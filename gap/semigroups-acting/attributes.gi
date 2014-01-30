@@ -386,13 +386,11 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local J, g, max, h, h1, mat, d, hclasses, gpclasses, gen, out, thing, temp, gens, i, j, k, j1, rep, components, comp, hh, trans, y, getout, poss;
+  local I, g, max, h, h1, mat, d, hclasses, gpclasses, gen, out, thing, temp, gens, i, j, k, j1, rep, components, comp, hh, trans, y, getout, poss;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
   mat:=Matrix(s);
-  #I:=Rows(s);
-  J:=Columns(s);
   d:=DClasses(s)[2];
   hclasses:=HClasses(d);
   gpclasses:=Filtered(hclasses,IsGroupHClass);
@@ -409,7 +407,8 @@ function(s)
     j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
     gens:=List(Generators(max), x->
       ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)
-    );
+    ) ;
+    I:=i;
     for h1 in Difference(gpclasses,[h]) do
       rep:=Representative(h1);
       i:=RowOfReesZeroMatrixSemigroupElement(rep);
@@ -427,40 +426,18 @@ function(s)
       poss:=EmptyPlist(Length(components)-1);
       
       for k in [2..Length(components)] do
-      
-        i:=components[k][1][1];
-        j:=components[k][1][2];
-        
-        # So H_i,j is a group H-class in the connected component #k
+        Add(poss,components[k][1][2]);
+        # So components[k][1] is a group H-class H_i,j in the connected component #k
         # Now need to pick any non-group H-class in its 'complementary block'
-        # ie Looking for H_x,j such that H_x,y is a group H-class in a previous connected component, for some y
-        # Need to make sure I don't pick a group h-class in the current connected component #k. Not yet done.
-        
-        getout:=false;
-        for j1 in J do
-          for comp in components{[1..(k-1)]} do
-            for h1 in comp do
-              if h1[2] = j1 then
-                Add(poss,[i,j1]);
-                getout:=true;
-                break;
-              fi;
-            od;
-            if getout then break; fi;
-          od;
-          if getout then break; fi;
-        od;
-        ### The preceding 15 lines of code need a LOT of work
-
+        # We choose H_I,j
       od;
       
       for thing in Tuples(trans,Length(components)-1) do
         temp:=[];
         for i in [1..(Length(components)-1)] do
-          Add(temp, ReesZeroMatrixSemigroupElement(s, poss[i][1], thing[i], poss[i][2]));
+          Add(temp, ReesZeroMatrixSemigroupElement(s, I, thing[i], poss[i]));
         od;
         Add(out, Semigroup(gens, temp, [MultiplicativeZero(s)]));
-        Print("\n");
         Print(gens, temp);
         Print("\n");
       od;
