@@ -59,6 +59,37 @@ function(S, T)
   fi;
 end); 
 
+#
+
+# Returns a list of lists (connected comps), each list being those (I,J)
+# co-ords of the group H-classes in the connected comp
+InstallMethod(RMSConnectedComponents, "for a Rees zero matrix semigroup", 
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local I, J, mat, len, graph, comps;
+  
+  I:=Rows(R); J:=Columns(R); mat:=Matrix(R);
+  len:=Length(mat[1]);
+
+  graph:=Graph(Group(()), Union(I, J+len), OnPoints,
+    function(i,j)
+      if i<=len and j>len then
+        return mat[j-len][i]<>0;
+      elif j<=len and i>len then
+        return mat[i-len][j]<>0;
+      fi;
+      return false;
+    end, true);
+    
+  comps:=List(ConnectedComponents(graph),x->Intersection(x,I));
+
+  return List(comps,x->
+    Concatenation(List(x, y->
+    List(graph.adjacencies[y], z->[y,z-len])
+    )));
+    
+end); 
+
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 # and only works for Rees matrix semigroup over groups
 
@@ -359,13 +390,12 @@ function(s)
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
-
-  # pick a group h-class to do stuff with
-  
   mat:=Matrix(s);
   d:=DClasses(s)[2];
   hclasses:=HClasses(d);
   gpclasses:=Filtered(hclasses,IsGroupHClass);
+  
+  # pick a distinguished group h-class to start with
   h:=gpclasses[1];
   
   for max in MaximalSubgroups(g) do
@@ -375,7 +405,7 @@ function(s)
     j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
     gens:=List(Generators(max), x->
       ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)
-    );    
+    );
     for h1 in Difference(gpclasses,[h]) do
       rep:=Representative(h1);
       i:=RowOfReesZeroMatrixSemigroupElement(rep);

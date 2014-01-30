@@ -34,6 +34,9 @@ DeclareAttribute("MaximalCasey", IsReesZeroMatrixSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
 
+# Not sure how this should be defined
+DeclareAttribute("RMSConnectedComponents", IsReesZeroMatrixSemigroup);
+
 DeclareOperation("SubsemigroupByIndicesNC", 
 [IsReesMatrixSemigroup, IsDenseList, IsDenseList]);
 DeclareOperation("SubsemigroupByIndicesNC",
