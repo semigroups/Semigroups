@@ -444,7 +444,7 @@ function(s)
     fi;  
   od;
   
-  return out;
+  return Filtered(out,x->not Size(x)=Size(s));
 
 end);
 
