@@ -386,7 +386,7 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local I, g, max, h, h1, mat, d, hclasses, gpclasses, gen, out, thing, temp, gens, i, j, k, j1, rep, components, comp, hh, trans, y, getout, poss;
+  local I, g, max, h, h1, mat, d, hclasses, gpclasses, gen, out, thing, temp, gens, i, j, k, rep, components, comp, trans, poss;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
