@@ -41,7 +41,10 @@
   used  to convert bipartitions into permutations, partial permutations, or
   transformations where  appropriate.  
     <#Include Label="AsBipartition"/>
+    <#Include Label="AsBlockBijection"/>
     <#Include Label="AsTransformation"/>
+    <#Include Label="AsPartialPerm"/>
+    <#Include Label="AsPermutation"/>
   </Section>
  
   <Section Label="operators-bipartitions">
@@ -75,10 +78,11 @@
 
   <Section Label="attributes-bipartitions">
   <Heading>Attributes for bipartitons</Heading>
-    Details 
+     In this section we describe various attributes for bipartitions. 
     <#Include Label="IsTransBipartition">
     <#Include Label="IsDualTransBipartition">
     <#Include Label="IsPermBipartition">
+    <#Include Label="IsPartialPermBipartition">
     <#Include Label="IsBlockBijection">
     <#Include Label="DegreeOfBipartition">
     <#Include Label="RankOfBipartition">
@@ -109,7 +113,7 @@
     <#Include Label="InverseLeftBlocks">
   </Section>
 
-  <Section><Heading>Visualising blocks and bipartitions</Heading>
+  <!--  <Section><Heading>Visualising blocks and bipartitions</Heading>
     There are some functions in &Semigroups; for creating &LaTeX; pictures of
     bipartitions and blocks. Descriptions of these methods can be found in this
     section. <P/>
@@ -117,12 +121,15 @@
     Many of the functions described herein return a string, which can be
     written to a file using the function 
     <Ref Func="FileString" BookName="GAPDoc"/>.
-  </Section>
+  </Section>-->
 
   <Section><Heading>Semigroups of bipartitions</Heading>
   
     <#Include Label="IsBipartitionSemigroup">
+    <#Include Label="IsBlockBijectionSemigroup">
     <#Include Label="DegreeOfBipartitionSemigroup">
+    <#Include Label="IsomorphismBipartitionSemigroup">
+    <#Include Label="IsomorphismBlockBijectionSemigroup">
 
   </Section>
 </Chapter>

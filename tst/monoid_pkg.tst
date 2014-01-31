@@ -77,9 +77,9 @@ true
 gap> gens:=[Transformation([3,5,3,3,5,6]), Transformation([6,2,4,2,2,6])];;
 gap> S:=Semigroup(gens);;
 gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
-{Transformation( [ 2, 2, 2, 2, 2 ] )}
+{Transformation( [ 6, 2, 2, 2, 2, 6 ] )}
 gap> IsomorphismPermGroup(last);
-MappingByFunction( {Transformation( [ 2, 2, 2, 2, 2 ] )
+MappingByFunction( {Transformation( [ 6, 2, 2, 2, 2, 6 ] )
  }, Group(()), function( x ) ... end, function( x ) ... end )
 
 #

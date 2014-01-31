@@ -497,7 +497,7 @@ true</Example>
 
      See also <Ref Attr="One" BookName="ref"/>, 
      <Ref Prop="IsInverseMonoid" BookName="ref"/>
-     and <Ref Oper="IsomorphismTransformationMonoid"/>.
+     and <Ref Oper="IsomorphismTransformationMonoid" BookName="ref"/>.
       <Example>
 gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
@@ -809,6 +809,41 @@ gap> S:=Semigroup(
 > Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation([ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] ));;
 gap> IsZeroSimpleSemigroup(S);
+false</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsCongruenceFreeSemigroup">
+  <ManSection>
+    <Prop Name="IsCongruenceFreeSemigroup" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.  </Returns>
+    <Description> 
+      <C>IsCongruenceFreeSemigroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a congruence-free semigroup and <K>false</K> if it is 
+      not.<P/>
+
+      A semigroup <A>S</A> is a <E>congruence-free semigroup</E> if it has no 
+      non-trivial congruences.<P/>
+
+      A semigroup with zero is congruence-free if and only if it is isomorphic
+      to a regular Rees 0-matrix semigroup <C>R</C> whose underlying semigroup
+      is the trivial group, no two rows of the matrix of <C>R</C> are identical,
+      and no two columns are identical; see Theorem 3.7.1 in 
+      <Cite Key="howie"/>.<P/>
+     
+      A semigroup without zero is
+      congruence-free if and only if it is a simple group or has order 2; see
+      Theorem 3.7.2 in <Cite Key="howie"/>.
+
+      <Example>
+gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
+true
+gap> S := Semigroup(
+>  Transformation( [ 2, 2, 4, 4 ] ),
+>  Transformation( [ 5, 3, 4, 4, 6, 6 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
 false</Example>
     </Description>
   </ManSection>

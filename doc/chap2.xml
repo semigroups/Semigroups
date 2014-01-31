@@ -136,7 +136,6 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
     
   <Section><Heading>Changing the representation of a semigroup</Heading>
     <#Include Label="IsomorphismPermGroup">
-    <#Include Label="IsomorphismTransformationMonoid">
   </Section>
   
   <Section Label="Examples"><Heading>Standard examples</Heading>

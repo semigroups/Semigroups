@@ -1,13 +1,21 @@
 #############################################################################
 ##
 #W  utils.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 ## this file contains utilies for use with the Semigroups package. 
+
+#
+
+BindGlobal("SemigroupsDocXMLFiles",
+  ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
+   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
+   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml", 
+   "factor.xml", "freeinverse.xml", "display.xml", "../PackageInfo.g"]);
 
 # <path> to the folder containing the timings, <vers> the version number to
 # check against.
@@ -146,16 +154,13 @@ function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
+
 #
 
 InstallGlobalFunction(SemigroupsMakeDoc, 
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
-   InstallationPath, "/doc"), "main.xml", 
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
-   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
-   "semibipart.xml", "semigroups.xml", "factor.xml", "freeinverse.xml",
-   "display.xml", "../PackageInfo.g"], "semigroups",
+   InstallationPath, "/doc"), "main.xml", SemigroupsDocXMLFiles, "semigroups",
    "MathJax", "../../..");;
   return;
 end);
@@ -245,10 +250,7 @@ InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
-  "main.xml",  [ "utils.xml", "examples.xml", "factor.xml", "greens.xml",
-  "orbits.xml", "properties.xml", "semigroups.xml",  "attributes-inverse.xml", 
-  "freeinverse.xml", "attributes.xml", "display.xml", "blocks.xml", 
-  "semibipart.xml", "bipartition.xml", "../PackageInfo.g" ], "Single" );
+  "main.xml",  SemigroupsDocXMLFiles, "Single" );
 end);
 
 # if <arg> is some strings, then any example containing any of these strings is
@@ -316,7 +318,9 @@ function(arg)
       repeat  
         i:=i+1; line:=IO_ReadLine(file);
       until i=arg[2] or line="";
-      IO_Close(file);
+      if IsString(arg[1]) then 
+        IO_Close(file);
+      fi;
       if line="" then
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
@@ -416,7 +420,7 @@ function(arg)
   elif file[Length(file)] = "xz" then 
     file:=IO_FilteredFile([["xz", ["-9q"]]], arg[1], mode);
   else  
-    file:=IO_File(arg[1]);
+    file:=IO_File(arg[1], mode);
   fi;
   return file;
 end);
@@ -536,7 +540,7 @@ function(arg)
       IO_WriteLine(file, line);
     od;
   fi;
-
+  
   if IsString(arg[1]) then  
     IO_Close(file);
   fi;

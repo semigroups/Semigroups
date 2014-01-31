@@ -981,7 +981,7 @@ gap> List(DClasses(S), SchutzenbergerGroup);
 gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
 gap> ReadGenerators(file, 1078);;
 gap> s:=InverseSemigroup(last);
-<inverse partial perm semigroup on 9 pts with 6 generators>
+<inverse partial perm monoid on 9 pts with 5 generators>
 gap> Size(s);
 12
 gap> IsDTrivial(s);

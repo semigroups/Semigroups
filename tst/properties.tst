@@ -678,6 +678,16 @@ gap> Size(t);
 #true
 #gap> Size(t);
 #180
+#
+#
+gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
+true
+gap> S := Semigroup(
+>  Transformation( [ 2, 2, 4, 4 ] ),
+>  Transformation( [ 5, 3, 4, 4, 6, 6 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
+false
 
 #
 gap> SemigroupsStopTest();
