@@ -378,6 +378,44 @@ gap> x:=PartialPerm( [ 1, 3 ], [ 3, 1 ] );;
 gap> ForAll(S, y-> x^f*y^f=(x*y)^f);
 true
 
+# NaturalLeqBlockBijection
+gap> S:=DualSymmetricInverseMonoid(4);;
+gap> f:=Random(S); g:=Random(S);
+gap> f:=Bipartition([ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ]] );;
+gap> g:=Bipartition([ [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ] ]);;
+gap> NaturalLeqBlockBijection(f, g);
+false
+gap> NaturalLeqBlockBijection(f, f);
+true
+gap> NaturalLeqBlockBijection(f, g);
+false
+gap> NaturalLeqBlockBijection(g, f);
+false
+gap> NaturalLeqBlockBijection(g, g);
+true
+gap> f:=Bipartition([[1,4,2,-1,-2,-3], [3,-4]]);
+<block bijection: [ 1, 2, 4, -1, -2, -3 ], [ 3, -4 ]>
+gap> NaturalLeqBlockBijection(f, g);
+true
+gap> NaturalLeqBlockBijection(g, f);
+false
+gap> First(Idempotents(S), e-> e*g=f);
+<block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>
+gap> Filtered(S, f-> NaturalLeqBlockBijection(f, g));
+[ <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]>, 
+  <block bijection: [ 1, 2, 4, -1, -2, -3 ], [ 3, -4 ]>, 
+  <block bijection: [ 1, 3, 4, -3, -4 ], [ 2, -1, -2 ]>, 
+  <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
+  <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]> ]
+gap> Filtered(S, f-> ForAny(Idempotents(S), e-> e*f=g));
+[ <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]> ]
+gap> Filtered(S, f-> ForAny(Idempotents(S), e-> e*g=f));
+[ <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]>, 
+  <block bijection: [ 1, 2, 4, -1, -2, -3 ], [ 3, -4 ]>, 
+  <block bijection: [ 1, 3, 4, -3, -4 ], [ 2, -1, -2 ]>, 
+  <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
+  <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]> ]
+
 #
 gap> SemigroupsStopTest();
 
