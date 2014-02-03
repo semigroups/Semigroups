@@ -9,4 +9,5 @@
 ##
 
 DeclareAttribute("DotDClasses", IsActingSemigroup, "mutable");
+DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup, "mutable");
 DeclareOperation("DotDClasses", [IsActingSemigroup, IsRecord]);
