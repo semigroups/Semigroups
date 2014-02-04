@@ -41,9 +41,6 @@ DeclareOperation("CongruenceByLinkedTriple",
  IsDenseList,
  IsDenseList]);
 
-DeclareOperation("MinimalSemigroupCongruence",
-[IsReesZeroMatrixSemigroup, IsDenseList]);
-
 DeclareOperation("SubsemigroupByIndicesNC", 
 [IsReesMatrixSemigroup, IsDenseList, IsDenseList]);
 DeclareOperation("SubsemigroupByIndicesNC",
