@@ -1214,9 +1214,9 @@ end);
 
 #
 
-InstallMethod(CongruenceByLinkedTriple,
+InstallMethod(SemigroupCongruenceByLinkedTriple,
 "for a Rees zero matrix semigroup and a linked triple",
-[IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite,
+[IsReesZeroMatrixSemigroup and IsFinite,
  IsGroup,
  IsDenseList,
  IsDenseList],

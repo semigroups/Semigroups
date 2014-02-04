@@ -35,8 +35,8 @@ DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
 DeclareAttribute("LinkedTriples", IsReesMatrixSemigroup);
 DeclareAttribute("LinkedTriples", IsReesZeroMatrixSemigroup);
 
-DeclareOperation("CongruenceByLinkedTriple",
-[IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite,
+DeclareOperation("SemigroupCongruenceByLinkedTriple",
+[IsReesZeroMatrixSemigroup and IsFinite,
  IsGroup,
  IsDenseList,
  IsDenseList]);
