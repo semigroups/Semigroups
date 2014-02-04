@@ -142,11 +142,17 @@ MappingByFunction( <partial perm semigroup on 3 pts with 2 generators>,
 
 <#GAPDoc Label="IsBlockBijectionSemigroup">
   <ManSection>
-    <Attr Name="IsBlockBijectionSemigroup" Arg="S"/>
-    <Attr Name="IsBlockBijectionMonoid" Arg="S"/>
+    <Prop Name="IsBlockBijectionSemigroup" Arg="S"/>
+    <Prop Name="IsBlockBijectionMonoid" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
+      A <E>block bijection semigroup</E> is simply a semigroup consisting of
+      block bijections. 
 
+      A <E>block bijection monoid</E> is a monoid consisting of block bijections. 
+      An object <A>obj</A> is a bipartition monoid in &GAP; if it satisfies 
+      <Ref Prop="IsMonoid" BookName="ref"/> and 
+      <Prop Filt="IsBlockBijectionSemigroup"/>.<P/>
     </Description> 
   </ManSection> 
 <#/GAPDoc>
