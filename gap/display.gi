@@ -8,12 +8,21 @@
 #############################################################################
 ##
 
+InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup], 
+function(S)
+  if IsActingSemigroup(S) then 
+    TryNextMethod();
+  fi;
+  return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)));
+end);
+
 #
 
 InstallMethod(DotDClasses, "for an acting semigroup",
 [IsActingSemigroup], 
 function(s)
-  return DotDClasses(s, rec(maximal:=false, number:=true));
+  return DotDClasses(s, rec());
 end);
 
 InstallMethod(DotDClasses, "for an acting semigroup and record",
