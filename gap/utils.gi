@@ -449,6 +449,11 @@ function(arg)
     return;
   fi;
 
+  if file=fail then 
+    Error("couldn't open the file ", file, ",");
+    return;
+  fi;
+
   if IsTransformationCollection(arg[2]) 
     or IsPartialPermCollection(arg[2])
     or IsBipartitionCollection(arg[2]) then 
@@ -459,7 +464,7 @@ function(arg)
     or IsBipartitionCollection(arg[2][1])) then 
       trans:=arg[2];
   else
-    Error("usage: the 2nd argument must be transformation or partial perm\n",
+    Error("usage: the 2nd argument must be a transformation or partial perm\n",
     "semigroup or collection, or a list of such semigroups or collections,");
     return;
   fi;
@@ -478,7 +483,6 @@ function(arg)
       gens:=trans;
     fi;
   od;
-
   
   #####
 
@@ -551,7 +555,7 @@ end);
 
 InstallGlobalFunction(WriteGeneratorsLine, 
 function(f)
-  local append, line, deg, strdeg, nrdigits, i;
+  local append, line, deg, strdeg, nrdigits, func, nr, i;
   
   append:=function(str, pt, m)
     local i, j;
@@ -568,20 +572,30 @@ function(f)
     deg:=DegreeOfTransformation(f);
     strdeg:=String(deg);
     nrdigits:=Length(strdeg);
+    func:=POW;
+    nr:=deg;
   elif IsPartialPerm(f) then 
     line:="p";
     deg:=DegreeOfPartialPerm(f);
-    strdeg:=String(strdeg);
+    strdeg:=String(deg);
     nrdigits:=Length(String(Maximum(deg, CodegreeOfPartialPerm(f))));
+    func:=POW;
+    nr:=deg;
   elif IsBipartition(f) then 
     line:="b";
-    Error("not yet implemented");
+    deg:=DegreeOfBipartition(f);
+    strdeg:=String(deg);
+    nrdigits:=Length(strdeg);
+    func:=function(i, f)
+      return f!.blocks[i];
+    end;
+    nr:=2*deg;
   fi;
   
   Append(line, String(nrdigits));
   Append(line, strdeg);
-  for i in [1..deg] do 
-    append(line, i^f, nrdigits);
+  for i in [1..nr] do 
+    append(line, func(i,f), nrdigits);
   od;
   return line;
 end);
