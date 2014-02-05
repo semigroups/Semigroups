@@ -1253,14 +1253,31 @@ InstallMethod(SemigroupCongruenceByLinkedTriple,
  IsDenseList],
 function(s, n, colCong, rowCong)
   local g, m, pairs,
+        IsRegularMatrix,
         i1, x,
         c, i, j,
         rowNo, colNo;
-  
   g := UnderlyingSemigroup(s);
   m := Matrix(s);
   
-  # Check that the underlying semigroup is valid
+  IsRegularMatrix := function(m)
+    # Checks no row or column is all-zero
+    local row;
+    if not IsRegularSemigroup(UnderlyingSemigroup(s)) then
+      return false;
+    fi;
+    for row in Union(m, TransposedMat(m)) do
+      if ForAll(row, x-> x=0) then
+        return false;
+      fi;
+    od;
+    return true;
+  end;
+  
+  # Check that the arguments are valid
+  if not IsRegularMatrix(m) then
+    return fail;
+  fi;
   if not IsGroup(g) then
     return fail;
   fi;
@@ -1301,7 +1318,7 @@ function(s, n, colCong, rowCong)
     od;
   od;
   
-  # RELATIONS FROM THE ROWS CONGRUENCE
+  # PAIRS FROM THE ROWS CONGRUENCE
   # For each class in the congruence...
   for c in rowCong do
     # For each row in the class...
@@ -1309,7 +1326,6 @@ function(s, n, colCong, rowCong)
       # For each column in the matrix...
       for colNo in [1..Size(m[1])] do
         if m[c[1]][colNo] <> 0 then
-          Print("T");
           Add(pairs, [
                   ReesZeroMatrixSemigroupElement(s,colNo,Inverse(m[c[1][colNo]]),c[1]),
                   ReesZeroMatrixSemigroupElement(s,colNo,Inverse(m[c[i][colNo]]),c[i])
