@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  iterators.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -660,7 +660,7 @@ end);
 InstallMethod(Iterator, "for a trivial acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
-  return TrivialIterator(Generators(s)[1]);
+  return TrivialIterator(GeneratorsOfSemigroup(s)[1]);
 end);
 
 # different method for regular/inverse

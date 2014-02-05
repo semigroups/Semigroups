@@ -149,9 +149,9 @@ true</Example>
     <Prop Name="IsCliffordSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsCliffordSemigroup</C> returns <K>true</K> if the <A>S</A> is  
-      regular and its idempotents are central, and <K>false</K> if it is not. 
-      
+      <C>IsCliffordSemigroup</C> returns <K>true</K> if the semigroup <A>S</A>
+      is  regular and its idempotents are central, and <K>false</K> if it is
+      not.  
       <Example>
 gap> S:=Semigroup( Transformation( [ 1, 2, 4, 5, 6, 3, 7, 8 ] ), 
 > Transformation( [ 3, 3, 4, 5, 6, 2, 7, 8 ] ), 
@@ -346,19 +346,17 @@ true</Example>
   <Description>
     If <A>S</A> is a semigroup, then <C>IsInverseSemigroup</C> returns
     <K>true</K> if <A>S</A> is an inverse semigroup and <K>false</K> if it is
-    not. If <A>S</A> is monoid of transformations or partial permutations, then
-    <C>IsInverseMonoid</C> returns <K>true</K> if <A>S</A> is an inverse monoid
-    and <K>false</K> if it is not.<P/>
+    not. If <A>S</A> is monoid, then <C>IsInverseMonoid</C> returns <K>true</K>
+    if <A>S</A> is an inverse monoid and <K>false</K> if it is not.<P/>
 
     A semigroup is an <E>inverse semigroup</E> if every element 
     <C>x</C> has a unique semigroup inverse, that is, a unique
     element <C>y</C> such that <C>x*y*x=x</C> and <C>y*x*y=y</C>.
 
     <Example>
-gap> gens:=[Transformation([1,2,4,5,6,3,7,8]),
-> Transformation([3,3,4,5,6,2,7,8]),
-> Transformation([1,2,5,3,6,8,4,4])];;
-gap> S:=Semigroup(gens);;
+gap> S:=Semigroup( Transformation( [ 1, 2, 4, 5, 6, 3 ] ), 
+> Transformation( [ 3, 3, 4, 5, 6, 2 ] ), 
+> Transformation( [ 1, 2, 5, 3, 6, 8, 4, 4 ] ) );
 gap> IsInverseSemigroup(S);
 true</Example>
   </Description>
@@ -499,7 +497,7 @@ true</Example>
 
      See also <Ref Attr="One" BookName="ref"/>, 
      <Ref Prop="IsInverseMonoid" BookName="ref"/>
-     and <Ref Oper="IsomorphismTransformationMonoid"/>.
+     and <Ref Oper="IsomorphismTransformationMonoid" BookName="ref"/>.
       <Example>
 gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
@@ -623,12 +621,11 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsSemilatticeAsSemigroup</C> returns <K>true</K> if the semigroup
-      <A>S</A> is a semilattice and <K>false</K> if it is not.
-      <P/>
+      <A>S</A> is a semilattice and <K>false</K> if it is not. <P/>
       
-      A semigroup is a
-      <E>semilattice</E> if it is commutative and every element is an 
-      idempotent. The idempotents of an inverse semigroup form a semilattice. 
+      A semigroup is a <E>semilattice</E> if it is commutative and every
+      element is an idempotent. The idempotents of an inverse semigroup form a
+      semilattice. 
       <Example>
 gap> S:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
 > Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;                    
@@ -650,15 +647,14 @@ true</Example>
     <Prop Name="IsCompletelySimpleSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsSimpleSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is simple 
-      and <K>false</K> if it is not.<P/>
+      <C>IsSimpleSemigroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is simple and <K>false</K> if it is not.<P/>
       
-      A semigroup is <E>simple</E> if it has no proper
-      2-sided ideals. A semigroup is <E>completely simple</E> if it is simple 
-      and possesses minimal left and right ideals. A finite semigroup is simple 
-      if and only if it is completely simple.  An inverse semigroup is simple
-      if and only if it is a group.
+      A semigroup is <E>simple</E> if it has no proper 2-sided ideals. A
+      semigroup is <E>completely simple</E> if it is simple and possesses
+      minimal left and right ideals. A finite semigroup is simple if and only
+      if it is completely simple.  An inverse semigroup is simple if and only
+      if it is a group.
       <Example>
 gap> gens:=[ Transformation( [ 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 2 ] ), 
 >  Transformation( [ 1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 3 ] ), 
@@ -730,11 +726,11 @@ true</Example>
       <C>IsZeroRectangularBand</C> returns <K>true</K> if the semigroup 
       <A>S</A> is a zero rectangular band and <K>false</K> if it is not.<P/>
 
-      A semigroup is a <E>zero rectangular band</E> if it is zero simple and
+      A semigroup is a <E>0-rectangular band</E> if it is 0-simple and
       &H;-trivial; see also <Ref Prop="IsZeroSimpleSemigroup"/>
       and <Ref Prop="IsHTrivial"/>.
-      An inverse semigroup is a zero rectangular band if and only if it is a
-      zero group; see <Ref Prop="IsZeroGroup"/>.
+      An inverse semigroup is a 0-rectangular band if and only if it is a
+      0-group; see <Ref Prop="IsZeroGroup"/>.
 <Example>
 gap> S:=Semigroup( 
 >  Transformation( [ 1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1, 13, 1, 1, 
@@ -790,13 +786,12 @@ Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsZeroSimpleSemigroup</C> returns <K>true</K> if the semigroup
-      <A>S</A> is a zero simple semigroup and <K>false</K> if it is not.<P/>
+      <A>S</A> is 0-simple and <K>false</K> if it is not.<P/>
 
-      A semigroup is a <E>zero simple semigroup</E> if it has no two-sided 
-      ideals other than itself and the set containing the zero element; see
-      also <Ref Attr="MultiplicativeZero"/>. An inverse semigroup is zero
-      simple if and only if it is a Brandt semigroup; see <Ref
-        Prop="IsBrandtSemigroup"/>.
+      A semigroup is a <E>0-simple</E> if it has no two-sided ideals other than
+      itself and the set containing the zero element; see also <Ref
+        Attr="MultiplicativeZero"/>. An inverse semigroup is 0-simple if and
+      only if it is a Brandt semigroup; see <Ref Prop="IsBrandtSemigroup"/>.
 
       <Example>
 gap> S:=Semigroup( 
@@ -828,12 +823,18 @@ false</Example>
       <A>S</A> is a congruence-free semigroup and <K>false</K> if it is 
       not.<P/>
 
-      A semigroup <C>S</C> is a <E>congruence-free semigroup</E> if it has no 
-      non-trivial congruences.
+      A semigroup <A>S</A> is a <E>congruence-free semigroup</E> if it has no 
+      non-trivial congruences.<P/>
 
-      A semigroup with zero is congruence-free iff it is isomorphic to a Rees 
-      matrix semigroup whose underlying semigroup is trivial.  A semigroup 
-      without zero is congruence-free iff it is a simple group or has order 2.
+      A semigroup with zero is congruence-free if and only if it is isomorphic
+      to a regular Rees 0-matrix semigroup <C>R</C> whose underlying semigroup
+      is the trivial group, no two rows of the matrix of <C>R</C> are identical,
+      and no two columns are identical; see Theorem 3.7.1 in 
+      <Cite Key="howie"/>.<P/>
+     
+      A semigroup without zero is
+      congruence-free if and only if it is a simple group or has order 2; see
+      Theorem 3.7.2 in <Cite Key="howie"/>.
 
       <Example>
 gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;

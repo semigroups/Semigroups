@@ -474,6 +474,35 @@ gap> Elements(H)[1]^f;
 gap> ()^g;            
 0
 
+# Issue 47: bug in ClosureSemigroup caused which assumed that if the rank of an
+# R-class rep was greater than the maximum rank of the collection being added,
+# then we hadn't seen an R-class rep with the same rho-value before. 
+gap> S:=Semigroup([ Transformation( [ 1, 2, 4, 6, 1, 6 ] ),
+> Transformation( [ 1, 6, 1, 1, 6, 5 ] ),
+> Transformation( [ 2, 6, 2, 4, 3, 2 ] ),
+> Transformation( [ 4, 1, 3, 6, 1, 5 ] ),
+> Transformation( [ 4, 1, 4, 2, 4, 2 ] ),
+> Transformation( [ 6, 6, 4, 6, 1, 1 ] ) ]);
+<transformation semigroup on 6 pts with 6 generators>
+gap> T:=Semigroup([ Transformation( [ 1, 5, 3, 4, 5 ] ),
+> Transformation( [ 6, 4, 3, 5, 4, 1 ] ),
+> Transformation( [ 1, 2, 4, 6, 1, 6 ] ),
+> Transformation( [ 1, 5, 1, 6, 3, 1 ] ),
+> Transformation( [ 4, 1, 6, 5, 4, 5 ] ),
+> Transformation( [ 2, 6, 2, 4, 3, 2 ] ),
+> Transformation( [ 2, 1, 2, 4, 4, 2 ] ),
+> Transformation( [ 4, 5, 4, 4, 5, 3 ] ),
+> Transformation( [ 4, 4, 4, 5, 4, 3 ] ),
+> Transformation( [ 6, 1, 6, 6, 4, 6 ] ),
+> Transformation( [ 5, 6, 6, 6, 6, 1 ] ),
+> Transformation( [ 4, 4, 5, 4, 3, 3 ] ) ]);
+<transformation semigroup on 6 pts with 12 generators>
+gap> IsMaximalSubsemigroup(S, T);
+true
+gap> T:=Semigroup(T, rec(small:=true));;
+gap> IsMaximalSubsemigroup(S, T);
+true
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

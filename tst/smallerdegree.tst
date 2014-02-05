@@ -137,11 +137,11 @@ gap> h:=PartialPerm(J);
 <partial perm on 122 pts with degree 122, codegree 122>
 gap> 
 gap> V:=InverseSemigroup(H1,H2,h);
-<inverse partial perm semigroup on 122 pts with 241 generators>
+<inverse partial perm monoid on 122 pts with 240 generators>
 gap> SmallerDegreePartialPermRepresentation(V);
-MappingByFunction( <inverse partial perm semigroup on 122 pts
- with 241 generators>, <inverse partial perm semigroup on 12 pts
- with 241 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse partial perm monoid on 122 pts
+ with 240 generators>, <inverse partial perm semigroup on 12 pts
+ with 240 generators>, function( x ) ... end, function( x ) ... end )
 
 #
 gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ], [ 1, 5, 3, 8, 4 ]);;
@@ -162,4 +162,3 @@ gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST("Semigroups package: smallerdegree.tst", 10000);
-

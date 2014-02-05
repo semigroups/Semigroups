@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  regular.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -48,7 +48,7 @@ function(f, s)
 
   if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-        and ActionDegree(f)<>ActionDegree(rep))
+        and ActionDegree(f)<>ActionDegree(s))
     or ActionDegree(f)>ActionDegree(s) then
     return false;
   fi;

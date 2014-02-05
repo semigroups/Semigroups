@@ -1,7 +1,7 @@
 ############################################################################# 
 ## 
 #W  examples.gi
-#Y  Copyright (C) 2013                                    James D. Mitchell
+#Y  Copyright (C) 2013-14                                 James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
@@ -41,6 +41,7 @@ function(d,q)
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
   SetIsRegularSemigroup(S, true);
+  
   return S;
 end);
 
@@ -235,9 +236,124 @@ end);
 
 #
 
+InstallMethod(PartitionMonoid, "for a positive integer",
+[IsPosInt], 
+function(n)
+  local gens;
+
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
+
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
+  Add(gens, BipartitionNC(Concatenation([[1,2,-1, -2]], 
+   List([3..n], x-> [x, -x]))));
+
+  return Monoid(gens, rec(regular:=true));
+end);
+
 #
+
+InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
+[IsPosInt], 
+function(n)
+  local gens, s;
+  
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
+  
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  
+  if n=2 then 
+    Add(gens, BipartitionNC([[1,2,-1,-2]]));
+  else 
+    Add(gens, BipartitionNC(Concatenation([[1,2,-3], [3,-1,-2]],
+     List([4..n], x-> [x, -x]))));
+  fi;
+  s:=InverseMonoid(gens);
+  return s;
+end);
+
 #
+
+InstallMethod(FactorisableDualSymmetricInverseSemigroup, 
+"for a positive integer", [IsPosInt], 
+function(n)
+  local gens;
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1,2,-1,-2]],
+   List([3..n], x-> [x, -x]))));
+  return InverseMonoid(gens);
+end);
+
 #
+
+InstallMethod(BrauerMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens;
+
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1,2]], 
+   List([3..n], x-> [x, -x]),[[-1,-2]])));
+  return Monoid(gens, rec(regular:=true));
+end);
+
+#
+
+InstallMethod(JonesMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens, next, s, i, j;
+ 
+  if n=1 then 
+    return Monoid(BipartitionNC([[1,-1]]));
+  fi;
+
+  gens:=[];
+  for i in [1..n-1] do 
+    next:=[];
+    for j in [1..i-1] do 
+      next[j]:=j;
+      next[n+j]:=j;
+    od;
+    next[i]:=i; next[i+1]:=i;
+    next[i+n]:=n; next[i+n+1]:=n;
+    for j in [i+2..n] do 
+      next[j]:=j-1;
+      next[n+j]:=j-1;
+    od;
+    gens[i]:=BipartitionByIntRep(next);
+  od;
+  return Monoid(gens, rec(regular:=true));
+end);
+
+# JDM rename and make global
+
+HamMonoid:=function(n)
+  local gens, next, i, j;
+  
+  gens:=[];
+  for i in [1..n-2] do 
+    next:=[];
+    for j in [1..i-1] do 
+      next[j]:=j;
+      next[n+j]:=j;
+    od;
+    next[i]:=i; next[i+1]:=i;  next[i+2]:=i;
+    next[i+n]:=n-1; next[i+n+1]:=n-1; next[i+n+2]:=n-1;
+    for j in [i+3..n] do 
+      next[j]:=j-2;
+      next[n+j]:=j-2;
+    od;
+    gens[i]:=BipartitionByIntRep(next);
+  od;
+  return Semigroup(gens);
+end;
+
 #
 
 InstallMethod(POI, "for a positive integer",
@@ -289,7 +405,7 @@ function(g)
   return s;
 end);
 
-#
+# JDM; update when ideals are ready...
 
 InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
@@ -301,6 +417,84 @@ function(n)
   T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
   SetIsRegularSemigroup(T, true);
   return T;
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
+[IsPosInt],
+function(n)
+  local x, S, T;
+  
+  x:=TransformationNC(Concatenation([1..n-1], [n-1]));
+  S:=OrderEndomorphisms(n);
+  T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
+  SetIsRegularSemigroup(T, true);
+  return T;
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularBrauerMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2], [-1,-2]];
+  for i in [3..n] do 
+    blocks[i]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=BrauerMonoid(n);
+  return Semigroup(Idempotents(DClassNC(S, x)), rec(small:=true, regular:=true));
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularJonesMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2], [-1,-2]];
+  for i in [3..n] do 
+    blocks[i]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=JonesMonoid(n);
+  return Semigroup(Idempotents(DClassNC(S, x)), rec(small:=true, regular:=true));
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2,-1,-2]];
+  for i in [3..n] do 
+    blocks[i-1]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=DualSymmetricInverseMonoid(n);
+  return Semigroup(DClassNC(S, x), rec(small:=true, regular:=true));
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup, 
+"for a positive integer", [IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2,-1,-2]];
+  for i in [3..n] do 
+    blocks[i-1]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=FactorisableDualSymmetricInverseSemigroup(n);
+  return Semigroup(DClassNC(S, x), rec(small:=true, regular:=true));
 end);
 
 #EOF

@@ -17,7 +17,7 @@
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
   </Section>
-  
+
   <Section><Heading>Creating Green's classes</Heading>
     <!--JDM green's classes and relations chapter-->
     <#Include Label="XClassOfYClass">
@@ -52,10 +52,10 @@
     <#Include Label="MultiplicativeNeutralElement">
     <#Include Label="IsGreensClassNC">
     <#Include Label="IsTransformationSemigroupGreensClass">
+    <#Include Label="IsBipartitionSemigroupGreensClass">
     <#Include Label="IsPartialPermSemigroupGreensClass">
     <#Include Label="StructureDescription">
     <#Include Label="IsGreensDLeq">
-
   </Section>
 
   <Section><Heading>Further attributes of semigroups</Heading>
@@ -74,9 +74,12 @@
     <#Include Label="MultiplicativeZero">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
-    <#Include Label="MaximalSubsemigroups"> 
     <#Include Label="ComponentRepsOfTransformationSemigroup">
-
+    <#Include Label="ComponentsOfTransformationSemigroup">
+    <#Include Label="CyclesOfTransformationSemigroup">
+    <#Include Label="ComponentRepsOfPartialPermSemigroup">
+    <#Include Label="ComponentsOfPartialPermSemigroup">
+    <#Include Label="CyclesOfPartialPermSemigroup">
   </Section>
 
   <Section><Heading>Further properties of semigroups</Heading>
@@ -89,6 +92,7 @@
     <#Include Label="IsBlockGroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
+    <#Include Label="IsCongruenceFreeSemigroup">
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
     <#Include Label="IsLeftSimple">
@@ -139,15 +143,14 @@
     <#Include Label="SameMinorantsSubgroup">
     <#Include Label="SmallerDegreePartialPermRepresentation">
     <#Include Label="VagnerPrestonRepresentation">
-
   </Section>
 
   <Section><Heading>Visualising the &D;-class structure</Heading>
     In this section, we describe a function for creating a picture of the 
     &D;-class structure of a semigroup of transformations, partial
-    permutations, or a subsemigroup of a Rees 0-matrix semigroup.
+    permutations, or bipartitions; or a subsemigroup of a Rees 0-matrix
+    semigroup.
     <#Include Label="DotDClasses"/>
- 
   </Section>
 </Chapter>
 

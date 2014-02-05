@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  attributes.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -47,7 +47,7 @@ function(S)
   end;
 end);
 
-#
+#JDM improve this!
 
 InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
 [IsSemigroup, IsSemigroup],
@@ -469,6 +469,32 @@ end);
 
 #
 
+InstallMethod(GroupOfUnits, "for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local R, G, deg, U;
+
+  if MultiplicativeNeutralElement(S)=fail then
+    return fail;
+  fi;
+
+  R:=GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  G:=SchutzenbergerGroup(R);
+  deg:=DegreeOfBipartitionSemigroup(S);
+  
+  U:=Monoid(List(GeneratorsOfGroup(G), x-> AsBipartition(x, deg)));
+  
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation, 
+   x-> AsBipartition(x, deg)));
+   
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, G);
+
+  return U;
+end);
+
+#
+
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup with generators",
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -530,7 +556,8 @@ function(d)
 
   lambdaperm:=LambdaPerm(Parent(d));
   if IsTransformationSemigroupGreensClass(d) 
-    or IsPartialPermSemigroupGreensClass(d) then 
+    or IsPartialPermSemigroupGreensClass(d) 
+    or IsBipartitionSemigroupGreensClass(d) then 
     leftact:=PROD;
   elif IsReesZeroMatrixSubsemigroup(Parent(d)) then 
     leftact:=function(x, y)
@@ -624,6 +651,10 @@ function(coll)
     coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
   
+  if Size(coll)=1 then 
+    return coll;
+  fi;
+
   gens:=Set(ShallowCopy(coll)); 
   nrgens:=Length(gens); 
   deg:=ActionDegree(coll);
@@ -1150,7 +1181,7 @@ function(s)
       x-> x![2], x-> RMSElement(s, rep![1], x, rep![3]));
 end);
 
-#
+#JDM  
 
 InstallMethod(IsomorphismTransformationSemigroup, 
 "for semigroup of binary relations with generators", 

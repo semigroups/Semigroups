@@ -71,10 +71,9 @@
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test the examples in
-      the &Semigroups; manual. These tests should take no more than a few minutes
-      to complete.
-      To more comprehensively test that &Semigroups; is installed
-      correctly use <Ref Func="SemigroupsTestAll"/>. See also <Ref
+      the &Semigroups; manual. These tests should take no more than a few
+      minutes to complete.  To more comprehensively test that &Semigroups; is
+      installed correctly use <Ref Func="SemigroupsTestAll"/>. See also <Ref
       Func="SemigroupsTestInstall"/>.
     </Description>
   </ManSection>
@@ -86,10 +85,10 @@
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test your installation
-      of &Semigroups; is working correctly. These tests should take no more than a
-      fraction of a second to complete. 
-      To more comprehensively test that &Semigroups; is
-      installed correctly use <Ref Func="SemigroupsTestAll"/>. 
+      of &Semigroups; is working correctly. These tests should take no more
+      than a fraction of a second to complete.  To more comprehensively test
+      that &Semigroups; is installed correctly use 
+      <Ref Func="SemigroupsTestAll"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -97,32 +96,31 @@
 <#GAPDoc Label="Generators">
   <ManSection>
     <Func Name="Generators" Arg="S"/>
-    <Returns>A list of transformations or partial permutations.</Returns>
+    <Returns>A list of generators.</Returns>
     <Description>
-      <C>Generators</C> returns the generating set used to define 
-      the semigroup <A>S</A> of transformations or partial permutations.  
-      The generators of a monoid or inverse semigroup
-      <A>S</A> can be defined in several ways, for example, including or
-      excluding the identity element, including or not the inverses of the
-      generators. <C>Generators(<A>S</A>)</C>
-      uses the definition that returns the least number of generators. Nothing
-      new is computed when <C>Generators</C> is called and this function 
-      should not be confused with <Ref Attr="SmallGeneratingSet"/>.
+      <C>Generators</C> returns the generating set used to define the semigroup
+      <A>S</A>.  The generators of a monoid or inverse semigroup <A>S</A> can
+      be defined in several ways, for example, including or excluding the
+      identity element, including or not the inverses of the generators.
+      <C>Generators</C> uses the definition that returns the least number of
+      generators. Nothing new is computed when <C>Generators</C> is called and
+      this function should not be confused with 
+      <Ref Attr="SmallGeneratingSet"/>.
 
       <List>
-        <Mark>Transformation semigroup</Mark>
+        <Mark>for a semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>.
         </Item>
-        <Mark>Transformation monoid</Mark>
+        <Mark>for a monoid</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>.
         </Item>
-        <Mark>Inverse semigroup</Mark>
+        <Mark>for an inverse semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
         </Item>
-        <Mark>Inverse monoid</Mark>
+        <Mark>for an inverse monoid</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
         </Item>
@@ -174,8 +172,8 @@ gap> GeneratorsOfSemigroup(S);
     <Description>
       If <A>filename</A> is the name of a file created using 
       <Ref Func="WriteGenerators"/>, then <C>ReadGenerators</C> returns the
-      contents of this file as a list of lists of transformations, or partial
-      permutations. <P/>
+      contents of this file as a list of lists of transformations, partial
+      permutations, or bipartitions. <P/>
       
       If the optional second argument <A>nr</A> is present, then
       <C>ReadGenerators</C> returns the elements stored in the <A>nr</A>th line
@@ -196,18 +194,19 @@ gap> GeneratorsOfSemigroup(S);
     <Func Name="WriteGenerators" Arg="filename, list[, append]"/>
     <Returns><K>true</K> or <K>fail</K>.</Returns>
     <Description>
-      This function provides a method for writing transformations and partial
-      permutations to a file, that uses a relatively small
+      This function provides a method for writing transformations, partial
+      permutations, and bipartitions to a file, that uses a relatively small
       amount of disk space.  The resulting file can be further compressed using
       <C>gzip</C> or <C>xz</C>.<P/>
       
       The argument <A>list</A> should be a list of elements, a semigroup, or a
-      list of lists of elements, or semigroups; or an <Package>IO</Package>
-      file object. The types of elements and semigroups supported are:
-      transformations and partial permutations.<P/>
+      list of lists of elements, or semigroups. The types of elements and
+      semigroups supported are: transformations, partial permutations, and
+      bipartitions. <P/>
      
       The argument <A>filename</A> should be a string containing the name of a
-      file where the entries in <A>list</A> will be written. <P/>
+      file where the entries in <A>list</A> will be written or an
+      <Package>IO</Package> package file object.<P/>
 
       If  the  optional  third argument <A>append</A> is given and
       equals  <C>"w"</C>,  then the previous content of the file is deleted. 
@@ -225,7 +224,8 @@ gap> GeneratorsOfSemigroup(S);
       characters in the degree of the elements to be written, the next <C>m</C>
       characters are the degree <C>n</C> of the elements to be written, and the
       internal representation of the elements themselves are written in blocks
-      of <C>m*n</C> in the remainder of the line. For example, the transformations: 
+      of <C>m*n</C> in the remainder of the line. For example, the
+      transformations: 
       <Log>
 [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] )]</Log>

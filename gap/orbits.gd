@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  orbits.gd
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -21,5 +21,4 @@ DeclareGlobalFunction("SchreierTreeOfSCC");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 
-DeclareAttribute("ComponentRepsOfTransformationSemigroup",
-IsTransformationSemigroup);
+

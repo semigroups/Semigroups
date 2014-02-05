@@ -221,11 +221,11 @@ gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
 gap> MultiplicativeNeutralElement(H);
 fail
 gap> H:=First(HClasses(U[5]), IsRegularClass);
-{(12,(1,6)(5,8),2)}
+{(14,(1,6)(5,8),1)}
 gap> e:=MultiplicativeNeutralElement(H);
-(12,(1,6)(5,8),2)
+(14,(5,8)(6,9),1)
 gap> e^2;
-(12,(1,6)(5,8),2)
+(14,(5,8)(6,9),1)
 gap> ForAll(H, x-> x*e=x and e*x=x);
 true
 gap> H:=First(HClasses(U[5]), x-> not IsRegularClass(x));

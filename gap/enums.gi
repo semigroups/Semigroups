@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  enums.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -447,7 +447,7 @@ function(d)
 end);
 
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
-#D-classJDM
+#D-class JDM
 
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
 [IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
@@ -610,7 +610,7 @@ function(l)
 end);
 
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
-#L-classJDM
+#L-class JDM
 
 InstallMethod(Enumerator, "for L-class of an inverse op acting semigroup",
 [IsGreensLClass and IsInverseOpClass and IsActingSemigroupGreensClass],

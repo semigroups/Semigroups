@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  lambda-rho.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -215,7 +215,8 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, slp, lenslp, len, bound, g, is_sym, vor, f, h, k, l;
+  local s, gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, rank,
+   bound, g, stop, forward, f, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -224,58 +225,43 @@ function(o, m)
   else
     o!.schutz:=EmptyPlist(Length(OrbSCC(o))); 
     o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
-    o!.slp:=EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  s:=o!.parent;
-  gens:=o!.gens; 
-  nrgens:=Length(gens);
-  scc:=OrbSCC(o)[m];      
-  lookup:=o!.scc_lookup;
-  orbitgraph:=OrbitGraph(o);
-  lambdaperm:=LambdaPerm(s);
-  rep:=LambdaOrbRep(o, m);
-  slp:=[]; lenslp:=0;
+  s:=o!.parent;                   gens:=o!.gens; 
+  scc:=OrbSCC(o)[m];              lookup:=o!.scc_lookup;
+  orbitgraph:=OrbitGraph(o);      genstoapply:=[1..Length(gens)];
+  lambdaperm:=LambdaPerm(s);      rep:=LambdaOrbRep(o, m);
+  rank:=LambdaRank(s)(o[scc[1]]);
 
-  len:=LambdaRank(s)(o[scc[1]]);
-
-  if len<1000 then
-    bound:=Factorial(len);
+  if rank<100 then
+    bound:=Factorial(rank);
   else
     bound:=infinity;
   fi;
 
-  g:=Group(()); is_sym:=false;
+  g:=Group(()); stop:=false; 
 
   for k in scc do
-    vor:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
-    for l in [1..nrgens] do
+    forward:=LambdaOrbMult(o, m, k)[1];
+    for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        f:=lambdaperm(rep, 
-         rep*vor*gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-        #f:=lambdaperm(rep, rep*LambdaOrbMult(o, m, k)[1]*gens[l]
-        #  *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-        h:=ClosureGroup(g, f);
-        if Size(h)>Size(g) then 
-          g:=h; 
-          lenslp:=lenslp+1;
-          slp[lenslp]:=[k,l];
-          if Size(g)>=bound then
-            is_sym:=true;
-            break;
-          fi;
+        f:=lambdaperm(rep, rep*forward*gens[l]
+          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+        g:=ClosureGroup(g, f);
+        if Size(g)>=bound then
+          stop:=true;
+          break;
         fi;
       fi;
     od;
-    if is_sym then
+    if stop then
       break;
     fi;
   od;
 
   o!.schutz[m]:=g;
-  o!.slp[m]:=slp;
 
-  if is_sym then
+  if stop then
     o!.schutzstab[m]:=true;
   elif Size(g)=1 then
     o!.schutzstab[m]:=false;
