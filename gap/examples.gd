@@ -20,6 +20,8 @@ DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
 DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
 
+DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
+
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);

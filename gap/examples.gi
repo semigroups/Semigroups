@@ -8,6 +8,134 @@
 ############################################################################# 
 ##
 
+# from the `The rank of the semigroup of transformations stabilising a partition
+# of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014). 
+
+InstallMethod(EndomorphismsPartition, "for a list of positive integers",
+[IsCyclotomicCollection],
+function(partition)
+  local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x, m, y, w, i, j, k, block;
+  
+  if not ForAll(partition, IsPosInt) then 
+    Error("usage: the argument <partition> must be a list of positive integers,");
+  elif ForAll(partition, x-> x=1) then 
+    return FullTransformationMonoid(Length(partition));
+  elif Length(partition)=1 then 
+    return FullTransformationMonoid(partition[1]);
+  fi;
+  
+  if not IsSortedList(partition) then  
+    Sort(partition); #JDM does this copy? or should we?
+  fi;
+
+  # get the generators of T(X, P) over Sigma(X, P)...
+
+  s:=0;         # nr of distinct block sizes
+  r:=0;         # nr of blocks with at least one other block of equal size
+  distinct:=[]; # indices of blocks with distinct block sizes
+  equal:=[];    # indices of blocks with at least one other block of equal size 
+  prev:=0;      # size of the previous block
+  n:=0;         # the degree of the transformations
+  blocks:=[];   # the actual blocks of the partition
+  unique:=[];   # blocks of a unique size
+  
+  for i in [1..Length(partition)] do 
+    blocks[i]:=[n+1..partition[i]+n];
+    n:=n+partition[i]; 
+    if partition[i]>prev then 
+      s:=s+1;
+      distinct[s]:=i;
+      prev:=partition[i];
+      didprevrepeat:=false;
+      AddSet(unique, i);
+    elif not didprevrepeat then
+      # repeat block size
+      r:=r+1;
+      equal[r]:=[i-1, i];
+      didprevrepeat:=true;
+      RemoveSet(unique, i-1);
+    else 
+      Add(equal[r], i);
+    fi;
+  od;  
+  
+  gens:=[];
+  for i in [1..Length(distinct)-1] do 
+    for j in [i+1..Length(distinct)] do 
+      x:=[1..n]; 
+      for k in [1..Length(blocks[distinct[i]])] do 
+        x[blocks[distinct[i]][k]]:=blocks[distinct[j]][k];
+      od;
+      Add(gens, Transformation(x));
+    od;
+  od;
+
+  for block in equal do 
+    x:=[1..n];
+    x{blocks[block[1]]}:=blocks[block[2]];
+    Add(gens, Transformation(x));
+  od;
+
+  # get the generators of Sigma(X,P) over S(X,P)...
+  Error(); #JDM not yet implemented!! 
+
+  # get the generators of S(X,P)...
+  if s+r<2 then 
+    Add(gens, AsTransformation((1,2)));
+    Add(gens, AsTransformation((1,2,3)));
+  elif s-r=1 and r>=1 then 
+    # 2 generators for the r-1 wreath products of symmetric groups 
+    for i in [1..r-1] do 
+      m:=Length(equal[i]);       #WreathProduct(S_n, S_m) m blocks of size n 
+      n:=partition[equal[i][1]];
+      if IsOddInt(m) or IsOddInt(n) then 
+        x:=Permuted(blocks{equal[i]}, PermList(Concatenation([2..m], [1])));
+      else
+        x:=Permuted(blocks{equal[i]}, PermList(Concatenation([1], [3..m], [2])));
+      fi;
+
+      if n>1 then 
+        x[2]:=Permuted(x[2], (1,2));
+      fi;
+      x:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(x));
+      Add(gens, AsTransformation(x));
+
+      y:=Permuted(blocks{equal[i]}, (1,2));
+      y[1]:=Permuted(y[1],  PermList(Concatenation([2..n], [1])));
+      y:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(y));
+      Add(gens, AsTransformation(y));
+    od;
+    # 3 generators for (S_{n_k}wrS_{m_k})\times S_{l_1}
+
+    m:=Length(equal[r]);      
+    n:=partition[equal[r][1]];
+    if IsOddInt(m) or IsOddInt(n) then 
+      x:=Permuted(blocks{equal[r]}, PermList(Concatenation([2..m], [1])));
+    else
+      x:=Permuted(blocks{equal[r]}, PermList(Concatenation([1], [3..m], [2])));
+    fi;
+
+    if n>1 then 
+      x[2]:=Permuted(x[2], (1,2));
+    fi;
+    x:=MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(x));
+    Add(gens, AsTransformation(x)); # (x, id)=u in the paper
+
+    y:=Permuted(blocks{equal[r]}, (1,2));
+    y[1]:=Permuted(y[1],  PermList(Concatenation([2..n], [1])));
+    y:=MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(y));
+    y:=y*MappingPermListList(blocks[unique[1]],
+     Concatenation(blocks[unique[1]]{[2..Length(blocks[unique[1]])]},
+     [blocks[unique[1]][1]])); # (y, (1,2,\ldots, l_1))=v in the paper
+    Add(gens, AsTransformation(y));
+    
+    w:=MappingPermListList(blocks[unique[1]], Permuted(blocks[unique[1]], (1,2)));
+    Add(gens, AsTransformation(w)); # (id, (1,2))=w in the paper
+  fi;
+  
+  return Semigroup(gens);
+end);
+
 #
 
 InstallMethod(RegularBinaryRelationSemigroup, "for a positive integer",
