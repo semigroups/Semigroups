@@ -386,7 +386,7 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local I, g, max, h, h1, mat, d, hclasses, gpclasses, gen, out, thing, temp, gens, i, j, k, rep, components, comp, trans, poss;
+  local I, J, g, max, h, h1, mat, d, hclasses, gpclasses, gen, out, thing, temp, gens, i, j, k, rep, components, comp, trans, poss, poss2;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
@@ -409,11 +409,14 @@ function(s)
       ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)
     ) ;
     I:=i;
+    J:=j;
     for h1 in Difference(gpclasses,[h]) do
       rep:=Representative(h1);
       i:=RowOfReesZeroMatrixSemigroupElement(rep);
       j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
-      Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
+      #Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
+      gens:=Concatenation(gens, List(Generators(max), x->
+      ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)));
     od;
   
     if Length(components) = 1 then
@@ -424,9 +427,11 @@ function(s)
     
       trans:=RightTransversal(g,max);
       poss:=EmptyPlist(Length(components)-1);
+      poss2:=EmptyPlist(Length(components)-1);
       
       for k in [2..Length(components)] do
         Add(poss,components[k][1][2]);
+        Add(poss2,components[k][1][1]);
         # So components[k][1] is a group H-class H_i,j in the connected component #k
         # Now need to pick any non-group H-class in its 'complementary block'
         # We choose H_I,j
@@ -436,15 +441,16 @@ function(s)
         temp:=[];
         for i in [1..(Length(components)-1)] do
           Add(temp, ReesZeroMatrixSemigroupElement(s, I, thing[i], poss[i]));
+          Add(temp, ReesZeroMatrixSemigroupElement(s, poss2[i], thing[i], J));
         od;
         Add(out, Semigroup(gens, temp, [MultiplicativeZero(s)]));
-        Print(gens, temp);
-        Print("\n");
+        #Print(gens, temp);
+        #Print("\n");
       od;
     fi;  
   od;
   
-  return out;
+  return Filtered(out,x->Size(x)<>Size(s));
 
 end);
 
