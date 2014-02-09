@@ -386,70 +386,81 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local I, J, g, max, h, h1, mat, d, hclasses, gpclasses, gen, out, thing, temp, gens, i, j, k, rep, components, comp, trans, poss, poss2;
+  local out, g, mat, gphclasses, components, h, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
   mat:=Matrix(s);
-  d:=DClasses(s)[2];
-  hclasses:=HClasses(d);
-  gpclasses:=Filtered(hclasses,IsGroupHClass);
+  gphclasses:=Filtered(HClasses(DClasses(s)[2]), IsGroupHClass);
   
-  # pick a distinguished group h-class to start with
+  # pick a distinguished group h-class h to start with
+  # Need h to be in the 1st conn component not implemented yet; just assumed
   components:=RMSConnectedComponents(s);
-  # Need h to be in the first connected component... not implemented yet
-  h:=gpclasses[1];
+  h:=gphclasses[1];
   
   for max in MaximalSubgroups(g) do
   
+    # Firstly get generators for our distinguished h-class in first component
+    # This group H-class will contain the elts of the coset (max*mat[j][i]^-1)
     rep:=Representative(h);
     i:=RowOfReesZeroMatrixSemigroupElement(rep);
     j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
     gens:=List(Generators(max), x->
       ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)
-    ) ;
+    );
+
+    # Remember where our first h-class was for later    
     I:=i;
     J:=j;
-    for h1 in Difference(gpclasses,[h]) do
+    
+    # Add to the generators one element which must be in each group h-class
+    for h1 in Difference(gphclasses,[h]) do
       rep:=Representative(h1);
       i:=RowOfReesZeroMatrixSemigroupElement(rep);
       j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
-      #Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
-      gens:=Concatenation(gens, List(Generators(max), x->
-      ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)));
+      Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
     od;
   
-    if Length(components) = 1 then
+    # If there is only one component, we have now specified enough that
+    # our subsemigroup is maximal, or it equals S
     
+    if Length(components) = 1 then    
       Add(out, Semigroup(gens));
-    
     else
-    
-      trans:=RightTransversal(g,max);
+
+      # Otherwise we are very unlikely to have a generating set for what we want yet
+      
       poss:=EmptyPlist(Length(components)-1);
       poss2:=EmptyPlist(Length(components)-1);
       
+      # Select the distinguished non-group H-classes which we'll need from each 'block' to put our generators in
       for k in [2..Length(components)] do
         Add(poss,components[k][1][2]);
-        Add(poss2,components[k][1][1]);
         # So components[k][1] is a group H-class H_i,j in the connected component #k
         # Now need to pick any non-group H-class in its 'complementary block'
         # We choose H_I,j
+        Add(poss2,components[k][1][1]);
+        # So components[k][1] is a group H-class H_i,j in the connected component #k
+        # Now need to pick any non-group H-class in its mirror image 'complementary block'
+        # We choose H_i,J
       od;
       
-      for thing in Tuples(trans,Length(components)-1) do
+      # Now populate all possible variations
+      for thing in Tuples(RightTransversal(g,max),2*(Length(components)-1)) do
         temp:=[];
         for i in [1..(Length(components)-1)] do
           Add(temp, ReesZeroMatrixSemigroupElement(s, I, thing[i], poss[i]));
-          Add(temp, ReesZeroMatrixSemigroupElement(s, poss2[i], thing[i], J));
         od;
+        for i in [Length(components)..2*(Length(components)-1)] do
+          Add(temp, ReesZeroMatrixSemigroupElement(s, poss2[i+1-Length(components)], thing[i], J));
+        od;
+        
         Add(out, Semigroup(gens, temp, [MultiplicativeZero(s)]));
-        #Print(gens, temp);
-        #Print("\n");
       od;
     fi;  
   od;
   
+  # Known issue: sometimes duplicates are returned (seen in an example with 3 components)
   return Filtered(out,x->Size(x)<>Size(s));
 
 end);
