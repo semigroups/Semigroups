@@ -386,39 +386,35 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local out, g, mat, gphclasses, components, h, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
+  local out, g, mat, components, h, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
   mat:=Matrix(s);
-  gphclasses:=Filtered(HClasses(DClasses(s)[2]), IsGroupHClass);
   
   # pick a distinguished group h-class h to start with
-  # Need h to be in the 1st conn component not implemented yet; just assumed
+  # Need h to be in the 1st conn component - not implemented yet; just assumed
   components:=RMSConnectedComponents(s);
-  h:=gphclasses[1];
+  h:=GroupHClass(DClasses(s)[2]);
+  # This group H-class will contain the elts of the coset (max*mat[j][i]^-1)
+  rep:=Representative(h);
+  I:=rep[1];
+  J:=rep[3];
   
   for max in MaximalSubgroups(g) do
   
     # Firstly get generators for our distinguished h-class in first component
-    # This group H-class will contain the elts of the coset (max*mat[j][i]^-1)
-    rep:=Representative(h);
-    i:=RowOfReesZeroMatrixSemigroupElement(rep);
-    j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
     gens:=List(Generators(max), x->
-      ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)
+      ReesZeroMatrixSemigroupElement(s, I, x*(mat[J][I]^-1), J)
     );
-
-    # Remember where our first h-class was for later    
-    I:=i;
-    J:=j;
     
     # Add to the generators one element which must be in each group h-class
-    for h1 in Difference(gphclasses,[h]) do
-      rep:=Representative(h1);
-      i:=RowOfReesZeroMatrixSemigroupElement(rep);
-      j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
-      Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
+    for i in [1..Length(mat[1])] do
+      for j in [1..Length(mat)] do
+        if mat[j][i] <> 0 then
+          Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
+        fi;
+      od;
     od;
   
     # If there is only one component, we have now specified enough that
