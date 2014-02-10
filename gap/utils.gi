@@ -276,6 +276,54 @@ function()
   return;
 end);
 
+#
+
+InstallGlobalFunction(IteratorFromGeneratorsFile, 
+function(str)
+  local file, record;
+  
+  file:=GeneratorsReadFile(str);
+  
+  if file=fail then 
+    return fail;
+  fi;
+ 
+  record:=rec(file:=file, curr:=ReadGeneratorsLine(IO_ReadLine(file)));
+
+  record.NextIterator:=function(iter)
+    local next, line;
+    next:=iter!.curr;
+    line:=IO_ReadLine(iter!.file);
+    if line<>"" then 
+      iter!.curr:=ReadGeneratorsLine(IO_ReadLine(iter!.file));
+    else 
+      iter!.curr:=line;
+    fi;
+    return next;
+  end;
+  
+  record.IsDoneIterator:=function(iter)
+    if iter!.curr="" then 
+      if not iter!.file!.closed then 
+        IO_Close(iter!.file);
+      fi;
+      return true;
+    else
+      return false;
+    fi;
+  end;
+
+  record.ShallowCopy:=function(iter)
+    local file;
+    file:=GeneratorsReadFile(str);
+    return rec(file:=file, curr:=ReadGeneratorsLine(IO_ReadLine(file)));
+  end;
+
+  return IteratorByFunctions(record);
+end);
+
+#
+
 InstallGlobalFunction(GeneratorsReadFile, 
 function(str)
   local file;
@@ -348,7 +396,7 @@ end);
 InstallGlobalFunction(ReadGeneratorsLine, 
 function(line)
   local i, k, out, m, deg, f, j;
-  
+ 
   i:=2; k:=0; out:=[];
 
   while i<Length(line) do
@@ -626,5 +674,7 @@ function(f)
   od;
   return line;
 end);
+
+
 
 #EOF
