@@ -521,6 +521,10 @@ gap> S:=InverseMonoid([
 gap> ForAll(S,f->ForAll(LClass(S,f),x -> x in S)); 
 true
 
+# From Jack Schmidt 07/02/14 by email
+gap> AsSet(InverseMonoid( PartialPerm([1,2]), PartialPerm([1])));
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
