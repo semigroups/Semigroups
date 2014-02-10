@@ -381,8 +381,6 @@ fi;
 
 #
 
-# Currently assumes that matrix has only one connected component
-# I haven't check that it is actually correct
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
@@ -392,11 +390,11 @@ function(s)
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
   mat:=Matrix(s);
   
-  # pick a distinguished group h-class h to start with
-  # Need h to be in the 1st conn component - not implemented yet; just assumed
+  # pick a distinguished group h-class h to start with.
+  # Possibly need h to be in the 1st conn component - currently just assumed
   components:=RMSConnectedComponents(s);
   h:=GroupHClass(DClasses(s)[2]);
-  # This group H-class will contain the elts of the coset (max*mat[j][i]^-1)
+  # This group H-class will contain the elts of the coset (max*mat[j][i]^-1) for each maximal subgroup
   rep:=Representative(h);
   I:=rep[1];
   J:=rep[3];
@@ -419,7 +417,6 @@ function(s)
   
     # If there is only one component, we have now specified enough that
     # our subsemigroup is maximal, or it equals S
-    
     if Length(components) = 1 then    
       Add(out, Semigroup(gens));
     else
@@ -444,6 +441,7 @@ function(s)
       # Now populate all possible variations
       for thing in Tuples(RightTransversal(g,max),2*(Length(components)-1)) do
         temp:=[];
+        
         for i in [1..(Length(components)-1)] do
           Add(temp, ReesZeroMatrixSemigroupElement(s, I, thing[i], poss[i]));
         od;
@@ -457,6 +455,7 @@ function(s)
   od;
   
   # Known issue: sometimes duplicates are returned (seen in an example with 3 components)
+  # return DuplicateFreeList(Filtered(out,x->Size(x)<>Size(s)));
   return Filtered(out,x->Size(x)<>Size(s));
 
 end);
