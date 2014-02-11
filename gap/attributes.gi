@@ -384,20 +384,17 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local out, g, mat, components, h, hc, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
+  local out, g, mat, components, h, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
   mat:=Matrix(s);
-  
-  # pick a distinguished group h-class h to start with.
-  # Possibly need h to be in the 1st conn component - currently just assumed
   components:=RMSConnectedComponents(s);
-  h:=GroupHClass(DClasses(s)[2]);
-  # This group H-class will contain the elts of the coset (max*mat[j][i]^-1) for each maximal subgroup
-  rep:=Representative(h);
-  I:=rep[1];
-  J:=rep[3];
+  
+  # pick a distinguished group h-class, indexed by I and J. We arbitrarily choose the first one of the first component.
+  # This group H-class will contain the elts of the coset (max*mat[J][I]^-1) for each maximal subgroup
+  I:=components[1][1];
+  J:=components[1][2];
   
   for max in MaximalSubgroups(g) do
   
@@ -408,8 +405,8 @@ function(s)
     
     # Add to the generators one element which must be in each group h-class
     for comp in components do
-      for hc in comp do
-        Add(gens, ReesZeroMatrixSemigroupElement(s, hc[1], (mat[hc[2]][hc[1]]^-1), hc[2]));
+      for h in comp do
+        Add(gens, ReesZeroMatrixSemigroupElement(s, h[1], (mat[h[2]][h[1]]^-1), h[2]));
       od;
     od;
   
