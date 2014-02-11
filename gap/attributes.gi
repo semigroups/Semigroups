@@ -222,7 +222,7 @@ else
      "Case 1: maximal subsemigroups arising from maximal subgroups...");
     
     for H in MaximalSubgroups(G) do
-      U:=Semigroup(GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J));
+      U:=Semigroup(GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J), [MultiplicativeZero(R)]);
       if Size(U)<Size(R) then 
         Add(out, U);
       fi;
@@ -373,7 +373,7 @@ else
           od;
         fi;
       od;
-      Add(out, Semigroup(new));
+      Add(out, Semigroup(new, [MultiplicativeZero(R)]));
     od;
     return out;
   end);
