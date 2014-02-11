@@ -384,7 +384,7 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local out, g, mat, components, h, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
+  local out, g, mat, components, h, hc, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
@@ -407,11 +407,9 @@ function(s)
     );
     
     # Add to the generators one element which must be in each group h-class
-    for i in [1..Length(mat[1])] do
-      for j in [1..Length(mat)] do
-        if mat[j][i] <> 0 then
-          Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
-        fi;
+    for comp in components do
+      for hc in comp do
+        Add(gens, ReesZeroMatrixSemigroupElement(s, hc[1], (mat[hc[2]][hc[1]]^-1), hc[2]));
       od;
     od;
   
