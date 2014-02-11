@@ -384,7 +384,7 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local out, g, mat, components, h, max, rep, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
+  local out, g, mat, components, h, max, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
@@ -393,8 +393,8 @@ function(s)
   
   # pick a distinguished group h-class, indexed by I and J. We arbitrarily choose the first one of the first component.
   # This group H-class will contain the elts of the coset (max*mat[J][I]^-1) for each maximal subgroup
-  I:=components[1][1];
-  J:=components[1][2];
+  I:=components[1][1][1];
+  J:=components[1][1][2];
   
   for max in MaximalSubgroups(g) do
   
