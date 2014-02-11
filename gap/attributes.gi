@@ -384,7 +384,7 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local out, g, mat, components, h, max, i, j, gens, I, J, h1, gen, thing, temp, k, comp, poss, poss2;
+  local out, g, mat, components, h, max, i, j, gens, I, J, gen, thing, temp, k, comp, poss, poss2;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
@@ -413,7 +413,7 @@ function(s)
     # If there is only one component, we have now specified enough that
     # our subsemigroup is maximal, or it equals S
     if Length(components) = 1 then    
-      Add(out, Semigroup(gens));
+      Add(out, Semigroup(gens, [MultiplicativeZero(s)]));
     else
 
       # Otherwise we are very unlikely to have a generating set for what we want yet
