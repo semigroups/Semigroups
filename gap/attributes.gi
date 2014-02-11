@@ -402,6 +402,7 @@ function(s)
     gens:=List(Generators(max), x->
       ReesZeroMatrixSemigroupElement(s, I, x*(mat[J][I]^-1), J)
     );
+    Add(gens, MultiplicativeZero(s));
     
     # Add to the generators one element which must be in each group h-class
     for comp in components do
@@ -413,7 +414,7 @@ function(s)
     # If there is only one component, we have now specified enough that
     # our subsemigroup is maximal, or it equals S
     if Length(components) = 1 then    
-      Add(out, Semigroup(gens, [MultiplicativeZero(s)]));
+      Add(out, Semigroup(gens));
     else
 
       # Otherwise we are very unlikely to have a generating set for what we want yet
@@ -444,7 +445,7 @@ function(s)
           Add(temp, ReesZeroMatrixSemigroupElement(s, poss2[i+1-Length(components)], thing[i], J));
         od;
         
-        Add(out, Semigroup(gens, temp, [MultiplicativeZero(s)]));
+        Add(out, Semigroup(gens, temp));
       od;
     fi;  
   od;
