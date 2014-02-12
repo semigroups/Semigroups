@@ -384,7 +384,7 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local out, g, mat, components, h, max, i, j, gens, I, J, gen, thing, temp, k, comp, poss, poss2;
+  local out, g, mat, components, h, max, i, j, gens, I, J, gen, choice, temp, t, comp, col, row;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
@@ -412,43 +412,52 @@ function(s)
     od;
   
     # If there is only one component, we have now specified enough that
-    # our subsemigroup is maximal, or it equals S
+    # our subsemigroup is maximal (or the whole thing)
     if Length(components) = 1 then    
       Add(out, Semigroup(gens));
     else
 
       # Otherwise we are very unlikely to have a generating set for what we want yet
       
-      poss:=EmptyPlist(Length(components)-1);
-      poss2:=EmptyPlist(Length(components)-1);
+      col:=EmptyPlist(Length(components)-1);
+      row:=EmptyPlist(Length(components)-1);
       
       # Select the distinguished non-group H-classes which we'll need from each 'block' to put our generators in
       for k in [2..Length(components)] do
-        Add(poss,components[k][1][2]);
+        Add(col,components[k][1][2]);
         # So components[k][1] is a group H-class H_i,j in the connected component #k
         # Now need to pick any non-group H-class in its 'complementary block'
         # We choose H_I,j
-        Add(poss2,components[k][1][1]);
+        Add(row,components[k][1][1]);
         # So components[k][1] is a group H-class H_i,j in the connected component #k
         # Now need to pick any non-group H-class in its mirror image 'complementary block'
         # We choose H_i,J
       od;
       
       # Now populate all possible variations
-      for thing in Tuples(RightTransversal(g,max),Length(components)-1) do
+      for choice in IteratorOfTuples(RightTransversal(g,max), Length(components)-1) do
         temp:=[];
         
+        # For each component after the first:
         for i in [1..(Length(components)-1)] do
-          Add(temp, ReesZeroMatrixSemigroupElement(s, I, thing[i], poss[i]));
-          Add(temp, ReesZeroMatrixSemigroupElement(s, poss2[i], mat[poss[i]][poss2[i]]^(-1)*thing[i]^(-1)*mat[J][I]^(-1), J));
+          # We use our free choice to specify a generator in this block of non-group h-classes
+          Add(temp, ReesZeroMatrixSemigroupElement(s, I, choice[i], col[i]));
+          # We have to specific an element in the complementary block of non-group h-classes too in order to generate the subsemigroup
+          # However this is not a free choice, and the group element, h, is specified as below
+          h:=mat[col[i]][row[i]]^(-1)*choice[i]^(-1)*mat[J][I]^(-1);
+          Add(temp, ReesZeroMatrixSemigroupElement(s, row[i], h, J));
         od;
         
-        Add(out, Semigroup(gens, temp));
+        t:=Semigroup(gens, temp);
+        if Size(t)<>Size(s) then
+          Add(out, t);
+        fi;
+        
       od;
     fi;  
   od;
   
-  return Filtered(out,x->Size(x)<>Size(s));
+  return out;
 
 end);
 
