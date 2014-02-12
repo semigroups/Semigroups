@@ -413,8 +413,11 @@ function(s)
   
     # If there is only one component, we have now specified enough that
     # our subsemigroup is maximal (or the whole thing)
-    if Length(components) = 1 then    
-      Add(out, Semigroup(gens));
+    if Length(components) = 1 then
+      t:=Semigroup(gens);
+      if Size(t)<>Size(s) then  
+        Add(out, t);
+      fi;
     else
 
       # Otherwise we are very unlikely to have a generating set for what we want yet
