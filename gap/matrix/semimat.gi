@@ -157,29 +157,35 @@ InstallMethod(MinActionRank,
 InstallMethod(LambdaOrbOpts,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
-        s -> rec(forflatplainlists := true));
+        s -> rec());
 InstallMethod(RhoOrbOpts,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
-        s -> rec(forflatplainlists := true));
+        s -> rec());
 
 InstallMethod(LambdaAct,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
 function(S)
-    Error("not implemented yet\n");
+    # returns the right action on subspaces of F^n by right multiplication
+    return
+      function(vsp, mat)
+        return VectorSpace(BaseDomain(mat), List()) ;
+      end;
 end);
 
 InstallMethod(RhoAct,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
 function(S)
+    # returns the left action on subspaces of F^n by left multiplication
     Error("not implemented yet\n");
 end);
 
 InstallMethod(LambdaOrbSeed,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
+        # row space of matrix 
         s -> [0]);
 
 InstallMethod(RhoOrbSeed,
@@ -191,13 +197,19 @@ InstallMethod(LambdaFunc,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
-    Error("not implemented yet\n");
+    # a function that returns the row space
+    return
+      function(mat)
+        #T This will only work for fields 
+        return(VectorSpace(BaseDomain(mat), List(mat, x -> x)));
+      end;
 end);
 
 InstallMethod(RhoFunc,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
+    # a function that returns the column space
     Error("not implemented yet\n");
 end);
 
@@ -205,6 +217,7 @@ InstallMethod(LambdaRank,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
+    # rank of the row space
     Error("not implemented yet\n");
 end);
 
@@ -212,6 +225,7 @@ InstallMethod(RhoRank,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
+    # rank of column space
     Error("not implemented yet\n");
 end);
 
