@@ -32,14 +32,6 @@ DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
-DeclareAttribute("LinkedTriples", IsReesMatrixSemigroup);
-DeclareAttribute("LinkedTriples", IsReesZeroMatrixSemigroup);
-
-DeclareOperation("SemigroupCongruenceByLinkedTriple",
-[IsReesZeroMatrixSemigroup and IsFinite,
- IsGroup,
- IsDenseList,
- IsDenseList]);
 
 DeclareOperation("SubsemigroupByIndicesNC", 
 [IsReesMatrixSemigroup, IsDenseList, IsDenseList]);
