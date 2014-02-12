@@ -319,6 +319,8 @@ function(str)
     return rec(file:=file, curr:=ReadGeneratorsLine(IO_ReadLine(file)));
   end;
 
+  InstallAtExit(function() if not file!.closed then IO_Close(file); fi; end);
+  
   return IteratorByFunctions(record);
 end);
 
