@@ -112,6 +112,44 @@ end);
 
 #
 
+InstallMethod(LinkedTriple,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  local n, colCong, rowCong,
+        s, m, g, p,
+        i1, foo, class, rmsElts, gpElts;
+  # Extract some information
+  s := Range(cong);
+  m := IsomorphismReesMatrixSemigroup(s);
+  g := UnderlyingSemigroup(m);
+  p := Matrix(m);
+  # Checks
+  if not IsGroup(g) then
+    return fail;
+  fi;
+  if not (IsZeroSimpleSemigroup(s) or IsSimpleSemigroup(s)) then
+    return fail;
+  fi;
+  
+  # FIND THE NORMAL SUBGROUP N
+  # First find a matrix entry not equal to zero
+  i1 := PositionProperty(m[1],x-> x<>0);
+  # N consists of all the x s.t. (i1,x,1) is related to (i1,id,1)
+  foo := ReesZeroMatrixSemigroupElement(m, i1, One(g), 1);
+  class := EquivalenceClassOfElement(cong, foo);
+  rmsElts := Filtered(Elements(class), elt->(elt[1]=1 and elt[3]=1));
+  gpElts := List(rmsElts, elt->elt[2]);
+  n := Subgroup(g, gpElts);
+  
+  #TODO
+  colCong := [];
+  rowCong := [];
+  return [n, colCong, rowCong];
+end);
+
+#
+
 # InstallMethod(\in,
 # "for an associative element collection and a semigroup congruence with linked triple",
 # [IsAssociativeElementCollection,

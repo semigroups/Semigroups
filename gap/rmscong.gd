@@ -1,7 +1,6 @@
 DeclareAttribute("LinkedTriples", IsReesMatrixSemigroup);
 DeclareAttribute("LinkedTriples", IsReesZeroMatrixSemigroup);
-DeclareAttribute("LinkedTriple",
-        IsSemigroupCongruence);
+DeclareAttribute("LinkedTriple", IsSemigroupCongruence);
 
 DeclareOperation("SemigroupCongruenceByLinkedTriple",
 [IsReesZeroMatrixSemigroup and IsFinite,
