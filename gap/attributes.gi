@@ -435,14 +435,12 @@ function(s)
       od;
       
       # Now populate all possible variations
-      for thing in Tuples(RightTransversal(g,max),2*(Length(components)-1)) do
+      for thing in Tuples(RightTransversal(g,max),Length(components)-1) do
         temp:=[];
         
         for i in [1..(Length(components)-1)] do
           Add(temp, ReesZeroMatrixSemigroupElement(s, I, thing[i], poss[i]));
-        od;
-        for i in [Length(components)..2*(Length(components)-1)] do
-          Add(temp, ReesZeroMatrixSemigroupElement(s, poss2[i+1-Length(components)], thing[i], J));
+          Add(temp, ReesZeroMatrixSemigroupElement(s, poss2[i], mat[poss[i]][poss2[i]]^(-1)*thing[i]^(-1)*mat[J][I]^(-1), J));
         od;
         
         Add(out, Semigroup(gens, temp));
@@ -450,8 +448,6 @@ function(s)
     fi;  
   od;
   
-  # Known issue: sometimes duplicates are returned (seen in an example with 3 components)
-  # return DuplicateFreeList(Filtered(out,x->Size(x)<>Size(s)));
   return Filtered(out,x->Size(x)<>Size(s));
 
 end);
