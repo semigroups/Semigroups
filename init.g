@@ -45,3 +45,5 @@ ReadPackage("semigroups/gap/freeinverse.gd");
 ReadPackage("semigroups/gap/display.gd");
 
 DeclareInfoClass("InfoSemigroups");;
+
+ReadPackage("semigroups/gap/rmscong.gd");

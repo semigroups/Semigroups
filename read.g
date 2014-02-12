@@ -54,3 +54,5 @@ if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
   Add(SemigroupsOmitFromTestManualExamples, "partition");
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
+
+ReadPackage("semigroups/gap/rmscong.gi");
