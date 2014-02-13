@@ -361,8 +361,17 @@ function(arg)
     Error("usage: the 1st argument must be a string or a file,");
     return;
   fi;
-
+  
+  if file=fail then 
+    return fail;
+  fi;
+  
   if Length(arg)=2 then 
+    if IsFile(arg[1]) then 
+      Error("usage: the argument must be a file, or a string, or a string and a", 
+      " positive integer,");
+      return;
+    fi;
     if IsPosInt(arg[2]) then 
       i:=0;
       repeat  
