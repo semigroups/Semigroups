@@ -384,7 +384,7 @@ fi;
 InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(s)
-  local out, g, mat, components, h, max, i, j, k, gens, gen, choice, chosengens, t, comp, col, row;
+  local out, g, mat, components, h, max, i, j, k, basicgens, gens, gen, choice, chosengens, t, comp, col, row;
 
   out:=[];
   g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
@@ -396,6 +396,29 @@ function(s)
   i:=components[1][1][1];
   j:=components[1][1][2];
   
+  if Length(components) > 1 then
+    col:=EmptyPlist(Length(components)-1);
+    row:=EmptyPlist(Length(components)-1);     
+    # Select the distinguished non-group H-classes which we'll need from each 'block' to put our generators in
+    for k in [2..Length(components)] do
+      Add(col,components[k][1][2]);
+      # So components[k][1] is a group H-class H_x,y in the connected component #k
+      # Now need to pick any non-group H-class in its 'complementary block'
+      # We choose H_i,y
+      Add(row,components[k][1][1]);
+      # We also need to pick any non-group H-class in its 'complementary block'
+      # We choose H_x,j
+    od;
+  fi;
+  
+  basicgens:=[];
+  # Add to the generators one element which must be in each group h-class
+  for comp in components do
+    for h in comp do
+      Add(basicgens, ReesZeroMatrixSemigroupElement(s, h[1], (mat[h[2]][h[1]]^-1), h[2]));
+    od;
+  od;
+  
   for max in MaximalSubgroups(g) do
   
     # Firstly get generators for our distinguished h-class in first component
@@ -404,42 +427,18 @@ function(s)
     );
     Add(gens, MultiplicativeZero(s));
     
-    # Add to the generators one element which must be in each group h-class
-    for comp in components do
-      for h in comp do
-        Add(gens, ReesZeroMatrixSemigroupElement(s, h[1], (mat[h[2]][h[1]]^-1), h[2]));
-      od;
-    od;
-  
     # If there is only one component, we have now specified enough that
     # our subsemigroup is maximal (or the whole thing)
     if Length(components) = 1 then
-      t:=Semigroup(gens);
+      t:=Semigroup(basicgens, gens);
       if Size(t)<>Size(s) then  
         Add(out, t);
       fi;
-    else
-
-      # Otherwise we are very unlikely to have a generating set for what we want yet
-      
-      col:=EmptyPlist(Length(components)-1);
-      row:=EmptyPlist(Length(components)-1);
-      
-      # Select the distinguished non-group H-classes which we'll need from each 'block' to put our generators in
-      for k in [2..Length(components)] do
-        Add(col,components[k][1][2]);
-        # So components[k][1] is a group H-class H_x,y in the connected component #k
-        # Now need to pick any non-group H-class in its 'complementary block'
-        # We choose H_i,y
-        Add(row,components[k][1][1]);
-        # We also need to pick any non-group H-class in its 'complementary block'
-        # We choose H_x,j
-      od;
-      
+    else # Otherwise, we are very unlikely to have a generating set for what we want yet
+            
       # Now populate all possible variations
       for choice in IteratorOfTuples(RightTransversal(g,max), Length(components)-1) do
-        chosengens:=[];
-        
+        chosengens:=[];    
         # For each component after the first:
         for k in [1..(Length(components)-1)] do
           # We use our free choice to specify a generator in this block of non-group h-classes
@@ -450,7 +449,7 @@ function(s)
           Add(chosengens, ReesZeroMatrixSemigroupElement(s, row[k], h, j));
         od;
         
-        t:=Semigroup(gens, chosengens);
+        t:=Semigroup(basicgens, gens, chosengens);
         if Size(t)<>Size(s) then
           Add(out, t);
         fi;
