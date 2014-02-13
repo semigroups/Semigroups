@@ -132,9 +132,9 @@ gap> Size(Range(last));
 gap> S:=Semigroup( PartialPerm( [ 1, 2 ], [ 3, 1 ] ), 
 > PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) );;
 gap> IsomorphismBlockBijectionSemigroup(S);
-MappingByFunction( <partial perm semigroup on 3 pts with 2 generators>, 
-<bipartition semigroup on 5 pts with 2 generators>
- , function( x ) ... end, function( x ) ... end )
+MappingByFunction( <partial perm semigroup on 3 pts
+ with 2 generators>, <bipartition semigroup on 5 pts with 2 generators
+  >, function( x ) ... end, function( x ) ... end )
 ]]></Example>
     </Description> 
   </ManSection> 
