@@ -525,6 +525,13 @@ true
 gap> AsSet(InverseMonoid( PartialPerm([1,2]), PartialPerm([1])));
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
 
+# Issue #57 (problem in INV_KER_TRANS)
+gap> S:=Semigroup(Transformation([1,1,1]), Transformation([1,1,4,4,5]));;
+gap> Size(S);
+2
+gap> IsMonogenicSemigroup(S);
+false
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
