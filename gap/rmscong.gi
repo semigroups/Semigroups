@@ -111,23 +111,25 @@ end);
 #
 
 InstallMethod(LinkedTriple,
-"for a semigroup congruence",
+"for a semigroup congruence over a finite 0-simple semigroup",
 [IsSemigroupCongruence],
 function(cong)
-  local n, colCong, rowCong,
+  local n, colRel, rowRel,
         s, m, g, p,
-        i1, foo, class, rmsElts, gpElts;
+        i1, foo, class, rmsElts, gpElts,
+        zeroMask, pairs,
+        cols, rows,
+        colNo, rowNo,
+        i, j, la, mu;
   # Extract some information
   s := Range(cong);
   m := IsomorphismReesMatrixSemigroup(s);
   g := UnderlyingSemigroup(m);
   p := Matrix(m);
   # Checks
-  if not IsGroup(g) then
-    return fail;
-  fi;
   if not (IsZeroSimpleSemigroup(s) or IsSimpleSemigroup(s)) then
-    return fail;
+    Error("usage: the argument must be a finite 0-simple semigroup");
+    return;
   fi;
   
   # FIND THE NORMAL SUBGROUP N
@@ -140,10 +142,39 @@ function(cong)
   gpElts := List(rmsElts, elt->elt[2]);
   n := Subgroup(g, gpElts);
   
-  #TODO
-  colCong := [];
-  rowCong := [];
-  return [n, colCong, rowCong];
+  # FIND THE RELATION ON THE SET OF COLUMNS
+  cols := TransposedMat(m);
+  zeroMask := List(cols, col-> List(col, x-> x<>0));
+  pairs := [];
+  for i in [1..Size(cols)] do
+    for j in Filtered([i+1..Size(cols)], j-> zeroMask[i]=zeroMask[j]) do
+      for rowNo in Filtered([1..Size(cols[1])], zeroMask[i]) do
+        if ReesZeroMatrixSemigroupElement(m, i, Inverse(p[rowNo][i]), rowNo) =
+           ReesZeroMatrixSemigroupElement(m, j, Inverse(p[rowNo][j]), rowNo) then
+          Add(pairs, [i,j]);
+        fi;
+      od;
+    od;
+  od;
+  colRel := EquivalenceRelationByPairsNC([1..Size(cols)], pairs); #TODO: Find out if this is okay
+  
+  # FIND THE RELATION ON THE SET OF ROWS
+  rows := m;
+  zeroMask := List(rows, row-> List(row, x-> x<>0));
+  pairs := [];
+  for la in [1..Size(rows)] do
+    for mu in Filtered([la+1..Size(rows)], mu-> zeroMask[la]=zeroMask[mu]) do
+      for colNo in Filtered([1..Size(rows[1])], zeroMask[la]) do
+        if ReesZeroMatrixSemigroupElement(m, colNo, Inverse(p[la][colNo]), la) =
+           ReesZeroMatrixSemigroupElement(m, colNo, Inverse(p[mu][colNo]), mu) then
+          Add(pairs, [la, mu]);
+        fi;
+      od;
+    od;
+  od;
+  rowRel := EquivalenceRelationByPairsNC([1..Size(rows)], pairs); #TODO: Find out if this is okay
+  
+  return [n, colRel, rowRel];
 end);
 
 #
