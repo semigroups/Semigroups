@@ -6,13 +6,6 @@
 ##  Licensing information can be foundin the README file of this package.
 ##
 ################################################################################
-DeclareCategory("IsFreeBandElement", IsAssociativeElement);
-DeclareCategoryCollections("IsFreeBandElement");
-DeclareProperty("IsFreeBand", IsSemigroup);
-DeclareGlobalFunction("FreeBand");
-
-
-################################################################################
 ##
 ##  FreeBand( <rank> )
 ##
@@ -113,4 +106,37 @@ function( S )
            GeneratorsOfSemigroup( S ), ">" );
   fi;
 end );
+#############################################################################
+##
+## Equality
+##
 
+InstallMethod(\=, "for elements of a free band",
+IsIdenticalObj,
+[IsFreeBandElement, IsFreeBandElement],
+function(tuple1, tuple2)
+  local isequal,i;
+
+  isequal := true;
+  for i in [1 .. 4] do
+    if tuple1![i] <> tuple2![i] then
+      isequal := false;
+      break;
+    fi;
+  od;
+  return isequal;
+end );
+
+##########################################################################
+##
+## Multiplication
+##
+
+InstallMethod(\*, "for elements of a free band", IsIdenticalObj,
+[IsFreeBandElement, IsFreeBandElement],
+function(tuple1, tuple2)
+  
+  return Objectify( TypeObj(tuple1), WordToTuple( Concatenation( TupleToWord(tuple1),
+                    TupleToWord(tuple2)) ) );
+
+end );
