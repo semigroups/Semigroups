@@ -27,7 +27,7 @@ InstallMethod(SemigroupCongruenceByLinkedTriple,
  IsGroup,
  IsDenseList,
  IsDenseList],
-function(s, n, colCong, rowCong)
+function(s, n, colRel, rowRel)
   local g, m, pairs,
         IsRegularMatrix,
         i1, x,
@@ -74,9 +74,9 @@ function(s, n, colCong, rowCong)
             ReesZeroMatrixSemigroupElement(s,i1,One(g),1) ] );
   od;
   
-  # PAIRS FROM THE COLUMNS CONGRUENCE
-  # For each class in the congruence...
-  for c in colCong do
+  # PAIRS FROM THE COLUMNS RELATION
+  # For each class in the relation...
+  for c in colRel do
     # For each column in the class...
     for j in [2..Size(c)] do
       # For each row in the matrix...
@@ -90,9 +90,9 @@ function(s, n, colCong, rowCong)
     od;
   od;
   
-  # PAIRS FROM THE ROWS CONGRUENCE
-  # For each class in the congruence...
-  for c in rowCong do
+  # PAIRS FROM THE ROWS RELATION
+  # For each class in the relation...
+  for c in rowRel do
     # For each row in the class...
     for i in [2..Size(c)] do
       # For each column in the matrix...
