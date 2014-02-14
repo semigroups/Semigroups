@@ -51,11 +51,9 @@ function(s, n, colCong, rowCong)
   end;
   
   # Check that the arguments are valid
-  if not IsRegularMatrix(m) then
-    return fail;
-  fi;
-  if not IsGroup(g) then
-    return fail;
+  if not (IsRegularMatrix(m) and IsGroup(g)) then
+    Error("usage: the argument must be a Rees 0-matrix semigroup with regular matrix over a group");
+    return;
   fi;
   if not IsSubgroup(g,n) and IsNormal(g,n) then
     return fail;
