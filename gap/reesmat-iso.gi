@@ -333,6 +333,19 @@ end);
 
 #
 
+InstallMethod(ELM_LIST, "for objects in `IsRZMSIsoByTriple'", 
+[IsRZMSIsoByTriple, IsPosInt], 
+function(x, i)
+
+  if 1<=i and i<=3 then 
+    return x!.triple[i];
+  fi;
+  Error("usage: the index must be at most 3,");
+  return;
+end);
+
+#
+
 InstallMethod(\=, "for objects in `IsRMSIsoByTriple'", IsIdenticalObj, 
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(triple1, triple2)
