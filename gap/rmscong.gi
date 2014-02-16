@@ -1,26 +1,3 @@
-InstallMethod(LinkedTriples, "for a Rees matrix semigroup",
-[IsReesMatrixSemigroup],
-#TODO
-function(s)
-  return fail;
-end);
-
-#
-
-InstallMethod(LinkedTriples, "for a Rees zero matrix semigroup",
-[IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite],
-#TODO
-function(s)
-  local g;
-  g := UnderlyingSemigroup(s);
-  if not IsGroup(g) then
-    return fail;
-  fi;
-  return fail;
-end);
-
-#
-
 InstallMethod(SemigroupCongruenceByLinkedTriple,
 "for a Rees zero matrix semigroup and a linked triple",
 [IsReesZeroMatrixSemigroup and IsFinite,
