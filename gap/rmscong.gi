@@ -1,3 +1,23 @@
+InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
+[IsReesZeroMatrixSemigroup and IsFinite,
+ IsGroup,
+ IsDenseList,
+ IsDenseList],
+function(s, n, colRel, rowRel)
+  local fam, cong;
+  fam := GeneralMappingsFamily(
+                 ElementsFamily(FamilyObj(s)),
+                 ElementsFamily(FamilyObj(s)) );
+  cong := Objectify(
+                  NewType(fam, IsRMSCongruenceByLinkedTriple),
+                  [ShallowCopy(n), ShallowCopy(colRel), ShallowCopy(rowRel)] );
+  SetSource(cong, s);
+  SetRange(cong, s);
+  return cong;
+end);
+
+#
+
 InstallMethod(SemigroupCongruenceByLinkedTriple,
 "for a Rees zero matrix semigroup and a linked triple",
 [IsReesZeroMatrixSemigroup and IsFinite,
