@@ -83,12 +83,29 @@ function(S, T)
     return false;
   elif Size(S)=1 then 
     return true;
-  elif Size(S)<20 then 
+  elif Size(S)<32 or (HasSmallestMultiplicationTable(S) 
+   and HasSmallestMultiplicationTable(T)) then 
     return SmallestMultiplicationTable(S)=SmallestMultiplicationTable(T);
   fi;
   
-  Error("not yet implemented,");
+  # compare the partial orders of the D-classes
+
+  pS:=Graph(Group(()), [1..NrDClasses(S)], OnPoints,
+   function(i,j)
+     return i in PartialOrderOfDClasses(S)[j];
+   end, true);
+
+  pT:=Graph(Group(()), [1..NrDClasses(T)], OnPoints,
+   function(i,j)
+     return i in PartialOrderOfDClasses(T)[j];
+   end, true);
+  
+  iso:=GraphIsomorphism(pS, pT);
+  if iso=fail then 
+    return false;
+  fi;
 
 end);
+
 
 #EOF
