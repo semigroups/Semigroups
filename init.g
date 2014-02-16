@@ -45,5 +45,7 @@ ReadPackage("semigroups/gap/freeinverse.gd");
 ReadPackage("semigroups/gap/display.gd");
 
 ReadPackage("semigroups/gap/isomorph.gd");
+ReadPackage("semigroups/gap/reesmat.gd");
+ReadPackage("semigroups/gap/reesmat-iso.gd");
 
 DeclareInfoClass("InfoSemigroups");;

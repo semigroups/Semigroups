@@ -74,6 +74,7 @@ InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
 HasGeneratorsOfSemigroup],  
 function(S, T)
+  local pS, pT, iso;
 
   if Size(S)<>Size(T) or NrRClasses(S)<>NrRClasses(T) or 
     NrDClasses(S)<>NrDClasses(T) or NrLClasses(S)<>NrLClasses(T) or 
@@ -104,8 +105,8 @@ function(S, T)
   if iso=fail then 
     return false;
   fi;
+  Error("not yet implemented,");
 
 end);
-
 
 #EOF

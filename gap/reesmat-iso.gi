@@ -115,9 +115,7 @@ end);
 
 #
 
-InstallMethod(RZMStoRZMSInducedFunction, "for a RZMS", true,
-[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup, IS_PERM,
-IsGeneralMapping, IsList], 0,
+InstallGlobalFunction(RZMStoRZMSInducedFunction, 
 function(rms1, rms2, l, g, groupelts)
   local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
   bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, i, k;
@@ -298,7 +296,7 @@ function(R1, R2, triple)
 
   fam:=GeneralMappingsFamily(ElementsFamily(FamilyObj(R1)),
    ElementsFamily(FamilyObj(R2)));	
-  out:=Objectify(NewType(fam, IsRMSIsoByTriple), triple);
+  out:=Objectify(NewType(fam, IsRMSIsoByTriple), rec(triple:=triple));
   SetSource(out, R1);
   SetRange(out, R2);
   #IsOne(out);
@@ -314,10 +312,23 @@ function(R1, R2, triple)
 
   fam:=GeneralMappingsFamily(ElementsFamily(FamilyObj(R1)),
    ElementsFamily(FamilyObj(R2)));	
-  out:=Objectify(NewType(fam, IsRZMSIsoByTriple), triple);
+  out:=Objectify(NewType(fam, IsRZMSIsoByTriple), rec(triple:=triple));
   SetSource(out, R1);
   SetRange(out, R2);
   return out;
+end);
+
+#
+
+InstallMethod(ELM_LIST, "for objects in `IsRMSIsoByTriple'", 
+[IsRMSIsoByTriple, IsPosInt], 
+function(x, i)
+
+  if 1<=i and i<=3 then 
+    return x!.triple[i];
+  fi;
+  Error("usage: the index must be at most 3,");
+  return;
 end);
 
 #
@@ -326,8 +337,8 @@ InstallMethod(\=, "for objects in `IsRMSIsoByTriple'", IsIdenticalObj,
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(triple1, triple2)
 
-  if triple1![1]=triple2![1] and  triple1![2]=triple2![2] and
-    triple1![3]=triple2![3] then 
+  if triple1[1]=triple2[1] and  triple1[2]=triple2[2] and
+    triple1[3]=triple2[3] then 
     return true;
   fi;
   return OnTuples(GeneratorsOfSemigroup(Source(triple1)), 
@@ -340,8 +351,8 @@ InstallMethod(\=, "for objects in `IsRZMSIsoByTriple'", IsIdenticalObj,
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple], 
 function(triple1, triple2)
 
-  if triple1![1]=triple2![1] and  triple1![2]=triple2![2] and
-    triple1![3]=triple2![3] then 
+  if triple1[1]=triple2[1] and  triple1[2]=triple2[2] and
+    triple1[3]=triple2[3] then 
     return true;
   fi; 
   return OnTuples(GeneratorsOfSemigroup(Source(triple1)), triple1)
@@ -354,12 +365,12 @@ InstallMethod(\<, "for objects in `IsRMSIsoByTriple'", IsIdenticalObj,
 [IsRMSIsoByTriple, IsRMSIsoByTriple],  
 function(triple1, triple2)
 
-  return (triple1![1]<triple2![1]) or
-   (triple1![1]=triple2![1] and
-    triple1![2]<triple2![2]) or 
-   (triple1![1]=triple2![1] and
-    triple1![2]=triple2![2] and 
-    triple1![3]<triple2![3]);
+  return (triple1[1]<triple2[1]) or
+   (triple1[1]=triple2[1] and
+    triple1[2]<triple2[2]) or 
+   (triple1[1]=triple2[1] and
+    triple1[2]=triple2[2] and 
+    triple1[3]<triple2[3]);
 end);
 
 #
@@ -368,12 +379,12 @@ InstallMethod(\<, "for objects in `IsRZMSIsoByTriple'", IsIdenticalObj,
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(triple1, triple2)
 
-  return (triple1![1]<triple2![1]) or
-   (triple1![1]=triple2![1] and 
-    triple1![2]<triple2![2]) or 
-   (triple1![1]=triple2![1] and 
-    triple1![2]=triple2![2] and 
-    triple1![3]<triple2![3]);
+  return (triple1[1]<triple2[1]) or
+   (triple1[1]=triple2[1] and 
+    triple1[2]<triple2[2]) or 
+   (triple1[1]=triple2[1] and 
+    triple1[2]=triple2[2] and 
+    triple1[3]<triple2[3]);
 end);
 
 #
@@ -385,9 +396,9 @@ function(a1, a2)
 
   n:=Length(Rows(Source(a1)))+Length(Columns(Source(a1)));
 
-  l1:=a1![1]; l2:=a2![1];
-  g1:=a1![2]; g2:=a2![2];
-  f1:=a1![3]; f2:=a2![3];
+  l1:=a1[1]; l2:=a2[1];
+  g1:=a1[2]; g2:=a2[2];
+  f1:=a1[3]; f2:=a2[3];
 
   return RMSIsoByTriple(Source(a1), Range(a2), [l1*l2, g1*g2, List([1..n], 
    x->f2[x^l1]*f1[x]^g2)]);
@@ -402,9 +413,9 @@ function(a1, a2)
 
   n:=Length(Rows(Source(a1)))+Length(Columns(Source(a1)));
 
-  l1:=a1![1]; l2:=a2![1];
-  g1:=a1![2]; g2:=a2![2];
-  f1:=a1![3]; f2:=a2![3];
+  l1:=a1[1]; l2:=a2[1];
+  g1:=a1[2]; g2:=a2[2];
+  f1:=a1[3]; f2:=a2[3];
 
   return RZMSIsoByTriple(Source(a1), Range(a2), [l1*l2, g1*g2, 
    List([1..n], x->f2[x^l1]*f1[x]^g2)]);
@@ -437,9 +448,9 @@ function( triple, x)
   m:=Length(Rows(Source(triple)));
 
   i:=x[1]; g:=x[2]; j:=x[3]+m;
-  lambda:=triple![1];
-  gamma:=triple![2]; 
-  f:=triple![3];
+  lambda:=triple[1];
+  gamma:=triple[2]; 
+  f:=triple[3];
   #JDM: use objectify here...
   return ReesMatrixSemigroupElement(Range(triple), i^lambda,
   f[i]*ImageElm(gamma,g)/f[j], j^lambda-m);
@@ -457,7 +468,7 @@ function(triple, x)
     m:=Length(Rows(Source(triple)));
 
     i:=x[1]; g:=x[2]; j:=x[3]+m;
-    lambda:=triple![1]; gamma:=triple![2]; f:=triple![3];
+    lambda:=triple[1]; gamma:=triple[2]; f:=triple[3];
 
     if f[i]=0 or f[j]=0 then 
       return MultiplicativeZero(Source(triple));
@@ -481,7 +492,7 @@ function(a)
 
   n:=Length(Rows(Source(a)))+Length(Columns(Source(a)));
 
-  l:=a![1]; g:=a![2]; f:=a![3];
+  l:=a[1]; g:=a[2]; f:=a[3];
 
   return RMSIsoByTriple(Range(a), Source(a), [l^-1, g^-1, List([1..n],x-> 
    (f[x^l]^(g^-1))^-1)]);
@@ -501,7 +512,7 @@ function(a)
 
   n:=Length(Rows(Source(a)))+Length(Columns((Source(a))));
 
-  l:=a![1]; g:=a![2]; f:=a![3];
+  l:=a[1]; g:=a[2]; f:=a[3];
 
   return RZMSIsoByTriple(Range(a), Source(a), [l^-1, g^-1, List([1..n],
    x->(f[x^l]^(g^-1))^-1)]);
@@ -512,8 +523,8 @@ end);
 InstallMethod(IsOne, "for objects in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple], 99, #JDM why the 99?
 function(triple)
-  return IsOne(triple![1]) and IsOne(triple![2]) and 
-   ForAll(triple![3], IsOne);
+  return IsOne(triple[1]) and IsOne(triple[2]) and 
+   ForAll(triple[3], IsOne);
 end);
 
 #
@@ -521,8 +532,8 @@ end);
 InstallMethod(IsOne, "for objects in `IsRZMSIsoByTriple'",
 [IsEndoGeneralMapping and IsRZMSIsoByTriple],
 function(triple)
-  return IsOne(triple![1]) and IsOne(triple![2]) and 
-   ForAll(triple![3], IsOne);
+  return IsOne(triple[1]) and IsOne(triple[2]) and 
+   ForAll(triple[3], IsOne);
 end);
 
 #
@@ -548,8 +559,8 @@ end);
 InstallMethod(PrintObj, "for object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple], 
 function( obj )
-  Print( "RMSIsoByTriple ( ",Source(obj),"," Range(obj), "," , obj![1], " ", 
-    obj![2], " ",  obj![3], " )" );
+  Print( "RMSIsoByTriple ( ", Source(obj), ",", Range(obj), "," , obj[1], " ", 
+    obj[2], " ",  obj[3], " )" );
   return;
 end);
 
@@ -558,8 +569,8 @@ end);
 InstallMethod(PrintObj, "for object in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
 function( obj )
-  Print( "RZMSIsoByTriple ( ",Source(obj),"," Range(obj), "," , obj![1], " ", 
-    obj![2], " ",  obj![3], " )" );
+  Print( "RZMSIsoByTriple ( ", Source(obj) , ",", Range(obj), "," , obj[1], " ", 
+    obj[2], " ",  obj[3], " )" );
   return;
 end);
 
@@ -568,14 +579,16 @@ end);
 InstallMethod( ViewObj, "for object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple], 
 function( obj ) 
-  Print( obj!.triple );
+  Print( "(", obj[1],", ",  obj[2],", ",  obj[3], ")" );
 end );
 
 #
 
 InstallMethod( ViewObj, "for object in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
-function(x) 
-  Print(x!.triple );
+function(obj) 
+  Print( "(", obj[1], ", ", obj[2], ", ", obj[3], ")" );
   return;
 end);
+
+#EOF
