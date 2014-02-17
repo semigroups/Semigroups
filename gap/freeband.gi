@@ -160,3 +160,31 @@ function(tuple1, tuple2)
                     TupleToWord(tuple2)) ) );
 
 end );
+
+
+################################################################################
+##
+## Size 
+##
+
+InstallMethod(Size, "for a free band", [IsFreeBand],
+function(S)
+  local c, output, k, i, n;
+  
+  n := Length(FamilyObj(S.1)!.names);
+ 
+  c := [];
+  for k in [ 1 .. n ] do
+    c[k] := 1;
+    for i in [1 .. k - 1] do
+      c[k] := c[k] * (k - i + 1)^(2^i);
+    od;
+  od;
+  
+  output := 0;
+  for k in [ 1 .. n ] do
+    output := output + Binomial( n, k ) * c[k];
+  od;
+
+  return output;
+end );
