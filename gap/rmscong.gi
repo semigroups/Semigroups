@@ -18,6 +18,26 @@ end);
 
 #
 
+InstallMethod(\in,
+"for a semigroup congruence by linked triple",
+[IsDenseList,
+ IsRMSCongruenceByLinkedTriple],
+function(pair, cong)
+  local s;
+  
+  # Check for validity
+  if Size(pair) <> 2 then
+    Error("usage: <pair> must be a list of length 2");
+  fi;
+  s := Range(cong);
+  if not ForAll(pair, x-> x in s) then
+    Error("usage: the elements of <pair> must be in <cong>'s semigroup");
+  fi;
+  
+end);
+
+#
+
 InstallMethod(SemigroupCongruenceByLinkedTriple,
 "for a Rees zero matrix semigroup and a linked triple",
 [IsReesZeroMatrixSemigroup and IsFinite,
