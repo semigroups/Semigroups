@@ -153,13 +153,9 @@ function(arg)
   type:=NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
   if IsEmpty( names ) then
-<<<<<<< mine
-    Error("the number of generators for FreeInverseSemigroups has to be non zero"); 
-=======
     Error("usage: the number of generators of a free inverse semigroup must", 
       " be non-zero,"); 
     return;
->>>>>>> theirs
   elif IsFinite( names ) then
     gens:=EmptyPlist( Length(names) );
     for m in [1 .. Length(names)] do 

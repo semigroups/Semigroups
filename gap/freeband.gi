@@ -127,6 +127,26 @@ function(tuple1, tuple2)
   return isequal;
 end );
 
+#############################################################################
+##
+## Inequality
+##
+
+InstallMethod(\<, "for elements of a free band",
+IsIdenticalObj,
+[IsFreeBandElement, IsFreeBandElement],
+function(tuple1, tuple2)
+  local list1, list2, i;
+
+  list1 := []; list2 := [];
+
+  for i in [1 .. 4] do
+    list1[i] := tuple1![i];
+    list2[i] := tuple2![i];
+  od;
+  return list1 < list2;
+end );
+
 ##########################################################################
 ##
 ## Multiplication
