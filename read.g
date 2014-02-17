@@ -39,6 +39,7 @@ ReadPackage("semigroups/gap/freeinverse.gi");
 ReadPackage("semigroups/gap/utils.gi");
 
 ReadPackage("semigroups/gap/display.gi");
+ReadPackage("semigroups/gap/pictures.gi");
 
 ReadPackage("semigroups/gap/fpsemi.gi");
 ReadPackage("semigroups/gap/isomorph.gi");
