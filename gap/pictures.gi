@@ -193,15 +193,15 @@ function(f)
     Append(str, ViewString(i-1)); Append(str, ",0)circle(.125);\n");
   
     Append(str, "\\draw("); Append(str, ViewString(i-1));
-    Append(str, ", -0.2) node [below] {{ $"); Append(str, ViewString(i));
-    Append(str, "'$}};"); Append(str, "\n");
+    Append(str, ", -0.2) node [below] {{ $-"); Append(str, ViewString(i));
+    Append(str, "$}};"); Append(str, "\n");
   od;
 
   # draw the lines
   for block in ext do
     up:=[]; down:=[];
     for i in [2..Length(block)] do
-      if block[i-1]<=n and block[i]<=n then
+      if block[i-1]>0 and block[i]>0 then
         AddSet(up, block[i-1]);
         AddSet(up, block[i]);
         Append(str, "\\draw (");
@@ -217,30 +217,31 @@ function(f)
         Append(str, ") .. (");
         Append(str, ViewString(block[i]-1));
         Append(str, ",1.875);\n");
-      elif block[i-1]>n and block[i]>n then 
-        AddSet(down, block[i-1]-n);
-        AddSet(down, block[i]-n);
+      elif block[i-1]<0 and block[i]<0 then 
+        AddSet(down, block[i-1]);
+        AddSet(down, block[i]);
         Append(str, "\\draw (");
-        Append(str, ViewString(block[i-1]-1-n));
+        Append(str, ViewString(-1*block[i-1]-1));
         Append(str, ",0.125) .. controls (");
-        Append(str, ViewString(block[i-1]-1-n));
+        Append(str, ViewString(-1*block[i-1]-1));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5+(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(0.5+(-1/(2*n))*(block[i]-block[i-1]))));
         Append(str, ") and (");
-        Append(str, ViewString(block[i]-1-n));
+        Append(str, ViewString(-1*block[i]-1));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5+(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(0.5+(-1/(2*n))*(block[i]-block[i-1]))));
         Append(str, ") .. (");
-        Append(str, ViewString(block[i]-1-n));
+        Append(str, ViewString(-1*block[i]-1));
         Append(str, ",0.125);\n");
-      elif block[i-1]<=n and block[i]>n then
-        AddSet(down, block[i]-n); AddSet(up, block[i-1]);
-      elif block[i-1]>n and block[i]<=n then
-        AddSet(down, block[i-1]-n); AddSet(up, block[i]);
+      elif block[i-1]>0 and block[i]<0 then
+        AddSet(down, block[i]); AddSet(up, block[i-1]);
+      elif block[i-1]<0 and block[i]>0 then
+        AddSet(down, block[i-1]); AddSet(up, block[i]);
       fi;
     od;
+    #Error();
     if Length(up)<>0 and Length(down)<>0 then 
-      min:=[n];
+      min:=[n+1]; down:=down*-1;
       for i in up do 
         for j in down do 
           if AbsInt(i-j)<min[1] then 
@@ -256,7 +257,6 @@ function(f)
   Append(str, "\\end{tikzpicture}\n\n");
   return str;
 end);
-
 
 #
 
