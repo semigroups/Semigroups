@@ -23,7 +23,14 @@ InstallMethod(\in,
 [IsDenseList,
  IsRMSCongruenceByLinkedTriple],
 function(pair, cong)
-  local s;
+  local s, mat,
+        n, colRel, rowRel,
+        row, col, rows, cols,
+        gpElt;
+  
+  n := cong[1]; #TODO: Make this work
+  colRel := cong[2]; #TODO: Make this work
+  rowRel := cong[3]; #TODO: Make this work
   
   # Check for validity
   if Size(pair) <> 2 then
@@ -34,6 +41,35 @@ function(pair, cong)
     Error("usage: the elements of <pair> must be in <cong>'s semigroup");
   fi;
   
+  # Trivial case which also covers (0,0)
+  if pair[1] = pair[2] then
+    return true;
+  fi;
+  
+  # First, the columns and rows must be related
+  if not (pair[1][1] in EquivalenceClassOfElement(colRel, pair[2][1]) and
+          pair[1][3] in EquivalenceClassOfElement(rowRel, pair[2][3])) then
+    return false;
+  fi;
+  
+  # Finally, check Lemma 3.5.6(2) in Howie
+  mat := Matrix(s);
+  rows := mat;
+  cols := TransposedMat(mat);
+  # Pick a valid column and row
+  col := PositionProperty(rows[pair[1][3]], x-> x <> 0);
+  row := PositionProperty(cols[pair[1][1]], x-> x <> 0);
+  gpElt := mat[row][pair[1][1]] *
+           pair[1][2] *
+           mat[pair[1][3]][col] *
+           Inverse(mat[pair[2][3]][col]) *
+           Inverse(pair[2][2]) *
+           Inverse(mat[row][pair[2][1]]);
+  if gpElt in n then
+    return true;
+  else
+    return false;
+  fi;
 end);
 
 #
