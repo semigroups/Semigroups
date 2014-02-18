@@ -10,7 +10,7 @@ function(s, n, colRel, rowRel)
                  ElementsFamily(FamilyObj(s)) );
   cong := Objectify(
                   NewType(fam, IsRMSCongruenceByLinkedTriple),
-                  [ShallowCopy(n), ShallowCopy(colRel), ShallowCopy(rowRel)] );
+                  rec(n := n, colRel := colRel, rowRel := rowRel) );
   SetSource(cong, s);
   SetRange(cong, s);
   return cong;
@@ -19,26 +19,24 @@ end);
 #
 
 InstallMethod(\in,
-"for a semigroup congruence by linked triple",
-[IsDenseList,
+"for a Rees 0-matrix semigroup element collection and a semigroup congruence by linked triple",
+[IsReesZeroMatrixSemigroupElementCollection,
  IsRMSCongruenceByLinkedTriple],
 function(pair, cong)
   local s, mat,
-        n, colRel, rowRel,
         row, col, rows, cols,
+        a, i, u, j, b, v,
         gpElt;
-  
-  n := cong[1]; #TODO: Make this work
-  colRel := cong[2]; #TODO: Make this work
-  rowRel := cong[3]; #TODO: Make this work
   
   # Check for validity
   if Size(pair) <> 2 then
-    Error("usage: <pair> must be a list of length 2");
+    Error("usage: 1st argument <pair> must be a list of length 2,");
+    return;
   fi;
   s := Range(cong);
   if not ForAll(pair, x-> x in s) then
-    Error("usage: the elements of <pair> must be in <cong>'s semigroup");
+    Error("usage: the elements of the 1st argument <pair> must be in the range of the 2nd argument <cong>,");
+    return;
   fi;
   
   # Trivial case which also covers (0,0)
@@ -46,9 +44,17 @@ function(pair, cong)
     return true;
   fi;
   
+  # Read the elements as (i,a,u) and (j,b,v)
+  i := pair[1][1];
+  a := pair[1][2];
+  u := pair[1][3];
+  j := pair[2][1];
+  b := pair[2][2];
+  v := pair[2][3];
+  
   # First, the columns and rows must be related
-  if not (pair[1][1] in EquivalenceClassOfElement(colRel, pair[2][1]) and
-          pair[1][3] in EquivalenceClassOfElement(rowRel, pair[2][3])) then
+  if not (i in EquivalenceClassOfElement(cong!.colRel, j) and
+          u in EquivalenceClassOfElement(cong!.rowRel, v)) then
     return false;
   fi;
   
@@ -57,19 +63,11 @@ function(pair, cong)
   rows := mat;
   cols := TransposedMat(mat);
   # Pick a valid column and row
-  col := PositionProperty(rows[pair[1][3]], x-> x <> 0);
-  row := PositionProperty(cols[pair[1][1]], x-> x <> 0);
-  gpElt := mat[row][pair[1][1]] *
-           pair[1][2] *
-           mat[pair[1][3]][col] *
-           Inverse(mat[pair[2][3]][col]) *
-           Inverse(pair[2][2]) *
-           Inverse(mat[row][pair[2][1]]);
-  if gpElt in n then
-    return true;
-  else
-    return false;
-  fi;
+  col := PositionProperty(rows[u], x-> x <> 0);
+  row := PositionProperty(cols[i], x-> x <> 0);
+  gpElt := mat[row][i] * a * mat[u][col] *
+           Inverse(mat[row][j] * b * mat[v][col]);
+  return(gpElt in cong!.n);
 end);
 
 #
