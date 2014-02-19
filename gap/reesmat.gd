@@ -9,4 +9,6 @@
 ##
 
 DeclareAttribute("RZMSGraph", IsReesZeroMatrixSemigroup, "mutable");
+DeclareOperation("GreensHClassOfElement", [IsReesZeroMatrixSemigroup, IsPosInt,
+IsPosInt]);
 

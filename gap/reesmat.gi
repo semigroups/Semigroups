@@ -8,6 +8,15 @@
 #############################################################################
 ##
 
+InstallMethod(GreensHClassOfElement, "for a RZMS, pos int, and pos int",
+[IsReesZeroMatrixSemigroup, IsPosInt, IsPosInt],
+function(R, i, j)
+  local rep;
+  
+  rep:=RMSElement(R, i, Representative(UnderlyingSemigroup(R)), j);
+  return GreensHClassOfElement(R, rep);
+end);
+
 #
 
 InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
