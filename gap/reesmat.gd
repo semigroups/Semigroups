@@ -8,5 +8,5 @@
 #############################################################################
 ##
 
-DeclareAttribute("RZMSGraph", IsReesZeroMatrixSemigroup);
+DeclareAttribute("RZMSGraph", IsReesZeroMatrixSemigroup, "mutable");
 
