@@ -3,8 +3,6 @@
     Bipartitions and blocks
   </Heading>
 
-  PREAMBLE...
-
   In this chapter we describe the functions in &Semigroups; for creating
   and manipulating bipartitions. 
   

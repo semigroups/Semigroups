@@ -39,6 +39,12 @@ ReadPackage("semigroups/gap/freeinverse.gi");
 ReadPackage("semigroups/gap/utils.gi");
 
 ReadPackage("semigroups/gap/display.gi");
+ReadPackage("semigroups/gap/pictures.gi");
+
+ReadPackage("semigroups/gap/fpsemi.gi");
+ReadPackage("semigroups/gap/isomorph.gi");
+ReadPackage("semigroups/gap/reesmat.gi");
+ReadPackage("semigroups/gap/reesmat-iso.gi");
 
 if TestPackageAvailability("grape")=fail then 
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");

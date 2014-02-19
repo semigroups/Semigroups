@@ -14,6 +14,41 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
+#
+
+InstallMethod(NaturalLeqBlockBijection, "for bipartitions", 
+[IsBipartition, IsBipartition], 
+function(f, g)
+  local fblocks, gblocks, n, lookup, i;
+  
+  if not IsBlockBijection(f) or not IsBlockBijection(g) then 
+    Error("usage: the arguments must be block bijections,");
+    return;
+  elif DegreeOfBipartition(f)<>DegreeOfBipartition(g) then 
+    Error("usage: the arguments must be block bijections of equal degree,");
+    return;
+  elif NrBlocks(f)>NrBlocks(g) then 
+    return false;
+  fi;
+
+  fblocks:=f!.blocks; gblocks:=g!.blocks;
+  n:=DegreeOfBipartition(f);
+  
+  lookup:=[];
+  for i in [1..n] do 
+    if IsBound(lookup[gblocks[i]]) and lookup[gblocks[i]]<>fblocks[i] then 
+      return false;
+    else 
+      lookup[gblocks[i]]:=fblocks[i];
+    fi;
+  od;
+  for i in [n+1..2*n] do 
+    if lookup[gblocks[i]]<>fblocks[i] then 
+      return false;
+    fi;
+  od;
+  return true;
+end);
 
 #
 
@@ -611,6 +646,37 @@ end);
 
 #
 
+InstallMethod(IsUniformBlockBijection, "for a bipartition", 
+[IsBipartition], 
+function(f)
+  local blocks, n, sizesleft, sizesright, i;
+  
+  if not IsBlockBijection(f) then 
+    return false;
+  fi;
+  
+  blocks:=f!.blocks;
+  n:=DegreeOfBipartition(f);
+  sizesleft:=[1..NrBlocks(f)]*0;
+  sizesright:=[1..NrBlocks(f)]*0;
+
+  for i in [1..n] do 
+    sizesleft[blocks[i]]:=sizesleft[blocks[i]]+1;
+  od;
+  for i in [n+1..2*n] do 
+    sizesright[blocks[i]]:=sizesright[blocks[i]]+1;
+  od;
+  for i in [1..NrBlocks(f)] do 
+    if sizesright[i]<>sizesleft[i] then 
+      return false;
+    fi;
+  od;
+  
+  return true;
+end);
+
+#
+
 InstallMethod(IsPartialPermBipartition, "for a bipartition", 
 [IsBipartition], 
 function(f)
@@ -1115,23 +1181,11 @@ function(f)
     Print("<empty bipartition>");
     return;
   fi;
-
-  Print("<bipartition: ");
-  ext:=ExtRepOfBipartition(f);
-  Print(ext[1]);
-  for i in [2..Length(ext)] do 
-    Print(", ", ext[i]);
-  od;
-  Print(">");
-  return;
-end);
-
-InstallMethod(ViewObj, "for a bipartition",
-[IsBlockBijection],
-function(f)
-  local ext, i;
-
-  Print("<block bijection: ");
+  if IsBlockBijection(f) then 
+    Print("<block bijection: ");
+  else 
+    Print("<bipartition: ");
+  fi;
   ext:=ExtRepOfBipartition(f);
   Print(ext[1]);
   for i in [2..Length(ext)] do 

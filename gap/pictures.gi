@@ -193,15 +193,15 @@ function(f)
     Append(str, ViewString(i-1)); Append(str, ",0)circle(.125);\n");
   
     Append(str, "\\draw("); Append(str, ViewString(i-1));
-    Append(str, ", -0.2) node [below] {{ $"); Append(str, ViewString(i));
-    Append(str, "'$}};"); Append(str, "\n");
+    Append(str, ", -0.2) node [below] {{ $-"); Append(str, ViewString(i));
+    Append(str, "$}};"); Append(str, "\n");
   od;
 
   # draw the lines
   for block in ext do
     up:=[]; down:=[];
     for i in [2..Length(block)] do
-      if block[i-1]<=n and block[i]<=n then
+      if block[i-1]>0 and block[i]>0 then
         AddSet(up, block[i-1]);
         AddSet(up, block[i]);
         Append(str, "\\draw (");
@@ -217,30 +217,31 @@ function(f)
         Append(str, ") .. (");
         Append(str, ViewString(block[i]-1));
         Append(str, ",1.875);\n");
-      elif block[i-1]>n and block[i]>n then 
-        AddSet(down, block[i-1]-n);
-        AddSet(down, block[i]-n);
+      elif block[i-1]<0 and block[i]<0 then 
+        AddSet(down, block[i-1]);
+        AddSet(down, block[i]);
         Append(str, "\\draw (");
-        Append(str, ViewString(block[i-1]-1-n));
+        Append(str, ViewString(-1*block[i-1]-1));
         Append(str, ",0.125) .. controls (");
-        Append(str, ViewString(block[i-1]-1-n));
+        Append(str, ViewString(-1*block[i-1]-1));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5+(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(0.5+(-1/(2*n))*(block[i]-block[i-1]))));
         Append(str, ") and (");
-        Append(str, ViewString(block[i]-1-n));
+        Append(str, ViewString(-1*block[i]-1));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5+(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(0.5+(-1/(2*n))*(block[i]-block[i-1]))));
         Append(str, ") .. (");
-        Append(str, ViewString(block[i]-1-n));
+        Append(str, ViewString(-1*block[i]-1));
         Append(str, ",0.125);\n");
-      elif block[i-1]<=n and block[i]>n then
-        AddSet(down, block[i]-n); AddSet(up, block[i-1]);
-      elif block[i-1]>n and block[i]<=n then
-        AddSet(down, block[i-1]-n); AddSet(up, block[i]);
+      elif block[i-1]>0 and block[i]<0 then
+        AddSet(down, block[i]); AddSet(up, block[i-1]);
+      elif block[i-1]<0 and block[i]>0 then
+        AddSet(down, block[i-1]); AddSet(up, block[i]);
       fi;
     od;
+    #Error();
     if Length(up)<>0 and Length(down)<>0 then 
-      min:=[n];
+      min:=[n+1]; down:=down*-1;
       for i in up do 
         for j in down do 
           if AbsInt(i-j)<min[1] then 
@@ -256,7 +257,6 @@ function(f)
   Append(str, "\\end{tikzpicture}\n\n");
   return str;
 end);
-
 
 #
 
@@ -313,127 +313,3 @@ GrahamBlocks:=function(s)
   return B;
 end;
 
-#
-
-InstallMethod(DotDClasses, "for an acting semigroup",
-[IsActingSemigroup], 
-function(s)
-  return DotDClasses(s, rec(maximal:=false, number:=true));
-end);
-
-InstallMethod(DotDClasses, "for an acting semigroup and record",
-[IsActingSemigroup, IsRecord],
-function(s, opts)
-  local str, i, gp, h, rel, j, k, d, l, x;
-
-  # process the options
-  if not IsBound(opts.maximal) then 
-    opts.maximal:=false;
-  fi;
-  if not IsBound(opts.number) then 
-    opts.number:=true;
-  fi;
-
-  str:="";
-  Append(str, "digraph  DClasses {\n");
-  Append(str, "node [shape=plaintext]\n");
-  Append(str, "edge [color=red,arrowhead=none]\n");
-  i:=0;
-
-  for d in DClasses(s) do
-    i:=i+1;
-    Append(str, String(i));
-    Append(str, " [shape=box style=dotted label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\"");
-    Append(str, " CELLPADDING=\"10\" CELLSPACING=\"0\"");
-    Append(str, Concatenation(" PORT=\"", String(i), "\">\n"));
-
-    if opts.number then
-      Append(str, "<TR BORDER=\"0\"><TD COLSPAN=\"");
-      Append(str, String(NrRClasses(d)));
-      Append(str, "\" BORDER=\"0\" >");
-      Append(str, String(i));
-      Append(str, "</TD></TR>");
-    fi;
-
-    if opts.maximal and IsRegularDClass(d) then
-       gp:=StructureDescription(GroupHClass(d));
-    fi;
-
-    for l in LClasses(d) do
-      Append(str, "<TR>");
-      if not IsRegularClass(l) then
-        for j in [1..NrRClasses(d)] do
-          Append(str, "<TD CELLPADDING=\"10\"> </TD>");
-        od;
-      else
-        h:=HClasses(l);
-        for x in h do
-          if IsGroupHClass(x) then
-            if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"grey\">", gp, "</TD>"));
-            else
-              Append(str, "<TD BGCOLOR=\"grey\">*</TD>");
-            fi;
-          else
-            Append(str, "<TD></TD>");
-          fi;
-        od;
-      fi;
-      Append(str, "</TR>\n");
-    od;
-    Append(str, "</TABLE>>];\n");
-  od;
-
-  rel:=PartialOrderOfDClasses(s);
-  rel:=List([1..Length(rel)], x-> Filtered(rel[x], y-> not x=y));
-
-  for i in [1..Length(rel)] do
-    j:=Difference(rel[i], Union(rel{rel[i]})); i:=String(i);
-    for k in j do
-      k:=String(k);
-      Append(str, Concatenation(i, " -> ", k, "\n"));
-    od;
-  od;
-
-  Append(str, " }");
-
-  return str;
-end);
-
-#InstallGlobalFunction(DotDClass, 
-#  function(d)
-#    local str, h, l, j, x;
-#
-#    if not IsGreensClassOfTransSemigp(d) or not IsGreensDClass(d) then
-#      Error("the argument should be a D-class of a trans. semigroup.");
-#    fi;
-#
-#    str:="";
-#    Append(str, "digraph  DClasses {\n");
-#    Append(str, "node [shape=plaintext]\n");
-#
-#    Append(str, "1 [label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\"");
-#    Append(str, " CELLPADDING=\"10\" CELLSPACING=\"0\">\n");
-#
-#    for l in LClasses(d) do
-#      Append(str, "<TR>");
-#      if not IsRegularClass(l) then
-#        for j in [1..NrRClasses(d)] do
-#          Append(str, "<TD></TD>");
-#        od;
-#      else
-#        h:=HClasses(l);
-#        for x in h do
-#          if IsGroupHClass(x) then
-#            Append(str, "<TD>*</TD>");
-#          else
-#            Append(str, "<TD></TD>");
-#          fi;
-#        od;
-#      fi;
-#      Append(str, "</TR>\n");
-#    od;
-#    Append(str, "</TABLE>>];\n}");
-#
-#    return str;
-#  end);

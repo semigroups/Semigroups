@@ -503,6 +503,35 @@ gap> T:=Semigroup(T, rec(small:=true));;
 gap> IsMaximalSubsemigroup(S, T);
 true
 
+# From Jack Schmidt 06/02/14 by email
+gap> S:=InverseMonoid([
+> PartialPerm([1..32],
+> [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,30,29,32,31,26,25,28,27,
+>  18,17,20,19,22,21,24,23]),
+> PartialPerm([1..32], [1,10,16,7,5,14,4,11,9,2,8,15,13,6,12,3,
+> 17,22,32,27,21,18,28,31,25,30,20,23,29,26,24,19]),
+> PartialPerm([1..16], [1,2,3,4,16,15,13,14,10,9,12,11,7,8,6,5]), 
+> PartialPerm([1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30],
+> [1,17,5,29,9,21,13,25,30,14,26,6,18,10,22,2]), 
+> PartialPerm([1,2,5,6,9,10,13,14,19,20,23,24,27,28,31,32],
+> [1,10,5,14,9,2,13,6,19,24,23,20,27,32,31,28]), 
+> PartialPerm([1,6,9,14,18,22,25,29],[1,6,9,14,18,22,25,29]), 
+> PartialPerm([1,5,9,13,19,23,27,31],[1,5,9,13,19,23,27,31]), 
+> PartialPerm([1,6,9,14,17,21,26,30],[1,6,9,14,17,21,26,30]) ]);; 
+gap> ForAll(S,f->ForAll(LClass(S,f),x -> x in S)); 
+true
+
+# From Jack Schmidt 07/02/14 by email
+gap> AsSet(InverseMonoid( PartialPerm([1,2]), PartialPerm([1])));
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
+
+# Issue #57 (problem in INV_KER_TRANS)
+gap> S:=Semigroup(Transformation([1,1,1]), Transformation([1,1,4,4,5]));;
+gap> Size(S);
+2
+gap> IsMonogenicSemigroup(S);
+false
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

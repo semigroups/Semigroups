@@ -25,6 +25,7 @@ DeclareGlobalFunction("ReadGenerators");
 DeclareGlobalFunction("GeneratorsWriteFile");
 DeclareGlobalFunction("WriteGeneratorsLine");
 DeclareGlobalFunction("WriteGenerators");
+DeclareGlobalFunction("IteratorFromGeneratorsFile");
 
 DeclareOperation("ShortStringRep", [IsTransformation]);
 

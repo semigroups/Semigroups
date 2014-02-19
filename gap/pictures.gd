@@ -19,8 +19,3 @@ DeclareGlobalFunction("TikzRightBlocks");
 DeclareGlobalFunction("TikzLeftBlocks");
 DeclareGlobalFunction("TikzBlocks");
 
-DeclareOperation("DotDClasses", [IsActingSemigroup]);
-# this should be an attribute JDM!
-DeclareOperation("DotDClasses", [IsActingSemigroup, IsRecord]);
-
-
