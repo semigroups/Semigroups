@@ -59,37 +59,6 @@ function(S, T)
   fi;
 end); 
 
-#
-
-# Returns a list of lists (connected comps), each list being those (I,J)
-# co-ords of the group H-classes in the connected comp
-InstallMethod(RMSConnectedComponents, "for a Rees zero matrix semigroup", 
-[IsReesZeroMatrixSemigroup],
-function(R)
-  local I, J, mat, len, graph, comps;
-  
-  I:=Rows(R); J:=Columns(R); mat:=Matrix(R);
-  len:=Length(mat[1]);
-
-  graph:=Graph(Group(()), Union(I, J+len), OnPoints,
-    function(i,j)
-      if i<=len and j>len then
-        return mat[j-len][i]<>0;
-      elif j<=len and i>len then
-        return mat[i-len][j]<>0;
-      fi;
-      return false;
-    end, true);
-    
-  comps:=List(ConnectedComponents(graph),x->Intersection(x,I));
-
-  return List(comps,x->
-    Concatenation(List(x, y->
-    List(graph.adjacencies[y], z->[y,z-len])
-    )));
-    
-end); 
-
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 # and only works for Rees matrix semigroup over groups
 
@@ -170,7 +139,7 @@ else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k, components, h, max, gen, choice, basicgens, maxgens, comp, col, row, CaseyRecursion, nrcomponents;
+    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k, components, h, max, gen, choice, basicgens, maxgens, comp, col, row, NonGroupRecursion, nrcomponents;
     
     if not IsReesZeroMatrixSemigroup(R) then 
       TryNextMethod(); 
@@ -221,7 +190,18 @@ else
     Info(InfoSemigroups, 3, 
      "Case 1: maximal subsemigroups arising from maximal subgroups...");
     
-    components:=RMSConnectedComponents(R);
+    graph:=RZMSGraph(R);
+    components:=ConnectedComponents(graph);
+  
+    # Add to the generators one element which *must* be in each group h-class
+    basicgens:=[MultiplicativeZero(R)];
+    for i in [1..Length(mat[1])] do
+      for j in [1..Length(mat)] do
+        if mat[j][i] <> 0 then
+        Add(basicgens, RMSElement(R, i, (mat[j][i]^-1), j));
+        fi;
+      od;
+    od;
   
     # pick a distinguished group h-class, indexed by i and j. We arbitrarily choose the first one of the first component.
     # This group H-class will contain the elts of the coset (max*mat[j][i]^-1) for each maximal subgroup
@@ -233,6 +213,7 @@ else
       col:=EmptyPlist(Length(components)-1);
       row:=EmptyPlist(Length(components)-1);
       
+      #Remove below block, can get required info on the fly
       # Select the distinguished non-group H-classes which we'll need from each 'block' to put our generators in
       for k in [2..Length(components)] do
         Add(col,components[k][1][2]);
@@ -245,52 +226,41 @@ else
       od;
     fi;
   
-    # Add to the generators one element which *must* be in each group h-class
-    # Question: is this potentially already wasteful, since surely we need only one element in each row and column of each component?
-    basicgens:=[];
-    for comp in components do
-      for h in comp do
-        Add(basicgens, ReesZeroMatrixSemigroupElement(R, h[1], (mat[h[2]][h[1]]^-1), h[2]));
-      od;
-    od;
-  
-    CaseyRecursion:=function(component, choices, choice)
-      local newchoice, t, x;
+    NonGroupRecursion:=function(k, t, choice)
+      local newchoice, x;
     
-      # Below line needs proof that checking with these generators is [necessary and] sufficient
-      # It works in my 3 examples, but that's maybe not good enough
-      # I don't yet have a theoretical result for why
-      # We can also possible do it with a smaller generating set in general
-      t:=Semigroup(basicgens, choice[1]);
+      if not k = 1 then
+        t:=ClosureSemigroup(t, choice);
+      fi;
 
-      # Test if adding our new choice has already made too much stuff; if it has, discard
-      if Size(GreensHClassOfElement(t, choice[1])) <= Size(max) then
+      # Test if adding our new choice has already made too much stuff
+      if Size(GreensHClassOfElementNC(t, choice[1])) <= Size(max) then
         # If we're okay, but not made all our choices yet, make another choice and continue recursion
         if component < nrcomponents then
-          for x in RightTransversal(G,max) do
-            h:=mat[col[component]][row[component]]^(-1)*x^(-1)*mat[j][i]^(-1);
-            newchoice:=[
-              ReesZeroMatrixSemigroupElement(R, i, x, col[component]),
-              ReesZeroMatrixSemigroupElement(R, row[component], h, j)
-            ];
-            CaseyRecursion(component+1, Concatenation(choices, choice), newchoice);
+          for x in trans do
+            h:=mat[col[k]][row[k]]^(-1)*x^(-1)*mat[j][i]^(-1);
+            newchoice:=[RMSElement(R, i, x, col[k]), RMSElement(R, row[k], h, j)];
+            CaseyRecursion(k+1, t, newchoice);
           od;
         # Otherwise we've found a valid result. I believe.
         else
-          Add(out, Semigroup(basicgens, choices, choice, [MultiplicativeZero(R)]));
+          Add(out, t);
         fi;
       fi;
     
+      # at this stage, can we rule out other cases from the level above?
       return;
     end;
   
     for max in MaximalSubgroups(G) do
 
+      trans:=RightTransversal(G,max);
       # Get generators for our distinguished h-class in first component, and start recursion
       maxgens:=List(
         Generators(max), x-> ReesZeroMatrixSemigroupElement(R, i, x*(mat[j][i]^-1), j) 
       );
-      CaseyRecursion(1, [], maxgens);
+      t:=Semigroup(basicgens, maxgens);
+      CaseyRecursion(1, t, []);
     od;
     
     

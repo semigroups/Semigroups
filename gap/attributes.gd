@@ -30,13 +30,8 @@ DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);
 DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
-DeclareAttribute("MaximalCaseyTuples", IsReesZeroMatrixSemigroup);
-DeclareAttribute("MaximalCaseyRecursion", IsReesZeroMatrixSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
-
-# Not sure how this should be defined
-DeclareAttribute("RMSConnectedComponents", IsReesZeroMatrixSemigroup);
 
 DeclareOperation("SubsemigroupByIndicesNC", 
 [IsReesMatrixSemigroup, IsDenseList, IsDenseList]);
