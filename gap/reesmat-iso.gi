@@ -59,7 +59,8 @@ end);
 
 InstallGlobalFunction(RZMSInducedFunction, 
 function(R, l, g, x, component)
-  local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, k;
+  local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb, j,
+   Last, involved, verts, v, new, k;
   
   mat:=Matrix(R); m:=Length(mat[1]); n:=Length(mat); graph:=RZMSGraph(R);
 
@@ -127,7 +128,9 @@ function(rms1, rms2, l, g, groupelts)
   components:=ConnectedComponents(rmsgraph);
 
   if not Length(groupelts)=Length(components) then 
-    Error("Must be as many elements as components");
+    Error("usage: the 3rd argument must be a list of length ", Length(components), 
+      ",");
+    return;
   fi;
 
   reps:=List(components, Minimum);
@@ -195,12 +198,12 @@ function(R1, R2)
     m:=Length(mat[1]); n:=Length(mat);
 
     if R1=R2 then 
-      g:=UnderlyingSemigroupOfReesMatrixSemigroup(R1); 
+      g:=UnderlyingSemigroup(R1); 
       return RMSIsoByTriple(R1, R2, [(), IdentityMapping(g), List([1..m+n], 
-       x-> One(g))]); #JDm IdentityMapping
+       x-> One(g))]);
     else
-      g1:=UnderlyingSemigroupOfReesMatrixSemigroup(R1);
-      g2:=UnderlyingSemigroupOfReesMatrixSemigroup(R2);
+      g1:=UnderlyingSemigroup(R1);
+      g2:=UnderlyingSemigroup(R2);
       iso:=IsomorphismGroups(g1, g2);
 
       # for RMS without 0 the graphs are always isomorphic, 
@@ -268,7 +271,7 @@ function(R1, R2)
   graph1:=RZMSGraph(R1); graph2:=RZMSGraph(R2);
   if UndirectedEdges(graph1)<>UndirectedEdges(graph2) then 
     g:=GraphIsomorphism(graph1, graph2);
-    if f=fail then 
+    if g=fail then 
       return fail;
     fi;
     graphiso:=List(AutGroupGraph(graph1, [[1..m],[m+1..n+m]]), x-> x*g);
@@ -350,8 +353,9 @@ InstallMethod(\=, "for objects in `IsRMSIsoByTriple'", IsIdenticalObj,
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(triple1, triple2)
 
-  if triple1[1]=triple2[1] and  triple1[2]=triple2[2] and
-    triple1[3]=triple2[3] then 
+  if triple1!.triple[1]=triple2!.triple[1] 
+    and triple1!.triple[2]=triple2!.triple[2] 
+    and triple1!.triple[3]=triple2!.triple[3] then 
     return true;
   fi;
   return OnTuples(GeneratorsOfSemigroup(Source(triple1)), 
@@ -364,8 +368,9 @@ InstallMethod(\=, "for objects in `IsRZMSIsoByTriple'", IsIdenticalObj,
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple], 
 function(triple1, triple2)
 
-  if triple1[1]=triple2[1] and  triple1[2]=triple2[2] and
-    triple1[3]=triple2[3] then 
+  if triple1!.triple[1]=triple2!.triple[1] 
+    and triple1!.triple[2]=triple2!.triple[2] 
+    and triple1!.triple[3]=triple2!.triple[3] then 
     return true;
   fi; 
   return OnTuples(GeneratorsOfSemigroup(Source(triple1)), triple1)
@@ -378,12 +383,12 @@ InstallMethod(\<, "for objects in `IsRMSIsoByTriple'", IsIdenticalObj,
 [IsRMSIsoByTriple, IsRMSIsoByTriple],  
 function(triple1, triple2)
 
-  return (triple1[1]<triple2[1]) or
-   (triple1[1]=triple2[1] and
-    triple1[2]<triple2[2]) or 
-   (triple1[1]=triple2[1] and
-    triple1[2]=triple2[2] and 
-    triple1[3]<triple2[3]);
+  return (triple1!.triple[1]<triple2!.triple[1]) or
+   (triple1!.triple[1]=triple2!.triple[1] and
+    triple1!.triple[2]<triple2!.triple[2]) or 
+   (triple1!.triple[1]=triple2!.triple[1] and
+    triple1!.triple[2]=triple2!.triple[2] and 
+    triple1!.triple[3]<triple2!.triple[3]);
 end);
 
 #
@@ -392,12 +397,12 @@ InstallMethod(\<, "for objects in `IsRZMSIsoByTriple'", IsIdenticalObj,
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(triple1, triple2)
 
-  return (triple1[1]<triple2[1]) or
-   (triple1[1]=triple2[1] and 
-    triple1[2]<triple2[2]) or 
-   (triple1[1]=triple2[1] and 
-    triple1[2]=triple2[2] and 
-    triple1[3]<triple2[3]);
+  return (triple1!.triple[1]<triple2!.triple[1]) or
+   (triple1!.triple[1]=triple2!.triple[1] and 
+    triple1!.triple[2]<triple2!.triple[2]) or 
+   (triple1!.triple[1]=triple2!.triple[1] and 
+    triple1!.triple[2]=triple2!.triple[2] and 
+    triple1!.triple[3]<triple2!.triple[3]);
 end);
 
 #
@@ -409,9 +414,9 @@ function(a1, a2)
 
   n:=Length(Rows(Source(a1)))+Length(Columns(Source(a1)));
 
-  l1:=a1[1]; l2:=a2[1];
-  g1:=a1[2]; g2:=a2[2];
-  f1:=a1[3]; f2:=a2[3];
+  l1:=a1!.triple[1]; l2:=a2!.triple[1];
+  g1:=a1!.triple[2]; g2:=a2!.triple[2];
+  f1:=a1!.triple[3]; f2:=a2!.triple[3];
 
   return RMSIsoByTriple(Source(a1), Range(a2), [l1*l2, g1*g2, List([1..n], 
    x->f2[x^l1]*f1[x]^g2)]);
@@ -426,9 +431,9 @@ function(a1, a2)
 
   n:=Length(Rows(Source(a1)))+Length(Columns(Source(a1)));
 
-  l1:=a1[1]; l2:=a2[1];
-  g1:=a1[2]; g2:=a2[2];
-  f1:=a1[3]; f2:=a2[3];
+  l1:=a1!.triple[1]; l2:=a2!.triple[1];
+  g1:=a1!.triple[2]; g2:=a2!.triple[2];
+  f1:=a1!.triple[3]; f2:=a2!.triple[3];
 
   return RZMSIsoByTriple(Source(a1), Range(a2), [l1*l2, g1*g2, 
    List([1..n], x->f2[x^l1]*f1[x]^g2)]);
@@ -465,8 +470,8 @@ function( triple, x)
   gamma:=triple[2]; 
   f:=triple[3];
   #JDM: use objectify here...
-  return ReesMatrixSemigroupElement(Range(triple), i^lambda,
-  f[i]*ImageElm(gamma,g)/f[j], j^lambda-m);
+  return RMSElement(Range(triple), i^lambda, f[i]*ImageElm(gamma,g)/f[j],
+   j^lambda-m);
 end);
 
 #
@@ -487,8 +492,8 @@ function(triple, x)
       return MultiplicativeZero(Source(triple));
     else
       #JDM: use objectify here...
-      return ReesZeroMatrixSemigroupElement(Range(triple), i^lambda,
-       f[i]*ImageElm(gamma,g)/f[j], j^lambda-m);
+      return RMSElement(Range(triple), i^lambda, f[i]*ImageElm(gamma,g)/f[j],
+        j^lambda-m);
     fi;
   else 
     return x;
