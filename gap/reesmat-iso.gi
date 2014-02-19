@@ -65,7 +65,7 @@ function(R, l, g, x, component)
   mat:=Matrix(R); m:=Length(mat[1]); n:=Length(mat); graph:=RZMSGraph(R);
 
   rep:=Minimum(component);
-  out:=EmptyPlist([1..m+n]);
+  out:=EmptyPlist(m+n);
   out[rep]:=x;
 
   if Length(component)=Length(Vertices(graph)) then 
