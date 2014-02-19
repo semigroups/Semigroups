@@ -8,6 +8,27 @@
 #############################################################################
 ##
 
+InstallMethod(MatrixEntries, "for a Rees matrix semigroup",
+[IsReesMatrixSemigroup], 
+function(R)
+  local P;
+  return Union(Matrix(R){Columns(R)}{Rows(R)}); 
+  # in case R is a proper subsemigroup of another RMS
+end);
+
+InstallMethod(MatrixEntries, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local P;
+  P:=Union(Matrix(R){Columns(R)}{Rows(R)}); 
+  if P[1]=0 then 
+    Remove(P, 1);
+  fi;
+  return P;
+end);
+
+#
+
 InstallMethod(GreensHClassOfElement, "for a RZMS, pos int, and pos int",
 [IsReesZeroMatrixSemigroup, IsPosInt, IsPosInt],
 function(R, i, j)
