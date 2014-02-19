@@ -139,7 +139,7 @@ else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k, components, h, max, gen, choice, basicgens, maxgens, comp, col, row, NonGroupRecursion, nrcomponents;
+    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k, components, h, max, gen, choice, basicgens, maxgens, comp, col, row, NonGroupRecursion, nrcomponents, transversal;
     
     if not IsReesZeroMatrixSemigroup(R) then 
       TryNextMethod(); 
@@ -192,6 +192,10 @@ else
     
     graph:=RZMSGraph(R);
     components:=ConnectedComponents(graph);
+    nrcomponents:=Length(components);
+
+    Info(InfoSemigroups, 3, 
+     "The matrix has ", nrcomponents, " connected components");
   
     # Add to the generators one element which *must* be in each group h-class
     basicgens:=[MultiplicativeZero(R)];
@@ -205,10 +209,10 @@ else
   
     # pick a distinguished group h-class, indexed by i and j. We arbitrarily choose the first one of the first component.
     # This group H-class will contain the elts of the coset (max*mat[j][i]^-1) for each maximal subgroup
-    i:=components[1][1][1];
-    j:=components[1][1][2];
+    # NEED MORE THOUGHT IN BELOW SELECTION
+    i:=components[1][1];
+    j:=components[1][Length(components[1])]-Length(mat[1]);
   
-    nrcomponents:=Length(components);
     if nrcomponents > 1 then
       col:=EmptyPlist(Length(components)-1);
       row:=EmptyPlist(Length(components)-1);
@@ -216,11 +220,11 @@ else
       #Remove below block, can get required info on the fly
       # Select the distinguished non-group H-classes which we'll need from each 'block' to put our generators in
       for k in [2..Length(components)] do
-        Add(col,components[k][1][2]);
+        Add(col,components[k][Length(components[k])]-Length(mat[1]));
         # So components[k][1] is a group H-class H_x,y in the connected component #k
         # Now need to pick any non-group H-class in its 'complementary block'
         # We choose H_i,y
-        Add(row,components[k][1][1]);
+        Add(row,components[k][1]);
         # We also need to pick any non-group H-class in its 'complementary block'
         # We choose H_x,j
       od;
@@ -231,16 +235,18 @@ else
     
       if not k = 1 then
         t:=ClosureSemigroup(t, choice);
+      else
+      	choice:=[MultiplicativeZero(R)];
       fi;
 
       # Test if adding our new choice has already made too much stuff
       if Size(GreensHClassOfElementNC(t, choice[1])) <= Size(max) then
         # If we're okay, but not made all our choices yet, make another choice and continue recursion
-        if component < nrcomponents then
-          for x in trans do
+        if k < nrcomponents then
+          for x in transversal do
             h:=mat[col[k]][row[k]]^(-1)*x^(-1)*mat[j][i]^(-1);
             newchoice:=[RMSElement(R, i, x, col[k]), RMSElement(R, row[k], h, j)];
-            CaseyRecursion(k+1, t, newchoice);
+            NonGroupRecursion(k+1, t, newchoice);
           od;
         # Otherwise we've found a valid result. I believe.
         else
@@ -254,13 +260,10 @@ else
   
     for max in MaximalSubgroups(G) do
 
-      trans:=RightTransversal(G,max);
+      transversal:=RightTransversal(G,max);
       # Get generators for our distinguished h-class in first component, and start recursion
-      maxgens:=List(
-        Generators(max), x-> ReesZeroMatrixSemigroupElement(R, i, x*(mat[j][i]^-1), j) 
-      );
-      t:=Semigroup(basicgens, maxgens);
-      CaseyRecursion(1, t, []);
+      maxgens:=List(Generators(max), x-> RMSElement(R, i, x*(mat[j][i]^-1), j) );
+      NonGroupRecursion(1, Semigroup(basicgens, maxgens), []);
     od;
     
     
@@ -420,15 +423,14 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, reps, classes, D, lookup, count, max, max2, found_case1, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
+  local out, gens, po, reps, classes, D, lookup, count, max, found_case1, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
   
   if Size(S) = 1 then
     return [];
   fi;
   
-  # Should be made into its own method or something
   if IsGroupAsSemigroup(S) then
-    max2:=function(S)
+    max:=function(S)
       local out, G, iso, inv, max, g, gens;
   
       out:=[];
@@ -440,9 +442,7 @@ function(S)
         gens:=GeneratorsOfSemigroup(g);
         Add(out, Semigroup(Images(inv,gens)));
       od;
-  
       return out;
-  
     end;
     return max2(S);
   fi;
@@ -607,6 +607,7 @@ function(S)
       G:=UnderlyingSemigroup(R); 
       I:=Rows(R); J:=Columns(R);
              
+      ## Below is wrong and needs to change to include our new understanding
       tot:=0;
       for H in MaximalSubgroups(G) do
         UU:=GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J);
