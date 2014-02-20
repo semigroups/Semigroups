@@ -8,6 +8,25 @@
 #############################################################################
 ##
 
+# this file contains functions for isomorphisms and automorphisms of Rees matrix
+# and 0-matrix semigroup.
+
+InstallGlobalFunction(HashFunctionMatrixOfRMS,
+function(P, data)
+  return Sum(List(P, x-> ORB_HashFunctionForPlainFlatList(x, data))) mod data+1;
+end);
+
+#
+
+InstallMethod(ChooseHashFunction, 
+"for Rees matrix semigroup matrix, and integer", 
+[IsListOrCollection and IsDenseList and IsHomogeneousList, IsInt], 
+function(P, data)  
+  return rec(func:=HashFunctionMatrixOfRMS, data:=data);  
+end); 
+
+#
+
 InstallMethod(ViewObj, "for the automorphism group of a Rees matrix semigroup", 
 [IsAutomorphismGroupOfRMS], 
 function(A)

@@ -27,3 +27,5 @@ DeclareOperation("ELM_LIST", [IsRZMSIsoByTriple, IsPosInt]);
 
 DeclareProperty("IsAutomorphismGroupOfRMS", IsAutomorphismGroup);
 DeclareProperty("IsAutomorphismGroupOfRZMS", IsAutomorphismGroup);
+
+DeclareGlobalFunction("HashFunctionMatrixOfRMS");
