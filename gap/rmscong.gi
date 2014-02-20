@@ -3,14 +3,30 @@ InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
  IsGroup,
  IsDenseList,
  IsDenseList],
-function(s, n, colRel, rowRel)
-  local fam, cong;
+function(s, n, colBlocks, rowBlocks)
+  local fam, cong, colLookup, rowLookup, i, j;
+  # Calculate lookup table for equivalence relations
+  colLookup := [];
+  rowLookup := [];
+  for i in [1..Length(colBlocks)] do
+    for j in colBlocks[i] do
+      colLookup[j] := i;
+    od;
+  od;
+  for i in [1..Length(rowBlocks)] do
+    for j in rowBlocks[i] do
+      rowLookup[j] := i;
+    od;
+  od;
+  # Construct the object
   fam := GeneralMappingsFamily(
                  ElementsFamily(FamilyObj(s)),
                  ElementsFamily(FamilyObj(s)) );
   cong := Objectify(
                   NewType(fam, IsRMSCongruenceByLinkedTriple),
-                  rec(n := n, colRel := colRel, rowRel := rowRel) );
+                  rec(n := n,
+                      colBlocks := colBlocks, colLookup := colLookup,
+                      rowBlocks := rowBlocks, rowLookup := rowLookup) );
   SetSource(cong, s);
   SetRange(cong, s);
   return cong;
@@ -20,8 +36,7 @@ end);
 
 InstallMethod(\in,
 "for a Rees 0-matrix semigroup element collection and a semigroup congruence by linked triple",
-[IsReesZeroMatrixSemigroupElementCollection,
- IsRMSCongruenceByLinkedTriple],
+[IsReesZeroMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
 function(pair, cong)
   local s, mat,
         row, col, rows, cols,
@@ -35,26 +50,25 @@ function(pair, cong)
   fi;
   s := Range(cong);
   if not ForAll(pair, x-> x in s) then
-    Error("usage: the elements of the 1st argument <pair> must be in the range of the 2nd argument <cong>,");
+    Error("usage: the elements of the 1st argument <pair> ",
+          "must be in the range of the 2nd argument <cong>,");
     return;
   fi;
   
-  # Trivial case which also covers (0,0)
+  # Handling the case when one or more of the pair are zero
   if pair[1] = pair[2] then
     return true;
+  elif MultiplicativeZero(s) in pair then
+    return false;
   fi;
   
   # Read the elements as (i,a,u) and (j,b,v)
-  i := pair[1][1];
-  a := pair[1][2];
-  u := pair[1][3];
-  j := pair[2][1];
-  b := pair[2][2];
-  v := pair[2][3];
+  i := pair[1][1]; a := pair[1][2]; u := pair[1][3];
+  j := pair[2][1]; b := pair[2][2]; v := pair[2][3];
   
   # First, the columns and rows must be related
-  if not (i in EquivalenceClassOfElement(cong!.colRel, j) and
-          u in EquivalenceClassOfElement(cong!.rowRel, v)) then
+  if not (cong!.colLookup[i] = cong!.colLookup[j] and
+          cong!.rowLookup[u] = cong!.rowLookup[v]) then
     return false;
   fi;
   
@@ -207,7 +221,7 @@ function(cong)
       od;
     od;
   od;
-  colRel := EquivalenceRelationByPairsNC([1..Size(cols)], pairs); #TODO: Find out if this is okay
+  colRel := EquivalenceRelationByPairsNC([1..Size(cols)], pairs);
   
   # FIND THE RELATION ON THE SET OF ROWS
   rows := m;
@@ -223,17 +237,9 @@ function(cong)
       od;
     od;
   od;
-  rowRel := EquivalenceRelationByPairsNC([1..Size(rows)], pairs); #TODO: Find out if this is okay
+  rowRel := EquivalenceRelationByPairsNC([1..Size(rows)], pairs);
   
   return [n, colRel, rowRel];
 end);
 
 #
-
-# InstallMethod(\in,
-# "for an associative element collection and a semigroup congruence with linked triple",
-# [IsAssociativeElementCollection,
-#  IsSemigroupCongruence and HasLinkedTriple],
-# function(pair, cong)
-#   return fail;
-# end);
