@@ -94,8 +94,7 @@ function(R)
   # maximal subgroup of G
   Info(InfoSemigroups, 3, 
    "Case 1: maximal subsemigroups arising from maximal subgroups...");
-  basicgens:=[];
-  
+  basicgens:=[]; 
   # The below 3 loops use more code, but ensure a smallest generating set
   for i in [1..Minimum(Length(I),Length(J))] do
     Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
@@ -369,7 +368,6 @@ else
 
     Info(InfoSemigroups, 3, "...found ", Length(rectangles));
     
-
     gens:=GeneratorsOfGroup(G);
     
     Info(InfoSemigroups, 3, 
@@ -423,7 +421,7 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, reps, classes, D, lookup, count, max, found_case1, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
+  local out, gens, po, reps, classes, D, lookup, count, max, found_case1, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H, basicgens, graph, components, nrcomponents, rows, NonGroupRecursion, transversal, maxgens, mat, h;
   
   if Size(S) = 1 then
     return [];
@@ -594,7 +592,7 @@ function(S)
         return;
       end;
       
-      # Case 1: Max. subsemigroups which intersect every H-class of classes[i]     
+      # Case 1: Max. subsemigroups which intersect every H-class of classes[i]
       Info(InfoSemigroups, 2, "\n\nCase 1: Looking for maximal subsemigroups ",
         "which intersect every H-class of the D-class\n");    
       gens3:=gens{lookup[i]};
@@ -606,12 +604,23 @@ function(S)
     
       G:=UnderlyingSemigroup(R); 
       I:=Rows(R); J:=Columns(R);
-             
-      ## Below is wrong and needs to change to include our new understanding
-      tot:=0;
-      for H in MaximalSubgroups(G) do
-        UU:=GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J);
-        if Size(Semigroup(UU))<Size(R) then
+      mat:=Matrix(R);
+      
+            tot:=0;
+
+if IsReesMatrixSemigroup(R) then
+
+  basicgens:=[]; 
+  for i in [1..Minimum(Length(I),Length(J))] do
+    Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
+  od; for i in [Length(J)+1..Length(I)] do
+    Add(basicgens, RMSElement(R, i, (mat[1][i]^-1), 1)); 
+  od; for j in [Length(I)+1..Length(J)] do
+    Add(basicgens, RMSElement(R, 1, (mat[j][1]^-1), j)); 
+  od;
+  for H in MaximalSubgroups(G) do
+    UU:=Semigroup(basicgens, List(Generators(H), x->RMSElement(R, 1, x*(mat[1][1]^-1), 1)));
+    if Size(UU)<Size(R) then
           UU:=Semigroup(Images(inj, UU), U);
           if ForAny(gens3, x-> not x in UU) then
             Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
@@ -619,11 +628,92 @@ function(S)
             Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
             tot:=tot+1;
           fi;
+    fi;
+  od;
+  
+elif IsReesZeroMatrixSemigroup(R) then
+
+
+    
+    graph:=RZMSGraph(R);
+    components:=ConnectedComponents(graph);
+    nrcomponents:=Length(components);
+    rows:=Length(I);
+
+    Info(InfoSemigroups, 3, 
+     "...the matrix has ", nrcomponents, " connected component(s)");
+  
+    # Add to the generators one element which *must* be in each group H-class of
+    # any maximal subsemigroup of the Case 1 form.
+    basicgens:=[];
+    for i in I do
+      for j in J do
+        if mat[j][i] <> 0 then
+        Add(basicgens, RMSElement(R, i, (mat[j][i]^-1), j));
         fi;
       od;
+    od;
+  
+    # Pick a distinguished group H-class in the first component: H_i,j
+    # For each maximal subgroup H we have: H_i,j = (i, H*(mat[j][i]^-1), j)  
+    i:=1; j:=graph.adjacencies[1][1] - rows;
+
+    # Recursive depth-first search    
+    NonGroupRecursion:=function(k, t, choice)
+      local nextchoice, x, a, b;
+    
+      if k = 1 then
+        t:=Semigroup(basicgens, choice);
+      else
+      	t:=ClosureSemigroup(t, choice);
+      fi;
+
+      # Test if adding our new choice has already made too much stuff
+      # This below logical condition needs improving if possible
+      # As well as proving that beyond the first component, is this even necessary?
+      if Size(GreensHClassOfElementNC(t, choice[1])) <= Size(H) then
+        # Make next choice, if any left to make.
+        if k < nrcomponents then
+          for x in transversal do
+            a:=components[k+1][1];
+            b:=graph.adjacencies[a][1] - rows;
+            h:=mat[b][a]^(-1) * x^(-1) * mat[j][i]^(-1);
+            nextchoice:=[RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
+            NonGroupRecursion(k+1, t, nextchoice);
+          od;
+        else
+          UU:=Semigroup(Images(inj, GeneratorsOfSemigroup(t)), U);
+          if ForAny(gens3, z-> not z in UU) then
+            Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
+              "intersects every H-class of the D-class");
+            Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
+            tot:=tot+1;
+          fi;
+        fi;
+      fi;
+      
+      # At this stage, can we rule out other cases from the level above?
+      return;
+    end;
+  
+    # For each max subgroup, start recursion with basic gens, and gens for H_i,j
+    for H in MaximalSubgroups(G) do
+      transversal:=RightTransversal(G,H);
+      maxgens:=List(GeneratorsOfSemigroup(H), x->RMSElement(R, i, x*(mat[j][i]^-1), j));
+      NonGroupRecursion(1, fail, maxgens);
+    od;
+
+
+
+
+  
+fi;
+             
+
       
       if tot > 0 then
         found_case1:=true;
+        Info(InfoSemigroups, 2, "Found ", tot, " such results\n");    
       else
         found_case1:=false;
         Info(InfoSemigroups, 2, "Found no such results\n");    
