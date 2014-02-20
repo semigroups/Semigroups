@@ -63,6 +63,9 @@ else
     blist, right, pruner, lambda, gamma, entries;
 
     G:=UnderlyingSemigroup(R);
+    if not IsGroup(G) then 
+      return fail;
+    fi;
     mat:=Matrix(R); m:=Length(mat[1]); n:=Length(mat);
 
     if n=1 and m=1 then
@@ -70,8 +73,10 @@ else
        RMSIsoByTriple(R, R, [(), x, [One(G), One(G)]])));
     elif n=2 and m=1 then 
       agraph:=Group((2,3));
+      SetSize(agraph, 2);
     elif n>2 and m=1 then 
       agraph:=Group((2,3), PermList(Concatenation([1],[3..n+m],[2]))); 
+      SetSize(agraph, Factorial(n));
     else 
       agraph:=DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
     fi;
@@ -96,6 +101,7 @@ else
     hom:=NaturalHomomorphismByNormalSubgroupNC(agroup,
      InnerAutomorphismsAutomorphismGroup(agroup));
     iso:=IsomorphismPermGroup(ImagesSource(hom));      
+    #iso:=IsomorphismPermGroup(agroup); 
     inv:=InverseGeneralMapping(iso);
      
     Info(InfoSemigroups, 2, "calculating the stabilizer of the matrix entries...");
@@ -118,6 +124,7 @@ else
     if S1.size<>1 or not IsTrivial(S2) then  
       U:=Group(Concatenation(
         Images(Embedding(V, 1), GeneratorsOfGroup(S1.stab)),
+        #Images(Embedding(V, 2), GeneratorsOfGroup(Image(iso, S2))))); 
         Images(Embedding(V, 2), GeneratorsOfGroup(Image(iso, Image(hom, S2)))))); 
     else 
       U:=Group(());
@@ -154,6 +161,7 @@ else
         for g in T do 
           if RMSInducedFunction(R, x, PreImagesRepresentative(hom, (x^proj2)^inv),
            g)[1] then 
+          #if RMSInducedFunction(R, x, (x^proj2)^inv, g)[1] then 
             return true;
           fi;
         od;
@@ -179,7 +187,9 @@ else
     A:=[];
     for g in T do
       for x in GeneratorsOfGroup(V) do 
-        lambda:=x^proj1;  gamma:=PreImagesRepresentative(hom, (x^proj2)^inv);
+        lambda:=x^proj1;  
+        #gamma:=(x^proj2)^inv;
+        gamma:=PreImagesRepresentative(hom, (x^proj2)^inv);
         x:=RMSInducedFunction(R, lambda, gamma, g); 
         if x[1] then 
           x:=RMSIsoByTriple(R, R, [lambda, gamma, x[2]]);
