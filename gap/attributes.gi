@@ -247,7 +247,7 @@ else
     # For each max subgroup, start recursion with basic gens, and gens for H_i,j
     for H in MaximalSubgroups(G) do
       transversal:=RightTransversal(G,H);
-      maxgens:=List(Generators(H), x->RMSElement(R, i, x*(mat[j][i]^-1), j));
+      maxgens:=List(GeneratorsOfSemigroup(H), x->RMSElement(R, i, x*(mat[j][i]^-1), j));
       NonGroupRecursion(1, fail, maxgens);
     od;
     
