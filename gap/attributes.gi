@@ -65,7 +65,7 @@ end);
 InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup",
 [IsReesMatrixSubsemigroup], 
 function(R)
-  local G, out, mat, I, J, P, U, H, j, i;
+  local G, out, mat, I, J, P, U, H, j, i, basicgens;
   
   if not IsReesMatrixSemigroup(R) then 
     TryNextMethod(); 
@@ -94,9 +94,21 @@ function(R)
   # maximal subgroup of G
   Info(InfoSemigroups, 3, 
    "Case 1: maximal subsemigroups arising from maximal subgroups...");
+  basicgens:=[];
+  
+  # The below 3 loops use more code, but ensure a smallest generating set
+  for i in [1..Minimum(Length(I),Length(J))] do
+    Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
+  od;
+  for i in [Length(J)+1..Length(I)] do
+    Add(basicgens, RMSElement(R, i, (mat[1][i]^-1), 1)); 
+  od;
+  for j in [Length(I)+1..Length(J)] do
+    Add(basicgens, RMSElement(R, 1, (mat[j][1]^-1), j)); 
+  od;
   for H in MaximalSubgroups(G) do
-    U:=Semigroup(GeneratorsOfReesMatrixSemigroupNC(R, I, H, J));
-    if Size(U)<Size(R) then 
+    U:=Semigroup(basicgens, List(Generators(H), x->RMSElement(R, 1, x*(mat[1][1]^-1), 1)));
+    if Size(U)<Size(R) then
       Add(out, U);
     fi;
   od;
@@ -111,6 +123,7 @@ function(R)
       Add(out, ReesMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
     od;
   fi;
+  Info(InfoSemigroups, 3, "...found ", Length(J));
   
   # Case 3: the dual of case 2.
   Info(InfoSemigroups, 3, 
@@ -120,6 +133,7 @@ function(R)
       Add(out, ReesMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
     od;
   fi;
+  Info(InfoSemigroups, 3, "...found ", Length(I));
 
   return out;
 end);
@@ -195,13 +209,13 @@ else
     nrcomponents:=Length(components);
 
     Info(InfoSemigroups, 3, 
-     "...the matrix has ", nrcomponents, " connected components");
+     "...the matrix has ", nrcomponents, " connected component(s)");
   
     # Add to the generators one element which *must* be in each group H-class of
     # any maximal subsemigroup of the Case 1 form.
     basicgens:=[MultiplicativeZero(R)];
-    for i in [1..Length(mat[1])] do
-      for j in [1..Length(mat)] do
+    for i in I do
+      for j in J do
         if mat[j][i] <> 0 then
         Add(basicgens, RMSElement(R, i, (mat[j][i]^-1), j));
         fi;
@@ -329,12 +343,12 @@ else
       Add(out, U);
     od;
 
-    Info(InfoSemigroups, 3, "...found ", Length(II));
+    Info(InfoSemigroups, 3, "...found ", Length(II)); pos:=Length(out);
 
     # Case 4: maximal rectangle of zeros in the matrix
     Info(InfoSemigroups, 3, 
      "Case 4: maximal subsemigroups obtained by removing a rectangle...");
-    Info(InfoSemigroups, 3, "...finding rectangles...");
+    Info(InfoSemigroups, 3, "finding rectangles...");
 
     len:=Length(mat[1]); # use <mat> to keep the indices correct
 
@@ -354,6 +368,7 @@ else
     rectangles:=CompleteSubgraphs(graph);
 
     Info(InfoSemigroups, 3, "...found ", Length(rectangles));
+    
 
     gens:=GeneratorsOfGroup(G);
     
@@ -398,6 +413,7 @@ else
       od;
       Add(out, Semigroup(new, [MultiplicativeZero(R)]));
     od;
+    Info(InfoSemigroups, 3, "...found ", Length(out)-pos);
     return out;
   end);
 fi;
