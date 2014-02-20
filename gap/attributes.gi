@@ -139,7 +139,7 @@ else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k, components, h, max, gen, choice, basicgens, maxgens, comp, col, row, NonGroupRecursion, nrcomponents, transversal;
+    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k, components, h, maxgens, gen, basicgens, NonGroupRecursion, nrcomponents, transversal, rows;
     
     if not IsReesZeroMatrixSemigroup(R) then 
       TryNextMethod(); 
@@ -161,7 +161,7 @@ else
       fi;
     fi;
 
-    out:=[]; I:=Rows(R); J:=Columns(R); mat:=Matrix(R);     
+    out:=[]; I:=Rows(R); J:=Columns(R); mat:=Matrix(R); rows:=Length(I);   
    
     # find the set of group elements in the matrix
     P:=Union(mat{J}{I});
@@ -195,9 +195,10 @@ else
     nrcomponents:=Length(components);
 
     Info(InfoSemigroups, 3, 
-     "The matrix has ", nrcomponents, " connected components");
+     "...the matrix has ", nrcomponents, " connected components");
   
-    # Add to the generators one element which *must* be in each group h-class
+    # Add to the generators one element which *must* be in each group H-class of
+    # any maximal subsemigroup of the Case 1 form.
     basicgens:=[MultiplicativeZero(R)];
     for i in [1..Length(mat[1])] do
       for j in [1..Length(mat)] do
@@ -207,65 +208,48 @@ else
       od;
     od;
   
-    # pick a distinguished group h-class, indexed by i and j. We arbitrarily choose the first one of the first component.
-    # This group H-class will contain the elts of the coset (max*mat[j][i]^-1) for each maximal subgroup
-    # NEED MORE THOUGHT IN BELOW SELECTION
-    i:=components[1][1];
-    j:=components[1][Length(components[1])]-Length(mat[1]);
-  
-    if nrcomponents > 1 then
-      col:=EmptyPlist(Length(components)-1);
-      row:=EmptyPlist(Length(components)-1);
-      
-      #Remove below block, can get required info on the fly
-      # Select the distinguished non-group H-classes which we'll need from each 'block' to put our generators in
-      for k in [2..Length(components)] do
-        Add(col,components[k][Length(components[k])]-Length(mat[1]));
-        # So components[k][1] is a group H-class H_x,y in the connected component #k
-        # Now need to pick any non-group H-class in its 'complementary block'
-        # We choose H_i,y
-        Add(row,components[k][1]);
-        # We also need to pick any non-group H-class in its 'complementary block'
-        # We choose H_x,j
-      od;
-    fi;
-  
+    # Pick a distinguished group H-class in the first component: H_i,j
+    # For each maximal subgroup H we have: H_i,j = (i, H*(mat[j][i]^-1), j)  
+    i:=1; j:=graph.adjacencies[1][1] - rows;
+
+    # Recursive depth-first search    
     NonGroupRecursion:=function(k, t, choice)
-      local newchoice, x;
+      local nextchoice, x, a, b;
     
-      if not k = 1 then
-        t:=ClosureSemigroup(t, choice);
+      if k = 1 then
+        t:=Semigroup(basicgens, choice);
       else
-      	choice:=[MultiplicativeZero(R)];
+      	t:=ClosureSemigroup(t, choice);
       fi;
 
       # Test if adding our new choice has already made too much stuff
-      if Size(GreensHClassOfElementNC(t, choice[1])) <= Size(max) then
-        # If we're okay, but not made all our choices yet, make another choice and continue recursion
+      # This below logical condition needs improving if possible
+      # As well as proving that beyond the first component, is this even necessary?
+      if Size(GreensHClassOfElementNC(t, choice[1])) <= Size(H) then
+        # Make next choice, if any left to make.
         if k < nrcomponents then
           for x in transversal do
-            h:=mat[col[k]][row[k]]^(-1)*x^(-1)*mat[j][i]^(-1);
-            newchoice:=[RMSElement(R, i, x, col[k]), RMSElement(R, row[k], h, j)];
-            NonGroupRecursion(k+1, t, newchoice);
+            a:=components[k+1][1];
+            b:=graph.adjacencies[a][1] - rows;
+            h:=mat[b][a]^(-1) * x^(-1) * mat[j][i]^(-1);
+            nextchoice:=[RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
+            NonGroupRecursion(k+1, t, nextchoice);
           od;
-        # Otherwise we've found a valid result. I believe.
         else
           Add(out, t);
         fi;
       fi;
-    
-      # at this stage, can we rule out other cases from the level above?
+      
+      # At this stage, can we rule out other cases from the level above?
       return;
     end;
   
-    for max in MaximalSubgroups(G) do
-
-      transversal:=RightTransversal(G,max);
-      # Get generators for our distinguished h-class in first component, and start recursion
-      maxgens:=List(Generators(max), x-> RMSElement(R, i, x*(mat[j][i]^-1), j) );
-      NonGroupRecursion(1, Semigroup(basicgens, maxgens), []);
+    # For each max subgroup, start recursion with basic gens, and gens for H_i,j
+    for H in MaximalSubgroups(G) do
+      transversal:=RightTransversal(G,H);
+      maxgens:=List(Generators(H), x->RMSElement(R, i, x*(mat[j][i]^-1), j));
+      NonGroupRecursion(1, fail, maxgens);
     od;
-    
     
     Info(InfoSemigroups, 3, "...found ", Length(out));
 
@@ -350,7 +334,7 @@ else
     # Case 4: maximal rectangle of zeros in the matrix
     Info(InfoSemigroups, 3, 
      "Case 4: maximal subsemigroups obtained by removing a rectangle...");
-    Info(InfoSemigroups, 3, "finding rectangles...");
+    Info(InfoSemigroups, 3, "...finding rectangles...");
 
     len:=Length(mat[1]); # use <mat> to keep the indices correct
 
@@ -444,7 +428,7 @@ function(S)
       od;
       return out;
     end;
-    return max2(S);
+    return max(S);
   fi;
   
   # preprocessing...
