@@ -25,3 +25,5 @@ DeclareGlobalFunction("RZMSIsoByTriple");
 DeclareOperation("ELM_LIST", [IsRMSIsoByTriple, IsPosInt]);
 DeclareOperation("ELM_LIST", [IsRZMSIsoByTriple, IsPosInt]);
 
+DeclareProperty("IsAutomorphismGroupOfRMS", IsAutomorphismGroup);
+DeclareProperty("IsAutomorphismGroupOfRZMS", IsAutomorphismGroup);
