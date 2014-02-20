@@ -1,3 +1,16 @@
+InstallMethod(ViewObj,
+"for Rees zero-matrix semigroup congruence by linked triple",
+[IsRMSCongruenceByLinkedTriple],
+function(cong)
+  local rows, cols;
+  rows := Size(Rows(Range(cong)));
+  cols := Size(Columns(Range(cong)));
+  Print("<semigroup congruence by linked triple on ",
+        rows, "x", cols, " Rees 0-matrix semigroup>");
+end);
+
+#
+
 InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
 [IsReesZeroMatrixSemigroup and IsFinite,
  IsGroup,
