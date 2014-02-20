@@ -8,6 +8,230 @@
 #############################################################################
 ##
 
+# this file contains functions for isomorphisms and automorphisms of Rees matrix
+# and 0-matrix semigroup.
+
+InstallGlobalFunction(HashFunctionMatrixOfRMS,
+function(P, data)
+  return Sum(List(P, x-> ORB_HashFunctionForPlainFlatList(x, data))) mod data+1;
+end);
+
+#
+
+InstallMethod(ChooseHashFunction, 
+"for Rees matrix semigroup matrix, and integer", 
+[IsListOrCollection and IsDenseList and IsHomogeneousList, IsInt], 
+function(P, data)  
+  return rec(func:=HashFunctionMatrixOfRMS, data:=data);  
+end); 
+
+#
+
+InstallMethod(ViewObj, "for the automorphism group of a Rees matrix semigroup", 
+[IsAutomorphismGroupOfRMS], 
+function(A)
+  Print("<automorphism group of ");
+  ViewObj(Source(A.1));
+  Print( " with ", Length(GeneratorsOfGroup(A)), " generator");
+  if Length(GeneratorsOfGroup(A))>1 then 
+    Print("s");
+  fi;
+  Print(">");
+  return;
+end);
+
+#
+
+InstallMethod(IsomorphismPermGroup, 
+"for the automorphism group of a Rees matrix semigroup",
+[IsAutomorphismGroupOfRMS],
+function(A)
+  local B, R, iso, x;
+
+  B:=[]; R:=Source(A.1);
+  for x in GeneratorsOfGroup(A) do 
+    Add(B, Permutation(x, R, POW));
+  od;
+  B:=Group(B);
+  
+  iso:=GroupHomomorphismByImagesNC(A, B, GeneratorsOfGroup(A),
+   GeneratorsOfGroup(B));
+  SetInverseGeneralMapping(iso, 
+    GroupHomomorphismByImagesNC(B, A, GeneratorsOfGroup(B), GeneratorsOfGroup(A)));
+  SetNiceMonomorphism(A, iso);
+  SetIsHandledByNiceMonomorphism(A, true);
+  UseIsomorphismRelation(A, B);
+  return iso;
+end);
+
+#
+if not IsBound(GAPInfo.PackagesLoaded.genss) then 
+  InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
+  [IsReesMatrixSemigroup], 
+  function(R)
+    Info(InfoWarning, 1, "the GENSS package is not loaded, and so this function", 
+      "does not work");
+    return fail;
+  end); 
+else
+  InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
+  [IsReesMatrixSemigroup],
+  function(R)
+    local G, mat, m, n, agroup, A, hom, agraph, OnMatrix, S1, S2, mat_elts, U, V,
+    iso, inv, T, tester, y, D, P, elts, B, g, x, proj1, proj2, stab, gens, i,
+    blist, right, pruner, lambda, gamma, entries;
+
+    G:=UnderlyingSemigroup(R);
+    if not IsGroup(G) then 
+      return fail;
+    fi;
+    mat:=Matrix(R); m:=Length(mat[1]); n:=Length(mat);
+
+    if n=1 and m=1 then
+      return Group(List(GeneratorsOfGroup(AutomorphismGroup(G)), x-> 
+       RMSIsoByTriple(R, R, [(), x, [One(G), One(G)]])));
+    elif n=2 and m=1 then 
+      agraph:=Group((2,3));
+      SetSize(agraph, 2);
+    elif n>2 and m=1 then 
+      agraph:=Group((2,3), PermList(Concatenation([1],[3..n+m],[2]))); 
+      SetSize(agraph, Factorial(n));
+    else 
+      agraph:=DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
+    fi;
+
+    Info(InfoSemigroups, 2, "calculating the automorphism group of the group...");
+    agroup:=AutomorphismGroup(G);
+    Info(InfoSemigroups, 3, "...it has size", Size(agroup));
+
+    OnMatrix:=function(mat, x)
+      local x2;
+      mat:=StructuralCopy(mat);
+      x2:=Permutation(x, [1..n], function(i, p) return (i+m)^p-m; end);
+      return List(Permuted(mat, x2), y-> Permuted(y, x));
+    end;
+
+    Info(InfoSemigroups, 2, "calculating the stabilizer of the matrix...");
+    S1:=Stab(agraph, mat, OnMatrix);
+    Info(InfoSemigroups, 2, "...it has size ", Size(S1.stab));
+   
+    Info(InfoSemigroups, 2, "calculating an isomorphism from the automorphisms",
+    " of the group to a\n#I  perm group...");
+    hom:=NaturalHomomorphismByNormalSubgroupNC(agroup,
+     InnerAutomorphismsAutomorphismGroup(agroup));
+    iso:=IsomorphismPermGroup(ImagesSource(hom));      
+    #iso:=IsomorphismPermGroup(agroup); 
+    inv:=InverseGeneralMapping(iso);
+     
+    Info(InfoSemigroups, 2, "calculating the stabilizer of the matrix entries...");
+    S2:=agroup; 
+    entries:=MatrixEntries(R);
+    if entries[1]=() then 
+      i:=1;
+    else
+      i:=0;
+    fi;
+    
+    while not IsTrivial(S2) and i<Length(entries) do 
+      i:=i+1;
+      S2:=Stabilizer(S2, entries[i], OnPoints);
+    od;
+
+    Info(InfoSemigroups, 2, "...it has size ", Size(S2));
+    
+    V:=DirectProduct(agraph, Image(iso));
+    if S1.size<>1 or not IsTrivial(S2) then  
+      U:=Group(Concatenation(
+        Images(Embedding(V, 1), GeneratorsOfGroup(S1.stab)),
+        #Images(Embedding(V, 2), GeneratorsOfGroup(Image(iso, S2))))); 
+        Images(Embedding(V, 2), GeneratorsOfGroup(Image(iso, Image(hom, S2)))))); 
+    else 
+      U:=Group(());
+    fi;
+
+    proj1:=Projection(V, 1);
+    proj2:=Projection(V, 2);
+    T:=RightTransversal(G, Centre(G));
+    
+    Info(InfoSemigroups, 2, "calculating a stabilizer chain for the direct product", 
+    " of the automorphism\n#I  groups of the group and the graph...");
+    stab:=StabilizerChain(V);
+    
+    if Size(U)<>Size(V) then 
+      if Size(U)=1 then 
+        pruner:=false;
+      else
+        blist:=BlistList([1..Index(V, U)], [1]);
+        right:=RightTransversal(V, U);
+        pruner:=function(chain, j, x, y, word)
+          local pos;
+          pos:=PositionCanonical(right, x);
+          if blist[pos] then  # we visited this coset before...
+            return false;     # don't continue searching in this subtree...
+          else
+            blist[pos]:=true;
+            return true;
+          fi;
+        end;
+      fi;
+      
+      tester:=function(x)
+        local g;
+        for g in T do 
+          if RMSInducedFunction(R, x, PreImagesRepresentative(hom, (x^proj2)^inv),
+           g)[1] then 
+          #if RMSInducedFunction(R, x, (x^proj2)^inv, g)[1] then 
+            return true;
+          fi;
+        od;
+        return false;
+      end;
+      
+      Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
+      Size(V), "...");
+      stab:=BacktrackSearchStabilizerChainSubgroup(stab, tester, pruner);
+    fi;
+    
+    #JDM there must be a better way!
+    V:=Group(());
+    Info(InfoSemigroups, 2, "processing generators for the subgroup...");
+    for x in StrongGenerators(stab) do 
+      V:=ClosureGroup(V, x);
+      if Size(V)=Size(stab) then 
+        break;
+      fi;
+    od;
+    
+    Info(InfoSemigroups, 2, "converting generators of the subgroup...");
+    A:=[];
+    for g in T do
+      for x in GeneratorsOfGroup(V) do 
+        lambda:=x^proj1;  
+        #gamma:=(x^proj2)^inv;
+        gamma:=PreImagesRepresentative(hom, (x^proj2)^inv);
+        x:=RMSInducedFunction(R, lambda, gamma, g); 
+        if x[1] then 
+          x:=RMSIsoByTriple(R, R, [lambda, gamma, x[2]]);
+          AddSet(A, x);
+        fi;
+      od;
+
+      x:=RMSInducedFunction(R, One(agraph), One(agroup), g);
+      if x[1] then 
+        x:=RMSIsoByTriple(R, R, [One(agraph), One(agroup), x[2]]);
+        AddSet(A, x);
+      fi;
+    od;
+    
+    A:=Group(A); 
+    SetIsGroupOfAutomorphisms(A, true);
+    SetIsAutomorphismGroupOfRMS(A, true);
+    SetIsFinite(A, true);
+
+    return A;
+  end);
+fi;
+
 #
 
 InstallMethod(IdentityMapping, "for a Rees matrix semigroup", 
@@ -65,7 +289,7 @@ function(R, l, g, x, component)
   mat:=Matrix(R); m:=Length(mat[1]); n:=Length(mat); graph:=RZMSGraph(R);
 
   rep:=Minimum(component);
-  out:=EmptyPlist([1..m+n]);
+  out:=EmptyPlist(m+n);
   out[rep]:=x;
 
   if Length(component)=Length(Vertices(graph)) then 

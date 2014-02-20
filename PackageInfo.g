@@ -79,7 +79,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7.3",
   NeededOtherPackages := [["orb", ">=4.6"], ["io", ">=4.2"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
+  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
+  ["genss", ">=1.5"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue, 
   Autoload := false,
