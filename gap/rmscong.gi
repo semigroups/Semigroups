@@ -99,6 +99,20 @@ end);
 
 #
 
+InstallMethod(EquivalenceClassOfElement,
+"for a Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
+[IsRMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
+function(cong, elt)
+  if not elt in Range(cong) then
+    Error("usage: 2nd argument <elt> should be ",
+          "in the semigroup of 1st argument <cong>");
+    return;
+  fi;
+  # CODE GOES HERE
+end);
+
+#
+
 InstallMethod(SemigroupCongruenceByLinkedTriple,
 "for a Rees zero matrix semigroup and a linked triple",
 [IsReesZeroMatrixSemigroup and IsFinite,
