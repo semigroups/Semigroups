@@ -8,14 +8,3 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("TikzStringForBlocks");
-DeclareGlobalFunction("TikzStringForBipartition");
-
-DeclareGlobalFunction("TikzBipartition");
-DeclareGlobalFunction("TikzBipartitionRight");
-DeclareGlobalFunction("TikzBipartitionLeft");
-DeclareGlobalFunction("TikzBipartitionLeftRight");
-DeclareGlobalFunction("TikzRightBlocks");
-DeclareGlobalFunction("TikzLeftBlocks");
-DeclareGlobalFunction("TikzBlocks");
-
