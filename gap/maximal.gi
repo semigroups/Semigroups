@@ -114,9 +114,7 @@ else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    local G, out, I, J, mat, rows, P, new, pos, graph, components, nrcomponents,
-     basicgens, i, j, NonGroupRecursion, transversal, maxgens, JJ, solo, U, II,
-      len, names, rectangles, gens, H, r, k;
+    local G, out, I, J, mat, nrrows, graph, components, nrcomponents, P, basicgens, new, pos, i, j, NonGroupRecursion, transversal, maxgens, JJ, solo, U, II, len, names, rectangles, gens, H, r, k;
     
     if not IsReesZeroMatrixSemigroup(R) then 
       TryNextMethod(); 
@@ -194,7 +192,7 @@ else
 
     # Recursive depth-first search    
     NonGroupRecursion:=function(k, t, choice)
-      local nextchoice, x, a, b;
+      local nextchoice, x, a, b, h;
     
       if k = 1 then
         t:=Semigroup(basicgens, choice);

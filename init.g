@@ -48,5 +48,6 @@ ReadPackage("semigroups/gap/pictures.gd");
 ReadPackage("semigroups/gap/isomorph.gd");
 ReadPackage("semigroups/gap/reesmat.gd");
 ReadPackage("semigroups/gap/reesmat-iso.gd");
+ReadPackage("semigroups/gap/maximal.gd");
 
 DeclareInfoClass("InfoSemigroups");;
