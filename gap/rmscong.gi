@@ -11,11 +11,20 @@ end);
 
 #
 
+InstallGlobalFunction(RMSCongruenceByLinkedTriple,
+[IsReesZeroMatrixSemigroup and IsFinite,
+ IsGroup, IsDenseList, IsDenseList],
+function(s, n, colBlocks, rowBlocks)
+  # Check q-condition
+  # Check colRel and rowRel are valid
+  return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
+end);
+
+#
+
 InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
 [IsReesZeroMatrixSemigroup and IsFinite,
- IsGroup,
- IsDenseList,
- IsDenseList],
+ IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local fam, cong, colLookup, rowLookup, i, j;
   # Calculate lookup table for equivalence relations
