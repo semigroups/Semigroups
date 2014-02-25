@@ -16,29 +16,30 @@ InstallGlobalFunction(RMSCongruenceByLinkedTriple,
  IsGroup, IsDenseList, IsDenseList],
 # Check axioms (L1) and (L2) from Howie p.86, then call NC function
 function(s, n, colBlocks, rowBlocks)
-  local mat, zeroMask, block, validRows, validCols,
-        i, j, u, v, bi, bj, bu, bv;
+  local mat, block, i, j, u, v, bi, bj, bu, bv;
   mat := Matrix(s);
-  # Go through the columns
-  zeroMask := List(TransposedMat(mat), col-> List(col, x-> x<>0));
+  # Go through the column blocks
   for block in colBlocks do
     for bj in [2..Size(block)] do
-      # Check columns have zeroes in the same rows (L1)
-      if zeroMask[block[1]] <> zeroMask[block[bj]] then
-        Error("columns in the same block of 3rd argument <colBlocks> ",
-              "must have zeroes in precisely the same rows,");
-        return;
-      fi;
+      # Check columns have zeroes in all the same rows (L1)
+      for u in [1..Size(mat)] do
+        if (mat[u][block[1]] = 0) <> (mat[u][block[bj]] = 0) then
+          Error("columns in the same block of 3rd argument <colBlocks> ",
+                "must have zeroes in precisely the same rows,");
+          return;
+        fi;
+      od;
     od;
-    # Check q-condition (L2)
+    # Check q-condition for all pairs of rows in this block (L2)
     for bi in [1..Size(block)] do
       for bj in [bi+1..Size(block)] do
         i := block[bi];
         j := block[bj];
-        # Check all pairs of rows (u,v) which are non-zero in these columns
-        validRows := Positions(zeroMask[i], true);
-        for u in validRows do
-          for v in Filtered(validRows, x-> x > u) do
+        # Check all pairs of rows (u,v)
+        for u in [1..Size(mat)] do
+          if mat[u][i] = 0 then continue; fi;
+          for v in [u+1..Size(mat)] do
+            if mat[v][i] = 0 then continue; fi;
             if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
               Error("not a valid linked triple for this semigroup's matrix, ",
                     "cols ",i," and ",j,", rows ",u," and ",v,",");
@@ -49,27 +50,28 @@ function(s, n, colBlocks, rowBlocks)
     od;
   od;
   
-  # Go through the rows
-  zeroMask := List(mat, row-> List(row, x-> x<>0));
+  # Go through the row blocks
   for block in rowBlocks do
     for bv in [2..Size(block)] do
-      # Check rows have zeroes in the same columns (L1)
-      if zeroMask[block[1]] <> zeroMask[block[bv]] then
-        Error("rows in the same block of 4th argument <rowBlocks> ",
-              "must have zeroes in precisely the same columns,");
-        return;
-      fi;
+      # Check rows have zeroes in all the same columns (L1)
+      for i in [1..Size(mat[1])] do
+        if (mat[block[1]][i] = 0) <> (mat[block[bv]][i] = 0) then
+          Error("rows in the same block of 4th argument <rowBlocks> ",
+                "must have zeroes in precisely the same columns,");
+          return;
+        fi;
+      od;
     od;
-    # Check q-condition (L2)
+    # Check q-condition for all pairs of columns in this block (L2)
     for bu in [1..Size(block)] do
       for bv in [bi+1..Size(block)] do
         u := block[bu];
         v := block[bv];
-        # Check all pairs of columns (i,j) which are non-zero in these rows
-        validCols := Positions(zeroMask[i], true);
-        for i in validCols do
-          for j in Filtered(validCols, x-> x > i) do
-            # NOTE: some of these may have been checked before. Filter them out?
+        # Check all pairs of columns (i,j)
+        for i in [1..Size(mat[1])] do
+          if mat[u][i] = 0 then continue; fi;
+          for j in [i+1..Size(mat[1])] do
+            if mat[u][j] = 0 then continue; fi;
             if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
               Error("not a valid linked triple for this semigroup's matrix, ",
                     "rows ",u," and ",v,", cols ",i," and ",j,",");
@@ -79,7 +81,6 @@ function(s, n, colBlocks, rowBlocks)
       od;
     od;
   od;
-  
   return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
 end);
 
