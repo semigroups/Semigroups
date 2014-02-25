@@ -1,5 +1,6 @@
 # NEW
 DeclareCategory("IsRMSCongruenceByLinkedTriple", IsSemigroupCongruence and IsAttributeStoringRep);
+DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 
 # OLD (This code to be reformed in new functions)
