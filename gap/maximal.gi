@@ -598,8 +598,7 @@ function(S)
           Add(out, Semigroup(OnTuples(
           GeneratorsOfSemigroup(U), inj), V, rec(small:=true)));
         elif tuples<>[] then
-          #Add(out, Semigroup(V, tuples, rec(small:=true))); #Had to temporarily remove rec() due to bug in GAP/semigroups
-          Add(out, Semigroup(V, tuples));
+          Add(out, Semigroup(V, tuples, rec(small:=true)));
         fi;
       od;
     fi;
@@ -858,7 +857,7 @@ function(S)
     fi;
   od;
   Info(InfoSemigroups, 2, "generating all found maximal subsemigroups...");
-  #out:=List(out, x-> Semigroup(x, rec(small:=true))); # Commented out for now because of orb???
+  out:=List(out, x-> Semigroup(x, rec(small:=true)));
   return out;
 end);
 
