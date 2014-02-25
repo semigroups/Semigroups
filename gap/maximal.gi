@@ -511,7 +511,7 @@ function(S)
   nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion,
   HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H, basicgens,
   graph, components, nrcomponents, rows, NonGroupRecursion, transversal,
-  maxgens, mat, h;
+  maxgens, mat, h, ii, jj, lastideal;
   
   if Size(S) = 1 then
     return [];
@@ -642,12 +642,17 @@ function(S)
       fi;
       count:=0;
       reps:=List(classes{po[i]}, Representative);
-      if not IsEmpty(reps) then
-        ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
-        reps), rec(small:=true)));
+      if IsBound(lastideal) and lastideal = reps then
+        # ideal doesn't need to be recalculated
       else
-        ideal:=[];
+        if not IsEmpty(reps) then
+          ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
+          reps), rec(small:=true)));
+        else
+          ideal:=[];
+        fi;
       fi;
+      lastideal:=reps;
       YannRecursion:=function(U, known, A, depth)
         local ismax, new_known, a, V, didtest, h, new_depth;
         new_depth:=depth+1;
@@ -701,14 +706,14 @@ function(S)
       if IsReesMatrixSemigroup(R) then
  
         basicgens:=[]; 
-        for i in [1..Minimum(I,J)] do
-          Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
+        for ii in [1..Minimum(I,J)] do
+          Add(basicgens, RMSElement(R, ii, (mat[ii][ii]^-1), ii));
         od;
-        for i in [J+1..I] do
-          Add(basicgens, RMSElement(R, i, (mat[1][i]^-1), 1)); 
+        for ii in [J+1..I] do
+          Add(basicgens, RMSElement(R, ii, (mat[1][ii]^-1), 1)); 
         od;
-        for j in [I+1..J] do
-          Add(basicgens, RMSElement(R, 1, (mat[j][1]^-1), j)); 
+        for jj in [I+1..J] do
+          Add(basicgens, RMSElement(R, 1, (mat[jj][1]^-1), jj)); 
         od;
         
         for H in MaximalSubgroups(G) do
@@ -735,21 +740,21 @@ function(S)
         # Add to the generators one element which *must* be in each group
         # H-class of any maximal subsemigroup of the Case 1 form.
         basicgens:=[];
-        for i in [1..I] do
-          for j in [1..J] do
-            if mat[j][i] <> 0 then
-              Add(basicgens, RMSElement(R, i, (mat[j][i]^-1), j));
+        for ii in [1..I] do
+          for jj in [1..J] do
+            if mat[jj][ii] <> 0 then
+              Add(basicgens, RMSElement(R, ii, (mat[jj][ii]^-1), jj));
             fi;
           od;
         od;
   
-        # Pick a distinguished group H-class in the first component: H_i,j
-        # For each maximal subgroup H we have: H_i,j = (i, H*(mat[j][i]^-1), j)  
-        i:=1; j:=graph.adjacencies[1][1] - I;
+        # Pick a distinguished group H-class in the first component: H_i,jj
+        # For each maximal subgroup H we have: H_i,jj = (ii, H*(mat[jj][ii]^-1), jj)  
+        ii:=1; jj:=graph.adjacencies[1][1] - I;
       
-        # For each max subgroup, start recursion with basic gens, and gens for H_i,j
+        # For each max subgroup, start recursion with basic gens, and gens for H_ii,jj
         for H in MaximalSubgroups(G) do
-          for UU in MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [i, j]) do
+          for UU in MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [ii, jj]) do
 
             UU:=Semigroup(Images(inj, GeneratorsOfSemigroup(UU)), U);
             if ForAny(gens3, z-> not z in UU) then
@@ -853,7 +858,7 @@ function(S)
     fi;
   od;
   Info(InfoSemigroups, 2, "generating all found maximal subsemigroups...");
-  out:=List(out, x-> Semigroup(x, rec(small:=true))); 
+  #out:=List(out, x-> Semigroup(x, rec(small:=true))); # Commented out for now because of orb???
   return out;
 end);
 
