@@ -134,8 +134,10 @@ function(R)
     for j in J do 
       Add(out, ReesMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
     od;
+    Info(InfoSemigroups, 3, "...found ", Length(J));
+  else
+    Info(InfoSemigroups, 3, "...found none");
   fi;
-  Info(InfoSemigroups, 3, "...found ", Length(J));
   
   # Case 3: the dual of case 2.
   Info(InfoSemigroups, 3, 
@@ -144,8 +146,10 @@ function(R)
     for i in I do 
       Add(out, ReesMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
     od;
+    Info(InfoSemigroups, 3, "...found ", Length(I));
+  else
+    Info(InfoSemigroups, 3, "...found none");
   fi;
-  Info(InfoSemigroups, 3, "...found ", Length(I));
 
   return out;
 end);
@@ -311,8 +315,7 @@ else
       for j in J do
         AddSet(P, mat[j][i]);
         if mat[j][i] <> 0 then
-          Add(basicgens, RMSElement(R, i, mat[j][i]^-1, j));
-          
+          Add(basicgens, RMSElement(R, i, mat[j][i]^-1, j)); 
         fi;
       od;
     od;
@@ -590,16 +593,17 @@ function(S)
           V:=[];
         fi;
         tuples:=OnTuples(Filtered(GeneratorsOfSemigroup(U), 
-             x-> not IsMultiplicativeZero(U, x)), inj);
-        if tuples=[] and Size(U) = 1 then  # This will fail if U = {0} ???
+             x-> not IsMultiplicativeZero(R, x)), inj);
+        if tuples=[] and Size(U) = 1 then  # This will fail if U = {0} ??? # But U = {0} is a maximal subsemigroup only if Size(classes[i]) = 1
           Add(out, Semigroup(OnTuples(
           GeneratorsOfSemigroup(U), inj), V, rec(small:=true)));
         elif tuples<>[] then
-          Add(out, Semigroup(tuples, V, rec(small:=true)));
+          #Add(out, Semigroup(V, tuples, rec(small:=true))); #Had to temporarily remove rec() due to bug in GAP/semigroups
+          Add(out, Semigroup(V, tuples));
         fi;
       od;
     fi;
-    Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups");
+    Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups in total in this D-class");
     tot:=Length(out);
   od;
 
@@ -688,117 +692,81 @@ function(S)
     
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
-    
-      G:=UnderlyingSemigroup(R); 
-      I:=Rows(R); J:=Columns(R);
+      G:=UnderlyingSemigroup(R);
+      I:=Length(Rows(R)); J:=Length(Columns(R));
       mat:=Matrix(R);
       
-            tot:=0;
+      tot:=0;
 
-### Copied code from MaximalSubsemigroups for ReesMatrixSemigroup
-
-# Is this first condition ever true?
-if IsReesMatrixSemigroup(R) then
-
-  basicgens:=[]; 
-  for i in [1..Minimum(Length(I),Length(J))] do
-    Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
-  od; for i in [Length(J)+1..Length(I)] do
-    Add(basicgens, RMSElement(R, i, (mat[1][i]^-1), 1)); 
-  od; for j in [Length(I)+1..Length(J)] do
-    Add(basicgens, RMSElement(R, 1, (mat[j][1]^-1), j)); 
-  od;
-  for H in MaximalSubgroups(G) do
-    UU:=Semigroup(basicgens, List(Generators(H), x->RMSElement(R, 1, x*(mat[1][1]^-1), 1)));
-    if Size(UU)<Size(R) then
-      UU:=Semigroup(Images(inj, UU), U);
-      if ForAny(gens3, x-> not x in UU) then
-        Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
-        "intersects every H-class of the D-class");
-        Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
-        tot:=tot+1;
-      fi;
-    fi;
-  od;
-  
-### Copied code from MaximalSubsemigroups for ReeZeroMatrixSemigroup  
-  
-elif IsReesZeroMatrixSemigroup(R) then
-  
-  graph:=RZMSGraph(R);
-  components:=ConnectedComponents(graph);
-  nrcomponents:=Length(components);
-  rows:=Length(I);
-
-  Info(InfoSemigroups, 3, 
-  "...the matrix has ", nrcomponents, " connected component(s)");
-  
-  # Add to the generators one element which *must* be in each group H-class of
-  # any maximal subsemigroup of the Case 1 form.
-  basicgens:=[];
-  for i in I do
-    for j in J do
-      if mat[j][i] <> 0 then
-      Add(basicgens, RMSElement(R, i, (mat[j][i]^-1), j));
-      fi;
-    od;
-  od;
-  
-  # Pick a distinguished group H-class in the first component: H_i,j
-  # For each maximal subgroup H we have: H_i,j = (i, H*(mat[j][i]^-1), j)  
-  i:=1; j:=graph.adjacencies[1][1] - rows;
-
-  # Recursive depth-first search    
-  NonGroupRecursion:=function(k, t, choice)
-    local nextchoice, x, a, b;
-    
-    if k = 1 then
-      t:=Semigroup(basicgens, choice);
-    else
-    	t:=ClosureSemigroup(t, choice);
-    fi;
-
-    # Test if adding our new choice has already made too much stuff
-    # This below logical condition needs improving if possible
-    # As well as proving that beyond the first component, is this even necessary?
-    if Size(GreensHClassOfElementNC(t, choice[1])) <= Size(H) then
-      # Make next choice, if any left to make.
-      if k < nrcomponents then
-        for x in transversal do
-          a:=components[k+1][1];
-          b:=graph.adjacencies[a][1] - rows;
-          h:=mat[b][a]^(-1) * x^(-1) * mat[j][i]^(-1);
-          nextchoice:=[RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
-          NonGroupRecursion(k+1, t, nextchoice);
+      if IsReesMatrixSemigroup(R) then
+ 
+        basicgens:=[]; 
+        for i in [1..Minimum(I,J)] do
+          Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
         od;
-      else
-        UU:=Semigroup(Images(inj, GeneratorsOfSemigroup(t)), U);
-        if ForAny(gens3, z-> not z in UU) then
-          Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
-          "intersects every H-class of the D-class");
-          Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
-          tot:=tot+1;
-        fi;
-      fi;
-    fi;
-      
-    # At this stage, can we rule out other cases from the level above?
-    return;
-  end;
+        for i in [J+1..I] do
+          Add(basicgens, RMSElement(R, i, (mat[1][i]^-1), 1)); 
+        od;
+        for j in [I+1..J] do
+          Add(basicgens, RMSElement(R, 1, (mat[j][1]^-1), j)); 
+        od;
+        
+        for H in MaximalSubgroups(G) do
+          UU:=MaximalSubsemigroupsNC(R,H,basicgens,mat[1][1]^-1);
+          if not IsEmpty(UU) then
+            UU:=UU[1];
+            if Size(UU)<Size(R) then
+              UU:=Semigroup(Images(inj, UU), U);
+              if ForAny(gens3, x-> not x in UU) then
+                Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
+                 "intersects every H-class of the D-class");
+                Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
+                tot:=tot+1;
+              fi;
+            fi;
+          fi;
+        od;
   
-  # For each max subgroup, start recursion with basic gens, and gens for H_i,j
-  for H in MaximalSubgroups(G) do
-    transversal:=RightTransversal(G,H);
-    maxgens:=List(GeneratorsOfSemigroup(H), x->RMSElement(R, i, x*(mat[j][i]^-1), j));
-    NonGroupRecursion(1, fail, maxgens);
-  od;  
-fi;
+      elif IsReesZeroMatrixSemigroup(R) then
+  
+        graph:=RZMSGraph(R);
+        components:=ConnectedComponents(graph);
+  
+        # Add to the generators one element which *must* be in each group
+        # H-class of any maximal subsemigroup of the Case 1 form.
+        basicgens:=[];
+        for i in [1..I] do
+          for j in [1..J] do
+            if mat[j][i] <> 0 then
+              Add(basicgens, RMSElement(R, i, (mat[j][i]^-1), j));
+            fi;
+          od;
+        od;
+  
+        # Pick a distinguished group H-class in the first component: H_i,j
+        # For each maximal subgroup H we have: H_i,j = (i, H*(mat[j][i]^-1), j)  
+        i:=1; j:=graph.adjacencies[1][1] - I;
+      
+        # For each max subgroup, start recursion with basic gens, and gens for H_i,j
+        for H in MaximalSubgroups(G) do
+          for UU in MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [i, j]) do
 
-### END of copied code
+            UU:=Semigroup(Images(inj, GeneratorsOfSemigroup(UU)), U);
+            if ForAny(gens3, z-> not z in UU) then
+              Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
+              "intersects every H-class of the D-class");
+              Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
+              tot:=tot+1;
+            fi;
+
+          od;
+        od;
+     
+      fi;
              
       if tot > 0 then
         found_case1:=true;
-        Info(InfoSemigroups, 2, "Found ", tot, " such results\n");    
+        Info(InfoSemigroups, 2, "Found ", tot, " such result(s)\n");    
       else
         found_case1:=false;
         Info(InfoSemigroups, 2, "Found no such results\n");    
