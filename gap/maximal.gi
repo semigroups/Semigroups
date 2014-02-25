@@ -20,6 +20,61 @@ function(S, T)
   fi;
 end); 
 
+#
+
+InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup and a group",
+[IsReesMatrixSubsemigroup, IsGroup], 
+function(R, H)
+  local G, basicgens, i, j, I, J, mat;
+ 
+  if not IsReesMatrixSemigroup(R) then 
+    TryNextMethod();
+    return;
+  fi;
+ 
+  G:=UnderlyingSemigroup(R);
+  
+  if not IsGroup(G) then 
+    return fail;
+  elif not IsSubgroup(G,H) then
+    return fail;
+  elif not H in MaximalSubgroups(G) then
+    return fail;
+  fi;
+  
+  mat:=Matrix(R);     I:=Length(mat[1]);         J:=Length(mat);
+  
+  basicgens:=[];  
+  for i in [1..Minimum(I,J)] do
+    Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
+  od;
+  for i in [J+1..I] do
+    Add(basicgens, RMSElement(R, i, (mat[1][i]^-1), 1)); 
+  od;
+  for j in [I+1..J] do
+    Add(basicgens, RMSElement(R, 1, (mat[j][1]^-1), j)); 
+  od;
+  
+  return MaximalSubsemigroupsNC(R, H, basicgens, mat[1][1]);
+
+end);
+
+#
+
+InstallMethod(MaximalSubsemigroupsNC, "for a Rees matrix subsemigroup and a group",
+[IsReesMatrixSubsemigroup, IsGroup, IsList, IsAssociativeElement], 
+function(R, H, basicgens, h)
+  local U;
+  
+  U:=Semigroup(basicgens, List(GeneratorsOfGroup(H), 
+   x->RMSElement(R, 1, x*(h^-1), 1)));
+  if Size(U)<Size(R) then
+    return [U];
+  fi;
+  
+  return [];
+end);
+
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 # and only works for Rees matrix semigroup over groups
 
@@ -67,11 +122,7 @@ function(R)
     Add(basicgens, RMSElement(R, 1, (mat[j][1]^-1), j)); 
   od;
   for H in MaximalSubgroups(G) do
-    U:=Semigroup(basicgens, List(GeneratorsOfGroup(H), 
-     x->RMSElement(R, 1, x*(mat[1][1]^-1), 1)));
-    if Size(U)<Size(R) then
-      Add(out, U);
-    fi;
+    out:=Concatenation(out, MaximalSubsemigroupsNC(R, H, basicgens, mat[1][1]));
   od;
   Info(InfoSemigroups, 3, "...found ", Length(out));
 
@@ -98,6 +149,104 @@ function(R)
 
   return out;
 end);
+
+
+#
+
+
+InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup and a group",
+[IsReesZeroMatrixSubsemigroup, IsGroup], 
+function(R, H)
+  local G, mat, graph, basicgens, i, j, maxgens;
+
+  if not IsReesZeroMatrixSemigroup(R) then 
+    TryNextMethod(); 
+    return;
+  fi;
+   
+  G:=UnderlyingSemigroup(R);    
+    
+  if not IsGroup(G) then 
+    return fail;
+  fi;
+
+  mat:=Matrix(R);         
+  graph:=RZMSGraph(R);
+  
+  # Add to the generators one element which *must* be in each group H-class of
+  # any maximal subsemigroup of the desired Case 1 form.
+  basicgens:=[MultiplicativeZero(R)];
+  for i in Rows(R) do
+    for j in Columns(R) do
+      if mat[j][i] <> 0 then
+        Add(basicgens, RMSElement(R, i, mat[j][i]^-1, j));      
+      fi;
+    od;
+  od;
+        
+  # Pick a distinguished group H-class in the first component: H_i,j
+  # For each maximal subgroup H we have: H_i,j = (i, H*(mat[j][i]^-1), j)  
+  i:=1; j:=graph.adjacencies[1][1] - Length(mat[1]);
+  
+  return MaximalSubsemigroupsNC(R, H, graph, ConnectedComponents(graph), basicgens, [i, j]);
+
+end);
+
+#
+
+InstallMethod(MaximalSubsemigroupsNC, "for a Rees matrix subsemigroup and a group",
+[IsReesZeroMatrixSubsemigroup, IsGroup, IsRecord, IsList, IsList, IsList], 
+function(R, H, graph, components, basicgens, indices)
+  local nrcomponents, nrrows, NonGroupRecursion, out, i, j, maxgens, Hsize, transversal, mat;
+  
+  out:=[];
+  mat:=Matrix(R);
+  i:=indices[1];
+  j:=indices[2];
+  nrcomponents:=Length(components);
+  nrrows:=Length(mat[1]); 
+  Hsize:=Size(H);
+  transversal:=RightTransversal(UnderlyingSemigroup(R),H);
+  maxgens:=List(GeneratorsOfSemigroup(H), 
+   x-> RMSElement(R, i, x*(mat[j][i]^-1), j));
+
+  # Recursive depth-first search    
+  NonGroupRecursion:=function(k, t, choice)
+    local nextchoice, x, a, b, h;
+    
+    if k = 1 then
+      t:=Semigroup(basicgens, choice);
+    else
+      	t:=ClosureSemigroup(t, choice);
+    fi;
+
+    # Test if adding our new choice has already made too much stuff
+    # The below logical condition need to be improved if possible
+    if Size(GreensHClassOfElementNC(t, choice[1]))<=Hsize then
+      # Make next choice, if any left to make.
+      if k < nrcomponents then
+        for x in transversal do
+          a:=components[k+1][1];
+          b:=graph.adjacencies[a][1] - nrrows;
+          h:=mat[b][a]^(-1) * x^(-1) * mat[j][i]^(-1);
+          nextchoice:=[RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
+          NonGroupRecursion(k+1, t, nextchoice);
+        od;
+      else
+        Add(out, t);
+      fi;
+    fi;
+      
+    # At this stage, can we rule out other cases from the level above?
+    return;
+  end;
+    
+  NonGroupRecursion(1, fail, maxgens);
+  
+  return out;
+
+end);
+
 
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 # and only works for Rees 0-matrix semigroup over groups
@@ -189,44 +338,11 @@ else
     # Pick a distinguished group H-class in the first component: H_i,j
     # For each maximal subgroup H we have: H_i,j = (i, H*(mat[j][i]^-1), j)  
     i:=1; j:=graph.adjacencies[1][1] - nrrows;
-
-    # Recursive depth-first search    
-    NonGroupRecursion:=function(k, t, choice)
-      local nextchoice, x, a, b, h;
-    
-      if k = 1 then
-        t:=Semigroup(basicgens, choice);
-      else
-      	t:=ClosureSemigroup(t, choice);
-      fi;
-
-      # Test if adding our new choice has already made too much stuff
-      # The below logical condition need to be improved if possible
-      if Size(GreensHClassOfElementNC(t, choice[1]))<=Size(H) then
-        # Make next choice, if any left to make.
-        if k < nrcomponents then
-          for x in transversal do
-            a:=components[k+1][1];
-            b:=graph.adjacencies[a][1] - nrrows;
-            h:=mat[b][a]^(-1) * x^(-1) * mat[j][i]^(-1);
-            nextchoice:=[RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
-            NonGroupRecursion(k+1, t, nextchoice);
-          od;
-        else
-          Add(out, t);
-        fi;
-      fi;
-      
-      # At this stage, can we rule out other cases from the level above?
-      return;
-    end;
   
     # For each max subgroup, start recursion with basic gens, and gens for H_i,j
     for H in MaximalSubgroups(G) do
-      transversal:=RightTransversal(G, H);
-      maxgens:=List(GeneratorsOfSemigroup(H), 
-       x-> RMSElement(R, i, x*(mat[j][i]^-1), j));
-      NonGroupRecursion(1, fail, maxgens);
+      out:=Concatenation(out,
+       MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [i, j]));
     od;
     
     Info(InfoSemigroups, 3, "...found ", Length(out));
@@ -772,3 +888,52 @@ fi;
   out:=List(out, x-> Semigroup(x, rec(small:=true))); 
   return out;
 end);
+
+#
+
+Subsemigroups:=function(R)
+  local max, o, U, V;
+  
+  max:=Set(MaximalSubsemigroups(R));
+  o:=ShallowCopy(max);
+  
+  for U in o do 
+    if Size(U)>1 then 
+      for V in MaximalSubsemigroups(U) do 
+        if not V in max then 
+          AddSet(max, V);
+          Add(o, V);
+        fi;
+      od;
+    fi;
+  od;
+
+  return Concatenation(max, [R]);
+end;
+
+#
+
+NumberOfSubsemigroups:=function(R)
+  local max, o, U, V, count;
+  
+  max:=Set(MaximalSubsemigroups(R));
+  o:=ShallowCopy(max);
+  count:=Length(o)+1; # +1 for R itself
+  
+  while not IsEmpty(o) do
+    U:=o[1];
+    if Size(U)>1 then 
+      for V in MaximalSubsemigroups(U) do 
+        if not V in max then 
+          AddSet(max, V);
+          Add(o, V);
+          count:=count+1;
+          Print(count,"\n");
+        fi;
+      od;
+    fi;
+    Remove(o,1);
+  od;
+
+  return count;
+end;

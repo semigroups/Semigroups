@@ -9,4 +9,8 @@
 ##
 
 DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
+DeclareOperation("MaximalSubsemigroups", [IsSemigroup, IsGroup]);
+DeclareOperation("MaximalSubsemigroupsNC", [IsReesMatrixSubsemigroup, IsGroup, IsList, IsAssociativeElement]);
+DeclareOperation("MaximalSubsemigroupsNC", [IsReesZeroMatrixSubsemigroup, IsGroup, IsRecord, IsList, IsList, IsList]);
+
 DeclareOperation("IsMaximalSubsemigroup", [IsSemigroup, IsSemigroup]);
