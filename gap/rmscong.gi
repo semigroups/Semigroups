@@ -14,9 +14,72 @@ end);
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 [IsReesZeroMatrixSemigroup and IsFinite,
  IsGroup, IsDenseList, IsDenseList],
+# Check axioms (L1) and (L2) from Howie p.86, then call NC function
 function(s, n, colBlocks, rowBlocks)
-  # Check q-condition
-  # Check colRel and rowRel are valid
+  local mat, zeroMask, block, validRows, validCols,
+        i, j, u, v, bi, bj, bu, bv;
+  mat := Matrix(s);
+  # Go through the columns
+  zeroMask := List(TransposedMat(mat), col-> List(col, x-> x<>0));
+  for block in colBlocks do
+    for bj in [2..Size(block)] do
+      # Check columns have zeroes in the same rows (L1)
+      if zeroMask[block[1]] <> zeroMask[block[bj]] then
+        Error("columns in the same block of 3rd argument <colBlocks> ",
+              "must have zeroes in precisely the same rows,");
+        return;
+      fi;
+    od;
+    # Check q-condition (L2)
+    for bi in [1..Size(block)] do
+      for bj in [bi+1..Size(block)] do
+        i := block[bi];
+        j := block[bj];
+        # Check all pairs of rows (u,v) which are non-zero in these columns
+        validRows := Positions(zeroMask[i], true);
+        for u in validRows do
+          for v in Filtered(validRows, x-> x > u) do
+            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+              Error("not a valid linked triple for this semigroup's matrix, ",
+                    "cols ",i," and ",j,", rows ",u," and ",v,",");
+            fi;
+          od;
+        od;
+      od;
+    od;
+  od;
+  
+  # Go through the rows
+  zeroMask := List(mat, row-> List(row, x-> x<>0));
+  for block in rowBlocks do
+    for bv in [2..Size(block)] do
+      # Check rows have zeroes in the same columns (L1)
+      if zeroMask[block[1]] <> zeroMask[block[bv]] then
+        Error("rows in the same block of 4th argument <rowBlocks> ",
+              "must have zeroes in precisely the same columns,");
+        return;
+      fi;
+    od;
+    # Check q-condition (L2)
+    for bu in [1..Size(block)] do
+      for bv in [bi+1..Size(block)] do
+        u := block[bu];
+        v := block[bv];
+        # Check all pairs of columns (i,j) which are non-zero in these rows
+        validCols := Positions(zeroMask[i], true);
+        for i in validCols do
+          for j in Filtered(validCols, x-> x > i) do
+            # NOTE: some of these may have been checked before. Filter them out?
+            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+              Error("not a valid linked triple for this semigroup's matrix, ",
+                    "rows ",u," and ",v,", cols ",i," and ",j,",");
+            fi;
+          od;
+        od;
+      od;
+    od;
+  od;
+  
   return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
 end);
 
