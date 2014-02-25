@@ -46,6 +46,7 @@ ReadPackage("semigroups/gap/isomorph.gi");
 ReadPackage("semigroups/gap/reesmat.gi");
 ReadPackage("semigroups/gap/reesmat-iso.gi");
 ReadPackage("semigroups/gap/maximal.gi");
+ReadPackage("semigroups/gap/normalizer.gi");
 
 if TestPackageAvailability("grape")=fail then 
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
