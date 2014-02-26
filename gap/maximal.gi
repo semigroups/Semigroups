@@ -863,6 +863,17 @@ end);
 
 #
 
+InstallMethod(MaximalSubsemigroups, "for an arbitary semigroup",
+[IsSemigroup],
+function(S)
+
+  # Make this return subsemigroups, not just isomorphic subsemigroups
+  return MaximalSubsemigroups(Range(IsomorphismTransformationSemigroup(S)));
+
+end);
+
+#
+
 Subsemigroups:=function(R)
   local max, o, U, V;
   

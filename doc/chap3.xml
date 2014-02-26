@@ -70,6 +70,9 @@
     <#Include Label="NrIdempotents">
     <#Include Label="IdempotentGeneratedSubsemigroup">
     <#Include Label="IrredundantGeneratingSubset">
+    <#Include Label="MaximalSubsemigroups">
+    <#Include Label="MaximalSubsemigroups2">
+    <#Include Label="IsMaximalSubsemigroup">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
     <#Include Label="Random">

@@ -10,15 +10,16 @@
 
 <#GAPDoc Label="MaximalSubsemigroups">
 <ManSection>
-  <Attr Name="MaximalSubsemigroups" Arg="S"/>
+  <Attr Name="MaximalSubsemigroups" Arg="S" Label="for an acting semigroup"/>
   <Returns>The maximal subsemigroups of <A>S</A>.</Returns>
   <Description>
-    If <A>S</A> is a Rees matrix semigroup or regular Rees 0-matrix semigroup
-    over a group, then <C>MaximalSubsemigroups</C> returns a list of the
-    maximal subsemigroups of <A>S</A>. <P/>
+    If <A>S</A> is a semigroup, then <C>MaximalSubsemigroups</C> returns
+    a list of the maximal subsemigroups of <A>S</A>. <P/>
+    
+    A maximal subsemigroup of <A>S</A> is a proper subsemigroup of <A>S</A> 
+    which is contained in no other proper subsemigroups of <A>S</A>.  <P/>
 
-    The method for this function is based on Remark 1 of 
-    <Cite Key="Graham1968aa"/>. 
+    The methods for this function are based on <Cite Key="Graham1968aa"/>. 
 
   <Example>
 gap> S:=FullTransformationSemigroup(4);                              
@@ -58,6 +59,72 @@ gap> MaximalSubsemigroups(R);
   &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
   &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
   &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators> ]
+</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+#
+
+<#GAPDoc Label="MaximalSubsemigroups2">
+<ManSection>
+  <Oper Name="MaximalSubsemigroups" Arg="R, H" Label="for a Rees (0-)matrix semigroup, and a group"/>
+  <Returns>The maximal subsemigroups of <M>R = \mathcal{M}(I, G, J; P)</M>
+  isomorphic to <M>\mathcal{M}(I, H, J; P)</M>.</Returns>
+  <Description>
+    Le <A>R</A> be a Rees matrix semigroup, or a regular Rees 0-matrix semigroup
+    over a group <A>G</A>, i.e. <M>R = \mathcal{M}(I, G, J; P)</M>. Then if 
+    <A>H</A> is a maximal subgroup of <A>G</A>, <C>MaximalSubsemigroups</C> 
+    returns a list of the maximal subsemigroups of <A>R</A> isomorphic to 
+    <M>\mathcal{M}(I, H, J; P)</M>. <P/>
+
+    The methods for this function are based on Remark 1 of 
+    <Cite Key="Graham1968aa"/>. 
+
+  <Example>
+gap> R:=ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), [[ (), (1,2)], [(), (1,2)]]);
+&lt;Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>
+gap> G:=UnderlyingSemigroup(R);
+Group([ (1,2), (3,4) ])
+gap> H:=Group((1,2));  
+Group([ (1,2) ])
+gap> MaximalSubsemigroups(R,H);
+[ &lt;subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators> ]
+  </Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+#
+
+<#GAPDoc Label="IsMaximalSubsemigroup">
+<ManSection>
+  <Oper Name="IsMaximalSubsemigroup" Arg="S, T"/>
+  <Returns>true or false</Returns>
+  <Description>
+    If <A>S</A> and <A>T</A> are semigroups, then <C>IsMaximalSubsemigroup</C> 
+    returns true if and only if <A>T</A> is a maximal subsemigroup of <A>S</A>.
+    <P/>
+    
+    <A>T</A> is a maximal subsemigroup of <A>S</A> if <A>T</A> is a proper 
+    subsemigroup of <A>S</A> and is contained in no other proper subsemigroups 
+    of <A>S</A>.
+
+  <Example>
+gap> S:=FullTransformationSemigroup(4);                              
+&lt;full transformation semigroup on 4 pts>
+gap> T:=Semigroup([ Transformation( [ 3, 4, 1, 2 ] ),
+>  Transformation( [ 1, 4, 2, 3 ] ),
+>  Transformation( [ 2, 1, 1, 3 ] ) ]);
+&lt;transformation semigroup on 4 pts with 3 generators>
+gap> IsMaximalSubsemigroup(S,T);
+true
+gap> R:=Semigroup([ Transformation( [ 3, 4, 1, 2 ] ),
+>  Transformation( [ 1, 4, 2, 2 ] ),
+>  Transformation( [ 2, 1, 1, 3 ] ) ]);
+&lt;transformation semigroup on 4 pts with 3 generators>
+gap> IsMaximalSubsemigroup(S,R);                                                                                            
+false
 </Example>
   </Description>
 </ManSection>
