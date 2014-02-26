@@ -22,14 +22,15 @@
       http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by
     J.  D. Mitchell.<P/>
 
-    The theory behind the main algorithms in &Semigroups; is described in <Cite
-      Key=""/>.  A reference for free inverse semigroups is Section 5.10 in
+    The theory behind the main algorithms in &Semigroups; is described in 
+    <!--<Cite Key=""/>-->.  A reference for free inverse semigroups is Section
+    5.10 in
     <Cite Key="howie"/>. The functions for: finding a smaller degree partial
     permutation representation of an inverse semigroup are based on <Cite
       Key="Schein1992aa"/>. 
     <!--and finding the maximal subsemigroups of a Rees
     matrix or 0-matrix semigroup are based on Remark 1 in <Cite
-      Key="Graham1968aa"/>.-->  <P/>
+    Key="Graham1968aa"/>.-->  <P/>
     
     <!--&Semigroups; &VERSION; retains all the functionality of the original
     &Monoid; for &GAP; 3; and those functions from &Monoid; 3.1.4 not involved
