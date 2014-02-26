@@ -769,7 +769,6 @@ gap> IsZeroSemigroup(s);
 false
 
 #
-gap> 
 gap> gens:=[Transformation( [ 13, 10, 9, 5, 1, 5, 13, 13, 8, 2, 7, 2, 6 ] ),
 > Transformation( [ 6, 11, 12, 10, 4, 10, 13, 5, 8, 5, 11, 6, 9 ] )];;
 gap> s:=Semigroup(gens);;
