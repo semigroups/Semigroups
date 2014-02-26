@@ -15,12 +15,19 @@ InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 [IsReesZeroMatrixSemigroup and IsFinite,
  IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
-  local mat, block, i, j, u, v, bi, bj, bu, bv;
+  local g, mat, block, i, j, u, v, bi, bj, bu, bv;
   mat := Matrix(s);
+  g := UnderlyingSemigroup(s);
   
   # Basic checks
-  if not IsNormalSubgroup(g,n) then
+  if not IsNormal(g,n) then
     Error("2nd argument <n> must be a normal subgroup,"); return;
+  fi;
+  if not ForAll(colBlocks, IsList) then
+    Error("3rd argument <colBlocks> must be a list of lists,"); return;
+  fi;
+  if not ForAll(rowBlocks, IsList) then
+    Error("4th argument <rowBlocks> must be a list of lists,"); return;
   fi;
   if SortedList(Flat(colBlocks)) <> [1..Size(mat[1])] then
     Error("3rd argument <colBlocks> must be a partition ",
@@ -223,7 +230,7 @@ function(cong, elt)
                          colClass := colClass,
                          rowClass := rowClass) );
   SetParentAttr(class, cong);
-  return cong;
+  return class;
 end);
 
 #
