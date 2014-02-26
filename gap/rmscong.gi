@@ -176,12 +176,40 @@ InstallMethod(EquivalenceClassOfElement,
 "for a Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
 [IsRMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
 function(cong, elt)
-  if not elt in Range(cong) then
+  local fam, class, s, mat, i, j, u, v,
+        nCoset, colClass, rowClass;
+  s := Range(cong);
+  # Check that the arguments make sense
+  if not elt in s then
     Error("usage: 2nd argument <elt> should be ",
           "in the semigroup of 1st argument <cong>");
     return;
   fi;
-  # CODE GOES HERE
+  # Calculate the parameters
+  if elt = MultiplicativeZero(s) then
+    # Not sure what to do in this case
+  else
+    mat := Matrix(s);
+    i := elt[1];    # Column no
+    u := elt[3];    # Row no
+    for v in [1..Size(mat)] do
+      if mat[v][i] <> 0 then break; fi;
+    od;
+    for j in [1..Size(mat[1])] do
+      if mat[u][j] <> 0 then break; fi;
+    od;
+    nCoset := RightCoset(cong!.n, mat[v][i] * elt[2] * mat[u][j]);
+    colClass := cong!.colLookup[i];
+    rowClass := cong!.rowLookup[u];
+  fi;
+  # Wrap the object
+  fam := CollectionsFamily( ElementsFamily(FamilyObj(s)) );
+  class := Objectify(NewType(fam, IsCongruenceClassByLinkedTriple),
+                     rec(nCoset := nCoset,
+                         colClass := colClass,
+                         rowClass := rowClass) );
+  SetParentAttr(class, cong);
+  return cong;
 end);
 
 #
