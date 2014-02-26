@@ -14,10 +14,24 @@ end);
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 [IsReesZeroMatrixSemigroup and IsFinite,
  IsGroup, IsDenseList, IsDenseList],
-# Check axioms (L1) and (L2) from Howie p.86, then call NC function
 function(s, n, colBlocks, rowBlocks)
   local mat, block, i, j, u, v, bi, bj, bu, bv;
   mat := Matrix(s);
+  
+  # Basic checks
+  if not IsNormalSubgroup(g,n) then
+    Error("2nd argument <n> must be a normal subgroup,"); return;
+  fi;
+  if SortedList(Flat(colBlocks)) <> [1..Size(mat[1])] then
+    Error("3rd argument <colBlocks> must be a partition ",
+          "of the columns of the matrix of <s>,"); return;
+  fi;
+  if SortedList(Flat(rowBlocks)) <> [1..Size(mat)] then
+    Error("4th argument <rowBlocks> must be a partition ",
+          "of the rows of the matrix of <s>,"); return;
+  fi;
+  
+  # Check axioms (L1) and (L2) from Howie p.86, then call NC function
   # Go through the column blocks
   for block in colBlocks do
     for bj in [2..Size(block)] do
