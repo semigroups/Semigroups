@@ -131,8 +131,8 @@ if not IsBound(GAPInfo.PackagesLoaded.grape) then
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    Info(InfoWarning, 1, "the GRAPE is not loaded, and so this function does",
-         " not work");
+    Info(InfoWarning, 1, "the GRAPE package is not loaded, and so this function", 
+    " does not work");
     return fail;
   end); 
 else

@@ -953,7 +953,8 @@ function(l)
   o:=LambdaOrb(l); m:=LambdaOrbSCCIndex(l);
 
   if not IsGreensClassNC(l) then
-    p:=LambdaConjugator(Parent(l))(LambdaOrbRep(o, m), Representative(l));
+    # go from the lambda-value in scc 1 to the lambda value of the rep of <l>
+    p:=LambdaConjugator(Parent(l))(RightOne(LambdaOrbRep(o, m)), Representative(l));
     return LambdaOrbSchutzGp(o, m)^p;
   fi;
   return LambdaOrbSchutzGp(o, m);

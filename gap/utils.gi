@@ -276,6 +276,56 @@ function()
   return;
 end);
 
+#
+
+InstallGlobalFunction(IteratorFromGeneratorsFile, 
+function(str)
+  local file, record;
+  
+  file:=GeneratorsReadFile(str);
+  
+  if file=fail then 
+    return fail;
+  fi;
+ 
+  record:=rec(file:=file, curr:=ReadGeneratorsLine(IO_ReadLine(file)));
+
+  record.NextIterator:=function(iter)
+    local next, line;
+    next:=iter!.curr;
+    line:=IO_ReadLine(iter!.file);
+    if line<>"" then 
+      iter!.curr:=ReadGeneratorsLine(IO_ReadLine(iter!.file));
+    else 
+      iter!.curr:=line;
+    fi;
+    return next;
+  end;
+  
+  record.IsDoneIterator:=function(iter)
+    if iter!.curr="" then 
+      if not iter!.file!.closed then 
+        IO_Close(iter!.file);
+      fi;
+      return true;
+    else
+      return false;
+    fi;
+  end;
+
+  record.ShallowCopy:=function(iter)
+    local file;
+    file:=GeneratorsReadFile(str);
+    return rec(file:=file, curr:=ReadGeneratorsLine(IO_ReadLine(file)));
+  end;
+
+  InstallAtExit(function() if not file!.closed then IO_Close(file); fi; end);
+  
+  return IteratorByFunctions(record);
+end);
+
+#
+
 InstallGlobalFunction(GeneratorsReadFile, 
 function(str)
   local file;
@@ -311,8 +361,17 @@ function(arg)
     Error("usage: the 1st argument must be a string or a file,");
     return;
   fi;
-
+  
+  if file=fail then 
+    return fail;
+  fi;
+  
   if Length(arg)=2 then 
+    if IsFile(arg[1]) then 
+      Error("usage: the argument must be a file, or a string, or a string and a", 
+      " positive integer,");
+      return;
+    fi;
     if IsPosInt(arg[2]) then 
       i:=0;
       repeat  
@@ -348,7 +407,7 @@ end);
 InstallGlobalFunction(ReadGeneratorsLine, 
 function(line)
   local i, k, out, m, deg, f, j;
-  
+ 
   i:=2; k:=0; out:=[];
 
   while i<Length(line) do
@@ -449,6 +508,11 @@ function(arg)
     return;
   fi;
 
+  if file=fail then 
+    Error("couldn't open the file ", file, ",");
+    return;
+  fi;
+
   if IsTransformationCollection(arg[2]) 
     or IsPartialPermCollection(arg[2])
     or IsBipartitionCollection(arg[2]) then 
@@ -459,7 +523,7 @@ function(arg)
     or IsBipartitionCollection(arg[2][1])) then 
       trans:=arg[2];
   else
-    Error("usage: the 2nd argument must be transformation or partial perm\n",
+    Error("usage: the 2nd argument must be a transformation or partial perm\n",
     "semigroup or collection, or a list of such semigroups or collections,");
     return;
   fi;
@@ -478,7 +542,6 @@ function(arg)
       gens:=trans;
     fi;
   od;
-
   
   #####
 
@@ -551,7 +614,7 @@ end);
 
 InstallGlobalFunction(WriteGeneratorsLine, 
 function(f)
-  local append, line, deg, strdeg, nrdigits, i;
+  local append, line, deg, strdeg, nrdigits, func, nr, i;
   
   append:=function(str, pt, m)
     local i, j;
@@ -568,20 +631,30 @@ function(f)
     deg:=DegreeOfTransformation(f);
     strdeg:=String(deg);
     nrdigits:=Length(strdeg);
+    func:=POW;
+    nr:=deg;
   elif IsPartialPerm(f) then 
     line:="p";
     deg:=DegreeOfPartialPerm(f);
-    strdeg:=String(strdeg);
+    strdeg:=String(deg);
     nrdigits:=Length(String(Maximum(deg, CodegreeOfPartialPerm(f))));
+    func:=POW;
+    nr:=deg;
   elif IsBipartition(f) then 
     line:="b";
-    Error("not yet implemented");
+    deg:=DegreeOfBipartition(f);
+    strdeg:=String(deg);
+    nrdigits:=Length(strdeg);
+    func:=function(i, f)
+      return f!.blocks[i];
+    end;
+    nr:=2*deg;
   fi;
   
   Append(line, String(nrdigits));
   Append(line, strdeg);
-  for i in [1..deg] do 
-    append(line, i^f, nrdigits);
+  for i in [1..nr] do 
+    append(line, func(i,f), nrdigits);
   od;
   return line;
 end);
@@ -612,5 +685,7 @@ function(f)
   od;
   return line;
 end);
+
+
 
 #EOF

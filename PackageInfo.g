@@ -10,7 +10,7 @@
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "2.0">
-##  <!ENTITY GAPVERS "4.7.1">
+##  <!ENTITY GAPVERS "4.7.3">
 ##  <!ENTITY ORBVERS "4.6">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
@@ -77,9 +77,10 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.7.1",
+  GAP := ">=4.7.3",
   NeededOtherPackages := [["orb", ">=4.6"], ["io", ">=4.2"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
+  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
+  ["genss", ">=1.5"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue, 
   Autoload := false,

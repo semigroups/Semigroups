@@ -43,6 +43,12 @@ ReadPackage("semigroups/gap/attributes-inverse.gd");
 ReadPackage("semigroups/gap/freeinverse.gd");
 
 ReadPackage("semigroups/gap/display.gd");
+ReadPackage("semigroups/gap/pictures.gd");
+
+ReadPackage("semigroups/gap/isomorph.gd");
+ReadPackage("semigroups/gap/reesmat.gd");
+ReadPackage("semigroups/gap/reesmat-iso.gd");
+ReadPackage("semigroups/gap/normalizer.gd");
 
 DeclareInfoClass("InfoSemigroups");;
 
