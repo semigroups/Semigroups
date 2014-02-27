@@ -4,6 +4,8 @@ DeclareCategory("IsRMSCongruenceByLinkedTriple",
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 
+DeclareGlobalFunction("LinkedElement");
+
 DeclareCategory("IsCongruenceClassByLinkedTriple", IsEquivalenceClass);
 
 # OLD (This code to be reformed in new functions)

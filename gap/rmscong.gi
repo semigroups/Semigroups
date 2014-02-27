@@ -141,6 +141,22 @@ end);
 
 #
 
+InstallGlobalFunction(LinkedElement,
+function(elt)  local mat, i, j, u, v;
+  mat := Matrix(Parent(elt));
+  i := elt[1];  # Column no
+  u := elt[3];  # Row no
+  for v in [1..Size(mat)] do
+    if mat[v][i] <> 0 then break; fi;
+  od;
+  for j in [1..Size(mat[1])] do
+    if mat[u][j] <> 0 then break; fi;
+  od;
+  return(mat[v][i] * elt[2] * mat[u][j]);
+end);
+
+#
+
 InstallMethod(\in,
 "for a Rees 0-matrix semigroup element collection and a semigroup congruence by linked triple",
 [IsReesZeroMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
@@ -210,16 +226,7 @@ function(cong, elt)
   if elt = MultiplicativeZero(s) then
     # Not sure what to do in this case
   else
-    mat := Matrix(s);
-    i := elt[1];    # Column no
-    u := elt[3];    # Row no
-    for v in [1..Size(mat)] do
-      if mat[v][i] <> 0 then break; fi;
-    od;
-    for j in [1..Size(mat[1])] do
-      if mat[u][j] <> 0 then break; fi;
-    od;
-    nCoset := RightCoset(cong!.n, mat[v][i] * elt[2] * mat[u][j]);
+    nCoset := RightCoset(cong!.n, LinkedElement(elt));
     colClass := cong!.colLookup[i];
     rowClass := cong!.rowLookup[u];
   fi;
@@ -230,11 +237,28 @@ function(cong, elt)
                          colClass := colClass,
                          rowClass := rowClass) );
   SetParentAttr(class, cong);
+  SetRepresentative(class, elt);
   return class;
 end);
 
 #
 
+InstallMethod( \in,
+"for a Rees 0-matrix semigroup element and a congruence class by linked triple",
+[IsReesZeroMatrixSemigroupElement, IsCongruenceClassByLinkedTriple],
+function(elt, class)
+  local s, cong;
+  cong := ParentAttr(class);
+  s := Range(cong);
+  return( elt in s and
+          cong!.colLookup[elt[1]] = class!.colClass and
+          cong!.rowLookup[elt[3]] = class!.rowClass and
+          LinkedElement(elt) in class!.nCoset );
+end);
+
+#
+
+# OLD: REPLACE
 InstallMethod(SemigroupCongruenceByLinkedTriple,
 "for a Rees zero matrix semigroup and a linked triple",
 [IsReesZeroMatrixSemigroup and IsFinite,
@@ -324,6 +348,7 @@ end);
 
 #
 
+# OLD: REPLACE
 InstallMethod(LinkedTriple,
 "for a semigroup congruence over a finite 0-simple semigroup",
 [IsSemigroupCongruence],
