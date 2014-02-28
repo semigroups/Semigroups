@@ -4,9 +4,8 @@ DeclareCategory("IsRMSCongruenceByLinkedTriple",
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 
-DeclareGlobalFunction("LinkedElement");
-
-DeclareCategory("IsCongruenceClassByLinkedTriple", IsEquivalenceClass);
+DeclareCategory("IsCongruenceClassByLinkedTriple",
+        IsEquivalenceClass and IsAttributeStoringRep);
 
 # OLD (This code to be reformed in new functions)
 DeclareAttribute("LinkedTriple", IsSemigroupCongruence);
