@@ -559,9 +559,7 @@ gap> EvaluateWord(Generators(U[4]), last);
 
 # AutomorphismGroup of a ReesMatrixSemigroup
 gap> G:=Group(());;
-gap> mat:=List([1..5], x-> List([1..5], y-> ()));
-[ [ (), (), (), (), () ], [ (), (), (), (), () ], [ (), (), (), (), () ], 
-  [ (), (), (), (), () ], [ (), (), (), (), () ] ]
+gap> mat:=List([1..5], x-> List([1..5], y-> ()));;
 gap> M:=ReesMatrixSemigroup(G, mat);
 <Rees matrix semigroup 5x5 over Group(())>
 gap> AutomorphismGroup(M);
