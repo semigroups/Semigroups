@@ -260,4 +260,17 @@ end);
 
 #
 
+InstallMethod(Size,
+"for a congruence class by linked triple",
+[IsCongruenceClassByLinkedTriple],
+function(class)
+  local cong;
+  cong := Parent(class);
+  return( Size(cong!.n) *
+          Size(cong!.colBlocks[class!.colClass]) *
+          Size(cong!.rowBlocks[class!.rowClass]) );
+end);
+  
+#
+
 #UnbindGlobal("LinkedElement");
