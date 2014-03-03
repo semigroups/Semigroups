@@ -210,6 +210,33 @@ end);
 
 #
 
+InstallMethod(EquivalenceClasses,
+"for a Rees 0-matrix semigroup congruence by linked triple",
+[IsRMSCongruenceByLinkedTriple],
+function(cong)
+  local list, s, g, n, colBlocks, rowBlocks, colClass, rowClass, rep, elt;
+  list := [];
+  s := Range(cong);
+  g := UnderlyingSemigroup(s);
+  n := cong!.n;
+  colBlocks := cong!.colBlocks;
+  rowBlocks := cong!.rowBlocks;
+  for colClass in [1..Size(colBlocks)] do
+    for rowClass in [1..Size(rowBlocks)] do
+      for rep in List(RightCosets(g,n), Representative) do
+        elt := ReesZeroMatrixSemigroupElement(
+                       s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1] );
+        # nCoset := RightCoset(n, LinkedElement(elt));
+        # Could be faster?
+        Add(list, EquivalenceClassOfElement(cong, elt));
+      od;
+    od;
+  od;
+  return list;
+end);
+
+#
+
 InstallMethod(EquivalenceClassOfElement,
 "for a Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
 [IsRMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
