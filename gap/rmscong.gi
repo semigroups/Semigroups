@@ -270,7 +270,18 @@ function(class)
           Size(cong!.colBlocks[class!.colClass]) *
           Size(cong!.rowBlocks[class!.rowClass]) );
 end);
-  
+
+#
+
+InstallMethod( \=,
+"for two congruence classes by linked triple",
+[IsCongruenceClassByLinkedTriple, IsCongruenceClassByLinkedTriple],
+function(c1, c2) 
+  return( c1!.nCoset = c2!.nCoset and
+          c1!.colClass = c2!.colClass and
+          c1!.rowClass = c2!.rowClass );
+end);
+
 #
 
 #UnbindGlobal("LinkedElement");
