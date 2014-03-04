@@ -25,40 +25,40 @@
 gap> S:=FullTransformationSemigroup(4);                              
 &lt;full transformation semigroup on 4 pts>
 gap> MaximalSubsemigroups(S);
-[ &lt;transformation semigroup on 4 pts with 4 generators>,
-  &lt;transformation semigroup on 4 pts with 4 generators>,
+[ &lt;transformation semigroup on 4 pts with 4 generators>, 
   &lt;transformation semigroup on 4 pts with 4 generators>, 
-  &lt;transformation semigroup on 4 pts with 4 generators>,
-  &lt;transformation semigroup on 4 pts with 5 generators>,
+  &lt;transformation semigroup on 4 pts with 4 generators>, 
+  &lt;transformation semigroup on 4 pts with 4 generators>, 
   &lt;transformation semigroup on 4 pts with 5 generators>, 
-  &lt;transformation semigroup on 4 pts with 5 generators>,
-  &lt;transformation semigroup on 4 pts with 5 generators>,
+  &lt;transformation semigroup on 4 pts with 5 generators>, 
+  &lt;transformation semigroup on 4 pts with 5 generators>, 
+  &lt;transformation semigroup on 4 pts with 5 generators>, 
   &lt;transformation semigroup on 4 pts with 4 generators> ]
 gap> D:=DClass(S, Transformation([2,2]));
-{Transformation( [ 2, 2, 3, 1 ] )}
+{Transformation( [ 2, 3, 1, 2 ] )}
 gap> R:=PrincipalFactor(D);
-&lt;Rees 0-matrix semigroup 6x4 over Group([ (2,3,4), (2,4) ])>
+&lt;Rees 0-matrix semigroup 6x4 over Group([ (1,2,3), (1,2) ])>
 gap> MaximalSubsemigroups(R);                                       
-[ &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators> ]
+[ &lt;Rees 0-matrix semigroup 6x3 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 6x3 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 6x3 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 6x3 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (1,2,3), (1,2) ])>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 23 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 23 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 23 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 23 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators> ]
 </Example>
   </Description>
 </ManSection>
@@ -88,9 +88,11 @@ gap> G:=UnderlyingSemigroup(R);
 Group([ (1,2), (3,4) ])
 gap> H:=Group((1,2));  
 Group([ (1,2) ])
-gap> MaximalSubsemigroups(R,H);
+gap> max:=MaximalSubsemigroups(R,H);
 [ &lt;subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators> ]
-  </Example>
+gap> IsMaximalSubsemigroup(R,max[1]);
+true
+</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
