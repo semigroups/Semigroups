@@ -8,39 +8,126 @@
 gap> START_TEST("Semigroups package: maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
+# Want: RMS; RZMS: unconnected; Transformation Semigroup; Partial Perm Semigroup; IsMaximalSubsemigroup
+#
 # 
 gap> SemigroupsStartTest();
 
-# Our first example
-gap> S:=Semigroup([ Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
->   Transformation( [ 1, 5, 3, 5, 5, 5 ] ), 
->   Transformation( [ 2, 4, 6, 1, 6, 5 ] ), 
->   Transformation( [ 3, 2, 4, 2, 3, 3 ] ), 
->   Transformation( [ 4, 1, 2, 6, 2, 1 ] ), 
->   Transformation( [ 4, 6, 4, 3, 3, 3 ] ), 
->   Transformation( [ 4, 6, 5, 5, 2, 6 ] ), 
->   Transformation( [ 5, 1, 6, 1, 6, 3 ] ), 
->   Transformation( [ 5, 2, 5, 3, 5, 3 ] ), 
->   Transformation( [ 6, 4, 5, 5, 1, 6 ] ) ]);
-<transformation semigroup on 6 pts with 10 generators>
-gap> Size(S);
-7039
+# A NxM RMS over group G
 
-# Subsemigroups of T2
-gap> T2:=FullTransformationMonoid(2);         
-<full transformation semigroup on 2 pts>
-gap> Subsemigroups(T2);
-[ <trivial transformation group on 2 pts with 1 generator>, 
-  <commutative transformation monoid of size 2, on 2 pts with 1 generator>, 
-  <transformation monoid of size 3, on 2 pts with 2 generators>, 
-  <transformation semigroup of size 2, on 2 pts with 2 generators>, 
-  <trivial transformation group>, 
-  <transformation group of size 2, on 2 pts with 1 generator>, 
-  <commutative transformation monoid of size 2, on 2 pts with 1 generator>, 
-  <trivial transformation group on 2 pts with 1 generator>, 
-  <full transformation semigroup on 2 pts> ]
+# A RMS over group G with maximal subgroup H
+
+# A connected 2x2 RZMS over group S3
+gap> G:=Group([ (1,2), (1,2,3) ]);
+Group([ (1,2), (1,2,3) ])
+gap> mat:=[ [(1,2), 0], [0, (2,3)] ];
+[ [ (1,2), 0 ], [ 0, (2,3) ] ]
+gap> R:=ReesZeroMatrixSemigroup(G,mat);
+<Rees 0-matrix semigroup 2x2 over Group([ (1,2), (1,2,3) ])>
+gap> max:=MaximalSubsemigroups(R);
+[ <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 9 generators>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 9 generators> ]
+gap> Size(max);
+13
+
+# A connected 5x5 RZMS over group S3, the first one we focused on
+gap> G:=Group([ (1,4,2), (1,4,5) ]);
+Group([ (1,4,2), (1,4,5) ])
+gap> mat:=[
+> [ 0, 0, (1,4,2), (1,4,5), 0 ],
+> [ 0, (), (1,2,5), 0, 0 ],
+> [ (), (1,2,5), 0, 0, 0 ],
+> [ (), 0, 0, 0, (1,5,2) ],
+> [ 0, 0, 0, (1,4,2), (1,4,5) ] ];;
+gap> R:=ReesZeroMatrixSemigroup(G,mat);
+<Rees 0-matrix semigroup 5x5 over Group([ (1,4,2), (1,4,5) ])>
+gap> max:=MaximalSubsemigroups(R);
+[ <subsemigroup of 5x5 Rees 0-matrix semigroup with 12 generators>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators>, 
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 25 generators> ]
+gap> Size(max);
+26
+
+# The above connected 5x5 RZMS over S3, with maximal subgroup <(1,2,5)>
+gap> H:=Group([ (1,2,5) ]);
+Group([ (1,2,5) ])
+gap> MaximalSubsemigroups(R,H);
+[ <subsemigroup of 5x5 Rees 0-matrix semigroup with 12 generators> ]
+
+# An unconnected (3 components) 5x6 RZMS over group S4
+gap> G:=Group([ (1,2,3,4), (1,3,2,4) ]);
+Group([ (1,2,3,4), (1,3,2,4) ])
+gap> mat:=[ [ (), (4,3), 0, 0, 0 ],
+> [ (1,3)(2,4), 0, 0, 0, 0 ],
+> [ 0, 0, (4,3), 0, 0 ],
+> [ 0, 0, 0, (), 0 ],
+> [ 0, 0, 0, (), () ],
+> [ 0, 0, 0, (), 0 ] ];;
+gap> R:=ReesZeroMatrixSemigroup(G,mat);
+<Rees 0-matrix semigroup 5x6 over Group([ (1,2,3,4), (1,3,2,4) ])>
+gap> max:=MaximalSubsemigroup(R);;
+gap> Size(max);
+116
+
+# Maximal subsemigroups of T3
+gap> T3:=FullTransformationMonoid(3);
+<full transformation semigroup on 3 pts>
+gap> MaximalSubsemigroups(T3);
+[ <transformation semigroup on 3 pts with 2 generators>, 
+  <transformation semigroup on 3 pts with 4 generators>, 
+  <transformation semigroup on 3 pts with 4 generators>, 
+  <transformation semigroup on 3 pts with 4 generators>, 
+  <transformation semigroup on 3 pts with 3 generators> ]
 gap> Size(last);
-9
+5
+
+# Test of IsMaximalSubsemigroup
+gap> S:=Semigroup([ Transformation( [ 1, 2, 4, 4, 1 ] ), Transformation( [ 4, 4, 1, 4 ] ), Transformation( [ 5, 1, 4, 2, 3 ] ) ]);
+<transformation semigroup on 5 pts with 3 generators>
+gap> T:=Semigroup([ Transformation( [ 5, 1, 4, 2, 3 ] ), Transformation( [ 4, 4, 2, 4, 1 ] ), Transformation( [ 3, 1, 2, 2, 2 ] ) ]);
+<transformation semigroup on 5 pts with 3 generators>
+gap> IsMaximalSubsemigroup(S, T);
+true
+gap> U:=Semigroup([ Transformation( [ 5, 5, 1, 1, 5 ] ), Transformation( [ 2, 2, 3, 4, 3 ] ), Transformation( [ 3, 4, 5, 4, 3 ] ) ]);
+<transformation semigroup on 5 pts with 3 generators>
+gap> IsSubsemigroup(S, U);
+true
+gap> IsMaximalSubsemigroup(S, U);
+false
 
 #
 gap> SemigroupsStopTest();
