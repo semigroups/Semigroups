@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-InstallMethod( Enumerate, "for a hash orbit and a limit", 
+InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)", 
 [IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
 function( o, limit )
   local orb, i, nr, looking, lookfunc, stopper, storenumbers, op, gens, ht, genstoapply, schreier, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
@@ -58,8 +58,12 @@ function( o, limit )
       depth := depth + 1;
       depthmarks[depth+1] := nr+1;
     fi;
-
-    logind[i] := logpos; suc := false;
+    
+    if not IsBound(logind[i]) then 
+      logind[i] := logpos; suc := false;
+    else
+      suc:=true;
+    fi;
 
     # Now apply generators:
     for j in genstoapply do
