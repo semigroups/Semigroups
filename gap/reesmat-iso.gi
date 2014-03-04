@@ -178,8 +178,8 @@ else
       tester:=function(x)
         local g;
         for g in T do 
-          if RMSInducedFunction(R, x, PreImagesRepresentative(hom, (x^proj2)^inv),
-           g)[1] then 
+          if RMSInducedFunction(R, x, 
+            PreImagesRepresentative(hom, (x^proj2)^inv), g)[1] then 
           #if RMSInducedFunction(R, x, (x^proj2)^inv, g)[1] then 
             return true;
           fi;
@@ -192,30 +192,25 @@ else
       stab:=BacktrackSearchStabilizerChainSubgroup(stab, tester, pruner);
     fi;
     
-    #JDM there must be a better way!
-    V:=Group(());
-    Info(InfoSemigroups, 2, "processing generators for the subgroup...");
-    for x in StrongGenerators(stab) do 
-      V:=ClosureGroup(V, x);
-      if Size(V)=Size(stab) then 
-        break;
-      fi;
-    od;
+    V:=Group(stab!.orb!.gens);
     
     Info(InfoSemigroups, 2, "converting generators of the subgroup...");
     A:=[];
-    for g in T do
-      for x in GeneratorsOfGroup(V) do 
-        lambda:=x^proj1;  
-        #gamma:=(x^proj2)^inv;
-        gamma:=PreImagesRepresentative(hom, (x^proj2)^inv);
+    for x in GeneratorsOfGroup(V) do 
+      lambda:=x^proj1;  
+      #gamma:=(x^proj2)^inv;
+      gamma:=PreImagesRepresentative(hom, (x^proj2)^inv);
+      for g in T do
         x:=RMSInducedFunction(R, lambda, gamma, g); 
         if x[1] then 
           x:=RMSIsoByTriple(R, R, [lambda, gamma, x[2]]);
           AddSet(A, x);
+          break;
         fi;
       od;
+    od;
 
+    for g in T do 
       x:=RMSInducedFunction(R, One(agraph), One(agroup), g);
       if x[1] then 
         x:=RMSIsoByTriple(R, R, [One(agraph), One(agroup), x[2]]);

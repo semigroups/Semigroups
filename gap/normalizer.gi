@@ -12,7 +12,7 @@ InstallMethod(Normalizer,
 "for a permutation group and a transformation semigroup", 
 [IsPermGroup, IsTransformationSemigroup],
 function(G, S)
-  local U, o, deg, OnKernelByConj, gens, nrgens, used, P,
+  local U, o, deg, gens, nrgens, used, P,
    pruner, out;
 
   U:=StabilizerChain(G); 
@@ -29,10 +29,7 @@ function(G, S)
    
     deg:=DegreeOfTransformationSemigroup(S);
     Info(InfoSemigroups, 2, "finding the stabilizer of the kernels...");
-    OnKernelByConj:=function(pt, x) #JDM better method for this!
-      return FlatKernelOfTransformation(TransformationNC(pt)^x, deg);
-    end;
-    U:=SetwiseStabilizer(U, OnKernelByConj, o).setstab;
+    U:=SetwiseStabilizer(U, POW_KER_PERM, o).setstab;
     Info(InfoSemigroups, 2, Size(U), " found");
   else 
     return U;
@@ -208,7 +205,7 @@ function(G, S)
   return out;
 end);
 
-#JDM
+#JDM the function below is not fully written...
 
 InstallMethod(Normalizer, 
 "for a permutation group and a bipartition regular *-semigroup", 
