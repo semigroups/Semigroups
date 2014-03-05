@@ -15,31 +15,6 @@ end);
 
 #
 
-InstallMethod(CanonicalRepresentative,
-"for a Rees 0-matrix semigroup congruence class by linked triple",
-[IsRMSCongruenceClassByLinkedTriple],
-function(class)
-  local cong, s, mat, i, u, v, j, a;
-  cong := Parent(class);
-  s := Range(cong);
-  mat := Matrix(s);
-  # Pick the first row and column from the classes
-  i := cong!.colBlocks[class!.colClass][1];
-  u := cong!.rowBlocks[class!.rowClass][1];
-  # Pick another row and column with appropriate non-zero entries
-  for v in [1..Size(mat)] do
-    if mat[v][i] <> 0 then break; fi;
-  od;
-  for j in [1..Size(mat[1])] do
-    if mat[u][j] <> 0 then break; fi;
-  od;
-  #TODO: Representative(coset) is NOT CANONICAL, so this function is wrong
-  a := mat[v][i]^-1 * Representative(class!.nCoset) * mat[u][j]^-1;
-  return ReesZeroMatrixSemigroupElement(s, i, a, u);
-end);
-
-#
-
 InstallMethod(ViewObj,
 "for Rees zero-matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
@@ -54,7 +29,7 @@ end);
 #
 
 InstallMethod(CongruencesOfSemigroup,
-"for a finite 0-simple Rees 0-matrix semigroup",
+"for finite 0-simple Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite],
 function(s)
   local congs, mat, g, AddRelation, maxColBlocks, maxRowBlocks,
@@ -93,6 +68,11 @@ function(s)
       fi;
     od;
   od;
+  
+  # Will this method generate the universal congruence?
+  if not (Size(maxColBlocks) = 1 and Size(maxRowBlocks) = 1) then
+    #TODO: Create the universal congruence and add it to congs
+  fi;
   
   # Compute all column and row relations which are subsets of the max relations
   colBlocksList := List(List(Cartesian(List(maxColBlocks,PartitionsSet)),Concatenation),SSortedList);
@@ -250,13 +230,10 @@ end);
 #
 
 InstallMethod(\in,
-"for a Rees 0-matrix semigroup element collection and a semigroup congruence by linked triple",
+"for Rees 0-matrix semigroup element collection and a semigroup congruence by linked triple",
 [IsReesZeroMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
 function(pair, cong)
-  local s, mat,
-        row, col, rows, cols,
-        a, i, u, j, b, v,
-        gpElt;
+  local s, mat, gpElt, row, col, rows, cols, a, i, u, j, b, v;
   
   # Check for validity
   if Size(pair) <> 2 then
@@ -302,10 +279,9 @@ end);
 #
 
 InstallMethod(EquivalenceClasses,
-"for a Rees 0-matrix semigroup congruence by linked triple",
+"for Rees 0-matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
 function(cong)
-  #TODO: Zero class
   local list, s, g, n, colBlocks, rowBlocks, colClass, rowClass, rep, elt;
   list := [];
   s := Range(cong);
@@ -324,13 +300,15 @@ function(cong)
       od;
     od;
   od;
+  # Add the zero class
+  Add(list, EquivalenceClassOfElement(cong, MultiplicativeZero(s)));
   return list;
 end);
 
 #
 
 InstallMethod(RMSCongruenceClassByLinkedTriple,
-"for a semigroup congruence by linked triple, a coset and two positive integers",
+"for semigroup congruence by linked triple, a coset and two positive integers",
 [IsRMSCongruenceByLinkedTriple,
  IsRightCoset, IsPosInt, IsPosInt],
 function(cong, nCoset, colClass, rowClass)
@@ -341,7 +319,7 @@ end);
 #
 
 InstallMethod(RMSCongruenceClassByLinkedTripleNC,
-"for a semigroup congruence by linked triple, a coset and two positive integers",
+"for semigroup congruence by linked triple, a coset and two positive integers",
 [IsRMSCongruenceByLinkedTriple,
  IsRightCoset, IsPosInt, IsPosInt], 
 function(cong, nCoset, colClass, rowClass)
@@ -359,7 +337,7 @@ end);
 #
 
 InstallMethod(EquivalenceClassOfElement,
-"for a Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
+"for Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
 [IsRMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
 function(cong, elt)
   local fam, class, mat, nCoset, colClass, rowClass;
@@ -373,10 +351,9 @@ function(cong, elt)
   # Construct the object
   fam := CollectionsFamily( FamilyObj(elt));
   if elt = MultiplicativeZero(Range(cong)) then
-    class := Objectify(NewType(fam, IsEquivalenceClass and
-                                    IsEquivalenceClassDefaultRep),
+    class := Objectify(NewType(fam, IsRMSCongruenceClassByLinkedTriple),
                        rec(nCoset := 0) );
-    SetAsSSortedList([elt]);
+    SetAsSSortedList(class,[elt]);
   else
     nCoset := RightCoset(cong!.n, LinkedElement(elt));
     colClass := cong!.colLookup[elt[1]];
@@ -394,12 +371,17 @@ end);
 #
 
 InstallMethod( \in,
-"for a Rees 0-matrix semigroup element and a congruence class by linked triple",
+"for Rees 0-matrix semigroup element and a congruence class by linked triple",
 [IsReesZeroMatrixSemigroupElement, IsRMSCongruenceClassByLinkedTriple],
 function(elt, class)
   local s, cong;
   cong := ParentAttr(class);
   s := Range(cong);
+  # Special case for {0}
+  if elt = MultiplicativeZero(s) then
+    return(class!.nCoset = 0);
+  fi;
+  # Otherwise
   return( elt in s and
           cong!.colLookup[elt[1]] = class!.colClass and
           cong!.rowLookup[elt[3]] = class!.rowClass and
@@ -409,10 +391,15 @@ end);
 #
 
 InstallMethod(Size,
-"for a congruence class by linked triple",
+"for congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
 function(class)
   local cong;
+  # Special case for {0}
+  if class!.nCoset = 0 then
+    return 1;
+  fi;
+  # Otherwise
   cong := Parent(class);
   return( Size(cong!.n) *
           Size(cong!.colBlocks[class!.colClass]) *
@@ -424,10 +411,44 @@ end);
 InstallMethod( \=,
 "for two congruence classes by linked triple",
 [IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
-function(c1, c2) 
+function(c1, c2)
+  # Special case for {0}
+  if c1!.nCoset = 0 and c2!.nCoset = 0 then
+    return true;
+  fi;
+  # Otherwise
   return( c1!.nCoset = c2!.nCoset and
           c1!.colClass = c2!.colClass and
           c1!.rowClass = c2!.rowClass );
+end);
+
+#
+
+InstallMethod(CanonicalRepresentative,
+"for Rees 0-matrix semigroup congruence class by linked triple",
+[IsRMSCongruenceClassByLinkedTriple],
+function(class)
+  local cong, s, mat, i, u, v, j, a;
+  cong := Parent(class);
+  s := Range(cong);
+  # Special case for {0}
+  if class!.nCoset = 0 then
+    return MultiplicativeZero(s);
+  fi;
+  # Pick the first row and column from the classes
+  i := cong!.colBlocks[class!.colClass][1];
+  u := cong!.rowBlocks[class!.rowClass][1];
+  # Pick another row and column with appropriate non-zero entries
+  mat := Matrix(s);
+  for v in [1..Size(mat)] do
+    if mat[v][i] <> 0 then break; fi;
+  od;
+  for j in [1..Size(mat[1])] do
+    if mat[u][j] <> 0 then break; fi;
+  od;
+  #TODO: Representative(coset) is NOT CANONICAL, so this function is wrong
+  a := mat[v][i]^-1 * Representative(class!.nCoset) * mat[u][j]^-1;
+  return ReesZeroMatrixSemigroupElement(s, i, a, u);
 end);
 
 #
