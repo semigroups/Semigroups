@@ -35,6 +35,12 @@ IsEndomorphismOfPartition:=function(bl, f)
   return true;
 end;
 
+NrEndomorphismsPartition:=function(partition)
+  local bl;
+  bl:=BlocksOfPartition(partition);
+  return Number(FullTransformationSemigroup(Sum(partition)), x-> 
+    IsEndomorphismOfPartition(bl, x));
+end;
 
 # from the `The rank of the semigroup of transformations stabilising a partition
 # of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014). 
@@ -137,27 +143,32 @@ function(partition)
       Add(gens, Transformation(x));
     fi;
   od;
-
+  Error();
+  
   # get the generators of S(X,P)...
   if s=r or s-r>=2 then 
     # 2 generators for the r wreath products of symmetric groups 
     for i in [1..r] do 
       m:=Length(equal[i]);       #WreathProduct(S_n, S_m) m blocks of size n 
       n:=partition[equal[i][1]];
-      if IsOddInt(m) or IsOddInt(n) then 
-        x:=Permuted(blocks{equal[i]}, PermList(Concatenation([2..m], [1])));
-      else
-        x:=Permuted(blocks{equal[i]}, PermList(Concatenation([1], [3..m], [2])));
-      fi;
+      x:=blocks{equal[i]};
 
       if n>1 then 
         x[2]:=Permuted(x[2], (1,2));
       fi;
+      
+      if IsOddInt(m) or IsOddInt(n) then 
+        x:=Permuted(x, PermList(Concatenation([2..m], [1])));
+      else
+        x:=Permuted(x, PermList(Concatenation([1], [3..m], [2])));
+      fi;
+
       x:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(x));
       Add(gens, AsTransformation(x));
-
-      y:=Permuted(blocks{equal[i]}, (1,2));
+      
+      y:=blocks{equal[i]};
       y[1]:=Permuted(y[1],  PermList(Concatenation([2..n], [1])));
+      y:=Permuted(y, (1,2));
       y:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(y));
       Add(gens, AsTransformation(y));
     od;
@@ -220,7 +231,7 @@ function(partition)
       if Length(blocks[unique[i]])<>1 then 
         x:=Permuted(blocks[unique[i]], (1,2));
       else
-        x:=blocks[unique[i]];
+        x:=ShallowCopy(blocks[unique[i]]);
       fi;
       if IsOddInt(Length(blocks[unique[i+1]])) then 
         Append(x, Permuted(blocks[unique[i+1]], 
@@ -236,7 +247,7 @@ function(partition)
       fi;
     od;
     
-    x:=Permuted(blocks[unique[s-r]], (1,2));
+    x:=[];
     if partition[unique[1]]<>1 then  
       if IsOddInt(partition[unique[1]]) then 
         Append(x, Permuted(blocks[unique[1]], 
@@ -248,7 +259,8 @@ function(partition)
     else
       Append(x, blocks[unique[1]]);
     fi;
-    x:=MappingPermListList(Concatenation(blocks[unique[s-r]], blocks[unique[1]]), x);
+    Append(x, Permuted(blocks[unique[s-r]], (1,2)));
+    x:=MappingPermListList(Concatenation(blocks[unique[1]], blocks[unique[s-r]]), x);
     Add(gens, AsTransformation(x));
   fi;
   
