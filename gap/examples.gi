@@ -143,7 +143,6 @@ function(partition)
       Add(gens, Transformation(x));
     fi;
   od;
-  Error();
   
   # get the generators of S(X,P)...
   if s=r or s-r>=2 then 
