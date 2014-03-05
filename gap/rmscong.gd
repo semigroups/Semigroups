@@ -1,8 +1,8 @@
-# NEW
 DeclareCategory("IsRMSCongruenceByLinkedTriple",
         IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareAttribute("CongruencesOfSemigroup",
         IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite);
+DeclareGlobalFunction("IsLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 

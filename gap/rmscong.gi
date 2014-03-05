@@ -57,39 +57,127 @@ InstallMethod(CongruencesOfSemigroup,
 "for a finite 0-simple Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite],
 function(s)
+  local congs, mat, g, AddRelation, maxColBlocks, maxRowBlocks,
+        i, j, u, v, n, colBlocks, rowBlocks, colBlocksList, rowBlocksList;
   congs := [];
   mat := Matrix(s);
   g := UnderlyingSemigroup(s);
   
+  # This function combines two congruence classes
+  AddRelation := function(R, x, y)
+    local xClass, yClass;
+    xClass := PositionProperty(R, class -> x in class);
+    yClass := PositionProperty(R, class -> y in class);
+    if xClass <> yClass then
+      Append(R[xClass],R[yClass]);
+      Remove(R,yClass);
+    fi;
+  end;
+  
   # Construct maximum column relation
-  pairs := [];
+  maxColBlocks := List([1..Size(mat[1])], i->[i]);
   for i in [1..Size(mat[1])] do
     for j in [i+1..Size(mat[1])] do
-      if Forall([1..Size(mat)], u->( (mat[u][i]=0) = (mat[u][j]=0) ) ) then
-        Add(pairs,[i,j]);
+      if ForAll([1..Size(mat)], u->( (mat[u][i]=0) = (mat[u][j]=0) ) ) then
+        AddRelation(maxColBlocks, i, j);
       fi;
     od;
   od;
-  maxColRel := EquivalenceRelationByPairs(Domain([1..Size(mat[1])]), pairs);
+  
   # Construct maximum row relation
-  pairs := [];
+  maxRowBlocks := List([1..Size(mat)], u->[u]);
   for u in [1..Size(mat)] do
     for v in [u+1..Size(mat)] do
-      if Forall([1..Size(mat[1])], i->( (mat[u][i]=0) = (mat[v][i]=0) ) ) then
-        Add(pairs,[u,v]);
+      if ForAll([1..Size(mat[1])], i->( (mat[u][i]=0) = (mat[v][i]=0) ) ) then
+        AddRelation(maxRowBlocks, u, v);
       fi;
     od;
   od;
-  maxRowRel := EquivalenceRelationByPairs(Domain([1..Size(mat)]), pairs);
   
+  # Compute all column and row relations which are subsets of the max relations
+  colBlocksList := List(List(Cartesian(List(maxColBlocks,PartitionsSet)),Concatenation),SSortedList);
+  rowBlocksList := List(List(Cartesian(List(maxRowBlocks,PartitionsSet)),Concatenation),SSortedList);
+  
+  # Go through all triples and check
   for n in NormalSubgroups(g) do
-    
+    for colBlocks in colBlocksList do
+      for rowBlocks in rowBlocksList do
+        if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
+          Add(congs, RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
+        fi;
+      od;
+    od;
   od;
   
   return congs;
 end);
 
 #
+
+InstallGlobalFunction(IsLinkedTriple,
+function(s, n, colBlocks, rowBlocks)
+  local mat, block, i, j, u, v, bi, bj, bu, bv;
+  mat := Matrix(s);
+  # Check axioms (L1) and (L2) from Howie p.86, then call NC function
+  # Go through the column blocks
+  for block in colBlocks do
+    for bj in [2..Size(block)] do
+      # Check columns have zeroes in all the same rows (L1)
+      for u in [1..Size(mat)] do
+        if (mat[u][block[1]] = 0) <> (mat[u][block[bj]] = 0) then
+          return false;
+        fi;
+      od;
+    od;
+    # Check q-condition for all pairs of rows in this block (L2)
+    for bi in [1..Size(block)] do
+      for bj in [bi+1..Size(block)] do
+        i := block[bi];
+        j := block[bj];
+        # Check all pairs of rows (u,v)
+        for u in [1..Size(mat)] do
+          if mat[u][i] = 0 then continue; fi;
+          for v in [u+1..Size(mat)] do
+            if mat[v][i] = 0 then continue; fi;
+            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+              return false;
+            fi;
+          od;
+        od;
+      od;
+    od;
+  od;
+  
+  # Go through the row blocks
+  for block in rowBlocks do
+    for bv in [2..Size(block)] do
+      # Check rows have zeroes in all the same columns (L1)
+      for i in [1..Size(mat[1])] do
+        if (mat[block[1]][i] = 0) <> (mat[block[bv]][i] = 0) then
+          return false;
+        fi;
+      od;
+    od;
+    # Check q-condition for all pairs of columns in this block (L2)
+    for bu in [1..Size(block)] do
+      for bv in [bi+1..Size(block)] do
+        u := block[bu];
+        v := block[bv];
+        # Check all pairs of columns (i,j)
+        for i in [1..Size(mat[1])] do
+          if mat[u][i] = 0 then continue; fi;
+          for j in [i+1..Size(mat[1])] do
+            if mat[u][j] = 0 then continue; fi;
+            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+              return false;
+            fi;
+          od;
+        od;
+      od;
+    od;
+  od;
+  return true;
+end);
 
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 [IsReesZeroMatrixSemigroup and IsFinite,
@@ -118,71 +206,11 @@ function(s, n, colBlocks, rowBlocks)
           "of the rows of the matrix of <s>,"); return;
   fi;
   
-  # Check axioms (L1) and (L2) from Howie p.86, then call NC function
-  # Go through the column blocks
-  for block in colBlocks do
-    for bj in [2..Size(block)] do
-      # Check columns have zeroes in all the same rows (L1)
-      for u in [1..Size(mat)] do
-        if (mat[u][block[1]] = 0) <> (mat[u][block[bj]] = 0) then
-          Error("columns in the same block of 3rd argument <colBlocks> ",
-                "must have zeroes in precisely the same rows,");
-          return;
-        fi;
-      od;
-    od;
-    # Check q-condition for all pairs of rows in this block (L2)
-    for bi in [1..Size(block)] do
-      for bj in [bi+1..Size(block)] do
-        i := block[bi];
-        j := block[bj];
-        # Check all pairs of rows (u,v)
-        for u in [1..Size(mat)] do
-          if mat[u][i] = 0 then continue; fi;
-          for v in [u+1..Size(mat)] do
-            if mat[v][i] = 0 then continue; fi;
-            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
-              Error("not a valid linked triple for this semigroup's matrix, ",
-                    "cols ",i," and ",j,", rows ",u," and ",v,",");
-            fi;
-          od;
-        od;
-      od;
-    od;
-  od;
-  
-  # Go through the row blocks
-  for block in rowBlocks do
-    for bv in [2..Size(block)] do
-      # Check rows have zeroes in all the same columns (L1)
-      for i in [1..Size(mat[1])] do
-        if (mat[block[1]][i] = 0) <> (mat[block[bv]][i] = 0) then
-          Error("rows in the same block of 4th argument <rowBlocks> ",
-                "must have zeroes in precisely the same columns,");
-          return;
-        fi;
-      od;
-    od;
-    # Check q-condition for all pairs of columns in this block (L2)
-    for bu in [1..Size(block)] do
-      for bv in [bi+1..Size(block)] do
-        u := block[bu];
-        v := block[bv];
-        # Check all pairs of columns (i,j)
-        for i in [1..Size(mat[1])] do
-          if mat[u][i] = 0 then continue; fi;
-          for j in [i+1..Size(mat[1])] do
-            if mat[u][j] = 0 then continue; fi;
-            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
-              Error("not a valid linked triple for this semigroup's matrix, ",
-                    "rows ",u," and ",v,", cols ",i," and ",j,",");
-            fi;
-          od;
-        od;
-      od;
-    od;
-  od;
-  return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
+  if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
+    return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
+  else
+    Error("Not a valid linked triple,"); return;
+  fi;
 end);
 
 #
@@ -277,6 +305,7 @@ InstallMethod(EquivalenceClasses,
 "for a Rees 0-matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
 function(cong)
+  #TODO: Zero class
   local list, s, g, n, colBlocks, rowBlocks, colClass, rowClass, rep, elt;
   list := [];
   s := Range(cong);
