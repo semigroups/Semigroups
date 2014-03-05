@@ -71,7 +71,7 @@ function(s)
   
   # Will this method generate the universal congruence?
   if not (Size(maxColBlocks) = 1 and Size(maxRowBlocks) = 1) then
-    #TODO: Create the universal congruence and add it to congs
+    Add(congs, UniversalSemigroupCongruence(s));
   fi;
   
   # Compute all column and row relations which are subsets of the max relations
@@ -229,6 +229,32 @@ end);
 
 #
 
+InstallGlobalFunction(UniversalSemigroupCongruence,
+function(s)
+  local fam, cong;
+  fam := GeneralMappingsFamily(
+                 ElementsFamily(FamilyObj(s)),
+                 ElementsFamily(FamilyObj(s)) );
+  cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
+  SetSource(cong, s);
+  SetRange(cong, s);
+  return cong;
+end);
+        
+#
+
+InstallMethod(ViewObj,
+"for universal semigroup congruence",
+[IsUniversalSemigroupCongruence],
+function(cong)
+#  Print("<universal congruence on ");
+#  ViewObj(Range(cong));
+#  Print(">");
+  Print("<universal semigroup congruence>");
+end);
+
+#
+
 InstallMethod(\in,
 "for Rees 0-matrix semigroup element collection and a semigroup congruence by linked triple",
 [IsReesZeroMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
@@ -340,14 +366,22 @@ InstallMethod(EquivalenceClassOfElement,
 "for Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
 [IsRMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
 function(cong, elt)
-  local fam, class, mat, nCoset, colClass, rowClass;
   # Check that the arguments make sense
   if not elt in Range(cong) then
     Error("usage: 2nd argument <elt> should be ",
           "in the semigroup of 1st argument <cong>");
     return;
   fi;
-  
+  return EquivalenceClassOfElementNC(cong, elt);
+end);
+
+#
+
+InstallMethod(EquivalenceClassOfElementNC,
+"for Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
+[IsRMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
+function(cong, elt)
+  local fam, class, mat, nCoset, colClass, rowClass;
   # Construct the object
   fam := CollectionsFamily( FamilyObj(elt));
   if elt = MultiplicativeZero(Range(cong)) then
@@ -364,6 +398,7 @@ function(cong, elt)
                            rowClass := rowClass) );
   fi;
   SetParentAttr(class, cong);
+  SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elt);
   return class;
 end);

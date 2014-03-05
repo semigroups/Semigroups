@@ -1,3 +1,4 @@
+# RMS Congruences by linked triple
 DeclareCategory("IsRMSCongruenceByLinkedTriple",
         IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareAttribute("CongruencesOfSemigroup",
@@ -6,6 +7,12 @@ DeclareGlobalFunction("IsLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 
+# Universal Congruences
+DeclareCategory("IsUniversalSemigroupCongruence",
+        IsSemigroupCongruence and IsAttributeStoringRep);
+DeclareGlobalFunction("UniversalSemigroupCongruence");
+
+# RMS Congruence Classes
 DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
         IsEquivalenceClass and IsAttributeStoringRep);
 DeclareOperation("RMSCongruenceClassByLinkedTriple",
