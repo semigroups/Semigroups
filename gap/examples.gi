@@ -67,7 +67,8 @@ function(partition)
   s:=0;         # nr of distinct block sizes
   r:=0;         # nr of block sizes with at least one other block of equal size
   distinct:=[]; # indices of blocks with distinct block sizes
-  equal:=[];    # indices of blocks with at least one other block of equal size 
+  equal:=[];    # indices of blocks with at least one other block of equal size,
+                # partitioned according to the sizes of the blocks 
   prev:=0;      # size of the previous block
   n:=0;         # the degree of the transformations
   blocks:=[];   # the actual blocks of the partition
