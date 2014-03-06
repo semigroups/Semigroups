@@ -174,25 +174,29 @@ function(partition)
   elif s=1 and r=0 then 
     Append(gens, List(GeneratorsOfGroup(SymmetricGroup(blocks[1])),
      AsTransformation));
-  elif s-r=1 and r>=1 then 
+  elif s-r=1 and r>=1 then#JDM this case should be changed as in the previous case 
     # 2 generators for the r-1 wreath products of symmetric groups 
     for i in [1..r-1] do 
       m:=Length(equal[i]);       #WreathProduct(S_n, S_m) m blocks of size n 
       n:=partition[equal[i][1]];
-      if IsOddInt(m) or IsOddInt(n) then 
-        x:=Permuted(blocks{equal[i]}, PermList(Concatenation([2..m], [1])));
-      else
-        x:=Permuted(blocks{equal[i]}, PermList(Concatenation([1], [3..m], [2])));
-      fi;
+      x:=blocks{equal[i]};
 
       if n>1 then 
         x[2]:=Permuted(x[2], (1,2));
       fi;
+      
+      if IsOddInt(m) or IsOddInt(n) then 
+        x:=Permuted(x, PermList(Concatenation([2..m], [1])));
+      else
+        x:=Permuted(x, PermList(Concatenation([1], [3..m], [2])));
+      fi;
+
       x:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(x));
       Add(gens, AsTransformation(x));
-
-      y:=Permuted(blocks{equal[i]}, (1,2));
+      
+      y:=blocks{equal[i]};
       y[1]:=Permuted(y[1],  PermList(Concatenation([2..n], [1])));
+      y:=Permuted(y, (1,2));
       y:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(y));
       Add(gens, AsTransformation(y));
     od;
@@ -225,7 +229,7 @@ function(partition)
       Add(gens, AsTransformation(w)); # (id, (1,2))=w in the paper
     fi;
   fi;
-  if s-r>=2 then #added generators for the wreath products above
+  if s-r>=2 then # the (s-r) generators of W_2 in the proof
     for i in [1..s-r-1] do 
       if Length(blocks[unique[i]])<>1 then 
         x:=Permuted(blocks[unique[i]], (1,2));
