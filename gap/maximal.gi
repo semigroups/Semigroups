@@ -447,7 +447,7 @@ else
      end, true);
 
     names:=x-> graph.names[x];
-
+    graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
 
     Info(InfoSemigroups, 3, "...found ", Length(rectangles));
