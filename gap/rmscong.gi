@@ -292,6 +292,54 @@ end);
 
 #
 
+InstallMethod(ImagesElm,
+"for Rees 0-matrix semigroup congruence by linked triple and element",
+[IsRMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
+function(cong, elm)
+  local s, mat, images, i, a, u, row, col, j, b, v, nElm;
+  s := Range(cong);
+  mat := Matrix(s);
+  if not elm in s then
+    Error("1st and 2nd args <cong> and <elm> must refer to the same semigroup,");
+    return;
+  fi;
+  # Special case for 0
+  if elm = MultiplicativeZero(s) then
+    return [elm];
+  fi;
+  # List of all elements congruent to elm under cong
+  images := [];
+  # Read the element as (i,a,u)
+  i := elm[1]; a := elm[2]; u := elm[3];
+  # Find a non-zero row for this class of columns
+  for row in [1..Size(mat)] do
+    if mat[row][i] <> 0 then break; fi;
+  od;
+  # Find a non-zero column for this class of rows
+  for col in [1..Size(mat[1])] do
+    if mat[u][col] <> 0 then break; fi;
+  od;
+  
+  # Construct congruent elements as (j,b,v)
+  for j in cong!.colBlocks[cong!.colLookup[i]] do
+    for v in cong!.rowBlocks[cong!.rowLookup[u]] do
+      for nElm in cong!.n do
+        # Might be better to use congruence classes after all
+        b := mat[row][j]^-1
+             * nElm 
+             * mat[row][i] 
+             * a 
+             * mat[u][col] 
+             * mat[v][col]^-1;
+        Add(images, ReesZeroMatrixSemigroupElement(s, j, b, v));
+      od;
+    od;
+  od;
+  return images;
+end);
+
+#
+
 InstallGlobalFunction(UniversalSemigroupCongruence,
 function(s)
   local fam, cong;
