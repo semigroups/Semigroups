@@ -243,6 +243,18 @@ end);
         
 #
 
+InstallMethod( \=,
+"for two Rees 0-matrix semigroup congruences by linked triple",
+[IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
+function(c1, c2)
+  return( Range(c1) = Range(c2) and
+          c1!.n = c2!.n and
+          c1!.colRel = c2!.colRel and
+          c1!.rowRel = c2!.rowRel );
+end);
+
+#
+
 InstallMethod(ViewObj,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
