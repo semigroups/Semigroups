@@ -1,16 +1,69 @@
-BindGlobal("LinkedElement",
-function(elt)
-  local mat, i, u, v, j;
-  mat := Matrix(ReesMatrixSemigroupOfFamily(FamilyObj(elt)));
-  i := elt[1];  # Column no
-  u := elt[3];  # Row no
-  for v in [1..Size(mat)] do
-    if mat[v][i] <> 0 then break; fi;
+InstallGlobalFunction(RMSCongruenceByLinkedTriple,
+[IsReesZeroMatrixSemigroup and IsFinite,
+ IsGroup, IsDenseList, IsDenseList],
+function(s, n, colBlocks, rowBlocks)
+  local g, mat, block, i, j, u, v, bi, bj, bu, bv;
+  mat := Matrix(s);
+  g := UnderlyingSemigroup(s);
+  
+  # Basic checks
+  if not IsNormal(g,n) then
+    Error("2nd argument <n> must be a normal subgroup,"); return;
+  fi;
+  if not ForAll(colBlocks, IsList) then
+    Error("3rd argument <colBlocks> must be a list of lists,"); return;
+  fi;
+  if not ForAll(rowBlocks, IsList) then
+    Error("4th argument <rowBlocks> must be a list of lists,"); return;
+  fi;
+  if SortedList(Flat(colBlocks)) <> [1..Size(mat[1])] then
+    Error("3rd argument <colBlocks> must be a partition ",
+          "of the columns of the matrix of <s>,"); return;
+  fi;
+  if SortedList(Flat(rowBlocks)) <> [1..Size(mat)] then
+    Error("4th argument <rowBlocks> must be a partition ",
+          "of the rows of the matrix of <s>,"); return;
+  fi;
+  
+  if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
+    return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
+  else
+    Error("Not a valid linked triple,"); return;
+  fi;
+end);
+
+#
+
+InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
+[IsReesZeroMatrixSemigroup and IsFinite,
+ IsGroup, IsDenseList, IsDenseList],
+function(s, n, colBlocks, rowBlocks)
+  local fam, cong, colLookup, rowLookup, i, j;
+  # Calculate lookup table for equivalence relations
+  colLookup := [];
+  rowLookup := [];
+  for i in [1..Length(colBlocks)] do
+    for j in colBlocks[i] do
+      colLookup[j] := i;
+    od;
   od;
-  for j in [1..Size(mat[1])] do
-    if mat[u][j] <> 0 then break; fi;
+  for i in [1..Length(rowBlocks)] do
+    for j in rowBlocks[i] do
+      rowLookup[j] := i;
+    od;
   od;
-  return(mat[v][i] * elt[2] * mat[u][j]);
+  # Construct the object
+  fam := GeneralMappingsFamily(
+                 ElementsFamily(FamilyObj(s)),
+                 ElementsFamily(FamilyObj(s)) );
+  cong := Objectify(
+                  NewType(fam, IsRMSCongruenceByLinkedTriple),
+                  rec(n := n,
+                      colBlocks := colBlocks, colLookup := colLookup,
+                      rowBlocks := rowBlocks, rowLookup := rowLookup) );
+  SetSource(cong, s);
+  SetRange(cong, s);
+  return cong;
 end);
 
 #
@@ -159,88 +212,23 @@ function(s, n, colBlocks, rowBlocks)
   return true;
 end);
 
-InstallGlobalFunction(RMSCongruenceByLinkedTriple,
-[IsReesZeroMatrixSemigroup and IsFinite,
- IsGroup, IsDenseList, IsDenseList],
-function(s, n, colBlocks, rowBlocks)
-  local g, mat, block, i, j, u, v, bi, bj, bu, bv;
-  mat := Matrix(s);
-  g := UnderlyingSemigroup(s);
-  
-  # Basic checks
-  if not IsNormal(g,n) then
-    Error("2nd argument <n> must be a normal subgroup,"); return;
-  fi;
-  if not ForAll(colBlocks, IsList) then
-    Error("3rd argument <colBlocks> must be a list of lists,"); return;
-  fi;
-  if not ForAll(rowBlocks, IsList) then
-    Error("4th argument <rowBlocks> must be a list of lists,"); return;
-  fi;
-  if SortedList(Flat(colBlocks)) <> [1..Size(mat[1])] then
-    Error("3rd argument <colBlocks> must be a partition ",
-          "of the columns of the matrix of <s>,"); return;
-  fi;
-  if SortedList(Flat(rowBlocks)) <> [1..Size(mat)] then
-    Error("4th argument <rowBlocks> must be a partition ",
-          "of the rows of the matrix of <s>,"); return;
-  fi;
-  
-  if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-    return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
-  else
-    Error("Not a valid linked triple,"); return;
-  fi;
-end);
-
 #
 
-InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
-[IsReesZeroMatrixSemigroup and IsFinite,
- IsGroup, IsDenseList, IsDenseList],
-function(s, n, colBlocks, rowBlocks)
-  local fam, cong, colLookup, rowLookup, i, j;
-  # Calculate lookup table for equivalence relations
-  colLookup := [];
-  rowLookup := [];
-  for i in [1..Length(colBlocks)] do
-    for j in colBlocks[i] do
-      colLookup[j] := i;
-    od;
+BindGlobal("LinkedElement",
+function(elt)
+  local mat, i, u, v, j;
+  mat := Matrix(ReesMatrixSemigroupOfFamily(FamilyObj(elt)));
+  i := elt[1];  # Column no
+  u := elt[3];  # Row no
+  for v in [1..Size(mat)] do
+    if mat[v][i] <> 0 then break; fi;
   od;
-  for i in [1..Length(rowBlocks)] do
-    for j in rowBlocks[i] do
-      rowLookup[j] := i;
-    od;
+  for j in [1..Size(mat[1])] do
+    if mat[u][j] <> 0 then break; fi;
   od;
-  # Construct the object
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)) );
-  cong := Objectify(
-                  NewType(fam, IsRMSCongruenceByLinkedTriple),
-                  rec(n := n,
-                      colBlocks := colBlocks, colLookup := colLookup,
-                      rowBlocks := rowBlocks, rowLookup := rowLookup) );
-  SetSource(cong, s);
-  SetRange(cong, s);
-  return cong;
+  return(mat[v][i] * elt[2] * mat[u][j]);
 end);
 
-#
-
-InstallGlobalFunction(UniversalSemigroupCongruence,
-function(s)
-  local fam, cong;
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)) );
-  cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
-  SetSource(cong, s);
-  SetRange(cong, s);
-  return cong;
-end);
-        
 #
 
 InstallMethod( \=,
@@ -251,18 +239,6 @@ function(c1, c2)
           c1!.n = c2!.n and
           c1!.colRel = c2!.colRel and
           c1!.rowRel = c2!.rowRel );
-end);
-
-#
-
-InstallMethod(ViewObj,
-"for universal semigroup congruence",
-[IsUniversalSemigroupCongruence],
-function(cong)
-#  Print("<universal congruence on ");
-#  ViewObj(Range(cong));
-#  Print(">");
-  Print("<universal semigroup congruence>");
 end);
 
 #
@@ -312,6 +288,32 @@ function(pair, cong)
   gpElt := mat[row][i] * a * mat[u][col] *
            Inverse(mat[row][j] * b * mat[v][col]);
   return(gpElt in cong!.n);
+end);
+
+#
+
+InstallGlobalFunction(UniversalSemigroupCongruence,
+function(s)
+  local fam, cong;
+  fam := GeneralMappingsFamily(
+                 ElementsFamily(FamilyObj(s)),
+                 ElementsFamily(FamilyObj(s)) );
+  cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
+  SetSource(cong, s);
+  SetRange(cong, s);
+  return cong;
+end);
+        
+#
+
+InstallMethod(ViewObj,
+"for universal semigroup congruence",
+[IsUniversalSemigroupCongruence],
+function(cong)
+#  Print("<universal congruence on ");
+#  ViewObj(Range(cong));
+#  Print(">");
+  Print("<universal semigroup congruence>");
 end);
 
 #
