@@ -19,8 +19,8 @@
       document which can be compiled using &LaTeX; to produce a picture of
       <A>blocks</A>.  <P/>
 
-      <Example><![CDATA[
-gap> f:=Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );
+      <Log><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;
 gap> TikzBlocks(RightBlocks(f));
 "%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
 t}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \
@@ -30,7 +30,7 @@ aw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\
  \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\
 raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
 .8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\
- and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"]]></Example>
+ and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -51,7 +51,7 @@ raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
       of colors available in <C>tikz</C> this option only works when the degree
       of <A>f</A> is less than 20. 
     
-      <Example><![CDATA[
+      <Log><![CDATA[
 gap> f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -3, -5 ], [ 3, -1, -2 ], 
 > [ -4 ] ] );;
 gap> TikzBipartition(f);
@@ -74,7 +74,7 @@ circle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\
 ines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\
 \n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\
 ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
- %lines\n\\end{tikzpicture}\n\n\\end{document}"]]></Example>
+ %lines\n\\end{tikzpicture}\n\n\\end{document}"]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -94,7 +94,7 @@ ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
       For details about this file format, and information about how to display
       or edit this format see <URL>http://www.graphviz.org</URL>. <P/>
 
-      <Example><![CDATA[
+      <Log><![CDATA[
 gap> S:=DualSymmetricInverseMonoid(4);
 <inverse bipartition monoid on 4 pts with 3 generators>
 gap> DotSemilatticeOfIdempotents(S);
@@ -104,7 +104,7 @@ ter_3{\n2 3 10 4 6 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3 -- \
 1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\n8 \
 -- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- 6\n\
 12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15 -\
-- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"]]></Example>
+- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
