@@ -415,6 +415,46 @@ gap> Filtered(S, f-> ForAny(Idempotents(S), e-> e*g=f));
   <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
   <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]> ]
 
+# Factorization/EvaluateWord
+gap> S:=DualSymmetricInverseMonoid(6);;
+gap> f:=S.1*S.2*S.3*S.2*S.1;
+<block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
+[ 5, -1 ]>
+gap> Factorization(S, f);
+[ -2, -2, -2, -2, -2, 4, 2 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+<block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
+[ 5, -1 ]>
+gap> S:=PartitionMonoid(5);;
+gap> f:= Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;
+gap> Factorization(S, f);
+[ 2, 3, 2, 5, 2, 2, 5, 2, 5, 4, 3, 4, 2, 4, 2, 2, 2, 5, 2, 5, 2, 1, 2, 3, 2, 
+  4, 2, 4, 5, 2, 3, 2, 2, 5, 2 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+<bipartition: [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ]>
+gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+<inverse bipartition monoid on 5 pts with 3 generators>
+gap> f:=S.1*S.2*S.3*S.2*S.1;
+<bipartition: [ 1 ], [ 2, -2 ], [ 3, -4 ], [ 4, -5 ], [ 5, -3 ], [ -1 ]>
+gap> Factorization(S, f);
+[ -1, 1, 3, 2, 1, 2, -1, -1, 2, 1, 2, -1, -1, 1 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+<bipartition: [ 1 ], [ 2, -2 ], [ 3, -4 ], [ 4, -5 ], [ 5, -3 ], [ -1 ]>
+gap> S:=Semigroup(
+> [ Bipartition( [ [ 1, 2, 3, 5, -1, -4 ], [ 4 ], [ -2, -3 ], [ -5 ] ] ), 
+>   Bipartition( [ [ 1, 2, 4 ], [ 3, 5, -1, -4 ], [ -2, -5 ], [ -3 ] ] ), 
+>   Bipartition( [ [ 1, 2 ], [ 3, -1, -3 ], [ 4, 5, -4, -5 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1, 3, 4, -4 ], [ 2 ], [ 5 ], [ -1, -2, -3 ], [ -5 ] ] ), 
+>   Bipartition( [ [ 1, -3 ], [ 2, -5 ], [ 3, -1 ], [ 4, 5 ], [ -2, -4 ] ] ) ] );;
+gap> x:=S.1*S.2*S.3*S.4*S.5;
+<bipartition: [ 1, 2, 3, 5 ], [ 4 ], [ -1, -3, -5 ], [ -2, -4 ]>
+gap> Factorization(S, x);
+[ 1, 4, 1, 4, 5 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+<bipartition: [ 1, 2, 3, 5 ], [ 4 ], [ -1, -3, -5 ], [ -2, -4 ]>
+gap> IsInverseSemigroup(S);
+false
+
 #
 gap> SemigroupsStopTest();
 

@@ -142,7 +142,23 @@ end );
 
 #
 
-InstallMethod(EvaluateWord, "for partial perm coll and list pos ints", 
+InstallMethod(EvaluateWord, "for bipartition coll and list of integers", 
+[IsBipartitionCollection, IsList],
+function ( gens, w )
+    local  i, res, pts;
+    if Length( w ) = 0  then
+        return One(gens);
+    fi;
+    res := gens[AbsInt(w[1])]^SignInt(w[1]);
+    for i  in [ 2 .. Length( w ) ]  do
+        res := res * gens[AbsInt(w[i])]^SignInt(w[i]);
+    od;
+    return res;
+end);
+
+#
+
+InstallMethod(EvaluateWord, "for partial perm coll and list of integers", 
 [IsPartialPermCollection, IsList],
 function ( gens, w )
     local  i, res, pts;

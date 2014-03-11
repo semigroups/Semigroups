@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  slp.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#W  factor.xml
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -41,7 +41,7 @@
 
     See also <Ref Func="EvaluateWord"/> and 
     <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
-<Example>
+<Example><![CDATA[
 gap> gens:=[ Transformation( [ 2, 2, 9, 7, 4, 9, 5, 5, 4, 8 ] ), 
 > Transformation( [ 4, 10, 5, 6, 4, 1, 2, 7, 1, 2 ] ) ];;
 gap> S:=Semigroup(gens);;
@@ -51,7 +51,7 @@ gap> Factorization(S, f);
 gap> EvaluateWord(gens, last);
 Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )
 gap> S:=SymmetricInverseMonoid(8);
-&lt;symmetric inverse semigroup on 8 pts>
+<symmetric inverse semigroup on 8 pts>
 gap> f:=PartialPerm( [ 1, 2, 3, 4, 5, 8 ], [ 7, 1, 4, 3, 2, 6 ] );
 [5,2,1,7][8,6](3,4)
 gap> Factorization(S, f);
@@ -62,8 +62,16 @@ gap> Factorization(S, f);
   3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, 
   -2, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 2, 3, 2, 2, 2, 2 ]
 gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
-[5,2,1,7][8,6](3,4)</Example>
+[5,2,1,7][8,6](3,4)
+gap> S:=DualSymmetricInverseMonoid(6);;
+gap> f:=S.1*S.2*S.3*S.2*S.1;
+<block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
+[ 5, -1 ]>
+gap> Factorization(S, f);
+[ -2, -2, -2, -2, -2, 4, 2 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+<block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
+[ 5, -1 ]>]]></Example>
     </Description>
   </ManSection>
-  <#/GAPDoc>
-
+<#/GAPDoc>
