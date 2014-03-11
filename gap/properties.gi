@@ -281,14 +281,10 @@ end);
 #
 
 InstallMethod(IsFactorisableSemigroup, "for a block bijection semigroup",
-[IsBipartitionSemigroup and IsInverseSemigroup], 
+[IsBlockBijectionSemigroup and IsInverseSemigroup], 
 function(S)
   local G, iso, enum, f;
   
-  if not IsBlockBijectionSemigroup(S) then 
-    TryNextMethod();
-  fi;
-
   G:=GroupOfUnits(S);
   
   if G=fail then 
@@ -309,6 +305,18 @@ function(S)
   od;
   return true;
 end);
+
+#
+
+InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup with generators",
+[IsInverseSemigroup and HasGeneratorsOfSemigroup], 
+function(S)
+  if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) then 
+    return IsFactorisableSemigroup(Range(IsomorphismPartialPermSemigroup(S)));
+  fi;
+  return false;
+end);
+
 #
 
 InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
