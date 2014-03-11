@@ -280,6 +280,37 @@ end);
 
 #
 
+InstallMethod(IsFactorisableSemigroup, "for a block bijection semigroup",
+[IsBipartitionSemigroup and IsInverseSemigroup], 
+function(S)
+  local G, iso, enum, f;
+  
+  if not IsBlockBijectionSemigroup(S) then 
+    TryNextMethod();
+  fi;
+
+  G:=GroupOfUnits(S);
+  
+  if G=fail then 
+    return false;
+  elif IsTrivial(G) then 
+    return IsSemilatticeAsSemigroup(S);
+  fi;
+  
+  iso:=InverseGeneralMapping(IsomorphismPermGroup(G));
+  enum:=Enumerator(Source(iso));
+
+  for f in Generators(S) do 
+    if not f in G then 
+      if not ForAny(enum, g-> NaturalLeqBlockBijection(f, g^iso)) then 
+        return false;
+      fi;
+    fi;
+  od;
+  return true;
+end);
+#
+
 InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
