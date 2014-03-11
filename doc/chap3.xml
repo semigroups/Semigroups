@@ -145,12 +145,19 @@
     <#Include Label="VagnerPrestonRepresentation">
   </Section>
 
-  <Section><Heading>Visualising the &D;-class structure</Heading>
-    In this section, we describe a function for creating a picture of the 
-    &D;-class structure of a semigroup of transformations, partial
+  <Section><Heading>Visualising the structure of a semigroup</Heading>
+    In this section, we describe a function for creating pictures of various  
+    structures related to a semigroup of transformations, partial
     permutations, or bipartitions; or a subsemigroup of a Rees 0-matrix
-    semigroup.
+    semigroup.<P/>
+    
+    The functions described in this seciton return a string, which can be
+    written to a file using the function 
+    <Ref Func="FileString" BookName="GAPDoc"/>.
+
     <#Include Label="DotDClasses"/>
+    <#Include Label="DotSemilatticeOfIdempotents"/>
+
   </Section>
 </Chapter>
 
