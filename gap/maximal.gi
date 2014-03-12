@@ -773,9 +773,6 @@ function(S)
       for k in [1..Length(lookup[i])] do      
         for j in Combinations(lookup[i], k) do 
           Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
-          #if j = [ 1, 2 ] then
-            #Error();
-          #fi;
           # indices of gens in classes[i]
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
@@ -816,7 +813,7 @@ function(S)
                   Add(out, V);
                   Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
                   " by removing all of XX");
-                elif ForAll(XX, x->not x in V) and not ForAny(out, W-> not IsSubsemigroup(W, V)) then
+                elif ForAll(XX, x->not x in V) and not ForAny(out, W->IsSubsemigroup(W, V)) then
                   Add(out, V);
                   Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
                   " by removing all of XX");

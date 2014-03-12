@@ -176,14 +176,14 @@ gap> ForAll(max,x->IsMaximalSubsemigroup(S,x));
 true
 
 # Inverse semigroup of partial permutations
-#gap> S:=InverseSemigroup([ PartialPerm( [ 1, 3, 4, 5 ], [ 6, 5, 2, 4 ] ), PartialPerm( [ 1, 2, 3, 4, 6 ], [ 5, 4, 3, 1, 6 ] ), PartialPerm( [ 1, 2, 5, 7 ], [ 3, 1, 4, 6 ] ) ]);;
-#gap> max:=MaximalSubsemigroups(S);;
-#gap> Size(max);
-#4
-#gap> List(max, Size);
-#[ 714, 714, 713, 713 ]
-#
-# Bipartition monoid
+gap> S:=InverseSemigroup([ PartialPerm( [ 1, 3, 4, 5 ], [ 6, 5, 2, 4 ] ), PartialPerm( [ 1, 2, 3, 4, 6 ], [ 5, 4, 3, 1, 6 ] ), PartialPerm( [ 1, 2, 5, 7 ], [ 3, 1, 4, 6 ] ) ]);;
+gap> max:=MaximalSubsemigroups(S);;
+gap> Size(max);
+4
+gap> List(max, Size);
+[ 714, 714, 713, 713 ]
+
+# Partition monoid on 3 points
 gap> B:=PartitionMonoid(3);;
 gap> max:=MaximalSubsemigroups(B);;
 gap> Size(max);
