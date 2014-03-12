@@ -151,8 +151,11 @@ gap> RandomBinaryRelationMonoid(5,5);
     <Description>
       Returns a random monoid or semigroup of bipartition on <A>n</A>
       points with <A>m</A> generators.
-      <Example>
-</Example>
+      <Example><![CDATA[
+gap> RandomBipartitionMonoid(5,5);
+<bipartition monoid on 5 pts with 5 generators>
+gap> RandomBipartitionSemigroup(5,5);
+<bipartition semigroup on 5 pts with 5 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

@@ -993,7 +993,7 @@ function(d, f)
   local l;
 
   # use non-NC so taht rho value of f is rectified
-  l:=CreateLClass(Parent(d), RhoOrb(d), RhoOrbSCCIndex(d), f, true);
+  l:=CreateLClass(Parent(d), RhoOrbSCCIndex(d), RhoOrb(d), f, true);
   SetDClassOfLClass(l, d);
   return l;
 end);

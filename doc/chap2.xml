@@ -142,6 +142,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
     In this section, we describe the operations in &Semigroups; that can be
     used to creating semigroups belonging to several standard classes of
     example. 
+    <#Include Label="EndomorphismsPartition"> 
     <#Include Label="JonesMonoid"> 
     <#Include Label="BrauerMonoid"> 
     <#Include Label="FactorisableDualSymmetricInverseSemigroup">

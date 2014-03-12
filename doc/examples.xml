@@ -1,12 +1,42 @@
 #############################################################################
 ##
 #W  examples.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+<#GAPDoc Label="EndomorphismsPartition">
+   <ManSection>
+    <Oper Name="EndomorphismsPartition" Arg="list"/>
+    <Returns>A transformation monoid.</Returns>
+    <Description>
+      If <A>list</A> is a list of positive integers, then 
+      <C>EndomorphismsPartition</C> returns a monoid of endomorphisms preserving
+      a partition of <C>[1..Sum(<A>list</A>)]</C> with
+      a part of length <C><A>list</A>[i]</C> for
+      every <C>i</C>. For example, if <C><A>list</A>=[1,2,3]</C>, then
+      <C>EndomorphismsPartition</C> returns the monoid of endomorphisms of the
+      partition <C>[[1],[2,3],[4,5,6]]</C>. <P/>
+      
+      If <C>f</C> is a transformation of <C>[1..n]</C>, then it is an
+      <B>endomorphism</B> of a partition <C>P</C> on <C>[1..n]</C> if
+      <C>(i,j)</C> in <C>P</C> implies that <C>(i^f, j^f)</C> is in <C>P</C>. <P/>
+
+      <C>EndomorphismsPartition</C> returns a monoid with a minimal size
+      generating set, as described in <Cite Key="Araujo2014aa"/>.
+
+      <Example><![CDATA[
+gap> S:=EndomorphismsPartition([3,3,3]);
+<transformation semigroup on 9 pts with 4 generators>
+gap> Size(S);
+531441
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="JonesMonoid">
    <ManSection>
@@ -14,8 +44,15 @@
     <Oper Name="TemperleyLiebMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
-      <Example>
-</Example>
+      If <A>n</A> is a positive integer, then this operation returns the Jones
+      monoid of degree <A>n</A>. The <B>Jones monoid</B> is the subsemigroup of
+      the Brauer monoid consisting of those bipartitions with a planar diagram.
+      The Jones monoid is sometimes refered to as the <B>Temperley-Lieb
+        monoid</B>. 
+
+      <Example><![CDATA[
+gap> S:=JonesMonoid(4);
+<regular bipartition monoid on 4 pts with 3 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -25,8 +62,17 @@
     <Oper Name="BrauerMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
-      <Example>
-</Example>
+      If <A>n</A> is a positive integer, then this operation returns the Brauer
+      monoid of degree <A>n</A>. The <B>Brauer monoid</B> is the subsemigroup of
+      the partition monoid consisiting of those bipartitions where the size of
+      every block is 2. 
+      <Example><![CDATA[
+gap> S:=BrauerMonoid(4);
+<regular bipartition monoid on 4 pts with 3 generators>
+gap> IsSubsemigroup(S, JonesMonoid(4));
+true
+gap> Size(S);
+105]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -36,8 +82,23 @@
     <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
-      <Example>
-</Example>
+      If <A>n</A> is a positive integer, then this operation returns the largest
+      factorisable inverse subsemigroup of the dual symmetric inverse monoid of
+      degree <A>n</A>. 
+      <Example><![CDATA[
+gap> S:=DualSymmetricInverseMonoid(4);
+<inverse bipartition monoid on 4 pts with 3 generators>
+gap> IsFactorisableSemigroup(S);
+false
+gap> S:=FactorisableDualSymmetricInverseSemigroup(4);
+<inverse bipartition monoid on 4 pts with 3 generators>
+gap> IsFactorisableSemigroup(S);
+true
+gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+<inverse bipartition monoid on 5 pts with 3 generators>
+gap> IsFactorisableSemigroup(S);
+true
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -48,8 +109,20 @@
     <Oper Name="DualSymmetricInverseMonoid" Arg="n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
-      <Example>
-</Example>
+      If <A>n</A> is a positive integer, then these operations return the dual
+      symmetric inverse monoid of degree <A>n</A>, which is the subsemigroup of
+      the partition monoid consisting of the block bijections of degree <A>n</A>.<P/>
+
+      See <Ref Prop="IsBlockBijection"/>.
+
+      <Example><![CDATA[
+gap> Number(PartitionMonoid(3), IsBlockBijection);
+25
+gap> S:=DualSymmetricInverseSemigroup(3);
+<inverse bipartition monoid on 3 pts with 3 generators>
+gap> Size(S);
+25
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -59,8 +132,15 @@
     <Oper Name="PartitionMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
-      <Example>
-</Example>
+      If <A>n</A> is a positive integer, then this operation returns the
+      partition monoid of degree <A>n</A> which is the monoid consisting of all
+      the bipartitions of degree <A>n</A>. 
+      <Example><![CDATA[
+gap> S:=PartitionMonoid(5);
+<regular bipartition monoid on 5 pts with 4 generators>
+gap> Size(S);
+115975
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -229,6 +309,7 @@ gap> NrIdempotents(S);
     that preserve the orientation of <M>\{1,2,\ldots, n\}</M> where
     <M>n</M> is a positive integer.
     <Alt Not="Text">
+
     <C>POPI(<A>n</A>)</C> is generated by the partial permutations:
     <Display>
       \left(
