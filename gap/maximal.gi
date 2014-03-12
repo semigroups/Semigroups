@@ -435,18 +435,9 @@ else
 
     len:=Length(mat[1]); # use <mat> to keep the indices correct
 
-    graph:=Graph(Group(()), Union(I, J+len), OnPoints,
-     function(i,j)
-       if i<=len and j>len then
-         return mat[j-len][i]=0;
-       elif j<=len and i>len then
-         return mat[i-len][j]=0;
-       else
-         return i<>j;
-       fi;
-     end, true);
-
+    graph:=ComplementGraph(RZMSGraph(R));
     names:=x-> graph.names[x];
+    
     graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
 
@@ -656,7 +647,7 @@ function(S)
         local ismax, new_known, a, V, didtest, h, new_depth;
         new_depth:=depth+1;
         count:=count+1;
-        Print("call: ", count, ", depth: ", new_depth,"\n");
+        Info(InfoSemigroups, 1, "call: ", count, ", depth: ", new_depth,"\r");
         ismax:=true; 
         new_known:=ShallowCopy(known);
         didtest:=false;
@@ -782,6 +773,9 @@ function(S)
       for k in [1..Length(lookup[i])] do      
         for j in Combinations(lookup[i], k) do 
           Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
+          #if j = [ 1, 2 ] then
+            #Error();
+          #fi;
           # indices of gens in classes[i]
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
