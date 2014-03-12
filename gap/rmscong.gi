@@ -86,7 +86,23 @@ InstallMethod(CongruencesOfSemigroup,
 [IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite],
 function(s)
   local congs, mat, g, AddRelation, maxColBlocks, maxRowBlocks,
-        i, j, u, v, n, colBlocks, rowBlocks, colBlocksList, rowBlocksList;
+        i, j, u, v, n, colBlocks, rowBlocks, colBlocksList, rowBlocksList,
+        subpartitions;
+  
+  # Function to compute all subsets of a relation given by partitions
+  subpartitions := function(part)
+    local l;
+    # Replace each class with a list of all partitions of that class
+    l := List(part, PartitionsSet);
+    # Produce all the combinations of partitions of classes
+    l := Cartesian(l);
+    # Concatenate these lists to produce complete partitions of the set
+    l := List(l, Concatenation);
+    # Finally sort each of these into the canonical order of its new classes
+    l := SSortedList(l);
+    return l;
+  end;
+  
   congs := [];
   mat := Matrix(s);
   g := UnderlyingSemigroup(s);
@@ -122,14 +138,12 @@ function(s)
     od;
   od;
   
-  # Will this method generate the universal congruence?
-  if not (Size(maxColBlocks) = 1 and Size(maxRowBlocks) = 1) then
-    Add(congs, UniversalSemigroupCongruence(s));
-  fi;
+  # Add the universal congruence
+  Add(congs, UniversalSemigroupCongruence(s));
   
   # Compute all column and row relations which are subsets of the max relations
-  colBlocksList := List(List(Cartesian(List(maxColBlocks,PartitionsSet)),Concatenation),SSortedList);
-  rowBlocksList := List(List(Cartesian(List(maxRowBlocks,PartitionsSet)),Concatenation),SSortedList);
+  colBlocksList := subpartitions(maxColBlocks);
+  rowBlocksList := subpartitions(maxRowBlocks);
   
   # Go through all triples and check
   for n in NormalSubgroups(g) do
@@ -340,32 +354,6 @@ end);
 
 #
 
-InstallGlobalFunction(UniversalSemigroupCongruence,
-function(s)
-  local fam, cong;
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)) );
-  cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
-  SetSource(cong, s);
-  SetRange(cong, s);
-  return cong;
-end);
-        
-#
-
-InstallMethod(ViewObj,
-"for universal semigroup congruence",
-[IsUniversalSemigroupCongruence],
-function(cong)
-#  Print("<universal congruence on ");
-#  ViewObj(Range(cong));
-#  Print(">");
-  Print("<universal semigroup congruence>");
-end);
-
-#
-
 InstallMethod(EquivalenceClasses,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
@@ -382,8 +370,6 @@ function(cong)
       for rep in List(RightCosets(g,n), Representative) do
         elt := ReesZeroMatrixSemigroupElement(
                        s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1] );
-        # nCoset := RightCoset(n, LinkedElement(elt));
-        # Could be faster?
         Add(list, EquivalenceClassOfElement(cong, elt));
       od;
     od;
@@ -400,7 +386,18 @@ InstallMethod(RMSCongruenceClassByLinkedTriple,
 [IsRMSCongruenceByLinkedTriple,
  IsRightCoset, IsPosInt, IsPosInt],
 function(cong, nCoset, colClass, rowClass)
-  #TODO: Checks
+  local g;
+  g := UnderlyingSemigroup(Range(cong));
+  if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
+    Error("2nd argument <nCoset> must be a coset of <cong>'s field n in the ",
+          "underlying (semi)group of the Rees 0-matrix semigroup,"); return;
+  fi;
+  if not colClass in [1..Size(cong!.colBlocks)] then
+    Error("3rd argument <colClass> is out of range,"); return;
+  fi;
+  if not rowClass in [1..Size(cong!.rowBlocks)] then
+    Error("4th argument <rowClass> is out of range,"); return;
+  fi;
   return RMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
 end);
 
@@ -487,6 +484,38 @@ end);
 
 #
 
+InstallMethod( \*,
+"for two congruence classes by linked triple",
+[IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
+function(c1, c2)
+  local elm;
+  if not Parent(c1) = Parent(c2) then
+    Error("<c1> and <c2> must be classes of the same congruence,"); return;
+  fi;
+  elm := Representative(c1) * Representative(c2);
+  return( EquivalenceClassOfElementNC(Parent(c1), elm) );
+end);
+
+#
+
+InstallMethod( \*,
+"for a congruence class by linked triple and a list",
+[IsRMSCongruenceClassByLinkedTriple, IsList],
+function(class, list)
+  return List(list, x -> class * x);
+end);
+
+#
+
+InstallMethod( \*,
+"for a list and a congruence class by linked triple",
+[IsList, IsRMSCongruenceClassByLinkedTriple],
+function(list, class)
+  return List(list, x -> x * class);
+end);
+
+#
+
 InstallMethod(Size,
 "for congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
@@ -543,8 +572,9 @@ function(class)
   for j in [1..Size(mat[1])] do
     if mat[u][j] <> 0 then break; fi;
   od;
-  #TODO: Representative(coset) is NOT CANONICAL, so this function is wrong
-  a := mat[v][i]^-1 * Representative(class!.nCoset) * mat[u][j]^-1;
+  a := mat[v][i]^-1
+       * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
+       * mat[u][j]^-1;
   return ReesZeroMatrixSemigroupElement(s, i, a, u);
 end);
 

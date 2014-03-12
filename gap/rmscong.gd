@@ -7,19 +7,19 @@ DeclareGlobalFunction("IsLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 
-# Universal Congruences
-DeclareCategory("IsUniversalSemigroupCongruence",
-        IsSemigroupCongruence and IsAttributeStoringRep);
-DeclareGlobalFunction("UniversalSemigroupCongruence");
-
 # RMS Congruence Classes
 DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
-        IsEquivalenceClass and IsAttributeStoringRep);
+        IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
 DeclareOperation("RMSCongruenceClassByLinkedTriple",
         [IsRMSCongruenceByLinkedTriple,
          IsRightCoset, IsPosInt, IsPosInt] );
 DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
         [IsRMSCongruenceByLinkedTriple,
          IsRightCoset, IsPosInt, IsPosInt] );
+DeclareOperation("\*",
+        [IsRMSCongruenceClassByLinkedTriple, IsList] );
+DeclareOperation("\*",
+        [IsList, IsRMSCongruenceClassByLinkedTriple] );
 DeclareAttribute("CanonicalRepresentative",
         IsRMSCongruenceClassByLinkedTriple);
+
