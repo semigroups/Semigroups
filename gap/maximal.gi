@@ -500,7 +500,7 @@ InstallMethod(MaximalSubsemigroups, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local out, gens, po, reps, classes, D, lookup, count, max, found_case1,
-  nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion,
+  nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, UnionOfHClassRecursion,
   HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H, basicgens,
   graph, components, nrcomponents, rows, NonGroupRecursion, transversal,
   maxgens, mat, h, ii, jj, lastideal;
@@ -644,7 +644,7 @@ function(S)
         fi;
       fi;
       lastideal:=reps;
-      YannRecursion:=function(U, known, A, depth)
+      UnionOfHClassRecursion:=function(U, known, A, depth)
         local ismax, new_known, a, V, didtest, h, new_depth;
         new_depth:=depth+1;
         count:=count+1;
@@ -662,7 +662,7 @@ function(S)
             if ForAll(XX, x-> not x in V) then #i.e. check that V<>S
               ismax:=false;
               if ForAll(new_known, x-> not x in V) then 
-                YannRecursion(V, new_known, Difference(A, V), new_depth);
+                UnionOfHClassRecursion(V, new_known, Difference(A, V), new_depth);
               fi;
               new_known:=Union(new_known, h);
             fi;
@@ -674,7 +674,7 @@ function(S)
           if not ForAny(out, W-> IsSubsemigroup(W, U)) then 
             Add(out, Semigroup(U, ideal));
             Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
-            " YannRecursion");
+            " UnionOfHClassRecursion");
           fi;
         fi;
         return;
@@ -837,7 +837,7 @@ function(S)
                 if not ForAny(XX, x->x in U) then           
                   A:=Filtered(classes[i], x-> not (x in XX or x in U));
                   count:=0;
-                  YannRecursion(U, [], A, 0);
+                  UnionOfHClassRecursion(U, [], A, 0);
                 fi;
               fi;
             fi;
