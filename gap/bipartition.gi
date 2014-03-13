@@ -203,6 +203,14 @@ function(f, g)
   return f!.blocks=g!.blocks;
 end);
 
+#
+
+InstallMethod(\^, "for a bipartition and permutation",
+[IsBipartition, IsPerm],
+function(f, p)
+  return p^-1*f*p;
+end);
+
 # LambdaPerm
 
 InstallGlobalFunction(PermLeftQuoBipartitionNC,

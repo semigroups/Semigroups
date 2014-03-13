@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+# takes approx. 6.9s
+
 gap> START_TEST("Semigroups package: normalizer.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -19,7 +21,7 @@ gap> SemigroupsStartTest();
 #> Transformation( [ 1, 8, 11, 2, 5, 16, 13, 14, 3, 6, 15, 10, 7, 4, 9, 12 ] ),
 #> Transformation( [ 1, 16, 9, 6, 5, 8, 13, 12, 15, 2, 3, 4, 7, 10, 11, 14 ] ),
 #> Transformation( [ 1, 3, 7, 9, 1, 15, 5, 11, 13, 11, 13, 3, 5, 15, 7, 9 ] ) );;
-#gap> Size(Normalizer(SymmetricGroup(16), S, false));
+#gap> Size(Normalizer(SymmetricGroup(16), S, rec(random:=true)));
 #I  Computing adjusted stabilizer chain...
 #I  Computing adjusted stabilizer chain...
 #16
@@ -142,6 +144,37 @@ gap> Size(Normalizer(SymmetricGroup(9), S));
 54
 gap> Size(Normalizer(SymmetricGroup(9), MinimalIdeal(S)));
 362880
+
+# takes about 4.6s
+gap> S:=JonesMonoid(8);;
+gap> Normalizer(S, rec(lambdastab:=false, rhostab:=false));
+Group([ (1,8)(2,7)(3,6)(4,5) ])
+
+# takes about 42ms, also it is best not to find rhostab or lambdastab here!
+gap> Normalizer(S, rec(rhostab:=false, lambdastab:=false, random:=true));
+Group([ (), (1,8)(2,7)(3,6)(4,5) ])
+
+# takes about 1.5s
+gap> S:=InverseSemigroup(
+> [ PartialPerm( [ 1, 2, 3, 4 ], [ 4, 6, 8, 3 ] ), 
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 3, 4, 1, 6 ] ), 
+>  PartialPerm( [ 1, 2, 4, 5 ], [ 5, 4, 8, 7 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 1, 8, 2, 3, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 2, 6, 3, 1, 5, 8 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 8, 3, 4, 7 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 4, 7, 8, 6, 2 ] ), 
+>  PartialPerm( [ 1, 2, 4, 5, 6 ], [ 7, 2, 3, 4, 6 ] ), 
+>  PartialPerm( [ 1, 2, 3, 5, 8 ], [ 1, 3, 6, 2, 5 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5, 8 ], [ 6, 4, 8, 7, 5, 2 ] ) ]);;
+gap> Normalizer(S, rec(lambdastab:=false));
+Group(())
+
+# takes about 750ms, with lambdastab=true it takes 10s!
+gap> Normalizer(S, rec(lambdastab:=false, random:=true));
+#I  This function uses random methods and so there is some chance that
+#I  it will return an incorrect result. Call the function with the option
+#I  `random' set to <false> for a deterministic (but slower) answer.
+Group(())
 
 #
 gap> SemigroupsStopTest();
