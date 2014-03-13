@@ -22,6 +22,65 @@ end);
 
 #
 
+InstallMethod(IsMaximalSubsemigroup2, "for a semigroup and semigroup", 
+[IsSemigroup, IsSemigroup],
+function(S, T)
+  local found, x, d, hS, hT, n, h;
+  
+  # Check T is a proper subsemigroup of S
+  if S=T then
+  	return false;
+  elif not IsSubsemigroup(S, T) then
+    return false;
+  fi;
+
+  # Check that we only lack part of one D-class, d
+  found:=false;
+  for x in DClasses(S) do
+    if not IsSubset(T,x) then
+      if found then
+        return false;
+      fi;
+      d:=x;
+      found:=true;
+    fi;
+  od;
+  
+  # Check that if d is non-regular, it has been completely removed
+  if not IsRegularDClass(d) then
+    return not ForAny(d, x->x in T);
+  fi;
+  
+  hS:=Size(GroupHClass(d));
+  hT:=Number(GroupHClass(d), x->x in T);
+  
+  # If appropriate, check that T is a union of H-classes of S
+  if hT=hS or hT=0 then  
+    for h in HClasses(d) do
+      n:=Number(h, x->x in T);
+      if not (n = hS or n = 0) then
+        return false;
+      fi;
+    od;
+  # Else check that T intersects all H-classes of d in the same way
+  # Check divisibility because of maximal subgroup connection
+  elif hS mod hT = 0 then
+    for h in HClasses(d) do
+      n:=Number(h, x->x in T);
+      if n <> hT then
+        return false;
+      fi;
+    od;
+  else
+  	return false;
+  fi;
+  
+  return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
+
+end); 
+
+#
+
 InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup and a group",
 [IsReesMatrixSubsemigroup, IsGroup], 
 function(R, H)
@@ -440,6 +499,7 @@ else
     
     graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
+    
     # I'm not familiar with these functions... this is surely not the best way.
     rectangles:=Set(Concatenation(
                  List(rectangles, x->Orbit(graph.autGroup, x, OnSets))));

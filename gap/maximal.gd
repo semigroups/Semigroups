@@ -14,3 +14,4 @@ DeclareOperation("MaximalSubsemigroupsNC", [IsReesMatrixSubsemigroup, IsGroup, I
 DeclareOperation("MaximalSubsemigroupsNC", [IsReesZeroMatrixSubsemigroup, IsGroup, IsRecord, IsList, IsList, IsList]);
 
 DeclareOperation("IsMaximalSubsemigroup", [IsSemigroup, IsSemigroup]);
+DeclareOperation("IsMaximalSubsemigroup2", [IsSemigroup, IsSemigroup]);
