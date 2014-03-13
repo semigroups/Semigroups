@@ -77,7 +77,7 @@
         </Item>
       </List> 
 
-      <Example><![CDATA[
+      <Log><![CDATA[
 gap> S:=BrauerMonoid(8);
 <regular bipartition monoid on 8 pts with 3 generators>
 gap> StructureDescription(Normalizer(S));
@@ -87,7 +87,7 @@ gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 5, 6, 3, 8 ] ),
 gap> Normalizer(S, rec(random:=true, lambdastab:=false));
 #I  Have 33389 points.
 #I  Have 40136 points in new orbit.
-Group(())]]></Example>
+Group(())]]></Log>
 
     </Description> 
   </ManSection> 
