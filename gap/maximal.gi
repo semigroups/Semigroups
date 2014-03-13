@@ -438,9 +438,13 @@ else
     graph:=ComplementGraph(RZMSGraph(R));
     names:=x-> graph.names[x];
     
-    # Un-comment out below line once I've work out how to recover original functionality
-    #graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
+    graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
+    # I'm not familiar with these functions... this is surely not the best way.
+    rectangles:=Set(Concatenation(
+                 List(rectangles, x->Orbit(graph.autGroup, x, OnSets))));
+    # A hack to get round problems caused by immutability...
+    rectangles:=List(rectangles,ShallowCopy);
 
     Info(InfoSemigroups, 3, "...found ", Length(rectangles));
     
@@ -833,7 +837,7 @@ function(S)
                 end;
 
                 # Set U to be a union of H-classes of S            
-                U:=HClassClosure(U);    
+                U:=HClassClosure(U);  
                 if not ForAny(XX, x->x in U) then           
                   A:=Filtered(classes[i], x-> not (x in XX or x in U));
                   count:=0;
