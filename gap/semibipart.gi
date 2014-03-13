@@ -227,7 +227,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  n:=LargestMovedPoint(S);
+  n:=DegreeOfBipartitionSemigroup(S);
   source:=GeneratorsOfSemigroup(S); 
   range:=EmptyPlist(Length(source));
 
