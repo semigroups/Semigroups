@@ -438,7 +438,8 @@ else
     graph:=ComplementGraph(RZMSGraph(R));
     names:=x-> graph.names[x];
     
-    graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
+    # Un-comment out below line once I've work out how to recover original functionality
+    #graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
 
     Info(InfoSemigroups, 3, "...found ", Length(rectangles));
@@ -657,7 +658,7 @@ function(S)
           if not ForAny(h, x->x in known) then 
             didtest:=true;
             V:=Semigroup(U, h);
-            # ? Should above line be: V:=HClassClosure(Semigroup(U, h));
+            # Above line could be: V:=HClassClosure(Semigroup(U, h)); but this is slower
             if ForAll(XX, x-> not x in V) then #i.e. check that V<>S
               ismax:=false;
               if ForAll(new_known, x-> not x in V) then 
@@ -668,7 +669,8 @@ function(S)
             A:=Difference(A,h);
           fi;
         od;
-        if ismax and didtest then
+        #if ismax and didtest then
+        if ismax then
           if not ForAny(out, W-> IsSubsemigroup(W, U)) then 
             Add(out, Semigroup(U, ideal));
             Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
@@ -820,9 +822,6 @@ function(S)
                 fi;
               else
                 
-                #XX:=Union(List(XX, x-> Elements(HClass(S, x))));
-                #A:=Filtered(classes[i], x-> not (x in XX or x in U));
-              
                 HClassClosure:=function(U)
                   local V, B;
                   B:=Intersection(U, classes[i]);
