@@ -11,7 +11,7 @@
 InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)", 
 [IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
 function( o, limit )
-  local orb, i, nr, looking, lookfunc, found, stopper, storenumbers, op, gens, ht, genstoapply, schreier, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
+  local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht, genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
 
   # Set a few local variables for faster access:
   orb := o!.orbit;
@@ -34,12 +34,10 @@ function( o, limit )
   fi;
   
   stopper := o!.stopper;
-  storenumbers := o!.storenumbers;
   op := o!.op;
   gens := o!.gens;
   ht := o!.ht;
   genstoapply := o!.genstoapply;
-  schreier := o!.schreier;
   schreiergen := o!.schreiergen;
   schreierpos := o!.schreierpos;
   
@@ -97,8 +95,6 @@ function( o, limit )
           
         orbitgraph[nr] := EmptyPlist(nrgens);
         orbitgraph[i][j] := nr;
-        #reverse[nr]:=List([1..nrgens], x-> []);
-        #Add(reverse[nr][j], i);
 
         # Handle Schreier tree:
         schreiergen[nr] := j;
@@ -119,7 +115,6 @@ function( o, limit )
         fi;
       elif pos <> false then    # false if point was rejected by grade
         orbitgraph[i][j]:=pos;
-        #Add(reverse[pos][j], i);
       fi;
     od;    
     # Now close the log for this point:
@@ -134,7 +129,7 @@ function( o, limit )
   o!.pos := i;
   o!.depth := depth;
   if i > nr then
-    SetFilterObj(o,IsClosed); 
+    SetFilterObj(o, IsClosed); 
     o!.orbind := [1..nr];
   fi;
   return o;
