@@ -8,6 +8,15 @@
 #############################################################################
 ##
 
+InstallMethod(DegreeOfTransformationSemigroup, 
+"for a transformation semigroup ideal",
+[IsTransformationSemigroup and IsSemigroupIdeal],
+function(I)
+  return DegreeOfTransformationSemigroup(Parent(I));
+end);
+
+#
+
 InstallMethod(ComponentRepsOfTransformationSemigroup, 
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
