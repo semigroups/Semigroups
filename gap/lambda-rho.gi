@@ -66,6 +66,7 @@ function(arg)
   fi;
   return rec(l:=l, m:=m, rep:=f);
 end);
+
 #
 
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",

@@ -279,7 +279,8 @@ function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
 
-#
+#JDM: this has the same problem as orb in Issue #4, the log is not properly
+#formed if the enumeration stops early.
 
 InstallMethod(Enumerate, 
 "for an semigroup data, limit, and func",
@@ -710,7 +711,12 @@ function(data)
   else 
     Print("open ");
   fi;
-  Print("semigroup data with ", Length(data!.orbit)-1, " reps, ",
+  Print("semigroup ");
+  if IsSemigroupIdeal(S) then 
+    Print("ideal ");
+  fi;
+
+  Print("data with ", Length(data!.orbit)-1, " reps, ",
    Length(LambdaOrb(Parent(data)))-1, " lambda-values, ", 
    Length(RhoOrb(Parent(data)))-1, " rho-values>"); 
    #Sum(data!.lenreps), " lambda-rho combos>");
