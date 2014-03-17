@@ -6,6 +6,9 @@
 ##  Licensing information can be foundin the README file of this package.
 ##
 ################################################################################
+
+
+################################################################################
 ##
 ##  FreeBand( <rank> )
 ##
@@ -40,7 +43,7 @@ end );
 
 ################################################################################
 ##
-##
+## WordToTuple & TupleToWord
 ##
 
 WordToTuple := function(word)
@@ -76,6 +79,167 @@ TupleToWord := function(tuple)
   fi;
 end;
 
+################################################################################
+##
+## Iterator
+##
+
+BindGlobal("NextIterator_FreeBand",
+function(iter)
+  local NextIteratorWithContent, NewIterator, PrintIterator, ones, content, i, old_iter;
+  
+  NewIterator := function(C)
+    local it, el, i, iscontdone, C1;
+
+    el := [];
+    iscontdone := false;
+    if Sum(C) = 1 then
+      for i in [1 .. Length(C)] do
+        if C[i] = 1 then break; fi;
+      od;
+      el := [i,0,i,0];
+      iscontdone := true;
+    else
+      for i in [1 .. Length(C)] do
+        if C[i] = 1 then 
+          el[1] := i; el[3] := i;
+          break;
+        fi;
+      od;
+      C1 := ShallowCopy(C);
+      C1[i] := 0;
+      el[2] := NewIterator(C1); el[4] := NewIterator(C1);
+    fi;
+
+    it := rec(
+      isdone := false,
+      content := C,
+      contdone := iscontdone,
+      nrgen := iter!.nrgen,
+      semigroup := iter!.semigroup,
+      element := el );
+    return it;
+  end;
+
+
+  NextIteratorWithContent := function(it)
+## The content C is given as a list with C[i] = 1 if i is in C and 0 otherwise. 
+    local i, j, C1, C2, C;
+## suppose if you enter it!.content = false
+
+    C := it!.content;
+    if not it!.element[2]!.contdone then 
+      C1 := ShallowCopy(C); C1[it!.element[1]] := 0;
+      it!.element[2] := NextIteratorWithContent(C1, it!.element[2]);
+    elif not it!.element[4]!.contdone then 
+      C2 := ShallowCopy(C); C2[it!.element[3]] := 0;
+      it!.element[4] := NextIteratorWithContent(C2, it!.element[4]);
+    else 
+      for i in [it!.element[1] + 1 .. it!.nrgen] do
+        if C[i] = 1  then
+          break;
+        fi;
+      od;
+      if IsBound(i) and C[i] = 1 then
+        it!.element[1] := i;
+        C1 := ShallowCopy(C); C1[it!.element[1]] := 0; 
+        C2 := ShallowCopy(C); C2[it!.element[3]] := 0;
+        it!.element[2] := NewIterator(C1); it!.element[4] := NewIterator(C2);
+      else
+        for i in [it!.element[3] + 1 .. it!.nrgen] do
+          if C[i] = 1  then
+            break;
+          fi;
+        od;
+        j := Position(C, 1);
+        if IsBound(i) and C[i] = 1 then
+          it!.element[1] := j;
+          it!.element[3] := i; 
+          C1 := ShallowCopy(C); C1[it!.element[1]] := 0; 
+          C2 := ShallowCopy(C); C2[it!.element[3]] := 0;
+          it!.element[2] := NewIterator(C1); it!.element[4] := NewIterator(C2);
+        else
+          it!.contdone := true; 
+        fi;
+      fi;
+    fi;
+    
+    if ForAll(it!.content, x-> x=1) and it!.contdone = true then
+      it!.isdone := true;
+    fi;
+
+    return it!.element;
+  end; 
+ 
+  content := iter!.content;
+  ones := [];
+  for i in [1 .. iter!.nrgen] do
+    ones[i] :=1;
+  od;
+  
+  if iter!.contdone and content = ones then
+    return fail;
+  elif iter!.contdone and not content = ones then
+    for i in [1 .. iter!.nrgen] do
+      if content[i] = 0 then
+        content[i] := 1; break;
+      else
+        content[i] := 0;
+      fi;
+    od;
+    old_iter := NewIterator(content);
+    iter!.isdone := old_iter!.isdone;
+    iter!.content := old_iter!.content;
+    iter!.contdone := old_iter!.contdone;
+    iter!.nrgen := old_iter!.nrgen;
+    iter!.semigroup := old_iter!.semigroup;
+    iter!.element := old_iter!.element;
+  else
+    NextIteratorWithContent(iter);  
+  fi;
+
+  PrintIterator := function(it)
+    local tuple;
+  
+    tuple := ShallowCopy(it!.element);
+
+    if tuple[2] = 0 then
+      return [tuple[1]];
+    else
+      return Concatenation(PrintIterator(tuple[2]), [tuple[1]], [tuple[3]],
+             PrintIterator(tuple[4]));
+    fi;
+  end;
+ 
+
+   return Product( List( PrintIterator(iter),
+                          x -> Generators(iter!.semigroup)[x] ) );
+end );
+
+BindGlobal("ShallowCopy_FreeBand", iter -> rec(
+                isdone := iter!.isdone,
+                content := iter!.content,
+                contdone := iter!.contdone,
+                nrgen := iter!.nrgen,
+                semigroup := iter!.semigroup,
+                element := ShallowCopy(iter!.element) ) );
+
+BindGlobal("IsDoneIterator_FreeBand", iter -> iter!.isdone );
+
+InstallMethod( Iterator, "for a free band",
+  [IsFreeBand], S -> IteratorByFunctions( rec(
+
+  IsDoneIterator := IsDoneIterator_FreeBand,
+  NextIterator   := NextIterator_FreeBand,
+  ShallowCopy    := ShallowCopy_FreeBand,
+
+  semigroup      := S,
+  nrgen          := Length(Generators(S)),
+  content        := [1..Length(Generators(S))]*0 + [1],
+  contdone       := true,
+  isdone         := (Length(Generators(S)) = 1), 
+  element        := [1, 0, 1, 0]) ) );
+
 ###########################################################################
 ##
 ## ViewObj
@@ -106,6 +270,7 @@ function( S )
            GeneratorsOfSemigroup( S ), ">" );
   fi;
 end );
+
 #############################################################################
 ##
 ## Equality
