@@ -18,6 +18,7 @@ ReadPackage("semigroups/gap/options.g");
 
 ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/acting.gd");
+ReadPackage("semigroups/gap/ideals-acting.gd");
 ReadPackage("semigroups/gap/semigroups.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");

@@ -2300,7 +2300,7 @@ InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 # different method for regular/inverse
 
 InstallMethod(DClassType, "for an acting semigroups",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 function(s);
   return NewType( FamilyObj( s ), IsEquivalenceClass and
           IsEquivalenceClassDefaultRep and IsGreensDClass and
@@ -2309,8 +2309,8 @@ end);
 
 # different method for regular/inverse
 
-InstallMethod(HClassType, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(HClassType, "for an acting semigroup",
+[IsActingSemigroup],
 function(s);
  return NewType( FamilyObj( s ), IsEquivalenceClass and
   IsEquivalenceClassDefaultRep and IsGreensHClass and

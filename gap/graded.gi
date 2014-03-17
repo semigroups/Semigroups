@@ -135,13 +135,14 @@ end);
 
 InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
-  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j, k, l;
+  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j,
+  k, l;
 
-  if not IsActingSemigroup(s) then 
-    Error("usage: <s> must be an acting semigroup,");
+  if not (IsActingSemigroup(s) and HasGeneratorsOfSemigroup(s)) then 
+    Error("usage: <s> must be an acting semigroup with generators,");
     return;
   elif not IsAssociativeElement(f) then 
-    Error("usage: <f> must be an associative element with action,");
+    Error("usage: <f> must be an associative element,");
     return;
   elif not IsBool(opt) then 
     Error("usage: <opt> must be a boolean,");

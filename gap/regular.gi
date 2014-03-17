@@ -53,7 +53,7 @@ function(f, s)
     return false;
   fi;
  
-  if not IsMonoid(s) and IsOne(f) then
+  if not (IsMonoid(s) and IsOne(f)) then
     if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
      then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
@@ -931,7 +931,7 @@ end);
 InstallMethod(Size, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, i, rhofunc, lookup, rho, m;
+  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup, start, rho, m;
 
   lambda_o:=Enumerate(LambdaOrb(s), infinity);
   rho_o:=Enumerate(RhoOrb(s), infinity);
@@ -943,7 +943,13 @@ function(s)
   rhofunc:=RhoFunc(s);
   lookup:=OrbSCCLookup(rho_o);
 
-  for m in [2..r] do 
+  if IsMagmaIdeal(s) then 
+    start:=1;
+  else
+    start:=2;
+  fi;
+
+  for m in [start..r] do 
     rho:=rhofunc(LambdaOrbRep(lambda_o, m));
     nr:=nr+Length(lambda_scc[m])*Size(LambdaOrbSchutzGp(lambda_o,m))*
      Length(rho_scc[lookup[Position(rho_o, rho)]]);
