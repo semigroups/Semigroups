@@ -22,8 +22,7 @@ end);
 
 #
 
-InstallMethod(GradedRhoHT, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(GradedRhoHT, "for an acting semigroup", [IsActingSemigroup],
 function(s)
   local record;
 

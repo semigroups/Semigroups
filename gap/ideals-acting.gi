@@ -32,6 +32,8 @@ function(s)
   return data;
 end);
 
+
+
 # We concentrate on the case when nothing is known about the parent of the
 # ideal.
 
@@ -100,18 +102,18 @@ function(data, limit, lookfunc)
   genstoapply:=data!.genstoapply;
   
   # lambda
-  s:=Parent(data);
-  lambda:=LambdaFunc(s);
-  lambdaact:=LambdaAct(s);  
-  lambdaperm:=LambdaPerm(s);
+  I:=Parent(data);
+  lambda:=LambdaFunc(I);
+  lambdaact:=LambdaAct(I);  
+  lambdaperm:=LambdaPerm(I);
 
-  o:=LambdaOrb(s);
+  o:=LambdaOrb(I);
   oht:=o!.ht;
   scc:=OrbSCC(o); 
   lookup:=o!.scc_lookup;
  
   # rho
-  rho_ht:=GradedRhoHT(s);
+  rho_ht:=GradedRhoHT(I); #??JDM
  
   # initialise the data if necessary
   if data!.init=false then 
@@ -124,6 +126,11 @@ function(data, limit, lookfunc)
     od;
     data!.init:=true;
     i:=data!.pos;
+    for x in GeneratorsOfSemigroupIdeal(I) do 
+      l:=Position(o, lambda(x));
+      pos:=Position(data, x);
+      if pos=fail then 
+
   fi;
  
   if IsBoundGlobal("ORBC") then 

@@ -712,7 +712,7 @@ function(data)
     Print("open ");
   fi;
   Print("semigroup ");
-  if IsSemigroupIdeal(S) then 
+  if IsSemigroupIdeal(Parent(data)) then 
     Print("ideal ");
   fi;
 

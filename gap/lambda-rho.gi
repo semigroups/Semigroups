@@ -199,6 +199,7 @@ function(o, m, i)
 end);
 
 # JDM this is really slow (due to EvaluateWord) for large degree 
+# JDM: require a new method for this for ideals.
 
 InstallGlobalFunction(LambdaOrbRep,
 function(o, m)
@@ -306,15 +307,10 @@ end);
 
 #
 
-InstallMethod(RhoOrb, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(RhoOrb, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local record, o;
-  
-  # it might be better in the case of having IsClosed(SemigroupData)
-  # to just fake the orbit below (we have all the info already).
-  # But it seems to be so fast to calculate the 
-  # in most cases that there is no point. 
 
   record:=ShallowCopy(RhoOrbOpts(s));
   record.schreier:=true;        record.orbitgraph:=true;

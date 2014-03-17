@@ -25,6 +25,37 @@ function(S, n)
   return S[n];
 end);
 
+# JDM move to lib?
+
+InstallMethod(\=, "for semigroup ideals", 
+[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
+ IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+function(I, J)
+  
+  if Parent(I)=Parent(J) then 
+    return ForAll(GeneratorsOfMagmaIdeal(I), x-> x in J) and
+    ForAll(GeneratorsOfMagmaIdeal(J), x-> x in I);
+  elif HasGeneratorsOfSemigroup(I) and HasGeneratorsOfSemigroup(J) then 
+    return ForAll(GeneratorsOfSemigroup(I), x-> x in J) and
+     ForAll(GeneratorsOfSemigroup(J), x-> x in I); 
+  else #JDM: a better way??
+    return AsSSortedList(I)=AsSSortedList(J);
+  fi;
+
+end);
+
+#
+
+InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsActingSemigroup);
+
+#
+
+InstallMethod(Representative, "for a semigroup ideal", 
+[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+function(I)
+  return Representative(GeneratorsOfMagmaIdeal(I));
+end);
+
 # a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
 InstallGlobalFunction(SemigroupIdeal, 
@@ -68,8 +99,8 @@ function( arg )
           Append(out, AsList(arg[1])); #JDM should use this in Semigroup too
         fi;
       #so that we can pass the options record in the Semigroups package 
-      #elif i=Length(arg[2]) and IsRecord(arg[2][i]) then
-      #  return SemigroupIdealByGenerators(out, arg[2][i]);
+      elif i=Length(arg[2]) and IsRecord(arg[2][i]) then
+        return SemigroupIdealByGenerators(out, arg[2][i]);
       else
         Error( "usage: the second argument should be some\n",
         "combination of generators, lists of generators, or semigroups,");
@@ -85,35 +116,46 @@ function( arg )
   fi;
 end);
 
-# JDM move to lib?
 
-InstallMethod(\=, "for semigroup ideals", 
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
- IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
-function(I, J)
-  
-  if Parent(I)=Parent(J) then 
-    return ForAll(GeneratorsOfMagmaIdeal(I), x-> x in J) and
-    ForAll(GeneratorsOfMagmaIdeal(J), x-> x in I);
-  elif HasGeneratorsOfSemigroup(I) and HasGeneratorsOfSemigroup(J) then 
-    return ForAll(GeneratorsOfSemigroup(I), x-> x in J) and
-     ForAll(GeneratorsOfSemigroup(J), x-> x in I); 
-  else #JDM: a better way??
-    return AsSSortedList(I)=AsSSortedList(J);
-  fi;
+#
 
+InstallMethod(SemigroupIdealByGenerators, "for an associative element collection",
+[IsActingSemigroup, IsAssociativeElementCollection], 
+function(S, gens)
+  return SemigroupIdealByGenerators(S, gens, S!.opts);
 end);
 
 #
 
-InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsActingSemigroup);
+InstallMethod(SemigroupIdealByGenerators, 
+"for an acting semigroup, associative element collection and record",
+[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
+function(S, gens, opts)
+  local filts, I;
 
-#
+  # check generators belong to S?
 
-InstallMethod(Representative, "for a semigroup ideal", 
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
-function(I)
-  return Representative(GeneratorsOfMagmaIdeal(I));
+  opts:=SemigroupOptions(opts);
+  gens:=AsList(gens);
+  
+  filts:=IsMagmaIdeal and IsAttributeStoringRep;
+
+  if opts.acting then 
+    filts:=filts and IsActingSemigroup;
+  fi;
+
+  I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
+  
+  if IsActingSemigroupWithInverseOp(S) then 
+    SetFilterObj(IsActingSemigroupWithInverseOp, I);
+  elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then 
+    SetIsRegularSemigroup(I, true);
+  fi;
+
+  SetParent(I, S); 
+  SetGeneratorsOfMagmaIdeal(I, gens);
+
+  return I;
 end);
 
 #

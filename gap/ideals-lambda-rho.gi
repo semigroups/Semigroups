@@ -11,59 +11,94 @@
 InstallMethod(LambdaOrb, "for an acting semigroup ideal with generators",
 [IsActingSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local record, o, lambdafunc, gens, nrgens, orb, ht, nr, schreiergen,
-    schreierpos, orbitgraph, lambda, pos, x;
+  local gens, record, lambdafunc, pt, seeds, seedslookup, lambda, pos, o, i;
  
   #JDM: if Parent(I) already knows its LambdaOrb, then probably this should
   #either just copy this, or otherwise create the LambdaOrb(I) directly from
   #LambdaOrb(Parent(I)) without recomputing anything...
 
-  # same as for a non-ideal
+  gens:=GeneratorsOfSemigroupIdeal(I);
+  
   record:=ShallowCopy(LambdaOrbOpts(I));
-  record.scc_reps:=[FakeOne(GeneratorsOfSemigroupIdeal(I))];
+  record.scc_reps:=[gens[1]];
   
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
-
-  o:=Orb(GeneratorsOfSemigroup(Parent(I)), LambdaOrbSeed(I), LambdaAct(I), record);
-
-  o!.pos:=2;  # don't apply the generators of the parent to the
-              # lambda-seed...
   
+  lambdafunc:=LambdaFunc(I);    pt:=lambdafunc(gens[1]);
+  seeds:=[];                    seedslookup:=[fail];    
+  #Position(o, lambdafunc(gens[i]))=seedslookup[i]
+
+  for i in [2..Length(gens)] do 
+    lambda:=lambdafunc(gens[i]);
+    pos:=Position(seeds, lambda);
+    if pos<>fail then
+      seedslookup[i]:=pos;
+    else
+      Add(seeds, lambda);
+    fi;
+  od;
+
+  record.seeds:=seeds;         record.seedslookup:=seedslookup;
+
+  o:=Orb(GeneratorsOfSemigroup(Parent(I)), pt, LambdaAct(I), record);
+
   SetFilterObj(o, IsLambdaOrb);
-  
+
   if IsActingSemigroupWithInverseOp(I) then 
     SetFilterObj(o, IsInvLambdaOrb);
   fi;
   
-  #next add the ideal generators, which is a special case of enumerate
-  lambdafunc:=LambdaFunc(I);
-  gens := GeneratorsOfSemigroupIdeal(I);
-  nrgens:= Length(o!.gens); 
+  return o;
+end);
 
-  orb := o!.orbit;
-  ht := o!.ht;
-  nr := Length(orb);
+#
+
+InstallMethod(RhoOrb, "for an acting semigroup ideal with generators",
+[IsActingSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local gens, record, rhofunc, pt, seeds, seedslookup, rho, pos, o, i;
+ 
+  #JDM: if Parent(I) already knows its RhoOrb, then probably this should
+  #either just copy this, or otherwise create the RhoOrb(I) directly from
+  #RhoOrb(Parent(I)) without recomputing anything...
+
+  gens:=GeneratorsOfSemigroupIdeal(I);
   
-  schreiergen := o!.schreiergen;
-  schreierpos := o!.schreierpos;
-  orbitgraph := o!.orbitgraph;
+  record:=ShallowCopy(RhoOrbOpts(I));
+  record.scc_reps:=[FakeOne(gens)];
+  
+  record.schreier:=true;        record.orbitgraph:=true;
+  record.storenumbers:=true;    record.log:=true;
+  record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
+  
+  rhofunc:=RhoFunc(I);          pt:=rhofunc(gens[1]);
+  seeds:=[];                    seedslookup:=[fail];    
+  #Position(o, rhofunc(gens[i]))=seedslookup[i]
 
-  for x in gens do 
-    lambda:=lambdafunc(x);
-    pos:=HTValue(ht, lambda);
-    if pos = fail then
-      nr:=nr+1;
-      orb[nr]:=lambda;
-      HTAdd(ht, lambda, nr);
-        
-      schreiergen[nr] := fail;
-      schreierpos[nr] := fail;
-      orbitgraph[nr] := EmptyPlist(nrgens);
-      #also we must update the log...
+  for i in [2..Length(gens)] do 
+    rho:=rhofunc(gens[i]);
+    pos:=Position(seeds, rho);
+    if pos<>fail then
+      seedslookup[i]:=pos;
+    else
+      Add(seeds, rho);
     fi;
-  od;    
+  od;
+
+  record.seeds:=seeds;         record.seedslookup:=seedslookup;
+
+  o:=Orb(GeneratorsOfSemigroup(Parent(I)), pt, RhoAct(I), record);
+
+  SetFilterObj(o, IsRhoOrb);
+
+  if IsActingSemigroupWithInverseOp(I) then 
+    SetFilterObj(o, IsInvRhoOrb);
+  fi;
   
   return o;
 end);
+
+#
+

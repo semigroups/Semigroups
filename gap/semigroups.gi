@@ -200,7 +200,7 @@ function(gens, opts)
   fi;
 
   opts:=SemigroupOptions(opts);
-  gens:=ShallowCopy(gens);
+  gens:=AsList(gens);
   
   # try to find a smaller generating set
   if opts.small and Length(gens)>1 then 
@@ -250,7 +250,7 @@ function(gens, opts)
     SetIsRegularSemigroup(s, true);
   fi;
  
-  SetGeneratorsOfMagma( s, AsList( gens ) );
+  SetGeneratorsOfMagma(s, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens) 
    and CanEasilyCompareElements(gens) then

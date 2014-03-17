@@ -28,6 +28,7 @@ ReadPackage("semigroups/gap/blocks.gd");
 
 ReadPackage("semigroups/gap/greens.gd");
 ReadPackage("semigroups/gap/lambda-rho.gd");
+ReadPackage("semigroups/gap/ideals-lambda-rho.gd");
 ReadPackage("semigroups/gap/orbits.gd");
 ReadPackage("semigroups/gap/graded.gd");
 ReadPackage("semigroups/gap/enums.gd");
