@@ -199,7 +199,6 @@ function(o, m, i)
 end);
 
 # JDM this is really slow (due to EvaluateWord) for large degree 
-# JDM: require a new method for this for ideals.
 
 InstallGlobalFunction(LambdaOrbRep,
 function(o, m)
@@ -209,7 +208,28 @@ function(o, m)
     return o!.scc_reps[m];
   fi;
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  o!.scc_reps[m]:=o!.scc_reps[1]*EvaluateWord(o!.gens, w);
+  o!.scc_reps[m]:=EvaluateWord(o!.parent, w);
+  if not IsIdealOrb(o) then 
+    o!.scc_reps[m]:=o!.scc_reps[1]*o!.scc_reps[m];
+  fi;
+  return o!.scc_reps[m];
+end);
+
+#
+
+InstallGlobalFunction(RhoOrbRep, 
+function(o, m)
+  local w;
+
+  if IsBound(o!.scc_reps[m]) then 
+    return o!.scc_reps[m];
+  fi;
+
+  w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
+  o!.scc_reps[m]:=EvaluateWord(o!.parent, w, OnLeftAntiOperation);
+  if not IsIdealOrb(o) then 
+    o!.scc_reps[m]:=o!.scc_reps[m]*o!.scc_reps[1];
+  fi;
   return o!.scc_reps[m];
 end);
 
@@ -420,20 +440,6 @@ function(o, m)
   return o!.mults;
 end);
 
-#
-
-InstallGlobalFunction(RhoOrbRep, 
-function(o, m)
-  local w;
-
-  if IsBound(o!.scc_reps[m]) then 
-    return o!.scc_reps[m];
-  fi;
-
-  w:=Reversed(TraceSchreierTreeForward(o, OrbSCC(o)[m][1]));
-  o!.scc_reps[m]:=EvaluateWord(o!.gens, w)*o!.scc_reps[1];
-  return o!.scc_reps[m];
-end);
 
 # JDM could use IsRegular here to speed up?
 

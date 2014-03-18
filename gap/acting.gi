@@ -687,8 +687,9 @@ end);
 InstallGlobalFunction(SizeOfSemigroupData,
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
-   
-  data:=Enumerate(data, infinity, ReturnFalse);
+  if not data!.init then 
+    return 0;
+  fi;
   lenreps:=data!.lenreps;
   repslens:=data!.repslens;
   o:=LambdaOrb(Parent(data));
@@ -720,6 +721,7 @@ function(data)
     Print("ideal ");
   fi;
 
+  # the minus 1s here are wrong in the case of ideals JDM
   Print("data with ", Length(data!.orbit)-1, " reps, ",
    Length(LambdaOrb(Parent(data)))-1, " lambda-values, ", 
    Length(RhoOrb(Parent(data)))-1, " rho-values>"); 

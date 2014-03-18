@@ -10,3 +10,4 @@
 
 DeclareFilter("IsIdealOrb", IsOrbit);
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);
+DeclareOperation("EvaluateWord", [IsSemigroup, IsList, IsFunction]);
