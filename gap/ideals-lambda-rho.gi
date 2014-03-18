@@ -11,7 +11,7 @@
 InstallMethod(LambdaOrb, "for an acting semigroup ideal with generators",
 [IsActingSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local gens, record, lambdafunc, seeds, pt, seedslookup, nr, lambda, pos, o, i;
+  local gens, record, lambdafunc, seeds, pt, seedslookup, genslookup, nr, lambda, pos, o, i;
  
   #JDM: if Parent(I) already knows its LambdaOrb, then probably this should
   #either just copy this, or otherwise create the LambdaOrb(I) directly from
@@ -29,7 +29,8 @@ function(I)
   lambdafunc:=LambdaFunc(I);    
   seeds:=[];                    pt:=lambdafunc(gens[1]); 
   seedslookup:=[1];   #Position(o, lambdafunc(gens[i]))=seedslookup[i]
-  nr:=0;
+  genslookup:=[1];    #o[i] equals lambdafunc(gens[genslookup[i]])
+  nr:=1;
 
   for i in [2..Length(gens)] do 
     lambda:=lambdafunc(gens[i]);
@@ -37,17 +38,20 @@ function(I)
     if pos<>fail then
       seedslookup[i]:=pos;
     else
-      nr:=nr+1;
       seeds[nr]:=lambda;
+      nr:=nr+1;
       seedslookup[i]:=nr;
+      genslookup[nr]:=i;
     fi;
   od;
 
-  record.seeds:=seeds;         record.seedslookup:=seedslookup;
+  record.seeds:=seeds;           record.seedslookup:=seedslookup;
+  record.genslookup:=genslookup;
   
   o:=Orb(GeneratorsOfSemigroup(Parent(I)), pt, LambdaAct(I), record);
 
   SetFilterObj(o, IsLambdaOrb);
+  SetFilterObj(o, IsIdealOrb);
 
   if IsActingSemigroupWithInverseOp(I) then 
     SetFilterObj(o, IsInvLambdaOrb);
@@ -61,7 +65,7 @@ end);
 InstallMethod(RhoOrb, "for an acting semigroup ideal with generators",
 [IsActingSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local gens, record, rhofunc, pt, seeds, seedslookup, rho, pos, o, i;
+  local gens, record, rhofunc, seeds, pt, seedslookup, genslookup, nr, rho, pos, o, i;
  
   #JDM: if Parent(I) already knows its RhoOrb, then probably this should
   #either just copy this, or otherwise create the RhoOrb(I) directly from
@@ -76,9 +80,11 @@ function(I)
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
   
-  rhofunc:=RhoFunc(I);          pt:=rhofunc(gens[1]);
-  seeds:=[];                    seedslookup:=[fail];    
-  #Position(o, rhofunc(gens[i]))=seedslookup[i]
+  rhofunc:=RhoFunc(I);    
+  seeds:=[];                    pt:=rhofunc(gens[1]); 
+  seedslookup:=[1];   #Position(o, rhofunc(gens[i]))=seedslookup[i]
+  genslookup:=[1];    #o[i] equals rhofunc(gens[genslookup[i]])
+  nr:=1;
 
   for i in [2..Length(gens)] do 
     rho:=rhofunc(gens[i]);
@@ -86,15 +92,20 @@ function(I)
     if pos<>fail then
       seedslookup[i]:=pos;
     else
-      Add(seeds, rho);
+      seeds[nr]:=rho;
+      nr:=nr+1;
+      seedslookup[i]:=nr;
+      genslookup[nr]:=i;
     fi;
   od;
 
-  record.seeds:=seeds;         record.seedslookup:=seedslookup;
-
+  record.seeds:=seeds;           record.seedslookup:=seedslookup;
+  record.genslookup:=genslookup;
+  
   o:=Orb(GeneratorsOfSemigroup(Parent(I)), pt, RhoAct(I), record);
 
   SetFilterObj(o, IsRhoOrb);
+  SetFilterObj(o, IsIdealOrb);
 
   if IsActingSemigroupWithInverseOp(I) then 
     SetFilterObj(o, IsInvRhoOrb);
@@ -103,5 +114,37 @@ function(I)
   return o;
 end);
 
+# the first position of the returned word refers to the generators of the ideal
+# corresponding to the position in the orbit of the point from which the <o[pos]>
+# is obtained. For example, [1,2,3] means I.1*S.2*S.3.
+
+InstallMethod( TraceSchreierTreeForward, 
+"for an ideal orb and a position (Semigroups)",
+  [ IsIdealOrb, IsPosInt ],
+  function( o, pos )
+    local word;
+    word := [];
+    while o!.schreierpos[pos] <> fail do
+        Add(word,o!.schreiergen[pos]);
+        pos := o!.schreierpos[pos];
+    od;
+    Add(word, o!.genslookup[pos]);
+    return Reversed(word);
+  end );
+
 #
+
+InstallMethod( EvaluateIdealWord, 
+"for a lists of semigroup, ideal generators, and a word (Semigroups)",
+  [ IsList, IsList, IsList ],
+   function( sgens, igens, w )
+    local i, res;
+
+    res := igens[w[1]];
+    for i in [2..Length(w)] do
+        res := res * sgens[w[i]];
+    od;
+    return res;
+  end );
+
 
