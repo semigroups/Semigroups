@@ -8,8 +8,10 @@
 #############################################################################
 ##
 
+#JDM this should work for the RhoOrb too!
+
 InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)", 
-[IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
+[IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
 function( o, limit )
   local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht, genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
 

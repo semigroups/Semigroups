@@ -8,6 +8,19 @@
 #############################################################################
 ##
 
-DeclareFilter("IsIdealOrb", IsOrbit);
+DeclareFilter("IsIdealOrb", IsList);
+DeclareFilter("IsIdealLambdaOrb", IsIdealOrb);
+DeclareFilter("IsIdealRhoOrb", IsIdealOrb);
+
+DeclareAttribute("IdealLambdaOrb", IsActingSemigroup and IsSemigroupIdeal,
+"mutable");
+DeclareAttribute("IdealRhoOrb", IsActingSemigroup and IsSemigroupIdeal,
+"mutable");
+
+DeclareGlobalFunction("UpdateIdealLambdaOrb");
+DeclareGlobalFunction("UpdateIdealRhoOrb");
+
+DeclareOperation("OrbitGraph", [IsIdealOrb]);
+
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList, IsFunction]);

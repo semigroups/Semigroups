@@ -105,13 +105,13 @@ function(data, limit, lookfunc)
   lambdaact:=LambdaAct(I);  
   lambdaperm:=LambdaPerm(I);
 
-  o:=LambdaOrb(I);
+  o:=IdealLambdaOrb(I);
   oht:=o!.ht;
   scc:=OrbSCC(o); 
   lookup:=o!.scc_lookup;
  
   # rho
-  rho_o:=RhoOrb(I); #??JDM better use graded here
+  rho_o:=IdealRhoOrb(I); #??JDM better use graded here
   Enumerate(rho_o);
   rho:=RhoFunc(I);
 
@@ -132,7 +132,14 @@ function(data, limit, lookfunc)
     local l, m, schutz, ind, n, rectify, mults, cosets, y, z;
 
     # the following is similar to Position(data, x);
-    l:=Position(o, lambda(x));
+    lamx:=lambda(x);
+    l:=Position(o, lamx);
+    if l=fail then 
+      UpdateIdealLambdaOrb(o, lamx);
+      lookup:=o!.scc_lookup;
+      scc:=o!.scc;
+    fi;
+
     m:=lookup[l];
     if l<>scc[m][1] then 
       x:=x*LambdaOrbMult(o, m, l)[2];
