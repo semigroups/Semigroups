@@ -209,6 +209,7 @@ function(o, m)
   fi;
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
   o!.scc_reps[m]:=EvaluateWord(o!.parent, w);
+  # remove the following after update of dummy points...JDM
   if not IsIdealOrb(o) then 
     o!.scc_reps[m]:=o!.scc_reps[1]*o!.scc_reps[m];
   fi;
@@ -227,6 +228,7 @@ function(o, m)
 
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
   o!.scc_reps[m]:=EvaluateWord(o!.parent, w, OnLeftAntiOperation);
+  # remove the following after update of dummy points...JDM
   if not IsIdealOrb(o) then 
     o!.scc_reps[m]:=o!.scc_reps[m]*o!.scc_reps[1];
   fi;

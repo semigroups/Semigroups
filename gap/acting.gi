@@ -561,7 +561,6 @@ function(data, limit, lookfunc)
         if lookfunc(data, pt) then 
           data!.pos:=i-1;
           data!.found:=nr;
-          data!.lenreps:=lenreps;
           rho_o!.depth:=rho_depth;
           return data;
         fi;
