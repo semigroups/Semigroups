@@ -134,15 +134,21 @@ InstallMethod( TraceSchreierTreeForward,
 
 #
 
-InstallMethod( EvaluateIdealWord, 
-"for a lists of semigroup, ideal generators, and a word (Semigroups)",
-  [ IsList, IsList, IsList ],
-   function( sgens, igens, w )
-    local i, res;
+InstallMethod( EvaluateWord, 
+"for a semigroup or ideal, and a word (Semigroups)",
+  [ IsSemigroup, IsList ],
+  function(S, w)
+    local res, gens, i;
 
-    res := igens[w[1]];
+    if IsMagmaIdeal(S) then 
+      res:=GeneratorsOfSemigroupIdeal(S)[w[1]];
+      gens:=GeneratorsOfSemigroup(Parent(S));
+    else
+      gens:=GeneratorsOfSemigroup(S);
+      res:=gens[w[1]];
+    fi;
     for i in [2..Length(w)] do
-        res := res * sgens[w[i]];
+        res := res * gens[w[i]];
     od;
     return res;
   end );
