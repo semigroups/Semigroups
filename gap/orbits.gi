@@ -457,7 +457,9 @@ end);
 # Notes: returns a word in the generators that takes o[j] to o!.scc[i][1]  
 # assuming that j in scc[i]
 
-InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
+InstallMethod(TraceSchreierTreeOfSCCBack,
+"for an orbit and two positive integers",
+[IsOrbit, IsPosInt, IsPosInt],
 function(o, i, j)
   local tree, mult, scc, word;
   
@@ -485,7 +487,9 @@ end);
 # Notes: returns a word in the generators that takes o!.scc[i][1] to o[j] 
 # assuming that j in scc[i]
 
-InstallGlobalFunction(TraceSchreierTreeOfSCCForward,
+InstallMethod(TraceSchreierTreeOfSCCForward,
+"for an orbit and two positive integers",
+[IsOrbit, IsPosInt, IsPosInt],
 function(o, i, j)
   local tree, scc, word;
 

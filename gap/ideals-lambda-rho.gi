@@ -153,4 +153,56 @@ InstallMethod( EvaluateWord,
     return res;
   end );
 
+#Usage: o = orbit of images; i = index of scc; j = element of scc[i].
 
+# Notes: returns a word in the generators that takes o!.scc[i][1] to o[j] 
+# assuming that j in scc[i]
+
+InstallMethod(TraceSchreierTreeOfSCCForward,
+"for an ideal orbit and two positive integers",
+[IsIdealOrb, IsPosInt, IsPosInt],
+function(o, i, j)
+  local tree, scc, word, parent;
+
+  tree:=SchreierTreeOfSCC(o, i);
+  scc:=OrbSCC(o)[i];
+
+  word := [];
+  parent := tree[2][j];
+  while parent  <> fail do
+    Add(word, tree[1][j]);
+    j := parent;
+    parent := tree[2][j];
+  od;
+  
+  Add(word, o!.genslookup[j]);
+  return Reversed(word);
+end);
+
+
+InstallMethod(TraceSchreierTreeOfSCCBack,
+"for an ideal orbit and two positive integers",
+[IsIdealOrb, IsPosInt, IsPosInt],
+function(o, i, j)
+  local tree, mult, scc, word, parent;
+
+  if not IsInvLambdaOrb(o) then
+    tree:=ReverseSchreierTreeOfSCC(o, i);
+    mult:=1;
+  else
+    tree:=SchreierTreeOfSCC(o, i);
+    mult:=-1;
+  fi;
+
+  scc:=OrbSCC(o)[i];
+
+  word := [];
+  parent := tree[2][j];
+  while parent <> fail do
+    Add(word, tree[1][j]);
+    j := parent;
+    parent := tree[2][j];
+  od;
+
+  return word*mult;
+end);
