@@ -42,7 +42,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho_o, rho, act, htadd, htvalue, old, l, m, x, schutz, ind, rectify, mults, cosets, y, i, n, z, j;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho_o, rho, act, htadd, htvalue, old, l, m, x, schutz, ind, rectify, mults, cosets, y, i, cand, n, z, j;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -177,6 +177,7 @@ function(data, limit, lookfunc)
         nr_d:=nr_d+1;
         rectify:=RectifyRho(I, rho_o, x);
         d[nr_d]:=CreateDClassNC(I, m, o, rectify.m, rho_o, rectify.rep, false);
+        cand:=rectify.rep; 
         mults:=RhoOrbMults(rho_o, RhoOrbSCCIndex(d[nr_d]));
         cosets:=RhoCosets(d[nr_d]);
 
@@ -191,13 +192,15 @@ function(data, limit, lookfunc)
             repslens[m][ind]:=0;
             reps[m][ind]:=[];
             repslookup[m][ind]:=[];
+          else
+            ind:=lambdarhoht[l][m];
           fi;
           y:=mults[l][1]*x;
 
           for z in cosets do 
             nr_r:=nr_r+1;
             
-            repslens[m][ind]:=repslens[m][ind]+1;
+            repslens[m][ind]:=repslens[m][ind]+1;#1
             reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
             repslookup[m][ind][repslens[m][ind]]:=nr_r;
             
@@ -217,8 +220,7 @@ function(data, limit, lookfunc)
     od;
 
     data!.init:=true;
-  fi; 
- 
+  fi;
   i:=data!.pos;       # points in orb in position at most i have descendants
   
   while nr_d<=limit and i<nr_d and i<>stopper do 
@@ -228,19 +230,19 @@ function(data, limit, lookfunc)
     # left multiply the R-class reps by the generators
     for x in RClassReps(d[i]) do
       for j in genstoapply do 
-        x:=gens[j]*x;
+        cand:=gens[j]*x;
         old:=true;
         
         # the following is similar to Position(data, x);
-        l:=Position(o, lambda(x));
+        l:=Position(o, lambda(cand));
         m:=lookup[l];
         if l<>scc[m][1] then 
-          x:=x*LambdaOrbMult(o, m, l)[2];
+          cand:=cand*LambdaOrbMult(o, m, l)[2];
         fi;
         
         schutz:=LambdaOrbStabChain(o, m);
 
-        if HTValue(ht, x)<>fail then 
+        if HTValue(ht, cand)<>fail then 
           continue;
         elif schutz=false then # new R-class rep
           old:=false;
@@ -248,9 +250,9 @@ function(data, limit, lookfunc)
 
         if old then 
           old:=false;
-          l:=Position(rho_o, rho(x));
+          l:=Position(rho_o, rho(cand));
           if IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]) then 
-            
+          # <cand> is an old rep 
             ind:=lambdarhoht[l][m];
             
             if schutz=true then 
@@ -258,18 +260,23 @@ function(data, limit, lookfunc)
             fi;
             
             for n in [1..repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then 
+              if not (rho(reps[m][ind][n])=rho(cand) and 
+                lambda(reps[m][ind][n])=lambda(cand)) then 
+                Error("1");
+              fi;
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], cand))=()
+                then 
                 old:=true;
                 continue;
               fi;
             od;
           fi;
         fi;
-        
-        if not old then # new R-class rep.
+        if not old then # new D-class rep.
           nr_d:=nr_d+1;
-          rectify:=RectifyRho(I, rho_o, x);
+          rectify:=RectifyRho(I, rho_o, cand);
           d[nr_d]:=CreateDClassNC(I, m, o, rectify.m, rho_o, rectify.rep, false);
+          cand:=rectify.rep;
           mults:=RhoOrbMults(rho_o, RhoOrbSCCIndex(d[nr_d]));
           cosets:=RhoCosets(d[nr_d]);
 
@@ -284,13 +291,16 @@ function(data, limit, lookfunc)
               repslens[m][ind]:=0;
               reps[m][ind]:=[];
               repslookup[m][ind]:=[];
+            else
+              ind:=lambdarhoht[l][m];
             fi;
-            y:=mults[l][1]*x;
+
+            y:=mults[l][1]*cand;
 
             for z in cosets do 
               nr_r:=nr_r+1;
               
-              repslens[m][ind]:=repslens[m][ind]+1;
+              repslens[m][ind]:=repslens[m][ind]+1;#2
               reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
               repslookup[m][ind][repslens[m][ind]]:=nr_r;
               
@@ -312,18 +322,18 @@ function(data, limit, lookfunc)
     # right multiply the L-class reps by the generators
     for x in LClassReps(d[i]) do 
       for j in genstoapply do 
-        x:=x*gens[j];
+        cand:=x*gens[j];
         old:=true;
-        # the following is similar to Position(data, x);
-        l:=Position(o, lambda(x));
+        # the following is similar to Position(data, cand);
+        l:=Position(o, lambda(cand));
         m:=lookup[l];
         if l<>scc[m][1] then 
-          x:=x*LambdaOrbMult(o, m, l)[2];
+          cand:=cand*LambdaOrbMult(o, m, l)[2];
         fi;
         
         schutz:=LambdaOrbStabChain(o, m);
 
-        if HTValue(ht, x)<>fail then 
+        if HTValue(ht, cand)<>fail then 
           continue;
         elif schutz=false then # new R-class rep
           old:=false;
@@ -331,7 +341,7 @@ function(data, limit, lookfunc)
 
         if old then 
           old:=false;
-          l:=Position(rho_o, rho(x));
+          l:=Position(rho_o, rho(cand));
           if IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]) then 
             
             ind:=lambdarhoht[l][m];
@@ -341,7 +351,12 @@ function(data, limit, lookfunc)
             fi;
             
             for n in [1..repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then 
+              if not (rho(reps[m][ind][n])=rho(cand) and 
+                lambda(reps[m][ind][n])=lambda(cand)) then 
+                Error("2");
+              fi;
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], cand))=()
+                then 
                 old:=true;
                 continue;
               fi;
@@ -351,9 +366,9 @@ function(data, limit, lookfunc)
         
         if not old then # new R-class rep.
           nr_d:=nr_d+1;
-          rectify:=RectifyRho(I, rho_o, x);
+          rectify:=RectifyRho(I, rho_o, cand);
           d[nr_d]:=CreateDClassNC(I, m, o, rectify.m, rho_o, rectify.rep, false);
-          
+          cand:=rectify.rep;
           mults:=RhoOrbMults(rho_o, RhoOrbSCCIndex(d[nr_d]));
           cosets:=RhoCosets(d[nr_d]);
 
@@ -368,13 +383,17 @@ function(data, limit, lookfunc)
               repslens[m][ind]:=0;
               reps[m][ind]:=[];
               repslookup[m][ind]:=[];
+            else
+              ind:=lambdarhoht[l][m];
             fi;
-            y:=mults[l][1]*x;
+            
+              
+            y:=mults[l][1]*cand;
 
             for z in cosets do 
               nr_r:=nr_r+1;
               
-              repslens[m][ind]:=repslens[m][ind]+1;
+              repslens[m][ind]:=repslens[m][ind]+1; #3
               reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
               repslookup[m][ind][repslens[m][ind]]:=nr_r;
               
