@@ -133,7 +133,13 @@ InstallMethod(SemigroupIdealByGenerators,
 function(S, gens, opts)
   local filts, I;
 
-  # check generators belong to S?
+  #JDM: is this a good idea?
+  if not ForAll(gens, x-> x in S) then 
+    Error("usage: the generators do not belong to the semigroup,");
+    return fail;
+  fi;
+
+  #JDM: check if the ideal is actually the whole semigroup?
 
   opts:=SemigroupOptions(opts);
   gens:=AsList(gens);

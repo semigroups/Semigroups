@@ -42,7 +42,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho_o, rho, act, htadd, htvalue, old, l, m, x, schutz, ind, rectify, mults, cosets, y, i, cand, n, z, j;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho_o, rho, act, htadd, htvalue, add_to_data, i, start, x, k, j;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -125,7 +125,86 @@ function(data, limit, lookfunc)
     htadd:=HTAdd;
     htvalue:=HTValue;
   fi;
-  
+
+  # the function which checks if x is already R/D-related to something in the
+  # data and if not adds it in the appropriate place
+  add_to_data:=function(x)
+    local l, m, schutz, ind, n, rectify, mults, cosets, y, z;
+
+    # the following is similar to Position(data, x);
+    l:=Position(o, lambda(x));
+    m:=lookup[l];
+    if l<>scc[m][1] then 
+      x:=x*LambdaOrbMult(o, m, l)[2];
+    fi;
+
+    schutz:=LambdaOrbStabChain(o, m);
+
+    if HTValue(ht, x)<>fail then 
+      return;
+    fi;
+
+    if schutz<>false then 
+      l:=Position(rho_o, rho(x));
+      if IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]) then 
+        
+        ind:=lambdarhoht[l][m];
+        
+        if schutz=true then 
+          return;
+        fi;
+        
+        for n in [1..repslens[m][ind]] do
+          if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then 
+            return;
+          fi;
+        od;
+      fi;
+    fi;
+
+    nr_d:=nr_d+1;
+    rectify:=RectifyRho(I, rho_o, x);
+    d[nr_d]:=CreateDClassNC(I, m, o, rectify.m, rho_o, rectify.rep, false);
+    x:=rectify.rep; 
+    mults:=RhoOrbMults(rho_o, RhoOrbSCCIndex(d[nr_d]));
+    cosets:=RhoCosets(d[nr_d]);
+
+    for l in RhoOrbSCC(d[nr_d]) do #install the R-class reps
+      if not IsBound(lambdarhoht[l]) then 
+        lambdarhoht[l]:=[];
+      fi;
+      if not IsBound(lambdarhoht[l][m]) then 
+        lenreps[m]:=lenreps[m]+1;
+        ind:=lenreps[m];
+        lambdarhoht[l][m]:=ind;
+        repslens[m][ind]:=0;
+        reps[m][ind]:=[];
+        repslookup[m][ind]:=[];
+      else
+        ind:=lambdarhoht[l][m];
+      fi;
+      y:=mults[l][1]*x;
+
+      for z in cosets do 
+        nr_r:=nr_r+1;
+        
+        repslens[m][ind]:=repslens[m][ind]+1;
+        reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
+        repslookup[m][ind][repslens[m][ind]]:=nr_r;
+        
+        orblookup1[nr_r]:=ind;
+        orblookup2[nr_r]:=repslens[m][ind];
+
+        rholookup[nr_r]:=l; # orb[nr] has rho-value in position l of the rho-orb
+        
+        orb[nr_r]:=[ I, m, o, reps[m][ind][repslens[m][ind]], false, nr_r ];
+        
+        htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
+
+      od;
+    od;
+  end;
+
   # initialise the data if necessary
   if data!.init=false then 
     # init the list of reps
@@ -137,280 +216,48 @@ function(data, limit, lookfunc)
     od;
     # add the generators of the ideal...
     for x in GeneratorsOfSemigroupIdeal(I) do 
-      old:=true;
-      # the following is similar to Position(data, x);
-      l:=Position(o, lambda(x));
-      m:=lookup[l];
-      if l<>scc[m][1] then 
-        x:=x*LambdaOrbMult(o, m, l)[2];
-      fi;
-      
-      schutz:=LambdaOrbStabChain(o, m);
-
-      if HTValue(ht, x)<>fail then 
-        continue;
-      elif schutz=false then # new R-class rep
-        old:=false;
-      fi; 
-
-      if old then 
-        old:=false;
-        l:=Position(rho_o, rho(x));
-        if IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]) then 
-          
-          ind:=lambdarhoht[l][m];
-          
-          if schutz=true then 
-            continue;
-          fi;
-          
-          for n in [1..repslens[m][ind]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then 
-              old:=true;
-              continue;
-            fi;
-          od;
-        fi;
-      fi;
-      
-      if not old then # new R-class rep.
-        nr_d:=nr_d+1;
-        rectify:=RectifyRho(I, rho_o, x);
-        d[nr_d]:=CreateDClassNC(I, m, o, rectify.m, rho_o, rectify.rep, false);
-        cand:=rectify.rep; 
-        mults:=RhoOrbMults(rho_o, RhoOrbSCCIndex(d[nr_d]));
-        cosets:=RhoCosets(d[nr_d]);
-
-        for l in RhoOrbSCC(d[nr_d]) do #install the R-class reps
-          if not IsBound(lambdarhoht[l]) then 
-            lambdarhoht[l]:=[];
-          fi;
-          if not IsBound(lambdarhoht[l][m]) then 
-            lenreps[m]:=lenreps[m]+1;
-            ind:=lenreps[m];
-            lambdarhoht[l][m]:=ind;
-            repslens[m][ind]:=0;
-            reps[m][ind]:=[];
-            repslookup[m][ind]:=[];
-          else
-            ind:=lambdarhoht[l][m];
-          fi;
-          y:=mults[l][1]*x;
-
-          for z in cosets do 
-            nr_r:=nr_r+1;
-            
-            repslens[m][ind]:=repslens[m][ind]+1;#1
-            reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
-            repslookup[m][ind][repslens[m][ind]]:=nr_r;
-            
-            orblookup1[nr_r]:=ind;
-            orblookup2[nr_r]:=repslens[m][ind];
-
-            rholookup[nr_r]:=l; # orb[nr] has rho-value in position l of the rho-orb
-            
-            orb[nr_r]:=[ I, m, o, reps[m][ind][repslens[m][ind]], false, nr_r ];
-            
-            htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
-
-          od;
-        od;
-      fi;
-
+      add_to_data(x);
     od;
 
     data!.init:=true;
+    if looking then 
+      # did we find it?
+      for k in [1..nr_r] do 
+        if lookfunc(data, orb[k]) then 
+          data!.found:=k;
+          return data;
+        fi;
+      od;
+    fi;
   fi;
-  i:=data!.pos;       # points in orb in position at most i have descendants
   
+  i:=data!.pos;       # points in orb in position at most i have descendants
+
   while nr_d<=limit and i<nr_d and i<>stopper do 
      
     i:=i+1; # advance in the dorb
+    start:=nr_r;
     
-    # left multiply the R-class reps by the generators
-    for x in RClassReps(d[i]) do
-      for j in genstoapply do 
-        cand:=gens[j]*x;
-        old:=true;
-        
-        # the following is similar to Position(data, x);
-        l:=Position(o, lambda(cand));
-        m:=lookup[l];
-        if l<>scc[m][1] then 
-          cand:=cand*LambdaOrbMult(o, m, l)[2];
-        fi;
-        
-        schutz:=LambdaOrbStabChain(o, m);
-
-        if HTValue(ht, cand)<>fail then 
-          continue;
-        elif schutz=false then # new R-class rep
-          old:=false;
-        fi; 
-
-        if old then 
-          old:=false;
-          l:=Position(rho_o, rho(cand));
-          if IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]) then 
-          # <cand> is an old rep 
-            ind:=lambdarhoht[l][m];
-            
-            if schutz=true then 
-              continue;
-            fi;
-            
-            for n in [1..repslens[m][ind]] do
-              if not (rho(reps[m][ind][n])=rho(cand) and 
-                lambda(reps[m][ind][n])=lambda(cand)) then 
-                Error("1");
-              fi;
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], cand))=()
-                then 
-                old:=true;
-                continue;
-              fi;
-            od;
-          fi;
-        fi;
-        if not old then # new D-class rep.
-          nr_d:=nr_d+1;
-          rectify:=RectifyRho(I, rho_o, cand);
-          d[nr_d]:=CreateDClassNC(I, m, o, rectify.m, rho_o, rectify.rep, false);
-          cand:=rectify.rep;
-          mults:=RhoOrbMults(rho_o, RhoOrbSCCIndex(d[nr_d]));
-          cosets:=RhoCosets(d[nr_d]);
-
-          for l in RhoOrbSCC(d[nr_d]) do #install the R-class reps
-            if not IsBound(lambdarhoht[l]) then 
-              lambdarhoht[l]:=[];
-            fi;
-            if not IsBound(lambdarhoht[l][m]) then 
-              lenreps[m]:=lenreps[m]+1;
-              ind:=lenreps[m];
-              lambdarhoht[l][m]:=ind;
-              repslens[m][ind]:=0;
-              reps[m][ind]:=[];
-              repslookup[m][ind]:=[];
-            else
-              ind:=lambdarhoht[l][m];
-            fi;
-
-            y:=mults[l][1]*cand;
-
-            for z in cosets do 
-              nr_r:=nr_r+1;
-              
-              repslens[m][ind]:=repslens[m][ind]+1;#2
-              reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
-              repslookup[m][ind][repslens[m][ind]]:=nr_r;
-              
-              orblookup1[nr_r]:=ind;
-              orblookup2[nr_r]:=repslens[m][ind];
-
-              rholookup[nr_r]:=l; 
-              # orb[nr] has rho-value in position l of the rho-orb
-              orb[nr_r]:=[ I, m, o, reps[m][ind][repslens[m][ind]], false, nr_r ];
-              
-              htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
-
-            od;
-          od;
-        fi;
+    # left/right multiply the R/L-class reps by the generators
+    for j in genstoapply do
+      for x in RClassReps(d[i]) do
+        add_to_data(gens[j]*x);
+      od;
+      for x in LClassReps(d[i]) do 
+        add_to_data(x*gens[j]);
       od;
     od;
     
-    # right multiply the L-class reps by the generators
-    for x in LClassReps(d[i]) do 
-      for j in genstoapply do 
-        cand:=x*gens[j];
-        old:=true;
-        # the following is similar to Position(data, cand);
-        l:=Position(o, lambda(cand));
-        m:=lookup[l];
-        if l<>scc[m][1] then 
-          cand:=cand*LambdaOrbMult(o, m, l)[2];
-        fi;
-        
-        schutz:=LambdaOrbStabChain(o, m);
-
-        if HTValue(ht, cand)<>fail then 
-          continue;
-        elif schutz=false then # new R-class rep
-          old:=false;
-        fi; 
-
-        if old then 
-          old:=false;
-          l:=Position(rho_o, rho(cand));
-          if IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]) then 
-            
-            ind:=lambdarhoht[l][m];
-            
-            if schutz=true then 
-              continue;
-            fi;
-            
-            for n in [1..repslens[m][ind]] do
-              if not (rho(reps[m][ind][n])=rho(cand) and 
-                lambda(reps[m][ind][n])=lambda(cand)) then 
-                Error("2");
-              fi;
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], cand))=()
-                then 
-                old:=true;
-                continue;
-              fi;
-            od;
-          fi;
-        fi;
-        
-        if not old then # new R-class rep.
-          nr_d:=nr_d+1;
-          rectify:=RectifyRho(I, rho_o, cand);
-          d[nr_d]:=CreateDClassNC(I, m, o, rectify.m, rho_o, rectify.rep, false);
-          cand:=rectify.rep;
-          mults:=RhoOrbMults(rho_o, RhoOrbSCCIndex(d[nr_d]));
-          cosets:=RhoCosets(d[nr_d]);
-
-          for l in RhoOrbSCC(d[nr_d]) do #install the R-class reps
-            if not IsBound(lambdarhoht[l]) then 
-              lambdarhoht[l]:=[];
-            fi;
-            if not IsBound(lambdarhoht[l][m]) then 
-              lenreps[m]:=lenreps[m]+1;
-              ind:=lenreps[m];
-              lambdarhoht[l][m]:=ind;
-              repslens[m][ind]:=0;
-              reps[m][ind]:=[];
-              repslookup[m][ind]:=[];
-            else
-              ind:=lambdarhoht[l][m];
-            fi;
-            
-              
-            y:=mults[l][1]*cand;
-
-            for z in cosets do 
-              nr_r:=nr_r+1;
-              
-              repslens[m][ind]:=repslens[m][ind]+1; #3
-              reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
-              repslookup[m][ind][repslens[m][ind]]:=nr_r;
-              
-              orblookup1[nr_r]:=ind;
-              orblookup2[nr_r]:=repslens[m][ind];
-
-              rholookup[nr_r]:=l; 
-              # orb[nr] has rho-value in position l of the rho-orb
-              
-              orb[nr_r]:=[ I, m, o, reps[m][ind][repslens[m][ind]], false, nr_r ];
-              
-              htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
-            od;
-          od;
+    if looking then 
+      # did we find it?
+      for k in [start+1..nr_r] do #check the newly added R-reps
+        if lookfunc(data, orb[k]) then 
+          data!.found:=k;
+          return data;
         fi;
       od;
-    od;
+    fi;
+
   od;
   
   # for the data-orbit
