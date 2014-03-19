@@ -147,33 +147,38 @@ end);
 
 InstallGlobalFunction(LambdaOrbMult,
 function(o, m, i)
-  local mults, one, scc, gens, genpos, inv, trace, x;
+  local scc, mults, gens, one, genpos, inv, trace;
 
   if IsBound(o!.mults) then
     if IsBound(o!.mults[i]) then
       return o!.mults[i];
     fi;
   else
-    mults:=EmptyPlist(Length(o));
-    one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
-    for x in OrbSCC(o) do 
-      mults[x[1]]:=one;
-    od;
-    o!.mults:=mults;
+    o!.mults:=EmptyPlist(Length(o));
+    #one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
+    #for x in OrbSCC(o) do 
+    #  mults[x[1]]:=one;
+    #od;
+    #o!.mults:=mults;
   fi;
 
-  scc:=OrbSCC(o)[m];
-  mults:=o!.mults;
-  gens:=o!.gens;
+  scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
+
+  if i=scc[1] then 
+    return [one, one];
+  fi;
+
+  mults:=o!.mults;      
+
   if not IsInvLambdaOrb(o) then
-#JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
+    #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
     inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
 
     trace:=function(i)
       local f;
-      if IsBound(mults[i]) then 
-        return mults[i][2];
+      if i=scc[1] then 
+        return one;
       fi;
       f:=gens[genpos[1][i]]*trace(genpos[2][i]);
       mults[i]:=[inv(o[i], f), f];
@@ -185,8 +190,8 @@ function(o, m, i)
     trace:=function(i)
       local f;
 
-      if IsBound(mults[i]) then 
-        return mults[i][2];
+      if i=scc[1] then 
+        return one;
       fi;
       f:=INV(gens[genpos[1][i]])*trace(genpos[2][i]);
       mults[i]:=[INV(f), f];
