@@ -110,6 +110,8 @@ function(I)
   record.scc_reps:=[];    record.scc_lookup:=[];
   record.schreiergen:=[]; record.schreierpos:=[];
   record.orbitgraph:=[];  record.gens:=GeneratorsOfSemigroup(Parent(I));
+  record.orbschreierpos := [];
+  record.orbschreiergen := [];
   
   htopts:=ShallowCopy(LambdaOrbOpts(I)); 
   htopts.treehashsize:=I!.opts.hashlen.M;
@@ -122,8 +124,8 @@ end);
 # assumes that <pt> is in <o> already...
 
 InstallGlobalFunction(UpdateIdealLambdaOrb, 
-function(o, pt)
-  local I, record, len, new, ht, i;
+function(o, pt, pos, j)
+  local I, record, len, new, ht, i, nrorb;
 
   I:=o!.parent; 
   record:=ShallowCopy(LambdaOrbOpts(I));
@@ -167,6 +169,11 @@ function(o, pt)
 
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);
+
+  nrorb := Length(o!.orbits);  
+  o!.orbschreierpos[nrorb] := pos;
+  o!.orbschreiergen[nrorb] := j;
+
   return len+1;
 end);
 
