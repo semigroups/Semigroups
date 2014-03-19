@@ -61,7 +61,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoscc, act, htadd, htvalue, drel, dtype, UpdateSemigroupData, i, start, x, k, j;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoscc, act, htadd, htvalue, drel, dtype, UpdateSemigroupIdealData, i, start, mults, scc, x, cosets, y, k, j;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -154,7 +154,7 @@ function(data, limit, lookfunc)
   # the function which checks if x is already R/D-related to something in the
   # data and if not adds it in the appropriate place
 
-  UpdateSemigroupData:=function(x, j)
+  UpdateSemigroupIdealData:=function(x, i, j)
     local new, xx, l, m, mm, schutz, ind, mults, cosets, y, n, z;
 
     new:=false;
@@ -163,7 +163,7 @@ function(data, limit, lookfunc)
     xx:=lambda(x);
     l:=htvalue(lambdaoht, xx);
     if l=fail then 
-      l:=UpdateIdealLambdaOrb(lambdao, xx, j);
+      l:=UpdateIdealLambdaOrb(lambdao, xx, i, j);
       # update the lists of reps
       for i in [lenscc+1..lenscc+Length(lambdascc)] do 
         reps[i]:=[];
@@ -190,7 +190,7 @@ function(data, limit, lookfunc)
     xx:=rho(x);
     l:=htvalue(rhooht, xx);
     if l=fail then 
-      l:=UpdateIdealRhoOrb(rhoo, xx, j);
+      l:=UpdateIdealRhoOrb(rhoo, xx, i, j);
       new:=true; # x is a new R-rep
     fi;
     mm:=rholookup[l];
@@ -266,7 +266,7 @@ function(data, limit, lookfunc)
   if data!.init=false then 
     # add the generators of the ideal...
     for x in GeneratorsOfSemigroupIdeal(I) do 
-      UpdateSemigroupData(x, 0);
+      UpdateSemigroupIdealData(x, 0, 0);
     od;
 
     data!.init:=true;
@@ -288,13 +288,37 @@ function(data, limit, lookfunc)
     i:=i+1; # advance in the dorb
     start:=nr_r;
     
-    # left/right multiply the R/L-class reps by the generators
-    for j in genstoapply do
-      for x in RClassReps(d[i]) do
-        UpdateSemigroupData(gens[j]*x, j);
+    # left multiply the R-class reps by the generators of the semigroup
+    # JDM: this is repeated work...
+    mults:=RhoOrbMults(rhoo, RhoOrbSCCIndex(d[i]));
+    scc:=RhoOrbSCC(d[i]);
+    x:=Representative(d[i]);
+    cosets:=RhoCosets(d[i]);
+
+    for y in cosets do 
+      y:=act(x, y^-1);
+      for i in scc do
+        y:=mults[i][1]*y;
+        for j in genstoapply do
+          UpdateSemigroupIdealData(gens[j]*y, i, j);
+        od;
       od;
-      for x in LClassReps(d[i]) do 
-        UpdateSemigroupData(x*gens[j], j);
+    od;
+     
+    # right multiply the L-class reps by the generators of the semigroup
+    
+    mults:=LambdaOrbMults(lambdao, LambdaOrbSCCIndex(d[i]));
+    scc:=LambdaOrbSCC(d[i]);
+    x:=Representative(d[i]);
+    cosets:=LambdaCosets(d[i]);
+    
+    for y in cosets do 
+      y:=act(x, y);
+      for i in scc do
+        y:=y*mults[i][1];
+        for j in genstoapply do
+          UpdateSemigroupIdealData(y*gens[j], i, j);
+        od;
       od;
     od;
     
