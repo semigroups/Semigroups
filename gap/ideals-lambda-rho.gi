@@ -112,6 +112,7 @@ function(I)
   record.orbitgraph:=[];        record.gens:=GeneratorsOfSemigroup(Parent(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
+  record.orbtogen := [];
   
   htopts:=ShallowCopy(LambdaOrbOpts(I)); 
   htopts.treehashsize:=I!.opts.hashlen.M;
@@ -174,6 +175,11 @@ function(o, pt, pos, j)
   o!.orbschreierpos[nrorb] := pos;
   o!.orbschreiergen[nrorb] := j;
 
+  # jj assume that if a generator is passsed into UpadateIdealLambdaOrb then
+  # pos = the index of the generator and j = fail.
+  if j = fail then
+    o!.orbtogen[nrorb] := pos;
+  fi;
   return len+1;
 end);
 
@@ -316,10 +322,11 @@ leftword, rightword, nr, j;
       i := schreierpos[i];
     od;
 
-    i := orbschreierpos[nr];
-    if i = fail then
+    if orbschreiergen[nr] = fail then
       break;
     fi;
+
+    i := orbschreierpos[nr];
     Add(leftword, orbschreiergen[nr]);
 
     while j>Length(o!.orbits[nr]) do 
@@ -327,9 +334,9 @@ leftword, rightword, nr, j;
       nr:=nr+1;
     od;
 
-  until orbschreierpos[nr] <> fail;
+  until orbschreiergen[nr] <> fail;
 
-  return [Reversed(leftword), nr, rightword];
+  return [Reversed(leftword), o!.orbtogen[nr], rightword];
 end);
 
 
