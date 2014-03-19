@@ -158,8 +158,6 @@ function(data, limit, lookfunc)
     
     new:=false;
    
-    #if x=Transformation( [ 2, 1, 4, 1 ] ) then Error(); fi;
-    #Print(x);
     # check, update, rectify the lambda value
     xx:=lambda(x);
     l:=htvalue(lambdaoht, xx);
@@ -270,7 +268,6 @@ function(data, limit, lookfunc)
     # add the generators of the ideal...
     idealgens:=GeneratorsOfSemigroupIdeal(I);
     for i in [1..Length(idealgens)] do
-      Print(i, "\n");
       UpdateSemigroupIdealData(idealgens[i], fail, fail, i);
     od;
 
@@ -288,7 +285,6 @@ function(data, limit, lookfunc)
   i:=data!.pos;       # points in orb in position at most i have descendants
 
   while nr_d<=limit and i<nr_d and i<>stopper do 
-    Print("i=", i, "\n"); 
     i:=i+1; # advance in the dorb
     start:=nr_r;
     
@@ -298,15 +294,12 @@ function(data, limit, lookfunc)
     scc:=RhoOrbSCC(d[i]);
     x:=Representative(d[i]);
     cosets:=RhoCosets(d[i]);
-    Print("R-classes\n");
     for y in cosets do 
       y:=act(x, y^-1);
       for j in scc do
         z:=mults[j][1]*y;
         for k in genstoapply do
-          Print("j=", j, ", k=", k, "\n");
           UpdateSemigroupIdealData(gens[k]*z, j, k, fail);
-          Print("escaped!\n");          
         od;
       od;
     od;
@@ -316,15 +309,12 @@ function(data, limit, lookfunc)
     scc:=LambdaOrbSCC(d[i]);
     x:=Representative(d[i]);
     cosets:=LambdaCosets(d[i]);
-    Print("L-classes\n");
     for y in cosets do 
       y:=act(x, y);
       for j in scc do
         z:=y*mults[j][1];
         for k in genstoapply do
-          Print("j=", j, ", k=", k, "\n");
           UpdateSemigroupIdealData(z*gens[k], j, k, fail);
-          Print("escaped!\n");          
         od;
       od;
     od;

@@ -266,14 +266,6 @@ function(o, m)
     forward:=LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        if LambdaFunc(s)(rep)<>LambdaFunc(s)(rep*forward*gens[l]
-          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]) 
-          or 
-        RhoFunc(s)(rep)<>RhoFunc(s)(rep*forward*gens[l]
-          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]) then 
-          Error();
-        fi;
-        Print("k=", k, " l=", l, "\n");
         f:=lambdaperm(rep, rep*forward*gens[l]
           *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g:=ClosureGroup(g, f);

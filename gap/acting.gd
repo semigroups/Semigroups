@@ -9,7 +9,6 @@
 ##
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
-DeclareGlobalFunction("SizeOfSemigroupData");
 DeclareCategory("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
 

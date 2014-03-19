@@ -26,7 +26,7 @@ function(s)
  
   gens:=GeneratorsOfSemigroup(s);
 
-  data:=rec(gens:=gens, 
+  data:=rec(gens:=gens, parent:=s, 
      ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[1],
@@ -34,10 +34,8 @@ function(s)
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
-  Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
-   data);
+  Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
   
-  SetParent(data, s);
   return data;
 end);
 
@@ -271,11 +269,11 @@ end);
 
 #
 
-InstallMethod(Length, "for semigroup data",
-[IsSemigroupData], 
+InstallMethod(Length, "for semigroup data", [IsSemigroupData], 
 function(data)
-  return Length(data!.orbit);
+  return Length(data!.orbit)-1;
 end);
+
 #
 
 InstallMethod(Enumerate, "for semigroup data", [IsSemigroupData],
@@ -355,7 +353,7 @@ function(data, limit, lookfunc)
   genstoapply:=data!.genstoapply;
   
   # lambda
-  s:=Parent(data);
+  s:=data!.parent;
   lambda:=LambdaFunc(s);
   lambdaact:=LambdaAct(s);  
   lambdaperm:=LambdaPerm(s);
@@ -623,7 +621,7 @@ function(data, x, n)
   local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
   lambdaperm;
 
-  s:=Parent(data);
+  s:=data!.parent;
   o:=LambdaOrb(s);
   l:=Position(o, LambdaFunc(s)(x));
   
@@ -691,16 +689,16 @@ end);
 
 #
 
-InstallGlobalFunction(SizeOfSemigroupData,
+InstallMethod(Size, "for semigroup data", [IsSemigroupData],
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
+  
   if not data!.init then 
     return 0;
   fi;
-  lenreps:=data!.lenreps;
-  repslens:=data!.repslens;
-  o:=LambdaOrb(Parent(data));
-  scc:=OrbSCC(o);
+  
+  lenreps:=data!.lenreps;      repslens:=data!.repslens;
+  o:=LambdaOrb(data!.parent);  scc:=OrbSCC(o);
   
   size:=0;
   for m in [2..Length(scc)] do 
@@ -726,8 +724,8 @@ function(data)
   Print("semigroup ");
 
   Print("data with ", Length(data!.orbit)-1, " reps, ",
-   Length(LambdaOrb(Parent(data)))-1, " lambda-values, ", 
-   Length(RhoOrb(Parent(data)))-1, " rho-values>"); 
+   Length(LambdaOrb(data!.parent))-1, " lambda-values, ", 
+   Length(RhoOrb(data!.parent))-1, " rho-values>"); 
   return;
 end);
 
