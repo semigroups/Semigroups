@@ -950,7 +950,6 @@ function(s)
   fi;
 
   for m in [start..r] do 
-    Print(m, "\n");
     rho:=rhofunc(LambdaOrbRep(lambda_o, m));
     nr:=nr+Length(lambda_scc[m])*Size(LambdaOrbSchutzGp(lambda_o, m))*
      Length(rho_scc[lookup[Position(rho_o, rho)]]);
