@@ -105,11 +105,11 @@ function(I)
   local record, htopts, fam;
   
   record:=rec();
-  record.orbits:=[];      record.lens:=[];    
-  record.parent:=I;       record.scc:=[];       
-  record.scc_reps:=[];    record.scc_lookup:=[];
-  record.schreiergen:=[]; record.schreierpos:=[];
-  record.orbitgraph:=[];  record.gens:=GeneratorsOfSemigroup(Parent(I));
+  record.orbits:=[];            record.lens:=[];    
+  record.parent:=I;             record.scc:=[];       
+  record.scc_reps:=[];          record.scc_lookup:=[];
+  record.schreiergen:=[];       record.schreierpos:=[];
+  record.orbitgraph:=[];        record.gens:=GeneratorsOfSemigroup(Parent(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
   
@@ -121,7 +121,7 @@ function(I)
   return Objectify(NewType(fam, IsIdealLambdaOrb), record);
 end);
 
-# assumes that <pt> is in <o> already...
+# assumes that <pt> is not in <o> already...
 
 InstallGlobalFunction(UpdateIdealLambdaOrb, 
 function(o, pt, pos, j)
@@ -177,19 +177,19 @@ function(o, pt, pos, j)
   return len+1;
 end);
 
-#
-
 InstallMethod(IdealRhoOrb, "for an acting semigroup ideal", 
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local record, htopts, fam;
   
   record:=rec();
-  record.orbits:=[];      record.lens:=[];    
-  record.parent:=I;       record.scc:=[];       
-  record.scc_reps:=[];    record.scc_lookup:=[];
-  record.schreiergen:=[]; record.schreierpos:=[];
-  record.orbitgraph:=[];  record.gens:=GeneratorsOfSemigroup(Parent(I));
+  record.orbits:=[];            record.lens:=[];    
+  record.parent:=I;             record.scc:=[];       
+  record.scc_reps:=[];          record.scc_lookup:=[];
+  record.schreiergen:=[];       record.schreierpos:=[];
+  record.orbitgraph:=[];        record.gens:=GeneratorsOfSemigroup(Parent(I));
+  record.orbschreierpos := [];
+  record.orbschreiergen := [];
   
   htopts:=ShallowCopy(RhoOrbOpts(I)); 
   htopts.treehashsize:=I!.opts.hashlen.M;
@@ -199,12 +199,11 @@ function(I)
   return Objectify(NewType(fam, IsIdealRhoOrb), record);
 end);
 
-# assumes that <pt> is not in <o> already, returns the position of <pt> after it
-# is added
+# assumes that <pt> is not in <o> already...
 
 InstallGlobalFunction(UpdateIdealRhoOrb, 
-function(o, pt)
-  local I, record, len, new, ht, i;
+function(o, pt, pos, j)
+  local I, record, len, new, ht, i, nrorb;
 
   I:=o!.parent; 
   record:=ShallowCopy(RhoOrbOpts(I));
@@ -212,7 +211,7 @@ function(o, pt)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
-  
+ 
   len:=Length(o);
 
   if len<>0 then 
@@ -248,6 +247,11 @@ function(o, pt)
 
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);
+
+  nrorb := Length(o!.orbits);  
+  o!.orbschreierpos[nrorb] := pos;
+  o!.orbschreiergen[nrorb] := j;
+
   return len+1;
 end);
 
