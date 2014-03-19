@@ -9,19 +9,16 @@
 ##
 
 DeclareFilter("IsIdealOrb", IsOrbit);
-DeclareFilter("IsIdealLambdaOrb", IsIdealOrb);
-DeclareFilter("IsIdealRhoOrb", IsIdealOrb);
+DeclareFilter("IsIdealLambdaOrb", IsIdealOrb and IsLambdaOrb);
+DeclareFilter("IsIdealRhoOrb", IsIdealOrb and IsRhoOrb);
 
-DeclareAttribute("IdealLambdaOrb", IsActingSemigroup and IsSemigroupIdeal,
-"mutable");
-DeclareAttribute("IdealRhoOrb", IsActingSemigroup and IsSemigroupIdeal,
-"mutable");
+#DeclareAttribute("IdealLambdaOrb", IsActingSemigroup and IsSemigroupIdeal,
+#"mutable");
+#DeclareAttribute("IdealRhoOrb", IsActingSemigroup and IsSemigroupIdeal,
+#"mutable");
 
 DeclareGlobalFunction("UpdateIdealLambdaOrb");
 DeclareGlobalFunction("UpdateIdealRhoOrb");
-
-#DeclareOperation("OrbitGraph", [IsIdealOrb]); JDM only required if IsIdealOrb
-#it not an IsOrbit
 
 DeclareOperation("EvaluateWord", [IsSemigroupIdeal, IsList]);
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);

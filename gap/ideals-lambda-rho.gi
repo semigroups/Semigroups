@@ -99,7 +99,7 @@ end);
 
 #
 
-InstallMethod(IdealLambdaOrb, "for an acting semigroup ideal", 
+InstallMethod(LambdaOrb, "for an acting semigroup ideal", 
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local record, htopts, fam;
@@ -185,7 +185,7 @@ end);
 
 #
 
-InstallMethod(IdealRhoOrb, "for an acting semigroup ideal", 
+InstallMethod(RhoOrb, "for an acting semigroup ideal", 
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local record, htopts, fam;

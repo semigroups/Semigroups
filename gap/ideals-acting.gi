@@ -45,8 +45,8 @@ function(data)
   Print("semigroup ideal ");
 
   Print("data with ", Length(data!.orbit), " reps, ",
-   Length(IdealLambdaOrb(Parent(data))), " lambda-values, ", 
-   Length(IdealRhoOrb(Parent(data))), " rho-values>"); 
+   Length(LambdaOrb(Parent(data))), " lambda-values, ", 
+   Length(RhoOrb(Parent(data))), " rho-values>"); 
   return;
 end);
 
@@ -121,7 +121,7 @@ function(data, limit, lookfunc)
   
   # lambda
   lambda:=LambdaFunc(I);
-  lambdao:=IdealLambdaOrb(I);
+  lambdao:=LambdaOrb(I);
   lambdaoht:=lambdao!.ht;
   lambdalookup:=lambdao!.scc_lookup;
   lambdascc:=OrbSCC(lambdao); 
@@ -132,7 +132,7 @@ function(data, limit, lookfunc)
   
   # rho
   rho:=RhoFunc(I);
-  rhoo:=IdealRhoOrb(I); 
+  rhoo:=RhoOrb(I); 
   rhooht:=rhoo!.ht;        
   rhoolookup:=rhoo!.scc_lookup;        
   rhoscc:=OrbSCC(rhoo); 
