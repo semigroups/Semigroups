@@ -281,6 +281,54 @@ InstallMethod( EvaluateWord,
     return res;
   end );
 
+
+InstallMethod(TraceIdealSchreierTreeForward,
+"for an ideal orbit and two positive integers",
+[IsIdealOrb, IsPosInt],
+function(o, i)
+  local orbschreierpos, orbschreiergen, schreiergen, schreierpos,
+leftword, rightword, nr, j;
+
+  orbschreierpos := o!.orbschreierpos;
+  orbschreiergen := o!.orbschreiergen;
+  
+  schreierpos := o!.schreierpos;
+  schreiergen := o!.schreiergen;
+   
+  leftword := [];
+  rightword := [];
+
+  nr:=1;
+  j:=i;
+  while j>Length(o!.orbits[nr]) do 
+    j:=j-Length(o!.orbits[nr]);
+    nr:=nr+1;
+  od;
+
+  repeat 
+
+    while schreierpos[i] <> fail do
+      Add(rightword, schreiergen[i]);
+      i := schreierpos[i];
+    od;
+
+    i := orbschreierpos[nr];
+    if i = fail then
+      break;
+    fi;
+    Add(leftword, orbschreiergen[nr]);
+
+    while j>Length(o!.orbits[nr]) do 
+      j:=j-Length(o!.orbits[nr]);
+      nr:=nr+1;
+    od;
+
+  until orbschreierpos[nr] <> fail;
+
+  return [Reversed(leftword), nr, rightword];
+end);
+
+
 # the first position of the returned word refers to the generators of the ideal
 # corresponding to the position in the orbit of the point from which the <o[pos]>
 # is obtained. For example, [1,2,3] means I.1*S.2*S.3.
