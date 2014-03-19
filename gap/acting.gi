@@ -706,7 +706,7 @@ end);
 
 #
 
-InstallMethod(ViewObj, [IsSemigroupData], 999,
+InstallMethod(ViewObj, [IsSemigroupData],
 function(data)
   Print("<");
 
@@ -716,15 +716,10 @@ function(data)
     Print("open ");
   fi;
   Print("semigroup ");
-  if IsMagmaIdeal(Parent(data)) then 
-    Print("ideal ");
-  fi;
 
-  # the minus 1s here are wrong in the case of ideals JDM
   Print("data with ", Length(data!.orbit)-1, " reps, ",
    Length(LambdaOrb(Parent(data)))-1, " lambda-values, ", 
    Length(RhoOrb(Parent(data)))-1, " rho-values>"); 
-   #Sum(data!.lenreps), " lambda-rho combos>");
   return;
 end);
 

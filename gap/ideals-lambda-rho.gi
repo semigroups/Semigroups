@@ -104,18 +104,12 @@ InstallMethod(IdealLambdaOrb, "for an acting semigroup ideal",
 function(I)
   local record, htopts, fam;
   
-  # create the whole object...
   record:=rec();
-  record.orbits:=[];
-  record.lens:=[];
-  record.parent:=I;
-  record.scc:=[];
-  record.scc_reps:=[];
-  record.scc_lookup:=[];
-  record.schreiergen:=[];
-  record.schreierpos:=[];
-  record.orbitgraph:=[];
-  record.gens:=GeneratorsOfSemigroup(Parent(I));
+  record.orbits:=[];      record.lens:=[];    
+  record.parent:=I;       record.scc:=[];       
+  record.scc_reps:=[];    record.scc_lookup:=[];
+  record.schreiergen:=[]; record.schreierpos:=[];
+  record.orbitgraph:=[];  record.gens:=GeneratorsOfSemigroup(Parent(I));
   
   htopts:=ShallowCopy(LambdaOrbOpts(I)); 
   htopts.treehashsize:=I!.opts.hashlen.M;
@@ -129,7 +123,7 @@ end);
 
 InstallGlobalFunction(UpdateIdealLambdaOrb, 
 function(o, pt)
-  local I, record, new, ht, scc, lookup, i;
+  local I, record, len, new, ht, i;
 
   I:=o!.parent; 
   record:=ShallowCopy(LambdaOrbOpts(I));
@@ -137,8 +131,10 @@ function(o, pt)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
-  
-  if Length(o)<>0 then 
+ 
+  len:=Length(o);
+
+  if len<>0 then 
     record.gradingfunc:=function(new, x)
       return x in o;
     end;
@@ -153,24 +149,25 @@ function(o, pt)
   
   ht:=o!.ht;
   for i in [1..Length(new)] do 
-    HTAdd(ht, new[i], i+Length(o));
+    HTAdd(ht, new[i], i+len);
   od;
   
   o!.scc_reps[Length(o!.scc)+1]:=pt;
   
   # JDM probably don't store these things in <o> since they are already in <new>
+  # or remove them from the individual orbits...
   Append(o!.scc_lookup, OrbSCCLookup(new)+Length(o!.scc));
-  Append(o!.scc, OrbSCC(new)+Length(o));  
+  Append(o!.scc, OrbSCC(new)+len);  
   Append(o!.schreiergen, new!.schreiergen);
   Add(o!.schreierpos, fail);
   for i in [2..Length(new)] do 
-    Add(o!.schreierpos, new!.schreierpos[i]+Length(o));
+    Add(o!.schreierpos, new!.schreierpos[i]+len);
   od;
-  Append(o!.orbitgraph, new!.orbitgraph+Length(o));
+  Append(o!.orbitgraph, new!.orbitgraph+len);
 
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);
-  return o;
+  return len+1;
 end);
 
 #
@@ -180,13 +177,12 @@ InstallMethod(IdealRhoOrb, "for an acting semigroup ideal",
 function(I)
   local record, htopts, fam;
   
-  # create the whole object...
   record:=rec();
-  record.orbits:=[];
-  record.lens:=[];
-  record.parent:=I;
-  record.scc:=[];
-  record.scc_lookup:=[];
+  record.orbits:=[];      record.lens:=[];    
+  record.parent:=I;       record.scc:=[];       
+  record.scc_reps:=[];    record.scc_lookup:=[];
+  record.schreiergen:=[]; record.schreierpos:=[];
+  record.orbitgraph:=[];  record.gens:=GeneratorsOfSemigroup(Parent(I));
   
   htopts:=ShallowCopy(RhoOrbOpts(I)); 
   htopts.treehashsize:=I!.opts.hashlen.M;
@@ -196,25 +192,27 @@ function(I)
   return Objectify(NewType(fam, IsIdealRhoOrb), record);
 end);
 
-# assumes that <pt> is in <o> already...
+# assumes that <pt> is not in <o> already, returns the position of <pt> after it
+# is added
 
 InstallGlobalFunction(UpdateIdealRhoOrb, 
 function(o, pt)
-  local I, record, new, ht, scc, lookup, i;
+  local I, record, len, new, ht, i;
 
   I:=o!.parent; 
   record:=ShallowCopy(RhoOrbOpts(I));
-  record.scc_reps:=[pt];
   
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
   
-  if Length(o)<>0 then 
+  len:=Length(o);
+
+  if len<>0 then 
     record.gradingfunc:=function(new, x)
       return x in o;
     end;
-    record.onlygrades:=function(x, data)
+    record.onlygrades:=function(x, data);
       return not x;
     end;
     record.onlygradesdata:=fail;
@@ -225,16 +223,27 @@ function(o, pt)
   
   ht:=o!.ht;
   for i in [1..Length(new)] do 
-    HTAdd(ht, new[i], i+Length(o));
+    HTAdd(ht, new[i], i+len);
   od;
   
-  Append(o!.scc_lookup, OrbSCCLookup(new)+Length(o!.scc));
-  Append(o!.scc, OrbSCC(new)+Length(o));  
+  o!.scc_reps[Length(o!.scc)+1]:=pt;
   
+  # JDM probably don't store these things in <o> since they are already in <new>
+  # or remove them from the individual orbits...
+  Append(o!.scc_lookup, OrbSCCLookup(new)+Length(o!.scc));
+  Append(o!.scc, OrbSCC(new)+len);  
+  Append(o!.schreiergen, new!.schreiergen);
+  Add(o!.schreierpos, fail);
+  for i in [2..Length(new)] do 
+    Add(o!.schreierpos, new!.schreierpos[i]+len);
+  od;
+  Append(o!.orbitgraph, new!.orbitgraph+len);
+
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);
-  return o;
+  return len+1;
 end);
+
 #
 
 InstallMethod( EvaluateWord, 

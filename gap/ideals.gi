@@ -164,6 +164,4 @@ function(S, gens, opts)
   return I;
 end);
 
-#
-
 #EOF
