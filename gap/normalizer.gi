@@ -53,7 +53,7 @@ end);
 
 #
 
-InstallMethod(Normalizer, 
+InstallMethod(NormalizerOp, 
 "for a permutation group and a semigroup", 
 [IsPermGroup, IsSemigroup],
 function(G, S)
