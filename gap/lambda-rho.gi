@@ -175,6 +175,7 @@ function(o, m, i)
       if IsBound(mults[i]) then 
         return mults[i][1];
       elif i=scc[1] then 
+      #if i=scc[1] then 
         return one;
       fi;
       x:=gens[genpos[1][i]]*trace(genpos[2][i]);
@@ -185,14 +186,14 @@ function(o, m, i)
     genpos:=SchreierTreeOfSCC(o, m);
 
     trace:=function(i)
-      local f;
+      local x;
 
       if i=scc[1] then 
         return one;
       fi;
-      f:=INV(gens[genpos[1][i]])*trace(genpos[2][i]);
-      mults[i]:=[INV(f), f];
-      return f;
+      x:=INV(gens[genpos[1][i]])*trace(genpos[2][i]);
+      mults[i]:=[INV(x), x];
+      return x;
     end;
   fi;
 
@@ -271,6 +272,13 @@ function(o, m)
     forward:=LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
+        if LambdaFunc(s)(rep)<>LambdaFunc(s)(rep*forward*gens[l]
+          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]) or 
+        RhoFunc(s)(rep)<>RhoFunc(s)(rep*forward*gens[l]
+          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]) then 
+          Error();
+        fi;
+
         f:=lambdaperm(rep, rep*forward*gens[l]
           *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g:=ClosureGroup(g, f);
