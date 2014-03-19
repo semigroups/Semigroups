@@ -11,6 +11,7 @@
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("SizeOfSemigroupData");
 DeclareCategory("IsSemigroupData", IsList);
+DeclareFilter("IsClosedData", IsSemigroupData);
 
 DeclareOperation("Enumerate", [IsSemigroupData]);
 DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);

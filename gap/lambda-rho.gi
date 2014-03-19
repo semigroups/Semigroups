@@ -99,42 +99,36 @@ function(o, m)
   scc:=OrbSCC(o);
 
   if IsBound(o!.hasmults) then
-    if o!.hasmults[m] then 
+    if IsBound(o!.hasmults[m]) and o!.hasmults[m] then 
       return o!.mults;
     fi;
   else 
     if not IsBound(o!.mults) then 
-      mults:=EmptyPlist(Length(o));
-      one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
-      for x in OrbSCC(o) do 
-        mults[x[1]]:=one;
-      od;
-      o!.mults:=mults;
+      o!.mults:=EmptyPlist(Length(o));
     fi;
     o!.hasmults:=BlistList([1..Length(scc)], []);
   fi;
 
-  o!.hasmults[m]:=true;
-  scc:=OrbSCC(o)[m];
-  gens:=o!.gens;
-  mults:=o!.mults;
-  
-  if not IsBound(mults[scc[1]]) then 
-    mults[scc[1]]:=[FakeOne(gens), FakeOne(gens)];
-  fi; 
- 
+  o!.hasmults[m]:=true;    scc:=OrbSCC(o)[m];    
+  gens:=o!.gens;        one:=FakeOne(gens);
+  mults:=o!.mults;      
+
+  #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
+  #JDM and shouldn't there be a second case of inverse orbits here??
   genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
+  inv:=function(lambda, x) return LambdaInverse(o!.parent)(lambda, x); end;
 
   trace:=function(i)
-    local f;
-
+    local x;
     if IsBound(mults[i]) then 
       return mults[i][2];
+    elif i=scc[1] then 
+      mults[i]:=[one, one];
+      return one;
     fi;
-    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[inv(o[i], f), f];
-    return f;
+    x:=gens[genpos[1][i]]*trace(genpos[2][i]);
+    mults[i]:=[inv(o[i], x), x];
+    return x;
   end;
 
   for i in scc do 
@@ -144,6 +138,8 @@ function(o, m)
 end);
 
 # f takes o[i] to o[scc[1]] and inv(o[i], f) takes o[scc[1]] to o[i]
+# JDM: this should be the other way around like in RhoOrbMult, and using
+# SchreierTreeOfSCC instead of its reverse.
 
 InstallGlobalFunction(LambdaOrbMult,
 function(o, m, i)
@@ -159,10 +155,6 @@ function(o, m, i)
 
   scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
 
-  if i=scc[1] then 
-    return [one, one];
-  fi;
-
   mults:=o!.mults;      
 
   if not IsInvLambdaOrb(o) then
@@ -175,6 +167,7 @@ function(o, m, i)
       if IsBound(mults[i]) then 
         return mults[i][2];
       elif i=scc[1] then 
+        mults[i]:=[one, one];
         return one;
       fi;
       x:=gens[genpos[1][i]]*trace(genpos[2][i]);
@@ -189,6 +182,7 @@ function(o, m, i)
       if IsBound(mults[i]) then 
         return mults[i][2];
       elif i=scc[1] then 
+        mults[i]:=[one, one];
         return one;
       fi;
       x:=INV(gens[genpos[1][i]])*trace(genpos[2][i]);
@@ -211,7 +205,7 @@ function(o, m)
     return o!.scc_reps[m];
   fi;
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  o!.scc_reps[m]:=EvaluateWord(o!.parent, w, OnRight);
+  o!.scc_reps[m]:=EvaluateWord(o!.parent, w);
   # remove the following after update of dummy points...JDM
   if not IsIdealOrb(o) then 
     o!.scc_reps[m]:=o!.scc_reps[1]*o!.scc_reps[m];
@@ -230,7 +224,8 @@ function(o, m)
   fi;
 
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  o!.scc_reps[m]:=EvaluateWord(o!.parent, w, OnLeftAntiOperation);
+  #JDM is the following right?
+  o!.scc_reps[m]:=EvaluateWord(o!.parent, Reversed(w));
   # remove the following after update of dummy points...JDM
   if not IsIdealOrb(o) then 
     o!.scc_reps[m]:=o!.scc_reps[m]*o!.scc_reps[1];
@@ -253,7 +248,6 @@ function(o, m)
     o!.schutz:=EmptyPlist(Length(OrbSCC(o))); 
     o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
   fi;
-
   s:=o!.parent;                   gens:=o!.gens; 
   scc:=OrbSCC(o)[m];              lookup:=o!.scc_lookup;
   orbitgraph:=OrbitGraph(o);      genstoapply:=[1..Length(gens)];
@@ -267,11 +261,19 @@ function(o, m)
   fi;
 
   g:=Group(()); stop:=false; 
-
+  
   for k in scc do
     forward:=LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
+        if LambdaFunc(s)(rep)<>LambdaFunc(s)(rep*forward*gens[l]
+          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]) 
+          or 
+        RhoFunc(s)(rep)<>RhoFunc(s)(rep*forward*gens[l]
+          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]) then 
+          Error();
+        fi;
+        Print("k=", k, " l=", l, "\n");
         f:=lambdaperm(rep, rep*forward*gens[l]
           *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g:=ClosureGroup(g, f);
@@ -368,10 +370,6 @@ function(o, m, i)
 
   scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
 
-  if i=scc[1] then 
-    return [one, one];
-  fi;
-
   mults:=o!.mults;
   
   genpos:=SchreierTreeOfSCC(o, m);
@@ -379,10 +377,10 @@ function(o, m, i)
   
   trace:=function(i)
     local x;
-
     if IsBound(mults[i]) then 
       return mults[i][1];
     elif i=scc[1] then 
+      mults[i]:=[one, one];
       return one;
     fi;
     x:=gens[genpos[1][i]]*trace(genpos[2][i]);
@@ -398,47 +396,38 @@ end);
 
 InstallGlobalFunction(RhoOrbMults,
 function(o, m)
-  local scc, mults, one, gens, genpos, inv, trace, x, i;
-
+  local scc, gens, one, mults, genpos, inv, trace, i;
+  
   scc:=OrbSCC(o);
-
   if IsBound(o!.hasmults) then
-    if o!.hasmults[m] then 
+    if IsBound(o!.hasmults[m]) and o!.hasmults[m] then 
       return o!.mults;
     fi;
   else 
     if not IsBound(o!.mults) then 
-      mults:=EmptyPlist(Length(o));
-      one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
-      for x in OrbSCC(o) do 
-        mults[x[1]]:=one;
-      od;
-      o!.mults:=mults;
+      o!.mults:=EmptyPlist(Length(o));
     fi;
     o!.hasmults:=BlistList([1..Length(scc)], []);
   fi;
-
-  o!.hasmults[m]:=true;
-  scc:=OrbSCC(o)[m];
-  gens:=o!.gens;
+  
+  o!.hasmults[m]:=true;  scc:=OrbSCC(o)[m];
+  gens:=o!.gens;         one:=FakeOne(gens);
   mults:=o!.mults;
   
-  if not IsBound(mults[scc[1]]) then 
-    mults[scc[1]]:=[FakeOne(gens), FakeOne(gens)];
-  fi; 
-
   genpos:=SchreierTreeOfSCC(o, m);
-  inv:=f-> RhoInverse(o!.parent)(o[scc[1]], f);
-
+  inv:=x-> RhoInverse(o!.parent)(o[scc[1]], x);
+  
   trace:=function(i)
-    local f;
-
+    local x;
     if IsBound(mults[i]) then 
       return mults[i][1];
+    elif i=scc[1] then 
+      mults[i]:=[one, one];
+      return one;
     fi;
-    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[f, inv(f)];
-    return f;
+    x:=gens[genpos[1][i]]*trace(genpos[2][i]);
+    mults[i]:=[x, inv(x)];
+    return x;
   end;
 
   for i in scc do 
@@ -446,7 +435,6 @@ function(o, m)
   od;
   return o!.mults;
 end);
-
 
 # JDM could use IsRegular here to speed up?
 

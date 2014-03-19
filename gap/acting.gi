@@ -133,7 +133,7 @@ function(f, s)
   
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
   # lambda-rho-combination not yet seen
-    if IsClosed(data) then 
+    if IsClosedData(data) then 
       return false;
     fi;
     
@@ -178,7 +178,7 @@ function(f, s)
     return true; 
   fi; 
 
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     return false;
   fi;
 
@@ -260,6 +260,7 @@ InstallMethod(\in, "for associative element and semigroup data",
 function(f, data)
   return not Position(data, f)=fail;
 end);
+
 #
 
 InstallMethod(ELM_LIST, "for semigroup data, and pos int",
@@ -268,6 +269,13 @@ function(o, nr)
   return o!.orbit[nr];
 end);
 
+#
+
+InstallMethod(Length, "for semigroup data",
+[IsSemigroupData], 
+function(data)
+  return Length(data!.orbit);
+end);
 #
 
 InstallMethod(Enumerate, "for semigroup data", [IsSemigroupData],
@@ -298,7 +306,7 @@ function(data, limit, lookfunc)
     looking:=false;
   fi;
   
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     if looking then 
       data!.found:=false;
     fi;
@@ -583,7 +591,7 @@ function(data, limit, lookfunc)
     data!.found:=false;
   fi;
   if nr=i then 
-    SetFilterObj(data, IsClosed);
+    SetFilterObj(data, IsClosedData);
     SetFilterObj(rho_o, IsClosed);
     rho_o!.orbind:=[1..rho_nr];
   fi;
@@ -710,7 +718,7 @@ InstallMethod(ViewObj, [IsSemigroupData],
 function(data)
   Print("<");
 
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     Print("closed ");
   else 
     Print("open ");

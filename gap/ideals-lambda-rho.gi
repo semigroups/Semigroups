@@ -93,7 +93,7 @@ function(o)
     Print("rho ");
   fi;
   
-  Print("orbit with ", Length(o), " points>");
+  Print("orbit with ", Length(o), " points in ", Length(o!.orbits), " components>");
   return;
 end);
 
@@ -125,7 +125,7 @@ end);
 # assumes that <pt> is not in <o> already...
 
 InstallGlobalFunction(UpdateIdealLambdaOrb, 
-function(o, pt, pos, j)
+function(o, pt, x, pos, gen, ind)
   local I, record, len, new, ht, i, nrorb;
 
   I:=o!.parent; 
@@ -155,7 +155,7 @@ function(o, pt, pos, j)
     HTAdd(ht, new[i], i+len);
   od;
   
-  o!.scc_reps[Length(o!.scc)+1]:=pt;
+  o!.scc_reps[Length(o!.scc)+1]:=x;
   
   # JDM probably don't store these things in <o> since they are already in <new>
   # or remove them from the individual orbits...
@@ -173,15 +173,17 @@ function(o, pt, pos, j)
 
   nrorb := Length(o!.orbits);  
   o!.orbschreierpos[nrorb] := pos;
-  o!.orbschreiergen[nrorb] := j;
+  o!.orbschreiergen[nrorb] := gen;
 
-  # jj assume that if a generator is passsed into UpadateIdealLambdaOrb then
-  # pos = the index of the generator and j = fail.
-  if j = fail then
-    o!.orbtogen[nrorb] := pos;
+  # jj assume that if a generator is passed into UpadateIdealLambdaOrb then
+  # pos = the index of the generator and ind <> fail.
+  if ind <> fail then
+    o!.orbtogen[nrorb] := ind;
   fi;
   return len+1;
 end);
+
+#
 
 InstallMethod(IdealRhoOrb, "for an acting semigroup ideal", 
 [IsActingSemigroup and IsSemigroupIdeal],
@@ -196,6 +198,7 @@ function(I)
   record.orbitgraph:=[];        record.gens:=GeneratorsOfSemigroup(Parent(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
+  record.orbtogen := [];
   
   htopts:=ShallowCopy(RhoOrbOpts(I)); 
   htopts.treehashsize:=I!.opts.hashlen.M;
@@ -208,7 +211,7 @@ end);
 # assumes that <pt> is not in <o> already...
 
 InstallGlobalFunction(UpdateIdealRhoOrb, 
-function(o, pt, pos, j)
+function(o, pt, x, pos, gen, ind)
   local I, record, len, new, ht, i, nrorb;
 
   I:=o!.parent; 
@@ -238,7 +241,7 @@ function(o, pt, pos, j)
     HTAdd(ht, new[i], i+len);
   od;
   
-  o!.scc_reps[Length(o!.scc)+1]:=pt;
+  o!.scc_reps[Length(o!.scc)+1]:=x;
   
   # JDM probably don't store these things in <o> since they are already in <new>
   # or remove them from the individual orbits...
@@ -256,48 +259,53 @@ function(o, pt, pos, j)
 
   nrorb := Length(o!.orbits);  
   o!.orbschreierpos[nrorb] := pos;
-  o!.orbschreiergen[nrorb] := j;
+  o!.orbschreiergen[nrorb] := gen;
 
+  # jj assume that if a generator is passed into UpadateIdealRhoOrb then
+  # pos = the index of the generator and ind<>fail.
+  if ind<>fail then
+    o!.orbtogen[nrorb] := ind;
+  fi;
   return len+1;
 end);
 
 #
 
-InstallMethod( EvaluateWord, 
-"for a semigroup or ideal, a word (Semigroups)",
-  [ IsSemigroup, IsList],
-  function(S, w)
-    return EvaluateWord(S, w, OnRight);
-  end);
-
-#
-
-InstallMethod( EvaluateWord, 
-"for a semigroup or ideal, a word, and a function (Semigroups)",
-  [ IsSemigroup, IsList, IsFunction],
-  function(S, w, act)
+InstallMethod(EvaluateWord, 
+"for a semigroup ideal and a triple of words (Semigroups)",
+[IsSemigroupIdeal, IsList],
+function(I, w)
     local res, gens, i;
 
-    if IsMagmaIdeal(S) then 
-      res:=GeneratorsOfSemigroupIdeal(S)[w[1]];
-      gens:=GeneratorsOfSemigroup(Parent(S));
-    else
-      gens:=GeneratorsOfSemigroup(S);
-      res:=gens[w[1]];
-    fi;
-    for i in [2..Length(w)] do
-        res := act(res, gens[w[i]]);
+    gens:=GeneratorsOfSemigroup(Parent(I));
+    res:=GeneratorsOfSemigroupIdeal(I)[w[2]];
+    
+    for i in [1..Length(w[1])] do
+      res:=gens[w[1][i]]*res;
+    od;
+    for i in [1..Length(w[3])] do
+      res:=res*gens[w[3][i]];
     od;
     return res;
   end );
 
+#
 
-InstallMethod(TraceIdealSchreierTreeForward,
-"for an ideal orbit and two positive integers",
+InstallMethod(EvaluateWord, 
+"for a semigroup and a words (Semigroups)",
+[IsSemigroup, IsList],
+function(S, w)
+  return EvaluateWord(GeneratorsOfSemigroup(S), w);
+  end );
+
+#
+
+InstallMethod(TraceSchreierTreeForward,
+"for an ideal orbit and positive integer",
 [IsIdealOrb, IsPosInt],
 function(o, i)
   local orbschreierpos, orbschreiergen, schreiergen, schreierpos,
-leftword, rightword, nr, j;
+   leftword, rightword, nr, j;
 
   orbschreierpos := o!.orbschreierpos;
   orbschreiergen := o!.orbschreiergen;
@@ -307,7 +315,6 @@ leftword, rightword, nr, j;
    
   leftword := [];
   rightword := [];
-
   nr:=1;
   j:=i;
   while j>Length(o!.orbits[nr]) do 
@@ -334,11 +341,10 @@ leftword, rightword, nr, j;
       nr:=nr+1;
     od;
 
-  until orbschreiergen[nr] <> fail;
+  until orbschreiergen[nr]=fail;
 
-  return [Reversed(leftword), o!.orbtogen[nr], rightword];
+  return [Reversed(leftword), o!.orbtogen[nr], Reversed(rightword)];
 end);
-
 
 # the first position of the returned word refers to the generators of the ideal
 # corresponding to the position in the orbit of the point from which the <o[pos]>

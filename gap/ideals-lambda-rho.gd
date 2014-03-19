@@ -23,6 +23,6 @@ DeclareGlobalFunction("UpdateIdealRhoOrb");
 #DeclareOperation("OrbitGraph", [IsIdealOrb]); JDM only required if IsIdealOrb
 #it not an IsOrbit
 
+DeclareOperation("EvaluateWord", [IsSemigroupIdeal, IsList]);
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);
-DeclareOperation("EvaluateWord", [IsSemigroup, IsList, IsFunction]);
 DeclareOperation("TraceIdealSchreierTreeForward", [IsIdealOrb, IsPosInt]);

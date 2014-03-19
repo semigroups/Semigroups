@@ -37,8 +37,7 @@ end);
 InstallMethod(ViewObj, [IsSemigroupIdealData], 
 function(data)
   Print("<");
-
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     Print("closed ");
   else 
     Print("open ");
@@ -61,7 +60,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoscc, act, htadd, htvalue, drel, dtype, UpdateSemigroupIdealData, i, start, mults, scc, x, cosets, y, k, j;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, UpdateSemigroupIdealData, idealgens, i, start, mults, scc, x, cosets, y, z, k, j;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -135,8 +134,8 @@ function(data, limit, lookfunc)
   rho:=RhoFunc(I);
   rhoo:=IdealRhoOrb(I); 
   rhooht:=rhoo!.ht;        
-  rholookup:=rhoo!.scc_lookup;        
-  rhoscc:=OrbSCC(lambdao); 
+  rhoolookup:=rhoo!.scc_lookup;        
+  rhoscc:=OrbSCC(rhoo); 
 
   act:=StabilizerAction(I);
  
@@ -154,16 +153,19 @@ function(data, limit, lookfunc)
   # the function which checks if x is already R/D-related to something in the
   # data and if not adds it in the appropriate place
 
-  UpdateSemigroupIdealData:=function(x, i, j)
-    local new, xx, l, m, mm, schutz, ind, mults, cosets, y, n, z;
-
+  UpdateSemigroupIdealData:=function(x, pos, gen, idealpos)
+    local new, xx, l, m, mm, schutz, mults, cosets, y, n, z, i, ind;
+    
     new:=false;
    
+    #if x=Transformation( [ 2, 1, 4, 1 ] ) then Error(); fi;
+    #Print(x);
     # check, update, rectify the lambda value
     xx:=lambda(x);
     l:=htvalue(lambdaoht, xx);
     if l=fail then 
-      l:=UpdateIdealLambdaOrb(lambdao, xx, i, j);
+      l:=UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos);
+       
       # update the lists of reps
       for i in [lenscc+1..lenscc+Length(lambdascc)] do 
         reps[i]:=[];
@@ -190,14 +192,9 @@ function(data, limit, lookfunc)
     xx:=rho(x);
     l:=htvalue(rhooht, xx);
     if l=fail then 
-      l:=UpdateIdealRhoOrb(rhoo, xx, i, j);
+      l:=UpdateIdealRhoOrb(rhoo, xx, x, pos, gen, idealpos);
       new:=true; # x is a new R-rep
     fi;
-    mm:=rholookup[l];
-    if l<>rhoscc[mm][1] then 
-      x:=RhoOrbMult(rho, mm, l)[2]*x;
-    fi;
-    
     schutz:=LambdaOrbStabChain(lambdao, m);
 
     # check if x is R-related to one of the known R-reps
@@ -218,12 +215,18 @@ function(data, limit, lookfunc)
     fi;
 
     # if we reach here, then x is a new R-rep, and hence a new D-rep
+    mm:=rhoolookup[l];
+    if l<>rhoscc[mm][1] then 
+      x:=RhoOrbMult(rhoo, mm, l)[2]*x;
+    fi;
+      
     nr_d:=nr_d+1;
     d[nr_d]:=rec();
     ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
       EquivalenceClassRelation, drel, IsGreensClassNC, false, 
       Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
       RhoOrb, rhoo, RhoOrbSCCIndex, mm, RhoOrbSCC, rhoscc[mm]);
+    if Number(d, x-> x=d[nr_d])>1 then Error(); fi;    
 
     # install the R-class reps of the new D-rep
     mults:=RhoOrbMults(rhoo, mm);
@@ -233,30 +236,30 @@ function(data, limit, lookfunc)
       if not IsBound(lambdarhoht[l]) then 
         lambdarhoht[l]:=[];
       fi;
-      if not IsBound(lambdarhoht[l][mm]) then 
-        lenreps[mm]:=lenreps[mm]+1;
-        ind:=lenreps[mm];
-        lambdarhoht[l][mm]:=ind;
-        repslens[mm][ind]:=0;
-        reps[mm][ind]:=[];
-        repslookup[mm][ind]:=[];
+      if not IsBound(lambdarhoht[l][m]) then 
+        lenreps[m]:=lenreps[m]+1;
+        ind:=lenreps[m];
+        lambdarhoht[l][m]:=ind;
+        repslens[m][ind]:=0;
+        reps[m][ind]:=[];
+        repslookup[m][ind]:=[];
       else
-        ind:=lambdarhoht[l][mm];
+        ind:=lambdarhoht[l][m];
       fi;
       y:=mults[l][1]*x;
 
       for z in cosets do 
         nr_r:=nr_r+1;
         
-        repslens[mm][ind]:=repslens[mm][ind]+1;
-        reps[mm][ind][repslens[mm][ind]]:=act(y, z^-1);
-        repslookup[mm][ind][repslens[mm][ind]]:=nr_r;
+        repslens[m][ind]:=repslens[m][ind]+1;
+        reps[m][ind][repslens[m][ind]]:=act(y, z^-1);
+        repslookup[m][ind][repslens[m][ind]]:=nr_r;
         orblookup1[nr_r]:=ind;
-        orblookup2[nr_r]:=repslens[mm][ind];
+        orblookup2[nr_r]:=repslens[m][ind];
         rholookup[nr_r]:=l; 
         
-        orb[nr_r]:=[I, m, lambdao, reps[mm][ind][repslens[mm][ind]], false, nr_r];
-        htadd(ht, reps[mm][ind][repslens[mm][ind]], nr_r);
+        orb[nr_r]:=[I, m, lambdao, reps[m][ind][repslens[m][ind]], false, nr_r];
+        htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
 
       od;
     od;
@@ -265,8 +268,10 @@ function(data, limit, lookfunc)
   # initialise the data if necessary
   if data!.init=false then 
     # add the generators of the ideal...
-    for x in GeneratorsOfSemigroupIdeal(I) do 
-      UpdateSemigroupIdealData(x, 0, 0);
+    idealgens:=GeneratorsOfSemigroupIdeal(I);
+    for i in [1..Length(idealgens)] do
+      Print(i, "\n");
+      UpdateSemigroupIdealData(idealgens[i], fail, fail, i);
     od;
 
     data!.init:=true;
@@ -280,11 +285,10 @@ function(data, limit, lookfunc)
       od;
     fi;
   fi;
-  
   i:=data!.pos;       # points in orb in position at most i have descendants
 
   while nr_d<=limit and i<nr_d and i<>stopper do 
-     
+    Print("i=", i, "\n"); 
     i:=i+1; # advance in the dorb
     start:=nr_r;
     
@@ -294,30 +298,33 @@ function(data, limit, lookfunc)
     scc:=RhoOrbSCC(d[i]);
     x:=Representative(d[i]);
     cosets:=RhoCosets(d[i]);
-
+    Print("R-classes\n");
     for y in cosets do 
       y:=act(x, y^-1);
-      for i in scc do
-        y:=mults[i][1]*y;
-        for j in genstoapply do
-          UpdateSemigroupIdealData(gens[j]*y, i, j);
+      for j in scc do
+        z:=mults[j][1]*y;
+        for k in genstoapply do
+          Print("j=", j, ", k=", k, "\n");
+          UpdateSemigroupIdealData(gens[k]*z, j, k, fail);
+          Print("escaped!\n");          
         od;
       od;
     od;
      
     # right multiply the L-class reps by the generators of the semigroup
-    
     mults:=LambdaOrbMults(lambdao, LambdaOrbSCCIndex(d[i]));
     scc:=LambdaOrbSCC(d[i]);
     x:=Representative(d[i]);
     cosets:=LambdaCosets(d[i]);
-    
+    Print("L-classes\n");
     for y in cosets do 
       y:=act(x, y);
-      for i in scc do
-        y:=y*mults[i][1];
-        for j in genstoapply do
-          UpdateSemigroupIdealData(y*gens[j], i, j);
+      for j in scc do
+        z:=y*mults[j][1];
+        for k in genstoapply do
+          Print("j=", j, ", k=", k, "\n");
+          UpdateSemigroupIdealData(z*gens[k], j, k, fail);
+          Print("escaped!\n");          
         od;
       od;
     od;
@@ -344,7 +351,7 @@ function(data, limit, lookfunc)
   if nr_d=i then 
     SetFilterObj(lambdao, IsClosed);
     SetFilterObj(rhoo, IsClosed);
-    SetFilterObj(data, IsClosed);
+    SetFilterObj(data, IsClosedData);
   fi;
 
   return data;
