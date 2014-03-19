@@ -227,7 +227,7 @@ end);
 #
 
 InstallMethod(Size, "for an acting semigroup",
-[IsActingSemigroup], 
+[IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
 function(s)
   local data, lenreps, repslens, o, scc, size, start, n, m, i;
    
@@ -706,7 +706,7 @@ end);
 
 #
 
-InstallMethod(ViewObj, [IsSemigroupData],
+InstallMethod(ViewObj, [IsSemigroupData], 10,
 function(data)
   Print("<");
 

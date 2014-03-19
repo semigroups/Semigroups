@@ -213,7 +213,7 @@ function(o, m)
     return o!.scc_reps[m];
   fi;
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  o!.scc_reps[m]:=EvaluateWord(o!.parent, w);
+  o!.scc_reps[m]:=EvaluateWord(o!.parent, w, OnRight);
   # remove the following after update of dummy points...JDM
   if not IsIdealOrb(o) then 
     o!.scc_reps[m]:=o!.scc_reps[1]*o!.scc_reps[m];
