@@ -154,7 +154,7 @@ function(data, limit, lookfunc)
   # the function which checks if x is already R/D-related to something in the
   # data and if not adds it in the appropriate place
 
-  UpdateSemigroupData:=function(x)
+  UpdateSemigroupData:=function(x, j)
     local new, xx, l, m, mm, schutz, ind, mults, cosets, y, n, z;
 
     new:=false;
@@ -163,7 +163,7 @@ function(data, limit, lookfunc)
     xx:=lambda(x);
     l:=htvalue(lambdaoht, xx);
     if l=fail then 
-      l:=UpdateIdealLambdaOrb(lambdao, xx);
+      l:=UpdateIdealLambdaOrb(lambdao, xx, j);
       # update the lists of reps
       for i in [lenscc+1..lenscc+Length(lambdascc)] do 
         reps[i]:=[];
@@ -190,7 +190,7 @@ function(data, limit, lookfunc)
     xx:=rho(x);
     l:=htvalue(rhooht, xx);
     if l=fail then 
-      l:=UpdateIdealRhoOrb(rhoo, xx);
+      l:=UpdateIdealRhoOrb(rhoo, xx, j);
       new:=true; # x is a new R-rep
     fi;
     mm:=rholookup[l];
@@ -266,7 +266,7 @@ function(data, limit, lookfunc)
   if data!.init=false then 
     # add the generators of the ideal...
     for x in GeneratorsOfSemigroupIdeal(I) do 
-      UpdateSemigroupData(x);
+      UpdateSemigroupData(x, 0);
     od;
 
     data!.init:=true;
@@ -291,10 +291,10 @@ function(data, limit, lookfunc)
     # left/right multiply the R/L-class reps by the generators
     for j in genstoapply do
       for x in RClassReps(d[i]) do
-        UpdateSemigroupData(gens[j]*x);
+        UpdateSemigroupData(gens[j]*x, j);
       od;
       for x in LClassReps(d[i]) do 
-        UpdateSemigroupData(x*gens[j]);
+        UpdateSemigroupData(x*gens[j], j);
       od;
     od;
     
