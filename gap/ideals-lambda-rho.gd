@@ -25,3 +25,4 @@ DeclareGlobalFunction("UpdateIdealRhoOrb");
 
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList, IsFunction]);
+DeclareOperation("TraceIdealSchreierTreeForward", [IsIdealOrb, IsPosInt]);
