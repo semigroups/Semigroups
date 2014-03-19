@@ -155,11 +155,6 @@ function(o, m, i)
     fi;
   else
     o!.mults:=EmptyPlist(Length(o));
-    #one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
-    #for x in OrbSCC(o) do 
-    #  mults[x[1]]:=one;
-    #od;
-    #o!.mults:=mults;
   fi;
 
   scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
@@ -173,16 +168,18 @@ function(o, m, i)
   if not IsInvLambdaOrb(o) then
     #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
-    inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
+    inv:=function(lambda, x) return LambdaInverse(o!.parent)(lambda, x); end;
 
     trace:=function(i)
-      local f;
-      if i=scc[1] then 
+      local x;
+      if IsBound(mults[i]) then 
+        return mults[i][1];
+      elif i=scc[1] then 
         return one;
       fi;
-      f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-      mults[i]:=[inv(o[i], f), f];
-      return f;
+      x:=gens[genpos[1][i]]*trace(genpos[2][i]);
+      mults[i]:=[inv(o[i], x), x];
+      return x;
     end;
   else
     genpos:=SchreierTreeOfSCC(o, m);
@@ -365,29 +362,29 @@ function(o, m, i)
       return o!.mults[i];
     fi;
   else
-    mults:=EmptyPlist(Length(o));
-    one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
-    for x in OrbSCC(o) do 
-      mults[x[1]]:=one;
-    od;
-    o!.mults:=mults;
+    o!.mults:=EmptyPlist(Length(o));
   fi;
 
-  scc:=OrbSCC(o)[m];
+  scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
+
+  if i=scc[1] then 
+    return [one, one];
+  fi;
+
   mults:=o!.mults;
-  gens:=o!.gens;
+  
   genpos:=SchreierTreeOfSCC(o, m);
-  inv:=f-> RhoInverse(o!.parent)(o[scc[1]], f);
+  inv:=x-> RhoInverse(o!.parent)(o[scc[1]], x);
   
   trace:=function(i)
-    local f;
+    local x;
 
     if IsBound(mults[i]) then 
       return mults[i][1];
     fi;
-    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[f, inv(f)];
-    return f;
+    x:=gens[genpos[1][i]]*trace(genpos[2][i]);
+    mults[i]:=[x, inv(x)];
+    return x;
   end;
 
   trace(i);

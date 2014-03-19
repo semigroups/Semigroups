@@ -706,7 +706,7 @@ end);
 
 #
 
-InstallMethod(ViewObj, [IsSemigroupData], 10,
+InstallMethod(ViewObj, [IsSemigroupData], 
 function(data)
   Print("<");
 
