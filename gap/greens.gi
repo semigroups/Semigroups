@@ -1019,7 +1019,7 @@ InstallMethod(GreensRClassOfElementNC, "for an acting semigroup and element",
 function(s, f)
   local pos, r;
  
-  if HasSemigroupData(s) and IsClosed(SemigroupData(s)) then 
+  if HasSemigroupData(s) and IsClosedData(SemigroupData(s)) then 
     pos:=Position(SemigroupData(s), f);
     if pos<>fail then
       return CallFuncList(CreateRClassNC, SemigroupData(s)[pos]);
@@ -1914,7 +1914,7 @@ function(s)
   
   data:=SemigroupData(s);
   
-  if not IsClosed(data) then
+  if not IsClosedData(data) then
     gens:=GeneratorsOfSemigroup(s);
     i:=Random([1..2*Length(gens)]);
     w:=List([1..i], x-> Random([1..Length(gens)]));

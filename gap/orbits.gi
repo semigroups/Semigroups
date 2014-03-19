@@ -272,7 +272,7 @@ function(o)
     return o!.scc;
   fi;
 
-  if not IsClosed(o) then 
+  if not IsClosed(o) or not IsClosedData(o) then 
     Enumerate(o, infinity);
   fi;
 

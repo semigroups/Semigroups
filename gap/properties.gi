@@ -433,7 +433,7 @@ InstallMethod(IsRTrivial, "for an acting semigroup with generators",
 function(S)
   local iter, x;
 
-  if IsClosed(SemigroupData(S)) and IsClosed(RhoOrb(S)) then 
+  if IsClosedData(SemigroupData(S)) and IsClosed(RhoOrb(S)) then 
     for x in GreensDClasses(S) do 
       if (not IsTrivial(SchutzenbergerGroup(x))) or Length(LambdaOrbSCC(x))>1 
        then
@@ -840,7 +840,7 @@ function(s)
     fi;
   od;
 
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     return true;
   fi;
 
@@ -1210,7 +1210,7 @@ function(S)
   if MultiplicativeZero(S)=fail then 
     return false;
   fi;
-  if IsClosed(SemigroupData(S)) then 
+  if IsClosedData(SemigroupData(S)) then 
     return IsRegularSemigroup(S) and NrDClasses(S)=2;
   fi;
   iter:=IteratorOfDClasses(S);

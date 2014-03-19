@@ -68,7 +68,7 @@ function(data, limit, lookfunc)
     looking:=false;
   fi;
   
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     if looking then 
       data!.found:=false;
     fi;

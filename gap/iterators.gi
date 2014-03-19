@@ -484,7 +484,7 @@ InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 function(s)
   local iter;
   
-  if IsClosed(SemigroupData(s)) then 
+  if IsClosedData(SemigroupData(s)) then 
     iter:=IteratorList(GreensDClasses(s));
     SetIsIteratorOfDClasses(iter, true);
     return iter;
