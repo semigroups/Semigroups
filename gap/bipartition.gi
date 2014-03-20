@@ -1180,56 +1180,85 @@ end);
 
 #view/print/display
 
-InstallMethod(ViewObj, "for a bipartition",
-[IsBipartition],
-function(f)
-  local ext, i;
-
-  if DegreeOfBipartition(f)=0 then 
-    Print("<empty bipartition>");
-    return;
-  fi;
-  if IsBlockBijection(f) then 
-    Print("<block bijection: ");
-  else 
-    Print("<bipartition: ");
-  fi;
-  ext:=ExtRepOfBipartition(f);
-  Print(ext[1]);
-  for i in [2..Length(ext)] do 
-    Print(", ", ext[i]);
-  od;
-  Print(">");
-  return;
-end);
-
-#
-
-InstallMethod(PrintObj, "for a bipartition",
+InstallMethod(ViewString, "for a bipartition",
 [IsBipartition], 
 function(f)
-  Print("Bipartition( ", ExtRepOfBipartition(f), " )");
-  return;
+  local str, ext, i;
+ 
+  if DegreeOfBipartition(f)=0 then 
+    return "<empty bipartition>";
+  fi;
+
+  if IsBlockBijection(f) then 
+    str:="<block bijection: ";
+  else 
+    str:="<bipartition: ";
+  fi;
+
+  ext:=ExtRepOfBipartition(f);
+  Append(str, ViewString(ext[1]));
+
+  for i in [2..Length(ext)] do 
+    Append(str, ", ");
+    Append(str, ViewString(ext[i]));
+  od;
+  Append(str, ">");
+  return str;
 end);
 
 #
 
-InstallMethod(PrintObj, "for a bipartition collection",
+#InstallMethod(ViewObj, "for a bipartition",
+#[IsBipartition],
+#function(f)
+#  local ext, i;
+#
+#  if DegreeOfBipartition(f)=0 then 
+#    Print("<empty bipartition>");
+#    return;
+#  fi;
+#  if IsBlockBijection(f) then 
+#    Print("<block bijection: ");
+#  else 
+#    Print("<bipartition: ");
+#  fi;
+#  ext:=ExtRepOfBipartition(f);
+#  Print(ext[1]);
+#  for i in [2..Length(ext)] do 
+#    Print(", ", ext[i]);
+#  od;
+#  Print(">");
+#  return;
+#end);
+
+#
+
+InstallMethod(PrintString, "for a bipartition",
+[IsBipartition], 
+function(f)
+  return Concatenation("Bipartition( ", PrintString(ExtRepOfBipartition(f)), " )");
+end);
+
+#
+
+InstallMethod(PrintString, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll) 
-  local i;
+  local str, i;
 
-  Print("[ ");
+  str:="[ ";
   for i in [1..Length(coll)] do 
-    if not i=1 then Print(" "); fi;
-    Print(coll[i]);
+    if not i=1 then 
+      Append(str, " ");
+    fi;
+    Append(str, PrintString(coll[i]));
     if not i=Length(coll) then 
-      Print(",\n");
+      Append(str, ",\n");
     else
-      Print(" ]\n");
+      Append(str, " ]\n");
     fi;
   od;
-  return;
+  return str;
 end);
 
 # required to beat the method for bipartition collections...

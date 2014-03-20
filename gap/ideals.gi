@@ -27,7 +27,9 @@ function(I)
 
   str:="SemigroupIdeal(";
   Append(str, PrintString(Parent(I)));
-  Append(str, String(GeneratorsOfSemigroupIdeal(I)));
+  Append(str, ", ");
+  Append(str, PrintString(GeneratorsOfSemigroupIdeal(I)));
+  Append(str, " )");
   return str;
 end);
 
