@@ -1181,7 +1181,8 @@ end);
 
 # Notes: that these are not rectified!
 
-# separate methods for both regular and inverse semigroups. AAAAA
+# separate methods for both regular and inverse semigroups. 
+# this seems not work for ideals. jj
 
 InstallMethod(DClassReps, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -1199,10 +1200,10 @@ function(s)
   return out;
 end);
 
-# different method for regular/inverse AAAAA
+# different method for regular/inverse, same method for ideals.
 
 InstallMethod(LClassReps, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup ],
 function(s)
   local D, out, x;
   D:=GreensDClasses(s);
@@ -1488,7 +1489,7 @@ function(h)
   return IdempotentTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
 
-# same method for regular/inverse
+# same method for regular/inverse, same method for ideals
 
 InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -1556,7 +1557,7 @@ InstallMethod(IsRegularClass, "for an D-class of an acting semigroup",
 d-> IsRegularClass@(d, RhoFunc(Parent(d))(Representative(d)),
 LambdaOrbSCC(d), LambdaOrb(d), true));
 
-# same method for regular/inverse
+# same method for regular/inverse, same method for ideals
 
 InstallMethod(IsRegularClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass], IsGroupHClass);
@@ -1577,7 +1578,7 @@ LambdaOrbSCC(r), LambdaOrb(r), true));
 
 #OOO
 
-# same method for regular/inverse
+# same method for regular/inverse, same method for ideals
 
 InstallMethod(MultiplicativeNeutralElement, 
 "for a H-class of an acting semigroup",
@@ -1627,10 +1628,10 @@ function(s)
   return nr;
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse, same method for ideals
 
 InstallMethod(NrHClasses, "for an acting semigroup", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup ],
 function(s)
   return Sum(List(GreensDClasses(s), NrHClasses));
 end);
@@ -1764,7 +1765,7 @@ function(d)
   return nr;
 end);
 
-# same method for regular/inverse
+# same method for regular/inverse, same method for ideals
 
 InstallMethod(NrIdempotents, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -1983,7 +1984,7 @@ function(d)
   return schutz;
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse, same method for ideals
 
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
