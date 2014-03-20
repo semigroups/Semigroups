@@ -93,7 +93,8 @@ function(o)
     Print("rho ");
   fi;
   
-  Print("orbit with ", Length(o), " points in ", Length(o!.orbits), " components>");
+  Print("orbit with ", Length(o)-1, " points in ", Length(o!.orbits)-1, 
+  " components>");
   return;
 end);
 

@@ -255,6 +255,13 @@ function(data, limit, lookfunc)
         
         orb[nr_r]:=[I, m, lambdao, reps[m][ind][repslens[m][ind]], false, nr_r];
         htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
+        
+        if looking then 
+          # did we find it?
+          if lookfunc(data, orb[nr_r]) then 
+            data!.found:=nr_r;
+          fi;
+        fi;
 
       od;
     od;
@@ -269,21 +276,11 @@ function(data, limit, lookfunc)
     od;
 
     data!.init:=true;
-    if looking then 
-      # did we find it?
-      for k in [1..nr_r] do 
-        if lookfunc(data, orb[k]) then 
-          data!.found:=k;
-          return data;
-        fi;
-      od;
-    fi;
   fi;
   i:=data!.pos;       # points in orb in position at most i have descendants
 
   while nr_d<=limit and i<nr_d and i<>stopper do 
     i:=i+1; # advance in the dorb
-    start:=nr_r;
     
     # left multiply the R-class reps by the generators of the semigroup
     # JDM: this is repeated work...
@@ -297,6 +294,10 @@ function(data, limit, lookfunc)
         z:=mults[j][1]*y;
         for k in genstoapply do
           UpdateSemigroupIdealData(gens[k]*z, j, k, fail);
+          if looking and data!.found<>false then 
+            data!.pos:=i;
+            return data;
+          fi;
         od;
       od;
     od;
@@ -312,20 +313,14 @@ function(data, limit, lookfunc)
         z:=y*mults[j][1];
         for k in genstoapply do
           UpdateSemigroupIdealData(z*gens[k], j, k, fail);
+          if looking and data!.found<>false then 
+            data!.pos:=i;
+            return data;
+          fi;
         od;
       od;
     od;
     
-    if looking then 
-      # did we find it?
-      for k in [start+1..nr_r] do #check the newly added R-reps
-        if lookfunc(data, orb[k]) then 
-          data!.found:=k;
-          return data;
-        fi;
-      od;
-    fi;
-
   od;
   
   # for the data-orbit
@@ -344,3 +339,198 @@ function(data, limit, lookfunc)
   return data;
 end);
 
+#
+
+InstallMethod(\in, 
+"for an associative element and acting semigroup ideal",  
+[IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal], 
+function(x, I)
+  local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
+  
+  if ElementsFamily(FamilyObj(I))<>FamilyObj(x) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(I) 
+     and ActionDegree(x)<>ActionDegree(I)) 
+    or (ActionDegree(x)>ActionDegree(I)) then 
+    return false;
+  fi;
+
+  if ActionRank(I)(x)>MaximumList(List(Generators(I), f-> ActionRank(I)(x)))
+   then
+    Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+     "semigroup.");
+    return false;
+  fi;
+
+  if HasMinimalIdeal(I) then 
+    if ActionRank(I)(x)<ActionRank(I)(Representative(MinimalIdeal(I))) then
+      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
+  fi;  
+
+  data:=SemigroupData(I);
+  ht:=data!.ht;
+
+  # look for lambda!
+  xx:=LambdaFunc(I)(x);   o:=LambdaOrb(I); 
+  scc:=OrbSCC(o);         scclookup:=OrbSCCLookup(o);
+
+  l:=Position(o, xx);
+
+  if l=fail then 
+    if IsClosed(o) then 
+      return fail;
+    fi;
+     
+    # this function checks if <pt> has the same lambda-value as x
+    lookfunc:=function(data, pt) 
+      return xx in o;
+    end;
+    Enumerate(data, infinity, lookfunc);
+    l:=PositionOfFound(data);
+
+    # rho is not found, so f not in s
+    if l=false then 
+      return false;
+    fi;
+    l:=Position(o, xx);
+    new:=true;
+  fi;
+    
+  # strongly connected component of lambda orb
+  m:=OrbSCCLookup(o)[l];
+
+  # make sure lambda of f is in the first place of its scc
+  if l<>OrbSCC(o)[m][1] then 
+    x:=x*LambdaOrbMult(o, m, l)[2];
+  fi;
+  
+  # check if f is an existing R-rep
+  if HTValue(ht, x)<>fail then 
+    return true;
+  fi;
+  
+  # look for rho!
+  xxx:=RhoFunc(I)(x);   o:=RhoOrb(I); 
+  scc:=OrbSCC(o);      scclookup:=OrbSCCLookup(o);
+
+  l:=Position(o, xxx);
+
+  if l=fail then 
+    if IsClosed(o) then 
+      return fail;
+    fi;
+     
+    # this function checks if <pt> has the same lambda-value as x
+    lookfunc:=function(data, pt) 
+      return xxx in o;
+    end;
+    Enumerate(data, infinity, lookfunc);
+    l:=PositionOfFound(data);
+
+    # rho is not found, so f not in s
+    if l=false then 
+      return false;
+    fi;
+    l:=Position(o, xxx);
+    new:=true;
+  fi;
+ 
+  lambdarhoht:=data!.lambdarhoht;
+
+  # look for the R-class rep
+  if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
+    # lambda-rho-combination not yet seen
+    if IsClosedData(data) then 
+      return false;
+    fi;
+    
+    lookfunc:=function(data, x)
+      return IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
+    end;
+    data:=Enumerate(data, infinity, lookfunc);
+    if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
+      return false;
+    fi;
+    new:=true;
+  fi;
+
+  o:=LambdaOrb(I); 
+  schutz:=LambdaOrbStabChain(o, m);
+  ind:=lambdarhoht[l][m];
+  # the index of the list of reps with same lambda-rho value as f. 
+
+  # if the Schutzenberger group is the symmetric group, then f in s!
+  if schutz=true then 
+    return true;
+  fi;
+
+  reps:=data!.reps;       repslens:=data!.repslens;
+  max:=Factorial(LambdaRank(I)(xx))/Size(LambdaOrbSchutzGp(o, m));
+  
+  if repslens[m][ind]=max then 
+    return true;
+  fi;
+  
+  # if schutz is false, then f has to be an R-rep which it is not...
+  if schutz<>false then 
+    
+    # check if f already corresponds to an element of reps[m][ind]
+    lambdaperm:=LambdaPerm(I);
+    for n in [1..repslens[m][ind]] do 
+      if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then
+        return true;
+      fi;
+    od;
+  elif new and HTValue(ht, x)<>fail then 
+    return true; 
+  fi; 
+
+  if IsClosedData(data) then 
+    return false;
+  fi;
+
+  # enumerate until we find x or finish 
+  if repslens[m][ind]<max then 
+    oldrepslens:=repslens[m][ind];
+    lookfunc:=function(data, x)
+      return repslens[m][ind]>oldrepslens;
+    end; 
+    if schutz=false then 
+      repeat 
+        # look for more R-reps with same lambda-rho value
+        data:=Enumerate(data, infinity, lookfunc);
+        oldrepslens:=repslens[m][ind];
+        found:=data!.found;
+        if found<>false then 
+          if oldrepslens=max or x=data[found][4] then 
+            return true;
+          fi;
+        fi;
+      until found=false;
+    else 
+      repeat
+        # look for more R-reps with same lambda-rho value
+        data:=Enumerate(data, infinity, lookfunc);
+        oldrepslens:=repslens[m][ind];
+        found:=data!.found;
+        if found<>false then
+          if oldrepslens=max then 
+            return true;
+          fi;
+          for i in [n+1..repslens[m][ind]] do 
+            if SiftedPermutation(schutz, lambdaperm(reps[m][ind][i], x))=()
+             then 
+              return true;
+            fi;
+          od;
+          n:=repslens[m][ind];
+        fi;
+      until found=false;
+    fi;
+  fi;
+  return false;
+end);
+
+#EOF

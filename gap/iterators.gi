@@ -566,7 +566,7 @@ function(s)
 
   return IteratorByNextIterator( rec( 
     
-    i:=1,
+    i:=0,
 
     NextIterator:=function(iter)
       local data;
@@ -575,13 +575,13 @@ function(s)
       
       data:=Enumerate(SemigroupData(s), iter!.i, ReturnFalse);
 
-      if iter!.i>Length(data!.orbit) then 
+      if iter!.i>Length(data) then 
         return fail;
       fi;
       return data[iter!.i];
     end,
     
-    ShallowCopy:=iter-> rec(i:=1)));
+    ShallowCopy:=iter-> rec(i:=0)));
 end);
 
 # no method required for inverse/regular
