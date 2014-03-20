@@ -10,7 +10,7 @@
 
 1.4 -> 2.0
 						This is a major release including many new features, as well as bug
-						fixes.
+						fixes. Some particularly notable improvements and additions are:
 						
 						• new methods for computing MaximalSubsemigroups of arbitrary
             semigroups have been implemented;
@@ -19,7 +19,11 @@
             
             • bipartitions;
             
-            • free bands.
+            • free bands;
+            
+            • normalizer;
+            
+            • partial order of d-classes.
 
 1.3 -> 1.4  
             This is a minor release containing some bug fixes. Specifically:
