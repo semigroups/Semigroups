@@ -577,7 +577,7 @@ gap> gens:=[
 > Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
 > Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ) ];;
 gap> V:=SemigroupIdealByGenerators(S, gens);
-<semigroup ideal with 3 generators>
+<bipartition semigroup ideal on 3 pts with 3 generators>
 gap> tuples:=[ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ] ] ) ];;
 gap> Semigroup(V, tuples, rec(small:=true));
 <bipartition monoid on 3 pts with 9 generators>
