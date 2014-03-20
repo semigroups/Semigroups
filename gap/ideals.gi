@@ -98,7 +98,7 @@ function(I, J)
   elif HasGeneratorsOfSemigroup(I) and HasGeneratorsOfSemigroup(J) then 
     return ForAll(GeneratorsOfSemigroup(I), x-> x in J) and
      ForAll(GeneratorsOfSemigroup(J), x-> x in I); 
-  else
+  else #JDM: a better way??
     return AsSSortedList(I)=AsSSortedList(J);
   fi;
 

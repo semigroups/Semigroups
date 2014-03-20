@@ -83,6 +83,7 @@
     <#Include Label="ComponentRepsOfPartialPermSemigroup">
     <#Include Label="ComponentsOfPartialPermSemigroup">
     <#Include Label="CyclesOfPartialPermSemigroup">
+    <#Include Label="Normalizer">
   </Section>
 
   <Section><Heading>Further properties of semigroups</Heading>
