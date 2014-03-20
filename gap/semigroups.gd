@@ -19,6 +19,8 @@ DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 
 DeclareGlobalFunction("InternalSemigroupByGenerators");
 
+DeclareOperation("SemigroupByGenerators", 
+[IsHomogeneousList and IsRingElementCollCollColl, IsRecord]);
 DeclareOperation("SemigroupByGenerators",
 [IsAssociativeElementCollection, IsRecord]);
 

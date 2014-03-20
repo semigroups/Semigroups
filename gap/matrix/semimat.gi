@@ -14,18 +14,28 @@
 InstallTrueMethod(IsAssociativeElementCollection
         , IsMatrixSemigroupElementCollection);
 
+InstallMethod(SemigroupByGenerators,
+        "for a list of matrices",
+        [IsHomogeneousList and IsRingElementCollCollColl],
+function(gens)
+    if IsGeneratorsOfActingSemigroup(gens) then
+        return InternalSemigroupByGenerators(gens, SemigroupsOptionsRec);
+    else
+        TryNextMethod();
+    fi;
+end);
+
 # Note that for technical reasons we cannot
 # use IsMatrixObjCollection here.
 InstallMethod(SemigroupByGenerators,
         "for a list of matrices",
-        [IsHomogeneousList and IsRingElementCollCollColl],
-function( gens )
-    if Length(gens) > 0 and
-       IsMatrixObj(gens[1]) and
+        [IsHomogeneousList and IsRingElementCollCollColl, IsRecord],
+function( gens, opt )
+    if IsMatrixObj(gens[1]) and
        IsAssociativeElement(gens[1]) then
         # Make a matrix semigroup
         Info(InfoSemigroups, 2, "creating matrix semigroup");
-        return InternalSemigroupByGenerators(gens, SemigroupsOptionsRec);
+        return InternalSemigroupByGenerators(gens, opt);
     else
         TryNextMethod();
     fi;
@@ -61,8 +71,6 @@ InstallMethod(IsGroupAsSemigroup,
 #############################################################################
 ##
 ## A homogenous collection of matrices of the same size
-## This is InstallOtherMethod because a list of matrices
-## is not in IsAssociativeElementCollection
 ##
 ## An empty list does not generate a very well defined
 ## matrix semigroup in this setting so we don't allow
@@ -96,7 +104,7 @@ InstallOtherMethod(FakeOne,
     [IsHomogeneousList and IsRingElementCollCollColl],
 function(elts)
     if IsGeneratorsOfActingSemigroup(elts) then
-        return One;
+        return One(elts[1]);
     else
         TryNextMethod();
     fi;
@@ -141,13 +149,13 @@ InstallMethod(ActionRank,
 function(x, y)
     #T I assume that y is supposed to be a larger enclosing
     ## thing in certain cases (transformations on n points)?
-    return RankMat(x);
+    Error("not correctly implemetned");
 end);
 InstallMethod(ActionRank,
         "for a matrix semigroup with generators",
         [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
 function( s )
-    return RankMat;
+    Error("not correctly implemetned");
 end);
 
 InstallMethod(MinActionRank,
@@ -170,7 +178,17 @@ function(S)
     # returns the right action on subspaces of F^n by right multiplication
     return
       function(vsp, mat)
-        return VectorSpace(BaseDomain(mat), List()) ;
+        local basis;
+        
+        #T is CanonicalBasis better here?
+        basis := BasisVectors(Basis(vsp));
+        
+        #T hack.
+        if basis = [] then
+            basis := [Zero(vsp)];
+        fi;
+        
+        return VectorSpace(BaseDomain(mat), basis * mat);
       end;
 end);
 
@@ -178,20 +196,48 @@ InstallMethod(RhoAct,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
 function(S)
-    # returns the left action on subspaces of F^n by left multiplication
-    Error("not implemented yet\n");
+    return
+      #T I checked, these arguments should be this way around
+      function(vsp, mat)
+        local basis;
+        
+        basis := BasisVectors(Basis(vsp));
+        #T hack.
+        if basis = [] then
+            basis := [Zero(vsp)];
+        fi;
+         
+        return VectorSpace(BaseDomain(mat), basis * TransposedMat(mat));
+      end;
 end);
 
 InstallMethod(LambdaOrbSeed,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
-        # row space of matrix 
-        s -> [0]);
+        # row space of matrix
+        function(s)
+            local dom, rep, gens;
+    
+            rep := Representative(s);
+            dom := BaseDomain(rep);
+            gens := Rows(IdentityMatrix(ActionDegree(s), rep));
+
+            return VectorSpace(dom, gens);
+        end);
+
 
 InstallMethod(RhoOrbSeed,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
-        s -> [0]);
+        function(s)
+            local dom, rep, gens;
+    
+            rep := Representative(s);
+            dom := BaseDomain(rep);
+            gens := Rows(IdentityMatrix(ActionDegree(s), rep));
+
+            return VectorSpace(dom, gens);
+        end);
 
 InstallMethod(LambdaFunc,
         "for a matrix semigroup",
@@ -201,7 +247,12 @@ InstallMethod(LambdaFunc,
     return
       function(mat)
         #T This will only work for fields 
-        return(VectorSpace(BaseDomain(mat), List(mat, x -> x)));
+        #T at the moment the Matrix functions
+        #T Don't check that their entries actually
+        #T lie in the base domain. This leads to
+        #T problems. Best way of solving this is 
+        #T to implement checks.
+        return(VectorSpace(BaseDomain(mat), Rows(mat)));
       end;
 end);
 
@@ -210,15 +261,26 @@ InstallMethod(RhoFunc,
         [IsMatrixSemigroup],
         function(S)
     # a function that returns the column space
-    Error("not implemented yet\n");
+    return
+      function(mat)
+        #T This will only work for fields 
+        #T at the moment the Matrix functions
+        #T Don't check that their entries actually
+        #T lie in the base domain. This leads to
+        #T problems. Best way of solving this is 
+        #T to implement checks.
+        return(VectorSpace(BaseDomain(mat), Rows(mat)));
+      end;
 end);
 
 InstallMethod(LambdaRank,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
-    # rank of the row space
-    Error("not implemented yet\n");
+    # returns a function that
+    # returns the row rank of
+    # it's input
+    return (x -> Dimension(x));
 end);
 
 InstallMethod(RhoRank,
@@ -233,6 +295,7 @@ InstallMethod(LambdaInverse,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
+    # Returns a function that for 
     Error("not implemented yet\n");
 end);
 
@@ -243,11 +306,14 @@ InstallMethod(RhoInverse,
     Error("not implemented yet\n");
 end);
 
+#T returns a permutation
 InstallMethod(LambdaPerm,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
-    Error("not implemented yet\n");
+    return function(x, y)
+        return ();
+    end;
 end);
 
 InstallMethod(LambdaConjugator,
