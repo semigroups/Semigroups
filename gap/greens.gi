@@ -174,7 +174,7 @@ end);
 
 # main 
 
-# different method for regular/inverse 
+# different method for regular/inverse same for ideals 
 
 InstallMethod(\in, "for associative element and D-class of acting semigroup",
 [IsAssociativeElement, IsGreensDClass and IsActingSemigroupGreensClass],
@@ -633,7 +633,7 @@ function(r)
   return out;
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse same for ideals
 
 InstallMethod(GreensLClasses, "for an acting semigroup",
 [IsActingSemigroup], 
@@ -649,7 +649,7 @@ function(s)
   return out;
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse same for ideals
 
 InstallMethod(GreensLClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
@@ -683,7 +683,7 @@ function(d)
   return out;
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse same for ideals
 
 InstallMethod(GreensRClasses, "for an acting semigroup",
 [IsActingSemigroup], 
@@ -700,7 +700,7 @@ function(s)
   return out;
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse same for ideals
 
 InstallMethod(GreensRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
