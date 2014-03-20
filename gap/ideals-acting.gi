@@ -62,6 +62,7 @@ function(data, limit, lookfunc)
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
+    data!.found:=false;
   else
     looking:=false;
   fi;
@@ -295,7 +296,7 @@ function(data, limit, lookfunc)
         for k in genstoapply do
           UpdateSemigroupIdealData(gens[k]*z, j, k, fail);
           if looking and data!.found<>false then 
-            data!.pos:=i;
+            data!.pos:=i-1;
             return data;
           fi;
         od;
@@ -314,7 +315,7 @@ function(data, limit, lookfunc)
         for k in genstoapply do
           UpdateSemigroupIdealData(z*gens[k], j, k, fail);
           if looking and data!.found<>false then 
-            data!.pos:=i;
+            data!.pos:=i-1;
             return data;
           fi;
         od;
@@ -325,10 +326,6 @@ function(data, limit, lookfunc)
   
   # for the data-orbit
   data!.pos:=i;
-  
-  if looking then 
-    data!.found:=false;
-  fi;
   
   if nr_d=i then 
     SetFilterObj(lambdao, IsClosed);
@@ -413,7 +410,7 @@ function(x, I)
   
   # look for rho!
   xxx:=RhoFunc(I)(x);   o:=RhoOrb(I); 
-  scc:=OrbSCC(o);      scclookup:=OrbSCCLookup(o);
+  scc:=OrbSCC(o);       scclookup:=OrbSCCLookup(o);
 
   l:=Position(o, xxx);
 

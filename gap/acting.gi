@@ -55,7 +55,8 @@ function(f, s)
   fi;
 
   if not (IsMonoid(s) and IsOne(f)) then 
-    if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
+    if Length(Generators(s))>0 
+      and ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
      then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
        "semigroup.");
