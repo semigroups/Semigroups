@@ -105,11 +105,11 @@ function(I)
   local record, htopts, fam;
   
   record:=rec();
-  record.orbits:=[];            record.lens:=[];    
-  record.parent:=I;             record.scc:=[];       
-  record.scc_reps:=[];          record.scc_lookup:=[];
-  record.schreiergen:=[];       record.schreierpos:=[];
-  record.orbitgraph:=[];        record.gens:=GeneratorsOfSemigroup(Parent(I));
+  record.orbits:=[[fail]];      record.lens:=[1];    
+  record.parent:=I;             record.scc:=[[1]];       
+  record.scc_reps:=[fail,];     record.scc_lookup:=[1];
+  record.schreiergen:=[fail];   record.schreierpos:=[fail];
+  record.orbitgraph:=[[]];      record.gens:=GeneratorsOfSemigroup(Parent(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
   record.orbtogen := [];

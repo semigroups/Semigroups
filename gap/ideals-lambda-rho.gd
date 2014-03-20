@@ -12,11 +12,6 @@ DeclareFilter("IsIdealOrb", IsOrbit);
 DeclareFilter("IsIdealLambdaOrb", IsIdealOrb and IsLambdaOrb);
 DeclareFilter("IsIdealRhoOrb", IsIdealOrb and IsRhoOrb);
 
-#DeclareAttribute("IdealLambdaOrb", IsActingSemigroup and IsSemigroupIdeal,
-#"mutable");
-#DeclareAttribute("IdealRhoOrb", IsActingSemigroup and IsSemigroupIdeal,
-#"mutable");
-
 DeclareGlobalFunction("UpdateIdealLambdaOrb");
 DeclareGlobalFunction("UpdateIdealRhoOrb");
 

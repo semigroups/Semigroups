@@ -227,7 +227,7 @@ end);
 InstallMethod(Size, "for an acting semigroup",
 [IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
 function(s)
-  local data, lenreps, repslens, o, scc, size, start, n, m, i;
+  local data, lenreps, repslens, o, scc, size, n, m, i;
    
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   lenreps:=data!.lenreps;
@@ -236,12 +236,8 @@ function(s)
   scc:=OrbSCC(o);
   
   size:=0;
-  if IsMagmaIdeal(s) then 
-    start:=1;
-  else
-    start:=2;
-  fi;
-  for m in [start..Length(scc)] do 
+  
+  for m in [2..Length(scc)] do 
     n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
     for i in [1..lenreps[m]] do 
       size:=size+n*repslens[m][i];
