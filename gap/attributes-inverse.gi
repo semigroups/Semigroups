@@ -413,11 +413,14 @@ end);
 #
 
 InstallMethod(RightCosetsOfInverseSemigroup, 
-"for an inverse semigroup of partial permutations and an inverse subsemigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup,
-IsInverseSemigroup and IsPartialPermSemigroup],
+"for an inverse semigroup of partial permutations or block bijections, and an inverse subsemigroup",
+[IsInverseSemigroup, IsInverseSemigroup],
 function(S, T)
   local elts, idem, usedreps, out, dupe, coset, s, rep, t;
+  
+  if not (IsPartialPermSemigroup(S) and IsPartialPermSemigroup(T)) and not (IsBlockBijectionSemigroup(S) and IsBlockBijectionSemigroup(T)) then
+  	return fail;
+  fi;
   
   if not IsSubset(S,T) then
     Error("The second argument should be a subsemigroup of the first");

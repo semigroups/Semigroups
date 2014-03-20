@@ -21,8 +21,7 @@ DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("MajorantClosureNC", [IsInverseSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
 
-DeclareOperation("RightCosetsOfInverseSemigroup", [IsInverseSemigroup and
-IsPartialPermSemigroup, IsInverseSemigroup and IsPartialPermSemigroup]);
+DeclareOperation("RightCosetsOfInverseSemigroup", [IsInverseSemigroup, IsInverseSemigroup]);
 
 DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup and
