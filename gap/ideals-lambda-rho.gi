@@ -113,6 +113,7 @@ function(I)
   record.orbitgraph:=[[]];      record.gens:=GeneratorsOfSemigroup(Parent(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
+  record.orbschreiercmp := [];
   record.orbtogen := [];
   
   htopts:=ShallowCopy(LambdaOrbOpts(I)); 
@@ -127,7 +128,7 @@ end);
 
 InstallGlobalFunction(UpdateIdealLambdaOrb, 
 function(o, pt, x, pos, gen, ind)
-  local I, record, len, new, ht, i, nrorb;
+  local I, record, len, new, ht, nrorb, cmp, i;
 
   I:=o!.parent; 
   record:=ShallowCopy(LambdaOrbOpts(I));
@@ -175,6 +176,18 @@ function(o, pt, x, pos, gen, ind)
   nrorb := Length(o!.orbits);  
   o!.orbschreierpos[nrorb] := pos;
   o!.orbschreiergen[nrorb] := gen;
+  
+  if pos<>fail then 
+    # find the component containing <pos>
+    cmp:=1;
+    while pos>Length(o!.orbits[cmp]) do
+      pos:=pos-Length(o!.orbits[cmp]);
+      cmp:=cmp+1;
+    od;
+    o!.orbschreiercmp[nrorb] := cmp;
+  else 
+    o!.orbschreiercmp[nrorb] := fail;
+  fi;
 
   # jj assume that if a generator is passed into UpadateIdealLambdaOrb then
   # pos = the index of the generator and ind <> fail.
@@ -199,6 +212,7 @@ function(I)
   record.orbitgraph:=[[]];      record.gens:=GeneratorsOfSemigroup(Parent(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
+  record.orbschreiercmp := [];
   record.orbtogen := [];
 
   htopts:=ShallowCopy(RhoOrbOpts(I)); 
@@ -213,7 +227,7 @@ end);
 
 InstallGlobalFunction(UpdateIdealRhoOrb, 
 function(o, pt, x, pos, gen, ind)
-  local I, record, len, new, ht, i, nrorb;
+  local I, record, len, new, ht, nrorb, cmp, i;
 
   I:=o!.parent; 
   record:=ShallowCopy(RhoOrbOpts(I));
@@ -261,6 +275,18 @@ function(o, pt, x, pos, gen, ind)
   nrorb := Length(o!.orbits);  
   o!.orbschreierpos[nrorb] := pos;
   o!.orbschreiergen[nrorb] := gen;
+  
+  if pos<>fail then 
+    # find the component containing <pos>
+    cmp:=1;
+    while pos>Length(o!.orbits[cmp]) do
+      pos:=pos-Length(o!.orbits[cmp]);
+      cmp:=cmp+1;
+    od;
+    o!.orbschreiercmp[nrorb] := cmp;
+  else
+    o!.orbschreiercmp[nrorb] := fail;
+  fi;
 
   # jj assume that if a generator is passed into UpadateIdealRhoOrb then
   # pos = the index of the generator and ind<>fail.
@@ -305,44 +331,44 @@ InstallMethod(TraceSchreierTreeForward,
 "for an ideal orbit and positive integer",
 [IsIdealOrb, IsPosInt],
 function(o, i)
-  local orbschreierpos, orbschreiergen, schreiergen, schreierpos,
-   leftword, rightword, nr, j;
+  local orbschreierpos, orbschreiergen, orbschreiercmp, schreierpos, schreiergen, leftword, rightword, nr, j;
 
   orbschreierpos := o!.orbschreierpos;
   orbschreiergen := o!.orbschreiergen;
+  orbschreiercmp := o!.orbschreiercmp;
   
   schreierpos := o!.schreierpos;
   schreiergen := o!.schreiergen;
    
   leftword := [];
   rightword := [];
+  
+  #find the component <nr> containing <i>
   nr:=1;
   j:=i;
   while j>Length(o!.orbits[nr]) do 
     j:=j-Length(o!.orbits[nr]);
     nr:=nr+1;
   od;
+  
+  # trace back to the start of the component
+  while schreierpos[i] <> fail do
+    Add(rightword, schreiergen[i]);
+    i := schreierpos[i];
+  od;
 
-  repeat 
+  while orbschreiergen[nr]<>fail do  
+    Add(leftword, orbschreiergen[nr]);
+    
+    i:=orbschreierpos[nr];
+    nr:=orbschreiercmp[nr];
 
     while schreierpos[i] <> fail do
       Add(rightword, schreiergen[i]);
       i := schreierpos[i];
     od;
 
-    if orbschreiergen[nr] = fail then
-      break;
-    fi;
-
-    i := orbschreierpos[nr];
-    Add(leftword, orbschreiergen[nr]);
-
-    while j>Length(o!.orbits[nr]) do 
-      j:=j-Length(o!.orbits[nr]);
-      nr:=nr+1;
-    od;
-
-  until orbschreiergen[nr]=fail;
+  od;
 
   return [Reversed(leftword), o!.orbtogen[nr], Reversed(rightword)];
 end);
