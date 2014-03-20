@@ -562,6 +562,24 @@ gap> GeneratorsOfInverseSemigroup(T);
 gap> One(S) in T;
 true
 
+# Issue pointed out by WAW, caused by IsInvLambdaOrb being inherited from the
+# argument of ClosureSemigroup by its output, when the output wasn't an
+# InverseOp semigroup... 
+gap> S:=Semigroup([
+> Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] ),
+> Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ),
+> Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
+> Bipartition( [ [ 1, 3, -1 ], [ 2, -2 ], [ -3 ] ] ) ]);;
+gap> gens:=[
+> Bipartition( [ [ 1, 3, -1 ], [ 2, -2 ], [ -3 ] ] ),
+> Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
+> Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ) ];;
+gap> V:=SemigroupIdealByGenerators(S, gens);
+<semigroup ideal with 3 generators>
+gap> tuples:=[ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ] ] ) ];;
+gap> Semigroup(V, tuples, rec(small:=true));
+<bipartition monoid on 3 pts with 9 generators>
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

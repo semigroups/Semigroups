@@ -83,9 +83,6 @@ function(s)
   o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
   
   SetFilterObj(o, IsLambdaOrb);
-  if IsActingSemigroupWithInverseOp(s) then 
-    SetFilterObj(o, IsInvLambdaOrb);
-  fi;
   return o;
 end);
 
@@ -164,8 +161,9 @@ function(o, m, i)
   scc:=OrbSCC(o)[m];
   mults:=o!.mults;
   gens:=o!.gens;
-  if not IsInvLambdaOrb(o) then
-#JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
+
+  if not IsActingSemigroupWithInverseOp(o!.parent) then
+  #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
     inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
 
@@ -324,9 +322,6 @@ function(s)
   o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
   
   SetFilterObj(o, IsRhoOrb);
-  if IsActingSemigroupWithInverseOp(s) then
-    SetFilterObj(o, IsInvRhoOrb);
-  fi;
   return o;
 end);
 

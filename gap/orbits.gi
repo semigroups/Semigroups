@@ -466,7 +466,7 @@ InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
 function(o, i, j)
   local tree, mult, scc, word;
   
-  if not IsInvLambdaOrb(o) then 
+  if not IsActingSemigroupWithInverseOp(o!.parent) then 
     tree:=ReverseSchreierTreeOfSCC(o, i);
     mult:=1;
   else 
