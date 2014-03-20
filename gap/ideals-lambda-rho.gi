@@ -293,10 +293,10 @@ function(I, w)
 
 InstallMethod(EvaluateWord, 
 "for a semigroup and a words (Semigroups)",
-[IsSemigroup, IsList],
+[IsSemigroup, IsList], 1, # to beat the methods for IsXCollection
 function(S, w)
   return EvaluateWord(GeneratorsOfSemigroup(S), w);
-  end );
+end);
 
 #
 

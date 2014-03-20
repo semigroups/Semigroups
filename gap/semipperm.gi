@@ -8,6 +8,68 @@
 #############################################################################
 ##
 
+#
+
+InstallMethod(DegreeOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  return DegreeOfPartialPermSemigroup(Parent(I));
+end);
+
+#
+
+InstallMethod(DisplayString, "for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+ViewString); 
+
+#
+
+InstallMethod(ViewString, "for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 
+function(I)
+  local str, nrgens;
+  
+  str:="<";
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+    Append(str, "trivial ");
+  else 
+    if HasIsCommutative(I) and IsCommutative(I) then 
+      Append(str, "commutative ");
+    fi;
+  fi;
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then 
+    Append(str, "0-simple ");
+  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then 
+    Append(str, "simple ");
+  fi;
+
+  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then 
+    Append(str, "inverse ");
+  fi;
+
+  Append(str, "partial perm semigroup ideal ");
+  Append(str, "\<\>on ");
+  Append(str, String(DegreeOfPartialPermSemigroup(I)));
+  Append(str, " pts\<\> with ");
+
+  nrgens:=Length(GeneratorsOfSemigroupIdeal(I));
+  Append(str, String(nrgens));
+  Append(str, " generator");
+
+  if nrgens>1 or nrgens=0 then 
+    Append(str, "s");
+  fi;
+  Append(str, ">");
+
+  return str;
+end);
+
+#
+
 InstallMethod(CyclesOfPartialPerm, "for a partial perm", [IsPartialPerm], 
 function(f)
   local n, seen, out, i, j, cycle;

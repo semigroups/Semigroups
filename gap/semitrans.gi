@@ -8,6 +8,63 @@
 #############################################################################
 ##
 
+#
+
+InstallMethod(ViewString, 
+"for a transformation semigroup ideal with ideal generators",
+[IsTransformationSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 
+function(I)
+  local str, nrgens;
+  
+  str:="\><";
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+    Append(str, "\>trivial\< ");
+  else 
+    if HasIsCommutative(I) and IsCommutative(I) then 
+      Append(str, "\>commutative\< ");
+    fi;
+  fi;
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then 
+    Append(str, "\>0-simple\< ");
+  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then 
+    Append(str, "\>simple\< ");
+  fi;
+
+  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then 
+    Append(str, "\>inverse\< ");
+  elif HasIsRegularSemigroup(I) 
+   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then 
+    if IsRegularSemigroup(I) then 
+      Append(str, "\>regular\< ");
+    else
+      Append(str, "\>non-regular\< ");
+    fi;
+  fi;
+  
+  Append(str, "\>transformation\< \>semigroup\< \>ideal\< ");
+  Append(str, "\>on \>");
+  Append(str, ViewString(DegreeOfTransformationSemigroup(I)));
+  Append(str, "\< pts with\> ");
+  
+  nrgens:=Length(GeneratorsOfSemigroupIdeal(I));
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then 
+    Append(str, "s\<");
+  else 
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
+end);
+
+#
+
 InstallMethod(DegreeOfTransformationSemigroup, 
 "for a transformation semigroup ideal",
 [IsTransformationSemigroup and IsSemigroupIdeal],

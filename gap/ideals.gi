@@ -10,6 +10,41 @@
 
 #
 
+InstallMethod(PrintObj, 
+"for a semigroup ideal with ideal generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I) 
+  Print(PrintString(I));
+end);
+
+#
+
+InstallMethod(PrintString, 
+"for a semigroup ideal with ideal generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I) 
+  local str;
+
+  str:="SemigroupIdeal(";
+  Append(str, PrintString(Parent(I)));
+  Append(str, String(GeneratorsOfSemigroupIdeal(I)));
+  return str;
+end);
+
+# JDM this is required since there is a method for ViewObj of a semigroup ideal
+# with a higher rank than the default method which delegates from ViewObj to
+# ViewString. Hence the method for ViewString is never invoked without the
+# method below.
+
+InstallMethod(ViewObj, 
+"for a semigroup ideal with ideal generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 1,
+function(I) 
+  Print(ViewString(I));
+end);
+
+#
+
 InstallMethod(\., "for a semigroup ideal with generators and pos int",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, IsPosInt],
 function(S, n)

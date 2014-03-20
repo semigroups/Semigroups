@@ -606,7 +606,7 @@ end);
 #
 
 InstallMethod(OrbitGraphAsSets, "for semigroup data",  
-[IsSemigroupData], 99,
+[IsSemigroupData],
 function(data)
   return List(data!.graph, Set);
 end);
