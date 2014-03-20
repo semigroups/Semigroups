@@ -263,14 +263,14 @@ end);
 InstallMethod(ELM_LIST, "for semigroup data, and pos int",
 [IsSemigroupData, IsPosInt], 
 function(o, nr)
-  return o!.orbit[nr+1];
+  return o!.orbit[nr];
 end);
 
 # same method for ideals
 
 InstallMethod(Length, "for semigroup data", [IsSemigroupData], 
 function(data)
-  return Length(data!.orbit)-1;
+  return Length(data!.orbit);
 end);
 
 # same method for ideals
@@ -650,7 +650,7 @@ function(data, x, n)
   schutz:=LambdaOrbStabChain(o, m);
   
   if val<>fail then 
-    return val-1;
+    return val;
   elif schutz=false then 
     return fail;
   fi;
@@ -671,7 +671,7 @@ function(data, x, n)
   repslookup:=data!.repslookup[m][ind];
 
   if schutz=true then 
-    return repslookup[1]-1;
+    return repslookup[1];
   fi;
 
   reps:=data!.reps[m][ind]; repslens:=data!.repslens[m][ind];
@@ -679,14 +679,14 @@ function(data, x, n)
   lambdaperm:=LambdaPerm(s);
   for n in [1..repslens] do 
     if SiftedPermutation(schutz, lambdaperm(reps[n], x))=() then 
-      return repslookup[n]-1;
+      return repslookup[n];
     fi;
   od;
 
   return fail;
 end);
 
-# same method for ideals
+#
 
 InstallMethod(PositionOfFound,"for semigroup data",
 [IsSemigroupData],

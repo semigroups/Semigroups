@@ -43,8 +43,8 @@ function(data)
   Print("semigroup ideal ");
 
   Print("data with ", Length(data!.orbit)-1, " reps, ",
-   Length(LambdaOrb(data!.parent)), " lambda-values, ", 
-   Length(RhoOrb(data!.parent)), " rho-values>"); 
+   Length(LambdaOrb(data!.parent))-1, " lambda-values, ", 
+   Length(RhoOrb(data!.parent))-1, " rho-values>"); 
   return;
 end);
 
