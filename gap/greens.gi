@@ -536,10 +536,10 @@ function(s)
   return out;
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse, same method for ideals
 
 InstallMethod(GreensHClasses, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+[IsActingSemigroup], 
 function(s)
   return Concatenation(List(GreensDClasses(s), GreensHClasses));
 end);
