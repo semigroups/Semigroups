@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  attributes.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -131,8 +131,8 @@ if not IsBound(GAPInfo.PackagesLoaded.grape) then
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    Info(InfoWarning, 1, "the GRAPE is not loaded, and so this function does",
-         " not work");
+    Info(InfoWarning, 1, "the GRAPE package is not loaded, and so this function", 
+    " does not work");
     return fail;
   end); 
 else
@@ -1179,6 +1179,33 @@ function(s)
   return MagmaIsomorphismByFunctionsNC(s, 
     Group(List(GeneratorsOfSemigroup(s), x-> x![2])),
       x-> x![2], x-> RMSElement(s, rep![1], x, rep![3]));
+end);
+
+# fall back method...
+
+InstallMethod(IsomorphismPermGroup, "for a semigroup with generators", 
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local en, act, gens;
+
+  if not IsGroupAsSemigroup(S)  then
+   Error( "usage: the argument must be a semigroup satisfying\n", 
+    "IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  en:=EnumeratorSorted(S);
+  
+  act:=function(i, x)
+    return Position(en, en[i]*x);
+  end;
+  
+  gens := List(GeneratorsOfSemigroup(S), 
+   x-> Permutation(x, [1..Length(en)], act));
+
+  return MagmaIsomorphismByFunctionsNC( S, Group( gens ), 
+   x-> Permutation(x, [1..Length(en)], act), 
+   x-> en[Position(en, One(S))^x]);
 end);
 
 #JDM  

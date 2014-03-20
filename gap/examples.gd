@@ -1,7 +1,7 @@
 ############################################################################# 
 ## 
 #W  examples.gd
-#Y  Copyright (C) 2013                                    James D. Mitchell
+#Y  Copyright (C) 2013-14                                 James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
@@ -19,6 +19,8 @@ DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup", [IsPosInt]
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
 DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
+
+DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
 
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);

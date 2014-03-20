@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  blocks.gi
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -149,6 +149,33 @@ function(blocks)
   
   Print(">");
   return;
+end);
+
+# create a projection using some blocks
+
+InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks],
+function(blocks)
+  local n, nr, out, lookup, i;
+
+  n:=DegreeOfBlocks(blocks);
+  blocks:=blocks!.blocks;
+  nr:=blocks[1];             #nr of blocks
+  out:=[];
+  lookup:=[];
+  
+  for i in [1..n] do 
+    out[i]:=blocks[i+1];
+    if blocks[blocks[i+1]+n+1]=1 then 
+      out[i+n]:=blocks[i+1];
+    else
+      if not IsBound(lookup[blocks[i+1]]) then 
+        nr:=nr+1;
+        lookup[blocks[i+1]]:=nr;
+      fi;
+      out[i+n]:=lookup[blocks[i+1]];
+    fi;
+  od;
+  return BipartitionByIntRepNC(out);
 end);
 
 #
@@ -351,24 +378,6 @@ function(blocks, f)
   out:=Objectify(BlocksType, rec(blocks:=out));
   return out;
 end);
-
-#
-
-#InstallGlobalFunction(ExtRepOfBlocks,
-#function(blocks)
-#  local n, sign, out, i;
-#  
-#  n:=DegreeOfBlocks(blocks);
-#  out:=EmptyPlist(n);
-#  for i in [1..n] do 
-#    out[i]:=blocks[i+1];
-#    if blocks[n+1+blocks[i+1]]=0 then 
-#      out[i]:=out[i]*-1;
-#    fi;
-#  od;
-#    
-#  return out;
-#end);
 
 #
 

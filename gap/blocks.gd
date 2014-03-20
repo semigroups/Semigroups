@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  blocks.gd
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -14,6 +14,7 @@ DeclareCategoryCollections("IsBlocks");
 DeclareGlobalFunction("ORB_HashFunctionForBlocks");
 DeclareGlobalFunction("BlocksNC");
 DeclareGlobalFunction("BlocksByIntRepNC");
+DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
 
 DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("NrBlocks", IsBlocks);

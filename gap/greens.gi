@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  greens.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -993,7 +993,7 @@ function(d, f)
   local l;
 
   # use non-NC so taht rho value of f is rectified
-  l:=CreateLClass(Parent(d), RhoOrb(d), RhoOrbSCCIndex(d), f, true);
+  l:=CreateLClass(Parent(d), RhoOrbSCCIndex(d), RhoOrb(d), f, true);
   SetDClassOfLClass(l, d);
   return l;
 end);

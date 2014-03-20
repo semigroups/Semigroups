@@ -1,7 +1,7 @@
 ############################################################################# 
 ## 
 #W  ideals.gi
-#Y  Copyright (C) 2013                                    James D. Mitchell
+#Y  Copyright (C) 2013-14                                 James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
@@ -98,7 +98,7 @@ function(I, J)
   elif HasGeneratorsOfSemigroup(I) and HasGeneratorsOfSemigroup(J) then 
     return ForAll(GeneratorsOfSemigroup(I), x-> x in J) and
      ForAll(GeneratorsOfSemigroup(J), x-> x in I); 
-  else
+  else #JDM: a better way??
     return AsSSortedList(I)=AsSSortedList(J);
   fi;
 

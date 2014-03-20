@@ -557,6 +557,99 @@ gap> Factorization(U[4], x);
 gap> EvaluateWord(Generators(U[4]), last);
 (26,(6,9),5)
 
+# AutomorphismGroup of a ReesMatrixSemigroup
+gap> G:=Group(());;
+gap> mat:=List([1..5], x-> List([1..5], y-> ()));;
+gap> M:=ReesMatrixSemigroup(G, mat);
+<Rees matrix semigroup 5x5 over Group(())>
+gap> AutomorphismGroup(M);
+<automorphism group of <Rees matrix semigroup 5x5 over Group(())> with 
+5 generators>
+gap> Size(last);
+14400
+gap> G:=Group((1,2,3,4,5));;
+gap> mat:=[ [ (), (), (), (), () ], 
+> [ (), (1,4,2,5,3), (1,3,5,2,4), (), (1,4,2,5,3) ],     
+>   [ (), (1,2,3,4,5), (1,2,3,4,5), (), () ], 
+>   [ (), (1,4,2,5,3), (1,5,4,3,2), (1,3,5,2,4), () ], 
+>   [ (), (1,2,3,4,5), (1,2,3,4,5), (1,5,4,3,2), (1,2,3,4,5) ] ];;
+gap> M:=ReesMatrixSemigroup(G, mat);
+<Rees matrix semigroup 5x5 over Group([ (1,2,3,4,5) ])>
+gap> AutomorphismGroup(M);
+<automorphism group of <Rees matrix semigroup 5x5 over Group([ (1,2,3,4,
+5) ])> with 1 generator>
+gap> Size(last);
+1
+gap> M:=Semigroup(Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] ), 
+> Transformation( [ 5, 1, 7, 8, 7, 5, 8, 1 ] ));;
+gap> R:=Range(IsomorphismReesMatrixSemigroup(M));;
+gap> AutomorphismGroup(R);
+<automorphism group of <Rees matrix semigroup 2x2 over Group([ (2,3)
+(4,6), (2,3,4,6), (2,4,6,3) ])> with 9 generators>
+gap> Size(last);
+12
+gap> G:=SmallGroup(256, 4);;
+gap> f1:=G.1;; f2:=G.2;; f3:=G.3;; f4:=G.4;; 
+gap> f5:=G.5;; f6:=G.6;; f7:=G.7;; f8:=G.8;; 
+gap> y:=f2*f3*f4*f5*f6*f7;;
+gap> iso:=IsomorphismPermGroup(G);;
+gap> G:=Range(iso);;
+gap> y:=y^iso;;
+gap> mat:=List([1..3], x-> [One(G), y, One(G)]);;
+gap> M:=ReesMatrixSemigroup(G, mat);;
+gap> AutomorphismGroup(M);;
+gap> IsomorphismPermGroup(last);; 
+
+#JDM due to the non-deterministic methods in genss this will sometimes be
+#incorrect... 
+gap> Size(last2);
+294912
+gap> G:=SymmetricGroup(7);; e:=One(G);; mat:=[[e], [e]];;
+gap> R:=ReesMatrixSemigroup(G, mat);
+<Rees matrix semigroup 1x2 over Sym( [ 1 .. 7 ] )>
+gap> AutomorphismGroup(R);
+<automorphism group of <Rees matrix semigroup 1x2 over Sym( [ 1 .. 7 ] )>
+  with 10080 generators>
+gap> G:=Group((1,4,3,5,2));;
+gap> mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;
+gap> R:=ReesMatrixSemigroup(G, mat);;
+gap> l:=(4,6);
+(4,6)
+gap>  g:=GroupHomomorphismByImages(G, G, [(1,4,3,5,2)], [(1,2,5,3,4)]);
+[ (1,4,3,5,2) ] -> [ (1,2,5,3,4) ]
+gap> 
+gap> map:=[(), (1,5,4,2,3), (), (), (), () ];
+[ (), (1,5,4,2,3), (), (), (), () ]
+gap> 
+gap> RMSIsoByTriple(R, R, [l, g, map]);
+((4,6), GroupHomomorphismByImages( Group( [ (1,4,3,5,2) ] ), Group( 
+[ (1,4,3,5,2) ] ), [ (1,4,3,5,2) ], [ (1,2,5,3,4) ] ), 
+[ (), (1,5,4,2,3), (), (), (), () ])
+gap> G:=Group([ (2,5)(3,4) ]);;
+gap> mat:=[ [ (), (), (), (), () ], [ (), (), (2,5)(3,4), (2,5)(3,4), () ], 
+>   [ (), (), (), (2,5)(3,4), (2,5)(3,4) ], 
+>   [ (), (2,5)(3,4), (), (2,5)(3,4), () ], 
+>   [ (), (2,5)(3,4), (), (2,5)(3,4), () ] ];;
+gap> R:=ReesMatrixSemigroup(G, mat);;
+gap> A:=AutomorphismGroup(R);;
+
+#JDM this is very often wrong due to genss...
+gap> Size(A);
+12
+gap> G:=Group([ (1,2) ]);;
+gap> mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], 
+>    [ (), (), () ], [ (), (1,2), () ] ];;
+gap> R:=ReesMatrixSemigroup(G, mat);;
+gap> l:=(1,2)(4,5,6);
+(1,2)(4,5,6)
+gap> gam:=One(AutomorphismGroup(G));
+IdentityMapping( Group([ (1,2) ]) )
+gap> g:=(1,2);;
+gap> RMSInducedFunction(R, l, gam, g);
+[ false, [ (1,2), (), (), (), (), (1,2), (1,2), () ] ]
+gap> RMSInducedFunction(R, (4,7), gam, ());
+[ true, [ (), (), (), (), (), (), (), () ] ]
+
 #
 #
 gap> SemigroupsStopTest();

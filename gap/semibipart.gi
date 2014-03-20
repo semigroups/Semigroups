@@ -1,12 +1,43 @@
 ############################################################################# 
 ## 
 #W  semibipart.gi 
-#Y  Copyright (C) 2013                                    James D. Mitchell
+#Y  Copyright (C) 2013-14                                 James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
 ############################################################################# 
 ##
+
+InstallImmediateMethod(IsBlockBijectionSemigroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
+function(S) 
+  return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+end);
+
+#
+
+InstallMethod(NaturalPartialOrder, 
+"for an inverse bipartition semigroup",
+[IsBipartitionSemigroup and IsInverseSemigroup],
+function(S)
+  local elts, p, n, out, i, j;
+
+  if not IsBlockBijectionSemigroup(S) then 
+    TryNextMethod();
+  fi;
+
+  elts:=Elements(S);  n:=Length(elts); out:=List([1..n], x-> []);
+
+  for i in [n,n-1..2] do
+    for j in [i-1,i-2..1] do
+      if NaturalLeqBlockBijection(elts[j], elts[i]) then
+        AddSet(out[i], j);
+      fi;
+    od;
+  od;
+  
+  Perform(out, ShrinkAllocationPlist);
+  return out;
+end);
 
 # this is just a composition of IsomorphismTransformationSemigroup and the
 # method below for IsomorphismBipartitionSemigroup...
@@ -196,7 +227,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  n:=LargestMovedPoint(S);
+  n:=DegreeOfBipartitionSemigroup(S);
   source:=GeneratorsOfSemigroup(S); 
   range:=EmptyPlist(Length(source));
 

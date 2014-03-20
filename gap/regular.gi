@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  regular.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -75,6 +75,9 @@ function(f, s)
   fi;
 
   lambda_o:=LambdaOrb(s);
+#JDM: shouldn't use EnumeratePosition  here if it is not in there then we have
+  #to reach the end to find that out, if it is in there then we calculate the
+  #scc later on and so we have to reach the end...
   lambda_l:=EnumeratePosition(lambda_o, LambdaFunc(s)(f), false);
   
   if lambda_l=fail then 

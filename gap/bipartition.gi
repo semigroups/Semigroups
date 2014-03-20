@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  bipartition.gi
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -14,6 +14,41 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
+#
+
+InstallMethod(NaturalLeqBlockBijection, "for bipartitions", 
+[IsBipartition, IsBipartition], 
+function(f, g)
+  local fblocks, gblocks, n, lookup, i;
+  
+  if not IsBlockBijection(f) or not IsBlockBijection(g) then 
+    Error("usage: the arguments must be block bijections,");
+    return;
+  elif DegreeOfBipartition(f)<>DegreeOfBipartition(g) then 
+    Error("usage: the arguments must be block bijections of equal degree,");
+    return;
+  elif NrBlocks(f)>NrBlocks(g) then 
+    return false;
+  fi;
+
+  fblocks:=f!.blocks; gblocks:=g!.blocks;
+  n:=DegreeOfBipartition(f);
+  
+  lookup:=[];
+  for i in [1..n] do 
+    if IsBound(lookup[gblocks[i]]) and lookup[gblocks[i]]<>fblocks[i] then 
+      return false;
+    else 
+      lookup[gblocks[i]]:=fblocks[i];
+    fi;
+  od;
+  for i in [n+1..2*n] do 
+    if lookup[gblocks[i]]<>fblocks[i] then 
+      return false;
+    fi;
+  od;
+  return true;
+end);
 
 #
 
@@ -166,6 +201,14 @@ InstallMethod(\=, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition],
 function(f, g)
   return f!.blocks=g!.blocks;
+end);
+
+#
+
+InstallMethod(\^, "for a bipartition and permutation",
+[IsBipartition, IsPerm],
+function(f, p)
+  return p^-1*f*p;
 end);
 
 # LambdaPerm
@@ -607,6 +650,37 @@ InstallMethod(IsBlockBijection, "for a bipartition",
 [IsBipartition], 
 function(f) 
   return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
+end);
+
+#
+
+InstallMethod(IsUniformBlockBijection, "for a bipartition", 
+[IsBipartition], 
+function(f)
+  local blocks, n, sizesleft, sizesright, i;
+  
+  if not IsBlockBijection(f) then 
+    return false;
+  fi;
+  
+  blocks:=f!.blocks;
+  n:=DegreeOfBipartition(f);
+  sizesleft:=[1..NrBlocks(f)]*0;
+  sizesright:=[1..NrBlocks(f)]*0;
+
+  for i in [1..n] do 
+    sizesleft[blocks[i]]:=sizesleft[blocks[i]]+1;
+  od;
+  for i in [n+1..2*n] do 
+    sizesright[blocks[i]]:=sizesright[blocks[i]]+1;
+  od;
+  for i in [1..NrBlocks(f)] do 
+    if sizesright[i]<>sizesleft[i] then 
+      return false;
+    fi;
+  od;
+  
+  return true;
 end);
 
 #
@@ -1115,23 +1189,11 @@ function(f)
     Print("<empty bipartition>");
     return;
   fi;
-
-  Print("<bipartition: ");
-  ext:=ExtRepOfBipartition(f);
-  Print(ext[1]);
-  for i in [2..Length(ext)] do 
-    Print(", ", ext[i]);
-  od;
-  Print(">");
-  return;
-end);
-
-InstallMethod(ViewObj, "for a bipartition",
-[IsBlockBijection],
-function(f)
-  local ext, i;
-
-  Print("<block bijection: ");
+  if IsBlockBijection(f) then 
+    Print("<block bijection: ");
+  else 
+    Print("<bipartition: ");
+  fi;
   ext:=ExtRepOfBipartition(f);
   Print(ext[1]);
   for i in [2..Length(ext)] do 

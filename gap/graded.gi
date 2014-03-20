@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  graded.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -113,7 +113,7 @@ function(s, f, opt)
   record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
   record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata; 
 
-  o:=Orb(s, lambda, LambdaAct(s), record);
+  o:=Orb(GeneratorsOfSemigroup(s), lambda, LambdaAct(s), record);
   SetIsGradedLambdaOrb(o, true);
   
   if opt then # store o
@@ -183,8 +183,7 @@ function(s, f, opt)
   record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
   record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata;
 
-  o:=Orb(s, rho, RhoAct(s), record);
-
+  o:=Orb(GeneratorsOfSemigroup(s), rho, RhoAct(s), record);
   SetIsGradedRhoOrb(o, true);
   
   if opt then # store o

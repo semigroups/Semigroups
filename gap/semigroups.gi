@@ -1,14 +1,14 @@
-#############################################################################
-##
-#W  semigroups.gi
-#Y  Copyright (C) 2013                                    James D. Mitchell
+############################################################################# 
+## 
+#W  semigroups.gi 
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
-##
-#############################################################################
+## 
+############################################################################# 
 ##
 
-# star
+# star 
 
 InstallMethod(Star, "for an associative element with star",
 [IsAssociativeElementWithStar],
@@ -216,7 +216,7 @@ function(gens, opts)
 
     if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
-      for i in [1..n] do
+      for i in [2..n] do
         if not gens[i] in s then
           s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
@@ -339,7 +339,7 @@ function(gens, record)
     SetIsRegularSemigroup(s, true);
   fi;
 
-  # remove one from gens if there.
+  # remove one from gens if it's there.
   if CanEasilyCompareElements(gens) then
     pos:=Position(gens, One(gens));
     if pos<>fail then
@@ -571,14 +571,14 @@ function(s, coll, record)
   o:=StructuralCopy(LambdaOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
-  #should be a case split here for semigroups and monoids
+  #should be a case split here for semigroups and monoids JDM
   t:=InverseSemigroupByGenerators(
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
 
   #remove everything related to strongly connected components
-  Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+  Unbind(o!.scc);   Unbind(o!.trees);  Unbind(o!.scc_lookup);
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
-  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
+  Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp);
 
   o!.parent:=t;
   o!.scc_reps:=[FakeOne(Generators(t))];
@@ -708,9 +708,10 @@ function(s, coll, opts)
     " semigroup,");
     return s;
   fi;
-
+  
   # init the semigroup or monoid
-  if IsMonoid(s) then
+  if IsMonoid(s) and One(coll)=One(s) then 
+    # it can be that these One's differ, and hence we shouldn't call Monoid here
     t:=Monoid(s, coll, opts);
   else
     t:=Semigroup(s, coll, opts);
@@ -736,7 +737,7 @@ function(s, coll, opts)
 
   AddGeneratorsToOrbit(o, coll);
   #JDM I'm not certain this is working properly, the OrbitGraph seems not to be
-  #updated in the second position, in the first example in
+  #updated in the second position, in the first example in the 
   #IdempotentGeneratedSubsemigroup man section
 
   # unbind everything related to strongly connected components, since

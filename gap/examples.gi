@@ -1,12 +1,276 @@
 ############################################################################# 
 ## 
 #W  examples.gi
-#Y  Copyright (C) 2013                                    James D. Mitchell
+#Y  Copyright (C) 2013-14                                 James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
 ############################################################################# 
 ##
+
+#for testing purposes
+
+# BlocksOfPartition:=function(partition)
+#   local blocks, lookup, n, i, j;
+#   
+#   blocks:=[]; lookup:=[]; n:=0;
+#   for i in [1..Length(partition)] do 
+#     blocks[i]:=[n+1..partition[i]+n];
+#     for j in blocks[i] do 
+#       lookup[j]:=i;
+#     od;
+#     n:=n+partition[i]; 
+#   od;  
+#   return [blocks, lookup];  
+# end;
+# 
+# IsEndomorphismOfPartition:=function(bl, f)
+#   local imblock, x;
+# 
+#   for x in bl[1] do #blocks
+#     imblock:=bl[1][bl[2][x[1]^f]];
+#     if not ForAll(x, y-> y^f in imblock) then 
+#       return false;
+#     fi;
+#   od;
+#   return true;
+# end;
+# 
+# NrEndomorphismsPartition:=function(partition)
+#   local bl;
+#   bl:=BlocksOfPartition(partition);
+#   return Number(FullTransformationSemigroup(Sum(partition)), x-> 
+#     IsEndomorphismOfPartition(bl, x));
+# end;
+
+# from the `The rank of the semigroup of transformations stabilising a partition
+# of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014). 
+
+InstallMethod(EndomorphismsPartition, "for a list of positive integers",
+[IsCyclotomicCollection],
+function(partition)
+  local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x, m, y, w, i, j, k, block;
+  
+  if not ForAll(partition, IsPosInt) then 
+    Error("usage: the argument <partition> must be a list of positive integers,");
+  elif ForAll(partition, x-> x=1) then 
+    return FullTransformationMonoid(Length(partition));
+  elif Length(partition)=1 then 
+    return FullTransformationMonoid(partition[1]);
+  fi;
+  
+  if not IsSortedList(partition) then  
+    Sort(partition); #JDM does this copy? or should we?
+  fi;
+
+  # preprocessing...
+  
+  s:=0;         # nr of distinct block sizes
+  r:=0;         # nr of block sizes with at least one other block of equal size
+  distinct:=[]; # indices of blocks with distinct block sizes
+  equal:=[];    # indices of blocks with at least one other block of equal size,
+                # partitioned according to the sizes of the blocks 
+  prev:=0;      # size of the previous block
+  n:=0;         # the degree of the transformations
+  blocks:=[];   # the actual blocks of the partition
+  unique:=[];   # blocks of a unique size
+  
+  for i in [1..Length(partition)] do 
+    blocks[i]:=[n+1..partition[i]+n];
+    n:=n+partition[i]; 
+    if partition[i]>prev then 
+      s:=s+1;
+      distinct[s]:=i;
+      prev:=partition[i];
+      didprevrepeat:=false;
+      AddSet(unique, i);
+    elif not didprevrepeat then
+      # repeat block size
+      r:=r+1;
+      equal[r]:=[i-1, i];
+      didprevrepeat:=true;
+      RemoveSet(unique, i-1);
+    else 
+      Add(equal[r], i);
+    fi;
+  od;  
+  
+  # get the generators of T(X,P) over Sigma(X,P)... 
+  # from the proof of Theorem 3.3
+  gens:=[];
+  for i in [1..Length(distinct)-1] do 
+    for j in [i+1..Length(distinct)] do 
+      x:=[1..n]; 
+      for k in [1..Length(blocks[distinct[i]])] do 
+        x[blocks[distinct[i]][k]]:=blocks[distinct[j]][k];
+      od;
+      Add(gens, Transformation(x));
+    od;
+  od;
+
+  for block in equal do 
+    x:=[1..n];
+    x{blocks[block[1]]}:=blocks[block[2]];
+    Add(gens, Transformation(x));
+  od;
+
+  # get the generators of Sigma(X,P) over S(X,P)...
+
+  # the generators from B (swap blocks of adjacent distinct sizes)...
+  for i in [1..s-1] do
+    x:=[1..n]; 
+    # map up
+    for j in [1..Length(blocks[distinct[i]])] do 
+      x[blocks[distinct[i]][j]]:=blocks[distinct[i+1]][j];
+      x[blocks[distinct[i+1]][j]]:=blocks[distinct[i]][j];
+    od;
+    # map down
+    for j in [Length(blocks[distinct[i]])+1..Length(blocks[distinct[i+1]])] do 
+      x[blocks[distinct[i+1]][j]]:=blocks[distinct[i]][1];
+    od;
+    Add(gens, Transformation(x));
+  od;
+
+  # the generators from C...
+  if Length(blocks[distinct[1]])<>1 then 
+    x:=[1..n];
+    x[1]:=2;
+    Add(gens, Transformation(x));
+  fi;
+
+  for i in [2..s] do 
+    if Length(blocks[distinct[i]])-Length(blocks[distinct[i-1]])>1 then 
+      x:=[1..n]; 
+      x[blocks[distinct[i]][1]]:=x[blocks[distinct[i]][2]];
+      Add(gens, Transformation(x));
+    fi;
+  od;
+  
+  # get the generators of S(X,P)...
+  if s=r or s-r>=2 then 
+    # 2 generators for the r wreath products of symmetric groups 
+    for i in [1..r] do 
+      m:=Length(equal[i]);       #WreathProduct(S_n, S_m) m blocks of size n 
+      n:=partition[equal[i][1]];
+      x:=blocks{equal[i]};
+
+      if n>1 then 
+        x[2]:=Permuted(x[2], (1,2));
+      fi;
+      
+      if IsOddInt(m) or IsOddInt(n) then 
+        x:=Permuted(x, PermList(Concatenation([2..m], [1])));
+      else
+        x:=Permuted(x, PermList(Concatenation([1], [3..m], [2])));
+      fi;
+
+      x:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(x));
+      Add(gens, AsTransformation(x));
+      
+      y:=blocks{equal[i]};
+      y[1]:=Permuted(y[1],  PermList(Concatenation([2..n], [1])));
+      y:=Permuted(y, (1,2));
+      y:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(y));
+      Add(gens, AsTransformation(y));
+    od;
+  elif s=1 and r=0 then 
+    Append(gens, List(GeneratorsOfGroup(SymmetricGroup(blocks[1])),
+     AsTransformation));
+  elif s-r=1 and r>=1 then#JDM this case should be changed as in the previous case 
+    # 2 generators for the r-1 wreath products of symmetric groups 
+    for i in [1..r-1] do 
+      m:=Length(equal[i]);       #WreathProduct(S_n, S_m) m blocks of size n 
+      n:=partition[equal[i][1]];
+      x:=blocks{equal[i]};
+
+      if n>1 then 
+        x[2]:=Permuted(x[2], (1,2));
+      fi;
+      
+      if IsOddInt(m) or IsOddInt(n) then 
+        x:=Permuted(x, PermList(Concatenation([2..m], [1])));
+      else
+        x:=Permuted(x, PermList(Concatenation([1], [3..m], [2])));
+      fi;
+
+      x:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(x));
+      Add(gens, AsTransformation(x));
+      
+      y:=blocks{equal[i]};
+      y[1]:=Permuted(y[1],  PermList(Concatenation([2..n], [1])));
+      y:=Permuted(y, (1,2));
+      y:=MappingPermListList(Concatenation(blocks{equal[i]}), Concatenation(y));
+      Add(gens, AsTransformation(y));
+    od;
+    
+    # 3 generators for (S_{n_k}wrS_{m_k})\times S_{l_1}
+    m:=Length(equal[r]);      
+    n:=partition[equal[r][1]];
+    if IsOddInt(m) or IsOddInt(n) then 
+      x:=Permuted(blocks{equal[r]}, PermList(Concatenation([2..m], [1])));
+    else
+      x:=Permuted(blocks{equal[r]}, PermList(Concatenation([1], [3..m], [2])));
+    fi;
+
+    if n>1 then 
+      x[2]:=Permuted(x[2], (1,2));
+    fi;
+    x:=MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(x));
+    Add(gens, AsTransformation(x)); # (x, id)=u in the paper
+
+    y:=Permuted(blocks{equal[r]}, (1,2));
+    y[1]:=Permuted(y[1],  PermList(Concatenation([2..n], [1])));
+    y:=MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(y));
+    y:=y*MappingPermListList(blocks[unique[1]],
+     Concatenation(blocks[unique[1]]{[2..Length(blocks[unique[1]])]},
+     [blocks[unique[1]][1]])); # (y, (1,2,\ldots, l_1))=v in the paper
+    Add(gens, AsTransformation(y));
+    
+    if Length(blocks[unique[1]])>1 then  
+      w:=MappingPermListList(blocks[unique[1]], Permuted(blocks[unique[1]], (1,2)));
+      Add(gens, AsTransformation(w)); # (id, (1,2))=w in the paper
+    fi;
+  fi;
+  if s-r>=2 then # the (s-r) generators of W_2 in the proof
+    for i in [1..s-r-1] do 
+      if Length(blocks[unique[i]])<>1 then 
+        x:=Permuted(blocks[unique[i]], (1,2));
+      else
+        x:=ShallowCopy(blocks[unique[i]]);
+      fi;
+      if IsOddInt(Length(blocks[unique[i+1]])) then 
+        Append(x, Permuted(blocks[unique[i+1]], 
+         PermList(Concatenation([2..Length(blocks[unique[i+1]])], [1]))));
+      else
+        Append(x, Permuted(blocks[unique[i+1]], 
+         PermList(Concatenation([1], [3..Length(blocks[unique[i+1]])], [2]))));
+      fi;
+      x:=MappingPermListList(Union(blocks[unique[i]], blocks[unique[i+1]]), 
+       x);
+      if x<>() then 
+        Add(gens, AsTransformation(x));
+      fi;
+    od;
+    
+    x:=[];
+    if partition[unique[1]]<>1 then  
+      if IsOddInt(partition[unique[1]]) then 
+        Append(x, Permuted(blocks[unique[1]], 
+         PermList(Concatenation([2..Length(blocks[unique[1]])], [1]))));
+      else
+        Append(x, Permuted(blocks[unique[1]], 
+         PermList(Concatenation([1], [3..Length(blocks[unique[1]])], [2]))));
+      fi;
+    else
+      Append(x, blocks[unique[1]]);
+    fi;
+    Append(x, Permuted(blocks[unique[s-r]], (1,2)));
+    x:=MappingPermListList(Concatenation(blocks[unique[1]], blocks[unique[s-r]]), x);
+    Add(gens, AsTransformation(x));
+  fi;
+  
+  return Semigroup(gens);
+end);
 
 #
 

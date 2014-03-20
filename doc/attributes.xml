@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  attributes.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -333,7 +333,7 @@ fail
 gap> S:=DualSymmetricInverseMonoid(6);
 &lt;inverse bipartition monoid on 6 pts with 3 generators>
 gap> MultiplicativeZero(S);
-&lt;bipartition: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]></Example> 
+&lt;block bijection: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]></Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
