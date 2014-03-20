@@ -23,7 +23,8 @@ function(I)
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[fail],
      lenreps:=[0], orbit:=[fail,], dorbit:=[], repslens:=[],
      lambdarhoht:=[], schreierpos:=[fail], schreiergen:=[fail],
-     schreiermult:=[fail], genstoapply:=[1..Length(gens)], stopper:=false);
+     schreiermult:=[fail], genstoapply:=[1..Length(gens)], stopper:=false, 
+     poset:=[], scc_lookup:=[]);
   
   Objectify(NewType(FamilyObj(I), IsSemigroupIdealData), data);
   
@@ -58,7 +59,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, UpdateSemigroupIdealData, idealgens, i, start, mults, scc, x, cosets, y, z, k, j;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, UpdateSemigroupIdealData, idealgens, i, mults, scc, x, cosets, y, z, j, k;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -149,11 +150,15 @@ function(data, limit, lookfunc)
   drel:=GreensDRelation(I);
   dtype:=DClassType(I);
 
+  poset:=data!.poset;  # the D-class poset
+  datalookup:=data!.scc_lookup;
+ 
+  ##############################################################################
   # the function which checks if x is already R/D-related to something in the
   # data and if not adds it in the appropriate place
 
   UpdateSemigroupIdealData:=function(x, pos, gen, idealpos)
-    local new, xx, l, m, mm, schutz, mults, cosets, y, n, z, i, ind;
+    local new, xx, l, m, mm, schutz, mults, cosets, y, n, z, ind, val;
     
     new:=false;
    
@@ -164,11 +169,11 @@ function(data, limit, lookfunc)
       l:=UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos);
        
       # update the lists of reps
-      for i in [lenscc+1..lenscc+Length(lambdascc)] do 
-        reps[i]:=[];
-        repslookup[i]:=[];
-        repslens[i]:=[];
-        lenreps[i]:=0;
+      for n in [lenscc+1..lenscc+Length(lambdascc)] do 
+        reps[n]:=[];
+        repslookup[n]:=[];
+        repslens[n]:=[];
+        lenreps[n]:=0;
         lenscc:=Length(lambdascc);
       od;
       new:=true; # x is a new R-rep
@@ -180,7 +185,11 @@ function(data, limit, lookfunc)
     
     # check if x is identical to one of the known R-reps
     if not new then 
-      if htvalue(ht, x)<>fail then 
+      val:=htvalue(ht, x);
+      if val<>fail then 
+        if pos<>fail then # we are multiplying a D-rep by generator <i>
+          AddSet(poset[i], datalookup[val]);
+        fi;
         return; #x is one of the old R-reps
       fi;
     fi;
@@ -199,13 +208,19 @@ function(data, limit, lookfunc)
       and IsBound(lambdarhoht[l][m]) then 
        # if schutz=false or these are not bound, then x is a new R-rep
         
+      ind:=lambdarhoht[l][m];
       if schutz=true then 
+        if pos<>fail then 
+          AddSet(poset[i], datalookup[repslookup[m][ind][1]]);
+        fi;
         return; 
       fi;
       
-      ind:=lambdarhoht[l][m];
       for n in [1..repslens[m][ind]] do
         if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then 
+          if pos<>fail then 
+            AddSet(poset[i], datalookup[repslookup[m][ind][n]]);
+          fi;
           return; # x is on of the old R-reps
         fi;
       od;
@@ -253,7 +268,8 @@ function(data, limit, lookfunc)
         orblookup1[nr_r]:=ind;
         orblookup2[nr_r]:=repslens[m][ind];
         rholookup[nr_r]:=l; 
-        
+        datalookup[nr_r]:=nr_d; 
+
         orb[nr_r]:=[I, m, lambdao, reps[m][ind][repslens[m][ind]], false, nr_r];
         htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
         
@@ -267,6 +283,7 @@ function(data, limit, lookfunc)
       od;
     od;
   end;
+  ##############################################################################
   
   # initialise the data if necessary
   if data!.init=false then 
@@ -282,7 +299,7 @@ function(data, limit, lookfunc)
 
   while nr_d<=limit and i<nr_d and i<>stopper do 
     i:=i+1; # advance in the dorb
-    
+    poset[i]:=[]; 
     # left multiply the R-class reps by the generators of the semigroup
     # JDM: this is repeated work...
     mults:=RhoOrbMults(rhoo, RhoOrbSCCIndex(d[i]));
