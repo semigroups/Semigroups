@@ -190,6 +190,8 @@ gap> Size(max);
 8
 gap> List(max, Size);
 [ 200, 199, 199, 199, 167, 167, 167, 167 ]
+gap> S:=max[1];;
+gap> max:=MaximalSubsemigroups(S);;
 
 # Test of IsMaximalSubsemigroup
 gap> S:=Semigroup([ Transformation( [ 1, 2, 4, 4, 1 ] ), Transformation( [ 4, 4, 1, 4 ] ), Transformation( [ 5, 1, 4, 2, 3 ] ) ]);

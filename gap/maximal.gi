@@ -81,6 +81,14 @@ end);
 
 #
 
+InstallMethod(MaximalSubsemigroups, "for a group",
+[IsGroup], 
+function(G)
+  return MaximalSubgroups(G);
+end);
+
+#
+
 InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup and a group",
 [IsReesMatrixSubsemigroup, IsGroup], 
 function(R, H)
