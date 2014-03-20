@@ -83,6 +83,24 @@ end);
 
 #
 
+InstallMethod(\=, "for a semigroup ideal and semigroup with generators", 
+[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
+ IsSemigroup and HasGeneratorsOfSemigroup],
+function(I, S)
+  return ForAll(GeneratorsOfSemigroup(S), x-> x in I);  
+end);
+
+#
+
+InstallMethod(\=, "for a semigroup with generators and a semigroup ideal", 
+[IsSemigroup and HasGeneratorsOfSemigroup, 
+IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal], 
+function(S, I)
+  return ForAll(GeneratorsOfSemigroup(S), x-> x in I);  
+end);
+
+#
+
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsActingSemigroup);
 
 #
