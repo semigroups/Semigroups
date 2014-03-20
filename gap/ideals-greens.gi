@@ -16,3 +16,11 @@ function(I)
   return Length(SemigroupData(I)!.dorbit);
 end);
 
+#
+
+InstallMethod(GreensDClasses, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  Enumerate(SemigroupData(I));
+  return SemigroupData(I)!.dorbit;
+end);

@@ -499,10 +499,10 @@ h-> CreateRClass(Parent(h), LambdaOrbSCCIndex(h), LambdaOrb(h),
 # Notes: this could be written in a more compact way but it is not for
 # performance reasons. 
 
-# different method for regular/inverse
+# different method for regular/inverse/ideals
 
 InstallMethod(GreensDClasses, "for an acting semigroup",
-[IsActingSemigroup], 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local data, scc, out, type, drel, o, arg, d, rectify, i;
 
