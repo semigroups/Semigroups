@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: semigroups.tst");
+gap> START_TEST("Semigroups package: ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -25,7 +25,7 @@ gap> s:=Semigroup(gens);;
 gap> I := SemigroupIdeal(s, gens);
 <transformation semigroup ideal on 5 pts with 3 generators>
 gap> data := SemigroupData(I);
-<open semigroup ideal data with 0 reps, 1 lambda-values, 1 rho-values>
+<open semigroup ideal data with 0 reps, 0 lambda-values, 0 rho-values>
 gap> Size(I);
 731
 gap> NrDClasses(I);
@@ -44,7 +44,7 @@ gap> s:=Semigroup(gens);;
 gap> I := SemigroupIdeal(s, gens{[1,2]});
 <transformation semigroup ideal on 4 pts with 2 generators>
 gap> o := LambdaOrb(I);
-<open ideal lambda orbit with 1 points in 1 components>
+<open ideal lambda orbit with 0 points in 0 components>
 gap> I.1 in o;
 false
 gap> UpdateIdealLambdaOrb(o, LambdaFunc(I)(I.1), I.1, fail, fail, 1);
@@ -59,7 +59,7 @@ gap> s:=Semigroup(gens);;
 gap> I := SemigroupIdeal(s, [gens[2]* gens[1], gens[3]^3]);
 <transformation semigroup ideal on 4 pts with 2 generators>
 gap> o := RhoOrb(I);
-<open ideal rho orbit with 1 points in 1 components>
+<open ideal rho orbit with 0 points in 0 components>
 gap> I.1 in o;
 false
 gap> UpdateIdealRhoOrb(o, RhoFunc(I)(I.1), I.1, fail, fail, 1);
