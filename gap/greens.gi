@@ -65,6 +65,7 @@ function(d)
 
   return out;
 end);
+
 # not required for regular/inverse
 
 InstallMethod(LambdaCosets, "for a D-class of an acting semigroup",

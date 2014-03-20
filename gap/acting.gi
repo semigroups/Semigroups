@@ -17,7 +17,7 @@ function(S)
   return fail;
 end);
 
-#
+# different method for ideals
 
 InstallMethod(SemigroupData, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],

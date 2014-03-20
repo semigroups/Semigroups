@@ -943,13 +943,7 @@ function(s)
   rhofunc:=RhoFunc(s);
   lookup:=OrbSCCLookup(rho_o);
 
-  if IsMagmaIdeal(s) then 
-    start:=1;
-  else
-    start:=2;
-  fi;
-
-  for m in [start..r] do 
+  for m in [2..r] do 
     rho:=rhofunc(LambdaOrbRep(lambda_o, m));
     nr:=nr+Length(lambda_scc[m])*Size(LambdaOrbSchutzGp(lambda_o, m))*
      Length(rho_scc[lookup[Position(rho_o, rho)]]);
