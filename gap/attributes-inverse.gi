@@ -67,13 +67,23 @@ end);
 #
 
 InstallMethod(IsJoinIrreducible, 
-"for an inverse semigroup of partial perms and a partial perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
+"for an inverse semigroup of partial perms or block bijections, and an element",
+[IsInverseSemigroup, IsAssociativeElement],
 function(S, x)
-  local y, elts, i, k, singleline, sup, j;
+  local y, elts, i, k, singleline, sup, j, NaturalLeq, SupremumIdempotentsNC;
 
   if not x in S then
     Error("Second argument should be a partial perm within first argument");
+  fi;
+  
+  if IsPartialPermSemigroup(S) then
+    NaturalLeq:=NaturalLeqPartialPerm;
+    SupremumIdempotentsNC:=SupremumIdempotentsPPNC;
+  elif IsBlockBijectionSemigroup(S) then
+    NaturalLeq:=NaturalLeqBlockBijection;
+    SupremumIdempotentsNC:=SupremumIdempotentsBBNC;
+  else
+    return fail;
   fi;
   
   if IsMultiplicativeZero(S, x) then 
@@ -88,7 +98,7 @@ function(S, x)
 
   # Find an element smaller than y, k
   for j in [i-1,i-2 .. 1] do
-    if NaturalLeqPartialPerm(elts[j], elts[i]) then
+    if NaturalLeq(elts[j], elts[i]) then
       k:=j;
       break;
     fi;
@@ -99,8 +109,7 @@ function(S, x)
 
   # Look for other elements smaller than y which are not smaller than k
   for j in [1..(k-1)] do 
-    if  NaturalLeqPartialPerm(elts[j], elts[i]) and
-    not NaturalLeqPartialPerm(elts[j], elts[k]) then 
+    if  NaturalLeq(elts[j], elts[i]) and not NaturalLeq(elts[j], elts[k]) then 
       singleline:=false; 
       break;
     fi;
@@ -113,7 +122,7 @@ function(S, x)
   sup:=SupremumIdempotentsNC(Minorants(S, y));
   if y = sup then return false; fi;
 
-  if ForAny(HClass(S, y), x-> NaturalLeqPartialPerm(sup,x) and x<>y) then
+  if ForAny(HClass(S, y), x-> NaturalLeq(sup,x) and x<>y) then
     return true;
   fi;
   
@@ -124,36 +133,55 @@ end);
 #
 
 InstallMethod(IsMajorantlyClosed, 
-"for an inverse subsemigroup of partial perms and an inverse subsemigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup,
-IsInverseSemigroup and IsPartialPermSemigroup],
+"for an inverse subsemigroup of partial perms or block bijections, and a subset",
+[IsInverseSemigroup, IsSemigroup],
 function(S, T)
-  return IsMajorantlyClosed(S, Elements(T));
+  if not (IsPartialPermSemigroup(S) and IsPartialPermSemigroup(T)) and not (IsBlockBijectionSemigroup(S) and IsBlockBijectionSemigroup(T)) then
+  	return fail;
+  else
+    if not IsSubsemigroup(S, T) then
+      Error("The second argument should be a subsemigroup of the first");
+    else
+      return IsMajorantlyClosedNC(S, Elements(T));
+    fi;
+  fi;
 end);
 
 #
 
 InstallMethod(IsMajorantlyClosed, 
-"for an inverse subsemigroup of partial permutations and a subset",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
+"for an inverse subsemigroup of partial perms or block bijections, and a subset",
+[IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
-  if not IsSubset(S,T) then
-    Error("The second argument should be a subset of the first");
+  if not (IsPartialPermSemigroup(S) and IsPartialPermCollection(T)) and not (IsBlockBijectionSemigroup(S) and IsBipartitionCollection(T)) then
+  	return fail;
   else
-    return IsMajorantlyClosedNC(S,T);
+    if not IsSubset(S, T) then
+      Error("The second argument should be a subset of the first");
+    else
+      return IsMajorantlyClosedNC(S, T);
+    fi;
   fi;
 end);
 
 #
 
 InstallMethod(IsMajorantlyClosedNC, 
-"for an inverse subsemigroup of partial permutations and a subset",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
+"for an inverse subsemigroup of partial permutations or block bijections and a subset",
+[IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
-  local i, iter, t, u;
+  local i, iter, t, u, NaturalLeq;
 
   if Size(S) = Size(T) then
     return true;
+  fi;
+  
+  if IsPartialPermSemigroup(S) then
+    NaturalLeq:=NaturalLeqPartialPerm;
+  elif IsBlockBijectionSemigroup(T) then
+    NaturalLeq:=NaturalLeqBlockBijection;
+  else
+    return fail;
   fi;
 	
   i:=0;
@@ -161,7 +189,7 @@ function(S, T)
     iter:=Iterator(S);
     for u in iter do
       i:=i+1;
-      if NaturalLeqPartialPerm(t, u) and not u in T then
+      if NaturalLeq(t, u) and not u in T then
         return false;
       fi;
     od;
@@ -173,10 +201,18 @@ end);
 
 InstallMethod(JoinIrreducibleDClasses, 
 "for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
+[IsInverseSemigroup],
 function(S)
-  local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p;
-  
+  local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p, NaturalLeq;
+
+  if IsPartialPermSemigroup(S) then
+    NaturalLeq:=NaturalLeqPartialPerm;
+  elif IsBlockBijectionSemigroup(S) then
+    NaturalLeq:=NaturalLeqBlockBijection;
+  else
+    return fail;
+  fi;
+
   D:=GreensDClasses(S);
   elts:=Set(Idempotents(S));;
   out:=EmptyPlist(Length(D));
@@ -191,7 +227,7 @@ function(S)
     fi;
     
     i:=Position(elts, rep);
-    k:=First([i-1,i-2 .. 1], j-> NaturalLeqPartialPerm(elts[j], rep));
+    k:=First([i-1,i-2 .. 1], j-> NaturalLeq(elts[j], rep));
 
     if k=fail then # d is the minimal non-trivial D-class
       Add(out, d);
@@ -202,8 +238,8 @@ function(S)
     singleline:=true;
 
     for j in [1..k-1] do 
-      if NaturalLeqPartialPerm(elts[j], rep) then 
-        if singleline and not NaturalLeqPartialPerm(elts[j], elts[k]) then 
+      if NaturalLeq(elts[j], rep) then 
+        if singleline and not NaturalLeq(elts[j], elts[k]) then 
           # rep is the lub of {elts[j], elts[k]}, not quite 
           singleline:=false;
           if IsTrivial(SchutzenbergerGroup(d)) then 
@@ -221,12 +257,26 @@ function(S)
     elif IsTrivial(SchutzenbergerGroup(d)) then 
       continue;
     fi;
+    
+    if IsPartialPermSemigroup(S) then
 
-    minorants:=Union(List(minorants, j-> DomainOfPartialPerm(elts[j])));
+      minorants:=Union(List(minorants, j-> DomainOfPartialPerm(elts[j])));
 
-    if DomainOfPartialPerm(rep)=minorants then 
-      # rep=lub(minorants) but rep not in minorants
-      continue; 
+      if DomainOfPartialPerm(rep)=minorants then 
+        # rep=lub(minorants) but rep not in minorants
+        continue; 
+      fi;
+
+    # Need to do the same here
+    elif IsBlockBijectionSemigroup(S) then
+  
+      #minorants:=Union(List(minorants, j-> DomainOfPartialPerm(AsPartialPerm(elts[j]))));
+
+      #if DomainOfPartialPerm(AsPartialPerm(rep))=minorants then 
+      #  # rep=lub(minorants) but rep not in minorants
+      #  continue; 
+      #fi;
+      
     fi;
 
     for p in SchutzenbergerGroup(d) do
@@ -245,9 +295,8 @@ end);
 #
 
 InstallMethod(MajorantClosure, 
-"for an inverse subsemigroup of partial perms and an inverse subsemigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup,
-IsInverseSemigroup and IsPartialPermSemigroup],
+"for an inverse subsemigroup of partial perms or block bijections and an inverse subsemigroup",
+[IsInverseSemigroup, IsSemigroup],
 function(S, T)
   return MajorantClosure(S, Elements(T));;
 end);
@@ -255,8 +304,8 @@ end);
 #
 
 InstallMethod(MajorantClosure, 
-"for an inverse subsemigroup of partial permutations and a subset",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
+"for an inverse subsemigroup of partial permutations or block bijections and a subset",
+[IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S,T) then
     Error("The second argument should be a subset of the first");
@@ -268,10 +317,18 @@ end);
 #
 
 InstallMethod(MajorantClosureNC, 
-"for an inverse subsemigroup of partial permutations and a subset",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
+"for an inverse subsemigroup of partial permutations or block bijections and a subset",
+[IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
-  local elts, n, out, ht, k, val, t, i;
+  local elts, n, out, ht, k, val, t, i, NaturalLeq;
+  
+  if IsPartialPermSemigroup(S) then
+    NaturalLeq:=NaturalLeqPartialPerm;
+  elif IsBlockBijectionSemigroup(S) then
+    NaturalLeq:=NaturalLeqBlockBijection;
+  else
+    return fail;
+  fi;
 	
   elts:=Elements(S);
   n:=Length(elts);
@@ -287,7 +344,7 @@ function(S, T)
 
   for t in out do
     for i in [1..n] do
-      if NaturalLeqPartialPerm(t, elts[i]) then
+      if NaturalLeq(t, elts[i]) then
         val:=HTValue(ht, elts[i]);
         if val=fail then
           k:=k+1;
@@ -308,14 +365,22 @@ end);
 #C method? JDM
 
 InstallMethod(Minorants, 
-"for an inverse semigroup of partial permutation and an element",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
+"for an inverse semigroup of partial permutation or block bijections and an element",
+[IsInverseSemigroup, IsAssociativeElement],
 function(s, f)
-  local out, elts, i, j, k;
+  local out, elts, i, j, k, NaturalLeq;
   
   if not f in s then 
     Error("the second argument is not an element of the first,");
     return;
+  fi;
+  
+  if IsPartialPermCollection(s) then
+    NaturalLeq:=NaturalLeqPartialPerm;
+  elif IsBipartitionCollection(s) then
+    NaturalLeq:=NaturalLeqBlockBijection;
+  else
+    return fail;
   fi;
 
   if HasNaturalPartialOrder(s) then 
@@ -336,7 +401,7 @@ function(s, f)
   j:=0; 
 
   for k in [1..i-1] do 
-    if NaturalLeqPartialPerm(elts[k], f) and f<>elts[k] then 
+    if NaturalLeq(elts[k], f) and f<>elts[k] then 
       j:=j+1;
       out[j]:=elts[k];
     fi;
@@ -358,11 +423,13 @@ function(S, T)
     Error("The second argument should be a subsemigroup of the first");
     return;
   fi;
-  if not IsMajorantlyClosed(S,T) then
+  
+  elts:=Elements(T);
+  
+  if not IsMajorantlyClosed(S, elts) then
     Error("The second argument should be majorantly closed.");
   fi;
 
-  elts:=Elements(T);
   idem:=Representative(MinimalIdeal(T));
   usedreps:=[];
   out:=[];
@@ -401,10 +468,18 @@ end);
 #
 
 InstallMethod(SameMinorantsSubgroup, 
-"for a group H-class of an inverse semigroup of partial perms",
-[IsGroupHClass and IsPartialPermCollection],
+"for a group H-class of an inverse sgp of partial perms or block bijections",
+[IsGroupHClass],
 function(h)
-  local e, F, out, i;
+  local e, F, out, i, NaturalLeq;
+  
+  if IsPartialPermCollection(h) then
+    NaturalLeq:=NaturalLeqPartialPerm;
+  elif IsBipartitionCollection(h) then
+    NaturalLeq:=NaturalLeqBlockBijection;
+  else
+    return fail;
+  fi;
 
   e:=Representative(h);
   F:=Minorants(Parent(h), e);
@@ -412,7 +487,7 @@ function(h)
   out:=[e];
 
   for i in [2..Length(h)] do
-    if ForAll(F, f-> NaturalLeqPartialPerm(f, h[i])) then 
+    if ForAll(F, f-> NaturalLeq(f, h[i])) then 
       Add(out, h[i]);
     fi;
   od;
@@ -444,7 +519,7 @@ function(S)
     sigmainv:=InverseGeneralMapping(sigma);
     
     schutz:=SchutzenbergerGroup(d);
-    sup:=SupremumIdempotentsNC(Minorants(S, e));
+    sup:=SupremumIdempotentsPPNC(Minorants(S, e));
     trivialse:=not ForAny(He, x-> NaturalLeqPartialPerm(sup, x) and x<>e);
     
     psi:=ActionHomomorphism(
@@ -540,7 +615,7 @@ end);
 
 #JDM c method, don't document until generalised
 
-InstallGlobalFunction(SupremumIdempotentsNC, 
+InstallGlobalFunction(SupremumIdempotentsPPNC, 
 function(coll)
   local dom;
 
@@ -556,12 +631,31 @@ end);
 
 #
 
+#JDM c method, don't document until generalised
+
+### NOT GONNA WORK SO EASILY SINCE NOT ALL BLOCK BIJECTIONS ARE PARTIAL PERMS
+InstallGlobalFunction(SupremumIdempotentsBBNC, 
+function(coll)
+  local dom;
+
+  if IsList(coll) and IsEmpty(coll) then 
+    return PartialPerm([]);
+  fi;
+  if not IsBipartitionCollection(coll) then 
+    Error("the argument should be a collection of block bijections,");
+  fi;
+  dom:=DomainOfPartialPermCollection( List(coll, AsPartialPerm) );
+  return AsBlockBijection(PartialPerm(dom, dom));
+end);
+
+#
+
 InstallMethod(VagnerPrestonRepresentation, 
-"for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
+"for an acting semigroup with inverse operation",
+[IsActingSemigroupWithInverseOp],
 function(S)
   local gens, elts, out, iso, T, inv, i;
-
+  
   gens:=GeneratorsOfSemigroup(S);
   elts:=Elements(S);
   out:=EmptyPlist(Length(gens));

@@ -11,29 +11,23 @@
 #############################################################################
 ##
 
-DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup and
-IsPartialPermSemigroup, IsPartialPerm]);
-DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup and
-IsPartialPermSemigroup, IsPartialPermCollection]);
-DeclareOperation("IsMajorantlyClosedNC", [IsInverseSemigroup and
-IsPartialPermSemigroup, IsPartialPermCollection]);
+DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup, IsAssociativeElement]);
+DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup, IsCollection]);
+DeclareOperation("IsMajorantlyClosedNC", [IsInverseSemigroup, IsAssociativeElementCollection]);
 
-DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup and
-IsPartialPermSemigroup);
+DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
 
-DeclareOperation("MajorantClosure", [IsInverseSemigroup and
-IsPartialPermSemigroup, IsPartialPermCollection]);
-DeclareOperation("MajorantClosureNC", [IsInverseSemigroup and
-IsPartialPermSemigroup, IsPartialPermCollection]);
-DeclareOperation("Minorants", [IsInverseSemigroup and IsPartialPermSemigroup,
-IsPartialPerm]);
+DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
+DeclareOperation("MajorantClosureNC", [IsInverseSemigroup, IsAssociativeElementCollection]);
+DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
 
 DeclareOperation("RightCosetsOfInverseSemigroup", [IsInverseSemigroup and
 IsPartialPermSemigroup, IsInverseSemigroup and IsPartialPermSemigroup]);
 
-DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass and IsPartialPermCollection);
+DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup and
 IsPartialPermSemigroup);
-DeclareGlobalFunction("SupremumIdempotentsNC");
+DeclareGlobalFunction("SupremumIdempotentsPPNC");
+DeclareGlobalFunction("SupremumIdempotentsBBNC");
 
-DeclareAttribute("VagnerPrestonRepresentation", IsInverseSemigroup and IsPartialPermSemigroup);
+DeclareAttribute("VagnerPrestonRepresentation", IsActingSemigroupWithInverseOp);
