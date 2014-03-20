@@ -17,7 +17,7 @@ function(I)
  
   gens:=GeneratorsOfSemigroup(Parent(I));
 
-  data:=rec(gens:=gens, parent:=I,
+  data:=rec(gens:=gens, parent:=I, log:=[1],
      ht:=HTCreate(gens[1], rec(treehashsize:=I!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[fail],
@@ -59,7 +59,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, UpdateSemigroupIdealData, idealgens, i, mults, scc, x, cosets, y, z, j, k;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, UpdateSemigroupIdealData, idealgens, i, n, mults, scc, x, cosets, y, z, j, k;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -147,13 +147,18 @@ function(data, limit, lookfunc)
     htvalue:=HTValue;
   fi;
 
+  # new stuff
   drel:=GreensDRelation(I);
   dtype:=DClassType(I);
 
   poset:=data!.poset;  # the D-class poset
   datalookup:=data!.scc_lookup;
+
+  log:=data!.log;  # log[i+1] is the last position in orb=data!.orbit where the
+                   # R-class reps of d[i] appear...
  
   ##############################################################################
+  
   # the function which checks if x is already R/D-related to something in the
   # data and if not adds it in the appropriate place
 
@@ -231,7 +236,7 @@ function(data, limit, lookfunc)
     if l<>rhoscc[mm][1] then 
       x:=RhoOrbMult(rhoo, mm, l)[2]*x;
     fi;
-      
+    
     nr_d:=nr_d+1;
     d[nr_d]:=rec();
     ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
@@ -243,6 +248,7 @@ function(data, limit, lookfunc)
     mults:=RhoOrbMults(rhoo, mm);
     cosets:=RhoCosets(d[nr_d]);
 
+    
     for l in rhoscc[mm] do #install the R-class reps
       if not IsBound(lambdarhoht[l]) then 
         lambdarhoht[l]:=[];
@@ -282,6 +288,7 @@ function(data, limit, lookfunc)
 
       od;
     od;
+    log[nr_d+1]:=nr_r; 
   end;
   ##############################################################################
   
@@ -301,22 +308,17 @@ function(data, limit, lookfunc)
     i:=i+1; # advance in the dorb
     poset[i]:=[]; 
     # left multiply the R-class reps by the generators of the semigroup
-    # JDM: this is repeated work...
-    mults:=RhoOrbMults(rhoo, RhoOrbSCCIndex(d[i]));
+    
+    n:=Length(RhoCosets(d[i]));
     scc:=RhoOrbSCC(d[i]);
-    x:=Representative(d[i]);
-    cosets:=RhoCosets(d[i]);
-    for y in cosets do 
-      y:=act(x, y^-1);
-      for j in scc do
-        z:=mults[j][1]*y;
-        for k in genstoapply do
-          UpdateSemigroupIdealData(gens[k]*z, j, k, fail);
-          if looking and data!.found<>false then 
-            data!.pos:=i-1;
-            return data;
-          fi;
-        od;
+    for j in [log[i]+1..log[i+1]] do  # the R-class reps of d[i]
+      for k in genstoapply do 
+        UpdateSemigroupIdealData(gens[k]*orb[j][4], scc[QuoInt(j-log[i]+n-1, n)], 
+         k, fail);
+        if looking and data!.found<>false then 
+          data!.pos:=i-1;
+          return data;
+        fi;
       od;
     od;
      
