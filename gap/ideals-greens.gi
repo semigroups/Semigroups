@@ -24,3 +24,16 @@ function(I)
   Enumerate(SemigroupData(I));
   return SemigroupData(I)!.dorbit;
 end);
+
+#
+
+InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal", 
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  local data;
+
+  data:=SemigroupData(I);
+  Enumerate(data);
+  return data!.poset;
+end);
+
