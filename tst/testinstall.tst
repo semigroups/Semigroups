@@ -436,15 +436,13 @@ gap> G:=Group((1,2),(3,4));;
 gap> mat:=[[(), ()], [(), 0], [(), (1,2)]];;
 gap> R:=ReesZeroMatrixSemigroup(G, mat);
 <Rees 0-matrix semigroup 2x3 over Group([ (1,2), (3,4) ])>
-gap> MaximalSubsemigroups(R);
-[ <subsemigroup of 2x3 Rees 0-matrix semigroup with 4 generators>, 
-  <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
-  <Rees 0-matrix semigroup 2x2 over Group([ (3,4), (1,2) ])>, 
-  <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
-  <Rees 0-matrix semigroup 1x3 over Group([ (3,4), (1,2) ])>, 
-  <subsemigroup of 2x3 Rees 0-matrix semigroup with 9 generators> ]
-gap> List(last, U-> IsMaximalSubsemigroup(R, U));
+gap> max:=MaximalSubsemigroups(R);;
+gap> IsDuplicateFreeList(max);
+true
+gap> List(max, U-> IsMaximalSubsemigroup(R, U));
 [ true, true, true, true, true, true ]
+gap> Size(max) = 6;
+true
 
 # ClosureSemigroup with an element of higher degree
 gap> S:=Semigroup( 

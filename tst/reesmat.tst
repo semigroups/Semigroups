@@ -81,12 +81,12 @@ gap> S:=Semigroup(
 gap> R:=PrincipalFactor(DClasses(S)[40]);
 <Rees 0-matrix semigroup 26x5 over Group([ (5,8)(6,9), (1,6,9), (1,6) ])>
 gap> U:=MaximalSubsemigroups(R){[31..36]};
-[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 128 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 148 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 140 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 132 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 124 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 144 generators> ]
+[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators> ]
 gap> V:=Semigroup(MultiplicativeZero(U[3]), 
 > RMSElement(U[3], 13, (1,6)(5,8),3),
 > RMSElement(U[3], 1,(1,6),3), 
