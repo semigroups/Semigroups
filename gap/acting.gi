@@ -222,7 +222,7 @@ function(f, s)
   return false;
 end);
 
-#
+# same method for ideals, different for regular/inverse
 
 InstallMethod(Size, "for an acting semigroup",
 [IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
@@ -253,41 +253,45 @@ end);
 
 # data...
 
+# same method for ideals
+
 InstallMethod(\in, "for associative element and semigroup data",
 [IsAssociativeElement, IsSemigroupData],
 function(f, data)
   return not Position(data, f)=fail;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(ELM_LIST, "for semigroup data, and pos int",
 [IsSemigroupData, IsPosInt], 
 function(o, nr)
-  return o!.orbit[nr];
+  return o!.orbit[nr+1];
 end);
 
-#
+# same method for ideals
 
 InstallMethod(Length, "for semigroup data", [IsSemigroupData], 
 function(data)
   return Length(data!.orbit)-1;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(Enumerate, "for semigroup data", [IsSemigroupData],
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
-#
+# same method for ideals
 
 InstallMethod(Enumerate, "for semigroup data and limit", 
 [IsSemigroupData, IsCyclotomic],
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
+
+# different method for ideals...
 
 #JDM: this has the same problem as orb in Issue #4, the log is not properly
 #formed if the enumeration stops early.
@@ -603,7 +607,15 @@ function(data, limit, lookfunc)
   return data;
 end);
 
-#
+# not currently applicable for ideals
+
+InstallMethod(OrbitGraph, "for semigroup data",  
+[IsSemigroupData],
+function(data)
+  return data!.graph;
+end);
+
+# not currently applicable for ideals
 
 InstallMethod(OrbitGraphAsSets, "for semigroup data",  
 [IsSemigroupData],
@@ -614,6 +626,8 @@ end);
 # returns the index of the representative of the R-class containing x in the
 # parent of data. Note that this depends on the state of the data, it only tells
 # you if it is there already, it doesn't try to find it. 
+
+# same method for ideals
 
 InstallMethod(Position, "for semigroup data and an associative element",
 [IsSemigroupData, IsAssociativeElement, IsZeroCyc], 100,
@@ -639,7 +653,7 @@ function(data, x, n)
   schutz:=LambdaOrbStabChain(o, m);
   
   if val<>fail then 
-    return val;
+    return val-1;
   elif schutz=false then 
     return fail;
   fi;
@@ -660,7 +674,7 @@ function(data, x, n)
   repslookup:=data!.repslookup[m][ind];
 
   if schutz=true then 
-    return repslookup[1];
+    return repslookup[1]-1;
   fi;
 
   reps:=data!.reps[m][ind]; repslens:=data!.repslens[m][ind];
@@ -668,14 +682,14 @@ function(data, x, n)
   lambdaperm:=LambdaPerm(s);
   for n in [1..repslens] do 
     if SiftedPermutation(schutz, lambdaperm(reps[n], x))=() then 
-      return repslookup[n];
+      return repslookup[n]-1;
     fi;
   od;
 
   return fail;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(PositionOfFound,"for semigroup data",
 [IsSemigroupData],
@@ -687,9 +701,9 @@ function( data )
   return data!.found;
 end);
 
-#
+# same method for ideals
 
-InstallMethod(Size, "for semigroup data", [IsSemigroupData],
+InstallMethod(SizeOfSemigroupData, "for semigroup data", [IsSemigroupData],
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
   
@@ -710,7 +724,7 @@ function(data)
   return size; 
 end);
 
-#
+# different method for ideals
 
 InstallMethod(ViewObj, [IsSemigroupData], 
 function(data)

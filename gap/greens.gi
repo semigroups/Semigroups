@@ -10,7 +10,6 @@
 
 # Notes:
 # - D-class reps must have rectified lambda and rho value
-#
 
 InstallMethod(EquivalenceClassOfElement, 
 "for Green's R-relation and associative element", 
@@ -1585,10 +1584,10 @@ function(h)
   return Idempotents(h)[1];
 end);
 
-# different method for regular/inverse
+# different method for regular/inverse/ideals 
 
-InstallMethod(NrDClasses, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(NrDClasses, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> Length(OrbSCC(SemigroupData(s)))-1);
 
 # different method for regular/inverse

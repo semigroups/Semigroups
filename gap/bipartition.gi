@@ -1208,31 +1208,6 @@ end);
 
 #
 
-#InstallMethod(ViewObj, "for a bipartition",
-#[IsBipartition],
-#function(f)
-#  local ext, i;
-#
-#  if DegreeOfBipartition(f)=0 then 
-#    Print("<empty bipartition>");
-#    return;
-#  fi;
-#  if IsBlockBijection(f) then 
-#    Print("<block bijection: ");
-#  else 
-#    Print("<bipartition: ");
-#  fi;
-#  ext:=ExtRepOfBipartition(f);
-#  Print(ext[1]);
-#  for i in [2..Length(ext)] do 
-#    Print(", ", ext[i]);
-#  od;
-#  Print(">");
-#  return;
-#end);
-
-#
-
 InstallMethod(PrintString, "for a bipartition",
 [IsBipartition], 
 function(f)

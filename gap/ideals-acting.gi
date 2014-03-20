@@ -12,23 +12,21 @@
 
 InstallMethod(SemigroupData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(s)
+function(I)
   local gens, data, opts;
  
-  gens:=GeneratorsOfSemigroup(Parent(s));
+  gens:=GeneratorsOfSemigroup(Parent(I));
 
-  data:=rec(gens:=gens, 
-     ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
+  data:=rec(gens:=gens, parent:=I,
+     ht:=HTCreate(gens[1], rec(treehashsize:=I!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[fail],
-     lenreps:=[0], orbit:=[], dorbit:=[], repslens:=[],
+     lenreps:=[0], orbit:=[fail,], dorbit:=[], repslens:=[],
      lambdarhoht:=[], schreierpos:=[fail], schreiergen:=[fail],
      schreiermult:=[fail], genstoapply:=[1..Length(gens)], stopper:=false);
   
-  Objectify(NewType(FamilyObj(s), IsSemigroupIdealData and IsAttributeStoringRep),
-   data);
+  Objectify(NewType(FamilyObj(I), IsSemigroupIdealData), data);
   
-  SetParent(data, s);
   return data;
 end);
 
@@ -44,9 +42,9 @@ function(data)
   fi;
   Print("semigroup ideal ");
 
-  Print("data with ", Length(data!.orbit), " reps, ",
-   Length(LambdaOrb(Parent(data))), " lambda-values, ", 
-   Length(RhoOrb(Parent(data))), " rho-values>"); 
+  Print("data with ", Length(data!.orbit)-1, " reps, ",
+   Length(LambdaOrb(data!.parent)), " lambda-values, ", 
+   Length(RhoOrb(data!.parent)), " rho-values>"); 
   return;
 end);
 
@@ -117,7 +115,7 @@ function(data, limit, lookfunc)
   nrgens:=Length(gens); 
   genstoapply:=data!.genstoapply;
   
-  I:=Parent(data);
+  I:=data!.parent;
   
   # lambda
   lambda:=LambdaFunc(I);
@@ -224,7 +222,6 @@ function(data, limit, lookfunc)
       EquivalenceClassRelation, drel, IsGreensClassNC, false, 
       Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
       RhoOrb, rhoo, RhoOrbSCCIndex, mm, RhoOrbSCC, rhoscc[mm]);
-    if Number(d, x-> x=d[nr_d])>1 then Error(); fi;    
 
     # install the R-class reps of the new D-rep
     mults:=RhoOrbMults(rhoo, mm);
