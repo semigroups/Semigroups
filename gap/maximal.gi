@@ -8,10 +8,22 @@
 #############################################################################
 ##
 
-#JDM improve this!
-
 InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
 [IsSemigroup, IsSemigroup],
+function(S, T)
+  local iso;
+  if IsSubsemigroup(S, T) and S<>T then 
+    iso:=IsomorphismTransformationSemigroup(S);
+    return IsMaximalSubsemigroup(Range(iso),Semigroup(Images(iso, GeneratorsOfSemigroup(T))));
+  else
+    return false;
+  fi;
+end); 
+
+#JDM improve this!
+
+InstallMethod(IsMaximalSubsemigroup, "for an acting semigroup and acting semigroup", 
+[IsActingSemigroup, IsActingSemigroup],
 function(S, T)
   if IsSubsemigroup(S, T) and S<>T then 
     return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
@@ -929,9 +941,17 @@ InstallMethod(MaximalSubsemigroups, "for an arbitary semigroup",
 [IsSemigroup],
 function(S)
 
-  # Make this return subsemigroups, not just isomorphic subsemigroups
-  return MaximalSubsemigroups(Range(IsomorphismTransformationSemigroup(S)));
+  local iso, inv, max, out, T;
+  
+  iso:=IsomorphismTransformationSemigroup(S);
+  inv:=InverseGeneralMapping(iso);
+  max:=MaximalSubsemigroups(Range(iso));
+  out:=[];
+  for T in max do
+    Add(out, Semigroup(Images(inv, GeneratorsOfSemigroup(T))));
+  od;
 
+  return out;
 end);
 
 #
