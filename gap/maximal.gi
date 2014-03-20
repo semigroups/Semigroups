@@ -237,7 +237,7 @@ end);
 #
 
 
-InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup and a group",
+InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup and a group",
 [IsReesZeroMatrixSubsemigroup, IsGroup], 
 function(R, H)
   local G, mat, graph, basicgens, i, j, maxgens;
