@@ -57,6 +57,8 @@ gap> MaximalSubsemigroups(R,H);
 [ <subsemigroup of 2x3 Rees matrix semigroup with 5 generators> ]
 gap> MaximalSubsemigroups(R, Group([ (1,2,3), (1,2) ]));
 [  ]
+gap> MaximalSubsemigroups(R, Group(()));
+fail
 
 # A connected 2x2 RZMS over group S3
 gap> G:=Group([ (1,2), (1,2,3) ]);
@@ -128,6 +130,8 @@ gap> H:=Group([ (1,2,5) ]);
 Group([ (1,2,5) ])
 gap> MaximalSubsemigroups(R,H);
 [ <subsemigroup of 5x5 Rees 0-matrix semigroup with 12 generators> ]
+gap> MaximalSubsemigroups(R, Group(()));
+fail
 
 # An unconnected (3 components) 5x6 RZMS over group S4
 gap> G:=Group([ (1,2,3,4), (1,3,2,4) ]);

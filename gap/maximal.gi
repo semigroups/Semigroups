@@ -251,9 +251,13 @@ function(R, H)
     
   if not IsGroup(G) then 
     return fail;
+  elif not IsSubgroup(G,H) then
+    return fail;
+  elif not H in MaximalSubgroups(G) then
+    return fail;
   fi;
 
-  mat:=Matrix(R);         
+  mat:=Matrix(R);
   graph:=RZMSGraph(R);
   
   # Add to the generators one element which *must* be in each group H-class of
@@ -944,6 +948,7 @@ function(S)
   local iso, inv, max, out, T;
   
   iso:=IsomorphismTransformationSemigroup(S);
+  if iso = fail then return fail; fi;
   inv:=InverseGeneralMapping(iso);
   max:=MaximalSubsemigroups(Range(iso));
   out:=[];

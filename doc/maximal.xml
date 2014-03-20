@@ -92,7 +92,8 @@ gap> max:=MaximalSubsemigroups(R,H);
 [ &lt;subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators> ]
 gap> IsMaximalSubsemigroup(R,max[1]);
 true
-</Example>
+gap> MaximalSubsemigroups(R, Group(()));
+fail</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
