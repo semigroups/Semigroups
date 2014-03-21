@@ -8,28 +8,14 @@
 #############################################################################
 ##
 
-InstallMethod(Enumerate, "for an ideal lambda orb, a number and a function", 
-[IsIdealLambdaOrb, IsCyclotomic, IsFunction], 
-function(o, limit, lookfunc)
-  local I, newlookfunc;
+InstallMethod(Enumerate, "for an ideal orb, and a number", 
+[IsIdealOrb, IsCyclotomic], 
+function(o, limit)
+  local newlookfunc;
 
-  if limit <> infinity then
-    newlookfunc := function(data, x)
-      local lambdao;
-
-      lambdao := LambdaOrb(data!.parent);
-      return IsClosed(lambdao) or Length(lambdao) >= limit
-             or lookfunc(lambdao, x);
-    end;
-  else
-    newlookfunc := function(data, x)
-      local lambdao;
-     
-      lambdao := LambdaOrb(data!.parent);
-      return IsClosed(lambdao) or lookfunc(lambdao, x);
-    end;
-  fi;
-
+  newlookfunc := function(data, x)
+    return IsClosed(o) or Length(o) >= limit;
+  end;
   Enumerate(SemigroupData(o!.parent), infinity, newlookfunc);
 
   return o;
@@ -37,27 +23,15 @@ end);
 
 #
 
-InstallMethod(Enumerate, "for an ideal rho orb, a number and a function", 
-[IsIdealRhoOrb, IsCyclotomic, IsFunction], 
+InstallMethod(Enumerate, "for an ideal orb, a number, and a function", 
+[IsIdealOrb, IsCyclotomic, IsFunction], 
 function(o, limit, lookfunc)
-  local I, newlookfunc;
+  local newlookfunc;
 
-  if limit <> infinity then
-    newlookfunc := function(data, x)
-      local rhoo;
-
-      rhoo := RhoOrb(data!.parent);
-      return IsClosed(rhoo) or Length(rhoo) >= limit or lookfunc(rhoo, x);
-    end;
-  else
-    newlookfunc := function(data, x)
-      local rhoo;
-
-      rhoo := RhoOrb(data!.parent);
-      return IsClosed(rhoo) or lookfunc(rhoo, x);
-    end;
-  fi;
-
+  newlookfunc := function(data, x)
+    return IsClosed(o) or Length(o) >= limit
+           or lookfunc(o, x);
+  end;
   Enumerate(SemigroupData(o!.parent), infinity, newlookfunc);
 
   return o;
