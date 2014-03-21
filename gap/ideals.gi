@@ -8,6 +8,9 @@
 ############################################################################# 
 ##
 
+InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
+InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
+
 #
 
 InstallMethod(PrintObj, 

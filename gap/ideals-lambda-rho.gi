@@ -8,9 +8,12 @@
 #############################################################################
 ##
 
+#
+
 #InstallMethod(Enumerate, "for an ideal lambda orb", 
-#[IsIdealLambdaOrb], 
+#[IsIdealOrb], 
 #function(o, limit, lookfunc)
+#
 #end);
 
 #
