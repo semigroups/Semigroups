@@ -8,6 +8,9 @@ DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 DeclareAttribute("NrCongruenceClasses", IsSemigroupCongruence);
 
+DeclareSynonym("CongruenceClasses", EquivalenceClasses);
+DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
+
 # RMS Congruence Classes
 DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
