@@ -380,8 +380,9 @@ MappingByFunction( &lt;inverse partial perm monoid on 6721 pts
     An isomorphism to an inverse semigroup of partial permutations.
   </Returns>
   <Description>
-    <C>VagnerPrestonRepresentation</C> returns an isomorphism from the inverse
-    semigroup of partial permutations or bipartitions <A>S</A> to the inverse 
+    <C>VagnerPrestonRepresentation</C> returns an isomorphism from an inverse 
+    semigroup <A>S</A> where the elements of <A>S</A> have a unique semigroup 
+    inverse accessible via <Ref Attr="Inverse" BookName="ref"/>, to the inverse 
     semigroup of partial permutations <A>T</A> of degree equal to the size of 
     <A>S</A>, which is obtained using the Vagner-Preston Representation Theorem.
     <P/>
