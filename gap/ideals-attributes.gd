@@ -10,3 +10,4 @@
 
 DeclareOperation("SmallIdealGeneratingSet",
 [IsActingSemigroup and IsSemigroupIdeal]);
+DeclareAttribute("IsomorphismTransformationSemigroup", IsSemigroupIdeal);

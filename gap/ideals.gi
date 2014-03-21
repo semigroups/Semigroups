@@ -90,7 +90,15 @@ InstallMethod(\=, "for a semigroup ideal and semigroup with generators",
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
  IsSemigroup and HasGeneratorsOfSemigroup],
 function(I, S)
-  return ForAll(GeneratorsOfSemigroup(S), x-> x in I);  
+  if ForAll(GeneratorsOfSemigroup(S), x-> x in I) then 
+    if S=Parent(I) then 
+      return true;
+    else 
+      return ForAll(GeneratorsOfSemigroup(I), x-> x in S);
+    fi;
+  else 
+    return false;
+  fi;
 end);
 
 #
@@ -99,7 +107,7 @@ InstallMethod(\=, "for a semigroup with generators and a semigroup ideal",
 [IsSemigroup and HasGeneratorsOfSemigroup, 
 IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal], 
 function(S, I)
-  return ForAll(GeneratorsOfSemigroup(S), x-> x in I);  
+  return I=S;
 end);
 
 #
