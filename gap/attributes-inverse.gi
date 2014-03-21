@@ -467,7 +467,7 @@ end);
 
 InstallMethod(SameMinorantsSubgroup, 
 "for a group H-class of an inverse semigroup of partial perms or block bijections",
-[IsGroupHClass],
+[IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass],
 function(h)
   local S, e, F, out, i, NaturalLeq;
   

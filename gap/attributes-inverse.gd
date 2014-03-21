@@ -23,7 +23,7 @@ DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
 
 DeclareOperation("RightCosetsOfInverseSemigroup", [IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp]);
 
-DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
+DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup and
 IsPartialPermSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
