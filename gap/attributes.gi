@@ -931,7 +931,7 @@ function(s)
   return fail;
 end);
 
-#JDM better if this returned an actual semigroup ideal!!
+#
 
 InstallMethod(MinimalIdeal, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -956,9 +956,9 @@ function(s)
 
   f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
   d:=GreensDClassOfElementNC(s, f);
-  I:=Semigroup(Elements(d), rec(small:=true));
+  I:=SemigroupIdealByGenerators(s, [f]);
   SetMinimalDClass(s, d);
-  SetIsSimpleSemigroup(I, true);
+  #SetIsSimpleSemigroup(I, true); # Setting ideal as simple doesn't work
   return I; 
 end);
 
