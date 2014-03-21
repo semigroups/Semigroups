@@ -9,6 +9,48 @@
 #############################################################################
 ##
 
+#
+#T This will be moved to a more appropriate place
+#
+
+DeclareGlobalFunction( "SEMIG_HashFunctionForPlistVects" );
+DeclareGlobalFunction( "SEMIG_HashFunctionForPlistMats" );
+
+#T these are basically stolen from cvec
+InstallGlobalFunction( SEMIG_HashFunctionForPlistVects,
+function(x,data)
+    return ORB_HashFunctionForPlainFlatList(x, data);
+end);
+
+InstallGlobalFunction( SEMIG_HashFunctionForPlistMats,
+function(x,data)
+    local i,res;
+    res := 0;
+    #T This looks magic bus isn't, see matobjplist.gd
+    #T the entries of PlistMatrixRep and PlistVectorRep are defined there
+    for i in [1..x![3]] do
+        res := (res * 1001 + SEMIG_HashFunctionForPlistVects(x![4][i]![2],data[1]))
+             mod data[1]+1;
+    od;
+    return res;
+end );
+
+InstallMethod( ChooseHashFunction, "for plain list vector objects",
+    [IsPlistVectorRep, IsInt],
+function(vec, hashlen)
+    return rec( func := ORB_HashFunctionForPlainFlatList,
+                data := hashlen );
+end);
+
+InstallMethod( ChooseHashFunction, "for plain list matrix objects",
+    [IsPlistMatrixRep, IsInt],
+function(mat, hashlen)
+    local bytelen;
+    bytelen := (GAPInfo.BytesPerVariable * (mat![3] + 1) mod hashlen) + 1;
+    return rec( func := SEMIG_HashFunctionForPlistMats,
+                data := [hashlen,bytelen] );
+end );
+
 # This certainly is a collection of associative elements under the assumption
 # that the multiplication only has to be associative if it works.
 InstallTrueMethod(IsAssociativeElementCollection
@@ -180,14 +222,17 @@ function(S)
       function(vsp, mat)
         local basis;
         
-        #T is CanonicalBasis better here?
-        basis := BasisVectors(Basis(vsp));
+        if vsp = [[]] then
+            basis := Rows(mat);
+        else
+            #T is CanonicalBasis better here?
+            basis := BasisVectors(Basis(vsp));
         
-        #T hack.
-        if basis = [] then
-            basis := [Zero(vsp)];
+            #T hack.
+            if basis = [] then
+                basis := [Zero(vsp)];
+            fi;
         fi;
-        
         return VectorSpace(BaseDomain(mat), basis * mat);
       end;
 end);
@@ -201,12 +246,17 @@ function(S)
       function(vsp, mat)
         local basis;
         
-        basis := BasisVectors(Basis(vsp));
-        #T hack.
-        if basis = [] then
-            basis := [Zero(vsp)];
+         if vsp = [[]] then
+            basis := Rows(mat);
+        else
+            #T is CanonicalBasis better here?
+            basis := BasisVectors(Basis(vsp));
+        
+            #T hack.
+            if basis = [] then
+                basis := [Zero(vsp)];
+            fi;
         fi;
-         
         return VectorSpace(BaseDomain(mat), basis * TransposedMat(mat));
       end;
 end);
@@ -215,29 +265,12 @@ InstallMethod(LambdaOrbSeed,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         # row space of matrix
-        function(s)
-            local dom, rep, gens;
-    
-            rep := Representative(s);
-            dom := BaseDomain(rep);
-            gens := Rows(IdentityMatrix(ActionDegree(s), rep));
-
-            return VectorSpace(dom, gens);
-        end);
-
+        s -> [ [] ] );
 
 InstallMethod(RhoOrbSeed,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
-        function(s)
-            local dom, rep, gens;
-    
-            rep := Representative(s);
-            dom := BaseDomain(rep);
-            gens := Rows(IdentityMatrix(ActionDegree(s), rep));
-
-            return VectorSpace(dom, gens);
-        end);
+        s -> [ [] ] );
 
 InstallMethod(LambdaFunc,
         "for a matrix semigroup",
