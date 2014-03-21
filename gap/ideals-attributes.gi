@@ -34,3 +34,21 @@ function(I)
   return out;
 end);
 
+# 
+
+InstallMethod(SmallIdealGeneratingSet, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  local max, out;
+
+  out := [];
+  if Length(GeneratorsOfSemigroupIdeal(I)) = 1 then
+    return GeneratorsOfSemigroupIdeal(I);
+  else
+    for max in MaximalDClasses(I) do
+      Add(out, Representative(max));
+    od;
+  fi;
+
+  return out;
+end);
