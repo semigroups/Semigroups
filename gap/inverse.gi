@@ -968,7 +968,7 @@ InstallMethod(Size, "for an acting semigroup with inversion",
 function(s)
   local o, scc, r, nr, m;
 
-  o:=LambdaOrb(s);   
+  o:=LambdaOrb(s);   Enumerate(o, infinity);
   scc:=OrbSCC(o);
   r:=Length(scc); 
   nr:=0;
