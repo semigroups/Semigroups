@@ -21,12 +21,13 @@ DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("MajorantClosureNC", [IsInverseSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
 
-DeclareOperation("RightCosetsOfInverseSemigroup", [IsInverseSemigroup, IsInverseSemigroup]);
+DeclareOperation("RightCosetsOfInverseSemigroup", [IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp]);
 
 DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup and
 IsPartialPermSemigroup);
-DeclareGlobalFunction("SupremumIdempotentsPPNC");
-DeclareGlobalFunction("SupremumIdempotentsBBNC");
+DeclareGlobalFunction("SupremumIdempotentsNC");
 
 DeclareAttribute("VagnerPrestonRepresentation", IsActingSemigroupWithInverseOp);
+
+DeclareOperation("NaturalLeqInverseSemigroup", [IsAssociativeElement, IsAssociativeElement]);
