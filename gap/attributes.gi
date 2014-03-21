@@ -24,6 +24,8 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
 
+# same method for ideals
+
 InstallMethod(IsGreensDLeq, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
@@ -348,10 +350,10 @@ else
   end);
 fi;
 
-#
+# different method for ideals, although this method will work too
 
-InstallMethod(MaximalDClasses, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(MaximalDClasses, "for an acting semigroup",
+[IsActingSemigroup],
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 

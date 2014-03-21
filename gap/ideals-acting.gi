@@ -17,7 +17,7 @@ function(I)
  
   gens:=GeneratorsOfSemigroup(Parent(I));
 
-  data:=rec(gens:=gens, parent:=I, log:=[1],
+  data:=rec(gens:=gens, parent:=I, log:=[1], genspos:=0,
      ht:=HTCreate(gens[1], rec(treehashsize:=I!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[fail],
@@ -247,7 +247,6 @@ function(data, limit, lookfunc)
     # install the R-class reps of the new D-rep
     mults:=RhoOrbMults(rhoo, mm);
     cosets:=RhoCosets(d[nr_d]);
-
     
     for l in rhoscc[mm] do #install the R-class reps
       if not IsBound(lambdarhoht[l]) then 
@@ -301,7 +300,9 @@ function(data, limit, lookfunc)
     od;
 
     data!.init:=true;
+    data!.genspos:=nr_d+1;
   fi;
+
   i:=data!.pos;       # points in orb in position at most i have descendants
 
   while nr_d<=limit and i<nr_d and i<>stopper do 

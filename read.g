@@ -30,6 +30,7 @@ ReadPackage("semigroups/gap/enums.gi");
 ReadPackage("semigroups/gap/iterators.gi");
 ReadPackage("semigroups/gap/properties.gi");
 ReadPackage("semigroups/gap/attributes.gi");
+ReadPackage("semigroups/gap/ideals-attributes.gi");
 ReadPackage("semigroups/gap/examples.gi");
 ReadPackage("semigroups/gap/orbits.gi");
 
