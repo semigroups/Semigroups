@@ -381,6 +381,73 @@ end);
 
 #
 
+InstallMethod(JoinSemigroupCongruences,
+"for two Rees 0-matrix semigroup congruences by linked triple",
+[IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
+function(c1, c2)
+  local gens, n, colBlocks, cols, rowBlocks, rows, i, block, u;
+  if Range(c1) <> Range(c2) then
+    Error("congruences must be defined over the same semigroup,"); return;
+  fi;
+  # n is the product of the normal subgroups
+  gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
+  n := Group(gens);
+  # Calculate the union of the column and row relations
+  colBlocks := []; cols := [1..Size(c1!.colLookup)];
+  rowBlocks := []; rows := [1..Size(c1!.rowLookup)];
+  while not IsEmpty(cols) do
+    i := Remove(cols);
+    block := Union(c1!.colBlocks[c1!.colLookup[i]],
+                   c2!.colBlocks[c2!.colLookup[i]]);
+    for i in block do Unbind(cols[i]); od;
+    Add(colBlocks, block);
+  od;
+  while not IsEmpty(rows) do
+    u := Remove(rows);
+    block := Union(c1!.rowBlocks[c1!.rowLookup[u]],
+                   c2!.rowBlocks[c2!.rowLookup[u]]);
+    for u in block do Unbind(rows[u]); od;
+    Add(rowBlocks, block);
+  od;
+  # Make the congruence and return it
+  return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
+end);
+
+#
+
+InstallMethod(MeetSemigroupCongruences,
+"for two Rees 0-matrix semigroup congruences by linked triple",
+[IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
+function(c1, c2)
+  local n, colBlocks, cols, rowBlocks, rows, i, block, u;
+  if Range(c1) <> Range(c2) then
+    Error("congruences must be defined over the same semigroup,"); return;
+  fi;
+  # n is the intersection of the two normal subgroups
+  n := Intersection(c1!.n, c2!.n);
+  # Calculate the intersection of the column and row relations
+  colBlocks := []; cols := [1..Size(c1!.colLookup)];
+  rowBlocks := []; rows := [1..Size(c1!.rowLookup)];
+  while not IsEmpty(cols) do
+    i := Remove(cols);
+    block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
+                          c2!.colBlocks[c2!.colLookup[i]]);
+    for i in block do Unbind(cols[i]); od;
+    Add(colBlocks, block);
+  od;
+  while not IsEmpty(rows) do
+    u := Remove(rows);
+    block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
+                          c2!.rowBlocks[c2!.rowLookup[u]]);
+    for u in block do Unbind(rows[u]); od;
+    Add(rowBlocks, block);
+  od;
+  # Make the congruence and return it
+  return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
+end);
+
+#
+
 InstallMethod(RMSCongruenceClassByLinkedTriple,
 "for semigroup congruence by linked triple, a coset and two positive integers",
 [IsRMSCongruenceByLinkedTriple,
