@@ -212,7 +212,7 @@ function(S, gens, opts)
   
   if IsActingSemigroupWithInverseOp(S) then 
     SetFilterObj(I, IsActingSemigroupWithInverseOp);
-  elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then 
+  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then 
     SetIsRegularSemigroup(I, true);
   fi;
 
