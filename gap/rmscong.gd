@@ -17,8 +17,8 @@ DeclareOperation("RMSCongruenceClassByLinkedTriple",
 DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
         [IsRMSCongruenceByLinkedTriple,
          IsRightCoset, IsPosInt, IsPosInt] );
-DeclareOperation("\*", [IsRMSCongruenceClassByLinkedTriple, IsList] );
-DeclareOperation("\*", [IsList, IsRMSCongruenceClassByLinkedTriple] );
+DeclareOperation("\*", [IsEquivalenceClass, IsList] );
+DeclareOperation("\*", [IsList, IsEquivalenceClass] );
 DeclareAttribute("CanonicalRepresentative",
         IsRMSCongruenceClassByLinkedTriple);
 
