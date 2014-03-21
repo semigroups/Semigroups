@@ -10,8 +10,8 @@
 
 # things for graded orbits
 
-InstallMethod(GradedLambdaHT, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(GradedLambdaHT, "for an acting semigroup",
+[IsActingSemigroup],  
 function(s)
   local record;
 
@@ -67,13 +67,13 @@ end);
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
-  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j, k, l;
+  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
 
   if not IsActingSemigroup(s) then 
     Error("usage: <s> must be an acting semigroup,");
     return;
   elif not IsAssociativeElement(f) then 
-    Error("usage: <f> must be an associative element with action,");
+    Error("usage: <f> must be an associative element,");
     return;
   elif not IsBool(opt) then 
     Error("usage: <opt> must be a boolean,");
@@ -112,7 +112,13 @@ function(s, f, opt)
   record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
   record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata; 
 
-  o:=Orb(GeneratorsOfSemigroup(s), lambda, LambdaAct(s), record);
+  if IsSemigroupIdeal(s) then 
+    gens:=GeneratorsOfSemigroup(Parent(s));
+  else
+    gens:=GeneratorsOfSemigroup(s);
+  fi;
+
+  o:=Orb(gens, lambda, LambdaAct(s), record);
   SetIsGradedLambdaOrb(o, true);
   
   if opt then # store o
@@ -135,11 +141,10 @@ end);
 
 InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
-  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j,
-  k, l;
+  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
 
-  if not (IsActingSemigroup(s) and HasGeneratorsOfSemigroup(s)) then 
-    Error("usage: <s> must be an acting semigroup with generators,");
+  if not IsActingSemigroup(s) then 
+    Error("usage: <s> must be an acting semigroup,");
     return;
   elif not IsAssociativeElement(f) then 
     Error("usage: <f> must be an associative element,");
@@ -183,7 +188,13 @@ function(s, f, opt)
   record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
   record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata;
 
-  o:=Orb(GeneratorsOfSemigroup(s), rho, RhoAct(s), record);
+  if IsSemigroupIdeal(s) then 
+    gens:=GeneratorsOfSemigroup(Parent(s));
+  else
+    gens:=GeneratorsOfSemigroup(s);
+  fi;
+
+  o:=Orb(gens, rho, RhoAct(s), record);
   SetIsGradedRhoOrb(o, true);
   
   if opt then # store o
