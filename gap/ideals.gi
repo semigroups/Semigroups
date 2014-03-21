@@ -211,7 +211,7 @@ function(S, gens, opts)
   I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
   
   if IsActingSemigroupWithInverseOp(S) then 
-    SetFilterObj(IsActingSemigroupWithInverseOp, I);
+    SetFilterObj(I, IsActingSemigroupWithInverseOp);
   elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then 
     SetIsRegularSemigroup(I, true);
   fi;
