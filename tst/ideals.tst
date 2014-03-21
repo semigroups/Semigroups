@@ -66,4 +66,22 @@ gap> UpdateIdealRhoOrb(o, RhoFunc(I)(I.1), I.1, fail, fail, 1);
 2
 
 #
+gap> gens := [                                                              
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
+> PartialPerm( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ),
+> PartialPerm( [ 1, 2, 6, 7, 8 ], [ 5, 1, 6, 2, 3 ] )];;
+gap> s := Semigroup(gens);
+<partial perm semigroup on 10 pts with 3 generators>
+gap> I := SemigroupIdeal(s, [gens[1]^2, gens[2]]);
+<partial perm semigroup ideal on 10 pts with 2 generators>
+gap> R := GreensRClassOfElement(I, gens[1]^2);
+{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+gap> DClassOfRClass(R);
+{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+gap> L := GreensLClassOfElement(I, gens[1]^2);
+{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+gap> DClassOfLClass(L);
+{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+
+#
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);
