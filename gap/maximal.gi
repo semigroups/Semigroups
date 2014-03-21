@@ -893,7 +893,7 @@ function(S)
               if k = 1 then
                 Add(out, Semigroup(GeneratorsOfSemigroup(U), ideal));
                 Info(InfoSemigroups, 2, "found maximal subsemigroup arising", 
-                " from removing all of XX");
+                " from removing all of XX; A is empty");
               fi;
               # if k > 1, I think we can stop considering this subset gens{j}
             else # not IsEmpty(A)
@@ -902,11 +902,11 @@ function(S)
                 if k = 1 then
                   Add(out, V);
                   Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
-                  " by removing all of XX");
+                  " by removing all of XX, and keeping all of A");
                 elif ForAll(XX, x->not x in V) and not ForAny(out, W->IsSubsemigroup(W, V)) then
                   Add(out, V);
                   Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
-                  " by removing all of XX");
+                  " by removing all of XX, and keeping all of A");
                 fi;
               else
                 
