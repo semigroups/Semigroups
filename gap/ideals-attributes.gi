@@ -63,3 +63,34 @@ end);
 
 #
 
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+
+  iso:=IsomorphismTransformationSemigroup(Parent(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsomorphismPermGroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+
+  if not IsGroupAsSemigroup(I) then 
+    Error( "usage: a semigroup satisfying IsGroupAsSemigroup,");
+    return; 
+  fi;
+
+  iso:=IsomorphismTransformationSemigroup(Parent(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+

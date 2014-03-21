@@ -883,13 +883,17 @@ end);
 InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 [IsPartialPermSemigroup], One);
 
-#
+# same method for ideals...
 
 InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
-  
+ 
+  if IsSemigroupIdeal(s) and HasMultiplicativeZero(Parent(s)) then 
+    return MultiplicativeZero(Parent(s));
+  fi;
+
   min:=MinActionRank(s);
   o:=LambdaOrb(s);
   rank:=LambdaRank(s);
@@ -931,48 +935,29 @@ function(s)
   return fail;
 end);
 
-#
+# same method for ideals
 
-InstallMethod(MinimalIdeal, "for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local rank, o, pos, min, len, m, f, d, I, n, i;
-
-  rank:=LambdaRank(s);
-  o:=LambdaOrb(s);
-  
-  pos:=LookForInOrb(o, function(o, x) return rank(x)=MinActionRank(s); end, 2);
-
-  if pos=false then 
-    min:=rank(o[2]); pos:=2; len:=Length(o);
-
-    for i in [3..len] do 
-      m:=rank(o[i]);
-      if m<min then
-        pos:=i; min:=m;
-      fi;
-    od;
-  fi;
-
-  f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
-  d:=GreensDClassOfElementNC(s, f);
-  I:=SemigroupIdealByGenerators(s, [f]);
-  SetMinimalDClass(s, d);
-  #SetIsSimpleSemigroup(I, true); # Setting ideal as simple doesn't work
-  return I; 
+InstallMethod(MinimalIdeal, "for an acting semigroup", [IsActingSemigroup],
+function(S)
+  return SemigroupIdeal(S, Representative(MinimalDClass(S)));
 end);
 
-# same method for inverse
+# same method for inverse/ideals
+# JDM: note that at present LookForInOrb will enumerate the semigroup data of
+# <s> to the end...
 
-InstallMethod(MinimalDClass, "for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local rank, o, pos, min, len, m, f, I, n, i;
+InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
+function(S)
+  local rank, o, pos, min, len, m, x, n, i;
 
-  rank:=LambdaRank(s);
-  o:=LambdaOrb(s);
+  if IsSemigroupIdeal(S) and HasMinimalDClass(Parent(S)) then 
+    return GreensDClassOfElementNC(S, Representative(MinimalDClass(Parent(S))));
+  fi;
+
+  rank:=LambdaRank(S);
+  o:=LambdaOrb(S);
   
-  pos:=LookForInOrb(o, function(o, x) return rank(x)=MinActionRank(s); end, 2);
+  pos:=LookForInOrb(o, function(o, x) return rank(x)=MinActionRank(S); end, 2);
 
   if pos=false then 
     min:=rank(o[2]); pos:=2; len:=Length(o);
@@ -984,37 +969,8 @@ function(s)
     od;
   fi;
 
-  f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
-  return GreensDClassOfElementNC(s, f);
-end);
-
-#
-
-InstallMethod(MinimalIdeal, "for an inverse acting semigroup",
-[IsActingSemigroupWithInverseOp],
-function(s)
-  local rank, o, pos, min, len, m, f, I, n, i;
-
-  rank:=LambdaRank(s);
-  o:=LambdaOrb(s);
-
-  pos:=LookForInOrb(o, function(o, x) return rank(x)=MinActionRank(s); end, 2);
-  
-  if pos=false then 
-    min:=rank(o[2]); pos:=2; len:=Length(o);
-    for i in [3..len] do 
-      m:=rank(o[i]); 
-      if m<min then 
-        pos:=i; min:=m;
-      fi;
-    od;
-  fi;
-
-  f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
-  I:=InverseSemigroup(Elements(GreensDClassOfElementNC(s, f)), 
-   rec(small:=true));
-  SetIsGroupAsSemigroup(I, true);
-  return I;
+  x:=EvaluateWord(S, TraceSchreierTreeForward(o, pos));
+  return GreensDClassOfElementNC(S, x);
 end);
 
 #
@@ -1028,7 +984,8 @@ d-> Range(InjectionPrincipalFactor(d)));
 InstallMethod(PrincipalFactor, "for a D-class",
 [IsGreensDClass], AssociatedReesMatrixSemigroupOfDClass);
 
-#
+#JDM this should be revised as per Attila's request
+# different method for ideals, not yet implemented 
 
 InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with generators", 
@@ -1041,7 +998,8 @@ function(s)
   fi;
 end);
 
-#
+#JDM this should be revised as per Attila's request
+# different method for ideals, not yet implemented 
 
 InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with inverse op and generators", 
@@ -1054,7 +1012,7 @@ function(s)
   fi;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(StructureDescription, "for an acting Brandt semigroup",
 [IsActingSemigroup and IsBrandtSemigroup],
@@ -1068,14 +1026,15 @@ function(s)
   String(NrRClasses(d)), ")");
 end);
 
-#
+# same method for ideals JDM check this works, IsGroupAsSemigroup not yet
+# working
 
 InstallMethod(StructureDescription, 
 "for an acting group as semigroup",
 [IsActingSemigroup and IsGroupAsSemigroup],
 s-> StructureDescription(Range(IsomorphismPermGroup(s))));
 
-#
+# JDM is this required anymore??
 
 InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
@@ -1110,11 +1069,12 @@ function(s)
    inv);
 end);
 
-#
+# JDM: can you review this MP?, 
+# different method for ideals
 
 InstallMethod(IsomorphismTransformationSemigroup, 
-"for a matrix semigroup",
-[IsMatrixSemigroup], 
+"for a matrix semigroup with generators", 
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup], 
 function(S)        
   local n, F, T;
   n:=Length(GeneratorsOfSemigroup(S)[1][1]);
@@ -1125,10 +1085,12 @@ function(S)
    x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
 end);
 
-#
+# same method for ideals
+# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
+# for an ideal. 
 
 InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+[IsTransformationSemigroup],
 function(s)
  
   if not IsGroupAsSemigroup(s)  then
@@ -1137,16 +1099,17 @@ function(s)
   fi;
 
   return MagmaIsomorphismByFunctionsNC(s, 
-   Group(List(Generators(s), PermutationOfImage)), 
+   Group(List(GeneratorsOfSemigroup(s), PermutationOfImage)), 
     PermutationOfImage, 
     x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
 end);
 
-#
+# same method for ideals
+# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
+# for an ideal. 
 
-InstallMethod(IsomorphismPermGroup,
-"for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
@@ -1159,7 +1122,9 @@ function(s)
     AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
 end);
 
-#
+# same method for ideals
+# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
+# for an ideal. 
 
 InstallMethod(IsomorphismPermGroup,
 "for a subsemigroup of a Rees 0-matrix semigroup",
@@ -1183,10 +1148,12 @@ function(s)
       x-> x![2], x-> RMSElement(s, rep![1], x, rep![3]));
 end);
 
-# fall back method...
+# fall back method, same method for ideals
+# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
+# for an ideal. 
 
-InstallMethod(IsomorphismPermGroup, "for a semigroup with generators", 
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsomorphismPermGroup, "for a semigroup", 
+[IsSemigroup],
 function(S)
   local en, act, gens;
 
@@ -1210,7 +1177,7 @@ function(S)
    x-> en[Position(en, One(S))^x]);
 end);
 
-#JDM  
+# not relevant for ideals
 
 InstallMethod(IsomorphismTransformationSemigroup, 
 "for semigroup of binary relations with generators", 
@@ -1235,7 +1202,7 @@ function(s)
   x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
 end);
 
-#
+# not relevant for ideals
 
 InstallMethod(Size, "for a monogenic transformation semigroup",
 [IsTransformationSemigroup and IsMonogenicSemigroup],

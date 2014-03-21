@@ -280,7 +280,7 @@ function(data, limit, lookfunc)
         
         if looking then 
           # did we find it?
-          if lookfunc(data, orb[nr_r]) then 
+          if lookfunc(data, orb[nr_r]) then
             data!.found:=nr_r;
           fi;
         fi;
@@ -406,6 +406,9 @@ function(x, I)
     lookfunc:=function(data, pt) 
       return xx in o;
     end;
+    #JDM: this currently doesn't work, i.e. it doesn't find if xx in o, and 
+    # it evaluates lookfunc(data, pt) when <pt> is every R-class in a D-class
+    # even though every such <pt> has the same lambda value :(
     Enumerate(data, infinity, lookfunc);
     l:=PositionOfFound(data);
 
