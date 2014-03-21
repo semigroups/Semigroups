@@ -93,8 +93,10 @@ function(I, S)
   if ForAll(GeneratorsOfSemigroup(S), x-> x in I) then 
     if S=Parent(I) then 
       return true;
+    elif HasGeneratorsOfSemigroup(I) then 
+      return ForAll(GeneratorsOfSemigroup(I), x-> x in I);
     else 
-      return ForAll(GeneratorsOfSemigroup(I), x-> x in S);
+      return Size(I)=Size(S);
     fi;
   else 
     return false;

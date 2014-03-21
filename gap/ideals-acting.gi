@@ -8,6 +8,45 @@
 ############################################################################# 
 ##
 
+InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  local D, U, inj, i, partial, j, C;
+  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  D:=MaximalDClasses(I);
+  U:=Semigroup(GeneratorsOfSemigroupIdeal(I));
+
+  for i in [1..Length(D)] do  
+    if IsRegularDClass(D[i]) then 
+      inj:=InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
+      U:=ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
+    else #Size(D[i])=1
+      U:=ClosureSemigroup(U, Representative(D[i]));
+    fi;
+  od;
+
+  i:=0; 
+  partial:=PartialOrderOfDClasses(I);
+  D:=GreensDClasses(I);
+
+  while U<>I do 
+    i:=i+1; j:=0;
+    while U<>I and j<Length(partial[i]) do 
+      j:=j+1; 
+      if Length(partial[i])=1 or partial[i][j]<>i then 
+        C:=D[partial[i][j]];
+        if IsRegularDClass(C) then 
+          inj:=InverseGeneralMapping(InjectionPrincipalFactor(C));
+          U:=ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
+        else
+          U:=ClosureSemigroup(U, AsList(C));
+        fi;
+      fi;
+    od;
+  od;
+  return GeneratorsOfSemigroup(Semigroup(U, rec(small:=true)));
+end);
+
 # JDM: currently almost a straight copy from acting.gi
 
 InstallMethod(SemigroupData, "for an acting semigroup ideal",
@@ -192,7 +231,7 @@ function(data, limit, lookfunc)
     if not new then 
       val:=htvalue(ht, x);
       if val<>fail then 
-        if pos<>fail then # we are multiplying a D-rep by generator <i>
+        if pos<>fail then # we are multiplying the <i>th D-rep by a generator
           AddSet(poset[i], datalookup[val]);
         fi;
         return; #x is one of the old R-reps
@@ -243,7 +282,13 @@ function(data, limit, lookfunc)
       EquivalenceClassRelation, drel, IsGreensClassNC, false, 
       Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
       RhoOrb, rhoo, RhoOrbSCCIndex, mm, RhoOrbSCC, rhoscc[mm]);
-
+    
+    # install the point in the poset
+    
+    if pos<>fail  then 
+      AddSet(poset[i], nr_d);
+    fi;
+    
     # install the R-class reps of the new D-rep
     mults:=RhoOrbMults(rhoo, mm);
     cosets:=RhoCosets(d[nr_d]);
