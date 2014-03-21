@@ -37,3 +37,23 @@ function(I)
   return data!.poset;
 end);
 
+#
+
+InstallMethod(DClassReps, "for an acting semigroup ideal", 
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  local data;
+
+  data:=SemigroupData(I);
+  Enumerate(data);
+  return List(data!.dorbit, Representative);
+end);
+
+#
+
+InstallMethod(NrRegularDClasses, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  return Number(GreensDClasses(I), IsRegularDClass);
+end);
+

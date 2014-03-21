@@ -59,7 +59,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, UpdateSemigroupIdealData, idealgens, i, n, mults, scc, x, cosets, y, z, j, k;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, UpdateSemigroupIdealData, idealgens, i, rreps, n, scc, mults, x, cosets, y, z, j, k;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -308,10 +308,11 @@ function(data, limit, lookfunc)
     i:=i+1; # advance in the dorb
     poset[i]:=[]; 
     # left multiply the R-class reps by the generators of the semigroup
-    
+    rreps:=[];
     n:=Length(RhoCosets(d[i]));
     scc:=RhoOrbSCC(d[i]);
     for j in [log[i]+1..log[i+1]] do  # the R-class reps of d[i]
+      rreps[j-log[i]]:=orb[j][4];    
       for k in genstoapply do 
         UpdateSemigroupIdealData(gens[k]*orb[j][4], scc[QuoInt(j-log[i]+n-1, n)], 
          k, fail);
@@ -321,7 +322,8 @@ function(data, limit, lookfunc)
         fi;
       od;
     od;
-     
+    SetRClassReps(d[i], rreps);
+
     # right multiply the L-class reps by the generators of the semigroup
     mults:=LambdaOrbMults(lambdao, LambdaOrbSCCIndex(d[i]));
     scc:=LambdaOrbSCC(d[i]);
