@@ -1345,7 +1345,7 @@ function(s)
     lookup:=OrbSCCLookup(rho_o);
 
     for i in [2..Length(lambda_o)] do
-      rep:=EvaluateWord(gens, TraceSchreierTreeForward(lambda_o, i));
+      rep:=EvaluateWord(s, TraceSchreierTreeForward(lambda_o, i));
       rho:=rhofunc(rep);
       j:=lookup[Position(rho_o, rho)];
 
@@ -1397,7 +1397,7 @@ function(s, n)
     rank:=RhoRank(s);
 
     for i in [2..Length(lambda_o)] do
-      rep:=EvaluateWord(gens, TraceSchreierTreeForward(lambda_o, i));
+      rep:=EvaluateWord(s, TraceSchreierTreeForward(lambda_o, i));
       rho:=rhofunc(rep);
       j:=lookup[Position(rho_o, rho)];
       if rank(rho_o[scc[j][1]])=n then  

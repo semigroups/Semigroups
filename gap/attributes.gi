@@ -379,15 +379,15 @@ function(s)
   return out;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(StructureDescriptionSchutzenbergerGroups, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for an acting semigroup", [IsActingSemigroup],
 function(s)
   local o, scc, out, m;
 
   o:=LambdaOrb(s);
+  Enumerate(o, infinity);
   scc:=OrbSCC(o);
   out:=[];
 
@@ -398,11 +398,10 @@ function(s)
   return out;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(StructureDescriptionMaximalSubgroups, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for an acting semigroup", [IsActingSemigroup],
 function(s)
   local out, d;
 
@@ -416,10 +415,11 @@ function(s)
   return out;
 end);
 
-#
+# same method for ideals, not yet tested due to no method for
+# MultiNeutralElement JDM 
 
-InstallMethod(GroupOfUnits, "for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(GroupOfUnits, "for a transformation semigroup",
+[IsTransformationSemigroup],
 function(s)
   local r, g, deg, u;
 
@@ -442,10 +442,11 @@ function(s)
   return u;
 end);
 
-#
+# same method for ideals, not yet tested due to no method for
+# MultiNeutralElement JDM 
 
-InstallMethod(GroupOfUnits, "for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(GroupOfUnits, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
 function(s)
   local r, g, deg, u;
 
@@ -469,10 +470,11 @@ function(s)
   return u;
 end);
 
-#
+# same method for ideals, not yet tested due to no method for
+# MultiNeutralElement JDM
 
-InstallMethod(GroupOfUnits, "for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(GroupOfUnits, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
 function(S)
   local R, G, deg, U;
 
@@ -495,10 +497,11 @@ function(S)
   return U;
 end);
 
-#
+# same method for ideals, not yet tested due to no method for
+# MultiNeutralElement JDM
 
-InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup with generators",
-[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
 function(s)
   local r, g, i, j, u;
 
@@ -521,16 +524,13 @@ end);
 
 #
 
-InstallMethod(IdempotentGeneratedSubsemigroup, 
-"for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-s-> Semigroup(Idempotents(s), rec(small:=true)));
+InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
+[IsActingSemigroup], s-> Semigroup(Idempotents(s), rec(small:=true)));
 
 #
 
 InstallMethod(IdempotentGeneratedSubsemigroup, 
-"for an inverse op acting semigroup with generators",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+"for an inverse op acting semigroup", [IsActingSemigroupWithInverseOp],
 s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 
 #
@@ -931,7 +931,7 @@ function(s)
   return fail;
 end);
 
-#JDM better if this returned an actual semigroup ideal!!
+#
 
 InstallMethod(MinimalIdeal, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -956,9 +956,9 @@ function(s)
 
   f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
   d:=GreensDClassOfElementNC(s, f);
-  I:=Semigroup(Elements(d), rec(small:=true));
+  I:=SemigroupIdealByGenerators(s, [f]);
   SetMinimalDClass(s, d);
-  SetIsSimpleSemigroup(I, true);
+  #SetIsSimpleSemigroup(I, true); # Setting ideal as simple doesn't work
   return I; 
 end);
 
