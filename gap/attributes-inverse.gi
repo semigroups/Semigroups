@@ -69,10 +69,10 @@ end);
 InstallMethod(NaturalLeqInverseSemigroup, "for an inverse semigroup elements",
 [IsAssociativeElement, IsAssociativeElement], 
 function(f, g)
-  if IsBlockBijection(f) and IsBlockBijection(g) then 
-    return NaturalLeqBlockBijection(f,g);
-  elif IsPartialPerm(f) and IsPartialPerm(g) then
+  if IsPartialPerm(f) and IsPartialPerm(g) then
     return NaturalLeqPartialPerm(f,g);
+  elif IsBlockBijection(f) and IsBlockBijection(g) then 
+    return NaturalLeqBlockBijection(f,g);
   else
     return fail;
   fi;
@@ -629,7 +629,7 @@ function(coll, type)
   elif IsBlockBijection(type) then
   
     if IsList(coll) and IsEmpty(coll) then 
-      return Bipartition(Concatenation([1..DegreeOfBipartition(type)],-[1..DegreeOfBipartition(type)]);
+      return Bipartition(Concatenation([1..DegreeOfBipartition(type)],-[1..DegreeOfBipartition(type)]));
     elif not IsBipartitionCollection(coll) then
       Error("the argument should be a collection of block bijections,");
     fi;
