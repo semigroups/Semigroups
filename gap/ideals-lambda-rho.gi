@@ -423,6 +423,38 @@ function(o, i)
   return [Reversed(leftword), o!.orbtogen[nr], Reversed(rightword)];
 end);
 
+#
+
+# the arguments are a lambda/rho orbit of a parent semigroup and a number. jj
+InstallGlobalFunction(SuffixOrb,
+function(o, i)
+  local out, scc, lookup, graph, adj, bool, x, z, y, newadj;
+
+  scc := OrbSCC(o);
+  lookup := OrbSCCLookup(o);
+  graph := OrbitGraph(o);
+  adj := [lookup[i]];
+  bool := BlistList([1..Length(scc)], [lookup[i]]); 
+  out := [lookup[i]];
+
+  while adj <> [] do
+    newadj := [];
+    for x in adj do
+      for y in scc[x] do
+        for z in graph[y] do
+          if not bool[lookup[z]] then
+            bool[lookup[z]] := true;
+            Add(out, lookup[z]);
+            Add(newadj, lookup[z]);
+          fi;
+        od;
+      od;
+    od;
+    adj := newadj;
+  od;
+
+  return out;
+end);
 # the first position of the returned word refers to the generators of the ideal
 # corresponding to the position in the orbit of the point from which the <o[pos]>
 # is obtained. For example, [1,2,3] means I.1*S.2*S.3.

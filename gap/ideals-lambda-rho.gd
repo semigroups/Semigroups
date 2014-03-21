@@ -20,3 +20,5 @@ DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);
 DeclareOperation("TraceIdealSchreierTreeForward", [IsIdealOrb, IsPosInt]);
 
 DeclareOperation("Enumerate", [IsIdealOrb, IsCyclotomic, IsFunction]);
+
+DeclareGlobalFunction("SuffixOrb");
