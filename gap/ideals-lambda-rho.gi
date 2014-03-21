@@ -18,11 +18,15 @@ function(o, limit, lookfunc)
       local lambdao;
 
       lambdao := LambdaOrb(data!.parent);
-      return Length(lambdao) >= limit or lookfunc(lambdao, x);
+      return IsClosed(lambdao) or Length(lambdao) >= limit
+             or lookfunc(lambdao, x);
     end;
   else
     newlookfunc := function(data, x)
-      return lookfunc(LambdaOrb(data!.parent));
+      local lambdao;
+     
+      lambdao := LambdaOrb(data!.parent);
+      return IsClosed(lambdao) or lookfunc(lambdao, x);
     end;
   fi;
 
@@ -43,11 +47,14 @@ function(o, limit, lookfunc)
       local rhoo;
 
       rhoo := RhoOrb(data!.parent);
-      return Length(rhoo) >= limit or lookfunc(rhoo, x);
+      return IsClosed(rhoo) or Length(rhoo) >= limit or lookfunc(rhoo, x);
     end;
   else
     newlookfunc := function(data, x)
-      return lookfunc(RhoOrb(data!.parent));
+      local rhoo;
+
+      rhoo := RhoOrb(data!.parent);
+      return IsClosed(rhoo) or lookfunc(rhoo, x);
     end;
   fi;
 
