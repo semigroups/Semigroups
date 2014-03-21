@@ -6,6 +6,7 @@ DeclareAttribute("CongruencesOfSemigroup",
 DeclareGlobalFunction("IsLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
+DeclareAttribute("NrCongruenceClasses", IsSemigroupCongruence);
 
 # RMS Congruence Classes
 DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
@@ -16,10 +17,8 @@ DeclareOperation("RMSCongruenceClassByLinkedTriple",
 DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
         [IsRMSCongruenceByLinkedTriple,
          IsRightCoset, IsPosInt, IsPosInt] );
-DeclareOperation("\*",
-        [IsRMSCongruenceClassByLinkedTriple, IsList] );
-DeclareOperation("\*",
-        [IsList, IsRMSCongruenceClassByLinkedTriple] );
+DeclareOperation("\*", [IsRMSCongruenceClassByLinkedTriple, IsList] );
+DeclareOperation("\*", [IsList, IsRMSCongruenceClassByLinkedTriple] );
 DeclareAttribute("CanonicalRepresentative",
         IsRMSCongruenceClassByLinkedTriple);
 

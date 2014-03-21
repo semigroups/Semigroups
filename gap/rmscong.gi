@@ -381,6 +381,21 @@ end);
 
 #
 
+InstallMethod(NrCongruenceClasses,
+"for Rees 0-matrix semigroup congruence by linked triple",
+[IsRMSCongruenceByLinkedTriple],
+function(cong)
+  local s, g;
+  s := Range(cong);
+  g := UnderlyingSemigroup(s);
+  return( Index(g, cong!.n)    # Number of cosets of n
+          * Size(cong!.colBlocks)       # Number of column blocks
+          * Size(cong!.rowBlocks)       # Number of row blocks
+          + 1 );                        # Class containing zero
+end);
+
+#
+
 InstallMethod(JoinSemigroupCongruences,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
