@@ -18,3 +18,5 @@ DeclareGlobalFunction("UpdateIdealRhoOrb");
 DeclareOperation("EvaluateWord", [IsSemigroupIdeal, IsList]);
 DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);
 DeclareOperation("TraceIdealSchreierTreeForward", [IsIdealOrb, IsPosInt]);
+
+DeclareOperation("Enumerate", [IsIdealOrb, IsCyclotomic, IsFunction]);
