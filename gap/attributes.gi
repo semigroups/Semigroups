@@ -522,18 +522,18 @@ function(s)
   return u;
 end);
 
-#
+# same method for ideals 
 
 InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
 [IsActingSemigroup], s-> Semigroup(Idempotents(s), rec(small:=true)));
 
-#
+# same method for ideals 
 
 InstallMethod(IdempotentGeneratedSubsemigroup, 
 "for an inverse op acting semigroup", [IsActingSemigroupWithInverseOp],
 s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 
-#
+# same method for ideals
 
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -631,13 +631,13 @@ function(d)
   return hom;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
 "for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass], InjectionPrincipalFactor);
 
-#
+# same method for ideal
 
 InstallMethod(IrredundantGeneratingSubset,
 "for an associative element collection",
@@ -689,11 +689,10 @@ function(coll)
   return out;
 end);
 
-#
+# JDM: I'm not sure this is a valid method... 
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for a simple  or 0-simple acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for a simple  or 0-simple acting semigroup", [IsActingSemigroup],
 function(S)
   local D, iso, inv;
   if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then 
@@ -709,24 +708,24 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, Range(iso), x-> x^iso, x->x^inv);
 end);
 
-#
+# same method for ideals
 
 InstallMethod(InversesOfSemigroupElement, 
-"for acting semigroup with generators and associative element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
-function(s, f)
+"for an acting semigroup and associative element",
+[IsActingSemigroup, IsAssociativeElement],
+function(S, x)
 
-  if f in s then
-    return InversesOfSemigroupElementNC(s, f);
+  if x in S then
+    return InversesOfSemigroupElementNC(S, x);
   fi;
 
   return fail;
 end);
 
-#
+# different method for ideals
 
 InstallMethod(InversesOfSemigroupElementNC, 
-"for an acting semigroup and acting element",
+"for an acting semigroup and associative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
@@ -829,10 +828,10 @@ function(s, f)
   return out;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 function(s)
   local gens, rank, lambda, max, r, rep, f;
 
@@ -879,13 +878,15 @@ end);
 # partial permutations has to coincide with the One. This is not the case for
 # transformation semigroups
 
+# same method for ideals
+
 InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 [IsPartialPermSemigroup], One);
 
 #
 
 InstallMethod(MultiplicativeZero, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
   
@@ -907,8 +908,7 @@ function(s)
   fi;
 
   if pos<>fail and pos<>false then
-    f:=EvaluateWord(GeneratorsOfSemigroup(s), 
-     TraceSchreierTreeForward(o, pos));
+    f:=EvaluateWord(s, TraceSchreierTreeForward(o, pos));
   else
     # lambda orb is closed, find an element with minimum rank
     min_found:=rank(o[2]); pos:=2; i:=1; 

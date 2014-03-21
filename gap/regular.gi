@@ -75,18 +75,15 @@ function(f, s)
     return f in AsSSortedList(s); 
   fi;
 
-  lambda_o:=LambdaOrb(s);
-#JDM: shouldn't use EnumeratePosition  here if it is not in there then we have
-  #to reach the end to find that out, if it is in there then we calculate the
-  #scc later on and so we have to reach the end...
-  lambda_l:=EnumeratePosition(lambda_o, LambdaFunc(s)(f), false);
+  lambda_o:=LambdaOrb(s); Enumerate(lambda_o, infinity);
+  lambda_l:=Position(lambda_o, LambdaFunc(s)(f));
   
   if lambda_l=fail then 
     return false;
   fi;
 
-  rho_o:=RhoOrb(s);
-  rho_l:=EnumeratePosition(rho_o, RhoFunc(s)(f), false);
+  rho_o:=RhoOrb(s);       Enumerate(rho_o, infinity);
+  rho_l:=Position(rho_o, RhoFunc(s)(f));
   
   if rho_l=fail then 
     return false;

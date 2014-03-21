@@ -21,13 +21,15 @@ function(o, limit)
   return o;
 end);
 
-#
+# JDM: this doesn't make any sense, the argument <lookfunc> should be applied to
+# the elements of <o> not the points in <data!.orbit>, which is what is
+# happening here...
 
 InstallMethod(Enumerate, "for an ideal orb, a number, and a function", 
 [IsIdealOrb, IsCyclotomic, IsFunction], 
 function(o, limit, lookfunc)
   local newlookfunc;
-
+  
   newlookfunc := function(data, x)
     return IsClosed(o) or Length(o) >= limit
            or lookfunc(o, x);

@@ -8,13 +8,38 @@
 #############################################################################
 ##
 
+# the following method is required to beat the method for
+# IsPartialPermCollection in the library.
+
+InstallMethod(One, "for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local x;
+
+  x:=One(GeneratorsOfSemigroupIdeal(I));
+
+  if x in I then 
+    return x;
+  fi;
+  return fail;
+end);
+
+#
+
+InstallMethod(CodegreeOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  return CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I));
+end);
+
 #
 
 InstallMethod(DegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  return DegreeOfPartialPermSemigroup(Parent(I));
+  return DegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I));
 end);
 
 #

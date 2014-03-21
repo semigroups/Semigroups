@@ -34,3 +34,13 @@ function(I)
   return out;
 end);
 
+#JDM: is there a better method?
+
+InstallMethod(InversesOfSemigroupElementNC, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal, IsAssociativeElement],
+function(I, x)
+  return InversesOfSemigroupElementNC(Parent(I), x);
+end);
+
+#
+
