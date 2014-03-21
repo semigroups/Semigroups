@@ -348,6 +348,7 @@ gap> GreensRClasses(D);
     <Oper Name="GreensHClassOfElement" Arg="X, f"/>
     <Oper Name="GreensHClassOfElement" Arg="R, i, j"/>
     <Func Name="HClass" Arg="X, f"/>
+    <Func Name="HClass" Arg="R, i, j"/>
     <Oper Name="GreensLClassOfElement" Arg="X, f"/>
     <Func Name="LClass" Arg="X, f"/>
     <Oper Name="GreensRClassOfElement" Arg="X, f"/>
