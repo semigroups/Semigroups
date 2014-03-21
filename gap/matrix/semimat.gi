@@ -12,9 +12,84 @@
 #
 #T This will be moved to a more appropriate place
 #
+#############################################################################
+##
+#M  TriangulizeMat( <mat> ) . . . . . bring a matrix in upper triangular form
+##
+DeclareOperation( "TriangulizeMat", 
+        [ IsMatrixObj and IsMutable ]);
+        
+InstallMethod( TriangulizeMat,
+    "generic method for mutable matrix objects",
+    [ IsMatrixObj and IsMutable ],
+    function ( mat )
+    local d, m, n, i, j, k, row, zero, x, row2;
+                  
+    Info( InfoMatrix, 1, "TriangulizeMat called" );
+
+    d := DimensionsMat(mat);
+    m := d[1]; n := d[2];
+    
+    if not (m = 0 or n = 0) then  
+       # get the size of the matrix
+       zero := Zero( BaseDomain(mat) );
+              
+       # make sure that the rows are mutable
+       # for i in [ 1 .. m ] do
+       #   if not IsMutable( mat[i] ) then
+       #     mat[i]:= ShallowCopy( mat[i] );
+       #   fi;
+       # od;
+
+       # run through all columns of the matrix
+       i := 0;
+       for k  in [1..n]  do
+           # find a nonzero entry in this column
+           j := i + 1;
+           while j <= m and mat[j][k] = zero  do j := j + 1;  od;
+
+           # if there is a nonzero entry
+           if j <= m  then
+
+               # increment the rank
+               Info( InfoMatrix, 2, "  nonzero columns: ", k );
+               i := i + 1;
+
+               # make its row the current row and normalize it
+               row    := mat[j];
+               mat[j] := mat[i];
+               x:= Inverse( row[k] );
+               if x = fail then
+                 TryNextMethod();
+               fi;
+               MultRowVector( row, x );
+               mat[i] := row;
+
+               # clear all entries in this column
+               for j  in [1..i-1] do
+                   row2 := mat[j];
+                   x := row2[k];
+                   if   x <> zero  then
+                       AddRowVector( row2, row, - x );
+                   fi;
+               od;
+               for j  in [i+1..m] do
+                   row2 := mat[j];
+                   x := row2[k];
+                   if   x <> zero  then
+                       AddRowVector( row2, row, - x );
+                   fi;
+               od;
+           fi;
+       od;
+    fi;
+
+    Info( InfoMatrix, 1, "TriangulizeMat returns" );
+end );
 
 DeclareGlobalFunction( "SEMIG_HashFunctionForPlistVects" );
 DeclareGlobalFunction( "SEMIG_HashFunctionForPlistMats" );
+DeclareGlobalFunction( "SEMIG_HashFunctionForFiniteDimensionalVectorSpaces");
 
 #T these are basically stolen from cvec
 InstallGlobalFunction( SEMIG_HashFunctionForPlistVects,
@@ -26,12 +101,33 @@ InstallGlobalFunction( SEMIG_HashFunctionForPlistMats,
 function(x,data)
     local i,res;
     res := 0;
-    #T This looks magic bus isn't, see matobjplist.gd
+    #T This looks magic but isn't, see matobjplist.gd
     #T the entries of PlistMatrixRep and PlistVectorRep are defined there
     for i in [1..x![3]] do
         res := (res * 1001 + SEMIG_HashFunctionForPlistVects(x![4][i]![2],data[1]))
              mod data[1]+1;
     od;
+    return res;
+end );
+
+InstallGlobalFunction( SEMIG_HashFunctionForFiniteDimensionalVectorSpaces,
+function(x,data)
+    local i,basis,res;
+    #T This is an attribute and is thus only computed once
+    #T If we cannot compute a canonical basis we are stuffed atm.
+    basis := CanonicalBasis(x);
+    res := 0;
+    #T This looks magic bus isn't, see matobjplist.gd
+    #T the entries of PlistMatrixRep and PlistVectorRep are defined there
+    if Length(basis) = 0 then
+        res := 1;
+    else
+        for i in [1..Length(basis)] do
+            res := (res * 1001 + SEMIG_HashFunctionForPlistVects(basis[i],data))
+                mod data+1;
+        od;
+    fi;
+    
     return res;
 end );
 
@@ -50,6 +146,15 @@ function(mat, hashlen)
     return rec( func := SEMIG_HashFunctionForPlistMats,
                 data := [hashlen,bytelen] );
 end );
+
+# Note that this can only be used to hash subspaces of F^n for some
+# previously fixed F and n
+InstallMethod( ChooseHashFunction, "for finite dimensional vector spaces",
+    [IsVectorSpace, IsInt],
+function(vsp, hashlen)
+    return rec( func := SEMIG_HashFunctionForFiniteDimensionalVectorSpaces,
+                data := hashlen );
+end);
 
 # This certainly is a collection of associative elements under the assumption
 # that the multiplication only has to be associative if it works.
@@ -220,20 +325,17 @@ function(S)
     # returns the right action on subspaces of F^n by right multiplication
     return
       function(vsp, mat)
-        local basis;
+        local basis, nvsp;
         
-        if vsp = [[]] then
-            basis := Rows(mat);
+        # This takes care of the token element
+        if RowLength(vsp) > RowLength(mat) then
+            nvsp := mat;
         else
-            #T is CanonicalBasis better here?
-            basis := BasisVectors(Basis(vsp));
-        
-            #T hack.
-            if basis = [] then
-                basis := [Zero(vsp)];
-            fi;
+            nvsp := vsp * mat;
         fi;
-        return VectorSpace(BaseDomain(mat), basis * mat);
+        
+        
+        return nvsp;
       end;
 end);
 
@@ -244,9 +346,9 @@ function(S)
     return
       #T I checked, these arguments should be this way around
       function(vsp, mat)
-        local basis;
+        local basis, nvsp;
         
-         if vsp = [[]] then
+        if Dimension(vsp) > RowLength(mat) then
             basis := Rows(mat);
         else
             #T is CanonicalBasis better here?
@@ -257,7 +359,9 @@ function(S)
                 basis := [Zero(vsp)];
             fi;
         fi;
-        return VectorSpace(BaseDomain(mat), basis * TransposedMat(mat));
+        nvsp := VectorSpace(BaseDomain(mat), basis * TransposedMat(mat));
+        SetFilterObj(nvsp, IsGaussianSpace);
+        return nvsp;
       end;
 end);
 
@@ -265,12 +369,23 @@ InstallMethod(LambdaOrbSeed,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         # row space of matrix
-        s -> [ [] ] );
+        # This is still a hack.
+function(s)
+    local rep;
+    rep := Representative(s);
+    
+    return FullRowModule(BaseDomain(rep), RowLength(rep) + 1);
+end);
 
 InstallMethod(RhoOrbSeed,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
-        s -> [ [] ] );
+function(s)
+    local rep;
+    rep := Representative(s);
+    
+    return FullRowModule(BaseDomain(rep), RowLength(rep) + 1);
+end);
 
 InstallMethod(LambdaFunc,
         "for a matrix semigroup",
@@ -279,13 +394,18 @@ InstallMethod(LambdaFunc,
     # a function that returns the row space
     return
       function(mat)
+        local nvsp;
+        
         #T This will only work for fields 
         #T at the moment the Matrix functions
         #T Don't check that their entries actually
         #T lie in the base domain. This leads to
         #T problems. Best way of solving this is 
         #T to implement checks.
-        return(VectorSpace(BaseDomain(mat), Rows(mat)));
+        nvsp := VectorSpace(BaseDomain(mat), Rows(mat));
+        SetFilterObj(nvsp, IsGaussianSpace);
+        return nvsp;
+        
       end;
 end);
 

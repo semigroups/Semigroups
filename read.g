@@ -35,6 +35,9 @@ ReadPackage("semigroups/gap/attributes-inverse.gi");
 ReadPackage("semigroups/gap/ideals.gi");
 
 ReadPackage("semigroups/gap/freeinverse.gi");
+
+ReadPackage("semigroups/gap/matrix/hash.gi");
+ReadPackage("semigroups/gap/matrix/matrix.gi");
 ReadPackage("semigroups/gap/matrix/semimat.gi");
 
 ReadPackage("semigroups/gap/utils.gi");

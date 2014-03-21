@@ -45,7 +45,10 @@ ReadPackage("semigroups/gap/freeinverse.gd");
 
 ReadPackage("semigroups/gap/display.gd");
 
+ReadPackage("semigroups/gap/matrix/hash.gd");
+ReadPackage("semigroups/gap/matrix/matrix.gd");
 ReadPackage("semigroups/gap/matrix/semimat.gd");
+
 ReadPackage("semigroups/gap/isomorph.gd");
 ReadPackage("semigroups/gap/reesmat.gd");
 ReadPackage("semigroups/gap/reesmat-iso.gd");
