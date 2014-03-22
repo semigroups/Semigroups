@@ -543,11 +543,11 @@ function(S)
     return IsCliffordSemigroup(S);
   fi;
 
-  lambda:=LambdaOrb(S); Enumerate(lambda);
-  rho:=RhoOrb(S); Enumerate(rho, Length(lambda));
+  lambda:=LambdaOrb(S);  Enumerate(lambda);
+  rho:=RhoOrb(S);        Enumerate(rho, Length(lambda));
 
   if not (IsClosed(rho) and Length(rho)>=Length(lambda)) then 
-    Info(InfoSemigroups, 2, "the number of lambda and rho values is not equal");
+    Info(InfoSemigroups, 2, "the numbers of lambda and rho values are not equal");
     return false;
   fi;
   

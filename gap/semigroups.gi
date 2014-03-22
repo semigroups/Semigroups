@@ -737,9 +737,6 @@ function(s, coll, opts)
   fi;
 
   AddGeneratorsToOrbit(o, coll); 
-  #JDM I'm not certain this is working properly, the OrbitGraph seems not to be
-  #updated in the second position, in the first example in the 
-  #IdempotentGeneratedSubsemigroup man section
 
   # unbind everything related to strongly connected components, since 
   # even if the orbit length doesn't change the strongly connected components
@@ -923,7 +920,7 @@ function(s, coll, opts)
       orblookup1[new_nr]:=ind;
       orblookup2[new_nr]:=1;
 
-      pt:=[s, m, o, x, false, new_nr];
+      pt:=[t, m, o, x, false, new_nr];
     else
     # old rho value, and maybe we already have a rep of y's R-class...
       ind:=lambdarhoht[l][m];
