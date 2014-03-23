@@ -8,18 +8,6 @@
 #############################################################################
 ##
 
-InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
-[IsSemigroup, IsSemigroup],
-function(S, T)
-  local iso;
-  if IsSubsemigroup(S, T) and S<>T then 
-    iso:=IsomorphismTransformationSemigroup(S);
-    return IsMaximalSubsemigroup(Range(iso),Semigroup(Images(iso, GeneratorsOfSemigroup(T))));
-  else
-    return false;
-  fi;
-end); 
-
 #JDM improve this!
 
 InstallMethod(IsMaximalSubsemigroup, "for an acting semigroup and acting semigroup", 
@@ -34,6 +22,19 @@ end);
 
 #
 
+InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
+[IsSemigroup, IsSemigroup],
+function(S, T)
+  local iso;
+  if IsSubsemigroup(S, T) and S<>T then 
+    iso:=IsomorphismTransformationSemigroup(S);
+    return IsMaximalSubsemigroup(Range(iso),Semigroup(Images(iso, GeneratorsOfSemigroup(T))));
+  else
+    return false;
+  fi;
+end);
+
+#
 InstallMethod(IsMaximalSubsemigroup2, "for a semigroup and semigroup", 
 [IsSemigroup, IsSemigroup],
 function(S, T)
@@ -59,8 +60,8 @@ function(S, T)
   od;
   
   # Check that if d is non-regular, it has been completely removed
-  if not IsRegularDClass(d) then
-    return not ForAny(d, x->x in T);
+  if not IsRegularDClass(d) then 
+    return not ForAny(DClassReps(T), x-> x in d);
   fi;
   
   hS:=Size(GroupHClass(d));
