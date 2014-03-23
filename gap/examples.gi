@@ -661,15 +661,12 @@ function(g)
   while Size(s)<2^Size(g) do  
     i:=i+1;
     f:=TransformationOp(dom[i], dom, act);
-    if not f in s then 
-      Add(gens, f);
-      s:=Semigroup(gens);
-    fi;
+    s:=ClosureSemigroup(s, f);
   od;
   return s;
 end);
 
-# JDM
+#
 
 InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
@@ -678,10 +675,10 @@ function(n)
   
   x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=FullTransformationSemigroup(n);
-  return SemigroupIdeal(S, [x]);
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM
+#
 
 InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 [IsPosInt],
@@ -690,10 +687,10 @@ function(n)
   
   x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=OrderEndomorphisms(n);
-  return SemigroupIdeal(S, [x]);
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM
+#
 
 InstallMethod(SingularBrauerMonoid, "for a positive integer",
 [IsPosInt],
@@ -706,10 +703,10 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=BrauerMonoid(n);
-  return SemigroupIdeal(S, [x]);
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM
+#
 
 InstallMethod(SingularJonesMonoid, "for a positive integer",
 [IsPosInt],
@@ -722,10 +719,10 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=JonesMonoid(n);
-  return SemigroupIdeal(S, [x]);
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM
+#
 
 InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt],
@@ -738,10 +735,10 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=DualSymmetricInverseMonoid(n);
-  return SemigroupIdeal(S, [x]);
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM
+#
 
 InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup, 
 "for a positive integer", [IsPosInt],
@@ -754,7 +751,7 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=FactorisableDualSymmetricInverseSemigroup(n);
-  return SemigroupIdeal(S, [x]);
+  return SemigroupIdeal(S, x);
 end);
 
 #EOF
