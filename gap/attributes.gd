@@ -23,7 +23,22 @@ DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
-DeclareAttribute("SmallGeneratingSet", IsActingSemigroup);
+
+DeclareAttribute("SmallSemigroupGeneratingSet", IsAssociativeElementCollection);
+DeclareAttribute("SmallSemigroupGeneratingSet", IsActingSemigroup);
+DeclareAttribute("SmallMonoidGeneratingSet", IsAssociativeElementCollection and
+IsMultiplicativeElementWithOneCollection);
+DeclareAttribute("SmallMonoidGeneratingSet", IsActingSemigroup and IsMonoid);
+DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
+IsGeneratorsOfInverseSemigroup);
+DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
+IsInverseSemigroup and IsActingSemigroup);
+DeclareAttribute("SmallInverseMonoidGeneratingSet", 
+IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection);
+DeclareAttribute("SmallInverseMonoidGeneratingSet", 
+IsInverseMonoid and IsActingSemigroup);
+DeclareAttribute("SmallGeneratingSet", IsSemigroup);
+
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
 DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);

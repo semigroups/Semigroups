@@ -13,3 +13,5 @@ DeclareGlobalFunction("SemigroupIdeal");
 DeclareOperation("SemigroupIdealByGenerators", 
   [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
 
+DeclareAttribute("SmallIdealGeneratingSet", IsSemigroupIdeal);
+

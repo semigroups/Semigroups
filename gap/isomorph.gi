@@ -75,7 +75,7 @@ if (not IsBound(GAPInfo.PackagesLoaded.grape))
   InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
   HasGeneratorsOfSemigroup],  
-  function(R)
+  function(S, T)
     Info(InfoWarning, 1, "the GRAPE package is not loaded or the ",
     "nauty/dreadnaut  binaries are not installed, and so this function ", 
     "does not work");
