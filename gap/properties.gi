@@ -1200,10 +1200,10 @@ end);
 InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-#
+# same method for ideals
 
-InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
 function(S)
   local iter, D;
   

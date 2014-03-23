@@ -877,32 +877,45 @@ function(s)
   return out;
 end);
 
-# different method for inverse
+# different method for inverse, same method for ideals
 
 InstallMethod(Random, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-function(s)
-  local gens, i, w, lambda_o, m, f, rho_o, rho_m, j;
+function(S)
+  local gens, i, w, x, o, m;
   
-  if not IsClosed(LambdaOrb(s)) or not IsClosed(RhoOrb(s)) then
-    gens:=GeneratorsOfSemigroup(s);    
-    i:=Random([1..Int(Length(gens)/2)]);
-    w:=List([1..i], x-> Random([1..Length(gens)]));
-    return EvaluateWord(gens, w);
+  if not IsClosed(LambdaOrb(S)) or not IsClosed(RhoOrb(S)) then
+    if HasGeneratorsOfSemigroup(S) then 
+      gens:=GeneratorsOfSemigroup(S);    
+      i:=Random([1..2*Int(Length(gens))]);
+      w:=List([1..i], x-> Random([1..Length(gens)]));
+      return EvaluateWord(gens, w);
+    else
+      x:=Random([1..Length(GeneratorsOfSemigroupIdeal(S))]);
+      gens:=GeneratorsOfSemigroup(Parent(S));
+      
+      i:=Random([1..Length(gens)]);
+      w:=List([1..i], x-> Random([1..Length(gens)]));
+      
+      x:=EvaluateWord(S, [[], x, w]);
+      
+      i:=Random([1..Length(gens)]);
+      w:=List([1..i], x-> Random([1..Length(gens)]));
+      return EvaluateWord(gens, w)*x;
+    fi;
   fi;
   
-  lambda_o:=LambdaOrb(s);
-  i:=Random([1..Length(lambda_o)]);
-  m:=OrbSCCLookup(lambda_o)[i];
-  f:=LambdaOrbRep(lambda_o, m);
+  o:=LambdaOrb(S);
+  i:=Random([2..Length(o)]);
+  m:=OrbSCCLookup(o)[i];
+  x:=LambdaOrbRep(o, m)*Random(LambdaOrbSchutzGp(o, m))
+   *LambdaOrbMult(o, m, i)[1];
   
-  rho_o:=RhoOrb(s);
-  rho_m:=OrbSCCLookup(rho_o)[Position(rho_o, RhoFunc(s)(f))]; 
-  j:=Random(OrbSCC(rho_o)[rho_m]);
+  o:=RhoOrb(S);
+  m:=OrbSCCLookup(o)[Position(o, RhoFunc(S)(x))]; 
+  i:=Random(OrbSCC(o)[m]);
 
-  return RhoOrbMult(rho_o, rho_m, j)[1]*f*
-   Random(LambdaOrbSchutzGp(lambda_o, m))*
-    LambdaOrbMult(lambda_o, m, i)[1];
+  return RhoOrbMult(o, m, i)[1]*x;
 end);
 
 # same method for inverse

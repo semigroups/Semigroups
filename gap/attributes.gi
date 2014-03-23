@@ -747,10 +747,10 @@ function(s, f)
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then 
     o:=RhoOrb(s);
     rhos:=EmptyPlist(Length(o));
-    for rho in o do
-      if rhorank(rho)=rank and tester(lambda, rho) then
+    for i in [2..Length(o)] do
+      if rhorank(o[i])=rank and tester(lambda, o[i]) then
         j:=j+1;
-        rhos[j]:=rho;
+        rhos[j]:=o[i];
       fi;
     od;
   else

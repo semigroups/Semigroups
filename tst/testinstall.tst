@@ -582,6 +582,21 @@ gap> tuples:=[ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ] ] ) ];;
 gap> Semigroup(V, tuples, rec(small:=true));
 <bipartition monoid on 3 pts with 9 generators>
 
+# Issue pointed out by WAW, caused by typo in ClosureSemigroup (the parent of an
+# R-class was set to be the subsemigroup not the new parent semigroup)
+gap> for i in [1..6] do 
+> V:=Semigroup([ PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 5, 3, 4, 6 ] ),
+>  PartialPerm( [ 1, 2, 4, 5, 6 ], [ 2, 1, 5, 4, 3 ] ),
+>  PartialPerm( [ 1, 3, 4, 5, 6 ], [ 1, 4, 5, 2, 6 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 1, 6, 5, 4 ] ),
+>  PartialPerm( [ 1, 2, 3, 6 ], [ 4, 3, 2, 6 ] ),
+>  PartialPerm( [ 1, 2, 4, 6 ], [ 2, 1, 5, 3 ] ),
+>  PartialPerm( [ 1, 2, 3, 6 ], [ 5, 2, 1, 3 ] ),
+>  PartialPerm( [ 2, 3, 4, 6 ], [ 3, 2, 1, 6 ] ),
+>  PartialPerm( [ 1, 2, 6 ], [ 3, 2, 6 ] ) ], rec(small:=true));
+> IsInverseSemigroup(V);
+> od;
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
