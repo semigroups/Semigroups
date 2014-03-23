@@ -70,43 +70,57 @@ end);
 
 #
 
-InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
-HasGeneratorsOfSemigroup],  
-function(S, T)
-  local pS, pT, iso;
+if (not IsBound(GAPInfo.PackagesLoaded.grape)) 
+  or (Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")=fail) then 
+  InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
+  [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
+  HasGeneratorsOfSemigroup],  
+  function(R)
+    Info(InfoWarning, 1, "the GRAPE package is not loaded or the ",
+    "nauty/dreadnaut  binaries are not installed, and so this function ", 
+    "does not work");
+    return fail;
+  end);  
+else 
+  InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
+  [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
+  HasGeneratorsOfSemigroup],  
+  function(S, T)
+    local pS, pT, iso;
 
-  if Size(S)<>Size(T) or NrRClasses(S)<>NrRClasses(T) or 
-    NrDClasses(S)<>NrDClasses(T) or NrLClasses(S)<>NrLClasses(T) or 
-    NrHClasses(S)<>NrHClasses(T) or NrIdempotents(S)<>NrIdempotents(T) or 
-    StructureDescriptionMaximalSubgroups(S)<>StructureDescriptionMaximalSubgroups(T)
-   then 
-    return false;
-  elif Size(S)=1 then 
-    return true;
-  elif Size(S)<32 or (HasSmallestMultiplicationTable(S) 
-   and HasSmallestMultiplicationTable(T)) then 
-    return SmallestMultiplicationTable(S)=SmallestMultiplicationTable(T);
-  fi;
-  
-  # compare the partial orders of the D-classes
+    if Size(S)<>Size(T) or NrRClasses(S)<>NrRClasses(T) or 
+      NrDClasses(S)<>NrDClasses(T) or NrLClasses(S)<>NrLClasses(T) or 
+      NrHClasses(S)<>NrHClasses(T) or NrIdempotents(S)<>NrIdempotents(T) 
+      or StructureDescriptionMaximalSubgroups(S)
+      <>StructureDescriptionMaximalSubgroups(T)
+     then 
+      return false;
+    elif Size(S)=1 then 
+      return true;
+    elif Size(S)<32 or (HasSmallestMultiplicationTable(S) 
+     and HasSmallestMultiplicationTable(T)) then 
+      return SmallestMultiplicationTable(S)=SmallestMultiplicationTable(T);
+    fi;
+    
+    # compare the partial orders of the D-classes
 
-  pS:=Graph(Group(()), [1..NrDClasses(S)], OnPoints,
-   function(i,j)
-     return i in PartialOrderOfDClasses(S)[j];
-   end, true);
+    pS:=Graph(Group(()), [1..NrDClasses(S)], OnPoints,
+     function(i,j)
+       return i in PartialOrderOfDClasses(S)[j];
+     end, true);
 
-  pT:=Graph(Group(()), [1..NrDClasses(T)], OnPoints,
-   function(i,j)
-     return i in PartialOrderOfDClasses(T)[j];
-   end, true);
-  
-  iso:=GraphIsomorphism(pS, pT);
-  if iso=fail then 
-    return false;
-  fi;
-  Error("not yet implemented,");
+    pT:=Graph(Group(()), [1..NrDClasses(T)], OnPoints,
+     function(i,j)
+       return i in PartialOrderOfDClasses(T)[j];
+     end, true);
+    
+    iso:=GraphIsomorphism(pS, pT);
+    if iso=fail then 
+      return false;
+    fi;
+    Error("not yet implemented,");
 
-end);
+  end);
+fi;
 
 #EOF
