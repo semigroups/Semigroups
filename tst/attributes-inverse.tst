@@ -1,11 +1,11 @@
 #############################################################################
 ##
-#W  maximal.tst
-##  Test file for Maximal Subsemigroups related algorithms
+#W  attributes-inverse.tst
+##  Test file for inverse semigroup attributes
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: maximal.tst");
+gap> START_TEST("Semigroups package: attributes-inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 # 
