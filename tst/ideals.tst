@@ -101,6 +101,5 @@ gap> I:=SemigroupIdeal(S,
 gap> Size(I);
 4626937
 
-
 #
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);
