@@ -939,7 +939,10 @@ end);
 
 InstallMethod(MinimalIdeal, "for an acting semigroup", [IsActingSemigroup],
 function(S)
-  return SemigroupIdeal(S, Representative(MinimalDClass(S)));
+  local I;  
+  I:=SemigroupIdeal(S, Representative(MinimalDClass(S)));
+  SetIsSimpleSemigroup(I, true);
+  return I;
 end);
 
 # same method for inverse/ideals
