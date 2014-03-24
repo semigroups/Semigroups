@@ -324,7 +324,7 @@ function(s)
     if val<>fail then # previously calculated graded orbit
       o:=GradedLambdaOrbs(s)[val[1]][val[2]];
     else # new graded orbit
-      o:=GradedLambdaOrb(s, EvaluateWord(lambda_o!.gens, 
+      o:=GradedLambdaOrb(s, EvaluateWord(s, 
           TraceSchreierTreeForward(lambda_o, pos)), true)[1];
       val:=o!.position_in_graded;
     fi;
