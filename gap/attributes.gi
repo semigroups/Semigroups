@@ -49,15 +49,14 @@ function(S)
   end;
 end);
 
-# different method for ideals, although this method will work too
+# different method for ideals/regular/inverse, although this method will work too
 
-InstallMethod(MaximalDClasses, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(MaximalDClasses, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 
-  gens:=GeneratorsOfSemigroup(s);
-
+  gens:=GeneratorsOfSemigroup(s); 
   partial:=PartialOrderOfDClasses(s);
   data:=SemigroupData(s);
   pos:=[];
@@ -69,6 +68,41 @@ function(s)
 
   out:=[];
   classes:=GreensDClasses(s);
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
+# same method for inverse
+
+InstallMethod(MaximalDClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup], 
+3, # to beat the method for an acting semigroup ideal
+function(S)
+  local gens, partial, pos, o, scc, out, classes, x, i;
+  
+  if HasGeneratorsOfSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroupIdeal(S);
+  else 
+    gens:=GeneratorsOfSemigroup(S); 
+  fi;
+
+  partial:=PartialOrderOfDClasses(S);
+  pos:=[]; 
+  o:=LambdaOrb(S); 
+  scc:=OrbSCCLookup(o);
+
+  for x in gens do 
+    #index of the D-class containing x 
+    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))]-1);
+  od;
+
+  out:=[];
+  classes:=GreensDClasses(S);
   for i in pos do 
     if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
       Add(out, classes[i]);
