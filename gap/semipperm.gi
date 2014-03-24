@@ -134,7 +134,7 @@ end);
 InstallMethod(ComponentRepsOfPartialPermSemigroup, 
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, reps, next, opts, o, out, i;
+  local pts, reps, next, opts, gens, o, out, i;
 
   pts:=[1..DegreeOfPartialPermSemigroup(S)];
   reps:=BlistList(pts, []);
@@ -148,8 +148,14 @@ function(S)
     fi;
   end);
 
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
+
   repeat
-    o:=Orb(S, [next], OnSets, opts);  
+    o:=Orb(gens, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false and reps[o[PositionOfFound(o)][1]]=true then 
       if not IsEmpty(o[PositionOfFound(o)]) then 
@@ -180,7 +186,7 @@ end);
 InstallMethod(ComponentsOfPartialPermSemigroup, 
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, comp, next, nr, opts, o, out, i;
+  local pts, comp, next, nr, opts, gens, o, out, i;
 
   pts:=[1..DegreeOfPartialPermSemigroup(S)];
   comp:=BlistList(pts, []);
@@ -193,9 +199,15 @@ function(S)
       return false;
     fi;
   end);
+  
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
 
   repeat
-    o:=Orb(S, [next], OnSets, opts);  
+    o:=Orb(gens, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
@@ -230,7 +242,7 @@ end);
 InstallMethod(CyclesOfPartialPermSemigroup, 
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, comp, next, nr, cycles, opts, o, scc, i;
+  local pts, comp, next, nr, cycles, opts, gens, o, scc, i;
 
   pts:=[1..DegreeOfPartialPermSemigroup(S)];
   comp:=BlistList(pts, []);
@@ -244,9 +256,15 @@ function(S)
     fi;
   end);
 
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
+
   repeat
     #JDM the next line doesn't work if OnPoints is used...
-    o:=Orb(S, [next], OnSets, opts);  
+    o:=Orb(gens, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
