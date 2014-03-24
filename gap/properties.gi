@@ -78,12 +78,14 @@ s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
 #  return ForAll(reg, x-> x);
 #end);
 
+#JDM Is AbundantSemigroup doesn't work for ideals.
+
 InstallMethod(IsAdequateSemigroup, 
 "for acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
-#
+#JDM IsHtrivial doesn't work for ideals yet
 
 InstallMethod(IsBand, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], s-> 
@@ -97,8 +99,8 @@ InstallMethod(IsBand, "for an inverse semigroup",
 #
 
 InstallMethod(IsBlockGroup, 
-"for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+"for an acting semigroup",
+[IsActingSemigroup ], 
 function(s)
   local iter, d;
 
@@ -122,7 +124,7 @@ function(s)
   return true;
 end);
 
-#
+#JDM IsInverseSemigroup doesn't work for ideals
 
 InstallMethod(IsBrandtSemigroup, 
 "for an acting semigroup with generators", 
@@ -134,7 +136,7 @@ s-> IsZeroSimpleSemigroup(s) and IsInverseSemigroup(s));
 InstallMethod(IsBrandtSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup], IsZeroSimpleSemigroup);
 
-#
+#JDM
 
 InstallMethod(IsCliffordSemigroup, 
 "for an acting semigroup with generators", 
@@ -183,7 +185,7 @@ InstallMethod(IsCliffordSemigroup,
 [IsInverseSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup], 
 s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
 
-#
+#JDM
 
 InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
@@ -206,7 +208,7 @@ function(s)
   return true;
 end);
 
-#
+#JDM
 
 InstallMethod(IsCompletelyRegularSemigroup, 
 "for an acting semigroup with generators", 
@@ -238,10 +240,10 @@ function(s)
   return true;
 end);
 
-#
+#JDM IsCliffordSemigroup doesn't work for ideals
 
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
-[IsInverseSemigroup], IsCliffordSemigroup);
+[IsInverseSemigroup and HasGeneratorsOfSemigroup], IsCliffordSemigroup);
 
 # Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
 # causes problems. 
@@ -250,7 +252,7 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> IsSimpleSemigroup(x) and IsFinite(x));
 
-#
+#JDM IsSemilatticeAsSemigroup doesn't work for ideals
 
 InstallMethod(IsFactorisableSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
@@ -278,7 +280,7 @@ function(s)
   return true;
 end);
 
-#
+# JDM IsSemilatticeAsSemigroup doesn't work for ideals
 
 InstallMethod(IsFactorisableSemigroup, "for a block bijection semigroup",
 [IsBlockBijectionSemigroup and IsInverseSemigroup], 
@@ -306,7 +308,7 @@ function(S)
   return true;
 end);
 
-#
+#JDM
 
 InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup], 
@@ -317,7 +319,7 @@ function(S)
   return false;
 end);
 
-#
+#JDM
 
 InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
@@ -348,17 +350,17 @@ function(S)
   return true;
 end);
 
-#
+#same method for ideals
 
 InstallMethod(IsHTrivial, 
 "for a D-class of an acting semigroup", 
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 d-> NrHClasses(d)=Size(d));
 
-#
+#same method for ideals
 
-InstallMethod(IsLTrivial, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsLTrivial, "for an acting semigroup",
+[IsActingSemigroup ],
 function(s)
   local iter, o, d;
 
@@ -384,23 +386,23 @@ function(s)
   return ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1);
 end);
 
-#
+#same method for ideals
 
 InstallMethod(IsLTrivial, "for a D-class of an acting semigroup", 
 [IsGreensDClass and IsActingSemigroupGreensClass], d-> NrLClasses(d)=Size(d));
 
-#
+#same method for ideals
 
 InstallMethod(IsRTrivial, "for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 d-> NrRClasses(d)=Size(d));
 
-#
+#same method for ideals
 
 InstallMethod(IsRTrivial, "for an inverse semigroup", 
 [IsInverseSemigroup], IsLTrivial);
 
-#
+#JDM
 
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
@@ -413,7 +415,7 @@ function(S)
   fi;
 end);
 
-#
+#JDM
 
 InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup], 
@@ -426,10 +428,10 @@ function(S)
   fi;
 end);
 
-#
+#same method for ideals
 
-InstallMethod(IsRTrivial, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsRTrivial, "for an acting semigroup",
+[IsActingSemigroup],
 function(S)
   local iter, x;
 
@@ -455,7 +457,7 @@ function(S)
   return true;
 end);
 
-#
+#JDM
 
 InstallMethod(IsGroupAsSemigroup, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -486,7 +488,7 @@ function(s)
   return true;
 end);
 
-#
+#JDM should gens in the following function be GeneratorsOfSemigroup?
 # IteratorOfIdempotents would be good here.
 
 InstallMethod(IsIdempotentGenerated, 
@@ -517,12 +519,12 @@ function(s)
   return ForAll(gens, f-> f in t);
 end);
 
-#
+# JDM IsSemilatticeAsSemigroup doesn't work for ideals
 
 InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
 
-#
+#JDM
 
 InstallMethod(IsInverseSemigroup,
 "for an acting semigroup with generators", 
@@ -570,7 +572,7 @@ function(S)
   return true;
 end);
 
-#
+#JDM would only work for inverse ideals
 
 InstallMethod(IsLeftSimple, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -589,12 +591,12 @@ function(s)
   return IsDoneIterator(iter);
 end);
 
-#
+#same method for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup", 
 [IsInverseSemigroup], IsGroupAsSemigroup);
 
-#
+#JDM Generators = GeneratorsOfSemigroup?
 
 InstallMethod(IsLeftZeroSemigroup, 
 "for an acting semigroup with generators", 
@@ -620,7 +622,7 @@ end);
 InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-#
+#JDM
 
 InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and HasGeneratorsOfSemigroup, 0, 
 function(s) 
@@ -630,7 +632,7 @@ function(s)
   TryNextMethod();
 end);
 
-#
+#JDM
 
 InstallMethod(IsMonogenicSemigroup, 
 "for an acting semigroup with generators", 
@@ -674,7 +676,7 @@ function(s)
   return false;
 end);
 
-#
+#JDM IsInverseSemigroup doesn't work for ideals
 
 InstallMethod(IsMonogenicInverseSemigroup, 
 "for an acting semigroup with generators", 
@@ -686,7 +688,7 @@ function(s)
   return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(s)));
 end);
  
-#
+#JDM
 
 InstallMethod(IsMonogenicInverseSemigroup, 
 "for an acting semigroup with inverse op and generators", 
@@ -731,17 +733,18 @@ function(s)
   return false;
 end);
 
-#
+#same method for ideals
 
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup], 
+[IsSemigroup], 
  x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
 
 # Notes: is there a better method? JDM
+# same method for ideals
 
 InstallMethod(IsOrthodoxSemigroup, 
-"for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+"for an acting semigroup",
+[IsActingSemigroup ], 
 function(s)
   local e, m, i, j;
 
@@ -766,7 +769,7 @@ function(s)
   return true;
 end);
 
-#
+#JDM IsBand and IsHTrivial doens't work for ideals
 
 InstallMethod(IsRectangularBand, 
 "for an acting semigroup with generators", 
@@ -783,12 +786,12 @@ function(s)
   return IsHTrivial(s);
 end);
 
-#
+#JDM IsHTrivial doesn't work for ideals
 
 InstallMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
 
-#
+#JDM uses lookfunc 
 
 InstallMethod(IsRegularSemigroup, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -848,11 +851,11 @@ function(s)
   return data!.found=false;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(IsRegularSemigroupElement, 
 "for an acting semigroup and acting element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
+[IsActingSemigroup, IsAssociativeElement], 
 function(s, f)                                  
   local o, scc, rho, tester, i;
   
@@ -884,11 +887,11 @@ function(s, f)
   return false;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(IsRegularSemigroupElementNC, 
 "for an acting semigroup and acting element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
+[IsActingSemigroup, IsAssociativeElement], 
 function(s, f)                                  
   local o, scc, rho, tester, i;
  
@@ -906,7 +909,7 @@ function(s, f)
   return false;
 end);
 
-#
+#JDM IsRightZeroSemigroup doesn't work for ideals except for inverse
 
 InstallMethod(IsRightSimple, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -930,7 +933,7 @@ end);
 InstallMethod(IsRightSimple, "for an inverse semigroup", 
 [IsInverseSemigroup], IsGroupAsSemigroup);
 
-#
+#JDM
 
 InstallMethod(IsRightZeroSemigroup, 
 "for an acting semigroup with generators", 
@@ -955,26 +958,26 @@ end);
 InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-#
+#JDM IsIdempotentGenerated doesn't work for ideals
 
 InstallMethod(IsSemiband, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], IsIdempotentGenerated);
 
-#
+#JDM IsCommutativeSemigroup doesn't work for ideals
 
 InstallMethod(IsSemilatticeAsSemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
  s-> IsCommutativeSemigroup(s) and IsBand(s));
 
-#
+#JDM
 
 InstallMethod(IsSemilatticeAsSemigroup, 
 "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup], 
 s-> ForAll(GeneratorsOfSemigroup(s), IsIdempotent));
 
-#
+#JDM
 
 InstallMethod(IsSimpleSemigroup, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
@@ -1025,11 +1028,11 @@ end);
 InstallMethod(IsSimpleSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsGroupAsSemigroup);
 
-#
+#JDM the call of Orb looks for a generating set for an ideal
 
 InstallMethod(IsSynchronizingSemigroup, 
 "for a transformation semigroup with generators and positive integer", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+[IsTransformationSemigroup , IsPosInt],
 function(s, n)
   local o;
 
@@ -1052,7 +1055,7 @@ function(s, n)
   return false;
 end);
 
-#
+#JDM Orb tries to get a generating set for an ideal
 
 InstallMethod(IsSynchronizingTransformationCollection, 
 "for a transformation collection and positive integer", 
@@ -1069,7 +1072,7 @@ function(coll, n)
   return PositionOfFound(o)<>false;
 end);
 
-#
+#JDM
 
 InstallMethod(IsTrivial, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
@@ -1082,7 +1085,7 @@ function(s)
   return ForAll(gens, x-> gens[1]=x) and IsIdempotent(gens[1]);
 end); 
 
-#
+#JDM IsBand doens't work for ideals also uses gens.
 
 InstallMethod(IsUnitRegularSemigroup, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
@@ -1131,8 +1134,8 @@ end);
 
 #
 
-InstallMethod(IsZeroGroup, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsZeroGroup, "for an acting semigroup",
+[IsActingSemigroup],
 function(s)
 
   if MultiplicativeZero(s)=fail then 
@@ -1148,7 +1151,7 @@ function(s)
   return false;
 end);
 
-#
+#JDM IsHTrivial doesn't work for ideals
 
 InstallMethod(IsZeroRectangularBand, 
 "for an acting semigroup with generators", 
@@ -1165,7 +1168,7 @@ function(s)
   return IsHTrivial(s);
 end);
 
-#
+#JDM
 
 InstallMethod(IsZeroSemigroup, 
 "for an acting semigroup with generators", 
@@ -1222,7 +1225,7 @@ function(S)
   return IsDoneIterator(iter) and IsRegularDClass(D);
 end);
 
-#
+#same method for ideals
 
 InstallMethod(IsCongruenceFreeSemigroup,
 "for a finite semigroup",
