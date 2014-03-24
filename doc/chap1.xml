@@ -253,7 +253,7 @@ or 64-bit mode correctly!
 
   <Section><Heading>Use &R;-classes not &L;-classes</Heading>
     It is harder for &Semigroups; to compute Green's &L;- and &H;-classes of a
-    transformation or bipartition semigroup and the methods used to compute with
+    transformation semigroup and the methods used to compute with
     Green's &R;- and &D;-classes are the most efficient in &Semigroups;.  Thus,
     if you are computing with a transformation or bipartition semigroup,
     wherever possible it is advisable to use the commands relating to Green's

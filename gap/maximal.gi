@@ -8,7 +8,8 @@
 #############################################################################
 ##
 
-#JDM improve this!
+# WAW The more complicated version incorporating maximal subsemigroup theory did
+# not seem to perform significantly better and so was removed.
 
 InstallMethod(IsMaximalSubsemigroup, "for an acting semigroup and acting semigroup", 
 [IsActingSemigroup, IsActingSemigroup],
@@ -19,86 +20,6 @@ function(S, T)
     return false;
   fi;
 end); 
-
-#
-
-InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
-[IsSemigroup, IsSemigroup],
-function(S, T)
-  local iso;
-  if IsSubsemigroup(S, T) and S<>T then 
-    iso:=IsomorphismTransformationSemigroup(S);
-    return IsMaximalSubsemigroup(Range(iso),Semigroup(Images(iso, GeneratorsOfSemigroup(T))));
-  else
-    return false;
-  fi;
-end);
-
-#
-InstallMethod(IsMaximalSubsemigroup2, "for a semigroup and semigroup", 
-[IsSemigroup, IsSemigroup],
-function(S, T)
-  local found, x, d, hS, hT, n, h;
-  
-  # Check T is a proper subsemigroup of S
-  if S=T then
-  	return false;
-  elif not IsSubsemigroup(S, T) then
-    return false;
-  fi;
-
-  # Check that we only lack part of one D-class, d
-  found:=false;
-  for x in DClasses(S) do
-    if not IsSubset(T,x) then
-      if found then
-        return false;
-      fi;
-      d:=x;
-      found:=true;
-    fi;
-  od;
-  
-  # Check that if d is non-regular, it has been completely removed
-  if not IsRegularDClass(d) then 
-    return not ForAny(DClassReps(T), x-> x in d);
-  fi;
-  
-  hS:=Size(GroupHClass(d));
-  hT:=Number(GroupHClass(d), x->x in T);
-  
-  # If appropriate, check that T is a union of H-classes of S
-  if hT=hS or hT=0 then  
-    for h in HClasses(d) do
-      n:=Number(h, x->x in T);
-      if not (n = hS or n = 0) then
-        return false;
-      fi;
-    od;
-  # Else check that T intersects all H-classes of d in the same way
-  # Check divisibility because of maximal subgroup connection
-  elif hS mod hT = 0 then
-    for h in HClasses(d) do
-      n:=Number(h, x->x in T);
-      if n <> hT then
-        return false;
-      fi;
-    od;
-  else
-  	return false;
-  fi;
-  
-  return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
-
-end); 
-
-#
-
-InstallMethod(MaximalSubsemigroups, "for a group",
-[IsGroup], 
-function(G)
-  return MaximalSubgroups(G);
-end);
 
 #
 
@@ -581,12 +502,10 @@ else
   end);
 fi;
 
-
-
 #
 
 InstallMethod(MaximalSubsemigroups, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 function(S)
   local out, gens, po, reps, classes, D, lookup, count, max, found_case1,
   nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, UnionOfHClassRecursion,
@@ -937,26 +856,6 @@ function(S)
   od;
   Info(InfoSemigroups, 2, "generating all found maximal subsemigroups...");
   out:=List(out, x-> Semigroup(x, rec(small:=true)));
-  return out;
-end);
-
-#
-
-InstallMethod(MaximalSubsemigroups, "for an arbitary semigroup",
-[IsSemigroup],
-function(S)
-
-  local iso, inv, max, out, T;
-  
-  iso:=IsomorphismTransformationSemigroup(S);
-  if iso = fail then return fail; fi;
-  inv:=InverseGeneralMapping(iso);
-  max:=MaximalSubsemigroups(Range(iso));
-  out:=[];
-  for T in max do
-    Add(out, Semigroup(Images(inv, GeneratorsOfSemigroup(T))));
-  od;
-
   return out;
 end);
 

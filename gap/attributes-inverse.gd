@@ -12,22 +12,18 @@
 ##
 
 DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup, IsAssociativeElement]);
+DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
 DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("IsMajorantlyClosedNC", [IsInverseSemigroup, IsAssociativeElementCollection]);
-
-DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
-
 DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("MajorantClosureNC", [IsInverseSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
+DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass);
 
 DeclareOperation("RightCosetsOfInverseSemigroup", [IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp]);
-
-DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup and
 IsPartialPermSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
 
 DeclareAttribute("VagnerPrestonRepresentation", IsActingSemigroupWithInverseOp);
-
 DeclareOperation("NaturalLeqInverseSemigroup", [IsAssociativeElement, IsAssociativeElement]);
