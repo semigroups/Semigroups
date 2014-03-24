@@ -84,6 +84,11 @@ function(s)
   o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
   
   SetFilterObj(o, IsLambdaOrb);
+  
+  if IsActingSemigroupWithInverseOp(s) then 
+    SetFilterObj(o, IsInverseOrb);
+  fi;
+  
   return o;
 end);
 
@@ -336,6 +341,9 @@ function(s)
   o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
   
   SetFilterObj(o, IsRhoOrb);
+  if IsActingSemigroupWithInverseOp(s) then 
+    SetFilterObj(o, IsInverseOrb);
+  fi;
   return o;
 end);
 
