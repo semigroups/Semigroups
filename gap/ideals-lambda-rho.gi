@@ -407,7 +407,7 @@ end);
 
 InstallMethod(TraceSchreierTreeForward, 
 "for an inverse semigroup ideal orbit and a positive integer",
-[IsInverseSemigroupOrb and IsIdealOrb],
+[IsInverseSemigroupOrb and IsIdealOrb, IsPosInt],
 function(o, i)
   local schreierpos, schreiergen, rightword;
   
@@ -422,7 +422,7 @@ function(o, i)
     i := schreierpos[i];
   od;
 
-  return [ o!.orbtogen[nr], Reversed(rightword)];
+  return [ [], o!.orbtogen[i], Reversed(rightword)];
 end);
 
 #
