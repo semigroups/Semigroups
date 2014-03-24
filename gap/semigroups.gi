@@ -555,13 +555,16 @@ end);
 InstallGlobalFunction(ClosureInverseSemigroupNC,
 function(s, coll, record)
   local t, coll_copy, o, f;
- 
+  
+    
   if coll=[] then
     Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
     " semigroup,");
     return s;
+  elif IsSemigroupIdeal(s) then 
+    return InverseSemigroup(s, coll, record);
   fi;
-
+  
   coll_copy:=Set(ShallowCopy(coll));
   for f in coll do
     if not f^-1 in coll then
@@ -719,7 +722,7 @@ function(s, coll, opts)
   fi;
   
   # if nothing is known about s, then return t
-  if not HasLambdaOrb(s) then 
+  if not HasLambdaOrb(s) or IsSemigroupIdeal(s) then 
     return t;
   fi;
   
@@ -1006,8 +1009,8 @@ end);
 # <limit> is the max size of the subsemigroup.
 
 InstallMethod(SubsemigroupByProperty, 
-"for an acting semigroup with generators, function, and positive integer",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
+"for an acting semigroup, function, and positive integer",
+[IsActingSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
@@ -1036,8 +1039,8 @@ end);
 # <limit> is the max size of the subsemigroup.
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for acting semigroup with inverse op & generators, function, positive integer",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
+"for acting semigroup with inverse op, function, positive integer",
+[IsActingSemigroupWithInverseOp, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
@@ -1066,8 +1069,8 @@ end);
 #
 
 InstallMethod(SubsemigroupByProperty, 
-"for an acting semigroup with generators and function",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
+"for an acting semigroup and function",
+[IsActingSemigroup, IsFunction], 
 function(S, func)
   return SubsemigroupByProperty(S, func, Size(S));
 end);
@@ -1075,8 +1078,8 @@ end);
 #
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for acting semigroup with inverse op & generators and function",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction], 
+"for acting semigroup with inverse op and function",
+[IsActingSemigroupWithInverseOp, IsFunction], 
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);
