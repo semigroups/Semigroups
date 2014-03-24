@@ -699,7 +699,6 @@ function(coll)
   fi;
 end);
 
-#JDM this should be revised as per Attila's request
 # different method for ideals, not yet implemented 
 
 InstallMethod(SmallSemigroupGeneratingSet, 
