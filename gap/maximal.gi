@@ -780,7 +780,6 @@ function(S)
         "which are a union of H-classes");
       for k in [1..Length(lookup[i])] do
         for j in Combinations(lookup[i], k) do
-          Error("start debug,");
           Info(InfoSemigroups, 2, "Trying to remove gens: ", j, "...");
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
