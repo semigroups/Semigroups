@@ -69,7 +69,52 @@ InstallMethod(IsomorphismTransformationSemigroup,
 function(I)
   local iso, inv, J;
 
-  iso:=IsomorphismTransformationSemigroup(Parent(I));
+  iso:=IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso:=IsomorphismBipartitionSemigroup(SupersemigroupOfIdeal(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsomorphismPartialPermSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso:=IsomorphismPartialPermSemigroup(SupersemigroupOfIdeal(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsomorphismBlockBijectionSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso:=IsomorphismBlockBijectionSemigroup(SupersemigroupOfIdeal(I));
   inv:=InverseGeneralMapping(iso);
   J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
 

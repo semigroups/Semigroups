@@ -141,8 +141,7 @@ function(s)
   return u;
 end);
 
-# same method for ideals, not yet tested due to no method for
-# MultiNeutralElement JDM 
+# same method for ideals
 
 InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
@@ -169,8 +168,7 @@ function(s)
   return u;
 end);
 
-# same method for ideals, not yet tested due to no method for
-# MultiNeutralElement JDM
+# same method for ideals
 
 InstallMethod(GroupOfUnits, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
@@ -196,8 +194,7 @@ function(S)
   return U;
 end);
 
-# same method for ideals, not yet tested due to no method for
-# MultiNeutralElement JDM
+# same method for ideals
 
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
@@ -687,7 +684,6 @@ d-> Range(InjectionPrincipalFactor(d)));
 InstallMethod(PrincipalFactor, "for a D-class",
 [IsGreensDClass], AssociatedReesMatrixSemigroupOfDClass);
 
-#JDM this should be revised as per Attila's request
 # different method for ideals, not yet implemented 
 
 InstallMethod(SmallSemigroupGeneratingSet, 
