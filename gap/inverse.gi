@@ -968,10 +968,8 @@ InstallMethod(Size, "for an acting semigroup with inversion",
 function(s)
   local o, scc, r, nr, m;
 
-  o:=LambdaOrb(s);   Enumerate(o, infinity);
-  scc:=OrbSCC(o);
-  r:=Length(scc); 
-  nr:=0;
+  o:=LambdaOrb(s);   Enumerate(o, infinity);  scc:=OrbSCC(o);
+  r:=Length(scc);    nr:=0;
 
   for m in [2..r] do 
     nr:=nr+Length(scc[m])^2*Size(LambdaOrbSchutzGp(o, m));
