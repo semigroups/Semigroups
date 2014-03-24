@@ -91,12 +91,12 @@ InstallMethod(IsBand, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], s-> 
  IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
 
-#
+#JDM IsSemilatticeAsSemigroup doesn't work for ideals
 
 InstallMethod(IsBand, "for an inverse semigroup", 
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
 
-#
+# same method for ideals
 
 InstallMethod(IsBlockGroup, 
 "for an acting semigroup",
@@ -131,7 +131,7 @@ InstallMethod(IsBrandtSemigroup,
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> IsZeroSimpleSemigroup(s) and IsInverseSemigroup(s));
 
-#
+# same method for ideals
 
 InstallMethod(IsBrandtSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup], IsZeroSimpleSemigroup);
@@ -178,11 +178,11 @@ function(s)
   return true;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(IsCliffordSemigroup, 
-"for an inverse acting semigroup with generators", 
-[IsInverseSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup], 
+"for an inverse acting semigroup", 
+[IsInverseSemigroup and IsActingSemigroup], 
 s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
 
 #JDM
@@ -591,7 +591,7 @@ function(s)
   return IsDoneIterator(iter);
 end);
 
-#same method for ideals
+# JDM IsGroupAsSemigroup doesn't work for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup", 
 [IsInverseSemigroup], IsGroupAsSemigroup);
@@ -617,7 +617,7 @@ function(s)
   return ForAll(gens, IsIdempotent);
 end);
 
-#
+# same method for ideals
 
 InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
@@ -928,7 +928,7 @@ function(s)
   return IsDoneIterator(iter);
 end);
 
-#
+#JDM IsGroupAsSemigroup doesn't work for ideals
 
 InstallMethod(IsRightSimple, "for an inverse semigroup", 
 [IsInverseSemigroup], IsGroupAsSemigroup);
@@ -953,7 +953,7 @@ function(s)
   return true;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
@@ -1023,7 +1023,7 @@ function(s)
   return true;
 end);
 
-#
+# JDM IsGroupAsSemigroup doesn't work for ideals
 
 InstallMethod(IsSimpleSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsGroupAsSemigroup);
@@ -1198,7 +1198,7 @@ function(s)
   return true;
 end);
 
-#
+# same method for ideals
 
 InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
