@@ -29,7 +29,7 @@ function(I)
   local str;
 
   str:="SemigroupIdeal(";
-  Append(str, PrintString(Parent(I)));
+  Append(str, PrintString(SupersemigroupOfIdeal(I)));
   Append(str, ", ");
   Append(str, PrintString(GeneratorsOfSemigroupIdeal(I)));
   Append(str, " )");
@@ -225,7 +225,13 @@ function(S, gens, opts)
   elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then 
     SetIsRegularSemigroup(I, true);
   fi;
-
+  
+  if  HasSupersemigroupOfIdeal(S) then 
+    SetSupersemigroupOfIdeal(I, SupersemigroupOfIdeal(S));
+  elif HasGeneratorsOfSemigroup(S) then 
+    SetSupersemigroupOfIdeal(I, S);
+  fi;
+  
   SetParent(I, S); 
   SetGeneratorsOfMagmaIdeal(I, gens);
 

@@ -58,7 +58,7 @@ end);
 InstallMethod(InversesOfSemigroupElementNC, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal, IsAssociativeElement],
 function(I, x)
-  return InversesOfSemigroupElementNC(Parent(I), x);
+  return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
 end);
 
 #

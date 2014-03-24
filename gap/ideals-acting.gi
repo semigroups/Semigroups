@@ -54,7 +54,7 @@ InstallMethod(SemigroupData, "for an acting semigroup ideal",
 function(I)
   local gens, data, opts;
  
-  gens:=GeneratorsOfSemigroup(Parent(I));
+  gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
 
   data:=rec(gens:=gens, parent:=I, log:=[1], genspos:=0,
      ht:=HTCreate(gens[1], rec(treehashsize:=I!.opts.hashlen.L)),

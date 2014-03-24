@@ -42,7 +42,7 @@ end);
 # different method for inverse
 
 InstallMethod(\in, "for an acting element and regular acting semigroup",
-[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup],  1000,
+[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup], 
 function(f, s)
   local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
 

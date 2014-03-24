@@ -83,5 +83,7 @@ gap> L := GreensLClassOfElement(I, gens[1]^2);
 gap> DClassOfLClass(L);
 {PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
 
+# \in for an inverse op semigroup ideal
+
 #
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);
