@@ -166,17 +166,17 @@ function(I)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
-  record.orbtogen:=[1]; # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i
+  record.orbtogen:=[]; # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i
 
   gens:=GeneratorsOfSemigroupIdeal(I);
   lambdafunc:=LambdaFunc(I);
   
-  o:=Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), lambdafunc(gens[1]),
+  o:=Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), LambdaOrbSeed(I),
    LambdaAct(I), record);
  
   # install the lambda values of the generators
   ht:=o!.ht;  nr:=1;  nrgens:=Length(gens);
-  lambda:=lambdafunc(gens[1]^-1);
+  lambdafunc:=LambdaFunc(I);
   
   #
   InstallPointInOrb:=function(lambda)
@@ -189,12 +189,7 @@ function(I)
   end;
   #
   
-  if HTValue(ht, lambda)=fail then 
-    InstallPointInOrb(lambda);
-    o!.orbtogen[nr]:=nrgens+1;
-  fi;
-  
-  for i in [2..nrgens] do 
+  for i in [1..nrgens] do 
     x:=gens[i]; 
     lambda:=lambdafunc(x);
     if HTValue(ht, lambda)=fail then 
@@ -208,6 +203,9 @@ function(I)
       o!.orbtogen[nr]:=nrgens+i;
     fi;
   od;
+  o!.pos:=2; #don't apply the generators of the supersemigroup of <I> to the
+             #dummy point at the start of the orbit (otherwise we just get the
+             #lambda orbit of the supersemigroup
 
   SetFilterObj(o, IsLambdaOrb and IsInverseIdealOrb); 
   return o;

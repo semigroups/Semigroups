@@ -732,10 +732,10 @@ function(s, f)
   return CreateRClass(s, fail, o, f, false); 
 end);
 
-# same method for inverse semigroups
+# same method for inverse/ideals
 
 InstallMethod(NrDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
+[IsActingSemigroup and IsRegularSemigroup],
 function(s)
   local o;
   o:=Enumerate(LambdaOrb(s), infinity);
@@ -892,7 +892,7 @@ function(S)
       return EvaluateWord(gens, w);
     else
       x:=Random([1..Length(GeneratorsOfSemigroupIdeal(S))]);
-      gens:=GeneratorsOfSemigroup(Parent(S));
+      gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
       
       i:=Random([1..Length(gens)]);
       w:=List([1..i], x-> Random([1..Length(gens)]));

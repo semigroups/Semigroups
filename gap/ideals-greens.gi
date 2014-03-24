@@ -10,6 +10,14 @@
 ##
 
 InstallMethod(NrDClasses, "for an acting semigroup ideal",
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+function(I)
+  return Length(OrbSCC(LambdaOrb(I)))-1;
+end);
+
+# 
+
+InstallMethod(NrDClasses, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   Enumerate(SemigroupData(I));
