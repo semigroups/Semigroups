@@ -45,6 +45,7 @@ function(R, H)
   
   mat:=Matrix(R);     I:=Length(mat[1]);         J:=Length(mat);
   
+  # Produce a necessary elt for every row and column for our generating set
   basicgens:=[];  
   for i in [1..Minimum(I,J)] do
     Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
@@ -111,7 +112,7 @@ function(R)
   # maximal subgroup of G
   Info(InfoSemigroups, 3, 
    "Case 1: maximal subsemigroups arising from maximal subgroups...");
-  basicgens:=[]; 
+  basicgens:=[];
   # The below 3 loops use more code, but ensure a smallest generating set
   for i in [1..Minimum(Length(I),Length(J))] do
     Add(basicgens, RMSElement(R, i, (mat[i][i]^-1), i));
@@ -169,21 +170,11 @@ function(R, H)
     return;
   fi;
   
-  mat:=Matrix(R); I:=Rows(R); J:=Columns(R);
-  
   # Check that matrix is regular (i.e. no zero rows or columns)
-  for i in I do
-    if ForAll(J, j->mat[j][i] = 0) then
-      Error("matrix is non-regular, so this function doesn't work,");
-      return;
-    fi;
-  od;
-  for j in J do
-    if ForAll(I, i->mat[j][i] = 0) then
-      Error("matrix is non-regular, so this function doesn't work,");
-      return;
-    fi;
-  od;
+  if not IsRegularSemigroup(R) then
+    Error("not yet implemented,");
+    return;
+  fi;
    
   G:=UnderlyingSemigroup(R);    
     
@@ -195,6 +186,7 @@ function(R, H)
     return fail;
   fi;
 
+  mat:=Matrix(R); I:=Rows(R); J:=Columns(R);
   graph:=RZMSGraph(R);
   
   # Add to the generators one element which *must* be in each group H-class of
@@ -238,6 +230,7 @@ function(R, H, graph, components, basicgens, indices)
   NonGroupRecursion:=function(k, t, choice)
     local nextchoice, x, a, b, h;
     
+    # Generate the semigroup which includes our most recent choice
     if k = 1 then
       t:=Semigroup(basicgens, choice);
     else
@@ -247,11 +240,14 @@ function(R, H, graph, components, basicgens, indices)
     # Test if adding our new choice has already made too much stuff
     # The below logical condition need to be improved if possible
     if Size(GreensHClassOfElementNC(t, choice[1]))<=Hsize then
+      
       # Make next choice, if any left to make.
       if k < nrcomponents then
+        # We are making our choice for H_i,b; this forces our choice of H_a,j
+        a:=components[k+1][1];
+        b:=graph.adjacencies[a][1] - nrrows;
+        # one choice for each coset
         for x in transversal do
-          a:=components[k+1][1];
-          b:=graph.adjacencies[a][1] - nrrows;
           h:=mat[b][a]^(-1) * x^(-1) * mat[j][i]^(-1);
           nextchoice:=[RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
           NonGroupRecursion(k+1, t, nextchoice);
@@ -294,21 +290,11 @@ else
       return;
     fi;
     
-    out:=[]; I:=Rows(R); J:=Columns(R); nrrows:=Length(I); mat:=Matrix(R);
-    
     # Check that matrix is regular (i.e. no zero rows or columns)
-    for i in I do
-      if ForAll(J, j->mat[j][i] = 0) then
-        Error("matrix is non-regular, so this function doesn't work,");
-        return;
-      fi;
-    od;
-    for j in J do
-      if ForAll(I, i->mat[j][i] = 0) then
-        Error("matrix is non-regular, so this function doesn't work,");
-        return;
-      fi;
-    od;
+    if not IsRegularSemigroup(R) then
+      Error("not yet implemented,");
+      return;
+    fi;
    
     G:=UnderlyingSemigroup(R);    
     
@@ -324,6 +310,8 @@ else
         return;
       fi;
     fi;
+    
+    out:=[]; I:=Rows(R); J:=Columns(R); nrrows:=Length(I); mat:=Matrix(R);
 
     # find the set of group elements in the matrix
     
@@ -475,7 +463,7 @@ else
     graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
     
-    # I'm not familiar with these functions... this is surely not the best way.
+    # Surely not the best way to let the automorphism gp act on the rectanlges
     rectangles:=Set(Concatenation(
                  List(rectangles, x->Orbit(graph.autGroup, x, OnSets))));
     # A hack to get round problems caused by immutability...
@@ -542,10 +530,12 @@ function(S)
   graph, components, nrcomponents, rows, NonGroupRecursion, transversal,
   maxgens, mat, h, ii, jj, lastideal;
   
+  # Trivial semigroup has no proper subsemigroups so no maximal subsemigroups
   if Size(S) = 1 then
     return [];
   fi;
   
+  # Subsemigroups of finite groups are subgroups; hence so are maximal ones
   if IsGroupAsSemigroup(S) then
     max:=function(S)
       local out, G, iso, inv, max, g, gens;
@@ -592,45 +582,46 @@ function(S)
   # principal factors of maximal D-classes...
   Info(InfoSemigroups, 2, "finding maximal subsemigroups arising from", 
   " maximal D-classes...");
+  
   tot:=0;
   for i in max do 
     Info(InfoSemigroups, 2, "considering D-class ", i);
-    if Size(classes[i])=1 then #remove the whole thing...
-      gens2:=ShallowCopy(gens);
-      Remove(gens2, lookup[i][1]);
-      pos:=Position(po[i], i);
-      if pos<>fail then 
-        Remove(po[i], pos);
-      fi;
-      Append(gens2, List(classes{po[i]}, Representative));
-      if not IsEmpty(gens2) then
-        Add(out, SemigroupIdealByGenerators(S, gens2));
-      fi;
+    # Calculate S \ classes[i]
+    gens2:=ShallowCopy(gens){Difference([1..Length(gens)], lookup[i])};
+    pos:=Position(po[i], i);
+    if pos<>fail then 
+      Remove(po[i], pos);
+    fi;
+    Info(InfoSemigroups, 2, "calculating the ideal S\D");
+    Append(gens2, List(classes{po[i]}, Representative));
+    
+    # Remove the whole of any trivial D-class
+    if Size(classes[i])=1 then
+      Add(out, SemigroupIdealByGenerators(S, gens2));
+    
+    # Adjoin maximal subsemigroups of principal factor to S\D
     else
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
-      for U in MaximalSubsemigroups(R) do 
-        gens2:=ShallowCopy(gens){Difference([1..Length(gens)], lookup[i])};
-        pos:=Position(po[i], i);
-        if pos<>fail then 
-          Remove(po[i], pos);
-        fi;
-        Append(gens2, List(classes{po[i]}, Representative));
-        if not IsEmpty(gens2) then
-          V:=SemigroupIdealByGenerators(S, gens2);
-        else
-          V:=[];
-        fi;
-        tuples:=OnTuples(Filtered(GeneratorsOfSemigroup(U), 
-             x-> not IsMultiplicativeZero(R, x)), inj);
-        if tuples=[] and Size(U) = 1 then  # This will fail if U = {0} ??? # But U = {0} is a maximal subsemigroup only if Size(classes[i]) = 1
-          Add(out, Semigroup(OnTuples(
-          GeneratorsOfSemigroup(U), inj), V, rec(small:=true)));
-        elif tuples<>[] then
+      if not IsEmpty(gens2) then
+        Info(InfoSemigroups, 2, "calculating the ideal S\D");
+        V:=SemigroupIdealByGenerators(S, gens2);
+      else
+        V:=[];
+      fi;
+      for U in MaximalSubsemigroups(R) do
+        if IsSimpleSemigroup(R) then # We don't want to remove multiplicative zero in this case, if it exists
+          Add(out, Semigroup(
+            OnTuples(GeneratorsOfSemigroup(U), inj), V, rec(small:=true)));
+        else # Remove 0 from the generators since it's not an elt of classes[i]
+          tuples:=OnTuples(Filtered(
+            GeneratorsOfSemigroup(U), x-> not IsMultiplicativeZero(R, x)), inj);
           Add(out, Semigroup(V, tuples, rec(small:=true)));
         fi;
+        # Don't need to worry about U = {0}, which could only happen if Size(classes[i]) = 1. So tuples is always non-empty
       od;
     fi;
+    
     Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups in total in this D-class");
     tot:=Length(out);
   od;
