@@ -595,12 +595,9 @@ function(S)
     Info(InfoSemigroups, 2, "calculating the ideal S\D");
     Append(gens2, List(classes{po[i]}, Representative));
     
-    # Remove the whole of any trivial D-class
-    if Size(classes[i])=1 then
+    if Size(classes[i])=1 then   # Remove the whole of any trivial D-class
       Add(out, SemigroupIdealByGenerators(S, gens2));
-    
-    # Adjoin maximal subsemigroups of principal factor to S\D
-    else
+    else   # Adjoin maximal subsemigroups of principal factor to S\D
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
       if not IsEmpty(gens2) then
@@ -626,52 +623,46 @@ function(S)
     tot:=Length(out);
   od;
 
+  # Info statements
   if not IsEmpty(nonmax) then
     Info(InfoSemigroups, 2, "finding maximal subsemigroups arising from", 
     " non-maximal D-classes...");
   else
     Info(InfoSemigroups, 2, "no non-maximal D-classes to consider...");    
   fi;
-  #Type 2: maximal subsemigroups arising from non-maximal D-classes
+  
+  # Type 2: maximal subsemigroups arising from non-maximal D-classes
   for i in nonmax do 
     Info(InfoSemigroups, 2, "considering D-class ", i);
-    if not IsRegularDClass(classes[i]) then #remove the whole thing...
-      #find the generators for the ideal...
-      gens2:=ShallowCopy(gens);
-      Remove(gens2, lookup[i][1]); #there's only one generator in the D-class
-      pos:=Position(po[i], i);
-      if pos<>fail then
-        Remove(po[i], pos);
-      fi;
-      reps:=List(classes{po[i]}, Representative);
+    
+    # Calculate D-class reps directly below classes[i]
+    pos:=Position(po[i], i);
+    if pos<>fail then
+      Remove(po[i], pos);
+    fi;
+    reps:=List(classes{po[i]}, Representative);
+    
+    # Calculate ideal of D-class reps directly below classes[i] if necessary
+    if not(IsBound(lastideal) and lastideal = reps) then
       if not IsEmpty(reps) then
-        Append(gens2, 
-         GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
-          reps)));
-      fi;
-      Add(out, Semigroup(gens2, rec(small:=true)));
-      Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
-      " removing whole non-maximal non-regular D-class...");
-      #find the generator above <classes[i]>
-    else # <classes[i]> is regular
-      
-      pos:=Position(po[i], i);
-      if pos<>fail then 
-        Remove(po[i], pos);
-      fi;
-      count:=0;
-      reps:=List(classes{po[i]}, Representative);
-      if IsBound(lastideal) and lastideal = reps then
-        # ideal doesn't need to be recalculated
-      else
-        if not IsEmpty(reps) then
-          ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
+        Info(InfoSemigroups, 2, "calculating ideal..."); 
+        ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
           reps), rec(small:=true)));
-        else
-          ideal:=[];
-        fi;
+      else
+        ideal:=[];
       fi;
       lastideal:=reps;
+    fi;
+    
+    if not IsRegularDClass(classes[i]) then #remove the whole thing...
+      gens2:=ShallowCopy(gens);
+      Remove(gens2, lookup[i][1]); # there's only one generator in the D-class
+      Add(out, Semigroup(gens2, ideal, rec(small:=true)));
+      Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+      " removing whole non-maximal non-regular D-class...");
+      
+    else # <classes[i]> is regular; lots of work to be done
+
       UnionOfHClassRecursion:=function(U, known, A, depth)
         local ismax, new_known, a, V, didtest, h, new_depth;
         new_depth:=depth+1;
