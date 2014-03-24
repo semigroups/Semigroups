@@ -12,7 +12,7 @@
 # not seem to perform significantly better and so was removed.
 
 InstallMethod(IsMaximalSubsemigroup, "for an acting semigroup and acting semigroup", 
-[IsActingSemigroup, IsActingSemigroup],
+[IsSemigroup, IsSemigroup],
 function(S, T)
   if IsSubsemigroup(S, T) and S<>T then 
     return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
@@ -162,12 +162,28 @@ end);
 InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup and a group",
 [IsReesZeroMatrixSubsemigroup, IsGroup], 
 function(R, H)
-  local G, mat, graph, basicgens, i, j, maxgens;
+  local G, mat, graph, basicgens, i, j, maxgens, I, J;
 
   if not IsReesZeroMatrixSemigroup(R) then 
     TryNextMethod(); 
     return;
   fi;
+  
+  mat:=Matrix(R); I:=Rows(R); J:=Columns(R);
+  
+  # Check that matrix is regular (i.e. no zero rows or columns)
+  for i in I do
+    if ForAll(J, j->mat[j][i] = 0) then
+      Error("matrix is non-regular, so this function doesn't work,");
+      return;
+    fi;
+  od;
+  for j in J do
+    if ForAll(I, i->mat[j][i] = 0) then
+      Error("matrix is non-regular, so this function doesn't work,");
+      return;
+    fi;
+  od;
    
   G:=UnderlyingSemigroup(R);    
     
@@ -179,7 +195,6 @@ function(R, H)
     return fail;
   fi;
 
-  mat:=Matrix(R);
   graph:=RZMSGraph(R);
   
   # Add to the generators one element which *must* be in each group H-class of
@@ -203,7 +218,7 @@ end);
 
 #
 
-InstallMethod(MaximalSubsemigroupsNC, "for a Rees matrix subsemigroup and a group",
+InstallMethod(MaximalSubsemigroupsNC, "for a Rees 0-matrix subsemigroup and a group",
 [IsReesZeroMatrixSubsemigroup, IsGroup, IsRecord, IsList, IsList, IsList], 
 function(R, H, graph, components, basicgens, indices)
   local nrcomponents, nrrows, NonGroupRecursion, out, i, j, maxgens, Hsize, transversal, mat;
@@ -278,6 +293,22 @@ else
       TryNextMethod(); 
       return;
     fi;
+    
+    out:=[]; I:=Rows(R); J:=Columns(R); nrrows:=Length(I); mat:=Matrix(R);
+    
+    # Check that matrix is regular (i.e. no zero rows or columns)
+    for i in I do
+      if ForAll(J, j->mat[j][i] = 0) then
+        Error("matrix is non-regular, so this function doesn't work,");
+        return;
+      fi;
+    od;
+    for j in J do
+      if ForAll(I, i->mat[j][i] = 0) then
+        Error("matrix is non-regular, so this function doesn't work,");
+        return;
+      fi;
+    od;
    
     G:=UnderlyingSemigroup(R);    
     
@@ -294,8 +325,6 @@ else
       fi;
     fi;
 
-    out:=[]; I:=Rows(R); J:=Columns(R); mat:=Matrix(R); nrrows:=Length(I);   
-   
     # find the set of group elements in the matrix
     
     if Length(I)=1 and Length(J)=1 and IsTrivial(G) then 
