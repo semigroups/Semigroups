@@ -469,7 +469,7 @@ InstallMethod(TraceSchreierTreeOfSCCBack,
 function(o, i, j)
   local tree, mult, scc, word;
   
-  if not IsActingSemigroupWithInverseOp(o!.parent) then 
+  if not IsInverseOrb(o) then 
     tree:=ReverseSchreierTreeOfSCC(o, i);
     mult:=1;
   else 
