@@ -153,7 +153,7 @@ gap> Size(S);
       If <A>n</A> is a positive integer, then this function returns a
       semigroup of transformations on <C><A>n</A>+1</C> points which is
       isomorphic to the semigroup consisting of all partial transformation on
-      <A>n</A> points. This monoid has <C><A>n</A>^<A>n</A>+1</C> elements.
+      <A>n</A> points. This monoid has <C>(<A>n</A>+1)^<A>n</A></C> elements.
       <!--JDM add generators-->
       <Example>
 gap> PartialTransformationSemigroup(8); 

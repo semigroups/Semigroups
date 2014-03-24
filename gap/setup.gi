@@ -38,6 +38,8 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection",
 [IsBipartitionCollection], x-> true);
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
 
 # IsGeneratorsOfActingSemigroup
 

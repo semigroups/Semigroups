@@ -19,12 +19,7 @@ end);
 InstallMethod(MatrixEntries, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(R)
-  local P;
-  P:=Union(Matrix(R){Columns(R)}{Rows(R)}); 
-  if P[1]=0 then 
-    Remove(P, 1);
-  fi;
-  return P;
+  return Union(Matrix(R){Columns(R)}{Rows(R)}); 
 end);
 
 #

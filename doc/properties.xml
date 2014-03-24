@@ -315,6 +315,57 @@ false</Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsEunitaryInverseSemigroup">
+<ManSection>
+  <Prop Name="IsEunitaryInverseSemigroup" Arg="S"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    As described in <Cite Key="howie"/>, an inverse semigroup <A>S</A> with 
+    subsemigroup of idempotents <A>E</A> is <E>E-unitary</E> if for
+    <Display>
+    s \in S\textrm{ and }e \in E\textrm{: }es \in E \Rightarrow s \in E.
+    </Display>
+    Equivalently, <A>S</A> is <E>E-unitary</E> if <A>E</A> is closed in the 
+    natural partial order (see Proposition 5.9.1 in <Cite Key="howie"/>); that is:
+    <Alt Not="Text">
+    <Display>
+    \textrm{for } s \in S\textrm{ and }e \in E\textrm{: }e \le s \Rightarrow s \in E
+    </Display>
+    </Alt>
+    <Alt Only="Text">
+    for s in S and e in E, e less than s implies s in E.
+    </Alt><P/>
+    This condition is equivalent to <A>E</A> being majorantly closed in <A>S</A>.
+    See <Ref Oper="IdempotentGeneratedSubsemigroup"/> and <Ref Oper="IsMajorantlyClosed"/>.    
+    Hence an inverse semigroup of partial permutations is <E>E-unitary</E> if 
+    and only if the idempotent generated subsemigroup is majorantly closed.
+    <Example>
+gap> S:=InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 4 ], [ 2, 3, 1, 6 ] ),
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 3, 2, 1, 6 ] ) ]);;
+gap> IsEunitaryInverseSemigroup(S);
+true
+gap> e:=IdempotentGeneratedSubsemigroup(S);;
+gap> ForAll(Difference(S,e), x->not ForAny(e, y->y*x in e));
+true
+gap> T:=InverseSemigroup( [ 
+>  PartialPerm( [ 1, 3, 4, 6, 8 ], [ 2, 5, 10, 7, 9 ] ),
+>  PartialPerm( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 8, 9, 2, 10, 1, 3 ] ),
+>  PartialPerm( [ 1, 2, 3, 5, 6, 7, 9 ], [ 9, 8, 4, 1, 6, 7, 2 ] ) ]);;
+gap> IsEunitaryInverseSemigroup(T);
+false
+gap> U:=InverseSemigroup( [
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 3, 4, 5, 1 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 1, 3, 4, 5 ] ) ]);;
+gap> IsEunitaryInverseSemigroup(U);
+true
+gap> IsGroupAsSemigroup(U);
+true
+gap> StructureDescription(U);
+"S5"</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsFactorisableSemigroup">
 <ManSection>
   <Prop Name="IsFactorisableSemigroup" Arg="S"/>

@@ -346,7 +346,9 @@ gap> GreensRClasses(D);
     <Oper Name="GreensDClassOfElement" Arg="X, f"/>
     <Func Name="DClass" Arg="X, f"/>
     <Oper Name="GreensHClassOfElement" Arg="X, f"/>
+    <Oper Name="GreensHClassOfElement" Arg="R, i, j"/>
     <Func Name="HClass" Arg="X, f"/>
+    <Func Name="HClass" Arg="R, i, j"/>
     <Oper Name="GreensLClassOfElement" Arg="X, f"/>
     <Func Name="LClass" Arg="X, f"/>
     <Oper Name="GreensRClassOfElement" Arg="X, f"/>
@@ -366,6 +368,12 @@ gap> GreensRClasses(D);
       <Mark><C>GreensHClassOfElement</C> and <C>HClass</C></Mark>
       <Item>
         <A>X</A> can be a semigroup, &R;-class, &L;-class, or &D;-class.
+      </Item>
+      <Item>
+        If <A>R</A> is a <A>IxJ</A> Rees matrix semigroup or a Rees 0-matrix semigroup,
+        and <A>i</A> and <A>j</A> are integers of the corresponding index sets,
+        then <C>GreensHClassOfElement</C> returns the &H;-class in row <A>i</A>
+        and column <A>j</A>.
       </Item>
 
       <Mark><C>GreensLClassOfElement</C> and <C>LClass</C></Mark>

@@ -1269,6 +1269,15 @@ function(s)
   fi;
 end);
 
+#
+
+InstallMethod(IsEunitaryInverseSemigroup,
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  return IsMajorantlyClosed(s,IdempotentGeneratedSubsemigroup(s));
+end);
+
 # for general semigroups...
 
 InstallMethod(IsRTrivial, "for a semigroup", 
