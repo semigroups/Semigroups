@@ -164,3 +164,43 @@ function(mat)
     return SemiEchelonMatDestructive(copy);
 end);
 
+###
+#M MoorePenroseInverse
+#
+# This is certainly NOT the most efficient way of doing this
+#
+InstallMethod( MoorePenroseInverse,
+        "for a matrix over a field",
+        [ IsMatrixObj ],
+function(mat)
+    local C, D, E, F, n, i, rows;
+    
+    if not IsField(BaseDomain(mat)) then
+        Error("This method only works for matrices over fields\n");
+    fi;
+    
+    D := MutableCopyMat(mat);
+    TriangulizeMat(D);
+    D := D{ [1..PositionLastNonZero(D)] };
+    
+    n := DimensionsMat(mat)[1];
+    rows := [];
+    
+    C := TransposedMat(mat);
+    
+    for i in [1..DimensionsMat(D)[1]] do
+        if PositionNonZero(D[i]) <= n then
+            Add(rows, C[i]);
+        fi;
+    od;
+    
+    C := TransposedMat(NewMatrix(IsPlistMatrixRep, BaseDomain(mat), n, rows));
+    
+    # Instead of transposedmat, this probably has to be
+    # transposed conjugate
+    E := C * (TransposedMat(C) * C) ^ (-1);
+    F := (D * TransposedMat(D)) ^ (-1) * D;
+    
+    return E * F;
+end);
+

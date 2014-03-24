@@ -24,3 +24,8 @@ DeclareOperation( "SemiEchelonMatDestructive",
 
 DeclareAttribute( "SemiEchelonMat", 
         IsMatrixObj );
+
+DeclareOperation( "MoorePenroseInverse",
+        [ IsMatrixObj ] );
+        
+        

@@ -264,6 +264,8 @@ InstallMethod(RhoFunc,
     # a function that returns the column space
     return
       function(mat)
+        local nvsp;
+        
         nvsp := MutableCopyMat(mat);
         SemiEchelonMatDestructive(nvsp);
         return nvsp;
@@ -293,9 +295,14 @@ InstallMethod(LambdaInverse,
         [IsMatrixSemigroup],
         function(S)
     # Returns a function that for 
-    return(x->x);
-    
-    Error("not implemented yet\n");
+    return function( Y, f )
+        local inv;
+        
+        inv := MoorePenroseInverse(f);
+       # Error("Debugging");
+        
+        return MoorePenroseInverse(f);
+    end;
 end);
 
 InstallMethod(RhoInverse,
