@@ -153,11 +153,25 @@ gap> T3:=FullTransformationMonoid(3);
 <full transformation semigroup on 3 pts>
 gap> max:=MaximalSubsemigroups(T3);;
 gap> correct:=[
->   Semigroup([ Transformation( [ 2, 3, 1 ] ), Transformation( [ 3, 1, 1 ] ) ]),
->   Semigroup([ Transformation( [ 1, 3, 2 ] ), Transformation( [ 3, 1, 1 ] ), Transformation( [ 3, 3, 2 ] ), Transformation( [ 1, 3, 1 ] ) ]),
->   Semigroup([ Transformation( [ 2, 1 ] ), Transformation( [ 3, 3, 1 ] ), Transformation( [ 1, 3, 3 ] ), Transformation( [ 1, 2, 2 ] ) ]),
->   Semigroup([ Transformation( [ 3, 2, 1 ] ), Transformation( [ 1, 2, 1 ] ), Transformation( [ 3, 3, 1 ] ), Transformation( [ 1, 1, 2 ] ) ]),
->   Semigroup([ Transformation( [ 2, 1 ] ), Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 2, 2 ] ) ])
+>   Semigroup([
+>     Transformation( [ 2, 3, 1 ] ),
+>     Transformation( [ 3, 1, 1 ] ) ]),
+>   Semigroup([
+>     Transformation( [ 1, 3, 2 ] ),
+>     Transformation( [ 3, 1, 1 ] ),
+>     Transformation( [ 3, 3, 2 ] ),
+>     Transformation( [ 1, 3, 1 ] ) ]),
+>   Semigroup([ Transformation( [ 2, 1 ] ),
+>     Transformation( [ 3, 3, 1 ] ),
+>     Transformation( [ 1, 3, 3 ] ),
+>     Transformation( [ 1, 2, 2 ] ) ]),
+>   Semigroup([ Transformation( [ 3, 2, 1 ] ),
+>     Transformation( [ 1, 2, 1 ] ),
+>     Transformation( [ 3, 3, 1 ] ),
+>     Transformation( [ 1, 1, 2 ] ) ]),
+>   Semigroup([ Transformation( [ 2, 1 ] ),
+>     Transformation( [ 2, 3, 1 ] ),
+>     Transformation( [ 2, 2, 2 ] ) ])
 > ];;
 gap> max = correct;
 true
@@ -165,11 +179,12 @@ gap> Size(max);
 5
 
 # Transformation semigroup
-gap> S:=Semigroup([ Transformation( [ 2, 1, 5, 2, 4 ] ),
-> Transformation( [ 2, 3, 4, 3, 1 ] ),
-> Transformation( [ 3, 4, 1, 4, 3 ] ),
-> Transformation( [ 3, 4, 2, 2, 2 ] ),
-> Transformation( [ 5, 1, 1, 2, 3 ] ) ]);
+gap> S:=Semigroup([
+>   Transformation( [ 2, 1, 5, 2, 4 ] ),
+>   Transformation( [ 2, 3, 4, 3, 1 ] ),
+>   Transformation( [ 3, 4, 1, 4, 3 ] ),
+>   Transformation( [ 3, 4, 2, 2, 2 ] ),
+>   Transformation( [ 5, 1, 1, 2, 3 ] ) ]);
 <transformation semigroup on 5 pts with 5 generators>
 gap> max:=MaximalSubsemigroups(S);;
 gap> Size(max);
@@ -180,7 +195,10 @@ gap> ForAll(max,x->IsMaximalSubsemigroup(S,x));
 true
 
 # Inverse semigroup of partial permutations
-gap> S:=InverseSemigroup([ PartialPerm( [ 1, 3, 4, 5 ], [ 6, 5, 2, 4 ] ), PartialPerm( [ 1, 2, 3, 4, 6 ], [ 5, 4, 3, 1, 6 ] ), PartialPerm( [ 1, 2, 5, 7 ], [ 3, 1, 4, 6 ] ) ]);;
+gap> S:=InverseSemigroup([
+>   PartialPerm( [ 1, 3, 4, 5 ], [ 6, 5, 2, 4 ] ),
+>   PartialPerm( [ 1, 2, 3, 4, 6 ], [ 5, 4, 3, 1, 6 ] ),
+>   PartialPerm( [ 1, 2, 5, 7 ], [ 3, 1, 4, 6 ] ) ]);;
 gap> max:=MaximalSubsemigroups(S);;
 gap> Size(max);
 6
@@ -198,13 +216,22 @@ gap> S:=max[1];;
 gap> max:=MaximalSubsemigroups(S);;
 
 # Test of IsMaximalSubsemigroup
-gap> S:=Semigroup([ Transformation( [ 1, 2, 4, 4, 1 ] ), Transformation( [ 4, 4, 1, 4 ] ), Transformation( [ 5, 1, 4, 2, 3 ] ) ]);
+gap> S:=Semigroup([
+>   Transformation( [ 1, 2, 4, 4, 1 ] ),
+>   Transformation( [ 4, 4, 1, 4 ] ),
+>   Transformation( [ 5, 1, 4, 2, 3 ] ) ]);
 <transformation semigroup on 5 pts with 3 generators>
-gap> T:=Semigroup([ Transformation( [ 5, 1, 4, 2, 3 ] ), Transformation( [ 4, 4, 2, 4, 1 ] ), Transformation( [ 3, 1, 2, 2, 2 ] ) ]);
+gap> T:=Semigroup([
+>   Transformation( [ 5, 1, 4, 2, 3 ] ),
+>   Transformation( [ 4, 4, 2, 4, 1 ] ),
+>   Transformation( [ 3, 1, 2, 2, 2 ] ) ]);
 <transformation semigroup on 5 pts with 3 generators>
 gap> IsMaximalSubsemigroup(S, T);
 true
-gap> U:=Semigroup([ Transformation( [ 5, 5, 1, 1, 5 ] ), Transformation( [ 2, 2, 3, 4, 3 ] ), Transformation( [ 3, 4, 5, 4, 3 ] ) ]);
+gap> U:=Semigroup([
+>   Transformation( [ 5, 5, 1, 1, 5 ] ),
+>   Transformation( [ 2, 2, 3, 4, 3 ] ),
+>   Transformation( [ 3, 4, 5, 4, 3 ] ) ]);
 <transformation semigroup on 5 pts with 3 generators>
 gap> IsSubsemigroup(S, U);
 true
@@ -216,4 +243,3 @@ gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST("Semigroups package: maximal.tst", 10000);
-

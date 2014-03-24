@@ -603,6 +603,7 @@ function(S)
     if Size(classes[i])=1 then   # Remove the whole of any trivial D-class
       Add(out, V);   # V <> [] since S is non-trivial at this point
     else   # Adjoin maximal subsemigroups of principal factor to S\D
+      V:=GeneratorsOfSemigroup(V);
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
       for U in MaximalSubsemigroups(R) do
@@ -779,6 +780,7 @@ function(S)
         "which are a union of H-classes");
       for k in [1..Length(lookup[i])] do
         for j in Combinations(lookup[i], k) do
+          Error("start debug,");
           Info(InfoSemigroups, 2, "Trying to remove gens: ", j, "...");
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
