@@ -1,0 +1,72 @@
+<Chapter Label="Congruences on completely 0-simple semigroups">
+  <Heading>Congruences on completely 0-simple semigroups</Heading> This chapter
+  describes the implementation of congruences on completely 0-simple semigroups
+  in the &Semigroups; package, and the functions associated with them.  This
+  code and this part of the manual were written by Michael Torpey.  Most of the
+  theorems used in this chapter are from Section 3.5 of <Cite Key =
+  "howie"/>.<P/>
+
+  By the Rees Theorem, any 0-simple semigroup <M>S</M> is isomorphic to a
+  <E>Rees 0-matrix semigroup</E> (see <Ref Chap = "Rees Matrix Semigroups"
+  BookName = "ref" />) over a group, with a regular sandwich matrix.
+  <Alt Not="Text">
+    That is, <Display>S \cong \mathcal{M}^0[G; I,\Lambda; P], </Display> where
+    <M>G</M> is a group, <M>\Lambda</M> and <M>I</M> are non-empty sets, and
+    <M>P</M> is regular in the sense that no two of its rows or columns contain
+    only zeroes.
+  </Alt>
+  <Alt Only="Text">
+    That is, S is isomorphic to M^0[G; I,L; P] where G is a group, L and I are
+    non-empty sets and the matrix P is regular in the sense that no two of its
+    rows or columns contain only zeroes.
+  </Alt><P/>
+
+  By Theorem 3.5.9, there is a bijection between the set of congruences of such
+  a semigroup, and the set of <E>linked triples</E>.  A linked triple of such a
+  semigroup is a triple of the form
+  <Alt Not="Text"><M>(N,\mathcal{S},\mathcal{T})</M></Alt>
+  <Alt Only="Text">(N,S,T)</Alt>
+  where<P/>
+  
+  <List>
+    <Item>
+      <M>N</M> is a normal subgroup of the underlying group <M>G</M>,
+    </Item>
+    <Item>
+      <Alt Not="Text"><M>\mathcal{S}</M></Alt><Alt Only="Text">S</Alt> is an
+      equivalence relation on the columns of <M>P</M>,
+    </Item>
+    <Item>
+      <Alt Not="Text"><M>\mathcal{T}</M></Alt><Alt Only="Text">T</Alt> is an
+      equivalence relation on the rows of <M>P</M>,
+    </Item>
+  </List>
+
+  satisfying the following conditions:
+
+  <List>
+    <Item>
+      A related pair of columns in <Alt Not="Text"><M>\mathcal{S}</M></Alt> <Alt
+      Only="Text"><M>S</M></Alt> must contain zeroes in precisely the same rows.
+    </Item>
+    <Item>
+      A related pair of rows in <Alt Not="Text"><M>\mathcal{T}</M></Alt> <Alt
+      Only="Text"><M>T</M></Alt> must contain zeroes in precisely the same
+      columns.
+    </Item>
+    <Item>
+      <Alt Not="Text">
+	If <M>(i,j) \in S</M> and <M>(u,v) \in T</M>, such that the matrix
+	entries <M>p_{\lambda i}, p_{\lambda j}, p_{\mu i}, p_{\mu j} \neq 0</M>,
+	then <M>q_{\lambda \mu i j} \in N</M>, where <Display>q_{\lambda \mu i
+	j} = p_{\lambda i} \times p_{\mu i}^{-1} \times p_{\mu j} \times
+	p_{\lambda j}^{-1}.</Display>
+      </Alt>
+      <Alt Only="Text">
+	If (i,j) is in S, (u,v) is in T, and the matrix entries
+	p_ui, p_uj, p_vi, and p_vj are all non-zero, then q_uvij is in N, where
+	<Display>q_uvij = p_ui * p_vi^-1 * p_vj * p_uj^-1.</Display>
+      </Alt>
+    </Item>
+  </List>
+</Chapter>
