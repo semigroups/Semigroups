@@ -22,8 +22,8 @@ function(x,data)
     #T This looks magic but isn't, see matobjplist.gd
     #T the entries of PlistMatrixRep and PlistVectorRep are defined there
     for i in [1..x![3]] do
-        res := (res * 1001 + SEMIG_HashFunctionForPlistVects(x![4][i]![2],data[1]))
-             mod data[1]+1;
+        res := (res * 1001 + SEMIG_HashFunctionForPlistVects(x![4][i]![2], data))
+             mod data + 1;
     od;
     return res;
 end );
@@ -62,7 +62,7 @@ function(mat, hashlen)
     local bytelen;
     bytelen := (GAPInfo.BytesPerVariable * (mat![3] + 1) mod hashlen) + 1;
     return rec( func := SEMIG_HashFunctionForPlistMats,
-                data := [hashlen,bytelen] );
+                data := hashlen );
 end );
 
 # Note that this can only be used to hash subspaces of F^n for some

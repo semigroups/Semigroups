@@ -16,12 +16,11 @@
 # This aims to be compatible with the MatrixObj interface in the 
 # GAP library and might at some point be moved to the library
 #
-#############################################################################
-##
-#M  TriangulizeMat( <mat> ) . . . . . bring a matrix in upper triangular form
-##
 DeclareOperation( "TriangulizeMat", 
         [ IsMatrixObj and IsMutable ]);
         
-DeclareOperation( "SemiEchelonMat"
+DeclareOperation( "SemiEchelonMatDestructive",
         [ IsMatrixObj and IsMutable ]);
+
+DeclareAttribute( "SemiEchelonMat", 
+        IsMatrixObj );

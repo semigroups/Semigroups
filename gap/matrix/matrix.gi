@@ -81,3 +81,86 @@ InstallMethod( TriangulizeMat,
 end );
 
 
+
+
+
+#############################################################################
+##
+#M  SemiEchelonMat( <mat> )
+##
+InstallMethod( SemiEchelonMatDestructive,
+    "generic method for matrix objects", 
+    [ IsMatrixObj and IsMutable],
+    function( mat )
+    local zero,      # zero of the field of <mat>
+          dims,      # dims of matrix entries
+          nrows,     # number of rows in <mat>
+          ncols,     # number of columns in <mat>
+          vectors,   # list of basis vectors
+          heads,     # list of pivot positions in `vectors'
+          i,         # loop over rows
+          j,         # loop over columns
+          x,         # a current element
+          nzheads,   # list of non-zero heads
+          row,       # the row of current interest
+          inv;       # inverse of a matrix entry
+
+    dims := DimensionsMat(mat);
+    
+    nrows := dims[1];
+    ncols := dims[2];
+    
+    zero := Zero(BaseDomain(mat));
+    
+    heads:= ListWithIdenticalEntries( ncols, 0 );
+    nzheads := []; 
+    vectors := [];
+        
+    for i in [ 1 .. nrows ] do
+       
+        row := mat[i];
+        # Reduce the row with the known basis vectors.
+        for j in [ 1 .. Length(nzheads) ] do
+            x := row[nzheads[j]];
+            if x <> zero then
+              AddRowVector( row, vectors[ j ], - x );
+            fi;
+        od;
+          
+        #j := PositionNot( row, zero );
+        j := 1;
+        while (j <= ncols) and (row[j] = zero) do
+            j := j+1;
+        od;
+        
+        if j <= ncols then
+          
+            # We found a new basis vector.
+            inv:= Inverse( row[j] );
+            if inv = fail then
+                Error("fail");
+                return fail;
+            fi;
+            MultRowVector( row, inv );
+            Add( vectors, row );
+            Add( nzheads, j );
+            heads[j]:= Length( vectors );
+
+        fi;
+    
+    od;
+       
+    return rec( heads   := heads,
+                vectors := vectors );
+end );
+
+InstallMethod( SemiEchelonMat,
+        "generic method for matrix objects",
+        [ IsMatrixObj ],
+function(mat)
+    local copy;
+    
+    copy := StructuralCopy(mat);
+    return SemiEchelonMatDestructive(copy);
+end);
+
