@@ -28,8 +28,9 @@ gap> B:=InverseSemigroup([
 <inverse bipartition semigroup on 7 pts with 3 generators>
 gap> JoinIrreducibleDClasses(B);
 [ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
-    , {Bipartition( [ [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] 
-     ] )} ]
+    , 
+  {Bipartition( [ [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] ] )}\
+ ]
 
 # IsJoinIrreducible
 gap> x:=PartialPerm( [ 1, 2, 4, 6 ], [ 2, 3, 1, 4 ] );;
@@ -89,11 +90,11 @@ gap> IsMajorantlyClosed(B, [R]);
 false
 gap> MajorantClosure(B, [Q]);
 [ <block bijection: [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>, 
-  <block bijection: [ 1, 2, 5, 7, -1, -2, -5, -7 ], [ 3, -3 ], [ 4, -4 ], 
-    [ 6, -6 ]>, <block bijection: [ 1, 2, 5, 7, -4, -5, -6, -7 ], [ 3, -3 ], 
-    [ 4, -2 ], [ 6, -1 ]>, <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], 
-    [ 4, 5, 6, 7, -4, -5, -6, -7 ]>, <block bijection: [ 1, -6 ], [ 2, -4 ], 
-    [ 3, -3 ], [ 4, 5, 6, 7, -1, -2, -5, -7 ]> ]
+  <block bijection: [ 1, 2, 5, 7, -1, -2, -5, -7 ], [ 3, -3 ], [ 4, -4 ], [ 6,
+   -6 ]>, <block bijection: [ 1, 2, 5, 7, -4, -5, -6, -7 ], [ 3, -3 ], [ 4,
+    -2 ], [ 6, -1 ]>, <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4,
+    5, 6, 7, -4, -5, -6, -7 ]>, <block bijection: [ 1, -6 ], [ 2, -4 ], [ 3,
+    -3 ], [ 4, 5, 6, 7, -1, -2, -5, -7 ]> ]
 gap> m:=MajorantClosure(B, [R]);;
 gap> IsMajorantlyClosed(B, m);
 true
@@ -127,14 +128,13 @@ gap> V:=InverseSemigroup(m);
 gap> IsMajorantlyClosed(B,V);
 true
 gap> RightCosetsOfInverseSemigroup(B, V);
-[ [ <block bijection: [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>
-        , <block bijection: [ 1, 2, 5, 7, -1, -2, -5, -7 ], [ 3, -3 ], 
-        [ 4, -4 ], [ 6, -6 ]>, 
-      <block bijection: [ 1, 2, 5, 7, -4, -5, -6, -7 ], [ 3, -3 ], [ 4, -2 ], 
-        [ 6, -1 ]>, <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], 
-        [ 4, 5, 6, 7, -4, -5, -6, -7 ]>, 
-      <block bijection: [ 1, -6 ], [ 2, -4 ], [ 3, -3 ], 
-        [ 4, 5, 6, 7, -1, -2, -5, -7 ]> ] ]
+[ [ <block bijection: [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3,
+        -3 ]>, <block bijection: [ 1, 2, 5, 7, -1, -2, -5, -7 ], [ 3,
+        -3 ], [ 4, -4 ], [ 6, -6 ]>, <block bijection: [ 1, 2, 5, 7, -4, -5,
+        -6, -7 ], [ 3, -3 ], [ 4, -2 ], [ 6, -1 ]>, <block bijection: [ 1,
+        -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, 5, 6, 7, -4, -5, -6, -7 ]>, 
+      <block bijection: [ 1, -6 ], [ 2, -4 ], [ 3, -3 ], [ 4, 5, 6, 7, -1, -2,
+       -5, -7 ]> ] ]
 
 # SameMinorantsSubgroup
 gap> h:=GroupHClass(DClasses(S)[4]);
@@ -142,11 +142,11 @@ gap> h:=GroupHClass(DClasses(S)[4]);
 gap> SameMinorantsSubgroup(h);
 [ <identity partial perm on [ 1, 4, 6 ]> ]
 gap> h:=GroupHClass(DClasses(B)[6]);
-{Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] 
- ] )}
+{Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] ] \
+)}
 gap> SameMinorantsSubgroup(h);
-[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 
-     ]> ]
+[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6,
+    -7 ]> ]
 
 # Non-trivial examples
 gap> f:=PartialPermNC( [ 2, 1, 4, 5, 3, 7, 6, 9, 10, 8 ] );;
