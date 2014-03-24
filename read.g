@@ -55,6 +55,7 @@ if TestPackageAvailability("grape")=fail then
 elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
    then 
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
+  Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
 fi;
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")

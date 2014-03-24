@@ -1028,28 +1028,117 @@ InstallMethod(PrincipalFactor, "for a D-class",
 
 #
 
-InstallMethod(SmallGeneratingSet, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  if IsEmpty(Generators(s)) then 
-    return Generators(s);
+InstallMethod(SmallSemigroupGeneratingSet, 
+"for an associative element collection", 
+[IsAssociativeElementCollection],
+function(coll)
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    TryNextMethod();
+  elif Length(coll)<2 then 
+    return coll;
   else
-    return Generators(Semigroup(Generators(s), rec(small:=true)));
+    return GeneratorsOfSemigroup(Semigroup(coll, rec(small:=true)));
   fi;
 end);
 
 #
 
-InstallMethod(SmallGeneratingSet, 
-"for an acting semigroup with inverse op and generators", 
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
-function(s)
-  if IsEmpty(Generators(s)) then 
-    return Generators(s);
+InstallMethod(SmallSemigroupGeneratingSet, 
+"for an acting semigroup", [IsActingSemigroup],
+function(S)
+  return SmallSemigroupGeneratingSet(GeneratorsOfSemigroup(S));
+end);
+
+#
+
+InstallMethod(SmallMonoidGeneratingSet, 
+"for an associative element with one collection", 
+[IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection],
+function(coll)
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    TryNextMethod();
+  elif Length(coll)<2 then 
+    return coll;
   else
-    return Generators(InverseSemigroup(Generators(s), rec(small:=true)));
+    return GeneratorsOfMonoid(Monoid(coll, rec(small:=true)));
   fi;
+end);
+
+#
+
+InstallMethod(SmallMonoidGeneratingSet, 
+"for an acting monoid", [IsActingSemigroup and IsMonoid],
+function(S)
+  return SmallMonoidGeneratingSet(GeneratorsOfMonoid(S));
+end);
+
+#
+
+InstallMethod(SmallInverseSemigroupGeneratingSet, 
+"for generators of an inverse semigroup", 
+[IsGeneratorsOfInverseSemigroup],
+function(coll)
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    TryNextMethod();
+  elif Length(coll)<2 then 
+    return coll;
+  else
+    return GeneratorsOfInverseSemigroup(InverseSemigroup(coll, rec(small:=true)));
+  fi;
+end);
+
+#
+
+InstallMethod(SmallInverseSemigroupGeneratingSet, 
+"for an acting inverse semigroup with generators", 
+[IsActingSemigroup and IsInverseSemigroup],
+function(S)
+  return SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S));
+end);
+
+#
+
+InstallMethod(SmallInverseMonoidGeneratingSet, 
+"for generators of an inverse monoid", 
+[IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection],
+function(coll)
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    TryNextMethod();
+  elif Length(coll)<2 then 
+    return coll;
+  else
+    return GeneratorsOfInverseMonoid(InverseMonoid(coll, rec(small:=true)));
+  fi;
+end);
+
+#
+
+InstallMethod(SmallInverseMonoidGeneratingSet, 
+"for an acting inverse semigroup with generators", 
+[IsActingSemigroup and IsInverseMonoid],
+function(S)
+  return SmallSemigroupGeneratingSet(GeneratorsOfInverseMonoid(S));
+end);
+
+#
+
+InstallMethod(SmallGeneratingSet, "for a semigroup",
+[IsSemigroup],
+function(S)
+  
+  if HasGeneratorsOfSemigroupIdeal(S) then 
+    return SmallIdealGeneratingSet(S);
+  elif HasGeneratorsOfGroup(S) then 
+    return SmallGeneratingSet(GeneratorsOfGroup(S));
+  elif HasGeneratorsOfInverseMonoid(S) then 
+    return SmallInverseMonoidGeneratingSet(S);
+  elif HasGeneratorsOfInverseSemigroup(S) then 
+    return SmallInverseSemigroupGeneratingSet(S);
+  elif HasGeneratorsOfMonoid(S) then
+    return SmallMonoidGeneratingSet(S);
+  fi;
+
+  return SmallSemigroupGeneratingSet(S);
 end);
 
 #
