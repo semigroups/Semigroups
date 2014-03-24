@@ -603,6 +603,7 @@ function(S)
     if Size(classes[i])=1 then   # Remove the whole of any trivial D-class
       Add(out, V);   # V <> [] since S is non-trivial at this point
     else   # Adjoin maximal subsemigroups of principal factor to S\D
+      V:=GeneratorsOfSemigroup(V);
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
       for U in MaximalSubsemigroups(R) do
