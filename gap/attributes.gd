@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-DeclareOperation("IsMaximalSubsemigroup", [IsSemigroup, IsSemigroup]);
 DeclareOperation("IrredundantGeneratingSubset",
 [IsAssociativeElementCollection]);
 DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup,
@@ -44,15 +43,6 @@ DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
 DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);
 DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
-DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
 
-DeclareOperation("SubsemigroupByIndicesNC", 
-[IsReesMatrixSemigroup, IsDenseList, IsDenseList]);
-DeclareOperation("SubsemigroupByIndicesNC",
-[IsReesZeroMatrixSemigroup, IsDenseList, IsDenseList]);
-DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
-[IsReesMatrixSemigroup, IsGroup]);
-DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
-[IsReesZeroMatrixSemigroup, IsGroup]);

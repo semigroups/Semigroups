@@ -54,7 +54,8 @@ gap> PrimitiveIdempotents(S);
   </Returns>
   <Description>
     <C>IsJoinIrreducible</C> determines whether an element <A>x</A> of an 
-    inverse semigroup <A>S</A> of partial permutations is join irreducible.<P/>
+    inverse semigroup <A>S</A> of partial permutations or block bijections is 
+    join irreducible.<P/>
 
     An element <A>x</A> is <E>join irreducible</E> when it is not the least
     upper bound (with respect to the natural partial order 
@@ -76,6 +77,19 @@ gap> y:=PartialPerm([1,2,3,4]);
 &lt;identity partial perm on [ 1, 2, 3, 4 ]>
 gap> IsJoinIrreducible(T, y);
 true
+gap> B:=InverseSemigroup([
+>  Bipartition( [ [ 1, -5 ], [ 2, -2 ], [ 3, 5, 6, 7, -1, -4, -6, -7 ], [ 4, -3 ] ] ),
+>  Bipartition( [ [ 1, -1 ], [ 2, -3 ], [ 3, -4 ], [ 4, 5, 7, -2, -6, -7 ], [ 6, -5 ] ] ),
+>  Bipartition( [ [ 1, -2 ], [ 2, -4 ], [ 3, -6 ], [ 4, -1 ], [ 5, 7, -3, -7 ], [ 6, -5 ] ] ),
+>  Bipartition( [ [ 1, -5 ], [ 2, -1 ], [ 3, -6 ], [ 4, 5, 7, -2, -4, -7 ], [ 6, -3 ] ] )]);
+&lt;inverse bipartition semigroup on 7 pts with 4 generators>
+gap> x:=Bipartition( [ [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], [ 4, -1 ] ] );
+&lt;block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], 
+[ 4, -1 ]>
+gap> IsJoinIrreducible(B, x);
+true
+gap> IsJoinIrreducible(B, B.1);
+false
 </Example>
 <#/GAPDoc>
 
@@ -87,16 +101,15 @@ true
 </Returns>
 <Description>
   <C>IsMajorantlyClosed</C> determines whether the subset <A>T</A> of the
-  inverse semigroup of partial permutations <A>S</A> is majorantly closed in 
-  <A>S</A>.<P/>
+  inverse semigroup of partial permutations or block bijections <A>S</A> is 
+  majorantly closed in <A>S</A>. See also <Ref Oper="MajorantClosure"/>.<P/>
  
   We say that <A>T</A> is <E>majorantly closed</E> in <A>S</A> if it 
   contains all elements of <A>S</A> which are greater than or equal to any 
   element of <A>T</A>, with respect to the natural partial order.
   See <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>.<P/>
   
-  Note that <A>T</A> can be a subset of <A>S</A> or an inverse 
-  subsemigroup of <A>S</A>.
+  Note that <A>T</A> can be a subset of <A>S</A> or a subsemigroup of <A>S</A>.
 </Description>
 </ManSection>
 <Example>
@@ -111,6 +124,14 @@ gap> U:=[Elements(S)[2],Elements(S)[6]];
     > ]
 gap> IsMajorantlyClosed(S,U);
 true
+gap> D:=DualSymmetricInverseSemigroup(3);
+&lt;inverse bipartition monoid on 3 pts with 3 generators>
+gap> x:=Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] );;
+gap> IsMajorantlyClosed(D, [x]);
+true
+gap> y:=Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] );;
+gap> IsMajorantlyClosed(D, [x,y]);
+false
 </Example>
 <#/GAPDoc>
 
@@ -122,7 +143,8 @@ true
   </Returns>
   <Description>
     <C>JoinIrreducibleDClasses</C> returns a list of the join irreducible
-    &D;-classes of the inverse semigroup of partial permutations <A>S</A>.<P/>
+    &D;-classes of the inverse semigroup of partial permutations or block 
+    bijections <A>S</A>.<P/>
 
     A <E>join irreducible &D;-class</E> is a &D;-class containing only join
     irreducible elements.  See <Ref Oper="IsJoinIrreducible"/>.
@@ -139,6 +161,10 @@ gap> T:=InverseSemigroup(a,b,c);
 gap> JoinIrreducibleDClasses(T);
 [ {PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 3, 4 ] )}, 
   {PartialPerm( [ 1 ], [ 1 ] )}, {PartialPerm( [ 2 ], [ 2 ] )} ]
+gap> D:=DualSymmetricInverseSemigroup(3);
+&lt;inverse bipartition monoid on 3 pts with 3 generators>
+gap> JoinIrreducibleDClasses(D);
+[ {Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] )} ]
 </Example>
   </Description>
 </ManSection>
@@ -148,18 +174,17 @@ gap> JoinIrreducibleDClasses(T);
 <ManSection>
 <Oper Name="MajorantClosure" Arg="S,T"/>
   <Returns>
-    A majorantly closed list of partial permutations.
+    A majorantly closed list of elements.
   </Returns>
   <Description>
     <C>MajorantClosure</C> returns a majorantly closed subset of an inverse
-    semigroup of partial permutations, <A>S</A>, as a list. 
-    See <Ref Func="IsMajorantlyClosed"/>.
+    semigroup of partial permutations or block bijections, <A>S</A>, as a list. 
+    See <Ref Func="IsMajorantlyClosed"/>.<P/>
     The result contains all elements of <A>S</A> which are greater than or
     equal to any element of <A>T</A> (with respect to the natural partial 
     order <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>).
-    In particular, the result contains <A>T</A>.<P/>
-    Note that <A>T</A> can be a subset of <A>S</A> or an inverse subsemigroup
-    of <A>S</A>.
+    In particular, the result is a superset of <A>T</A>.<P/>
+    Note that <A>T</A> can be a subset of <A>S</A> or a subsemigroup of <A>S</A>.
   </Description>
 </ManSection>
 <Example>
@@ -172,6 +197,26 @@ gap> U:=MajorantClosure(S,T);
   &lt;identity partial perm on [ 1, 2, 3 ]>, [2,4](1)(3), [4,2](1)(3), 
   &lt;identity partial perm on [ 1, 3, 4 ]>, 
   &lt;identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2,4)(3) ]
+gap> B:=InverseSemigroup([
+>  Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, 5, -4, -5 ] ] ),
+>  Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -2 ], [ 4, -1 ], [ 5, -5 ] ] ) ]);;
+gap> T:=[
+>  Bipartition( [ [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ] ] ),
+>  Bipartition( [ [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ] ] ) ];;
+gap> IsMajorantlyClosed(B,T);
+false
+gap> MajorantClosure(B,T);
+[ &lt;block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]>, 
+  &lt;block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]>, 
+  &lt;block bijection: [ 1, -2 ], [ 2, 5, -1, -5 ], [ 3, -3 ], [ 4, -4 ]>
+    , &lt;block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ], 
+    [ 4, -4 ]>, &lt;block bijection: [ 1, -4 ], [ 2, 5, -3, -5 ], 
+    [ 3, -1 ], [ 4, -2 ]>, &lt;block bijection: [ 1, -4 ], [ 2, -3 ], 
+    [ 3, 5, -1, -5 ], [ 4, -2 ]>, 
+  &lt;block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ], [ 4, -2 ], 
+    [ 5, -5 ]> ]
+gap> IsMajorantlyClosed(B, last);
+true
 </Example>
 <#/GAPDoc>
 
@@ -179,16 +224,16 @@ gap> U:=MajorantClosure(S,T);
 <ManSection>
 <Oper Name="Minorants" Arg="S,f"/>
   <Returns>
-    A list of partial permutations.
+    A list of elements.
   </Returns>
   <Description>
     <C>Minorants</C> takes an element <A>f</A> from an inverse semigroup of 
-    partial permutations <A>S</A> and returns a list of the minorants of 
-    <A>f</A> in <A>S</A>. <P/>
+    partial permutations or block bijections <A>S</A>, and returns a list of the
+    minorants of <A>f</A> in <A>S</A>. <P/>
     
-    A <E>minorant</E> of <A>f</A> is an element of
-    <A>S</A> which is strictly less than <A>f</A> in the natural partial order
-    of <A>S</A>. See <Ref Attr="NaturalLeqPartialPerm" BookName="ref" />.
+    A <E>minorant</E> of <A>f</A> is an element of <A>S</A> which is strictly 
+    less than <A>f</A> in the natural partial order of <A>S</A>. 
+    See <Ref Attr="NaturalLeqPartialPerm" BookName="ref" />.
   </Description>
 </ManSection>
 <Example>
@@ -211,13 +256,13 @@ gap> Minorants(S,f);
 <ManSection>
 <Oper Name="RightCosetsOfInverseSemigroup" Arg="S,T"/>
   <Returns>
-    A list of lists of partial permutations.
+    A list of lists of elements.
   </Returns>
   <Description>
     <C>RightCosetsOfInverseSemigroup</C> takes a majorantly closed inverse 
-    subsemigroup <A>T</A>  of an inverse semigroup of partial permutations 
-    <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>. The result is a list of 
-    the right cosets of <A>T</A> in <A>S</A>.<P/>
+    subsemigroup <A>T</A>  of an inverse semigroup of partial permutations or
+    block bijections <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>. The result 
+    is a list of the right cosets of <A>T</A> in <A>S</A>.<P/>
     For <M>s \in S</M>, the right coset <M>\overline{Ts}</M> is defined if and 
     only if <M>ss^{-1} \in T</M>, in which case it is defined to be the 
     majorant closure of the set <M>Ts</M>. See <Ref Func="MajorantClosure"/>. 
@@ -248,11 +293,13 @@ gap> RC:=RightCosetsOfInverseSemigroup(S,T);
   </Returns>
   <Description>
     Given a group &H;-class <A>H</A> in an inverse semigroup of partial 
-    permutations <C>S</C>, <C>SameMinorantsSubgroup</C> returns a list of the 
-    elements of <A>h</A> which have the same strict minorants as the 
-    identity element of <A>h</A>. A <E>strict minorant</E> of <C>x</C> in 
-    <A>H</A> is an element of <C>S</C> which is less than <C>x</C> (with
-    respect to the natural partial order), but is not equal to <C>x</C>.<P/>
+    permutations or block bijections <C>S</C>, <C>SameMinorantsSubgroup</C> 
+    returns a list of the elements of <A>H</A> which have the same strict
+    minorants as the identity element of <A>H</A>.
+    
+    A <E>strict minorant</E> of <C>x</C> in <A>H</A> is an element of <C>S</C> 
+    which is less than <C>x</C> (with respect to the natural partial order), 
+    but is not equal to <C>x</C>.<P/>
 
     The returned list of elements of <A>H</A> describe a subgroup of <A>H</A>.
   </Description>
@@ -330,13 +377,15 @@ MappingByFunction( &lt;inverse partial perm monoid on 6721 pts
 <ManSection>
   <Func Name="VagnerPrestonRepresentation" Arg="S"/>
   <Returns>
-    An inverse semigroup of partial permutations.
+    An isomorphism to an inverse semigroup of partial permutations.
   </Returns>
   <Description>
-    <C>VagnerPrestonRepresentation</C> returns an isomorphism from the inverse
-    semigroup of partial permutation <A>S</A> to the inverse semigroup of 
-    partial permutations <C>T</C> of degree equal to the size of <A>S</A>,
-    which is obtained using the Vagner-Preston Representation Theorem. <P/>
+    <C>VagnerPrestonRepresentation</C> returns an isomorphism from an inverse 
+    semigroup <A>S</A> where the elements of <A>S</A> have a unique semigroup 
+    inverse accessible via <Ref Attr="Inverse" BookName="ref"/>, to the inverse 
+    semigroup of partial permutations <A>T</A> of degree equal to the size of 
+    <A>S</A>, which is obtained using the Vagner-Preston Representation Theorem.
+    <P/>
 
     More precisely, if <M>f:S\to T</M> is the isomorphism returned by
     <C>VagnerPrestonRepresentation(<A>S</A>)</C> and <M>x</M> is in <A>S</A>,
@@ -363,7 +412,18 @@ true
 gap> inv:=InverseGeneralMapping(iso);;
 gap> ForAll(S, x-> (x^iso)^inv=x);
 true
-</Example>
+gap> V:=InverseSemigroup([
+>  Bipartition( [ [ 1, -4 ], [ 2, -1 ], [ 3, -5 ], [ 4 ], [ 5 ], [ -2 ], [ -3 ] ] ),
+>  Bipartition( [ [ 1, -5 ], [ 2, -1 ], [ 3, -3 ], [ 4 ], [ 5 ], [ -2 ], [ -4 ] ] ),
+>  Bipartition( [ [ 1, -2 ], [ 2, -4 ], [ 3, -5 ], [ 4, -1 ], [ 5, -3 ] ] ) ]);
+&lt;inverse bipartition semigroup on 5 pts with 3 generators>
+gap> IsInverseSemigroup(V);
+true
+gap> VagnerPrestonRepresentation(V);
+MappingByFunction( &lt;inverse bipartition semigroup of size 394, 
+ on 5 pts with 3 generators>, &lt;inverse partial perm semigroup 
+on 394 pts
+ with 5 generators>, function( x ) ... end, function( x ) ... end )</Example>
 <#/GAPDoc>
 
 #EOF
