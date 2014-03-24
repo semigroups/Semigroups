@@ -890,8 +890,8 @@ InstallMethod(MultiplicativeZero, "for an acting semigroup",
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
  
-  if IsSemigroupIdeal(s) and HasMultiplicativeZero(Parent(s)) then 
-    return MultiplicativeZero(Parent(s));
+  if IsSemigroupIdeal(s) and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then 
+    return MultiplicativeZero(SupersemigroupOfIdeal(s));
   fi;
 
   min:=MinActionRank(s);
@@ -953,8 +953,9 @@ InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
 function(S)
   local rank, o, pos, min, len, m, x, n, i;
 
-  if IsSemigroupIdeal(S) and HasMinimalDClass(Parent(S)) then 
-    return GreensDClassOfElementNC(S, Representative(MinimalDClass(Parent(S))));
+  if IsSemigroupIdeal(S) and HasMinimalDClass(SupersemigroupOfIdeal(S)) then 
+    return GreensDClassOfElementNC(S,
+     Representative(MinimalDClass(SupersemigroupOfIdeal(S))));
   fi;
 
   rank:=LambdaRank(S);

@@ -10,9 +10,11 @@
 
 # acting semigroups...
 
+# same method for ideals
+
 InstallMethod(SemigroupData, 
-"for an acting semigroup with inverse op and generators",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+"for an acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp],
 function(S)
   return fail;
 end);
