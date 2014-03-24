@@ -1,5 +1,5 @@
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
-[IsReesZeroMatrixSemigroup and IsFinite,
+[IsReesZeroMatrixSemigroup and IsFinite and IsZeroSimpleSemigroup,
  IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local g, mat, block, i, j, u, v, bi, bj, bu, bv;
@@ -657,6 +657,194 @@ function(class)
        * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
        * mat[u][j]^-1;
   return ReesZeroMatrixSemigroupElement(s, i, a, u);
+end);
+
+#
+
+InstallMethod(GeneratingPairsOfMagmaCongruence,
+"for Rees 0-matrix semigroup congruence by linked triple",
+[IsRMSCongruenceByLinkedTriple],
+function(cong)
+  local s, g, m, pairs, i1, x, bl, j, rowNo, i, colNo;
+  s := Range(cong);
+  g := UnderlyingSemigroup(s);
+  m := Matrix(s);
+  
+  # Create a list of generating pairs
+  pairs := [];
+  
+  # PAIRS FROM THE NORMAL SUBGROUP
+  # First, find a matrix entry not equal to zero
+  i1 := PositionProperty(m[1], x-> x<>0);
+  
+  # for each x in the subgroup,
+  # (i1,x,1) is related to (i1,id,1)
+  for x in cong!.n do
+    Add(pairs, [ReesZeroMatrixSemigroupElement(s,i1,x,1),
+                ReesZeroMatrixSemigroupElement(s,i1,One(g),1) ] );
+  od;
+  
+  # PAIRS FROM THE COLUMNS RELATION
+  # For each class in the relation...
+  for bl in cong!.colBlocks do
+    # For each column in the class...
+    for j in [2..Size(bl)] do
+      # For each row in the matrix...
+      for rowNo in [1..Size(m)] do
+        if m[rowNo][bl[1]] <> 0 then
+          Add(pairs,
+              [ReesZeroMatrixSemigroupElement(s,bl[1],m[rowNo][bl[1]]^-1,rowNo),
+               ReesZeroMatrixSemigroupElement(s,bl[j],m[rowNo][bl[j]]^-1,rowNo)] );
+        fi;
+      od;
+    od;
+  od;
+  
+  # PAIRS FROM THE ROWS RELATION
+  # For each class in the relation...
+  for bl in cong!.rowBlocks do
+    # For each row in the class...
+    for i in [2..Size(bl)] do
+      # For each column in the matrix...
+      for colNo in [1..Size(m[1])] do
+        if m[bl[1]][colNo] <> 0 then
+          Add(pairs,
+              [ReesZeroMatrixSemigroupElement(s,colNo,m[bl[1][colNo]]^-1,bl[1]),
+               ReesZeroMatrixSemigroupElement(s,colNo,m[bl[i][colNo]]^-1,bl[i])] );
+        fi;
+      od;
+    od;
+  od;
+  return pairs;
+end);
+
+#
+
+InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
+"for semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  local s, pairs;
+  s := Range(cong);
+  pairs := GeneratingPairsOfMagmaCongruence(cong);
+  return SemigroupCongruenceByGeneratingPairs(s, pairs);
+end);
+
+#
+
+InstallMethod(AsRMSCongruenceByLinkedTriple,
+"for semigroup congruence by generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(cong)
+  local s, g, m, pair, i, u, j, v, i1, base, baseClass, rmsElts, gpElts, n, 
+        colLookup, pass, elm1, elm2, colBlocks, rowLookup, rowBlocks;
+  # Extract some information
+  s := Range(cong);
+  g := UnderlyingSemigroup(s);
+  m := Matrix(s);
+  # Checks
+  if not (IsReesZeroMatrixSemigroup(s) and IsFinite(s)) then
+    Error("the congruence must be over a finite Rees 0-matrix semigroup");
+    return;
+  fi;
+  if not IsZeroSimpleSemigroup(s) then
+    Error("the congruence must be over a 0-simple semigroup");
+    return;
+  fi;
+  # Is this the universal congruence?
+  for pair in GeneratingPairsOfMagmaCongruence(cong) do
+    if (pair[1] = MultiplicativeZero(s)) <> (pair[2] = MultiplicativeZero(s)) then
+      # 0 is related to another element
+      return UniversalSemigroupCongruence(s);
+    elif pair[1] <> MultiplicativeZero(s) then
+      # Check whether they relate
+      i := pair[1][1]; u := pair[1][3];
+      j := pair[2][1]; v := pair[2][3];
+      if ForAny([1..Size(m)], u-> (m[u][i]=0) <> (m[u][j]=0)) or
+         ForAny([1..Size(m[1])], i-> (m[u][i]=0) <> (m[v][i]=0)) then
+        return UniversalSemigroupCongruence(s);
+      fi;
+    fi;
+  od;
+  
+  # FIND THE NORMAL SUBGROUP N
+  # First find a matrix entry not equal to zero
+  i1 := PositionProperty(m[1],x-> x<>0);
+  # N consists of all the x s.t. (i1,x,1) is related to (i1,id,1)
+  base := ReesZeroMatrixSemigroupElement(s, i1, One(g), 1);
+  baseClass := EquivalenceClassOfElementNC(cong, base);
+#  gpElts := [];
+#  for x in g do
+#    if ReesZeroMatrixSemigroupElement(s, i1, x, 1)
+#       in baseClass then
+#      Add(gpElts, x);
+#    fi;
+#  od;
+  rmsElts := Filtered(Elements(baseClass), elt->(elt[1]=i1 and elt[3]=1));
+  gpElts := List(rmsElts, elt->elt[2]);
+  n := Subgroup(g, gpElts);
+  
+  # FIND THE RELATION ON THE SET OF COLUMNS
+  colLookup := [1..Size(m[1])];
+  for i in [1..Size(m[1])] do
+    # If i has already been sorted, continue
+    if colLookup[i] <> i then continue; fi;
+    for j in [i+1..Size(m[1])] do
+      # If j has already been sorted, continue
+      if colLookup[j] < i then continue; fi;
+      # Must have zeroes in the same rows
+      if not ForAll([1..Size(m)], u-> (m[u][i]=0) = (m[u][j]=0)) then
+        continue;
+      fi;
+      # The condition must test true for ALL non-zero rows
+      pass := true;
+      for u in [1..Size(m)] do
+        if m[u][i] = 0 then continue; fi;
+        elm1 := ReesZeroMatrixSemigroupElement(s, i, m[u][i]^-1, u);
+        elm2 := ReesZeroMatrixSemigroupElement(s, j, m[u][j]^-1, u);
+        if not elm1 in EquivalenceClassOfElementNC(cong, elm2) then
+          pass := false; break;
+        fi;
+      od;
+      if pass then
+        colLookup[j] := i;
+      fi;
+    od;
+  od;
+  colBlocks := List([1..Size(m)], i-> Positions(colLookup, i));
+  colBlocks := Filtered(colBlocks, block-> not IsEmpty(block));
+  
+  # FIND THE RELATION ON THE SET OF ROWS
+  rowLookup := [1..Size(m)];
+  for u in [1..Size(m)] do
+    # If u has already been sorted, continue
+    if rowLookup[u] <> u then continue; fi;
+    for v in [u+1..Size(m)] do
+      # If v has already been sorted, continue
+      if rowLookup[v] <> v then continue; fi;
+      # Must have zeroes in the same columns
+      if not ForAll([1..Size(m[1])], i-> (m[u][i]=0) = (m[v][i]=0)) then
+        continue;
+      fi;
+      # The condition must test true for ALL non-zero columns
+      pass := true;
+      for i in [1..Size(m[1])] do
+        if m[u][i] = 0 then continue; fi;
+        elm1 := ReesZeroMatrixSemigroupElement(s, i, m[u][i]^-1, u);
+        elm2 := ReesZeroMatrixSemigroupElement(s, i, m[v][i]^-1, v);
+        if not elm1 in EquivalenceClassOfElementNC(cong, elm2) then
+          pass := false; break;
+        fi;
+      od;
+      if pass then
+        rowLookup[v] := u;
+      fi;
+    od;
+  od;
+  rowBlocks := List([1..Size(m[1])], u->Positions(rowLookup, u));
+  rowBlocks := Filtered(rowBlocks, block-> not IsEmpty(block));
+  
+  return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
 end);
 
 #

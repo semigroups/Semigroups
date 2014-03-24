@@ -25,3 +25,8 @@ DeclareOperation("\*", [IsList, IsEquivalenceClass] );
 DeclareAttribute("CanonicalRepresentative",
         IsRMSCongruenceClassByLinkedTriple);
 
+# Conversion with semigroup congruences by generating pairs
+DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
+        [IsSemigroupCongruence] );
+DeclareOperation("AsRMSCongruenceByLinkedTriple",
+        [IsSemigroupCongruence] );

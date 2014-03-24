@@ -211,3 +211,14 @@ function(c1, c2)
 end);
 
 #
+
+InstallMethod(GeneratingPairsOfMagmaCongruence,
+"for universal semigroup congruence",
+[IsUniversalSemigroupCongruence],
+function(cong)
+  local s;
+  s := Range(cong);
+  return List(Elements(s), x-> [x, Representative(s)]);
+end);
+
+#
