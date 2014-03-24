@@ -72,7 +72,7 @@ InstallMethod(\=, "for semigroup ideals",
  IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(I, J)
   
-  if Parent(I)=Parent(J) then 
+  if SupersemigroupOfIdeal(I)=SupersemigroupOfIdeal(J) then 
     return ForAll(GeneratorsOfMagmaIdeal(I), x-> x in J) and
     ForAll(GeneratorsOfMagmaIdeal(J), x-> x in I);
   elif HasGeneratorsOfSemigroup(I) and HasGeneratorsOfSemigroup(J) then 

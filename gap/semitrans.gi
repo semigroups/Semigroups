@@ -69,7 +69,7 @@ InstallMethod(DegreeOfTransformationSemigroup,
 "for a transformation semigroup ideal",
 [IsTransformationSemigroup and IsSemigroupIdeal],
 function(I)
-  return DegreeOfTransformationSemigroup(Parent(I));
+  return DegreeOfTransformationSemigroup(SupersemigroupOfIdeal(I));
 end);
 
 #
@@ -77,7 +77,7 @@ end);
 InstallMethod(ComponentRepsOfTransformationSemigroup, 
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, reps, next, opts, o, out, i;
+  local pts, reps, next, opts, gens, o, out, i;
 
   pts:=[1..DegreeOfTransformationSemigroup(S)];
   reps:=BlistList(pts, []);
@@ -87,8 +87,14 @@ function(S)
     return reps[x]=true or reps[x]=fail;
   end);
 
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
+  
   repeat
-    o:=Orb(S, next, OnPoints, opts);  
+    o:=Orb(gens, next, OnPoints, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false and reps[o[PositionOfFound(o)]]=true then 
       reps[o[PositionOfFound(o)]]:=fail;
@@ -115,7 +121,7 @@ end);
 InstallMethod(ComponentsOfTransformationSemigroup, 
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, comp, next, nr, opts, o, out, i;
+  local pts, comp, next, nr, opts, gens, o, out, i;
 
   pts:=[1..DegreeOfTransformationSemigroup(S)];
   comp:=BlistList(pts, []);
@@ -125,8 +131,14 @@ function(S)
     return IsPosInt(comp[x]);
   end);
 
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
+  
   repeat
-    o:=Orb(S, next, OnPoints, opts);  
+    o:=Orb(gens, next, OnPoints, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
@@ -157,7 +169,7 @@ end);
 InstallMethod(CyclesOfTransformationSemigroup, 
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, comp, next, nr, cycles, opts, o, scc, i;
+  local pts, comp, next, nr, cycles, opts, gens, o, scc, i;
 
   pts:=[1..DegreeOfTransformationSemigroup(S)];
   comp:=BlistList(pts, []);
@@ -166,9 +178,15 @@ function(S)
   opts:=rec(lookingfor:=function(o, x) 
     return IsPosInt(comp[x]);
   end);
-
+  
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
+  
   repeat
-    o:=Orb(S, next, OnPoints, opts);  
+    o:=Orb(gens, next, OnPoints, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
@@ -191,4 +209,5 @@ function(S)
 
   return cycles;
 end);
+
 #EOF
