@@ -592,20 +592,19 @@ function(S)
     if pos<>fail then 
       Remove(po[i], pos);
     fi;
-    Info(InfoSemigroups, 2, "calculating the ideal S\D");
     Append(gens2, List(classes{po[i]}, Representative));
+    if not IsEmpty(gens2) then
+      Info(InfoSemigroups, 2, "calculating the ideal S minus D");
+      V:=SemigroupIdealByGenerators(S, gens2);
+    else
+      V:=[];
+    fi;
     
     if Size(classes[i])=1 then   # Remove the whole of any trivial D-class
-      Add(out, SemigroupIdealByGenerators(S, gens2));
+      Add(out, V);   # V <> [] since S is non-trivial at this point
     else   # Adjoin maximal subsemigroups of principal factor to S\D
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
-      if not IsEmpty(gens2) then
-        Info(InfoSemigroups, 2, "calculating the ideal S\D");
-        V:=SemigroupIdealByGenerators(S, gens2);
-      else
-        V:=[];
-      fi;
       for U in MaximalSubsemigroups(R) do
         if IsSimpleSemigroup(R) then # We don't want to remove multiplicative zero in this case, if it exists
           Add(out, Semigroup(
@@ -618,7 +617,6 @@ function(S)
         # Don't need to worry about U = {0}, which could only happen if Size(classes[i]) = 1. So tuples is always non-empty
       od;
     fi;
-    
     Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups in total in this D-class");
     tot:=Length(out);
   od;
@@ -628,20 +626,18 @@ function(S)
     Info(InfoSemigroups, 2, "finding maximal subsemigroups arising from", 
     " non-maximal D-classes...");
   else
-    Info(InfoSemigroups, 2, "no non-maximal D-classes to consider...");    
+    Info(InfoSemigroups, 2, "no non-maximal D-classes to consider...");
   fi;
   
   # Type 2: maximal subsemigroups arising from non-maximal D-classes
   for i in nonmax do 
-    Info(InfoSemigroups, 2, "considering D-class ", i);
-    
+    Info(InfoSemigroups, 2, "considering D-class ", i); 
     # Calculate D-class reps directly below classes[i]
     pos:=Position(po[i], i);
     if pos<>fail then
       Remove(po[i], pos);
     fi;
     reps:=List(classes{po[i]}, Representative);
-    
     # Calculate ideal of D-class reps directly below classes[i] if necessary
     if not(IsBound(lastideal) and lastideal = reps) then
       if not IsEmpty(reps) then
@@ -660,14 +656,13 @@ function(S)
       Add(out, Semigroup(gens2, ideal, rec(small:=true)));
       Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
       " removing whole non-maximal non-regular D-class...");
-      
     else # <classes[i]> is regular; lots of work to be done
 
       UnionOfHClassRecursion:=function(U, known, A, depth)
         local ismax, new_known, a, V, didtest, h, new_depth;
         new_depth:=depth+1;
         count:=count+1;
-        Info(InfoSemigroups, 1, "call: ", count, ", depth: ", new_depth,"\r");
+        Info(InfoSemigroups, 3, "call: ", count, ", depth: ", new_depth,"\r");
         ismax:=true; 
         new_known:=ShallowCopy(known);
         didtest:=false;
@@ -692,7 +687,7 @@ function(S)
         if ismax then
           if not ForAny(out, W-> IsSubsemigroup(W, U)) then 
             Add(out, Semigroup(U, ideal));
-            Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+            Info(InfoSemigroups, 2, "found maximal subsemigroup arising from",
             " UnionOfHClassRecursion");
           fi;
         fi;
@@ -700,9 +695,9 @@ function(S)
       end;
       
       # Case 1: Max. subsemigroups which intersect every H-class of classes[i]
-      Info(InfoSemigroups, 2, "\n\nCase 1: Looking for maximal subsemigroups ",
-        "which intersect every H-class of the D-class\n");    
-      gens3:=gens{lookup[i]};
+      Info(InfoSemigroups, 2, "Case 1: Looking for maximal subsemigroups ",
+        "which intersect every H-class of the D-class");
+      gens3:=gens{lookup[i]}; # gens3 is the set of generators in classes[i]
       gens2:=Difference(ShallowCopy(gens), gens3);
       U:=Semigroup(gens2);
     
@@ -710,12 +705,10 @@ function(S)
       R:=Source(inj);
       G:=UnderlyingSemigroup(R);
       I:=Length(Rows(R)); J:=Length(Columns(R));
-      mat:=Matrix(R);
-      
+      mat:=Matrix(R);      
       tot:=0;
 
       if IsReesMatrixSemigroup(R) then
- 
         basicgens:=[]; 
         for ii in [1..Minimum(I,J)] do
           Add(basicgens, RMSElement(R, ii, (mat[ii][ii]^-1), ii));
@@ -728,26 +721,22 @@ function(S)
         od;
         
         for H in MaximalSubgroups(G) do
-          UU:=MaximalSubsemigroupsNC(R,H,basicgens,mat[1][1]^-1);
-          if not IsEmpty(UU) then
-            UU:=UU[1];
-            if Size(UU)<Size(R) then
-              UU:=Semigroup(Images(inj, UU), U);
-              if ForAny(gens3, x-> not x in UU) then
-                Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
-                 "intersects every H-class of the D-class");
-                Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
-                tot:=tot+1;
-              fi;
+          for UU in MaximalSubsemigroupsNC(R,H,basicgens,mat[1][1]^-1) do
+            UU:=Semigroup(Images(inj, GeneratorsOfSemigroup(UU)), U);
+            # UU (along with the ideal) is either maximal or equals S. So check if it lacks some of our generating set
+            if ForAny(gens3, x-> not x in UU) then
+              Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
+               "intersects every H-class of the D-class (RMS-type)");
+              Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
+              tot:=tot+1;
             fi;
-          fi;
+          od;
         od;
   
       elif IsReesZeroMatrixSemigroup(R) then
   
         graph:=RZMSGraph(R);
         components:=ConnectedComponents(graph);
-  
         # Add to the generators one element which *must* be in each group
         # H-class of any maximal subsemigroup of the Case 1 form.
         basicgens:=[];
@@ -760,41 +749,37 @@ function(S)
         od;
   
         # Pick a distinguished group H-class in the first component: H_i,jj
-        # For each maximal subgroup H we have: H_i,jj = (ii, H*(mat[jj][ii]^-1), jj)  
+        # For each maximal subgroup H we have: H_i,jj = (ii, H*(mat[jj][ii]^-1), jj)
         ii:=1; jj:=graph.adjacencies[1][1] - I;
       
         # For each max subgroup, start recursion with basic gens, and gens for H_ii,jj
         for H in MaximalSubgroups(G) do
           for UU in MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [ii, jj]) do
-
             UU:=Semigroup(Images(inj, GeneratorsOfSemigroup(UU)), U);
+            # UU (along with the ideal) is either maximal or equals S. So check if it lacks some of our generating set
             if ForAny(gens3, z-> not z in UU) then
               Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
-              "intersects every H-class of the D-class");
+              "intersects every H-class of the D-class (RZMS-type)");
               Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
               tot:=tot+1;
             fi;
-
           od;
         od;
-     
-      fi;
-             
+      fi;  
       if tot > 0 then
         found_case1:=true;
-        Info(InfoSemigroups, 2, "Found ", tot, " such result(s)\n");    
+        Info(InfoSemigroups, 2, "Found ", tot, " such result(s)");
       else
         found_case1:=false;
-        Info(InfoSemigroups, 2, "Found no such results\n");    
+        Info(InfoSemigroups, 2, "Found no such results");
       fi;
       
-      # Case 2: Max. subsemigroups which are a union of H-classes in classes[i]        
-      Info(InfoSemigroups, 2, "\n\nCase 2: Looking for maximal subsemigroups ",
-        "which are a union of H-classes\n");    
-      for k in [1..Length(lookup[i])] do      
-        for j in Combinations(lookup[i], k) do 
-          Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
-          # indices of gens in classes[i]
+      # Case 2: Max. subsemigroups which are a union of H-classes in classes[i]
+      Info(InfoSemigroups, 2, "Case 2: Looking for maximal subsemigroups ",
+        "which are a union of H-classes");
+      for k in [1..Length(lookup[i])] do
+        for j in Combinations(lookup[i], k) do
+          Info(InfoSemigroups, 2, "Trying to remove gens: ", j, "...");
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
           A:=Difference(classes[i], Intersection(U, classes[i]));
@@ -817,7 +802,7 @@ function(S)
               Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
               " removing whole non-maximal regular D-class...");
             fi;
-            # if k > 1, we can stop considering this subset gens{j}
+            # if k > 1, we are done since our gen set is irredund.
           else
             A:=Filtered(classes[i], x-> not (x in XX or x in U));
             if IsEmpty(A) then 
@@ -826,7 +811,7 @@ function(S)
                 Info(InfoSemigroups, 2, "found maximal subsemigroup arising", 
                 " from removing all of XX; A is empty");
               fi;
-              # if k > 1, I think we can stop considering this subset gens{j}
+              # if k > 1, we are done since our gen set is irredund.
             else # not IsEmpty(A)
               V:=Semigroup(U, A, ideal, rec(small:=true));
               if V<>S then
