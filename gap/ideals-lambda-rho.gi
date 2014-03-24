@@ -157,46 +157,59 @@ end);
 InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal", 
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-  local record, o, ht, nr, lambdafunc, lambda, x;
-  
+  local record, gens, lambdafunc, o, ht, nr, nrgens, lambda, InstallPointInOrb,
+   x, i;
+
   record:=ShallowCopy(LambdaOrbOpts(I));
   record.scc_reps:=[FakeOne(GeneratorsOfSemigroupIdeal(I))];
   
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
-  record.orbtogen:=[];
+  record.orbtogen:=[1]; # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i
 
-  o:=Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), LambdaOrbSeed(I),
+  gens:=GeneratorsOfSemigroupIdeal(I);
+  lambdafunc:=LambdaFunc(I);
+  
+  o:=Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), lambdafunc(gens[1]),
    LambdaAct(I), record);
  
   # install the lambda values of the generators
-  ht:=o!.ht; 
-  nr:=1;
-  lambdafunc:=LambdaFunc(I);
-
-  for x in GeneratorsOfSemigroupIdeal(I) do 
+  ht:=o!.ht;  nr:=1;  nrgens:=Length(gens);
+  lambda:=lambdafunc(gens[1]^-1);
+  
+  #
+  InstallPointInOrb:=function(lambda)
+    nr:=nr+1;
+    HTAdd(ht, lambda, nr);
+    Add(o!.orbit, lambda);
+    Add(o!.schreierpos, fail);
+    Add(o!.schreiergen, fail);
+    Add(o!.orbitgraph, []);
+  end;
+  #
+  
+  if HTValue(ht, lambda)=fail then 
+    InstallPointInOrb(lambda);
+    o!.orbtogen[nr]:=nrgens+1;
+  fi;
+  
+  for i in [2..nrgens] do 
+    x:=gens[i]; 
     lambda:=lambdafunc(x);
     if HTValue(ht, lambda)=fail then 
-      nr:=nr+1;
-      HTAdd(ht, lambda, nr);
-      Add(o!.orbit, lambda);
-      Add(o!.schreierpos, fail);
-      Add(o!.schreiergen, fail);
-      Add(o!.orbitgraph, []);
+      InstallPointInOrb(lambda);
+      o!.orbtogen[nr]:=i;
     fi;
+    
     lambda:=lambdafunc(x^-1);
     if HTValue(ht, lambda)=fail then 
-      nr:=nr+1;
-      HTAdd(ht, lambda, nr);
-      Add(o!.orbit, lambda);
-      Add(o!.schreierpos, fail);
-      Add(o!.schreiergen, fail);
-      Add(o!.orbitgraph, []);
+      InstallPointInOrb(lambda);
+      o!.orbtogen[nr]:=nrgens+i;
     fi;
   od;
 
-  SetFilterObj(o, IsLambdaOrb and IsIdealOrb and IsInverseSemigroupOrb); 
+  SetFilterObj(o, IsLambdaOrb and IsInverseIdealOrb); 
   return o;
 end);
 
@@ -383,7 +396,7 @@ function(I, w)
     local res, gens, i;
 
     gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
-    res:=GeneratorsOfSemigroupIdeal(I)[w[2]];
+    res:=GeneratorsOfSemigroupIdeal(I)[AbsInt(w[2])]^SignInt(w[2]);
     
     for i in [1..Length(w[1])] do
       res:=gens[w[1][i]]*res;
@@ -407,22 +420,27 @@ end);
 
 InstallMethod(TraceSchreierTreeForward, 
 "for an inverse semigroup ideal orbit and a positive integer",
-[IsInverseSemigroupOrb and IsIdealOrb, IsPosInt],
+[IsInverseIdealOrb, IsPosInt],
 function(o, i)
-  local schreierpos, schreiergen, rightword;
+  local schreierpos, schreiergen, rightword, nr;
   
   schreierpos := o!.schreierpos;
   schreiergen := o!.schreiergen;
    
   rightword := [];
   
-  # trace back to the start of the component
   while schreierpos[i] <> fail do
     Add(rightword, schreiergen[i]);
     i := schreierpos[i];
   od;
 
-  return [ [], o!.orbtogen[i], Reversed(rightword)];
+  if o!.orbtogen[i]>Length(GeneratorsOfSemigroupIdeal(o!.parent)) then 
+    nr:=-o!.orbtogen[i]+Length(GeneratorsOfSemigroupIdeal(o!.parent));
+  else
+    nr:=o!.orbtogen[i];
+  fi;
+
+  return [ [], nr, Reversed(rightword)];
 end);
 
 #

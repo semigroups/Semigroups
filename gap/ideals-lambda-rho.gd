@@ -9,7 +9,7 @@
 ##
 
 DeclareFilter("IsIdealOrb", IsOrbit);
-DeclareFilter("IsInverseSemigroupOrb", IsOrbit);
+DeclareFilter("IsInverseIdealOrb", IsOrbit);
 DeclareFilter("IsIdealLambdaOrb", IsIdealOrb and IsLambdaOrb);
 DeclareFilter("IsIdealRhoOrb", IsIdealOrb and IsRhoOrb);
 
