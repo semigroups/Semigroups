@@ -52,6 +52,10 @@ elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
    then 
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
+  Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
+  Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
+  Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
+  Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
 fi;
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")

@@ -40,23 +40,35 @@ end);
 
 #
 
-InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
-function(R) 
-  local mat, n, m, adj;
+if not IsBound(GAPInfo.PackagesLoaded.grape) then 
+  InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
+  function(R)
+    Info(InfoWarning, 1, "the GRAPE package is not available, ",
+    "and so this function does not work");
+    return fail;
+  end);  
 
-  mat:=Matrix(R); n:=Length(mat); m:=Length(mat[1]);
+else
 
-  adj:=function(x,y)
-    if x<=m and y>m then 
-      return not mat[y-m][x]=0;
-    elif x>m and y<=m then 
-      return not mat[x-m][y]=0;
-    else 
-      return false;
-    fi;
-  end;
+  InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
+  function(R) 
+    local mat, n, m, adj;
 
-  return Graph(Group(()), [1..n+m], OnPoints, adj, true);
-end);
+    mat:=Matrix(R); n:=Length(mat); m:=Length(mat[1]);
+
+    adj:=function(x,y)
+      if x<=m and y>m then 
+        return not mat[y-m][x]=0;
+      elif x>m and y<=m then 
+        return not mat[x-m][y]=0;
+      else 
+        return false;
+      fi;
+    end;
+
+    return Graph(Group(()), [1..n+m], OnPoints, adj, true);
+  end);
+
+fi;
 
 #EOF
