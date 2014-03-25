@@ -52,6 +52,11 @@ end);
 
 #
 
+InstallMethod(NaturalLeqInverseSemigroup, "for two block bijections",
+[IsBlockBijection, IsBlockBijection], NaturalLeqBlockBijection);
+
+#
+
 InstallOtherMethod(InverseMutable, "for a bipartition", [IsBipartition],
 function(f)
   if IsBlockBijection(f) or IsPartialPermBipartition(f) then 

@@ -185,4 +185,9 @@ function(S)
   return cycles;
 end);
 
+#
+
+InstallMethod(NaturalLeqInverseSemigroup, "for two partial perms",
+[IsPartialPerm, IsPartialPerm], NaturalLeqPartialPerm);
+
 #EOF
