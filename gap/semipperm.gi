@@ -74,6 +74,13 @@ function(I)
 
   if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then 
     Append(str, "inverse ");
+  elif HasIsRegularSemigroup(I) 
+   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then 
+    if IsRegularSemigroup(I) then 
+      Append(str, "\>regular\< ");
+    else
+      Append(str, "\>non-regular\< ");
+    fi;
   fi;
 
   Append(str, "partial perm semigroup ideal ");
