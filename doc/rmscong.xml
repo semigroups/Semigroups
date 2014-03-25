@@ -136,3 +136,15 @@
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="UniversalSemigroupCongruence">
+<ManSection> 
+  <Oper Name="UniversalSemigroupCongruence" Arg="s"/>
+  <Returns>a universal semigroup congruence</Returns>
+  <Description>
+    This function returns the universal semigroup congruence for the
+    semigroup <A>s</A>.  It can be used in the same way as any other
+    semigroup congruence object.
+  </Description>
+</ManSection>
+<#/GAPDoc>

@@ -90,7 +90,7 @@
     <M><Alt Not="Text">\lambda / \mathcal</Alt><Alt Only="Text">u/</Alt>{T}</M>
     is an equivalence class of rows under <M><Alt Not="Text">\mathcal</Alt>{T}</M>.
     Thus we can internally represent any class of such a congruence as a triple
-    simply consisting of a right coset and two positive integers.
+    simply consisting of a right coset and two positive integers.<P/>
     
     <#Include Label="RMSCongruenceByLinkedTriple">
     <#Include Label="RMSCongruenceClassByLinkedTriple">
@@ -100,5 +100,26 @@
     <#Include Label="CanonicalRepresentative">
     <#Include Label="AsSemigroupCongruenceByGeneratingPairs">
     <#Include Label="AsRMSCongruenceByLinkedTriple">
+  </Section>
+
+  <Section>
+    <Heading>Universal Semigroup Congruences</Heading>
+
+    The linked triples of a completely 0-simple Rees 0-matrix semigroup describe
+    only its non-universal congruences.  In any one of these, the zero element
+    of the semigroup is related only to itself.  However, for any semigroup
+    <M>S</M> there must exist the universal congruence <M>S<Alt
+    Not="Text"> \times </Alt><Alt Only="Text">x</Alt>S</M>.  We must therefore
+    represent this in a different way from the other congruences.<P/>
+
+    Since many things we want to calculate about congruences are trivial in the
+    case of the universal congruence, this package contains a category
+    specifically designed for it, <C>IsUniversalSemigroupCongruence</C>.  This
+    allows for universal semigroup congruences to be described together with the
+    linked triples, to be compared and used together in functions.  We also
+    define <C>IsUniversalSemigroupCongruenceClass</C>, which acts as the single
+    congruence class of the universal congruence.<P/>
+
+    <#Include Label="UniversalSemigroupCongruence">
   </Section>
 </Chapter>
