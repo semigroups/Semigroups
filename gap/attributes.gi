@@ -51,8 +51,8 @@ end);
 
 # different method for ideals/regular/inverse, although this method will work too
 
-InstallMethod(MaximalDClasses, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(MaximalDClasses, "for an acting semigroup",
+[IsActingSemigroup] ,
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 
@@ -77,20 +77,14 @@ function(s)
   return out;
 end);
 
-# same method for inverse
+# same method for inverse, different method for inverse ideals
 
 InstallMethod(MaximalDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup], 
-3, # to beat the method for an acting semigroup ideal
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
   
-  if HasGeneratorsOfSemigroupIdeal(S) then 
-    gens:=GeneratorsOfSemigroupIdeal(S);
-  else 
-    gens:=GeneratorsOfSemigroup(S); 
-  fi;
-
+  gens:=GeneratorsOfSemigroup(S); 
   partial:=PartialOrderOfDClasses(S);
   pos:=[]; 
   o:=LambdaOrb(S); 
