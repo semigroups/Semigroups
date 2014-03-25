@@ -395,6 +395,10 @@ InstallMethod(EvaluateWord,
 function(I, w)
     local res, gens, i;
 
+    if HasGeneratorsOfSemigroup(I) and IsPosInt(w[1]) then 
+      return EvaluateWord(GeneratorsOfSemigroup(I), w);
+    fi;
+
     gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
     res:=GeneratorsOfSemigroupIdeal(I)[AbsInt(w[2])]^SignInt(w[2]);
     
@@ -410,8 +414,9 @@ function(I, w)
 #
 
 InstallMethod(EvaluateWord, 
-"for a semigroup and a words (Semigroups)",
-[IsSemigroup, IsList], 1, # to beat the methods for IsXCollection
+"for a semigroup and a word (Semigroups)",
+[IsSemigroup and HasGeneratorsOfSemigroup, IsList], 1, 
+# to beat the methods for IsXCollection
 function(S, w)
   return EvaluateWord(GeneratorsOfSemigroup(S), w);
 end);

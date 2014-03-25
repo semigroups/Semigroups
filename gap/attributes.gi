@@ -142,8 +142,7 @@ function(s)
   return out;
 end);
 
-# same method for ideals, not yet tested due to no method for
-# MultiNeutralElement JDM 
+# same method for ideals
 
 InstallMethod(GroupOfUnits, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -416,7 +415,7 @@ end);
 # JDM: I'm not sure this is a valid method... 
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for a simple  or 0-simple acting semigroup", [IsActingSemigroup],
+"for a simple or 0-simple acting semigroup", [IsActingSemigroup],
 function(S)
   local D, iso, inv;
   if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then 
@@ -920,8 +919,6 @@ function(s)
 end);
 
 # same method for ideals
-# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
-# for an ideal. 
 
 InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
