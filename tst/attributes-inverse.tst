@@ -19,19 +19,32 @@ gap> S:=InverseSemigroup([
 >  PartialPerm( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
 >  PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] ) ]);
 <inverse partial perm semigroup on 7 pts with 5 generators>
+gap> I:=SemigroupIdeal(S, PartialPerm( [ 1, 3, 4, 5, 7 ], [ 1, 3, 4, 5, 7 ] ));
+<inverse partial perm semigroup ideal on 7 pts with 1 generator>
 gap> JoinIrreducibleDClasses(S);
+[ {PartialPerm( [ 2 ], [ 2 ] )} ]
+gap> JoinIrreducibleDClasses(I);
 [ {PartialPerm( [ 2 ], [ 2 ] )} ]
 gap> B:=InverseSemigroup([
 >  Bipartition( [ [ 1, -6 ], [ 2, -4 ], [ 3, -3 ], [ 4, 5, 6, 7, -1, -2, -5, -7 ] ] ),
 >  Bipartition( [ [ 1, -4 ], [ 2, -5 ], [ 3, 6, 7, -2, -3, -7 ], [ 4, -1 ], [ 5, -6 ] ] ),
 >  Bipartition( [ [ 1, -6 ], [ 2, -5 ], [ 3, 5, 7, -3, -4, -7 ], [ 4, -2 ], [ 6, -1 ] ] ) ]);
 <inverse bipartition semigroup on 7 pts with 3 generators>
+gap> J:=SemigroupIdeal(B, Bipartition( [ [ 1, -1 ], 
+>  [ 2, 3, 5, 7, -2, -3, -5, -7 ], [ 4, -4 ], [ 6, -6 ] ] ), Bipartition( [ 
+>  [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] ));
+<inverse bipartition semigroup ideal on 7 pts with 2 generators>
 gap> JoinIrreducibleDClasses(B);
 [ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
     , 
   {Bipartition( [ [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] ] )}\
  ]
-
+gap> JoinIrreducibleDClasses(J);
+[ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
+    , 
+  {Bipartition( [ [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], [ 6, -6 ] ] )}\
+ ]
+ 
 # IsJoinIrreducible
 gap> x:=PartialPerm( [ 1, 2, 4, 6 ], [ 2, 3, 1, 4 ] );;
 gap> x in S;
