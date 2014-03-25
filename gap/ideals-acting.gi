@@ -94,9 +94,7 @@ function(I)
   classes:=data!.dorbit;
   D:=[];
   for i in pos do 
-    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
-      Add(D, classes[i]);
-    fi;
+    Add(D, classes[i]);
   od;
   
   # find generators for I...
@@ -138,13 +136,30 @@ end);
 InstallMethod(GeneratorsOfSemigroup, "for an inverse op acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-  local U, i, partial, D, j, C, inj;
-   
+  local out, U, i, partial, D, pos, inj, j, C;
+ 
+  if HasGeneratorsOfInverseSemigroup(I) then 
+    # JDM could remove repeats and only add necessary inverses...
+    out:=ShallowCopy(GeneratorsOfInverseSemigroup(I));
+    Append(out, List(out, x-> x^-1));
+    return out;
+  fi;
+
   Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
   
   # find generators for I...
   U:=InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
   i:=0;  partial:=PartialOrderOfDClasses(I);  D:=GreensDClasses(I);
+ 
+  # positions of the D-classes containing generators of the ideal...
+  pos:=Set(GeneratorsOfSemigroupIdeal(I), 
+   x-> OrbSCCLookup(LambdaOrb(I))[Position(LambdaOrb(I), LambdaFunc(I)(x))]-1);
+
+  for i in pos do 
+    inj:=InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
+    U:=ClosureInverseSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+     inj));
+  od;
 
   while Size(U)<>Size(I) do 
     i:=i+1; j:=0; 
@@ -158,10 +173,54 @@ function(I)
       fi;
     od;
   od;
-  
+   
   return GeneratorsOfSemigroup(U);
 end);
 
+#
+
+InstallMethod(GeneratorsOfInverseSemigroup, 
+"for an inverse op acting semigroup ideal",
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+function(I)
+  local U, i, partial, D, j, C, inj;
+ 
+  if HasGeneratorsOfSemigroup(I) then 
+    # JDM: could remove inverses...
+    return GeneratorsOfSemigroup(I);
+  fi;
+
+  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  
+  # find generators for I...
+  U:=InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
+  i:=0;  partial:=PartialOrderOfDClasses(I);  D:=GreensDClasses(I);
+ 
+  # positions of the D-classes containing generators of the ideal...
+  pos:=Set(GeneratorsOfSemigroupIdeal(I), 
+   x-> OrbSCCLookup(LambdaOrb(I))[Position(LambdaOrb(I), LambdaFunc(I)(x))]-1);
+
+  for i in pos do 
+    inj:=InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
+    U:=ClosureInverseSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+     inj));
+  od;
+
+  while Size(U)<>Size(I) do 
+    i:=i+1; j:=0; 
+    while Size(U)<>Size(I) and j<Length(partial[i]) do 
+      j:=j+1; 
+      if Length(partial[i])=1 or partial[i][j]<>i then 
+        C:=D[partial[i][j]];
+        inj:=InverseGeneralMapping(InjectionPrincipalFactor(C));
+        U:=ClosureInverseSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+         inj));
+      fi;
+    od;
+  od;
+   
+  return GeneratorsOfInverseSemigroup(U);
+end);
 #
 
 InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",

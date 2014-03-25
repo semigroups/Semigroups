@@ -14,9 +14,14 @@
 InstallMethod(One, "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  local x;
+  local pts, x;
 
-  x:=One(GeneratorsOfSemigroupIdeal(I));
+  if HasGeneratorsOfSemigroup(I) then 
+    return One(GeneratorsOfSemigroup(I));
+  fi;
+
+  pts:=Union(ComponentsOfPartialPermSemigroup(I));
+  x:=PartialPermNC(pts, pts);
 
   if x in I then 
     return x;

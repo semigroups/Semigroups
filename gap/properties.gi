@@ -179,7 +179,7 @@ s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
 # same method for regular ideals, or non-regular without a generating set
 
 InstallMethod(IsCliffordSemigroup, "for a semigroup",
-[IsSemigroup], S-> IsInverseSemigroup(S) and NrHClasses(S)=NrDClasses(S));
+[IsSemigroup], S-> IsRegularSemigroup(S) and NrHClasses(S)=NrDClasses(S));
 
 # different method for ideals
 
@@ -474,9 +474,10 @@ InstallMethod(IsGroupAsSemigroup, "for a semigroup",
 #JDM should gens in the following function be GeneratorsOfSemigroup?
 # IteratorOfIdempotents would be good here.
 
-InstallMethod(IsIdempotentGenerated, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+# same method for ideals
+
+InstallMethod(IsIdempotentGenerated, "for an acting semigroup", 
+[IsActingSemigroup], 
 function(s) 
   local gens, t, min, new;
  
@@ -502,20 +503,20 @@ function(s)
   return ForAll(gens, f-> f in t);
 end);
 
-# JDM IsSemilatticeAsSemigroup doesn't work for ideals
+# same method for inverse ideals
 
 InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
 
-#JDM
+# same method for ideals
 
-InstallMethod(IsInverseSemigroup,
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsInverseSemigroup, "for an acting semigroup", 
+[IsActingSemigroup],
 function(S)
   local lambda, rho, iter, x;
 
-  if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) and 
+  if HasGeneratorsOfSemigroup(S) and
+    IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) and 
     ForAll(GeneratorsOfSemigroup(S), x-> x^-1 in S) then 
     return true;
   fi;
@@ -555,31 +556,32 @@ function(S)
   return true;
 end);
 
-#JDM would only work for inverse ideals
+# same method for ideals
 
-InstallMethod(IsLeftSimple, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+InstallMethod(IsLeftSimple, "for an acting semigroup", [IsActingSemigroup],
+function(S)
   local iter;
-  
-  if IsLeftZeroSemigroup(s) then 
+ 
+  if HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then 
+    return false;
+  elif IsLeftZeroSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is a left zero semigroup");
     return true;
-  elif HasNrLClasses(s) then 
-    return NrLClasses(s)=1;
+  elif HasNrLClasses(S) then 
+    return NrLClasses(S)=1;
   fi;
   
-  iter:=IteratorOfLClassReps(s); 
+  iter:=IteratorOfLClassReps(S); 
   NextIterator(iter);
   return IsDoneIterator(iter);
 end);
 
-# JDM IsGroupAsSemigroup doesn't work for ideals
+# same method for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup", 
 [IsInverseSemigroup], IsGroupAsSemigroup);
 
-#JDM Generators = GeneratorsOfSemigroup?
+# different method for ideals without generators
 
 InstallMethod(IsLeftZeroSemigroup, 
 "for an acting semigroup with generators", 
@@ -587,7 +589,7 @@ InstallMethod(IsLeftZeroSemigroup,
 function(s)
   local gens, lambda, val, x;
 
-  gens:=Generators(s);
+  gens:=GeneratorsOfSemigroup(s);
   lambda:=LambdaFunc(s);
   val:=lambda(gens[1]);
   
@@ -600,12 +602,15 @@ function(s)
   return ForAll(gens, IsIdempotent);
 end);
 
+InstallMethod(IsLeftZeroSemigroup, "for a semigroup",
+[IsSemigroup], S-> NrLClasses(S)=1 and Size(S)=NrRClasses(S));
+
 # same method for ideals
 
 InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-#JDM
+# not applicable for ideals
 
 InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and HasGeneratorsOfSemigroup, 0, 
 function(s) 
@@ -615,27 +620,29 @@ function(s)
   TryNextMethod();
 end);
 
-#JDM
+# same method for ideals
 
-InstallMethod(IsMonogenicSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
+InstallMethod(IsMonogenicSemigroup, "for an acting semigroup",
+[IsActingSemigroup], 
+function(S)
   local gens, I, f, i;
-
-  gens:=GeneratorsOfSemigroup(s); 
   
-  if not IsDuplicateFreeList(gens) then 
-    gens:=ShallowCopy(DuplicateFreeList(gens));
-    Info(InfoSemigroups, 2, "there are repeated generators");
+  if HasGeneratorsOfSemigroup(S) then 
+
+    gens:=GeneratorsOfSemigroup(S); 
+    
+    if not IsDuplicateFreeList(gens) then 
+      gens:=ShallowCopy(DuplicateFreeList(gens));
+      Info(InfoSemigroups, 2, "there are repeated generators");
+    fi;
+   
+    if Length(gens)=1 then
+      Info(InfoSemigroups, 2, "the semigroup only has one generator");
+      return true;
+    fi;
   fi;
  
-  if Length(gens)=1 then
-    Info(InfoSemigroups, 2, "the semigroup only has one generator");
-    return true;
-  fi;
- 
-  I:=MinimalIdeal(s);
+  I:=MinimalIdeal(S);
   
   if not IsGroupAsSemigroup(I) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
@@ -645,11 +652,13 @@ function(s)
     return false;
   fi;
 
+  gens:=GeneratorsOfSemigroup(S);
+
   for i in [1..Length(gens)] do 
     f:=gens[i];
     if ForAll(gens, x-> x in Semigroup(f)) then
       Info(InfoSemigroups, 2, "the semigroup is generated by generator ", i);
-      SetMinimalGeneratingSet(s, [f]);
+      SetMinimalGeneratingSet(S, [f]);
       return true;
     fi;
   od;
@@ -659,11 +668,10 @@ function(s)
   return false;
 end);
 
-#JDM IsInverseSemigroup doesn't work for ideals
+# same method for ideals
 
-InstallMethod(IsMonogenicInverseSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsMonogenicInverseSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
 function(s)
   if not IsInverseSemigroup(s) then 
     return false;
@@ -671,27 +679,28 @@ function(s)
   return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(s)));
 end);
  
-#JDM
+# same method for ideals
 
 InstallMethod(IsMonogenicInverseSemigroup, 
-"for an acting semigroup with inverse op and generators", 
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfInverseSemigroup],
-function(s)
+"for an acting semigroup with inverse op", [IsActingSemigroupWithInverseOp],
+function(S)
   local gens, I, f, i;
 
-  gens:=GeneratorsOfInverseSemigroup(s); 
+  if HasGeneratorsOfInverseSemigroup(S) then 
+    gens:=GeneratorsOfInverseSemigroup(S); 
   
-  if not IsDuplicateFreeList(gens) then 
-    gens:=ShallowCopy(DuplicateFreeList(gens));
-    Info(InfoSemigroups, 2, "there are repeated generators");
+    if not IsDuplicateFreeList(gens) then 
+      gens:=ShallowCopy(DuplicateFreeList(gens));
+      Info(InfoSemigroups, 2, "there are repeated generators");
+    fi;
+   
+    if Length(gens)=1 then
+      Info(InfoSemigroups, 2, "the semigroup only has one generator");
+      return true;
+    fi;
   fi;
  
-  if Length(gens)=1 then
-    Info(InfoSemigroups, 2, "the semigroup only has one generator");
-    return true;
-  fi;
- 
-  I:=MinimalIdeal(s);
+  I:=MinimalIdeal(S);
   
   if not IsGroupAsSemigroup(I) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
@@ -700,12 +709,14 @@ function(s)
     Info(InfoSemigroups, 2, "the minimal ideal is a non-cyclic group.");
     return false;
   fi;
+  
+  gens:=GeneratorsOfInverseSemigroup(S);
 
   for i in [1..Length(gens)] do 
     f:=gens[i];
     if ForAll(gens, x-> x in InverseSemigroup(f)) then
       Info(InfoSemigroups, 2, "the semigroup is generated by generator ", i);
-      SetMinimalGeneratingSet(s, [f]);
+      SetMinimalGeneratingSet(S, [f]);
       return true;
     fi;
   od;
@@ -719,8 +730,7 @@ end);
 #same method for ideals
 
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
-[IsSemigroup], 
- x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
+[IsSemigroup], x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
 
 # Notes: is there a better method? JDM
 # same method for ideals
@@ -1058,7 +1068,7 @@ function(coll, n)
   return PositionOfFound(o)<>false;
 end);
 
-#JDM
+# different method for ideals
 
 InstallMethod(IsTrivial, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
