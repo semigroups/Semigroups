@@ -243,6 +243,8 @@ gap> S:=SingularTransformationSemigroup(5);
 gap> max:=MaximalSubsemigroups(S);;
 gap> Size(max);
 40
+gap> S=max[1];
+false
 
 #
 gap> SemigroupsStopTest();

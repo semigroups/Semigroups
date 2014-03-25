@@ -643,8 +643,7 @@ function(S)
     if not(IsBound(lastideal) and lastideal = reps) then
       if not IsEmpty(reps) then
         Info(InfoSemigroups, 2, "calculating ideal..."); 
-        ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
-          reps), rec(small:=true)));
+        ideal:=GeneratorsOfSemigroup(SemigroupIdeal(S, reps));
       else
         ideal:=[];
       fi;
