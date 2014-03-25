@@ -94,7 +94,7 @@ function(I, S)
     if S=Parent(I) then 
       return true;
     elif HasGeneratorsOfSemigroup(I) then 
-      return ForAll(GeneratorsOfSemigroup(I), x-> x in I);
+      return ForAll(GeneratorsOfSemigroup(I), x-> x in S);
     else 
       return Size(I)=Size(S);
     fi;
