@@ -84,6 +84,7 @@ function(I)
   fi; 
   
   Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  data:=SemigroupIdealData(I);
   pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
                              # [1..n-1] in data!.dorbit
   partial:=data!.poset;
