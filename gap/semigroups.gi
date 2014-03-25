@@ -555,7 +555,6 @@ end);
 InstallGlobalFunction(ClosureInverseSemigroupNC,
 function(s, coll, record)
   local t, coll_copy, o, f;
-  
     
   if coll=[] then
     Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
@@ -578,7 +577,7 @@ function(s, coll, record)
   #should be a case split here for semigroups and monoids JDM
   t:=InverseSemigroupByGenerators(
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
-
+  
   #remove everything related to strongly connected components
   Unbind(o!.scc);   Unbind(o!.trees);  Unbind(o!.scc_lookup);
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);

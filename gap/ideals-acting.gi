@@ -150,7 +150,7 @@ function(I)
   
   # find generators for I...
   U:=InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
-  i:=0;  partial:=PartialOrderOfDClasses(I);  D:=GreensDClasses(I);
+  partial:=PartialOrderOfDClasses(I);  D:=GreensDClasses(I);
  
   # positions of the D-classes containing generators of the ideal...
   pos:=Set(GeneratorsOfSemigroupIdeal(I), 
@@ -161,7 +161,8 @@ function(I)
     U:=ClosureInverseSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
      inj));
   od;
-
+  
+  i:=0;
   while Size(U)<>Size(I) do 
     i:=i+1; j:=0; 
     while Size(U)<>Size(I) and j<Length(partial[i]) do 
@@ -184,7 +185,8 @@ InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse op acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-  local U, i, partial, D, j, C, inj, pos;
+
+  local U, i, partial, D, pos, inj, j, C;
  
   if HasGeneratorsOfSemigroup(I) then 
     # JDM: could remove inverses...
