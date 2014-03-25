@@ -123,12 +123,12 @@ end);
 InstallMethod(IsBrandtSemigroup, "for an acting semigroup", [IsActingSemigroup],
 S-> IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S));
 
-# same method for ideals
+# same method for inverse ideals
 
 InstallMethod(IsBrandtSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup], IsZeroSimpleSemigroup);
 
-#JDM
+# same method for non-regular ideals
 
 InstallMethod(IsCliffordSemigroup, 
 "for an acting semigroup with generators", 
@@ -170,16 +170,18 @@ function(s)
   return true;
 end);
 
-# same method for ideals
+# same method for inverse ideals
 
 InstallMethod(IsCliffordSemigroup, "for an inverse acting semigroup", 
 [IsInverseSemigroup and IsActingSemigroup], 
 s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
 
+# same method for regular ideals, or non-regular without a generating set
+
 InstallMethod(IsCliffordSemigroup, "for a semigroup",
 [IsSemigroup], S-> IsInverseSemigroup(S) and NrHClasses(S)=NrDClasses(S));
 
-#JDM
+# different method for ideals
 
 InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
@@ -202,7 +204,7 @@ function(s)
   return true;
 end);
 
-#JDM
+# same method for non-regular ideals
 
 InstallMethod(IsCompletelyRegularSemigroup, 
 "for an acting semigroup with generators", 
@@ -234,23 +236,23 @@ function(s)
   return true;
 end);
 
-# only IsActingSemigroup since there are no methods for NrHClasses,
-# NrIdempotents for an arbitrary semigroup
+# same method for regular ideals, or non-regular without a generating set
 
 InstallMethod(IsCompletelyRegularSemigroup, "for a semigroup",
-[IsActingSemigroup], S-> NrHClasses(S)=NrIdempotents(S));
+[IsSemigroup], S-> NrHClasses(S)=NrIdempotents(S));
 
-#JDM IsCliffordSemigroup doesn't work for ideals
+# same method for inverse ideals
 
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
-[IsInverseSemigroup and HasGeneratorsOfSemigroup], IsCliffordSemigroup);
+[IsInverseSemigroup], IsCliffordSemigroup);
 
 # Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
 # causes problems. 
 
+#same method for ideals
+
 InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup], 
- x-> IsSimpleSemigroup(x) and IsFinite(x));
+[IsSemigroup], S-> IsSimpleSemigroup(S) and IsFinite(S));
 
 #JDM IsSemilatticeAsSemigroup doesn't work for ideals
 
