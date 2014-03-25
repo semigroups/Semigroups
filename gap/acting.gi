@@ -37,7 +37,8 @@ function(s)
   return data;
 end);
 
-# different method for ideals
+# different method for regular ideals, regular/inverse semigroups, same method
+# for non-regular ideals
 
 InstallMethod(\in, 
 "for an associative element and acting semigroup",  

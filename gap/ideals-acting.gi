@@ -527,7 +527,7 @@ end);
 #
 
 InstallMethod(\in, 
-"for an associative element and acting semigroup ideal",  
+"for an associative element and regular acting semigroup ideal",  
 [IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup], 
 function(x, I)
   local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;

@@ -18,7 +18,7 @@
 # same method for ideals
 
 InstallMethod(\in, 
-"for inverse acting element and acting semigroup with inversion",
+"for an associative element and acting semigroup with inversion",
 [IsAssociativeElement, IsActingSemigroupWithInverseOp],
 function(f, s)
   local dom, o, lambda, lambda_l, rho, rho_l, lookingfor, m, schutz, scc, g,

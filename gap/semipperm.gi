@@ -30,7 +30,7 @@ InstallMethod(CodegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  return CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I));
+  return CodegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
 #
@@ -39,7 +39,7 @@ InstallMethod(DegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  return DegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I));
+  return DegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
 #
