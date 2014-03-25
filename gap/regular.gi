@@ -846,7 +846,7 @@ end);
 # same method for inverse semigroups, same for ideals
 
 InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
+[IsActingSemigroup and IsRegularSemigroup],
 NrDClasses);
 
 # different method for inverse/ideals
