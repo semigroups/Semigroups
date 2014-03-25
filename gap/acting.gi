@@ -12,17 +12,13 @@
 
 # same method for ideals
 
-InstallMethod(SemigroupData, 
-"for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
-function(S)
-  return fail;
-end);
+InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp], ReturnFail);
 
 # different method for ideals
 
-InstallMethod(SemigroupData, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(SemigroupData, "for an acting semigroup",
+[IsActingSemigroup],
 function(s)
   local gens, data, opts;
  

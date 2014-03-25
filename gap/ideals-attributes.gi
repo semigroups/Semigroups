@@ -8,12 +8,12 @@
 ############################################################################# 
 ##
 
-InstallMethod(MaximalDClasses, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data, pos, partial, classes, out, i;
 
-   data:=SemigroupData(I);
+   data:=SemigroupIdealData(I);
    data!.stopper:=Length(GeneratorsOfSemigroupIdeal(I));
    Enumerate(data, infinity, ReturnFalse);
    #install the generators, and their descendants

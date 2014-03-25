@@ -8,49 +8,142 @@
 ############################################################################# 
 ##
 
-InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
+#
+
+InstallMethod(SemigroupData, "for a regular acting semigroup ideal",
+[IsActingSemigroup and IsRegularSemigroup and IsSemigroupIdeal],
+SemigroupIdealData);
+
+# JDM this method should become obsolete in time...
+
+InstallMethod(SemigroupData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
-  local D, U, inj, i, partial, j, C;
-  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
-  D:=MaximalDClasses(I);
+  local data, pos, partial, classes, D, U, inj, i, j, C;
+  
+  # add at least the generators to the ideal data...
+  data:=SemigroupIdealData(I);
+  Enumerate(data, infinity, ReturnFalse);
+
+  if IsRegularSemigroup(I) then 
+    return data;
+  fi;
+
+  # the maximal D-classes of the supersemigroup of <I> contained in <I>
+  
+  pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
+                             # [1..n-1] in data!.dorbit
+  partial:=data!.poset;
+  classes:=data!.dorbit;
+  D:=[];
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(D, classes[i]);
+    fi;
+  od;
+  
+  # find generators for I...
   U:=Semigroup(GeneratorsOfSemigroupIdeal(I));
 
   for i in [1..Length(D)] do  
     if IsRegularDClass(D[i]) then 
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
       U:=ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
-    else #Size(D[i])=1
-      U:=ClosureSemigroup(U, Representative(D[i]));
+    else 
+      U:=ClosureSemigroup(U, D[i]);
     fi;
   od;
+  
+  i:=0;  partial:=data!.poset;  D:=data!.dorbit; 
 
-  i:=0; 
-  partial:=PartialOrderOfDClasses(I);
-  D:=GreensDClasses(I);
-
-  while U<>I do 
-    i:=i+1; j:=0;
-    while U<>I and j<Length(partial[i]) do 
+  while Size(U)<>Size(I) do 
+    i:=i+1; j:=0; 
+    while Size(U)<>Size(I) and j<Length(partial[i]) do 
       j:=j+1; 
       if Length(partial[i])=1 or partial[i][j]<>i then 
         C:=D[partial[i][j]];
         if IsRegularDClass(C) then 
           inj:=InverseGeneralMapping(InjectionPrincipalFactor(C));
-          U:=ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
+          U:=ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+           inj));
         else
           U:=ClosureSemigroup(U, AsList(C));
         fi;
       fi;
     od;
   od;
-  return GeneratorsOfSemigroup(Semigroup(U, rec(small:=true)));
+  
+  SetGeneratorsOfSemigroup(I, GeneratorsOfSemigroup(U));
+  SetLambdaOrb(I, LambdaOrb(U));
+  SetRhoOrb(I, RhoOrb(U));
+  return SemigroupData(U);
 end);
 
-# JDM: currently almost a straight copy from acting.gi
+#
 
-InstallMethod(SemigroupData, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  local data, pos, partial, classes, D, U, inj, i, j, C;
+   
+  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  data:=SemigroupIdealData(I);
+  Enumerate(data, infinity, ReturnFalse);
+
+  if not IsRegularSemigroup(I) then 
+    data:=SemigroupData(I); 
+    return GeneratorsOfSemigroup(I);
+  fi; 
+  
+  pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
+                             # [1..n-1] in data!.dorbit
+  partial:=data!.poset;
+  classes:=data!.dorbit;
+  D:=[];
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(D, classes[i]);
+    fi;
+  od;
+  
+  # find generators for I...
+  U:=Semigroup(GeneratorsOfSemigroupIdeal(I));
+
+  for i in [1..Length(D)] do  
+    if IsRegularDClass(D[i]) then 
+      inj:=InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
+      U:=ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
+    else 
+      U:=ClosureSemigroup(U, D[i]);
+    fi;
+  od;
+  
+  i:=0;  partial:=data!.poset;  D:=data!.dorbit; 
+
+  while Size(U)<>Size(I) do 
+    i:=i+1; j:=0; 
+    while Size(U)<>Size(I) and j<Length(partial[i]) do 
+      j:=j+1; 
+      if Length(partial[i])=1 or partial[i][j]<>i then 
+        C:=D[partial[i][j]];
+        if IsRegularDClass(C) then 
+          inj:=InverseGeneralMapping(InjectionPrincipalFactor(C));
+          U:=ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+           inj));
+        else
+          U:=ClosureSemigroup(U, AsList(C));
+        fi;
+      fi;
+    od;
+  od;
+  
+  return GeneratorsOfSemigroup(U);
+end);
+
+#
+
+InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local gens, data, opts;
  
@@ -61,14 +154,19 @@ function(I)
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[fail],
      lenreps:=[0], orbit:=[fail,], dorbit:=[], repslens:=[],
-     lambdarhoht:=[], schreierpos:=[fail], schreiergen:=[fail],
-     schreiermult:=[fail], genstoapply:=[1..Length(gens)], stopper:=false, 
+     lambdarhoht:=[], regular:=[],
+     genstoapply:=[1..Length(gens)], stopper:=false, 
      poset:=[], scc_lookup:=[]);
   
   Objectify(NewType(FamilyObj(I), IsSemigroupIdealData), data);
   
   return data;
 end);
+
+#
+
+InstallMethod(SemigroupIdealData, "for an inverse op acting semigroup ideal",
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal], ReturnFail);
 
 #
 
@@ -91,14 +189,14 @@ end);
 # We concentrate on the case when nothing is known about the parent of the
 # ideal.
 
-# we make the R-class centered data structure as in SemigroupData but at the
+# we make the R-class centered data structure as in SemigroupIdealData but at the
 # same time have an additional "orbit" consisting of D-class reps. 
 
 InstallMethod(Enumerate, 
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, UpdateSemigroupIdealData, idealgens, i, rreps, n, scc, mults, x, cosets, y, z, j, k;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, rreps, n, scc, mults, x, cosets, y, z, j, k;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -146,11 +244,6 @@ function(data, limit, lookfunc)
   
   stopper:=data!.stopper;       # stop at this place in the orbit
 
-  # schreier
-  schreierpos:=data!.schreierpos;
-  schreiergen:=data!.schreiergen;
-  schreiermult:=data!.schreiermult;
-
   # generators
   gens:=data!.gens; # generators of the parent semigroup
   nrgens:=Length(gens); 
@@ -195,7 +288,10 @@ function(data, limit, lookfunc)
 
   log:=data!.log;  # log[i+1] is the last position in orb=data!.orbit where the
                    # R-class reps of d[i] appear...
- 
+
+  tester:=IdempotentTester(I);
+  regular:=data!.regular;
+
   ##############################################################################
   
   # the function which checks if x is already R/D-related to something in the
@@ -282,7 +378,8 @@ function(data, limit, lookfunc)
       EquivalenceClassRelation, drel, IsGreensClassNC, false, 
       Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
       RhoOrb, rhoo, RhoOrbSCCIndex, mm, RhoOrbSCC, rhoscc[mm]);
-    
+    regular[nr_d]:=false;
+
     # install the point in the poset
     
     if pos<>fail  then 
@@ -306,6 +403,10 @@ function(data, limit, lookfunc)
         repslookup[m][ind]:=[];
       else
         ind:=lambdarhoht[l][m];
+        SetIsRegularSemigroup(I, false);
+      fi;
+      if not HasIsRegularSemigroup(I) and not regular[nr_d] then 
+        regular[nr_d]:=tester(lambdao[lambdascc[m][1]], rhoo[l]);
       fi;
       y:=mults[l][1]*x;
 
@@ -398,6 +499,7 @@ function(data, limit, lookfunc)
     SetFilterObj(lambdao, IsClosed);
     SetFilterObj(rhoo, IsClosed);
     SetFilterObj(data, IsClosedData);
+    SetIsRegularSemigroup(data!.parent, ForAll(regular, x-> x=true));
   fi;
 
   return data;
@@ -411,6 +513,10 @@ InstallMethod(\in,
 function(x, I)
   local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   
+  if HasGeneratorsOfSemigroup(I) then 
+    TryNextMethod();
+  fi;
+
   if ElementsFamily(FamilyObj(I))<>FamilyObj(x) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(I) 
      and ActionDegree(x)<>ActionDegree(I)) 
@@ -433,7 +539,7 @@ function(x, I)
     fi;
   fi;  
 
-  data:=SemigroupData(I);
+  data:=SemigroupIdealData(I);
   ht:=data!.ht;
 
   # look for lambda!
@@ -598,6 +704,31 @@ function(x, I)
     fi;
   fi;
   return false;
+end);
+
+# JDM; this method could be removed later...
+
+InstallMethod(Size, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal], 
+function(s)
+  local data, lenreps, repslens, o, scc, size, n, m, i;
+   
+  data:=Enumerate(SemigroupIdealData(s), infinity, ReturnFalse);
+  lenreps:=data!.lenreps;
+  repslens:=data!.repslens;
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  
+  size:=0;
+  
+  for m in [2..Length(scc)] do 
+    n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
+    for i in [1..lenreps[m]] do 
+      size:=size+n*repslens[m][i];
+    od;
+  od;
+
+  return size; 
 end);
 
 #EOF

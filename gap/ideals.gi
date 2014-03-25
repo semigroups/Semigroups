@@ -167,8 +167,8 @@ function( arg )
           Append(out, AsList(arg[1])); #JDM should use this in Semigroup too
         fi;
       #so that we can pass the options record in the Semigroups package 
-      elif i=Length(arg[2]) and IsRecord(arg[2][i]) then
-        return SemigroupIdealByGenerators(out, arg[2][i]);
+      elif i=Length(arg) and IsRecord(arg[i]) then
+        return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
         Error( "usage: the second argument should be some\n",
         "combination of generators, lists of generators, or semigroups,");
@@ -220,20 +220,26 @@ function(S, gens, opts)
 
   I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
   
-  if IsActingSemigroupWithInverseOp(S) then 
+  if opts.acting and IsActingSemigroupWithInverseOp(S) then 
     SetFilterObj(I, IsActingSemigroupWithInverseOp);
-  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then 
+  fi;
+
+  if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then 
     SetIsRegularSemigroup(I, true);
   fi;
   
-  if  HasSupersemigroupOfIdeal(S) then 
+  if HasSupersemigroupOfIdeal(S) then 
     SetSupersemigroupOfIdeal(I, SupersemigroupOfIdeal(S));
   elif HasGeneratorsOfSemigroup(S) then 
     SetSupersemigroupOfIdeal(I, S);
   fi;
-  
+ 
   SetParent(I, S); 
   SetGeneratorsOfMagmaIdeal(I, gens);
+  
+  if not opts.acting then 
+    SetActingDomain(I, S);
+  fi;
 
   return I;
 end);

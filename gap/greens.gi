@@ -500,7 +500,7 @@ h-> CreateRClass(Parent(h), LambdaOrbSCCIndex(h), LambdaOrb(h),
 # different method for regular/inverse/ideals
 
 InstallMethod(GreensDClasses, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+[IsActingSemigroup], 
 function(s)
   local data, scc, out, type, drel, o, arg, d, rectify, i;
 
@@ -1171,8 +1171,8 @@ end);
 
 # different methods for regular/inverse/ideals
 
-InstallMethod(DClassReps, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(DClassReps, "for an acting semigroup",
+[IsActingSemigroup],
 function(s)
   local data, scc, r, i, out, j;
 
@@ -1579,13 +1579,13 @@ end);
 # different method for regular/inverse/ideals 
 
 InstallMethod(NrDClasses, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 s-> Length(OrbSCC(SemigroupData(s)))-1);
 
 # different method for regular/inverse/ideals
 
 InstallMethod(NrRegularDClasses, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 function(s)
   local data, datascc, rhofunc, tester, nr, r, x, o, scc, rho, i, j;
   
@@ -1817,7 +1817,7 @@ end);
 # different method for regular/inverse/ideals
 
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 function(s)
   local d, n, out, data, gens, graph, lambdarhoht, datalookup, reps, repslens, ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup, schutz, mults, f, l, m, val, j, i, x, k;
 

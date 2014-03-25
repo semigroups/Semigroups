@@ -8,5 +8,10 @@
 ############################################################################# 
 ##
 
+# the current idea is use the new setup for regular and inverse semigroups, and
+# to use the 
+
 DeclareCategory("IsSemigroupIdealData", IsSemigroupData);
+DeclareAttribute("SemigroupIdealData", IsSemigroupIdeal);
+
 
