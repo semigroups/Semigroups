@@ -425,7 +425,9 @@ function(data, limit, lookfunc)
         repslookup[m][ind]:=[];
       else
         ind:=lambdarhoht[l][m];
-        SetIsRegularSemigroup(I, false);
+        if not HasIsRegularSemigroup(I) then 
+          SetIsRegularSemigroup(I, false);
+        fi;
       fi;
       if not HasIsRegularSemigroup(I) and not regular[nr_d] then 
         regular[nr_d]:=tester(lambdao[lambdascc[m][1]], rhoo[l]);
@@ -516,7 +518,9 @@ function(data, limit, lookfunc)
     SetFilterObj(lambdao, IsClosed);
     SetFilterObj(rhoo, IsClosed);
     SetFilterObj(data, IsClosedData);
-    SetIsRegularSemigroup(data!.parent, ForAll(regular, x-> x=true));
+    if not HasIsRegularSemigroup(I) then 
+      SetIsRegularSemigroup(data!.parent, ForAll(regular, x-> x=true));
+    fi;
   fi;
 
   return data;
