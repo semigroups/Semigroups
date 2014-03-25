@@ -27,5 +27,7 @@ DeclareAttribute( "SemiEchelonMat",
 
 DeclareOperation( "MoorePenroseInverse",
         [ IsMatrixObj ] );
-        
+
+DeclareGlobalFunction( "PedestrianLambdaInverse" );
+
         

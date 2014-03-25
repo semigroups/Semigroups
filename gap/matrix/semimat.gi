@@ -296,12 +296,7 @@ InstallMethod(LambdaInverse,
         function(S)
     # Returns a function that for 
     return function( Y, f )
-        local inv;
-        
-        inv := MoorePenroseInverse(f);
-       # Error("Debugging");
-        
-        return MoorePenroseInverse(f);
+        return PedestrianLambdaInverse(f)[1];
     end;
 end);
 
@@ -318,7 +313,16 @@ InstallMethod(LambdaPerm,
         [IsMatrixSemigroup],
         function(S)
     return function(x, y)
-        return ();
+        local pi, mat;
+        
+        pi := PedestrianLambdaInverse(x);
+        
+        mat := pi[1] * y;
+        
+        mat := mat{ Difference([1..RowLength(mat)], pi[2]) };
+        
+        Error("debugger");
+        return mat;
     end;
 end);
 

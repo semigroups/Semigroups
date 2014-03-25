@@ -237,8 +237,13 @@ function(o, m)
     bound:=infinity;
   fi;
 
-  g:=Group(()); stop:=false; 
-
+  if IsMatrixSemigroup(s) then
+    g:=Group(One(Representative(s)));
+  else
+    g:=Group(());
+  fi;
+  stop:=false; 
+      
   for k in scc do
     forward:=LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do

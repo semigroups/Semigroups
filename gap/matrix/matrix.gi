@@ -173,7 +173,7 @@ InstallMethod( MoorePenroseInverse,
         "for a matrix over a field",
         [ IsMatrixObj ],
 function(mat)
-    local C, D, E, F, n, i, rows;
+    local C, D, E, F, n, i, rows, pos;
     
     if not IsField(BaseDomain(mat)) then
         Error("This method only works for matrices over fields\n");
@@ -189,8 +189,9 @@ function(mat)
     C := TransposedMat(mat);
     
     for i in [1..DimensionsMat(D)[1]] do
-        if PositionNonZero(D[i]) <= n then
-            Add(rows, C[i]);
+        pos := PositionNonZero(D[i]);
+        if pos <= n then
+            Add(rows, C[pos]);
         fi;
     od;
     
@@ -198,9 +199,64 @@ function(mat)
     
     # Instead of transposedmat, this probably has to be
     # transposed conjugate
-    E := C * (TransposedMat(C) * C) ^ (-1);
-    F := (D * TransposedMat(D)) ^ (-1) * D;
     
-    return E * F;
+    E := (TransposedMat(C) * C)^(-1) * TransposedMat(C);
+    F := TransposedMat(D) * (D * TransposedMat(D)) ^ (-1);
+
+    return F * E;
 end);
 
+InstallGlobalFunction(PedestrianLambdaInverse
+        , function(f)
+    local z, e, i, ech, info, zh;
+    
+    ech := MutableCopyMat(f);
+    
+    info := SemiEchelonMat(ech);
+    
+    z := ZeroMutable(ech[1]);
+    e := One(BaseDomain(f));
+    zh := [];
+    
+    for i in [1..Length(info.heads)] do
+        if info.heads[i] = 0 then
+            
+            ech[i] := ShallowCopy(z);
+            ech[i][i] := e;
+        fi;
+    od;
+    
+    return [ech^(-1), zh];
+end);
+
+InstallMethod( IsGeneratorsOfMagmaWithInverses,
+        "for lists of MatrixObj",
+        [ IsHomogeneousList and IsRingElementCollCollColl ],
+        function(l)
+    if Length(l) > 0 then
+        if IsMatrixObj(l[1]) then
+            if ForAll(l, x -> x^(-1) <> fail) then
+                return true;
+            fi;
+        fi;
+    fi;
+    
+    TryNextMethod();
+            
+    end);
+
+InstallMethod( DefaultScalarDomainOfMatrixList,
+        [ IsHomogeneousList and IsRingElementCollCollColl ],
+        15,
+        function(l)
+     if Length(l) > 0 then
+        if IsMatrixObj(l[1]) then
+            return BaseDomain(l[1]);
+        fi;
+    fi;
+    
+    TryNextMethod();
+    
+end);
+
+    
