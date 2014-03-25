@@ -35,3 +35,20 @@ function(I)
   return MultiplicativeZero(I) = gens[1] and ForAll(gens, x -> gens[1] = x);
 end);
 
+#
+
+InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup ideal",
+[IsSemigroupIdeal and IsInverseSemigroup],
+function(I)
+
+  if I=SupersemigroupOfIdeal(I) then 
+    return IsFactorisableSemigroup(SupersemigroupOfIdeal(I));
+  fi;
+  return false;
+end);
+
+#
+
+InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
+[IsSemigroupIdeal], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
+

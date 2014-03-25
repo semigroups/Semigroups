@@ -254,38 +254,10 @@ InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 [IsSemigroup], S-> IsSimpleSemigroup(S) and IsFinite(S));
 
-#JDM IsSemilatticeAsSemigroup doesn't work for ideals
+#different method for ideals
 
-InstallMethod(IsFactorisableSemigroup, "for a partial perm semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup], 
-function(s)
-  local G, iso, enum, f;
-  
-  G:=GroupOfUnits(s);
-  
-  if G=fail then 
-    return false;
-  elif IsTrivial(G) then 
-    return IsSemilatticeAsSemigroup(s);
-  fi;
-  
-  iso:=InverseGeneralMapping(IsomorphismPermGroup(G));
-  enum:=Enumerator(Source(iso));
-
-  for f in Generators(s) do 
-    if not f in G then 
-      if not ForAny(enum, g-> NaturalLeqPartialPerm(f, g^iso)) then 
-        return false;
-      fi;
-    fi;
-  od;
-  return true;
-end);
-
-# JDM IsSemilatticeAsSemigroup doesn't work for ideals
-
-InstallMethod(IsFactorisableSemigroup, "for a block bijection semigroup",
-[IsBlockBijectionSemigroup and IsInverseSemigroup], 
+InstallMethod(IsFactorisableSemigroup, "for an inverse op acting semigroup",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
 function(S)
   local G, iso, enum, f;
   
@@ -302,7 +274,7 @@ function(S)
 
   for f in Generators(S) do 
     if not f in G then 
-      if not ForAny(enum, g-> NaturalLeqBlockBijection(f, g^iso)) then 
+      if not ForAny(enum, g-> NaturalLeqInverseSemigroup(f, g^iso)) then 
         return false;
       fi;
     fi;
@@ -310,7 +282,7 @@ function(S)
   return true;
 end);
 
-#JDM
+# same method for ideals
 
 InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup], 
@@ -321,20 +293,20 @@ function(S)
   return false;
 end);
 
-#JDM
+# same method for ideals
 
-InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(IsHTrivial, "for an acting semigroup", 
+[IsActingSemigroup], 
 function(S)
   local iter, x;
 
-  if IsTransformationSemigroup(S) then 
+  if IsTransformationSemigroup(S) and HasGeneratorsOfSemigroup(S) then 
     for x in GeneratorsOfSemigroup(S) do 
       if IndexPeriodOfTransformation(x)[2]<>1 then 
         return false;
       fi;
     od;
-  elif IsPartialPermSemigroup(S) then 
+  elif IsPartialPermSemigroup(S) and HasGeneratorsOfSemigroup(S) then 
     for x in GeneratorsOfSemigroup(S) do 
       if IndexPeriodOfPartialPerm(x)[2]<>1 then 
         return false;
@@ -352,15 +324,18 @@ function(S)
   return true;
 end);
 
+InstallMethod(IsHTrivial, "for a semigroup",
+[IsSemigroup], S-> NrHClasses(S)=Size(S));
+
 #same method for ideals
 
 InstallMethod(IsHTrivial, "for a D-class of an acting semigroup", 
 [IsGreensDClass and IsActingSemigroupGreensClass], d-> NrHClasses(d)=Size(d));
 
-#same method for ideals
+#same method for non-inverse ideals
 
 InstallMethod(IsLTrivial, "for an acting semigroup",
-[IsActingSemigroup ],
+[IsActingSemigroup],
 function(s)
   local iter, o, d;
 
@@ -378,10 +353,10 @@ function(s)
   return true;
 end);
 
-#
+# same method for inverse ideals
 
-InstallMethod(IsLTrivial, "for an inverse acting semigroup with generators",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+InstallMethod(IsLTrivial, "for an inverse acting semigroup",
+[IsActingSemigroupWithInverseOp],
 function(s)
   return ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1);
 end);
@@ -402,7 +377,7 @@ d-> NrRClasses(d)=Size(d));
 InstallMethod(IsRTrivial, "for an inverse semigroup", 
 [IsInverseSemigroup], IsLTrivial);
 
-#JDM
+# different method for ideals
 
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
@@ -415,10 +390,10 @@ function(S)
   fi;
 end);
 
-#JDM
+# different method for ideals
 
 InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
-[IsPartialPermSemigroup], 
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
   if ForAny(GeneratorsOfSemigroup(S), x-> 
    ForAny(CyclesOfPartialPerm(x), y-> Length(y)>1)) then 
@@ -428,7 +403,7 @@ function(S)
   fi;
 end);
 
-#same method for ideals
+# same method for non-inverse ideals
 
 InstallMethod(IsRTrivial, "for an acting semigroup",
 [IsActingSemigroup],
@@ -457,10 +432,13 @@ function(S)
   return true;
 end);
 
-#JDM
+InstallMethod(IsRTrivial, "for a semigroup",
+[IsSemigroup], S-> Size(S)=NrRClasses(S));
 
-InstallMethod(IsGroupAsSemigroup, "for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+# same method for non-regular ideals
+
+InstallMethod(IsGroupAsSemigroup, "for an acting semigroup", 
+[IsActingSemigroup],
 function(s)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
 
@@ -487,6 +465,11 @@ function(s)
 
   return true;
 end);
+
+# different method for inverse, regular ideals (so that it has higher rank)
+
+InstallMethod(IsGroupAsSemigroup, "for a semigroup",
+[IsSemigroup], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
 
 #JDM should gens in the following function be GeneratorsOfSemigroup?
 # IteratorOfIdempotents would be good here.
