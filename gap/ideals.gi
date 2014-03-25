@@ -239,7 +239,7 @@ function(S, gens, opts)
   
   if not opts.acting then 
     SetActingDomain(I, S);
-  else 
+  elif not HasIsRegularSemigroup(S) then
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
   fi;
 
