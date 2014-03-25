@@ -74,6 +74,18 @@ end);
 
 #
 
+InstallMethod(IsBlockBijectionSemigroup,
+"for a bipartition semigroup ideal",
+[IsBipartitionSemigroup and IsSemigroupIdeal],
+function(S)
+  if IsBlockBijectionSemigroup(SupersemigroupOfIdeal(S)) then
+    return true;
+  fi;
+  return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+end);
+
+#
+
 InstallMethod(NaturalPartialOrder, 
 "for an inverse bipartition semigroup",
 [IsBipartitionSemigroup and IsInverseSemigroup],
