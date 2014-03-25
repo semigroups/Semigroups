@@ -38,7 +38,7 @@ false
 
 #
 gap> s:=SingularTransformationSemigroup(6);
-<regular transformation semigroup on 6 pts with 30 generators>
+<regular transformation semigroup ideal on 6 pts with 1 generator>
 gap> Size(s);
 45936
 
@@ -258,14 +258,14 @@ gap> t:=Range(IsomorphismTransformationMonoid(g));
 gap> Generators(t);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));
-Group([ (2,4), (1,3) ])
+Group([ (), (2,4), (1,3) ])
 gap> IsomorphismGroups(g, h);
 [ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
 
 #Issue 22 - takes about 49ms
 gap> f := Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] );
 Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] )
-gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);  
+gap> InversesOfSemigroupElementNC(FullTransformationSemigroup(12),f); #Remove NC
 [ Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 6, 3, 6, 2 ] ), 
@@ -533,7 +533,7 @@ false
 # Issue #63 (problem with Monoid and InverseMonoid when one of the arguments is
 # a monoid)
 gap> S:=Semigroup(PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ) );
-<trivial partial perm group on 5 pts with 0 generators>
+<trivial partial perm group on 6 pts with 0 generators>
 gap> T:=Monoid(S,  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ));
 <partial perm monoid on 6 pts with 2 generators>
 gap> One(S) in T;
@@ -546,7 +546,7 @@ gap> GeneratorsOfSemigroup(T);
 gap> GeneratorsOfMonoid(T);
 [ <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5] ]
 gap> S:=InverseSemigroup(PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ) );
-<trivial partial perm group on 5 pts with 0 generators>
+<trivial partial perm group on 6 pts with 0 generators>
 gap> T:=InverseMonoid(S,  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ));
 <inverse partial perm monoid on 6 pts with 2 generators>
 gap> GeneratorsOfMonoid(T);
@@ -575,10 +575,10 @@ gap> gens:=[
 > Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
 > Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ) ];;
 gap> V:=SemigroupIdealByGenerators(S, gens);
-<bipartition semigroup ideal on 3 pts with 3 generators>
+<regular bipartition semigroup ideal on 3 pts with 3 generators>
 gap> tuples:=[ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ] ] ) ];;
 gap> Semigroup(V, tuples, rec(small:=true));
-<bipartition monoid on 3 pts with 9 generators>
+<bipartition monoid on 3 pts with 7 generators>
 
 # Issue pointed out by WAW, caused by typo in ClosureSemigroup (the parent of an
 # R-class was set to be the subsemigroup not the new parent semigroup)
