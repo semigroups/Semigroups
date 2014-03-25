@@ -223,7 +223,7 @@ function(f, s)
   return false;
 end);
 
-# same method for ideals, different for regular/inverse
+# different for regular/inverse/ideals
 
 InstallMethod(Size, "for an acting semigroup",
 [IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup

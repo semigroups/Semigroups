@@ -140,7 +140,9 @@ function(I)
   record.gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
-  record.orbschreiercmp := [];
+  record.orbschreiercmp := []; 
+  # data!.orbits[i] is obtained from data!.orbits[data!.orbschreiercmp[i]] by
+  # applying some generator
   record.orbtogen := [];
   
   htopts:=ShallowCopy(LambdaOrbOpts(I)); 
