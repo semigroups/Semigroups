@@ -52,8 +52,8 @@ end);
 
 #
 
-InstallMethod(NaturalLeqInverseSemigroup, "for two block bijections",
-[IsBlockBijection, IsBlockBijection], NaturalLeqBlockBijection);
+InstallMethod(NaturalLeqInverseSemigroup, "for two bipartitions",
+[IsBipartition, IsBipartition], NaturalLeqBlockBijection);
 
 #
 
