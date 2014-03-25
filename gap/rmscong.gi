@@ -164,6 +164,11 @@ end);
 InstallGlobalFunction(IsLinkedTriple,
 function(s, n, colBlocks, rowBlocks)
   local mat, block, i, j, u, v, bi, bj, bu, bv;
+  # Check the semigroup is valid
+  if not (IsFinite(s) and IsZeroSimple(s) and IsReesZeroMatrixSemigroup(s) then
+    Error("usage: 1st arg <s> must be a finite 0-simple Rees 0-matrix semigroup");
+    return;
+  fi;
   mat := Matrix(s);
   # Check axioms (L1) and (L2) from Howie p.86, then call NC function
   # Go through the column blocks
