@@ -663,6 +663,7 @@ function(S)
         new_depth:=depth+1;
         count:=count+1;
         Info(InfoSemigroups, 3, "call: ", count, ", depth: ", new_depth,"\r");
+        #Print("call: ", count, ", depth: ", new_depth,"\r");
         ismax:=true; 
         new_known:=ShallowCopy(known);
         didtest:=false;
