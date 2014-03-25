@@ -39,6 +39,9 @@ InstallGlobalFunction(RZMSCongruenceByLinkedTripleNC,
  IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local fam, cong, colLookup, rowLookup, i, j;
+  # Sort the blocks
+  colBlocks := SSortedList(colBlocks);
+  rowBlocks := SSortedList(rowBlocks);
   # Calculate lookup table for equivalence relations
   colLookup := [];
   rowLookup := [];
@@ -72,8 +75,10 @@ InstallMethod(ViewObj,
 "for Rees zero-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
 function(cong)
-  Print("<RZMS congruence by linked triple (",StructureDescription(cong!.n),",",
-        Size(cong!.colBlocks), ",", Size(cong!.rowBlocks),")>");
+  Print("<RZMS congruence by linked triple (",
+        StructureDescription(cong!.n:short), ",",
+        Size(cong!.colBlocks), ",",
+        Size(cong!.rowBlocks),")>");
 end);
 
 #
@@ -96,7 +101,7 @@ function(s)
     # Concatenate these lists to produce complete partitions of the set
     l := List(l, Concatenation);
     # Finally sort each of these into the canonical order of its new classes
-    l := SSortedList(l);
+    l := List(l, SSortedList);
     return l;
   end;
   
@@ -253,8 +258,8 @@ InstallMethod( \=,
 function(c1, c2)
   return( Range(c1) = Range(c2) and
           c1!.n = c2!.n and
-          c1!.colRel = c2!.colRel and
-          c1!.rowRel = c2!.rowRel );
+          c1!.colBlocks = c2!.colBlocks and
+          c1!.rowBlocks = c2!.rowBlocks );
 end);
 
 #
@@ -402,7 +407,7 @@ InstallMethod(JoinSemigroupCongruences,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
 function(c1, c2)
-  local gens, n, colBlocks, cols, rowBlocks, rows, i, block, u;
+  local gens, n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
     Error("congruences must be defined over the same semigroup,"); return;
   fi;
@@ -412,18 +417,18 @@ function(c1, c2)
   # Calculate the union of the column and row relations
   colBlocks := []; cols := [1..Size(c1!.colLookup)];
   rowBlocks := []; rows := [1..Size(c1!.rowLookup)];
-  while not IsEmpty(cols) do
-    i := Remove(cols);
+  for i in [1..Size(cols)] do
+    if cols[i] = 0 then continue; fi;
     block := Union(c1!.colBlocks[c1!.colLookup[i]],
                    c2!.colBlocks[c2!.colLookup[i]]);
-    for i in block do Unbind(cols[i]); od;
+    for j in block do cols[j] := 0; od;
     Add(colBlocks, block);
   od;
-  while not IsEmpty(rows) do
-    u := Remove(rows);
+  for u in [1..Size(rows)] do
+    if rows[u] = 0 then continue; fi;
     block := Union(c1!.rowBlocks[c1!.rowLookup[u]],
                    c2!.rowBlocks[c2!.rowLookup[u]]);
-    for u in block do Unbind(rows[u]); od;
+    for v in block do rows[v] := 0; od;
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
@@ -436,7 +441,7 @@ InstallMethod(MeetSemigroupCongruences,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
 function(c1, c2)
-  local n, colBlocks, cols, rowBlocks, rows, i, block, u;
+  local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
     Error("congruences must be defined over the same semigroup,"); return;
   fi;
@@ -445,18 +450,18 @@ function(c1, c2)
   # Calculate the intersection of the column and row relations
   colBlocks := []; cols := [1..Size(c1!.colLookup)];
   rowBlocks := []; rows := [1..Size(c1!.rowLookup)];
-  while not IsEmpty(cols) do
-    i := Remove(cols);
+  for i in [1..Size(cols)] do
+    if cols[i] = 0 then continue; fi;
     block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
                           c2!.colBlocks[c2!.colLookup[i]]);
-    for i in block do Unbind(cols[i]); od;
+    for j in block do cols[j] := 0; od;
     Add(colBlocks, block);
   od;
-  while not IsEmpty(rows) do
-    u := Remove(rows);
+  for u in [1..Size(rows)] do
+    if rows[u] = 0 then continue; fi;
     block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
                           c2!.rowBlocks[c2!.rowLookup[u]]);
-    for u in block do Unbind(rows[u]); od;
+    for v in block do rows[v] := 0; od;
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
@@ -813,7 +818,7 @@ function(cong)
       fi;
     od;
   od;
-  colBlocks := List([1..Size(m)], i-> Positions(colLookup, i));
+  colBlocks := List([1..Size(colLookup)], i-> Positions(colLookup, i));
   colBlocks := Filtered(colBlocks, block-> not IsEmpty(block));
   
   # FIND THE RELATION ON THE SET OF ROWS
