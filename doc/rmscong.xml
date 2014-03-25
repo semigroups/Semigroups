@@ -24,7 +24,7 @@
 
       If the arguments describe a valid linked triple on <A>s</A>, then an
       <C>IsRMSCongruenceByLinkedTriple</C> object is returned, which can be used
-      just like any semigroup congruence object.<P/>
+      like any other semigroup congruence object.<P/>
 
       If the arguments describe an invalid linked triple, then an error is
       returned.
@@ -45,13 +45,13 @@
       If the linked triple consists of the three parameters <C>n</C>,
       <C>colBlocks</C> and <C>rowBlocks</C>, then <A>nCoset</A> must be a right
       coset of <C>n</C>, <A>colClass</A> must be a positive integer
-      corresponding to a class with that position in the list <C>colBlocks</C>,
-      and <A>rowClass</A> must be a positive integer corresponding to a class
-      with that position in the list <C>rowBlocks</C>.<P/>
+      corresponding to a position in the list <C>colBlocks</C>, and
+      <A>rowClass</A> must be a positive integer corresponding to a position in
+      the list <C>rowBlocks</C>.<P/>
 
       If the arguments are valid, an <C>IsRMSCongruenceClassByLinkedTriple</C>
-      object is returned, which can be used like any equivalence class object.
-      Otherwise, an error is returned.
+      object is returned, which can be used like any other equivalence class
+      object.  Otherwise, an error is returned.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -61,9 +61,6 @@
     <Oper Name="CongruencesOfSemigroup" Arg="s"/>
     <Returns>A list</Returns>
     <Description>
-      This function returns one congruence class of the congruence <A>cong</A>,
-      as defined by the other three parameters.<P/>
-
       This function returns a list of all the congruences of the finite 0-simple
       Rees 0-matrix semigroup <A>s</A>.  This list will include all possible RMS
       congruences by linked triple, as well as a special object describing the
@@ -90,7 +87,7 @@
     <Returns>a positive integer</Returns>
     <Description>
       This function returns the number of congruence classes the semigroup
-      congruence <A>s</A> has in its semigroup.  <A>s</A> must be a Rees
+      congruence <A>cong</A> has in its semigroup.  <A>cong</A> must be a Rees
       0-matrix semigroup congruence by linked triple, or a universal congruence.
     </Description>
   </ManSection>
