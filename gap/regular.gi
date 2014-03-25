@@ -82,8 +82,10 @@ function(f, s)
     return false;
   fi;
 
-  rho_o:=RhoOrb(s);       Enumerate(rho_o, infinity);
-  rho_l:=Position(rho_o, RhoFunc(s)(f));
+  rho_o:=RhoOrb(s);       
+  rho_l:=EnumeratePosition(rho_o, RhoFunc(s)(f), false); 
+  # this is worth it in the case that schutz=true below! For example, in the
+  # full transformation monoid on 12 points (see Issue 22 in testinstall.tst)
   
   if rho_l=fail then 
     return false;
@@ -102,6 +104,7 @@ function(f, s)
     g:=g*LambdaOrbMult(lambda_o, m, lambda_l)[2];
   fi;
 
+  Enumerate(rho_o, infinity); # in case <s> is an ideal...
   n:=OrbSCCLookup(rho_o)[rho_l]; 
   
   if rho_l<>OrbSCC(rho_o)[n][1] then 
