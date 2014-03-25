@@ -675,5 +675,7 @@ gap> PartialOrderOfDClasses(C);
 gap> List(ideals, Size);
 [ 9285, 7172, 6906, 19167, 19146, 3782, 1568 ]
 
+# properties...
+
 #
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);

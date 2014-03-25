@@ -1910,7 +1910,7 @@ function(s)
       return EvaluateWord(gens, w);
     elif IsSemigroupIdeal(s) and HasGeneratorsOfSemigroupIdeal(s) then 
       x:=Random([1..Length(GeneratorsOfSemigroupIdeal(s))]);
-      gens:=GeneratorsOfSemigroup(Parent(s));
+      gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
       
       i:=Random([1..Length(gens)]);
       w:=List([1..i], x-> Random([1..Length(gens)]));
