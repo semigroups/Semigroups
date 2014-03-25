@@ -165,7 +165,7 @@ InstallGlobalFunction(IsLinkedTriple,
 function(s, n, colBlocks, rowBlocks)
   local mat, block, i, j, u, v, bi, bj, bu, bv;
   # Check the semigroup is valid
-  if not (IsFinite(s) and IsZeroSimple(s) and IsReesZeroMatrixSemigroup(s) then
+  if not (IsFinite(s) and IsZeroSimpleSemigroup(s) and IsReesZeroMatrixSemigroup(s)) then
     Error("usage: 1st arg <s> must be a finite 0-simple Rees 0-matrix semigroup");
     return;
   fi;
