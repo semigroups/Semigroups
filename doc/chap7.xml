@@ -1,10 +1,11 @@
 <Chapter Label="Congruences on completely 0-simple semigroups">
-  <Heading>Congruences on completely 0-simple semigroups</Heading> This chapter
-  describes the implementation of congruences on completely 0-simple semigroups
-  in the &Semigroups; package, and the functions associated with them.  This
-  code and this part of the manual were written by Michael Torpey.  Most of the
-  theorems used in this chapter are from Section 3.5 of <Cite Key =
-  "howie"/>.<P/>
+  <Heading>Congruences on completely 0-simple semigroups</Heading>
+
+  This chapter describes the implementation of congruences on completely
+  0-simple semigroups in the &Semigroups; package, and the functions associated
+  with them.  This code and this part of the manual were written by Michael
+  Torpey.  Most of the theorems used in this chapter are from Section 3.5 of
+  <Cite Key = "howie"/>.<P/>
 
   By the Rees Theorem, any 0-simple semigroup <M>S</M> is isomorphic to a
   <E>Rees 0-matrix semigroup</E> (see <Ref Chap = "Rees Matrix Semigroups"
@@ -21,52 +22,83 @@
     rows or columns contain only zeroes.
   </Alt><P/>
 
-  By Theorem 3.5.9, there is a bijection between the set of congruences of such
-  a semigroup, and the set of <E>linked triples</E>.  A linked triple of such a
-  semigroup is a triple of the form
-  <Alt Not="Text"><M>(N,\mathcal{S},\mathcal{T})</M></Alt>
-  <Alt Only="Text">(N,S,T)</Alt>
-  where<P/>
-  
-  <List>
-    <Item>
-      <M>N</M> is a normal subgroup of the underlying group <M>G</M>,
-    </Item>
-    <Item>
-      <Alt Not="Text"><M>\mathcal{S}</M></Alt><Alt Only="Text">S</Alt> is an
-      equivalence relation on the columns of <M>P</M>,
-    </Item>
-    <Item>
-      <Alt Not="Text"><M>\mathcal{T}</M></Alt><Alt Only="Text">T</Alt> is an
-      equivalence relation on the rows of <M>P</M>,
-    </Item>
-  </List>
+  <Section>
+    <Heading>Congruences by Linked Triple</Heading>
+    A <E>linked triple</E> of such a semigroup is a triple of the form <Alt
+    Not="Text"><M>(N,\mathcal{S},\mathcal{T})</M></Alt> <Alt
+    Only="Text">(N,S,T)</Alt> where<P/>
+    
+    <List>
+      <Item>
+	<M>N</M> is a normal subgroup of the underlying group <M>G</M>,
+      </Item>
+      <Item>
+	<Alt Not="Text"><M>\mathcal{S}</M></Alt><Alt Only="Text">S</Alt> is an
+	equivalence relation on the columns of <M>P</M>,
+      </Item>
+      <Item>
+	<Alt Not="Text"><M>\mathcal{T}</M></Alt><Alt Only="Text">T</Alt> is an
+	equivalence relation on the rows of <M>P</M>,
+      </Item>
+    </List>
+    
+    satisfying the following conditions:
+    
+    <List>
+      <Item>
+	A pair of <Alt Not="Text"><M>\mathcal{S}</M></Alt><Alt
+	Only="Text"><M>S</M></Alt>-related columns must contain zeroes in
+	precisely the same rows.
+      </Item>
+      <Item>
+	A pair of <Alt Not="Text"><M>\mathcal{T}</M></Alt><Alt
+	Only="Text"><M>T</M></Alt>-related rows must contain zeroes in precisely
+	the same columns.
+      </Item>
+      <Item>
+	<Alt Not="Text">
+	  If <M>(i,j) \in \mathcal{S}</M> and <M>(u,v) \in \mathcal{T}</M>, such
+	  that the matrix entries <M>p_{\lambda i}, p_{\lambda j}, p_{\mu i},
+	  p_{\mu j} \neq 0</M>, then <M>q_{\lambda \mu i j} \in N</M>, where
+	  <Display>q_{\lambda \mu i j} = p_{\lambda i} p_{\mu i}^{-1} p_{\mu j}
+	  p_{\lambda j}^{-1}.</Display>
+	</Alt>
+	<Alt Only="Text">
+	  If (i,j) is in S, (u,v) is in T, and the matrix entries
+	  p_ui, p_uj, p_vi, and p_vj are all non-zero, then q_uvij is in N, where
+	  <Display>q_uvij = p_ui * p_vi^-1 * p_vj * p_uj^-1.</Display>
+	</Alt>
+      </Item>
+    </List>
+    
+    By Theorem 3.5.9, there is a bijection between the set of non-universal
+    congruences of a finite 0-simple Rees 0-matrix semigroup, and the set of its
+    linked triples.  In this way, we can internally represent any congruence of
+    such a semigroup by storing its associated linked triple instead of a set of
+    generating pairs, and thus perform many calculations on it more
+    efficiently.<P/>
 
-  satisfying the following conditions:
-
-  <List>
-    <Item>
-      A related pair of columns in <Alt Not="Text"><M>\mathcal{S}</M></Alt> <Alt
-      Only="Text"><M>S</M></Alt> must contain zeroes in precisely the same rows.
-    </Item>
-    <Item>
-      A related pair of rows in <Alt Not="Text"><M>\mathcal{T}</M></Alt> <Alt
-      Only="Text"><M>T</M></Alt> must contain zeroes in precisely the same
-      columns.
-    </Item>
-    <Item>
-      <Alt Not="Text">
-	If <M>(i,j) \in S</M> and <M>(u,v) \in T</M>, such that the matrix
-	entries <M>p_{\lambda i}, p_{\lambda j}, p_{\mu i}, p_{\mu j} \neq 0</M>,
-	then <M>q_{\lambda \mu i j} \in N</M>, where <Display>q_{\lambda \mu i
-	j} = p_{\lambda i} \times p_{\mu i}^{-1} \times p_{\mu j} \times
-	p_{\lambda j}^{-1}.</Display>
-      </Alt>
-      <Alt Only="Text">
-	If (i,j) is in S, (u,v) is in T, and the matrix entries
-	p_ui, p_uj, p_vi, and p_vj are all non-zero, then q_uvij is in N, where
-	<Display>q_uvij = p_ui * p_vi^-1 * p_vj * p_uj^-1.</Display>
-      </Alt>
-    </Item>
-  </List>
+    If a congruence is defined by a linked triple
+    <Alt Not="Text"><M>(N,\mathcal{S},\mathcal{T})</M></Alt>
+    <Alt Only="Text">(N,S,T)</Alt> 
+    then a single class of that congruence can be defined by a triple
+    <Alt Not="Text"><M>(Nx,i/\mathcal{S},\lambda/\mathcal{T})</M>,</Alt>
+    <Alt Only="Text">(Nx,i/S,u/T),</Alt>
+    where <M>Nx</M> is a right coset of <M>N</M>,
+    <M>i/<Alt Not="Text">\mathcal</Alt>{S}</M> is an equivalence class of
+    columns under <M><Alt Not="Text">\mathcal</Alt>{S}</M>, and
+    <M><Alt Not="Text">\lambda / \mathcal</Alt><Alt Only="Text">u/</Alt>{T}</M>
+    is an equivalence class of rows under <M><Alt Not="Text">\mathcal</Alt>{T}</M>.
+    Thus we can internally represent any class of such a congruence as a triple
+    simply consisting of a right coset and two positive integers.
+    
+    <#Include Label="RMSCongruenceByLinkedTriple">
+    <#Include Label="RMSCongruenceClassByLinkedTriple">
+    <#Include Label="CongruencesOfSemigroup">
+    <#Include Label="IsLinkedTriple">
+    <#Include Label="NrCongruenceClasses">
+    <#Include Label="CanonicalRepresentative">
+    <#Include Label="AsSemigroupCongruenceByGeneratingPairs">
+    <#Include Label="AsRMSCongruenceByLinkedTriple">
+  </Section>
 </Chapter>
