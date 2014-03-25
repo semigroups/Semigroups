@@ -82,21 +82,19 @@ s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
 #[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 #s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
-#
+# same method for ideals
 
 InstallMethod(IsBand, "for an acting semigroup", 
 [IsActingSemigroup], S-> IsCompletelyRegularSemigroup(S) and IsHTrivial(S));
 
-#JDM IsSemilatticeAsSemigroup doesn't work for ideals
+# same method for ideals
 
-InstallMethod(IsBand, "for an inverse semigroup", 
-[IsInverseSemigroup], IsSemilatticeAsSemigroup);
+InstallMethod(IsBand, "for an inverse semigroup", [IsInverseSemigroup],
+IsSemilatticeAsSemigroup);
 
 # same method for ideals
 
-InstallMethod(IsBlockGroup, 
-"for an acting semigroup",
-[IsActingSemigroup ], 
+InstallMethod(IsBlockGroup, "for an acting semigroup", [IsActingSemigroup], 
 function(s)
   local iter, d;
 
@@ -120,12 +118,10 @@ function(s)
   return true;
 end);
 
-#JDM IsInverseSemigroup doesn't work for ideals
+# same method for ideals
 
-InstallMethod(IsBrandtSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-s-> IsZeroSimpleSemigroup(s) and IsInverseSemigroup(s));
+InstallMethod(IsBrandtSemigroup, "for an acting semigroup", [IsActingSemigroup],
+S-> IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S));
 
 # same method for ideals
 
@@ -176,10 +172,12 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsCliffordSemigroup, 
-"for an inverse acting semigroup", 
+InstallMethod(IsCliffordSemigroup, "for an inverse acting semigroup", 
 [IsInverseSemigroup and IsActingSemigroup], 
 s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
+
+InstallMethod(IsCliffordSemigroup, "for a semigroup",
+[IsSemigroup], S-> IsInverseSemigroup(S) and NrHClasses(S)=NrDClasses(S));
 
 #JDM
 
@@ -1206,6 +1204,7 @@ end);
 InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
+
 # same method for ideals
 
 InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup",
@@ -1226,6 +1225,12 @@ function(S)
   fi;
   D:=NextIterator(iter);
   return IsDoneIterator(iter) and IsRegularDClass(D);
+end);
+
+InstallMethod(IsZeroSimpleSemigroup, "for an inverse semigroup", 
+[IsInverseSemigroup], 
+function(S)
+  return MultiplicativeZero(S)<>fail and NrDClasses(S)=2;
 end);
 
 #same method for ideals

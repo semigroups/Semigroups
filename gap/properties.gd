@@ -45,6 +45,7 @@ InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsRegul
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
+InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);
 InstallTrueMethod(IsHTrivial, IsLTrivial);
 InstallTrueMethod(IsHTrivial, IsRTrivial);

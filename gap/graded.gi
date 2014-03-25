@@ -113,7 +113,7 @@ function(s, f, opt)
   record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata; 
 
   if IsSemigroupIdeal(s) then 
-    gens:=GeneratorsOfSemigroup(Parent(s));
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
   else
     gens:=GeneratorsOfSemigroup(s);
   fi;
@@ -189,7 +189,7 @@ function(s, f, opt)
   record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata;
 
   if IsSemigroupIdeal(s) then 
-    gens:=GeneratorsOfSemigroup(Parent(s));
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
   else
     gens:=GeneratorsOfSemigroup(s);
   fi;
