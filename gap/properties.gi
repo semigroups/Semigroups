@@ -733,11 +733,10 @@ InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup], x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
 
 # Notes: is there a better method? JDM
+
 # same method for ideals
 
-InstallMethod(IsOrthodoxSemigroup, 
-"for an acting semigroup",
-[IsActingSemigroup ], 
+InstallMethod(IsOrthodoxSemigroup, "for an acting semigroup", [IsActingSemigroup], 
 function(s)
   local e, m, i, j;
 
@@ -762,11 +761,10 @@ function(s)
   return true;
 end);
 
-#JDM IsBand and IsHTrivial doens't work for ideals
+# same method for ideals
 
-InstallMethod(IsRectangularBand, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsRectangularBand, "for an acting semigroup", 
+[IsActingSemigroup],
 function(s)
 
   if not IsSimpleSemigroup(s) then 
@@ -779,7 +777,7 @@ function(s)
   return IsHTrivial(s);
 end);
 
-#JDM IsHTrivial doesn't work for ideals
+# same method for ideals
 
 InstallMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));

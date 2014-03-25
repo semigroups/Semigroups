@@ -205,8 +205,15 @@ function(o, m)
   if IsBound(o!.scc_reps[m]) then
     return o!.scc_reps[m];
   fi;
+  
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  o!.scc_reps[m]:=EvaluateWord(o!.parent, w);
+  
+  if IsList(w[1]) then 
+    o!.scc_reps[m]:=EvaluateWord(o!.parent, w);
+  else
+    o!.scc_reps[m]:=EvaluateWord(o!.gens, w);
+  fi;
+  
   # remove the following after update of dummy points...JDM
   if not IsIdealOrb(o) then 
     o!.scc_reps[m]:=o!.scc_reps[1]*o!.scc_reps[m];
@@ -249,6 +256,7 @@ function(o, m)
     o!.schutz:=EmptyPlist(Length(OrbSCC(o))); 
     o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
   fi;
+
   s:=o!.parent;                   gens:=o!.gens; 
   scc:=OrbSCC(o)[m];              lookup:=o!.scc_lookup;
   orbitgraph:=OrbitGraph(o);      genstoapply:=[1..Length(gens)];
