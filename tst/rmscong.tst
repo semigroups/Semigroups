@@ -89,8 +89,31 @@ gap> JoinSemigroupCongruences(congs[12], congs[31]);
 gap> MeetSemigroupCongruences(congs[12], congs[31]);
 <RZMS congruence by linked triple (2^2,6,3)>
 
+# Quotients
+gap> q := s / congs[13];;
+gap> Size(q);  
+73
+
 # Convert to and from semigroup congruence by generating pairs
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
 gap> ccong := AsRZMSCongruenceByLinkedTriple(cong);;
 gap> congs[2] = ccong;
 true
+
+# Universal semigroup congruences
+gap> uni := UniversalSemigroupCongruence(s);
+<universal semigroup congruence>
+gap> [x,z] in uni;
+true
+gap> EquivalenceClasses(uni);
+[ {(1,(),1)} ]
+gap> eq := EquivalenceClassOfElement(uni, y);
+{(6,(1,3,5),1)}
+gap> eq := EquivalenceClassOfElement(uni, y);;
+gap> z in eq;
+true
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(uni);;
+gap> AsRZMSCongruenceByLinkedTriple(cong) = uni;
+true
+gap> Size(s / uni);
+1
