@@ -239,6 +239,8 @@ function(S, gens, opts)
   
   if not opts.acting then 
     SetActingDomain(I, S);
+  else 
+    Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
   fi;
 
   return I;

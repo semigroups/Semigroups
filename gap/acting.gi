@@ -40,8 +40,8 @@ end);
 # different method for ideals
 
 InstallMethod(\in, 
-"for an associative element and acting semigroup with generators",  
-[IsAssociativeElement, IsActingSemigroup and HasGeneratorsOfSemigroup], 
+"for an associative element and acting semigroup",  
+[IsAssociativeElement, IsActingSemigroup], 
 function(f, s)
   local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   

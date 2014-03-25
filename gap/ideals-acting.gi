@@ -15,22 +15,15 @@ InstallMethod(SemigroupData, "for a regular acting semigroup ideal",
 SemigroupIdealData);
 
 # JDM this method should become obsolete in time...
+# <I> is not regular if this function is invoked...
 
 InstallMethod(SemigroupData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
   
-  # add at least the generators to the ideal data...
-  data:=SemigroupIdealData(I);
-  Enumerate(data, infinity, ReturnFalse);
-
-  if IsRegularSemigroup(I) then 
-    return data;
-  fi;
-
   # the maximal D-classes of the supersemigroup of <I> contained in <I>
-  
+  data:=SemigroupIdealData(I);
   pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
                              # [1..n-1] in data!.dorbit
   partial:=data!.poset;
@@ -86,15 +79,11 @@ InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
    
-  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
-  data:=SemigroupIdealData(I);
-  Enumerate(data, infinity, ReturnFalse);
-
   if not IsRegularSemigroup(I) then 
-    data:=SemigroupData(I); 
-    return GeneratorsOfSemigroup(I);
+    return SemigroupData(I)!.gens;
   fi; 
   
+  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
   pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
                              # [1..n-1] in data!.dorbit
   partial:=data!.poset;
@@ -509,14 +498,10 @@ end);
 
 InstallMethod(\in, 
 "for an associative element and acting semigroup ideal",  
-[IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal], 
+[IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup], 
 function(x, I)
   local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   
-  if HasGeneratorsOfSemigroup(I) then 
-    TryNextMethod();
-  fi;
-
   if ElementsFamily(FamilyObj(I))<>FamilyObj(x) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(I) 
      and ActionDegree(x)<>ActionDegree(I)) 
