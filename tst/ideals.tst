@@ -675,5 +675,15 @@ gap> PartialOrderOfDClasses(C);
 gap> List(ideals, Size);
 [ 9285, 7172, 6906, 19167, 19146, 3782, 1568 ]
 
+# this example caused a seg fault before changeset 34d25659aa72
+gap> S:=InverseSemigroup([
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 2, 6 ] ),
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] ),
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] ),
+>  PartialPerm( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] ) ]);
+gap> I:=SemigroupIdeal(S, PartialPerm( [ 1, 3, 4, 5, 7 ], [ 1, 3, 4, 5, 7 ] ));
+gap> GeneratorsOfSemigroup(I);;
+
 #
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);
