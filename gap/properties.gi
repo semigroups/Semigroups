@@ -77,18 +77,15 @@ s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
 #  return ForAll(reg, x-> x);
 #end);
 
-#JDM Is AbundantSemigroup doesn't work for ideals.
+#InstallMethod(IsAdequateSemigroup, 
+#"for acting semigroup with generators", 
+#[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+#s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
-InstallMethod(IsAdequateSemigroup, 
-"for acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
-s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
+#
 
-#JDM IsHtrivial doesn't work for ideals yet
-
-InstallMethod(IsBand, "for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup], s-> 
- IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
+InstallMethod(IsBand, "for an acting semigroup", 
+[IsActingSemigroup], S-> IsCompletelyRegularSemigroup(S) and IsHTrivial(S));
 
 #JDM IsSemilatticeAsSemigroup doesn't work for ideals
 
@@ -239,6 +236,12 @@ function(s)
   return true;
 end);
 
+# only IsActingSemigroup since there are no methods for NrHClasses,
+# NrIdempotents for an arbitrary semigroup
+
+InstallMethod(IsCompletelyRegularSemigroup, "for a semigroup",
+[IsActingSemigroup], S-> NrHClasses(S)=NrIdempotents(S));
+
 #JDM IsCliffordSemigroup doesn't work for ideals
 
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
@@ -351,10 +354,8 @@ end);
 
 #same method for ideals
 
-InstallMethod(IsHTrivial, 
-"for a D-class of an acting semigroup", 
-[IsGreensDClass and IsActingSemigroupGreensClass], 
-d-> NrHClasses(d)=Size(d));
+InstallMethod(IsHTrivial, "for a D-class of an acting semigroup", 
+[IsGreensDClass and IsActingSemigroupGreensClass], d-> NrHClasses(d)=Size(d));
 
 #same method for ideals
 
@@ -969,12 +970,15 @@ InstallMethod(IsSemilatticeAsSemigroup,
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
  s-> IsCommutativeSemigroup(s) and IsBand(s));
 
-#JDM
+#
 
 InstallMethod(IsSemilatticeAsSemigroup, 
 "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup], 
 s-> ForAll(GeneratorsOfSemigroup(s), IsIdempotent));
+
+InstallMethod(IsSemilatticeAsSemigroup, "for an inverse semigroup",
+[IsInverseSemigroup], S-> ForAll(GreensDClasses(S), IsTrivial));
 
 #JDM
 

@@ -9,6 +9,24 @@
 ##
 
 
+InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
+[IsSemigroupIdeal],
+function(I)
+  local x, y;
+  
+  for x in GeneratorsOfSemigroupIdeal(I) do
+    for y in GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)) do 
+      if not x*y=y*x then 
+        return false;
+      fi;
+    od;
+  od;
+
+  return true;
+end);
+
+#
+
 InstallMethod(IsTrivial, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)
@@ -16,3 +34,4 @@ function(I)
     gens := GeneratorsOfSemigroupIdeal(I);
   return MultiplicativeZero(I) = gens[1] and ForAll(gens, x -> gens[1] = x);
 end);
+
