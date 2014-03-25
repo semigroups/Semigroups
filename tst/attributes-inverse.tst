@@ -174,13 +174,13 @@ gap> NaturalLeqInverseSemigroup(a, a);
 true
 
 # NaturalLeqInverseSemigroup for block bijections
-gap> a:=Bipartition( [ [ 1, 2, 3, 4, 6, 7, 8, -1, -2, -4, -5, -6, -7, -8 ], [ 5, -3 ] ] );;
-gap> b:=Bipartition( [ [ 1, 2, 3, 4, 8, -4, -5, -6, -7, -8 ], [ 5, -3 ], [ 6, -2 ], [ 7, -1 ] ] );;
-gap> NaturalLeqInverseSemigroup(a, b);
+gap> A:=Bipartition( [ [ 1, 2, 3, 4, 6, 7, 8, -1, -2, -4, -5, -6, -7, -8 ], [ 5, -3 ] ] );;
+gap> B:=Bipartition( [ [ 1, 2, 3, 4, 8, -4, -5, -6, -7, -8 ], [ 5, -3 ], [ 6, -2 ], [ 7, -1 ] ] );;
+gap> NaturalLeqInverseSemigroup(A, B);
 true
-gap> NaturalLeqInverseSemigroup(b, a);
+gap> NaturalLeqInverseSemigroup(B, A);
 false
-gap> NaturalLeqInverseSemigroup(b, b);
+gap> NaturalLeqInverseSemigroup(B, B);
 true
 
 #
