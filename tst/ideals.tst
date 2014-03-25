@@ -65,7 +65,7 @@ gap> gens := [
 gap> s := Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> I := SemigroupIdeal(s, [gens[1]^2, gens[2]]);
-<partial perm semigroup ideal on 10 pts with 2 generators>
+<non-regular partial perm semigroup ideal on 10 pts with 2 generators>
 gap> R := GreensRClassOfElement(I, gens[1]^2);
 {PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
 gap> DClassOfRClass(R);

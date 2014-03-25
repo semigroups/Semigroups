@@ -69,6 +69,9 @@ function(I)
   SetGeneratorsOfSemigroup(I, GeneratorsOfSemigroup(U));
   SetLambdaOrb(I, LambdaOrb(U));
   SetRhoOrb(I, RhoOrb(U));
+  # JDM: maybe more is required here to remove U from the semigroup data, like
+  # replacing it in the first position of every entry of the data, and in the
+  # different internal components of the data. 
   return SemigroupData(U);
 end);
 
@@ -215,7 +218,7 @@ InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and func",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, rreps, n, scc, mults, x, cosets, y, z, j, k;
+  local looking, ht, orb, nr_r, d, nr_d, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, x, rreps, n, scc, pos, mults, cosets, y, z, j, k;
  
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -473,15 +476,17 @@ function(data, limit, lookfunc)
   while nr_d<=limit and i<nr_d and i<>stopper do 
     i:=i+1; # advance in the dorb
     poset[i]:=[]; 
+    x:=Representative(d[i]);
+    
     # left multiply the R-class reps by the generators of the semigroup
     rreps:=[];
     n:=Length(RhoCosets(d[i]));
     scc:=RhoOrbSCC(d[i]);
+    pos:=Position(lambdao, lambda(x)); 
     for j in [log[i]+1..log[i+1]] do  # the R-class reps of d[i]
       rreps[j-log[i]]:=orb[j][4];    
       for k in genstoapply do 
-        UpdateSemigroupIdealData(gens[k]*orb[j][4], scc[QuoInt(j-log[i]+n-1, n)], 
-         k, fail);
+        UpdateSemigroupIdealData(gens[k]*orb[j][4], pos, k, fail);
         if looking and data!.found<>false then 
           data!.pos:=i-1;
           return data;
@@ -491,21 +496,14 @@ function(data, limit, lookfunc)
     SetRClassReps(d[i], rreps);
 
     # right multiply the L-class reps by the generators of the semigroup
-    mults:=LambdaOrbMults(lambdao, LambdaOrbSCCIndex(d[i]));
-    scc:=LambdaOrbSCC(d[i]);
-    x:=Representative(d[i]);
-    cosets:=LambdaCosets(d[i]);
-    for y in cosets do 
-      y:=act(x, y);
-      for j in scc do
-        z:=y*mults[j][1];
-        for k in genstoapply do
-          UpdateSemigroupIdealData(z*gens[k], j, k, fail);
-          if looking and data!.found<>false then 
-            data!.pos:=i-1;
-            return data;
-          fi;
-        od;
+    pos:=Position(rhoo, rho(x));
+    for z in LClassReps(d[i]) do 
+      for k in genstoapply do
+        UpdateSemigroupIdealData(z*gens[k], pos, k, fail);
+        if looking and data!.found<>false then 
+          data!.pos:=i-1;
+          return data;
+        fi;
       od;
     od;
     
