@@ -86,100 +86,118 @@ end;
 
 BindGlobal("NextIterator_FreeBand",
 function(iter)
-  local NextIteratorWithContent, NewIterator, PrintIterator, ones, content, i, old_iter;
+  local NextIteratorWithContent, NewIterator, PrintIterator, ones, content, i,
+        tempiter, output;
   
-  NewIterator := function(C)
-    local it, el, i, iscontdone, C1;
+  NewIterator := function(cont)
+# Create a new iterator (technicaly not an iterator) for a specified content.
+    local element, iscontdone, i, iter1, iter2, tempcont, record; 
 
-    el := [];
+    element := [];
     iscontdone := false;
-    if Sum(C) = 1 then
-      for i in [1 .. Length(C)] do
-        if C[i] = 1 then break; fi;
-      od;
-      el := [i,0,i,0];
-      iscontdone := true;
+    if Sum(cont) = 1 then
+      i := Position(cont, 1);
+      element := [i,0,i,0];            iscontdone := true;
+      iter1 := fail;                   iter2 := fail;
     else
-      for i in [1 .. Length(C)] do
-        if C[i] = 1 then 
-          el[1] := i; el[3] := i;
-          break;
-        fi;
-      od;
-      C1 := ShallowCopy(C);
-      C1[i] := 0;
-      el[2] := NewIterator(C1); el[4] := NewIterator(C1);
+      i := Position(cont, 1);
+      element[1] := i;                 element[3] := i;
+      tempcont := ShallowCopy(cont);   tempcont[i] := 0;
+      iter1 := NewIterator(tempcont);  iter2 := NewIterator(tempcont);
+      element[2] := iter1!.element;    element[4] := iter2!.element;
     fi;
 
-    it := rec(
-      isdone := false,
-      content := C,
-      contdone := iscontdone,
-      nrgen := iter!.nrgen,
-      semigroup := iter!.semigroup,
-      element := el );
-    return it;
+    record := rec(
+      isdone := false,                 content := cont,
+      contdone := iscontdone,          nrgen := iter!.nrgen,
+      semigroup := iter!.semigroup,    element := element,
+      iter1 := iter1,                  iter2 := iter2
+      );
+    return record;
   end;
 
 
-  NextIteratorWithContent := function(it)
-## The content C is given as a list with C[i] = 1 if i is in C and 0 otherwise. 
-    local i, j, C1, C2, C;
-## suppose if you enter it!.content = false
+  NextIteratorWithContent := function(iter)
+# Iterate for a fixed content.
+    local cont, iter1, iter2, i, tempcont, output;
 
-    C := it!.content;
-    if not it!.element[2]!.contdone then 
-      C1 := ShallowCopy(C); C1[it!.element[1]] := 0;
-      it!.element[2] := NextIteratorWithContent(C1, it!.element[2]);
-    elif not it!.element[4]!.contdone then 
-      C2 := ShallowCopy(C); C2[it!.element[3]] := 0;
-      it!.element[4] := NextIteratorWithContent(C2, it!.element[4]);
-    else 
-      for i in [it!.element[1] + 1 .. it!.nrgen] do
-        if C[i] = 1  then
-          break;
-        fi;
-      od;
-      if IsBound(i) and C[i] = 1 then
-        it!.element[1] := i;
-        C1 := ShallowCopy(C); C1[it!.element[1]] := 0; 
-        C2 := ShallowCopy(C); C2[it!.element[3]] := 0;
-        it!.element[2] := NewIterator(C1); it!.element[4] := NewIterator(C2);
+    cont := iter!.content;
+    iter1 := iter!.iter1;
+    iter2 := iter!.iter2;
+    output := ShallowCopy(iter!.element);
+
+    if Sum(cont) =  1 then 
+      # iter1 = fail is only possible if content is of size 1
+      iter!.element := fail;
+    elif iter!.contdone then
+      return fail;
+    elif not iter1!.contdone then 
+      iter!.element[2] := NextIteratorWithContent(iter1);
+    else
+      i := Position(cont, 1, iter!.element[1]); 
+      if i <> fail then
+      # If we fall into this case increase the first component of the quadruple
+        iter!.element[1] := i;
+        tempcont := ShallowCopy(cont);
+        tempcont[i] := 0;
+        iter1 := NewIterator(tempcont);
+        iter!.element[2] := NextIteratorWithContent(iter1);
+      elif not iter2!.contdone then
+      # Being in this or following case implies that the prefix is maximal 
+        iter!.element[4] := NextIteratorWithContent(iter2);
       else
-        for i in [it!.element[3] + 1 .. it!.nrgen] do
-          if C[i] = 1  then
-            break;
-          fi;
-        od;
-        j := Position(C, 1);
-        if IsBound(i) and C[i] = 1 then
-          it!.element[1] := j;
-          it!.element[3] := i; 
-          C1 := ShallowCopy(C); C1[it!.element[1]] := 0; 
-          C2 := ShallowCopy(C); C2[it!.element[3]] := 0;
-          it!.element[2] := NewIterator(C1); it!.element[4] := NewIterator(C2);
+        i := Position(cont, 1, iter!.element[3]);
+        if i <> fail then
+          iter!.element[3] := i;
+          tempcont := ShallowCopy(cont);
+          tempcont[i] := 0;
+          iter2 := NewIterator(tempcont);
+          iter!.element[4] := NextIteratorWithContent(iter2);
+          i := Position(cont, 1);
+       # Restart prefix
+          iter!.element[1] := i;
+          tempcont := ShallowCopy(cont);
+          tempcont[i] := 0;
+          iter1 := NewIterator(tempcont);
+          iter!.element[2] := NextIteratorWithContent(iter1);
         else
-          it!.contdone := true; 
+          iter!.contdone := true; 
         fi;
       fi;
     fi;
-    
-    if ForAll(it!.content, x-> x=1) and it!.contdone = true then
-      it!.isdone := true;
+   
+    # Move this out of the function
+    if ForAll(iter!.content, x-> x=1) and iter!.contdone = true then
+      iter!.isdone := true;
     fi;
-
-    return it!.element;
+    return output;
   end; 
- 
+
+# A function to convert a iter!.element list into a free band word 
+  PrintIterator := function(list)
+    local output;
+
+    if list[2] = 0 then
+      # Implies that list = [i, 0, i, 0];
+      return GeneratorsOfSemigroup(iter!.semigroup)[list[1]];
+    else
+      return PrintIterator(list[2])*
+             GeneratorsOfSemigroup(iter!.semigroup)[list[1]]*
+             GeneratorsOfSemigroup(iter!.semigroup)[list[3]]*
+             PrintIterator(list[4]);
+    fi;
+  end;
+
+# If the iterator is done iterating a specific content (D-class) then change
+# the content.
   content := iter!.content;
-  ones := [];
-  for i in [1 .. iter!.nrgen] do
-    ones[i] :=1;
-  od;
-  
+  ones := [1 .. iter!.nrgen]*0+1;
+  output := ShallowCopy(iter!.element);
+
   if iter!.contdone and content = ones then
     return fail;
-  elif iter!.contdone and not content = ones then
+  elif iter!.contdone then
+  # If we are in this case, then content <> ones and we change the content
     for i in [1 .. iter!.nrgen] do
       if content[i] = 0 then
         content[i] := 1; break;
@@ -187,33 +205,22 @@ function(iter)
         content[i] := 0;
       fi;
     od;
-    old_iter := NewIterator(content);
-    iter!.isdone := old_iter!.isdone;
-    iter!.content := old_iter!.content;
-    iter!.contdone := old_iter!.contdone;
-    iter!.nrgen := old_iter!.nrgen;
-    iter!.semigroup := old_iter!.semigroup;
-    iter!.element := old_iter!.element;
+# NewIterator is a local function and it doesn't create a proper iterator
+    tempiter := NewIterator(content);
+    iter!.isdone := tempiter!.isdone;
+    iter!.content := tempiter!.content;
+    iter!.contdone := tempiter!.contdone;
+    iter!.nrgen := tempiter!.nrgen;
+    iter!.semigroup := tempiter!.semigroup;
+    iter!.element := tempiter!.element;
+    iter!.iter1 := tempiter!.iter1;
+    iter!.iter2 := tempiter!.iter2;
   else
+  # Otherwise we can get next iterator for the current content
     NextIteratorWithContent(iter);  
   fi;
 
-  PrintIterator := function(it)
-    local tuple;
-  
-    tuple := ShallowCopy(it!.element);
-
-    if tuple[2] = 0 then
-      return [tuple[1]];
-    else
-      return Concatenation(PrintIterator(tuple[2]), [tuple[1]], [tuple[3]],
-             PrintIterator(tuple[4]));
-    fi;
-  end;
- 
-
-   return Product( List( PrintIterator(iter),
-                          x -> Generators(iter!.semigroup)[x] ) );
+ return PrintIterator(output);
 end );
 
 BindGlobal("ShallowCopy_FreeBand", iter -> rec(
@@ -222,6 +229,8 @@ BindGlobal("ShallowCopy_FreeBand", iter -> rec(
                 contdone := iter!.contdone,
                 nrgen := iter!.nrgen,
                 semigroup := iter!.semigroup,
+                iter1 := iter!.iter1,
+                iter2 := iter!.iter2,
                 element := ShallowCopy(iter!.element) ) );
 
 BindGlobal("IsDoneIterator_FreeBand", iter -> iter!.isdone );
@@ -238,6 +247,8 @@ InstallMethod( Iterator, "for a free band",
   content        := [1..Length(Generators(S))]*0 + [1],
   contdone       := true,
   isdone         := (Length(Generators(S)) = 1), 
+  iter1          := fail,
+  iter2          := fail,
   element        := [1, 0, 1, 0]) ) );
 
 ###########################################################################
