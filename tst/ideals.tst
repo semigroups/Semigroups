@@ -23,9 +23,9 @@ gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> I := SemigroupIdeal(s, gens);
-<transformation semigroup ideal on 5 pts with 3 generators>
+<regular transformation semigroup ideal on 5 pts with 3 generators>
 gap> data := SemigroupData(I);
-<open semigroup ideal data with 0 reps, 0 lambda-values, 0 rho-values>
+<closed semigroup ideal data with 26 reps, 23 lambda-values, 26 rho-values>
 gap> Size(I);
 731
 gap> NrDClasses(I);
@@ -42,13 +42,9 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> I := SemigroupIdeal(s, gens{[1,2]});
-<transformation semigroup ideal on 4 pts with 2 generators>
+<non-regular transformation semigroup ideal on 4 pts with 2 generators>
 gap> o := LambdaOrb(I);
-<open ideal lambda orbit with 0 points in 0 components>
-gap> I.1 in o;
-false
-gap> UpdateIdealLambdaOrb(o, LambdaFunc(I)(I.1), I.1, fail, fail, 1);
-2
+<closed ideal lambda orbit with 11 points in 2 components>
 
 #
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ), 
@@ -57,13 +53,9 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ) ];; 
 gap> s:=Semigroup(gens);;
 gap> I := SemigroupIdeal(s, [gens[2]* gens[1], gens[3]^3]);
-<transformation semigroup ideal on 4 pts with 2 generators>
+<non-regular transformation semigroup ideal on 4 pts with 2 generators>
 gap> o := RhoOrb(I);
-<open ideal rho orbit with 0 points in 0 components>
-gap> I.1 in o;
-false
-gap> UpdateIdealRhoOrb(o, RhoFunc(I)(I.1), I.1, fail, fail, 1);
-2
+<closed ideal rho orbit with 10 points in 2 components>
 
 #
 gap> gens := [                                                              
@@ -99,7 +91,7 @@ gap> I:=SemigroupIdeal(S,
 > [ PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 7, 6, 9, 10, 1, 3, 2 ] ), 
 >   PartialPerm( [ 4 ], [ 3 ] ), PartialPerm( [ 6, 7 ], [ 5, 8 ] ) ]);;
 gap> Size(I);
-4626937
+4626941
 
 #
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);

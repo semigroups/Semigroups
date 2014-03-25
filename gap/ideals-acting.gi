@@ -132,6 +132,35 @@ end);
 
 #
 
+InstallMethod(GeneratorsOfSemigroup, "for an inverse op acting semigroup ideal",
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+function(I)
+  local U, i, partial, D, j, C, inj;
+   
+  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  
+  # find generators for I...
+  U:=InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
+  i:=0;  partial:=PartialOrderOfDClasses(I);  D:=GreensDClasses(I);
+
+  while Size(U)<>Size(I) do 
+    i:=i+1; j:=0; 
+    while Size(U)<>Size(I) and j<Length(partial[i]) do 
+      j:=j+1; 
+      if Length(partial[i])=1 or partial[i][j]<>i then 
+        C:=D[partial[i][j]];
+        inj:=InverseGeneralMapping(InjectionPrincipalFactor(C));
+        U:=ClosureInverseSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+         inj));
+      fi;
+    od;
+  od;
+  
+  return GeneratorsOfSemigroup(U);
+end);
+
+#
+
 InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)

@@ -14,4 +14,3 @@
 DeclareCategory("IsSemigroupIdealData", IsSemigroupData);
 DeclareAttribute("SemigroupIdealData", IsSemigroupIdeal);
 
-

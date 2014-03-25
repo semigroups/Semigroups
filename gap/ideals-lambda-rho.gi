@@ -124,7 +124,7 @@ function(o)
   return;
 end);
 
-# different method of inverse semigroup ideals
+# different method for inverse semigroup ideals
 
 InstallMethod(LambdaOrb, "for an acting semigroup ideal", 
 [IsActingSemigroup and IsSemigroupIdeal],

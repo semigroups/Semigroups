@@ -8,25 +8,51 @@
 ############################################################################# 
 ##
 
+#
+
+InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal], 
+function(S)
+  local gens, partial, pos, o, scc, out, classes, x, i;
+  
+  gens:=GeneratorsOfSemigroupIdeal(S); 
+  partial:=PartialOrderOfDClasses(S);
+  pos:=[]; 
+  o:=LambdaOrb(S); 
+  scc:=OrbSCCLookup(o);
+
+  for x in gens do 
+    #index of the D-class containing x 
+    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))]-1);
+  od;
+
+  out:=[];
+  classes:=GreensDClasses(S);
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
+# different method for inverse
+
 InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data, pos, partial, classes, out, i;
 
-   data:=SemigroupIdealData(I);
-   data!.stopper:=Length(GeneratorsOfSemigroupIdeal(I));
-   Enumerate(data, infinity, ReturnFalse);
-   #install the generators, and their descendants
-   data!.stopper:=false; 
+  data:=SemigroupIdealData(I); 
+  pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
+                             # [1..n-1] in data!.dorbit
    
-   pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
-                              # [1..n-1] in data!.dorbit
-   
-   partial:=data!.poset;
-   classes:=data!.dorbit;
-   out:=[];
-   for i in pos do 
-     if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+  partial:=data!.poset;
+  classes:=data!.dorbit;
+  out:=[];
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
       Add(out, classes[i]);
     fi;
   od;
