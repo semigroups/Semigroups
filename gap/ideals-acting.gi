@@ -88,6 +88,7 @@ function(I)
   
   Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
   data:=SemigroupIdealData(I);
+  Enumerate(data, infinity, ReturnFalse);
   pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
                              # [1..n-1] in data!.dorbit
   partial:=data!.poset;
@@ -183,7 +184,7 @@ InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse op acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-  local U, i, partial, D, j, C, inj;
+  local U, i, partial, D, j, C, inj, pos;
  
   if HasGeneratorsOfSemigroup(I) then 
     # JDM: could remove inverses...

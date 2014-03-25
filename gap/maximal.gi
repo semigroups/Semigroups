@@ -609,11 +609,11 @@ function(S)
       for U in MaximalSubsemigroups(R) do
         if IsSimpleSemigroup(R) then # We don't want to remove multiplicative zero in this case, if it exists
           Add(out, Semigroup(
-            OnTuples(GeneratorsOfSemigroup(U), inj), V, rec(small:=true)));
+            OnTuples(GeneratorsOfSemigroup(U), inj), V));
         else # Remove 0 from the generators since it's not an elt of classes[i]
           tuples:=OnTuples(Filtered(
             GeneratorsOfSemigroup(U), x-> not IsMultiplicativeZero(R, x)), inj);
-          Add(out, Semigroup(V, tuples, rec(small:=true)));
+          Add(out, Semigroup(V, tuples));
         fi;
         # Don't need to worry about U = {0}, which could only happen if Size(classes[i]) = 1. So tuples is always non-empty
       od;
@@ -654,7 +654,7 @@ function(S)
     if not IsRegularDClass(classes[i]) then #remove the whole thing...
       gens2:=ShallowCopy(gens);
       Remove(gens2, lookup[i][1]); # there's only one generator in the D-class
-      Add(out, Semigroup(gens2, ideal, rec(small:=true)));
+      Add(out, Semigroup(gens2, ideal));
       Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
       " removing whole non-maximal non-regular D-class...");
     else # <classes[i]> is regular; lots of work to be done
