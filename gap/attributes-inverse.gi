@@ -66,20 +66,6 @@ end);
 
 #
 
-InstallMethod(NaturalLeqInverseSemigroup, "for an inverse semigroup elements",
-[IsAssociativeElement, IsAssociativeElement], 
-function(f, g)
-  if IsPartialPerm(f) and IsPartialPerm(g) then
-    return NaturalLeqPartialPerm(f,g);
-  elif IsBlockBijection(f) and IsBlockBijection(g) then 
-    return NaturalLeqBlockBijection(f,g);
-  else
-    return fail;
-  fi;
-end);
-
-#
-
 InstallMethod(IsJoinIrreducible, 
 "for an inverse semigroup of partial perms or block bijections, and an element",
 [IsInverseSemigroup, IsAssociativeElement],

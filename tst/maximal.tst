@@ -243,4 +243,3 @@ gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST("Semigroups package: maximal.tst", 10000);
-

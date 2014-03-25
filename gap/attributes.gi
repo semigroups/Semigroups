@@ -754,6 +754,7 @@ end);
 InstallMethod(SmallMonoidGeneratingSet, 
 "for an acting monoid", [IsActingSemigroup and IsMonoid],
 function(S)
+  if IsEmpty(GeneratorsOfMonoid(S)) then return []; fi;
   return SmallMonoidGeneratingSet(GeneratorsOfMonoid(S));
 end);
 
