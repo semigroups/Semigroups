@@ -1,32 +1,32 @@
-# RMS Congruences by linked triple
-DeclareCategory("IsRMSCongruenceByLinkedTriple",
+# RZMS Congruences by linked triple
+DeclareCategory("IsRZMSCongruenceByLinkedTriple",
         IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareAttribute("CongruencesOfSemigroup",
         IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite);
 DeclareGlobalFunction("IsLinkedTriple");
-DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
-DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
+DeclareGlobalFunction("RZMSCongruenceByLinkedTriple");
+DeclareGlobalFunction("RZMSCongruenceByLinkedTripleNC");
 DeclareAttribute("NrCongruenceClasses", IsSemigroupCongruence);
 
 DeclareSynonym("CongruenceClasses", EquivalenceClasses);
 DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
 
-# RMS Congruence Classes
-DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
+# RZMS Congruence Classes
+DeclareCategory("IsRZMSCongruenceClassByLinkedTriple",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
-DeclareOperation("RMSCongruenceClassByLinkedTriple",
-        [IsRMSCongruenceByLinkedTriple,
+DeclareOperation("RZMSCongruenceClassByLinkedTriple",
+        [IsRZMSCongruenceByLinkedTriple,
          IsRightCoset, IsPosInt, IsPosInt] );
-DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
-        [IsRMSCongruenceByLinkedTriple,
+DeclareOperation("RZMSCongruenceClassByLinkedTripleNC",
+        [IsRZMSCongruenceByLinkedTriple,
          IsRightCoset, IsPosInt, IsPosInt] );
 DeclareOperation("\*", [IsEquivalenceClass, IsList] );
 DeclareOperation("\*", [IsList, IsEquivalenceClass] );
 DeclareAttribute("CanonicalRepresentative",
-        IsRMSCongruenceClassByLinkedTriple);
+        IsRZMSCongruenceClassByLinkedTriple);
 
 # Conversion with semigroup congruences by generating pairs
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
         [IsSemigroupCongruence] );
-DeclareOperation("AsRMSCongruenceByLinkedTriple",
+DeclareOperation("AsRZMSCongruenceByLinkedTriple",
         [IsSemigroupCongruence] );

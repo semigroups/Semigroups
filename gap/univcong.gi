@@ -32,7 +32,7 @@ end);
 
 InstallMethod( \=,
 "for universal semigroup congruence and Rees 0-matrix semigroup congruence by linked triple",
-[IsUniversalSemigroupCongruence, IsRMSCongruenceByLinkedTriple],
+[IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
 function(ucong, cong)
   return false;
 end);
@@ -41,7 +41,7 @@ end);
 
 InstallMethod( \=,
 "for Rees 0-matrix semigroup congruence by linked triple and universal semigroup congruence",
-[IsRMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
+[IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   return false;
 end);
@@ -91,7 +91,7 @@ end);
 
 InstallMethod(JoinSemigroupCongruences,
 "for Rees 0-matrix semigroup congruence by linked triple and universal semigroup congruence",
-[IsRMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
+[IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   return ucong;
 end);
@@ -100,7 +100,7 @@ end);
 
 InstallMethod(JoinSemigroupCongruences,
 "for universal semigroup congruence and Rees 0-matrix semigroup congruence by linked triple",
-[IsUniversalSemigroupCongruence, IsRMSCongruenceByLinkedTriple],
+[IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
 function(ucong, cong)
   return ucong;
 end);
@@ -118,7 +118,7 @@ end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for Rees 0-matrix semigroup congruence by linked triple and universal semigroup congruence",
-[IsRMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
+[IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   return cong;
 end);
@@ -127,7 +127,7 @@ end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for universal semigroup congruence and Rees 0-matrix semigroup congruence by linked triple",
-[IsUniversalSemigroupCongruence, IsRMSCongruenceByLinkedTriple],
+[IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
 function(ucong, cong)
   return cong;
 end);

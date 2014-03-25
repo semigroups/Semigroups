@@ -92,14 +92,14 @@
     Thus we can internally represent any class of such a congruence as a triple
     simply consisting of a right coset and two positive integers.<P/>
     
-    <#Include Label="RMSCongruenceByLinkedTriple">
-    <#Include Label="RMSCongruenceClassByLinkedTriple">
+    <#Include Label="RZMSCongruenceByLinkedTriple">
+    <#Include Label="RZMSCongruenceClassByLinkedTriple">
     <#Include Label="CongruencesOfSemigroup">
     <#Include Label="IsLinkedTriple">
     <#Include Label="NrCongruenceClasses">
     <#Include Label="CanonicalRepresentative">
     <#Include Label="AsSemigroupCongruenceByGeneratingPairs">
-    <#Include Label="AsRMSCongruenceByLinkedTriple">
+    <#Include Label="AsRZMSCongruenceByLinkedTriple">
   </Section>
 
   <Section>
