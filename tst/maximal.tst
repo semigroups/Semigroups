@@ -238,6 +238,12 @@ true
 gap> IsMaximalSubsemigroup(S, U);
 false
 
+gap> S:=SingularTransformationSemigroup(5);
+<regular transformation semigroup ideal on 5 pts with 1 generator>
+gap> max:=MaximalSubsemigroups(S);;
+gap> Size(max);
+40
+
 #
 gap> SemigroupsStopTest();
 
