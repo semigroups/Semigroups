@@ -23,8 +23,8 @@ end);
 #
 
 InstallMethod(PrintString, 
-"for a semigroup ideal with ideal generators", 
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+"for an acting semigroup ideal with ideal generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and IsActingSemigroup],
 function(I) 
   local str;
 
@@ -46,6 +46,17 @@ InstallMethod(ViewObj,
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 1,
 function(I) 
   Print(ViewString(I));
+end);
+
+# the above method usurps the method in the library for ViewObj hence we require
+# the following method for ideals for which we did not write a special
+# ViewString method for...
+
+InstallMethod(ViewString, "for a semigroup ideal with generators",
+[IsMagmaIdeal and IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+function(S)
+  return Concatenation("<semigroup ideal with ",
+   String(Length(GeneratorsOfMagmaIdeal(S))), " generators>");
 end);
 
 #
