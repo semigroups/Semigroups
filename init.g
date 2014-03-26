@@ -56,3 +56,6 @@ ReadPackage("semigroups/gap/maximal.gd");
 ReadPackage("semigroups/gap/normalizer.gd");
 
 DeclareInfoClass("InfoSemigroups");;
+
+ReadPackage("semigroups/gap/rmscong.gd");
+ReadPackage("semigroups/gap/univcong.gd");
