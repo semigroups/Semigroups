@@ -29,8 +29,8 @@ gap> JoinIrreducibleDClasses(S);
 gap> JoinIrreducibleDClasses(I);
 [ {PartialPerm( [ 2 ], [ 2 ] )} ]
 gap> JoinIrreducibleDClasses(A);
-[ {Bipartition( [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], 
-     [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ] )} ]
+[ {Bipartition( [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -1 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ] ] )} ]
 gap> B:=InverseSemigroup([
 >  Bipartition( [ [ 1, -6 ], [ 2, -4 ], [ 3, -3 ], [ 4, 5, 6, 7, -1, -2, -5, -7 ] ] ),
 >  Bipartition( [ [ 1, -4 ], [ 2, -5 ], [ 3, 6, 7, -2, -3, -7 ], [ 4, -1 ], [ 5, -6 ] ] ),
@@ -41,11 +41,13 @@ gap> J:=SemigroupIdeal(B, Bipartition( [ [ 1, -1 ],
 >  [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] ));
 <inverse bipartition semigroup ideal on 7 pts with 2 generators>
 gap> JoinIrreducibleDClasses(B);
-[ {Bipartition( [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] )}, 
-  {Bipartition( [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] )} ]
+[ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
+    , {Bipartition( [ [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] 
+      ] )} ]
 gap> JoinIrreducibleDClasses(J);
-[ {Bipartition( [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] )}, 
-  {Bipartition( [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], [ 6, -6 ] )} ]
+[ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
+    , {Bipartition( [ [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], 
+     [ 6, -6 ] ] )} ]
 
 # IsJoinIrreducible
 gap> x:=PartialPerm( [ 1, 2, 4, 6 ], [ 2, 3, 1, 4 ] );;
@@ -354,13 +356,14 @@ gap> h:=GroupHClass(DClasses(S)[4]);
 gap> SameMinorantsSubgroup(h);
 [ <identity partial perm on [ 1, 4, 6 ]> ]
 gap> h:=GroupHClass(DClasses(A)[4]);
-{Bipartition( [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
- [ -2 ], [ -3 ], [ -5 ], [ -7 ] )}
+{Bipartition( [ [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
+ [ -2 ], [ -3 ], [ -5 ], [ -7 ] ] )}
 gap> SameMinorantsSubgroup(h);
 [ <bipartition: [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
      [ -2 ], [ -3 ], [ -5 ], [ -7 ]> ]
 gap> h:=GroupHClass(DClasses(B)[6]);
-{Bipartition( [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] )}
+{Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] 
+  ] )}
 gap> SameMinorantsSubgroup(h);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], 
      [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ]> ]
