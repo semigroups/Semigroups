@@ -53,7 +53,7 @@ true
 gap> IsGroupAsSemigroup(s);
 false
 gap> i:=MinimalIdeal(s);
-<transformation group on 8 pts with 1 generator>
+<simple transformation semigroup ideal on 8 pts with 1 generator>
 gap> Size(i);
 1
 gap> MultiplicativeZero(s);
