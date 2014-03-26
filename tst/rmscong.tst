@@ -91,7 +91,7 @@ gap> MeetSemigroupCongruences(congs[12], congs[31]);
 
 # Quotients
 gap> q := s / congs[13];;
-gap> Size(q);  
+gap> Size(q);
 73
 
 # Convert to and from semigroup congruence by generating pairs
