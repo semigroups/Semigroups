@@ -9,10 +9,12 @@
      <!ENTITY Orb "<Alt Not='Text'><URL Text='Orb'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 </URL></Alt><Alt Only='Text'><Package>Orb</Package></Alt>">
+     <!ENTITY genss "<Alt Not='Text'><URL Text='genss'>
+     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
+</URL></Alt><Alt Only='Text'><Package>genss</Package></Alt>">
      <!ENTITY IO "<Alt Not='Text'><URL Text='IO'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
 </URL></Alt><Alt Only='Text'><Package>IO</Package></Alt>">
-     <!ENTITY Comatose "<Package>Comatose</Package>">
      <!ENTITY vspace "<Alt Only='LaTeX'>\vspace{\baselineskip}</Alt>">
      <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
      <!ENTITY H "<Alt Only='HTML'>\(\mathcal{H}\)</Alt><Alt

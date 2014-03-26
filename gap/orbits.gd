@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareOperation("EvaluateWord", [IsBipartitionCollection, IsList]);
 DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
 DeclareOperation("EvaluateWord", 
 [IsReesZeroMatrixSemigroupElementCollection, IsList]);

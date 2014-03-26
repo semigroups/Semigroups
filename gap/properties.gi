@@ -280,6 +280,45 @@ end);
 
 #
 
+InstallMethod(IsFactorisableSemigroup, "for a block bijection semigroup",
+[IsBlockBijectionSemigroup and IsInverseSemigroup], 
+function(S)
+  local G, iso, enum, f;
+  
+  G:=GroupOfUnits(S);
+  
+  if G=fail then 
+    return false;
+  elif IsTrivial(G) then 
+    return IsSemilatticeAsSemigroup(S);
+  fi;
+  
+  iso:=InverseGeneralMapping(IsomorphismPermGroup(G));
+  enum:=Enumerator(Source(iso));
+
+  for f in Generators(S) do 
+    if not f in G then 
+      if not ForAny(enum, g-> NaturalLeqBlockBijection(f, g^iso)) then 
+        return false;
+      fi;
+    fi;
+  od;
+  return true;
+end);
+
+#
+
+InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup with generators",
+[IsInverseSemigroup and HasGeneratorsOfSemigroup], 
+function(S)
+  if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) then 
+    return IsFactorisableSemigroup(Range(IsomorphismPartialPermSemigroup(S)));
+  fi;
+  return false;
+end);
+
+#
+
 InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
@@ -488,34 +527,39 @@ InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 InstallMethod(IsInverseSemigroup,
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local lambda, rho, iter, x;
 
-  if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
+  if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) and 
+    ForAll(GeneratorsOfSemigroup(S), x-> x^-1 in S) then 
+    return true;
+  fi;
+  
+  if HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
-  elif IsCompletelyRegularSemigroup(s) then
+  elif IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is completely regular");
-    return IsCliffordSemigroup(s);
+    return IsCliffordSemigroup(S);
   fi;
 
-  lambda:=LambdaOrb(s); Enumerate(lambda);
-  rho:=RhoOrb(s); Enumerate(rho, Length(lambda));
+  lambda:=LambdaOrb(S); Enumerate(lambda);
+  rho:=RhoOrb(S); Enumerate(rho, Length(lambda));
 
   if not (IsClosed(rho) and Length(rho)>=Length(lambda)) then 
     Info(InfoSemigroups, 2, "the number of lambda and rho values is not equal");
     return false;
   fi;
   
-  if HasGreensDClasses(s) then 
-    iter:=GreensDClasses(s);
+  if HasGreensDClasses(S) then 
+    iter:=GreensDClasses(S);
     for x in iter do
       if not IsRegularClass(x) or NrIdempotents(x)<>NrRClasses(x) then 
         return false;
       fi;
     od;
   else
-    iter:=IteratorOfRClasses(s);
+    iter:=IteratorOfRClasses(S);
     for x in iter do
       if not IsRegularClass(x) or NrIdempotents(x)>1 then 
         return false;
@@ -525,13 +569,6 @@ function(s)
   
   return true;
 end);
-
-#
-
-InstallMethod(IsInverseSemigroup, 
-"for a semigroup of partial perms with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-s-> ForAll(Generators(s), x-> x^-1 in s));
 
 #
 

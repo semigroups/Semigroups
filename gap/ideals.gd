@@ -12,3 +12,5 @@ DeclareGlobalFunction("SemigroupIdeal");
 
 DeclareAttribute("IdealOfDClasses", IsSemigroupIdeal);
 
+DeclareAttribute("SmallIdealGeneratingSet", IsSemigroupIdeal);
+

@@ -39,7 +39,6 @@ ReadPackage("semigroups/gap/freeinverse.gi");
 ReadPackage("semigroups/gap/utils.gi");
 
 ReadPackage("semigroups/gap/display.gi");
-ReadPackage("semigroups/gap/pictures.gi");
 
 ReadPackage("semigroups/gap/fpsemi.gi");
 ReadPackage("semigroups/gap/isomorph.gi");
@@ -54,6 +53,11 @@ if TestPackageAvailability("grape")=fail then
 elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
    then 
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
+  Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
+  Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
+  Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
+  Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
+  Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
 fi;
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")

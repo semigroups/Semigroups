@@ -14,6 +14,7 @@ DeclareCategoryCollections("IsBlocks");
 DeclareGlobalFunction("ORB_HashFunctionForBlocks");
 DeclareGlobalFunction("BlocksNC");
 DeclareGlobalFunction("BlocksByIntRepNC");
+DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
 
 DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("NrBlocks", IsBlocks);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  bipartition.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -634,7 +634,8 @@ true</Example>
       property that <C><A>f</A>*e=<A>f</A></C>. <C>RightOne</C> and
       <C>RightProjection</C> are synonymous.
       <Example>
-gap> f:=Bipartition( [ [ 1, -1, -4 ], [ 2, -2, -3 ], [ 3, 4 ], [ 5, -5 ] ] );;
+gap> f:=Bipartition( [ [ 1, -1, -4 ], [ 2, -2, -3 ], [ 3, 4 ], 
+> [ 5, -5 ] ] );;
 gap> RightOne(f);
 &lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ], [ 5, -5 ]>
 gap> RightBlocks(RightOne(f));

@@ -8,10 +8,10 @@
 #############################################################################
 ##
 
-InstallMethod( Enumerate, "for a hash orbit and a limit", 
+InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)", 
 [IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
 function( o, limit )
-  local orb, i, nr, looking, lookfunc, stopper, storenumbers, op, gens, ht, genstoapply, schreier, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
+  local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht, genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
 
   # Set a few local variables for faster access:
   orb := o!.orbit;
@@ -20,14 +20,24 @@ function( o, limit )
 
   # We copy a few things to local variables to speed up access:
   looking := o!.looking;
-  if looking then lookfunc := o!.lookfunc; fi;
+  if looking then 
+    lookfunc := o!.lookfunc; 
+    found:=o!.found;
+    if found<>false then 
+      for j in [found+1..nr] do 
+        if lookfunc(o,orb[j]) then
+          o!.found := j;
+          return o;
+        fi;
+      od;
+    fi;
+  fi;
+  
   stopper := o!.stopper;
-  storenumbers := o!.storenumbers;
   op := o!.op;
   gens := o!.gens;
   ht := o!.ht;
   genstoapply := o!.genstoapply;
-  schreier := o!.schreier;
   schreiergen := o!.schreiergen;
   schreierpos := o!.schreierpos;
   
@@ -51,15 +61,16 @@ function( o, limit )
     htadd:=HTAdd;
     htvalue:=HTValue;
   fi;
-
+  
   # Maybe we are looking for something and it is the start point:
   while nr <= limit and i <= nr and i <> stopper do
     if i >= depthmarks[depth+1] then
       depth := depth + 1;
       depthmarks[depth+1] := nr+1;
     fi;
-
-    logind[i] := logpos; suc := false;
+   
+    logind[i]:=logpos;
+    suc:=false;
 
     # Now apply generators:
     for j in genstoapply do
@@ -84,8 +95,6 @@ function( o, limit )
           
         orbitgraph[nr] := EmptyPlist(nrgens);
         orbitgraph[i][j] := nr;
-        #reverse[nr]:=List([1..nrgens], x-> []);
-        #Add(reverse[nr][j], i);
 
         # Handle Schreier tree:
         schreiergen[nr] := j;
@@ -95,34 +104,32 @@ function( o, limit )
         log[logpos] := j;
         log[logpos+1] := nr;
         logpos := logpos+2;
-        o!.logpos := logpos;   # write back to preserve
+        o!.logpos := logpos;    # write back to preserve
                 
         # Are we looking for something?
-        if looking then
+        if looking and not found then
           if lookfunc(o,yy) then
-            o!.pos := i;
+            found:=true;
             o!.found := nr;
-            o!.depth := depth;
-            return o;
           fi;
         fi;
       elif pos <> false then    # false if point was rejected by grade
         orbitgraph[i][j]:=pos;
-        #Add(reverse[pos][j], i);
       fi;
     od;    
     # Now close the log for this point:
     if suc then
       log[logpos-2] := -log[logpos-2];
+      if looking and found then i:=i+1; break; fi;
     else
-      logind[i] := 0;
+      logind[i]:=0;
     fi;
     i := i + 1;
   od;
   o!.pos := i;
   o!.depth := depth;
   if i > nr then
-    SetFilterObj(o,IsClosed); 
+    SetFilterObj(o, IsClosed); 
     o!.orbind := [1..nr];
   fi;
   return o;
@@ -130,7 +137,23 @@ end );
 
 #
 
-InstallMethod(EvaluateWord, "for partial perm coll and list pos ints", 
+InstallMethod(EvaluateWord, "for bipartition coll and list of integers", 
+[IsBipartitionCollection, IsList],
+function ( gens, w )
+    local  i, res, pts;
+    if Length( w ) = 0  then
+        return One(gens);
+    fi;
+    res := gens[AbsInt(w[1])]^SignInt(w[1]);
+    for i  in [ 2 .. Length( w ) ]  do
+        res := res * gens[AbsInt(w[i])]^SignInt(w[i]);
+    od;
+    return res;
+end);
+
+#
+
+InstallMethod(EvaluateWord, "for partial perm coll and list of integers", 
 [IsPartialPermCollection, IsList],
 function ( gens, w )
     local  i, res, pts;
@@ -438,7 +461,7 @@ InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
 function(o, i, j)
   local tree, mult, scc, word;
   
-  if not IsInvLambdaOrb(o) then 
+  if not IsActingSemigroupWithInverseOp(o!.parent) then 
     tree:=ReverseSchreierTreeOfSCC(o, i);
     mult:=1;
   else 

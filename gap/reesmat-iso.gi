@@ -178,8 +178,8 @@ else
       tester:=function(x)
         local g;
         for g in T do 
-          if RMSInducedFunction(R, x, PreImagesRepresentative(hom, (x^proj2)^inv),
-           g)[1] then 
+          if RMSInducedFunction(R, x, 
+            PreImagesRepresentative(hom, (x^proj2)^inv), g)[1] then 
           #if RMSInducedFunction(R, x, (x^proj2)^inv, g)[1] then 
             return true;
           fi;
@@ -192,30 +192,25 @@ else
       stab:=BacktrackSearchStabilizerChainSubgroup(stab, tester, pruner);
     fi;
     
-    #JDM there must be a better way!
-    V:=Group(());
-    Info(InfoSemigroups, 2, "processing generators for the subgroup...");
-    for x in StrongGenerators(stab) do 
-      V:=ClosureGroup(V, x);
-      if Size(V)=Size(stab) then 
-        break;
-      fi;
-    od;
+    V:=Group(stab!.orb!.gens);
     
     Info(InfoSemigroups, 2, "converting generators of the subgroup...");
     A:=[];
-    for g in T do
-      for x in GeneratorsOfGroup(V) do 
-        lambda:=x^proj1;  
-        #gamma:=(x^proj2)^inv;
-        gamma:=PreImagesRepresentative(hom, (x^proj2)^inv);
+    for x in GeneratorsOfGroup(V) do 
+      lambda:=x^proj1;  
+      #gamma:=(x^proj2)^inv;
+      gamma:=PreImagesRepresentative(hom, (x^proj2)^inv);
+      for g in T do
         x:=RMSInducedFunction(R, lambda, gamma, g); 
         if x[1] then 
           x:=RMSIsoByTriple(R, R, [lambda, gamma, x[2]]);
           AddSet(A, x);
+          break;
         fi;
       od;
+    od;
 
+    for g in T do 
       x:=RMSInducedFunction(R, One(agraph), One(agroup), g);
       if x[1] then 
         x:=RMSIsoByTriple(R, R, [One(agraph), One(agroup), x[2]]);
@@ -281,107 +276,56 @@ end);
 
 #
 
-InstallGlobalFunction(RZMSInducedFunction, 
-function(R, l, g, x, component)
-  local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb, j,
-   Last, involved, verts, v, new, k;
-  
-  mat:=Matrix(R); m:=Length(mat[1]); n:=Length(mat); graph:=RZMSGraph(R);
+if not IsBound(GAPInfo.PackagesLoaded.grape) then 
 
-  rep:=Minimum(component);
-  out:=EmptyPlist(m+n);
-  out[rep]:=x;
+  InstallGlobalFunction(RZMSInducedFunction, 
+  function(R, l, g, x, component)
+    Info(InfoWarning, 1, "the GRAPE package is not available, ",
+    "and so this function does not work");
+    return fail;
+  end);  
 
-  if Length(component)=Length(Vertices(graph)) then 
-    edges:=DirectedEdges(graph);
-    bicomps:=Bicomponents(graph);
-  else
-    sub:=InducedSubgraph(graph, component);
-    perm:=MappingPermListList(VertexNames(sub), Vertices(sub));
-    edges:=OnTuplesTuples(DirectedEdges(sub), perm^-1);
-    bicomps:=OnTuplesTuples(Bicomponents(sub), perm^-1);
-  fi;
+  InstallGlobalFunction(RZMStoRZMSInducedFunction, 
+  function(rms1, rms2, l, g, groupelts)
+    Info(InfoWarning, 1, "the GRAPE package is not available, ",
+    "and so this function does not work");
+    return fail;
+  end);  
+    
+else 
+    
+  InstallGlobalFunction(RZMSInducedFunction, 
+  function(R, l, g, x, component)
+    local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb, j,
+     Last, involved, verts, v, new, k;
+    
+    mat:=Matrix(R); m:=Length(mat[1]); n:=Length(mat); graph:=RZMSGraph(R);
 
-  defined:=[];
-  orb:=[rep];  
-  j:=0;
+    rep:=Minimum(component);
+    out:=EmptyPlist(m+n);
+    out[rep]:=x;
 
-  repeat 
-    j:=j+1;
-    Last:=orb[j];
- 
-    involved:=Filtered(edges, x-> x[1]=Last and not x in defined);
-  
-    if not involved=[] then
-      verts:=List(involved, x-> x[2]);
-      Append(orb, Filtered(verts, x-> not x in orb));
-
-      for k in [1..Length(verts)] do
-        v:=verts[k];
-      
-        if Last in bicomps[1] then
-          new:=mat[v^l-m][Last^l]*out[Last]*(mat[v-m][Last]^g)^-1;
-        else
-          new:=(mat[Last^l-m][v^l])^-1*out[Last]*(mat[Last-m][v]^g);
-        fi; 
-      
-        if not IsBound(out[v]) then 
-          out[v]:=new;
-        elif not out[v]=new then
-          return fail;
-        fi;
-        defined:=Union(defined, [involved[k], Reversed(involved[k])]);   
-      od;
-    fi;
-  until defined=edges;
-
-  return out;
-end);
-
-#
-
-InstallGlobalFunction(RZMStoRZMSInducedFunction, 
-function(rms1, rms2, l, g, groupelts)
-  local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
-  bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, i, k;
-
-  mat1:=Matrix(rms1);
-  mat2:=Matrix(rms2);
-  m:=Length(mat1[1]); n:=Length(mat1);
-  rmsgraph:=RZMSGraph(rms1);
-  components:=ConnectedComponents(rmsgraph);
-
-  if not Length(groupelts)=Length(components) then 
-    Error("usage: the 3rd argument must be a list of length ", Length(components), 
-      ",");
-    return;
-  fi;
-
-  reps:=List(components, Minimum);
-  imagelist:=[];
-  imagelist{reps}:=groupelts;
-
-  for i in [1..Length(components)] do 
-    if Length(components)=1 then 
-      edges:=DirectedEdges(rmsgraph);
-      bicomps:=Bicomponents(rmsgraph);
+    if Length(component)=Length(Vertices(graph)) then 
+      edges:=DirectedEdges(graph);
+      bicomps:=Bicomponents(graph);
     else
-      sub:=InducedSubgraph(rmsgraph, components[i]);
+      sub:=InducedSubgraph(graph, component);
       perm:=MappingPermListList(VertexNames(sub), Vertices(sub));
       edges:=OnTuplesTuples(DirectedEdges(sub), perm^-1);
       bicomps:=OnTuplesTuples(Bicomponents(sub), perm^-1);
     fi;
 
     defined:=[];
-    orb:=[reps[i]];  
+    orb:=[rep];  
     j:=0;
 
     repeat 
       j:=j+1;
       Last:=orb[j];
+   
       involved:=Filtered(edges, x-> x[1]=Last and not x in defined);
+    
       if not involved=[] then
-
         verts:=List(involved, x-> x[2]);
         Append(orb, Filtered(verts, x-> not x in orb));
 
@@ -389,23 +333,93 @@ function(rms1, rms2, l, g, groupelts)
           v:=verts[k];
         
           if Last in bicomps[1] then
-            new:=mat2[v^l-m][Last^l]*imagelist[Last]*(mat1[v-m][Last]^g)^-1;
+            new:=mat[v^l-m][Last^l]*out[Last]*(mat[v-m][Last]^g)^-1;
           else
-            new:=(mat2[Last^l-m][v^l])^-1*imagelist[Last]*(mat1[Last-m][v]^g);
+            new:=(mat[Last^l-m][v^l])^-1*out[Last]*(mat[Last-m][v]^g);
           fi; 
-      
-          if not IsBound(imagelist[v]) then 
-            imagelist[v]:=new;
-          elif not imagelist[v]=new then
+        
+          if not IsBound(out[v]) then 
+            out[v]:=new;
+          elif not out[v]=new then
             return fail;
           fi;
           defined:=Union(defined, [involved[k], Reversed(involved[k])]);   
         od;
       fi;
     until defined=edges;
-  od;
-  return imagelist;
-end);
+
+    return out;
+  end);
+
+  #
+
+  InstallGlobalFunction(RZMStoRZMSInducedFunction, 
+  function(rms1, rms2, l, g, groupelts)
+    local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
+    bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, i, k;
+
+    mat1:=Matrix(rms1);
+    mat2:=Matrix(rms2);
+    m:=Length(mat1[1]); n:=Length(mat1);
+    rmsgraph:=RZMSGraph(rms1);
+    components:=ConnectedComponents(rmsgraph);
+
+    if not Length(groupelts)=Length(components) then 
+      Error("usage: the 3rd argument must be a list of length ", Length(components), 
+        ",");
+      return;
+    fi;
+
+    reps:=List(components, Minimum);
+    imagelist:=[];
+    imagelist{reps}:=groupelts;
+
+    for i in [1..Length(components)] do 
+      if Length(components)=1 then 
+        edges:=DirectedEdges(rmsgraph);
+        bicomps:=Bicomponents(rmsgraph);
+      else
+        sub:=InducedSubgraph(rmsgraph, components[i]);
+        perm:=MappingPermListList(VertexNames(sub), Vertices(sub));
+        edges:=OnTuplesTuples(DirectedEdges(sub), perm^-1);
+        bicomps:=OnTuplesTuples(Bicomponents(sub), perm^-1);
+      fi;
+
+      defined:=[];
+      orb:=[reps[i]];  
+      j:=0;
+
+      repeat 
+        j:=j+1;
+        Last:=orb[j];
+        involved:=Filtered(edges, x-> x[1]=Last and not x in defined);
+        if not involved=[] then
+
+          verts:=List(involved, x-> x[2]);
+          Append(orb, Filtered(verts, x-> not x in orb));
+
+          for k in [1..Length(verts)] do
+            v:=verts[k];
+          
+            if Last in bicomps[1] then
+              new:=mat2[v^l-m][Last^l]*imagelist[Last]*(mat1[v-m][Last]^g)^-1;
+            else
+              new:=(mat2[Last^l-m][v^l])^-1*imagelist[Last]*(mat1[Last-m][v]^g);
+            fi; 
+        
+            if not IsBound(imagelist[v]) then 
+              imagelist[v]:=new;
+            elif not imagelist[v]=new then
+              return fail;
+            fi;
+            defined:=Union(defined, [involved[k], Reversed(involved[k])]);   
+          od;
+        fi;
+      until defined=edges;
+    od;
+    return imagelist;
+  end);
+fi;
 
 #
 
@@ -457,63 +471,78 @@ end);
 
 #
 
-InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups", 
-[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
-function(R1, R2)
-  local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, candidate, l, tup;
-
-  G1:=UnderlyingSemigroup(R1); 
-  G2:=UnderlyingSemigroup(R2); 
-
-  if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2) and
-    IsGroup(G2)) then 
-    Error("usage: the arguments must regular Rees 0-matrix semigroups over groups,");
-  fi;
-
-  if not (Size(R1)=Size(R2) and Columns(R1)=Columns(R2) and Rows(R1)=Rows(R2))
-    then 
-      return fail;
-  fi;
-
-  mat:=Matrix(R1);
-  m:=Length(mat[1]); 
-  n:=Length(mat);
-
-  if R1=R2 then 
-    return RZMSIsoByTriple(R1, R2, [(), IdentityMapping(G1), List([1..m+n], 
-      x-> One(G2))]);
-  fi;
-
-  # every isomorphism of the groups
-  f:=IsomorphismGroups(G1, G2);
-  if f=fail then 
-    return fail;
-  fi;
-  groupiso:=List(AutomorphismGroup(G1), x->x*f); 
+if not IsBound(GAPInfo.PackagesLoaded.grape) then 
   
-  # every isomorphism of the graphs
-  graph1:=RZMSGraph(R1); graph2:=RZMSGraph(R2);
-  if UndirectedEdges(graph1)<>UndirectedEdges(graph2) then 
-    g:=GraphIsomorphism(graph1, graph2);
-    if g=fail then 
+  InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups", 
+  [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
+  function(R1, R2)
+    Info(InfoWarning, 1, "the GRAPE package is not available, ",
+    "and so this function does not work");
+    return fail;
+  end);  
+
+else 
+
+  InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups", 
+  [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
+  function(R1, R2)
+    local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso,
+    candidate, l, tup;
+
+    G1:=UnderlyingSemigroup(R1); 
+    G2:=UnderlyingSemigroup(R2); 
+
+    if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2) and
+      IsGroup(G2)) then 
+      Error("usage: the arguments must be regular Rees 0-matrix semigroups", 
+      " over groups,");
+    fi;
+
+    if not (Size(R1)=Size(R2) and Columns(R1)=Columns(R2) and Rows(R1)=Rows(R2))
+      then 
+        return fail;
+    fi;
+
+    mat:=Matrix(R1);
+    m:=Length(mat[1]); 
+    n:=Length(mat);
+
+    if R1=R2 then 
+      return RZMSIsoByTriple(R1, R2, [(), IdentityMapping(G1), List([1..m+n], 
+        x-> One(G2))]);
+    fi;
+
+    # every isomorphism of the groups
+    f:=IsomorphismGroups(G1, G2);
+    if f=fail then 
       return fail;
     fi;
-    graphiso:=List(AutGroupGraph(graph1, [[1..m],[m+1..n+m]]), x-> x*g);
-  fi;
+    groupiso:=List(AutomorphismGroup(G1), x->x*f); 
+    
+    # every isomorphism of the graphs
+    graph1:=RZMSGraph(R1); graph2:=RZMSGraph(R2);
+    if UndirectedEdges(graph1)<>UndirectedEdges(graph2) then 
+      g:=GraphIsomorphism(graph1, graph2);
+      if g=fail then 
+        return fail;
+      fi;
+      graphiso:=List(AutGroupGraph(graph1, [[1..m],[m+1..n+m]]), x-> x*g);
+    fi;
 
-  #find an induced function, if there is one
-  for l in graphiso do
-    for g in groupiso do
-      for tup in Elements(G2) do 
-        candidate:=RZMStoRZMSInducedFunction(R1, R2, l, g, [tup]);
-        if not candidate=false then 
-          return RZMSIsoByTriple(R1, R2, [l, g, candidate]);
-        fi;
+    #find an induced function, if there is one
+    for l in graphiso do
+      for g in groupiso do
+        for tup in Elements(G2) do 
+          candidate:=RZMStoRZMSInducedFunction(R1, R2, l, g, [tup]);
+          if not candidate=false then 
+            return RZMSIsoByTriple(R1, R2, [l, g, candidate]);
+          fi;
+        od;
       od;
     od;
-  od;
-  return fail;
-end);
+    return fail;
+  end);
+fi;
 
 #
 

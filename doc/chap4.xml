@@ -111,15 +111,18 @@
     <#Include Label="InverseLeftBlocks">
   </Section>
 
-  <!--  <Section><Heading>Visualising blocks and bipartitions</Heading>
+  <Section><Heading>Visualising blocks and bipartitions</Heading>
     There are some functions in &Semigroups; for creating &LaTeX; pictures of
     bipartitions and blocks. Descriptions of these methods can be found in this
     section. <P/>
 
-    Many of the functions described herein return a string, which can be
-    written to a file using the function 
-    <Ref Func="FileString" BookName="GAPDoc"/>.
-  </Section>-->
+    The functions described in this section return a string, which can be written
+    to a file using the function <Ref Func="FileString" BookName="GAPDoc"/>.
+
+    <#Include Label="TikzBipartition">
+    <#Include Label="TikzBlocks">
+
+  </Section>
 
   <Section><Heading>Semigroups of bipartitions</Heading>
   

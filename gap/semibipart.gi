@@ -8,8 +8,7 @@
 ############################################################################# 
 ##
 
-InstallMethod(IsBlockBijectionSemigroup, "for a bipartition semigroup",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], 
+InstallImmediateMethod(IsBlockBijectionSemigroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
 function(S) 
   return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
@@ -228,7 +227,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  n:=LargestMovedPoint(S);
+  n:=DegreeOfBipartitionSemigroup(S);
   source:=GeneratorsOfSemigroup(S); 
   range:=EmptyPlist(Length(source));
 
