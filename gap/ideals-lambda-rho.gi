@@ -62,6 +62,21 @@ function(o, i)
   return IsBound(o!.orbits[nr]) and IsBound(o!.orbits[nr][i]);
 end);
 
+# returns the index of the component containing <o[i]>
+
+InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
+[IsIdealOrb, IsPosInt],
+function(o, i)
+local nr;
+
+  nr:=1;
+  while i>Length(o!.orbits[nr]) do 
+    i:=i-Length(o!.orbits[nr]);
+    nr:=nr+1;
+  od;
+  return nr;
+end);
+
 #
 
 InstallMethod(ELM_LIST, "for an ideal orb and positive integer",
@@ -138,12 +153,16 @@ function(I)
   record.schreiergen:=[fail];   record.schreierpos:=[fail];
   record.orbitgraph:=[[]];      
   record.gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
-  record.orbschreierpos := [];
+  record.orbschreierpos := []; 
   record.orbschreiergen := [];
   record.orbschreiercmp := []; 
-  # data!.orbits[i] is obtained from data!.orbits[data!.orbschreiercmp[i]] by
-  # applying some generator
+  # <o!.orbits[i]> is obtained from the component <o!.orbits[o!.orbschreiercmp[i]]>
+  # by applying right multiplying some element of the ideal with lambda value in
+  # position <o!.schreierpos[i]> by <o!.schreiergen[i]>.
   record.orbtogen := [];
+  # ComponentOfIndex(o, Position(o, LambdaFunc(M)(gens[orbtogen[i]])))=i
+  # and <orbtogen[ComponentOfIndex(Position(o, LambdaFunc(I)(gens[i])))]=i>
+  # i.e. component <i> arises from <gens[orbtogen[i]]>.
   
   htopts:=ShallowCopy(LambdaOrbOpts(I)); 
   htopts.treehashsize:=I!.opts.hashlen.M;
@@ -153,8 +172,41 @@ function(I)
   return Objectify(NewType(fam, IsIdealLambdaOrb), record);
 end);
 
-# this is essentially the same as the method for a semigroup defined by a
-# generating set...
+#
+
+InstallMethod(RhoOrb, "for an acting semigroup ideal", 
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  local record, htopts, fam;
+  record:=rec();
+  record.orbits:=[[fail]];      record.lens:=[1];    
+  record.parent:=I;             record.scc:=[[1]];       
+  record.scc_reps:=[fail,];     record.scc_lookup:=[1];
+  record.schreiergen:=[fail];   record.schreierpos:=[fail];
+  record.orbitgraph:=[[]];      
+  record.gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
+  record.orbschreierpos := [];
+  record.orbschreiergen := [];
+  record.orbschreiercmp := [];
+  # <o!.orbits[i]> is obtained from the component <o!.orbits[o!.orbschreiercmp[i]]>
+  # by applying left multiplying some element of the ideal with rho value in
+  # position <o!.schreierpos[i]> by <o!.schreiergen[i]>.
+  record.orbtogen := [];
+  # <ComponentOfIndex(o, Position(o, RhoFunc(I)(gens[orbtogen[i]])))=i>
+  # and <orbtogen[ComponentOfIndex(Position(o, RhoFunc(I)(gens[i])))]=i>
+  # i.e. component <i> arises from <gens[orbtogen[i]]>.
+  htopts:=ShallowCopy(RhoOrbOpts(I)); 
+  htopts.treehashsize:=I!.opts.hashlen.M;
+  record.ht:=HTCreate(RhoFunc(I)(Representative(I)), htopts);
+  
+  fam:=CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
+  return Objectify(NewType(fam, IsIdealRhoOrb), record);
+end);
+
+# The entire lambda orbit of an ideal of an inverse semigroup is obtained from
+# the lambda values of the generators (and their inverses) of the ideal by
+# acting on the right by the generators (and their inverses) of the
+# supersemigroup. Hence we require a different case here. 
 
 InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal", 
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
@@ -168,7 +220,10 @@ function(I)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             record.treehashsize:=I!.opts.hashlen.M;
-  record.orbtogen:=[]; # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i
+  record.orbtogen:=[]; 
+  # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i and 
+  # orbtogen[Position(o, LambdaFunc(I)(gens[i]^-1))]=i+nrgens...
+        
 
   gens:=GeneratorsOfSemigroupIdeal(I);
   lambdafunc:=LambdaFunc(I);
@@ -205,6 +260,7 @@ function(I)
       o!.orbtogen[nr]:=nrgens+i;
     fi;
   od;
+
   o!.pos:=2; #don't apply the generators of the supersemigroup of <I> to the
              #dummy point at the start of the orbit (otherwise we just get the
              #lambda orbit of the supersemigroup
@@ -213,7 +269,18 @@ function(I)
   return o;
 end);
 
-# assumes that <pt> is not in <o> already...
+# For an ideal rho orb <o>, rho value <pt> of <x>, <x> itself an element of the
+# ideal, <pos> is the position in <o> of the rho value from which <x> was
+# obtained by right multiplication by, the <gen>th generator of the parent of
+# <o>, <ind> is the index of the generator of the ideal which we are adding (if
+# applicable).                                                       
+#                                                                               
+# This assumes that <pt> is not in <o> already, and that either:                
+#                                                                               
+#   - <pos=gen=fail> and we are updating with the <ind>th generator of the
+#     *ideal*; or                                                               
+#                                                                               
+#   - <pos>, <gen> are positive integers and <ind=fail>                         
 
 InstallGlobalFunction(UpdateIdealLambdaOrb, 
 function(o, pt, x, pos, gen, ind)
@@ -279,42 +346,24 @@ function(o, pt, x, pos, gen, ind)
     o!.orbschreiercmp[nrorb] := fail;
   fi;
 
-  # jj assume that if a generator is passed into UpadateIdealLambdaOrb then
-  # pos = the index of the generator and ind <> fail.
   if ind <> fail then
     o!.orbtogen[nrorb] := ind;
   fi;
   return len+1;
 end);
 
-#
-
-InstallMethod(RhoOrb, "for an acting semigroup ideal", 
-[IsActingSemigroup and IsSemigroupIdeal],
-function(I)
-  local record, htopts, fam;
- 
-  record:=rec();
-  record.orbits:=[[fail]];      record.lens:=[1];    
-  record.parent:=I;             record.scc:=[[1]];       
-  record.scc_reps:=[fail,];     record.scc_lookup:=[1];
-  record.schreiergen:=[fail];   record.schreierpos:=[fail];
-  record.orbitgraph:=[[]];      
-  record.gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
-  record.orbschreierpos := [];
-  record.orbschreiergen := [];
-  record.orbschreiercmp := [];
-  record.orbtogen := [];
-
-  htopts:=ShallowCopy(RhoOrbOpts(I)); 
-  htopts.treehashsize:=I!.opts.hashlen.M;
-  record.ht:=HTCreate(RhoFunc(I)(Representative(I)), htopts);
-  
-  fam:=CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
-  return Objectify(NewType(fam, IsIdealRhoOrb), record);
-end);
-
-# assumes that <pt> is not in <o> already...
+# For an ideal rho orb <o>, rho value <pt> of <x>, <x> itself an element of the
+# ideal, <pos> is the position in <o> of the rho value from which <x> was
+# obtained by right multiplication by, the <gen>th generator of the parent of
+# <o>, <ind> is the index of the generator of the ideal which we are adding (if
+# applicable).                                                       
+#                                                                               
+# This assumes that <pt> is not in <o> already, and that either:                
+#                                                                               
+#   - <pos=gen=fail> and we are updating with the <ind>th generator of the
+#     *ideal*; or                                                               
+#                                                                               
+#   - <pos>, <gen> are positive integers and <ind=fail>                         
 
 InstallGlobalFunction(UpdateIdealRhoOrb, 
 function(o, pt, x, pos, gen, ind)
@@ -421,7 +470,9 @@ function(S, w)
   return EvaluateWord(GeneratorsOfSemigroup(S), w);
 end);
 
-#
+# returns a triple [leftword, nr, rightword] where <leftword>, <rightword> are
+# words in the generators of the supersemigroup of the ideal, and <nr> is the
+# index of a generator of the ideal. 
 
 InstallMethod(TraceSchreierTreeForward, 
 "for an inverse semigroup ideal orbit and a positive integer",
@@ -448,7 +499,9 @@ function(o, i)
   return [ [], nr, Reversed(rightword)];
 end);
 
-#
+# returns a triple [leftword, nr, rightword] where <leftword>, <rightword> are
+# words in the generators of the supersemigroup of the ideal, and <nr> is the
+# index of a generator of the ideal. 
 
 InstallMethod(TraceSchreierTreeForward,
 "for an ideal orbit and positive integer",
@@ -528,80 +581,4 @@ function(o, i)
 
   return out;
 end);
-# the first position of the returned word refers to the generators of the ideal
-# corresponding to the position in the orbit of the point from which the <o[pos]>
-# is obtained. For example, [1,2,3] means I.1*S.2*S.3.
 
-#InstallMethod( TraceSchreierTreeForward, 
-#"for an ideal orb and a position (Semigroups)",
-#  [ IsIdealOrb, IsPosInt ],
-#  function( o, pos )
-#    local word;
-#    word := [];
-#    while o!.schreierpos[pos] <> fail do
-#        Add(word,o!.schreiergen[pos]);
-#        pos := o!.schreierpos[pos];
-#    od;
-#    Add(word, o!.genslookup[pos]);
-#    return Reversed(word);
-#  end );
-#
-##
-#
-#
-##Usage: o = orbit of images; i = index of scc; j = element of scc[i].
-#
-## Notes: returns a word in the generators that takes o!.scc[i][1] to o[j] 
-## assuming that j in scc[i]
-#
-#InstallMethod(TraceSchreierTreeOfSCCForward,
-#"for an ideal orbit and two positive integers",
-#[IsIdealOrb, IsPosInt, IsPosInt],
-#function(o, i, j)
-#  local tree, scc, word, parent;
-#
-#  tree:=SchreierTreeOfSCC(o, i);
-#  scc:=OrbSCC(o)[i];
-#
-#  word := [];
-#  parent := tree[2][j];
-#  while parent  <> fail do
-#    Add(word, tree[1][j]);
-#    j := parent;
-#    parent := tree[2][j];
-#  od;
-#  
-#  Add(word, o!.genslookup[j]);
-#  return Reversed(word);
-#end);
-#
-#
-#InstallMethod(TraceSchreierTreeOfSCCBack,
-#"for an ideal orbit and two positive integers",
-#[IsIdealOrb, IsPosInt, IsPosInt],
-#function(o, i, j)
-#  local tree, mult, scc, word, parent;
-#
-#  if not IsInvLambdaOrb(o) then
-#    tree:=ReverseSchreierTreeOfSCC(o, i);
-#    mult:=1;
-#  else
-#    tree:=SchreierTreeOfSCC(o, i);
-#    mult:=-1;
-#  fi;
-#
-#  scc:=OrbSCC(o)[i];
-#
-#  word := [];
-#  parent := tree[2][j];
-#  while parent <> fail do
-#    Add(word, tree[1][j]);
-#    j := parent;
-#    parent := tree[2][j];
-#  od;
-#
-#  return word*mult;
-#end);
-#
-#
-#
