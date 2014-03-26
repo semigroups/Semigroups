@@ -475,10 +475,11 @@ fail
 gap> MinimalIdeal(M);
 <simple bipartition semigroup ideal on 7 pts with 1 generator>
 gap> MinimalDClass(M);
-{Bipartition( [ 1, 2, 3, 4, 5, 6, 7 ], [ -1 ], [ -2, -4, -7 ], [ -3, -5 ], 
- [ -6 ] )}
+{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1 ], [ -2, -4, -7 ], [ -3, -5 ], 
+ [ -6 ] ] )}
 gap> MinimalDClass(R);
-{Bipartition( [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], [ -6 ] )}
+{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], 
+ [ -6 ] ] )}
 
 # greens.gi for ideals
 #
@@ -686,8 +687,8 @@ gap> GreensDClassOfElement(K, PartialPerm( [ 1, 4, 5, 6 ], [ 6, 2, 1, 3 ] ));
 {PartialPerm( [ 1, 4, 5, 6 ], [ 6, 2, 1, 3 ] )}
 gap> GreensHClassOfElement(L, Bipartition( [ [ 1, 3, 4, 6, -3 ], 
 >   [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], [ -5 ], [ -6 ] ] ));
-{Bipartition( [ 1, 3, 4, 6, -3 ], [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], 
- [ -5 ], [ -6 ] )}
+{Bipartition( [ [ 1, 3, 4, 6, -3 ], [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], 
+ [ -5 ], [ -6 ] ] )}
 gap> GreensLClassOfElement(A, Transformation( [ 6, 3, 4, 4, 3, 2 ] ));
 {Transformation( [ 6, 3, 4, 4, 3, 2 ] )}
 gap> GreensRClassOfElement(B, Transformation( [ 3, 4, 6, 6, 4, 2 ] ));
