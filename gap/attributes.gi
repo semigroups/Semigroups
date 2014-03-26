@@ -1000,7 +1000,7 @@ InstallMethod(IsomorphismTransformationSemigroup,
 function(s)        
   local n, pts, o, t, pos, i;
 
-  n:=DegreeOfBinaryRelation(Generators(s)[1]);
+  n:=DegreeOfBinaryRelation(GeneratorsOfSemigroup(s)[1]);
   pts:=EmptyPlist(2^n);
 
   for i in [1..n] do 
@@ -1010,7 +1010,8 @@ function(s)
   od;
   ShrinkAllocationPlist(pts);
   pos:=List([1..n], x-> Position(pts, [x]));
-  t:=Semigroup(List(Generators(s), x-> TransformationOpNC(x, pts, OnPoints)));
+  t:=Semigroup(List(GeneratorsOfSemigroup(s), 
+   x-> TransformationOpNC(x, pts, OnPoints)));
   
   return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),
   x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
