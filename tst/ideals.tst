@@ -3,6 +3,7 @@
 #W  ideals.tst
 #Y  Copyright (C) 2013-14                                James D. Mitchell
 ##                                                       Julius Jonusas 
+##                                                       Wilf Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -12,10 +13,189 @@ gap> START_TEST("Semigroups package: ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+gap> SemigroupsStartTest();
+
+#
+gap> gens:=[ Transformation( [ 2, 6, 1, 7, 5, 3, 4 ] ), 
+>   Transformation( [ 5, 3, 7, 2, 1, 6, 4 ] ), 
+>   Transformation( [ 2, 5, 5, 3, 4, 2, 3 ] ), 
+>   Transformation( [ 1, 5, 1, 6, 1, 5, 6 ] ), 
+>   Transformation( [ 6, 2, 2, 2, 5, 1, 2 ] ), 
+>   Transformation( [ 7, 5, 4, 4, 4, 5, 5 ] ), 
+>   Transformation( [ 5, 1, 6, 1, 1, 5, 1 ] ), 
+>   Transformation( [ 3, 5, 2, 3, 2, 2, 3 ] ) ];;
+gap> S:=Semigroup(gens);;
+gap> I:=SemigroupIdeal(S, S.8);;
+gap> x:=S.8*S.1*S.4*S.3;;
+gap> R:=RClass(I, x);;
+gap> x in R;
+true
+gap> I:=MinimalIdeal(I);
+<simple transformation semigroup ideal on 7 pts with 1 generator>
+gap> IsRegularSemigroup(I);
+true
+gap> Idempotents(I, 0);
+[  ]
+gap> Idempotents(I);
+[ Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ), 
+  Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ) ]
+gap> Idempotents(I, 2);
+[  ]
+gap> x in R;
+true
+gap> I:=MinimalIdeal(I);
+<simple transformation semigroup ideal on 7 pts with 1 generator>
+gap> IsRegularSemigroup(I);;
+gap> Idempotents(I, 0);
+[  ]
+gap> Idempotents(I);
+[ Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ), 
+  Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ) ]
+gap> Idempotents(I, 2);
+[  ]
+gap> S:=Semigroup([ Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
+>   Transformation( [ 1, 5, 3, 5, 5, 5 ] ), 
+>   Transformation( [ 2, 4, 6, 1, 6, 5 ] ), 
+>   Transformation( [ 3, 2, 4, 2, 3, 3 ] ), 
+>   Transformation( [ 4, 1, 2, 6, 2, 1 ] ), 
+>   Transformation( [ 4, 6, 4, 3, 3, 3 ] ), 
+>   Transformation( [ 4, 6, 5, 5, 2, 6 ] ), 
+>   Transformation( [ 5, 1, 6, 1, 6, 3 ] ), 
+>   Transformation( [ 5, 2, 5, 3, 5, 3 ] ), 
+>   Transformation( [ 6, 4, 5, 5, 1, 6 ] ) ]);
+<transformation semigroup on 6 pts with 10 generators>
+gap> I:=SemigroupIdeal(S, Representative(DClasses(S)[3]));
+<non-regular transformation semigroup ideal on 6 pts with 1 generator>
+gap> S:=JonesMonoid(6);
+<regular bipartition monoid on 6 pts with 5 generators>
+gap> I:=SemigroupIdeal(S, Random(S));
+<regular bipartition semigroup ideal on 6 pts with 1 generator>
+gap> InversesOfSemigroupElement(I, Random(I));
+[ <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ -1, -2 ], [ -3, -4 ], 
+     [ -5, -6 ]>, <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, 6 ], [ -1, -2 ], 
+     [ -3, -4 ], [ -5, -6 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -2 ], [ -3, -4 ], 
+     [ -5, -6 ]>, <bipartition: [ 1, 6 ], [ 2, 3 ], [ 4, 5 ], [ -1, -2 ], 
+     [ -3, -4 ], [ -5, -6 ]>, 
+  <bipartition: [ 1, 6 ], [ 2, 5 ], [ 3, 4 ], [ -1, -2 ], [ -3, -4 ], 
+     [ -5, -6 ]>, <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ -1, -4 ], 
+     [ -2, -3 ], [ -5, -6 ]>, 
+  <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, 6 ], [ -1, -4 ], [ -2, -3 ], 
+     [ -5, -6 ]>, <bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -4 ], 
+     [ -2, -3 ], [ -5, -6 ]>, 
+  <bipartition: [ 1, 6 ], [ 2, 3 ], [ 4, 5 ], [ -1, -4 ], [ -2, -3 ], 
+     [ -5, -6 ]>, <bipartition: [ 1, 6 ], [ 2, 5 ], [ 3, 4 ], [ -1, -4 ], 
+     [ -2, -3 ], [ -5, -6 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ -1, -2 ], [ -3, -6 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, 6 ], [ -1, -2 ], 
+     [ -3, -6 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -2 ], [ -3, -6 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 6 ], [ 2, 3 ], [ 4, 5 ], [ -1, -2 ], 
+     [ -3, -6 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 6 ], [ 2, 5 ], [ 3, 4 ], [ -1, -2 ], [ -3, -6 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ -1, -6 ], 
+     [ -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, 6 ], [ -1, -6 ], [ -2, -3 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -6 ], 
+     [ -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 6 ], [ 2, 3 ], [ 4, 5 ], [ -1, -6 ], [ -2, -3 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 6 ], [ 2, 5 ], [ 3, 4 ], [ -1, -6 ], 
+     [ -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ -1, -6 ], [ -2, -5 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, 6 ], [ -1, -6 ], 
+     [ -2, -5 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -6 ], [ -2, -5 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, 6 ], [ 2, 3 ], [ 4, 5 ], [ -1, -6 ], 
+     [ -2, -5 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, 6 ], [ 2, 5 ], [ 3, 4 ], [ -1, -6 ], [ -2, -5 ], 
+     [ -3, -4 ]> ]
+gap> InversesOfSemigroupElement(I, Random(I));
+[ <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, -5 ], [ 6, -6 ], [ -1, -2 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, 2 ], [ 3, -5 ], [ 4, 5 ], [ 6, -6 ], 
+     [ -1, -2 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, -5 ], [ 4, -6 ], [ 5, 6 ], [ -1, -2 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, -5 ], [ 2, 3 ], [ 4, 5 ], [ 6, -6 ], 
+     [ -1, -2 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, -5 ], [ 2, 3 ], [ 4, -6 ], [ 5, 6 ], [ -1, -2 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, -5 ], [ 2, -6 ], [ 3, 4 ], [ 5, 6 ], 
+     [ -1, -2 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, -5 ], [ 6, -6 ], [ -1, -2 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, -5 ], [ 2, 5 ], [ 3, 4 ], [ 6, -6 ], 
+     [ -1, -2 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, -5 ], [ 2, -6 ], [ 3, 6 ], [ 4, 5 ], [ -1, -2 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, -3 ], [ 6, -6 ], 
+     [ -1, -2 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, -3 ], [ 4, 5 ], [ 6, -6 ], [ -1, -2 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 2 ], [ 3, -3 ], [ 4, -6 ], [ 5, 6 ], 
+     [ -1, -2 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, -3 ], [ 2, 3 ], [ 4, 5 ], [ 6, -6 ], [ -1, -2 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, -3 ], [ 2, 3 ], [ 4, -6 ], [ 5, 6 ], 
+     [ -1, -2 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, -3 ], [ 2, -6 ], [ 3, 4 ], [ 5, 6 ], [ -1, -2 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, -3 ], [ 6, -6 ], 
+     [ -1, -2 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, -3 ], [ 2, 5 ], [ 3, 4 ], [ 6, -6 ], [ -1, -2 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, -3 ], [ 2, -6 ], [ 3, 6 ], [ 4, 5 ], 
+     [ -1, -2 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, -1 ], [ 6, -6 ], [ -2, -3 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 2 ], [ 3, -1 ], [ 4, 5 ], [ 6, -6 ], 
+     [ -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, -1 ], [ 4, -6 ], [ 5, 6 ], [ -2, -3 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, -1 ], [ 2, 3 ], [ 4, 5 ], [ 6, -6 ], 
+     [ -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, -1 ], [ 2, 3 ], [ 4, -6 ], [ 5, 6 ], [ -2, -3 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, -1 ], [ 2, -6 ], [ 3, 4 ], [ 5, 6 ], 
+     [ -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, -1 ], [ 6, -6 ], [ -2, -3 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, -1 ], [ 2, 5 ], [ 3, 4 ], [ 6, -6 ], 
+     [ -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, -1 ], [ 2, -6 ], [ 3, 6 ], [ 4, 5 ], [ -2, -3 ], 
+     [ -4, -5 ]>, <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, -5 ], [ 6, -6 ], 
+     [ -1, -4 ], [ -2, -3 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, -5 ], [ 4, 5 ], [ 6, -6 ], [ -1, -4 ], 
+     [ -2, -3 ]>, <bipartition: [ 1, 2 ], [ 3, -5 ], [ 4, -6 ], [ 5, 6 ], 
+     [ -1, -4 ], [ -2, -3 ]>, 
+  <bipartition: [ 1, -5 ], [ 2, 3 ], [ 4, 5 ], [ 6, -6 ], [ -1, -4 ], 
+     [ -2, -3 ]>, <bipartition: [ 1, -5 ], [ 2, 3 ], [ 4, -6 ], [ 5, 6 ], 
+     [ -1, -4 ], [ -2, -3 ]>, 
+  <bipartition: [ 1, -5 ], [ 2, -6 ], [ 3, 4 ], [ 5, 6 ], [ -1, -4 ], 
+     [ -2, -3 ]>, <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, -5 ], [ 6, -6 ], 
+     [ -1, -4 ], [ -2, -3 ]>, 
+  <bipartition: [ 1, -5 ], [ 2, 5 ], [ 3, 4 ], [ 6, -6 ], [ -1, -4 ], 
+     [ -2, -3 ]>, <bipartition: [ 1, -5 ], [ 2, -6 ], [ 3, 6 ], [ 4, 5 ], 
+     [ -1, -4 ], [ -2, -3 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, -1 ], [ 6, -6 ], [ -2, -5 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, 2 ], [ 3, -1 ], [ 4, 5 ], [ 6, -6 ], 
+     [ -2, -5 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, -1 ], [ 4, -6 ], [ 5, 6 ], [ -2, -5 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, -1 ], [ 2, 3 ], [ 4, 5 ], [ 6, -6 ], 
+     [ -2, -5 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, -1 ], [ 2, 3 ], [ 4, -6 ], [ 5, 6 ], [ -2, -5 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, -1 ], [ 2, -6 ], [ 3, 4 ], [ 5, 6 ], 
+     [ -2, -5 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, -1 ], [ 6, -6 ], [ -2, -5 ], 
+     [ -3, -4 ]>, <bipartition: [ 1, -1 ], [ 2, 5 ], [ 3, 4 ], [ 6, -6 ], 
+     [ -2, -5 ], [ -3, -4 ]>, 
+  <bipartition: [ 1, -1 ], [ 2, -6 ], [ 3, 6 ], [ 4, 5 ], [ -2, -5 ], 
+     [ -3, -4 ]> ]
+gap> S:=SymmetricInverseMonoid(8);
+<symmetric inverse semigroup on 8 pts>
+gap> x:=PartialPerm([1]);
+<identity partial perm on [ 1 ]>
+gap> I:=SemigroupIdeal(S, x);
+<inverse partial perm semigroup ideal on 8 pts with 1 generator>
+gap> IsZeroSimpleSemigroup(I);
+true
 
 #
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ), 
@@ -240,7 +420,7 @@ fail
 gap> MinimalIdeal(L);
 <simple transformation semigroup ideal on 8 pts with 1 generator>
 gap> L:=SemigroupIdeal(S, GeneratorsOfSemigroup(S));
-<transformation semigroup ideal on 8 pts with 5 generators>
+<non-regular transformation semigroup ideal on 8 pts with 5 generators>
 gap> MinimalIdeal(J);
 <simple transformation semigroup ideal on 6 pts with 1 generator>
 gap> MinimalIdeal(L);
@@ -617,13 +797,15 @@ gap> Idempotents(C,1);
   Transformation( [ 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 5, 5, 5, 5, 5, 5 ] ) ]
 gap> Idempotents(L, 2);
-[ <bipartition: [ 1, 3 ], [ 2, 5, 6, -1, -2, -3 ], [ 4, 7, -4,
-    -7 ], [ -5 ], [ -6 ]>, <bipartition: [ 1, 7, -1, -7 ], [ 2, 3, 4, 5, 6,
-    -3, -4, -5, -6 ], [ -2 ]>, <bipartition: [ 1, 5, -1, -5 ], [ 2, 3, 4, 6,
-    -2, -3, -4, -7 ], [ 7 ], [ -6 ]>, <bipartition: [ 1, 4, 5, 6, -1, -4, -5,
-    -6 ], [ 2 ], [ 3, 7, -2, -7 ], [ -3 ]>, <bipartition: [ 1, 3, 4, 6 ], [ 2,
-   5, -5 ], [ 7, -1, -3, -4, -6, -7 ], [ -2 ]>, <bipartition: [ 1, 3, 4, 5, 7,
-   -1, -2, -3, -4, -5 ], [ 2 ], [ 6, -6 ], [ -7 ]> ]
+[ <bipartition: [ 1, 3 ], [ 2, 5, 6, -1, -2, -3 ], [ 4, 7, -4, -7 ], [ -5 ], 
+     [ -6 ]>, 
+  <bipartition: [ 1, 7, -1, -7 ], [ 2, 3, 4, 5, 6, -3, -4, -5, -6 ], [ -2 ]>, 
+  <bipartition: [ 1, 5, -1, -5 ], [ 2, 3, 4, 6, -2, -3, -4, -7 ], [ 7 ], 
+     [ -6 ]>, <bipartition: [ 1, 4, 5, 6, -1, -4, -5, -6 ], [ 2 ], 
+     [ 3, 7, -2, -7 ], [ -3 ]>, 
+  <bipartition: [ 1, 3, 4, 6 ], [ 2, 5, -5 ], [ 7, -1, -3, -4, -6, -7 ], 
+     [ -2 ]>, <bipartition: [ 1, 3, 4, 5, 7, -1, -2, -3, -4, -5 ], [ 2 ], 
+     [ 6, -6 ], [ -7 ]> ]
 
 # NrIdempotents
 gap> List(ideals, NrIdempotents);
@@ -688,4 +870,5 @@ gap> I:=SemigroupIdeal(S, PartialPerm( [ 1, 3, 4, 5, 7 ], [ 1, 3, 4, 5, 7 ] ));
 gap> GeneratorsOfSemigroup(I);;
 
 #
+gap> SemigroupsStopTest(); 
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);

@@ -36,7 +36,7 @@ function(I)
   return str;
 end);
 
-# JDM this is required since there is a method for ViewObj of a semigroup ideal
+# this is required since there is a method for ViewObj of a semigroup ideal
 # with a higher rank than the default method which delegates from ViewObj to
 # ViewString. Hence the method for ViewString is never invoked without the
 # method below.
@@ -162,7 +162,7 @@ function( arg )
         elif IsList(arg[i]) then 
           Append(out, arg[i]);
         else 
-          Append(out, AsList(arg[1])); #JDM should use this in Semigroup too
+          Append(out, AsList(arg[1])); 
         fi;
       #so that we can pass the options record in the Semigroups package 
       elif i=Length(arg) and IsRecord(arg[i]) then
@@ -199,13 +199,10 @@ InstallMethod(SemigroupIdealByGenerators,
 function(S, gens, opts)
   local filts, I;
 
-  #JDM: is this a good idea?
   if not ForAll(gens, x-> x in S) then 
     Error("usage: the generators do not belong to the semigroup,");
     return fail;
   fi;
-
-  #JDM: check if the ideal is actually the whole semigroup?
 
   opts:=SemigroupOptions(opts);
   gens:=AsList(gens);
@@ -243,7 +240,7 @@ function(S, gens, opts)
   SetParent(I, S); 
   SetGeneratorsOfMagmaIdeal(I, gens);
   
-  if not opts.acting then 
+  if not opts.acting then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif not (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) then
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
