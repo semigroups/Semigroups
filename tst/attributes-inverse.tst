@@ -290,6 +290,29 @@ false
 gap> NaturalLeqInverseSemigroup(B, B);
 true
 
+# NaturalLeqInverseSemigroup for partial perm bipartitions
+gap> f:=Bipartition( [ [ 1, -2 ], [ 2 ], [ -1 ] ] );;
+gap> f2:=Bipartition( [ [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ -1 ], [ -3 ], [-4 ], [ -5 ], [ -6 ] ] );;
+gap> g:=Bipartition( [ [ 1, -2 ], [ 2 ], [ 3, -5 ], [ 4 ], [ 5 ], [ -1 ], [ -3 ], [ -4 ] ] );;
+gap> NaturalLeqInverseSemigroup(f,g);
+true
+gap> NaturalLeqInverseSemigroup(f2,g);
+true
+gap> AsPartialPerm(f)=AsPartialPerm(f2);
+true
+gap> f=f2;
+false
+gap> NaturalLeqInverseSemigroup(f,f2);
+true
+gap> NaturalLeqInverseSemigroup(f2,f);
+true
+gap> NaturalLeqInverseSemigroup(g,g);
+true
+gap> NaturalLeqInverseSemigroup(g,f);
+false
+gap> NaturalLeqInverseSemigroup(g,f2);
+false
+
 #
 gap> SemigroupsStopTest();
 

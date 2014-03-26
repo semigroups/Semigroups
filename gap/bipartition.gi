@@ -52,8 +52,43 @@ end);
 
 #
 
+InstallMethod(NaturalLeqPartialPermBipartition, "for bipartitions", 
+[IsBipartition, IsBipartition], 
+function(f, g)
+  local fblocks, gblocks, n, m, i;
+  
+  if not IsPartialPermBipartition(f) or not IsPartialPermBipartition(g) then
+    Error("usage: the arguments must be partial perm bipartitions,");
+    return;
+  fi;
+  
+  fblocks:=f!.blocks; gblocks:=g!.blocks;
+  n:=DegreeOfBipartition(f); m:=DegreeOfBipartition(g);
+  
+  for i in [1..n] do
+    if fblocks[n+i] <= n then
+      if not IsBound(gblocks[m+i]) then
+        return false;
+      elif fblocks[n+i] <> gblocks[m+i] then
+        return false;
+      fi;
+    fi;
+  od;
+  return true;
+end);
+
+#
+
 InstallMethod(NaturalLeqInverseSemigroup, "for two bipartitions",
-[IsBipartition, IsBipartition], NaturalLeqBlockBijection);
+[IsBipartition, IsBipartition],
+function(f, g)
+  if IsBlockBijection(f) and IsBlockBijection(g) then
+    return NaturalLeqBlockBijection(f,g);
+  elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
+    return NaturalLeqPartialPermBipartition(f,g);
+  fi;
+  Error("usage: the bipartitions should be block bijections or partial perms,");
+end);
 
 #
 
