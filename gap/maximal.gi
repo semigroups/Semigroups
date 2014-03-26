@@ -643,8 +643,7 @@ function(S)
     if not(IsBound(lastideal) and lastideal = reps) then
       if not IsEmpty(reps) then
         Info(InfoSemigroups, 2, "calculating ideal..."); 
-        ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
-          reps), rec(small:=true)));
+        ideal:=GeneratorsOfSemigroup(SemigroupIdeal(S, reps));
       else
         ideal:=[];
       fi;
@@ -664,6 +663,7 @@ function(S)
         new_depth:=depth+1;
         count:=count+1;
         Info(InfoSemigroups, 3, "call: ", count, ", depth: ", new_depth,"\r");
+        #Print("call: ", count, ", depth: ", new_depth,"\r");
         ismax:=true; 
         new_known:=ShallowCopy(known);
         didtest:=false;
