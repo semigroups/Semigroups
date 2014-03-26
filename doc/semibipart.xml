@@ -48,7 +48,7 @@ gap> One(S);
 fail
 gap> MultiplicativeNeutralElement(S);
 <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
-[ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]>
+ [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]>
 gap> IsMonoid(S);
 false]]></Example>
       In this example <C>S</C> cannot be converted into a monoid using <Ref
@@ -69,9 +69,9 @@ false]]></Example>
       The <E>degree</E> of a bipartition semigroup <A>S</A> is just the
       degree of any (and every) element of <A>S</A>.
 
-      <Example>
+      <Example><![CDATA[
 gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
-8</Example>
+8]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
