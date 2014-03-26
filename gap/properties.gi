@@ -30,7 +30,7 @@ InstallMethod(OneMutable, "for ring element coll coll coll",
 
 InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
 [IsMatrixSemigroup],
-s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
+S-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(S))));
 
 #
 
@@ -84,8 +84,15 @@ s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
 
 # same method for ideals
 
-InstallMethod(IsBand, "for an acting semigroup", 
-[IsActingSemigroup], S-> IsCompletelyRegularSemigroup(S) and IsHTrivial(S));
+InstallMethod(IsBand, "for a semigroup", 
+[IsSemigroup], 
+function(S)
+  if HasParent(S) and HasIsBand(Parent(S)) and IsBand(Parent(S)) then 
+    return true;
+  else 
+    return IsCompletelyRegularSemigroup(S) and IsHTrivial(S);
+  fi;
+end);
 
 # same method for ideals
 
@@ -95,19 +102,21 @@ IsSemilatticeAsSemigroup);
 # same method for ideals
 
 InstallMethod(IsBlockGroup, "for an acting semigroup", [IsActingSemigroup], 
-function(s)
+function(S)
   local iter, d;
 
-  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+  if HasParent(S) and HasIsBlockGroup(Parent(S)) and IsBlockGroup(Parent(S)) then 
+    return true;
+  elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then 
     Info(InfoSemigroups, 2, "inverse semigroup");
     return true;
-  elif (HasIsRegularSemigroup(s) and IsRegularSemigroup(s)) and
-   (HasIsInverseSemigroup(s) and not IsInverseSemigroup(s)) then 
+  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) and
+   (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then 
     Info(InfoSemigroups, 2, "regular but non-inverse semigroup");
     return false;
   fi;
 
-  iter:=IteratorOfDClasses(s); 
+  iter:=IteratorOfDClasses(S); 
     
   for d in iter do
     if IsRegularDClass(d) and (ForAny(RClasses(d), x-> NrIdempotents(x)>1) or 
@@ -133,28 +142,31 @@ InstallMethod(IsBrandtSemigroup, "for an inverse semigroup",
 InstallMethod(IsCliffordSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
+function(S)
   local gens, idem, f, g;
 
-  if HasIsInverseSemigroup(s) and not IsInverseSemigroup(s) then 
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) and
+   IsCliffordSemigroup(Parent(S)) then 
+    return true;
+  elif HasIsInverseSemigroup(S) and not IsInverseSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is not inverse");
     return false;
-  elif not IsCompletelyRegularSemigroup(s) then 
+  elif not IsCompletelyRegularSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
-  elif IsGroupAsSemigroup(s) then
+  elif IsGroupAsSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a group");
     return true;
   fi;
 
-  if not IsRegularSemigroup(s) then 
+  if not IsRegularSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
   fi;
 
-  gens:=GeneratorsOfSemigroup(s);
+  gens:=GeneratorsOfSemigroup(S);
   idem:=Set(List(gens, x-> 
-   IdempotentCreator(s)(LambdaFunc(s)(x), RhoFunc(s)(x))));
+   IdempotentCreator(S)(LambdaFunc(S)(x), RhoFunc(S)(x))));
 
   for f in gens do
     for g in idem do
@@ -174,21 +186,34 @@ end);
 
 InstallMethod(IsCliffordSemigroup, "for an inverse acting semigroup", 
 [IsInverseSemigroup and IsActingSemigroup], 
-s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
+S-> ForAll(OrbSCC(LambdaOrb(S)), x-> Length(x)=1));
 
 # same method for regular ideals, or non-regular without a generating set
 
 InstallMethod(IsCliffordSemigroup, "for a semigroup",
-[IsSemigroup], S-> IsRegularSemigroup(S) and NrHClasses(S)=NrDClasses(S));
+[IsSemigroup], 
+function(S)
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) and
+   IsCliffordSemigroup(Parent(S)) then 
+    return true;
+  else 
+    return IsRegularSemigroup(S) and NrHClasses(S)=NrDClasses(S);
+  fi;
+end);
 
 # different method for ideals
 
 InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local gens, n, i, j; 
 
-  gens:=GeneratorsOfSemigroup(s);
+  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S)) and
+   IsCommutativeSemigroup(Parent(S)) then 
+    return true;
+  fi;
+  
+  gens:=GeneratorsOfSemigroup(S);
   n:=Length(gens);
 
   for i in [1..n] do
@@ -204,26 +229,29 @@ function(s)
   return true;
 end);
 
-# same method for non-regular ideals
+# same method for non-regular ideals with generators
 
 InstallMethod(IsCompletelyRegularSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local record, o, pos, f, n;
-
-  if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
+  
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
+   IsCompletelyRegularSemigroup(Parent(S)) then 
+    return true;
+  elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then 
     Info(InfoSemigroups, 2, "semigroup is not regular");
     return false;
   fi;
 
-  record:=ShallowCopy(LambdaOrbOpts(s));
-  record.treehashsize:=s!.opts.hashlen.M;
+  record:=ShallowCopy(LambdaOrbOpts(S));
+  record.treehashsize:=S!.opts.hashlen.M;
 
-  for f in GeneratorsOfSemigroup(s) do
-    o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s), record);
+  for f in GeneratorsOfSemigroup(S) do
+    o:=Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
     pos:=LookForInOrb(o, function(o, x) 
-      return LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 1);
+      return LambdaRank(S)(LambdaAct(S)(x, f))<>LambdaRank(S)(x); end, 1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
     
@@ -239,7 +267,17 @@ end);
 # same method for regular ideals, or non-regular without a generating set
 
 InstallMethod(IsCompletelyRegularSemigroup, "for a semigroup",
-[IsSemigroup], S-> NrHClasses(S)=NrIdempotents(S));
+[IsSemigroup], 
+function(S)
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
+   IsCompletelyRegularSemigroup(Parent(S)) then 
+    return true;
+  elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then 
+    Info(InfoSemigroups, 2, "semigroup is not regular");
+    return false;
+  fi;
+  return NrHClasses(S)=NrIdempotents(S);
+end);
 
 # same method for inverse ideals
 
@@ -299,6 +337,10 @@ InstallMethod(IsHTrivial, "for an acting semigroup",
 [IsActingSemigroup], 
 function(S)
   local iter, x;
+  
+  if HasParent(S) and HasIsHTrivial(Parent(S)) and IsHTrivial(Parent(S)) then 
+    return true;
+  fi;
 
   if IsTransformationSemigroup(S) and HasGeneratorsOfSemigroup(S) then 
     for x in GeneratorsOfSemigroup(S) do 
@@ -324,8 +366,14 @@ function(S)
   return true;
 end);
 
-InstallMethod(IsHTrivial, "for a semigroup",
-[IsSemigroup], S-> NrHClasses(S)=Size(S));
+InstallMethod(IsHTrivial, "for a semigroup", [IsSemigroup], 
+function(S)
+
+  if HasParent(S) and HasIsHTrivial(Parent(S)) and IsHTrivial(Parent(S)) then 
+    return true;
+  fi;
+  return NrHClasses(S)=Size(S);
+end);
 
 #same method for ideals
 
@@ -336,10 +384,14 @@ InstallMethod(IsHTrivial, "for a D-class of an acting semigroup",
 
 InstallMethod(IsLTrivial, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local iter, o, d;
+  
+  if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then 
+    return true;
+  fi;
 
-  iter:=IteratorOfDClasses(s); 
+  iter:=IteratorOfDClasses(S); 
 
   for d in iter do 
     if not IsTrivial(SchutzenbergerGroup(d)) then 
@@ -357,8 +409,11 @@ end);
 
 InstallMethod(IsLTrivial, "for an inverse acting semigroup",
 [IsActingSemigroupWithInverseOp],
-function(s)
-  return ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1);
+function(S)
+  if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then 
+    return true;
+  fi;
+  return ForAll(OrbSCC(LambdaOrb(S)), x-> Length(x)=1);
 end);
 
 #same method for ideals
@@ -410,6 +465,10 @@ InstallMethod(IsRTrivial, "for an acting semigroup",
 function(S)
   local iter, x;
 
+  if HasParent(S) and HasIsRTrivial(Parent(S)) and IsRTrivial(Parent(S)) then 
+    return true;
+  fi;
+
   if IsClosedData(SemigroupData(S)) and IsClosed(RhoOrb(S)) then 
     for x in GreensDClasses(S) do 
       if (not IsTrivial(SchutzenbergerGroup(x))) or Length(LambdaOrbSCC(x))>1 
@@ -432,28 +491,38 @@ function(S)
   return true;
 end);
 
-InstallMethod(IsRTrivial, "for a semigroup",
-[IsSemigroup], S-> Size(S)=NrRClasses(S));
+InstallMethod(IsRTrivial, "for a semigroup", [IsSemigroup], 
+function(S)
+  if HasParent(S) and HasIsRTrivial(Parent(S)) and IsRTrivial(Parent(S)) then 
+    return true;
+  fi;
+  return Size(S)=NrRClasses(S);
+end);
 
 # same method for non-regular ideals
 
 InstallMethod(IsGroupAsSemigroup, "for an acting semigroup", 
 [IsActingSemigroup],
-function(s)
+function(S)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
 
-  gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
-
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
-   ForAll(gens, f->ActionRank(s)(f)=ActionDegree(f)) then
+  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S)) 
+    and IsGroupAsSemigroup(Parent(S)) then 
     return true;
   fi;
 
-  lambdafunc:=LambdaFunc(s);
+  gens:=GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
+
+  if IsActingSemigroupWithFixedDegreeMultiplication(S) and 
+   ForAll(gens, f->ActionRank(S)(f)=ActionDegree(f)) then
+    return true;
+  fi;
+
+  lambdafunc:=LambdaFunc(S);
   lambda:=lambdafunc(gens[1]);
-  rhofunc:=RhoFunc(s);
+  rhofunc:=RhoFunc(S);
   rho:=rhofunc(gens[1]);
-  tester:=IdempotentTester(s);
+  tester:=IdempotentTester(S);
 
   for f in gens do 
     lambda_f:=lambdafunc(f);
@@ -469,7 +538,14 @@ end);
 # different method for inverse, regular ideals (so that it has higher rank)
 
 InstallMethod(IsGroupAsSemigroup, "for a semigroup",
-[IsSemigroup], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
+[IsSemigroup], 
+function(S)
+  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S)) 
+    and IsGroupAsSemigroup(Parent(S)) then 
+    return true;
+  fi;
+  return NrRClasses(S)=1 and NrLClasses(S)=1;
+end);
 
 #JDM should gens in the following function be GeneratorsOfSemigroup?
 # IteratorOfIdempotents would be good here.
@@ -478,21 +554,21 @@ InstallMethod(IsGroupAsSemigroup, "for a semigroup",
 
 InstallMethod(IsIdempotentGenerated, "for an acting semigroup", 
 [IsActingSemigroup], 
-function(s) 
+function(S) 
   local gens, t, min, new;
  
-  gens:=Generators(s);
+  gens:=Generators(S);
 
   if ForAll(gens, IsIdempotent) then 
     Info(InfoSemigroups, 2, "all the generators are idempotents");
     return true;
   fi;
   
-  if HasIdempotentGeneratedSubsemigroup(s) then 
-    t:=IdempotentGeneratedSubsemigroup(s);
+  if HasIdempotentGeneratedSubsemigroup(S) then 
+    t:=IdempotentGeneratedSubsemigroup(S);
   else
-    min:=MinimumList(List(gens, x-> ActionRank(s)(x)));
-    new:=Filtered(Idempotents(s), x-> ActionRank(s)(x)>=min);
+    min:=MinimumList(List(gens, x-> ActionRank(S)(x)));
+    new:=Filtered(Idempotents(S), x-> ActionRank(S)(x)>=min);
     if new=[] then 
       return false;
     fi;
@@ -586,11 +662,16 @@ InstallMethod(IsLeftSimple, "for an inverse semigroup",
 InstallMethod(IsLeftZeroSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local gens, lambda, val, x;
+  
+  if HasParent(S) and HasIsLeftZeroSemigroup(Parent(S)) 
+    and IsLeftZeroSemigroup(Parent(S)) then 
+    return true;
+  fi;
 
-  gens:=GeneratorsOfSemigroup(s);
-  lambda:=LambdaFunc(s);
+  gens:=GeneratorsOfSemigroup(S);
+  lambda:=LambdaFunc(S);
   val:=lambda(gens[1]);
   
   for x in gens do 
@@ -602,8 +683,14 @@ function(s)
   return ForAll(gens, IsIdempotent);
 end);
 
-InstallMethod(IsLeftZeroSemigroup, "for a semigroup",
-[IsSemigroup], S-> NrLClasses(S)=1 and Size(S)=NrRClasses(S));
+InstallMethod(IsLeftZeroSemigroup, "for a semigroup", [IsSemigroup], 
+function(S)
+  if HasParent(S) and HasIsLeftZeroSemigroup(Parent(S)) 
+    and IsLeftZeroSemigroup(Parent(S)) then 
+    return true;
+  fi;
+  return NrLClasses(S)=1 and Size(S)=NrRClasses(S);
+end);
 
 # same method for ideals
 
@@ -613,8 +700,8 @@ InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 # not applicable for ideals
 
 InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and HasGeneratorsOfSemigroup, 0, 
-function(s) 
-  if Length(GeneratorsOfSemigroup(s))=1 then 
+function(S) 
+  if Length(GeneratorsOfSemigroup(S))=1 then 
     return true;
   fi;
   TryNextMethod();
@@ -672,11 +759,11 @@ end);
 
 InstallMethod(IsMonogenicInverseSemigroup, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
-  if not IsInverseSemigroup(s) then 
+function(S)
+  if not IsInverseSemigroup(S) then 
     return false;
   fi;
-  return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(s)));
+  return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(S)));
 end);
  
 # same method for ideals
@@ -732,20 +819,19 @@ end);
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup], x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
 
-# Notes: is there a better method? JDM
-
+# is there a better method? JDM
 # same method for ideals
 
 InstallMethod(IsOrthodoxSemigroup, "for an acting semigroup", [IsActingSemigroup], 
-function(s)
+function(S)
   local e, m, i, j;
 
-  if not IsRegularSemigroup(s) then 
+  if not IsRegularSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
   fi;
 
-  e:=Idempotents(s); m:=Length(e);
+  e:=Idempotents(S); m:=Length(e);
   
   for i in [1..m] do
     for j in [1..m] do
@@ -765,44 +851,57 @@ end);
 
 InstallMethod(IsRectangularBand, "for an acting semigroup", 
 [IsActingSemigroup],
-function(s)
+function(S)
 
-  if not IsSimpleSemigroup(s) then 
-    Info(InfoSemigroups, 2, "the semigroup is not simple");
-    return false;
-  elif HasIsBand(s) then
-    return IsBand(s);
+  if HasParent(S) and HasIsRectangularBand(Parent(S)) 
+    and IsRectangularBand(Parent(S)) then 
+    return true;
   fi;
 
-  return IsHTrivial(s);
+  if not IsSimpleSemigroup(S) then 
+    Info(InfoSemigroups, 2, "the semigroup is not simple");
+    return false;
+  elif HasIsBand(S) then
+    return IsBand(S);
+  fi;
+
+  return IsHTrivial(S);
 end);
 
 # same method for ideals
 
 InstallMethod(IsRectangularBand, "for an inverse semigroup",
-[IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
+[IsInverseSemigroup], 
+function(S)
+
+  if HasParent(S) and HasIsRectangularBand(Parent(S)) 
+    and IsRectangularBand(Parent(S)) then 
+    return true;
+  fi;
+  return IsHTrivial(S) and IsSimpleSemigroup(S);
+end);
 
 # different method for ideals (ideals know at their point of creation if they
 # are regular or not)
 
 InstallMethod(IsRegularSemigroup, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local tester, n, rhofunc, lookfunc, data, i;
 
-  if IsSimpleSemigroup(s) then 
+  if IsSimpleSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is simple");
     return true;
-  elif HasIsCompletelyRegularSemigroup(s) 
-    and IsCompletelyRegularSemigroup(s) then 
+  elif HasIsCompletelyRegularSemigroup(S) 
+    and IsCompletelyRegularSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is completely regular");
     return true;
-  else #HasGreensDClasses(s) then 
-    return ForAll(GreensDClasses(s), IsRegularDClass);
+  else #HasGreensDClasses(S) then 
+    return ForAll(GreensDClasses(S), IsRegularDClass);
   fi;
 
-  tester:=IdempotentTester(s);
-  rhofunc:=RhoFunc(s);
+  tester:=IdempotentTester(S);
+  rhofunc:=RhoFunc(S);
 
   # look for s not being regular
   lookfunc:=function(data, x)
@@ -812,8 +911,8 @@ function(s)
     fi;
     
     # data corresponds to the group of units...
-    if IsActingSemigroupWithFixedDegreeMultiplication(s) 
-     and ActionRank(s)(x[4])=ActionDegree(x[4]) then 
+    if IsActingSemigroupWithFixedDegreeMultiplication(S) 
+     and ActionRank(S)(x[4])=ActionDegree(x[4]) then 
       return false;
     fi;
     
@@ -827,7 +926,7 @@ function(s)
     return true;
   end;
 
-  data:=SemigroupData(s);
+  data:=SemigroupData(S);
 
   for i in [2..Length(data)] do 
     if lookfunc(data, data[i]) then 
@@ -848,28 +947,28 @@ end);
 InstallMethod(IsRegularSemigroupElement, 
 "for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement], 
-function(s, f)                                  
+function(S, f)                                  
   local o, scc, rho, tester, i;
   
-  if not f in s then 
+  if not f in S then 
     Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
     return false;
   fi;
   
-  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
+  if HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is regular,");
     return true;
   fi;
  
-  if IsClosed(LambdaOrb(s)) then 
-    o:=LambdaOrb(s); 
+  if IsClosed(LambdaOrb(S)) then 
+    o:=LambdaOrb(S); 
   else
-    o:=GradedLambdaOrb(s, f, true)[1]; 
+    o:=GradedLambdaOrb(S, f, true)[1]; 
   fi;
         
-  scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]];
-  rho:=RhoFunc(s)(f);
-  tester:=IdempotentTester(s);
+  scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(S)(f))]];
+  rho:=RhoFunc(S)(f);
+  tester:=IdempotentTester(S);
 
   for i in scc do 
     if tester(o[i], rho) then
@@ -884,14 +983,14 @@ end);
 InstallMethod(IsRegularSemigroupElementNC, 
 "for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement], 
-function(s, f)                                  
+function(S, f)                                  
   local o, scc, rho, tester, i;
  
-  o:=GradedLambdaOrb(s, f, false)[1];
+  o:=GradedLambdaOrb(S, f, false)[1];
         
-  scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]];
-  rho:=RhoFunc(s)(f);
-  tester:=IdempotentTester(s);
+  scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(S)(f))]];
+  rho:=RhoFunc(S)(f);
+  tester:=IdempotentTester(S);
 
   for i in scc do 
     if tester(o[i], rho) then
@@ -931,11 +1030,15 @@ InstallMethod(IsRightSimple, "for an inverse semigroup",
 InstallMethod(IsRightZeroSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local gens, rho, val, x;
 
-  gens:=GeneratorsOfSemigroup(s);
-  rho:=RhoFunc(s);
+  if HasParent(S) and HasIsRightZeroSemigroup(Parent(S)) 
+    and IsRightZeroSemigroup(Parent(S)) then 
+    return true;
+  fi;
+  gens:=GeneratorsOfSemigroup(S);
+  rho:=RhoFunc(S);
   val:=rho(gens[1]);
   for x in gens do 
     if rho(x)<>val or not IsIdempotent(x) then 
@@ -947,7 +1050,14 @@ function(s)
 end);
 
 InstallMethod(IsRightZeroSemigroup, "for a semigroup",
-[IsSemigroup], S-> NrRClasses(S)=1 and Size(S)=NrLClasses(S));
+[IsSemigroup], 
+function(S)
+  if HasParent(S) and HasIsRightZeroSemigroup(Parent(S)) 
+    and IsRightZeroSemigroup(Parent(S)) then 
+    return true;
+  fi;
+  return NrRClasses(S)=1 and Size(S)=NrLClasses(S);
+end);
 
 # same method for ideals
 
@@ -961,21 +1071,33 @@ InstallMethod(IsSemiband, "for a semigroup", [IsSemigroup], IsIdempotentGenerate
 # same method for ideals
 
 InstallMethod(IsSemilatticeAsSemigroup, "for a semigroup", [IsSemigroup], 
- S-> IsCommutativeSemigroup(S) and IsBand(S));
+function(S)
+  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S)) 
+    and IsSemilatticeAsSemigroup(Parent(S)) then 
+    return true;
+  fi;
+  return IsCommutativeSemigroup(S) and IsBand(S);
+end);
 
 # not applicable to ideals
 
 InstallMethod(IsSemilatticeAsSemigroup, 
 "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup], 
-s-> ForAll(GeneratorsOfSemigroup(s), IsIdempotent));
+function(S) 
+  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S)) 
+    and IsSemilatticeAsSemigroup(Parent(S)) then 
+    return true;
+  fi;
+  return ForAll(GeneratorsOfSemigroup(S), IsIdempotent);
+end);
 
 # same method for ideals
 
 InstallMethod(IsSemilatticeAsSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], 
 function(S)
-  if IsSemigroupIdeal(S) and HasIsSemilatticeAsSemigroup(Parent(S)) 
+  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S)) 
     and IsSemilatticeAsSemigroup(Parent(S)) then 
     return true;
   else
@@ -1092,12 +1214,12 @@ end);
 
 InstallMethod(IsTrivial, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
+function(S)
   local gens;
-  if HasSize(s) and Size(s)=1 then 
+  if HasSize(S) and Size(S)=1 then 
     return true;
   fi;
-  gens:=GeneratorsOfSemigroup(s);
+  gens:=GeneratorsOfSemigroup(S);
   return ForAll(gens, x-> gens[1]=x) and IsIdempotent(gens[1]);
 end); 
 
@@ -1156,6 +1278,10 @@ InstallMethod(IsZeroGroup, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
 
+  if HasParent(S) and HasIsZeroGroup(Parent(S)) and IsZeroGroup(Parent(S)) then 
+    return true;
+  fi;
+
   if MultiplicativeZero(S)=fail then 
     Info(InfoSemigroups, 2, "the semigroup does not have a zero");
     return false;
@@ -1174,7 +1300,10 @@ end);
 InstallMethod(IsZeroRectangularBand, "for an acting semigroup", [IsActingSemigroup],
 function(S)
 
-  if not IsZeroSimpleSemigroup(S) then 
+  if HasParent(S) and HasIsZeroRectangularBand(Parent(S)) 
+   and IsZeroRectangularBand(Parent(S)) then 
+    return true;
+  elif not IsZeroSimpleSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is not 0-simple");
     return false;
   fi;
@@ -1189,6 +1318,11 @@ InstallMethod(IsZeroSemigroup,
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local z, gens, m, i, j;
+
+  if HasParent(S) and HasIsZeroSemigroup(Parent(S)) and
+   IsZeroSemigroup(Parent(S)) then 
+    return true;
+  fi;
 
   z:=MultiplicativeZero(S);
 
@@ -1214,6 +1348,10 @@ end);
 
 InstallMethod(IsZeroSemigroup, "for a semigroup", [IsSemigroup],
 function(S) 
+  if HasParent(S) and HasIsZeroSemigroup(Parent(S)) and
+   IsZeroSemigroup(Parent(S)) then 
+    return true;
+  fi;
   return NrRegularDClasses(S)=1 and MultiplicativeZero(S)<>fail;
 end);
 

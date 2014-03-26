@@ -13,7 +13,12 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)
   local x, y;
-  
+ 
+  if HasParent(I) and HasIsCommutativeSemigroup(Parent(I)) and
+   IsCommutativeSemigroup(Parent(I)) then 
+    return true;
+  fi;
+
   for x in GeneratorsOfSemigroupIdeal(I) do
     for y in GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)) do 
       if not x*y=y*x then 
@@ -31,7 +36,12 @@ InstallMethod(IsTrivial, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)
   local gens;
-    gens := GeneratorsOfSemigroupIdeal(I);
+  
+  if HasIsTrivial(Parent(I)) and IsTrivial(Parent(I)) then 
+    return true;
+  fi;
+
+  gens := GeneratorsOfSemigroupIdeal(I);
   return MultiplicativeZero(I) = gens[1] and ForAll(gens, x -> gens[1] = x);
 end);
 
@@ -47,7 +57,8 @@ function(I)
   return false;
 end);
 
-#
+# this is here so that for regular ideals this method has higher rank than the
+# method for IsSemigroup.
 
 InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
