@@ -26,8 +26,19 @@
       <C>IsRZMSCongruenceByLinkedTriple</C> object is returned, which can be
       used like any other semigroup congruence object.<P/>
 
-      If the arguments describe an invalid linked triple, then an error is
-      returned.
+      If the arguments describe a triple which is not <E>linked</E> in the sense
+      described above, then this function returns an error.
+      <Example>
+gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
+gap> mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],
+>             [  0, (),       0,     0, (3,5),         0 ],
+>             [ (),  0,       0, (3,5),     0,         0 ] ];;
+gap> s := ReesZeroMatrixSemigroup(g, mat);;
+gap> n := Group([ (1,4)(3,5), (1,5)(3,4) ]);;
+gap> colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;
+gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
+gap> cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
+&lt;RZMS congruence by linked triple (2^2,4,3)&gt;</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -53,6 +64,19 @@
       If the arguments are valid, an <C>IsRZMSCongruenceClassByLinkedTriple</C>
       object is returned, which can be used like any other equivalence class
       object.  Otherwise, an error is returned.
+      <Example>
+gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
+gap> mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],
+>             [  0, (),       0,     0, (3,5),         0 ],
+>             [ (),  0,       0, (3,5),     0,         0 ] ];;
+gap> s := ReesZeroMatrixSemigroup(g, mat);;
+gap> n := Group([ (1,4)(3,5), (1,5)(3,4) ]);;
+gap> colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;
+gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
+gap> cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);;
+gap> class := RZMSCongruenceClassByLinkedTriple(cong, RightCoset(n,(1,5)),2,3);
+{(2,(3,4),3)}
+      </Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -66,6 +90,9 @@
       Rees 0-matrix semigroup <A>s</A>.  This list will include all possible
       RZMS congruences by linked triple, as well as a special object describing
       the universal congruence, which has no linked triple representation.<P/>
+      <Example>
+gap> s := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(),(1,3,2)],[(1,2),0]]);;
+gap> congs := CongruencesOfSemigroup(s);;</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -78,6 +105,17 @@
       This function returns true if and only if the arguments (<A>n</A>,
       <A>colBlocks</A>, <A>rowBlocks</A>) form a linked triple on the finite
       0-simple semigroup <A>s</A>, in the sense described above.
+      <Example>
+gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
+gap> mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],
+>             [  0, (),       0,     0, (3,5),         0 ],
+>             [ (),  0,       0, (3,5),     0,         0 ] ];;
+gap> s := ReesZeroMatrixSemigroup(g, mat);;
+gap> n := Group([ (1,4)(3,5), (1,5)(3,4) ]);;
+gap> colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;
+gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
+gap> IsLinkedTriple(s, n, colBlocks, rowBlocks);
+true</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -90,6 +128,11 @@
       This function returns the number of congruence classes the semigroup
       congruence <A>cong</A> has in its semigroup.  <A>cong</A> must be a Rees
       0-matrix semigroup congruence by linked triple, or a universal congruence.
+      <Example>
+gap> s := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(),(1,3,2)],[(1,2),0]]);;
+gap> cong := CongruencesOfSemigroup(s)[3];;
+gap> NrCongruenceClasses(cong);
+9</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -102,6 +145,12 @@
       This function returns a canonical representative for the RZMS congruence
       class by linked triple <A>class</A>.  This representative can be used to
       identify a class uniquely.
+      <Example>
+gap> s := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(),(1,3,2)],[(1,2),0]]);;
+gap> cong := CongruencesOfSemigroup(s)[3];;
+gap> class := CongruenceClasses(cong)[3];;
+gap> CanonicalRepresentative(class);
+(1,(1,2,3),2)</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -115,6 +164,11 @@
       linked triple, or a universal semigroup congruence, and returns the same
       congruence relation, but described by GAP's default method of implementing
       semigroup congruences: by a set of generating pairs for the congruence.
+      <Example>
+gap> s := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(),(1,3,2)],[(1,2),0]]);;
+gap> cong := CongruencesOfSemigroup(s)[3];;
+gap> AsSemigroupCongruenceByGeneratingPairs(cong);
+&lt;semigroup congruence with 3 generating pairs&gt;</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -131,6 +185,13 @@
 
       If the congruence is not defined over an appropriate semigroup, then this
       function returns an error.
+      <Example>
+gap> s := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(),(1,3,2)],[(1,2),0]]);;
+gap> x := ReesZeroMatrixSemigroupElement(s, 1, (1,3,2), 1);;
+gap> y := ReesZeroMatrixSemigroupElement(s, 1, (), 1);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(s, [ [x,y] ]);;
+gap> AsRZMSCongruenceByLinkedTriple(cong);
+&lt;RZMS congruence by linked triple (3,2,2)&gt;</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -143,6 +204,10 @@
     This function returns the universal semigroup congruence for the
     semigroup <A>s</A>.  It can be used in the same way as any other
     semigroup congruence object.
+    <Example>
+gap> s := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(),(1,3,2)],[(1,2),0]]);;
+gap> UniversalSemigroupCongruence(s);
+&lt;universal semigroup congruence&gt;</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
