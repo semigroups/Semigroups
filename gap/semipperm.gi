@@ -49,6 +49,15 @@ end);
 
 #
 
+InstallMethod(RankOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  return RankOfPartialPermCollection(SupersemigroupOfIdeal(I));
+end);
+
+#
+
 InstallMethod(DisplayString, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 ViewString); 
@@ -90,7 +99,7 @@ function(I)
 
   Append(str, "partial perm semigroup ideal ");
   Append(str, "\<\>on ");
-  Append(str, String(DegreeOfPartialPermSemigroup(I)));
+  Append(str, String(RankOfPartialPermSemigroup(I)));
   Append(str, " pts\<\> with ");
 
   nrgens:=Length(GeneratorsOfSemigroupIdeal(I));

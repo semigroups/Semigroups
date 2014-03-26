@@ -16,8 +16,8 @@ DeclareAttribute("GradedRhoHT", IsActingSemigroup, "mutable");
 
 DeclareGlobalFunction("GradedLambdaOrb");
 DeclareGlobalFunction("GradedRhoOrb");
-DeclareProperty("IsGradedLambdaOrb", IsLambdaOrb);
-DeclareProperty("IsGradedRhoOrb", IsRhoOrb);
+DeclareFilter("IsGradedLambdaOrb", IsLambdaOrb);
+DeclareFilter("IsGradedRhoOrb", IsRhoOrb);
 
 DeclareAttribute("GradedLambdaOrbs", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("IteratorOfGradedLambdaOrbs");

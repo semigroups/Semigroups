@@ -119,7 +119,7 @@ function(s, f, opt)
   fi;
 
   o:=Orb(gens, lambda, LambdaAct(s), record);
-  SetIsGradedLambdaOrb(o, true);
+  SetFilterObj(o, IsGradedLambdaOrb);
   
   if opt then # store o
     j:=LambdaRank(s)(lambda)+1;
@@ -195,7 +195,7 @@ function(s, f, opt)
   fi;
 
   o:=Orb(gens, rho, RhoAct(s), record);
-  SetIsGradedRhoOrb(o, true);
+  SetFilterObj(o, IsGradedRhoOrb);
   
   if opt then # store o
     j:=RhoRank(s)(RhoFunc(s)(f))+1;
