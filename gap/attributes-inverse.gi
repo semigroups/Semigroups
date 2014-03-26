@@ -67,18 +67,18 @@ end);
 #
 
 InstallMethod(IsJoinIrreducible, 
-"for an inverse semigroup of partial perms or block bijections, and an element",
+"for an inverse semigroup of partial perms or block bijections or partial perm bipartitions, and an element",
 [IsInverseSemigroup, IsAssociativeElement],
 function(S, x)
   local y, elts, i, k, singleline, sup, j;
 
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) then
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
     return fail;
   fi;
 
   if not x in S then
-    Error("Second argument should be a partial perm within first argument,");
+    Error("Second argument should be an element within first argument,");
     return fail;
   fi;
   
@@ -87,11 +87,17 @@ function(S, x)
   fi;
 
   y:=LeftOne(x);    
-  elts:=Set(Idempotents(S));;
+  if IsBipartition(x) then
+    elts:=ShallowCopy(Idempotents(S));
+    Sort(elts, function(x, y) return RankOfBipartition(x) < RankOfBipartition(y); end );
+  else
+    elts:=Set(Idempotents(S));;
+  fi;
   i:=Position(elts, y);
   k:=0;
   singleline:=true;
 
+  # This assumes something about the ordering of the idempotents which is not necessarily true for Bipartition stuff
   # Find an element smaller than y, k
   for j in [i-1,i-2 .. 1] do
     if NaturalLeqInverseSemigroup(elts[j], elts[i]) then
@@ -129,10 +135,12 @@ end);
 #
 
 InstallMethod(IsMajorantlyClosed, 
-"for an inverse subsemigroup of partial perms or block bijections, and a subsemigroup",
+"for an inverse subsemigroup of partial perms or block bijections or partial perm bipartitions, and a subsemigroup",
 [IsInverseSemigroup, IsSemigroup],
 function(S, T)
-  if not (IsPartialPermSemigroup(S) and IsPartialPermSemigroup(T)) and not (IsBlockBijectionSemigroup(S) and IsBlockBijectionSemigroup(T)) then
+  if not (IsPartialPermSemigroup(S) and IsPartialPermSemigroup(T))
+   and not (IsBlockBijectionSemigroup(S) and IsBlockBijectionSemigroup(T))
+   and not (IsPartialPermBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(T)) then
     Error("Not yet implemented,");
   else
     if not IsSubsemigroup(S, T) then
@@ -146,10 +154,12 @@ end);
 #
 
 InstallMethod(IsMajorantlyClosed, 
-"for an inverse subsemigroup of partial perms or block bijections, and a subset",
+"for an inverse subsemigroup of partial perms or block bijections or partial perm bipartitions, and a subset",
 [IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
-  if not (IsPartialPermSemigroup(S) and IsPartialPermCollection(T)) and not (IsBlockBijectionSemigroup(S) and IsBipartitionCollection(T)) then
+  if not (IsPartialPermSemigroup(S) and IsPartialPermCollection(T))
+    and not (IsBlockBijectionSemigroup(S) and IsBipartitionCollection(T))
+    and not (IsPartialPermBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(T)) then
     Error("Not yet implemented,");
   else
     if not IsSubset(S, T) then
@@ -163,7 +173,7 @@ end);
 #
 
 InstallMethod(IsMajorantlyClosedNC, 
-"for an inverse subsemigroup of partial permutations or block bijections and a subset",
+"for an inverse subsemigroup of partial permutations or block bijections or partial perm bipartitions and a subset",
 [IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
   local i, iter, t, u;
@@ -172,7 +182,7 @@ function(S, T)
     return true;
   fi;
   
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) then
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
     return fail;
   fi;
@@ -266,10 +276,10 @@ end);
 #
 
 InstallMethod(JoinIrreducibleDClasses,
-"for an inverse semigroup of block bijections",
+"for an inverse semigroup of block bijections or partial perm bipartitions",
 [IsInverseSemigroup],
 function(S)
-  if not IsBlockBijectionSemigroup(S) then
+  if not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
     return fail;
   fi;
@@ -280,10 +290,10 @@ end);
 #
 
 InstallMethod(MajorantClosure, 
-"for an inverse subsemigroup of partial perms or block bijections and a subsemigroup",
+"for an inverse subsemigroup of partial perms or block bijections or partial perm bipartitions and a subsemigroup",
 [IsInverseSemigroup, IsSemigroup],
 function(S, T)
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) then
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
   elif not IsSubset(S,T) then
     Error("The second argument should be a subset of the first,");
@@ -298,7 +308,7 @@ InstallMethod(MajorantClosure,
 "for an inverse subsemigroup of partial permutations or block bijections and a subset",
 [IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) then
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
   elif not IsSubset(S,T) then
     Error("The second argument should be a subset of the first");
@@ -355,7 +365,7 @@ InstallMethod(Minorants,
 function(S, f)
   local out, elts, i, j, k, NaturalLeq;
   
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) then
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
     return fail;
   elif not f in S then 
@@ -398,7 +408,7 @@ InstallMethod(RightCosetsOfInverseSemigroup,
 function(S, T)
   local elts, idem, usedreps, out, dupe, coset, s, rep, t;
   
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) then
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
     return fail;
   fi;
@@ -639,7 +649,9 @@ function(coll, type)
     od;
     
     return Bipartition(out);
-    
+
+  elif IsPartialPermBipartition(type) then
+    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm), PartialPerm([])));
   else
     Error("this function does not work for this type of element");
   fi;

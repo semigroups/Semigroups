@@ -74,6 +74,13 @@ end);
 
 #
 
+InstallImmediateMethod(IsPartialPermBipartitionSemigroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
+function(S) 
+  return ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
+end);
+
+#
+
 InstallMethod(IsBlockBijectionSemigroup,
 "for a bipartition semigroup ideal",
 [IsBipartitionSemigroup and IsSemigroupIdeal],
@@ -82,6 +89,18 @@ function(S)
     return true;
   fi;
   return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+end);
+
+#
+
+InstallMethod(IsPartialPermBipartitionSemigroup,
+"for a bipartition semigroup ideal",
+[IsBipartitionSemigroup and IsSemigroupIdeal],
+function(S)
+  if IsPartialPermBipartitionSemigroup(SupersemigroupOfIdeal(S)) then
+    return true;
+  fi;
+  return ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
 end);
 
 #
