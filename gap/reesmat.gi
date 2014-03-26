@@ -8,6 +8,12 @@
 #############################################################################
 ##
 
+InstallMethod(IsGeneratorsOfInverseSemigroup, 
+"for a collection of Rees 0-matrix semigroup elements",
+[IsReesZeroMatrixSemigroupElementCollection], ReturnFalse);
+
+#
+
 InstallMethod(ViewString, 
 "for a Rees 0-matrix subsemigroup ideal with ideal generators",
 [IsReesZeroMatrixSubsemigroup and IsSemigroupIdeal and

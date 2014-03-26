@@ -286,6 +286,9 @@ function(d)
     leftact:=PROD;
   elif IsReesZeroMatrixSubsemigroup(Parent(d)) then 
     leftact:=function(x, y)
+      if y![1]=0 then 
+        return y;
+      fi;
       return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]]^-1
       *x*rep![2]^-1*y![2], y![3], y![4]]);
     end;
@@ -937,37 +940,34 @@ function(s)
 end);
 
 # same method for ideals
-# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
-# for an ideal. 
 
 InstallMethod(IsomorphismPermGroup,
 "for a subsemigroup of a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
-function(s)
+[IsReesZeroMatrixSubsemigroup],
+function(S)
   local rep;
 
-  if not IsGroupAsSemigroup(s)  then
+  if not IsGroupAsSemigroup(S)  then
    Error( "usage: a subsemigroup of a Rees 0-matrix semigroup satisfying\n", 
     "IsGroupAsSemigroup,");
    return; 
   fi;
 
-  rep:=s.1;
+  rep:=S.1;
   if rep![1]=0 then # special case for the group consisting of 0
-    return MagmaIsomorphismByFunctionsNC(s, Group(()), x-> (), x-> rep);
+    return MagmaIsomorphismByFunctionsNC(S, Group(()), x-> (), x-> rep);
   fi;
 
-  return MagmaIsomorphismByFunctionsNC(s, 
-    Group(List(GeneratorsOfSemigroup(s), x-> x![2])),
-      x-> x![2], x-> RMSElement(s, rep![1], x, rep![3]));
+  return MagmaIsomorphismByFunctionsNC(S, 
+    Group(List(GeneratorsOfSemigroup(S), x-> x![2])),
+      x-> x![2], x-> RMSElement(S, rep![1], x, rep![3]));
 end);
 
 # fall back method, same method for ideals
 # JDM not tested since there is so far no good method for GeneratorsOfSemigroup
 # for an ideal. 
 
-InstallMethod(IsomorphismPermGroup, "for a semigroup", 
-[IsSemigroup],
+InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
 function(S)
   local en, act, gens;
 
@@ -988,7 +988,7 @@ function(S)
 
   return MagmaIsomorphismByFunctionsNC( S, Group( gens ), 
    x-> Permutation(x, [1..Length(en)], act), 
-   x-> en[Position(en, One(S))^x]);
+   x-> en[Position(en, MultiplicativeNeutralElement(S))^x]);
 end);
 
 # not relevant for ideals

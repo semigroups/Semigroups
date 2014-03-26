@@ -195,8 +195,8 @@ function(f, n)
   fi;
 end);
 
-InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup with generators", 
-[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup", 
+[IsReesZeroMatrixSubsemigroup], 
 function(s)
   return function(x)
     if x![1]=0 then 
@@ -406,7 +406,9 @@ function(x)
   if x=0 then 
     return 0;
   else 
-    return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1; 
+    return
+     NrMovedPoints(UnderlyingSemigroup(
+      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
   fi;
 end);
 
@@ -433,7 +435,8 @@ function(x)
   if x=0 then 
     return 0;
   else 
-    return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1; 
+     return NrMovedPoints(UnderlyingSemigroup(
+      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
   fi;
 end);
 
