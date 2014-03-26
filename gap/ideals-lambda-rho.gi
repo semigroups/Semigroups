@@ -128,7 +128,7 @@ function(o)
     Print("open ");
   fi;
   Print("ideal ");
-  if IsIdealLambdaOrb(o) then 
+  if IsLambdaOrb(o) then 
     Print("lambda ");
   else
     Print("rho ");
@@ -169,7 +169,7 @@ function(I)
   record.ht:=HTCreate(LambdaFunc(I)(Representative(I)), htopts);
   
   fam:=CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
-  return Objectify(NewType(fam, IsIdealLambdaOrb), record);
+  return Objectify(NewType(fam, IsIdealOrb and IsLambdaOrb), record);
 end);
 
 #
@@ -200,7 +200,7 @@ function(I)
   record.ht:=HTCreate(RhoFunc(I)(Representative(I)), htopts);
   
   fam:=CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
-  return Objectify(NewType(fam, IsIdealRhoOrb), record);
+  return Objectify(NewType(fam, IsIdealOrb and IsRhoOrb), record);
 end);
 
 # The entire lambda orbit of an ideal of an inverse semigroup is obtained from

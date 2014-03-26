@@ -10,8 +10,6 @@
 
 DeclareFilter("IsIdealOrb", IsOrbit);
 DeclareFilter("IsInverseIdealOrb", IsOrbit);
-DeclareFilter("IsIdealLambdaOrb", IsIdealOrb and IsLambdaOrb);
-DeclareFilter("IsIdealRhoOrb", IsIdealOrb and IsRhoOrb);
 
 DeclareGlobalFunction("UpdateIdealLambdaOrb");
 DeclareGlobalFunction("UpdateIdealRhoOrb");
