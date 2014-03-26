@@ -12,7 +12,7 @@
 
 # the first three main functions should be updated!
 
-## Methods for inverse acting semigroups consisting of acting elements with a
+## Methods for inverse acting semigroups consisting of associative elements with a
 ## method for InverseOp. 
 
 # same method for ideals
@@ -164,7 +164,7 @@ end);
 
 #
 
-InstallMethod(\in, "for acting element and inverse op L-class of acting semigroup.",
+InstallMethod(\in, "for associative element and inverse op L-class of acting semigroup.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(f, l)
   local rep, s, m, o, i, schutz, g, p;
@@ -217,7 +217,7 @@ end);
 
 #
 
-InstallMethod(\in, "for acting element and inverse op R-class of acting semigroup.",
+InstallMethod(\in, "for associative element and inverse op R-class of acting semigroup.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
   local rep, s, m, o, i, schutz, g, p;
@@ -677,7 +677,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensLClassOfElementNC, "for D-class and acting element",
+InstallMethod(GreensLClassOfElementNC, "for D-class and associative element",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;

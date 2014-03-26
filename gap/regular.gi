@@ -41,7 +41,7 @@ end);
 
 # different method for inverse, same method for ideals
 
-InstallMethod(\in, "for an acting element and regular acting semigroup",
+InstallMethod(\in, "for an associative element and regular acting semigroup",
 [IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup], 
 function(f, s)
   local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
@@ -128,7 +128,7 @@ end);
 
 #
 
-InstallMethod(\in, "for acting element and regular D-class of acting semigroup",
+InstallMethod(\in, "for associative element and regular D-class of acting semigroup",
 [IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
