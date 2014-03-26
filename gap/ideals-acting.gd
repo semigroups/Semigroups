@@ -12,5 +12,6 @@
 # to use the 
 
 DeclareCategory("IsSemigroupIdealData", IsSemigroupData);
+DeclareCategory("IsRegularIdealData", IsSemigroupIdealData);
 DeclareAttribute("SemigroupIdealData", IsSemigroupIdeal);
 

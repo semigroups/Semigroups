@@ -475,11 +475,10 @@ fail
 gap> MinimalIdeal(M);
 <simple bipartition semigroup ideal on 7 pts with 1 generator>
 gap> MinimalDClass(M);
-{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1 ], [ -2, -4, -7 ], [ -3, -5 ], [\
- -6 ] ] )}
+{Bipartition( [ 1, 2, 3, 4, 5, 6, 7 ], [ -1 ], [ -2, -4, -7 ], [ -3, -5 ], 
+ [ -6 ] )}
 gap> MinimalDClass(R);
-{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], [ -6 ] ] \
-)}
+{Bipartition( [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], [ -6 ] )}
 
 # greens.gi for ideals
 #
@@ -687,8 +686,8 @@ gap> GreensDClassOfElement(K, PartialPerm( [ 1, 4, 5, 6 ], [ 6, 2, 1, 3 ] ));
 {PartialPerm( [ 1, 4, 5, 6 ], [ 6, 2, 1, 3 ] )}
 gap> GreensHClassOfElement(L, Bipartition( [ [ 1, 3, 4, 6, -3 ], 
 >   [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], [ -5 ], [ -6 ] ] ));
-{Bipartition( [ [ 1, 3, 4, 6, -3 ], [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], [ -5 \
-], [ -6 ] ] )}
+{Bipartition( [ 1, 3, 4, 6, -3 ], [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], 
+ [ -5 ], [ -6 ] )}
 gap> GreensLClassOfElement(A, Transformation( [ 6, 3, 4, 4, 3, 2 ] ));
 {Transformation( [ 6, 3, 4, 4, 3, 2 ] )}
 gap> GreensRClassOfElement(B, Transformation( [ 3, 4, 6, 6, 4, 2 ] ));
@@ -745,9 +744,9 @@ gap> List(ideals, DClassType);
     [ 38, 40, 53, 54, 92, 93, 116, 117, 119, 120, 123, 127, 131, 135, 150, 
       205, 245, 498, 723, 724, 1712, 1717, 1962, 2117 ] ), 
   NewType( NewFamily( "CollectionsFamily(...)", [ 54 ], 
-    [ 53, 54, 116, 117, 119, 120, 123, 127, 131, 135, 150, 2148, 2154 ] ), 
+    [ 53, 54, 116, 117, 119, 120, 123, 127, 131, 135, 150, 2149, 2155 ] ), 
     [ 38, 40, 53, 54, 92, 93, 116, 117, 119, 120, 123, 127, 131, 135, 150, 
-      205, 498, 1712, 1717, 1962, 2117, 2148, 2154 ] ) ]
+      205, 498, 1712, 1717, 1962, 2117, 2149, 2155 ] ) ]
 gap> RClassType(A);
 NewType( NewFamily( "CollectionsFamily(...)", [ 54 ], 
 [ 53, 54, 116, 117, 119, 120, 123, 127, 131, 135, 150, 241 ] ), 
@@ -762,7 +761,7 @@ gap> HClassType(C);
 NewType( NewFamily( "CollectionsFamily(...)", [ 54 ], 
 [ 53, 54, 116, 117, 119, 120, 123, 127, 131, 135, 150, 241 ] ), 
 [ 38, 40, 53, 54, 92, 93, 116, 117, 119, 120, 123, 127, 131, 135, 150, 205, 
-  241, 498, 1712, 1716, 1962, 2117, 2219 ] )
+  241, 498, 1712, 1716, 1962, 2117, 2220 ] )
 
 # Idempotents, (and with integer)
 gap> L:=SemigroupIdeal(R, gensL);;
