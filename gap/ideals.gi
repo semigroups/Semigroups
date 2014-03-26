@@ -65,7 +65,7 @@ function(S, n)
   return S[n];
 end);
 
-# JDM move to lib?
+#
 
 InstallMethod(\=, "for semigroup ideals", 
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
@@ -75,11 +75,9 @@ function(I, J)
   if SupersemigroupOfIdeal(I)=SupersemigroupOfIdeal(J) then 
     return ForAll(GeneratorsOfMagmaIdeal(I), x-> x in J) and
     ForAll(GeneratorsOfMagmaIdeal(J), x-> x in I);
-  elif HasGeneratorsOfSemigroup(I) and HasGeneratorsOfSemigroup(J) then 
+  else 
     return ForAll(GeneratorsOfSemigroup(I), x-> x in J) and
      ForAll(GeneratorsOfSemigroup(J), x-> x in I); 
-  else #JDM: a better way??
-    return AsSSortedList(I)=AsSSortedList(J);
   fi;
 
 end);
@@ -228,9 +226,17 @@ function(S, gens, opts)
     SetIsRegularSemigroup(I, true);
   fi;
   
-  if HasSupersemigroupOfIdeal(S) then 
+  if (HasIsRegularSemigroup(S) and not IsRegularSemigroup(S)) then
+    # <S> is a non-regular semigroup or ideal
+    SetSupersemigroupOfIdeal(I, S);
+  elif HasSupersemigroupOfIdeal(S) then 
+    # <S> is a regular ideal
+
+    # this takes precedence over the last case since we hope that the
+    # supersemigroup of an ideal has fewer generators than the ideal...
     SetSupersemigroupOfIdeal(I, SupersemigroupOfIdeal(S));
-  elif HasGeneratorsOfSemigroup(S) then 
+  else
+    # <S> is a regular semigroup 
     SetSupersemigroupOfIdeal(I, S);
   fi;
  
