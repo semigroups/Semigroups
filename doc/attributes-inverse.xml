@@ -54,8 +54,8 @@ gap> PrimitiveIdempotents(S);
   </Returns>
   <Description>
     <C>IsJoinIrreducible</C> determines whether an element <A>x</A> of an 
-    inverse semigroup <A>S</A> of partial permutations or block bijections is 
-    join irreducible.<P/>
+    inverse semigroup <A>S</A> of partial permutations, block bijections or 
+    partial permutation bipartitions is join irreducible.<P/>
 
     An element <A>x</A> is <E>join irreducible</E> when it is not the least
     upper bound (with respect to the natural partial order 
@@ -100,8 +100,9 @@ false]]></Example>
 </Returns>
 <Description>
   <C>IsMajorantlyClosed</C> determines whether the subset <A>T</A> of the
-  inverse semigroup of partial permutations or block bijections <A>S</A> is 
-  majorantly closed in <A>S</A>. See also <Ref Oper="MajorantClosure"/>.<P/>
+  inverse semigroup of partial permutations, block bijections or partial 
+  permutation bipartitions <A>S</A> is majorantly closed in <A>S</A>. See also 
+  <Ref Oper="MajorantClosure"/>.<P/>
  
   We say that <A>T</A> is <E>majorantly closed</E> in <A>S</A> if it 
   contains all elements of <A>S</A> which are greater than or equal to any 
@@ -142,8 +143,8 @@ false
   </Returns>
   <Description>
     <C>JoinIrreducibleDClasses</C> returns a list of the join irreducible
-    &D;-classes of the inverse semigroup of partial permutations or block 
-    bijections <A>S</A>.<P/>
+    &D;-classes of the inverse semigroup of partial permutations, block 
+    bijections or partial permutation bipartitions <A>S</A>.<P/>
 
     A <E>join irreducible &D;-class</E> is a &D;-class containing only join
     irreducible elements.  See <Ref Oper="IsJoinIrreducible"/>.
@@ -177,8 +178,8 @@ gap> JoinIrreducibleDClasses(D);
   </Returns>
   <Description>
     <C>MajorantClosure</C> returns a majorantly closed subset of an inverse
-    semigroup of partial permutations or block bijections, <A>S</A>, as a list. 
-    See <Ref Func="IsMajorantlyClosed"/>.<P/>
+    semigroup of partial permutations, block bijections or partial permutation 
+    bipartitions, <A>S</A>, as a list. See <Ref Func="IsMajorantlyClosed"/>.<P/>
     The result contains all elements of <A>S</A> which are greater than or
     equal to any element of <A>T</A> (with respect to the natural partial 
     order <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>).
@@ -227,8 +228,8 @@ true
   </Returns>
   <Description>
     <C>Minorants</C> takes an element <A>f</A> from an inverse semigroup of 
-    partial permutations or block bijections <A>S</A>, and returns a list of the
-    minorants of <A>f</A> in <A>S</A>. <P/>
+    partial permutations, block bijections or partial permutation bipartitions 
+    <A>S</A>, and returns a list of the minorants of <A>f</A> in <A>S</A>. <P/>
     
     A <E>minorant</E> of <A>f</A> is an element of <A>S</A> which is strictly 
     less than <A>f</A> in the natural partial order of <A>S</A>. 
@@ -259,9 +260,10 @@ gap> Minorants(S,f);
   </Returns>
   <Description>
     <C>RightCosetsOfInverseSemigroup</C> takes a majorantly closed inverse 
-    subsemigroup <A>T</A>  of an inverse semigroup of partial permutations or
-    block bijections <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>. The result 
-    is a list of the right cosets of <A>T</A> in <A>S</A>.<P/>
+    subsemigroup <A>T</A>  of an inverse semigroup of partial permutations,
+    block bijections or partial permutation bipartitions <A>S</A>. See 
+    <Ref Func="IsMajorantlyClosed"/>. The result is a list of the right cosets 
+    of <A>T</A> in <A>S</A>.<P/>
     For <M>s \in S</M>, the right coset <M>\overline{Ts}</M> is defined if and 
     only if <M>ss^{-1} \in T</M>, in which case it is defined to be the 
     majorant closure of the set <M>Ts</M>. See <Ref Func="MajorantClosure"/>. 
@@ -292,9 +294,9 @@ gap> RC:=RightCosetsOfInverseSemigroup(S,T);
   </Returns>
   <Description>
     Given a group &H;-class <A>H</A> in an inverse semigroup of partial 
-    permutations or block bijections <C>S</C>, <C>SameMinorantsSubgroup</C> 
-    returns a list of the elements of <A>H</A> which have the same strict
-    minorants as the identity element of <A>H</A>.
+    permutations, block bijections or partial permutation bipartitions <C>S</C>,
+    <C>SameMinorantsSubgroup</C> returns a list of the elements of <A>H</A> 
+    which have the same strict minorants as the identity element of <A>H</A>.
     
     A <E>strict minorant</E> of <C>x</C> in <A>H</A> is an element of <C>S</C> 
     which is less than <C>x</C> (with respect to the natural partial order), 

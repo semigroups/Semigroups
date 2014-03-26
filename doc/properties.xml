@@ -337,8 +337,9 @@ false]]></Example>
     </Alt><P/>
     This condition is equivalent to <A>E</A> being majorantly closed in <A>S</A>.
     See <Ref Oper="IdempotentGeneratedSubsemigroup"/> and <Ref Oper="IsMajorantlyClosed"/>.    
-    Hence an inverse semigroup of partial permutations is <E>E-unitary</E> if 
-    and only if the idempotent generated subsemigroup is majorantly closed.
+    Hence an inverse semigroup of partial permutations, block bijections or 
+    partial permutation bipartitions is <E>E-unitary</E> if and only if the 
+    idempotent generated subsemigroup is majorantly closed.
     <Example><![CDATA[
 gap> S:=InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 4 ], [ 2, 3, 1, 6 ] ),
 >  PartialPerm( [ 1, 2, 3, 5 ], [ 3, 2, 1, 6 ] ) ]);;

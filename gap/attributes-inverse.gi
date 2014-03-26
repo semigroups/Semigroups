@@ -87,11 +87,9 @@ function(S, x)
   fi;
 
   y:=LeftOne(x);    
-  if IsBipartition(x) then
-    elts:=ShallowCopy(Idempotents(S));
-    Sort(elts, function(x, y) return RankOfBipartition(x) < RankOfBipartition(y); end );
-  else
-    elts:=Set(Idempotents(S));;
+  elts:=Set(Idempotents(S));;
+  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
+      elts:=Reversed(elts);
   fi;
   i:=Position(elts, y);
   k:=0;
@@ -159,7 +157,7 @@ InstallMethod(IsMajorantlyClosed,
 function(S, T)
   if not (IsPartialPermSemigroup(S) and IsPartialPermCollection(T))
     and not (IsBlockBijectionSemigroup(S) and IsBipartitionCollection(T))
-    and not (IsPartialPermBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(T)) then
+    and not (IsPartialPermBipartitionSemigroup(S) and IsBipartitionCollection(T)) then
     Error("Not yet implemented,");
   else
     if not IsSubset(S, T) then
@@ -379,18 +377,21 @@ function(S, f)
     return elts{NaturalPartialOrder(S)[i]};
   fi;
 
-  if IsIdempotent(f) then 
+  if IsIdempotent(f) then #(always true if S is a D-Class rep of an inverse sgp)
     out:=EmptyPlist(NrIdempotents(S));
     elts:=SSortedList(Idempotents(S));
-  else 
+  else
     out:=EmptyPlist(Size(S));
     elts:=Elements(S);
+  fi;
+  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
+    elts:=Reversed(elts);
   fi;
 
   i:=Position(elts, f);
   j:=0; 
 
-  for k in [1..i-1] do 
+  for k in [1..i-1] do
     if NaturalLeqInverseSemigroup(elts[k], f) and f<>elts[k] then 
       j:=j+1;
       out[j]:=elts[k];
@@ -469,7 +470,7 @@ function(h)
   
   S:=Parent(h);
   
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) then
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
     Error("Not yet implemented,");
     return fail;
   fi;
