@@ -428,8 +428,14 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> RankOfBlocks);
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R->
-  (x-> NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1)); 
+[IsReesZeroMatrixSubsemigroup], R->  
+function(x) 
+  if x=0 then 
+    return 0;
+  else 
+    return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1; 
+  fi;
+end);
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right 
 # like the inverse of f on Y.
