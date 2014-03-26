@@ -28,11 +28,11 @@ InstallMethod(PrintString,
 function(I) 
   local str;
 
-  str:="SemigroupIdeal(";
+  str:="\>\>SemigroupIdeal(\< \>";
   Append(str, PrintString(SupersemigroupOfIdeal(I)));
-  Append(str, ", ");
+  Append(str, ",\< \>");
   Append(str, PrintString(GeneratorsOfSemigroupIdeal(I)));
-  Append(str, " )");
+  Append(str, "\< )\<");
   return str;
 end);
 

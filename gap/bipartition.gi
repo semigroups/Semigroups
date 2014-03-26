@@ -1254,7 +1254,16 @@ end);
 InstallMethod(PrintString, "for a bipartition",
 [IsBipartition], 
 function(f)
-  return Concatenation("Bipartition( ", PrintString(ExtRepOfBipartition(f)), " )");
+  local ext, str, i;
+  ext:=ExtRepOfBipartition(f);
+  str:=Concatenation("\>\>Bipartition(\< \>", PrintString(ext[1]));
+  for i in [2..Length(ext)] do 
+    Append(str, ",\< \>");
+    Append(str, PrintString(ext[i]));
+  od;
+  Append(str, "\<");
+  Append(str, " )\<");
+  return str;
 end);
 
 #
@@ -1264,16 +1273,17 @@ InstallMethod(PrintString, "for a bipartition collection",
 function(coll) 
   local str, i;
 
-  str:="[ ";
+  str:="\>[ ";
   for i in [1..Length(coll)] do 
     if not i=1 then 
       Append(str, " ");
     fi;
+    Append(str, "\>");
     Append(str, PrintString(coll[i]));
     if not i=Length(coll) then 
-      Append(str, ",\n");
+      Append(str, ",\<\n");
     else
-      Append(str, " ]\n");
+      Append(str, " ]\<\n");
     fi;
   od;
   return str;
