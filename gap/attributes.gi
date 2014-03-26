@@ -373,7 +373,7 @@ function(coll)
   fi;
 
   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll)) or 
-   IsSemigroupIdeal(coll) then
+   (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
     coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
   
