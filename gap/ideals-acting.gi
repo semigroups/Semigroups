@@ -224,7 +224,8 @@ function(I)
    
   return GeneratorsOfInverseSemigroup(U);
 end);
-#
+
+# this could be simplier for ideals which know they are regular a priori.
 
 InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
@@ -235,12 +236,10 @@ function(I)
 
   data:=rec(gens:=gens, parent:=I, log:=[1], genspos:=0,
      ht:=HTCreate(gens[1], rec(treehashsize:=I!.opts.hashlen.L)),
-     pos:=0, init:=false,
-     reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[fail],
-     lenreps:=[0], orbit:=[fail,], dorbit:=[], repslens:=[],
-     lambdarhoht:=[], regular:=[],
-     genstoapply:=[1..Length(gens)], stopper:=false, 
-     poset:=[], scc_lookup:=[]);
+     pos:=0, init:=false, reps:=[], repslookup:=[], orblookup1:=[],
+     orblookup2:=[], rholookup:=[fail], lenreps:=[0], orbit:=[fail,],
+     dorbit:=[], repslens:=[], lambdarhoht:=[], regular:=[],
+     genstoapply:=[1..Length(gens)], stopper:=false, poset:=[], scc_lookup:=[]);
  
   if HasIsRegularSemigroup(I) and IsRegularSemigroup(I) then 
     filt:=IsRegularIdealData;
