@@ -38,6 +38,8 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection",
 [IsBipartitionCollection], x-> true);
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
 
 # IsGeneratorsOfActingSemigroup
 
@@ -193,8 +195,8 @@ function(f, n)
   fi;
 end);
 
-InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup with generators", 
-[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup", 
+[IsReesZeroMatrixSubsemigroup], 
 function(s)
   return function(x)
     if x![1]=0 then 
@@ -404,7 +406,9 @@ function(x)
   if x=0 then 
     return 0;
   else 
-    return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1; 
+    return
+     NrMovedPoints(UnderlyingSemigroup(
+      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
   fi;
 end);
 
@@ -426,8 +430,15 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> RankOfBlocks);
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R->
-  (x-> NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1)); 
+[IsReesZeroMatrixSubsemigroup], R->  
+function(x) 
+  if x=0 then 
+    return 0;
+  else 
+     return NrMovedPoints(UnderlyingSemigroup(
+      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
+  fi;
+end);
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right 
 # like the inverse of f on Y.

@@ -69,12 +69,12 @@ DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt]);
+[IsActingSemigroup, IsFunction, IsPosInt]);
 
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty", 
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction,       IsPosInt]);
+[IsActingSemigroupWithInverseOp, IsFunction, IsPosInt]);
 
 # undoc
 

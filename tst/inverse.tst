@@ -908,17 +908,14 @@ gap> NextIterator(iter);
 <identity partial perm on [ 1, 16, 17, 19 ]>
 gap> NextIterator(iter);
 <identity partial perm on [ 1, 7, 15, 16 ]>
-gap> s:=RandomInverseSemigroup(2,20);
-<inverse partial perm semigroup on 20 pts with 2 generators>
+gap> s:=RandomInverseSemigroup(2,20);;
 gap> iter:=IteratorOfDClassReps(s);
 <iterator of D-class reps>
-gap> s:=RandomInverseSemigroup(2,100);
-<inverse partial perm semigroup on 97 pts with 2 generators>
+gap> s:=RandomInverseSemigroup(2,100);;
 gap> iter:=IteratorOfLClassReps(s);
 <iterator of L-class reps>
 gap> for i in [1..10000] do NextIterator(iter); od;
-gap> s:=RandomInverseSemigroup(2,10);        
-<inverse partial perm semigroup on 10 pts with 2 generators>
+gap> s:=RandomInverseSemigroup(2,10);;
 gap> iter:=IteratorOfLClassReps(s);
 <iterator of L-class reps>
 gap> for i in iter do od;

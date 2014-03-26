@@ -8,7 +8,8 @@
 #############################################################################
 ##
 
-# factorisation of schutz gp element
+# factorisation of Schutzenberger group element, the same method works for
+# ideals
 
 InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
@@ -50,11 +51,11 @@ function(o, m, elt)
   
   for k in scc do
     uword:=TraceSchreierTreeOfSCCForward(o, m, k);
-    u:=EvaluateWord(gens, uword);
+    u:=EvaluateWord(o, uword);
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
         vword:=TraceSchreierTreeOfSCCBack(o, m, orbitgraph[k][l]);
-        v:=EvaluateWord(gens, vword);
+        v:=EvaluateWord(o, vword);
         f:=lambdaperm(rep, rep*u*gens[l]*v);
         if not IsBound(ex) then 
           nrgens:=nrgens+1; 
@@ -84,14 +85,16 @@ function(o, m, elt)
 end);
 
 # returns a word in the generators of the parent of <data> equal to the R-class
-# representative store in <data!.orbit[pos]>.
+# representative stored in <data!.orbit[pos]>.
 
 # Notes: the code is more complicated than you might think since the R-class
 # reps are obtained from earlier reps by left multiplication but the orbit
 # multipliers correspond to right multiplication.
 
+# This method does not work for ideals!
+
 InstallMethod(TraceSchreierTreeForward, "for semigroup data and pos int",
-[IsSemigroupData, IsPosInt], 100,
+[IsSemigroupData, IsPosInt], 
 function(data, pos)
   local word1, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
   
@@ -123,7 +126,7 @@ InstallMethod(Factorization,
 "for an acting semigroup with generators and element", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)
-  local o, gens, l, m, scc, data, pos, rep, word1, word2, p;
+  local o, l, m, scc, data, pos, rep, word1, word2, p;
  
   if not f in s then 
     Error("usage: <f> is not an element of the semigroup <s>,");
@@ -141,9 +144,9 @@ function(s, f)
   
   #compensate for the action of the multipliers, if necessary
   if l<>scc[1] then 
-    gens:=o!.gens;
     word2:=TraceSchreierTreeOfSCCForward(o, m, l);
-    p:=LambdaPerm(s)(rep, f*LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p:=LambdaPerm(s)(rep, f*LambdaInverse(s)(o[scc[1]], 
+     EvaluateWord(o!.gens, word2)));
   else 
     word2:=[];
     p:=LambdaPerm(s)(rep, f);
