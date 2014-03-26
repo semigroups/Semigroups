@@ -39,7 +39,7 @@ DeclareOperation("IsSynchronizingTransformationCollection",
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
-DeclareProperty("IsEunitaryInverseSemigroup", IsInverseSemigroup and IsPartialPermSemigroup);
+DeclareProperty("IsEunitaryInverseSemigroup", IsInverseSemigroup);
 
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsRegularStarSemigroup and IsActingSemigroup);
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);

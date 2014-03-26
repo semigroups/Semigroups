@@ -1298,9 +1298,12 @@ end);
 # same method for ideals
 
 InstallMethod(IsEunitaryInverseSemigroup,
-"for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
+"for an inverse semigroup which has NaturalLeqInverseSemigroup function",
+[IsInverseSemigroup],
 function(S)
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
+    TryNextMethod();
+  fi;
   return IsMajorantlyClosed(S,IdempotentGeneratedSubsemigroup(S));
 end);
 

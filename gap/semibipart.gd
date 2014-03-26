@@ -19,5 +19,6 @@ DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroup);
 DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroup);
 
 DeclareProperty("IsBlockBijectionSemigroup", IsBipartitionSemigroup);
+DeclareProperty("IsPartialPermBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareSynonymAttr("IsBlockBijectionMonoid", IsBlockBijectionSemigroup and IsMonoid);
-
+DeclareSynonymAttr("IsPartialPermBipartitionMonoid", IsPartialPermBipartitionSemigroup and IsMonoid);
