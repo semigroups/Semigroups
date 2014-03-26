@@ -86,7 +86,7 @@ function(I)
     return SemigroupData(I)!.gens;
   fi; 
   
-  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  Info(InfoWarning, 2, "finding a generating set of a semigroup ideal!");
   data:=SemigroupIdealData(I);
   Enumerate(data, infinity, ReturnFalse);
   pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
@@ -146,7 +146,7 @@ function(I)
     return out;
   fi;
 
-  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  Info(InfoWarning, 2, "finding a generating set of a semigroup ideal!");
   
   # find generators for I...
   U:=InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
@@ -193,7 +193,7 @@ function(I)
     return GeneratorsOfSemigroup(I);
   fi;
 
-  Info(InfoWarning, 1, "finding a generating set of a semigroup ideal!");
+  Info(InfoWarning, 2, "finding a generating set of a semigroup ideal!");
   
   # find generators for I...
   U:=InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
