@@ -1191,23 +1191,26 @@ function(f)
   local str, ext, i;
  
   if DegreeOfBipartition(f)=0 then 
-    return "<empty bipartition>";
+    return "\><empty bipartition>\<";
   fi;
 
   if IsBlockBijection(f) then 
-    str:="<block bijection: ";
+    str:="\>\><block bijection:\< ";
   else 
-    str:="<bipartition: ";
+    str:="\>\><bipartition:\< ";
   fi;
 
   ext:=ExtRepOfBipartition(f);
-  Append(str, ViewString(ext[1]));
+  Append(str, "\>");
+  Append(str, String(ext[1]));
+  Append(str, "\<");
 
   for i in [2..Length(ext)] do 
-    Append(str, ", ");
-    Append(str, ViewString(ext[i]));
+    Append(str, ", \>");
+    Append(str, String(ext[i]));
+    Append(str, "\<");
   od;
-  Append(str, ">");
+  Append(str, ">\<");
   return str;
 end);
 
