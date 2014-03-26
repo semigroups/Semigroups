@@ -636,7 +636,7 @@ function(s)
   fi;
 
   if pos<>fail and pos<>false then
-    f:=EvaluateWord(s, TraceSchreierTreeForward(o, pos));
+    f:=EvaluateWord(o, TraceSchreierTreeForward(o, pos));
   else
     # lambda orb is closed, find an element with minimum rank
     min_found:=rank(o[2]); pos:=2; i:=1; 
@@ -649,7 +649,7 @@ function(s)
         pos:=i;
       fi;
     od;
-    f:=EvaluateWord(GeneratorsOfSemigroup(s), TraceSchreierTreeForward(o, pos));
+    f:=EvaluateWord(o, TraceSchreierTreeForward(o, pos));
   fi;
 
   if IsIdempotent(f) and Size(GreensRClassOfElementNC(s, f))=1 then
@@ -697,7 +697,7 @@ function(S)
     od;
   fi;
 
-  x:=EvaluateWord(S, TraceSchreierTreeForward(o, pos));
+  x:=EvaluateWord(o, TraceSchreierTreeForward(o, pos));
   return GreensDClassOfElementNC(S, x);
 end);
 

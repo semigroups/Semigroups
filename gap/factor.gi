@@ -51,11 +51,11 @@ function(o, m, elt)
   
   for k in scc do
     uword:=TraceSchreierTreeOfSCCForward(o, m, k);
-    u:=EvaluateWord(s, uword);
+    u:=EvaluateWord(o, uword);
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
         vword:=TraceSchreierTreeOfSCCBack(o, m, orbitgraph[k][l]);
-        v:=EvaluateWord(s, vword);
+        v:=EvaluateWord(o, vword);
         f:=lambdaperm(rep, rep*u*gens[l]*v);
         if not IsBound(ex) then 
           nrgens:=nrgens+1; 
@@ -126,7 +126,7 @@ InstallMethod(Factorization,
 "for an acting semigroup with generators and element", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)
-  local o, gens, l, m, scc, data, pos, rep, word1, word2, p;
+  local o, l, m, scc, data, pos, rep, word1, word2, p;
  
   if not f in s then 
     Error("usage: <f> is not an element of the semigroup <s>,");
@@ -144,9 +144,9 @@ function(s, f)
   
   #compensate for the action of the multipliers, if necessary
   if l<>scc[1] then 
-    gens:=o!.gens;
     word2:=TraceSchreierTreeOfSCCForward(o, m, l);
-    p:=LambdaPerm(s)(rep, f*LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p:=LambdaPerm(s)(rep, f*LambdaInverse(s)(o[scc[1]], 
+     EvaluateWord(o!.gens, word2)));
   else 
     word2:=[];
     p:=LambdaPerm(s)(rep, f);

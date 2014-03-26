@@ -862,13 +862,13 @@ function(S)
       w:=List([1..i], x-> Random([1..Length(gens)]));
       return EvaluateWord(gens, w);
     else
-      x:=Random([1..Length(GeneratorsOfSemigroupIdeal(S))]);
+      x:=Random(GeneratorsOfSemigroupIdeal(S));
       gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
       
       i:=Random([1..Length(gens)/2]);
       w:=List([1..i], x-> Random([1..Length(gens)]));
       
-      x:=EvaluateWord(S, [[], x, w]);
+      x:=x*EvaluateWord(gens, w);
       
       i:=Random([1..Length(gens)/2]);
       w:=List([1..i], x-> Random([1..Length(gens)]));

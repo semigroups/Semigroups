@@ -9,14 +9,11 @@
 ##
 
 DeclareFilter("IsIdealOrb", IsOrbit);
-DeclareFilter("IsInverseIdealOrb", IsOrbit);
 
 DeclareGlobalFunction("UpdateIdealLambdaOrb");
 DeclareGlobalFunction("UpdateIdealRhoOrb");
 
-DeclareOperation("EvaluateWord", [IsSemigroupIdeal, IsList]);
-DeclareOperation("EvaluateWord", [IsSemigroup, IsList]);
-DeclareOperation("TraceIdealSchreierTreeForward", [IsIdealOrb, IsPosInt]);
+#DeclareOperation("TraceIdealSchreierTreeForward", [IsIdealOrb, IsPosInt]);
 
 DeclareOperation("Enumerate", [IsIdealOrb, IsCyclotomic, IsFunction]);
 DeclareOperation("ComponentOfIndex", [IsIdealOrb, IsPosInt]);

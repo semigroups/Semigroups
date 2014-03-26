@@ -738,7 +738,7 @@ function(s)
     func:=function(iter, m)
       local rep;
       # rep has rectified lambda val and rho val.
-      rep:=EvaluateWord(s, TraceSchreierTreeForward(o, scc[m][1])); 
+      rep:=EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1])); 
       return [s, m, o, 1, GradedRhoOrb(s, rep, false)[1], rep, false];
     end;
     
@@ -759,7 +759,7 @@ function(s)
     local rep;
 
     # <rep> has lambda val corresponding to <i>  
-    rep:=EvaluateWord(s, TraceSchreierTreeForward(o, i));
+    rep:=EvaluateWord(o, TraceSchreierTreeForward(o, i));
     
     # <rep> has rho val in position 1 of GradedRhoOrb(s, rep, false).
     # We don't rectify the rho val of <rep> in <o> since we require to
@@ -790,7 +790,7 @@ function(s)
     local rep;
 
     # <rep> has rho val corresponding to <i>  
-    rep:=EvaluateWord(s, Reversed(TraceSchreierTreeForward(o, i)));
+    rep:=EvaluateWord(o, Reversed(TraceSchreierTreeForward(o, i)));
     
     # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
     # We don't rectify the lambda val of <rep> in <o> since we require to
@@ -891,8 +891,7 @@ function(s)
     func:=function(iter, m) 
       local rep; 
       # rep has rectified lambda val and rho val. 
-      rep:=RightOne(EvaluateWord(s, 
-       TraceSchreierTreeForward(o, scc[m][1])));  
+      rep:=RightOne(EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1])));  
       
       return [s, m, o, fail, fail, rep, false]; 
     end; 
@@ -912,7 +911,7 @@ function(s)
   if not IsClosed(o) then 
     func:=function(iter, i) 
       local rep;
-      rep:=Inverse(EvaluateWord(s, TraceSchreierTreeForward(o, i)));
+      rep:=Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
       # <rep> has rho val corresponding to <i> and lambda val in position 1 of
       # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
       # this is no longer the case, and this is would be more complicated.
@@ -927,7 +926,7 @@ function(s)
       local rep; 
       
       # <rep> has rho val corresponding to <i> 
-      rep:=Inverse(EvaluateWord(s, TraceSchreierTreeForward(o, i)));
+      rep:=Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
      
       # rectify the lambda value of <rep>
       rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];

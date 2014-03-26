@@ -207,11 +207,10 @@ function(o, m)
   fi;
   
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  
-  if IsList(w[1]) then 
-    o!.scc_reps[m]:=EvaluateWord(o!.parent, w);
-  else
-    o!.scc_reps[m]:=o!.scc_reps[1]*EvaluateWord(o!.gens, w);
+  o!.scc_reps[m]:=EvaluateWord(o, w);
+
+  if not IsIdealOrb(o) then 
+    o!.scc_reps[m]:=o!.scc_reps[1]*o!.scc_reps[m];
   fi;
   
   return o!.scc_reps[m];
@@ -228,11 +227,10 @@ function(o, m)
   fi;
 
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  
-  if IsList(w[1]) then 
-    o!.scc_reps[m]:=EvaluateWord(o!.parent, Reversed(w));
-  else
-    o!.scc_reps[m]:=EvaluateWord(o!.gens, Reversed(w))*o!.scc_reps[1];
+  o!.scc_reps[m]:=EvaluateWord(o, Reversed(w));
+
+  if not IsIdealOrb(o) then 
+    o!.scc_reps[m]:=o!.scc_reps[m]*o!.scc_reps[1];
   fi;
   
   return o!.scc_reps[m];

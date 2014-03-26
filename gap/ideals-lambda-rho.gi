@@ -49,6 +49,14 @@ end);
 
 #
 
+InstallMethod(Length, "for an ideal inverse orb", 
+[IsIdealOrb and IsInverseOrb],
+function(o)
+  return Length(o!.orbit);
+end);
+
+#
+
 InstallMethod(IsBound\[\], "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt], 
 function(o, i)
@@ -60,6 +68,14 @@ function(o, i)
     nr:=nr+1;
   od;
   return IsBound(o!.orbits[nr]) and IsBound(o!.orbits[nr][i]);
+end);
+
+#
+
+InstallMethod(IsBound\[\], "for an inverse ideal orb and positive integer",
+[IsIdealOrb and IsInverseOrb, IsPosInt], 
+function(o, i)
+  return IsBound(o!.orbit[i]);
 end);
 
 # returns the index of the component containing <o[i]>
@@ -79,6 +95,14 @@ end);
 
 #
 
+InstallMethod(ComponentOfIndex, "for an inverse ideal orb and positive integer",
+[IsIdealOrb and IsInverseOrb, IsPosInt],
+function(o, i)
+  return 1;
+end);
+
+#
+
 InstallMethod(ELM_LIST, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt], 
 function(o, i)
@@ -94,13 +118,21 @@ end);
 
 #
 
+InstallMethod(ELM_LIST, "for an inverse ideal orb and positive integer",
+[IsIdealOrb and IsInverseOrb, IsPosInt], 
+function(o, i)
+  return o!.orbit[i];
+end);
+
+# same method for inverse ideal orbs
+
 InstallMethod(\in, "for an object and ideal orb",
 [IsObject, IsIdealOrb],
 function(obj, o)
   return HTValue(o!.ht, obj)<>fail;
 end);
 
-#
+# same method for inverse ideal orbs
 
 InstallMethod(Position, "for an ideal orb, object, zero cyc",
 [IsIdealOrb, IsObject, IsZeroCyc],
@@ -108,7 +140,7 @@ function(o, obj, n)
   return HTValue(o!.ht, obj);
 end);
 
-#
+# same method for inverse ideal orbs
 
 InstallMethod(OrbitGraph, "for an ideal orb",
 [IsIdealOrb],
@@ -127,15 +159,21 @@ function(o)
   else
     Print("open ");
   fi;
+  if IsInverseOrb(o) then 
+    Print("inverse ");
+  fi;
   Print("ideal ");
   if IsLambdaOrb(o) then 
     Print("lambda ");
   else
     Print("rho ");
   fi;
+  Print("orbit with ", Length(o)-1, " points");
   
-  Print("orbit with ", Length(o)-1, " points in ", Length(o!.orbits)-1, 
-  " components>");
+  if not IsInverseOrb(o) then 
+    Print(" in ", Length(o!.orbits)-1, " components");
+  fi;
+  Print(">");
   return;
 end);
 
@@ -265,7 +303,7 @@ function(I)
              #dummy point at the start of the orbit (otherwise we just get the
              #lambda orbit of the supersemigroup
 
-  SetFilterObj(o, IsLambdaOrb and IsInverseIdealOrb); 
+  SetFilterObj(o, IsLambdaOrb and IsInverseOrb and IsIdealOrb); 
   return o;
 end);
 
@@ -438,36 +476,41 @@ end);
 
 #
 
-InstallMethod(EvaluateWord, 
-"for a semigroup ideal and a triple of words (Semigroups)",
-[IsSemigroupIdeal, IsList],
-function(I, w)
-    local res, gens, i;
-
-    if HasGeneratorsOfSemigroup(I) and IsPosInt(w[1]) then 
-      return EvaluateWord(GeneratorsOfSemigroup(I), w);
-    fi;
-
-    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
-    res:=GeneratorsOfSemigroupIdeal(I)[AbsInt(w[2])]^SignInt(w[2]);
-    
-    for i in [1..Length(w[1])] do
-      res:=gens[w[1][i]]*res;
-    od;
-    for i in [1..Length(w[3])] do
-      res:=res*gens[w[3][i]];
-    od;
-    return res;
-  end );
+InstallMethod(EvaluateWord, "for an ideal orb and an ideal word (Semigroups)",
+[IsIdealOrb, IsList], 2, # to beat the methods for lambda/rho orbs below
+function(o, w)
+  local res, gens, i;
+  # it is safe to use <GeneratorsOfSemigroup> here since an ideal can't be
+  # obtained using <ClosureSemigroup>
+  gens:=o!.gens;
+  # = GeneratorsOfSemigroup(SupersemigroupOfIdeal(o!.parent));
+  res:=GeneratorsOfSemigroupIdeal(o!.parent)[AbsInt(w[2])]^SignInt(w[2]);
+  
+  for i in [1..Length(w[1])] do
+    res:=gens[w[1][i]]*res;
+  od;
+  for i in [1..Length(w[3])] do
+    res:=res*gens[w[3][i]];
+  od;
+  return res;
+end);
 
 #
 
-InstallMethod(EvaluateWord, 
-"for a semigroup and a word (Semigroups)",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsList], 1, 
+InstallMethod(EvaluateWord, "for a lambda orb and a word (Semigroups)",
+[IsLambdaOrb, IsList], 1, 
 # to beat the methods for IsXCollection
-function(S, w)
-  return EvaluateWord(GeneratorsOfSemigroup(S), w);
+function(o, w)
+  return EvaluateWord(o!.gens, w);
+end);
+
+#
+
+InstallMethod(EvaluateWord, "for a rho orb and a word (Semigroups)",
+[IsRhoOrb, IsList], 1, 
+# to beat the methods for IsXCollection
+function(o, w)
+  return EvaluateWord(o!.gens, w);
 end);
 
 # returns a triple [leftword, nr, rightword] where <leftword>, <rightword> are
@@ -476,7 +519,7 @@ end);
 
 InstallMethod(TraceSchreierTreeForward, 
 "for an inverse semigroup ideal orbit and a positive integer",
-[IsInverseIdealOrb, IsPosInt],
+[IsInverseOrb and IsIdealOrb, IsPosInt],
 function(o, i)
   local schreierpos, schreiergen, rightword, nr;
   
@@ -548,8 +591,6 @@ function(o, i)
 
   return [Reversed(leftword), o!.orbtogen[nr], Reversed(rightword)];
 end);
-
-#
 
 # the arguments are a lambda/rho orbit of a parent semigroup and a number. jj
 InstallGlobalFunction(SuffixOrb,

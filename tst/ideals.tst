@@ -188,10 +188,8 @@ gap> InversesOfSemigroupElement(I, Random(I));
      [ -2, -5 ], [ -3, -4 ]>, 
   <bipartition: [ 1, -1 ], [ 2, -6 ], [ 3, 6 ], [ 4, 5 ], [ -2, -5 ], 
      [ -3, -4 ]> ]
-gap> S:=SymmetricInverseMonoid(8);
-<symmetric inverse semigroup on 8 pts>
-gap> x:=PartialPerm([1]);
-<identity partial perm on [ 1 ]>
+gap> S:=SymmetricInverseMonoid(8);;
+gap> x:=PartialPerm([1]);;
 gap> I:=SemigroupIdeal(S, x);
 <inverse partial perm semigroup ideal on 8 pts with 1 generator>
 gap> IsZeroSimpleSemigroup(I);

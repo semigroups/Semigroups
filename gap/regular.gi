@@ -833,7 +833,7 @@ function(S)
   lookup:=OrbSCCLookup(rho_o);
 
   for i in [2..Length(lambda_o)] do
-    rep:=EvaluateWord(S, TraceSchreierTreeForward(lambda_o, i));
+    rep:=EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
     rho:=rhofunc(rep);
     j:=lookup[Position(rho_o, rho)];
     for k in scc[j] do
@@ -897,13 +897,13 @@ function(S)
       w:=List([1..i], x-> Random([1..Length(gens)]));
       return EvaluateWord(gens, w);
     else
-      x:=Random([1..Length(GeneratorsOfSemigroupIdeal(S))]);
+      x:=Random(GeneratorsOfSemigroupIdeal(S));
       gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
       
       i:=Random([1..Length(gens)]);
       w:=List([1..i], x-> Random([1..Length(gens)]));
       
-      x:=EvaluateWord(S, [[], x, w]);
+      x:=x*EvaluateWord(gens, w);
       
       i:=Random([1..Length(gens)]);
       w:=List([1..i], x-> Random([1..Length(gens)]));
