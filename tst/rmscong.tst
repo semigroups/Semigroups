@@ -117,3 +117,9 @@ gap> AsRZMSCongruenceByLinkedTriple(cong) = uni;
 true
 gap> Size(s / uni);
 1
+
+#
+gap> SemigroupsStopTest();
+
+#
+gap> STOP_TEST( "Semigroups package: rmscong.tst", 10000);
