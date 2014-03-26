@@ -19,15 +19,18 @@ gap> S:=InverseSemigroup([
 >  PartialPerm( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
 >  PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] ) ]);
 <inverse partial perm semigroup on 7 pts with 5 generators>
-gap> B:=Range(IsomorphismBipartitionSemigroup(S));
+gap> iso:=IsomorphismBipartitionSemigroup(S);;
+gap> A:=Range(iso);
 <inverse bipartition semigroup on 7 pts with 5 generators>
 gap> I:=SemigroupIdeal(S, PartialPerm( [ 1, 3, 4, 5, 7 ], [ 1, 3, 4, 5, 7 ] ));
 <inverse partial perm semigroup ideal on 7 pts with 1 generator>
 gap> JoinIrreducibleDClasses(S);
 [ {PartialPerm( [ 2 ], [ 2 ] )} ]
-gap> JoinIrreducibleDClasses(B);;
 gap> JoinIrreducibleDClasses(I);
 [ {PartialPerm( [ 2 ], [ 2 ] )} ]
+gap> JoinIrreducibleDClasses(A);
+[ {Bipartition( [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], 
+     [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ] )} ]
 gap> B:=InverseSemigroup([
 >  Bipartition( [ [ 1, -6 ], [ 2, -4 ], [ 3, -3 ], [ 4, 5, 6, 7, -1, -2, -5, -7 ] ] ),
 >  Bipartition( [ [ 1, -4 ], [ 2, -5 ], [ 3, 6, 7, -2, -3, -7 ], [ 4, -1 ], [ 5, -6 ] ] ),
@@ -38,18 +41,15 @@ gap> J:=SemigroupIdeal(B, Bipartition( [ [ 1, -1 ],
 >  [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] ));
 <inverse bipartition semigroup ideal on 7 pts with 2 generators>
 gap> JoinIrreducibleDClasses(B);
-[ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
-    , 
-  {Bipartition( [ [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] ] )}\
- ]
+[ {Bipartition( [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] )}, 
+  {Bipartition( [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] )} ]
 gap> JoinIrreducibleDClasses(J);
-[ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
-    , 
-  {Bipartition( [ [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], [ 6, -6 ] ] )}\
- ]
+[ {Bipartition( [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] )}, 
+  {Bipartition( [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], [ 6, -6 ] )} ]
 
 # IsJoinIrreducible
 gap> x:=PartialPerm( [ 1, 2, 4, 6 ], [ 2, 3, 1, 4 ] );;
+gap> xx:=x^iso;;
 gap> x in S;
 true
 gap> IsJoinIrreducible(S, x);
@@ -58,10 +58,17 @@ gap> x in I;
 true
 gap> IsJoinIrreducible(I, x);
 false
+gap> xx in A;
+true
+gap> IsJoinIrreducible(A, xx);
+false
 gap> y:=PartialPerm( [ 5 ], [ 3 ] );;
+gap> yy:=y^iso;;
 gap> IsJoinIrreducible(S, y);
 true
 gap> IsJoinIrreducible(I, y);
+true
+gap> IsJoinIrreducible(A, yy);
 true
 gap> P:=Bipartition( [ [ 1, 3, 5, 6, 7, -3, -4, -5, -6, -7 ], [ 2, -2 ], [ 4, -1 ] ] );;
 gap> IsJoinIrreducible(B, P);
@@ -80,7 +87,7 @@ gap> IsJoinIrreducible(J, R);
 true
 
 # Minorants
-gap> Minorants(S, x);   
+gap> Minorants(S, x);
 [ <empty partial perm>, [1,2], [2,3], [1,2,3], [4,1], [2,3][4,1], [4,1,2], 
   [4,1,2,3], [6,4], [6,4,1], [2,3][6,4], [2,3][6,4,1], [1,2][6,4], [6,4,1,2], 
   [1,2,3][6,4] ]
@@ -88,15 +95,51 @@ gap> Minorants(I, x);
 [ <empty partial perm>, [1,2], [2,3], [1,2,3], [4,1], [2,3][4,1], [4,1,2], 
   [4,1,2,3], [6,4], [6,4,1], [2,3][6,4], [2,3][6,4,1], [1,2][6,4], [6,4,1,2], 
   [1,2,3][6,4] ]
+gap> Minorants(A, xx);
+[ <bipartition: [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], 
+     [ -2 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, -4 ], [ 7 ], [ -1 ], 
+     [ -2 ], [ -3 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], 
+     [ -2 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6, -4 ], [ 7 ], 
+     [ -1 ], [ -2 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], 
+     [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, -4 ], [ 7 ], 
+     [ -1 ], [ -3 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -1 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6, -4 ], [ 7 ], 
+     [ -1 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], [ -2 ], 
+     [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6, -4 ], [ 7 ], 
+     [ -2 ], [ -3 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -2 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6, -4 ], [ 7 ], 
+     [ -2 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6, -4 ], [ 7 ], 
+     [ -3 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -4 ], [ -5 ], [ -6 ], [ -7 ]> ]
 gap> z:=PartialPerm( [  ], [  ] );
 <empty partial perm>
+gap> zz:=z^iso;;
 gap> z in S;
 true
 gap> z in I;
 true
+gap> zz in A;
+true
 gap> Minorants(S, z);
 [  ]
 gap> Minorants(I, z);
+[  ]
+gap> Minorants(A, zz);
 [  ]
 gap> m:=Minorants(B, Q);
 [ <block bijection: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -4, -5, -6, -7 ]> ]
@@ -124,9 +167,15 @@ gap> IsMajorantlyClosed(I,[x]);
 true
 gap> MajorantClosure(I, [x]) = [x];
 true
+gap> IsMajorantlyClosed(A, [xx]);
+true
+gap> MajorantClosure(A, [xx]) = [xx];
+true
 gap> IsMajorantlyClosed(S, [y]);      
 false
 gap> IsMajorantlyClosed(I, [y]);      
+false
+gap> IsMajorantlyClosed(A, [yy]);
 false
 gap> m:=MajorantClosure(S, [y]);;
 gap> Size(m);
@@ -134,6 +183,9 @@ gap> Size(m);
 gap> m1:=MajorantClosure(I, [y]);;
 gap> Size(m1);
 485
+gap> m2:=MajorantClosure(A, [yy]);;
+gap> Size(m2);
+486
 gap> ForAll(m1, x->x in m);
 true
 gap> IsMajorantlyClosed(B, [P]);
@@ -188,6 +240,67 @@ gap> RightCosetsOfInverseSemigroup(S, W);
   [ [4,3,2,7](1) ], [ [1,3,4,6](2), [5,1,3,4,6](2), [7,5,1,3,4,6](2) ], 
   [ [3,5][4,1,7](2), [4,1,7][6,3,5](2) ], [ [2,5](1)(3)(4) ], 
   [ [4,1,6](2)(3) ], [ [2,1,3,4,6] ], [ [3,1,7][4,2,6] ], [ [1,5][2,4,3,6] ] ]
+gap> ww:=w^iso;;
+gap> m:=MajorantClosure(A, [ww]);;
+gap> WW:=InverseSemigroup(m);
+<inverse bipartition semigroup on 7 pts with 5 generators>
+gap> IsMajorantlyClosed(A, WW);
+true
+gap> RightCosetsOfInverseSemigroup(A, WW);
+[ [ <bipartition: [ 1, -4 ], [ 2, -1 ], [ 3, -2 ], [ 4, -6 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -3 ], [ -5 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -5 ], [ 2, -7 ], [ 3, -1 ], [ 4, -6 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -2 ], [ -3 ], [ -4 ]> ], 
+  [ <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -5 ], [ 4, -7 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -1 ], [ -4 ], [ -6 ]> ], 
+  [ <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -5 ], [ -6 ], [ -7 ]>, 
+      <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+         [ 6, -6 ], [ 7 ], [ -7 ]>, 
+      <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+         [ 6 ], [ 7, -7 ], [ -6 ]>, 
+      <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+         [ 6 ], [ 7 ], [ -6 ], [ -7 ]>, 
+      <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5 ], 
+         [ 6, -6 ], [ 7 ], [ -5 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -5 ], [ 2, -2 ], [ 3, -1 ], [ 4, -3 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -4 ], [ -6 ], [ -7 ]>, 
+      <bipartition: [ 1, -5 ], [ 2, -2 ], [ 3, -1 ], [ 4, -3 ], [ 5, -7 ], 
+         [ 6, -4 ], [ 7 ], [ -6 ]>, 
+      <bipartition: [ 1, -5 ], [ 2, -2 ], [ 3, -1 ], [ 4, -3 ], [ 5 ], 
+         [ 6, -4 ], [ 7 ], [ -6 ], [ -7 ]>, 
+      <bipartition: [ 1, -5 ], [ 2, -2 ], [ 3, -1 ], [ 4, -3 ], [ 5, -7 ], 
+         [ 6 ], [ 7 ], [ -4 ], [ -6 ]> ], 
+  [ <bipartition: [ 1, -3 ], [ 2, -5 ], [ 3, -2 ], [ 4, -4 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -1 ], [ -6 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -4 ], [ 2, -2 ], [ 3, -1 ], [ 4, -5 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -3 ], [ -6 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -5 ], [ 2, -7 ], [ 3, -1 ], [ 4, -3 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -2 ], [ -4 ], [ -6 ]> ], 
+  [ <bipartition: [ 1, -7 ], [ 2, -3 ], [ 3, -4 ], [ 4, -1 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -2 ], [ -5 ], [ -6 ]> ], 
+  [ <bipartition: [ 1, -1 ], [ 2, -7 ], [ 3, -2 ], [ 4, -3 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -4 ], [ -5 ], [ -6 ]> ], 
+  [ <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -4 ], [ 4, -6 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -1 ], [ -5 ], [ -7 ]>, 
+      <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -4 ], [ 4, -6 ], [ 5, -1 ], 
+         [ 6 ], [ 7, -5 ], [ -7 ]>, 
+      <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -4 ], [ 4, -6 ], [ 5, -1 ], 
+         [ 6 ], [ 7 ], [ -5 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -7 ], [ 2, -2 ], [ 3, -5 ], [ 4, -1 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -3 ], [ -4 ], [ -6 ]>, 
+      <bipartition: [ 1, -7 ], [ 2, -2 ], [ 3, -5 ], [ 4, -1 ], [ 5 ], 
+         [ 6, -3 ], [ 7 ], [ -4 ], [ -6 ]> ], 
+  [ <bipartition: [ 1, -1 ], [ 2, -5 ], [ 3, -3 ], [ 4, -4 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -2 ], [ -6 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -6 ], [ 2, -2 ], [ 3, -3 ], [ 4, -1 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -4 ], [ -5 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, -4 ], [ 4, -6 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -2 ], [ -5 ], [ -7 ]> ], 
+  [ <bipartition: [ 1, -7 ], [ 2, -6 ], [ 3, -1 ], [ 4, -2 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -3 ], [ -4 ], [ -5 ]> ], 
+  [ <bipartition: [ 1, -5 ], [ 2, -4 ], [ 3, -6 ], [ 4, -3 ], [ 5 ], [ 6 ], 
+         [ 7 ], [ -1 ], [ -2 ], [ -7 ]> ] ]
 gap> I2:=SemigroupIdeal(S, PartialPerm( [ 1, 2, 3, 4, 5, 6 ] ));
 <inverse partial perm semigroup ideal on 7 pts with 1 generator>
 gap> RightCosetsOfInverseSemigroup(I2, W);
@@ -240,9 +353,14 @@ gap> h:=GroupHClass(DClasses(S)[4]);
 {PartialPerm( [ 1, 4, 6 ], [ 1, 4, 6 ] )}
 gap> SameMinorantsSubgroup(h);
 [ <identity partial perm on [ 1, 4, 6 ]> ]
+gap> h:=GroupHClass(DClasses(A)[4]);
+{Bipartition( [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
+ [ -2 ], [ -3 ], [ -5 ], [ -7 ] )}
+gap> SameMinorantsSubgroup(h);
+[ <bipartition: [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
+     [ -2 ], [ -3 ], [ -5 ], [ -7 ]> ]
 gap> h:=GroupHClass(DClasses(B)[6]);
-{Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] ] \
-)}
+{Bipartition( [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] )}
 gap> SameMinorantsSubgroup(h);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], 
      [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ]> ]
