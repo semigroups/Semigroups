@@ -110,10 +110,10 @@ function(dclass)
     if iter!.element[2] = 0 then
       iter!.element := fail;
     elif iter!.iter1!.element <> fail then
-  # Prefix word is not done yet
+# Prefix word is not done yet
       iter!.element[2] := NextIterator_FreeBandDClass(iter!.iter1); 
     elif Position(content, true, iter!.element[1]) <> fail then
-  # Update the first component
+# Update the first component
       i := Position(content, true, iter!.element[1]);
       iter!.element[1] := i;
       tempcont := ShallowCopy(content);
@@ -121,24 +121,24 @@ function(dclass)
       iter!.iter1 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
       iter!.element[2] := NextIterator_FreeBandDClass(iter!.iter1);
     elif iter!.iter2!.element <> fail then
-  # Sufix word is not done yet
+# Sufix word is not done yet
       iter!.element[4] := NextIterator_FreeBandDClass(iter!.iter2); 
-  # Restart the prefix
+# Restart the prefix
       i := Position(content, true);
       iter!.element[1] := i;
       tempcont := ShallowCopy(content);
       tempcont[i] := false;
       iter!.iter1 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
       iter!.element[2] := NextIterator_FreeBandDClass(iter!.iter1);
-    elif Position(content, true, iter!.element[3]) <> fail then # Increase the third comp
-  # Update the third component
+    elif Position(content, true, iter!.element[3]) <> fail then
+# Update the third component
       i := Position(content, true, iter!.element[3]);
       iter!.element[3] := i;
       tempcont := ShallowCopy(content);
       tempcont[i] := false;
       iter!.iter2 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
       iter!.element[4] := NextIterator_FreeBandDClass(iter!.iter2);
-  # Restart the prefix 
+# Restart the prefix 
       i := Position(content, true);
       iter!.element[1] := i;
       tempcont := ShallowCopy(content);
@@ -195,89 +195,97 @@ function(dclass)
     
   #
   
-    ShallowCopyLocal := record -> rec(
-      lasr_called_by_is_done := record!.last_called_by_is_done,
-      next_value := record!.next_value,
-      IsDoneIterator := record!.IsDoneIterator,
-      NextIterator := record!.IsDoneIterator );
-  
+  ShallowCopyLocal := record -> rec(
+    lasr_called_by_is_done := record!.last_called_by_is_done,
+    next_value := record!.next_value,
+    IsDoneIterator := record!.IsDoneIterator,
+    NextIterator := record!.NextIterator );
+
   record := NewIterator_FreeBandDClass(s, content); 
   record!.NextIterator := NextIterator_FreeBandDClassWithPrint;
   record!.ShallowCopy := ShallowCopyLocal;
   return IteratorByNextIterator(record);
 end);
 
-#
+# A free band iteratror has component: content, dclass_iter.
 
-#BindGlobal("NextIterator_FreeBand",
-#function(iter)
-#  local 
-#
-## If the iterator is done iterating a specific content (D-class) then change
-## the content.
-#  content := iter!.content;
-#  ones := [1 .. iter!.nrgen]*0+1;
-#  output := StructuralCopy(iter!.element);
-#
-#  if iter!.contdone and content = ones then
-#    iter!.element := fail;
-#  elif iter!.contdone then
-#  # If we are in this case, then content <> ones and we change the content
-#    for i in [1 .. iter!.nrgen] do
-#      if content[i] = 0 then
-#        content[i] := 1; break;
-#      else
-#        content[i] := 0;
-#      fi;
-#    od;
-#   # NewIterator is a local function and it doesn't create a proper iterator
-#    tempiter := NewIterator(content);
-#    iter!.isdone := tempiter!.isdone;
-#    iter!.content := tempiter!.content;
-#    iter!.contdone := tempiter!.contdone;
-#    iter!.nrgen := tempiter!.nrgen;
-#    iter!.semigroup := tempiter!.semigroup;
-#    iter!.element := tempiter!.element;
-#    iter!.iter1 := tempiter!.iter1;
-#    iter!.iter2 := tempiter!.iter2;
-#    NextIteratorWithContent(iter!.iter1);
-#    NextIteratorWithContent(iter!.iter2);
-#  else
-#  # Otherwise we can get next iterator for the current content
-#    NextIteratorWithContent(iter);  
-#  fi;
-#  
-# return PrintIterator(output);
-#end );
-#
-#BindGlobal("ShallowCopy_FreeBand", iter -> rec(
-#                isdone := iter!.isdone,
-#                content := iter!.content,
-#                contdone := iter!.contdone,
-#                nrgen := iter!.nrgen,
-#                semigroup := iter!.semigroup,
-#                iter1 := iter!.iter1,
-#                iter2 := iter!.iter2,
-#                element := StructuralCopy(iter!.element) ) );
-#
-#BindGlobal("IsDoneIterator_FreeBand", iter -> iter!.isdone );
-#
-#InstallMethod( Iterator, "for a free band",
-#  [IsFreeBand], S -> IteratorByFunctions( rec(
-#
-#  IsDoneIterator := IsDoneIterator_FreeBand,
-#  NextIterator   := NextIterator_FreeBand,
-#  ShallowCopy    := ShallowCopy_FreeBand,
-#
-#  semigroup      := S,
-#  nrgen          := Length(Generators(S)),
-#  content        := [1..Length(Generators(S))]*0 + [1],
-#  contdone       := true,
-#  isdone         := (Length(Generators(S)) = 1), 
-#  iter1          := fail,
-#  iter2          := fail,
-#  element        := [1, 0, 1, 0]) ) );
-#
+InstallMethod(Iterator, "for a free band",
+[IsFreeBand],
+function(s)
+  local NextIterator_FreeBand, ShallowCopyLocal, record ;
+  
+
+  NextIterator_FreeBand := function(iter)
+    local next_dclass_value, content, i, rep, dclass;
+
+    next_dclass_value := NextIterator(iter!.dclass_iter);
+    content := iter!.content;
+
+    if next_dclass_value <> fail then
+# The current content is not done yet
+      return next_dclass_value;
+    elif ForAll(content, x -> x) then
+# Last content finished
+      return fail;
+    else
+# Change content
+      for i in [1 .. Length(content)] do
+        if content[i] then
+          content[i] := false;
+        else
+          content[i] := true;
+          break;
+        fi;
+      od;
+# Create the corresponding D-class, without actualy enumerating it.
+      i := Position(content, true);
+      rep := UniversalFakeOne;
+      while i <> fail do
+        rep := rep * GeneratorsOfSemigroup(s)[i];
+        i := Position(content, true, i);
+      od;
+      dclass := GreensDClassOfElement(s, rep);
+      iter!.dclass_iter := Iterator(dclass);
+      return NextIterator(iter!.dclass_iter);
+    fi;
+  end;
+
+  ShallowCopyLocal := record -> rec(
+    lasr_called_by_is_done := record!.last_called_by_is_done,
+    next_value := record!.next_value,
+    IsDoneIterator := record!.IsDoneIterator,
+    NextIterator := record!.NextIterator );
+
+  record := rec( content := BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
+                 dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));  
+  record!.NextIterator := NextIterator_FreeBand;
+  record!.ShallowCopy := ShallowCopyLocal;
+  return IteratorByNextIterator(record);
+end);
+############################################################################
+##
+## GreensDClassOfElement
+##
+
+InstallMethod(GreensDClassOfElement, "for a free band an element",
+[IsFreeBand, IsFreeBandElement],
+function(s, x)
+  local type, d;
+
+  if not x in s then
+    Error("the element does not belong to the semigroup.");
+    return;
+  fi;
+
+  type := NewType( FamilyObj( s ), IsEquivalenceClass and
+                   IsEquivalenceClassDefaultRep and IsGreensDClass);
+  d := Objectify( type, rec());
+  SetParent(d, s);
+  SetRepresentative(d, x);
+  SetEquivalenceClassRelation(d, GreensDRelation(s));
+  return d;
+end);
+
 ############################################################################
 ##
 ## ViewObj
