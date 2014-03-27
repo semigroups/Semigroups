@@ -65,6 +65,7 @@ WordToTuple := function(word)
          word[Minimum(last)],WordToTuple(word{[Minimum(last)+1.. Length(word)]}) ];
 end;
 
+#
 
 TupleToWord := function(tuple)
   if tuple = [] then
@@ -84,174 +85,200 @@ end;
 ## Iterator
 ##
 
-BindGlobal("NextIterator_FreeBand",
-function(iter)
-  local NextIteratorWithContent, NewIterator, PrintIterator, ones, content, i,
-        tempiter, output;
+InstallMethod(Iterator, "for a Greens D-class of a free band",
+[IsFreeBandElementCollection and IsGreensDClass],
+function(dclass)
+  local NextIterator_FreeBandDClass, NewIterator_FreeBandDClass, ShallowCopyLocal,
+  record, s, content, rep, NextIterator_FreeBandDClassWithPrint;
   
-  NewIterator := function(cont)
-# Create a new iterator (technicaly not an iterator) for a specified content.
-    local element, iscontdone, i, iter1, iter2, tempcont, record; 
-
-    element := [];
-    iscontdone := false;
-    if Sum(cont) = 1 then
-      i := Position(cont, 1);
-      element := [i,0,i,0];            iscontdone := true;
-      iter1 := fail;                   iter2 := fail;
+  s := Parent(dclass);
+  rep := Representative(dclass); 
+  content :=BlistList( [1 .. Length(GeneratorsOfSemigroup(s))],
+            Set(TupleToWord([rep![1], rep![2], rep![3], rep![4]]))); 
+   
+  NextIterator_FreeBandDClass := function(iter)
+    local output, i, content, tempcont;
+  
+    if iter!.element <> fail then
+      output := StructuralCopy(iter!.element);
     else
-      i := Position(cont, 1);
-      element[1] := i;                 element[3] := i;
-      tempcont := ShallowCopy(cont);   tempcont[i] := 0;
-      iter1 := NewIterator(tempcont);  iter2 := NewIterator(tempcont);
-      element[2] := iter1!.element;    element[4] := iter2!.element;
-    fi;
-
-    record := rec(
-      isdone := false,                 content := cont,
-      contdone := iscontdone,          nrgen := iter!.nrgen,
-      semigroup := iter!.semigroup,    element := element,
-      iter1 := iter1,                  iter2 := iter2
-      );
-    return record;
-  end;
-
-
-  NextIteratorWithContent := function(iter)
-# Iterate for a fixed content.
-    local cont, iter1, iter2, i, tempcont, output;
-
-    cont := iter!.content;
-    iter1 := iter!.iter1;
-    iter2 := iter!.iter2;
-    output := ShallowCopy(iter!.element);
-
-    if Sum(cont) =  1 then 
-      # iter1 = fail is only possible if content is of size 1
-      iter!.element := fail;
-    elif iter!.contdone then
       return fail;
-    elif not iter1!.contdone then 
-      iter!.element[2] := NextIteratorWithContent(iter1);
-    else
-      i := Position(cont, 1, iter!.element[1]); 
-      if i <> fail then
-      # If we fall into this case increase the first component of the quadruple
-        iter!.element[1] := i;
-        tempcont := ShallowCopy(cont);
-        tempcont[i] := 0;
-        iter1 := NewIterator(tempcont);
-        iter!.element[2] := NextIteratorWithContent(iter1);
-      elif not iter2!.contdone then
-      # Being in this or following case implies that the prefix is maximal 
-        iter!.element[4] := NextIteratorWithContent(iter2);
-      else
-        i := Position(cont, 1, iter!.element[3]);
-        if i <> fail then
-          iter!.element[3] := i;
-          tempcont := ShallowCopy(cont);
-          tempcont[i] := 0;
-          iter2 := NewIterator(tempcont);
-          iter!.element[4] := NextIteratorWithContent(iter2);
-          i := Position(cont, 1);
-       # Restart prefix
-          iter!.element[1] := i;
-          tempcont := ShallowCopy(cont);
-          tempcont[i] := 0;
-          iter1 := NewIterator(tempcont);
-          iter!.element[2] := NextIteratorWithContent(iter1);
-        else
-          iter!.contdone := true; 
-        fi;
-      fi;
     fi;
    
-    # Move this out of the function
-    if ForAll(iter!.content, x-> x=1) and iter!.contdone = true then
-      iter!.isdone := true;
+    content := iter!.content;
+  
+    if iter!.element[2] = 0 then
+      iter!.element := fail;
+    elif iter!.iter1!.element <> fail then
+  # Prefix word is not done yet
+      iter!.element[2] := NextIterator_FreeBandDClass(iter!.iter1); 
+    elif Position(content, true, iter!.element[1]) <> fail then
+  # Update the first component
+      i := Position(content, true, iter!.element[1]);
+      iter!.element[1] := i;
+      tempcont := ShallowCopy(content);
+      tempcont[i] := false;
+      iter!.iter1 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
+      iter!.element[2] := NextIterator_FreeBandDClass(iter!.iter1);
+    elif iter!.iter2!.element <> fail then
+  # Sufix word is not done yet
+      iter!.element[4] := NextIterator_FreeBandDClass(iter!.iter2); 
+  # Restart the prefix
+      i := Position(content, true);
+      iter!.element[1] := i;
+      tempcont := ShallowCopy(content);
+      tempcont[i] := false;
+      iter!.iter1 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
+      iter!.element[2] := NextIterator_FreeBandDClass(iter!.iter1);
+    elif Position(content, true, iter!.element[3]) <> fail then # Increase the third comp
+  # Update the third component
+      i := Position(content, true, iter!.element[3]);
+      iter!.element[3] := i;
+      tempcont := ShallowCopy(content);
+      tempcont[i] := false;
+      iter!.iter2 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
+      iter!.element[4] := NextIterator_FreeBandDClass(iter!.iter2);
+  # Restart the prefix 
+      i := Position(content, true);
+      iter!.element[1] := i;
+      tempcont := ShallowCopy(content);
+      tempcont[i] := false;
+      iter!.iter1 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
+      iter!.element[2] := NextIterator_FreeBandDClass(iter!.iter1);
+    else
+     iter!.element := fail;
     fi;
     return output;
-  end; 
+  end;
+ 
+#
 
-# A function to convert a iter!.element list into a free band word 
-  PrintIterator := function(list)
-    local output;
-
-    if list[2] = 0 then
-      # Implies that list = [i, 0, i, 0];
-      return GeneratorsOfSemigroup(iter!.semigroup)[list[1]];
+  NextIterator_FreeBandDClassWithPrint := function(iter)
+    local next_value;
+  
+    next_value := NextIterator_FreeBandDClass(iter);
+  
+    if next_value = fail then
+      return fail;
     else
-      return PrintIterator(list[2])*
-             GeneratorsOfSemigroup(iter!.semigroup)[list[1]]*
-             GeneratorsOfSemigroup(iter!.semigroup)[list[3]]*
-             PrintIterator(list[4]);
+      return Product(List(TupleToWord(next_value),
+                     x -> GeneratorsOfSemigroup(iter!.semigroup)[x]));
     fi;
   end;
 
-# If the iterator is done iterating a specific content (D-class) then change
-# the content.
-  content := iter!.content;
-  ones := [1 .. iter!.nrgen]*0+1;
-  output := ShallowCopy(iter!.element);
+#
+  
+  NewIterator_FreeBandDClass := function(s, content)
+    local record, first, tempcont;
+   
+    first := Position(content, true);  
+  
+  # If the content is of size one
+    if Position(content, true, first) = fail then
+      record := rec( element := [first, 0, first, 0],
+                     iter1 := fail,
+                     iter2 := fail,
+                     semigroup := s,
+                     content := content) ;
+    else
+      tempcont := ShallowCopy(content);
+      tempcont[first] := false;
+      record := rec( iter1 := NewIterator_FreeBandDClass(s, tempcont),
+                     iter2 := NewIterator_FreeBandDClass(s, tempcont),
+                     semigroup := s,
+                     content := content) ;
+      record!.element := [first, NextIterator_FreeBandDClass(record!.iter1),
+                          first, NextIterator_FreeBandDClass(record!.iter2)]; 
+    fi;
+    return record;
+  end;
+    
+  #
+  
+    ShallowCopyLocal := record -> rec(
+      lasr_called_by_is_done := record!.last_called_by_is_done,
+      next_value := record!.next_value,
+      IsDoneIterator := record!.IsDoneIterator,
+      NextIterator := record!.IsDoneIterator );
+  
+  record := NewIterator_FreeBandDClass(s, content); 
+  record!.NextIterator := NextIterator_FreeBandDClassWithPrint;
+  record!.ShallowCopy := ShallowCopyLocal;
+  return IteratorByNextIterator(record);
+end);
 
-  if iter!.contdone and content = ones then
-    return fail;
-  elif iter!.contdone then
-  # If we are in this case, then content <> ones and we change the content
-    for i in [1 .. iter!.nrgen] do
-      if content[i] = 0 then
-        content[i] := 1; break;
-      else
-        content[i] := 0;
-      fi;
-    od;
-# NewIterator is a local function and it doesn't create a proper iterator
-    tempiter := NewIterator(content);
-    iter!.isdone := tempiter!.isdone;
-    iter!.content := tempiter!.content;
-    iter!.contdone := tempiter!.contdone;
-    iter!.nrgen := tempiter!.nrgen;
-    iter!.semigroup := tempiter!.semigroup;
-    iter!.element := tempiter!.element;
-    iter!.iter1 := tempiter!.iter1;
-    iter!.iter2 := tempiter!.iter2;
-  else
-  # Otherwise we can get next iterator for the current content
-    NextIteratorWithContent(iter);  
-  fi;
+#
 
- return PrintIterator(output);
-end );
-
-BindGlobal("ShallowCopy_FreeBand", iter -> rec(
-                isdone := iter!.isdone,
-                content := iter!.content,
-                contdone := iter!.contdone,
-                nrgen := iter!.nrgen,
-                semigroup := iter!.semigroup,
-                iter1 := iter!.iter1,
-                iter2 := iter!.iter2,
-                element := ShallowCopy(iter!.element) ) );
-
-BindGlobal("IsDoneIterator_FreeBand", iter -> iter!.isdone );
-
-InstallMethod( Iterator, "for a free band",
-  [IsFreeBand], S -> IteratorByFunctions( rec(
-
-  IsDoneIterator := IsDoneIterator_FreeBand,
-  NextIterator   := NextIterator_FreeBand,
-  ShallowCopy    := ShallowCopy_FreeBand,
-
-  semigroup      := S,
-  nrgen          := Length(Generators(S)),
-  content        := [1..Length(Generators(S))]*0 + [1],
-  contdone       := true,
-  isdone         := (Length(Generators(S)) = 1), 
-  iter1          := fail,
-  iter2          := fail,
-  element        := [1, 0, 1, 0]) ) );
-
-###########################################################################
+#BindGlobal("NextIterator_FreeBand",
+#function(iter)
+#  local 
+#
+## If the iterator is done iterating a specific content (D-class) then change
+## the content.
+#  content := iter!.content;
+#  ones := [1 .. iter!.nrgen]*0+1;
+#  output := StructuralCopy(iter!.element);
+#
+#  if iter!.contdone and content = ones then
+#    iter!.element := fail;
+#  elif iter!.contdone then
+#  # If we are in this case, then content <> ones and we change the content
+#    for i in [1 .. iter!.nrgen] do
+#      if content[i] = 0 then
+#        content[i] := 1; break;
+#      else
+#        content[i] := 0;
+#      fi;
+#    od;
+#   # NewIterator is a local function and it doesn't create a proper iterator
+#    tempiter := NewIterator(content);
+#    iter!.isdone := tempiter!.isdone;
+#    iter!.content := tempiter!.content;
+#    iter!.contdone := tempiter!.contdone;
+#    iter!.nrgen := tempiter!.nrgen;
+#    iter!.semigroup := tempiter!.semigroup;
+#    iter!.element := tempiter!.element;
+#    iter!.iter1 := tempiter!.iter1;
+#    iter!.iter2 := tempiter!.iter2;
+#    NextIteratorWithContent(iter!.iter1);
+#    NextIteratorWithContent(iter!.iter2);
+#  else
+#  # Otherwise we can get next iterator for the current content
+#    NextIteratorWithContent(iter);  
+#  fi;
+#  
+# return PrintIterator(output);
+#end );
+#
+#BindGlobal("ShallowCopy_FreeBand", iter -> rec(
+#                isdone := iter!.isdone,
+#                content := iter!.content,
+#                contdone := iter!.contdone,
+#                nrgen := iter!.nrgen,
+#                semigroup := iter!.semigroup,
+#                iter1 := iter!.iter1,
+#                iter2 := iter!.iter2,
+#                element := StructuralCopy(iter!.element) ) );
+#
+#BindGlobal("IsDoneIterator_FreeBand", iter -> iter!.isdone );
+#
+#InstallMethod( Iterator, "for a free band",
+#  [IsFreeBand], S -> IteratorByFunctions( rec(
+#
+#  IsDoneIterator := IsDoneIterator_FreeBand,
+#  NextIterator   := NextIterator_FreeBand,
+#  ShallowCopy    := ShallowCopy_FreeBand,
+#
+#  semigroup      := S,
+#  nrgen          := Length(Generators(S)),
+#  content        := [1..Length(Generators(S))]*0 + [1],
+#  contdone       := true,
+#  isdone         := (Length(Generators(S)) = 1), 
+#  iter1          := fail,
+#  iter2          := fail,
+#  element        := [1, 0, 1, 0]) ) );
+#
+############################################################################
 ##
 ## ViewObj
 ##

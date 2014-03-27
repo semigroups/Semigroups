@@ -9,4 +9,5 @@
 DeclareCategory("IsFreeBandElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeBandElement");
 DeclareProperty("IsFreeBand", IsSemigroup);
+
 DeclareGlobalFunction("FreeBand");
