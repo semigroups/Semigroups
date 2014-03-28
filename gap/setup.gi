@@ -137,7 +137,8 @@ InstallMethod(ActionDegree, "for a Rees 0-matrix subsemigroup with generators",
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
 function(R) 
   if ForAny(GeneratorsOfSemigroup(R), x-> x![1]<>0) then 
-    return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1;
+    return NrMovedPoints(UnderlyingSemigroup(
+      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1;
   else
     return 0;
   fi;
@@ -186,23 +187,24 @@ end);
 InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element", 
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(f, n)
-  local R;
   if f![1]=0 then 
     return 0;
   else
-    R:=ReesMatrixSemigroupOfFamily(FamilyObj(f));
-    return NrMovedPoints(UnderlyingSemigroup(R))+1; 
+    return NrMovedPoints(UnderlyingSemigroup(
+      ReesMatrixSemigroupOfFamily(FamilyObj(f))))+1; 
   fi;
 end);
 
 InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup", 
 [IsReesZeroMatrixSubsemigroup], 
-function(s)
+function(R)
+  local U;
   return function(x)
     if x![1]=0 then 
       return 0;
     else
-      return NrMovedPoints(UnderlyingSemigroup(ParentAttr(s)))+1; 
+      return NrMovedPoints(UnderlyingSemigroup(
+       ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
     fi;
   end;
 end);
@@ -435,7 +437,8 @@ function(x)
   if x=0 then 
     return 0;
   else 
-     return NrMovedPoints(UnderlyingSemigroup(
+    return 
+     NrMovedPoints(UnderlyingSemigroup(
       ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
   fi;
 end);
@@ -559,13 +562,13 @@ InstallMethod(IdempotentTester, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> BlocksIdempotentTester);
 
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup", 
-[IsReesZeroMatrixSubsemigroup], s-> 
+[IsReesZeroMatrixSubsemigroup], R-> 
 function(j,i)
   if i=0 and j=0 then 
     return true;
   fi;
   return Matrix(ReesMatrixSemigroupOfFamily(
-   ElementsFamily(FamilyObj(s))))[j][i]<>0;
+   ElementsFamily(FamilyObj(R))))[j][i]<>0;
 end);
 
 # the function used to create an idempotent with the specified lambda and rho
@@ -581,14 +584,14 @@ InstallMethod(IdempotentCreator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> BlocksIdempotentCreator);
 
 InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup", 
-[IsReesZeroMatrixSubsemigroup], s-> 
+[IsReesZeroMatrixSubsemigroup], R-> 
 function(j,i)
   local mat;
   if i=0 and j=0 then 
-    return Objectify(TypeReesMatrixSemigroupElements(s), [0]);
+    return Objectify(TypeReesMatrixSemigroupElements(R), [0]);
   fi;
-  mat:=Matrix(ParentAttr(s));
-  return Objectify(TypeReesMatrixSemigroupElements(s), 
+  mat:=Matrix(ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))));
+  return Objectify(TypeReesMatrixSemigroupElements(R), 
      [i, mat[j][i]^-1, j, mat]);
 end);
 
