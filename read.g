@@ -55,9 +55,9 @@ ReadPackage("semigroups/gap/normalizer.gi");
 ReadPackage("semigroups/gap/quotients.gi");
 
 if TestPackageAvailability("grape")=fail then 
-  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
 elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
    then 
+  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");

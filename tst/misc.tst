@@ -1,13 +1,13 @@
 #############################################################################
 ###
-##W  everyfunction.tst
+##W  misc.tst
 ##Y  Copyright (C) 2011-13                                James D. Mitchell
 ###
 ###  Licensing information can be found in the README file of this package.
 ###
 ##############################################################################
 ###
-gap> START_TEST("Semigroups package: everyfunction.tst"); 
+gap> START_TEST("Semigroups package: misc.tst"); 
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -4897,4 +4897,4 @@ gap> SemigroupsStopTest();
 
 #
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(l); Unbind(iter);
-gap> STOP_TEST( "Semigroups package: everyfunction.tst", 0);
+gap> STOP_TEST( "Semigroups package: misc.tst", 0);
