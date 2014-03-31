@@ -8,6 +8,114 @@
 #############################################################################
 ##
 
+# the following method is required to beat the method for
+# IsPartialPermCollection in the library.
+
+InstallMethod(One, "for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local pts, x;
+
+  if HasGeneratorsOfSemigroup(I) then 
+    return One(GeneratorsOfSemigroup(I));
+  fi;
+
+  pts:=Union(ComponentsOfPartialPermSemigroup(I));
+  x:=PartialPermNC(pts, pts);
+
+  if x in I then 
+    return x;
+  fi;
+  return fail;
+end);
+
+#
+
+InstallMethod(CodegreeOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  return CodegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
+end);
+
+#
+
+InstallMethod(DegreeOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  return DegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
+end);
+
+#
+
+InstallMethod(RankOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  return RankOfPartialPermCollection(SupersemigroupOfIdeal(I));
+end);
+
+#
+
+InstallMethod(DisplayString, "for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+ViewString); 
+
+#
+
+InstallMethod(ViewString, "for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 
+function(I)
+  local str, nrgens;
+  
+  str:="<";
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+    Append(str, "trivial ");
+  else 
+    if HasIsCommutative(I) and IsCommutative(I) then 
+      Append(str, "commutative ");
+    fi;
+  fi;
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then 
+    Append(str, "0-simple ");
+  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then 
+    Append(str, "simple ");
+  fi;
+
+  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then 
+    Append(str, "inverse ");
+  elif HasIsRegularSemigroup(I) 
+   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then 
+    if IsRegularSemigroup(I) then 
+      Append(str, "\>regular\< ");
+    else
+      Append(str, "\>non-regular\< ");
+    fi;
+  fi;
+
+  Append(str, "partial perm semigroup ideal ");
+  Append(str, "\<\>on ");
+  Append(str, String(RankOfPartialPermSemigroup(I)));
+  Append(str, " pts\<\> with ");
+
+  nrgens:=Length(GeneratorsOfSemigroupIdeal(I));
+  Append(str, String(nrgens));
+  Append(str, " generator");
+
+  if nrgens>1 or nrgens=0 then 
+    Append(str, "s");
+  fi;
+  Append(str, ">");
+
+  return str;
+end);
+
+#
+
 InstallMethod(CyclesOfPartialPerm, "for a partial perm", [IsPartialPerm], 
 function(f)
   local n, seen, out, i, j, cycle;
@@ -47,7 +155,7 @@ end);
 InstallMethod(ComponentRepsOfPartialPermSemigroup, 
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, reps, next, opts, o, out, i;
+  local pts, reps, next, opts, gens, o, out, i;
 
   pts:=[1..DegreeOfPartialPermSemigroup(S)];
   reps:=BlistList(pts, []);
@@ -61,8 +169,14 @@ function(S)
     fi;
   end);
 
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
+
   repeat
-    o:=Orb(S, [next], OnSets, opts);  
+    o:=Orb(gens, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false and reps[o[PositionOfFound(o)][1]]=true then 
       if not IsEmpty(o[PositionOfFound(o)]) then 
@@ -93,7 +207,7 @@ end);
 InstallMethod(ComponentsOfPartialPermSemigroup, 
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, comp, next, nr, opts, o, out, i;
+  local pts, comp, next, nr, opts, gens, o, out, i;
 
   pts:=[1..DegreeOfPartialPermSemigroup(S)];
   comp:=BlistList(pts, []);
@@ -106,9 +220,15 @@ function(S)
       return false;
     fi;
   end);
+  
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
 
   repeat
-    o:=Orb(S, [next], OnSets, opts);  
+    o:=Orb(gens, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
@@ -143,7 +263,7 @@ end);
 InstallMethod(CyclesOfPartialPermSemigroup, 
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, comp, next, nr, cycles, opts, o, scc, i;
+  local pts, comp, next, nr, cycles, opts, gens, o, scc, i;
 
   pts:=[1..DegreeOfPartialPermSemigroup(S)];
   comp:=BlistList(pts, []);
@@ -157,9 +277,15 @@ function(S)
     fi;
   end);
 
+  if IsSemigroupIdeal(S) then 
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+  fi;
+
   repeat
     #JDM the next line doesn't work if OnPoints is used...
-    o:=Orb(S, [next], OnSets, opts);  
+    o:=Orb(gens, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
@@ -184,5 +310,10 @@ function(S)
 
   return cycles;
 end);
+
+#
+
+InstallMethod(NaturalLeqInverseSemigroup, "for two partial perms",
+[IsPartialPerm, IsPartialPerm], NaturalLeqPartialPerm);
 
 #EOF

@@ -26,6 +26,8 @@ DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("NaturalLeqBlockBijection", [IsBipartition, IsBipartition]);
+DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition, 
+ IsBipartition]);
 DeclareOperation("RandomBipartition", [IsPosInt]);
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);

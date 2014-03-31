@@ -8,8 +8,10 @@
 #############################################################################
 ##
 
+#JDM this should work for the RhoOrb too!
+
 InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)", 
-[IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
+[IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
 function( o, limit )
   local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht, genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
 
@@ -270,7 +272,7 @@ function(o)
     return o!.scc;
   fi;
 
-  if not IsClosed(o) then 
+  if not IsClosed(o) or not IsClosedData(o) then 
     Enumerate(o, infinity);
   fi;
 
@@ -322,7 +324,7 @@ end);
 
 InstallGlobalFunction(ReverseSchreierTreeOfSCC,
 function(o, i)
-  local r, nrgens, graph, nrgraph, rev, scc, gen, pos, seen, lookup, oo, j, nroo, nrscc, k, l, m, len;
+  local r, rev, graph, j, len, nrgens, genstoapply, scc, gen, pos, seen, lookup, oo, nroo, nrscc, k, l, m;
 
   r:=Length(OrbSCC(o));
 
@@ -338,29 +340,33 @@ function(o, i)
   if IsBound(o!.reverse[i]) then
     return o!.reverse[i];
   fi;
-
-  nrgens:=Length(o!.gens);
   
   if not IsBound(o!.rev) then
-
-    graph:=OrbitGraph(o);
-    nrgraph:=Length(graph);
-    rev:=List([1..nrgraph], x-> List([1..nrgens], x-> []));
-
-    for j in [1..nrgraph] do
-      for k in [1..nrgens] do
-        if IsBound(graph[j][k]) then
-          Add(rev[graph[j][k]][k], j);
-          #starting at position j and applying gens[k] we obtain graph[j][k];
-        fi;
-      od;
-    od;
-
-    o!.rev:=rev;
+    o!.rev:=[];
   fi;
+ 
+  # update o!.rev if necessary
+  rev:=o!.rev;        graph:=OrbitGraph(o);
+  j:=Length(rev);     len:=Length(graph);
+ 
+  nrgens:=Length(o!.gens);
+  genstoapply:=[1..nrgens];
+  
+  Append(rev, List([j+1..len], x-> List(genstoapply, x-> [])));
+
+  while j<len do 
+    j:=j+1; 
+    for k in genstoapply do
+      if IsBound(graph[j][k]) then
+        Add(rev[graph[j][k]][k], j);
+        #starting at position j and applying gens[k] we obtain graph[j][k];
+      fi;
+    od;
+  od;
+
   #rev[i][j][k]:=l implies that o[l]^gens[j]=o[i]
 
-  scc:=o!.scc[i]; rev:=o!.rev;
+  scc:=o!.scc[i]; 
   gen:=EmptyPlist(Length(o));
   pos:=EmptyPlist(Length(o));
 
@@ -371,7 +377,7 @@ function(o, i)
   lookup:=OrbSCCLookup(o);
   oo:=EmptyPlist(Length(scc));
   oo[1]:=scc[1]; j:=0; nroo:=1;
-  nrscc:=Length(scc);
+  nrscc:=Length(scc);  
 
   while nroo<nrscc do
     j:=j+1;
@@ -457,11 +463,13 @@ end);
 # Notes: returns a word in the generators that takes o[j] to o!.scc[i][1]  
 # assuming that j in scc[i]
 
-InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
+InstallMethod(TraceSchreierTreeOfSCCBack,
+"for an orbit and two positive integers",
+[IsOrbit, IsPosInt, IsPosInt],
 function(o, i, j)
   local tree, mult, scc, word;
   
-  if not IsActingSemigroupWithInverseOp(o!.parent) then 
+  if not IsInverseOrb(o) then 
     tree:=ReverseSchreierTreeOfSCC(o, i);
     mult:=1;
   else 
@@ -485,7 +493,9 @@ end);
 # Notes: returns a word in the generators that takes o!.scc[i][1] to o[j] 
 # assuming that j in scc[i]
 
-InstallGlobalFunction(TraceSchreierTreeOfSCCForward,
+InstallMethod(TraceSchreierTreeOfSCCForward,
+"for an orbit and two positive integers",
+[IsOrbit, IsPosInt, IsPosInt],
 function(o, i, j)
   local tree, scc, word;
 

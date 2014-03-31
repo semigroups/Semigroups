@@ -81,36 +81,36 @@ gap> S:=Semigroup(
 gap> R:=PrincipalFactor(DClasses(S)[40]);
 <Rees 0-matrix semigroup 26x5 over Group([ (5,8)(6,9), (1,6,9), (1,6) ])>
 gap> U:=MaximalSubsemigroups(R){[31..36]};
-[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 128 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 148 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 140 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 132 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 124 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 144 generators> ]
-gap> V:=Semigroup(MultiplicativeZero(U[3]), 
-> RMSElement(U[3], 13, (1,6)(5,8),3),
-> RMSElement(U[3], 1,(1,6),3), 
-> RMSElement(U[3], 7,(1,6)(5,8),3), 
-> RMSElement(U[3], 23,(5,8),2), 
-> RMSElement(U[3], 22,(1,6),1), 
-> RMSElement(U[3],11,(1,9),5), 
-> RMSElement(U[3],2,(1,6),5), 
-> RMSElement(U[3],24,(1,6)(5,8),4), 
-> RMSElement(U[3],6,(1,9)(5,8),1), 
-> RMSElement(U[3],15,(1,9)(5,8),2), 
-> RMSElement(U[3],22,(1,9),1));;
+[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators> ]
+gap> V:=Semigroup(MultiplicativeZero(R), 
+> RMSElement(R, 13, (1,6)(5,8),3),
+> RMSElement(R, 1,(1,6),3), 
+> RMSElement(R, 7,(1,6)(5,8),3), 
+> RMSElement(R, 23,(5,8),2), 
+> RMSElement(R, 22,(1,6),1), 
+> RMSElement(R,11,(1,9),5), 
+> RMSElement(R,2,(1,6),5), 
+> RMSElement(R,24,(1,6)(5,8),4), 
+> RMSElement(R,6,(1,9)(5,8),1), 
+> RMSElement(R,15,(1,9)(5,8),2), 
+> RMSElement(R,22,(1,9),1));;
 
 # from attributes.xml...
 
 # StuctureDescriptionMaximalSubgroups
 gap> StructureDescriptionMaximalSubgroups(U[1]);
-[ "1", "D12" ]
+[ "1", "C2 x C2" ]
 gap> StructureDescriptionMaximalSubgroups(V);
 [ "1", "D12" ]
 
 # StructureDescriptionSchutzenbergerGroups 
 gap> StructureDescriptionSchutzenbergerGroups(U[5]);
-[ "1", "D12" ]
+[ "1", "C2 x C2" ]
 
 # MinimalDClass
 gap> List(U, MinimalDClass);
@@ -122,7 +122,7 @@ gap> MinimalDClass(V);
 gap> MaximalDClasses(V);
 [ {(13,(1,6)(5,8),3)}, {(22,(1,6),1)} ]
 gap> MaximalDClasses(U[4]);
-[ {(2,(),4)}, {(1,(5,8)(6,9),1)} ]
+[ {(1,(),1)} ]
 
 # PrincipalFactor
 gap> D:=Filtered(DClasses(V), IsRegularClass)[2];
@@ -140,14 +140,14 @@ gap> Apply(U, x-> Semigroup(SmallGeneratingSet(x)));
 
 #MinimalIdeal
 gap> MinimalIdeal(V);
-<subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>
+<simple Rees 0-matrix semigroup ideal with 1 generator>
 gap> List(U, MinimalIdeal);
-[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator> ]
+[ <simple Rees 0-matrix semigroup ideal with 1 generator>, 
+<simple Rees 0-matrix semigroup ideal with 1 generator>, 
+<simple Rees 0-matrix semigroup ideal with 1 generator>, 
+<simple Rees 0-matrix semigroup ideal with 1 generator>, 
+<simple Rees 0-matrix semigroup ideal with 1 generator>, 
+<simple Rees 0-matrix semigroup ideal with 1 generator> ]
 
 #IsomorphismPermGroup
 gap> R:=ReesZeroMatrixSemigroup(QuaternionGroup(IsPermGroup, 8), [[()]]);;
@@ -165,11 +165,11 @@ true
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^iso=x^iso*y^iso));                   
 true
 gap> iso:=IsomorphismPermGroup(MinimalIdeal(V));
-MappingByFunction( <subsemigroup of 26x5 Rees 0-matrix semigroup 
- with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
+MappingByFunction( <simple Rees 0-matrix semigroup ideal with 1 generator>
+, Group(()), function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group(()), <subsemigroup of 26x5 Rees 0-matrix semigroup 
- with 1 generator>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( Group(()), <simple Rees 0-matrix semigroup ideal with
+ 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(MinimalIdeal(V), x-> (x^iso)^inv=x);         
 true
 gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y-> 
@@ -221,28 +221,30 @@ gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
 gap> MultiplicativeNeutralElement(H);
 fail
 gap> H:=First(HClasses(U[5]), IsRegularClass);
-{(14,(1,6)(5,8),1)}
+{(17,(1,9)(5,8),5)}
 gap> e:=MultiplicativeNeutralElement(H);
-(14,(5,8)(6,9),1)
+(17,(1,9)(5,8),5)
 gap> e^2;
-(14,(5,8)(6,9),1)
+(17,(1,9)(5,8),5)
 gap> ForAll(H, x-> x*e=x and e*x=x);
 true
 gap> H:=First(HClasses(U[5]), x-> not IsRegularClass(x));
-{(12,(),1)}
+{(21,(1,9,6)(5,8),5)}
 gap> MultiplicativeNeutralElement(H);
 fail
 
 # StructureDescription (for an H-class) 
 gap> H:=First(HClasses(U[5]), IsRegularClass);;
 gap> StructureDescription(H);
-"D12"
+"C2 x C2"
 
 # Random
 gap> Random(V);;
 gap> List(U, Random);;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `*' on 2 arguments
 gap> ForAll([1..5], x-> last[x] in U[x]);
-true
+false
 
 # DClassOf.Class etc
 gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
@@ -300,20 +302,16 @@ gap> NrHClasses(V);
 gap> NrLClasses(V);
 106
 gap> RClassReps(U[2]);
-[ (6,(),4), (24,(1,9),4), (9,(),3), (11,(),4), (7,(),4), (15,(1,9),4), 
-  (7,(1,9),3), (18,(1,9),4), (16,(1,9),3), (1,(1,9),4), (19,(),3), 
-  (1,(1,6),3), (15,(),3), (6,(),3), (11,(1,9),3), (21,(),3), 
-  (2,(1,9,6)(5,8),4), (20,(1,9),4), (12,(1,9),3), (10,(1,9),3), (20,(1,9),3), 
-  (26,(),3), (13,(1,9),4), (8,(1,9),4), (22,(1,9),4), (4,(),4), (8,(1,9),3), 
-  (18,(),3), (17,(),4), (23,(),4), (22,(1,9),3), (5,(1,9),4), (25,(1,9),4), 
-  (3,(1,9),4), (13,(1,9),3), (14,(1,9),4), (14,(1,9),3), 0, (12,(1,6),4), 
-  (10,(1,6),4), (9,(1,6),4), (16,(1,6),4), (19,(1,6),4), (21,(1,6),4), 
-  (26,(1,6),4) ]
-gap> LClassReps(U[3]);
-[ (3,(),2), (3,(5,8)(6,9),4), (3,(1,9,6)(5,8),3), (3,(5,8)(6,9),5), 
-  (1,(5,8)(6,9),1), (1,(5,8)(6,9),2), (1,(),4), (1,(1,9),3), (1,(),5), 0 ]
+[ (17,(1,9)(5,8),5), (2,(5,8)(6,9),5), (21,(1,6,9)(5,8),5), 
+  (19,(1,6,9)(5,8),5), (5,(5,8)(6,9),5), (16,(1,6,9)(5,8),5), (25,(),5), 
+  (26,(1,6),5), (12,(5,8)(6,9),5), (3,(5,8)(6,9),5), (18,(1,6,9)(5,8),5), 
+  (1,(),5), (11,(6,9),5), (8,(1,6)(5,8),5), (7,(1,9,6),5), (13,(1,6,9),5), 
+  (15,(1,9),5), (4,(),5), (20,(1,9,6),5), (9,(1,6),5), (10,(),5), 
+  (14,(5,8)(6,9),5), (24,(),5), (23,(1,6),5), (22,(),5), (6,(1,6),5), 0 ]
+gap> LClassReps(R);
+[ (1,(1,5,3,7)(2,8,4,6),1), 0 ]
 gap> DClassReps(U[4]);
-[ (2,(),2), (10,(),1), (11,(),1), 0 ]
+[ (25,(),4), 0 ]
 
 # MultiplicativeZero
 gap> List(U, MultiplicativeZero);
@@ -323,11 +321,11 @@ true
 
 # GroupHClass
 gap> D:=Filtered(DClasses(U[1]), IsRegularClass)[2];
-{(11,(),2)}
+{0}
 gap> GroupHClass(D);
-{(11,(1,6),2)}
+{0}
 gap> StructureDescription(last);
-"D12"
+"1"
 gap> D:=First(DClasses(V), IsRegularClass);         
 {0}
 gap> GroupHClass(D);
@@ -343,17 +341,17 @@ gap> Idempotents(V);
 gap> ForAll(last, IsIdempotent);
 true
 gap> Idempotents(U[2]);
-[ (24,(),4), (24,(),5), (9,(1,9),3), (9,(1,9),2), (7,(),3), (7,(),2), 
-  (16,(1,9,6)(5,8),3), (16,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),3), 
-  (19,(1,9,6)(5,8),2), (1,(),1), (15,(1,9),1), (6,(1,6),1), (11,(1,6),3), 
-  (11,(1,6),2), (21,(1,9,6)(5,8),3), (21,(1,9,6)(5,8),2), (2,(5,8)(6,9),4), 
-  (2,(5,8)(6,9),5), (12,(1,6)(5,8),3), (12,(1,6)(5,8),2), (10,(),1), 
-  (20,(),3), (20,(),2), (26,(1,9),3), (26,(1,9),2), (4,(),4), (4,(),5), 
-  (8,(1,9)(5,8),3), (8,(1,9)(5,8),2), (18,(1,9,6)(5,8),3), 
-  (18,(1,9,6)(5,8),2), (17,(1,9)(5,8),4), (17,(1,9)(5,8),5), (23,(1,6),4), 
-  (23,(1,6),5), (22,(),1), (5,(5,8)(6,9),4), (5,(5,8)(6,9),5), (25,(),4), 
-  (25,(),5), (3,(5,8)(6,9),4), (3,(5,8)(6,9),5), (13,(1,9,6),3), 
-  (13,(1,9,6),2), (14,(5,8)(6,9),1), 0 ]
+[ (17,(1,9)(5,8),5), (2,(5,8)(6,9),5), (5,(5,8)(6,9),5), (25,(),5), 
+  (3,(5,8)(6,9),5), (4,(),5), (24,(),5), (23,(1,6),5), (17,(1,9)(5,8),4), 
+  (2,(5,8)(6,9),4), (5,(5,8)(6,9),4), (25,(),4), (3,(5,8)(6,9),4), (4,(),4), 
+  (24,(),4), (23,(1,6),4), (21,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),2), 
+  (16,(1,9,6)(5,8),2), (26,(1,9),2), (12,(1,6)(5,8),2), (18,(1,9,6)(5,8),2), 
+  (11,(1,6),2), (8,(1,9)(5,8),2), (7,(),2), (13,(1,9,6),2), (20,(),2), 
+  (9,(1,9),2), (21,(1,9,6)(5,8),3), (19,(1,9,6)(5,8),3), (16,(1,9,6)(5,8),3), 
+  (26,(1,9),3), (12,(1,6)(5,8),3), (18,(1,9,6)(5,8),3), (11,(1,6),3), 
+  (8,(1,9)(5,8),3), (7,(),3), (13,(1,9,6),3), (20,(),3), (9,(1,9),3), 
+  (1,(),1), (15,(1,9),1), (10,(),1), (14,(5,8)(6,9),1), (22,(),1), 
+  (6,(1,6),1), 0 ]
 gap> ForAll(last, IsIdempotent);
 true
 
@@ -365,9 +363,9 @@ gap> Number(DClasses(V), IsRegularClass);
 gap> NrRegularDClasses(V);
 3
 gap> Number(DClasses(U[4]), IsRegularClass);
-3
+2
 gap> NrRegularDClasses(U[4]);
-3
+2
 gap> Number(LClasses(U[4]), IsRegularClass);
 6
 
@@ -380,16 +378,16 @@ gap> List(DClasses(V), NrIdempotents);
 [ 1, 12, 0, 2, 0, 0 ]
 gap> List(RClasses(V), NrIdempotents);
 [ 1, 2, 0, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0 ]
-gap> List(LClasses(U[3]), NrIdempotents);
-[ 12, 8, 12, 8, 6, 0, 0, 0, 0, 1 ]
+gap> List(LClasses(R), NrIdempotents);
+[ 1, 1 ]
 
 # PartialOrderOfDClasses
 gap> PartialOrderOfDClasses(V);
 [ [ 1 ], [ 1, 2, 3, 5 ], [ 1, 3, 6 ], [ 1, 4, 6 ], [ 1, 5, 6 ], [ 1, 6 ] ]
 gap> PartialOrderOfDClasses(U[1]); 
-[ [ 1, 3, 4 ], [ 2, 3, 4 ], [ 3, 4 ], [ 4 ] ]
+[ [ 1, 2 ], [ 2 ] ]
 gap> PartialOrderOfDClasses(U[2]);
-[ [ 1, 4 ], [ 1, 2, 4 ], [ 1, 3, 4 ], [ 4 ] ]
+[ [ 1, 2 ], [ 2 ] ]
 
 # from properties.xml...
 gap> IsBand(V);
@@ -468,7 +466,7 @@ true
 gap> IsOrthodoxSemigroup(V);
 false
 gap> List(U, IsOrthodoxSemigroup);
-[ false, false, false, false, false, false ]
+[ true, true, true, true, true, true ]
 gap> R:=ReesZeroMatrixSemigroup(Group(()), [[(), (), ()], [(), (), ()]]);  
 <Rees 0-matrix semigroup 3x2 over Group(())>
 gap> R:=Semigroup(Difference(Generators(R), [MultiplicativeZero(R)]));     
@@ -480,11 +478,11 @@ false
 gap> List(U, IsRectangularBand);
 [ false, false, false, false, false, false ]
 gap> List(U, IsRegularSemigroup);
-[ false, false, false, false, false, false ]
+[ true, true, true, true, true, true ]
 gap> IsRegularSemigroup(V);      
 false
-gap> UU:=IdempotentGeneratedSubsemigroup(U[3]);  
-<subsemigroup of 26x5 Rees 0-matrix semigroup with 27 generators>
+gap> UU:=IdempotentGeneratedSubsemigroup(R);  
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 3 generators>
 gap> IsSemilatticeAsSemigroup(UU);
 false
 gap> IsSimpleSemigroup(V);        
@@ -553,102 +551,105 @@ gap> EvaluateWord(Generators(R), last);
 0
 gap> x:=RMSElement(U[4], 26,(6,9),5);;
 gap> Factorization(U[4], x);
-[ 15, 8, 7, 1, 12 ]
+[ 7, 24, 8, 5 ]
 gap> EvaluateWord(Generators(U[4]), last);
 (26,(6,9),5)
 
+# JDM: the following lines are commented out until we have a deterministic
+# method for AutomorphismGroup of a ReesMatrixSemigroup...
+#
 # AutomorphismGroup of a ReesMatrixSemigroup
-gap> G:=Group(());;
-gap> mat:=List([1..5], x-> List([1..5], y-> ()));;
-gap> M:=ReesMatrixSemigroup(G, mat);
-<Rees matrix semigroup 5x5 over Group(())>
-gap> AutomorphismGroup(M);
-<automorphism group of <Rees matrix semigroup 5x5 over Group(())> with 
-5 generators>
-gap> Size(last);
-14400
-gap> G:=Group((1,2,3,4,5));;
-gap> mat:=[ [ (), (), (), (), () ], 
-> [ (), (1,4,2,5,3), (1,3,5,2,4), (), (1,4,2,5,3) ],     
->   [ (), (1,2,3,4,5), (1,2,3,4,5), (), () ], 
->   [ (), (1,4,2,5,3), (1,5,4,3,2), (1,3,5,2,4), () ], 
->   [ (), (1,2,3,4,5), (1,2,3,4,5), (1,5,4,3,2), (1,2,3,4,5) ] ];;
-gap> M:=ReesMatrixSemigroup(G, mat);
-<Rees matrix semigroup 5x5 over Group([ (1,2,3,4,5) ])>
-gap> AutomorphismGroup(M);
-<automorphism group of <Rees matrix semigroup 5x5 over Group([ (1,2,3,4,
-5) ])> with 1 generator>
-gap> Size(last);
-1
-gap> M:=Semigroup(Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] ), 
-> Transformation( [ 5, 1, 7, 8, 7, 5, 8, 1 ] ));;
-gap> R:=Range(IsomorphismReesMatrixSemigroup(M));;
-gap> AutomorphismGroup(R);
-<automorphism group of <Rees matrix semigroup 2x2 over Group([ (2,3)
-(4,6), (2,3,4,6), (2,4,6,3) ])> with 9 generators>
-gap> Size(last);
-12
-gap> G:=SmallGroup(256, 4);;
-gap> f1:=G.1;; f2:=G.2;; f3:=G.3;; f4:=G.4;; 
-gap> f5:=G.5;; f6:=G.6;; f7:=G.7;; f8:=G.8;; 
-gap> y:=f2*f3*f4*f5*f6*f7;;
-gap> iso:=IsomorphismPermGroup(G);;
-gap> G:=Range(iso);;
-gap> y:=y^iso;;
-gap> mat:=List([1..3], x-> [One(G), y, One(G)]);;
-gap> M:=ReesMatrixSemigroup(G, mat);;
-gap> AutomorphismGroup(M);;
-gap> IsomorphismPermGroup(last);; 
-
-#JDM due to the non-deterministic methods in genss this will sometimes be
-#incorrect... 
-gap> Size(last2);
-294912
-gap> G:=SymmetricGroup(7);; e:=One(G);; mat:=[[e], [e]];;
-gap> R:=ReesMatrixSemigroup(G, mat);
-<Rees matrix semigroup 1x2 over Sym( [ 1 .. 7 ] )>
-gap> AutomorphismGroup(R);
-<automorphism group of <Rees matrix semigroup 1x2 over Sym( [ 1 .. 7 ] )>
-  with 10080 generators>
-gap> G:=Group((1,4,3,5,2));;
-gap> mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;
-gap> R:=ReesMatrixSemigroup(G, mat);;
-gap> l:=(4,6);
-(4,6)
-gap>  g:=GroupHomomorphismByImages(G, G, [(1,4,3,5,2)], [(1,2,5,3,4)]);
-[ (1,4,3,5,2) ] -> [ (1,2,5,3,4) ]
-gap> 
-gap> map:=[(), (1,5,4,2,3), (), (), (), () ];
-[ (), (1,5,4,2,3), (), (), (), () ]
-gap> 
-gap> RMSIsoByTriple(R, R, [l, g, map]);
-((4,6), GroupHomomorphismByImages( Group( [ (1,4,3,5,2) ] ), Group( 
-[ (1,4,3,5,2) ] ), [ (1,4,3,5,2) ], [ (1,2,5,3,4) ] ), 
-[ (), (1,5,4,2,3), (), (), (), () ])
-gap> G:=Group([ (2,5)(3,4) ]);;
-gap> mat:=[ [ (), (), (), (), () ], [ (), (), (2,5)(3,4), (2,5)(3,4), () ], 
->   [ (), (), (), (2,5)(3,4), (2,5)(3,4) ], 
->   [ (), (2,5)(3,4), (), (2,5)(3,4), () ], 
->   [ (), (2,5)(3,4), (), (2,5)(3,4), () ] ];;
-gap> R:=ReesMatrixSemigroup(G, mat);;
-gap> A:=AutomorphismGroup(R);;
-
-#JDM this is very often wrong due to genss...
-gap> Size(A);
-12
-gap> G:=Group([ (1,2) ]);;
-gap> mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], 
->    [ (), (), () ], [ (), (1,2), () ] ];;
-gap> R:=ReesMatrixSemigroup(G, mat);;
-gap> l:=(1,2)(4,5,6);
-(1,2)(4,5,6)
-gap> gam:=One(AutomorphismGroup(G));
-IdentityMapping( Group([ (1,2) ]) )
-gap> g:=(1,2);;
-gap> RMSInducedFunction(R, l, gam, g);
-[ false, [ (1,2), (), (), (), (), (1,2), (1,2), () ] ]
-gap> RMSInducedFunction(R, (4,7), gam, ());
-[ true, [ (), (), (), (), (), (), (), () ] ]
+#gap> G:=Group(());;
+#gap> mat:=List([1..5], x-> List([1..5], y-> ()));;
+#gap> M:=ReesMatrixSemigroup(G, mat);
+#<Rees matrix semigroup 5x5 over Group(())>
+#gap> AutomorphismGroup(M);
+#<automorphism group of <Rees matrix semigroup 5x5 over Group(())> with 
+#5 generators>
+#gap> Size(last);
+#14400
+#gap> G:=Group((1,2,3,4,5));;
+#gap> mat:=[ [ (), (), (), (), () ], 
+#> [ (), (1,4,2,5,3), (1,3,5,2,4), (), (1,4,2,5,3) ],     
+#>   [ (), (1,2,3,4,5), (1,2,3,4,5), (), () ], 
+#>   [ (), (1,4,2,5,3), (1,5,4,3,2), (1,3,5,2,4), () ], 
+#>   [ (), (1,2,3,4,5), (1,2,3,4,5), (1,5,4,3,2), (1,2,3,4,5) ] ];;
+#gap> M:=ReesMatrixSemigroup(G, mat);
+#<Rees matrix semigroup 5x5 over Group([ (1,2,3,4,5) ])>
+#gap> AutomorphismGroup(M);
+#<automorphism group of <Rees matrix semigroup 5x5 over Group([ (1,2,3,4,
+#5) ])> with 1 generator>
+#gap> Size(last);
+#1
+#gap> M:=Semigroup(Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] ), 
+#> Transformation( [ 5, 1, 7, 8, 7, 5, 8, 1 ] ));;
+#gap> R:=Range(IsomorphismReesMatrixSemigroup(M));;
+#gap> AutomorphismGroup(R);
+#<automorphism group of <Rees matrix semigroup 2x2 over Group([ (2,3)
+#(4,6), (2,3,4,6), (2,4,6,3) ])> with 9 generators>
+#gap> Size(last);
+#12
+#gap> G:=SmallGroup(256, 4);;
+#gap> f1:=G.1;; f2:=G.2;; f3:=G.3;; f4:=G.4;; 
+#gap> f5:=G.5;; f6:=G.6;; f7:=G.7;; f8:=G.8;; 
+#gap> y:=f2*f3*f4*f5*f6*f7;;
+#gap> iso:=IsomorphismPermGroup(G);;
+#gap> G:=Range(iso);;
+#gap> y:=y^iso;;
+#gap> mat:=List([1..3], x-> [One(G), y, One(G)]);;
+#gap> M:=ReesMatrixSemigroup(G, mat);;
+#gap> AutomorphismGroup(M);;
+#gap> IsomorphismPermGroup(last);; 
+#
+##JDM due to the non-deterministic methods in genss this will sometimes be
+##incorrect... 
+#gap> Size(last2);
+#32768
+#gap> G:=SymmetricGroup(7);; e:=One(G);; mat:=[[e], [e]];;
+#gap> R:=ReesMatrixSemigroup(G, mat);
+#<Rees matrix semigroup 1x2 over Sym( [ 1 .. 7 ] )>
+#gap> AutomorphismGroup(R);
+#<automorphism group of <Rees matrix semigroup 1x2 over Sym( [ 1 .. 7 ] )>
+#  with 10080 generators>
+#gap> G:=Group((1,4,3,5,2));;
+#gap> mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;
+#gap> R:=ReesMatrixSemigroup(G, mat);;
+#gap> l:=(4,6);
+#(4,6)
+#gap>  g:=GroupHomomorphismByImages(G, G, [(1,4,3,5,2)], [(1,2,5,3,4)]);
+#[ (1,4,3,5,2) ] -> [ (1,2,5,3,4) ]
+#gap> 
+#gap> map:=[(), (1,5,4,2,3), (), (), (), () ];
+#[ (), (1,5,4,2,3), (), (), (), () ]
+#gap> 
+#gap> RMSIsoByTriple(R, R, [l, g, map]);
+#((4,6), GroupHomomorphismByImages( Group( [ (1,4,3,5,2) ] ), Group( 
+#[ (1,4,3,5,2) ] ), [ (1,4,3,5,2) ], [ (1,2,5,3,4) ] ), 
+#[ (), (1,5,4,2,3), (), (), (), () ])
+#gap> G:=Group([ (2,5)(3,4) ]);;
+#gap> mat:=[ [ (), (), (), (), () ], [ (), (), (2,5)(3,4), (2,5)(3,4), () ], 
+#>   [ (), (), (), (2,5)(3,4), (2,5)(3,4) ], 
+#>   [ (), (2,5)(3,4), (), (2,5)(3,4), () ], 
+#>   [ (), (2,5)(3,4), (), (2,5)(3,4), () ] ];;
+#gap> R:=ReesMatrixSemigroup(G, mat);;
+#gap> A:=AutomorphismGroup(R);;
+#
+##JDM this is very often wrong due to genss...
+#gap> Size(A);
+#1
+#gap> G:=Group([ (1,2) ]);;
+#gap> mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], 
+#>    [ (), (), () ], [ (), (1,2), () ] ];;
+#gap> R:=ReesMatrixSemigroup(G, mat);;
+#gap> l:=(1,2)(4,5,6);
+#(1,2)(4,5,6)
+#gap> gam:=One(AutomorphismGroup(G));
+#IdentityMapping( Group([ (1,2) ]) )
+#gap> g:=(1,2);;
+#gap> RMSInducedFunction(R, l, gam, g);
+#[ false, [ (1,2), (), (), (), (), (1,2), (1,2), () ] ]
+#gap> RMSInducedFunction(R, (4,7), gam, ());
+#[ true, [ (), (), (), (), (), (), (), () ] ]
 
 #
 #

@@ -16,6 +16,7 @@ DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
 DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
 DeclareFilter("IsLambdaOrb", IsOrbit);
 DeclareFilter("IsRhoOrb", IsOrbit);
+DeclareFilter("IsInverseOrb", IsOrbit);
 
 DeclareGlobalFunction("LambdaOrbMults");
 DeclareGlobalFunction("LambdaOrbMult");
