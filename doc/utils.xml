@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -90,62 +90,6 @@
       that &Semigroups; is installed correctly use 
       <Ref Func="SemigroupsTestAll"/>. 
     </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="Generators">
-  <ManSection>
-    <Func Name="Generators" Arg="S"/>
-    <Returns>A list of generators.</Returns>
-    <Description>
-      <C>Generators</C> returns the generating set used to define the semigroup
-      <A>S</A>.  The generators of a monoid or inverse semigroup <A>S</A> can
-      be defined in several ways, for example, including or excluding the
-      identity element, including or not the inverses of the generators.
-      <C>Generators</C> uses the definition that returns the least number of
-      generators. Nothing new is computed when <C>Generators</C> is called and
-      this function should not be confused with 
-      <Ref Attr="SmallGeneratingSet"/>.
-
-      <List>
-        <Mark>for a semigroup</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>.
-        </Item>
-        <Mark>for a monoid</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>.
-        </Item>
-        <Mark>for an inverse semigroup</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
-        </Item>
-        <Mark>for an inverse monoid</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
-        </Item>
-      </List>
-<Example>
-gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
-> Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
-gap> GeneratorsOfSemigroup(M);
-[ IdentityTransformation, 
-  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> GeneratorsOfMonoid(M);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> Generators(M);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> S:=Semigroup(Generators(M));;
-gap> Generators(S);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]</Example>
-   </Description>
   </ManSection>
 <#/GAPDoc>
 
