@@ -346,9 +346,10 @@ gap> GreensRClasses(D);
     <Oper Name="GreensDClassOfElement" Arg="X, f"/>
     <Func Name="DClass" Arg="X, f"/>
     <Oper Name="GreensHClassOfElement" Arg="X, f"/>
-    <Oper Name="GreensHClassOfElement" Arg="R, i, j"/>
+    <Oper Name="GreensHClassOfElement" Arg="R, i, j" 
+      Label="for a Rees matrix semigroup"/>
     <Func Name="HClass" Arg="X, f"/>
-    <Func Name="HClass" Arg="R, i, j"/>
+    <Func Name="HClass" Arg="R, i, j" Label="for a Rees matrix semigroup"/>
     <Oper Name="GreensLClassOfElement" Arg="X, f"/>
     <Func Name="LClass" Arg="X, f"/>
     <Oper Name="GreensRClassOfElement" Arg="X, f"/>

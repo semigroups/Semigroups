@@ -8,6 +8,12 @@
 #############################################################################
 ##
 
+gap> START_TEST("Semigroups package: testinstall-4.7.5.tst");
+gap> LoadPackage( "semigroups", false );;
+
+# Set info levels and user preferences
+gap> SemigroupsStartTest();
+
 # Issue #63 (problem with Monoid and InverseMonoid when one of the arguments is
 # a monoid)
 gap> S:=Semigroup(PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ) );
@@ -39,3 +45,7 @@ gap> GeneratorsOfInverseSemigroup(T);
   <identity partial perm on [ 1, 2, 3, 4, 5, 6 ]> ]
 gap> One(S) in T;
 true
+
+#
+gap> SemigroupsStopTest();
+gap> STOP_TEST( "Semigroups package: testinstall-4.7.5.tst", 10000);

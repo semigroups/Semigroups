@@ -3,13 +3,13 @@
   <Index Key="Semigroups">&Semigroups; package overview</Index>	
     
   <Section><Heading>An important note</Heading>
-    The operations, methods, properties, and functions
-    described in this manual only apply to semigroups of transformations,
-    partial permutations, bipartitions, and subsemigroups of regular Rees
-    0-matrix semigroups over groups. For the sake of brevity, we have opted to say
-    <B>semigroup</B> rather than <B>semigroup of transformations, partial
-      permutations, bipartitions,and subsemigroups of regular Rees 0-matrix
-      semigroups over groups</B>.
+    Many of the operations, methods, properties, and functions described in this
+    manual only apply to semigroups of transformations, partial permutations,
+    bipartitions, and subsemigroups of regular Rees 0-matrix semigroups over
+    groups. For the sake of brevity, we have opted to say <B>semigroup</B>
+    rather than <B>semigroup of transformations, partial permutations,
+    bipartitions, and subsemigroups of regular Rees 0-matrix semigroups over
+    groups</B>.
   </Section>
   
   <Section><Heading>Introduction</Heading>
@@ -100,7 +100,7 @@
     <List>
      <Item> ensure that the &IO; package version &IOVERS; or higher is
        available. For more details go to:&vspace;<P/>&noindent;
-      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/ io.html
+      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
       </URL>
       </Item>
       
@@ -120,12 +120,7 @@
         more details go to:&vspace;<P/>&noindent;
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
         If &Grape; is not fully installed, then &Semigroups; can be used as
-        normal with the exception that <Ref Oper="MunnSemigroup"/>
-        will not work. 
-        <!--The method for <Ref Attr="MaximalSubsemigroups"/> will
-        work provided &Grape; can be loaded, i.e. it is not necessary for
-        &Grape; to be compiled.-->
-
+        normal with the exception of the functions listed above.
       </Item>
 
       <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
