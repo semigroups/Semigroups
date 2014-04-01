@@ -16,7 +16,7 @@ BindGlobal("SemigroupsDocXMLFiles",
    "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
    "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml", 
    "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml", 
-   "maximal.xml", "rmscong.xml", "../PackageInfo.g"]);
+   "maximal.xml", "rmscong.xml", "ideals.xml", "isomorph.xml", "../PackageInfo.g"]);
 
 # <path> to the folder containing the timings, <vers> the version number to
 # check against.

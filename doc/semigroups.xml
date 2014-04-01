@@ -28,7 +28,7 @@
         </Item>
         <Mark>for an ideal of semigroup</Mark> 
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfSemigroupIdeal" BookName="ref"/>.
+          <Ref Attr="GeneratorsOfSemigroupIdeal"/>.
         </Item>
         <Mark>for a semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 

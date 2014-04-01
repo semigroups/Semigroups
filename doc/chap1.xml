@@ -24,18 +24,12 @@
 
     The theory behind the main algorithms in &Semigroups; is described in 
     <!--<Cite Key=""/>-->.  A reference for free inverse semigroups is Section
-    5.10 in
-    <Cite Key="howie"/>. The functions for: finding a smaller degree partial
-    permutation representation of an inverse semigroup are based on <Cite
-      Key="Schein1992aa"/>. 
-    <!--and finding the maximal subsemigroups of a Rees
+    5.10 in <Cite Key="howie"/>. The functions for: finding a smaller degree
+    partial permutation representation of an inverse semigroup are based on
+    <Cite Key="Schein1992aa"/> and finding the maximal subsemigroups of a Rees
     matrix or 0-matrix semigroup are based on Remark 1 in <Cite
-    Key="Graham1968aa"/>.-->  <P/>
+      Key="Graham1968aa"/>.<P/>
     
-    <!--&Semigroups; &VERSION; retains all the functionality of the original
-    &Monoid; for &GAP; 3; and those functions from &Monoid; 3.1.4 not involved
-    in the computation of automorphism groups of semigroups.<P/>-->
-
     &noindent; &Semigroups; &VERSION; contains more efficient methods than those
     available in the &GAP; library (and in many cases more efficient than any
     other software) for creating semigroups, calculating their Green's classes,
@@ -65,13 +59,20 @@
     requires the &Orb; and &IO;packages. The &Orb; package is used
     to efficiently compute components of actions, which underpin many of the
     features of &Semigroups;.  The &IO; package is used to read and write
-    transformations and partial permutations to a file.  The &Grape; package is
-    used in the functions <Ref Oper="MunnSemigroup"/> and 
-    <Ref Oper="MaximalSubsemigroups"/> but nowhere else in &Semigroups;. If 
-    &Grape; is not available, then &Semigroups; can be used as normal with the 
-    exception that <Ref Oper="MunnSemigroup"/> will not work, and 
-    <Ref Oper="MaximalSubsemigroups"/> will not work for many semigroups, in
-    particular it will not work for Rees 0-matrix semigroups.<P/>
+    transformations, partial permutations, and bipartitions to a file.  The
+    &Grape; package must be fully compiled for the following functions to work:
+    <List>
+      <Item> <Ref Oper="MunnSemigroup"/> </Item>
+      <Item> 
+        <Ref Oper="MaximalSubsemigroups" Label="for an acting semigroup"/>
+      </Item>
+      <Item> <Ref Oper="IsIsomorphicSemigroup"/> </Item>
+      <Item> <Ref Oper="SmallestMultiplicationTable"/> </Item>
+      <Item> <Ref Oper="IsomorphismSemigroups"/> </Item>
+    </List>
+    but nowhere else in &Semigroups;. If &Grape; is not available or is not
+    compiled , then &Semigroups; can be used as normal with the exception that
+    the functions above will not work. <P/>
     
     If you find a bug or an issue with the package, then please let me know by
     emailing me the details at: <Email>jdm3@st-and.ac.uk</Email>.<P/>

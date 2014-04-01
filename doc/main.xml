@@ -35,12 +35,14 @@
 
 <Body>
 <#Include SYSTEM="chap1.xml">
-<#Include SYSTEM "chap2.xml">
+<#Include SYSTEM "chap2.xml"> <!-- creating semigroups and monoid -->
+<#Include SYSTEM "chap8.xml"> <!-- ideals -->
 <#Include SYSTEM "chap3.xml">
 <#Include SYSTEM "chap4.xml">
 <#Include SYSTEM "chap5.xml">
 <#Include SYSTEM "chap6.xml">
-<#Include SYSTEM "chap7.xml">
+<#Include SYSTEM "chap7.xml"> <!-- congruences -->
+<#Include SYSTEM "chap9.xml"> <!-- homomorphisms -->
 </Body>
 
 <Bibliography Databases="semigroups" />

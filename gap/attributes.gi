@@ -268,10 +268,9 @@ function(d)
     return;
   fi;
 
-  g:=GroupHClass(d);
-  rep:=Representative(g);
-  g:=Range(IsomorphismPermGroup(g));
+  g:=Range(IsomorphismPermGroup(GroupHClass(d)));
 
+  rep:=Representative(g);
   rreps:=HClassReps(LClass(d, rep));
   lreps:=HClassReps(RClass(d, rep));
   mat:=[];
