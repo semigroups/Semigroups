@@ -56,11 +56,12 @@
     by Julius Jonu&#353;as; see Chapter <Ref Chap="Free inverse semigroups"/>.<P/>
 
     &noindent; The &Semigroups; package is written &GAP; code and 
-    requires the &Orb; and &IO;packages. The &Orb; package is used
+    requires the &Orb; and &IO; packages. The &Orb; package is used
     to efficiently compute components of actions, which underpin many of the
     features of &Semigroups;.  The &IO; package is used to read and write
-    transformations, partial permutations, and bipartitions to a file.  The
-    &Grape; package must be fully compiled for the following functions to work:
+    transformations, partial permutations, and bipartitions to a file. <P/>
+    
+    The &Grape; package must be fully compiled for the following functions to work:
     <List>
       <Item> <Ref Oper="MunnSemigroup"/> </Item>
       <Item> 
@@ -71,9 +72,15 @@
       <Item> <Ref Oper="IsomorphismSemigroups"/> </Item>
     </List>
     but nowhere else in &Semigroups;. If &Grape; is not available or is not
-    compiled , then &Semigroups; can be used as normal with the exception that
+    compiled, then &Semigroups; can be used as normal with the exception that
     the functions above will not work. <P/>
-    
+
+    The &genss; package is used in the one version of the function <Ref
+      Oper="Normalizer" Label="for a perm group, semigroup, record"/> but
+    nowhere else in &Semigroups;. If &genss; is not available, then &Semigroups;
+    can be used as normal with the exception that this function will not work.
+    <P/> 
+
     If you find a bug or an issue with the package, then please let me know by
     emailing me the details at: <Email>jdm3@st-and.ac.uk</Email>.<P/>
 
@@ -104,8 +111,8 @@
       </URL>
       </Item>
       
-      <Item> ensure that the &Orb; package version 
-      &ORBVERS; or higher is available. For more details go to:
+      <Item> ensure that the &Orb; package version &ORBVERS; or higher is
+        available. For more details go to:
       &vspace;<P/>&noindent; 
       <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
@@ -113,16 +120,29 @@
       is compiled. 
       </Item>
 
-      <Item>  if you want to be able to calculate the Munn semigroup of a
-        semilattice or the maximal subsemigroups of
-        a Rees 0-matrix semigroup, then make sure that 
-        the &Grape; package version &GRAPEVERS; or higher is available.  For
-        more details go to:&vspace;<P/>&noindent;
+      <Item>  
+        This step is optional: certain functions in &Semigroups; require the
+        &Grape; package to be available and fully compiled; a full list of these
+        functions can be found above.  To use these functions make sure
+        that the &Grape; package version &GRAPEVERS; or higher is available.
+        For more details go to:
+        &vspace;<P/>&noindent; 
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
-        If &Grape; is not fully installed, then &Semigroups; can be used as
-        normal with the exception of the functions listed above.
+        &noindent; If &Grape; is not fully installed, then &Semigroups; can be
+        used as normal with  the  exception that the functions listed above will
+        not work. 
       </Item>
 
+      <Item> 
+         This step is optional: the non-deterministic version of the function
+         <Ref Oper="Normalizer" Label="for a perm group, semigroup, record"/>
+         requires the &genss; package to be loaded. If you want to use this
+         function, then please ensure that the &genss; package version
+         &GENSSVERS; or higher is available. For more details go to:
+        &vspace;<P/>&noindent; 
+        <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html</URL>
+      </Item>
+      
       <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
       &vspace;<P/>&noindent;&vspace;
       <URL>http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php</URL>

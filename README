@@ -73,8 +73,9 @@ installation of Semigroups:
 
  3.  This step is optional: certain functions in Semigroups require the Grape
      package to be available and fully compiled; a full list of these functions
-     can be found in the first chapter of the manual.  Make sure that the Grape
-     package version 4.5 or higher is available. For more details go to:
+     can be found in the first chapter of the manual.  To use these functions
+     make sure that the Grape package version 4.5 or higher is available. For
+     more details go to:
   
        http://www.maths.qmul.ac.uk/~leonard/grape/
   
