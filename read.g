@@ -72,5 +72,5 @@ if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
 
-ReadPackage("semigroups/gap/rmscong.gi");
+ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univcong.gi");
