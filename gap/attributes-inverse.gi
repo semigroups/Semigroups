@@ -83,20 +83,25 @@ function(S, x)
     Error("Second argument should be an element within first argument,");
     return fail;
   fi;
-  
-  if IsMultiplicativeZero(S, x) then 
-    return false; 
+
+  if IsMultiplicativeZero(S, x) then
+    return false;
   fi;
 
-  y:=LeftOne(x);    
-  elts:=Set(Idempotents(S));;
+  y:=LeftOne(x);
+  elts:=ShallowCopy(Idempotents(S));
+  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
+    Sort(elts, PartialPermLeqBipartition);
+  else
+    elts:=Set(elts);
+  fi;
   i:=Position(elts, y);
   k:=0;
   singleline:=true;
 
   # Find an element smaller than y, k
-  for j in [1..Length(elts)] do
-    if NaturalLeqInverseSemigroup(elts[j], elts[i]) and j<>i then
+  for j in [i-1,i-2 .. 1] do
+    if NaturalLeqInverseSemigroup(elts[j], elts[i]) then
       k:=j;
       break;
     fi;
@@ -106,8 +111,8 @@ function(S, x)
   if k = 0 then return true; fi;
 
   # Look for other elements smaller than y which are not smaller than k
-  for j in [1..Length(elts)] do 
-    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not NaturalLeqInverseSemigroup(elts[j], elts[k]) and j<>i then 
+  for j in [1..(k-1)] do 
+    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not NaturalLeqInverseSemigroup(elts[j], elts[k]) then 
       singleline:=false; 
       break;
     fi;
@@ -123,7 +128,7 @@ function(S, x)
   if ForAny(HClass(S, y), x-> NaturalLeqInverseSemigroup(sup,x) and x<>y) then
     return true;
   fi;
-  
+
   return false;
 
 end);
@@ -184,7 +189,7 @@ function(S, T)
     Error("Not yet implemented,");
     return fail;
   fi;
-	
+
   i:=0;
   for t in T do
     iter:=Iterator(S);
@@ -213,12 +218,12 @@ function(S)
 
   for d in D do
     rep:=Representative(d);
-    
+
     if not seen_zero and IsMultiplicativeZero(S, rep) then 
       seen_zero:=true;
       continue; 
     fi;
-    
+
     i:=Position(elts, rep);
     k:=First([i-1,i-2 .. 1], j-> NaturalLeqInverseSemigroup(elts[j], rep));
 
@@ -327,13 +332,13 @@ InstallMethod(MajorantClosureNC,
 [IsInverseSemigroup, IsAssociativeElementCollection],
 function(S, T)
   local elts, n, out, ht, k, val, t, i;
-  	
+
   elts:=Elements(S);
   n:=Length(elts);
   out:=EmptyPlist(n);
   ht:=HTCreate(T[1]);
   k:=0;
-  
+
   for t in T do
     HTAdd(ht, t, true);
     Add(out, t);
@@ -367,7 +372,7 @@ InstallMethod(Minorants,
 [IsInverseSemigroup, IsAssociativeElement],
 function(S, f)
   local out, elts, i, j, k, NaturalLeq;
-  
+
   if not IsPartialPermSemigroup(S) 
    and not (IsBipartitionSemigroup(S) and IsBlockBijectionSemigroup(S))
    and not (IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S)) then
@@ -386,16 +391,21 @@ function(S, f)
 
   if IsIdempotent(f) then #(always true if S is a D-Class rep of an inverse sgp)
     out:=EmptyPlist(NrIdempotents(S));
-    elts:=SSortedList(Idempotents(S));
+    elts:=ShallowCopy(Idempotents(S));
   else
     out:=EmptyPlist(Size(S));
-    elts:=Elements(S);
+    elts:=ShallowCopy(Elements(S));
+  fi;
+  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
+    Sort(elts, PartialPermLeqBipartition);
+  else
+    elts:=SSortedList(elts);
   fi;
 
   i:=Position(elts, f);
   j:=0; 
 
-  for k in [1..Length(elts)] do
+  for k in [1..i-1] do
     if NaturalLeqInverseSemigroup(elts[k], f) and f<>elts[k] then 
       j:=j+1;
       out[j]:=elts[k];
@@ -412,21 +422,21 @@ InstallMethod(RightCosetsOfInverseSemigroup,
 [IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp],
 function(S, T)
   local elts, idem, usedreps, out, dupe, coset, s, rep, t;
-  
+
   if not IsPartialPermSemigroup(S) 
    and not (IsBipartitionSemigroup(S) and IsBlockBijectionSemigroup(S))
    and not (IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S)) then
     Error("Not yet implemented,");
     return fail;
   fi;
-  
+
   elts:=Elements(T);
-  
+
   if not IsSubset(S,elts) then
     Error("The second argument should be a subsemigroup of the first");
     return fail;
   fi;
-  
+
   if not IsMajorantlyClosedNC(S, elts) then
     Error("The second argument should be majorantly closed.");
   fi;
@@ -434,22 +444,22 @@ function(S, T)
   idem:=Representative(MinimalIdeal(T));
   usedreps:=[];
   out:=[];
-  
+
   for s in RClass(S, idem) do
-    
+
     # Check if Ts is a duplicate coset
-    dupe:=false;    
+    dupe:=false;
     for rep in [1..Length(usedreps)] do
       if s*usedreps[rep]^-1 in elts then
         dupe:=true;
         break;
       fi;
     od;
-    	  	
-    if dupe then continue; fi;	
-    	
+
+    if dupe then continue; fi;
+
     Add(usedreps, s);
-    	
+
     coset:=[];
     for t in elts do
       Add(coset, t*s);
@@ -458,7 +468,7 @@ function(S, T)
 
     # Generate the majorant closure of Ts to create the coset
 
-    coset:=MajorantClosureNC(S, coset);      
+    coset:=MajorantClosureNC(S, coset);
     Add(out, coset);
 
   od;
@@ -594,7 +604,7 @@ function(S)
           fi;
         od;
       od; 
-    od;        
+    od;
   od;
 
 
@@ -622,7 +632,7 @@ function(coll, type)
   local dom, i, part, rep, reps, out, todo, inter;
 
   if IsPartialPerm(type) then
-  
+
     if IsList(coll) and IsEmpty(coll) then 
       return PartialPerm([]);
     elif not IsPartialPermCollection(coll) then 
@@ -630,41 +640,36 @@ function(coll, type)
     fi;
     dom:=DomainOfPartialPermCollection(coll);
     return PartialPerm(dom, dom);
-    
-  elif IsBipartition(type) then
-		if IsBlockBijection(type) then
-  
-			if IsList(coll) and IsEmpty(coll) then 
-				return Bipartition(Concatenation([1..DegreeOfBipartition(type)],-[1..DegreeOfBipartition(type)]));
-			elif not IsBipartitionCollection(coll) then
-				Error("the argument should be a collection of block bijections,");
-			fi;
-		
-			reps:=List(coll,ExtRepOfBipartition);
-			todo:=[1..DegreeOfBipartition(type)];
-			out:=[];
-			for i in todo do
-				inter:=[];
-				for rep in reps do
-					for part in rep do
-						if i in part then
-							Add(inter, part);
-							break;
-						fi;
-					od;
-				od;
-				inter:=Intersection(inter);
-				AddSet(out, inter);
-				todo:=Difference(todo,inter);
-			od;
-		
-			return Bipartition(out);
 
-    elif IsPartialPermBipartition(type) then
-      return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm), PartialPerm([])));
-    else
-      Error("this function does not work for this type of element");
+  elif IsBipartition(type) and IsBlockBijection(type) then
+
+    if IsList(coll) and IsEmpty(coll) then 
+      return Bipartition(Concatenation([1..DegreeOfBipartition(type)],-[1..DegreeOfBipartition(type)]));
+    elif not IsBipartitionCollection(coll) then
+      Error("the argument should be a collection of block bijections,");
     fi;
+
+    reps:=List(coll,ExtRepOfBipartition);
+    todo:=[1..DegreeOfBipartition(type)];
+    out:=[];
+    for i in todo do
+      inter:=[];
+      for rep in reps do
+        for part in rep do
+          if i in part then
+            Add(inter, part);
+            break;
+          fi;
+        od;
+      od;
+      inter:=Intersection(inter);
+      AddSet(out, inter);
+      todo:=Difference(todo,inter);
+    od;
+    return Bipartition(out);
+
+  elif IsBipartition(type) and IsPartialPermBipartition(type) then
+    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm), PartialPerm([]))); 
   else
     Error("this function does not work for this type of element");
   fi;
@@ -677,18 +682,18 @@ InstallMethod(VagnerPrestonRepresentation,
 [IsActingSemigroupWithInverseOp],
 function(S)
   local gens, elts, out, iso, T, inv, i;
-  
+
   gens:=GeneratorsOfSemigroup(S);
   elts:=Elements(S);
   out:=EmptyPlist(Length(gens));
- 
+
   iso:=function(x)
     local dom;
     dom:=Set(elts*(x^-1));
     return PartialPermNC(List(dom, y-> Position(elts, y)), 
      List(List(dom, y-> y*x), y-> Position(elts, y)));
   end;
-  
+
   for i in [1..Length(gens)] do
     out[i]:=iso(gens[i]);
   od;
