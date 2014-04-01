@@ -90,18 +90,13 @@ function(S, x)
 
   y:=LeftOne(x);    
   elts:=Set(Idempotents(S));;
-  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
-      elts:=Reversed(elts);
-  fi;
   i:=Position(elts, y);
   k:=0;
   singleline:=true;
 
-  # This assumes something about the ordering of the idempotents which is not
-  # necessarily true for Bipartition stuff
   # Find an element smaller than y, k
-  for j in [i-1,i-2 .. 1] do
-    if NaturalLeqInverseSemigroup(elts[j], elts[i]) then
+  for j in [1..Length(elts)] do
+    if NaturalLeqInverseSemigroup(elts[j], elts[i]) and j<>i then
       k:=j;
       break;
     fi;
@@ -111,9 +106,8 @@ function(S, x)
   if k = 0 then return true; fi;
 
   # Look for other elements smaller than y which are not smaller than k
-  for j in [1..(k-1)] do 
-    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not
-      NaturalLeqInverseSemigroup(elts[j], elts[k]) then 
+  for j in [1..Length(elts)] do 
+    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not NaturalLeqInverseSemigroup(elts[j], elts[k]) and j<>i then 
       singleline:=false; 
       break;
     fi;
@@ -397,14 +391,11 @@ function(S, f)
     out:=EmptyPlist(Size(S));
     elts:=Elements(S);
   fi;
-  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
-    elts:=Reversed(elts);
-  fi;
 
   i:=Position(elts, f);
   j:=0; 
 
-  for k in [1..i-1] do
+  for k in [1..Length(elts)] do
     if NaturalLeqInverseSemigroup(elts[k], f) and f<>elts[k] then 
       j:=j+1;
       out[j]:=elts[k];
