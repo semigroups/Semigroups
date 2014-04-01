@@ -354,8 +354,6 @@ function(o, pt, x, pos, gen, ind)
   
   o!.scc_reps[Length(o!.scc)+1]:=x;
   
-  # JDM probably don't store these things in <o> since they are already in <new>
-  # or remove them from the individual orbits...
   Append(o!.scc_lookup, OrbSCCLookup(new)+Length(o!.scc));
   Append(o!.scc, OrbSCC(new)+len);  
   Append(o!.schreiergen, new!.schreiergen);
@@ -364,6 +362,12 @@ function(o, pt, x, pos, gen, ind)
     Add(o!.schreierpos, new!.schreierpos[i]+len);
   od;
   Append(o!.orbitgraph, new!.orbitgraph+len);
+  
+  Unbind(new!.scc);          Unbind(new!.trees);        Unbind(new!.scc_lookup);
+  Unbind(new!.mults);        Unbind(new!.schutz);       Unbind(new!.reverse); 
+  Unbind(new!.rev);          Unbind(new!.truth);        Unbind(new!.schutzstab); 
+  Unbind(new!.exhaust);      Unbind(new!.factors);      Unbind(new!.orbitgraph);
+  Unbind(new!.schreiergen);  Unbind(new!.schreierpos);
 
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);
@@ -436,8 +440,6 @@ function(o, pt, x, pos, gen, ind)
   
   o!.scc_reps[Length(o!.scc)+1]:=x;
   
-  # JDM probably don't store these things in <o> since they are already in <new>
-  # or remove them from the individual orbits...
   Append(o!.scc_lookup, OrbSCCLookup(new)+Length(o!.scc));
   Append(o!.scc, OrbSCC(new)+len);  
   Append(o!.schreiergen, new!.schreiergen);
@@ -446,6 +448,12 @@ function(o, pt, x, pos, gen, ind)
     Add(o!.schreierpos, new!.schreierpos[i]+len);
   od;
   Append(o!.orbitgraph, new!.orbitgraph+len);
+
+  Unbind(new!.scc);          Unbind(new!.trees);        Unbind(new!.scc_lookup);
+  Unbind(new!.mults);        Unbind(new!.schutz);       Unbind(new!.reverse); 
+  Unbind(new!.rev);          Unbind(new!.truth);        Unbind(new!.schutzstab); 
+  Unbind(new!.exhaust);      Unbind(new!.factors);      Unbind(new!.orbitgraph);
+  Unbind(new!.schreiergen);  Unbind(new!.schreierpos);
 
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);
