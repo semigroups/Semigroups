@@ -1,6 +1,6 @@
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 +                                                                           +
-+   Copyright (C) 2011-13                              James D. Mitchell    +
++   Copyright (C) 2011-14                              James D. Mitchell    +
 +                                                                           +
 +   'Semigroups' is free software: you can redistribute it and/or modify    +
 +   it under the terms of the GNU General Public License as published by    +
@@ -40,7 +40,7 @@ from
 
     http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php
 
-and inside the 'pkg' subdirectory of your GAP 4 installation unpack
+and inside the 'pkg' subdirectory of your GAP installation unpack
 semigroups-x.x.tar.gz using:
 
     gunzip semigroups-x.x.tar.gz; tar xvf semigroups-x.x.tar
@@ -50,7 +50,7 @@ This will create a subdirectory 'semigroups-x.x'.
 Installation
 ------------
 
-It is assumed that you have a working copy of GAP with version number 4.7.1 or
+It is assumed that you have a working copy of GAP with version number 4.7.3 or
 higher.  The  most  up-to-date  version  of  GAP  and instructions on how to
 install it can be obtained from the main GAP webpage
   
@@ -59,50 +59,55 @@ install it can be obtained from the main GAP webpage
 The  following  is  a  summary of the steps that should lead to a successful
 installation of Semigroups:
 
- 1.  ensure that the IO package version 4.2 or higher is available. For more
+ 1.  ensure that the IO package version 4.3 or higher is available. For more
      details go to:
 
-  http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
+       http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
  
- 2.  ensure that the Orb package version 4.6 or higher is available. For more
+ 2.  ensure that the Orb package version 4.7 or higher is available. For more
      details go to:
 
-  http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+       http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
      Note that Orb and Semigroups both perform better if Orb is compiled.
 
- 3.  This step is optional: if  you  want  to  be  able  to  calculate the
-     Munn semigroup of a semilattice or the maximal subsemigroups of a Rees
-     0-matrix semigroup, then make sure that the Grape package version 4.5 or
-     higher is available. For more details go to:
+ 3.  This step is optional: certain functions in Semigroups require the Grape
+     package to be available and fully compiled; a full list of these functions
+     can be found in the first chapter of the manual.  Make sure that the Grape
+     package version 4.5 or higher is available. For more details go to:
   
-         http://www.maths.qmul.ac.uk/~leonard/grape/
+       http://www.maths.qmul.ac.uk/~leonard/grape/
   
      If Grape is not fully installed, then Semigroups can be used as normal
-     with  the  exception that MunnSemigroup will not work. The method for
-     MaximalSubsemigroups will  work  provided Grape can be loaded, i.e. it is
-     not necessary for Grape to be compiled. 
+     with  the  exception that the functions listed in the first chapter of the
+     manual will not work. 
 
+ 4.  This step is optional: the non-deterministic version of the function
+     Normalizer requires the genss package to be loaded. If you want to use this
+     function, then please ensure that the genss package version 1.5 or higher
+     is available. For more details go to:
 
- 4.  download the package archive 'semigroups-x.x.tar.gz' from
+       http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
+
+ 5.  download the package archive 'semigroups-x.x.tar.gz' from
 
      http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php
 
- 5.  unzip and untar the file 'semigroups-x.x.tar.gz' using
+ 6.  unzip and untar the file 'semigroups-x.x.tar.gz' using
  
         gunzip semigroups-x.x.tar.gz; tar xvf semigroups-x.x.tar
     
      this should create a directory called 'semigroups-x.x'.
 
- 6.  locate  the  'pkg'  directory  of your GAP directory, which contains the
+ 7.  locate  the  'pkg'  directory  of your GAP directory, which contains the
      directories 'lib', 'doc' and so on. Move the directory 'semigroups-x.x'
      into the 'pkg' directory (if it is not there already).
 
- 7.  start GAP in the usual way.
+ 8.  start GAP in the usual way.
 
- 8.  type LoadPackage("semigroups");
+ 9.  type LoadPackage("semigroups");
 
- 9.  compile the documentation by typing 
+ 10. compile the documentation by typing 
  
         SemigroupsMakeDoc();
 
@@ -113,4 +118,4 @@ Please email me if you have any questions, remarks, suggestions, or find any
 issues. Also I would like to hear about any applications of this package
 (jdm3@st-and.ac.uk).  
 
-James D. Mitchell, Friday 11th of October 2013.
+James D. Mitchell, Friday 1st of April 2014.
