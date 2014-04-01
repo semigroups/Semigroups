@@ -16,6 +16,19 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
 
 #
 
+InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
+[IsBipartition, IsBipartition],
+function(x, y)
+
+  if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then 
+    return fail;
+  fi;
+
+  return AsPartialPerm(x)<AsPartialPerm(y);
+end);
+
+#
+
 InstallMethod(NaturalLeqBlockBijection, "for bipartitions", 
 [IsBipartition, IsBipartition], 
 function(f, g)
@@ -83,9 +96,9 @@ InstallMethod(NaturalLeqInverseSemigroup, "for two bipartitions",
 [IsBipartition, IsBipartition],
 function(f, g)
   if IsBlockBijection(f) and IsBlockBijection(g) then
-    return NaturalLeqBlockBijection(f,g);
+    return NaturalLeqBlockBijection(f, g);
   elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
-    return NaturalLeqPartialPermBipartition(f,g);
+    return NaturalLeqPartialPermBipartition(f, g);
   fi;
   Error("usage: the bipartitions should be block bijections or partial perms,");
 end);
@@ -441,65 +454,6 @@ end);
 
 #
 
-InstallMethod(AsBlockBijection, "for a partial perm",
-[IsPartialPerm],
-function(f) 
-  return AsBlockBijection(f, Maximum(DegreeOfPartialPerm(f),
-   CodegreeOfPartialPerm(f))+1);
-end);
-
-InstallMethod(AsBlockBijection, "for a partial perm and zero",
-[IsPartialPerm, IsZeroCyc],
-function(f, n)
-  return Bipartition([]);
-end);
-
-# same as AsBipartition except that all undefined points are in a single block
-# together with an extra (pair of) points.
-
-InstallMethod(AsBlockBijection, "for a partial perm and pos int",
-[IsPartialPerm, IsPosInt],
-function(f, n)
-  local bigblock, nr, out, i;
-
-  if n<=Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then 
-    return fail;
-  fi;
-
-  nr:=0;
-  out:=[1..2*n]*0;
-  bigblock:=n;
-  
-  for i in [1..n-1] do 
-    if i^f=0 then 
-      if bigblock=n then 
-        nr:=nr+1;
-        bigblock:=nr;
-      fi;
-      out[i]:=bigblock;
-    else 
-      nr:=nr+1;
-      out[i]:=nr;
-      out[n+i^f]:=nr;
-    fi;
-  od;
-
-  out[n]:=bigblock;
-  out[2*n]:=bigblock;
-  
-  for i in [n+1..2*n-1] do 
-    if out[i]=0 then 
-      out[i]:=bigblock;
-    fi;
-  od;
-  
-  out:=BipartitionByIntRepNC(out); 
-  SetIsBlockBijection(out, true);
-  return out;
-end);
-
-#
-
 InstallMethod(AsBipartition, "for a transformation",
 [IsTransformation],
 function(f)
@@ -618,6 +572,65 @@ function(f, n)
   SetDegreeOfBipartition(out, n);
   SetNrBlocks(out, nrblocks);
   SetNrLeftBlocks(out, nrleft);
+  return out;
+end);
+
+#
+
+InstallMethod(AsBlockBijection, "for a partial perm",
+[IsPartialPerm],
+function(f) 
+  return AsBlockBijection(f, Maximum(DegreeOfPartialPerm(f),
+   CodegreeOfPartialPerm(f))+1);
+end);
+
+InstallMethod(AsBlockBijection, "for a partial perm and zero",
+[IsPartialPerm, IsZeroCyc],
+function(f, n)
+  return Bipartition([]);
+end);
+
+# same as AsBipartition except that all undefined points are in a single block
+# together with an extra (pair of) points.
+
+InstallMethod(AsBlockBijection, "for a partial perm and pos int",
+[IsPartialPerm, IsPosInt],
+function(f, n)
+  local bigblock, nr, out, i;
+
+  if n<=Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then 
+    return fail;
+  fi;
+
+  nr:=0;
+  out:=[1..2*n]*0;
+  bigblock:=n;
+  
+  for i in [1..n-1] do 
+    if i^f=0 then 
+      if bigblock=n then 
+        nr:=nr+1;
+        bigblock:=nr;
+      fi;
+      out[i]:=bigblock;
+    else 
+      nr:=nr+1;
+      out[i]:=nr;
+      out[n+i^f]:=nr;
+    fi;
+  od;
+
+  out[n]:=bigblock;
+  out[2*n]:=bigblock;
+  
+  for i in [n+1..2*n-1] do 
+    if out[i]=0 then 
+      out[i]:=bigblock;
+    fi;
+  od;
+  
+  out:=BipartitionByIntRepNC(out); 
+  SetIsBlockBijection(out, true);
   return out;
 end);
 

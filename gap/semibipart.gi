@@ -81,6 +81,13 @@ end);
 
 #
 
+InstallImmediateMethod(IsPermBipartitionGroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
+function(S) 
+  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
+end);
+
+#
+
 InstallMethod(IsBlockBijectionSemigroup,
 "for a bipartition semigroup ideal",
 [IsBipartitionSemigroup and IsSemigroupIdeal],
@@ -105,15 +112,23 @@ end);
 
 #
 
+InstallMethod(IsPermBipartitionGroup,
+"for a bipartition semigroup ideal",
+[IsBipartitionSemigroup and IsSemigroupIdeal],
+function(S)
+  if IsPermBipartitionGroup(SupersemigroupOfIdeal(S)) then
+    return true;
+  fi;
+  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
+end);
+
+#
+
 InstallMethod(NaturalPartialOrder, 
-"for an inverse bipartition semigroup",
-[IsBipartitionSemigroup and IsInverseSemigroup],
+"for an inverse block bijection semigroup",
+[IsBlockBijectionSemigroup and IsInverseSemigroup],
 function(S)
   local elts, p, n, out, i, j;
-
-  if not IsBlockBijectionSemigroup(S) then 
-    TryNextMethod();
-  fi;
 
   elts:=Elements(S);  n:=Length(elts); out:=List([1..n], x-> []);
 
@@ -121,6 +136,29 @@ function(S)
     for j in [i-1,i-2..1] do
       if NaturalLeqBlockBijection(elts[j], elts[i]) then
         AddSet(out[i], j);
+      fi;
+    od;
+  od;
+  
+  Perform(out, ShrinkAllocationPlist);
+  return out;
+end);
+
+#
+
+InstallMethod(NaturalPartialOrder, 
+"for an inverse partial perm bipartition semigroup",
+[IsPartialPermBipartitionSemigroup and IsInverseSemigroup],
+function(S)
+  local elts, p, n, out, i, j;
+
+  elts:=ShallowCopy(Elements(S));  n:=Length(elts); out:=List([1..n], x-> []);
+  p:=Sortex(elts, PartialPermLeqBipartition)^-1;
+
+  for i in [n,n-1..2] do
+    for j in [i-1,i-2..1] do
+      if NaturalLeqPartialPermBipartition(elts[j], elts[i]) then
+        AddSet(out[i^p], j^p);
       fi;
     od;
   od;
@@ -308,14 +346,11 @@ end);
 # the converse of the previous method
 
 InstallMethod(IsomorphismPermGroup, 
-"for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+"for a perm bipartition group with generators",
+[IsPermBipartitionGroup and HasGeneratorsOfSemigroup], 
+1, # to beat the method for IsBlockBijectionSemigroup 
 function(S)
   local n, source, range, i;
-
-  if not ForAll(GeneratorsOfSemigroup(S), IsPermBipartition) then 
-    TryNextMethod();
-  fi;
 
   n:=DegreeOfBipartitionSemigroup(S);
   source:=GeneratorsOfSemigroup(S); 
@@ -327,6 +362,22 @@ function(S)
 
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
    AsPermutation, x-> AsBipartition(x, n));
+end);
+
+InstallMethod(IsomorphismPermGroup, 
+"for a block bijection semigroup with generators",
+[IsBlockBijectionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local iso, inv;
+
+  if not IsGroupAsSemigroup(S) then 
+    return fail;
+  fi;
+
+  iso:=IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));
+  inv:=InverseGeneralMapping(iso);
+
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso), x->x^iso, x-> x^inv);
 end);
 
 # this is one way, i.e. no converse method

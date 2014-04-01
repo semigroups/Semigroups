@@ -463,7 +463,7 @@ else
     graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
     
-    # Surely not the best way to let the automorphism gp act on the rectanlges
+    # Surely not the best way to let the automorphism gp act on the rectangles
     rectangles:=Set(Concatenation(
                  List(rectangles, x->Orbit(graph.autGroup, x, OnSets))));
     # A hack to get round problems caused by immutability...

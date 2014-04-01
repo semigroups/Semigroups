@@ -821,6 +821,32 @@ gap> I:=SemigroupIdeal(S, PartialPerm( [ 1, 3, 4, 5, 7 ], [ 1, 3, 4, 5, 7 ] ));
 <inverse partial perm semigroup ideal on 7 pts with 1 generator>
 gap> GeneratorsOfSemigroup(I);;
 
+# test for \in method from ideals-acting.gi (only applies to ideals that know
+# apriori that they are regular) which partially enumerates the semigroup ideal
+# data
+gap> S:=FullTransformationMonoid(6);;
+gap> x:=Transformation( [ 6, 5, 1, 5, 1, 2 ] );;
+gap> I:=SemigroupIdeal(S, x);
+<regular transformation semigroup ideal on 6 pts with 1 generator>
+gap> x:=Transformation( [ 2, 2, 4, 4, 2, 2 ] );;
+gap> x in I;
+true
+gap> IsClosedData(SemigroupData(I));
+false
+gap> Size(I);
+35136
+gap> Size(SemigroupIdeal(S, I));
+35136
+
+# IsomorphismPermGroup for an ideal which happens to be a group...
+gap> S:=FullTransformationSemigroup(6);;
+gap> S:=Semigroup(GroupOfUnits(S));;
+gap> I:=SemigroupIdeal(S, S);;
+gap> IsomorphismPermGroup(I);
+MappingByFunction( <transformation group of size 720, 
+ on 6 pts with 3 generators>, Group([ (), (1,2,3,4,5,6), (1,
+2) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
+
 #
 gap> SemigroupsStopTest(); 
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);

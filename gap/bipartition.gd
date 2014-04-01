@@ -25,10 +25,12 @@ DeclareOperation("OneMutable", [IsBipartitionCollection]);
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
+DeclareOperation("RandomBipartition", [IsPosInt]);
+
 DeclareOperation("NaturalLeqBlockBijection", [IsBipartition, IsBipartition]);
 DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition, 
  IsBipartition]);
-DeclareOperation("RandomBipartition", [IsPosInt]);
+DeclareOperation("PartialPermLeqBipartition", [IsBipartition, IsBipartition]);
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);
 DeclareOperation("BipartitionByIntRepNC", [IsList]);
@@ -42,12 +44,12 @@ DeclareOperation("AsBipartition", [IsTransformation]);
 DeclareOperation("AsBipartition", [IsPartialPerm, IsPosInt]);
 DeclareOperation("AsBipartition", [IsPartialPerm, IsZeroCyc]);
 DeclareOperation("AsBipartition", [IsPartialPerm]);
-DeclareOperation("AsBlockBijection", [IsPartialPerm, IsPosInt]);
-DeclareOperation("AsBlockBijection", [IsPartialPerm, IsZeroCyc]);
-DeclareOperation("AsBlockBijection", [IsPartialPerm]);
 DeclareOperation("AsBipartition", [IsBipartition, IsPosInt]);
 DeclareOperation("AsBipartition", [IsBipartition, IsZeroCyc]);
 DeclareOperation("AsBipartition", [IsBipartition]);
+DeclareOperation("AsBlockBijection", [IsPartialPerm, IsPosInt]);
+DeclareOperation("AsBlockBijection", [IsPartialPerm, IsZeroCyc]);
+DeclareOperation("AsBlockBijection", [IsPartialPerm]);
 
 DeclareProperty("IsBlockBijection", IsBipartition);
 DeclareProperty("IsUniformBlockBijection", IsBipartition);

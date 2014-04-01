@@ -59,10 +59,3 @@ end);
 
 #
 
-#InstallMethod(NrRegularDClasses, "for an acting semigroup ideal",
-#[IsActingSemigroup and IsSemigroupIdeal],
-#function(I)
-#  return Number(GreensDClasses(I), IsRegularDClass);
-#end);
-
-

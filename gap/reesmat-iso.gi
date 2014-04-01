@@ -470,8 +470,8 @@ function(R1, R2)
 end);
 
 #
-
-if not IsBound(GAPInfo.PackagesLoaded.grape) then 
+if not IsBound(GAPInfo.PackagesLoaded.grape) or
+  (Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")=fail) then
   
   InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups", 
   [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],

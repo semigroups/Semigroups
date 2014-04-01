@@ -25,8 +25,7 @@ else
   InstallMethod(SmallestMultiplicationTable, "for a semigroup",
   [IsSemigroup],
   function(S)
-    local LitNum, NumLit, diag2lits, tbl2lits, onLiterals, n, mtS, diagS, phi,
-    diaglitsS, minS, permS, tbllitsS, stabS;
+    local LitNum, NumLit, diag2lits, tbl2lits, lits_to_tbl, onLiterals, n, mtS, diagS, phi, diaglitsS, minS, permS, tbllitsS, stabS;
      
     LitNum:=function(ln, n)
       return [QuoInt(ln-1,n^2)+1,QuoInt((ln-1) mod n^2,n)+1,(ln-1) mod n+1];
@@ -53,6 +52,18 @@ else
 
       return literals;
     end;
+    
+    lits_to_tbl:=function(lits, n)
+      local table, i, j;
+      table:=[];
+      for i in [0..n-1] do 
+        table[i+1]:=[];
+        for j in [1..n] do 
+          table[i+1][j]:=LitNum(lits[i*n+j], n)[3];
+        od;
+      od;
+      return table;
+    end;
 
     onLiterals:=n->function(ln,pi)
       local lit,imlit;
@@ -77,7 +88,7 @@ else
     tbllitsS:=OnSets( tbl2lits( mtS, n ), permS);
     stabS:=Stabilizer(Image(phi), minS, OnSets);
 
-    return SmallestImageSet(stabS, tbllitsS);
+    return lits_to_tbl(SmallestImageSet(stabS, tbllitsS), n);
   end);
 
 fi;
@@ -105,8 +116,6 @@ else
     if Size(S)<>Size(T) or NrRClasses(S)<>NrRClasses(T) or 
       NrDClasses(S)<>NrDClasses(T) or NrLClasses(S)<>NrLClasses(T) or 
       NrHClasses(S)<>NrHClasses(T) or NrIdempotents(S)<>NrIdempotents(T) 
-      or StructureDescriptionMaximalSubgroups(S)
-      <>StructureDescriptionMaximalSubgroups(T)
      then 
       return false;
     elif Size(S)=1 then 

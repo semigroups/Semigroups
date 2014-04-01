@@ -29,7 +29,7 @@ gap> S:=Semigroup(gens);;
 gap> IsAbundantSemigroup(S);
 true
 gap> IsRegularSemigroup(S);
-false</Example> 
+false]]></Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -56,7 +56,7 @@ gap> S:=Semigroup( Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 2, 4, 1, 1 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ) );;
 gap> IsAdequateSemigroup(S);
-false</Example> 
+false]]></Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -64,7 +64,7 @@ false</Example>
 <#GAPDoc Label="IsBand">
   <ManSection>
     <Prop Name="IsBand" Arg="S"/>
-    <Returns><K>true</K> or <K>false</K>.  </Returns>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       <C>IsBand</C> returns <K>true</K> if every element of the semigroup
       <A>S</A> is an idempotent and <K>false</K> if it is not. An inverse
@@ -320,26 +320,35 @@ false]]></Example>
   <Prop Name="IsEunitaryInverseSemigroup" Arg="S"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
-    As described in <Cite Key="howie"/>, an inverse semigroup <A>S</A> with 
-    subsemigroup of idempotents <A>E</A> is <E>E-unitary</E> if for
-    <Display>
-    s \in S\textrm{ and }e \in E\textrm{: }es \in E \Rightarrow s \in E.
-    </Display>
-    Equivalently, <A>S</A> is <E>E-unitary</E> if <A>E</A> is closed in the 
-    natural partial order (see Proposition 5.9.1 in <Cite Key="howie"/>); that is:
+    As described in Section 5.9 of <Cite Key="howie"/>, an inverse semigroup
+    <A>S</A> with semilattice of idempotents <A>E</A> is <E>E-unitary</E> if
+    for
     <Alt Not="Text">
-    <Display>
-    \textrm{for } s \in S\textrm{ and }e \in E\textrm{: }e \le s \Rightarrow s \in E
-    </Display>
+      <Display>
+        s \in S\textrm{ and }e \in E\textrm{: }es \in E \Rightarrow s \in E.
+      </Display>
     </Alt>
     <Alt Only="Text">
-    for s in S and e in E, e less than s implies s in E.
+      for s in S and e in E, es in E implies s in E.
     </Alt><P/>
-    This condition is equivalent to <A>E</A> being majorantly closed in <A>S</A>.
-    See <Ref Oper="IdempotentGeneratedSubsemigroup"/> and <Ref Oper="IsMajorantlyClosed"/>.    
+    Equivalently, <A>S</A> is <E>E-unitary</E> if <A>E</A> is closed in the 
+    natural partial order (see Proposition 5.9.1 in <Cite Key="howie"/>):
+    <Alt Not="Text">
+      <Display>
+        \textrm{for } s \in S\textrm{ and }e \in E\textrm{: }e \le s \Rightarrow s
+        \in E.
+      </Display>
+    </Alt>
+    <Alt Only="Text">
+      for s in S and e in E, e less than s implies s in E.
+    </Alt><P/>
+
+    This condition is equivalent to <A>E</A> being majorantly closed in
+    <A>S</A>.  See <Ref Oper="IdempotentGeneratedSubsemigroup"/> and <Ref
+      Oper="IsMajorantlyClosed"/>.    
     Hence an inverse semigroup of partial permutations, block bijections or 
     partial permutation bipartitions is <E>E-unitary</E> if and only if the 
-    idempotent generated subsemigroup is majorantly closed.
+    idempotent semilattice is majorantly closed.
     <Example><![CDATA[
 gap> S:=InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 4 ], [ 2, 3, 1, 6 ] ),
 >  PartialPerm( [ 1, 2, 3, 5 ], [ 3, 2, 1, 6 ] ) ]);;
@@ -977,8 +986,8 @@ false]]></Example>
       <A>S</A> is a congruence-free semigroup and <K>false</K> if it is 
       not.<P/>
 
-      A semigroup <A>S</A> is a <E>congruence-free semigroup</E> if it has no 
-      non-trivial congruences.<P/>
+      A semigroup <A>S</A> is <E>congruence-free</E> if it has no non-trivial
+      proper congruences.<P/>
 
       A semigroup with zero is congruence-free if and only if it is isomorphic
       to a regular Rees 0-matrix semigroup <C>R</C> whose underlying semigroup
@@ -993,8 +1002,7 @@ false]]></Example>
 gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;
 gap> IsCongruenceFreeSemigroup(S);
 true
-gap> S := Semigroup(
->  Transformation( [ 2, 2, 4, 4 ] ),
+gap> S := Semigroup( Transformation( [ 2, 2, 4, 4 ] ),
 >  Transformation( [ 5, 3, 4, 4, 6, 6 ] ) );;
 gap> IsCongruenceFreeSemigroup(S);
 false]]></Example>

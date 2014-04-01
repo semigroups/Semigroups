@@ -52,10 +52,12 @@ ReadPackage("semigroups/gap/reesmat-iso.gi");
 ReadPackage("semigroups/gap/maximal.gi");
 ReadPackage("semigroups/gap/normalizer.gi");
 
+ReadPackage("semigroups/gap/quotients.gi");
+
 if TestPackageAvailability("grape")=fail then 
-  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
 elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
    then 
+  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
@@ -69,3 +71,6 @@ if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
   Add(SemigroupsOmitFromTestManualExamples, "partition");
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
+
+ReadPackage("semigroups/gap/reesmat-cong.gi");
+ReadPackage("semigroups/gap/univcong.gi");
