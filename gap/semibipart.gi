@@ -81,6 +81,13 @@ end);
 
 #
 
+InstallImmediateMethod(IsPermBipartitionGroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
+function(S) 
+  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
+end);
+
+#
+
 InstallMethod(IsBlockBijectionSemigroup,
 "for a bipartition semigroup ideal",
 [IsBipartitionSemigroup and IsSemigroupIdeal],
@@ -308,14 +315,10 @@ end);
 # the converse of the previous method
 
 InstallMethod(IsomorphismPermGroup, 
-"for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+"for a perm bipartition group with generators",
+[IsPermBipartitionGroup and HasGeneratorsOfSemigroup], 1, 
 function(S)
   local n, source, range, i;
-
-  if not ForAll(GeneratorsOfSemigroup(S), IsPermBipartition) then 
-    TryNextMethod();
-  fi;
 
   n:=DegreeOfBipartitionSemigroup(S);
   source:=GeneratorsOfSemigroup(S); 
@@ -327,6 +330,22 @@ function(S)
 
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
    AsPermutation, x-> AsBipartition(x, n));
+end);
+
+InstallMethod(IsomorphismPermGroup, 
+"for a block bijection semigroup with generators",
+[IsBlockBijectionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local iso, inv;
+
+  if not IsGroupAsSemigroup(S) then 
+    return fail;
+  fi;
+
+  iso:=IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));
+  inv:=InverseGeneralMapping(iso);
+
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso), x->x^iso, x-> x^inv);
 end);
 
 # this is one way, i.e. no converse method
