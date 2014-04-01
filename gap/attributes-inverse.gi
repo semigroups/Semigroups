@@ -89,14 +89,19 @@ function(S, x)
   fi;
 
   y:=LeftOne(x);
-  elts:=Set(Idempotents(S));;
+  elts:=ShallowCopy(Idempotents(S));
+  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
+    Sort(elts, PartialPermLeqBipartition);
+  else
+    elts:=Set(elts);
+  fi;
   i:=Position(elts, y);
   k:=0;
   singleline:=true;
 
   # Find an element smaller than y, k
-  for j in [1..Length(elts)] do
-    if NaturalLeqInverseSemigroup(elts[j], elts[i]) and j<>i then
+  for j in [i-1,i-2 .. 1] do
+    if NaturalLeqInverseSemigroup(elts[j], elts[i]) then
       k:=j;
       break;
     fi;
@@ -106,8 +111,8 @@ function(S, x)
   if k = 0 then return true; fi;
 
   # Look for other elements smaller than y which are not smaller than k
-  for j in [1..Length(elts)] do 
-    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not NaturalLeqInverseSemigroup(elts[j], elts[k]) and j<>i then 
+  for j in [1..(k-1)] do 
+    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not NaturalLeqInverseSemigroup(elts[j], elts[k]) then 
       singleline:=false; 
       break;
     fi;
@@ -386,16 +391,21 @@ function(S, f)
 
   if IsIdempotent(f) then #(always true if S is a D-Class rep of an inverse sgp)
     out:=EmptyPlist(NrIdempotents(S));
-    elts:=SSortedList(Idempotents(S));
+    elts:=ShallowCopy(Idempotents(S));
   else
     out:=EmptyPlist(Size(S));
-    elts:=Elements(S);
+    elts:=ShallowCopy(Elements(S));
+  fi;
+  if IsBipartitionSemigroup(S) and IsPartialPermBipartitionSemigroup(S) then
+    Sort(elts, PartialPermLeqBipartition);
+  else
+    elts:=SSortedList(elts);
   fi;
 
   i:=Position(elts, f);
   j:=0; 
 
-  for k in [1..Length(elts)] do
+  for k in [1..i-1] do
     if NaturalLeqInverseSemigroup(elts[k], f) and f<>elts[k] then 
       j:=j+1;
       out[j]:=elts[k];
