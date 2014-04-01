@@ -8,6 +8,10 @@
     <Homepage>http://tinyurl.com/jdmitchell</Homepage>
   </Author>
 
+  <Author>Julius Jonu&#353;as</Author>
+  <Author>Michael Torpey</Author>
+  <Author>Wilf Wilson</Author>
+
   <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell.<P/>
     &Semigroups; is free software; you can redistribute it and/or modify it
     under the terms of the <URL Text="GNU General Public License">
@@ -18,31 +22,54 @@
 
   <Abstract>
     The &Semigroups; package is a &GAP; package containing methods for
-    semigroups, principally semigroups of transformations, partial
-    permutations, bipartitions, and subsemigroups of regular Rees 0-matrix
-    semigroups.  &Semigroups; contains more efficient methods than those
-    available in the &GAP; library (and in many cases more efficient than any
-    other software) for creating semigroups, calculating their Green's classes,
-    size, elements, group of units, minimal ideal, small generating sets,
-    testing membership, finding the inverses of a regular element, factorizing
-    elements over the generators, and many more. It is also possible to test if
-    a semigroup satisfies a particular property, such as if it is regular,
-    simple, inverse, completely regular, and a variety of further properties.
+    semigroups, monoids, and inverse semigroups, principally of
+    transformations, partial permutations, bipartitions, subsemigroups of
+    regular Rees 0-matrix semigroups, and the free inverse semigroup. 
     <P/>
-
-    There are also functions to define and manipulate free inverse semigroups
-    and their elements.  
+    
+    &Semigroups; contains more efficient methods than those available in the
+    &GAP; library (and in many cases more efficient than any other software) for
+    creating semigroups, monoids, and inverse semigroup, calculating their
+    Green's structure, ideals, size, elements, group of units, small generating
+    sets, testing membership, finding the inverses of a regular element,
+    factorizing elements over the generators, and many more. It is also possible
+    to test if a semigroup satisfies a particular property, such as if it is
+    regular, simple, inverse, completely regular, and a variety of further
+    properties.
+    <P/>
+    
+    There are methods for finding congruences of certain types of semigroups,
+    the normalizer of a semigroup in a permutation group, the maximal
+    subsemigroups of a finite semigroup, and smaller degree partial permutation
+    representations of inverse semigroups. There are functions for producing
+    pictures of the Green's structure of a semigroup, and for drawing bipartitions. 
   </Abstract>
 
   <Acknowledgements>
-    I would like to thank P. von Bunau, A. Distler, A. Egri-Nagy, S. Linton, 
-    C. Nehaniv,  J.  Neubueser, M. R. Quick, E. F. Robertson, and N. Ruskuc for
-    their help and suggestions.  Special thanks go to J. Araujo for his
-    mathematical suggestions and to M.  Neunhoeffer for his invaluable help in
-    improving the efficiency of the package. <P/>
+    I would like to thank P. von Bunau, A. Distler, S. Linton, C. Nehaniv,  J.
+    Neubueser, M. R. Quick, E. F. Robertson, and N. Ruskuc for their help and
+    suggestions.  Special thanks go to J. Araujo for his mathematical
+    suggestions and to M. Neunhoeffer for his invaluable help in improving the
+    efficiency of the package. <P/>
+
+    Julius Jonu&#353;as contributed the part of the package relating to free
+    inverse semigroups, and contributed to the code for ideals.<P/>
+
+    Michael Torpey contributed the part of the package relating to congruences
+    of Rees (0-)matrix semigroups.<P/>
+
+    Wilf Wilson contributed to the part of the package relating maximal
+    subsemigroups and smaller degree partial permutation representations of
+    inverse semigroups. We are also grateful to C. Donoven and R. Hancock for
+    their contribution to the development of the algorithms for maximal
+    subseemigroups and smaller degree partial permutation representations.<P/>
+
+    James East and Attila Egri-Nagy contributed to the part of the package
+    relating to bipartitions. I would like to thank the University of Western
+    Sydney for their support of the development of this part of the pacakge. <P/>
 
     I would also like to acknowledge the support of the Centre of Algebra at
-    the University of Lisbon, and of EPSRC grant number GR/S/56085/01.
+    the University of Lisbon, and of EPSRC grant number GR/S/56085/01.    
   </Acknowledgements>
 
 </TitlePage>

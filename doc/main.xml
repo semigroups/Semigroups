@@ -17,13 +17,13 @@
 </URL></Alt><Alt Only='Text'><Package>IO</Package></Alt>">
      <!ENTITY vspace "<Alt Only='LaTeX'>\vspace{\baselineskip}</Alt>">
      <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
-     <!ENTITY H "<Alt Only='HTML'>\(\mathcal{H}\)</Alt><Alt
+     <!ENTITY H "<Alt Only='HTML'>\(\mathscr{H}\)</Alt><Alt
      Only='Text'><E>H</E></Alt><Alt Only='LaTeX'><M>\mathcal{H}</M></Alt>">
-     <!ENTITY R "<Alt Only='HTML'>\(\mathcal{R}\)</Alt><Alt
+     <!ENTITY R "<Alt Only='HTML'>\(\mathscr{R}\)</Alt><Alt
      Only='Text'><E>R</E></Alt><Alt Only='LaTeX'><M>\mathcal{R}</M></Alt>">
-     <!ENTITY L "<Alt Only='HTML'>\(\mathcal{L}\)</Alt><Alt
+     <!ENTITY L "<Alt Only='HTML'>\(\mathscr{L}\)</Alt><Alt
      Only='Text'><E>L</E></Alt><Alt Only='LaTeX'><M>\mathcal{L}</M></Alt>">
-     <!ENTITY D "<Alt Only='HTML'>\(\mathcal{D}\)</Alt><Alt
+     <!ENTITY D "<Alt Only='HTML'>\(\mathscr{D}\)</Alt><Alt
      Only='Text'><E>D</E></Alt><Alt Only='LaTeX'><M>\mathcal{D}</M></Alt>">
      <#Include Label="PKGVERSIONDATA">
    ]>
