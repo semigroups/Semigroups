@@ -14,4 +14,4 @@
 DeclareCategory("IsSemigroupIdealData", IsSemigroupData);
 DeclareCategory("IsRegularIdealData", IsSemigroupIdealData);
 DeclareAttribute("SemigroupIdealData", IsSemigroupIdeal);
-
+DeclareOperation("Enumerate", [IsSemigroupIdealData, IsCyclotomic, IsRecord]);

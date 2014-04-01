@@ -70,8 +70,8 @@ function(I)
   SetLambdaOrb(I, LambdaOrb(U));
   SetRhoOrb(I, RhoOrb(U));
   # JDM: maybe more is required here to remove U from the semigroup data, like
-  # replacing it in the first position of every entry of the data, and in the
-  # different internal components of the data. 
+  # replacing U with I in the first position of every entry of the data, and in
+  # the different internal components of the data. 
   return SemigroupData(U);
 end);
 
@@ -274,6 +274,15 @@ function(data)
   return;
 end);
 
+#
+
+InstallMethod(Enumerate, "for semigroup ideal data, limit, looking function", 
+[IsSemigroupIdealData, IsCyclotomic, IsFunction],
+function(data, limit, lookfunc)
+  return Enumerate(data, limit, rec(lookfunc:=lookfunc));
+end);
+
+
 # We concentrate on the case when nothing is known about the parent of the
 # ideal.
 
@@ -282,17 +291,34 @@ end);
 
 InstallMethod(Enumerate, 
 "for semigroup ideal data, limit, and func",
-[IsSemigroupIdealData, IsCyclotomic, IsFunction],
-function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
+[IsSemigroupIdealData, IsCyclotomic, IsRecord],
+function(data, limit, record)
+  local lookfunc, looking, lambdalookfunc, lambdalooking, rholookfunc, rholooking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
  
-  if lookfunc<>ReturnFalse then 
+  if IsBound(record.lookfunc) then 
+    lookfunc:=record.lookfunc;
     looking:=true;
     data!.found:=false;
   else
     looking:=false;
   fi;
-  
+ 
+  if IsBound(record.lambdalookfunc) then 
+    lambdalookfunc:=record.lambdalookfunc;
+    lambdalooking:=true;
+  else
+    lambdalookfunc:=ReturnFalse;
+    lambdalooking:=false;
+  fi;
+
+  if IsBound(record.rholookfunc) then 
+    rholookfunc:=record.rholookfunc;
+    rholooking:=true;
+  else
+    rholookfunc:=ReturnFalse;
+    rholooking:=false;
+  fi;
+
   if IsClosedData(data) then 
     if looking then 
       data!.found:=false;
@@ -393,7 +419,7 @@ function(data, limit, lookfunc)
     xx:=lambda(x);
     l:=htvalue(lambdaoht, xx);
     if l=fail then 
-      l:=UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos);
+      l:=UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos, lambdalookfunc);
        
       # update the lists of reps
       for n in [lenscc+1..lenscc+Length(lambdascc)] do 
@@ -425,7 +451,7 @@ function(data, limit, lookfunc)
     xx:=rho(x);
     l:=htvalue(rhooht, xx);
     if l=fail then 
-      l:=UpdateIdealRhoOrb(rhoo, xx, x, pos, gen, idealpos);
+      l:=UpdateIdealRhoOrb(rhoo, xx, x, pos, gen, idealpos, rholookfunc);
       new:=true; # x is a new R-rep
     fi;
     schutz:=LambdaOrbStabChain(lambdao, m);
@@ -553,7 +579,9 @@ function(data, limit, lookfunc)
       rreps[j-log[i]]:=orb[j][4];    
       for k in genstoapply do 
         UpdateSemigroupIdealData(gens[k]*orb[j][4], pos, k, fail);
-        if looking and data!.found<>false then 
+        if (looking and data!.found<>false) 
+         or (lambdalooking and lambdao!.found<>false) 
+         or (rholooking and rhoo!.found<>false) then 
           data!.pos:=i-1;
           return data;
         fi;
@@ -566,13 +594,14 @@ function(data, limit, lookfunc)
     for z in LClassReps(d[i]) do 
       for k in genstoapply do
         UpdateSemigroupIdealData(z*gens[k], pos, k, fail);
-        if looking and data!.found<>false then 
+        if (looking and data!.found<>false) 
+         or (lambdalooking and lambdao!.found<>false) 
+         or (rholooking and rhoo!.found<>false) then 
           data!.pos:=i-1;
           return data;
         fi;
       od;
     od;
-    
   od;
   
   # for the data-orbit
@@ -635,14 +664,11 @@ function(x, I)
     fi;
      
     # this function checks if <pt> has the same lambda-value as x
-    lookfunc:=function(data, pt) 
-      return xx in o;
+    lookfunc:=function(lambdao, pt) 
+      return pt=xx;
     end;
-    #JDM: this currently doesn't work, i.e. it doesn't find if xx in o, and 
-    # it evaluates lookfunc(data, pt) when <pt> is every R-class in a D-class
-    # even though every such <pt> has the same lambda value :(
-    Enumerate(data, infinity, lookfunc);
-    l:=PositionOfFound(data);
+    Enumerate(data, infinity, rec(lambdalookfunc:=lookfunc));
+    l:=PositionOfFound(o);
 
     # rho is not found, so f not in s
     if l=false then 
@@ -677,11 +703,11 @@ function(x, I)
     fi;
      
     # this function checks if <pt> has the same lambda-value as x
-    lookfunc:=function(data, pt) 
-      return xxx in o;
+    lookfunc:=function(o, pt) 
+      return pt=xxx;
     end;
-    Enumerate(data, infinity, lookfunc);
-    l:=PositionOfFound(data);
+    Enumerate(data, infinity, rec(rholookfunc:=lookfunc));
+    l:=PositionOfFound(o);
 
     # rho is not found, so f not in s
     if l=false then 
@@ -816,15 +842,32 @@ end);
 
 InstallMethod(Enumerate, 
 "for regular ideal data, limit, and func",
-[IsRegularIdealData, IsCyclotomic, IsFunction],
-function(data, limit, lookfunc)
-  local looking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, rholen, act, htadd, htvalue, drel, dtype, poset, datalookup, log, UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
+[IsRegularIdealData, IsCyclotomic, IsRecord],
+function(data, limit, record)
+  local lookfunc, looking, lambdalookfunc, lambdalooking, rholookfunc, rholooking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, rholen, act, htadd, htvalue, drel, dtype, poset, datalookup, log, UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
   
-  if lookfunc<>ReturnFalse then 
+  if IsBound(record.lookfunc) and record.lookfunc<>ReturnFalse then 
+    lookfunc:=record.lookfunc;
     looking:=true;
     data!.found:=false;
   else
     looking:=false;
+  fi;
+  
+  if IsBound(record.lambdalookfunc) then 
+    lambdalookfunc:=record.lambdalookfunc;
+    lambdalooking:=true;
+  else
+    lambdalookfunc:=ReturnFalse;
+    lambdalooking:=false;
+  fi;
+
+  if IsBound(record.rholookfunc) then 
+    rholookfunc:=record.rholookfunc;
+    rholooking:=true;
+  else
+    rholookfunc:=ReturnFalse;
+    rholooking:=false;
   fi;
   
   if IsClosedData(data) then 
@@ -925,7 +968,7 @@ function(data, limit, lookfunc)
     xx:=lambda(x);
     l:=htvalue(lambdaoht, xx);
     if l=fail then 
-      l:=UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos);
+      l:=UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos, lambdalookfunc);
        
       # update the lists of reps
       for n in [lenscc+1..lenscc+Length(lambdascc)] do 
@@ -957,7 +1000,7 @@ function(data, limit, lookfunc)
     xx:=rho(x);
     l:=htvalue(rhooht, xx);
     if l=fail then 
-      l:=UpdateIdealRhoOrb(rhoo, xx, x, pos, gen, idealpos);
+      l:=UpdateIdealRhoOrb(rhoo, xx, x, pos, gen, idealpos, rholookfunc);
       for n in [rholen+1..rholen+Length(rhoo)] do 
         lambdarhoht[n]:=[];
       od;
@@ -1052,7 +1095,9 @@ function(data, limit, lookfunc)
       rreps[j-log[i]]:=orb[j][4];    
       for k in genstoapply do 
         UpdateSemigroupIdealData(gens[k]*orb[j][4], pos, k, fail);
-        if looking and data!.found<>false then 
+        if (looking and data!.found<>false) 
+         or (lambdalooking and lambdao!.found<>false) 
+         or (rholooking and rhoo!.found<>false) then 
           data!.pos:=i-1;
           return data;
         fi;
@@ -1065,7 +1110,9 @@ function(data, limit, lookfunc)
     for z in LClassReps(d[i]) do 
       for k in genstoapply do
         UpdateSemigroupIdealData(z*gens[k], pos, k, fail);
-        if looking and data!.found<>false then 
+        if (looking and data!.found<>false) 
+         or (lambdalooking and lambdao!.found<>false) 
+         or (rholooking and rhoo!.found<>false) then 
           data!.pos:=i-1;
           return data;
         fi;
