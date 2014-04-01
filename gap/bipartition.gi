@@ -16,6 +16,19 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
 
 #
 
+InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
+[IsBipartition, IsBipartition],
+function(x, y)
+
+  if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then 
+    return fail;
+  fi;
+
+  return AsPartialPerm(x)<AsPartialPerm(y);
+end);
+
+#
+
 InstallMethod(NaturalLeqBlockBijection, "for bipartitions", 
 [IsBipartition, IsBipartition], 
 function(f, g)
@@ -83,9 +96,9 @@ InstallMethod(NaturalLeqInverseSemigroup, "for two bipartitions",
 [IsBipartition, IsBipartition],
 function(f, g)
   if IsBlockBijection(f) and IsBlockBijection(g) then
-    return NaturalLeqBlockBijection(f,g);
+    return NaturalLeqBlockBijection(f, g);
   elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
-    return NaturalLeqPartialPermBipartition(f,g);
+    return NaturalLeqPartialPermBipartition(f, g);
   fi;
   Error("usage: the bipartitions should be block bijections or partial perms,");
 end);

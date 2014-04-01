@@ -838,6 +838,15 @@ gap> Size(I);
 gap> Size(SemigroupIdeal(S, I));
 35136
 
+# IsomorphismPermGroup for an ideal which happens to be a group...
+gap> S:=FullTransformationSemigroup(6);;
+gap> S:=Semigroup(GroupOfUnits(S));;
+gap> I:=SemigroupIdeal(S, S);;
+gap> IsomorphismPermGroup(I);
+MappingByFunction( <transformation group of size 720, 
+ on 6 pts with 3 generators>, Group([ (), (1,2,3,4,5,6), (1,
+2) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
+
 #
 gap> SemigroupsStopTest(); 
 gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);

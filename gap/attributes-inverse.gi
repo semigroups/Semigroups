@@ -97,7 +97,8 @@ function(S, x)
   k:=0;
   singleline:=true;
 
-  # This assumes something about the ordering of the idempotents which is not necessarily true for Bipartition stuff
+  # This assumes something about the ordering of the idempotents which is not
+  # necessarily true for Bipartition stuff
   # Find an element smaller than y, k
   for j in [i-1,i-2 .. 1] do
     if NaturalLeqInverseSemigroup(elts[j], elts[i]) then
@@ -111,7 +112,8 @@ function(S, x)
 
   # Look for other elements smaller than y which are not smaller than k
   for j in [1..(k-1)] do 
-    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not NaturalLeqInverseSemigroup(elts[j], elts[k]) then 
+    if  NaturalLeqInverseSemigroup(elts[j], elts[i]) and not
+      NaturalLeqInverseSemigroup(elts[j], elts[k]) then 
       singleline:=false; 
       break;
     fi;

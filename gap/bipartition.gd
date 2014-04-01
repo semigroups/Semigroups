@@ -25,10 +25,12 @@ DeclareOperation("OneMutable", [IsBipartitionCollection]);
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
+DeclareOperation("RandomBipartition", [IsPosInt]);
+
 DeclareOperation("NaturalLeqBlockBijection", [IsBipartition, IsBipartition]);
 DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition, 
  IsBipartition]);
-DeclareOperation("RandomBipartition", [IsPosInt]);
+DeclareOperation("PartialPermLeqBipartition", [IsBipartition, IsBipartition]);
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);
 DeclareOperation("BipartitionByIntRepNC", [IsList]);
