@@ -238,7 +238,8 @@ function(o, m)
   fi;
 
   if IsMatrixSemigroup(s) then
-    g:=Group(One(Representative(s)));
+    #T (mpf) Horrible horrible hack
+    g:=Group(List( One(Representative(s)), x -> List(x)));
   else
     g:=Group(());
   fi;
@@ -251,6 +252,8 @@ function(o, m)
         f:=lambdaperm(rep, rep*forward*gens[l]
           *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g:=ClosureGroup(g, f);
+        Print(Size(g),"\n");
+        
         if Size(g)>=bound then
           stop:=true;
           break;
@@ -266,7 +269,7 @@ function(o, m)
 
   if stop then
     o!.schutzstab[m]:=true;
-  elif Size(g)=1 then
+  elif Size(g)=1 or (not IsPermGroup(g)) then
     o!.schutzstab[m]:=false;
   else
     o!.schutzstab[m]:=StabChainImmutable(g);

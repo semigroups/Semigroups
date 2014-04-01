@@ -266,7 +266,7 @@ InstallMethod(RhoFunc,
       function(mat)
         local nvsp;
         
-        nvsp := MutableCopyMat(mat);
+        nvsp := MutableCopyMat(TransposedMat(mat));
         SemiEchelonMatDestructive(nvsp);
         return nvsp;
       end;
@@ -287,16 +287,50 @@ InstallMethod(RhoRank,
         [IsMatrixSemigroup],
         function(S)
     # rank of column space
-    Error("not implemented yet\n");
+    return (x -> Length(SemiEchelonMat(x).heads));
 end);
 
+
+# Under the assumption that rank mat >= dim V compute
+# a matrix N such that mat * N = id_V
+#
+#T maybe do this "by hand"
+#T in particular we can probably not rely
+#T on SemiEchelonMatDestructive actually leaving
+#T the semiechelon form in W
 InstallMethod(LambdaInverse,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
-    # Returns a function that for 
-    return function( Y, f )
-        return PedestrianLambdaInverse(f)[1];
+    return function( V, mat )
+        local W, se, Vdims, mdims, n, k, i, j, u;
+        
+        # We assume that mat is quadratic
+        # we don't check this for performance reasons. If a semigroup decides to
+        # have non-quadratic matrices in it, something is seriously wrong anyway.
+        n := DimensionsMat(mat)[1];
+        k := DimensionsMat(V)[1];
+
+        W := ZeroMatrix(n, 2 * n, mat);
+        
+        CopySubMatrix( V * mat, W, [1..k], [1..k], [1..n], [1..n]);
+        CopySubMatrix( V, W, [1..k], [1..k], [1..n], [n+1..2*n]);
+        
+        se := SemiEchelonMatDestructive(W);
+
+        u := One(BaseDomain(W));
+        j := Length(se.vectors) + 1;
+        for i in [1..n] do
+            if se.heads[i] = 0 then
+                W[j][i] := u;
+                W[j][n+i] := u;
+                j := j+1;
+            fi;
+        od;
+        
+        TriangulizeMat(W);
+        
+        return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
     end;
 end);
 
@@ -313,16 +347,16 @@ InstallMethod(LambdaPerm,
         [IsMatrixSemigroup],
         function(S)
     return function(x, y)
-        local pi, mat;
+        local pi, mat, se, A, B, i, u, uv;
         
-        pi := PedestrianLambdaInverse(x);
-        
-        mat := pi[1] * y;
-        
-        mat := mat{ Difference([1..RowLength(mat)], pi[2]) };
-        
-        Error("debugger");
-        return mat;
+        if IsZero(x) then
+            return List(One(x), List);
+        else 
+            #T kaputt
+            return List(One(x), List);
+            
+        fi;
+        return List(mat, List);
     end;
 end);
 

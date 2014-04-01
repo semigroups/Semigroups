@@ -127,11 +127,7 @@ InstallMethod( SemiEchelonMatDestructive,
             fi;
         od;
           
-        #j := PositionNot( row, zero );
-        j := 1;
-        while (j <= ncols) and (row[j] = zero) do
-            j := j+1;
-        od;
+        j := PositionNonZero( row );
         
         if j <= ncols then
           
@@ -160,73 +156,199 @@ InstallMethod( SemiEchelonMat,
 function(mat)
     local copy;
     
-    copy := StructuralCopy(mat);
+    copy := MutableCopyMat(mat);
     return SemiEchelonMatDestructive(copy);
 end);
 
-###
-#M MoorePenroseInverse
-#
-# This is certainly NOT the most efficient way of doing this
-#
-InstallMethod( MoorePenroseInverse,
-        "for a matrix over a field",
-        [ IsMatrixObj ],
-function(mat)
-    local C, D, E, F, n, i, rows, pos;
+##########################################################################
+##
+#F  BaseSteinitzMatrixObj( <bas>, <mat> )
+##
+##  find vectors extending mat to a basis spanning the span of <bas>.
+##  'BaseSteinitz'  returns a
+##  record  describing  a base  for the factorspace   and ways   to decompose
+##  vectors:
+##
+##  zero:           zero of <V> and <U>
+##  factorzero:     zero of complement
+##  subspace:       triangulized basis of <mat>
+##  factorspace:    base of a complement of <U> in <V>
+##  heads:          a list of integers i_j, such that  if i_j>0 then a vector
+##                  with head j is at position i_j  in factorspace.  If i_j<0
+##                  then the vector is in subspace.
+##
+InstallGlobalFunction( BaseSteinitzMatrixObj, function(bas,mat)
+    local mdims,	# Dimensions of mat
+          bdims,	# Dimensions of bas 
+          z,l,b,i,j,k,stop,v,dim,h,zv;
+    bdims := DimensionsMat(bas);
     
-    if not IsField(BaseDomain(mat)) then
-        Error("This method only works for matrices over fields\n");
-    fi;
-    
-    D := MutableCopyMat(mat);
-    TriangulizeMat(D);
-    D := D{ [1..PositionLastNonZero(D)] };
-    
-    n := DimensionsMat(mat)[1];
-    rows := [];
-    
-    C := TransposedMat(mat);
-    
-    for i in [1..DimensionsMat(D)[1]] do
-        pos := PositionNonZero(D[i]);
-        if pos <= n then
-            Add(rows, C[pos]);
-        fi;
-    od;
-    
-    C := TransposedMat(NewMatrix(IsPlistMatrixRep, BaseDomain(mat), n, rows));
-    
-    # Instead of transposedmat, this probably has to be
-    # transposed conjugate
-    
-    E := (TransposedMat(C) * C)^(-1) * TransposedMat(C);
-    F := TransposedMat(D) * (D * TransposedMat(D)) ^ (-1);
+  # catch trivial case
+  if bdims[1] = 0 then
+    return rec(subspace:=[],factorspace:=[]);
+  fi;
 
-    return F * E;
+  bas := MutableCopyMat(bas);
+  
+  z := Zero(BaseDomain(bas));
+  zv := Zero(bas[1]);
+  
+  mdims := DimensionsMat(mat);
+  dim := bdims[2];
+  l := bdims[1] - mdims[1]; # missing dimension
+  b := [];
+  h := [];
+  i := 1;
+  j := 1;
+  
+  while Length(b) < l do
+    stop := false;
+    repeat
+      if j<=dim and (mdims[1]<i or mat[i][j]=z) then
+        # Add vector from bas with j-th component not zero (if any exists)
+        
+        v:=PositionProperty(Rows(bas),k->k[j]<>z);
+        if v<>fail then
+          # add the vector
+          v:=bas[v];
+          v:=1/v[j]*v; # normed
+          Add(b,v);
+          h[j]:=Length(b);
+        # if fail, then this dimension is only dependent (and not needed)
+        fi;
+      else
+        stop:=true;
+        # check whether we are running to fake zero columns
+        if i<=mdims[1] then
+          # has a step, clean with basis vector
+          v:=mat[i];
+          v:=1/v[j]*v; # normed
+          h[j]:=-i;
+        else
+          v:=fail;
+        fi;
+      fi;
+      if v<>fail then
+        # clean j-th component from bas with v
+        for k in [1..Length(bas)] do
+          if not IsZero(bas[k][j]) then
+            bas[k]:=bas[k]-bas[k][j]/v[j]*v;
+          fi;
+        od;
+        v:=Zero(v);
+        bas:=Matrix(Filtered(Rows(bas),k->k<>v), bdims[2], bas);
+      fi;
+      j:=j+1;
+    until stop;
+    i:=i+1;
+  od;
+  
+  # add subspace indices
+  while i <= mdims[1] do
+    if mat[i][j]<>z then
+      h[j]:=-i;
+      i:=i+1;
+    fi;
+    j:=j+1;
+  od;
+
+
+  return rec(factorspace:=b,
+             factorzero:=zv,
+             subspace:=mat,
+             heads:=h);
+end );
+
+InstallMethod( SemiEchelonMatTransformationDestructive,
+    "generic method for matrices",
+    [ IsMatrixObj and IsMutable],
+    function( mat )
+    local zero,      # zero of the field of <mat>
+          nrows,     # number of rows in <mat>
+          ncols,     # number of columns in <mat>
+          vectors,   # list of basis vectors
+          heads,     # list of pivot positions in 'vectors'
+          i,         # loop over rows
+          j,         # loop over columns
+          T,         # transformation matrix
+          coeffs,    # list of coefficient vectors for 'vectors'
+          relations, # basis vectors of the null space of 'mat'
+          row, head, x, row2,f,dims;
+
+    dims := DimensionsMat(mat);
+    
+    nrows := dims[1];
+    ncols := dims[2];
+
+    f := BaseDomain(mat);
+    zero := Zero(f);
+
+    heads   := ListWithIdenticalEntries( ncols, 0 );
+    vectors := [];
+
+    T         := IdentityMatrix( nrows, mat );
+    coeffs    := [];
+    relations := [];
+
+    for i in [ 1 .. nrows ] do
+
+        row := mat[i];
+        row2 := T[i];
+
+        # Reduce the row with the known basis vectors.
+        for j in [ 1 .. ncols ] do
+            head := heads[j];
+            if head <> 0 then
+                x := - row[j];
+                if x <> zero then
+                    AddRowVector( row2, coeffs[ head ],  x );
+                    AddRowVector( row,  vectors[ head ], x );
+                fi;
+            fi;
+        od;
+
+        j := PositionNonZero( row );
+        if j <= ncols then
+
+            # We found a new basis vector.
+            x := Inverse( row[j] );
+            if x = fail then
+              TryNextMethod();
+            fi;
+            Add( coeffs,  row2 * x );
+            Add( vectors, row  * x );
+            heads[j]:= Length( vectors );
+
+        else
+            Add( relations, row2 );
+        fi;
+
+    od;
+
+    return rec( heads     := heads,
+                vectors   := vectors,
+                coeffs    := coeffs,
+                relations := relations );
+end );
+
+InstallMethod( SemiEchelonMatTransformation,
+    "generic method for matrices",
+    [ IsMatrixObj ],
+    function( mat )
+    local copy;
+    
+    copy := MutableCopyMat(mat);
+
+    return SemiEchelonMatTransformationDestructive( copy );
 end);
+
 
 InstallGlobalFunction(PedestrianLambdaInverse
         , function(f)
     local z, e, i, ech, info, zh;
     
-    ech := MutableCopyMat(f);
+    Error("wrong");
     
-    info := SemiEchelonMat(ech);
-    
-    z := ZeroMutable(ech[1]);
-    e := One(BaseDomain(f));
-    zh := [];
-    
-    for i in [1..Length(info.heads)] do
-        if info.heads[i] = 0 then
-            
-            ech[i] := ShallowCopy(z);
-            ech[i][i] := e;
-        fi;
-    od;
-    
-    return [ech^(-1), zh];
 end);
 
 InstallMethod( IsGeneratorsOfMagmaWithInverses,
@@ -256,7 +378,5 @@ InstallMethod( DefaultScalarDomainOfMatrixList,
     fi;
     
     TryNextMethod();
-    
 end);
 
-    

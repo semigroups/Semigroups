@@ -25,9 +25,21 @@ DeclareOperation( "SemiEchelonMatDestructive",
 DeclareAttribute( "SemiEchelonMat", 
         IsMatrixObj );
 
+DeclareOperation( "SemiEchelonMatTransformationDestructive",
+        [ IsMatrixObj and IsMutable ]);
+
+DeclareAttribute( "SemiEchelonMatTransformation", 
+        IsMatrixObj );
+
+DeclareGlobalFunction( "BaseSteinitzMatrixObj");
+
+
 DeclareOperation( "MoorePenroseInverse",
         [ IsMatrixObj ] );
 
 DeclareGlobalFunction( "PedestrianLambdaInverse" );
+
+# To make the GAP library code happy for now
+#DeclareOperation( "ImmutableMatrix", [ IsObject, IsMatrixObj ]);
 
         
