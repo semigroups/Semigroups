@@ -179,7 +179,8 @@ t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
      
       The file <A>filename</A> can be read using <Ref Func="ReadGenerators"/>.
 <Example>
-gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
+gap> file:=Concatenation(SemigroupsDir(), 
+> "/examples/graph7c.semigroups.gz");;
 gap> ReadGenerators(file, 453);
 [ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 

@@ -18,34 +18,23 @@
     <URL Text="Monoid package for GAP 3">
       http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
     Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc; and
-    the <URL Text="Monoid package for GAP 4">
-      http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by
-    J.  D. Mitchell.<P/>
-
-    The theory behind the main algorithms in &Semigroups; is described in 
-    <!--<Cite Key=""/>-->.  A reference for free inverse semigroups is Section
-    5.10 in <Cite Key="howie"/>. The functions for: finding a smaller degree
-    partial permutation representation of an inverse semigroup are based on
-    <Cite Key="Schein1992aa"/> and finding the maximal subsemigroups of a Rees
-    matrix or 0-matrix semigroup are based on Remark 1 in <Cite
-      Key="Graham1968aa"/>.<P/>
+    the Monoid package for GAP 4 by J. D. Mitchell.<P/>
     
-    &noindent; &Semigroups; &VERSION; contains more efficient methods than those
-    available in the &GAP; library (and in many cases more efficient than any
-    other software) for creating semigroups, calculating their Green's classes,
-    size, elements, group of units, minimal ideal, and testing membership,
-    finding the inverses of a regular element, and factorizing elements over
-    the generators, and many more; see Chapters <Ref Chap="create"/> and  <Ref
-      Chap="green"/>. There are also methods for testing if a semigroup
-    satisfies a particular property, such as if it is regular, simple, inverse,
-    completely regular, and a variety of further properties; see Chapter <Ref
-      Chap="green"/>. 
-    Several standard examples of semigroups are provided see Section 
-    <Ref Sect="Examples"/>.  &Semigroups; also provides abbreviated names for
-    some of the commonly used &GAP; library functions related to semigroups,
-    and functions to read and write collections of transformations or
-    partial permutations to a file; see <Ref Func="ReadGenerators"/> and <Ref
-      Func="WriteGenerators"/>. 
+    &Semigroups; &VERSION; contains more efficient methods than those available
+    in the &GAP; library (and in many cases more efficient than any other
+    software) for creating semigroups and ideals, calculating their Green's
+    classes, size, elements, group of units, minimal ideal, and testing
+    membership, finding the inverses of a regular element, and factorizing
+    elements over the generators, and many more; see Chapters <Ref
+      Chap="create"/>, <Ref Chap="Ideals"/>, and  <Ref Chap="green"/>. There are
+    also methods for testing if a semigroup satisfies a particular property,
+    such as if it is regular, simple, inverse, completely regular, and a variety
+    of further properties; see Chapter <Ref Chap="green"/>.  Several standard
+    examples of semigroups are provided see Section <Ref Sect="Examples"/>.
+    &Semigroups; also provides abbreviated names for some of the commonly used
+    &GAP; library functions related to semigroups, and functions to read and
+    write collections of transformations or partial permutations to a file; see
+    <Ref Func="ReadGenerators"/> and <Ref Func="WriteGenerators"/>. 
     <P/>
 
     Details of how to create and manipulate semigroups of bipartitions can be
@@ -55,6 +44,14 @@
     inverse semigroups and their elements; this part of the package was written
     by Julius Jonu&#353;as; see Chapter <Ref Chap="Free inverse semigroups"/>.<P/>
 
+
+    The theory behind the main algorithms in &Semigroups; is described in 
+    <!--<Cite Key=""/>-->.  A reference for free inverse semigroups is Section
+    5.10 in <Cite Key="howie"/>. The functions for: finding a smaller degree
+    partial permutation representation of an inverse semigroup are based on
+    <Cite Key="Schein1992aa"/> and finding the maximal subsemigroups of a Rees
+    matrix or 0-matrix semigroup are based on Remark 1 in <Cite
+      Key="Graham1968aa"/>.<P/>
     &noindent; The &Semigroups; package is written &GAP; code and 
     requires the &Orb; and &IO; packages. The &Orb; package is used
     to efficiently compute components of actions, which underpin many of the
@@ -69,24 +66,25 @@
       </Item>
       <Item> <Ref Oper="IsIsomorphicSemigroup"/> </Item>
       <Item> <Ref Oper="SmallestMultiplicationTable"/> </Item>
-      <Item> <Ref Oper="IsomorphismSemigroups"/> </Item>
+      <Item> <Ref Oper="IsomorphismSemigroups"/>. </Item>
     </List>
-    but nowhere else in &Semigroups;. If &Grape; is not available or is not
-    compiled, then &Semigroups; can be used as normal with the exception that
-    the functions above will not work. <P/>
+    If &Grape; is not available or is not compiled, then &Semigroups; can be
+    used as normal with the exception that the functions above will not work.
+    <P/>
 
-    The &genss; package is used in the one version of the function <Ref
+    The &genss; package is used in one version of the function <Ref
       Oper="Normalizer" Label="for a perm group, semigroup, record"/> but
     nowhere else in &Semigroups;. If &genss; is not available, then &Semigroups;
     can be used as normal with the exception that this function will not work.
     <P/> 
+    
+    Some further details about semigroups in &GAP; and Green's relations in
+    particular, can be found in <Ref Sect="Semigroups" BookName="ref"/> and 
+    <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
 
     If you find a bug or an issue with the package, then please let me know by
     emailing me the details at: <Email>jdm3@st-and.ac.uk</Email>.<P/>
 
-    For more details about semigroups in &GAP; or Green's relations in
-    particular, see <Ref Sect="Semigroups" BookName="ref"/> or 
-    <Ref Sect="Green's Relations" BookName="ref"/>.
   </Section>
   
   <Section Label="install">
@@ -269,19 +267,19 @@ or 64-bit mode correctly!
 
   <Section><Heading>Use &R;-classes not &L;-classes</Heading>
     It is harder for &Semigroups; to compute Green's &L;- and &H;-classes of a
-    transformation semigroup and the methods used to compute with
-    Green's &R;- and &D;-classes are the most efficient in &Semigroups;.  Thus,
-    if you are computing with a transformation or bipartition semigroup,
-    wherever possible it is advisable to use the commands relating to Green's
-    &R;- or &D;-classes rather than those relating to Green's &L;-  or
-    &H;-classes. No such difficulties are present when computing with semigroups
-    of partial permutations, bipartitions, or subsemigroups of a regular Rees
-    0-matrix semigroup over a group.<P/>
+    transformation semigroup and the methods used to compute with Green's &R;-
+    and &D;-classes are the most efficient in &Semigroups;.  Thus, if you are
+    computing with a transformation semigroup, wherever possible it is advisable
+    to use the commands relating to Green's &R;- or &D;-classes rather than
+    those relating to Green's &L;-  or &H;-classes. No such difficulties are
+    present when computing with semigroups of partial permutations,
+    bipartitions, or subsemigroups of a regular Rees 0-matrix semigroup over a
+    group.<P/>
     
     The methods in &Semigroups; allow the computation of individual Green's
-    classes without the need to compute all the elements of the underlying
+    classes without computing the entire data structure of the underlying
     semigroup; see <Ref Oper="GreensRClassOfElementNC"/>.  It is also possible
-    to compute all the &R;-classes, the number of elements and test membership
+    to compute the &R;-classes, the number of elements and test membership
     in a semigroup without computing all the elements; see, for example, <Ref
       Oper="GreensRClasses"/>, <Ref Attr="RClassReps"/>, <Ref
       Func="IteratorOfRClassReps"/>, <Ref Func="IteratorOfRClasses"/>, or <Ref
