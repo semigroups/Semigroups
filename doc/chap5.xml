@@ -1,5 +1,5 @@
-<Chapter Label="Free inverse semigroups">
-  <Heading>Free inverse semigroups</Heading>
+<Chapter Label="FreeInverseSemigroups">
+  <Heading>Free inverse semigroups and free bands</Heading>
 
   This chapter describes the functions in &Semigroups; for dealing with
   free inverse semigroups. This part of the manual and the functions described
@@ -57,7 +57,7 @@
   <#Include Label = "FreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroupElement">
-  </Section>
+</Section>
 
 <Section>
   <Heading> Displaying free inverse semigroup elements </Heading>
