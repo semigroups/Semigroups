@@ -15,9 +15,8 @@ DeclareGlobalFunction("RectifyInverseRho");
 DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
 DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
 DeclareFilter("IsLambdaOrb", IsOrbit);
-DeclareFilter("IsInvLambdaOrb", IsLambdaOrb);
 DeclareFilter("IsRhoOrb", IsOrbit);
-DeclareFilter("IsInvRhoOrb", IsRhoOrb);
+DeclareFilter("IsInverseOrb", IsOrbit);
 
 DeclareGlobalFunction("LambdaOrbMults");
 DeclareGlobalFunction("LambdaOrbMult");

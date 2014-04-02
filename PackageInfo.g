@@ -11,11 +11,12 @@
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "2.0">
 ##  <!ENTITY GAPVERS "4.7.3">
-##  <!ENTITY ORBVERS "4.6">
-##  <!ENTITY IOVERS "4.1">
+##  <!ENTITY ORBVERS "4.7">
+##  <!ENTITY IOVERS "4.3">
 ##  <!ENTITY GRAPEVERS "4.5">
+##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-2.0">
-##  <!ENTITY COPYRIGHTYEARS "2011-13">
+##  <!ENTITY COPYRIGHTYEARS "2011-14">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
@@ -78,8 +79,9 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7.3",
-  NeededOtherPackages := [["orb", ">=4.6"], ["io", ">=4.2"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
+  NeededOtherPackages := [["orb", ">=4.7"], ["io", ">=4.3"]],
+  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
+  ["genss", ">=1.5"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue, 
   Autoload := false,

@@ -70,6 +70,9 @@
     <#Include Label="NrIdempotents">
     <#Include Label="IdempotentGeneratedSubsemigroup">
     <#Include Label="IrredundantGeneratingSubset">
+    <#Include Label="MaximalSubsemigroups">
+    <#Include Label="MaximalSubsemigroups2">
+    <#Include Label="IsMaximalSubsemigroup">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
     <#Include Label="Random">
@@ -80,6 +83,7 @@
     <#Include Label="ComponentRepsOfPartialPermSemigroup">
     <#Include Label="ComponentsOfPartialPermSemigroup">
     <#Include Label="CyclesOfPartialPermSemigroup">
+    <#Include Label="Normalizer">
   </Section>
 
   <Section><Heading>Further properties of semigroups</Heading>
@@ -117,8 +121,8 @@
     <!--JDM attributes and properties of inverse semigroups chapter-->
     In this section we describe several properties and attributes 
     <Ref Sect="Properties" BookName="ref"/> of inverse semigroup of
-    transformations or partial permutations that can be determined using
-    &Semigroups;. The functions 
+    transformations, partial permutations or bipartitions that can be determined
+    using &Semigroups;. The functions 
     <Ref Oper="IsJoinIrreducible"/>,
     <Ref Oper="IsMajorantlyClosed"/>, 
     <Ref Attr="JoinIrreducibleDClasses"/>,
@@ -131,6 +135,7 @@
     
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsBrandtSemigroup">
+    <#Include Label="IsEunitaryInverseSemigroup">
     <#Include Label="IsFactorisableSemigroup">
     <#Include Label="IsJoinIrreducible">
     <#Include Label="IsMajorantlyClosed">
@@ -145,12 +150,19 @@
     <#Include Label="VagnerPrestonRepresentation">
   </Section>
 
-  <Section><Heading>Visualising the &D;-class structure</Heading>
-    In this section, we describe a function for creating a picture of the 
-    &D;-class structure of a semigroup of transformations, partial
+  <Section><Heading>Visualising the structure of a semigroup</Heading>
+    In this section, we describe a function for creating pictures of various  
+    structures related to a semigroup of transformations, partial
     permutations, or bipartitions; or a subsemigroup of a Rees 0-matrix
-    semigroup.
+    semigroup.<P/>
+    
+    The functions described in this seciton return a string, which can be
+    written to a file using the function 
+    <Ref Func="FileString" BookName="GAPDoc"/>.
+
     <#Include Label="DotDClasses"/>
+    <#Include Label="DotSemilatticeOfIdempotents"/>
+
   </Section>
 </Chapter>
 

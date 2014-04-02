@@ -14,6 +14,7 @@ DeclareCategoryCollections("IsBlocks");
 DeclareGlobalFunction("ORB_HashFunctionForBlocks");
 DeclareGlobalFunction("BlocksNC");
 DeclareGlobalFunction("BlocksByIntRepNC");
+DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
 
 DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("NrBlocks", IsBlocks);
@@ -30,6 +31,8 @@ DeclareAttribute("RightBlocks", IsBipartition);
 
 DeclareAttribute("ExtRepOfBlocks", IsBlocks);
 DeclareGlobalFunction("BlocksByExtRep");
+
+DeclareOperation("JoinOfBlocks", [IsBlocks, IsBlocks]);
 
 DeclareGlobalFunction("OnRightBlocks");
 DeclareGlobalFunction("OnLeftBlocks");

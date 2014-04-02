@@ -187,8 +187,7 @@ end);
 
 # the actual methods used...
 
-# same method for regular/inverse, note that at present EnumeratorOfRClasses
-# does not work for regular or inverse semigrous JDM
+# same method for regular/inverse, 
 
 # also this has really awful performance
 

@@ -11,6 +11,8 @@
 DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 
+DeclareProperty("IsCommutativeSemigroup", IsSemigroupIdeal);
+
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
 DeclareProperty("IsBlockGroup", IsSemigroup);
@@ -37,11 +39,13 @@ DeclareOperation("IsSynchronizingTransformationCollection",
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
+DeclareProperty("IsEunitaryInverseSemigroup", IsInverseSemigroup);
 
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsRegularStarSemigroup and IsActingSemigroup);
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
+InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);
 InstallTrueMethod(IsHTrivial, IsLTrivial);
 InstallTrueMethod(IsHTrivial, IsRTrivial);
@@ -61,4 +65,5 @@ InstallTrueMethod(IsZeroGroup, IsZeroRectangularBand and IsInverseSemigroup);
 InstallTrueMethod(IsRegularSemigroup, IsRegularStarSemigroup);
 InstallTrueMethod(IsInverseSemigroup, IsGroup);
 InstallTrueMethod(IsInverseSemigroup, IsBlockGroup and IsRegularSemigroup);
+
 #EOF
