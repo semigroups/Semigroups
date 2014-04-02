@@ -10,20 +10,36 @@
 
 ################################################################################
 ##
-##  FreeBand( <rank> )
+##  FreeBand( <rank> [, names] )
+##  FreeBand( name1, name2, ... ) 
+##  FreeBand( names ) 
 ##
 
 InstallGlobalFunction(FreeBand,
 function(arg)
   local names, F, type, gens, S, m;
 
+ # Get and check the argument list, and construct names if necessary.
+  if Length( arg ) = 1 and IsInt( arg[1] ) and 0 < arg[1] then
+    names:= List( [ 1 .. arg[1] ],
+                  i -> Concatenation( "x", String(i) ) );
+  elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 < arg[1] then
+    names:= List( [ 1 .. arg[1] ],
+                  i -> Concatenation( arg[2], String(i) ) );
+  elif 1 <= Length( arg ) and ForAll( arg, IsString ) then
+    names:= arg;
+  elif Length( arg ) = 1 and IsList( arg[1] )
+                          and ForAll( arg[1], IsString ) then
+    names:= arg[1];
+  else
+    Error("usage: FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])");
+  fi;
+  MakeImmutable( names );
+
   F := NewFamily( "FreeBandElementsFamily", IsFreeBandElement, 
        CanEasilySortElements);
 
   type := NewType(F, IsFreeBandElement and IsPositionalObjectRep);
-
-  names := List( [ 1 .. arg[1] ], i -> Concatenation("x", String(i)));
-  MakeImmutable( names );
 
   gens:=EmptyPlist( Length(names) );
   for m in  [1 .. Length(names)] do
