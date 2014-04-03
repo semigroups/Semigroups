@@ -13,7 +13,7 @@ DeclareGlobalFunction("SemigroupIdeal");
 DeclareOperation("SemigroupIdealByGenerators", 
   [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
 
-DeclareOperation("SmallIdealGeneratingSet",
+DeclareOperation("MinimalIdealGeneratingSet",
 [IsActingSemigroup and IsSemigroupIdeal]);
 
 # the <Parent> of an ideal is the semigroup in which the ideal was created, i.e.

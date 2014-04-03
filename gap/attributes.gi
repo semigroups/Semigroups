@@ -815,7 +815,7 @@ InstallMethod(SmallGeneratingSet, "for a semigroup",
 function(S)
   
   if HasGeneratorsOfSemigroupIdeal(S) then 
-    return SmallIdealGeneratingSet(S);
+    return MinimalIdealGeneratingSet(S);
   elif HasGeneratorsOfGroup(S) then 
     return SmallGeneratingSet(GeneratorsOfGroup(S));
   elif HasGeneratorsOfInverseMonoid(S) then 

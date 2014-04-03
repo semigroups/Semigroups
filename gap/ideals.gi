@@ -313,7 +313,7 @@ end);
 
 # 
 
-InstallMethod(SmallIdealGeneratingSet, "for an acting semigroup ideal",
+InstallMethod(MinimalIdealGeneratingSet, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local max, out;
