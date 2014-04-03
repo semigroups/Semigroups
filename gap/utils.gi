@@ -19,6 +19,72 @@ BindGlobal("SemigroupsDocXMLFiles",
    "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
    "../PackageInfo.g"]);
 
+# arg is the number of threads, defaults to 2...
+
+SemigroupsParallelTestAll:=function(arg)
+  local n, dir_str, tst, dir, omit, files, filesplit, test, stringfile, farm, out, str, filename, file;
+  
+  if Length(arg)<>0 then 
+    n:=arg[1];
+  else 
+    n:=2;
+  fi;
+  
+  Print("Reading all .tst files in the directory semigroups/tst/...\n\n"); 
+  dir_str:=Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+  tst:=DirectoryContents(dir_str);
+  dir:=Directory(dir_str);
+
+  omit:=SemigroupsOmitFromTestManualExamples;
+
+  if Length(omit)>0 then 
+    Print("not testing files containing the strings");
+    for str in omit do 
+      Print(", \"", str, "\"");
+    od;
+    Print(" . . .\n\n");
+  fi;
+  files:=[]; 
+  for filename in tst do
+    if filename="testinstall-4.7.5.tst" 
+     and not CompareVersionNumbers(GAPInfo.Version, "4.7.5") then 
+      break;
+    fi;
+
+    filesplit:=SplitString(filename, ".");
+    if Length(filesplit)>=2 and filesplit[Length(filesplit)]="tst" then
+      test:=true;
+      stringfile:=StringFile(Concatenation(dir_str, "/", filename));
+      for str in omit do 
+        if PositionSublist(stringfile, str)<>fail then 
+          Print("not testing ", filename, ", it contains a test involving ", 
+          str, ", which will not work . . .\n\n");
+          test:=false;
+          break;
+        fi;
+      od;
+      if test then 
+        Add(files, [Concatenation(dir_str, "/", filename)]);
+      fi;
+    fi;
+  od;  
+
+  farm:=ParWorkerFarmByFork(Test, rec(NumberJobs:=n));
+  
+  for file in files do 
+    Submit(farm, file);
+  od;
+
+  while Length(farm!.outqueue)<Length(files) do 
+    DoQueues(farm, false);
+  od;
+
+  out:=Pickup(farm);
+  Kill(farm);
+  return out;
+end;
+  
+
 # <path> to the folder containing the timings, <vers> the version number to
 # check against.
 
