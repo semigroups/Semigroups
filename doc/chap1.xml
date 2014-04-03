@@ -255,6 +255,7 @@ or 64-bit mode correctly!
     <#Include Label="SemigroupsDir">
     <#Include Label="ReadGenerators">
     <#Include Label="WriteGenerators">
+    <#Include Label="IteratorFromGeneratorsFile">
   </Section>
 
   <Section><Heading>Use &R;-classes not &L;-classes</Heading>

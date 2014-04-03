@@ -8,9 +8,81 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="PartialPermLeqBipartition">
+  <ManSection>
+    <Filt Name="PartialPermLeqBipartition" Arg="x, y"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      If <A>x</A> and <A>y</A> are partial perm bipartitions, i.e. they satisfy 
+      <Ref Prop="IsPartialPermBipartition"/>, then this function returns 
+      <C>AsPartialPerm(<A>x</A>)&lt;AsPartialPerm(<A>y</A>)</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NaturalLeqPartialPermBipartition">
+  <ManSection>
+    <Filt Name="NaturalLeqPartialPermBipartition" Arg="x, y"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      The <E>natural partial order</E> <M>\leq</M> on an inverse semigroup
+      <C>S</C> is defined by <C>s</C><M>\leq</M><C>t</C> if there exists an
+      idempotent <C>e</C> in <C>S</C> such that <C>s=et</C>. Hence if <A>x</A>
+      and <A>y</A> are partial perm bipartitions, then
+      <A>x</A><M>\leq</M><A>y</A> if and only if <A>AsPartialPerm(x)</A>
+      is a restriction of  <A>AsPartialPerm(y)</A>.
+      <P/>
+     
+      <C>NaturalLeqPartialPermBipartition</C>
+      returns <K>true</K> if <C>AsPartialPerm(<A>x</A>)</C> is a restriction of
+      <C>AsPartialPerm(<A>y</A>)</C> and <K>false</K> if it is not. Note that since
+      this is a partial order and not a total order, it is possible that
+      <A>x</A> and <A>y</A> are incomparable with respect to the natural partial
+      order. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NaturalLeqBlockBijection">
+  <ManSection>
+    <Filt Name="NaturalLeqBlockBijection" Arg="x, y"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      The <E>natural partial order</E> <M>\leq</M> on an inverse semigroup
+      <C>S</C> is defined by <C>s</C><M>\leq</M><C>t</C> if there exists an
+      idempotent
+      <C>e</C> in <C>S</C> such that <C>s=et</C>. Hence if <A>x</A> and
+      <A>y</A> are block bijections, then <A>x</A><M>\leq</M><A>y</A> if
+      and only if <A>x</A> contains <A>y</A>. <P/>
+     
+      <C>NaturalLeqBlockBijection</C>
+      returns <K>true</K> if <A>x</A> is contained in <A>y</A> and
+      <K>false</K> if it is not. Note that since this is a partial order and
+      not a total order, it is possible that <A>x</A> and <A>y</A> are
+      incomparable with respect to the natural partial order. 
+      <Example><![CDATA[
+gap> x:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], 
+> [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], 
+> [ 10, -10 ] ] );;
+gap> y:=Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], 
+> [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ] ] );;
+gap> z:=Bipartition([Union([1..10],[-10..-1])]);;
+gap> NaturalLeqBlockBijection(x, y);
+false
+gap> NaturalLeqBlockBijection(y, x);
+false
+gap> NaturalLeqBlockBijection(z, x);
+true
+gap> NaturalLeqBlockBijection(z, y);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsDualTransBipartition">
   <ManSection>
     <Filt Name="IsDualTransBipartition" Arg="f"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
     If the star of the bipartition <A>f</A> defines a transformation, then
     <C>IsDualTransBipartition</C> returns <K>true</K>, and if not, then
@@ -38,6 +110,7 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 <#GAPDoc Label="IsBlockBijection">
   <ManSection>
     <Filt Name="IsBlockBijection" Arg="f"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       If the bipartition <A>f</A> induces a bijection from the quotient of
       <C>[1..n]</C> by the blocks of <A>f</A> to the quotient of <C>[-n..-1]</C>
@@ -59,6 +132,29 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsUniformBlockBijection">
+  <ManSection>
+    <Prop Name="IsUniformBlockBijection" Arg="x"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      If the bipartition <A>x</A> is a block bijection where every block
+      contains an equal number of positive and negative entries, then
+      <C>IsUniformBlockBijection</C> returns <K>true</K>, and otherwise it
+      returns <K>false</K>.
+      
+      <Example><![CDATA[
+gap> x:=Bipartition( [ [ 1, 2, -3, -4 ], [ 3, -5 ], [ 4, -6 ], 
+> [ 5, -7 ], [ 6, -8 ], [ 7, -9 ], [ 8, -1 ], [ 9, -2 ] ] );;
+gap> IsBlockBijection(x); 
+true
+gap> x:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], 
+> [ 5, -5 ] ] );;
+gap> IsUniformBlockBijection(x);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="BipartitionFamily">
   <ManSection>
     <Fam Name="BipartitionFamily"/>
@@ -71,6 +167,7 @@ true]]></Example>
 <#GAPDoc Label="IsBipartition">
   <ManSection>
     <Filt Name="IsBipartition" Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
    Every bipartition in &GAP; belongs to the category
     <C>IsBipartition</C>. Basic operations for bipartitions are
@@ -91,6 +188,7 @@ true]]></Example>
 <#GAPDoc Label="IsBipartitionCollection">
   <ManSection>
     <Filt Name="IsBipartitionCollection" Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
        Every collection of bipartitions belongs to the category
      <C>IsBipartitionCollection</C>. For example, bipartition semigroups

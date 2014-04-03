@@ -69,7 +69,10 @@
       transformation <A>g</A> and returns <K>false</K> if it does not.
     </Item>
    </List> 
-   
+    
+   <#Include Label="PartialPermLeqBipartition">
+   <#Include Label="NaturalLeqPartialPermBipartition">
+   <#Include Label="NaturalLeqBlockBijection">
    <#Include Label="PermLeftQuoBipartition">
    <#Include Label="OnRightBlocksBipartitionByPerm">
  </Section>    
@@ -82,6 +85,7 @@
     <#Include Label="IsPermBipartition">
     <#Include Label="IsPartialPermBipartition">
     <#Include Label="IsBlockBijection">
+    <#Include Label="IsUniformBlockBijection">
     <#Include Label="DegreeOfBipartition">
     <#Include Label="RankOfBipartition">
     <#Include Label="ExtRepOfBipartition">
@@ -116,8 +120,9 @@
     bipartitions and blocks. Descriptions of these methods can be found in this
     section. <P/>
 
-    The functions described in this section return a string, which can be written
-    to a file using the function <Ref Func="FileString" BookName="GAPDoc"/>.
+    The functions described in this section return a string, which can be
+    written to a file using the function <Ref Func="FileString"
+      BookName="GAPDoc"/> or viewed using <Ref Func="Splash"/>.
 
     <#Include Label="TikzBipartition">
     <#Include Label="TikzBlocks">
@@ -128,6 +133,8 @@
   
     <#Include Label="IsBipartitionSemigroup">
     <#Include Label="IsBlockBijectionSemigroup">
+    <#Include Label="IsPartialPermBipartitionSemigroup">
+    <#Include Label="IsPermBipartitionGroup">
     <#Include Label="DegreeOfBipartitionSemigroup">
     <#Include Label="IsomorphismBipartitionSemigroup">
     <#Include Label="IsomorphismBlockBijectionSemigroup">

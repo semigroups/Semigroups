@@ -127,6 +127,25 @@
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IteratorFromGeneratorsFile">
+  <ManSection> 
+    <Func Name="IteratorFromGeneratorsFile" Arg="filename"/>
+    <Returns>An iterator.</Returns>
+    <Description>
+      If <A>filename</A> is a string containing the name of a file created using 
+      <Ref Func="WriteGenerators"/>, then <C>IteratorFromGeneratorsFile</C>
+      returns an iterator <C>iter</C> such that <C>NextIterator(iter)</C>
+      returns the next collection of generators stored in the file <A>filename</A>. 
+      <P/>
+
+      This function is a convenient way of, for example, looping over a
+      collection of generators in a file without loading every object in the
+      file into memory. This might be useful if the file contains more
+      information than there is available memory. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="WriteGenerators">
   <ManSection> 
     <Func Name="WriteGenerators" Arg="filename, list[, append]"/>
@@ -187,5 +206,7 @@ gap> ReadGenerators(file, 453);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+
 
 #EOF

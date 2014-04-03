@@ -19,7 +19,7 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
 
   BindGlobal("Splash",
   function(arg)
-    local opt, path, dir, tdir, file, viewer, tikz, filetype;
+    local opt, path, dir, tdir, file, viewer, type, filetype;
 
     if not IsString(arg[1]) then 
       Error("usage: the first argument must be a string,");
@@ -61,8 +61,8 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     fi;
 
     #file
-    if IsBound(opt.file) then
-      file := opt.file;
+    if IsBound(opt.filename) then
+      file := opt.filename;
     else
       file := "vizpicture";
     fi;
@@ -75,15 +75,19 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
        Filename(DirectoriesSystemPrograms(),x)<>fail);
     fi;
 
-    # latex
-    if IsBound(opt.tikz) then
-      tikz := opt.tikz;
-    elif arg[1]{[1..5]}="%tikz" then 
-      tikz:=true;
-    else
-      tikz := false;
+    # type
+    if IsBound(opt.type) and (opt.type="latex" or opt.type="dot") then
+      type := opt.type;
+    elif arg[1]{[1..6]}="%latex" then 
+      type:="latex";
+    elif arg[1]{[1..5]}="//dot" then 
+      type:="dot";
+    else 
+      Error("usage: the option <type> must be \"dot\" or \"latex\",");
+      return;
     fi;
-
+    
+    # output type
     if IsBound(opt.filetype) then
       filetype := opt.filetype;
     else
@@ -92,12 +96,12 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     
     #
     
-    if tikz then
+    if type="latex" then
       FileString(Concatenation(dir, file, ".tex"), arg[1]);
       Exec(Concatenation("cd ",dir,"; ","pdflatex ",dir,file, 
        " 2>/dev/null 1>/dev/null"));
       Exec(Concatenation(viewer, " ", dir, file, ".pdf 2>/dev/null 1>/dev/null &"));
-    else
+    elif type="dot" then 
       FileString(Concatenation(dir,file,".dot"),arg[1]);
       Exec(Concatenation("dot -T",filetype," ",dir,file,".dot"," -o ",
        dir,file,".",filetype));
@@ -111,7 +115,7 @@ fi;
 #
 
 BindGlobal("TikzInit",
-  Concatenation("%tikz\n", 
+  Concatenation("%latex\n", 
    "\\documentclass{minimal}\n",
    "\\usepackage{tikz}\n",
    "\\begin{document}\n")
@@ -382,6 +386,9 @@ function(arg)
   Append(str, "\\end{tikzpicture}\n\n");
   return str;
 end);
+
+#
+
 InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup], 
 function(S)
@@ -418,7 +425,7 @@ function(s, opts)
     elts:=Elements(es); #JDM could be enumerator sorted
   fi;
 
-  str:="";
+  str:="//dot\n";
   Append(str, "digraph  DClasses {\n");
   Append(str, "node [shape=plaintext]\n");
   Append(str, "edge [color=red,arrowhead=none]\n");
@@ -514,7 +521,7 @@ function(S)
   rel:=NaturalPartialOrder(U);
   elts:=Elements(U); 
 
-  str:="";
+  str:="//dot\n";
 
   #if Length(rel)<20 then
   #  Append(str,  "graph graphname {\n  node [shape=circle]\n");

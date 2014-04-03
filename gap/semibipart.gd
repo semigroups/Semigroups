@@ -23,4 +23,5 @@ DeclareProperty("IsPartialPermBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareProperty("IsPermBipartitionGroup", IsBipartitionSemigroup);
 DeclareSynonymAttr("IsBlockBijectionMonoid", IsBlockBijectionSemigroup and IsMonoid);
 DeclareSynonymAttr("IsPartialPermBipartitionMonoid", IsPartialPermBipartitionSemigroup and IsMonoid);
+DeclareSynonymAttr("IsPartialPermBipartitionMonoid", IsPartialPermBipartitionSemigroup and IsMonoid);
 

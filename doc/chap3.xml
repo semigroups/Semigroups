@@ -168,6 +168,7 @@
     written to a file using the function 
     <Ref Func="FileString" BookName="GAPDoc"/>.
 
+    <#Include Label="Splash"/>
     <#Include Label="DotDClasses"/>
     <#Include Label="DotSemilatticeOfIdempotents"/>
 
