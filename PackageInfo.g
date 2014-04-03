@@ -152,20 +152,7 @@ PackageInfoURL :=
   "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
 
 AbstractHTML := Concatenation(
-   "<p>The Semigroups package is a GAP package containing methods for",
-   " semigroups (principally semigroups of of transformations, partial",
-   " permutations or subsemigroups of regular Rees 0-matrix semigroups). ",
-   "Semigroups contains more efficient methods than those available in the ",
-   "GAP library (and in many cases more efficient than any other software)",
-   "for creating semigroups, calculating their Green's classes, size,",
-   "elements, ",
-   "group of units, minimal ideal, small generating sets, testing membership, ",
-   "finding the inverses of a regular element, factorizing elements over the ",
-   "generators, and many more. It is also possible to test if a semigroup ",
-   "satisfies a particular property, such as if it is regular, simple, ",
-   "inverse, completely regular, and a variety of further properties.</p>",
-   "<p>There are also functions to define and manipulate free inverse", 
-   "semigroups and their elements.<p/>"),
+"<p>The <strong class=\"pkg\">Semigroups</strong> package is a <strong class=\"pkg\">GAP</strong> package containing methods for semigroups, monoids, and inverse semigroups, principally of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups, and the free inverse semigroup.</p>\n\n <p><strong class=\"pkg\">Semigroups</strong> contains more efficient methods than those available in the <strong class=\"pkg\">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and many more. It is also possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p>\n\n <p>There are methods for finding congruences of certain types of semigroups, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, and smaller degree partial permutation representations of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing bipartitions.</p>"), 
 
 PackageWWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php",
                
