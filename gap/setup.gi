@@ -13,6 +13,8 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
+# IsGeneratorsOfActingSemigroup
+
 InstallMethod(IsGeneratorsOfActingSemigroup, 
 "for an associative element collection",
 [IsAssociativeElementCollection], ReturnFalse);
@@ -37,41 +39,24 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection",
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection", 
 [IsBipartitionCollection], x-> true);
 
-InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
-
-# IsGeneratorsOfActingSemigroup
-
-InstallMethod(IsGeneratorsOfActingSemigroup, 
-"for an associative element collection",
-[IsAssociativeElementCollection], ReturnFalse);
-
-# In the below can't do ReturnTrue, since GAP insists that we use
-# InstallTrueMethod.
-#
-# InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsTransformationCollection);
-# 
-# can't do InstallTrueMethod for the above since this is not picked up 
-# if Semigroups is loaded after any transformation semigroup has been created.
-# It seems that since IsTransformationCollection has had its implied filters
-# installed, if we add an additional implied filter
-# IsGeneratorsOfActingSemigroup, then this is ignored. 
-
-InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection", 
-[IsTransformationCollection], x-> true);
-
-InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection", 
-[IsPartialPermCollection], x-> true);
-
 InstallMethod(IsGeneratorsOfActingSemigroup, 
 "for a Rees 0-matrix semigroup element collection", 
 [IsReesZeroMatrixSemigroupElementCollection],
 function(coll)
   local R;
-  R:=ReesMatrixSemigroupOfFamily(FamilyObj(coll[1]));
+  R:=ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
+
+# IsActingSemigroupWithInverseOp
+
+InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
+IsPartialPermBipartitionSemigroup);
+
+#InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
 
 # the largest point involved in the action
 
@@ -110,9 +95,10 @@ InstallMethod(ActionDegree, "for a bipartition collection",
 InstallMethod(ActionDegree, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection],           
 function(coll)
+  local R;
   if ForAny(coll, x-> x![1]<>0) then 
-    return NrMovedPoints(
-     UnderlyingSemigroup(ReesMatrixSemigroupOfFamily(FamilyObj(coll[1]))))+1;
+    R:=ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
+    return NrMovedPoints(UnderlyingSemigroup(R))+1;
   else
     return 0;
   fi;
