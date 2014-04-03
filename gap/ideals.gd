@@ -13,6 +13,9 @@ DeclareGlobalFunction("SemigroupIdeal");
 DeclareOperation("SemigroupIdealByGenerators", 
   [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
 
+DeclareOperation("SmallIdealGeneratingSet",
+[IsActingSemigroup and IsSemigroupIdeal]);
+
 # the <Parent> of an ideal is the semigroup in which the ideal was created, i.e.
 # the first argument of <SemigroupIdeal(S, I)>. The <SupersemigroupOfIdeal> is
 # the object containing <GeneratorsOfSemigroup> which are used to compute the
@@ -32,3 +35,7 @@ DeclareOperation("SemigroupIdealByGenerators",
 
 DeclareAttribute("SupersemigroupOfIdeal", IsSemigroupIdeal);
 
+DeclareAttribute("IsomorphismTransformationSemigroup", IsSemigroupIdeal);
+DeclareAttribute("IsomorphismPartialPermSemigroup", IsSemigroupIdeal);
+DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroupIdeal);
+DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroupIdeal);

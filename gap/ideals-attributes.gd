@@ -8,9 +8,4 @@
 ############################################################################# 
 ##
 
-DeclareOperation("SmallIdealGeneratingSet",
-[IsActingSemigroup and IsSemigroupIdeal]);
-DeclareAttribute("IsomorphismTransformationSemigroup", IsSemigroupIdeal);
-DeclareAttribute("IsomorphismPartialPermSemigroup", IsSemigroupIdeal);
-DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroupIdeal);
-DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroupIdeal);
+
