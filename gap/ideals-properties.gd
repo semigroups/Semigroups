@@ -8,5 +8,5 @@
 #############################################################################
 ##
 
-DeclareProperty("IsGroupAsSemigroup", IsSemigroupIdeal);
+
 

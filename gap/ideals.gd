@@ -39,3 +39,5 @@ DeclareAttribute("IsomorphismTransformationSemigroup", IsSemigroupIdeal);
 DeclareAttribute("IsomorphismPartialPermSemigroup", IsSemigroupIdeal);
 DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroupIdeal);
 DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroupIdeal);
+
+DeclareProperty("IsGroupAsSemigroup", IsSemigroupIdeal);

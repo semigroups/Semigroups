@@ -35,9 +35,7 @@ ReadPackage("semigroups/gap/graded.gd");
 ReadPackage("semigroups/gap/enums.gd");
 ReadPackage("semigroups/gap/iterators.gd");
 ReadPackage("semigroups/gap/properties.gd");
-ReadPackage("semigroups/gap/ideals-properties.gd");
 ReadPackage("semigroups/gap/attributes.gd");
-ReadPackage("semigroups/gap/ideals-attributes.gd");
 ReadPackage("semigroups/gap/factor.gd");
 ReadPackage("semigroups/gap/examples.gd");
 
