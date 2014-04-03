@@ -44,9 +44,8 @@
     inverse semigroups and their elements; this part of the package was written
     by Julius Jonu&#353;as; see Chapter <Ref Chap="Free inverse semigroups"/>.<P/>
 
-
-    The theory behind the main algorithms in &Semigroups; is described in 
-    <!--<Cite Key=""/>-->.  A reference for free inverse semigroups is Section
+    The theory behind the main algorithms in &Semigroups; will be described in 
+    forthcoming article.  A reference for free inverse semigroups is Section
     5.10 in <Cite Key="howie"/>. The functions for: finding a smaller degree
     partial permutation representation of an inverse semigroup are based on
     <Cite Key="Schein1992aa"/> and finding the maximal subsemigroups of a Rees

@@ -36,17 +36,18 @@ gap> S:=InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ),
 > PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
 > PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] ), 
 > PartialPerm( [ 1, 3, 4 ], [ 3, 4, 1 ] ) ] );;
-gap> tbl:=CharacterTableOfInverseSemigroup(S);
-[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 2, 1, -1, 1, 0, 0, 0, 0 ], 
-      [ 4, 2, 0, -1, 0, 0, 0, 0 ], [ 2, 1, 1, 1, 0, 0, 0, 0 ], 
-      [ 5, 3, -1, 0, 1, -1, 0, 0 ], [ 5, 3, 1, 0, 1, 1, 0, 0 ], 
-      [ 4, 3, 1, 0, 2, 0, 1, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
+gap> CharacterTableOfInverseSemigroup(S);
+[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ], 
+      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ], 
+      [ 3, 1, E(3)^2, E(3), 0, 0, 0, 0 ], [ 6, 3, 0, 0, 1, -1, 0, 0 ],
+      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ], 
+      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
   [ <identity partial perm on [ 1, 2, 3, 4 ]>, 
-      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3), 
-      <identity partial perm on [ 2, 3 ]>, (2,3), 
-      <identity partial perm on [ 4 ]>, <empty partial perm> ] ]
+      <identity partial perm on [ 1, 3, 4 ]>, (1,3,4), (1,4,3), 
+      <identity partial perm on [ 1, 3 ]>, (1,3), 
+      <identity partial perm on [ 3 ]>, <empty partial perm> ] ]
 gap> S:=SymmetricInverseMonoid(4);;
-gap> tbl2:=CharacterTableOfInverseSemigroup(S);
+gap> CharacterTableOfInverseSemigroup(S);
 [ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -59,9 +60,10 @@ gap> tbl2:=CharacterTableOfInverseSemigroup(S);
       [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ], 
       [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ], 
       [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
-  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4), (1)(2,3,4), 
-      (1,2)(3,4), (1,2,3,4), <identity partial perm on [ 1, 2, 3 ]>, 
-      (1)(2,3), (1,2,3), <identity partial perm on [ 1, 2 ]>, (1,2), 
+  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4), 
+      (1)(2,3,4), (1,2)(3,4), (1,2,3,4), 
+      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3), 
+      <identity partial perm on [ 1, 2 ]>, (1,2), 
       <identity partial perm on [ 1 ]>, <empty partial perm> ] ]]]></Example>
     </Description>
   </ManSection>
