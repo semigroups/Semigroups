@@ -67,59 +67,63 @@ end);
 
 #
 
-InstallImmediateMethod(IsBlockBijectionSemigroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
+InstallImmediateMethod(IsBlockBijectionSemigroup, IsSemigroup and HasGeneratorsOfSemigroup, 0,  
 function(S) 
-  return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
+   IsBlockBijection);
 end);
 
 #
 
-InstallImmediateMethod(IsPartialPermBipartitionSemigroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
+InstallImmediateMethod(IsPartialPermBipartitionSemigroup, IsSemigroup and
+HasGeneratorsOfSemigroup, 0,  
 function(S) 
-  return ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
+  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
+  IsPartialPermBipartition);
 end);
 
 #
 
-InstallImmediateMethod(IsPermBipartitionGroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,  
+InstallImmediateMethod(IsPermBipartitionGroup, IsSemigroup and HasGeneratorsOfSemigroup, 0,  
 function(S) 
-  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
+  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
+  IsPermBipartition);
 end);
 
 #
 
-InstallMethod(IsBlockBijectionSemigroup,
-"for a bipartition semigroup ideal",
-[IsBipartitionSemigroup and IsSemigroupIdeal],
+InstallMethod(IsBlockBijectionSemigroup, "for a semigroup ideal",
+[IsSemigroupIdeal],
 function(S)
   if IsBlockBijectionSemigroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+  return IsBipartitionSemigroup(S) 
+   and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
 
 #
 
-InstallMethod(IsPartialPermBipartitionSemigroup,
-"for a bipartition semigroup ideal",
-[IsBipartitionSemigroup and IsSemigroupIdeal],
+InstallMethod(IsPartialPermBipartitionSemigroup, "for a semigroup ideal",
+[IsSemigroupIdeal],
 function(S)
   if IsPartialPermBipartitionSemigroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
+  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
+  IsPartialPermBipartition);
 end);
 
 #
 
-InstallMethod(IsPermBipartitionGroup,
-"for a bipartition semigroup ideal",
-[IsBipartitionSemigroup and IsSemigroupIdeal],
+InstallMethod(IsPermBipartitionGroup, "for a semigroup ideal",
+[IsSemigroupIdeal],
 function(S)
   if IsPermBipartitionGroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
+  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
+   IsPermBipartition);
 end);
 
 #

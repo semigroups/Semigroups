@@ -18,9 +18,13 @@ DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroup);
 DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroup);
 
-DeclareProperty("IsBlockBijectionSemigroup", IsBipartitionSemigroup);
-DeclareProperty("IsPartialPermBipartitionSemigroup", IsBipartitionSemigroup);
-DeclareProperty("IsPermBipartitionGroup", IsBipartitionSemigroup);
+DeclareProperty("IsBlockBijectionSemigroup", IsSemigroup);
+DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
+DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
+DeclareProperty("IsBlockBijectionSemigroup", IsSemigroupIdeal);
+DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroupIdeal);
+DeclareProperty("IsPermBipartitionGroup", IsSemigroupIdeal);
+
 DeclareSynonymAttr("IsBlockBijectionMonoid", IsBlockBijectionSemigroup and IsMonoid);
 DeclareSynonymAttr("IsPartialPermBipartitionMonoid",
 IsPartialPermBipartitionSemigroup and IsMonoid);
