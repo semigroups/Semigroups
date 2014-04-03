@@ -12,17 +12,18 @@
 #T these are basically stolen from cvec
 InstallGlobalFunction( SEMIG_HashFunctionForPlistVects,
 function(x,data)
-    return ORB_HashFunctionForPlainFlatList(x, data);
+    return ORB_HashFunctionForPlainFlatList(x![2], data);
 end);
 
 InstallGlobalFunction( SEMIG_HashFunctionForPlistMats,
 function(x,data)
     local i,res;
+    if DimensionsMat(x)[1] = 0 then
+        return 1;
+    fi;
     res := 0;
-    #T This looks magic but isn't, see matobjplist.gd
-    #T the entries of PlistMatrixRep and PlistVectorRep are defined there
-    for i in [1..x![3]] do
-        res := (res * 1001 + SEMIG_HashFunctionForPlistVects(x![4][i]![2], data))
+    for i in [1..DimensionsMat(x)[1]] do
+        res := (res * 1001 + SEMIG_HashFunctionForPlistVects(x[i], data))
              mod data + 1;
     od;
     return res;
