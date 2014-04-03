@@ -8,7 +8,11 @@
     <Homepage>http://tinyurl.com/jdmitchell</Homepage>
   </Author>
 
+  <Author>James East</Author>
+  <Author>Attila Egri-Nagy</Author>
   <Author>Julius Jonu&#353;as</Author>
+  <Author>Ben Steinberg</Author>
+  <Author>Jhevon Smith</Author>
   <Author>Michael Torpey</Author>
   <Author>Wilf Wilson</Author>
 
@@ -41,8 +45,9 @@
     There are methods for finding congruences of certain types of semigroups,
     the normalizer of a semigroup in a permutation group, the maximal
     subsemigroups of a finite semigroup, and smaller degree partial permutation
-    representations of inverse semigroups. There are functions for producing
-    pictures of the Green's structure of a semigroup, and for drawing bipartitions. 
+    representations and the character tables of inverse semigroups. There are
+    functions for producing pictures of the Green's structure of a semigroup,
+    and for drawing bipartitions. 
   </Abstract>
 
   <Acknowledgements>
@@ -52,8 +57,15 @@
     suggestions and to M. Neunhoeffer for his invaluable help in improving the
     efficiency of the package. <P/>
 
+    James East and Attila Egri-Nagy contributed to the part of the package
+    relating to bipartitions. I would like to thank the University of Western
+    Sydney for their support of the development of this part of the pacakge. <P/>
+    
     Julius Jonu&#353;as contributed the part of the package relating to free
     inverse semigroups, and contributed to the code for ideals.<P/>
+
+    Jhevon Smith and Ben Steinberg contributed the function 
+    <Ref Attr="CharacterTableOfInverseSemigroup"/>.
 
     Michael Torpey contributed the part of the package relating to congruences
     of Rees (0-)matrix semigroups.<P/>
@@ -64,11 +76,7 @@
     their contribution to the development of the algorithms for maximal
     subsemigroups and smaller degree partial permutation representations.<P/>
 
-    James East and Attila Egri-Nagy contributed to the part of the package
-    relating to bipartitions. I would like to thank the University of Western
-    Sydney for their support of the development of this part of the pacakge. <P/>
-
-    I would also like to acknowledge the support of the Centre of Algebra at
+    We would also like to acknowledge the support of the Centre of Algebra at
     the University of Lisbon, and of EPSRC grant number GR/S/56085/01.    
   </Acknowledgements>
 

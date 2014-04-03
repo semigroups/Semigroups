@@ -8,6 +8,22 @@
 #############################################################################
 ##
 
+RecogsFunnyNameFormatterFunction := function(st)
+  if Length(st) = 0 then 
+      return st;
+  else
+      return Concatenation(" (",st,")");
+  fi;
+end;
+
+RecogsFunnyWWWURLFunction := function(re)
+  if IsBound(re.WWWHome) then
+      return re.WWWHome;
+  else
+      return "";
+  fi;
+end;
+
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "2.0">
 ##  <!ENTITY GAPVERS "4.7.3">
@@ -34,6 +50,92 @@ Persons := [
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
     WWWHome       := "tinyurl.com/jdmitchell",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ),
+  
+  rec( 
+    LastName      := "East",
+    FirstNames    := "J.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "",
+    WWWHome       := "http://www.maths.usyd.edu.au/u/jamese/",
+    Place         := "Sydney",
+    Institution   := "University of Western Sydney"
+  ),
+  
+  rec(
+    LastName      := "Egri-Nagy",
+    FirstNames    := "Attila",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "attila@egri-nagy.hu",
+    WWWHome       := "http://www.egri-nagy.hu",
+    PostalAddress := Concatenation( [
+                       "University of Hertfordshire\n",
+                       "STRI\n",
+                       "College Lane\n",
+                       "AL10 9AB\n",
+                       "United Kingdom" ] ),
+    Place         := "Hatfield, Herts",
+    Institution   := "UH"
+  ),
+  rec( 
+    LastName      := "Jonusas",
+    FirstNames    := "J.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "jj252@st-and.ac.uk",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ),
+
+  rec( 
+    LastName      := "Steinberg",
+    FirstNames    := "B.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    WWWHome       := "http://www.sci.ccny.cuny.edu/~benjamin/",
+  ),
+  
+  rec( 
+    LastName      := "Smith",
+    FirstNames    := "J.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    WWWHome       := "http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith",
+  ),
+
+  rec( 
+    LastName      := "Torpey",
+    FirstNames    := "M.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "mct25@st-and.ac.uk",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ),
+  
+  rec( 
+    LastName      := "Wilson",
+    FirstNames    := "W.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "waw7@st-and.ac.uk",
+    WWWHome       := "http://wilf-wilson.net",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
@@ -83,6 +185,26 @@ Dependencies := rec(
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
   ["genss", ">=1.5"]], 
   ExternalConditions := []),
+
+  BannerString := Concatenation(
+  "----------------------------------------------------------------------",
+  "-------\n",
+  "Loading  Semigroups ", ~.Version, " - methods for semigroups\n",
+  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+        " (", ~.Persons[1].WWWHome, ")\n",
+  "with contributions by:\n",
+  Concatenation(Concatenation(List(~.Persons{[2..Length(~.Persons)-1]},
+       p->["     ",p.FirstNames," ",p.LastName,
+       RecogsFunnyNameFormatterFunction(
+         RecogsFunnyWWWURLFunction(p)),",\n"]))),
+  " and ",~.Persons[Length(~.Persons)].FirstNames," ",
+  ~.Persons[Length(~.Persons)].LastName,
+  RecogsFunnyNameFormatterFunction(
+    RecogsFunnyWWWURLFunction(~.Persons[Length(~.Persons)])),".\n",
+  "-----------------------------------------------------------------------",
+  "------\n"
+),
+
   AvailabilityTest := ReturnTrue, 
   Autoload := false,
   TestFile := "tst/testinstall.tst",
