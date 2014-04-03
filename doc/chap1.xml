@@ -234,13 +234,6 @@ or 64-bit mode correctly!
     seconds for <Ref Func="SemigroupsTestInstall"/> to finish and it may take
     several minutes for <Ref Func="SemigroupsTestAll"/> to finish.<P/>
 
-    Note that after calling <Ref Func="SemigroupsTestAll"/>, <Ref
-      Func="SemigroupsTestAll"/>, or <Ref
-      Func="SemigroupsTestManualExamples"/>, the message <C>gzip: stdout:
-      Broken pipe</C> might be displayed (several times). While this is
-    unfortunate, it is not an error and should simply be ignored.  We hope to
-    resolve this issue in the future.
-
     If something goes wrong, then please review the instructions in Section
     <Ref Sect="install"/> and ensure that &Semigroups; has been properly
     installed.  If you continue having problems, please email me at
