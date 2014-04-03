@@ -21,8 +21,10 @@ BindGlobal("SemigroupsDocXMLFiles",
 
 # arg is the number of threads, defaults to 2...
 
-SemigroupsParallelTestAll:=function(arg)
-  local n, dir_str, tst, dir, omit, files, filesplit, test, stringfile, farm, out, str, filename, file;
+BindGlobal("SemigroupsParallelTestAll",
+function(arg)
+  local n, dir_str, tst, dir, omit, files, filesplit, test, stringfile, farm,
+  out, str, filename, file;
   
   if Length(arg)<>0 then 
     n:=arg[1];
@@ -82,7 +84,7 @@ SemigroupsParallelTestAll:=function(arg)
   out:=Pickup(farm);
   Kill(farm);
   return out;
-end;
+end);
   
 
 # <path> to the folder containing the timings, <vers> the version number to

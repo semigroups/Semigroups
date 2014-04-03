@@ -20,7 +20,6 @@ DeclareAttribute("RankOfBipartition", IsBipartition);
 DeclareAttribute("TransverseBlocksLookup", IsBipartition);
 DeclareAttribute("NrTransverseBlocks", IsBipartition);
 
-DeclareOperation("InverseMutable", [IsBipartition]);
 DeclareOperation("OneMutable", [IsBipartitionCollection]);
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
