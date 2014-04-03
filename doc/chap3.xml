@@ -122,16 +122,23 @@
     In this section we describe several properties and attributes 
     <Ref Sect="Properties" BookName="ref"/> of inverse semigroup of
     transformations, partial permutations or bipartitions that can be determined
-    using &Semigroups;. The functions 
-    <Ref Oper="IsJoinIrreducible"/>,
-    <Ref Oper="IsMajorantlyClosed"/>, 
-    <Ref Attr="JoinIrreducibleDClasses"/>,
-    <Ref Oper="MajorantClosure"/>, 
-    <Ref Oper="Minorants"/>, 
-    <Ref Oper="RightCosetsOfInverseSemigroup"/>, 
-    <Ref Attr="SmallerDegreePartialPermRepresentation"/>, and 
-    <Ref Attr="VagnerPrestonRepresentation"/> were written by 
-    Wilf Wilson and Robert Hancock. 
+    using &Semigroups;.<P/> 
+    
+    The functions 
+    <List>
+      <Item><Ref Oper="IsJoinIrreducible"/></Item>
+      <Item><Ref Oper="IsMajorantlyClosed"/></Item>
+      <Item><Ref Attr="JoinIrreducibleDClasses"/></Item>
+      <Item><Ref Oper="MajorantClosure"/></Item> 
+      <Item><Ref Oper="Minorants"/></Item>
+      <Item><Ref Oper="RightCosetsOfInverseSemigroup"/></Item>
+      <Item><Ref Attr="SmallerDegreePartialPermRepresentation"/></Item>
+      <Item><Ref Attr="VagnerPrestonRepresentation"/></Item>
+    </List>
+    were written by Wilf Wilson and Robert Hancock. <P/>
+
+    The function <Ref Oper="CharacterTableOfInverseSemigroup"/> was written by
+    Jhevon Smith and Ben Steinberg.
     
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsBrandtSemigroup">
@@ -148,6 +155,7 @@
     <#Include Label="SameMinorantsSubgroup">
     <#Include Label="SmallerDegreePartialPermRepresentation">
     <#Include Label="VagnerPrestonRepresentation">
+    <#Include Label="CharacterTableOfInverseSemigroup">
   </Section>
 
   <Section><Heading>Visualising the structure of a semigroup</Heading>
