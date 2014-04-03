@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  bipartition.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -10,18 +10,19 @@
 
 <#GAPDoc Label="IsDualTransBipartition">
   <ManSection>
-    <Filt Name="IsDualTransBipartition" Arg='f'/>
+    <Filt Name="IsDualTransBipartition" Arg="f"/>
     <Description>
     If the star of the bipartition <A>f</A> defines a transformation, then
     <C>IsDualTransBipartition</C> returns <K>true</K>, and if not, then
     <K>false</K> is returned.<P/>
 
-    The star of a bipartition <A>f</A> defines a transformation if and only if
-    the left blocks of <A>f</A> corresponds to a permutation of <C>[1..n]</C>,
-    where <C>n</C> is the degree of <A>f</A>.
-    <Example>
-gap> f:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], [ 5, -10 ], 
-> [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;
+    A bipartition is the dual of a transformation if and only if its number of
+    right blocks equals its number of transverse blocks and its number of left
+    blocks equals its degree.
+
+    <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], 
+> [ 5, -10 ], [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;
 gap> IsDualTransBipartition(f);
 true
 gap> f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], 
@@ -29,15 +30,31 @@ gap> f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ],
 gap> IsTransBipartition(f);
 false
 gap> Number(PartitionMonoid(3), IsDualTransBipartition);
-27</Example>
+27]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsBlockBijection">
   <ManSection>
-    <Filt Name="IsBlockBijection" Arg='f'/>
+    <Filt Name="IsBlockBijection" Arg="f"/>
     <Description>
+      If the bipartition <A>f</A> induces a bijection from the quotient of
+      <C>[1..n]</C> by the blocks of <A>f</A> to the quotient of <C>[-n..-1]</C>
+      by the blocks of <A>f</A>, then <C>IsBlockBijection</C> return
+      <K>true</K>, and if not, then it returns <K>false</K>. <P/>
+      
+      A bipartition is a block bijection if and only if its number of blocks,
+      left blocks and right blocks are equal.
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, 5, -2 ], [ 2, 3, -1 ], 
+> [ 6, -5, -6 ], [ -3, -4 ] ] );;
+gap> IsBlockBijection(f);
+false
+gap> f:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], 
+> [ 5, -5 ] ] );;
+gap> IsBlockBijection(f);
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -53,7 +70,7 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 
 <#GAPDoc Label="IsBipartition">
   <ManSection>
-    <Filt Name="IsBipartition" Arg='obj' Type='Category'/>
+    <Filt Name="IsBipartition" Arg="obj" Type="Category"/>
     <Description>
    Every bipartition in &GAP; belongs to the category
     <C>IsBipartition</C>. Basic operations for bipartitions are
@@ -73,7 +90,7 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 
 <#GAPDoc Label="IsBipartitionCollection">
   <ManSection>
-    <Filt Name="IsBipartitionCollection" Arg='obj' Type='Category'/>
+    <Filt Name="IsBipartitionCollection" Arg="obj" Type="Category"/>
     <Description>
        Every collection of bipartitions belongs to the category
      <C>IsBipartitionCollection</C>. For example, bipartition semigroups
@@ -85,7 +102,6 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 <#GAPDoc Label="AsTransformation">
   <ManSection>
     <Oper Name="AsTransformation" Arg="f" Label="for a bipartition"/>
-    <Oper Name="AsTransformationNC" Arg="f" Label="for a bipartition"/>
     <Returns>A transformation or <K>fail</K>.</Returns>
     <Description>
       When the argument <A>f</A> is a bipartition, that mathematically defines
@@ -94,10 +110,8 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
       blocks are the image list of a permutation of <C>[1..n]</C> where
       <C>n</C> is the degere of <A>f</A>. <P/>
       
-      <C>AsTransformation</C> verifies that its argument defines a
-      transformation and <C>AsTransformationNC</C> does not. See 
-      <Ref Oper="IsTransBipartition"/>. 
-      <Example>
+      See <Ref Oper="IsTransBipartition"/>. 
+      <Example><![CDATA[
 gap> f:=Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], 
 > [ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], 
 > [ -8 ], [ -9 ]]);;
@@ -108,8 +122,100 @@ true
 gap> f:=Bipartition([[ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], 
 > [ 9, -4, -6, -9 ], [ -3, -5 ], [ -7, -8 ], [ -10 ]]);;
 gap> AsTransformation(f);
-fail</Example>
+fail]]></Example>
     </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsPermutation">
+  <ManSection>
+    <Oper Name="AsPermutation" Arg="f" Label="for a bipartition"/>
+    <Returns>A permutation or <K>fail</K>.</Returns>
+    <Description>
+      When the argument <A>f</A> is a bipartition that mathematically defines a
+      permutation, this function returns that permutation. <P/>
+      
+      A bipartition <A>f</A> defines a permutation if and only if its numbers of
+      left, right, and transverse blocks all equal its degree.<P/>
+
+      See <Ref Oper="IsPermBipartition"/>. 
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, -6 ], [ 2, -4 ], [ 3, -2 ], [ 4, -5 ], 
+> [ 5, -3 ], [ 6, -1 ] ] );;
+gap> IsPermBipartition(f);
+true
+gap> AsPermutation(f);
+(1,6)(2,4,5,3)
+gap> AsBipartition(last)=f;
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsPartialPerm">
+  <ManSection>
+    <Oper Name="AsPartialPerm" Arg="f" Label="for a bipartition"/>
+    <Returns>A partial perm or <K>fail</K>.</Returns>
+    <Description>
+      When the argument <A>f</A> is a bipartition that mathematically defines a
+      partial perm, this function returns that partial perm. <P/>
+      
+      A bipartition <A>f</A> defines a partial perm if and only if its numbers of
+      left and right blocks both equal its degree.<P/>
+
+      See <Ref Oper="IsPartialPermBipartition"/>. 
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3, -10 ], [ 4, -5 ], 
+> [ 5, -9 ], [ 6 ], [ 7 ], [ 8, -6 ], [ 9, -3 ], [ 10, -8 ], 
+> [ -1 ], [ -7 ] ] );;
+gap> IsPartialPermBipartition(f);
+true
+gap> AsPartialPerm(f);
+[1,4,5,9,3,10,8,6](2)
+gap> f:=Bipartition([[ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]]);;
+gap> IsPartialPermBipartition(f);
+false
+gap> AsPartialPerm(f);
+fail]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsBlockBijection">
+  <ManSection>
+    <Oper Name="AsBlockBijection" Arg="f[, n]"/>
+    <Returns>A block bijection or <K>fail</K>.</Returns>
+    <Description>
+      When the argument <A>f</A> is a partial perm and <A>n</A> is a positive
+      integer which is greater than the maximum of the degree and codegree of
+      <A>f</A>, this function returns a block bijection corresponding to
+      <A>f</A>. This block bijection has the same non-singleton classes as
+      <C>g:=AsBipartition(<A>f</A>, <A>n</A>)</C> and one additional class which is
+      the union the singleton classes of <C>g</C>.<P/> 
+
+      If the optional second argument <A>n</A> is not present, then the maximum
+      of the degree and codegree of <A>f</A> plus 1 is used by default. If the
+      second argument <A>n</A> is not greater than this maximum, then
+      <K>fail</K> is returned.  <P/>
+
+      This is the value at <A>f</A> of the embedding of the symmetric inverse
+      monoid into the dual symmetric inverse monoid given in the
+      FitzGerald-Leech Theorem <Cite Key="Fitzgerald1998aa"/>. 
+
+<Example><![CDATA[
+gap> f:=PartialPerm( [ 1, 2, 3, 6, 7, 10 ], [ 9, 5, 6, 1, 7, 8 ] ) ;  
+[2,5][3,6,1,9][10,8](7)
+gap> AsBipartition(f, 11);
+<bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], 
+ [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
+ [ -3 ], [ -4 ], [ -10 ], [ -11 ]>
+gap> AsBlockBijection(f, 10);
+fail
+gap> AsBlockBijection(f, 11);
+<block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
+ [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 
+ [ 10, -8 ]>]]></Example>
+  </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -119,8 +225,8 @@ fail</Example>
     <Returns>A bipartition.</Returns>
   <Description>
   <C>AsBipartition</C> 
-  returns the bipartition, permutation, transformation, or partial permutation,
-  as a bipartition. 
+  returns the bipartition, permutation, transformation, or partial permutation
+  <A>f</A>, as a bipartition of degree <A>n</A>.
   
   There are several possible arguments for <C>AsBipartition</C>:
   <List>
@@ -140,7 +246,7 @@ fail</Example>
       If <A>f</A> is a transformation and <A>n</A> is a positive integer
       such that <A>f</A> is a transformation of <C>[1..<A>n</A>]</C>, then
       <C>AsTransformation</C> returns the bipartition with classes
-      <M>(i)f^-1\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.
+      <M>(i)f^-1\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.<P/>
       
       If the positive integer <A>n</A> is not specified, then the
       internal degree of <A>f</A> is used as the value for <A>n</A>.
@@ -151,7 +257,7 @@ fail</Example>
       positive integer, then <C>AsBipartition</C> returns the bipartition 
       with classes <C>[i, i^<A>f</A>]</C> for <C>i</C> in <C>[1..<A>n</A>]</C>. 
       Thus the degree of the returned bipartition is the maximum of <A>n</A>
-      and the values <C>i^<A>f</A></C> where <C>i</C> in <C>[1..<A>n</A>]</C>.
+      and the values <C>i^<A>f</A></C> where <C>i</C> in <C>[1..<A>n</A>]</C>.<P/>
 
       If the optional argument <A>n</A> is not present, then the default value
       of the maximum of the largest moved point and the largest image of a
@@ -159,34 +265,55 @@ fail</Example>
     </Item>
     <Mark>bipartitions</Mark>
     <Item>
-      not yet implemented.
+      If <A>f</A> is a bipartition and <A>n</A> is a non-negative integer, then 
+      <C>AsBipartition</C> returns a bipartition corresponding to <A>f</A> with
+      degree <A>n</A>. <P/>
+      
+      If <A>n</A> equals the degree of <A>f</A>, then <A>f</A>
+      is returned. If <A>n</A> is less than the degree of <A>f</A>, then this
+      function returns the bipartition obtained from <A>f</A> by removing the
+      values exceeding <A>n</A> or less than <A>-n</A> from the blocks of <A>f</A>.
+      If <A>n</A> is greater than the degree of <A>f</A>, then this function
+      returns the bipartition with the same blocks as <A>f</A> and the singleton
+      blocks <C>i</C> and <C>-i</C> for all <C>i</C> greater than the degree of
+      <A>f</A>
     </Item>
   </List>
-  <Example>
+
+  <Example><![CDATA[
 gap> f:=Transformation( [ 3, 5, 3, 4, 1, 2 ] );;
 gap> AsBipartition(f, 5);
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>
 gap> AsBipartition(f);  
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
-[ 6, -2 ], [ -6 ]>
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+ [ 6, -2 ], [ -6 ]>
 gap> AsBipartition(f, 10);
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
-[ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]>
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+ [ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]>
 gap> AsBipartition((1, 3)(2, 4));
-&lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>
+<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>
 gap> AsBipartition((1, 3)(2, 4), 10);
-&lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ 5, -5 ], 
-[ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>
+<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], 
+ [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>
 gap> f:=PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 6, 7, 1, 4, 3, 2 ] );;
 gap> AsBipartition(f, 11);            
-&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
-[ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], 
-[ -9 ], [ -10 ], [ -11 ]>
+<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+ [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], 
+ [ -9 ], [ -10 ], [ -11 ]>
 gap> AsBipartition(f);
-&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
-[ 6, -2 ], [ 7 ], [ -5 ]>
+<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+ [ 6, -2 ], [ 7 ], [ -5 ]>
 gap> AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);
-&lt;bipartition: [ 1, -1 ]></Example>
+<block bijection: [ 1, -1 ]>
+gap> f:=Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], 
+> [ -3, -4, -5, -6 ] ] );;
+gap> AsBipartition(f, 0);
+<empty bipartition>
+gap> AsBipartition(f, 2);
+<bipartition: [ 1, 2, -2 ], [ -1 ]>
+gap> AsBipartition(f, 8);
+<bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ], 
+ [ -3, -4, -5, -6 ], [ -7 ], [ -8 ]>]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
@@ -200,10 +327,11 @@ gap> AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);
     <C>IsTransBipartition</C> returns <K>true</K>, and if not, then
     <K>false</K> is returned.<P/>
 
-    A bipartition <A>f</A> defines a transformation if and only if the right
-    blocks of <A>f</A> corresponds to a permutation of <C>[1..n]</C>, where
-    <C>n</C> is the degree of <A>f</A>.
-    <Example>
+    A bipartition <A>f</A> defines a transformation if and only if the number of
+    left blocks equals the number of transverse blocks and the number of right
+    blocks equals the degree. 
+
+    <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [ 6, 7, -9 ], 
 > [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [ -8 ], [ -10 ] ] );;
 gap> IsTransBipartition(f);
@@ -213,7 +341,7 @@ gap> f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ],
 gap> IsTransBipartition(f);
 false
 gap> Number(PartitionMonoid(3), IsTransBipartition);
-27</Example>
+27]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -227,11 +355,10 @@ gap> Number(PartitionMonoid(3), IsTransBipartition);
     <C>IsPermBipartition</C> returns <K>true</K>, and if not, then
     <K>false</K> is returned.<P/>
 
-    A bipartition <A>f</A> defines a permutation if and only if the left blocks
-    of <A>f</A> are singletons and the right blocks of <A>f</A> correspond to a
-    permutation of <C>[1..n]</C>, where <C>n</C> is the degree of <A>f</A>.
-  
-  <Example>
+    A bipartition is a permutation if its numbers of left, right,
+    and transverse blocks all equal its degree. 
+
+  <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], 
 > [ 5, -2, -4, -6 ] ] );;
 gap> IsPermBipartition(f);
@@ -239,7 +366,34 @@ false
 gap> f:=Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -6 ], [ 4, -1 ], [ 5, -5 ], 
 > [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;
 gap> IsPermBipartition(f);
-true</Example>
+true]]></Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsPartialPermBipartition">
+  <ManSection>
+    <Prop Name="IsPartialPermBipartition" Arg="f"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    If the bipartition <A>f</A> defines a partial permutation, then
+    <C>IsPartialPermBipartition</C> returns <K>true</K>, and if not, then
+    <K>false</K> is returned.<P/>
+
+    A bipartition <A>f</A> defines a partial permutation if and only if the
+    numbers of left and right blocks of <A>f</A> equal the degree of <A>f</A>.
+
+  <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], 
+> [ 5, -2, -4, -6 ] ] );;
+gap> IsPartialPermBipartition(f);
+false
+gap> f:=Bipartition( [ [ 1, -3 ], [ 2 ], [ -4 ], [ 3, -6 ], [ 4, -1 ], 
+> [ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;
+gap> IsPermBipartition(f);
+false
+gap> IsPartialPermBipartition(f); 
+true]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
@@ -247,10 +401,9 @@ true</Example>
 <#GAPDoc Label="BipartitionByIntRep">
   <ManSection>
     <Oper Name="BipartitionByIntRep" Arg="list"/>
-    <Oper Name="BipartitionByIntRepNC" Arg="list"/>
     <Returns>A bipartition.</Returns>
     <Description>
-      It is possible to create a bipartition using from its internal
+      It is possible to create a bipartition using its internal
       representation. The argument <A>list</A> must be a list of positive
       integers not greater than <C>n</C>, of length <C>2*n</C>, and where
       <C>i</C> appears in the list only if <C>i-1</C> occurs earlier in the
@@ -270,11 +423,10 @@ true</Example>
       <C>3</C> in the second position.<P/>
 
       In its first form <C>BipartitionByIntRep</C> verifies that the argument
-      <A>list</A> is the internal representation of a bipartition, whereas
-      <C>BipartitionByIntRepNC</C> performs no checks. 
-      <Example>
+      <A>list</A> is the internal representation of a bipartition. 
+      <Example><![CDATA[
 gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);                         
-&lt;bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]></Example> 
+<bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]>]]></Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -282,7 +434,6 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
 <#GAPDoc Label="PermLeftQuoBipartition">
   <ManSection>
     <Oper Name="PermLeftQuoBipartition" Arg="f, g"/>
-    <Func Name="PermLeftQuoBipartitionNC" Arg="f, g"/>
     <Returns>A permutation.</Returns>
     <Description>
       If <A>f</A> and <A>g</A> are bipartitions with equal left and right
@@ -292,14 +443,13 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
 
       <C>PermLeftQuoBipartition</C> verifies that <A>f</A> and <A>g</A> have
       equal left and right blocks, and returns an error if they do not.
-      <C>PermLeftQuoTransformationNC</C> does no checks.<P/>
 
       The value returned by <C>PermLeftQuoBipartition(<A>f</A>,<A>g</A>)</C> is
       the same as that returned by 
       <C>PermRightBlocks(RightBlocks(<A>f</A>), Star(<A>f</A>)*g)</C>.
       See also <Ref Oper="PermRightBlocks"/> and 
        <Ref Oper="OnRightBlocksBipartitionByPerm"/>.
-      <Example>
+      <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ], 
 > [ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;
 gap> g:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], 
@@ -307,10 +457,10 @@ gap> g:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ],
 gap> PermLeftQuoBipartition(f, g);
 (1,2,3)
 gap> Star(f)*g;
-&lt;bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], 
-[ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>
+<bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], 
+ [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>
 gap> PermRightBlocks(RightBlocks(f), last);
-(1,2,3)</Example>
+(1,2,3)]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -326,12 +476,12 @@ gap> PermRightBlocks(RightBlocks(f), last);
       from <A>f</A> by rearranging the right blocks of <A>f</A> according to
       <A>p</A>.
       
-      <Example>
+      <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ],
 > [ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;
 gap> OnRightBlocksBipartitionByPerm(f, (1,2,3));
-&lt;bipartition: [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], 
-[ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ]></Example>
+<bipartition: [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], 
+ [ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -342,10 +492,10 @@ gap> OnRightBlocksBipartitionByPerm(f, (1,2,3));
     <Returns>The identity bipartition.</Returns>
     <Description>
       Returns the identity bipartition with degree <A>n</A>. 
-      <Example>
+      <Example><![CDATA[
 gap> IdentityBipartition(10);
-&lt;bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
-[ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]></Example>
+<block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
+ [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -361,13 +511,13 @@ gap> IdentityBipartition(10);
       negative entries, i.e. the number of transverse blocks of <A>f</A>.<P/>
 
       <C>NrTransverseBlocks</C> is just a synonym for <C>RankOfBipartition</C>. 
-      <Example>
+      <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], 
 > [ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ] ] );
-&lt;bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], 
-[ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ]>
+<bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], 
+ [ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ]>
 gap> RankOfBipartition(f);
-4</Example>
+4]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -378,23 +528,24 @@ gap> RankOfBipartition(f);
     <Attr Name="DegreeOfBipartitionCollection" Arg="f"/>
     <Returns>A positive integer.</Returns>
     <Description>
-The degree of a bipartition is, roughly speaking, the number of points where
-the bipartition is defined. More precisely, if <A>f</A> is a bipartition defined on <C>2*n</C> points, then the degree of <A>f</A> is <C>n</C>. <P/>
+The degree of a bipartition is, roughly speaking, the number of points where it
+is defined. More precisely, if <A>f</A> is a bipartition defined on <C>2*n</C>
+points, then the degree of <A>f</A> is <C>n</C>. <P/>
 
 The degree of a collection <A>coll</A> of bipartitions of equal degree is just
 the degree of any (and every) bipartition in <A>coll</A>. The degree of collection of bipartitions of unequal degrees is not defined. 
 
-<Example>
+<Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 7, -3, -8 ], [ 2, 6 ], [ 3 ], [ 4, -7, -9 ], 
 > [ 5, 9, -2 ], [ 8, -1, -4, -6 ], [ -5 ] ] );;
 gap> DegreeOfBipartition(f);
 9
 gap> s:=BrauerMonoid(5);
-&lt;regular bipartition semigroup on 5 pts with 3 generators>
+<regular bipartition monoid on 5 pts with 3 generators>
 gap> IsBipartitionCollection(s);
 true
 gap> DegreeOfBipartitionCollection(s);
-5</Example>
+5]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -402,7 +553,6 @@ gap> DegreeOfBipartitionCollection(s);
 <#GAPDoc Label="Bipartition">
   <ManSection>
     <Func Name="Bipartition" Arg="blocks"/>
-    <Func Name="BipartitionNC" Arg="blocks"/>
     <Returns>A bipartition.</Returns>
     <Description>
       <C>Bipartition</C> returns the bipartition <C>f</C> with equivalence
@@ -411,11 +561,10 @@ gap> DegreeOfBipartitionCollection(s);
       integer <C>n</C>. <P/>
       
       <C>Bipartition</C> returns an error if the argument does not define a
-      bipartition, whereas <C>BipartitionNC</C> performs no checks on its
-      argument. 
-      <Example>
+      bipartition. 
+      <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, -1 ],[ 2, 3, -3 ], [ -2 ] ] );
-&lt;bipartition: [ 1, -1 ], [ 2, 3, -3 ], [ -2 ]></Example>
+<bipartition: [ 1, -1 ], [ 2, 3, -3 ], [ -2 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -429,11 +578,11 @@ gap> f:=Bipartition( [ [ 1, -1 ],[ 2, 3, -3 ], [ -2 ] ] );
       <A>f</A>, then <C>ExtRepOfBipartition</C> returns the partition of 
       <C>[-n..-1]</C> union <C>[1..n]</C> corresponding to <A>f</A> as a
       sorted list of duplicate-free lists. 
-<Example>
+<Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ] );
-&lt;bipartition: [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ]>
+<block bijection: [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ]>
 gap> ExtRepOfBipartition(f);
-[ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ]</Example>
+[ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -452,19 +601,20 @@ gap> ExtRepOfBipartition(f);
       The left projection <C>e</C> of <A>f</A> is also a bipartition with the
       property that <C>e*<A>f</A>=<A>f</A></C>. <C>LeftOne</C> and
       <C>LeftProjection</C> are synonymous. 
-      <Example>
+      <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, 4, -1, -2, -6 ], [ 2, 3, 5, -4 ], 
 > [ 6, -3 ], [ -5 ] ] );;
 gap> LeftOne(f);
-&lt;bipartition: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], [ 6, -6 ]>
+<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], 
+ [ 6, -6 ]>
 gap> LeftBlocks(f);
-&lt;blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
+<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
 gap> RightBlocks(LeftOne(f));
-&lt;blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
+<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
 gap> LeftBlocks(LeftOne(f)); 
-&lt;blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
+<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
 gap> LeftOne(f)*f=f;
-true</Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -483,18 +633,19 @@ true</Example>
       The right projection <C>e</C> of <A>f</A> is also a bipartition with the
       property that <C><A>f</A>*e=<A>f</A></C>. <C>RightOne</C> and
       <C>RightProjection</C> are synonymous.
-      <Example>
-gap> f:=Bipartition( [ [ 1, -1, -4 ], [ 2, -2, -3 ], [ 3, 4 ], [ 5, -5 ] ] );;
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, -1, -4 ], [ 2, -2, -3 ], [ 3, 4 ], 
+> [ 5, -5 ] ] );;
 gap> RightOne(f);
-&lt;bipartition: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ], [ 5, -5 ]>
+<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ], [ 5, -5 ]>
 gap> RightBlocks(RightOne(f));
-&lt;blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
+<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
 gap> LeftBlocks(RightOne(f));        
-&lt;blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
+<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
 gap> RightBlocks(f);
-&lt;blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
+<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
 gap> f*RightOne(f)=f;
-true</Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -511,20 +662,20 @@ true</Example>
       <C>LeftBlocks(<A>f</A>)=RightBlocks(g)</C>. The star <C>g</C> can
       be obtained from <A>f</A> by changing the sign of every integer in the
       external representation of <A>f</A>.  
-      <Example>
+      <Example><![CDATA[
 gap> f:=Bipartition( [ [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], 
 > [ -2, -3 ], [ -5 ] ] );
-&lt;bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], 
-[ -5 ]>
+<bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], 
+ [ -5 ]>
 gap> g:=Star(f);
-&lt;bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], 
-[ -5 ]>
+<bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], 
+ [ -5 ]>
 gap> f*g*f=f;
 true
 gap> LeftBlocks(f)=RightBlocks(g);
 true
 gap> RightBlocks(f)=LeftBlocks(g); 
-true</Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -536,12 +687,12 @@ true</Example>
     <Description>
       If <A>n</A> is a positive integer, then <C>RandomBipartition</C> returns
       a random bipartition of degree <A>n</A>.
-      <Log>
+      <Log><![CDATA[
 gap> f:=RandomBipartition(6); 
-&lt;bipartition: [ 1, 2, 3, 4 ], [ 5 ], [ 6, -2, -3, -4 ], [ -1, -5 ], [ -6 ]>
-</Log>
+<bipartition: [ 1, 2, 3, 4 ], [ 5 ], [ 6, -2, -3, -4 ], [ -1, -5 ], [ -6 ]>
+]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-
+#EOF

@@ -10,12 +10,13 @@
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "2.0">
-##  <!ENTITY GAPVERS "4.7.1">
-##  <!ENTITY ORBVERS "4.6">
-##  <!ENTITY IOVERS "4.1">
+##  <!ENTITY GAPVERS "4.7.3">
+##  <!ENTITY ORBVERS "4.7">
+##  <!ENTITY IOVERS "4.3">
 ##  <!ENTITY GRAPEVERS "4.5">
+##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-2.0">
-##  <!ENTITY COPYRIGHTYEARS "2011-13">
+##  <!ENTITY COPYRIGHTYEARS "2011-14">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
@@ -49,19 +50,18 @@ PackageInfoURL :=
   "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
 
 AbstractHTML := Concatenation(
-   "<p>The &Semigroups; package is a &GAP; package containing methods for",
-   "semigroups principally semigroups of of transformations, partial",
-   "permutations or subsemigroups of regular Rees 0-matrix semigroups.",
-   "&Semigroups; contains more efficient methods than those available in the",
-   "&GAP; library (and in many cases more efficient than any other software)",
+   "<p>The Semigroups package is a GAP package containing methods for",
+   " semigroups (principally semigroups of of transformations, partial",
+   " permutations or subsemigroups of regular Rees 0-matrix semigroups). ",
+   "Semigroups contains more efficient methods than those available in the ",
+   "GAP library (and in many cases more efficient than any other software)",
    "for creating semigroups, calculating their Green's classes, size,",
    "elements, ",
-   "group of units, minimal ideal, small generating sets, testing membership,",
-   "finding the inverses of a regular element, factorizing elements over the",
-   "generators, and many more. It is also possible to test if a semigroup",
-   "satisfies a particular property, such as if it is regular, simple,",
-   "inverse,",
-   "completely regular, and a variety of further properties.</p>",
+   "group of units, minimal ideal, small generating sets, testing membership, ",
+   "finding the inverses of a regular element, factorizing elements over the ",
+   "generators, and many more. It is also possible to test if a semigroup ",
+   "satisfies a particular property, such as if it is regular, simple, ",
+   "inverse, completely regular, and a variety of further properties.</p>",
    "<p>There are also functions to define and manipulate free inverse", 
    "semigroups and their elements.<p/>"),
 
@@ -78,9 +78,10 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.7.1",
-  NeededOtherPackages := [["orb", ">=4.6"], ["io", ">=4.2"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
+  GAP := ">=4.7.3",
+  NeededOtherPackages := [["orb", ">=4.7"], ["io", ">=4.3"]],
+  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
+  ["genss", ">=1.5"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue, 
   Autoload := false,

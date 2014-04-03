@@ -1,0 +1,69 @@
+#############################################################################
+##
+#W  semitrans.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="ComponentRepsOfTransformationSemigroup">
+<ManSection>
+  <Attr Name="ComponentRepsOfTransformationSemigroup" Arg="S"/>
+  <Returns>The representatives of components of a transformation semigroup.</Returns>
+  <Description>
+    This function returns the representatives of the components of the 
+    action of the transformation semigroup <A>S</A> on the set of positive
+    integers not greater than the degree of <A>S</A>. <P/>
+    
+    The representatives are the least set of points such that every point can be
+    reached from some representative under the action of <A>S</A>.
+
+    <Example>
+gap> S:=Semigroup( 
+> Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
+> Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
+gap> ComponentRepsOfTransformationSemigroup(S);
+[ 2, 3, 8 ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ComponentsOfTransformationSemigroup">
+<ManSection>
+  <Attr Name="ComponentsOfTransformationSemigroup" Arg="S"/>
+  <Returns>The components of a transformation semigroup.</Returns>
+  <Description>
+    This function returns the components of the action of the transformation
+    semigroup <A>S</A> on the set of positive integers not greater than the
+    degree of <A>S</A>; the components of <A>S</A> partition this set.
+    
+    <Example>
+gap> S:=Semigroup( 
+> Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
+> Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
+gap> ComponentsOfTransformationSemigroup(S);
+[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CyclesOfTransformationSemigroup">
+<ManSection>
+  <Attr Name="CyclesOfTransformationSemigroup" Arg="S"/>
+  <Returns>The cycles of a transformation semigroup.</Returns>
+  <Description>
+    This function returns the cycles, or strongly connected components, of the
+    action of the transformation semigroup <A>S</A> on the set of positive
+    integers not greater than the degree of <A>S</A>.
+    <Example>
+gap> S:=Semigroup( 
+> Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
+> Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
+gap> CyclesOfTransformationSemigroup(S);
+[ [ 1, 11, 12, 5, 4, 6, 10, 7, 9 ] ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+

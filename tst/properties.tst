@@ -557,6 +557,25 @@ gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 
+# E-unitary
+gap> [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 1, 2, 5 ] ),
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 1, 4 ] ) ];;
+gap> s:=InverseSemigroup(last);;
+gap> IsEunitaryInverseSemigroup(s);
+true
+gap> [ PartialPerm( [ 1, 2, 3, 4, 5 ], [ 1, 2, 5, 6, 3 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 3, 2, 1, 6, 5 ] ) ];;
+gap> s:=InverseSemigroup(last);;
+gap> IsEunitaryInverseSemigroup(s);
+true
+gap> [ PartialPerm( [ 1, 2, 3, 4, 7 ], [ 2, 4, 6, 5, 7 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 6, 4, 7, 2, 3, 1, 8 ] ),
+>  PartialPerm( [ 1, 2, 4, 5, 6, 7 ], [ 8, 6, 3, 5, 4, 1 ] ),
+>  PartialPerm( [ 1, 2, 4, 5, 8 ], [ 1, 3, 8, 6, 2 ] ) ];;
+gap> s:=InverseSemigroup(last);;
+gap> IsEunitaryInverseSemigroup(s);
+false
+
 ##
 #gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 #>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
@@ -678,6 +697,16 @@ gap> Size(t);
 #true
 #gap> Size(t);
 #180
+#
+#
+gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
+true
+gap> S := Semigroup(
+>  Transformation( [ 2, 2, 4, 4 ] ),
+>  Transformation( [ 5, 3, 4, 4, 6, 6 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
+false
 
 #
 gap> SemigroupsStopTest();

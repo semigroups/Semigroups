@@ -38,7 +38,7 @@ false
 
 #
 gap> s:=SingularTransformationSemigroup(6);
-<regular transformation semigroup on 6 pts with 30 generators>
+<regular transformation semigroup ideal on 6 pts with 1 generator>
 gap> Size(s);
 45936
 
@@ -258,14 +258,14 @@ gap> t:=Range(IsomorphismTransformationMonoid(g));
 gap> Generators(t);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));
-Group([ (2,4), (1,3) ])
+Group([ (), (2,4), (1,3) ])
 gap> IsomorphismGroups(g, h);
 [ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
 
 #Issue 22 - takes about 49ms
 gap> f := Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] );
 Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] )
-gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);  
+gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);
 [ Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 6, 3, 6, 2 ] ), 
@@ -436,15 +436,14 @@ gap> G:=Group((1,2),(3,4));;
 gap> mat:=[[(), ()], [(), 0], [(), (1,2)]];;
 gap> R:=ReesZeroMatrixSemigroup(G, mat);
 <Rees 0-matrix semigroup 2x3 over Group([ (1,2), (3,4) ])>
-gap> MaximalSubsemigroups(R);
-[ <subsemigroup of 2x3 Rees 0-matrix semigroup with 4 generators>, 
-  <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
-  <Rees 0-matrix semigroup 2x2 over Group([ (3,4), (1,2) ])>, 
-  <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
-  <Rees 0-matrix semigroup 1x3 over Group([ (3,4), (1,2) ])>, 
-  <subsemigroup of 2x3 Rees 0-matrix semigroup with 9 generators> ]
-gap> List(last, U-> IsMaximalSubsemigroup(R, U));
-[ true, true, true, true, true, true ]
+gap> (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail 
+> and IsDuplicateFreeList(MaximalSubsemigroups(R))
+> and ForAll(MaximalSubsemigroups(R), U-> IsMaximalSubsemigroup(R, U)) 
+> and Length(MaximalSubsemigroups(R))=6) 
+> or (not (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail));
+true
 
 # ClosureSemigroup with an element of higher degree
 gap> S:=Semigroup( 
@@ -473,6 +472,96 @@ gap> Elements(H)[1]^f;
 ()
 gap> ()^g;            
 0
+
+# Issue 47: bug in ClosureSemigroup caused which assumed that if the rank of an
+# R-class rep was greater than the maximum rank of the collection being added,
+# then we hadn't seen an R-class rep with the same rho-value before. 
+gap> S:=Semigroup([ Transformation( [ 1, 2, 4, 6, 1, 6 ] ),
+> Transformation( [ 1, 6, 1, 1, 6, 5 ] ),
+> Transformation( [ 2, 6, 2, 4, 3, 2 ] ),
+> Transformation( [ 4, 1, 3, 6, 1, 5 ] ),
+> Transformation( [ 4, 1, 4, 2, 4, 2 ] ),
+> Transformation( [ 6, 6, 4, 6, 1, 1 ] ) ]);
+<transformation semigroup on 6 pts with 6 generators>
+gap> T:=Semigroup([ Transformation( [ 1, 5, 3, 4, 5 ] ),
+> Transformation( [ 6, 4, 3, 5, 4, 1 ] ),
+> Transformation( [ 1, 2, 4, 6, 1, 6 ] ),
+> Transformation( [ 1, 5, 1, 6, 3, 1 ] ),
+> Transformation( [ 4, 1, 6, 5, 4, 5 ] ),
+> Transformation( [ 2, 6, 2, 4, 3, 2 ] ),
+> Transformation( [ 2, 1, 2, 4, 4, 2 ] ),
+> Transformation( [ 4, 5, 4, 4, 5, 3 ] ),
+> Transformation( [ 4, 4, 4, 5, 4, 3 ] ),
+> Transformation( [ 6, 1, 6, 6, 4, 6 ] ),
+> Transformation( [ 5, 6, 6, 6, 6, 1 ] ),
+> Transformation( [ 4, 4, 5, 4, 3, 3 ] ) ]);
+<transformation semigroup on 6 pts with 12 generators>
+gap> IsMaximalSubsemigroup(S, T);
+true
+gap> T:=Semigroup(T, rec(small:=true));;
+gap> IsMaximalSubsemigroup(S, T);
+true
+
+# From Jack Schmidt 06/02/14 by email
+gap> S:=InverseMonoid([
+> PartialPerm([1..32],
+> [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,30,29,32,31,26,25,28,27,
+>  18,17,20,19,22,21,24,23]),
+> PartialPerm([1..32], [1,10,16,7,5,14,4,11,9,2,8,15,13,6,12,3,
+> 17,22,32,27,21,18,28,31,25,30,20,23,29,26,24,19]),
+> PartialPerm([1..16], [1,2,3,4,16,15,13,14,10,9,12,11,7,8,6,5]), 
+> PartialPerm([1,2,5,6,9,10,13,14,17,18,21,22,25,26,29,30],
+> [1,17,5,29,9,21,13,25,30,14,26,6,18,10,22,2]), 
+> PartialPerm([1,2,5,6,9,10,13,14,19,20,23,24,27,28,31,32],
+> [1,10,5,14,9,2,13,6,19,24,23,20,27,32,31,28]), 
+> PartialPerm([1,6,9,14,18,22,25,29],[1,6,9,14,18,22,25,29]), 
+> PartialPerm([1,5,9,13,19,23,27,31],[1,5,9,13,19,23,27,31]), 
+> PartialPerm([1,6,9,14,17,21,26,30],[1,6,9,14,17,21,26,30]) ]);; 
+gap> ForAll(S,f->ForAll(LClass(S,f),x -> x in S)); 
+true
+
+# From Jack Schmidt 07/02/14 by email
+gap> AsSet(InverseMonoid( PartialPerm([1,2]), PartialPerm([1])));
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
+
+# Issue #57 (problem in INV_KER_TRANS)
+gap> S:=Semigroup(Transformation([1,1,1]), Transformation([1,1,4,4,5]));;
+gap> Size(S);
+2
+gap> IsMonogenicSemigroup(S);
+false
+
+# Issue pointed out by WAW, caused by IsInvLambdaOrb being inherited from the
+# argument of ClosureSemigroup by its output, when the output wasn't an
+# InverseOp semigroup... 
+gap> S:=Semigroup([
+> Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] ),
+> Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ),
+> Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
+> Bipartition( [ [ 1, 3, -1 ], [ 2, -2 ], [ -3 ] ] ) ]);;
+gap> gens:=[
+> Bipartition( [ [ 1, 3, -1 ], [ 2, -2 ], [ -3 ] ] ),
+> Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
+> Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ) ];;
+gap> V:=SemigroupIdealByGenerators(S, gens);
+<regular bipartition semigroup ideal on 3 pts with 3 generators>
+gap> tuples:=[ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ] ] ) ];;
+gap> Semigroup(V, tuples, rec(small:=true));;
+
+# Issue pointed out by WAW, caused by typo in ClosureSemigroup (the parent of an
+# R-class was set to be the subsemigroup not the new parent semigroup)
+gap> for i in [1..6] do 
+> V:=Semigroup([ PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 5, 3, 4, 6 ] ),
+>  PartialPerm( [ 1, 2, 4, 5, 6 ], [ 2, 1, 5, 4, 3 ] ),
+>  PartialPerm( [ 1, 3, 4, 5, 6 ], [ 1, 4, 5, 2, 6 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 1, 6, 5, 4 ] ),
+>  PartialPerm( [ 1, 2, 3, 6 ], [ 4, 3, 2, 6 ] ),
+>  PartialPerm( [ 1, 2, 4, 6 ], [ 2, 1, 5, 3 ] ),
+>  PartialPerm( [ 1, 2, 3, 6 ], [ 5, 2, 1, 3 ] ),
+>  PartialPerm( [ 2, 3, 4, 6 ], [ 3, 2, 1, 6 ] ),
+>  PartialPerm( [ 1, 2, 6 ], [ 3, 2, 6 ] ) ], rec(small:=true));
+> IsInverseSemigroup(V);
+> od;
 
 #
 gap> SemigroupsStopTest();

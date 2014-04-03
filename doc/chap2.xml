@@ -136,13 +136,13 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
     
   <Section><Heading>Changing the representation of a semigroup</Heading>
     <#Include Label="IsomorphismPermGroup">
-    <#Include Label="IsomorphismTransformationMonoid">
   </Section>
   
   <Section Label="Examples"><Heading>Standard examples</Heading>
     In this section, we describe the operations in &Semigroups; that can be
     used to creating semigroups belonging to several standard classes of
     example. 
+    <#Include Label="EndomorphismsPartition"> 
     <#Include Label="JonesMonoid"> 
     <#Include Label="BrauerMonoid"> 
     <#Include Label="FactorisableDualSymmetricInverseSemigroup">

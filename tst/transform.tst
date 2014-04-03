@@ -278,7 +278,7 @@ gap> List(GreensDClasses(s), Size);
 gap> MultiplicativeZero(s);
 fail
 gap> MinimalIdeal(s);
-<simple transformation semigroup on 4 pts with 4 generators>
+<simple transformation semigroup ideal on 4 pts with 1 generator>
 gap> Size(last);
 4
 gap> IsRightZeroSemigroup(last2);

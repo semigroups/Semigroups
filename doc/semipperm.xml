@@ -1,0 +1,76 @@
+#############################################################################
+##
+#W  semipperm.xml
+#Y  Copyright (C) 2011-14                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="ComponentRepsOfPartialPermSemigroup">
+<ManSection>
+  <Attr Name="ComponentRepsOfPartialPermSemigroup" Arg="S"/>
+  <Returns>The representatives of components of a partial perm semigroup.</Returns>
+  <Description>
+    This function returns the representatives of the components of the 
+    action of the partial perm semigroup <A>S</A> on the set of positive
+    integers where it is defined. <P/>
+    
+    The representatives are the least set of points such that every point can be
+    reached from some representative under the action of <A>S</A>.
+
+    <Example>
+gap> S:=Semigroup( 
+> PartialPerm( [ 1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19 ], 
+>     [ 9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20 ], 
+>     [ 13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19 ] ) );;
+gap> ComponentRepsOfPartialPermSemigroup(S);
+[ 1, 4, 6, 10, 15, 17 ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ComponentsOfPartialPermSemigroup">
+<ManSection>
+  <Attr Name="ComponentsOfPartialPermSemigroup" Arg="S"/>
+  <Returns>The components of a partial perm semigroup.</Returns>
+  <Description>
+    This function returns the components of the action of the partial perm
+    semigroup <A>S</A> on the set of positive integers where it is defined; the
+    components of <A>S</A> partition this set.
+
+    <Example>
+gap> S:=Semigroup( 
+> PartialPerm( [ 1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19 ], 
+>     [ 9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20 ], 
+>     [ 13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19 ] ) );;
+gap> ComponentsOfPartialPermSemigroup(S);
+[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 19, 20 ], 
+  [ 15 ], [ 17 ] ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CyclesOfPartialPermSemigroup">
+<ManSection>
+  <Attr Name="CyclesOfPartialPermSemigroup" Arg="S"/>
+  <Returns>The cycles of a partial perm semigroup.</Returns>
+  <Description>
+    This function returns the cycles, or strongly connected components, of the
+    action of the partial perm semigroup <A>S</A> on the set of positive
+    integers where it is defined.
+    
+    <Example>
+gap> S:=Semigroup( 
+> PartialPerm( [ 1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19 ], 
+>     [ 9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20 ], 
+>     [ 13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19 ] ) );;
+gap> CyclesOfPartialPermSemigroup(S);
+[ [ 1, 9, 12, 14, 20, 2, 19, 3, 8, 11 ] ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

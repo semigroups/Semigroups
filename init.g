@@ -16,30 +16,46 @@ fi;
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
 
-ReadPackage("semigroups/gap/semigroups-acting/setup.gd");
-ReadPackage("semigroups/gap/semigroups-acting/greens.gd");
-ReadPackage("semigroups/gap/semigroups-acting/lambda-rho.gd");
-ReadPackage("semigroups/gap/semigroups-acting/orbits.gd");
-ReadPackage("semigroups/gap/semigroups-acting/acting.gd");
-ReadPackage("semigroups/gap/semigroups-acting/graded.gd");
-ReadPackage("semigroups/gap/semigroups-acting/semigroups.gd");
-ReadPackage("semigroups/gap/semigroups-acting/enums.gd");
-ReadPackage("semigroups/gap/semigroups-acting/iterators.gd");
-ReadPackage("semigroups/gap/semigroups-acting/properties.gd");
-ReadPackage("semigroups/gap/semigroups-acting/attributes.gd");
-ReadPackage("semigroups/gap/semigroups-acting/factor.gd");
-ReadPackage("semigroups/gap/semigroups-acting/examples.gd");
+ReadPackage("semigroups/gap/setup.gd");
+ReadPackage("semigroups/gap/acting.gd");
+ReadPackage("semigroups/gap/ideals-acting.gd");
+ReadPackage("semigroups/gap/semigroups.gd");
 
-ReadPackage("semigroups/gap/bipartitions/bipartition.gd");
-ReadPackage("semigroups/gap/bipartitions/semibipart.gd");
-ReadPackage("semigroups/gap/bipartitions/blocks.gd");
+ReadPackage("semigroups/gap/bipartition.gd");
+ReadPackage("semigroups/gap/semibipart.gd");
+ReadPackage("semigroups/gap/semitrans.gd");
+ReadPackage("semigroups/gap/semipperm.gd");
+ReadPackage("semigroups/gap/blocks.gd");
 
-ReadPackage("semigroups/gap/ideals-acting/ideals.gd");
+ReadPackage("semigroups/gap/greens.gd");
+ReadPackage("semigroups/gap/lambda-rho.gd");
+ReadPackage("semigroups/gap/ideals-lambda-rho.gd");
+ReadPackage("semigroups/gap/orbits.gd");
+ReadPackage("semigroups/gap/graded.gd");
+ReadPackage("semigroups/gap/enums.gd");
+ReadPackage("semigroups/gap/iterators.gd");
+ReadPackage("semigroups/gap/properties.gd");
+ReadPackage("semigroups/gap/ideals-properties.gd");
+ReadPackage("semigroups/gap/attributes.gd");
+ReadPackage("semigroups/gap/ideals-attributes.gd");
+ReadPackage("semigroups/gap/factor.gd");
+ReadPackage("semigroups/gap/examples.gd");
 
-ReadPackage("semigroups/gap/inverse-semigroups-acting/attributes-inverse.gd");
+ReadPackage("semigroups/gap/ideals.gd");
 
-ReadPackage("semigroups/gap/inverse-semigroups-general/freeinverse.gd");
+ReadPackage("semigroups/gap/attributes-inverse.gd");
 
-ReadPackage("semigroups/gap/semigroups-general/display.gd");
+ReadPackage("semigroups/gap/freeinverse.gd");
+
+ReadPackage("semigroups/gap/display.gd");
+
+ReadPackage("semigroups/gap/isomorph.gd");
+ReadPackage("semigroups/gap/reesmat.gd");
+ReadPackage("semigroups/gap/reesmat-iso.gd");
+ReadPackage("semigroups/gap/maximal.gd");
+ReadPackage("semigroups/gap/normalizer.gd");
 
 DeclareInfoClass("InfoSemigroups");;
+
+ReadPackage("semigroups/gap/reesmat-cong.gd");
+ReadPackage("semigroups/gap/univcong.gd");

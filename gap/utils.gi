@@ -1,13 +1,23 @@
 #############################################################################
 ##
 #W  utils.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 ## this file contains utilies for use with the Semigroups package. 
+
+#
+
+BindGlobal("SemigroupsDocXMLFiles",
+  ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
+   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
+   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml", 
+   "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml", 
+   "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
+   "../PackageInfo.g"]);
 
 # <path> to the folder containing the timings, <vers> the version number to
 # check against.
@@ -146,16 +156,13 @@ function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
+
 #
 
 InstallGlobalFunction(SemigroupsMakeDoc, 
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
-   InstallationPath, "/doc"), "main.xml", 
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
-   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
-   "semibipart.xml", "semigroups.xml", "factor.xml", "freeinverse.xml",
-   "display.xml", "../PackageInfo.g"], "semigroups",
+   InstallationPath, "/doc"), "main.xml", SemigroupsDocXMLFiles, "semigroups",
    "MathJax", "../../..");;
   return;
 end);
@@ -205,26 +212,47 @@ end);
 
 InstallGlobalFunction(SemigroupsTestAll, 
 function()
-  local dir_str, tst, dir, str, x;
+  local dir_str, tst, dir, omit, ex, filesplit, test, stringfile, str, filename;
   
-  Print(
-  "Reading all .tst files in the directory semigroups/tst/...\n\n"); 
+  Print("Reading all .tst files in the directory semigroups/tst/...\n\n"); 
   dir_str:=Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
   tst:=DirectoryContents(dir_str);
   dir:=Directory(dir_str);
-  for x in tst do
-    str:=SplitString(x, ".");
-    if Length(str)>=2 and str[2]="tst" then
-      #if not Semigroups_C and str[1] in ["inverse", "pperm", "semigroups", 
-      #   "testcompiled"]
-      #  then 
-      #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not
-      #  compiled)\n");
-      #else
-        Print("reading ", dir_str,"/", x, " ...\n");
-        Test(Filename(dir, x));
-      #fi;
-      Print("\n");
+
+  omit:=SemigroupsOmitFromTestManualExamples;
+
+  if Length(omit)>0 then 
+    Print("not testing files containing the strings");
+    for str in omit do 
+      Print(", \"", str, "\"");
+    od;
+    Print(" . . .\n\n");
+  fi;
+  
+  for filename in tst do
+    if filename="testinstall-4.7.5.tst" 
+     and not CompareVersionNumbers(GAPInfo.Version, "4.7.5") then 
+      Print("not testing ", filename, ", it requires GAP 4.7.5 or higher,\n\n");
+      break;
+    fi;
+
+    filesplit:=SplitString(filename, ".");
+    if Length(filesplit)>=2 and filesplit[Length(filesplit)]="tst" then
+      test:=true;
+      stringfile:=StringFile(Concatenation(dir_str, "/", filename));
+      for str in omit do 
+        if PositionSublist(stringfile, str)<>fail then 
+          Print("not testing ", filename, ", it contains a test involving ", 
+          str, ", which will not work . . .\n\n");
+          test:=false;
+          break;
+        fi;
+      od;
+      if test then 
+        Print("reading ", dir_str,"/", filename, " . . .\n");
+        Test(Filename(dir, filename));
+        Print("\n");
+      fi;
     fi;
   od;  
   return;
@@ -236,6 +264,10 @@ InstallGlobalFunction(SemigroupsTestInstall,
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
+  if CompareVersionNumbers(GAPInfo.Version,"4.7.5") then
+    Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
+     "testinstall-4.7.5.tst"));;
+  fi;
   return;
 end);
 
@@ -245,10 +277,7 @@ InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
-  "main.xml",  [ "utils.xml", "examples.xml", "factor.xml", "greens.xml",
-  "orbits.xml", "properties.xml", "semigroups.xml",  "attributes-inverse.xml", 
-  "freeinverse.xml", "attributes.xml", "display.xml", "blocks.xml", 
-  "semibipart.xml", "bipartition.xml", "../PackageInfo.g" ], "Single" );
+  "main.xml",  SemigroupsDocXMLFiles, "Single" );
 end);
 
 # if <arg> is some strings, then any example containing any of these strings is
@@ -273,6 +302,56 @@ function()
   SemigroupsStopTest();
   return;
 end);
+
+#
+
+InstallGlobalFunction(IteratorFromGeneratorsFile, 
+function(str)
+  local file, record;
+  
+  file:=GeneratorsReadFile(str);
+  
+  if file=fail then 
+    return fail;
+  fi;
+ 
+  record:=rec(file:=file, curr:=ReadGeneratorsLine(IO_ReadLine(file)));
+
+  record.NextIterator:=function(iter)
+    local next, line;
+    next:=iter!.curr;
+    line:=IO_ReadLine(iter!.file);
+    if line<>"" then 
+      iter!.curr:=ReadGeneratorsLine(IO_ReadLine(iter!.file));
+    else 
+      iter!.curr:=line;
+    fi;
+    return next;
+  end;
+  
+  record.IsDoneIterator:=function(iter)
+    if iter!.curr="" then 
+      if not iter!.file!.closed then 
+        IO_Close(iter!.file);
+      fi;
+      return true;
+    else
+      return false;
+    fi;
+  end;
+
+  record.ShallowCopy:=function(iter)
+    local file;
+    file:=GeneratorsReadFile(str);
+    return rec(file:=file, curr:=ReadGeneratorsLine(IO_ReadLine(file)));
+  end;
+
+  InstallAtExit(function() if not file!.closed then IO_Close(file); fi; end);
+  
+  return IteratorByFunctions(record);
+end);
+
+#
 
 InstallGlobalFunction(GeneratorsReadFile, 
 function(str)
@@ -309,14 +388,25 @@ function(arg)
     Error("usage: the 1st argument must be a string or a file,");
     return;
   fi;
-
+  
+  if file=fail then 
+    return fail;
+  fi;
+  
   if Length(arg)=2 then 
+    if IsFile(arg[1]) then 
+      Error("usage: the argument must be a file, or a string, or a string and a", 
+      " positive integer,");
+      return;
+    fi;
     if IsPosInt(arg[2]) then 
       i:=0;
       repeat  
         i:=i+1; line:=IO_ReadLine(file);
       until i=arg[2] or line="";
-      IO_Close(file);
+      if IsString(arg[1]) then 
+        IO_Close(file);
+      fi;
       if line="" then
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
@@ -344,7 +434,7 @@ end);
 InstallGlobalFunction(ReadGeneratorsLine, 
 function(line)
   local i, k, out, m, deg, f, j;
-  
+ 
   i:=2; k:=0; out:=[];
 
   while i<Length(line) do
@@ -416,7 +506,7 @@ function(arg)
   elif file[Length(file)] = "xz" then 
     file:=IO_FilteredFile([["xz", ["-9q"]]], arg[1], mode);
   else  
-    file:=IO_File(arg[1]);
+    file:=IO_File(arg[1], mode);
   fi;
   return file;
 end);
@@ -445,6 +535,11 @@ function(arg)
     return;
   fi;
 
+  if file=fail then 
+    Error("couldn't open the file ", file, ",");
+    return;
+  fi;
+
   if IsTransformationCollection(arg[2]) 
     or IsPartialPermCollection(arg[2])
     or IsBipartitionCollection(arg[2]) then 
@@ -455,7 +550,7 @@ function(arg)
     or IsBipartitionCollection(arg[2][1])) then 
       trans:=arg[2];
   else
-    Error("usage: the 2nd argument must be transformation or partial perm\n",
+    Error("usage: the 2nd argument must be a transformation or partial perm\n",
     "semigroup or collection, or a list of such semigroups or collections,");
     return;
   fi;
@@ -474,7 +569,6 @@ function(arg)
       gens:=trans;
     fi;
   od;
-
   
   #####
 
@@ -536,7 +630,7 @@ function(arg)
       IO_WriteLine(file, line);
     od;
   fi;
-
+  
   if IsString(arg[1]) then  
     IO_Close(file);
   fi;
@@ -547,7 +641,7 @@ end);
 
 InstallGlobalFunction(WriteGeneratorsLine, 
 function(f)
-  local append, line, deg, strdeg, nrdigits, i;
+  local append, line, deg, strdeg, nrdigits, func, nr, i;
   
   append:=function(str, pt, m)
     local i, j;
@@ -564,20 +658,30 @@ function(f)
     deg:=DegreeOfTransformation(f);
     strdeg:=String(deg);
     nrdigits:=Length(strdeg);
+    func:=POW;
+    nr:=deg;
   elif IsPartialPerm(f) then 
     line:="p";
     deg:=DegreeOfPartialPerm(f);
-    strdeg:=String(strdeg);
+    strdeg:=String(deg);
     nrdigits:=Length(String(Maximum(deg, CodegreeOfPartialPerm(f))));
+    func:=POW;
+    nr:=deg;
   elif IsBipartition(f) then 
     line:="b";
-    Error("not yet implemented");
+    deg:=DegreeOfBipartition(f);
+    strdeg:=String(deg);
+    nrdigits:=Length(strdeg);
+    func:=function(i, f)
+      return f!.blocks[i];
+    end;
+    nr:=2*deg;
   fi;
   
   Append(line, String(nrdigits));
   Append(line, strdeg);
-  for i in [1..deg] do 
-    append(line, i^f, nrdigits);
+  for i in [1..nr] do 
+    append(line, func(i,f), nrdigits);
   od;
   return line;
 end);
@@ -608,5 +712,7 @@ function(f)
   od;
   return line;
 end);
+
+
 
 #EOF

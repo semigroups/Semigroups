@@ -1,0 +1,11 @@
+<Chapter Label="Ideals"><Heading>Ideals</Heading> 
+
+  In this chapter we describe the various ways that an ideal of a semigroups 
+  can be created and manipulated in &Semigroups;.<P/>
+
+  We write ideal to mean two-sided ideal everywhere in this chapter. 
+
+  <Section><Heading>Attributes of ideals</Heading> 
+    <#Include Label="GeneratorsOfSemigroupIdeal"> 
+  </Section>
+</Chapter>
