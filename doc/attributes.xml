@@ -211,7 +211,7 @@ gap> PrincipalFactor(d);
     be a semigroup. The returned value of <C>SmallXGeneratingSet</C>, where
     applicable, has the property that
     <Log>
-      X(SmallXGeneratingSet(<A>coll</A>)=X(<A>coll</A>);
+      X(SmallXGeneratingSet(coll)=X(coll);
     </Log>
     where <C>X</C> is any of 
     <Ref Func="Semigroup" BookName="ref"/>,
