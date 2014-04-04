@@ -100,6 +100,8 @@
     <#Include Label="CanonicalRepresentative">
     <#Include Label="AsSemigroupCongruenceByGeneratingPairs">
     <#Include Label="AsRZMSCongruenceByLinkedTriple">
+    <#Include Label="CongruenceClassOfElement">
+    <#Include Label="CongruenceClasses">
   </Section>
 
   <Section>
