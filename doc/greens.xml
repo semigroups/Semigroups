@@ -746,7 +746,7 @@ gap> NextIterator(iter);
 Transformation( [ 5, 5, 4, 5, 1 ] )
 gap> iter;
 <iterator of R-class reps>
-gap> file:=Concatenation(SemigroupsDir(), "/tst/munn.gz");;
+gap> file:=Concatenation(SemigroupsDir(), "/tst/test.gz");;
 gap> s:=InverseSemigroup(ReadGenerators(file, 1377));
 <inverse partial perm semigroup on 983 pts with 2 generators>
 gap> NrMovedPoints(s);

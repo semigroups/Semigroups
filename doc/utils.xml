@@ -124,7 +124,7 @@
       of <A>filename</A>.
 
       <Example>
-gap> file:=Concatenation(SemigroupsDir(), "/tst/munn.gz");;
+gap> file:=Concatenation(SemigroupsDir(), "/tst/test.gz");;
 gap> ReadGenerators(file, 1378);
 [ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 

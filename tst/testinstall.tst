@@ -290,7 +290,7 @@ gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 8, 3, 12, 2 ] ) ]
 
 #
-gap> file:=Concatenation(SemigroupsDir(), "/tst/munn.gz");;
+gap> file:=Concatenation(SemigroupsDir(), "/tst/test.gz");;
 gap>  ReadGenerators(file, 1376);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 
