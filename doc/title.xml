@@ -59,13 +59,13 @@
 
     James East and Attila Egri-Nagy contributed to the part of the package
     relating to bipartitions. I would like to thank the University of Western
-    Sydney for their support of the development of this part of the pacakge. <P/>
+    Sydney for their support of the development of this part of the package. <P/>
     
     Julius Jonu&#353;as contributed the part of the package relating to free
     inverse semigroups, and contributed to the code for ideals.<P/>
 
     Jhevon Smith and Ben Steinberg contributed the function 
-    <Ref Attr="CharacterTableOfInverseSemigroup"/>.
+    <Ref Attr="CharacterTableOfInverseSemigroup"/>.<P/>
 
     Michael Torpey contributed the part of the package relating to congruences
     of Rees (0-)matrix semigroups.<P/>
