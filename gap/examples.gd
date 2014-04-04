@@ -32,6 +32,7 @@ DeclareOperation("OrderEndomorphisms", [IsPosInt]);
 DeclareOperation("SingularOrderEndomorphisms", [IsPosInt]);
 DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
 DeclareOperation("PartitionMonoid", [IsPosInt]);
+DeclareOperation("SingularPartitionMonoid", [IsPosInt]);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
 DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);

@@ -669,6 +669,20 @@ end);
 
 #
 
+InstallMethod(SingularPartitionMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, i;
+  
+  blocks:=[[1,2,-1,-2]];
+  for i in [3..n] do 
+    blocks[i-1]:=[i, -i];
+  od;
+  return SemigroupIdeal(PartitionMonoid(n), Bipartition(blocks));
+end);
+
+#
+
 InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
