@@ -264,8 +264,8 @@ gap> Size(DClass(h))=Size(RClass(h))^2/2;
 true
 
 #
-gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
-gap> s:=Semigroup(ReadGenerators(file, 600));
+gap> s:=Semigroup( [ Transformation( [ 3, 2, 1, 6, 5, 4 ] ), 
+> Transformation( [ 4, 7, 3, 1, 6, 5, 7 ] ) ] );
 <transformation semigroup on 7 pts with 2 generators>
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
 gap> inv:=InverseGeneralMapping(iso);;
@@ -975,9 +975,13 @@ gap> List(DClasses(S), SchutzenbergerGroup);
 [ Group(()), Group(()), Group(()), Group(()), Group([ (2,5) ]), Group(()) ]
 
 #
-gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
-gap> ReadGenerators(file, 1078);;
-gap> s:=InverseSemigroup(last);
+gap> s:=InverseSemigroup(
+> [ PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 7, 8, 9 ] ), 
+>  PartialPerm( [ 1, 3, 4, 7, 8, 9 ], [ 1, 3, 4, 7, 8, 9 ] ), 
+>  PartialPerm( [ 3, 7, 8, 9 ], [ 2, 7, 8, 9 ] ), 
+>  PartialPerm( [ 1, 7, 9 ], [ 1, 7, 9 ] ), 
+>  PartialPerm( [ 1, 7, 9 ], [ 8, 7, 9 ] ) ]);;
 <inverse partial perm monoid on 9 pts with 5 generators>
 gap> Size(s);
 12
