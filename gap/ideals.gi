@@ -123,10 +123,6 @@ end);
 
 #
 
-InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsActingSemigroup);
-
-#
-
 InstallMethod(Representative, "for a semigroup ideal", 
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(I)

@@ -136,8 +136,6 @@
     <#Include Label="IsPartialPermBipartitionSemigroup">
     <#Include Label="IsPermBipartitionGroup">
     <#Include Label="DegreeOfBipartitionSemigroup">
-    <#Include Label="IsomorphismBipartitionSemigroup">
-    <#Include Label="IsomorphismBlockBijectionSemigroup">
 
   </Section>
 </Chapter>
