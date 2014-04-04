@@ -435,7 +435,7 @@ gap> Size(S);
         \end{array}
       </Display> 
     </Alt>
-    Note that this semigroup has nearly <M>2^{(n^2)}</M> elements. 
+    This semigroup has nearly <M>2^{(n^2)}</M> elements. 
   </Description>
 </ManSection>
 <#/GAPDoc>
