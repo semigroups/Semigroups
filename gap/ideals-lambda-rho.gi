@@ -21,9 +21,7 @@ function(o, limit)
   return o;
 end);
 
-# JDM: this doesn't make any sense, the argument <lookfunc> should be applied to
-# the elements of <o> not the points in <data!.orbit>, which is what is
-# happening here...
+#
 
 InstallMethod(Enumerate, "for an ideal orb, a number, and a function", 
 [IsIdealOrb, IsCyclotomic, IsFunction], 
@@ -31,10 +29,15 @@ function(o, limit, lookfunc)
   local newlookfunc;
   
   newlookfunc := function(data, x)
-    return IsClosed(o) or Length(o) >= limit
-           or lookfunc(o, x);
+    return IsClosed(o) or Length(o) >= limit;
   end;
-  Enumerate(SemigroupData(o!.parent), infinity, newlookfunc);
+  if IsLambdaOrb(o) then 
+    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc:=newlookfunc, 
+     lambdalookfunc:=lookfunc));
+  elif IsRhoOrb(o) then 
+    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc:=newlookfunc, 
+     rholookfunc:=lookfunc));
+  fi;
 
   return o;
 end);
@@ -190,6 +193,7 @@ function(I)
   record.scc_reps:=[fail,];     record.scc_lookup:=[1];
   record.schreiergen:=[fail];   record.schreierpos:=[fail];
   record.orbitgraph:=[[]];      
+  record.looking:=false;
   record.gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
   record.orbschreierpos := []; 
   record.orbschreiergen := [];
@@ -222,6 +226,7 @@ function(I)
   record.scc_reps:=[fail,];     record.scc_lookup:=[1];
   record.schreiergen:=[fail];   record.schreierpos:=[fail];
   record.orbitgraph:=[[]];      
+  record.looking:=false;
   record.gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
@@ -321,8 +326,8 @@ end);
 #   - <pos>, <gen> are positive integers and <ind=fail>                         
 
 InstallGlobalFunction(UpdateIdealLambdaOrb, 
-function(o, pt, x, pos, gen, ind)
-  local I, record, len, new, ht, nrorb, cmp, i;
+function(o, pt, x, pos, gen, ind, lookfunc)
+  local I, record, len, new, ht, found, nrorb, cmp, i;
 
   I:=o!.parent; 
   record:=ShallowCopy(LambdaOrbOpts(I));
@@ -348,14 +353,26 @@ function(o, pt, x, pos, gen, ind)
   Enumerate(new);
   
   ht:=o!.ht;
-  for i in [1..Length(new)] do 
-    HTAdd(ht, new[i], i+len);
-  od;
+
+  if lookfunc=ReturnFalse then 
+    for i in [1..Length(new)] do 
+      HTAdd(ht, new[i], i+len);
+    od;
+  else
+    o!.looking:=true;
+    o!.found:=false;
+    found:=false;
+    for i in [1..Length(new)] do 
+      HTAdd(ht, new[i], i+len);
+      if not found and lookfunc(new, new[i]) then 
+        o!.found:=i;
+        found:=true;
+      fi;
+    od;
+  fi;
   
   o!.scc_reps[Length(o!.scc)+1]:=x;
   
-  # JDM probably don't store these things in <o> since they are already in <new>
-  # or remove them from the individual orbits...
   Append(o!.scc_lookup, OrbSCCLookup(new)+Length(o!.scc));
   Append(o!.scc, OrbSCC(new)+len);  
   Append(o!.schreiergen, new!.schreiergen);
@@ -364,6 +381,12 @@ function(o, pt, x, pos, gen, ind)
     Add(o!.schreierpos, new!.schreierpos[i]+len);
   od;
   Append(o!.orbitgraph, new!.orbitgraph+len);
+  
+  Unbind(new!.scc);          Unbind(new!.trees);        Unbind(new!.scc_lookup);
+  Unbind(new!.mults);        Unbind(new!.schutz);       Unbind(new!.reverse); 
+  Unbind(new!.rev);          Unbind(new!.truth);        Unbind(new!.schutzstab); 
+  Unbind(new!.exhaust);      Unbind(new!.factors);      Unbind(new!.orbitgraph);
+  Unbind(new!.schreiergen);  Unbind(new!.schreierpos);
 
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);
@@ -404,8 +427,8 @@ end);
 #   - <pos>, <gen> are positive integers and <ind=fail>                         
 
 InstallGlobalFunction(UpdateIdealRhoOrb, 
-function(o, pt, x, pos, gen, ind)
-  local I, record, len, new, ht, nrorb, cmp, i;
+function(o, pt, x, pos, gen, ind, lookfunc)
+  local I, record, len, new, ht, found, nrorb, cmp, i;
 
   I:=o!.parent; 
   record:=ShallowCopy(RhoOrbOpts(I));
@@ -430,14 +453,26 @@ function(o, pt, x, pos, gen, ind)
   Enumerate(new);
   
   ht:=o!.ht;
-  for i in [1..Length(new)] do 
-    HTAdd(ht, new[i], i+len);
-  od;
+  
+  if lookfunc=ReturnFalse then
+    for i in [1..Length(new)] do 
+      HTAdd(ht, new[i], i+len);
+    od;
+  else
+    o!.looking:=true;
+    o!.found:=false;
+    found:=false;
+    for i in [1..Length(new)] do 
+      HTAdd(ht, new[i], i+len);
+      if not found and lookfunc(new, new[i]) then 
+        o!.found:=i;
+        found:=true;
+      fi;
+    od;
+  fi;
   
   o!.scc_reps[Length(o!.scc)+1]:=x;
   
-  # JDM probably don't store these things in <o> since they are already in <new>
-  # or remove them from the individual orbits...
   Append(o!.scc_lookup, OrbSCCLookup(new)+Length(o!.scc));
   Append(o!.scc, OrbSCC(new)+len);  
   Append(o!.schreiergen, new!.schreiergen);
@@ -446,6 +481,12 @@ function(o, pt, x, pos, gen, ind)
     Add(o!.schreierpos, new!.schreierpos[i]+len);
   od;
   Append(o!.orbitgraph, new!.orbitgraph+len);
+
+  Unbind(new!.scc);          Unbind(new!.trees);        Unbind(new!.scc_lookup);
+  Unbind(new!.mults);        Unbind(new!.schutz);       Unbind(new!.reverse); 
+  Unbind(new!.rev);          Unbind(new!.truth);        Unbind(new!.schutzstab); 
+  Unbind(new!.exhaust);      Unbind(new!.factors);      Unbind(new!.orbitgraph);
+  Unbind(new!.schreiergen);  Unbind(new!.schreierpos);
 
   o!.orbits[Length(o!.orbits)+1]:=new;
   o!.lens[Length(o!.orbits)]:=Length(new);

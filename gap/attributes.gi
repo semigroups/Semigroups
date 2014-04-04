@@ -416,7 +416,7 @@ function(coll)
   return out;
 end);
 
-# JDM: I'm not sure this is a valid method... 
+#
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
 "for a simple or 0-simple acting semigroup", [IsActingSemigroup],
@@ -673,8 +673,6 @@ function(S)
 end);
 
 # same method for inverse/ideals
-# JDM: note that at present LookForInOrb will enumerate the semigroup data of
-# <s> to the end...
 
 InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
 function(S)
@@ -817,7 +815,7 @@ InstallMethod(SmallGeneratingSet, "for a semigroup",
 function(S)
   
   if HasGeneratorsOfSemigroupIdeal(S) then 
-    return SmallIdealGeneratingSet(S);
+    return MinimalIdealGeneratingSet(S);
   elif HasGeneratorsOfGroup(S) then 
     return SmallGeneratingSet(GeneratorsOfGroup(S));
   elif HasGeneratorsOfInverseMonoid(S) then 
@@ -845,15 +843,14 @@ function(s)
   String(NrRClasses(d)), ")");
 end);
 
-# same method for ideals JDM check this works, IsGroupAsSemigroup not yet
-# working
+# same method for ideals 
 
 InstallMethod(StructureDescription, 
 "for an acting group as semigroup",
 [IsActingSemigroup and IsGroupAsSemigroup],
 s-> StructureDescription(Range(IsomorphismPermGroup(s))));
 
-# JDM is this required anymore??
+# 
 
 InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
@@ -888,7 +885,6 @@ function(s)
    inv);
 end);
 
-# JDM: can you review this MP?, 
 # different method for ideals
 
 InstallMethod(IsomorphismTransformationSemigroup, 
@@ -905,8 +901,6 @@ function(S)
 end);
 
 # same method for ideals
-# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
-# for an ideal. 
 
 InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
@@ -964,8 +958,6 @@ function(S)
 end);
 
 # fall back method, same method for ideals
-# JDM not tested since there is so far no good method for GeneratorsOfSemigroup
-# for an ideal. 
 
 InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
 function(S)

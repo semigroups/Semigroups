@@ -193,7 +193,6 @@ function( arg )
   fi;
 end);
 
-
 #
 
 InstallMethod(SemigroupIdealByGenerators, "for an associative element collection",
@@ -258,6 +257,249 @@ function(S, gens, opts)
   fi;
 
   return I;
+end);
+
+#
+
+InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal], 
+function(S)
+  local gens, partial, pos, o, scc, out, classes, x, i;
+  
+  gens:=GeneratorsOfSemigroupIdeal(S); 
+  partial:=PartialOrderOfDClasses(S);
+  pos:=[]; 
+  o:=LambdaOrb(S); 
+  scc:=OrbSCCLookup(o);
+
+  for x in gens do 
+    #index of the D-class containing x 
+    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))]-1);
+  od;
+
+  out:=[];
+  classes:=GreensDClasses(S);
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
+# different method for inverse
+
+InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  local data, pos, partial, classes, out, i;
+
+  data:=SemigroupIdealData(I); 
+  pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
+                             # [1..n-1] in data!.dorbit
+   
+  partial:=data!.poset;
+  classes:=data!.dorbit;
+  out:=[];
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
+# 
+
+InstallMethod(MinimalIdealGeneratingSet, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  local max, out;
+
+  out := [];
+  if Length(GeneratorsOfSemigroupIdeal(I)) = 1 then
+    return GeneratorsOfSemigroupIdeal(I);
+  else
+    for max in MaximalDClasses(I) do
+      Add(out, Representative(max));
+    od;
+  fi;
+
+  return out;
+end);
+
+#JDM: is there a better method?
+
+InstallMethod(InversesOfSemigroupElementNC, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal, IsAssociativeElement],
+function(I, x)
+  return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
+end);
+
+#
+
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso:=IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso:=IsomorphismBipartitionSemigroup(SupersemigroupOfIdeal(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsomorphismPartialPermSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso:=IsomorphismPartialPermSemigroup(SupersemigroupOfIdeal(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsomorphismBlockBijectionSemigroup, 
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso:=IsomorphismBlockBijectionSemigroup(SupersemigroupOfIdeal(I));
+  inv:=InverseGeneralMapping(iso);
+  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+end);
+
+#
+
+InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
+[IsSemigroupIdeal],
+function(I)
+  local x, y;
+ 
+  if HasParent(I) and HasIsCommutativeSemigroup(Parent(I)) and
+   IsCommutativeSemigroup(Parent(I)) then 
+    return true;
+  fi;
+
+  for x in GeneratorsOfSemigroupIdeal(I) do
+    for y in GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)) do 
+      if not x*y=y*x then 
+        return false;
+      fi;
+    od;
+  od;
+
+  return true;
+end);
+
+#
+
+InstallMethod(IsTrivial, "for a semigroup ideal",
+[IsSemigroupIdeal],
+function(I)
+  local gens;
+  
+  if HasIsTrivial(Parent(I)) and IsTrivial(Parent(I)) then 
+    return true;
+  fi;
+
+  gens := GeneratorsOfSemigroupIdeal(I);
+  return MultiplicativeZero(I) = gens[1] and ForAll(gens, x -> gens[1] = x);
+end);
+
+#
+
+InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup ideal",
+[IsSemigroupIdeal and IsInverseSemigroup],
+function(I)
+
+  if I=SupersemigroupOfIdeal(I) then 
+    return IsFactorisableSemigroup(SupersemigroupOfIdeal(I));
+  fi;
+  return false;
+end);
+
+# this is here so that for regular ideals this method has higher rank than the
+# method for IsSemigroup.
+
+InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
+[IsSemigroupIdeal], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
+
+InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+function(I)
+  return Length(OrbSCC(LambdaOrb(I)))-1;
+end);
+
+# 
+
+InstallMethod(NrDClasses, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  Enumerate(SemigroupIdealData(I));
+  return Length(SemigroupIdealData(I)!.dorbit);
+end);
+
+#
+
+InstallMethod(GreensDClasses, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  Enumerate(SemigroupIdealData(I));
+  return SemigroupIdealData(I)!.dorbit;
+end);
+
+#
+
+InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal", 
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  local data;
+
+  data:=SemigroupIdealData(I);
+  Enumerate(data);
+  return data!.poset;
+end);
+
+#
+
+InstallMethod(DClassReps, "for an acting semigroup ideal", 
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  local data;
+
+  data:=SemigroupIdealData(I);
+  Enumerate(data);
+  return List(data!.dorbit, Representative);
 end);
 
 #EOF

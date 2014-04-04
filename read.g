@@ -28,10 +28,8 @@ ReadPackage("semigroups/gap/regular.gi");
 ReadPackage("semigroups/gap/inverse.gi");
 ReadPackage("semigroups/gap/enums.gi");
 ReadPackage("semigroups/gap/iterators.gi");
-ReadPackage("semigroups/gap/ideals-properties.gi");
 ReadPackage("semigroups/gap/properties.gi");
 ReadPackage("semigroups/gap/attributes.gi");
-ReadPackage("semigroups/gap/ideals-attributes.gi");
 ReadPackage("semigroups/gap/examples.gi");
 ReadPackage("semigroups/gap/orbits.gi");
 
@@ -55,9 +53,9 @@ ReadPackage("semigroups/gap/normalizer.gi");
 ReadPackage("semigroups/gap/quotients.gi");
 
 if TestPackageAvailability("grape")=fail then 
-  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
 elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
    then 
+  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
@@ -72,5 +70,5 @@ if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
 
-ReadPackage("semigroups/gap/rmscong.gi");
+ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univcong.gi");

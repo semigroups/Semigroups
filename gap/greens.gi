@@ -1579,8 +1579,11 @@ end);
 # different method for regular/inverse/ideals 
 
 InstallMethod(NrDClasses, "for an acting semigroup with generators",
-[IsActingSemigroup],
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> Length(OrbSCC(SemigroupData(s)))-1);
+
+InstallMethod(NrDClasses, "for a semigroup",
+[IsSemigroup], S-> Length(GreensDClasses(S)));
 
 # different method for regular/inverse/ideals
 
@@ -1619,6 +1622,9 @@ function(s)
   return Sum(List(GreensDClasses(s), NrHClasses));
 end);
 
+InstallMethod(NrHClasses, "for a semigroup",
+[IsSemigroup], S-> Length(GreensHClasses(S)));
+
 # different method for regular/inverse, same for ideals
 
 InstallMethod(NrHClasses, "for a D-class of an acting semigroup",
@@ -1647,6 +1653,9 @@ r-> NrLClasses(DClassOfRClass(r)));
 InstallMethod(NrLClasses, "for an acting semigroup",
 [IsActingSemigroup], s-> Sum(List(GreensDClasses(s), NrLClasses)));
 
+InstallMethod(NrLClasses, "for a semigroup",
+[IsSemigroup], S-> Length(GreensLClasses(S)));
+
 # different method for regular/inverse, same for ideals
 
 InstallMethod(NrLClasses, "for a D-class of an acting semigroup",       
@@ -1664,6 +1673,9 @@ function(s)
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   return Length(data!.orbit)-1;
 end);
+
+InstallMethod(NrRClasses, "for a semigroup",
+[IsSemigroup], S-> Length(GreensRClasses(S)));
 
 # different method for regular/inverse, same for ideals
 
@@ -1811,6 +1823,9 @@ function(s)
 
   return nr;
 end);
+
+InstallMethod(NrIdempotents, "for a semigroup",
+[IsSemigroup], S-> Length(Idempotents(S)));
 
 #PPP
 

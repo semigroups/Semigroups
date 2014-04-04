@@ -8,6 +8,12 @@
 #############################################################################
 ##
 
+if not IsBound(POW_KER_PERM) then 
+  POW_KER_PERM:=function(pt, x)
+    return FlatKernelOfTransformation(TransformationNC(pt)^x, Length(pt));
+  end;
+fi;
+
 #
 
 InstallMethod(Normalizer, "for a transformation semigroup and record", 

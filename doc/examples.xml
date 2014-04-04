@@ -84,7 +84,9 @@ gap> Size(S);
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the largest
       factorisable inverse subsemigroup of the dual symmetric inverse monoid of
-      degree <A>n</A>. 
+      degree <A>n</A>. <P/>
+
+      See <Ref Prop="IsUniformBlockBijection"/>.
       <Example><![CDATA[
 gap> S:=DualSymmetricInverseMonoid(4);
 <inverse bipartition monoid on 4 pts with 3 generators>

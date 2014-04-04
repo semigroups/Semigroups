@@ -595,9 +595,10 @@ function(n)
   return Monoid(gens, rec(regular:=true));
 end);
 
-# JDM rename and make global
+#
 
-HamMonoid:=function(n)
+InstallMethod(TriapsisMonoid, "for a positive integer", [IsPosInt],
+function(n)
   local gens, next, i, j;
   
   gens:=[];
@@ -616,7 +617,7 @@ HamMonoid:=function(n)
     gens[i]:=BipartitionByIntRep(next);
   od;
   return Semigroup(gens);
-end;
+end);
 
 #
 

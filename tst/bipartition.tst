@@ -2890,6 +2890,22 @@ gap> StructureDescriptionMaximalSubgroups(S);
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "1", "C2" ]
 
+# IsomorphismPermGroup for a block bijection group
+gap> S:=Semigroup( 
+>  Bipartition( [ [ 1, 2, -3 ], [ 3, -4 ], [ 4, -8 ], [ 5, -1, -2 ], 
+>      [ 6, -5 ], [ 7, -6 ], [ 8, -7 ] ] ), 
+>  Bipartition( [ [ 1, 2, -7 ], [ 3, -1, -2 ], [ 4, -8 ], [ 5, -4 ], 
+>     [ 6, -5 ], [ 7, -3 ], [ 8, -6 ] ] )  );;
+gap> iso:=IsomorphismPermGroup(S);
+MappingByFunction( <bipartition group on 8 pts with 2 generators>, Group([ (1,
+2,3,7,6,5,4), (1,6,2)
+(3,7,5,4) ]), function( x ) ... end, function( x ) ... end )
+gap> inv:=InverseGeneralMapping(iso);;
+gap> ForAll(S, x-> x^iso in Range(iso));
+true
+gap> ForAll(S, x-> (x^iso)^inv=x);
+true
+
 #
 gap> SemigroupsStopTest();
 

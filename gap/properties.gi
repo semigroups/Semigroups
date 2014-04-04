@@ -896,14 +896,14 @@ function(S)
     and IsCompletelyRegularSemigroup(S) then 
     Info(InfoSemigroups, 2, "the semigroup is completely regular");
     return true;
-  else #HasGreensDClasses(S) then 
+  elif HasGreensDClasses(S) then 
     return ForAll(GreensDClasses(S), IsRegularDClass);
   fi;
 
   tester:=IdempotentTester(S);
   rhofunc:=RhoFunc(S);
 
-  # look for s not being regular
+  # look for <S> not being regular
   lookfunc:=function(data, x)
     local rho, scc, i;
     if data!.repslens[x[2]][data!.orblookup1[x[6]]]>1 then
@@ -924,6 +924,58 @@ function(S)
       fi;
     od;
     return true;
+  end;
+
+  data:=SemigroupData(S);
+
+  for i in [2..Length(data)] do 
+    if lookfunc(data, data[i]) then 
+      return false;
+    fi;
+  od;
+
+  if IsClosedData(data) then 
+    return true;
+  fi;
+
+  data:=Enumerate(data, infinity, lookfunc);
+  return data!.found=false;
+end);
+
+#
+
+InstallMethod(IsRegularSemigroup, "for an acting star semigroup with generators", 
+[IsActingSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local lookfunc, data, i;
+
+  if IsSimpleSemigroup(S) then 
+    Info(InfoSemigroups, 2, "the semigroup is simple");
+    return true;
+  elif HasIsCompletelyRegularSemigroup(S) 
+    and IsCompletelyRegularSemigroup(S) then 
+    Info(InfoSemigroups, 2, "the semigroup is completely regular");
+    return true;
+  elif HasGreensDClasses(S) then 
+    return ForAll(GreensDClasses(S), IsRegularDClass);
+  fi;
+
+  # look for <S> not being regular
+  lookfunc:=function(data, x)
+    local l;
+    if data!.repslens[x[2]][data!.orblookup1[x[6]]]>1 then
+      return true;
+    fi;
+    
+    # data corresponds to the group of units...
+    if IsActingSemigroupWithFixedDegreeMultiplication(S) 
+     and ActionRank(S)(x[4])=ActionDegree(x[4]) then 
+      return false;
+    fi;
+    #check that the rho value of <x> is in the same scc as the lambda value of
+    #<x> 
+    l:=Position(x[3], RhoFunc(S)(x[4]));
+    return l=fail or OrbSCCLookup(x[3])[l]<>x[2];
   end;
 
   data:=SemigroupData(S);
@@ -978,18 +1030,56 @@ function(S, f)
   return false;
 end);
 
+InstallMethod(IsRegularSemigroupElement, 
+"for an acting star semigroup and associative element with star",
+[IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar], 
+function(S, x)                                  
+  local o, k, l;
+  
+  if not x in S then 
+    Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
+    return false;
+  fi;
+  
+  if HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
+    Info(InfoSemigroups, 2, "the semigroup is regular,");
+    return true;
+  fi;
+ 
+  if IsClosed(LambdaOrb(S)) then 
+    o:=LambdaOrb(S); 
+    k:=Position(o, LambdaFunc(S)(x));
+  else
+    o:=GradedLambdaOrb(S, x, true);
+    k:=o[2]; o:=o[1];
+  fi;
+        
+  l:=Position(o, RhoFunc(S)(x));
+  return l<>fail and OrbSCCLookup(o)[k]=OrbSCCLookup(o)[l];
+end);
+
 # same method for ideals
 
 InstallMethod(IsRegularSemigroupElementNC, 
 "for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement], 
-function(S, f)                                  
-  local o, scc, rho, tester, i;
- 
-  o:=GradedLambdaOrb(S, f, false)[1];
-        
-  scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(S)(f))]];
-  rho:=RhoFunc(S)(f);
+function(S, x)                                  
+  local o, l, scc, rho, tester, i;
+
+   if IsClosed(LambdaOrb(S)) then 
+    o:=LambdaOrb(S);
+    l:=Position(o, LambdaFunc(S)(x)); 
+    if l=fail then 
+      return false;
+    fi;
+  else
+    # this has to be false, since we're not sure if <x> in <S>
+    o:=GradedLambdaOrb(S, x, false)[1]; 
+    l:=1;
+  fi;
+
+  scc:=OrbSCC(o)[OrbSCCLookup(o)[l]];
+  rho:=RhoFunc(S)(x);
   tester:=IdempotentTester(S);
 
   for i in scc do 
@@ -998,6 +1088,27 @@ function(S, f)
     fi;
   od;
   return false;
+end);
+
+InstallMethod(IsRegularSemigroupElementNC, 
+"for an acting semigroup with star and associative element with star",
+[IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar], 
+function(S, x)                                  
+  local o, k, l;
+ 
+   if IsClosed(LambdaOrb(S)) then 
+    o:=LambdaOrb(S);
+    k:=Position(o, LambdaFunc(S)(x)); 
+    if k=fail then 
+      return false;
+    fi;
+  else
+    # this has to be false, since we're not sure if <x> in <S>
+    o:=GradedLambdaOrb(S, x, false)[1]; 
+    k:=1;
+  fi;
+  l:=Position(o, RhoFunc(S)(x));
+  return l<>fail and OrbSCCLookup(o)[k]=OrbSCCLookup(o)[l];
 end);
 
 # same method for ideals

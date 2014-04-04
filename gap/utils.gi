@@ -16,7 +16,76 @@ BindGlobal("SemigroupsDocXMLFiles",
    "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
    "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml", 
    "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml", 
-   "maximal.xml", "rmscong.xml", "../PackageInfo.g"]);
+   "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
+   "../PackageInfo.g"]);
+
+# arg is the number of threads, defaults to 2...
+
+BindGlobal("SemigroupsParallelTestAll",
+function(arg)
+  local n, dir_str, tst, dir, omit, files, filesplit, test, stringfile, farm,
+  out, str, filename, file;
+  
+  if Length(arg)<>0 then 
+    n:=arg[1];
+  else 
+    n:=2;
+  fi;
+  
+  Print("Reading all .tst files in the directory semigroups/tst/...\n\n"); 
+  dir_str:=Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+  tst:=DirectoryContents(dir_str);
+  dir:=Directory(dir_str);
+
+  omit:=SemigroupsOmitFromTestManualExamples;
+
+  if Length(omit)>0 then 
+    Print("not testing files containing the strings");
+    for str in omit do 
+      Print(", \"", str, "\"");
+    od;
+    Print(" . . .\n\n");
+  fi;
+  files:=[]; 
+  for filename in tst do
+    if filename="testinstall-4.7.5.tst" 
+     and not CompareVersionNumbers(GAPInfo.Version, "4.7.5") then 
+      break;
+    fi;
+
+    filesplit:=SplitString(filename, ".");
+    if Length(filesplit)>=2 and filesplit[Length(filesplit)]="tst" then
+      test:=true;
+      stringfile:=StringFile(Concatenation(dir_str, "/", filename));
+      for str in omit do 
+        if PositionSublist(stringfile, str)<>fail then 
+          Print("not testing ", filename, ", it contains a test involving ", 
+          str, ", which will not work . . .\n\n");
+          test:=false;
+          break;
+        fi;
+      od;
+      if test then 
+        Add(files, [Concatenation(dir_str, "/", filename)]);
+      fi;
+    fi;
+  od;  
+
+  farm:=ParWorkerFarmByFork(Test, rec(NumberJobs:=n));
+  
+  for file in files do 
+    Submit(farm, file);
+  od;
+
+  while Length(farm!.outqueue)<Length(files) do 
+    DoQueues(farm, false);
+  od;
+
+  out:=Pickup(farm);
+  Kill(farm);
+  return out;
+end);
+  
 
 # <path> to the folder containing the timings, <vers> the version number to
 # check against.
@@ -211,26 +280,47 @@ end);
 
 InstallGlobalFunction(SemigroupsTestAll, 
 function()
-  local dir_str, tst, dir, str, x;
+  local dir_str, tst, dir, omit, ex, filesplit, test, stringfile, str, filename;
   
-  Print(
-  "Reading all .tst files in the directory semigroups/tst/...\n\n"); 
+  Print("Reading all .tst files in the directory semigroups/tst/...\n\n"); 
   dir_str:=Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
   tst:=DirectoryContents(dir_str);
   dir:=Directory(dir_str);
-  for x in tst do
-    str:=SplitString(x, ".");
-    if Length(str)>=2 and str[2]="tst" then
-      #if not Semigroups_C and str[1] in ["inverse", "pperm", "semigroups", 
-      #   "testcompiled"]
-      #  then 
-      #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not
-      #  compiled)\n");
-      #else
-        Print("reading ", dir_str,"/", x, " ...\n");
-        Test(Filename(dir, x));
-      #fi;
-      Print("\n");
+
+  omit:=SemigroupsOmitFromTestManualExamples;
+
+  if Length(omit)>0 then 
+    Print("not testing files containing the strings");
+    for str in omit do 
+      Print(", \"", str, "\"");
+    od;
+    Print(" . . .\n\n");
+  fi;
+  
+  for filename in tst do
+    if filename="testinstall-4.7.5.tst" 
+     and not CompareVersionNumbers(GAPInfo.Version, "4.7.5") then 
+      Print("not testing ", filename, ", it requires GAP 4.7.5 or higher,\n\n");
+      break;
+    fi;
+
+    filesplit:=SplitString(filename, ".");
+    if Length(filesplit)>=2 and filesplit[Length(filesplit)]="tst" then
+      test:=true;
+      stringfile:=StringFile(Concatenation(dir_str, "/", filename));
+      for str in omit do 
+        if PositionSublist(stringfile, str)<>fail then 
+          Print("not testing ", filename, ", it contains a test involving ", 
+          str, ", which will not work . . .\n\n");
+          test:=false;
+          break;
+        fi;
+      od;
+      if test then 
+        Print("reading ", dir_str,"/", filename, " . . .\n");
+        Test(Filename(dir, filename));
+        Print("\n");
+      fi;
     fi;
   od;  
   return;
@@ -242,6 +332,10 @@ InstallGlobalFunction(SemigroupsTestInstall,
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
+  if CompareVersionNumbers(GAPInfo.Version,"4.7.5") then
+    Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
+     "testinstall-4.7.5.tst"));;
+  fi;
   return;
 end);
 

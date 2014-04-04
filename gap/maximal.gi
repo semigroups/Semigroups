@@ -463,7 +463,7 @@ else
     graph:=NewGroupGraph(AutomorphismGroup(graph), graph);
     rectangles:=CompleteSubgraphs(graph);
     
-    # Surely not the best way to let the automorphism gp act on the rectanlges
+    # Surely not the best way to let the automorphism gp act on the rectangles
     rectangles:=Set(Concatenation(
                  List(rectangles, x->Orbit(graph.autGroup, x, OnSets))));
     # A hack to get round problems caused by immutability...
@@ -603,7 +603,9 @@ function(S)
     if Size(classes[i])=1 then   # Remove the whole of any trivial D-class
       Add(out, V);   # V <> [] since S is non-trivial at this point
     else   # Adjoin maximal subsemigroups of principal factor to S\D
-      V:=GeneratorsOfSemigroup(V);
+      if not IsEmpty(V) then
+        V:=GeneratorsOfSemigroup(V);
+      fi;
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
       for U in MaximalSubsemigroups(R) do
@@ -858,49 +860,49 @@ end);
 
 #
 
-Subsemigroups:=function(R)
-  local max, o, U, V;
-  
-  max:=Set(MaximalSubsemigroups(R));
-  o:=ShallowCopy(max);
-  
-  for U in o do 
-    if Size(U)>1 then 
-      for V in MaximalSubsemigroups(U) do 
-        if not V in max then 
-          AddSet(max, V);
-          Add(o, V);
-        fi;
-      od;
-    fi;
-  od;
-
-  return Concatenation(max, [R]);
-end;
-
+#Subsemigroups:=function(R)
+#  local max, o, U, V;
+#  
+#  max:=Set(MaximalSubsemigroups(R));
+#  o:=ShallowCopy(max);
+#  
+#  for U in o do 
+#    if Size(U)>1 then 
+#      for V in MaximalSubsemigroups(U) do 
+#        if not V in max then 
+#          AddSet(max, V);
+#          Add(o, V);
+#        fi;
+#      od;
+#    fi;
+#  od;
 #
-
-NumberOfSubsemigroups:=function(R)
-  local max, o, U, V, count;
-  
-  max:=Set(MaximalSubsemigroups(R));
-  o:=ShallowCopy(max);
-  count:=Length(o)+1; # +1 for R itself
-  
-  while not IsEmpty(o) do
-    U:=o[1];
-    if Size(U)>1 then 
-      for V in MaximalSubsemigroups(U) do 
-        if not V in max then 
-          AddSet(max, V);
-          Add(o, V);
-          count:=count+1;
-          Print(count,"\n");
-        fi;
-      od;
-    fi;
-    Remove(o,1);
-  od;
-
-  return count;
-end;
+#  return Concatenation(max, [R]);
+#end;
+#
+##
+#
+#NumberOfSubsemigroups:=function(R)
+#  local max, o, U, V, count;
+#  
+#  max:=Set(MaximalSubsemigroups(R));
+#  o:=ShallowCopy(max);
+#  count:=Length(o)+1; # +1 for R itself
+#  
+#  while not IsEmpty(o) do
+#    U:=o[1];
+#    if Size(U)>1 then 
+#      for V in MaximalSubsemigroups(U) do 
+#        if not V in max then 
+#          AddSet(max, V);
+#          Add(o, V);
+#          count:=count+1;
+#          Print(count,"\n");
+#        fi;
+#      od;
+#    fi;
+#    Remove(o,1);
+#  od;
+#
+#  return count;
+#end;

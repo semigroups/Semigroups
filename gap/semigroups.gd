@@ -13,7 +13,10 @@ DeclareCategoryCollections("IsAssociativeElementWithStar");
 DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
 DeclareAttribute("Star", IsAssociativeElementWithStar);
 
-DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and                 IsAssociativeElementWithStarCollection);
+DeclareSynonym("IsStarSemigroup", IsSemigroup and
+IsAssociativeElementWithStarCollection);
+DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and
+IsAssociativeElementWithStarCollection);
 
 DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 

@@ -579,9 +579,10 @@ function(s, coll, record)
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
   
   #remove everything related to strongly connected components
-  Unbind(o!.scc);   Unbind(o!.trees);  Unbind(o!.scc_lookup);
-  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
-  Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp);
+  Unbind(o!.scc);     Unbind(o!.trees);    Unbind(o!.scc_lookup);
+  Unbind(o!.mults);   Unbind(o!.schutz);   Unbind(o!.reverse); 
+  Unbind(o!.rev);     Unbind(o!.truth);    Unbind(o!.schutzstab); 
+  Unbind(o!.exhaust); Unbind(o!.factors); 
 
   o!.parent:=t;
   o!.scc_reps:=[FakeOne(Generators(t))];

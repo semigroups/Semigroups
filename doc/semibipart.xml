@@ -147,12 +147,46 @@ MappingByFunction( <partial perm semigroup on 3 pts
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>block bijection semigroup</E> is simply a semigroup consisting of
-      block bijections. 
+      block bijections.<P/>
 
-      A <E>block bijection monoid</E> is a monoid consisting of block bijections. 
-      An object <A>obj</A> is a bipartition monoid in &GAP; if it satisfies 
-      <Ref Prop="IsMonoid" BookName="ref"/> and 
-      <Ref Filt="IsBlockBijectionSemigroup"/>.<P/>
+      A <E>block bijection monoid</E> is a monoid consisting of block
+      bijections.  An object in &GAP; is a block bijection monoid if it satisfies
+      <Ref Prop="IsMonoid" BookName="ref"/> and <Ref
+        Filt="IsBlockBijectionSemigroup"/>.<P/>
+      
+      See <Ref Filt="IsBlockBijection"/>.<P/>
+    </Description> 
+  </ManSection> 
+<#/GAPDoc>
+
+<#GAPDoc Label="IsPartialPermBipartitionSemigroup">
+  <ManSection>
+    <Prop Name="IsPartialPermBipartitionSemigroup" Arg="S"/>
+    <Prop Name="IsPartialPermBipartitionMonoid" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A <E>partial perm bipartition semigroup</E> is simply a semigroup
+      consisting of partial perm bipartitions.<P/>
+
+      A <E>partial perm bipartition monoid</E> is a monoid consisting of partial
+      perm bipartitions. An object in &GAP; is a partial perm bipartition monoid
+      if it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and 
+      <Ref Filt="IsPartialPermBipartitionSemigroup"/>.<P/>
+      
+      See <Ref Filt="IsPartialPermBipartition"/>.<P/>
+    </Description> 
+  </ManSection> 
+<#/GAPDoc>
+
+<#GAPDoc Label="IsPermBipartitionGroup">
+  <ManSection>
+    <Prop Name="IsPermBipartitionGroup" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A <E>perm bipartition group</E> is simply a semigroup consisting of perm
+      bipartitions.<P/>
+
+      See <Ref Filt="IsPermBipartitionGroup"/>.<P/>
     </Description> 
   </ManSection> 
 <#/GAPDoc>

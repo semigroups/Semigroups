@@ -199,24 +199,40 @@ gap> PrincipalFactor(d);
 
 <#GAPDoc Label="SmallGeneratingSet">
 <ManSection>
-  <Attr Name="SmallGeneratingSet" Arg="S"/>
+  <Attr Name="SmallGeneratingSet" Arg="coll"/>
+  <Attr Name="SmallSemigroupGeneratingSet" Arg="coll"/>
+  <Attr Name="SmallMonoidGeneratingSet" Arg="coll"/>
+  <Attr Name="SmallInverseSemigroupGeneratingSet" Arg="coll"/>
+  <Attr Name="SmallInverseMonoidGeneratingSet" Arg="coll"/>
   <Returns>A small generating set for a semigroup.</Returns>
-    <Description>
-      <C>SmallGeneratingSet</C> returns a relatively small generating subset
-      of the set of generators of the semigroup <A>S</A>; 
-      see <Ref Func="Generators"/>. If the number of
-      generators for <A>S</A> is already relatively small, then this function
-      will often return the original generating set.<P/> 
+  <Description>
+    The attributes <C>SmallXGeneratingSet</C> return a relatively small
+    generating subset of the collection of elements <A>coll</A>, which can also
+    be a semigroup. The returned value of <C>SmallXGeneratingSet</C>, where
+    applicable, has the property that
+    <Log>
+      X(SmallXGeneratingSet(<A>coll</A>)=X(<A>coll</A>);
+    </Log>
+    where <C>X</C> is any of 
+    <Ref Func="Semigroup" BookName="ref"/>,
+    <Ref Func="Monoid" BookName="ref"/>, 
+    <Ref Func="InverseSemigroup" BookName="ref"/>, or
+    <Ref Func="InverseMonoid" BookName="ref"/>.<P/>
 
-      As neither irredundancy, nor minimal length are proven,
-    <C>SmallGeneratingSet</C> usually returns an answer  much more quickly than
-    <Ref Oper="IrredundantGeneratingSubset"/>. It can be used whenever a
-    small generating set is desired which does not necessarily needs to be
-    minimal. <C>SmallGeneratingSet</C> works particularly well for inverse
-    semigroups of partial permutations.<P/>
+    If the number of generators for <A>S</A> is already relatively small, then
+    these functions will often return the original generating set. <P/>
+
+    These functions may return different results in different &GAP; sessions.<P/> 
     
-    Note that <C>SmallGeneratingSet</C> may return different
-    results in different &GAP; sessions.
+    <C>SmallGeneratingSet</C> returns the smallest of the returned values of
+    <C>SmallXGeneratingSet</C> which applicable to <A>coll</A>; see <Ref
+      Func="Generators"/>. 
+
+    As neither irredundancy, nor minimal length are proven, these functions
+    usually return an answer much more quickly than <Ref
+      Oper="IrredundantGeneratingSubset"/>. These functions can be used whenever
+    a small generating set is desired which does not necessarily needs to be
+    minimal.
 
       <Log><![CDATA[
 gap> S:=Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ), 
