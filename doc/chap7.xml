@@ -1,7 +1,7 @@
 <Chapter Label="Congruences on completely 0-simple semigroups">
-  <Heading>Congruences on completely 0-simple semigroups</Heading>
+  <Heading>Congruences of completely 0-simple semigroups</Heading>
 
-  This chapter describes the implementation of congruences on completely
+  This chapter describes the implementation of congruences of completely
   0-simple semigroups in the &Semigroups; package, and the functions associated
   with them.  This code and this part of the manual were written by Michael
   Torpey.  Most of the theorems used in this chapter are from Section 3.5 of

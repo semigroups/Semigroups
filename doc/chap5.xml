@@ -29,17 +29,16 @@
   <Ref Chap = "Partial permutations" BookName = "ref"/> and <Ref Sect = "Free
     Groups, Monoids and Semigroups" BookName = "ref" />.<P/> 
 
-  An element of a free inverse semigroup in &Semigroups; is be displayed, by
-  default, as a shortest word corresponding to the element. 
-  However, there might
-  be more than one word of the minimum length. For example, if <M>x</M>
+  An element of a free inverse semigroup in &Semigroups; is displayed, by
+  default, as a shortest word corresponding to the element.  However, there
+  might be more than one word of the minimum length. For example, if <M>x</M>
   and <M>y</M> are generators of a free inverse semigroups, then 
-  <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.</Display>
-  See <Ref Oper="MinimalWord" Label = "for free inverse semigroup element"/> 
-  Therefore we provide a another method for printing elements of a free
-  inverse semigroup: a unique canonical form.
-  Suppose an element of a free inverse semigroup is given as a Munn tree. Let 
-  <M>L</M> be the set of words corresponding to the shortest paths from
+  <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1};</Display>
+  see <Ref Oper="MinimalWord" Label = "for free inverse semigroup element"/>.
+  Therefore we provide a another method for printing elements of a free inverse
+  semigroup: a unique canonical form.  Suppose an element of a free inverse
+  semigroup is given as a Munn tree. Let <M>L</M> be the set of words
+  corresponding to the shortest paths from
   the start vertex to the leaves of the tree. Also let <M>w</M>
   be a word corresponding to the shortest path from start to terminal
   vertices. The word <M>vv^{-1}</M> is an idempotent for every <M>v</M> in
@@ -80,16 +79,17 @@
     </Item>
   </List>
 
-<Example>
-gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
+  <Example>
+gap> SetUserPreference("semigroups", 
+> "FreeInverseSemigroupElementDisplay", "minimal");
 gap> S:=FreeInverseSemigroup(2);
 &lt;free inverse semigroup on the generators [ x1, x2 ]>
 gap> S.1 * S.2;
 x1*x2
-gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "canonical");
+gap> SetUserPreference("semigroups", 
+> "FreeInverseSemigroupElementDisplay", "canonical");
 gap> S.1 * S.2;
-x1x2x2^-1x1^-1x1x2
-</Example>
+x1x2x2^-1x1^-1x1x2</Example>
 </Section>
 
   <Section>
