@@ -82,7 +82,8 @@ gap> MaximalSubsemigroups(R);
     <Cite Key="Graham1968aa"/>. 
 
   <Example><![CDATA[
-gap> R:=ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), [[ (), (1,2)], [(), (1,2)]]);
+gap> R:=ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), 
+> [[ (), (1,2)], [(), (1,2)]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>
 gap> G:=UnderlyingSemigroup(R);
 Group([ (1,2), (3,4) ])

@@ -53,14 +53,14 @@
   See <Ref Oper = "CanonicalForm" Label = "for a free inverse semigroup element"/>.
  
 <Section Label = "sect:Free inverse semigroups">
-  <Heading> Free inverse semigroups</Heading>
+  <Heading>Creating free inverse semigroups</Heading>
   <#Include Label = "FreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroupElement">
   </Section>
 
 <Section>
-  <Heading> Displaying free inverse semigroup elements </Heading>
+  <Heading>Displaying free inverse semigroup elements</Heading>
   There is a way to change how &GAP; displays free inverse semigroup
   elements using the user preference <C>FreeInverseSemigroupElementDisplay</C>.
   See <Ref Func = "UserPreference" BookName = "ref"/> for more information

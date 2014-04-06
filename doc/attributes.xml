@@ -462,13 +462,16 @@ gap> StructureDescription(GroupOfUnits(S));
       
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example><![CDATA[
-gap> S:=Semigroup( [ Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 2 ] ), 
+gap> S:=Semigroup( [ Transformation( [ 1, 1 ] ), 
+>  Transformation( [ 2, 1 ] ), 
+> Transformation( [ 1, 2, 2 ] ), 
 >  Transformation( [ 1, 2, 3, 4, 5, 1 ] ), 
 >  Transformation( [ 1, 2, 3, 4, 5, 5 ] ), 
->  Transformation( [ 1, 2, 3, 4, 6, 5 ] ), Transformation( [ 1, 2, 3, 5, 4 ] ),
+>  Transformation( [ 1, 2, 3, 4, 6, 5 ] ), 
+>  Transformation( [ 1, 2, 3, 5, 4 ] ),
 >  Transformation( [ 1, 2, 3, 7, 4, 5, 7 ] ), 
 >  Transformation( [ 1, 2, 4, 8, 8, 3, 8, 7 ] ), 
->  Transformation( [ 1, 2, 8, 4, 5, 6, 7, 8 ] ), Transformation( [ 2, 1 ] ), 
+>  Transformation( [ 1, 2, 8, 4, 5, 6, 7, 8 ] ), 
 >  Transformation( [ 7, 7, 7, 4, 5, 6, 1 ] ) ] );;
 gap> IdempotentGeneratedSubsemigroup(S);
 <transformation monoid on 8 pts with 18 generators>
