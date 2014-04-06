@@ -17,7 +17,7 @@ gap> SemigroupsStartTest();
 
 #
 gap> semis:=
->[ Semigroup( [ Transformation( [ 2, 2, 4, 4 ] ), 
+> [ Semigroup( [ Transformation( [ 2, 2, 4, 4 ] ), 
 >      Transformation( [ 5, 3, 4, 4, 6, 6 ] ) ] ), 
 >  Semigroup( [ Transformation( [ 5, 4, 4, 2, 1 ] ), 
 >      Transformation( [ 2, 5, 5, 4, 1 ] ) ] ), 

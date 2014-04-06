@@ -481,9 +481,6 @@ end);
 
 InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> InverseLeftBlocks);
-  #function(rho, f)
-  #  return Inverse(InverseRightBlocks(rho, Inverse(f)));
-  #end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two

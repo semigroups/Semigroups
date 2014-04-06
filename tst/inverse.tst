@@ -982,7 +982,6 @@ gap> s:=InverseSemigroup(
 >  PartialPerm( [ 3, 7, 8, 9 ], [ 2, 7, 8, 9 ] ), 
 >  PartialPerm( [ 1, 7, 9 ], [ 1, 7, 9 ] ), 
 >  PartialPerm( [ 1, 7, 9 ], [ 8, 7, 9 ] ) ]);;
-<inverse partial perm monoid on 9 pts with 5 generators>
 gap> Size(s);
 12
 gap> IsDTrivial(s);
