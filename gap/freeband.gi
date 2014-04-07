@@ -1,13 +1,10 @@
 ################################################################################
 ##
 #W  freeband.gi
-#Y  Copyright (C) 2013-14                                  
+#Y  Copyright (C) 2013-14                                         Julius Jonusas     
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
-################################################################################
-
-
 ################################################################################
 ##
 ##  FreeBand( <rank> [, names] )
@@ -84,15 +81,22 @@ end;
 #
 
 TupleToWord := function(tuple)
+  local word1, word2;
+
   if tuple = [] then
     return [];
   elif tuple![2] = 0 then
     return [tuple![1]];
   elif tuple![1] = tuple![3] then
     return Concatenation(TupleToWord(tuple![2]), [tuple![1]], TupleToWord(tuple![4]));
-  else 
-    return Concatenation(TupleToWord(tuple![2]), [tuple![1], tuple![3]],
-                         TupleToWord(tuple![4]) );
+  else
+    word1 := Concatenation(TupleToWord(tuple![2]), [tuple![1]]);
+    word2 := Concatenation([tuple![3]],TupleToWord(tuple![4]));
+    if word1 = word2 then
+      return word1; 
+    else
+    return Concatenation(word1, word2);
+    fi;
   fi;
 end;
 

@@ -5,15 +5,15 @@
   free inverse semigroups. This part of the manual and the functions described
   herein were written by Julius Jonu&#353;as.<P/>
 
-  A <E>free inverse semigroup</E> is an inverse semigroup having the following
-  universal property. An inverse semigroup <M>F</M> is a <E>free inverse
-    semigroup</E> on a non-empty set <M>X</M> if <M>F</M> is an inverse
+<Section Label = "sect:Free inverse semigroups">
+  <Heading> Free inverse semigroups </Heading>
+  <M>F</M> is a <E>free inverse
+  semigroup</E> on a non-empty set <M>X</M> if <M>F</M> is an inverse
   semigroup with a map <M>f</M> from <M>F</M> to <M>X</M> such that for every
   inverse semigroup
   <M>S</M> and a map <M>g</M> from <M>X</M> to <M>S</M> there exists a 
-  unique morphism <M>g'</M> from <M>F</M> to <M>S</M>
-  such that <M>fg' = g</M>. This object is unique up to isomorphism.
-  Moreover, by the universal property, every inverse
+  unique homomorphism <M>g'</M> from <M>F</M> to <M>S</M>
+  such that <M>fg' = g</M>. Moreover, by the universal property, every inverse
   semigroup can be expressed as a quotient of a free inverse
   semigroup.<P/>
 
@@ -52,8 +52,6 @@
   <Display>xxx^{-1}x^{-1}xyy^{-1}x^{-1}.</Display>
   See <Ref Oper = "CanonicalForm" Label = "for a free inverse semigroup element"/>.
  
-<Section Label = "sect:Free inverse semigroups">
-  <Heading> Free inverse semigroups</Heading>
   <#Include Label = "FreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroupElement">
@@ -115,5 +113,28 @@ x1x2x2^-1x1^-1x1x2
 
   <#Include Label = "CanonicalForm"> 
   <#Include Label = "MinimalWord">
+</Section>
+
+
+<Section Label = "sect:FreeBand">
+  <Heading> Free bands </Heading>
+  Similartly to free inverse semigroups, <M>B</M> is a <E>free band </E>
+  on a non-empty set <M>X</M> if <M>B</M> is a band with a map <M> f </M>
+  from <M> B </M> to <M>X</M> such that for everyi band
+  <M> S </M> and a map <M> g </M> from <M>X</M> to <M> B </M> there exists a 
+  unique homomorphism <M> g'</M> from <M>B</M> to <M>S</M>
+  such that <M>fg' = g</M>. The free object is unique up to isomorphism.
+  Moreover, by the universal property, every band can be expressed as a
+  quotient of a free band.<P/>
+
+  For an alternative description of a free band. Suppose that <M> X </M> is a
+  non-empty set and <M> X^+ </M> a free semigroup on <M> X </M>. Also suppose
+  that <M> b </M> is the smallest congurance on <M> X^+ </M> containing the set
+  <Display> \{ (w^2, w) : w \in X^+ \}. </Display> Then the free band on 
+  <M> X </M> is isomorphic to the quotient of <M> X^+ </M> by <M> b </M>.
+  See Section 4.5 of <Cite Key = "howie" /> for more information on free bands.
+  
+  <#Include Label = "FreeBand">
+  <#Include Label = "GreensDClassOfElement" > 
 </Section>
 </Chapter>

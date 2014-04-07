@@ -13,11 +13,20 @@
     Label="for a free band and a free band element"/>
     <Returns> A Green's D-class</Returns>
     <Description>
-      Let <A> s </A> be a free band. Then two elements of <A> s </A> are D 
+      Let <A> s </A> be a free band. Two elements of <A> s </A> are D 
       related if and only if they have the same content i.e. the set of
-      generators appearing in any factorization of an element. Therefore, a D class of a free band element <A> x </A> is the set of elements of
+      generators appearing in any factorization of an element. Therefore,
+      a D class of a free band element <A> x </A> is the set of elements of
       <A> s </A> which have the same content as <A> x </A>. 
 <Example>
+gap> s := FreeBand(3, "b");
+&lt;free band on the generators [ b1, b2, b3 ]>
+gap> x := s.1*s.2;
+b1b2
+gap> D := GreensDClassOfElement(s,x);
+{b1b2}
+gap> IsGreensDClass(D);
+true
 </Example>
     </Description>
   </ManSection>
@@ -54,7 +63,7 @@ gap> gens := Generators(s);
 [ a, b, c ]
 gap> a := gens[1];; b := gens[2];;
 gap> a*b;
-abab
+ab
 </Example>
     </Description>
   </ManSection>
