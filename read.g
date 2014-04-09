@@ -8,6 +8,46 @@
 #############################################################################
 ##
 
+# deal with GRAPE being available or not, compiled or not
+BindGlobal("IsGrapeAvailable", TestPackageAvailability("grape")<>fail);
+BindGlobal("IsGrapeCompiled",
+ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")<>fail);
+
+if not IsGrapeAvailable then 
+  Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
+  BindGlobal("GrapeIsNotAvailableString", 
+  Concatenation("the GRAPE package is not available and", 
+  " so this function does not work"));
+fi;
+
+if not IsGrapeCompiled then 
+  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
+  Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
+  Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
+  Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
+  Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
+  Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
+  BindGlobal("GrapeIsNotCompiledString", 
+  Concatenation("the nauty/dreadnaut binaries for the GRAPE package are", 
+  " not available\n#I  and so this function does not work")); 
+fi;
+
+#
+
+if TestPackageAvailability("genss")=fail then 
+  Add(SemigroupsOmitFromTestManualExamples, "Normalizer");
+fi;
+
+# skip examples including partitions if we're in version less than 2.0
+
+if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
+ then 
+  Add(SemigroupsOmitFromTestManualExamples, "partition");
+  Add(SemigroupsOmitFromTestManualExamples, "Partition");
+fi;
+
+#
+
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
@@ -52,23 +92,6 @@ ReadPackage("semigroups/gap/normalizer.gi");
 
 ReadPackage("semigroups/gap/quotients.gi");
 
-if TestPackageAvailability("grape")=fail then 
-elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
-   then 
-  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
-  Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
-  Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
-  Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
-  Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
-  Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
-  Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
-fi;
-
-if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
- then 
-  Add(SemigroupsOmitFromTestManualExamples, "partition");
-  Add(SemigroupsOmitFromTestManualExamples, "Partition");
-fi;
 
 ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univcong.gi");

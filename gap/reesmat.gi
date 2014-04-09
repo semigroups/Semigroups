@@ -95,11 +95,10 @@ end);
 
 #
 
-if not IsBound(GAPInfo.PackagesLoaded.grape) then 
+if not IsGrapeAvailable then 
   InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
   function(R)
-    Info(InfoWarning, 1, "the GRAPE package is not available, ",
-    "and so this function does not work");
+    Info(InfoWarning, 1, GrapeIsNotAvailableString);
     return fail;
   end);  
 
