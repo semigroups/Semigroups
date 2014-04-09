@@ -82,7 +82,8 @@ gap> S:=BrauerMonoid(8);
 <regular bipartition monoid on 8 pts with 3 generators>
 gap> StructureDescription(Normalizer(S));
 "S8"
-gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 5, 6, 3, 8 ] ), 
+gap> S:=InverseSemigroup( 
+> PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 5, 6, 3, 8 ] ), 
 > PartialPerm( [ 1, 2, 4, 7, 8 ], [ 3, 6, 2, 5, 7 ] ) );;
 gap> Normalizer(S, rec(random:=true, lambdastab:=false));
 #I  Have 33389 points.

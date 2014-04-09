@@ -258,7 +258,7 @@ true]]></Example>
         (St Andrews), Yanhui Wang (York). <P/>
 
         <B>Please note:</B> the &Grape; package version &GRAPEVERS;
-        or higher should be fully installed for this function to work.
+        or higher must be available and compiled for this function to work.
 
         <Example><![CDATA[
 gap> S:=InverseSemigroup(

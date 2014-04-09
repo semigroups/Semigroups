@@ -19,7 +19,10 @@
     A maximal subsemigroup of <A>S</A> is a proper subsemigroup of <A>S</A> 
     which is contained in no other proper subsemigroups of <A>S</A>.  <P/>
 
-    The methods for this function are based on <Cite Key="Graham1968aa"/>. 
+    The method for this function are based on <Cite Key="Graham1968aa"/>. <P/>
+
+    <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must be
+    available and compiled for this function to work.
 
   <Example><![CDATA[
 gap> S:=FullTransformationSemigroup(4);                              
@@ -68,18 +71,28 @@ gap> MaximalSubsemigroups(R);
 
 <#GAPDoc Label="MaximalSubsemigroups2">
 <ManSection>
-  <Oper Name="MaximalSubsemigroups" Arg="R, H" Label="for a Rees (0-)matrix semigroup, and a group"/>
-  <Returns>The maximal subsemigroups of <M>R = \mathcal{M}(I, G, J; P)</M>
-  isomorphic to <M>\mathcal{M}(I, H, J; P)</M>.</Returns>
+  <Oper Name="MaximalSubsemigroups" Arg="R, H" 
+    Label="for a Rees (0-)matrix semigroup, and a group"/>
+  <Returns>The maximal subsemigroups of a Rees (0)-matrix semigroup
+    corresponding to a maximal subgroup of the underlying group.</Returns>
   <Description>
-    Le <A>R</A> be a Rees matrix semigroup, or a regular Rees 0-matrix semigroup
-    over a group <A>G</A>, i.e. <M>R = \mathcal{M}(I, G, J; P)</M>. Then if 
-    <A>H</A> is a maximal subgroup of <A>G</A>, <C>MaximalSubsemigroups</C> 
-    returns a list of the maximal subsemigroups of <A>R</A> isomorphic to 
-    <M>\mathcal{M}(I, H, J; P)</M>. <P/>
+    Suppose that <A>R</A> is a regular Rees (0-)matrix semigroup of the form 
+    <Alt Not="Text"><M>\mathcal{M}[G; I, J; P]</M>.</Alt>
+    <Alt Only="Text"><B>M</B><M>[G; I, J; P]</M></Alt>
+    where <C>G</C> is a group and <C>P</C> is a <C>|J|</C> by <C>|I|</C> matrix
+    with entries in <C>G</C> union <C>0</C>. If <A>H</A> is a maximal subgroup
+    of <A>G</A>, then this function returns the maximal subsemigroups of
+    <A>R</A> which are isomorphic to 
+    <Alt Not="Text"><M>\mathcal{M}[H; I, J; P]</M>.</Alt>
+    <Alt Only="Text"><B>M</B><M>[H; I, J; P]</M>.</Alt>
+    <P/>
 
-    The methods for this function are based on Remark 1 of 
-    <Cite Key="Graham1968aa"/>. 
+    The method used in this function is based on Remark 1 of <Cite
+      Key="Graham1968aa"/>. <P/>
+
+   <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must be
+   available and compiled for this function to work, when the argument <A>R</A>
+   is a Rees 0-matrix semigroup. 
 
   <Example><![CDATA[
 gap> R:=ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), 

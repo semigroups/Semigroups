@@ -91,14 +91,15 @@
     package is used to read and write transformations, partial permutations, and
     bipartitions to a file. <P/>
 
-    The &Grape; package must be fully compiled for the following functions to work:
+    The &Grape; package must be loaded for the operation <Ref
+      Oper="SmallestMultiplicationTable"/> to work, and it must be 
+    fully compiled for the following functions to work:
     <List>
       <Item> <Ref Oper="MunnSemigroup"/> </Item>
       <Item> 
         <Ref Oper="MaximalSubsemigroups" Label="for an acting semigroup"/>
       </Item>
       <Item> <Ref Oper="IsIsomorphicSemigroup"/> </Item>
-      <Item> <Ref Oper="SmallestMultiplicationTable"/> </Item>
       <Item> <Ref Oper="IsomorphismSemigroups"/>. </Item>
     </List>
     If &Grape; is not available or is not compiled, then &Semigroups; can be
