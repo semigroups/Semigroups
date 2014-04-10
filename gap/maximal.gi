@@ -348,6 +348,7 @@ else
   
     if P[1]=0 then 
       Remove(P, 1);
+      pos:=0;
     else  # S\{0} is a maximal subsemigroup 
           # the unique case when the missing D-class is {0}
       new:=ShallowCopy(GeneratorsOfSemigroup(R));
@@ -356,6 +357,8 @@ else
         Remove(new, pos); #remove the zero, which has to be present
       fi;
       Add(out, Semigroup(new));
+      pos:=1;
+      Info(InfoSemigroups, 3, "found maximal subsemigroup by removing the 0...");
     fi;
     
     # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
@@ -374,7 +377,7 @@ else
        MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [i, j]));
     od;
     
-    Info(InfoSemigroups, 3, "...found ", Length(out));
+    Info(InfoSemigroups, 3, "...found ", Length(out)-pos);
 
     # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
     # for some j in J, and where the resultant matrix has no zero columns or
