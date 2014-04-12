@@ -26,8 +26,8 @@
       of those elements in <C>g</C> in <A>G</A> conjugating <A>S</A> to
       <A>S</A>, i.e.  <C><A>S</A>^g=<A>S</A></C>. <P/>
       
-      The analogous definition can be given for a partial perm or bipartition
-      semigroup.<P/>
+      Analogous definitions can be given for a partial perm and bipartition
+      semigroups.<P/>
 
       The optional final argument <A>opts</A> allows you to specify various
       options, which determine how the normalizer is calculated. The values of

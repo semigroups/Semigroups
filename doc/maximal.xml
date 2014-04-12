@@ -16,8 +16,9 @@
     If <A>S</A> is a semigroup, then <C>MaximalSubsemigroups</C> returns
     a list of the maximal subsemigroups of <A>S</A>. <P/>
     
-    A maximal subsemigroup of <A>S</A> is a proper subsemigroup of <A>S</A> 
-    which is contained in no other proper subsemigroups of <A>S</A>.  <P/>
+    A <E>maximal subsemigroup</E> of <A>S</A> is a proper subsemigroup of
+    <A>S</A> which is contained in no other proper subsemigroups of <A>S</A>.
+    <P/>
 
     The method for this function are based on <Cite Key="Graham1968aa"/>. <P/>
 
@@ -123,9 +124,8 @@ fail]]></Example>
     returns true if and only if <A>T</A> is a maximal subsemigroup of <A>S</A>.
     <P/>
     
-    <A>T</A> is a maximal subsemigroup of <A>S</A> if <A>T</A> is a proper 
-    subsemigroup of <A>S</A> and is contained in no other proper subsemigroups 
-    of <A>S</A>.
+    A proper subsemigroup <A>T</A> of a semigroup <A>S</A> is a <E>maximal</E>
+    if <A>T</A> is not contained in any other proper subsemigroups of <A>S</A>.
 
     <Example><![CDATA[
 gap> S:=FullTransformationSemigroup(4);                              

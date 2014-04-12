@@ -40,7 +40,7 @@ gap> MinimalIdealGeneratingSet(I);
     <Returns>The generators of an ideal of a semigroup.</Returns>
     <Description>
       This function returns the generators of the two-sided ideal <A>I</A>,
-      which were used to defined <A>I</A> at its point of creation. <P/>
+      which were used to defined <A>I</A> when it was created. <P/>
 
       If <A>I</A> is an ideal of a semigroup, then <A>I</A> is defined to be the
       least 2-sided ideal of a semigroup <C>S</C> containing a set <C>J</C> of
@@ -122,7 +122,7 @@ gap> I:=SemigroupIdeal(S, I, Idempotents(S));
 
       If <C>S</C> is a semigroup, <C>I</C> is a non-regular ideal of <C>S</C>,
       <C>J</C> is an ideal of <C>I</C>, then <C>SupersemigroupOfIdeal(J)</C> is
-      <C>I</C>, since we currently have to use a <C>GeneratorsOfSemigroup(I)</C>
+      <C>I</C>, since we currently have to use <C>GeneratorsOfSemigroup(I)</C>
       to compute anything about <C>I</C> other than its size and membership. 
       
       <Example><![CDATA[
