@@ -154,14 +154,13 @@
   </Section>
 
   <Section><Heading>Visualising the structure of a semigroup</Heading>
-    In this section, we describe a function for creating pictures of various  
-    structures related to a semigroup of transformations, partial
-    permutations, or bipartitions; or a subsemigroup of a Rees 0-matrix
-    semigroup.<P/>
+    In this section, we describe some functions for creating pictures of various
+    structures related to a semigroup of transformations, partial permutations,
+    or bipartitions; or a subsemigroup of a Rees 0-matrix semigroup.<P/>
     
-    The functions described in this seciton return a string, which can be
-    written to a file using the function 
-    <Ref Func="FileString" BookName="GAPDoc"/>.
+    Several of the functions described in this section return a string, which
+    can be written to a file using the function <Ref Func="FileString"
+      BookName="GAPDoc"/>.
 
     <#Include Label="Splash"/>
     <#Include Label="DotDClasses"/>
