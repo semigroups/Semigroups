@@ -64,6 +64,9 @@
     
     Julius Jonu&#353;as contributed the part of the package relating to free
     inverse semigroups, and contributed to the code for ideals.<P/>
+    
+    Yann Peresse and Yanhui Wang contributed to the function <Ref
+      Oper="MunnSemigroup"/>.<P/>
 
     Jhevon Smith and Ben Steinberg contributed the function 
     <Ref Attr="CharacterTableOfInverseSemigroup"/>.<P/>
