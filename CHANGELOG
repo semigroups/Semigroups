@@ -9,11 +9,12 @@
 
 
 1.4 -> 2.0
-						This is a major release including many new features, as well as bug
-						fixes. Some particularly notable improvements and additions are:
 						
-						• new methods for computing MaximalSubsemigroups of arbitrary
-            semigroups have been implemented;
+	    This is a major release including many new features and several bug
+	    fixes. 
+						
+	    • new methods for computing MaximalSubsemigroups of arbitrary
+              semigroups have been implemented;
             
             • ideals;
             
