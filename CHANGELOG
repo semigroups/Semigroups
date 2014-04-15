@@ -11,43 +11,9 @@
 1.4 -> 2.0
 						
 	    This is a major release including many new features and several bug
-	    fixes. The genss package is a suggested package in version 2.0,
-	    since it is required by the non-deterministic version of the
-	    function Normalizer. 
+	    fixes. 
 
-	    Resolved issues include, the issue numbers refer to the issues on
-	    the tracker at:
-
-	    http://bitbucket.org/james-d-mitchell/semigroups/issues
-	    
-	    • The main algorithm underlying many of the methods in Semigroups
-	    has been revised slightly to avoid computing the same information
-	    more than once. Some further internal rearranging and cleaning up
-	    was done. 
-
-	    • Issue 36: the function SmallGeneratingSet was ambiguous, in the
-	    sense that it was sometimes unclear how to recreate a semigroup from
-	    its small generating set. For example, SmallGeneratingSet of a
-	    monoid could return an empty list, but this empty list could not be
-	    used to recreate the monoid in GAP. This was resolved by introducing
-	    the functions SmallSemigroupGeneratingSet, SmallMonoidGeneratingSet,
-	    SmallInverseSemigroupGeneratingSet, SmallInverseMonoidGeneratingSet.
-	    These functions can also now be applied to collections of elements,
-	    i.e. not only to semigroups. 
-	    
-	    • MinimalIdeal and SingularTransformationSemigroup now returns an
-	    ideal rather than a semigroup defined by a generating set;
-
-	    • to reduce the size of the package archive, the examples directory
-	    has been removed. The content of the examples directory is available
-	    on the webpage: http://tinyurl.com/jdmitchell/data.php
-
-	    • several bugs in the setup for subsemigroups of Rees 0-matrix
-	    semigroups were resolved. These issues would have caused GAP to give
-	    an error in certain circumstances.
-
-
-	    ***New features include***
+	    ***New features***
 
 	    • extensive new features for computing with elements and
 	    subsemigroups of the partition monoid. It is now possible to compute
@@ -77,7 +43,7 @@
 	    • the new operation Normalizer for computing a subgroup of a
 	    permutation group consisting of those permutations that stabilise,
 	    under conjugation, a transformation, partial perm, or bipartition
-	    semigroup. The Grape package is required for this operation in some
+	    semigroup. The genss package is required for this operation in some
 	    cases;
 	    
 	    • the new operation CharacterTableOfInverseSemigroup for finding the
@@ -118,6 +84,41 @@
 
 	    • the operation NaturalLeqInverseSemigroup, which is an umbrella
 	    operation for NaturalLeqPartialPerm, and other such functions. 
+
+	    ***Resolved issues*** 
+	    
+	    Issue numbers refer to the issues on the tracker at:
+
+	    http://bitbucket.org/james-d-mitchell/semigroups/issues
+	    
+	    • The main algorithm underlying many of the methods in Semigroups
+	    has been revised slightly to avoid computing the same information
+	    more than once. Some further internal rearranging and cleaning up
+	    was done. 
+
+	    • Issue 36: the function SmallGeneratingSet was ambiguous, in the
+	    sense that it was sometimes unclear how to recreate a semigroup from
+	    its small generating set. For example, SmallGeneratingSet of a
+	    monoid could return an empty list, but this empty list could not be
+	    used to recreate the monoid in GAP. This was resolved by introducing
+	    the functions SmallSemigroupGeneratingSet, SmallMonoidGeneratingSet,
+	    SmallInverseSemigroupGeneratingSet, SmallInverseMonoidGeneratingSet.
+	    These functions can also now be applied to collections of elements,
+	    i.e. not only to semigroups. 
+	    
+	    • MinimalIdeal and SingularTransformationSemigroup now returns an
+	    ideal rather than a semigroup defined by a generating set;
+
+	    • to reduce the size of the package archive, the examples directory
+	    has been removed. The content of the examples directory is available
+	    on the webpage: http://tinyurl.com/jdmitchell/data.php
+
+	    • several bugs in the setup for subsemigroups of Rees 0-matrix
+	    semigroups were resolved. These issues would have caused GAP to give
+	    an error in certain circumstances.
+
+
+	    
 
 
 	    
