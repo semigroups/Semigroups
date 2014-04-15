@@ -82,7 +82,7 @@ true]]></Example>
       it does not.<P/>
       
       At present this only works for Rees matrix semigroups and Rees 0-matrix
-      semigroups. 
+      semigroups.<P/> 
       
       <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must
       be available and compiled for this function to work, when the argument
