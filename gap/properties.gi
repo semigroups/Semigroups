@@ -1546,7 +1546,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsEunitaryInverseSemigroup,
+InstallMethod(IsEUnitaryInverseSemigroup,
 "for an inverse semigroup which has NaturalLeqInverseSemigroup function",
 [IsInverseSemigroup],
 function(S)

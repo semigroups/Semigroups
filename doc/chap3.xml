@@ -137,7 +137,7 @@
     
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsBrandtSemigroup">
-    <#Include Label="IsEunitaryInverseSemigroup">
+    <#Include Label="IsEUnitaryInverseSemigroup">
     <#Include Label="IsFactorisableSemigroup">
     <#Include Label="IsJoinIrreducible">
     <#Include Label="IsMajorantlyClosed">
