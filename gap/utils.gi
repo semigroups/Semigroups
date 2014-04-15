@@ -332,10 +332,6 @@ InstallGlobalFunction(SemigroupsTestInstall,
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
-  if CompareVersionNumbers(GAPInfo.Version,"4.7.5") then
-    Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
-     "testinstall-4.7.5.tst"));;
-  fi;
   return;
 end);
 

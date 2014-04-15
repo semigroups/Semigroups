@@ -148,7 +148,7 @@ function(s)
   nrgens:=Length(Generators(s));
   
   Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfPartialPermSemigroup(s)));
+  Append(str, ViewString(RankOfPartialPermSemigroup(s)));
   Append(str, "\< pts with\> ");
   Append(str, ViewString(nrgens));
   Append(str, "\< generator");
