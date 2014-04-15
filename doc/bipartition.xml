@@ -29,8 +29,8 @@
       <C>S</C> is defined by <C>s</C><M>\leq</M><C>t</C> if there exists an
       idempotent <C>e</C> in <C>S</C> such that <C>s=et</C>. Hence if <A>x</A>
       and <A>y</A> are partial perm bipartitions, then
-      <A>x</A><M>\leq</M><A>y</A> if and only if <A>AsPartialPerm(x)</A>
-      is a restriction of  <A>AsPartialPerm(y)</A>.
+      <A>x</A><M>\leq</M><A>y</A> if and only if <C>AsPartialPerm(<A>x</A>)</C>
+      is a restriction of  <C>AsPartialPerm(<A>y</A>)</C>.
       <P/>
      
       <C>NaturalLeqPartialPermBipartition</C>
@@ -544,7 +544,7 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
 
       The value returned by <C>PermLeftQuoBipartition(<A>f</A>,<A>g</A>)</C> is
       the same as that returned by 
-      <C>PermRightBlocks(RightBlocks(<A>f</A>), Star(<A>f</A>)*g)</C>.
+      <C>PermRightBlocks(RightBlocks(<A>f</A>), Star(<A>f</A>)*<A>g</A>)</C>.
       See also <Ref Oper="PermRightBlocks"/> and 
        <Ref Oper="OnRightBlocksBipartitionByPerm"/>.
       <Example><![CDATA[

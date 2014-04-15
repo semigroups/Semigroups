@@ -160,7 +160,7 @@
     
     Several of the functions described in this section return a string, which
     can be written to a file using the function <Ref Func="FileString"
-      BookName="GAPDoc"/>.
+      BookName="GAPDoc"/> or viewed using <Ref Func="Splash"/>.
 
     <#Include Label="Splash"/>
     <#Include Label="DotDClasses"/>
