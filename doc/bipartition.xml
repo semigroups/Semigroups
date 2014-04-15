@@ -206,7 +206,7 @@ false]]></Example>
       a transformation, this function returns that transformation. A
       bipartition <A>f</A> defines a transformation if and only if its right
       blocks are the image list of a permutation of <C>[1..n]</C> where
-      <C>n</C> is the degere of <A>f</A>. <P/>
+      <C>n</C> is the degree of <A>f</A>. <P/>
       
       See <Ref Oper="IsTransBipartition"/>. 
       <Example><![CDATA[
@@ -344,7 +344,7 @@ gap> AsBlockBijection(f, 11);
       If <A>f</A> is a transformation and <A>n</A> is a positive integer
       such that <A>f</A> is a transformation of <C>[1..<A>n</A>]</C>, then
       <C>AsTransformation</C> returns the bipartition with classes
-      <M>(i)f^-1\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.<P/>
+      <M>(i)f^{-1}\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.<P/>
       
       If the positive integer <A>n</A> is not specified, then the
       internal degree of <A>f</A> is used as the value for <A>n</A>.
