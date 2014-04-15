@@ -29,6 +29,9 @@
       Analogous definitions can be given for a partial perm and bipartition
       semigroups.<P/>
 
+      The method used by this operation is based on Section 3 in 
+      <Cite Key="Araujo2010aa"/>.<P/>
+
       The optional final argument <A>opts</A> allows you to specify various
       options, which determine how the normalizer is calculated. The values of
       these options can dramatically change the time it takes for this operation
