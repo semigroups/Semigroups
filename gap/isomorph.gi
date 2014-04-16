@@ -10,13 +10,12 @@
 
 # returns the lex-least multiplication table of the semigroup <S>
 
-if not IsBound(GAPInfo.PackagesLoaded.grape) then 
+if not IsGrapeAvailable then 
   
   InstallMethod(SmallestMultiplicationTable, "for a semigroup",
   [IsSemigroup],
   function(S)
-    Info(InfoWarning, 1, "the GRAPE package is not available, ",
-    "and so this function does not work");
+    Info(InfoWarning, 1, GrapeIsNotAvailableString);
     return fail;
   end);  
 
@@ -25,7 +24,8 @@ else
   InstallMethod(SmallestMultiplicationTable, "for a semigroup",
   [IsSemigroup],
   function(S)
-    local LitNum, NumLit, diag2lits, tbl2lits, lits_to_tbl, onLiterals, n, mtS, diagS, phi, diaglitsS, minS, permS, tbllitsS, stabS;
+    local LitNum, NumLit, diag2lits, tbl2lits, lits_to_tbl, onLiterals, n, mtS,
+    diagS, phi, diaglitsS, minS, permS, tbllitsS, stabS;
      
     LitNum:=function(ln, n)
       return [QuoInt(ln-1,n^2)+1,QuoInt((ln-1) mod n^2,n)+1,(ln-1) mod n+1];
@@ -95,15 +95,12 @@ fi;
 
 #
 
-if (not IsBound(GAPInfo.PackagesLoaded.grape)) 
-  or (Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")=fail) then 
+if not (IsGrapeAvailable and IsGrapeCompiled) then 
   InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
   HasGeneratorsOfSemigroup],  
   function(S, T)
-    Info(InfoWarning, 1, "the GRAPE package is not loaded or the ",
-    "nauty/dreadnaut  binaries are not installed, and so this function ", 
-    "does not work");
+    Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end);  
 else 

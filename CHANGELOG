@@ -9,22 +9,118 @@
 
 
 1.4 -> 2.0
-						This is a major release including many new features, as well as bug
-						fixes. Some particularly notable improvements and additions are:
 						
-						• new methods for computing MaximalSubsemigroups of arbitrary
-            semigroups have been implemented;
-            
-            • ideals;
-            
-            • bipartitions;
-            
-            • free bands;
-            
-            • normalizer;
-            
-            • partial order of d-classes.
+	    This is a major release including many new features and several bug
+	    fixes. The genss package is a suggested package in version 2.0,
+	    since it is required by the non-deterministic version of the
+	    function Normalizer. 
 
+	    Resolved issues include, the issue numbers refer to the issues on
+	    the tracker at:
+
+	    http://bitbucket.org/james-d-mitchell/semigroups/issues
+	    
+	    • The main algorithm underlying many of the methods in Semigroups
+	    has been revised slightly to avoid computing the same information
+	    more than once. Some further internal rearranging and cleaning up
+	    was done. 
+
+	    • Issue 36: the function SmallGeneratingSet was ambiguous, in the
+	    sense that it was sometimes unclear how to recreate a semigroup from
+	    its small generating set. For example, SmallGeneratingSet of a
+	    monoid could return an empty list, but this empty list could not be
+	    used to recreate the monoid in GAP. This was resolved by introducing
+	    the functions SmallSemigroupGeneratingSet, SmallMonoidGeneratingSet,
+	    SmallInverseSemigroupGeneratingSet, SmallInverseMonoidGeneratingSet.
+	    These functions can also now be applied to collections of elements,
+	    i.e. not only to semigroups. 
+	    
+	    • MinimalIdeal and SingularTransformationSemigroup now returns an
+	    ideal rather than a semigroup defined by a generating set;
+
+	    • to reduce the size of the package archive, the examples directory
+	    has been removed. The content of the examples directory is available
+	    on the webpage: http://tinyurl.com/jdmitchell/data.php
+
+	    • several bugs in the setup for subsemigroups of Rees 0-matrix
+	    semigroups were resolved. These issues would have caused GAP to give
+	    an error in certain circumstances.
+
+
+	    ***New features include***
+
+	    • extensive new features for computing with elements and
+	    subsemigroups of the partition monoid. It is now possible to compute
+	    with semigroups, monoids, inverse semigroups, inverse monoids, and
+	    ideals consisting of elements of the partition monoid. Examples of
+	    subsemigroups of this type are the Brauer monoids, Temperley-Lieb
+	    monoids, and the dual symmetric inverse monoid. See Chapter 5 of the
+	    manual for more details;
+
+	    • support for ideals of transformation, partial permutation, and
+	    bipartition semigroups, and subsemigroups of Rees 0-matrix
+	    semigroups. It is now possible to compute anything about one of
+	    these ideals that could formerly only be computed about a semigroup
+	    defined by a generating set. Such ideals now use a data structure
+	    similar to that used by semigroups defined by a generating set;
+	    
+	    • the new operations IsomorphismSemigroups, IsIsomorphicSemigroup,
+	    and SmallestMultiplicationTable. Some of the methods for this
+	    operation require the Grape package to be fully installed; 
+	    
+	    • the new operation MaximalSubsemigroups, which returns the maximal
+	    subsemigroups of an arbitrary semigroup. Some of the methods for
+	    this operation require the Grape package to be fully installed;
+
+	    • the operation IsMaximalSubsemigroup;
+
+	    • the new operation Normalizer for computing a subgroup of a
+	    permutation group consisting of those permutations that stabilise,
+	    under conjugation, a transformation, partial perm, or bipartition
+	    semigroup. The Grape package is required for this operation in some
+	    cases;
+	    
+	    • the new operation CharacterTableOfInverseSemigroup for finding the
+	    character table of an inverse semigroup of partial permutations;
+
+	    • methods for defining and manipulating the congruences of a Rees
+	    0-matrix semigroup;
+
+	    • the properties IsCongruenceFreeSemigroup, IsEUnitaryInverseSemigroup;
+
+	    • the attributes ComponentRepsOfTransformationSemigroup,
+	    ComponentsOfTransformationSemigroup,
+	    CyclesOfTransformationSemigroup,
+	    ComponentRepsOfPartialPermSemigroup, 
+	    ComponentsOfPartialPermSemigroup,
+	    CyclesOfPartialPermSemigroup for finding components,
+	    representatives, and cycles of the action of a semigroup. 
+
+	    • the new function IteratorFromGeneratorsFile that returns an
+	    iterator which reads semigroup elements from a file created using
+	    WriteGenerators. This function is a convenient way of, for example,
+	    looping over a collection of  generators  in  a  file  without
+	    loading  every object in the file into memory.  This  might  be
+	    useful  if the file contains more information than there is
+	    available memory;
+
+	    • the operation EndomorphismsPartition that returns the monoid
+	    of endomorphisms preserving a partition. This monoid is defined
+	    using the minimum possible number of generators;
+
+	    • a version of the function Splash that attempts to convert a string 
+	    containing a dot or tikz document into a pdf and to open this pdf.
+	    Other file formats are also supported;
+
+	    • the function DotSemilatticeOfIdempotents that produces a string
+	    containing a dot document of the semilattice of idempotents of an
+	    inverse semigroup grouped by D-class;
+
+	    • the operation NaturalLeqInverseSemigroup, which is an umbrella
+	    operation for NaturalLeqPartialPerm, and other such functions. 
+
+
+	    
 1.3 -> 1.4  
             This is a minor release containing some bug fixes. Specifically:
             the functionality of ReadGenerators and WriteGenerators has been

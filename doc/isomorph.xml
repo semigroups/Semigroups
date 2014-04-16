@@ -11,7 +11,7 @@
 <#GAPDoc Label="SmallestMultiplicationTable">
   <ManSection>
     <Attr Name="SmallestMultiplicationTable" Arg="S"/>
-    <Returns>The lex-least multiplication table of semigroup.</Returns>
+    <Returns>The lex-least multiplication table of a semigroup.</Returns>
     <Description>
       This function returns the lex-least multiplication table of a semigroup
       isomorphic to the semigroup <A>S</A>. <C>SmallestMultiplicationTable</C>
@@ -23,7 +23,10 @@
       at most approximately 50 elements.<P/> 
       
       <C>SmallestMultiplicationTable</C> is based on the function 
-      <Ref Attr="IdSmallSemigroup" BookName="Smallsemi"/> by Andreas Distler. 
+      <Ref Attr="IdSmallSemigroup" BookName="Smallsemi"/> by Andreas Distler.<P/>
+
+      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must be
+      loaded for this function to work. 
 
       <Example><![CDATA[
 gap> S:=Semigroup(
@@ -48,10 +51,14 @@ gap> SmallestMultiplicationTable(S);
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This operation attempts to determine if the semigroups <A>S</A> and
-      <A>T</A> are isomorphic. <P/>
+      <A>T</A> are isomorphic, it returns <K>true</K> if they are and
+      <K>false</K> if they are not. <P/>
       
-      At present this only works for rather small
-      semigroups, with approximately 50 elements or less. 
+      At present this only works for rather small semigroups, with approximately
+      50 elements or less. <P/>
+
+      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must
+      be available and compiled installed for this function to work.
 
       <Example><![CDATA[
 gap> S:=Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 3, 5, 1 ] ), 
@@ -75,7 +82,11 @@ true]]></Example>
       it does not.<P/>
       
       At present this only works for Rees matrix semigroups and Rees 0-matrix
-      semigroups. 
+      semigroups.<P/> 
+      
+      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must
+      be available and compiled for this function to work, when the argument
+      <A>R</A> is a Rees 0-matrix semigroup.  
 
       <Example><![CDATA[
 gap> S:=PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);

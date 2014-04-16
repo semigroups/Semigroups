@@ -118,8 +118,8 @@ gap> StructureDescriptionSchutzenbergerGroups(S);
       <C>MinimalDClass</C> returns the minimal &D;-class with respect to the
       partial order of &D;-classes.<P/>
 
-      Note that <C>MinimalDClass</C> is significantly faster than finding the
-      &D;-class with minimum rank representative. <P/>
+      It is significantly easier to find the minimal &D;-class of a semigroup,
+      than to find its &D;-classes. <P/>
 
       See also <Ref Attr="PartialOrderOfDClasses"/>,
       <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
@@ -211,7 +211,7 @@ gap> PrincipalFactor(d);
     be a semigroup. The returned value of <C>SmallXGeneratingSet</C>, where
     applicable, has the property that
     <Log>
-      X(SmallXGeneratingSet(<A>coll</A>)=X(<A>coll</A>);
+      X(SmallXGeneratingSet(coll))=X(coll);
     </Log>
     where <C>X</C> is any of 
     <Ref Func="Semigroup" BookName="ref"/>,
@@ -220,13 +220,12 @@ gap> PrincipalFactor(d);
     <Ref Func="InverseMonoid" BookName="ref"/>.<P/>
 
     If the number of generators for <A>S</A> is already relatively small, then
-    these functions will often return the original generating set. <P/>
-
-    These functions may return different results in different &GAP; sessions.<P/> 
+    these functions will often return the original generating set.  These
+    functions may return different results in different &GAP; sessions.<P/> 
     
     <C>SmallGeneratingSet</C> returns the smallest of the returned values of
-    <C>SmallXGeneratingSet</C> which applicable to <A>coll</A>; see <Ref
-      Func="Generators"/>. 
+    <C>SmallXGeneratingSet</C> which is applicable to <A>coll</A>; see <Ref
+      Func="Generators"/>.<P/>
 
     As neither irredundancy, nor minimal length are proven, these functions
     usually return an answer much more quickly than <Ref
@@ -319,13 +318,8 @@ gap> MultiplicativeZero(S);
     The minimal ideal of a semigroup is the least ideal with respect to
     containment. <P/> 
 
-    Currently, <C>MinimalIdeal</C> returns a semigroup with as
-    many generators as elements. There are plans to improve this in future
-    versions of &Semigroups;. <P/>
-
-    Note that <C>MinimalIdeal</C> is significantly faster than finding the
-    &D;-class with minimum rank representative (which is also
-    the minimal ideal). 
+    It is significantly easier to find the minimal &D;-class of a semigroup,
+    than to find its &D;-classes. <P/>
 
     See also <Ref Attr="PartialOrderOfDClasses"/>,
     <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
@@ -462,8 +456,17 @@ gap> StructureDescription(GroupOfUnits(S));
       
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example><![CDATA[
-gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
-gap> S:=Semigroup(ReadGenerators(file, 13));;
+gap> S:=Semigroup( [ Transformation( [ 1, 1 ] ), 
+>  Transformation( [ 2, 1 ] ), 
+> Transformation( [ 1, 2, 2 ] ), 
+>  Transformation( [ 1, 2, 3, 4, 5, 1 ] ), 
+>  Transformation( [ 1, 2, 3, 4, 5, 5 ] ), 
+>  Transformation( [ 1, 2, 3, 4, 6, 5 ] ), 
+>  Transformation( [ 1, 2, 3, 5, 4 ] ),
+>  Transformation( [ 1, 2, 3, 7, 4, 5, 7 ] ), 
+>  Transformation( [ 1, 2, 4, 8, 8, 3, 8, 7 ] ), 
+>  Transformation( [ 1, 2, 8, 4, 5, 6, 7, 8 ] ), 
+>  Transformation( [ 7, 7, 7, 4, 5, 6, 1 ] ) ] );;
 gap> IdempotentGeneratedSubsemigroup(S);
 <transformation monoid on 8 pts with 18 generators>
 gap> S:=SymmetricInverseSemigroup(5);
@@ -486,7 +489,7 @@ true]]></Example>
   <Attr Name="IsomorphismReesMatrixSemigroup" Arg="D"/>
   <Returns>A injective mapping.</Returns>
   <Description> 
-    If the &D;-class <A>D</A> is a subsemigroup of <C>S</C>, then the
+    If the &D;-class <A>D</A> is a subsemigroup of a semigroup <C>S</C>, then the
     <E>principal factor</E> of <A>D</A> is just <A>D</A> itself.  If <A>D</A>
     is not a subsemigroup of <C>S</C>, then the principal factor of <A>D</A> is
     the semigroup with elements <A>D</A> and a new element <C>0</C> with

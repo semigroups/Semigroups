@@ -32,7 +32,8 @@
       returned. 
       <Example><![CDATA[
 gap> S:=Semigroup( 
->  PartialPerm( [ 1, 2, 3 ], [ 1, 5, 2 ] ), PartialPerm( [ 1, 3 ], [ 2, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3 ], [ 1, 5, 2 ] ), 
+>  PartialPerm( [ 1, 3 ], [ 2, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3 ], [ 4, 1, 5 ] ), 
 >  PartialPerm( [ 1, 3, 5 ], [ 1, 3, 4 ] ), 
 >  PartialPerm( [ 1, 2, 4, 5 ], [ 1, 2, 3, 5 ] ), 
@@ -111,9 +112,9 @@ gap> StructureDescription(H);
     <Returns>A random element.</Returns>
     <Description>
       This function returns a random element of the semigroup <A>S</A>.  If
-      the &R;-class structure of <A>S</A> has not been calculated, then a short
+      the data structure for <A>S</A> has not been calculated, then a short
       product (at most <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>) of
-      generators is returned.  If the &R;-class structure of <A>S</A> is known,
+      generators is returned.  If the data  structure for <A>S</A> is known,
       then a random element of a randomly chosen &R;-class is returned.  
     </Description> 
   </ManSection>
@@ -148,10 +149,10 @@ gap> IsGreensLessThanOrEqual(A,B);
 true
 gap> IsGreensLessThanOrEqual(B,A);
 false
-gap> s:=SymmetricInverseSemigroup(4);;
-gap> A:=GreensJClassOfElement(s, PartialPerm([ 1 .. 3 ], [ 1, 3, 4 ]) );
+gap> S:=SymmetricInverseSemigroup(4);;
+gap> A:=GreensJClassOfElement(S, PartialPerm([ 1 .. 3 ], [ 1, 3, 4 ]) );
 {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
-gap> B:=GreensJClassOfElement(s, PartialPerm([ 1, 2 ], [ 3, 1 ]) );
+gap> B:=GreensJClassOfElement(S, PartialPerm([ 1, 2 ], [ 3, 1 ]) );
 {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}
 gap> A<B;
 false
@@ -302,14 +303,14 @@ gap> R:=GreensRClasses(D)[1];
 gap> GreensHClasses(R);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, 
   {Transformation( [ 1, 2, 2, 2 ] )} ]
-gap> s:=InverseSemigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] ),
+gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] ),
 > PartialPerm( [ 1, 3, 4 ], [ 3, 4, 1 ] ) );;
-gap> GreensDClasses(s);
+gap> GreensDClasses(S);
 [ {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
   {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
   {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 4 ], [ 4 ] )}, 
   {PartialPerm( [  ], [  ] )} ]
-gap> GreensLClasses(s);
+gap> GreensLClasses(S);
 [ {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
   {PartialPerm( [ 1, 2, 4 ], [ 3, 1, 2 ] )}, 
   {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
@@ -321,7 +322,7 @@ gap> GreensLClasses(s);
   {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, {PartialPerm( [ 4 ], [ 4 ] )}, 
   {PartialPerm( [ 4 ], [ 1 ] )}, {PartialPerm( [ 4 ], [ 3 ] )}, 
   {PartialPerm( [ 4 ], [ 2 ] )}, {PartialPerm( [  ], [  ] )} ]
-gap> D:=GreensDClasses(s)[3];
+gap> D:=GreensDClasses(S)[3];
 {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}
 gap> GreensLClasses(D);
 [ {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, 
@@ -574,10 +575,10 @@ gap> IsRegularDClass(D);
 false
 gap> GroupHClass(D);
 fail
-gap> s:=InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 5 ], [ 2, 1, 6, 3 ] ),
+gap> S:=InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 5 ], [ 2, 1, 6, 3 ] ),
 > PartialPerm( [ 1, 2, 3, 6 ], [ 3, 5, 2, 6 ] ) ]);;
 gap> f:=PartialPerm([ 1 .. 3 ], [ 6, 3, 1 ]);;
-gap> First(DClasses(s), x-> not IsTrivial(GroupHClass(x)));
+gap> First(DClasses(S), x-> not IsTrivial(GroupHClass(x)));
 {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}
 gap> StructureDescription(GroupHClass(last));
 "C2"]]></Example>
@@ -644,12 +645,13 @@ gap> H:=GroupHClass(D);
 {Transformation( [ 1, 1, 3, 3 ] )}
 gap> Idempotents(H);
 [ Transformation( [ 1, 1, 3, 3 ] ) ]
-gap> s:=InverseSemigroup(
+gap> S:=InverseSemigroup(
 > [ PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 10, 6, 3, 4, 9, 1 ] ),
-> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 6, 10, 7, 4, 8, 2, 9, 1 ] ) ]);;
-gap> Idempotents(s, 1);
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8 ], 
+> [ 6, 10, 7, 4, 8, 2, 9, 1 ] ) ]);;
+gap> Idempotents(S, 1);
 [ <identity partial perm on [ 4 ]> ]
-gap> Idempotents(s, 0);
+gap> Idempotents(S, 0);
 [  ]]]></Example> 
   </Description>
   </ManSection>
@@ -746,12 +748,12 @@ gap> NextIterator(iter);
 Transformation( [ 5, 5, 4, 5, 1 ] )
 gap> iter;
 <iterator of R-class reps>
-gap> file:=Concatenation(SemigroupsDir(), "/examples/inverse.semigroups.gz");;
-gap> s:=InverseSemigroup(ReadGenerators(file, 8));
+gap> file:=Concatenation(SemigroupsDir(), "/tst/test.gz");;
+gap> S:=InverseSemigroup(ReadGenerators(file, 1377));
 <inverse partial perm semigroup on 983 pts with 2 generators>
-gap> NrMovedPoints(s);
+gap> NrMovedPoints(S);
 983
-gap> iter:=IteratorOfLClassReps(s);
+gap> iter:=IteratorOfLClassReps(S);
 <iterator of L-class reps>
 gap> NextIterator(iter);
 <partial perm on 634 pts with degree 1000, codegree 1000>]]></Example>
@@ -904,16 +906,16 @@ gap> D:=DClass(S, f);
 {Transformation( [ 2, 4, 2, 2, 2, 1 ] )}
 gap> NrRClasses(D);
 87
-gap> s:=SymmetricInverseSemigroup(10);;
-gap> NrDClasses(s); NrRClasses(s); NrHClasses(s); NrLClasses(s);
+gap> S:=SymmetricInverseSemigroup(10);;
+gap> NrDClasses(S); NrRClasses(S); NrHClasses(S); NrLClasses(S);
 11
 1024
 184756
 1024
-gap> s:=POPI(10);;
-gap> NrDClasses(s);
+gap> S:=POPI(10);;
+gap> NrDClasses(S);
 11
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1024]]></Example>
   </Description>
   </ManSection>
@@ -961,13 +963,14 @@ gap> NrIdempotents(L);
 gap> H:=GroupHClass(D);;
 gap> NrIdempotents(H);
 1
-gap> s:=InverseSemigroup(
+gap> S:=InverseSemigroup(
 > [ PartialPerm( [ 1, 2, 3, 5, 7, 9, 10 ], [ 6, 7, 2, 9, 1, 5, 3 ] ),
-> PartialPerm( [ 1, 2, 3, 5, 6, 7, 9, 10 ], [ 8, 1, 9, 4, 10, 5, 6, 7 ] ) ]);;
-gap> NrIdempotents(s);
+> PartialPerm( [ 1, 2, 3, 5, 6, 7, 9, 10 ], 
+> [ 8, 1, 9, 4, 10, 5, 6, 7 ] ) ]);;
+gap> NrIdempotents(S);
 236
 gap> f:=PartialPerm([ 2, 3, 7, 9, 10 ], [ 7, 2, 1, 5, 3 ]);;
-gap> d:=DClassNC(s, f);;
+gap> d:=DClassNC(S, f);;
 gap> NrIdempotents(d);
 13]]></Example>
   </Description>

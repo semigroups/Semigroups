@@ -1,44 +1,58 @@
-<Chapter Label="Congruences on completely 0-simple semigroups">
-  <Heading>Congruences on completely 0-simple semigroups</Heading>
+<Chapter Label="chapter-congruence">
+  <Heading>Congruences</Heading>
+  
+  In this chapter we describe the various ways to define a congruence on a
+  semigroup.<P/>
 
-  This chapter describes the implementation of congruences on completely
-  0-simple semigroups in the &Semigroups; package, and the functions associated
-  with them.  This code and this part of the manual were written by Michael
-  Torpey.  Most of the theorems used in this chapter are from Section 3.5 of
-  <Cite Key = "howie"/>.<P/>
+  Support for congruences in &Semigroups; is currently rather limited but
+  there are plans to improve this in the future. <P/>
 
-  By the Rees Theorem, any 0-simple semigroup <M>S</M> is isomorphic to a
-  <E>Rees 0-matrix semigroup</E> (see <Ref Chap = "Rees Matrix Semigroups"
-  BookName = "ref" />) over a group, with a regular sandwich matrix.
-  <Alt Not="Text">
-    That is, <Display>S \cong \mathcal{M}^0[G; I,\Lambda; P], </Display> where
-    <M>G</M> is a group, <M>\Lambda</M> and <M>I</M> are non-empty sets, and
-    <M>P</M> is regular in the sense that none of its rows or columns contains
-    only zeroes.
-  </Alt>
-  <Alt Only="Text">
-    That is, S is isomorphic to M^0[G; I,L; P] where G is a group, L and I are
-    non-empty sets and the matrix P is regular in the sense that no two of its
-    rows or columns contain only zeroes.
-  </Alt><P/>
+  <Section><Heading>Congruence classes</Heading>
+
+    <#Include Label="CongruenceClassOfElement">
+    <#Include Label="CongruenceClasses">
+    <#Include Label="NrCongruenceClasses">
+    <#Include Label="CongruencesOfSemigroup">
+
+  </Section>
 
   <Section>
-    <Heading>Congruences by Linked Triple</Heading>
-    A <E>linked triple</E> of such a semigroup is a triple of the form <Alt
-    Not="Text"><M>(N,\mathcal{S},\mathcal{T})</M></Alt> <Alt
-    Only="Text">(N,S,T)</Alt> where<P/>
+    <Heading>Congruence on Rees matrix semigroups</Heading>
+
+    This section describes the implementation of congruences of 0-simple
+    semigroups in the &Semigroups; package, and the functions associated with
+    them.  This code and this part of the manual were written by Michael Torpey.
+    Most of the theorems used in this chapter are from Section 3.5 of 
+    <Cite Key="howie"/>.<P/>
+
+    By the Rees Theorem, any 0-simple semigroup <M>S</M> is isomorphic to a
+    <E>Rees 0-matrix semigroup</E> (see <Ref Chap = "Rees Matrix Semigroups"
+    BookName = "ref" />) over a group, with a regular sandwich matrix.
+    <Alt Not="Text">
+      That is, <Display>S \cong \mathcal{M}^0[G; I,\Lambda; P], </Display> where
+      <M>G</M> is a group, <M>\Lambda</M> and <M>I</M> are non-empty sets, and
+      <M>P</M> is regular in the sense that it has no rows or columns consisting
+      soley of zeroes.
+    </Alt>
+    <Alt Only="Text">
+      That is, <C>S</C> is isomorphic to <C>M^0[G;I,L;P]</C> where <C>G</C> is a
+      group, <C>L</C> and <C>I</C> are non-empty sets and the matrix <C>P</C> is
+      regular in the sense that it has no rows or columns consisting soley of
+      zeroes.
+    </Alt><P/>
+
+    The congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with 
+    the <E>linked triple</E>, which is a triple of the form <C>[N,S,T]</C> where:
     
     <List>
       <Item>
-	<M>N</M> is a normal subgroup of the underlying group <M>G</M>,
+	<C>N</C> is a normal subgroup of the underlying group <C>G</C>,
       </Item>
       <Item>
-	<Alt Not="Text"><M>\mathcal{S}</M></Alt><Alt Only="Text">S</Alt> is an
-	equivalence relation on the columns of <M>P</M>, and
+        <C>S</C> is an equivalence relation on the columns of <C>P</C>,
       </Item>
       <Item>
-	<Alt Not="Text"><M>\mathcal{T}</M></Alt><Alt Only="Text">T</Alt> is an
-	equivalence relation on the rows of <M>P</M>,
+        <C>T</C> is an equivalence relation on the rows of <C>P</C>,
       </Item>
     </List>
     
@@ -46,80 +60,61 @@
     
     <List>
       <Item>
-	A pair of <Alt Not="Text"><M>\mathcal{S}</M></Alt><Alt
-	Only="Text"><M>S</M></Alt>-related columns must contain zeroes in
-	precisely the same rows.
+        a pair of <C>S</C>-related columns must contain zeroes in
+	precisely the same rows,
       </Item>
       <Item>
-	A pair of <Alt Not="Text"><M>\mathcal{T}</M></Alt><Alt
-	Only="Text"><M>T</M></Alt>-related rows must contain zeroes in precisely
-	the same columns.
+	a pair of <C>T</C>-related rows must contain zeroes in precisely
+	the same columns,
       </Item>
       <Item>
-	<Alt Not="Text">
-	  If <M>(i,j) \in \mathcal{S}</M> and <M>(\lambda,\mu) \in
-	  \mathcal{T}</M>, such that the matrix entries <M>p_{\lambda i},
-	  p_{\lambda j}, p_{\mu i}, p_{\mu j} \neq 0</M>, then <M>q_{\lambda \mu
-	  i j} \in N</M>, where <Display>q_{\lambda \mu i j} = p_{\lambda i}
-	  p_{\mu i}^{-1} p_{\mu j} p_{\lambda j}^{-1}.</Display>
-	</Alt>
-	<Alt Only="Text">
-	  If (i,j) is in S, (u,v) is in T, and the matrix entries p_ui, p_uj,
-	  p_vi, and p_vj are all non-zero, then q_uvij is in N, where<P/>
-	  q_uvij = p_ui * p_vi^-1 * p_vj * p_uj^-1.
-	</Alt>
+        if <C>i</C> and <C>j</C> are <C>S</C>-related, <C>k</C> and
+        <C>l</C> are <C>T</C>-related and the matrix entries 
+        <M>p_{k, i}, p_{k, j}, p_{l, i}, p_{l, j} \neq 0</M>, then 
+        <M>q_{k, l, i, j} \in N</M>, where 
+        <Display>q_{k, l, i, j} = p_{k, i}
+        p_{l, i}^{-1} p_{l, j} p_{k, j}^{-1}.</Display>
       </Item>
     </List>
     
-    By Theorem 3.5.9, for any finite 0-simple Rees 0-matrix semigroup, there is
-    a bijection between the set of its non-universal congruences and the set
-    of its linked triples.  In this way, we can internally represent any
-    congruence of such a semigroup by storing its associated linked triple
-    instead of a set of generating pairs, and thus perform many calculations on
-    it more efficiently.<P/>
+    By Theorem 3.5.9 in <Cite Key="howie"/>, for any finite 0-simple Rees
+    0-matrix semigroup, there is a bijection between its non-universal
+    congruences and its linked triples.  In this way, we can internally
+    represent any congruence of such a semigroup by storing its associated
+    linked triple instead of a set of generating pairs, and thus perform many
+    calculations on it more efficiently.<P/>
 
-    If a congruence is defined by a linked triple
-    <Alt Not="Text"><M>(N,\mathcal{S},\mathcal{T})</M></Alt>
-    <Alt Only="Text">(N,S,T)</Alt> 
-    then a single class of that congruence can be defined by a triple
-    <Alt Not="Text"><M>(Nx,i/\mathcal{S},\lambda/\mathcal{T})</M>,</Alt>
-    <Alt Only="Text">(Nx,i/S,u/T),</Alt>
-    where <M>Nx</M> is a right coset of <M>N</M>,
-    <M>i/<Alt Not="Text">\mathcal</Alt>{S}</M> is an equivalence class of
-    columns under <M><Alt Not="Text">\mathcal</Alt>{S}</M>, and
-    <M><Alt Not="Text">\lambda / \mathcal</Alt><Alt Only="Text">u/</Alt>{T}</M>
-    is an equivalence class of rows under <M><Alt Not="Text">\mathcal</Alt>{T}</M>.
-    Thus we can internally represent any class of such a congruence as a triple
-    simply consisting of a right coset and two positive integers.<P/>
+    If a congruence is defined by a linked triple <C>(N,S,T)</C>, then a single
+    class of that congruence can be defined by a triple <C>(Nx,i/S,k/S)</C>,
+    where <C>Nx</C> is a right coset of <C>N</C>, <C>i/S</C> is the equivalence
+    class of <C>i</C> in <C>S</C>, and <C>k/S</C> is the equivalence class of
+    <C>k</C> in <C>T</C>.  Thus we can internally represent any class of such a
+    congruence as a triple simply consisting of a right coset and two positive
+    integers.<P/>
     
     <#Include Label="RZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceClassByLinkedTriple">
-    <#Include Label="CongruencesOfSemigroup">
     <#Include Label="IsLinkedTriple">
-    <#Include Label="NrCongruenceClasses">
     <#Include Label="CanonicalRepresentative">
     <#Include Label="AsSemigroupCongruenceByGeneratingPairs">
     <#Include Label="AsRZMSCongruenceByLinkedTriple">
-    <#Include Label="CongruenceClassOfElement">
-    <#Include Label="CongruenceClasses">
   </Section>
 
   <Section>
-    <Heading>Universal Semigroup Congruences</Heading>
+    <Heading>Universal congruences</Heading>
 
     The linked triples of a completely 0-simple Rees 0-matrix semigroup describe
     only its non-universal congruences.  In any one of these, the zero element
     of the semigroup is related only to itself.  However, for any semigroup
-    <M>S</M> there must exist the universal congruence <M>S<Alt
-    Not="Text"> \times </Alt><Alt Only="Text">x</Alt>S</M>.  We must therefore
-    represent this in a different way from the other congruences.<P/>
+    <M>S</M> the universal relation <M>S<Alt Not="Text"> \times </Alt><Alt
+        Only="Text">x</Alt>S</M> is a congruence; called the <E>universal
+      congruence</E>. The universal congruence on a semigroup has its own unique
+    representation.<P/>
 
     Since many things we want to calculate about congruences are trivial in the
     case of the universal congruence, this package contains a category
-    specifically designed for it, <C>IsUniversalSemigroupCongruence</C>.  This
-    allows for universal semigroup congruences to be described together with the
-    linked triples, to be compared and used together in functions.  We also
-    define <C>IsUniversalSemigroupCongruenceClass</C>, which acts as the single
+    specifically designed for it, <C>IsUniversalSemigroupCongruence</C>. We also
+    define <C>IsUniversalSemigroupCongruenceClass</C>, which represents the single
     congruence class of the universal congruence.<P/>
 
     <#Include Label="UniversalSemigroupCongruence">

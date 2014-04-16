@@ -166,7 +166,7 @@ gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 
-#gap> s:=Semigroup(ReadGenerators("pkg/semigroups/examples/graph9c.semigroups.gz", 100013));;
+#
 gap> s:=Semigroup([ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
 >  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 8 ] ), 
 >  Transformation( [ 7, 2, 8, 4, 5, 6, 1, 9, 8 ] ), 
@@ -290,7 +290,7 @@ gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 8, 3, 12, 2 ] ) ]
 
 #
-gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
+gap> file:=Concatenation(SemigroupsDir(), "/tst/test.gz");;
 gap>  ReadGenerators(file, 1376);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 
@@ -562,6 +562,46 @@ gap> for i in [1..6] do
 >  PartialPerm( [ 1, 2, 6 ], [ 3, 2, 6 ] ) ], rec(small:=true));
 > IsInverseSemigroup(V);
 > od;
+
+# Issue #63 (problem with Monoid and InverseMonoid when one of the arguments is
+# a monoid). 
+# This only works in GAP 4.7.5 or higher hence the CompareVersionNumbers
+gap> S:=Semigroup(PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ) );
+<trivial partial perm group on 5 pts with 0 generators>
+gap> T:=Monoid(S,  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ));;
+gap> Length(GeneratorsOfMonoid(T))=2 
+> or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> One(S) in T or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> One(S)=One(T);
+false
+gap> GeneratorsOfSemigroup(T)=
+> [ PartialPerm( [ 1, 2, 3, 4, 5, 6 ] ), 
+> PartialPerm([ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ), 
+> PartialPerm([ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] )]
+> or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> GeneratorsOfMonoid(T)=
+> [ PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ), 
+>   PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ) ]
+> or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> S:=InverseSemigroup(PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ) );;
+gap> T:=InverseMonoid(S,  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ));
+<inverse partial perm monoid on 6 pts with 2 generators>
+gap> GeneratorsOfMonoid(T);
+[ <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5], [5,2,1,4,3,6] ]
+gap> GeneratorsOfSemigroup(T);
+[ <identity partial perm on [ 1, 2, 3, 4, 5, 6 ]>, 
+  <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5], [5,2,1,4,3,6] ]
+gap> GeneratorsOfInverseMonoid(T);
+[ <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5] ]
+gap> GeneratorsOfInverseSemigroup(T);
+[ <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5], 
+  <identity partial perm on [ 1, 2, 3, 4, 5, 6 ]> ]
+gap> One(S) in T;
+true
 
 #
 gap> SemigroupsStopTest();

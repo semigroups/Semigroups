@@ -352,12 +352,10 @@ end);
 
 #
 
-if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
+if not (IsGrapeAvailable and IsGrapeCompiled) then
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup], 
-  function(s)
-    Info(InfoWarning, 1, "the nauty/dreadnaut binaries in GRAPE are not", 
-    " installed and so this ");
-    Info(InfoWarning, 1, "function does not work.");
+  function(S)
+    Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end);
 else
@@ -665,6 +663,20 @@ function(g)
     s:=ClosureSemigroup(s, f);
   od;
   return s;
+end);
+
+#
+
+InstallMethod(SingularPartitionMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, i;
+  
+  blocks:=[[1,2,-1,-2]];
+  for i in [3..n] do 
+    blocks[i-1]:=[i, -i];
+  od;
+  return SemigroupIdeal(PartitionMonoid(n), Bipartition(blocks));
 end);
 
 #
