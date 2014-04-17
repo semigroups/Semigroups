@@ -54,32 +54,28 @@
 
 	    • the properties IsCongruenceFreeSemigroup, IsEUnitaryInverseSemigroup;
 
-	    • the attributes 
+	    • the attributes:
 	      
-	      ComponentRepsOfTransformationSemigroup,
-	      ComponentsOfTransformationSemigroup,
-	      CyclesOfTransformationSemigroup,
-	      ComponentRepsOfPartialPermSemigroup, 
-	      ComponentsOfPartialPermSemigroup,
-	      CyclesOfPartialPermSemigroup 
+	      ComponentRepsOfTransformationSemigroup
+	      ComponentsOfTransformationSemigroup
+	      CyclesOfTransformationSemigroup
+	      ComponentRepsOfPartialPermSemigroup 
+	      ComponentsOfPartialPermSemigroup
+	      CyclesOfPartialPermSemigroup.
 	    
-	    for finding components, representatives, and cycles of the action of
-	    a semigroup. 
-
 	    • the new function IteratorFromGeneratorsFile that returns an
 	    iterator which reads semigroup elements from a file created using
 	    WriteGenerators. This function is a convenient way of, for example,
-	    looping over a collection of  generators  in  a  file  without
-	    loading  every object in the file into memory.  This  might  be
-	    useful  if the file contains more information than there is
-	    available memory;
+	    looping over a collection of generators in a file without loading
+	    every object in the file into memory. This  might be useful if
+	    the file contains more information than there is available memory;
 
 	    • the operation EndomorphismsPartition that returns the monoid
 	    of endomorphisms preserving a partition. This monoid is defined
 	    using the minimum possible number of generators;
 
 	    • a version of the function Splash that attempts to convert a string 
-	    containing a dot or tikz document into a pdf and to open this pdf.
+	    containing a dot or tikz document into a pdf and opens this pdf.
 	    Other file formats are also supported;
 
 	    • the function DotSemilatticeOfIdempotents that produces a string
@@ -96,9 +92,8 @@
 	    http://bitbucket.org/james-d-mitchell/semigroups/issues
 	    
 	    • the main algorithm underlying many of the methods in Semigroups
-	    has been revised slightly to avoid computing the same information
-	    more than once. Some further internal rearranging and cleaning up
-	    was done. 
+	    has been revised to avoid computing the same information more than
+	    once. Some further internal rearranging and cleaning up was done. 
 	    
 	    • MinimalIdeal and SingularTransformationSemigroup now returns an
 	    ideal rather than a semigroup defined by a generating set;
@@ -124,7 +119,7 @@
 	    These functions can also now be applied to collections of elements,
 	    i.e. not only to semigroups. 
 	    
-	    • Issues 47, : ClosureSemigroup had several bugs that could, in some
+	    • Issues 47: ClosureSemigroup had several bugs that could, in some
 	    cases, result in incorrect results, or semigroups with invalid data
 	    structures. 
 
@@ -143,8 +138,8 @@
 	    transformations with different length and degree properly, caused
 	    GAP to give an error.
 
-	    • Issue 63: there was an error in the library functions Monoid and
-	    InverseMonoid, when they were passed a monoid as an argument. 
+	    • Issue 63: there was an error in the GAP library functions Monoid
+	    and InverseMonoid, when they were passed a monoid as an argument. 
 
 	    • Issue 63 (and Issue 4 in the Orb package): a bug in the Orb
 	    package meant that the log of an Orb was not properly updated if the
