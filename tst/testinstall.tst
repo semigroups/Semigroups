@@ -588,19 +588,35 @@ gap> GeneratorsOfMonoid(T)=
 > or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
 true
 gap> S:=InverseSemigroup(PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ) );;
-gap> T:=InverseMonoid(S,  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ));
-<inverse partial perm monoid on 6 pts with 2 generators>
-gap> GeneratorsOfMonoid(T);
-[ <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5], [5,2,1,4,3,6] ]
-gap> GeneratorsOfSemigroup(T);
-[ <identity partial perm on [ 1, 2, 3, 4, 5, 6 ]>, 
-  <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5], [5,2,1,4,3,6] ]
-gap> GeneratorsOfInverseMonoid(T);
-[ <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5] ]
-gap> GeneratorsOfInverseSemigroup(T);
-[ <identity partial perm on [ 1, 2, 4, 5, 6 ]>, [6,3,4,1,2,5], 
-  <identity partial perm on [ 1, 2, 3, 4, 5, 6 ]> ]
-gap> One(S) in T;
+gap> T:=InverseMonoid(S,  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ));;
+gap> Length(GeneratorsOfInverseMonoid(T))=2 
+> or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> GeneratorsOfMonoid(T)=
+> [ PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 4, 1, 6, 3, 2 ] ) ]
+> or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> GeneratorsOfSemigroup(T)=
+> [ PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 1, 2, 3, 4, 5, 6 ] ), 
+>  PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 4, 1, 6, 3, 2 ] ) ]
+>  or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> GeneratorsOfInverseMonoid(T)=
+> [ PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ), 
+>   PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ) ]
+>   or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> GeneratorsOfInverseSemigroup(T)=
+> [ PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ), 
+>   PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ), 
+>   PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 1, 2, 3, 4, 5, 6 ] ) ] 
+>   or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
+true
+gap> One(S) in T or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
 true
 
 # Issue 33 (problem with Rees factor semigroups)
@@ -690,7 +706,8 @@ gap> S:=Semigroup( [ Transformation( [ 2, 1, 3, 1, 4, 3 ] ),
 >  Transformation( [ 2, 2, 2, 2, 1, 2 ] ), Transformation( [ 5, 3, 4, 3, 5 ] ),
 > Transformation( [ 6, 4, 1, 4, 5, 3 ] ), 
 >  Transformation( [ 6, 5, 2, 6, 3, 4 ] ) ] );;
-gap> NrIdempotents(S)=Number(HClasses(S), IsGroupHClass);
+gap> NrIdempotents(S)=Number(HClasses(S), IsGroupHClass)
+> or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
 true
 
 #

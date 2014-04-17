@@ -654,8 +654,7 @@ function(blocks, f)
       tab[x]:=next;
     fi;
   od;
-  
-  return MappingPermListList(signed, List(signed, i-> tab[fuseit(i)]));
+  return MappingPermListList_C(signed, List(signed, i-> tab[fuseit(i)]));
 end);
 
 # LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of
