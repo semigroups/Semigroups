@@ -987,11 +987,12 @@ end);
 
 InstallMethod(IsomorphismTransformationSemigroup, 
 "for semigroup of binary relations with generators", 
-[IsBinaryRelationSemigroup and HasGeneratorsOfSemigroup], 2, 
-#to beat the method for a semigroups of general mappings
+[IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup], 
 function(s)        
   local n, pts, o, t, pos, i;
-
+  if not IsBinaryRelation(Representative(s)) then 
+    TryNextMethod();
+  fi;
   n:=DegreeOfBinaryRelation(GeneratorsOfSemigroup(s)[1]);
   pts:=EmptyPlist(2^n);
 
