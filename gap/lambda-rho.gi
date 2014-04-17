@@ -255,10 +255,10 @@ function(o, m)
         if g = fail then
             #T part of a horrible hack
             g := Group(f);
-	    Print("size: ", Size(g));
+#	    Print("size: ", Size(g));
         else    
             g := ClosureGroup(g, f);
-	    Print("size: ", Size(g));
+#	    Print("size: ", Size(g));
         fi;
         
 	#T (mpf) why is it still g == fail sometimes?
@@ -277,10 +277,12 @@ function(o, m)
 
   if stop then
     o!.schutzstab[m]:=true;
-  elif Size(g)=1 or (not IsPermGroup(g)) then
+  elif Size(g)=1 then
     o!.schutzstab[m]:=false;
-  else
+  elif IsPermGroup(g) then
     o!.schutzstab[m]:=StabChainImmutable(g);
+  else
+    o!.schutzstab[m]:=StabChainImmutable(Range(IsomorphismPermGroup(g)));
   fi;
 
   return g;

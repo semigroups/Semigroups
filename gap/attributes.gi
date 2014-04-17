@@ -1197,22 +1197,36 @@ function(s)
    inv);
 end);
 
+#T mpf: Will this still be needed? Should we have IsMatrixSemigroup and
+#T      IsMatrixObjSemigroup, or should IsMatrixSemigroup always be a 
+#T      MatrixObjSemigroup?
 #
+#InstallMethod(IsomorphismTransformationSemigroup, 
+#"for a matrix semigroup",
+#[IsMatrixSemigroup], 
+#function(S)        
+#  local n, F, T;
+#  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
+#  F:=FieldOfMatrixList(GeneratorsOfSemigroup(S));        
+#  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
+#   TransformationOp(x, Elements(F^n), OnRight)));        
+#  return MappingByFunction(S, T,
+#   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
+#end);
 
 InstallMethod(IsomorphismTransformationSemigroup, 
 "for a matrix semigroup",
 [IsMatrixSemigroup], 
 function(S)        
-  local n, F, T;
-  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
-  F:=FieldOfMatrixList(GeneratorsOfSemigroup(S));        
+  local n, F, T, M;
+  n:=DimensionsMat(GeneratorsOfSemigroup(S)[1])[1];
+  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);
+  M:=List(Elements(F^n), x->NewRowVector(IsPlistVectorRep, F, x));
   T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
-   TransformationOp(x, Elements(F^n), OnRight)));        
+   TransformationOp(x, M, \*)));        
   return MappingByFunction(S, T,
-   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
+   x-> TransformationOp(x, Elements(F^Size(F)), \*));
 end);
-
-#
 
 InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
