@@ -27,7 +27,7 @@ gap> gens:=
 >     , [ Transformation( [ 4, 1, 2, 3 ] ), Transformation( [ 4, 3, 4, 1 ] ) ], 
 >   [ Transformation( [ 2, 1, 3, 1, 4, 3 ] ), 
 >       Transformation( [ 2, 2, 2, 2, 1, 2 ] ), 
->       Transformation( [ 5, 3, 4, 3, 5 ] ), 
+>       Transformation( [ 5, 3, 4, 3, 5, 6 ] ), 
 >       Transformation( [ 6, 4, 1, 4, 5, 3 ] ), 
 >       Transformation( [ 6, 5, 2, 6, 3, 4 ] ) ], 
 >   [ Transformation( [ 3, 5, 5, 1, 4, 7, 5 ] ) ], 
