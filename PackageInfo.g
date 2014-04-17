@@ -39,7 +39,7 @@ SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
 Version := "2.0",
-Date := "15/04/2014",
+Date := "17/04/2014",
 ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.0",
 ArchiveFormats := ".tar.gz",
 Persons := [
@@ -98,6 +98,21 @@ Persons := [
     Place         := "St Andrews",
     Institution   := "University of St Andrews"
   ),
+        
+   rec(
+    LastName      := "Pfeiffer",
+    FirstNames    := "Markus",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "markus.pfeiffer@morphism.de",
+    WWWHome       := "http://www.morphism.de/~markusp/",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ), 
 
   rec( 
     LastName      := "Steinberg",
