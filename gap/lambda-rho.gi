@@ -239,7 +239,8 @@ function(o, m)
 
   if IsMatrixSemigroup(s) then
     #T (mpf) Horrible horrible hack
-    g:=Group(List( One(Representative(s)), x -> List(x)));
+      g := fail;
+      #Group(List( One(Representative(s)), x -> List(x)));
   else
     g:=Group(());
   fi;
@@ -251,10 +252,17 @@ function(o, m)
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
         f:=lambdaperm(rep, rep*forward*gens[l]
           *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-        g:=ClosureGroup(g, f);
-        Print(Size(g),"\n");
+        if g = fail then
+            #T part of a horrible hack
+            g := Group(f);
+	    Print("size: ", Size(g));
+        else    
+            g := ClosureGroup(g, f);
+	    Print("size: ", Size(g));
+        fi;
         
-        if Size(g)>=bound then
+	#T (mpf) why is it still g == fail sometimes?
+        if (g<>fail) and (Size(g)>=bound) then
           stop:=true;
           break;
         fi;

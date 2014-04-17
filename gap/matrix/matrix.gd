@@ -37,6 +37,9 @@ DeclareGlobalFunction( "BaseSteinitzMatrixObj");
 DeclareOperation( "MoorePenroseInverse",
         [ IsMatrixObj ] );
 
+DeclareOperation( "PseudoInverse",
+        [ IsMatrixObj ] );
+
 DeclareGlobalFunction( "PedestrianLambdaInverse" );
 
 # To make the GAP library code happy for now

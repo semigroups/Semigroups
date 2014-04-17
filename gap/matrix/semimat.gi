@@ -177,18 +177,24 @@ function(S)
     # returns the right action on subspaces of F^n by right multiplication
     return
       function(vsp, mat)
-        local basis, nvsp;
+        local basis, nvsp, i, n;
         
         # This takes care of the token element
-        if RowLength(vsp) > RowLength(mat) then
+        if DimensionsMat(vsp)[1] > DimensionsMat(mat)[1] then
             nvsp := mat;
         else
             nvsp := vsp * mat;
         fi;
         #T WHY?
         nvsp := MutableCopyMat(nvsp);
+        TriangulizeMat(nvsp);
+        n := DimensionsMat(nvsp)[1];
+        for i in [n,n-1..1] do
+            if IsZero(nvsp[i]) then
+                Remove(nvsp, i);
+            fi;
+        od;
         
-        SemiEchelonMatDestructive(nvsp);
         return nvsp;
       end;
 end);
@@ -243,16 +249,20 @@ InstallMethod(LambdaFunc,
     # a function that returns the row space
     return
       function(mat)
-        local nvsp;
+        local i, n, nvsp;
+
+        Info(InfoMatrixSemigroups, 2, "LambdaFunc for IsMatrixSemigroup called\n");
         
-        #T This will only work for fields 
-        #T at the moment the Matrix functions
-        #T Don't check that their entries actually
-        #T lie in the base domain. This leads to
-        #T problems. Best way of solving this is 
-        #T to implement checks.
         nvsp := MutableCopyMat(mat);
-        SemiEchelonMatDestructive(nvsp);
+        TriangulizeMat(nvsp);
+        
+        n := DimensionsMat(nvsp)[1];
+        
+        for i in [n,n-1..1] do
+            if IsZero(nvsp[i]) then
+                Remove(nvsp, i);
+            fi;
+        od;
         return nvsp;
       end;
 end);
@@ -264,11 +274,11 @@ InstallMethod(RhoFunc,
     # a function that returns the column space
     return
       function(mat)
-        local nvsp;
+        local i, n, nvsp, se;
         
-        nvsp := MutableCopyMat(TransposedMat(mat));
-        SemiEchelonMatDestructive(nvsp);
-        return nvsp;
+        Info(InfoMatrixSemigroups, 2, "RhoFunc for IsMatrixSemigroup called\n");
+        
+        return LambdaFunc(S)(TransposedMat(mat));
       end;
 end);
 
@@ -303,23 +313,29 @@ InstallMethod(LambdaInverse,
         [IsMatrixSemigroup],
         function(S)
     return function( V, mat )
-        local W, se, Vdims, mdims, n, k, i, j, u;
+        local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
         
-        # We assume that mat is quadratic
-        # we don't check this for performance reasons. If a semigroup decides to
-        # have non-quadratic matrices in it, something is seriously wrong anyway.
+        # We assume that mat is quadratic but we don't check this.
+        # If a semigroup decides to have non-quadratic matrices in it,
+        # something is seriously wrong anyway.
         n := DimensionsMat(mat)[1];
         k := DimensionsMat(V)[1];
 
         W := ZeroMatrix(n, 2 * n, mat);
-        
+
+        #T I think this should all be done in place
         CopySubMatrix( V * mat, W, [1..k], [1..k], [1..n], [1..n]);
         CopySubMatrix( V, W, [1..k], [1..k], [1..n], [n+1..2*n]);
         
-        se := SemiEchelonMatDestructive(W);
-
+        se := SemiEchelonMat(W);
+        
+        for i in [1..Length(se.vectors)] do
+            W[i] := ShallowCopy(se.vectors[i]);
+        od;
+        
+        # add missing heads
         u := One(BaseDomain(W));
-        j := Length(se.vectors) + 1;
+        j := k+1;
         for i in [1..n] do
             if se.heads[i] = 0 then
                 W[j][i] := u;
@@ -341,22 +357,41 @@ InstallMethod(RhoInverse,
     Error("not implemented yet\n");
 end);
 
-#T returns a permutation
+#T returns an invertible matrix
 InstallMethod(LambdaPerm,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
     return function(x, y)
-        local pi, mat, se, A, B, i, u, uv;
+        local xse, xhe, yse, yhe, he, p, q, i, RemoveZeroRows;
+        
+        RemoveZeroRows := function(mat)
+            local i, n;
+            
+            n := DimensionsMat(mat)[1];
+            
+            for i in [n,n-1..1] do
+                if IsZero(mat[i]) then
+                    Remove(mat,i);
+                fi;
+            od;
+        end;
         
         if IsZero(x) then
-            return List(One(x), List);
+            return [[One(BaseDomain(x))]];
         else 
-            #T kaputt
-            return List(One(x), List);
-            
+            xse := SemiEchelonMatTransformation(x);
+            p := MutableCopyMat(TransposedMat(Matrix(xse.coeffs, Length(xse.heads), x)));
+            RemoveZeroRows(p);
+            p := TransposedMat(p);
+
+            yse := SemiEchelonMatTransformation(y);
+            q := MutableCopyMat(TransposedMat(Matrix(yse.coeffs, Length(yse.heads), y)));
+            RemoveZeroRows(q);
+            q := TransposedMat(q);
+
+            return List(p*q^(-1), List);
         fi;
-        return List(mat, List);
     end;
 end);
 
@@ -364,7 +399,8 @@ InstallMethod(LambdaConjugator,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
-    Error("not implemented yet\n");
+    Error
+      ("not implemented yet\n");
 end);
 
 InstallMethod(IdempotentTester,

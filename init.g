@@ -54,4 +54,5 @@ ReadPackage("semigroups/gap/reesmat.gd");
 ReadPackage("semigroups/gap/reesmat-iso.gd");
 ReadPackage("semigroups/gap/normalizer.gd");
 
-DeclareInfoClass("InfoSemigroups");;
+DeclareInfoClass("InfoSemigroups");
+DeclareInfoClass("InfoMatrixSemigroups");

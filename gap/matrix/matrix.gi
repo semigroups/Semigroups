@@ -80,10 +80,6 @@ InstallMethod( TriangulizeMat,
     Info( InfoMatrix, 1, "TriangulizeMat returns" );
 end );
 
-
-
-
-
 #############################################################################
 ##
 #M  SemiEchelonMat( <mat> )
@@ -380,3 +376,35 @@ InstallMethod( DefaultScalarDomainOfMatrixList,
     TryNextMethod();
 end);
 
+
+InstallMethod( PseudoInverse,
+        [ IsMatrixObj ],
+        function(mat)
+            local W, se, n, k, i, j, u;
+        
+        # We assume that mat is quadratic
+        # we don't check this for performance reasons. If a semigroup decides to
+        # have non-quadratic matrices in it, something is seriously wrong anyway.
+        n := DimensionsMat(mat)[1];
+
+        W := ZeroMatrix(n, 2 * n, mat);
+        
+        CopySubMatrix( mat, W, [1..n], [1..n], [1..n], [1..n]);
+        CopySubMatrix( One(mat), W, [1..n], [1..n], [1..n], [n+1..2*n]);
+        
+        se := SemiEchelonMatDestructive(W);
+
+        u := One(BaseDomain(W));
+        j := Length(se.vectors) + 1;
+        for i in [1..n] do
+            if se.heads[i] = 0 then
+                W[j][i] := u;
+                j := j+1;
+            fi;
+        od;
+        
+        TriangulizeMat(W);
+        
+        return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
+ 
+end);
