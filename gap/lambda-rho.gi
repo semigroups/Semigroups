@@ -239,7 +239,7 @@ function(o, m)
 
   if IsMatrixSemigroup(s) then
     #T (mpf) Horrible horrible hack
-      g := fail;
+      g:=fail;
       #Group(List( One(Representative(s)), x -> List(x)));
   else
     g:=Group(());

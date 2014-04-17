@@ -384,11 +384,13 @@ InstallMethod(LambdaPerm,
             p := MutableCopyMat(TransposedMat(Matrix(xse.coeffs, Length(xse.heads), x)));
             RemoveZeroRows(p);
             p := TransposedMat(p);
+            p := Matrix(PermutationMat(SortingPerm(Filtered(xse.heads, x -> x <> 0)), DimensionsMat(p)[1], BaseDomain(p)), p) * p;
 
             yse := SemiEchelonMatTransformation(y);
             q := MutableCopyMat(TransposedMat(Matrix(yse.coeffs, Length(yse.heads), y)));
             RemoveZeroRows(q);
             q := TransposedMat(q);
+            q := Matrix(One(BaseDomain(q)) * PermutationMat(SortingPerm(Filtered(yse.heads, x -> x <> 0)), DimensionsMat(q)[1], BaseDomain(q)), q) * q;
 
             return List(p*q^(-1), List);
         fi;
