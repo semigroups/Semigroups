@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.gd
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -25,6 +25,7 @@ DeclareGlobalFunction("ReadGenerators");
 DeclareGlobalFunction("GeneratorsWriteFile");
 DeclareGlobalFunction("WriteGeneratorsLine");
 DeclareGlobalFunction("WriteGenerators");
+DeclareGlobalFunction("IteratorFromGeneratorsFile");
 
 DeclareOperation("ShortStringRep", [IsTransformation]);
 

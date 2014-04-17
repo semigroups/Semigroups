@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  graded.gd
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -16,8 +16,8 @@ DeclareAttribute("GradedRhoHT", IsActingSemigroup, "mutable");
 
 DeclareGlobalFunction("GradedLambdaOrb");
 DeclareGlobalFunction("GradedRhoOrb");
-DeclareProperty("IsGradedLambdaOrb", IsOrbit);
-DeclareProperty("IsGradedRhoOrb", IsOrbit);
+DeclareFilter("IsGradedLambdaOrb", IsLambdaOrb);
+DeclareFilter("IsGradedRhoOrb", IsRhoOrb);
 
 DeclareAttribute("GradedLambdaOrbs", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("IteratorOfGradedLambdaOrbs");

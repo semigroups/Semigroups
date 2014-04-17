@@ -1,0 +1,284 @@
+<Chapter Label="bipartition">
+  <Heading>
+    Bipartitions and blocks
+  </Heading>
+
+  In this chapter we describe the functions in &Semigroups; for creating
+  and manipulating bipartitions and semigroups of bipartitions. We begin by
+  describing what these objects are.
+  <P/>
+
+  A <E>partition</E> of a set &setX; is a set of pairwise disjoint non-empty
+  subsets of &setX; whose union is &setX;.
+  <P/>
+
+  Let <M>n\in</M>&bbN;, let &bfn;<M>=\{1,2,\ldots,n\}</M>, and let
+  <M>-</M>&bfn;<M>=\{-1,-2,\ldots,-n\}</M>.
+  <P/>
+    
+  The <E>partition monoid</E> of degree &n; is the set of all partitions of
+  &bfn;<M>\cup</M>-&bfn; with a multiplication we describe below. To
+  avoid conflict with other uses of the word "partition" in &GAP;, and to reflect
+  their definition, we have opted to refer to the elements of the partition
+  monoid as <E>bipartitions</E> of degree &n;; we will do so from this
+  point on. 
+  <P/>
+  
+  Let &x; be any bipartition of degree &n;. Then &x; is a set of
+  pairwise disjoint non-empty subsets of &bfn;<M>\cup</M>-&bfn; whose
+  union is &bfn;<M>\cup</M>-&bfn;; these subsets are called the
+  <E>blocks</E> of &x;.  A block containing elements of both
+  &bfn; and -&bfn; is called a <E>transverse block</E>.
+  If &i;,&j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; belong to the same block of a
+  bipartition &x;, then we write (&i;,&j;)<M>\in</M>&x;.
+  <P/>
+
+  <!--A block contained in <M>\mathbf{n}</M> is called a <E>left block</E> and 
+  a block contained in <M>-\mathbf{n}</M> is called a <E>right block</E>.
+  <P/>--> 
+
+  <!--A partition can be represented as a graph with vertices <M>\mathbf{n}\cup
+  -\mathbf{n}</M> and edges so that the connected components of the graph
+  correspond to the blocks of the partition.  Of course such a representation is
+  not unique but we will generally identify a partition with any graph
+  representing it.
+  <P/>-->
+  
+  Let &x; and &y; be bipartitions of equal degree.   Then &x;&y; is
+  the bipartition where &i;,&j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; belong to the
+  same block of &x;&y; if there exist
+  <Alt Not="Text"><M>k(1), k(2),\ldots, k(r)\in \mathbf{n}</M></Alt>
+  <Alt
+    Only="Text"><C>k(1),k(2)</C>,<M>\ldots</M>,<C>k(r)</C><M>\in</M><E>n</E></Alt>;
+  and one of the following holds:
+  <List>
+    <Item>
+      &r;<M>=0</M> and either <M>(</M>&i;,&j;<M>)\in</M>&x; or 
+      <M>(</M>-&i;,-&j;<M>)\in</M>&y;;
+    </Item>
+    
+    <Item>
+      <Alt Not="Text">
+        <M>r=2s-1</M> for some <M>s\geq 1</M> and
+        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,\ 
+          (-k(2s-2),-k(2s-1))\in x,\ (k(2s-1),-j)\in y</Display>
+      </Alt>
+      <Alt Only="Text">
+        <C>r=2s-1</C> for some <C>s</C><M>\geq</M><C>1</C> and<P/>
+        <C>(i,-k(1))</C><M>\in</M><C>x</C>, <C>(k(1),k(2))</C><M>\in</M><C>y</C>,
+        <C>(-k(2),-k(3))</C><M>\in</M><C>x</C>, <M>\ldots</M>, 
+        <C>(-k(2s-2),-k(2s-1))</C><M>\in</M><C>x</C>,
+        <C>(k(2s-1),-j)</C><M>\in</M><C>y</C>
+      </Alt>
+    </Item>
+    
+    <Item>
+      <Alt Not="Text">
+        <M>r=2s</M> for some <M>s\geq 1</M> and either:
+        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots, 
+          (k(2s-1), k(2s))\in y,\ (-k(2s), j)\in x</Display>
+        or
+        <Display>(-i,k(1))\in y,\ (-k(1),-k(2))\in x,\ (k(2),k(3))\in y,\ \ldots, 
+          (-k(2s-1), -k(2s))\in x,\ (k(2s), -j)\in y.</Display>
+      </Alt>
+      <Alt Only="Text">
+        <C>r=2s</C> for some <C>s</C><M>\geq</M><C>1</C> and either: 
+        <P/>
+        <C>(i,-k(1))</C><M>\in</M><C>x</C>,
+        <C>(k(1),k(2))</C><M>\in</M><C>y</C>,
+        <C>(-k(2),-k(3))</C><M>\in</M><C>x</C>,
+        <M>\ldots</M>,
+        <C>(k(2s-1),k(2s))</C><M>\in</M><C>x</C>,
+        <C>(-k(2s),j)</C><M>\in</M><C>y</C><P/>
+        or<P/>
+        <C>(-i,k(1))</C><M>\in</M><C>y</C>,
+        <C>(-k(1),-k(2))</C><M>\in</M><C>x</C>,
+        <C>(k(2),k(3))</C><M>\in</M><C>y</C>,
+        <M>\ldots</M>,
+        <C>(-k(2s-1),-k(2s))</C><M>\in</M><C>y</C>,
+        <C>(k(2s),-j)</C><M>\in</M><C>x</C>.<P/>
+      </Alt>
+    </Item>
+    
+  </List> 
+
+  This product can be shown to be associative, and so the collection of
+  bipartitions of any particular degree is a monoid; the identity element is the
+  partition 
+  <Alt Not="Text"><M>\left\{\{i,-i\}:i\in\mathbf{n}\right\}</M>.</Alt>
+  <Alt Only="Text">{{<C>i</C>,-<C>i</C>}:<C>i</C><M>\in</M><E>n</E>}.</Alt>
+  A bipartition is a unit if and only if each block is of the form
+  <M>\{</M>&i;,-&j;<M>\}</M> for some &i;, &j;<M>\in</M>&bfn;.  Hence the group
+  of units is isomorphic to the symmetric group on &bfn;. 
+  <P/>
+
+  Let &x; be a bipartition of degree &n;. Then we define &x;<M>^*</M> to
+  be the bipartition obtained from &x; by replacing &i; by -&i;
+  and -&i; by -&i; in every block of &x; for all &i;<M>\in</M>&bfn;.  
+  It is routine to verify that if &x; and &y; are
+  arbitrary bipartitions of equal degree, then 
+  <Alt Not="Text">
+    <Display>
+      (x^*)^*=x,\quad xx^*x=x,\quad x^*xx^*=x^*,\quad (xy)^*=y^*x^*.
+    </Display>
+  </Alt>
+  <Alt Only="Text">
+    <P/>
+    <C>(x^*)^*=x, xx^*x=x, x^*xx^*=x^*, (xy)^*=y^*x^*.</C>
+    <P/>
+  </Alt>
+  In this way, the partition monoid is a <E>regular *-semigroup</E>.
+
+  <Section><Heading>The family and categories of bipartitions</Heading>
+    <#Include Label="IsBipartition">
+    <#Include Label="IsBipartitionCollection">
+    <#Include Label="BipartitionFamily">
+  </Section>
+  
+  <Section Label="creating-bipartitions">
+    <Heading>Creating bipartitions</Heading>
+  There are several ways of creating bipartitions in &GAP;, which are
+  described in this section.
+    <#Include Label="Bipartition">
+    <#Include Label="BipartitionByIntRep">
+    <#Include Label="IdentityBipartition">
+    <#Include Label="LeftProjection">
+    <#Include Label="RightProjection">
+    <#Include Label="StarOp">
+    <#Include Label="RandomBipartition">
+  </Section>
+
+  <Section Label="changing-rep-bipartitions">
+    <Heading>Changing the representation of a bipartition</Heading>
+   It  is  possible that a bipartition can be represented as another
+  type  of object, or that another type of &GAP; object can be represented as a
+  bipartition. In this section, we describe the functions in the &Semigroups;
+  package for changing the representation of bipartition, or for changing the
+  representation of another type of object to that of a bipartition.<P/> 
+  
+  The  operations  <Ref Oper="AsPermutation" Label="for a bipartition"/>, 
+  <Ref Oper="AsPartialPerm" Label="for a bipartition"/>, 
+  <Ref Oper="AsTransformation" Label="for a bipartition"/> can be 
+  used  to convert bipartitions into permutations, partial permutations, or
+  transformations where  appropriate.  
+    <#Include Label="AsBipartition"/>
+    <#Include Label="AsBlockBijection"/>
+    <#Include Label="AsTransformation"/>
+    <#Include Label="AsPartialPerm"/>
+    <#Include Label="AsPermutation"/>
+  </Section>
+ 
+  <Section Label="operators-bipartitions">
+  <Heading>Operators for bipartitions</Heading>
+    <List>
+     <Mark><C><A>f</A> * <A>g</A></C></Mark>
+     <Item>
+       <Index Key="*"><C>*</C> (for bipartitions)</Index>
+       returns the composition of <A>f</A> and <A>g</A> when <A>f</A> and
+       <A>g</A> are bipartitions. 
+     </Item>
+     <Mark><C><A>f</A> &lt; <A>g</A></C></Mark>
+    <Item>
+      <Index Key="&lt;"><C>&lt;</C> (for bipartitions)</Index>
+      returns <K>true</K> if the internal representation of <A>f</A> is
+      lexicographically less than the internal representation of <A>g</A> and
+      <K>false</K> if it is not.
+    </Item>
+    <Mark><C><A>f</A> = <A>g</A></C></Mark>
+    <Item>
+      <Index Key="="><C>=</C> (for bipartitions)</Index>
+      returns <K>true</K> if the bipartition <A>f</A> equals the
+      bipartition <A>g</A> and returns <K>false</K> if it does not.
+    </Item>
+   </List> 
+    
+   <#Include Label="PartialPermLeqBipartition">
+   <#Include Label="NaturalLeqPartialPermBipartition">
+   <#Include Label="NaturalLeqBlockBijection">
+   <#Include Label="PermLeftQuoBipartition">
+   <#Include Label="OnRightBlocksBipartitionByPerm">
+ </Section>    
+
+  <Section Label="attributes-bipartitions">
+  <Heading>Attributes for bipartitons</Heading>
+    In this section we describe various attributes that a bipartition can
+    possess.  
+    <#Include Label="DegreeOfBipartition">
+    <#Include Label="RankOfBipartition">
+    <#Include Label="ExtRepOfBipartition">
+    <#Include Label="RightBlocks">
+    <#Include Label="LeftBlocks">
+    <#Include Label="NrLeftBlocks">
+    <#Include Label="NrRightBlocks">
+    <#Include Label="NrBlocks">
+    <#Include Label="IsTransBipartition">
+    <#Include Label="IsDualTransBipartition">
+    <#Include Label="IsPermBipartition">
+    <#Include Label="IsPartialPermBipartition">
+    <#Include Label="IsBlockBijection">
+    <#Include Label="IsUniformBlockBijection">
+  </Section> 
+
+  <Section Label="section-blocks">
+    <Heading>Creating blocks and their attributes</Heading>
+    As described above the left and right blocks of a bipartition characterise
+    Green's &R;- and &L;-relation on the partition monoid; see 
+    <Ref Attr="LeftBlocks"/> and <Ref Attr="RightBlocks"/>. 
+    The left or right blocks of a bipartition are &GAP; objects in their own
+    right.
+    <P/>
+
+    In this section, we describe the functions in the &Semigroups; package for
+    creating and manipulating the left or right blocks of a bipartition.
+
+    <#Include Label="BlocksNC">
+    <#Include Label="ExtRepOfBlocks">
+    <#Include Label="RankOfBlocks">
+    <#Include Label="DegreeOfBlocks">
+  </Section>
+
+  <Section><Heading>Actions on blocks</Heading>
+    Bipartitions act on left and right blocks in several ways, which are
+    described in this section. 
+    <#Include Label="OnRightBlocks">
+    <#Include Label="OnLeftBlocks">
+    <#Include Label="PermRightBlocks">
+    <#Include Label="InverseRightBlocks">
+    <#Include Label="InverseLeftBlocks">
+  </Section>
+
+  <Section><Heading>Visualising blocks and bipartitions</Heading>
+    There are some functions in &Semigroups; for creating &LaTeX; pictures of
+    bipartitions and blocks. Descriptions of these methods can be found in this
+    section. <P/>
+
+    The functions described in this section return a string, which can be
+    written to a file using the function <Ref Func="FileString"
+      BookName="GAPDoc"/> or viewed using <Ref Func="Splash"/>.
+
+    <#Include Label="TikzBipartition">
+    <#Include Label="TikzBlocks">
+
+  </Section>
+
+  <Section><Heading>Semigroups of bipartitions</Heading>
+    Semigroups and monoids of bipartitions
+    can be created in the usual way in &GAP; using the functions 
+    <Ref Func="Semigroup" BookName="ref"/> and 
+    <Ref Func="Monoid" BookName="ref"/>. <P/>
+    
+    It is possible to create inverse semigroups and monoids of bipartitions 
+    using <Ref Func="InverseSemigroup" BookName="ref"/> and <Ref
+      Func="InverseMonoid" BookName="ref"/> when the argument is a collection
+    of block bijections or partial perm bipartions; see <Ref
+      Prop="IsBlockBijection"/> and <Ref Prop="IsPartialPermBipartition"/>. 
+
+    <#Include Label="IsBipartitionSemigroup">
+    <#Include Label="IsBlockBijectionSemigroup">
+    <#Include Label="IsPartialPermBipartitionSemigroup">
+    <#Include Label="IsPermBipartitionGroup">
+    <#Include Label="DegreeOfBipartitionSemigroup">
+
+  </Section>
+</Chapter>
+

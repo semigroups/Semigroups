@@ -32,7 +32,7 @@ MappingByFunction( <inverse partial perm semigroup on 5 pts
 gap> ForAll(f,x->(x^VPR)^inv=x);
 true
 
-# Standard VagnerPreston example
+# Standard VagnerPreston example with SymmetricInverseSemigroup on 5 points
 gap> I5:=SymmetricInverseSemigroup(5);;
 gap> NrMovedPoints(I5);
 5
@@ -48,6 +48,19 @@ gap> NrMovedPoints(Image(I5));
 5
 gap> Size(Image(I5));
 1546
+
+# VagnerPreston example on BipartitionSemigroup
+gap> B:=Semigroup([
+>  Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5, -5 ], [ 6 ], [ 7 ], [ -1 ], [ -3 ], [ -6 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1, -5 ], [ 2, -6 ], [ 3, -7 ], [ 4, -3 ], [ 5 ], [ 6, -2 ], [ 7 ], [ -1 ], [ -4 ] ] ), 
+>  Bipartition( [ [ 1, -4 ], [ 2, -7 ], [ 3 ], [ 4, -5 ], [ 5, -2 ], [ 6 ], [ 7, -1 ], [ -3 ], [ -6 ] ] ), 
+>  Bipartition( [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4, -1 ], [ 5, -5 ], [ 6 ], [ 7 ], [ -3 ], [ -4 ], [ -6 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1 ], [ 2, -6 ], [ 3, -4 ], [ 4 ], [ 5, -1 ], [ 6, -2 ], [ 7, -3 ], [ -5 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1, -7 ], [ 2, -5 ], [ 3 ], [ 4, -1 ], [ 5, -4 ], [ 6 ], [ 7, -2 ], [ -3 ], [ -6 ] ] ) ]);;
+gap> IsInverseSemigroup(B);
+true
+gap> V:=Range(VagnerPrestonRepresentation(B));
+<inverse partial perm semigroup on 664 pts with 6 generators>
 
 # Example of higher returned degree spotted by Rhiannon
 gap> f1:=PartialPermNC([2,1,4,5,3]);;
@@ -137,11 +150,11 @@ gap> h:=PartialPerm(J);
 <partial perm on 122 pts with degree 122, codegree 122>
 gap> 
 gap> V:=InverseSemigroup(H1,H2,h);
-<inverse partial perm semigroup on 122 pts with 241 generators>
+<inverse partial perm monoid on 122 pts with 240 generators>
 gap> SmallerDegreePartialPermRepresentation(V);
-MappingByFunction( <inverse partial perm semigroup on 122 pts
- with 241 generators>, <inverse partial perm semigroup on 12 pts
- with 241 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse partial perm monoid on 122 pts
+ with 240 generators>, <inverse partial perm semigroup on 12 pts
+ with 240 generators>, function( x ) ... end, function( x ) ... end )
 
 #
 gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ], [ 1, 5, 3, 8, 4 ]);;
@@ -162,4 +175,3 @@ gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST("Semigroups package: smallerdegree.tst", 10000);
-

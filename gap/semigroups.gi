@@ -1,12 +1,22 @@
 ############################################################################# 
 ## 
 #W  semigroups.gi 
-#Y  Copyright (C) 2013                                    James D. Mitchell
-## 
-##  Licensing information can be found in the README file of this package. 
+#Y  Copyright (C) 2013-14                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
 ## 
 ############################################################################# 
 ##
+
+# star 
+
+InstallMethod(Star, "for an associative element with star",
+[IsAssociativeElementWithStar], 
+function(elm)
+  elm:=StarOp(elm);
+  MakeImmutable(elm);
+  return elm;
+end);
 
 # basic things
 
@@ -27,6 +37,45 @@ function(s)
   fi;
 
   return GeneratorsOfSemigroup(s);
+end);
+
+#
+
+InstallMethod(ViewString, "for a group of bipartitions",
+[IsBipartitionSemigroup and IsGroupAsSemigroup],
+function(s)
+  local str, nrgens;
+  if IsGroup(s) then 
+    TryNextMethod();
+  fi;
+  str:="\><";
+  if HasIsTrivial(s) and IsTrivial(s) then
+    Append(str, "\>trivial\< ");
+  fi;
+
+  Append(str, "\>bipartition\< \>group\< ");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
+    Append(str, "\>of size\> ");
+    Append(str, String(Size(s)));
+    Append(str, ",\<\< ");
+  fi;
+
+  nrgens:=Length(Generators(s));
+  
+  Append(str, "\>on \>");
+  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
+  Append(str, "\< pts with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
 end);
 
 #
@@ -75,7 +124,7 @@ InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroup],
 ViewStringForGroupOfTransformations@);
 
-Unbind(ViewStringForGroupOfTransformations);
+Unbind(ViewStringForGroupOfTransformations@);
 
 #
 
@@ -151,7 +200,7 @@ function(gens, opts)
   fi;
 
   opts:=SemigroupOptions(opts);
-  gens:=ShallowCopy(gens);
+  gens:=AsList(gens);
   
   # try to find a smaller generating set
   if opts.small and Length(gens)>1 then 
@@ -171,7 +220,7 @@ function(gens, opts)
 
     if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
-      for i in [1..n] do
+      for i in [2..n] do
         if not gens[i] in s then
           s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
@@ -201,7 +250,7 @@ function(gens, opts)
     SetIsRegularSemigroup(s, true);
   fi;
  
-  SetGeneratorsOfMagma( s, AsList( gens ) );
+  SetGeneratorsOfMagma(s, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens) 
    and CanEasilyCompareElements(gens) then
@@ -291,7 +340,7 @@ function(gens, record)
     SetIsRegularSemigroup(s, true);
   fi;
 
-  # remove one from gens if there.
+  # remove one from gens if it's there.
   if CanEasilyCompareElements(gens) then
     pos:=Position(gens, One(gens));
     if pos<>fail then 
@@ -397,7 +446,7 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local n, closure_opts, s, filts, f;
+  local n, closure_opts, s, filts, pos, f;
 
   if not IsGeneratorsOfActingSemigroup(gens) then 
     TryNextMethod();
@@ -428,8 +477,17 @@ function(gens, record)
   fi;
 
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
-
-  SetGeneratorsOfInverseSemigroup(s, gens);
+  SetGeneratorsOfInverseSemigroup(s, AsList(gens));
+  
+  if IsMultiplicativeElementWithOneCollection(gens) then 
+    pos:=Position(gens, One(gens));
+    if pos<>fail then 
+      SetFilterObj(s, IsMonoid);
+      gens:=ShallowCopy(gens);
+      Remove(gens, pos);
+      SetGeneratorsOfInverseMonoid(s, gens);
+    fi;
+  fi;
   return s;
 end);
 
@@ -497,13 +555,15 @@ end);
 InstallGlobalFunction(ClosureInverseSemigroupNC,
 function(s, coll, record)
   local t, coll_copy, o, f;
- 
+    
   if coll=[] then
     Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
     " semigroup,");
     return s;
+  elif IsSemigroupIdeal(s) then 
+    return InverseSemigroup(s, coll, record);
   fi;
-
+  
   coll_copy:=Set(ShallowCopy(coll));
   for f in coll do
     if not f^-1 in coll then
@@ -514,14 +574,15 @@ function(s, coll, record)
   o:=StructuralCopy(LambdaOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
-  #should be a case split here for semigroups and monoids 
+  #should be a case split here for semigroups and monoids JDM
   t:=InverseSemigroupByGenerators(
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
-
+  
   #remove everything related to strongly connected components
-  Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
-  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
-  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
+  Unbind(o!.scc);     Unbind(o!.trees);    Unbind(o!.scc_lookup);
+  Unbind(o!.mults);   Unbind(o!.schutz);   Unbind(o!.reverse); 
+  Unbind(o!.rev);     Unbind(o!.truth);    Unbind(o!.schutzstab); 
+  Unbind(o!.exhaust); Unbind(o!.factors); 
 
   o!.parent:=t;
   o!.scc_reps:=[FakeOne(Generators(t))];
@@ -595,25 +656,48 @@ function(s, coll, record)
    SemigroupOptions(record));
 end);
 
-#recreate the lambda orb using the higher degree!
-InstallGlobalFunction(RebaseTransformationSemigroupLambdaOrb, 
+#recreate the lambda/rho orb using the higher degree!
+InstallGlobalFunction(ChangeDegreeOfTransformationSemigroupOrb, 
 function(o, old_deg, t)
-  local extra, ht, i;
-
-  # rehash the orbit values
-  extra:=[old_deg+1..DegreeOfTransformationSemigroup(t)];
-  ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
-  HTAdd(ht, o[1], 1);
-  for i in [2..Length(o)] do 
-    o!.orbit[i]:=ShallowCopy(o[i]);
-    Append(o[i], extra);
-    HTAdd(ht, o[i], i);
-  od;
-  Unbind(o!.ht);
-  o!.ht:=ht;
-  
-  # change the action of <o> to that of <t> 
-  o!.op:=LambdaAct(t);
+  local deg, extra, ht, max, i, orb;
+  deg:=DegreeOfTransformationSemigroup(t);
+  orb:=o!.orbit; 
+  if IsLambdaOrb(o) then 
+    # rehash the orbit values
+    extra:=[old_deg+1..deg];
+    ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
+    #JDM: could make the treehashsize bigger if needed here!
+    HTAdd(ht, o[1], 1);
+    for i in [2..Length(o)] do 
+      orb[i]:=ShallowCopy(o[i]);
+      Append(o[i], extra);
+      HTAdd(ht, o[i], i);
+    od;
+    Unbind(o!.ht);
+    o!.ht:=ht;
+    
+    # change the action of <o> to that of <t> 
+    o!.op:=LambdaAct(t);
+  elif IsRhoOrb(o) then 
+    ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
+    #JDM: could make the treehashsize bigger if needed here!
+    HTAdd(ht, o[1], 1);
+    for i in [2..Length(o)] do 
+      orb[i]:=ShallowCopy(o[i]);
+      if not IsEmpty(o[i]) then 
+        max:=MaximumList(o[i]); #nr kernel classes
+      else
+        max:=0;
+      fi;
+      Append(o[i], [max+1..max+deg-old_deg]);
+      HTAdd(ht, o[i], i);
+    od;
+    Unbind(o!.ht);
+    o!.ht:=ht;
+    
+    # change the action of <o> to that of <t> 
+    o!.op:=RhoAct(t);
+  fi;
   return o;
 end);
 
@@ -621,63 +705,52 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, old_o, o, old_deg, oldnrgens, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, n, j;
+  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup, rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new, htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old, n, j;
  
   if coll=[] then 
-    Info(InfoSemigroups, 2, "all the elements in the collection belong to the ",
+    Info(InfoSemigroups, 2, "every element in the collection belong to the ",
     " semigroup,");
     return s;
   fi;
-
+  
   # init the semigroup or monoid
-  if IsMonoid(s) then 
+  if IsMonoid(s) and One(coll)=One(s) then 
+    # it can be that these One's differ, and hence we shouldn't call Monoid here
     t:=Monoid(s, coll, opts);
   else
     t:=Semigroup(s, coll, opts);
   fi;
   
   # if nothing is known about s, then return t
-  if not HasLambdaOrb(s) then 
+  if not HasLambdaOrb(s) or IsSemigroupIdeal(s) then 
     return t;
   fi;
   
   # set up lambda orb for t
   old_o:=LambdaOrb(s);
   o:=StructuralCopy(old_o);
+  rho_o:=StructuralCopy(RhoOrb(s));
   
   if IsTransformationSemigroup(s) then 
     old_deg:=DegreeOfTransformationSemigroup(s);
     if old_deg<DegreeOfTransformationSemigroup(t) then 
-      RebaseTransformationSemigroupLambdaOrb(o, old_deg, t);
+      ChangeDegreeOfTransformationSemigroupOrb(o, old_deg, t);
+      ChangeDegreeOfTransformationSemigroupOrb(rho_o, old_deg, t);
     fi;
   fi;
-  AddGeneratorsToOrbit(o, coll); 
-  #JDM I'm not certain this is working properly, the OrbitGraph seems not to be
-  #updated in the second position, in the first example in
-  #IdempotentGeneratedSubsemigroup man section
 
-  #oldnrgens := Length(o!.gens);
-  #Append(o!.gens,coll);
-  #ResetFilterObj(o,IsClosed);
-  #o!.stopper := o!.pos;
-  #o!.pos := 1;
-  #o!.genstoapply := [oldnrgens+1..Length(o!.gens)];
-  #Enumerate(o);
-  #if o!.pos <> o!.stopper then
-  #  Error("Unexpected case!");
-  #fi; 
-  #o!.stopper := false;
-  #o!.genstoapply := [1..Length(o!.gens)];
+  AddGeneratorsToOrbit(o, coll); 
 
   # unbind everything related to strongly connected components, since 
   # even if the orbit length doesn't change the strongly connected components
   # might
-  Unbind(o!.scc);   Unbind(o!.trees);  Unbind(o!.scc_lookup);
-  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
-  Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp); 
+  Unbind(o!.scc);     Unbind(o!.trees);    Unbind(o!.scc_lookup);
+  Unbind(o!.mults);   Unbind(o!.schutz);   Unbind(o!.reverse); 
+  Unbind(o!.rev);     Unbind(o!.truth);    Unbind(o!.schutzstab); 
+  Unbind(o!.exhaust); Unbind(o!.factors); 
   
   o!.parent:=t;
-  o!.scc_reps:=[FakeOne(Generators(t))];
+  o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
 
   SetLambdaOrb(t, o); 
   
@@ -685,6 +758,27 @@ function(s, coll, opts)
     return t;
   fi;
   
+  oht:=o!.ht; scc:=OrbSCC(o); old_scc:=OrbSCC(old_o); lookup:=o!.scc_lookup; 
+
+  old_lookup:=old_o!.scc_lookup;
+  
+  # we don't do AddGeneratorsToOrbit of rho_o here because this is handled by
+  # Enumerate(SemigroupData.. later
+  rho_ht:=rho_o!.ht;
+
+  # unbind everything related to strongly connected components, since 
+  # even if the orbit length doesn't change the strongly connected components
+  # might
+  Unbind(rho_o!.scc);   Unbind(rho_o!.trees);  Unbind(rho_o!.scc_lookup);
+  Unbind(rho_o!.mults); Unbind(rho_o!.schutz); Unbind(rho_o!.reverse); 
+  Unbind(rho_o!.rev);   Unbind(rho_o!.truth);  Unbind(rho_o!.schutzstab);
+  
+  rho_o!.parent:=t;
+  rho_o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
+  Append(rho_o!.gens, coll);
+  ResetFilterObj(rho_o, IsClosed);
+  SetRhoOrb(t, rho_o);
+
   # get new and old R-rep orbit data
   new_data:=SemigroupData(t);
   old_data:=SemigroupData(s);
@@ -711,7 +805,8 @@ function(s, coll, opts)
   # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
   
   lambdarhoht:=new_data!.lambdarhoht;
-  
+  rholookup:=new_data!.rholookup;
+
   repslookup:=new_data!.repslookup; 
   # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
  
@@ -746,15 +841,11 @@ function(s, coll, opts)
   lambdaact:=LambdaAct(t);
   lambdaperm:=LambdaPerm(t);
   rho:=RhoFunc(t);
-
-  oht:=o!.ht;
-  scc:=OrbSCC(o);
-  old_scc:=OrbSCC(old_o);
-  lookup:=o!.scc_lookup; 
-  old_lookup:=old_o!.scc_lookup;
   
   # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
   # i.e. position of old R-rep in new_orb
+  # JDM: this is mainly used to update the orbit graph of the R-rep orbit, but
+  # I think this could also be done during the main loop below.
   
   old_to_new:=EmptyPlist(old_nr);
   old_to_new[1]:=1;
@@ -780,82 +871,107 @@ function(s, coll, opts)
   # install old R-class reps in new_orb
   while new_nr<=old_nr and i<old_nr do
     i:=i+1;
+
     x:=old_orb[i][4];
-    if not x in s then 
-      Error();
-    fi;
-    pos:=old_schreiermult[i]; 
+    
+    pos:=old_schreiermult[i]; #lambda-index for x 
     m:=lookup[pos];           
     rank:=ActionRank(t)(x);
+    
     if rank>max_rank or scc[m][1]=old_scc[old_lookup[pos]][1] then 
-      y:=x;
+    # in either case x is an old R-rep and so has rectified lambda value.
     elif pos=old_scc[old_lookup[pos]][1] then 
-      y:=x*LambdaOrbMult(o, m, pos)[2];
+      x:=x*LambdaOrbMult(o, m, pos)[2];
     else
       # x has rectified lambda value but pos refers to the unrectified value
-      y:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
+      x:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
        *LambdaOrbMult(o, m, pos)[2];
     fi;
-  
-    rhoy:=rho(y);
-    val:=htvalue(lambdarhoht, rhoy);
+    
+    rhox:=rho(x);
+    l:=htvalue(rho_ht, rhox); #l<>fail since we have copied the old rho values
 
-    if val=fail or not IsBound(val[m]) or rank>max_rank then 
-      #new rho value, and hence new R-rep
-      lenreps[m]:=lenreps[m]+1;
-      if val=fail then 
-        val:=[];
-        val[m]:=lenreps[m];
-        htadd(lambdarhoht, rhoy, val);
-      else 
-        val[m]:=lenreps[m];
-      fi;
+    if not IsBound(lambdarhoht[l]) then 
+    # old rho-value, but new lambda-rho-combination
+
       new_nr:=new_nr+1;
-      reps[m][lenreps[m]]:=[y];
-      repslookup[m][lenreps[m]]:=[new_nr];
-      repslens[m][lenreps[m]]:=1;
-      orblookup1[new_nr]:=lenreps[m];
+      lenreps[m]:=lenreps[m]+1;
+      ind:=lenreps[m];
+      lambdarhoht[l]:=[];
+      lambdarhoht[l][m]:=ind;
+      
+      reps[m][ind]:=[x];
+      repslookup[m][ind]:=[new_nr];
+      repslens[m][ind]:=1;
+      
+      orblookup1[new_nr]:=ind;
       orblookup2[new_nr]:=1;
-      x:=[t, m, o, y, false, new_nr];
-    else              # old rho value
-      val:=val[m];
-      x:=[t, m, o, y, false, new_nr+1];
-      #check membership in schutz gp via stab chain
-      schutz:=LambdaOrbStabChain(o, m);
 
-      if schutz=true then # schutz gp is symmetric group
-        old_to_new[i]:=repslookup[m][val][1];
-        continue;
-      else
-        if schutz=false then # schutz gp is trivial
-          tmp:=htvalue(ht, y);
-          if tmp<>fail then
-            old_to_new[i]:=tmp;
-            continue;
-          fi;
-        else # schutz gp neither trivial nor symmetric group
-          old:=false;
-          for n in [1..repslens[m][val]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], y))=()
-              then
-              old:=true;
-              old_to_new[i]:=repslookup[m][val][n];
-              break;
+      pt:=[t, m, o, x, false, new_nr];
+    elif not IsBound(lambdarhoht[l][m]) then 
+    # old rho-value, but new lambda-rho-combination
+
+      new_nr:=new_nr+1;
+      lenreps[m]:=lenreps[m]+1;
+      ind:=lenreps[m];
+      lambdarhoht[l][m]:=ind;
+      
+      reps[m][ind]:=[x];
+      repslookup[m][ind]:=[new_nr];
+      repslens[m][ind]:=1;
+      
+      orblookup1[new_nr]:=ind;
+      orblookup2[new_nr]:=1;
+
+      pt:=[t, m, o, x, false, new_nr];
+    else
+    # old rho value, and maybe we already have a rep of y's R-class...
+      ind:=lambdarhoht[l][m];
+      pt:=[t, m, o, x, false, new_nr+1];
+      if not rank>max_rank then 
+      # this is maybe a new R-reps and so tests are required...
+        
+        #check membership in Schutzenberger group via stabiliser chain
+        schutz:=LambdaOrbStabChain(o, m);
+
+        if schutz=true then 
+        # the Schutzenberger group is the symmetric group
+          old_to_new[i]:=repslookup[m][ind][1];
+          continue;
+        else
+          if schutz=false then
+           # the Schutzenberger group is trivial
+            data_val:=htvalue(ht, x);
+            if data_val<>fail then
+              old_to_new[i]:=data_val;
+              continue;
             fi;
-          od;
-          if old then
-            continue;
+          else
+          # the Schutzenberger group is neither trivial nor symmetric group
+           old:=false;
+            for n in [1..repslens[m][ind]] do
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then
+                old:=true;
+                old_to_new[i]:=repslookup[m][ind][n];
+                break;
+              fi;
+            od;
+            if old then
+              continue;
+            fi;
           fi;
         fi;
-        new_nr:=new_nr+1;
-        repslens[m][val]:=repslens[m][val]+1;
-        reps[m][val][repslens[m][val]]:=y;
-        repslookup[m][val][repslens[m][val]]:=new_nr;
-        orblookup1[new_nr]:=val;
-        orblookup2[new_nr]:=repslens[m][val];
       fi;
+      # if rank>max_rank, then <y> is an old R-rep and hence a new one too
+      new_nr:=new_nr+1;
+      repslens[m][ind]:=repslens[m][ind]+1;
+      reps[m][ind][repslens[m][ind]]:=x;
+      repslookup[m][ind][repslens[m][ind]]:=new_nr;
+      orblookup1[new_nr]:=ind;
+      orblookup2[new_nr]:=repslens[m][ind];
     fi;
-    new_orb[new_nr]:=x;
+    rholookup[new_nr]:=l;
+    new_orb[new_nr]:=pt;
     graph[new_nr]:=ShallowCopy(old_graph[i]);
     new_schreierpos[new_nr]:=old_to_new[old_schreierpos[i]];
     # orb[nr] is obtained from orb[i]
@@ -863,13 +979,11 @@ function(s, coll, opts)
     # by multiplying by gens[j]
     new_schreiermult[new_nr]:=pos;  # and ends up in position <pos> of 
                                     # its lambda orb
-    htadd(ht, y, new_nr);
+    htadd(ht, x, new_nr);
     old_to_new[i]:=new_nr;
   od;
   
-  
   # process the orbit graph
-
   for i in [1..new_nr] do 
     for j in [1..Length(graph[i])] do 
       graph[i][j]:=old_to_new[graph[i][j]];
@@ -895,8 +1009,8 @@ end);
 # <limit> is the max size of the subsemigroup.
 
 InstallMethod(SubsemigroupByProperty, 
-"for an acting semigroup with generators, function, and positive integer",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
+"for an acting semigroup, function, and positive integer",
+[IsActingSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
@@ -925,8 +1039,8 @@ end);
 # <limit> is the max size of the subsemigroup.
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for acting semigroup with inverse op & generators, function, positive integer",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
+"for acting semigroup with inverse op, function, positive integer",
+[IsActingSemigroupWithInverseOp, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
@@ -955,8 +1069,8 @@ end);
 #
 
 InstallMethod(SubsemigroupByProperty, 
-"for an acting semigroup with generators and function",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
+"for an acting semigroup and function",
+[IsActingSemigroup, IsFunction], 
 function(S, func)
   return SubsemigroupByProperty(S, func, Size(S));
 end);
@@ -964,8 +1078,8 @@ end);
 #
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for acting semigroup with inverse op & generators and function",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction], 
+"for acting semigroup with inverse op and function",
+[IsActingSemigroupWithInverseOp, IsFunction], 
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);
@@ -1070,6 +1184,24 @@ InstallMethod(RandomTransformationMonoid,
 [IsPosInt, IsPosInt], 
 function(m,n)
   return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
+end);
+
+#
+
+InstallMethod(RandomBipartitionSemigroup,
+"for positive integer and positive integer",
+[IsPosInt, IsPosInt], 
+function(m,n)
+  return Semigroup(Set(List([1..m], x-> RandomBipartition(n))));
+end);
+
+#
+
+InstallMethod(RandomBipartitionMonoid,
+"for positive integer and positive integer",
+[IsPosInt, IsPosInt], 
+function(m,n)
+  return Monoid(Set(List([1..m], x-> RandomBipartition(n))));
 end);
 
 #EOF

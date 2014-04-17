@@ -1,12 +1,75 @@
 #############################################################################
 ##
 #W  semigroups.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+<#GAPDoc Label="Generators">
+  <ManSection>
+    <Func Name="Generators" Arg="S"/>
+    <Returns>A list of generators.</Returns>
+    <Description>
+      <C>Generators</C> returns a generating set that can be used to define the
+      semigroup <A>S</A>.  The generators of a monoid or inverse semigroup
+      <A>S</A>, say, can be defined in several ways, for example, including or
+      excluding the identity element, including or not the inverses of the
+      generators.  <C>Generators</C> uses the definition that returns the least
+      number of generators. If no generating set for <A>S</A> is known, then
+      <C>GeneratorsOfSemigroup</C> is used by default.<P/>
+     
+      <List>
+        <Mark>for a group</Mark> 
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfGroup" BookName="ref"/>.
+        </Item>
+        <Mark>for an ideal of semigroup</Mark> 
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfSemigroupIdeal"/>.
+        </Item>
+        <Mark>for a semigroup</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>.
+        </Item>
+        <Mark>for a monoid</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>.
+        </Item>
+        <Mark>for an inverse semigroup</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
+        </Item>
+        <Mark>for an inverse monoid</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
+        </Item>
+      </List>
+<Example>
+gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
+> Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
+gap> GeneratorsOfSemigroup(M);
+[ IdentityTransformation, 
+  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> GeneratorsOfMonoid(M);
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> Generators(M);
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> S:=Semigroup(Generators(M));;
+gap> Generators(S);
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> GeneratorsOfSemigroup(S);
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]</Example>
+   </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="ClosureSemigroup">
   <ManSection>
@@ -23,7 +86,7 @@
       If present, the optional third argument <A>opts</A> should be a record
       containing the values of the options for the semigroup being created as
       described in Section <Ref Sect="opts"/>.<P/>
-      <Example>
+      <Example><![CDATA[
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
 >  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
 >  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
@@ -31,9 +94,9 @@ gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 gap> S:=Monoid(gens[1]);;
 gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
 gap> S;
-&lt;transformation monoid on 8 pts with 4 generators>
+<transformation monoid on 8 pts with 4 generators>
 gap> Size(S);
-233606</Example>
+233606]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -54,7 +117,7 @@ gap> Size(S);
       containing the values of the options for the inverse semigroup being
       created; these options are described in Section <Ref Sect="opts"/>. <P/>
 
-      <Example>
+      <Example><![CDATA[
 gap> S:=InverseMonoid(
 > PartialPerm( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 9, 10, 6, 3, 8, 4 ] ),
 > PartialPerm( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) );;
@@ -62,14 +125,14 @@ gap> f:=PartialPerm(
 > [ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],
 > [ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;
 gap> S:=ClosureInverseSemigroup(S, f);
-&lt;inverse partial perm semigroup on 19 pts with 4 generators>
+<inverse partial perm semigroup on 19 pts with 4 generators>
 gap> Size(S);
 9744
 gap> T:=Idempotents(SymmetricInverseSemigroup(10));;
 gap> S:=ClosureInverseSemigroup(S, T);
-&lt;inverse partial perm semigroup on 19 pts with 854 generators>
+<inverse partial perm semigroup on 19 pts with 854 generators>
 gap> S:=InverseSemigroup(SmallGeneratingSet(S));
-&lt;inverse partial perm semigroup on 19 pts with 14 generators></Example>
+<inverse partial perm semigroup on 19 pts with 14 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -82,12 +145,12 @@ gap> S:=InverseSemigroup(SmallGeneratingSet(S));
     <Description>
       Returns  a  random  inverse  monoid  or semigroup of partial
       permutations with degree at most <A>n</A>  with <A>m</A> generators.
-      <Example>
+      <Example><![CDATA[
 gap> S:=RandomInverseSemigroup(10,10);                                
-&lt;inverse partial perm semigroup on 10 pts with 10 generators>
+<inverse partial perm semigroup on 10 pts with 10 generators>
 gap> S:=RandomInverseMonoid(10,10);   
-&lt;inverse partial perm monoid on 10 pts with 10 generators>
-</Example>
+<inverse partial perm monoid on 10 pts with 10 generators>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -100,11 +163,11 @@ gap> S:=RandomInverseMonoid(10,10);
     <Description>
       Returns a random transformation monoid or semigroup of at most degree
       <A>n</A> with <A>m</A> generators.
-      <Example>
+      <Example><![CDATA[
 gap> S:=RandomTransformationMonoid(5,5);
-&lt;transformation monoid on 5 pts with 5 generators>
+<transformation monoid on 5 pts with 5 generators>
 gap> S:=RandomTransformationSemigroup(5,5);
-&lt;transformation semigroup on 5 pts with 5 generators></Example>
+<transformation semigroup on 5 pts with 5 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -117,11 +180,11 @@ gap> S:=RandomTransformationSemigroup(5,5);
     <Description>
       Returns a random partial perm monoid or semigroup of degree at most
       <A>n</A> with <A>m</A> generators.
-      <Log>
+      <Log><![CDATA[
 gap> S:=RandomPartialPermSemigroup(5, 5);
-&lt;partial perm semigroup on 4 pts with 5 generators>
+<partial perm semigroup on 4 pts with 5 generators>
 gap> S:=RandomPartialPermMonoid(5, 5);
-&lt;partial perm monoid on 5 pts with 5 generators></Log>
+<partial perm monoid on 5 pts with 5 generators>]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -134,11 +197,11 @@ gap> S:=RandomPartialPermMonoid(5, 5);
     <Description>
       Returns a random monoid or semigroup of binary relations on <A>n</A>
       points with <A>m</A> generators.
-      <Example>
+      <Example><![CDATA[
 gap> RandomBinaryRelationSemigroup(5,5);
-&lt;semigroup with 5 generators>
+<semigroup with 5 generators>
 gap> RandomBinaryRelationMonoid(5,5);   
-&lt;monoid with 5 generators></Example>
+<monoid with 5 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -151,8 +214,11 @@ gap> RandomBinaryRelationMonoid(5,5);
     <Description>
       Returns a random monoid or semigroup of bipartition on <A>n</A>
       points with <A>m</A> generators.
-      <Example>
-</Example>
+      <Example><![CDATA[
+gap> RandomBipartitionMonoid(5,5);
+<bipartition monoid on 5 pts with 5 generators>
+gap> RandomBipartitionSemigroup(5,5);
+<bipartition semigroup on 5 pts with 5 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -173,7 +239,7 @@ gap> RandomBinaryRelationMonoid(5,5);
     If the optional third argument <A>limit</A> is present and a positive
     integer, then once the subsemigroup has at least <A>limit</A> elements the
     computation stops.
-    <Example>
+    <Example><![CDATA[
 gap> IsIsometry:=function(f)
 > local n, i, j, k, l;
 >  n:=RankOfPartialPerm(f);
@@ -191,7 +257,7 @@ gap> IsIsometry:=function(f)
 gap> S:=InverseSubsemigroupByProperty(SymmetricInverseSemigroup(5),
 > IsIsometry);;
 gap> Size(S);
-142</Example>
+142]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -214,16 +280,17 @@ gap> Size(S);
     If the optional third argument <A>limit</A> is present and a positive
     integer, then once the subsemigroup has at least <A>limit</A> elements the
     computation stops.
-    <Example>
-gap> func:=function(f) return 1^f&lt;>1 and
+    <Example><![CDATA[
+gap> func:=function(f) return 1^f<>1 and
 > ForAll([1..DegreeOfTransformation(f)], y-> y=1 or y^f=y); end;
 function( f ) ... end
 gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(3), func);
-&lt;transformation semigroup of size 2, on 3 pts with 2 generators>
+<transformation semigroup of size 2, on 3 pts with 2 generators>
 gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(4), func);
-&lt;transformation semigroup of size 3, on 4 pts with 3 generators>
+<transformation semigroup of size 3, on 4 pts with 3 generators>
 gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(5), func);
-&lt;transformation semigroup of size 4, on 5 pts with 4 generators></Example>
+<transformation semigroup of size 4, on 5 pts with 4 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
+

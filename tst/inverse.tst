@@ -264,8 +264,8 @@ gap> Size(DClass(h))=Size(RClass(h))^2/2;
 true
 
 #
-gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
-gap> s:=Semigroup(ReadGenerators(file, 600));
+gap> s:=Semigroup( [ Transformation( [ 3, 2, 1, 6, 5, 4 ] ), 
+> Transformation( [ 4, 7, 3, 1, 6, 5, 7 ] ) ] );
 <transformation semigroup on 7 pts with 2 generators>
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
 gap> inv:=InverseGeneralMapping(iso);;
@@ -908,17 +908,14 @@ gap> NextIterator(iter);
 <identity partial perm on [ 1, 16, 17, 19 ]>
 gap> NextIterator(iter);
 <identity partial perm on [ 1, 7, 15, 16 ]>
-gap> s:=RandomInverseSemigroup(2,20);
-<inverse partial perm semigroup on 20 pts with 2 generators>
+gap> s:=RandomInverseSemigroup(2,20);;
 gap> iter:=IteratorOfDClassReps(s);
 <iterator of D-class reps>
-gap> s:=RandomInverseSemigroup(2,100);
-<inverse partial perm semigroup on 97 pts with 2 generators>
+gap> s:=RandomInverseSemigroup(2,100);;
 gap> iter:=IteratorOfLClassReps(s);
 <iterator of L-class reps>
 gap> for i in [1..10000] do NextIterator(iter); od;
-gap> s:=RandomInverseSemigroup(2,10);        
-<inverse partial perm semigroup on 10 pts with 2 generators>
+gap> s:=RandomInverseSemigroup(2,10);;
 gap> iter:=IteratorOfLClassReps(s);
 <iterator of L-class reps>
 gap> for i in iter do od;
@@ -978,10 +975,13 @@ gap> List(DClasses(S), SchutzenbergerGroup);
 [ Group(()), Group(()), Group(()), Group(()), Group([ (2,5) ]), Group(()) ]
 
 #
-gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
-gap> ReadGenerators(file, 1078);;
-gap> s:=InverseSemigroup(last);
-<inverse partial perm semigroup on 9 pts with 6 generators>
+gap> s:=InverseSemigroup(
+> [ PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 7, 8, 9 ] ), 
+>  PartialPerm( [ 1, 3, 4, 7, 8, 9 ], [ 1, 3, 4, 7, 8, 9 ] ), 
+>  PartialPerm( [ 3, 7, 8, 9 ], [ 2, 7, 8, 9 ] ), 
+>  PartialPerm( [ 1, 7, 9 ], [ 1, 7, 9 ] ), 
+>  PartialPerm( [ 1, 7, 9 ], [ 8, 7, 9 ] ) ]);;
 gap> Size(s);
 12
 gap> IsDTrivial(s);

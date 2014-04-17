@@ -1,7 +1,7 @@
 ################################################################################
 ##
-#W  inverse.gi
-#Y  Copyright (C) 2013                                 Julius Jonusas
+#W  freeinverse.gi
+#Y  Copyright (C) 2013-14                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
@@ -451,17 +451,6 @@ function(tree1, tree2)
   product[3] := new_names[tree2![3]];
   return Objectify(TypeObj(tree1), product);
 end);
-
-InternalRep := function(x) 
-  local out, i;
-  
-    out := [];
-    for i in [1 .. 5 +  x![2]] do
-      out[i] := x![i];
-    od;
-  return out ;
-end;
-  
 
 ##############################################################################
 ##

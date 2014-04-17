@@ -32,7 +32,7 @@
   <ManSection> 
     <Oper Name="LookForInOrb" Arg="o, func, start"/>
     <Returns><K>false</K> or a positive integer.</Returns>
-    <Description> 
+    <Description>
       The arguments of this function should be an orbit <A>o</A>, a function
       <A>func</A> which gets the orbit object and a point in the orbit as
       arguments, and a positive integer <A>start</A>. The function <A>func</A>
@@ -59,6 +59,13 @@ gap> o;
     <Oper Name="EvaluateWord" Arg="gens, w"/>
     <Returns>A semigroup element.</Returns>
     <Description> 
+      The argument <A>gens</A> should be a collection of generators of a
+      semigroup and the argument <A>w</A> should be a list of positive integers
+      less than or equal to the length of <A>gens</A>.  This operation evaluates
+      the word <A>w</A> in the generators <A>gens</A>. More precisely,
+      <C>EvaluateWord</C> returns the equivalent of: 
+      <Log>Product(List(w, i-> gens[i]));</Log> 
+      see also <Ref Meth="Factorization"/>.<P/>
       <List>
         <Mark>for elements of a semigroup</Mark>
         <Item>
@@ -74,13 +81,13 @@ gap> o;
           When <A>gens</A> is a list of elements with a semigroup inverse and
           <A>w</A> is a list of non-zero integers whose absolute value does not
           exceed the length of <A>gens</A>, this operation returns the product
-    <C>gens[AbsInt(w[1])]^SignInt(w[1])*...*gens[AbsInt(w[n])]^SignInt(w[n])</C>
+          <C>gens[AbsInt(w[1])]^SignInt(w[1])*...*gens[AbsInt(w[n])]^SignInt(w[n])</C>
           where <C>n</C> is the length of <A>w</A>.
         </Item>
       </List>
 
       Note that <C>EvaluateWord(<A>gens</A>, [])</C> returns
-      <C>One(<A>gens</A>)</C> if <A>gens</A> is belongs to the category
+      <C>One(<A>gens</A>)</C> if <A>gens</A> belongs to the category
       <Ref Filt="IsMultiplicativeElementWithOne" BookName="ref"/>.
 <Example>
 gap> gens:=[ Transformation( [ 2, 4, 4, 6, 8, 8, 6, 6 ] ), 

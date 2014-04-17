@@ -1,32 +1,190 @@
 #############################################################################
 ##
-#W  pictures.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#W  display.xml
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-<#GAPDoc Label="TikzInit">
+<#GAPDoc Label="Splash">
   <ManSection>
-    <Var Name="TikzInit"/>
+    <Func Name="Splash" Arg="str, [opts]"/>
+    <Returns>Nothing.</Returns>
+    <Description>
+      This function attempts to convert the string <A>str</A> into a pdf
+      document and open this document, i.e. to splash it all over your monitor.<P/>
+
+      The string <A>str</A> must correspond to a valid <C>dot</C> or
+      <C>LaTeX</C> text file and you must have have <C>GraphViz</C> and
+      <C>pdflatex</C> installed on your computer.  For details about these file
+      formats, see <URL>http://www.latex-project.org</URL> and 
+      <URL>http://www.graphviz.org</URL>.<P/>
+      
+      This function is provided to allow convenient, immediate viewing of the
+      pictures produced by the functions:
+      <Ref Func="TikzBlocks"/>, <Ref Func="TikzBipartition"/>, 
+      <Ref Func="DotSemilatticeOfIdempotents"/>, and <Ref Func="DotDClasses"/>.<P/>
+
+      The optional second argument <A>opts</A> should be a record with
+      components corresponding to various options, given below. 
+
+      <List>
+        <Mark>path</Mark>
+        <Item>
+          this should be a string representing the path to the directory where
+          you want <C>Splash</C> to do its work. The default value of this
+          option is <C>"~/"</C>.
+        </Item>
+
+        <Mark>directory</Mark>
+        <Item>
+          this should be a string representing the name of the directory in
+          <C>path</C> where you want <C>Splash</C> to do its work. This function
+          will create this directory if does not already exist. <P/>
+    
+          The default value of this option is <C>"tmp.viz"</C> if the option
+          <C>path</C> is present, and the result of 
+          <Ref Func="DirectoryTemporary" BookName="ref"/> is used otherwise.
+        </Item>
+          
+        <Mark>filename</Mark>
+        <Item>
+          this should be a string representing the name of the file where
+          <A>str</A> will be written.  The default value of this option is
+          <C>"vizpicture"</C>.
+        </Item>
+
+        <Mark>viewer</Mark>
+        <Item>
+          this should be a string representing the name of the program which
+          should open the files produced by <C>GraphViz</C> or <C>pdflatex</C>.
+        </Item>
+
+        <Mark>type</Mark>
+        <Item>
+          this option can be used to specify that the string <A>str</A> contains
+          a &LaTeX; or <C>dot</C> document. You can specify this option in
+          <A>str</A> directly by making the first line <C>"%latex"</C> or
+          <C>"//dot"</C>.  There is no default value for this option, this
+          option must be specified in <A>str</A> or in <A>opt.type</A>. 
+        </Item>
+
+        <Mark>filetype</Mark>
+        <Item>
+          this should be a string representing the type of file which
+          <C>Splash</C> should produce. For &LaTeX; files, this option is
+          ignored and the default value <C>"pdf"</C> is used. 
+        </Item>
+      </List>
+
+      This function was written by Attila Egri-Nagy with some minor changes by
+      J. D. Mitchell.<P/>
+
+      <Log><![CDATA[
+        gap> Splash(DotDClasses(FullTransformationMonoid(4)));]]></Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TikzBlocks">
+  <ManSection>
+    <Func Name="TikzBlocks" Arg="blocks"/>
     <Returns>A string.</Returns>
     <Description>
-      This global variable is set to the following string:
-      <Q>\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{document}\n</Q>
+      This function produces a graphical representation of the blocks
+      <A>blocks</A> of a bipartition using the <C>tikz</C> package for &LaTeX;.
+      More precisely, this function outputs a string containing a minimal &LaTeX;
+      document which can be compiled using &LaTeX; to produce a picture of
+      <A>blocks</A>.  <P/>
 
-      <Example>
-gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
->  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
->  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
->  Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
-gap> S:=Monoid(gens[1]);;
-gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
-gap> S;
-&lt;transformation monoid on 8 pts with 4 generators>
-gap> Size(S);
-233606</Example>
+      <Log><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;
+gap> TikzBlocks(RightBlocks(f));
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \
+\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\
+aw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\
+.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \
+ \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\
+raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
+.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\
+ and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"]]></Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TikzBipartition">
+  <ManSection>
+    <Func Name="TikzBipartition" Arg="f[, opts]"/>
+    <Returns>A string.</Returns>
+    <Description>
+      This function produces a graphical representation of the bipartition
+      <A>f</A> using the <C>tikz</C> package for &LaTeX;. More precisely, this
+      function outputs a string containing a minimal &LaTeX; document which can
+      be compiled using &LaTeX; to produce a picture of <A>f</A>. <P/>
+
+      If the optional second argument <A>opts</A> is a record with the component
+      <C>colors</C> set to <K>true</K>, then the blocks of <A>f</A> will be
+      colored using the standard <C>tikz</C> colors. Due to the limited number
+      of colors available in <C>tikz</C> this option only works when the degree
+      of <A>f</A> is less than 20. 
+    
+      <Log><![CDATA[
+gap> f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -3, -5 ], [ 3, -1, -2 ], 
+> [ -4 ] ] );;
+gap> TikzBipartition(f);
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\
+fill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \
+ \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\
+\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\
+,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\
+.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\
+le(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\
+ircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\
+)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\
+\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \
+\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\
+aw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\
+circle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\
+,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\
+(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\
+ines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\
+\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\
+ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
+ %lines\n\\end{tikzpicture}\n\n\\end{document}"]]></Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DotSemilatticeOfIdempotents">
+  <ManSection>
+    <Attr Name="DotSemilatticeOfIdempotents" Arg="S"/>
+    <Returns>A string.</Returns>
+    <Description>
+      This function produces a graphical representation of the semilattice of
+      the idempotents of an inverse semigroup <A>S</A> where the elements of
+      <A>S</A> have a unique semigroup inverse accessible via <Ref
+        Attr="Inverse" BookName="ref"/>. The idempotents are grouped by the
+      &D;-class they belong to.<P/>
+      
+      The output is in <C>dot</C> format (also known as <C>GraphViz</C>) format.
+      For details about this file format, and information about how to display
+      or edit this format see <URL>http://www.graphviz.org</URL>. <P/>
+
+      <Log><![CDATA[
+gap> S:=DualSymmetricInverseMonoid(4);
+<inverse bipartition monoid on 4 pts with 3 generators>
+gap> DotSemilatticeOfIdempotents(S);
+"graph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph cluste\
+r_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 8 12 13 \n}\nsubgraph clus\
+ter_3{\n2 3 10 4 6 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3 -- \
+1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\n8 \
+-- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- 6\n\
+12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15 -\
+- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -50,9 +208,9 @@ gap> Size(S);
       The &D;-classes are shown as eggbox diagrams with &L;-classes as rows and
       &R;-classes as columns; group &H;-classes are shaded gray and contain an
       asterisk. The &D;-classes are numbered according to their index in
-      <C>GreensDClasses(<A>S</A>)</C>, so that a <C>i</C> appears next to the
+      <C>GreensDClasses(<A>S</A>)</C>, so that an <C>i</C> appears next to the
       eggbox diagram of <C>GreensDClasses(<A>S</A>)[i]</C>. A red line from one
-      &D;-class to another indicates that higher &D;-class is greater than 
+      &D;-class to another indicates that the higher &D;-class is greater than 
       the lower one in the &D;-order on <A>S</A>. <P/>
 
       If the optional second argument <A>record</A> is present, it can be used
