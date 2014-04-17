@@ -603,6 +603,96 @@ gap> GeneratorsOfInverseSemigroup(T);
 gap> One(S) in T;
 true
 
+# Issue 33 (problem with Rees factor semigroups)
+gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), [Transformation([1,2,2,2])]);
+<regular transformation semigroup ideal on 4 pts with 1 generator>
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);
+<semigroup congruence>
+gap> hom := HomomorphismQuotientSemigroup(cong);
+MappingByFunction( <full transformation semigroup on 4 pts>, <quotient of Mono\
+id( [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), 
+  Transformation( [ 1, 2, 3, 1 ] ) 
+ ] ) by SemigroupCongruence( ... )>, function( x ) ... end )
+gap> T := Range(hom);
+<quotient of Monoid( [ Transformation( [ 2, 3, 4, 1 ] ), 
+  Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 3, 1 ] ) 
+ ] ) by SemigroupCongruence( ... )>
+gap> IsSemigroup(T);
+true
+gap> Size(T);
+169
+gap>  u := Image(hom, Transformation([1,1,1,1]));
+{Transformation( [ 1, 1, 1, 1 ] )}
+gap> t := Image(hom, Transformation([2,1,2,3]));
+{Transformation( [ 2, 1, 2, 3 ] )}
+gap> u*t;
+{Transformation( [ 2, 2, 2, 2 ] )}
+gap> t*u;
+{Transformation( [ 1, 1, 1, 1 ] )}
+gap> S:=Semigroup(u,t);
+<semigroup with 2 generators>
+gap> Size(S);
+2
+
+# Issue 56 (Monoid/InverseMonoid removes One inappropriately sometimes)
+gap> M:=InverseMonoid( PartialPerm([1,2]), PartialPerm([1]) );
+<commutative inverse partial perm monoid on 2 pts with 1 generator>
+gap> One(M) in M;
+true
+gap> AsSet(M);
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
+gap> M:=InverseMonoid( PartialPerm([1,2]), PartialPerm([1]) );
+<commutative inverse partial perm monoid on 2 pts with 1 generator>
+gap> AsSet(M);
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
+
+# Issue 4 in Orb (logs are not properly updated if the enumeration stops early
+# because we find something we are looking for)
+gap> gens:=[ PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ) ];;
+gap> o:=Orb([gens[1]], [0], OnPosIntSetsPartialPerm, rec(log:=true,   
+> lookingfor:=function(o, x) return x=[1,2,4,5,6]; end));
+<open orbit, 1 points looking for sth. with log>
+gap>  Enumerate(o);
+<open orbit, 2 points looking for sth. with log>
+gap> o!.looking:=false;
+false
+gap> Enumerate(o);
+<closed orbit, 2 points with log>
+gap> o!.logind;
+[ 1, 0 ]
+gap> o!.logpos;
+3
+gap> o!.log;
+[ -1, 2 ]
+gap> AddGeneratorsToOrbit(o, [gens[2]]);
+<closed orbit, 12 points with log>
+
+# Issue 72 (problem with IsomorphismTransformationSemigroup when applied to a
+# binary relation monoid)
+gap> B:=Monoid( BinaryRelationOnPoints( [ [ 2 ], [ 1, 2 ], [ 1, 3 ] ] ),
+> BinaryRelationOnPoints( [ [ 3 ], [ 1, 2 ], [ 1, 3 ] ] ), 
+> BinaryRelationOnPoints( [ [ 1, 2, 3 ], [ 1, 2 ], [ 3 ] ] ) );; 
+gap> Size(B);
+16
+gap> IsMonoid(B);
+true
+gap> iso:=IsomorphismTransformationSemigroup(B);;
+gap> T:=Range(iso);
+<transformation monoid on 6 pts with 3 generators>
+gap> Size(T);
+16
+gap> IsMonoid(T);
+true
+
+# Issue 89 
+gap> S:=Semigroup( [ Transformation( [ 2, 1, 3, 1, 4, 3 ] ), 
+>  Transformation( [ 2, 2, 2, 2, 1, 2 ] ), Transformation( [ 5, 3, 4, 3, 5 ] ),
+> Transformation( [ 6, 4, 1, 4, 5, 3 ] ), 
+>  Transformation( [ 6, 5, 2, 6, 3, 4 ] ) ] );;
+gap> NrIdempotents(S)=Number(HClasses(S), IsGroupHClass);
+true
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
