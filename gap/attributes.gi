@@ -990,7 +990,7 @@ InstallMethod(IsomorphismTransformationSemigroup,
 [IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup], 
 function(s)        
   local n, pts, o, t, pos, i;
-  if not IsBinaryRelation(Representative(s)) then 
+  if not IsBinaryRelationOnPointsRep(Representative(s)) then 
     TryNextMethod();
   fi;
   n:=DegreeOfBinaryRelation(GeneratorsOfSemigroup(s)[1]);
