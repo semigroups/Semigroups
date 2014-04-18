@@ -196,8 +196,8 @@ function(gens, opts)
   fi;
 
   opts:=SemigroupOptions(opts);
-  gens:=ShallowCopy(gens);
-
+  gens:=AsList(gens);
+  
   # try to find a smaller generating set
   if opts.small and Length(gens)>1 then
     gens:=SSortedList(gens); #remove duplicates
@@ -245,8 +245,8 @@ function(gens, opts)
   if opts.regular then
     SetIsRegularSemigroup(s, true);
   fi;
-
-  SetGeneratorsOfMagma( s, AsList( gens ) );
+ 
+  SetGeneratorsOfMagma(s, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens)
    and CanEasilyCompareElements(gens) then
@@ -559,8 +559,10 @@ function(s, coll, record)
     Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
     " semigroup,");
     return s;
+  elif IsSemigroupIdeal(s) then 
+    return InverseSemigroup(s, coll, record);
   fi;
-
+  
   coll_copy:=Set(ShallowCopy(coll));
   for f in coll do
     if not f^-1 in coll then
@@ -574,11 +576,12 @@ function(s, coll, record)
   #should be a case split here for semigroups and monoids JDM
   t:=InverseSemigroupByGenerators(
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
-
+  
   #remove everything related to strongly connected components
-  Unbind(o!.scc);   Unbind(o!.trees);  Unbind(o!.scc_lookup);
-  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
-  Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp);
+  Unbind(o!.scc);     Unbind(o!.trees);    Unbind(o!.scc_lookup);
+  Unbind(o!.mults);   Unbind(o!.schutz);   Unbind(o!.reverse); 
+  Unbind(o!.rev);     Unbind(o!.truth);    Unbind(o!.schutzstab); 
+  Unbind(o!.exhaust); Unbind(o!.factors); 
 
   o!.parent:=t;
   o!.scc_reps:=[FakeOne(Generators(t))];
@@ -718,7 +721,7 @@ function(s, coll, opts)
   fi;
 
   # if nothing is known about s, then return t
-  if not HasLambdaOrb(s) then
+  if not HasLambdaOrb(s) or IsSemigroupIdeal(s) then 
     return t;
   fi;
 
@@ -735,10 +738,7 @@ function(s, coll, opts)
     fi;
   fi;
 
-  AddGeneratorsToOrbit(o, coll);
-  #JDM I'm not certain this is working properly, the OrbitGraph seems not to be
-  #updated in the second position, in the first example in the 
-  #IdempotentGeneratedSubsemigroup man section
+  AddGeneratorsToOrbit(o, coll); 
 
   # unbind everything related to strongly connected components, since
   # even if the orbit length doesn't change the strongly connected components
@@ -922,7 +922,7 @@ function(s, coll, opts)
       orblookup1[new_nr]:=ind;
       orblookup2[new_nr]:=1;
 
-      pt:=[s, m, o, x, false, new_nr];
+      pt:=[t, m, o, x, false, new_nr];
     else
     # old rho value, and maybe we already have a rep of y's R-class...
       ind:=lambdarhoht[l][m];
@@ -1007,9 +1007,9 @@ end);
 
 # <limit> is the max size of the subsemigroup.
 
-InstallMethod(SubsemigroupByProperty,
-"for an acting semigroup with generators, function, and positive integer",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt],
+InstallMethod(SubsemigroupByProperty, 
+"for an acting semigroup, function, and positive integer",
+[IsActingSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
 
@@ -1037,9 +1037,9 @@ end);
 
 # <limit> is the max size of the subsemigroup.
 
-InstallMethod(InverseSubsemigroupByProperty,
-"for acting semigroup with inverse op & generators, function, positive integer",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction, IsPosInt],
+InstallMethod(InverseSubsemigroupByProperty, 
+"for acting semigroup with inverse op, function, positive integer",
+[IsActingSemigroupWithInverseOp, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
 
@@ -1067,18 +1067,18 @@ end);
 
 #
 
-InstallMethod(SubsemigroupByProperty,
-"for an acting semigroup with generators and function",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction],
+InstallMethod(SubsemigroupByProperty, 
+"for an acting semigroup and function",
+[IsActingSemigroup, IsFunction], 
 function(S, func)
   return SubsemigroupByProperty(S, func, Size(S));
 end);
 
 #
 
-InstallMethod(InverseSubsemigroupByProperty,
-"for acting semigroup with inverse op & generators and function",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction],
+InstallMethod(InverseSubsemigroupByProperty, 
+"for acting semigroup with inverse op and function",
+[IsActingSemigroupWithInverseOp, IsFunction], 
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);

@@ -452,17 +452,6 @@ function(tree1, tree2)
   return Objectify(TypeObj(tree1), product);
 end);
 
-InternalRep := function(x) 
-  local out, i;
-  
-    out := [];
-    for i in [1 .. 5 +  x![2]] do
-      out[i] := x![i];
-    od;
-  return out ;
-end;
-  
-
 ##############################################################################
 ##
 ## Inverse  

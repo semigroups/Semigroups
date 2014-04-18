@@ -33,6 +33,61 @@ end);
 
 #
 
+InstallMethod(JoinOfBlocks, "for blocks",
+[IsBlocks, IsBlocks],
+function(blocks1, blocks2)
+  local n, nrblocks1, nrblocks2, fuse, fuseit, x, y, lookup, nr, out, j, i;
+
+  n:=DegreeOfBlocks(blocks1);
+  
+  if NrBlocks(blocks1)=1 then 
+    return blocks1;
+  elif NrBlocks(blocks2)=1 then 
+    return blocks2;
+  fi;
+
+  nrblocks1:=NrBlocks(blocks1);
+  blocks1:=blocks1!.blocks;
+  blocks2:=blocks2!.blocks;
+
+  fuse:=[1..nrblocks1+blocks2[1]];
+
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+
+  for i in [2..n+1] do
+    x := fuseit(blocks1[i]);
+    y := fuseit(blocks2[i]+nrblocks1);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+  
+  lookup:=[]; out:=[0];
+  
+  for i in [2..n+1] do 
+    x:=fuseit(blocks1[i]);
+    if not IsBound(lookup[x]) then 
+      out[1]:=out[1]+1;
+      out[n+1+out[1]]:=1;
+      lookup[x]:=out[1];
+    fi;
+    out[i]:=lookup[x];
+  od;
+
+  return BlocksByIntRepNC(out);
+end);
+
+#
+
 InstallGlobalFunction(BlocksNC, 
 function(blocks)
   local n, out, i, j;
@@ -599,8 +654,7 @@ function(blocks, f)
       tab[x]:=next;
     fi;
   od;
-  
-  return MappingPermListList(signed, List(signed, i-> tab[fuseit(i)]));
+  return MappingPermListList_C(signed, List(signed, i-> tab[fuseit(i)]));
 end);
 
 # LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of

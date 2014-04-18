@@ -81,9 +81,8 @@ gap> o;
           When <A>gens</A> is a list of elements with a semigroup inverse and
           <A>w</A> is a list of non-zero integers whose absolute value does not
           exceed the length of <A>gens</A>, this operation returns the product
-          <C>gens[AbsInt(w[1])]^SignInt(w[1])*...*gens[AbsInt(w[n])]
-            ^SignInt(w[n])</C> where <C>n</C> is the length
-          of <A>w</A>.
+          <C>gens[AbsInt(w[1])]^SignInt(w[1])*...*gens[AbsInt(w[n])]^SignInt(w[n])</C>
+          where <C>n</C> is the length of <A>w</A>.
         </Item>
       </List>
 

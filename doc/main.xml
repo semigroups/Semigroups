@@ -17,15 +17,27 @@
 </URL></Alt><Alt Only='Text'><Package>IO</Package></Alt>">
      <!ENTITY vspace "<Alt Only='LaTeX'>\vspace{\baselineskip}</Alt>">
      <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
-     <!ENTITY H "<Alt Only='HTML'>\(\mathcal{H}\)</Alt><Alt
+     <!ENTITY H "<Alt Only='HTML'>\(\mathscr{H}\)</Alt><Alt
      Only='Text'><E>H</E></Alt><Alt Only='LaTeX'><M>\mathcal{H}</M></Alt>">
-     <!ENTITY R "<Alt Only='HTML'>\(\mathcal{R}\)</Alt><Alt
+     <!ENTITY R "<Alt Only='HTML'>\(\mathscr{R}\)</Alt><Alt
      Only='Text'><E>R</E></Alt><Alt Only='LaTeX'><M>\mathcal{R}</M></Alt>">
-     <!ENTITY L "<Alt Only='HTML'>\(\mathcal{L}\)</Alt><Alt
+     <!ENTITY L "<Alt Only='HTML'>\(\mathscr{L}\)</Alt><Alt
      Only='Text'><E>L</E></Alt><Alt Only='LaTeX'><M>\mathcal{L}</M></Alt>">
-     <!ENTITY D "<Alt Only='HTML'>\(\mathcal{D}\)</Alt><Alt
+     <!ENTITY D "<Alt Only='HTML'>\(\mathscr{D}\)</Alt><Alt
      Only='Text'><E>D</E></Alt><Alt Only='LaTeX'><M>\mathcal{D}</M></Alt>">
      <#Include Label="PKGVERSIONDATA">
+     <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
+     <!ENTITY setX "<Alt Not='Text'><M>X</M></Alt><Alt Only='Text'><C>X</C></Alt>">
+     <!ENTITY bfn "<Alt Not='Text'><M>\mathbf{n}</M></Alt><Alt Only='Text'><E>n</E></Alt>">
+     <!ENTITY n "<Alt Not='Text'><M>n</M></Alt><Alt Only='Text'><C>n</C></Alt>">
+     <!ENTITY x "<Alt Not='Text'><M>x</M></Alt><Alt Only='Text'><C>x</C></Alt>">
+     <!ENTITY y "<Alt Not='Text'><M>y</M></Alt><Alt Only='Text'><C>y</C></Alt>">
+     <!ENTITY i "<Alt Not='Text'><M>i</M></Alt><Alt Only='Text'><C>i</C></Alt>">
+     <!ENTITY j "<Alt Not='Text'><M>j</M></Alt><Alt Only='Text'><C>j</C></Alt>">
+     <!ENTITY k "<Alt Not='Text'><M>k</M></Alt><Alt Only='Text'><C>k</C></Alt>">
+     <!ENTITY r "<Alt Not='Text'><M>r</M></Alt><Alt Only='Text'><C>r</C></Alt>">
+     <!ENTITY s "<Alt Not='Text'><M>s</M></Alt><Alt Only='Text'><C>s</C></Alt>">
+     <!ENTITY bbN "<Alt Not='Text'><M>\mathbb{N}</M></Alt><Alt Only='Text'><E>N</E></Alt>">
    ]>
 
 <Book Name="semigroups">
@@ -34,12 +46,15 @@
 <TableOfContents/>
 
 <Body>
-<#Include SYSTEM="chap1.xml">
-<#Include SYSTEM "chap2.xml">
-<#Include SYSTEM "chap3.xml">
-<#Include SYSTEM "chap4.xml">
-<#Include SYSTEM "chap5.xml">
-<#Include SYSTEM "chap6.xml">
+  <#Include SYSTEM="chap1.xml">
+  <#Include SYSTEM "chap2.xml"> <!-- creating semigroups and monoid -->
+  <#Include SYSTEM "chap8.xml"> <!-- ideals -->
+  <#Include SYSTEM "chap3.xml"> <!-- structure -->
+  <#Include SYSTEM "chap4.xml"> <!-- bipartitions and blocks --> 
+  <#Include SYSTEM "chap5.xml"> <!-- free inverse semigroups -->
+  <#Include SYSTEM "chap7.xml"> <!-- congruences -->
+  <#Include SYSTEM "chap9.xml"> <!-- homomorphisms -->
+  <#Include SYSTEM "chap6.xml"> <!-- orbits --> 
 </Body>
 
 <Bibliography Databases="semigroups" />

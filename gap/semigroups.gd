@@ -13,7 +13,10 @@ DeclareCategoryCollections("IsAssociativeElementWithStar");
 DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
 DeclareAttribute("Star", IsAssociativeElementWithStar);
 
-DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and                 IsAssociativeElementWithStarCollection);
+DeclareSynonym("IsStarSemigroup", IsSemigroup and
+IsAssociativeElementWithStarCollection);
+DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and
+IsAssociativeElementWithStarCollection);
 
 DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 
@@ -73,12 +76,12 @@ DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt]);
+[IsActingSemigroup, IsFunction, IsPosInt]);
 
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty", 
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction,       IsPosInt]);
+[IsActingSemigroupWithInverseOp, IsFunction, IsPosInt]);
 
 # undoc
 

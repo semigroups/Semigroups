@@ -130,9 +130,9 @@ true
 
 # test a regular semigroup that only learns this after creation
 gap> s:=SingularTransformationSemigroup(5);
-<regular transformation semigroup on 5 pts with 20 generators>
-gap> s:=Semigroup(Generators(s));
-<transformation semigroup on 5 pts with 20 generators>
+<regular transformation semigroup ideal on 5 pts with 1 generator>
+gap> s:=Semigroup(GeneratorsOfSemigroup(s));
+<transformation semigroup on 5 pts with 16 generators>
 gap> IsRegularSemigroup(s);
 true
 gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s), 

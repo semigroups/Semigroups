@@ -171,9 +171,6 @@ Group(())
 
 # takes about 750ms, with lambdastab=true it takes 10s!
 gap> Normalizer(S, rec(lambdastab:=false, random:=true));
-#I  This function uses random methods and so there is some chance that
-#I  it will return an incorrect result. Call the function with the option
-#I  `random' set to <false> for a deterministic (but slower) answer.
 Group(())
 
 #

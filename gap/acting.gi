@@ -10,23 +10,21 @@
 
 # acting semigroups...
 
-InstallMethod(SemigroupData, 
-"for an acting semigroup with inverse op and generators",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
-function(S)
-  return fail;
-end);
+# same method for ideals
 
-#
+InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp], ReturnFail);
 
-InstallMethod(SemigroupData, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+# different method for ideals
+
+InstallMethod(SemigroupData, "for an acting semigroup",
+[IsActingSemigroup],
 function(s)
   local gens, data, opts;
  
   gens:=GeneratorsOfSemigroup(s);
 
-  data:=rec(gens:=gens, 
+  data:=rec(gens:=gens, parent:=s, 
      ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[1],
@@ -34,18 +32,17 @@ function(s)
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
-  Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
-   data);
+  Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
   
-  SetParent(data, s);
   return data;
 end);
 
-#
+# different method for regular ideals, regular/inverse semigroups, same method
+# for non-regular ideals
 
 InstallMethod(\in, 
-"for an associative element and acting semigroup with generators",
-[IsAssociativeElement, IsActingSemigroup and HasGeneratorsOfSemigroup], 
+"for an associative element and acting semigroup",  
+[IsAssociativeElement, IsActingSemigroup], 
 function(f, s)
   local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   
@@ -57,7 +54,8 @@ function(f, s)
   fi;
 
   if not (IsMonoid(s) and IsOne(f)) then 
-    if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
+    if Length(Generators(s))>0 
+      and ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
      then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
        "semigroup.");
@@ -134,7 +132,7 @@ function(f, s)
   
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
   # lambda-rho-combination not yet seen
-    if IsClosed(data) then 
+    if IsClosedData(data) then 
       return false;
     fi;
     
@@ -179,7 +177,7 @@ function(f, s)
     return true; 
   fi; 
 
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     return false;
   fi;
 
@@ -225,10 +223,10 @@ function(f, s)
   return false;
 end);
 
-#
+# different for regular/inverse/ideals
 
-InstallMethod(Size, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(Size, "for an acting semigroup",
+[IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
 function(s)
   local data, lenreps, repslens, o, scc, size, n, m, i;
    
@@ -239,6 +237,7 @@ function(s)
   scc:=OrbSCC(o);
   
   size:=0;
+  
   for m in [2..Length(scc)] do 
     n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
     for i in [1..lenreps[m]] do 
@@ -251,12 +250,15 @@ end);
 
 # data...
 
+# same method for ideals
+
 InstallMethod(\in, "for associative element and semigroup data",
 [IsAssociativeElement, IsSemigroupData],
 function(f, data)
   return not Position(data, f)=fail;
 end);
-#
+
+# same method for ideals
 
 InstallMethod(ELM_LIST, "for semigroup data, and pos int",
 [IsSemigroupData, IsPosInt], 
@@ -264,14 +266,21 @@ function(o, nr)
   return o!.orbit[nr];
 end);
 
-#
+# same method for ideals
+
+InstallMethod(Length, "for semigroup data", [IsSemigroupData], 
+function(data)
+  return Length(data!.orbit);
+end);
+
+# same method for ideals
 
 InstallMethod(Enumerate, "for semigroup data", [IsSemigroupData],
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
-#
+# same method for ideals
 
 InstallMethod(Enumerate, "for semigroup data and limit", 
 [IsSemigroupData, IsCyclotomic],
@@ -279,7 +288,10 @@ function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
 
-#
+# different method for ideals...
+
+#JDM: this has the same problem as orb in Issue #4, the log is not properly
+#formed if the enumeration stops early.
 
 InstallMethod(Enumerate, 
 "for an semigroup data, limit, and func",
@@ -293,7 +305,7 @@ function(data, limit, lookfunc)
     looking:=false;
   fi;
   
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     if looking then 
       data!.found:=false;
     fi;
@@ -342,7 +354,7 @@ function(data, limit, lookfunc)
   genstoapply:=data!.genstoapply;
   
   # lambda
-  s:=Parent(data);
+  s:=data!.parent;
   lambda:=LambdaFunc(s);
   lambdaact:=LambdaAct(s);  
   lambdaperm:=LambdaPerm(s);
@@ -556,7 +568,6 @@ function(data, limit, lookfunc)
         if lookfunc(data, pt) then 
           data!.pos:=i-1;
           data!.found:=nr;
-          data!.lenreps:=lenreps;
           rho_o!.depth:=rho_depth;
           return data;
         fi;
@@ -574,12 +585,12 @@ function(data, limit, lookfunc)
   
   # for the data-orbit
   data!.pos:=i;
-  data!.lenreps:=lenreps;
+  
   if looking then 
     data!.found:=false;
   fi;
   if nr=i then 
-    SetFilterObj(data, IsClosed);
+    SetFilterObj(data, IsClosedData);
     SetFilterObj(rho_o, IsClosed);
     rho_o!.orbind:=[1..rho_nr];
   fi;
@@ -593,10 +604,18 @@ function(data, limit, lookfunc)
   return data;
 end);
 
-#
+# not currently applicable for ideals
+
+InstallMethod(OrbitGraph, "for semigroup data",  
+[IsSemigroupData],
+function(data)
+  return data!.graph;
+end);
+
+# not currently applicable for ideals
 
 InstallMethod(OrbitGraphAsSets, "for semigroup data",  
-[IsSemigroupData], 99,
+[IsSemigroupData],
 function(data)
   return List(data!.graph, Set);
 end);
@@ -605,13 +624,15 @@ end);
 # parent of data. Note that this depends on the state of the data, it only tells
 # you if it is there already, it doesn't try to find it. 
 
+# same method for ideals
+
 InstallMethod(Position, "for semigroup data and an associative element",
-[IsSemigroupData, IsAssociativeElement, IsZeroCyc], 100,
+[IsSemigroupData, IsAssociativeElement, IsZeroCyc], 
 function(data, x, n)
   local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
   lambdaperm;
 
-  s:=Parent(data);
+  s:=data!.parent;
   o:=LambdaOrb(s);
   l:=Position(o, LambdaFunc(s)(x));
   
@@ -677,17 +698,18 @@ function( data )
   return data!.found;
 end);
 
-#
+# same method for ideals
 
-InstallGlobalFunction(SizeOfSemigroupData,
+InstallMethod(SizeOfSemigroupData, "for semigroup data", [IsSemigroupData],
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
-   
-  data:=Enumerate(data, infinity, ReturnFalse);
-  lenreps:=data!.lenreps;
-  repslens:=data!.repslens;
-  o:=LambdaOrb(Parent(data));
-  scc:=OrbSCC(o);
+  
+  if not data!.init then 
+    return 0;
+  fi;
+  
+  lenreps:=data!.lenreps;      repslens:=data!.repslens;
+  o:=LambdaOrb(data!.parent);  scc:=OrbSCC(o);
   
   size:=0;
   for m in [2..Length(scc)] do 
@@ -699,21 +721,22 @@ function(data)
   return size; 
 end);
 
-#
+# different method for ideals
 
-InstallMethod(ViewObj, [IsSemigroupData], 999,
+InstallMethod(ViewObj, [IsSemigroupData], 
 function(data)
   Print("<");
 
-  if IsClosed(data) then 
+  if IsClosedData(data) then 
     Print("closed ");
   else 
     Print("open ");
   fi;
-  Print("semigroup data with ", Length(data!.orbit)-1, " reps, ",
-   Length(LambdaOrb(Parent(data)))-1, " lambda-values, ", 
-   Length(RhoOrb(Parent(data)))-1, " rho-values>"); 
-   #Sum(data!.lenreps), " lambda-rho combos>");
+  Print("semigroup ");
+
+  Print("data with ", Length(data!.orbit)-1, " reps, ",
+   Length(LambdaOrb(data!.parent))-1, " lambda-values, ", 
+   Length(RhoOrb(data!.parent))-1, " rho-values>"); 
   return;
 end);
 

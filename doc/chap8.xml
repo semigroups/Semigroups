@@ -1,0 +1,32 @@
+<Chapter Label="Ideals"><Heading>Ideals</Heading> 
+
+  In this chapter we describe the various ways that an ideal of a semigroup
+  can be created and manipulated in &Semigroups;.<P/>
+
+  We write <E>ideal</E> to mean two-sided ideal everywhere in this chapter.<P/>
+
+  The methods in the &Semigroups; package apply to any ideal of a
+  transformation, partial permutation, or bipartition semigroup, or an ideal of
+  a subsemigroup of a Rees 0-matrix semigroup, that is created by the function
+  <Ref Func="SemigroupIdeal"/> or <C>SemigroupIdealByGenerators</C>. Anything
+  that can be calculated for a semigroup defined by a generating set can
+  also be found for an ideal. This works particularly well for regular ideals,
+  since such an ideal can be represented using a similar data structure to that
+  used to represent a semigroup defined by a generating set but without the
+  necessity to find a generating set for the ideal. Many methods for non-regular
+  ideals rely on first finding a generating set for the ideal, which
+  can be costly (but not nearly as costly as an exhaustive enumeration of the
+  elements of the ideal). We plan to improve the functionality of &Semigroups;
+  for non-regular ideals in the future. 
+
+  <Section><Heading>Creating ideals</Heading> 
+    <#Include Label="SemigroupIdeal"> 
+  </Section>
+  
+  <Section><Heading>Attributes of ideals</Heading> 
+    <#Include Label="GeneratorsOfSemigroupIdeal">
+    <#Include Label="MinimalIdealGeneratingSet">
+    <#Include Label="SupersemigroupOfIdeal"> 
+  </Section>
+
+</Chapter>

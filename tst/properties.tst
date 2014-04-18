@@ -16,8 +16,60 @@ gap> LoadPackage("semigroups", false);;
 gap> SemigroupsStartTest();
 
 #
-gap> file:=Concatenation(SemigroupsDir(), "/examples/misc.semigroups.gz");;
-gap> semis:=List([1..22], i-> Semigroup(ReadGenerators(file, i)));;
+gap> semis:=
+> [ Semigroup( [ Transformation( [ 2, 2, 4, 4 ] ), 
+>      Transformation( [ 5, 3, 4, 4, 6, 6 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 5, 4, 4, 2, 1 ] ), 
+>      Transformation( [ 2, 5, 5, 4, 1 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 1, 2, 1, 3, 3 ] ), 
+>      Transformation( [ 2, 2, 3, 5, 5 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 1, 2, 1, 3, 3 ] ), 
+>      Transformation( [ 2, 2, 3, 5, 5 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ), 
+>      Transformation( [ 5, 1, 4, 1, 4, 4 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 3, 1, 2, 3, 2, 3, 2, 3 ] ), 
+>      Transformation( [ 2, 5, 8, 5, 2, 5, 7, 8 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] ), 
+>      Transformation( [ 5, 1, 7, 8, 7, 5, 8, 1 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6, 3, 4, 6 ] ), 
+>      Transformation( [ 4, 4, 6, 1, 3, 3, 3, 3, 11, 11, 11 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6, 3, 4, 6 ] ), 
+>      Transformation( [ 4, 4, 6, 1, 3, 3, 3, 3, 11, 11, 11 ] ), 
+>      Transformation( [ 2, 2, 3, 4, 4, 6, 6, 6, 6, 6 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6, 3, 4, 6 ] ), 
+>      Transformation( [ 4, 4, 6, 1, 3, 3, 3, 3, 11, 11, 11 ] ), 
+>      Transformation( [ 2, 2, 3, 4, 4, 6, 6, 6, 6, 6 ] ), 
+>      Transformation( [ 2, 2, 3, 4, 4, 6, 6, 6, 6, 11, 11 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 12, 3, 6, 4, 6, 11, 9, 6, 6, 7, 6, 12 ] ), 
+>      Transformation( [ 10, 7, 2, 11, 7, 3, 12, 4, 3, 8, 7, 5 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 3, 2, 12, 2, 7, 9, 4, 2, 1, 12, 11, 12 ] ), 
+>      Transformation( [ 3, 6, 12, 7, 2, 2, 3, 6, 1, 7, 11, 1 ] ) ] ), 
+>  Semigroup( 
+>    [ Transformation( [ 2, 2 ] ), Transformation( [ 2, 3, 4, 5, 6, 1 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 2, 1, 4, 5, 6, 7, 3, 2, 1 ] ), 
+>      Transformation( [ 2, 1, 4, 2, 1, 4, 2, 1, 4 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 5, 2, 5, 5, 8, 10, 8, 5, 2, 10 ] ), 
+>      Transformation( [ 2, 2, 5, 5, 5, 8, 8, 8, 8, 8 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 4, 6, 3, 8, 5, 6, 10, 4, 3, 7 ] ), 
+>      Transformation( [ 5, 6, 6, 3, 8, 6, 3, 7, 8, 4 ] ), 
+>      Transformation( [ 8, 6, 3, 2, 8, 10, 9, 2, 6, 2 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ), 
+>      Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ), 
+>      Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 2, 1, 4, 5, 3, 7, 8, 9, 10, 6 ] ), 
+>      Transformation( [ 1, 2, 4, 3 ] ), 
+>      Transformation( [ 1, 2, 3, 4, 5, 6, 10, 9, 8, 7 ] ), 
+>      Transformation( [ 9, 1, 4, 3, 6, 9, 3, 4, 3, 9 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 13, 10, 9, 5, 1, 5, 13, 13, 8, 2, 7, 2, 6 ] )
+>        , Transformation( [ 6, 11, 12, 10, 4, 10, 13, 5, 8, 5, 11, 6, 9 ] ) 
+>     ] ), 
+>  Semigroup( [ Transformation( [ 12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2 ] ), 
+>      Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ), 
+>      Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] ) ] ), 
+>  Semigroup( [ Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ), 
+>      Transformation( [ 5, 4, 1, 2, 3, 7, 6, 5, 4, 1 ] ), 
+>      Transformation( [ 2, 1, 4, 3, 2, 1, 4, 4, 3, 3 ] ) ] ) ];;
 gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));   
 [ false, true, false, false, false, true, true, true, true, true, false, 
   false, false, false, true ]
@@ -557,6 +609,25 @@ gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 
+# E-unitary
+gap> [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 1, 2, 5 ] ),
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 1, 4 ] ) ];;
+gap> s:=InverseSemigroup(last);;
+gap> IsEUnitaryInverseSemigroup(s);
+true
+gap> [ PartialPerm( [ 1, 2, 3, 4, 5 ], [ 1, 2, 5, 6, 3 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 3, 2, 1, 6, 5 ] ) ];;
+gap> s:=InverseSemigroup(last);;
+gap> IsEUnitaryInverseSemigroup(s);
+true
+gap> [ PartialPerm( [ 1, 2, 3, 4, 7 ], [ 2, 4, 6, 5, 7 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 6, 4, 7, 2, 3, 1, 8 ] ),
+>  PartialPerm( [ 1, 2, 4, 5, 6, 7 ], [ 8, 6, 3, 5, 4, 1 ] ),
+>  PartialPerm( [ 1, 2, 4, 5, 8 ], [ 1, 3, 8, 6, 2 ] ) ];;
+gap> s:=InverseSemigroup(last);;
+gap> IsEUnitaryInverseSemigroup(s);
+false
+
 ##
 #gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 #>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
@@ -653,9 +724,15 @@ IdentityTransformation
 #false
 #
 #
-gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
-gap> ReadGenerators(file, 1303);;
-gap> s:=Semigroup(last);;
+gap> s:=Semigroup(
+> [ Transformation( [ 1, 2, 3, 2 ] ), Transformation( [ 1, 2, 3, 3 ] ), 
+>   Transformation( [ 1, 2, 3, 4, 5, 7, 6 ] ), Transformation( [ 1, 2, 4, 3 ] ),
+>   Transformation( [ 1, 2, 8, 3, 5, 6, 7, 8 ] ), 
+>   Transformation( [ 1, 6, 8, 8, 5, 7, 2, 8 ] ), 
+>   Transformation( [ 3, 8, 8, 8, 6, 2, 6, 7 ] ), 
+>   Transformation( [ 5, 2, 3, 4, 1 ] ), 
+>   Transformation( [ 6, 2, 3, 4, 7, 6, 7 ] ), 
+>   Transformation( [ 8, 8, 3, 4, 6, 7, 6, 2 ] ) ]);;
 gap> t:=IdempotentGeneratedSubsemigroup(s);;
 gap> Size(t);
 105

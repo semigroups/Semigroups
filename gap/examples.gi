@@ -352,12 +352,10 @@ end);
 
 #
 
-if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
+if not (IsGrapeAvailable and IsGrapeCompiled) then
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup], 
-  function(s)
-    Info(InfoWarning, 1, "the nauty/dreadnaut binaries in GRAPE are not", 
-    " installed and so this ");
-    Info(InfoWarning, 1, "function does not work.");
+  function(S)
+    Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end);
 else
@@ -595,9 +593,10 @@ function(n)
   return Monoid(gens, rec(regular:=true));
 end);
 
-# JDM rename and make global
+#
 
-HamMonoid:=function(n)
+InstallMethod(TriapsisMonoid, "for a positive integer", [IsPosInt],
+function(n)
   local gens, next, i, j;
   
   gens:=[];
@@ -616,7 +615,7 @@ HamMonoid:=function(n)
     gens[i]:=BipartitionByIntRep(next);
   od;
   return Semigroup(gens);
-end;
+end);
 
 #
 
@@ -661,43 +660,50 @@ function(g)
   while Size(s)<2^Size(g) do  
     i:=i+1;
     f:=TransformationOp(dom[i], dom, act);
-    if not f in s then 
-      Add(gens, f);
-      s:=Semigroup(gens);
-    fi;
+    s:=ClosureSemigroup(s, f);
   od;
   return s;
 end);
 
-# JDM; update when ideals are ready...
+#
+
+InstallMethod(SingularPartitionMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, i;
+  
+  blocks:=[[1,2,-1,-2]];
+  for i in [3..n] do 
+    blocks[i-1]:=[i, -i];
+  od;
+  return SemigroupIdeal(PartitionMonoid(n), Bipartition(blocks));
+end);
+
+#
 
 InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
-  local x, S, T;
+  local x, S;
   
   x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=FullTransformationSemigroup(n);
-  T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
-  SetIsRegularSemigroup(T, true);
-  return T;
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM; update when ideals are ready...
+#
 
 InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 [IsPosInt],
 function(n)
-  local x, S, T;
+  local x, S;
   
   x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=OrderEndomorphisms(n);
-  T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
-  SetIsRegularSemigroup(T, true);
-  return T;
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM; update when ideals are ready...
+#
 
 InstallMethod(SingularBrauerMonoid, "for a positive integer",
 [IsPosInt],
@@ -710,10 +716,10 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=BrauerMonoid(n);
-  return Semigroup(Idempotents(DClassNC(S, x)), rec(small:=true, regular:=true));
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM; update when ideals are ready...
+#
 
 InstallMethod(SingularJonesMonoid, "for a positive integer",
 [IsPosInt],
@@ -726,10 +732,10 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=JonesMonoid(n);
-  return Semigroup(Idempotents(DClassNC(S, x)), rec(small:=true, regular:=true));
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM; update when ideals are ready...
+#
 
 InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt],
@@ -742,10 +748,10 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=DualSymmetricInverseMonoid(n);
-  return Semigroup(DClassNC(S, x), rec(small:=true, regular:=true));
+  return SemigroupIdeal(S, x);
 end);
 
-# JDM; update when ideals are ready...
+#
 
 InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup, 
 "for a positive integer", [IsPosInt],
@@ -758,7 +764,7 @@ function(n)
   od;
   x:=Bipartition(blocks);
   S:=FactorisableDualSymmetricInverseSemigroup(n);
-  return Semigroup(DClassNC(S, x), rec(small:=true, regular:=true));
+  return SemigroupIdeal(S, x);
 end);
 
 #EOF
