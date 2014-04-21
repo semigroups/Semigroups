@@ -46,6 +46,7 @@ DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
 DeclareAttribute("StabilizerAction", IsSemigroup);
+DeclareAttribute("SchutzGpMembership", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsCollection]);
 
