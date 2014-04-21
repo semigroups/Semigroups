@@ -22,25 +22,20 @@ DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 
 DeclareGlobalFunction("InternalSemigroupByGenerators");
 
-DeclareOperation("SemigroupByGenerators", 
-[IsHomogeneousList and IsRingElementCollCollColl, IsRecord]);
-DeclareOperation("SemigroupByGenerators",
-[IsAssociativeElementCollection, IsRecord]);
+DeclareOperation("SemigroupByGenerators", [IsCollection, IsRecord]);
 
-DeclareOperation("MonoidByGenerators",
-[IsAssociativeElementCollection, IsRecord]);
+DeclareOperation("MonoidByGenerators", [IsCollection, IsRecord]);
 
-DeclareOperation("InverseMonoidByGenerators",
-[IsAssociativeElementCollection and
-IsAssociativeElementCollection, IsRecord]);
+DeclareOperation("InverseMonoidByGenerators", [IsCollection]);
+DeclareOperation("InverseMonoidByGenerators", [IsCollection, IsRecord]);
 
-DeclareOperation("InverseSemigroupByGenerators",
-[IsAssociativeElementCollection, IsRecord]);
+DeclareOperation("InverseSemigroupByGenerators", [IsCollection]);
+DeclareOperation("InverseSemigroupByGenerators", [IsCollection, IsRecord]);
 
 DeclareOperation("ClosureInverseSemigroup", [IsActingSemigroupWithInverseOp,
-IsAssociativeElementCollection, IsRecord]);
+IsCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection]);
+[IsActingSemigroupWithInverseOp, IsCollection]);
 DeclareOperation("ClosureInverseSemigroup", 
 [IsActingSemigroupWithInverseOp, IsAssociativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
@@ -48,9 +43,9 @@ DeclareOperation("ClosureInverseSemigroup",
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
 DeclareOperation("ClosureSemigroup", 
-[IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
+[IsActingSemigroup, IsCollection, IsRecord]);
 DeclareOperation("ClosureSemigroup", 
-[IsActingSemigroup, IsAssociativeElementCollection]);
+[IsActingSemigroup, IsCollection]);
 DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElement, IsRecord]);
 DeclareOperation("ClosureSemigroup",

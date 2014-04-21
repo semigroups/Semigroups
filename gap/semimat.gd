@@ -12,7 +12,9 @@
 ## library
 
 #T Is there a better way of saying what a matrix semigroup is?
-DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
+
+DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl);
+
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 
 #DeclareCategory("IsMatrixSemigroupElement", IsMatrixObj);
@@ -26,8 +28,6 @@ DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 ## which can be  non-associative, but declares matrices to be a 
 ## CollColl, which makes it impossible to tell whether a list
 ## of Matrices has IsAssociativeElementCollection
-DeclareProperty("IsGeneratorsOfActingSemigroup",
-    IsHomogeneousList and IsRingElementCollCollColl);
 
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
 

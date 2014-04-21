@@ -16,10 +16,7 @@
 # IsGeneratorsOfActingSemigroup
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a collection",
-[IsCollection], 
-function(coll)
-  return ForAll(coll, IsMatrixObj);
-end);
+[IsCollection], ReturnFalse); 
 
 # In the below can't do ReturnTrue, since GAP insists that we use
 # InstallTrueMethod.
@@ -50,6 +47,29 @@ function(coll)
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
+InstallMethod(IsGeneratorsOfActingSemigroup, 
+"for a homogeneous list in IsFFECollCollColl", 
+[IsHomogeneousList and IsFFECollCollColl], 
+function(coll)
+  local dims, x;
+
+  if (Length(coll) > 0) and (IsMatrixObj(coll[1])) then
+    dims := DimensionsMat(coll[1]);
+
+    if dims[1] <> dims[2] then 
+      return false; 
+    fi;
+    for x in coll do
+      if DimensionsMat(x) <> dims then
+        return false;
+      fi;
+    od;
+    return true;
+  else
+    return false;
+  fi;
+end);
+
 # IsActingSemigroupWithInverseOp
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
@@ -57,8 +77,6 @@ InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsParti
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
 IsPartialPermBipartitionSemigroup);
-
-#InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
 
 # the largest point involved in the action
 
@@ -82,6 +100,9 @@ function(x)
   fi;
 end);
 
+InstallMethod(ActionDegree, "for a matrix object",
+[IsMatrixObj], RowLength);
+
 #
 
 InstallMethod(ActionDegree, "for a transformation collection",
@@ -104,6 +125,12 @@ function(coll)
   else
     return 0;
   fi;
+end);
+
+InstallMethod(ActionDegree, "for a matrix object collection",
+[IsHomogeneousList and IsFFECollCollColl],
+function(coll)
+  return RowLength(coll[1]);
 end);
 
 #
@@ -132,10 +159,15 @@ function(R)
   fi;
 end);
 
+InstallMethod(ActionDegree, "for a matrix semigroup",
+[IsMatrixSemigroup],
+function(S)
+    return ActionDegree(Representative(S));
+end);
 
 # the number of points in the range of the action
 
-InstallMethod(ActionRank, "for a transformation and positive integer",
+InstallMethod(ActionRank, "for a transformation and integer",
 [IsTransformation, IsInt], RANK_TRANS_INT);
 
 InstallMethod(ActionRank, "for a transformation semigroup",
@@ -148,7 +180,7 @@ function(s)
   end;
 end);
 
-InstallMethod(ActionRank, "for a partial perm and positive integer",
+InstallMethod(ActionRank, "for a partial perm and integer",
 [IsPartialPerm, IsInt],
 function(f, n)
   return RankOfPartialPerm(f);
@@ -160,7 +192,7 @@ function(s)
   return RankOfPartialPerm;
 end);
 
-InstallMethod(ActionRank, "for a bipartition",
+InstallMethod(ActionRank, "for a bipartition and integer",
 [IsBipartition, IsInt],
 function(f, n)
   return RankOfBipartition(f);
@@ -172,7 +204,7 @@ function(s)
   return RankOfBipartition;
 end);
 
-InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element",
+InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(f, n)
   if f![1]=0 then 
@@ -195,6 +227,18 @@ function(R)
        ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
     fi;
   end;
+end);
+
+InstallMethod(ActionRank, "for a matrix object and integer",
+[IsMatrixObj, IsInt],
+function(x, i)
+  return Length(CanonicalRowSpace(x));
+end);
+
+InstallMethod(ActionRank, "for a matrix semigroup",
+[IsMatrixSemigroup],
+function(S)
+  return x -> Length(CanonicalRowSpace(x));
 end);
 
 # the minimum possible rank of an element

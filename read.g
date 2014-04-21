@@ -95,9 +95,9 @@ ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");
 ReadPackage("semigroups/gap/blocks.gi");
 
-ReadPackage("semigroups/gap/matrix/hash.gi");
-ReadPackage("semigroups/gap/matrix/matrix.gi");
-ReadPackage("semigroups/gap/matrix/semimat.gi");
+ReadPackage("semigroups/gap/hash.gi");
+ReadPackage("semigroups/gap/matrix.gi");
+ReadPackage("semigroups/gap/semimat.gi");
 
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/lambda-rho.gi");

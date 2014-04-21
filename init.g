@@ -16,9 +16,9 @@ fi;
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
 
-ReadPackage("semigroups/gap/matrix/hash.gd");
-ReadPackage("semigroups/gap/matrix/matrix.gd");
-ReadPackage("semigroups/gap/matrix/semimat.gd");
+ReadPackage("semigroups/gap/hash.gd");
+ReadPackage("semigroups/gap/matrix.gd");
+ReadPackage("semigroups/gap/semimat.gd");
 
 ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/acting.gd");
