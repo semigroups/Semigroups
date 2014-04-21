@@ -42,6 +42,8 @@ DeclareOperation( "PseudoInverse",
 
 DeclareGlobalFunction( "PedestrianLambdaInverse" );
 
+DeclareGlobalFunction( "RandomMatrixObj" );
+
 # To make the GAP library code happy for now
 #DeclareOperation( "ImmutableMatrix", [ IsObject, IsMatrixObj ]);
 
