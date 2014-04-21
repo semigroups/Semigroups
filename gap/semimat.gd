@@ -46,3 +46,5 @@ DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 
 DeclareProperty( "IsGeneralLinearGroupAsMatrixSemigroup", IsMatrixSemigroup);
 
+DeclareMethod("CanonicalRowSpace", [ IsMatrixObj and IsFFECollCollColl ]);
+

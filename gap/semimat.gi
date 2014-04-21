@@ -430,3 +430,14 @@ function(S)
         Print("Semigroup(",l,")");
     fi;
 end);
+
+
+InstallMethod( CanonicalRowSpace,
+        "for a matrix object over a finite field",
+        [ IsMatrixObj and IsFFECollCollColl ],
+function( m )
+    if not IsBound(m![5])
+    fi;
+    return m![5];
+end);
+
