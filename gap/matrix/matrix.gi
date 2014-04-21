@@ -417,6 +417,8 @@ end);
 ##  <m> rows and <n> columns with elements taken from the ring <R>,
 ##  which defaults to 'Integers'.
 ##
+#W  This returns a matrix in IsPlistMatrixRep
+#T  this function should take either a filter or a sample matrix
 InstallGlobalFunction( RandomMatrixObj, function ( arg )
     local   mat, m, n, R, i, row, k;
 
