@@ -386,7 +386,7 @@ function(str)
     next:=iter!.curr;
     line:=IO_ReadLine(iter!.file);
     if line<>"" then 
-      iter!.curr:=ReadGeneratorsLine(IO_ReadLine(iter!.file));
+      iter!.curr:=ReadGeneratorsLine(line);
     else 
       iter!.curr:=line;
     fi;
