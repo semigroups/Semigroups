@@ -761,6 +761,43 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup], ReturnFalse);
 
+#
+
+InstallMethod(SchutzGpMembership, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x)=();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a partial perm semigroup", 
+[IsPartialPermSemigroup],
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x)=();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a Rees 0-matrix subsemigroup", 
+[IsReesZeroMatrixSubsemigroup], 
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x)=();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a bipartition semigroup", 
+[IsBipartitionSemigroup], 
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x)=();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a matrix semigroup", 
+[IsMatrixSemigroup], S -> function(stab, x) return x in stab; end);
+
 # One or a fake one for those types of object without one.
 
 InstallMethod(FakeOne, "for a transformation collection",

@@ -240,8 +240,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local s, gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, rank,
-   bound, g, stop, forward, f, k, l;
+  local s, gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, rank, bound, one, g, stop, forward, f, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -259,40 +258,45 @@ function(o, m)
   rank:=LambdaRank(s)(o[scc[1]]);
 
   if rank<100 then
-    bound:=Factorial(rank);
+    if IsMatrixSemigroup(s) then 
+      f:=Representative(s);
+      bound:=Size(GL(DimensionsMat(f)[1], BaseDomain(f)));
+      one:=IdentityMat(rank, BaseDomain(f));
+    else
+      bound:=Factorial(rank);
+      one:=();
+    fi;
   else
     bound:=infinity;
   fi;
 
-  if IsMatrixSemigroup(s) then
-    #T (mpf) Horrible horrible hack
-      g:=fail;
-      #Group(List( One(Representative(s)), x -> List(x)));
-  else
-    g:=Group(());
+  if rank=0 then 
+    if IsPerm(one) then 
+      o!.schutzstab[m]:=false;
+      o!.schutz[m]:=Group(one);
+    else
+      o!.schutzstab[m]:=[one];
+      o!.schutz[m]:=[one];
+    fi;
+    return [one];
   fi;
+
+  g:=Group(one);
+
   stop:=false; 
-      
+  Print(bound, "\n"); 
   for k in scc do
     forward:=LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
         f:=lambdaperm(rep, rep*forward*gens[l]
           *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-        if g = fail then
-            #T part of a horrible hack
-            g := Group(f);
-#	    Print("size: ", Size(g));
-        else    
-            g := ClosureGroup(g, f);
-#	    Print("size: ", Size(g));
-        fi;
+        g:=ClosureGroup(g, f);
+      fi;
         
-	#T (mpf) why is it still g == fail sometimes?
-        if (g<>fail) and (Size(g)>=bound) then
-          stop:=true;
-          break;
-        fi;
+      if Size(g)>=bound then
+        stop:=true;
+        break;
       fi;
     od;
     if stop then
@@ -308,8 +312,8 @@ function(o, m)
     o!.schutzstab[m]:=false;
   elif IsPermGroup(g) then
     o!.schutzstab[m]:=StabChainImmutable(g);
-  else
-    o!.schutzstab[m]:=StabChainImmutable(Range(IsomorphismPermGroup(g)));
+  else # if IsMatrixGroup(g)
+    o!.schutzstab[m]:=g;
   fi;
 
   return g;
