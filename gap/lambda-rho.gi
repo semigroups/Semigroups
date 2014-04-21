@@ -271,20 +271,18 @@ function(o, m)
   fi;
 
   if rank=0 then 
+    o!.schutzstab[m]:=false;
     if IsPerm(one) then 
-      o!.schutzstab[m]:=false;
       o!.schutz[m]:=Group(one);
     else
-      o!.schutzstab[m]:=[one];
       o!.schutz[m]:=[one];
     fi;
-    return [one];
+    return o!.schutz[m];
   fi;
 
   g:=Group(one);
 
   stop:=false; 
-  Print(bound, "\n"); 
   for k in scc do
     forward:=LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do

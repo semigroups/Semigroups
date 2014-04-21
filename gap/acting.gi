@@ -543,6 +543,7 @@ function(data, limit, lookfunc)
               continue;
             fi;
           fi;
+
           nr:=nr+1;
           repslens[m][ind]:=repslens[m][ind]+1;
           reps[m][ind][repslens[m][ind]]:=x;
