@@ -16,6 +16,10 @@ fi;
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
 
+ReadPackage("semigroups/gap/matrix/hash.gd");
+ReadPackage("semigroups/gap/matrix/matrix.gd");
+ReadPackage("semigroups/gap/matrix/semimat.gd");
+
 ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/acting.gd");
 ReadPackage("semigroups/gap/ideals-acting.gd");
@@ -46,10 +50,6 @@ ReadPackage("semigroups/gap/attributes-inverse.gd");
 ReadPackage("semigroups/gap/freeinverse.gd");
 
 ReadPackage("semigroups/gap/display.gd");
-
-ReadPackage("semigroups/gap/matrix/hash.gd");
-ReadPackage("semigroups/gap/matrix/matrix.gd");
-ReadPackage("semigroups/gap/matrix/semimat.gd");
 
 ReadPackage("semigroups/gap/isomorph.gd");
 ReadPackage("semigroups/gap/reesmat.gd");

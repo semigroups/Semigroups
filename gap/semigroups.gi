@@ -244,11 +244,16 @@ function(gens, opts)
     filts:=filts and IsActingSemigroup;
   fi;
 
+  if IsMatrixObj(gens[1]) then 
+    filts:=filts and IsMatrixObjCollection;
+  fi;
+
   s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
   
   if opts.regular then 
     SetIsRegularSemigroup(s, true);
   fi;
+
  
   SetGeneratorsOfMagma(s, gens);
 
@@ -1103,7 +1108,7 @@ InstallMethod(RandomMatrixSemigroup,
 "for a ring, positive integer and positive integer",
 [IsRing, IsPosInt, IsPosInt], 
 function(R, m, n)
-  return Semigroup(List([1..m], x-> RandomMat(n, n, R)));
+  return Semigroup(List([1..m], x-> RandomMatrixObj(n, n, R)));
 end);
 
 #

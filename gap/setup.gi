@@ -15,9 +15,11 @@
 
 # IsGeneratorsOfActingSemigroup
 
-InstallMethod(IsGeneratorsOfActingSemigroup, 
-"for an associative element collection",
-[IsAssociativeElementCollection], ReturnFalse);
+InstallMethod(IsGeneratorsOfActingSemigroup, "for a collection",
+[IsCollection], 
+function(coll)
+  return ForAll(coll, IsMatrixObj);
+end);
 
 # In the below can't do ReturnTrue, since GAP insists that we use
 # InstallTrueMethod.

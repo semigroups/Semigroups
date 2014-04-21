@@ -8,40 +8,53 @@
 ##
 #############################################################################
 ##
+
+#InstallMethod(IsMatrixObjCollection, "for a homo. list ",
+#[IsHomogeneousList and IsRingElementCollCollColl],
+#function(l)
+#  if IsMatrixObj(l[1]) then 
+#    if IsAssociativeElement(l[1]) then 
+#      SetFilterObj(l, IsAssociativeElementCollection);
+#    fi;
+#    return true;
+#  fi;
+#  return false; 
+#end);
+
 # This certainly is a collection of associative elements under the assumption
 # that the multiplication only has to be associative if it works.
-InstallTrueMethod(IsAssociativeElementCollection
-        , IsMatrixSemigroupElementCollection);
+#InstallTrueMethod(IsAssociativeElementCollection
+#        , IsMatrixSemigroupElementCollection);
 
-InstallMethod(SemigroupByGenerators,
-        "for a list of matrices",
-        [IsHomogeneousList and IsRingElementCollCollColl],
-function(gens)
-    if IsGeneratorsOfActingSemigroup(gens) then
-        return InternalSemigroupByGenerators(gens, SemigroupsOptionsRec);
-    else
-        TryNextMethod();
-    fi;
-end);
+#InstallMethod(SemigroupByGenerators,
+#        "for a list of matrices",
+#        [IsHomogeneousList and IsRingElementCollCollColl],
+#function(gens)
+#    if IsGeneratorsOfActingSemigroup(gens) then
+#        return InternalSemigroupByGenerators(gens, SemigroupsOptionsRec);
+#    else
+#        TryNextMethod();
+#    fi;
+#end);
 
 # Note that for technical reasons we cannot
 # use IsMatrixObjCollection here.
-InstallMethod(SemigroupByGenerators,
-        "for a list of matrices",
-        [IsHomogeneousList and IsRingElementCollCollColl, IsRecord],
-function( gens, opt )
-    if IsMatrixObj(gens[1]) and
-       IsAssociativeElement(gens[1]) then
-        # Make a matrix semigroup
-        Info(InfoSemigroups, 2, "creating matrix semigroup");
-        return InternalSemigroupByGenerators(gens, opt);
-    else
-        TryNextMethod();
-    fi;
-end);
+#InstallMethod(SemigroupByGenerators,
+#        "for a list of matrices",
+#        [IsHomogeneousList and IsRingElementCollCollColl, IsRecord],
+#function( gens, opt )
+#    if IsMatrixObj(gens[1]) and
+#       IsAssociativeElement(gens[1]) then
+#        # Make a matrix semigroup
+#        Info(InfoSemigroups, 2, "creating matrix semigroup");
+#        return InternalSemigroupByGenerators(gens, opt);
+#    else
+#        TryNextMethod();
+#    fi;
+#end);
 
 #T Hack?
-InstallTrueMethod(IsAssociativeElementCollection, IsMatrixSemigroup);
+#InstallTrueMethod(IsAssociativeElementCollection, IsMatrixSemigroup);
 
 #T Are these still needed
 #T This returns immutable 
@@ -109,10 +122,8 @@ function(elts)
     fi;
 end);
 
-InstallMethod(FakeOne,
-    "for a collection of elements of a matrix semigroup",
-    [IsMatrixSemigroupElementCollection],
-    One);
+InstallMethod(FakeOne, "for a collection of matrix obj",
+[IsMatrixObjCollection and IsAssociativeElementCollection], One);
 
 ## Degree is the number of rows/columns.
 #T It is not checked yet that the dimensions
@@ -122,6 +133,7 @@ InstallMethod(ActionDegree,
     # MatrixObj are not per default IsAssociativeElement
     [IsMatrixObj and IsAssociativeElement],
     RowLength);
+
 InstallOtherMethod(ActionDegree,
     "for a matrix object collection",
     # note that we have to ensure associativity here
