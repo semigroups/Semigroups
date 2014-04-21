@@ -408,3 +408,41 @@ InstallMethod( PseudoInverse,
         return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
  
 end);
+
+#############################################################################
+##
+#F  RandomMatrixObj( <m>, <n> [, <R>] ) . . . . . . . . . . .  make a random matrix
+##
+##  'RandomMatrixObj' returns a random plist matrix object with
+##  <m> rows and <n> columns with elements taken from the ring <R>,
+##  which defaults to 'Integers'.
+##
+InstallGlobalFunction( RandomMatrixObj, function ( arg )
+    local   mat, m, n, R, i, row, k;
+
+    # check the arguments and get the list of elements
+    if Length(arg) = 2  then
+        m := arg[1];
+        n := arg[2];
+        R := Integers;
+    elif Length(arg) = 3  then
+        m := arg[1];
+        n := arg[2];
+        R := arg[3];
+    else
+        Error("usage: RandomMat( <m>, <n> [, <F>] )");
+    fi;
+
+    # now construct the random matrix
+    mat := [];
+    for i  in [1..m]  do
+        row := [];
+        for k  in [1..n]  do
+            row[k] := Random( R );
+        od;
+        mat[i] := row;
+    od;
+
+    return NewMatrix(IsPlistMatrixRep, R, n, mat);
+end );
+
