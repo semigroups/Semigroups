@@ -20,6 +20,7 @@ if not IsGrapeAvailable then
   " so this function does not work"));
 fi;
 
+
 if not IsGrapeCompiled then 
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
@@ -36,6 +37,46 @@ fi;
 
 if TestPackageAvailability("genss")=fail then 
   Add(SemigroupsOmitFromTestManualExamples, "Normalizer");
+fi;
+
+# Issue 5 for Orb:
+
+if not IsBound( MappingPermListList_C ) then 
+  BIND_GLOBAL( "MappingPermListList_C", function( src, dst )
+    local src_tab, dst_tab, d, out, next, i;
+
+    if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
+       Error("usage: MappingPermListList( <lst1>, <lst2> )");
+    fi;
+
+    if IsEmpty( src )  then
+      return ();
+    fi;
+    src_tab:=[];
+    dst_tab:=[];
+    d:=Maximum(Maximum(src), Maximum(dst));
+    for i in [1..Length(src)] do 
+      src_tab[src[i]]:=i;
+    od;
+    for i in [1..Length(dst)] do 
+      dst_tab[dst[i]]:=i;
+    od;
+    out:=EmptyPlist(d);
+    next:=1;
+    for i in [1..d] do 
+      if IsBound(src_tab[i]) then 
+        out[i]:=dst[src_tab[i]];
+      else
+        while IsBound(dst_tab[next]) do 
+          next:=next+1;
+        od;
+        out[i]:=next;
+        next:=next+1;
+      fi;
+    od;
+
+    return PermList(out);
+  end);
 fi;
 
 # skip examples including partitions if we're in version less than 2.0
