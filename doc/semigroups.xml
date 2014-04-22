@@ -225,7 +225,7 @@ gap> RandomBipartitionSemigroup(5,5);
 
 <#GAPDoc Label="InverseSubsemigroupByProperty">
   <ManSection>
-    <Func Name="InverseSubsemigroupByProperty" Arg="??"/>
+    <Func Name="InverseSubsemigroupByProperty" Arg="S, func"/>
     <Returns>An inverse semigroup.</Returns>
     <Description>
     <C>InverseSubsemigroupByProperty</C> returns the inverse subsemigroup of the
