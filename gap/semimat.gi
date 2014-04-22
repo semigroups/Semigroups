@@ -117,7 +117,7 @@ InstallMethod(LambdaPerm,
             od;
         end;
         
-        if (x^(-1) <> fail) and (y^(-1) <> fail) then
+        if x^(-1) <> fail then
             return List(x^(-1) * y, List);
         fi;
         
