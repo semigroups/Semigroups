@@ -183,12 +183,12 @@ function(S)
     local gens, dims;
         gens:=GeneratorsOfSemigroup(S);
         dims:=DimensionsMat(gens[1]);
-        Print("<matrix semigroup ");
+        Print("<semigroup of ");
         #if HasSize(S) then
         #   Print(" of size ",Size(S));
         #fi;
         Print(dims[1], "x", dims[2]);
-        Print(" over ", BaseDomain(gens[1]));
+        Print(" matrices over ", BaseDomain(gens[1]));
         Print(" with ", Length(gens), " generator");
         if Length(gens)>1 then 
           Print("s");
