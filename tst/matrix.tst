@@ -31,7 +31,7 @@ gap> M := NewMatrix(IsPlistMatrixRep, GF(2), 16,
 > [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ]
 > ]);;
 gap> S := Semigroup(M);
-<matrix semigroup 16x16 over GF(2) with 1 generator>
+<semigroup of 16x16 matrices over GF(2) with 1 generator>
 gap> Size(S);
 7161
 gap>
