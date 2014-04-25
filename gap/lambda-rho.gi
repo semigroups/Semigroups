@@ -262,6 +262,7 @@ function(o, m)
       f:=Representative(s);
       bound:=Size(GL(DimensionsMat(f)[1], BaseDomain(f)));
       one:=IdentityMat(rank, BaseDomain(f));
+      f := one;
     else
       bound:=Factorial(rank);
       one:=();
@@ -281,7 +282,11 @@ function(o, m)
   fi;
 
   g:=Group(one);
-
+  Print(" -> ", List(GeneratorsOfGroup(g), x -> IsMatrixObj(x)));
+  if IsMatrixObj(GeneratorsOfGroup(g)[1]) then
+      Error("Panic");
+  fi;
+  
   stop:=false; 
   for k in scc do
     forward:=LambdaOrbMult(o, m, k)[1];

@@ -445,6 +445,6 @@ InstallGlobalFunction( RandomMatrixObj, function ( arg )
         mat[i] := row;
     od;
 
-    return NewMatrix(IsPlistMatrixRep, R, n, mat);
+    return NewMatrix(IsPlistMatrixRep, R, n, One(R) * mat);
 end );
 

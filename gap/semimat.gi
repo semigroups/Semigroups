@@ -118,6 +118,8 @@ InstallMethod(LambdaPerm,
         end;
         
         if x^(-1) <> fail then
+            p := List(x^(-1) * y, List);
+            Print("p is ", IsMatrixObj(p), "\n");
             return List(x^(-1) * y, List);
         fi;
         
@@ -136,6 +138,8 @@ InstallMethod(LambdaPerm,
             q := TransposedMat(q);
             q := Matrix(One(BaseDomain(q)) * PermutationMat(SortingPerm(Filtered(yse.heads, x -> x <> 0)), DimensionsMat(q)[1], BaseDomain(q)), q) * q;
 
+            p := List(p*q^(-1), List);
+            Print("p is ", IsMatrixObj(p), "\n");
             return List(p*q^(-1), List);
         fi;
     end;
