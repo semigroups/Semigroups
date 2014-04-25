@@ -1,4 +1,7 @@
 
+# TODO: use lookfunc, include logs like in Orb so that we can have
+# ClosureSemigroup, IsomorphismFpSemigroup, a method for Factorization,
+# \in methods, tie this in with Enumerator, etc...
 
 #  for details see:
 #
@@ -171,9 +174,7 @@ function(S, limit, lookfunc)
   data!.nr:=nr;   data!.nrrules:=nrrules;
   data!.one:=one; data!.pos:=i;
 
-  return [Length(data.elts)-1, 
-   Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(data.right))-1, 
-   Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(data.left))-1];
+  return data;
 end);
 
 
