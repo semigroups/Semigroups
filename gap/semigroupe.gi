@@ -8,85 +8,129 @@
 #
 #  JDM shouldn't produce fp representation if input is fp semigroup!
 
+InstallGlobalFunction(InitSemigroupe,
+function(S)
+  local gens, nrgens, genstoapply, ht, stopper, nr, elts, words, lenwords, one, genslookup, first, final, left, prefix, suffix, right, reduced, pos, record, i;
+
+  gens:=GeneratorsOfSemigroup(S);
+  nrgens:=Length(gens);
+  genstoapply:=[1..nrgens];
+  ht:=HTCreate(gens[1], rec(treehashsize:=S!.opts!.hashlen.L));
+
+  stopper:=false;  nr:=1;       elts:=[];       words:=[];  
+  lenwords:=[];    one:=false;  genslookup:=[];
+  
+  first:=[];    final:=[];    left:=[genstoapply+1];
+  prefix:=[];   suffix:=[];   right:=[genstoapply+1];  
+  
+  reduced:=[BlistList(genstoapply, genstoapply)];
+
+  for i in genstoapply do 
+    pos:=HTValue(ht, gens[i]);
+    if pos=fail then 
+      nr:=nr+1; 
+      HTAdd(ht, gens[i], nr); 
+      elts[nr]:=gens[i];
+      words[nr]:=[i];  lenwords[nr]:=1;
+      first[nr]:=i;    final[nr]:=i;
+      prefix[nr]:=1;   suffix[nr]:=1;
+      left[nr]:=[];    right[nr]:=[];
+      genslookup[i]:=nr;
+      reduced[nr]:=BlistList(genstoapply, []);
+      if one=false and ForAll(gens, y-> gens[i]*y=y and y*gens[i]=y) then 
+        one:=nr;
+      fi;
+    else 
+      genslookup[i]:=pos;
+    fi;
+  od;
+
+  record:=rec( ht:=ht, stopper:=stopper,   words:=words, genslookup:=genslookup,
+               nr:=nr, lenwords:=lenwords, elts:=elts,   one:=one, 
+               first:=first, final:=final, prefix:=prefix, suffix:=suffix,
+               left:=left,   right:=right, reduced:=reduced);
+
+  record.rules:=[];  record.nrrules:=0;  record.pos:=2;                        
+  record.len:=1;     record.lenindex:=[2];   
+
+  S!.semigroupe:=record; 
+  return record;
+end);
+
+# the main algorithm
+
 InstallMethod(Enumerate, 
 "for a finite semigroup with generators, cyclotomic, function",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsCyclotomic, IsFunction], 
 function(S, limit, lookfunc)
-  local stopper, ht, gens, nrgens, nr, elts, words, lenwords, one, rules, first, final, prefix, suffix, right, left, reduced, i, len, lenindex, j, b, s, newword, r, new, pos, nrrules, p, x, k;
+  local gens, nrgens, genstoapply, data, i, len, one, right, left, first, final, prefix, suffix, reduced, words, elts, nr, stopper, ht, lenwords, rules, nrrules, lenindex, genslookup, htadd, htvalue, b, s, r, newword, new, pos, p, j, k;
 
+  gens:=GeneratorsOfSemigroup(S);
+  nrgens:=Length(gens);
+  genstoapply:=[1..nrgens];
+  
   if not IsBound(S!.semigroupe) then
-    stopper:=false; #JDM not currently in use 
-    ht:=HTCreate(gens[1], rec(treehashsize:=S!.opts!.hashlen.M));
-    gens:=GeneratorsOfSemigroup(S);
-    nrgens:=Length(gens);
-    nr:=0;                                   # length of <elts>
-    elts:=[];
-    words:=[];
-    lenwords:=[];                            # lenwords[i]=Length(words[i])
-    one:=false;
-    
-    # remove duplicate <gens> and initialise <ht> and <elts>
-    for x in gens do 
-      if HTValue(ht, x)=fail then 
-        nr:=nr+1; 
-        HTAdd(ht, x, nr);
-        elts[nr]:=x;
-        words[nr]:=[nr];
-        lenwords[nr]:=1;
-        if IsOne(x) then 
-          one:=nr;
-        fi;
-      fi;
-    od;
-
-    # <u> is an element in <S> represented as a word in <gens>
-    rules:=[];                          # the rules
-    first:=[1..nr];                     # position of first letter in <gens>
-    final:=[1..nr];                     # position of last letter in <gens>
-    prefix:=List([1..nr], ReturnFail);  # position of prefix of length |u|-1
-    suffix:=List([1..nr], ReturnFail);  # position of suffix of length |u|-1
-    right:=List([1..nr], x-> []);       # position of u*gens[i] in <elts>
-    left:=List([1..nr], x-> []);        # position of gens[i]*u in <elts>
-    reduced:=List([1..nr], x-> BlistList([1..nrgens], []));
-    # <true> if <u*gens[i]> corresponds is a reduced word (i.e. the reduced word
-    # corresponding to <u*gens[i]> is the word corresponding to <u> product <gens[i]>
-    # in the free semigroup 
-    i:=1;                               # position where we apply <gens>
-    len:=1;                             # current word length
-    lenindex:=[1];                      # lenindex[i]=position in <words> of
-                                        # first element of length i
+    data:=InitSemigroupe(S);
   else
-    # set the above local variables using <S!.semigroupe>
+    data:=S!.semigroupe;
+  fi;
+  
+  i:=data!.pos;             # current position where we apply <gens>
+  len:=data!.len;           # current word length
+  one:=data!.one;           # <elts[one]> is the mult. neutral element
+  right:=data!.right;       # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
+  left:=data!.left;         # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
+  first:=data!.first;       # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
+  final:=data!.final;       # elts[i]=elts[prefix[i]]*gens[final[i]]
+  prefix:=data!.prefix;     # see final
+  suffix:=data!.suffix;     # see first
+  reduced:=data!.reduced;   # words[right[i][j]] is reduced if reduced[i][j]=true
+  words:=data!.words;       # words[i] is a word in the gens equal to elts[i]
+  elts:=data!.elts;         # the so far enumerated elements
+  nr:=data!.nr;             # nr=Length(elts);
+  stopper:=data!.stopper;   # JDM not currenly used
+  ht:=data!.ht;             # HTValue(ht, x)=Position(elts, x)
+  lenwords:=data!.lenwords; # lenwords[i]=Length(words[i])
+  rules:=data!.rules;       # the relations
+  nrrules:=data!.nrrules;   # Length(rules)
+  lenindex:=data!.lenindex; # lenindex[len]=position in <words> and <elts> of
+                            # first element of length <len>
+  genslookup:=data!.genslookup; # genslookup[i]=Position(elts, gens[i])
+                                # this is not always <i+1>!
+
+  if IsBoundGlobal("ORBC") then 
+    htadd:=HTAdd_TreeHash_C;
+    htvalue:=HTValue_TreeHash_C;
+  else
+    htadd:=HTAdd;
+    htvalue:=HTValue;
   fi;
 
-  j:=i;               # place holder
-  
- 
-  while nr<=limit and i<nr and i<>stopper do 
-    while i<nr and lenwords[i]=len do 
+  while nr<=limit and i<=nr and i<>stopper do 
+    while i<=nr and lenwords[i]=len do 
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
-      for j in [1..nrgens] do # consider <elts[i]*gens[j]>
-        newword:=Concatenation(words[i], [j]);
-        #newword:=fpelts[u]*freegens[j]; # newword=u*a_j=elts[i]*gens[j]
-
+      for j in genstoapply do # consider <elts[i]*gens[j]>
+        # <newword> represents <elts[i]*gens[j]>
         if not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];             # elts[r]=elts[s]*gens[i]
           if r=one then               # <elts[r]> is the identity
-            right[i][j]:=b; 
+            right[i][j]:=genslookup[b]; 
             reduced[i][j]:=true;      # <elts[i]*gens[j]=b> and it is reduced
           else
             right[i][j]:=right[left[prefix[r]][b]][final[r]];
             # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*elts[final[r]];
-            # \rho(u*a_i)=\rho(\rho(b*r)*l(r)), or ua=btc
+            newword:=words[i]{[1..lenwords[i]]};
+            newword[lenwords[i]+1]:=j;
             reduced[i][j]:=(newword=words[right[i][j]]);     
+
             # elts[i]*gens[j]=words[right[i][j]]; 
-            # if \rho(u*a_i)=u*a_i then true
           fi;
         else # <elts[s]*gens[j]> is reduced
-          
           new:=elts[i]*gens[j];
-          pos:=HTValue(ht, new);
+          newword:=words[i]{[1..lenwords[i]]}; # better than ShallowCopy
+          newword[lenwords[i]+1]:=j;           # using Concatenate here is very bad!
+          pos:=htvalue(ht, new);
           if pos<>fail then 
             nrrules:=nrrules+1;
             rules[nrrules]:=[newword, words[pos]];
@@ -97,44 +141,39 @@ function(S, limit, lookfunc)
           else #<new> is a new element!
             nr:=nr+1;
            
-            if one<>false and IsOne(new) then 
+            if one=false and ForAll(gens, y-> new*y=y and y*new=y) then
               one:=nr;
             fi;
-
-            elts[nr]:=new;
-            HTAdd(ht, new, nr);
-
-            words[nr]:=newword;
-            lenwords[nr]:=lenwords[i]+1;
-            
-            first[nr]:=b; 
-            final[nr]:=j;
-            prefix[nr]:=i; 
-            suffix[nr]:=right[s][j];
-            right[nr]:=[];
-            reduced[nr]:=[];
-            left[nr]:=[];
-
-            right[i][j]:=nr;
-            reduced[i][j]:=true;
+            elts[nr]:=new;        htadd(ht, new, nr);
+            words[nr]:=newword;   lenwords[nr]:=lenwords[i]+1;
+            first[nr]:=b;         final[nr]:=j;
+            prefix[nr]:=i;        suffix[nr]:=right[s][j];
+            right[nr]:=[];        left[nr]:=[];
+            right[i][j]:=nr;      reduced[i][j]:=true;
+            reduced[nr]:=BlistList(genstoapply, []);
           fi;
         fi;
-        i:=i+1;
-      od; # finished words of length <len>
-
-      # process words of length <len> into <left>
-      len:=len+1;
-      lenindex[len]:=nr+1;              # words of length <len> start at <nr+1>
-      for j in [lenindex[len-1]..nr] do # loop over all words of length <len-1>
-        p:=prefix[j]; b:=final[j];
-        for k in [1..nrgens] do 
-          left[j][k]:=right[left[p][k]][b];
-          # gens[k]*elts[j]=(gens[k]*elts[p])*gens[p]
-        od;
+      od; # finished applying gens to <elts[i]>
+      i:=i+1;
+    od; # finished words of length <len>
+    # process words of length <len> into <left>
+    len:=len+1;
+    lenindex[len]:=i;                  # words of length <len> start at <nr+1>
+    for j in [lenindex[len-1]..i-1] do # loop over all words of length <len-1>
+      p:=prefix[j]; b:=final[j];
+      for k in genstoapply do 
+        left[j][k]:=right[left[p][k]][b];
+        # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
       od;
     od;
   od;
 
+  data!.nr:=nr;   data!.nrrules:=nrrules;
+  data!.one:=one; data!.pos:=i;
+
+  return [Length(data.elts)-1, 
+   Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(data.right))-1, 
+   Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(data.left))-1];
 end);
 
 
