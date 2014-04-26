@@ -623,6 +623,23 @@ end);
 InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> InverseLeftBlocks);
 
+InstallMethod(LambdaBound, "for a transformation semigroup",
+[IsTransformationSemigroup],
+  s -> function(r) 
+           if r < 100 then
+             return Factorial(r);
+           else
+             return infinity;
+           fi;
+       end);
+# LamdaIdentity(s) returns a function that returns
+# the identity element of the schuetzenberger group
+# elements produced by LambdaPerm
+InstallMethod(LambdaIdentity, "for a transformation semigroup",
+[IsTransformationSemigroup],
+  s -> function(r) return (); end);
+   
+
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.

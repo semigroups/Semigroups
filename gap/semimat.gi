@@ -97,13 +97,46 @@ InstallMethod(RhoInverse,
     Error("not implemented yet\n");
 end);
 
+InstallMethod(LambdaBound,
+	"for a matrix semigroup",
+        [IsMatrixSemigroup],
+	S -> function(r)
+  	    local f;
+
+            if r < 100 then
+		    f := Representative(S);
+		    return Size(GL(DimensionsMat(f)[1], BaseDomain(f)));
+            else
+                    return infinity;
+            fi;
+        end);
+
+InstallMethod(LambdaIdentity,
+	"for a matrix semigroup",
+        [IsMatrixSemigroup],
+	S -> function(r)
+  	    local f, one;
+
+	    f := Representative(S);
+            one := IdentityMat(r, BaseDomain(f));
+
+	    #(mpf) If this isn't here, the field for the matrix
+            #      group is set wrong, and the matrix code falls
+            #      on it's face converting all matrices to the
+            #      prime field, in which they might not be invertible
+            #      anymore
+            ConvertToMatrixRep(one);
+ 
+            return one;
+        end);
+
 #T returns an invertible matrix
 InstallMethod(LambdaPerm,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
         function(S)
     return function(x, y)
-        local xse, xhe, yse, yhe, he, p, q, i, RemoveZeroRows;
+        local xse, xhe, yse, yhe, he, p, q, i, RemoveZeroRows, res;
         
         RemoveZeroRows := function(mat)
             local i, n;
@@ -118,13 +151,9 @@ InstallMethod(LambdaPerm,
         end;
         
         if x^(-1) <> fail then
-            p := List(x^(-1) * y, List);
-            Print("p is ", IsMatrixObj(p), "\n");
-            return List(x^(-1) * y, List);
-        fi;
-        
-        if IsZero(x) then
-            return [[One(BaseDomain(x))]];
+            res := List(x^(-1) * y, List);
+        elif IsZero(x) then
+            res := [[One(BaseDomain(x))]];
         else 
             xse := SemiEchelonMatTransformation(x);
             p := MutableCopyMat(TransposedMat(Matrix(xse.coeffs, Length(xse.heads), x)));
@@ -138,10 +167,13 @@ InstallMethod(LambdaPerm,
             q := TransposedMat(q);
             q := Matrix(One(BaseDomain(q)) * PermutationMat(SortingPerm(Filtered(yse.heads, x -> x <> 0)), DimensionsMat(q)[1], BaseDomain(q)), q) * q;
 
-            p := List(p*q^(-1), List);
-            Print("p is ", IsMatrixObj(p), "\n");
-            return List(p*q^(-1), List);
+            res := List(p * q^(-1), List);
         fi;
+        #(mpf) This is necessary to make the matrices
+        #      have the correct representation to play
+        #      nice with the matrix group code.
+        ConvertToMatrixRep(res);
+        return res;
     end;
 end);
 
@@ -178,7 +210,6 @@ end);
 ##
 #M  ViewObj( <matgrp> )
 ##
-#T Print additional info about base domain and matrix size
 
 InstallMethod( ViewObj,
     "for a matrix semigroup with generators",

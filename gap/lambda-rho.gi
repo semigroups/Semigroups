@@ -257,19 +257,8 @@ function(o, m)
   lambdaperm:=LambdaPerm(s);      rep:=LambdaOrbRep(o, m);
   rank:=LambdaRank(s)(o[scc[1]]);
 
-  if rank<100 then
-    if IsMatrixSemigroup(s) then 
-      f:=Representative(s);
-      bound:=Size(GL(DimensionsMat(f)[1], BaseDomain(f)));
-      one:=IdentityMat(rank, BaseDomain(f));
-      f := one;
-    else
-      bound:=Factorial(rank);
-      one:=();
-    fi;
-  else
-    bound:=infinity;
-  fi;
+  one := LambdaIdentity(s)(rank);
+  bound := LambdaBound(s)(rank);
 
   if rank=0 then 
     o!.schutzstab[m]:=false;
@@ -282,10 +271,6 @@ function(o, m)
   fi;
 
   g:=Group(one);
-  Print(" -> ", List(GeneratorsOfGroup(g), x -> IsMatrixObj(x)));
-  if IsMatrixObj(GeneratorsOfGroup(g)[1]) then
-      Error("Panic");
-  fi;
   
   stop:=false; 
   for k in scc do

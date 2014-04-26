@@ -33,6 +33,9 @@ DeclareAttribute("RhoFunc", IsSemigroup);
 
 DeclareAttribute("RhoInverse", IsSemigroup);
 DeclareAttribute("LambdaInverse", IsSemigroup);
+DeclareAttribute("LambdaRank", IsSemigroup);
+DeclareAttribute("LambdaBound", IsSemigroup);
+DeclareAttribute("LambdaIdentity", IsSemigroup);
 DeclareAttribute("LambdaPerm", IsSemigroup);
 DeclareAttribute("LambdaConjugator", IsSemigroup);
 
