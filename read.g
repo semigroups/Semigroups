@@ -119,6 +119,7 @@ ReadPackage("semigroups/gap/attributes-inverse.gi");
 ReadPackage("semigroups/gap/ideals.gi");
 
 ReadPackage("semigroups/gap/freeinverse.gi");
+ReadPackage("semigroups/gap/freeband.gi");
 
 ReadPackage("semigroups/gap/utils.gi");
 

@@ -44,6 +44,7 @@ ReadPackage("semigroups/gap/ideals.gd");
 ReadPackage("semigroups/gap/attributes-inverse.gd");
 
 ReadPackage("semigroups/gap/freeinverse.gd");
+ReadPackage("semigroups/gap/freeband.gd");
 
 ReadPackage("semigroups/gap/display.gd");
 
