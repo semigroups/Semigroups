@@ -116,7 +116,7 @@ function(S, limit, lookfunc)
       for j in genstoapply do # consider <elts[i]*gens[j]>
         # <newword> represents <elts[i]*gens[j]>
         if not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
-          r:=right[s][j];             # elts[r]=elts[s]*gens[i]
+          r:=right[s][j];             # elts[r]=elts[s]*gens[j]
           if r=one then               # <elts[r]> is the identity
             right[i][j]:=genslookup[b]; 
             reduced[i][j]:=true;      # <elts[i]*gens[j]=b> and it is reduced
