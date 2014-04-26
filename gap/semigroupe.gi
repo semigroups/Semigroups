@@ -176,5 +176,3 @@ function(S, limit, lookfunc)
 
   return data;
 end);
-
-

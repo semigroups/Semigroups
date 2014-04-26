@@ -13,6 +13,8 @@ IsBipartitionCollection);
 DeclareSynonym("IsBipartitionMonoid", IsMonoid and
 IsBipartitionCollection);
 
+InstallTrueMethod(IsFinite, IsBipartitionSemigroup);
+
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroup);
