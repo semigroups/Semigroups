@@ -137,4 +137,5 @@ ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univcong.gi");
 
 ReadPackage("semigroups/gap/semigroupe.gi");
+ReadPackage("semigroups/gap/generic.gi");
 
