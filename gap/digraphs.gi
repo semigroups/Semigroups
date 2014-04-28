@@ -42,7 +42,6 @@ GabowSCC:=function(digraph)
 
     if stack2[len2]=v then
       len2:=len2-1;
-      
       repeat
         w:=stack1[len1];
         id[w]:=count;
@@ -88,15 +87,10 @@ NonRecursiveGabowSCC:=function(digraph)
       stack2[len2]:=branch[level];
       
       while level>0 do
-        #Print("here0\n");
-        #Print("branch[level]=", branch[level], "\n");
-        #Print("wstack[level]=", wstack[level], "\n");
-        #Print("Length(digraph[v])=", Length(digraph[v]), "\n");
         v:=branch[level];
         deeper:=false;
         for w in [wstack[level]..Length(digraph[v])] do 
           if not marked[digraph[v][w]] then 
-            #Print("here1\n");
             wstack[level]:=w+1; # where we restart when we get back here...
             level:=level+1;
             branch[level]:=digraph[v][w];
@@ -110,14 +104,8 @@ NonRecursiveGabowSCC:=function(digraph)
             stack2[len2]:=branch[level];
             deeper:=true;
             break;
-            #dfs(digraph, w);
           elif id[digraph[v][w]]=0 then 
-            #Print("here2\n");
             while preorder[stack2[len2]] > preorder[digraph[v][w]] do
-              #Print("len2=", len2, "\n");
-              #Print("preorder[stack2[len2]]=", preorder[stack2[len2]], "\n");
-              #Print("preorder[graph[v][w]]=", preorder[digraph[v][w]], "\n");
-
               len2:=len2-1; # pop from stack2
             od;
           fi;
@@ -126,7 +114,6 @@ NonRecursiveGabowSCC:=function(digraph)
         if not deeper then 
           if stack2[len2]=branch[level] then
             len2:=len2-1;
-            #Print("here3"); 
             repeat
               w:=stack1[len1];
               id[w]:=count;
