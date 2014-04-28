@@ -48,4 +48,10 @@ DeclareProperty( "IsGeneralLinearGroupAsMatrixSemigroup", IsMatrixSemigroup);
 
 DeclareOperation("CanonicalRowSpace", [ IsMatrixObj and IsFFECollColl ]);
 
+# Right action of a matrix over a field on a row space
+DeclareGlobalFunction("MatrixObjRowSpaceRightAction");
+DeclareGlobalFunction("MatrixObjLocalRightInverse");
+DeclareGlobalFunction("MatrixObjSchutzGrpElement");
+
+
 

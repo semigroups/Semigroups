@@ -291,7 +291,6 @@ InstallMethod(RhoOrbOpts, "for a matrix semigroup",
 [IsMatrixSemigroup], s -> rec());
 
 # the lambda and rho acts
-
 InstallMethod(LambdaAct, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
@@ -323,31 +322,8 @@ end);
 InstallMethod(LambdaAct, "for a matrix semigroup", [IsMatrixSemigroup],
 function(S)
   # returns the right action on subspaces of F^n by right multiplication
-  return
-    function(vsp, mat)
-      local basis, nvsp, i, n;
-      
-      # This takes care of the token element
-      if DimensionsMat(vsp)[1] > DimensionsMat(mat)[1] then
-          nvsp := mat;
-      else
-          nvsp := vsp * mat;
-      fi;
-      #T WHY?
-      nvsp := MutableCopyMat(nvsp);
-      TriangulizeMat(nvsp);
-      n := DimensionsMat(nvsp)[1];
-      for i in [n,n-1..1] do
-        if IsZero(nvsp[i]) then
-          Remove(nvsp, i);
-        fi;
-      od;
-      
-      return nvsp;
-    end;
+    return MatrixObjRowSpaceRightAction;
 end);
-
-#
 
 InstallMethod(RhoAct, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -402,7 +378,8 @@ InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s-> -1);
 
-InstallMethod(LambdaOrbSeed, "for a matrix semigroup", [IsMatrixSemigroup],
+InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
+[IsMatrixSemigroup],
 function(s)
     local rep;
     rep := Representative(s);
@@ -425,8 +402,8 @@ InstallMethod(RhoOrbSeed, "for a bipartition semigroup",
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s-> -1);
 
-InstallMethod(RhoOrbSeed, "for a matrix semigroup", [IsMatrixSemigroup],
-LambdaOrbSeed);
+InstallMethod(RhoOrbSeed, "for a matrix semigroup",
+[IsMatrixSemigroup], LambdaOrbSeed);
 
 # the function calculating the lambda or rho value of an element
 
@@ -456,28 +433,12 @@ InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
-InstallMethod(LambdaFunc, "for a matrix semigroup", [IsMatrixSemigroup], 
+InstallMethod(LambdaFunc, "for a matrix semigroup",
+[IsMatrixSemigroup], 
 function(S)
   # a function that returns the row space
-  return function(mat)
-      local i, n, nvsp;
-      
-      nvsp := MutableCopyMat(mat);
-      TriangulizeMat(nvsp);
-      
-      n := DimensionsMat(nvsp)[1];
-      
-      for i in [n,n-1..1] do
-          if IsZero(nvsp[i]) then
-              Remove(nvsp, i);
-          fi;
-      od;
-      return nvsp;
-    end;
+    return CanonicalRowSpace;
 end);
-
-
-#
 
 InstallMethod(RhoFunc, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -499,7 +460,8 @@ InstallMethod(RhoFunc, "for a bipartition semigroup",
 InstallMethod(RhoFunc, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R->(x-> x![1]));
 
-InstallMethod(RhoFunc, "for a matrix semigroup", [IsMatrixSemigroup],
+InstallMethod(RhoFunc, "for a matrix semigroup",
+[IsMatrixSemigroup],
 function(S)
   # a function that returns the column space
   return
@@ -531,12 +493,11 @@ function(x)
   fi;
 end);
 
-InstallMethod(LambdaRank, "for a matrix semigroup", [IsMatrixSemigroup],
+InstallMethod(LambdaRank, "for a matrix semigroup",
+[IsMatrixSemigroup],
 function(S)
   return x-> Length(CanonicalRowSpace(x));
 end);
-
-#
 
 InstallMethod(RhoRank, "for a transformation semigroup",
 [IsTransformationSemigroup], S-> function(x)
@@ -565,7 +526,8 @@ function(x)
   fi;
 end);
 
-InstallMethod(RhoRank, "for a matrix semigroup", [IsMatrixSemigroup],
+InstallMethod(RhoRank, "for a matrix semigroup",
+[IsMatrixSemigroup],
 function(S)
   return LambdaRank(S);
 end);
@@ -592,6 +554,12 @@ function(k, x)
   i:=First([1..Length(x![4][x![3]])], i-> x![4][x![3]][i]<>0);
   return Objectify(FamilyObj(x)!.type,
    [i, (x![4][k][x![1]]*x![2]*x![4][x![3]][i])^-1, k, x![4]]);
+end);
+
+InstallMethod(LambdaInverse, "for a matrix semigroup",
+[IsMatrixSemigroup], s->
+function(rsp, mat)
+    return MatrixObjLocalRightInverse(s, rsp, mat);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
@@ -623,6 +591,12 @@ end);
 InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> InverseLeftBlocks);
 
+InstallMethod(RhoInverse, "for a matrix semigroup",
+[IsMatrixSemigroup], s->
+function(rsp, mat)
+  Error("RhoInverse for matrix semigroups not implemented yet\n");
+end);
+
 InstallMethod(LambdaBound, "for a transformation semigroup",
 [IsTransformationSemigroup],
   s -> function(r) 
@@ -639,7 +613,6 @@ InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
   s -> function(r) return (); end);
    
-
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
@@ -660,6 +633,12 @@ function(x, y)
     return ();
   fi;
   return x![2]^-1*y![2];
+end);
+
+InstallMethod(LambdaPerm, "for a matrix semigroup",
+[IsMatrixSemigroup], s->
+function(x,y)
+  return MatrixObjSchutzGrpElement(s,x,y);
 end);
 
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that

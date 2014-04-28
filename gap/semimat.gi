@@ -41,18 +41,42 @@ end);
 InstallMethod(FakeOne, "for an FFE coll coll coll",
 [IsFFECollCollColl], One);
 
+
+InstallGlobalFunction(MatrixObjRowSpaceRightAction,
+  function(vsp, mat)
+    local basis, nvsp, i, n;
+      
+      # This takes care of the token element
+      if DimensionsMat(vsp)[1] > DimensionsMat(mat)[1] then
+          nvsp := mat;
+      else
+          nvsp := vsp * mat;
+      fi;
+      #T WHY?
+      nvsp := MutableCopyMat(nvsp);
+      TriangulizeMat(nvsp);
+      n := DimensionsMat(nvsp)[1];
+      for i in [n,n-1..1] do
+        if IsZero(nvsp[i]) then
+          Remove(nvsp, i);
+        fi;
+      od;
+      
+      return nvsp;
+end);
+
+
 # Under the assumption that rank mat >= dim V compute
 # a matrix N such that mat * N = id_V
 #
-#T maybe do this "by hand"
-#T in particular we can probably not rely
-#T on SemiEchelonMatDestructive actually leaving
-#T the semiechelon form in W
-InstallMethod(LambdaInverse,
-        "for a matrix semigroup",
-        [IsMatrixSemigroup],
-        function(S)
-    return function( V, mat )
+#T do this "by hand", and in place, or find a
+#T kernel function that does this.
+InstallGlobalFunction(MatrixObjLocalRightInverse,
+#InstallMethod(LambdaInverse,
+#        "for a matrix semigroup",
+#        [IsMatrixSemigroup],
+#        function(S)
+function( S, V, mat )
         local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
         
         # We assume that mat is quadratic but we don't check this.
@@ -87,14 +111,6 @@ InstallMethod(LambdaInverse,
         TriangulizeMat(W);
         
         return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
-    end;
-end);
-
-InstallMethod(RhoInverse,
-        "for a matrix semigroup",
-        [IsMatrixSemigroup],
-        function(S)
-    Error("not implemented yet\n");
 end);
 
 InstallMethod(LambdaBound,
@@ -120,95 +136,53 @@ InstallMethod(LambdaIdentity,
 	    f := Representative(S);
             one := IdentityMat(r, BaseDomain(f));
 
-	    #(mpf) If this isn't here, the field for the matrix
-            #      group is set wrong, and the matrix code falls
-            #      on it's face converting all matrices to the
-            #      prime field, in which they might not be invertible
-            #      anymore
-            ConvertToMatrixRep(one);
- 
             return one;
         end);
 
 #T returns an invertible matrix
-InstallMethod(LambdaPerm,
-        "for a matrix semigroup",
-        [IsMatrixSemigroup],
-        function(S)
-    return function(x, y)
-        local xse, xhe, yse, yhe, he, p, q, i, RemoveZeroRows, res;
+#T make pretty and efficient (in that order)
+InstallGlobalFunction(MatrixObjSchutzGrpElement,
+function(S, x, y)
+    local xse, xhe, yse, yhe, he, p, q, i, RemoveZeroRows, res;
         
-        RemoveZeroRows := function(mat)
-            local i, n;
+    RemoveZeroRows := function(mat)
+        local i, n;
             
-            n := DimensionsMat(mat)[1];
-            
-            for i in [n,n-1..1] do
-                if IsZero(mat[i]) then
-                    Remove(mat,i);
-                fi;
-            od;
-        end;
-        
-        if x^(-1) <> fail then
-            res := List(x^(-1) * y, List);
-        elif IsZero(x) then
-            res := [[One(BaseDomain(x))]];
-        else 
-            xse := SemiEchelonMatTransformation(x);
-            p := MutableCopyMat(TransposedMat(Matrix(xse.coeffs, Length(xse.heads), x)));
-            RemoveZeroRows(p);
-            p := TransposedMat(p);
-            p := Matrix(PermutationMat(SortingPerm(Filtered(xse.heads, x -> x <> 0)), DimensionsMat(p)[1], BaseDomain(p)), p) * p;
+        n := DimensionsMat(mat)[1];
 
-            yse := SemiEchelonMatTransformation(y);
-            q := MutableCopyMat(TransposedMat(Matrix(yse.coeffs, Length(yse.heads), y)));
-            RemoveZeroRows(q);
-            q := TransposedMat(q);
-            q := Matrix(One(BaseDomain(q)) * PermutationMat(SortingPerm(Filtered(yse.heads, x -> x <> 0)), DimensionsMat(q)[1], BaseDomain(q)), q) * q;
-
-            res := List(p * q^(-1), List);
-        fi;
-        #(mpf) This is necessary to make the matrices
-        #      have the correct representation to play
-        #      nice with the matrix group code.
-        ConvertToMatrixRep(res);
-        return res;
+        for i in [n,n-1..1] do
+            if IsZero(mat[i]) then
+                Remove(mat,i);
+            fi;
+        od;
     end;
-end);
+        
+    if x^(-1) <> fail then
+        res := List(x^(-1) * y, List);
+    elif IsZero(x) then
+        res := [[One(BaseDomain(x))]];
+    else 
+        xse := SemiEchelonMatTransformation(x);
+        p := MutableCopyMat(TransposedMat(Matrix(xse.coeffs, Length(xse.heads), x)));
+        RemoveZeroRows(p);
+        p := TransposedMat(p);
+        p := Matrix(PermutationMat(SortingPerm(Filtered(xse.heads, x -> x <> 0)), DimensionsMat(p)[1], BaseDomain(p)), p) * p;
 
-InstallMethod(LambdaConjugator,
-        "for a matrix semigroup",
-        [IsMatrixSemigroup],
-        function(S)
-    Error
-      ("not implemented yet\n");
-end);
+        yse := SemiEchelonMatTransformation(y);
+        q := MutableCopyMat(TransposedMat(Matrix(yse.coeffs, Length(yse.heads), y)));
+        RemoveZeroRows(q);
+        q := TransposedMat(q);
+        q := Matrix(One(BaseDomain(q)) * PermutationMat(SortingPerm(Filtered(yse.heads, x -> x <> 0)), DimensionsMat(q)[1], BaseDomain(q)), q) * q;
 
-InstallMethod(IdempotentTester,
-        "for a matrix semigroup",
-        [IsMatrixSemigroup],
-        function(S)
-    Error("not implemented yet\n");
-end);
+        res := List(p * q^(-1), List);
+    fi;
 
-InstallMethod(IdempotentCreator,
-        "for a matrix semigroup",
-        [IsMatrixSemigroup],
-        function(S)
-    Error("not implemented yet\n");
-end);
-
-InstallMethod(StabilizerAction,
-        "for a matrix semigroup",
-        [IsMatrixSemigroup],
-        function(S)
-    Error("not implemented yet\n");
+    return res;
 end);
 
 #############################################################################
 ##
-#M  ViewObj( <matgrp> )
+#M  ViewObj( <matsemigrp> )
 ##
 
 InstallMethod( ViewObj,
@@ -233,7 +207,7 @@ end);
 
 #############################################################################
 ##
-#M  PrintObj( <matgrp> )
+#M  PrintObj( <matsemigrp> )
 ##
 InstallMethod( PrintObj,"for a matrix semigroup",
     [ IsMatrixSemigroup ],
