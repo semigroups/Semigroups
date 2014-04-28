@@ -43,7 +43,7 @@ InstallMethod(FakeOne, "for an FFE coll coll coll",
 
 
 InstallGlobalFunction(MatrixObjRowSpaceRightAction,
-  function(vsp, mat)
+  function(s, vsp, mat)
     local basis, nvsp, i, n;
       
       # This takes care of the token element
@@ -72,10 +72,6 @@ end);
 #T do this "by hand", and in place, or find a
 #T kernel function that does this.
 InstallGlobalFunction(MatrixObjLocalRightInverse,
-#InstallMethod(LambdaInverse,
-#        "for a matrix semigroup",
-#        [IsMatrixSemigroup],
-#        function(S)
 function( S, V, mat )
         local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
         
@@ -228,7 +224,7 @@ function( m )
     local i, n;
 
     if not IsBound(m![5]) then
-        Info(InfoMatrixSemigroups, 2, "CanonicalRowSpace called\n");
+        Info(InfoMatrixSemigroups, 2, "CanonicalRowSpace called");
         
         m![5] := MutableCopyMat(m);
         TriangulizeMat(m![5]);

@@ -319,10 +319,10 @@ InstallMethod(LambdaAct, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
-InstallMethod(LambdaAct, "for a matrix semigroup", [IsMatrixSemigroup],
-function(S)
-  # returns the right action on subspaces of F^n by right multiplication
-    return MatrixObjRowSpaceRightAction;
+InstallMethod(LambdaAct, "for a matrix semigroup",
+[IsMatrixSemigroup],
+s -> function(vsp, mat)
+  return MatrixObjRowSpaceRightAction(s, vsp, mat);
 end);
 
 InstallMethod(RhoAct, "for a transformation semigroup",
@@ -435,9 +435,9 @@ end);
 
 InstallMethod(LambdaFunc, "for a matrix semigroup",
 [IsMatrixSemigroup], 
-function(S)
+s -> function(mat)
   # a function that returns the row space
-    return CanonicalRowSpace;
+    return CanonicalRowSpace(mat);
 end);
 
 InstallMethod(RhoFunc, "for a transformation semigroup",

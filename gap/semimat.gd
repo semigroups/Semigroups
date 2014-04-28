@@ -50,7 +50,12 @@ DeclareOperation("CanonicalRowSpace", [ IsMatrixObj and IsFFECollColl ]);
 
 # Right action of a matrix over a field on a row space
 DeclareGlobalFunction("MatrixObjRowSpaceRightAction");
+# Given a row space rsp and a matrix mat, computes
+# a matrix mat' such that rsp.(mat * mat') = id_rsp
 DeclareGlobalFunction("MatrixObjLocalRightInverse");
+# Given two H-related matrices x and y, computes the element
+# of the schutzenberger group of the matrices' H-class
+# that maps im x to im y. Returns an invertible matrix
 DeclareGlobalFunction("MatrixObjSchutzGrpElement");
 
 
