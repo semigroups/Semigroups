@@ -347,34 +347,34 @@ InstallGlobalFunction(PedestrianLambdaInverse
     
 end);
 
-InstallMethod( IsGeneratorsOfMagmaWithInverses,
-        "for lists of MatrixObj",
-        [ IsHomogeneousList and IsRingElementCollCollColl ],
-        function(l)
-    if Length(l) > 0 then
-        if IsMatrixObj(l[1]) then
-            if ForAll(l, x -> x^(-1) <> fail) then
-                return true;
-            fi;
-        fi;
-    fi;
-    
-    TryNextMethod();
-            
-    end);
+#InstallMethod( IsGeneratorsOfMagmaWithInverses,
+#        "for lists of MatrixObj",
+#        [ IsHomogeneousList and IsRingElementCollCollColl ],
+#        function(l)
+#    if Length(l) > 0 then
+#        if IsMatrixObj(l[1]) then
+#            if ForAll(l, x -> x^(-1) <> fail) then
+#                return true;
+#            fi;
+#        fi;
+#    fi;
+#    
+#    TryNextMethod();
+#            
+#    end);
 
-InstallMethod( DefaultScalarDomainOfMatrixList,
-        [ IsHomogeneousList and IsRingElementCollCollColl ],
-        15,
-        function(l)
-     if Length(l) > 0 then
-        if IsMatrixObj(l[1]) then
-            return BaseDomain(l[1]);
-        fi;
-    fi;
-    
-    TryNextMethod();
-end);
+#InstallMethod( DefaultScalarDomainOfMatrixList,
+ #       [ IsHomogeneousList and IsRingElementCollCollColl ],
+#        15,
+#        function(l)
+#     if Length(l) > 0 then
+#        if IsMatrixObj(l[1]) then
+#            return BaseDomain(l[1]);
+#        fi;
+#    fi;
+#    
+#    TryNextMethod();
+#end);
 
 
 InstallMethod( PseudoInverse,
