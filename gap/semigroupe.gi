@@ -18,7 +18,7 @@ function(S)
   gens:=GeneratorsOfSemigroup(S);
   nrgens:=Length(gens);
   genstoapply:=[1..nrgens];
-  ht:=HTCreate(gens[1], rec(treehashsize:=S!.opts!.hashlen.L));
+  ht:=HTCreate(gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
 
   stopper:=false;  nr:=1;       elts:=[];       words:=[];  
   lenwords:=[];    one:=false;  genslookup:=[];
