@@ -62,15 +62,33 @@ end);
 
 # the main algorithm
 
+InstallMethod(Enumerate, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup], 
+function(S)
+  return Enumerate(S, infinity, ReturnFalse);
+end);
+
+#
+
+InstallMethod(Enumerate, "for a finite semigroup with generators and a cyclotomic",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsCyclotomic], 
+function(S, limit)
+  return Enumerate(S, limit, ReturnFalse);
+end);
+
+#
+
 InstallMethod(Enumerate, 
 "for a finite semigroup with generators, cyclotomic, function",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsCyclotomic, IsFunction], 
 function(S, limit, lookfunc)
-  local gens, nrgens, genstoapply, data, i, len, one, right, left, first, final, prefix, suffix, reduced, words, elts, nr, stopper, ht, lenwords, rules, nrrules, lenindex, genslookup, htadd, htvalue, b, s, r, newword, new, pos, p, j, k;
+  local looking, data, gens, nrgens, genstoapply, i, len, one, right, left, first, final, prefix, suffix, reduced, words, elts, nr, stopper, ht, lenwords, rules, nrrules, lenindex, genslookup, htadd, htvalue, b, s, r, newword, new, pos, found, p, j, k;
 
-  gens:=GeneratorsOfSemigroup(S);
-  nrgens:=Length(gens);
-  genstoapply:=[1..nrgens];
+  if lookfunc<>ReturnFalse then 
+    looking:=true;
+  else
+    looking:=false;
+  fi;
   
   if not IsBound(S!.semigroupe) then
     data:=InitSemigroupe(S);
@@ -78,28 +96,41 @@ function(S, limit, lookfunc)
     data:=S!.semigroupe;
   fi;
   
-  i:=data!.pos;             # current position where we apply <gens>
-  len:=data!.len;           # current word length
-  one:=data!.one;           # <elts[one]> is the mult. neutral element
-  right:=data!.right;       # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
-  left:=data!.left;         # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
-  first:=data!.first;       # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
-  final:=data!.final;       # elts[i]=elts[prefix[i]]*gens[final[i]]
-  prefix:=data!.prefix;     # see final
-  suffix:=data!.suffix;     # see first
-  reduced:=data!.reduced;   # words[right[i][j]] is reduced if reduced[i][j]=true
-  words:=data!.words;       # words[i] is a word in the gens equal to elts[i]
-  elts:=data!.elts;         # the so far enumerated elements
-  nr:=data!.nr;             # nr=Length(elts);
-  stopper:=data!.stopper;   # JDM not currenly used
-  ht:=data!.ht;             # HTValue(ht, x)=Position(elts, x)
-  lenwords:=data!.lenwords; # lenwords[i]=Length(words[i])
-  rules:=data!.rules;       # the relations
-  nrrules:=data!.nrrules;   # Length(rules)
-  lenindex:=data!.lenindex; # lenindex[len]=position in <words> and <elts> of
+  if data.pos>data.nr then 
+    if looking then 
+      data.found:=false;
+    fi;
+    return data;
+  fi;
+  
+  data.looking:=looking;
+
+  gens:=GeneratorsOfSemigroup(S);
+  nrgens:=Length(gens);
+  genstoapply:=[1..nrgens];
+  
+  i:=data.pos;             # current position where we apply <gens>
+  len:=data.len;           # current word length
+  one:=data.one;           # <elts[one]> is the mult. neutral element
+  right:=data.right;       # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
+  left:=data.left;         # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
+  first:=data.first;       # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
+  final:=data.final;       # elts[i]=elts[prefix[i]]*gens[final[i]]
+  prefix:=data.prefix;     # see final
+  suffix:=data.suffix;     # see first
+  reduced:=data.reduced;   # words[right[i][j]] is reduced if reduced[i][j]=true
+  words:=data.words;       # words[i] is a word in the gens equal to elts[i]
+  elts:=data.elts;         # the so far enumerated elements
+  nr:=data.nr;             # nr=Length(elts);
+  stopper:=data.stopper;   # JDM not currenly used
+  ht:=data.ht;             # HTValue(ht, x)=Position(elts, x)
+  lenwords:=data.lenwords; # lenwords[i]=Length(words[i])
+  rules:=data.rules;       # the relations
+  nrrules:=data.nrrules;   # Length(rules)
+  lenindex:=data.lenindex; # lenindex[len]=position in <words> and <elts> of
                             # first element of length <len>
-  genslookup:=data!.genslookup; # genslookup[i]=Position(elts, gens[i])
-                                # this is not always <i+1>!
+  genslookup:=data.genslookup; # genslookup[i]=Position(elts, gens[i])
+                               # this is not always <i+1>!
 
   if IsBoundGlobal("ORBC") then 
     htadd:=HTAdd_TreeHash_C;
@@ -154,6 +185,13 @@ function(S, limit, lookfunc)
             right[nr]:=[];        left[nr]:=[];
             right[i][j]:=nr;      reduced[i][j]:=true;
             reduced[nr]:=BlistList(genstoapply, []);
+            
+            if looking and not found then
+              if lookfunc(data, new) then
+                found:=true;
+                data.found := nr;
+              fi;
+            fi;
           fi;
         fi;
       od; # finished applying gens to <elts[i]>
