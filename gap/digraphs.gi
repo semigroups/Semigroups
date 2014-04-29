@@ -8,7 +8,7 @@
 # the scc index 1 corresponds to the "deepest" scc, i.e. the minimal ideal in
 # our case...
 GabowSCC:=function(digraph)   
-  local stack1, len1, stack2, len2, marked, preorder, id, pre, count, dfs, v;
+  local stack1, len1, stack2, len2, marked, preorder, id, pre, count, dfs, v, tmp;
 
   stack1:=[]; len1:=0;
   stack2:=[]; len2:=0;
@@ -17,6 +17,7 @@ GabowSCC:=function(digraph)
   id:=[1..Length(digraph)]*0;
   pre:=1;
   count:=1;
+  tmp:=0;
   
   #
   dfs:=function(graph, v)
@@ -29,7 +30,7 @@ GabowSCC:=function(digraph)
     len2:=len2+1;
     stack1[len1]:=v;
     stack2[len2]:=v;
-    
+    tmp:=tmp+1; 
     for w in digraph[v] do 
       if not marked[w] then 
         dfs(digraph, w);
@@ -59,11 +60,12 @@ GabowSCC:=function(digraph)
     fi;
   od;
 
-  return rec(id:=id, preorder:=preorder, count:=count);
+  #return rec(id:=id, preorder:=preorder, count:=count);
+  return tmp;
 end;
 
 NonRecursiveGabowSCC:=function(digraph)   
-  local stack1, len1, stack2, len2, marked, preorder, id, pre, count, level, branch, wstack, deeper, w, v;
+  local stack1, len1, stack2, len2, marked, preorder, id, pre, count, level, branch, wstack, deeper, w, v, tmp;
 
   stack1:=[]; len1:=0;
   stack2:=[]; len2:=0;
@@ -72,8 +74,9 @@ NonRecursiveGabowSCC:=function(digraph)
   id:=[1..Length(digraph)]*0;
   pre:=1;
   count:=1;
-  
+  tmp:=0;
   for v in [1..Length(digraph)] do 
+    #Print("v=", v, "\n");
     if not marked[v] then
       level:=1;
       branch:=[v];
@@ -86,7 +89,9 @@ NonRecursiveGabowSCC:=function(digraph)
       stack1[len1]:=branch[level];
       stack2[len2]:=branch[level];
       
-      while level>0 do
+      while true do
+        #Print("level=", level, "\n");
+        tmp:=tmp+1;
         v:=branch[level];
         deeper:=false;
         for w in [wstack[level]..Length(digraph[v])] do 
@@ -121,13 +126,17 @@ NonRecursiveGabowSCC:=function(digraph)
             until w=branch[level];
             count:=count+1;
           fi;
+          if level=1 then 
+            break;
+          fi;
           level:=level-1;
         fi;
       od;
     fi;
   od;
 
-  return rec(id:=id, preorder:=preorder, count:=count);
+  #return rec(id:=id, preorder:=preorder, count:=count);
+  return tmp;
 end;
 
 # <scc> is the output of GabowSCC applied to right
