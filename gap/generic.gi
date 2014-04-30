@@ -114,7 +114,7 @@ function(S)
   return SemigroupIdeal(S, data.elts[data.rightscc.min]);
 end);
 
-#
+# JDM: this could have a c method...
 
 InstallMethod(NrHClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
@@ -175,4 +175,38 @@ function(S)
 
   return hindex;
 end);
+
+# JDM: can probably do better than this by considering Green's classes.
+
+InstallMethod(Idempotents, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  local data, elts, idempotents, nr, i;
+
+  data:=Enumerate(S);
+
+  if not IsBound(data.idempotents) then 
+
+    elts:=data.elts;
+    idempotents:=EmptyPlist(Length(elts)-1);
+    nr:=0;
+
+    for i in [2..Length(elts)] do 
+      if elts[i]*elts[i]=elts[i] then 
+        nr:=nr+1;
+        idempotents[nr]:=i;
+      fi;
+    od;
+    
+    data.idempotents:=idempotents;
+  fi;
+
+  return data.elts{data.idempotents};
+end);
+
+
+    
+
+
+
 
