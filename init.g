@@ -59,6 +59,7 @@ DeclareInfoClass("InfoSemigroups");;
 ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univcong.gd");
 
+ReadPackage("semigroups/gap/digraphs.gd");
 ReadPackage("semigroups/gap/semigroupe.gd");
 ReadPackage("semigroups/gap/generic.gd");
 

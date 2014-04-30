@@ -9,7 +9,7 @@
 # our case...
 
 if not IsBound(GABOW_SCC) then
-  InstallGlobalFunction(GABOW_SCC, 
+  BindGlobal("GABOW_SCC", 
   function(digraph)   
     local stack1, len1, stack2, len2, marked, preorder, id, pre, count, level,
     branch, wstack, deeper, w, v, tmp;
@@ -92,7 +92,7 @@ fi;
 # <scc> is the output of GABOW_SCC applied to right
 
 if not IsBound(GABOW_SCC_DCLASSES) then 
-  InstallGlobalFunction(GABOW_SCC_DCLASSES,
+  BindGlobal("GABOW_SCC_DCLASSES",
   function(left, scc)   
     local stack1, len1, stack2, len2, marked, preorder, id, pre, count, nr,
     sccid, did, level, branch, wstack, v, deeper, w;
@@ -107,7 +107,7 @@ if not IsBound(GABOW_SCC_DCLASSES) then
 
     nr:=1; # nr of D-classes
     sccid:=scc.id;
-    did:=[1..scc.count-1]*0; # lookup for scc of R-classes
+    did:=[1..scc.count]*0; # lookup for scc of R-classes
     
     for v in [1..Length(left)] do 
       if not marked[v] then
@@ -175,7 +175,8 @@ if not IsBound(GABOW_SCC_DCLASSES) then
       fi;
     od;
 
-    return rec(id:=id, preorder:=preorder, count:=count, dclassesid=did);
+    return rec(id:=id, preorder:=preorder, count:=count-1, dclassesid:=did, 
+    nrdclasses:=nr-1);
   end);
 fi;
 

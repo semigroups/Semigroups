@@ -8,7 +8,7 @@
 ##############################################################################
 ###
 
-DeclareCategory("IsActingSemigroup", IsSemigroup);
+DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 2);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
