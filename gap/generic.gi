@@ -163,9 +163,11 @@ function(S)
     j:=sorted[i];
     if rid[j]>now then # new R-class
       now:=rid[j]; 
-      cur:=hindex; # H-class indices for elements of R-class <now> start at <cur+1>
+      cur:=hindex; 
+      # H-class indices for elements of R-class <now> start at <cur+1>
     fi;
-    if hlookup[lid[j]]<=cur then # then we have a new H-class, otherwise, this is an 
+    if hlookup[lid[j]]<=cur then 
+      # then we have a new H-class, otherwise, this is an 
       hindex:=hindex+1;          # existing H-class in the current R-class. 
       hlookup[lid[j]]:=hindex;
     fi;
