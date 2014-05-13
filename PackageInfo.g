@@ -64,7 +64,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "",
-    WWWHome       := "http://www.maths.usyd.edu.au/u/jamese/",
+    WWWHome       := "http://www.uws.edu.au/staff_profiles/uws_profiles/doctor_james_east",
     Place         := "Sydney",
     Institution   := "University of Western Sydney"
   ),
