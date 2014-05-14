@@ -217,9 +217,17 @@ function(S)
     fi;
 end);
 
+# Note that this method assumes that the object is 
+# IsPlistMatrixRep and that we are using a position
+# in the positionalobjectrep for storing the row space (this 
+# is mainly because MatrixObj, PlistMatrixObj are not
+# in IsAttributeStoringRep
+# 
 InstallMethod( CanonicalRowSpace,
-        "for a matrix object over a finite field",
-        [ IsMatrixObj and IsFFECollColl ],
+        "for a matrix object in PlistMatrixRep over a finite field",
+        [ IsMatrixObj 
+          and IsPlistMatrixRep
+          and IsFFECollColl ],
 function( m )
     local i, n;
 
