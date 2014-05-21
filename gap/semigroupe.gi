@@ -1,5 +1,5 @@
 
-# TODO: use lookfunc, include logs like in Orb so that we can have
+# TODO: use include logs like in Orb so that we can have
 # ClosureSemigroup, IsomorphismFpSemigroup, a method for Factorization,
 # \in methods, tie this in with Enumerator, etc...
 
@@ -25,18 +25,19 @@ end);
 
 InstallGlobalFunction(InitSemigroupe,
 function(S)
-  local gens, nrgens, genstoapply, ht, stopper, nr, elts, words, lenwords, one, genslookup, first, final, left, prefix, suffix, right, reduced, pos, record, i;
+  local gens, nrgens, genstoapply, ht, stopper, nr, elts, words, lenwords, one, genslookup, first, final, left, prefix, suffix, right, rules, nrrules, reduced, pos, data, i;
 
   gens:=GeneratorsOfSemigroup(S);
   nrgens:=Length(gens);
   genstoapply:=[1..nrgens];
   ht:=HTCreate(gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
 
-  stopper:=false;  nr:=1;       elts:=[];       words:=[];  
+  stopper:=false;  nr:=0;       elts:=[];       words:=[];  
   lenwords:=[];    one:=false;  genslookup:=[];
   
-  first:=[];    final:=[];    left:=[genstoapply+1];
-  prefix:=[];   suffix:=[];   right:=[genstoapply+1];  
+  first:=[];    final:=[];    left:=[genstoapply];
+  prefix:=[];   suffix:=[];   right:=[genstoapply];  
+  rules:=[];    nrrules:=0;
   
   reduced:=[BlistList(genstoapply, genstoapply)];
 
@@ -48,7 +49,7 @@ function(S)
       elts[nr]:=gens[i];
       words[nr]:=[i];  lenwords[nr]:=1;
       first[nr]:=i;    final[nr]:=i;
-      prefix[nr]:=1;   suffix[nr]:=1;
+      prefix[nr]:=0;   suffix[nr]:=0;
       left[nr]:=[];    right[nr]:=[];
       genslookup[i]:=nr;
       reduced[nr]:=BlistList(genstoapply, []);
@@ -57,20 +58,20 @@ function(S)
       fi;
     else 
       genslookup[i]:=pos;
+      nrrules:=nrrules+1;
+      rules[nrrules]:=[[i], [pos]];
     fi;
   od;
 
-  record:=rec( ht:=ht, stopper:=stopper,   words:=words, genslookup:=genslookup,
-               nr:=nr, lenwords:=lenwords, elts:=elts,   one:=one, 
-               first:=first, final:=final, prefix:=prefix, suffix:=suffix,
-               left:=left,   right:=right, reduced:=reduced, genstoapply:=genstoapply, 
-               gens:=gens, found:=false);
+  data:=rec( ht:=ht, stopper:=stopper,   words:=words, genslookup:=genslookup,
+             nr:=nr, lenwords:=lenwords, elts:=elts,   one:=one, 
+             first:=first, final:=final, prefix:=prefix, suffix:=suffix,
+             left:=left,   right:=right, reduced:=reduced, genstoapply:=genstoapply, 
+             gens:=gens, found:=false, rules:=rules, nrrules:=nrrules, pos:=1, 
+             len:=1, lenindex:=[1]);
 
-  record.rules:=[];  record.nrrules:=0;  record.pos:=2;                        
-  record.len:=1;     record.lenindex:=[2];   
-
-  S!.semigroupe:=record; 
-  return record;
+  S!.semigroupe:=data; 
+  return data;
 end);
 
 # the main algorithm
@@ -157,25 +158,33 @@ function(S, limit, lookfunc)
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
         # <newword> represents <elts[i]*gens[j]>
-        if not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
+        if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];             # elts[r]=elts[s]*gens[j]
-          if r=one then               # <elts[r]> is the identity
-            right[i][j]:=genslookup[b]; 
-            reduced[i][j]:=true;      # <elts[i]*gens[j]=b> and it is reduced
-          else
+          if prefix[r]<>0 then 
             right[i][j]:=right[left[prefix[r]][b]][final[r]];
             # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*elts[final[r]];
             newword:=words[i]{[1..lenwords[i]]};
             newword[lenwords[i]+1]:=j;
             reduced[i][j]:=(newword=words[right[i][j]]);     
-
             # elts[i]*gens[j]=words[right[i][j]]; 
+          elif r=one then               # <elts[r]> is the identity
+            right[i][j]:=genslookup[b]; 
+            reduced[i][j]:=true;      # <elts[i]*gens[j]=b> and it is reduced
+          else # prefix[r]=0
+            right[i][j]:=right[b][final[r]];
+            # elts[i]*gens[j]=gens[b]*elts[final[r]];
+            newword:=words[i]{[1..lenwords[i]]};
+            newword[lenwords[i]+1]:=j;
+            reduced[i][j]:=(newword=words[right[i][j]]);     
+            # elts[i]*gens[j]=words[right[i][j]]; 
+             
           fi;
         else # <elts[s]*gens[j]> is reduced
           new:=elts[i]*gens[j];
           newword:=words[i]{[1..lenwords[i]]}; # better than ShallowCopy
           newword[lenwords[i]+1]:=j;           # using Concatenate here is very bad!
           pos:=htvalue(ht, new);
+          
           if pos<>fail then 
             nrrules:=nrrules+1;
             rules[nrrules]:=[newword, words[pos]];
@@ -189,13 +198,18 @@ function(S, limit, lookfunc)
             if one=false and ForAll(gens, y-> new*y=y and y*new=y) then
               one:=nr;
             fi;
+            if s<>0 then 
+              suffix[nr]:=right[s][j];
+            else 
+              suffix[nr]:=genslookup[j];
+            fi;
+            
             elts[nr]:=new;        htadd(ht, new, nr);
             words[nr]:=newword;   lenwords[nr]:=lenwords[i]+1;
             first[nr]:=b;         final[nr]:=j;
-            prefix[nr]:=i;        suffix[nr]:=right[s][j];
-            right[nr]:=[];        left[nr]:=[];
-            right[i][j]:=nr;      reduced[i][j]:=true;
-            reduced[nr]:=BlistList(genstoapply, []);
+            prefix[nr]:=i;        right[nr]:=[];        
+            left[nr]:=[];         right[i][j]:=nr;      
+            reduced[i][j]:=true;  reduced[nr]:=BlistList(genstoapply, []);
             
             if looking and not found then
               if lookfunc(data, nr) then
@@ -217,13 +231,23 @@ function(S, limit, lookfunc)
     # process words of length <len> into <left>
     len:=len+1;
     lenindex[len]:=i;                  # words of length <len> start at <nr+1>
-    for j in [lenindex[len-1]..i-1] do # loop over all words of length <len-1>
-      p:=prefix[j]; b:=final[j];
-      for k in genstoapply do 
-        left[j][k]:=right[left[p][k]][b];
-        # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+    if len<>2 then 
+      for j in [lenindex[len-1]..i-1] do # loop over all words of length <len-1>
+        p:=prefix[j]; b:=final[j];
+        for k in genstoapply do 
+          left[j][k]:=right[left[p][k]][b];
+          # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+        od;
       od;
-    od;
+    else
+      for j in [1..i-1] do           # loop over all words of length <1>
+        b:=final[j];
+        for k in genstoapply do 
+          left[j][k]:=right[k][b];
+          # gens[k]*elts[j]=gens[k]*gens[b]
+        od;
+      od;
+    fi;
   od;
   
   data.nr:=nr;    
@@ -238,6 +262,8 @@ function(S, limit, lookfunc)
 
   return data;
 end);
+
+# JDM: this should probably be changed to a method for IsSemigroupData
 
 InstallMethod(Position, 
 "for a finite semigroup with generators, an associative element, 0",

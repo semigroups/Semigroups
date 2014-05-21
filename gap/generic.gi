@@ -2,10 +2,93 @@
 # code for generic semigroups, ties in the Froidure-Pin Semigroupe algorithm to
 # GAP methods
 
+#
+
+InstallMethod(IsomorphismFpMonoid, "for a finite monoid with generators",
+[IsMonoid and IsFinite and HasGeneratorsOfMonoid],
+function(S)
+  local F, A, gens, lookup, convert, rels;
+  
+  F:=FreeMonoid(Length(GeneratorsOfMonoid(S)));
+  A:=GeneratorsOfMonoid(F);
+
+  gens:=GeneratorsOfSemigroup(S);
+  lookup:=List([1..Length(gens)], i-> Position(GeneratorsOfMonoid(S), gens[i]));
+  
+  # convert words in the generators of semigroup to words in generators of the
+  # monoid
+  convert:=function(word) # as a list of positive integers...
+    local out, i;
+    out:=[];
+    for i in word do 
+      if lookup[i]<>fail then 
+        Add(out, lookup[i]);
+      fi;
+    od;
+    return out;
+  end;
+
+  rels:=List(Enumerate(S).rules, x-> [EvaluateWord(A, convert(x[1])), 
+    EvaluateWord(A, convert(x[2]))]);
+  
+  return MagmaIsomorphismByFunctionsNC(S, F/rels, 
+   x -> EvaluateWord(A, convert(Factorization(S, x))), 
+   x -> MappedWord(x, A, GeneratorsOfMonoid(S)));
+end);
+
+#
+
+InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  local F, A, rels;
+  
+  F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
+  A:=GeneratorsOfSemigroup(F);
+  rels:=List(Enumerate(S).rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
+  
+  return MagmaIsomorphismByFunctionsNC(S, F/rels, 
+   x -> EvaluateWord(A, Factorization(S, x)), 
+   x -> MappedWord(x, A, GeneratorsOfSemigroup(S)));
+end);
+
+#
+
+InstallMethod(Enumerator, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  local data, record;
+  
+  data:=Enumerate(S);
+  record:=rec();
+
+  record.NumberElement:=function(enum, elt)
+    return Position(S, elt);
+  end;
+
+  record.ElementNumber:=function(enum, nr)
+    return data.elts[nr];
+  end;
+
+  record.Length:=enum -> Size(S);
+
+  record.Membership:=function(enum, elt)
+    return Position(S, elt)<>fail;
+  end;
+
+  record.IsBound\[\]:=function(enum, nr)
+    return IsBound(data.elts[nr]);
+  end;
+
+  return EnumeratorByFunctions(S, record);
+end);    
+
+#
+
 InstallMethod(Size, "for a finite semigroup with generators", 
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(Enumerate(S, infinity, ReturnFalse).elts)-1;
+  return Length(Enumerate(S, infinity, ReturnFalse).elts);
 end);
 
 #
@@ -15,7 +98,7 @@ InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup with generators
 function(S)
   local data;
   data:=Enumerate(S);
-  return data.right{[2..Length(data.right)]}-1; # first point is a dummy
+  return data.right;; 
 end);
 
 #
@@ -25,7 +108,7 @@ InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup with generators"
 function(S)
   local data;
   data:=Enumerate(S);
-  return data.left{[2..Length(data.left)]}-1; # first point is a dummy
+  return data.left;; # first point is a dummy
 end);
 
 #
@@ -62,7 +145,7 @@ function(S)
     data.rightscc:=GABOW_SCC(Enumerate(S).right);
   fi;
     
-  return data.rightscc.count-1;
+  return data.rightscc.count;
 end);
 
 #
@@ -80,7 +163,7 @@ function(S)
     data.leftscc:=GABOW_SCC_DCLASSES(data.left, data.rightscc);
   fi;
     
-  return data.leftscc.count-1;
+  return data.leftscc.count;
 end);
 
 #
@@ -122,31 +205,33 @@ function(S)
   local data, nr, rid, rnr, count, sorted, lid, lnr, hid, hlookup, now, hindex, j, cur, i;
   
   data:=Enumerate(S);
+  
   if not IsBound(data.rightscc) then 
     data.rightscc:=GABOW_SCC(Enumerate(S).right);
   fi;
   if not IsBound(data.leftscc) then 
     data.leftscc:=GABOW_SCC_DCLASSES(data.left, data.rightscc);
   fi;
+
   nr:=Length(data.elts);
   rid:=data.rightscc.id;      # lookup for index of R-class containing <elts[i]>
-  rnr:=data.rightscc.count-1; # number of R-classes
-  count:=[1..rnr+1]*0;        
-  count[1]:=2;
+  rnr:=data.rightscc.count;   # number of R-classes
+  count:=[1..rnr+1]*0;   
+  count[1]:=1;
 
   # count the number of elements in each R-class
-  for i in [2..nr] do 
+  for i in [1..nr] do 
     count[rid[i]+1]:=count[rid[i]+1]+1;
   od;
-  # count[id[i]] is the next available position to contain an element of R-class
-  # with index id[i]. 
+  # count[rid[i]] is the next available position to contain an element of R-class
+  # with index rid[i]. 
   for i in [2..rnr] do 
     count[i]:=count[i-1]+count[i];
   od;
   
-  # List(sorted, i-> id[i])= id sorted, without the last element...
+  # List(sorted, i-> rid[i])= rid sorted, without the last element...
   sorted:=EmptyPlist(nr);
-  for i in [2..nr] do 
+  for i in [1..nr] do 
     sorted[count[rid[i]]]:=i;
     count[rid[i]]:=count[rid[i]]+1;
   od;
@@ -155,11 +240,11 @@ function(S)
   hid:=[1..nr]*0;       # lookup for H-class indices
   now:=0;               # current R-class 
   hindex:=0;            # current H-class index
-  hlookup:=[1..data.leftscc.count-1]*0; 
+  hlookup:=[1..data.leftscc.count]*0; 
   # H-class corresponding to L-class in the current R-class <now>
 
   # browse the L-class table...
-  for i in [2..nr] do
+  for i in [1..nr] do
     j:=sorted[i];
     if rid[j]>now then # new R-class
       now:=rid[j]; 
@@ -190,10 +275,10 @@ function(S)
   if not IsBound(data.idempotents) then 
 
     elts:=data.elts;
-    idempotents:=EmptyPlist(Length(elts)-1);
+    idempotents:=EmptyPlist(Length(elts));
     nr:=0;
 
-    for i in [2..Length(elts)] do 
+    for i in [1..Length(elts)] do 
       if elts[i]*elts[i]=elts[i] then 
         nr:=nr+1;
         idempotents[nr]:=i;
@@ -201,6 +286,7 @@ function(S)
     od;
     
     data.idempotents:=idempotents;
+    ShrinkAllocationPlist(idempotents);
   fi;
 
   return data.elts{data.idempotents};
