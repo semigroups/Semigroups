@@ -10,3 +10,5 @@ DeclareOperation("Enumerate", [IsPinData]);
 DeclareOperation("Enumerate", [IsPinData, IsCyclotomic]);
 DeclareOperation("Enumerate", [IsPinData, IsCyclotomic, IsFunction]);
 
+DeclareGlobalFunction("ClosureNonActingSemigroupNC");
+

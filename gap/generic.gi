@@ -152,7 +152,7 @@ end);
 InstallMethod(\in, "for an associative element and finite semigroup with generators",
 [IsAssociativeElement, IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(x, S)
-  return Position(S, x)<>fail;
+  return Position(PinData(S), x)<>fail;
 end);
 
 #
@@ -162,7 +162,7 @@ InstallMethod(Factorization,
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(S, x)
   local pos;
-  pos:=Position(S, x); 
+  pos:=Position(PinData(S), x); 
   if pos=fail then 
     return fail;
   fi;
