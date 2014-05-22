@@ -1,7 +1,6 @@
 
 # TODO: use include logs like in Orb so that we can have
-# ClosureSemigroup, IsomorphismFpSemigroup, a method for Factorization,
-# \in methods, tie this in with Enumerator, etc...
+# ClosureSemigroup, etc...
 
 #  for details see:
 #
@@ -25,13 +24,19 @@ end);
 
 InstallGlobalFunction(InitSemigroupe,
 function(S)
-  local gens, nrgens, genstoapply, ht, stopper, nr, elts, words, lenwords, one, genslookup, first, final, left, prefix, suffix, right, rules, nrrules, reduced, pos, data, i;
+  local gens, nrgens, genstoapply, ht, stopper, nr, elts, words, lenwords, one, genslookup, first, final, left, prefix, suffix, right, rules, nrrules, reduced, lenindex, pos, val, data, i;
 
-  gens:=GeneratorsOfSemigroup(S);
+  if IsMonoid(S) then 
+    gens:=GeneratorsOfMonoid(S);
+    ht:=HTCreate(One(S), rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+  else
+    gens:=GeneratorsOfSemigroup(S);
+    ht:=HTCreate(gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+  fi;
+
   nrgens:=Length(gens);
   genstoapply:=[1..nrgens];
-  ht:=HTCreate(gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
-
+  
   stopper:=false;  nr:=0;       elts:=[];       words:=[];  
   lenwords:=[];    one:=false;  genslookup:=[];
   
@@ -40,10 +45,26 @@ function(S)
   rules:=[];    nrrules:=0;
   
   reduced:=[BlistList(genstoapply, genstoapply)];
-
+  
+  if IsMonoid(S) then 
+    nr:=1; 
+    HTAdd(ht, One(S), 1); 
+    elts[1]:=One(S);
+    words[1]:=[];   lenwords[1]:=0;
+    first[1]:=0;    final[1]:=0;
+    prefix[1]:=0;   suffix[1]:=0;
+    reduced[1]:=BlistList(genstoapply, genstoapply);
+    one:=1;
+    lenindex:=[2];
+    pos:=2;
+  else 
+    lenindex:=[1];
+    pos:=1;
+  fi;
+    
   for i in genstoapply do 
-    pos:=HTValue(ht, gens[i]);
-    if pos=fail then 
+    val:=HTValue(ht, gens[i]);
+    if val=fail then 
       nr:=nr+1; 
       HTAdd(ht, gens[i], nr); 
       elts[nr]:=gens[i];
@@ -57,18 +78,23 @@ function(S)
         one:=nr;
       fi;
     else 
-      genslookup[i]:=pos;
+      genslookup[i]:=val;
       nrrules:=nrrules+1;
-      rules[nrrules]:=[[i], [pos]];
+      rules[nrrules]:=[[i], [val]];
     fi;
   od;
+
+  if IsMonoid(S) then 
+    left[1]:=List(genstoapply, i-> genslookup[i]);    
+    right[1]:=List(genstoapply, i-> genslookup[i]);
+  fi;
 
   data:=rec( ht:=ht, stopper:=stopper,   words:=words, genslookup:=genslookup,
              nr:=nr, lenwords:=lenwords, elts:=elts,   one:=one, 
              first:=first, final:=final, prefix:=prefix, suffix:=suffix,
              left:=left,   right:=right, reduced:=reduced, genstoapply:=genstoapply, 
-             gens:=gens, found:=false, rules:=rules, nrrules:=nrrules, pos:=1, 
-             len:=1, lenindex:=[1]);
+             gens:=gens, found:=false, rules:=rules, nrrules:=nrrules, pos:=pos, 
+             len:=1, lenindex:=lenindex);
 
   S!.semigroupe:=data; 
   return data;
@@ -229,18 +255,16 @@ function(S, limit, lookfunc)
       break;
     fi;
     # process words of length <len> into <left>
-    len:=len+1;
-    lenindex[len]:=i;                  # words of length <len> start at <nr+1>
-    if len<>2 then 
-      for j in [lenindex[len-1]..i-1] do # loop over all words of length <len-1>
+    if len>1 then 
+      for j in [lenindex[len]..i-1] do # loop over all words of length <len-1>
         p:=prefix[j]; b:=final[j];
         for k in genstoapply do 
           left[j][k]:=right[left[p][k]][b];
           # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
         od;
       od;
-    else
-      for j in [1..i-1] do           # loop over all words of length <1>
+    elif len=1 then 
+      for j in [lenindex[len]..i-1] do  # loop over all words of length <1>
         b:=final[j];
         for k in genstoapply do 
           left[j][k]:=right[k][b];
@@ -248,6 +272,8 @@ function(S, limit, lookfunc)
         od;
       od;
     fi;
+    len:=len+1;
+    lenindex[len]:=i;                  # words of length <len> start at <nr+1>
   od;
   
   data.nr:=nr;    
