@@ -90,7 +90,6 @@ InstallMethod(Enumerator, "for a finite semigroup with generators",
 function(S)
   local data, record;
   
-  data:=Enumerate(S);
   record:=rec();
 
   record.NumberElement:=function(enum, elt)
@@ -98,6 +97,11 @@ function(S)
   end;
 
   record.ElementNumber:=function(enum, nr)
+    data:=SemigroupData(S);
+  
+    if not IsBound(data.elts[nr]) then 
+      Enumerate(S, nr);
+    fi;
     return data.elts[nr];
   end;
 
@@ -127,9 +131,7 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  local data;
-  data:=Enumerate(S);
-  return data.right;
+  return Enumerate(S).right;
 end);
 
 #
@@ -137,9 +139,7 @@ end);
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  local data;
-  data:=Enumerate(S);
-  return data.left;
+  return Enumerate(S).left;
 end);
 
 #

@@ -300,17 +300,19 @@ function(S, x, n)
   data:=SemigroupData(S);
   pos:=HTValue(data.ht, x);
   
-  if pos=fail then 
+  if pos<>fail then 
+    return pos;
+  else
     lookfunc:=function(data, i)
       return data.elts[i]=x;
     end;
     
     pos:=Enumerate(S, infinity, lookfunc).found;
+    if pos<>false then 
+      return pos;
+    fi;
   fi;
 
-  if pos<>fail then 
-    return pos;
-  fi;
   return fail;
 end);
 
