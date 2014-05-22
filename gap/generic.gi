@@ -7,11 +7,13 @@
 InstallMethod(IsomorphismFpMonoid, "for a finite monoid with generators",
 [IsMonoid and IsFinite and HasGeneratorsOfMonoid],
 function(S)
-  local F, A, rels, Q, B;
+  local rules, F, A, rels, Q, B;
+ 
+  rules:=Enumerate(PinData(S))!.rules;
   
   F:=FreeMonoid(Length(GeneratorsOfMonoid(S)));
   A:=GeneratorsOfMonoid(F);
-  rels:=List(Enumerate(S).rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
+  rels:=List(rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
   
   Q:=F/rels; 
   B:=GeneratorsOfMonoid(Q);
@@ -26,11 +28,13 @@ end);
 InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  local F, A, rels, Q, B;
+  local rules, F, A, rels, Q, B;
+  
+  rules:=Enumerate(PinData(S))!.rules;
   
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
-  rels:=List(Enumerate(S).rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
+  rels:=List(rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
   
   Q:=F/rels; 
   B:=GeneratorsOfSemigroup(Q);
@@ -44,7 +48,7 @@ end);
 InstallMethod(IsomorphismFpSemigroup, "for a finite monoid with generators",
 [IsMonoid and IsFinite and HasGeneratorsOfMonoid],
 function(S)
-  local lookup, convert, F, A, rels, one, Q, B, i;
+  local rules, lookup, convert, F, A, rels, one, Q, B, i;
  
   if GeneratorsOfSemigroup(S)=GeneratorsOfMonoid(S) then 
     return IsomorphismFpMonoid(S);
@@ -63,9 +67,11 @@ function(S)
   end;
   #convert words in generators of monoid to words in generators of semigroup
 
+  rules:=Enumerate(PinData(S))!.rules;
+  
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
-  rels:=Set(Enumerate(S).rules, x-> [EvaluateWord(A, convert(x[1])), 
+  rels:=Set(rules, x-> [EvaluateWord(A, convert(x[1])), 
    EvaluateWord(A, convert(x[2]))]);
 
   # add relations for the identity
@@ -93,26 +99,25 @@ function(S)
   record:=rec();
 
   record.NumberElement:=function(enum, elt)
-    return Position(S, elt);
+    return Position(PinData(S), elt);
   end;
 
   record.ElementNumber:=function(enum, nr)
-    data:=SemigroupData(S);
-  
-    if not IsBound(data.elts[nr]) then 
-      Enumerate(S, nr);
+    data:=PinData(S);
+    if not IsBound(data!.elts[nr]) then 
+      Enumerate(data, nr);
     fi;
-    return data.elts[nr];
+    return data!.elts[nr];
   end;
 
   record.Length:=enum -> Size(S);
 
   record.Membership:=function(enum, elt)
-    return Position(S, elt)<>fail;
+    return Position(PinData(S), elt)<>fail;
   end;
 
   record.IsBound\[\]:=function(enum, nr)
-    return IsBound(data.elts[nr]);
+    return IsBound(PinData(S)!.elts[nr]);
   end;
 
   return EnumeratorByFunctions(S, record);
@@ -123,7 +128,7 @@ end);
 InstallMethod(Size, "for a finite semigroup with generators", 
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(Enumerate(S, infinity, ReturnFalse).elts);
+  return Length(Enumerate(PinData(S), infinity, ReturnFalse)!.elts);
 end);
 
 #
@@ -131,7 +136,7 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Enumerate(S).right;
+  return Enumerate(PinData(S))!.right;
 end);
 
 #
@@ -139,7 +144,7 @@ end);
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Enumerate(S).left;
+  return Enumerate(PinData(S))!.left;
 end);
 
 #
@@ -161,7 +166,7 @@ function(S, x)
   if pos=fail then 
     return fail;
   fi;
-  return SemigroupData(S).words[pos];
+  return PinData(S)!.words[pos];
 end);
 
 # JDM: probably have a global function or attribute RightCayleyGraphSCC or
@@ -171,12 +176,12 @@ InstallMethod(NrRClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(S);
-  if not IsBound(data.rightscc) then 
-    data.rightscc:=GABOW_SCC(Enumerate(S).right);
+  data:=Enumerate(PinData(S));
+  if not IsBound(data!.rightscc) then 
+    data!.rightscc:=GABOW_SCC(data!.right);
   fi;
     
-  return data.rightscc.count;
+  return data!.rightscc.count;
 end);
 
 #
@@ -185,16 +190,16 @@ InstallMethod(NrLClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(S);
-  if not IsBound(data.leftscc) then 
-    if not IsBound(data.rightscc) then 
-      data.rightscc:=GABOW_SCC(Enumerate(S).right);
+  data:=Enumerate(PinData(S));
+  if not IsBound(data!.leftscc) then 
+    if not IsBound(data!.rightscc) then 
+      data!.rightscc:=GABOW_SCC(data!.right);
     fi;
 
-    data.leftscc:=GABOW_SCC_DCLASSES(data.left, data.rightscc);
+    data!.leftscc:=GABOW_SCC_DCLASSES(data!.left, data!.rightscc);
   fi;
     
-  return data.leftscc.count;
+  return data!.leftscc.count;
 end);
 
 #
@@ -203,16 +208,16 @@ InstallMethod(NrDClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(S);
-  if not IsBound(data.leftscc) then 
-    if not IsBound(data.rightscc) then 
-      data.rightscc:=GABOW_SCC(Enumerate(S).right);
+  data:=Enumerate(PinData(S));
+  if not IsBound(data!.leftscc) then 
+    if not IsBound(data!.rightscc) then 
+      data!.rightscc:=GABOW_SCC(data!.right);
     fi;
 
-    data.leftscc:=GABOW_SCC_DCLASSES(data.left, data.rightscc);
+    data!.leftscc:=GABOW_SCC_DCLASSES(data!.left, data!.rightscc);
   fi;
     
-  return data.leftscc.nrdclasses;
+  return data!.leftscc.nrdclasses;
 end);
 
 #
@@ -221,11 +226,11 @@ InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(S);
-  if not IsBound(data.rightscc) then 
-    data.rightscc:=GABOW_SCC(Enumerate(S).right);
+  data:=Enumerate(PinData(S));
+  if not IsBound(data!.rightscc) then 
+    data!.rightscc:=GABOW_SCC(data!.right);
   fi;
-  return SemigroupIdeal(S, data.elts[data.rightscc.min]);
+  return SemigroupIdeal(S, data!.elts[data!.rightscc.min]);
 end);
 
 # JDM: this could have a c method...
@@ -235,18 +240,18 @@ InstallMethod(NrHClasses, "for a finite semigroup with generators",
 function(S)
   local data, nr, rid, rnr, count, sorted, lid, lnr, hid, hlookup, now, hindex, j, cur, i;
   
-  data:=Enumerate(S);
+  data:=Enumerate(PinData(S));
   
-  if not IsBound(data.rightscc) then 
-    data.rightscc:=GABOW_SCC(Enumerate(S).right);
+  if not IsBound(data!.rightscc) then 
+    data!.rightscc:=GABOW_SCC(data!.right);
   fi;
-  if not IsBound(data.leftscc) then 
-    data.leftscc:=GABOW_SCC_DCLASSES(data.left, data.rightscc);
+  if not IsBound(data!.leftscc) then 
+    data!.leftscc:=GABOW_SCC_DCLASSES(data!.left, data!.rightscc);
   fi;
 
-  nr:=Length(data.elts);
-  rid:=data.rightscc.id;      # lookup for index of R-class containing <elts[i]>
-  rnr:=data.rightscc.count;   # number of R-classes
+  nr:=Length(data!.elts);
+  rid:=data!.rightscc.id;      # lookup for index of R-class containing <elts[i]>
+  rnr:=data!.rightscc.count;   # number of R-classes
   count:=[1..rnr+1]*0;   
   count[1]:=1;
 
@@ -267,11 +272,11 @@ function(S)
     count[rid[i]]:=count[rid[i]]+1;
   od;
 
-  lid:=data.leftscc.id; # lookup for L-class indices
+  lid:=data!.leftscc.id; # lookup for L-class indices
   hid:=[1..nr]*0;       # lookup for H-class indices
   now:=0;               # current R-class 
   hindex:=0;            # current H-class index
-  hlookup:=[1..data.leftscc.count]*0; 
+  hlookup:=[1..data!.leftscc.count]*0; 
   # H-class corresponding to L-class in the current R-class <now>
 
   # browse the L-class table...
@@ -289,7 +294,7 @@ function(S)
     fi;
     hid[j]:=hlookup[lid[j]];
   od;
-  data.hid:=hid;
+  data!.hid:=hid;
 
   return hindex;
 end);
@@ -301,11 +306,11 @@ InstallMethod(Idempotents, "for a finite semigroup with generators",
 function(S)
   local data, elts, idempotents, nr, i;
 
-  data:=Enumerate(S);
+  data:=Enumerate(PinData(S));
 
-  if not IsBound(data.idempotents) then 
+  if not IsBound(data!.idempotents) then 
 
-    elts:=data.elts;
+    elts:=data!.elts;
     idempotents:=EmptyPlist(Length(elts));
     nr:=0;
 
@@ -316,11 +321,11 @@ function(S)
       fi;
     od;
     
-    data.idempotents:=idempotents;
+    data!.idempotents:=idempotents;
     ShrinkAllocationPlist(idempotents);
   fi;
 
-  return data.elts{data.idempotents};
+  return data!.elts{data!.idempotents};
 end);
 
 

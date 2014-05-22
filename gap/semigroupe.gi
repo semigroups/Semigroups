@@ -8,21 +8,8 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-InstallMethod(SemigroupData, "for a finite semigroup with generators",
+InstallMethod(PinData, "for a finite semigroup with generators",
 [IsFinite and IsSemigroup and HasGeneratorsOfSemigroup], 
-function(S)
-  local data;
-  
-  if not IsBound(S!.semigroupe) then
-    data:=InitSemigroupe(S);
-  else
-    data:=S!.semigroupe;
-  fi;
-
-  return S!.semigroupe;  
-end);
-
-InstallGlobalFunction(InitSemigroupe,
 function(S)
   local gens, nrgens, genstoapply, ht, stopper, nr, elts, words, lenwords, one, genslookup, first, final, left, prefix, suffix, right, rules, nrrules, reduced, lenindex, pos, val, data, i;
 
@@ -96,78 +83,72 @@ function(S)
              gens:=gens, found:=false, rules:=rules, nrrules:=nrrules, pos:=pos, 
              len:=1, lenindex:=lenindex);
 
-  S!.semigroupe:=data; 
-  return data;
+  return Objectify(NewType(FamilyObj(S), IsPinData), data);
 end);
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup], 
-function(S)
-  return Enumerate(S, infinity, ReturnFalse);
+InstallMethod(Enumerate, "for Pin data", [IsPinData], 
+function(data)
+  return Enumerate(data, infinity, ReturnFalse);
 end);
 
 #
 
-InstallMethod(Enumerate, "for a finite semigroup with generators and a cyclotomic",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsCyclotomic], 
-function(S, limit)
-  return Enumerate(S, limit, ReturnFalse);
+InstallMethod(Enumerate, "for Pin data and cyclotomic", [IsPinData, IsCyclotomic], 
+function(data, limit)
+  return Enumerate(data, limit, ReturnFalse);
 end);
 
 # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
-# <[1..Length(data.elts)]>.
+# <[1..Length(data!.elts)]>.
 
-InstallMethod(Enumerate, 
-"for a finite semigroup with generators, cyclotomic, function",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsCyclotomic, IsFunction], 
-function(S, limit, lookfunc)
-  local data, elts, i, nr, looking, found, gens, genstoapply, len, one, right, left, first, final, prefix, suffix, reduced, words, stopper, ht, lenwords, rules, nrrules, lenindex, genslookup, htadd, htvalue, b, s, r, newword, new, pos, p, j, k;
-  
-  data:=SemigroupData(S);
+InstallMethod(Enumerate, "for pin data, cyclotomic, function",
+[IsPinData, IsCyclotomic, IsFunction], 
+function(data, limit, lookfunc)
+  local elts, i, nr, looking, found, gens, genstoapply, len, one, right, left, first, final, prefix, suffix, reduced, words, stopper, ht, lenwords, rules, nrrules, lenindex, genslookup, htadd, htvalue, b, s, r, newword, new, pos, p, j, k;
 
-  elts:=data.elts;             # the so far enumerated elements
-  i:=data.pos;                 # current position where we apply <gens>
-  nr:=data.nr;                 # nr=Length(elts);
+  elts:=data!.elts;             # the so far enumerated elements
+  i:=data!.pos;                 # current position where we apply <gens>
+  nr:=data!.nr;                 # nr=Length(elts);
   
   if lookfunc<>ReturnFalse then 
     looking:=true;             # only applied to new elements, not old ones!!!
-    data.found:=false;         # in case we previously looked for something and found it
+    data!.found:=false;         # in case we previously looked for something and found it
   else
     looking:=false;
   fi;
   
   found:=false; 
  
-  if data.pos>data.nr then 
+  if data!.pos>data!.nr then 
     if looking then 
-      data.found:=false;
+      data!.found:=false;
     fi;
     return data;
   fi;
   
-  gens:=data.gens;
-  genstoapply:=data.genstoapply;
-  len:=data.len;               # current word length
-  one:=data.one;               # <elts[one]> is the mult. neutral element
-  right:=data.right;           # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
-  left:=data.left;             # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
-  first:=data.first;           # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
-  final:=data.final;           # elts[i]=elts[prefix[i]]*gens[final[i]]
-  prefix:=data.prefix;         # see final
-  suffix:=data.suffix;         # see first
-  reduced:=data.reduced;       # words[right[i][j]] is reduced if reduced[i][j]=true
-  words:=data.words;           # words[i] is a word in the gens equal to elts[i]
-  nr:=data.nr;                 # nr=Length(elts);
-  stopper:=data.stopper;       # JDM not currenly used
-  ht:=data.ht;                 # HTValue(ht, x)=Position(elts, x)
-  lenwords:=data.lenwords;     # lenwords[i]=Length(words[i])
-  rules:=data.rules;           # the relations
-  nrrules:=data.nrrules;       # Length(rules)
-  lenindex:=data.lenindex;     # lenindex[len]=position in <words> and <elts> of
+  gens:=data!.gens;
+  genstoapply:=data!.genstoapply;
+  len:=data!.len;               # current word length
+  one:=data!.one;               # <elts[one]> is the mult. neutral element
+  right:=data!.right;           # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
+  left:=data!.left;             # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
+  first:=data!.first;           # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
+  final:=data!.final;           # elts[i]=elts[prefix[i]]*gens[final[i]]
+  prefix:=data!.prefix;         # see final
+  suffix:=data!.suffix;         # see first
+  reduced:=data!.reduced;       # words[right[i][j]] is reduced if reduced[i][j]=true
+  words:=data!.words;           # words[i] is a word in the gens equal to elts[i]
+  nr:=data!.nr;                 # nr=Length(elts);
+  stopper:=data!.stopper;       # stop when we have applied generators to elts[stopper] 
+  ht:=data!.ht;                 # HTValue(ht, x)=Position(elts, x)
+  lenwords:=data!.lenwords;     # lenwords[i]=Length(words[i])
+  rules:=data!.rules;           # the relations
+  nrrules:=data!.nrrules;       # Length(rules)
+  lenindex:=data!.lenindex;     # lenindex[len]=position in <words> and <elts> of
                                # first element of length <len>
-  genslookup:=data.genslookup; # genslookup[i]=Position(elts, gens[i])
+  genslookup:=data!.genslookup; # genslookup[i]=Position(elts, gens[i])
                                # this is not always <i+1>!
 
   if IsBoundGlobal("ORBC") then 
@@ -240,7 +221,7 @@ function(S, limit, lookfunc)
             if looking and not found then
               if lookfunc(data, nr) then
                 found:=true;
-                data.found := nr;
+                data!.found := nr;
               fi;
             fi;
           fi;
@@ -276,43 +257,60 @@ function(S, limit, lookfunc)
     lenindex[len]:=i;                  # words of length <len> start at <nr+1>
   od;
   
-  data.nr:=nr;    
-  data.nrrules:=nrrules;
-  data.one:=one;  
-  data.pos:=i;
-  data.len:=len;
+  data!.nr:=nr;    
+  data!.nrrules:=nrrules;
+  data!.one:=one;  
+  data!.pos:=i;
+  data!.len:=len;
 
-  #if i>nr then # currently does nothing, since <data> is only a record...
-  #  SetFilterObj(data, IsClosedData);
-  #fi;
+  if i>nr then 
+    SetFilterObj(data, IsClosedPinData);
+  fi;
 
   return data;
 end);
 
-# JDM: this should probably be changed to a method for IsSemigroupData
+#
 
-InstallMethod(Position, 
-"for a finite semigroup with generators, an associative element, 0",
-[IsFinite and IsSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement, IsZeroCyc], 
-function(S, x, n)
-  local data, pos, lookfunc;
+InstallMethod(Position, "for Pin data, an associative element, zero cyc",
+[IsPinData, IsAssociativeElement, IsZeroCyc], 
+function(data, x, n)
+  local pos, lookfunc;
 
-  data:=SemigroupData(S);
-  pos:=HTValue(data.ht, x);
+  pos:=HTValue(data!.ht, x);
   
   if pos<>fail then 
     return pos;
   else
     lookfunc:=function(data, i)
-      return data.elts[i]=x;
+      return data!.elts[i]=x;
     end;
     
-    pos:=Enumerate(S, infinity, lookfunc).found;
+    pos:=Enumerate(data, infinity, lookfunc).found;
     if pos<>false then 
       return pos;
     fi;
   fi;
 
   return fail;
+end);
+
+#
+
+InstallMethod(ViewObj, [IsPinData], 
+function(data)
+  Print("<");
+
+  if IsClosedPinData(data) then 
+    Print("closed ");
+  else 
+    Print("open ");
+  fi;
+  Print("Pin ");
+
+  Print("data with ", Length(data!.elts), " elements, ");
+  Print(Length(data!.rules), " relations, ");
+  Print("max length of a word is ", data!.lenwords[data!.nr], ">");
+  return;
 end);
 

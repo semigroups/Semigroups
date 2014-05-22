@@ -1,14 +1,12 @@
 
 
 
-DeclareGlobalFunction("InitSemigroupe");
-DeclareAttribute("SemigroupData", IsFinite and IsSemigroup and
+DeclareAttribute("PinData", IsFinite and IsSemigroup and
 HasGeneratorsOfSemigroup, "mutable");
+DeclareCategory("IsPinData", IsList);
+DeclareFilter("IsClosedPinData", IsPinData);
 
-DeclareOperation("Position", [IsFinite and IsSemigroup and
-HasGeneratorsOfSemigroup, IsAssociativeElement, IsZeroCyc]);
-
-DeclareOperation("Enumerate", [IsSemigroup]);
-DeclareOperation("Enumerate", [IsSemigroup, IsCyclotomic]);
-DeclareOperation("Enumerate", [IsSemigroup, IsCyclotomic, IsFunction]);
+DeclareOperation("Enumerate", [IsPinData]);
+DeclareOperation("Enumerate", [IsPinData, IsCyclotomic]);
+DeclareOperation("Enumerate", [IsPinData, IsCyclotomic, IsFunction]);
 
