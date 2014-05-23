@@ -455,6 +455,7 @@ function(S, coll)
     for i in wordsoflen[len] do 
       if i<=oldpos then 
         genstoapply:=newgenstoapply;
+        Append(reduced[i], BlistList(genstoapply, []));
       else
         genstoapply:=allgenstoapply;
       fi;
@@ -462,14 +463,13 @@ function(S, coll)
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
-        
+         
         if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
           if prefix[r]<>0 then 
             right[i][j]:=right[left[prefix[r]][b]][final[r]];
             # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*elts[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
-            reduced[i][j]:=false;
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
               reduced[i][j]:=true;
               for k in lentoapply do 
@@ -478,6 +478,8 @@ function(S, coll)
                   break;
                 fi;
               od;
+            else
+              reduced[i][j]:=false;
             fi;
           elif r=one then               # <elts[r]> is the identity
             right[i][j]:=genslookup[b]; 
@@ -486,7 +488,6 @@ function(S, coll)
             right[i][j]:=left[final[r]][b];
             # elts[i]*gens[j]=gens[b]*elts[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
-            reduced[i][j]:=false;
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
               reduced[i][j]:=true;
               for k in lentoapply do 
@@ -495,6 +496,8 @@ function(S, coll)
                   break;
                 fi;
               od;
+            else
+              reduced[i][j]:=false;
             fi;
              
           fi;
@@ -529,7 +532,7 @@ function(S, coll)
             first[nr]:=b;         final[nr]:=j;
             prefix[nr]:=i;        right[nr]:=[];        
             left[nr]:=[];         right[i][j]:=nr;      
-            reduced[i][j]:=true;  reduced[nr]:=BlistList(genstoapply, []);
+            reduced[i][j]:=true;  reduced[nr]:=BlistList(allgenstoapply, []);
             
             if not IsBound(wordsoflen[len+1]) then 
               maxwordlen:=len+1;
