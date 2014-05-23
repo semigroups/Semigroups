@@ -381,6 +381,8 @@ function(S, coll)
   prefix:=data!.prefix;             # see final, 0 if prefix is empty i.e. elts[i] is a gen
   suffix:=data!.suffix;             # see first, 0 if suffix is empty i.e. elts[i] is a gen
   reduced:=data!.reduced;           # words[right[i][j]] is reduced if reduced[i][j]=true
+                                    # i.e. it is not possible to apply any of
+                                    # the <rules> to reduce the length of words[right[i][j]]
   words:=data!.words;               # words[i] is a word in the gens equal to elts[i]
   nr:=data!.nr;                     # nr=Length(elts);
   ht:=data!.ht;                     # HTValue(ht, x)=Position(elts, x)
@@ -477,6 +479,7 @@ function(S, coll)
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
+      if i=1486 then Error(); fi;
         if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
           if prefix[r]<>0 then 
