@@ -663,9 +663,14 @@ function(f, g)
   return ();
 end);
 
+InstallMethod(LambdaConjugator, "for a matrix semigroup",
+[IsMatrixSemigroup], s->
+function(x, y)
+    return MatrixObjLambdaConjugator(s,x,y);
+end);
+
 # the function used to test if there is an idempotent with the specified
 # lambda and rho values.
-
 InstallMethod(IdempotentTester, "for a transformation semigroup",
 [IsTransformationSemigroup], s->
 function(img, ker)
@@ -691,6 +696,10 @@ function(j,i)
    ElementsFamily(FamilyObj(R))))[j][i]<>0;
 end);
 
+InstallMethod(IdempotentTester, "for a matrix semigroup",
+[IsMatrixSemigroup], s -> MatrixObjIdempotentTester(s, x, y));
+
+
 # the function used to create an idempotent with the specified lambda and rho
 # values.
 
@@ -714,6 +723,9 @@ function(j,i)
   return Objectify(TypeReesMatrixSemigroupElements(R), 
      [i, mat[j][i]^-1, j, mat]);
 end);
+
+InstallMethod(IdempotentCreator, "for a matrix semigroup",
+s -> MatrixObjIdempotentCreator);
 
 # the action of elements of the stabiliser of a lambda-value on any element of
 # the semigroup with that lambda-value
@@ -758,6 +770,8 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup], ReturnFalse);
 
 #
+InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
+"for a matrix semigroup", [IsMatrixSemigroup], ReturnTrue);
 
 InstallMethod(SchutzGpMembership, "for a transformation semigroup", 
 [IsTransformationSemigroup],
@@ -808,8 +822,11 @@ InstallMethod(FakeOne, "for a bipartition collection",
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection],  R-> UniversalFakeOne);
 
-# missing hash functions
+# Matrix semigroup elements
+InstallMethod(FakeOne, "for an FFE coll coll coll",
+[IsFFECollCollColl], One);
 
+# missing hash functions
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
   function(x, hashlen)

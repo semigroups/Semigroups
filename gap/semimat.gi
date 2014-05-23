@@ -27,6 +27,7 @@ InstallMethod(IsGroupAsSemigroup,
 ##
 #############################################################################
 
+
 InstallOtherMethod(FakeOne,
     "for a list of matrices (hack)",
     [IsHomogeneousList and IsRingElementCollCollColl],
@@ -37,10 +38,6 @@ function(elts)
         TryNextMethod();
     fi;
 end);
-
-InstallMethod(FakeOne, "for an FFE coll coll coll",
-[IsFFECollCollColl], One);
-
 
 InstallGlobalFunction(MatrixObjRowSpaceRightAction,
   function(s, vsp, mat)
@@ -174,6 +171,22 @@ function(S, x, y)
     fi;
 
     return res;
+end);
+
+
+InstallGlobalFunction(MatrixObjLambdaConjugator,
+function(S, x, y)
+    Error("not implemented yet");
+end);
+
+InstallGlobalFunction(MatrixObjIdempotentTester,
+function(S, x, y)
+    Error("not implemented yet");
+end);
+
+InstallGlobalFunction(MatrixObjIdempotentCreator,
+function(S, x, y) 
+    Error("not implemented yet");
 end);
 
 #############################################################################
