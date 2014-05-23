@@ -1,6 +1,6 @@
 
 # TODO: generalise the code to not only use hash tables but dictionaries, or
-# sets of elements
+# sets of elements, remove genslookup in preference for wordsoflen[1]
 
 #  for details see:
 #
@@ -177,12 +177,11 @@ function(data, limit, lookfunc)
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
-        
         if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
           if prefix[r]<>0 then 
             right[i][j]:=right[left[prefix[r]][b]][final[r]];
-            # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*elts[final[r]];
+            # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             reduced[i][j]:=false;
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
@@ -198,8 +197,8 @@ function(data, limit, lookfunc)
             right[i][j]:=genslookup[b]; 
             reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
           else # prefix[r]=0, i.e. elts[r] is one of the generators
-            right[i][j]:=left[final[r]][b];
-            # elts[i]*gens[j]=gens[b]*elts[final[r]];
+            right[i][j]:=right[genslookup[b]][final[r]];
+            # elts[i]*gens[j]=gens[b]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             reduced[i][j]:=false;
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
@@ -337,7 +336,7 @@ end);
 
 InstallGlobalFunction(ClosureNonActingSemigroupNC, 
 function(S, coll)
-  local T, data, oldnrgens, nr, elts, gens, genslookup, one, right, left, first, final, prefix, suffix, reduced, words, stopper, ht, rules, nrrules, wordsoflen, nrwordsoflen, oldpos, val, htadd, htvalue, newgenstoapply, allgenstoapply, i, len, lentoapply, genstoapply, b, s, r, new, newword, maxwordlen, p, j, k;
+  local T, data, oldnrgens, nr, elts, gens, genslookup, one, right, left, first, final, prefix, suffix, reduced, words, ht, rules, nrrules, wordsoflen, nrwordsoflen, oldpos, val, htadd, htvalue, newgenstoapply, allgenstoapply, i, len, reprocess, nrrevisited, lentoapply, genstoapply, b, s, r, new, newword, oldlen, p, j, k;
   
   if IsEmpty(coll) then 
     Info(InfoSemigroups, 2, "every element in the collection belong to the ",
@@ -434,7 +433,12 @@ function(S, coll)
       rules[nrrules]:=[[oldnrgens+i], [val]];
     fi;
   od;
-  
+ 
+  if IsMonoid(S) then 
+    left[1]:=List(data!.genstoapply, i-> genslookup[i]);    
+    right[1]:=List(data!.genstoapply, i-> genslookup[i]);
+  fi;
+
   if IsBoundGlobal("ORBC") then 
     htadd:=HTAdd_TreeHash_C;
     htvalue:=HTValue_TreeHash_C;
@@ -449,26 +453,35 @@ function(S, coll)
   allgenstoapply := data!.genstoapply;
   i:=1;
   len:=1;
+  reprocess:=BlistList([1..nr], [nr-Length(coll)+1..nr]);
+  
+  if IsMonoid(S) then 
+    nrrevisited:=1; # the old data knows the decendants of everything up to <oldpos>
+  else 
+    nrrevisited:=0;
+  fi;
 
-  while i<>oldpos do 
+  while true do  
     lentoapply:=[1..len];
-    for i in wordsoflen[len] do 
-      if i<=oldpos then 
+    for i in wordsoflen[len] do
+      if reprocess[i] then 
+        genstoapply:=allgenstoapply;
+      else
         genstoapply:=newgenstoapply;
         Append(reduced[i], BlistList(genstoapply, []));
-      else
-        genstoapply:=allgenstoapply;
+      fi;
+      if i<=oldpos then 
+        nrrevisited:=nrrevisited+1;
       fi;
 
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
-         
         if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
           if prefix[r]<>0 then 
             right[i][j]:=right[left[prefix[r]][b]][final[r]];
-            # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*elts[final[r]];
+            # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
               reduced[i][j]:=true;
@@ -485,8 +498,8 @@ function(S, coll)
             right[i][j]:=genslookup[b]; 
             reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
           else # prefix[r]=0, i.e. elts[r] is one of the generators
-            right[i][j]:=left[final[r]][b];
-            # elts[i]*gens[j]=gens[b]*elts[final[r]];
+            right[i][j]:=right[genslookup[b]][final[r]];
+            # elts[i]*gens[j]=gens[b]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
               reduced[i][j]:=true;
@@ -508,12 +521,39 @@ function(S, coll)
           newword[len+1]:=j;             # using Concatenate here is very bad!
           val:=htvalue(ht, new);
           
-          if val<>fail then 
-            nrrules:=nrrules+1;
-            rules[nrrules]:=[newword, words[val]];
-            right[i][j]:=val;
-            # <newword> and <words[val]> represent the same element (but are not
-            # equal) and so <newword> is not reduced
+          if val<>fail then
+            oldlen:=Length(words[val]);
+            right[i][j]:=val;      
+            if len+1<oldlen then    # we found a new word equal to elts[val] 
+                                    # that is shorter than words[val]
+              words[val]:=newword;
+              if s<>0 then 
+                suffix[val]:=right[s][j];
+              else 
+                suffix[val]:=genslookup[j];
+              fi;
+              prefix[val]:=i;
+              first[val]:=b;        
+              final[val]:=j;
+              reduced[i][j]:=true;  
+              reduced[val]:=BlistList(allgenstoapply, []);#JDM: necessary?
+
+              nrwordsoflen[len+1]:=nrwordsoflen[len+1]+1;
+              wordsoflen[len+1][nrwordsoflen[len+1]]:=val;
+              Remove(wordsoflen[oldlen], Position(wordsoflen[oldlen], val));
+              nrwordsoflen[oldlen]:=nrwordsoflen[oldlen]-1;
+              if nrwordsoflen[oldlen]=0 then 
+                Unbind(nrwordsoflen[oldlen]);
+                Unbind(wordsoflen[oldlen]);
+              fi;
+              reprocess[val]:=true;
+              # anything else? JDM
+            else 
+              nrrules:=nrrules+1;
+              rules[nrrules]:=[newword, words[val]];
+              # <newword> and <words[val]> represent the same element (but are not
+              # equal) and so <newword> is not reduced
+            fi;
 
           else #<new> is a new element!
             nr:=nr+1;
@@ -533,9 +573,9 @@ function(S, coll)
             prefix[nr]:=i;        right[nr]:=[];        
             left[nr]:=[];         right[i][j]:=nr;      
             reduced[i][j]:=true;  reduced[nr]:=BlistList(allgenstoapply, []);
+            reprocess[nr]:=true;
             
             if not IsBound(wordsoflen[len+1]) then 
-              maxwordlen:=len+1;
               wordsoflen[len+1]:=[];
               nrwordsoflen[len+1]:=0;
             fi;
@@ -545,11 +585,11 @@ function(S, coll)
           fi;
         fi;
       od; # finished applying gens to <elts[i]>
-      if i=oldpos then 
+      if nrrevisited=oldpos then 
         break;
       fi;
     od; # finished words of length <len> or reach previous end point
-    if i=oldpos then 
+    if nrrevisited=oldpos then 
       break;
     fi;
     # process words of length <len> into <left>
@@ -577,11 +617,13 @@ function(S, coll)
   data!.nr:=nr;    
   data!.nrrules:=nrrules;
   data!.one:=one;  
-  data!.maxwordlen:=maxwordlen;       # this can increase!
+  data!.maxwordlen:=Length(nrwordsoflen);       # this can increase or decrease!!
+  data!.len:=len;
+  data!.ind:=Position(wordsoflen[len], i)+1;
 
   # remove the parts of the data that shouldn't be there!
   # Note that <data> can be closed at this point if the old data was closed.
-  if len<=maxwordlen then 
+  if len<=Length(nrwordsoflen) then 
     Unbind(data!.rightscc);
     Unbind(data!.leftscc);
     Unbind(data!.idempotents); 
