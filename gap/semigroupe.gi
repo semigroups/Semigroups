@@ -171,7 +171,7 @@ function(data, limit, lookfunc)
     lentoapply:=[1..len];
     for i in [pos..nrwordsoflen[len]] do 
       i:=wordsoflen[len][i];
-      if i=stopper then 
+      if i=stopper or (looking and found) then 
         break;
       fi;
       
@@ -184,24 +184,34 @@ function(data, limit, lookfunc)
           if prefix[r]<>0 then 
             right[i][j]:=right[left[prefix[r]][b]][final[r]];
             # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*elts[final[r]];
-            # <newword>=<elts[i]*gens[j]>
-            newword:=words[i]{lentoapply};
-            newword[len+1]:=j;
-            reduced[i][j]:=(newword=words[right[i][j]]);     
-            # elts[i]*gens[j]=words[right[i][j]]; 
+            # reduced[i][j]=([words[i],j]=words[right[i][j]])
+            reduced[i][j]:=false;
+            if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
+              reduced[i][j]:=true;
+              for k in lentoapply do 
+                if words[i][k]<>words[right[i][j]][k] then 
+                  reduced[i][j]:=false;
+                  break;
+                fi;
+              od;
+            fi;
           elif r=one then               # <elts[r]> is the identity
             right[i][j]:=genslookup[b]; 
             reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
           else # prefix[r]=0, i.e. elts[r] is one of the generators
             right[i][j]:=left[final[r]][b];
             # elts[i]*gens[j]=gens[b]*elts[final[r]];
-            # JDM: there is no need to create a new object here! 
-            
-            # <newword>=<elts[i]*gens[j]>
-            newword:=words[i]{lentoapply};
-            newword[len+1]:=j;
-            reduced[i][j]:=(newword=words[right[i][j]]);     
-            # elts[i]*gens[j]=words[right[i][j]]; 
+            # reduced[i][j]=([words[i],j]=words[right[i][j]])
+            reduced[i][j]:=false;
+            if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
+              reduced[i][j]:=true;
+              for k in lentoapply do 
+                if words[i][k]<>words[right[i][j]][k] then 
+                  reduced[i][j]:=false;
+                  break;
+                fi;
+              od;
+            fi;
              
           fi;
         else # <elts[s]*gens[j]> is reduced
@@ -254,9 +264,6 @@ function(data, limit, lookfunc)
           fi;
         fi;
       od; # finished applying gens to <elts[i]>
-      if looking and found then 
-        break;
-      fi;
     od; # finished words of length <len> or <looking and found>
     if looking and found then 
       break;
