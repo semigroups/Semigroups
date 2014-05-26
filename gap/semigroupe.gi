@@ -11,7 +11,7 @@
 InstallMethod(PinData, "for a finite semigroup with generators",
 [IsFinite and IsSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
-  local gens, ht, nrgens, genstoapply, stopper, nr, one, nrrules, elts, words, first, final, left, prefix, suffix, right, rules, genslookup, reduced, wordsoflen, nrwordsoflen, maxwordlen, val, i;
+  local gens, ht, nrgens, genstoapply, stopper, nr, one, nrrules, elts, words, first, final, left, prefix, suffix, right, rules, genslookup, reduced, wordsoflen, nrwordsoflen, maxwordlen, val, pos, i;
 
   if IsMonoid(S) then 
     gens:=ShallowCopy(GeneratorsOfMonoid(S));
@@ -78,8 +78,11 @@ function(S)
   od;
 
   if IsMonoid(S) then 
+    pos:=1; # we don't apply generators to the One(S)
     left[1]:=List(genstoapply, i-> genslookup[i]);    
     right[1]:=List(genstoapply, i-> genslookup[i]);
+  else
+    pos:=0;
   fi;
 
   return Objectify(NewType(FamilyObj(S), IsPinData and IsMutable), 
@@ -87,7 +90,7 @@ function(S)
            nr:=nr, elts:=elts,   one:=one, 
            first:=first, final:=final, prefix:=prefix, suffix:=suffix,
            left:=left,   right:=right, reduced:=reduced, genstoapply:=genstoapply, 
-           gens:=gens, found:=false, rules:=rules, nrrules:=nrrules, pos:=1,
+           gens:=gens, found:=false, rules:=rules, nrrules:=nrrules, pos:=pos,
            len:=1, wordsoflen:=wordsoflen, nrwordsoflen:=nrwordsoflen, 
            maxwordlen:=maxwordlen, ind:=1));
 end);
@@ -125,8 +128,11 @@ function(data, limit, lookfunc)
   
   len:=data!.len;                   # current word length
   maxwordlen:=data!.maxwordlen;     # the maximum length of a word so far
+  pos:=data!.pos;                   # number of points to which generators have been   
+                                    # applied, this is needed in ClosureSemigroup
+  nr:=data!.nr;                     # nr=Length(elts);
  
-  if len>maxwordlen then
+  if pos=nr then
     SetFilterObj(data, IsClosedPinData);
     if looking then 
       data!.found:=false;
@@ -134,7 +140,6 @@ function(data, limit, lookfunc)
     return data;
   fi;
   
-  nr:=data!.nr;                     # nr=Length(elts);
   elts:=data!.elts;                 # the so far enumerated elements
   gens:=data!.gens;                 # the generators
   genstoapply:=data!.genstoapply;   # list of indices of generators to apply in inner loop
@@ -159,8 +164,8 @@ function(data, limit, lookfunc)
   nrwordsoflen:=data!.nrwordsoflen; # nrwordsoflen[len]=Length(wordsoflen[len]);
 
   ind:=data!.ind;                   # index in wordsoflen[len]
-  i:=data!.pos;                     # wordsoflen[len][ind], the actual position
-                                    # in the orbit we are about to apply generators to 
+  i:=wordsoflen[len][ind];          # the position in the orbit we are about to
+                                    # apply generators to 
   
   if IsBoundGlobal("ORBC") then 
     htadd:=HTAdd_TreeHash_C;
@@ -172,8 +177,9 @@ function(data, limit, lookfunc)
   
   while nr<=limit and len<=maxwordlen do 
     lentoapply:=[1..len];
-    for i in [ind..nrwordsoflen[len]] do 
-      i:=wordsoflen[len][i];
+    for k in [ind..nrwordsoflen[len]] do 
+      pos:=pos+1;
+      i:=wordsoflen[len][k];
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
@@ -289,13 +295,14 @@ function(data, limit, lookfunc)
     fi;
     len:=len+1;
     ind:=1;
+    k:=0;
   od;
   
   data!.nr:=nr;    
   data!.nrrules:=nrrules;
   data!.one:=one;  
-  data!.pos:=i;
-  data!.ind:=ind; # this is wrong! JDM it should be Position([1..nrwordsoflen[len]], i)
+  data!.pos:=pos;
+  data!.ind:=k+1; 
   data!.maxwordlen:=maxwordlen;
 
   if len>maxwordlen then
@@ -342,7 +349,7 @@ end);
 
 InstallGlobalFunction(ClosureNonActingSemigroupNC, 
 function(S, coll)
-  local T, data, oldpos, oldnr, oldnrgens, oldwords, nr, elts, gens, genslookup, genstoapply, right, left, ht, first, final, prefix, suffix, reduced, words, wordsoflen, nrwordsoflen, maxwordlen, len, rules, nrrules, one, val, htadd, htvalue, seen, nrseen, lentoapply, b, s, r, new, newword, p, i, j, k;
+  local T, data, oldpos, oldnr, oldnrgens, oldwords, nr, elts, gens, genslookup, genstoapply, right, left, ht, first, final, prefix, suffix, reduced, words, wordsoflen, nrwordsoflen, maxwordlen, len, rules, nrrules, newgenstoapply, one, val, htadd, htvalue, seen, nrseen, pos, lentoapply, i, b, s, r, new, newword, p, k, j;
   
   if IsEmpty(coll) then 
     Info(InfoSemigroups, 2, "every element in the collection belong to the ",
@@ -366,18 +373,21 @@ function(S, coll)
     fi;
   fi;
 
-  if not HasPinData(S) or (PinData(S)!.pos=1 and not IsClosedPinData(S)) then 
+  if not HasPinData(S) then  
+    #JDM could add check that PinData(S) is not just created and nothing has been enumerated
     #nothing is known about <S>
     return T;
   fi;
   
-  data:=StructuralCopy(PinData(S));
-  
+  data:=PinData(S);
+
   # parts that will change but where we also require the old values...
   oldpos:=data!.pos;                # so we can tell when we've finished
   oldnr:=data!.nr;                  # so we discriminate old points from new ones
   oldnrgens:=Length(data!.gens);
   oldwords:=data!.words;
+  
+  data:=StructuralCopy(data);
   
   # parts of the data which stay the same from the old semigroup to the new...
   nr:=data!.nr;                     # nr=Length(elts);
@@ -420,7 +430,9 @@ function(S, coll)
  
   # update the generators etc...
   Append(gens, coll);
-  Append(genstoapply, [oldnrgens+1..Length(gens)]);
+  newgenstoapply:=[oldnrgens+1..Length(gens)];
+  Append(genstoapply, newgenstoapply);
+
   ResetFilterObj(data, IsClosedPinData);
   
   # <elts[one]> is the mult. neutral element
@@ -466,11 +478,14 @@ function(S, coll)
   fi;
   
   seen:=BlistList([1..oldnr], genslookup);
-  nrseen:=0;
+  nrseen:=oldnrgens;
+  pos:=0;
 
-  while nrseen<oldpos and len<=maxwordlen do 
+  while nrseen<=oldpos and len<=maxwordlen do 
     lentoapply:=[1..len];
-    for i in wordsoflen[len] do 
+    for k in [1..nrwordsoflen[len]] do 
+      pos:=pos+1;
+      i:=wordsoflen[len][k];
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
@@ -562,13 +577,15 @@ function(S, coll)
             else 
               # this is a new-old element, and <newword> has length less than oldwords[val]
               seen[val]:=true;
-              nrseen:=nrseen+1;
+              if IsBound(right[val]) and IsBound(right[val][1]) then 
+                nrseen:=nrseen+1;
+              fi;
               if s<>0 then 
                 suffix[val]:=right[s][j];
               else 
                 suffix[val]:=genslookup[j];
               fi;
-              words[val]:=oldwords[val];
+              words[val]:=newword;
               first[val]:=b;
               final[val]:=j;
               prefix[val]:=i;
@@ -627,29 +644,45 @@ function(S, coll)
     if len>1 then 
       for j in wordsoflen[len] do # loop over all words of length <len-1>
         p:=prefix[j]; b:=final[j];
-        for k in genstoapply do #only loop over new gens here JDM! 
-          left[j][k]:=right[left[p][k]][b];
-          # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
-        od;
+        if IsBound(left[j]) and IsBound(left[j][1]) then # old element
+          for k in newgenstoapply do #only loop over new gens
+            left[j][k]:=right[left[p][k]][b];
+            # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+          od;
+        else
+          for k in genstoapply do 
+            left[j][k]:=right[left[p][k]][b];
+            # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+          od;
+        fi;
       od;
     elif len=1 then 
       for j in wordsoflen[len] do  # loop over all words of length <1>
         b:=final[j];
-        for k in genstoapply do 
-          left[j][k]:=right[genslookup[k]][b];
-          # gens[k]*elts[j]=gens[k]*gens[b]
-        od;
+        if IsBound(left[j]) and IsBound(left[j][1]) then # old element
+          for k in newgenstoapply do #only loop over new gens
+            left[j][k]:=right[genslookup[k]][b];
+            # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+          od;
+        else
+          for k in genstoapply do 
+            left[j][k]:=right[genslookup[k]][b];
+            # gens[k]*elts[j]=gens[k]*gens[b]
+          od;
+        fi;
       od;
     fi;
     len:=len+1;
+    k:=0;
   od;
   
   data!.nr:=nr;    
   data!.nrrules:=nrrules;
   data!.one:=one;  
-  data!.pos:=i;
-  data!.ind:=1; #Position([1..nrwordsoflen[len]], i); # JDM! bad
+  data!.pos:=pos;
+  data!.ind:=k+1; #Position([1..nrwordsoflen[len]], i); # JDM! bad
   data!.maxwordlen:=maxwordlen;
+  data!.len:=len;
 
   if len>maxwordlen then
     data!.len:=maxwordlen;
@@ -668,7 +701,6 @@ function(S, coll)
   else 
     SetFilterObj(data, IsClosedPinData);
   fi;
-  Error(); 
   SetPinData(T, data);
   return T;
 end);
@@ -730,8 +762,9 @@ function(data)
   local recnames, com, i, nam;
   
   recnames:=[ "elts", "final", "first", "found", "gens", "genslookup", "genstoapply", 
-  "ht", "left", "len", "wordsoflen", "maxwordlen", "nr", "nrrules", "one", "pos", 
-  "prefix", "reduced", "right", "rules", "stopper", "suffix", "words", "nrwordsoflen"];
+  "ht", "left", "len", "wordsoflen", "maxwordlen", "nr", "nrrules", "one",
+  "pos", "prefix", "reduced", "right", "rules", "stopper", "suffix", "words",
+  "nrwordsoflen", "ind"];
   
   Print("\>\>rec(\n\>\>");
   com := false;
