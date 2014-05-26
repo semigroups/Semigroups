@@ -159,7 +159,7 @@ function(data, limit, lookfunc)
   nrwordsoflen:=data!.nrwordsoflen; # nrwordsoflen[len]=Length(wordsoflen[len]);
 
   ind:=data!.ind;                   # index in wordsoflen[len]
-  i:=data!.pos;                     # wordsoflen[len][pos], the actual position
+  i:=data!.pos;                     # wordsoflen[len][ind], the actual position
                                     # in the orbit we are about to apply generators to 
   
   if IsBoundGlobal("ORBC") then 
@@ -295,7 +295,7 @@ function(data, limit, lookfunc)
   data!.nrrules:=nrrules;
   data!.one:=one;  
   data!.pos:=i;
-  data!.ind:=ind;
+  data!.ind:=ind; # this is wrong! JDM it should be Position([1..nrwordsoflen[len]], i)
   data!.maxwordlen:=maxwordlen;
 
   if len>maxwordlen then
@@ -334,9 +334,15 @@ end);
 
 # <coll> should consist of elements not in <S>
 
+# we add the new generators <coll> to the data structure for <S>, and we
+# rerun Enumerate on the new data structure until we have applied all the
+# generators (old and new) to the old elements of <S>. This is more complicated
+# than it might first appear since Enumerate relies on having found all the
+# words of one length before moving to the next length.
+
 InstallGlobalFunction(ClosureNonActingSemigroupNC, 
 function(S, coll)
-  local T, data, oldnrgens, nr, elts, gens, genslookup, one, right, left, first, final, prefix, suffix, reduced, words, ht, rules, nrrules, wordsoflen, nrwordsoflen, oldpos, val, htadd, htvalue, newgenstoapply, allgenstoapply, i, len, reprocess, nrrevisited, lentoapply, genstoapply, b, s, r, new, newword, oldlen, p, j, k;
+  local T, data, oldpos, oldnr, oldnrgens, oldwords, nr, elts, gens, genslookup, genstoapply, right, left, ht, first, final, prefix, suffix, reduced, words, wordsoflen, nrwordsoflen, maxwordlen, len, rules, nrrules, one, val, htadd, htvalue, seen, nrseen, lentoapply, b, s, r, new, newword, p, i, j, k;
   
   if IsEmpty(coll) then 
     Info(InfoSemigroups, 2, "every element in the collection belong to the ",
@@ -364,50 +370,65 @@ function(S, coll)
     #nothing is known about <S>
     return T;
   fi;
-
+  
   data:=StructuralCopy(PinData(S));
+  
+  # parts that will change but where we also require the old values...
+  oldpos:=data!.pos;                # so we can tell when we've finished
+  oldnr:=data!.nr;                  # so we discriminate old points from new ones
   oldnrgens:=Length(data!.gens);
-
+  oldwords:=data!.words;
+  
+  # parts of the data which stay the same from the old semigroup to the new...
   nr:=data!.nr;                     # nr=Length(elts);
   elts:=data!.elts;                 # the so far enumerated elements
   gens:=data!.gens;                 # the generators
   genslookup:=data!.genslookup;     # genslookup[i]=Position(elts, gens[i])
-                                    # this is not always <i+1>!
-  one:=data!.one;                   # <elts[one]> is the mult. neutral element
+                                    # this is not always <i>!
+  genstoapply:=data!.genstoapply;
   right:=data!.right;               # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
   left:=data!.left;                 # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
-  first:=data!.first;               # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
-  final:=data!.final;               # elts[i]=elts[prefix[i]]*gens[final[i]]
-  prefix:=data!.prefix;             # see final, 0 if prefix is empty i.e. elts[i] is a gen
-  suffix:=data!.suffix;             # see first, 0 if suffix is empty i.e. elts[i] is a gen
-  reduced:=data!.reduced;           # words[right[i][j]] is reduced if reduced[i][j]=true
-                                    # i.e. it is not possible to apply any of
-                                    # the <rules> to reduce the length of words[right[i][j]]
-  words:=data!.words;               # words[i] is a word in the gens equal to elts[i]
   nr:=data!.nr;                     # nr=Length(elts);
   ht:=data!.ht;                     # HTValue(ht, x)=Position(elts, x)
-  rules:=data!.rules;               # the relations
-  nrrules:=data!.nrrules;           # Length(rules)
-  wordsoflen:=data!.wordsoflen;     # wordsoflen[len]=list of positions in <words>
-                                    # of length <len>
-  nrwordsoflen:=data!.nrwordsoflen; # nrwordsoflen[len]=Length(wordsoflen[len]);
 
-  oldpos:=data!.pos;                # so we discriminate old points from new ones
- 
-
-  Append(gens, coll);
-  Append(data!.genstoapply, [oldnrgens+1..Length(gens)]);
+  # parts of the data which do not stay the same from the old to the new...
   
+  first:=[]; final:=[]; prefix:=[]; suffix:=[]; reduced:=[]; words:=[];
+
+  for i in genslookup do 
+    first[i]:=data!.first[i];       final[i]:=data!.final[i];
+    prefix[i]:=data!.prefix[i];     suffix[i]:=data!.suffix[i];
+    reduced[i]:=data!.reduced[i];   Append(reduced[i], BlistList([1..Length(coll)], []));
+    words[i]:=data!.words[i];
+  od;
+
+  data!.first:=first;       data!.final:=final;
+  data!.prefix:=prefix;     data!.suffix:=suffix;
+  data!.reduced:=reduced;   data!.words:=words;               
+
+  wordsoflen:=[data!.wordsoflen[1]];# wordsoflen[len]=list of positions in <words>
+  data!.wordsoflen:=wordsoflen;     # of length <len>
+                                    
+                                    #nrwordsoflen[len]=Length(wordsoflen[len]);
+  nrwordsoflen:=[data!.nrwordsoflen[1]];
+  data!.nrwordsoflen:=nrwordsoflen;
+
+  maxwordlen:=1;                    # the maximum length of a word...
+  len:=1;
+  rules:=[];                        # the relations
+  nrrules:=0;                       # Length(rules)
+ 
+  # update the generators etc...
+  Append(gens, coll);
+  Append(genstoapply, [oldnrgens+1..Length(gens)]);
   ResetFilterObj(data, IsClosedPinData);
   
-  # in case <S> was trivial
-  if not IsBound(wordsoflen[1]) then 
-    # we are definitely adding some generators, so ok to increase <maxwordlen>
-    data!.maxwordlen:=1;
-    data!.wordsoflen[1]:=[];
-    data!.nrwordsoflen[1]:=0;
+  # <elts[one]> is the mult. neutral element
+  one:=data!.one;
+  if one<>false and elts[one]<>One(gens) then 
+    one:=false;                 
   fi;
-  
+ 
   # append the elements of <coll> to <data>
   for i in [1..Length(coll)] do 
     val:=HTValue(ht, coll[i]);
@@ -436,11 +457,6 @@ function(S, coll)
     fi;
   od;
  
-  if IsMonoid(S) then 
-    left[1]:=List(data!.genstoapply, i-> genslookup[i]);    
-    right[1]:=List(data!.genstoapply, i-> genslookup[i]);
-  fi;
-
   if IsBoundGlobal("ORBC") then 
     htadd:=HTAdd_TreeHash_C;
     htvalue:=HTValue_TreeHash_C;
@@ -449,43 +465,23 @@ function(S, coll)
     htvalue:=HTValue;
   fi;
   
-  # apply new generators to old points, and all generators to new points...
-  
-  newgenstoapply := [oldnrgens+1..Length(gens)];
-  allgenstoapply := data!.genstoapply;
-  i:=1;
-  len:=1;
-  reprocess:=BlistList([1..nr], [nr-Length(coll)+1..nr]);
-  
-  if IsMonoid(S) then 
-    nrrevisited:=1; # the old data knows the decendants of everything up to <oldpos>
-  else 
-    nrrevisited:=0;
-  fi;
+  seen:=BlistList([1..oldnr], genslookup);
+  nrseen:=0;
 
-  while true do  
+  while nrseen<oldpos and len<=maxwordlen do 
     lentoapply:=[1..len];
-    for i in wordsoflen[len] do
-      if reprocess[i] then 
-        genstoapply:=allgenstoapply;
-      else
-        genstoapply:=newgenstoapply;
-        Append(reduced[i], BlistList(genstoapply, []));
-      fi;
-      if i<=oldpos then 
-        nrrevisited:=nrrevisited+1;
-      fi;
-
+    for i in wordsoflen[len] do 
       b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
       for j in genstoapply do # consider <elts[i]*gens[j]>
-      if i=1486 then Error(); fi;
         if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
           if prefix[r]<>0 then 
             right[i][j]:=right[left[prefix[r]][b]][final[r]];
             # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
+            reduced[i][j]:=false;
+            # check if Concatenation(words[i], [j])=words[right[i][j]];
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
               reduced[i][j]:=true;
               for k in lentoapply do 
@@ -494,8 +490,6 @@ function(S, coll)
                   break;
                 fi;
               od;
-            else
-              reduced[i][j]:=false;
             fi;
           elif r=one then               # <elts[r]> is the identity
             right[i][j]:=genslookup[b]; 
@@ -504,6 +498,8 @@ function(S, coll)
             right[i][j]:=right[genslookup[b]][final[r]];
             # elts[i]*gens[j]=gens[b]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
+            reduced[i][j]:=false;
+            # check if Concatenation(words[i], [j])=words[right[i][j]];
             if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
               reduced[i][j]:=true;
               for k in lentoapply do 
@@ -512,58 +508,91 @@ function(S, coll)
                   break;
                 fi;
               od;
-            else
-              reduced[i][j]:=false;
             fi;
              
           fi;
-        else # <elts[s]*gens[j]> is reduced
+        elif j<=oldnrgens and IsBound(right[i]) and IsBound(right[i][j]) then 
+        #<elts[s]*gens[j]> is reduced and this is an old element multiplied by
+        #an old generator
+          val:=right[i][j];
+          if seen[val] then  
+            # there is a new shorter word which is equal to <elts[val]>
+            nrrules:=nrrules+1;
+            rules[nrrules]:=[oldwords[val], words[val]];
+          else
+            # <elts[right[i][k]]> equals <oldwords[val]> i.e. it is the
+            # same product of the generators as in <S>
+            seen[val]:=true;
+            nrseen:=nrseen+1;
+            if s<>0 then 
+              suffix[val]:=right[s][j];
+            else 
+              suffix[val]:=genslookup[j];
+            fi;
+            words[val]:=oldwords[val];
+            first[val]:=b;
+            final[val]:=j;
+            prefix[val]:=i;
+            reduced[i][j]:=true;
+            reduced[val]:=BlistList(genstoapply, []);
+
+            if not IsBound(wordsoflen[len+1]) then 
+              maxwordlen:=len+1;
+              wordsoflen[len+1]:=[];
+              nrwordsoflen[len+1]:=0;
+            fi;
+            nrwordsoflen[len+1]:=nrwordsoflen[len+1]+1;
+            wordsoflen[len+1][nrwordsoflen[len+1]]:=val;
+          fi;
+          
+        else 
+          # <elts[s]*gens[j]> is reduced and this is a new element or a new
+          # generator
           new:=elts[i]*gens[j];
           # <newword>=<elts[i]*gens[j]>
           newword:=words[i]{lentoapply}; # better than ShallowCopy
           newword[len+1]:=j;             # using Concatenate here is very bad!
           val:=htvalue(ht, new);
           
-          if val<>fail then
-            oldlen:=Length(words[val]);
-            right[i][j]:=val;      
-            if len+1<oldlen then    # we found a new word equal to elts[val] 
-                                    # that is shorter than words[val]
-              words[val]:=newword;
+          if val<>fail then 
+            if val>oldnr or seen[val] then 
+              nrrules:=nrrules+1;
+              rules[nrrules]:=[newword, words[val]];
+              right[i][j]:=val;
+            else 
+              # this is a new-old element, and <newword> has length less than oldwords[val]
+              seen[val]:=true;
+              nrseen:=nrseen+1;
               if s<>0 then 
                 suffix[val]:=right[s][j];
               else 
                 suffix[val]:=genslookup[j];
               fi;
-              prefix[val]:=i;
-              first[val]:=b;        
+              words[val]:=oldwords[val];
+              first[val]:=b;
               final[val]:=j;
-              reduced[i][j]:=true;  
-              reduced[val]:=BlistList(allgenstoapply, []);#JDM: necessary?
+              prefix[val]:=i;
+              right[i][j]:=val;
+              reduced[i][j]:=true;
+              reduced[val]:=BlistList(genstoapply, []);
+              # don't have to do right/left[val]:=[] since this is already set!
 
-              nrwordsoflen[len+1]:=nrwordsoflen[len+1]+1;
-              wordsoflen[len+1][nrwordsoflen[len+1]]:=val;
-              Remove(wordsoflen[oldlen], Position(wordsoflen[oldlen], val));
-              nrwordsoflen[oldlen]:=nrwordsoflen[oldlen]-1;
-              if nrwordsoflen[oldlen]=0 then 
-                Unbind(nrwordsoflen[oldlen]);
-                Unbind(wordsoflen[oldlen]);
+              if not IsBound(wordsoflen[len+1]) then 
+                maxwordlen:=len+1;
+                wordsoflen[len+1]:=[];
+                nrwordsoflen[len+1]:=0;
               fi;
-              reprocess[val]:=true;
-              # anything else? JDM
-            else 
-              nrrules:=nrrules+1;
-              rules[nrrules]:=[newword, words[val]];
-              # <newword> and <words[val]> represent the same element (but are not
-              # equal) and so <newword> is not reduced
+              nrwordsoflen[len+1]:=nrwordsoflen[len+1]+1;
+              wordsoflen[len+1][nrwordsoflen[len+1]]:=right[i][j];
             fi;
-
+            
           else #<new> is a new element!
             nr:=nr+1;
            
             if one=false and ForAll(gens, y-> new*y=y and y*new=y) then
               one:=nr;
             fi;
+            
             if s<>0 then 
               suffix[nr]:=right[s][j];
             else 
@@ -575,31 +604,30 @@ function(S, coll)
             first[nr]:=b;         final[nr]:=j;
             prefix[nr]:=i;        right[nr]:=[];        
             left[nr]:=[];         right[i][j]:=nr;      
-            reduced[i][j]:=true;  reduced[nr]:=BlistList(allgenstoapply, []);
-            reprocess[nr]:=true;
+            reduced[i][j]:=true;  reduced[nr]:=BlistList(genstoapply, []);
             
             if not IsBound(wordsoflen[len+1]) then 
+              maxwordlen:=len+1;
               wordsoflen[len+1]:=[];
               nrwordsoflen[len+1]:=0;
             fi;
             nrwordsoflen[len+1]:=nrwordsoflen[len+1]+1;
             wordsoflen[len+1][nrwordsoflen[len+1]]:=nr;
-            
           fi;
         fi;
       od; # finished applying gens to <elts[i]>
-      if nrrevisited=oldpos then 
+      if nrseen=oldpos then 
         break;
       fi;
-    od; # finished words of length <len> or reach previous end point
-    if nrrevisited=oldpos then 
+    od; # finished words of length <len> or <nrseen=oldpos>
+    if nrseen=oldpos then 
       break;
     fi;
     # process words of length <len> into <left>
     if len>1 then 
       for j in wordsoflen[len] do # loop over all words of length <len-1>
         p:=prefix[j]; b:=final[j];
-        for k in genstoapply do 
+        for k in genstoapply do #only loop over new gens here JDM! 
           left[j][k]:=right[left[p][k]][b];
           # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
         od;
@@ -616,13 +644,19 @@ function(S, coll)
     len:=len+1;
   od;
   
-  # put the numbers back in <data>
   data!.nr:=nr;    
   data!.nrrules:=nrrules;
   data!.one:=one;  
-  data!.maxwordlen:=Length(nrwordsoflen);       # this can increase or decrease!!
-  data!.len:=len;
-  data!.ind:=Position(wordsoflen[len], i)+1;
+  data!.pos:=i;
+  data!.ind:=1; #Position([1..nrwordsoflen[len]], i); # JDM! bad
+  data!.maxwordlen:=maxwordlen;
+
+  if len>maxwordlen then
+    data!.len:=maxwordlen;
+    SetFilterObj(data, IsClosedPinData);
+  else 
+    data!.len:=len;
+  fi;
 
   # remove the parts of the data that shouldn't be there!
   # Note that <data> can be closed at this point if the old data was closed.
@@ -634,7 +668,7 @@ function(S, coll)
   else 
     SetFilterObj(data, IsClosedPinData);
   fi;
-  
+  Error(); 
   SetPinData(T, data);
   return T;
 end);
