@@ -1,14 +1,21 @@
+###########################################################################
+##
+#W  semigroupe.gd
+#Y  Copyright (C) 2014                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
-
-
-DeclareAttribute("PinData", IsFinite and IsSemigroup and
+DeclareAttribute("SEEData", IsFinite and IsSemigroup and
 HasGeneratorsOfSemigroup, "mutable");
-DeclareCategory("IsPinData", IsList);
-DeclareFilter("IsClosedPinData", IsPinData);
+DeclareCategory("IsSEEData", IsList);
+DeclareFilter("IsClosedSEEData", IsSEEData);
 
-DeclareOperation("Enumerate", [IsPinData]);
-DeclareOperation("Enumerate", [IsPinData, IsCyclotomic]);
-DeclareOperation("Enumerate", [IsPinData, IsCyclotomic, IsFunction]);
+DeclareOperation("Enumerate", [IsSEEData]);
+DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic]);
+DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic, IsFunction]);
 
 DeclareGlobalFunction("ClosureNonActingSemigroupNC");
 

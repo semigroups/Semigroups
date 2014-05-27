@@ -139,5 +139,6 @@ ReadPackage("semigroups/gap/univcong.gi");
 
 ReadPackage("semigroups/gap/digraphs.gi");
 ReadPackage("semigroups/gap/semigroupe.gi");
-ReadPackage("semigroups/gap/generic.gi");
+ReadPackage("semigroups/gap/generic-lib.gi");
+ReadPackage("semigroups/gap/generic-pkg.gi");
 

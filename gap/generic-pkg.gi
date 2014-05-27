@@ -20,7 +20,7 @@ InstallMethod(NrRClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(PinData(S));
+  data:=Enumerate(SEEData(S));
   if not IsBound(data!.rightscc) then 
     data!.rightscc:=GABOW_SCC(data!.right);
   fi;
@@ -34,7 +34,7 @@ InstallMethod(NrLClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(PinData(S));
+  data:=Enumerate(SEEData(S));
   if not IsBound(data!.leftscc) then 
     if not IsBound(data!.rightscc) then 
       data!.rightscc:=GABOW_SCC(data!.right);
@@ -52,7 +52,7 @@ InstallMethod(NrDClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(PinData(S));
+  data:=Enumerate(SEEData(S));
   if not IsBound(data!.leftscc) then 
     if not IsBound(data!.rightscc) then 
       data!.rightscc:=GABOW_SCC(data!.right);
@@ -70,7 +70,7 @@ InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local data;
-  data:=Enumerate(PinData(S));
+  data:=Enumerate(SEEData(S));
   if not IsBound(data!.rightscc) then 
     data!.rightscc:=GABOW_SCC(data!.right);
   fi;
@@ -84,7 +84,7 @@ InstallMethod(NrHClasses, "for a finite semigroup with generators",
 function(S)
   local data, nr, rid, rnr, count, sorted, lid, lnr, hid, hlookup, now, hindex, j, cur, i;
   
-  data:=Enumerate(PinData(S));
+  data:=Enumerate(SEEData(S));
   
   if not IsBound(data!.rightscc) then 
     data!.rightscc:=GABOW_SCC(data!.right);

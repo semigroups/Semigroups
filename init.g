@@ -61,6 +61,3 @@ ReadPackage("semigroups/gap/univcong.gd");
 
 ReadPackage("semigroups/gap/digraphs.gd");
 ReadPackage("semigroups/gap/semigroupe.gd");
-ReadPackage("semigroups/gap/generic.gd");
-
-

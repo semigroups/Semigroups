@@ -19,7 +19,7 @@ function(S, x)
     return;
   fi;
 
-  return PinData(S)!.words[Position(PinData(S), x)];
+  return SEEData(S)!.words[Position(SEEData(S), x)];
 end);
 
 # factorisation of Schutzenberger group element, the same method works for

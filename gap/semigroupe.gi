@@ -1,6 +1,14 @@
+###########################################################################
+##
+#W  semigroupe.gi
+#Y  Copyright (C) 2014                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
-# TODO: generalise the code to not only use hash tables but dictionaries, or
-# sets of elements
+# SEEData = Semigroup Exhaustive Enumeration Data structure
 
 #  for details see:
 #
@@ -8,10 +16,10 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-InstallMethod(PinData, "for a finite semigroup with generators",
+InstallMethod(SEEData, "for a finite semigroup with generators",
 [IsFinite and IsSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
-  local gens, ht, nrgens, genstoapply, stopper, nr, one, nrrules, elts, words, first, final, left, prefix, suffix, right, rules, genslookup, reduced, wordsoflen, nrwordsoflen, maxwordlen, val, pos, i;
+  local data, nr, val, i;
 
   # JDM: add a test to see if the elements of S are hashable, in the sense that
   # the value returned by ChooseHashFunction(S.1).func is not
@@ -19,98 +27,92 @@ function(S)
   # which uses sets (to be implemented in the library) rather than hash tables
   # is faster in this case, then we should use that method instead. 
 
+  data:=rec( elts := [  ], final := [  ], first := [  ], found := false, 
+    genslookup := [  ], ind := 1, left := [  ], len := 1, nrrules := 0, 
+    nrwordsoflen := [  ], prefix := [  ], reduced := [ [  ] ], right := [  ], 
+    rules := [  ], stopper := false, suffix := [  ], words := [  ], 
+    wordsoflen := [  ] );
+
   if IsMonoid(S) then 
-    gens:=ShallowCopy(GeneratorsOfMonoid(S));
-    ht:=HTCreate(One(S), rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+    data.gens:=ShallowCopy(GeneratorsOfMonoid(S));
+    data.ht:=HTCreate(One(S), rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+    data.nr:=1; 
+    HTAdd(data.ht, One(S), 1); 
+    data.elts[1]:=One(S);
+    data.words[1]:=[];   
+    data.first[1]:=0;    
+    data.final[1]:=0;
+    data.prefix[1]:=0;   
+    data.suffix[1]:=0;
+    data.reduced[1]:=BlistList(data.genstoapply, data.genstoapply);
+    data.one:=1;
+    data.pos:=1; # we don't apply generators to the One(S)
+    data.left[1]:=data.genslookup;    
+    data.right[1]:=data.genslookup;
   else
-    gens:=ShallowCopy(GeneratorsOfSemigroup(S));
-    ht:=HTCreate(gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+    data.gens:=ShallowCopy(GeneratorsOfSemigroup(S));
+    data.ht:=HTCreate(data.gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+    data.nr:=0;
+    data.one:=false;
+    data.pos:=0;
   fi;
 
-  nrgens:=Length(gens);
-  genstoapply:=[1..nrgens];
-  
-  stopper:=false;   nr:=0;            one:=false;  
-  nrrules:=0;
-  
-  elts:=[];         words:=[];         
-  first:=[];        final:=[];        left:=[];
-  prefix:=[];       suffix:=[];       right:=[];  
-  rules:=[];        genslookup:=[];   reduced:=[[]];
-  wordsoflen:=[]; 
-  nrwordsoflen:=[];
-  maxwordlen:=0;
-  
-  if nrgens<>0 then 
-    maxwordlen:=1;
-    wordsoflen[1]:=[];
-    nrwordsoflen[1]:=0;
+  data.genstoapply:=[1..Length(data.gens)];
+
+  if Length(data.gens)<>0 then 
+    data.maxwordlen:=1;
+    data.wordsoflen[1]:=[];
+    data.nrwordsoflen[1]:=0;
+  else 
+    data.maxwordlen:=0;
   fi;
   
-  if IsMonoid(S) then 
-    nr:=1; 
-    HTAdd(ht, One(S), 1); 
-    elts[1]:=One(S);
-    words[1]:=[];   
-    first[1]:=0;    final[1]:=0;
-    prefix[1]:=0;   suffix[1]:=0;
-    reduced[1]:=BlistList(genstoapply, genstoapply);
-    one:=1;
-  fi;
-   
-  for i in genstoapply do 
-    val:=HTValue(ht, gens[i]);
-    if val=fail then 
+  nr:=data.nr;
+
+  # add the generators 
+  for i in data.genstoapply do 
+    val:=HTValue(data.ht, data.gens[i]);
+    if val=fail then # new generator
       nr:=nr+1; 
-      HTAdd(ht, gens[i], nr); 
-      elts[nr]:=gens[i];
-      words[nr]:=[i];  
-      first[nr]:=i;    final[nr]:=i;
-      prefix[nr]:=0;   suffix[nr]:=0;
-      left[nr]:=[];    right[nr]:=[];
-      genslookup[i]:=nr;
-      reduced[nr]:=BlistList(genstoapply, []);
-      nrwordsoflen[1]:=nrwordsoflen[1]+1;
-      wordsoflen[1][nrwordsoflen[1]]:=nr;
+      HTAdd(data.ht, data.gens[i], nr); 
+      data.elts[nr]:=data.gens[i];
+      data.words[nr]:=[i];  
+      data.first[nr]:=i;    
+      data.final[nr]:=i;
+      data.prefix[nr]:=0;   
+      data.suffix[nr]:=0;
+      data.left[nr]:=[];    
+      data.right[nr]:=[];
+      data.genslookup[i]:=nr;
+      data.reduced[nr]:=BlistList(data.genstoapply, []);
+      data.nrwordsoflen[1]:=data.nrwordsoflen[1]+1;
+      data.wordsoflen[1][data.nrwordsoflen[1]]:=nr;
       
-      if one=false and ForAll(gens, y-> gens[i]*y=y and y*gens[i]=y) then 
-        one:=nr;
+      if data.one=false and ForAll(data.gens, y-> data.gens[i]*y=y and y*data.gens[i]=y) then 
+        data.one:=nr;
       fi;
-    else 
-      genslookup[i]:=val;
-      nrrules:=nrrules+1;
-      rules[nrrules]:=[[i], [val]];
+    else # duplicate generator
+      data.genslookup[i]:=val;
+      data.nrrules:=data.nrrules+1;
+      data.rules[data.nrrules]:=[[i], [val]];
     fi;
   od;
+  
+  data.nr:=nr;
 
-  if IsMonoid(S) then 
-    pos:=1; # we don't apply generators to the One(S)
-    left[1]:=List(genstoapply, i-> genslookup[i]);    
-    right[1]:=List(genstoapply, i-> genslookup[i]);
-  else
-    pos:=0;
-  fi;
-
-  return Objectify(NewType(FamilyObj(S), IsPinData and IsMutable), 
-      rec( ht:=ht, stopper:=stopper,   words:=words, genslookup:=genslookup,
-           nr:=nr, elts:=elts,   one:=one, 
-           first:=first, final:=final, prefix:=prefix, suffix:=suffix,
-           left:=left,   right:=right, reduced:=reduced, genstoapply:=genstoapply, 
-           gens:=gens, found:=false, rules:=rules, nrrules:=nrrules, pos:=pos,
-           len:=1, wordsoflen:=wordsoflen, nrwordsoflen:=nrwordsoflen, 
-           maxwordlen:=maxwordlen, ind:=1));
+  return Objectify(NewType(FamilyObj(S), IsSEEData and IsMutable), data);
 end);
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for Pin data", [IsPinData], 
+InstallMethod(Enumerate, "for SEE data", [IsSEEData], 
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
 #
 
-InstallMethod(Enumerate, "for Pin data and cyclotomic", [IsPinData, IsCyclotomic], 
+InstallMethod(Enumerate, "for SEE data and cyclotomic", [IsSEEData, IsCyclotomic], 
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
@@ -118,8 +120,8 @@ end);
 # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
 # <[1..Length(data!.elts)]>.
 
-InstallMethod(Enumerate, "for Pin data, cyclotomic, function",
-[IsPinData, IsCyclotomic, IsFunction], 
+InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
+[IsSEEData, IsCyclotomic, IsFunction], 
 function(data, limit, lookfunc)
   local looking, found, len, maxwordlen, nr, elts, gens, genstoapply, genslookup, one, right, left, first, final, prefix, suffix, reduced, words, stopper, ht, rules, nrrules, wordsoflen, nrwordsoflen, pos, i, htadd, htvalue, lentoapply, b, s, r, new, newword, val, p, ind, j, k;
   
@@ -139,7 +141,7 @@ function(data, limit, lookfunc)
   nr:=data!.nr;                     # nr=Length(elts);
  
   if pos=nr then
-    SetFilterObj(data, IsClosedPinData);
+    SetFilterObj(data, IsClosedSEEData);
     if looking then 
       data!.found:=false;
     fi;
@@ -313,7 +315,7 @@ function(data, limit, lookfunc)
 
   if len>maxwordlen then
     data!.len:=maxwordlen;
-    SetFilterObj(data, IsClosedPinData);
+    SetFilterObj(data, IsClosedSEEData);
   else 
     data!.len:=len;
   fi;
@@ -379,13 +381,13 @@ function(S, coll)
     fi;
   fi;
 
-  if not HasPinData(S) then  
-    #JDM could add check that PinData(S) is not just created and nothing has been enumerated
-    #nothing is known about <S>
+  if not HasSEEData(S) then  
+    # JDM could add check that SEEData(S) is not just created and nothing has
+    # been enumerated nothing is known about <S>
     return T;
   fi;
   
-  data:=PinData(S);
+  data:=SEEData(S);
 
   # parts that will change but where we also require the old values...
   oldpos:=data!.pos;                # so we can tell when we've finished
@@ -439,7 +441,7 @@ function(S, coll)
   newgenstoapply:=[oldnrgens+1..Length(gens)];
   Append(genstoapply, newgenstoapply);
 
-  ResetFilterObj(data, IsClosedPinData);
+  ResetFilterObj(data, IsClosedSEEData);
   
   # <elts[one]> is the mult. neutral element
   one:=data!.one;
@@ -692,7 +694,7 @@ function(S, coll)
 
   if len>maxwordlen then
     data!.len:=maxwordlen;
-    SetFilterObj(data, IsClosedPinData);
+    SetFilterObj(data, IsClosedSEEData);
   else 
     data!.len:=len;
   fi;
@@ -705,16 +707,16 @@ function(S, coll)
     Unbind(data!.idempotents); 
     #JDM <idempotents> could be kept...
   else 
-    SetFilterObj(data, IsClosedPinData);
+    SetFilterObj(data, IsClosedSEEData);
   fi;
-  SetPinData(T, data);
+  SetSEEData(T, data);
   return T;
 end);
 
 #
 
-InstallMethod(Position, "for Pin data, an associative element, zero cyc",
-[IsPinData, IsAssociativeElement, IsZeroCyc], 
+InstallMethod(Position, "for SEE data, an associative element, zero cyc",
+[IsSEEData, IsAssociativeElement, IsZeroCyc], 
 function(data, x, n)
   local pos, lookfunc;
 
@@ -738,26 +740,26 @@ end);
 
 #
 
-InstallMethod(Length, "for Pin data", [IsPinData], 
+InstallMethod(Length, "for SEE data", [IsSEEData], 
 function(data)
   return Length(data!.elts);
 end);
 
 #
 
-InstallMethod(ELM_LIST, "for pin data, and pos int",
-[IsPinData, IsPosInt], 
+InstallMethod(ELM_LIST, "for SEE data, and pos int",
+[IsSEEData, IsPosInt], 
 function(data, nr)
   return data!.elts[nr];
 end);
 
 #
 
-InstallMethod(ViewObj, [IsPinData], 
+InstallMethod(ViewObj, [IsSEEData], 
 function(data)
   Print("<");
 
-  if IsClosedPinData(data) then 
+  if IsClosedSEEData(data) then 
     Print("closed ");
   else 
     Print("open ");
@@ -771,7 +773,7 @@ end);
 
 #
 
-InstallMethod(PrintObj, [IsPinData], 
+InstallMethod(PrintObj, [IsSEEData], 
 function(data)
   local recnames, com, i, nam;
   

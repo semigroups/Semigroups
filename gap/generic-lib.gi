@@ -19,7 +19,7 @@ InstallMethod(IsomorphismFpMonoid, "for a finite monoid with generators",
 function(S)
   local rules, F, A, rels, Q, B;
  
-  rules:=Enumerate(PinData(S))!.rules;
+  rules:=Enumerate(SEEData(S))!.rules;
   
   F:=FreeMonoid(Length(GeneratorsOfMonoid(S)));
   A:=GeneratorsOfMonoid(F);
@@ -40,7 +40,7 @@ InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup with generators",
 function(S)
   local rules, F, A, rels, Q, B;
   
-  rules:=Enumerate(PinData(S))!.rules;
+  rules:=Enumerate(SEEData(S))!.rules;
   
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
@@ -77,7 +77,7 @@ function(S)
   end;
   #convert words in generators of monoid to words in generators of semigroup
 
-  rules:=Enumerate(PinData(S))!.rules;
+  rules:=Enumerate(SEEData(S))!.rules;
   
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
@@ -109,11 +109,11 @@ function(S)
   record:=rec();
 
   record.NumberElement:=function(enum, elt)
-    return Position(PinData(S), elt);
+    return Position(SEEData(S), elt);
   end;
 
   record.ElementNumber:=function(enum, nr)
-    data:=PinData(S);
+    data:=SEEData(S);
     if not IsBound(data!.elts[nr]) then 
       Enumerate(data, nr);
     fi;
@@ -123,11 +123,11 @@ function(S)
   record.Length:=enum -> Size(S);
 
   record.Membership:=function(enum, elt)
-    return Position(PinData(S), elt)<>fail;
+    return Position(SEEData(S), elt)<>fail;
   end;
 
   record.IsBound\[\]:=function(enum, nr)
-    return IsBound(PinData(S)!.elts[nr]);
+    return IsBound(SEEData(S)!.elts[nr]);
   end;
 
   return EnumeratorByFunctions(S, record);
@@ -138,7 +138,7 @@ end);
 InstallMethod(Size, "for a finite semigroup with generators", 
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(Enumerate(PinData(S), infinity, ReturnFalse)!.elts);
+  return Length(Enumerate(SEEData(S), infinity, ReturnFalse)!.elts);
 end);
 
 #
@@ -146,7 +146,7 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Enumerate(PinData(S))!.right;
+  return Enumerate(SEEData(S))!.right;
 end);
 
 #
@@ -154,7 +154,7 @@ end);
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Enumerate(PinData(S))!.left;
+  return Enumerate(SEEData(S))!.left;
 end);
 
 #
@@ -162,7 +162,7 @@ end);
 InstallMethod(\in, "for an associative element and finite semigroup with generators",
 [IsAssociativeElement, IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(x, S)
-  return Position(PinData(S), x)<>fail;
+  return Position(SEEData(S), x)<>fail;
 end);
 
 #
@@ -172,11 +172,11 @@ InstallMethod(Factorization,
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(S, x)
   local pos;
-  pos:=Position(PinData(S), x); 
+  pos:=Position(SEEData(S), x); 
   if pos=fail then 
     return fail;
   fi;
-  return PinData(S)!.words[pos];
+  return SEEData(S)!.words[pos];
 end);
 
 
@@ -187,7 +187,7 @@ InstallMethod(Idempotents, "for a finite semigroup with generators",
 function(S)
   local data, elts, idempotents, nr, i;
 
-  data:=Enumerate(PinData(S));
+  data:=Enumerate(SEEData(S));
 
   if not IsBound(data!.idempotents) then 
 
