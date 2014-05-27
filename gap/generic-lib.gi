@@ -1,6 +1,16 @@
+###########################################################################
+##
+#W  generic-lib.gi
+#Y  Copyright (C) 2014                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
-# code for generic semigroups, ties in the Froidure-Pin Semigroupe algorithm to
-# GAP methods
+# Code for generic semigroups (i.e. ones which know \*), ties in the
+# Froidure-Pin Semigroupe algorithm to GAP methods. This file only contains
+# methods for operations (etc) that are available in the gap library. 
 
 #
 
