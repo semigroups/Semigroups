@@ -58,5 +58,9 @@ DeclareGlobalFunction("MatrixObjLocalRightInverse");
 # that maps im x to im y. Returns an invertible matrix
 DeclareGlobalFunction("MatrixObjSchutzGrpElement");
 
+DeclareGlobalFunction("MatrixObjLambdaConjugator");
+DeclareGlobalFunction("MatrixObjIdempotentTester");
+DeclareGlobalFunction("MatrixObjIdempotentCreator");
+
 
 

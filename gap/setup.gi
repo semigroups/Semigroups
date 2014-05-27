@@ -697,8 +697,9 @@ function(j,i)
 end);
 
 InstallMethod(IdempotentTester, "for a matrix semigroup",
-[IsMatrixSemigroup], s -> MatrixObjIdempotentTester(s, x, y));
-
+[IsMatrixSemigroup], s -> function(x,y) 
+    return MatrixObjIdempotentTester(s, x, y);
+end);
 
 # the function used to create an idempotent with the specified lambda and rho
 # values.
@@ -725,7 +726,9 @@ function(j,i)
 end);
 
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
-s -> MatrixObjIdempotentCreator);
+[IsMatrixSemigroup], s -> function(x,y)
+    return MatrixObjIdempotentCreator(s,x,y);
+end);
 
 # the action of elements of the stabiliser of a lambda-value on any element of
 # the semigroup with that lambda-value
@@ -770,8 +773,12 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup], ReturnFalse);
 
 #
-InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
-"for a matrix semigroup", [IsMatrixSemigroup], ReturnTrue);
+#InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
+#"for a matrix semigroup", [IsMatrixSemigroup], ReturnTrue);
+# wat?
+InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
+IsMatrixSemigroup);
+
 
 InstallMethod(SchutzGpMembership, "for a transformation semigroup", 
 [IsTransformationSemigroup],

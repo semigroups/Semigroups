@@ -173,20 +173,41 @@ function(S, x, y)
     return res;
 end);
 
-
 InstallGlobalFunction(MatrixObjLambdaConjugator,
 function(S, x, y)
     Error("not implemented yet");
 end);
 
+#T this might be too inefficient. We could test
+#T the traces of x and y whether they are equal
+#T and coincide with the Length of x and y
+#T is there a direct way of testing whether
+#T this idempotent exists (without constructing it)?
 InstallGlobalFunction(MatrixObjIdempotentTester,
 function(S, x, y)
-    Error("not implemented yet");
+    return MatrixObjIdempotentCreator(S,x,y) <> fail;
 end);
 
 InstallGlobalFunction(MatrixObjIdempotentCreator,
 function(S, x, y) 
-    Error("not implemented yet");
+     local m, ev;
+    # m has the appropriate row/column space but might have
+    # to be scaled.
+    m := TransposedMat(y) * x;
+    ev := Eigenvalues(BaseDomain(m), m);
+    
+    if Length(ev) > 2 then
+        return fail;
+    elif ev = [Zero(BaseDomain(m))] then
+        return m;
+    elif ev = [One(BaseDomain(m)] then
+        #T m _has_ to be IdentityMat
+        return m;
+    else
+        #T two eigenvalues, one is non-zero,
+        #T we scale by the inverse
+        return ev[PositionNonZero(m)]^(-1) * m;
+    fi;
 end);
 
 #############################################################################
