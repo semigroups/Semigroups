@@ -13,6 +13,12 @@ InstallMethod(PinData, "for a finite semigroup with generators",
 function(S)
   local gens, ht, nrgens, genstoapply, stopper, nr, one, nrrules, elts, words, first, final, left, prefix, suffix, right, rules, genslookup, reduced, wordsoflen, nrwordsoflen, maxwordlen, val, pos, i;
 
+  # JDM: add a test to see if the elements of S are hashable, in the sense that
+  # the value returned by ChooseHashFunction(S.1).func is not
+  # ORB_HashFunctionReturn1. If it turns out that the version of this algorithm
+  # which uses sets (to be implemented in the library) rather than hash tables
+  # is faster in this case, then we should use that method instead. 
+
   if IsMonoid(S) then 
     gens:=ShallowCopy(GeneratorsOfMonoid(S));
     ht:=HTCreate(One(S), rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
