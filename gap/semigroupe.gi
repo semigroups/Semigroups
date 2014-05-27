@@ -44,7 +44,7 @@ function(S)
     data.final[1]:=0;
     data.prefix[1]:=0;   
     data.suffix[1]:=0;
-    data.reduced[1]:=BlistList(data.genstoapply, data.genstoapply);
+    data.reduced[1]:=BlistList([1..Length(data.gens)], [1..Length(data.gens)]);
     data.one:=1;
     data.pos:=1; # we don't apply generators to the One(S)
     data.left[1]:=data.genslookup;    

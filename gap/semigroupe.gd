@@ -18,4 +18,4 @@ DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic]);
 DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic, IsFunction]);
 
 DeclareGlobalFunction("ClosureNonActingSemigroupNC");
-
+# AddGeneratorsToSemigroup...
