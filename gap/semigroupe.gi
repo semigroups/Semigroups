@@ -1,6 +1,6 @@
 
 # TODO: generalise the code to not only use hash tables but dictionaries, or
-# sets of elements, remove genslookup in preference for wordsoflen[1]
+# sets of elements
 
 #  for details see:
 #
@@ -735,6 +735,14 @@ end);
 InstallMethod(Length, "for Pin data", [IsPinData], 
 function(data)
   return Length(data!.elts);
+end);
+
+#
+
+InstallMethod(ELM_LIST, "for pin data, and pos int",
+[IsPinData, IsPosInt], 
+function(data, nr)
+  return data!.elts[nr];
 end);
 
 #

@@ -6,9 +6,11 @@
 ##  Licensing information can be foundin the README file of this package.
 ##
 ################################################################################
+
 DeclareCategory("IsFreeBandElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeBandElement");
 DeclareProperty("IsFreeBand", IsSemigroup);
-InstallTrueMethod(IsFinite, IsFreeBand);
+DeclareSynonym("IsFreeBandSubsemigroup", IsSemigroup and IsFreeBandElementCollection);
+InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 DeclareGlobalFunction("FreeBand");
