@@ -8,6 +8,20 @@
 #############################################################################
 ##
 
+InstallMethod(MinimalFactorization, 
+"for a finite semigroup with generators and associative element",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsAssociativeElement],
+function(S, x)
+  
+  if not x in S then 
+    Error("usage: the second argument <x> is not an element of the semigroup <S>", 
+    " in the second argument,");
+    return;
+  fi;
+
+  return PinData(S)!.words[Position(PinData(S), x)];
+end);
+
 # factorisation of Schutzenberger group element, the same method works for
 # ideals
 
