@@ -1,0 +1,27 @@
+<Chapter Label="Matrix semigroups">
+  <Heading>Matrix semigroups</Heading>
+
+  This chapter describes the functions in &Semigroups; for dealing with
+  matrix semigroups. This part of the manual and the functions described
+  herein were written by Markus Pfeiffer.<P/>
+
+  A <E>matrix semigroup</E> for the purposes of this document is a subsemigroup
+  of the full monoid of <M>n\times n</M> matrices over a <E>finite field</E>
+  <M>\mathbb{F}</M>,.
+
+  More general matrix semigroups are planned, but not implemented yet.
+
+  The matrix semigroup functions in &Semigroups; rely on <Ref Filt="IsMatrixObj"/>
+  objects defined in the GAP library, but take every precaution to hide
+  this fact from the user of &Semigroups;.
+ 
+<Section Label = "sect:Matrix semigroups">
+  <Heading>Creating matrix semigroups</Heading>
+
+  Ideally using &Semigroups; with matrices should go as follows:
+  <Example>
+gap> S := MatrixSemigroup([[]]);
+gap>
+  </Example>
+</Section>
+</Chapter>
