@@ -10,14 +10,20 @@
 
 if not IsBound(GABOW_SCC) then
   BindGlobal("GABOW_SCC", 
-    function(digraph)   
-       local stack1, len1, stack2, len2, id, count, fptr, level, w, v;
-
-    stack1:=[]; len1:=0;
-    stack2:=[]; len2:=0;
-    id:=[1..Length(digraph)]*0;
-    count:=Length(digraph);
+  function(digraph)   
+    local n, stack1, len1, stack2, len2, id, count, comps, fptr, level, l, comp, w, v;
     
+    n:=Length(digraph);
+    
+    if n=0 then 
+      return rec( comps:=[], id:=[]);
+    fi;
+
+    stack1:=EmptyPlist(n); len1:=0;
+    stack2:=EmptyPlist(n); len2:=0;
+    id:=[1..n]*0;
+    count:=Length(digraph);
+    comps:=[];
     fptr:=[];
 
     for v in [1..Length(digraph)] do
@@ -36,11 +42,18 @@ if not IsBound(GABOW_SCC) then
             if stack2[len2]=id[fptr[2*level-1]] then
               len2:=len2-1;
               count:=count+1;
+              l:=0;
+              comp:=[];
               repeat
                 w:=stack1[len1];
                 id[w]:=count;
                 len1:=len1-1; #pop from stack1
+                l:=l+1;
+                comp[l]:=w;
               until w=fptr[2*level-1];
+              ShrinkAllocationPlist(comp);
+              MakeImmutable(comp);
+              Add(comps, comp);
             fi;
             level:=level-1;
           else
@@ -67,8 +80,11 @@ if not IsBound(GABOW_SCC) then
       fi;
     od;
 
-    return rec(id:=id-Length(digraph), count:=count-Length(digraph));
-  end;
+    MakeImmutable(id);
+    ShrinkAllocationPlist(comps);
+    MakeImmutable(comps);
+    return rec(id:=id-Length(digraph), comps:=comps);
+  end);
 fi;
 
 # <scc> is the output of GABOW_SCC applied to right
@@ -164,8 +180,8 @@ fi;
 
 # non-recursive versions of the above...
 
-#graph:=[[2,6], [3,4,5], [1], [3,5], [1], [7,10,11], [5,8,9], [5], [8], [11], [], [10,11], 
-#[9,11,15], [13], [14]];
+graph:=[[2,6], [3,4,5], [1], [3,5], [1], [7,10,11], [5,8,9], [5], [8], [11], [], [10,11], 
+[9,11,15], [13], [14]];
 
 #GABOW_SCC_2:=function(digraph)   
 #  local stack1, len1, stack2, len2, id, count, dfs, v;
