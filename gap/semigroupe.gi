@@ -34,6 +34,10 @@ end);
 
 InstallGlobalFunction(SCCOfLeftRightCayleyGraph, 
 function(data)
+  if not IsBound(data!.leftrighscc) then 
+    data!.leftrightscc:=SCC_UNION_DIGRAPHS(SCCOfRightCayleyGraph(data),
+     SCCOfLeftCayleyGraph(data));
+  fi;
   return data!.leftrightscc;
 end);
 

@@ -94,7 +94,7 @@ fi;
 if not IsBound(SCC_UNION_DIGRAPHS) then
   BindGlobal("SCC_UNION_DIGRAPHS", 
   function(scc1, scc2)  
-    local id1, comps1, id2, comps2, id, comps, nr, comp, i, j;
+    local id1, comps1, id2, comps2, id, comps, nr, seen, tst, comp, i, j;
 
     id1:=scc1.id;
     comps1:=scc1.comps;
@@ -104,16 +104,23 @@ if not IsBound(SCC_UNION_DIGRAPHS) then
     id:=[1..Length(id1)]*0;
     comps:=[];
     nr:=0;
+    
+    seen:=BlistList([1..Length(comps2)], []);
+    tst:=0;
 
     for comp in comps1 do 
       if id[comp[1]]=0 then 
         nr:=nr+1;
         comps[nr]:=[];
         for i in comp do
-          for j in comps2[id2[i]] do 
-            id[j]:=nr;
-            Add(comps[nr], j);
-          od;
+          if not seen[id2[i]] then 
+            seen[id2[i]]:=true;
+            for j in comps2[id2[i]] do 
+              tst:=tst+1;
+              id[j]:=nr;
+              Add(comps[nr], j);
+            od;
+          fi;
         od;
         MakeImmutable(comps[nr]);
         ShrinkAllocationPlist(comps[nr]);
@@ -124,7 +131,7 @@ if not IsBound(SCC_UNION_DIGRAPHS) then
     ShrinkAllocationPlist(id);
     MakeImmutable(id);
 
-    return rec(comps:=comps, id:=id);
+    return rec(comps:=comps, id:=id, tst:=tst);
   end);
 fi;
 

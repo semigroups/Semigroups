@@ -35,20 +35,18 @@ function(S)
   return Length(SCCOfLeftRightCayleyGraph(SEEData(S)).comps);
 end);
 
-#
+#JDM: this doesn't yet work...
 
 InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  local data;
+  local data, scc;
   data:=Enumerate(SEEData(S));
-  if not IsBound(data!.rightscc) then 
-    data!.rightscc:=GABOW_SCC(data!.right);
-  fi;
-  return SemigroupIdeal(S, data!.elts[data!.rightscc.min]);
+  scc:=SCCOfRightCayleyGraph(data);
+  return SemigroupIdeal(S, data!.elts[scc.comps[1][1]]);
 end);
 
-# JDM: this could have a c method...
+# JDM: this should be a c method...
 
 InstallMethod(NrHClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
