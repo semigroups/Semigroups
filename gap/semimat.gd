@@ -62,5 +62,11 @@ DeclareGlobalFunction("MatrixObjLambdaConjugator");
 DeclareGlobalFunction("MatrixObjIdempotentTester");
 DeclareGlobalFunction("MatrixObjIdempotentCreator");
 
+# Constructor for matrix semigroups, we want the flexibility
+# to pass a list of generators, a field and a list of generators
+# a field, a row/column dimension, and a list of generators.
+DeclareGlobalFunction("MatrixSemigroup");
+#DeclareOperation("MatrixSemigroup", [IsFFECollCollColl]);
+#DeclareOperation("MatrixSemigroup", [IsField, IsFFECollCollColl]);
 
 

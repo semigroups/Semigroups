@@ -298,3 +298,20 @@ function( m )
     return m![5];
 end);
 
+#############################################################################
+##
+#M  MatrixSemigroup( )
+##
+
+InstallGlobalFunction(MatrixSemigroup,
+function(arg)
+    local gens;
+    
+    if Length(arg) = 1 then # List of generators
+    elif Length(arg) = 2 then
+    elif Length(arg) = 3 then
+    else
+    fi;
+end);
+
+
