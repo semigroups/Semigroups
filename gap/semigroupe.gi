@@ -16,6 +16,27 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
+InstallGlobalFunction(SCCOfRightCayleyGraph,
+function(data)
+  if not IsBound(data!.rightscc) then 
+    data!.rightscc:=GABOW_SCC(Enumerate(data)!.right);
+  fi;
+  return data!.rightscc;
+end);
+
+InstallGlobalFunction(SCCOfLeftCayleyGraph, 
+function(data)
+  if not IsBound(data!.leftscc) then 
+    data!.leftscc:=GABOW_SCC(Enumerate(data)!.left);
+  fi;
+  return data!.leftscc;
+end);
+
+InstallGlobalFunction(SCCOfLeftRightCayleyGraph, 
+function(data)
+  return data!.leftrightscc;
+end);
+
 InstallMethod(SEEData, "for a finite semigroup with generators",
 [IsFinite and IsSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
