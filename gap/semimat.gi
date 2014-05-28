@@ -175,8 +175,25 @@ end);
 
 InstallGlobalFunction(MatrixObjLambdaConjugator,
 function(S, x, y)
-    
-    Error("not implemented yet");
+     local xse, xhe, yse, yhe, he, h, p, q, i, RemoveZeroRows, res;
+        
+    if x^(-1) <> fail then
+        res := List(x^(-1) * y, List);
+    elif IsZero(x) then
+        res := [[One(BaseDomain(x))]];
+    else 
+        xse := SemiEchelonMat(x);
+        h := Filtered(xse.heads, x->x<>0);
+        p := Matrix(One(BaseDomain(x)) * PermutationMat(SortingPerm(h), Length(h), BaseDomain(x)), x);
+
+        yse := SemiEchelonMat(y);
+        h := Filtered(yse.heads, x->x<>0);
+        q := Matrix(One(BaseDomain(y)) * PermutationMat(SortingPerm(h), Length(h), BaseDomain(y)), y);
+
+        res := List(p * q^(-1), List);
+    fi;
+
+    return res;   
 end);
 
 #T is there a complete direct way of testing whether
