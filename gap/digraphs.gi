@@ -87,101 +87,51 @@ if not IsBound(GABOW_SCC) then
   end);
 fi;
 
-# <scc> is the output of GABOW_SCC applied to right
+# returns the strongly connected components of union of two graphs <digraph1>
+# and <digraph2> with strongly connected components <scc1> and <scc2> (as output
+# by GABOW_SCC). 
 
-if not IsBound(GABOW_SCC_DCLASSES) then 
-  BindGlobal("GABOW_SCC_DCLASSES",
-  function(left, scc)   
-    local stack1, len1, stack2, len2, marked, preorder, id, pre, count, nr,
-    sccid, did, level, branch, wstack, v, deeper, w;
+if not IsBound(SCC_UNION_DIGRAPHS) then
+  BindGlobal("SCC_UNION_DIGRAPHS", 
+  function(scc1, scc2)  
+    local id1, comps1, id2, comps2, id, comps, nr, comp, i, j;
 
-    stack1:=[]; len1:=0;
-    stack2:=[]; len2:=0;
-    marked:=BlistList([1..Length(left)], []);
-    preorder:=[];
-    id:=[1..Length(left)]*0;
-    pre:=1;
-    count:=1;
+    id1:=scc1.id;
+    comps1:=scc1.comps;
+    id2:=scc2.id;
+    comps2:=scc2.comps;
 
-    nr:=1; # nr of D-classes
-    sccid:=scc.id;
-    did:=[1..scc.count]*0; # lookup for scc of R-classes
-    
-    for v in [1..Length(left)] do 
-      if not marked[v] then
-        level:=1;
-        branch:=[v];
-        wstack:=[1];
-        marked[branch[level]]:=true;
-        preorder[branch[level]]:=pre;
-        pre:=pre+1;
-        len1:=len1+1;
-        len2:=len2+1;
-        stack1[len1]:=branch[level];
-        stack2[len2]:=branch[level];
-        
-        while level>0 do 
-          v:=branch[level];
-          deeper:=false;
-          for w in [wstack[level]..Length(left[v])] do 
-            if not marked[left[v][w]] then 
-              wstack[level]:=w+1; # where we restart when we get back here...
-              level:=level+1;
-              branch[level]:=left[v][w];
-              wstack[level]:=1;
-              marked[branch[level]]:=true;
-              preorder[branch[level]]:=pre;
-              pre:=pre+1;
-              len1:=len1+1;
-              len2:=len2+1;
-              stack1[len1]:=branch[level];
-              stack2[len2]:=branch[level];
-              deeper:=true;
-              break;
-              #dfs(left, w);
-            elif id[left[branch[level]][w]]=0 then 
-              while preorder[stack2[len2]] > preorder[left[branch[level]][w]] do
-                len2:=len2-1; # pop from stack2
-              od;
-            fi;
+    id:=[1..Length(id1)]*0;
+    comps:=[];
+    nr:=0;
+
+    for comp in comps1 do 
+      if id[comp[1]]=0 then 
+        nr:=nr+1;
+        comps[nr]:=[];
+        for i in comp do
+          for j in comps2[id2[i]] do 
+            id[j]:=nr;
+            Add(comps[nr], j);
           od;
-          
-          if not deeper then 
-            if stack2[len2]=branch[level] then
-              len2:=len2-1;
-              if did[sccid[stack1[len1]]]=0 then 
-                # i.e. didn't see the scc of the R-class of <w>
-                repeat
-                  w:=stack1[len1];
-                  id[w]:=count;
-                  len1:=len1-1; #pop from stack1
-                  did[sccid[w]]:=nr; 
-                until w=v;
-                nr:=nr+1;
-              else
-                repeat
-                  w:=stack1[len1];
-                  id[w]:=count;
-                  len1:=len1-1; #pop from stack1
-                until w=v;
-              fi;
-              count:=count+1;
-            fi;
-            level:=level-1;
-          fi;
         od;
+        MakeImmutable(comps[nr]);
+        ShrinkAllocationPlist(comps[nr]);
       fi;
     od;
+    ShrinkAllocationPlist(comps);
+    MakeImmutable(comps);
+    ShrinkAllocationPlist(id);
+    MakeImmutable(id);
 
-    return rec(id:=id, preorder:=preorder, count:=count-1, dclassesid:=did, 
-    nrdclasses:=nr-1);
+    return rec(comps:=comps, id:=id);
   end);
 fi;
 
 # non-recursive versions of the above...
 
-graph:=[[2,6], [3,4,5], [1], [3,5], [1], [7,10,11], [5,8,9], [5], [8], [11], [], [10,11], 
-[9,11,15], [13], [14]];
+#graph:=[[2,6], [3,4,5], [1], [3,5], [1], [7,10,11], [5,8,9], [5], [8], [11], [], [10,11], 
+#[9,11,15], [13], [14]];
 
 #GABOW_SCC_2:=function(digraph)   
 #  local stack1, len1, stack2, len2, id, count, dfs, v;
@@ -249,72 +199,3 @@ graph:=[[2,6], [3,4,5], [1], [3,5], [1], [7,10,11], [5,8,9], [5], [8], [11], [],
 #  return rec(id:=id-Length(digraph), count:=count-Length(digraph));
 #end;
 
-#GabowDClasses:=function(left, scc)   
-#  local stack1, len1, stack2, len2, marked, preorder, id, pre, count, nr, sccid, did, dfs, v;
-#
-#  # for the scc of <left>
-#  stack1:=[]; len1:=0;
-#  stack2:=[]; len2:=0;
-#  marked:=BlistList([1..Length(left)], []);
-#  preorder:=[];
-#  id:=[1..Length(left)]*0;
-#  pre:=1;
-#  count:=1;
-#
-#  nr:=1; # nr of D-classes
-#  sccid:=scc.id;
-#  did:=[1..scc.count-1]*0; # lookup for scc of R-classes
-#  
-#  #
-#  dfs:=function(left, v)
-#    local w;
-#
-#    marked[v]:=true;
-#    preorder[v]:=pre;
-#    pre:=pre+1;
-#    len1:=len1+1;
-#    len2:=len2+1;
-#    stack1[len1]:=v;
-#    stack2[len2]:=v;
-#    
-#    for w in left[v] do 
-#      if not marked[w] then 
-#        dfs(left, w);
-#      elif id[w]=0 then 
-#        while preorder[stack2[len2]] > preorder[w] do
-#          len2:=len2-1; # pop from stack2
-#        od;
-#      fi;
-#    od;
-#
-#    if stack2[len2]=v then
-#      len2:=len2-1;
-#      
-#      if did[sccid[stack1[len1]]]=0 then # i.e. didn't see the scc of the R-class of <w>
-#        repeat
-#          w:=stack1[len1];
-#          id[w]:=count;
-#          len1:=len1-1; #pop from stack1
-#          did[sccid[w]]:=nr; 
-#        until w=v;
-#        nr:=nr+1;
-#      else
-#        repeat
-#          w:=stack1[len1];
-#          id[w]:=count;
-#          len1:=len1-1; #pop from stack1
-#        until w=v;
-#      fi;
-#      count:=count+1;
-#    fi;
-#  end;
-#  #
-#
-#  for v in [1..Length(left)] do 
-#    if not marked[v] then 
-#      dfs(left, v);
-#    fi;
-#  od;
-#
-#  return [rec(id:=id, preorder:=preorder, count:=count), did];
-#end;
