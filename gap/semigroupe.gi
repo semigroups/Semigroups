@@ -198,15 +198,15 @@ function(data, limit, lookfunc)
             # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             reduced[i][j]:=false;
-            if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
-              reduced[i][j]:=true;
-              for k in lentoapply do 
-                if words[i][k]<>words[right[i][j]][k] then 
-                  reduced[i][j]:=false;
-                  break;
-                fi;
-              od;
-            fi;
+            #if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
+            #  reduced[i][j]:=true;
+            #  for k in lentoapply do 
+            #    if words[i][k]<>words[right[i][j]][k] then 
+            #      reduced[i][j]:=false;
+            #      break;
+            #    fi;
+            #  od;
+            #fi;
           elif r=one then               # <elts[r]> is the identity
             right[i][j]:=genslookup[b]; 
             reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
@@ -215,15 +215,15 @@ function(data, limit, lookfunc)
             # elts[i]*gens[j]=gens[b]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             reduced[i][j]:=false;
-            if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
-              reduced[i][j]:=true;
-              for k in lentoapply do 
-                if words[i][k]<>words[right[i][j]][k] then 
-                  reduced[i][j]:=false;
-                  break;
-                fi;
-              od;
-            fi;
+            #if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
+            #  reduced[i][j]:=true;
+            #  for k in lentoapply do 
+            #    if words[i][k]<>words[right[i][j]][k] then 
+            #      reduced[i][j]:=false;
+            #      break;
+            #    fi;
+            #  od;
+            #fi;
              
           fi;
         else # <elts[s]*gens[j]> is reduced

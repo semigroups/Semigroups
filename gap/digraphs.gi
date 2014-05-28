@@ -10,83 +10,65 @@
 
 if not IsBound(GABOW_SCC) then
   BindGlobal("GABOW_SCC", 
-  function(digraph)   
-    local stack1, len1, stack2, len2, marked, preorder, id, pre, count, level,
-    branch, wstack, deeper, w, v, tmp;
+    function(digraph)   
+       local stack1, len1, stack2, len2, id, count, fptr, level, w, v;
 
     stack1:=[]; len1:=0;
     stack2:=[]; len2:=0;
-    marked:=BlistList([1..Length(digraph)], []);
-    preorder:=[];
     id:=[1..Length(digraph)]*0;
-    pre:=1;
-    count:=1;
-    tmp:=0;
-    for v in [1..Length(digraph)] do 
-      #Print("v=", v, "\n");
-      if not marked[v] then
+    count:=Length(digraph);
+    
+    fptr:=[];
+
+    for v in [1..Length(digraph)] do
+      if id[v]=0 then 
         level:=1;
-        branch:=[v];
-        wstack:=[1];
-        marked[branch[level]]:=true;
-        preorder[branch[level]]:=pre;
-        pre:=pre+1;
+        fptr[1] := v; #fptr[0], vertex
+        fptr[2] := 1; #fptr[2], index
         len1:=len1+1;
+        stack1[len1]:=v;   
         len2:=len2+1;
-        stack1[len1]:=branch[level];
-        stack2[len2]:=branch[level];
-        
-        while true do
-          #Print("level=", level, "\n");
-          tmp:=tmp+1;
-          v:=branch[level];
-          deeper:=false;
-          for w in [wstack[level]..Length(digraph[v])] do 
-            if not marked[digraph[v][w]] then 
-              wstack[level]:=w+1; # where we restart when we get back here...
-              level:=level+1;
-              branch[level]:=digraph[v][w];
-              wstack[level]:=1;
-              marked[branch[level]]:=true;
-              preorder[branch[level]]:=pre;
-              pre:=pre+1;
-              len1:=len1+1;
-              len2:=len2+1;
-              stack1[len1]:=branch[level];
-              stack2[len2]:=branch[level];
-              deeper:=true;
-              break;
-            elif id[digraph[v][w]]=0 then 
-              while preorder[stack2[len2]] > preorder[digraph[v][w]] do
-                len2:=len2-1; # pop from stack2
-              od;
-            fi;
-          od;
-          
-          if not deeper then 
-            if stack2[len2]=branch[level] then
+        stack2[len2]:=len1; 
+        id[v]:=len1;
+
+        while level>0 do
+          if fptr[2*level] > Length(digraph[fptr[2*level-1]]) then 
+            if stack2[len2]=id[fptr[2*level-1]] then
               len2:=len2-1;
+              count:=count+1;
               repeat
                 w:=stack1[len1];
                 id[w]:=count;
                 len1:=len1-1; #pop from stack1
-              until w=branch[level];
-              if count=1 then 
-                min:=w;
-              fi;
-              count:=count+1;
-            fi;
-            if level=1 then 
-              break;
+              until w=fptr[2*level-1];
             fi;
             level:=level-1;
+          else
+            w:=digraph[fptr[2*level-1]][fptr[2*level]];
+            fptr[2*level]:=fptr[2*level]+1;
+
+            if id[w]=0 then 
+              level:=level+1;
+              fptr[2*level-1]:=w; #fptr[0], vertex
+              fptr[2*level]:=1;   #fptr[2], index
+              len1:=len1+1;
+              stack1[len1]:=w;   
+              len2:=len2+1;
+              stack2[len2]:=len1; 
+              id[w]:=len1;
+
+            else # we saw <w> earlier in this run
+              while stack2[len2] > id[w] do
+                len2:=len2-1; # pop from stack2
+              od;
+            fi;
           fi;
         od;
       fi;
     od;
 
-    return rec(id:=id, preorder:=preorder, count:=count-1, min:=min);
-  end);
+    return rec(id:=id-Length(digraph), count:=count-Length(digraph));
+  end;
 fi;
 
 # <scc> is the output of GABOW_SCC applied to right
@@ -182,64 +164,75 @@ fi;
 
 # non-recursive versions of the above...
 
-#InstallGlobalFunction(GABOW_SCC, 
-#function(digraph)   
-#  local stack1, len1, stack2, len2, marked, preorder, id, pre, count, dfs, v, tmp;
+#graph:=[[2,6], [3,4,5], [1], [3,5], [1], [7,10,11], [5,8,9], [5], [8], [11], [], [10,11], 
+#[9,11,15], [13], [14]];
+
+#GABOW_SCC_2:=function(digraph)   
+#  local stack1, len1, stack2, len2, id, count, dfs, v;
 #
 #  stack1:=[]; len1:=0;
 #  stack2:=[]; len2:=0;
-#  marked:=BlistList([1..Length(digraph)], []);
-#  preorder:=[];
 #  id:=[1..Length(digraph)]*0;
-#  pre:=1;
-#  count:=1;
-#  tmp:=0;
+#  count:=Length(digraph);
 #  
 #  #
 #  dfs:=function(graph, v)
 #    local w;
-#
-#    marked[v]:=true;
-#    preorder[v]:=pre;
-#    pre:=pre+1;
 #    len1:=len1+1;
 #    len2:=len2+1;
-#    stack1[len1]:=v;
-#    stack2[len2]:=v;
-#    tmp:=tmp+1; 
+#    stack1[len1]:=v;    # all vertices visited in one run 
+#    stack2[len2]:=len1; # strictly weakly visited vertices (i.e. 1-way only)
+#    
+#    id[v]:=len1;
+#
+#    #Print("v=", v, "\n");
+#    #Print("stack1=", stack1{[1..len1]}, "\n");
+#    #Print("stack2=", stack2{[1..len2]}, "\n");
+#    #Print("id=", id, "\n");
+#
 #    for w in digraph[v] do 
-#      if not marked[w] then 
+#      if id[w]=0 then 
+#        #Print("dfs on ", w, " from ", v, "\n\n");
 #        dfs(digraph, w);
-#      elif id[w]=0 then 
-#        while preorder[stack2[len2]] > preorder[w] do
+#      else # we saw <w> earlier in this run
+#        while stack2[len2] > id[w] do
 #          len2:=len2-1; # pop from stack2
 #        od;
+#        #Print("v=", v, "\n");
+#        #Print("id[", w, "]<>0\n");
+#        #Print("stack1=", stack1{[1..len1]}, "\n");
+#        #Print("stack2=", stack2{[1..len2]}, "\n");
 #      fi;
 #    od;
 #
-#    if stack2[len2]=v then
+#    if stack2[len2]=id[v] then
 #      len2:=len2-1;
+#      count:=count+1;
 #      repeat
 #        w:=stack1[len1];
 #        id[w]:=count;
 #        len1:=len1-1; #pop from stack1
 #      until w=v;
-#      count:=count+1;
+#      #Print("v=", v, "\n");
+#      #Print("stack2[len2]=", v, "\n");
+#      #Print("stack1=", stack1{[1..len1]}, "\n");
+#      #Print("stack2=", stack2{[1..len2]}, "\n");
+#      #Print("id=", id);
+#
 #    fi;
-#    #Print(id, "\n");
+#    #Print("\n");
 #  end;
 #  #
 #
 #  for v in [1..Length(digraph)] do 
-#    if not marked[v] then 
+#    if id[v]=0 then 
 #      dfs(digraph, v);
 #    fi;
 #  od;
 #
-#  return rec(id:=id, preorder:=preorder, count:=count);
-#  #return tmp;
-#end);
-#
+#  return rec(id:=id-Length(digraph), count:=count-Length(digraph));
+#end;
+
 #GabowDClasses:=function(left, scc)   
 #  local stack1, len1, stack2, len2, marked, preorder, id, pre, count, nr, sccid, did, dfs, v;
 #
