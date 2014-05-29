@@ -172,7 +172,7 @@ if not IsBound(FIND_HCLASSES) then
 
     hindex:=0;            # current H-class index
     rindex:=0;            # current R-class index
-    id:=[1..len]*0;       # id component for H-class data structure
+    id:=EmptyPlist(len);  # id component for H-class data structure
     comps:=[];
     lookup:=[1..Length(left.comps)]*0; 
     # H-class corresponding to L-class in the current R-class <now>

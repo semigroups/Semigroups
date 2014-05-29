@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-#W  generic-lib.gi
+#W  generic.gi
 #Y  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -43,7 +43,8 @@ function(S)
   return Length(GreensHClasses(SEEData(S)).comps);
 end);
 
-#JDM: this doesn't yet work...
+#JDM: this doesn't yet work properly, and returns an error for transformation
+#semigroups
 
 InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
