@@ -16,7 +16,7 @@
 InstallMethod(NrRClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(SCCRightCayleyGraph(SEEData(S)).comps);
+  return Length(GreensRClasses(SEEData(S)).comps);
 end);
 
 #
@@ -24,7 +24,7 @@ end);
 InstallMethod(NrLClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(SCCLeftCayleyGraph(SEEData(S)).comps);
+  return Length(GreensLClasses(SEEData(S)).comps);
 end);
 
 #
@@ -32,7 +32,15 @@ end);
 InstallMethod(NrDClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(SCCLeftRightCayleyGraph(SEEData(S)).comps);
+  return Length(GreensDClasses(SEEData(S)).comps);
+end);
+
+#
+
+InstallMethod(NrHClasses, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  return Length(GreensHClasses(SEEData(S)).comps);
 end);
 
 #JDM: this doesn't yet work...
@@ -42,66 +50,10 @@ InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
 function(S)
   local data, scc;
   data:=Enumerate(SEEData(S));
-  scc:=SCCRightCayleyGraph(data);
+  scc:=GreensRClasses(data);
   return SemigroupIdeal(S, data!.elts[scc.comps[1][1]]);
 end);
 
-# JDM: this should be a c method...
-
-InstallMethod(NrHClasses, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  local data, right, rightid, left, leftid, comps, nextpos, len, sorted, hindex, rindex, id, lookup, j, init, i;
-  
-  data:=Enumerate(SEEData(S));
-  right:=SCCRightCayleyGraph(data);
-  rightid:=right.id;
-  left:=SCCLeftCayleyGraph(data);
-  leftid:=left.id;
-
-  comps:=right.comps;
-  nextpos:=EmptyPlist(Length(comps));
-  nextpos[1]:=1;
-  for i in [2..Length(comps)] do 
-    nextpos[i]:=nextpos[i-1]+Length(comps[i-1]);
-  od;
-
-  # List(sorted, i-> right.id[i])= right.id sorted
-  len:=Length(data!.elts);
-  sorted:=EmptyPlist(len);
-  for i in [1..len] do 
-    sorted[nextpos[rightid[i]]]:=i;
-    nextpos[rightid[i]]:=nextpos[rightid[i]]+1;
-  od;
-
-  hindex:=0;            # current H-class index
-  rindex:=0;            # current R-class index
-  id:=[1..len]*0;       # id component for H-class data structure
-  comps:=[];
-  lookup:=[1..Length(left.comps)]*0; 
-  # H-class corresponding to L-class in the current R-class <now>
-
-  # browse the L-class table...
-  for i in [1..len] do
-    j:=sorted[i];
-    if rightid[j]>rindex then # new R-class
-      rindex:=rightid[j]; 
-      init:=hindex; 
-      # H-class indices for elements of R-class <rindex> start at <init+1>
-    fi;
-    if lookup[leftid[j]]<=init then 
-      # we have a new H-class, otherwise, this is an existing H-class in the 
-      # current R-class.
-      hindex:=hindex+1;           
-      lookup[leftid[j]]:=hindex;
-      comps[hindex]:=[];
-    fi;
-    id[j]:=lookup[leftid[j]];
-    Add(comps[lookup[leftid[j]]], j);
-  od;
-
-  return rec(id:=id, comps:=comps);
-end);
 
 # Methods for things declared in the GAP library
 

@@ -17,9 +17,12 @@ DeclareOperation("Enumerate", [IsSEEData]);
 DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic]);
 DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic, IsFunction]);
 
-DeclareGlobalFunction("SCCRightCayleyGraph", IsSEEData);
-DeclareGlobalFunction("SCCLeftCayleyGraph", IsSEEData);
-DeclareGlobalFunction("SCCLeftRightCayleyGraph", IsSEEData);
+# we use the attribute GreensXClasses to store the data structure for the sccs
+# corresponding to Green's X-classes in the SEE data
+DeclareAttribute("GreensHClasses", IsSEEData);
+DeclareAttribute("GreensRClasses", IsSEEData);
+DeclareAttribute("GreensLClasses", IsSEEData);
+DeclareAttribute("GreensDClasses", IsSEEData);
 
 DeclareGlobalFunction("ClosureNonActingSemigroupNC");
 # AddGeneratorsToSemigroup...

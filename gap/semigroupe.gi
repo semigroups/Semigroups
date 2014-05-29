@@ -163,7 +163,7 @@ if not IsBound(FIND_HCLASSES) then
     od;
 
     # List(sorted, i-> right.id[i])= right.id sorted
-    len:=Length(data!.elts);
+    len:=Length(rightid);
     sorted:=EmptyPlist(len);
     for i in [1..len] do 
       sorted[nextpos[rightid[i]]]:=i;
@@ -201,40 +201,27 @@ if not IsBound(FIND_HCLASSES) then
 fi;
 
 # the following functions can be used to access/create the scc data structure
-# for R-, L-, D-, and H-classes. These are not attributes so that the SEE data
-# record contains all the information about the semigroup.
+# for R-, L-, D-, and H-classes.
 
-InstallGlobalFunction(SEEDataHClasses, 
+InstallMethod(GreensHClasses, "for SEE data", [IsSEEData], 
 function(data)
-  if not IsBound(data!.hclasses) then 
-    data!.hclasses=FIND_HCLASSES(SCCRightCayleyGraph(data), SCCLeftCayleyGraph(data));
-  fi;
-  return data!.hclasses;
+  return FIND_HCLASSES(GreensRClasses(data), GreensLClasses(data));
 end);
 
-InstallGlobalFunction(SCCRightCayleyGraph,
+InstallMethod(GreensLClasses, "for SEE data", [IsSEEData], 
 function(data)
-  if not IsBound(data!.rightscc) then 
-    data!.rightscc:=GABOW_SCC(Enumerate(data)!.right);
-  fi;
-  return data!.rightscc;
+  return GABOW_SCC(Enumerate(data)!.left);
 end);
 
-InstallGlobalFunction(SCCLeftCayleyGraph, 
+InstallMethod(GreensRClasses, "for SEE data", [IsSEEData], 
 function(data)
-  if not IsBound(data!.leftscc) then 
-    data!.leftscc:=GABOW_SCC(Enumerate(data)!.left);
-  fi;
-  return data!.leftscc;
+  return GABOW_SCC(Enumerate(data)!.right);
 end);
 
-InstallGlobalFunction(SCCLeftRightCayleyGraph, 
+InstallMethod(GreensDClasses, "for SEE data", [IsSEEData], 
 function(data)
-  if not IsBound(data!.leftrightscc) then 
-    data!.leftrightscc:=SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(SCCRightCayleyGraph(data),
-     SCCLeftCayleyGraph(data));
-  fi;
-  return data!.leftrightscc;
+  return SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRClasses(data),
+    GreensLClasses(data));
 end);
 
 #
@@ -243,12 +230,6 @@ InstallMethod(SEEData, "for a finite semigroup with generators",
 [IsFinite and IsSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
   local data, nr, val, i;
-
-  # JDM: add a test to see if the elements of S are hashable, in the sense that
-  # the value returned by ChooseHashFunction(S.1).func is not
-  # ORB_HashFunctionReturn1. If it turns out that the version of this algorithm
-  # which uses sets (to be implemented in the library) rather than hash tables
-  # is faster in this case, then we should use that method instead. 
 
   data:=rec( elts := [  ], final := [  ], first := [  ], found := false, 
     genslookup := [  ], ind := 1, left := [  ], len := 1, nrrules := 0, 
@@ -323,7 +304,8 @@ function(S)
   
   data.nr:=nr;
 
-  return Objectify(NewType(FamilyObj(S), IsSEEData and IsMutable), data);
+  return Objectify(NewType(FamilyObj(S), IsSEEData and IsMutable and
+   IsAttributeStoringRep), data);
 end);
 
 # the main algorithm
