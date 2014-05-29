@@ -50,10 +50,10 @@ end);
 # IsActingSemigroupWithInverseOp
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup and IsActingSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup and IsActingSemigroup);
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-IsPartialPermBipartitionSemigroup);
+IsPartialPermBipartitionSemigroup and IsActingSemigroup);
 
 #InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
 
