@@ -232,15 +232,14 @@ function(S)
   local data, nr, val, i;
 
   data:=rec( elts := [  ], final := [  ], first := [  ], found := false, 
-    genslookup := [  ], ind := 1, left := [  ], len := 1, nrrules := 0, 
-    nrwordsoflen := [  ], prefix := [  ], reduced := [ [  ] ], right := [  ], 
-    rules := [  ], stopper := false, suffix := [  ], words := [  ], 
-    wordsoflen := [  ] );
+    genslookup := [  ], left := [  ], len := 1, lenindex := [  ], 
+    nrrules := 0, prefix := [  ], reduced := [ [  ] ], right := [  ], 
+    rules := [  ], stopper := false, suffix := [  ], words := [  ] );
 
   if IsMonoid(S) then 
     data.gens:=ShallowCopy(GeneratorsOfMonoid(S));
     data.ht:=HTCreate(One(S), rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
-    data.nr:=1; 
+    nr:=1; 
     HTAdd(data.ht, One(S), 1); 
     data.elts[1]:=One(S);
     data.words[1]:=[];   
@@ -250,28 +249,20 @@ function(S)
     data.suffix[1]:=0;
     data.reduced[1]:=BlistList([1..Length(data.gens)], [1..Length(data.gens)]);
     data.one:=1;
-    data.pos:=1; # we don't apply generators to the One(S)
+    data.pos:=2; # we don't apply generators to the One(S)
     data.left[1]:=data.genslookup;    
     data.right[1]:=data.genslookup;
+    data.lenindex[1]:=2;
   else
     data.gens:=ShallowCopy(GeneratorsOfSemigroup(S));
     data.ht:=HTCreate(data.gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
-    data.nr:=0;
+    nr:=0;
     data.one:=false;
-    data.pos:=0;
+    data.pos:=1;
+    data.lenindex[1]:=1;
   fi;
 
   data.genstoapply:=[1..Length(data.gens)];
-
-  if Length(data.gens)<>0 then 
-    data.maxwordlen:=1;
-    data.wordsoflen[1]:=[];
-    data.nrwordsoflen[1]:=0;
-  else 
-    data.maxwordlen:=0;
-  fi;
-  
-  nr:=data.nr;
 
   # add the generators 
   for i in data.genstoapply do 
@@ -289,8 +280,6 @@ function(S)
       data.right[nr]:=[];
       data.genslookup[i]:=nr;
       data.reduced[nr]:=BlistList(data.genstoapply, []);
-      data.nrwordsoflen[1]:=data.nrwordsoflen[1]+1;
-      data.wordsoflen[1][data.nrwordsoflen[1]]:=nr;
       
       if data.one=false and ForAll(data.gens, y-> data.gens[i]*y=y and y*data.gens[i]=y) then 
         data.one:=nr;
@@ -328,7 +317,7 @@ end);
 InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
 [IsSEEData, IsCyclotomic, IsFunction], 
 function(data, limit, lookfunc)
-  local looking, found, len, maxwordlen, nr, elts, gens, genstoapply, genslookup, one, right, left, first, final, prefix, suffix, reduced, words, stopper, ht, rules, nrrules, wordsoflen, nrwordsoflen, pos, i, htadd, htvalue, lentoapply, b, s, r, new, newword, val, p, ind, j, k;
+  local looking, found, i, nr, len, elts, gens, genstoapply, genslookup, one, right, left, first, final, prefix, suffix, reduced, words, stopper, ht, rules, nrrules, lenindex, htadd, htvalue, stop, lentoapply, b, s, r, new, newword, val, p, j, k;
   
   if lookfunc<>ReturnFalse then 
     looking:=true;              # only applied to new elements, not old ones!!!
@@ -339,13 +328,10 @@ function(data, limit, lookfunc)
   
   found:=false; 
   
-  len:=data!.len;                   # current word length
-  maxwordlen:=data!.maxwordlen;     # the maximum length of a word so far
-  pos:=data!.pos;                   # number of points to which generators have been   
-                                    # applied, this is needed in ClosureSemigroup
-  nr:=data!.nr;                     # nr=Length(elts);
+  i:=data!.pos;                     # current position we are about to apply gens to ...
+  nr:=data!.nr;                     # number of elements found so far...
  
-  if pos=nr then
+  if i>nr then
     SetFilterObj(data, IsClosedSEEData);
     if looking then 
       data!.found:=false;
@@ -353,6 +339,7 @@ function(data, limit, lookfunc)
     return data;
   fi;
   
+  len:=data!.len;                   # current word length
   elts:=data!.elts;                 # the so far enumerated elements
   gens:=data!.gens;                 # the generators
   genstoapply:=data!.genstoapply;   # list of indices of generators to apply in inner loop
@@ -372,14 +359,9 @@ function(data, limit, lookfunc)
   ht:=data!.ht;                     # HTValue(ht, x)=Position(elts, x)
   rules:=data!.rules;               # the relations
   nrrules:=data!.nrrules;           # Length(rules)
-  wordsoflen:=data!.wordsoflen;     # wordsoflen[len]=list of positions in <words>
-                                    # of length <len>
-  nrwordsoflen:=data!.nrwordsoflen; # nrwordsoflen[len]=Length(wordsoflen[len]);
+  lenindex:=data!.lenindex;         # lenindex[len]=position in <words> and <elts> of
+                                    # first element of length <len>
 
-  ind:=data!.ind;                   # index in wordsoflen[len]
-  i:=wordsoflen[len][ind];          # the position in the orbit we are about to
-                                    # apply generators to 
-  
   if IsBoundGlobal("ORBC") then 
     htadd:=HTAdd_TreeHash_C;
     htvalue:=HTValue_TreeHash_C;
@@ -387,15 +369,13 @@ function(data, limit, lookfunc)
     htadd:=HTAdd;
     htvalue:=HTValue;
   fi;
-  
-  while nr<=limit and len<=maxwordlen do 
-    lentoapply:=[1..len];
-    while nr<=limit and len<=maxwordlen and i<>stopper and not (looking and found) then 
-    for k in [ind..nrwordsoflen[len]] do 
-      pos:=pos+1;
-      i:=wordsoflen[len][k];
-      b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
 
+  stop:=false;
+  
+  while i<=nr do 
+    lentoapply:=[1..len];
+    while i<=nr and Length(words[i])=len and not stop do 
+      b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
       for j in genstoapply do # consider <elts[i]*gens[j]>
         if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
           r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
@@ -446,14 +426,6 @@ function(data, limit, lookfunc)
             left[nr]:=[];         right[i][j]:=nr;      
             reduced[i][j]:=true;  reduced[nr]:=BlistList(genstoapply, []);
             
-            if not IsBound(wordsoflen[len+1]) then 
-              maxwordlen:=len+1;
-              wordsoflen[len+1]:=[];
-              nrwordsoflen[len+1]:=0;
-            fi;
-            nrwordsoflen[len+1]:=nrwordsoflen[len+1]+1;
-            wordsoflen[len+1][nrwordsoflen[len+1]]:=nr;
-            
             if looking and not found then
               if lookfunc(data, nr) then
                 found:=true;
@@ -463,14 +435,15 @@ function(data, limit, lookfunc)
           fi;
         fi;
       od; # finished applying gens to <elts[i]>
-
+      i:=i+1;
+      stop:=(nr>=limit or i=stopper or (looking and found));
     od; # finished words of length <len> or <looking and found>
-    if nr>=limit or i=stopper or (looking and found) then 
+    if stop then 
       break;
     fi;
     # process words of length <len> into <left>
     if len>1 then 
-      for j in wordsoflen[len] do # loop over all words of length <len-1>
+      for j in [lenindex[len]..i-1] do # loop over all words of length <len-1>
         p:=prefix[j]; b:=final[j];
         for k in genstoapply do 
           left[j][k]:=right[left[p][k]][b];
@@ -478,31 +451,26 @@ function(data, limit, lookfunc)
         od;
       od;
     elif len=1 then 
-      for j in wordsoflen[len] do  # loop over all words of length <1>
+      for j in [lenindex[len]..i-1] do  # loop over all words of length <1>
         b:=final[j];
         for k in genstoapply do 
-          left[j][k]:=right[genslookup[k]][b];
+          left[j][k]:=right[k][b];
           # gens[k]*elts[j]=gens[k]*gens[b]
         od;
       od;
     fi;
     len:=len+1;
-    ind:=1;
-    k:=0;
+    lenindex[len]:=i;    
   od;
   
   data!.nr:=nr;    
   data!.nrrules:=nrrules;
   data!.one:=one;  
-  data!.pos:=pos;
-  data!.ind:=k+1; 
-  data!.maxwordlen:=maxwordlen;
+  data!.pos:=i;
+  data!.len:=len;
 
-  if len>maxwordlen then
-    data!.len:=maxwordlen;
+  if i>nr then
     SetFilterObj(data, IsClosedSEEData);
-  else 
-    data!.len:=len;
   fi;
 
   return data;
@@ -562,7 +530,7 @@ function(data)
 
   Print("semigroup data with ", Length(data!.elts), " elements, ");
   Print(Length(data!.rules), " relations, ");
-  Print("max word length ", data!.maxwordlen, ">");
+  Print("max word length ", Length(data!.words[data!.nr]), ">");
   return;
 end);
 
@@ -572,10 +540,9 @@ InstallMethod(PrintObj, [IsSEEData], 2, # to beat the method for an enumerator!
 function(data)
   local recnames, com, i, nam;
   
-  recnames:=[ "elts", "final", "first", "found", "gens", "genslookup", "genstoapply", 
-  "ht", "left", "len", "wordsoflen", "maxwordlen", "nr", "nrrules", "one",
-  "pos", "prefix", "reduced", "right", "rules", "stopper", "suffix", "words",
-  "nrwordsoflen", "ind"];
+  recnames:=[ "elts", "final", "first", "found", "gens", "genslookup",
+    "genstoapply", "ht", "left", "len", "lenindex", "nr", "nrrules", "one", "pos",
+    "prefix", "reduced", "right", "rules", "stopper", "suffix", "words"];
   
   for nam in ["leftscc", "rightscc", "leftrightscc", "hclasses", "idempotents"] do 
     if IsBound(data!.(nam)) then 
