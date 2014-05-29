@@ -91,22 +91,20 @@ fi;
 # and <digraph2> with strongly connected components <scc1> and <scc2> (as output
 # by GABOW_SCC). 
 
-if not IsBound(SCC_UNION_DIGRAPHS) then
-  BindGlobal("SCC_UNION_DIGRAPHS", 
+if not IsBound(SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS) then
+  BindGlobal("SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS", 
   function(scc1, scc2)  
-    local id1, comps1, id2, comps2, id, comps, nr, seen, tst, comp, i, j;
+    local id1, comps1, id2, comps2, id, comps, nr, seen, comp, i, j;
 
-    id1:=scc1.id;
     comps1:=scc1.comps;
     id2:=scc2.id;
     comps2:=scc2.comps;
 
-    id:=[1..Length(id1)]*0;
+    id:=[1..Length(scc1.id)]*0;
     comps:=[];
     nr:=0;
     
     seen:=BlistList([1..Length(comps2)], []);
-    tst:=0;
 
     for comp in comps1 do 
       if id[comp[1]]=0 then 
@@ -116,7 +114,6 @@ if not IsBound(SCC_UNION_DIGRAPHS) then
           if not seen[id2[i]] then 
             seen[id2[i]]:=true;
             for j in comps2[id2[i]] do 
-              tst:=tst+1;
               id[j]:=nr;
               Add(comps[nr], j);
             od;
@@ -131,7 +128,7 @@ if not IsBound(SCC_UNION_DIGRAPHS) then
     ShrinkAllocationPlist(id);
     MakeImmutable(id);
 
-    return rec(comps:=comps, id:=id, tst:=tst);
+    return rec(comps:=comps, id:=id);
   end);
 fi;
 

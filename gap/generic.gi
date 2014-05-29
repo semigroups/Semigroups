@@ -16,7 +16,7 @@
 InstallMethod(NrRClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(SCCOfRightCayleyGraph(SEEData(S)).comps);
+  return Length(SCCRightCayleyGraph(SEEData(S)).comps);
 end);
 
 #
@@ -24,7 +24,7 @@ end);
 InstallMethod(NrLClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(SCCOfLeftCayleyGraph(SEEData(S)).comps);
+  return Length(SCCLeftCayleyGraph(SEEData(S)).comps);
 end);
 
 #
@@ -32,7 +32,7 @@ end);
 InstallMethod(NrDClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(SCCOfLeftRightCayleyGraph(SEEData(S)).comps);
+  return Length(SCCLeftRightCayleyGraph(SEEData(S)).comps);
 end);
 
 #JDM: this doesn't yet work...
@@ -42,7 +42,7 @@ InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
 function(S)
   local data, scc;
   data:=Enumerate(SEEData(S));
-  scc:=SCCOfRightCayleyGraph(data);
+  scc:=SCCRightCayleyGraph(data);
   return SemigroupIdeal(S, data!.elts[scc.comps[1][1]]);
 end);
 

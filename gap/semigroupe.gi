@@ -16,7 +16,7 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-InstallGlobalFunction(SCCOfRightCayleyGraph,
+InstallGlobalFunction(SCCRightCayleyGraph,
 function(data)
   if not IsBound(data!.rightscc) then 
     data!.rightscc:=GABOW_SCC(Enumerate(data)!.right);
@@ -24,7 +24,7 @@ function(data)
   return data!.rightscc;
 end);
 
-InstallGlobalFunction(SCCOfLeftCayleyGraph, 
+InstallGlobalFunction(SCCLeftCayleyGraph, 
 function(data)
   if not IsBound(data!.leftscc) then 
     data!.leftscc:=GABOW_SCC(Enumerate(data)!.left);
@@ -32,11 +32,11 @@ function(data)
   return data!.leftscc;
 end);
 
-InstallGlobalFunction(SCCOfLeftRightCayleyGraph, 
+InstallGlobalFunction(SCCLeftRightCayleyGraph, 
 function(data)
   if not IsBound(data!.leftrighscc) then 
-    data!.leftrightscc:=SCC_UNION_DIGRAPHS(SCCOfRightCayleyGraph(data),
-     SCCOfLeftCayleyGraph(data));
+    data!.leftrightscc:=SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(SCCRightCayleyGraph(data),
+     SCCLeftCayleyGraph(data));
   fi;
   return data!.leftrightscc;
 end);

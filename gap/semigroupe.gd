@@ -17,9 +17,9 @@ DeclareOperation("Enumerate", [IsSEEData]);
 DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic]);
 DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic, IsFunction]);
 
-DeclareGlobalFunction("SCCOfRightCayleyGraph", IsSEEData);
-DeclareGlobalFunction("SCCOfLeftCayleyGraph", IsSEEData);
-DeclareGlobalFunction("SCCOfLeftRightCayleyGraph", IsSEEData);
+DeclareGlobalFunction("SCCRightCayleyGraph", IsSEEData);
+DeclareGlobalFunction("SCCLeftCayleyGraph", IsSEEData);
+DeclareGlobalFunction("SCCLeftRightCayleyGraph", IsSEEData);
 
 DeclareGlobalFunction("ClosureNonActingSemigroupNC");
 # AddGeneratorsToSemigroup...
