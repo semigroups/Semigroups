@@ -222,7 +222,7 @@ function(gens, opts)
       n:=Length(gens);
       for i in [2..n] do
         if not gens[i] in s then
-          s:=ClosureActingSemigroupNC(s, [gens[i]], closure_opts);
+          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far\r");
@@ -231,7 +231,7 @@ function(gens, opts)
     else
       for f in gens do
         if not f in s then
-          s:=ClosureActingSemigroupNC(s, [f], closure_opts);
+          s:=ClosureSemigroupNC(s, [f], closure_opts);
         fi;
       od;
     fi;
@@ -312,7 +312,7 @@ function(gens, record)
       n:=Length(gens);
       for i in [1..n] do
         if not gens[i] in s then 
-          s:=ClosureActingSemigroupNC(s, [gens[i]], closure_opts);
+          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far");
@@ -321,7 +321,7 @@ function(gens, record)
     else
       for f in gens do
         if not f in s then 
-          s:=ClosureActingSemigroupNC(s, [f], closure_opts);
+          s:=ClosureSemigroupNC(s, [f], closure_opts);
         fi;
       od;
     fi;
@@ -602,15 +602,17 @@ end);
 
 #
 
-InstallMethod(ClosureSemigroup, "for a semigroup and associative element",
-[IsSemigroup, IsAssociativeElement],
+InstallMethod(ClosureSemigroup, 
+"for an acting semigroup and associative element",
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
-  return ClosureSemigroup(s, [f]);
+  return ClosureSemigroup(s, [f], s!.opts);
 end);
 
 #
 
-InstallMethod(ClosureSemigroup, "for an acting semigroup, associative element, and record",
+InstallMethod(ClosureSemigroup, 
+"for an acting semigroup, associative element, and record",
 [IsActingSemigroup, IsAssociativeElement, IsRecord],
 function(s, f, record)
   return ClosureSemigroup(s, [f], SemigroupOptions(record));
@@ -650,7 +652,7 @@ function(s, coll, record)
     return;
   fi;
 
-  return ClosureActingSemigroupNC(s, Filtered(coll, x-> not x in s),
+  return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s),
    SemigroupOptions(record));
 end);
 
@@ -701,7 +703,7 @@ end);
 
 # coll should consist of elements not in s
 
-InstallGlobalFunction(ClosureActingSemigroupNC,
+InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
   local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup, rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new, htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old, n, j;
  

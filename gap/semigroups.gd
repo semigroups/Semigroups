@@ -43,14 +43,15 @@ DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
-DeclareOperation("ClosureSemigroup",[IsSemigroup, IsAssociativeElement]);
-DeclareOperation("ClosureSemigroup", [IsSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureSemigroup", 
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
+DeclareOperation("ClosureSemigroup", 
+[IsActingSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElement, IsRecord]);
-
-DeclareGlobalFunction("ClosureActingSemigroupNC");
+DeclareOperation("ClosureSemigroup",
+[IsActingSemigroup, IsAssociativeElement]);
+DeclareGlobalFunction("ClosureSemigroupNC");
 
 DeclareGlobalFunction("ChangeDegreeOfTransformationSemigroupOrb");
 
