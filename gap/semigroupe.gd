@@ -24,5 +24,3 @@ DeclareAttribute("GreensRClasses", IsSEEData);
 DeclareAttribute("GreensLClasses", IsSEEData);
 DeclareAttribute("GreensDClasses", IsSEEData);
 
-DeclareGlobalFunction("ClosureNonActingSemigroupNC");
-# AddGeneratorsToSemigroup...
