@@ -300,18 +300,61 @@ end);
 
 #############################################################################
 ##
-#M  MatrixSemigroup( )
+#M  MatrixSemigroup(gens, [F, n] )
 ##
-
+#############################################################################
+##
+## This is the kitchen-sink matrix semigroup creation tool
+##
+## This needs more/better checking since GAP does not have any means
+## of determining _whether there is_ a common scalar domain for
+## a list of matrices for example, it just complains with a 
+## "no method found" error if handed a list of matrices over different
+## incompatible domains.
+##
 InstallGlobalFunction(MatrixSemigroup,
 function(arg)
-    local gens;
+    local gens, field, n, ListOfGens, ListOfGensAndField;
     
-    if Length(arg) = 1 then # List of generators
-    elif Length(arg) = 2 then
-    elif Length(arg) = 3 then
+    if Length(arg) > 0 then
+        if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then # Just the generators
+            gens := arg;
+        elif Length(arg) = 1 then # List of generators
+            gens := arg[1];
+        elif Length(arg) = 2 then # List of generators, field
+            gens := arg[1];
+            field := arg[2];
+        elif Length(arg) = 3 then # List of generators, field, matrix dimensions 
+            gens := arg[1];
+            field := arg[2];
+            n := arg[3];
+        else                      # just the generators
+            Error("usage: MatrixSemigroup(gens [, F, n])");
+        fi;
     else
+        Error("usage: MatrixSemigroup(gens [, F, n])");
     fi;
+    
+    if Length(gens) = 0 then
+        Error("empty generating sets are not supported");
+    fi;
+    
+    if (not IsFFECollCollColl(gens)) or 
+       (not IsHomogeneousList(gens)) then
+        Error("only matrices over finite fields are supported as generating sets");
+    fi;
+    
+    if not IsBound(field) then
+        field := DefaultScalarDomainOfMatrixList(gens);
+    fi;
+    
+    if not IsBound(n) then
+        n := Length(gens[1]);
+    fi;
+    
+    gens := List(gens, x -> NewMatrix(IsPlistMatrixRep, field, n, x));
+
+    return Semigroup(gens);
 end);
 
 
