@@ -390,6 +390,7 @@ function(data, limit, lookfunc)
   
   while nr<=limit and len<=maxwordlen do 
     lentoapply:=[1..len];
+    while nr<=limit and len<=maxwordlen and i<>stopper and not (looking and found) then 
     for k in [ind..nrwordsoflen[len]] do 
       pos:=pos+1;
       i:=wordsoflen[len][k];
@@ -403,15 +404,6 @@ function(data, limit, lookfunc)
             # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             reduced[i][j]:=false;
-            #if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
-            #  reduced[i][j]:=true;
-            #  for k in lentoapply do 
-            #    if words[i][k]<>words[right[i][j]][k] then 
-            #      reduced[i][j]:=false;
-            #      break;
-            #    fi;
-            #  od;
-            #fi;
           elif r=one then               # <elts[r]> is the identity
             right[i][j]:=genslookup[b]; 
             reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
@@ -420,16 +412,6 @@ function(data, limit, lookfunc)
             # elts[i]*gens[j]=gens[b]*gens[final[r]];
             # reduced[i][j]=([words[i],j]=words[right[i][j]])
             reduced[i][j]:=false;
-            #if len+1=Length(words[right[i][j]]) and j=words[right[i][j]][len+1] then 
-            #  reduced[i][j]:=true;
-            #  for k in lentoapply do 
-            #    if words[i][k]<>words[right[i][j]][k] then 
-            #      reduced[i][j]:=false;
-            #      break;
-            #    fi;
-            #  od;
-            #fi;
-             
           fi;
         else # <elts[s]*gens[j]> is reduced
           new:=elts[i]*gens[j];
@@ -481,11 +463,9 @@ function(data, limit, lookfunc)
           fi;
         fi;
       od; # finished applying gens to <elts[i]>
-      if i=stopper or (looking and found) then 
-        break;
-      fi;
+
     od; # finished words of length <len> or <looking and found>
-    if i=stopper or (looking and found) then 
+    if nr>=limit or i=stopper or (looking and found) then 
       break;
     fi;
     # process words of length <len> into <left>
@@ -588,7 +568,7 @@ end);
 
 #
 
-InstallMethod(PrintObj, [IsSEEData], 
+InstallMethod(PrintObj, [IsSEEData], 2, # to beat the method for an enumerator!
 function(data)
   local recnames, com, i, nam;
   

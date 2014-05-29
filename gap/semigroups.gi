@@ -447,7 +447,6 @@ InstallMethod(InverseSemigroupByGenerators,
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local n, closure_opts, s, filts, pos, f;
-
   if not IsGeneratorsOfActingSemigroup(gens) then 
     TryNextMethod();
   fi;
