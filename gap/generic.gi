@@ -51,65 +51,56 @@ end);
 InstallMethod(NrHClasses, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  local data, nr, rid, rnr, count, sorted, lid, lnr, hid, hlookup, now, hindex, j, cur, i;
+  local data, right, rightid, left, leftid, comps, nextpos, len, sorted, hindex, rindex, id, lookup, j, init, i;
   
   data:=Enumerate(SEEData(S));
-  
-  if not IsBound(data!.rightscc) then 
-    data!.rightscc:=GABOW_SCC(data!.right);
-  fi;
-  if not IsBound(data!.leftscc) then 
-    data!.leftscc:=GABOW_SCC_DCLASSES(data!.left, data!.rightscc);
-  fi;
+  right:=SCCRightCayleyGraph(data);
+  rightid:=right.id;
+  left:=SCCLeftCayleyGraph(data);
+  leftid:=left.id;
 
-  nr:=Length(data!.elts);
-  rid:=data!.rightscc.id;      # lookup for index of R-class containing <elts[i]>
-  rnr:=data!.rightscc.count;   # number of R-classes
-  count:=[1..rnr+1]*0;   
-  count[1]:=1;
-
-  # count the number of elements in each R-class
-  for i in [1..nr] do 
-    count[rid[i]+1]:=count[rid[i]+1]+1;
-  od;
-  # count[rid[i]] is the next available position to contain an element of R-class
-  # with index rid[i]. 
-  for i in [2..rnr] do 
-    count[i]:=count[i-1]+count[i];
-  od;
-  
-  # List(sorted, i-> rid[i])= rid sorted, without the last element...
-  sorted:=EmptyPlist(nr);
-  for i in [1..nr] do 
-    sorted[count[rid[i]]]:=i;
-    count[rid[i]]:=count[rid[i]]+1;
+  comps:=right.comps;
+  nextpos:=EmptyPlist(Length(comps));
+  nextpos[1]:=1;
+  for i in [2..Length(comps)] do 
+    nextpos[i]:=nextpos[i-1]+Length(comps[i-1]);
   od;
 
-  lid:=data!.leftscc.id; # lookup for L-class indices
-  hid:=[1..nr]*0;       # lookup for H-class indices
-  now:=0;               # current R-class 
+  # List(sorted, i-> right.id[i])= right.id sorted
+  len:=Length(data!.elts);
+  sorted:=EmptyPlist(len);
+  for i in [1..len] do 
+    sorted[nextpos[rightid[i]]]:=i;
+    nextpos[rightid[i]]:=nextpos[rightid[i]]+1;
+  od;
+
   hindex:=0;            # current H-class index
-  hlookup:=[1..data!.leftscc.count]*0; 
+  rindex:=0;            # current R-class index
+  id:=[1..len]*0;       # id component for H-class data structure
+  comps:=[];
+  lookup:=[1..Length(left.comps)]*0; 
   # H-class corresponding to L-class in the current R-class <now>
 
   # browse the L-class table...
-  for i in [1..nr] do
+  for i in [1..len] do
     j:=sorted[i];
-    if rid[j]>now then # new R-class
-      now:=rid[j]; 
-      cur:=hindex; 
-      # H-class indices for elements of R-class <now> start at <cur+1>
+    if rightid[j]>rindex then # new R-class
+      rindex:=rightid[j]; 
+      init:=hindex; 
+      # H-class indices for elements of R-class <rindex> start at <init+1>
     fi;
-    if hlookup[lid[j]]<=cur then 
-      # then we have a new H-class, otherwise, this is an 
-      hindex:=hindex+1;          # existing H-class in the current R-class. 
-      hlookup[lid[j]]:=hindex;
+    if lookup[leftid[j]]<=init then 
+      # we have a new H-class, otherwise, this is an existing H-class in the 
+      # current R-class.
+      hindex:=hindex+1;           
+      lookup[leftid[j]]:=hindex;
+      comps[hindex]:=[];
     fi;
-    hid[j]:=hlookup[lid[j]];
+    id[j]:=lookup[leftid[j]];
+    Add(comps[lookup[leftid[j]]], j);
   od;
-  data!.hid:=hid;
 
-  return hindex;
+  return rec(id:=id, comps:=comps);
 end);
 
 # Methods for things declared in the GAP library
