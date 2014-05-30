@@ -229,16 +229,23 @@ end);
 InstallMethod(SEEData, "for a finite semigroup with generators",
 [IsFinite and IsSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
-  local data, nr, val, i;
+  local data, hashlen, nrgens, nr, val, i;
 
   data:=rec( elts := [  ], final := [  ], first := [  ], found := false, 
     genslookup := [  ], left := [  ], len := 1, lenindex := [  ], 
     nrrules := 0, prefix := [  ], reduced := [ [  ] ], right := [  ], 
     rules := [  ], stopper := false, suffix := [  ], words := [  ] );
+  
+  if IsBound(S!.opts) then 
+    hashlen:=S!.opts.hashlen.L;
+  else
+    hashlen:=SemigroupsOptionsRec.hashlen.L;
+  fi;
 
   if IsMonoid(S) then 
     data.gens:=ShallowCopy(GeneratorsOfMonoid(S));
-    data.ht:=HTCreate(One(S), rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+    nrgens:=Length(data.gens);
+    data.ht:=HTCreate(One(S), rec(treehashsize:=hashlen));
     nr:=1; 
     HTAdd(data.ht, One(S), 1); 
     data.elts[1]:=One(S);
@@ -247,7 +254,8 @@ function(S)
     data.final[1]:=0;
     data.prefix[1]:=0;   
     data.suffix[1]:=0;
-    data.reduced[1]:=BlistList([1..Length(data.gens)], [1..Length(data.gens)]);
+    #data.reduced[1]:=BlistList([1..nrgens], [1..nrgens]);
+    data.reduced[1]:=List([1..nrgens], ReturnTrue);
     data.one:=1;
     data.pos:=2; # we don't apply generators to the One(S)
     data.left[1]:=data.genslookup;    
@@ -255,14 +263,15 @@ function(S)
     data.lenindex[1]:=2;
   else
     data.gens:=ShallowCopy(GeneratorsOfSemigroup(S));
-    data.ht:=HTCreate(data.gens[1], rec(treehashsize:=SemigroupsOptionsRec.hashlen.L));
+    nrgens:=Length(data.gens);
+    data.ht:=HTCreate(data.gens[1], rec(treehashsize:=hashlen));
     nr:=0;
     data.one:=false;
     data.pos:=1;
     data.lenindex[1]:=1;
   fi;
 
-  data.genstoapply:=[1..Length(data.gens)];
+  data.genstoapply:=[1..nrgens];
 
   # add the generators 
   for i in data.genstoapply do 
@@ -276,10 +285,11 @@ function(S)
       data.final[nr]:=i;
       data.prefix[nr]:=0;   
       data.suffix[nr]:=0;
-      data.left[nr]:=[];    
-      data.right[nr]:=[];
+      data.left[nr]:=EmptyPlist(nrgens);    
+      data.right[nr]:=EmptyPlist(nrgens);
       data.genslookup[i]:=nr;
-      data.reduced[nr]:=BlistList(data.genstoapply, []);
+      data.reduced[nr]:=List([1..nrgens], ReturnFalse);
+      #data.reduced[nr]:=BlistList(data.genstoapply, []);
       
       if data.one=false and ForAll(data.gens, y-> data.gens[i]*y=y and y*data.gens[i]=y) then 
         data.one:=nr;
@@ -314,167 +324,194 @@ end);
 # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
 # <[1..Length(data!.elts)]>.
 
-InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
-[IsSEEData, IsCyclotomic, IsFunction], 
-function(data, limit, lookfunc)
-  local looking, found, i, nr, len, elts, gens, genstoapply, genslookup, one, right, left, first, final, prefix, suffix, reduced, words, stopper, ht, rules, nrrules, lenindex, htadd, htvalue, stop, lentoapply, b, s, r, new, newword, val, p, j, k;
-  
-  if lookfunc<>ReturnFalse then 
-    looking:=true;              # only applied to new elements, not old ones!!!
-    data!.found:=false;         # in case we previously looked for something and found it
-  else
-    looking:=false;
-  fi;
-  
-  found:=false; 
-  
-  i:=data!.pos;                     # current position we are about to apply gens to ...
-  nr:=data!.nr;                     # number of elements found so far...
- 
-  if i>nr then
-    SetFilterObj(data, IsClosedSEEData);
-    if looking then 
-      data!.found:=false;
+if IsBound(ENUMERATE_SEE_DATA) then 
+  InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
+  [IsSEEData, IsCyclotomic, IsFunction], 
+  function(data, limit, lookfunc)
+    
+    data:=ENUMERATE_SEE_DATA(data, limit, lookfunc, lookfunc<>ReturnFalse);
+
+    if data!.pos>data!.nr then
+      SetFilterObj(data, IsClosedSEEData);
     fi;
+
     return data;
-  fi;
-  
-  len:=data!.len;                   # current word length
-  elts:=data!.elts;                 # the so far enumerated elements
-  gens:=data!.gens;                 # the generators
-  genstoapply:=data!.genstoapply;   # list of indices of generators to apply in inner loop
-  genslookup:=data!.genslookup;     # genslookup[i]=Position(elts, gens[i])
+  end);
+else
+
+  InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
+  [IsSEEData, IsCyclotomic, IsFunction], 
+  function(data, limit, lookfunc)
+    local looking, found, i, nr, len, one, stopper, nrrules, elts, gens, nrgens,
+    genstoapply, genslookup, lenindex, first, final, prefix, suffix, words,
+    right, left, reduced, ht, rules, htadd, htvalue, stop, lentoapply, b, s, r,
+    new, newword, val, p, j, k;
+    
+    if lookfunc<>ReturnFalse then 
+      looking:=true;              # only applied to new elements, not old ones!!!
+      data!.found:=false;         # in case we previously looked for something and found it
+    else
+      looking:=false;
+    fi;
+    
+    found:=false; 
+    
+    i:=data!.pos;                     # current position we are about to apply gens to ...
+    nr:=data!.nr;                     # number of elements found so far...
+   
+    if i>nr then
+      SetFilterObj(data, IsClosedSEEData);
+      return data;
+    fi;
+    
+    len:=data!.len;                 # current word length
+    one:=data!.one;                 # <elts[one]> is the mult. neutral element
+    stopper:=data!.stopper;         # stop when we have applied generators to elts[stopper] 
+    nrrules:=data!.nrrules;         # Length(rules)
+    
+    elts:=data!.elts;               # the so far enumerated elements
+    gens:=data!.gens;               # the generators
+    nrgens:=Length(gens);
+    genstoapply:=data!.genstoapply; # list of indices of generators to apply in inner loop
+    genslookup:=data!.genslookup;   # genslookup[i]=Position(elts, gens[i])
                                     # this is not always <i+1>!
-  one:=data!.one;                   # <elts[one]> is the mult. neutral element
-  right:=data!.right;               # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
-  left:=data!.left;                 # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
-  first:=data!.first;               # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
-  final:=data!.final;               # elts[i]=elts[prefix[i]]*gens[final[i]]
-  prefix:=data!.prefix;             # see final, 0 if prefix is empty i.e. elts[i] is a gen
-  suffix:=data!.suffix;             # see first, 0 if suffix is empty i.e. elts[i] is a gen
-  reduced:=data!.reduced;           # words[right[i][j]] is reduced if reduced[i][j]=true
-  words:=data!.words;               # words[i] is a word in the gens equal to elts[i]
-  nr:=data!.nr;                     # nr=Length(elts);
-  stopper:=data!.stopper;           # stop when we have applied generators to elts[stopper] 
-  ht:=data!.ht;                     # HTValue(ht, x)=Position(elts, x)
-  rules:=data!.rules;               # the relations
-  nrrules:=data!.nrrules;           # Length(rules)
-  lenindex:=data!.lenindex;         # lenindex[len]=position in <words> and <elts> of
+    lenindex:=data!.lenindex;       # lenindex[len]=position in <words> and <elts> of
                                     # first element of length <len>
+    first:=data!.first;             # elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
+    final:=data!.final;             # elts[i]=elts[prefix[i]]*gens[final[i]]
+    prefix:=data!.prefix;           # see final, 0 if prefix is empty i.e. elts[i] is a gen
+    suffix:=data!.suffix;           # see first, 0 if suffix is empty i.e. elts[i] is a gen
+    words:=data!.words;             # words[i] is a word in the gens equal to elts[i]
+   
+    right:=data!.right;             # elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
+    left:=data!.left;               # elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
+    reduced:=data!.reduced;         # words[right[i][j]] is reduced if reduced[i][j]=true
+    ht:=data!.ht;                   # HTValue(ht, x)=Position(elts, x)
+    rules:=data!.rules;             # the relations
 
-  if IsBoundGlobal("ORBC") then 
-    htadd:=HTAdd_TreeHash_C;
-    htvalue:=HTValue_TreeHash_C;
-  else
-    htadd:=HTAdd;
-    htvalue:=HTValue;
-  fi;
+    if IsBoundGlobal("ORBC") then 
+      htadd:=HTAdd_TreeHash_C;
+      htvalue:=HTValue_TreeHash_C;
+    else
+      htadd:=HTAdd;
+      htvalue:=HTValue;
+    fi;
 
-  stop:=false;
-  
-  while i<=nr do 
-    lentoapply:=[1..len];
-    while i<=nr and Length(words[i])=len and not stop do 
-      b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
-      for j in genstoapply do # consider <elts[i]*gens[j]>
-        if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
-          r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
-          if prefix[r]<>0 then 
-            right[i][j]:=right[left[prefix[r]][b]][final[r]];
-            # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*gens[final[r]];
-            # reduced[i][j]=([words[i],j]=words[right[i][j]])
-            reduced[i][j]:=false;
-          elif r=one then               # <elts[r]> is the identity
-            right[i][j]:=genslookup[b]; 
-            reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
-          else # prefix[r]=0, i.e. elts[r] is one of the generators
-            right[i][j]:=right[genslookup[b]][final[r]];
-            # elts[i]*gens[j]=gens[b]*gens[final[r]];
-            # reduced[i][j]=([words[i],j]=words[right[i][j]])
-            reduced[i][j]:=false;
-          fi;
-        else # <elts[s]*gens[j]> is reduced
-          new:=elts[i]*gens[j];
-          # <newword>=<elts[i]*gens[j]>
-          newword:=words[i]{lentoapply}; # better than ShallowCopy
-          newword[len+1]:=j;             # using Concatenate here is very bad!
-          val:=htvalue(ht, new);
-          
-          if val<>fail then 
-            nrrules:=nrrules+1;
-            rules[nrrules]:=[newword, words[val]];
-            right[i][j]:=val;
-            # <newword> and <words[val]> represent the same element (but are not
-            # equal) and so <newword> is not reduced
-
-          else #<new> is a new element!
-            nr:=nr+1;
-           
-            if one=false and ForAll(gens, y-> new*y=y and y*new=y) then
-              one:=nr;
+    stop:=false;
+    
+    while i<=nr do 
+      lentoapply:=[1..len];
+      while i<=nr and Length(words[i])=len and not stop do 
+        b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
+        for j in genstoapply do # consider <elts[i]*gens[j]>
+          if s<>0 and not reduced[s][j] then     # <elts[s]*gens[j]> is not reduced
+            r:=right[s][j];                      # elts[r]=elts[s]*gens[j]
+            if prefix[r]<>0 then 
+              right[i][j]:=right[left[prefix[r]][b]][final[r]];
+              # elts[i]*gens[j]=gens[b]*elts[prefix[r]]*gens[final[r]];
+              # reduced[i][j]=([words[i],j]=words[right[i][j]])
+              reduced[i][j]:=false;
+            elif r=one then               # <elts[r]> is the identity
+              right[i][j]:=genslookup[b]; 
+              reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
+            else # prefix[r]=0, i.e. elts[r] is one of the generators
+              right[i][j]:=right[genslookup[b]][final[r]];
+              # elts[i]*gens[j]=gens[b]*gens[final[r]];
+              # reduced[i][j]=([words[i],j]=words[right[i][j]])
+              reduced[i][j]:=false;
             fi;
-            if s<>0 then 
-              suffix[nr]:=right[s][j];
-            else 
-              suffix[nr]:=genslookup[j];
-            fi;
+          else # <elts[s]*gens[j]> is reduced
+            new:=elts[i]*gens[j];
+            # <newword>=<elts[i]*gens[j]>
+            newword:=words[i]{lentoapply}; # better than ShallowCopy
+            newword[len+1]:=j;             # using Concatenate here is very bad!
+            val:=htvalue(ht, new);
             
-            elts[nr]:=new;        htadd(ht, new, nr);
-            words[nr]:=newword;   
-            first[nr]:=b;         final[nr]:=j;
-            prefix[nr]:=i;        right[nr]:=[];        
-            left[nr]:=[];         right[i][j]:=nr;      
-            reduced[i][j]:=true;  reduced[nr]:=BlistList(genstoapply, []);
-            
-            if looking and not found then
-              if lookfunc(data, nr) then
-                found:=true;
-                data!.found := nr;
+            if val<>fail then 
+              nrrules:=nrrules+1;
+              rules[nrrules]:=[newword, words[val]];
+              right[i][j]:=val;
+              # <newword> and <words[val]> represent the same element (but are not
+              # equal) and so <newword> is not reduced
+
+            else #<new> is a new element!
+              nr:=nr+1;
+              htadd(ht, new, nr);
+
+              if one=false and ForAll(gens, y-> new*y=y and y*new=y) then
+                one:=nr;
+              fi;
+              
+              if s<>0 then 
+                suffix[nr]:=right[s][j];
+              else 
+                suffix[nr]:=genslookup[j];
+              fi;
+              
+              elts[nr]:=new;        
+              words[nr]:=newword;   
+              first[nr]:=b;         
+              final[nr]:=j;
+              prefix[nr]:=i;        
+              right[nr]:=EmptyPlist(nrgens);        
+              left[nr]:=EmptyPlist(nrgens);         
+              reduced[nr]:=BlistList(genstoapply, []);
+              
+              right[i][j]:=nr;    
+              reduced[i][j]:=true; 
+              
+              if looking and not found then
+                if lookfunc(data, nr) then
+                  found:=true;
+                  data!.found := nr;
+                fi;
               fi;
             fi;
           fi;
-        fi;
-      od; # finished applying gens to <elts[i]>
-      i:=i+1;
-      stop:=(nr>=limit or i=stopper or (looking and found));
-    od; # finished words of length <len> or <looking and found>
-    if stop then 
-      break;
-    fi;
-    # process words of length <len> into <left>
-    if len>1 then 
-      for j in [lenindex[len]..i-1] do # loop over all words of length <len-1>
-        p:=prefix[j]; b:=final[j];
-        for k in genstoapply do 
-          left[j][k]:=right[left[p][k]][b];
-          # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+        od; # finished applying gens to <elts[i]>
+        i:=i+1;
+        stop:=(nr>=limit or i=stopper or (looking and found));
+      od; # finished words of length <len> or <looking and found>
+      if stop then 
+        break;
+      fi;
+      # process words of length <len> into <left>
+      if len>1 then 
+        for j in [lenindex[len]..i-1] do # loop over all words of length <len-1>
+          p:=prefix[j]; b:=final[j];
+          for k in genstoapply do 
+            left[j][k]:=right[left[p][k]][b];
+            # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+          od;
         od;
-      od;
-    elif len=1 then 
-      for j in [lenindex[len]..i-1] do  # loop over all words of length <1>
-        b:=final[j];
-        for k in genstoapply do 
-          left[j][k]:=right[k][b];
-          # gens[k]*elts[j]=gens[k]*gens[b]
+      elif len=1 then 
+        for j in [lenindex[len]..i-1] do  # loop over all words of length <1>
+          b:=final[j];
+          for k in genstoapply do 
+            left[j][k]:=right[k][b];
+            # gens[k]*elts[j]=gens[k]*gens[b]
+          od;
         od;
-      od;
+      fi;
+      len:=len+1;
+      lenindex[len]:=i;    
+    od;
+    
+    data!.nr:=nr;    
+    data!.nrrules:=nrrules;
+    data!.one:=one;  
+    data!.pos:=i;
+    data!.len:=len;
+
+    if i>nr then
+      SetFilterObj(data, IsClosedSEEData);
+      # Unbind some of the unnecessary components here!
     fi;
-    len:=len+1;
-    lenindex[len]:=i;    
-  od;
-  
-  data!.nr:=nr;    
-  data!.nrrules:=nrrules;
-  data!.one:=one;  
-  data!.pos:=i;
-  data!.len:=len;
 
-  if i>nr then
-    SetFilterObj(data, IsClosedSEEData);
-  fi;
 
-  return data;
-end);
+    return data;
+  end);
+fi;
 
 #
 
@@ -529,7 +566,7 @@ function(data)
   fi;
 
   Print("semigroup data with ", Length(data!.elts), " elements, ");
-  Print(Length(data!.rules), " relations, ");
+  Print(data!.nrrules, " relations, ");
   Print("max word length ", Length(data!.words[data!.nr]), ">");
   return;
 end);
