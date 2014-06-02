@@ -25,6 +25,9 @@
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j)       INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
+Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj new );
+Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj new, Obj val);
+
 static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
   SET_LEN_PLIST(ELM_PLIST(plist, i), j);
@@ -264,6 +267,306 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
   return data;
 }
 
+/****************************************************************************
+**
+*F  FuncGABOW_SCC
+**
+** `digraph' should be a list whose entries and the lists of out-neighbours
+** of the vertices. So [[2,3],[1],[2]] represents the graph whose edges are
+** 1->2, 1->3, 2->1 and 3->2.
+**
+** returns a newly constructed record with two components 'comps' and 'id' the
+** elements of 'comps' are lists representing the strongly connected components
+** of the directed graph, and in the component 'id' the following holds:
+** id[i]=PositionProperty(comps, x-> i in x);
+** i.e. 'id[i]' is the index in 'comps' of the component containing 'i'.  
+** Neither the components, nor their elements are in any particular order.
+**
+** The algorithm is that of Gabow, based on the implementation in Sedgwick:
+**   http://algs4.cs.princeton.edu/42directed/GabowSCC.java.html
+** (made non-recursive to avoid problems with stack limits) and 
+** the implementation of STRONGLY_CONNECTED_COMPONENTS_DIGRAPH in listfunc.c.
+*/
+
+static Obj FuncGABOW_SCC(Obj self, Obj digraph)
+{
+  UInt len1, len2, count, level, w, v, n, l, idw, *fptr, *stkptr;
+  Obj  id, frames, adj, stack1, stack2, out, comp, comps; 
+ 
+  n = LEN_LIST(digraph);
+  if (n == 0){
+    out = NEW_PREC(2);
+    AssPRec(out, RNamName("id"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
+    AssPRec(out, RNamName("comps"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
+    CHANGED_BAG(out);
+    return out;
+  }
+
+  len1 = 0; 
+  stack1 = NEW_PLIST(T_PLIST_CYC, n); 
+  //stack1 is a plist so we can use memcopy below
+  SET_LEN_PLIST(stack1, n);
+
+  len2 = 0;
+  stack2 = NewBag(T_DATOBJ, (n+1)*sizeof(UInt));
+   
+  id = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, n);
+  SET_LEN_PLIST(id, n);
+  //init id
+  for(v=1;v<=n;v++){
+    SET_ELM_PLIST(id, v, INTOBJ_INT(0));
+  }
+  count = n;
+  
+  comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, n);
+  SET_LEN_PLIST(comps, 0);
+  
+  frames = NewBag(T_DATOBJ, (3*n+1)*sizeof(UInt));
+  
+  for(v=1;v<=n;v++){
+    if(INT_INTOBJ(ELM_PLIST(id, v))==0){
+      level=1;
+      adj = ELM_LIST(digraph, v);
+      PLAIN_LIST(adj);
+      fptr = (UInt *)ADDR_OBJ(frames);
+      fptr[0] = v; // vertex
+      fptr[1] = 1; // index
+      fptr[2] = (UInt)adj;
+      SET_ELM_PLIST(stack1, ++len1, INTOBJ_INT(v));
+      ((UInt *)ADDR_OBJ(stack2))[++len2] = len1;
+      SET_ELM_PLIST(id, v, INTOBJ_INT(len1)); 
+      
+      while(level>0){
+        if(fptr[1]>LEN_PLIST(fptr[2])){
+          if(((UInt *)ADDR_OBJ(stack2))[len2]==INT_INTOBJ(ELM_PLIST(id, fptr[0]))){
+            len2--;
+            count++;
+            l=0;
+            do{
+              l++;
+              w=INT_INTOBJ(ELM_PLIST(stack1, len1--));
+              SET_ELM_PLIST(id, w, INTOBJ_INT(count));
+            }while(w!=fptr[0]);
+            
+            comp = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, l);
+            SET_LEN_PLIST(comp, l);
+           
+            memcpy( (void *)((char *)(ADDR_OBJ(comp)) + sizeof(Obj)), 
+                    (void *)((char *)(ADDR_OBJ(stack1)) + (len1+1)*sizeof(Obj)), 
+                    (size_t)(l*sizeof(Obj)));
+
+            l=LEN_PLIST(comps)+1;
+            SET_ELM_PLIST(comps, l, comp);
+            SET_LEN_PLIST(comps, l);
+            CHANGED_BAG(comps);
+            fptr = (UInt *)ADDR_OBJ(frames)+(level-1)*3;
+          }
+          level--;
+          fptr -= 3;
+        } else {
+          
+          w = INT_INTOBJ(ELM_PLIST(fptr[2], fptr[1]++));
+          idw = INT_INTOBJ(ELM_PLIST(id, w));
+          
+          if(idw==0){
+      
+            level++;
+            adj = ELM_LIST(digraph, w);
+            PLAIN_LIST(adj);
+            fptr += 3; 
+            fptr[0] = w; // vertex
+            fptr[1] = 1; // index
+            fptr[2] = (UInt)adj;                          
+            SET_ELM_PLIST(stack1, ++len1, INTOBJ_INT(w));
+            ((UInt *)ADDR_OBJ(stack2))[++len2] = len1;
+            SET_ELM_PLIST(id, w, INTOBJ_INT(len1)); 
+          
+          } else {
+            stkptr=((UInt*)ADDR_OBJ(stack2));
+            while(stkptr[len2]>idw){
+              len2--; // pop from stack2
+            }
+          }
+        }
+      }
+    }
+  }
+
+  for(v=1;v<=n;v++){
+    SET_ELM_PLIST(id, v, INTOBJ_INT(INT_INTOBJ(ELM_PLIST(id, v))-n));
+  }
+
+  out = NEW_PREC(2);
+  SHRINK_PLIST(comps, LEN_PLIST(comps));
+  AssPRec(out, RNamName("id"), id);
+  AssPRec(out, RNamName("comps"), comps);
+  CHANGED_BAG(out);
+  return out;
+}
+
+static Obj FuncSCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2)
+{ UInt  n, len, nr, i, j, k, l, *ptr;
+  Obj   comps1, id2, comps2, id, comps, seen, comp1, comp2, new, x, out;
+
+  n = LEN_PLIST(ElmPRec(scc1, RNamName("id")));
+  
+  if (n == 0){
+    out = NEW_PREC(2);
+    AssPRec(out, RNamName("id"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
+    AssPRec(out, RNamName("comps"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
+    CHANGED_BAG(out);
+    return out;
+  }
+
+  comps1 = ElmPRec(scc1, RNamName("comps"));
+  id2 = ElmPRec(scc2, RNamName("id"));
+  comps2 = ElmPRec(scc2, RNamName("comps"));
+   
+  id = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, n);
+  SET_LEN_PLIST(id, n);
+  seen = NewBag(T_DATOBJ, (LEN_PLIST(comps2)+1)*sizeof(UInt));
+  ptr = (UInt *)ADDR_OBJ(seen);
+  //init id
+  for(i=1;i<=n;i++){
+    SET_ELM_PLIST(id, i, INTOBJ_INT(0));
+    ptr[i] = 0;
+  }
+  
+  comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, LEN_PLIST(comps1));
+  SET_LEN_PLIST(comps, 0);
+ 
+  nr = 0;
+  
+  for(i=1;i<=LEN_PLIST(comps1);i++){
+    comp1 = ELM_PLIST(comps1, i);
+    if(INT_INTOBJ(ELM_PLIST(id, INT_INTOBJ(ELM_PLIST(comp1, 1))))==0){
+      nr++;
+      new = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, LEN_PLIST(comp1));
+      SET_LEN_PLIST(new, 0);
+      for(j=1;j<=LEN_PLIST(comp1);j++){
+        k=INT_INTOBJ(ELM_PLIST(id2, INT_INTOBJ(ELM_PLIST(comp1, j))));
+        if((UInt *)ADDR_OBJ(seen)[k]==0){
+          ((UInt *)ADDR_OBJ(seen))[k]=1;
+          comp2 = ELM_PLIST(comps2, k);
+          for(l=1;l<=LEN_PLIST(comp2);l++){
+            x=ELM_PLIST(comp2, l);
+            SET_ELM_PLIST(id, INT_INTOBJ(x), INTOBJ_INT(nr));
+            len=LEN_PLIST(new);
+            AssPlist(new, len+1, x);
+            SET_LEN_PLIST(new, len+1);
+          }
+        }
+      }
+      SHRINK_PLIST(new, LEN_PLIST(new));
+      len=LEN_PLIST(comps)+1;
+      SET_ELM_PLIST(comps, len, new);
+      SET_LEN_PLIST(comps, len);
+      CHANGED_BAG(comps);
+    }
+  }
+
+  out = NEW_PREC(2);
+  SHRINK_PLIST(comps, LEN_PLIST(comps));
+  AssPRec(out, RNamName("id"), id);
+  AssPRec(out, RNamName("comps"), comps);
+  CHANGED_BAG(out);
+  return out;
+}
+
+// <right> and <left> should be scc data structures for the right and left
+// Cayley graphs of a semigroup, as produced by GABOW_SCC. 
+
+static Obj FuncFIND_HCLASSES(Obj self, Obj right, Obj left){ 
+  UInt  n, nrcomps, i, hindex, rindex, init, j, k, len, *nextpos, *sorted, *lookup;
+  Obj   rightid, leftid, comps, buf, id, out, comp;
+  
+  rightid = ElmPRec(right, RNamName("id"));
+  leftid = ElmPRec(left, RNamName("id"));
+  n = LEN_PLIST(rightid);
+  
+  if (n == 0){
+    out = NEW_PREC(2);
+    AssPRec(out, RNamName("id"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
+    AssPRec(out, RNamName("comps"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
+    CHANGED_BAG(out);
+    return out;
+  }
+
+  comps = ElmPRec(right, RNamName("comps"));
+  nrcomps = LEN_PLIST(comps);
+  
+  buf = NewBag(T_DATOBJ, (2*n+nrcomps+1)*sizeof(UInt));
+  nextpos = (UInt *)ADDR_OBJ(buf);
+  
+  nextpos[1] = 1;
+  for(i=2;i<=nrcomps;i++){
+    nextpos[i]=nextpos[i-1]+LEN_PLIST(ELM_PLIST(comps, i-1));
+  }
+  
+  sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
+  lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
+  for(i = 1;i <= n; i++){
+    j = INT_INTOBJ(ELM_PLIST(rightid, i));
+    sorted[nextpos[j]] = i;
+    nextpos[j]++;
+    lookup[i] = 0;
+  }
+  
+  id = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, n);
+  SET_LEN_PLIST(id, n);
+  comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, n);
+  SET_LEN_PLIST(comps, 0);
+  
+  sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
+  lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
+
+  hindex = 0;
+  rindex = 0;
+  init = 0;
+  
+  for(i=1;i<=n;i++){
+    j = sorted[i];
+    k = INT_INTOBJ(ELM_PLIST(rightid, j));
+    if(k > rindex){
+      rindex = k;
+      init = hindex;
+    }
+    k = INT_INTOBJ(ELM_PLIST(leftid, j));
+    if(lookup[k]<=init){
+      hindex++;
+      lookup[k] = hindex;
+
+      comp = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, 1);
+      SET_LEN_PLIST(comp, 0);
+      SET_ELM_PLIST(comps, hindex, comp);
+      SET_LEN_PLIST(comps, hindex);
+      CHANGED_BAG(comps);
+
+      sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
+      lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
+    }
+    k = lookup[k];
+    comp = ELM_PLIST(comps, k);
+    len = LEN_PLIST(comp) + 1;
+    AssPlist(comp, len, INTOBJ_INT(j)); 
+    SET_LEN_PLIST(comp, len);
+    
+    SET_ELM_PLIST(id, j, INTOBJ_INT(k));
+  }
+
+  SHRINK_PLIST(comps, LEN_PLIST(comps));
+  for(i=1;i<=LEN_PLIST(comps);i++){
+    comp = ELM_PLIST(comps, i);
+    SHRINK_PLIST(comp, LEN_PLIST(comp));
+  }
+  
+  out = NEW_PREC(2);
+  AssPRec(out, RNamName("id"), id);
+  AssPRec(out, RNamName("comps"), comps);
+  CHANGED_BAG(out);
+  return out;
+}
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
@@ -273,7 +576,19 @@ static StructGVarFunc GVarFuncs [] = {
 
   { "ENUMERATE_SEE_DATA", 4, "data, limit, lookfunc, looking",
     FuncENUMERATE_SEE_DATA, 
-    "src/listfunc.c:FuncENUMERATE_SEE_DATA" },
+    "src/semigroups.c:FuncENUMERATE_SEE_DATA" },
+
+  { "GABOW_SCC", 1, "digraph",
+    FuncGABOW_SCC, 
+    "src/listfunc.c:GABOW_SCC" },
+
+  { "SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS", 2, "scc1, scc2",
+    FuncSCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS,
+    "src/listfunc.c:FuncSCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS" },
+
+  { "FIND_HCLASSES", 2, "right, left", 
+    FuncFIND_HCLASSES,
+    "src/listfunc.c:FuncFIND_HCLASSES" },
 
   { 0 }
 
@@ -328,7 +643,7 @@ static StructInitInfo module = {
  /* revision_h  = */ 0,
  /* version     = */ 0,
  /* crc         = */ 0,
- /* initKernel  = */ 0,
+ /* initKernel  = */ InitKernel,
  /* initLibrary = */ InitLibrary,
  /* checkInit   = */ 0,
  /* preSave     = */ 0,
