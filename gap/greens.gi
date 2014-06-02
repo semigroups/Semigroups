@@ -547,7 +547,7 @@ end);
 # different method for regular/inverse, same method for ideals 
 
 InstallMethod(GreensHClasses, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsActingSemigroupGreensClass], 1, # to beat generic method
 function(d)
   return Concatenation(List(GreensRClasses(d), GreensHClasses));
 end);
@@ -555,7 +555,7 @@ end);
 # different method for regular/inverse, same method for ideals
 
 InstallMethod(GreensHClasses, "for an L-class of an acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass],
+[IsGreensLClass and IsActingSemigroupGreensClass], 1, # to beat generic method
 function(l)
   local rho_o, rho_m, s, scc, mults, d, lambda_o, lambda_m, cosets, f, nc, act, out, k, i, j;
 
@@ -593,7 +593,7 @@ end);
 # different method for regular/inverse, same method for ideals
 
 InstallMethod(GreensHClasses, "for an R-class of an acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass],
+[IsGreensRClass and IsActingSemigroupGreensClass], 1, # to beat generic method
 function(r)
   local lambda_o, lambda_m, s, scc, mults, d, rho_o, rho_m, cosets, f, nc, act, out, k, i, j;
 

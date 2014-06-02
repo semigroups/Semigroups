@@ -25,7 +25,7 @@ function(s)
   gens:=GeneratorsOfSemigroup(s);
 
   data:=rec(gens:=gens, parent:=s, 
-     ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
+     ht:=HTCreate(gens[1], rec(treehashsize:=SemigroupOptions(s).hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[1],
      lenreps:=[0], orbit:=[[,,,FakeOne(gens)]], repslens:=[], lambdarhoht:=[],

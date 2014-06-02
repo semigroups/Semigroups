@@ -8,6 +8,14 @@
 ############################################################################# 
 ##
 
+
+DeclareAttribute("SemigroupOptions", IsSemigroup);
+
+InstallMethod(SemigroupOptions, "for a semigroup", [IsSemigroup], 
+function(S)
+  return SEMIGROUPS_OptionsRec;
+end);
+
 BindGlobal("SEMIGROUPS_OptionsRec", 
   rec(  small:=false,
         hashlen:=rec(S:=251, M:=6257, L:=25013),
