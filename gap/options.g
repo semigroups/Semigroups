@@ -8,14 +8,6 @@
 ############################################################################# 
 ##
 
-
-DeclareAttribute("SemigroupOptions", IsSemigroup);
-
-InstallMethod(SemigroupOptions, "for a semigroup", [IsSemigroup], 
-function(S)
-  return SEMIGROUPS_OptionsRec;
-end);
-
 BindGlobal("SEMIGROUPS_OptionsRec", 
   rec(  small:=false,
         hashlen:=rec(S:=251, M:=6257, L:=25013),
@@ -28,9 +20,9 @@ MakeReadWriteGlobal("SEMIGROUPS_OptionsRec");
 BindGlobal("SEMIGROUPS_ProcessOptionsRec", function(record)
   local n, x;
   
-  for x in RecNames(SemigroupsOptionsRec) do 
+  for x in RecNames(SEMIGROUPS_OptionsRec) do 
     if not IsBound(record.(x)) then 
-      record.(x):=SemigroupsOptionsRec.(x);
+      record.(x):=SEMIGROUPS_OptionsRec.(x);
     fi;
   od;
 
@@ -41,4 +33,11 @@ BindGlobal("SEMIGROUPS_ProcessOptionsRec", function(record)
   fi;
 
   return record;
+end);
+
+DeclareAttribute("SemigroupOptions", IsSemigroup);
+
+InstallMethod(SemigroupOptions, "for a semigroup", [IsSemigroup], 
+function(S)
+  return SEMIGROUPS_OptionsRec;
 end);

@@ -37,9 +37,9 @@ gap> IsSimpleSemigroup(s);
 false
 
 #
-gap> s:=SingularTransformationSemigroup(6);
+gap> S:=SingularTransformationSemigroup(6);
 <regular transformation semigroup ideal on 6 pts with 1 generator>
-gap> Size(s);
+gap> Size(S);
 45936
 
 #

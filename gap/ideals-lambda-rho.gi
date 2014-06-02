@@ -334,7 +334,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
-  record.parent:=I;             record.treehashsize:=SemigroupOptions(I).opts.hashlen.M;
+  record.parent:=I;             record.treehashsize:=SemigroupOptions(I).hashlen.M;
  
   len:=Length(o);
 
@@ -436,7 +436,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=I;             
-  record.treehashsize:=SemigroupOptions(I).opts.hashlen.M;
+  record.treehashsize:=SemigroupOptions(I).hashlen.M;
  
   len:=Length(o);
 

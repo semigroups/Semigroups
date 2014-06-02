@@ -215,7 +215,7 @@ function(S)
   if HasSemigroupOptions(S) then 
     hashlen:=SemigroupOptions(S).hashlen.L;
   else
-    hashlen:=SemigroupsOptionsRec.hashlen.L;
+    hashlen:=SEMIGROUPS_OptionsRec.hashlen.L;
   fi;
 
   if IsMonoid(S) then 

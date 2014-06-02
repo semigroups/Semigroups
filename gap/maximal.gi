@@ -168,7 +168,7 @@ if not IsGrapeAvailable then
   end); 
 else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup and a group",
-  [IsReesZeroMatrixSubsemigroup, IsGroup], 
+  [IsReesZeroMatrixSubsemigroup, IsGroup],
   function(R, H)
     local G, mat, graph, basicgens, i, j, maxgens, I, J;
 
@@ -278,20 +278,19 @@ end);
 
 if not IsGrapeAvailable or not IsGrapeCompiled then 
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
-  [IsReesZeroMatrixSubsemigroup], 
+  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsActingSemigroup
   function(R)
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end); 
 else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
-  [IsReesZeroMatrixSubsemigroup], 
+  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsActingSemigroup
   function(R)
     local G, out, I, J, mat, nrrows, graph, components, nrcomponents, P, basicgens, new, pos, i, j, NonGroupRecursion, transversal, maxgens, JJ, solo, U, II, len, names, rectangles, gens, H, r, k;
     
     if not IsReesZeroMatrixSemigroup(R) then 
       TryNextMethod(); 
-      return;
     fi;
     
     # Check that matrix is regular (i.e. no zero rows or columns)

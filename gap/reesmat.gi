@@ -8,17 +8,6 @@
 #############################################################################
 ##
 
-#InstallImmediateMethod(GeneratorsOfSemigroup, IsReesZeroMatrixSemigroup, 0, 
-#function(R)
-#  local gens;
-#  gens:=GeneratorsOfReesZeroMatrixSemigroupNC(R, Rows(R),
-#   UnderlyingSemigroup(R), Columns(R));
-#  if ForAll(Rows(R), i-> ForAll(Columns(R), j-> Matrix(R)[j][i]<>0)) then 
-#    Add(gens, MultiplicativeZero(R));
-#  fi;
-#  return gens;
-#end);
-
 #
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, 

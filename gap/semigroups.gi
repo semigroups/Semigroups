@@ -181,7 +181,7 @@ InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection], 
 function(gens)
    if IsGeneratorsOfActingSemigroup(gens) then 
-     return SemigroupByGenerators(gens, SemigroupsOptionsRec);
+     return SemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
    else
      TryNextMethod();
     fi;
@@ -273,7 +273,7 @@ InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then 
-    return MonoidByGenerators(gens, SemigroupsOptionsRec);
+    return MonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
   else
     TryNextMethod();
   fi;
@@ -365,7 +365,7 @@ InstallMethod(InverseMonoidByGenerators,
 function(gens)
 
   if IsGeneratorsOfActingSemigroup(gens) then 
-    return InverseMonoidByGenerators(gens, SemigroupsOptionsRec);
+    return InverseMonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
   else
     TryNextMethod();
   fi;
@@ -378,7 +378,7 @@ InstallMethod(InverseSemigroupByGenerators,
 [IsAssociativeElementCollection],
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then 
-    return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
+    return InverseSemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
   else
     TryNextMethod();
   fi;
@@ -499,7 +499,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for acting semigroup with inverse op and associative element coll.",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(s, coll) 
-  return ClosureInverseSemigroup(s, coll, SemigroupOptions(s));
+  return ClosureInverseSemigroup(s, coll, ShallowCopy(SemigroupOptions(s)));
 end);
 
 #
@@ -508,7 +508,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for acting semigroup with inverse op and an associative element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f) 
-  return ClosureInverseSemigroup(s, [f], SemigroupOptions(s));
+  return ClosureInverseSemigroup(s, [f], ShallowCopy(SemigroupOptions(s)));
 end);
 
 #
@@ -599,7 +599,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup and associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection],
 function(s, coll)
-  return ClosureSemigroup(s, coll, SemigroupOptions(s));
+  return ClosureSemigroup(s, coll, ShallowCopy(SemigroupOptions(s)));
 end);
 
 #
@@ -608,7 +608,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement],
 function(s, f)
-  return ClosureSemigroup(s, [f], SemigroupOptions(s));
+  return ClosureSemigroup(s, [f], ShallowCopy(SemigroupOptions(s)));
 end);
 
 #
