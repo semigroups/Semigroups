@@ -488,8 +488,8 @@ else
         for j in [lenindex[len]..i-1] do  # loop over all words of length <1>
           b:=final[j];
           for k in genstoapply do 
-            left[j][k]:=right[k][b];
-            # gens[k]*elts[j]=gens[k]*gens[b]
+            left[j][k]:=right[genslookup[k]][b];
+            # gens[k]*elts[j]=elts[k]*gens[b]
           od;
         od;
       fi;
