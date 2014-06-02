@@ -404,6 +404,10 @@ static Obj FuncGABOW_SCC(Obj self, Obj digraph)
   return out;
 }
 
+// using the output of GABOW_SCC on the right and left Cayley graphs of a
+// semigroup, the following function calculates the strongly connected
+// components of the union of these two graphs.
+
 static Obj FuncSCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2)
 { UInt  n, len, nr, i, j, k, l, *ptr;
   Obj   comps1, id2, comps2, id, comps, seen, comp1, comp2, new, x, out;
@@ -474,7 +478,10 @@ static Obj FuncSCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2)
 }
 
 // <right> and <left> should be scc data structures for the right and left
-// Cayley graphs of a semigroup, as produced by GABOW_SCC. 
+// Cayley graphs of a semigroup, as produced by GABOW_SCC. This function find
+// the H-classes of the semigroup from <right> and <left>. The method used is
+// that described in:
+// http://www.liafa.jussieu.fr/~jep/PDF/Exposes/StAndrews.pdf
 
 static Obj FuncFIND_HCLASSES(Obj self, Obj right, Obj left){ 
   UInt  n, nrcomps, i, hindex, rindex, init, j, k, len, *nextpos, *sorted, *lookup;
