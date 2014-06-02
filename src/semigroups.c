@@ -25,6 +25,8 @@
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j)       INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
+//#define DEBUG 1
+
 Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj new );
 Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj new, Obj val);
 
@@ -54,7 +56,9 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
   if(i>nr){
     return data;
   }
-
+  #ifdef DEBUG
+    Pr("here 1\n", 0L, 0L);
+  #endif 
   // get everything out of <data>
   
   //lists of integers, objects
@@ -76,6 +80,9 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
   suffix = ElmPRec(data, RNamName("suffix"));             
   // see first, 0 if suffix is empty i.e. elts[i] is a gen
   
+  #ifdef DEBUG
+    Pr("here 2\n", 0L, 0L);
+  #endif 
   //lists of lists
   right = ElmPRec(data, RNamName("right")); 
   // elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
@@ -95,6 +102,9 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
   ht = ElmPRec(data, RNamName("ht"));                     
   // HTValue(ht, x)=Position(elts, x)
  
+  #ifdef DEBUG
+    Pr("here 3\n", 0L, 0L);
+  #endif 
   //integers
   len=INT_INTOBJ(ElmPRec(data, RNamName("len"))); 
   // current word length
@@ -113,35 +123,50 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
   stop = 0;
   found = False;
   
+  #ifdef DEBUG
+    Pr("here 4\n", 0L, 0L);
+  #endif 
   for(j=1;j<=nrgens;j++){
-    if(TNUM_OBJ(ELM_PLIST(right, INT_PLIST(genslookup, j)))==T_PLIST_EMPTY){
-      RetypeBag(ELM_PLIST(right, j), T_PLIST_CYC);
+    k = INT_PLIST(genslookup, j);
+    if(TNUM_OBJ(ELM_PLIST(right, k))==T_PLIST_EMPTY){
+      RetypeBag(ELM_PLIST(right, k), T_PLIST_CYC);
     }
-    if(TNUM_OBJ(ELM_PLIST(left, INT_PLIST(genslookup, j)))==T_PLIST_EMPTY){
-      RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);
+    if(TNUM_OBJ(ELM_PLIST(left, k))==T_PLIST_EMPTY){
+      RetypeBag(ELM_PLIST(left, k), T_PLIST_CYC);
     }
   }
 
+  #ifdef DEBUG
+    Pr("here 5\n", 0L, 0L);
+  #endif 
   while(i<=nr){
     while(i<=nr&&LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
       b=INT_INTOBJ(ELM_PLIST(first, i)); 
       s=INT_INTOBJ(ELM_PLIST(suffix, i));
       for(j = 1;j <= nrgens;j++){
-        //Pr("i=%d\n", (Int) i, 0L);
-        //Pr("j=%d\n", (Int) j, 0L);
+        #ifdef DEBUG
+          Pr("i=%d\n", (Int) i, 0L);
+          Pr("j=%d\n", (Int) j, 0L);
+        #endif
         if(s != 0&&ELM_PLIST2(reduced, s, j) == False){
           r = INT_PLIST2(right, s, j);
           if(INT_PLIST(prefix, r) != 0){
-            //Pr("Case 1!\n", 0L, 0L);
+            #ifdef DEBUG
+              Pr("Case 1!\n", 0L, 0L);
+            #endif
             intval = INT_PLIST2(left, INT_PLIST(prefix, r), b);
             SET_ELM_PLIST2(right, i, j, ELM_PLIST2(right, intval, INT_PLIST(final, r)));
             SET_ELM_PLIST2(reduced, i, j, False);
           } else if (r == one){
-            //Pr("Case 7!\n", 0L, 0L);
+            #ifdef DEBUG
+              Pr("Case 2!\n", 0L, 0L);
+            #endif
             SET_ELM_PLIST2(right, i, j, ELM_PLIST(genslookup, b));
             SET_ELM_PLIST2(reduced, i, j, False);
           } else {
-            //Pr("Case 2!\n", 0L, 0L);
+            #ifdef DEBUG
+              Pr("Case 3!\n", 0L, 0L);
+            #endif
             SET_ELM_PLIST2(right, i, j, 
               ELM_PLIST2(right, INT_PLIST(genslookup, b), INT_PLIST(final, r)));
             SET_ELM_PLIST2(reduced, i, j, False);
@@ -160,7 +185,9 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
 
           objval = HTValue_TreeHash_C(self, ht, new); 
           if(objval!=Fail){
-            //Pr("Case 3!\n", 0L, 0L);
+            #ifdef DEBUG
+              Pr("Case 4!\n", 0L, 0L);
+            #endif
             newrule = NEW_PLIST(T_PLIST, 2);
             SET_ELM_PLIST(newrule, 1, newword);
             SET_ELM_PLIST(newrule, 2, ELM_PLIST(words, INT_INTOBJ(objval)));
@@ -170,7 +197,9 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
             AssPlist(rules, nrrules, newrule);
             SET_ELM_PLIST2(right, i, j, objval);
           } else {
-            //Pr("Case 4!\n", 0L, 0L);
+            #ifdef DEBUG
+              Pr("Case 5!\n", 0L, 0L);
+            #endif
             nr++;
             HTAdd_TreeHash_C(self, ht, new, INTOBJ_INT(nr));
 
@@ -233,9 +262,13 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
 
     }//finished words of length <len> or <looking and found>
     if(stop) break;
-    //Pr("finished processing words of len %d\n", (Int) len, 0L);
+    #ifdef DEBUG
+      Pr("finished processing words of len %d\n", (Int) len, 0L);
+    #endif
     if(len>1){
-      //Pr("Case 5!\n", 0L, 0L);
+      #ifdef DEBUG
+        Pr("Case 6!\n", 0L, 0L);
+      #endif
       for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
         p=INT_INTOBJ(ELM_PLIST(prefix, j)); 
         b=INT_INTOBJ(ELM_PLIST(final, j));
@@ -244,7 +277,9 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
         }
       }
     } else if(len==1){ 
-      //Pr("Case 6!\n", 0L, 0L);
+      #ifdef DEBUG
+        Pr("Case 7!\n", 0L, 0L);
+      #endif
       for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
         b=INT_INTOBJ(ELM_PLIST(final, j));
         for(k=1;k<=nrgens;k++){ 
