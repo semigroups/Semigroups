@@ -8,6 +8,14 @@
 ############################################################################# 
 ##
 
+DeclareAttribute("SemigroupOptions", IsSemigroup);
+
+InstallMethod(SemigroupOptions, "for a semigroup", [IsSemigroup], 
+function(S)
+  return SemigroupsOptionsRec;
+end);
+
+
 BindGlobal("SemigroupsOptionsRec", 
   rec(  small:=false,
         hashlen:=rec(S:=251, M:=6257, L:=25013),
@@ -17,7 +25,7 @@ BindGlobal("SemigroupsOptionsRec",
 
 MakeReadWriteGlobal("SemigroupsOptionsRec");
 
-BindGlobal("SemigroupOptions", function(record)
+BindGlobal("SEMIGROUPS_ProcessOptionsRec", function(record)
   local n, x;
   
   for x in RecNames(SemigroupsOptionsRec) do 

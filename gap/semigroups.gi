@@ -244,7 +244,8 @@ function(gens, opts)
     filts:=filts and IsActingSemigroup;
   fi;
 
-  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
+  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
+  SetSemigroupOptions(s, opts);
   
   if opts.regular then 
     SetIsRegularSemigroup(s, true);
@@ -334,7 +335,8 @@ function(gens, record)
     filts:=filts and IsActingSemigroup;
   fi;
 
-  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=record));
+  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
+  SetSemigroupOptions(s, record);
 
   if record.regular then 
     SetIsRegularSemigroup(s, true);
@@ -420,7 +422,7 @@ function(gens, record)
   fi;
 
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
-  
+  SetSemigroupOptions(s, record);
   one:=One(gens); 
   SetOne(s, one);
   pos:=Position(gens, one);
@@ -475,7 +477,8 @@ function(gens, record)
     filts:=filts and IsActingSemigroupWithInverseOp;
   fi;
 
-  s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
+  s:=Objectify( NewType (FamilyObj( gens ), filts), rec());
+  SetSemigroupOptions(s, record);
   SetGeneratorsOfInverseSemigroup(s, AsList(gens));
   
   if IsMultiplicativeElementWithOneCollection(gens) then 
@@ -496,7 +499,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for acting semigroup with inverse op and associative element coll.",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(s, coll) 
-  return ClosureInverseSemigroup(s, coll, s!.opts);
+  return ClosureInverseSemigroup(s, coll, SemigroupOptions(s));
 end);
 
 #
@@ -505,7 +508,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for acting semigroup with inverse op and an associative element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f) 
-  return ClosureInverseSemigroup(s, [f], s!.opts);
+  return ClosureInverseSemigroup(s, [f], SemigroupOptions(s));
 end);
 
 #
@@ -596,7 +599,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup and associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection],
 function(s, coll)
-  return ClosureSemigroup(s, coll, s!.opts);
+  return ClosureSemigroup(s, coll, SemigroupOptions(s));
 end);
 
 #
@@ -605,7 +608,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement],
 function(s, f)
-  return ClosureSemigroup(s, [f], s!.opts);
+  return ClosureSemigroup(s, [f], SemigroupOptions(s));
 end);
 
 #

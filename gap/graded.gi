@@ -16,7 +16,7 @@ function(s)
   local record;
 
   record:=ShallowCopy(LambdaOrbOpts(s));
-  record.treehashsize:=s!.opts.hashlen.S;
+  record.treehashsize:=SemigroupOptions(s).hashlen.S;
   return HTCreate(LambdaFunc(s)(Representative(s)), record);
 end);
 
@@ -27,7 +27,7 @@ function(s)
   local record;
 
   record:=ShallowCopy(RhoOrbOpts(s));
-  record.treehashsize:=s!.opts.hashlen.S;
+  record.treehashsize:=SemigroupOptions(s).hashlen.S;
   return HTCreate(RhoFunc(s)(Representative(s)), record);
 end);
 
@@ -106,7 +106,7 @@ function(s, f, opt)
 
   record:=ShallowCopy(LambdaOrbOpts(s));
   
-  record.parent:=s;               record.treehashsize:=s!.opts.hashlen.M;
+  record.parent:=s;               record.treehashsize:=SemigroupOptions(s).hashlen.M;
   record.schreier:=true;          record.orbitgraph:=true;
   record.storenumbers:=true;      record.log:=true;
   record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
@@ -182,7 +182,7 @@ function(s, f, opt)
 
   record:=ShallowCopy(RhoOrbOpts(s));
   
-  record.parent:=s;               record.treehashsize:=s!.opts.hashlen.M;
+  record.parent:=s;               record.treehashsize:=SemigroupOptions(s).hashlen.M;
   record.schreier:=true;          record.orbitgraph:=true;
   record.storenumbers:=true;      record.log:=true;
   record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;

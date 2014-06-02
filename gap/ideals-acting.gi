@@ -235,7 +235,7 @@ function(I)
   gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
 
   data:=rec(gens:=gens, parent:=I, log:=[1], genspos:=0,
-     ht:=HTCreate(gens[1], rec(treehashsize:=I!.opts.hashlen.L)),
+     ht:=HTCreate(gens[1], rec(treehashsize:=SemigroupOptions(I).hashlen.L)),
      pos:=0, init:=false, reps:=[], repslookup:=[], orblookup1:=[],
      orblookup2:=[], rholookup:=[fail], lenreps:=[0], orbit:=[fail,],
      dorbit:=[], repslens:=[], lambdarhoht:=[], regular:=[],

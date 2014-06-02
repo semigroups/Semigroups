@@ -79,7 +79,7 @@ function(s)
   
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
-  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.parent:=s;             record.treehashsize:=SemigroupOptions(s).hashlen.M;
 
   o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
   
@@ -338,7 +338,7 @@ function(s)
   record:=ShallowCopy(RhoOrbOpts(s));
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
-  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.parent:=s;             record.treehashsize:=SemigroupOptions(s).hashlen.M;
   record.scc_reps:=[FakeOne(GeneratorsOfSemigroup(s))];
 
   o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);

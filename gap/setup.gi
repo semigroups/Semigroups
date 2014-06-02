@@ -54,8 +54,7 @@ InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsParti
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup and IsActingSemigroup);
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
 IsPartialPermBipartitionSemigroup and IsActingSemigroup);
-
-#InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
+InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
 
 # the largest point involved in the action
 

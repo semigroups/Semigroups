@@ -246,7 +246,7 @@ function(S)
   fi;
 
   record:=ShallowCopy(LambdaOrbOpts(S));
-  record.treehashsize:=S!.opts.hashlen.M;
+  record.treehashsize:=SemigroupOptions(S).hashlen.M;
 
   for f in GeneratorsOfSemigroup(S) do
     o:=Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
@@ -1242,7 +1242,7 @@ function(S)
       return false;
     fi;
 
-    opts:=rec(treehashsize:=S!.opts.hashlen.M);
+    opts:=rec(treehashsize:=SemigroupOptions(S).hashlen.M);
     
     for name in RecNames(LambdaOrbOpts(S)) do
       opts.(name):=LambdaOrbOpts(S).(name);

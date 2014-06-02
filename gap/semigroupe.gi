@@ -212,8 +212,8 @@ function(S)
     nrrules := 0, prefix := [  ], reduced := [ [  ] ], right := [  ], 
     rules := [  ], stopper := false, suffix := [  ], words := [  ] );
   
-  if IsBound(S!.opts) then 
-    hashlen:=S!.opts.hashlen.L;
+  if HasSemigroupOptions(S) then 
+    hashlen:=SemigroupOptions(S).hashlen.L;
   else
     hashlen:=SemigroupsOptionsRec.hashlen.L;
   fi;

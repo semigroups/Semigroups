@@ -194,7 +194,7 @@ end);
 InstallMethod(SemigroupIdealByGenerators, "for an associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection], 
 function(S, gens)
-  return SemigroupIdealByGenerators(S, gens, S!.opts);
+  return SemigroupIdealByGenerators(S, gens, SemigroupOptions(S));
 end);
 
 #
