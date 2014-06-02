@@ -210,7 +210,7 @@ function(S, gens, opts)
     return fail;
   fi;
 
-  opts:=SemigroupOptions(opts);
+  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
   gens:=AsList(gens);
   
   filts:=IsMagmaIdeal and IsAttributeStoringRep;

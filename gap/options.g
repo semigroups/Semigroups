@@ -8,16 +8,16 @@
 ############################################################################# 
 ##
 
-BindGlobal("SemigroupsOptionsRec", 
+BindGlobal("SEMIGROUPS_OptionsRec", 
   rec(  small:=false,
         hashlen:=rec(S:=251, M:=6257, L:=25013),
         regular:=false,
         acting:=true
       ));
 
-MakeReadWriteGlobal("SemigroupsOptionsRec");
+MakeReadWriteGlobal("SEMIGROUPS_OptionsRec");
 
-BindGlobal("SemigroupOptions", function(record)
+BindGlobal("SEMIGROUPS_ProcessOptionsRec", function(record)
   local n, x;
   
   for x in RecNames(SemigroupsOptionsRec) do 

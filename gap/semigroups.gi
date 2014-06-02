@@ -199,7 +199,7 @@ function(gens, opts)
     TryNextMethod();
   fi;
 
-  opts:=SemigroupOptions(opts);
+  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
   gens:=AsList(gens);
   
   # try to find a smaller generating set
@@ -290,7 +290,7 @@ function(gens, record)
     TryNextMethod();
   fi;
 
-  record:=SemigroupOptions(record);
+  record:=SEMIGROUPS_ProcessOptionsRec(record);
   gens:=ShallowCopy(gens);
 
   if record.small and Length(gens)>1 then #small gen. set
@@ -394,7 +394,7 @@ function(gens, record)
     TryNextMethod();
   fi;
 
-  record:=SemigroupOptions(record);
+  record:=SEMIGROUPS_ProcessOptionsRec(record);
 
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
@@ -451,7 +451,7 @@ function(gens, record)
     TryNextMethod();
   fi;
 
-  record:=SemigroupOptions(record);
+  record:=SEMIGROUPS_ProcessOptionsRec(record);
   
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
@@ -546,7 +546,7 @@ function(s, coll, record)
   fi;
 
   return ClosureInverseSemigroupNC(s, Filtered(coll, x-> not x in s),
-   SemigroupOptions(record));
+   SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #
@@ -614,7 +614,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup, associative element, and record",
 [IsActingSemigroup, IsAssociativeElement, IsRecord],
 function(s, f, record)
-  return ClosureSemigroup(s, [f], SemigroupOptions(record));
+  return ClosureSemigroup(s, [f], SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #
@@ -652,7 +652,7 @@ function(s, coll, record)
   fi;
 
   return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s),
-   SemigroupOptions(record));
+   SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #recreate the lambda/rho orb using the higher degree!
