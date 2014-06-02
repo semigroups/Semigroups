@@ -200,30 +200,6 @@ if not IsBound(FIND_HCLASSES) then
   end);
 fi;
 
-# the following functions can be used to access/create the scc data structure
-# for R-, L-, D-, and H-classes.
-
-InstallMethod(GreensHClasses, "for SEE data", [IsSEEData], 
-function(data)
-  return FIND_HCLASSES(GreensRClasses(data), GreensLClasses(data));
-end);
-
-InstallMethod(GreensLClasses, "for SEE data", [IsSEEData], 
-function(data)
-  return GABOW_SCC(Enumerate(data)!.left);
-end);
-
-InstallMethod(GreensRClasses, "for SEE data", [IsSEEData], 
-function(data)
-  return GABOW_SCC(Enumerate(data)!.right);
-end);
-
-InstallMethod(GreensDClasses, "for SEE data", [IsSEEData], 
-function(data)
-  return SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRClasses(data),
-    GreensLClasses(data));
-end);
-
 #
 
 InstallMethod(SEEData, "for a finite semigroup with generators",
