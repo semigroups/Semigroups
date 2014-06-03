@@ -81,23 +81,29 @@ end;
 #
 
 TupleToWord := function(tuple)
-  local word1, word2;
+  local word1, word2, out;
+  
+  if IsBound(tuple![5]) then 
+    return tuple![5];
+  fi;
 
   if tuple = [] then
-    return [];
+    out:=[];
   elif tuple![2] = 0 then
-    return [tuple![1]];
+    out:=[tuple![1]];
   elif tuple![1] = tuple![3] then
-    return Concatenation(TupleToWord(tuple![2]), [tuple![1]], TupleToWord(tuple![4]));
+    out:=Concatenation(TupleToWord(tuple![2]), [tuple![1]], TupleToWord(tuple![4]));
   else
     word1 := Concatenation(TupleToWord(tuple![2]), [tuple![1]]);
     word2 := Concatenation([tuple![3]],TupleToWord(tuple![4]));
     if word1 = word2 then
-      return word1; 
+      out:=word1; 
     else
-    return Concatenation(word1, word2);
+      out:=Concatenation(word1, word2);
     fi;
   fi;
+  tuple![5]:=out;
+  return out;
 end;
 
 ################################################################################
@@ -346,16 +352,14 @@ InstallMethod(\=, "for elements of a free band",
 IsIdenticalObj,
 [IsFreeBandElement, IsFreeBandElement],
 function(tuple1, tuple2)
-  local isequal,i;
+  local i;
 
-  isequal := true;
   for i in [1 .. 4] do
     if tuple1![i] <> tuple2![i] then
-      isequal := false;
-      break;
+      return false;  
     fi;
   od;
-  return isequal;
+  return true;
 end );
 
 #############################################################################
@@ -367,15 +371,14 @@ InstallMethod(\<, "for elements of a free band",
 IsIdenticalObj,
 [IsFreeBandElement, IsFreeBandElement],
 function(tuple1, tuple2)
-  local list1, list2, i;
-
-  list1 := []; list2 := [];
+  local i;
 
   for i in [1 .. 4] do
-    list1[i] := tuple1![i];
-    list2[i] := tuple2![i];
+    if tuple1![i]>tuple2[i] then 
+      return false;
+    fi;
   od;
-  return list1 < list2;
+  return true;
 end );
 
 ##########################################################################
@@ -420,3 +423,19 @@ function(S)
 
   return output;
 end );
+
+#
+
+#InstallGlobalFunction(ORB_HashFunctionForBlocks,
+#function(blocks, data)
+#  return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
+#end);
+
+#
+
+#InstallMethod(ChooseHashFunction, "for blocks",
+#[IsBlocks, IsInt],
+#function(t,hashlen)
+#  return rec(func := ORB_HashFunctionForBlocks, data:=hashlen);
+#end );
+
