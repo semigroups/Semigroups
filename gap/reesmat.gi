@@ -8,6 +8,57 @@
 #############################################################################
 ##
 
+# this method is just a copy of the library method in GAP 4.7.5 with the extra
+# line GeneratorsOfSemigroup, so that the correct (i.e. non-exhaustive) methods
+# are used for ReesZeroMatrixSemigroups when the package is loaded. 
+
+InstallMethod(ReesZeroMatrixSemigroup, "for a semigroup and a dense list",
+[IsSemigroup, IsDenseList], 
+function(S, mat)
+  local fam, R, type, x;
+
+  if not ForAll(mat, x-> IsDenseList(x) and Length(x)=Length(mat[1])) then 
+    Error("usage: <mat> must be a list of dense lists of equal length,");
+    return;
+  fi;
+
+  for x in mat do 
+    if ForAny(x, s-> not (s=0 or s in S)) then
+      Error("usage: the entries of <mat> must be 0 or belong to <S>,");
+      return;
+    fi;
+  od;
+
+  fam := NewFamily( "ReesZeroMatrixSemigroupElementsFamily",
+          IsReesZeroMatrixSemigroupElement);
+
+  # create the Rees matrix semigroup
+  R := Objectify( NewType( CollectionsFamily( fam ), IsWholeFamily and
+   IsReesZeroMatrixSubsemigroup and IsAttributeStoringRep ), rec() );
+
+  # store the type of the elements in the semigroup
+  type:=NewType(fam, IsReesZeroMatrixSemigroupElement);
+  
+  fam!.type:=type;
+  SetTypeReesMatrixSemigroupElements(R, type); 
+  SetReesMatrixSemigroupOfFamily(fam, R);
+
+  SetMatrix(R, mat);                 SetUnderlyingSemigroup(R, S);
+  SetRows(R, [1..Length(mat[1])]);   SetColumns(R, [1..Length(mat)]);
+  SetMultiplicativeZero(R, 
+   Objectify(TypeReesMatrixSemigroupElements(R), [0]));
+
+  # cannot set IsZeroSimpleSemigroup to be <true> here since the matrix may
+  # contain a row or column consisting entirely of 0s!
+
+  if HasIsFinite(S) then 
+    SetIsFinite(R, IsFinite(S));
+  fi;
+  GeneratorsOfSemigroup(R); 
+  SetIsSimpleSemigroup(R, false);
+  return R;
+end);
+
 #
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, 
