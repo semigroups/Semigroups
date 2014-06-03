@@ -398,7 +398,8 @@ end );
 ## Size 
 ##
 
-InstallMethod(Size, "for a free band", [IsFreeBand],
+InstallMethod(Size, "for a free band", 
+[IsFreeBand and IsFinite and HasGeneratorsOfSemigroup], 
 function(S)
   local c, output, k, i, n;
   

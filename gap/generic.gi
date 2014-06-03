@@ -286,6 +286,8 @@ function(S)
 
   record.Length:=enum -> Size(S);
 
+  record.AsList:=enum -> Enumerate(SEEData(S))!.elts;
+
   record.Membership:=function(enum, elt)
     return Position(SEEData(S), elt)<>fail;
   end;
