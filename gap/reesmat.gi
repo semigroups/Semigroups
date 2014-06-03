@@ -8,6 +8,16 @@
 #############################################################################
 ##
 
+# this method is better than the generic one for acting semigroups
+
+InstallMethod(Random, "for a Rees 0-matrix semigroup", 
+[IsReesZeroMatrixSemigroup], 3, # to beat the method for regular acting semigroups
+function(R)
+  return Objectify(TypeReesMatrixSemigroupElements(R), 
+   [Random(Rows(R)), Random(UnderlyingSemigroup(R)),
+    Random(Columns(R)), Matrix(ParentAttr(R))]);
+end);
+
 # this method is just a copy of the library method in GAP 4.7.5 with the extra
 # line GeneratorsOfSemigroup, so that the correct (i.e. non-exhaustive) methods
 # are used for ReesZeroMatrixSemigroups when the package is loaded. 

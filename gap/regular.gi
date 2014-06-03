@@ -914,7 +914,7 @@ function(S)
   o:=LambdaOrb(S);
   i:=Random([2..Length(o)]);
   m:=OrbSCCLookup(o)[i];
-  x:=LambdaOrbRep(o, m)*Random(LambdaOrbSchutzGp(o, m))
+  x:=StabilizerAction(S)(LambdaOrbRep(o, m), Random(LambdaOrbSchutzGp(o, m)))
    *LambdaOrbMult(o, m, i)[1];
   
   o:=RhoOrb(S);
