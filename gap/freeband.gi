@@ -336,7 +336,7 @@ InstallMethod(ViewObj,
 function( S )
   if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
        Print( "<free band with ", Length( GeneratorsOfSemigroup( S ) ),
-                  " generators>" );
+                 " generators>" );
   else
     Print( "<free band on the generators ",
            GeneratorsOfSemigroup( S ), ">" );
@@ -374,7 +374,7 @@ function(tuple1, tuple2)
   local i;
 
   for i in [1 .. 4] do
-    if tuple1![i]>tuple2[i] then 
+    if tuple1![i]>tuple2![i] then 
       return false;
     fi;
   od;

@@ -251,7 +251,6 @@ function(S)
 
   # add the generators 
   for i in data.genstoapply do 
-    Error();
     val:=HTValue(data.ht, data.gens[i]);
     if val=fail then # new generator
       nr:=nr+1; 
