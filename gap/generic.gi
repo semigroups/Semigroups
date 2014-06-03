@@ -149,6 +149,11 @@ function(S)
   return Length(GreensDRelation(S)!.data.comps);
 end);
 
+InstallMethod(NrDClasses, "for a semigroup", [IsSemigroup],
+function(S)
+  return Length(GreensDClasses(S));
+end);
+
 #
 
 InstallMethod(NrHClasses, "for a finite semigroup with generators",
