@@ -40,7 +40,7 @@ function(arg)
 
   gens:=EmptyPlist( Length(names) );
   for m in  [1 .. Length(names)] do
-    gens[m] := Objectify(type, [m, 0, m, 0]);
+    gens[m] := Objectify(type, rec(tuple:=[m, 0, m, 0], word:=[m]));
   od;
   StoreInfoFreeMagma( F, names, IsFreeBandElement );
   S := Semigroup(gens);
@@ -313,13 +313,8 @@ end);
 ##
 
 InstallMethod(PrintObj, "for a free band element",
-[IsFreeBandElement], ViewObj);
-
-
-InstallMethod(ViewObj, "for a free band element",
-[IsFreeBandElement],
+[IsFreeBandElement], 
 function(tuple)
-
   Print( Concatenation( List( TupleToWord(tuple),
                           x -> FamilyObj(tuple)!.names[x] ) ) );
   return;
