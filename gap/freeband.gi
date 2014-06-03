@@ -83,9 +83,9 @@ end;
 TupleToWord := function(tuple)
   local word1, word2, out;
   
-  if IsBound(tuple![5]) then 
-    return tuple![5];
-  fi;
+  #if IsBound(tuple![5]) then 
+  #  return tuple![5];
+  #fi;
 
   if tuple = [] then
     out:=[];
@@ -372,14 +372,13 @@ IsIdenticalObj,
 [IsFreeBandElement, IsFreeBandElement],
 function(tuple1, tuple2)
   local i;
-
-  for i in [1 .. 4] do
-    if tuple1![i]>tuple2![i] then 
-      return false;
-    fi;
+  i:=1;
+  while i<=3 and tuple1![i]=tuple2![i] do  
+    i:=i+1;
   od;
-  return true;
-end );
+
+  return tuple1![i]<tuple2![i];
+end);
 
 ##########################################################################
 ##
