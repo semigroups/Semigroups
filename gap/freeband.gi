@@ -83,10 +83,6 @@ end;
 TupleToWord := function(tuple)
   local word1, word2, out;
   
-  #if IsBound(tuple![5]) then 
-  #  return tuple![5];
-  #fi;
-
   if tuple = [] then
     out:=[];
   elif tuple![2] = 0 then
@@ -102,7 +98,6 @@ TupleToWord := function(tuple)
       out:=Concatenation(word1, word2);
     fi;
   fi;
-  tuple![5]:=out;
   return out;
 end;
 
@@ -425,16 +420,16 @@ end );
 
 #
 
-#InstallGlobalFunction(ORB_HashFunctionForBlocks,
-#function(blocks, data)
-#  return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
-#end);
+InstallGlobalFunction(SEMIGROUPS_HashFunctionForFreeBandElements,
+function(x, data)
+  return ORB_HashFunctionForPlainFlatList(TupleToWord(x), data);
+end);
 
 #
 
-#InstallMethod(ChooseHashFunction, "for blocks",
-#[IsBlocks, IsInt],
-#function(t,hashlen)
-#  return rec(func := ORB_HashFunctionForBlocks, data:=hashlen);
-#end );
+InstallMethod(ChooseHashFunction, "for blocks",
+[IsFreeBandElement, IsInt],
+function(x, hashlen)
+  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements, data:=hashlen);
+end );
 
