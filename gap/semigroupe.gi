@@ -375,7 +375,7 @@ else
 
     stop:=false;
     
-    while i<=nr do 
+    while i<=nr and not stop do 
       lentoapply:=[1..len];
       while i<=nr and Length(words[i])=len and not stop do 
         b:=first[i];  s:=suffix[i];  # elts[i]=gens[b]*elts[s]
@@ -436,41 +436,41 @@ else
               right[i][j]:=nr;    
               reduced[i][j]:=true; 
               
-              if looking and not found then
-                if lookfunc(data, nr) then
-                  found:=true;
-                  data!.found := nr;
-                fi;
+              if looking and (not found) and lookfunc(data, nr) then
+                found:=true;
+                stop:=true;
+                data!.found := nr;
+              else
+                stop:=nr>=limit;
               fi;
             fi;
           fi;
         od; # finished applying gens to <elts[i]>
-        stop:=(nr>=limit or i=stopper or (looking and found));
+        stop:=(stop or i=stopper);
         i:=i+1;
       od; # finished words of length <len> or <looking and found>
-      if stop then 
-        break;
-      fi;
-      # process words of length <len> into <left>
-      if len>1 then 
-        for j in [lenindex[len]..i-1] do # loop over all words of length <len-1>
-          p:=prefix[j]; b:=final[j];
-          for k in genstoapply do 
-            left[j][k]:=right[left[p][k]][b];
-            # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+      if i>nr or Length(words[i])<>len then 
+        # process words of length <len> into <left>
+        if len>1 then 
+          for j in [lenindex[len]..i-1] do # loop over all words of length <len-1>
+            p:=prefix[j]; b:=final[j];
+            for k in genstoapply do 
+              left[j][k]:=right[left[p][k]][b];
+              # gens[k]*elts[j]=(gens[k]*elts[p])*gens[b]
+            od;
           od;
-        od;
-      elif len=1 then 
-        for j in [lenindex[len]..i-1] do  # loop over all words of length <1>
-          b:=final[j];
-          for k in genstoapply do 
-            left[j][k]:=right[genslookup[k]][b];
-            # gens[k]*elts[j]=elts[k]*gens[b]
+        elif len=1 then 
+          for j in [lenindex[len]..i-1] do  # loop over all words of length <1>
+            b:=final[j];
+            for k in genstoapply do 
+              left[j][k]:=right[genslookup[k]][b];
+              # gens[k]*elts[j]=elts[k]*gens[b]
+            od;
           od;
-        od;
+        fi;
+        len:=len+1;
+        lenindex[len]:=i;
       fi;
-      len:=len+1;
-      lenindex[len]:=i;    
     od;
     
     data!.nr:=nr;    
