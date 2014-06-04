@@ -126,23 +126,12 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
   #ifdef DEBUG
     Pr("here 4\n", 0L, 0L);
   #endif 
-  for(j=1;j<=nrgens;j++){
-    k = INT_PLIST(genslookup, j);
-    if(TNUM_OBJ(ELM_PLIST(right, k))==T_PLIST_EMPTY){
-      RetypeBag(ELM_PLIST(right, k), T_PLIST_CYC);
-    }
-    if(TNUM_OBJ(ELM_PLIST(left, k))==T_PLIST_EMPTY){
-      RetypeBag(ELM_PLIST(left, k), T_PLIST_CYC);
-    }
-  }
 
-  #ifdef DEBUG
-    Pr("here 5\n", 0L, 0L);
-  #endif 
   while(i<=nr){
     while(i<=nr&&LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
       b=INT_INTOBJ(ELM_PLIST(first, i)); 
       s=INT_INTOBJ(ELM_PLIST(suffix, i));
+      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); //from T_PLIST_EMPTY
       for(j = 1;j <= nrgens;j++){
         #ifdef DEBUG
           Pr("i=%d\n", (Int) i, 0L);
@@ -230,11 +219,11 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
             AssPlist(final, nr, INTOBJ_INT(j));
             AssPlist(prefix, nr, INTOBJ_INT(i));
             
-            empty = NEW_PLIST(T_PLIST_CYC, nrgens);
+            empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
             SET_LEN_PLIST(empty, 0);
             AssPlist(right, nr, empty);
             
-            empty = NEW_PLIST(T_PLIST_CYC, nrgens);
+            empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
             SET_LEN_PLIST(empty, 0);
             AssPlist(left, nr, empty);
             
@@ -257,9 +246,8 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
           }
         }
       }//finished applying gens to <elts[i]>
-      i++;
       stop=(nr>=int_limit||i==stopper||(looking==True&&found==True));
-
+      i++;
     }//finished words of length <len> or <looking and found>
     if(stop) break;
     #ifdef DEBUG
@@ -270,6 +258,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
         Pr("Case 6!\n", 0L, 0L);
       #endif
       for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
+        RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
         p=INT_INTOBJ(ELM_PLIST(prefix, j)); 
         b=INT_INTOBJ(ELM_PLIST(final, j));
         for(k=1;k<=nrgens;k++){ 
@@ -281,6 +270,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
         Pr("Case 7!\n", 0L, 0L);
       #endif
       for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
+        RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
         b=INT_INTOBJ(ELM_PLIST(final, j));
         for(k=1;k<=nrgens;k++){ 
           SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST(genslookup, k) , b));
