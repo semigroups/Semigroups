@@ -168,8 +168,7 @@ function(C)
   return Length(GreensHClasses(C));
 end);
 
-#JDM: this doesn't yet work properly, and returns an error for transformation
-#semigroups
+#
 
 InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],

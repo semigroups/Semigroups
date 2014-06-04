@@ -64,7 +64,7 @@ ViewString);
 
 #
 
-InstallMethod(ViewString, "for a partial perm semigroup with generators",
+InstallMethod(ViewString, "for a partial perm semigroup ideal with generators",
 [IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 
 function(I)
   local str, nrgens;

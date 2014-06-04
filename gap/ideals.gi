@@ -11,6 +11,20 @@
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 
+# this is here for non-acting semigroup ideals
+
+InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal", 
+[IsSemigroupIdeal],
+function(I)
+
+  if HasSupersemigroupOfIdeal(Parent(I)) then 
+    return SupersemigroupOfIdeal(Parent(I));
+  else
+    return Parent(I);
+  fi;
+
+end);
+
 #
 
 InstallMethod(PrintObj, 
