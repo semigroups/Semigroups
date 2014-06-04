@@ -8,8 +8,7 @@
 #############################################################################
 ##
 
-DeclareAttribute("SEEData", IsFinite and IsSemigroup and
-HasGeneratorsOfSemigroup, "mutable");
+DeclareAttribute("SEEData", IsFinite and IsSemigroup, "mutable");
 DeclareCategory("IsSEEData", IsList);
 DeclareFilter("IsClosedSEEData", IsSEEData);
 

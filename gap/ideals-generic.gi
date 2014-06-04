@@ -192,7 +192,7 @@ function(x, I)
   return Position(Enumerator(I), x)<>fail;
 end);
 
-#
+#JDM: this should be better, more like the method in ideals-acting.gi
 
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],

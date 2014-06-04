@@ -200,10 +200,10 @@ if not IsBound(FIND_HCLASSES) then
   end);
 fi;
 
-#
+# same method for ideals
 
-InstallMethod(SEEData, "for a finite semigroup with generators",
-[IsFinite and IsSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(SEEData, "for a finite semigroup",
+[IsFinite and IsSemigroup], 
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
