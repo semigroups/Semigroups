@@ -8,10 +8,9 @@
 #############################################################################
 ##
 
-DeclareAttribute("DotDClasses", IsActingSemigroup, "mutable");
-DeclareAttribute("DotDClasses", IsReesZeroMatrixSemigroup, "mutable");
+DeclareAttribute("DotDClasses", IsSemigroup, "mutable");
 DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup, "mutable");
-DeclareOperation("DotDClasses", [IsActingSemigroup, IsRecord]);
+DeclareOperation("DotDClasses", [IsSemigroup, IsRecord]);
 
 DeclareGlobalFunction("TikzBipartition");
 DeclareGlobalFunction("TikzBlocks");

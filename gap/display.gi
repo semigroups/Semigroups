@@ -389,25 +389,14 @@ end);
 
 #
 
-#InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
-#[IsReesZeroMatrixSemigroup], 
-#function(S)
-#  if IsActingSemigroup(S) then 
-#    TryNextMethod();
-#  fi;
-#  return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)));
-#end);
-
-#
-
 InstallMethod(DotDClasses, "for an acting semigroup",
-[IsActingSemigroup], 
-function(s)
-  return DotDClasses(s, rec());
+[IsSemigroup], 
+function(S)
+  return DotDClasses(S, rec());
 end);
 
-InstallMethod(DotDClasses, "for an acting semigroup and record",
-[IsActingSemigroup, IsRecord],
+InstallMethod(DotDClasses, "for a semigroup and record",
+[IsSemigroup, IsRecord],
 function(s, opts)
   local es, elts, str, i, gp, h, rel, j, k, di, dk, d, l, x;
 

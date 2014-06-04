@@ -138,4 +138,5 @@ ReadPackage("semigroups/gap/univcong.gi");
 
 ReadPackage("semigroups/gap/semigroupe.gi");
 ReadPackage("semigroups/gap/generic.gi");
+ReadPackage("semigroups/gap/ideals-generic.gi");
 

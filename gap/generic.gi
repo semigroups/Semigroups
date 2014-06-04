@@ -11,11 +11,97 @@
 # Code for generic semigroups (i.e. ones which know \*), ties in the
 # Froidure-Pin Semigroupe algorithm to GAP methods.
 
+# methods for things declared in the GAP library
+
+# different method for ideals
+
+InstallMethod(Enumerator, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  local data, record;
+  
+  record:=rec();
+
+  record.NumberElement:=function(enum, elt)
+    return Position(SEEData(S), elt);
+  end;
+
+  record.ElementNumber:=function(enum, nr)
+    data:=SEEData(S);
+    if not IsBound(data!.elts[nr]) then 
+      Enumerate(data, nr);
+    fi;
+    return data!.elts[nr];
+  end;
+
+  record.Length:=enum -> Size(S);
+
+  record.AsList:=enum -> Enumerate(SEEData(S))!.elts;
+
+  record.Membership:=function(enum, elt)
+    return Position(SEEData(S), elt)<>fail;
+  end;
+
+  record.IsBound\[\]:=function(enum, nr)
+    return IsBound(SEEData(S)!.elts[nr]);
+  end;
+
+  return EnumeratorByFunctions(S, record);
+end);    
+
+# different method for ideals
+
+InstallMethod(Size, "for a finite semigroup with generators", 
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  return Length(Enumerate(SEEData(S), infinity, ReturnFalse)!.elts);
+end);
+
+# different method for ideals
+
+InstallMethod(\in, "for an associative element and finite semigroup with generators",
+[IsAssociativeElement, IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(x, S)
+  return Position(SEEData(S), x)<>fail;
+end);
+
+# different method for ideals
+# JDM: can probably do better than this by considering Green's classes.
+
+InstallMethod(Idempotents, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  local data, elts, idempotents, nr, i;
+
+  data:=Enumerate(SEEData(S));
+
+  if not IsBound(data!.idempotents) then 
+
+    elts:=data!.elts;
+    idempotents:=EmptyPlist(Length(elts));
+    nr:=0;
+
+    for i in [1..Length(elts)] do 
+      if elts[i]*elts[i]=elts[i] then 
+        nr:=nr+1;
+        idempotents[nr]:=i;
+      fi;
+    od;
+    
+    data!.idempotents:=idempotents;
+    ShrinkAllocationPlist(idempotents);
+  fi;
+
+  return data!.elts{data!.idempotents};
+end);
+
 # Green's classes: the idea is to only store the index of the equivalence class
 # corresponding to the Green's class, then look everything up in the data. The
 # equivalence class data structures for R-, L-, H-, D-classes of a finite
 # semigroup <S> are stored in the !.data component of the corresponding Green's
 # relation. 
+
+# same method for ideals
 
 InstallMethod(GreensRRelation, "for a semigroup", [IsSemigroup], 
 function(S)
@@ -39,6 +125,8 @@ function(S)
   fi;
   return rel;
 end);
+
+# same method for ideals
 
 InstallMethod(GreensLRelation, "for a semigroup",  [IsSemigroup], 
 function(S)
@@ -64,8 +152,12 @@ function(S)
   return rel;
 end);
 
+# same method for ideals
+
 InstallMethod(GreensJRelation, "for a finite semigroup",  [IsSemigroup and IsFinite], 
 GreensDRelation);
+
+# same method for ideals
 
 InstallMethod(GreensDRelation, "for a semigroup",  [IsSemigroup], 
 function(S)
@@ -91,6 +183,8 @@ function(S)
   return rel;
 end);
 
+# same method for ideals
+
 InstallMethod(GreensHRelation, "for a semigroup",  [IsSemigroup], 
 function(S)
     local fam, rel;
@@ -113,77 +207,10 @@ function(S)
   return rel;
 end);
 
-# Methods for things declared in the Semigroups package...
+# same method for ideals
 
-InstallMethod(NrRClasses, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  return Length(GreensRRelation(S)!.data.comps);
-end);
-
-InstallMethod(NrRClasses, "for a Green's D-class",
-[IsGreensDClass],
-function(D)
-  return Length(GreensRClasses(D));
-end);
-
-#
-
-InstallMethod(NrLClasses, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  return Length(GreensLRelation(S)!.data.comps);
-end);
-
-InstallMethod(NrLClasses, "for a Green's D-class",
-[IsGreensDClass],
-function(D)
-  return Length(GreensLClasses(D));
-end);
-
-#
-
-InstallMethod(NrDClasses, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  return Length(GreensDRelation(S)!.data.comps);
-end);
-
-InstallMethod(NrDClasses, "for a semigroup", [IsSemigroup],
-function(S)
-  return Length(GreensDClasses(S));
-end);
-
-#
-
-InstallMethod(NrHClasses, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  return Length(GreensHRelation(S)!.data.comps);
-end);
-
-InstallMethod(NrHClasses, "for a Green's class",
-[IsGreensClass],
-function(C)
-  return Length(GreensHClasses(C));
-end);
-
-#
-
-InstallMethod(MinimalIdeal, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  local data, scc;
-  data:=Enumerate(SEEData(S));
-  scc:=GreensRRelation(S)!.data;
-  return SemigroupIdeal(S, data!.elts[scc.comps[1][1]]);
-end);
-
-
-# Methods for things declared in the GAP library
-
-InstallMethod(IsomorphismFpMonoid, "for a finite monoid with generators",
-[IsMonoid and IsFinite and HasGeneratorsOfMonoid],
+InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
+[IsMonoid and IsFinite],
 function(S)
   local rules, F, A, rels, Q, B;
  
@@ -201,10 +228,10 @@ function(S)
 
 end);
 
-#
+# same method for ideals
 
-InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
 function(S)
   local rules, F, A, rels, Q, B;
   
@@ -221,10 +248,10 @@ function(S)
    x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
 end);
 
-#
+# same method for ideals
 
-InstallMethod(IsomorphismFpSemigroup, "for a finite monoid with generators",
-[IsMonoid and IsFinite and HasGeneratorsOfMonoid],
+InstallMethod(IsomorphismFpSemigroup, "for a finite monoid",
+[IsMonoid and IsFinite],
 function(S)
   local rules, lookup, convert, F, A, rels, one, Q, B, i;
  
@@ -267,75 +294,26 @@ function(S)
    x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
 end);
 
-#
+# same method for ideals
 
-InstallMethod(Enumerator, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  local data, record;
-  
-  record:=rec();
-
-  record.NumberElement:=function(enum, elt)
-    return Position(SEEData(S), elt);
-  end;
-
-  record.ElementNumber:=function(enum, nr)
-    data:=SEEData(S);
-    if not IsBound(data!.elts[nr]) then 
-      Enumerate(data, nr);
-    fi;
-    return data!.elts[nr];
-  end;
-
-  record.Length:=enum -> Size(S);
-
-  record.AsList:=enum -> Enumerate(SEEData(S))!.elts;
-
-  record.Membership:=function(enum, elt)
-    return Position(SEEData(S), elt)<>fail;
-  end;
-
-  record.IsBound\[\]:=function(enum, nr)
-    return IsBound(SEEData(S)!.elts[nr]);
-  end;
-
-  return EnumeratorByFunctions(S, record);
-end);    
-
-#
-
-InstallMethod(Size, "for a finite semigroup with generators", 
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  return Length(Enumerate(SEEData(S), infinity, ReturnFalse)!.elts);
-end);
-
-#
-
-InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
 function(S)
   return Enumerate(SEEData(S))!.right;
 end);
 
-#
+# same method for ideals
 
-InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
 function(S)
   return Enumerate(SEEData(S))!.left;
 end);
 
-#
 
-InstallMethod(\in, "for an associative element and finite semigroup with generators",
-[IsAssociativeElement, IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(x, S)
-  return Position(SEEData(S), x)<>fail;
-end);
-
-#
+# same method for ideals
+# this is declared in the library, but there is no method for semigroups in the
+# library.
 
 InstallMethod(Factorization,
 "for a finite semigroup with generators and an associative element",
@@ -348,38 +326,6 @@ function(S, x)
   fi;
   return SEEData(S)!.words[pos];
 end);
-
-# JDM: can probably do better than this by considering Green's classes.
-
-InstallMethod(Idempotents, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
-function(S)
-  local data, elts, idempotents, nr, i;
-
-  data:=Enumerate(SEEData(S));
-
-  if not IsBound(data!.idempotents) then 
-
-    elts:=data!.elts;
-    idempotents:=EmptyPlist(Length(elts));
-    nr:=0;
-
-    for i in [1..Length(elts)] do 
-      if elts[i]*elts[i]=elts[i] then 
-        nr:=nr+1;
-        idempotents[nr]:=i;
-      fi;
-    od;
-    
-    data!.idempotents:=idempotents;
-    ShrinkAllocationPlist(idempotents);
-  fi;
-
-  return data!.elts{data!.idempotents};
-end);
-
-InstallMethod(NrIdempotents, "for a semigroup",
-[IsSemigroup], S-> Length(Idempotents(S)));
 
 #
 
@@ -557,5 +503,77 @@ function(C)
   TryNextMethod();
 end);
 
-#
+# Methods for things declared in the Semigroups package but not in the GAP
+# library
+
+# same method for ideals
+
+InstallMethod(NrIdempotents, "for a semigroup",
+[IsSemigroup], S-> Length(Idempotents(S)));
+
+# same method for ideals
+
+InstallMethod(NrRClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  return Length(GreensRRelation(S)!.data.comps);
+end);
+
+InstallMethod(NrRClasses, "for a Green's D-class",
+[IsGreensDClass],
+function(D)
+  return Length(GreensRClasses(D));
+end);
+
+# same method for ideals
+
+InstallMethod(NrLClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  return Length(GreensLRelation(S)!.data.comps);
+end);
+
+InstallMethod(NrLClasses, "for a Green's D-class",
+[IsGreensDClass],
+function(D)
+  return Length(GreensLClasses(D));
+end);
+
+# same method for ideals
+
+InstallMethod(NrDClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  return Length(GreensDRelation(S)!.data.comps);
+end);
+
+InstallMethod(NrDClasses, "for a semigroup", [IsSemigroup],
+function(S)
+  return Length(GreensDClasses(S));
+end);
+
+# same method for ideals
+
+InstallMethod(NrHClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  return Length(GreensHRelation(S)!.data.comps);
+end);
+
+InstallMethod(NrHClasses, "for a Green's class",
+[IsGreensClass],
+function(C)
+  return Length(GreensHClasses(C));
+end);
+
+# same method for ideals
+
+InstallMethod(MinimalIdeal, "for a finite semigroup",
+[IsSemigroup],
+function(S)
+  local data, scc;
+  data:=Enumerate(SEEData(S));
+  scc:=GreensRRelation(S)!.data;
+  return SemigroupIdeal(S, data!.elts[scc.comps[1][1]]);
+end);
 

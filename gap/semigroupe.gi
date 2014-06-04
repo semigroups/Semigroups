@@ -445,8 +445,8 @@ else
             fi;
           fi;
         od; # finished applying gens to <elts[i]>
-        i:=i+1;
         stop:=(nr>=limit or i=stopper or (looking and found));
+        i:=i+1;
       od; # finished words of length <len> or <looking and found>
       if stop then 
         break;
