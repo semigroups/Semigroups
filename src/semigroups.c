@@ -127,7 +127,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
     Pr("here 4\n", 0L, 0L);
   #endif 
 
-  while(i<=nr){
+  while(i<=nr&&!stop){
     while(i<=nr&&LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
       b=INT_INTOBJ(ELM_PLIST(first, i)); 
       s=INT_INTOBJ(ELM_PLIST(suffix, i));
@@ -190,6 +190,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
               Pr("Case 5!\n", 0L, 0L);
             #endif
             nr++;
+            
             HTAdd_TreeHash_C(self, ht, new, INTOBJ_INT(nr));
 
             if(one==0){
@@ -237,48 +238,51 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
             SET_ELM_PLIST2(reduced, i, j, True);
             SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));
             
-            if(looking==True&&found==False){
-              if(CALL_2ARGS( lookfunc, data, INTOBJ_INT(nr))==True){
+            if(looking==True&&found==False&&
+                CALL_2ARGS(lookfunc, data, INTOBJ_INT(nr))==True){
                 found=True;
+                stop=1;
                 AssPRec(data,  RNamName("found"), INTOBJ_INT(nr)); 
-              }
-            } 
+            } else {
+              stop=(nr>=int_limit);
+            }
           }
         }
       }//finished applying gens to <elts[i]>
-      stop=(nr>=int_limit||i==stopper||(looking==True&&found==True));
+      stop=(stop||i==stopper);
       i++;
-    }//finished words of length <len> or <looking and found>
-    if(stop) break;
+    }//finished words of length <len> or <stop>
     #ifdef DEBUG
       Pr("finished processing words of len %d\n", (Int) len, 0L);
     #endif
-    if(len>1){
-      #ifdef DEBUG
-        Pr("Case 6!\n", 0L, 0L);
-      #endif
-      for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
-        RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
-        p=INT_INTOBJ(ELM_PLIST(prefix, j)); 
-        b=INT_INTOBJ(ELM_PLIST(final, j));
-        for(k=1;k<=nrgens;k++){ 
-          SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST2(left, p, k), b));
+    if(i>nr||LEN_PLIST(ELM_PLIST(words, i))!=len){
+      if(len>1){
+        #ifdef DEBUG
+          Pr("Case 6!\n", 0L, 0L);
+        #endif
+        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
+          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
+          p=INT_INTOBJ(ELM_PLIST(prefix, j)); 
+          b=INT_INTOBJ(ELM_PLIST(final, j));
+          for(k=1;k<=nrgens;k++){ 
+            SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST2(left, p, k), b));
+          }
+        }
+      } else if(len==1){ 
+        #ifdef DEBUG
+          Pr("Case 7!\n", 0L, 0L);
+        #endif
+        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
+          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
+          b=INT_INTOBJ(ELM_PLIST(final, j));
+          for(k=1;k<=nrgens;k++){ 
+            SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST(genslookup, k) , b));
+          }
         }
       }
-    } else if(len==1){ 
-      #ifdef DEBUG
-        Pr("Case 7!\n", 0L, 0L);
-      #endif
-      for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
-        RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
-        b=INT_INTOBJ(ELM_PLIST(final, j));
-        for(k=1;k<=nrgens;k++){ 
-          SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST(genslookup, k) , b));
-        }
-      }
+      len++;
+      AssPlist(lenindex, len, INTOBJ_INT(i));  
     }
-    len++;
-    AssPlist(lenindex, len, INTOBJ_INT(i));  
   }
   
   AssPRec(data, RNamName("nr"), INTOBJ_INT(nr));  
