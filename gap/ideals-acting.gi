@@ -1,6 +1,6 @@
 ############################################################################# 
 ## 
-#W  ideals-acting.gi
+#W  ideals-non-exhaustive.gi
 #Y  Copyright (C) 2013-14                                 James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
@@ -10,15 +10,15 @@
 
 #
 
-InstallMethod(SemigroupData, "for a regular acting semigroup ideal",
-[IsActingSemigroup and IsRegularSemigroup and IsSemigroupIdeal],
+InstallMethod(SemigroupData, "for a regular non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup and IsSemigroupIdeal],
 SemigroupIdealData);
 
 # JDM this method should become obsolete in time...
 # <I> is not regular if this function is invoked...
 
-InstallMethod(SemigroupData, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(SemigroupData, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
   
@@ -77,8 +77,8 @@ end);
 
 #
 
-InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(GeneratorsOfSemigroup, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
    
@@ -134,8 +134,8 @@ end);
 
 #
 
-InstallMethod(GeneratorsOfSemigroup, "for an inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+InstallMethod(GeneratorsOfSemigroup, "for an inverse op non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
   local out, U, i, partial, D, pos, inj, j, C;
  
@@ -182,8 +182,8 @@ end);
 #
 
 InstallMethod(GeneratorsOfInverseSemigroup, 
-"for an inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+"for an inverse op non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
 
   local U, i, partial, D, pos, inj, j, C;
@@ -227,8 +227,8 @@ end);
 
 # this could be simplier for ideals which know they are regular a priori.
 
-InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(SemigroupIdealData, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local gens, data, filt; 
 
@@ -253,8 +253,8 @@ end);
 
 #
 
-InstallMethod(SemigroupIdealData, "for an inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal], ReturnFail);
+InstallMethod(SemigroupIdealData, "for an inverse op non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal], ReturnFail);
 
 #
 
@@ -622,13 +622,13 @@ end);
 #
 
 InstallMethod(\in, 
-"for an associative element and regular acting semigroup ideal",  
-[IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup], 
+"for an associative element and regular non-exhaustive semigroup ideal",  
+[IsAssociativeElement, IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup], 
 function(x, I)
   local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   
   if ElementsFamily(FamilyObj(I))<>FamilyObj(x) 
-    or (IsActingSemigroupWithFixedDegreeMultiplication(I) 
+    or (IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(I) 
      and ActionDegree(x)<>ActionDegree(I)) 
     or (ActionDegree(x)>ActionDegree(I)) then 
     return false;
@@ -815,8 +815,8 @@ end);
 
 # JDM; this method could be removed later...
 
-InstallMethod(Size, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal], 
+InstallMethod(Size, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal], 
 function(s)
   local data, lenreps, repslens, o, scc, size, n, m, i;
    

@@ -12,8 +12,8 @@ DeclareGlobalFunction("RectifyLambda");
 DeclareGlobalFunction("RectifyRho");
 DeclareGlobalFunction("RectifyInverseRho");
 
-DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
-DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
+DeclareAttribute("LambdaOrb", IsNonExhaustiveSemigroup, "mutable");
+DeclareAttribute("RhoOrb", IsNonExhaustiveSemigroup, "mutable");
 DeclareFilter("IsLambdaOrb", IsOrbit);
 DeclareFilter("IsRhoOrb", IsOrbit);
 DeclareFilter("IsInverseOrb", IsOrbit);
@@ -27,7 +27,7 @@ DeclareGlobalFunction("LambdaOrbRep");
 DeclareGlobalFunction("RhoOrbRep");
 DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
-DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
+DeclareAttribute("RhoOrbStabChain", IsNonExhaustiveSemigroupGreensClass);
 DeclareOperation("RhoOrbStabChain", [IsOrbit, IsPosInt]);
 
 #EOF

@@ -11,17 +11,17 @@
 # hash table of all lambda values found so far, HTValue of LambdaHT points
 # to where the graded orbit is in GradedLambdaOrbs
 # only applies in graded case
-DeclareAttribute("GradedLambdaHT", IsActingSemigroup, "mutable");
-DeclareAttribute("GradedRhoHT", IsActingSemigroup, "mutable");
+DeclareAttribute("GradedLambdaHT", IsNonExhaustiveSemigroup, "mutable");
+DeclareAttribute("GradedRhoHT", IsNonExhaustiveSemigroup, "mutable");
 
 DeclareGlobalFunction("GradedLambdaOrb");
 DeclareGlobalFunction("GradedRhoOrb");
 DeclareFilter("IsGradedLambdaOrb", IsLambdaOrb);
 DeclareFilter("IsGradedRhoOrb", IsRhoOrb);
 
-DeclareAttribute("GradedLambdaOrbs", IsActingSemigroup, "mutable");
+DeclareAttribute("GradedLambdaOrbs", IsNonExhaustiveSemigroup, "mutable");
 DeclareGlobalFunction("IteratorOfGradedLambdaOrbs");
-DeclareAttribute("GradedRhoOrbs", IsActingSemigroup, "mutable");
+DeclareAttribute("GradedRhoOrbs", IsNonExhaustiveSemigroup, "mutable");
 DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
 DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 

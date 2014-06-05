@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  acting.gd
+#W  non-exhaustive.gd
 #Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
+DeclareAttribute("SemigroupData", IsNonExhaustiveSemigroup, "mutable");
 DeclareCategory("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
 DeclareAttribute("SizeOfSemigroupData", IsSemigroupData);

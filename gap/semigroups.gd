@@ -33,24 +33,24 @@ IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGenerators",
 [IsAssociativeElementCollection, IsRecord]);
 
-DeclareOperation("ClosureInverseSemigroup", [IsActingSemigroupWithInverseOp,
+DeclareOperation("ClosureInverseSemigroup", [IsNonExhaustiveSemigroupWithInverseOp,
 IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection]);
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElementCollection]);
 DeclareOperation("ClosureInverseSemigroup", 
-[IsActingSemigroupWithInverseOp, IsAssociativeElement]);
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
 DeclareOperation("ClosureSemigroup", 
-[IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
+[IsNonExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureSemigroup", 
-[IsActingSemigroup, IsAssociativeElementCollection]);
+[IsNonExhaustiveSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureSemigroup",
-[IsActingSemigroup, IsAssociativeElement, IsRecord]);
+[IsNonExhaustiveSemigroup, IsAssociativeElement, IsRecord]);
 DeclareOperation("ClosureSemigroup",
-[IsActingSemigroup, IsAssociativeElement]);
+[IsNonExhaustiveSemigroup, IsAssociativeElement]);
 DeclareGlobalFunction("ClosureSemigroupNC");
 
 DeclareGlobalFunction("ChangeDegreeOfTransformationSemigroupOrb");
@@ -72,12 +72,12 @@ DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty", 
-[IsActingSemigroup, IsFunction, IsPosInt]);
+[IsNonExhaustiveSemigroup, IsFunction, IsPosInt]);
 
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty", 
-[IsActingSemigroupWithInverseOp, IsFunction, IsPosInt]);
+[IsNonExhaustiveSemigroupWithInverseOp, IsFunction, IsPosInt]);
 
 # undoc
 

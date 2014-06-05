@@ -8,20 +8,20 @@
 #############################################################################
 ##
 
-## Methods for Green's classes of regular acting semigroups
+## Methods for Green's classes of regular non-exhaustive semigroups
 
-InstallMethod(RhoCosets, "for a regular class of an acting semigroup", 
-[IsRegularClass and IsActingSemigroupGreensClass], 
+InstallMethod(RhoCosets, "for a regular class of a non-exhaustive semigroup", 
+[IsRegularClass and IsNonExhaustiveSemigroupGreensClass], 
 function(x)
   return [()];
 end);
 
-# acting...
+# non-exhaustive...
 
 # not required for inverse, same method for ideals
 
 InstallMethod(RhoOrbStabChain, "for a regular D-class",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local g;
 
@@ -41,13 +41,13 @@ end);
 
 # different method for inverse, same method for ideals
 
-InstallMethod(\in, "for an associative element and regular acting semigroup",
-[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup], 
+InstallMethod(\in, "for an associative element and regular non-exhaustive semigroup",
+[IsAssociativeElement, IsNonExhaustiveSemigroup and IsRegularSemigroup], 
 function(f, s)
   local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
 
   if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
-    or (IsActingSemigroupWithFixedDegreeMultiplication(s)
+    or (IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(s)
         and ActionDegree(f)<>ActionDegree(s))
     or ActionDegree(f)>ActionDegree(s) then
     return false;
@@ -128,8 +128,8 @@ end);
 
 #
 
-InstallMethod(\in, "for associative element and regular D-class of acting semigroup",
-[IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(\in, "for associative element and regular D-class of non-exhaustive semigroup",
+[IsAssociativeElement, IsRegularClass and IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
 
@@ -137,7 +137,7 @@ function(f, d)
   s:=Parent(d);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+    or (IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(s) 
         and ActionDegree(f)<>ActionDegree(rep)) 
     or ActionRank(s)(f) <> ActionRank(s)(rep) then
     return false;
@@ -188,12 +188,12 @@ end);
 # Note that these are not rectified!
 
 # this method could apply to regular ideals but is not used since the rank of
-# IsActingSemigroup and IsSemigroupIdeal is higher than the rank for this
+# IsNonExhaustiveSemigroup and IsSemigroupIdeal is higher than the rank for this
 # method. Anyway the data of an ideal must be enumerated to the end to know the
 # DClassReps, and to know the LambdaOrb, so these methods are equal.
 
-InstallMethod(DClassReps, "for a regular acting semigroup with generators",
-[IsRegularSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(DClassReps, "for a regular non-exhaustive semigroup with generators",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local o, r, out, m;
 
@@ -209,8 +209,8 @@ end);
 
 # different method for inverse, same for ideals
 
-InstallMethod(HClassReps, "for a regular acting semigroup", 
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(HClassReps, "for a regular non-exhaustive semigroup", 
+[IsRegularSemigroup and IsNonExhaustiveSemigroup],
 function(s)
   local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, n, lambda_mults, f, rho_l, rho_m, rho_mults, lambda_m, j, k;
   
@@ -246,8 +246,8 @@ end);
 
 # different method for inverse
  
-InstallMethod(HClassReps, "for a regular D-class of an acting semigroup",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(HClassReps, "for a regular D-class of a non-exhaustive semigroup",
+[IsRegularClass and IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local o, m, lambda_scc, lambda_mults, rho_scc, rho_mults, f, out, k, g, i, j;
   
@@ -278,8 +278,8 @@ end);
 
 # different method for inverse
   
-InstallMethod(HClassReps, "for a regular L-class of an acting semigroup",
-[IsRegularClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(HClassReps, "for a regular L-class of a non-exhaustive semigroup",
+[IsRegularClass and IsGreensLClass and IsNonExhaustiveSemigroupGreensClass],
 function(l)
   local o, m, scc, mults, f, out, k, i;
   
@@ -301,8 +301,8 @@ end);
 
 # same method for inverse
 
-InstallMethod(HClassReps, "for a regular R-class of an acting semigroup",
-[IsRegularClass and IsGreensRClass and IsActingSemigroupGreensClass],
+InstallMethod(HClassReps, "for a regular R-class of a non-exhaustive semigroup",
+[IsRegularClass and IsGreensRClass and IsNonExhaustiveSemigroupGreensClass],
 function(l)
   local o, m, scc, mults, f, out, k, i;
   
@@ -326,8 +326,8 @@ end);
 
 # same method for inverse/ideals
 
-InstallMethod(LClassReps, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(LClassReps, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local o, scc, len, out, n, f, mults, m, j;
   
@@ -351,8 +351,8 @@ end);
 
 # same method for inverse
 
-InstallMethod(LClassReps, "for a regular D-class of acting semigroup",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(LClassReps, "for a regular D-class of non-exhaustive semigroup",
+[IsRegularClass and IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local o, m, mults, scc, f, out, k, j;
 
@@ -376,8 +376,8 @@ end);
 
 # note that these are not rectified!!
 
-InstallMethod(RClassReps, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(RClassReps, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local rho_o, scc, len, out, n, f, mults, m, j;
   
@@ -401,8 +401,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(RClassReps, "for a D-class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+InstallMethod(RClassReps, "for a D-class of a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 function(d)
   local o, m, mults, scc, f, out, k, i;
 
@@ -424,8 +424,8 @@ end);
 # different method for inverse, different method for ideals
 # see the note above next to DClassReps
 
-InstallMethod(GreensDClasses, "for a regular acting semigroup with generators",
-[IsRegularSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(GreensDClasses, "for a regular non-exhaustive semigroup with generators",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local lambda_o, rho_o, len, out, type, drel, d, rectify, m;
 
@@ -448,8 +448,8 @@ end);
 
 # different method for inverse, same for ideals
 
-InstallMethod(GreensHClasses, "for a regular acting semigroup", 
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(GreensHClasses, "for a regular non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, type, n, lambda_mults, f, rho_l, rho_m, rho_mults, g, lambda_m, j, k;
 
@@ -488,8 +488,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(GreensHClasses, "for D-class of regular acting semigroup",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(GreensHClasses, "for D-class of regular non-exhaustive semigroup",
+[IsRegularClass and IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local lambda_o, lambda_m, lambda_scc, lambda_mults, rho_o, rho_m, rho_scc,
   rho_mults, f, nc, s, out, k, g, i, j;
@@ -524,8 +524,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(GreensHClasses, "for L-class of regular acting semigroup",
-[IsRegularClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(GreensHClasses, "for L-class of regular non-exhaustive semigroup",
+[IsRegularClass and IsGreensLClass and IsNonExhaustiveSemigroupGreensClass],
 function(l)
   local rho_o, rho_m, scc, mults, f, nc, s, lambda_o, lambda_l, lambda_m, out,
   k, j;
@@ -563,8 +563,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(GreensHClasses, "for R-class of regular acting semigroup",
-[IsRegularClass and IsGreensRClass and IsActingSemigroupGreensClass],
+InstallMethod(GreensHClasses, "for R-class of regular non-exhaustive semigroup",
+[IsRegularClass and IsGreensRClass and IsNonExhaustiveSemigroupGreensClass],
 function(r)
   local lambda_o, lambda_m, scc, mults, f, nc, s, rho_o, rho_l, rho_m, out, k, j;
 
@@ -601,8 +601,8 @@ end);
 
 # different method for inverse, same for ideals
 
-InstallMethod(GreensLClasses, "for a regular acting semigroup", 
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(GreensLClasses, "for a regular non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local rho_o, lambda_o, lambda_scc, len, out, n, rectify, m, f, mults, lambda_m, j;
   
@@ -632,8 +632,8 @@ end);
 
 # different method for inverse.
 
-InstallMethod(GreensLClasses, "for regular D-class of acting semigroup", 
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+InstallMethod(GreensLClasses, "for regular D-class of non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 function(d)
   local f, s, o, m, nc, scc, mults, out, k, i;
   
@@ -661,8 +661,8 @@ end);
 
 # different method for inverse, same method for ideals 
 
-InstallMethod(GreensRClasses, "for a regular acting semigroup", 
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(GreensRClasses, "for a regular non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, lambdafunc, out, n, f, lambda_l, lambda_m, mults, rho_m, j;
   
@@ -694,8 +694,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(GreensRClasses, "for a regular D-class of acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+InstallMethod(GreensRClasses, "for a regular D-class of non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 function(d)
   local mults, scc, f, s, o, m, nc, out, k, i;
 
@@ -721,8 +721,8 @@ end);
 
 # same method for inverse,
 
-InstallMethod(GreensRClassOfElement, "for regular acting semigroup and element",
-[IsRegularSemigroup and IsActingSemigroup, IsAssociativeElement],
+InstallMethod(GreensRClassOfElement, "for regular non-exhaustive semigroup and element",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(s, f)
   local o;
 
@@ -743,16 +743,16 @@ end);
 # same method for inverse/ideals
 # see the note about DClassReps above...
 
-InstallMethod(NrDClasses, "for a regular acting semigroup with generators",
-[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(NrDClasses, "for a regular non-exhaustive semigroup with generators",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   return Length(OrbSCC(LambdaOrb(s)))-1;
 end);
 
 # different method for inverse, same for ideals
 
-InstallMethod(NrHClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(NrHClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, i, rhofunc, lookup, rho, m;
   
@@ -776,50 +776,50 @@ end);
 
 # different method for inverse.
 
-InstallMethod(NrHClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+InstallMethod(NrHClasses, "for a D-class of regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d)));
 
 # different method for inverse semigroups 
 
-InstallMethod(NrHClasses, "for a L-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensLClass],
+InstallMethod(NrHClasses, "for a L-class of regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensLClass],
 l-> Length(RhoOrbSCC(l)));
 
 # same method for inverse semigroups 
 
-InstallMethod(NrHClasses, "for a R-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensRClass],
+InstallMethod(NrHClasses, "for a R-class of regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensRClass],
 r-> Length(LambdaOrbSCC(r)));
 
 # same method for inverse semigroups, same for ideals
 
-InstallMethod(NrLClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(NrLClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 s-> Length(Enumerate(LambdaOrb(s), infinity))-1);
 
 # same method for inverse semigroups
 
-InstallMethod(NrLClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+InstallMethod(NrLClasses, "for a D-class of regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(LambdaOrbSCC(d)));
 
 # different method for inverse semigroups, same for ideals
 
-InstallMethod(NrRClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(NrRClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 s-> Length(Enumerate(RhoOrb(s), infinity))-1);
 
 # different method for inverse semigroups
 
-InstallMethod(NrRClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+InstallMethod(NrRClasses, "for a D-class of regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(RhoOrbSCC(d)));
 
 # different method for inverse, same for ideals
 
-InstallMethod(NrIdempotents, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(NrIdempotents, "for a regular non-exhaustive semigroup",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup],
 function(S)
   local nr, tester, rho_o, scc, lambda_o, rhofunc, lookup, rep, rho, j, i, k;
 
@@ -848,15 +848,15 @@ end);
 
 # same method for inverse semigroups, same for ideals
 
-InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(NrRegularDClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 NrDClasses);
 
 # different method for inverse/ideals
 
 InstallMethod(PartialOrderOfDClasses, 
-"for a regular acting semigroup with generators",
-[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup],
+"for a regular non-exhaustive semigroup with generators",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local d, n, out, o, gens, lookup, lambdafunc, i, x, f;
 
@@ -885,8 +885,8 @@ end);
 
 # different method for inverse, same method for ideals
 
-InstallMethod(Random, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(Random, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(S)
   local gens, i, w, x, o, m;
   
@@ -926,14 +926,14 @@ end);
 
 # same method for inverse
 
-InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(SchutzenbergerGroup, "for D-class of regular non-exhaustive semigroup",
+[IsRegularClass and IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
 
 # same method for inverse
 
-InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup and IsGreensHClass],
+InstallMethod(SchutzenbergerGroup, "for H-class of regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupGreensClass and IsHClassOfRegularSemigroup and IsGreensHClass],
 function(h)
   local o, rep, s, p;
 
@@ -945,8 +945,8 @@ end);
 
 # different method for inverse semigroups
 
-InstallMethod(Size, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(Size, "for a regular non-exhaustive semigroup",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup],
 function(s)
   local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup, start, rho, m;
 
@@ -971,8 +971,8 @@ end);
 
 #
 
-InstallMethod(Size, "for a regular D-class of an acting semigroup",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(Size, "for a regular D-class of a non-exhaustive semigroup",
+[IsRegularClass and IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
    *Length(RhoOrbSCC(d));
@@ -982,42 +982,42 @@ end);
 
 # different method for inverse semigroups
 
-InstallMethod(DClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(DClassType, "for a regular non-exhaustive semigroup",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensDClass 
-         and IsActingSemigroupGreensClass);
+         and IsNonExhaustiveSemigroupGreensClass);
 end);
 
 # different method for inverse semigroups
 
-InstallMethod(LClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(LClassType, "for a regular non-exhaustive semigroup",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensLClass and
-         IsActingSemigroupGreensClass);
+         IsNonExhaustiveSemigroupGreensClass);
 end);
 
 # different method for inverse semigroups
 
-InstallMethod(RClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(RClassType, "for a regular non-exhaustive semigroup",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
-         IsActingSemigroupGreensClass);
+         IsNonExhaustiveSemigroupGreensClass);
 end);
 
 #
 
-InstallMethod(HClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(HClassType, "for a regular non-exhaustive semigroup",
+[IsRegularSemigroup and IsNonExhaustiveSemigroup],
 function(s);
  return NewType( FamilyObj( s ), IsEquivalenceClass and
   IsEquivalenceClassDefaultRep and IsGreensHClass and
-  IsHClassOfRegularSemigroup and IsActingSemigroupGreensClass);
+  IsHClassOfRegularSemigroup and IsNonExhaustiveSemigroupGreensClass);
 end);
 
 #EOF

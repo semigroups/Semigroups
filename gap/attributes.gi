@@ -26,8 +26,8 @@
 
 # same method for ideals
 
-InstallMethod(IsGreensDLeq, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsGreensDLeq, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(S)
   local partial, data, comp_index;
 
@@ -51,8 +51,8 @@ end);
 
 # different method for ideals/regular/inverse, although this method will work too
 
-InstallMethod(MaximalDClasses, "for an acting semigroup",
-[IsActingSemigroup] ,
+InstallMethod(MaximalDClasses, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup] ,
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 
@@ -79,8 +79,8 @@ end);
 
 # same method for inverse, different method for inverse ideals
 
-InstallMethod(MaximalDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup], 
+InstallMethod(MaximalDClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup], 
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
   
@@ -109,7 +109,7 @@ end);
 # same method for ideals
 
 InstallMethod(StructureDescriptionSchutzenbergerGroups, 
-"for an acting semigroup", [IsActingSemigroup],
+"for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(s)
   local o, scc, out, m;
 
@@ -128,7 +128,7 @@ end);
 # same method for ideals
 
 InstallMethod(StructureDescriptionMaximalSubgroups, 
-"for an acting semigroup", [IsActingSemigroup],
+"for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(s)
   local out, d;
 
@@ -247,19 +247,19 @@ end);
 
 # same method for ideals 
 
-InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
-[IsActingSemigroup], s-> Semigroup(Idempotents(s), rec(small:=true)));
+InstallMethod(IdempotentGeneratedSubsemigroup, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup], s-> Semigroup(Idempotents(s), rec(small:=true)));
 
 # same method for ideals 
 
 InstallMethod(IdempotentGeneratedSubsemigroup, 
-"for an inverse op acting semigroup", [IsActingSemigroupWithInverseOp],
+"for an inverse op non-exhaustive semigroup", [IsNonExhaustiveSemigroupWithInverseOp],
 s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 
 # same method for ideals
 
-InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(InjectionPrincipalFactor, "for a D-class of a non-exhaustive semigroup",
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
 
@@ -360,8 +360,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass], InjectionPrincipalFactor);
+"for D-class of a non-exhaustive semigroup",
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass], InjectionPrincipalFactor);
 
 # same method for ideal
 
@@ -371,7 +371,7 @@ InstallMethod(IrredundantGeneratingSubset,
 function(coll)
   local gens, nrgens, deg, out, redund, i, f;
     
-  if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then 
+  if not (IsNonExhaustiveSemigroup(coll) or IsGeneratorsOfNonExhaustiveSemigroup(coll)) then 
     Error();
   fi;
 
@@ -419,7 +419,7 @@ end);
 #
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for a simple or 0-simple acting semigroup", [IsActingSemigroup],
+"for a simple or 0-simple non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(S)
   local D, iso, inv;
   if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then 
@@ -438,8 +438,8 @@ end);
 # same method for ideals
 
 InstallMethod(InversesOfSemigroupElement, 
-"for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement],
+"for a non-exhaustive semigroup and associative element",
+[IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(S, x)
 
   if x in S then
@@ -452,8 +452,8 @@ end);
 # different method for ideals
 
 InstallMethod(InversesOfSemigroupElementNC, 
-"for an acting semigroup and associative element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
+"for a non-exhaustive semigroup and associative element",
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
 
@@ -557,8 +557,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(MultiplicativeNeutralElement, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
   local gens, rank, lambda, max, r, rep, f;
 
@@ -612,8 +612,8 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 
 # same method for ideals...
 
-InstallMethod(MultiplicativeZero, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(MultiplicativeZero, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
  
@@ -664,7 +664,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(MinimalIdeal, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(MinimalIdeal, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(S)
   local I;  
   I:=SemigroupIdeal(S, Representative(MinimalDClass(S)));
@@ -674,7 +674,7 @@ end);
 
 # same method for inverse/ideals
 
-InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(MinimalDClass, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(S)
   local rank, o, pos, min, len, m, x, n, i;
 
@@ -705,7 +705,7 @@ end);
 #
 
 InstallMethod(PrincipalFactor, "for a D-class", 
-[IsGreensDClass and IsActingSemigroupGreensClass], 
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass], 
 d-> Range(InjectionPrincipalFactor(d)));
 
 #
@@ -719,7 +719,7 @@ InstallMethod(SmallSemigroupGeneratingSet,
 "for an associative element collection", 
 [IsAssociativeElementCollection],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then 
+  if not IsGeneratorsOfNonExhaustiveSemigroup(coll) then 
     TryNextMethod();
   elif Length(coll)<2 then 
     return coll;
@@ -731,7 +731,7 @@ end);
 # different method for ideals, not yet implemented 
 
 InstallMethod(SmallSemigroupGeneratingSet, 
-"for an acting semigroup", [IsActingSemigroup],
+"for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(S)
   return SmallSemigroupGeneratingSet(GeneratorsOfSemigroup(S));
 end);
@@ -742,7 +742,7 @@ InstallMethod(SmallMonoidGeneratingSet,
 "for an associative element with one collection", 
 [IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then 
+  if not IsGeneratorsOfNonExhaustiveSemigroup(coll) then 
     TryNextMethod();
   elif Length(coll)<2 then 
     return coll;
@@ -754,7 +754,7 @@ end);
 # same method for ideals
 
 InstallMethod(SmallMonoidGeneratingSet, 
-"for an acting monoid", [IsActingSemigroup and IsMonoid],
+"for a non-exhaustive monoid", [IsNonExhaustiveSemigroup and IsMonoid],
 function(S)
   if IsEmpty(GeneratorsOfMonoid(S)) then return []; fi;
   return SmallMonoidGeneratingSet(GeneratorsOfMonoid(S));
@@ -766,7 +766,7 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 "for generators of an inverse semigroup", 
 [IsGeneratorsOfInverseSemigroup],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then 
+  if not IsGeneratorsOfNonExhaustiveSemigroup(coll) then 
     TryNextMethod();
   elif Length(coll)<2 then 
     return coll;
@@ -778,8 +778,8 @@ end);
 #
 
 InstallMethod(SmallInverseSemigroupGeneratingSet, 
-"for an acting inverse semigroup with generators", 
-[IsActingSemigroup and IsInverseSemigroup],
+"for a non-exhaustive inverse semigroup with generators", 
+[IsNonExhaustiveSemigroup and IsInverseSemigroup],
 function(S)
   return SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S));
 end);
@@ -790,7 +790,7 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 "for generators of an inverse monoid", 
 [IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then 
+  if not IsGeneratorsOfNonExhaustiveSemigroup(coll) then 
     TryNextMethod();
   elif Length(coll)<2 then 
     return coll;
@@ -802,8 +802,8 @@ end);
 #
 
 InstallMethod(SmallInverseMonoidGeneratingSet, 
-"for an acting inverse semigroup with generators", 
-[IsActingSemigroup and IsInverseMonoid],
+"for a non-exhaustive inverse semigroup with generators", 
+[IsNonExhaustiveSemigroup and IsInverseMonoid],
 function(S)
   return SmallSemigroupGeneratingSet(GeneratorsOfInverseMonoid(S));
 end);
@@ -831,8 +831,8 @@ end);
 
 #
 
-InstallMethod(StructureDescription, "for an acting Brandt semigroup",
-[IsActingSemigroup and IsBrandtSemigroup],
+InstallMethod(StructureDescription, "for a non-exhaustive Brandt semigroup",
+[IsNonExhaustiveSemigroup and IsBrandtSemigroup],
 function(s)
   local x, d;
   
@@ -846,8 +846,8 @@ end);
 # same method for ideals 
 
 InstallMethod(StructureDescription, 
-"for an acting group as semigroup",
-[IsActingSemigroup and IsGroupAsSemigroup],
+"for a non-exhaustive group as semigroup",
+[IsNonExhaustiveSemigroup and IsGroupAsSemigroup],
 s-> StructureDescription(Range(IsomorphismPermGroup(s))));
 
 # 

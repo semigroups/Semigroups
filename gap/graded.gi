@@ -10,8 +10,8 @@
 
 # things for graded orbits
 
-InstallMethod(GradedLambdaHT, "for an acting semigroup",
-[IsActingSemigroup],  
+InstallMethod(GradedLambdaHT, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],  
 function(s)
   local record;
 
@@ -22,7 +22,7 @@ end);
 
 #
 
-InstallMethod(GradedRhoHT, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(GradedRhoHT, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(s)
   local record;
 
@@ -69,8 +69,8 @@ InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
   local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
 
-  if not IsActingSemigroup(s) then 
-    Error("usage: <s> must be an acting semigroup,");
+  if not IsNonExhaustiveSemigroup(s) then 
+    Error("usage: <s> must be a non-exhaustive semigroup,");
     return;
   elif not IsAssociativeElement(f) then 
     Error("usage: <f> must be an associative element,");
@@ -143,8 +143,8 @@ InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
   local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
 
-  if not IsActingSemigroup(s) then 
-    Error("usage: <s> must be an acting semigroup,");
+  if not IsNonExhaustiveSemigroup(s) then 
+    Error("usage: <s> must be a non-exhaustive semigroup,");
     return;
   elif not IsAssociativeElement(f) then 
     Error("usage: <f> must be an associative element,");
@@ -216,8 +216,8 @@ end);
 
 # stores so far calculated GradedLambdaOrbs
 
-InstallMethod(GradedLambdaOrbs, "for an acting semigroup", 
-[IsActingSemigroup],
+InstallMethod(GradedLambdaOrbs, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup],
 function(s)
   local fam;
  
@@ -229,8 +229,8 @@ end);
 
 # stores so far calculated GradedRhoOrbs
 
-InstallMethod(GradedRhoOrbs, "for an acting semigroup", 
-[IsActingSemigroup],
+InstallMethod(GradedRhoOrbs, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup],
 function(s)
   return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs), rec(
     orbits:=List([1..ActionDegree(s)+1], x-> []), 

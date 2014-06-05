@@ -11,7 +11,7 @@
 # WAW The more complicated version incorporating maximal subsemigroup theory did
 # not seem to perform significantly better and so was removed.
 
-InstallMethod(IsMaximalSubsemigroup, "for an acting semigroup and acting semigroup", 
+InstallMethod(IsMaximalSubsemigroup, "for a non-exhaustive semigroup and non-exhaustive semigroup", 
 [IsSemigroup, IsSemigroup],
 function(S, T)
   if IsSubsemigroup(S, T) and S<>T then 
@@ -278,14 +278,14 @@ end);
 
 if not IsGrapeAvailable or not IsGrapeCompiled then 
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
-  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsActingSemigroup
+  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsNonExhaustiveSemigroup
   function(R)
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end); 
 else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
-  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsActingSemigroup
+  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsNonExhaustiveSemigroup
   function(R)
     local G, out, I, J, mat, nrrows, graph, components, nrcomponents, P, basicgens, new, pos, i, j, NonGroupRecursion, transversal, maxgens, JJ, solo, U, II, len, names, rectangles, gens, H, r, k;
     
@@ -528,15 +528,15 @@ fi;
 #
 
 if not (IsGrapeAvailable and IsGrapeCompiled) then 
-  InstallMethod(MaximalSubsemigroups, "for an acting semigroup", 
-  [IsActingSemigroup], 
+  InstallMethod(MaximalSubsemigroups, "for a non-exhaustive semigroup", 
+  [IsNonExhaustiveSemigroup], 
   function(S) 
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end);
 else
-  InstallMethod(MaximalSubsemigroups, "for an acting semigroup",
-  [IsActingSemigroup],
+  InstallMethod(MaximalSubsemigroups, "for a non-exhaustive semigroup",
+  [IsNonExhaustiveSemigroup],
   function(S)
     local out, gens, po, reps, classes, D, lookup, count, max, found_case1,
     nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, UnionOfHClassRecursion,

@@ -182,8 +182,8 @@ end);
 
 # different method for inverse semigroup ideals
 
-InstallMethod(LambdaOrb, "for an acting semigroup ideal", 
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(LambdaOrb, "for a non-exhaustive semigroup ideal", 
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local record, htopts, fam;
   
@@ -216,8 +216,8 @@ end);
 
 #
 
-InstallMethod(RhoOrb, "for an acting semigroup ideal", 
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(RhoOrb, "for a non-exhaustive semigroup ideal", 
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local record, htopts, fam;
   record:=rec();
@@ -248,11 +248,11 @@ end);
 
 # The entire lambda orbit of an ideal of an inverse semigroup is obtained from
 # the lambda values of the generators (and their inverses) of the ideal by
-# acting on the right by the generators (and their inverses) of the
+# non-exhaustive on the right by the generators (and their inverses) of the
 # supersemigroup. Hence we require a different case here. 
 
-InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal", 
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+InstallMethod(LambdaOrb, "for an inverse op non-exhaustive semigroup ideal", 
+[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
   local record, gens, lambdafunc, o, ht, nr, nrgens, lambda, InstallPointInOrb,
    x, i;

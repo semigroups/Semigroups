@@ -8,10 +8,10 @@
 #############################################################################
 ##
 
-# this method is better than the generic one for acting semigroups
+# this method is better than the generic one for non-exhaustive semigroups
 
 InstallMethod(Random, "for a Rees 0-matrix semigroup", 
-[IsReesZeroMatrixSemigroup], 3, # to beat the method for regular acting semigroups
+[IsReesZeroMatrixSemigroup], 3, # to beat the method for regular non-exhaustive semigroups
 function(R)
   return Objectify(TypeReesMatrixSemigroupElements(R), 
    [Random(Rows(R)), Random(UnderlyingSemigroup(R)),

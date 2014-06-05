@@ -78,8 +78,8 @@ S-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(S))));
 #end);
 
 #InstallMethod(IsAdequateSemigroup, 
-#"for acting semigroup with generators", 
-#[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+#"for non-exhaustive semigroup with generators", 
+#[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup], 
 #s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
 # same method for ideals
@@ -101,7 +101,7 @@ IsSemilatticeAsSemigroup);
 
 # same method for ideals
 
-InstallMethod(IsBlockGroup, "for an acting semigroup", [IsActingSemigroup], 
+InstallMethod(IsBlockGroup, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup], 
 function(S)
   local iter, d;
 
@@ -129,7 +129,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsBrandtSemigroup, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsBrandtSemigroup, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 S-> IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S));
 
 # same method for inverse ideals
@@ -140,8 +140,8 @@ InstallMethod(IsBrandtSemigroup, "for an inverse semigroup",
 # same method for non-regular ideals
 
 InstallMethod(IsCliffordSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+"for a non-exhaustive semigroup with generators", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
   local gens, idem, f, g;
 
@@ -184,8 +184,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(IsCliffordSemigroup, "for an inverse acting semigroup", 
-[IsInverseSemigroup and IsActingSemigroup], 
+InstallMethod(IsCliffordSemigroup, "for an inverse non-exhaustive semigroup", 
+[IsInverseSemigroup and IsNonExhaustiveSemigroup], 
 S-> ForAll(OrbSCC(LambdaOrb(S)), x-> Length(x)=1));
 
 # same method for regular ideals, or non-regular without a generating set
@@ -232,8 +232,8 @@ end);
 # same method for non-regular ideals with generators
 
 InstallMethod(IsCompletelyRegularSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for a non-exhaustive semigroup with generators", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local record, o, pos, f, n;
   
@@ -294,8 +294,8 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 
 #different method for ideals
 
-InstallMethod(IsFactorisableSemigroup, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
+InstallMethod(IsFactorisableSemigroup, "for an inverse op non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
 function(S)
   local G, iso, enum, f;
   
@@ -333,8 +333,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsHTrivial, "for an acting semigroup", 
-[IsActingSemigroup], 
+InstallMethod(IsHTrivial, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup], 
 function(S)
   local iter, x;
   
@@ -377,13 +377,13 @@ end);
 
 #same method for ideals
 
-InstallMethod(IsHTrivial, "for a D-class of an acting semigroup", 
-[IsGreensDClass and IsActingSemigroupGreensClass], d-> NrHClasses(d)=Size(d));
+InstallMethod(IsHTrivial, "for a D-class of a non-exhaustive semigroup", 
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass], d-> NrHClasses(d)=Size(d));
 
 #same method for non-inverse ideals
 
-InstallMethod(IsLTrivial, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsLTrivial, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(S)
   local iter, o, d;
   
@@ -407,8 +407,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(IsLTrivial, "for an inverse acting semigroup",
-[IsActingSemigroupWithInverseOp],
+InstallMethod(IsLTrivial, "for an inverse non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupWithInverseOp],
 function(S)
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then 
     return true;
@@ -418,13 +418,13 @@ end);
 
 #same method for ideals
 
-InstallMethod(IsLTrivial, "for a D-class of an acting semigroup", 
-[IsGreensDClass and IsActingSemigroupGreensClass], d-> NrLClasses(d)=Size(d));
+InstallMethod(IsLTrivial, "for a D-class of a non-exhaustive semigroup", 
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass], d-> NrLClasses(d)=Size(d));
 
 #same method for ideals
 
-InstallMethod(IsRTrivial, "for D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass], 
+InstallMethod(IsRTrivial, "for D-class of a non-exhaustive semigroup",
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass], 
 d-> NrRClasses(d)=Size(d));
 
 #same method for ideals
@@ -460,8 +460,8 @@ end);
 
 # same method for non-inverse ideals
 
-InstallMethod(IsRTrivial, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsRTrivial, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(S)
   local iter, x;
 
@@ -501,8 +501,8 @@ end);
 
 # same method for non-regular ideals
 
-InstallMethod(IsGroupAsSemigroup, "for an acting semigroup", 
-[IsActingSemigroup],
+InstallMethod(IsGroupAsSemigroup, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup],
 function(S)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
 
@@ -513,7 +513,7 @@ function(S)
 
   gens:=GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
 
-  if IsActingSemigroupWithFixedDegreeMultiplication(S) and 
+  if IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(S) and 
    ForAll(gens, f->ActionRank(S)(f)=ActionDegree(f)) then
     return true;
   fi;
@@ -552,8 +552,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsIdempotentGenerated, "for an acting semigroup", 
-[IsActingSemigroup], 
+InstallMethod(IsIdempotentGenerated, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup], 
 function(S) 
   local gens, t, min, new;
  
@@ -586,8 +586,8 @@ InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 
 # same method for ideals
 
-InstallMethod(IsInverseSemigroup, "for an acting semigroup", 
-[IsActingSemigroup],
+InstallMethod(IsInverseSemigroup, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup],
 function(S)
   local lambda, rho, iter, x;
 
@@ -634,7 +634,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsLeftSimple, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsLeftSimple, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(S)
   local iter;
  
@@ -660,8 +660,8 @@ InstallMethod(IsLeftSimple, "for an inverse semigroup",
 # different method for ideals without generators
 
 InstallMethod(IsLeftZeroSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for a non-exhaustive semigroup with generators", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, lambda, val, x;
   
@@ -709,8 +709,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsMonogenicSemigroup, "for an acting semigroup",
-[IsActingSemigroup], 
+InstallMethod(IsMonogenicSemigroup, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup], 
 function(S)
   local gens, I, f, i;
   
@@ -757,8 +757,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsMonogenicInverseSemigroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsMonogenicInverseSemigroup, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(S)
   if not IsInverseSemigroup(S) then 
     return false;
@@ -769,7 +769,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsMonogenicInverseSemigroup, 
-"for an acting semigroup with inverse op", [IsActingSemigroupWithInverseOp],
+"for a non-exhaustive semigroup with inverse op", [IsNonExhaustiveSemigroupWithInverseOp],
 function(S)
   local gens, I, f, i;
 
@@ -822,7 +822,7 @@ InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 # is there a better method? JDM
 # same method for ideals
 
-InstallMethod(IsOrthodoxSemigroup, "for an acting semigroup", [IsActingSemigroup], 
+InstallMethod(IsOrthodoxSemigroup, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup], 
 function(S)
   local e, m, i, j;
 
@@ -849,8 +849,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsRectangularBand, "for an acting semigroup", 
-[IsActingSemigroup],
+InstallMethod(IsRectangularBand, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup],
 function(S)
 
   if HasParent(S) and HasIsRectangularBand(Parent(S)) 
@@ -884,8 +884,8 @@ end);
 # different method for ideals (ideals know at their point of creation if they
 # are regular or not)
 
-InstallMethod(IsRegularSemigroup, "for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsRegularSemigroup, "for a non-exhaustive semigroup with generators", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local tester, n, rhofunc, lookfunc, data, i;
 
@@ -911,7 +911,7 @@ function(S)
     fi;
     
     # data corresponds to the group of units...
-    if IsActingSemigroupWithFixedDegreeMultiplication(S) 
+    if IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(S) 
      and ActionRank(S)(x[4])=ActionDegree(x[4]) then 
       return false;
     fi;
@@ -944,8 +944,8 @@ end);
 
 #
 
-InstallMethod(IsRegularSemigroup, "for an acting star semigroup with generators", 
-[IsActingSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsRegularSemigroup, "for a non-exhaustive star semigroup with generators", 
+[IsNonExhaustiveSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local lookfunc, data, i;
 
@@ -968,7 +968,7 @@ function(S)
     fi;
     
     # data corresponds to the group of units...
-    if IsActingSemigroupWithFixedDegreeMultiplication(S) 
+    if IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(S) 
      and ActionRank(S)(x[4])=ActionDegree(x[4]) then 
       return false;
     fi;
@@ -997,8 +997,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsRegularSemigroupElement, 
-"for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement], 
+"for a non-exhaustive semigroup and associative element",
+[IsNonExhaustiveSemigroup, IsAssociativeElement], 
 function(S, f)                                  
   local o, scc, rho, tester, i;
   
@@ -1031,8 +1031,8 @@ function(S, f)
 end);
 
 InstallMethod(IsRegularSemigroupElement, 
-"for an acting star semigroup and associative element with star",
-[IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar], 
+"for a non-exhaustive star semigroup and associative element with star",
+[IsNonExhaustiveSemigroup and IsStarSemigroup, IsAssociativeElementWithStar], 
 function(S, x)                                  
   local o, k, l;
   
@@ -1061,8 +1061,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsRegularSemigroupElementNC, 
-"for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement], 
+"for a non-exhaustive semigroup and associative element",
+[IsNonExhaustiveSemigroup, IsAssociativeElement], 
 function(S, x)                                  
   local o, l, scc, rho, tester, i;
 
@@ -1091,8 +1091,8 @@ function(S, x)
 end);
 
 InstallMethod(IsRegularSemigroupElementNC, 
-"for an acting semigroup with star and associative element with star",
-[IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar], 
+"for a non-exhaustive semigroup with star and associative element with star",
+[IsNonExhaustiveSemigroup and IsStarSemigroup, IsAssociativeElementWithStar], 
 function(S, x)                                  
   local o, k, l;
  
@@ -1113,7 +1113,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsRightSimple, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsRightSimple, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(S)
   local iter;
  
@@ -1139,8 +1139,8 @@ InstallMethod(IsRightSimple, "for an inverse semigroup",
 # different method for ideals
 
 InstallMethod(IsRightZeroSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for a non-exhaustive semigroup with generators", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, rho, val, x;
 
@@ -1218,7 +1218,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsSimpleSemigroup, "for an acting semigroup", [IsActingSemigroup], 
+InstallMethod(IsSimpleSemigroup, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup], 
 function(S)
   local gens, lambdafunc, lambdarank, rank, opts, o, pos, iter, name, f, n;
 
@@ -1336,8 +1336,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsUnitRegularSemigroup, "for an acting semigroup",
-[IsActingSemigroup], 
+InstallMethod(IsUnitRegularSemigroup, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup], 
 function(S)
   local g, perm_g, o, scc, graded, tester, gens, rhofunc, dom, rho, m, j;
 
@@ -1385,8 +1385,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsZeroGroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsZeroGroup, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(S)
 
   if HasParent(S) and HasIsZeroGroup(Parent(S)) and IsZeroGroup(Parent(S)) then 
@@ -1408,7 +1408,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsZeroRectangularBand, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsZeroRectangularBand, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
 function(S)
 
   if HasParent(S) and HasIsZeroRectangularBand(Parent(S)) 
@@ -1425,8 +1425,8 @@ end);
 # different method for ideals
 
 InstallMethod(IsZeroSemigroup, 
-"for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for a non-exhaustive semigroup with generators", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local z, gens, m, i, j;
 
@@ -1473,8 +1473,8 @@ InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 
 # same method for ideals
 
-InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsZeroSimpleSemigroup, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(S)
   local iter, D;
   

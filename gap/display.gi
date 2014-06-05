@@ -389,7 +389,7 @@ end);
 
 #
 
-InstallMethod(DotDClasses, "for an acting semigroup",
+InstallMethod(DotDClasses, "for a non-exhaustive semigroup",
 [IsSemigroup], 
 function(S)
   return DotDClasses(S, rec());
@@ -501,8 +501,8 @@ function(s, opts)
 end);
 
 InstallMethod(DotSemilatticeOfIdempotents,
-"for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+"for a non-exhaustive semigroup with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp],
 function(S)
   local U, rel, elts, str, nr, V, j, i, k, D, v;
 

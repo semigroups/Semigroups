@@ -9,36 +9,36 @@
 ##
 
 ###############################################################################
-# Setup - install the basic things required for specific acting semigroups    #
+# Setup - install the basic things required for specific non-exhaustive semigroups    #
 ###############################################################################
 
-# IsGeneratorsOfActingSemigroup
+# IsGeneratorsOfNonExhaustiveSemigroup
 
-InstallMethod(IsGeneratorsOfActingSemigroup, 
+InstallMethod(IsGeneratorsOfNonExhaustiveSemigroup, 
 "for an associative element collection",
 [IsAssociativeElementCollection], ReturnFalse);
 
 # In the below can't do ReturnTrue, since GAP insists that we use
 # InstallTrueMethod.
 #
-# InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsTransformationCollection);
+# InstallTrueMethod(IsGeneratorsOfNonExhaustiveSemigroup, IsTransformationCollection);
 # 
 # can't do InstallTrueMethod for the above since this is not picked up 
 # if Semigroups is loaded after any transformation semigroup has been created.
 # It seems that since IsTransformationCollection has had its implied filters
 # installed, if we add an additional implied filter
-# IsGeneratorsOfActingSemigroup, then this is ignored. I think this is a bug.
+# IsGeneratorsOfNonExhaustiveSemigroup, then this is ignored. I think this is a bug.
 
-InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection", 
+InstallMethod(IsGeneratorsOfNonExhaustiveSemigroup, "for a transformation collection", 
 [IsTransformationCollection], x-> true);
 
-InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection", 
+InstallMethod(IsGeneratorsOfNonExhaustiveSemigroup, "for a partial perm collection", 
 [IsPartialPermCollection], x-> true);
 
-InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection", 
+InstallMethod(IsGeneratorsOfNonExhaustiveSemigroup, "for a bipartition collection", 
 [IsBipartitionCollection], x-> true);
 
-InstallMethod(IsGeneratorsOfActingSemigroup, 
+InstallMethod(IsGeneratorsOfNonExhaustiveSemigroup, 
 "for a Rees 0-matrix semigroup element collection", 
 [IsReesZeroMatrixSemigroupElementCollection],
 function(coll)
@@ -47,14 +47,14 @@ function(coll)
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
-# IsActingSemigroupWithInverseOp
+# IsNonExhaustiveSemigroupWithInverseOp
 
-InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup and IsActingSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup and IsActingSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-IsPartialPermBipartitionSemigroup and IsActingSemigroup);
-InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
+InstallTrueMethod(IsInverseSemigroup, IsNonExhaustiveSemigroupWithInverseOp);
+InstallTrueMethod(IsNonExhaustiveSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup and IsNonExhaustiveSemigroup);
+InstallTrueMethod(IsNonExhaustiveSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup and IsNonExhaustiveSemigroup);
+InstallTrueMethod(IsNonExhaustiveSemigroupWithInverseOp, IsInverseSemigroup and
+IsPartialPermBipartitionSemigroup and IsNonExhaustiveSemigroup);
+InstallTrueMethod(IsNonExhaustiveSemigroup, IsReesZeroMatrixSemigroup);
 
 # the largest point involved in the action
 
@@ -480,7 +480,7 @@ end);
 InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> InverseLeftBlocks);
 
-# LambdaPerm(s) returns a permutation from two acting semigroup elements with
+# LambdaPerm(s) returns a permutation from two non-exhaustive semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
 
@@ -601,21 +601,21 @@ function(x, p)
   return Objectify(TypeObj(x), [x![1], x![2]*p, x![3], x![4]]);
 end);
 
-# IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
+# IsNonExhaustiveSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
 # equal degrees.
 
-InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+InstallMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
 "for a transformation semigroup", [IsTransformationSemigroup], ReturnFalse);
 
-InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+InstallTrueMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
 IsBipartitionSemigroup);
 
-InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+InstallMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
 "for a partial perm semigroup", [IsPartialPermSemigroup], ReturnFalse);
 
 #this is not really relevant here.
-InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+InstallMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
 "for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup], ReturnFalse);
 
 # One or a fake one for those types of object without one.

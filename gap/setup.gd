@@ -8,10 +8,12 @@
 ##############################################################################
 ###
 
-DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 2);
-DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
-DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
-DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
+DeclareCategory("IsNonExhaustiveSemigroup", IsSemigroup and IsFinite);
+DeclareCategory("IsExhaustiveSemigroup", IsSemigroup and IsFinite);
+
+DeclareCategory("IsNonExhaustiveSemigroupWithInverseOp", IsNonExhaustiveSemigroup);
+DeclareProperty("IsGeneratorsOfNonExhaustiveSemigroup", IsAssociativeElementCollection);
+DeclareCategory("IsNonExhaustiveSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
@@ -42,7 +44,7 @@ DeclareAttribute("RhoOrbSeed", IsSemigroup);
 DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
-DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
+DeclareProperty("IsNonExhaustiveSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
 DeclareAttribute("StabilizerAction", IsSemigroup);

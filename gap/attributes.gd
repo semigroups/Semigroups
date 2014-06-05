@@ -10,7 +10,7 @@
 
 DeclareOperation("IrredundantGeneratingSubset",
 [IsAssociativeElementCollection]);
-DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup,
+DeclareOperation("InversesOfSemigroupElementNC", [IsNonExhaustiveSemigroup,
 IsAssociativeElement]);
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
@@ -20,28 +20,28 @@ DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
-DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
+DeclareAttribute("MultiplicativeZero", IsNonExhaustiveSemigroup);
 
 DeclareAttribute("SmallSemigroupGeneratingSet", IsAssociativeElementCollection);
-DeclareAttribute("SmallSemigroupGeneratingSet", IsActingSemigroup);
+DeclareAttribute("SmallSemigroupGeneratingSet", IsNonExhaustiveSemigroup);
 DeclareAttribute("SmallMonoidGeneratingSet", IsAssociativeElementCollection and
 IsMultiplicativeElementWithOneCollection);
-DeclareAttribute("SmallMonoidGeneratingSet", IsActingSemigroup and IsMonoid);
+DeclareAttribute("SmallMonoidGeneratingSet", IsNonExhaustiveSemigroup and IsMonoid);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
 IsGeneratorsOfInverseSemigroup);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
-IsInverseSemigroup and IsActingSemigroup);
+IsInverseSemigroup and IsNonExhaustiveSemigroup);
 DeclareAttribute("SmallInverseMonoidGeneratingSet", 
 IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallInverseMonoidGeneratingSet", 
-IsInverseMonoid and IsActingSemigroup);
+IsInverseMonoid and IsNonExhaustiveSemigroup);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
-DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);
-DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
+DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsNonExhaustiveSemigroup);
+DeclareAttribute("StructureDescriptionMaximalSubgroups", IsNonExhaustiveSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
-DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
+DeclareAttribute("IsGreensDLeq", IsNonExhaustiveSemigroup);
 

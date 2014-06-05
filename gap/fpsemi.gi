@@ -9,7 +9,7 @@
 ##
 
 # a different method is required for ideals (or MonoidByAdjoiningIdentity
-# requires a method for acting semigroup ideals)
+# requires a method for non-exhaustive semigroup ideals)
 
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 

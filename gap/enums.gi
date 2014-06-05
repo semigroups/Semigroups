@@ -191,8 +191,8 @@ end);
 
 # also this has really awful performance
 
-InstallMethod(Enumerator, "for an acting semigroup", 
-[IsActingSemigroup], 5, #to beat the method for semigroup ideals
+InstallMethod(Enumerator, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
   local record, convert;
   
@@ -226,8 +226,8 @@ end);
 
 # JDM the performance of this also sucks
 
-InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup], 
+InstallMethod(EnumeratorOfRClasses, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup], 
 function(s)
   local enum;
 
@@ -257,8 +257,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup], 
+InstallMethod(EnumeratorOfRClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup], 
 function(s)
   local o;
 
@@ -302,8 +302,8 @@ end);
 # JDM again this method might not nec. if inverse op semigroups have RhoOrb
 # method
 
-InstallMethod(EnumeratorOfRClasses, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp], 
+InstallMethod(EnumeratorOfRClasses, "for an inverse op non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupWithInverseOp], 
 function(s)
   local o;
 
@@ -351,8 +351,8 @@ end);
 #semigroup, invokes IteratorOfRClassData which repeatedly recomputes the graded
 #lambda orbs of the R-class reps.
 
-InstallMethod(EnumeratorSorted, "for an acting semigroup", 
-[IsActingSemigroup], 5, #to beat the method for semigroup ideals
+InstallMethod(EnumeratorSorted, "for a non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
   return Immutable(SSortedList(ListIterator(Iterator(s), Size(s))));
 end);
@@ -361,8 +361,8 @@ end);
 
 # this could be better at the cost of being much more complicated...
 
-InstallMethod(Enumerator, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator, "for a D-class of a non-exhaustive semigroup",
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local record, convert;
   
@@ -385,8 +385,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
-[IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator, "for a regular D-class of a non-exhaustive semigroup",
+[IsGreensDClass and IsRegularClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local record, convert_out, convert_in, rho_scc, lambda_scc;
    
@@ -448,8 +448,8 @@ end);
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
 #D-class JDM
 
-InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
-[IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator, "for a D-class of an inverse non-exhaustive semigroup",
+[IsGreensDClass and IsInverseOpClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local record, convert_out, convert_in, lambda_scc;
   
@@ -505,8 +505,8 @@ end);
 
 # same method for inverse/regular
 
-InstallMethod(Enumerator, "for H-class of acting semigp.",
-[IsGreensHClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator, "for H-class of non-exhaustive semigp.",
+[IsGreensHClass and IsNonExhaustiveSemigroupGreensClass],
 function(h)
 
   if HasAsSSortedList(h) then 
@@ -553,8 +553,8 @@ end);
 
 # same method for regular, different method for inverse
 
-InstallMethod(Enumerator, "for L-class of an acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator, "for L-class of a non-exhaustive semigroup",
+[IsGreensLClass and IsNonExhaustiveSemigroupGreensClass],
 function(l)
   local record, convert_out, convert_in, scc;
   
@@ -611,8 +611,8 @@ end);
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
 #L-class JDM
 
-InstallMethod(Enumerator, "for L-class of an inverse op acting semigroup",
-[IsGreensLClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator, "for L-class of an inverse op non-exhaustive semigroup",
+[IsGreensLClass and IsInverseOpClass and IsNonExhaustiveSemigroupGreensClass],
 function(l)
   local record, convert_out, convert_in, scc;
 
@@ -668,8 +668,8 @@ end);
 
 # same method for regular/inverse
 
-InstallMethod(Enumerator, "for R-class of an acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator, "for R-class of a non-exhaustive semigroup",
+[IsGreensRClass and IsNonExhaustiveSemigroupGreensClass],
 function(r)
   local record, convert_out, convert_in, scc;
 

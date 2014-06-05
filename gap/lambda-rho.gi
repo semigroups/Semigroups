@@ -69,8 +69,8 @@ end);
 
 #
 
-InstallMethod(LambdaOrb, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(LambdaOrb, "for a non-exhaustive semigroup with generators",
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local record, o;
   
@@ -85,7 +85,7 @@ function(s)
   
   SetFilterObj(o, IsLambdaOrb);
   
-  if IsActingSemigroupWithInverseOp(s) then 
+  if IsNonExhaustiveSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
   fi;
   
@@ -158,7 +158,7 @@ function(o, m, i)
   scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
   mults:=o!.mults;      
 
-  if not IsActingSemigroupWithInverseOp(o!.parent) then
+  if not IsNonExhaustiveSemigroupWithInverseOp(o!.parent) then
   #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
     inv:=function(lambda, x) return LambdaInverse(o!.parent)(lambda, x); end;
@@ -330,8 +330,8 @@ end);
 
 #
 
-InstallMethod(RhoOrb, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(RhoOrb, "for a non-exhaustive semigroup with generators",
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local record, o;
 
@@ -344,7 +344,7 @@ function(s)
   o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
   
   SetFilterObj(o, IsRhoOrb);
-  if IsActingSemigroupWithInverseOp(s) then 
+  if IsNonExhaustiveSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
   fi;
   return o;

@@ -35,26 +35,26 @@
 # R-reps of the D-class d) and LambdaRhoLookup(d) is only bound for those
 # indices i where there is an R-rep in the scc of the D-class in reps[i] 
 DeclareAttribute("LambdaRhoLookup", IsGreensDClass and
-IsActingSemigroupGreensClass);
+IsNonExhaustiveSemigroupGreensClass);
 
 DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 
 DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
-DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
+DeclareProperty("IsGreensClassNC", IsNonExhaustiveSemigroupGreensClass);
 
-DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);
-DeclareAttribute("LambdaOrbSCCIndex", IsActingSemigroupGreensClass);
+DeclareAttribute("LambdaOrbSCC", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("LambdaOrbSCCIndex", IsNonExhaustiveSemigroupGreensClass);
 
-DeclareAttribute("RhoOrbSCC", IsActingSemigroupGreensClass);
-DeclareAttribute("RhoOrbSCCIndex", IsActingSemigroupGreensClass);
+DeclareAttribute("RhoOrbSCC", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("RhoOrbSCCIndex", IsNonExhaustiveSemigroupGreensClass);
 
-DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
-DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
+DeclareAttribute("LambdaCosets", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("RhoCosets", IsNonExhaustiveSemigroupGreensClass);
 
-DeclareAttribute("SemigroupDataSCC", IsActingSemigroupGreensClass);
-DeclareAttribute("SemigroupDataSCCIndex", IsActingSemigroupGreensClass);
-DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
+DeclareAttribute("SemigroupDataSCC", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("SemigroupDataSCCIndex", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("SemigroupDataIndex", IsNonExhaustiveSemigroupGreensClass);
 
 #old
 

@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  acting.gi
+#W  non-exhaustive.gi
 #Y  Copyright (C) 2013-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -8,17 +8,17 @@
 #############################################################################
 ##
 
-# acting semigroups...
+# non-exhaustive semigroups...
 
 # same method for ideals
 
-InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], ReturnFail);
+InstallMethod(SemigroupData, "for a non-exhaustive semigroup with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp], ReturnFail);
 
 # different method for ideals
 
-InstallMethod(SemigroupData, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(SemigroupData, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
   local gens, data, opts;
  
@@ -41,13 +41,13 @@ end);
 # for non-regular ideals
 
 InstallMethod(\in, 
-"for an associative element and acting semigroup",  
-[IsAssociativeElement, IsActingSemigroup], 
+"for an associative element and non-exhaustive semigroup",  
+[IsAssociativeElement, IsNonExhaustiveSemigroup], 
 function(f, s)
   local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   
   if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
-    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+    or (IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(s) 
      and ActionDegree(f)<>ActionDegree(s)) 
     or (ActionDegree(f)>ActionDegree(s)) then 
     return false;
@@ -225,8 +225,8 @@ end);
 
 # different for regular/inverse/ideals
 
-InstallMethod(Size, "for an acting semigroup",
-[IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
+InstallMethod(Size, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
 function(s)
   local data, lenreps, repslens, o, scc, size, n, m, i;
    

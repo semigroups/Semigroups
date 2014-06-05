@@ -89,8 +89,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsGreensDLeq, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp], 
+InstallMethod(IsGreensDLeq, "for an inverse op non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupWithInverseOp], 
 function(S)
   local partial, o, comp_index;
   
@@ -114,8 +114,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(PrimitiveIdempotents, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+InstallMethod(PrimitiveIdempotents, "for a non-exhaustive semigroup with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp],
 function(s)
   local o, scc, rank, min, l, min2, m;
   
@@ -144,8 +144,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsJoinIrreducible, 
-"for an acting semigroup with inverse op and an associative element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
+"for a non-exhaustive semigroup with inverse op and an associative element",
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
   local y, elts, i, k, singleline, sup, j;
 
@@ -208,8 +208,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed, 
-"for an acting semigroup with inverse op and an acting semigroup",
-[IsActingSemigroupWithInverseOp, IsActingSemigroup],
+"for a non-exhaustive semigroup with inverse op and a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupWithInverseOp, IsNonExhaustiveSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("usage: the second argument must be a subsemigroup of the first,");
@@ -222,8 +222,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed, 
-"for an acting semigroup with inverse op and an associative element collection",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a non-exhaustive semigroup with inverse op and an associative element collection",
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     Error("The second argument should be a subset of the first");
@@ -235,8 +235,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosedNC, 
-"for an acting semigroup with inverse op and associative element collection",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a non-exhaustive semigroup with inverse op and associative element collection",
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   local i, iter, t, u;
 
@@ -333,8 +333,8 @@ end);
 # same method for ideals 
 
 InstallMethod(JoinIrreducibleDClasses, 
-"for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+"for a non-exhaustive semigroup with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp],
 function(S)
   return Filtered(GreensDClasses(S), x-> IsJoinIrreducible(S, Representative(x)));
 end);
@@ -342,8 +342,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure, 
-"for an acting semigroup with inverse op and an acting semigroup",
-[IsActingSemigroupWithInverseOp, IsActingSemigroup],
+"for a non-exhaustive semigroup with inverse op and a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroupWithInverseOp, IsNonExhaustiveSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("usage: the second argument must be a subset of the first,");
@@ -356,8 +356,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure, 
-"for an acting semigroup with inverse op and associative element collections",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a non-exhaustive semigroup with inverse op and associative element collections",
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     Error("usage: the second argument must be a subset of the first,");
@@ -370,8 +370,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosureNC, 
-"for an acting semigroup with inverse op and associative element collections",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a non-exhaustive semigroup with inverse op and associative element collections",
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   local elts, n, out, ht, k, val, t, i;
 
@@ -410,8 +410,8 @@ end);
 #C method? JDM
 
 InstallMethod(Minorants, 
-"for an acting semigroup with inverse op and associative element collections",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
+"for a non-exhaustive semigroup with inverse op and associative element collections",
+[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElement],
 function(S, f)
   local out, elts, i, j, k, NaturalLeq;
 
@@ -456,8 +456,8 @@ end);
 # same method for ideals
 
 InstallMethod(RightCosetsOfInverseSemigroup, 
-"for acting semigroups with inverse op",
-[IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp],
+"for non-exhaustive semigroups with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp, IsNonExhaustiveSemigroupWithInverseOp],
 function(S, T)
   local elts, idem, usedreps, out, dupe, coset, s, rep, t;
 
@@ -511,8 +511,8 @@ end);
 # same method for ideals
 
 InstallMethod(SameMinorantsSubgroup, 
-"for a group H-class of an acting semigroup with op",
-[IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+"for a group H-class of a non-exhaustive semigroup with op",
+[IsGroupHClass and IsInverseOpClass and IsNonExhaustiveSemigroupGreensClass],
 function(h)
   local S, e, F, out, i, NaturalLeq;
   
@@ -706,8 +706,8 @@ end);
 # same method for ideals
 
 InstallMethod(VagnerPrestonRepresentation, 
-"for an acting semigroup with inverse operation",
-[IsActingSemigroupWithInverseOp],
+"for a non-exhaustive semigroup with inverse operation",
+[IsNonExhaustiveSemigroupWithInverseOp],
 function(S)
   local gens, elts, out, iso, T, inv, i;
 

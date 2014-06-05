@@ -120,7 +120,7 @@ function(S)
   if HasIsFinite(S) and IsFinite(S) then
    SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
-  if not IsActingSemigroup(S) then  
+  if not IsNonExhaustiveSemigroup(S) then  
     rel!.data:=GABOW_SCC(RightCayleyGraphSemigroup(S));
   fi;
   return rel;
@@ -146,7 +146,7 @@ function(S)
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
 
-  if not IsActingSemigroup(S) then  
+  if not IsNonExhaustiveSemigroup(S) then  
     rel!.data:=GABOW_SCC(LeftCayleyGraphSemigroup(S));
   fi;
   return rel;
@@ -176,7 +176,7 @@ function(S)
   if HasIsFinite(S) and IsFinite(S) then
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
-  if not IsActingSemigroup(S) then 
+  if not IsNonExhaustiveSemigroup(S) then 
     rel!.data:=SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRRelation(S)!.data,
     GreensLRelation(S)!.data);
   fi;
@@ -201,7 +201,7 @@ function(S)
   if HasIsFinite(S) and IsFinite(S) then
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
-  if not IsActingSemigroup(S) then 
+  if not IsNonExhaustiveSemigroup(S) then 
     rel!.data:=FIND_HCLASSES(GreensRRelation(S)!.data, GreensLRelation(S)!.data);
   fi;
   return rel;

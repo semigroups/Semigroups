@@ -11,7 +11,7 @@
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 
-# this is here for non-acting semigroup ideals
+# this is here for non-non-exhaustive semigroup ideals
 
 InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal", 
 [IsSemigroupIdeal],
@@ -37,8 +37,8 @@ end);
 #
 
 InstallMethod(PrintString, 
-"for an acting semigroup ideal with ideal generators", 
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and IsActingSemigroup],
+"for a non-exhaustive semigroup ideal with ideal generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and IsNonExhaustiveSemigroup],
 function(I) 
   local str;
 
@@ -206,7 +206,7 @@ end);
 #
 
 InstallMethod(SemigroupIdealByGenerators, "for an associative element collection",
-[IsActingSemigroup, IsAssociativeElementCollection], 
+[IsNonExhaustiveSemigroup, IsAssociativeElementCollection], 
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, SemigroupOptions(S));
 end);
@@ -214,8 +214,8 @@ end);
 #
 
 InstallMethod(SemigroupIdealByGenerators, 
-"for an acting semigroup, associative element collection and record",
-[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
+"for a non-exhaustive semigroup, associative element collection and record",
+[IsNonExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
 
@@ -229,14 +229,14 @@ function(S, gens, opts)
   
   filts:=IsMagmaIdeal and IsAttributeStoringRep;
 
-  if opts.acting then 
-    filts:=filts and IsActingSemigroup;
+  if opts.non-exhaustive then 
+    filts:=filts and IsNonExhaustiveSemigroup;
   fi;
 
   I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
   
-  if opts.acting and IsActingSemigroupWithInverseOp(S) then 
-    SetFilterObj(I, IsActingSemigroupWithInverseOp);
+  if opts.non-exhaustive and IsNonExhaustiveSemigroupWithInverseOp(S) then 
+    SetFilterObj(I, IsNonExhaustiveSemigroupWithInverseOp);
   fi;
 
   if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then 
@@ -260,7 +260,7 @@ function(S, gens, opts)
   SetParent(I, S); 
   SetGeneratorsOfMagmaIdeal(I, gens);
   
-  if not opts.acting then # to keep the craziness in the library happy!
+  if not opts.non-exhaustive then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif not (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) then
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
@@ -271,8 +271,8 @@ end);
 
 #
 
-InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal], 
+InstallMethod(MaximalDClasses, "for a inverse op non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal], 
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
   
@@ -300,8 +300,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+InstallMethod(MaximalDClasses, "for a regular non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data, pos, partial, classes, out, i;
 
@@ -323,8 +323,8 @@ end);
 
 # 
 
-InstallMethod(MinimalIdealGeneratingSet, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(MinimalIdealGeneratingSet, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local max, out;
 
@@ -342,8 +342,8 @@ end);
 
 #JDM: is there a better method?
 
-InstallMethod(InversesOfSemigroupElementNC, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal, IsAssociativeElement],
+InstallMethod(InversesOfSemigroupElementNC, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal, IsAssociativeElement],
 function(I, x)
   return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
 end);
@@ -464,16 +464,16 @@ end);
 InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
 
-InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+InstallMethod(NrDClasses, "for an inverse non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I)))-1;
 end);
 
 # 
 
-InstallMethod(NrDClasses, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+InstallMethod(NrDClasses, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   Enumerate(SemigroupIdealData(I));
   return Length(SemigroupIdealData(I)!.dorbit);
@@ -481,8 +481,8 @@ end);
 
 #
 
-InstallMethod(GreensDClasses, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+InstallMethod(GreensDClasses, "for a non-exhaustive semigroup ideal",
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   Enumerate(SemigroupIdealData(I));
   return SemigroupIdealData(I)!.dorbit;
@@ -490,8 +490,8 @@ end);
 
 #
 
-InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal", 
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+InstallMethod(PartialOrderOfDClasses, "for a non-exhaustive semigroup ideal", 
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data;
 
@@ -502,8 +502,8 @@ end);
 
 #
 
-InstallMethod(DClassReps, "for an acting semigroup ideal", 
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+InstallMethod(DClassReps, "for a non-exhaustive semigroup ideal", 
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data;
 

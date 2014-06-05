@@ -11,10 +11,10 @@ DeclareSynonymAttr("GeneratorsOfSemigroupIdeal", GeneratorsOfMagmaIdeal);
 DeclareGlobalFunction("SemigroupIdeal");
 
 DeclareOperation("SemigroupIdealByGenerators", 
-  [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
+  [IsNonExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord]);
 
 DeclareOperation("MinimalIdealGeneratingSet",
-[IsActingSemigroup and IsSemigroupIdeal]);
+[IsNonExhaustiveSemigroup and IsSemigroupIdeal]);
 
 # the <Parent> of an ideal is the semigroup in which the ideal was created, i.e.
 # the first argument of <SemigroupIdeal(S, I)>. The <SupersemigroupOfIdeal> is

@@ -137,8 +137,8 @@ end);
 #
 
 InstallMethod(Factorization, 
-"for an acting semigroup with generators and element", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
+"for a non-exhaustive semigroup with generators and element", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)
   local o, l, m, scc, data, pos, rep, word1, word2, p;
  
@@ -181,8 +181,8 @@ end);
 #
 
 InstallMethod(Factorization, 
-"for an acting semigroup with inverse op with generators and element", 
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsAssociativeElement], 
+"for a non-exhaustive semigroup with inverse op with generators and element", 
+[IsNonExhaustiveSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
  
@@ -231,8 +231,8 @@ end);
 #
 
 InstallMethod(Factorization, 
-"for a regular acting semigroup with generators and element", 
-[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
+"for a regular non-exhaustive semigroup with generators and element", 
+[IsNonExhaustiveSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
 IsAssociativeElement], 
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, p, word2;

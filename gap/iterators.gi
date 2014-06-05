@@ -312,14 +312,14 @@ function(arg)
   return out;
 end);
 
-# for general acting semigroups...
+# for general non-exhaustive semigroups...
 
 # Notes: the previous inverse method used D-classes instead of R-classes.
 
 # same method for regular/inverse 
 
-InstallMethod(Iterator, "for an acting semigroup",
-[IsActingSemigroup], 5, #to beat the method for semigroup ideals
+InstallMethod(Iterator, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
   local iter;
 
@@ -336,8 +336,8 @@ end);
 
 # different method for regular/inverse
 
-InstallMethod(Iterator, "for a D-class of an acting semigroup", 
-[IsGreensDClass and IsActingSemigroupGreensClass], 
+InstallMethod(Iterator, "for a D-class of a non-exhaustive semigroup", 
+[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass], 
 function(d)
   local iter, s;
   
@@ -353,8 +353,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(Iterator, "for a regular D-class of an acting semigroup",
-[IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
+InstallMethod(Iterator, "for a regular D-class of a non-exhaustive semigroup",
+[IsGreensDClass and IsRegularClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local iter, baseiter, convert;
 
@@ -381,8 +381,8 @@ end);
 #JDM again this method is redundant if we introduce RhoOrb for inverse
 #semigroups
 
-InstallMethod(Iterator, "for a D-class of an inverse acting semigroup",
-[IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+InstallMethod(Iterator, "for a D-class of an inverse non-exhaustive semigroup",
+[IsGreensDClass and IsInverseOpClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local iter, scc, baseiter, convert;
 
@@ -406,8 +406,8 @@ end);
 
 # same method for regular/inverse
 
-InstallMethod(Iterator, "for a H-class of an acting semigroup", 
-[IsGreensHClass and IsActingSemigroupGreensClass], 
+InstallMethod(Iterator, "for a H-class of a non-exhaustive semigroup", 
+[IsGreensHClass and IsNonExhaustiveSemigroupGreensClass], 
 function(h)
   local iter, s;
   
@@ -424,8 +424,8 @@ end);
 
 # same method for regular, different method for inverse
 
-InstallMethod(Iterator, "for an L-class of an acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(Iterator, "for an L-class of a non-exhaustive semigroup",
+[IsGreensLClass and IsNonExhaustiveSemigroupGreensClass],
 function(l)
   local iter, baseiter, convert;
 
@@ -451,8 +451,8 @@ end);
 
 # same method for regular/inverse
 
-InstallMethod(Iterator, "for an R-class of an acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass],
+InstallMethod(Iterator, "for an R-class of a non-exhaustive semigroup",
+[IsGreensRClass and IsNonExhaustiveSemigroupGreensClass],
 function(r)
   local iter, baseiter, convert;
 
@@ -479,8 +479,8 @@ end);
 
 # different method for regular/inverse
 
-InstallMethod(IteratorOfDClasses, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfDClasses, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
   local iter;
   
@@ -509,8 +509,8 @@ end);
 # JDM could be different method for regular/inverse, see inverse_old.gi in
 # semigroups-dev.
 
-InstallMethod(IteratorOfHClasses, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfHClasses, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
   local iter;
   
@@ -526,8 +526,8 @@ end);
 
 # different method for regular/inverse
 
-InstallMethod(IteratorOfLClasses, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfLClasses, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
   local iter;
   
@@ -543,8 +543,8 @@ end);
 
 # same method for regular/inverse
 
-InstallMethod(IteratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfRClasses, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
   local iter;
 
@@ -560,8 +560,8 @@ end);
 
 #different method for regular/inverse
 
-InstallMethod(IteratorOfRClassData, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfRClassData, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 function(s)
 
   return IteratorByNextIterator( rec( 
@@ -657,47 +657,47 @@ end);
 
 # same method for regular/inverse
 
-InstallMethod(Iterator, "for a trivial acting semigroup", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
+InstallMethod(Iterator, "for a trivial non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
   return TrivialIterator(GeneratorsOfSemigroup(s)[1]);
 end);
 
 # different method for regular/inverse
 
-InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfDClassReps, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
 [IsIteratorOfDClassReps]));
 
 #JDM could be a different  method for regular/inverse using
 #IteratorOfHClassData (not yet written), see inverse_old.gi in semigroups-dev
 
-InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfHClassReps, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 s-> IteratorByIterator(IteratorOfHClasses(s), Representative,
 [IsIteratorOfHClassReps]));
 
 # different method for regular/inverse
 
-InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfLClassReps, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 s-> IteratorByIterator(IteratorOfLClasses(s), Representative,
 [IsIteratorOfLClassReps]));
 
 # same method for inverse/regular.
 
-InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IteratorOfRClassReps, "for a non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup],
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
 [IsIteratorOfRClassReps]));
 
-# for regular acting semigroups...
+# for regular non-exhaustive semigroups...
 
 # different method for inverse
 
-InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(IteratorOfDClassData, "for regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local record, o, scc, func, iter, f;
 
@@ -748,8 +748,8 @@ end);
 
 # no method required for inverse (it's not used for anything) 
 
-InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(IteratorOfLClassData, "for regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local o, func, iter;
 
@@ -779,8 +779,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(IteratorOfRClassData, "for regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   local o, func, iter;
 
@@ -811,8 +811,8 @@ end);
 
 # same method for inverse
 
-InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(IteratorOfDClassReps, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   if HasDClassReps(s) then
     return IteratorList(DClassReps(s));
@@ -823,8 +823,8 @@ end);
 
 # same method for inverse
 
-InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(IteratorOfDClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 function(s)
   if HasGreensDClasses(s) then
     return IteratorList(GreensDClasses(s));
@@ -835,22 +835,22 @@ end);
 
 # different method for inverse
 
-InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(IteratorOfLClassReps, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
 [IsIteratorOfLClassReps]));
 
 # different method for inverse
 
-InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(IteratorOfLClasses, "for a regular non-exhaustive semigroup",
+[IsNonExhaustiveSemigroup and IsRegularSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x->
 CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
-#for inverse acting semigroups...
+#for inverse non-exhaustive semigroups...
 
-InstallMethod(IteratorOfDClassData, "for inverse acting semigroup", 
-[IsActingSemigroupWithInverseOp and IsRegularSemigroup], 
+InstallMethod(IteratorOfDClassData, "for inverse non-exhaustive semigroup", 
+[IsNonExhaustiveSemigroupWithInverseOp and IsRegularSemigroup], 
 function(s) 
   local graded, record, o, scc, func;
  
@@ -902,8 +902,8 @@ end);
 
 #
 
-InstallMethod(IteratorOfRClassData, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], 
+InstallMethod(IteratorOfRClassData, "for non-exhaustive semigroup with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp], 
 function(s)
   local o, func, iter, lookup;
   
@@ -942,15 +942,15 @@ end);
 
 #
 
-InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+InstallMethod(IteratorOfLClassReps, "for non-exhaustive semigroup with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> Inverse(x[4]),
 [IsIteratorOfLClassReps]));
 
 #
 
-InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+InstallMethod(IteratorOfLClasses, "for non-exhaustive semigroup with inverse op",
+[IsNonExhaustiveSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), 
 function(x)
   x[4]:=Inverse(x[4]); #JDM is this a good idea??
@@ -959,8 +959,8 @@ end, [IsIteratorOfLClasses]));
 
 #
 
-InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(Iterator, "for an L-class of an inverse non-exhaustive semigroup",
+[IsInverseOpClass and IsGreensLClass and IsNonExhaustiveSemigroupGreensClass],
 function(l)
   local iter, baseiter, convert;
 
