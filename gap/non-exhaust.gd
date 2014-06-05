@@ -8,9 +8,15 @@
 #############################################################################
 ##
 
+# IsSemigroupData contains both IsExhaustiveData and IsNonExhaustiveData.
+DeclareAttribute("IsSemigroupData", IsList);
+DeclareFilter("IsClosedData", IsSemigroupData);
+
+DeclareCategory("IsNonExhaustiveSemigroup", IsSemigroup and IsFinite);
 DeclareAttribute("NonExhaustiveData", IsNonExhaustiveSemigroup, "mutable");
-DeclareCategory("IsNonExhaustiveData", IsList);
-DeclareFilter("IsClosedData", IsNonExhaustiveData);
+
+DeclareCategory("IsNonExhaustiveData", IsSemigroupData);
+
 DeclareAttribute("SizeOfNonExhaustiveData", IsNonExhaustiveData);
 
 DeclareOperation("Enumerate", [IsNonExhaustiveData]);

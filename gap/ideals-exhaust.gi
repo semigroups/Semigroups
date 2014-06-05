@@ -67,7 +67,7 @@ function(enum, limit, lookfunc)
         # at the end of this either there is a word in <data> of length <len+1>
         # or <data> is closed.
       fi;
-      if not IsClosedExhaustiveData(data) then 
+      if not IsClosedData(data) then 
         data!.stopper:=data!.lenindex[len+1];
         Enumerate(data);
         # enumerate <data> until the right descendants of the first word of

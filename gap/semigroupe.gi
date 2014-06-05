@@ -308,7 +308,7 @@ if IsBound(ENUMERATE_SEE_DATA) then
     data:=ENUMERATE_SEE_DATA(data, limit, lookfunc, lookfunc<>ReturnFalse);
 
     if data!.pos>data!.nr then
-      SetFilterObj(data, IsClosedExhaustiveData);
+      SetFilterObj(data, IsClosedData);
     fi;
 
     return data;
@@ -336,7 +336,7 @@ else
     nr:=data!.nr;                     # number of elements found so far...
    
     if i>nr then
-      SetFilterObj(data, IsClosedExhaustiveData);
+      SetFilterObj(data, IsClosedData);
       return data;
     fi;
     
@@ -480,7 +480,7 @@ else
     data!.len:=len;
 
     if i>nr then
-      SetFilterObj(data, IsClosedExhaustiveData);
+      SetFilterObj(data, IsClosedData);
       # Unbind some of the unnecessary components here!
     fi;
 
@@ -535,7 +535,7 @@ InstallMethod(ViewObj, [IsExhaustiveData],
 function(data)
   Print("<");
 
-  if IsClosedExhaustiveData(data) then 
+  if IsClosedData(data) then 
     Print("closed ");
   else 
     Print("open ");
