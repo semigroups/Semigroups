@@ -242,7 +242,7 @@ function(S, gens, record)
 
   I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=record));
   
-  if not record.exhaustive and IsSemigroupWithInverseOp(S) then 
+  if IsSemigroupWithInverseOp(S) then 
     SetFilterObj(I, IsSemigroupWithInverseOp);
   fi;
 

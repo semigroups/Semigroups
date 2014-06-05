@@ -19,7 +19,7 @@
 
 InstallMethod(\in, 
 "for an associative element and non-exhaustive semigroup with inversion",
-[IsAssociativeElement, IsSemigroupWithInverseOp],
+[IsAssociativeElement, IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(f, s)
   local dom, o, lambda, lambda_l, rho, rho_l, lookingfor, m, schutz, scc, g,
   rep, n;
@@ -303,7 +303,7 @@ LambdaOrb(h), Representative(h), IsGreensClassNC(h)));
 # same method for ideals
 
 InstallMethod(DClassReps, "for a non-exhaustive semigroup with inversion",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(s)            
   local o, r, out, m;
   
@@ -320,7 +320,7 @@ end);
 # same method for ideals
 
 InstallMethod(GreensDClasses, "for a non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(s)
   local o, scc, out, i, f, m;
 
@@ -341,7 +341,7 @@ end);
 # same method for ideals
 
 InstallMethod(GreensHClasses, "for a non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(s)
   local o, scc, len, out, n, mults, g, f, m, j, k;
   
@@ -453,7 +453,7 @@ end);
 # same method for ideals
     
 InstallMethod(GreensLClasses, "for non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(s)
   local o, scc, len, out, n, f, mults, m, j;
   
@@ -507,7 +507,7 @@ end);
 
 InstallMethod(GreensDClassOfElement, 
 "for non-exhaustive semigroup with inverse op and element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(s, f)
   local o, i, m, rep;
 
@@ -534,7 +534,7 @@ end);
 
 InstallMethod(GreensDClassOfElementNC, 
 "for a non-exhaustive semigroup with inverse op and element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(s, f)
   return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false)[1], 
    fail, fail, RightOne(f), true);
@@ -544,7 +544,7 @@ end);
 
 InstallMethod(GreensHClassOfElement, 
 "for a non-exhaustive semigroup with inverse op and element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(s, f)
   local o, m;
 
@@ -562,7 +562,7 @@ end);
 # same method for ideals
 
 InstallMethod(GreensHClassOfElementNC, "for a non-exhaustive semigroup and element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(s, f)
   return CreateHClass(s, 1, GradedLambdaOrb(s, f, false)[1],
    fail, fail, f, true);
@@ -619,7 +619,7 @@ end);
 
 InstallMethod(GreensLClassOfElement, 
 "for non-exhaustive semigroup with inverse op and element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(s, f)
   local o, l, m;
 
@@ -647,7 +647,7 @@ end);
 # same method for ideals
 
 InstallMethod(GreensLClassOfElementNC, "for a non-exhaustive semigroup and element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement],
 function(s, f)
   # lambda value of f has to be in first place of GradedLambdaOrb
   # with false as final arg, use non-NC version since rho value of f should be
@@ -692,7 +692,7 @@ end);
 # same method for ideals
                     
 InstallMethod(GreensRClasses, "for non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(s)         
   local o, scc, len, out, i, f, mults, m, j;
                     
@@ -779,7 +779,7 @@ r-> [LeftOne(Representative(r))]);
 # same method for ideals
 
 InstallMethod(Idempotents, "for non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp], 
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup], 
 function(s)
   local o, creator, r, out, i;
 
@@ -804,7 +804,7 @@ end);
 
 InstallMethod(Idempotents, 
 "for non-exhaustive semigroup with inverse op and non-negative integer",
-[IsSemigroupWithInverseOp, IsInt], 
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsInt], 
 function(s, n)
   local o, creator, r, out, rank, len, i;
 
@@ -840,7 +840,7 @@ end);
 # same method for ideals
 
 InstallMethod(RClassReps, "for a non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp], s-> List(LClassReps(s), x-> Inverse(x)));
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup], s-> List(LClassReps(s), x-> Inverse(x)));
 
 # same method for ideals
 
@@ -851,7 +851,7 @@ d-> List(LClassReps(d), x-> Inverse(x)));
 # same method for ideals
 
 InstallMethod(Random, "for a non-exhaustive semigroup with inverse op and generators",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(S)
   local gens, i, w, x, o, m;
   
@@ -907,7 +907,7 @@ end);
 # same method for ideals
 
 InstallMethod(Size, "for a non-exhaustive semigroup with inversion",
-[IsSemigroupWithInverseOp], 10, 
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup], 10, 
 function(s)
   local o, scc, r, nr, m;
 
@@ -935,7 +935,7 @@ l-> Size(SchutzenbergerGroup(l))*Length(LambdaOrbSCC(l)));
 # same method for ideals
 
 InstallMethod(HClassReps, "for a non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(s)
   local o, scc, len, out, n, mults, f, m, j, k;
   
@@ -1016,7 +1016,7 @@ end);
 # same method for ideals
 
 InstallMethod(NrIdempotents, "for a non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp], 
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup], 
 s-> Length(Enumerate(LambdaOrb(s), infinity))-1);     
 
 # same method for ideals
@@ -1037,7 +1037,7 @@ InstallMethod(NrIdempotents, "for an inverse op R-class",
 # same method for ideals
 
 InstallMethod(NrRClasses, "for a non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp], NrLClasses);
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup], NrLClasses);
 
 # same method for ideals
 
@@ -1059,7 +1059,7 @@ l-> Length(LambdaOrbSCC(l)));
 # same method for ideals
 
 InstallMethod(NrHClasses, "for a non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 function(s)
   local o, scc;
   o:=Enumerate(LambdaOrb(s), infinity);
@@ -1071,7 +1071,7 @@ end);
 #
  
 InstallMethod(PartialOrderOfDClasses, "for non-exhaustive semigroup with inverse op",
-[IsSemigroupWithInverseOp],      
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],      
 function(s)            
   local d, n, out, o, gens, lookup, l, lambdafunc, i, x, f;
                        

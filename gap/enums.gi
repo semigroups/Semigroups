@@ -303,7 +303,7 @@ end);
 # method
 
 InstallMethod(EnumeratorOfRClasses, "for an inverse op non-exhaustive semigroup",
-[IsSemigroupWithInverseOp], 
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup], 
 function(s)
   local o;
 

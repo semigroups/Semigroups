@@ -253,7 +253,7 @@ InstallMethod(IdempotentGeneratedSubsemigroup, "for a non-exhaustive semigroup",
 # same method for ideals 
 
 InstallMethod(IdempotentGeneratedSubsemigroup, 
-"for an inverse op non-exhaustive semigroup", [IsSemigroupWithInverseOp],
+"for an inverse op non-exhaustive semigroup", [IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup],
 s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 
 # same method for ideals

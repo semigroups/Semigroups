@@ -47,13 +47,8 @@ function(coll)
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
-# IsSemigroupWithInverseOp
-
-InstallTrueMethod(IsInverseSemigroup, IsSemigroupWithInverseOp);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup and IsNonExhaustiveSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup and IsNonExhaustiveSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-IsPartialPermBipartitionSemigroup and IsNonExhaustiveSemigroup);
+# JDM should remove this since it is not possible to have an exhaustive Rees
+# 0-matrix semigroup (or to specify any of the other options)
 InstallTrueMethod(IsNonExhaustiveSemigroup, IsReesZeroMatrixSemigroup);
 
 # the largest point involved in the action
@@ -606,17 +601,20 @@ end);
 # equal degrees.
 
 InstallMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
-"for a transformation semigroup", [IsTransformationSemigroup], ReturnFalse);
+"for a non-exhaustive transformation semigroup", 
+[IsTransformationSemigroup and IsNonExhaustiveSemigroup], ReturnFalse);
 
 InstallTrueMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
-IsBipartitionSemigroup);
+IsBipartitionSemigroup and IsNonExhaustiveSemigroup);
 
 InstallMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
-"for a partial perm semigroup", [IsPartialPermSemigroup], ReturnFalse);
+"for a non-exhaustive partial perm semigroup", 
+[IsPartialPermSemigroup and IsNonExhaustiveSemigroup], ReturnFalse);
 
 #this is not really relevant here.
 InstallMethod(IsNonExhaustiveSemigroupWithFixedDegreeMultiplication, 
-"for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup], ReturnFalse);
+"for a non-exhaustive Rees 0-matrix subsemigroup", 
+[IsReesZeroMatrixSubsemigroup and IsNonExhaustiveSemigroup], ReturnFalse);
 
 # One or a fake one for those types of object without one.
 

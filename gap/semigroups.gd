@@ -8,7 +8,7 @@
 ############################################################################# 
 ##
 
-DeclareCategory("IsSemigroupWithInverseOp", IsSemigroup);
+DeclareCategory("IsSemigroupWithInverseOp", IsInverseSemigroup);
 
 DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
 DeclareCategoryCollections("IsAssociativeElementWithStar");
@@ -35,14 +35,14 @@ IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGenerators",
 [IsAssociativeElementCollection, IsRecord]);
 
-DeclareOperation("ClosureInverseSemigroup", [IsSemigroupWithInverseOp,
+DeclareOperation("ClosureInverseSemigroup", [IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup,
 IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureInverseSemigroup", 
-[IsSemigroupWithInverseOp, IsAssociativeElement]);
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
 DeclareOperation("ClosureSemigroup", 
@@ -79,7 +79,7 @@ DeclareOperation("SubsemigroupByProperty",
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty", 
-[IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsFunction, IsPosInt]);
 
 # undoc
 

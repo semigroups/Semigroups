@@ -252,7 +252,7 @@ end);
 # supersemigroup. Hence we require a different case here. 
 
 InstallMethod(LambdaOrb, "for an inverse op non-exhaustive semigroup ideal", 
-[IsSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local record, gens, lambdafunc, o, ht, nr, nrgens, lambda, InstallPointInOrb,
    x, i;

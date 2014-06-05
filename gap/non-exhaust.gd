@@ -8,24 +8,19 @@
 #############################################################################
 ##
 
-DeclareCategory("IsSemigroupWithInverseOp", IsNonExhaustiveSemigroup);
-
-DeclareProperty("IsNonExhaustiveSemigroupWithFixedDegreeMultiplication",
-IsSemigroup);
-DeclareProperty("IsGeneratorsOfNonExhaustiveSemigroup", IsAssociativeElementCollection);
-
-DeclareCategory("IsNonExhaustiveSemigroupGreensClass", IsGreensClass);
-
 # IsSemigroupData contains both IsExhaustiveData and IsNonExhaustiveData.
 DeclareAttribute("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
 
 DeclareCategory("IsNonExhaustiveSemigroup", IsSemigroup and IsFinite);
+
 DeclareAttribute("NonExhaustiveData", IsNonExhaustiveSemigroup, "mutable");
-
 DeclareCategory("IsNonExhaustiveData", IsSemigroupData);
-
 DeclareAttribute("SizeOfNonExhaustiveData", IsNonExhaustiveData);
+DeclareProperty("IsGeneratorsOfNonExhaustiveSemigroup", IsAssociativeElementCollection);
+DeclareProperty("IsNonExhaustiveSemigroupWithFixedDegreeMultiplication",
+IsNonExhaustiveSemigroup);
+DeclareCategory("IsNonExhaustiveSemigroupGreensClass", IsGreensClass);
 
 DeclareOperation("Enumerate", [IsNonExhaustiveData]);
 DeclareOperation("Enumerate", [IsNonExhaustiveData, IsCyclotomic]);

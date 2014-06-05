@@ -16,12 +16,12 @@ IsPartialPermSemigroup);
 
 DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup, IsAssociativeElement]);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
-DeclareOperation("IsMajorantlyClosed", [IsSemigroupWithInverseOp,
+DeclareOperation("IsMajorantlyClosed", [IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup,
   IsAssociativeElementCollection]);
-DeclareOperation("IsMajorantlyClosed", [IsSemigroupWithInverseOp,
+DeclareOperation("IsMajorantlyClosed", [IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup,
   IsNonExhaustiveSemigroup]);
 DeclareOperation("IsMajorantlyClosedNC", 
-  [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
+  [IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("MajorantClosureNC", 
   [IsInverseSemigroup, IsAssociativeElementCollection]);
@@ -30,11 +30,11 @@ DeclareAttribute("SameMinorantsSubgroup",
   IsGroupHClass and IsInverseOpClass and IsNonExhaustiveSemigroupGreensClass);
 
 DeclareOperation("RightCosetsOfInverseSemigroup", 
-  [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp]);
+  [IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup]);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", 
   IsInverseSemigroup and IsPartialPermSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
 
-DeclareAttribute("VagnerPrestonRepresentation", IsSemigroupWithInverseOp);
+DeclareAttribute("VagnerPrestonRepresentation", IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup);
 DeclareOperation("NaturalLeqInverseSemigroup", 
   [IsAssociativeElement, IsAssociativeElement]);
