@@ -11,7 +11,7 @@
 # the current idea is use the new setup for regular and inverse semigroups, and
 # to use the 
 
-DeclareCategory("IsSemigroupIdealData", IsSemigroupData);
+DeclareCategory("IsSemigroupIdealData", IsNonExhaustiveData);
 DeclareCategory("IsRegularIdealData", IsSemigroupIdealData);
 DeclareAttribute("SemigroupIdealData", IsSemigroupIdeal);
 DeclareOperation("Enumerate", [IsSemigroupIdealData, IsCyclotomic, IsRecord]);

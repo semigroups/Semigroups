@@ -764,7 +764,7 @@ function(s, coll, opts)
 
   SetLambdaOrb(t, o); 
   
-  if not HasSemigroupData(s) or SemigroupData(s)!.pos=0 then 
+  if not HasNonExhaustiveData(s) or NonExhaustiveData(s)!.pos=0 then 
     return t;
   fi;
   
@@ -773,7 +773,7 @@ function(s, coll, opts)
   old_lookup:=old_o!.scc_lookup;
   
   # we don't do AddGeneratorsToOrbit of rho_o here because this is handled by
-  # Enumerate(SemigroupData.. later
+  # Enumerate(NonExhaustiveData.. later
   rho_ht:=rho_o!.ht;
 
   # unbind everything related to strongly connected components, since 
@@ -790,8 +790,8 @@ function(s, coll, opts)
   SetRhoOrb(t, rho_o);
 
   # get new and old R-rep orbit data
-  new_data:=SemigroupData(t);
-  old_data:=SemigroupData(s);
+  new_data:=NonExhaustiveData(t);
+  old_data:=NonExhaustiveData(s);
   max_rank:=MaximumList(List(coll, x-> ActionRank(t)(x))); 
 
   ht:=new_data!.ht;       

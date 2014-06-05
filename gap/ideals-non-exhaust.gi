@@ -106,14 +106,14 @@ end);
 
 # the really technical stuff...
 
-InstallMethod(SemigroupData, "for a regular non-exhaustive semigroup ideal",
+InstallMethod(NonExhaustiveData, "for a regular non-exhaustive semigroup ideal",
 [IsNonExhaustiveSemigroup and IsRegularSemigroup and IsSemigroupIdeal],
 SemigroupIdealData);
 
 # JDM this method should become obsolete in time...
 # <I> is not regular if this function is invoked...
 
-InstallMethod(SemigroupData, "for a non-exhaustive semigroup ideal",
+InstallMethod(NonExhaustiveData, "for a non-exhaustive semigroup ideal",
 [IsNonExhaustiveSemigroup and IsSemigroupIdeal],
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
@@ -168,7 +168,7 @@ function(I)
   # JDM: maybe more is required here to remove U from the semigroup data, like
   # replacing U with I in the first position of every entry of the data, and in
   # the different internal components of the data. 
-  return SemigroupData(U);
+  return NonExhaustiveData(U);
 end);
 
 #
@@ -179,7 +179,7 @@ function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
    
   if not IsRegularSemigroup(I) then 
-    return SemigroupData(I)!.gens;
+    return NonExhaustiveData(I)!.gens;
   fi; 
   
   Info(InfoWarning, 2, "finding a generating set of a semigroup ideal!");

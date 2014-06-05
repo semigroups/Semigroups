@@ -52,9 +52,9 @@ DeclareAttribute("RhoOrbSCCIndex", IsNonExhaustiveSemigroupGreensClass);
 DeclareAttribute("LambdaCosets", IsNonExhaustiveSemigroupGreensClass);
 DeclareAttribute("RhoCosets", IsNonExhaustiveSemigroupGreensClass);
 
-DeclareAttribute("SemigroupDataSCC", IsNonExhaustiveSemigroupGreensClass);
-DeclareAttribute("SemigroupDataSCCIndex", IsNonExhaustiveSemigroupGreensClass);
-DeclareAttribute("SemigroupDataIndex", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("NonExhaustiveDataSCC", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("NonExhaustiveDataSCCIndex", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("NonExhaustiveDataIndex", IsNonExhaustiveSemigroupGreensClass);
 
 #old
 

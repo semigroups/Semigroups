@@ -16,7 +16,7 @@ function(o, limit)
   newlookfunc := function(data, x)
     return IsClosed(o) or Length(o) >= limit;
   end;
-  Enumerate(SemigroupData(o!.parent), infinity, newlookfunc);
+  Enumerate(NonExhaustiveData(o!.parent), infinity, newlookfunc);
 
   return o;
 end);
@@ -32,10 +32,10 @@ function(o, limit, lookfunc)
     return IsClosed(o) or Length(o) >= limit;
   end;
   if IsLambdaOrb(o) then 
-    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc:=newlookfunc, 
+    Enumerate(NonExhaustiveData(o!.parent), infinity, rec(lookfunc:=newlookfunc, 
      lambdalookfunc:=lookfunc));
   elif IsRhoOrb(o) then 
-    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc:=newlookfunc, 
+    Enumerate(NonExhaustiveData(o!.parent), infinity, rec(lookfunc:=newlookfunc, 
      rholookfunc:=lookfunc));
   fi;
 

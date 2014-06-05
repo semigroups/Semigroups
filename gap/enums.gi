@@ -238,7 +238,7 @@ function(s)
     end,
 
     NumberElement:=function(enum, r)
-      return Position(SemigroupData(s), Representative(r))-1;
+      return Position(NonExhaustiveData(s), Representative(r))-1;
     end,
 
     Membership:=function(r, enum)

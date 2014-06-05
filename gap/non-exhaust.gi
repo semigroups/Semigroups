@@ -12,12 +12,12 @@
 
 # same method for ideals
 
-InstallMethod(SemigroupData, "for a non-exhaustive semigroup with inverse op",
+InstallMethod(NonExhaustiveData, "for a non-exhaustive semigroup with inverse op",
 [IsNonExhaustiveSemigroupWithInverseOp], ReturnFail);
 
 # different method for ideals
 
-InstallMethod(SemigroupData, "for a non-exhaustive semigroup",
+InstallMethod(NonExhaustiveData, "for a non-exhaustive semigroup",
 [IsNonExhaustiveSemigroup],
 function(s)
   local gens, data, opts;
@@ -32,7 +32,7 @@ function(s)
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
-  Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
+  Objectify(NewType(FamilyObj(s), IsNonExhaustiveData), data);
   
   return data;
 end);
@@ -71,7 +71,7 @@ function(f, s)
     fi;
   fi;  
 
-  data:=SemigroupData(s);
+  data:=NonExhaustiveData(s);
   ht:=data!.ht;
 
   # look for lambda!
@@ -230,7 +230,7 @@ InstallMethod(Size, "for a non-exhaustive semigroup",
 function(s)
   local data, lenreps, repslens, o, scc, size, n, m, i;
    
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data:=Enumerate(NonExhaustiveData(s), infinity, ReturnFalse);
   lenreps:=data!.lenreps;
   repslens:=data!.repslens;
   o:=LambdaOrb(s);
@@ -253,7 +253,7 @@ end);
 # same method for ideals
 
 InstallMethod(\in, "for associative element and semigroup data",
-[IsAssociativeElement, IsSemigroupData],
+[IsAssociativeElement, IsNonExhaustiveData],
 function(f, data)
   return not Position(data, f)=fail;
 end);
@@ -261,21 +261,21 @@ end);
 # same method for ideals
 
 InstallMethod(ELM_LIST, "for semigroup data, and pos int",
-[IsSemigroupData, IsPosInt], 
+[IsNonExhaustiveData, IsPosInt], 
 function(o, nr)
   return o!.orbit[nr];
 end);
 
 # same method for ideals
 
-InstallMethod(Length, "for semigroup data", [IsSemigroupData], 
+InstallMethod(Length, "for semigroup data", [IsNonExhaustiveData], 
 function(data)
   return Length(data!.orbit);
 end);
 
 # same method for ideals
 
-InstallMethod(Enumerate, "for semigroup data", [IsSemigroupData],
+InstallMethod(Enumerate, "for semigroup data", [IsNonExhaustiveData],
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
@@ -283,7 +283,7 @@ end);
 # same method for ideals
 
 InstallMethod(Enumerate, "for semigroup data and limit", 
-[IsSemigroupData, IsCyclotomic],
+[IsNonExhaustiveData, IsCyclotomic],
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
@@ -295,7 +295,7 @@ end);
 
 InstallMethod(Enumerate, 
 "for an semigroup data, limit, and func",
-[IsSemigroupData, IsCyclotomic, IsFunction],
+[IsNonExhaustiveData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
   local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho, rho_o, rho_orb, rho_nr, rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, pt, ind, schutz, data_val, old, j, n;
  
@@ -607,7 +607,7 @@ end);
 # not currently applicable for ideals
 
 InstallMethod(OrbitGraph, "for semigroup data",  
-[IsSemigroupData],
+[IsNonExhaustiveData],
 function(data)
   return data!.graph;
 end);
@@ -615,7 +615,7 @@ end);
 # not currently applicable for ideals
 
 InstallMethod(OrbitGraphAsSets, "for semigroup data",  
-[IsSemigroupData],
+[IsNonExhaustiveData],
 function(data)
   return List(data!.graph, Set);
 end);
@@ -627,7 +627,7 @@ end);
 # same method for ideals
 
 InstallMethod(Position, "for semigroup data and an associative element",
-[IsSemigroupData, IsAssociativeElement, IsZeroCyc], 
+[IsNonExhaustiveData, IsAssociativeElement, IsZeroCyc], 
 function(data, x, n)
   local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
   lambdaperm;
@@ -689,7 +689,7 @@ end);
 #
 
 InstallMethod(PositionOfFound,"for semigroup data",
-[IsSemigroupData],
+[IsNonExhaustiveData],
 function( data )
   if not(data!.looking) then
     Error("not looking for anything,");
@@ -700,7 +700,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(SizeOfSemigroupData, "for semigroup data", [IsSemigroupData],
+InstallMethod(SizeOfNonExhaustiveData, "for semigroup data", [IsNonExhaustiveData],
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
   
@@ -723,7 +723,7 @@ end);
 
 # different method for ideals
 
-InstallMethod(ViewObj, [IsSemigroupData], 
+InstallMethod(ViewObj, [IsNonExhaustiveData], 
 function(data)
   Print("<");
 

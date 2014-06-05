@@ -32,7 +32,7 @@ function(S)
   local partial, data, comp_index;
 
   partial:=PartialOrderOfDClasses(S);
-  data:=SemigroupData(S);
+  data:=NonExhaustiveData(S);
 
   comp_index:=function(x, y)
     if y in partial[x] then
@@ -58,7 +58,7 @@ function(s)
 
   gens:=GeneratorsOfSemigroup(s); 
   partial:=PartialOrderOfDClasses(s);
-  data:=SemigroupData(s);
+  data:=NonExhaustiveData(s);
   pos:=[];
   for x in gens do 
     i:=OrbSCCLookup(data)[Position(data, x)]-1; 

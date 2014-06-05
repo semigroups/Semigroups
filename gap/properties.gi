@@ -469,7 +469,7 @@ function(S)
     return true;
   fi;
 
-  if IsClosedData(SemigroupData(S)) and IsClosed(RhoOrb(S)) then 
+  if IsClosedData(NonExhaustiveData(S)) and IsClosed(RhoOrb(S)) then 
     for x in GreensDClasses(S) do 
       if (not IsTrivial(SchutzenbergerGroup(x))) or Length(LambdaOrbSCC(x))>1 
        then
@@ -926,7 +926,7 @@ function(S)
     return true;
   end;
 
-  data:=SemigroupData(S);
+  data:=NonExhaustiveData(S);
 
   for i in [2..Length(data)] do 
     if lookfunc(data, data[i]) then 
@@ -978,7 +978,7 @@ function(S)
     return l=fail or OrbSCCLookup(x[3])[l]<>x[2];
   end;
 
-  data:=SemigroupData(S);
+  data:=NonExhaustiveData(S);
 
   for i in [2..Length(data)] do 
     if lookfunc(data, data[i]) then 
@@ -1481,7 +1481,7 @@ function(S)
   if MultiplicativeZero(S)=fail then 
     return false;
   fi;
-  if IsClosedData(SemigroupData(S)) then 
+  if IsClosedData(NonExhaustiveData(S)) then 
     return IsRegularSemigroup(S) and NrDClasses(S)=2;
   fi;
   iter:=IteratorOfDClasses(S);

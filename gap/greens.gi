@@ -48,10 +48,10 @@ InstallMethod(LambdaRhoLookup, "for a D-class of a non-exhaustive semigroup",
 function(d)
   local data, orb_scc, orblookup1, orblookup2, out, i;
 
-  data:=SemigroupData(Parent(d));
+  data:=NonExhaustiveData(Parent(d));
   
   # scc of R-reps corresponding to d 
-  orb_scc:=SemigroupDataSCC(d);
+  orb_scc:=NonExhaustiveDataSCC(d);
 
   # positions in reps containing R-reps in d 
   orblookup1:=data!.orblookup1;
@@ -161,17 +161,17 @@ end);
 
 # this is useful in PartialOrderOfDClasses, different method required for ideals
 
-InstallMethod(SemigroupDataSCC, "for a D-class of a non-exhaustive semigroup",
+InstallMethod(NonExhaustiveDataSCC, "for a D-class of a non-exhaustive semigroup",
 [IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
 function(d)
   local data;
-  if not HasSemigroupDataIndex(d) then 
+  if not HasNonExhaustiveDataIndex(d) then 
     return fail;
   fi;
-  data:=SemigroupData(Parent(d));
+  data:=NonExhaustiveData(Parent(d));
 
   # scc of R-reps corresponding to d 
-  return OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
+  return OrbSCC(data)[OrbSCCLookup(data)[NonExhaustiveDataIndex(d)]];
 end);
 
 # main 
@@ -504,7 +504,7 @@ InstallMethod(GreensDClasses, "for a non-exhaustive semigroup",
 function(s)
   local data, scc, out, type, drel, o, arg, d, rectify, i;
 
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data:=Enumerate(NonExhaustiveData(s), infinity, ReturnFalse);
   
   scc:=OrbSCC(data);
   out:=EmptyPlist(Length(scc));
@@ -518,7 +518,7 @@ function(s)
     SetParent(d, s);
     SetLambdaOrbSCCIndex(d, arg[2]);
     SetLambdaOrb(d, arg[3]);
-    SetSemigroupDataIndex(d, arg[6]);
+    SetNonExhaustiveDataIndex(d, arg[6]);
 
     #JDM expand!
     rectify:=RectifyRho(arg[1], o, arg[4]);
@@ -688,7 +688,7 @@ InstallMethod(GreensRClasses, "for a non-exhaustive semigroup",
 function(s)
   local data, orbit, out, i;
 
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data:=Enumerate(NonExhaustiveData(s), infinity, ReturnFalse);
   orbit:=data!.orbit;
   out:=EmptyPlist(Length(orbit));
 
@@ -1004,7 +1004,7 @@ function(s, f)
     return;
   fi;
   return CallFuncList(CreateRClassNC, 
-   SemigroupData(s)[Position(SemigroupData(s), f)]);
+   NonExhaustiveData(s)[Position(NonExhaustiveData(s), f)]);
 end);
 
 # same method for regular/inverse, same for ideals
@@ -1014,10 +1014,10 @@ InstallMethod(GreensRClassOfElementNC, "for a non-exhaustive semigroup and eleme
 function(s, f)
   local pos, r;
  
-  if HasSemigroupData(s) and IsClosedData(SemigroupData(s)) then 
-    pos:=Position(SemigroupData(s), f);
+  if HasNonExhaustiveData(s) and IsClosedData(NonExhaustiveData(s)) then 
+    pos:=Position(NonExhaustiveData(s), f);
     if pos<>fail then
-      return CallFuncList(CreateRClassNC, SemigroupData(s)[pos]);
+      return CallFuncList(CreateRClassNC, NonExhaustiveData(s)[pos]);
     fi;  
   fi;
   
@@ -1176,7 +1176,7 @@ InstallMethod(DClassReps, "for a non-exhaustive semigroup",
 function(s)
   local data, scc, r, i, out, j;
 
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data:=Enumerate(NonExhaustiveData(s), infinity, ReturnFalse);
   scc:=OrbSCC(data); 
   r:=Length(scc);
   out:=EmptyPlist(r-1);
@@ -1234,7 +1234,7 @@ InstallMethod(RClassReps, "for a non-exhaustive semigroup", [IsNonExhaustiveSemi
 function(s)
   local data, orbit, nr, r, out, i;
 
-  data:=Enumerate(SemigroupData(s)); 
+  data:=Enumerate(NonExhaustiveData(s)); 
   orbit:=data!.orbit;
   nr:=Length(orbit);
   out:=EmptyPlist(nr-1);
@@ -1502,10 +1502,10 @@ function(x, value, scc, o, onright)
 
   s:=Parent(x);
   
-  if HasSemigroupDataIndex(x) then
-    data:=SemigroupData(s);
+  if HasNonExhaustiveDataIndex(x) then
+    data:=NonExhaustiveData(s);
     m:=LambdaOrbSCCIndex(x);
-    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    if data!.repslens[m][data!.orblookup1[NonExhaustiveDataIndex(x)]]>1 then
       return false;
     fi;
   fi; 
@@ -1580,7 +1580,7 @@ end);
 
 InstallMethod(NrDClasses, "for a non-exhaustive semigroup with generators",
 [IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
-s-> Length(OrbSCC(SemigroupData(s)))-1);
+s-> Length(OrbSCC(NonExhaustiveData(s)))-1);
 
 # different method for regular/inverse/ideals
 
@@ -1589,7 +1589,7 @@ InstallMethod(NrRegularDClasses, "for a non-exhaustive semigroup with generators
 function(s)
   local data, datascc, rhofunc, tester, nr, r, x, o, scc, rho, i, j;
   
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data:=Enumerate(NonExhaustiveData(s), infinity, ReturnFalse);
   datascc:=OrbSCC(data);
   
   rhofunc:=RhoFunc(s);
@@ -1661,7 +1661,7 @@ InstallMethod(NrRClasses, "for a non-exhaustive semigroup", [IsNonExhaustiveSemi
 function(s)
   local data;
   
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data:=Enumerate(NonExhaustiveData(s), infinity, ReturnFalse);
   return Length(data!.orbit)-1;
 end);
 
@@ -1684,11 +1684,11 @@ function(x, value, scc, o, onright)
   s:=Parent(x);     
 
   # check if we already know this...
-  if HasSemigroupDataIndex(x) and not (HasIsRegularClass(x) and
+  if HasNonExhaustiveDataIndex(x) and not (HasIsRegularClass(x) and
    IsRegularClass(x)) then
-    data:=SemigroupData(s);
+    data:=NonExhaustiveData(s);
     m:=LambdaOrbSCCIndex(x);
-    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    if data!.repslens[m][data!.orblookup1[NonExhaustiveDataIndex(x)]]>1 then
       return 0;
     fi;
   fi;
@@ -1782,7 +1782,7 @@ function(s)
     return Length(Idempotents(s));
   fi;
 
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data:=Enumerate(NonExhaustiveData(s), infinity, ReturnFalse);
   
   lambda:=LambdaOrb(s);    
   rho:=RhoOrb(s);
@@ -1825,7 +1825,7 @@ function(s)
   n:=Length(d);
   out:=List([1..n], x-> []);
   
-  data:=SemigroupData(s);
+  data:=NonExhaustiveData(s);
   gens:=data!.gens;
   graph:=data!.graph;
   lambdarhoht:=data!.lambdarhoht;
@@ -1848,7 +1848,7 @@ function(s)
 
   for i in [1..n] do
     # collect info about left multiplying R-class reps of d[i] by gens
-    for j in SemigroupDataSCC(d[i]) do 
+    for j in NonExhaustiveDataSCC(d[i]) do 
       for k in graph[j] do  
         AddSet(out[i], datalookup[k]);
       od;
@@ -1900,7 +1900,7 @@ InstallMethod(Random, "for a non-exhaustive semigroup",
 function(s)
   local data, gens, i, w, x, n, m, o, rep, g;
   
-  data:=SemigroupData(s);
+  data:=NonExhaustiveData(s);
   
   if not IsClosedData(data) then 
     if HasGeneratorsOfSemigroup(s) then
@@ -2283,7 +2283,7 @@ function(arg)
   SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
   SetIsGreensClassNC(r, arg[5]);
   if IsBound(arg[6]) then 
-    SetSemigroupDataIndex(r, arg[6]);
+    SetNonExhaustiveDataIndex(r, arg[6]);
   fi;
 
   return r;

@@ -484,7 +484,7 @@ InstallMethod(IteratorOfDClasses, "for a non-exhaustive semigroup",
 function(s)
   local iter;
   
-  if IsClosedData(SemigroupData(s)) then 
+  if IsClosedData(NonExhaustiveData(s)) then 
     iter:=IteratorList(GreensDClasses(s));
     SetIsIteratorOfDClasses(iter, true);
     return iter;
@@ -573,7 +573,7 @@ function(s)
 
       iter!.i:=iter!.i+1;
       
-      data:=Enumerate(SemigroupData(s), iter!.i, ReturnFalse);
+      data:=Enumerate(NonExhaustiveData(s), iter!.i, ReturnFalse);
 
       if iter!.i>Length(data!.orbit) then 
         return fail;

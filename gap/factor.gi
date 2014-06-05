@@ -108,7 +108,7 @@ end);
 # This method does not work for ideals!
 
 InstallMethod(TraceSchreierTreeForward, "for semigroup data and pos int",
-[IsSemigroupData, IsPosInt], 
+[IsNonExhaustiveData, IsPosInt], 
 function(data, pos)
   local word1, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
   
@@ -150,7 +150,7 @@ function(s, f)
   o:=LambdaOrb(s);            l:=Position(o, LambdaFunc(s)(f));
   m:=OrbSCCLookup(o)[l];      scc:=OrbSCC(o)[m];
 
-  data:=SemigroupData(s);
+  data:=NonExhaustiveData(s);
   pos:=Position(data, f);                     #not <fail> since <f> in <s>
   rep:=data[pos][4];                          #rep of R-class of <f>
   
