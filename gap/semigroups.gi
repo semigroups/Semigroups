@@ -42,25 +42,14 @@ end);
 # creating semigroups, monoids, inverse semigroups, etc
 
 InstallMethod(MagmaByGenerators, "for an associative element collection",
-[IsAssociativeElementCollection], 
-function(coll)
-  if IsGeneratorsOfNonExhaustiveSemigroup(coll) then 
-    return SemigroupByGenerators(coll);
-  else
-    TryNextMethod();
-  fi;
-end);
+[IsAssociativeElementCollection], SemigroupByGenerators);
 
 #
 
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection], 
 function(gens)
-   if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-     return SemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
-   else
-     TryNextMethod();
-    fi;
+   return SemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
 end);
 
 #
@@ -69,11 +58,7 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local deg, n, i, closure_opts, s, filts, pos, f;
-
-  if not IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-    TryNextMethod();
-  fi;
+  local n, closure, i, closure_opts, S, s, filts, pos, f;
 
   record:=SEMIGROUPS_ProcessOptionsRec(record);
   gens:=AsList(gens);
@@ -81,68 +66,72 @@ function(gens, record)
   # try to find a smaller generating set
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(gens); #remove duplicates 
-    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    n:=ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
-
-    #remove the identity
-    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
-      Remove(gens, 1);
+    if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
+      gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+      n:=ActionDegree(gens);
+      Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
+      closure:=ClosureSemigroupNC;
+      #remove the identity
+      if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
+        Remove(gens, 1);
+      fi;
+    else 
+      closure:=Semigroup;
     fi;
 
     i:=0;
     closure_opts:=rec(small:=false, hashlen:=record.hashlen);
-    s:=Semigroup(gens[1], closure_opts);
+    S:=Semigroup(gens[1], closure_opts);
 
     if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
       for i in [2..n] do
-        if not gens[i] in s then
-          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
+        if not gens[i] in S then
+          S:=closure(S, [gens[i]], closure_opts);
         fi;
-        Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
+        Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
         " generators so far\r");
       od;
       Print("\n");
     else
       for f in gens do
-        if not f in s then
-          s:=ClosureSemigroupNC(s, [f], closure_opts);
+        if not f in S then
+          s:=closure(S, [f], closure_opts);
         fi;
       od;
     fi;
-    return s;
+    return S;
   fi;
 
   filts:=IsSemigroup and IsAttributeStoringRep;
 
-  if record.exhaustive then 
-    filts:=filts and IsExhaustiveSemigroup;
-  else 
+  if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
+  else 
+    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
-  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
-  SetSemigroupOptions(s, record);
+  S:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
+  SetSemigroupOptions(S, record);
   
   if record.regular then 
-    SetIsRegularSemigroup(s, true);
+    SetIsRegularSemigroup(S, true);
   fi;
  
-  SetGeneratorsOfMagma(s, gens);
+  SetGeneratorsOfMagma(S, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens) 
    and CanEasilyCompareElements(gens) then
     pos:=Position(gens, One(gens));
     if pos<>fail then 
-      SetFilterObj(s, IsMonoid);
+      SetFilterObj(S, IsMonoid);
       gens:=ShallowCopy(gens);
       Remove(gens, pos);
-      SetGeneratorsOfMonoid(s, gens);
+      SetGeneratorsOfMonoid(S, gens);
     fi;
   fi; 
 
-  return s;
+  return S;
 end);
 
 #
@@ -150,11 +139,7 @@ end);
 InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
-  if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-    return MonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
-  else
-    TryNextMethod();
-  fi;
+  return MonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
 end);
 
 #
@@ -163,78 +148,78 @@ InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local deg, n, i, closure_opts, s, filts, pos, f;
-
-  if not IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-    TryNextMethod();
-  fi;
+  local n, closure, i, closure_opts, S, filts, pos, f;
 
   record:=SEMIGROUPS_ProcessOptionsRec(record);
   gens:=ShallowCopy(gens);
 
   if record.small and Length(gens)>1 then #small gen. set
     gens:=SSortedList(gens); #remove duplicates 
-    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    n:=ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
-
-    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
-      #remove id
-      Remove(gens, 1);
+    if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
+      gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+      n:=ActionDegree(gens);
+      Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
+      closure:=ClosureSemigroupNC;
+      #remove the identity
+      if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
+        Remove(gens, 1);
+      fi;
+    else 
+      closure:=Semigroup;
     fi;
 
     i:=0;
     closure_opts:=rec(small:=false, hashlen:=record.hashlen);
-    s:=Monoid(gens[1], closure_opts);
+    S:=Monoid(gens[1], closure_opts);
 
     if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
       for i in [1..n] do
         if not gens[i] in s then 
-          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
+          S:=closure(S, [gens[i]], closure_opts);
         fi;
-        Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
+        Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
         " generators so far");
       od;
       Print("\n");
     else
       for f in gens do
-        if not f in s then 
-          s:=ClosureSemigroupNC(s, [f], closure_opts);
+        if not f in S then 
+          S:=closure(S, [f], closure_opts);
         fi;
       od;
     fi;
-    return s;
+    return S;
   fi;    
 
   filts:=IsMonoid and IsAttributeStoringRep;
 
-  if record.exhaustive then 
-    filts:=filts and IsExhaustiveSemigroup;
-  else 
+  if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
+  else 
+    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
   s:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
-  SetSemigroupOptions(s, record);
+  SetSemigroupOptions(S, record);
 
   if record.regular then 
-    SetIsRegularSemigroup(s, true);
+    SetIsRegularSemigroup(S, true);
   fi;
 
   # remove one from gens if it's there.
   if CanEasilyCompareElements(gens) then
     pos:=Position(gens, One(gens));
     if pos<>fail then 
-      SetGeneratorsOfMagma(s, AsList(gens));
+      SetGeneratorsOfMagma(S, AsList(gens));
       gens:=ShallowCopy(gens);
       Remove(gens, pos);
     else
-      SetGeneratorsOfMagma(s, Concatenation([One(gens)], gens));
+      SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
     fi;
   fi; 
-  SetGeneratorsOfMagmaWithOne( s, gens );
-  return s;
+  SetGeneratorsOfMagmaWithOne(S, gens );
+  return S;
 end);
 
 #
@@ -243,12 +228,7 @@ InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
-
-  if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-    return InverseMonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
-  else
-    TryNextMethod();
-  fi;
+  return InverseMonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
 end);
 
 #
@@ -257,14 +237,10 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
-  if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-    return InverseSemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
-  else
-    TryNextMethod();
-  fi;
+  return InverseSemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
 end);
 
-#
+# JDM here!
 
 InstallMethod(InverseMonoidByGenerators, 
 "for an associative element collection and record",
