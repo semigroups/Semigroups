@@ -11,8 +11,6 @@
 DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 
-DeclareProperty("IsCommutativeSemigroup", IsSemigroupIdeal);
-
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
 DeclareProperty("IsBlockGroup", IsSemigroup);

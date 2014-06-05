@@ -13,6 +13,7 @@
 
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
+InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
 
 # this is here for exhaustive semigroup ideals
 
@@ -298,7 +299,8 @@ end);
 
 #JDM: is there a better method?
 
-InstallMethod(InversesOfSemigroupElementNC, "for a semigroup ideal",
+InstallMethod(InversesOfSemigroupElementNC, 
+"for a semigroup ideal and associative element",
 [IsSemigroupIdeal, IsAssociativeElement],
 function(I, x)
   return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);

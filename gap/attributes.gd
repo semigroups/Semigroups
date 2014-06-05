@@ -10,8 +10,7 @@
 
 DeclareOperation("IrredundantGeneratingSubset",
 [IsAssociativeElementCollection]);
-DeclareOperation("InversesOfSemigroupElementNC", [IsNonExhaustiveSemigroup,
-IsAssociativeElement]);
+DeclareOperation("InversesOfSemigroupElementNC", [IsSemigroup, IsAssociativeElement]);
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
