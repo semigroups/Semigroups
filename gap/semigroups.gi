@@ -58,7 +58,7 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local n, closure, i, closure_opts, S, s, filts, pos, f;
+  local n, i, opts, S, filts, pos, f;
 
   record:=SEMIGROUPS_ProcessOptionsRec(record);
   gens:=AsList(gens);
@@ -70,34 +70,26 @@ function(gens, record)
       gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
       n:=ActionDegree(gens);
       Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
-      closure:=ClosureSemigroupNC;
       #remove the identity
       if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
         Remove(gens, 1);
       fi;
-    else 
-      closure:=Semigroup;
     fi;
 
-    i:=0;
-    closure_opts:=rec(small:=false, hashlen:=record.hashlen);
-    S:=Semigroup(gens[1], closure_opts);
+    opts:=ShallowCopy(record);  opts.small:=false;  opts.regular:=false;
+    S:=Semigroup(gens[1], opts);
 
     if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
       for i in [2..n] do
-        if not gens[i] in S then
-          S:=closure(S, [gens[i]], closure_opts);
-        fi;
+        S:=ClosureSemigroup(S, gens[i], closure_opts);
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
         " generators so far\r");
       od;
       Print("\n");
     else
       for f in gens do
-        if not f in S then
-          s:=closure(S, [f], closure_opts);
-        fi;
+        S:=ClosureSemigroup(S, f, closure_opts);
       od;
     fi;
     return S;
@@ -148,7 +140,7 @@ InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local n, closure, i, closure_opts, S, filts, pos, f;
+  local n, i, opts, S, filts, s, pos, f;
 
   record:=SEMIGROUPS_ProcessOptionsRec(record);
   gens:=ShallowCopy(gens);
@@ -159,34 +151,26 @@ function(gens, record)
       gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
       n:=ActionDegree(gens);
       Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
-      closure:=ClosureSemigroupNC;
       #remove the identity
       if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
         Remove(gens, 1);
       fi;
-    else 
-      closure:=Semigroup;
     fi;
 
-    i:=0;
-    closure_opts:=rec(small:=false, hashlen:=record.hashlen);
-    S:=Monoid(gens[1], closure_opts);
+    opts:=ShallowCopy(record);  opts.small:=false;  opts.regular:=false;
+    S:=Monoid(gens[1], opts);
 
     if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
-      for i in [1..n] do
-        if not gens[i] in s then 
-          S:=closure(S, [gens[i]], closure_opts);
-        fi;
+      for i in [2..n] do
+        S:=ClosureSemigroup(S, gens[i], opts);
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
         " generators so far");
       od;
       Print("\n");
     else
       for f in gens do
-        if not f in S then 
-          S:=closure(S, [f], closure_opts);
-        fi;
+        S:=ClosureSemigroup(S, f, opts);
       od;
     fi;
     return S;
@@ -240,144 +224,138 @@ function(gens)
   return InverseSemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
 end);
 
-# JDM here!
+#
 
 InstallMethod(InverseMonoidByGenerators, 
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local n, closure_opts, s, filts, one, pos, f;
+  local n, opts, S, filts, one, pos, f;
   
-  if not IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-    TryNextMethod();
-  fi;
-
   record:=SEMIGROUPS_ProcessOptionsRec(record);
 
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
-    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    n:=ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
-    
-    closure_opts:=rec(small:=false, hashlen:=record.hashlen);
-    s:=InverseMonoid(gens[1], closure_opts);
+     if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
+      gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+      n:=ActionDegree(gens);
+      Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
+    fi;
+
+    opts:=ShallowCopy(record);  opts.small:=false;  
+    S:=InverseMonoid(gens[1], opts);
     
     for f in gens do
-      if not f in s then 
-        s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
-      fi;
+      S:=ClosureInverseSemigroup(S, f, opts);
     od;
-    return s;
+    return S;
   fi;
 
   filts:=IsMagmaWithOne and IsInverseSemigroup and IsAttributeStoringRep;
   
-  if record.exhaustive then 
-    filts:=filts and IsExhaustiveSemigroup;
-  else 
+  if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
+  else 
+    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
-  s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
-  SetSemigroupOptions(s, record);
+  S:=Objectify( NewType (FamilyObj( gens ), filts), rec());
+  SetSemigroupOptions(S, record);
   one:=One(gens); 
-  SetOne(s, one);
+  SetOne(S, one);
   pos:=Position(gens, one);
 
   if pos<>fail then 
-    SetGeneratorsOfInverseSemigroup(s, gens);
+    SetGeneratorsOfInverseSemigroup(S, gens);
     gens:=ShallowCopy(gens);
     Remove(gens, pos);
-    SetGeneratorsOfInverseMonoid(s, gens);
+    SetGeneratorsOfInverseMonoid(S, gens);
   else
-    SetGeneratorsOfInverseMonoid(s, gens);
+    SetGeneratorsOfInverseMonoid(S, gens);
     gens:=ShallowCopy(gens);
     Add(gens, one);
-    SetGeneratorsOfInverseSemigroup(s, gens);
+    SetGeneratorsOfInverseSemigroup(S, gens);
   fi;
 
   return s;
 end);
 
-#
+# hereJDM
 
 InstallMethod(InverseSemigroupByGenerators, 
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local n, closure_opts, s, filts, pos, f;
-  if not IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
-    TryNextMethod();
-  fi;
+  local n, opts, S, filts, pos, f;
 
   record:=SEMIGROUPS_ProcessOptionsRec(record);
   
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
-    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    n:=ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
+    if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
+      gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+      n:=ActionDegree(gens);
+      Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
+    fi;
     
-    closure_opts:=rec(small:=false, hashlen:=record.hashlen);
-    s:=InverseSemigroup(gens[1], closure_opts);
+    opts:=ShallowCopy(record);  opts.small:=false;
+
+    S:=InverseSemigroup(gens[1], opts);
     for f in gens do
-      if not f in s then 
-        s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
-      fi;
+      S:=ClosureInverseSemigroup(S, f, opts);
     od;
-    return s;
+    return S;
   fi;
   
   filts:=IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
   
-  if record.exhaustive then 
-    filts:=filts and IsExhaustiveSemigroup;
-  else 
+  if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
+  else 
+    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
-  s:=Objectify( NewType (FamilyObj( gens ), filts), rec());
-  SetSemigroupOptions(s, record);
-  SetGeneratorsOfInverseSemigroup(s, AsList(gens));
+  S:=Objectify( NewType (FamilyObj( gens ), filts), rec());
+  SetSemigroupOptions(S, record);
+  SetGeneratorsOfInverseSemigroup(S, AsList(gens));
   
   if IsMultiplicativeElementWithOneCollection(gens) then 
     pos:=Position(gens, One(gens));
     if pos<>fail then 
-      SetFilterObj(s, IsMonoid);
+      SetFilterObj(S, IsMonoid);
       gens:=ShallowCopy(gens);
       Remove(gens, pos);
-      SetGeneratorsOfInverseMonoid(s, gens);
+      SetGeneratorsOfInverseMonoid(S, gens);
     fi;
   fi;
-  return s;
+  return S;
 end);
 
 # closure
 
 InstallMethod(ClosureInverseSemigroup, 
-"for non-exhaustive semigroup with inverse op and associative element coll.",
-[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElementCollection],
-function(s, coll) 
-  return ClosureInverseSemigroup(s, coll, ShallowCopy(SemigroupOptions(s)));
+"for a semigroup with inverse op and associative element coll.",
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
+function(S, coll) 
+  return ClosureInverseSemigroup(S, coll, ShallowCopy(SemigroupOptions(S)));
 end);
 
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for non-exhaustive semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement],
-function(s, f) 
-  return ClosureInverseSemigroup(s, [f], ShallowCopy(SemigroupOptions(s)));
+"for a semigroup with inverse op and an associative element",
+[IsSemigroupWithInverseOp, IsAssociativeElement],
+function(S, f) 
+  return ClosureInverseSemigroup(S, [f], ShallowCopy(SemigroupOptions(S)));
 end);
 
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for non-exhaustive semigroup with inverse op, associative element, record",
-[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElement, IsRecord],
-function(s, f, record) 
-  return ClosureInverseSemigroup(s, [f], record);
+"for semigroup with inverse op, associative element, record",
+[IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
+function(S, f, record) 
+  return ClosureInverseSemigroup(S, [f], record);
 end);
 
 #
@@ -385,8 +363,11 @@ end);
 InstallMethod(ClosureInverseSemigroup, 
 "for a non-exhaustive semigroup with inverse op, associative elt coll, and record",
 [IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
-function(s, coll, record)
-  local n;
+function(S, coll, record)
+  
+  if IsEmpty(coll) then 
+    return S;
+  fi;
 
   if not IsGeneratorsOfNonExhaustiveSemigroup(coll) then 
     Error("usage: the second argument <coll> should be a collection",
@@ -394,7 +375,7 @@ function(s, coll, record)
     return;
   fi;
 
-  if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
+  if not ElementsFamily(FamilyObj(S))=FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
     return;
   fi;
@@ -408,8 +389,33 @@ function(s, coll, record)
     coll:=GeneratorsOfSemigroup(coll);
   fi;
 
-  return ClosureInverseSemigroupNC(s, Filtered(coll, x-> not x in s),
+  record.small:=false;
+
+  return ClosureInverseSemigroupNC(S, Filtered(coll, x-> not x in S),
    SEMIGROUPS_ProcessOptionsRec(record));
+end);
+
+#
+
+InstallMethod(ClosureInverseSemigroup, 
+"for an exhaustive semigroup with inverse op, associative elt coll, and record",
+[IsSemigroupWithInverseOp and IsExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
+function(S, coll, record)
+  
+  if IsEmpty(coll) then 
+    return S;
+  fi;
+
+  if not ElementsFamily(FamilyObj(S))=FamilyObj(Representative(coll)) then 
+    Error("the semigroup and collection of elements are not of the same type,");
+    return;
+  fi;
+  
+  if IsSemigroup(coll) then 
+    coll:=GeneratorsOfSemigroup(coll);
+  fi;
+
+  return InverseSemigroup(S, coll, record);
 end);
 
 #
@@ -456,28 +462,27 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for a non-exhaustive semigroup and associative element collection",
-[IsNonExhaustiveSemigroup, IsAssociativeElementCollection],
-function(s, coll)
-  return ClosureSemigroup(s, coll, ShallowCopy(SemigroupOptions(s)));
+"for a semigroup and associative element collection",
+[IsSemigroup, IsAssociativeElementCollection],
+function(S, coll)
+  return ClosureSemigroup(S, coll, ShallowCopy(SemigroupOptions(S)));
+end);
+
+#
+
+InstallMethod(ClosureSemigroup, "for a semigroup and associative element",
+[IsSemigroup, IsAssociativeElement],
+function(S, x)
+  return ClosureSemigroup(S, [x], ShallowCopy(SemigroupOptions(S)));
 end);
 
 #
 
 InstallMethod(ClosureSemigroup, 
-"for a non-exhaustive semigroup and associative element",
-[IsNonExhaustiveSemigroup, IsAssociativeElement],
-function(s, f)
-  return ClosureSemigroup(s, [f], ShallowCopy(SemigroupOptions(s)));
-end);
-
-#
-
-InstallMethod(ClosureSemigroup, 
-"for a non-exhaustive semigroup, associative element, and record",
-[IsNonExhaustiveSemigroup, IsAssociativeElement, IsRecord],
-function(s, f, record)
-  return ClosureSemigroup(s, [f], SEMIGROUPS_ProcessOptionsRec(record));
+"for a semigroup, associative element, and record",
+[IsSemigroup, IsAssociativeElement, IsRecord],
+function(S, x, record)
+  return ClosureSemigroup(S, [x], record);
 end);
 
 #
@@ -485,10 +490,10 @@ end);
 InstallMethod(ClosureSemigroup, 
 "for a non-exhaustive semigroup, associative element collection, and record",
 [IsNonExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
-function(s, coll, record)
+function(S, coll, record)
  
   if IsEmpty(coll) then 
-    return s;
+    return S;
   fi;
 
   if not IsGeneratorsOfNonExhaustiveSemigroup(coll) then 
@@ -497,24 +502,48 @@ function(s, coll, record)
     return;
   fi;
 
-  if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
+  if not ElementsFamily(FamilyObj(S))=FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
     return;
   fi;
 
-  record.small:=false;
-
-  if IsNonExhaustiveSemigroup(coll) then 
-    coll:=Generators(coll);
-  fi;
-
   if IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(s) and
-    ActionDegree(s)<>ActionDegree(Representative(coll)) then 
+    ActionDegree(S)<>ActionDegree(Representative(coll)) then 
     Error("usage: the degree of the semigroup and collection must be equal,");
     return;
   fi;
 
-  return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s),
+  if IsSemigroup(coll) then 
+    coll:=GeneratorsOfSemigroup(coll); #JDM: was just Generators, ok?
+  fi;
+  
+  record.small:=false;
+  
+  return ClosureSemigroupNC(S, Filtered(coll, x-> not x in S),
+   SEMIGROUPS_ProcessOptionsRec(record));
+end);
+
+#
+
+InstallMethod(ClosureSemigroup, 
+"for an exhaustive semigroup, associative element collection, and record",
+[IsExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
+function(S, coll, record)
+ 
+  if IsEmpty(coll) then 
+    return S;
+  fi;
+
+  if not ElementsFamily(FamilyObj(S))=FamilyObj(Representative(coll)) then 
+    Error("the semigroup and collection of elements are not of the same type,");
+    return;
+  fi;
+
+  if IsSemigroup(coll) then 
+    coll:=GeneratorsOfSemigroup(coll);
+  fi;
+
+  return Semigroup(S, Filtered(coll, x-> not x in S), 
    SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
@@ -871,8 +900,8 @@ end);
 # <limit> is the max size of the subsemigroup.
 
 InstallMethod(SubsemigroupByProperty, 
-"for a non-exhaustive semigroup, function, and positive integer",
-[IsNonExhaustiveSemigroup, IsFunction, IsPosInt], 
+"for a semigroup, function, and positive integer",
+[IsSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
@@ -901,8 +930,8 @@ end);
 # <limit> is the max size of the subsemigroup.
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for non-exhaustive semigroup with inverse op, function, positive integer",
-[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsFunction, IsPosInt], 
+"for a semigroup with inverse op, function, positive integer",
+[IsSemigroupWithInverseOp, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
@@ -930,9 +959,8 @@ end);
 
 #
 
-InstallMethod(SubsemigroupByProperty, 
-"for a non-exhaustive semigroup and function",
-[IsNonExhaustiveSemigroup, IsFunction], 
+InstallMethod(SubsemigroupByProperty, "for a semigroup and function",
+[IsSemigroup, IsFunction], 
 function(S, func)
   return SubsemigroupByProperty(S, func, Size(S));
 end);
@@ -940,8 +968,8 @@ end);
 #
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for non-exhaustive semigroup with inverse op and function",
-[IsSemigroupWithInverseOp and IsNonExhaustiveSemigroup, IsFunction], 
+"for semigroup with inverse op and function",
+[IsSemigroupWithInverseOp, IsFunction], 
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);
