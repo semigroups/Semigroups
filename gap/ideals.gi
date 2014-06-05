@@ -11,7 +11,7 @@
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 
-# this is here for non-non-exhaustive semigroup ideals
+# this is here for exhaustive semigroup ideals
 
 InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal", 
 [IsSemigroupIdeal],
@@ -67,7 +67,7 @@ end);
 # ViewString method for...
 
 InstallMethod(ViewString, "for a semigroup ideal with generators",
-[IsMagmaIdeal and IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+[IsMagmaIdeal and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(S)
   return Concatenation("<semigroup ideal with ",
    String(Length(GeneratorsOfMagmaIdeal(S))), " generators>");
@@ -93,8 +93,8 @@ end);
 #
 
 InstallMethod(\=, "for semigroup ideals", 
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
- IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, 
+ IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I, J)
   
   if SupersemigroupOfIdeal(I)=SupersemigroupOfIdeal(J) then 
@@ -110,7 +110,7 @@ end);
 #
 
 InstallMethod(\=, "for a semigroup ideal and semigroup with generators", 
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, 
  IsSemigroup and HasGeneratorsOfSemigroup],
 function(I, S)
   if ForAll(GeneratorsOfSemigroup(S), x-> x in I) then 
@@ -130,7 +130,7 @@ end);
 
 InstallMethod(\=, "for a semigroup with generators and a semigroup ideal", 
 [IsSemigroup and HasGeneratorsOfSemigroup, 
-IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal], 
+IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 
 function(S, I)
   return I=S;
 end);
@@ -138,7 +138,7 @@ end);
 #
 
 InstallMethod(Representative, "for a semigroup ideal", 
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   return Representative(GeneratorsOfMagmaIdeal(I));
 end);
@@ -205,8 +205,9 @@ end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators, "for an associative element collection",
-[IsNonExhaustiveSemigroup, IsAssociativeElementCollection], 
+InstallMethod(SemigroupIdealByGenerators, 
+"for a semigroup, associative element collection",
+[IsSemigroup, IsAssociativeElementCollection], 
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, SemigroupOptions(S));
 end);
@@ -214,9 +215,9 @@ end);
 #
 
 InstallMethod(SemigroupIdealByGenerators, 
-"for a non-exhaustive semigroup, associative element collection and record",
-[IsNonExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
-function(S, gens, opts)
+"for semigroup, associative element collection, and record",
+[IsSemigroup, IsAssociativeElementCollection, IsRecord],
+function(S, gens, record)
   local filts, I;
 
   if not ForAll(gens, x-> x in S) then 
@@ -224,22 +225,25 @@ function(S, gens, opts)
     return fail;
   fi;
 
-  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
+  record:=SEMIGROUPS_ProcessOptionsRec(record);
   gens:=AsList(gens);
   
   filts:=IsMagmaIdeal and IsAttributeStoringRep;
-
-  if opts.non-exhaustive then 
+  
+  if not record.exhaustive and (IsNonExhaustiveSemigroup(S) 
+    or IsGeneratorsOfNonExhaustiveSemigroup(gens)) then 
     filts:=filts and IsNonExhaustiveSemigroup;
+  else record.exhaustive then 
+    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
-  I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
+  I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=record));
   
-  if opts.non-exhaustive and IsNonExhaustiveSemigroupWithInverseOp(S) then 
+  if not record.exhaustive and IsNonExhaustiveSemigroupWithInverseOp(S) then 
     SetFilterObj(I, IsNonExhaustiveSemigroupWithInverseOp);
   fi;
 
-  if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then 
+  if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or record.regular then 
     SetIsRegularSemigroup(I, true);
   fi;
   
@@ -260,9 +264,10 @@ function(S, gens, opts)
   SetParent(I, S); 
   SetGeneratorsOfMagmaIdeal(I, gens);
   
-  if not opts.non-exhaustive then # to keep the craziness in the library happy!
-    SetActingDomain(I, S);
-  elif not (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) then
+  if IsNonExhaustiveSemigroup(I) 
+    and not (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) then
+    # this is done so that the ideal knows it is regular or non-regular from the
+    # point of creation...
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
   fi;
 
