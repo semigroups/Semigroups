@@ -8,6 +8,43 @@
 #############################################################################
 ##
 
+#
+
+InstallMethod(ViewString, "for a group of partial perms",
+[IsPartialPermSemigroup and IsGroupAsSemigroup],
+function(s)
+  local str, nrgens;
+
+  str:="\><";
+  if HasIsTrivial(s) and IsTrivial(s) then
+    Append(str, "\>trivial\< ");
+  fi;
+
+  Append(str, "\>partial perm\< \>group\< ");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
+    Append(str, "\>of size\> ");
+    Append(str, String(Size(s)));
+    Append(str, ",\<\< ");
+  fi;
+
+  nrgens:=Length(Generators(s));
+  
+  Append(str, "\>on \>");
+  Append(str, ViewString(RankOfPartialPermSemigroup(s)));
+  Append(str, "\< pts with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
+end);
+
 # the following method is required to beat the method for
 # IsPartialPermCollection in the library.
 
