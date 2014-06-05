@@ -8,11 +8,11 @@
 #############################################################################
 ##
 
-DeclareAttribute("SEEData", IsFinite and IsSemigroup, "mutable");
-DeclareCategory("IsSEEData", IsList);
-DeclareFilter("IsClosedSEEData", IsSEEData);
+DeclareAttribute("ExhaustiveData", IsFinite and IsSemigroup, "mutable");
+DeclareCategory("IsExhaustiveData", IsList);
+DeclareFilter("IsClosedExhaustiveData", IsExhaustiveData);
 
-DeclareOperation("Enumerate", [IsSEEData]);
-DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic]);
-DeclareOperation("Enumerate", [IsSEEData, IsCyclotomic, IsFunction]);
+DeclareOperation("Enumerate", [IsExhaustiveData]);
+DeclareOperation("Enumerate", [IsExhaustiveData, IsCyclotomic]);
+DeclareOperation("Enumerate", [IsExhaustiveData, IsCyclotomic, IsFunction]);
 

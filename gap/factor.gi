@@ -19,7 +19,7 @@ function(S, x)
     return;
   fi;
 
-  return SEEData(S)!.words[Position(SEEData(S), x)];
+  return ExhaustiveData(S)!.words[Position(ExhaustiveData(S), x)];
 end);
 
 # factorisation of Schutzenberger group element, the same method works for

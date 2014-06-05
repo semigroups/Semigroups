@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-# SEEData = Semigroup Exhaustive Enumeration Data structure
+# ExhaustiveData = Semigroup Exhaustive Enumeration Data structure
 
 #  for details see:
 #
@@ -202,7 +202,7 @@ fi;
 
 # same method for ideals
 
-InstallMethod(SEEData, "for a finite semigroup",
+InstallMethod(ExhaustiveData, "for a finite semigroup",
 [IsFinite and IsSemigroup], 
 function(S)
   local data, hashlen, nrgens, nr, val, i;
@@ -279,20 +279,20 @@ function(S)
   
   data.nr:=nr;
 
-  return Objectify(NewType(FamilyObj(S), IsSEEData and IsMutable and
+  return Objectify(NewType(FamilyObj(S), IsExhaustiveData and IsMutable and
    IsAttributeStoringRep), data);
 end);
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for SEE data", [IsSEEData], 
+InstallMethod(Enumerate, "for SEE data", [IsExhaustiveData], 
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
 #
 
-InstallMethod(Enumerate, "for SEE data and cyclotomic", [IsSEEData, IsCyclotomic], 
+InstallMethod(Enumerate, "for SEE data and cyclotomic", [IsExhaustiveData, IsCyclotomic], 
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
@@ -302,13 +302,13 @@ end);
 
 if IsBound(ENUMERATE_SEE_DATA) then 
   InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
-  [IsSEEData, IsCyclotomic, IsFunction], 
+  [IsExhaustiveData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     
     data:=ENUMERATE_SEE_DATA(data, limit, lookfunc, lookfunc<>ReturnFalse);
 
     if data!.pos>data!.nr then
-      SetFilterObj(data, IsClosedSEEData);
+      SetFilterObj(data, IsClosedExhaustiveData);
     fi;
 
     return data;
@@ -316,7 +316,7 @@ if IsBound(ENUMERATE_SEE_DATA) then
 else
 
   InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
-  [IsSEEData, IsCyclotomic, IsFunction], 
+  [IsExhaustiveData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     local looking, found, i, nr, len, one, stopper, nrrules, elts, gens, nrgens,
     genstoapply, genslookup, lenindex, first, final, prefix, suffix, words,
@@ -336,7 +336,7 @@ else
     nr:=data!.nr;                     # number of elements found so far...
    
     if i>nr then
-      SetFilterObj(data, IsClosedSEEData);
+      SetFilterObj(data, IsClosedExhaustiveData);
       return data;
     fi;
     
@@ -480,7 +480,7 @@ else
     data!.len:=len;
 
     if i>nr then
-      SetFilterObj(data, IsClosedSEEData);
+      SetFilterObj(data, IsClosedExhaustiveData);
       # Unbind some of the unnecessary components here!
     fi;
 
@@ -492,7 +492,7 @@ fi;
 #
 
 InstallMethod(Position, "for SEE data, an associative element, zero cyc",
-[IsSEEData, IsAssociativeElement, IsZeroCyc], 
+[IsExhaustiveData, IsAssociativeElement, IsZeroCyc], 
 function(data, x, n)
   local pos, lookfunc;
 
@@ -516,7 +516,7 @@ end);
 
 #
 
-InstallMethod(Length, "for SEE data", [IsSEEData], 
+InstallMethod(Length, "for SEE data", [IsExhaustiveData], 
 function(data)
   return Length(data!.elts);
 end);
@@ -524,18 +524,18 @@ end);
 #
 
 InstallMethod(ELM_LIST, "for SEE data, and pos int",
-[IsSEEData, IsPosInt], 
+[IsExhaustiveData, IsPosInt], 
 function(data, nr)
   return data!.elts[nr];
 end);
 
 #
 
-InstallMethod(ViewObj, [IsSEEData], 
+InstallMethod(ViewObj, [IsExhaustiveData], 
 function(data)
   Print("<");
 
-  if IsClosedSEEData(data) then 
+  if IsClosedExhaustiveData(data) then 
     Print("closed ");
   else 
     Print("open ");
@@ -549,7 +549,7 @@ end);
 
 #
 
-InstallMethod(PrintObj, [IsSEEData], 2, # to beat the method for an enumerator!
+InstallMethod(PrintObj, [IsExhaustiveData], 2, # to beat the method for an enumerator!
 function(data)
   local recnames, com, i, nam;
   

@@ -10,7 +10,7 @@
 
 # this file contains method specific to exhaustive ideals of semigroups. 
 
-# We use the result of enumerating the SEEData of the supersemigroup of an ideal
+# We use the result of enumerating the ExhaustiveData of the supersemigroup of an ideal
 # to calculate elements, size, test membership, find idempotents, etc. We get a
 # generating set and use that otherwise. 
 
@@ -40,7 +40,7 @@ function(enum, limit, lookfunc)
   lookup:=enum!.lookup;
   indices:=enum!.indices;
 
-  data:=SEEData(SupersemigroupOfIdeal(UnderlyingCollection(enum)));
+  data:=ExhaustiveData(SupersemigroupOfIdeal(UnderlyingCollection(enum)));
   left:=data!.left;
   right:=data!.right;
   genstoapply:=data!.genstoapply;
@@ -67,7 +67,7 @@ function(enum, limit, lookfunc)
         # at the end of this either there is a word in <data> of length <len+1>
         # or <data> is closed.
       fi;
-      if not IsClosedSEEData(data) then 
+      if not IsClosedExhaustiveData(data) then 
         data!.stopper:=data!.lenindex[len+1];
         Enumerate(data);
         # enumerate <data> until the right descendants of the first word of
@@ -122,7 +122,7 @@ InstallMethod(Enumerator, "for a semigroup ideal with generators",
 function(I)
   local record, data, gens, i, pos;
 
-  data:=SEEData(SupersemigroupOfIdeal(I));
+  data:=ExhaustiveData(SupersemigroupOfIdeal(I));
 
   record:=rec(
     pos:=1,       # the first position in <indices> whose descendants might not
@@ -219,7 +219,7 @@ InstallMethod(Idempotents, "for a semigroup ideal with generators",
 function(I)
   local enum, elts, indices, idempotents, nr, i;
 
-  elts:=SEEData(SupersemigroupOfIdeal(I))!.elts;
+  elts:=ExhaustiveData(SupersemigroupOfIdeal(I))!.elts;
   enum:=Enumerator(I);
   if not IsBound(enum!.idempotents) then 
     SEMIGROUPS_EnumerateIdeal(enum, infinity, ReturnFalse);

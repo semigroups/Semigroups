@@ -23,11 +23,11 @@ function(S)
   record:=rec();
 
   record.NumberElement:=function(enum, elt)
-    return Position(SEEData(S), elt);
+    return Position(ExhaustiveData(S), elt);
   end;
 
   record.ElementNumber:=function(enum, nr)
-    data:=SEEData(S);
+    data:=ExhaustiveData(S);
     if not IsBound(data!.elts[nr]) then 
       Enumerate(data, nr);
     fi;
@@ -36,14 +36,14 @@ function(S)
 
   record.Length:=enum -> Size(S);
 
-  record.AsList:=enum -> Enumerate(SEEData(S))!.elts;
+  record.AsList:=enum -> Enumerate(ExhaustiveData(S))!.elts;
 
   record.Membership:=function(enum, elt)
-    return Position(SEEData(S), elt)<>fail;
+    return Position(ExhaustiveData(S), elt)<>fail;
   end;
 
   record.IsBound\[\]:=function(enum, nr)
-    return IsBound(SEEData(S)!.elts[nr]);
+    return IsBound(ExhaustiveData(S)!.elts[nr]);
   end;
 
   return EnumeratorByFunctions(S, record);
@@ -54,7 +54,7 @@ end);
 InstallMethod(Size, "for a finite semigroup with generators", 
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(Enumerate(SEEData(S), infinity, ReturnFalse)!.elts);
+  return Length(Enumerate(ExhaustiveData(S), infinity, ReturnFalse)!.elts);
 end);
 
 # different method for ideals
@@ -62,7 +62,7 @@ end);
 InstallMethod(\in, "for an associative element and finite semigroup with generators",
 [IsAssociativeElement, IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(x, S)
-  return Position(SEEData(S), x)<>fail;
+  return Position(ExhaustiveData(S), x)<>fail;
 end);
 
 # different method for ideals
@@ -73,7 +73,7 @@ InstallMethod(Idempotents, "for a finite semigroup with generators",
 function(S)
   local data, elts, idempotents, nr, i;
 
-  data:=Enumerate(SEEData(S));
+  data:=Enumerate(ExhaustiveData(S));
 
   if not IsBound(data!.idempotents) then 
 
@@ -214,7 +214,7 @@ InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
 function(S)
   local rules, F, A, rels, Q, B;
  
-  rules:=Enumerate(SEEData(S))!.rules;
+  rules:=Enumerate(ExhaustiveData(S))!.rules;
   
   F:=FreeMonoid(Length(GeneratorsOfMonoid(S)));
   A:=GeneratorsOfMonoid(F);
@@ -235,7 +235,7 @@ InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
 function(S)
   local rules, F, A, rels, Q, B;
   
-  rules:=Enumerate(SEEData(S))!.rules;
+  rules:=Enumerate(ExhaustiveData(S))!.rules;
   
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
@@ -272,7 +272,7 @@ function(S)
   end;
   #convert words in generators of monoid to words in generators of semigroup
 
-  rules:=Enumerate(SEEData(S))!.rules;
+  rules:=Enumerate(ExhaustiveData(S))!.rules;
   
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
@@ -299,7 +299,7 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  return Enumerate(SEEData(S))!.right;
+  return Enumerate(ExhaustiveData(S))!.right;
 end);
 
 # same method for ideals
@@ -307,7 +307,7 @@ end);
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  return Enumerate(SEEData(S))!.left;
+  return Enumerate(ExhaustiveData(S))!.left;
 end);
 
 
@@ -320,11 +320,11 @@ InstallMethod(Factorization,
 [IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(S, x)
   local pos;
-  pos:=Position(SEEData(S), x); 
+  pos:=Position(ExhaustiveData(S), x); 
   if pos=fail then 
     return fail;
   fi;
-  return SEEData(S)!.words[pos];
+  return ExhaustiveData(S)!.words[pos];
 end);
 
 #
@@ -332,7 +332,7 @@ end);
 InstallMethod(Enumerator, "for a Green's class",  [IsGreensClass], 
 function(C)
   local data, rel;
-  data:=SEEData(Parent(C));
+  data:=ExhaustiveData(Parent(C));
   rel:=EquivalenceClassRelation(C);
   return data!.elts{rel!.data.comps[C!.index]};
 end);
@@ -351,7 +351,7 @@ InstallMethod(\in, "for an associative element and Green's class",
 function(x, C)
   local pos;
 
-  pos:=Position(SEEData(Parent(C)), x);
+  pos:=Position(ExhaustiveData(Parent(C)), x);
   return pos<>fail and EquivalenceClassRelation(C)!.data.id[pos]=C!.index;
 end);
 
@@ -361,7 +361,7 @@ BindGlobal("SEMIGROUPS_EquivalentClassOfElementNC",
 function(rel, rep, IsGreensXClass)
   local pos, type, out;
 
-  pos:=Position(SEEData(Source(rel)), rep);
+  pos:=Position(ExhaustiveData(Source(rel)), rep);
   if pos=fail then 
     Error("usage: the element in the 2nd argument does not belong to the ", 
     "semigroup,");
@@ -414,7 +414,7 @@ function(S, GreensXRelation, GreensXClassOfElement)
   local comps, elts, out, C, i;
 
   comps:=GreensXRelation(S)!.data.comps;
-  elts:=SEEData(S)!.elts;
+  elts:=ExhaustiveData(S)!.elts;
   out:=EmptyPlist(Length(comps));
 
   for i in [1..Length(comps)] do
@@ -467,7 +467,7 @@ function(C, GreensXRelation, GreensXClassOfElement)
   comp:=EquivalenceClassRelation(C)!.data.comps[C!.index];
   id:=GreensXRelation(Parent(C))!.data.id;
   seen:=BlistList([1..Length(id)], []);
-  elts:=SEEData(S)!.elts;
+  elts:=ExhaustiveData(S)!.elts;
   out:=EmptyPlist(Length(comp));
   
   for i in comp do 
@@ -572,7 +572,7 @@ InstallMethod(MinimalIdeal, "for a finite semigroup",
 [IsSemigroup],
 function(S)
   local data, scc;
-  data:=Enumerate(SEEData(S));
+  data:=Enumerate(ExhaustiveData(S));
   scc:=GreensRRelation(S)!.data;
   return SemigroupIdeal(S, data!.elts[scc.comps[1][1]]);
 end);
