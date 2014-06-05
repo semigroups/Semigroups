@@ -850,7 +850,7 @@ CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 #for inverse non-exhaustive semigroups...
 
 InstallMethod(IteratorOfDClassData, "for inverse non-exhaustive semigroup", 
-[IsNonExhaustiveSemigroupWithInverseOp and IsRegularSemigroup], 
+[IsSemigroupWithInverseOp and IsRegularSemigroup], 
 function(s) 
   local graded, record, o, scc, func;
  
@@ -903,7 +903,7 @@ end);
 #
 
 InstallMethod(IteratorOfRClassData, "for non-exhaustive semigroup with inverse op",
-[IsNonExhaustiveSemigroupWithInverseOp], 
+[IsSemigroupWithInverseOp], 
 function(s)
   local o, func, iter, lookup;
   
@@ -943,14 +943,14 @@ end);
 #
 
 InstallMethod(IteratorOfLClassReps, "for non-exhaustive semigroup with inverse op",
-[IsNonExhaustiveSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> Inverse(x[4]),
 [IsIteratorOfLClassReps]));
 
 #
 
 InstallMethod(IteratorOfLClasses, "for non-exhaustive semigroup with inverse op",
-[IsNonExhaustiveSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), 
 function(x)
   x[4]:=Inverse(x[4]); #JDM is this a good idea??

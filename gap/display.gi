@@ -502,7 +502,7 @@ end);
 
 InstallMethod(DotSemilatticeOfIdempotents,
 "for a non-exhaustive semigroup with inverse op",
-[IsNonExhaustiveSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp],
 function(S)
   local U, rel, elts, str, nr, V, j, i, k, D, v;
 

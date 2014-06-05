@@ -47,12 +47,12 @@ function(coll)
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
-# IsNonExhaustiveSemigroupWithInverseOp
+# IsSemigroupWithInverseOp
 
-InstallTrueMethod(IsInverseSemigroup, IsNonExhaustiveSemigroupWithInverseOp);
-InstallTrueMethod(IsNonExhaustiveSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup and IsNonExhaustiveSemigroup);
-InstallTrueMethod(IsNonExhaustiveSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup and IsNonExhaustiveSemigroup);
-InstallTrueMethod(IsNonExhaustiveSemigroupWithInverseOp, IsInverseSemigroup and
+InstallTrueMethod(IsInverseSemigroup, IsSemigroupWithInverseOp);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup and IsNonExhaustiveSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup and IsNonExhaustiveSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
 IsPartialPermBipartitionSemigroup and IsNonExhaustiveSemigroup);
 InstallTrueMethod(IsNonExhaustiveSemigroup, IsReesZeroMatrixSemigroup);
 

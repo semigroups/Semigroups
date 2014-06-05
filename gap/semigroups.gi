@@ -424,7 +424,7 @@ function(gens, record)
   if record.exhaustive then 
     filts:=filts and IsExhaustiveSemigroup;
   else 
-    filts:=filts and IsNonExhaustiveSemigroupWithInverseOp;
+    filts:=filts and IsSemigroupWithInverseOp;
   fi;
 
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
@@ -482,7 +482,7 @@ function(gens, record)
   if record.exhaustive then 
     filts:=filts and IsExhaustiveSemigroup;
   else 
-    filts:=filts and IsNonExhaustiveSemigroupWithInverseOp;
+    filts:=filts and IsSemigroupWithInverseOp;
   fi;
 
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec());
@@ -505,7 +505,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup, 
 "for non-exhaustive semigroup with inverse op and associative element coll.",
-[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElementCollection],
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(s, coll) 
   return ClosureInverseSemigroup(s, coll, ShallowCopy(SemigroupOptions(s)));
 end);
@@ -514,7 +514,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup, 
 "for non-exhaustive semigroup with inverse op and an associative element",
-[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f) 
   return ClosureInverseSemigroup(s, [f], ShallowCopy(SemigroupOptions(s)));
 end);
@@ -523,7 +523,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup, 
 "for non-exhaustive semigroup with inverse op, associative element, record",
-[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
+[IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
 function(s, f, record) 
   return ClosureInverseSemigroup(s, [f], record);
 end);
@@ -532,7 +532,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup, 
 "for a non-exhaustive semigroup with inverse op, associative elt coll, and record",
-[IsNonExhaustiveSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
   local n;
 
@@ -1050,7 +1050,7 @@ end);
 
 InstallMethod(InverseSubsemigroupByProperty, 
 "for non-exhaustive semigroup with inverse op, function, positive integer",
-[IsNonExhaustiveSemigroupWithInverseOp, IsFunction, IsPosInt], 
+[IsSemigroupWithInverseOp, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
@@ -1089,7 +1089,7 @@ end);
 
 InstallMethod(InverseSubsemigroupByProperty, 
 "for non-exhaustive semigroup with inverse op and function",
-[IsNonExhaustiveSemigroupWithInverseOp, IsFunction], 
+[IsSemigroupWithInverseOp, IsFunction], 
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);

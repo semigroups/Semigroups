@@ -295,7 +295,7 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 #different method for ideals
 
 InstallMethod(IsFactorisableSemigroup, "for an inverse op non-exhaustive semigroup",
-[IsNonExhaustiveSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
+[IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
 function(S)
   local G, iso, enum, f;
   
@@ -408,7 +408,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsLTrivial, "for an inverse non-exhaustive semigroup",
-[IsNonExhaustiveSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp],
 function(S)
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then 
     return true;
@@ -769,7 +769,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsMonogenicInverseSemigroup, 
-"for a non-exhaustive semigroup with inverse op", [IsNonExhaustiveSemigroupWithInverseOp],
+"for a non-exhaustive semigroup with inverse op", [IsSemigroupWithInverseOp],
 function(S)
   local gens, I, f, i;
 

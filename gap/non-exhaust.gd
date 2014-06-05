@@ -8,6 +8,14 @@
 #############################################################################
 ##
 
+DeclareCategory("IsSemigroupWithInverseOp", IsNonExhaustiveSemigroup);
+
+DeclareProperty("IsNonExhaustiveSemigroupWithFixedDegreeMultiplication",
+IsSemigroup);
+DeclareProperty("IsGeneratorsOfNonExhaustiveSemigroup", IsAssociativeElementCollection);
+
+DeclareCategory("IsNonExhaustiveSemigroupGreensClass", IsGreensClass);
+
 # IsSemigroupData contains both IsExhaustiveData and IsNonExhaustiveData.
 DeclareAttribute("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);

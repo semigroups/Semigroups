@@ -182,7 +182,7 @@ end);
 
 InstallMethod(Factorization, 
 "for a non-exhaustive semigroup with inverse op with generators and element", 
-[IsNonExhaustiveSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsAssociativeElement], 
+[IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
  

@@ -1,19 +1,15 @@
+############################################################################
+##
+#W  setup.gd
+#Y  Copyright (C) 2013-14                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
 #############################################################################
-###
-##W  setup.gd
-##Y  Copyright (C) 2013-14                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
 
-DeclareCategory("IsNonExhaustiveSemigroup", IsSemigroup and IsFinite);
-DeclareCategory("IsExhaustiveSemigroup", IsSemigroup and IsFinite);
-
-DeclareCategory("IsNonExhaustiveSemigroupWithInverseOp", IsNonExhaustiveSemigroup);
-DeclareProperty("IsGeneratorsOfNonExhaustiveSemigroup", IsAssociativeElementCollection);
-DeclareCategory("IsNonExhaustiveSemigroupGreensClass", IsGreensClass);
+# this file contains declarations of everything required for a semigroup
+# belonging to IsNonExhaustiveSemigroup...
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
@@ -43,9 +39,6 @@ DeclareAttribute("RhoOrbSeed", IsSemigroup);
 
 DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
-
-DeclareProperty("IsNonExhaustiveSemigroupWithFixedDegreeMultiplication",
-IsSemigroup);
 
 DeclareAttribute("StabilizerAction", IsSemigroup);
 

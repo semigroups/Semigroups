@@ -13,7 +13,7 @@
 # same method for ideals
 
 InstallMethod(NonExhaustiveData, "for a non-exhaustive semigroup with inverse op",
-[IsNonExhaustiveSemigroupWithInverseOp], ReturnFail);
+[IsSemigroupWithInverseOp], ReturnFail);
 
 # different method for ideals
 
