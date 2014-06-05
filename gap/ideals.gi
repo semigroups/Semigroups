@@ -8,6 +8,9 @@
 ############################################################################# 
 ##
 
+# This file contains methods for ideals of semigroups, which do not depend on
+# the representation as IsExhaustiveSemigroup or IsNonExhaustiveSemigroup.
+
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 
@@ -37,8 +40,8 @@ end);
 #
 
 InstallMethod(PrintString, 
-"for a non-exhaustive semigroup ideal with ideal generators", 
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and IsNonExhaustiveSemigroup],
+"for a semigroup ideal with ideal generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I) 
   local str;
 
@@ -233,7 +236,7 @@ function(S, gens, record)
   if not record.exhaustive and (IsNonExhaustiveSemigroup(S) 
     or IsGeneratorsOfNonExhaustiveSemigroup(gens)) then 
     filts:=filts and IsNonExhaustiveSemigroup;
-  else record.exhaustive then 
+  else
     filts:=filts and IsExhaustiveSemigroup;
   fi;
 
@@ -276,60 +279,8 @@ end);
 
 #
 
-InstallMethod(MaximalDClasses, "for a inverse op non-exhaustive semigroup ideal",
-[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal], 
-function(S)
-  local gens, partial, pos, o, scc, out, classes, x, i;
-  
-  gens:=GeneratorsOfSemigroupIdeal(S); 
-  partial:=PartialOrderOfDClasses(S);
-  pos:=[]; 
-  o:=LambdaOrb(S); 
-  scc:=OrbSCCLookup(o);
-
-  for x in gens do 
-    #index of the D-class containing x 
-    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))]-1);
-  od;
-
-  out:=[];
-  classes:=GreensDClasses(S);
-  for i in pos do 
-    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
-end);
-
-# different method for inverse
-
-InstallMethod(MaximalDClasses, "for a regular non-exhaustive semigroup ideal",
-[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
-function(I)
-  local data, pos, partial, classes, out, i;
-
-  data:=SemigroupIdealData(I); 
-  pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
-                             # [1..n-1] in data!.dorbit
-   
-  partial:=data!.poset;
-  classes:=data!.dorbit;
-  out:=[];
-  for i in pos do 
-    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
-end);
-
-# 
-
-InstallMethod(MinimalIdealGeneratingSet, "for a non-exhaustive semigroup ideal",
-[IsNonExhaustiveSemigroup and IsSemigroupIdeal],
+InstallMethod(MinimalIdealGeneratingSet, "for a semigroup ideal with generators",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local max, out;
 
@@ -347,8 +298,8 @@ end);
 
 #JDM: is there a better method?
 
-InstallMethod(InversesOfSemigroupElementNC, "for a non-exhaustive semigroup ideal",
-[IsNonExhaustiveSemigroup and IsSemigroupIdeal, IsAssociativeElement],
+InstallMethod(InversesOfSemigroupElementNC, "for a semigroup ideal",
+[IsSemigroupIdeal, IsAssociativeElement],
 function(I, x)
   return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
 end);
@@ -468,53 +419,5 @@ end);
 
 InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
-
-InstallMethod(NrDClasses, "for an inverse non-exhaustive semigroup ideal",
-[IsNonExhaustiveSemigroupWithInverseOp and IsSemigroupIdeal],
-function(I)
-  return Length(OrbSCC(LambdaOrb(I)))-1;
-end);
-
-# 
-
-InstallMethod(NrDClasses, "for a non-exhaustive semigroup ideal",
-[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
-function(I)
-  Enumerate(SemigroupIdealData(I));
-  return Length(SemigroupIdealData(I)!.dorbit);
-end);
-
-#
-
-InstallMethod(GreensDClasses, "for a non-exhaustive semigroup ideal",
-[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
-function(I)
-  Enumerate(SemigroupIdealData(I));
-  return SemigroupIdealData(I)!.dorbit;
-end);
-
-#
-
-InstallMethod(PartialOrderOfDClasses, "for a non-exhaustive semigroup ideal", 
-[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
-function(I)
-  local data;
-
-  data:=SemigroupIdealData(I);
-  Enumerate(data);
-  return data!.poset;
-end);
-
-#
-
-InstallMethod(DClassReps, "for a non-exhaustive semigroup ideal", 
-[IsNonExhaustiveSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
-function(I)
-  local data;
-
-  data:=SemigroupIdealData(I);
-  Enumerate(data);
-  return List(data!.dorbit, Representative);
-end);
 
 #EOF

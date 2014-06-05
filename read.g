@@ -98,8 +98,8 @@ ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/lambda-rho.gi");
 ReadPackage("semigroups/gap/ideals-lambda-rho.gi");
-ReadPackage("semigroups/gap/acting.gi");
-ReadPackage("semigroups/gap/ideals-acting.gi");
+ReadPackage("semigroups/gap/non-exhaust.gi");
+ReadPackage("semigroups/gap/ideals-non-exhaust.gi");
 ReadPackage("semigroups/gap/graded.gi");
 ReadPackage("semigroups/gap/semigroups.gi");
 ReadPackage("semigroups/gap/greens.gi");
@@ -137,6 +137,6 @@ ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univcong.gi");
 
 ReadPackage("semigroups/gap/semigroupe.gi");
-ReadPackage("semigroups/gap/generic.gi");
-ReadPackage("semigroups/gap/ideals-generic.gi");
+ReadPackage("semigroups/gap/exhaust.gi");
+ReadPackage("semigroups/gap/ideals-exhaust.gi");
 

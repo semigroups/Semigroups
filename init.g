@@ -29,8 +29,8 @@ ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
 
 ReadPackage("semigroups/gap/setup.gd");
-ReadPackage("semigroups/gap/acting.gd");
-ReadPackage("semigroups/gap/ideals-acting.gd");
+ReadPackage("semigroups/gap/non-exhaust.gd");
+ReadPackage("semigroups/gap/ideals-non-exhaust.gd");
 ReadPackage("semigroups/gap/semigroups.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
@@ -70,4 +70,4 @@ DeclareInfoClass("InfoSemigroups");;
 ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univcong.gd");
 
-ReadPackage("semigroups/gap/semigroupe.gd");
+ReadPackage("semigroups/gap/exhaust.gd");

@@ -1,12 +1,14 @@
 ###########################################################################
 ##
-#W  ideals-generic.gi
+#W  ideals-exhaust.gi
 #Y  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+# this file contains method specific to exhaustive ideals of semigroups. 
 
 # We use the result of enumerating the SEEData of the supersemigroup of an ideal
 # to calculate elements, size, test membership, find idempotents, etc. We get a
@@ -46,7 +48,6 @@ function(enum, limit, lookfunc)
   while nr <= limit and i <= nr and not (looking and found) do
 
     j:=indices[i]; # position in <data> corresponding to <enum[i]>
-    #if j=28 then Error(); fi; 
     # enumerate <data> until we've seen all the left and right descendants of
     # <data!.elts[j]>...
     if not IsBound(left[j][1]) then 
