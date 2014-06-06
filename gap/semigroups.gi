@@ -18,10 +18,7 @@ function(S)
   return Length(Idempotents(S));
 end);
 
-InstallMethod(NrDClasses, "for a finite semigroup", [IsSemigroup and IsFinite],
-function(S)
-  return Length(GreensDClasses(S));
-end);
+
 
 # star 
 
