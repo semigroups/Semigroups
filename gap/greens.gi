@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+InstallMethod(NrDClasses, "for a finite semigroup", [IsSemigroup and IsFinite],
+function(S)
+  return Length(GreensDClasses(S));
+end);
+
 # Notes:
 # - D-class reps must have rectified lambda and rho value
 

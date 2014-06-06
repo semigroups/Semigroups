@@ -277,21 +277,17 @@ end);
 # and only works for Rees 0-matrix semigroup over groups
 
 if not IsGrapeAvailable or not IsGrapeCompiled then 
-  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
-  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsNonExhaustiveSemigroup
+  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix semigroup",
+  [IsReesZeroMatrixSemigroup], 
   function(R)
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end); 
 else
-  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
-  [IsReesZeroMatrixSubsemigroup], 3, #to beat the method for IsNonExhaustiveSemigroup
+  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix semigroup",
+  [IsReesZeroMatrixSemigroup], 
   function(R)
     local G, out, I, J, mat, nrrows, graph, components, nrcomponents, P, basicgens, new, pos, i, j, NonGroupRecursion, transversal, maxgens, JJ, solo, U, II, len, names, rectangles, gens, H, r, k;
-    
-    if not IsReesZeroMatrixSemigroup(R) then 
-      TryNextMethod(); 
-    fi;
     
     # Check that matrix is regular (i.e. no zero rows or columns)
     if not IsRegularSemigroup(R) then

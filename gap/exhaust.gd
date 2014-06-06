@@ -8,12 +8,16 @@
 #############################################################################
 ##
 
-DeclareCategory("IsExhaustiveSemigroup", IsSemigroup and IsFinite);
+# there is a good reason this is not a category!
+DeclareProperty("IsExhaustiveSemigroup", IsSemigroup and IsFinite);
+InstallImmediateMethod(IsExhaustiveSemigroup, IsSemigroup and IsFinite, 
+0, S-> not IsNonExhaustiveSemigroup(S));
+
 DeclareAttribute("ExhaustiveData", IsFinite and IsSemigroup, "mutable");
 # a non-exhaustive semigroup can have exhaustive data but not the other way
 # around. 
 
-DeclareCategory("IsExhaustiveData", IsSemigroupData);
+DeclareProperty("IsExhaustiveData", IsSemigroupData);
 
 DeclareOperation("Enumerate", [IsExhaustiveData]);
 DeclareOperation("Enumerate", [IsExhaustiveData, IsCyclotomic]);

@@ -202,7 +202,7 @@ gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 gap> s:=Semigroup(gens);;
 gap> I := SemigroupIdeal(s, gens);
 <regular transformation semigroup ideal on 5 pts with 3 generators>
-gap> data := SemigroupData(I);
+gap> data := NonExhaustiveData(I);
 <closed semigroup ideal data with 26 reps, 23 lambda-values, 26 rho-values>
 gap> Size(I);
 731
@@ -831,7 +831,7 @@ gap> I:=SemigroupIdeal(S, x);
 gap> x:=Transformation( [ 2, 2, 4, 4, 2, 2 ] );;
 gap> x in I;
 true
-gap> IsClosedData(SemigroupData(I));
+gap> IsClosedData(NonExhaustiveData(I));
 false
 gap> Size(I);
 35136

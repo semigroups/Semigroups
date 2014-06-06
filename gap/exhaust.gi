@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-#W  generic.gi
+#W  exhaust.gi
 #Y  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -15,8 +15,8 @@
 
 # different method for ideals
 
-InstallMethod(Enumerator, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+InstallMethod(Enumerator, "for an exhaustive semigroup with generators",
+[IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, record;
   
@@ -51,8 +51,8 @@ end);
 
 # different method for ideals
 
-InstallMethod(Size, "for a finite semigroup with generators", 
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+InstallMethod(Size, "for an exhaustive semigroup with generators", 
+[IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   return Length(Enumerate(ExhaustiveData(S), infinity, ReturnFalse)!.elts);
 end);
@@ -60,7 +60,7 @@ end);
 # different method for ideals
 
 InstallMethod(\in, "for an associative element and finite semigroup with generators",
-[IsAssociativeElement, IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+[IsAssociativeElement, IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(x, S)
   return Position(ExhaustiveData(S), x)<>fail;
 end);
@@ -68,8 +68,8 @@ end);
 # different method for ideals
 # JDM: can probably do better than this by considering Green's classes.
 
-InstallMethod(Idempotents, "for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+InstallMethod(Idempotents, "for an exhaustive semigroup with generators",
+[IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, elts, idempotents, nr, i;
 
@@ -103,7 +103,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensRRelation, "for a semigroup", [IsSemigroup], 
+InstallMethod(GreensRRelation, "for a semigroup", [IsExhaustiveSemigroup], 
 function(S)
   local fam, rel, sc;
 
@@ -128,7 +128,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensLRelation, "for a semigroup",  [IsSemigroup], 
+InstallMethod(GreensLRelation, "for a semigroup",  [IsExhaustiveSemigroup], 
 function(S)
   local fam, rel;
 
@@ -154,12 +154,12 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensJRelation, "for a finite semigroup",  [IsSemigroup and IsFinite], 
+InstallMethod(GreensJRelation, "for an exhaustive semigroup",  [IsExhaustiveSemigroup], 
 GreensDRelation);
 
 # same method for ideals
 
-InstallMethod(GreensDRelation, "for a semigroup",  [IsSemigroup], 
+InstallMethod(GreensDRelation, "for a semigroup",  [IsExhaustiveSemigroup], 
 function(S)
     local fam, rel;
 
@@ -185,7 +185,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensHRelation, "for a semigroup",  [IsSemigroup], 
+InstallMethod(GreensHRelation, "for a semigroup",  [IsExhaustiveSemigroup], 
 function(S)
     local fam, rel;
 
@@ -230,8 +230,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(IsomorphismFpSemigroup, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
 function(S)
   local rules, F, A, rels, Q, B;
   
@@ -296,16 +296,16 @@ end);
 
 # same method for ideals
 
-InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(RightCayleyGraphSemigroup, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
 function(S)
   return Enumerate(ExhaustiveData(S))!.right;
 end);
 
 # same method for ideals
 
-InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(LeftCayleyGraphSemigroup, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
 function(S)
   return Enumerate(ExhaustiveData(S))!.left;
 end);
@@ -316,8 +316,8 @@ end);
 # library.
 
 InstallMethod(Factorization,
-"for a finite semigroup with generators and an associative element",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsAssociativeElement],
+"for an exhaustive semigroup with generators and an associative element",
+[IsExhaustiveSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(S, x)
   local pos;
   pos:=Position(ExhaustiveData(S), x); 
@@ -425,34 +425,34 @@ function(S, GreensXRelation, GreensXClassOfElement)
   return out;
 end);
 
-#
+# same method for ideals
 
-InstallMethod(GreensLClasses, "for a finite semigroup with generators",  
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup], 
+InstallMethod(GreensLClasses, "for an exhaustive semigroup",  
+[IsExhaustiveSemigroup], 
 function(S)
   return SEMIGROUPS_GreensXClasses(S, GreensLRelation, GreensLClassOfElement);
 end);
 
-#
+# same method for ideals
 
-InstallMethod(GreensRClasses, "for a finite semigroup with generators",  
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup], 
+InstallMethod(GreensRClasses, "for an exhaustive semigroup",  
+[IsExhaustiveSemigroup], 
 function(S)
   return SEMIGROUPS_GreensXClasses(S, GreensRRelation, GreensRClassOfElement);
 end);
 
-#
+# same method for ideals
 
-InstallMethod(GreensHClasses, "for a finite semigroup with generators",  
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup], 
+InstallMethod(GreensHClasses, "for an exhaustive semigroup",  
+[IsExhaustiveSemigroup], 
 function(S)
   return SEMIGROUPS_GreensXClasses(S, GreensHRelation, GreensHClassOfElement);
 end);
 
-#
+# same method for ideals
 
-InstallMethod(GreensDClasses, "for a finite semigroup with generators",  
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup], 
+InstallMethod(GreensDClasses, "for an exhaustive semigroup",  
+[IsExhaustiveSemigroup], 
 function(S)
   return SEMIGROUPS_GreensXClasses(S, GreensDRelation, GreensDClassOfElement);
 end);
@@ -508,13 +508,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(NrIdempotents, "for a semigroup",
-[IsSemigroup], S-> Length(Idempotents(S)));
-
-# same method for ideals
-
-InstallMethod(NrRClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(NrRClasses, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
 function(S)
   return Length(GreensRRelation(S)!.data.comps);
 end);
@@ -527,8 +522,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(NrLClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(NrLClasses, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
 function(S)
   return Length(GreensLRelation(S)!.data.comps);
 end);
@@ -541,21 +536,17 @@ end);
 
 # same method for ideals
 
-InstallMethod(NrDClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(NrDClasses, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
 function(S)
   return Length(GreensDRelation(S)!.data.comps);
 end);
 
-InstallMethod(NrDClasses, "for a semigroup", [IsSemigroup],
-function(S)
-  return Length(GreensDClasses(S));
-end);
 
 # same method for ideals
 
-InstallMethod(NrHClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(NrHClasses, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
 function(S)
   return Length(GreensHRelation(S)!.data.comps);
 end);
@@ -568,8 +559,9 @@ end);
 
 # same method for ideals
 
-InstallMethod(MinimalIdeal, "for a finite semigroup",
-[IsSemigroup],
+InstallMethod(MinimalIdeal, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
+# this is not a category, since if it was then 
 function(S)
   local data, scc;
   data:=Enumerate(ExhaustiveData(S));

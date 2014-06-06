@@ -9,7 +9,7 @@
 ##
 
 # This file contains methods for ideals of semigroups, which do not depend on
-# the representation as IsExhaustiveSemigroup or IsNonExhaustiveSemigroup.
+# the representation as IsNonExhaustiveSemigroup.
 
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
@@ -237,8 +237,6 @@ function(S, gens, record)
   if not record.exhaustive and (IsNonExhaustiveSemigroup(S) 
     or IsGeneratorsOfNonExhaustiveSemigroup(gens)) then 
     filts:=filts and IsNonExhaustiveSemigroup;
-  else
-    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
   I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=record));

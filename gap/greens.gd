@@ -6,57 +6,11 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-##
-##  This file contains algorithms for computing Green's relations
-##  and related notions for transformation semigroups and monoids. 
-##  The theory behind these algorithms is developed in 
-##  
-##  [LPRR1] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
-##  Groups  and actions in  transformation semigroups, to appear in Math Z.
-##  (1998).
-##
-##  Early versions of the algorithms themselves are described in
-##
-##  [LPRR2] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
-##  Computing transformation semigroups, (1998), in preparation.
-##  
-##  Another reference is
-##
-##  [LM]  G.  Lallement and R. McFadden, On the   determination of Green's
-##  relations in finite transformation semigroups, J. Symbolic Computation 10
-##  (1990), 481--489.
-##
-#############################################################################
-#############################################################################
 
-#new
-
-# LambdaRhoLookup(d)[i]=j if orbit[j][4] in reps[i] (orbit[j][4] is one of the
-# R-reps of the D-class d) and LambdaRhoLookup(d) is only bound for those
-# indices i where there is an R-rep in the scc of the D-class in reps[i] 
-DeclareAttribute("LambdaRhoLookup", IsGreensDClass and
-IsNonExhaustiveSemigroupGreensClass);
+# this file contains methods for Green's relations and classes of semigroups,
+# which do not depend on the representation as IsNonExhaustiveSemigroup.
 
 DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
-
-DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
-DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
-DeclareProperty("IsGreensClassNC", IsNonExhaustiveSemigroupGreensClass);
-
-DeclareAttribute("LambdaOrbSCC", IsNonExhaustiveSemigroupGreensClass);
-DeclareAttribute("LambdaOrbSCCIndex", IsNonExhaustiveSemigroupGreensClass);
-
-DeclareAttribute("RhoOrbSCC", IsNonExhaustiveSemigroupGreensClass);
-DeclareAttribute("RhoOrbSCCIndex", IsNonExhaustiveSemigroupGreensClass);
-
-DeclareAttribute("LambdaCosets", IsNonExhaustiveSemigroupGreensClass);
-DeclareAttribute("RhoCosets", IsNonExhaustiveSemigroupGreensClass);
-
-DeclareAttribute("NonExhaustiveDataSCC", IsNonExhaustiveSemigroupGreensClass);
-DeclareAttribute("NonExhaustiveDataSCCIndex", IsNonExhaustiveSemigroupGreensClass);
-DeclareAttribute("NonExhaustiveDataIndex", IsNonExhaustiveSemigroupGreensClass);
-
-#old
 
 DeclareOperation("GreensDClassOfElementNC", [IsSemigroup,
 IsAssociativeElement]); 
@@ -143,26 +97,10 @@ DeclareAttribute("NrRegularDClasses", IsSemigroup);
 DeclareAttribute("NrIdempotents", IsSemigroup);
 DeclareAttribute("NrIdempotents", IsGreensClass);
 
-# other...
-DeclareGlobalFunction("CreateDClass");
-DeclareGlobalFunction("CreateDClassNC");
-DeclareGlobalFunction("CreateHClass");
-DeclareGlobalFunction("CreateHClassNC");
-DeclareGlobalFunction("CreateLClass");
-DeclareGlobalFunction("CreateLClassNC");
-DeclareGlobalFunction("CreateInverseOpLClassNC");
-DeclareGlobalFunction("CreateInverseOpLClass");
-DeclareGlobalFunction("CreateRClass");
-DeclareGlobalFunction("CreateRClassNC");
 
 DeclareAttribute("DClassType", IsSemigroup);
 DeclareAttribute("HClassType", IsSemigroup);
 DeclareAttribute("LClassType", IsSemigroup);
 DeclareAttribute("RClassType", IsSemigroup);
-
-#technical...
-DeclareGlobalFunction("IsRegularClass@");
-DeclareGlobalFunction("Idempotents@");
-DeclareGlobalFunction("NrIdempotents@");
 
 #EOF

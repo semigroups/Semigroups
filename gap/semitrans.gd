@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
+
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
 IsTransformationSemigroup);
 DeclareAttribute("ComponentsOfTransformationSemigroup",

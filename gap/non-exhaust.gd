@@ -12,7 +12,10 @@
 DeclareAttribute("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
 
-DeclareCategory("IsNonExhaustiveSemigroup", IsSemigroup and IsFinite);
+DeclareCategory("IsNonExhaustiveSemigroup", IsSemigroup and IsFinite, 8);
+# so that the rank of IsNonExhaustiveSemigroup is higher than that of
+# IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and
+# IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
 
 DeclareAttribute("NonExhaustiveData", IsNonExhaustiveSemigroup, "mutable");
 DeclareCategory("IsNonExhaustiveData", IsSemigroupData);

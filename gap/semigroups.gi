@@ -8,6 +8,21 @@
 ############################################################################# 
 ##
 
+# this file contains methods semigroups which do not depend on whether they are
+# exhaustive or non-exhaustive
+
+# same method for ideals
+
+InstallMethod(NrIdempotents, "for a finite semigroup", [IsSemigroup and IsFinite], 
+function(S)
+  return Length(Idempotents(S));
+end);
+
+InstallMethod(NrDClasses, "for a finite semigroup", [IsSemigroup and IsFinite],
+function(S)
+  return Length(GreensDClasses(S));
+end);
+
 # star 
 
 InstallMethod(Star, "for an associative element with star",
@@ -22,21 +37,21 @@ end);
 
 InstallMethod(Generators, "for a semigroup",
 [IsSemigroup],
-function(s)
+function(S)
   
-  if HasGeneratorsOfMagmaIdeal(s) then 
-    return GeneratorsOfMagmaIdeal(s);
-  elif HasGeneratorsOfGroup(s) then 
-    return GeneratorsOfGroup(s);
-  elif HasGeneratorsOfInverseMonoid(s) then 
-    return GeneratorsOfInverseMonoid(s);
-  elif HasGeneratorsOfInverseSemigroup(s) then 
-    return GeneratorsOfInverseSemigroup(s);
-  elif HasGeneratorsOfMonoid(s) then
-    return GeneratorsOfMonoid(s);
+  if HasGeneratorsOfMagmaIdeal(S) then 
+    return GeneratorsOfMagmaIdeal(S);
+  elif HasGeneratorsOfGroup(S) then 
+    return GeneratorsOfGroup(S);
+  elif HasGeneratorsOfInverseMonoid(S) then 
+    return GeneratorsOfInverseMonoid(S);
+  elif HasGeneratorsOfInverseSemigroup(S) then 
+    return GeneratorsOfInverseSemigroup(S);
+  elif HasGeneratorsOfMonoid(S) then
+    return GeneratorsOfMonoid(S);
   fi;
 
-  return GeneratorsOfSemigroup(s);
+  return GeneratorsOfSemigroup(S);
 end);
 
 # creating semigroups, monoids, inverse semigroups, etc
@@ -82,14 +97,14 @@ function(gens, record)
     if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
       for i in [2..n] do
-        S:=ClosureSemigroup(S, gens[i], closure_opts);
+        S:=ClosureSemigroup(S, gens[i], opts);
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
         " generators so far\r");
       od;
       Print("\n");
     else
       for f in gens do
-        S:=ClosureSemigroup(S, f, closure_opts);
+        S:=ClosureSemigroup(S, f, opts);
       od;
     fi;
     return S;
@@ -99,8 +114,6 @@ function(gens, record)
 
   if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
-  else 
-    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
   S:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
@@ -140,7 +153,7 @@ InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local n, i, opts, S, filts, s, pos, f;
+  local n, opts, S, filts, pos, i, f;
 
   record:=SEMIGROUPS_ProcessOptionsRec(record);
   gens:=ShallowCopy(gens);
@@ -180,11 +193,9 @@ function(gens, record)
 
   if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
-  else 
-    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
-  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
+  S:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
   SetSemigroupOptions(S, record);
 
   if record.regular then 
@@ -255,8 +266,6 @@ function(gens, record)
   
   if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
-  else 
-    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
   S:=Objectify( NewType (FamilyObj( gens ), filts), rec());
@@ -277,10 +286,10 @@ function(gens, record)
     SetGeneratorsOfInverseSemigroup(S, gens);
   fi;
 
-  return s;
+  return S;
 end);
 
-# hereJDM
+#
 
 InstallMethod(InverseSemigroupByGenerators, 
 "for an associative element collection and record",
@@ -292,7 +301,7 @@ function(gens, record)
   
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
-    if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
+   if IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
       gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
       n:=ActionDegree(gens);
       Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
@@ -311,11 +320,9 @@ function(gens, record)
   
   if not record.exhaustive and IsGeneratorsOfNonExhaustiveSemigroup(gens) then 
     filts:=filts and IsNonExhaustiveSemigroup;
-  else 
-    filts:=filts and IsExhaustiveSemigroup;
   fi;
 
-  S:=Objectify( NewType (FamilyObj( gens ), filts), rec());
+  S:=Objectify( NewType(FamilyObj( gens ), filts), rec());
   SetSemigroupOptions(S, record);
   SetGeneratorsOfInverseSemigroup(S, AsList(gens));
   
@@ -398,8 +405,8 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for an exhaustive semigroup with inverse op, associative elt coll, and record",
-[IsSemigroupWithInverseOp and IsExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
+"for a semigroup with inverse op, associative elt coll, and record",
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
 function(S, coll, record)
   
   if IsEmpty(coll) then 
@@ -507,7 +514,7 @@ function(S, coll, record)
     return;
   fi;
 
-  if IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(s) and
+  if IsNonExhaustiveSemigroupWithFixedDegreeMultiplication(S) and
     ActionDegree(S)<>ActionDegree(Representative(coll)) then 
     Error("usage: the degree of the semigroup and collection must be equal,");
     return;
@@ -526,8 +533,8 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an exhaustive semigroup, associative element collection, and record",
-[IsExhaustiveSemigroup, IsAssociativeElementCollection, IsRecord],
+"for a semigroup, associative element collection, and record",
+[IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, coll, record)
  
   if IsEmpty(coll) then 

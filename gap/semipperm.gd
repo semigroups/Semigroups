@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
+
 DeclareAttribute("CyclesOfPartialPerm", IsPartialPerm);
 
 DeclareAttribute("ComponentRepsOfPartialPermSemigroup",
