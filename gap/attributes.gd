@@ -22,24 +22,24 @@ DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsNonExhaustiveSemigroup);
 
 DeclareAttribute("SmallSemigroupGeneratingSet", IsAssociativeElementCollection);
-DeclareAttribute("SmallSemigroupGeneratingSet", IsNonExhaustiveSemigroup);
+DeclareAttribute("SmallSemigroupGeneratingSet", IsSemigroup and IsFinite);
 DeclareAttribute("SmallMonoidGeneratingSet", IsAssociativeElementCollection and
 IsMultiplicativeElementWithOneCollection);
-DeclareAttribute("SmallMonoidGeneratingSet", IsNonExhaustiveSemigroup and IsMonoid);
+DeclareAttribute("SmallMonoidGeneratingSet", IsMonoid and IsFinite);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
 IsGeneratorsOfInverseSemigroup);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
-IsInverseSemigroup and IsNonExhaustiveSemigroup);
+IsSemigroupWithInverseOp);
 DeclareAttribute("SmallInverseMonoidGeneratingSet", 
 IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallInverseMonoidGeneratingSet", 
-IsInverseMonoid and IsNonExhaustiveSemigroup);
+IsInverseMonoid and IsSemigroupWithInverseOp);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
-DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsNonExhaustiveSemigroup);
-DeclareAttribute("StructureDescriptionMaximalSubgroups", IsNonExhaustiveSemigroup);
+DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsSemigroup and IsFinite);
+DeclareAttribute("StructureDescriptionMaximalSubgroups", IsSemigroup and IsFinite);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsNonExhaustiveSemigroup);
