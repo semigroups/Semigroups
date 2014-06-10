@@ -8,6 +8,63 @@
 #############################################################################
 ##
 
+# this file contains methods for every operation/attribute/property that is
+# specific to semigroups of partial perms.
+
+# same method for ideals
+
+InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(s)
+
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a partial perm semigroup satisfying IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s,
+   Group(List(GeneratorsOfSemigroup(s), AsPermutation)),
+    AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
+end);
+
+# it just so happens that the MultiplicativeNeutralElement of a semigroup of
+# partial permutations has to coincide with the One. This is not the case for
+# transformation semigroups
+
+# same method for ideals
+
+InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
+[IsPartialPermSemigroup], One);
+
+# same method for ideals
+
+InstallMethod(GroupOfUnits, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(s)
+  local r, g, deg, u;
+
+  if MultiplicativeNeutralElement(s)=fail then
+    return fail;
+  fi;
+
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g:=SchutzenbergerGroup(r);
+  deg:=Maximum(DegreeOfPartialPermSemigroup(s),
+   CodegreeOfPartialPermSemigroup(s));   
+ 
+  u:=Monoid(List(GeneratorsOfGroup(g), x-> AsPartialPerm(x, deg)));
+  
+  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation, 
+   x-> AsPartialPerm(x, deg)));
+   
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+
+#
+
 InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x-> IsPartialPermSemigroup(Parent(x)));
 

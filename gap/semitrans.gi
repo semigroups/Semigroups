@@ -8,6 +8,89 @@
 #############################################################################
 ##
 
+# this file contains methods for every operation/attribute/property that is
+# specific to transformation semigroups.
+
+# 
+
+InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local id, dom, gens, inv;
+
+  if IsMonoid(s) then 
+    return MappingByFunction(s, s, IdFunc, IdFunc);
+  fi;
+
+  if MultiplicativeNeutralElement(s)=fail then 
+    Error( "usage: <s> must have a multiplicative neutral element,");
+    return;
+  fi;
+  
+  id:=MultiplicativeNeutralElement(s);
+  dom:=ImageSetOfTransformation(id);
+  
+  gens:=List(Generators(s), x-> TransformationOp(x, dom));
+
+  inv:=function(f)
+    local out, i;
+
+    out:=[1..DegreeOfTransformationSemigroup(s)];
+    for i in [1..Length(dom)] do 
+      out[dom[i]]:=dom[i^f];
+    od;
+    return id*Transformation(out);
+  end;
+
+  return MappingByFunction(s, Monoid(gens), f-> TransformationOp(f, dom), 
+   inv);
+end);
+
+# same method for ideals
+
+InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+ 
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a transformation semigroup satisfying IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s, 
+   Group(List(GeneratorsOfSemigroup(s), PermutationOfImage)), 
+    PermutationOfImage, 
+    x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
+end);
+
+# same method for ideals
+
+InstallMethod(GroupOfUnits, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+  local r, g, deg, u;
+
+  if MultiplicativeNeutralElement(s)=fail then
+    return fail;
+  fi;
+
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g:=SchutzenbergerGroup(r);
+  deg:=DegreeOfTransformationSemigroup(s);   
+ 
+  u:=Monoid(List(GeneratorsOfGroup(g), x-> AsTransformation(x, deg)));
+  
+  SetIsomorphismPermGroup(u, MappingByFunction(u, g, PermutationOfImage, 
+   x-> AsTransformation(x, deg)));
+   
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+
+#
+
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
 

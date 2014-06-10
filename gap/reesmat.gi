@@ -8,6 +8,57 @@
 #############################################################################
 ##
 
+# this file contains methods for every operation/attribute/property that is
+# specific to Rees 0-matrix semigroups.
+
+# same method for ideals
+
+InstallMethod(IsomorphismPermGroup,
+"for a subsemigroup of a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup],
+function(S)
+  local rep;
+
+  if not IsGroupAsSemigroup(S)  then
+   Error( "usage: a subsemigroup of a Rees 0-matrix semigroup satisfying\n", 
+    "IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  rep:=S.1;
+  if rep![1]=0 then # special case for the group consisting of 0
+    return MagmaIsomorphismByFunctionsNC(S, Group(()), x-> (), x-> rep);
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(S, 
+    Group(List(GeneratorsOfSemigroup(S), x-> x![2])),
+      x-> x![2], x-> RMSElement(S, rep![1], x, rep![3]));
+end);
+
+# same method for ideals
+
+InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
+function(s)
+  local r, g, i, j, u;
+
+  if MultiplicativeNeutralElement(s)=fail then
+    return fail;
+  fi;
+
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g:=SchutzenbergerGroup(r);
+  i:=MultiplicativeNeutralElement(s)![1];
+  j:=MultiplicativeNeutralElement(s)![3];
+
+  u:=Semigroup(List(GeneratorsOfGroup(g), x-> RMSElement(s, i, x, j)));
+  
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+
 # this method is better than the generic one for non-exhaustive semigroups
 
 InstallMethod(Random, "for a Rees 0-matrix semigroup", 

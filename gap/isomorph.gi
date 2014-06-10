@@ -8,6 +8,79 @@
 #############################################################################
 ##
 
+# this file contains methods for finding isomorphisms between semigroups and
+# related methods. Isomorphism.* methods for transformation, partial perm,
+# bipartition and Rees 0-matrix semigroups can be found in the files
+# semitrans.gi, semipperm.gi, semibipart.gi , and reesmat.gi.
+
+# different method for ideals
+
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for a matrix semigroup with generators", 
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup], 
+function(S)        
+  local n, F, T;
+  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
+  F:=FieldOfMatrixList(GeneratorsOfSemigroup(S));        
+  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
+   TransformationOp(x, Elements(F^n), OnRight)));        
+  return MappingByFunction(S, T,
+   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
+end);
+
+# fall back method, same method for ideals
+
+InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
+function(S)
+  local en, act, gens;
+
+  if not IsGroupAsSemigroup(S)  then
+   Error( "usage: the argument must be a semigroup satisfying\n", 
+    "IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  en:=EnumeratorSorted(S);
+  
+  act:=function(i, x)
+    return Position(en, en[i]*x);
+  end;
+  
+  gens := List(GeneratorsOfSemigroup(S), 
+   x-> Permutation(x, [1..Length(en)], act));
+
+  return MagmaIsomorphismByFunctionsNC( S, Group( gens ), 
+   x-> Permutation(x, [1..Length(en)], act), 
+   x-> en[Position(en, MultiplicativeNeutralElement(S))^x]);
+end);
+
+# not relevant for ideals
+
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for semigroup of binary relations with generators", 
+[IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup], 
+function(s)        
+  local n, pts, o, t, pos, i;
+  if not IsBinaryRelationOnPointsRep(Representative(s)) then 
+    TryNextMethod();
+  fi;
+  n:=DegreeOfBinaryRelation(GeneratorsOfSemigroup(s)[1]);
+  pts:=EmptyPlist(2^n);
+
+  for i in [1..n] do 
+    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
+    Enumerate(o);
+    pts:=Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  pos:=List([1..n], x-> Position(pts, [x]));
+  t:=Semigroup(List(GeneratorsOfSemigroup(s), 
+   x-> TransformationOpNC(x, pts, OnPoints)));
+  
+  return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),
+  x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
+end);
+
 # returns the lex-least multiplication table of the semigroup <S>
 
 if not IsGrapeAvailable then 
