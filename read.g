@@ -103,6 +103,8 @@ ReadPackage("semigroups/gap/ideals-non-exhaust.gi");
 ReadPackage("semigroups/gap/graded.gi");
 ReadPackage("semigroups/gap/semigroups.gi");
 ReadPackage("semigroups/gap/greens.gi");
+ReadPackage("semigroups/gap/greens-non-exhaust.gi");
+ReadPackage("semigroups/gap/greens-exhaust.gi");
 ReadPackage("semigroups/gap/ideals-greens.gi");
 ReadPackage("semigroups/gap/factor.gi");
 ReadPackage("semigroups/gap/regular.gi");

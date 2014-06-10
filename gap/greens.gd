@@ -7,8 +7,8 @@
 ##
 #############################################################################
 
-# this file contains methods for Green's relations and classes of semigroups,
-# which do not depend on the representation as IsNonExhaustiveSemigroup.
+# this file contains methods for Green's relations and classes of semigroups
+# that apply to either of IsNonExhaustiveSemigroup, or IsExhaustiveSemigroup.
 
 DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 

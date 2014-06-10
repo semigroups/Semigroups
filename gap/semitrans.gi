@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
+
 #
 
 ViewStringForGroupOfTransformations@:=function(s)

@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], x-> IsPartialPermSemigroup(Parent(x)));
+
 #
 
 InstallMethod(ViewString, "for a group of partial perms",
