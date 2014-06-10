@@ -13,6 +13,8 @@
 DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 
 DeclareOperation("GreensDClassOfElementNC", [IsSemigroup,
+IsAssociativeElement]);
+DeclareOperation("GreensJClassOfElementNC", [IsSemigroup,
 IsAssociativeElement]); 
 
 DeclareOperation("GreensHClassOfElementNC", [IsSemigroup,

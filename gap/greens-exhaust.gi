@@ -161,9 +161,11 @@ function(x, C)
   return pos<>fail and EquivalenceClassRelation(C)!.data.id[pos]=C!.index;
 end);
 
-#
+# there are not methods for EquivalenceClassOfElementNC in this case since we
+# require the variable <pos> below, and if it can't be determined, then we can't
+# make the Green's class. 
 
-BindGlobal("SEMIGROUPS_EquivalentClassOfElementNC", 
+BindGlobal("SEMIGROUPS_EquivalenceClassOfElement", 
 function(rel, rep, IsGreensXClass)
   local pos, type, out;
 
@@ -188,32 +190,32 @@ end);
 
 #
 
-InstallMethod(EquivalenceClassOfElementNC, 
+InstallMethod(EquivalenceClassOfElement, 
 "for an exhaustive semigroup Green's R-relation and an associative element", 
 [IsGreensRRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensRClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensRClass);
 end);
 
-InstallMethod(EquivalenceClassOfElementNC, 
+InstallMethod(EquivalenceClassOfElement, 
 "for an exhaustive semigroup Green's L-relation and an associative element", 
 [IsGreensLRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensLClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensLClass);
 end);
 
-InstallMethod(EquivalenceClassOfElementNC, 
+InstallMethod(EquivalenceClassOfElement, 
 "for an exhaustive semigroup Green's H-relation and an associative element", 
 [IsGreensHRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensHClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensHClass);
 end);
 
-InstallMethod(EquivalenceClassOfElementNC, 
+InstallMethod(EquivalenceClassOfElement, 
 "for an exhaustive semigroup Green's D-relation and an associative element", 
 [IsGreensDRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensDClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensDClass);
 end);
 
 #
@@ -305,12 +307,14 @@ function(C)
   return SEMIGROUPS_GreensXClassesOfClass(C, GreensRRelation, GreensRClassOfElement);
 end);
 
-InstallMethod(GreensHClasses, "for Green's class", [IsExhaustiveSemigroupGreensClass],
+InstallMethod(GreensHClasses, "for an exhaustive semigroup Green's class",
+[IsExhaustiveSemigroupGreensClass],
 function(C)
   if IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C) then 
     return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation, GreensHClassOfElement);
   fi;
-  TryNextMethod();
+  Error("usage: the argument should be a Greens R-, L-, or D-class,");
+  return;
 end);
 
 # Methods for things declared in the Semigroups package but not in the GAP
@@ -348,9 +352,4 @@ function(S)
   return Length(GreensHRelation(S)!.data.comps);
 end);
 
-InstallMethod(NrHClasses, "for an exhaustive semigroup Green's class",
-[IsExhaustiveSemigroupGreensClass],
-function(C)
-  return Length(GreensHClasses(C));
-end);
 

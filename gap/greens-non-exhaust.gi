@@ -10,6 +10,9 @@
 # this file contains methods for Green's relations and classes of semigroups
 # that satisfy IsNonExhaustiveSemigroup.
 
+# Notes:
+# - D-class reps must have rectified lambda and rho value
+
 # this won't work for ideals, but isn't currently used for anything
 
 InstallMethod(LambdaRhoLookup, "for a D-class of a non-exhaustive semigroup",
@@ -691,6 +694,7 @@ end);
 
 # same method for regular, different method for inverse, same for ideals
 
+# JDM this should be a method for EquivalenceClassOfElement for GreensDRelation, same with the other GreensXClassOfELement methods. 
 InstallMethod(GreensDClassOfElement, 
 "for a non-exhaustive semigroup and associative element",
 [IsNonExhaustiveSemigroup, IsAssociativeElement],

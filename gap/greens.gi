@@ -8,11 +8,82 @@
 #############################################################################
 ##
 
+#
+
+InstallMethod(GreensRClassOfElement, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElement( GreensRRelation(S), x );
+end);
+
+InstallMethod(GreensLClassOfElement, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElement( GreensLRelation(S), x );
+end);
+
+InstallMethod(GreensHClassOfElement, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElement( GreensHRelation(S), x );
+end);
+
+InstallMethod(GreensDClassOfElement, 
+"for a finite semigroup and associative element", 
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElement( GreensDRelation(S), x );
+end);
+
+# same method for regular/inverse
+
+InstallMethod(GreensJClassOfElement, "for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElement);
+
+#
+
+InstallMethod(GreensRClassOfElementNC, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC( GreensRRelation(S), x );
+end);
+
+InstallMethod(GreensLClassOfElementNC, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC( GreensLRelation(S), x );
+end);
+
+InstallMethod(GreensHClassOfElementNC, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC( GreensHRelation(S), x );
+end);
+
+InstallMethod(GreensDClassOfElementNC, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC( GreensDRelation(S), x );
+end);
+
+# same method for regular/inverse
+
+InstallMethod(GreensJClassOfElementNC, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElementNC);
+
 # this should be removed after the library method for AsSSortedList 
 # for a Green's class is removed. The default AsSSortedList for a collection
 # is what should be used (it is identical)! JDM
 
-InstallMethod(AsSSortedList, "for a Green's class of a semigroup",
+InstallMethod(AsSSortedList, "for a Green's class",
 [IsGreensClass], 
 function(C)
   return ConstantTimeAccessList(EnumeratorSorted(C));
@@ -43,8 +114,7 @@ function(C)
   return Length(GreensHClasses(C));
 end);
 
-# Notes:
-# - D-class reps must have rectified lambda and rho value
+#JDM these methods shouldn't be necessary...
 
 InstallMethod(EquivalenceClassOfElement, 
 "for Green's R-relation and associative element", 
@@ -113,10 +183,7 @@ InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
 InstallMethod(LClass, "for an H-class", [IsGreensHClass], LClassOfHClass);
 InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 
-# same method for regular/inverse
 
-InstallMethod(GreensJClassOfElement, "for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElement);
 
 InstallMethod(IsRegularDClass, "for a D-class of a semigroup",
 [IsGreensDClass], IsRegularClass);
