@@ -11,9 +11,24 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
-# 
+# not relevant for ideals
 
-InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
+InstallMethod(Size, "for a monogenic transformation semigroup",
+[IsTransformationSemigroup and IsMonogenicSemigroup],
+function(s)
+  local ind;
+  
+  ind:=IndexPeriodOfTransformation(GeneratorsOfSemigroup(s)[1]);
+  if ind[1]>0 then 
+    return Sum(ind)-1;
+  fi;
+  return Sum(ind);
+end);
+
+#
+
+InstallMethod(IsomorphismTransformationMonoid, 
+"for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local id, dom, gens, inv;

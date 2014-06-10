@@ -295,7 +295,8 @@ function(I)
   return out;
 end);
 
-#JDM: is there a better method?
+# JDM: is there a better method? Certainly for regular non-exhaustive ideals
+# there is
 
 InstallMethod(InversesOfSemigroupElementNC, 
 "for a semigroup ideal and associative element",

@@ -314,7 +314,7 @@ gap> x in J;
 true
 gap> Length(InversesOfSemigroupElement(I, x))=84;
 true
-gap> InversesOfSemigroupElement(J, x)=InversesOfSemigroupElement(I, x);
+gap> Set(InversesOfSemigroupElement(J, x))=Set(InversesOfSemigroupElement(I, x));
 true
 gap> MultiplicativeNeutralElement(I);
 fail
@@ -482,7 +482,6 @@ gap> MinimalDClass(R);
  [ -6 ] ] )}
 
 # greens.gi for ideals
-#
 gap> S:=Semigroup([ Transformation( [ 1, 2, 6, 6, 5, 5 ] ), 
 >   Transformation( [ 2, 3, 1, 3, 6, 5 ] ), 
 >   Transformation( [ 3, 4, 6, 3, 2, 1 ] ), 

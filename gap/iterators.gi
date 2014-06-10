@@ -588,23 +588,28 @@ end);
 
 InstallMethod(Iterator, "for a full transformation semigroup",
 [IsTransformationSemigroup and IsFullTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
+7, #to beat the method for non-exhaustive semigroups 
+function(S)
   local iter;
   
   iter:= IteratorByFunctions( rec(
 
-    parent:=s,
+    parent:=S,
 
-    tups:=IteratorOfTuples([1..DegreeOfTransformationSemigroup(s)],
-     DegreeOfTransformationSemigroup(s)),
+    tups:=IteratorOfTuples([1..DegreeOfTransformationSemigroup(S)],
+     DegreeOfTransformationSemigroup(S)),
 
     NextIterator:=iter-> TransformationNC(NextIterator(iter!.tups)),
   
     IsDoneIterator:=iter -> IsDoneIterator(iter!.tups),
     
-    ShallowCopy:= iter -> rec(tups:=
-      IteratorOfTuples([1..DegreeOfTransformationSemigroup(s)],
-       DegreeOfTransformationSemigroup(s)))));
+    ShallowCopy:= iter -> 
+      rec( 
+        parent:=S, 
+        tups:= IteratorOfTuples( [1..DegreeOfTransformationSemigroup(S)],
+         DegreeOfTransformationSemigroup(S))
+      )
+  ));
 
   SetIsIteratorOfSemigroup(iter, true);
   return iter;
