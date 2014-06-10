@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="MaximalSubsemigroups">
 <ManSection>
-  <Attr Name="MaximalSubsemigroups" Arg="S" Label="for an acting semigroup"/>
+  <Attr Name="MaximalSubsemigroups" Arg="S" Label="for a non-exhaustive semigroup"/>
   <Returns>The maximal subsemigroups of <A>S</A>.</Returns>
   <Description>
     If <A>S</A> is a semigroup, then <C>MaximalSubsemigroups</C> returns
