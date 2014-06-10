@@ -8,9 +8,39 @@
 #############################################################################
 ##
 
+# this should be removed after the library method for AsSSortedList 
+# for a Green's class is removed. The default AsSSortedList for a collection
+# is what should be used (it is identical)! JDM
+
+InstallMethod(AsSSortedList, "for a Green's class of a semigroup",
+[IsGreensClass], 
+function(C)
+  return ConstantTimeAccessList(EnumeratorSorted(C));
+end);
+
+#
+
 InstallMethod(NrDClasses, "for a finite semigroup", [IsSemigroup and IsFinite],
 function(S)
   return Length(GreensDClasses(S));
+end);
+
+InstallMethod(NrRClasses, "for a Green's D-class",
+[IsGreensDClass],
+function(D)
+  return Length(GreensRClasses(D));
+end);
+
+InstallMethod(NrLClasses, "for a Green's D-class",
+[IsGreensDClass],
+function(D)
+  return Length(GreensLClasses(D));
+end);
+
+InstallMethod(NrHClasses, "for a Green's class",
+[IsGreensClass],
+function(C)
+  return Length(GreensHClasses(C));
 end);
 
 # Notes:

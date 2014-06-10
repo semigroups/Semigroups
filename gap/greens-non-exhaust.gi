@@ -10,16 +10,6 @@
 # this file contains methods for Green's relations and classes of semigroups
 # that satisfy IsNonExhaustiveSemigroup.
 
-# this should be removed after the library method for AsSSortedList 
-# for a Green's class is removed. The default AsSSortedList for a collection
-# is what should be used (it is identical)! JDM
-
-InstallMethod(AsSSortedList, "for a Green's class of a non-exhaustive semigroup",
-[IsGreensClass and IsNonExhaustiveSemigroupGreensClass], 
-function(c)
-  return ConstantTimeAccessList(EnumeratorSorted(c));
-end);
-
 # this won't work for ideals, but isn't currently used for anything
 
 InstallMethod(LambdaRhoLookup, "for a D-class of a non-exhaustive semigroup",

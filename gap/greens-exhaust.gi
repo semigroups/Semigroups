@@ -18,7 +18,8 @@
 
 # same method for ideals
 
-InstallMethod(GreensRRelation, "for a semigroup", [IsExhaustiveSemigroup], 
+InstallMethod(GreensRRelation, "for an exhaustive semigroup", 
+[IsExhaustiveSemigroup], 
 function(S)
   local fam, rel, sc;
 
@@ -27,7 +28,8 @@ function(S)
 
   rel := Objectify(NewType(fam,
            IsEquivalenceRelation and IsEquivalenceRelationDefaultRep
-           and IsGreensRRelation), rec());
+           and IsGreensRRelation and IsExhaustiveSemigroupGreensRelation),
+           rec());
 
   SetSource(rel, S);
   SetRange(rel, S);
@@ -43,7 +45,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensLRelation, "for a semigroup",  [IsExhaustiveSemigroup], 
+InstallMethod(GreensLRelation, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup], 
 function(S)
   local fam, rel;
 
@@ -52,7 +55,8 @@ function(S)
 
   rel := Objectify(NewType(fam,
           IsEquivalenceRelation and IsEquivalenceRelationDefaultRep
-          and IsGreensLRelation), rec());
+          and IsGreensLRelation and IsExhaustiveSemigroupGreensRelation), 
+          rec());
 
   SetSource(rel, S);
   SetRange(rel, S);
@@ -69,12 +73,13 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensJRelation, "for an exhaustive semigroup",  [IsExhaustiveSemigroup], 
-GreensDRelation);
+InstallMethod(GreensJRelation, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup], GreensDRelation);
 
 # same method for ideals
 
-InstallMethod(GreensDRelation, "for a semigroup",  [IsExhaustiveSemigroup], 
+InstallMethod(GreensDRelation, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup], 
 function(S)
     local fam, rel;
 
@@ -83,7 +88,8 @@ function(S)
 
   rel := Objectify(NewType(fam,
           IsEquivalenceRelation and IsEquivalenceRelationDefaultRep
-          and IsGreensDRelation), rec());
+          and IsGreensDRelation and IsExhaustiveSemigroupGreensRelation), 
+          rec());
 
   SetSource(rel, S);
   SetRange(rel, S);
@@ -100,7 +106,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensHRelation, "for a semigroup",  [IsExhaustiveSemigroup], 
+InstallMethod(GreensHRelation, "for an exhaustive semigroup",  
+[IsExhaustiveSemigroup], 
 function(S)
     local fam, rel;
 
@@ -108,7 +115,8 @@ function(S)
           ElementsFamily(FamilyObj(S)) );
   rel := Objectify(NewType(fam,
           IsEquivalenceRelation and IsEquivalenceRelationDefaultRep
-          and IsGreensHRelation), rec());
+          and IsGreensHRelation and IsExhaustiveSemigroupGreensRelation),
+          rec());
 
   SetSource(rel, S);
   SetRange(rel, S);
@@ -122,10 +130,10 @@ function(S)
   return rel;
 end);
 
-
 #
 
-InstallMethod(Enumerator, "for a Green's class",  [IsGreensClass], 
+InstallMethod(Enumerator, "for an exhaustive semigroup Green's class",
+[IsExhaustiveSemigroupGreensClass], 
 function(C)
   local data, rel;
   data:=ExhaustiveData(Parent(C));
@@ -135,15 +143,17 @@ end);
 
 #
 
-InstallMethod(Size, "for a Green's class", [IsGreensClass], 
+InstallMethod(Size, "for an exhaustive semigroup Green's class",
+[IsExhaustiveSemigroupGreensClass], 
 function(C)
   return Length(EquivalenceClassRelation(C)!.data.comps[C!.index]);
 end);
 
 #
 
-InstallMethod(\in, "for an associative element and Green's class",  
-[IsAssociativeElement, IsGreensClass], 
+InstallMethod(\in, 
+"for an associative element and an exhaustive semigroup Green's class",  
+[IsAssociativeElement, IsExhaustiveSemigroupGreensClass], 
 function(x, C)
   local pos;
 
@@ -165,7 +175,8 @@ function(rel, rep, IsGreensXClass)
   fi;
 
   type:=NewType(CollectionsFamily(FamilyObj(rep)), 
-     IsEquivalenceClass and IsEquivalenceClassDefaultRep and IsGreensXClass);
+     IsEquivalenceClass and IsEquivalenceClassDefaultRep
+     and IsExhaustiveSemigroupGreensClass and IsGreensXClass);
   out:=rec(); 
   ObjectifyWithAttributes(out, type, EquivalenceClassRelation, rel,
     Representative, rep, ParentAttr, Source(rel));
@@ -175,30 +186,32 @@ function(rel, rep, IsGreensXClass)
   return out;
 end);
 
+#
+
 InstallMethod(EquivalenceClassOfElementNC, 
-"for a Green's R-relation and an associative element", 
-[IsGreensRRelation, IsAssociativeElement],
+"for an exhaustive semigroup Green's R-relation and an associative element", 
+[IsGreensRRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
   return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensRClass);
 end);
 
 InstallMethod(EquivalenceClassOfElementNC, 
-"for a Green's L-relation and an associative element", 
-[IsGreensLRelation, IsAssociativeElement],
+"for an exhaustive semigroup Green's L-relation and an associative element", 
+[IsGreensLRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
   return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensLClass);
 end);
 
 InstallMethod(EquivalenceClassOfElementNC, 
-"for a Green's H-relation and an associative element", 
-[IsGreensHRelation, IsAssociativeElement],
+"for an exhaustive semigroup Green's H-relation and an associative element", 
+[IsGreensHRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
   return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensHClass);
 end);
 
 InstallMethod(EquivalenceClassOfElementNC, 
-"for a Green's D-relation and an associative element", 
-[IsGreensDRelation, IsAssociativeElement],
+"for an exhaustive semigroup Green's D-relation and an associative element", 
+[IsGreensDRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
   return SEMIGROUPS_EquivalentClassOfElementNC(rel, rep, IsGreensDClass);
 end);
@@ -280,18 +293,19 @@ end);
 
 #
 
-InstallMethod(GreensLClasses, "for a Green's D-class", [IsGreensDClass], 
+InstallMethod(GreensLClasses, "for a Green's D-class", 
+[IsGreensDClass and IsExhaustiveSemigroupGreensClass], 
 function(C)
   return SEMIGROUPS_GreensXClassesOfClass(C, GreensLRelation, GreensLClassOfElement);
 end);
 
-InstallMethod(GreensRClasses, "for a Green's D-class", [IsGreensDClass], 
+InstallMethod(GreensRClasses, "for a Green's D-class", 
+[IsGreensDClass and IsExhaustiveSemigroupGreensClass], 
 function(C)
   return SEMIGROUPS_GreensXClassesOfClass(C, GreensRRelation, GreensRClassOfElement);
 end);
 
-InstallMethod(GreensHClasses, "for Green's class", [IsGreensClass], 2, 
-# to beat the library method
+InstallMethod(GreensHClasses, "for Green's class", [IsExhaustiveSemigroupGreensClass],
 function(C)
   if IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C) then 
     return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation, GreensHClassOfElement);
@@ -310,24 +324,12 @@ function(S)
   return Length(GreensRRelation(S)!.data.comps);
 end);
 
-InstallMethod(NrRClasses, "for a Green's D-class",
-[IsGreensDClass],
-function(D)
-  return Length(GreensRClasses(D));
-end);
-
 # same method for ideals
 
 InstallMethod(NrLClasses, "for an exhaustive semigroup",
 [IsExhaustiveSemigroup],
 function(S)
   return Length(GreensLRelation(S)!.data.comps);
-end);
-
-InstallMethod(NrLClasses, "for a Green's D-class",
-[IsGreensDClass],
-function(D)
-  return Length(GreensLClasses(D));
 end);
 
 # same method for ideals
@@ -338,7 +340,6 @@ function(S)
   return Length(GreensDRelation(S)!.data.comps);
 end);
 
-
 # same method for ideals
 
 InstallMethod(NrHClasses, "for an exhaustive semigroup",
@@ -347,8 +348,8 @@ function(S)
   return Length(GreensHRelation(S)!.data.comps);
 end);
 
-InstallMethod(NrHClasses, "for a Green's class",
-[IsGreensClass],
+InstallMethod(NrHClasses, "for an exhaustive semigroup Green's class",
+[IsExhaustiveSemigroupGreensClass],
 function(C)
   return Length(GreensHClasses(C));
 end);

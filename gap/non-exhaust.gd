@@ -23,7 +23,7 @@ DeclareAttribute("SizeOfNonExhaustiveData", IsNonExhaustiveData);
 DeclareProperty("IsGeneratorsOfNonExhaustiveSemigroup", IsAssociativeElementCollection);
 DeclareProperty("IsNonExhaustiveSemigroupWithFixedDegreeMultiplication",
 IsNonExhaustiveSemigroup);
-DeclareCategory("IsNonExhaustiveSemigroupGreensClass", IsGreensClass);
+
 
 DeclareOperation("Enumerate", [IsNonExhaustiveData]);
 DeclareOperation("Enumerate", [IsNonExhaustiveData, IsCyclotomic]);
