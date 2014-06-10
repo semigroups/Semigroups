@@ -8,9 +8,30 @@
 #############################################################################
 ##
 
+# this file contains methods relating to factorising elements of a semigroup
+# over its generators.
+
+# same method for ideals
+# this is declared in the library, but there is no method for semigroups in the
+# library.
+
+InstallMethod(Factorization,
+"for an exhaustive semigroup and an associative element",
+[IsExhaustiveSemigroup, IsAssociativeElement],
+function(S, x)
+  local pos;
+  pos:=Position(ExhaustiveData(S), x); 
+  if pos=fail then 
+    return fail;
+  fi;
+  return ExhaustiveData(S)!.words[pos];
+end);
+
+# same method for ideals
+
 InstallMethod(MinimalFactorization, 
-"for a finite semigroup with generators and associative element",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, IsAssociativeElement],
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
 function(S, x)
   
   if not x in S then 

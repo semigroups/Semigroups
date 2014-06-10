@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+# this file contains methods for finding various attributes of finite semigroups
+# that can satisfy either IsNonExhaustiveSemigroup or IsExhaustiveSemigroup.
+
 # Note about the difference between One and MultiplicativeNeutralElement 
 # (the same goes for Zero and MultplicativeZero):
 #
@@ -23,6 +26,109 @@
 # A semigroup satisfies IsMonoidAsSemigroup(s) if
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
+
+# same method for ideals
+
+InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
+[IsMonoid and IsFinite],
+function(S)
+  local rules, F, A, rels, Q, B;
+ 
+  rules:=Enumerate(ExhaustiveData(S))!.rules;
+  
+  F:=FreeMonoid(Length(GeneratorsOfMonoid(S)));
+  A:=GeneratorsOfMonoid(F);
+  rels:=List(rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
+  
+  Q:=F/rels; 
+  B:=GeneratorsOfMonoid(Q);
+  return MagmaIsomorphismByFunctionsNC(S, Q, 
+   x -> EvaluateWord(B, Factorization(S, x)), 
+   x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S)));
+
+end);
+
+# same method for ideals
+
+InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
+[IsFinite and IsSemigroup],
+function(S)
+  local rules, F, A, rels, Q, B;
+  
+  rules:=Enumerate(ExhaustiveData(S))!.rules;
+  
+  F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
+  A:=GeneratorsOfSemigroup(F);
+  rels:=List(rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
+  
+  Q:=F/rels; 
+  B:=GeneratorsOfSemigroup(Q);
+  return MagmaIsomorphismByFunctionsNC(S, Q, 
+   x -> EvaluateWord(B, Factorization(S, x)), 
+   x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
+end);
+
+# same method for ideals
+
+InstallMethod(IsomorphismFpSemigroup, "for a finite monoid",
+[IsMonoid and IsFinite],
+function(S)
+  local rules, lookup, convert, F, A, rels, one, Q, B, i;
+ 
+  if GeneratorsOfSemigroup(S)=GeneratorsOfMonoid(S) then 
+    return IsomorphismFpMonoid(S);
+  fi;
+
+  lookup:=List(GeneratorsOfMonoid(S), x-> Position(GeneratorsOfSemigroup(S), x));
+  one:=Position(GeneratorsOfSemigroup(S), One(S));
+  # if One(S) appears more than once in the generators of S, then this causes
+  # problems here... JDM
+  convert:=function(w)
+    if not IsEmpty(w) then 
+      return List(w, i-> lookup[i]); 
+    else
+      return [one];
+    fi;
+  end;
+  #convert words in generators of monoid to words in generators of semigroup
+
+  rules:=Enumerate(ExhaustiveData(S))!.rules;
+  
+  F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
+  A:=GeneratorsOfSemigroup(F);
+  rels:=Set(rules, x-> [EvaluateWord(A, convert(x[1])), 
+   EvaluateWord(A, convert(x[2]))]);
+
+  # add relations for the identity
+  AddSet(rels, [A[one]^2, A[one]]);
+  for i in [1..Length(GeneratorsOfMonoid(S))] do 
+    AddSet(rels, [A[lookup[i]]*A[one], A[lookup[i]]]);
+    AddSet(rels, [A[one]*A[lookup[i]], A[lookup[i]]]);
+  od;
+  
+  Q:=F/rels; 
+  B:=GeneratorsOfSemigroup(Q);
+  return MagmaIsomorphismByFunctionsNC(S, Q, 
+   x -> EvaluateWord(B, convert(Factorization(S, x))), 
+  # Factorization returns a word in the monoid generators of S
+   x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
+end);
+
+# same method for ideals
+
+InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  return Enumerate(ExhaustiveData(S))!.right;
+end);
+
+# same method for ideals
+
+InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  return Enumerate(ExhaustiveData(S))!.left;
+end);
 
 # same method for ideals
 
