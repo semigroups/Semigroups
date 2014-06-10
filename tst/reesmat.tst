@@ -19,7 +19,7 @@ gap> R:=ReesZeroMatrixSemigroup(POI(5), [[0,0,0], [0,0,0]]);
  with 5 generators>>
 gap> R:=Semigroup(Generators(R));
 <subsemigroup of 3x2 Rees 0-matrix semigroup with 1512 generators>
-gap> IsActingSemigroup(R);
+gap> IsNonExhaustiveSemigroup(R);
 false
 gap> R:=ReesZeroMatrixSemigroup(Group(()), [[0,0,0], [0,0,0]]);
 <Rees 0-matrix semigroup 3x2 over Group(())>
@@ -27,7 +27,7 @@ gap> R:=ReesZeroMatrixSemigroup(Group(()), [[0,0,0], [0,0,0]]);
 <Rees 0-matrix semigroup 3x2 over Group(())>
 gap> R:=Semigroup(Generators(R));                              
 <subsemigroup of 3x2 Rees 0-matrix semigroup with 6 generators>
-gap> IsActingSemigroup(R);
+gap> IsNonExhaustiveSemigroup(R);
 false
 gap> R:=ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([],[]),0],
 > [0, PartialPerm([], [])]]);
@@ -35,7 +35,7 @@ gap> R:=ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([],[]),0],
  with 5 generators>>
 gap> R:=Semigroup(Generators(R));                                              
 <subsemigroup of 2x2 Rees 0-matrix semigroup with 1008 generators>
-gap> IsActingSemigroup(R);
+gap> IsNonExhaustiveSemigroup(R);
 false
 
 # find a source of interesting subsemigroups of Rees 0-matrix semigroups...
@@ -165,10 +165,10 @@ true
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^iso=x^iso*y^iso));                   
 true
 gap> iso:=IsomorphismPermGroup(MinimalIdeal(V));
-MappingByFunction( <simple Rees 0-matrix semigroup ideal with 1 generator>
+MappingByFunction( <trivial Rees 0-matrix semigroup ideal with 1 generator>
 , Group(()), function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group(()), <simple Rees 0-matrix semigroup ideal with
+MappingByFunction( Group(()), <trivial Rees 0-matrix semigroup ideal with
  1 generator>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(MinimalIdeal(V), x-> (x^iso)^inv=x);         
 true
@@ -240,11 +240,9 @@ gap> StructureDescription(H);
 
 # Random
 gap> Random(V);;
-gap> List(U, Random);;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `*' on 2 arguments
-gap> ForAll([1..5], x-> last[x] in U[x]);
-false
+gap> H:=List(U, Random);;
+gap> ForAll([1..5], x-> H[x] in U[x]);
+true
 
 # DClassOf.Class etc
 gap> H:=First(HClasses(V), x-> not IsRegularClass(x));

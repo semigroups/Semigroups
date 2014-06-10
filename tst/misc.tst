@@ -840,13 +840,13 @@ gap> SchutzenbergerGroup(d);
 Group(())
 gap> RhoOrbStabChain(d);
 <stabilizer chain record, Base [ 8, 7 ], Orbit length 3, Size: 6>
-gap> SemigroupDataSCC(d);
+gap> NonExhaustiveDataSCC(d);
 fail
 gap> Position(DClasses(s), d);
 18
 gap> d:=DClasses(s)[18];
 {PartialPerm( [ 1, 3, 6 ], [ 7, 4, 8 ] )}
-gap> SemigroupDataSCC(d);
+gap> NonExhaustiveDataSCC(d);
 [ 33, 35, 144, 146, 147, 148, 151, 152, 340, 341, 342, 343, 344, 345, 346, 
   353, 355, 356, 357, 358, 503, 519, 539, 540, 544, 553, 560, 561, 568, 571, 
   706, 707, 708, 709, 710, 711, 712, 713, 714, 715, 717, 718, 719, 720, 721, 
