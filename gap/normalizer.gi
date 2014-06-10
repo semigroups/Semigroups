@@ -223,12 +223,12 @@ function(G, S, opts)
     Info(InfoSemigroups, 2, Size(U), " found");
   fi;
   
-  if Size(U)=1 then 
-    return U;
-  fi;
-
   gens:=Generators(S);
   nrgens:=Length(gens);
+  
+  if Size(U)=1 or nrgens=0 then 
+    return U;
+  fi;
 
   P:=function(x)
     local i, pt;
