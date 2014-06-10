@@ -1,0 +1,2 @@
+DeclareGlobalFunction("Trace");
+DeclareGlobalFunction("CongruencePair");
