@@ -1,21 +1,58 @@
-InstallGlobalFunction(Trace,
+InstallGlobalFunction(InverseSemigroupCongruenceByCongruencePairNC,
+[IsInverseSemigroup and IsFinite, IsSemigroup, IsDenseList],
+function(s, kernel, traceBlocks)
+  local traceLookup, i, elm, fam, cong;
+  # Calculate lookup table for trace
+  traceLookup := [];
+  for i in [1..Length(traceBlocks)] do
+    for elm in traceBlocks[i] do
+      traceLookup[Position(Idempotents(s),elm)] := i;
+    od;
+  od;
+  # Construct the object
+  fam := GeneralMappingsFamily(
+                 ElementsFamily(FamilyObj(s)),
+                 ElementsFamily(FamilyObj(s)) );
+  cong := Objectify(
+                  NewType(fam, IsInverseSemigroupCongruence),
+                  rec(kernel := kernel,
+                      traceBlocks := traceBlocks,
+                      traceLookup := traceLookup) );
+  SetSource(cong, s);
+  SetRange(cong, s);
+  return cong;
+end);
+
+#
+
+InstallMethod(ViewObj,
+"for inverse semigroup congruence",
+[IsInverseSemigroupCongruence],
+function(cong)
+  Print("<inverse semigroup congruence by congruence pair (",
+        Size(cong!.kernel), ",",
+        Size(cong!.traceBlocks),")>");
+end);
+
+#
+
+InstallMethod(Trace,
+"for inverse semigroup congruence",
+[IsSemigroupCongruence],
 function(cong)
   local s, e, elms, trace, i, class, j;
-  if not IsSemigroupCongruence(cong) then
-    Error("<cong> must be a semigroup congruence,"); return;
-  fi;
   s := Range(cong);
   if not IsInverseSemigroup(s) then
     Error("<cong> must be declared over an inverse semigroup,"); return;
   fi;
   e := IdempotentGeneratedSubsemigroup(s);
-  elms := Elements(e);
+  elms := ShallowCopy(Elements(e));
   trace := [];
   for i in [1..Size(elms)] do
     if elms[i] <> fail then
       class := [ elms[i] ];
       for j in [i+1..Size(elms)] do
-        if j in EquivalenceClassOfElement(cong, i) then
+        if elms[j] in EquivalenceClassOfElement(cong, elms[i]) then
           Add(class, elms[j]);
           elms[j] := fail;
         fi;
@@ -28,7 +65,14 @@ end);
 
 #
 
+InstallMethod(Kernel,
+"for inverse semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+
+end);
+
 InstallGlobalFunction(CongruencePair,
 function(cong)
-  return [trace];
+  return [Trace(cong)];
 end);
