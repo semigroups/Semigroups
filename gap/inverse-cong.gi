@@ -50,8 +50,8 @@ function(pair, cong)
     Error("<pair> must have entries from the semigroup of <cong>,"); return;
   fi;
   # Is (a^-1 a, b^-1 b) in the trace?
-  if PositionProperty(cong!.traceBlocks, c-> pair[1]^-1 * pair[1] in c) =
-     PositionProperty(cong!.traceBlocks, c-> pair[2]^-1 * pair[2] in c) then
+  if pair[1]^-1 * pair[1] in
+     First(cong!.traceBlocks, c-> pair[2]^-1*pair[2] in c) then
     # Is ab^-1 in the kernel?
     if pair[1] * pair[2]^-1 in cong!.kernel then
       return true;
