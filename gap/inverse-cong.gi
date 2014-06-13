@@ -32,7 +32,7 @@ InstallMethod(ViewObj,
 function(cong)
   Print("<inverse semigroup congruence by congruence pair: ",
         Size(cong!.kernel), " ",
-        Size(cong!.traceBlocks),")>");
+        Size(cong!.traceBlocks),">");
 end);
 
 #
@@ -66,19 +66,19 @@ InstallMethod(Trace,
 "for inverse semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local s, e, elms, trace, i, class, j;
+  local s, elms, trace, i, class, congClass, j;
   s := Range(cong);
   if not IsInverseSemigroup(s) then
     Error("<cong> must be declared over an inverse semigroup,"); return;
   fi;
-  e := IdempotentGeneratedSubsemigroup(s);
-  elms := ShallowCopy(Elements(e));
+  elms := ShallowCopy(Idempotents(s));
   trace := [];
   for i in [1..Size(elms)] do
     if elms[i] <> fail then
       class := [ elms[i] ];
+      congClass := EquivalenceClassOfElementNC(cong, elms[i]);
       for j in [i+1..Size(elms)] do
-        if elms[j] in EquivalenceClassOfElement(cong, elms[i]) then
+        if elms[j] in congClass then
           Add(class, elms[j]);
           elms[j] := fail;
         fi;
