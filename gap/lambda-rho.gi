@@ -11,60 +11,42 @@
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
 # element has its RhoValue in the first position of its scc.
 
-# s, o, f, l, m
+InstallGlobalFunction(SEMIGROUPS_RectifyRho,
+function(S, x)
+  local o, l, m;
 
-InstallGlobalFunction(RectifyRho,
-function(arg)
-  local f, l, m;
-
-  if not IsClosed(arg[2]) then 
-    Enumerate(arg[2], infinity);
+  o:=RhoOrb(S);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
   fi;
 
-  f:=arg[3];
-  if not IsBound(arg[4]) or arg[4]=fail then 
-    l:=Position(arg[2], RhoFunc(arg[1])(f));
-  else
-    l:=arg[4];
-  fi;
+  l:=Position(o, RhoFunc(S)(f));
+  m:=OrbSCCLookup(o)[l];
 
-  if not IsBound(arg[5]) or arg[5]=fail then 
-    m:=OrbSCCLookup(arg[2])[l];
-  else
-    m:=arg[5];
+  if l<>OrbSCC(o)[m][1] then
+    x:=RhoOrbMult(o, m, l)[2]*x;
   fi;
-
-  if l<>OrbSCC(arg[2])[m][1] then
-    f:=RhoOrbMult(arg[2], m, l)[2]*f;
-  fi;
-  return rec(l:=l, m:=m, rep:=f);
+  return rec(Position:=l, OrbSCCIndex:=m, Representative:=x);
 end);
 
 #
 
-InstallGlobalFunction(RectifyLambda,
-function(arg)
-  local f, l, m;
-  if not IsClosed(arg[2]) then 
-    Enumerate(arg[2], infinity);
+InstallGlobalFunction(SEMIGROUPS_RectifyLambda,
+function(S, x)
+  local o, l, m;
+
+  o:=LambdaOrb(S);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
   fi;
 
-  f:=arg[3];
-  if not IsBound(arg[4]) or arg[4]=fail then 
-    l:=Position(arg[2], LambdaFunc(arg[1])(f));
-  else
-    l:=arg[4];
-  fi;
-  if not IsBound(arg[5]) or arg[5]=fail then 
-    m:=OrbSCCLookup(arg[2])[l];
-  else
-    m:=arg[5];
-  fi;
+  l:=Position(o, LambdaFunc(S)(f));
+  m:=OrbSCCLookup(o)[l];
 
-  if l<>OrbSCC(arg[2])[m][1] then
-    f:=f*LambdaOrbMult(arg[2], m, l)[2];
+  if l<>OrbSCC(o)[m][1] then
+    x:=x*LambdaOrbMult(o, m, l)[2];
   fi;
-  return rec(l:=l, m:=m, rep:=f);
+  return rec(Position:=l, OrbSCCIndex:=m, Representative:=x);
 end);
 
 #

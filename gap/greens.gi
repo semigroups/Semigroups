@@ -114,36 +114,6 @@ function(C)
   return Length(GreensHClasses(C));
 end);
 
-#JDM these methods shouldn't be necessary...
-
-InstallMethod(EquivalenceClassOfElement, 
-"for Green's R-relation and associative element", 
-[IsGreensRRelation, IsAssociativeElement],
-function(R, x)
-  return GreensRClassOfElement(UnderlyingDomainOfBinaryRelation(R), x);
-end);
-
-InstallMethod(EquivalenceClassOfElement, 
-"for Green's L-relation and associative element", 
-[IsGreensLRelation, IsAssociativeElement],
-function(L, x)
-  return GreensLClassOfElement(UnderlyingDomainOfBinaryRelation(L), x);
-end);
-
-InstallMethod(EquivalenceClassOfElement, 
-"for Green's D-relation and associative element", 
-[IsGreensDRelation, IsAssociativeElement],
-function(D, x)
-  return GreensDClassOfElement(UnderlyingDomainOfBinaryRelation(D), x);
-end);
-
-InstallMethod(EquivalenceClassOfElement, 
-"for Green's H-relation and associative element", 
-[IsGreensHRelation, IsAssociativeElement],
-function(H, x)
-  return GreensHClassOfElement(UnderlyingDomainOfBinaryRelation(H), x);
-end);
-
 # technical
 #JDM: is this necessary? I.e. is there a similar method in the library? 
 
@@ -182,8 +152,6 @@ InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
 InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
 InstallMethod(LClass, "for an H-class", [IsGreensHClass], LClassOfHClass);
 InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
-
-
 
 InstallMethod(IsRegularDClass, "for a D-class of a semigroup",
 [IsGreensDClass], IsRegularClass);

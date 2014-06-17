@@ -11,6 +11,7 @@
 # that satisfy IsNonExhaustiveSemigroup.
 
 DeclareCategory("IsNonExhaustiveSemigroupGreensClass", IsGreensClass);
+DeclareCategory("IsNonExhaustiveSemigroupGreensRelaton", IsGreensRelation);
 DeclareProperty("IsGreensClassNC", IsNonExhaustiveSemigroupGreensClass);
 
 # LambdaRhoLookup(d)[i]=j if orbit[j][4] in reps[i] (orbit[j][4] is one of the

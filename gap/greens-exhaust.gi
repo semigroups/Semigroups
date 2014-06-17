@@ -166,8 +166,8 @@ end);
 # make the Green's class. 
 
 BindGlobal("SEMIGROUPS_EquivalenceClassOfElement", 
-function(rel, rep, IsGreensXClass)
-  local pos, type, out;
+function(rel, rep, type)
+  local pos, out;
 
   pos:=Position(ExhaustiveData(Source(rel)), rep);
   if pos=fail then 
@@ -176,9 +176,6 @@ function(rel, rep, IsGreensXClass)
     return;
   fi;
 
-  type:=NewType(CollectionsFamily(FamilyObj(rep)), 
-     IsEquivalenceClass and IsEquivalenceClassDefaultRep
-     and IsExhaustiveSemigroupGreensClass and IsGreensXClass);
   out:=rec(); 
   ObjectifyWithAttributes(out, type, EquivalenceClassRelation, rel,
     Representative, rep, ParentAttr, Source(rel));
@@ -194,7 +191,7 @@ InstallMethod(EquivalenceClassOfElement,
 "for an exhaustive semigroup Green's R-relation and an associative element", 
 [IsGreensRRelation and IsExhaustiveSemigroupGreensRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensRClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, RClassType(Source(rel));
 end);
 
 InstallMethod(EquivalenceClassOfElement, 
@@ -352,4 +349,36 @@ function(S)
   return Length(GreensHRelation(S)!.data.comps);
 end);
 
+#
 
+InstallMethod(DClassType, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
+function(S)
+  return NewType( FamilyObj(S), IsEquivalenceClass and
+          IsEquivalenceClassDefaultRep and IsGreensDClass and
+          IsExhaustiveSemigroupGreensClass);
+end);
+
+InstallMethod(HClassType, "for an exhaustive semigroup",
+[IsExhaustiveSemigroup],
+function(S)
+ return NewType( FamilyObj(S), IsEquivalenceClass and
+  IsEquivalenceClassDefaultRep and IsGreensHClass and
+  IsExhaustiveSemigroupGreensClass);
+end);
+
+InstallMethod(LClassType, "for a exhaustive semigroup",
+[IsExhaustiveSemigroup],
+function(S)
+  return NewType( FamilyObj(S), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensLClass and
+         IsExhaustiveSemigroupGreensClass);
+end);
+
+InstallMethod(RClassType, "for a exhaustive semigroup",
+[IsExhaustiveSemigroup],
+function(S)
+  return NewType( FamilyObj(S), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensRClass and
+         IsExhaustiveSemigroupGreensClass);
+end);

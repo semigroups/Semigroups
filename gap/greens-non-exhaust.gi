@@ -694,45 +694,48 @@ end);
 
 # same method for regular, different method for inverse, same for ideals
 
-# JDM this should be a method for EquivalenceClassOfElement for GreensDRelation, same with the other GreensXClassOfELement methods. 
-InstallMethod(GreensDClassOfElement, 
-"for a non-exhaustive semigroup and associative element",
-[IsNonExhaustiveSemigroup, IsAssociativeElement],
-function(s, f)
-  local lambda_o, rectify, lambda_m, rep, rho_o, i;
+# JDM this should be a method for EquivalenceClassOfElement for GreensDRelation,
+# same with the other GreensXClassOfELement methods. 
 
-  if not f in s then
+InstallMethod(EquivalenceClassOfElement, 
+"for Green's D-relation of non-exhaustive semigroup and associative element",
+[IsGreensDRelation and IsNonExhaustiveSemigroupGreensRelation, IsAssociativeElement],
+function(D, x)
+  local S, lambda, rho, out;
+
+  S:=Source(D);
+
+  if not x in S then 
     Error("the element does not belong to the semigroup,");
     return;
   fi;
-
-  lambda_o:=LambdaOrb(s);
-  rectify:=RectifyLambda(s, lambda_o, f);
-  lambda_m:=rectify.m;
-  rep:=rectify.rep;   
   
-  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
-    rho_o:=RhoOrb(s);
-    i:=fail;
-  else
-    rho_o:=GradedRhoOrb(s, f, true);
-    i:=rho_o[2];#Position(o, RhoFunc(s)(f));
-    rho_o:=rho_o[1];
-  fi;
-
-  rectify:=RectifyRho(s, rho_o, rep, i);
-
-  return CreateDClassNC(s, lambda_m, lambda_o, rectify.m, rho_o, rectify.rep,
-   false);
+  lambda:=SEMIGROUPS_RectifyLambda(S, x);
+  rho:=SEMIGROUPS_RectifyRho(S, lambda.Representative);
+  
+  out:=rec(); 
+  
+  return ObjectifyWithAttributes(out, DClassType(S), EquivalenceClassRelation, D,
+    Representative, rho.Representative, ParentAttr, S, 
+    LambdaOrb, LambdaOrb(S),  LambdaOrbSCCIndex, lambda.OrbSCCIndex, 
+    RhoOrb, RhoOrb(S), RhoOrbSCCIndex, rho.OrbSCCIndex,  IsGreensClassNC, false);
 end);
 
 # same method for regular, different method for inverse, same for ideals
 
-InstallMethod(GreensDClassOfElementNC, "for a non-exhaustive semigroup and element",
-[IsNonExhaustiveSemigroup, IsAssociativeElement],
-function(s, f)
-  return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false)[1], 
-   1, GradedRhoOrb(s, f, false)[1], f, true);
+InstallMethod(EquivalenceClassOfElementNC,
+"for Green's D-relation of non-exhaustive semigroup and associative element",
+[IsGreensDRelation and IsNonExhaustiveSemigroupGreensRelation, IsAssociativeElement],
+function(D, x)
+  local S, out;
+  
+  S:=Source(D);
+  
+  out:=rec(); 
+  return ObjectifyWithAttributes(out, DClassType(S), EquivalenceClassRelation, D,
+    Representative, x, ParentAttr, S, 
+    LambdaOrb, GradedLambdaOrb(S, x, false)[1], LambdaOrbSCCIndex, 1, 
+    RhoOrb, GradedRhoOrb(S, x, false)[1], RhoOrbSCCIndex, 1, IsGreensClassNC, true);
 end);
 
 # same method for regular, different method for inverse, same method for ideals
@@ -2238,8 +2241,8 @@ end);
 
 InstallMethod(DClassType, "for a non-exhaustive semigroup",
 [IsNonExhaustiveSemigroup],
-function(s);
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+  return NewType( FamilyObj(S), IsEquivalenceClass and
           IsEquivalenceClassDefaultRep and IsGreensDClass and
           IsNonExhaustiveSemigroupGreensClass);
 end);
@@ -2248,8 +2251,8 @@ end);
 
 InstallMethod(HClassType, "for a non-exhaustive semigroup",
 [IsNonExhaustiveSemigroup],
-function(s);
- return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+ return NewType( FamilyObj(S), IsEquivalenceClass and
   IsEquivalenceClassDefaultRep and IsGreensHClass and
   IsNonExhaustiveSemigroupGreensClass);
 end);
@@ -2258,8 +2261,8 @@ end);
 
 InstallMethod(LClassType, "for a non-exhaustive semigroup",
 [IsNonExhaustiveSemigroup],
-function(s);
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+  return NewType( FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensLClass and
          IsNonExhaustiveSemigroupGreensClass);
 end);
@@ -2268,8 +2271,8 @@ end);
 
 InstallMethod(RClassType, "for a non-exhaustive semigroup",
 [IsNonExhaustiveSemigroup],
-function(s);
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+  return NewType( FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensRClass and
          IsNonExhaustiveSemigroupGreensClass);
 end);
