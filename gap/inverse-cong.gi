@@ -62,8 +62,8 @@ end);
 
 #
 
-InstallMethod(Trace,
-"for inverse semigroup congruence",
+InstallMethod(TraceOfSemigroupCongruence,
+"for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
   local s, elms, trace, i, class, congClass, j;
@@ -91,11 +91,16 @@ end);
 
 #
 
-InstallMethod(Kernel,
-"for inverse semigroup congruence",
+InstallMethod(KernelOfSemigroupCongruence,
+"for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-
+  local s;
+  s := Range(cong);
+  if not IsInverseSemigroup(s) then
+    Error("1st arg <cong> must be over an inverse semigroup,"); return;
+  fi;
+  return Union(List(Idempotents(s), e->EquivalenceClassOfElementNC(cong,e)));
 end);
 
 InstallGlobalFunction(CongruencePair,

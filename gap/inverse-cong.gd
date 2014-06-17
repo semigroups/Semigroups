@@ -6,5 +6,6 @@ DeclareAttribute("CongruencesOfSemigroup",
 DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePair");
 DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePairNC");
 
-DeclareAttribute("Trace", IsSemigroupCongruence);
+DeclareAttribute("TraceOfSemigroupCongruence", IsSemigroupCongruence);
+DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareGlobalFunction("CongruencePair");
