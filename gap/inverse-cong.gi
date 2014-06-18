@@ -1,3 +1,40 @@
+InstallGlobalFunction(InverseSemigroupCongruenceByCongruencePair,
+[IsInverseSemigroup and IsFinite, IsSemigroup, IsDenseList],
+function(s, kernel, traceBlocks)
+  local a, ids, aa_class, e;
+  if not IsSubsemigroup(s, kernel) then
+    Error("2nd arg <kernel> must be a subsemigroup of 1st arg <s>,"); return;
+  fi;
+#  if not ForAll(Flat(traceBlocks), IsIdempotent) then
+#    Error("3rd arg <traceBlocks> must be a list of lists of idempotents");
+#  fi;
+  # Check conditions for a congruence pair: Howie p.156
+  # Condition (C2): aa' related to a'a
+  for a in kernel do
+    if not a^-1 * a in First(traceBlocks, c-> a * a^-1 in c) then
+      Error("Not a valid congruence pair,"); return;
+    fi;
+  od;
+  # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
+  ids := Idempotents(s);
+  # Would rather do this without looping over the whole semigroup
+  for a in s do
+    if a in kernel then
+      continue;
+    fi;
+    # Find the trace class containing a^-1 a
+    aa_class := First(traceBlocks, c-> a^-1 * a in c);
+    for e in aa_class do
+      if a*e in kernel then
+        Error("Not a valid congruence pair,"); return;
+      fi;
+    od;
+  od;
+  return InverseSemigroupCongruenceByCongruencePairNC(s, kernel, traceBlocks);
+end);
+
+#
+
 InstallGlobalFunction(InverseSemigroupCongruenceByCongruencePairNC,
 [IsInverseSemigroup and IsFinite, IsSemigroup, IsDenseList],
 function(s, kernel, traceBlocks)
