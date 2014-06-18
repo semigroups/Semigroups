@@ -74,6 +74,41 @@ end);
 
 #
 
+InstallMethod(\=,
+"for two inverse semigroup congruences",
+[IsInverseSemigroupCongruence, IsInverseSemigroupCongruence],
+function(cong1, cong2)
+  return(Range(cong1) = Range(cong2) and
+         cong1!.kernel = cong2!.kernel and
+         cong1!.traceBlocks = cong2!.traceBlocks);
+end);
+
+#
+
+InstallMethod(ImagesElm,
+"for inverse semigroup congruence and associative element",
+[IsInverseSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  local s, images, e, b;
+  s := Range(cong);
+  if not elm in s then
+    Error("<cong> must be defined over the semigroup of the element <elm>,");
+    return;
+  fi;
+  images := [];
+  # Consider all idempotents trace-related to (a^-1 a)
+  for e in First(cong!.traceBlocks, c-> (elm^-1 * elm) in c) do
+    for b in LClass(s,e) do
+      if elm * b^-1 in cong!.kernel then
+        Add(images, b);
+      fi;
+    od;
+  od;
+  return images;
+end);
+
+#
+
 InstallMethod(\in,
 "for dense list and inverse semigroup congruence",
 [IsDenseList, IsInverseSemigroupCongruence],
