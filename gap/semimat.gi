@@ -290,11 +290,12 @@ function( m )
         n := DimensionsMat(m![5])[1];
         
         for i in [n,n-1..1] do
-            if IsZero(m![5]) then
+            if IsZero(m![5][i]) then
                 Remove(m![5], i);
             fi;
         od;
     fi;
+
     return m![5];
 end);
 
