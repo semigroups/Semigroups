@@ -169,3 +169,17 @@ function(cong)
   fi;
   return Union(List(Idempotents(s), e->EquivalenceClassOfElementNC(cong,e)));
 end);
+
+#
+
+InstallMethod(AsInverseSemigroupCongruenceByCongruencePair,
+"for semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  if not IsInverseSemigroup(Range(cong)) then
+    Error("<cong> must be over an inverse semigroup,");
+  fi;
+  return InverseSemigroupCongruenceByCongruencePairNC( Range(cong),
+                 KernelOfSemigroupCongruence(cong),
+                 TraceOfSemigroupCongruence(cong) );
+end);
