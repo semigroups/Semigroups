@@ -1,9 +1,28 @@
 InstallGlobalFunction(InverseSemigroupCongruenceByCongruencePair,
 [IsInverseSemigroup and IsFinite, IsSemigroup, IsDenseList],
 function(s, kernel, traceBlocks)
-  local traceClass, f, a, e;
+  local a, x, traceClass, f, e;
+  # Check that the kernel is a subsemigroup
   if not IsSubsemigroup(s, kernel) then
     Error("2nd arg <kernel> must be a subsemigroup of 1st arg <s>,"); return;
+  fi;
+  # CHECK KERNEL IS NORMAL:
+  # (1) Must contain all the idempotents of s
+  if NrIdempotents(kernel) <> NrIdempotents(s) then
+    Error("2nd arg <kernel> must contain all idempotents of 1st arg <s>,");
+    return;
+  fi;
+  # (2) Must be self-conjugate
+  for a in kernel do
+    for x in Generators(s) do
+      if not (x^-1 * a * x) in kernel then
+        Error("2nd arg <kernel> must be self-conjugate,"); return;
+      fi;
+    od;
+  od;
+  # (3) Must be inverse
+  if not IsInverseSemigroup(kernel) then
+    Error("2nd arg <kernel> must be an inverse semigroup,"); return;
   fi;
   # Check conditions for a congruence pair: Howie p.156
   for traceClass in traceBlocks do
@@ -162,12 +181,13 @@ InstallMethod(KernelOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local s;
+  local s, gens;
   s := Range(cong);
   if not IsInverseSemigroup(s) then
     Error("1st arg <cong> must be over an inverse semigroup,"); return;
   fi;
-  return Union(List(Idempotents(s), e->EquivalenceClassOfElementNC(cong,e)));
+  gens := Union(List(Idempotents(s), e->EquivalenceClassOfElementNC(cong,e)));
+  return Subsemigroup(s, gens);
 end);
 
 #
