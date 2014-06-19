@@ -8,4 +8,3 @@ DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePairNC");
 
 DeclareAttribute("TraceOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
-DeclareGlobalFunction("CongruencePair");

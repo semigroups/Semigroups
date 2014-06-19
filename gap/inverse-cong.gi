@@ -169,8 +169,3 @@ function(cong)
   fi;
   return Union(List(Idempotents(s), e->EquivalenceClassOfElementNC(cong,e)));
 end);
-
-InstallGlobalFunction(CongruencePair,
-function(cong)
-  return [Trace(cong)];
-end);
