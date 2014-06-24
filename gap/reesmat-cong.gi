@@ -208,8 +208,8 @@ function(s)
   Add(congs, UniversalSemigroupCongruence(s));
   
   # Compute all column and row relations which are subsets of the max relations
-  colBlocksList := subpartitions([1..Size(mat[1])]);
-  rowBlocksList := subpartitions([1..Size(mat)]);
+  colBlocksList := subpartitions( [ [1..Size(mat[1])] ] );
+  rowBlocksList := subpartitions( [ [1..Size(mat)] ] );
   
   # Go through all triples and check
   for n in NormalSubgroups(g) do
