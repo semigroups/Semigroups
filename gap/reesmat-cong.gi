@@ -1,6 +1,4 @@
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
-[IsReesMatrixSemigroup and IsFinite and IsSimpleSemigroup,
- IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local g, mat, block, i, j, u, v, bi, bj, bu, bv;
   mat := Matrix(s);
@@ -35,8 +33,6 @@ end);
 #
 
 InstallGlobalFunction(RZMSCongruenceByLinkedTriple,
-[IsReesZeroMatrixSemigroup and IsFinite and IsZeroSimpleSemigroup,
- IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local g, mat, block, i, j, u, v, bi, bj, bu, bv;
   mat := Matrix(s);
@@ -71,8 +67,6 @@ end);
 #
 
 InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
-[IsReesMatrixSemigroup and IsFinite,
- IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local fam, cong, colLookup, rowLookup, i, j;
   # Sort the blocks
@@ -108,8 +102,6 @@ end);
 #
 
 InstallGlobalFunction(RZMSCongruenceByLinkedTripleNC,
-[IsReesZeroMatrixSemigroup and IsFinite,
- IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local fam, cong, colLookup, rowLookup, i, j;
   # Sort the blocks
@@ -309,10 +301,15 @@ end);
 
 InstallMethod(IsLinkedTriple,
 "for Rees matrix semigroup, group, and two lists",
-[IsReesMatrixSemigroup and IsSimpleSemigroup and IsFinite,        
+[IsReesMatrixSemigroup,
  IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local mat, block, bi, bj, i, j, u, v, bu, bv;
+  # Check the semigroup is valid
+  if not (IsFinite(s) and IsSimpleSemigroup(s)) then
+    Error("usage: 1st arg <s> must be a finite simple Rees matrix semigroup");
+    return;
+  fi;
   mat := Matrix(s);
   # Check axiom (L2) from Howie p.86, then call NC function
   # Go through the column blocks
@@ -359,12 +356,12 @@ end);
 
 InstallMethod(IsLinkedTriple,
 "for Rees 0-matrix semigroup, group, and two lists",
-[IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite,
+[IsReesZeroMatrixSemigroup,
  IsGroup, IsDenseList, IsDenseList],
 function(s, n, colBlocks, rowBlocks)
   local mat, block, i, j, u, v, bi, bj, bu, bv;
   # Check the semigroup is valid
-  if not (IsFinite(s) and IsZeroSimpleSemigroup(s) and IsReesZeroMatrixSemigroup(s)) then
+  if not (IsFinite(s) and IsZeroSimpleSemigroup(s)) then
     Error("usage: 1st arg <s> must be a finite 0-simple Rees 0-matrix semigroup");
     return;
   fi;
