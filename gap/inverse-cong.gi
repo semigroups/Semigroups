@@ -1,7 +1,7 @@
 InstallGlobalFunction(InverseSemigroupCongruenceByCongruencePair,
-[IsInverseSemigroup and IsFinite, IsSemigroup, IsDenseList],
+[IsInverseSemigroup and IsFinite, IsInverseSemigroup, IsDenseList],
 function(s, kernel, traceBlocks)
-  local a, x, traceClass, f, e;
+  local a, x, traceClass, f, l, e;
   # Check that the kernel is a subsemigroup
   if not IsSubsemigroup(s, kernel) then
     Error("2nd arg <kernel> must be a subsemigroup of 1st arg <s>,"); return;
@@ -15,19 +15,16 @@ function(s, kernel, traceBlocks)
   # (2) Must be self-conjugate
   for a in kernel do
     for x in Generators(s) do
-      if not (x^-1 * a * x) in kernel then
+      if not a^x in kernel then
         Error("2nd arg <kernel> must be self-conjugate,"); return;
       fi;
     od;
   od;
-  # (3) Must be inverse
-  if not IsInverseSemigroup(kernel) then
-    Error("2nd arg <kernel> must be an inverse semigroup,"); return;
-  fi;
   # Check conditions for a congruence pair: Howie p.156
   for traceClass in traceBlocks do
     for f in traceClass do
-      for a in LClass(s,f) do
+      l := LClass(s,f);
+      for a in l do
         if a in kernel then
           # Condition (C2): aa' related to a'a
           if not a * a^-1 in traceClass then
