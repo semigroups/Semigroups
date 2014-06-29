@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
+
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
 IsTransformationSemigroup);
 DeclareAttribute("ComponentsOfTransformationSemigroup",

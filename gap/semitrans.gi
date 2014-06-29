@@ -8,6 +8,12 @@
 #############################################################################
 ##
 
+InstallMethod(AsTransformationSemigroup, "for a semigroup",
+[IsSemigroup], 
+function(S)
+  return Range(IsomorphismTransformationSemigroup(S));
+end);
+
 #
 
 InstallMethod(ViewString, 
