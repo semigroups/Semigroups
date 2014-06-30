@@ -10,3 +10,11 @@ DeclareAttribute("TraceOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("AsInverseSemigroupCongruenceByCongruencePair",
         IsSemigroupCongruence);
+
+# Congruence Classes
+DeclareCategory("IsInverseSemigroupCongruenceClass",
+        IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
+DeclareOperation("InverseSemigroupCongruenceClass",
+        [IsInverseSemigroupCongruence, IsAssociativeElement] );
+DeclareOperation("InverseSemigroupCongruenceClassNC",
+        [IsInverseSemigroupCongruence, IsAssociativeElement] );

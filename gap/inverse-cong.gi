@@ -145,6 +145,63 @@ end);
 
 #
 
+InstallMethod(EquivalenceClassOfElementNC,
+"for inverse semigroup congruence and associative element",
+[IsInverseSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  local fam, class;
+  fam := FamilyObj(Range(cong));
+  class := Objectify(NewType(fam, IsInverseSemigroupCongruenceClass),
+                   rec(rep := elm) );
+  SetParentAttr(class, cong);
+  SetRepresentative(class, elm);
+  return class;
+end);
+
+#
+
+InstallMethod(\=,
+"for two inverse semigroup congruence classes",
+[IsInverseSemigroupCongruenceClass, IsInverseSemigroupCongruenceClass],
+function(c1, c2)
+  return( ParentAttr(c1) = ParentAttr(c2) and
+          [c1!.rep, c2!.rep] in ParentAttr(c1) );
+end);
+
+#
+
+InstallMethod( \in,
+"for associative element and inverse semigroup congruence class",
+[IsAssociativeElement, IsInverseSemigroupCongruenceClass],
+function(elm, class)
+  local cong;
+  cong := ParentAttr(class);
+  return( elm in Range(cong) and [elm, class!.rep] in cong );
+end);
+
+#
+
+InstallMethod( \*,
+"for two inverse semigroup congruence classes",
+[IsInverseSemigroupCongruenceClass, IsInverseSemigroupCongruenceClass],
+function(c1, c2)
+  if not Parent(c1) = Parent(c2) then
+    Error("<c1> and <c2> must be classes of the same congruence,"); return;
+  fi;
+  return( EquivalenceClassOfElementNC(Parent(c1), c1!.rep * c2!.rep) );
+end);
+
+#
+
+#InstallMethod(Elements,
+#"for inverse semigroup congruence class",
+#[IsInverseSemigroupCongruenceClass],
+#function(class)
+#  return ImagesElm(ParentAttr(class), class!.rep);
+#end);
+
+#
+
 InstallMethod(TraceOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
@@ -184,7 +241,7 @@ function(cong)
     Error("1st arg <cong> must be over an inverse semigroup,"); return;
   fi;
   gens := Union(List(Idempotents(s), e->EquivalenceClassOfElementNC(cong,e)));
-  return Subsemigroup(s, gens);
+  return InverseSemigroup(gens, rec(small := true) );
 end);
 
 #
