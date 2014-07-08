@@ -504,7 +504,7 @@ function(n)
   local gens;
 
   if n=1 then 
-    return Semigroup(BipartitionNC([[1,-1]]));
+    return Monoid(BipartitionNC([[1],[-1]]));
   fi;
 
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
