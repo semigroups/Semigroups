@@ -193,12 +193,12 @@ end);
 
 #
 
-#InstallMethod(Elements,
-#"for inverse semigroup congruence class",
-#[IsInverseSemigroupCongruenceClass],
-#function(class)
-#  return ImagesElm(ParentAttr(class), class!.rep);
-#end);
+InstallMethod(AsSSortedList,
+"for inverse semigroup congruence class",
+[IsInverseSemigroupCongruenceClass],
+function(class)
+  return SSortedList(ImagesElm(ParentAttr(class), class!.rep));
+end);
 
 #
 
