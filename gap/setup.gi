@@ -639,11 +639,23 @@ InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
   function(x, hashlen)
-  return rec( func := ORB_HashFunctionReesZeroMatrixSemigroupElements, 
+  return rec( func := SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements, 
               data := hashlen );
 end);
 
-InstallGlobalFunction(ORB_HashFunctionReesZeroMatrixSemigroupElements, 
+InstallMethod(ChooseHashFunction, "for a bipartition",
+[IsBipartition, IsInt],
+  function(x, hashlen)
+  return rec( func := SEMIGROUPS_HashFunctionBipartition, 
+              data := hashlen );
+end);
+
+InstallGlobalFunction(SEMIGROUPS_HashFunctionBipartition, 
+function(x, data)
+ return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
+end);
+
+InstallGlobalFunction(SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements, 
 function(x, data)
   local p, l;
   
