@@ -21,11 +21,6 @@ CongByGenPairs:=function(S, pairs)
     ii:=find(pair[1]);
     jj:=find(pair[2]);
 
-#    if ii<jj then 
-#      cong[pair[2]]:=ii;
-#    elif jj<ii then 
-#      cong[pair[1]]:=jj;
-#    fi;
     if ii<jj then 
       cong[jj]:=ii;
     elif jj<ii then 
@@ -85,8 +80,6 @@ CongByGenPairs:=function(S, pairs)
     od;
     return cong;
   end;
-#  return rec(l:=List(cong, find),
-#             lookup:=normalise(cong),
-#             ht:=ht);
+  
   return normalise(cong);
 end;
