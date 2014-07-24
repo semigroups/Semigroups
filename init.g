@@ -55,7 +55,7 @@ ReadPackage("semigroups/gap/normalizer.gd");
 
 DeclareInfoClass("InfoSemigroups");;
 
+ReadPackage("semigroups/gap/semicong.gd");
 ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univcong.gd");
-
 ReadPackage("semigroups/gap/inverse-cong.gd");

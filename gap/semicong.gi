@@ -1,16 +1,21 @@
-CongByGenPairs:=function(S, pairs)
-  local elts, right, left, cong, find, union, o, ht, treehashsize, x, i, nr, 
-        genstoapply, j, y, normalise;
+InstallMethod(AsLookupTable,
+"for semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  local pairs, s, elts, right, left, table, find, union, o, ht, treehashsize, x, 
+        i, nr, genstoapply, j, y, normalise;
   
-  elts:=Elements(S);
-  right:=RightCayleyGraphSemigroup(S);
-  left:=LeftCayleyGraphSemigroup(S);
+  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  s := Range(cong);
+  elts:=Elements(s);
+  right:=RightCayleyGraphSemigroup(s);
+  left:=LeftCayleyGraphSemigroup(s);
   
-  cong:=[1..Size(S)];
+  table:=[1..Size(s)];
 
   find:=function(i)
-    while cong[i]<>i do 
-      i:=cong[i];
+    while table[i]<>i do 
+      i:=table[i];
     od;
     return i;
   end;
@@ -22,9 +27,9 @@ CongByGenPairs:=function(S, pairs)
     jj:=find(pair[2]);
 
     if ii<jj then 
-      cong[jj]:=ii;
+      table[jj]:=ii;
     elif jj<ii then 
-      cong[ii]:=jj;
+      table[ii]:=jj;
     fi;
 
   end;
@@ -39,7 +44,7 @@ CongByGenPairs:=function(S, pairs)
   od;
 
   i:=0; nr:=Length(o);
-  genstoapply:=[1..Length(GeneratorsOfSemigroup(S))]; # take care if S is a
+  genstoapply:=[1..Length(GeneratorsOfSemigroup(s))]; # take care if s is a
                                                       # monoid!!
   while i<nr do 
     i:=i+1;
@@ -65,21 +70,21 @@ CongByGenPairs:=function(S, pairs)
     od;
   od;
 
-  normalise := function(cong)
+  normalise := function(table)
     local ht, next, i, ii;
     ht := HTCreate(1);
     next := 1;
-    for i in [1..Size(cong)] do
+    for i in [1..Size(table)] do
       ii := find(i);
-      cong[i] := HTValue(ht, ii);
-      if cong[i] = fail then
-        cong[i] := next;
+      table[i] := HTValue(ht, ii);
+      if table[i] = fail then
+        table[i] := next;
         HTAdd(ht, ii, next);
         next := next + 1;
       fi;
     od;
-    return cong;
+    return table;
   end;
   
-  return normalise(cong);
-end;
+  return normalise(table);
+end);
