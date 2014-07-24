@@ -8,6 +8,111 @@
 #############################################################################
 ##
 
+# same method for ideals
+
+InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(S) 
+  return IsSynchronizingSemigroup(S, DegreeOfTransformationSemigroup(S));
+end);
+
+# same method for ideals
+
+InstallMethod(IsSynchronizingSemigroup,
+"for a transformation semigroup and positive integer", 
+[IsTransformationSemigroup, IsPosInt],
+function(S, n)
+  local gens;
+ 
+  if HasGeneratorsOfSemigroup(S) then 
+    gens:=GeneratorsOfSemigroup(S);
+  else
+    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  fi;
+
+  return IsSynchronizingTransformationCollection(gens, n);
+end);
+
+# this method comes from PJC's slides from the Lisbon Workshop in July 2014
+# not applicable to ideals
+
+InstallMethod(IsSynchronizingTransformationCollection, 
+"for a transformation collection and positive integer", 
+[IsTransformationCollection, IsPosInt],
+function(gens, n)
+  local NumberPair, PairNumber, genstoapply, act, graph, constants, x, adj, y, num, marked, squashed, i, j;
+  
+  NumberPair:=function(x)
+    if x[2]>x[1] then 
+      return n*(x[1]-1)+x[2]-x[1];
+    else 
+      return (n-1)*(x[1]-1)+x[2];
+    fi;
+  end;
+
+  PairNumber:=function(x)
+    local q, r;
+    q:=QuoInt(x-1, n-1);
+    r:=(x-1)-q*(n-1);
+    if q>r then
+      return [q+1, r+1];
+    else
+      return [q+1, r+2];
+    fi;
+  end;
+
+  genstoapply:=[1..Length(gens)];
+  
+  act:=function(set, f) 
+    return OnPosIntSetsTrans(set, f, n);
+  end;
+
+  graph:=List([1..n^2], x->[]); 
+  constants:=false;
+  
+  # add edges for pairs
+  for i in [1..n^2-n] do 
+    x:=PairNumber(i);
+    adj:=[];
+    for j in genstoapply do
+      y:=act(x, gens[j]);
+      if Length(y)=2 then 
+        num:=NumberPair(act(x, gens[j]));
+        AddSet(graph[num], i);
+        AddSet(adj, num);
+      else
+        AddSet(graph[n^2-n+y[1]], i);
+        AddSet(adj, n^2-n+y[1]);
+        constants:=true;
+      fi;
+      
+    od;
+    if Length(adj)=1 and adj[1]=i then 
+      # can't get anywhere by applying things to this pair
+      return false;
+    fi;
+  od;
+   
+  if not constants then 
+    return false;
+  fi;
+
+  marked:=BlistList([1..n^2], [n^2-n+1..n^2]);
+  squashed:=[n^2-n+1..n^2];
+  for i in squashed do 
+    for j in graph[i] do 
+      if not marked[j] then 
+        marked[j]:=true;
+        squashed[Length(squashed)+1]:=j;
+      fi;
+    od;
+  od;
+  
+  return Length(squashed)=n^2;
+end);
+
+#
+
 InstallMethod(AsTransformationSemigroup, "for a semigroup",
 [IsSemigroup], 
 function(S)
