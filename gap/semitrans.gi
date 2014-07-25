@@ -90,8 +90,8 @@ fi;
 # IS_STRONGLY_CONNECTED_DIGRAPH with the generators themselves.
 
 InstallMethod(IsTransitive, 
-"for a transformation semigroup with generators and a positive int",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt], 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(S)
   return IsTransitive(S, DegreeOfTransformationSemigroup(S));
 end);
