@@ -17,7 +17,7 @@ function(pair, cong)
   p2 := Position(enum, pair[2]);
 
   # Use lookup table if available
-  if "AsLookupTable" in KnownAttributesOfObject(cong) then
+  if HasAsLookupTable(cong) then
     table := AsLookupTable(cong);
     return table[p1] = table[p2];
   else
