@@ -49,7 +49,7 @@ InstallMethod(Enumerate,
 [IsSemigroupCongruence, IsFunction],
 function(cong, lookfunc)
   local s, enum, pairs, right, left, table, find, union, o, ht, treehashsize, x, 
-        i, nr, genstoapply, j, y, normalise;
+        i, nr, genstoapply, j, y, normalise, result;
   
   s := Range(cong);
   enum := Enumerator(s);
@@ -103,8 +103,9 @@ function(cong, lookfunc)
     x:=o[i];
     for j in genstoapply do 
       y := [right[x[1]][j], right[x[2]][j]];
-      if HTValue(ht, y) = fail and
-         HTValue(ht, [y[2], y[1]]) = fail then 
+      if y[1] <> y[2] and                       # Ignore a=b (reflexive)
+         HTValue(ht, y) = fail and              # Check for (a,b)
+         HTValue(ht, [y[2], y[1]]) = fail then  # Check for (b,a) (symmetric)
         HTAdd(ht, y, true);
         nr:=nr+1;
         o[nr]:=y;
@@ -115,7 +116,8 @@ function(cong, lookfunc)
       fi;
       
       y := [left[x[1]][j], left[x[2]][j]];
-      if HTValue(ht, y) = fail and
+      if y[1] <> y[2] and
+         HTValue(ht, y) = fail and
          HTValue(ht, [y[2], y[1]]) = fail then 
         HTAdd(ht, y, true);
         nr:=nr+1;
@@ -142,7 +144,8 @@ function(cong, lookfunc)
     od;
     return cong;
   end;
-
+  
+  result := lookfunc(table);
   SetAsLookupTable(cong, normalise(table));
-  return lookfunc(table);
+  return result;
 end);
