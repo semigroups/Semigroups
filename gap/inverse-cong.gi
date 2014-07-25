@@ -14,7 +14,7 @@ function(s, kernel, traceBlocks)
   fi;
   # (2) Must be self-conjugate
   for a in kernel do
-    for x in Generators(s) do
+    for x in GeneratorsOfSemigroup(s) do
       if not a^x in kernel then
         Error("2nd arg <kernel> must be self-conjugate,"); return;
       fi;
