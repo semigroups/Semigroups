@@ -49,7 +49,7 @@ InstallMethod(Enumerate,
 [IsSemigroupCongruence, IsFunction],
 function(cong, lookfunc)
   local s, enum, pairs, right, left, table, find, union, o, ht, treehashsize, x, 
-        i, nr, genstoapply, j, y;
+        i, nr, genstoapply, j, y, normalise;
   
   s := Range(cong);
   enum := Enumerator(s);
@@ -127,6 +127,22 @@ function(cong, lookfunc)
     od;
   od;
   
-  SetAsLookupTable(cong, table);
+  normalise := function(cong)
+    local ht, next, i, ii;
+    ht := HTCreate(1);
+    next := 1;
+    for i in [1..Size(cong)] do
+      ii := find(i);
+      cong[i] := HTValue(ht, ii);
+      if cong[i] = fail then
+        cong[i] := next;
+        HTAdd(ht, ii, next);
+        next := next + 1;
+      fi;
+    od;
+    return cong;
+  end;
+
+  SetAsLookupTable(cong, normalise(table));
   return lookfunc(table);
 end);
