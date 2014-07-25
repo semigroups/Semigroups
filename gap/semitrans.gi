@@ -8,6 +8,114 @@
 #############################################################################
 ##
 
+
+if not IsBound(IS_STRONGLY_CONNECTED_DIGRAPH) then 
+  # non-recursive version below...
+  BindGlobal("IS_STRONGLY_CONNECTED_DIGRAPH", 
+  function(digraph)   
+    local n, stack1, len1, stack2, len2, id, count, fptr, level, l, w, v;
+    
+    n:=Length(digraph);
+    
+    if n=0 then 
+      return true;
+    fi;
+
+    stack1:=EmptyPlist(n); len1:=0;
+    stack2:=EmptyPlist(n); len2:=0;
+    id:=[1..n]*0;
+    count:=Length(digraph);
+    fptr:=[];
+
+    for v in [1..Length(digraph)] do
+      if id[v]=0 then 
+        level:=1;
+        fptr[1] := v; #fptr[0], vertex
+        fptr[2] := 1; #fptr[2], index
+        len1:=len1+1;
+        stack1[len1]:=v;   
+        len2:=len2+1;
+        stack2[len2]:=len1; 
+        id[v]:=len1;
+
+        while level>0 do
+          if fptr[2*level] > Length(digraph[fptr[2*level-1]]) then 
+            if stack2[len2]=id[fptr[2*level-1]] then
+              if count=Length(digraph)+1 then 
+                return false;
+              fi;
+              len2:=len2-1;
+              count:=count+1;
+              l:=0;
+              repeat
+                w:=stack1[len1];
+                id[w]:=count;
+                len1:=len1-1; #pop from stack1
+                l:=l+1;
+              until w=fptr[2*level-1];
+            fi;
+            level:=level-1;
+          else
+            w:=digraph[fptr[2*level-1]][fptr[2*level]];
+            fptr[2*level]:=fptr[2*level]+1;
+
+            if id[w]=0 then 
+              level:=level+1;
+              fptr[2*level-1]:=w; #fptr[0], vertex
+              fptr[2*level]:=1;   #fptr[2], index
+              len1:=len1+1;
+              stack1[len1]:=w;   
+              len2:=len2+1;
+              stack2[len2]:=len1; 
+              id[w]:=len1;
+
+            else # we saw <w> earlier in this run
+              while stack2[len2] > id[w] do
+                len2:=len2-1; # pop from stack2
+              od;
+            fi;
+          fi;
+        od;
+      fi;
+    od;
+
+    return true;
+  end);
+fi;
+
+# different method required (but not yet given!!) for ideals
+
+# JDM this could be done without creating the graph first and then running
+# IS_STRONGLY_CONNECTED_DIGRAPH, but just using the method of
+# IS_STRONGLY_CONNECTED_DIGRAPH with the generators themselves.
+
+InstallMethod(IsTransitive, 
+"for a transformation semigroup with generators and a positive int",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt], 
+function(S)
+  return IsTransitive(S, DegreeOfTransformationSemigroup(S));
+end);
+
+InstallMethod(IsTransitive, 
+"for a transformation semigroup with generators and a positive int",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt], 
+function(S, n)
+  local gens, nrgens, graph, i, x;
+
+  gens:=GeneratorsOfSemigroup(S);
+  nrgens:=Length(gens);
+  graph:=EmptyPlist(n);
+
+  for i in [1..n] do 
+    graph[i]:=EmptyPlist(nrgens);;
+    for x in gens do 
+      Add(graph[i], i^x);
+    od;
+  od;
+
+  return IS_STRONGLY_CONNECTED_DIGRAPH(graph);
+end);
+
 # same method for ideals
 
 InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup", 

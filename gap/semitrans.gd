@@ -22,3 +22,6 @@ DeclareOperation("IsSynchronizingSemigroup",
 [IsTransformationSemigroup, IsPosInt]);
 DeclareOperation("IsSynchronizingTransformationCollection",
 [IsTransformationCollection, IsPosInt]);
+
+DeclareProperty("IsTransitive", IsTransformationSemigroup);
+DeclareOperation("IsTransitive", [IsTransformationSemigroup, IsPosInt]);
