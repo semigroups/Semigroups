@@ -8,6 +8,16 @@
 ############################################################################# 
 ##
 
+InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return Range(IsomorphismBlockBijectionSemigroup(S));
+end);
+
+InstallMethod(AsBipartitionSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return Range(IsomorphismBipartitionSemigroup(S));
+end);
+
 #
 
 InstallMethod(ViewString, 
