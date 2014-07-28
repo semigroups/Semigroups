@@ -85,10 +85,6 @@ fi;
 
 # different method required (but not yet given!!) for ideals
 
-# JDM this could be done without creating the graph first and then running
-# IS_STRONGLY_CONNECTED_DIGRAPH, but just using the method of
-# IS_STRONGLY_CONNECTED_DIGRAPH with the generators themselves.
-
 InstallMethod(IsTransitive, 
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
@@ -104,6 +100,17 @@ function(S, n)
 end);
 
 InstallMethod(IsTransitive, 
+"for a transformation semigroup with generators and a set of pos ints",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsList], 
+function(S, set)
+  return IsTransitive(GeneratorsOfSemigroup(S), set);
+end);
+
+# JDM this could be done without creating the graph first and then running
+# IS_STRONGLY_CONNECTED_DIGRAPH, but just using the method of
+# IS_STRONGLY_CONNECTED_DIGRAPH with the generators themselves.
+
+InstallMethod(IsTransitive, 
 "for a transformation collection and a positive int",
 [IsTransformationCollection, IsPosInt], 
 function(coll, n)
@@ -116,6 +123,41 @@ function(coll, n)
     graph[i]:=EmptyPlist(nrgens);;
     for x in coll do 
       Add(graph[i], i^x);
+    od;
+  od;
+
+  return IS_STRONGLY_CONNECTED_DIGRAPH(graph);
+end);
+
+InstallMethod(IsTransitive, 
+"for a transformation collection and set of positive integers",
+[IsTransformationCollection, IsList], 
+function(coll, set)
+  local n, nrgens, graph, lookup, j, i, x;
+  
+  if not (IsSSortedList(set) and IsHomogeneousList(set) and IsPosInt(set[1]))
+   then 
+    Error("usage: the second argument <set> must be a set of positive",
+    " integers");
+    return;
+  fi;
+
+  n:=Length(set);
+  nrgens:=Length(coll);
+  graph:=EmptyPlist(n);
+  lookup:=[];
+
+  for i in [1..n] do 
+    lookup[set[i]]:=i;
+  od;
+
+  for i in [1..n] do 
+    graph[i]:=EmptyPlist(nrgens);;
+    for x in coll do 
+      j:=set[i]^x;
+      if IsBound(lookup[j]) then # <j> is in <set>!
+        Add(graph[i], lookup[set[i]^x]);
+      fi;
     od;
   od;
 
