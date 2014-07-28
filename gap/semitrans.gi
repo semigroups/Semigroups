@@ -100,15 +100,21 @@ InstallMethod(IsTransitive,
 "for a transformation semigroup with generators and a positive int",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt], 
 function(S, n)
+  return IsTransitive(GeneratorsOfSemigroup(S), n);
+end);
+
+InstallMethod(IsTransitive, 
+"for a transformation collection and a positive int",
+[IsTransformationCollection, IsPosInt], 
+function(coll, n)
   local gens, nrgens, graph, i, x;
 
-  gens:=GeneratorsOfSemigroup(S);
-  nrgens:=Length(gens);
+  nrgens:=Length(coll);
   graph:=EmptyPlist(n);
 
   for i in [1..n] do 
     graph[i]:=EmptyPlist(nrgens);;
-    for x in gens do 
+    for x in coll do 
       Add(graph[i], i^x);
     od;
   od;
