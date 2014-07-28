@@ -79,6 +79,7 @@
     <#Include Label="ComponentRepsOfTransformationSemigroup">
     <#Include Label="ComponentsOfTransformationSemigroup">
     <#Include Label="CyclesOfTransformationSemigroup">
+    <#Include Label="IsTransitive">
     <#Include Label="ComponentRepsOfPartialPermSemigroup">
     <#Include Label="ComponentsOfPartialPermSemigroup">
     <#Include Label="CyclesOfPartialPermSemigroup">
