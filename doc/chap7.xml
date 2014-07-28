@@ -98,6 +98,8 @@
     <#Include Label="CanonicalRepresentative">
     <#Include Label="AsSemigroupCongruenceByGeneratingPairs">
     <#Include Label="AsRZMSCongruenceByLinkedTriple">
+    <#Include Label="MeetSemigroupCongruences">
+    <#Include Label="JoinSemigroupCongruences">
   </Section>
 
   <Section>
