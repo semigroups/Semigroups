@@ -1,3 +1,26 @@
+InstallGlobalFunction(SetupCongData,
+function(cong)
+  local s, enum, pairs, ht, treehashsize, pair, lookup, pairstoapply;
+  
+  s := Range(cong);
+  enum := Enumerator(s);
+  pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
+                 x-> [Position(enum, x[1]), Position(enum, x[2])] );
+  ht:=HTCreate( o[1], rec(forflatplainlists:=true,
+              treehashsize:=100003) );
+  for pair in pairs do
+    HTAdd(ht, pair, true);
+  od;
+
+  cong!.data := rec( cong := cong,
+                     lookup := [1..Size(s)],
+                     pairstoapply := pairs,
+                     ht := ht );
+  return;
+end);
+
+#
+
 InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence],
@@ -51,15 +74,20 @@ function(cong, lookfunc)
   local s, enum, pairs, right, left, table, find, union, o, ht, treehashsize, x, 
         i, nr, genstoapply, j, y, normalise, result;
   
+  if not IsBound(cong!.data) then
+    SetupCongData(cong);
+  fi;
+  
   s := Range(cong);
   enum := Enumerator(s);
+  data := cong!.data;
   
-  # Begin calculating the lookup table
-  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  table := data.lookup;
+  pairstoapply := data.pairstoapply;
+  ht := data.ht;
+  
   right:=RightCayleyGraphSemigroup(s);
   left:=LeftCayleyGraphSemigroup(s);
-  
-  table:=[1..Size(s)];
   
   find:=function(i)
     while table[i]<>i do 
@@ -79,28 +107,20 @@ function(cong, lookfunc)
     elif jj<ii then 
       table[ii]:=jj;
     fi;
-    
-    # Have we found what we were looking for?
-    return lookfunc(table);
   end;
   
-  o:=List(pairs, x-> [Position(enum, x[1]), Position(enum, x[2])]);
-  
-  ht:=HTCreate(o[1], rec(forflatplainlists:=true,
-              treehashsize:=100003));
-  for x in o do 
-    HTAdd(ht, x, true);
-    if union(x) then
+  genstoapply:=[1..Size(right[1])];
+  i := 0; nr := Size(pairstoapply);
+  while i<nr do
+    # Have we found what we were looking for?
+    if lookfunc(table) then
+      # Save our place
+      data.pairstoapply := pairstoapply{[i+1..nr]};
       return true;
     fi;
-  od;
-  
-  i:=0; nr:=Length(o);
-  genstoapply:=[1..Length(GeneratorsOfSemigroup(s))]; # take care if s is a
-                                                      # monoid!!
-  while i<nr do 
+    
     i:=i+1;
-    x:=o[i];
+    x:=pairstoapply[i];
     for j in genstoapply do 
       y := [right[x[1]][j], right[x[2]][j]];
       if y[1] <> y[2] and                       # Ignore a=b (reflexive)
@@ -108,11 +128,8 @@ function(cong, lookfunc)
          HTValue(ht, [y[2], y[1]]) = fail then  # Check for (b,a) (symmetric)
         HTAdd(ht, y, true);
         nr:=nr+1;
-        o[nr]:=y;
-        # Use the return value of union
-        if union(o[nr]) then
-          return true;
-        fi;
+        pairstoapply[nr]:=y;
+        union(y);
       fi;
       
       y := [left[x[1]][j], left[x[2]][j]];
@@ -121,10 +138,8 @@ function(cong, lookfunc)
          HTValue(ht, [y[2], y[1]]) = fail then 
         HTAdd(ht, y, true);
         nr:=nr+1;
-        o[nr]:=y;
-        if union(o[nr]) then
-          return true;
-        fi;
+        pairstoapply[nr]:=y;
+        union(y);
       fi;
     od;
   od;
@@ -147,5 +162,6 @@ function(cong, lookfunc)
   
   result := lookfunc(table);
   SetAsLookupTable(cong, normalise(table));
+  Unbind(cong!.data);
   return result;
 end);
