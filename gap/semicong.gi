@@ -6,7 +6,7 @@ function(cong)
   enum := Enumerator(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
                  x-> [Position(enum, x[1]), Position(enum, x[2])] );
-  ht:=HTCreate( o[1], rec(forflatplainlists:=true,
+  ht:=HTCreate( pairs[1], rec(forflatplainlists:=true,
               treehashsize:=100003) );
   for pair in pairs do
     HTAdd(ht, pair, true);
@@ -71,8 +71,8 @@ InstallMethod(Enumerate,
 "for a semigroup congruence and a function",
 [IsSemigroupCongruence, IsFunction],
 function(cong, lookfunc)
-  local s, enum, pairs, right, left, table, find, union, o, ht, treehashsize, x, 
-        i, nr, genstoapply, j, y, normalise, result;
+  local s, enum, data, table, pairstoapply, ht, right, left, find, union, 
+        genstoapply, i, nr, x, j, y, normalise, result;
   
   if not IsBound(cong!.data) then
     SetupCongData(cong);
