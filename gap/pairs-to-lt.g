@@ -1,4 +1,7 @@
-AsRZMSCongruenceByLinkedTriple := function(cong)
+AsCongByLinkedTriple := function(cong)
+  local pairs, s, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i, 
+        j, normalise;
+  
   # Extract some information
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   s := Range(cong);
@@ -31,11 +34,18 @@ AsRZMSCongruenceByLinkedTriple := function(cong)
   end;
   
   for pair in pairs do
-    # Does this relate any elements to zero?
-    if ForAny( [1..Size(mat)],
+    # If this pair adds no information, ignore it
+    if pair[1] = pair[2] then
+      continue;
+    fi;
+    
+    # Does this relate any non-zero elements to zero?
+    if pair[1] = MultiplicativeZero(s)
+       or pair[2] = MultiplicativeZero(s)
+       or ForAny( [1..Size(mat)],
                u -> (mat[u][pair[1][1]] = 0) 
-               <>   (mat[u][pair[2][1]] = 0) ) or
-       ForAny( [1..Size(mat[1])],
+               <>   (mat[u][pair[2][1]] = 0) )
+       or ForAny( [1..Size(mat[1])],
                i -> (mat[pair[1][3]][i] = 0)
                <>   (mat[pair[2][3]][i] = 0) ) then
       return UniversalSemigroupCongruence(s);
@@ -51,7 +61,7 @@ AsRZMSCongruenceByLinkedTriple := function(cong)
 #    col1 := Position([1..Size(mat[1])], k-> mat[pair[1][3]][k]<>0);
     
     # Ensure linkedness
-    u := Position([1..Size(mat)], u-> mat[u][pair[1][1]]<>0);
+    u := PositionProperty([1..Size(mat)], u-> mat[u][pair[1][1]]<>0);
     if mat[u][pair[1][1]] = 0 then continue; fi;
     for v in [u+1..Size(mat)] do
       if mat[v][pair[1][1]] = 0 then
@@ -63,7 +73,7 @@ AsRZMSCongruenceByLinkedTriple := function(cong)
                    * mat[v][pair[2][1]]
                    * mat[u][pair[2][1]] ^-1 );
     od;
-    i := Position([1..Size(mat[1])], k-> mat[pair[1][3]][k]<>0);
+    i := PositionProperty([1..Size(mat[1])], k-> mat[pair[1][3]][k]<>0);
     if mat[pair[1][3]][i] = 0 then continue; fi;
     for j in [i+1..Size(mat[1])] do
       if mat[pair[1][3]][j] = 0 then continue; fi;
@@ -81,7 +91,7 @@ AsRZMSCongruenceByLinkedTriple := function(cong)
     ht := HTCreate(1);
     next := 1;
     for i in [1..Size(table)] do
-      ii := find(i);
+      ii := find(table, i);
       table[i] := HTValue(ht, ii);
       if table[i] = fail then
         table[i] := next;
@@ -94,7 +104,7 @@ AsRZMSCongruenceByLinkedTriple := function(cong)
   normalise(rowLookup);
   
   # Make n normal
-  n := NormalClosure(n);
+  n := NormalClosure(g,n);
   
-  return SemigroupCongruenceByLinkedTriple(s, n, colLookup, rowLookup);
+  return RZMSCongruenceByLinkedTriple(s, n, colLookup, rowLookup);
 end;
