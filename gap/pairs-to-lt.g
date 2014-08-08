@@ -1,6 +1,6 @@
 AsCongByLinkedTriple := function(cong)
   local pairs, s, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i, 
-        j, normalise;
+        j, normalise, colBlocks, rowBlocks;
   
   # Extract some information
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
@@ -103,8 +103,18 @@ AsCongByLinkedTriple := function(cong)
   normalise(colLookup);
   normalise(rowLookup);
   
+  # Make blocks
+  colBlocks := List([1..Maximum(colLookup)], x->[]);
+  rowBlocks := List([1..Maximum(rowLookup)], x->[]);
+  for i in [1..Size(colLookup)] do
+    Add(colBlocks[colLookup[i]], i);
+  od;
+  for u in [1..Size(rowLookup)] do
+    Add(rowBlocks[rowLookup[u]], u);
+  od;
+  
   # Make n normal
   n := NormalClosure(g,n);
   
-  return RZMSCongruenceByLinkedTriple(s, n, colLookup, rowLookup);
+  return RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
 end;
