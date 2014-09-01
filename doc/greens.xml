@@ -1005,7 +1005,7 @@ gap> NrDClasses(S);
  </Returns>
   <Description>
     Returns a list <C>list</C> where <C>list[i]</C> contains every <C>j</C> such
-    that if <C>GreensDClasses(S)[j]</C> is immediately less than
+    that <C>GreensDClasses(S)[j]</C> is immediately less than
     <C>GreensDClasses(S)[i]</C> in the partial order of &D;- classes of
     <A>S</A>. There might be other indices in <C>list</C>, and it may or may not
     include <C>i</C>.  The reflexive transitive closure of the relation defined
