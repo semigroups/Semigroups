@@ -701,6 +701,23 @@ gap> Size(T);
 gap> IsMonoid(T);
 true
 
+# Issue 82 (couldn't take quotients by ideals!)
+gap> S:=Monoid( [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ), 
+>  Transformation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ), 
+>  Transformation( [ 1, 4, 4, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ), 
+>  Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 2, 2, 1, 2 ] ), 
+>  Transformation( [ 2, 2, 1, 3 ] ), Transformation( [ 1, 2, 2, 3 ] ), 
+>  Transformation( [ 2, 4, 3, 2 ] ), Transformation( [ 2, 3, 3, 3 ] ) ] );;
+gap> I:=SemigroupIdeal(S, S.3);;
+gap> S/I;
+<quotient of Monoid( [ Transformation( [ 3, 3, 3, 3 ] ), 
+  Transformation( [ 2, 4, 2, 4 ] ), Transformation( [ 2, 3, 2, 3 ] ), 
+  Transformation( [ 4, 1, 4, 3 ] ), Transformation( [ 1, 4, 4, 1 ] ), 
+  Transformation( [ 2, 2, 3, 1 ] ), Transformation( [ 2, 4, 3, 4 ] ), 
+  Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 2, 2, 1, 3 ] ), 
+  Transformation( [ 1, 2, 2, 3 ] ), Transformation( [ 2, 4, 3, 2 ] ), 
+  Transformation( [ 2, 3, 3, 3 ] ) ] ) by SemigroupCongruence( ... )>
+
 # Issue 89 
 gap> S:=Semigroup( [ Transformation( [ 2, 1, 3, 1, 4, 3 ] ), 
 >  Transformation( [ 2, 2, 2, 2, 1, 2 ] ), Transformation( [ 5, 3, 4, 3, 5 ] ),

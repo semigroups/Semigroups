@@ -55,7 +55,9 @@ ReadPackage("semigroups/gap/reesmat-iso.gd");
 ReadPackage("semigroups/gap/maximal.gd");
 ReadPackage("semigroups/gap/normalizer.gd");
 
-DeclareInfoClass("InfoSemigroups");;
+ReadPackage("semigroups/gap/quotients.gd");
 
 ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univcong.gd");
+
+DeclareInfoClass("InfoSemigroups");;
