@@ -1004,21 +1004,20 @@ gap> NrDClasses(S);
   <Returns>The partial order of the &D;-classes of <A>S</A>.
  </Returns>
   <Description>
-  Returns a list <C>l</C> where <C>j</C> is in <C>l[i]</C> if and only if 
-  <C>GreensDClasses(S)[j]</C> is immediately less than 
-  <C>GreensDClasses(S)[i]</C> in the partial order of &D;-
-  classes of <A>S</A>.
-  The transitive closure of the relation <M>\{(j,i): j\in
-    l[i]\}</M> is the partial order of &D;-classes of <A>S</A>. <P/>
+    Returns a list <C>list</C> where <C>list[i]</C> contains every <C>j</C> such
+    that if <C>GreensDClasses(S)[j]</C> is immediately less than
+    <C>GreensDClasses(S)[i]</C> in the partial order of &D;- classes of
+    <A>S</A>. There might be other indices in <C>list</C>, and it may or may not
+    include <C>i</C>.  The reflexive transitive closure of the relation defined
+    by <C>list</C> is the partial order of &D;-classes of <A>S</A>. <P/>
 
-  The partial order on the &D;-classes is defined by 
-  <M>x\leq y</M> if and only if <M>S^1xS^1</M> is a subset of  
-  <M>S^1yS^1</M>. <P/>
+    The partial order on the &D;-classes is defined by <M>x\leq y</M> if and only
+    if <M>S^1xS^1</M> is a subset of  <M>S^1yS^1</M>. <P/>
 
-  See also <Ref Attr="GreensDClasses"/>, 
-  <Ref Attr="GreensDClasses" BookName="ref"/>, 
-  <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>,
-  and <Ref Oper="\&lt;" Label="for Green's classes"/>.
+    See also <Ref Attr="GreensDClasses"/>, 
+    <Ref Attr="GreensDClasses" BookName="ref"/>, 
+    <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>,
+    and <Ref Oper="\&lt;" Label="for Green's classes"/>.
   <Example><![CDATA[
 gap> S:=Semigroup( Transformation( [ 2, 4, 1, 2 ] ), 
 > Transformation( [ 3, 3, 4, 1 ] ) );;
