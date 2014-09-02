@@ -758,6 +758,15 @@ gap> GroupOfUnits(FullTransformationSemigroup(1));
 gap> GroupOfUnits(Semigroup(PartialPerm([])));
 <trivial partial perm group on 0 pts with 0 generators>
 
+# Issue 103 (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup
+# but doesn't know it at the start)
+gap> S:=POI(5);;
+gap> T:=Semigroup(S, PartialPerm([1,2,3,4,5],[2,3,4,5,1]));;
+gap> I:=SemigroupIdeal(T, [ PartialPerm( [ 1, 2, 4, 5 ], [ 1, 2, 3, 5 ] )]);
+<inverse partial perm semigroup ideal on 5 pts with 1 generator>
+gap> Size(I);
+626
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
