@@ -57,12 +57,9 @@ AsCongByLinkedTriple := function(cong)
     
     # Associate group entries in the normal subgroup
     n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2])^-1);
-#    row1 := Position([1..Size(mat)], w-> mat[w][pair[1][1]]<>0);
-#    col1 := Position([1..Size(mat[1])], k-> mat[pair[1][3]][k]<>0);
     
     # Ensure linkedness
     u := PositionProperty([1..Size(mat)], u-> mat[u][pair[1][1]]<>0);
-    if mat[u][pair[1][1]] = 0 then continue; fi;
     for v in [u+1..Size(mat)] do
       if mat[v][pair[1][1]] = 0 then
         continue;
@@ -74,7 +71,6 @@ AsCongByLinkedTriple := function(cong)
                    * mat[u][pair[2][1]] ^-1 );
     od;
     i := PositionProperty([1..Size(mat[1])], k-> mat[pair[1][3]][k]<>0);
-    if mat[pair[1][3]][i] = 0 then continue; fi;
     for j in [i+1..Size(mat[1])] do
       if mat[pair[1][3]][j] = 0 then continue; fi;
       n := ClosureGroup( n,
