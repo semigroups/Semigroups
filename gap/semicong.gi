@@ -1,11 +1,11 @@
 InstallGlobalFunction(SetupCongData,
 function(cong)
-  local s, enum, pairs, ht, treehashsize, pair, lookup, pairstoapply;
+  local s, elms, pairs, ht, treehashsize, pair, lookup, pairstoapply;
   
   s := Range(cong);
-  enum := Enumerator(s);
+  elms := Elements(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
-                 x-> [Position(enum, x[1]), Position(enum, x[2])] );
+                 x-> [Position(elms, x[1]), Position(elms, x[2])] );
   ht:=HTCreate( pairs[1], rec(forflatplainlists:=true,
               treehashsize:=100003) );
   for pair in pairs do
@@ -15,7 +15,8 @@ function(cong)
   cong!.data := rec( cong := cong,
                      lookup := [1..Size(s)],
                      pairstoapply := pairs,
-                     ht := ht );
+                     ht := ht,
+                     elms := elms );
   return;
 end);
 
@@ -25,7 +26,7 @@ InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence],
 function(pair, cong)
-  local s, enum, p1, p2, table, find;
+  local s, elms, p1, p2, table, find;
   # Input checks
   if not Size(pair) = 2 then
     Error("1st arg <pair> must be a list of length 2,"); return;
@@ -35,9 +36,12 @@ function(pair, cong)
     Error("Elements of <pair> must be in range of <cong>,"); return;
   fi;
   
-  enum:=Enumerator(s);
-  p1 := Position(enum, pair[1]);
-  p2 := Position(enum, pair[2]);
+  if not IsBound(cong!.data) then
+    SetupCongData(cong);
+  fi;
+  elms:=cong!.data.elms;
+  p1 := Position(elms, pair[1]);
+  p2 := Position(elms, pair[2]);
 
   # Use lookup table if available
   if HasAsLookupTable(cong) then
@@ -71,7 +75,7 @@ InstallMethod(Enumerate,
 "for a semigroup congruence and a function",
 [IsSemigroupCongruence, IsFunction],
 function(cong, lookfunc)
-  local s, enum, data, table, pairstoapply, ht, right, left, find, union, 
+  local s, elms, data, table, pairstoapply, ht, right, left, find, union, 
         genstoapply, i, nr, x, j, y, normalise, result;
   
   if not IsBound(cong!.data) then
@@ -79,7 +83,6 @@ function(cong, lookfunc)
   fi;
   
   s := Range(cong);
-  enum := Enumerator(s);
   data := cong!.data;
   
   table := data.lookup;
