@@ -135,9 +135,7 @@ else
      end, true);
     
     iso:=GraphIsomorphism(pS, pT);
-    # JDM this doesn't work, the PartialOrderOfDClasses(S) and T are not the
-    # always isomorphic as directed graphs even though they define isomorphic
-    # partially ordered sets. Issue #
+    
     if iso=fail then 
       return false;
     fi;
