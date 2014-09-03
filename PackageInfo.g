@@ -39,7 +39,7 @@ SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
 Version := "2.1",
-Date := "22/07/2014",
+Date := "03/09/2014",
 ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.1",
 ArchiveFormats := ".tar.gz",
 Persons := [
@@ -193,7 +193,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.7.3",
+  GAP := ">=4.7.5",
   NeededOtherPackages := [["orb", ">=4.7"], ["io", ">=4.3"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
   ["genss", ">=1.5"]], 
