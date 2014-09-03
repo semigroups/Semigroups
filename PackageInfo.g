@@ -59,11 +59,22 @@ Persons := [
   ),
   
   rec( 
+    LastName      := "Delgado",
+    FirstNames    := "Manuel",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "mdelgado@fc.up.pt",
+    WWWHome       := "http://cmup.fc.up.pt/cmup/mdelgado/",
+    Place         := "Porto",
+    Institution   := "Universidade do Porto"
+  ),
+  
+  rec( 
     LastName      := "East",
     FirstNames    := "J.",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "",
+    Email         := "j.east@uws.edu.au",
     WWWHome       := "http://www.uws.edu.au/staff_profiles/uws_profiles/doctor_james_east",
     Place         := "Sydney",
     Institution   := "University of Western Sydney"
