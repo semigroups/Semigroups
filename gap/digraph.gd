@@ -15,15 +15,15 @@
 
 # in case we want to make a more elaborate data structure in the future 
 
-DeclareSynonym("IsDigraph", IsList);
+DeclareSynonym("IsDirectedGraph", IsList);
 
-DeclareOperation("DigraphRelabel", [IsDigraph, IsPerm]);
-DeclareOperation("DigraphRemoveLoops", [IsDigraph]);
-DeclareOperation("DigraphTopologicalSort", [IsDigraph]);
-DeclareOperation("DigraphTopologicalSort", [IsDigraph, IsBool]);
-DeclareOperation("DigraphReflexiveTransitiveClosure", [IsDigraph]);
-DeclareOperation("DigraphTransitiveClosure", [IsDigraph]);
+DeclareOperation("DirectedGraphRelabel", [IsDirectedGraph, IsPerm]);
+DeclareOperation("DirectedGraphRemoveLoops", [IsDirectedGraph]);
+DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph]);
+DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph, IsBool]);
+DeclareOperation("DirectedGraphReflexiveTransitiveClosure", [IsDirectedGraph]);
+DeclareOperation("DirectedGraphTransitiveClosure", [IsDirectedGraph]);
 
-DeclareProperty("IsStronglyConnectedDigraph", IsDigraph);
-DeclareProperty("IsAcyclicDigraph", IsDigraph);
+DeclareProperty("IsStronglyConnectedDirectedGraph", IsDirectedGraph);
+DeclareProperty("IsAcyclicDirectedGraph", IsDirectedGraph);
 

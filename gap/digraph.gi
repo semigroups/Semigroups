@@ -8,8 +8,8 @@
 #############################################################################
 ##
 
-InstallMethod(DigraphRelabel, "for a digraph and perm",
-[IsDigraph, IsPerm], 
+InstallMethod(DirectedGraphRelabel, "for a digraph and perm",
+[IsDirectedGraph, IsPerm], 
 function(digraph, perm)
   local nr, out;
   nr := Length(digraph);
@@ -19,8 +19,8 @@ function(digraph, perm)
   return out;
 end);
 
-InstallMethod(DigraphRemoveLoops, "for a digraph", 
-[IsDigraph], 
+InstallMethod(DirectedGraphRemoveLoops, "for a digraph", 
+[IsDirectedGraph], 
 function(digraph)
   local nr, out, i, v;
   
@@ -40,11 +40,11 @@ function(digraph)
 end);
 
 if IsBound(IS_ACYCLIC_DIGRAPH) then 
-  InstallMethod(IsAcyclicDigraph, "for a digraph", 
-  [IsDigraph], IS_ACYCLIC_DIGRAPH);
+  InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
+  [IsDirectedGraph], IS_ACYCLIC_DIGRAPH);
 else 
-  InstallMethod(IsAcyclicDigraph, "for a digraph", 
-  [IsDigraph], 
+  InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
+  [IsDirectedGraph], 
   function(digraph)  
     local nr, marked1, marked2, dfs, i;
 
@@ -123,20 +123,20 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
   end);
 fi;
 
-InstallMethod(DigraphTopologicalSort, "for a digraph", 
-[IsDigraph], x-> DIGRAPH_TOPO_SORT(x, false));
+InstallMethod(DirectedGraphTopologicalSort, "for a digraph", 
+[IsDirectedGraph], x-> DIGRAPH_TOPO_SORT(x, false));
 
-InstallMethod(DigraphTopologicalSort, "for a digraph and boolean", 
-[IsDigraph, IsBool], DIGRAPH_TOPO_SORT);
+InstallMethod(DirectedGraphTopologicalSort, "for a digraph and boolean", 
+[IsDirectedGraph, IsBool], DIGRAPH_TOPO_SORT);
 
 # only works for acyclic digraphs
 
-InstallMethod(DigraphReflexiveTransitiveClosure, 
-"for a digraph", [IsDigraph],
+InstallMethod(DirectedGraphReflexiveTransitiveClosure, 
+"for a digraph", [IsDirectedGraph],
 function(digraph)
   local sorted, vertices, out, trans, v, u;
   
-  sorted := DigraphTopologicalSort(digraph, true); # ignore loops
+  sorted := DirectedGraphTopologicalSort(digraph, true); # ignore loops
   vertices := [1..Length(digraph)];
   out := EmptyPlist(Length(digraph));
   trans := EmptyPlist(Length(digraph));
@@ -153,12 +153,12 @@ end);
 
 # only works for acyclic digraphs
 
-InstallMethod(DigraphTransitiveClosure, "for a digraph", 
-[IsDigraph], 
+InstallMethod(DirectedGraphTransitiveClosure, "for a digraph", 
+[IsDirectedGraph], 
 function(digraph)
   local sorted, vertices, out, trans, reflex, v, u;
 
-  sorted := DigraphTopologicalSort(digraph, true); # ignore loops
+  sorted := DirectedGraphTopologicalSort(digraph, true); # ignore loops
   vertices := [1..Length(digraph)];
   out := EmptyPlist(Length(digraph));
   trans := EmptyPlist(Length(digraph));
@@ -183,11 +183,11 @@ function(digraph)
 end);
 
 if IsBound(IS_STRONGLY_CONNECTED_DIGRAPH) then 
-  InstallMethod(IsStronglyConnectedDigraph, "for a digraph", 
-  [IsDigraph], IS_STRONGLY_CONNECTED_DIGRAPH);
+  InstallMethod(IsStronglyConnectedDirectedGraph, "for a digraph", 
+  [IsDirectedGraph], IS_STRONGLY_CONNECTED_DIGRAPH);
 else 
-  InstallMethod(IsStronglyConnectedDigraph, "for a digraph", 
-  [IsDigraph], 
+  InstallMethod(IsStronglyConnectedDirectedGraph, "for a digraph", 
+  [IsDirectedGraph], 
   function(digraph)   
     local n, stack1, len1, stack2, len2, id, count, fptr, level, l, w, v;
     
