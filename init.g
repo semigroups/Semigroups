@@ -13,6 +13,8 @@ if not IsBound(ORBC) then
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
+ReadPackage("semigroups/gap/digraph.gd");
+
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
 
@@ -53,9 +55,11 @@ ReadPackage("semigroups/gap/reesmat-iso.gd");
 ReadPackage("semigroups/gap/maximal.gd");
 ReadPackage("semigroups/gap/normalizer.gd");
 
-DeclareInfoClass("InfoSemigroups");;
+ReadPackage("semigroups/gap/quotients.gd");
 
 ReadPackage("semigroups/gap/pairs-cong.gd");
 ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univcong.gd");
 ReadPackage("semigroups/gap/inverse-cong.gd");
+
+DeclareInfoClass("InfoSemigroups");;

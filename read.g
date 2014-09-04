@@ -89,6 +89,8 @@ fi;
 
 #
 
+ReadPackage("semigroups/gap/digraph.gi");
+
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
@@ -132,7 +134,6 @@ ReadPackage("semigroups/gap/maximal.gi");
 ReadPackage("semigroups/gap/normalizer.gi");
 
 ReadPackage("semigroups/gap/quotients.gi");
-
 
 ReadPackage("semigroups/gap/pairs-cong.gi");
 ReadPackage("semigroups/gap/reesmat-cong.gi");

@@ -79,8 +79,8 @@
         </Item>
       </List>
 
-      This function was written by Attila Egri-Nagy with some minor changes by
-      J. D. Mitchell.<P/>
+      This function was written by Attila Egri-Nagy and Manuel Delgado with some
+      minor changes by J. D. Mitchell.<P/>
 
       <Log><![CDATA[
         gap> Splash(DotDClasses(FullTransformationMonoid(4)));]]></Log>

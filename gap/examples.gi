@@ -504,7 +504,7 @@ function(n)
   local gens;
 
   if n=1 then 
-    return Semigroup(BipartitionNC([[1,-1]]));
+    return Monoid(BipartitionNC([[1],[-1]]));
   fi;
 
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
@@ -562,6 +562,23 @@ function(n)
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2]], 
    List([3..n], x-> [x, -x]),[[-1,-2]])));
+  return Monoid(gens, rec(regular:=true));
+end);
+
+#
+
+InstallMethod(PartialBrauerMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens;
+
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
+
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1,2]], 
+   List([3..n], x-> [x, -x]),[[-1,-2]])));
+  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
   return Monoid(gens, rec(regular:=true));
 end);
 

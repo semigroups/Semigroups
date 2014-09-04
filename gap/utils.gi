@@ -386,7 +386,7 @@ function(str)
     next:=iter!.curr;
     line:=IO_ReadLine(iter!.file);
     if line<>"" then 
-      iter!.curr:=ReadGeneratorsLine(IO_ReadLine(iter!.file));
+      iter!.curr:=ReadGeneratorsLine(line);
     else 
       iter!.curr:=line;
     fi;
@@ -428,9 +428,9 @@ function(str)
   
   file:=SplitString(str, ".");
   if file[Length(file)] = "gz" then 
-    file:=IO_FilteredFile([["gzip", ["-dq"]]], str);
+    file:=IO_FilteredFile([["gzip", ["-dq"]]], str, "r");
   elif file[Length(file)] = "xz" then 
-    file:=IO_FilteredFile([["xz", ["-dq"]]], str);
+    file:=IO_FilteredFile([["xz", ["-dq"]]], str, "r");
   else  
     file:=IO_File(str);
   fi;

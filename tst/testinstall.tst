@@ -701,6 +701,23 @@ gap> Size(T);
 gap> IsMonoid(T);
 true
 
+# Issue 82 (couldn't take quotients by ideals!)
+gap> S:=Monoid( [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ), 
+>  Transformation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ), 
+>  Transformation( [ 1, 4, 4, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ), 
+>  Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 2, 2, 1, 2 ] ), 
+>  Transformation( [ 2, 2, 1, 3 ] ), Transformation( [ 1, 2, 2, 3 ] ), 
+>  Transformation( [ 2, 4, 3, 2 ] ), Transformation( [ 2, 3, 3, 3 ] ) ] );;
+gap> I:=SemigroupIdeal(S, S.3);;
+gap> S/I;
+<quotient of Monoid( [ Transformation( [ 3, 3, 3, 3 ] ), 
+  Transformation( [ 2, 4, 2, 4 ] ), Transformation( [ 2, 3, 2, 3 ] ), 
+  Transformation( [ 4, 1, 4, 3 ] ), Transformation( [ 1, 4, 4, 1 ] ), 
+  Transformation( [ 2, 2, 3, 1 ] ), Transformation( [ 2, 4, 3, 4 ] ), 
+  Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 2, 2, 1, 3 ] ), 
+  Transformation( [ 1, 2, 2, 3 ] ), Transformation( [ 2, 4, 3, 2 ] ), 
+  Transformation( [ 2, 3, 3, 3 ] ) ] ) by SemigroupCongruence( ... )>
+
 # Issue 89 
 gap> S:=Semigroup( [ Transformation( [ 2, 1, 3, 1, 4, 3 ] ), 
 >  Transformation( [ 2, 2, 2, 2, 1, 2 ] ), Transformation( [ 5, 3, 4, 3, 5 ] ),
@@ -709,6 +726,46 @@ gap> S:=Semigroup( [ Transformation( [ 2, 1, 3, 1, 4, 3 ] ),
 gap> NrIdempotents(S)=Number(HClasses(S), IsGroupHClass)
 > or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
 true
+
+# Issue 96 (problem with using the partial order of D-classes as an isomorphism
+# invariant)
+gap> S:=Semigroup( [ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 3, 2 ] ), 
+> Transformation( [ 2, 2, 2 ] ), Transformation( [ 4, 2, 1, 4 ] ) ]);;
+gap> T:=Semigroup( Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ), 
+> Transformation( [ 2, 3, 3, 1 ] ), Transformation( [ 1, 3, 3 ] ), 
+> Transformation( [ 2, 3, 3, 3 ] ), Transformation( [ 3, 2, 3, 3 ] ));;
+gap> (not (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail)) or 
+> (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail 
+> and IsIsomorphicSemigroup(S, T));
+true
+
+# Issue 97 (bug in normalizer and the kernel function POW_KER_TRANS)
+gap> Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation));
+Sym( [ 1 .. 3 ] )
+
+# Issue 98 (incorrect definition of partition monoid on 1 point)
+gap> GeneratorsOfSemigroup(PartitionMonoid(1));
+[ <block bijection: [ 1, -1 ]>, <bipartition: [ 1 ], [ -1 ]> ]
+
+# Issue 101 (incorrect method for DegreeOfTransformationSemigroup for a
+# transformation group with 0 generators)
+gap> GroupOfUnits(FullTransformationSemigroup(1));
+<trivial transformation group>
+
+# Issue 101 (incorrect method for AsPartialPerm for a perm and zero)
+gap> GroupOfUnits(Semigroup(PartialPerm([])));
+<trivial partial perm group on 0 pts with 0 generators>
+
+# Issue 103 (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup
+# but doesn't know it at the start)
+gap> S:=POI(5);;
+gap> T:=Semigroup(S, PartialPerm([1,2,3,4,5],[2,3,4,5,1]));;
+gap> I:=SemigroupIdeal(T, [ PartialPerm( [ 1, 2, 4, 5 ], [ 1, 2, 3, 5 ] )]);
+<inverse partial perm semigroup ideal on 5 pts with 1 generator>
+gap> Size(I);
+626
 
 #
 gap> SemigroupsStopTest();

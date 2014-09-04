@@ -7,6 +7,73 @@
 ##
 #############################################################################
 
+2.0 -> 2.1  
+	    This is a minor release including some bug fixes and performance
+	    improvements. 
+
+	    *************************New features*************************
+	    
+	    • The functions: 
+	      
+	      - AsTransformationSemigroup,
+	      -	AsPartialPermSemigroup, 
+	      - AsBipartitionSemigroup,
+	      - AsBlockBijectionSemigroup 
+
+	      which are shortcuts to Range(IsomorphismXSemigroup(S)).
+
+	    • A method for IsTransitive for a transformation semigroup and,
+	    optionally, a positive integer or list of positive integers. This
+	    method is based on Gabow's algorithm for determining the strongly
+	    connected components of a directed graph.
+	    
+	    • The functions MeetSemigroupCongruence and JoinSemigroupCongruences
+	    for finding the meet and join of a pair of congruences of a
+	    semigroup. 
+
+	    *************************Resolved issues************************* 
+	    
+	    Issue numbers refer to the issues on the tracker at:
+
+	    http://bitbucket.org/james-d-mitchell/semigroups/issues
+	    
+	    • There was a bug in ReadGeneratorsFile, which meant it sometimes
+	    returned fail. The mode argument for IO_FilteredFile was not given.
+	    
+	    • There was a bug in the \in method for a congruence of a Rees
+	    0-matrix semigroup, which sometimes returned the wrong answer for
+	    the zero of the semigroup.
+	    
+	    • There was a bug in IteratorFromGeneratorsFile that caused it to
+	    read only every other line in the given file, and to crash if there
+	    were an odd number of lines. 
+
+	    • There was no hash function for bipartitions.
+	    
+	    • The documentation for InverseSubsemigroupByProperty did not
+	    specify the arguments of the function. 
+
+	    • Issue 82: it is now possible to take the quotient of a semigroup
+	    by an ideal using the / operator. 
+
+	    • Issue 96: IsIsomorphicSemigroup sometimes returned a false
+	    negative by incorrectly comparing the output of
+	    PartialOrderOfDClasses (up to isomorphism) rather than the
+	    transitive reflexive closure of PartialOrderOfDClasses.
+	    
+	    • Issue 97: there was a bug in the Normalizer method, which
+	    caused GAP to crash when the argument was a monoid with 0
+	    generators. 
+	    
+	    • Issue 98: PartitionMonoid(1) returned the wrong answer, it was
+	    missing the non-identity element. 
+	    
+	    • Issue 99: the documentation for PartialOrderOfDClasses was
+	    incorrect, it did not accurately describe the output of the
+	    function. 
+	    
+	    • Issue 103: under certain circumstances an error was given when
+	    trying to compute with an ideal of an inverse semigroup. 
 
 1.4 -> 2.0
 						
