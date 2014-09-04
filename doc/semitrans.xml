@@ -1,12 +1,81 @@
 #############################################################################
 ##
 #W  semitrans.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+<#GAPDoc Label="IsTransitive">
+<ManSection>
+  <Oper Name="IsTransitive" Arg="S[, X]" Label="for a transformation
+    semigroup and a set"/>
+  <Oper Name="IsTransitive" Arg="S[, n]" Label="for a transformation
+    semigroup and a pos int"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    A transformation semigroup <A>S</A> is <E>transitive</E> or <E>strongly
+    connected</E> on the set <A>X</A> if for every <C>i,j</C> in <A>X</A>
+    there is an element <C>s</C> in <A>S</A> such that <C>i^s=j</C>. <P/>
+
+    If the optional second argument is a positive integer <A>n</A>, then
+    <C>IsTransitive</C> returns <K>true</K> if <A>S</A> is transitive on
+    <C>[1..<A>n</A>]</C>, and <K>false</K> if it is not. <P/>
+
+    If the optional second argument is not provided, then the degree of 
+    <A>S</A> is used by default; see <Ref
+      Attr="DegreeOfTransformationSemigroup" BookName="ref"/>. 
+
+    <Example><![CDATA[
+gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], 
+> [ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), 
+> Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], 
+> [ -2, -3 ], [ -5 ] ] ) ] );
+<bipartition semigroup on 6 pts with 2 generators>
+gap> AsTransformationSemigroup(S);
+<transformation semigroup on 12 pts with 2 generators>
+gap> IsTransitive(last);
+false
+gap> IsTransitive(AsSemigroup(Group((1,2,3))));
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsTransformationSemigroup">
+<ManSection>
+  <Oper Name="AsTransformationSemigroup" Arg="S"/>
+  <Oper Name="AsPartialPermSemigroup" Arg="S"/>
+  <Oper Name="AsBipartitionSemigroup" Arg="S"/>
+  <Oper Name="AsBlockBijectionSemigroup" Arg="S"/>
+  <Returns>A semigroup.</Returns>
+  <Description>
+    <C>AsTransformationSemigroup(<A>S</A>)</C> is just shorthand for 
+    <C>Range(IsomorphismTransformationSemigroup(<A>S</A>))</C>, when <A>S</A> 
+    is a semigroup; see <Ref Oper="IsomorphismTransformationSemigroup"
+      BookName="ref"/> for more details.<P/>
+  
+    The operations: 
+    <List>
+      <Item> <C>AsPartialPermSemigroup</C>;</Item>
+      <Item> <C>AsBipartitionSemigroup</C>;</Item>
+      <Item> <C>AsBlockBijectionSemigroup</C>;</Item>
+    </List>
+    are analogous to <C>AsTransformationSemigroup</C>.
+
+    <Example><![CDATA[
+gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], 
+> [ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), 
+> Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], 
+> [ -2, -3 ], [ -5 ] ] ) ] );
+<bipartition semigroup on 6 pts with 2 generators>
+gap> AsTransformationSemigroup(S);
+<transformation semigroup on 12 pts with 2 generators>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="ComponentRepsOfTransformationSemigroup">
 <ManSection>
@@ -17,15 +86,15 @@
     action of the transformation semigroup <A>S</A> on the set of positive
     integers not greater than the degree of <A>S</A>. <P/>
     
-    The representatives are the least set of points such that every point can be
-    reached from some representative under the action of <A>S</A>.
+    The representatives are the least set of points such that every point can 
+    be reached from some representative under the action of <A>S</A>.
 
-    <Example>
+    <Example><![CDATA[
 gap> S:=Semigroup( 
 > Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
 > Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
 gap> ComponentRepsOfTransformationSemigroup(S);
-[ 2, 3, 8 ]</Example>
+[ 2, 3, 8 ]]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -39,12 +108,12 @@ gap> ComponentRepsOfTransformationSemigroup(S);
     semigroup <A>S</A> on the set of positive integers not greater than the
     degree of <A>S</A>; the components of <A>S</A> partition this set.
     
-    <Example>
+    <Example><![CDATA[
 gap> S:=Semigroup( 
 > Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
 > Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
 gap> ComponentsOfTransformationSemigroup(S);
-[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ]</Example>
+[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ]]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -57,12 +126,12 @@ gap> ComponentsOfTransformationSemigroup(S);
     This function returns the cycles, or strongly connected components, of the
     action of the transformation semigroup <A>S</A> on the set of positive
     integers not greater than the degree of <A>S</A>.
-    <Example>
+    <Example><![CDATA[
 gap> S:=Semigroup( 
 > Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
 > Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
 gap> CyclesOfTransformationSemigroup(S);
-[ [ 1, 11, 12, 5, 4, 6, 10, 7, 9 ] ]</Example>
+[ [ 1, 11, 12, 5, 4, 6, 10, 7, 9 ] ]]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

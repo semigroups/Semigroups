@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup], 
+function(S)
+  return Range(IsomorphismPartialPermSemigroup(S));
+end);
+
 # the following method is required to beat the method for
 # IsPartialPermCollection in the library.
 
