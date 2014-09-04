@@ -1271,56 +1271,6 @@ end);
 InstallMethod(IsSimpleSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsGroupAsSemigroup);
 
-# same method for ideals
-
-InstallMethod(IsSynchronizingSemigroup, 
-"for a transformation semigroup and positive integer", 
-[IsTransformationSemigroup, IsPosInt],
-function(S, n)
-  local gens, o;
-
-  if HasGeneratorsOfSemigroup(S) then 
-    gens:=GeneratorsOfSemigroup(S);
-  else
-    gens:=GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  fi;
-
-  o:=Orb(gens, [1..n], LambdaAct(S), rec( schreier:=true, 
-    lookingfor:=function(o, x) 
-      return Length(x)=1; 
-    end));
-  
-  Enumerate(o);
-
-  if PositionOfFound(o)<>false then 
-    Info(InfoSemigroups, 2, "the product of the generators: ",
-    TraceSchreierTreeForward(o, PositionOfFound(o)));
-
-    Info(InfoSemigroups, 2, "is a constant function with value ", 
-     o[PositionOfFound(o)][1]);
-    return true;
-  fi;
-
-  return false;
-end);
-
-# not applicable to ideals
-
-InstallMethod(IsSynchronizingTransformationCollection, 
-"for a transformation collection and positive integer", 
-[IsTransformationCollection, IsPosInt],
-function(coll, n)
-  local o;
-
-  o:=Orb(coll, [1..n], OnSets, rec(
-    lookingfor:=function(o, x) 
-      return Length(x)=1;
-    end));
-
-  Enumerate(o);
-  return PositionOfFound(o)<>false;
-end);
-
 # different method for ideals
 
 InstallMethod(IsTrivial, "for a semigroup with generators",

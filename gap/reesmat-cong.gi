@@ -559,9 +559,11 @@ function(elm, class)
   local s, cong;
   cong := ParentAttr(class);
   s := Range(cong);
-  # Special case for {0}
+  # Special case for 0 and {0}
   if elm = MultiplicativeZero(s) then
     return(class!.nCoset = 0);
+  elif class!.nCoset = 0 then
+    return false;
   fi;
   # Otherwise
   return( elm in s and

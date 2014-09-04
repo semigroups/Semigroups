@@ -89,6 +89,8 @@ fi;
 
 #
 
+ReadPackage("semigroups/gap/digraph.gi");
+
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/semitrans.gi");

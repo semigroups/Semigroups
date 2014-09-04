@@ -18,3 +18,5 @@ DeclareAttribute("ComponentsOfPartialPermSemigroup",
 IsPartialPermSemigroup);
 DeclareAttribute("CyclesOfPartialPermSemigroup",
 IsPartialPermSemigroup);
+
+DeclareOperation("AsPartialPermSemigroup", [IsSemigroup]);

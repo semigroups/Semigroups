@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.0">
-##  <!ENTITY GAPVERS "4.7.3">
+##  <!ENTITY VERSION "2.1">
+##  <!ENTITY GAPVERS "4.7.5">
 ##  <!ENTITY ORBVERS "4.7">
 ##  <!ENTITY IOVERS "4.3">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.0">
+##  <!ENTITY ARCHIVENAME "semigroups-2.1">
 ##  <!ENTITY COPYRIGHTYEARS "2011-14">
 ##  <#/GAPDoc>
 
@@ -39,8 +39,8 @@ SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
 Version := "2.1",
-Date := "17/04/2014",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.0",
+Date := "04/09/2014",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.1",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -59,11 +59,22 @@ Persons := [
   ),
   
   rec( 
+    LastName      := "Delgado",
+    FirstNames    := "Manuel",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "mdelgado@fc.up.pt",
+    WWWHome       := "http://cmup.fc.up.pt/cmup/mdelgado/",
+    Place         := "Porto",
+    Institution   := "Universidade do Porto"
+  ),
+  
+  rec( 
     LastName      := "East",
     FirstNames    := "J.",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "",
+    Email         := "j.east@uws.edu.au",
     WWWHome       := "http://www.uws.edu.au/staff_profiles/uws_profiles/doctor_james_east",
     Place         := "Sydney",
     Institution   := "University of Western Sydney"
@@ -182,7 +193,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.7.3",
+  GAP := ">=4.7.5",
   NeededOtherPackages := [["orb", ">=4.7"], ["io", ">=4.3"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
   ["genss", ">=1.5"]], 

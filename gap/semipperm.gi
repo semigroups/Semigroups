@@ -11,6 +11,11 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
+InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup], 
+function(S)
+  return Range(IsomorphismPartialPermSemigroup(S));
+end);
+
 # same method for ideals
 
 InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",

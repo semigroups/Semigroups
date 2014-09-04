@@ -1,3 +1,13 @@
+#############################################################################
+##
+#W  quotients.gi
+#Y  Copyright (C) 2014                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 InstallMethod(GeneratorsOfSemigroup, "for a quotient semigroup",
 [IsQuotientSemigroup], 
 function(S)
@@ -21,5 +31,11 @@ function(nonlist, list)
     return PROD_SCL_LIST_DEFAULT( nonlist, list );
   fi;
   TryNextMethod();
+end);
+
+InstallMethod(\/, "for a semigroup and an ideal", 
+[IsSemigroup, IsSemigroupIdeal], 
+function(S, I)
+  return S/ReesCongruenceOfSemigroupIdeal(I);
 end);
 

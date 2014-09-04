@@ -44,6 +44,7 @@ DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
-DeclareGlobalFunction("ORB_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
 
 #EOF

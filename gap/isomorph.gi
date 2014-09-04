@@ -199,18 +199,16 @@ else
 
     pS:=Graph(Group(()), [1..NrDClasses(S)], OnPoints,
      function(i,j)
-       return i in PartialOrderOfDClasses(S)[j];
+       return i in DirectedGraphTransitiveClosure(PartialOrderOfDClasses(S)[j]);
      end, true);
 
     pT:=Graph(Group(()), [1..NrDClasses(T)], OnPoints,
      function(i,j)
-       return i in PartialOrderOfDClasses(T)[j];
+       return i in DirectedGraphTransitiveClosure(PartialOrderOfDClasses(T)[j]);
      end, true);
     
     iso:=GraphIsomorphism(pS, pT);
-    # JDM this doesn't work, the PartialOrderOfDClasses(S) and T are not the
-    # always isomorphic as directed graphs even though they define isomorphic
-    # partially ordered sets. Issue #
+    
     if iso=fail then 
       return false;
     fi;
