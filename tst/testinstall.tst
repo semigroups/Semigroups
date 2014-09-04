@@ -742,7 +742,12 @@ gap> (not (IsBound(GAPInfo.PackagesLoaded.grape)
 true
 
 # Issue 97 (bug in normalizer and the kernel function POW_KER_TRANS)
-gap> Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation));
+gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then 
+> G:=Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation));
+> else 
+> G:=SymmetricGroup(3);
+> fi;
+gap> G;
 Sym( [ 1 .. 3 ] )
 
 # Issue 98 (incorrect definition of partition monoid on 1 point)
