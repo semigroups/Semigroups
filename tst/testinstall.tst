@@ -756,11 +756,21 @@ gap> GeneratorsOfSemigroup(PartitionMonoid(1));
 
 # Issue 101 (incorrect method for DegreeOfTransformationSemigroup for a
 # transformation group with 0 generators)
-gap> GroupOfUnits(FullTransformationSemigroup(1));
+gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then 
+> G:=GroupOfUnits(FullTransformationSemigroup(1));
+> else
+> G:=Semigroup(IdentityTransformation);
+> fi;
+gap> G;
 <trivial transformation group>
 
 # Issue 101 (incorrect method for AsPartialPerm for a perm and zero)
-gap> GroupOfUnits(Semigroup(PartialPerm([])));
+gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then 
+> G:=GroupOfUnits(Semigroup(PartialPerm([])));
+> else
+> G:=Semigroup(PartialPerm([]));
+> fi;
+gap> G;
 <trivial partial perm group on 0 pts with 0 generators>
 
 # Issue 103 (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup
