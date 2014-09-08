@@ -1,47 +1,46 @@
 
 
 
+InstallGlobalFunction(IteratorSortedConjugateStabChain, 
+function(S, conj)
+   record := rec();
+   record.rep := ();
+   record.NextIterator := 
 
-
-InstallGlobalFunction(SEMIGROUPS_ElementConjugateStabChain,
-function(S, rep, conj, largest)
-  local pnt, min, val, compare, gen, i;
-    
-    if Length( S.generators ) = 0  then
-        return rep;
-    fi;
-    pnt := S.orbit[1]^conj;
-    min := 0;
-
-    if largest then 
-      val := 0;
-      compare := function(x, y) return x > y; end;
-    else
-      val :=  LargestMovedPoint(S.generators) + 1;
-      compare := LT;
-    fi;
-    
-    for i  in S.orbit  do
-        if compare((i ^ conj) ^ rep, val)  then
-            min := i;
-            val := (i ^ conj) ^ rep;
-        fi;
-    od;
-    while pnt <> min  do
-        gen := S.transversal[min] ^ conj;
-        rep := LeftQuotient( gen, rep );
-        min := min ^ gen;
-    od;
-    return SEMIGROUPS_ElementConjugateStabChain(S.stabilizer, rep, conj, largest);
+  
 end);
+
+#
 
 InstallGlobalFunction(LargestElementConjugateStabChain,
 function(S, rep, conj)
-  return SEMIGROUPS_ElementConjugateStabChain(S, rep, conj, true);
+  local pnt, max, val, gen, i;
+    
+    if Length( S.generators ) = 0  then
+      return rep;
+    fi;
+    
+    pnt := S.orbit[1]^conj;
+    max := 0;
+    val := 0;
+    
+    for i in S.orbit  do
+      if (i ^ conj) ^ rep > val  then
+        max := i;
+        val := (i ^ conj) ^ rep;
+      fi;
+    od;
+
+    while pnt <> max  do
+      gen := S.transversal[max] ^ conj;
+      rep := LeftQuotient( gen, rep );
+      max := max ^ gen;
+    od;
+    
+    return LargestElementConjugateStabChain( S.stabilizer, rep, conj );
 end);
 
-InstallGlobalFunction(SmallestElementConjugateStabChain,
-function(S, rep, conj)
-  return SEMIGROUPS_ElementConjugateStabChain(S, rep, conj, false);
-end);
+#
+
+
 

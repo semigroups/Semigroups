@@ -146,7 +146,7 @@ function(o, func, start)
  return IteratorByNextIterator( record );
 end);
 
-# NextIterator in opts must return fail if the iterator is finished. 
+# NextIterator in <opts> must return fail if the iterator is finished. 
 
 InstallGlobalFunction(IteratorByNextIterator, 
 function(record)

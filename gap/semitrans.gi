@@ -8,17 +8,100 @@
 #############################################################################
 ##
 
+InstallMethod(IteratorSorted, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(S)
+  return IteratorSorted(List(RClasses(S), IteratorSorted));
+end);
+
+#
+
+InstallMethod(IteratorSorted, "for an R-class", 
+[IsGreensRClass], 
+function(R)
+  local o, m, rep, n, scc, base1, S, out, x, basei, i;
+  
+  if Size(R)=1 then 
+    return Representative(R);
+  fi;
+  
+  o := LambdaOrb(R);
+  m := LambdaOrbSCCIndex(R);
+  rep := Representative(R);
+  n := DegreeOfTransformationSemigroup(Parent(R));
+  
+  scc := OrbSCC(o)[m];
+  base := DuplicateFreeList(ImageListOfTransformation(rep, n));
+  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
+  out := [ IteratorSorted(S) ];
+
+  for i in [ 2 .. Length(scc) ] do
+    x := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+    basei := DuplicateFreeList(ImageListOfTransformation(rep * x, n));
+    out[i] := IteratorSortedConjugateStabChain(S, MappingPermListList(base, basei));
+  od;
+  
+  return IteratorSorted(out);
+end);
+
+#
+
+InstallMethod(\<, "for transformation semigroups",
+[IsTransformationSemigroup, IsTransformationSemigroup],
+function(S, T)
+  local des, det, i, SS, TT, nr;
+ 
+  des := DegreeOfTransformationSemigroup(S);
+  det := DegreeOfTransformationSemigroup(T);
+  
+  if des <> det then 
+    return des < det;
+  fi;
+
+  i := 0;
+  SS := GeneratorsSmallest(S);
+  TT := GeneratorsSmallest(T);
+  nr := Minimum(Length(SS), Length(TT));
+  
+  while i < nr do 
+    i := i + 1;
+    if SS[i] <> TT[i] then 
+      return SS[i] < TT[i];
+    fi;
+  od;
+
+  if Length(SS) = Length(TT) then 
+    return LargestElementSemigroup(S) < LargestElementSemigroup(T);
+  elif Length(SS) < Length(TT) then 
+    while i < Length(TT) do 
+      if LargestElementSemigroup(S) <> TT[i] then 
+        return LargestElementSemigroup(S) < TT[i];
+      fi;
+    od;
+  else
+    while i < Length(SS) do 
+      if SS[i] <> LargestElementSemigroup(T) then 
+        return SS[i] < LargestElementSemigroup(T);
+      fi;
+    od;
+  fi;
+  # if we get here S = T
+  return false;
+end);
+
+#
+
 InstallMethod(GeneratorsSmallest, "for a semigroup", 
 [IsSemigroup], 
 function(S)
   local iter, T, x;
   
-  iter:=IteratorSorted(S);
-  T:=Semigroup(NextIterator(iter));
+  iter := IteratorSorted(S);
+  T := Semigroup(NextIterator(iter));
   for x in iter do  
     if not x in T then 
-      T:=ClosureSemigroup(T, x);
-      if T=S then 
+      T := ClosureSemigroup(T, x);
+      if T = S then 
         break;
       fi;
     fi;
@@ -26,48 +109,60 @@ function(S)
   return GeneratorsOfSemigroup(T);
 end);
 
+#
+
 BindGlobal("SEMIGROUPS_ElementRClass",
-function(R, which, compare)
-  local o, m, scc, G, rep, n, repimg, S, max, y, img, p, x, i;
+function(R, largest)
+  local o, m, rep, n, base, S, max, scc, y, basei, p, x, i;
 
   if Size(R)=1 then 
     return Representative(R);
   fi;
   
-  o:=LambdaOrb(R);
-  m:=LambdaOrbSCCIndex(R);
-  scc:=OrbSCC(o)[m];
-  G:=LambdaOrbSchutzGp(o, m);
-  rep:=Representative(R);
-  n:=DegreeOfTransformationSemigroup(Parent(R));
-  repimg:=DuplicateFreeList(ImageListOfTransformation(rep, n));
-  S:=StabChainOp(G, rec(base:=repimg));
-  max:=rep*LargestElementStabChain(S, ());
+  o := LambdaOrb(R);
+  m := LambdaOrbSCCIndex(R);
+  rep := Representative(R);
+  
+  n := DegreeOfTransformationSemigroup(Parent(R));
+  base := DuplicateFreeList(ImageListOfTransformation(rep, n));
+  
+  if not largest then 
+    base := Reversed(base);
+  fi;
+  
+  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
+  max := rep * LargestElementStabChain(S, ());
 
-  for i in [2..Length(scc)] do
-    y:=EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
-    img:=DuplicateFreeList(ImageListOfTransformation(rep*y, n));
-    p:=MappingPermListList(repimg, img);
-    x:=rep*y*which(S, (), ());
-    if compare(x,max) then 
-      max:=x;
+  scc := OrbSCC(o)[m];
+  
+  for i in [ 2 .. Length(scc) ] do
+    y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+    basei := DuplicateFreeList(ImageListOfTransformation(rep*y, n));
+    p := MappingPermListList(base, basei);
+    x := rep * y * LargestElementStabChain(S, (), p);
+    if x > max then 
+      max := x;
     fi;
   od;
+
   return max;
 end);
+
+#
 
 InstallMethod(SmallestElementRClass, "for an R-class",
 [IsGreensRClass],
 function(R)
-  return SEMIGROUPS_ElementRClass(R, SmallestElementConjugateStabChain, LT);
+  return SEMIGROUPS_ElementRClass(R, false);
 end);
 
 InstallMethod(LargestElementRClass, "for an R-class",
 [IsGreensRClass],
 function(R)
-  return SEMIGROUPS_ElementRClass(R, LargestElementConjugateStabChain,
-    function(x,y) return x>y; end);
+  return SEMIGROUPS_ElementRClass(R, true);
 end);
+
+#
 
 InstallMethod(SmallestElementSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup], 
