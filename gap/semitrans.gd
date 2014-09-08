@@ -10,6 +10,8 @@
 
 DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 
+DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
+
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
 IsTransformationSemigroup);
 DeclareAttribute("ComponentsOfTransformationSemigroup",
@@ -32,4 +34,4 @@ DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 DeclareAttribute("SmallestElementRClass", IsGreensRClass);
 DeclareAttribute("LargestElementRClass", IsGreensRClass);
 
-DeclareGlobalFunction("IteratorSortedStabChain");
+

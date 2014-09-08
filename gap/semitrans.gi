@@ -57,13 +57,13 @@ function(R, which, compare)
 end);
 
 InstallMethod(SmallestElementRClass, "for an R-class",
-[IsGreensRClass and IsTransformationSemigroupGreensClass],
+[IsGreensRClass],
 function(R)
   return SEMIGROUPS_ElementRClass(R, SmallestElementConjugateStabChain, LT);
 end);
 
 InstallMethod(LargestElementRClass, "for an R-class",
-[IsGreensRClass and IsTransformationSemigroupGreensClass],
+[IsGreensRClass],
 function(R)
   return SEMIGROUPS_ElementRClass(R, LargestElementConjugateStabChain,
     function(x,y) return x>y; end);
