@@ -8,6 +8,62 @@
 #############################################################################
 ##
 
+InstallMethod(IteratorSorted, "for a list of IsIteratorSorted",
+[IsHomogeneousList], 
+function(list)
+  local record, iter;
+
+  if Length(list)>0 and IsIteratorSorted(list[1]) then 
+    record:=rec();
+    record.indices:=[2..Length(list)];
+    record.base:=list;
+    record.current:=List(record.base, NextIterator);
+
+    record.NextIterator:=function(iter)
+      local current, indices, next, pos, i, base;
+      
+      current:=iter!.current;
+      indices:=iter!.indices;
+      next:=current[1];
+      pos:=1;
+
+      for i in indices do 
+        if current[i]<>fail and current[i]<current[1] then 
+          next:=current[i];
+          pos:=i;
+        fi;
+      od;
+
+      base:=iter!.base;
+      if IsDoneIterator(base[pos]) then 
+        current[pos]:=fail;
+      else
+        current[pos]:=NextIterator(base[pos]);
+      fi;
+      return next;
+    end;
+
+    record.IsDoneIterator:=function(iter)
+      return ForAll(iter!.current, x-> x=fail);
+    end;
+    
+    record.ShallowCopy:=function(iter)
+      local base;
+      base:=List(iter!.base, ShallowCopy);
+      return rec( base:=base,
+                  indices:=iter!.indices,  
+                  current:=List(base, NextIterator) );
+    end;
+    
+    iter:=IteratorByFunctions(record);
+    SetFilterObj(iter, IsIteratorSorted);
+    return iter;
+
+  fi;
+  return fail;
+end);
+
+
 # to lib...
 
 InstallGlobalFunction(IteratorOfArrangements, 
@@ -147,12 +203,11 @@ function(record)
 end);
 
 # <baseiter> should be an iterator where NextIterator(baseiter) has a method for
-# Iterator. More specifically, if iter:=Iterator(x) where <x> 
-# is a returned value of convert(NextIterator(baseiter)), then NextIterator of
-# IteratorByIterOfIters returns NextIterator(iter) until
-# IsDoneIterator(iter) then iter is replaced by
-# Iterator(convert(NextIterator(baseiter)))
-# until IsDoneIterator(baseiter), where <convert> is a function. 
+# Iterator. More specifically, if iter:=Iterator(x) where <x> is a returned
+# value of convert(NextIterator(baseiter)), then NextIterator of
+# IteratorByIterOfIters returns NextIterator(iter) until IsDoneIterator(iter)
+# then iter is replaced by Iterator(convert(NextIterator(baseiter))) until
+# IsDoneIterator(baseiter), where <convert> is a function. 
 
 InstallGlobalFunction(IteratorByIterOfIters,
 function(record, baseiter, convert, filts)

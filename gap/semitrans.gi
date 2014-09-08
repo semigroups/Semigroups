@@ -8,7 +8,96 @@
 #############################################################################
 ##
 
-# different method required (but not yet given!!) for ideals
+InstallMethod(GeneratorsSmallest, "for a semigroup", 
+[IsSemigroup], 
+function(S)
+  local iter, T, x;
+  
+  iter:=IteratorSorted(S);
+  T:=Semigroup(NextIterator(iter));
+  for x in iter do  
+    if not x in T then 
+      T:=ClosureSemigroup(T, x);
+      if T=S then 
+        break;
+      fi;
+    fi;
+  od;
+  return GeneratorsOfSemigroup(T);
+end);
+
+BindGlobal("SEMIGROUPS_ElementRClass",
+function(R, which, compare)
+  local o, m, scc, G, rep, n, repimg, S, max, y, img, p, x, i;
+
+  if Size(R)=1 then 
+    return Representative(R);
+  fi;
+  
+  o:=LambdaOrb(R);
+  m:=LambdaOrbSCCIndex(R);
+  scc:=OrbSCC(o)[m];
+  G:=LambdaOrbSchutzGp(o, m);
+  rep:=Representative(R);
+  n:=DegreeOfTransformationSemigroup(Parent(R));
+  repimg:=DuplicateFreeList(ImageListOfTransformation(rep, n));
+  S:=StabChainOp(G, rec(base:=repimg));
+  max:=rep*LargestElementStabChain(S, ());
+
+  for i in [2..Length(scc)] do
+    y:=EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+    img:=DuplicateFreeList(ImageListOfTransformation(rep*y, n));
+    p:=MappingPermListList(repimg, img);
+    x:=rep*y*which(S, (), ());
+    if compare(x,max) then 
+      max:=x;
+    fi;
+  od;
+  return max;
+end);
+
+InstallMethod(SmallestElementRClass, "for an R-class",
+[IsGreensRClass and IsTransformationSemigroupGreensClass],
+function(R)
+  return SEMIGROUPS_ElementRClass(R, SmallestElementConjugateStabChain, LT);
+end);
+
+InstallMethod(LargestElementRClass, "for an R-class",
+[IsGreensRClass and IsTransformationSemigroupGreensClass],
+function(R)
+  return SEMIGROUPS_ElementRClass(R, LargestElementConjugateStabChain,
+    function(x,y) return x>y; end);
+end);
+
+InstallMethod(SmallestElementSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup], 
+function(S)
+  local n;
+
+  n:=DegreeOfTransformationSemigroup(S);
+  
+  if ConstantTransformation(n, 1) in MinimalIdeal(S) then 
+    return ConstantTransformation(n, 1);
+  fi;
+
+  return Minimum(List(RClasses(S), SmallestElementRClass));
+end);
+
+InstallMethod(LargestElementSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup], 
+function(S)
+  local n;
+
+  n:=DegreeOfTransformationSemigroup(S);
+  
+  if ConstantTransformation(n, n) in MinimalIdeal(S) then 
+    return ConstantTransformation(n, n);
+  fi;
+
+  return Maximum(List(RClasses(S), LargestElementRClass));
+end);
+
+# different method required (but not yet given!! JDM) for ideals
 
 InstallMethod(IsTransitive, 
 "for a transformation semigroup with generators",
