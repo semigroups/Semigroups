@@ -19,7 +19,7 @@ end);
 InstallMethod(IteratorSorted, "for an R-class", 
 [IsGreensRClass], 
 function(R)
-  local o, m, rep, n, scc, base1, S, out, x, basei, i;
+  local o, m, rep, n, scc, base, S, out, x, basei, i;
   
   if Size(R)=1 then 
     return Representative(R);

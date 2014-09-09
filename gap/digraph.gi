@@ -59,10 +59,7 @@ else
       fi;
       if not marked1[i] then 
         marked2[i]:=true;
-        for j in digraph[i] do
-        #for k in [1..Length(digraph[i])] do 
-        # j:=digraph[i][k];
-        #
+        for j in digraph[i] do 
           if not dfs(j) then 
             return false;
           fi;
