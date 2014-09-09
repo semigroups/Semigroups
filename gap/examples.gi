@@ -352,7 +352,7 @@ end);
 
 #
 
-if not (IsGrapeAvailable and IsGrapeCompiled) then
+if not (IsGrapeLoaded and IsGrapeCompiled) then
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup], 
   function(S)
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
