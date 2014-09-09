@@ -43,38 +43,85 @@ if IsBound(IS_ACYCLIC_DIGRAPH) then
   InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
   [IsDirectedGraph], IS_ACYCLIC_DIGRAPH);
 else 
+#  InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
+#  [IsDirectedGraph], 
+#  function(digraph)
+#    local nr, marked1, marked2, dfs, i;
+#
+#    nr := Length(digraph);
+#    marked1 := BlistList([1..nr], []);
+#    marked2 := BlistList([1..nr], []);
+#
+#    dfs := function(i)
+#      local j;
+#      if marked2[i] then 
+#        return false; # not an acyclic graph!
+#      fi;
+#      if not marked1[i] then 
+#        marked2[i]:=true;
+#        for j in digraph[i] do 
+#          if not dfs(j) then 
+#            return false;
+#          fi;
+#        od;
+#        marked1[i]:=true;
+#        marked2[i]:=false;
+#      fi;
+#      return true;
+#    end;
+#
+#    for i in [1..nr] do 
+#      if not marked1[i] then
+#        if not dfs(i) then 
+#          return false;
+#        fi;
+#      fi;
+#    od;
+#    return true;
+#  end);
+  
   InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
   [IsDirectedGraph], 
-  function(digraph)  
-    local nr, marked1, marked2, dfs, i;
+  function(digraph)
+    local nr, level, stack, len, i, ii, k, marked1, marked2;
 
-    nr := Length(digraph);
+    nr:=Length(digraph);
     marked1 := BlistList([1..nr], []);
     marked2 := BlistList([1..nr], []);
+    stack:=EmptyPlist(2*nr);
 
-    dfs := function(i)
-      local j;
-      if marked2[i] then 
-        return false; # not an acyclic graph!
-      fi;
-      if not marked1[i] then 
-        marked2[i]:=true;
-        for j in digraph[i] do 
-          if not dfs(j) then 
-            return false;
+    for i in [1..nr] do
+      if Length(digraph[i]) = 0 then
+        marked1[i]:=true;
+      elif not marked1[i] then
+
+        level:=1;
+        stack[1]:=i;
+        stack[2]:=1;
+
+        while level > 0 do
+          ii:=stack[level*2-1];
+          k:=stack[level*2];
+          if marked2[ii] then
+            return false;  # We have just travelled around a cycle
+          fi;
+                
+          # Check whether we've already checked this vertex OR
+          # whether we've now chosen all possible branches descending from it
+          if marked1[ii] or k > Length(digraph[ii]) then
+            marked1[ii]:=true;
+            level:=level-1;
+            if level>0 then
+              stack[level*2]:=stack[level*2]+1;
+              marked2[stack[level*2-1]]:=false;
+            fi;
+          else # Otherwise we move onto the next available branch
+            marked2[ii]:=true;
+            level:=level+1;
+            stack[level*2-1]:=digraph[ii][k];
+            stack[level*2]:=1;
           fi;
         od;
-        marked1[i]:=true;
-        marked2[i]:=false;
-      fi;
-      return true;
-    end;
-
-    for i in [1..nr] do 
-      if not marked1[i] then
-        if not dfs(i) then 
-          return false;
-        fi;
       fi;
     od;
     return true;
