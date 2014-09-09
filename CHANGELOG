@@ -7,6 +7,10 @@
 ##
 #############################################################################
 
+2.1 -> 2.1.1 
+	    This is a very minor release to fix an issue caused by only loading
+	    the packages needed (but not required) by Semigroups.
+
 2.0 -> 2.1  
 	    This is a minor release including some bug fixes and performance
 	    improvements. 
