@@ -276,17 +276,17 @@ end);
 
 #
 
-if not IsGrapeAvailable then 
+if not IsGrapeLoaded then 
 
   InstallGlobalFunction(RZMSInducedFunction, 
   function(R, l, g, x, component)
-    Info(InfoWarning, 1, GrapeIsNotAvailableString);
+    Info(InfoWarning, 1, GrapeIsNotLoadedString);
     return fail;
   end);  
 
   InstallGlobalFunction(RZMStoRZMSInducedFunction, 
   function(rms1, rms2, l, g, groupelts)
-    Info(InfoWarning, 1, GrapeIsNotAvailableString);
+    Info(InfoWarning, 1, GrapeIsNotLoadedString);
     return fail;
   end);  
     
@@ -468,7 +468,7 @@ function(R1, R2)
 end);
 
 #
-if not (IsGrapeAvailable and IsGrapeCompiled) then
+if not (IsGrapeLoaded and IsGrapeCompiled) then
   
   InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups", 
   [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],

@@ -158,12 +158,12 @@ end);
 
 #
 
-if not IsGrapeAvailable then 
+if not IsGrapeLoaded then 
   InstallMethod(MaximalSubsemigroups, 
   "for a Rees 0-matrix subsemigroup and a group",
   [IsReesZeroMatrixSubsemigroup, IsGroup], 
   function(R, H)
-    Info(InfoWarning, 1, GrapeIsNotAvailableString);
+    Info(InfoWarning, 1, GrapeIsNotLoadedString);
     return fail;
   end); 
 else
@@ -276,7 +276,7 @@ end);
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 # and only works for Rees 0-matrix semigroup over groups
 
-if not IsGrapeAvailable or not IsGrapeCompiled then 
+if not IsGrapeLoaded or not IsGrapeCompiled then 
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
@@ -528,7 +528,7 @@ fi;
 
 #
 
-if not (IsGrapeAvailable and IsGrapeCompiled) then 
+if not (IsGrapeLoaded and IsGrapeCompiled) then 
   InstallMethod(MaximalSubsemigroups, "for an acting semigroup", 
   [IsActingSemigroup], 
   function(S) 
