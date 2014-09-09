@@ -8,15 +8,15 @@
 #############################################################################
 ##
 
-# deal with GRAPE being available or not, compiled or not
-BindGlobal("IsGrapeAvailable", TestPackageAvailability("grape")<>fail);
+# deal with GRAPE being loaded or not, compiled or not
+BindGlobal("IsGrapeLoaded", IsPackageMarkedForLoading("grape", "4.5"));
 BindGlobal("IsGrapeCompiled",
 ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")<>fail);
 
-if not IsGrapeAvailable then 
+if not IsGrapeLoaded then 
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
-  BindGlobal("GrapeIsNotAvailableString", 
-  Concatenation("the GRAPE package is not available and", 
+  BindGlobal("GrapeIsNotLoadedString", 
+  Concatenation("the GRAPE package is not loaded and", 
   " so this function does not work"));
 fi;
 
@@ -30,7 +30,7 @@ if not IsGrapeCompiled then
   Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
   BindGlobal("GrapeIsNotCompiledString", 
   Concatenation("the nauty/dreadnaut binaries for the GRAPE package are", 
-  " not available\n#I  and so this function does not work")); 
+  " not loaded\n#I  and so this function does not work")); 
 fi;
 
 #
