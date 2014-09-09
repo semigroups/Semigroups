@@ -95,10 +95,10 @@ end);
 
 #
 
-if not IsGrapeAvailable then 
+if not IsGrapeLoaded then 
   InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
   function(R)
-    Info(InfoWarning, 1, GrapeIsNotAvailableString);
+    Info(InfoWarning, 1, GrapeIsNotLoadedString);
     return fail;
   end);  
 
