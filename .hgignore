@@ -88,3 +88,4 @@ src/.libs/semigroups_la-semigroups.o
 src/pkgconfig.h
 src/semigroups_la-semigroups.lo
 src/stamp-h1
+pkgconfig.h.in~
