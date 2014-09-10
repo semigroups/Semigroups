@@ -10,6 +10,8 @@
 
 DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 
+DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
+
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
 IsTransformationSemigroup);
 DeclareAttribute("ComponentsOfTransformationSemigroup",
@@ -26,3 +28,10 @@ DeclareOperation("IsSynchronizingTransformationCollection",
 DeclareProperty("IsTransitive", IsTransformationSemigroup);
 DeclareOperation("IsTransitive", [IsTransformationCollection, IsPosInt]);
 DeclareOperation("IsTransitive", [IsTransformationCollection, IsList]);
+
+DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
+DeclareAttribute("LargestElementSemigroup", IsSemigroup);
+DeclareAttribute("SmallestElementRClass", IsGreensRClass);
+DeclareAttribute("LargestElementRClass", IsGreensRClass);
+
+

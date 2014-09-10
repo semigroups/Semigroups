@@ -14,6 +14,7 @@ if not IsBound(ORBC) then
 fi;
 
 ReadPackage("semigroups/gap/digraph.gd");
+ReadPackage("semigroups/gap/grpperm.gd");
 
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
