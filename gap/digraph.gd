@@ -15,8 +15,27 @@
 
 # in case we want to make a more elaborate data structure in the future 
 
-DeclareSynonym("IsDirectedGraph", IsList);
+DeclareCategory("IsDirectedGraph", IsObject);
 
+BindGlobal("DirectedGraphFamily", NewFamily("DirectedGraphFamily",
+ IsDirectedGraph));
+
+BindGlobal("DirectedGraphType", NewType(DirectedGraphFamily,
+ IsDirectedGraph and IsComponentObjectRep and IsAttributeStoringRep));
+
+# constructors
+DeclareOperation("DirectedGraph", [IsRecord]);
+DeclareOperation("DirectedGraph", [IsList]);
+
+# basic attributes
+DeclareOperation("Vertices", [IsDirectedGraph]);
+DeclareAttribute("Range", IsDirectedGraph);
+DeclareAttribute("Source", IsDirectedGraph);
+DeclareAttribute("Edges", IsDirectedGraph);
+DeclareAttribute("Adjacencies", IsDirectedGraph);
+DeclareProperty("IsSimpleDirectedGraph", IsDirectedGraph);
+
+# operations
 DeclareOperation("DirectedGraphRelabel", [IsDirectedGraph, IsPerm]);
 DeclareOperation("DirectedGraphRemoveLoops", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph]);
