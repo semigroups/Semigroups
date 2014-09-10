@@ -44,7 +44,11 @@ function(R)
     iter := IteratorSortedConjugateStabChain(S, 
      MappingPermListList(base, basei));
     out[i] := IteratorByIterator(iter, 
-      p -> Transformation(image) * p, [IsIteratorSorted] );
+      function(iter, p)
+        return iter!.rep * p;
+      end, 
+      [IsIteratorSorted], ReturnTrue,
+      rec( rep :=  Transformation(image) ) );
   od;
   return CallFuncList(IteratorSortedOp, out);
 end);
