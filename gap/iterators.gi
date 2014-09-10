@@ -8,29 +8,42 @@
 #############################################################################
 ##
 
-InstallMethod(IteratorSorted, "for a list of IsIteratorSorted",
-[IsHomogeneousList], 
-function(list)
+InstallGlobalFunction(IteratorSortedOp,
+function(arg)
   local record, iter;
+  
+  if Length(arg) = 1 and IsList(arg[1]) then 
+    arg := arg[1];
+  fi;
 
-  if Length(list)>0 and IsIteratorSorted(list[1]) then 
+  if Length(arg) > 0 and IsIteratorSorted(arg[1]) then 
     record:=rec();
-    record.indices:=[2..Length(list)];
-    record.base:=list;
-    record.current:=List(record.base, NextIterator);
+    record.indices:=[1..Length(arg)];
+    record.base:=arg;
+    record.current:=[];
+    for iter in record.base do 
+      Add(record.current, NextIterator(iter));
+    od;
 
     record.NextIterator:=function(iter)
       local current, indices, next, pos, i, base;
       
-      current:=iter!.current;
-      indices:=iter!.indices;
-      next:=current[1];
-      pos:=1;
+      current := iter!.current;
+      indices := iter!.indices;
+      next := fail;
+      pos := fail;
 
       for i in indices do 
-        if current[i]<>fail and current[i]<current[1] then 
-          next:=current[i];
-          pos:=i;
+        if current[i] <> fail then 
+          if next <> fail then 
+            if current[i] < next then 
+              next := current[i];
+              pos := i;
+            fi;
+          else 
+            next := current[i];
+            pos := i;
+          fi;
         fi;
       od;
 
@@ -49,22 +62,20 @@ function(list)
     
     record.ShallowCopy:=function(iter)
       local base;
-      base:=List(iter!.base, ShallowCopy);
+      base:=arg(iter!.base, ShallowCopy);
       return rec( base:=base,
                   indices:=iter!.indices,  
-                  current:=List(base, NextIterator) );
+                  current:=arg(base, NextIterator) );
     end;
     
     iter:=IteratorByFunctions(record);
     SetFilterObj(iter, IsIteratorSorted);
     return iter;
-
   fi;
   return fail;
 end);
 
-
-# to lib...
+#
 
 InstallGlobalFunction(IteratorOfArrangements, 
 function(n, m)
@@ -190,15 +201,17 @@ function(record)
     end);
 
   for comp in RecNames(record) do 
-    if comp="ShallowCopy" then 
-      shallow:=record.ShallowCopy(iter);
-      shallow.last_called_by_is_done:=false;
-      shallow.next_value:=fail;
-      iter.ShallowCopy:= iter-> shallow;
-    elif comp<>"NextIterator" then 
+    if comp<>"NextIterator" then 
       iter.(comp):=record.(comp);
     fi;
+  
   od;
+  shallow:=record.ShallowCopy(iter);
+  shallow.last_called_by_is_done:=false;
+  shallow.next_value:=fail;
+  
+  iter.ShallowCopy:= iter -> shallow;
+
   return IteratorByFunctions(iter);
 end);
 
@@ -304,7 +317,6 @@ function(arg)
   iter.baseiter:=arg[1]; 
   
   iter.ShallowCopy:=iter-> rec(baseiter:=ShallowCopy(arg[1]));
-  
 
   # get NextIterator
   if Length(arg)=3 then 
