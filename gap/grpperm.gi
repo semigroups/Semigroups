@@ -100,25 +100,3 @@ function(S, rep, conj)
     return LargestElementConjugateStabChain( S.stabilizer, rep, conj );
 end);
 
-#
-
-#MySift:=function(S, g, factor)
-#  local bpt, img;
-#
-#  while IsBound( S.stabilizer ) and g <> S.identity do
-#    bpt := S.orbit[ 1 ];
-#    img := bpt ^ g;
-#    if IsBound( S.transversal[ img ] )  then
-#      while img <> bpt do
-#        Add(factor, S.transversal[ img ]);
-#        g := g * S.transversal[ img ];
-#        img := bpt ^ g;
-#      od;
-#      S := S.stabilizer;
-#    else
-#      return factor;
-#    fi;
-#  od;
-#  return List(Reversed(factor), x-> x^-1);
-#end;
-
