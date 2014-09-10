@@ -163,7 +163,12 @@ static Obj FuncGABOW_SCC(Obj self, Obj digraph)
 /******************************************************************************
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
+
 static StructGVarFunc GVarFuncs [] = {
+
+  { "GABOW_SCC", 1, "digraph",
+    FuncGABOW_SCC, 
+    "src/semigroups.c:GABOW_SCC" },
 
   { 0 }
 
