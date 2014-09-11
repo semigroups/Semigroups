@@ -89,3 +89,5 @@ src/pkgconfig.h
 src/semigroups_la-semigroups.lo
 src/stamp-h1
 pkgconfig.h.in~
+autom4te.*
+configure

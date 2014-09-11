@@ -199,6 +199,36 @@ function(graph)
   return str;
 end);
 
+InstallMethod(String, "for a directed graph",
+[IsDirectedGraph], 
+function(graph)
+  local str, com, i, nam;
+  
+  str:="DirectedGraph( ";
+  
+  if IsSimpleDirectedGraph(graph) then 
+    return Concatenation(str, PrintString(Adjacencies(graph)), " )");
+  fi;
+  
+  Append(str, "rec( ");
+  com := false;
+  i := 1;
+  for nam in ["range", "source", "vertices"] do
+    if com then
+      Append(str, ", ");
+    else
+      com := true;
+    fi;
+    SET_PRINT_OBJ_INDEX(i);
+    i := i+1;
+    Append(str, nam);
+    Append(str, " := ");
+    Append(str, PrintString(graph!.(nam)));
+  od;
+  Append(str, " )");
+  return str;
+end);
+
 # graph algorithms
 
 InstallMethod(DirectedGraphRemoveLoops, "for a digraph", 
