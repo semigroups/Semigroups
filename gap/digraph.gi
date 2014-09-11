@@ -380,14 +380,13 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
   BindGlobal("DIGRAPH_TOPO_SORT", function(graph, ignoreloops)
     local adj, nr, marked1, marked2, stack, level, ii, k, i, out;
     
-    out := EmptyPlist(nr);
-    
     adj := Adjacencies(graph);
     
     nr:=Length(adj);
     marked1 := BlistList([1..nr], []);
     marked2 := BlistList([1..nr], []);
     stack:=EmptyPlist(2*nr);
+    out := EmptyPlist(nr);
     
     for i in [1..nr] do
       if Length(adj[i]) = 0 then
