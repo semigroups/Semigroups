@@ -1,0 +1,114 @@
+#############################################################################
+##
+#W  graph-inverse.xml
+#Y  Copyright (C) 2014                                  James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="GraphInverseSemigroup">
+<ManSection>
+  <Oper Name="GraphInverseSemigroup" Arg="E"/>
+  <Returns>A graph inverse semigroup.</Returns>
+  <Description>
+    If <A>E</A> is a directed graph (i.e. it satisfies <C>IsDirectedGraph</C>)
+    then <C>GraphInverseSemigroup</C> returns the graph inverse semigroup
+    <C>G(E)</C> where, roughly speaking, elements correspond to paths in the
+    graph <C>E</C>. <P/>
+    
+    Given a directed graph <C><A>E</A>=(E^0,E^1,r,s)</C> the <E>graph inverse
+      semigroup <C>G(E)</C> of <C>E</C></E> is the semigroup with zero generated
+    by the sets <C>E^0</C> and <C>E^1</C>, together with a set of variables
+    <M>\{e^-1 \mid e\in E^1\}</M>, satisfying the following relations for all
+    <M>v,w\in E^0</M> and <M>e,f\in E^1</M>:
+    <List>
+      <Mark>(V)</Mark>
+      <Item><M>vw = \delta_{v,w}\cdot v</M>,</Item>
+
+      <Mark>(E1)</Mark>
+      <Item><M>s(e)\cdot e=e\cdot r(e)=e</M>,</Item>
+        
+      <Mark>(E2)</Mark>
+      <Item><M>s(e)\cdot e = e\cdot r(e) =e</M>,</Item>
+
+      <Mark>(CK1)</Mark>
+      <Item><M>e^{-1}f=\delta_{e,f}\cdot r(e)</M>.</Item>
+    </List>
+    (Here <M>\delta</M> is the Kronecker delta.) We define <M>v^{-1}=v</M> for
+    each <M>v \in E^0</M>, and for any path <M>y=e_1\dots e_n</M> (<M>e_1\dots
+      e_n \in E^1</M>) we let <M>y^{-1} = e_n^{-1} \dots e_1^{-1}</M>. With this
+    notation, every nonzero element of <M>G(E)</M> can be written uniquely as
+    <M>xy^{-1}</M> for some paths <M>x, y</M> in <M>E</M>, by the CK1 relation. 
+
+    <Example><![CDATA[
+gap> gr:= DirectedGraph( [ [ 2, 5, 8, 10 ], [ 2, 3, 4, 5, 6, 8, 9, 10 ], 
+> [ 1 ], [ 3, 5, 7, 8, 10 ], [ 2, 5, 7 ], [ 3, 6, 7, 9, 10 ], [ 1, 4 ], 
+> [ 1, 5, 9 ], [ 1, 2, 7, 8 ], [ 3, 5 ] ] );
+<directed graph with 10 vertices, 37 edges>
+gap> S:=GraphInverseSemigroup(gr);
+#I  the graph defines an infinite semigroup!
+<graph inverse semigroup with 10 vertices, 37 edges>
+gap> GeneratorsOfInverseSemigroup(S);
+[ e_1, e_2, e_3, e_4, e_5, e_6, e_7, e_8, e_9, e_10, e_11, e_12, 
+  e_13, e_14, e_15, e_16, e_17, e_18, e_19, e_20, e_21, e_22, e_23, 
+  e_24, e_25, e_26, e_27, e_28, e_29, e_30, e_31, e_32, e_33, e_34, 
+  e_35, e_36, e_37, v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, 
+  v_10 ]
+gap> AssignGeneratorVariables(S);
+gap> e_1*e_1^-1;
+e_1e_1^-1
+gap> e_1^-1*e_1^-1;
+0
+gap> e_1^-1*e_1;
+v_2]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RangeSourceGraphInverseSemigroupElement">
+<ManSection>
+  <Attr Name="Range" Arg="x" Label="for a graph inverse semigroup element"/>
+  <Attr Name="Source" Arg="x" Label="for a graph inverse semigroup element"/>
+  <Returns></Returns>
+  <Description>
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsVertex">
+<ManSection>
+  <Attr Name="IsVertex" Arg="x" Label="for a graph inverse semigroup element"/>
+  <Returns></Returns>
+  <Description>
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsGraphInverseSemigroup">
+<ManSection>
+  <Filt Name="IsGraphInverseSemigroup" Arg="x"/>
+  <Filt Name="IsGraphInverseSemigroupElement" Arg="x"/>
+  <Returns></Returns>
+  <Description>
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="GraphOfGraphInverseSemigroup">
+<ManSection>
+  <Filt Name="GraphOfGraphInverseSemigroup" Arg="x"/>
+  <Returns></Returns>
+  <Description>
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

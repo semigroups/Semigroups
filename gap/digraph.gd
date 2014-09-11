@@ -26,6 +26,7 @@ BindGlobal("DirectedGraphType", NewType(DirectedGraphFamily,
 # constructors
 DeclareOperation("DirectedGraph", [IsRecord]);
 DeclareOperation("DirectedGraph", [IsList]);
+DeclareOperation("RandomSimpleDirectedGraph", [IsPosInt]);
 
 # basic attributes
 DeclareOperation("Vertices", [IsDirectedGraph]);

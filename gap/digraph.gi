@@ -10,6 +10,25 @@
 
 # constructors
 
+InstallMethod(RandomSimpleDirectedGraph, "for a pos int",
+[IsPosInt], 
+function(n)
+  local verts, adj, nr, i, j;
+
+  verts := [1..n];
+  adj := [];
+  
+  for i in verts do 
+    nr := Random(verts);
+    adj[i] := [];
+    for j in [1..nr] do 
+      AddSet(adj[i], Random(verts));
+    od;
+  od;
+
+  return DirectedGraph(adj);
+end);
+
 InstallMethod(DirectedGraph, "for a record", [IsRecord], 
 function(record)
   local i;
@@ -75,8 +94,8 @@ function(adjacencies)
   local record, names, i, j;
 
   if not ForAll(adjacencies, x -> ForAll(x, i -> IsPosInt(i) 
-    and i <= Length(adjacencies))) then
-    Error("usage: the argument must be a list of lists of positive", 
+    and i <= Length(adjacencies)) and IsDuplicateFreeList(x)) then
+    Error("usage: the argument must be a list of duplicate free lists of positive", 
     " integers not exceeding the length of the argument,");
     return;
   fi;
