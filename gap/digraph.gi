@@ -378,41 +378,98 @@ fi;
 
 if not IsBound(DIGRAPH_TOPO_SORT) then 
   BindGlobal("DIGRAPH_TOPO_SORT", function(graph, ignoreloops)
-    local adj, nr, out, marked1, marked2, dfs, i;
+    local adj, nr, marked1, marked2, stack, level, ii, k, i, out;
+    
+    out := EmptyPlist(nr);
     
     adj := Adjacencies(graph);
-    nr := Length(adj);
-    out := EmptyPlist(nr);
+    
+    nr:=Length(adj);
     marked1 := BlistList([1..nr], []);
     marked2 := BlistList([1..nr], []);
-
-    dfs := function(i)
-      local j;
-      if marked2[i] then 
-        if not ignoreloops then 
-          Error("the digraph is not acyclic,");
-        fi;
-        return; # not an acyclic graph!
-      fi;
-      if not marked1[i] then 
-        marked2[i]:=true;
-        for j in adj[i] do 
-          dfs(j);
-        od;
+    stack:=EmptyPlist(2*nr);
+    
+    for i in [1..nr] do
+      if Length(adj[i]) = 0 then
         marked1[i]:=true;
-        marked2[i]:=false;
-        Add(out, i);
-      fi;
-    end;
+      elif not marked1[i] then
 
-    for i in [1..nr] do 
-      if not marked1[i] then 
-        dfs(i);
+        level:=1;
+        stack[1]:=i;
+        stack[2]:=1;
+
+        while level > 0 do
+          ii:=stack[level*2-1];
+          k:=stack[level*2];
+          if marked2[ii] then
+            if not ignoreloops then 
+              Error("the digraph is not acyclic,");
+            fi;
+            return; # not an acyclic graph!
+            # ignoreloops?
+          fi;
+                
+          # Check whether we've already checked this vertex OR
+          # whether we've now chosen all possible branches descending from it
+          if marked1[ii] or k > Length(adj[ii]) then
+            if not marked1[ii] then
+              Add(out, ii);
+            fi;
+
+            marked1[ii]:=true;
+            level:=level-1;
+            if level>0 then
+              stack[level*2]:=stack[level*2]+1;
+              marked2[stack[level*2-1]]:=false;
+            fi;
+          else # Otherwise we move onto the next available branch
+            marked2[ii]:=true;
+            level:=level+1;
+            stack[level*2-1]:=adj[ii][k];
+            stack[level*2]:=1;
+          fi;
+        od;
       fi;
     od;
     return out;
   end);
 fi;
+#function(graph, ignoreloops)
+#    local adj, nr, out, marked1, marked2, dfs, i;
+#    
+#    adj := Adjacencies(graph);
+#    nr := Length(adj);
+#    out := EmptyPlist(nr);
+#    marked1 := BlistList([1..nr], []);
+#    marked2 := BlistList([1..nr], []);
+#
+#    dfs := function(i)
+#      local j;
+#      if marked2[i] then 
+#        if not ignoreloops then 
+#          Error("the digraph is not acyclic,");
+#        fi;
+#        return; # not an acyclic graph!
+#      fi;
+#      if not marked1[i] then 
+#        marked2[i]:=true;
+#        for j in adj[i] do 
+#          dfs(j);
+#        od;
+#        marked1[i]:=true;
+#        marked2[i]:=false;
+#        Add(out, i);
+#      fi;
+#    end;
+#
+#    for i in [1..nr] do 
+#      if not marked1[i] then 
+#        dfs(i);
+#      fi;
+#    od;
+#    return out;
+#  end);
+#fi;
 
 InstallMethod(DirectedGraphTopologicalSort, "for a digraph", 
 [IsDirectedGraph], x-> DIGRAPH_TOPO_SORT(x, false));
