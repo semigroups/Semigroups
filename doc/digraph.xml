@@ -1,0 +1,184 @@
+#############################################################################
+##
+#W  digraph.xml
+#Y  Copyright (C) 2014                                  James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="DirectedGraph">
+<ManSection>
+  <Oper Name="DirectedGraph" Arg="obj"/>
+  <Returns>A directed graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+gap> gr:= DirectedGraph( [ [ 2, 5, 8, 10 ], [ 2, 3, 4, 5, 6, 8, 9, 10 ], 
+> [ 1 ], [ 3, 5, 7, 8, 10 ], [ 2, 5, 7 ], [ 3, 6, 7, 9, 10 ], [ 1, 4 ], 
+> [ 1, 5, 9 ], [ 1, 2, 7, 8 ], [ 3, 5 ] ] );
+<directed graph with 10 vertices, 37 edges>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="GrapeGraph">
+<ManSection>
+  <Oper Name="Graph" Arg="digraph"/>
+  <Returns>A Grape package graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsDirectedGraph">
+<ManSection>
+  <Filt Name="IsDirectedGraph" Type='Category'/>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomSimpleDirectedGraph">
+<ManSection>
+  <Oper Name="RandomSimpleDirectedGraph" Arg="digraph"/>
+  <Returns>A directed graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Vertices">
+<ManSection>
+  <Oper Name="Vertices" Arg="digraph"/>
+  <Returns>The vertices of a directed graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RangeSourceDigraph">
+<ManSection>
+  <Attr Name="Range" Arg="digraph"/>
+  <Attr Name="Source" Arg="digraph"/>
+  <Returns>A list of positive integers.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Adjacencies">
+<ManSection>
+  <Attr Name="Adjacencies" Arg="digraph"/>
+  <Returns>The adjacencies of a directed graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSimpleDirectedGraph">
+<ManSection>
+  <Prop Name="IsSimpleDirectedGraph" Arg="digraph"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsStronglyConnectedDirectedGraph">
+<ManSection>
+  <Prop Name="IsStronglyConnectedDirectedGraph" Arg="digraph"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsAcyclicDirectedGraph">
+<ManSection>
+  <Prop Name="IsAcyclicDirectedGraph" Arg="digraph"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DirectedGraphRelabel">
+<ManSection>
+  <Oper Name="DirectedGraphRelabel" Arg="digraph, perm"/>
+  <Returns>A directed graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DirectedGraphRemoveLoops">
+<ManSection>
+  <Oper Name="DirectedGraphRemoveLoops" Arg="digraph"/>
+  <Returns>A directed graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DirectedGraphTopologicalSort">
+<ManSection>
+  <Oper Name="DirectedGraphTopologicalSort" Arg="digraph"/>
+  <Returns>A list of positive integers.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DirectedGraphReflexiveTransitiveClosure">
+<ManSection>
+  <Oper Name="DirectedGraphReflexiveTransitiveClosure" Arg="digraph"/>
+  <Oper Name="DirectedGraphTransitiveClosure" Arg="digraph"/>
+  <Returns>A directed graph.</Returns>
+  <Description>
+  
+    <Example><![CDATA[
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+

@@ -35,7 +35,11 @@ DeclareAttribute("Range", IsDirectedGraph);
 DeclareAttribute("Source", IsDirectedGraph);
 DeclareAttribute("Edges", IsDirectedGraph);
 DeclareAttribute("Adjacencies", IsDirectedGraph);
+
+# properties
 DeclareProperty("IsSimpleDirectedGraph", IsDirectedGraph);
+DeclareProperty("IsStronglyConnectedDirectedGraph", IsDirectedGraph);
+DeclareProperty("IsAcyclicDirectedGraph", IsDirectedGraph);
 
 # operations
 DeclareOperation("DirectedGraphRelabel", [IsDirectedGraph, IsPerm]);
@@ -45,6 +49,4 @@ DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph, IsBool]);
 DeclareOperation("DirectedGraphReflexiveTransitiveClosure", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphTransitiveClosure", [IsDirectedGraph]);
 
-DeclareProperty("IsStronglyConnectedDirectedGraph", IsDirectedGraph);
-DeclareProperty("IsAcyclicDirectedGraph", IsDirectedGraph);
 
