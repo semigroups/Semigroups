@@ -83,4 +83,4 @@ gap>
 gap> SemigroupsStopTest();
 
 #
-gap> STOP_TEST( "Semigroups package: normalizer.tst", 0);
+gap> STOP_TEST( "Semigroups package: graph-inverse.tst", 0);
