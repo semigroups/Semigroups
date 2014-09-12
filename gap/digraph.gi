@@ -10,6 +10,18 @@
 
 # constructors
 
+InstallMethod(Graph, "for a directed graph", 
+[IsDirectedGraph], 
+function(graph)
+  local adj;
+
+  adj:=function(i, j)
+    return j in Adjacencies(graph)[i];
+  end;
+
+  return Graph(Group(()), Vertices(graph), OnPoints, adj, true); 
+end);
+
 InstallMethod(RandomSimpleDirectedGraph, "for a pos int",
 [IsPosInt], 
 function(n)
@@ -32,7 +44,11 @@ end);
 InstallMethod(DirectedGraph, "for a record", [IsRecord], 
 function(record)
   local i;
-  
+ 
+  if IsGraph(record) then 
+    return DirectedGraph(record.adjacencies);
+  fi;
+
   if not (IsBound(record.source) and IsBound(record.range) and 
     IsBound(record.vertices)) then 
     Error("usage: the argument must be a record with components `source',", 
@@ -165,6 +181,15 @@ function(graph)
     AddSet(out[i], range[i]);
   od;
   return out;
+end);
+
+# operators
+
+InstallMethod(\=, "for directed graphs",
+[IsDirectedGraph, IsDirectedGraph], 
+function(graph1, graph2)
+  return Vertices(graph1)=Vertices(graph2) and Range(graph1)=Range(graph2) 
+   and Source(graph1)=Source(graph2);
 end);
 
 # simple means no multiple edges (loops are allowed)
