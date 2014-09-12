@@ -48,14 +48,13 @@ gap> gr:= DirectedGraph( [ [ 2, 5, 8, 10 ], [ 2, 3, 4, 5, 6, 8, 9, 10 ],
 > [ 1, 5, 9 ], [ 1, 2, 7, 8 ], [ 3, 5 ] ] );
 <directed graph with 10 vertices, 37 edges>
 gap> S:=GraphInverseSemigroup(gr);
-#I  the graph defines an infinite semigroup!
 <graph inverse semigroup with 10 vertices, 37 edges>
 gap> GeneratorsOfInverseSemigroup(S);
 [ e_1, e_2, e_3, e_4, e_5, e_6, e_7, e_8, e_9, e_10, e_11, e_12, 
   e_13, e_14, e_15, e_16, e_17, e_18, e_19, e_20, e_21, e_22, e_23, 
   e_24, e_25, e_26, e_27, e_28, e_29, e_30, e_31, e_32, e_33, e_34, 
-  e_35, e_36, e_37, v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, 
-  v_10 ]
+  e_35, e_36, e_37, v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10 
+ ]
 gap> AssignGeneratorVariables(S);
 gap> e_1*e_1^-1;
 e_1e_1^-1
