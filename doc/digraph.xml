@@ -49,7 +49,7 @@
         edge is <C>i</C> and the range is <C>j</C>.
       </Item>
       
-      <Mark>for a <Package>Grape</Package> package graph</Mark>
+      <Mark>for a Grape package graph</Mark>
       <Item>
         if <A>obj</A> is a &Grape; package graph (i.e. a record for which the
         function <C>IsGraph</C> returns <K>true</K>), then this function returns
@@ -81,24 +81,37 @@ gap> DirectedGraph(Petersen);
 <#GAPDoc Label="GrapeGraph">
 <ManSection>
   <Oper Name="Graph" Arg="digraph"/>
-  <Returns>A Grape package graph.</Returns>
+  <Returns>A <Package>Grape</Package> package graph.</Returns>
   <Description>
-  
+    If <A>digraph</A> is a directed graph, then this method returns a &Grape;
+    package graph, that is isomorphic to <A>digraph</A>.
+    
     <Example><![CDATA[
+gap> Petersen := Graph( SymmetricGroup(5), [[1,2]], OnSets,
+> function(x,y) return Intersection(x,y)=[]; end );;
+gap> DirectedGraph(Petersen);
+<directed graph with 10 vertices, 30 edges>
+gap> Graph(last);
+rec( adjacencies := [ [ 3, 5, 8 ], [ 5, 7, 9 ], [ 1, 7, 10 ], [ 5, 6, 10 ], [ 1, 2, 4 ], 
+    [ 4, 7, 8 ], [ 2, 3, 6 ], [ 1, 6, 9 ], [ 2, 8, 10 ], [ 3, 4, 9 ] ], group := Group(()), 
+isGraph := true, names := [ 1 .. 10 ], order := 10, 
+representatives := [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
+schreierVector := [ -1, -2, -3, -4, -5, -6, -7, -8, -9, -10 ] )
 ]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
 
-
 <#GAPDoc Label="RandomSimpleDirectedGraph">
 <ManSection>
-  <Oper Name="RandomSimpleDirectedGraph" Arg="digraph"/>
+  <Oper Name="RandomSimpleDirectedGraph" Arg="n"/>
   <Returns>A directed graph.</Returns>
   <Description>
-  
-    <Example><![CDATA[
-]]></Example>
+    Returns a random simple directed graph with <A>n</A> vertices.
+    <Log><![CDATA[
+gap> RandomSimpleDirectedGraph(1000);
+<directed graph with 1000 vertices, 364444 edges>
+]]></Log>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -108,8 +121,23 @@ gap> DirectedGraph(Petersen);
   <Oper Name="Vertices" Arg="digraph"/>
   <Returns>The vertices of a directed graph.</Returns>
   <Description>
-  
+    Returns the vertices of the directed graph <A>digraph</A>. <P/>
+
+    <B>Note that:</B> the vertices of a directed graph are always a range of
+    positive integers from <C>1</C> to the number of vertices of the graph. 
     <Example><![CDATA[
+gap> gr:=DirectedGraph(rec(vertices:=["a", "b", "c"],
+> source:=["a", "b", "b"], range:=["b", "c", "a"]));
+<directed graph with 3 vertices, 3 edges>
+gap> Vertices(gr);
+[ 1 .. 3 ]
+gap> gr:=DirectedGraph(rec(vertices:=[1,2,3,4,5,7],
+> source:=[1,2,2,4,4], range:=[2,3,5,3,5]));
+<directed graph with 6 vertices, 5 edges>
+gap> Vertices(gr);
+[ 1 .. 6 ]
+gap> Vertices(RandomSimpleDirectedGraph(100));
+[ 1 .. 100 ]
 ]]></Example>
   </Description>
 </ManSection>
@@ -120,8 +148,15 @@ gap> DirectedGraph(Petersen);
   <Attr Name="Edges" Arg="digraph"/>
   <Returns>The edges of a directed graph.</Returns>
   <Description>
-  
+    Returns the edges of the directed graph <A>digraph</A>, that is, a list of
+    pairs of elements of <Ref Oper="Vertices"/>.
     <Example><![CDATA[
+gap> gr:= DirectedGraph( [ [ 1, 3, 4, 5 ], [ 1, 2, 3, 5 ], [ 2, 4, 5 ], 
+> [ 2, 4, 5 ], [ 1 ] ] );
+<directed graph with 5 vertices, 15 edges>
+gap> Edges(gr);
+[ [ 1, 1 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 2, 1 ], [ 2, 2 ], [ 2, 3 ], [ 2, 5 ], [ 3, 2 ], 
+  [ 3, 4 ], [ 3, 5 ], [ 4, 2 ], [ 4, 4 ], [ 4, 5 ], [ 5, 1 ] ]
 ]]></Example>
   </Description>
 </ManSection>
@@ -133,8 +168,21 @@ gap> DirectedGraph(Petersen);
   <Attr Name="Source" Arg="digraph"/>
   <Returns>A list of positive integers.</Returns>
   <Description>
-  
+    <C>Range</C> and <C>Source</C> return the range and source of the directed
+    graph <A>digraph</A>. More precisely, position <C>i</C> in
+    <C>Range(<A>digraph</A>)</C> is the range of the <C>i</C>th edge of
+    <A>digraph</A>. 
+
     <Example><![CDATA[
+gap> gr:=DirectedGraph( [ [ 1, 2, 3, 5 ], [ 1, 3, 4 ], [ 2, 3 ], 
+> [ 2 ], [ 1, 2, 3, 4 ] ] )
+gap> Range(gr);
+[ 1, 2, 3, 5, 1, 3, 4, 2, 3, 2, 1, 2, 3, 4 ]
+gap> Source(gr);
+[ 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5, 5, 5, 5 ]
+gap> Edges(gr);
+[ [ 1, 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 5 ], [ 2, 1 ], [ 2, 3 ], [ 2, 4 ], [ 3, 2 ], [ 3, 3 ], 
+  [ 4, 2 ], [ 5, 1 ], [ 5, 2 ], [ 5, 3 ], [ 5, 4 ] ]
 ]]></Example>
   </Description>
 </ManSection>
@@ -145,8 +193,27 @@ gap> DirectedGraph(Petersen);
   <Attr Name="Adjacencies" Arg="digraph"/>
   <Returns>The adjacencies of a directed graph.</Returns>
   <Description>
-  
+    Returns the list <C>adj</C> of adjacencies of the directed graph
+    <A>digraph</A>. More specifically, <C>j</C> belongs to <C>adj[i]</C>
+    whenever there is an edge from <C>i</C> to <C>j</C> in <A>digraph</A>. <P/>
+
+    A <A>digraph</A> is a simple directed graph if and only if it is defined by
+    its adjacencies. 
+
     <Example><![CDATA[
+gap> gr:=DirectedGraph(rec(vertices:=["a", "b", "c"],
+> source:=["a", "b", "b"], range:=["b", "c", "a"]));
+[ [ 2 ], [ 1, 3 ], [  ] ]
+gap> gr:=DirectedGraph(rec(vertices:=[1..3], 
+> source:=[1,2,3,1,1,2], range:=[1,2,3,2,3,1]));
+<directed graph with 3 vertices, 6 edges>
+gap> Adjacencies(gr);
+[ [ 1, 2, 3 ], [ 1, 2 ], [ 3 ] ]
+gap> gr:=DirectedGraph(rec(vertices:=[1..3],
+> source:=[1,2,3,1,1,2,1], range:=[1,2,3,2,3,1,2]));
+<directed graph with 3 vertices, 7 edges>
+gap> Adjacencies(gr);
+[ [ 1, 2, 3 ], [ 1, 2 ], [ 3 ] ]
 ]]></Example>
   </Description>
 </ManSection>

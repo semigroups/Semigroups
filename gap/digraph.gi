@@ -173,13 +173,16 @@ end);
 InstallMethod(Adjacencies, "for a directed graph",
 [IsDirectedGraph], 
 function(graph)
-  local out, range, i;
+  local range, source, out, i;
+  
+  range:=Range(graph);
+  source:=Source(graph);
   out:=List(Vertices(graph), x-> []);
 
-  range:=Range(graph);
-  for i in Source(graph) do 
-    AddSet(out[i], range[i]);
+  for i in [1..Length(source)] do 
+    AddSet(out[source[i]], range[i]);
   od;
+
   return out;
 end);
 
