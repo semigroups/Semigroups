@@ -13,6 +13,10 @@ InstallMethod(Enumerate, "for an ideal orb, and a number",
 function(o, limit)
   local newlookfunc;
 
+  if IsClosed(o) then 
+    return o;
+  fi;
+
   newlookfunc := function(data, x)
     return IsClosed(o) or Length(o) >= limit;
   end;

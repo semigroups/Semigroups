@@ -7,7 +7,8 @@
     <Email>jdm3@st-and.ac.uk</Email>
     <Homepage>http://tinyurl.com/jdmitchell</Homepage>
   </Author>
-
+  
+  <Author>Manuel Delgado</Author>
   <Author>James East</Author>
   <Author>Attila Egri-Nagy</Author>
   <Author>Julius Jonu&#353;as</Author>
@@ -58,6 +59,9 @@
     suggestions and to M. Neunhoeffer for his invaluable help in improving the
     efficiency of the package. <P/>
 
+    Manuel Delgado and Attila Egri-Nagy contributed to the functions
+    <Ref Func="Splash"/> and <Ref Oper="DotDClasses"/>.<P/>
+      
     James East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of
     the package relating to bipartitions. I would like to thank the University
     of Western Sydney for their support of the development of this part of the

@@ -40,7 +40,7 @@ IsActingSemigroupGreensClass);
 DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 
 DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
-DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
+
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
 
 DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);

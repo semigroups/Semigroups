@@ -13,6 +13,7 @@ DeclareOperation("SingularJonesMonoid", [IsPosInt]);
 DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
 
 DeclareOperation("BrauerMonoid", [IsPosInt]);
+DeclareOperation("PartialBrauerMonoid", [IsPosInt]);
 DeclareOperation("SingularBrauerMonoid", [IsPosInt]);
 DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
