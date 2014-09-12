@@ -46,7 +46,7 @@ function(record)
   local i;
  
   if IsGraph(record) then 
-    return DirectedGraph(record.adjacencies);
+    return DirectedGraph(List(Vertices(record), x-> Adjacency(record, x)));
   fi;
 
   if not (IsBound(record.source) and IsBound(record.range) and 
