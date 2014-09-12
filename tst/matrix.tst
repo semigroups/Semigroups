@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  matrix.tst
-#Y  Copyright (C) 2014                               Markus Pfeiffer
+#Y  Copyright (C) 2014                                    Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -34,8 +34,7 @@ gap> S := Semigroup(M);
 <semigroup of 16x16 matrices over GF(2) with 1 generator>
 gap> Size(S);
 7161
-gap>
-#
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: matrix.tst", 10000);
