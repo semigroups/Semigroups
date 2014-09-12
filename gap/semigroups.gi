@@ -378,7 +378,7 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators, 
 "for an associative element collection",
-[IsCollection],
+[IsCollection], 6, # to beat the library method with IsAssociativeElementCollection
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then 
     return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
@@ -449,7 +449,7 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators, 
 "for an associative element collection and record",
-[IsCollection, IsRecord],
+[IsCollection, IsRecord], 
 function(gens, record)
   local n, closure_opts, s, filts, pos, f;
 
