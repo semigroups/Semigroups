@@ -643,9 +643,13 @@ function(n)
 
   out:=EmptyPlist(n);
   out[1]:=PartialPermNC([0..n-1]);
+  if n = 1 then 
+    Add(out, PartialPermNC([1]));
+  fi;
   for i in [0..n-2] do 
     out[i+2]:=[1..n];
-    out[i+2][(n-i)-1]:=n-i; out[i+2][n-i]:=0;
+    out[i+2][(n-i)-1]:=n-i; 
+    out[i+2][n-i]:=0;
     out[i+2]:=PartialPermNC(out[i+2]);
   od;
   return InverseMonoid(out); 
