@@ -338,7 +338,7 @@ InstallMethod(DirectedGraphRelabel, "for a digraph and perm",
 [IsDirectedGraph, IsPerm], 
 function(graph, perm)
   
-  if OnSets(Vertices(graph), perm) = Vertices(graph) then 
+  if OnSets(Vertices(graph), perm) <> Vertices(graph) then 
     Error("usage: the 2nd argument <perm> must permute ", 
     "the vertices of the 1st argument <graph>,");
     return;
