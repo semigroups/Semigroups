@@ -44,6 +44,7 @@
   <Section><Heading>Operations  on directed graphs</Heading> 
     <#Include Label="DirectedGraphRelabel"> 
     <#Include Label="DirectedGraphRemoveLoops"> 
+    <#Include Label="DirectedGraphRemoveEdges"> 
     <#Include Label="DirectedGraphTopologicalSort"> 
     <#Include Label="DirectedGraphReflexiveTransitiveClosure"> 
   </Section>

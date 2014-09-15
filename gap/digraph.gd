@@ -26,6 +26,7 @@ BindGlobal("DirectedGraphType", NewType(DirectedGraphFamily,
 # constructors
 DeclareOperation("DirectedGraph", [IsRecord]);
 DeclareOperation("DirectedGraph", [IsList]);
+DeclareOperation("DirectedGraph", [IsList, IsFunction]);
 DeclareOperation("Graph", [IsDirectedGraph]);
 DeclareOperation("RandomSimpleDirectedGraph", [IsPosInt]);
 
@@ -44,6 +45,7 @@ DeclareProperty("IsAcyclicDirectedGraph", IsDirectedGraph);
 # operations
 DeclareOperation("DirectedGraphRelabel", [IsDirectedGraph, IsPerm]);
 DeclareOperation("DirectedGraphRemoveLoops", [IsDirectedGraph]);
+DeclareOperation("DirectedGraphRemoveEdges", [IsDirectedGraph, IsList]);
 DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph, IsBool]);
 DeclareOperation("DirectedGraphReflexiveTransitiveClosure", [IsDirectedGraph]);

@@ -41,6 +41,18 @@ function(n)
   return DirectedGraph(adj);
 end);
 
+# <func> must be a function that accepts a record (defining a digraph) and
+# returns another such record. 
+
+InstallMethod(DirectedGraph, "for a list and a function", [IsList, IsFunction], 
+function(vertices, func)
+  local record;
+  record:=rec(vertices:=vertices, source:=[], range:=[]);
+  return DirectedGraph(func(record));
+end);
+
+#
+
 InstallMethod(DirectedGraph, "for a record", [IsRecord], 
 function(record)
   local i;
@@ -300,10 +312,38 @@ function(graph)
                             vertices:=ShallowCopy(Vertices(graph))));
 end);
 
+InstallMethod(DirectedGraphRemoveEdges, "for a digraph and a list", 
+[IsDirectedGraph, IsList], 
+function(graph, edges)
+  local source, range, newsource, newrange, i;
+  
+  source := Source(graph);
+  range := Range(graph);
+
+  newsource := [ ];
+  newrange := [ ];
+  
+  for i in [ 1 .. Length(source) ] do 
+    if not [ source[i], range[i] ] in edges then 
+      Add(newrange, range[i]);
+      Add(newsource, source[i]);
+    fi;
+  od;
+
+  return DirectedGraph(rec( source:=newsource, range:=newrange, 
+                            vertices:=ShallowCopy(Vertices(graph))));
+end);
+
 InstallMethod(DirectedGraphRelabel, "for a digraph and perm",
 [IsDirectedGraph, IsPerm], 
 function(graph, perm)
   
+  if OnSets(Vertices(graph), perm) = Vertices(graph) then 
+    Error("usage: the 2nd argument <perm> must permute ", 
+    "the vertices of the 1st argument <graph>,");
+    return;
+  fi;
+
   return DirectedGraph(rec( 
     source := ShallowCopy(OnTuples(Source(graph), perm)), 
     range:= ShallowCopy(OnTuples(Range(graph), perm)), 
