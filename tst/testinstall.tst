@@ -782,6 +782,11 @@ gap> I:=SemigroupIdeal(T, [ PartialPerm( [ 1, 2, 4, 5 ], [ 1, 2, 3, 5 ] )]);
 gap> Size(I);
 626
 
+# Issue 105 (CyclesOfPartialPerm returned nonsense)
+gap> x:=PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], [ 3, 1, 4, 2, 5, 6, 7 ] );;
+gap> CyclesOfPartialPerm(x);
+[ [ 3, 4, 2, 1 ], [ 5 ] ]
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

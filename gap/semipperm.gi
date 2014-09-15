@@ -145,7 +145,8 @@ function(f)
     if seen[i] then 
       j:=i^f;
       cycle:=[j];
-      while j<>i do 
+      while j<>i do
+        seen[j]:=false;
         j:=j^f;
         Add(cycle, j);
       od;
