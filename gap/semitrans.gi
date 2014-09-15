@@ -233,7 +233,7 @@ function(coll, n)
     od;
   od;
 
-  return IsStronglyConnectedDirectedGraph(graph);
+  return IsStronglyConnectedDirectedGraph(DirectedGraph(graph));
 end);
 
 InstallMethod(IsTransitive, 
@@ -268,7 +268,7 @@ function(coll, set)
     od;
   od;
 
-  return IsStronglyConnectedDirectedGraph(graph);
+  return IsStronglyConnectedDirectedGraph(DirectedGraph(graph));
 end);
 
 # same method for ideals
