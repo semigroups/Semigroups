@@ -353,49 +353,12 @@ end);
 if IsBound(IS_ACYCLIC_DIGRAPH) then 
   InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
   [IsDirectedGraph], IS_ACYCLIC_DIGRAPH);
-else 
-#  InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
-#  [IsDirectedGraph], 
-#  function(digraph)
-#    local nr, marked1, marked2, dfs, i;
-#
-#    nr := Length(digraph);
-#    marked1 := BlistList([1..nr], []);
-#    marked2 := BlistList([1..nr], []);
-#
-#    dfs := function(i)
-#      local j;
-#      if marked2[i] then 
-#        return false; # not an acyclic graph!
-#      fi;
-#      if not marked1[i] then 
-#        marked2[i]:=true;
-#        for j in digraph[i] do 
-#          if not dfs(j) then 
-#            return false;
-#          fi;
-#        od;
-#        marked1[i]:=true;
-#        marked2[i]:=false;
-#      fi;
-#      return true;
-#    end;
-#
-#    for i in [1..nr] do 
-#      if not marked1[i] then
-#        if not dfs(i) then 
-#          return false;
-#        fi;
-#      fi;
-#    od;
-#    return true;
-#  end);
-  
+else
   InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
   [IsDirectedGraph], 
   function(graph)
     local adj, nr, marked1, marked2, stack, level, ii, k, i;
-    
+
     adj := Adjacencies(graph);
 
     nr:=Length(adj);
