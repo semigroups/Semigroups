@@ -23,7 +23,6 @@
 gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 &gt;                          Z(4) * [[0,0,0],[0,0,1],[0,1,0]]);
 &lt;semigroup of 3x3 matrices over GF(2^2) with 2 generators&gt;
-gap>
   </Example>
   <M>S</M> is now a semigroup object for all intents and purposes of
   &Semigroups;
@@ -34,7 +33,6 @@ gap>
 gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 &gt;                          Z(4) * [[0,0,0],[0,0,1],[0,1,0]]], GF(4), 3);
 &lt;semigroup of 3x3 matrices over GF(2^2) with 2 generators&gt;
-gap>
   </Example>
   Note that for this usage the generators have to be given as a list as
   the first argument to <Ref Func="MatrixSemigroup"/>.

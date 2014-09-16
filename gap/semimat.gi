@@ -106,32 +106,6 @@ function( S, V, mat )
         return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
 end);
 
-InstallMethod(LambdaBound,
-	"for a matrix semigroup",
-        [IsMatrixSemigroup],
-	S -> function(r)
-  	    local f;
-
-            if r < 100 then
-		    f := Representative(S);
-		    return Size(GL(DimensionsMat(f)[1], BaseDomain(f)));
-            else
-                    return infinity;
-            fi;
-        end);
-
-InstallMethod(LambdaIdentity,
-	"for a matrix semigroup",
-        [IsMatrixSemigroup],
-	S -> function(r)
-  	    local f, one;
-
-	    f := Representative(S);
-            one := IdentityMat(r, BaseDomain(f));
-
-            return one;
-        end);
-
 #T returns an invertible matrix
 #T make pretty and efficient (in that order)
 InstallGlobalFunction(MatrixObjSchutzGrpElement,

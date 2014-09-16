@@ -16,7 +16,7 @@
 # IsGeneratorsOfActingSemigroup
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a collection",
-[IsCollection], ReturnFalse); 
+[IsCollection], ReturnFalse);
 
 # In the below can't do ReturnTrue, since GAP insists that we use
 # InstallTrueMethod.
@@ -38,8 +38,8 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection",
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection",
 [IsBipartitionCollection], x-> true);
 
-InstallMethod(IsGeneratorsOfActingSemigroup, 
-"for a Rees 0-matrix semigroup element collection", 
+InstallMethod(IsGeneratorsOfActingSemigroup,
+"for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection],
 function(coll)
   local R;
@@ -47,17 +47,17 @@ function(coll)
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
-InstallMethod(IsGeneratorsOfActingSemigroup, 
-"for a homogeneous list in IsFFECollCollColl", 
-[IsHomogeneousList and IsFFECollCollColl], 
+InstallMethod(IsGeneratorsOfActingSemigroup,
+"for a homogeneous list in IsFFECollCollColl",
+[IsHomogeneousList and IsFFECollCollColl],
 function(coll)
   local dims, x;
 
   if (Length(coll) > 0) and (IsMatrixObj(coll[1])) then
     dims := DimensionsMat(coll[1]);
 
-    if dims[1] <> dims[2] then 
-      return false; 
+    if dims[1] <> dims[2] then
+      return false;
     fi;
     for x in coll do
       if DimensionsMat(x) <> dims then
@@ -119,7 +119,7 @@ InstallMethod(ActionDegree, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection],
 function(coll)
   local R;
-  if ForAny(coll, x-> x![1]<>0) then 
+  if ForAny(coll, x-> x![1]<>0) then
     R:=ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
     return NrMovedPoints(UnderlyingSemigroup(R))+1;
   else
@@ -150,8 +150,8 @@ InstallMethod(ActionDegree, "for a bipartition semigroup",
 
 InstallMethod(ActionDegree, "for a Rees 0-matrix subsemigroup with generators",
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
-function(R) 
-  if ForAny(GeneratorsOfSemigroup(R), x-> x![1]<>0) then 
+function(R)
+  if ForAny(GeneratorsOfSemigroup(R), x-> x![1]<>0) then
     return NrMovedPoints(UnderlyingSemigroup(
       ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1;
   else
@@ -207,16 +207,16 @@ end);
 InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(f, n)
-  if f![1]=0 then 
+  if f![1]=0 then
     return 0;
   else
     return NrMovedPoints(UnderlyingSemigroup(
-      ReesMatrixSemigroupOfFamily(FamilyObj(f))))+1; 
+      ReesMatrixSemigroupOfFamily(FamilyObj(f))))+1;
   fi;
 end);
 
-InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup", 
-[IsReesZeroMatrixSubsemigroup], 
+InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
 function(R)
   local U;
   return function(x)
@@ -224,7 +224,7 @@ function(R)
       return 0;
     else
       return NrMovedPoints(UnderlyingSemigroup(
-       ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
+       ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1;
     fi;
   end;
 end);
@@ -383,7 +383,7 @@ InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 function(s)
     local rep;
     rep := Representative(s);
-    
+
     return NewZeroMatrix(IsPlistMatrixRep, BaseDomain(rep), RowLength(rep)+1,
      RowLength(rep)+1);
 end);
@@ -434,7 +434,7 @@ InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
 end);
 
 InstallMethod(LambdaFunc, "for a matrix semigroup",
-[IsMatrixSemigroup], 
+[IsMatrixSemigroup],
 s -> function(mat)
   # a function that returns the row space
     return CanonicalRowSpace(mat);
@@ -486,10 +486,10 @@ InstallMethod(LambdaRank, "for a Rees 0-matrix subsemigroup",
 function(x)
   if x=0 then
     return 0;
-  else 
+  else
     return
      NrMovedPoints(UnderlyingSemigroup(
-      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
+      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1;
   fi;
 end);
 
@@ -515,14 +515,14 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> RankOfBlocks);
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R->  
-function(x) 
-  if x=0 then 
+[IsReesZeroMatrixSubsemigroup], R->
+function(x)
+  if x=0 then
     return 0;
-  else 
-    return 
+  else
+    return
      NrMovedPoints(UnderlyingSemigroup(
-      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1; 
+      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)))))+1;
   fi;
 end);
 
@@ -598,43 +598,57 @@ function(rsp, mat)
 end);
 
 InstallMethod(LambdaBound, "for a transformation semigroup",
-[IsTransformationSemigroup],
-  s -> function(r) 
-           if r < 100 then
-             return Factorial(r);
-           else
-             return infinity;
-           fi;
-       end);
-       
+[IsTransformationSemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
+
 InstallMethod(LambdaBound, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-  s -> function(r) 
-           if r < 100 then
-             return Factorial(r);
-           else
-             return infinity;
-           fi;
-       end);
+[IsPartialPermSemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
 
 InstallMethod(LambdaBound, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
-  s -> function(r) 
-           if r < 100 then
-             return Factorial(r);
-           else
-             return infinity;
-           fi;
-       end);
+[IsBipartitionSemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
+
 InstallMethod(LambdaBound, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
-  s -> function(r) 
-           if r < 100 then
-             return Factorial(r);
-           else
-             return infinity;
-           fi;
-       end);
+[IsReesZeroMatrixSemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
+
+InstallMethod(LambdaBound, "for a matrix semigroup",
+[IsMatrixSemigroup], s ->
+function(r)
+  local f;
+
+  if r < 100 then
+    f := Representative(s);
+    return Size(GL(DimensionsMat(f)[1], BaseDomain(f)));
+  else
+    return infinity;
+  fi;
+end);
 
 # LamdaIdentity(s) returns a function that returns
 # the identity element of the schuetzenberger group
@@ -651,7 +665,17 @@ InstallMethod(LambdaIdentity, "for a partial perm semigroup",
 InstallMethod(LambdaIdentity, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
   s -> function(r) return (); end);
-   
+InstallMethod(LambdaIdentity, "for a matrix semigroup",
+[IsMatrixSemigroup], s ->
+function(r)
+  local f, one;
+
+  f := Representative(s);
+  one := IdentityMat(r, BaseDomain(f));
+
+  return one;
+end);
+
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
@@ -725,8 +749,8 @@ InstallMethod(IdempotentTester, "for a partial perm semigroup",
 InstallMethod(IdempotentTester, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> BlocksIdempotentTester);
 
-InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup", 
-[IsReesZeroMatrixSubsemigroup], R-> 
+InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup], R->
 function(j,i)
   if i=0 and j=0 then
     return true;
@@ -736,7 +760,7 @@ function(j,i)
 end);
 
 InstallMethod(IdempotentTester, "for a matrix semigroup",
-[IsMatrixSemigroup], s -> function(x,y) 
+[IsMatrixSemigroup], s -> function(x,y)
     return MatrixObjIdempotentTester(s, x, y);
 end);
 
@@ -752,15 +776,15 @@ InstallMethod(IdempotentCreator, "for a partial perm semigp",
 InstallMethod(IdempotentCreator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> BlocksIdempotentCreator);
 
-InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup", 
-[IsReesZeroMatrixSubsemigroup], R-> 
+InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup], R->
 function(j,i)
   local mat;
-  if i=0 and j=0 then 
+  if i=0 and j=0 then
     return Objectify(TypeReesMatrixSemigroupElements(R), [0]);
   fi;
   mat:=Matrix(ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))));
-  return Objectify(TypeReesMatrixSemigroupElements(R), 
+  return Objectify(TypeReesMatrixSemigroupElements(R),
      [i, mat[j][i]^-1, j, mat]);
 end);
 
@@ -819,7 +843,7 @@ InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 IsMatrixSemigroup);
 
 
-InstallMethod(SchutzGpMembership, "for a transformation semigroup", 
+InstallMethod(SchutzGpMembership, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
   return function(stab, x)
@@ -827,7 +851,7 @@ function(S)
   end;
 end);
 
-InstallMethod(SchutzGpMembership, "for a partial perm semigroup", 
+InstallMethod(SchutzGpMembership, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
   return function(stab, x)
@@ -835,23 +859,23 @@ function(S)
   end;
 end);
 
-InstallMethod(SchutzGpMembership, "for a Rees 0-matrix subsemigroup", 
-[IsReesZeroMatrixSubsemigroup], 
+InstallMethod(SchutzGpMembership, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
 function(S)
   return function(stab, x)
     return SiftedPermutation(stab, x)=();
   end;
 end);
 
-InstallMethod(SchutzGpMembership, "for a bipartition semigroup", 
-[IsBipartitionSemigroup], 
+InstallMethod(SchutzGpMembership, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
 function(S)
   return function(stab, x)
     return SiftedPermutation(stab, x)=();
   end;
 end);
 
-InstallMethod(SchutzGpMembership, "for a matrix semigroup", 
+InstallMethod(SchutzGpMembership, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> function(stab, x) return x in stab; end);
 
 # One or a fake one for those types of object without one.
@@ -876,23 +900,23 @@ InstallMethod(FakeOne, "for an FFE coll coll coll",
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
   function(x, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements, 
+  return rec( func := SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
               data := hashlen );
 end);
 
 InstallMethod(ChooseHashFunction, "for a bipartition",
 [IsBipartition, IsInt],
   function(x, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionBipartition, 
+  return rec( func := SEMIGROUPS_HashFunctionBipartition,
               data := hashlen );
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionBipartition, 
+InstallGlobalFunction(SEMIGROUPS_HashFunctionBipartition,
 function(x, data)
  return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements, 
+InstallGlobalFunction(SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
 function(x, data)
   local p, l;
 
