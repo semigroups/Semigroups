@@ -45,7 +45,7 @@
         returns the directed graph with vertices
         <M>E^0=</M><C>[1..Length(<A>obj</A>)]</C>, and edges corresponding to
         the entries of <A>obj</A>. More precisely, there is an edge from vertex
-        <C>i</C> to <C>j</C> if <C>j in <A>obj</A>[i]</C>; the source of this
+        <C>i</C> to <C>j</C> if <C>j</C> is in <C><A>obj</A>[i]</C>; the source of this
         edge is <C>i</C> and the range is <C>j</C>.
       </Item>
 
