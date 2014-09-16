@@ -606,11 +606,50 @@ InstallMethod(LambdaBound, "for a transformation semigroup",
              return infinity;
            fi;
        end);
+       
+InstallMethod(LambdaBound, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+  s -> function(r) 
+           if r < 100 then
+             return Factorial(r);
+           else
+             return infinity;
+           fi;
+       end);
+
+InstallMethod(LambdaBound, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+  s -> function(r) 
+           if r < 100 then
+             return Factorial(r);
+           else
+             return infinity;
+           fi;
+       end);
+InstallMethod(LambdaBound, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+  s -> function(r) 
+           if r < 100 then
+             return Factorial(r);
+           else
+             return infinity;
+           fi;
+       end);
+
 # LamdaIdentity(s) returns a function that returns
 # the identity element of the schuetzenberger group
 # elements produced by LambdaPerm
 InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
+  s -> function(r) return (); end);
+InstallMethod(LambdaIdentity, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+  s -> function(r) return (); end);
+InstallMethod(LambdaIdentity, "for a partial perm semigroup",
+[IsBipartitionSemigroup],
+  s -> function(r) return (); end);
+InstallMethod(LambdaIdentity, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
   s -> function(r) return (); end);
    
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
