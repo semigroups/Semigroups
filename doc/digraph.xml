@@ -255,10 +255,11 @@ gap> Adjacencies(gr);
   <Prop Name="IsSimpleDirectedGraph" Arg="digraph"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
-    A <E>simple directed graph</E> is one that it does not have multiple edges
-    with equal source and range, but it may have loops. In other words, is
-    defined by its adjacencies <Ref Attr="Adjacencies"/>. 
-
+    A <E>simple directed graph</E> is one that it does not have multiple 
+    edges with equal source and range. In other words, is defined by its
+    adjacencies <Ref Attr="Adjacencies"/>. A <E>simple directed graph</E>
+    may have loops. 
+ 
     <Example><![CDATA[
 gap> gr:=DirectedGraph(rec(vertices:=["a", "b", "c"],
 > source:=["a", "b", "b"], range:=["b", "c", "a"]));
