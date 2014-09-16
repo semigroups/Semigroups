@@ -324,7 +324,7 @@ false
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     Returns <K>true</K> if the directed graph <A>digraph</A> is acyclic and
-    <K>false</K> if it is not. A digraph <A>digraph</A> is <E>acyclic</E> if
+    <K>false</K> if it is not. A digraph is <E>acyclic</E> if
     there are no cycles, i.e. paths starting and ending at the same vertex. 
 
     The method used in this operation has complexity <M>O(m+n)</M> where
@@ -400,7 +400,7 @@ gap> DirectedGraphRemoveLoops(gr);
   <Description>
     If <A>digraph</A> is a directed graph and <A>edges</A> is a list of pairs of
     vertices of <A>digraph</A>, then this operation returns a directed graph
-    constructed from <A>digraph</A> by removing all of the edges in <A>edges</A>.
+    constructed from <A>digraph</A> by removing all of the edges which are described in <A>edges</A>.
     <Example><![CDATA[
 gap> cycle:=function(record)
 >   local i;
