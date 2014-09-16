@@ -50,5 +50,5 @@ DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph, IsBool]);
 DeclareOperation("DirectedGraphReflexiveTransitiveClosure", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphTransitiveClosure", [IsDirectedGraph]);
-
-
+# By Wilf. Change name. Is "Operation" the correct type of function?
+DeclareOperation("Floyd", [IsDirectedGraph]);
