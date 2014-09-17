@@ -35,6 +35,10 @@ function(m, k, n, set, min, nr, coeff)
    # coeff = Binomial( n - i - 1, k - 2 )
 end);
 
+InstallGlobalFunction(SEMIGROUPS_NumberSubset, 
+function(x)
+end);
+
 # the <m>th subset of <[1..n]> with <k> elements
 
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
@@ -49,63 +53,73 @@ function(m, k, n, coeff)
   return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
 end);
 
-#InstallMethod(PermNumber, "for a pos int and pos int",
-#[IsPosInt, IsPosInt], 
-#function( m, n )
-#  local out, i, q;
-#  out := EmptyPlist( n );
-#  m := m - 1;
-#  i := n;
-  
-#  while i > 0 do 
-#    q := QuotientRemainder( Integers, m, n - i + 1 );
-#    out[i] := q[2] + 1;
-#    m := q[1];
-#    i := i - 1;
-#  od;
+# JDM this is not working!
 
-#  return out;
-#end);
+InstallMethod(NumberSubset, "for a set and a pos int",
+[IsList, IsPosInt],
+function(set, n)
+  local nr, m, i, k, j;
+  Error("not yet working,");
+  nr := 0;
+  m := Length(set);
+  i := 1;
+  for j in [1..Length(set)] do 
+    k := set[j];
+    while k > i do 
+      nr := nr + Binomial(n - k - i + 2, m - 1); #JDM improve
+      k := k - 1;
+    od;
+    m := m - 1;
+    i := set[j] + 1;
+  od;
+
+  return nr + 1;
+end);
 
 InstallMethod(PartialPermNumber, "for pos int and pos int",
 [IsPosInt, IsPosInt],
 function(m, n)
-  local i, coeff, j, dom, ran;
+  local i, base, coeff, j;
+  
+  if m = 1 then 
+    return PartialPermNC([]);
+  fi;
 
+  m := m - 1;
   i := 1;
-  coeff := n ^ 2; # Binomial( n, 1 ) ^ 2 * Factorial(1)
+  base := [ 1 .. n ];
+  coeff := n ^ 2; # Binomial( n, 1 ) * NrArrangements([1..n], 1)
 
   while m > coeff do 
     m := m - coeff;
     i := i + 1;
-    coeff := coeff * ( (n - i) / (i + 1) ) ^ 2 * i;
-    # coeff = Binomial( n, i ) ^ 2 * Factorial(i)
-  od;
-
-  #coeff := Binomial(n, i) * Factorial(i);
-  j := 0;
-  while j < i do
-    coeff := coeff * (n - j);
-    j := j + 1;
+    coeff := Binomial( n, i ) * NrArrangements(base, i);
   od;
 
   j := 1;
+  coeff := NrArrangements(base, i);
   while m > coeff do 
     j := j + 1;
     m := m - coeff;
   od;
-  # the <j>th <i>-subset of [1..n]
-  dom := SubsetNumber(j, i, n);
+  return PartialPermNC(SubsetNumber(j, i, n), ArrangementNumber(m, i, n));
+end);
 
-  coeff := Factorial(i);
-  j := 1;
-  while m > coeff do 
-    j := j + 1;
-    m := m - coeff;
-  od;
-  ran := Permuted(SubsetNumber(j, i, n), PermNumber(m, i));
+InstallMethod(PartialPermNumber, "for a partial perm and a pos int",
+[IsPosInt, IsPosInt],
+function(x, n)
+  local dom, i;
   
-  return PartialPermNC(dom, ran);
+  dom := DomainOfPartialPerm(x);
+  i := Length(dom);
+  
+  if i = 0 then 
+    return 1;
+  fi;
+
+  return Sum(List([1..i], Binomial(n, i))) 
+   + ((NumberSubset(dom, n) - 1) * NrArrangements([1..10], i)) 
+   + NumberArrangement(ImageSetOfPartialPerm(x), n);
 end);
 
 InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup], 
