@@ -258,7 +258,7 @@ gap> Adjacencies(gr);
     A <E>simple directed graph</E> is one that it does not have multiple 
     edges with equal source and range. In other words, is defined by its
     adjacencies <Ref Attr="Adjacencies"/>. A <E>simple directed graph</E>
-    may have loops. 
+    may have loops (but not multiple loops at the same vertex). 
  
     <Example><![CDATA[
 gap> gr:=DirectedGraph(rec(vertices:=["a", "b", "c"],
