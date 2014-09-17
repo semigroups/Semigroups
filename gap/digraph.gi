@@ -41,16 +41,6 @@ function(n)
   return DirectedGraph(adj);
 end);
 
-# <func> must be a function that accepts a record (defining a digraph) and
-# returns another such record. 
-
-InstallMethod(DirectedGraph, "for a list and a function", [IsList, IsFunction], 
-function(vertices, func)
-  local record;
-  record:=rec(vertices:=vertices, source:=[], range:=[]);
-  return DirectedGraph(func(record));
-end);
-
 #
 
 InstallMethod(DirectedGraph, "for a record", [IsRecord], 
