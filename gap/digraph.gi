@@ -355,7 +355,9 @@ end);
 
 if IsBound(IS_ACYCLIC_DIGRAPH) then 
   InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
-  [IsDirectedGraph], IS_ACYCLIC_DIGRAPH);
+  [IsDirectedGraph], function(graph)
+    return IS_ACYCLIC_DIGRAPH(Adjacencies(graph));
+  end);
 else
   InstallMethod(IsAcyclicDirectedGraph, "for a digraph", 
   [IsDirectedGraph], 

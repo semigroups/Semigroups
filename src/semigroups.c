@@ -158,53 +158,59 @@ static Obj FuncGABOW_SCC(Obj self, Obj digraph)
   return out;
 }
 
-static Obj FuncIS_ACYCLIC_DIGRAPH(Obj self, Obj graph)
-{
-
-    local adj, nr, vertex_complete, vertex_in_path, stack, level, j, k, i;
-    
-    adj := Adjacencies(graph);
-    nr:=Length(adj);
-    vertex_complete := BlistList([1..nr], []);
-    vertex_in_path := BlistList([1..nr], []);
-    stack:=EmptyPlist(2*nr);
-
-    for i in [1..nr] do
-      if Length(adj[i]) = 0 then
-        vertex_complete[i]:=true;
-      elif not vertex_complete[i] then
-        level:=1;
-        stack[1]:=i;
-        stack[2]:=1;
-        while true do
-          j:=stack[level*2-1];
-          k:=stack[level*2];
-          if vertex_in_path[j] then
-            return false;  # We have just travelled around a cycle
-          fi;
-          # Check whether:
-          # 1. We've previously finished with this vertex, OR 
-          # 2. Whether we've now investigated all branches descending from it
-          if vertex_complete[j] or k > Length(adj[j]) then
-            vertex_complete[j]:=true;
-            level:=level-1;
-            if level=0 then
-              break;
-            fi;
-            # Backtrack and choose next available branch
-            stack[level*2]:=stack[level*2]+1;
-            vertex_in_path[stack[level*2-1]]:=false;
-          else # Otherwise move onto the next available branch
-            vertex_in_path[j]:=true;
-            level:=level+1;
-            stack[level*2-1]:=adj[j][k];
-            stack[level*2]:=1;
-          fi;
-        od;
-      fi;
-    od;
-    return true;
-  end);
+static Obj FuncIS_ACYCLIC_DIGRAPH(Obj self, Obj adj)
+{ UInt  nr, i, j, k;
+  UInt  level;
+  Obj   buf, nbs;
+  UInt  *stack, *ptr1, *ptr2;
+  
+  nr = LEN_PLIST(adj);
+  buf = NewBag(T_DATOBJ, (4 * nr + 6) * sizeof(UInt));
+  
+  //init the buf
+  ptr1 = ((UInt*)ADDR_OBJ(buf)); 
+  ptr2 = ptr1 + nr + 1;
+  stack = ptr2 + nr + 1;
+  
+  for (i = 1; i <= nr; i++) {
+    nbs = ELM_PLIST(adj, i);
+    if (LEN_PLIST(nbs) == 0) {
+      ptr1[i] = 1;
+    } else if (ptr1[i] == 0) {
+      level = 1;
+      stack[1] = i;
+      stack[2] = 1;
+      while (1) {
+        j = stack[level * 2 - 1];
+        k = stack[level * 2];
+        if (ptr2[j] == 1) { 
+          return False;  // We have just travelled around a cycle
+        }
+        // Check whether:
+        // 1. We've previously finished with this vertex, OR 
+        // 2. Whether we've now investigated all branches descending from it
+        nbs = ELM_PLIST(adj, j);
+        if( ptr1[j] == 1 || k > LEN_PLIST(nbs)) {
+          ptr1[j] = 1;
+          level--;
+          if (level==0) { 
+            break;
+          }
+          // Backtrack and choose next available branch
+          stack[2 * level]++;
+          ptr2[stack[2 * level - 1]] = 0;
+        } else { //Otherwise move onto the next available branch
+          ptr2[j]=1;
+          level++;
+          nbs = ELM_PLIST(adj, j);
+          stack[2 * level - 1] = INT_INTOBJ(ELM_PLIST(nbs, k));
+          stack[2 * level] = 1;
+        }
+      }
+    }
+  }
+  return True;
+}
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -218,6 +224,10 @@ static StructGVarFunc GVarFuncs [] = {
     FuncGABOW_SCC, 
     "src/semigroups.c:GABOW_SCC" },
 
+  { "IS_ACYCLIC_DIGRAPH", 1, "digraph",
+    FuncIS_ACYCLIC_DIGRAPH, 
+    "src/semigroups.c:FuncIS_ACYCLIC_DIGRAPH" },
+  
   { 0 }
 
 };
