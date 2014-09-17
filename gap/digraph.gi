@@ -443,7 +443,7 @@ end);
 # edges from <out[j]> to <out[i]> for all <i> greater than <j>.
 
 if not IsBound(DIGRAPH_TOPO_SORT) then 
-  BindGlobal("DIGRAPH_TOPO_SORT", function(graph, ignoreloops)
+  BindGlobal("DIGRAPH_TOPO_SORT", function(graph)
     local adj, nr, marked1, marked2, stack, level, ii, k, i, out;
     
     adj := Adjacencies(graph);
@@ -467,11 +467,9 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
           ii:=stack[level*2-1];
           k:=stack[level*2];
           if marked2[ii] then
-            if not ignoreloops then 
-              Error("the digraph is not acyclic,");
-            fi;
+            SetIsAcyclicDirectedGraph(graph, false);
+            Error("the digraph is not acyclic,");
             return; # not an acyclic graph!
-            # ignoreloops?
           fi;
                 
           # Check whether we've already checked this vertex OR
@@ -537,10 +535,7 @@ fi;
 #fi;
 
 InstallMethod(DirectedGraphTopologicalSort, "for a digraph", 
-[IsDirectedGraph], x-> DIGRAPH_TOPO_SORT(x, false));
-
-InstallMethod(DirectedGraphTopologicalSort, "for a digraph and boolean", 
-[IsDirectedGraph, IsBool], DIGRAPH_TOPO_SORT);
+[IsDirectedGraph], x-> DIGRAPH_TOPO_SORT(x));
 
 # JDM: requires a method for non-acyclic graphs
 
@@ -769,5 +764,55 @@ if not IsBound(GABOW_SCC) then
     return rec(id:=id-Length(digraph), comps:=comps);
   end);
 fi;
+
+#
+
+# A few methods which call GRAPE functions
+InstallMethod(IsIsomorphicDirectedGraph, "for two digraphs", 
+[IsDirectedGraph, IsDirectedGraph],
+function(g1, g2)
+  return IsIsomorphicGraph( Graph(g1), Graph(g2) );
+end);
+
+#
+
+InstallMethod(AutomorphismGroup, "for a digraph",
+[IsDirectedGraph],
+function(graph)
+  return AutomorphismGroup(Graph(graph));
+end);
+
+#
+
+InstallMethod(DirectedGraphIsomorphism, "for two digraphs", 
+[IsDirectedGraph, IsDirectedGraph],
+function(g1, g2)
+  # TODO: convert back to directed graphs
+  return GraphIsomorphism( Graph(g1), Graph(g2) );
+end);
+
+#
+
+#InstallMethod(Girth, "for a digraph",
+#[IsDirectedGraph],
+#function(graph)
+#  return Girth( Graph(graph) );
+#end);
+
+#
+
+InstallMethod(Diameter, "for a digraph",
+[IsDirectedGraph],
+function(graph)
+  return Diameter( Graph(graph) );
+end);
+
+#
+
+InstallMethod(IsConnectedDigraph, "for a digraph",
+[IsDirectedGraph],
+function(graph)
+  return IsConnectedGraph( Graph(graph) );
+end);
 
 #EOF

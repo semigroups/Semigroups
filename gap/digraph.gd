@@ -47,8 +47,16 @@ DeclareOperation("DirectedGraphRelabel", [IsDirectedGraph, IsPerm]);
 DeclareOperation("DirectedGraphRemoveLoops", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphRemoveEdges", [IsDirectedGraph, IsList]);
 DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph]);
-DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph, IsBool]);
 DeclareOperation("DirectedGraphReflexiveTransitiveClosure", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphTransitiveClosure", [IsDirectedGraph]);
+
+# calls to GRAPE functions
+DeclareOperation("IsIsomorphicDirectedGraph", [IsDirectedGraph, IsDirectedGraph]);
+DeclareAttribute("AutomorphismGroup", IsDirectedGraph);
+DeclareOperation("DirectedGraphIsomorphism", [IsDirectedGraph, IsDirectedGraph]);
+#DeclareOperation("Girth", [IsDirectedGraph]);
+DeclareOperation("Diameter", [IsDirectedGraph]);
+DeclareProperty("IsConnectedDigraph", IsDirectedGraph);
+
 # By Wilf. Change name. Is "Operation" the correct type of function?
 DeclareOperation("Floyd", [IsDirectedGraph]);
