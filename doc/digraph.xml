@@ -174,7 +174,7 @@ gap> Vertices(RandomSimpleDirectedGraph(100));
   <Attr Name="Edges" Arg="digraph"/>
   <Returns>The edges of a directed graph.</Returns>
   <Description>
-    Returns the edges of the directed graph <A>digraph</A>, that is, a list of
+    Returns the set of edges of the directed graph <A>digraph</A>, that is, a set of
     pairs of elements of <Ref Oper="Vertices"/>.
     <Example><![CDATA[
 gap> gr:= DirectedGraph( [ [ 1, 3, 4, 5 ], [ 1, 2, 3, 5 ], [ 2, 4, 5 ], 
