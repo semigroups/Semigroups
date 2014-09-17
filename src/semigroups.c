@@ -174,7 +174,7 @@ static Obj FuncIS_ACYCLIC_DIGRAPH(Obj self, Obj adj)
   
   for (i = 1; i <= nr; i++) {
     nbs = ELM_PLIST(adj, i);
-    if (LEN_PLIST(nbs) == 0) {
+    if (LEN_LIST(nbs) == 0) {
       ptr1[i] = 1;
     } else if (ptr1[i] == 0) {
       level = 1;
@@ -190,7 +190,7 @@ static Obj FuncIS_ACYCLIC_DIGRAPH(Obj self, Obj adj)
         // 1. We've previously finished with this vertex, OR 
         // 2. Whether we've now investigated all branches descending from it
         nbs = ELM_PLIST(adj, j);
-        if( ptr1[j] == 1 || k > LEN_PLIST(nbs)) {
+        if( ptr1[j] == 1 || k > LEN_LIST(nbs)) {
           ptr1[j] = 1;
           level--;
           if (level==0) { 
@@ -203,7 +203,7 @@ static Obj FuncIS_ACYCLIC_DIGRAPH(Obj self, Obj adj)
           ptr2[j]=1;
           level++;
           nbs = ELM_PLIST(adj, j);
-          stack[2 * level - 1] = INT_INTOBJ(ELM_PLIST(nbs, k));
+          stack[2 * level - 1] = INT_INTOBJ(ELM_LIST(nbs, k));
           stack[2 * level] = 1;
         }
       }
