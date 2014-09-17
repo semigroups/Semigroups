@@ -510,45 +510,10 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
     return out;
   end);
 fi;
-#function(graph, ignoreloops)
-#    local adj, nr, out, marked1, marked2, dfs, i;
-#    
-#    adj := Adjacencies(graph);
-#    nr := Length(adj);
-#    out := EmptyPlist(nr);
-#    marked1 := BlistList([1..nr], []);
-#    marked2 := BlistList([1..nr], []);
-#
-#    dfs := function(i)
-#      local j;
-#      if marked2[i] then 
-#        if not ignoreloops then 
-#          Error("the digraph is not acyclic,");
-#        fi;
-#        return; # not an acyclic graph!
-#      fi;
-#      if not marked1[i] then 
-#        marked2[i]:=true;
-#        for j in adj[i] do 
-#          dfs(j);
-#        od;
-#        marked1[i]:=true;
-#        marked2[i]:=false;
-#        Add(out, i);
-#      fi;
-#    end;
-#
-#    for i in [1..nr] do 
-#      if not marked1[i] then 
-#        dfs(i);
-#      fi;
-#    od;
-#    return out;
-#  end);
-#fi;
+
 
 InstallMethod(DirectedGraphTopologicalSort, "for a digraph", 
-[IsDirectedGraph], x-> DIGRAPH_TOPO_SORT(x));
+[IsDirectedGraph], DIGRAPH_TOPO_SORT);
 
 # JDM: requires a method for non-acyclic graphs
 

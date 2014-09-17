@@ -54,6 +54,39 @@ rec( adjacencies := [ [ 17, 19 ], [ 17, 20 ], [ 17, 18 ], [ 17, 20 ],
 gap> DirectedGraph(last);
 <directed graph with 20 vertices, 64 edges>
 
+# IsAcyclicDirectedGraph
+gap> gr:=DirectedGraph([
+>  [ 1, 2, 4, 10 ], [ 3, 15 ], [ 3, 15 ], [ 1, 3, 7, 8, 9, 11, 12, 13 ], 
+>  [ 4, 8 ], [ 1, 2, 4, 5, 6, 7, 8, 10, 14, 15 ], [ 3, 4, 6, 11, 13, 15 ], 
+>  [ 3, 5, 6, 7, 8, 9, 10, 15 ], [ 2, 5, 6, 7, 8, 9, 10, 11, 12 ], 
+>  [ 2, 3, 10, 11, 14 ], [ 3, 5, 14, 15 ], [ 7, 9, 10, 14, 15 ], 
+>  [ 1, 4, 7, 8, 10, 14, 15 ], [ 1, 2, 4, 7, 13, 14, 15 ], 
+>  [ 1, 2, 3, 9, 10, 11, 12, 13, 14, 15 ] ]);
+<directed graph with 15 vertices, 89 edges>
+gap> IsSimpleDirectedGraph(gr);
+true
+gap> IsAcyclicDirectedGraph(gr);
+false
+gap> r:=rec(vertices:=[1..10000],source:=[],range:=[]);
+rec( range := [  ], source := [  ], vertices := [ 1 .. 10000 ] )
+gap> for i in [1..9999] do
+>    Add(r.source, i);
+>    Add(r.range, i+1);
+>  od;
+> Add(r.source, 10000);; Add(r.range, 1);;
+gap> gr:=DirectedGraph(r);
+<directed graph with 10000 vertices, 10000 edges>
+gap> IsAcyclicDirectedGraph(gr);
+false
+gap> gr:=DirectedGraphRemoveEdges(gr, [10000]);
+<directed graph with 10000 vertices, 9999 edges>
+gap> IsAcyclicDirectedGraph(gr);
+true
+gap> gr:=DirectedGraph( [ [ 2, 3 ], [ 4, 5 ], [ 5, 6 ], [], [], [], [ 3 ] ] );
+<directed graph with 7 vertices, 7 edges>
+gap> IsDirectedGraph(gr);
+true
+
 #
 gap> SemigroupsStopTest();
 

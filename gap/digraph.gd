@@ -53,5 +53,4 @@ DeclareOperation("DirectedGraphIsomorphism", [IsDirectedGraph, IsDirectedGraph])
 DeclareOperation("Diameter", [IsDirectedGraph]);
 DeclareProperty("IsConnectedDigraph", IsDirectedGraph);
 
-# Is "Operation" the correct type of function?
 DeclareAttribute("DirectedGraphFloydWarshall", IsDirectedGraph);
