@@ -378,7 +378,7 @@ else
         while true do
           j:=stack[level*2-1];
           k:=stack[level*2];
-          if marked2[j] then
+          if vertex_in_path[j] then
             return false;  # We have just travelled around a cycle
           fi;
           # Check whether:
@@ -406,7 +406,7 @@ else
   end);
 fi;
 
-InstallMethod(Floyd, "for a digraph", 
+InstallMethod(DirectedGraphFloydWarshall, "for a digraph", 
 [IsDirectedGraph],
 function(graph)
   local dist, i, j, k, n, m;

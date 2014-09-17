@@ -8,11 +8,6 @@
 #############################################################################
 ##
 
-# Some functions for directed graphs, that are represented as, for example,
-# [[1,2,3], [1,3], [2]] (i.e. 1 is adjacent to 1, 2, and 3, and 2 is adjacent to
-# 1 and 3). 
-
-
 # in case we want to make a more elaborate data structure in the future 
 
 DeclareCategory("IsDirectedGraph", IsObject);
@@ -58,5 +53,5 @@ DeclareOperation("DirectedGraphIsomorphism", [IsDirectedGraph, IsDirectedGraph])
 DeclareOperation("Diameter", [IsDirectedGraph]);
 DeclareProperty("IsConnectedDigraph", IsDirectedGraph);
 
-# By Wilf. Change name. Is "Operation" the correct type of function?
-DeclareOperation("Floyd", [IsDirectedGraph]);
+# Is "Operation" the correct type of function?
+DeclareAttribute("DirectedGraphFloydWarshall", IsDirectedGraph);
