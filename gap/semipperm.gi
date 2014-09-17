@@ -49,23 +49,64 @@ function(m, k, n, coeff)
   return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
 end);
 
-#InstallMethod(PartialPermNumber, "for pos int and pos int",
-#[IsPosInt, IsPosInt],
-#function(m, n)
-#
-#  subtract := 1;
-#  k:=0;
-#  while m > subtract do 
-#    m := m - subtract;
-#    k := k + 1;
-#    subtract := Binomial(n, k);
+#InstallMethod(PermNumber, "for a pos int and pos int",
+#[IsPosInt, IsPosInt], 
+#function( m, n )
+#  local out, i, q;
+#  out := EmptyPlist( n );
+#  m := m - 1;
+#  i := n;
+  
+#  while i > 0 do 
+#    q := QuotientRemainder( Integers, m, n - i + 1 );
+#    out[i] := q[2] + 1;
+#    m := q[1];
+#    i := i - 1;
 #  od;
-#
-#  # get the <m>th subset of <[1..n]> with <k> elements
-#
-#  
-#
+
+#  return out;
 #end);
+
+InstallMethod(PartialPermNumber, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local i, coeff, j, dom, ran;
+
+  i := 1;
+  coeff := n ^ 2; # Binomial( n, 1 ) ^ 2 * Factorial(1)
+
+  while m > coeff do 
+    m := m - coeff;
+    i := i + 1;
+    coeff := coeff * ( (n - i) / (i + 1) ) ^ 2 * i;
+    # coeff = Binomial( n, i ) ^ 2 * Factorial(i)
+  od;
+
+  #coeff := Binomial(n, i) * Factorial(i);
+  j := 0;
+  while j < i do
+    coeff := coeff * (n - j);
+    j := j + 1;
+  od;
+
+  j := 1;
+  while m > coeff do 
+    j := j + 1;
+    m := m - coeff;
+  od;
+  # the <j>th <i>-subset of [1..n]
+  dom := SubsetNumber(j, i, n);
+
+  coeff := Factorial(i);
+  j := 1;
+  while m > coeff do 
+    j := j + 1;
+    m := m - coeff;
+  od;
+  ran := Permuted(SubsetNumber(j, i, n), PermNumber(m, i));
+  
+  return PartialPermNC(dom, ran);
+end);
 
 InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup], 
 function(S)

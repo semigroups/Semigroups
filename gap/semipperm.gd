@@ -24,6 +24,7 @@ DeclareOperation("NumberPartialPerm", [IsPartialPerm, IsPosInt]);
 DeclareOperation("PartialPermNumber", [IsPosInt, IsPosInt]);
 DeclareOperation("SubsetNumber", [IsPosInt, IsPosInt, IsPosInt]);
 DeclareOperation("SubsetNumber", [IsPosInt, IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("PermNumber", [IsPosInt, IsPosInt]);
 
 DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");
 
