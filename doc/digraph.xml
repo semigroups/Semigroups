@@ -398,9 +398,12 @@ gap> DirectedGraphRemoveLoops(gr);
   <Oper Name="DirectedGraphRemoveEdges" Arg="digraph, edges"/>
   <Returns>A directed graph.</Returns>
   <Description>
-    If <A>digraph</A> is a directed graph and <A>edges</A> is a list of pairs of
-    vertices of <A>digraph</A>, then this operation returns a directed graph
-    constructed from <A>digraph</A> by removing all of the edges which are described in <A>edges</A>.
+    If <A>digraph</A> is a directed graph and <A>edges</A> is a list of either:
+    pairs of vertices of the simple directed graph <A>digraph</A> or indices of
+    edges of <A>digraph</A>, then this operation returns a directed graph
+    constructed from <A>digraph</A> by removing all of the edges specified by
+    <A>edges</A>.
+
     <Example><![CDATA[
 gap> cycle:=function(record)
 >   local i;
@@ -414,7 +417,9 @@ gap> gr:=DirectedGraph([1..250000], cycle);
 <directed graph with 250000 vertices, 250000 edges>
 gap> gr:=DirectedGraphRemoveEdges(gr, [[250000, 1]]);
 <directed graph with 250000 vertices, 249999 edges>
-]]></Example>
+gap> gr:=DirectedGraphRemoveEdges(gr, [10]);
+
+  ]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

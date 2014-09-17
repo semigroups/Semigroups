@@ -177,9 +177,9 @@ function(graph)
   range:=Range(graph);
   source:=Source(graph);
   for i in [1..Length(source)] do 
-    Add(out, [source[i], range[i]]);
+    out[i]:=[source[i], range[i]];
   od;
-  return out;
+  return Set(out);
 end);
 
 InstallMethod(Adjacencies, "for a directed graph",
@@ -212,7 +212,7 @@ end);
 InstallMethod(IsSimpleDirectedGraph, "for a directed graph",
 [IsDirectedGraph],
 function(graph)
-  return IsDuplicateFreeList(Edges(graph));
+  return Length(Edges(graph)) = Length(Source(graph));
 end);
 
 InstallMethod(ViewString, "for a directed graph",
@@ -315,23 +315,36 @@ end);
 InstallMethod(DirectedGraphRemoveEdges, "for a digraph and a list", 
 [IsDirectedGraph, IsList], 
 function(graph, edges)
-  local source, range, newsource, newrange, i;
+  local range, vertices, source, newsource, newrange, i;
   
-  source := Source(graph);
-  range := Range(graph);
+  if Length(edges) > 0 and IsPosInt(edges[1]) then # remove edges by index
+    edges := Difference( [ 1 .. Length(Source(graph)) ], edges );
 
-  newsource := [ ];
-  newrange := [ ];
-  
-  for i in [ 1 .. Length(source) ] do 
-    if not [ source[i], range[i] ] in edges then 
-      Add(newrange, range[i]);
-      Add(newsource, source[i]);
+    return DirectedGraph(rec( 
+      source := Source(graph){edges}, 
+      range := Range(graph){edges},
+      vertices := ShallowCopy(Vertices(graph))));
+  else 
+    if not IsSimpleDirectedGraph(graph) then 
+      Error("usage: to remove edges given as pairs of vertices,",
+      " the graph must be simple,");
+      return;
     fi;
-  od;
+    source := Source(graph);
+    range := Range(graph);
+    newsource := [ ];
+    newrange := [ ];
+    
+    for i in [ 1 .. Length(source) ] do 
+      if not [ source[i], range[i] ] in edges then 
+        Add(newrange, range[i]);
+        Add(newsource, source[i]);
+      fi;
+    od;
 
-  return DirectedGraph(rec( source:=newsource, range:=newrange, 
-                            vertices:=ShallowCopy(Vertices(graph))));
+    return DirectedGraph(rec( source:=newsource, range:=newrange, 
+                              vertices:=ShallowCopy(Vertices(graph))));
+  fi;
 end);
 
 InstallMethod(DirectedGraphRelabel, "for a digraph and perm",
