@@ -158,6 +158,54 @@ static Obj FuncGABOW_SCC(Obj self, Obj digraph)
   return out;
 }
 
+static Obj FuncIS_ACYCLIC_DIGRAPH(Obj self, Obj graph)
+{
+
+    local adj, nr, vertex_complete, vertex_in_path, stack, level, j, k, i;
+    
+    adj := Adjacencies(graph);
+    nr:=Length(adj);
+    vertex_complete := BlistList([1..nr], []);
+    vertex_in_path := BlistList([1..nr], []);
+    stack:=EmptyPlist(2*nr);
+
+    for i in [1..nr] do
+      if Length(adj[i]) = 0 then
+        vertex_complete[i]:=true;
+      elif not vertex_complete[i] then
+        level:=1;
+        stack[1]:=i;
+        stack[2]:=1;
+        while true do
+          j:=stack[level*2-1];
+          k:=stack[level*2];
+          if vertex_in_path[j] then
+            return false;  # We have just travelled around a cycle
+          fi;
+          # Check whether:
+          # 1. We've previously finished with this vertex, OR 
+          # 2. Whether we've now investigated all branches descending from it
+          if vertex_complete[j] or k > Length(adj[j]) then
+            vertex_complete[j]:=true;
+            level:=level-1;
+            if level=0 then
+              break;
+            fi;
+            # Backtrack and choose next available branch
+            stack[level*2]:=stack[level*2]+1;
+            vertex_in_path[stack[level*2-1]]:=false;
+          else # Otherwise move onto the next available branch
+            vertex_in_path[j]:=true;
+            level:=level+1;
+            stack[level*2-1]:=adj[j][k];
+            stack[level*2]:=1;
+          fi;
+        od;
+      fi;
+    od;
+    return true;
+  end);
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
