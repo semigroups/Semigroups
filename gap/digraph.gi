@@ -41,16 +41,6 @@ function(n)
   return DirectedGraph(adj);
 end);
 
-# <func> must be a function that accepts a record (defining a digraph) and
-# returns another such record. 
-
-InstallMethod(DirectedGraph, "for a list and a function", [IsList, IsFunction], 
-function(vertices, func)
-  local record;
-  record:=rec(vertices:=vertices, source:=[], range:=[]);
-  return DirectedGraph(func(record));
-end);
-
 #
 
 InstallMethod(DirectedGraph, "for a record", [IsRecord], 
@@ -481,8 +471,8 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
           k:=stack[level*2];
           if marked2[ii] then
             SetIsAcyclicDirectedGraph(graph, false);
-            Error("the digraph is not acyclic,");
-            return; # not an acyclic graph!
+            Error("the digraph has a cycle of length >1,");
+            return;
           fi;
                 
           # Check whether we've already checked this vertex OR
@@ -511,7 +501,6 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
   end);
 fi;
 
-
 InstallMethod(DirectedGraphTopologicalSort, "for a digraph", 
 [IsDirectedGraph], DIGRAPH_TOPO_SORT);
 
@@ -527,7 +516,7 @@ function(graph)
     return;
   fi;
 
-  sorted := DirectedGraphTopologicalSort(graph, true); # ignore loops
+  sorted := DirectedGraphTopologicalSort(graph); # ignore loops
   
   vertices := Vertices(graph);
   out := EmptyPlist(Length(vertices));
@@ -557,7 +546,7 @@ function(graph)
     return;
   fi;
 
-  sorted := DirectedGraphTopologicalSort(graph, true); # ignore loops
+  sorted := DirectedGraphTopologicalSort(graph); # ignore loops
   
   vertices := Vertices(graph);
   out := EmptyPlist(Length(vertices));
@@ -664,11 +653,18 @@ fi;
 # the scc index 1 corresponds to the "deepest" scc, i.e. the minimal ideal in
 # our case...
 
-if not IsBound(GABOW_SCC) then 
-  BindGlobal("GABOW_SCC", 
+if IsBound(GABOW_SCC) then 
+  InstallMethod(StronglyConnectedComponents, "for a directed graph", 
+  [IsDirectedGraph], 
+  function(digraph)
+    return GABOW_SCC(Adjacencies(digraph));
+  end);
+else
+  InstallMethod(StronglyConnectedComponents, "for a directed graph",
   function(digraph)   
     local n, stack1, len1, stack2, len2, id, count, comps, fptr, level, l, comp, w, v;
     
+    digraph:=Adjacencies(digraph);
     n:=Length(digraph);
     
     if n=0 then 

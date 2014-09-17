@@ -31,6 +31,7 @@ DeclareAttribute("Range", IsDirectedGraph);
 DeclareAttribute("Source", IsDirectedGraph);
 DeclareAttribute("Edges", IsDirectedGraph);
 DeclareAttribute("Adjacencies", IsDirectedGraph);
+DeclareOperation("StronglyConnectedComponents", [IsDirectedGraph]);
 
 # properties
 DeclareProperty("IsSimpleDirectedGraph", IsDirectedGraph);
