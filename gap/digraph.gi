@@ -481,8 +481,8 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
           k:=stack[level*2];
           if marked2[ii] then
             SetIsAcyclicDirectedGraph(graph, false);
-            Error("the digraph is not acyclic,");
-            return; # not an acyclic graph!
+            Error("the digraph has a cycle of length >1,");
+            return;
           fi;
                 
           # Check whether we've already checked this vertex OR
@@ -510,7 +510,8 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
     return out;
   end);
 fi;
-#function(graph, ignoreloops)
+
+#function(graph)
 #    local adj, nr, out, marked1, marked2, dfs, i;
 #    
 #    adj := Adjacencies(graph);
@@ -522,15 +523,16 @@ fi;
 #    dfs := function(i)
 #      local j;
 #      if marked2[i] then 
-#        if not ignoreloops then 
-#          Error("the digraph is not acyclic,");
-#        fi;
-#        return; # not an acyclic graph!
+#        Error("the digraph has a cycle of length greater than 1,");
+#        return;
 #      fi;
 #      if not marked1[i] then 
 #        marked2[i]:=true;
+#        
 #        for j in adj[i] do 
-#          dfs(j);
+#          if j<>i then
+#            dfs(j);
+#          fi;
 #        od;
 #        marked1[i]:=true;
 #        marked2[i]:=false;
@@ -562,7 +564,7 @@ function(graph)
     return;
   fi;
 
-  sorted := DirectedGraphTopologicalSort(graph, true); # ignore loops
+  sorted := DirectedGraphTopologicalSort(graph); # ignore loops
   
   vertices := Vertices(graph);
   out := EmptyPlist(Length(vertices));
@@ -592,7 +594,7 @@ function(graph)
     return;
   fi;
 
-  sorted := DirectedGraphTopologicalSort(graph, true); # ignore loops
+  sorted := DirectedGraphTopologicalSort(graph); # ignore loops
   
   vertices := Vertices(graph);
   out := EmptyPlist(Length(vertices));
