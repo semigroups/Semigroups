@@ -661,6 +661,7 @@ if IsBound(GABOW_SCC) then
   end);
 else
   InstallMethod(StronglyConnectedComponents, "for a directed graph",
+  [IsDirectedGraph],        
   function(digraph)   
     local n, stack1, len1, stack2, len2, id, count, comps, fptr, level, l, comp, w, v;
     
