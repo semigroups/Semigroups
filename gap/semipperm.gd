@@ -18,3 +18,12 @@ DeclareAttribute("CyclesOfPartialPermSemigroup",
 IsPartialPermSemigroup);
 
 DeclareOperation("AsPartialPermSemigroup", [IsSemigroup]);
+
+DeclareOperation("NumberPartialPerm", [IsPartialPerm]);
+DeclareOperation("NumberPartialPerm", [IsPartialPerm, IsPosInt]);
+DeclareOperation("PartialPermNumber", [IsPosInt, IsPosInt]);
+DeclareOperation("SubsetNumber", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("SubsetNumber", [IsPosInt, IsPosInt, IsPosInt, IsPosInt]);
+
+DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");
+

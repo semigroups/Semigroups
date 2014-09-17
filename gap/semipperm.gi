@@ -8,6 +8,65 @@
 #############################################################################
 ##
 
+InstallGlobalFunction(SEMIGROUPS_SubsetNumber, 
+function(m, k, n, set, min, nr, coeff)
+  local i;
+
+  nr := nr + 1;
+  
+  if k = 1 then 
+    set[nr] := m + min;
+    return set;
+  fi;
+
+  i := 1;
+  while m > coeff do 
+    m := m - coeff;
+    coeff := coeff * (n - k - i + 1) / (n - i);
+    # coeff = Binomial( n - i, k - 1 )
+    i := i + 1;
+  od;
+
+  min := min + i; 
+  set[nr] := min;
+  
+  return SEMIGROUPS_SubsetNumber(m, k - 1, n - i, set, min, nr,
+   coeff * (k - 1) / (n - i) );
+   # coeff = Binomial( n - i - 1, k - 2 )
+end);
+
+# the <m>th subset of <[1..n]> with <k> elements
+
+InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
+[IsPosInt, IsPosInt, IsPosInt],
+function(m, k, n)
+  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial( n - 1, k - 1 ));
+end);
+
+InstallMethod(SubsetNumber, "for pos int, pos int, pos int, pos int, pos int",
+[IsPosInt, IsPosInt, IsPosInt, IsPosInt],
+function(m, k, n, coeff)
+  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
+end);
+
+#InstallMethod(PartialPermNumber, "for pos int and pos int",
+#[IsPosInt, IsPosInt],
+#function(m, n)
+#
+#  subtract := 1;
+#  k:=0;
+#  while m > subtract do 
+#    m := m - subtract;
+#    k := k + 1;
+#    subtract := Binomial(n, k);
+#  od;
+#
+#  # get the <m>th subset of <[1..n]> with <k> elements
+#
+#  
+#
+#end);
+
 InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup], 
 function(S)
   return Range(IsomorphismPartialPermSemigroup(S));
