@@ -47,7 +47,6 @@ DeclareOperation("DirectedGraphRelabel", [IsDirectedGraph, IsPerm]);
 DeclareOperation("DirectedGraphRemoveLoops", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphRemoveEdges", [IsDirectedGraph, IsList]);
 DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph]);
-DeclareOperation("DirectedGraphTopologicalSort", [IsDirectedGraph, IsBool]);
 DeclareOperation("DirectedGraphReflexiveTransitiveClosure", [IsDirectedGraph]);
 DeclareOperation("DirectedGraphTransitiveClosure", [IsDirectedGraph]);
 
