@@ -501,46 +501,8 @@ if not IsBound(DIGRAPH_TOPO_SORT) then
   end);
 fi;
 
-#function(graph)
-#    local adj, nr, out, marked1, marked2, dfs, i;
-#    
-#    adj := Adjacencies(graph);
-#    nr := Length(adj);
-#    out := EmptyPlist(nr);
-#    marked1 := BlistList([1..nr], []);
-#    marked2 := BlistList([1..nr], []);
-#
-#    dfs := function(i)
-#      local j;
-#      if marked2[i] then 
-#        Error("the digraph has a cycle of length greater than 1,");
-#        return;
-#      fi;
-#      if not marked1[i] then 
-#        marked2[i]:=true;
-#        
-#        for j in adj[i] do 
-#          if j<>i then
-#            dfs(j);
-#          fi;
-#        od;
-#        marked1[i]:=true;
-#        marked2[i]:=false;
-#        Add(out, i);
-#      fi;
-#    end;
-#
-#    for i in [1..nr] do 
-#      if not marked1[i] then 
-#        dfs(i);
-#      fi;
-#    od;
-#    return out;
-#  end);
-#fi;
-
 InstallMethod(DirectedGraphTopologicalSort, "for a digraph", 
-[IsDirectedGraph], x-> DIGRAPH_TOPO_SORT(x));
+[IsDirectedGraph], DIGRAPH_TOPO_SORT);
 
 # JDM: requires a method for non-acyclic graphs
 
@@ -691,11 +653,18 @@ fi;
 # the scc index 1 corresponds to the "deepest" scc, i.e. the minimal ideal in
 # our case...
 
-if not IsBound(GABOW_SCC) then 
-  BindGlobal("GABOW_SCC", 
+if IsBound(GABOW_SCC) then 
+  InstallMethod(StronglyConnectedComponents, "for a directed graph", 
+  [IsDirectedGraph], 
+  function(digraph)
+    return GABOW_SCC(Adjacencies(digraph));
+  end);
+else
+  InstallMethod(StronglyConnectedComponents, "for a directed graph",
   function(digraph)   
     local n, stack1, len1, stack2, len2, id, count, comps, fptr, level, l, comp, w, v;
     
+    digraph:=Adjacencies(digraph);
     n:=Length(digraph);
     
     if n=0 then 

@@ -33,6 +33,7 @@
     <#Include Label="Edges"> 
     <#Include Label="RangeSourceDigraph"> 
     <#Include Label="Adjacencies"> 
+    <#Include Label="StronglyConnectedComponents"> 
   </Section>
 
   <Section><Heading>Properties of directed graphs</Heading> 

@@ -31,6 +31,7 @@ DeclareAttribute("Range", IsDirectedGraph);
 DeclareAttribute("Source", IsDirectedGraph);
 DeclareAttribute("Edges", IsDirectedGraph);
 DeclareAttribute("Adjacencies", IsDirectedGraph);
+DeclareOperation("StronglyConnectedComponents", [IsDirectedGraph]);
 
 # properties
 DeclareProperty("IsSimpleDirectedGraph", IsDirectedGraph);
@@ -53,5 +54,4 @@ DeclareOperation("DirectedGraphIsomorphism", [IsDirectedGraph, IsDirectedGraph])
 DeclareOperation("Diameter", [IsDirectedGraph]);
 DeclareProperty("IsConnectedDigraph", IsDirectedGraph);
 
-# Is "Operation" the correct type of function?
 DeclareAttribute("DirectedGraphFloydWarshall", IsDirectedGraph);
