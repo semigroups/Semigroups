@@ -59,3 +59,5 @@ src/.deps/.dirstamp
 src/.deps/semigroups_la-semigroups.Plo
 src/.libs/semigroups_la-semigroups.o
 pkgconfig.h.in~
+autom4te.cache/*
+configure
