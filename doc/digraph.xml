@@ -418,7 +418,7 @@ gap> gr:=DirectedGraph([1..250000], cycle);
 gap> gr:=DirectedGraphRemoveEdges(gr, [[250000, 1]]);
 <directed graph with 250000 vertices, 249999 edges>
 gap> gr:=DirectedGraphRemoveEdges(gr, [10]);
-
+<directed graph with 250000 vertices, 249998 edges>
   ]]></Example>
   </Description>
 </ManSection>
