@@ -243,6 +243,34 @@ gap> Adjacencies(gr);
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="StronglyConnectedComponents">
+<ManSection>
+  <Oper Name="StronglyConnectedComponents" Arg="digraph"/>
+  <Returns>A record.</Returns>
+  <Description>
+    Returns the record <C>scc</C> corresponding to the strongly connected
+    components of the directed graph <A>digraph</A>. The record <C>scc</C> has 2
+    components <C>comps</C> and <C>id</C>. The component <C>comps</C> is a list
+    of the strongly connected components of <A>digraph</A> (as a list of
+    vertices) and <C>id</C> is a list such that the vertex <C>i</C> is an
+    element of <C>comps[id[i]]</C>.<P/>
+
+    The method used in this operation is a non-recursive version of Gabow's
+    Algorithm <Cite Key="Gabow2000aa"/> and has complexity <M>O(m+n)</M> where
+    <M>m</M> is the number of edges (counting multiple edges as one) and
+    <M>n</M> is the number of vertices in the directed graph. 
+    
+    <Example><![CDATA[
+gap> gr:=DirectedGraph(rec(vertices:=["a", "b", "c"],
+> source:=["a", "b", "b"], range:=["b", "c", "a"]));
+<directed graph with 3 vertices, 3 edges>
+gap> StronglyConnectedComponents(gr);
+rec( comps := [ [ 3 ], [ 1, 2 ] ], id := [ 2, 2, 1 ] )
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsSimpleDirectedGraph">
 <ManSection>
   <Prop Name="IsSimpleDirectedGraph" Arg="digraph"/>

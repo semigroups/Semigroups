@@ -689,11 +689,18 @@ fi;
 # the scc index 1 corresponds to the "deepest" scc, i.e. the minimal ideal in
 # our case...
 
-if not IsBound(GABOW_SCC) then 
-  BindGlobal("GABOW_SCC", 
+if IsBound(GABOW_SCC) then 
+  InstallMethod(StronglyConnectedComponents, "for a directed graph", 
+  [IsDirectedGraph], 
+  function(digraph)
+    return GABOW_SCC(Adjacencies(digraph));
+  end);
+else
+  InstallMethod(StronglyConnectedComponents, "for a directed graph",
   function(digraph)   
     local n, stack1, len1, stack2, len2, id, count, comps, fptr, level, l, comp, w, v;
     
+    digraph:=Adjacencies(digraph);
     n:=Length(digraph);
     
     if n=0 then 
