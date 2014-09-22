@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-if not IsBound(ORBC) then 
+if not IsBound(ORBC) then
   BindGlobal("HTAdd_TreeHash_C", fail);
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
@@ -59,5 +59,7 @@ ReadPackage("semigroups/gap/quotients.gd");
 
 ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univcong.gd");
+
+ReadPackage("semigroups/gap/freeband.gd");
 
 DeclareInfoClass("InfoSemigroups");;
