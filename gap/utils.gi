@@ -701,7 +701,7 @@ function(arg)
   return true;
 end);
 
-#
+# JDM: this appears to be unused . . .
 
 InstallGlobalFunction(WriteGeneratorsLine, 
 function(f)

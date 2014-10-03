@@ -231,12 +231,11 @@ function(f, d)
 
   if schutz<>false then 
     for x in cosets do 
-      #if SiftGroupElement(schutz, g/x).isone then 
       if SiftedPermutation(schutz, g/x)=() then 
         return true;
       fi;
     od;
-  else #JDM is search really necessary? 
+  else 
     for x in cosets do 
       if g/x=() then 
         return true;
