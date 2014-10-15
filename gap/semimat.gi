@@ -10,7 +10,7 @@
 ##
 
 #T Are these still needed
-#T This returns immutable 
+#T This returns immutable
 InstallMethod(OneMutable,
     "for ring element coll coll coll",
     [IsRingElementCollCollColl],
@@ -42,7 +42,7 @@ end);
 InstallGlobalFunction(MatrixObjRowSpaceRightAction,
   function(s, vsp, mat)
     local basis, nvsp, i, n;
-      
+
       # This takes care of the token element
       if DimensionsMat(vsp)[1] > DimensionsMat(mat)[1] then
           nvsp := mat;
@@ -58,7 +58,7 @@ InstallGlobalFunction(MatrixObjRowSpaceRightAction,
           Remove(nvsp, i);
         fi;
       od;
-      
+
       return nvsp;
 end);
 
@@ -71,7 +71,7 @@ end);
 InstallGlobalFunction(MatrixObjLocalRightInverse,
 function( S, V, mat )
         local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
-        
+
         # We assume that mat is quadratic but we don't check this.
         # If a semigroup decides to have non-quadratic matrices in it,
         # something is seriously wrong anyway.
@@ -83,13 +83,13 @@ function( S, V, mat )
         #T I think this should all be done in place
         CopySubMatrix( V * mat, W, [1..k], [1..k], [1..n], [1..n]);
         CopySubMatrix( V, W, [1..k], [1..k], [1..n], [n+1..2*n]);
-        
+
         se := SemiEchelonMat(W);
-        
+
         for i in [1..Length(se.vectors)] do
             W[i] := ShallowCopy(se.vectors[i]);
         od;
-        
+
         # add missing heads
         u := One(BaseDomain(W));
         j := k+1;
@@ -100,9 +100,9 @@ function( S, V, mat )
                 j := j+1;
             fi;
         od;
-        
+
         TriangulizeMat(W);
-        
+
         return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
 end);
 
@@ -111,10 +111,10 @@ end);
 InstallGlobalFunction(MatrixObjSchutzGrpElement,
 function(S, x, y)
     local xse, xhe, yse, yhe, he, p, q, i, RemoveZeroRows, res;
-        
+
     RemoveZeroRows := function(mat)
         local i, n;
-            
+
         n := DimensionsMat(mat)[1];
 
         for i in [n,n-1..1] do
@@ -123,12 +123,12 @@ function(S, x, y)
             fi;
         od;
     end;
-        
+
     if x^(-1) <> fail then
         res := List(x^(-1) * y, List);
     elif IsZero(x) then
         res := [[One(BaseDomain(x))]];
-    else 
+    else
         xse := SemiEchelonMatTransformation(x);
         p := MutableCopyMat(TransposedMat(Matrix(xse.coeffs, Length(xse.heads), x)));
         RemoveZeroRows(p);
@@ -150,12 +150,12 @@ end);
 InstallGlobalFunction(MatrixObjLambdaConjugator,
 function(S, x, y)
      local xse, xhe, yse, yhe, he, h, p, q, i, RemoveZeroRows, res;
-        
+
     if x^(-1) <> fail then
         res := List(x^(-1) * y, List);
     elif IsZero(x) then
         res := [[One(BaseDomain(x))]];
-    else 
+    else
         xse := SemiEchelonMat(x);
         h := Filtered(xse.heads, x->x<>0);
         p := Matrix(One(BaseDomain(x)) * PermutationMat(SortingPerm(h), Length(h), BaseDomain(x)), x);
@@ -167,7 +167,7 @@ function(S, x, y)
         res := List(p * q^(-1), List);
     fi;
 
-    return res;   
+    return res;
 end);
 
 #T is there a complete direct way of testing whether
@@ -181,18 +181,18 @@ end);
 # Attempt to construct an idempotent m with RowSpace(m) = x
 # ColumnSpace(m) = y
 InstallGlobalFunction(MatrixObjIdempotentCreator,
-function(S, x, y) 
+function(S, x, y)
     local m, m2, p1, p2, f;
     m := TransposedMat(y) * x;
-    
+
     m2 := m * m;
     p1 := PositionNonZero(m2);
     p2 := PositionNonZero(m2[p1]);
 
     f := m[p1][p2] / m2[p1][p2];
-    
+
     m := f * m;
-    
+
     if f * m2 = m then
         return m;
     else
@@ -219,7 +219,7 @@ function(S)
         Print(dims[1], "x", dims[2]);
         Print(" matrices over ", BaseDomain(gens[1]));
         Print(" with ", Length(gens), " generator");
-        if Length(gens)>1 then 
+        if Length(gens)>1 then
           Print("s");
         fi;
         Print(">");
@@ -241,15 +241,15 @@ function(S)
     fi;
 end);
 
-# Note that this method assumes that the object is 
+# Note that this method assumes that the object is
 # IsPlistMatrixRep and that we are using a position
-# in the positionalobjectrep for storing the row space (this 
+# in the positionalobjectrep for storing the row space (this
 # is mainly because MatrixObj, PlistMatrixObj are not
 # in IsAttributeStoringRep
-# 
+#
 InstallMethod( CanonicalRowSpace,
         "for a matrix object in PlistMatrixRep over a finite field",
-        [ IsMatrixObj 
+        [ IsMatrixObj
           and IsPlistMatrixRep
           and IsFFECollColl ],
 function( m )
@@ -257,12 +257,12 @@ function( m )
 
     if not IsBound(m![5]) then
         Info(InfoMatrixSemigroups, 2, "CanonicalRowSpace called");
-        
+
         m![5] := MutableCopyMat(m);
         TriangulizeMat(m![5]);
-        
+
         n := DimensionsMat(m![5])[1];
-        
+
         for i in [n,n-1..1] do
             if IsZero(m![5][i]) then
                 Remove(m![5], i);
@@ -283,14 +283,14 @@ end);
 ##
 ## This needs more/better checking since GAP does not have any means
 ## of determining _whether there is_ a common scalar domain for
-## a list of matrices for example, it just complains with a 
+## a list of matrices for example, it just complains with a
 ## "no method found" error if handed a list of matrices over different
 ## incompatible domains.
 ##
 InstallGlobalFunction(MatrixSemigroup,
 function(arg)
     local gens, field, n, ListOfGens, ListOfGensAndField;
-    
+
     if Length(arg) > 0 then
         if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then # Just the generators
             gens := arg;
@@ -299,7 +299,7 @@ function(arg)
         elif Length(arg) = 2 then # List of generators, field
             gens := arg[1];
             field := arg[2];
-        elif Length(arg) = 3 then # List of generators, field, matrix dimensions 
+        elif Length(arg) = 3 then # List of generators, field, matrix dimensions
             gens := arg[1];
             field := arg[2];
             n := arg[3];
@@ -309,27 +309,25 @@ function(arg)
     else
         Error("usage: MatrixSemigroup(gens [, F, n])");
     fi;
-    
+
     if Length(gens) = 0 then
         Error("empty generating sets are not supported");
     fi;
-    
-    if (not IsFFECollCollColl(gens)) or 
+
+    if (not IsFFECollCollColl(gens)) or
        (not IsHomogeneousList(gens)) then
         Error("only matrices over finite fields are supported as generating sets");
     fi;
-    
+
     if not IsBound(field) then
         field := DefaultScalarDomainOfMatrixList(gens);
     fi;
-    
+
     if not IsBound(n) then
         n := Length(gens[1]);
     fi;
-    
+
     gens := List(gens, x -> NewMatrix(IsPlistMatrixRep, field, n, x));
 
     return Semigroup(gens);
 end);
-
-
