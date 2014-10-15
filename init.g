@@ -13,7 +13,6 @@ if not IsBound(ORBC) then
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
-ReadPackage("semigroups/gap/digraph.gd");
 ReadPackage("semigroups/gap/grpperm.gd");
 
 ReadPackage("semigroups/gap/utils.gd");
