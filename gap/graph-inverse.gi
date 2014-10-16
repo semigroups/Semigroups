@@ -14,14 +14,14 @@ function(S)
   DoAssignGenVars(GeneratorsOfInverseSemigroup(S));
 end);
 
-#graph should be a record with 3 components 'vertices', 'source', and 'range'
+#
 
-InstallMethod(GraphInverseSemigroup, "for a directed graph",
-[IsDirectedGraph],
+InstallMethod(GraphInverseSemigroup, "for a digraph",
+[IsDigraph],
 function(graph)
   local copy, range, source, fam, S, gens, i, j;
 
-  if not IsAcyclicDirectedGraph(graph) then 
+  if not IsAcyclicDigraph(graph) then 
     Info(InfoWarning, 1, "the graph defines an infinite semigroup!");
   fi;
 
@@ -39,11 +39,11 @@ function(graph)
   
   SetIsFinite(S, true);
   gens:=[]; 
-  for i in [1..Length(Vertices(graph))+Length(Source(graph))] do 
+  for i in [1..Length(DigraphVertices(graph))+Length(DigraphSource(graph))] do 
     Add(gens, Objectify(fam!.type, [[i], graph]));
   od;
-  SetGeneratorsOfSemigroup(S, Concatenation(gens, List([1..Length(Source(graph))], x->
-   gens[x]^-1)));
+  SetGeneratorsOfSemigroup(S, Concatenation(gens, List([1..Length(DigraphSource(graph))], 
+  x-> gens[x]^-1)));
   SetGeneratorsOfInverseSemigroup(S, gens);
   SetGraphOfGraphInverseSemigroup(S, graph);
   return S;
@@ -52,7 +52,7 @@ end);
 InstallMethod(IsVertex, "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
 function(x)
-  return Length(x![1])=1 and AbsInt(x![1][1])>Length(Source(x![2]));
+  return Length(x![1])=1 and AbsInt(x![1][1])>Length(DigraphSource(x![2]));
 end);
 
 InstallOtherMethod(MultiplicativeZero, "for a graph inverse semigroup",
@@ -81,10 +81,10 @@ function(x)
     return x;
   elif x![1][1]>0 then 
     return Objectify(FamilyObj(x)!.type,
-     [[Source(x![2])[x![1][1]]+Length(Source(x![2]))], x![2]]);
+     [[DigraphSource(x![2])[x![1][1]]+Length(DigraphSource(x![2]))], x![2]]);
   elif x![1][1]<0 then 
     return Objectify(FamilyObj(x)!.type,
-     [[Range(x![2])[-x![1][1]]+Length(Source(x![2]))], x![2]]);
+     [[DigraphRange(x![2])[-x![1][1]]+Length(DigraphSource(x![2]))], x![2]]);
   else 
     Error("usage: the argument <x> must not be the zero,");
     return;
@@ -98,10 +98,10 @@ function(x)
     return x;
   elif x![1][Length(x![1])]>0 then 
     return Objectify(FamilyObj(x)!.type,
-     [[Range(x![2])[x![1][Length(x![1])]]+Length(Source(x![2]))], x![2]]);
+     [[DigraphRange(x![2])[x![1][Length(x![1])]]+Length(DigraphSource(x![2]))], x![2]]);
   elif x![1][Length(x![1])]<0 then 
     return Objectify(FamilyObj(x)!.type,
-     [[Source(x![2])[-x![1][Length(x![1])]]+Length(Source(x![2]))], x![2]]);
+     [[DigraphSource(x![2])[-x![1][Length(x![1])]]+Length(DigraphSource(x![2]))], x![2]]);
   else 
     Error("usage: the argument <x> must not be the zero,");
     return;
@@ -120,9 +120,9 @@ function(x)
   str:="";
   gr:=x![2];
   for i in x![1] do 
-    if i>Length(Source(gr)) then 
+    if i>Length(DigraphSource(gr)) then 
       Append(str, "v_");
-      Append(str, String(i-Length(Source(gr))));
+      Append(str, String(i-Length(DigraphSource(gr))));
     elif i>0 then  
       Append(str, "e_");
       Append(str, String(i));
@@ -140,9 +140,9 @@ InstallMethod(ViewString, "for a graph inverse semigroup",
 function(S)
   local str;
   str:="<graph inverse semigroup with ";
-  Append(str, String(Length(Vertices(GraphOfGraphInverseSemigroup(S)))));
+  Append(str, String(Length(DigraphVertices(GraphOfGraphInverseSemigroup(S)))));
   Append(str, " vertices, ");
-  Append(str, String(Length(Source(GraphOfGraphInverseSemigroup(S)))));
+  Append(str, String(Length(DigraphSource(GraphOfGraphInverseSemigroup(S)))));
   Append(str, " edges>");
   return str;
 end);
@@ -193,9 +193,9 @@ function(x, y)
   
   type:=FamilyObj(x)!.type;
   graph:=x![2];
-  nredges:=Length(Source(graph));
-  range:=Range(graph);
-  source:=Source(graph);
+  nredges:=Length(DigraphSource(graph));
+  range:=DigraphRange(graph);
+  source:=DigraphSource(graph);
 
   if IsZero(x) or IsZero(y) then 
     return Zero(x);

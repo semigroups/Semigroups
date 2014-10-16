@@ -214,8 +214,8 @@ function(S, set)
 end);
 
 # JDM this could be done without creating the graph first and then running
-# IsStronglyConnectedDirectedGraph, but just using the method of
-# IsStronglyConnectedDirectedGraph with the generators themselves.
+# IsStronglyConnectedDigraph, but just using the method of
+# IsStronglyConnectedDigraph with the generators themselves.
 
 InstallMethod(IsTransitive, 
 "for a transformation collection and a positive int",
@@ -233,7 +233,7 @@ function(coll, n)
     od;
   od;
 
-  return IsStronglyConnectedDirectedGraph(DirectedGraph(graph));
+  return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
 InstallMethod(IsTransitive, 
@@ -268,7 +268,7 @@ function(coll, set)
     od;
   od;
 
-  return IsStronglyConnectedDirectedGraph(DirectedGraph(graph));
+  return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
 # same method for ideals

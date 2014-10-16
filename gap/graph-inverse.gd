@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-DeclareOperation("GraphInverseSemigroup", [IsDirectedGraph]);
+DeclareOperation("GraphInverseSemigroup", [IsDigraph]);
 
 DeclareCategory( "IsGraphInverseSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections( "IsGraphInverseSemigroupElement");

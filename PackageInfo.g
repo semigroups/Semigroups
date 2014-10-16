@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.1.1">
+##  <!ENTITY VERSION "2.2">
 ##  <!ENTITY GAPVERS "4.7.5">
 ##  <!ENTITY ORBVERS "4.7">
 ##  <!ENTITY IOVERS "4.3">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.1.1">
+##  <!ENTITY ARCHIVENAME "semigroups-2.2">
 ##  <!ENTITY COPYRIGHTYEARS "2011-14">
 ##  <#/GAPDoc>
 
@@ -38,9 +38,9 @@ end;
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "2.1.1",
+Version := "2.2",
 Date := "09/09/2014",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.1.1",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.2",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
