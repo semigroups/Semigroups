@@ -55,7 +55,6 @@
   <#Include SYSTEM "chap7.xml">  <!-- congruences -->
   <#Include SYSTEM "chap9.xml">  <!-- homomorphisms -->
   <#Include SYSTEM "chap6.xml">  <!-- orbits --> 
-  <#Include SYSTEM "chap10.xml"> <!-- directed graphs --> 
   <#Include SYSTEM "chap11.xml"> <!-- graph inverse semigroups --> 
 </Body>
 
