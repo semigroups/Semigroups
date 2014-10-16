@@ -47,14 +47,15 @@
 
 <Body>
   <#Include SYSTEM="chap1.xml">
-  <#Include SYSTEM "chap2.xml"> <!-- creating semigroups and monoid -->
-  <#Include SYSTEM "chap8.xml"> <!-- ideals -->
-  <#Include SYSTEM "chap3.xml"> <!-- structure -->
-  <#Include SYSTEM "chap4.xml"> <!-- bipartitions and blocks --> 
-  <#Include SYSTEM "chap5.xml"> <!-- free inverse semigroups -->
-  <#Include SYSTEM "chap7.xml"> <!-- congruences -->
-  <#Include SYSTEM "chap9.xml"> <!-- homomorphisms -->
-  <#Include SYSTEM "chap6.xml"> <!-- orbits --> 
+  <#Include SYSTEM "chap2.xml">  <!-- creating semigroups and monoid -->
+  <#Include SYSTEM "chap8.xml">  <!-- ideals -->
+  <#Include SYSTEM "chap3.xml">  <!-- structure -->
+  <#Include SYSTEM "chap4.xml">  <!-- bipartitions and blocks --> 
+  <#Include SYSTEM "chap5.xml">  <!-- free inverse semigroups -->
+  <#Include SYSTEM "chap7.xml">  <!-- congruences -->
+  <#Include SYSTEM "chap9.xml">  <!-- homomorphisms -->
+  <#Include SYSTEM "chap6.xml">  <!-- orbits --> 
+  <#Include SYSTEM "chap11.xml"> <!-- graph inverse semigroups --> 
 </Body>
 
 <Bibliography Databases="semigroups" />
