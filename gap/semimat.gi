@@ -49,7 +49,7 @@ InstallGlobalFunction(MatrixObjRowSpaceRightAction,
       else
           nvsp := vsp * mat;
       fi;
-      #T WHY?
+      #T WHY? This is not correct, i think
       nvsp := MutableCopyMat(nvsp);
       TriangulizeMat(nvsp);
       n := DimensionsMat(nvsp)[1];
@@ -108,40 +108,23 @@ end);
 
 #T returns an invertible matrix
 #T make pretty and efficient (in that order)
+#T In particular the setup for the matrix should be much more
+#T efficient.
 InstallGlobalFunction(MatrixObjSchutzGrpElement,
 function(S, x, y)
-    local xse, xhe, yse, yhe, he, p, q, i, RemoveZeroRows, res;
+    local eqs, sch, res, n, k;
 
-    RemoveZeroRows := function(mat)
-        local i, n;
+    k := DimensionsMat(x)[2];
+	n := LambdaRank(S)(x);
 
-        n := DimensionsMat(mat)[1];
-
-        for i in [n,n-1..1] do
-            if IsZero(mat[i]) then
-                Remove(mat,i);
-            fi;
-        od;
-    end;
-
-    if x^(-1) <> fail then
-        res := List(x^(-1) * y, List);
-    elif IsZero(x) then
+    if IsZero(x) then
         res := [[One(BaseDomain(x))]];
     else
-        xse := SemiEchelonMatTransformation(x);
-        p := MutableCopyMat(TransposedMat(Matrix(xse.coeffs, Length(xse.heads), x)));
-        RemoveZeroRows(p);
-        p := TransposedMat(p);
-        p := Matrix(PermutationMat(SortingPerm(Filtered(xse.heads, x -> x <> 0)), DimensionsMat(p)[1], BaseDomain(p)), p) * p;
+		eqs := MutableCopyMat(TransposedMat(Concatenation(TransposedMat(x),TransposedMat(y))));
+		TriangulizeMat(eqs);
+		sch := ExtractSubMatrix(eqs, [1..n],[k+1..k+n]);
 
-        yse := SemiEchelonMatTransformation(y);
-        q := MutableCopyMat(TransposedMat(Matrix(yse.coeffs, Length(yse.heads), y)));
-        RemoveZeroRows(q);
-        q := TransposedMat(q);
-        q := Matrix(One(BaseDomain(q)) * PermutationMat(SortingPerm(Filtered(yse.heads, x -> x <> 0)), DimensionsMat(q)[1], BaseDomain(q)), q) * q;
-
-        res := List(p * q^(-1), List);
+        res := List(sch, List);
     fi;
 
     return res;
