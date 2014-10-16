@@ -90,7 +90,6 @@ fi;
 #
 
 ReadPackage("semigroups/gap/grpperm.gi");
-ReadPackage("semigroups/gap/digraph.gi");
 ReadPackage("semigroups/gap/graph-inverse.gi");
 
 ReadPackage("semigroups/gap/bipartition.gi");
