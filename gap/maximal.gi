@@ -810,8 +810,10 @@ else
             Info(InfoSemigroups, 2, "Trying to remove gens: ", j, "...");
             gens2:=Difference(ShallowCopy(gens), gens{j});
             U:=Semigroup(gens2);
-            A:=Difference(classes[i], Intersection(U, classes[i]));
-            for a in gens{j} do RemoveSet(A, a); od;
+            A:=Difference(Elements(classes[i]), Intersection(U, classes[i]));
+            for a in j do
+              RemoveSet(A, gens[a]);
+            od;
             XX:=Union(List(gens{j},x->Elements(HClass(S,x))));
             while not IsEmpty(A) do 
               a:=A[1];
