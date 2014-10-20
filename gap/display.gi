@@ -398,6 +398,15 @@ function(S)
   return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)));
 end);
 
+InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup, IsRecord], 
+function(S, opts)
+  if IsActingSemigroup(S) then 
+    TryNextMethod();
+  fi;
+  return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)), opts);
+end);
+
 #
 
 InstallMethod(DotDClasses, "for an acting semigroup",
@@ -409,7 +418,7 @@ end);
 InstallMethod(DotDClasses, "for an acting semigroup and record",
 [IsActingSemigroup, IsRecord],
 function(s, opts)
-  local es, elts, str, i, gp, h, rel, j, k, di, dk, d, l, x;
+  local es, elts, str, i, gp, h, color, rel, j, k, di, dk, d, l, x;
 
   # process the options
   if not IsBound(opts.maximal) then 
@@ -417,6 +426,9 @@ function(s, opts)
   fi;
   if not IsBound(opts.number) then 
     opts.number:=true;
+  fi;
+  if not IsBound(opts.highlight) then 
+    opts.highlight := false; #JDM means highligh H-classes
   fi;
   if not IsBound(opts.idempotentsemilattice) then 
     opts.idempotentsemilattice:=false;
@@ -460,10 +472,15 @@ function(s, opts)
         h:=HClasses(l);
         for x in h do
           if IsGroupHClass(x) then
-            if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"grey\">", gp, "</TD>"));
+            if opts.highlight <> false and x in opts.highlight then 
+              color := "#880000";
             else
-              Append(str, "<TD BGCOLOR=\"grey\"");
+              color := "gray";
+            fi;
+            if opts.maximal then
+              Append(str, Concatenation("<TD BGCOLOR=\"", color , "\">", gp, "</TD>"));
+            else
+              Append(str, Concatenation("<TD BGCOLOR=\"", color, "\""));
               if opts.idempotentsemilattice then 
                 Append(str, Concatenation(" PORT=\"e", String(Position(elts,
                  Idempotents(x)[1])), "\""));
@@ -471,7 +488,12 @@ function(s, opts)
               Append(str, ">*</TD>");
             fi;
           else
-            Append(str, "<TD></TD>");
+            if opts.highlight <> false and x in opts.highlight then 
+              color := "#FF0000";
+            else
+              color := "white";
+            fi;
+            Append(str, Concatenation("<TD BGCOLOR=\"", color ,"\"></TD>"));
           fi;
         od;
       fi;
