@@ -2,6 +2,7 @@
 ##
 #W  maximal.tst
 ##  Test file for Maximal Subsemigroups related algorithms
+##  Written by Wilf
 ##
 #############################################################################
 ##
@@ -148,6 +149,26 @@ gap> max:=MaximalSubsemigroups(R);;
 gap> Size(max);
 116
 
+# A principal factor of an inverse sgp; 13x13 completely unconnected over () gp
+gap> mat:=[ [ (), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+>   [ 0, (), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+>   [ 0, 0, (), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+>   [ 0, 0, 0, (), 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+>   [ 0, 0, 0, 0, (), 0, 0, 0, 0, 0, 0, 0, 0 ], 
+>   [ 0, 0, 0, 0, 0, (), 0, 0, 0, 0, 0, 0, 0 ], 
+>   [ 0, 0, 0, 0, 0, 0, (), 0, 0, 0, 0, 0, 0 ], 
+>   [ 0, 0, 0, 0, 0, 0, 0, (), 0, 0, 0, 0, 0 ], 
+>   [ 0, 0, 0, 0, 0, 0, 0, 0, (), 0, 0, 0, 0 ], 
+>   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, (), 0, 0, 0 ], 
+>   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (), 0, 0 ], 
+>   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (), 0 ], 
+>   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, () ] ];;
+gap> G:=Group(());;
+gap> R:=ReesZeroMatrixSemigroup(G, mat);;
+gap> max:=MaximalSubsemigroups(R);;
+gap> Size(max);
+8190
+
 # Maximal subsemigroups of T3
 gap> T3:=FullTransformationMonoid(3);
 <full transformation semigroup on 3 pts>
@@ -194,7 +215,7 @@ true
 gap> ForAll(max,x->IsMaximalSubsemigroup(S,x));
 true
 
-# Inverse semigroup of partial permutations
+# Random inverse semigroup of partial permutations
 gap> S:=InverseSemigroup([
 >   PartialPerm( [ 1, 3, 4, 5 ], [ 6, 5, 2, 4 ] ),
 >   PartialPerm( [ 1, 2, 3, 4, 6 ], [ 5, 4, 3, 1, 6 ] ),
@@ -205,7 +226,30 @@ gap> Size(max);
 gap> List(max, Size);
 [ 715, 715, 714, 714, 713, 713 ]
 
-# Partition monoid on 3 points
+# Random inverse semigroup of block bijections
+gap> C:=InverseSemigroup( [ 
+>   Bipartition( [ [ 1, -4 ], [ 2, -5 ], [ 3, 4, 5, 6, 7, -1, -2, -3, -6, -7 ] ] ), 
+>   Bipartition( [ [ 1, -6 ], [ 2, -3 ], [ 3, 5, 6, 7, -1, -4, -5, -7 ], [ 4, -2 ] ] ), 
+>   Bipartition( [ [ 1, -6 ], [ 2, -2 ], [ 3, 6, 7, -1, -5, -7 ], [ 4, -4 ], [ 5, -3 ] ] ), 
+>   Bipartition( [ [ 1, -6 ], [ 2, -3 ], [ 3, -2 ], [ 4, 5, 7, -1, -5, -7 ], [ 6, -4 ] ] ) ] );
+<inverse bipartition semigroup on 7 pts with 4 generators>
+gap> max:=MaximalSubsemigroups(C);
+[ <bipartition semigroup on 7 pts with 11 generators>, 
+  <bipartition semigroup on 7 pts with 10 generators>, 
+  <bipartition semigroup on 7 pts with 11 generators>, 
+  <bipartition semigroup on 7 pts with 13 generators>, 
+  <bipartition semigroup on 7 pts with 12 generators>, 
+  <bipartition semigroup on 7 pts with 8 generators>, 
+  <bipartition semigroup on 7 pts with 8 generators>, 
+  <bipartition semigroup on 7 pts with 8 generators> ]
+gap> Size(max);
+8
+gap> IsDuplicateFreeList(max);
+true
+gap> ForAll(max, x->IsMaximalSubsemigroup(C,x));
+true
+
+# Partition monoid of degree 3
 gap> B:=PartitionMonoid(3);;
 gap> max:=MaximalSubsemigroups(B);;
 gap> Size(max);
@@ -214,6 +258,22 @@ gap> List(max, Size);
 [ 200, 199, 199, 199, 167, 167, 167, 167 ]
 gap> S:=max[1];;
 gap> max:=MaximalSubsemigroups(S);;
+
+# Random Bipartition example
+gap> B:=Semigroup( [ Bipartition( [ [ 1, 2, -4 ], [ 3, 4, 5, 7 ], [ 6, -5, -7 ], [ -1, -3, -6 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1, 5, 6, -2, -4, -6, -7 ], [ 2, 3, 4, -3, -5 ], [ 7, -1 ] ] ), 
+>   Bipartition( [ [ 1, 6 ], [ 2, 3, 4 ], [ 5 ], [ 7, -6, -7 ], [ -1, -3, -4 ], [ -2 ], [ -5 ] ] ), 
+>   Bipartition( [ [ 1, -4 ], [ 2, 3, 7 ], [ 4, 5, -7 ], [ 6, -1, -2, -3, -5 ], [ -6 ] ] ), 
+>   Bipartition( [ [ 1, 7, -3 ], [ 2, 4, 5, -4 ], [ 3, 6 ], [ -1 ], [ -2 ], [ -5 ], [ -6 ], [ -7 ] ] ), 
+>   Bipartition( [ [ 1, 5, -2, -4, -6, -7 ], [ 2, -1, -3, -5 ], [ 3, 4, 6, 7 ] ] ) ] );
+<bipartition semigroup on 7 pts with 6 generators>
+gap> max:=MaximalSubsemigroups(B);;                                    
+gap> IsDuplicateFreeList(max);
+true
+gap> Size(max);
+7
+gap> ForAll(max,x->IsMaximalSubsemigroup(B,x));
+true
 
 # Test of IsMaximalSubsemigroup
 gap> S:=Semigroup([
@@ -236,6 +296,15 @@ gap> U:=Semigroup([
 gap> IsSubsemigroup(S, U);
 true
 gap> IsMaximalSubsemigroup(S, U);
+false
+
+# Maximal subsemigroups of a random regular transformation ideal
+gap> S:=SingularTransformationSemigroup(5);
+<regular transformation semigroup ideal on 5 pts with 1 generator>
+gap> max:=MaximalSubsemigroups(S);;
+gap> Size(max);
+40
+gap> S=max[1];
 false
 
 #

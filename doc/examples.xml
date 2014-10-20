@@ -42,17 +42,24 @@ gap> Size(S);
    <ManSection>
     <Oper Name="JonesMonoid" Arg="n"/>
     <Oper Name="TemperleyLiebMonoid" Arg="n"/>
+    <Oper Name="SingularJonesMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the Jones
       monoid of degree <A>n</A>. The <B>Jones monoid</B> is the subsemigroup of
       the Brauer monoid consisting of those bipartitions with a planar diagram.
-      The Jones monoid is sometimes refered to as the <B>Temperley-Lieb
-        monoid</B>. 
+      The Jones monoid is sometimes referred to as the <B>Temperley-Lieb
+        monoid</B>. <P/>
+
+      <C>SingularJonesMonoid</C> returns the ideal of the Jones monoid
+      consisting of the non-invertible elements (i.e. those not in the group of
+      units). 
 
       <Example><![CDATA[
 gap> S:=JonesMonoid(4);
-<regular bipartition monoid on 4 pts with 3 generators>]]></Example>
+<regular bipartition monoid on 4 pts with 3 generators>
+gap> SingularJonesMonoid(8);
+<regular bipartition semigroup ideal on 8 pts with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -60,19 +67,27 @@ gap> S:=JonesMonoid(4);
 <#GAPDoc Label="BrauerMonoid">
    <ManSection>
     <Oper Name="BrauerMonoid" Arg="n"/>
+    <Oper Name="SingularBrauerMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the Brauer
       monoid of degree <A>n</A>. The <B>Brauer monoid</B> is the subsemigroup of
       the partition monoid consisiting of those bipartitions where the size of
-      every block is 2. 
+      every block is 2. <P/>
+      
+      <C>SingularBrauerMonoid</C> returns the ideal of the Brauer monoid
+      consisting of the non-invertible elements (i.e. those not in the group of
+      units). 
+
       <Example><![CDATA[
 gap> S:=BrauerMonoid(4);
 <regular bipartition monoid on 4 pts with 3 generators>
 gap> IsSubsemigroup(S, JonesMonoid(4));
 true
 gap> Size(S);
-105]]></Example>
+105
+gap> SingularBrauerMonoid(8);
+<regular bipartition semigroup ideal on 8 pts with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -80,11 +95,18 @@ gap> Size(S);
 <#GAPDoc Label="FactorisableDualSymmetricInverseSemigroup">
    <ManSection>
     <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="SingularFactorisableDualSymmetricInverseSemigroup" Arg="n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the largest
       factorisable inverse subsemigroup of the dual symmetric inverse monoid of
-      degree <A>n</A>. 
+      degree <A>n</A>. <P/>
+      
+      <C>SingularFactorisableDualSymmetricInverseSemigroup</C> returns the ideal
+      of the factorisable dual symmetric inverse semigroup consisting of the
+      non-invertible elements (i.e. those not in the group of units). <P/>
+
+      See <Ref Prop="IsUniformBlockBijection"/>.
       <Example><![CDATA[
 gap> S:=DualSymmetricInverseMonoid(4);
 <inverse bipartition monoid on 4 pts with 3 generators>
@@ -107,12 +129,17 @@ true
    <ManSection>
     <Oper Name="DualSymmetricInverseSemigroup" Arg="n"/>
     <Oper Name="DualSymmetricInverseMonoid" Arg="n"/>
+    <Oper Name="SingularDualSymmetricInverseSemigroup" Arg="n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then these operations return the dual
       symmetric inverse monoid of degree <A>n</A>, which is the subsemigroup of
       the partition monoid consisting of the block bijections of degree <A>n</A>.<P/>
 
+      <C>SingularDualSymmetricInverseSemigroup</C> returns the ideal of the
+      dual symmetric inverse monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units). <P/>
+      
       See <Ref Prop="IsBlockBijection"/>.
 
       <Example><![CDATA[
@@ -130,11 +157,17 @@ gap> Size(S);
 <#GAPDoc Label="PartitionMonoid">
    <ManSection>
     <Oper Name="PartitionMonoid" Arg="n"/>
+    <Oper Name="SingularPartitionMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the
       partition monoid of degree <A>n</A> which is the monoid consisting of all
-      the bipartitions of degree <A>n</A>. 
+      the bipartitions of degree <A>n</A>. <P/>
+
+      <C>SingularPartitionMonoid</C> returns the ideal of the
+      partition monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units). <P/>
+
       <Example><![CDATA[
 gap> S:=PartitionMonoid(5);
 <regular bipartition monoid on 5 pts with 4 generators>
@@ -155,11 +188,11 @@ gap> Size(S);
       isomorphic to the semigroup consisting of all partial transformation on
       <A>n</A> points. This monoid has <C>(<A>n</A>+1)^<A>n</A></C> elements.
       <!--JDM add generators-->
-      <Example>
+      <Example><![CDATA[
 gap> PartialTransformationSemigroup(8); 
-&lt;regular transformation monoid on 9 pts with 4 generators>
+<regular transformation monoid on 9 pts with 4 generators>
 gap> Size(last);
-43046721</Example>
+43046721]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -180,12 +213,12 @@ gap> Size(last);
       with matrix semigroups in &Semigroups; and so it might be advisable to use
       <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
 
-      <Example>
+      <Example><![CDATA[
 gap> S:=FullMatrixSemigroup(3,4);
-&lt;full matrix semigroup 3x3 over GF(2^2)>
+<full matrix semigroup 3x3 over GF(2^2)>
 gap> T:=Range(IsomorphismTransformationSemigroup(S));;
 gap> Size(T);
-262144</Example>
+262144]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -200,14 +233,14 @@ gap> Size(T);
       commands <Ref Oper="FullMatrixSemigroup"/> or 
       <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
 
-      <Example>
+      <Example><![CDATA[
 gap> S:=RandomTransformationSemigroup(4,4);;
 gap> IsFullMatrixSemigroup(S);
 false
 gap> S:=GeneralLinearSemigroup(3,3);
-&lt;full matrix semigroup 3x3 over GF(3)>
+<full matrix semigroup 3x3 over GF(3)>
 gap> IsFullMatrixSemigroup(S);
-true</Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -225,19 +258,19 @@ true</Example>
         (St Andrews), Yanhui Wang (York). <P/>
 
         <B>Please note:</B> the &Grape; package version &GRAPEVERS;
-        or higher should be fully installed for this function to work.
+        or higher must be available and compiled for this function to work.
 
-        <Example>
+        <Example><![CDATA[
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
 > PartialPerm( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );
-&lt;inverse partial perm semigroup on 10 pts with 2 generators>
+<inverse partial perm semigroup on 10 pts with 2 generators>
 gap> T:=InverseSemigroup(Idempotents(S), rec(small:=true));;
 gap> M:=MunnSemigroup(T);;
 gap> NrIdempotents(M);
 60
 gap> NrIdempotents(S);
-60</Example>
+60]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -327,15 +360,15 @@ gap> NrIdempotents(S);
     </Alt>
   </Item>
 </List>
-      <Example>
+      <Example><![CDATA[
 gap> S:=POPI(10);                                            
-&lt;inverse partial perm monoid on 10 pts with 2 generators>
+<inverse partial perm monoid on 10 pts with 2 generators>
 gap> Size(S);
 923781
 gap> 1+5*Binomial(20, 10);
 923781
 gap> S:=POI(10);
-&lt;inverse partial perm monoid on 10 pts with 10 generators>
+<inverse partial perm monoid on 10 pts with 10 generators>
 gap> Size(S);
 184756
 gap> Binomial(20,10);
@@ -343,11 +376,11 @@ gap> Binomial(20,10);
 gap> IsSubsemigroup(POPI(10), POI(10));
 true
 gap> S:=OrderEndomorphisms(5);
-&lt;regular transformation monoid on 5 pts with 5 generators>
+<regular transformation monoid on 5 pts with 5 generators>
 gap> IsIdempotentGenerated(S);
 true
 gap> Size(S)=Binomial(2*5-1, 5-1);
-true</Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -362,11 +395,11 @@ true</Example>
         generated by the <C><A>n</A>(<A>n</A>-1)</C> idempotents of degree
         <A>n</A> and rank <C><A>n</A>-1</C> and has <M>n^n-n!</M> elements. 
 
-        <Example>
+        <Example><![CDATA[
 gap> S:=SingularTransformationSemigroup(5);
-&lt;regular transformation semigroup on 5 pts with 20 generators>
+<regular transformation semigroup ideal on 5 pts with 1 generator>
 gap> Size(S);
-3005</Example>
+3005]]></Example>
       </Description>
     </ManSection>
 <#/GAPDoc>
@@ -389,7 +422,7 @@ gap> Size(S);
         \end{array}\right),&amp; \quad
         \left(\begin{array}{ccccccccc}
         1&amp;2&amp;3&amp;\cdots&amp;n\\
-        2&amp;1&amp;3&amp;\cdots&amp;n
+          2&amp;1&amp;3&amp;\cdots&amp;n
         \end{array}\right),\\
         \left(\begin{array}{ccccccccc}
         1&amp;2&amp;\cdots&amp;n-1&amp; n\\
@@ -402,7 +435,7 @@ gap> Size(S);
         \end{array}
       </Display> 
     </Alt>
-    Note that this semigroup has nearly <M>2^{(n^2)}</M> elements. 
+    This semigroup has nearly <M>2^{(n^2)}</M> elements. 
   </Description>
 </ManSection>
 <#/GAPDoc>

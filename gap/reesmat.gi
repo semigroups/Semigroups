@@ -8,6 +8,66 @@
 #############################################################################
 ##
 
+InstallMethod(IsGeneratorsOfInverseSemigroup, 
+"for a collection of Rees 0-matrix semigroup elements",
+[IsReesZeroMatrixSemigroupElementCollection], ReturnFalse);
+
+#
+
+InstallMethod(ViewString, 
+"for a Rees 0-matrix subsemigroup ideal with ideal generators",
+[IsReesZeroMatrixSubsemigroup and IsSemigroupIdeal and
+HasGeneratorsOfSemigroupIdeal], 
+function(I)
+  local str, nrgens;
+  
+  str:="\><";
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+    Append(str, "\>trivial\< ");
+  else 
+    if HasIsCommutative(I) and IsCommutative(I) then 
+      Append(str, "\>commutative\< ");
+    fi;
+  fi;
+
+  if HasIsTrivial(I) and IsTrivial(I) then 
+  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then 
+    Append(str, "\>0-simple\< ");
+  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then 
+    Append(str, "\>simple\< ");
+  fi;
+
+  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then 
+    Append(str, "\>inverse\< ");
+  elif HasIsRegularSemigroup(I) 
+   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then 
+    if IsRegularSemigroup(I) then 
+      Append(str, "\>regular\< ");
+    else
+      Append(str, "\>non-regular\< ");
+    fi;
+  fi;
+  
+  Append(str, "\>Rees\< \>0-matrix\< \>semigroup\< \>ideal\< ");
+  Append(str, "\<with\> ");
+  
+  nrgens:=Length(GeneratorsOfSemigroupIdeal(I));
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then 
+    Append(str, "s\<");
+  else 
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
+end);
+
+#
+
 InstallMethod(MatrixEntries, "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup], 
 function(R)
@@ -35,11 +95,10 @@ end);
 
 #
 
-if not IsBound(GAPInfo.PackagesLoaded.grape) then 
+if not IsGrapeLoaded then 
   InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
   function(R)
-    Info(InfoWarning, 1, "the GRAPE package is not available, ",
-    "and so this function does not work");
+    Info(InfoWarning, 1, GrapeIsNotLoadedString);
     return fail;
   end);  
 

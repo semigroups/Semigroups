@@ -23,4 +23,3 @@ DeclareGlobalFunction("TikzBipartitionLeft");
 DeclareGlobalFunction("TikzBipartitionLeftRight");
 DeclareGlobalFunction("TikzRightBlocks");
 DeclareGlobalFunction("TikzLeftBlocks");
-

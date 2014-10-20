@@ -32,6 +32,8 @@ DeclareAttribute("RightBlocks", IsBipartition);
 DeclareAttribute("ExtRepOfBlocks", IsBlocks);
 DeclareGlobalFunction("BlocksByExtRep");
 
+DeclareOperation("JoinOfBlocks", [IsBlocks, IsBlocks]);
+
 DeclareGlobalFunction("OnRightBlocks");
 DeclareGlobalFunction("OnLeftBlocks");
 

@@ -8,7 +8,74 @@
 #############################################################################
 ##
 
-# to lib...
+InstallGlobalFunction(IteratorSortedOp,
+function(arg)
+  local record, iter;
+  
+  if Length(arg) = 1 and IsList(arg[1]) then 
+    arg := arg[1];
+  fi;
+
+  if Length(arg) > 0 and IsIteratorSorted(arg[1]) then 
+    record:=rec();
+    record.indices:=[1..Length(arg)];
+    record.base:=arg;
+    record.current:=[];
+    for iter in record.base do 
+      Add(record.current, NextIterator(iter));
+    od;
+
+    record.NextIterator:=function(iter)
+      local current, indices, next, pos, i, base;
+      
+      current := iter!.current;
+      indices := iter!.indices;
+      next := fail;
+      pos := fail;
+
+      for i in indices do 
+        if current[i] <> fail then 
+          if next <> fail then 
+            if current[i] < next then 
+              next := current[i];
+              pos := i;
+            fi;
+          else 
+            next := current[i];
+            pos := i;
+          fi;
+        fi;
+      od;
+
+      base:=iter!.base;
+      if IsDoneIterator(base[pos]) then 
+        current[pos]:=fail;
+      else
+        current[pos]:=NextIterator(base[pos]);
+      fi;
+      return next;
+    end;
+
+    record.IsDoneIterator:=function(iter)
+      return ForAll(iter!.current, x-> x=fail);
+    end;
+    
+    record.ShallowCopy:=function(iter)
+      local base;
+      base:=arg(iter!.base, ShallowCopy);
+      return rec( base:=base,
+                  indices:=iter!.indices,  
+                  current:=arg(base, NextIterator) );
+    end;
+    
+    iter:=IteratorByFunctions(record);
+    SetFilterObj(iter, IsIteratorSorted);
+    return iter;
+  fi;
+  return fail;
+end);
+
+#
 
 InstallGlobalFunction(IteratorOfArrangements, 
 function(n, m)
@@ -90,7 +157,7 @@ function(o, func, start)
  return IteratorByNextIterator( record );
 end);
 
-# NextIterator in opts must return fail if the iterator is finished. 
+# NextIterator in <opts> must return fail if the iterator is finished. 
 
 InstallGlobalFunction(IteratorByNextIterator, 
 function(record)
@@ -134,25 +201,26 @@ function(record)
     end);
 
   for comp in RecNames(record) do 
-    if comp="ShallowCopy" then 
-      shallow:=record.ShallowCopy(iter);
-      shallow.last_called_by_is_done:=false;
-      shallow.next_value:=fail;
-      iter.ShallowCopy:= iter-> shallow;
-    elif comp<>"NextIterator" then 
+    if comp<>"NextIterator" then 
       iter.(comp):=record.(comp);
     fi;
+  
   od;
+  shallow:=record.ShallowCopy(iter);
+  shallow.last_called_by_is_done:=false;
+  shallow.next_value:=fail;
+  
+  iter.ShallowCopy:= iter -> shallow;
+
   return IteratorByFunctions(iter);
 end);
 
 # <baseiter> should be an iterator where NextIterator(baseiter) has a method for
-# Iterator. More specifically, if iter:=Iterator(x) where <x> 
-# is a returned value of convert(NextIterator(baseiter)), then NextIterator of
-# IteratorByIterOfIters returns NextIterator(iter) until
-# IsDoneIterator(iter) then iter is replaced by
-# Iterator(convert(NextIterator(baseiter)))
-# until IsDoneIterator(baseiter), where <convert> is a function. 
+# Iterator. More specifically, if iter:=Iterator(x) where <x> is a returned
+# value of convert(NextIterator(baseiter)), then NextIterator of
+# IteratorByIterOfIters returns NextIterator(iter) until IsDoneIterator(iter)
+# then iter is replaced by Iterator(convert(NextIterator(baseiter))) until
+# IsDoneIterator(baseiter), where <convert> is a function. 
 
 InstallGlobalFunction(IteratorByIterOfIters,
 function(record, baseiter, convert, filts)
@@ -249,7 +317,6 @@ function(arg)
   iter.baseiter:=arg[1]; 
   
   iter.ShallowCopy:=iter-> rec(baseiter:=ShallowCopy(arg[1]));
-  
 
   # get NextIterator
   if Length(arg)=3 then 
@@ -484,7 +551,7 @@ InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 function(s)
   local iter;
   
-  if IsClosed(SemigroupData(s)) then 
+  if IsClosedData(SemigroupData(s)) then 
     iter:=IteratorList(GreensDClasses(s));
     SetIsIteratorOfDClasses(iter, true);
     return iter;
@@ -738,7 +805,7 @@ function(s)
     func:=function(iter, m)
       local rep;
       # rep has rectified lambda val and rho val.
-      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
+      rep:=EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1])); 
       return [s, m, o, 1, GradedRhoOrb(s, rep, false)[1], rep, false];
     end;
     
@@ -759,7 +826,7 @@ function(s)
     local rep;
 
     # <rep> has lambda val corresponding to <i>  
-    rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i));
+    rep:=EvaluateWord(o, TraceSchreierTreeForward(o, i));
     
     # <rep> has rho val in position 1 of GradedRhoOrb(s, rep, false).
     # We don't rectify the rho val of <rep> in <o> since we require to
@@ -790,7 +857,7 @@ function(s)
     local rep;
 
     # <rep> has rho val corresponding to <i>  
-    rep:=EvaluateWord(o!.gens, Reversed(TraceSchreierTreeForward(o, i)));
+    rep:=EvaluateWord(o, Reversed(TraceSchreierTreeForward(o, i)));
     
     # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
     # We don't rectify the lambda val of <rep> in <o> since we require to
@@ -891,8 +958,7 @@ function(s)
     func:=function(iter, m) 
       local rep; 
       # rep has rectified lambda val and rho val. 
-      rep:=RightOne(EvaluateWord(o!.gens, 
-       TraceSchreierTreeForward(o, scc[m][1])));  
+      rep:=RightOne(EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1])));  
       
       return [s, m, o, fail, fail, rep, false]; 
     end; 
@@ -912,7 +978,7 @@ function(s)
   if not IsClosed(o) then 
     func:=function(iter, i) 
       local rep;
-      rep:=Inverse(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)));
+      rep:=Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
       # <rep> has rho val corresponding to <i> and lambda val in position 1 of
       # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
       # this is no longer the case, and this is would be more complicated.
@@ -927,7 +993,7 @@ function(s)
       local rep; 
       
       # <rep> has rho val corresponding to <i> 
-      rep:=Inverse(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)));
+      rep:=Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
      
       # rectify the lambda value of <rep>
       rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];

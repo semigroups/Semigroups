@@ -26,8 +26,11 @@
       of those elements in <C>g</C> in <A>G</A> conjugating <A>S</A> to
       <A>S</A>, i.e.  <C><A>S</A>^g=<A>S</A></C>. <P/>
       
-      The analogous definition can be given for a partial perm or bipartition
-      semigroup.<P/>
+      Analogous definitions can be given for a partial perm and bipartition
+      semigroups.<P/>
+
+      The method used by this operation is based on Section 3 in 
+      <Cite Key="Araujo2010aa"/>.<P/>
 
       The optional final argument <A>opts</A> allows you to specify various
       options, which determine how the normalizer is calculated. The values of
@@ -82,7 +85,8 @@ gap> S:=BrauerMonoid(8);
 <regular bipartition monoid on 8 pts with 3 generators>
 gap> StructureDescription(Normalizer(S));
 "S8"
-gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 5, 6, 3, 8 ] ), 
+gap> S:=InverseSemigroup( 
+> PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 5, 6, 3, 8 ] ), 
 > PartialPerm( [ 1, 2, 4, 7, 8 ], [ 3, 6, 2, 5, 7 ] ) );;
 gap> Normalizer(S, rec(random:=true, lambdastab:=false));
 #I  Have 33389 points.

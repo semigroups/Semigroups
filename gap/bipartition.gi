@@ -16,6 +16,19 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
 
 #
 
+InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
+[IsBipartition, IsBipartition],
+function(x, y)
+
+  if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then 
+    return fail;
+  fi;
+
+  return AsPartialPerm(x)<AsPartialPerm(y);
+end);
+
+#
+
 InstallMethod(NaturalLeqBlockBijection, "for bipartitions", 
 [IsBipartition, IsBipartition], 
 function(f, g)
@@ -52,8 +65,43 @@ end);
 
 #
 
+InstallMethod(NaturalLeqPartialPermBipartition, "for bipartitions", 
+[IsBipartition, IsBipartition], 
+function(f, g)
+  local fblocks, gblocks, n, m, i;
+  
+  if not IsPartialPermBipartition(f) or not IsPartialPermBipartition(g) then
+    Error("usage: the arguments must be partial perm bipartitions,");
+    return;
+  fi;
+  
+  fblocks:=f!.blocks; gblocks:=g!.blocks;
+  n:=DegreeOfBipartition(f); m:=DegreeOfBipartition(g);
+  
+  for i in [1..n] do
+    if fblocks[n+i] <= n then
+      if not IsBound(gblocks[m+i]) then
+        return false;
+      elif fblocks[n+i] <> gblocks[m+i] then
+        return false;
+      fi;
+    fi;
+  od;
+  return true;
+end);
+
+#
+
 InstallMethod(NaturalLeqInverseSemigroup, "for two bipartitions",
-[IsBipartition, IsBipartition], NaturalLeqBlockBijection);
+[IsBipartition, IsBipartition],
+function(f, g)
+  if IsBlockBijection(f) and IsBlockBijection(g) then
+    return NaturalLeqBlockBijection(f, g);
+  elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
+    return NaturalLeqPartialPermBipartition(f, g);
+  fi;
+  Error("usage: the bipartitions should be block bijections or partial perms,");
+end);
 
 #
 
@@ -406,65 +454,6 @@ end);
 
 #
 
-InstallMethod(AsBlockBijection, "for a partial perm",
-[IsPartialPerm],
-function(f) 
-  return AsBlockBijection(f, Maximum(DegreeOfPartialPerm(f),
-   CodegreeOfPartialPerm(f))+1);
-end);
-
-InstallMethod(AsBlockBijection, "for a partial perm and zero",
-[IsPartialPerm, IsZeroCyc],
-function(f, n)
-  return Bipartition([]);
-end);
-
-# same as AsBipartition except that all undefined points are in a single block
-# together with an extra (pair of) points.
-
-InstallMethod(AsBlockBijection, "for a partial perm and pos int",
-[IsPartialPerm, IsPosInt],
-function(f, n)
-  local bigblock, nr, out, i;
-
-  if n<=Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then 
-    return fail;
-  fi;
-
-  nr:=0;
-  out:=[1..2*n]*0;
-  bigblock:=n;
-  
-  for i in [1..n-1] do 
-    if i^f=0 then 
-      if bigblock=n then 
-        nr:=nr+1;
-        bigblock:=nr;
-      fi;
-      out[i]:=bigblock;
-    else 
-      nr:=nr+1;
-      out[i]:=nr;
-      out[n+i^f]:=nr;
-    fi;
-  od;
-
-  out[n]:=bigblock;
-  out[2*n]:=bigblock;
-  
-  for i in [n+1..2*n-1] do 
-    if out[i]=0 then 
-      out[i]:=bigblock;
-    fi;
-  od;
-  
-  out:=BipartitionByIntRepNC(out); 
-  SetIsBlockBijection(out, true);
-  return out;
-end);
-
-#
-
 InstallMethod(AsBipartition, "for a transformation",
 [IsTransformation],
 function(f)
@@ -583,6 +572,65 @@ function(f, n)
   SetDegreeOfBipartition(out, n);
   SetNrBlocks(out, nrblocks);
   SetNrLeftBlocks(out, nrleft);
+  return out;
+end);
+
+#
+
+InstallMethod(AsBlockBijection, "for a partial perm",
+[IsPartialPerm],
+function(f) 
+  return AsBlockBijection(f, Maximum(DegreeOfPartialPerm(f),
+   CodegreeOfPartialPerm(f))+1);
+end);
+
+InstallMethod(AsBlockBijection, "for a partial perm and zero",
+[IsPartialPerm, IsZeroCyc],
+function(f, n)
+  return Bipartition([]);
+end);
+
+# same as AsBipartition except that all undefined points are in a single block
+# together with an extra (pair of) points.
+
+InstallMethod(AsBlockBijection, "for a partial perm and pos int",
+[IsPartialPerm, IsPosInt],
+function(f, n)
+  local bigblock, nr, out, i;
+
+  if n<=Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then 
+    return fail;
+  fi;
+
+  nr:=0;
+  out:=[1..2*n]*0;
+  bigblock:=n;
+  
+  for i in [1..n-1] do 
+    if i^f=0 then 
+      if bigblock=n then 
+        nr:=nr+1;
+        bigblock:=nr;
+      fi;
+      out[i]:=bigblock;
+    else 
+      nr:=nr+1;
+      out[i]:=nr;
+      out[n+i^f]:=nr;
+    fi;
+  od;
+
+  out[n]:=bigblock;
+  out[2*n]:=bigblock;
+  
+  for i in [n+1..2*n-1] do 
+    if out[i]=0 then 
+      out[i]:=bigblock;
+    fi;
+  od;
+  
+  out:=BipartitionByIntRepNC(out); 
+  SetIsBlockBijection(out, true);
   return out;
 end);
 
@@ -1185,56 +1233,73 @@ end);
 
 #view/print/display
 
-InstallMethod(ViewObj, "for a bipartition",
-[IsBipartition],
-function(f)
-  local ext, i;
-
-  if DegreeOfBipartition(f)=0 then 
-    Print("<empty bipartition>");
-    return;
-  fi;
-  if IsBlockBijection(f) then 
-    Print("<block bijection: ");
-  else 
-    Print("<bipartition: ");
-  fi;
-  ext:=ExtRepOfBipartition(f);
-  Print(ext[1]);
-  for i in [2..Length(ext)] do 
-    Print(", ", ext[i]);
-  od;
-  Print(">");
-  return;
-end);
-
-#
-
-InstallMethod(PrintObj, "for a bipartition",
+InstallMethod(ViewString, "for a bipartition",
 [IsBipartition], 
 function(f)
-  Print("Bipartition( ", ExtRepOfBipartition(f), " )");
-  return;
+  local str, ext, i;
+ 
+  if DegreeOfBipartition(f)=0 then 
+    return "\><empty bipartition>\<";
+  fi;
+
+  if IsBlockBijection(f) then 
+    str:="\>\><block bijection:\< ";
+  else 
+    str:="\>\><bipartition:\< ";
+  fi;
+
+  ext:=ExtRepOfBipartition(f);
+  Append(str, "\>");
+  Append(str, String(ext[1]));
+  Append(str, "\<");
+
+  for i in [2..Length(ext)] do 
+    Append(str, ", \>");
+    Append(str, String(ext[i]));
+    Append(str, "\<");
+  od;
+  Append(str, ">\<");
+  return str;
 end);
 
 #
 
-InstallMethod(PrintObj, "for a bipartition collection",
+InstallMethod(PrintString, "for a bipartition",
+[IsBipartition], 
+function(f)
+  local ext, str, i;
+  ext:=ExtRepOfBipartition(f);
+  str:=Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
+  for i in [2..Length(ext)] do 
+    Append(str, ",\< \>");
+    Append(str, PrintString(ext[i]));
+  od;
+  Append(str, " \<]");
+  Append(str, " )\<");
+  return str;
+end);
+
+#
+
+InstallMethod(PrintString, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll) 
-  local i;
+  local str, i;
 
-  Print("[ ");
+  str:="\>[ ";
   for i in [1..Length(coll)] do 
-    if not i=1 then Print(" "); fi;
-    Print(coll[i]);
+    if not i=1 then 
+      Append(str, " ");
+    fi;
+    Append(str, "\>");
+    Append(str, PrintString(coll[i]));
     if not i=Length(coll) then 
-      Print(",\n");
+      Append(str, ",\<\n");
     else
-      Print(" ]\n");
+      Append(str, " ]\<\n");
     fi;
   od;
-  return;
+  return str;
 end);
 
 # required to beat the method for bipartition collections...

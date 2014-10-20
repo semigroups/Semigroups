@@ -1,0 +1,110 @@
+#############################################################################
+##
+#W  isomorph.xml
+#Y  Copyright (C) 2014                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="SmallestMultiplicationTable">
+  <ManSection>
+    <Attr Name="SmallestMultiplicationTable" Arg="S"/>
+    <Returns>The lex-least multiplication table of a semigroup.</Returns>
+    <Description>
+      This function returns the lex-least multiplication table of a semigroup
+      isomorphic to the semigroup <A>S</A>. <C>SmallestMultiplicationTable</C>
+      is an isomorphism invariant of semigroups, and so it can, for example, be
+      used to check if two semigroups are isomorphic. <P/>
+      
+      Due to the high complexity of computing the smallest multiplication table
+      of a semigroup, this function only performs well for semigroups with 
+      at most approximately 50 elements.<P/> 
+      
+      <C>SmallestMultiplicationTable</C> is based on the function 
+      <Ref Attr="IdSmallSemigroup" BookName="Smallsemi"/> by Andreas Distler.<P/>
+
+      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must be
+      loaded for this function to work. 
+
+      <Example><![CDATA[
+gap> S:=Semigroup(
+> Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
+> Bipartition( [ [ 1, 2, 3, -1 ], [ -2 ], [ -3 ] ] ), 
+> Bipartition( [ [ 1, 2, 3 ], [ -1 ], [ -2, -3 ] ] ), 
+> Bipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ -3 ] ] ) );;
+gap> Size(S);
+8
+gap> SmallestMultiplicationTable(S);
+[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], 
+  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], 
+  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], 
+  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsIsomorphicSemigroup">
+  <ManSection>
+    <Oper Name="IsIsomorphicSemigroup" Arg="S, T"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      This operation attempts to determine if the semigroups <A>S</A> and
+      <A>T</A> are isomorphic, it returns <K>true</K> if they are and
+      <K>false</K> if they are not. <P/>
+      
+      At present this only works for rather small semigroups, with approximately
+      50 elements or less. <P/>
+
+      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must
+      be available and compiled installed for this function to work.
+
+      <Example><![CDATA[
+gap> S:=Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 3, 5, 1 ] ), 
+> PartialPerm( [ 1, 3, 5 ], [ 4, 3, 2 ] ) ] );;
+gap> Size(S);
+11
+gap> T:=SemigroupByMultiplicationTable(SmallestMultiplicationTable(S));;
+gap> IsIsomorphicSemigroup(S, T);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismSemigroups">
+  <ManSection>
+    <Oper Name="IsomorphismSemigroups" Arg="S, T"/>
+    <Returns>An isomorphism or <K>fail</K>.</Returns>
+    <Description>
+      This operation returns an isomorphism from the semigroup <A>S</A>
+      and to the semigroup <A>T</A> if it exists, and it returns <K>fail</K> if
+      it does not.<P/>
+      
+      At present this only works for Rees matrix semigroups and Rees 0-matrix
+      semigroups.<P/> 
+      
+      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must
+      be available and compiled for this function to work, when the argument
+      <A>R</A> is a Rees 0-matrix semigroup.  
+
+      <Example><![CDATA[
+gap> S:=PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
+<Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
+gap> T:=PrincipalFactor(DClasses(PartitionMonoid(5))[2]);
+<Rees 0-matrix semigroup 15x15 over Group([ (2,3,4,5), (4,5) ])>
+gap> IsomorphismSemigroups(S, T);
+fail
+gap> I:=SemigroupIdeal(FullTransformationMonoid(5), 
+> Transformation([1,1,2,3,4]));
+<regular transformation semigroup ideal on 5 pts with 1 generator>
+gap> T:=PrincipalFactor(DClass(I, I.1));
+<Rees 0-matrix semigroup 10x5 over Group([ (2,3,4,5), (2,5) ])>
+gap> IsomorphismSemigroups(S, T);
+(( 2, 4, 3, 7, 9,10, 6, 5)
+(11,13,14,15), GroupHomomorphismByImages( Group( [ (1,2,3,4), (1,2) 
+ ] ), Group( [ (2,3,4,5), (2,5) ] ), [ (1,2,3,4), (1,2) ], 
+[ (2,4,5,3), (2,4) ] ), fail)]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

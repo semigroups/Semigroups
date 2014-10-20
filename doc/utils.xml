@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.xml
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-14                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -93,62 +93,6 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="Generators">
-  <ManSection>
-    <Func Name="Generators" Arg="S"/>
-    <Returns>A list of generators.</Returns>
-    <Description>
-      <C>Generators</C> returns the generating set used to define the semigroup
-      <A>S</A>.  The generators of a monoid or inverse semigroup <A>S</A> can
-      be defined in several ways, for example, including or excluding the
-      identity element, including or not the inverses of the generators.
-      <C>Generators</C> uses the definition that returns the least number of
-      generators. Nothing new is computed when <C>Generators</C> is called and
-      this function should not be confused with 
-      <Ref Attr="SmallGeneratingSet"/>.
-
-      <List>
-        <Mark>for a semigroup</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>.
-        </Item>
-        <Mark>for a monoid</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>.
-        </Item>
-        <Mark>for an inverse semigroup</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
-        </Item>
-        <Mark>for an inverse monoid</Mark>
-        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
-        </Item>
-      </List>
-<Example>
-gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
-> Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
-gap> GeneratorsOfSemigroup(M);
-[ IdentityTransformation, 
-  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> GeneratorsOfMonoid(M);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> Generators(M);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> S:=Semigroup(Generators(M));;
-gap> Generators(S);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
-  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]</Example>
-   </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="InfoSemigroups">
   <ManSection>
     <InfoClass Name="InfoSemigroups"/>
@@ -178,13 +122,37 @@ gap> GeneratorsOfSemigroup(S);
       If the optional second argument <A>nr</A> is present, then
       <C>ReadGenerators</C> returns the elements stored in the <A>nr</A>th line
       of <A>filename</A>.
+
+      <Example>
+gap> file:=Concatenation(SemigroupsDir(), "/tst/test.gz");;
+gap> ReadGenerators(file, 1378);
+[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
+  Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
+  Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), 
+  Transformation( [ 4, 2, 1, 1, 6, 5 ] ), 
+  Transformation( [ 4, 3, 2, 1, 6, 7, 7 ] ), 
+  Transformation( [ 4, 4, 5, 7, 6, 1, 1 ] ), 
+  Transformation( [ 7, 6, 6, 1, 2, 4, 4 ] ), 
+  Transformation( [ 7, 7, 5, 4, 3, 1, 1 ] ) ]</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IteratorFromGeneratorsFile">
+  <ManSection> 
+    <Func Name="IteratorFromGeneratorsFile" Arg="filename"/>
+    <Returns>An iterator.</Returns>
+    <Description>
+      If <A>filename</A> is a string containing the name of a file created using 
+      <Ref Func="WriteGenerators"/>, then <C>IteratorFromGeneratorsFile</C>
+      returns an iterator <C>iter</C> such that <C>NextIterator(iter)</C>
+      returns the next collection of generators stored in the file <A>filename</A>. 
       <P/>
-      
-      Note that if the file <A>filename</A> is gzipped, then the message
-      <C>gzip: stdout: Broken pipe</C> might be displayed when
-      <C>ReadGenerators</C> is used. While this is unfortunate, it is not an
-      error that affects the output of <C>ReadGenerators</C>. We hope to
-      resolve this issue in the future.
+
+      This function is a convenient way of, for example, looping over a
+      collection of generators in a file without loading every object in the
+      file into memory. This might be useful if the file contains more
+      information than there is available memory. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -234,19 +202,10 @@ gap> GeneratorsOfSemigroup(S);
 t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
      
       The file <A>filename</A> can be read using <Ref Func="ReadGenerators"/>.
-<Example>
-gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
-gap> ReadGenerators(file, 453);
-[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
-  Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
-  Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), 
-  Transformation( [ 4, 2, 1, 1, 6, 5 ] ), 
-  Transformation( [ 4, 3, 2, 1, 6, 7, 7 ] ), 
-  Transformation( [ 4, 4, 5, 7, 6, 1, 1 ] ), 
-  Transformation( [ 7, 6, 6, 1, 2, 4, 4 ] ), 
-  Transformation( [ 7, 7, 5, 4, 3, 1, 1 ] ) ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+
 
 #EOF

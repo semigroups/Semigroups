@@ -1,0 +1,15 @@
+<Chapter Label="Homomorphisms"><Heading>Homomorphisms</Heading> 
+
+  In this chapter we describe the various ways to define a homomorphism from a
+  semigroup to another semigroup. <P/>
+
+  Support for homomorphisms in &Semigroups; is currently rather limited but
+  there are plans to improve this in the future. 
+
+  <Section><Heading>Isomorphisms</Heading> 
+    <#Include Label="IsIsomorphicSemigroup"> 
+    <#Include Label="SmallestMultiplicationTable"> 
+    <#Include Label="IsomorphismSemigroups"> 
+  </Section>
+</Chapter>
+

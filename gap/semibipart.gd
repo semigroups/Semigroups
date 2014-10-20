@@ -16,8 +16,20 @@ IsBipartitionCollection);
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroup);
+DeclareOperation("AsBipartitionSemigroup", [IsSemigroup]);
 DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroup);
+DeclareOperation("AsBlockBijectionSemigroup", [IsSemigroup]);
 
-DeclareProperty("IsBlockBijectionSemigroup", IsBipartitionSemigroup);
+DeclareProperty("IsBlockBijectionSemigroup", IsSemigroup);
+DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
+DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
+
+#JDM why are these declarations necessary?
+DeclareProperty("IsBlockBijectionSemigroup", IsSemigroupIdeal);
+DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroupIdeal);
+DeclareProperty("IsPermBipartitionGroup", IsSemigroupIdeal);
+
 DeclareSynonymAttr("IsBlockBijectionMonoid", IsBlockBijectionSemigroup and IsMonoid);
+DeclareSynonymAttr("IsPartialPermBipartitionMonoid",
+IsPartialPermBipartitionSemigroup and IsMonoid);
 

@@ -22,15 +22,16 @@
         integers where <C>i</C> corresponds to
         <C>GeneratorsOfSemigroups(S)[i]</C>.  More specifically,
       <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
-      </Item>
+    </Item>
+
       <Mark>for inverse semigroups</Mark>
       <Item>
          When <A>S</A> is a inverse semigroup and <A>f</A> belongs to <A>S</A>,
          <C>Factorization</C> return a word in the generators of <A>S</A> that
          is equal to <A>f</A>. In this case, a word is a list of non-zero
          integers where <C>i</C> corresponds to
-         <C>GeneratorsOfSemigroups(S)[i]</C> and <C>-i</C> corresponds to 
-         <C>GeneratorsOfSemigroups(S)[i]^-1</C>.
+         <C>GeneratorsOfSemigroup(S)[i]</C> and <C>-i</C> corresponds to 
+         <C>GeneratorsOfSemigroup(S)[i]^-1</C>.
          As in the previous case,
       <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
       </Item>
@@ -66,12 +67,12 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
 gap> S:=DualSymmetricInverseMonoid(6);;
 gap> f:=S.1*S.2*S.3*S.2*S.1;
 <block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
-[ 5, -1 ]>
+ [ 5, -1 ]>
 gap> Factorization(S, f);
 [ -2, -2, -2, -2, -2, 4, 2 ]
 gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
 <block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
-[ 5, -1 ]>]]></Example>
+ [ 5, -1 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

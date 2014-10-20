@@ -10,15 +10,14 @@
 
 DeclareOperation("IrredundantGeneratingSubset",
 [IsAssociativeElementCollection]);
-DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
-HasGeneratorsOfSemigroup, IsAssociativeElement]);
+DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup,
+IsAssociativeElement]);
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
-DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
