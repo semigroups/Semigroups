@@ -112,7 +112,7 @@ end);
 #T efficient.
 InstallGlobalFunction(MatrixObjSchutzGrpElement,
 function(S, x, y)
-    local eqs, sch, res, n, k;
+    local eqs, sch, res, n, k, idx, row, col;
 
     k := DimensionsMat(x)[2];
 	n := LambdaRank(S)(x);
@@ -122,7 +122,21 @@ function(S, x, y)
     else
 		eqs := MutableCopyMat(TransposedMat(Concatenation(TransposedMat(x),TransposedMat(y))));
 		TriangulizeMat(eqs);
-		sch := ExtractSubMatrix(eqs, [1..n],[k+1..k+n]);
+	
+		idx := [];
+
+		col := 1; row := 1;
+		while col <= k do
+			while IsZero(eqs[row][col]) and col <= k do
+				col := col + 1;
+			od;
+			if col <= k then
+				Add(idx, col);
+				row := row + 1;
+				col := col + 1;
+			fi;
+	    od;
+		sch := ExtractSubMatrix(eqs, [1..n], idx + k);
 
         res := List(sch, List);
     fi;
@@ -149,7 +163,6 @@ function(S, x, y)
 
         res := List(p * q^(-1), List);
     fi;
-
     return res;
 end);
 
