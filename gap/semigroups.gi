@@ -339,6 +339,10 @@ function(gens, record)
     filts:=filts and IsActingSemigroup;
   fi;
 
+  if IsMatrixObj(gens[1]) then 
+    filts:=filts and IsMatrixSemigroup;
+  fi;
+
   s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=record));
 
   if record.regular then 
