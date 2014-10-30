@@ -628,7 +628,7 @@ function(r)
 end);
 
 InstallMethod(LambdaBound, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup], s ->
+[IsReesZeroMatrixSubsemigroup], s ->
 function(r)
   if r < 100 then
     return Factorial(r);
@@ -656,15 +656,19 @@ end);
 InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
   s -> function(r) return (); end);
+
 InstallMethod(LambdaIdentity, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
   s -> function(r) return (); end);
+
 InstallMethod(LambdaIdentity, "for a partial perm semigroup",
 [IsBipartitionSemigroup],
   s -> function(r) return (); end);
+
 InstallMethod(LambdaIdentity, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+[IsReesZeroMatrixSubsemigroup],
   s -> function(r) return (); end);
+
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(r)
