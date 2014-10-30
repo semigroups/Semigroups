@@ -15,7 +15,7 @@ BindGlobal("SemigroupsDocXMLFiles",
   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
    "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
    "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml", 
-   "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml", 
+   "semimat.xml", "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml", 
    "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
    "../PackageInfo.g"]);
 
