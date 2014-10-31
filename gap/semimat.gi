@@ -327,3 +327,30 @@ function(arg)
 
     return Semigroup(gens);
 end);
+
+#InstallMethod(IsomorphismMatrixSemigroup,
+#        "for a transformation semigroup",
+#        [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsRing],
+#        function(S)
+#    local egens, gens, mapfun;
+    
+#    egens := GeneratorsOfSemigroup(S);
+#end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+        "for a transformation semigroup",
+        [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+        function(S)
+    local egens, n, basis, gens, transop;
+    
+    egens := GeneratorsOfSemigroup(S);
+    n := NrMovedPoints(S);
+    
+    basis := NewIdentityMatrix(IsPlistMatrixRep, GF(2), n);
+    
+    gens := List(egens, x -> basis{ OnTuples([1..n], x) });
+    
+    return MappingByFunction(S, SemigroupByGenerators(gens), x -> basis{ OnTuples([1..n], x) } );
+end);
+
+
