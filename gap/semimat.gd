@@ -13,9 +13,10 @@
 
 #T Is there a better way of saying what a matrix semigroup is?
 
-DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl);
+DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl and IsAssociativeElementCollection);
 
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
+
 
 #DeclareCategory("IsMatrixSemigroupElement", IsMatrixObj);
 #DeclareCategoryCollections("IsMatrixSemigroupElement");
