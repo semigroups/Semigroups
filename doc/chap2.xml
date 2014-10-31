@@ -17,6 +17,7 @@
     <#Include Label="RandomPartialPermMonoid"> 
     <#Include Label="RandomBinaryRelationMonoid"> 
     <#Include Label="RandomBipartitionMonoid"> 
+    <#Include Label="RandomMatrixMonoid">
   </Section> 
 
   <Section><Heading>New semigroups from old</Heading> 

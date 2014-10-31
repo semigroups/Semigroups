@@ -223,6 +223,21 @@ gap> RandomBipartitionSemigroup(5,5);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="RandomMatrixMonoid">
+  <ManSection>
+    <Func Name="RandomMatrixSemigroup" Arg="R, m, n"/>
+    <Func Name="RandomMatrixMonoid" Arg="R, m, n"/>
+    <Returns>A matrix semigroup or monoid.</Returns>
+    <Description>
+      Returns a random semigroup or monoid of <A>n</A>-by-<A>n</A> matrices
+      over the ring <A>R</A> with <A>m</A> generators.
+      <Example><![CDATA[
+gap> RandomMatrixSemigroup(GF(25),5,5);
+<semigroup of 5x5 matrices over GF(25) with 5 generators>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="InverseSubsemigroupByProperty">
   <ManSection>
     <Func Name="InverseSubsemigroupByProperty" Arg="S, func"/>
