@@ -59,6 +59,7 @@ DeclareAttribute("Generators", IsSemigroup);
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
+DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomBlockGroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
