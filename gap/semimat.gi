@@ -353,8 +353,9 @@ InstallMethod(IsomorphismMatrixSemigroup,
     return MappingByFunction(S, SemigroupByGenerators(gens), x -> basis{ OnTuples([1..n], x) } );
 end);
 
-InstallMethod(IsListOrCollectionOfSemigroupElements, [IsFFECollCollColl],
+InstallMethod(IsGeneratorsOfSemigroup, [IsFFECollCollColl],
         function(L)
+#T do checking of dimensions
     return ForAll(L, IsMatrixObj);
 end);
 
