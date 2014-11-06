@@ -334,34 +334,24 @@ function(arg)
     return Semigroup(gens);
 end);
 
-<<<<<<< local
-=======
-#InstallMethod(IsomorphismMatrixSemigroup,
-#        "for a transformation semigroup",
-#        [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsRing],
-#        function(S)
-#    local egens, gens, mapfun;
-    
-#    egens := GeneratorsOfSemigroup(S);
-#end);
-
 InstallMethod(IsomorphismMatrixSemigroup, 
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local egens, n, basis, gens, transop;
+  local n, basis, gens;
 
-  egens := GeneratorsOfSemigroup(S);
-  n := NrMovedPoints(S);
+  n := DegreeOfTransformationSemigroup(S);
 
   basis := NewIdentityMatrix(IsPlistMatrixRep, GF(2), n);
 
-  gens := List(egens, x -> basis{ OnTuples([1..n], x) });
+  gens := List(GeneratorsOfSemigroup(S), 
+   x -> basis{ ImageListOfTransformation(x, n) });
 
-  return MappingByFunction(S, SemigroupByGenerators(gens), x -> basis{ OnTuples([1..n], x) } );
+  return MagmaIsomorphismByFunctionsNC(S, SemigroupByGenerators(gens), 
+   x -> basis{ ImageListOfTransformation(x, n) },
+   x -> Transformation(List(x, PositionNonZero)));
 
 end);
-
 
 InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
