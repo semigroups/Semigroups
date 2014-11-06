@@ -70,8 +70,8 @@ DeclareGlobalFunction("MatrixSemigroup");
 #DeclareOperation("MatrixSemigroup", [IsFFECollCollColl]);
 #DeclareOperation("MatrixSemigroup", [IsField, IsFFECollCollColl]);
 
-#DeclareAttribute("IsomorphismMatrixSemigroup", IsSemigroup);
 # This has to involve a field, otherwise we'll have to choose a default
 # field (rationals?):
 DeclareAttribute("IsomorphismMatrixSemigroup", IsSemigroup);
+DeclareAttribute("AsMatrixSemigroup", IsSemigroup);
 

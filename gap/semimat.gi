@@ -9,6 +9,12 @@
 #############################################################################
 ##
 
+InstallMethod(IsGeneratorsOfSemigroup, [IsFFECollCollColl],
+        function(L)
+#T do checking of dimensions
+    return ForAll(L, IsMatrixObj);
+end);
+
 #T Are these still needed
 #T This returns immutable
 InstallMethod(OneMutable,
@@ -328,6 +334,8 @@ function(arg)
     return Semigroup(gens);
 end);
 
+<<<<<<< local
+=======
 #InstallMethod(IsomorphismMatrixSemigroup,
 #        "for a transformation semigroup",
 #        [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsRing],
@@ -337,26 +345,25 @@ end);
 #    egens := GeneratorsOfSemigroup(S);
 #end);
 
-InstallMethod(IsomorphismMatrixSemigroup,
-        "for a transformation semigroup",
-        [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-        function(S)
-    local egens, n, basis, gens, transop;
-    
-    egens := GeneratorsOfSemigroup(S);
-    n := NrMovedPoints(S);
-    
-    basis := NewIdentityMatrix(IsPlistMatrixRep, GF(2), n);
-    
-    gens := List(egens, x -> basis{ OnTuples([1..n], x) });
-    
-    return MappingByFunction(S, SemigroupByGenerators(gens), x -> basis{ OnTuples([1..n], x) } );
-end);
+InstallMethod(IsomorphismMatrixSemigroup, 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local egens, n, basis, gens, transop;
 
-InstallMethod(IsGeneratorsOfSemigroup, [IsFFECollCollColl],
-        function(L)
-#T do checking of dimensions
-    return ForAll(L, IsMatrixObj);
+  egens := GeneratorsOfSemigroup(S);
+  n := NrMovedPoints(S);
+
+  basis := NewIdentityMatrix(IsPlistMatrixRep, GF(2), n);
+
+  gens := List(egens, x -> basis{ OnTuples([1..n], x) });
+
+  return MappingByFunction(S, SemigroupByGenerators(gens), x -> basis{ OnTuples([1..n], x) } );
+
 end);
 
 
+InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return Range(IsomorphismMatrixSemigroup(AsTransformationSemigroup(S)));
+end);
