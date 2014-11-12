@@ -435,6 +435,12 @@ InstallMethod(IsomorphismMatrixSemigroup,
 "for a matrix semigroup and a ring",
 [IsMatrixSemigroup, IsRing],
 function(S, R)
+    if BaseDomain(Representative(S)) = R then
+        return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
+    else
+        # This is obviously not ideal!
+        return IsomorphismMatrixSemigroup(AsTransformationSemigroup(S), R);
+    fi;
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
