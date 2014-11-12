@@ -257,7 +257,7 @@ function(gens, opts)
  
   SetGeneratorsOfMagma(s, gens);
 
-  if IsMultiplicativeElementWithOneCollection(gens) 
+  if IsGeneratorsOfSemigroup(gens) 
    and CanEasilyCompareElements(gens) then
     pos:=Position(gens, One(gens));
     if pos<>fail then 

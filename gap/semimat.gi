@@ -231,7 +231,11 @@ function(S)
     local gens, dims;
         gens:=GeneratorsOfSemigroup(S);
         dims:=DimensionsMat(gens[1]);
-        Print("<semigroup of ");
+        if HasIsMonoid(S) and IsMonoid(S) then
+            Print("<monoid of ");
+        else 
+            Print("<semigroup of ");
+        fi;
         #if HasSize(S) then
         #   Print(" of size ",Size(S));
         #fi;
