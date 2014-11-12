@@ -47,7 +47,11 @@ DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 
 DeclareProperty( "IsGeneralLinearGroupAsMatrixSemigroup", IsMatrixSemigroup);
 
+
+DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 DeclareOperation("CanonicalRowSpace", [ IsMatrixObj and IsFFECollColl ]);
+DeclareOperation("RowSpaceTransformation", [ IsMatrixObj and IsFFECollColl ]);
+DeclareOperation("RowSpaceTransformationInv", [ IsMatrixObj and IsFFECollColl ]);
 
 # Right action of a matrix over a field on a row space
 DeclareGlobalFunction("MatrixObjRowSpaceRightAction");
@@ -58,7 +62,7 @@ DeclareGlobalFunction("MatrixObjLocalRightInverse");
 # of the schutzenberger group of the matrices' H-class
 # that maps im x to im y. Returns an invertible matrix
 DeclareGlobalFunction("MatrixObjSchutzGrpElement");
-
+DeclareGlobalFunction("MatrixObjStabilizerAction");
 DeclareGlobalFunction("MatrixObjLambdaConjugator");
 DeclareGlobalFunction("MatrixObjIdempotentTester");
 DeclareGlobalFunction("MatrixObjIdempotentCreator");

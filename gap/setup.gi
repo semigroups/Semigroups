@@ -496,7 +496,7 @@ end);
 InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-  return x-> Length(CanonicalRowSpace(x));
+    return x -> Length(CanonicalRowSpace(x)); 
 end);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
@@ -821,6 +821,10 @@ function(x, p)
   fi;
   return Objectify(TypeObj(x), [x![1], x![2]*p, x![3], x![4]]);
 end);
+
+InstallMethod(StabilizerAction, "for a matrix semigroup",
+        [IsMatrixSemigroup], S -> function(x,y) return MatrixObjStabilizerAction(S,x,y);
+    end);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with

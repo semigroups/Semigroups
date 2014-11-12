@@ -115,28 +115,28 @@ function(S, x, y)
     local eqs, sch, res, n, k, idx, row, col;
 
     k := DimensionsMat(x)[2];
-	n := LambdaRank(S)(x);
+    n := LambdaRank(S)(x);
 
     if IsZero(x) then
         res := [[One(BaseDomain(x))]];
     else
-		eqs := MutableCopyMat(TransposedMat(Concatenation(TransposedMat(x),TransposedMat(y))));
-		TriangulizeMat(eqs);
-	
-		idx := [];
+	eqs := MutableCopyMat(TransposedMat(Concatenation(TransposedMat(x),TransposedMat(y))));
+	TriangulizeMat(eqs);
 
-		col := 1; row := 1;
-		while col <= k do
-			while IsZero(eqs[row][col]) and col <= k do
-				col := col + 1;
-			od;
-			if col <= k then
-				Add(idx, col);
-				row := row + 1;
-				col := col + 1;
-			fi;
-	    od;
-		sch := ExtractSubMatrix(eqs, [1..n], idx + k);
+	idx := [];
+
+	col := 1; row := 1;
+	while col <= k do
+		while IsZero(eqs[row][col]) and col <= k do
+			col := col + 1;
+		od;
+		if col <= k then
+			Add(idx, col);
+			row := row + 1;
+			col := col + 1;
+		fi;
+	od;
+	sch := ExtractSubMatrix(eqs, [1..n], idx + k);
 
         res := List(sch, List);
     fi;
@@ -144,9 +144,28 @@ function(S, x, y)
     return res;
 end);
 
+## StabilizerAction
+InstallGlobalFunction(MatrixObjStabilizerAction,
+function(S, x, m)
+    local rsp, g, coeff, i, n, k;
+
+    n := DimensionsMat(x)[1];
+    k := LambdaRank(S)(x);
+    g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);
+    rsp := g * CanonicalRowSpace(x);
+    
+    for i in [1..n-k] do
+        Add(rsp, ZeroVector(n, rsp));
+    od;
+    
+    return RowSpaceTransformationInv(x) * rsp;
+end);
+
 InstallGlobalFunction(MatrixObjLambdaConjugator,
 function(S, x, y)
      local xse, xhe, yse, yhe, he, h, p, q, i, RemoveZeroRows, res;
+
+	Print("conjugator\n");
 
     if x^(-1) <> fail then
         res := List(x^(-1) * y, List);
@@ -243,30 +262,85 @@ end);
 # is mainly because MatrixObj, PlistMatrixObj are not
 # in IsAttributeStoringRep
 #
+# We compute a basis for the rowspace and coefficients to express
+# the rows of the matrix in terms of this basis. This is needed
+# for StabilizerAction
+#
+# This should be an attribute, but since matrices are not
+# attribute storing...
+InstallGlobalFunction(ComputeRowSpaceAndTransformation,
+function(m)
+    local rows, cols, rsp, i;
+    
+    Info(InfoMatrixSemigroups, 2, "ComputeRowSpaceAndTransformation called");
+
+    rows := DimensionsMat(m)[1];
+    cols := DimensionsMat(m)[2];
+    
+    rsp := ZeroMatrix(cols, 2 * cols, m);
+    CopySubMatrix( m, rsp, [1..rows], [1..rows],
+                           [1..cols], [1..cols]);
+    for i in [1..cols] do
+        rsp[i][cols+i] := One(BaseDomain(m));
+    od;
+    TriangulizeMat(rsp);
+    
+    # This is dangerous, we are using positions in
+    # matrixobj which are undocumented
+    # This can be done more efficiently by determining the rank
+    # above and then just extracting the basis
+    m![5] := ExtractSubMatrix(rsp, [1..cols], [1..cols]);
+    for i in [cols,cols-1..1] do
+        if IsZero(m![5][i]) then
+            Remove(m![5], i);
+        fi;
+    od;
+    
+    # Remove 0?
+    m![6] := ExtractSubMatrix(rsp, [1..cols], [cols+1..2*cols]);
+    m![7] := m![6]^(-1);
+end);
+
 InstallMethod( CanonicalRowSpace,
         "for a matrix object in PlistMatrixRep over a finite field",
-        [ IsMatrixObj
-          and IsPlistMatrixRep
-          and IsFFECollColl ],
+        [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
 function( m )
-    local i, n;
-
+    local info;
+    
+    Info(InfoMatrixSemigroups, 2, "CanonicalRowSpace called");
     if not IsBound(m![5]) then
-        Info(InfoMatrixSemigroups, 2, "CanonicalRowSpace called");
-
-        m![5] := MutableCopyMat(m);
-        TriangulizeMat(m![5]);
-
-        n := DimensionsMat(m![5])[1];
-
-        for i in [n,n-1..1] do
-            if IsZero(m![5][i]) then
-                Remove(m![5], i);
-            fi;
-        od;
+        ComputeRowSpaceAndTransformation(m);
     fi;
 
     return m![5];
+end);
+
+InstallMethod( RowSpaceTransformation,
+        "for a matrix object in PlistMatrixRep over a finite field",
+        [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
+function( m )
+    local info;
+    
+    Info(InfoMatrixSemigroups, 2, "RowSpaceTransformation");
+    if not IsBound(m![6]) then
+        ComputeRowSpaceAndTransformation(m);
+    fi;
+
+    return m![6];
+end);
+
+InstallMethod( RowSpaceTransformationInv,
+        "for a matrix object in PlistMatrixRep over a finite field",
+        [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
+function( m )
+    local info;
+    
+    Info(InfoMatrixSemigroups, 2, "RowSpaceTransformationInv");
+    if not IsBound(m![7]) then
+        ComputeRowSpaceAndTransformation(m);
+    fi;
+
+    return m![7];
 end);
 
 #############################################################################
