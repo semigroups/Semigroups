@@ -78,4 +78,6 @@ DeclareGlobalFunction("MatrixSemigroup");
 # field (rationals?):
 DeclareAttribute("IsomorphismMatrixSemigroup", IsSemigroup);
 DeclareAttribute("AsMatrixSemigroup", IsSemigroup);
+DeclareOperation("IsomorphismMatrixSemigroup", [IsSemigroup, IsRing]);
+DeclareOperation("AsMatrixSemigroup", [IsSemigroup, IsRing]);
 
