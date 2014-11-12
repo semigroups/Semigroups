@@ -446,7 +446,7 @@ end);
 
 InstallGlobalFunction(RhoOrbSchutzGp, 
 function(o, m, bound)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, rho_rank, i, j;
+  local g, s, gens, nrgens, scc, lookup, orbitgraph, one, lbound, lambdaperm, rep, rank, mults, stop, i, j;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -457,8 +457,6 @@ function(o, m, bound)
     o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
   fi;
   
-  g:=Group(());
-
   if bound=1 then 
     o!.schutz[m]:=g;
     o!.schutzstab[m]:=false;
@@ -475,16 +473,24 @@ function(o, m, bound)
   rep:=RhoOrbRep(o, m);
   mults:=RhoOrbMults(o, m);
   
-  i:=RhoRank(s)(o[scc[1]]);
-
-  if i<1000 then
-    j:=Factorial(i);
-    if bound>j then 
-      bound:=j;
+  rank:=RhoRank(s)(o[scc[1]]);
+  
+  one := RhoIdentity(s)(rank);;
+  
+  if rank=0 then
+      o!.schutzstab[m]:=false;
+    if IsPerm(one) then 
+      o!.schutz[m]:=Group(one);
+    else
+      o!.schutz[m]:=[one];
     fi;
-  else
-    bound:=infinity;
+    return o!.schutz[m];
   fi;
+
+      
+  g:=Group(one);
+  stop := false;
+  
   for i in scc do 
     for j in [1..nrgens] do 
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]]=m then 
@@ -496,20 +502,24 @@ function(o, m, bound)
       fi;
     od;
     if Size(g)>=bound then 
-      break;
+        stop := true;
+        break;
+    fi;
+    if stop then
+        break;
     fi;
   od;
   
   o!.schutz[m]:=g;
-  rho_rank:=RhoRank(s)(o[scc[1]]);
 
-  if rho_rank<1000 and Size(g)=Factorial(rho_rank) then 
+  if stop then
     o!.schutzstab[m]:=true;
-  elif Size(g)=1 then 
+  elif Size(g)=1 then
     o!.schutzstab[m]:=false;
-  else
+  elif IsPermGroup(g) then
     o!.schutzstab[m]:=StabChainImmutable(g);
+  else # if IsMatrixGroup(g)
+    o!.schutzstab[m]:=g;
   fi;
-
   return g;
 end);

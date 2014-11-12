@@ -606,6 +606,8 @@ function(r)
     return infinity;
   fi;
 end);
+InstallMethod(RhoBound, "for a transformation semigroup",
+[IsTransformationSemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s ->
@@ -616,6 +618,8 @@ function(r)
     return infinity;
   fi;
 end);
+InstallMethod(RhoBound, "for a partial perm semigroup",
+[IsPartialPermSemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s ->
@@ -626,6 +630,8 @@ function(r)
     return infinity;
   fi;
 end);
+InstallMethod(RhoBound, "for a bipartition semigroup",
+[IsBipartitionSemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup], s ->
@@ -636,6 +642,8 @@ function(r)
     return infinity;
   fi;
 end);
+InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
@@ -649,6 +657,8 @@ function(r)
     return infinity;
   fi;
 end);
+InstallMethod(RhoBound, "for a matrix semigroup",
+[IsMatrixSemigroup], LambdaBound);
 
 # LamdaIdentity(s) returns a function that returns
 # the identity element of the schuetzenberger group
@@ -656,16 +666,28 @@ end);
 InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
   s -> function(r) return (); end);
+InstallMethod(RhoIdentity, "for a transformation semigroup",
+[IsTransformationSemigroup],
+  s -> function(r) return (); end);
 
 InstallMethod(LambdaIdentity, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+  s -> function(r) return (); end);
+InstallMethod(RhoIdentity, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
   s -> function(r) return (); end);
 
 InstallMethod(LambdaIdentity, "for a partial perm semigroup",
 [IsBipartitionSemigroup],
   s -> function(r) return (); end);
+InstallMethod(RhoIdentity, "for a partial perm semigroup",
+[IsBipartitionSemigroup],
+  s -> function(r) return (); end);
 
 InstallMethod(LambdaIdentity, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup],
+  s -> function(r) return (); end);
+InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
   s -> function(r) return (); end);
 
@@ -679,6 +701,17 @@ function(r)
 
   return one;
 end);
+InstallMethod(RhoIdentity, "for a matrix semigroup",
+[IsMatrixSemigroup], s ->
+function(r)
+  local f, one;
+
+  f := Representative(s);
+  one := IdentityMat(r, BaseDomain(f));
+
+  return one;
+end);
+
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
