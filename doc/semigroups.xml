@@ -96,7 +96,26 @@ gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
 gap> S;
 <transformation monoid on 8 pts with 4 generators>
 gap> Size(S);
-233606]]></Example>
+233606
+gap> gens:=
+> [ NewMatrix(IsPlistMatrixRep,GF(25),2,
+>    [ [ Z(5^2), Z(5^2)^13 ], [ 0*Z(5), Z(5^2)^14 ] ]), 
+>  NewMatrix(IsPlistMatrixRep,GF(25),2,
+>    [ [ Z(5^2)^21, Z(5)^0 ], [ Z(5)^0, 0*Z(5) ] ]), 
+>  NewMatrix(IsPlistMatrixRep,GF(25),2,
+>    [ [ Z(5^2)^23, Z(5^2)^5 ], [ Z(5^2)^20, Z(5^2)^20 ] ]) ];;
+gap> S := Semigroup(gens[1]);
+<semigroup of 2x2 matrices over GF(5^2) with 1 generator>
+gap> Size(S);
+24
+gap> S := ClosureSemigroup(S, gens[2]);
+<semigroup of 2x2 matrices over GF(5^2) with 2 generators>
+gap> Size(S);
+124800
+gap> S := ClosureSemigroup(S, gens[3]);
+<semigroup of 2x2 matrices over GF(5^2) with 3 generators>
+gap> Size(S);
+374400]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
