@@ -229,19 +229,21 @@ InstallMethod( ViewObj,
     [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
 function(S)
     local gens, dims;
-        gens:=GeneratorsOfSemigroup(S);
-        dims:=DimensionsMat(gens[1]);
         if HasIsMonoid(S) and IsMonoid(S) then
+            gens := GeneratorsOfMonoid(S);
+            dims := DimensionsMat(gens[1]);
             Print("<monoid of ");
+            Print(dims[1], "x", dims[2]);
+            Print(" matrices over ", BaseDomain(gens[1]));
+            Print(" with ", Length(GeneratorsOfMonoid(S)), " generator");
         else 
+            gens := GeneratorsOfMonoid(S);
+            dims := DimensionsMat(gens[1]);
             Print("<semigroup of ");
+            Print(dims[1], "x", dims[2]);
+            Print(" matrices over ", BaseDomain(gens[1]));
+            Print(" with ", Length(GeneratorsOfSemigroup(S)), " generator");
         fi;
-        #if HasSize(S) then
-        #   Print(" of size ",Size(S));
-        #fi;
-        Print(dims[1], "x", dims[2]);
-        Print(" matrices over ", BaseDomain(gens[1]));
-        Print(" with ", Length(gens), " generator");
         if Length(gens)>1 then
           Print("s");
         fi;

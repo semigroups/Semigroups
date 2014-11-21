@@ -297,14 +297,14 @@ function(gens, record)
 
   record:=SemigroupOptions(record);
   gens:=ShallowCopy(gens);
-
+  
   if record.small and Length(gens)>1 then #small gen. set
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
     n:=ActionDegree(gens);
     Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
 
-    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
+    if IsOne(gens[1]) and IsBound(gens[2]) then # Why this: and ActionRank(gens[2], n)=n then
       #remove id
       Remove(gens, 1);
     fi;
@@ -725,8 +725,10 @@ function(s, coll, opts)
   # init the semigroup or monoid
   if IsMonoid(s) and One(coll)=One(s) then 
     # it can be that these One's differ, and hence we shouldn't call Monoid here
+    Info(InfoSemigroups, 2, "calling monoid");
     t:=Monoid(s, coll, opts);
   else
+    Info(InfoSemigroups, 2, "calling semigroup");
     t:=Semigroup(s, coll, opts);
   fi;
   
