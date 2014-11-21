@@ -18,6 +18,11 @@ function(digraph)
     "the argument <digraph> must not be a multigraph,");
     return;
   fi;
+  
+  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then 
+    return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),  
+     rec(small := true));
+  fi;
 
   STAB:= function(gens, pt)
     if gens = [] then 
@@ -33,7 +38,7 @@ function(digraph)
 
   S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
 
-  return GRAPH_ENDOS(digraph, hook, S, STAB);
+  return GRAPH_ENDOS(digraph, hook, S, fail, STAB);
 end);
 
 #
