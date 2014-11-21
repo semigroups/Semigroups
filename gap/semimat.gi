@@ -235,14 +235,14 @@ function(S)
             Print("<monoid of ");
             Print(dims[1], "x", dims[2]);
             Print(" matrices over ", BaseDomain(gens[1]));
-            Print(" with ", Length(GeneratorsOfMonoid(S)), " generator");
+            Print(" with ", Length(gens), " generator");
         else 
-            gens := GeneratorsOfMonoid(S);
+            gens := GeneratorsOfSemigroup(S);
             dims := DimensionsMat(gens[1]);
             Print("<semigroup of ");
             Print(dims[1], "x", dims[2]);
             Print(" matrices over ", BaseDomain(gens[1]));
-            Print(" with ", Length(GeneratorsOfSemigroup(S)), " generator");
+            Print(" with ", Length(gens), " generator");
         fi;
         if Length(gens)>1 then
           Print("s");
