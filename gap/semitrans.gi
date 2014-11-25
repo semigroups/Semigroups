@@ -38,7 +38,7 @@ function(digraph)
 
   S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
 
-  return GRAPH_ENDOS(digraph, hook, S, fail, STAB);
+  return GRAPH_HOMOS(digraph, hook, S, fail, fail, false, STAB);
 end);
 
 #
