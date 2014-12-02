@@ -61,14 +61,12 @@ gap> MaximalSubsemigroups(R, Group([ (1,2,3), (1,2) ]));
 gap> MaximalSubsemigroups(R, Group(()));
 fail
 
-# A connected 2x2 RZMS over group S3
-gap> G:=Group([ (1,2), (1,2,3) ]);
-Group([ (1,2), (1,2,3) ])
-gap> mat:=[ [(1,2), 0], [0, (2,3)] ];
-[ [ (1,2), 0 ], [ 0, (2,3) ] ]
-gap> R:=ReesZeroMatrixSemigroup(G,mat);
+# A connected 2x2 RZMS over group S3 (inverse semigroup)
+gap> G := Group([ (1,2), (1,2,3) ]);;
+gap> mat := [ [ (1,2), 0 ], [ 0, (2,3) ] ];;
+gap> R := ReesZeroMatrixSemigroup(G,mat);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (1,2,3) ])>
-gap> max:=MaximalSubsemigroups(R);
+gap> max := MaximalSubsemigroups(R);
 [ <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
   <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
   <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
@@ -84,6 +82,10 @@ gap> max:=MaximalSubsemigroups(R);
   <subsemigroup of 2x2 Rees 0-matrix semigroup with 9 generators> ]
 gap> Size(max);
 13
+gap> IsDuplicateFreeList(max);
+true
+gap> ForAll(max, x -> IsMaximalSubsemigroup(R, x));
+true
 
 # A connected 5x5 RZMS over group S3, the first one we focused on
 gap> G:=Group([ (1,4,2), (1,4,5) ]);
@@ -214,6 +216,48 @@ gap> IsDuplicateFreeList(max);
 true
 gap> ForAll(max,x->IsMaximalSubsemigroup(S,x));
 true
+gap> List(max, GeneratorsOfSemigroup);
+[ [ Transformation( [ 2, 1, 4, 2, 3 ] ), Transformation( [ 2, 1, 1, 5, 3 ] ), 
+      Transformation( [ 2, 3, 4, 2, 1 ] ), Transformation( [ 2, 3, 4, 3, 1 ] )
+        , Transformation( [ 1, 2, 3, 1 ] ), 
+      Transformation( [ 2, 1, 5, 2, 4 ] ), Transformation( [ 3, 4, 2, 2, 2 ] )
+        , Transformation( [ 4, 3, 1, 4, 4 ] ), 
+      Transformation( [ 3, 1, 5, 3, 3 ] ), 
+      Transformation( [ 3, 4, 1, 4, 3 ] ) ], 
+  [ Transformation( [ 1, 2, 2, 3, 4 ] ), Transformation( [ 2, 4, 5, 2, 1 ] ), 
+      Transformation( [ 1, 2, 2 ] ), Transformation( [ 2, 3, 4, 3, 1 ] ), 
+      Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 2, 1, 4, 2, 3 ] ), 
+      Transformation( [ 3, 2, 2, 1, 4 ] ), Transformation( [ 5, 1, 1, 2, 3 ] )
+        , Transformation( [ 3, 4, 1, 4, 3 ] ), 
+      Transformation( [ 3, 4, 2, 2, 2 ] ) ], 
+  [ Transformation( [ 1, 2, 2, 3, 4 ] ), Transformation( [ 3, 2, 2, 1, 4 ] ), 
+      Transformation( [ 2, 1, 4, 2, 3 ] ), Transformation( [ 1, 5, 3, 1, 2 ] )
+        , Transformation( [ 4, 2, 2, 1 ] ), 
+      Transformation( [ 2, 3, 4, 3, 1 ] ), Transformation( [ 2, 1, 5, 2, 4 ] )
+        , Transformation( [ 3, 4, 2, 2, 2 ] ), 
+      Transformation( [ 4, 3, 1, 4, 4 ] ), 
+      Transformation( [ 3, 4, 1, 4, 3 ] ) ], 
+  [ Transformation( [ 2, 3, 4, 2, 1 ] ), Transformation( [ 4, 2, 2, 1 ] ), 
+      Transformation( [ 1, 2, 2, 3, 4 ] ), Transformation( [ 2, 3, 4, 3, 1 ] )
+        , Transformation( [ 1, 5, 3, 1, 2 ] ), 
+      Transformation( [ 5, 1, 1, 2, 3 ] ), Transformation( [ 4, 3, 1, 4, 4 ] )
+        , Transformation( [ 3, 4, 1, 4, 3 ] ), 
+      Transformation( [ 3, 4, 2, 3, 4 ] ), 
+      Transformation( [ 3, 4, 2, 2, 2 ] ) ], 
+  [ Transformation( [ 2, 1, 5, 2, 4 ] ), Transformation( [ 5, 1, 1, 2, 3 ] ), 
+      Transformation( [ 2, 3, 4, 2, 1 ] ), Transformation( [ 3, 1, 3, 1, 2 ] )
+        , Transformation( [ 3, 4, 1, 4, 3 ] ), 
+      Transformation( [ 3, 4, 2, 2, 2 ] ), 
+      Transformation( [ 2, 3, 1, 3, 1 ] ) ], 
+  [ Transformation( [ 5, 1, 1, 2, 3 ] ), Transformation( [ 2, 3, 4, 3, 1 ] ), 
+      Transformation( [ 2, 1, 5, 2, 4 ] ), Transformation( [ 3, 3, 3, 1, 4 ] )
+        , Transformation( [ 3, 1, 2, 2, 2 ] ) ], 
+  [ Transformation( [ 2, 1, 5, 2, 4 ] ), Transformation( [ 2, 3, 4, 3, 1 ] ), 
+      Transformation( [ 5, 1, 1, 2, 3 ] ), Transformation( [ 2, 3, 1, 3, 2 ] )
+        , Transformation( [ 3, 1, 2, 2, 2 ] ) ], 
+  [ Transformation( [ 2, 3, 4, 3, 1 ] ), Transformation( [ 2, 1, 5, 2, 4 ] ), 
+      Transformation( [ 5, 1, 1, 2, 3 ] ), Transformation( [ 3, 4, 1, 4, 3 ] )
+        , Transformation( [ 5, 5, 2, 2, 2 ] ) ] ]
 
 # Random inverse semigroup of partial permutations
 gap> S:=InverseSemigroup([
@@ -306,6 +350,22 @@ gap> Size(max);
 40
 gap> S=max[1];
 false
+
+# A random Inverse Semigroup of Partial Perms
+gap> gens := [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 4 ], [ 3, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 5, 2, 3, 1 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 3, 4, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 5, 4, 3, 2, 1 ] ) ];;
+gap> S := InverseSemigroup(gens);
+<inverse partial perm semigroup on 5 pts with 5 generators>
+gap> max := MaximalSubsemigroups(S);;
+gap> Size(max);
+9
+gap> IsDuplicateFreeList(max);
+true
+gap> ForAll(max, x -> IsMaximalSubsemigroup(S, x));
+true
 
 #
 gap> SemigroupsStopTest();

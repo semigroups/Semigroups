@@ -227,34 +227,29 @@ InstallMethod(MaximalSubsemigroupsNC, "for a Rees 0-matrix subsemigroup and a gr
 [IsReesZeroMatrixSubsemigroup, IsGroup, IsRecord, IsList, IsList, IsList], 
 function(R, H, graph, components, basicgens, indices)
   local nrcomponents, nrrows, NonGroupRecursion, out, i, j, maxgens, Hsize,
-  transversal, mat;
+  transversal, mat, nrcols;
   
   out := [  ];
   mat := Matrix(R);
   i := indices[1];
   j := indices[2];
   nrcomponents := Length(components);
-  nrrows := Length(mat[1]); 
+  nrrows := Length(mat[1]);
+  nrcols := Length(mat);
   Hsize := Size(H);
   transversal := RightTransversal(UnderlyingSemigroup(R), H);
   maxgens := List(GeneratorsOfSemigroup(H), 
    x-> RMSElement(R, i, x * (mat[j][i] ^ -1), j));
 
-  # Recursive depth-first search    
-  NonGroupRecursion := function(k, t, choice)
-    local nextchoice, x, a, b, h;
-    
-    # Generate the semigroup which includes our most recent choice
-    if k = 1 then
-      t := Semigroup(basicgens, choice);
-    else
-      t := ClosureSemigroup(t, choice);
-    fi;
-
-    # Test if adding our new choice has already made too much stuff
-    # The below logical condition need to be improved if possible
-    if Size(GreensHClassOfElementNC(t, choice[1])) <= Hsize then
+  # If R is an inverse semigroup, then every possible choice is valid - we now
+  # only need to enumerate them all
+  if nrrows = nrcols and nrrows = nrcomponents then
+    # Recursive depth-first 'enumeration'
+    NonGroupRecursion := function(k, t, choice)
+      local nextchoice, x, a, b, h;
       
+      t := Concatenation(t, choice);
+
       # Make next choice, if any left to make.
       if k < nrcomponents then
         # We are making our choice for H_i,b; this forces our choice of H_a,j
@@ -267,15 +262,48 @@ function(R, H, graph, components, basicgens, indices)
           NonGroupRecursion(k + 1, t, nextchoice);
         od;
       else
-        Add(out, t);
+        Add(out, Semigroup(t)); # TODO: should we do rec( small := true ) ? WW
       fi;
-    fi;
+      return;
+    end;
+    NonGroupRecursion(1, basicgens, maxgens);
+  else
+    # Recursive depth-first search    
+    NonGroupRecursion := function(k, t, choice)
+      local nextchoice, x, a, b, h;
       
-    # At this stage, can we rule out other cases from the level above?
-    return;
-  end;
-    
-  NonGroupRecursion(1, fail, maxgens);
+      # Generate the semigroup which includes our most recent choice
+      if k = 1 then
+        t := Semigroup(basicgens, choice);
+      else
+        t := ClosureSemigroup(t, choice);
+      fi;
+
+      # Test if adding our new choice has already made too much stuff
+      # The below logical condition need to be improved if possible
+      if Size(GreensHClassOfElementNC(t, choice[1])) <= Hsize then
+        
+        # Make next choice, if any left to make.
+        if k < nrcomponents then
+          # We are making our choice for H_i,b; this forces our choice of H_a,j
+          a := components[k + 1][1];
+          b := graph.adjacencies[a][1] - nrrows;
+          # one choice for each coset
+          for x in transversal do
+            h := (mat[b][a] ^ -1) * (x ^ -1) * (mat[j][i] ^ -1);
+            nextchoice := [ RMSElement(R, i, x, b), RMSElement(R, a, h, j) ];
+            NonGroupRecursion(k + 1, t, nextchoice);
+          od;
+        else
+          Add(out, t);
+        fi;
+      fi;
+        
+      # At this stage, can we rule out other cases from the level above?
+      return;
+    end;
+    NonGroupRecursion(1, fail, maxgens);
+  fi;
   return out;
 end);
 
@@ -731,7 +759,7 @@ else
         
         # Case 1: Max. subsemigroups which intersect every H-class of classes[i]
         Info(InfoSemigroups, 2, "Case 1: Looking for maximal subsemigroups ",
-          "which intersect every H-class of the D-class");
+          "which intersect every H-class");
         gens3 := gens{lookup[i]}; # gens3 is the set of generators in classes[i]
         gens2 := Difference(ShallowCopy(gens), gens3);
         U := Semigroup(gens2);
@@ -763,7 +791,7 @@ else
               # if it lacks some of our generating set
               if ForAny(gens3, x -> not x in UU) then
                 Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
-                 "intersects every H-class of the D-class (RMS-type).");
+                 "intersects every H-class (RMS-type).");
                 Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
                 tot := tot+1;
               fi;
@@ -800,7 +828,7 @@ else
               # if it lacks some of our generating set
               if ForAny(gens3, z -> not z in UU) then
                 Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
-                "intersects every H-class of the D-class (RZMS-type).");
+                "intersects every H-class (RZMS-type).");
                 Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
                 tot := tot + 1;
               fi;
