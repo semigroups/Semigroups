@@ -34,4 +34,6 @@ DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 DeclareAttribute("SmallestElementRClass", IsGreensRClass);
 DeclareAttribute("LargestElementRClass", IsGreensRClass);
 
+DeclareAttribute("EndomorphismMonoid", IsDigraph);
+
 

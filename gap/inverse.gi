@@ -844,7 +844,7 @@ InstallMethod(RClassReps, "for an acting semigroup with inverse op",
 
 # same method for ideals
 
-InstallMethod(RClassReps, "for a D-class of an acting semigroup",
+InstallMethod(RClassReps, "for a D-class of an inverse op acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 d-> List(LClassReps(d), x-> Inverse(x)));
 
@@ -1068,7 +1068,7 @@ function(s)
   return Sum(List(scc, m-> Length(m)^2))-1;
 end);
 
-#
+# same method for ideals
  
 InstallMethod(PartialOrderOfDClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],      

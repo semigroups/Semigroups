@@ -8,6 +8,41 @@
 #############################################################################
 ##
 
+InstallMethod(EndomorphismMonoid, "for a digraph", 
+[IsDigraph], 
+function(digraph)
+  local STAB, hook, S;
+
+  if IsMultiDigraph(digraph) then 
+    Error("Semigroups: EndomorphismMonoid: usage,\n",
+    "the argument <digraph> must not be a multigraph,");
+    return;
+  fi;
+  
+  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then 
+    return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),  
+     rec(small := true));
+  fi;
+
+  STAB:= function(gens, pt)
+    if gens = [] then 
+      return [()];
+    fi;
+    return GeneratorsOfGroup(Stabilizer(Group(gens), pt));
+  end;
+  
+  hook := function(S, f) 
+    S[1] := ClosureSemigroup(S[1], f);
+    Print("found ", Size(S[1]), " endomorphisms so far\n");
+  end;
+
+  S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
+
+  return GRAPH_HOMOS(digraph, hook, S, fail, fail, false, STAB);
+end);
+
+#
+
 InstallMethod(IteratorSorted, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(S)
