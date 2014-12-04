@@ -196,8 +196,7 @@ function(s)
     fi;
   end;
   
-  # Add the universal congruence
-  Add(congs, UniversalSemigroupCongruence(s));
+  # No need to add the universal congruence
   
   # Compute all column and row relations which are subsets of the max relations
   colBlocksList := subpartitions( [ [1..Size(mat[1])] ] );
@@ -1250,8 +1249,8 @@ function(cong)
       # For each column in the matrix...
       for colNo in [1..Size(m[1])] do
         Add(pairs,
-            [ReesMatrixSemigroupElement(s,colNo,m[bl[1][colNo]]^-1,bl[1]),
-             ReesMatrixSemigroupElement(s,colNo,m[bl[i][colNo]]^-1,bl[i])]);
+            [ReesMatrixSemigroupElement(s,colNo,m[bl[1]][colNo]^-1,bl[1]),
+             ReesMatrixSemigroupElement(s,colNo,m[bl[i]][colNo]^-1,bl[i])]);
       od;
     od;
   od;
@@ -1308,8 +1307,8 @@ function(cong)
       for colNo in [1..Size(m[1])] do
         if m[bl[1]][colNo] <> 0 then
           Add(pairs,
-              [ReesZeroMatrixSemigroupElement(s,colNo,m[bl[1][colNo]]^-1,bl[1]),
-               ReesZeroMatrixSemigroupElement(s,colNo,m[bl[i][colNo]]^-1,bl[i])] );
+              [ReesZeroMatrixSemigroupElement(s,colNo,m[bl[1]][colNo]^-1,bl[1]),
+               ReesZeroMatrixSemigroupElement(s,colNo,m[bl[i]][colNo]^-1,bl[i])] );
         fi;
       od;
     od;
