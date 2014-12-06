@@ -306,7 +306,11 @@ function(arg)
   str:="\\begin{tikzpicture}\n"; 
   ext:=ExtRepOfBipartition(f);
   n:=DegreeOfBipartition(f);
- 
+  
+  # draw background
+  Append(str,Concatenation("\\draw [fill=black!10,black!10] (.5,0) rectangle (",
+          String(n),".5,2);\n"));
+  
   # draw the lines
   for j in [1..Length(ext)] do
     block:=ext[j];
