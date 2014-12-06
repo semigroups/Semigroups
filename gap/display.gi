@@ -276,13 +276,17 @@ function(blocks, labels, edges)
 end);
 
 #
+# opts
+# 
 
 InstallGlobalFunction(TikzStringForBipartition,
 function(arg)
-  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i, k;
+  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i, k,
+        labels;
   
   fill:=i-> "  \\fill(";
   draw:=i-> "  \\draw(";
+  labels := true; #draw label nodes by default
   
   f:=arg[1]; 
   if IsBound(arg[2]) then 
@@ -293,7 +297,10 @@ function(arg)
       "purple", "teal", "violet", "white"];
       fill:=i-> Concatenation("  \\fill[", colors[i], "](");
       draw:=i-> Concatenation("  \\draw[", colors[i], "](");
-    fi; 
+    fi;
+    if IsBound(opts.labels) then
+      labels := opts.labels;
+    fi;
   fi;
 
   str:="\\begin{tikzpicture}\n"; 
@@ -314,16 +321,19 @@ function(arg)
         Append(str, fill(j));
         Append(str, ViewString(i)); Append(str, ",2)circle(.125);\n");
         
-        Append(str, draw(j)); Append(str, ViewString(i-0.05));
-        Append(str, ", 2.2) node [above] {{ $"); Append(str, ViewString(i));
-        Append(str, "$}};"); Append(str, "\n");
+        if labels then
+          Append(str, draw(j)); Append(str, ViewString(i-0.05));
+          Append(str, ", 2.2) node [above] {{ $"); Append(str, ViewString(i));
+          Append(str, "$}};"); Append(str, "\n");
+        fi;
       else
         Append(str, fill(j)); 
         Append(str, ViewString(-i)); Append(str, ",0)circle(.125);\n");
-      
-        Append(str, draw(j)); Append(str, ViewString(-i));
-        Append(str, ", -0.2) node [below] {{ $-"); Append(str, ViewString(-i));
-        Append(str, "$}};"); Append(str, "\n");
+        if labels then
+          Append(str, draw(j)); Append(str, ViewString(-i));
+          Append(str, ", -0.2) node [below] {{ $-"); Append(str, ViewString(-i));
+          Append(str, "$}};"); Append(str, "\n");
+        fi;
       fi;
     od;
 
