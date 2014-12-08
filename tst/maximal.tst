@@ -12,13 +12,13 @@ gap> LoadPackage("semigroups", false);;
 # 
 gap> SemigroupsStartTest();
 
-# A 3x2 RMS over group C2xC2
-gap> G:=Group([ (1,2), (3,4) ]);
+# MaximalSubsemigroups: for a Rees matrix semigroup
+gap> G := Group([ (1,2), (3,4) ]);
 Group([ (1,2), (3,4) ])
-gap> mat:=[[ (), (1,2), (1,2)(3,4)], [(), (1,2), ()]];;
-gap> R:=ReesMatrixSemigroup(G, mat);
+gap> mat := [ [ (), (1,2), (1,2)(3,4) ], [ (), (1,2), ( )] ];;
+gap> R := ReesMatrixSemigroup(G, mat); # 3x2 RMS over C2 x C2
 <Rees matrix semigroup 3x2 over Group([ (1,2), (3,4) ])>
-gap> max:=MaximalSubsemigroups(R);
+gap> max := MaximalSubsemigroups(R);
 [ <subsemigroup of 3x2 Rees matrix semigroup with 4 generators>, 
   <Rees matrix semigroup 3x1 over Group([ (1,2), (3,4) ])>, 
   <Rees matrix semigroup 3x1 over Group([ (1,2), (3,4) ])>, 
@@ -27,14 +27,12 @@ gap> max:=MaximalSubsemigroups(R);
   <Rees matrix semigroup 2x2 over Group([ (1,2), (3,4) ])> ]
 gap> Size(max);
 6
-
-# A 2x2 RMS over group C3, with only maximal subgroup trivial
-gap> G:=Group([ (1,2,3) ]);
+gap> G := Group([ (1,2,3) ]);
 Group([ (1,2,3) ])
-gap> mat:=[ [(), (1,2,3)], [(), (1,2,3)] ];;
-gap> R:=ReesMatrixSemigroup(G,mat);
+gap> mat := [ [ (), (1,2,3) ], [ (), (1,2,3) ] ];;
+gap> R := ReesMatrixSemigroup(G, mat); # 2x2 RMS over C3
 <Rees matrix semigroup 2x2 over Group([ (1,2,3) ])>
-gap> max:=MaximalSubsemigroups(R);
+gap> max := MaximalSubsemigroups(R);
 [ <subsemigroup of 2x2 Rees matrix semigroup with 2 generators>, 
   <Rees matrix semigroup 2x1 over Group([ (1,2,3) ])>, 
   <Rees matrix semigroup 2x1 over Group([ (1,2,3) ])>, 
@@ -43,23 +41,41 @@ gap> max:=MaximalSubsemigroups(R);
 gap> MaximalSubsemigroups(R, Group([ () ]));
 [ <subsemigroup of 2x2 Rees matrix semigroup with 3 generators> ]
 
-# A 2x3 RMS over group S4 with maximal subgroup isomorphic to D8
-gap> G:=Group([ (1,2,3,4), (1,2) ]);
+# MaximalSubsemigroups: for a Rees matrix semigroup and a group
+gap> G := Group([ (1,2,3,4), (1,2) ]);
 Group([ (1,2,3,4), (1,2) ])
-gap> mat:=[ [(1,2), ()], [(), (1,3)(2,4)], [(), ()] ];;
-gap> R:=ReesMatrixSemigroup(G, mat);
+gap> mat := [ [ (1,2), () ], [ (), (1,3)(2,4) ], [ (), () ] ];;
+gap> R := ReesMatrixSemigroup(G, mat); # 2x3 RMS over Sym(4); and subgroup D8
 <Rees matrix semigroup 2x3 over Group([ (1,2,3,4), (1,2) ])>
-gap> H:=Group([ (1,2), (1,4,2,3) ]);
+gap> H := Group([ (1,2), (1,4,2,3) ]);
 Group([ (1,2), (1,4,2,3) ])
-gap> max:=MaximalSubsemigroups(R);;
+gap> max := MaximalSubsemigroups(R);;
 gap> Size(max);
 6
-gap> MaximalSubsemigroups(R,H);
+gap> MaximalSubsemigroups(R, H);
 [ <subsemigroup of 2x3 Rees matrix semigroup with 5 generators> ]
-gap> MaximalSubsemigroups(R, Group([ (1,2,3), (1,2) ]));
+gap> last[1] in max;
+true
+gap> MaximalSubsemigroups(R, Group([ (1,2,3), (1,2) ])); # no results exist
 [  ]
-gap> MaximalSubsemigroups(R, Group(()));
-fail
+gap> MaximalSubsemigroups(R, Group([ (1,3,5) ])); # not a subgroup
+Error, Semigroups: MaximalSubsemigroups: usage,
+the second argument <H> must be a subgroup of the underlying
+group of the Rees matrix semigroup in the first first argument, <R>,
+gap> MaximalSubsemigroups(R, Group(())); # not a maximal subgroup
+Error, Semigroups: MaximalSubsemigroups: usage,
+the second argument <H> must be a maximal subgroup of the underlying
+group of the Rees matrix semigroup in the first first argument, <R>,
+gap> T := FullTransformationMonoid(2);
+<full transformation semigroup on 2 pts>
+gap> mat := [ [ Transformation( [ ] ) ] ];
+[ [ IdentityTransformation ] ]
+gap> R := ReesMatrixSemigroup(T, mat);
+<Rees matrix semigroup 1x1 over <full transformation semigroup on 2 pts>>
+gap> MaximalSubsemigroups(R, Group(())); # not a RMS over a group
+Error, Semigroups: MaximalSubsemigroups: usage,
+the first argument <R> must be a Rees matrix semigroup whose underlying
+semigroup is a group,
 
 # A connected 2x2 RZMS over group S3 (inverse semigroup)
 gap> G := Group([ (1,2), (1,2,3) ]);;
@@ -319,7 +335,7 @@ gap> Size(max);
 gap> ForAll(max,x->IsMaximalSubsemigroup(B,x));
 true
 
-# Test of IsMaximalSubsemigroup
+# IsMaximalSubsemigroup
 gap> S:=Semigroup([
 >   Transformation( [ 1, 2, 4, 4, 1 ] ),
 >   Transformation( [ 4, 4, 1, 4 ] ),
@@ -332,7 +348,7 @@ gap> T:=Semigroup([
 <transformation semigroup on 5 pts with 3 generators>
 gap> IsMaximalSubsemigroup(S, T);
 true
-gap> U:=Semigroup([
+gap> U := Semigroup([
 >   Transformation( [ 5, 5, 1, 1, 5 ] ),
 >   Transformation( [ 2, 2, 3, 4, 3 ] ),
 >   Transformation( [ 3, 4, 5, 4, 3 ] ) ]);
@@ -341,14 +357,24 @@ gap> IsSubsemigroup(S, U);
 true
 gap> IsMaximalSubsemigroup(S, U);
 false
+gap> IsSubsemigroup(U, S);
+false
+gap> IsMaximalSubsemigroup(U, S);
+false
+gap> IsSubsemigroup(S, S);
+true
+gap> S <> S;
+false
+gap> IsMaximalSubsemigroup(S, S);
+false
 
-# Maximal subsemigroups of a random regular transformation ideal
-gap> S:=SingularTransformationSemigroup(5);
+# MaximalSubsemigroups: for a random regular transformation ideal
+gap> S := SingularTransformationSemigroup(5);
 <regular transformation semigroup ideal on 5 pts with 1 generator>
-gap> max:=MaximalSubsemigroups(S);;
+gap> max := MaximalSubsemigroups(S);;
 gap> Size(max);
 40
-gap> S=max[1];
+gap> S = max[1];
 false
 
 # A random Inverse Semigroup of Partial Perms

@@ -16,9 +16,8 @@ InstallMethod(IsMaximalSubsemigroup, "for a semigroup and a semigroup",
 function(S, T)
   if IsSubsemigroup(S, T) and S <> T then 
     return ForAll(S, x -> x in T or Semigroup(GeneratorsOfSemigroup(T), x) = S);
-  else
-    return false;
   fi;
+  return false;
 end); 
 
 #
@@ -35,11 +34,20 @@ function(R, H)
  
   G := UnderlyingSemigroup(R);
   
-  if not IsGroup(G) then 
+  if not IsGroup(G) then
+    Error("Semigroups: MaximalSubsemigroups: usage,\n",
+    "the first argument <R> must be a Rees matrix semigroup whose underlying\n",
+    "semigroup is a group,");
     return fail;
-  elif not IsSubgroup(G,H) then
+  elif not IsSubgroup(G, H) then
+    Error("Semigroups: MaximalSubsemigroups: usage,\n",
+    "the second argument <H> must be a subgroup of the underlying\n", 
+    "group of the Rees matrix semigroup in the first first argument, <R>,");
     return fail;
   elif not H in MaximalSubgroups(G) then
+    Error("Semigroups: MaximalSubsemigroups: usage,\n",
+    "the second argument <H> must be a maximal subgroup of the underlying\n", 
+    "group of the Rees matrix semigroup in the first first argument, <R>,");
     return fail;
   fi;
   
