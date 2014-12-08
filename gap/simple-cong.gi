@@ -1,19 +1,32 @@
 InstallGlobalFunction(SimpleSemigroupCongruenceNC,
-function(s, ltcong)
+function(s, rmscong)
   local iso, r, fam, cong;
   # Find the isomorphism from s to r
   iso := IsomorphismReesMatrixSemigroup(s);
-  r := Range(ltcong);
-  
+  r := Range(rmscong);
+
   # Construct the object
   fam := GeneralMappingsFamily(
                  ElementsFamily(FamilyObj(s)),
                  ElementsFamily(FamilyObj(s)) );
   cong := Objectify( NewType(fam, IsSimpleSemigroupCongruence),
-                     rec(rmscong := ltcong, iso := iso) );
+                     rec(rmscong := rmscong, iso := iso) );
   SetSource(cong, s);
   SetRange(cong, s);
   return cong;
+end);
+
+#
+
+InstallGlobalFunction(SimpleSemigroupCongruenceClassNC,
+function(cong, rmsclass)
+  iso := IsomorphismReesMatrixSemigroup(Range(cong));
+  fam := FamilyObj(Range(cong));
+  class := Objectify( NewType(fam, IsSimpleSemigroupCongruenceClass),
+                      rec(rmsclass := rmsclass, iso := iso) );
+  SetParentAttr(class, cong);
+  SetRepresentative(class, Representative(rmsclass)^InverseGeneralMapping(iso));
+  return class;
 end);
 
 #
@@ -44,11 +57,11 @@ InstallMethod(\=,
 "for two simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(cong1, cong2)
-  #TODO
+  return (Range(cong1) = Range(cong2) and cong1!.rmscong = cong2!.rmscong);
 end);
 
 #
-  
+
 InstallMethod(\in,
 "for a Rees matrix semigroup element collection and a simple semigroup congruence",
 [IsAssociativeElementCollection, IsSimpleSemigroupCongruence],
@@ -66,4 +79,23 @@ function(pair, cong)
     return;
   fi;
   return [pair[1]^cong!.iso, pair[2]^cong!.iso] in cong!.rmscong;
+end);
+
+#
+
+InstallMethod(ImagesElm,
+"for a simple semigroup congruence and an associative element",
+[IsSimpleSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  return List( ImagesElm(cong!.rmscong, elm^iso),
+               x-> x^InverseGeneralMapping(iso) );
+end);
+
+#
+
+InstallMethod(EquivalenceClasses,
+"for a simple semigroup congruence",
+[IsSimpleSemigroupCongruence],
+function(cong)
+  
 end);
