@@ -3,8 +3,6 @@ DeclareCategory("IsRMSCongruenceByLinkedTriple",
         IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareCategory("IsRZMSCongruenceByLinkedTriple",
         IsSemigroupCongruence and IsAttributeStoringRep);
-DeclareAttribute("CongruencesOfSemigroup", IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite);
-DeclareAttribute("CongruencesOfSemigroup", IsReesMatrixSemigroup and IsSimpleSemigroup and IsFinite);
 DeclareOperation("IsLinkedTriple",
         [IsSemigroup, IsGroup, IsDenseList, IsDenseList] );
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");

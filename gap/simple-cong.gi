@@ -34,12 +34,12 @@ end);
 #
 
 InstallMethod(ViewObj,
-"for a simple semigroup congruence",
+"for a simple or 0-simple semigroup congruence",
 [SEMICONG_SIMPLE],
 function(cong)
-  Print("<semigroup congruence over ",
-        ViewString(Range(cong)),
-        " with linked triple (",
+  Print("<semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with linked triple (",
         StructureDescription(cong!.rmscong!.n:short), ",",
         Size(cong!.rmscong!.colBlocks), ",",
         Size(cong!.rmscong!.rowBlocks),")>");
@@ -48,17 +48,28 @@ end);
 #
 
 InstallMethod(CongruencesOfSemigroup,
-"for a simple semigroup",
-[IsSimpleSemigroup and IsFinite],
+"for a simple or 0-simple semigroup",
+[IsSemigroup],
 function(s)
-  return List( CongruencesOfSemigroup(Range(IsomorphismReesMatrixSemigroup(s))),
-               cong-> SIMPLECONG_FROM_RMSCONG(s, cong) );
+  local congs, i;
+  if not (IsFinite(s) and (IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s))) then
+    TryNextMethod();
+  fi;
+  congs := ShallowCopy(CongruencesOfSemigroup(Range(IsomorphismReesMatrixSemigroup(s))));
+  for i in [1..Length(congs)] do
+    if IsUniversalSemigroupCongruence(congs[i]) then
+      congs[i] := UniversalSemigroupCongruence(s);
+    else
+      congs[i] := SIMPLECONG_FROM_RMSCONG(s, congs[i]);
+    fi;
+  od;
+  return congs;
 end);
 
 #
 
 InstallMethod(\=,
-"for two simple semigroup congruences",
+"for two (0-)simple semigroup congruences",
 [SEMICONG_SIMPLE, SEMICONG_SIMPLE],
 function(cong1, cong2)
   return (Range(cong1) = Range(cong2) and cong1!.rmscong = cong2!.rmscong);
@@ -67,7 +78,7 @@ end);
 #
 
 InstallMethod(\in,
-"for a Rees matrix semigroup element collection and a simple semigroup congruence",
+"for an associative element collection and a (0-)simple semigroup congruence",
 [IsAssociativeElementCollection, SEMICONG_SIMPLE],
 function(pair, cong)
   local s;
@@ -98,7 +109,7 @@ end);
 #
 
 InstallMethod(EquivalenceClasses,
-"for a simple semigroup congruence",
+"for a (0-)simple semigroup congruence",
 [SEMICONG_SIMPLE],
 function(cong)
   return List( EquivalenceClasses(cong!.rmscong),
@@ -108,7 +119,7 @@ end);
 #
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for a simple semigroup congruence",
+"for a (0-)simple semigroup congruence",
 [SEMICONG_SIMPLE, IsAssociativeElement],
 function(cong, elm)
   return SIMPLECLASS_FROM_RMSCLASS(cong,
@@ -118,7 +129,7 @@ end);
 #
 
 InstallMethod(\in,
-"for an associative element and a simple semigroup congruence class",
+"for an associative element and a (0-)simple semigroup congruence class",
 [IsAssociativeElement, SEMICONG_SIMPLE_CLASS],
 function(elm, class)
   return (elm^EquivalenceClassRelation(class)!.iso in class!.rmsclass);
@@ -127,7 +138,7 @@ end);
 #
 
 InstallMethod(\*,
-"for two simple semigroup congruence classes",
+"for two (0-)simple semigroup congruence classes",
 [SEMICONG_SIMPLE_CLASS, SEMICONG_SIMPLE_CLASS],
 function(c1, c2)
   return SIMPLECLASS_FROM_RMSCLASS( EquivalenceClassRelation(c1),
@@ -137,7 +148,7 @@ end);
 #
 
 InstallMethod(Size,
-"for a simple semigroup congruence class",
+"for a (0-)simple semigroup congruence class",
 [SEMICONG_SIMPLE_CLASS],
 function(class)
   return Size(class!.rmsclass);
@@ -146,7 +157,7 @@ end);
 #
 
 InstallMethod( \=,
-"for two simple semigroup congruence classes",
+"for two (0-)simple semigroup congruence classes",
 [SEMICONG_SIMPLE_CLASS, SEMICONG_SIMPLE_CLASS],
 function(c1, c2)
   return EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
@@ -156,7 +167,7 @@ end);
 #
 
 InstallMethod(GeneratingPairsOfMagmaCongruence,
-"for a simple semigroup congruence",
+"for a (0-)simple semigroup congruence",
 [SEMICONG_SIMPLE],
 function(cong)
   local map;
