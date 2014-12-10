@@ -57,7 +57,7 @@ ReadPackage("semigroups/gap/normalizer.gd");
 
 ReadPackage("semigroups/gap/quotients.gd");
 
-#ReadPackage("semigroups/gap/pairs-cong.gd");
+ReadPackage("semigroups/gap/pairs-cong.gd");
 ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univcong.gd");
 ReadPackage("semigroups/gap/inverse-cong.gd");
