@@ -1,12 +1,12 @@
-DeclareCategory("IsSimpleSemigroupCongruence",
+DeclareCategory("SEMICONG_SIMPLE",
         IsSemigroupCongruence and IsAttributeStoringRep);
-DeclareCategory("IsZeroSimpleSemigroupCongruence",
+DeclareCategory("SEMICONG_Z_SIMPLE",
         IsSemigroupCongruence and IsAttributeStoringRep);
 
-DeclareGlobalFunction("SimpleSemigroupCongruenceNC");
+DeclareGlobalFunction("SIMPLECONG_FROM_RMSCONG");
 DeclareAttribute("CongruencesOfSemigroup", IsSimpleSemigroup and IsFinite);
 DeclareAttribute("CongruencesOfSemigroup", IsZeroSimpleSemigroup and IsFinite);
 
-DeclareCategory("IsSimpleSemigroupCongruenceClass",
-        IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
-DeclareGlobalFunction("SimpleSemigroupCongruenceClassNC");
+DeclareCategory("SEMICONG_SIMPLE_CLASS",
+        IsCongruenceClass and IsAttributeStoringRep and IsAssociativeElement);
+DeclareGlobalFunction("SIMPLECLASS_FROM_RMSCLASS");
