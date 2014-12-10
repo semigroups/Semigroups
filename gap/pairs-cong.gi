@@ -7,10 +7,6 @@ function(cong)
                  x-> [Position(elms, x[1]), Position(elms, x[2])] );
   ht:=HTCreate( pairs[1], rec(forflatplainlists:=true,
               treehashsize:=100003) );
-  for pair in pairs do
-    HTAdd(ht, pair, true);
-  od;
-
   cong!.data := rec( cong := cong,
                      lookup := [1..Size(s)],
                      pairstoapply := pairs,
@@ -123,7 +119,13 @@ function(cong, lookfunc)
     
     i:=i+1;
     x:=pairstoapply[i];
+    # Add the pair itself
+    if x[1] <> x[2] and HTValue(ht, x) = fail then
+      HTAdd(ht, x, true);
+      union(x);
+    fi;
     for j in genstoapply do 
+      # Add the pair's left-multiples
       y := [right[x[1]][j], right[x[2]][j]];
       if y[1] <> y[2] and HTValue(ht, y) = fail then
         HTAdd(ht, y, true);
@@ -132,6 +134,7 @@ function(cong, lookfunc)
         union(y);
       fi;
       
+      # Add the pair's right-multiples
       y := [left[x[1]][j], left[x[2]][j]];
       if y[1] <> y[2] and HTValue(ht, y) = fail then
         HTAdd(ht, y, true);
