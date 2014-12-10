@@ -37,7 +37,9 @@ InstallMethod(ViewObj,
 "for a simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
 function(cong)
-  Print("<simple semigroup congruence (",
+  Print("<semigroup congruence over ",
+        ViewString(Range(cong)),
+        " with linked triple (",
         StructureDescription(cong!.rmscong!.n:short), ",",
         Size(cong!.rmscong!.colBlocks), ",",
         Size(cong!.rmscong!.rowBlocks),")>");
