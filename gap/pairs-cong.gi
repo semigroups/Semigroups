@@ -168,3 +168,16 @@ function(cong, lookfunc)
   Unbind(cong!.data);
   return result;
 end);
+
+#
+
+InstallMethod(\=,
+"for two semigroup congruences",
+[IsSemigroupCongruence, IsSemigroupCongruence],
+function(cong1, cong2)
+  return Range(cong1) = Range(cong2) and
+         Set(GeneratingPairsOfSemigroupCongruence(cong1)) =
+         Set(GeneratingPairsOfSemigroupCongruence(cong2));
+end);
+
+#
