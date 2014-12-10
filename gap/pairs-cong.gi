@@ -1,7 +1,6 @@
 InstallGlobalFunction(SetupCongData,
 function(cong)
   local s, elms, pairs, ht, treehashsize, pair, lookup, pairstoapply;
-  
   s := Range(cong);
   elms := Elements(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
@@ -126,9 +125,7 @@ function(cong, lookfunc)
     x:=pairstoapply[i];
     for j in genstoapply do 
       y := [right[x[1]][j], right[x[2]][j]];
-      if y[1] <> y[2] and                       # Ignore a=b (reflexive)
-         HTValue(ht, y) = fail and              # Check for (a,b)
-         HTValue(ht, [y[2], y[1]]) = fail then  # Check for (b,a) (symmetric)
+      if y[1] <> y[2] and HTValue(ht, y) = fail then
         HTAdd(ht, y, true);
         nr:=nr+1;
         pairstoapply[nr]:=y;
@@ -136,9 +133,7 @@ function(cong, lookfunc)
       fi;
       
       y := [left[x[1]][j], left[x[2]][j]];
-      if y[1] <> y[2] and
-         HTValue(ht, y) = fail and
-         HTValue(ht, [y[2], y[1]]) = fail then 
+      if y[1] <> y[2] and HTValue(ht, y) = fail then
         HTAdd(ht, y, true);
         nr:=nr+1;
         pairstoapply[nr]:=y;
@@ -148,19 +143,20 @@ function(cong, lookfunc)
   od;
   
   normalise := function(cong)
-    local ht, next, i, ii;
+    local ht, next, i, ii, newcong;
     ht := HTCreate(1);
     next := 1;
+    newcong := [];
     for i in [1..Size(cong)] do
       ii := find(i);
-      cong[i] := HTValue(ht, ii);
-      if cong[i] = fail then
-        cong[i] := next;
+      newcong[i] := HTValue(ht, ii);
+      if newcong[i] = fail then
+        newcong[i] := next;
         HTAdd(ht, ii, next);
         next := next + 1;
       fi;
     od;
-    return cong;
+    return newcong;
   end;
   
   result := lookfunc(table);
@@ -178,6 +174,20 @@ function(cong1, cong2)
   return Range(cong1) = Range(cong2) and
          Set(GeneratingPairsOfSemigroupCongruence(cong1)) =
          Set(GeneratingPairsOfSemigroupCongruence(cong2));
+end);
+
+#
+
+InstallMethod(\*,
+"for two semigroup congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    Error("usage: arguments must be classes of the same congruence,");
+    return;
+  fi;
+  return CongruenceClassOfElement(EquivalenceClassRelation(class1),
+                 Representative(class1) * Representative(class2));
 end);
 
 #
