@@ -175,8 +175,7 @@ InstallMethod(\=,
 [IsSemigroupCongruence, IsSemigroupCongruence],
 function(cong1, cong2)
   return Range(cong1) = Range(cong2) and
-         Set(GeneratingPairsOfSemigroupCongruence(cong1)) =
-         Set(GeneratingPairsOfSemigroupCongruence(cong2));
+         AsLookupTable(cong1) = AsLookupTable(cong2);
 end);
 
 #
