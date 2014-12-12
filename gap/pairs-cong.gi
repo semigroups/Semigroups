@@ -193,3 +193,17 @@ function(class1, class2)
 end);
 
 #
+
+InstallMethod(ViewObj,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+1,
+function(cong)
+  Print("<semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ",
+        Size(GeneratingPairsOfSemigroupCongruence(cong)),
+        " generating pairs>");
+end);
+
+#
