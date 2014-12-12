@@ -1,3 +1,78 @@
+InstallGlobalFunction(SemigroupCongruence,
+function(arg)
+  local s, pairs;
+  if not Length(arg) >= 2 then
+    Error("Semigroups: SemigroupCongruence: usage,\n",
+          "at least 2 arguments are required,");
+    return;
+  fi;
+  if not IsSemigroup(arg[1]) then
+    Error("Semigroups: SemigroupCongruence: usage,\n",
+          "1st argument <s> must be a semigroup,");
+    return;
+  fi;
+  s := arg[1];
+  
+  if IsHomogeneousList(arg[2]) then
+    # We should have a list of generating pairs
+    if Length(arg) = 2 then
+      pairs := arg[2];
+      if not IsList(pairs[1]) then
+        pairs := [pairs];
+      fi;
+    elif Length(arg) > 2 then
+      pairs := arg{[2..Length(arg)]};
+    fi;
+    if not ForAll(pairs, p-> Size(p) = 2) then
+      Error("Semigroups: SemigroupCongruence: usage,\n",
+            "<pairs> should be a list of lists of size 2,");
+      return;
+    fi;
+    if not ForAll(pairs, p-> p[1] in s and p[2] in s) then
+      Error("Semigroups: SemigroupCongruence: usage,\n",
+            "each pair should contain elements from the semigroup <s>,");
+      return;
+    fi;
+    if IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s) then
+      return SIMPLECONG_FROM_PAIRS(s, pairs);
+    else
+      return SemigroupCongruenceByGeneratingPairs(s, pairs);
+    fi;
+  elif (IsRMSCongruenceByLinkedTriple(arg[2]) and IsSimpleSemigroup(s)) or
+    (IsRZMSCongruenceByLinkedTriple(arg[2]) and IsZeroSimpleSemigroup(s)) then
+    if Range(IsomorphismReesMatrixSemigroup(s)) = Range(arg[2]) then
+      return SIMPLECONG_FROM_RMSCONG(s, arg[2]);
+    else
+      Error("Semigroups: SemigroupCongruence: usage,\n<cong> should be ",
+            "over a Rees (0-)matrix semigroup isomorphic to <s>");
+      return;
+    fi;
+  else
+    TryNextMethod();
+  fi;
+end);
+
+#
+
+InstallGlobalFunction(SIMPLECONG_FROM_PAIRS,
+function(s, pairs)
+  local iso, r, rmspairs, pcong, rmscong, cong;
+  iso := IsomorphismReesMatrixSemigroup(s);
+  r := Range(iso);
+  rmspairs := List(pairs, p-> [p[1]^iso, p[2]^iso]);
+  pcong := SemigroupCongruenceByGeneratingPairs(r, rmspairs);
+  if IsReesMatrixSemigroup(r) then
+    rmscong := AsRMSCongruenceByLinkedTriple(pcong);
+  else #elif IsReesZeroMatrixSemigroup(r) then
+    rmscong := AsRZMSCongruenceByLinkedTriple(pcong);
+  fi;
+  cong := SIMPLECONG_FROM_RMSCONG(s, rmscong);
+  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
+  return cong;
+end);
+
+#
+
 InstallGlobalFunction(SIMPLECONG_FROM_RMSCONG,
 function(s, rmscong)
   local iso, r, fam, cong;
@@ -177,4 +252,3 @@ function(cong)
 end);
 
 #
-
