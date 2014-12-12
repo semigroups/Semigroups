@@ -96,19 +96,18 @@ gap> MaximalSubsemigroups(R);
    is a Rees 0-matrix semigroup. 
 
   <Example><![CDATA[
-gap> R:=ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), 
+gap> R := ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), 
 > [[ (), (1,2)], [(), (1,2)]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>
-gap> G:=UnderlyingSemigroup(R);
+gap> G := UnderlyingSemigroup(R);
 Group([ (1,2), (3,4) ])
-gap> H:=Group((1,2));  
+gap> H := Group((1,2));  
 Group([ (1,2) ])
-gap> max:=MaximalSubsemigroups(R,H);
+gap> max := MaximalSubsemigroups(R, H);
 [ <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators> ]
-gap> IsMaximalSubsemigroup(R,max[1]);
+gap> IsMaximalSubsemigroup(R, max[1]);
 true
-gap> MaximalSubsemigroups(R, Group(()));
-fail]]></Example>
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
