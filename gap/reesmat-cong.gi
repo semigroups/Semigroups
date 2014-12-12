@@ -1533,7 +1533,9 @@ function(cong)
   # Make n normal
   n := NormalClosure(g,n);
   
-  return RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
+  cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
+  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
+  return cong;
 end);
 
 #
