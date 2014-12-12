@@ -1,4 +1,4 @@
-#############################################################################
+#T###########################################################################
 ##
 #W  maximal.tst
 ##  Tests for algorithms relating to maximal subsemigroups of semigroups
@@ -12,7 +12,7 @@ gap> LoadPackage("semigroups", false);;
 # 
 gap> SemigroupsStartTest();
 
-# IsMaximalSubsemigroup
+#T# IsMaximalSubsemigroup
 gap> S := Semigroup([
 >   Transformation( [ 1, 2, 4, 4, 1 ] ),
 >   Transformation( [ 4, 4, 1, 4 ] ),
@@ -45,7 +45,7 @@ false
 gap> IsMaximalSubsemigroup(S, S);
 false
 
-# MaximalSubsemigroups: for a Rees matrix semigroup
+#T# MaximalSubsemigroups: for a Rees matrix semigroup
 gap> G := Group([ (1,2), (3,4) ]);
 Group([ (1,2), (3,4) ])
 gap> mat := [ [ (), (1,2), (1,2)(3,4) ], [ (), (1,2), ( )] ];;
@@ -129,7 +129,7 @@ Error, Semigroups: MaximalSubsemigroups,
 not yet implemented for a Rees matrix semigroup over a simple
 non-group semigroup,
 
-# MaximalSubsemigroups: for a Rees matrix semigroup and a maximal subgroup
+#T# MaximalSubsemigroups: for a Rees matrix semigroup and a maximal subgroup
 gap> G := Group([ (1,2,3) ]);
 Group([ (1,2,3) ])
 gap> mat := [ [ (), (1,2,3) ], [ (), (1,2,3) ] ];;
@@ -185,7 +185,7 @@ gap> MaximalSubsemigroups(R, Group(()));
 gap> IsMaximalSubsemigroup(R, last[1]);
 true
 
-# MaximalSubsemigroups: for a Rees 0-matrix semigroup
+#T# MaximalSubsemigroups: for a Rees 0-matrix semigroup
 gap> R := ReesZeroMatrixSemigroup(Group(()), [ [ 0 ] ]); # a non-regular RZMS
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> MaximalSubsemigroups(R);
@@ -345,7 +345,7 @@ gap> max := MaximalSubsemigroups(R1);
 gap> Size(max);
 26
 
-# MaximalSubsemigroups: for a Rees 0-matrix semigroup and a maximal subgroup
+#T# MaximalSubsemigroups: for a Rees 0-matrix semigroup and a maximal subgroup
 gap> H := Group([ (1,2,5) ]); # maximal subgroup <(1,2,5)>, using R1 from before
 Group([ (1,2,5) ])
 gap> MaximalSubsemigroups(R1, H);
@@ -408,7 +408,7 @@ gap> MaximalSubsemigroups(R4, Group(()));
 Error, Semigroups: MaximalSubsemigroups,
 not yet implemented for a non-regular Rees 0-matrix semigroup,
 
-# MaximalSubsemigroups: for a transformation semigroup
+#T# MaximalSubsemigroups: for a transformation semigroup
 gap> S := Semigroup( Transformation( [  ] ) ); # trivial semigroup
 <trivial transformation group>
 gap> MaximalSubsemigroups(S);
@@ -531,7 +531,7 @@ true
 gap> ForAll(max, x -> IsMaximalSubsemigroup(S, x));
 true
 
-# MaximalSubsemigroups: for semigroup of partial permutations
+#T# MaximalSubsemigroups: for semigroup of partial permutations
 gap> gens := [
 >   PartialPerm( [ 1, 3, 4, 5 ], [ 6, 5, 2, 4 ] ),
 >   PartialPerm( [ 1, 2, 3, 4, 6 ], [ 5, 4, 3, 1, 6 ] ),
@@ -562,7 +562,7 @@ gap> List(max, Size);
 gap> ForAll(max, x -> IsMaximalSubsemigroup(S, x));
 true
 
-# MaximalSubsemigroups: for a semigroup of partitions
+#T# MaximalSubsemigroups: for a semigroup of partitions
 gap> B := PartitionMonoid(3); # partition monoid of degree 3
 <regular bipartition monoid on 3 pts with 4 generators>
 gap> max := MaximalSubsemigroups(B);;
@@ -589,7 +589,7 @@ gap> Size(max);
 gap> ForAll(max,x -> IsMaximalSubsemigroup(B,x) );
 true
 
-# MaximalSubsemigroups: for a semigroup of block bijections
+#T# MaximalSubsemigroups: for a semigroup of block bijections
 gap> C := InverseSemigroup( [ 
 >   Bipartition( [ [ 1, -4 ], [ 2, -5 ], [ 3, 4, 5, 6, 7, -1, -2, -3, -6, -7 ] ] ), 
 >   Bipartition( [ [ 1, -6 ], [ 2, -3 ], [ 3, 5, 6, 7, -1, -4, -5, -7 ], [ 4, -2 ] ] ), 
@@ -606,7 +606,7 @@ true
 gap> ForAll(max, x -> IsMaximalSubsemigroup(C, x));
 true
 
-# MaximalSubsemigroups: for a transformation semigroup ideal
+#T# MaximalSubsemigroups: for a transformation semigroup ideal
 gap> S := SingularTransformationSemigroup(5); # Trans(5) \ Sym(5)
 <regular transformation semigroup ideal on 5 pts with 1 generator>
 gap> max := MaximalSubsemigroups(S);;
@@ -615,7 +615,7 @@ gap> Size(max);
 gap> S = max[1];
 false
 
-#
+#E#
 gap> SemigroupsStopTest();
 
 #
