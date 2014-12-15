@@ -235,7 +235,7 @@ function(coll, n)
     od;
   od;
 
-  return IsStronglyConnectedDigraph(Digraph(graph));
+  return IS_STRONGLY_CONNECTED_DIGRAPH(graph);
 end);
 
 InstallMethod(IsTransitive, 
@@ -270,7 +270,7 @@ function(coll, set)
     od;
   od;
 
-  return IsStronglyConnectedDigraph(Digraph(graph));
+  return IS_STRONGLY_CONNECTED_DIGRAPH(graph);
 end);
 
 # same method for ideals
