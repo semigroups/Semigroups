@@ -303,7 +303,8 @@ fail
 gap> S:=DualSymmetricInverseMonoid(6);
 <inverse bipartition monoid on 6 pts with 3 generators>
 gap> MultiplicativeZero(S);
-<block bijection: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]>]]></Example> 
+<block bijection: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]>]]>
+</Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
