@@ -140,9 +140,9 @@ InstallMethod(ViewObj,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
 function(cong)
-  Print("<semigroup congruence over ",
-        ViewString(Range(cong)),
-        " with linked triple (",
+  Print("<semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with linked triple (",
         StructureDescription(cong!.n:short), ",",
         Size(cong!.colBlocks), ",",
         Size(cong!.rowBlocks),")>");

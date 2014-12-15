@@ -31,10 +31,7 @@ function(pair, cong)
     Error("Elements of <pair> must be in range of <cong>,"); return;
   fi;
   
-  if not IsBound(cong!.data) then
-    SetupCongData(cong);
-  fi;
-  elms:=cong!.data.elms;
+  elms := Elements(s);
   p1 := Position(elms, pair[1]);
   p2 := Position(elms, pair[2]);
 
@@ -44,6 +41,9 @@ function(pair, cong)
     return table[p1] = table[p2];
   else
     # Otherwise, begin calculating the lookup table and look for this pair
+    if not IsBound(cong!.data) then
+      SetupCongData(cong);
+    fi;
     find:=function(table,i)
       while table[i]<>i do 
         i:=table[i];
@@ -168,6 +168,41 @@ function(cong, lookfunc)
   return result;
 end);
 
+#
+
+InstallMethod(\in,
+"for an associative element and a congruence class",
+[IsAssociativeElement, IsCongruenceClass],
+function(elm, class)
+  Info(InfoWarning,1,"in");
+  return [elm, Representative(class)] in EquivalenceClassRelation(class);
+end);
+
+#
+
+InstallMethod(Size,
+"for a congruence class",
+[IsCongruenceClass],
+function(class)
+  local p, tab;
+  Info(InfoWarning,1,"Size");
+  p := Position(Elements(Parent(class)), Representative(class));
+  tab := AsLookupTable(EquivalenceClassRelation(class));
+  return Number(tab, n-> n = tab[p]);
+end);
+
+#
+
+InstallMethod(\=,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  Info(InfoWarning,1,"=");
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2) and
+         [Representative(class1), Representative(class2)]
+         in EquivalenceClassRelation(class1);
+end);
+        
 #
 
 InstallMethod(\=,

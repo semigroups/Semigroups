@@ -63,7 +63,7 @@ function(s, kernel, traceBlocks)
                  ElementsFamily(FamilyObj(s)),
                  ElementsFamily(FamilyObj(s)) );
   cong := Objectify(
-                  NewType(fam, IsInverseSemigroupCongruence),
+                  NewType(fam, SEMIGROUPS_CONG_INVERSE),
                   rec(kernel := kernel,
                       traceBlocks := traceBlocks,
                       traceLookup := traceLookup) );
@@ -76,18 +76,20 @@ end);
 
 InstallMethod(ViewObj,
 "for inverse semigroup congruence",
-[IsInverseSemigroupCongruence],
+[SEMIGROUPS_CONG_INVERSE],
 function(cong)
-  Print("<inverse semigroup congruence by congruence pair: ",
-        Size(cong!.kernel), " ",
-        Size(cong!.traceBlocks),">");
+  Print("<semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with congruence pair (",
+        Size(cong!.kernel), ",",
+        Size(cong!.traceBlocks),")>");
 end);
 
 #
 
 InstallMethod(\=,
 "for two inverse semigroup congruences",
-[IsInverseSemigroupCongruence, IsInverseSemigroupCongruence],
+[SEMIGROUPS_CONG_INVERSE, SEMIGROUPS_CONG_INVERSE],
 function(cong1, cong2)
   return(Range(cong1) = Range(cong2) and
          cong1!.kernel = cong2!.kernel and
@@ -98,7 +100,7 @@ end);
 
 InstallMethod(ImagesElm,
 "for inverse semigroup congruence and associative element",
-[IsInverseSemigroupCongruence, IsAssociativeElement],
+[SEMIGROUPS_CONG_INVERSE, IsAssociativeElement],
 function(cong, elm)
   local s, images, e, b;
   s := Range(cong);
@@ -122,7 +124,7 @@ end);
 
 InstallMethod(\in,
 "for dense list and inverse semigroup congruence",
-[IsDenseList, IsInverseSemigroupCongruence],
+[IsDenseList, SEMIGROUPS_CONG_INVERSE],
 function(pair, cong)
   local s;
   if Size(pair) <> 2 then
@@ -147,11 +149,11 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for inverse semigroup congruence and associative element",
-[IsInverseSemigroupCongruence, IsAssociativeElement],
+[SEMIGROUPS_CONG_INVERSE, IsAssociativeElement],
 function(cong, elm)
   local fam, class;
   fam := FamilyObj(Range(cong));
-  class := Objectify(NewType(fam, IsInverseSemigroupCongruenceClass),
+  class := Objectify(NewType(fam, SEMIGROUPS_CONGCLASS_INVERSE),
                    rec(rep := elm) );
   SetParentAttr(class, cong);
   SetRepresentative(class, elm);
@@ -162,7 +164,7 @@ end);
 
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
-[IsInverseSemigroupCongruenceClass, IsInverseSemigroupCongruenceClass],
+[SEMIGROUPS_CONGCLASS_INVERSE, SEMIGROUPS_CONGCLASS_INVERSE],
 function(c1, c2)
   return( ParentAttr(c1) = ParentAttr(c2) and
           [c1!.rep, c2!.rep] in ParentAttr(c1) );
@@ -172,7 +174,7 @@ end);
 
 InstallMethod( \in,
 "for associative element and inverse semigroup congruence class",
-[IsAssociativeElement, IsInverseSemigroupCongruenceClass],
+[IsAssociativeElement, SEMIGROUPS_CONGCLASS_INVERSE],
 function(elm, class)
   local cong;
   cong := ParentAttr(class);
@@ -183,7 +185,7 @@ end);
 
 InstallMethod( \*,
 "for two inverse semigroup congruence classes",
-[IsInverseSemigroupCongruenceClass, IsInverseSemigroupCongruenceClass],
+[SEMIGROUPS_CONGCLASS_INVERSE, SEMIGROUPS_CONGCLASS_INVERSE],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
     Error("<c1> and <c2> must be classes of the same congruence,"); return;
@@ -195,7 +197,7 @@ end);
 
 InstallMethod(AsSSortedList,
 "for inverse semigroup congruence class",
-[IsInverseSemigroupCongruenceClass],
+[SEMIGROUPS_CONGCLASS_INVERSE],
 function(class)
   return SSortedList(ImagesElm(ParentAttr(class), class!.rep));
 end);
@@ -257,3 +259,13 @@ function(cong)
                  KernelOfSemigroupCongruence(cong),
                  TraceOfSemigroupCongruence(cong) );
 end);
+
+#
+
+InstallGlobalFunction(INVERSECONG_FROM_PAIRS,
+function(s, pairs)
+  return AsInverseSemigroupCongruenceByCongruencePair(
+                SemigroupCongruenceByGeneratingPairs(s, pairs) );
+end);
+
+#
