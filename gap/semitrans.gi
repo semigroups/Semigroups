@@ -235,7 +235,7 @@ function(coll, n)
     od;
   od;
 
-  return IS_STRONGLY_CONNECTED_DIGRAPH(graph);
+  return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
 end);
 
 InstallMethod(IsTransitive, 
@@ -270,7 +270,7 @@ function(coll, set)
     od;
   od;
 
-  return IS_STRONGLY_CONNECTED_DIGRAPH(graph);
+  return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
 end);
 
 # same method for ideals

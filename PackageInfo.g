@@ -194,10 +194,9 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7.5",
-  NeededOtherPackages := [["orb", ">=4.7"], ["io", ">=4.3"], 
-  ["digraphs", ">=0.1"]],
+  NeededOtherPackages := [ ["orb", ">=4.7"], ["io", ">=4.3"] ],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
-  ["genss", ">=1.5"]], 
+  ["genss", ">=1.5"]],
   ExternalConditions := []),
 
   BannerString := Concatenation(
