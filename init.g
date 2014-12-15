@@ -26,7 +26,6 @@ else # only do this if ORBC is available
 fi;
 
 ReadPackage("semigroups/gap/grpperm.gd");
-ReadPackage("semigroups/gap/graph-inverse.gd");
 
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
