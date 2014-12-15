@@ -9,7 +9,7 @@
 gap> START_TEST("Semigroups package: maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
-# 
+#
 gap> SemigroupsStartTest();
 
 #T# IsMaximalSubsemigroup
