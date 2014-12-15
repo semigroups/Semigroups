@@ -122,23 +122,6 @@ else
       return SmallestMultiplicationTable(S)=SmallestMultiplicationTable(T);
     fi;
     
-    # compare the partial orders of the D-classes
-
-    pS:=Graph(Group(()), [1..NrDClasses(S)], OnPoints,
-     function(i,j)
-       return i in DigraphTransitiveClosure(PartialOrderOfDClasses(S)[j]);
-     end, true);
-
-    pT:=Graph(Group(()), [1..NrDClasses(T)], OnPoints,
-     function(i,j)
-       return i in DigraphTransitiveClosure(PartialOrderOfDClasses(T)[j]);
-     end, true);
-    
-    iso:=GraphIsomorphism(pS, pT);
-    
-    if iso=fail then 
-      return false;
-    fi;
     Error("not yet implemented,");
 
   end);
