@@ -212,6 +212,21 @@ end);
 
 #
 
+InstallMethod(EquivalenceClassOfElement,
+"for a (0-)simple semigroup congruence and associative element",
+[SEMIGROUPS_CONG_SIMPLE, IsAssociativeElement],
+function(cong, elm)
+  if elm in Range(cong) then
+    return EquivalenceClassOfElementNC(cong, elm);
+  else
+    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
+          "<elm> must be an element of the range of <cong>");
+    return;
+  fi;
+end);
+
+#
+
 InstallMethod(EquivalenceClassOfElementNC,
 "for a (0-)simple semigroup congruence and associative element",
 [SEMIGROUPS_CONG_SIMPLE, IsAssociativeElement],
@@ -226,7 +241,7 @@ InstallMethod(NrCongruenceClasses,
 "for a (0-simple) semigroup congruence",
 [SEMIGROUPS_CONG_SIMPLE],
 function(cong)
-  return NrCongruenceClasses(rmscong);
+  return NrCongruenceClasses(cong!.rmscong);
 end);
 
 #
