@@ -213,11 +213,20 @@ end);
 #
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for a (0-)simple semigroup congruence",
+"for a (0-)simple semigroup congruence and associative element",
 [SEMIGROUPS_CONG_SIMPLE, IsAssociativeElement],
 function(cong, elm)
   return SEMIGROUPS_SIMPLECLASS_FROM_RMSCLASS(cong,
                  EquivalenceClassOfElementNC(cong!.rmscong, elm^cong!.iso) );
+end);
+
+#
+
+InstallMethod(NrCongruenceClasses,
+"for a (0-simple) semigroup congruence",
+[SEMIGROUPS_CONG_SIMPLE],
+function(cong)
+  return NrCongruenceClasses(rmscong);
 end);
 
 #
