@@ -171,6 +171,36 @@ end);
 
 #
 
+InstallMethod(JoinSemigroupCongruences,
+"for two (0-)simple semigroup congruences",
+[SEMIGROUPS_CONG_SIMPLE, SEMIGROUPS_CONG_SIMPLE],
+function(cong1, cong2)
+  if Range(cong1) <> Range(cong2) then
+    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
+          "<cong1> and <cong2> must be over the same semigroup,");
+    return;
+  fi;
+  return SEMIGROUPS_SIMPLECONG_FROM_RMSCONG(Range(cong1),
+                 JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong));
+end);
+
+#
+
+InstallMethod(MeetSemigroupCongruences,
+"for two (0-)simple semigroup congruences",
+[SEMIGROUPS_CONG_SIMPLE, SEMIGROUPS_CONG_SIMPLE],
+function(cong1, cong2)
+  if Range(cong1) <> Range(cong2) then
+    Error("Semigroups: MeetSemigroupCongruences: usage,\n",
+          "<cong1> and <cong2> must be over the same semigroup,");
+    return;
+  fi;
+  return SEMIGROUPS_SIMPLECONG_FROM_RMSCONG(Range(cong1,
+                 MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong));
+end);
+
+#
+
 InstallMethod(\in,
 "for an associative element collection and a (0-)simple semigroup congruence",
 [IsAssociativeElementCollection, SEMIGROUPS_CONG_SIMPLE],
