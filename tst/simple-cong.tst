@@ -78,10 +78,24 @@ gap> Size(classx);
 # Join and meet congruences
 gap> JoinSemigroupCongruences(congs[6],congs[11]) = congs[11];
 true
-gap> JoinSemigroupCongruences(congs[18],congs[11]);
+gap> JoinSemigroupCongruences(congs[18],congs[11]) = congs[23];
+true
+
+# Quotients
+gap> q := s / congs[13];;
+gap> Size(q) = NrCongruenceClasses(congs[13]);
+true
+
+# Convert to and from semigroup congruence by generating pairs
+gap> pairs := GeneratingPairsOfSemigroupCongruence(congs[4]);;
+gap> cong := SemigroupCongruence(s, pairs);
+<semigroup congruence over <simple transformation semigroup 
+ on 5 pts with 4 generators> with linked triple (1,2,2)>
+gap> congs[4] = cong;
+true
 
 #
 gap> SemigroupsStopTest();
 
 #
-gap> STOP_TEST( "Semigroups package: reesmat-cong.tst", 10000);
+gap> STOP_TEST( "Semigroups package: simple-cong.tst", 10000);
