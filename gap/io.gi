@@ -74,7 +74,8 @@ function(arg)
   if IsString(name) then 
     file:=IO_CompressedFile(name, "r");
     if file=fail then 
-      return fail;
+      Error("couldn't open the file ", file, ",");
+      return;
     fi;
   elif IsFile(name) then 
     file:=name;
@@ -149,58 +150,56 @@ end);
 
 InstallGlobalFunction(WriteGenerators, 
 function(arg)
-  local file, trans, gens, append, gzip, mode, line, deg, nrdigits, blocks, i, writin, s, f;
-  
-  if not (Length(arg)=3 or Length(arg)=2) then
+  local name, coll, mode, file, append, line, deg, nrdigits, blocks, i, x, f;
+ 
+  if Length(arg) = 2 then 
+    name := arg[1];
+    coll := arg[2];
+    mode := "a";
+  elif Length(arg) = 3 then 
+    name := arg[1];
+    coll := arg[2];
+    mode := arg[3];
+  else 
     Error("usage: there should be 2 or 3 arguments,"); 
     return;
   fi;
 
-  if IsString(arg[1]) then
-    if IsBound(arg[3]) then 
-      file:=IO_CompressedFile(arg[1], arg[3]);
-    else 
-      file:=IO_CompressedFile(arg[1], "a");
+  if not (mode = "a" or mode = "w") then 
+    Error("the 3rd argument must be \"a\" or \"w\",");
+  fi;
+
+  if IsTransformationCollection(coll) 
+    or IsPartialPermCollection(coll) 
+    or IsBipartitionCollection(coll) then 
+    coll := [ coll ];
+  elif not (IsTransformationCollColl(coll) 
+    or IsPartialPermCollColl(coll) 
+    or IsBipartitionCollColl(coll)) then 
+    Error("usage: the 2nd argument must be a transformation, partial perm,\n",
+    "or bipartition collection, or coll coll,");
+    return;
+  fi;
+
+  if IsString(name) then
+    file := IO_CompressedFile(name, mode);
+    if file = fail then 
+      Error("couldn't open the file ", file, ",");
+      return;
     fi;
-  elif IsFile(arg[1]) then 
-    file:=arg[1];
+  elif IsFile(name) then 
+    file := name;
   else 
     Error("usage: the 1st argument must be a string or a file,");
     return;
   fi;
 
-  if file=fail then 
-    Error("couldn't open the file ", file, ",");
-    return;
-  fi;
-
-  if IsTransformationCollection(arg[2]) 
-    or IsPartialPermCollection(arg[2])
-    or IsBipartitionCollection(arg[2]) then 
-      trans:=[arg[2]];
-  elif IsList(arg[2]) and IsBound(arg[2][1]) 
-   and (IsTransformationCollection(arg[2][1]) 
-    or IsPartialPermCollection(arg[2][1])
-    or IsBipartitionCollection(arg[2][1])) then 
-      trans:=arg[2];
-  else
-    Error("usage: the 2nd argument must be a transformation or partial perm\n",
-    "semigroup or collection, or a list of such semigroups or collections,");
-    return;
-  fi;
-
-  gens:=EmptyPlist(Length(trans));
-
-  for i in [1..Length(trans)] do 
-    if IsTransformationSemigroup(trans[i]) 
-     or IsPartialPermSemigroup(trans[i]) 
-     or IsBipartitionSemigroup(trans[i]) then 
-      gens[i]:=GeneratorsOfSemigroup(trans[i]);
+  for i in [ 1 .. Length(coll) ] do 
+    if IsSemigroup(coll[i]) then 
+      coll[i] := GeneratorsOfSemigroup(coll[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
       # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
       # generators we wrote, so better always use GeneratorsOfSemigroup
-    else
-      gens:=trans;
     fi;
   od;
   
@@ -219,10 +218,10 @@ function(arg)
 
   #####
 
-  if IsTransformationCollection(gens[1]) then 
-    for s in gens do
+  for x in coll do
+    if IsTransformationCollection(x) then 
       line:="t";
-      for f in s do
+      for f in x do
         deg:=String(DegreeOfTransformation(f));
         nrdigits:=Length(deg);
         Append(line, String(nrdigits));
@@ -232,11 +231,9 @@ function(arg)
         od;
       od;
       IO_WriteLine(file, line);
-    od;
-  elif IsPartialPermCollection(gens[1]) then 
-    for s in gens do 
+    elif IsPartialPermCollection(x) then 
       line:="p";
-      for f in s do 
+      for f in x do 
         deg:=String(DegreeOfPartialPerm(f));
         nrdigits:=Length(String(Maximum(
          DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f))));
@@ -247,11 +244,9 @@ function(arg)
         od;
       od;
       IO_WriteLine(file, line);
-    od;
-  elif IsBipartitionCollection(gens[1]) then 
-    for s in gens do 
+    elif IsBipartitionCollection(x) then 
       line:="b";
-      for f in s do 
+      for f in x do 
         deg:=String(2*DegreeOfBipartition(f));
         nrdigits:=Length(deg);
         Append(line, String(nrdigits));
@@ -262,62 +257,13 @@ function(arg)
         od;
       od;
       IO_WriteLine(file, line);
-    od;
-  fi;
+    fi;
+  od;
   
   if IsString(arg[1]) then  
     IO_Close(file);
   fi;
   return true;
-end);
-
-# JDM: this appears to be unused . . .
-
-InstallGlobalFunction(WriteGeneratorsLine, 
-function(f)
-  local append, line, deg, strdeg, nrdigits, func, nr, i;
-  
-  append:=function(str, pt, m)
-    local i, j;
-    i:=String(pt);
-    for j in [1..m-Length(i)] do 
-      Append(str, " ");
-    od;
-    Append(str, i);
-    return str;
-  end;
-
-  if IsTransformation(f) then 
-    line:="t";
-    deg:=DegreeOfTransformation(f);
-    strdeg:=String(deg);
-    nrdigits:=Length(strdeg);
-    func:=POW;
-    nr:=deg;
-  elif IsPartialPerm(f) then 
-    line:="p";
-    deg:=DegreeOfPartialPerm(f);
-    strdeg:=String(deg);
-    nrdigits:=Length(String(Maximum(deg, CodegreeOfPartialPerm(f))));
-    func:=POW;
-    nr:=deg;
-  elif IsBipartition(f) then 
-    line:="b";
-    deg:=DegreeOfBipartition(f);
-    strdeg:=String(deg);
-    nrdigits:=Length(strdeg);
-    func:=function(i, f)
-      return f!.blocks[i];
-    end;
-    nr:=2*deg;
-  fi;
-  
-  Append(line, String(nrdigits));
-  Append(line, strdeg);
-  for i in [1..nr] do 
-    append(line, func(i,f), nrdigits);
-  od;
-  return line;
 end);
 
 #
