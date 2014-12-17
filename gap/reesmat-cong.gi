@@ -732,30 +732,42 @@ InstallMethod(JoinSemigroupCongruences,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
 function(c1, c2)
-  local gens, n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
+  local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
   if Range(c1) <> Range(c2) then
     Error("congruences must be defined over the same semigroup,"); return;
   fi;
   # n is the product of the normal subgroups
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
-  n := Group(gens);
-  # Calculate the union of the column and row relations
-  colBlocks := []; cols := [1..Size(c1!.colLookup)];
-  rowBlocks := []; rows := [1..Size(c1!.rowLookup)];
-  for i in [1..Size(cols)] do
-    if cols[i] = 0 then continue; fi;
-    block := Union(c1!.colBlocks[c1!.colLookup[i]],
-                   c2!.colBlocks[c2!.colLookup[i]]);
-    for j in block do cols[j] := 0; od;
-    Add(colBlocks, block);
+  n := Subgroup(UnderlyingSemigroup(Range(c1)), gens);
+  # Calculate the join of the column and row relations
+  colBlocks := StructuralCopy(c1!.colBlocks);
+  rowBlocks := StructuralCopy(c1!.rowBlocks);
+  for block in c2!.colBlocks do
+    b1 := PositionProperty(colBlocks, cb-> block[1] in cb);
+    for j in [2..Size(block)] do
+      if not block[j] in colBlocks[b1] then
+        # Combine the classes
+        pos := PositionProperty(colBlocks, cb-> block[j] in cb);
+        Append(colBlocks[b1], colBlocks[pos]);
+        Unbind(colBlocks[pos]);
+      fi;
+    od;
+    colBlocks := Compacted(colBlocks);
   od;
-  for u in [1..Size(rows)] do
-    if rows[u] = 0 then continue; fi;
-    block := Union(c1!.rowBlocks[c1!.rowLookup[u]],
-                   c2!.rowBlocks[c2!.rowLookup[u]]);
-    for v in block do rows[v] := 0; od;
-    Add(rowBlocks, block);
+  for block in c2!.rowBlocks do
+    b1 := PositionProperty(rowBlocks, rb-> block[1] in rb);
+    for j in [2..Size(block)] do
+      if not block[j] in rowBlocks[b1] then
+        # Combine the classes
+        pos := PositionProperty(rowBlocks, rb-> block[j] in rb);
+        Append(rowBlocks[b1], rowBlocks[pos]);
+        Unbind(rowBlocks[pos]);
+      fi;
+    od;
+    rowBlocks := Compacted(rowBlocks);
   od;
+  colBlocks := SortedList(List(colBlocks, block-> SortedList(block)));
+  rowBlocks := SortedList(List(rowBlocks, block-> SortedList(block)));
   # Make the congruence and return it
   return RMSCongruenceByLinkedTriple(Range(c1), n, colBlocks, rowBlocks);
 end);
