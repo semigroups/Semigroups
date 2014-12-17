@@ -186,7 +186,6 @@ function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
-
 #
 
 InstallGlobalFunction(SemigroupsMakeDoc, 

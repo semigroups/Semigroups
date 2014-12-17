@@ -58,55 +58,60 @@ end);
 
 InstallGlobalFunction(ReadGenerators, 
 function(arg)
-  local file, i, line;
- 
-  if IsString(arg[1]) then 
-    file:=IO_CompressedFile(arg[1], "r");
-  elif IsFile(arg[1]) then 
-    file:=arg[1];
+  local name, line_nr, file, i, line;
+
+  if Length(arg) = 1 then 
+    name := arg[1];
+    line_nr := 0;
+  elif Length(arg) = 2 then 
+    name := arg[1];
+    line_nr := arg[2];
+  else
+    Error("usage: there should be at most 2 arguments,");
+    return;
+  fi;
+
+  if IsString(name) then 
+    file:=IO_CompressedFile(name, "r");
+    if file=fail then 
+      return fail;
+    fi;
+  elif IsFile(name) then 
+    file:=name;
   else
     Error("usage: the 1st argument must be a string or a file,");
     return;
   fi;
-  
-  if file=fail then 
-    return fail;
-  fi;
-  
-  if Length(arg)=2 then 
-    if IsFile(arg[1]) then 
-      Error("usage: the argument must be a file, or a string, or a string and a", 
-      " positive integer,");
-      return;
-    fi;
-    if IsPosInt(arg[2]) then 
-      i:=0;
-      repeat  
-        i:=i+1; line:=IO_ReadLine(file);
-      until i=arg[2] or line="";
-      if IsString(arg[1]) then 
-        IO_Close(file);
-      fi;
-      if line="" then
-        Error(arg[1], " only has ", i-1, " lines,"); 
-        return;
-      else
-        return ReadGeneratorsLine(Chomp(line));
-      fi;
-    else
-      Error("usage: the 2nd argument must be a positive integer,");
-      return;
-    fi;
-  elif Length(arg)>2 then 
-    Error("usage: there should be at most 2 arguments,");
+
+  if not (IsInt(line_nr) and line_nr >= 0) then 
+    Error("usage: the 2nd argument must be a positive integer,");
     return;
   fi;
-  
-  line:=IO_ReadLines(file);
-  if IsString(arg[1]) then 
-    IO_Close(file);
+    
+  if line_nr <> 0 then 
+    i := 0;
+    repeat  
+      i := i + 1; 
+      line := IO_ReadLine(file);
+    until i = line_nr or line="";
+
+    if IsString(arg[1]) then 
+      IO_Close(file);
+    fi;
+    if line="" then
+      Error("the file only has ", i-1, " lines,"); 
+      return;
+    else
+      return ReadGeneratorsLine(Chomp(line));
+    fi;
+  else 
+    line := IO_ReadLines(file);
+    
+    if IsString(arg[1]) then 
+      IO_Close(file);
+    fi;
+    return List(line, x-> ReadGeneratorsLine(Chomp(x)));
   fi;
-  return List(line, x-> ReadGeneratorsLine(Chomp(x)));
 end);
 
 #
@@ -142,57 +147,6 @@ end);
 
 #
 
-InstallGlobalFunction(GeneratorsWriteFile, 
-function(arg)
-  local mode, file;
-
-  if IsString(arg[1]) then 
-    if IsExistingFile(arg[1]) then 
-      if not IsWritableFile(arg[1]) then 
-        Error(arg[1], " exists and is not a writable file,");
-        return;
-      fi;
-    else
-      if not (IsExistingFile(Concatenation(arg[1], ".gz")) or 
-        IsExistingFile(Concatenation(arg[1], ".xz"))) then 
-        Exec("touch ", arg[1]);
-      fi;
-    fi;
-  else
-    Error("usage: the 1st argument must be a string,");
-    return;
-  fi;
-
-  if Length(arg)=2 and not (IsString(arg[2]) and (arg[2]="a" or arg[2]="w"))
-   then 
-    Error("usage: the 2nd argument must be \"a\" or \"w\",");
-    return;
-  fi;
-
-  if Length(arg)>2 then 
-    Error("usage: there must be at most 2 arguments,");
-    return;
-  fi;
-  
-  if Length(arg)=1 then 
-    mode:="a";
-  else
-    mode:=arg[2];
-  fi;
-
-  file:=SplitString(arg[1], ".");
-  if file[Length(file)] = "gz" then 
-    file:=IO_FilteredFile([["gzip", ["-9q"]]], arg[1], mode);
-  elif file[Length(file)] = "xz" then 
-    file:=IO_FilteredFile([["xz", ["-9q"]]], arg[1], mode);
-  else  
-    file:=IO_File(arg[1], mode);
-  fi;
-  return file;
-end);
-
-#
-
 InstallGlobalFunction(WriteGenerators, 
 function(arg)
   local file, trans, gens, append, gzip, mode, line, deg, nrdigits, blocks, i, writin, s, f;
@@ -204,9 +158,9 @@ function(arg)
 
   if IsString(arg[1]) then
     if IsBound(arg[3]) then 
-      file:=GeneratorsWriteFile(arg[1], arg[3]);
+      file:=IO_CompressedFile(arg[1], arg[3]);
     else 
-      file:=GeneratorsWriteFile(arg[1]);
+      file:=IO_CompressedFile(arg[1], "a");
     fi;
   elif IsFile(arg[1]) then 
     file:=arg[1];
