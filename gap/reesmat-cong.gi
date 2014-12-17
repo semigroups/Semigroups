@@ -1362,80 +1362,105 @@ InstallMethod(AsRMSCongruenceByLinkedTriple,
 "for semigroup congruence by generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local s, g, m, pair, i, u, j, v, i1, base, baseClass, rmsElts, gpElts, n, 
-        colLookup, pass, elm1, elm2, colBlocks, rowLookup, rowBlocks;
+  local pairs, s, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i, 
+        j, normalise, colBlocks, rowBlocks;
+  # Extract some information
+  pairs := GeneratingPairsOfSemigroupCongruence(cong);
   s := Range(cong);
-  # Checks
-  if not (IsReesMatrixSemigroup(s) and IsFinite(s)) then
-    Error("the congruence must be over a finite Rees matrix semigroup");
-    return;
-  fi;
-  if not IsSimpleSemigroup(s) then
-    Error("the congruence must be over a simple semigroup");
-    return;
-  fi;
   g := UnderlyingSemigroup(s);
-  m := Matrix(s);
-  
-  # FIND THE NORMAL SUBGROUP N
-  # N consists of all the x s.t. (1,x,1) is related to (1,id,1)
-  base := ReesMatrixSemigroupElement(s, 1, One(g), 1);
-  baseClass := EquivalenceClassOfElementNC(cong, base);
-  rmsElts := Filtered(Elements(baseClass), elt->(elt[1]=1 and elt[3]=1));
-  gpElts := List(rmsElts, elt->elt[2]);
-  n := Subgroup(g, gpElts);
-  
-  # FIND THE RELATION ON THE SET OF COLUMNS
-  colLookup := [1..Size(m[1])];
-  for i in [1..Size(m[1])] do
-    # If i has already been sorted, continue
-    if colLookup[i] <> i then continue; fi;
-    for j in [i+1..Size(m[1])] do
-      # If j has already been sorted, continue
-      if colLookup[j] < i then continue; fi;
-      # The condition must test true for ALL rows
-      pass := true;
-      for u in [1..Size(m)] do
-        elm1 := ReesMatrixSemigroupElement(s, i, m[u][i]^-1, u);
-        elm2 := ReesMatrixSemigroupElement(s, j, m[u][j]^-1, u);
-        if not elm1 in EquivalenceClassOfElementNC(cong, elm2) then
-          pass := false; break;
-        fi;
-      od;
-      if pass then
-        colLookup[j] := i;
-      fi;
+  mat := Matrix(s);
+
+  # Lookup tables for the column and row equivalences
+  colLookup := [1..Size(mat[1])];
+  rowLookup := [1..Size(mat)];
+
+  # Normal subgroup
+  n := Subgroup(g, []);
+
+  # Functions for union-find
+  find := function(table, n)
+    while table[n]<>n do
+      n:=table[n];
+    od;
+    return n;
+  end;
+
+  union := function(table, x, y)
+    x := find(table, x);
+    y := find(table, y);
+    if x < y then
+      table[y] := x;
+    elif y < x then
+      table[x] := y;
+    fi;
+  end;
+
+  for pair in pairs do
+    # If this pair adds no information, ignore it
+    if pair[1] = pair[2] then
+      continue;
+    fi;
+
+    # Associate the columns and rows
+    union(colLookup, pair[1][1], pair[2][1]);
+    union(rowLookup, pair[1][3], pair[2][3]);
+
+    # Associate group entries in the normal subgroup
+    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2])^-1);
+
+    # Ensure linkedness
+    for v in [2..Size(mat)] do
+      n := ClosureGroup( n,
+                   mat[1][pair[1][1]]
+                   * mat[v][pair[1][1]] ^-1
+                   * mat[v][pair[2][1]]
+                   * mat[1][pair[2][1]] ^-1 );
+    od;
+    for j in [2..Size(mat[1])] do
+      n := ClosureGroup( n,
+                   mat[pair[1][3]][1]
+                   * mat[pair[2][3]][1] ^-1
+                   * mat[pair[2][3]][j]
+                   * mat[pair[1][3]][j] ^-1 );
     od;
   od;
-  colBlocks := List([1..Size(colLookup)], i-> Positions(colLookup, i));
-  colBlocks := Filtered(colBlocks, block-> not IsEmpty(block));
-  
-  # FIND THE RELATION ON THE SET OF ROWS
-  rowLookup := [1..Size(m)];
-  for u in [1..Size(m)] do
-    # If u has already been sorted, continue
-    if rowLookup[u] <> u then continue; fi;
-    for v in [u+1..Size(m)] do
-      # If v has already been sorted, continue
-      if rowLookup[v] <> v then continue; fi;
-      # The condition must test true for ALL columns
-      pass := true;
-      for i in [1..Size(m[1])] do
-        elm1 := ReesMatrixSemigroupElement(s, i, m[u][i]^-1, u);
-        elm2 := ReesMatrixSemigroupElement(s, i, m[v][i]^-1, v);
-        if not elm1 in EquivalenceClassOfElementNC(cong, elm2) then
-          pass := false; break;
-        fi;
-      od;
-      if pass then
-        rowLookup[v] := u;
+
+  # Normalise lookup tables
+  normalise := function(table)
+    local ht, next, newtab, i, ii;
+    ht := HTCreate(1);
+    next := 1;
+    newtab := [];
+    for i in [1..Size(table)] do
+      ii := find(table, i);
+      newtab[i] := HTValue(ht, ii);
+      if newtab[i] = fail then
+        newtab[i] := next;
+        HTAdd(ht, ii, next);
+        next := next + 1;
       fi;
     od;
+    return newtab;
+  end;
+  colLookup := normalise(colLookup);
+  rowLookup := normalise(rowLookup);
+
+  # Make blocks
+  colBlocks := List([1..Maximum(colLookup)], x->[]);
+  rowBlocks := List([1..Maximum(rowLookup)], x->[]);
+  for i in [1..Size(colLookup)] do
+    Add(colBlocks[colLookup[i]], i);
   od;
-  rowBlocks := List([1..Size(m[1])], u->Positions(rowLookup, u));
-  rowBlocks := Filtered(rowBlocks, block-> not IsEmpty(block));
+  for u in [1..Size(rowLookup)] do
+    Add(rowBlocks[rowLookup[u]], u);
+  od;
   
-  return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
+  # Make n normal
+  n := NormalClosure(g,n);
+  
+  cong := RMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
+  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
+  return cong;
 end);
 
 #
