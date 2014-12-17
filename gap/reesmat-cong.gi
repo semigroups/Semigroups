@@ -1528,21 +1528,23 @@ function(cong)
   
   # Normalise lookup tables
   normalise := function(table)
-    local ht, next, i, ii;
+    local ht, next, newtab, i, ii;
     ht := HTCreate(1);
     next := 1;
+    newtab := [];
     for i in [1..Size(table)] do
       ii := find(table, i);
-      table[i] := HTValue(ht, ii);
-      if table[i] = fail then
-        table[i] := next;
+      newtab[i] := HTValue(ht, ii);
+      if newtab[i] = fail then
+        newtab[i] := next;
         HTAdd(ht, ii, next);
         next := next + 1;
       fi;
     od;
+    return newtab;
   end;
-  normalise(colLookup);
-  normalise(rowLookup);
+  colLookup := normalise(colLookup);
+  rowLookup := normalise(rowLookup);
   
   # Make blocks
   colBlocks := List([1..Maximum(colLookup)], x->[]);

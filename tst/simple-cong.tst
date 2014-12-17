@@ -22,7 +22,7 @@ gap> s := Semigroup( [Transformation( [ 2, 1, 1, 2, 1 ] ),
 # Find all its congruences
 gap> congs := CongruencesOfSemigroup(s);;
 gap> Size(congs);
-35
+34
 
 # Construct one congruence by generating pairs
 gap> cong := SemigroupCongruence(s,
@@ -32,9 +32,9 @@ gap> cong := SemigroupCongruence(s,
 >     Transformation( [ 1, 2, 2, 1, 2 ] ) ] ] );
 <semigroup congruence over <simple transformation semigroup 
  on 5 pts with 4 generators> with linked triple (2,2,2)>
-gap> cong = congs[34];
+gap> cong = congs[33];
 true
-gap> cong = congs[12];
+gap> cong = congs[11];
 false
 
 # Try some methods
@@ -92,6 +92,8 @@ gap> cong := SemigroupCongruence(s, pairs);
 <semigroup congruence over <simple transformation semigroup 
  on 5 pts with 4 generators> with linked triple (1,2,2)>
 gap> congs[4] = cong;
+true
+gap> ForAll(congs, cong-> cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
 true
 
 #
