@@ -317,7 +317,7 @@ function(s, n, colBlocks, rowBlocks)
   # Check axiom (L2) from Howie p.86, then call NC function
   # Go through the column blocks
   for block in colBlocks do
-    # Check q-condition for all pairs of rows in this block (L2)
+    # Check q-condition for all pairs of columns in this block (L2)
     for bi in [1..Size(block)] do
       for bj in [bi+1..Size(block)] do
         i := block[bi];
@@ -336,9 +336,9 @@ function(s, n, colBlocks, rowBlocks)
   
   # Go through the row blocks
   for block in rowBlocks do
-    # Check q-condition for all pairs of columns in this block (L2)
+    # Check q-condition for all pairs of rows in this block (L2)
     for bu in [1..Size(block)] do
-      for bv in [bi+1..Size(block)] do
+      for bv in [bu+1..Size(block)] do
         u := block[bu];
         v := block[bv];
         # Check all pairs of columns (i,j)
@@ -380,7 +380,7 @@ function(s, n, colBlocks, rowBlocks)
         fi;
       od;
     od;
-    # Check q-condition for all pairs of rows in this block (L2)
+    # Check q-condition for all pairs of columns in this block (L2)
     for bi in [1..Size(block)] do
       for bj in [bi+1..Size(block)] do
         i := block[bi];
@@ -409,9 +409,9 @@ function(s, n, colBlocks, rowBlocks)
         fi;
       od;
     od;
-    # Check q-condition for all pairs of columns in this block (L2)
+    # Check q-condition for all pairs of rows in this block (L2)
     for bu in [1..Size(block)] do
-      for bv in [bi+1..Size(block)] do
+      for bv in [bu+1..Size(block)] do
         u := block[bu];
         v := block[bv];
         # Check all pairs of columns (i,j)
