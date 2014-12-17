@@ -1,4 +1,4 @@
-#############################################################################
+#%T##########################################################################
 ##
 #W  smallerdegree.tst
 ##  Test file for St Andrews Pure Maths Summer School 2012
@@ -11,7 +11,8 @@ gap> LoadPackage("semigroups", false);;
 # 
 gap> SemigroupsStartTest();
 
-# General Vagner Preston Example
+#T# VagnerPresetonRepresentation
+# A general Vagner-Preston Example
 gap> f1:=PartialPermNC([1,2,4,3]);;
 gap> f2:=PartialPermNC([1]);;
 gap> f3:=PartialPermNC([0,2]);;
@@ -62,6 +63,7 @@ true
 gap> V:=Range(VagnerPrestonRepresentation(B));
 <inverse partial perm semigroup on 664 pts with 6 generators>
 
+#T# SmallerDegreePartialPermRepresentation
 # Example of higher returned degree spotted by Rhiannon
 gap> f1:=PartialPermNC([2,1,4,5,3]);;
 gap> f2:=PartialPermNC([2,1]);;
@@ -156,21 +158,7 @@ MappingByFunction( <inverse partial perm monoid on 122 pts
  with 240 generators>, <inverse partial perm semigroup on 12 pts
  with 240 generators>, function( x ) ... end, function( x ) ... end )
 
-#
-gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ], [ 1, 5, 3, 8, 4 ]);;
-gap> f2:=PartialPermNC([ 1, 2, 3, 4, 5, 6 ] ,[ 6, 7, 1, 4, 3, 2 ]);;
-gap> f3:=PartialPermNC([ 1, 2, 3, 4, 5, 8 ] ,[ 5, 6, 3, 8, 4, 7 ]);;
-gap> f4:=PartialPermNC([ 1, 3, 4, 5, 6, 8 ] ,[ 8, 7, 5, 1, 3, 4 ]);;
-gap> f5:=PartialPermNC([ 1, 3, 4, 5, 7, 8 ] ,[ 6, 5, 7, 1, 4, 2 ]);;
-gap> s:=InverseSemigroup(f1,f2,f3,f4,f5);;
-gap> t:=Elements(s)[51624];
-[7,1][8,6](4,5)
-gap> Minorants(s,t);
-[ <empty partial perm>, [4,5], [5,4], (4,5), [7,1], [5,4][7,1], [4,5][7,1], 
-  [7,1](4,5), [8,6], [7,1][8,6], [5,4][8,6], [5,4][7,1][8,6], [4,5][8,6], 
-  [4,5][7,1][8,6], [8,6](4,5) ]
-
-#
+#E#
 gap> SemigroupsStopTest();
 
 #
