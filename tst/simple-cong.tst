@@ -76,7 +76,9 @@ gap> Size(classx);
 4
 
 # Join and meet congruences
-gap> JoinSemigroupCongruences(congs[6],congs[11]);
+gap> JoinSemigroupCongruences(congs[6],congs[11]) = congs[11];
+true
+gap> JoinSemigroupCongruences(congs[18],congs[11]);
 
 #
 gap> SemigroupsStopTest();

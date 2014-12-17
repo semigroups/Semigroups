@@ -211,7 +211,7 @@ function(s)
     for colBlocks in colBlocksList do
       for rowBlocks in rowBlocksList do
         if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-          Add(congs, RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
+          Add(congs, RMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks));
         fi;
       od;
     od;
@@ -291,7 +291,7 @@ function(s)
     for colBlocks in colBlocksList do
       for rowBlocks in rowBlocksList do
         if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-          Add(congs, RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
+          Add(congs, RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks));
         fi;
       od;
     od;
@@ -757,7 +757,7 @@ function(c1, c2)
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
-  return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
+  return RMSCongruenceByLinkedTriple(Range(c1), n, colBlocks, rowBlocks);
 end);
 
 #
@@ -791,7 +791,7 @@ function(c1, c2)
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
-  return RZMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
+  return RZMSCongruenceByLinkedTriple(Range(c1), n, colBlocks, rowBlocks);
 end);
 
 #
