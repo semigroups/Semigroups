@@ -76,9 +76,13 @@ gap> Size(classx);
 4
 
 # Join and meet congruences
-gap> JoinSemigroupCongruences(congs[6],congs[11]) = congs[11];
+gap> JoinSemigroupCongruences(congs[6],congs[11]) = congs[12];
 true
-gap> JoinSemigroupCongruences(congs[18],congs[11]) = congs[23];
+gap> JoinSemigroupCongruences(congs[18],congs[11]) = congs[22];
+true
+gap> MeetSemigroupCongruences(congs[15],congs[1]) = congs[1];
+true
+gap> MeetSemigroupCongruences(congs[34],congs[34]) = congs[34];
 true
 
 # Quotients
