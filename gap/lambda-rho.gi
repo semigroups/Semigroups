@@ -478,7 +478,7 @@ function(o, m, bound)
   one := RhoIdentity(s)(rank);;
   
   if rank=0 then
-      o!.schutzstab[m]:=false;
+    o!.schutzstab[m]:=false;
     if IsPerm(one) then 
       o!.schutz[m]:=Group(one);
     else
@@ -497,14 +497,11 @@ function(o, m, bound)
         g:=ClosureGroup(g, 
          lambdaperm(rep, mults[orbitgraph[i][j]][2]*gens[j]*mults[i][1]*rep));
         if Size(g)>=bound then 
+          stop := true;
           break;
         fi;
       fi;
     od;
-    if Size(g)>=bound then 
-        stop := true;
-        break;
-    fi;
     if stop then
         break;
     fi;
