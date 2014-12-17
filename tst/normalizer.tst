@@ -174,7 +174,4 @@ gap> Normalizer(S, rec(lambdastab:=false, random:=true));
 Group(())
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: normalizer.tst", 0);
+gap> STOP_TEST( "Semigroups package: normalizer.tst");

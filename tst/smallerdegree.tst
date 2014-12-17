@@ -159,7 +159,4 @@ MappingByFunction( <inverse partial perm monoid on 122 pts
  with 240 generators>, function( x ) ... end, function( x ) ... end )
 
 #E#
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST("Semigroups package: smallerdegree.tst", 10000);
+gap> STOP_TEST("Semigroups package: smallerdegree.tst");

@@ -616,7 +616,4 @@ gap> S = max[1];
 false
 
 #E#
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST("Semigroups package: maximal.tst", 10000);
+gap> STOP_TEST("Semigroups package: maximal.tst");

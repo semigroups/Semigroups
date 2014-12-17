@@ -653,5 +653,4 @@ gap> EvaluateWord(Generators(U[4]), last);
 
 #
 #
-gap> SemigroupsStopTest();
-gap> STOP_TEST( "Semigroups package: reesmat.tst", 10000);
+gap> STOP_TEST( "Semigroups package: reesmat.tst");

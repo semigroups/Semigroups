@@ -2907,7 +2907,4 @@ gap> ForAll(S, x-> (x^iso)^inv=x);
 true
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: bipartition.tst", 0);
+gap> STOP_TEST( "Semigroups package: bipartition.tst");
