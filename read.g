@@ -123,6 +123,7 @@ ReadPackage("semigroups/gap/ideals.gi");
 ReadPackage("semigroups/gap/freeinverse.gi");
 
 ReadPackage("semigroups/gap/utils.gi");
+ReadPackage("semigroups/gap/io.gi");
 
 ReadPackage("semigroups/gap/display.gi");
 
