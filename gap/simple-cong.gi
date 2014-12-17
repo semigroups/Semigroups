@@ -171,7 +171,7 @@ end);
 
 #
 
-InstallMethod(JoinSemigroupCongruences,
+InstallMethod(JoinMagmaCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CONG_SIMPLE, SEMIGROUPS_CONG_SIMPLE],
 function(cong1, cong2)
@@ -186,7 +186,7 @@ end);
 
 #
 
-InstallMethod(MeetSemigroupCongruences,
+InstallMethod(MeetMagmaCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CONG_SIMPLE, SEMIGROUPS_CONG_SIMPLE],
 function(cong1, cong2)
@@ -195,7 +195,7 @@ function(cong1, cong2)
           "<cong1> and <cong2> must be over the same semigroup,");
     return;
   fi;
-  return SEMIGROUPS_SIMPLECONG_FROM_RMSCONG(Range(cong1,
+  return SEMIGROUPS_SIMPLECONG_FROM_RMSCONG(Range(cong1),
                  MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong));
 end);
 

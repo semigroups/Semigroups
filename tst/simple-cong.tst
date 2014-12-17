@@ -73,9 +73,10 @@ true
 gap> x * z in classz * classx;
 false
 gap> Size(classx);
+4
 
 # Join and meet congruences
-JoinSemigroupCongruences( , );
+gap> JoinSemigroupCongruences(congs[6],congs[11]);
 
 #
 gap> SemigroupsStopTest();
