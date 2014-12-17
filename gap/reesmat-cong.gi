@@ -154,9 +154,9 @@ InstallMethod(ViewObj,
 "for Rees zero-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
 function(cong)
-  Print("<semigroup congruence over ",
-        ViewString(Range(cong)),
-        " with linked triple (",
+  Print("<semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with linked triple (",
         StructureDescription(cong!.n:short), ",",
         Size(cong!.colBlocks), ",",
         Size(cong!.rowBlocks),")>");
@@ -211,7 +211,7 @@ function(s)
     for colBlocks in colBlocksList do
       for rowBlocks in rowBlocksList do
         if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-          Add(congs, RMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks));
+          Add(congs, RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
         fi;
       od;
     od;
@@ -291,7 +291,7 @@ function(s)
     for colBlocks in colBlocksList do
       for rowBlocks in rowBlocksList do
         if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-          Add(congs, RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks));
+          Add(congs, RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
         fi;
       od;
     od;
@@ -769,7 +769,7 @@ function(c1, c2)
   colBlocks := SortedList(List(colBlocks, block-> SortedList(block)));
   rowBlocks := SortedList(List(rowBlocks, block-> SortedList(block)));
   # Make the congruence and return it
-  return RMSCongruenceByLinkedTriple(Range(c1), n, colBlocks, rowBlocks);
+  return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
 end);
 
 #
