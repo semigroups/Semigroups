@@ -149,6 +149,9 @@ function(s)
   if not (IsFinite(s) and (IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s))) then
     TryNextMethod();
   fi;
+  if IsReesMatrixSemigroup(s) or IsReesZeroMatrixSemigroup(s) then
+    return CongruencesOfSemigroup(s);
+  fi;
   congs := ShallowCopy(CongruencesOfSemigroup(Range(IsomorphismReesMatrixSemigroup(s))));
   for i in [1..Length(congs)] do
     if IsUniversalSemigroupCongruence(congs[i]) then
