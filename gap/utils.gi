@@ -85,78 +85,6 @@ function(arg)
   Kill(farm);
   return out;
 end);
-  
-
-# <path> to the folder containing the timings, <vers> the version number to
-# check against.
-
-BindGlobal("SemigroupsCompareTestTimings", 
-function(path, vers)
-  local dir, files, suffix, tstdir, tstfiles, split, tstfile, file;
-  
-  vers:=Concatenation("-", vers, ".");
-  if not path[Length(path)]='/' then 
-    Add(path, '/');
-  fi;
-  
-  dir:=Directory(path);
-  files:=DirectoryContents(dir);
-  suffix:=Concatenation(vers, "tst.timings"); 
-
-  tstdir:=DirectoriesPackageLibrary("semigroups", "tst" )[1];
-  tstfiles:=DirectoryContents(tstdir);
-
-  for file in files do
-    split:=SplitString(file, '.');
-    if split[Length(split)]="timings" then 
-      if file{[Length(file)-Length(suffix)+1..Length(file)]}=suffix then 
-        tstfile:=Concatenation(SplitString(split[1], '-')[1], ".tst");
-        if not tstfile in tstfiles then 
-          Print("can't find ", 
-           Concatenation(SplitString(file[1], '-')[1], ".tst"), 
-           "in semigroups/tst for comparison!\n");
-        else
-          Print("\n");
-          Print(Test(Filename(tstdir, tstfile), rec(compareTimings:=file),
-          "\n"));
-        fi;
-      fi;
-    fi;
-  od;
-  return true;
-end);
-
-#
-
-BindGlobal("SemigroupsCreateTestTimings", 
-function(path, vers)
-  local dir, files, file, out;
-  
-  vers:=Concatenation("-", vers, ".");
-  if not path[Length(path)]='/' then 
-    Add(path, '/');
-  fi;
-  
-  dir:=DirectoriesPackageLibrary( "semigroups", "tst" )[1];
-  files:=DirectoryContents(dir);
-  
-  for file in files do
-    file:=SplitString(file, '.');
-    if file[Length(file)]="tst" then 
-      out:=Concatenation(path, JoinStringsWithSeparator(file, vers),
-      ".timings");
-      file:=JoinStringsWithSeparator(file, ".");
-      Print("checking ", file ,"...\n");
-      if not Test(Filename(dir, file)) then 
-        Print(file, " returns differences in output, exiting...");
-        return;
-      fi;
-      Print("writing ", file, " ...\n");
-      Test(Filename(dir, file), rec(writeTimings:=out));
-    fi;
-  od;
-  return true;
-end);
 
 #
 
@@ -169,6 +97,7 @@ function()
 
   record:=SemigroupsTestRec;  
   
+  # handle info levels etc
   record.InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
   record.InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
   
@@ -190,14 +119,26 @@ function()
   SetUserPreference("NotationForPartialPerms", "component");;
   SetUserPreference("NotationForTransformations", "input");;
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
-  return; 
+ 
+  # timing
+  record.timeofday := IO_gettimeofday();
+
+  record.STOP_TEST := STOP_TEST;
+
+  MakeReadWriteGlobal("STOP_TEST");
+  UnbindGlobal("STOP_TEST");
+  BindGlobal("STOP_TEST", SemigroupsStopTest);
+
+  return;
 end);
 
 #
 
 InstallGlobalFunction(SemigroupsStopTest, 
-function()
-  local record;
+function(file)
+  local timeofday, record, elapsed, str;
+  
+  # handle info levels 
 
   record:=SemigroupsTestRec;  
   
@@ -214,6 +155,31 @@ function()
    record.NotationForTransformations);
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
    record.FreeInverseSemigroupElementDisplay);
+  
+  # timing
+  timeofday := IO_gettimeofday();
+ 
+  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000 
+   + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
+
+  str := "elapsed time: ";
+  Append(str, String(elapsed));
+  Append(str, "ms\n");
+
+  if not IsBound( GAPInfo.TestData.START_TIME )  then
+      Error( "`STOP_TEST' command without `START_TEST' command for `", 
+       file, "'" );
+  fi;
+  Print( GAPInfo.TestData.START_NAME, "\n" );
+  
+  SetAssertionLevel( GAPInfo.TestData.AssertionLevel );
+  Unbind( GAPInfo.TestData.AssertionLevel );
+  Unbind( GAPInfo.TestData.START_TIME );
+  Unbind( GAPInfo.TestData.START_NAME );
+  Print(str);
+  MakeReadWriteGlobal("STOP_TEST");
+  UnbindGlobal("STOP_TEST");
+  BindGlobal("STOP_TEST", record.STOP_TEST);
   return;
 end);
 

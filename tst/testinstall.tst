@@ -788,5 +788,4 @@ gap> CyclesOfPartialPerm(x);
 [ [ 3, 4, 2, 1 ], [ 5 ] ]
 
 #
-gap> SemigroupsStopTest();
-gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
+gap> STOP_TEST( "Semigroups package: testinstall.tst");
