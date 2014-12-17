@@ -155,7 +155,7 @@ function(arg)
   if Length(arg) = 2 then 
     name := arg[1];
     coll := arg[2];
-    mode := "a";
+    mode := "w";
   elif Length(arg) = 3 then 
     name := arg[1];
     coll := arg[2];
@@ -184,7 +184,7 @@ function(arg)
   if IsString(name) then
     file := IO_CompressedFile(name, mode);
     if file = fail then 
-      Error("couldn't open the file ", file, ",");
+      Error("couldn't open the file ", name, ",");
       return;
     fi;
   elif IsFile(name) then 
