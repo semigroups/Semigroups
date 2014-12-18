@@ -14,10 +14,7 @@ gap> START_TEST("Semigroups package: semigroups.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+gap> SemigroupsStartTest();
 
 #
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
@@ -222,12 +219,6 @@ gap> Size(Range(iso));
 24
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
-gap> Unbind(s);; Unbind(gens);;
-
-#
 gap> S := FreeInverseSemigroup(3);
 <free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> Size(S);
@@ -248,4 +239,7 @@ gap> x * x^-1 = y * y^-1;
 false
 
 #
-gap> STOP_TEST( "Semigroups package: semigroups.tst", 10000);
+gap> Unbind(s);; Unbind(gens);;
+
+#
+gap> STOP_TEST( "Semigroups package: semigroups.tst");

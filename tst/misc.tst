@@ -4893,8 +4893,5 @@ gap> Number(HClassReps(s), x-> x in r);
 20
 
 #
-gap> SemigroupsStopTest();
-
-#
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(l); Unbind(iter);
-gap> STOP_TEST( "Semigroups package: misc.tst", 0);
+gap> STOP_TEST( "Semigroups package: misc.tst");

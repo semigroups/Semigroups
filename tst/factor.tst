@@ -140,7 +140,4 @@ gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
 true
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST("Semigroups package: factor.tst", 10000);
+gap> STOP_TEST("Semigroups package: factor.tst");

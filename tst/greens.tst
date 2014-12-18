@@ -1818,5 +1818,4 @@ gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(R); Unbind(x); Unbind(i);;
 
 #
-gap> SemigroupsStopTest();
-gap> STOP_TEST( "Semigroups package: greens.tst", 10000);
+gap> STOP_TEST( "Semigroups package: greens.tst");

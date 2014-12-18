@@ -2345,5 +2345,4 @@ gap> IsZeroSemigroup(s);
 false
 
 #
-gap> SemigroupsStopTest();
-gap> STOP_TEST("Semigroups package: examples.tst", 0);
+gap> STOP_TEST("Semigroups package: examples.tst");

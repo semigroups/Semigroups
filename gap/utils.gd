@@ -19,15 +19,5 @@ DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestManualExamples");
 DeclareGlobalFunction("SemigroupsManualExamples");
 
-DeclareGlobalFunction("GeneratorsReadFile");
-DeclareGlobalFunction("ReadGeneratorsLine");
-DeclareGlobalFunction("ReadGenerators");
-DeclareGlobalFunction("GeneratorsWriteFile");
-DeclareGlobalFunction("WriteGeneratorsLine");
-DeclareGlobalFunction("WriteGenerators");
-DeclareGlobalFunction("IteratorFromGeneratorsFile");
-
-DeclareOperation("ShortStringRep", [IsTransformation]);
-
 BindGlobal("SemigroupsOmitFromTestManualExamples", []);
 

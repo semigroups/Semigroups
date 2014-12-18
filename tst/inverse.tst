@@ -1016,7 +1016,4 @@ gap> Size(s);
 686
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST("Semigroups package: inverse.tst", 10000);
+gap> STOP_TEST("Semigroups package: inverse.tst");

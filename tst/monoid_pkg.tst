@@ -1491,7 +1491,4 @@ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> Unbind(semis); Unbind(S); Unbind(m);
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: monoid_pkg.tst", 10000);
+gap> STOP_TEST( "Semigroups package: monoid_pkg.tst");

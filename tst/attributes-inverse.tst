@@ -457,7 +457,4 @@ gap> NaturalLeqInverseSemigroup(g, f2);
 false
 
 #E#
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST("Semigroups package: attributes-inverse.tst", 10000);
+gap> STOP_TEST("Semigroups package: attributes-inverse.tst");
