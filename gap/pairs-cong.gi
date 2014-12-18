@@ -170,6 +170,27 @@ end);
 
 #
 
+InstallMethod(EquivalenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  local classes, next, tab, elms, i;
+  Info(InfoWarning,1,"Running EquivalenceClasses");
+  classes := [];
+  next := 1;
+  tab := AsLookupTable(cong);
+  elms := Elements(Range(cong));
+  for i in [1..Size(tab)] do
+    if tab[i] = next then
+      classes[next] := EquivalenceClassOfElementNC(cong, elms[i]);
+      next := next + 1;
+    fi;
+  od;
+  return classes;
+end);
+
+#
+
 InstallMethod(\in,
 "for an associative element and a congruence class",
 [IsAssociativeElement, IsCongruenceClass],
@@ -224,6 +245,15 @@ function(class1, class2)
   fi;
   return CongruenceClassOfElement(EquivalenceClassRelation(class1),
                  Representative(class1) * Representative(class2));
+end);
+
+#
+
+InstallMethod(NrCongruenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  return Maximum(AsLookupTable(cong));
 end);
 
 #
