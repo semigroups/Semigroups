@@ -328,3 +328,12 @@ function(cong)
 end);
 
 #
+
+InstallMethod(CanonicalRepresentative,
+"for a (0-)simple semigroup congruence class",
+[SEMIGROUPS_CONGCLASS_SIMPLE],
+function(class)
+  return CanonicalRepresentative(class!.rmsclass)^class!.iso;
+end);
+
+#
