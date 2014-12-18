@@ -623,7 +623,7 @@ true
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), [Transformation([1,2,2,2])]);
 <regular transformation semigroup ideal on 4 pts with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<semigroup congruence>
+<semigroup congruence over <full transformation semigroup on 4 pts>>
 gap> hom := HomomorphismQuotientSemigroup(cong);
 MappingByFunction( <full transformation semigroup on 4 pts>, <quotient of Mono\
 id( [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), 
