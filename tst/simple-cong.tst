@@ -87,8 +87,6 @@ true
 
 # Quotients
 gap> q := s / congs[13];;
-gap> Size(q) = NrCongruenceClasses(congs[13]);
-true
 
 # Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(congs[4]);;
