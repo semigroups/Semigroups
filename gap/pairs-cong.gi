@@ -19,7 +19,7 @@ end);
 
 InstallMethod(\in,
 "for dense list and semigroup congruence",
-[IsDenseList, IsSemigroupCongruence],
+[IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
   local s, elms, p1, p2, table, find;
   # Input checks
@@ -197,7 +197,6 @@ InstallMethod(\=,
 "for two congruence classes",
 [IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
-  Info(InfoWarning,1,"=");
   return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2) and
          [Representative(class1), Representative(class2)]
          in EquivalenceClassRelation(class1);
@@ -236,9 +235,11 @@ InstallMethod(ViewObj,
 function(cong)
   Print("<semigroup congruence over ");
   ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfSemigroupCongruence(cong)),
-        " generating pairs>");
+  if HasGeneratingPairsOfMagmaCongruence(cong) then
+    Print(" with ", Size(GeneratingPairsOfSemigroupCongruence(cong)),
+          " generating pairs");
+  fi;
+  Print(">");
 end);
 
 #
