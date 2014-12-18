@@ -147,6 +147,20 @@ end);
 
 #
 
+InstallMethod(EquivalenceClassOfElement,
+"for inverse semigroup congruence and associative element",
+[SEMIGROUPS_CONG_INVERSE, IsAssociativeElement],
+function(cong, elm)
+  if not elm in Range(cong) then
+    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
+          "<elm> must be in the semigroup of <cong>");
+    return;
+  fi;
+  return EquivalenceClassOfElementNC(cong, elm);
+end);
+
+#
+
 InstallMethod(EquivalenceClassOfElementNC,
 "for inverse semigroup congruence and associative element",
 [SEMIGROUPS_CONG_INVERSE, IsAssociativeElement],
@@ -200,6 +214,15 @@ InstallMethod(AsSSortedList,
 [SEMIGROUPS_CONGCLASS_INVERSE],
 function(class)
   return SSortedList(ImagesElm(ParentAttr(class), class!.rep));
+end);
+
+#
+
+InstallMethod(Size,
+"for inverse semigroup congruence class",
+[SEMIGROUPS_CONGCLASS_INVERSE],
+function(class)
+  return Size(Elements(class));
 end);
 
 #
@@ -264,8 +287,11 @@ end);
 
 InstallGlobalFunction(INVERSECONG_FROM_PAIRS,
 function(s, pairs)
-  return AsInverseSemigroupCongruenceByCongruencePair(
-                SemigroupCongruenceByGeneratingPairs(s, pairs) );
+  local cong;
+  cong := AsInverseSemigroupCongruenceByCongruencePair(
+                  SemigroupCongruenceByGeneratingPairs(s, pairs) );
+  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
+  return cong;
 end);
 
 #
