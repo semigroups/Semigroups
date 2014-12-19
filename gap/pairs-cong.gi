@@ -30,6 +30,9 @@ function(pair, cong)
   if not (pair[1] in s and pair[2] in s) then
     Error("Elements of <pair> must be in range of <cong>,"); return;
   fi;
+  if not (HasIsFinite(s) and IsFinite(s)) then
+    TryNextMethod();
+  fi;
   
   elms := Elements(s);
   p1 := Position(elms, pair[1]);
@@ -60,6 +63,11 @@ InstallMethod(AsLookupTable,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
+  if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
+    Error("Semigroups: AsLookupTable: usage,\n",
+          "<cong> must be a finite semigroup");
+    return;
+  fi;
   Enumerate(cong, x->false);
   return AsLookupTable(cong);
 end);
@@ -175,6 +183,9 @@ InstallMethod(EquivalenceClasses,
 [IsSemigroupCongruence],
 function(cong)
   local classes, next, tab, elms, i;
+  if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
+    TryNextMethod();
+  fi;
   classes := [];
   next := 1;
   tab := AsLookupTable(cong);
@@ -191,8 +202,8 @@ end);
 #
 
 InstallMethod(\in,
-"for an associative element and a congruence class",
-[IsAssociativeElement, IsCongruenceClass],
+"for an associative element and a finite congruence class",
+[IsAssociativeElement, IsCongruenceClass and IsFinite],
 function(elm, class)
   return [elm, Representative(class)] in EquivalenceClassRelation(class);
 end);
@@ -200,8 +211,8 @@ end);
 #
 
 InstallMethod(Size,
-"for a congruence class",
-[IsCongruenceClass],
+"for a finite congruence class",
+[IsCongruenceClass and IsFinite],
 function(class)
   local p, tab;
   p := Position(Elements(Parent(class)), Representative(class));
@@ -213,7 +224,7 @@ end);
 
 InstallMethod(\=,
 "for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
+[IsCongruenceClass and IsFinite, IsCongruenceClass and IsFinite],
 function(class1, class2)
   return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2) and
          [Representative(class1), Representative(class2)]
@@ -224,7 +235,7 @@ end);
 
 InstallMethod(\=,
 "for two semigroup congruences",
-[IsSemigroupCongruence, IsSemigroupCongruence],
+[IsSemigroupCongruence and IsFinite, IsSemigroupCongruence and IsFinite],
 function(cong1, cong2)
   return Range(cong1) = Range(cong2) and
          AsLookupTable(cong1) = AsLookupTable(cong2);
@@ -248,7 +259,7 @@ end);
 
 InstallMethod(NrCongruenceClasses,
 "for a semigroup congruence",
-[IsSemigroupCongruence],
+[IsSemigroupCongruence and IsFinite],
 function(cong)
   return Maximum(AsLookupTable(cong));
 end);
