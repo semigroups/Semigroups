@@ -175,7 +175,6 @@ InstallMethod(EquivalenceClasses,
 [IsSemigroupCongruence],
 function(cong)
   local classes, next, tab, elms, i;
-  Info(InfoWarning,1,"Running EquivalenceClasses");
   classes := [];
   next := 1;
   tab := AsLookupTable(cong);
@@ -195,7 +194,6 @@ InstallMethod(\in,
 "for an associative element and a congruence class",
 [IsAssociativeElement, IsCongruenceClass],
 function(elm, class)
-  Info(InfoWarning,1,"in");
   return [elm, Representative(class)] in EquivalenceClassRelation(class);
 end);
 
@@ -206,7 +204,6 @@ InstallMethod(Size,
 [IsCongruenceClass],
 function(class)
   local p, tab;
-  Info(InfoWarning,1,"Size");
   p := Position(Elements(Parent(class)), Representative(class));
   tab := AsLookupTable(EquivalenceClassRelation(class));
   return Number(tab, n-> n = tab[p]);
