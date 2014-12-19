@@ -7,6 +7,11 @@
   Support for congruences in &Semigroups; is currently rather limited but
   there are plans to improve this in the future. <P/>
 
+  <Section><Heading>Creating congruences</Heading>
+
+    <#Include Label="SemigroupCongruence">
+
+  </Section>
   <Section><Heading>Congruence classes</Heading>
 
     <#Include Label="CongruenceClassOfElement">

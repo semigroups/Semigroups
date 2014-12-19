@@ -8,14 +8,47 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="SemigroupCongruence">
+  <ManSection>
+    <Oper Name="SemigroupCongruence" Arg="S, pairs"/>
+    <Returns>A semigroup congruence.</Returns>
+    <Description>
+      This function returns a semigroup congruence over the semigroup
+      <A>S</A>.<P/>
+
+      If <A>pairs</A> is a list of lists of size 2 with elements from <A>S</A>,
+      then this function will return the semigroup congruence defined by these
+      generating pairs.  The individual pairs may instead be given as separate
+      arguments.<P/>
+
+      <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [ Transformation( [ 3, 4, 3, 4, 3 ] ),
+>               Transformation( [ 1, 2, 1, 2, 1 ] ) ];;
+gap> pair2 := [ Transformation( [ 4, 3, 4, 3, 4 ] ),
+>               Transformation( [ 3, 4, 3, 4, 3 ] ) ];;
+gap> SemigroupCongruence(S, [pair1, pair2]);
+<semigroup congruence over <simple transformation semigroup 
+ on 5 pts with 4 generators> with linked triple (2,4,1)>
+gap> SemigroupCongruence(S, pair1, pair2);
+<semigroup congruence over <simple transformation semigroup 
+ on 5 pts with 4 generators> with linked triple (2,4,1)>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="RZMSCongruenceByLinkedTriple">
   <ManSection>
     <Oper Name="RMSCongruenceByLinkedTriple" Arg="S, N, colBlocks, rowBlocks"/>
     <Oper Name="RZMSCongruenceByLinkedTriple" Arg="S, N, colBlocks, rowBlocks"/>
-    <Returns>A Rees matrix or 0-matrix semigroup congruence by linked triple.</Returns>
+    <Returns>A Rees matrix or 0-matrix semigroup congruence by linked
+    triple.</Returns>
     <Description>
-      This function returns a semigroup congruence over the Rees matrix or 0-matrix
-      semigroup <A>S</A> corresponding to the linked triple (<A>N</A>,
+      This function returns a semigroup congruence over the Rees matrix or
+      0-matrix semigroup <A>S</A> corresponding to the linked triple (<A>N</A>,
       <A>colBlocks</A>, <A>rowBlocks</A>).  The argument <A>N</A> should be a
       normal subgroup of the underlying semigroup of <A>S</A>; <A>colBlocks</A>
       should be a partition of the columns of the matrix of <A>S</A>; and
