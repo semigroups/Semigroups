@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.1">
+##  <!ENTITY VERSION "2.2">
 ##  <!ENTITY GAPVERS "4.7.5">
 ##  <!ENTITY ORBVERS "4.7">
 ##  <!ENTITY IOVERS "4.3">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.1">
+##  <!ENTITY ARCHIVENAME "semigroups-2.2">
 ##  <!ENTITY COPYRIGHTYEARS "2011-14">
 ##  <#/GAPDoc>
 
@@ -38,9 +38,9 @@ end;
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "2.1",
-Date := "03/09/2014",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.1",
+Version := "2.2",
+Date := "09/09/2014",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.2",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -161,7 +161,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "waw7@st-and.ac.uk",
-    WWWHome       := "http://wilf-wilson.net",
+    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~waw7",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
@@ -194,9 +194,9 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7.5",
-  NeededOtherPackages := [["orb", ">=4.7"], ["io", ">=4.3"]],
+  NeededOtherPackages := [ ["orb", ">=4.7"], ["io", ">=4.3"] ],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
-  ["genss", ">=1.5"]], 
+  ["genss", ">=1.5"]],
   ExternalConditions := []),
 
   BannerString := Concatenation(

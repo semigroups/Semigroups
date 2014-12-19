@@ -72,7 +72,4 @@ gap> Size(classx);
 gap> q := s / cong;;
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: simple-cong.tst", 10000);
+gap> STOP_TEST( "Semigroups package: simple-cong.tst");

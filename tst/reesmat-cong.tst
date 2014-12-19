@@ -123,7 +123,4 @@ gap> Size(s / uni);
 1
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: reesmat-cong.tst", 10000);
+gap> STOP_TEST( "Semigroups package: reesmat-cong.tst");

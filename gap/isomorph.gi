@@ -10,12 +10,12 @@
 
 # returns the lex-least multiplication table of the semigroup <S>
 
-if not IsGrapeAvailable then 
+if not IsGrapeLoaded then 
   
   InstallMethod(SmallestMultiplicationTable, "for a semigroup",
   [IsSemigroup],
   function(S)
-    Info(InfoWarning, 1, GrapeIsNotAvailableString);
+    Info(InfoWarning, 1, GrapeIsNotLoadedString);
     return fail;
   end);  
 
@@ -95,7 +95,7 @@ fi;
 
 #
 
-if not (IsGrapeAvailable and IsGrapeCompiled) then 
+if not (IsGrapeLoaded and IsGrapeCompiled) then 
   InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
   HasGeneratorsOfSemigroup],  
@@ -122,23 +122,6 @@ else
       return SmallestMultiplicationTable(S)=SmallestMultiplicationTable(T);
     fi;
     
-    # compare the partial orders of the D-classes
-
-    pS:=Graph(Group(()), [1..NrDClasses(S)], OnPoints,
-     function(i,j)
-       return i in DigraphTransitiveClosure(PartialOrderOfDClasses(S)[j]);
-     end, true);
-
-    pT:=Graph(Group(()), [1..NrDClasses(T)], OnPoints,
-     function(i,j)
-       return i in DigraphTransitiveClosure(PartialOrderOfDClasses(T)[j]);
-     end, true);
-    
-    iso:=GraphIsomorphism(pS, pT);
-    
-    if iso=fail then 
-      return false;
-    fi;
     Error("not yet implemented,");
 
   end);

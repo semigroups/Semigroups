@@ -93,8 +93,5 @@ gap> AsList(last);
   [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
 
 #
-gap> SemigroupsStopTest();
-
-#
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(iter); 
-gap> STOP_TEST( "Semigroups package: data.tst", 0);
+gap> STOP_TEST( "Semigroups package: data.tst");

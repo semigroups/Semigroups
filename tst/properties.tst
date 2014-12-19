@@ -767,12 +767,9 @@ gap> IsCongruenceFreeSemigroup(S);
 false
 
 #
-gap> SemigroupsStopTest();
-
-#
 gap> Unbind(semis); Unbind(file); Unbind(s); Unbind(d); 
 gap> Unbind(g); Unbind(gens); Unbind(t); Unbind(i); Unbind(f);
 gap> Unbind(g); Unbind(rms);
 
 #
-gap> STOP_TEST( "Semigroups package: properties.tst", 10000);
+gap> STOP_TEST( "Semigroups package: properties.tst");

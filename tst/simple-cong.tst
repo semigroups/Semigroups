@@ -99,7 +99,4 @@ gap> ForAll(congs, cong-> cong = SemigroupCongruence(s, GeneratingPairsOfSemigro
 true
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: simple-cong.tst", 10000);
+gap> STOP_TEST( "Semigroups package: simple-cong.tst");

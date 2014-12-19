@@ -80,7 +80,4 @@ gap> [y,z] in ccong;
 false
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: inverse-cong.tst", 10000);
+gap> STOP_TEST( "Semigroups package: inverse-cong.tst");

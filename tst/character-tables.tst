@@ -507,6 +507,4 @@ gap> CharacterTableOfInverseSemigroup(S[10]);
       <empty partial perm> ] ]
 
 #
-#
-gap> SemigroupsStopTest();
-gap> STOP_TEST( "Semigroups package: character-tables.tst", 10000);
+gap> STOP_TEST( "Semigroups package: character-tables.tst");

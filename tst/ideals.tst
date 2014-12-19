@@ -848,5 +848,4 @@ MappingByFunction( <transformation group of size 720,
 2) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
 
 #
-gap> SemigroupsStopTest(); 
-gap> STOP_TEST( "Semigroups package: ideals.tst", 10000);
+gap> STOP_TEST( "Semigroups package: ideals.tst");

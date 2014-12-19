@@ -7,6 +7,10 @@
 ##
 #############################################################################
 
+2.1 -> 2.1.1 
+	    This is a very minor release to fix an issue caused by only loading
+	    the packages needed (but not required) by Semigroups.
+
 2.0 -> 2.1  
 	    This is a minor release including some bug fixes and performance
 	    improvements. 
@@ -29,7 +33,10 @@
 	    
 	    • The functions MeetSemigroupCongruence and JoinSemigroupCongruences
 	    for finding the meet and join of a pair of congruences of a
-	    semigroup. 
+	    semigroup.
+
+	    • There is a new method for IsSynchronizingSemigroup, suggested by
+	    Peter Cameron, with better complexity than the previous method. 
 
 	    *************************Resolved issues************************* 
 	    
@@ -69,8 +76,7 @@
 	    missing the non-identity element. 
 	    
 	    • Issue 99: the documentation for PartialOrderOfDClasses was
-	    incorrect, it did not accurately describe the output of the
-	    function. 
+	    incorrect. 
 	    
 	    • Issue 103: under certain circumstances an error was given when
 	    trying to compute with an ideal of an inverse semigroup. 

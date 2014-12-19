@@ -53,7 +53,4 @@ gap> x * x^-1 = y * y^-1;
 false
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST("Semigroups package: freeinverse.tst", 0);
+gap> STOP_TEST("Semigroups package: freeinverse.tst");

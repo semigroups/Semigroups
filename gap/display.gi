@@ -398,6 +398,15 @@ function(S)
   return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)));
 end);
 
+InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup, IsRecord], 
+function(S, opts)
+  if IsActingSemigroup(S) then 
+    TryNextMethod();
+  fi;
+  return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)), opts);
+end);
+
 #
 
 InstallMethod(DotDClasses, "for an acting semigroup",
@@ -409,7 +418,7 @@ end);
 InstallMethod(DotDClasses, "for an acting semigroup and record",
 [IsActingSemigroup, IsRecord],
 function(s, opts)
-  local es, elts, str, i, gp, h, rel, j, k, di, dk, d, l, x;
+  local es, elts, str, i, gp, h, pos, color, rel, j, k, di, dk, x, d, l;
 
   # process the options
   if not IsBound(opts.maximal) then 
@@ -418,6 +427,20 @@ function(s, opts)
   if not IsBound(opts.number) then 
     opts.number:=true;
   fi;
+  if not IsBound(opts.highlight) then 
+    opts.highlight := false; #JDM means highligh H-classes
+  else
+    for x in opts.highlight do 
+      if not IsBound(x.HighlightGroupHClassColor) then 
+        x.HighlightGroupHClassColor := "#880000";
+      fi;
+
+      if not IsBound(x.HighlightNonGroupHClassColor) then 
+        x.HighlightNonGroupHClassColor := "#FF0000";
+      fi;
+    od;
+  fi;
+
   if not IsBound(opts.idempotentsemilattice) then 
     opts.idempotentsemilattice:=false;
   elif opts.idempotentsemilattice then 
@@ -428,13 +451,13 @@ function(s, opts)
   str:="//dot\n";
   Append(str, "digraph  DClasses {\n");
   Append(str, "node [shape=plaintext]\n");
-  Append(str, "edge [color=red,arrowhead=none]\n");
+  Append(str, "edge [color=black,arrowhead=none]\n");
   i:=0;
 
   for d in DClasses(s) do
     i:=i+1;
     Append(str, String(i));
-    Append(str, " [shape=box style=dotted label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\"");
+    Append(str, " [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\"");
     Append(str, " CELLPADDING=\"10\" CELLSPACING=\"0\"");
     Append(str, Concatenation(" PORT=\"", String(i), "\">\n"));
 
@@ -449,21 +472,36 @@ function(s, opts)
     if opts.maximal and IsRegularDClass(d) then
        gp:=StructureDescription(GroupHClass(d));
     fi;
-    
+
     for l in LClasses(d) do
       Append(str, "<TR>");
       if not IsRegularClass(l) then
-        for j in [1..NrRClasses(d)] do
-          Append(str, "<TD CELLPADDING=\"10\"> </TD>");
+        for x in HClasses(l) do
+          color := "white";
+          if opts.highlight <> false then 
+            pos := PositionProperty(opts.highlight, record -> x in record.HClasses);
+            if pos <> fail then 
+              color := opts.highlight[pos].HighlightNonGroupHClassColor;
+            fi;
+          fi;
+          Append(str, Concatenation("<TD CELLPADDING=\"10\" BGCOLOR=\"", color,
+          "\"> </TD>"));
         od;
       else
         h:=HClasses(l);
         for x in h do
           if IsGroupHClass(x) then
+            color := "gray";
+            if opts.highlight <> false then 
+              pos := PositionProperty(opts.highlight, record -> x in record.HClasses);
+              if pos <> fail then 
+                color := opts.highlight[pos].HighlightGroupHClassColor;
+              fi;
+            fi;
             if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"grey\">", gp, "</TD>"));
+              Append(str, Concatenation("<TD BGCOLOR=\"", color , "\">", gp, "</TD>"));
             else
-              Append(str, "<TD BGCOLOR=\"grey\"");
+              Append(str, Concatenation("<TD BGCOLOR=\"", color, "\""));
               if opts.idempotentsemilattice then 
                 Append(str, Concatenation(" PORT=\"e", String(Position(elts,
                  Idempotents(x)[1])), "\""));
@@ -471,7 +509,14 @@ function(s, opts)
               Append(str, ">*</TD>");
             fi;
           else
-            Append(str, "<TD></TD>");
+            color := "white";
+            if opts.highlight <> false then 
+              pos := PositionProperty(opts.highlight, record -> x in record.HClasses);
+              if pos <> fail then 
+                color := opts.highlight[pos].HighlightNonGroupHClassColor;
+              fi;
+            fi;
+            Append(str, Concatenation("<TD BGCOLOR=\"", color ,"\"></TD>"));
           fi;
         od;
       fi;

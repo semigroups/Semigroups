@@ -49,4 +49,7 @@ DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 DeclareProperty("IsIteratorOfHClassElements", IsIterator);
 
+DeclareFilter("IsIteratorSorted", IsIterator);
+DeclareGlobalFunction("IteratorSortedOp");
+
 #EOF

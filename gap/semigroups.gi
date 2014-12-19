@@ -558,7 +558,7 @@ function(s, coll, record)
     
   if coll=[] then
     Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
-    " semigroup,");
+    "semigroup,");
     return s;
   elif IsSemigroupIdeal(s) then 
     return InverseSemigroup(s, coll, record);

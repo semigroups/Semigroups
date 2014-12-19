@@ -285,7 +285,4 @@ gap> IsRightZeroSemigroup(last2);
 true
 
 #
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: transform.tst", 10000);
+gap> STOP_TEST( "Semigroups package: transform.tst");
