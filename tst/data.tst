@@ -1,4 +1,4 @@
-#############################################################################
+#%T##########################################################################
 ##
 #W  data.tst
 #Y  Copyright (C) 2011-13                                James D. Mitchell
@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#
+#T# Test 1
 gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
 > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
 gap> r:=GreensRClassOfElement(s,
@@ -35,7 +35,7 @@ gap> LambdaOrbMults(LambdaOrb(r),
   [ Transformation( [ 2, 1, 6, 3, 4, 6 ] ), 
       Transformation( [ 2, 1, 4, 5, 6, 3 ] ) ] ]
 
-#
+#T# Test 2
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
@@ -62,7 +62,7 @@ gap> LambdaOrbMults(LambdaOrb(r),
   [ Transformation( [ 1, 6, 3, 4, 5, 6 ] ), 
       Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ] ]
 
-#
+#T# Test 3
 gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
 > Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
 gap> s:=Monoid(gens);;
@@ -81,10 +81,10 @@ gap> NextIterator(iter);
 gap> f in SemigroupData(s);
 true
 
-#
-gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+#T# Test 4
+gap> s:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ]);;
-gap> RhoOrb(S);
+gap> RhoOrb(s);
 <open orbit, 1 points with Schreier tree with log>
 gap> Enumerate(last);
 <closed orbit, 9 points with Schreier tree with log>
@@ -94,4 +94,6 @@ gap> AsList(last);
 
 #
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(iter); 
+
+#E#
 gap> STOP_TEST( "Semigroups package: data.tst");
