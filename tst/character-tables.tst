@@ -13,7 +13,7 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-# some random examples to test consistency of old code with new
+#T#  some random examples to test consistency of old code with new
 gap> gens:=[[ PartialPerm( [ 1, 2, 3, 4, 6, 8, 9 ], [ 1, 5, 3, 8, 9, 4, 10 ] ) ],
 > [ PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 3, 8, 4, 6, 5, 7 ] ), 
 >   PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 1, 4, 3, 2, 7, 6 ] ), 
@@ -506,5 +506,5 @@ gap> CharacterTableOfInverseSemigroup(S[10]);
       <identity partial perm on [ 1, 4 ]>, <identity partial perm on [ 4 ]>, 
       <empty partial perm> ] ]
 
-#
+#E#
 gap> STOP_TEST( "Semigroups package: character-tables.tst");

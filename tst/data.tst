@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#T# Test 1
+#T# DataTest1
 gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
 > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
 gap> r:=GreensRClassOfElement(s,
@@ -35,7 +35,7 @@ gap> LambdaOrbMults(LambdaOrb(r),
   [ Transformation( [ 2, 1, 6, 3, 4, 6 ] ), 
       Transformation( [ 2, 1, 4, 5, 6, 3 ] ) ] ]
 
-#T# Test 2
+#T# DataTest2
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
@@ -62,7 +62,7 @@ gap> LambdaOrbMults(LambdaOrb(r),
   [ Transformation( [ 1, 6, 3, 4, 5, 6 ] ), 
       Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ] ]
 
-#T# Test 3
+#T# DataTest3
 gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
 > Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
 gap> s:=Monoid(gens);;
@@ -81,7 +81,7 @@ gap> NextIterator(iter);
 gap> f in SemigroupData(s);
 true
 
-#T# Test 4
+#T# DataTest4
 gap> s:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ]);;
 gap> RhoOrb(s);

@@ -88,7 +88,7 @@ true
 gap> IsJoinIrreducible(J, R);
 true
 
-#T# Minorants
+#T# TestMinorants1
 gap> Minorants(S, x);
 [ <empty partial perm>, [1,2], [2,3], [1,2,3], [4,1], [2,3][4,1], [4,1,2], 
   [4,1,2,3], [6,4], [6,4,1], [2,3][6,4], [2,3][6,4,1], [1,2][6,4], [6,4,1,2], 
@@ -160,7 +160,7 @@ gap> m1:=Minorants(J, Bipartition( [ [ 1, -6 ], [ 2, -5 ], [ 3, 5, 6, 7, -1, -3,
 gap> Size(m1);
 7
 
-#
+#T# TestMinorants2
 gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ], [ 1, 5, 3, 8, 4 ]);;
 gap> f2:=PartialPermNC([ 1, 2, 3, 4, 5, 6 ] ,[ 6, 7, 1, 4, 3, 2 ]);;
 gap> f3:=PartialPermNC([ 1, 2, 3, 4, 5, 8 ] ,[ 5, 6, 3, 8, 4, 7 ]);;

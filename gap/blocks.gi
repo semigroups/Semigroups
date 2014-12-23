@@ -118,7 +118,7 @@ end);
 
 #
 
-InstallGlobalFunction(ORB_HashFunctionForBlocks,
+InstallGlobalFunction(SEMIGROUPS_HashFunctionForBlocks,
 function(blocks, data)
   return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
 end);
@@ -128,7 +128,7 @@ end);
 InstallMethod(ChooseHashFunction, "for blocks",
 [IsBlocks, IsInt],
 function(t,hashlen)
-  return rec(func := ORB_HashFunctionForBlocks, data:=hashlen);
+  return rec(func := SEMIGROUPS_HashFunctionForBlocks, data:=hashlen);
 end );
 
 #

@@ -338,7 +338,6 @@ gap> MinimalDClass(I);
 {Transformation( [ 1, 1, 1, 1, 1, 1 ] )}
 gap> MinimalDClass(J);
 {Transformation( [ 5, 5, 5, 5, 5, 5 ] )}
-gap> 
 
 # attributes
 gap> S:=InverseSemigroup(
