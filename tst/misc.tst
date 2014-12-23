@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#
+#T# MiscTest0
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -46,7 +46,7 @@ gap> iter:=Iterator(d);
 <iterator of D-class>
 gap> for i in iter do od;
 
-#
+#T# MiscTest1
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 5, 7, 10 ], [ 12, 3, 1, 11, 9, 5 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 7, 8 ], [ 4, 3, 11, 12, 6, 2, 1 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 9, 11 ], [ 11, 6, 9, 2, 4, 8, 12 ] ),
@@ -107,7 +107,7 @@ gap> Number(d, x-> x in l);
 gap> Number(s, x-> x in l);
 11
 
-#
+#T# MiscTest2
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
@@ -222,7 +222,7 @@ gap> GreensHClasses(l);
 gap> Length(last);
 72
 
-#
+#T# MiscTest3
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 5, 7, 10 ], [ 12, 3, 1, 11, 9, 5 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 7, 8 ], [ 4, 3, 11, 12, 6, 2, 1 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 9, 11 ], [ 11, 6, 9, 2, 4, 8, 12 ] ),
@@ -434,7 +434,7 @@ true
 gap> ForAll(l, x-> x in l);
 true
 
-#
+#T# MiscTest4
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
@@ -523,7 +523,7 @@ true
 gap> Size(h);
 1
 
-#
+#T# MiscTest5
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 >   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
 >   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
@@ -663,7 +663,7 @@ gap> l:=LClass(s, f);
 gap> IsRegularClass(l);
 true
 
-#
+#T# MiscTest6
 gap> gens:=[ PartialPermNC( [ 1, 2, 3 ], [ 1, 4, 3 ] ),
 >  PartialPermNC( [ 1, 2, 3 ], [ 2, 3, 4 ] ),
 >  PartialPermNC( [ 1, 2, 3 ], [ 4, 2, 1 ] ),
@@ -729,7 +729,7 @@ gap> NrLClasses(d);
 gap> NrHClasses(d);
 4
 
-#
+#T# MiscTest7
 gap> gens:=[ Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] ),
 >   Transformation( [ 1, 7, 5, 4, 3, 5, 7 ] ),
 >   Transformation( [ 2, 7, 7, 2, 4, 1, 1 ] ),
@@ -794,7 +794,7 @@ Group([ (1,6), (1,2), (1,5,6,2) ])
 gap> d;
 {Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )}
 
-#
+#T# MiscTest8
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 7, 3, 4 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5 ], [ 6, 4, 1, 2, 7 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 7 ], [ 2, 7, 4, 5, 8 ] ),
@@ -927,7 +927,7 @@ gap> NrDClasses(s);
 gap> NrIdempotents(s);
 121
 
-#
+#T# MiscTest9
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -950,7 +950,7 @@ gap> GreensHClasses(d);
 gap> Size(d);
 1
 
-#
+#T# MiscTest10
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 19, 
 >   20, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 36, 37, 38, 40, 43, 45, 46, 49, 
@@ -1001,7 +1001,7 @@ gap> NrHClasses(d);
 gap> GreensLClasses(d);
 [ {PartialPerm( [ 8, 57 ], [ 63, 87 ] )} ]
 
-#
+#T# MiscTest11
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
@@ -1102,7 +1102,7 @@ gap> Union(last);
 gap> last=AsSSortedList(s);
 true
 
-#
+#T# MiscTest12
 gap> gens:= [ PartialPermNC( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] ),
 > PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
@@ -1113,7 +1113,7 @@ gap> Size(s);
 gap> NrDClasses(s);
 176
 
-#
+#T# MiscTest13
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] ),
 > PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
@@ -2157,7 +2157,7 @@ true
 gap> Set(last2)=AsSSortedList(s);
 true
 
-#
+#T# MiscTest14
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 2, 4, 1, 1 ] ),
@@ -2213,7 +2213,7 @@ true
 gap> d=h;
 true
 
-#
+#T# MiscTest15
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 
 >   19, 20, 21, 23, 24, 25, 26, 27, 28, 30, 32, 33, 34, 35, 36, 37, 40, 42, 44, 
@@ -2273,7 +2273,7 @@ true
 gap> Size(h);
 1
 
-#
+#T# MiscTest16
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
@@ -2408,7 +2408,7 @@ gap> L:=Set(last3);
   {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 4, 1, 2, 1 ] )}, 
   {Transformation( [ 4, 4, 2, 2 ] )} ]
 
-#
+#T# MiscTest17
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 
 >   20, 22, 23, 24, 25, 26, 28, 29, 31, 32, 33, 35, 36, 37, 38, 41, 42, 44, 45, 
@@ -2517,7 +2517,7 @@ gap> GroupHClass(d);
 fail
 gap>   
 
-#
+#T# MiscTest18
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ),
 >   Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1, 7 ] ), 
 >   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] ),
@@ -2540,7 +2540,7 @@ true
 gap> GroupHClass(d);
 {Transformation( [ 10, 10, 10, 10, 10, 6, 10, 10, 10, 10 ] )}
 
-#
+#T# MiscTest19
 gap> gens:=[ PartialPermNC( [ 1, 3, 4, 6, 10 ], [ 3, 4, 1, 6, 10 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 10, 3, 9, 1, 5, 8 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 6, 10 ], [ 1, 8, 2, 3, 4, 9 ] ),
@@ -2622,7 +2622,7 @@ false
 gap> Set(last3)=Set(Idempotents(s));
 true
 
-#
+#T# MiscTest20
 gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Monoid(gens);;
@@ -2664,7 +2664,7 @@ true
 gap> Set(Idempotents(s))=Set(e);
 true
 
-#
+#T# MiscTest21
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 7, 10, 8, 6, 4, 2 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 9 ], [ 6, 8, 3, 10, 4, 2 ] ),
@@ -2723,7 +2723,7 @@ true
 gap> ForAll(LClassReps(d), x-> x in dd);
 true
 
-#
+#T# MiscTest22
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
 > [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 1 ] ),
@@ -2817,7 +2817,7 @@ gap> NrDClasses(s);
 gap> IsRegularSemigroup(s);
 true
 
-#
+#T# MiscTest23
 gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Monoid(gens);;
@@ -2841,7 +2841,7 @@ gap> Size(d);
 gap> Size(last3);
 7
 
-#
+#T# MiscTest24
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 5, 6, 7, 12 ], [ 11, 10, 3, 4, 6, 2, 8 ] ),
 >  PartialPermNC( [ 1, 2, 4, 5, 6, 8, 9, 10, 11 ], 
@@ -2862,7 +2862,7 @@ gap> Sum(last);
 gap> NrHClasses(s);
 223
 
-#
+#T# MiscTest25
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 9, 10, 11 ], [ 4, 1, 7, 12, 3, 9, 6 ] ),
 > PartialPermNC( [ 1, 3, 4, 5, 7, 8, 11, 12 ], [ 4, 11, 2, 7, 9, 8, 1, 6 ] ) ];;
@@ -2940,7 +2940,7 @@ gap> HClassReps(d);
 gap> Set(last)=Elements(d);
 true
 
-#
+#T# MiscTest26
 gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,4,3,5,6,7,8,9,10]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
@@ -2982,7 +2982,7 @@ gap> NrIdempotents(d);
 gap> ForAll(Idempotents(d), x-> x in d);
 true
 
-# R-class
+#T# MiscTest27 R-class
 gap> gens:=[Transformation([2,2,3,5,5,6,7,8,14,16,16,17,18,14,16,16,17,18]),
 > Transformation([1,3,3,4,5,6, 7, 8, 9,10,11,12,13,14,15,16,17,18]),
 > Transformation([1,2,4,4,5,6,7,8,9, 10,11,12,13,15,15,16,17,18]),
@@ -3009,7 +3009,7 @@ gap> Size(r);
 gap> SchutzenbergerGroup(r);
 Group(())
 
-#
+#T# MiscTest28
 gap> gens:=[ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 >   Transformation( [ 9, 1, 2, 8, 1, 5, 9, 9, 9, 5 ] ),
 >   Transformation( [ 9, 3, 1, 5, 10, 3, 4, 6, 10, 2 ] ),
@@ -3243,7 +3243,7 @@ gap> Elements(h);
   Transformation( [ 6, 6, 3, 6, 6, 6, 6, 6, 4, 6 ] ), 
   Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] ) ]
 
-#
+#T# MiscTest29
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 5, 9, 10 ], [ 5, 10, 7, 8, 9, 1 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 6, 9 ], [ 9, 3, 1, 4, 2, 5, 6 ] ),
@@ -3290,7 +3290,7 @@ gap> Idempotents(r);
 gap> ForAll(last, x-> x in r);
 true
 
-#
+#T# MiscTest30
 gap> gens:=[ Transformation( [ 1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1,
 >  13, 1, 1, 21, 1, 1, 1, 1, 1, 25, 26, 1 ] ),
 >  Transformation( [ 1, 5, 1, 5, 11, 1, 1, 14, 1, 16, 17, 1, 1, 19, 1, 11, 1,
@@ -3328,7 +3328,7 @@ gap> Number(GreensRClasses(s), IsRegularClass);
 gap> NrRegularDClasses(s);
 2
 
-#
+#T# MiscTest31
 gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 >   Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] ),
 >   Transformation( [ 3, 6, 1, 7, 3, 4, 8, 3 ] ),
@@ -3373,7 +3373,7 @@ gap> r;
 gap> NrIdempotents(r);
 1
 
-#
+#T# MiscTest32
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 7 ], [ 8, 3, 5, 7, 4 ] ),
 >  PartialPermNC( [ 1, 2, 5, 6, 7 ], [ 4, 1, 6, 2, 8 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 3, 7, 1, 5, 2, 6 ] ),
@@ -3440,7 +3440,7 @@ true
 gap> ForAll(last2, x-> x in s);
 true
 
-#
+#T# MiscTest33
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3 ], [ 2, 3, 4 ] ),
 >  PartialPermNC( [ 1, 2, 3 ], [ 3, 6, 1 ] ),
@@ -3507,7 +3507,7 @@ true
 gap> ForAll(HClassReps(r), x-> x in HClassReps(d));
 true
 
-#
+#T# MiscTest34
 gap> gens:=[ Transformation( [ 6, 4, 3, 2, 5, 1 ] ),
 >   Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
 >   Transformation( [ 5, 3, 3, 2, 4, 1 ] ),
@@ -3578,7 +3578,7 @@ true
 gap> NrHClasses(r);
 6
 
-#
+#T# MiscTest35
 gap> gens:=[ PartialPermNC( [ 1, 2, 4 ], [ 2, 5, 3 ] ),
 >  PartialPermNC( [ 1, 2, 4 ], [ 5, 6, 1 ] ),
 >  PartialPermNC( [ 1, 2, 5 ], [ 5, 3, 2 ] ),
@@ -3611,7 +3611,7 @@ gap> NrHClasses(r);
 gap> Number(HClassReps(s), x-> x in r);
 20
 
-# H-class tests
+#T# MiscTest36 H-class tests
 gap> gens:=[ Transformation( [ 8, 7, 6, 5, 4, 3, 2, 1 ] ),
 >   Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] ),
 >   Transformation( [ 7, 6, 5, 4, 3, 2, 1, 2 ] ),
@@ -3635,7 +3635,7 @@ gap> h:=HClassNC(s, f);
 gap> SchutzenbergerGroup(h);
 Group([ (4,6) ])
 
-#
+#T# MiscTest37
 gap> s:=FullTransformationSemigroup(7);
 <full transformation semigroup on 7 pts>
 gap> Factorial(7);
@@ -3669,7 +3669,7 @@ false
 gap> IsRegularClass(h);
 false
 
-#
+#T# MiscTest38
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3 ], [ 1, 5, 2 ] ),
 >  PartialPermNC( [ 1, 2, 4 ], [ 1, 3, 6 ] ),
@@ -3752,7 +3752,7 @@ true
 gap> h:=HClass(l, f);
 {PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}
 
-#
+#T# MiscTest39
 gap> gens:=[ Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] ),
 >   Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] ),
 >   Transformation( [ 4, 5, 6, 7, 1, 2, 3 ] ),
@@ -3813,7 +3813,7 @@ MappingByFunction( Group([ (3,6)
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
 
-#
+#T# MiscTest40
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3 ], [ 1, 5, 3 ] ),
 >  PartialPermNC( [ 1, 2, 3 ], [ 3, 2, 4 ] ),
@@ -3893,7 +3893,7 @@ gap> h;
 gap> IsGroupHClass(h);
 false
 
-#
+#T# MiscTest41
 gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
@@ -3903,7 +3903,7 @@ gap> s:=Semigroup(gens);;
 gap> Size(s);
 5304
 
-#
+#T# MiscTest42
 gap> gens:=[ Transformation( [ 2, 1, 8, 7, 6, 5, 4, 3 ] ),
 >   Transformation( [ 2, 8, 4, 6, 3, 5, 1, 7 ] ),
 >   Transformation( [ 8, 7, 2, 1, 4, 3, 6, 5 ] ),
@@ -3949,7 +3949,7 @@ gap> h:=HClass(s, Transformation( [ 6, 8, 4, 2, 3, 4, 4, 2 ] ));;
 gap> NrIdempotents(h);
 0
 
-#
+#T# MiscTest43
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 7 ], [ 5, 6, 4 ] ),
 >  PartialPermNC( [ 1, 2, 3, 5 ], [ 6, 8, 4, 5 ] ),
@@ -4063,7 +4063,7 @@ gap> d:=DClass(h);
 gap> IsRegularDClass(d);
 false
 
-#
+#T# MiscTest44
 gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 >   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
 >   Transformation( [ 1, 2, 4, 3, 5, 6 ] ),
@@ -4101,7 +4101,7 @@ true
 gap> IsNaturalSymmetricGroup(g);
 true
 
-#
+#T# MiscTest45
 gap> a1 := Transformation([2,2,3,5,5,6,7,8,14,16,16,17,18,14,16,16,17,18]);;
 gap> a2 := Transformation([1,3,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);;
 gap> a3 := Transformation([1,2,4,4,5,6,7,8,9, 10,11,12,13,15,15,16,17,18]);;
@@ -4129,7 +4129,7 @@ gap> Size(r);
 gap> SchutzenbergerGroup(r);
 Group(())
 
-#
+#T# MiscTest46
 gap> gens:=[ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 >   Transformation( [ 9, 1, 2, 8, 1, 5, 9, 9, 9, 5 ] ),
 >   Transformation( [ 9, 3, 1, 5, 10, 3, 4, 6, 10, 2 ] ),
@@ -4365,7 +4365,7 @@ gap> Elements(h);
   Transformation( [ 6, 6, 3, 6, 6, 6, 6, 6, 4, 6 ] ), 
   Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] ) ]
 
-#
+#T# MiscTest47
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 5, 9, 10 ], [ 5, 10, 7, 8, 9, 1 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 6, 9 ], [ 9, 3, 1, 4, 2, 5, 6 ] ),
@@ -4412,7 +4412,7 @@ gap> Idempotents(r);
 gap> ForAll(last, x-> x in r);
 true
 
-#
+#T# MiscTest48
 gap> gens:=[ Transformation( [ 1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1,
 >  13, 1, 1, 21, 1, 1, 1, 1, 1, 25, 26, 1 ] ),
 >  Transformation( [ 1, 5, 1, 5, 11, 1, 1, 14, 1, 16, 17, 1, 1, 19, 1, 11, 1,
@@ -4450,7 +4450,7 @@ gap> Number(GreensRClasses(s), IsRegularClass);
 gap> NrRegularDClasses(s);
 2
 
-#
+#T# MiscTest49
 gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 >   Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] ),
 >   Transformation( [ 3, 6, 1, 7, 3, 4, 8, 3 ] ),
@@ -4495,7 +4495,7 @@ gap> r;
 gap> NrIdempotents(r);
 1
 
-#
+#T# MiscTest50
 gap> gens:= 
 > [ PartialPermNC( [ 1, 2, 3, 4, 7 ], [ 8, 3, 5, 7, 4 ] ),
 >  PartialPermNC( [ 1, 2, 5, 6, 7 ], [ 4, 1, 6, 2, 8 ] ),
@@ -4593,7 +4593,7 @@ true
 gap> ForAll(HClassReps(r), x-> x in HClassReps(d));
 true
 
-#
+#T# MiscTest51
 gap> gens:=[ Transformation( [ 6, 4, 3, 2, 5, 1 ] ),
 >   Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
 >   Transformation( [ 5, 3, 3, 2, 4, 1 ] ),
@@ -4858,7 +4858,7 @@ true
 gap> NrHClasses(r);
 6
 
-#
+#T# MiscTest52
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 4 ], [ 2, 5, 3 ] ),
 >  PartialPermNC( [ 1, 2, 4 ], [ 5, 6, 1 ] ),
@@ -4892,6 +4892,6 @@ gap> NrHClasses(r);
 gap> Number(HClassReps(s), x-> x in r);
 20
 
-#
+#E#
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(l); Unbind(iter);
 gap> STOP_TEST( "Semigroups package: misc.tst");
