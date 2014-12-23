@@ -136,5 +136,8 @@ ReadPackage("semigroups/gap/normalizer.gi");
 
 ReadPackage("semigroups/gap/quotients.gi");
 
+ReadPackage("semigroups/gap/pairs-cong.gi");
 ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univcong.gi");
+ReadPackage("semigroups/gap/inverse-cong.gi");
+ReadPackage("semigroups/gap/simple-cong.gi");

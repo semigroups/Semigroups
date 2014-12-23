@@ -31,7 +31,8 @@ gap> n := Group([(1,4)(3,5),(1,5)(3,4)]);;
 gap> colBlocks := [ [ 1 ], [ 4 ], [ 2, 5 ], [ 3, 6 ] ];;
 gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
 gap> cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
-<RZMS congruence by linked triple (2^2,4,3)>
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,4,3)>
 gap> cong = congs[12];
 false
 gap> cong = congs[13];
@@ -86,9 +87,11 @@ gap> Size(classes[73]);
 
 # Join and meet congruences
 gap> JoinSemigroupCongruences(congs[12], congs[31]);
-<RZMS congruence by linked triple (S4,3,3)>
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (S4,3,3)>
 gap> MeetSemigroupCongruences(congs[12], congs[31]);
-<RZMS congruence by linked triple (2^2,6,3)>
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,6,3)>
 
 # Quotients
 gap> q := s / congs[13];;
@@ -103,7 +106,8 @@ true
 
 # Universal semigroup congruences
 gap> uni := UniversalSemigroupCongruence(s);
-<universal semigroup congruence>
+<universal semigroup congruence over <Rees 0-matrix semigroup 6x3 over 
+  Group([ (1,4,5), (1,5,3,4) ])>>
 gap> [x,z] in uni;
 true
 gap> EquivalenceClasses(uni);

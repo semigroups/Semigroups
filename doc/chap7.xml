@@ -7,6 +7,11 @@
   Support for congruences in &Semigroups; is currently rather limited but
   there are plans to improve this in the future. <P/>
 
+  <Section><Heading>Creating congruences</Heading>
+
+    <#Include Label="SemigroupCongruence">
+
+  </Section>
   <Section><Heading>Congruence classes</Heading>
 
     <#Include Label="CongruenceClassOfElement">
@@ -17,9 +22,9 @@
   </Section>
 
   <Section>
-    <Heading>Congruence on Rees matrix semigroups</Heading>
+    <Heading>Congruences on Rees matrix semigroups</Heading>
 
-    This section describes the implementation of congruences of 0-simple
+    This section describes the implementation of congruences of simple and 0-simple
     semigroups in the &Semigroups; package, and the functions associated with
     them.  This code and this part of the manual were written by Michael Torpey.
     Most of the theorems used in this chapter are from Section 3.5 of 
@@ -91,6 +96,9 @@
     <C>k</C> in <C>T</C>.  Thus we can internally represent any class of such a
     congruence as a triple simply consisting of a right coset and two positive
     integers.<P/>
+
+    An analogous condition exists for finite simple Rees matrix semigroups
+    without zero.<P/>
     
     <#Include Label="RZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceClassByLinkedTriple">
