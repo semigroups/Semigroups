@@ -1816,4 +1816,5 @@ gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(iter2); Unbind(iter1); Unbind(iter3); Unbind(r3); Unbind(elts);
 > Unbind(R); Unbind(x); Unbind(i);;
 
+#
 gap> STOP_TEST( "Semigroups package: greens.tst");
