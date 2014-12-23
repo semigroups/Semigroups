@@ -13,6 +13,7 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
+#T# SimpleCongTest1 
 # Create a simple semigroup
 gap> s := Semigroup( [Transformation( [ 2, 1, 1, 2, 1 ] ), 
 >                     Transformation( [ 3, 4, 3, 4, 4 ] ),
