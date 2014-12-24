@@ -1,4 +1,4 @@
-#############################################################################
+###########################################################################
 ##
 #W  reesmat-cong.tst
 #Y  Copyright (C) 2014                                      Michael Torpey
@@ -13,6 +13,7 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
+#T# All ReesZeroMatrixSemigroup functions tested with a small example
 # Create a Rees 0-matrix semigroup
 gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
 gap> mat := [ [ 0, 0, (1,4,5), 0, 0, (1,4,3,5) ],
@@ -122,5 +123,5 @@ true
 gap> Size(s / uni);
 1
 
-#
+#E#
 gap> STOP_TEST( "Semigroups package: reesmat-cong.tst");

@@ -1,16 +1,18 @@
-#%T##########################################################################
+############################################################################
 ##
 #W  maximal.tst
-##  Tests for algorithms relating to maximal subsemigroups of semigroups
-##  Written by Wilf Wilson
+#Y  Copyright (C) 2011-14                                  Wilfred Wilson
+##
+##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+## Tests for the maximal subsemigroups code
 gap> START_TEST("Semigroups package: maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
 #  
-gap> SemigroupsStartTest();
+gap> SemigroupsStartTest();;
 
 #T# IsMaximalSubsemigroup
 gap> S := Semigroup([

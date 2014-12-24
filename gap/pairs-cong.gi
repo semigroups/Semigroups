@@ -162,7 +162,9 @@ function(cong, lookfunc)
       fi;
     od;
   od;
-  
+  # TODO: I think this last step of normalizing the table is probably
+  # prohibitively expensive. We should probably not do it. This will require
+  # some changes in other functions too. JDM
   normalise := function(cong)
     local ht, next, i, ii, newcong;
     ht := HTCreate(1);

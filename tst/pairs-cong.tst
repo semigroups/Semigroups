@@ -13,15 +13,13 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-# Create a semigroup
+#T# PairsCongTest1
 gap> s := Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 5 ] ),
 >    Transformation( [ 2, 4, 6, 1, 6, 5 ] ),
 >    Transformation( [ 4, 1, 2, 6, 2, 1 ] ), 
 >    Transformation( [ 4, 6, 4, 3, 3, 3 ] ),
 >    Transformation( [ 5, 1, 6, 1, 6, 3 ] ),
 >    Transformation( [ 5, 2, 5, 3, 5, 3 ] ) ] );;
-
-# Construct one congruence by pairs
 gap> cong := SemigroupCongruence( s,
 >  [ Transformation( [ 5, 5, 2, 4, 2, 4 ] ),
 >    Transformation( [ 1, 5, 4, 5, 4, 5 ] ) ],
@@ -29,8 +27,6 @@ gap> cong := SemigroupCongruence( s,
 >    Transformation( [ 1, 6, 6, 6, 6, 1 ] ) ] );
 <semigroup congruence over <transformation semigroup 
  on 6 pts with 6 generators> with 2 generating pairs>
-
-# Try some methods
 gap> x := Transformation( [ 6, 5, 4, 4, 4, 6 ] );;
 gap> y := Transformation( [ 2, 2, 2, 6, 2, 4 ] );;
 gap> z := Transformation( [ 2, 4, 6, 1, 6, 5 ] );;
@@ -38,8 +34,6 @@ gap> [x,y] in cong; [x,z] in cong; [y,z] in cong;
 true
 false
 false
-
-# Congruence classes
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
@@ -67,9 +61,7 @@ gap> y * z in classx * classz;
 true
 gap> Size(classx);
 3084
-
-# Quotients
 gap> q := s / cong;;
 
-#
+#E#
 gap> STOP_TEST( "Semigroups package: simple-cong.tst");

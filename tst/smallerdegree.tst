@@ -33,7 +33,7 @@ MappingByFunction( <inverse partial perm semigroup on 5 pts
 gap> ForAll(f,x->(x^VPR)^inv=x);
 true
 
-# Standard VagnerPreston example with SymmetricInverseSemigroup on 5 points
+#T# Standard VagnerPreston example with SymmetricInverseSemigroup on 5 points
 gap> I5:=SymmetricInverseSemigroup(5);;
 gap> NrMovedPoints(I5);
 5
@@ -50,7 +50,7 @@ gap> NrMovedPoints(Image(I5));
 gap> Size(Image(I5));
 1546
 
-# VagnerPreston example on BipartitionSemigroup
+#T# VagnerPreston example on BipartitionSemigroup
 gap> B:=Semigroup([
 >  Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5, -5 ], [ 6 ], [ 7 ], [ -1 ], [ -3 ], [ -6 ], [ -7 ] ] ), 
 >  Bipartition( [ [ 1, -5 ], [ 2, -6 ], [ 3, -7 ], [ 4, -3 ], [ 5 ], [ 6, -2 ], [ 7 ], [ -1 ], [ -4 ] ] ), 
@@ -76,7 +76,7 @@ gap> NrMovedPoints(f);
 gap> Size(f);
 8
 
-# Example of higher returned degree spotted by Robert
+#T# Example of higher returned degree spotted by Robert
 gap> f1:=PartialPermNC([2,1,0,0,4]);;
 gap> f2:=PartialPermNC([1,2,3,5]);;
 gap> f:=InverseSemigroup(f1,f2);;
@@ -90,7 +90,7 @@ gap> Size(f);
 gap> Size(Image(F));
 15
 
-# Example where Rhiannon's function returns a better result (confirmed)
+#T# Example where Rhiannon's function returns a better result (confirmed)
 gap> f1:=PartialPermNC([2,1,4,5,3,7,6,9,10,8]);;
 gap> f2:=PartialPermNC([2,1,0,0,0,7,6]);;
 gap> f:=InverseSemigroup(f1,f2);;
@@ -104,7 +104,7 @@ gap> Size(f);
 gap> Size(Image(F));
 8
 
-# Example of reducing degree but not moved points
+#T# Example of reducing degree but not moved points
 gap> f1:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 10, 11, 15, 16, 17, 18 ], [ 7, 5, 11, 8, 4, 2, 20, 14, 12, 17, 9, 3 ]);;
 gap> f2:=PartialPermNC([ 1, 2, 3, 6, 8, 10, 12, 15, 16, 17, 18, 19 ], [ 2, 4, 14, 3, 17, 7, 9, 16, 15, 10, 11, 1 ]);;
 gap> f:=InverseSemigroup(f1,f2);;
@@ -118,7 +118,7 @@ gap> ActionDegree(f);
 gap> ActionDegree(Image(F));
 19
 
-# Example made complicated by right regular representation of Sym(5). Genuine minimum degree of V is 7.
+#T# Example made complicated by right regular representation of Sym(5). Genuine minimum degree of V is 7.
 gap> S:=SymmetricGroup(5);
 Sym( [ 1 .. 5 ] )
 gap> rho:=ActionHomomorphism(S,S);

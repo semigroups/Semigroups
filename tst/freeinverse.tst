@@ -1,4 +1,4 @@
-#############################################################################
+#%T##########################################################################
 ##
 ##  freeinverse,tst 
 #Y  Copyright (C) 2011-13
@@ -12,7 +12,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#
+#T# FreeInverseSemigroup (with default generators) and basic methods
 gap> S := FreeInverseSemigroup(3);
 <free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> Size(S);
@@ -32,12 +32,12 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
-#
+#T# FreeInverseSemigroup (with named generators) and basic methods
 gap> S := FreeInverseSemigroup("a", "b", "c");
 <free inverse semigroup on the generators [ a, b, c ]>
 gap> Size(S);
 infinity
-gap>  x := S.1;
+gap> x := S.1;
 a
 gap> y := S.2;
 b
@@ -52,5 +52,5 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
-#
+#E#
 gap> STOP_TEST("Semigroups package: freeinverse.tst");

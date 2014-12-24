@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
+#T# IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
 gap> S:=DualSymmetricInverseMonoid(4);                                
 <inverse bipartition monoid on 4 pts with 3 generators>
 gap> IsomorphismTransformationMonoid(S);
@@ -38,10 +38,10 @@ MappingByFunction( <bipartition monoid of size 41, on 4 pts with 4 generators>
  , <transformation monoid on 41 pts with 4 generators>
  , function( x ) ... end, function( x ) ... end )
 
-#the number of iterations, change here to get faster test
+#T# the number of iterations, change here to get faster test
 gap> N := 333;;
 
-# BASICS
+#T#  BASICS
 gap> classes:=[[1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1], [-6]];;
 gap> f:=BipartitionNC(classes);
 <bipartition: [ 1, 2, 3, -2 ], [ 4, -5 ], [ 5, -7 ], [ 6, -3, -4 ], [ 7 ], 
@@ -50,7 +50,7 @@ gap> LeftProjection(f);
 <bipartition: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], 
  [ 7 ], [ -7 ]>
 
-# different order of classes
+#T#  different order of classes
 gap> classes2:=[[-6], [1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [-1], [7]];;
 gap> f = Bipartition(classes2);
 true
@@ -62,28 +62,28 @@ gap> LeftProjection(f);
 <bipartition: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, 7 ], [ 5, -5 ], [ 6 ], 
  [ 8, 9, -8, -9 ], [ -4, -7 ], [ -6 ]>
 
-# ASSOCIATIVITY
+#T#  ASSOCIATIVITY
 gap> l := List([1..3*N], i->RandomBipartition(17));;
 gap> triples := List([1..N], i -> [l[i],l[i+1],l[i+2]]);;
 gap> ForAll(triples, x-> ((x[1]*x[2])*x[3]) = (x[1]*(x[2]*x[3])));
 true
 
-# EMBEDDING into T_n
+#T#  EMBEDDING into T_n
 gap> l := List([1,2,3,4,5,15,35,1999,64999,65000],i->RandomTransformation(i));;
 gap> ForAll(l,t->t=AsTransformation(AsBipartition(t)));
 true
 
-#checking IsTransBipartitition
+#T# checking IsTransBipartitition
 gap> l := List([1,2,3,4,5,15,35,1999,30101,54321],i->RandomTransformation(i));;
 gap> ForAll(l,t->IsTransBipartition(AsBipartition(t)));
 true
 
-# check big size, identity, multiplication
+#T#  check big size, identity, multiplication
 gap> bp := RandomBipartition(70000);;bp*One(bp)=bp;One(bp)*bp=bp;
 true
 true
 
-#check BlocksIdempotentTester, first a few little examples
+#T# check BlocksIdempotentTester, first a few little examples
 gap> l := BlocksByIntRepNC( [ 3, 1, 2, 3, 3, 0, 0, 0 ]);;
 gap> r := BlocksByIntRepNC( [ 2, 1, 2, 2, 2, 0, 0 ]) ;;
 gap> BlocksIdempotentTester(l,r);
@@ -93,13 +93,13 @@ gap> e := BlocksIdempotentCreator(l,r);
 gap> IsIdempotent(e);
 true
 
-# JDM is this the right behaviour?
+#T#  JDM is this the right behaviour?
 gap> RightBlocks(e) = l;
 true
 gap> LeftBlocks(e) = r;
 true
 
-# AsBipartition for a bipartition
+#T#  AsBipartition for a bipartition
 gap> f:=Bipartition( [ [ 1, 2, 3 ], [ 4, -1, -3 ], [ 5, 6, -4, -5 ], 
 > [ -2 ], [ -6 ] ] );;
 gap> AsBipartition(f, 8);
@@ -110,7 +110,7 @@ gap> AsBipartition(f, 6);
 gap> AsBipartition(f, 4);
 <bipartition: [ 1, 2, 3 ], [ 4, -1, -3 ], [ -2 ], [ -4 ]>
 
-# AsPartialPerm for bipartitions
+#T#  AsPartialPerm for bipartitions
 gap> S:=DualSymmetricInverseMonoid(4);;
 gap> Number(S, IsPartialPermBipartition);
 24
@@ -126,7 +126,7 @@ gap> elts:=Filtered(PartitionMonoid(4), IsPartialPermBipartition);;
 gap> ForAll(elts, x-> AsBipartition(AsPartialPerm(x),4)=x);
 true
 
-# AsPermutation for bipartitions
+#T#  AsPermutation for bipartitions
 gap> G:=SymmetricGroup(5);;
 gap> ForAll(G, x-> AsPermutation(AsBipartition(x))=x);
 true
@@ -135,7 +135,7 @@ gap> G:=GroupOfUnits(PartitionMonoid(5));
 gap> ForAll(G, x-> AsBipartition(AsPermutation(x), 5)=x);
 true
 
-#IsomorphismBipartitionSemigroup for a generic semigroup
+#T# IsomorphismBipartitionSemigroup for a generic semigroup
 gap> S:=Semigroup( 
 > Bipartition( [ [ 1, 2, 3, -3 ], [ 4, -4, -5 ], [ 5, -1 ], [ -2 ] ] ), 
 > Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] ), 
@@ -160,7 +160,7 @@ gap> x:=RMSElement(R, 12,(),8);;
 gap> ForAll(R, y-> (x^f)*(y^f)=(x*y)^f);               
 true
 
-#IsomorphismBipartitionSemigroup for a transformation semigroup
+#T# IsomorphismBipartitionSemigroup for a transformation semigroup
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ), 
 >   Transformation( [ 4, 2, 1, 5, 5 ] ), 
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -184,7 +184,7 @@ gap> x:=Transformation( [ 3, 1, 3, 3, 3 ] );;
 gap> ForAll(s, y-> (x^f)*(y^f)=(x*y)^f);
 true
 
-#IsomorphismTransformationSemigroup for a bipartition semigroup consisting of 
+#T# IsomorphismTransformationSemigroup for a bipartition semigroup consisting of 
 #IsTransBipartition
 gap> S:=Semigroup( Transformation( [ 1, 3, 4, 1, 3 ] ), 
 > Transformation( [ 2, 4, 1, 5, 5 ] ), 
@@ -209,7 +209,7 @@ gap> Size(S);
 gap> Size(Range(f));
 602
 
-#IsomorphismBipartitionSemigroup for a partial perm semigroup
+#T# IsomorphismBipartitionSemigroup for a partial perm semigroup
 gap> S:=Semigroup(
 > [ PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ), 
@@ -247,7 +247,7 @@ gap> Size(S);
 gap> ForAll(S, x-> ForAll(S, y-> (x*y)^f=(x^f)*(y^f)));
 true
 
-#IsomorphismPartialPermSemigroup for a semigroup of bipartitions consisting of
+#T# IsomorphismPartialPermSemigroup for a semigroup of bipartitions consisting of
 #IsPartialPermBipartition
 gap> f:=IsomorphismPartialPermSemigroup(T);;
 gap> g:=InverseGeneralMapping(f);;
@@ -261,7 +261,7 @@ true
 gap> ForAll(S, x-> (x^g)^f=x);
 true
 
-# testing the cases to which the new methods for IsomorphismPartialPermSemigroup
+#T#  testing the cases to which the new methods for IsomorphismPartialPermSemigroup
 # and IsomorphismTransformationSemigroup don't apply...
 gap> S:=Semigroup(
 > Bipartition( [ [ 1, 2, 3, 4, -1, -2, -5 ], [ 5 ], [ -3, -4 ] ] ), 
@@ -274,7 +274,7 @@ fail
 gap> Range(IsomorphismTransformationSemigroup(S));
 <transformation semigroup on 208 pts with 5 generators>
 
-# IsomorphismBipartitionSemigroup for a perm group
+#T#  IsomorphismBipartitionSemigroup for a perm group
 gap> G:=DihedralGroup(IsPermGroup, 10);;
 gap> f:=IsomorphismBipartitionSemigroup(G);;
 gap> g:=InverseGeneralMapping(f);;
@@ -285,7 +285,7 @@ true
 gap> ForAll(Range(f), x-> (x^g)^f=x);                     
 true
 
-#IsomorphismPermGroup
+#T# IsomorphismPermGroup
 gap> G:=GroupOfUnits(PartitionMonoid(5));
 <bipartition group on 5 pts with 2 generators>
 gap> IsomorphismPermGroup(G);
@@ -307,7 +307,7 @@ MappingByFunction( {Bipartition( [ [ 1 ], [ 2, -2 ], [ 3, -3 ],
  [ 4, -4, -5 ], [ 5 ], [ -1 ] ] )}, Group([ (2,4,3), (3,
 4) ]), function( x ) ... end, function( x ) ... end )
 
-# IsomorphismBipartitionSemigroup for an inverse semigroup of partial perms
+#T#  IsomorphismBipartitionSemigroup for an inverse semigroup of partial perms
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 3, 5, 7, 9 ], [ 7, 6, 5, 10, 1 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 9, 10, 4, 2, 5, 6 ] ) );;
@@ -327,7 +327,7 @@ gap> f:=last2;; g:=InverseGeneralMapping(f);;
 gap> ForAll(T, x-> (x^f)^g=x);
 true
 
-# AsBlockBijection and IsomorphismBlockBijectionSemigroup for an inverse
+#T#  AsBlockBijection and IsomorphismBlockBijectionSemigroup for an inverse
 # semigroup of partial perms
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ), 
@@ -353,7 +353,7 @@ gap> x:=PartialPerm( [ 1, 2, 3, 8 ], [ 8, 4, 10, 3 ] );;
 gap> ForAll(S, y-> x^f*y^f=(x*y)^f);
 true
 
-# Same as last for non-inverse partial perm semigroup
+#T#  Same as last for non-inverse partial perm semigroup
 gap> S:=Semigroup(
 > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
@@ -377,7 +377,7 @@ gap> x:=PartialPerm( [ 1, 3 ], [ 3, 1 ] );;
 gap> ForAll(S, y-> x^f*y^f=(x*y)^f);
 true
 
-# NaturalLeqBlockBijection
+#T#  NaturalLeqBlockBijection
 gap> S:=DualSymmetricInverseMonoid(4);;
 gap> f:=Bipartition([ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ]] );;
 gap> g:=Bipartition([ [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ] ]);;
@@ -414,7 +414,7 @@ gap> Filtered(S, f-> ForAny(Idempotents(S), e-> e*g=f));
   <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
   <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]> ]
 
-# Factorization/EvaluateWord
+#T#  Factorization/EvaluateWord
 gap> S:=DualSymmetricInverseMonoid(6);;
 gap> f:=S.1*S.2*S.3*S.2*S.1;
 <block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
@@ -454,7 +454,7 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
 gap> IsInverseSemigroup(S);
 false
 
-# tests of things in greens.xml in the order they appear in that file. 
+#T#  tests of things in greens.xml in the order they appear in that file. 
 gap> S:=Semigroup(
 > Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -8 ], 
 >      [ 6, -9 ], [ 7, -10 ], [ 8, -11 ], [ 9, -12 ], [ 10, -13 ], [ 11, -5 ], 
@@ -2890,7 +2890,7 @@ gap> StructureDescriptionMaximalSubgroups(S);
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "1", "C2" ]
 
-# IsomorphismPermGroup for a block bijection group
+#T#  IsomorphismPermGroup for a block bijection group
 gap> S:=Semigroup( 
 >  Bipartition( [ [ 1, 2, -3 ], [ 3, -4 ], [ 4, -8 ], [ 5, -1, -2 ], 
 >      [ 6, -5 ], [ 7, -6 ], [ 8, -7 ] ] ), 
@@ -2906,5 +2906,5 @@ true
 gap> ForAll(S, x-> (x^iso)^inv=x);
 true
 
-#
+#E# 
 gap> STOP_TEST( "Semigroups package: bipartition.tst");

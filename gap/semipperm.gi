@@ -35,8 +35,12 @@ function(m, k, n, set, min, nr, coeff)
    # coeff = Binomial( n - i - 1, k - 2 )
 end);
 
+# the first occurrence in the ordered list of <m>-subsets of [ 1 .. <n> ] of 
+# set with first element equal to <k>. 
+
 InstallGlobalFunction(SEMIGROUPS_NumberSubset, 
-function(x)
+function(n, k, m)
+  return Sum( List( [ 1 .. k - 1 ], i -> Binomial( n - i, m - 1 ) ) );
 end);
 
 # the <m>th subset of <[1..n]> with <k> elements
@@ -53,27 +57,28 @@ function(m, k, n, coeff)
   return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
 end);
 
-# JDM this is not working!
+# the position of <set> in the set of subsets of [ 1 .. <n> ]
 
 InstallMethod(NumberSubset, "for a set and a pos int",
 [IsList, IsPosInt],
 function(set, n)
-  local nr, m, i, k, j;
-  Error("not yet working,");
-  nr := 0;
+  local m, nr, pos, k, prev, i;
+  
+  nr := Sum( List( [ 0 .. Length(set) - 1 ], i -> Binomial( n, i ) ) );
+
+  k := n;
+  prev := 0;
   m := Length(set);
-  i := 1;
-  for j in [1..Length(set)] do 
-    k := set[j];
-    while k > i do 
-      nr := nr + Binomial(n - k - i + 2, m - 1); #JDM improve
-      k := k - 1;
-    od;
+
+  for i in [ 1 .. Length(set) ] do 
+    pos := Position( [ prev + 1 .. n ], set[i]);
+    nr := nr + SEMIGROUPS_NumberSubset( k, pos, m );
+    k := k - set[i];
+    prev := set[i];
     m := m - 1;
-    i := set[j] + 1;
   od;
 
-  return nr + 1;
+  return nr;
 end);
 
 InstallMethod(PartialPermNumber, "for pos int and pos int",
@@ -105,8 +110,8 @@ function(m, n)
   return PartialPermNC(SubsetNumber(j, i, n), ArrangementNumber(m, i, n));
 end);
 
-InstallMethod(PartialPermNumber, "for a partial perm and a pos int",
-[IsPosInt, IsPosInt],
+InstallMethod(NumberPartialPerm, "for a partial perm and a pos int",
+[IsPartialPerm, IsPosInt],
 function(x, n)
   local dom, i;
   

@@ -11,7 +11,7 @@
 DeclareCategory("IsBlocks", IsList);
 DeclareCategoryCollections("IsBlocks");
 
-DeclareGlobalFunction("ORB_HashFunctionForBlocks");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForBlocks");
 DeclareGlobalFunction("BlocksNC");
 DeclareGlobalFunction("BlocksByIntRepNC");
 DeclareOperation("ProjectionFromBlocks", [IsBlocks]);

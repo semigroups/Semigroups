@@ -12,7 +12,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#
+#T# TestExample1
 gap> gens:=[Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 > Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -90,8 +90,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample2
 gap> gens:=[Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 > Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
@@ -165,8 +164,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample3 
 gap> gens:=[Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 > Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
 > Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
@@ -240,8 +238,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample4 
 gap> gens:=[Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] ),
 > Transformation( [ 1, 7, 5, 4, 3, 5, 7 ] ),
 > Transformation( [ 2, 7, 7, 2, 4, 1, 1 ] ),
@@ -321,8 +318,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample5 
 gap> gens:=[Transformation( [ 3, 4, 1, 2, 1 ] ),
 > Transformation( [ 4, 2, 1, 5, 5 ] ),
 > Transformation( [ 4, 2, 2, 2, 4 ] )];;
@@ -395,8 +391,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample6 
 gap> gens:=[Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
@@ -470,8 +465,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample7 
 gap> gens:=[Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 1, 4, 1, 2 ] ),
 > Transformation( [ 2, 4, 1, 1 ] ),
@@ -545,8 +539,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample8 
 gap> gens:=[Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 1, 4, 1, 2 ] ),
 > Transformation( [ 3, 4, 2, 2 ] ),
@@ -620,8 +613,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample9
 gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Semigroup(gens);;
@@ -693,8 +685,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample10
 gap> gens:=[Transformation( [ 2, 1, 4, 5, 3, 7, 8, 9, 10, 6 ] ),
 > Transformation( [ 1, 2, 4, 3, 5, 6, 7, 8, 9, 10 ] ),
 > Transformation( [ 1, 2, 3, 4, 5, 6, 10, 9, 8, 7 ] ),
@@ -768,7 +759,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
+#T# TestExample11
 gap> gens:=[Transformation( [ 13, 10, 9, 5, 1, 5, 13, 13, 8, 2, 7, 2, 6 ] ),
 > Transformation( [ 6, 11, 12, 10, 4, 10, 13, 5, 8, 5, 11, 6, 9 ] )];;
 gap> s:=Semigroup(gens);;
@@ -840,8 +831,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample12
 gap> gens:=[Transformation( [ 12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2 ] ),
 > Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ),
 > Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] )];;
@@ -914,8 +904,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample13
 gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation( [ 5, 4, 1, 2, 3, 7, 6, 5, 4, 1 ] ),
 > Transformation( [ 2, 1, 4, 3, 2, 1, 4, 4, 3, 3 ] )];;
@@ -988,8 +977,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample14
 gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
 > Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1061,8 +1049,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample15 
 gap> gens:=[Transformation( [ 5, 4, 4, 2, 1 ] ),
 > Transformation( [ 2, 5, 5, 4, 1 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1134,8 +1121,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample16 
 gap> gens:=[Transformation( [ 1, 2, 1, 3, 3 ] ),
 > Transformation( [ 2, 2, 3, 5, 5 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1207,8 +1193,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample17 
 gap> gens:=[Transformation( [ 3, 1, 2, 3, 2, 3, 2, 3 ] ),
 > Transformation( [ 2, 5, 8, 5, 2, 5, 7, 8 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1280,8 +1265,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample18
 gap> gens:=[Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] ),
 > Transformation( [ 5, 1, 7, 8, 7, 5, 8, 1 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1353,8 +1337,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample19 
 gap> gens:=[Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
 > Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1426,8 +1409,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample20
 gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1499,8 +1481,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample21
 gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1572,8 +1553,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample22
 gap> gens:=[Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1645,8 +1625,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample23
 gap> gens:=[Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 > Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] )];;
 gap> s:=Semigroup(gens);;
@@ -1718,8 +1697,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample24 
 gap> gens:=[Transformation( [ 1, 2, 4, 5, 6, 3, 7, 8 ] ),
 > Transformation( [ 3, 3, 4, 5, 6, 2, 7, 8 ] ),
 > Transformation( [ 1, 2, 5, 3, 6, 8, 4, 4 ] )];;
@@ -1792,8 +1770,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample25
 gap> gens:=[Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
 > 4, 4, 4, 4, 4 ] ),
 > Transformation( [ 1, 2, 3, 4, 5, 6, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
@@ -1874,8 +1851,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample26
 gap> gens:=[Transformation( [ 2, 1, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
 > 4, 4, 4, 4, 4 ] ),
 > Transformation( [ 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
@@ -1963,8 +1939,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample27
 gap> gens:=[Transformation( [ 2, 1, 1, 2, 1 ] ),
 > Transformation( [ 3, 4, 3, 4, 4 ] ),
 > Transformation( [ 3, 4, 3, 4, 3 ] ),
@@ -2038,8 +2013,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample28
 gap> gens:=[Transformation( [ 4, 4, 4, 1, 1, 6, 7, 8, 9, 10, 11, 1 ] ),
 > Transformation( [ 6, 6, 6, 7, 7, 1, 4, 8, 9, 10, 11, 7 ] ),
 > Transformation( [ 8, 8, 8, 9, 9, 10, 11, 1, 4, 6, 7, 9 ] ),
@@ -2116,8 +2090,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample29
 gap> gens:=[Transformation( [ 1, 2, 2, 1, 2 ] ),
 > Transformation( [ 3, 4, 3, 4, 4 ] ),
 > Transformation( [ 3, 4, 3, 4, 3 ] ),
@@ -2191,7 +2164,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
+#T# TestExample30
 gap> gens:=[Transformation( [ 2, 6, 1, 7, 5, 3, 4 ] ),
 > Transformation( [ 5, 3, 7, 2, 1, 6, 4 ] ),
 > Transformation( [ 2, 5, 5, 3, 4, 2, 3 ] ),
@@ -2269,8 +2242,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
-gap> 
+#T# TestExample31
 gap> gens:=[Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 > Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2 ] ),
 > Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] ),
@@ -2344,5 +2316,5 @@ false
 gap> IsZeroSemigroup(s);
 false
 
-#
+#E# 
 gap> STOP_TEST("Semigroups package: examples.tst");
