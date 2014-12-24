@@ -8,16 +8,16 @@
 #############################################################################
 ##
 
-DeclareCategory("SEMIGROUPS_CONG_SIMPLE",
+DeclareCategory("SEMIGROUPS_CongSimple",
         IsSemigroupCongruence and IsAttributeStoringRep);
 
-DeclareGlobalFunction("SEMIGROUPS_SIMPLECONG_FROM_RMSCONG");
-DeclareGlobalFunction("SEMIGROUPS_SIMPLECONG_FROM_PAIRS");
+DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromRMSCong");
+DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromPairs");
 
-DeclareCategory("SEMIGROUPS_CONGCLASS_SIMPLE",
+DeclareCategory("SEMIGROUPS_CongClassSimple",
         IsCongruenceClass and IsAttributeStoringRep and IsAssociativeElement);
 
-DeclareGlobalFunction("SEMIGROUPS_SIMPLECLASS_FROM_RMSCLASS");
+DeclareGlobalFunction("SEMIGROUPS_SimpleClassFromRMSclass");
 
 DeclareGlobalFunction("SemigroupCongruence");
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);

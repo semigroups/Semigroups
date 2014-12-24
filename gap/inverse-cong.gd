@@ -9,7 +9,7 @@
 ##
 
 # Inverse Congruences By Congruence Pair
-DeclareCategory("SEMIGROUPS_CONG_INVERSE",
+DeclareCategory("SEMIGROUPS_CongInverse",
         IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePair");
 DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePairNC");
@@ -19,12 +19,12 @@ DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("AsInverseSemigroupCongruenceByCongruencePair",
         IsSemigroupCongruence);
 
-DeclareGlobalFunction("INVERSECONG_FROM_PAIRS");
+DeclareGlobalFunction("SEMIGROUPS_InverseCongFromPairs");
 
 # Congruence Classes
-DeclareCategory("SEMIGROUPS_CONGCLASS_INVERSE",
+DeclareCategory("SEMIGROUPS_CongClassInverse",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
 DeclareOperation("InverseSemigroupCongruenceClass",
-        [SEMIGROUPS_CONG_INVERSE, IsAssociativeElement] );
+        [SEMIGROUPS_CongInverse, IsAssociativeElement] );
 DeclareOperation("InverseSemigroupCongruenceClassNC",
-        [SEMIGROUPS_CONG_INVERSE, IsAssociativeElement] );
+        [SEMIGROUPS_CongInverse, IsAssociativeElement] );
