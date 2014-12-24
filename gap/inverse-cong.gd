@@ -1,3 +1,13 @@
+############################################################################
+##
+#W  inverse-cong.gd
+#Y  Copyright (C) 2014                                   Michael C. Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # Inverse Congruences By Congruence Pair
 DeclareCategory("SEMIGROUPS_CONG_INVERSE",
         IsSemigroupCongruence and IsAttributeStoringRep);

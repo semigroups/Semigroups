@@ -1,3 +1,13 @@
+############################################################################
+##
+#W  simple-cong.gi
+#Y  Copyright (C) 2014                                   Michael C. Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
   local s, pairs;
