@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  pairs-cong.gi
-#Y  Copyright (C) 2014                                      Michael Torpey
+#Y  Copyright (C) 2014                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -271,8 +271,13 @@ end);
 
 InstallMethod(NrCongruenceClasses,
 "for a semigroup congruence",
-[IsSemigroupCongruence and IsFinite],
+[IsSemigroupCongruence],
 function(cong)
+  local s;
+  s := Range(cong);
+  if not (HasIsFinite(s) and IsFinite(s)) then
+    TryNextMethod();
+  fi;
   return Maximum(AsLookupTable(cong));
 end);
 

@@ -1,3 +1,13 @@
+############################################################################
+##
+#W  reesmat-cong.gi
+#Y  Copyright (C) 2014                                   Michael C. Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 function(s, n, colBlocks, rowBlocks)
   local g, mat, block, i, j, u, v, bi, bj, bu, bv;
