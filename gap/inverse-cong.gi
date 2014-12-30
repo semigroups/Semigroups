@@ -15,7 +15,7 @@ function(s, kernel, traceBlocks)
   # (2) Must be self-conjugate
   for a in kernel do
     for x in GeneratorsOfSemigroup(s) do
-      if not a^x in kernel then
+      if not a ^ x in kernel then
         Error("2nd arg <kernel> must be self-conjugate,"); return;
       fi;
     od;
@@ -27,13 +27,13 @@ function(s, kernel, traceBlocks)
       for a in l do
         if a in kernel then
           # Condition (C2): aa' related to a'a
-          if not a * a^-1 in traceClass then
+          if not a * a ^ - 1 in traceClass then
             Error("Not a valid congruence pair,"); return;
           fi;
-        else          
+        else
           # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
           for e in traceClass do
-            if a*e in kernel then
+            if a * e in kernel then
               Error("Not a valid congruence pair,"); return;
             fi;
           od;
@@ -53,7 +53,7 @@ function(s, kernel, traceBlocks)
   # Calculate lookup table for trace
   # Might remove lookup - might never be better than blocks
   traceLookup := [];
-  for i in [1..Length(traceBlocks)] do
+  for i in [1 .. Length(traceBlocks)] do
     for elm in traceBlocks[i] do
       traceLookup[Position(Idempotents(s),elm)] := i;
     od;
@@ -110,9 +110,9 @@ function(cong, elm)
   fi;
   images := [];
   # Consider all idempotents trace-related to (a^-1 a)
-  for e in First(cong!.traceBlocks, c-> (elm^-1 * elm) in c) do
+  for e in First(cong!.traceBlocks, c -> (elm ^ - 1 * elm) in c) do
     for b in LClass(s,e) do
-      if elm * b^-1 in cong!.kernel then
+      if elm * b ^ - 1 in cong!.kernel then
         Add(images, b);
       fi;
     od;
@@ -135,10 +135,10 @@ function(pair, cong)
     Error("<pair> must have entries from the semigroup of <cong>,"); return;
   fi;
   # Is (a^-1 a, b^-1 b) in the trace?
-  if pair[1]^-1 * pair[1] in
-     First(cong!.traceBlocks, c-> pair[2]^-1*pair[2] in c) then
+  if pair[1] ^ - 1 * pair[1] in
+     First(cong!.traceBlocks, c -> pair[2] ^ - 1 * pair[2] in c) then
     # Is ab^-1 in the kernel?
-    if pair[1] * pair[2]^-1 in cong!.kernel then
+    if pair[1] * pair[2] ^ - 1 in cong!.kernel then
       return true;
     fi;
   fi;
@@ -238,11 +238,11 @@ function(cong)
   fi;
   elms := ShallowCopy(Idempotents(s));
   trace := [];
-  for i in [1..Size(elms)] do
+  for i in [1 .. Size(elms)] do
     if elms[i] <> fail then
       class := [ elms[i] ];
       congClass := EquivalenceClassOfElementNC(cong, elms[i]);
-      for j in [i+1..Size(elms)] do
+      for j in [i + 1 .. Size(elms)] do
         if elms[j] in congClass then
           Add(class, elms[j]);
           elms[j] := fail;
@@ -265,7 +265,7 @@ function(cong)
   if not IsInverseSemigroup(s) then
     Error("1st arg <cong> must be over an inverse semigroup,"); return;
   fi;
-  gens := Union(List(Idempotents(s), e->EquivalenceClassOfElementNC(cong,e)));
+  gens := Union(List(Idempotents(s), e -> EquivalenceClassOfElementNC(cong,e)));
   return InverseSemigroup(gens, rec(small := true) );
 end);
 

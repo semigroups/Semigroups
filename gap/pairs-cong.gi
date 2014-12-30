@@ -14,11 +14,11 @@ function(cong)
   s := Range(cong);
   elms := Elements(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
-                 x-> [Position(elms, x[1]), Position(elms, x[2])] );
-  ht:=HTCreate( pairs[1], rec(forflatplainlists:=true,
-              treehashsize:=100003) );
+                 x -> [Position(elms, x[1]), Position(elms, x[2])] );
+  ht := HTCreate( pairs[1], rec(forflatplainlists := true,
+              treehashsize := 100003) );
   cong!.data := rec( cong := cong,
-                     lookup := [1..Size(s)],
+                     lookup := [1 .. Size(s)],
                      pairstoapply := pairs,
                      ht := ht,
                      elms := elms );
@@ -43,7 +43,7 @@ function(pair, cong)
   if not (HasIsFinite(s) and IsFinite(s)) then
     TryNextMethod();
   fi;
-  
+
   elms := Elements(s);
   p1 := Position(elms, pair[1]);
   p2 := Position(elms, pair[2]);
@@ -57,13 +57,13 @@ function(pair, cong)
     if not IsBound(cong!.data) then
       SetupCongData(cong);
     fi;
-    find:=function(table,i)
-      while table[i]<>i do 
-        i:=table[i];
+    find := function(table,i)
+      while table[i] <> i do
+        i := table[i];
       od;
       return i;
     end;
-    return Enumerate(cong, table->find(table,p1)=find(table,p2));
+    return Enumerate(cong, table -> find(table,p1) = find(table,p2));
   fi;
 end);
 
@@ -78,7 +78,7 @@ function(cong)
           "<cong> must be a finite semigroup");
     return;
   fi;
-  Enumerate(cong, x->false);
+  Enumerate(cong, x -> false);
   return AsLookupTable(cong);
 end);
 
@@ -88,76 +88,76 @@ InstallMethod(Enumerate,
 "for a semigroup congruence and a function",
 [IsSemigroupCongruence, IsFunction],
 function(cong, lookfunc)
-  local s, elms, data, table, pairstoapply, ht, right, left, find, union, 
+  local s, elms, data, table, pairstoapply, ht, right, left, find, union,
         genstoapply, i, nr, x, j, y, normalise, result;
-  
+
   if not IsBound(cong!.data) then
     SetupCongData(cong);
   fi;
-  
+
   s := Range(cong);
   data := cong!.data;
-  
+
   table := data.lookup;
   pairstoapply := data.pairstoapply;
   ht := data.ht;
-  
-  right:=RightCayleyGraphSemigroup(s);
-  left:=LeftCayleyGraphSemigroup(s);
-  
-  find:=function(i)
-    while table[i]<>i do 
-      i:=table[i];
+
+  right := RightCayleyGraphSemigroup(s);
+  left := LeftCayleyGraphSemigroup(s);
+
+  find := function(i)
+    while table[i] <> i do
+      i := table[i];
     od;
     return i;
   end;
-  
-  union:=function(pair)
-    local ii, jj; 
-    
-    ii:=find(pair[1]);
-    jj:=find(pair[2]);
-    
-    if ii<jj then 
-      table[jj]:=ii;
-    elif jj<ii then 
-      table[ii]:=jj;
+
+  union := function(pair)
+    local ii, jj;
+
+    ii := find(pair[1]);
+    jj := find(pair[2]);
+
+    if ii < jj then
+      table[jj] := ii;
+    elif jj < ii then
+      table[ii] := jj;
     fi;
   end;
-  
-  genstoapply:=[1..Size(right[1])];
+
+  genstoapply := [1 .. Size(right[1])];
   i := 0; nr := Size(pairstoapply);
-  while i<nr do
+  while i < nr do
     # Have we found what we were looking for?
     if lookfunc(table) then
       # Save our place
-      data.pairstoapply := pairstoapply{[i+1..nr]};
+      data.pairstoapply := pairstoapply{[i + 1 .. nr]};
       return true;
     fi;
-    
-    i:=i+1;
-    x:=pairstoapply[i];
+
+    i := i + 1;
+    x := pairstoapply[i];
     # Add the pair itself
     if x[1] <> x[2] and HTValue(ht, x) = fail then
       HTAdd(ht, x, true);
       union(x);
     fi;
-    for j in genstoapply do 
+    for j in genstoapply do
       # Add the pair's left-multiples
       y := [right[x[1]][j], right[x[2]][j]];
       if y[1] <> y[2] and HTValue(ht, y) = fail then
         HTAdd(ht, y, true);
-        nr:=nr+1;
-        pairstoapply[nr]:=y;
+        nr := nr + 1;
+        pairstoapply[nr] := y;
         union(y);
       fi;
-      
+
       # Add the pair's right-multiples
       y := [left[x[1]][j], left[x[2]][j]];
       if y[1] <> y[2] and HTValue(ht, y) = fail then
         HTAdd(ht, y, true);
-        nr:=nr+1;
-        pairstoapply[nr]:=y;
+        nr := nr + 1;
+        pairstoapply[nr] := y;
         union(y);
       fi;
     od;
@@ -170,7 +170,7 @@ function(cong, lookfunc)
     ht := HTCreate(1);
     next := 1;
     newcong := [];
-    for i in [1..Size(cong)] do
+    for i in [1 .. Size(cong)] do
       ii := find(i);
       newcong[i] := HTValue(ht, ii);
       if newcong[i] = fail then
@@ -181,7 +181,7 @@ function(cong, lookfunc)
     od;
     return newcong;
   end;
-  
+
   result := lookfunc(table);
   SetAsLookupTable(cong, normalise(table));
   Unbind(cong!.data);
@@ -202,7 +202,7 @@ function(cong)
   next := 1;
   tab := AsLookupTable(cong);
   elms := Elements(Range(cong));
-  for i in [1..Size(tab)] do
+  for i in [1 .. Size(tab)] do
     if tab[i] = next then
       classes[next] := EquivalenceClassOfElementNC(cong, elms[i]);
       next := next + 1;
@@ -229,7 +229,7 @@ function(class)
   local p, tab;
   p := Position(Elements(Parent(class)), Representative(class));
   tab := AsLookupTable(EquivalenceClassRelation(class));
-  return Number(tab, n-> n = tab[p]);
+  return Number(tab, n -> n = tab[p]);
 end);
 
 #
@@ -242,7 +242,7 @@ function(class1, class2)
          [Representative(class1), Representative(class2)]
          in EquivalenceClassRelation(class1);
 end);
-        
+
 #
 
 InstallMethod(\=,

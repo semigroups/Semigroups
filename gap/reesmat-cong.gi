@@ -3,7 +3,7 @@ function(s, n, colBlocks, rowBlocks)
   local g, mat, block, i, j, u, v, bi, bj, bu, bv;
   mat := Matrix(s);
   g := UnderlyingSemigroup(s);
-  
+
   # Basic checks
   if not IsNormal(g,n) then
     Error("2nd argument <n> must be a normal subgroup,"); return;
@@ -14,15 +14,15 @@ function(s, n, colBlocks, rowBlocks)
   if not ForAll(rowBlocks, IsList) then
     Error("4th argument <rowBlocks> must be a list of lists,"); return;
   fi;
-  if SortedList(Flat(colBlocks)) <> [1..Size(mat[1])] then
+  if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
     Error("3rd argument <colBlocks> must be a partition ",
           "of the columns of the matrix of <s>,"); return;
   fi;
-  if SortedList(Flat(rowBlocks)) <> [1..Size(mat)] then
+  if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
     Error("4th argument <rowBlocks> must be a partition ",
           "of the rows of the matrix of <s>,"); return;
   fi;
-  
+
   if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
     return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
   else
@@ -37,7 +37,7 @@ function(s, n, colBlocks, rowBlocks)
   local g, mat, block, i, j, u, v, bi, bj, bu, bv;
   mat := Matrix(s);
   g := UnderlyingSemigroup(s);
-  
+
   # Basic checks
   if not IsNormal(g,n) then
     Error("2nd argument <n> must be a normal subgroup,"); return;
@@ -48,15 +48,15 @@ function(s, n, colBlocks, rowBlocks)
   if not ForAll(rowBlocks, IsList) then
     Error("4th argument <rowBlocks> must be a list of lists,"); return;
   fi;
-  if SortedList(Flat(colBlocks)) <> [1..Size(mat[1])] then
+  if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
     Error("3rd argument <colBlocks> must be a partition ",
           "of the columns of the matrix of <s>,"); return;
   fi;
-  if SortedList(Flat(rowBlocks)) <> [1..Size(mat)] then
+  if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
     Error("4th argument <rowBlocks> must be a partition ",
           "of the rows of the matrix of <s>,"); return;
   fi;
-  
+
   if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
     return RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
   else
@@ -75,12 +75,12 @@ function(s, n, colBlocks, rowBlocks)
   # Calculate lookup table for equivalence relations
   colLookup := [];
   rowLookup := [];
-  for i in [1..Length(colBlocks)] do
+  for i in [1 .. Length(colBlocks)] do
     for j in colBlocks[i] do
       colLookup[j] := i;
     od;
   od;
-  for i in [1..Length(rowBlocks)] do
+  for i in [1 .. Length(rowBlocks)] do
     for j in rowBlocks[i] do
       rowLookup[j] := i;
     od;
@@ -110,12 +110,12 @@ function(s, n, colBlocks, rowBlocks)
   # Calculate lookup table for equivalence relations
   colLookup := [];
   rowLookup := [];
-  for i in [1..Length(colBlocks)] do
+  for i in [1 .. Length(colBlocks)] do
     for j in colBlocks[i] do
       colLookup[j] := i;
     od;
   od;
-  for i in [1..Length(rowBlocks)] do
+  for i in [1 .. Length(rowBlocks)] do
     for j in rowBlocks[i] do
       rowLookup[j] := i;
     od;
@@ -168,9 +168,9 @@ InstallMethod(CongruencesOfSemigroup,
 "for finite simple Rees matrix semigroup",
 [IsReesMatrixSemigroup and IsSimpleSemigroup and IsFinite],
 function(s)
-  local subpartitions, congs, mat, g, AddRelation, colBlocksList, rowBlocksList, 
+  local subpartitions, congs, mat, g, AddRelation, colBlocksList, rowBlocksList,
         n, colBlocks, rowBlocks;
-  
+
   # Function to compute all subsets of a relation given by partitions
   subpartitions := function(part)
     local l;
@@ -184,11 +184,11 @@ function(s)
     l := List(l, SSortedList);
     return l;
   end;
-  
+
   congs := [];
   mat := Matrix(s);
   g := UnderlyingSemigroup(s);
-  
+
   # This function combines two congruence classes
   AddRelation := function(R, x, y)
     local xClass, yClass;
@@ -199,13 +199,13 @@ function(s)
       Remove(R,yClass);
     fi;
   end;
-  
+
   # No need to add the universal congruence
-  
+
   # Compute all column and row relations which are subsets of the max relations
-  colBlocksList := subpartitions( [ [1..Size(mat[1])] ] );
-  rowBlocksList := subpartitions( [ [1..Size(mat)] ] );
-  
+  colBlocksList := subpartitions( [ [1 .. Size(mat[1])] ] );
+  rowBlocksList := subpartitions( [ [1 .. Size(mat)] ] );
+
   # Go through all triples and check
   for n in NormalSubgroups(g) do
     for colBlocks in colBlocksList do
@@ -216,7 +216,7 @@ function(s)
       od;
     od;
   od;
-  
+
   return congs;
 end);
 
@@ -229,7 +229,7 @@ function(s)
   local congs, mat, g, AddRelation, maxColBlocks, maxRowBlocks,
         i, j, u, v, n, colBlocks, rowBlocks, colBlocksList, rowBlocksList,
         subpartitions;
-  
+
   # Function to compute all subsets of a relation given by partitions
   subpartitions := function(part)
     local l;
@@ -243,11 +243,11 @@ function(s)
     l := List(l, SSortedList);
     return l;
   end;
-  
+
   congs := [];
   mat := Matrix(s);
   g := UnderlyingSemigroup(s);
-  
+
   # This function combines two congruence classes
   AddRelation := function(R, x, y)
     local xClass, yClass;
@@ -258,34 +258,34 @@ function(s)
       Remove(R,yClass);
     fi;
   end;
-  
+
   # Construct maximum column relation
-  maxColBlocks := List([1..Size(mat[1])], i->[i]);
-  for i in [1..Size(mat[1])] do
-    for j in [i+1..Size(mat[1])] do
-      if ForAll([1..Size(mat)], u->( (mat[u][i]=0) = (mat[u][j]=0) ) ) then
+  maxColBlocks := List([1 .. Size(mat[1])], i -> [i]);
+  for i in [1 .. Size(mat[1])] do
+    for j in [i + 1 .. Size(mat[1])] do
+      if ForAll([1 .. Size(mat)], u -> ( (mat[u][i] = 0) = (mat[u][j] = 0) ) ) then
         AddRelation(maxColBlocks, i, j);
       fi;
     od;
   od;
-  
+
   # Construct maximum row relation
-  maxRowBlocks := List([1..Size(mat)], u->[u]);
-  for u in [1..Size(mat)] do
-    for v in [u+1..Size(mat)] do
-      if ForAll([1..Size(mat[1])], i->( (mat[u][i]=0) = (mat[v][i]=0) ) ) then
+  maxRowBlocks := List([1 .. Size(mat)], u -> [u]);
+  for u in [1 .. Size(mat)] do
+    for v in [u + 1 .. Size(mat)] do
+      if ForAll([1 .. Size(mat[1])], i -> ( (mat[u][i] = 0) = (mat[v][i] = 0) ) ) then
         AddRelation(maxRowBlocks, u, v);
       fi;
     od;
   od;
-  
+
   # Add the universal congruence
   Add(congs, UniversalSemigroupCongruence(s));
-  
+
   # Compute all column and row relations which are subsets of the max relations
   colBlocksList := subpartitions(maxColBlocks);
   rowBlocksList := subpartitions(maxRowBlocks);
-  
+
   # Go through all triples and check
   for n in NormalSubgroups(g) do
     for colBlocks in colBlocksList do
@@ -296,7 +296,7 @@ function(s)
       od;
     od;
   od;
-  
+
   return congs;
 end);
 
@@ -318,14 +318,14 @@ function(s, n, colBlocks, rowBlocks)
   # Go through the column blocks
   for block in colBlocks do
     # Check q-condition for all pairs of columns in this block (L2)
-    for bi in [1..Size(block)] do
-      for bj in [bi+1..Size(block)] do
+    for bi in [1 .. Size(block)] do
+      for bj in [bi + 1 .. Size(block)] do
         i := block[bi];
         j := block[bj];
         # Check all pairs of rows (u,v)
-        for u in [1..Size(mat)] do
-          for v in [u+1..Size(mat)] do
-            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+        for u in [1 .. Size(mat)] do
+          for v in [u + 1 .. Size(mat)] do
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
               return false;
             fi;
           od;
@@ -333,18 +333,18 @@ function(s, n, colBlocks, rowBlocks)
       od;
     od;
   od;
-  
+
   # Go through the row blocks
   for block in rowBlocks do
     # Check q-condition for all pairs of rows in this block (L2)
-    for bu in [1..Size(block)] do
-      for bv in [bu+1..Size(block)] do
+    for bu in [1 .. Size(block)] do
+      for bv in [bu + 1 .. Size(block)] do
         u := block[bu];
         v := block[bv];
         # Check all pairs of columns (i,j)
-        for i in [1..Size(mat[1])] do
-          for j in [i+1..Size(mat[1])] do
-            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+        for i in [1 .. Size(mat[1])] do
+          for j in [i + 1 .. Size(mat[1])] do
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
               return false;
             fi;
           od;
@@ -372,25 +372,25 @@ function(s, n, colBlocks, rowBlocks)
   # Check axioms (L1) and (L2) from Howie p.86, then call NC function
   # Go through the column blocks
   for block in colBlocks do
-    for bj in [2..Size(block)] do
+    for bj in [2 .. Size(block)] do
       # Check columns have zeroes in all the same rows (L1)
-      for u in [1..Size(mat)] do
+      for u in [1 .. Size(mat)] do
         if (mat[u][block[1]] = 0) <> (mat[u][block[bj]] = 0) then
           return false;
         fi;
       od;
     od;
     # Check q-condition for all pairs of columns in this block (L2)
-    for bi in [1..Size(block)] do
-      for bj in [bi+1..Size(block)] do
+    for bi in [1 .. Size(block)] do
+      for bj in [bi + 1 .. Size(block)] do
         i := block[bi];
         j := block[bj];
         # Check all pairs of rows (u,v)
-        for u in [1..Size(mat)] do
+        for u in [1 .. Size(mat)] do
           if mat[u][i] = 0 then continue; fi;
-          for v in [u+1..Size(mat)] do
+          for v in [u + 1 .. Size(mat)] do
             if mat[v][i] = 0 then continue; fi;
-            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
               return false;
             fi;
           od;
@@ -398,28 +398,28 @@ function(s, n, colBlocks, rowBlocks)
       od;
     od;
   od;
-  
+
   # Go through the row blocks
   for block in rowBlocks do
-    for bv in [2..Size(block)] do
+    for bv in [2 .. Size(block)] do
       # Check rows have zeroes in all the same columns (L1)
-      for i in [1..Size(mat[1])] do
+      for i in [1 .. Size(mat[1])] do
         if (mat[block[1]][i] = 0) <> (mat[block[bv]][i] = 0) then
           return false;
         fi;
       od;
     od;
     # Check q-condition for all pairs of rows in this block (L2)
-    for bu in [1..Size(block)] do
-      for bv in [bu+1..Size(block)] do
+    for bu in [1 .. Size(block)] do
+      for bv in [bu + 1 .. Size(block)] do
         u := block[bu];
         v := block[bv];
         # Check all pairs of columns (i,j)
-        for i in [1..Size(mat[1])] do
+        for i in [1 .. Size(mat[1])] do
           if mat[u][i] = 0 then continue; fi;
-          for j in [i+1..Size(mat[1])] do
+          for j in [i + 1 .. Size(mat[1])] do
             if mat[u][j] = 0 then continue; fi;
-            if not (mat[u][i]*mat[v][i]^-1*mat[v][j]*mat[u][j]^-1) in n then
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
               return false;
             fi;
           od;
@@ -443,10 +443,10 @@ function(elm)
     return(mat[1][i] * elm[2] * mat[u][1]);
   else
     # RZMS case
-    for v in [1..Size(mat)] do
+    for v in [1 .. Size(mat)] do
       if mat[v][i] <> 0 then break; fi;
     od;
-    for j in [1..Size(mat[1])] do
+    for j in [1 .. Size(mat[1])] do
       if mat[u][j] <> 0 then break; fi;
     od;
     return(mat[v][i] * elm[2] * mat[u][j]);
@@ -484,29 +484,29 @@ InstallMethod(\in,
 [IsReesMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
 function(pair, cong)
   local s, i, a, u, j, b, v, mat, gpElm;
-  
+
   # Check for validity
   if Size(pair) <> 2 then
     Error("usage: 1st argument <pair> must be a list of length 2,");
     return;
   fi;
   s := Range(cong);
-  if not ForAll(pair, x-> x in s) then
+  if not ForAll(pair, x -> x in s) then
     Error("usage: the elements of the 1st argument <pair> ",
           "must be in the range of the 2nd argument <cong>,");
     return;
   fi;
-  
+
   # Read the elements as (i,a,u) and (j,b,v)
   i := pair[1][1]; a := pair[1][2]; u := pair[1][3];
   j := pair[2][1]; b := pair[2][2]; v := pair[2][3];
-  
+
   # First, the columns and rows must be related
   if not (cong!.colLookup[i] = cong!.colLookup[j] and
           cong!.rowLookup[u] = cong!.rowLookup[v]) then
     return false;
   fi;
-  
+
   # Finally, check Lemma 3.5.6(2) in Howie, with row 1 and column 1
   mat := Matrix(s);
   gpElm := mat[1][i] * a * mat[u][1] * Inverse(mat[1][j] * b * mat[v][1]);
@@ -520,44 +520,44 @@ InstallMethod(\in,
 [IsReesZeroMatrixSemigroupElementCollection, IsRZMSCongruenceByLinkedTriple],
 function(pair, cong)
   local s, mat, gpElm, row, col, rows, cols, a, i, u, j, b, v;
-  
+
   # Check for validity
   if Size(pair) <> 2 then
     Error("usage: 1st argument <pair> must be a list of length 2,");
     return;
   fi;
   s := Range(cong);
-  if not ForAll(pair, x-> x in s) then
+  if not ForAll(pair, x -> x in s) then
     Error("usage: the elements of the 1st argument <pair> ",
           "must be in the range of the 2nd argument <cong>,");
     return;
   fi;
-  
+
   # Handling the case when one or more of the pair are zero
   if pair[1] = pair[2] then
     return true;
   elif MultiplicativeZero(s) in pair then
     return false;
   fi;
-  
+
   # Read the elements as (i,a,u) and (j,b,v)
   i := pair[1][1]; a := pair[1][2]; u := pair[1][3];
   j := pair[2][1]; b := pair[2][2]; v := pair[2][3];
-  
+
   # First, the columns and rows must be related
   if not (cong!.colLookup[i] = cong!.colLookup[j] and
           cong!.rowLookup[u] = cong!.rowLookup[v]) then
     return false;
   fi;
-  
+
   # Finally, check Lemma 3.5.6(2) in Howie
   mat := Matrix(s);
   rows := mat;
   cols := TransposedMat(mat);
   # Pick a valid column and row
-  col := PositionProperty(rows[u], x-> x <> 0);
-  row := PositionProperty(cols[i], x-> x <> 0);
-  gpElm := mat[row][i] * a * mat[u][col] *
+  col := PositionProperty(rows[u], x -> x <> 0);
+  row := PositionProperty(cols[i], x -> x <> 0);
+  gpElm := mat[row][i] * a * mat[u][col] * 
            Inverse(mat[row][j] * b * mat[v][col]);
   return(gpElm in cong!.n);
 end);
@@ -584,12 +584,12 @@ function(cong, elm)
     for v in cong!.rowBlocks[cong!.rowLookup[u]] do
       for nElm in cong!.n do
         # Might be better to use congruence classes after all
-        b := mat[1][j]^-1
-             * nElm 
-             * mat[1][i] 
-             * a 
-             * mat[u][1] 
-             * mat[v][1]^-1;
+        b := mat[1][j] ^ - 1
+             * nElm
+             * mat[1][i]
+             * a
+             * mat[u][1]
+             * mat[v][1] ^ - 1;
         Add(images, ReesMatrixSemigroupElement(s, j, b, v));
       od;
     od;
@@ -619,25 +619,25 @@ function(cong, elm)
   # Read the element as (i,a,u)
   i := elm[1]; a := elm[2]; u := elm[3];
   # Find a non-zero row for this class of columns
-  for row in [1..Size(mat)] do
+  for row in [1 .. Size(mat)] do
     if mat[row][i] <> 0 then break; fi;
   od;
   # Find a non-zero column for this class of rows
-  for col in [1..Size(mat[1])] do
+  for col in [1 .. Size(mat[1])] do
     if mat[u][col] <> 0 then break; fi;
   od;
-  
+
   # Construct congruent elements as (j,b,v)
   for j in cong!.colBlocks[cong!.colLookup[i]] do
     for v in cong!.rowBlocks[cong!.rowLookup[u]] do
       for nElm in cong!.n do
         # Might be better to use congruence classes after all
-        b := mat[row][j]^-1
-             * nElm 
-             * mat[row][i] 
-             * a 
-             * mat[u][col] 
-             * mat[v][col]^-1;
+        b := mat[row][j] ^ - 1
+             * nElm
+             * mat[row][i]
+             * a
+             * mat[u][col]
+             * mat[v][col] ^ - 1;
         Add(images, ReesZeroMatrixSemigroupElement(s, j, b, v));
       od;
     od;
@@ -658,8 +658,8 @@ function(cong)
   n := cong!.n;
   colBlocks := cong!.colBlocks;
   rowBlocks := cong!.rowBlocks;
-  for colClass in [1..Size(colBlocks)] do
-    for rowClass in [1..Size(rowBlocks)] do
+  for colClass in [1 .. Size(colBlocks)] do
+    for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g,n), Representative) do
         elm := ReesMatrixSemigroupElement(
                        s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1] );
@@ -683,8 +683,8 @@ function(cong)
   n := cong!.n;
   colBlocks := cong!.colBlocks;
   rowBlocks := cong!.rowBlocks;
-  for colClass in [1..Size(colBlocks)] do
-    for rowClass in [1..Size(rowBlocks)] do
+  for colClass in [1 .. Size(colBlocks)] do
+    for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g,n), Representative) do
         elm := ReesZeroMatrixSemigroupElement(
                        s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1] );
@@ -743,11 +743,11 @@ function(c1, c2)
   colBlocks := StructuralCopy(c1!.colBlocks);
   rowBlocks := StructuralCopy(c1!.rowBlocks);
   for block in c2!.colBlocks do
-    b1 := PositionProperty(colBlocks, cb-> block[1] in cb);
-    for j in [2..Size(block)] do
+    b1 := PositionProperty(colBlocks, cb -> block[1] in cb);
+    for j in [2 .. Size(block)] do
       if not block[j] in colBlocks[b1] then
         # Combine the classes
-        pos := PositionProperty(colBlocks, cb-> block[j] in cb);
+        pos := PositionProperty(colBlocks, cb -> block[j] in cb);
         Append(colBlocks[b1], colBlocks[pos]);
         Unbind(colBlocks[pos]);
       fi;
@@ -755,19 +755,19 @@ function(c1, c2)
     colBlocks := Compacted(colBlocks);
   od;
   for block in c2!.rowBlocks do
-    b1 := PositionProperty(rowBlocks, rb-> block[1] in rb);
-    for j in [2..Size(block)] do
+    b1 := PositionProperty(rowBlocks, rb -> block[1] in rb);
+    for j in [2 .. Size(block)] do
       if not block[j] in rowBlocks[b1] then
         # Combine the classes
-        pos := PositionProperty(rowBlocks, rb-> block[j] in rb);
+        pos := PositionProperty(rowBlocks, rb -> block[j] in rb);
         Append(rowBlocks[b1], rowBlocks[pos]);
         Unbind(rowBlocks[pos]);
       fi;
     od;
     rowBlocks := Compacted(rowBlocks);
   od;
-  colBlocks := SortedList(List(colBlocks, block-> SortedList(block)));
-  rowBlocks := SortedList(List(rowBlocks, block-> SortedList(block)));
+  colBlocks := SortedList(List(colBlocks, block -> SortedList(block)));
+  rowBlocks := SortedList(List(rowBlocks, block -> SortedList(block)));
   # Make the congruence and return it
   return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
 end);
@@ -789,11 +789,11 @@ function(c1, c2)
   colBlocks := StructuralCopy(c1!.colBlocks);
   rowBlocks := StructuralCopy(c1!.rowBlocks);
   for block in c2!.colBlocks do
-    b1 := PositionProperty(colBlocks, cb-> block[1] in cb);
-    for j in [2..Size(block)] do
+    b1 := PositionProperty(colBlocks, cb -> block[1] in cb);
+    for j in [2 .. Size(block)] do
       if not block[j] in colBlocks[b1] then
         # Combine the classes
-        pos := PositionProperty(colBlocks, cb-> block[j] in cb);
+        pos := PositionProperty(colBlocks, cb -> block[j] in cb);
         Append(colBlocks[b1], colBlocks[pos]);
         Unbind(colBlocks[pos]);
       fi;
@@ -801,19 +801,19 @@ function(c1, c2)
     colBlocks := Compacted(colBlocks);
   od;
   for block in c2!.rowBlocks do
-    b1 := PositionProperty(rowBlocks, rb-> block[1] in rb);
-    for j in [2..Size(block)] do
+    b1 := PositionProperty(rowBlocks, rb -> block[1] in rb);
+    for j in [2 .. Size(block)] do
       if not block[j] in rowBlocks[b1] then
         # Combine the classes
-        pos := PositionProperty(rowBlocks, rb-> block[j] in rb);
+        pos := PositionProperty(rowBlocks, rb -> block[j] in rb);
         Append(rowBlocks[b1], rowBlocks[pos]);
         Unbind(rowBlocks[pos]);
       fi;
     od;
     rowBlocks := Compacted(rowBlocks);
   od;
-  colBlocks := SortedList(List(colBlocks, block-> SortedList(block)));
-  rowBlocks := SortedList(List(rowBlocks, block-> SortedList(block)));
+  colBlocks := SortedList(List(colBlocks, block -> SortedList(block)));
+  rowBlocks := SortedList(List(rowBlocks, block -> SortedList(block)));
   # Make the congruence and return it
   return RZMSCongruenceByLinkedTriple(Range(c1), n, colBlocks, rowBlocks);
 end);
@@ -831,16 +831,16 @@ function(c1, c2)
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
   # Calculate the intersection of the column and row relations
-  colBlocks := []; cols := [1..Size(c1!.colLookup)];
-  rowBlocks := []; rows := [1..Size(c1!.rowLookup)];
-  for i in [1..Size(cols)] do
+  colBlocks := []; cols := [1 .. Size(c1!.colLookup)];
+  rowBlocks := []; rows := [1 .. Size(c1!.rowLookup)];
+  for i in [1 .. Size(cols)] do
     if cols[i] = 0 then continue; fi;
     block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
                           c2!.colBlocks[c2!.colLookup[i]]);
     for j in block do cols[j] := 0; od;
     Add(colBlocks, block);
   od;
-  for u in [1..Size(rows)] do
+  for u in [1 .. Size(rows)] do
     if rows[u] = 0 then continue; fi;
     block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
                           c2!.rowBlocks[c2!.rowLookup[u]]);
@@ -864,16 +864,16 @@ function(c1, c2)
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
   # Calculate the intersection of the column and row relations
-  colBlocks := []; cols := [1..Size(c1!.colLookup)];
-  rowBlocks := []; rows := [1..Size(c1!.rowLookup)];
-  for i in [1..Size(cols)] do
+  colBlocks := []; cols := [1 .. Size(c1!.colLookup)];
+  rowBlocks := []; rows := [1 .. Size(c1!.rowLookup)];
+  for i in [1 .. Size(cols)] do
     if cols[i] = 0 then continue; fi;
     block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
                           c2!.colBlocks[c2!.colLookup[i]]);
     for j in block do cols[j] := 0; od;
     Add(colBlocks, block);
   od;
-  for u in [1..Size(rows)] do
+  for u in [1 .. Size(rows)] do
     if rows[u] = 0 then continue; fi;
     block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
                           c2!.rowBlocks[c2!.rowLookup[u]]);
@@ -897,10 +897,10 @@ function(cong, nCoset, colClass, rowClass)
     Error("2nd argument <nCoset> must be a coset of <cong>'s field n in the ",
           "underlying (semi)group of the Rees 0-matrix semigroup,"); return;
   fi;
-  if not colClass in [1..Size(cong!.colBlocks)] then
+  if not colClass in [1 .. Size(cong!.colBlocks)] then
     Error("3rd argument <colClass> is out of range,"); return;
   fi;
-  if not rowClass in [1..Size(cong!.rowBlocks)] then
+  if not rowClass in [1 .. Size(cong!.rowBlocks)] then
     Error("4th argument <rowClass> is out of range,"); return;
   fi;
   return RMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
@@ -919,10 +919,10 @@ function(cong, nCoset, colClass, rowClass)
     Error("2nd argument <nCoset> must be a coset of <cong>'s field n in the ",
           "underlying (semi)group of the Rees 0-matrix semigroup,"); return;
   fi;
-  if not colClass in [1..Size(cong!.colBlocks)] then
+  if not colClass in [1 .. Size(cong!.colBlocks)] then
     Error("3rd argument <colClass> is out of range,"); return;
   fi;
-  if not rowClass in [1..Size(cong!.rowBlocks)] then
+  if not rowClass in [1 .. Size(cong!.rowBlocks)] then
     Error("4th argument <rowClass> is out of range,"); return;
   fi;
   return RZMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
@@ -933,7 +933,7 @@ end);
 InstallMethod(RMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
 [IsRMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt], 
+ IsRightCoset, IsPosInt, IsPosInt],
 function(cong, nCoset, colClass, rowClass)
   local fam, class;
   fam := FamilyObj(Range(cong));
@@ -951,7 +951,7 @@ end);
 InstallMethod(RZMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
 [IsRZMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt], 
+ IsRightCoset, IsPosInt, IsPosInt],
 function(cong, nCoset, colClass, rowClass)
   local fam, class;
   fam := FamilyObj(Range(cong));
@@ -1133,8 +1133,8 @@ InstallMethod(Size,
 function(class)
   local cong;
   cong := Parent(class);
-  return( Size(cong!.n) *
-          Size(cong!.colBlocks[class!.colClass]) *
+  return( Size(cong!.n) * 
+          Size(cong!.colBlocks[class!.colClass]) * 
           Size(cong!.rowBlocks[class!.rowClass]) );
 end);
 
@@ -1151,8 +1151,8 @@ function(class)
   fi;
   # Otherwise
   cong := Parent(class);
-  return( Size(cong!.n) *
-          Size(cong!.colBlocks[class!.colClass]) *
+  return( Size(cong!.n) * 
+          Size(cong!.colBlocks[class!.colClass]) * 
           Size(cong!.rowBlocks[class!.rowClass]) );
 end);
 
@@ -1197,9 +1197,9 @@ function(class)
   u := cong!.rowBlocks[class!.rowClass][1];
   # Pick another row and column
   mat := Matrix(s);
-  a := mat[1][i]^-1
+  a := mat[1][i] ^ - 1
        * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
-       * mat[u][1]^-1;
+       * mat[u][1] ^ - 1;
   return ReesMatrixSemigroupElement(s, i, a, u);
 end);
 
@@ -1221,15 +1221,15 @@ function(class)
   u := cong!.rowBlocks[class!.rowClass][1];
   # Pick another row and column with appropriate non-zero entries
   mat := Matrix(s);
-  for v in [1..Size(mat)] do
+  for v in [1 .. Size(mat)] do
     if mat[v][i] <> 0 then break; fi;
   od;
-  for j in [1..Size(mat[1])] do
+  for j in [1 .. Size(mat[1])] do
     if mat[u][j] <> 0 then break; fi;
   od;
-  a := mat[v][i]^-1
+  a := mat[v][i] ^ - 1
        * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
-       * mat[u][j]^-1;
+       * mat[u][j] ^ - 1;
   return ReesZeroMatrixSemigroupElement(s, i, a, u);
 end);
 
@@ -1243,10 +1243,10 @@ function(cong)
   s := Range(cong);
   g := UnderlyingSemigroup(s);
   m := Matrix(s);
-  
+
   # Create a list of generating pairs
   pairs := [];
-  
+
   # PAIRS FROM THE NORMAL SUBGROUP
   # for each x in the subgroup,
   # (1,x,1) is related to (1,id,1)
@@ -1254,31 +1254,31 @@ function(cong)
     Add(pairs, [ReesMatrixSemigroupElement(s,1,x,1),
                 ReesMatrixSemigroupElement(s,1,One(g),1) ] );
   od;
-  
+
   # PAIRS FROM THE COLUMNS RELATION
   # For each class in the relation...
   for bl in cong!.colBlocks do
     # For each column in the class...
-    for j in [2..Size(bl)] do
+    for j in [2 .. Size(bl)] do
       # For each row in the matrix...
-      for rowNo in [1..Size(m)] do
+      for rowNo in [1 .. Size(m)] do
         Add(pairs,
-            [ReesMatrixSemigroupElement(s,bl[1],m[rowNo][bl[1]]^-1,rowNo),
-             ReesMatrixSemigroupElement(s,bl[j],m[rowNo][bl[j]]^-1,rowNo)]);
+            [ReesMatrixSemigroupElement(s,bl[1],m[rowNo][bl[1]] ^ - 1,rowNo),
+             ReesMatrixSemigroupElement(s,bl[j],m[rowNo][bl[j]] ^ - 1,rowNo)]);
       od;
     od;
   od;
-  
+
   # PAIRS FROM THE ROWS RELATION
   # For each class in the relation...
   for bl in cong!.rowBlocks do
     # For each row in the class...
-    for i in [2..Size(bl)] do
+    for i in [2 .. Size(bl)] do
       # For each column in the matrix...
-      for colNo in [1..Size(m[1])] do
+      for colNo in [1 .. Size(m[1])] do
         Add(pairs,
-            [ReesMatrixSemigroupElement(s,colNo,m[bl[1]][colNo]^-1,bl[1]),
-             ReesMatrixSemigroupElement(s,colNo,m[bl[i]][colNo]^-1,bl[i])]);
+            [ReesMatrixSemigroupElement(s,colNo,m[bl[1]][colNo] ^ - 1,bl[1]),
+             ReesMatrixSemigroupElement(s,colNo,m[bl[i]][colNo] ^ - 1,bl[i])]);
       od;
     od;
   od;
@@ -1295,48 +1295,48 @@ function(cong)
   s := Range(cong);
   g := UnderlyingSemigroup(s);
   m := Matrix(s);
-  
+
   # Create a list of generating pairs
   pairs := [];
-  
+
   # PAIRS FROM THE NORMAL SUBGROUP
   # First, find a matrix entry not equal to zero
-  i1 := PositionProperty(m[1], x-> x<>0);
-  
+  i1 := PositionProperty(m[1], x -> x <> 0);
+
   # for each x in the subgroup,
   # (i1,x,1) is related to (i1,id,1)
   for x in cong!.n do
     Add(pairs, [ReesZeroMatrixSemigroupElement(s,i1,x,1),
                 ReesZeroMatrixSemigroupElement(s,i1,One(g),1) ] );
   od;
-  
+
   # PAIRS FROM THE COLUMNS RELATION
   # For each class in the relation...
   for bl in cong!.colBlocks do
     # For each column in the class...
-    for j in [2..Size(bl)] do
+    for j in [2 .. Size(bl)] do
       # For each row in the matrix...
-      for rowNo in [1..Size(m)] do
+      for rowNo in [1 .. Size(m)] do
         if m[rowNo][bl[1]] <> 0 then
           Add(pairs,
-              [ReesZeroMatrixSemigroupElement(s,bl[1],m[rowNo][bl[1]]^-1,rowNo),
-               ReesZeroMatrixSemigroupElement(s,bl[j],m[rowNo][bl[j]]^-1,rowNo)] );
+              [ReesZeroMatrixSemigroupElement(s,bl[1],m[rowNo][bl[1]] ^ - 1,rowNo),
+               ReesZeroMatrixSemigroupElement(s,bl[j],m[rowNo][bl[j]] ^ - 1,rowNo)] );
         fi;
       od;
     od;
   od;
-  
+
   # PAIRS FROM THE ROWS RELATION
   # For each class in the relation...
   for bl in cong!.rowBlocks do
     # For each row in the class...
-    for i in [2..Size(bl)] do
+    for i in [2 .. Size(bl)] do
       # For each column in the matrix...
-      for colNo in [1..Size(m[1])] do
+      for colNo in [1 .. Size(m[1])] do
         if m[bl[1]][colNo] <> 0 then
           Add(pairs,
-              [ReesZeroMatrixSemigroupElement(s,colNo,m[bl[1]][colNo]^-1,bl[1]),
-               ReesZeroMatrixSemigroupElement(s,colNo,m[bl[i]][colNo]^-1,bl[i])] );
+              [ReesZeroMatrixSemigroupElement(s,colNo,m[bl[1]][colNo] ^ - 1,bl[1]),
+               ReesZeroMatrixSemigroupElement(s,colNo,m[bl[i]][colNo] ^ - 1,bl[i])] );
         fi;
       od;
     od;
@@ -1362,7 +1362,7 @@ InstallMethod(AsRMSCongruenceByLinkedTriple,
 "for semigroup congruence by generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local pairs, s, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i, 
+  local pairs, s, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i,
         j, normalise, colBlocks, rowBlocks;
   # Extract some information
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
@@ -1371,16 +1371,16 @@ function(cong)
   mat := Matrix(s);
 
   # Lookup tables for the column and row equivalences
-  colLookup := [1..Size(mat[1])];
-  rowLookup := [1..Size(mat)];
+  colLookup := [1 .. Size(mat[1])];
+  rowLookup := [1 .. Size(mat)];
 
   # Normal subgroup
   n := Subgroup(g, []);
 
   # Functions for union-find
   find := function(table, n)
-    while table[n]<>n do
-      n:=table[n];
+    while table[n] <> n do
+      n := table[n];
     od;
     return n;
   end;
@@ -1406,22 +1406,22 @@ function(cong)
     union(rowLookup, pair[1][3], pair[2][3]);
 
     # Associate group entries in the normal subgroup
-    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2])^-1);
+    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ - 1);
 
     # Ensure linkedness
-    for v in [2..Size(mat)] do
+    for v in [2 .. Size(mat)] do
       n := ClosureGroup( n,
                    mat[1][pair[1][1]]
-                   * mat[v][pair[1][1]] ^-1
+                   * mat[v][pair[1][1]] ^ - 1
                    * mat[v][pair[2][1]]
-                   * mat[1][pair[2][1]] ^-1 );
+                   * mat[1][pair[2][1]] ^ - 1 );
     od;
-    for j in [2..Size(mat[1])] do
+    for j in [2 .. Size(mat[1])] do
       n := ClosureGroup( n,
                    mat[pair[1][3]][1]
-                   * mat[pair[2][3]][1] ^-1
+                   * mat[pair[2][3]][1] ^ - 1
                    * mat[pair[2][3]][j]
-                   * mat[pair[1][3]][j] ^-1 );
+                   * mat[pair[1][3]][j] ^ - 1 );
     od;
   od;
 
@@ -1431,7 +1431,7 @@ function(cong)
     ht := HTCreate(1);
     next := 1;
     newtab := [];
-    for i in [1..Size(table)] do
+    for i in [1 .. Size(table)] do
       ii := find(table, i);
       newtab[i] := HTValue(ht, ii);
       if newtab[i] = fail then
@@ -1446,18 +1446,18 @@ function(cong)
   rowLookup := normalise(rowLookup);
 
   # Make blocks
-  colBlocks := List([1..Maximum(colLookup)], x->[]);
-  rowBlocks := List([1..Maximum(rowLookup)], x->[]);
-  for i in [1..Size(colLookup)] do
+  colBlocks := List([1 .. Maximum(colLookup)], x -> []);
+  rowBlocks := List([1 .. Maximum(rowLookup)], x -> []);
+  for i in [1 .. Size(colLookup)] do
     Add(colBlocks[colLookup[i]], i);
   od;
-  for u in [1..Size(rowLookup)] do
+  for u in [1 .. Size(rowLookup)] do
     Add(rowBlocks[rowLookup[u]], u);
   od;
-  
+
   # Make n normal
   n := NormalClosure(g,n);
-  
+
   cong := RMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
@@ -1469,95 +1469,95 @@ InstallMethod(AsRZMSCongruenceByLinkedTriple,
 "for semigroup congruence by generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local pairs, s, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i, 
+  local pairs, s, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i,
         j, normalise, colBlocks, rowBlocks;
-  
+
   # Extract some information
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   s := Range(cong);
   g := UnderlyingSemigroup(s);
   mat := Matrix(s);
-  
+
   # Lookup tables for the column and row equivalences
-  colLookup := [1..Size(mat[1])];
-  rowLookup := [1..Size(mat)];
-  
+  colLookup := [1 .. Size(mat[1])];
+  rowLookup := [1 .. Size(mat)];
+
   # Normal subgroup
   n := Subgroup(g, []);
-  
+
   # Functions for union-find
   find := function(table, n)
-    while table[n]<>n do 
-      n:=table[n];
+    while table[n] <> n do
+      n := table[n];
     od;
     return n;
   end;
-  
+
   union := function(table, x, y)
     x := find(table, x);
     y := find(table, y);
-    if x < y then 
+    if x < y then
       table[y] := x;
-    elif y < x then 
+    elif y < x then
       table[x] := y;
     fi;
   end;
-  
+
   for pair in pairs do
     # If this pair adds no information, ignore it
     if pair[1] = pair[2] then
       continue;
     fi;
-    
+
     # Does this relate any non-zero elements to zero?
     if pair[1] = MultiplicativeZero(s)
        or pair[2] = MultiplicativeZero(s)
-       or ForAny( [1..Size(mat)],
-               u -> (mat[u][pair[1][1]] = 0) 
+       or ForAny( [1 .. Size(mat)],
+               u -> (mat[u][pair[1][1]] = 0)
                <>   (mat[u][pair[2][1]] = 0) )
-       or ForAny( [1..Size(mat[1])],
+       or ForAny( [1 .. Size(mat[1])],
                i -> (mat[pair[1][3]][i] = 0)
                <>   (mat[pair[2][3]][i] = 0) ) then
       return UniversalSemigroupCongruence(s);
     fi;
-    
+
     # Associate the columns and rows
     union(colLookup, pair[1][1], pair[2][1]);
     union(rowLookup, pair[1][3], pair[2][3]);
-    
+
     # Associate group entries in the normal subgroup
-    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2])^-1);
-    
+    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ - 1);
+
     # Ensure linkedness
-    u := PositionProperty([1..Size(mat)], u-> mat[u][pair[1][1]]<>0);
-    for v in [u+1..Size(mat)] do
+    u := PositionProperty([1 .. Size(mat)], u -> mat[u][pair[1][1]] <> 0);
+    for v in [u + 1 .. Size(mat)] do
       if mat[v][pair[1][1]] = 0 then
         continue;
       fi;
       n := ClosureGroup( n,
                    mat[u][pair[1][1]]
-                   * mat[v][pair[1][1]] ^-1
+                   * mat[v][pair[1][1]] ^ - 1
                    * mat[v][pair[2][1]]
-                   * mat[u][pair[2][1]] ^-1 );
+                   * mat[u][pair[2][1]] ^ - 1 );
     od;
-    i := PositionProperty([1..Size(mat[1])], k-> mat[pair[1][3]][k]<>0);
-    for j in [i+1..Size(mat[1])] do
+    i := PositionProperty([1 .. Size(mat[1])], k -> mat[pair[1][3]][k] <> 0);
+    for j in [i + 1 .. Size(mat[1])] do
       if mat[pair[1][3]][j] = 0 then continue; fi;
       n := ClosureGroup( n,
                    mat[pair[1][3]][i]
-                   * mat[pair[2][3]][i] ^-1
+                   * mat[pair[2][3]][i] ^ - 1
                    * mat[pair[2][3]][j]
-                   * mat[pair[1][3]][j] ^-1 );
+                   * mat[pair[1][3]][j] ^ - 1 );
     od;
   od;
-  
+
   # Normalise lookup tables
   normalise := function(table)
     local ht, next, newtab, i, ii;
     ht := HTCreate(1);
     next := 1;
     newtab := [];
-    for i in [1..Size(table)] do
+    for i in [1 .. Size(table)] do
       ii := find(table, i);
       newtab[i] := HTValue(ht, ii);
       if newtab[i] = fail then
@@ -1570,20 +1570,20 @@ function(cong)
   end;
   colLookup := normalise(colLookup);
   rowLookup := normalise(rowLookup);
-  
+
   # Make blocks
-  colBlocks := List([1..Maximum(colLookup)], x->[]);
-  rowBlocks := List([1..Maximum(rowLookup)], x->[]);
-  for i in [1..Size(colLookup)] do
+  colBlocks := List([1 .. Maximum(colLookup)], x -> []);
+  rowBlocks := List([1 .. Maximum(rowLookup)], x -> []);
+  for i in [1 .. Size(colLookup)] do
     Add(colBlocks[colLookup[i]], i);
   od;
-  for u in [1..Size(rowLookup)] do
+  for u in [1 .. Size(rowLookup)] do
     Add(rowBlocks[rowLookup[u]], u);
   od;
-  
+
   # Make n normal
   n := NormalClosure(g,n);
-  
+
   cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;

@@ -9,7 +9,7 @@ function(s)
   SetRange(cong, s);
   return cong;
 end);
-        
+
 #
 
 InstallMethod(ViewObj,
@@ -66,7 +66,7 @@ InstallMethod(ImagesElm,
 [IsUniversalSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    Error("usage: 2nd argument <elm> must be in <cong>'s semigroup"); return; 
+    Error("usage: 2nd argument <elm> must be in <cong>'s semigroup"); return;
   fi;
   return Elements(Range(cong));
 end);
@@ -172,7 +172,7 @@ function(cong, elm)
   SetRepresentative(class, elm);
   return class;
 end);
-        
+
 #
 
 InstallMethod( \in,
@@ -220,7 +220,7 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 function(cong)
   local s;
   s := Range(cong);
-  return List(Elements(s), x-> [x, Representative(s)]);
+  return List(Elements(s), x -> [x, Representative(s)]);
 end);
 
 #

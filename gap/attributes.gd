@@ -27,13 +27,13 @@ DeclareAttribute("SmallSemigroupGeneratingSet", IsActingSemigroup);
 DeclareAttribute("SmallMonoidGeneratingSet", IsAssociativeElementCollection and
 IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallMonoidGeneratingSet", IsActingSemigroup and IsMonoid);
-DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
+DeclareAttribute("SmallInverseSemigroupGeneratingSet",
 IsGeneratorsOfInverseSemigroup);
-DeclareAttribute("SmallInverseSemigroupGeneratingSet", 
+DeclareAttribute("SmallInverseSemigroupGeneratingSet",
 IsInverseSemigroup and IsActingSemigroup);
-DeclareAttribute("SmallInverseMonoidGeneratingSet", 
+DeclareAttribute("SmallInverseMonoidGeneratingSet",
 IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection);
-DeclareAttribute("SmallInverseMonoidGeneratingSet", 
+DeclareAttribute("SmallInverseMonoidGeneratingSet",
 IsInverseMonoid and IsActingSemigroup);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 

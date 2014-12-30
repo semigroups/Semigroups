@@ -20,7 +20,7 @@ DeclareAttribute("CyclesOfTransformationSemigroup",
 IsTransformationSemigroup);
 
 DeclareOperation("IsSynchronizingSemigroup", [IsTransformationSemigroup]);
-DeclareOperation("IsSynchronizingSemigroup", 
+DeclareOperation("IsSynchronizingSemigroup",
 [IsTransformationSemigroup, IsPosInt]);
 DeclareOperation("IsSynchronizingTransformationCollection",
 [IsTransformationCollection, IsPosInt]);
