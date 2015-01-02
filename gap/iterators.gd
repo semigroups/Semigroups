@@ -20,12 +20,12 @@ DeclareGlobalFunction("ListIterator");
 
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfHClasses", [IsSemigroup]);
-DeclareOperation("IteratorOfLClasses", [IsSemigroup]); 
+DeclareOperation("IteratorOfLClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
 
-DeclareOperation("IteratorOfDClassReps", [IsSemigroup]); 
-DeclareOperation("IteratorOfLClassReps", [IsSemigroup]); 
-DeclareOperation("IteratorOfHClassReps", [IsSemigroup]); 
+DeclareOperation("IteratorOfDClassReps", [IsSemigroup]);
+DeclareOperation("IteratorOfLClassReps", [IsSemigroup]);
+DeclareOperation("IteratorOfHClassReps", [IsSemigroup]);
 DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);
 
 DeclareOperation("IteratorOfRClassData", [IsSemigroup]);

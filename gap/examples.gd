@@ -1,11 +1,11 @@
-############################################################################# 
-## 
+#############################################################################
+##
 #W  examples.gd
 #Y  Copyright (C) 2013-14                                 James D. Mitchell
-## 
-##  Licensing information can be found in the README file of this package. 
-## 
-############################################################################# 
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
 ##
 
 DeclareOperation("JonesMonoid", [IsPosInt]);

@@ -7,16 +7,16 @@
 ##
 #############################################################################
 ##
-## this file contains utilies for use with the Semigroups package. 
+## this file contains utilies for use with the Semigroups package.
 
 #
 
 BindGlobal("SemigroupsDocXMLFiles",
   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
    "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
-   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml", 
-   "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml", 
-   "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml", 
+   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml",
+   "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml",
+   "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
    "../PackageInfo.g"]);
 
 # arg is the number of threads, defaults to 2...
@@ -25,59 +25,59 @@ BindGlobal("SemigroupsParallelTestAll",
 function(arg)
   local n, dir_str, tst, dir, omit, files, filesplit, test, stringfile, farm,
   out, str, filename, file;
-  
-  if Length(arg)<>0 then 
-    n:=arg[1];
-  else 
-    n:=2;
+
+  if Length(arg) <> 0 then
+    n := arg[1];
+  else
+    n := 2;
   fi;
-  
-  Print("Reading all .tst files in the directory semigroups/tst/...\n\n"); 
-  dir_str:=Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
-  tst:=DirectoryContents(dir_str);
-  dir:=Directory(dir_str);
 
-  omit:=SemigroupsOmitFromTestManualExamples;
+  Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
+  dir_str := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+  tst := DirectoryContents(dir_str);
+  dir := Directory(dir_str);
 
-  if Length(omit)>0 then 
+  omit := SemigroupsOmitFromTestManualExamples;
+
+  if Length(omit) > 0 then
     Print("not testing files containing the strings");
-    for str in omit do 
+    for str in omit do
       Print(", \"", str, "\"");
     od;
     Print(" . . .\n\n");
   fi;
-  files:=[]; 
+  files := [];
   for filename in tst do
 
-    filesplit:=SplitString(filename, ".");
-    if Length(filesplit)>=2 and filesplit[Length(filesplit)]="tst" then
-      test:=true;
-      stringfile:=StringFile(Concatenation(dir_str, "/", filename));
-      for str in omit do 
-        if PositionSublist(stringfile, str)<>fail then 
-          Print("not testing ", filename, ", it contains a test involving ", 
+    filesplit := SplitString(filename, ".");
+    if Length(filesplit) >= 2 and filesplit[Length(filesplit)] = "tst" then
+      test := true;
+      stringfile := StringFile(Concatenation(dir_str, "/", filename));
+      for str in omit do
+        if PositionSublist(stringfile, str) <> fail then
+          Print("not testing ", filename, ", it contains a test involving ",
           str, ", which will not work . . .\n\n");
-          test:=false;
+          test := false;
           break;
         fi;
       od;
-      if test then 
+      if test then
         Add(files, [Concatenation(dir_str, "/", filename)]);
       fi;
     fi;
-  od;  
+  od;
 
-  farm:=ParWorkerFarmByFork(Test, rec(NumberJobs:=n));
-  
-  for file in files do 
+  farm := ParWorkerFarmByFork(Test, rec(NumberJobs := n));
+
+  for file in files do
     Submit(farm, file);
   od;
 
-  while Length(farm!.outqueue)<Length(files) do 
+  while Length(farm!.outqueue) < Length(files) do
     DoQueues(farm, false);
   od;
 
-  out:=Pickup(farm);
+  out := Pickup(farm);
   Kill(farm);
   return out;
 end);
@@ -87,35 +87,35 @@ end);
 BindGlobal("SemigroupsTestRec", rec());
 MakeReadWriteGlobal("SemigroupsTestRec");
 
-InstallGlobalFunction(SemigroupsStartTest, 
+InstallGlobalFunction(SemigroupsStartTest,
 function()
   local record;
 
-  record:=SemigroupsTestRec;  
-  
+  record := SemigroupsTestRec;
+
   # handle info levels etc
-  record.InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-  record.InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-  
-  record.PartialPermDisplayLimit:=UserPreference("PartialPermDisplayLimit");;
+  record.InfoLevelInfoWarning := InfoLevel(InfoWarning);;
+  record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);;
+
+  record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");;
   record.TransformationDisplayLimit
-   :=UserPreference("TransformationDisplayLimit");;
-  record.NotationForPartialPerms:=UserPreference("NotationForPartialPerms");;
-  record.NotationForTransformations:=
+   := UserPreference("TransformationDisplayLimit");;
+  record.NotationForPartialPerms := UserPreference("NotationForPartialPerms");;
+  record.NotationForTransformations := 
    UserPreference("NotationForTransformations");;
- 
+
   record.FreeInverseSemigroupElementDisplay := UserPreference("semigroups",
     "FreeInverseSemigroupElementDisplay");
 
   SetInfoLevel(InfoWarning, 0);;
   SetInfoLevel(InfoSemigroups, 0);
-  
+
   SetUserPreference("PartialPermDisplayLimit", 100);;
   SetUserPreference("TransformationDisplayLimit", 100);;
   SetUserPreference("NotationForPartialPerms", "component");;
   SetUserPreference("NotationForTransformations", "input");;
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
- 
+
   # timing
   record.timeofday := IO_gettimeofday();
 
@@ -130,32 +130,32 @@ end);
 
 #
 
-InstallGlobalFunction(SemigroupsStopTest, 
+InstallGlobalFunction(SemigroupsStopTest,
 function(file)
   local timeofday, record, elapsed, str;
-  
-  # handle info levels 
 
-  record:=SemigroupsTestRec;  
-  
+  # handle info levels
+
+  record := SemigroupsTestRec;
+
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);;
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
-  
-  SetUserPreference("PartialPermDisplayLimit", 
+
+  SetUserPreference("PartialPermDisplayLimit",
    record.PartialPermDisplayLimit);
-  SetUserPreference("TransformationDisplayLimit", 
+  SetUserPreference("TransformationDisplayLimit",
    record.TransformationDisplayLimit);
-  SetUserPreference("NotationForPartialPerms", 
+  SetUserPreference("NotationForPartialPerms",
    record.NotationForPartialPerms);
   SetUserPreference("NotationForTransformations",
    record.NotationForTransformations);
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
    record.FreeInverseSemigroupElementDisplay);
-  
+
   # timing
   timeofday := IO_gettimeofday();
- 
-  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000 
+
+  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
    + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
 
   str := "elapsed time: ";
@@ -163,11 +163,11 @@ function(file)
   Append(str, "ms\n");
 
   if not IsBound( GAPInfo.TestData.START_TIME )  then
-      Error( "`STOP_TEST' command without `START_TEST' command for `", 
+      Error( "`STOP_TEST' command without `START_TEST' command for `",
        file, "'" );
   fi;
   Print( GAPInfo.TestData.START_NAME, "\n" );
-  
+
   SetAssertionLevel( GAPInfo.TestData.AssertionLevel );
   Unbind( GAPInfo.TestData.AssertionLevel );
   Unbind( GAPInfo.TestData.START_TIME );
@@ -181,14 +181,14 @@ end);
 
 #
 
-InstallGlobalFunction(SemigroupsDir, 
+InstallGlobalFunction(SemigroupsDir,
 function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
 #
 
-InstallGlobalFunction(SemigroupsMakeDoc, 
+InstallGlobalFunction(SemigroupsMakeDoc,
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
    InstallationPath, "/doc"), "main.xml", SemigroupsDocXMLFiles, "semigroups",
@@ -198,52 +198,52 @@ end);
 
 #
 
-InstallGlobalFunction(SemigroupsTestAll, 
+InstallGlobalFunction(SemigroupsTestAll,
 function()
   local dir_str, tst, dir, omit, ex, filesplit, test, stringfile, str, filename;
-  
-  Print("Reading all .tst files in the directory semigroups/tst/...\n\n"); 
-  dir_str:=Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
-  tst:=DirectoryContents(dir_str);
-  dir:=Directory(dir_str);
 
-  omit:=SemigroupsOmitFromTestManualExamples;
+  Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
+  dir_str := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+  tst := DirectoryContents(dir_str);
+  dir := Directory(dir_str);
 
-  if Length(omit)>0 then 
+  omit := SemigroupsOmitFromTestManualExamples;
+
+  if Length(omit) > 0 then
     Print("not testing files containing the strings");
-    for str in omit do 
+    for str in omit do
       Print(", \"", str, "\"");
     od;
     Print(" . . .\n\n");
   fi;
-  
+
   for filename in tst do
 
-    filesplit:=SplitString(filename, ".");
-    if Length(filesplit)>=2 and filesplit[Length(filesplit)]="tst" then
-      test:=true;
-      stringfile:=StringFile(Concatenation(dir_str, "/", filename));
-      for str in omit do 
-        if PositionSublist(stringfile, str)<>fail then 
-          Print("not testing ", filename, ", it contains a test involving ", 
+    filesplit := SplitString(filename, ".");
+    if Length(filesplit) >= 2 and filesplit[Length(filesplit)] = "tst" then
+      test := true;
+      stringfile := StringFile(Concatenation(dir_str, "/", filename));
+      for str in omit do
+        if PositionSublist(stringfile, str) <> fail then
+          Print("not testing ", filename, ", it contains a test involving ",
           str, ", which will not work . . .\n\n");
-          test:=false;
+          test := false;
           break;
         fi;
       od;
-      if test then 
+      if test then
         Print("reading ", dir_str,"/", filename, " . . .\n");
         Test(Filename(dir, filename));
         Print("\n");
       fi;
     fi;
-  od;  
+  od;
   return;
 end);
 
 #
 
-InstallGlobalFunction(SemigroupsTestInstall, 
+InstallGlobalFunction(SemigroupsTestInstall,
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
@@ -254,31 +254,31 @@ end);
 
 InstallGlobalFunction(SemigroupsManualExamples,
 function()
-return 
-  ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
+return
+  ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"),
   "main.xml",  SemigroupsDocXMLFiles, "Single" );
 end);
 
 # if <arg> is some strings, then any example containing any of these strings is
 # omitted from the test...
 
-InstallGlobalFunction(SemigroupsTestManualExamples, 
+InstallGlobalFunction(SemigroupsTestManualExamples,
 function()
   local ex, omit, str;
 
-  ex:=SemigroupsManualExamples(); 
-  omit:=SemigroupsOmitFromTestManualExamples;
-  if Length(omit)>0 then 
+  ex := SemigroupsManualExamples();
+  omit := SemigroupsOmitFromTestManualExamples;
+  if Length(omit) > 0 then
     Print("# not testing examples containing the strings");
-    for str in omit do 
-      ex:=Filtered(ex, x-> PositionSublist(x[1][1], str)=fail);
+    for str in omit do
+      ex := Filtered(ex, x -> PositionSublist(x[1][1], str) = fail);
       Print(", \"", str, "\"");
     od;
     Print(" . . .\n");
   fi;
   SemigroupsStartTest();
   RunExamples(ex);
-  SemigroupsStopTest();
+  SemigroupsStopTest("");
   return;
 end);
 

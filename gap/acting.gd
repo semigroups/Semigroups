@@ -21,11 +21,11 @@ DeclareOperation("OrbitGraph", [IsSemigroupData]);
 DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
 DeclareCategory("IsUniversalFakeOne", IsAssociativeElement);
-BindGlobal("UniversalFakeOneFamily", 
+BindGlobal("UniversalFakeOneFamily",
   NewFamily("UniversalFakeOneFamily", IsUniversalFakeOne,
    CanEasilyCompareElements, CanEasilyCompareElements));
-                                                
-BindGlobal("UniversalFakeOne", 
+
+BindGlobal("UniversalFakeOne",
 Objectify(NewType(UniversalFakeOneFamily, IsUniversalFakeOne), rec()));
 
 #EOF
