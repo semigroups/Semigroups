@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="SemigroupCongruence">
   <ManSection>
-    <Oper Name="SemigroupCongruence" Arg="S, pairs"/>
+    <Func Name="SemigroupCongruence" Arg="S, pairs"/>
     <Returns>A semigroup congruence.</Returns>
     <Description>
       This function returns a semigroup congruence over the semigroup
@@ -42,8 +42,8 @@ gap> SemigroupCongruence(S, pair1, pair2);
 
 <#GAPDoc Label="RZMSCongruenceByLinkedTriple">
   <ManSection>
-    <Oper Name="RMSCongruenceByLinkedTriple" Arg="S, N, colBlocks, rowBlocks"/>
-    <Oper Name="RZMSCongruenceByLinkedTriple" Arg="S, N, colBlocks, rowBlocks"/>
+    <Func Name="RMSCongruenceByLinkedTriple" Arg="S, N, colBlocks, rowBlocks"/>
+    <Func Name="RZMSCongruenceByLinkedTriple" Arg="S, N, colBlocks, rowBlocks"/>
     <Returns>A Rees matrix or 0-matrix semigroup congruence by linked
     triple.</Returns>
     <Description>
@@ -122,7 +122,7 @@ gap> class := RZMSCongruenceClassByLinkedTriple(cong,
 
 <#GAPDoc Label="CongruencesOfSemigroup">
   <ManSection> 
-    <Oper Name="CongruencesOfSemigroup" Arg="S"/>
+    <Attr Name="CongruencesOfSemigroup" Arg="S"/>
     <Returns>The congruences of a semigroup.</Returns>
     <Description>
       This attribute gives a list of the congruences of the semigroup
@@ -170,7 +170,7 @@ true]]></Example>
 
 <#GAPDoc Label="NrCongruenceClasses">
   <ManSection> 
-    <Oper Name="NrCongruenceClasses" Arg="cong"/>
+    <Attr Name="NrCongruenceClasses" Arg="cong"/>
     <Returns>A positive integer.</Returns>
     <Description>
       This attribute describes the number of congruence classes in the semigroup
@@ -188,7 +188,7 @@ gap> NrCongruenceClasses(cong);
 
 <#GAPDoc Label="CanonicalRepresentative">
   <ManSection> 
-    <Oper Name="CanonicalRepresentative" Arg="class"/>
+    <Attr Name="CanonicalRepresentative" Arg="class"/>
     <Returns>A congruence class.</Returns>
     <Description>
       This attribute gives a canonical representative for the semigroup
@@ -257,7 +257,7 @@ gap> AsRZMSCongruenceByLinkedTriple(cong);
   <Oper Name="UniversalSemigroupCongruence" Arg="S"/>
   <Returns>A universal semigroup congruence.</Returns>
   <Description>
-    This function returns the universal semigroup congruence for the
+    This operation returns the universal semigroup congruence for the
     semigroup <A>S</A>.  It can be used in the same way as any other
     semigroup congruence object.
     <Example><![CDATA[
