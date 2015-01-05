@@ -13,18 +13,21 @@
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, ht, treehashsize, pair, lookup, pairstoapply;
+  local s, elms, pairs, ht, treehashsize, data;
   s := Range(cong);
   elms := Elements(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
                  x -> [Position(elms, x[1]), Position(elms, x[2])] );
   ht := HTCreate( pairs[1], rec(forflatplainlists := true,
-              treehashsize := 100003) ); #TODO: use s!.opts.hashlen.L
-  cong!.data := rec( cong := cong,
-                     lookup := [1 .. Size(s)],
-                     pairstoapply := pairs,
-                     ht := ht,
-                     elms := elms );
+              treehashsize := s!.opts.hashlen.L ) );
+  data := rec( cong := cong,
+               lookup := [1 .. Size(s)],
+               pairstoapply := pairs,
+               pos := 0,
+               ht := ht,
+               elms := elms,
+               found := false );
+  cong!.data := Objectify(NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
   return;
 end);
 
@@ -34,7 +37,7 @@ InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
-  local s, elms, p1, p2, table, find;
+  local s, elms, p1, p2, table, find, lookfunc;
   # Input checks
   if not Size(pair) = 2 then
     Error("1st arg <pair> must be a list of length 2,"); return;
@@ -66,7 +69,10 @@ function(pair, cong)
       od;
       return i;
     end;
-    return Enumerate(cong, table -> find(table,p1) = find(table,p2));
+    lookfunc := function(data, lastpair)
+      return find(data!.lookup, p1) = find(data!.lookup, p2);
+    end;
+    return Enumerate(cong!.data, lookfunc)!.found;
   fi;
 end);
 
@@ -81,29 +87,27 @@ function(cong)
           "<cong> must be a finite semigroup");
     return;
   fi;
-  Enumerate(cong, x -> false);
+  if not IsBound(cong!.data) then
+    SEMIGROUPS_SetupCongData(cong);
+  fi;
+  Enumerate(cong!.data, ReturnFalse);
   return AsLookupTable(cong);
 end);
 
 #
 
 InstallMethod(Enumerate,
-"for a semigroup congruence and a function",
-[IsSemigroupCongruence, IsFunction],
-function(cong, lookfunc)
-  local s, elms, data, table, pairstoapply, ht, right, left, find, union,
-        genstoapply, i, nr, x, j, y, normalise, result;
-
-  if not IsBound(cong!.data) then
-    SEMIGROUPS_SetupCongData(cong);
-  fi;
-
+"for semigroup congruence data and a function",
+[IsSemigroupCongruenceData, IsFunction],
+function(data, lookfunc)
+  local cong, s, table, pairstoapply, ht, right, left, find, union, genstoapply, 
+        i, nr, found, x, j, y, next, newtable, ii, result;
+  cong := data!.cong;
   s := Range(cong);
-  data := cong!.data;
-
-  table := data.lookup;
-  pairstoapply := data.pairstoapply;
-  ht := data.ht;
+  
+  table := data!.lookup;
+  pairstoapply := data!.pairstoapply;
+  ht := data!.ht;
 
   right := RightCayleyGraphSemigroup(s);
   left := LeftCayleyGraphSemigroup(s);
@@ -129,22 +133,27 @@ function(cong, lookfunc)
   end;
 
   genstoapply := [1 .. Size(right[1])];
-  i := 0; nr := Size(pairstoapply);
-  while i < nr do
-    # Have we found what we were looking for?
-    if lookfunc(table) then
-      # Save our place
-      data.pairstoapply := pairstoapply{[i + 1 .. nr]};
-      return true;
-    fi;
+  i := data!.pos; nr := Size(pairstoapply);
+  found := false;
+  
+  if i = 0 then
+    # Add the generating pairs themselves
+    for x in pairstoapply do
+      if x[1] <> x[2] and HTValue(ht, x) = fail then
+        HTAdd(ht, x, true);
+        union(x);
+        # Have we found what we were looking for?
+        if lookfunc(data, x) then
+          data!.found := true;
+          return data;
+        fi;
+      fi;
+    od;
+  fi;
 
+  while i < nr do
     i := i + 1;
     x := pairstoapply[i];
-    # Add the pair itself
-    if x[1] <> x[2] and HTValue(ht, x) = fail then
-      HTAdd(ht, x, true);
-      union(x);
-    fi;
     for j in genstoapply do
       # Add the pair's left-multiples
       y := [right[x[1]][j], right[x[2]][j]];
@@ -153,6 +162,9 @@ function(cong, lookfunc)
         nr := nr + 1;
         pairstoapply[nr] := y;
         union(y);
+        if lookfunc(data, y) then
+          found := true;
+        fi;
       fi;
 
       # Add the pair's right-multiples
@@ -162,31 +174,38 @@ function(cong, lookfunc)
         nr := nr + 1;
         pairstoapply[nr] := y;
         union(y);
+        if lookfunc(data, y) then
+          found := true;
+        fi;
       fi;
     od;
+    
+    if found then
+      # Save our place
+      data!.pos := i;
+      data!.found := found;
+      return data;
+    fi;
+
+  od;
+  
+  # "Normalise" the table for clean lookup
+  next := 1;
+  newtable := [];
+  for i in [1 .. Size(table)] do
+    ii := find(i);
+    if ii = i then
+      newtable[i] := next;
+      next := next + 1;
+    else
+      newtable[i] := newtable[ii];
+    fi;
   od;
 
-  #TODO make this inline not a function 
-  normalise := function(cong)
-    local ht, next, i, ii, newcong;
-    next := 1;
-    newcong := [];
-    for i in [1 .. Size(cong)] do
-      ii := find(i);
-      if ii <> i then
-        newcong[i] := ii;
-      else 
-        next := next + 1;
-        newcong[i] := next;
-      fi;
-    od;
-    return newcong;
-  end;
-
-  result := lookfunc(table);
-  SetAsLookupTable(cong, normalise(table));
+  SetAsLookupTable(cong, newtable);
   Unbind(cong!.data);
-  return result;
+  data!.found := found;
+  return data;
 end);
 
 #
