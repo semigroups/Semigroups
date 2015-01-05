@@ -486,12 +486,19 @@ InstallMethod(PartialTransformationSemigroup, "for a positive integer",
 function(n)
   local a, b, c, d, s;
 
-  a := [1 .. n + 1];  a[1] := 2;  a[2] := 1;
-  b := [0 .. n];  b[1] := n;  b[n + 1] := n + 1;
-  c := [1 .. n + 1];  c[1] := n + 1;
-  d := [1 .. n + 1];  d[1] := 2;
+  a := [1 .. n + 1];  a[1] := 2;  a[2] := 1;   #transposition
+  b := [0 .. n];  b[1] := n;  b[n + 1] := n + 1; #cycle
+  c := [1 .. n + 1];  c[1] := n + 1;            #partial
+  d := [1 .. n + 1];  d[1] := 2;              #collapsing
 
-  s := Monoid(List([a, b, c, d], TransformationNC));
+  if n = 1 then
+    s := Monoid(List([c], TransformationNC));
+  elif n = 2 then
+    s := Monoid(List([a, c, d], TransformationNC));
+  else
+    s := Monoid(List([a, b, c, d], TransformationNC));
+  fi;
+
   SetIsRegularSemigroup(s, true);
   return s;
 end);
