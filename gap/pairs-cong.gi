@@ -19,7 +19,7 @@ function(cong)
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
                  x -> [Position(elms, x[1]), Position(elms, x[2])] );
   ht := HTCreate( pairs[1], rec(forflatplainlists := true,
-              treehashsize := 100003) );
+              treehashsize := 100003) ); #TODO: use s!.opts.hashlen.L
   cong!.data := rec( cong := cong,
                      lookup := [1 .. Size(s)],
                      pairstoapply := pairs,
@@ -165,21 +165,19 @@ function(cong, lookfunc)
       fi;
     od;
   od;
-  # TODO: I think this last step of normalizing the table is probably
-  # prohibitively expensive. We should probably not do it. This will require
-  # some changes in other functions too. JDM
+
+  #TODO make this inline not a function 
   normalise := function(cong)
     local ht, next, i, ii, newcong;
-    ht := HTCreate(1);
     next := 1;
     newcong := [];
     for i in [1 .. Size(cong)] do
       ii := find(i);
-      newcong[i] := HTValue(ht, ii);
-      if newcong[i] = fail then
-        newcong[i] := next;
-        HTAdd(ht, ii, next);
+      if ii <> i then
+        newcong[i] := ii;
+      else 
         next := next + 1;
+        newcong[i] := next;
       fi;
     od;
     return newcong;

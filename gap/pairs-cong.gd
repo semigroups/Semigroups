@@ -11,6 +11,6 @@
 ## generating pairs, using a union-find method.
 ##
 
-DeclareGlobalFunction("SetupCongData");
+DeclareGlobalFunction("SetupCongData"); #TODO: prepend SEMIGROUPS_
 DeclareAttribute("AsLookupTable", IsSemigroupCongruence);
 DeclareOperation("Enumerate", [IsSemigroupCongruence, IsFunction]);
