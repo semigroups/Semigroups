@@ -11,7 +11,9 @@
 ## semigroup.
 ##
 
-InstallGlobalFunction(UniversalSemigroupCongruence,
+InstallMethod(UniversalSemigroupCongruence,
+"for a semigroup",
+[IsSemigroup],
 function(s)
   local fam, cong;
   fam := GeneralMappingsFamily(
