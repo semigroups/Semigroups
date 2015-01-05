@@ -88,7 +88,7 @@ gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);
     <Returns>A Rees matrix or 0-matrix semigroup congruence class by linked
     triple.</Returns>
     <Description>
-      This function returns one congruence class of the congruence <A>cong</A>,
+      This operation returns one congruence class of the congruence <A>cong</A>,
       as defined by the other three parameters.<P/>
       
       The argument <A>cong</A> must be a Rees matrix or 0-matrix semigroup congruence by
@@ -125,7 +125,8 @@ gap> class := RZMSCongruenceClassByLinkedTriple(cong,
     <Oper Name="CongruencesOfSemigroup" Arg="S"/>
     <Returns>The congruences of a semigroup.</Returns>
     <Description>
-      This operation returns the congruences of the semigroup <A>S</A>. <P/>
+      This attribute gives a list of the congruences of the semigroup
+      <A>S</A>. <P/>
 
       At present this only works for simple and 0-simple semigroups.
       <Example><![CDATA[
@@ -149,7 +150,7 @@ gap> congs := CongruencesOfSemigroup(s);
     <Oper Name="IsLinkedTriple" Arg="S, N, colBlocks, rowBlocks"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      This function returns true if and only if the arguments (<A>N</A>,
+      This operation returns true if and only if the arguments (<A>N</A>,
       <A>colBlocks</A>, <A>rowBlocks</A>) describe a linked triple of 
       the Rees matrix or 0-matrix semigroup <A>S</A>, as described above.
       <Example><![CDATA[
@@ -172,8 +173,8 @@ true]]></Example>
     <Oper Name="NrCongruenceClasses" Arg="cong"/>
     <Returns>A positive integer.</Returns>
     <Description>
-      This function returns the number of congruence classes in 
-      the semigroup congruence <A>cong</A>. 
+      This attribute describes the number of congruence classes in the semigroup
+      congruence <A>cong</A>.
       
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
@@ -190,7 +191,7 @@ gap> NrCongruenceClasses(cong);
     <Oper Name="CanonicalRepresentative" Arg="class"/>
     <Returns>A congruence class.</Returns>
     <Description>
-      This function returns a canonical representative for the semigroup
+      This attribute gives a canonical representative for the semigroup
       congruence class <A>class</A>.  This representative can be used to
       identify a class uniquely. <P/>
 
@@ -211,7 +212,7 @@ gap> CanonicalRepresentative(class);
     <Oper Name="AsSemigroupCongruenceByGeneratingPairs" Arg="cong"/>
     <Returns>A semigroup congruence.</Returns>
     <Description>
-      This function takes <A>cong</A>, a semigroup congruence, and returns the same
+      This operation takes <A>cong</A>, a semigroup congruence, and returns the same
       congruence relation, but described by &GAP;'s default method of defining 
       semigroup congruences: a set of generating pairs for the congruence.
       <Example><![CDATA[
@@ -231,7 +232,7 @@ gap> AsSemigroupCongruenceByGeneratingPairs(cong);
     <Oper Name="AsRZMSCongruenceByLinkedTriple" Arg="cong"/>
     <Returns>A Rees matrix or 0-matrix semigroup congruence by linked triple.</Returns>
     <Description>
-      This function takes a semigroup congruence <A>cong</A> over a finite simple or
+      This operation takes a semigroup congruence <A>cong</A> over a finite simple or
       0-simple Rees 0-matrix semigroup, and returns that congruence relation in
       a new form: as either a congruence by linked triple, or a universal
       congruence.<P/>
@@ -274,7 +275,7 @@ gap> UniversalSemigroupCongruence(S);
   <Oper Name="CongruenceClassOfElement" Arg="cong, elm"/>
   <Returns>A congruence class.</Returns>  
   <Description>
-    This function is a synonym of <C>EquivalenceClassOfElement</C> in the case
+    This operation is a synonym of <C>EquivalenceClassOfElement</C> in the case
     that the argument <A>cong</A> is a congruence of a semigroup.<P/>
 
     <Example>
@@ -296,7 +297,7 @@ gap> CongruenceClassOfElement(cong, elm);
     When <A>cong</A> is a congruence of semigroup, this attribute is synonymous
     with <C>EquivalenceClasses</C>.<P/>
 
-    This function returns a list containing all the equivalence classes of the
+    The return value is a list containing all the equivalence classes of the
     semigroup congruence <A>cong</A>.
     <Example>
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
@@ -314,7 +315,7 @@ gap> Size(classes);
   <Oper Name="MeetSemigroupCongruences" Arg="c1, c2"/>
   <Returns>A semigroup congruence.</Returns>
   <Description>
-    This function returns the <E>meet</E> of the two semigroup congruences
+    This operation returns the <E>meet</E> of the two semigroup congruences
     <A>c1</A> and <A>c2</A> -- that is, the largest semigroup congruence
     contained in both <A>c1</A> and <A>c2</A>.<P/>
 
@@ -335,7 +336,7 @@ gap> MeetSemigroupCongruences(congs[2], congs[3]);
   <Oper Name="JoinSemigroupCongruences" Arg="c1, c2"/>
   <Returns>A semigroup congruence.</Returns>
   <Description>
-    This function returns the <E>join</E> of the two semigroup congruences
+    This operation returns the <E>join</E> of the two semigroup congruences
     <A>c1</A> and <A>c2</A> -- that is, the smallest semigroup congruence
     containing all the relations in both <A>c1</A> and <A>c2</A>.<P/>
 

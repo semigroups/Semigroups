@@ -1,11 +1,14 @@
 ############################################################################
 ##
-#W  univcong.gd
-#Y  Copyright (C) 2014                                   Michael C. Torpey
+#W  univ-cong.gd
+#Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+##
+## This file contains methods for the unique universal congruence on a
+## semigroup.
 ##
 
 # Universal Congruences
