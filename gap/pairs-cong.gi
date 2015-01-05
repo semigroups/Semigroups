@@ -11,7 +11,7 @@
 ## generating pairs, using a union-find method.
 ##
 
-InstallGlobalFunction(SetupCongData,
+InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
   local s, elms, pairs, ht, treehashsize, pair, lookup, pairstoapply;
   s := Range(cong);
@@ -58,7 +58,7 @@ function(pair, cong)
   else
     # Otherwise, begin calculating the lookup table and look for this pair
     if not IsBound(cong!.data) then
-      SetupCongData(cong);
+      SEMIGROUPS_SetupCongData(cong);
     fi;
     find := function(table,i)
       while table[i] <> i do
@@ -95,7 +95,7 @@ function(cong, lookfunc)
         genstoapply, i, nr, x, j, y, normalise, result;
 
   if not IsBound(cong!.data) then
-    SetupCongData(cong);
+    SEMIGROUPS_SetupCongData(cong);
   fi;
 
   s := Range(cong);
