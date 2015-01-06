@@ -485,7 +485,7 @@ function(s, opts)
             fi;
           fi;
           Append(str, Concatenation("<TD CELLPADDING=\"10\" BGCOLOR=\"", color,
-          "\" > < / TD > "));
+          "\" > </TD> "));
         od;
       else
         h := HClasses(l);
