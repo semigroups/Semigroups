@@ -20,13 +20,16 @@ gap> s := Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 5 ] ),
 >    Transformation( [ 4, 6, 4, 3, 3, 3 ] ),
 >    Transformation( [ 5, 1, 6, 1, 6, 3 ] ),
 >    Transformation( [ 5, 2, 5, 3, 5, 3 ] ) ] );;
-gap> cong := SemigroupCongruence( s,
+gap> gens := [
 >  [ Transformation( [ 5, 5, 2, 4, 2, 4 ] ),
 >    Transformation( [ 1, 5, 4, 5, 4, 5 ] ) ],
 >  [ Transformation( [ 3, 3, 3, 6, 3, 3 ] ),
->    Transformation( [ 1, 6, 6, 6, 6, 1 ] ) ] );
+>    Transformation( [ 1, 6, 6, 6, 6, 1 ] ) ] ];;
+gap> cong := SemigroupCongruence( s, gens );
 <semigroup congruence over <transformation semigroup 
  on 6 pts with 6 generators> with 2 generating pairs>
+gap> gens[2] in cong;
+true
 gap> x := Transformation( [ 6, 5, 4, 4, 4, 6 ] );;
 gap> y := Transformation( [ 2, 2, 2, 6, 2, 4 ] );;
 gap> z := Transformation( [ 2, 4, 6, 1, 6, 5 ] );;

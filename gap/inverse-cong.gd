@@ -8,13 +8,12 @@
 #############################################################################
 ##
 ## This file contains methods for congruences on inverse semigroups, using the
-## "kernel and trace" representation. #TODO add reference to Howie's book.
+## "kernel and trace" representation - see Howie 5.3
 ##
 
 # Inverse Congruences By Congruence Pair
-DeclareCategory("SEMIGROUPS_CongInverse",
+DeclareCategory("IsInverseSemigroupCongruenceByKernelTrace",
         IsSemigroupCongruence and IsAttributeStoringRep);
-# TODO rename this IsInverseSemigroupCongruenceByKernelTrace
 DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePair");
 DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePairNC");
 
@@ -26,9 +25,9 @@ DeclareAttribute("AsInverseSemigroupCongruenceByCongruencePair",
 DeclareGlobalFunction("SEMIGROUPS_InverseCongFromPairs");
 
 # Congruence Classes
-DeclareCategory("SEMIGROUPS_CongClassInverse",
+DeclareCategory("InverseSemigroupCongruenceClassByKernelTrace",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
 DeclareOperation("InverseSemigroupCongruenceClass",
-        [SEMIGROUPS_CongInverse, IsAssociativeElement] );
+        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement] );
 DeclareOperation("InverseSemigroupCongruenceClassNC",
-        [SEMIGROUPS_CongInverse, IsAssociativeElement] );
+        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement] );

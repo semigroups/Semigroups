@@ -14,8 +14,7 @@
 # Universal Congruences
 DeclareCategory("IsUniversalSemigroupCongruence",
         IsSemigroupCongruence and IsAttributeStoringRep);
-DeclareGlobalFunction("UniversalSemigroupCongruence"); 
-#TODO make this an operation
+DeclareOperation("UniversalSemigroupCongruence", [IsSemigroup]); 
 
 DeclareCategory("IsUniversalSemigroupCongruenceClass",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);

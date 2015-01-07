@@ -76,7 +76,7 @@ function(s, kernel, traceBlocks)
                  ElementsFamily(FamilyObj(s)),
                  ElementsFamily(FamilyObj(s)) );
   cong := Objectify(
-                  NewType(fam, SEMIGROUPS_CongInverse),
+                  NewType(fam, IsInverseSemigroupCongruenceByKernelTrace),
                   rec(kernel := kernel,
                       traceBlocks := traceBlocks,
                       traceLookup := traceLookup) );
@@ -89,7 +89,7 @@ end);
 
 InstallMethod(ViewObj,
 "for inverse semigroup congruence",
-[SEMIGROUPS_CongInverse],
+[IsInverseSemigroupCongruenceByKernelTrace],
 function(cong)
   Print("<semigroup congruence over ");
   ViewObj(Range(cong));
@@ -102,7 +102,7 @@ end);
 
 InstallMethod(\=,
 "for two inverse semigroup congruences",
-[SEMIGROUPS_CongInverse, SEMIGROUPS_CongInverse],
+[IsInverseSemigroupCongruenceByKernelTrace, IsInverseSemigroupCongruenceByKernelTrace],
 function(cong1, cong2)
   return(Range(cong1) = Range(cong2) and
          cong1!.kernel = cong2!.kernel and
@@ -113,7 +113,7 @@ end);
 
 InstallMethod(ImagesElm,
 "for inverse semigroup congruence and associative element",
-[SEMIGROUPS_CongInverse, IsAssociativeElement],
+[IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
 function(cong, elm)
   local s, images, e, b;
   s := Range(cong);
@@ -137,7 +137,7 @@ end);
 
 InstallMethod(\in,
 "for dense list and inverse semigroup congruence",
-[IsDenseList, SEMIGROUPS_CongInverse],
+[IsDenseList, IsInverseSemigroupCongruenceByKernelTrace],
 function(pair, cong)
   local s;
   if Size(pair) <> 2 then
@@ -162,7 +162,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for inverse semigroup congruence and associative element",
-[SEMIGROUPS_CongInverse, IsAssociativeElement],
+[IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
     Error("Semigroups: EquivalenceClassOfElement: usage,\n",
@@ -176,11 +176,11 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for inverse semigroup congruence and associative element",
-[SEMIGROUPS_CongInverse, IsAssociativeElement],
+[IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
 function(cong, elm)
   local fam, class;
   fam := FamilyObj(Range(cong));
-  class := Objectify(NewType(fam, SEMIGROUPS_CongClassInverse),
+  class := Objectify(NewType(fam, InverseSemigroupCongruenceClassByKernelTrace),
                    rec(rep := elm) );
   SetParentAttr(class, cong);
   SetRepresentative(class, elm);
@@ -191,7 +191,7 @@ end);
 
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
-[SEMIGROUPS_CongClassInverse, SEMIGROUPS_CongClassInverse],
+[InverseSemigroupCongruenceClassByKernelTrace, InverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   return( ParentAttr(c1) = ParentAttr(c2) and
           [c1!.rep, c2!.rep] in ParentAttr(c1) );
@@ -201,7 +201,7 @@ end);
 
 InstallMethod( \in,
 "for associative element and inverse semigroup congruence class",
-[IsAssociativeElement, SEMIGROUPS_CongClassInverse],
+[IsAssociativeElement, InverseSemigroupCongruenceClassByKernelTrace],
 function(elm, class)
   local cong;
   cong := ParentAttr(class);
@@ -212,7 +212,7 @@ end);
 
 InstallMethod( \*,
 "for two inverse semigroup congruence classes",
-[SEMIGROUPS_CongClassInverse, SEMIGROUPS_CongClassInverse],
+[InverseSemigroupCongruenceClassByKernelTrace, InverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
     Error("<c1> and <c2> must be classes of the same congruence,"); return;
@@ -224,7 +224,7 @@ end);
 
 InstallMethod(AsSSortedList,
 "for inverse semigroup congruence class",
-[SEMIGROUPS_CongClassInverse],
+[InverseSemigroupCongruenceClassByKernelTrace],
 function(class)
   return SSortedList(ImagesElm(ParentAttr(class), class!.rep));
 end);
@@ -233,7 +233,7 @@ end);
 
 InstallMethod(Size,
 "for inverse semigroup congruence class",
-[SEMIGROUPS_CongClassInverse],
+[InverseSemigroupCongruenceClassByKernelTrace],
 function(class)
   return Size(Elements(class));
 end);
