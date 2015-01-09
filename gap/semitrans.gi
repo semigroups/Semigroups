@@ -278,7 +278,14 @@ end);
 InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  return IsSynchronizingSemigroup(S, DegreeOfTransformationSemigroup(S));
+  local deg;
+
+  deg := DegreeOfTransformationSemigroup(S);
+  if deg = 0 then
+    return false;
+  fi;
+
+  return IsSynchronizingSemigroup(S, deg);
 end);
 
 # same method for ideals
@@ -306,6 +313,10 @@ InstallMethod(IsSynchronizingTransformationCollection,
 [IsTransformationCollection, IsPosInt],
 function(gens, n)
   local NumberPair, PairNumber, genstoapply, act, graph, constants, x, adj, y, num, marked, squashed, i, j;
+
+  if n = 1 then
+    return true;
+  fi;
 
   NumberPair := function(x)
     if x[2] > x[1] then
