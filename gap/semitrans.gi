@@ -387,6 +387,85 @@ function(gens, n)
   return Length(squashed) = n ^ 2;
 end);
 
+# WW: UNFINISHED!
+
+InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  local n, gens, nrgens, nrpairs, graph, combs, NumberPair, PairNumber, pair, act, inn, which, range, seen_pairs, dfs, word, i, j;
+
+  n := DegreeOfTransformationSemigroup(S);
+
+  if n = 0 then
+    return Elements(S)[1];
+  fi;
+
+  gens := GeneratorsOfSemigroup(S);
+  nrgens := Length(gens);
+  nrpairs := Binomial(n, 2);
+
+  # a hack till I implement a nicer way of doing this
+  combs := Combinations( [ 1 .. n ], 2 );
+
+  NumberPair := function(pair)
+    local pos;
+    if Length(pair) = 1 then
+      return pair[1];
+    fi;
+    pos := Position(combs, pair);
+    if pos = fail then
+      Error("Error: NumberPair: this pair is not valid...");
+    fi;
+    return n + pos;
+  end;
+
+  PairNumber := function(k)
+    return combs[k - n];
+  end;
+
+  inn := List( [ 1 .. n + nrpairs ], x -> [  ] );
+  which := List( [ 1 .. n + nrpairs ], x -> [  ] );
+
+  for i in [(n + 1) .. (n + nrpairs)] do
+    pair := PairNumber(i);
+    for j in [ 1 .. nrgens ] do
+      act := OnSets(pair, gens[j]);
+      range := NumberPair(act);
+      Add(inn[range], i);
+      Add(which[range], j);
+    od;
+  od;
+
+  # find a word describing a path from each (possible) pair to a constant
+  dfs := function(i, p)
+    local j, k, prod;
+    for k in [ 1 .. Length(inn[i]) ] do
+      j := inn[i][k];
+      if not seen_pairs[j] then
+        prod := (gens[ which[i][k] ] * p);
+        word := word * prod;
+        #Print("Path from pair ",PairNumber(j)," to constant is described by:");
+        #Print("\n", prod, "\n");
+        seen_pairs[j] := true;
+        dfs(j, prod);
+      fi;
+    od;
+    return;
+  end;
+
+  word := Transformation([1]);
+  seen_pairs := BlistList( [ 1 .. n + nrpairs ], [ ]);
+  for i in [ 1 .. n ] do
+    # start DFS from here
+    dfs(i, word);
+  od;
+
+  # if by now word has not been added too, then the semigroup is a group of
+  # permutations (as transformations) and the identity is indeed an element of
+  # the minimal ideal
+  return word;
+end);
+
 #
 
 InstallMethod(AsTransformationSemigroup, "for a semigroup",
