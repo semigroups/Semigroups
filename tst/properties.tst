@@ -764,6 +764,18 @@ gap> S := Semigroup(
 gap> IsCongruenceFreeSemigroup(S);
 false
 
+#T# IsSynchronizingSemigroup
+# for <IdentityTransformation>
+gap> t := Transformation( [ 1 ] );;
+gap> s := Semigroup(t);
+<trivial transformation group>
+gap> IsSynchronizingSemigroup(s, 2);
+false
+gap> IsSynchronizingSemigroup(s, 1);
+true
+gap> IsSynchronizingSemigroup(s);
+false
+
 #E#
 gap> Unbind(semis); Unbind(file); Unbind(s); Unbind(d); 
 gap> Unbind(g); Unbind(gens); Unbind(t); Unbind(i); Unbind(f);
