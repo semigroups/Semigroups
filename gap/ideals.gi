@@ -204,7 +204,6 @@ InstallMethod(SemigroupIdealByGenerators,
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
-
   if not ForAll(gens, x -> x in S) then
     Error("usage: the generators do not belong to the semigroup,");
     return fail;

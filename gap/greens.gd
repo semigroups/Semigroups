@@ -97,12 +97,11 @@ DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
 DeclareAttribute("StructureDescription", IsGreensHClass);
 
 DeclareProperty("IsRegularClass", IsGreensClass);
+DeclareProperty("IsInverseOpClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+
 DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
-DeclareCategory("IsInverseOpClass", IsGreensClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensDClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensRClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensLClass);
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);

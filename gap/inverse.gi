@@ -8,12 +8,48 @@
 #############################################################################
 ##
 
-# Notes: everything here uses LambdaSomething, so don't use RhoAnything
-
-# the first three main functions should be updated!
+# TODO the first three main functions should be updated!
 
 ## Methods for inverse acting semigroups consisting of associative elements with a
 ## method for InverseOp.
+
+# Notes: everything here uses LambdaSomething, so don't use RhoAnything
+
+InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass and IsInverseOpClass],
+function(L)
+  local S, rep, nc, o, i, m, f;
+
+  S := Parent(L);
+  rep := Representative(L);
+  nc := IsGreensClassNC(L);
+
+  if HasLambdaOrb(S) and IsClosed(LambdaOrb(S)) and not nc then
+    o := LambdaOrb(S);
+    i := Position(o, LambdaFunc(S)(rep));
+  else
+    o := GradedLambdaOrb(S, rep, nc <> true);
+    i := o[2]; 
+    o := o[1];
+  fi;
+
+  if nc then
+    m := 1;
+  else
+    m := OrbSCCLookup(o)[i];
+    if i <> OrbSCC(o)[m][1] then
+      rep := rep * LambdaOrbMult(o, m, i)[2];
+    fi;
+  fi;
+
+  return CreateDClassNC(S, m, o, fail, fail, rep, nc);
+end);
+
+InstallMethod(IsInverseOpClass, "for a Green's class",
+[IsGreensClass], 
+function(class)
+  return IsActingSemigroupWithInverseOp(Parent(class));
+end);
 
 # same method for ideals
 
@@ -143,29 +179,30 @@ function(f, d)
   fi;
 
   scc := OrbSCC(o)[m];
-  g := f;
 
   if rho_l <> scc[1] then
-    g := LambdaOrbMult(o, m, rho_l)[1] * g;
+    f := LambdaOrbMult(o, m, rho_l)[1] * f;
   fi;
 
   if lambda_l <> scc[1] then
-    g := g * LambdaOrbMult(o, m, lambda_l)[2];
+    f := f * LambdaOrbMult(o, m, lambda_l)[2];
   fi;
 
-  if g = rep then
+  if f = rep then
     return true;
   elif schutz = false then
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g)) = ();
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, f)) = ();
 end);
 
 #
 
-InstallMethod(\in, "for associative element and inverse op L-class of acting semigroup.",
-[IsAssociativeElement, IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(\in, 
+"for associative element and inverse op L-class of acting semigroup.",
+[IsAssociativeElement, IsInverseOpClass and IsGreensLClass and
+IsActingSemigroupGreensClass],
 function(f, l)
   local rep, s, m, o, i, schutz, g, p;
 

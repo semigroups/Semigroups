@@ -420,10 +420,7 @@ function(l)
       f := f * LambdaOrbMult(o, m, i)[2];
     fi;
   fi;
-  #JDM is this a good idea? or should I give a separate method
-  if IsInverseOpClass(l) then
-    return CreateDClassNC(s, m, o, fail, fail, f, nc);
-  fi;
+
   return CreateDClassNC(s, m, o, RhoOrbSCCIndex(l), RhoOrb(l), f, nc);
 end);
 
@@ -2315,10 +2312,10 @@ InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 
 InstallMethod(DClassType, "for an acting semigroups",
 [IsActingSemigroup],
-function(s);
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function( S )
+  return NewType( FamilyObj( S ), IsEquivalenceClass and
           IsEquivalenceClassDefaultRep and IsGreensDClass and
-          IsActingSemigroupGreensClass);
+          IsActingSemigroupGreensClass );
 end);
 
 # different method for regular/inverse

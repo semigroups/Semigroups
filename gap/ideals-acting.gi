@@ -15,7 +15,7 @@ InstallMethod(SemigroupData, "for a regular acting semigroup ideal",
 SemigroupIdealData);
 
 # JDM this method should become obsolete in time...
-# <I> is not regular if this function is invoked...
+# <I> is not known to be regular if this function is invoked...
 
 InstallMethod(SemigroupData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
@@ -25,7 +25,7 @@ function(I)
   # the maximal D-classes of the supersemigroup of <I> contained in <I>
   data := SemigroupIdealData(I);
   pos := [1 .. data!.genspos - 1]; # the D-classes of the generators in positions
-                             # [1..n-1] in data!.dorbit
+                                   # [1..n-1] in data!.dorbit
   partial := data!.poset;
   classes := data!.dorbit;
   D := [];
@@ -90,7 +90,7 @@ function(I)
   data := SemigroupIdealData(I);
   Enumerate(data, infinity, ReturnFalse);
   pos := [1 .. data!.genspos - 1]; # the D-classes of the generators in positions
-                             # [1..n-1] in data!.dorbit
+                                   # [1..n-1] in data!.dorbit
   partial := data!.poset;
   classes := data!.dorbit;
   D := [];
@@ -234,9 +234,12 @@ function(I)
 
   gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
 
-  data := rec(gens := gens, parent := I, log := [1], genspos := 0,
-     ht := HTCreate(gens[1], rec(treehashsize := I!.opts.hashlen.L)),
-     pos := 0, init := false, reps := [], repslookup := [], orblookup1 := [],
+  data := rec(  gens := gens, 
+                parent := I, 
+                log := [1], 
+                genspos := 0,
+                ht := HTCreate(gens[1], rec(treehashsize := I!.opts.hashlen.L)),
+              pos := 0, init := false, reps := [], repslookup := [], orblookup1 := [],
      orblookup2 := [], rholookup := [fail], lenreps := [0], orbit := [fail,],
      dorbit := [], repslens := [], lambdarhoht := [], regular := [],
      genstoapply := [1 .. Length(gens)], stopper := false, poset := [], scc_lookup := []);
@@ -294,7 +297,7 @@ InstallMethod(Enumerate,
 [IsSemigroupIdealData, IsCyclotomic, IsRecord],
 function(data, limit, record)
   local lookfunc, looking, lambdalookfunc, lambdalooking, rholookfunc, rholooking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
-
+  
   if IsBound(record.lookfunc) then
     lookfunc := record.lookfunc;
     looking := true;
@@ -339,19 +342,19 @@ function(data, limit, record)
   lenreps := data!.lenreps;         # lenreps[m]=Length(reps[m])
 
   lambdarhoht := data!.lambdarhoht; # HTValue(lambdarhoht, [m,l])=position in reps[m]
-                                  # of R-reps with lambda-scc-index=m and
-                                  # rho-value-index=l
+                                    # of R-reps with lambda-scc-index=m and
+                                    # rho-value-index=l
 
   repslookup := data!.repslookup; # Position(orb, reps[m][i][j])
-                                # = repslookup[m][i][j]
-                                # = HTValue(ht, reps[m][i][j])
+                                  # = repslookup[m][i][j]
+                                  # = HTValue(ht, reps[m][i][j])
 
   orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m] containing
-                                # orb[i][4] (the R-rep)
+                                  # orb[i][4] (the R-rep)
 
   orblookup2 := data!.orblookup2; # orblookup2[i] position in
-                                # reps[m][orblookup1[i]]
-                                # containing orb[i][4] (the R-rep)
+                                  # reps[m][orblookup1[i]]
+                                  # containing orb[i][4] (the R-rep)
 
   rholookup := data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
 
@@ -395,6 +398,9 @@ function(data, limit, record)
   # new stuff
   drel := GreensDRelation(I);
   dtype := DClassType(I);
+  #FIXME the following are not required for anything here, just to make sure
+  # that the types of Green's classes are consistent
+  LClassType(I); RClassType(I); HClassType(I);
 
   poset := data!.poset;  # the D-class poset
   datalookup := data!.scc_lookup;
@@ -614,8 +620,9 @@ function(data, limit, record)
     if not HasIsRegularSemigroup(I) then
       SetIsRegularSemigroup(data!.parent, ForAll(regular, x -> x = true));
     fi;
+    # FIXME this is a bit of a hack
+    SetGreensDClasses(data!.parent, d);
   fi;
-
   return data;
 end);
 
