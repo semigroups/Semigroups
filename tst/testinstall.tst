@@ -774,8 +774,8 @@ gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then
 gap> G;
 <trivial partial perm group on 0 pts with 0 generators>
 
-#T# TestInstall49: Issue 103 (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup
-# but doesn't know it at the start)
+#T# TestInstall49: Issue 103 (problem with Enumerate(LambdaOrb(I)) when T is an
+# inverse semigroup but doesn't know it at the start)
 gap> S:=POI(5);;
 gap> T:=Semigroup(S, PartialPerm([1,2,3,4,5],[2,3,4,5,1]));;
 gap> I:=SemigroupIdeal(T, [ PartialPerm( [ 1, 2, 4, 5 ], [ 1, 2, 3, 5 ] )]);
@@ -788,5 +788,13 @@ gap> x:=PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], [ 3, 1, 4, 2, 5, 6, 7 ] );;
 gap> CyclesOfPartialPerm(x);
 [ [ 3, 4, 2, 1 ], [ 5 ] ]
 
-#T# TestInstall51
+#T# TestInstall51: Issue 107 (problems with Green's classes of ideals, and
+#inverse semigroups)
+gap> S := Monoid( [ PartialPermNC( [ 1 ], [ 1 ] ), PartialPermNC( [ 1 ], [ 2 ] ),
+> PartialPermNC( [ 2 ], [ 1 ] ) ] );;
+gap> I := SemigroupIdeal( S, PartialPermNC( [ ], [ ] ) );;
+gap> GeneratorsOfSemigroup(I);
+[ <empty partial perm> ]
+
+#E#
 gap> STOP_TEST( "Semigroups package: testinstall.tst");
