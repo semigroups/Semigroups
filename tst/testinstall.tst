@@ -796,5 +796,16 @@ gap> I := SemigroupIdeal( S, PartialPermNC( [ ], [ ] ) );;
 gap> GeneratorsOfSemigroup(I);
 [ <empty partial perm> ]
 
+#T# TestInstall52: Issue 107 (problems with Green's classes of ideals, and
+#   inverse semigroups)
+gap> S:=[SymmetricInverseMonoid(2)];;
+gap> S[2]:=MaximalSubsemigroups(S[1]);;
+gap> S[3]:=List(S[2], MaximalSubsemigroups);
+[ [ <partial perm semigroup on 2 pts with 4 generators>, <partial perm monoid 
+       on 2 pts with 3 generators>, <partial perm monoid on 2 pts
+        with 3 generators> ], 
+  [ <commutative partial perm monoid on 2 pts with 1 generator>, 
+      <commutative partial perm semigroup on 2 pts with 1 generator> ] ]
+
 #E#
 gap> STOP_TEST( "Semigroups package: testinstall.tst");

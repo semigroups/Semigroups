@@ -619,9 +619,10 @@ function(data, limit, record)
     SetFilterObj(data, IsClosedData);
     if not HasIsRegularSemigroup(I) then
       SetIsRegularSemigroup(data!.parent, ForAll(regular, x -> x = true));
+      if IsRegularSemigroup(data!.parent) then 
+        SetGreensDClasses(data!.parent, d);
+      fi;
     fi;
-    # FIXME this is a bit of a hack
-    SetGreensDClasses(data!.parent, d);
   fi;
   return data;
 end);

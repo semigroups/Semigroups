@@ -41,6 +41,13 @@ end);
 
 # acting...
 
+InstallMethod(SemigroupDataIndex, 
+"for an acting semigroup Green's class",
+[IsActingSemigroupGreensClass],
+function(C)
+  return Position(SemigroupData(Parent(C)), Representative(C));
+end);
+
 # this won't work for ideals, but isn't currently used for anything
 
 InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
@@ -165,11 +172,8 @@ InstallMethod(SemigroupDataSCC, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local data;
-  if not HasSemigroupDataIndex(d) then
-    return fail;
-  fi;
   data := SemigroupData(Parent(d));
-
+  
   # scc of R-reps corresponding to d
   return OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
 end);

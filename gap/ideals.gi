@@ -475,7 +475,8 @@ end);
 
 #
 
-InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal",
+InstallMethod(PartialOrderOfDClasses, 
+"for a regular acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data;

@@ -25,26 +25,27 @@ function(s)
   gens := GeneratorsOfSemigroup(s);
 
   data := rec(
-           gens := gens,
-           genstoapply := [1 .. Length(gens)],
-           graph := [EmptyPlist(Length(gens))],
-           ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
-           init := false,
-           lambdarhoht := [],
-           lenreps := [0],
-           orbit := [[,,,FakeOne(gens)]],
-           orblookup1 := [],
-           orblookup2 := [],
-           parent := s,
-           pos := 0,
-           reps := [],
-           repslens := [],
-           repslookup := [],
-           rholookup := [1],
-           schreiergen := [fail],
-           schreiermult := [fail],
-           schreierpos := [fail],
-           stopper := false );
+               gens := gens,
+               genstoapply := [1 .. Length(gens)],
+               graph := [EmptyPlist(Length(gens))],
+               ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
+               init := false,
+               lambdarhoht := [],
+               lenreps := [0],
+               orbit := [[,,,FakeOne(gens)]],
+               orblookup1 := [],
+               orblookup2 := [],
+               parent := s,
+               pos := 0,
+               reps := [],
+               repslens := [],
+               repslookup := [],
+               rholookup := [1],
+               schreiergen := [fail],
+               schreiermult := [fail],
+               schreierpos := [fail],
+               stopper := false 
+             );
 
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
