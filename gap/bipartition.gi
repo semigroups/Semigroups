@@ -35,10 +35,12 @@ function(f, g)
   local fblocks, gblocks, n, lookup, i;
 
   if not IsBlockBijection(f) or not IsBlockBijection(g) then
-    Error("usage: the arguments must be block bijections,");
+    Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
+          "the arguments must be block bijections,");
     return;
   elif DegreeOfBipartition(f) <> DegreeOfBipartition(g) then
-    Error("usage: the arguments must be block bijections of equal degree,");
+    Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
+          "the arguments must be block bijections of equal degree,");
     return;
   elif NrBlocks(f) > NrBlocks(g) then
     return false;
@@ -71,7 +73,8 @@ function(f, g)
   local fblocks, gblocks, n, m, i;
 
   if not IsPartialPermBipartition(f) or not IsPartialPermBipartition(g) then
-    Error("usage: the arguments must be partial perm bipartitions,");
+    Error("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
+          "the arguments must be partial perm bipartitions,");
     return;
   fi;
 
@@ -100,7 +103,9 @@ function(f, g)
   elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
     return NaturalLeqPartialPermBipartition(f, g);
   fi;
-  Error("usage: the bipartitions should be block bijections or partial perms,");
+  Error("Semigroups: NaturalLeqPartialPermBipartition: usage\n",
+        "the bipartitions should be block bijections or partial perms,");
+  return;
 end);
 
 #
@@ -304,7 +309,8 @@ function(f, g)
   local n, nr, fblocks, gblocks, p, i;
 
   if LeftBlocks(f) <> LeftBlocks(g) or RightBlocks(f) <> RightBlocks(g) then
-    Error("usage: the arguments must have equal left and right blocks,");
+    Error("Semigroups: PermLeftQuoBipartition: usage,\n",
+          "the arguments must have equal left and right blocks,");
     return;
   fi;
   return PermLeftQuoBipartitionNC(f, g);
@@ -943,20 +949,24 @@ InstallGlobalFunction(Bipartition,
 function(classes)
   local n, copy, i, j;
 
-  if not ForAll(classes, IsList) or not ForAll(classes, IsDuplicateFree) then
-    Error("<classes> must consist of duplicate-free lists,");
+  if not (IsList(classes) and ForAll(classes, x-> 
+          IsHomogeneousList(x) and IsDuplicateFree(x))) then
+    Error("Semigroups: Bipartition: usage,\n", 
+          "the argument <classes> must consist of duplicate-free lists,");
     return;
   fi;
 
   if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
-    Error("<classes> must consist of positive and negative integers,");
+    Error("Semigroups: Bipartition: usage,\n", 
+          "the argument <classes> must consist of positive and negative integers,");
     return;
   fi;
 
   copy := Union(classes);
   if not (copy = classes or copy = Concatenation([Minimum(copy) .. - 1],
     [1 .. Maximum(copy)])) then
-    Error("the union of <classes> must be [-n..-1, 1..n],");
+    Error("Semigroups: Bipartition: usage,\n", 
+          "the union of the argument <classes> must be [-n..-1, 1..n],");
     return;
   fi;
 
@@ -1091,14 +1101,17 @@ function(blocks)
   local n, next, seen, nrleft, rank, lookup, out, i;
 
   n := Length(blocks);
+
   if not IsEvenInt(n) then
-    Error("the length of <blocks> must be an even integer,");
+    Error("Semigroups: BipartitionByIntRep: usage,\n",
+          "the length of the argument <blocks> must be an even integer,");
     return;
   fi;
 
   n := n / 2;
   if not ForAll(blocks, IsPosInt) then
-    Error("the elements of <blocks> must be positive integers,");
+    Error("Semigroups: BipartitionByIntRep: usage,\n",
+          "the elements of the argument <blocks> must be positive integers,");
     return;
   fi;
 
@@ -1109,7 +1122,8 @@ function(blocks)
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
-        Error("expected ", next, " but found ", blocks[i], ",");
+        Error("Semigroups: BipartitionByIntRep: usage,\n",
+              "expected ", next, " but found ", blocks[i], ",");
         return;
       fi;
       seen[blocks[i]] := true;
@@ -1122,7 +1136,8 @@ function(blocks)
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
-        Error("expected ", next, " but found ", blocks[i], ",");
+        Error("Semigroups: BipartitionByIntRep: usage,\n",
+              "expected ", next, " but found ", blocks[i], ",");
         return;
       fi;
       seen[blocks[i]] := true;
@@ -1324,7 +1339,9 @@ function(coll)
 
   deg := DegreeOfBipartition(coll[1]);
   if not ForAll(coll, x -> DegreeOfBipartition(x) = deg) then
-    Error("usage: collection of bipartitions of equal degree,");
+    Error("Semigroups: DegreeOfBipartitionCollection: usage,\n",
+          "the argument <coll> must be a collection of bipartitions of ", 
+          "equal degree,");
     return;
   fi;
 

@@ -1,10 +1,10 @@
 #############################################################################
 ##
 #W  attributes-inverse.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell,
-##                                                       Wilf Wilson,
-##                                                       Rhiannon Dougall,
-##                                                       Robert Hancock
+#Y  Copyright (C) 2013-14                               James D. Mitchell,
+##                                                      Wilf Wilson,
+##                                                      Rhiannon Dougall,
+##                                                      Robert Hancock
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -150,7 +150,8 @@ function(S, x)
   local y, elts, i, k, singleline, sup, j;
 
   if not x in S then
-    Error("usage: the second argument must be an element of first,");
+    Error("Semigroups: IsJoinIrreducible: usage,\n",
+          "the second argument <x> must be an element of the first,");
     return;
   fi;
 
@@ -212,7 +213,8 @@ InstallMethod(IsMajorantlyClosed,
 [IsActingSemigroupWithInverseOp, IsActingSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
-    Error("usage: the second argument must be a subsemigroup of the first,");
+    Error("Semigroups: IsMajorantlyClosed: usage,\n",
+          "the second argument must be a subsemigroup of the first,");
     return;
   else
     return IsMajorantlyClosedNC(S, Elements(T));
@@ -226,7 +228,9 @@ InstallMethod(IsMajorantlyClosed,
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
-    Error("The second argument should be a subset of the first");
+    Error("Semigroups: IsMajorantlyClosed: usage,\n",
+          "the second argument should be a subset of the first,");
+    return;
   else
     return IsMajorantlyClosedNC(S, T);
   fi;
@@ -346,7 +350,8 @@ InstallMethod(MajorantClosure,
 [IsActingSemigroupWithInverseOp, IsActingSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
-    Error("usage: the second argument must be a subset of the first,");
+    Error("Semigroups: MajorantClosure: usage,\n",
+          "the second argument must be a subset of the first,");
     return;
   else
     return MajorantClosureNC(S, Elements(T));;
@@ -360,7 +365,8 @@ InstallMethod(MajorantClosure,
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
-    Error("usage: the second argument must be a subset of the first,");
+    Error("Semigroups: MajorantClosure: usage,\n",
+          "the second argument must be a subset of the first,");
     return;
   else
     return MajorantClosureNC(S,T);
@@ -416,8 +422,9 @@ function(S, f)
   local out, elts, i, j, k, NaturalLeq;
 
   if not f in S then
-    Error("usage: the second argument is not an element of the first,");
-    return fail;
+    Error("Semigroups: Minorant: usage,\n",
+          "the second argument is not an element of the first,");
+    return;
   fi;
 
   if HasNaturalPartialOrder(S) then
@@ -454,6 +461,7 @@ function(S, f)
 end);
 
 # same method for ideals
+# TODO: rename this RightCosets
 
 InstallMethod(RightCosetsOfInverseSemigroup,
 "for acting semigroups with inverse op",
@@ -463,14 +471,17 @@ function(S, T)
 
 
   if not IsSubsemigroup(S, T) then
-    Error("The second argument should be a subsemigroup of the first");
-    return fail;
+    Error("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
+          "the second argument should be a subsemigroup of the first,");
+    return;
   fi;
 
   elts := Elements(T);
 
   if not IsMajorantlyClosedNC(S, elts) then
-    Error("The second argument should be majorantly closed.");
+    Error("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
+          "the second argument must be majorantly closed,");
+    return;
   fi;
 
   idem := Representative(MinimalIdeal(T));
@@ -648,10 +659,7 @@ function(S)
 
 end);
 
-#
-
-#JDM c method, don't document until generalised
-#JDM review this...
+#TODO review and generalise this...
 
 InstallGlobalFunction(SupremumIdempotentsNC,
 function(coll, type)
@@ -662,7 +670,9 @@ function(coll, type)
     if IsList(coll) and IsEmpty(coll) then
       return PartialPerm([]);
     elif not IsPartialPermCollection(coll) then
-      Error("the argument should be a collection of partial perms,");
+      Error("Semigroups: SupremumIdempotentsNC: usage,\n", 
+            "the argument must be a collection of partial perms,");
+      return;
     fi;
     dom := DomainOfPartialPermCollection(coll);
     return PartialPerm(dom, dom);
@@ -673,7 +683,9 @@ function(coll, type)
       return Bipartition(Concatenation([1 .. DegreeOfBipartition(type)],
         - [1 .. DegreeOfBipartition(type)]));
     elif not IsBipartitionCollection(coll) then
-      Error("the argument should be a collection of block bijections,");
+      Error("Semigroups: SupremumIdempotentsNC: usage,\n", 
+            "the argument must be a collection of block bijections,");
+      return;
     fi;
 
     reps := List(coll,ExtRepOfBipartition);
@@ -696,10 +708,14 @@ function(coll, type)
     return Bipartition(out);
 
   elif IsBipartition(type) and IsPartialPermBipartition(type) then
+    #FIXME shouldn't there be a check here like above?
     return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm),
      PartialPerm([])));
   else
-    Error("this function does not work for this type of element");
+    Error("Semigroups: SupremumIdempotentsNC: usage,\n", 
+          "the argument must be a collection of partial perms, block bijections,\n",
+          "or partial perm bipartitions,");
+    return;
   fi;
 end);
 

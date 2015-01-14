@@ -707,7 +707,8 @@ InstallMethod(PositionOfFound,"for semigroup data",
 [IsSemigroupData],
 function( data )
   if not(data!.looking) then
-    Error("not looking for anything,");
+    Error("Semigroups: PositionOfFound: usage,\n",
+          "not looking for anything,");
     return fail;
   fi;
   return data!.found;
