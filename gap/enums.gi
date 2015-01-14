@@ -20,24 +20,30 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    Error("usage: <obj> must be a domain or a collections family,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the first argument <obj> must be a domain or a collections family,");
     return;
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
-    Error("usage: <baseenum> must be an enumerator or a list,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the second argument <baseenum> must be an enumerator or a list,");
     return;
   elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
-    Error("usage: <convert_out> and <convert_in> must be functions,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the third and fourth arguments <convert_out> and <convert_in>\n",
+          "must be functions,");
     return;
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    Error("usage: <filts> must be a list of filters,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the fifth argument <filts> must be a list of filters,");
     return;
   elif not (IsRecord(record) and IsMutable(record) and not
   IsBound(record.baseenum) and not IsBound(record.convert_out) and not
   IsBound(record.convert_in) and not IsBound(record.NumberElement) and not
   IsBound(record.ElementNumber)) then
-    Error("usage: <record> must be a mutable record with no components ",
-    " named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',",
-    " or `NumberElement',");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the sixth argument <record> must be a mutable record with no components\n",
+          "named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',\n",
+          "or `NumberElement',");
     return;
   fi;
 
@@ -99,19 +105,24 @@ function(obj, record, baseenum, convert, filts)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    Error("usage: <obj> must be a domain or a collections family,");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+          "the first argument <obj> must be a domain or a collections family,");
     return;
   elif not IsRecord(record) or IsBound(record.ElementNumber)
    or IsBound(record.NumberElement) or IsBound(record.baseenum)
    or IsBound(record.enumofenums) then
-    Error("usage: <record> must be a record with no components named:\n ",
-    "`NumberElement', `ElementNumber', `baseenum', or `enumofenums',");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+          "the second argument  <record> must be a record with no components named:\n",
+          "`NumberElement', `ElementNumber', `baseenum', or `enumofenums',");
     return;
+  # TODO add check for third arg
   elif not IsFunction(convert) then
-    Error("usage: <convert> must be functions,");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+           "the fourth argument <convert> must be a function,");
     return;
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    Error("usage: <filts> must be a list of filters,");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+          "the fifth argument <filts> must be a list of filters,");
     return;
   fi;
 
@@ -801,13 +812,18 @@ function(m, n)
   local convert_out, convert_in, fam;
 
   if not IsPosInt(n) then
-    Error("usage: <n> must be a positive integer,");
+    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
+          "the second argument <n> must be a positive integer,");
     return;
   elif not (IsInt(m) and m >= 0) then
-    Error("usage: <m> must be a non-negative integer,");
+    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
+          "the first argument <m> must be a non-negative integer,");
     return;
   elif m > n then
-    Error("usage: <m> must be no greater than <n>,");
+    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
+          "the first argument <m> must be no greater than the\n",
+          "second argument <n>,");
+    return;
   fi;
 
   convert_out := function(enum, x)

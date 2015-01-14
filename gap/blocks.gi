@@ -493,7 +493,8 @@ function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 
   if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
-    Error("the degrees of the blocks <lambda> and <rho> must be equal,");
+    Error("Semigroups: BlocksIdempotentTester: usage,\n", 
+          "the degrees of the blocks <lambda> and <rho> must be equal,");
     return;
   fi;
 

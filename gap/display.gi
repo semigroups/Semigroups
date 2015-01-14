@@ -22,13 +22,15 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     local opt, path, dir, tdir, file, viewer, type, filetype;
 
     if not IsString(arg[1]) then
-      Error("usage: the first argument must be a string,");
+      Error("Semigroups: Splash: usage,\n",
+            "the first argument must be a string,");
       return;
     fi;
 
     if IsBound(arg[2]) then
       if not IsRecord(arg[2]) then
-        Error("usage: the second argument must be a record,");
+        Error("Semigroups: Splash: usage,\n",
+              "the second argument must be a record,");
         return;
       else
         opt := arg[2];
@@ -83,7 +85,8 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     elif arg[1]{[1 .. 5]} = "//dot" then
       type := "dot";
     else
-      Error("usage: the option <type> must be \"dot\" or \"latex\",");
+      Error("Semigroups: Splash: usage,\n",
+            "the option <type> must be \"dot\" or \"latex\",");
       return;
     fi;
 
@@ -216,7 +219,8 @@ function(blocks, labels, edges)
       elif labels = "bottom" then
         x := "2.2";
       else
-        Error("usage: <labels> should be \"bottom\", \"top\", or \"none\",");
+        Error("Semigroups: TikzStringForBlocks: usage,\n",
+              "the second argument <labels> must be \"bottom\", \"top\", or \"none\",");
         return;
       fi;
       Append(str, "  \\draw(");
@@ -246,7 +250,8 @@ function(blocks, labels, edges)
       x := "1.875";
       y := i -> ViewString(Float(1.5 - (1 / (2 * n)) * (block[i] - block[i - 1])));
     else
-      Error("usage: <edges> should be \"top\" or \"bottom\",");
+      Error("Semigroups: TikzStringForBlocks: usage,\n",
+            "the third argument <edges> should be \"top\" or \"bottom\",");
       return;
     fi;
 
