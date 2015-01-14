@@ -738,7 +738,7 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
-#
+# TODO document this
 
 InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 [IsPosInt],
