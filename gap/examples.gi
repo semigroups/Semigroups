@@ -52,7 +52,9 @@ function(partition)
   local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x, m, y, w, i, j, k, block;
 
   if not ForAll(partition, IsPosInt) then
-    Error("usage: the argument <partition> must be a list of positive integers,");
+    Error("Semigroups: EndomorphismsPartition: usage,\n" 
+    "the argument <partition> must be a list of positive integers,");
+    return;
   elif ForAll(partition, x -> x = 1) then
     return FullTransformationMonoid(Length(partition));
   elif Length(partition) = 1 then
@@ -487,10 +489,10 @@ InstallMethod(PartialTransformationSemigroup, "for a positive integer",
 function(n)
   local a, b, c, d, s;
 
-  a := [1 .. n + 1];  a[1] := 2;  a[2] := 1;   #transposition
-  b := [0 .. n];  b[1] := n;  b[n + 1] := n + 1; #cycle
-  c := [1 .. n + 1];  c[1] := n + 1;            #partial
-  d := [1 .. n + 1];  d[1] := 2;              #collapsing
+  a := [1 .. n + 1];  a[1] := 2;     a[2] := 1;         # transposition
+  b := [0 .. n];      b[1] := n;     b[n + 1] := n + 1; # cycle
+  c := [1 .. n + 1];  c[1] := n + 1;                    # partial
+  d := [1 .. n + 1];  d[1] := 2;                        # collapsing
 
   if n = 1 then
     s := Monoid(List([c], TransformationNC));
@@ -552,6 +554,10 @@ InstallMethod(FactorisableDualSymmetricInverseSemigroup,
 "for a positive integer", [IsPosInt],
 function(n)
   local gens;
+  if n = 1 then 
+    return DualSymmetricInverseSemigroup(1);
+  fi;
+
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2, - 1, - 2]],
    List([3 .. n], x -> [x, - x]))));
@@ -618,7 +624,7 @@ function(n)
   return Monoid(gens, rec(regular := true));
 end);
 
-#
+# TODO: document this!
 
 InstallMethod(TriapsisMonoid, "for a positive integer", [IsPosInt],
 function(n)
@@ -668,11 +674,15 @@ end);
 InstallMethod(POPI, "for a positive integer",
 [IsPosInt],
 function(n)
+  if n = 1 then 
+    return InverseMonoid( PartialPerm([1]), PartialPerm([]));
+  fi;
   return InverseMonoid(PartialPermNC(Concatenation([2 .. n],[1])),
      PartialPermNC(Concatenation([1 .. n - 2],[n])));
 end);
 
-#
+# TODO improve and document this
+# FIXME this doesn't work
 
 InstallMethod(PowerSemigroup, "for a group",
 [IsGroup],
@@ -700,6 +710,10 @@ InstallMethod(SingularPartitionMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local blocks, i;
+  
+  if n = 1 then 
+    return SemigroupIdeal(PartitionMonoid(1), Bipartition([[1], [-1]]));
+  fi;
 
   blocks := [[1,2, - 1, - 2]];
   for i in [3 .. n] do
@@ -714,7 +728,11 @@ InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
   local x, S;
-
+  if n = 1 then 
+    Error("Semigroups: SingularTransformationMonoid: usage,\n",
+    "the argument must be greater than 1,");
+    return;
+  fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := FullTransformationSemigroup(n);
   return SemigroupIdeal(S, x);
@@ -726,7 +744,11 @@ InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 [IsPosInt],
 function(n)
   local x, S;
-
+  if n = 1 then 
+    Error("Semigroups: SingularOrderEndomorphisms: usage,\n",
+    "the argument must be greater than 1,");
+    return;
+  fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := OrderEndomorphisms(n);
   return SemigroupIdeal(S, x);
@@ -738,6 +760,12 @@ InstallMethod(SingularBrauerMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local blocks, x, S, i;
+  
+  if n = 1 then 
+    Error("Semigroups: SingularBrauerMonoid: usage,\n",
+    "the argument must be greater than 1,");
+    return;
+  fi;
 
   blocks := [[1,2], [ - 1, - 2]];
   for i in [3 .. n] do
@@ -754,6 +782,11 @@ InstallMethod(SingularJonesMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local blocks, x, S, i;
+  if n = 1 then 
+    Error("Semigroups: SingularJonesMonoid: usage,\n",
+    "the argument must be greater than 1,");
+    return;
+  fi;
 
   blocks := [[1,2], [ - 1, - 2]];
   for i in [3 .. n] do
@@ -770,6 +803,11 @@ InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
   local blocks, x, S, i;
+  if n = 1 then 
+    Error("Semigroups: SingularDualSymmetricInverseSemigroup: usage,\n",
+    "the argument must be greater than 1,");
+    return;
+  fi;
 
   blocks := [[1,2, - 1, - 2]];
   for i in [3 .. n] do
@@ -786,11 +824,17 @@ InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 "for a positive integer", [IsPosInt],
 function(n)
   local blocks, x, S, i;
+  if n = 1 then 
+    Error("Semigroups: SingularFactorisableDualSymmetricInverseSemigroup: usage,\n",
+    "the argument must be greater than 1,");
+    return;
+  fi;
 
   blocks := [[1,2, - 1, - 2]];
   for i in [3 .. n] do
     blocks[i - 1] := [i, - i];
   od;
+
   x := Bipartition(blocks);
   S := FactorisableDualSymmetricInverseSemigroup(n);
   return SemigroupIdeal(S, x);
