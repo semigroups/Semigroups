@@ -32,7 +32,7 @@ gap> S := FreeBand(5);
 <free band on the generators [ x1, x2, x3, x4, x5 ]>
 gap> x := S.3*S.2*S.1;
 x3x2x1
-gap> D := GreensDClassOfElement(s, x);
+gap> D := GreensDClassOfElement(S, x);
 {x3x2x1}
 gap> iter := Iterator(D);
 <iterator>
