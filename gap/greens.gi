@@ -1587,7 +1587,7 @@ InstallMethod(NrDClasses, "for a semigroup",
 
 # different method for regular/inverse/ideals
 
-InstallMethod(NrRegularDClasses, "for an acting semigroup with generators",
+InstallMethod(NrRegularDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local data, datascc, rhofunc, tester, nr, r, x, o, scc, rho, i, j;
@@ -1613,6 +1613,14 @@ function(s)
     od;
   od;
   return nr;
+end);
+
+# TODO improve the method below, using a similar method to the above
+
+InstallMethod(RegularDClasses, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return Filtered(GreensDClasses(S), IsRegularClass);
 end);
 
 # different method for regular/inverse, same method for ideals

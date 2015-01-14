@@ -29,6 +29,8 @@
 #############################################################################
 #############################################################################
 
+DeclareAttribute("RegularDClasses", IsSemigroup); 
+
 #new
 
 # LambdaRhoLookup(d)[i]=j if orbit[j][4] in reps[i] (orbit[j][4] is one of the

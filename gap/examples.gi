@@ -52,7 +52,7 @@ function(partition)
   local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x, m, y, w, i, j, k, block;
 
   if not ForAll(partition, IsPosInt) then
-    Error("Semigroups: EndomorphismsPartition: usage,\n" 
+    Error("Semigroups: EndomorphismsPartition: usage,\n",
     "the argument <partition> must be a list of positive integers,");
     return;
   elif ForAll(partition, x -> x = 1) then
