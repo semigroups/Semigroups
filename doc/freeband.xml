@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  freeband.xml
-#Y  Copyright (C) 2013-14                                     Julius Jonusas
+#Y  Copyright (C) 2013-14                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,21 +13,20 @@
     Label="for a free band and a free band element"/>
     <Returns> A Green's D-class</Returns>
     <Description>
-      Let <A> s </A> be a free band. Two elements of <A> s </A> are D 
-      related if and only if they have the same content i.e. the set of
-      generators appearing in any factorization of an element. Therefore,
-      a D class of a free band element <A> x </A> is the set of elements of
-      <A> s </A> which have the same content as <A> x </A>. 
-<Example>
-gap> s := FreeBand(3, "b");
-&lt;free band on the generators [ b1, b2, b3 ]>
-gap> x := s.1*s.2;
+      Let <A> S </A> be a free band. Two elements of <A> S </A> are &D;-related
+      if and only if they have the same content i.e. the set of generators
+      appearing in any factorization of the elements. Therefore, a &D;-class of
+      a free band element <A> x </A> is the set of elements of <A> S </A> which
+      have the same content as <A> x </A>. 
+<Example><![CDATA[
+gap> S := FreeBand(3, "b");
+<free band on the generators [ b1, b2, b3 ]>
+gap> x := S.1 * S.2;
 b1b2
-gap> D := GreensDClassOfElement(s,x);
+gap> D := GreensDClassOfElement(S, x);
 {b1b2}
 gap> IsGreensDClass(D);
-true
-</Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -46,25 +45,24 @@ true
      Returns a free band on <A>rank</A> generators, for a positive integer
      <A>rank</A>. If <A>rank</A> is not specified, the number of <A>names</A>
      is used. The resulting semigroup is always finite.
-<Example>
+<Example><![CDATA[
 gap> FreeBand(6);
-&lt;free band on the generators [ x1, x2, x3, x4, x5, x6 ]>
+<free band on the generators [ x1, x2, x3, x4, x5, x6 ]>
 gap> FreeBand(6, "b");
-&lt;free band on the generators [ b1, b2, b3, b4, b5, b6 ]>
+<free band on the generators [ b1, b2, b3, b4, b5, b6 ]>
 gap> FreeBand("a", "b", "c");
-&lt;free band on the generators [ a, b, c ]>
+<free band on the generators [ a, b, c ]>
 gap> FreeBand("a", "b", "c");
-&lt;free band on the generators [ a, b, c ]>
+<free band on the generators [ a, b, c ]>
 gap> s := FreeBand(["a", "b", "c"]);
-&lt;free band on the generators [ a, b, c ]>
+<free band on the generators [ a, b, c ]>
 gap> Size(s);
 159
 gap> gens := Generators(s);
 [ a, b, c ]
 gap> a := gens[1];; b := gens[2];;
-gap> a*b;
-ab
-</Example>
+gap> a * b;
+ab]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

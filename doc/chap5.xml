@@ -1,11 +1,11 @@
-<Chapter Label="FreeInverseSemigroups">
+<Chapter Label="Free inverse semigroups">
   <Heading>Free inverse semigroups and free bands</Heading>
 
-  This chapter describes the functions in &Semigroups; for dealing with
-  free inverse semigroups. This part of the manual and the functions described
-  herein were written by Julius Jonu&#353;as.<P/>
-
-<Section Label = "sect:Free inverse semigroups">
+  This chapter describes the functions in &Semigroups; for dealing with free
+  inverse semigroups and free bands. This part of the manual and the functions
+  described herein were written by Julius Jonu&#353;as.<P/>
+  
+  <Section Label = "sect:Free inverse semigroups">
   <Heading> Free inverse semigroups </Heading>
   <M>F</M> is a <E>free inverse
   semigroup</E> on a non-empty set <M>X</M> if <M>F</M> is an inverse
