@@ -1,49 +1,90 @@
 ################################################################################
 ##
 #W  freeband.gi
-#Y  Copyright (C) 2013-14                                         Julius Jonusas     
+#Y  Copyright (C) 2013-14                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
 ################################################################################
-##
-##  FreeBand( <rank> [, names] )
-##  FreeBand( name1, name2, ... ) 
-##  FreeBand( names ) 
-##
+
+DeclareGlobalFunction("SEMIGROUPS_FreeBandElmToWord");
+
+InstallGlobalFunction(SEMIGROUPS_FreeBandElmToWord, 
+function(elem)
+  local tuple, out, first, pre_tuple, last, su_tuple, word1, word2;
+
+  tuple := elem!.tuple;
+
+  if elem!.word <> fail then
+    return elem!.word;
+  elif tuple = [] then
+    out := [];
+  elif tuple![2] = 0 then # tuple corresponds to one the generators
+    out := [ tuple![1] ];
+  else
+    first := tuple![1];
+    pre_tuple := tuple![2]; # tuple correspoding to the prefix
+    last := tuple![3];
+    su_tuple := tuple![4];  # tuple corresponding to the sufix
+
+    # if first = last we only need a single letter
+    if first = last then
+      out := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first],
+	                   SEMIGROUPS_FreeBandElmToWord(su_tuple));
+    # otherwise we need distinct letters for both first and last
+    else
+      word1 := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first]);
+      word2 := Concatenation([last],SEMIGROUPS_FreeBandElmToWord(su_tuple));
+      if word1 = word2 then
+        out := word1;
+      else
+        out := Concatenation(word1, word2);
+      fi;
+    fi;
+  fi;
+  elem!.word := out;
+  return out;
+end);
 
 InstallGlobalFunction(FreeBand,
 function(arg)
   local names, F, type, gens, S, m, ngens;
 
- # Get and check the argument list, and construct names if necessary.
+  # Get and check the argument list, and construct names if necessary.
   if Length( arg ) = 1 and IsInt( arg[1] ) and 0 < arg[1] then
-    names:= List( [ 1 .. arg[1] ],
+    names := List( [ 1 .. arg[1] ],
                   i -> Concatenation( "x", String(i) ) );
   elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 < arg[1] then
-    names:= List( [ 1 .. arg[1] ],
+    names := List( [ 1 .. arg[1] ],
                   i -> Concatenation( arg[2], String(i) ) );
   elif 1 <= Length( arg ) and ForAll( arg, IsString ) then
-    names:= arg;
+    names := arg;
   elif Length( arg ) = 1 and IsList( arg[1] )
                           and ForAll( arg[1], IsString ) then
-    names:= arg[1];
+    names := arg[1];
   else
     Error("usage: FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])");
   fi;
+
   MakeImmutable( names );
 
-  F := NewFamily( "FreeBandElementsFamily", IsFreeBandElement, 
+  F := NewFamily( "FreeBandElementsFamily", IsFreeBandElement,
        CanEasilySortElements);
 
   type := NewType(F, IsFreeBandElement and IsPositionalObjectRep);
 
   ngens := Length(names);
-  gens:=EmptyPlist( ngens  );
+  gens := EmptyPlist( ngens );
+
   for m in  [1 .. ngens ] do
-    gens[m] := Objectify(type, rec(tuple:=[m, 0, m, 0], cont:=BlistList([1..ngens], [m]),
-                                   word:=[m]));
+    gens[m] := Objectify(type, rec(
+                                   tuple := [m, 0, m, 0], 
+                                   cont := BlistList([1 .. ngens], [m]),
+                                   word := [m]
+                                  )
+                        );
   od;
+
   StoreInfoFreeMagma( F, names, IsFreeBandElement );
   S := Semigroup(gens);
   SetIsFreeBand(S, true);
@@ -54,55 +95,7 @@ function(arg)
   SetIsWholeFamily( S, true);
 
   return S;
-end );
-
-################################################################################
-##
-## FreeBandElemToWord
-##
-
-InstallGlobalFunction(FreeBandElemToWord,
-function(elem) 
-  local tuple, first, pre_tuple, last, su_tuple, word1, word2, out;
-  
-  tuple := elem!.tuple;
-
-  if elem!.word <> fail then
-    return elem!.word;
-  elif tuple = [] then
-    out:=[];
-  # if tuple corresponds to one the generators
-  elif tuple![2] = 0 then
-    out := [ tuple![1] ];
-  else
-    first := tuple![1];
-    pre_tuple := tuple![2]; # tuple correspoding to the prefix
-    last := tuple![3];
-    su_tuple := tuple![4]; # tuple corresponding to the sufix
-
-    # if first = last we only need a single letter
-    if first = last then
-      out:=Concatenation(FreeBandElemToWord(pre_tuple), [first],
-	                 FreeBandElemToWord(su_tuple));
-    # otherwise we need distinct letters for both first and last
-    else
-      word1 := Concatenation(FreeBandElemToWord(pre_tuple), [first]);
-      word2 := Concatenation([last],FreeBandElemToWord(su_tuple));
-      if word1 = word2 then
-        out:=word1; 
-      else
-        out:=Concatenation(word1, word2);
-      fi;
-    fi;
-  fi;
-  elem!.word := out;
-  return out;
 end);
-
-################################################################################
-##
-## Iterator
-##
 
 
 InstallMethod(Iterator, "for a Greens D-class of a free band",
@@ -110,14 +103,14 @@ InstallMethod(Iterator, "for a Greens D-class of a free band",
 function(dclass)
   local NextIterator_FreeBandDClass, NewIterator_FreeBandDClass, ShallowCopyLocal,
   record, s, content, rep, NextIterator_FreeBandDClassWithPrint;
-  
+
   s := Parent(dclass);
-  rep := Representative(dclass); 
+  rep := Representative(dclass);
   content := rep!.cont;
-   
+
   NextIterator_FreeBandDClass := function(iter)
     local output, i, content, tempcont, tuple;
-  
+
     if iter!.element <> fail then
       # output := StructuralCopy(iter!.element); doesn't work
       output := rec( tuple := StructuralCopy(iter!.element!.tuple),
@@ -127,19 +120,19 @@ function(dclass)
     else
       return fail;
     fi;
-   
+
     content := iter!.content;
-    tuple := iter!.element!.tuple;  
+    tuple := iter!.element!.tuple;
     iter!.element!.word := fail;
 
     if tuple[2] = 0 then
       iter!.element := fail;
     elif iter!.iter1!.element <> fail then
-# Prefix word is not done yet
-      tuple[2] := NextIterator_FreeBandDClass(iter!.iter1); 
+      # Prefix word is not done yet
+      tuple[2] := NextIterator_FreeBandDClass(iter!.iter1);
       iter!.element!.tuple := tuple;
     elif Position(content, true, tuple[1]) <> fail then
-# Update the first component
+      # Update the first component
       i := Position(content, true, tuple[1]);
       tuple[1] := i;
       tempcont := ShallowCopy(content);
@@ -148,10 +141,10 @@ function(dclass)
       tuple[2] := NextIterator_FreeBandDClass(iter!.iter1);
       iter!.element!.tuple := tuple;
     elif iter!.iter2!.element <> fail then
-# Sufix word is not done yet
-      tuple[4] := NextIterator_FreeBandDClass(iter!.iter2); 
+      # Suffix word is not done yet
+      tuple[4] := NextIterator_FreeBandDClass(iter!.iter2);
       iter!.element!.tuple := tuple;
-# Restart the prefix
+      # Restart the prefix
       i := Position(content, true);
       tuple[1] := i;
       tempcont := ShallowCopy(content);
@@ -160,14 +153,14 @@ function(dclass)
       tuple[2] := NextIterator_FreeBandDClass(iter!.iter1);
       iter!.element!.tuple := tuple;
     elif Position(content, true, tuple[3]) <> fail then
-# Update the third component
+      # Update the third component
       i := Position(content, true, tuple[3]);
       tuple[3] := i;
       tempcont := ShallowCopy(content);
       tempcont[i] := false;
       iter!.iter2 := NewIterator_FreeBandDClass(iter!.semigroup, tempcont);
       tuple[4] := NextIterator_FreeBandDClass(iter!.iter2);
-# Restart the prefix 
+      # Restart the prefix
       i := Position(content, true);
       tuple[1] := i;
       tempcont := ShallowCopy(content);
@@ -180,37 +173,37 @@ function(dclass)
     fi;
     return output;
   end;
-  
+
 #
 
   NextIterator_FreeBandDClassWithPrint := function(iter)
     local next_value;
-  
+
     next_value := NextIterator_FreeBandDClass(iter);
-  
+
     if next_value = fail then
       return fail;
     else
-      return Product(List(FreeBandElemToWord(next_value),
+      return Product(List(SEMIGROUPS_FreeBandElmToWord(next_value),
                      x -> GeneratorsOfSemigroup(iter!.semigroup)[x]));
     fi;
   end;
- 
+
 #
-  
+
   NewIterator_FreeBandDClass := function(s, content)
     local record, first, tempcont, elem;
-   
-    first := Position(content, true);  
+
+    first := Position(content, true);
     elem := Objectify(TypeObj(s.1), rec( tuple := [],
-	    content := content, 
+	    content := content,
             word := fail));
 
   # If the content is of size one
     if Position(content, true, first) = fail then
       elem!.tuple := [first, 0, first, 0];
       elem!.word := [first];
-      record := rec( element := elem, 
+      record := rec( element := elem,
                      iter1 := fail,
                      iter2 := fail,
                      semigroup := s,
@@ -224,20 +217,20 @@ function(dclass)
                      semigroup := s,
                      content := content) ;
       record!.element!.tuple := [first, NextIterator_FreeBandDClass(record!.iter1),
-                                 first, NextIterator_FreeBandDClass(record!.iter2)]; 
+                                 first, NextIterator_FreeBandDClass(record!.iter2)];
     fi;
     return record;
   end;
-    
+
   #
-  
+
   ShallowCopyLocal := record -> rec(
     lasr_called_by_is_done := record!.last_called_by_is_done,
     next_value := record!.next_value,
     IsDoneIterator := record!.IsDoneIterator,
     NextIterator := record!.NextIterator );
 
-  record := NewIterator_FreeBandDClass(s, content); 
+  record := NewIterator_FreeBandDClass(s, content);
   record!.NextIterator := NextIterator_FreeBandDClassWithPrint;
   record!.ShallowCopy := ShallowCopyLocal;
    return IteratorByNextIterator(record);
@@ -249,7 +242,7 @@ InstallMethod(Iterator, "for a free band",
 [IsFreeBand],
 function(s)
   local NextIterator_FreeBand, ShallowCopyLocal, record ;
-  
+
 
   NextIterator_FreeBand := function(iter)
     local next_dclass_value, content, i, rep, dclass;
@@ -258,13 +251,13 @@ function(s)
     content := iter!.content;
 
     if next_dclass_value <> fail then
-# The current content is not done yet
+      # The current content is not done yet
       return next_dclass_value;
     elif ForAll(content, x -> x) then
-# Last content finished
+      # Last content finished
       return fail;
     else
-# Change content
+      # Change content
       for i in [1 .. Length(content)] do
         if content[i] then
           content[i] := false;
@@ -273,7 +266,7 @@ function(s)
           break;
         fi;
       od;
-# Create the corresponding D-class, without actualy enumerating it.
+      # Create the corresponding D-class, without actualy enumerating it.
       i := Position(content, true);
       rep := UniversalFakeOne;
       while i <> fail do
@@ -293,15 +286,13 @@ function(s)
     NextIterator := record!.NextIterator );
 
   record := rec( content := BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
-                 dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));  
+                 dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));
   record!.NextIterator := NextIterator_FreeBand;
   record!.ShallowCopy := ShallowCopyLocal;
   return IteratorByNextIterator(record);
 end);
-############################################################################
-##
-## GreensDClassOfElement
-##
+
+#
 
 InstallMethod(GreensDClassOfElement, "for a free band an element",
 [IsFreeBand, IsFreeBandElement],
@@ -319,25 +310,22 @@ function(s, x)
   SetParent(d, s);
   SetRepresentative(d, x);
   # SetEquivalenceClassRelation(d, GreensDRelation(s));
-  # Add a new method for GreensDRelations. JJ
+  # TODO Add a new method for GreensDRelations. JJ
   return d;
 end);
 
-############################################################################
-##
-## ViewObj
-##
+#
 
 InstallMethod(PrintObj, "for a free band element",
-[IsFreeBandElement], 
+[IsFreeBandElement],
 function(elem)
-  Print( Concatenation( List( FreeBandElemToWord(elem),
+  Print( Concatenation( List( SEMIGROUPS_FreeBandElmToWord(elem),
                           x -> FamilyObj(elem)!.names[x] ) ) );
   return;
 end);
 
 InstallMethod(ViewObj,
-"for a free band containing the whole family",
+"for a free band",
 [IsFreeBand],
 function( S )
   if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
@@ -347,14 +335,9 @@ function( S )
     Print( "<free band on the generators ",
            GeneratorsOfSemigroup( S ), ">" );
   fi;
-end );
+end);
 
-#############################################################################
-##
-## Equality
-##
-
-# Is there a more efficient way to compare elements? JJ
+# TODO Is there a more efficient way to compare elements? JJ
 
 InstallMethod(\=, "for elements of a free band",
 IsIdenticalObj,
@@ -367,34 +350,29 @@ function(x, y)
   else
     for i in [1 .. 4] do
       if x!.tuple![i] <> y!.tuple![i] then
-        return false;  
+        return false;
       fi;
     od;
   fi;
   return true;
-end );
+end);
 
-#############################################################################
-##
-## Inequality
-##
-
-# Is it possible to find a non recursive way to compare elements? JJ
+# TODO Is it possible to find a non recursive way to compare elements? JJ
 
 InstallMethod(\<, "for elements of a free band",
 IsIdenticalObj,
 [IsFreeBandElement, IsFreeBandElement],
 function(x, y)
   local i, tuple1, tuple2;
-  
+
   tuple1 := x!.tuple;
   tuple2 := y!.tuple;
 
-  i:=1;
-  while i<=3 and tuple1![i]=tuple2![i] do  
-    i:=i+1;
+  i := 1;
+  while i <= 3 and tuple1![i] = tuple2![i] do
+    i := i + 1;
   od;
-  
+
   if tuple2[i] = 0  then
     return false;
   elif tuple1[i] = 0 then
@@ -403,14 +381,10 @@ function(x, y)
     return tuple1[i] < tuple2[i];
   fi;
 
-
-  return tuple1![i]<tuple2![i];
+  return tuple1![i] < tuple2![i];
 end);
 
-##########################################################################
-##
-## Multiplication
-##
+#
 
 InstallMethod(\*, "for elements of a free band", IsIdenticalObj,
 [IsFreeBandElement, IsFreeBandElement],
@@ -429,13 +403,13 @@ function(x, y)
     # new_first is the last letter to occur first in the product
     new_first := y!.tuple[1];
     new_prefix := y!.tuple[2];
-    repeat 
+    repeat
       if diff[new_first] and new_prefix = 0 then
 	copy := ShallowCopy(x); # are shallow copies necessary?
         out := [new_first, copy];
 	break;
       elif diff[new_first] then
-	copy := ShallowCopy(x*new_prefix);
+	copy := ShallowCopy(x * new_prefix);
         out := [ new_first, copy];
 	break;
       else
@@ -444,7 +418,6 @@ function(x, y)
       fi;
     until IsBound(out[1]);
   fi;
-
 
   if IsSubsetBlist(y!.cont, x!.cont) then
     out{[3,4]} := [y!.tuple[3], y!.tuple[4]];
@@ -456,64 +429,60 @@ function(x, y)
     repeat
       if diff[new_last] and new_sufix = 0 then
 	copy := ShallowCopy(y);
-        out{[3..4]} := [new_last, copy];
+        out{[3 .. 4]} := [new_last, copy];
 	break;
       elif diff[new_last] then
-	copy := ShallowCopy(new_sufix*y);
+	copy := ShallowCopy(new_sufix * y);
         out{[3,4]} := [ new_last, copy];
 	break;
       else
         new_last := new_sufix!.tuple[3];
         new_sufix := new_sufix!.tuple[4];
-      fi; 
+      fi;
     until IsBound(out[3]);
   fi;
 
   return Objectify( type, rec(tuple := out, cont := UnionBlist(x!.cont, y!.cont),
-                              word := fail ) );  
+                              word := fail ) );
+end);
 
-end );
+#
 
-################################################################################
-##
-## Size 
-##
-
-InstallMethod(Size, "for a free band", 
-[IsFreeBand and IsFinite and HasGeneratorsOfSemigroup], 
+InstallMethod(Size, "for a free band",
+[IsFreeBand and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local c, output, k, i, n;
-  
+
   n := Length(FamilyObj(S.1)!.names);
- 
+
   c := [];
   for k in [ 1 .. n ] do
     c[k] := 1;
     for i in [1 .. k - 1] do
-      c[k] := c[k] * (k - i + 1)^(2^i);
+      c[k] := c[k] * (k - i + 1) ^ (2 ^ i);
     od;
   od;
-  
+
   output := 0;
   for k in [ 1 .. n ] do
     output := output + Binomial( n, k ) * c[k];
   od;
 
   return output;
-end );
+end);
 
 #
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionForFreeBandElements,
 function(x, data)
-  return ORB_HashFunctionForPlainFlatList(FreeBandElemToWord(x), data);
+  return ORB_HashFunctionForPlainFlatList(SEMIGROUPS_FreeBandElmToWord(x), data);
 end);
 
 #
 
-InstallMethod(ChooseHashFunction, "for blocks",
+InstallMethod(ChooseHashFunction, "for a free band element and int",
 [IsFreeBandElement, IsInt],
 function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements, data:=hashlen);
-end );
+  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements, data := hashlen);
+end);
 

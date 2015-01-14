@@ -14,5 +14,5 @@ DeclareSynonym("IsFreeBandSubsemigroup", IsSemigroup and IsFreeBandElementCollec
 InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 DeclareGlobalFunction("FreeBand");
-DeclareGlobalFunction("FreeBandElemToWord");
+
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForFreeBandElements");
