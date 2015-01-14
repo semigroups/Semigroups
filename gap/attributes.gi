@@ -264,7 +264,8 @@ function(d)
   local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
-    Error("usage: <d> must be a regular D-class,");
+    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
+    "the argument <d> must be a regular D-class,");
     return;
   fi;
 
@@ -372,7 +373,8 @@ function(coll)
   local gens, nrgens, deg, out, redund, i, f;
 
   if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then
-    Error();
+    Error("Semigroups: IrredundantGeneratingSubset: usage,\n",
+          "<coll> must be a generators of an acting semigroup,"); 
   fi;
 
   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll)) or
@@ -862,7 +864,8 @@ function(s)
   fi;
 
   if MultiplicativeNeutralElement(s) = fail then
-    Error( "usage: <s> must have a multiplicative neutral element,");
+    Error( "Semigroups: IsomorphismTransformationMonoid: usage,\n",
+           "the argument <s> must have a multiplicative neutral element,");
     return;
   fi;
 
@@ -907,7 +910,9 @@ InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-   Error( "usage: a transformation semigroup satisfying IsGroupAsSemigroup,");
+   Error("Semigroups: IsomorphismPermGroup: usage,\n", 
+         "the argument <s> must be a transformation semigroup ",
+         "satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -924,7 +929,9 @@ InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-   Error( "usage: a partial perm semigroup satisfying IsGroupAsSemigroup,");
+   Error( "Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <s> must be a partial perm semigroup ",
+          "satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -942,8 +949,9 @@ function(S)
   local rep;
 
   if not IsGroupAsSemigroup(S)  then
-   Error( "usage: a subsemigroup of a Rees 0-matrix semigroup satisfying\n",
-    "IsGroupAsSemigroup,");
+   Error( "Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <S> must be a subsemigroup of a Rees 0-matrix ", 
+          "semigroup satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -964,9 +972,10 @@ function(S)
   local en, act, gens;
 
   if not IsGroupAsSemigroup(S)  then
-   Error( "usage: the argument must be a semigroup satisfying\n",
-    "IsGroupAsSemigroup,");
-   return;
+    Error( "Semigroups: IsomorphismPermGroup: usage,\n",
+           "the argument must be a semigroup satisfying ",
+           "IsGroupAsSemigroup,");
+    return;
   fi;
 
   en := EnumeratorSorted(S);
