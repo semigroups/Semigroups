@@ -87,7 +87,6 @@ b]]></Example>
       If <A>w</A> is such an element, then <C>CanonicalForm</C> returns the
       canonical form of <A>w</A> as a string.
 <Example><![CDATA[
-gap> S := FreeInverseSemigroup(7);
 gap> S := FreeInverseSemigroup(3);
 <free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> x := S.1; y := S.2;
