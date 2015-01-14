@@ -17,7 +17,7 @@ BindGlobal("SemigroupsDocXMLFiles",
    "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml",
    "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml",
    "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
-   "../PackageInfo.g"]);
+   "freeband.xml", "../PackageInfo.g"]);
 
 # arg is the number of threads, defaults to 2...
 
