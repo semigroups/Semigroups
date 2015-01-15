@@ -485,7 +485,7 @@ function(h)
   fi;
 
   s := Parent(h);
-  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x -> 
+  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x ->
    StabilizerAction(s)(Representative(h), x), [IsIteratorOfHClassElements]);
 end);
 
@@ -621,7 +621,7 @@ function(s)
     return iter;
   fi;
 
-  return IteratorByIterator(IteratorOfRClassData(s), x -> 
+  return IteratorByIterator(IteratorOfRClassData(s), x ->
    CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]);
 end);
 
@@ -669,7 +669,7 @@ function(s)
 
     IsDoneIterator := iter -> IsDoneIterator(iter!.tups),
 
-    ShallowCopy := iter -> rec(tups := 
+    ShallowCopy := iter -> rec(tups :=
       IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(s)],
        DegreeOfTransformationSemigroup(s)))));
 
@@ -896,7 +896,7 @@ function(s)
   if HasGreensDClasses(s) then
     return IteratorList(GreensDClasses(s));
   fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x -> 
+  return IteratorByIterator(IteratorOfDClassData(s), x ->
    CallFuncList(CreateDClassNC, x), [IsIteratorOfDClasses]);
 end);
 
@@ -911,7 +911,7 @@ s -> IteratorByIterator(IteratorOfLClassData(s), x -> x[4],
 
 InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-s -> IteratorByIterator(IteratorOfLClassData(s), x -> 
+s -> IteratorByIterator(IteratorOfLClassData(s), x ->
 CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 #for inverse acting semigroups...
