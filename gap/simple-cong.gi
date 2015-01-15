@@ -238,14 +238,14 @@ function(pair, cong)
   # Check for validity
   if Size(pair) <> 2 then
     # FIXME shouldn't this return false?
-    Error("Semigroups: \in: usage,\n"
+    Error("Semigroups: \in: usage,\n",
           "the first argument <pair> must be a list of length 2,");
     return;
   fi;
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
     # FIXME shouldn't this return false?
-    Error("Semigroups: \in: usage,\n"
+    Error("Semigroups: \in: usage,\n",
           "the elements of the 1st argument <pair>\n",
           "must be in the range of the 2nd argument <cong>,");
     return;
