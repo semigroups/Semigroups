@@ -9,9 +9,9 @@
 ##
 
 if not IsBound(POW_KER_PERM) then
-  POW_KER_PERM := function(pt, x)
+  BindGlobal("POW_KER_PERM", function(pt, x)
     return FlatKernelOfTransformation(TransformationNC(pt) ^ x, Length(pt));
-  end;
+  end);
 fi;
 
 #
@@ -101,7 +101,8 @@ function(S, opts)
   if not IsBound(opts.lambdastab) then
     opts.lambdastab := true;
   elif not IsBool(opts.lambdastab) then
-    Error("usage: the component `lambdastab' must be a boolean,");
+    Error("Semigroups: NormalizerOptsRec@: usage,\n",
+          "the component `lambdastab' must be a boolean,");
     return;
   fi;
 
@@ -110,7 +111,8 @@ function(S, opts)
   elif not IsBound(opts.rhostab) then
     opts.rhostab := true;
   elif not IsBool(opts.rhostab) then
-    Error("usage: the component `rhostab' must be a boolean,");
+    Error("Semigroups: NormalizerOptsRec@: usage,\n",
+          "the component `rhostab' must be a boolean,");
     return;
   fi;
 
@@ -153,19 +155,22 @@ function(G, S, opts)
   local o, i, nr, act, deg, U, gens, nrgens, P;
 
   if not IsPermGroup(G) then
-    Error("usage: the 1st argument must be a permutation group,");
+    Error("Semigroups: DeterministicSemigroupNormalizer: usage,\n",
+          "the first arg must be a permutation group,");
     return;
   fi;
 
   if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) or
     IsBipartitionSemigroup(S)) then
-    Error("usage: the 2nd argument must be a transformation, partial perm\n",
-    "or bipartition semigroup,");
+    Error("Semigroups: DeterministicSemigroupNormalizer: usage,\n",
+          "the second arg must be a semigroup of transformations,\n",
+          "partial perms or bipartitions,");
     return;
   fi;
 
   if not IsRecord(opts) then
-    Error("usage: the 3rd argument must be a record,");
+    Error("Semigroups: DeterministicSemigroupNormalizer: usage,\n",
+          "the third argument must be a record,");
     return;
   fi;
 
@@ -259,19 +264,22 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       "`random' set to <false> for a deterministic (but slower) answer.");
 
     if not IsPermGroup(G) then
-      Error("usage: the 1st argument must be a permutation group,");
+      Error("Semigroups: NonDeterministicSemigroupNormalizer: usage,\n",
+            "the first arg must be a permutation group,");
       return;
     fi;
 
     if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) or
       IsBipartitionSemigroup(S)) then
-      Error("usage: the 2nd argument must be a transformation, partial perm\n",
-      "or bipartition semigroup,");
+      Error("Semigroups: NonDeterministicSemigroupNormalizer: usage,\n",
+            "the second arg must be a semigroup of transformations,\n",
+            "partial perms or bipartitions,");
       return;
     fi;
 
     if not IsRecord(opts) then
-      Error("usage: the 3rd argument must be a record,");
+      Error("Semigroups: NonDeterministicSemigroupNormalizer: usage,\n",
+            "the third arg must be a record,");
       return;
     fi;
 
