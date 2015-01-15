@@ -41,7 +41,8 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   IsBound(record.convert_in) and not IsBound(record.NumberElement) and not
   IsBound(record.ElementNumber)) then
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the sixth argument <record> must be a mutable record with no components\n",
+          "the sixth argument <record> must be a mutable record",
+          "with no components\n",
           "named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',\n",
           "or `NumberElement',");
     return;
@@ -112,7 +113,8 @@ function(obj, record, baseenum, convert, filts)
    or IsBound(record.NumberElement) or IsBound(record.baseenum)
    or IsBound(record.enumofenums) then
     Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-          "the second argument  <record> must be a record with no components named:\n",
+          "the second argument  <record> must be a record",
+          "with no components named:\n",
           "`NumberElement', `ElementNumber', `baseenum', or `enumofenums',");
     return;
   # TODO add check for third arg
@@ -172,14 +174,20 @@ function(obj, record, baseenum, convert, filts)
     baseenum := enum!.baseenum;
     enumofenums := enum!.enumofenums;
     conv := convert(enum, elt);
-    if conv = fail then return fail; fi;
+    if conv = fail then
+      return fail;
+    fi;
     basepos := Position(baseenum, conv);
-    if basepos = fail then return fail; fi;
+    if basepos = fail then
+      return fail;
+    fi;
     if not IsBound(enumofenums[basepos]) then
       enumofenums[basepos] := Enumerator(baseenum[basepos]);
     fi;
     pos := Position(enumofenums[basepos], elt);
-    if pos = fail then return fail; fi;
+    if pos = fail then
+      return fail;
+    fi;
     for i in [1 .. basepos - 1] do
       if not IsBound(enumofenums[i]) then
         enumofenums[i] := Enumerator(baseenum[i]);
@@ -420,8 +428,11 @@ function(d)
   #
   convert_out := function(enum, tuple)
     local d, rep, act;
-    if tuple = fail then return fail; fi;
-    d := enum!.parent; rep := Representative(d);
+    if tuple = fail then
+      return fail;
+    fi;
+    d := enum!.parent;
+    rep := Representative(d);
     act := StabilizerAction(Parent(d));
     return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1] * rep,
      tuple[2]) * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
@@ -478,8 +489,11 @@ function(d)
   #
   convert_out := function(enum, tuple)
     local d, rep, act;
-    if tuple = fail then return fail; fi;
-    d := enum!.parent; rep := Representative(d);
+    if tuple = fail then
+      return fail;
+    fi;
+    d := enum!.parent;
+    rep := Representative(d);
     act := StabilizerAction(Parent(d));
     return act(LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[1])[2]
      * rep, tuple[2]) * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d),
@@ -585,7 +599,9 @@ function(l)
   #
   convert_out := function(enum, tuple)
     local l, rep, act;
-    if tuple = fail then return fail; fi;
+    if tuple = fail then
+      return fail;
+    fi;
     l := enum!.parent;
     rep := Representative(l);
     act := StabilizerAction(Parent(l));
@@ -643,7 +659,9 @@ function(l)
   #
   convert_out := function(enum, tuple)
     local l, rep, act;
-    if tuple = fail then return fail; fi;
+    if tuple = fail then
+      return fail;
+    fi;
     l := enum!.parent;
     rep := Representative(l);
     act := StabilizerAction(Parent(l));
@@ -700,7 +718,9 @@ function(r)
   #
   convert_out := function(enum, tuple)
     local r, rep;
-    if tuple = fail then return fail; fi;
+    if tuple = fail then
+      return fail;
+    fi;
     r := enum!.parent;
     rep := Representative(r);
     return StabilizerAction(Parent(r))(rep,tuple[1])
@@ -755,7 +775,9 @@ function(arr, n)
   for i in [2 .. m] do
     k := 0;
     for j in [1 .. arr[i] - 1] do
-      if not bool[j] then k := k + 1; fi;
+      if not bool[j] then
+        k := k + 1;
+      fi;
     od;
     bool[arr[i]] := true;
     factor := factor - 1;
@@ -788,18 +810,24 @@ function(r, m, n)
     factor := factor - 1;
     mult := mult / factor;
     q := QuotientRemainder(q[2], mult);
-    j := 0; k := 0;
+    j := 0;
+    k := 0;
     repeat
       j := j + 1;
-      if not bool[j] then k := k + 1; fi;
+      if not bool[j] then
+        k := k + 1;
+      fi;
     until k = q[1] + 1;
     bool[j] := true;
     out[i] := j;
   od;
-  j := 0; k := 0;
+  j := 0;
+  k := 0;
   repeat
     j := j + 1;
-    if not bool[j] then k := k + 1; fi;
+    if not bool[j] then
+      k := k + 1;
+    fi;
   until k = q[2] + 1;
   out[m] := j;
   return out;

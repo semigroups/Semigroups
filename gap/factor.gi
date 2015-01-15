@@ -22,7 +22,7 @@ function(o, m, elt)
       pos := Position(o!.exhaust[m], elt);
       if pos = fail then
         Error("Semigroups: Factorization: usage,\n",
-              "the third argument <perm> does not belong to the ",
+              "the third arg <perm> does not belong to the ",
               "Schutzenberger group,");
         return;
       fi;
@@ -43,12 +43,18 @@ function(o, m, elt)
     o!.exhaust := EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  s := o!.parent;                   gens := o!.gens;
-  scc := OrbSCC(o)[m];              lookup := o!.scc_lookup;
-  orbitgraph := OrbitGraph(o);      genstoapply := [1 .. Length(gens)];
-  lambdaperm := LambdaPerm(s);      rep := LambdaOrbRep(o, m);
-  factors := [];                    bound := Size(LambdaOrbSchutzGp(o, m));
-  nrgens := 0;                      stop := false;
+  s := o!.parent;
+  gens := o!.gens;
+  scc := OrbSCC(o)[m];
+  lookup := o!.scc_lookup;
+  orbitgraph := OrbitGraph(o);
+  genstoapply := [1 .. Length(gens)];
+  lambdaperm := LambdaPerm(s);
+  rep := LambdaOrbRep(o, m);
+  factors := [];
+  bound := Size(LambdaOrbSchutzGp(o, m));
+  nrgens := 0;
+  stop := false;
 
   for k in scc do
     uword := TraceSchreierTreeOfSCCForward(o, m, k);
@@ -61,7 +67,8 @@ function(o, m, elt)
         if not IsBound(ex) then
           nrgens := nrgens + 1;
           factors[nrgens] := Concatenation(uword, [l], vword);
-          ex := Orb([f], (), PROD, rec(hashlen := 2 * bound, schreier := true, log := true));
+          ex := Orb([f], (), PROD, rec(hashlen := 2 * bound, schreier := true,
+                log := true));
           Enumerate(ex);
         elif not f in ex then
           nrgens := nrgens + 1;
@@ -131,12 +138,14 @@ function(s, f)
 
   if not f in s then
     Error("Semigroups: Factorization: usage,\n",
-          "the second argument <f> is not an element of the first argument <S>,");
+          "the second arg <f> is not an element of the first arg <S>,");
     return;
   fi;
 
-  o := LambdaOrb(s);            l := Position(o, LambdaFunc(s)(f));
-  m := OrbSCCLookup(o)[l];      scc := OrbSCC(o)[m];
+  o := LambdaOrb(s);
+  l := Position(o, LambdaFunc(s)(f));
+  m := OrbSCCLookup(o)[l];
+  scc := OrbSCC(o)[m];
 
   data := SemigroupData(s);
   pos := Position(data, f);                     #not <fail> since <f> in <s>
@@ -170,18 +179,22 @@ end);
 
 InstallMethod(Factorization,
 "for an acting semigroup with inverse op with generators and element",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsAssociativeElement],
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup,
+IsAssociativeElement],
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
   if not f in s then
     Error("Semigroups: Factorization: usage,\n",
-          "the second argument <f> is not an element of the first argument <S>,");
+          "the second arg <f> is not an element of the first arg <S>,");
     return;
   fi;
 
-  o := LambdaOrb(s);                  gens := o!.gens;
-  l := Position(o, LambdaFunc(s)(f)); m := OrbSCCLookup(o)[l]; scc := OrbSCC(o)[m];
+  o := LambdaOrb(s);
+  gens := o!.gens;
+  l := Position(o, LambdaFunc(s)(f));
+  m := OrbSCCLookup(o)[l];
+  scc := OrbSCC(o)[m];
 
   # find the R-class rep
   word1 := TraceSchreierTreeForward(o, scc[1]);
@@ -199,7 +212,8 @@ function(s, f)
   # compensate for the action of the multipliers
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f * LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(s)(rep, f
+         * LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
     p := LambdaPerm(s)(rep, f);
@@ -228,11 +242,13 @@ function(s, f)
 
   if not f in s then
     Error("Semigroups: Factorization: usage,\n",
-          "the second argument <f> is not an element of the first argument <S>,");
+          "the second arg <f> is not an element of the first arg <S>,");
     return;
   fi;
 
-  o := RhoOrb(s); Enumerate(o); gens := o!.gens;
+  o := RhoOrb(s);
+  Enumerate(o);
+  gens := o!.gens;
   l := Position(o, RhoFunc(s)(f));
 
   # find the R-class rep
@@ -240,7 +256,8 @@ function(s, f)
   #trace back to get forward since this is a left orbit
   rep := EvaluateWord(gens, word1);        #but lambda value is wrong
 
-  o := LambdaOrb(s); Enumerate(o);
+  o := LambdaOrb(s);
+  Enumerate(o);
   l := Position(o, LambdaFunc(s)(f));
   m := OrbSCCLookup(o)[l];
   scc := OrbSCC(o)[m];
@@ -254,7 +271,8 @@ function(s, f)
   #JDM: update this as above
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f * LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(s)(rep,
+         f * LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
     p := LambdaPerm(s)(rep, f);
