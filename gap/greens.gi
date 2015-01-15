@@ -780,9 +780,8 @@ function(s, f)
   local lambda_o, lambda_m, rho_o, i, rho_m;
 
   if not f in s then
-    Error("Semigroups: GreensDClassOfElement: usage,\n",
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
           "the element does not belong to the semigroup,");
-    Error("the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -820,8 +819,7 @@ function(d, f)
 
   if not f in d then
     Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the Green's class,");
-    Error("the element does not belong to the Green's class,");
+          "the element does not belong to the D-class,");
     return;
   fi;
 
@@ -855,8 +853,7 @@ function(l, f)
 
   if not f in l then
     Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the Green's class,");
-    Error("the element does not belong to the Green's class,");
+          "the element does not belong to the L-class,");
     return;
   fi;
 
@@ -901,8 +898,7 @@ function(r, f)
 
   if not f in r then
     Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the Green's class,");
-    Error("the element does not belong to the Green's class,");
+          "the element does not belong to the R-class,");
     return;
   fi;
 
@@ -1011,7 +1007,8 @@ InstallMethod(GreensRClassOfElement, "for an acting semigroup and element",
 function(s, f)
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensRClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
   return CallFuncList(CreateRClassNC,
@@ -1044,7 +1041,8 @@ function(d, f)
   local r;
 
   if not f in d then
-    Error("the element does not belong to the D-class,");
+    Error("Semigroups: GreensRClassOfElement: usage,\n",
+          "the element does not belong to the D-class,");
     return;
   fi;
 
@@ -1386,7 +1384,8 @@ function(s, n)
   local out, nr, tester, creator, rho_o, scc, lambda_o, gens, rhofunc, lookup, rank, rep, rho, j, i, k;
 
   if n < 0 then
-    Error("usage: <n> must be a non-negative integer,");
+    Error("Semigroups: Idempotents: usage,\n",
+          "the second argument <n> must be a non-negative integer,");
     return;
   fi;
 
@@ -1492,7 +1491,8 @@ InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 function(h)
 
   if not IsGroupHClass(h) then
-    Error("the H-class is not a group,");
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the H-class must be a group,");
     return;
   fi;
 
