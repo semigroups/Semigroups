@@ -72,7 +72,7 @@ if not IsBound(GAPInfo.PackagesLoaded.genss) then
   InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
   [IsReesMatrixSemigroup],
   function(R)
-    Info(InfoWarning, 1, "the GENSS package is not loaded, "
+    Info(InfoWarning, 1, "the GENSS package is not loaded, ",
     "and so this function does not work");
     return fail;
   end);
@@ -610,7 +610,7 @@ function(x, i)
   if 1 <= i and i <= 3 then
     return x!.triple[i];
   fi;
-  Error("Semigroups: ELM_LIST: usage,\n"
+  Error("Semigroups: ELM_LIST: usage,\n",
         "the index <i> must be at most 3,");
   return;
 end);

@@ -267,7 +267,7 @@ function(cong)
   local s, elms, trace, i, class, congClass, j;
   s := Range(cong);
   if not IsInverseSemigroup(s) then
-    Error("Semigroups: TraceOfSemigroupCongruence: usage,\n"
+    Error("Semigroups: TraceOfSemigroupCongruence: usage,\n",
           "the argument <cong> must be over an inverse semigroup,");
     return;
   fi;
