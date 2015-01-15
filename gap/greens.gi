@@ -738,7 +738,8 @@ function(s, f)
   local lambda_o, rectify, lambda_m, rep, rho_o, i;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensDClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -779,6 +780,8 @@ function(s, f)
   local lambda_o, lambda_m, rho_o, i, rho_m;
 
   if not f in s then
+    Error("Semigroups: GreensDClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     Error("the element does not belong to the semigroup,");
     return;
   fi;
@@ -816,6 +819,8 @@ function(d, f)
   local h;
 
   if not f in d then
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the Green's class,");
     Error("the element does not belong to the Green's class,");
     return;
   fi;
@@ -849,6 +854,8 @@ function(l, f)
   local s, nc, o, i, h;
 
   if not f in l then
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the Green's class,");
     Error("the element does not belong to the Green's class,");
     return;
   fi;
@@ -893,6 +900,8 @@ function(r, f)
   local s, nc, o, i, h;
 
   if not f in r then
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the Green's class,");
     Error("the element does not belong to the Green's class,");
     return;
   fi;
@@ -937,7 +946,8 @@ function(s, f)
   local o;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -968,7 +978,8 @@ function(d, f)
   local l;
 
   if not f in d then
-    Error("the element does not belong to the D-class,");
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the D-class,");
     return;
   fi;
 
