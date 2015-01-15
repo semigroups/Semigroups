@@ -70,13 +70,16 @@ function(s, f, opt)
   local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
 
   if not IsActingSemigroup(s) then
-    Error("usage: <s> must be an acting semigroup,");
+    Error("Semigroups: GradedLambdaOrb: usage,\n",
+          "the first argument <S> must be an acting semigroup,");
     return;
   elif not IsAssociativeElement(f) then
-    Error("usage: <f> must be an associative element,");
+    Error("Semigroups: GradedLambdaOrb: usage,\n",
+          "the second argument <f> must be an associative element,");
     return;
   elif not IsBool(opt) then
-    Error("usage: <opt> must be a boolean,");
+    Error("Semigroups: GradedLambdaOrb: usage,\n",
+          "the third argument <opt> must be a boolean,");
     return;
   fi;
 
@@ -144,13 +147,16 @@ function(s, f, opt)
   local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
 
   if not IsActingSemigroup(s) then
-    Error("usage: <s> must be an acting semigroup,");
+    Error("Semigroups: GradedRhoOrb: usage,\n",
+          "the first argument <S> must be an acting semigroup,");
     return;
   elif not IsAssociativeElement(f) then
-    Error("usage: <f> must be an associative element,");
+    Error("Semigroups: GradedRhoOrb: usage,\n",
+          "the second argument <f> must be an associative element,");
     return;
   elif not IsBool(opt) then
-    Error("usage: <opt> must be a boolean,");
+    Error("Semigroups: GradedRhpOrb: usage,\n",
+          "the third argument <opt> must be a boolean,");
     return;
   fi;
 

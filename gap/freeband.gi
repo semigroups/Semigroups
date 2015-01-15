@@ -63,7 +63,9 @@ function(arg)
                           and ForAll( arg[1], IsString ) then
     names := arg[1];
   else
-    Error("usage: FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])");
+    Error("Semigroups: FreeBand: usage,\n", 
+          "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
+    return;
   fi;
 
   MakeImmutable( names );

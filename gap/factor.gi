@@ -21,8 +21,9 @@ function(o, m, elt)
     if IsBound(o!.factors[m]) then
       pos := Position(o!.exhaust[m], elt);
       if pos = fail then
-        Error("usage: the permutation <elt> does not belong to the ",
-        "Schutzenberger group,");
+        Error("Semigroups: Factorization: usage,\n",
+              "the third argument <perm> does not belong to the ",
+              "Schutzenberger group,");
         return;
       fi;
 
@@ -129,7 +130,8 @@ function(s, f)
   local o, l, m, scc, data, pos, rep, word1, word2, p;
 
   if not f in s then
-    Error("usage: <f> is not an element of the semigroup <s>,");
+    Error("Semigroups: Factorization: usage,\n",
+          "the second argument <f> is not an element of the first argument <S>,");
     return;
   fi;
 
@@ -173,7 +175,8 @@ function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
   if not f in s then
-    Error("usage: <f> is not an element of the semigroup <s>,");
+    Error("Semigroups: Factorization: usage,\n",
+          "the second argument <f> is not an element of the first argument <S>,");
     return;
   fi;
 
@@ -224,7 +227,8 @@ function(s, f)
   local o, gens, l, m, scc, word1, k, rep, p, word2;
 
   if not f in s then
-    Error("usage: <f> is not an element of the semigroup <s>,");
+    Error("Semigroups: Factorization: usage,\n",
+          "the second argument <f> is not an element of the first argument <S>,");
     return;
   fi;
 

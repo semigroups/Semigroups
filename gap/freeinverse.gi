@@ -143,7 +143,9 @@ function(arg)
                           and ForAll( arg[1], IsString ) then
     names := arg[1];
   else
-    Error("usage: FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name])");
+    Error("Semigroups: FreeInverseSemigroup: usage,\n", 
+          "FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name]),");
+    return;
   fi;
 
   F := NewFamily( "FreeInverseSemigroupElementsFamily",
@@ -153,8 +155,9 @@ function(arg)
   type := NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
   if IsEmpty( names ) then
-    Error("usage: the number of generators of a free inverse semigroup must",
-      " be non-zero,");
+    Error("Semigroups: FreeInverseSemigroup: usage,\n", 
+          "the number of generators of a free inverse semigroup must ",
+          "be non-zero,");
     return;
   elif IsFinite( names ) then
     gens := EmptyPlist( Length(names) );
@@ -169,8 +172,9 @@ function(arg)
     S := InverseSemigroup(gens);
     SetIsFreeInverseSemigroup(S, true);
   else
-    Error("usage: the number of generators of a free inverse semigroup must",
-      " be finite,");
+    Error("Semigroups: FreeInverseSemigroup: usage,\n", 
+          "the number of generators of a free inverse semigroup must ",
+          "be finite,");
     return;
   fi;
 
