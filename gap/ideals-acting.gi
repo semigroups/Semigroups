@@ -234,9 +234,9 @@ function(I)
 
   gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
 
-  data := rec(  gens := gens, 
-                parent := I, 
-                log := [1], 
+  data := rec(  gens := gens,
+                parent := I,
+                log := [1],
                 genspos := 0,
                 ht := HTCreate(gens[1], rec(treehashsize := I!.opts.hashlen.L)),
               pos := 0, init := false, reps := [], repslookup := [], orblookup1 := [],
@@ -297,7 +297,7 @@ InstallMethod(Enumerate,
 [IsSemigroupIdealData, IsCyclotomic, IsRecord],
 function(data, limit, record)
   local lookfunc, looking, lambdalookfunc, lambdalooking, rholookfunc, rholooking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens, genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset, datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
-  
+
   if IsBound(record.lookfunc) then
     lookfunc := record.lookfunc;
     looking := true;
@@ -619,7 +619,7 @@ function(data, limit, record)
     SetFilterObj(data, IsClosedData);
     if not HasIsRegularSemigroup(I) then
       SetIsRegularSemigroup(data!.parent, ForAll(regular, x -> x = true));
-      if IsRegularSemigroup(data!.parent) then 
+      if IsRegularSemigroup(data!.parent) then
         SetGreensDClasses(data!.parent, d);
       fi;
     fi;

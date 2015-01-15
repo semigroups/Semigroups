@@ -29,7 +29,7 @@ function(L)
     i := Position(o, LambdaFunc(S)(rep));
   else
     o := GradedLambdaOrb(S, rep, nc <> true);
-    i := o[2]; 
+    i := o[2];
     o := o[1];
   fi;
 
@@ -46,7 +46,7 @@ function(L)
 end);
 
 InstallMethod(IsInverseOpClass, "for a Green's class",
-[IsGreensClass], 
+[IsGreensClass],
 function(class)
   return IsActingSemigroupWithInverseOp(Parent(class));
 end);
@@ -199,7 +199,7 @@ end);
 
 #
 
-InstallMethod(\in, 
+InstallMethod(\in,
 "for associative element and inverse op L-class of acting semigroup.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensLClass and
 IsActingSemigroupGreensClass],
