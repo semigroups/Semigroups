@@ -1407,6 +1407,8 @@ function(s, n)
     rank := RhoRank(s);
 
     for i in [2 .. Length(lambda_o)] do
+      # TODO this could be better, just take the product with the next
+      # schreiergen every time
       rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
       rho := rhofunc(rep);
       j := lookup[Position(rho_o, rho)];
