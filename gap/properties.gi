@@ -165,7 +165,7 @@ function(S)
   fi;
 
   gens := GeneratorsOfSemigroup(S);
-  idem := Set(List(gens, x -> 
+  idem := Set(List(gens, x ->
    IdempotentCreator(S)(LambdaFunc(S)(x), RhoFunc(S)(x))));
 
   for f in gens do
@@ -437,7 +437,7 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if ForAny(GeneratorsOfSemigroup(S), x -> 
+  if ForAny(GeneratorsOfSemigroup(S), x ->
    ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
     return false;
   else
@@ -450,7 +450,7 @@ end);
 InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if ForAny(GeneratorsOfSemigroup(S), x -> 
+  if ForAny(GeneratorsOfSemigroup(S), x ->
    ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
     return false;
   else
@@ -605,12 +605,12 @@ function(S)
     return IsCliffordSemigroup(S);
   fi;
 
-  lambda := LambdaOrb(S);  
+  lambda := LambdaOrb(S);
   Enumerate(lambda);
-  rho := RhoOrb(S);        
+  rho := RhoOrb(S);
   Enumerate(rho, Length(lambda));
-  # TODO shouldn't the below be Length(rho) = Length(lambda)? 
-  # and we should check that rho is closed. 
+  # TODO shouldn't the below be Length(rho) = Length(lambda)?
+  # and we should check that rho is closed.
   if not (IsClosed(rho) and Length(rho) >= Length(lambda)) then
     Info(InfoSemigroups, 2, "the numbers of lambda and rho values are not equal");
     return false;
