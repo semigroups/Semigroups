@@ -9,7 +9,7 @@
 
 DeclareGlobalFunction("SEMIGROUPS_FreeBandElmToWord");
 
-InstallGlobalFunction(SEMIGROUPS_FreeBandElmToWord, 
+InstallGlobalFunction(SEMIGROUPS_FreeBandElmToWord,
 function(elem)
   local tuple, out, first, pre_tuple, last, su_tuple, word1, word2;
 
@@ -63,7 +63,7 @@ function(arg)
                           and ForAll( arg[1], IsString ) then
     names := arg[1];
   else
-    Error("Semigroups: FreeBand: usage,\n", 
+    Error("Semigroups: FreeBand: usage,\n",
           "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
     return;
   fi;
@@ -80,7 +80,7 @@ function(arg)
 
   for m in  [1 .. ngens ] do
     gens[m] := Objectify(type, rec(
-                                   tuple := [m, 0, m, 0], 
+                                   tuple := [m, 0, m, 0],
                                    cont := BlistList([1 .. ngens], [m]),
                                    word := [m]
                                   )
@@ -103,8 +103,9 @@ end);
 InstallMethod(Iterator, "for a Greens D-class of a free band",
 [IsFreeBandElementCollection and IsGreensDClass],
 function(dclass)
-  local NextIterator_FreeBandDClass, NewIterator_FreeBandDClass, ShallowCopyLocal,
-  record, s, content, rep, NextIterator_FreeBandDClassWithPrint;
+  local NextIterator_FreeBandDClass, NewIterator_FreeBandDClass,
+  ShallowCopyLocal, record, s, content, rep,
+  NextIterator_FreeBandDClassWithPrint;
 
   s := Parent(dclass);
   rep := Representative(dclass);
@@ -217,9 +218,11 @@ function(dclass)
 		     iter1 := NewIterator_FreeBandDClass(s, tempcont),
                      iter2 := NewIterator_FreeBandDClass(s, tempcont),
                      semigroup := s,
-                     content := content) ;
-      record!.element!.tuple := [first, NextIterator_FreeBandDClass(record!.iter1),
-                                 first, NextIterator_FreeBandDClass(record!.iter2)];
+                     content := content);
+      record!.element!.tuple := [first,
+                                 NextIterator_FreeBandDClass(record!.iter1),
+                                 first,
+                                 NextIterator_FreeBandDClass(record!.iter2)];
     fi;
     return record;
   end;
@@ -287,7 +290,8 @@ function(s)
     IsDoneIterator := record!.IsDoneIterator,
     NextIterator := record!.NextIterator );
 
-  record := rec( content := BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
+  record := rec( content :=
+                  BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
                  dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));
   record!.NextIterator := NextIterator_FreeBand;
   record!.ShallowCopy := ShallowCopyLocal;
@@ -302,7 +306,8 @@ function(s, x)
   local type, d;
 
   if not x in s then
-    Error("the element does not belong to the semigroup.");
+    Error("Semigroups: GreensDClassOfElements: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -444,7 +449,8 @@ function(x, y)
     until IsBound(out[3]);
   fi;
 
-  return Objectify( type, rec(tuple := out, cont := UnionBlist(x!.cont, y!.cont),
+  return Objectify( type, rec(tuple := out,
+                    cont := UnionBlist(x!.cont, y!.cont),
                               word := fail ) );
 end);
 
@@ -477,7 +483,8 @@ end);
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionForFreeBandElements,
 function(x, data)
-  return ORB_HashFunctionForPlainFlatList(SEMIGROUPS_FreeBandElmToWord(x), data);
+  return ORB_HashFunctionForPlainFlatList(SEMIGROUPS_FreeBandElmToWord(x),
+  data);
 end);
 
 #
@@ -485,6 +492,7 @@ end);
 InstallMethod(ChooseHashFunction, "for a free band element and int",
 [IsFreeBandElement, IsInt],
 function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements, data := hashlen);
+  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements, data :=
+  hashlen);
 end);
 

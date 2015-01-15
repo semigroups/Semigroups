@@ -13,7 +13,8 @@
 
 #InstallGlobalFunction(HashFunctionMatrixOfRMS,
 #function(P, data)
-#  return Sum(List(P, x-> ORB_HashFunctionForPlainFlatList(x, data))) mod data+1;
+#  return Sum(List(P, x-> ORB_HashFunctionForPlainFlatList(x, data))) mod
+# data+1;
 #end);
 
 #
@@ -48,7 +49,8 @@ InstallMethod(IsomorphismPermGroup,
 function(A)
   local B, R, iso, x;
 
-  B := []; R := Source(A.1);
+  B := [];
+  R := Source(A.1);
   for x in GeneratorsOfGroup(A) do
     Add(B, Permutation(x, R, POW));
   od;
@@ -57,7 +59,8 @@ function(A)
   iso := GroupHomomorphismByImagesNC(A, B, GeneratorsOfGroup(A),
    GeneratorsOfGroup(B));
   SetInverseGeneralMapping(iso,
-    GroupHomomorphismByImagesNC(B, A, GeneratorsOfGroup(B), GeneratorsOfGroup(A)));
+    GroupHomomorphismByImagesNC(B, A, GeneratorsOfGroup(B),
+    GeneratorsOfGroup(A)));
   SetNiceMonomorphism(A, iso);
   SetIsHandledByNiceMonomorphism(A, true);
   UseIsomorphismRelation(A, B);
@@ -69,26 +72,28 @@ if not IsBound(GAPInfo.PackagesLoaded.genss) then
   InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
   [IsReesMatrixSemigroup],
   function(R)
-    Info(InfoWarning, 1, "the GENSS package is not loaded, and so this function",
-      "does not work");
+    Info(InfoWarning, 1, "the GENSS package is not loaded, ",
+    "and so this function does not work");
     return fail;
   end);
 else
   InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
   [IsReesMatrixSemigroup],
   function(R)
-    local G, mat, m, n, agroup, A, hom, agraph, OnMatrix, S1, S2, mat_elts, U, V,
-    iso, inv, T, tester, y, D, P, elts, B, g, x, proj1, proj2, stab, gens, i,
+    local G, mat, m, n, agroup, A, hom, agraph, OnMatrix, S1, S2, mat_elts, U,
+    V, iso, inv, T, tester, y, D, P, elts, B, g, x, proj1, proj2, stab, gens, i,
     blist, right, pruner, lambda, gamma, entries;
 
     G := UnderlyingSemigroup(R);
     if not IsGroup(G) then
       return fail;
     fi;
-    mat := Matrix(R); m := Length(mat[1]); n := Length(mat);
+    mat := Matrix(R);
+    m := Length(mat[1]);
+    n := Length(mat);
 
     if n = 1 and m = 1 then
-      return Group(List(GeneratorsOfGroup(AutomorphismGroup(G)), x -> 
+      return Group(List(GeneratorsOfGroup(AutomorphismGroup(G)), x ->
        RMSIsoByTriple(R, R, [(), x, [One(G), One(G)]])));
     elif n = 2 and m = 1 then
       agraph := Group((2,3));
@@ -100,14 +105,18 @@ else
       agraph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
     fi;
 
-    Info(InfoSemigroups, 2, "calculating the automorphism group of the group...");
+    Info(InfoSemigroups, 2,
+    "calculating the automorphism group of the group...");
     agroup := AutomorphismGroup(G);
     Info(InfoSemigroups, 3, "...it has size", Size(agroup));
 
     OnMatrix := function(mat, x)
       local x2;
       mat := StructuralCopy(mat);
-      x2 := Permutation(x, [1 .. n], function(i, p) return (i + m) ^ p - m; end);
+      x2 := Permutation(x, [1 .. n], function(i, p)
+                                       return (i + m) ^ p - m;
+                                     end);
+
       return List(Permuted(mat, x2), y -> Permuted(y, x));
     end;
 
@@ -123,7 +132,8 @@ else
     #iso:=IsomorphismPermGroup(agroup);
     inv := InverseGeneralMapping(iso);
 
-    Info(InfoSemigroups, 2, "calculating the stabilizer of the matrix entries...");
+    Info(InfoSemigroups, 2,
+    "calculating the stabilizer of the matrix entries...");
     S2 := agroup;
     entries := MatrixEntries(R);
     if entries[1] = () then
@@ -144,7 +154,8 @@ else
       U := Group(Concatenation(
         Images(Embedding(V, 1), GeneratorsOfGroup(S1.stab)),
         #Images(Embedding(V, 2), GeneratorsOfGroup(Image(iso, S2)))));
-        Images(Embedding(V, 2), GeneratorsOfGroup(Image(iso, Image(hom, S2))))));
+        Images(Embedding(V, 2),
+          GeneratorsOfGroup(Image(iso, Image(hom, S2))))));
     else
       U := Group(());
     fi;
@@ -153,7 +164,8 @@ else
     proj2 := Projection(V, 2);
     T := RightTransversal(G, Centre(G));
 
-    Info(InfoSemigroups, 2, "calculating a stabilizer chain for the direct product",
+    Info(InfoSemigroups, 2,
+    "calculating a stabilizer chain for the direct product",
     " of the automorphism\n#I  groups of the group and the graph...");
     stab := StabilizerChain(V);
 
@@ -255,13 +267,19 @@ InstallGlobalFunction(RMSInducedFunction,
 function(R, l, g, x)
   local mat, m, n, out, j, i;
 
-  mat := Matrix(R); m := Length(mat[1]); n := Length(mat);
-  out := EmptyPlist(m + n); out[1] := x;
+  mat := Matrix(R);
+  m := Length(mat[1]);
+  n := Length(mat);
+  out := EmptyPlist(m + n);
+  out[1] := x;
+  #FIXME for loop for this and the next
+  out{[m + 1 .. n + m]} :=
+   List([m + 1 .. n + m],
+   v -> mat[v ^ l - m][1 ^ l] * x * (mat[v - m][1] ^ g) ^ - 1);
 
-  out{[m + 1 .. n + m]} := List([m + 1 .. n + m], v -> mat[v ^ l - m][1 ^ l] * x * 
-   (mat[v - m][1] ^ g) ^ - 1);
-  out{[2 .. m]} := List([2 .. m], v -> (mat[(m + 1) ^ l - m][v ^ l]) ^ - 1 * out[m + 1] * 
-   (mat[1][v] ^ g));
+  out{[2 .. m]} := List([2 .. m],
+   v -> (mat[(m + 1) ^ l - m][v ^ l]) ^ - 1 * out[m + 1] *
+    (mat[1][v] ^ g));
 
   for j in [m + 2 .. n + m] do
     for i in [2 .. m] do
@@ -294,11 +312,13 @@ else
 
   InstallGlobalFunction(RZMSInducedFunction,
   function(R, l, g, x, component)
-    local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb, j,
-     Last, involved, verts, v, new, k;
+    local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb,
+    j, Last, involved, verts, v, new, k;
 
-    mat := Matrix(R); m := Length(mat[1]); n := Length(mat); graph := RZMSGraph(R);
-
+    mat := Matrix(R);
+    m := Length(mat[1]);
+    n := Length(mat);
+    graph := RZMSGraph(R);
     rep := Minimum(component);
     out := EmptyPlist(m + n);
     out[rep] := x;
@@ -331,9 +351,11 @@ else
           v := verts[k];
 
           if Last in bicomps[1] then
-            new := mat[v ^ l - m][Last ^ l] * out[Last] * (mat[v - m][Last] ^ g) ^ - 1;
+            new := mat[v ^ l - m][Last ^ l] * out[Last]
+                  * (mat[v - m][Last] ^ g) ^ - 1;
           else
-            new := (mat[Last ^ l - m][v ^ l]) ^ - 1 * out[Last] * (mat[Last - m][v] ^ g);
+            new := (mat[Last ^ l - m][v ^ l]) ^ - 1 * out[Last]
+                   * (mat[Last - m][v] ^ g);
           fi;
 
           if not IsBound(out[v]) then
@@ -358,13 +380,15 @@ else
 
     mat1 := Matrix(rms1);
     mat2 := Matrix(rms2);
-    m := Length(mat1[1]); n := Length(mat1);
+    m := Length(mat1[1]);
+    n := Length(mat1);
     rmsgraph := RZMSGraph(rms1);
     components := ConnectedComponents(rmsgraph);
 
     if not Length(groupelts) = Length(components) then
-      Error("usage: the 3rd argument must be a list of length ", Length(components),
-        ",");
+      Error("Semigroups: RZMStoRZMSInducedFunction: usage,\n",
+            "the 3rd arg must be a list of length ", Length(components),
+            ",");
       return;
     fi;
 
@@ -400,9 +424,11 @@ else
             v := verts[k];
 
             if Last in bicomps[1] then
-              new := mat2[v ^ l - m][Last ^ l] * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ - 1;
+              new := mat2[v ^ l - m][Last ^ l]
+                     * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ - 1;
             else
-              new := (mat2[Last ^ l - m][v ^ l]) ^ - 1 * imagelist[Last] * (mat1[Last - m][v] ^ g);
+              new := (mat2[Last ^ l - m][v ^ l]) ^ - 1
+                     * imagelist[Last] * (mat1[Last - m][v] ^ g);
             fi;
 
             if not IsBound(imagelist[v]) then
@@ -431,7 +457,8 @@ function(R1, R2)
    RowsOfReesMatrixSemigroup(R1) = RowsOfReesMatrixSemigroup(R2)) then
 
     mat := Matrix(R1);
-    m := Length(mat[1]); n := Length(mat);
+    m := Length(mat[1]);
+    n := Length(mat);
 
     if R1 = R2 then
       g := UnderlyingSemigroup(R1);
@@ -488,15 +515,17 @@ else
     G1 := UnderlyingSemigroup(R1);
     G2 := UnderlyingSemigroup(R2);
 
-    if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2) and
-      IsGroup(G2)) then
-      Error("usage: the arguments must be regular Rees 0-matrix semigroups",
-      " over groups,");
+    if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2)
+      and IsGroup(G2)) then
+      Error("Semigroups: IsomorphismSemigroups: usage,\n",
+            "the arguments must be regular Rees 0-matrix semigroups ",
+            "over groups,");
+      return;
     fi;
 
-    if not (Size(R1) = Size(R2) and Columns(R1) = Columns(R2) and Rows(R1) = Rows(R2))
-      then
-        return fail;
+    if not (Size(R1) = Size(R2) and Columns(R1) = Columns(R2)
+      and Rows(R1) = Rows(R2)) then
+      return fail;
     fi;
 
     mat := Matrix(R1);
@@ -504,8 +533,8 @@ else
     n := Length(mat);
 
     if R1 = R2 then
-      return RZMSIsoByTriple(R1, R2, [(), IdentityMapping(G1), List([1 .. m + n],
-        x -> One(G2))]);
+      return RZMSIsoByTriple(R1, R2, [(), IdentityMapping(G1),
+       List([1 .. m + n], x -> One(G2))]);
     fi;
 
     # every isomorphism of the groups
@@ -516,13 +545,15 @@ else
     groupiso := List(AutomorphismGroup(G1), x -> x * f);
 
     # every isomorphism of the graphs
-    graph1 := RZMSGraph(R1); graph2 := RZMSGraph(R2);
+    graph1 := RZMSGraph(R1);
+    graph2 := RZMSGraph(R2);
     if UndirectedEdges(graph1) <> UndirectedEdges(graph2) then
       g := GraphIsomorphism(graph1, graph2);
       if g = fail then
         return fail;
       fi;
-      graphiso := List(AutGroupGraph(graph1, [[1 .. m],[m + 1 .. n + m]]), x -> x * g);
+      graphiso := List(AutGroupGraph(graph1,
+                  [[1 .. m],[m + 1 .. n + m]]), x -> x * g);
     fi;
 
     #find an induced function, if there is one
@@ -579,7 +610,8 @@ function(x, i)
   if 1 <= i and i <= 3 then
     return x!.triple[i];
   fi;
-  Error("usage: the index must be at most 3,");
+  Error("Semigroups: ELM_LIST: usage,\n",
+        "the index <i> must be at most 3,");
   return;
 end);
 
@@ -592,7 +624,8 @@ function(x, i)
   if 1 <= i and i <= 3 then
     return x!.triple[i];
   fi;
-  Error("usage: the index must be at most 3,");
+  Error("Semigroups: ELM_LIST: usage,\n",
+        "the index <i> must be at most 3,");
   return;
 end);
 
@@ -663,9 +696,12 @@ function(a1, a2)
 
   n := Length(Rows(Source(a1))) + Length(Columns(Source(a1)));
 
-  l1 := a1!.triple[1]; l2 := a2!.triple[1];
-  g1 := a1!.triple[2]; g2 := a2!.triple[2];
-  f1 := a1!.triple[3]; f2 := a2!.triple[3];
+  l1 := a1!.triple[1];
+  l2 := a2!.triple[1];
+  g1 := a1!.triple[2];
+  g2 := a2!.triple[2];
+  f1 := a1!.triple[3];
+  f2 := a2!.triple[3];
 
   return RMSIsoByTriple(Source(a1), Range(a2), [l1 * l2, g1 * g2, List([1 .. n],
    x -> f2[x ^ l1] * f1[x] ^ g2)]);
@@ -680,9 +716,12 @@ function(a1, a2)
 
   n := Length(Rows(Source(a1))) + Length(Columns(Source(a1)));
 
-  l1 := a1!.triple[1]; l2 := a2!.triple[1];
-  g1 := a1!.triple[2]; g2 := a2!.triple[2];
-  f1 := a1!.triple[3]; f2 := a2!.triple[3];
+  l1 := a1!.triple[1];
+  l2 := a2!.triple[1];
+  g1 := a1!.triple[2];
+  g2 := a2!.triple[2];
+  f1 := a1!.triple[3];
+  f2 := a2!.triple[3];
 
   return RZMSIsoByTriple(Source(a1), Range(a2), [l1 * l2, g1 * g2,
    List([1 .. n], x -> f2[x ^ l1] * f1[x] ^ g2)]);
@@ -714,11 +753,12 @@ function( triple, x)
 
   m := Length(Rows(Source(triple)));
 
-  i := x[1]; g := x[2]; j := x[3] + m;
+  i := x[1];
+  g := x[2];
+  j := x[3] + m;
   lambda := triple[1];
   gamma := triple[2];
   f := triple[3];
-  #JDM: use objectify here...
   return RMSElement(Range(triple), i ^ lambda, f[i] * ImageElm(gamma,g) / f[j],
    j ^ lambda - m);
 end);
@@ -734,15 +774,18 @@ function(triple, x)
   if not x = MultiplicativeZero(Source(triple)) then
     m := Length(Rows(Source(triple)));
 
-    i := x[1]; g := x[2]; j := x[3] + m;
-    lambda := triple[1]; gamma := triple[2]; f := triple[3];
+    i := x[1];
+    g := x[2];
+    j := x[3] + m;
+    lambda := triple[1];
+    gamma := triple[2];
+    f := triple[3];
 
     if f[i] = 0 or f[j] = 0 then
       return MultiplicativeZero(Source(triple));
     else
-      #JDM: use objectify here...
-      return RMSElement(Range(triple), i ^ lambda, f[i] * ImageElm(gamma,g) / f[j],
-        j ^ lambda - m);
+      return RMSElement(Range(triple),
+      i ^ lambda, f[i] * ImageElm(gamma,g) / f[j], j ^ lambda - m);
     fi;
   else
     return x;
@@ -759,10 +802,12 @@ function(a)
 
   n := Length(Rows(Source(a))) + Length(Columns(Source(a)));
 
-  l := a[1]; g := a[2]; f := a[3];
+  l := a[1];
+  g := a[2];
+  f := a[3];
 
-  return RMSIsoByTriple(Range(a), Source(a), [l ^ - 1, g ^ - 1, List([1 .. n],x -> 
-   (f[x ^ l] ^ (g ^ - 1)) ^ - 1)]);
+  return RMSIsoByTriple(Range(a), Source(a), [l ^ - 1, g ^ - 1,
+   List([1 .. n], x -> (f[x ^ l] ^ (g ^ - 1)) ^ - 1)]);
 end);
 
 #
@@ -779,7 +824,9 @@ function(a)
 
   n := Length(Rows(Source(a))) + Length(Columns((Source(a))));
 
-  l := a[1]; g := a[2]; f := a[3];
+  l := a[1];
+  g := a[2];
+  f := a[3];
 
   return RZMSIsoByTriple(Range(a), Source(a), [l ^ - 1, g ^ - 1, List([1 .. n],
    x -> (f[x ^ l] ^ (g ^ - 1)) ^ - 1)]);

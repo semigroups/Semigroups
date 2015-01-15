@@ -122,7 +122,9 @@ else
       return SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
     fi;
 
-    Error("not yet implemented,");
+    Error("Semigroups: IsIsomorphicSemigroup:\n",
+          "not yet implemented,");
+    return;
 
   end);
 fi;

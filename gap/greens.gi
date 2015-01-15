@@ -41,7 +41,7 @@ end);
 
 # acting...
 
-InstallMethod(SemigroupDataIndex, 
+InstallMethod(SemigroupDataIndex,
 "for an acting semigroup Green's class",
 [IsActingSemigroupGreensClass],
 function(C)
@@ -173,7 +173,7 @@ InstallMethod(SemigroupDataSCC, "for a D-class of an acting semigroup",
 function(d)
   local data;
   data := SemigroupData(Parent(d));
-  
+
   # scc of R-reps corresponding to d
   return OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
 end);
@@ -1494,7 +1494,7 @@ function(h)
 
   if not IsGroupHClass(h) then
     Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the H-class must be a group,");
+          "the H-class is not a group,");
     return;
   fi;
 
@@ -2092,7 +2092,7 @@ function(d)
 
   l := LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d));
   r := RhoOrbSchutzGp(RhoOrb(d), RhoOrbSCCIndex(d), infinity);
-  return Size(r) * Size(l) * Length(LambdaOrbSCC(d)) * Length(RhoOrbSCC(d)) / 
+  return Size(r) * Size(l) * Length(LambdaOrbSCC(d)) * Length(RhoOrbSCC(d)) /
    Size(SchutzenbergerGroup(d));
 end);
 
@@ -2149,7 +2149,7 @@ function(x, y)
    (IsGreensLClass(x) and IsGreensLClass(y)) or
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return Parent(x) = Parent(y) and Representative(x) < 
+    return Parent(x) = Parent(y) and Representative(x) <
      Representative(y) and (not Representative(x) in y);
   fi;
   return fail;

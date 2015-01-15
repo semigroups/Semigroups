@@ -29,7 +29,7 @@ function(L)
     i := Position(o, LambdaFunc(S)(rep));
   else
     o := GradedLambdaOrb(S, rep, nc <> true);
-    i := o[2]; 
+    i := o[2];
     o := o[1];
   fi;
 
@@ -46,7 +46,7 @@ function(L)
 end);
 
 InstallMethod(IsInverseOpClass, "for a Green's class",
-[IsGreensClass], 
+[IsGreensClass],
 function(class)
   return IsActingSemigroupWithInverseOp(Parent(class));
 end);
@@ -199,7 +199,7 @@ end);
 
 #
 
-InstallMethod(\in, 
+InstallMethod(\in,
 "for associative element and inverse op L-class of acting semigroup.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensLClass and
 IsActingSemigroupGreensClass],
@@ -549,7 +549,8 @@ function(s, f)
   local o, i, m, rep;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensDClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -586,7 +587,8 @@ function(s, f)
   local o, m;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -613,7 +615,8 @@ function(x, f)
   local h;
 
   if not f in x then
-    Error("the element does not belong to the Green's class,");
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the Green's class,");
     return;
   fi;
 
@@ -661,7 +664,8 @@ function(s, f)
   local o, l, m;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -700,7 +704,8 @@ function(d, f)
   local l;
 
   if not f in d then
-    Error("the element does not belong to the D-class,");
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the D-class,");
     return;
   fi;
 
@@ -846,7 +851,8 @@ function(s, n)
   local o, creator, r, out, rank, len, i;
 
   if n < 0 then
-    Error("usage: <n> must be a non-negative integer,");
+    Error("Semigroups: Idempotents: usage,\n",
+          "the second argument <n> must be a non-negative integer,");
     return;
   fi;
 

@@ -68,7 +68,8 @@ function(S, n)
   n := NameRNam(n);
   n := Int(n);
   if n = fail or Length(S) < n then
-    Error("usage: the second argument <n> should be a positive integer\n",
+    Error("Semigroups: \.: usage,\n",
+    "the second argument <n> should be a positive integer\n",
      "not greater than the number of generators of the semigroup <S> in\n",
      "the first argument,");
     return;
@@ -136,13 +137,15 @@ function( arg )
   local out, i;
 
   if not IsSemigroup(arg[1]) then
-    Error("usage: the first argument should be a semigroup,");
+    Error("Semigroups: SemigroupIdeal: usage,\n",
+          "the first argument must be a semigroup,");
     return;
   fi;
 
   if Length(arg) = 1 then
-    Error("usage: there must be a second argument, which specifies\n",
-    "the ideal you are trying to create,");
+    Error("Semigroups: SemigroupIdeal: usage,\n",
+          "there must be a second argument, which specifies\n",
+          "the generators of the ideal,");
     return;
   fi;
 
@@ -175,16 +178,18 @@ function( arg )
       elif i = Length(arg) and IsRecord(arg[i]) then
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
-        Error( "usage: the second argument should be some\n",
-        "combination of generators, lists of generators, or semigroups,");
+        Error("Semigroups: SemigroupIdeal: usage,\n",
+              "the second argument must be a",
+              "combination of generators,\n lists of generators, or semigroups,");
         return;
       fi;
     od;
     return SemigroupIdealByGenerators(arg[1], out);
   # no argument given, error
   else
-    Error( "usage: the second argument should be some\n",
-    "combination of generators, lists of generators, or semigroups,");
+    Error("Semigroups: SemigroupIdeal: usage,\n",
+          "the second argument must be a",
+          "combination of generators,\nlists of generators, or semigroups,");
     return;
   fi;
 end);
@@ -205,8 +210,9 @@ InstallMethod(SemigroupIdealByGenerators,
 function(S, gens, opts)
   local filts, I;
   if not ForAll(gens, x -> x in S) then
-    Error("usage: the generators do not belong to the semigroup,");
-    return fail;
+    Error("Semigroups: SemigroupIdealByGenerators: usage,\n",
+          "the second argument <gens> do not all belong to the semigroup,");
+    return;
   fi;
 
   opts := SemigroupOptions(opts);
@@ -475,7 +481,7 @@ end);
 
 #
 
-InstallMethod(PartialOrderOfDClasses, 
+InstallMethod(PartialOrderOfDClasses,
 "for a regular acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)

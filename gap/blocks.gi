@@ -71,7 +71,8 @@ function(blocks1, blocks2)
     fi;
   od;
 
-  lookup := []; out := [0];
+  lookup := [];
+  out := [0];
 
   for i in [2 .. n + 1] do
     x := fuseit(blocks1[i]);
@@ -369,7 +370,8 @@ end);
 
 InstallGlobalFunction(OnLeftBlocks,
 function(blocks, f)
-  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
+  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
+  next, i;
 
   if blocks!.blocks = [0] then
     return LeftBlocks(f);
@@ -493,7 +495,7 @@ function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 
   if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
-    Error("Semigroups: BlocksIdempotentTester: usage,\n", 
+    Error("Semigroups: BlocksIdempotentTester: usage,\n",
           "the degrees of the blocks <lambda> and <rho> must be equal,");
     return;
   fi;
@@ -642,7 +644,9 @@ function(blocks, f)
   fblocks := f!.blocks;
 
   fuseit := FuseRightBlocks(blocks, f, false);
-  signed := []; tab := []; next := 0;
+  signed := [];
+  tab := [];
+  next := 0;
 
   # JDM could stop here after reaching the maximum signed class of <blocks>
   for i in [n + 1 .. 2 * n] do
@@ -696,7 +700,9 @@ function(blocks, f)
   fuseit := fusesign[1];
   sign := fusesign[2];
 
-  out := []; junk := 0; next := 0;
+  out := [];
+  junk := 0;
+  next := 0;
 
   # find the left blocks of the output
   tab1 := [];
@@ -761,7 +767,8 @@ function(blocks, f)
   fblocks := f!.blocks;
 
   fuseit := FuseLeftBlocks(blocks, f);
-  out := []; tab := [];
+  out := [];
+  tab := [];
 
   for i in [1 .. nrblocks] do
     if blocks[n + i] = 1 then

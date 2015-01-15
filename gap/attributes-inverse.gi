@@ -69,7 +69,8 @@ function(S)
     subsets := Filtered(o, x -> IsSubset(dom, x));
     for n in [1 .. Length(conjclass[i])] do
       j := j + 1;
-      conjreps[n + conjlens[i]] := AsPartialPerm(Representative(conjclass[i][n]), dom);
+      conjreps[n + conjlens[i]] :=
+        AsPartialPerm(Representative(conjclass[i][n]), dom);
       for y in subsets do
         x := RestrictedPartialPerm(conjreps[n + conjlens[i]], y);
         if y = ImageSetOfPartialPerm(x) then
@@ -78,7 +79,8 @@ function(S)
           u := LambdaOrbMult(o, m, l);
           x := AsPermutation(u[1] * x * u[2]);
           m := (m - 1) ^ p;
-          k := PositionProperty(conjclass[m], class -> x in class) + conjlens[m];
+          k := PositionProperty(conjclass[m], class -> x in class)
+               + conjlens[m];
           A[k][j] := A[k][j] + 1;
         fi;
       od;
@@ -119,8 +121,10 @@ InstallMethod(PrimitiveIdempotents, "for an acting semigroup with inverse op",
 function(s)
   local o, scc, rank, min, l, min2, m;
 
-  o := LambdaOrb(s);      scc := OrbSCC(o);
-  rank := LambdaRank(s);  min := ActionDegree(s);
+  o := LambdaOrb(s);
+  scc := OrbSCC(o);
+  rank := LambdaRank(s);
+  min := ActionDegree(s);
 
   if MultiplicativeZero(s) = fail then
     for m in [2 .. Length(scc)] do
@@ -134,7 +138,8 @@ function(s)
     for m in [2 .. Length(scc)] do
       l := rank(o[scc[m][1]]);
       if l < min then
-        min2 := min; min := l;
+        min2 := min;
+        min := l;
       fi;
     od;
     return Idempotents(s, min2);
@@ -270,7 +275,7 @@ function(S)
   local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p;
 
   D := GreensDClasses(S);
-  elts := Set(Idempotents(S));;
+  elts := Set(Idempotents(S));
   out := EmptyPlist(Length(D));
   seen_zero := false;
 
@@ -283,7 +288,8 @@ function(S)
     fi;
 
     i := Position(elts, rep);
-    k := First([i - 1,i - 2 .. 1], j -> NaturalLeqInverseSemigroup(elts[j], rep));
+    k := First([i - 1,i - 2 .. 1],
+          j -> NaturalLeqInverseSemigroup(elts[j], rep));
 
     if k = fail then # d is the minimal non-trivial D-class
       Add(out, d);
@@ -340,7 +346,8 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(S)
-  return Filtered(GreensDClasses(S), x -> IsJoinIrreducible(S, Representative(x)));
+  return Filtered(GreensDClasses(S),
+    x -> IsJoinIrreducible(S, Representative(x)));
 end);
 
 # same method for ideals
@@ -354,7 +361,7 @@ function(S, T)
           "the second argument must be a subset of the first,");
     return;
   else
-    return MajorantClosureNC(S, Elements(T));;
+    return MajorantClosureNC(S, Elements(T));
   fi;
 end);
 
@@ -499,7 +506,9 @@ function(S, T)
       fi;
     od;
 
-    if dupe then continue; fi;
+    if dupe then
+      continue;
+    fi;
 
     Add(usedreps, s);
 
@@ -548,7 +557,9 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, sup, trivialse, psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, h, nrcosets, j, reps, lookup, gen, offset, rep, box, subbox, T, d, i, k, m;
+  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, sup, trivialse,
+  psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, h, nrcosets, j, reps,
+  lookup, gen, offset, rep, box, subbox, T, d, i, k, m;
 
   oldgens := Generators(S);
   newgens := List(oldgens, x -> []);
@@ -670,7 +681,7 @@ function(coll, type)
     if IsList(coll) and IsEmpty(coll) then
       return PartialPerm([]);
     elif not IsPartialPermCollection(coll) then
-      Error("Semigroups: SupremumIdempotentsNC: usage,\n", 
+      Error("Semigroups: SupremumIdempotentsNC: usage,\n",
             "the argument must be a collection of partial perms,");
       return;
     fi;
@@ -683,7 +694,7 @@ function(coll, type)
       return Bipartition(Concatenation([1 .. DegreeOfBipartition(type)],
         - [1 .. DegreeOfBipartition(type)]));
     elif not IsBipartitionCollection(coll) then
-      Error("Semigroups: SupremumIdempotentsNC: usage,\n", 
+      Error("Semigroups: SupremumIdempotentsNC: usage,\n",
             "the argument must be a collection of block bijections,");
       return;
     fi;
@@ -709,12 +720,12 @@ function(coll, type)
 
   elif IsBipartition(type) and IsPartialPermBipartition(type) then
     #FIXME shouldn't there be a check here like above?
-    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm),
-     PartialPerm([])));
+    return AsBipartition(SupremumIdempotentsNC(
+      List(coll, AsPartialPerm), PartialPerm([])));
   else
-    Error("Semigroups: SupremumIdempotentsNC: usage,\n", 
-          "the argument must be a collection of partial perms, block bijections,\n",
-          "or partial perm bipartitions,");
+    Error("Semigroups: SupremumIdempotentsNC: usage,\n",
+          "the argument must be a collection of partial perms, block ",
+          "bijections,\n", "or partial perm bipartitions,");
     return;
   fi;
 end);
