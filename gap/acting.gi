@@ -44,7 +44,7 @@ function(s)
                schreiergen := [fail],
                schreiermult := [fail],
                schreierpos := [fail],
-               stopper := false 
+               stopper := false
              );
 
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
