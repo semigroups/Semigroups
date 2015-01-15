@@ -10,7 +10,8 @@
 
 DeclareCategory("IsActingSemigroup", IsSemigroup);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
-DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
+DeclareProperty("IsGeneratorsOfActingSemigroup",
+IsAssociativeElementCollection);
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
@@ -49,7 +50,8 @@ DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction(
+"SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
 
 #EOF

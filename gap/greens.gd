@@ -29,7 +29,7 @@
 #############################################################################
 #############################################################################
 
-DeclareAttribute("RegularDClasses", IsSemigroup); 
+DeclareAttribute("RegularDClasses", IsSemigroup);
 
 #new
 

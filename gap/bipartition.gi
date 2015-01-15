@@ -46,7 +46,8 @@ function(f, g)
     return false;
   fi;
 
-  fblocks := f!.blocks; gblocks := g!.blocks;
+  fblocks := f!.blocks;
+  gblocks := g!.blocks;
   n := DegreeOfBipartition(f);
 
   lookup := [];
@@ -78,8 +79,10 @@ function(f, g)
     return;
   fi;
 
-  fblocks := f!.blocks; gblocks := g!.blocks;
-  n := DegreeOfBipartition(f); m := DegreeOfBipartition(g);
+  fblocks := f!.blocks;
+  gblocks := g!.blocks;
+  n := DegreeOfBipartition(f);
+  m := DegreeOfBipartition(g);
 
   for i in [1 .. n] do
     if fblocks[n + i] <= n then
@@ -135,7 +138,8 @@ end);
 InstallMethod(\*, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition],
 function(a,b)
-  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next, nrleft, c, i;
+  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next,
+  nrleft, c, i;
 
   n := DegreeOfBipartition(a);
   Assert(1,n = DegreeOfBipartition(b));
@@ -486,7 +490,7 @@ function(f, n)
     od;
   fi;
 
-  r := RankOfTransformation(f, n);;
+  r := RankOfTransformation(f, n);
   ker := FlatKernelOfTransformation(f, n);
 
   out := EmptyPlist(2 * n);
@@ -516,7 +520,9 @@ end);
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition], IdFunc);
 
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition, IsZeroCyc],
-function(f, n) return Bipartition([]); end);
+function(f, n)
+  return Bipartition([]);
+end);
 
 InstallMethod(AsBipartition, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
@@ -774,7 +780,8 @@ end);
 InstallMethod(IsPermBipartition, "for a bipartition",
 [IsBipartition],
 function(f)
-  return IsPartialPermBipartition(f) and NrTransverseBlocks(f) = DegreeOfBipartition(f);
+  return IsPartialPermBipartition(f)
+    and NrTransverseBlocks(f) = DegreeOfBipartition(f);
 end);
 
 # creating
@@ -949,23 +956,24 @@ InstallGlobalFunction(Bipartition,
 function(classes)
   local n, copy, i, j;
 
-  if not (IsList(classes) and ForAll(classes, x-> 
+  if not (IsList(classes) and ForAll(classes, x ->
           IsHomogeneousList(x) and IsDuplicateFree(x))) then
-    Error("Semigroups: Bipartition: usage,\n", 
+    Error("Semigroups: Bipartition: usage,\n",
           "the argument <classes> must consist of duplicate-free lists,");
     return;
   fi;
 
   if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
-    Error("Semigroups: Bipartition: usage,\n", 
-          "the argument <classes> must consist of positive and negative integers,");
+    Error("Semigroups: Bipartition: usage,\n",
+          "the argument <classes> must consist of positive and negative ",
+          "integers,");
     return;
   fi;
 
   copy := Union(classes);
   if not (copy = classes or copy = Concatenation([Minimum(copy) .. - 1],
     [1 .. Maximum(copy)])) then
-    Error("Semigroups: Bipartition: usage,\n", 
+    Error("Semigroups: Bipartition: usage,\n",
           "the union of the argument <classes> must be [-n..-1, 1..n],");
     return;
   fi;
@@ -1035,7 +1043,7 @@ InstallMethod(OneMutable, "for a bipartition",
 #
 
 InstallMethod(OneMutable, "for a bipartition collection",
-[IsBipartitionCollection], x -> 
+[IsBipartitionCollection], x ->
 IdentityBipartition(DegreeOfBipartitionCollection(x)));
 
 #
@@ -1179,7 +1187,8 @@ function(f, g)
     fi;
   od;
 
-  src := []; dst := [];
+  src := [];
+  dst := [];
   next := 0;
   seen := BlistList([1 .. 2 * n], []);
   for i in [n + 1 .. 2 * n] do
@@ -1340,7 +1349,7 @@ function(coll)
   deg := DegreeOfBipartition(coll[1]);
   if not ForAll(coll, x -> DegreeOfBipartition(x) = deg) then
     Error("Semigroups: DegreeOfBipartitionCollection: usage,\n",
-          "the argument <coll> must be a collection of bipartitions of ", 
+          "the argument <coll> must be a collection of bipartitions of ",
           "equal degree,");
     return;
   fi;

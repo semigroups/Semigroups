@@ -10,7 +10,8 @@
 DeclareCategory("IsFreeBandElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeBandElement");
 DeclareProperty("IsFreeBand", IsSemigroup);
-DeclareSynonym("IsFreeBandSubsemigroup", IsSemigroup and IsFreeBandElementCollection);
+DeclareSynonym("IsFreeBandSubsemigroup", IsSemigroup and
+IsFreeBandElementCollection);
 InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 DeclareGlobalFunction("FreeBand");
