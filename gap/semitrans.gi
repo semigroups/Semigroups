@@ -229,7 +229,7 @@ function(coll, n)
   graph := EmptyPlist(n);
 
   for i in [1 .. n] do
-    graph[i] := EmptyPlist(nrgens);;
+    graph[i] := EmptyPlist(nrgens);
     for x in coll do
       Add(graph[i], i ^ x);
     od;
@@ -246,8 +246,9 @@ function(coll, set)
 
   if not (IsSSortedList(set) and IsHomogeneousList(set) and IsPosInt(set[1]))
    then
-    Error("usage: the second argument <set> must be a set of positive",
-    " integers");
+    Error("Semigroups: IsTransitive: usage,\n",
+          "the second argument <set> must be a set of positive ",
+          "integers");
     return;
   fi;
 
@@ -261,7 +262,7 @@ function(coll, set)
   od;
 
   for i in [1 .. n] do
-    graph[i] := EmptyPlist(nrgens);;
+    graph[i] := EmptyPlist(nrgens);
     for x in coll do
       j := set[i] ^ x;
       if IsBound(lookup[j]) then # <j> is in <set>!
@@ -278,7 +279,14 @@ end);
 InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  return IsSynchronizingSemigroup(S, DegreeOfTransformationSemigroup(S));
+  local deg;
+
+  deg := DegreeOfTransformationSemigroup(S);
+  if deg = 0 then
+    return false;
+  fi;
+
+  return IsSynchronizingSemigroup(S, deg);
 end);
 
 # same method for ideals
@@ -305,7 +313,12 @@ InstallMethod(IsSynchronizingTransformationCollection,
 "for a transformation collection and positive integer",
 [IsTransformationCollection, IsPosInt],
 function(gens, n)
-  local NumberPair, PairNumber, genstoapply, act, graph, constants, x, adj, y, num, marked, squashed, i, j;
+  local NumberPair, PairNumber, genstoapply, act, graph, constants, x, adj, y,
+  num, marked, squashed, i, j;
+
+  if n = 1 then
+    return true;
+  fi;
 
   NumberPair := function(x)
     if x[2] > x[1] then
@@ -388,7 +401,8 @@ end);
 
 InstallMethod(ViewString,
 "for a transformation semigroup ideal with ideal generators",
-[IsTransformationSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsTransformationSemigroup and IsSemigroupIdeal and
+HasGeneratorsOfSemigroupIdeal],
 function(I)
   local str, nrgens;
 
@@ -502,7 +516,8 @@ function(S)
   pts := [1 .. DegreeOfTransformationSemigroup(S)];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
-  next := 1;  nr := 0;
+  next := 1;
+  nr := 0;
   opts := rec(lookingfor := function(o, x)
     return IsPosInt(comp[x]);
   end);
@@ -550,7 +565,9 @@ function(S)
   pts := [1 .. DegreeOfTransformationSemigroup(S)];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
-  next := 1;  nr := 0; cycles := [];
+  next := 1;
+  nr := 0;
+  cycles := [];
   opts := rec(lookingfor := function(o, x)
     return IsPosInt(comp[x]);
   end);

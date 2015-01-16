@@ -192,19 +192,24 @@ function(I)
   local record, htopts, fam;
 
   record := rec();
-  record.orbits := [[fail]];      record.lens := [1];
-  record.parent := I;             record.scc := [[1]];
-  record.scc_reps := [fail,];     record.scc_lookup := [1];
-  record.schreiergen := [fail];   record.schreierpos := [fail];
+  record.orbits := [[fail]];
+  record.lens := [1];
+  record.parent := I;
+  record.scc := [[1]];
+  record.scc_reps := [fail,];
+  record.scc_lookup := [1];
+  record.schreiergen := [fail];
+  record.schreierpos := [fail];
   record.orbitgraph := [[]];
   record.looking := false;
   record.gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
   record.orbschreiercmp := [];
-  # <o!.orbits[i]> is obtained from the component <o!.orbits[o!.orbschreiercmp[i]]>
-  # by applying right multiplying some element of the ideal with lambda value in
-  # position <o!.schreierpos[i]> by <o!.schreiergen[i]>.
+  # <o!.orbits[i]> is obtained from the component
+  # <o!.orbits[o!.orbschreiercmp[i]]> by applying right multiplying some
+  # element of the ideal with lambda value in position <o!.schreierpos[i]> by
+  # <o!.schreiergen[i]>.
   record.orbtogen := [];
   # ComponentOfIndex(o, Position(o, LambdaFunc(M)(gens[orbtogen[i]])))=i
   # and <orbtogen[ComponentOfIndex(Position(o, LambdaFunc(I)(gens[i])))]=i>
@@ -225,19 +230,24 @@ InstallMethod(RhoOrb, "for an acting semigroup ideal",
 function(I)
   local record, htopts, fam;
   record := rec();
-  record.orbits := [[fail]];      record.lens := [1];
-  record.parent := I;             record.scc := [[1]];
-  record.scc_reps := [fail,];     record.scc_lookup := [1];
-  record.schreiergen := [fail];   record.schreierpos := [fail];
+  record.orbits := [[fail]];
+  record.lens := [1];
+  record.parent := I;
+  record.scc := [[1]];
+  record.scc_reps := [fail,];
+  record.scc_lookup := [1];
+  record.schreiergen := [fail];
+  record.schreierpos := [fail];
   record.orbitgraph := [[]];
   record.looking := false;
   record.gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
   record.orbschreierpos := [];
   record.orbschreiergen := [];
   record.orbschreiercmp := [];
-  # <o!.orbits[i]> is obtained from the component <o!.orbits[o!.orbschreiercmp[i]]>
-  # by applying left multiplying some element of the ideal with rho value in
-  # position <o!.schreierpos[i]> by <o!.schreiergen[i]>.
+  # <o!.orbits[i]> is obtained from the component
+  # <o!.orbits[o!.orbschreiercmp[i]]> by applying left multiplying some
+  # element of the ideal with rho value in position <o!.schreierpos[i]> by
+  # <o!.schreiergen[i]>.
   record.orbtogen := [];
   # <ComponentOfIndex(o, Position(o, RhoFunc(I)(gens[orbtogen[i]])))=i>
   # and <orbtogen[ComponentOfIndex(Position(o, RhoFunc(I)(gens[i])))]=i>
@@ -264,9 +274,12 @@ function(I)
   record := ShallowCopy(LambdaOrbOpts(I));
   record.scc_reps := [FakeOne(GeneratorsOfSemigroupIdeal(I))];
 
-  record.schreier := true;        record.orbitgraph := true;
-  record.storenumbers := true;    record.log := true;
-  record.parent := I;             record.treehashsize := I!.opts.hashlen.M;
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.parent := I;
+  record.treehashsize := I!.opts.hashlen.M;
   record.orbtogen := [];
   # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i and
   # orbtogen[Position(o, LambdaFunc(I)(gens[i]^-1))]=i+nrgens...
@@ -279,7 +292,9 @@ function(I)
    LambdaAct(I), record);
 
   # install the lambda values of the generators
-  ht := o!.ht;  nr := 1;  nrgens := Length(gens);
+  ht := o!.ht;
+  nr := 1;
+  nrgens := Length(gens);
   lambdafunc := LambdaFunc(I);
 
   #
@@ -336,9 +351,12 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   I := o!.parent;
   record := ShallowCopy(LambdaOrbOpts(I));
 
-  record.schreier := true;        record.orbitgraph := true;
-  record.storenumbers := true;    record.log := true;
-  record.parent := I;             record.treehashsize := I!.opts.hashlen.M;
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.parent := I;
+  record.treehashsize := I!.opts.hashlen.M;
 
   len := Length(o);
 
@@ -386,11 +404,20 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   od;
   Append(o!.orbitgraph, new!.orbitgraph + len);
 
-  Unbind(new!.scc);          Unbind(new!.trees);        Unbind(new!.scc_lookup);
-  Unbind(new!.mults);        Unbind(new!.schutz);       Unbind(new!.reverse);
-  Unbind(new!.rev);          Unbind(new!.truth);        Unbind(new!.schutzstab);
-  Unbind(new!.exhaust);      Unbind(new!.factors);      Unbind(new!.orbitgraph);
-  Unbind(new!.schreiergen);  Unbind(new!.schreierpos);
+  Unbind(new!.scc);
+  Unbind(new!.trees);
+  Unbind(new!.scc_lookup);
+  Unbind(new!.mults);
+  Unbind(new!.schutz);
+  Unbind(new!.reverse);
+  Unbind(new!.rev);
+  Unbind(new!.truth);
+  Unbind(new!.schutzstab);
+  Unbind(new!.exhaust);
+  Unbind(new!.factors);
+  Unbind(new!.orbitgraph);
+  Unbind(new!.schreiergen);
+  Unbind(new!.schreierpos);
 
   o!.orbits[Length(o!.orbits) + 1] := new;
   o!.lens[Length(o!.orbits)] := Length(new);
@@ -437,9 +464,12 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   I := o!.parent;
   record := ShallowCopy(RhoOrbOpts(I));
 
-  record.schreier := true;        record.orbitgraph := true;
-  record.storenumbers := true;    record.log := true;
-  record.parent := I;             record.treehashsize := I!.opts.hashlen.M;
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.parent := I;
+  record.treehashsize := I!.opts.hashlen.M;
 
   len := Length(o);
 
@@ -453,7 +483,8 @@ function(o, pt, x, pos, gen, ind, lookfunc)
     record.onlygradesdata := fail;
   fi;
 
-  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), pt, RhoAct(I), record);
+  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), pt, RhoAct(I),
+         record);
   Enumerate(new);
 
   ht := o!.ht;
@@ -486,11 +517,20 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   od;
   Append(o!.orbitgraph, new!.orbitgraph + len);
 
-  Unbind(new!.scc);          Unbind(new!.trees);        Unbind(new!.scc_lookup);
-  Unbind(new!.mults);        Unbind(new!.schutz);       Unbind(new!.reverse);
-  Unbind(new!.rev);          Unbind(new!.truth);        Unbind(new!.schutzstab);
-  Unbind(new!.exhaust);      Unbind(new!.factors);      Unbind(new!.orbitgraph);
-  Unbind(new!.schreiergen);  Unbind(new!.schreierpos);
+  Unbind(new!.scc);
+  Unbind(new!.trees);
+  Unbind(new!.scc_lookup);
+  Unbind(new!.mults);
+  Unbind(new!.schutz);
+  Unbind(new!.reverse);
+  Unbind(new!.rev);
+  Unbind(new!.truth);
+  Unbind(new!.schutzstab);
+  Unbind(new!.exhaust);
+  Unbind(new!.factors);
+  Unbind(new!.orbitgraph);
+  Unbind(new!.schreiergen);
+  Unbind(new!.schreierpos);
 
   o!.orbits[Length(o!.orbits) + 1] := new;
   o!.lens[Length(o!.orbits)] := Length(new);
@@ -595,7 +635,8 @@ InstallMethod(TraceSchreierTreeForward,
 "for an ideal orbit and positive integer",
 [IsIdealOrb, IsPosInt],
 function(o, i)
-  local orbschreierpos, orbschreiergen, orbschreiercmp, schreierpos, schreiergen, leftword, rightword, nr, j;
+  local orbschreierpos, orbschreiergen, orbschreiercmp, schreierpos,
+  schreiergen, leftword, rightword, nr, j;
 
   orbschreierpos := o!.orbschreierpos;
   orbschreiergen := o!.orbschreiergen;

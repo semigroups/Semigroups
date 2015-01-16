@@ -108,7 +108,9 @@ else
   function(R)
     local mat, n, m, adj;
 
-    mat := Matrix(R); n := Length(mat); m := Length(mat[1]);
+    mat := Matrix(R);
+    n := Length(mat);
+    m := Length(mat[1]);
 
     adj := function(x,y)
       if x <= m and y > m then

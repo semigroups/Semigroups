@@ -8,12 +8,48 @@
 #############################################################################
 ##
 
+# TODO the first three main functions should be updated!
+
+# Methods for inverse acting semigroups consisting of associative
+# elements with a method for InverseOp.
+
 # Notes: everything here uses LambdaSomething, so don't use RhoAnything
 
-# the first three main functions should be updated!
+InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass and IsInverseOpClass],
+function(L)
+  local S, rep, nc, o, i, m, f;
 
-## Methods for inverse acting semigroups consisting of associative elements with a
-## method for InverseOp.
+  S := Parent(L);
+  rep := Representative(L);
+  nc := IsGreensClassNC(L);
+
+  if HasLambdaOrb(S) and IsClosed(LambdaOrb(S)) and not nc then
+    o := LambdaOrb(S);
+    i := Position(o, LambdaFunc(S)(rep));
+  else
+    o := GradedLambdaOrb(S, rep, nc <> true);
+    i := o[2];
+    o := o[1];
+  fi;
+
+  if nc then
+    m := 1;
+  else
+    m := OrbSCCLookup(o)[i];
+    if i <> OrbSCC(o)[m][1] then
+      rep := rep * LambdaOrbMult(o, m, i)[2];
+    fi;
+  fi;
+
+  return CreateDClassNC(S, m, o, fail, fail, rep, nc);
+end);
+
+InstallMethod(IsInverseOpClass, "for a Green's class",
+[IsGreensClass],
+function(class)
+  return IsActingSemigroupWithInverseOp(Parent(class));
+end);
 
 # same method for ideals
 
@@ -37,8 +73,8 @@ function(f, s)
 
   if not (IsMonoid(s) and IsOne(f)) then
     if Length(Generators(s)) > 0
-      and ActionRank(s)(f) > MaximumList(List(Generators(s), f -> ActionRank(s)(f)))
-     then
+      and ActionRank(s)(f) > MaximumList(List(Generators(s),
+       f -> ActionRank(s)(f))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
        "semigroup.");
       return false;
@@ -83,7 +119,8 @@ function(f, s)
     return true;
   fi;
 
-  scc := OrbSCC(o)[m]; g := f;
+  scc := OrbSCC(o)[m];
+  g := f;
 
   if lambda_l <> scc[1] then
     g := g * LambdaOrbMult(o, m, lambda_l)[2];
@@ -143,29 +180,30 @@ function(f, d)
   fi;
 
   scc := OrbSCC(o)[m];
-  g := f;
 
   if rho_l <> scc[1] then
-    g := LambdaOrbMult(o, m, rho_l)[1] * g;
+    f := LambdaOrbMult(o, m, rho_l)[1] * f;
   fi;
 
   if lambda_l <> scc[1] then
-    g := g * LambdaOrbMult(o, m, lambda_l)[2];
+    f := f * LambdaOrbMult(o, m, lambda_l)[2];
   fi;
 
-  if g = rep then
+  if f = rep then
     return true;
   elif schutz = false then
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g)) = ();
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, f)) = ();
 end);
 
 #
 
-InstallMethod(\in, "for associative element and inverse op L-class of acting semigroup.",
-[IsAssociativeElement, IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(\in,
+"for associative element and inverse op L-class of acting semigroup.",
+[IsAssociativeElement, IsInverseOpClass and IsGreensLClass and
+IsActingSemigroupGreensClass],
 function(f, l)
   local rep, s, m, o, i, schutz, g, p;
 
@@ -217,8 +255,10 @@ end);
 
 #
 
-InstallMethod(\in, "for associative element and inverse op R-class of acting semigroup.",
-[IsAssociativeElement, IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+InstallMethod(\in,
+"for associative element and inverse op R-class of acting semigroup",
+[IsAssociativeElement, IsInverseOpClass and IsGreensRClass and
+IsActingSemigroupGreensClass],
 function(f, r)
   local rep, s, m, o, i, schutz, g, p;
 
@@ -512,7 +552,8 @@ function(s, f)
   local o, i, m, rep;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensDClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -521,7 +562,8 @@ function(s, f)
     i := Position(o, RhoFunc(s)(f));
   else
     o := GradedLambdaOrb(s, f, true);
-    i := o[2]; o := o[1];
+    i := o[2];
+    o := o[1];
   fi;
 
   m := OrbSCCLookup(o)[i];
@@ -549,7 +591,8 @@ function(s, f)
   local o, m;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -576,7 +619,8 @@ function(x, f)
   local h;
 
   if not f in x then
-    Error("the element does not belong to the Green's class,");
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the Green's class,");
     return;
   fi;
 
@@ -624,7 +668,8 @@ function(s, f)
   local o, l, m;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -658,12 +703,14 @@ end);
 # same method for ideals
 
 InstallMethod(GreensLClassOfElement, "for inverse op D-class and element",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
+IsAssociativeElement],
 function(d, f)
   local l;
 
   if not f in d then
-    Error("the element does not belong to the D-class,");
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the D-class,");
     return;
   fi;
 
@@ -678,7 +725,8 @@ end);
 # same method for ideals
 
 InstallMethod(GreensLClassOfElementNC, "for D-class and associative element",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
+IsAssociativeElement],
 function(d, f)
   local l;
 
@@ -809,7 +857,8 @@ function(s, n)
   local o, creator, r, out, rank, len, i;
 
   if n < 0 then
-    Error("usage: <n> must be a non-negative integer,");
+    Error("Semigroups: Idempotents: usage,\n",
+          "the second argument <n> must be a non-negative integer,");
     return;
   fi;
 
@@ -894,11 +943,13 @@ InstallMethod(SchutzenbergerGroup, "for an inverse op L-class",
 function(l)
   local o, m, p;
 
-  o := LambdaOrb(l); m := LambdaOrbSCCIndex(l);
+  o := LambdaOrb(l);
+  m := LambdaOrbSCCIndex(l);
 
   if not IsGreensClassNC(l) then
     # go from the lambda-value in scc 1 to the lambda value of the rep of <l>
-    p := LambdaConjugator(Parent(l))(RightOne(LambdaOrbRep(o, m)), Representative(l));
+    p := LambdaConjugator(Parent(l))(RightOne(LambdaOrbRep(o, m)),
+         Representative(l));
     return LambdaOrbSchutzGp(o, m) ^ p;
   fi;
   return LambdaOrbSchutzGp(o, m);
@@ -911,8 +962,11 @@ InstallMethod(Size, "for an acting semigroup with inversion",
 function(s)
   local o, scc, r, nr, m;
 
-  o := LambdaOrb(s);   Enumerate(o, infinity);  scc := OrbSCC(o);
-  r := Length(scc);    nr := 0;
+  o := LambdaOrb(s);
+  Enumerate(o, infinity);
+  scc := OrbSCC(o);
+  r := Length(scc);
+  nr := 0;
 
   for m in [2 .. r] do
     nr := nr + Length(scc[m]) ^ 2 * Size(LambdaOrbSchutzGp(o, m));
@@ -1022,7 +1076,8 @@ s -> Length(Enumerate(LambdaOrb(s), infinity)) - 1);
 # same method for ideals
 
 InstallMethod(NrIdempotents, "for an inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+NrLClasses);
 
 # same method for ideals
 
@@ -1042,7 +1097,8 @@ InstallMethod(NrRClasses, "for an acting semigroup with inverse op",
 # same method for ideals
 
 InstallMethod(NrRClasses, "for inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+NrLClasses);
 
 # same method for ideals
 

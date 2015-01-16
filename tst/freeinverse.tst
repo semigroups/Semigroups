@@ -1,11 +1,12 @@
-#%T##########################################################################
+###########################################################################
 ##
 ##  freeinverse,tst 
-#Y  Copyright (C) 2011-13
+#Y  Copyright (C) 2011-13                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
 gap> START_TEST("Semigroups package: freeinverse.tst");
 gap> LoadPackage("semigroups", false);;
 

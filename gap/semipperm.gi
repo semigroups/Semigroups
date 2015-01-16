@@ -48,7 +48,8 @@ end);
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
 function(m, k, n)
-  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial( n - 1, k - 1 ));
+  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial( n - 1,
+  k - 1 ));
 end);
 
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int, pos int, pos int",
@@ -303,7 +304,8 @@ function(S)
   repeat
     o := Orb(gens, [next], OnSets, opts);
     Enumerate(o);
-    if PositionOfFound(o) <> false and reps[o[PositionOfFound(o)][1]] = true then
+    if PositionOfFound(o) <> false
+      and reps[o[PositionOfFound(o)][1]] = true then
       if not IsEmpty(o[PositionOfFound(o)]) then
         reps[o[PositionOfFound(o)][1]] := fail;
       fi;
@@ -337,7 +339,8 @@ function(S)
   pts := [1 .. DegreeOfPartialPermSemigroup(S)];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
-  next := 1;  nr := 0;
+  next := 1;
+  nr := 0;
   opts := rec(lookingfor := function(o, x)
     if not IsEmpty(x) then
       return IsPosInt(comp[x[1]]);
@@ -393,7 +396,9 @@ function(S)
   pts := [1 .. DegreeOfPartialPermSemigroup(S)];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
-  next := 1;  nr := 0; cycles := [];
+  next := 1;
+  nr := 0;
+  cycles := [];
   opts := rec(lookingfor := function(o, x)
     if not IsEmpty(x) then
       return IsPosInt(comp[x[1]]);

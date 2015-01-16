@@ -711,7 +711,8 @@ gap> f:=Transformation(
 gap> f in s;
 false
 gap> GreensRClassOfElement(s, f);
-Error, the element does not belong to the semigroup,
+Error, Semigroups: GreensRClassOfElement: usage,
+the element does not belong to the semigroup,
 gap> f:=Transformation( [ 1, 33, 49, 57, 61, 63, 1, 59, 53, 51, 55, 39, 41, 35,
 > 37, 45, 43, 47, 11, 15, 17, 3, 13, 7, 5, 9, 23, 25, 19, 21, 29, 27, 31, 3, 19,
 > 27, 31, 33, 29, 21, 23, 25, 5, 9, 11, 7, 13, 15, 17, 35, 43, 47, 49, 45, 37, 

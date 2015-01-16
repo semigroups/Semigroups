@@ -617,5 +617,17 @@ gap> Size(max);
 gap> S = max[1];
 false
 
+#T# MaximalSubsemigroups: Issue 107 (problems with Green's classes of ideals,
+#   and inverse semigroups)
+gap> gens := [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 4 ], [ 3, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 5, 2, 3, 1 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 3, 4, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 5, 4, 3, 2, 1 ] ) ];;
+gap> S := InverseSemigroup(gens);;
+gap>  S := Semigroup(S);;
+gap> Length(MaximalSubsemigroups(S));
+9
+
 #E#
 gap> STOP_TEST("Semigroups package: maximal.tst");

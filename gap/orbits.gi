@@ -13,7 +13,10 @@
 InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)",
 [IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
 function( o, limit )
-  local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht, genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
+  local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht,
+  genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks,
+  grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd,
+  htvalue, suc, yy, pos, grade, j;
 
   # Set a few local variables for faster access:
   orb := o!.orbit;
@@ -122,7 +125,10 @@ function( o, limit )
     # Now close the log for this point:
     if suc then
       log[logpos - 2] := - log[logpos - 2];
-      if looking and found then i := i + 1; break; fi;
+      if looking and found then
+        i := i + 1;
+        break;
+      fi;
     else
       logind[i] := 0;
     fi;
@@ -172,7 +178,7 @@ end);
 #
 
 InstallMethod(EvaluateWord,
-"for Rees 0-matrix semigroup element collection and a list of positive integers",
+"for Rees 0-matrix semigroup element collection and a list of positive ints",
 [IsReesZeroMatrixSemigroupElementCollection, IsList],
 function ( gens, w )
     local  i, res, pts;
@@ -193,7 +199,8 @@ InstallGlobalFunction(EnumeratePosition,
 function(arg)
   local o, val, onlynew, pos;
 
-  o := arg[1]; val := arg[2];
+  o := arg[1];
+  val := arg[2];
   if Length(arg) = 3 then
     onlynew := arg[3];
   else
@@ -211,7 +218,9 @@ function(arg)
     return fail;
   fi;
   o!.looking := true;
-  o!.lookingfor := function(o, x) return x = val; end;
+  o!.lookingfor := function(o, x)
+    return x = val;
+  end;
   o!.lookfunc := o!.lookingfor;
   Enumerate(o);
   pos := PositionOfFound(o);
@@ -277,7 +286,7 @@ function(o)
   fi;
 
   scc := Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
-     Set));;
+     Set));
   r := Length(scc);
 
   o!.scc := scc;
@@ -315,7 +324,8 @@ function(o)
     return o!.truth;
   fi;
 
-  scc := OrbSCC(o); r := Length(scc);
+  scc := OrbSCC(o);
+  r := Length(scc);
   o!.truth := List([1 .. r], i -> BlistList([1 .. Length(o)], scc[i]));
   return o!.truth;
 end);
@@ -324,12 +334,14 @@ end);
 
 InstallGlobalFunction(ReverseSchreierTreeOfSCC,
 function(o, i)
-  local r, rev, graph, j, len, nrgens, genstoapply, scc, gen, pos, seen, lookup, oo, nroo, nrscc, k, l, m;
+  local r, rev, graph, j, len, nrgens, genstoapply, scc, gen, pos, seen, lookup,
+  oo, nroo, nrscc, k, l, m;
 
   r := Length(OrbSCC(o));
 
   if i > r then
-    Error("the orbit only has ", r, " strongly connected components,");
+    Error("Semigroups: ReverseSchreierTreeOfSCC:\n",
+          "the orbit only has ", r, " strongly connected components,");
     return;
   fi;
 
@@ -346,8 +358,10 @@ function(o, i)
   fi;
 
   # update o!.rev if necessary
-  rev := o!.rev;        graph := OrbitGraph(o);
-  j := Length(rev);     len := Length(graph);
+  rev := o!.rev;
+  graph := OrbitGraph(o);
+  j := Length(rev);
+  len := Length(graph);
 
   nrgens := Length(o!.gens);
   genstoapply := [1 .. nrgens];
@@ -370,13 +384,16 @@ function(o, i)
   gen := EmptyPlist(Length(o));
   pos := EmptyPlist(Length(o));
 
-  gen[scc[1]] := fail; pos[scc[1]] := fail;
+  gen[scc[1]] := fail;
+  pos[scc[1]] := fail;
 
   seen := BlistList([1 .. Length(o)], [scc[1]]);
 
   lookup := OrbSCCLookup(o);
   oo := EmptyPlist(Length(scc));
-  oo[1] := scc[1]; j := 0; nroo := 1;
+  oo[1] := scc[1];
+  j := 0;
+  nroo := 1;
   nrscc := Length(scc);
 
   while nroo < nrscc do
@@ -390,8 +407,11 @@ function(o, i)
       while m < len and nroo < nrscc do
         m := m + 1;
         if not seen[rev[k][l][m]] and lookup[rev[k][l][m]] = i then
-          Add(oo, rev[k][l][m]); nroo := nroo + 1;
-          seen[rev[k][l][m]] := true; gen[rev[k][l][m]] := l; pos[rev[k][l][m]] := k;
+          Add(oo, rev[k][l][m]);
+          nroo := nroo + 1;
+          seen[rev[k][l][m]] := true;
+          gen[rev[k][l][m]] := l;
+          pos[rev[k][l][m]] := k;
         fi;
       od;
     od;
@@ -424,32 +444,40 @@ function(o, i)
     return o!.trees[i];
   fi;
 
-  scc := o!.scc[i]; len := Length(o);
+  scc := o!.scc[i];
+  len := Length(o);
 
   #gen:=ListWithIdenticalEntries(len, fail);
   #pos:=ListWithIdenticalEntries(len, fail);
   gen := EmptyPlist(len);
   pos := EmptyPlist(len);
-  gen[scc[1]] := fail; pos[scc[1]] := fail;
+  gen[scc[1]] := fail;
+  pos[scc[1]] := fail;
 
   seen := BlistList([1 .. len], [scc[1]]);
   #JDM remove the use of truth table here
   #t:=OrbSCCTruthTable(o)[i];
   lookup := OrbSCCLookup(o);
-  oo := [scc[1]]; m := 1;
+  oo := [scc[1]];
+  m := 1;
   graph := OrbitGraph(o);
   j := 0;
   len := Length(scc);
 
   while m < len do
-    j := j + 1; k := oo[j]; l := 0; len_k := Length(graph[k]);
+    j := j + 1;
+    k := oo[j];
+    l := 0;
+    len_k := Length(graph[k]);
     while l < len_k and m < len do
       l := l + 1;
       if IsBound(graph[k][l]) and not seen[graph[k][l]]
        and lookup[graph[k][l]] = i then
         m := m + 1;
-        oo[m] := graph[k][l]; seen[graph[k][l]] := true;
-        gen[graph[k][l]] := l; pos[graph[k][l]] := k;
+        oo[m] := graph[k][l];
+        seen[graph[k][l]] := true;
+        gen[graph[k][l]] := l;
+        pos[graph[k][l]] := k;
       fi;
     od;
   od;

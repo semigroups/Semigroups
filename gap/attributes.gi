@@ -49,7 +49,7 @@ function(S)
   end;
 end);
 
-# different method for ideals/regular/inverse, although this method will work too
+# different method for ideals/regular/inverse, although this method also works
 
 InstallMethod(MaximalDClasses, "for an acting semigroup",
 [IsActingSemigroup] ,
@@ -261,10 +261,12 @@ s -> InverseSemigroup(Idempotents(s), rec(small := true)));
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
+  local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact,
+  f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
-    Error("usage: <d> must be a regular D-class,");
+    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
+    "the argument <d> must be a regular D-class,");
     return;
   fi;
 
@@ -324,7 +326,8 @@ function(d)
 
   iso := function(f)
     local o, m, i, j;
-    o := LambdaOrb(d); m := LambdaOrbSCCIndex(d);
+    o := LambdaOrb(d);
+    m := LambdaOrbSCCIndex(d);
     i := Position(o, LambdaFunc(Parent(d))(f));
 
     if i = fail or OrbSCCLookup(o)[i] <> m then
@@ -372,7 +375,8 @@ function(coll)
   local gens, nrgens, deg, out, redund, i, f;
 
   if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then
-    Error();
+    Error("Semigroups: IrredundantGeneratingSubset: usage,\n",
+          "<coll> must be a generators of an acting semigroup,");
   fi;
 
   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll)) or
@@ -388,14 +392,17 @@ function(coll)
   nrgens := Length(gens);
   deg := ActionDegree(coll);
   coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
-  Sort(coll, function(x, y) return ActionRank(x, deg) > ActionRank(y, deg); end);
+  Sort(coll, function(x, y)
+               return ActionRank(x, deg) > ActionRank(y, deg);
+             end);
 
   out := EmptyPlist(Length(coll));
   redund := EmptyPlist(Length(coll));
   i := 0;
 
   repeat
-    i := i + 1; f := coll[i];
+    i := i + 1;
+    f := coll[i];
     if InfoLevel(InfoSemigroups) >= 3 then
       Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund),
       " redundant, \t", Length(out), " non-redundant\r");
@@ -403,7 +410,8 @@ function(coll)
 
     if not f in redund and not f in out then
       if f in Semigroup(Difference(gens, [f])) then
-        AddSet(redund, f); gens := Difference(gens, [f]);
+        AddSet(redund, f);
+        gens := Difference(gens, [f]);
       else
         AddSet(out, f);
       fi;
@@ -432,7 +440,8 @@ function(S)
   fi;
   iso := IsomorphismReesMatrixSemigroup(D);
   inv := InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso), x -> x ^ iso, x -> x ^ inv);
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
+   x -> x ^ iso, x -> x ^ inv);
 end);
 
 # same method for ideals
@@ -455,7 +464,8 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and associative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
-  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
+  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f,
+  lambdarank, creator, inv, out, k, g, rho, name, i, x;
 
   regular := IsRegularSemigroup(s);
 
@@ -510,7 +520,8 @@ function(s, f)
   creator := IdempotentCreator(s);
   inv := LambdaInverse(s);
 
-  out := []; k := 0;
+  out := [];
+  k := 0;
 
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
     o := LambdaOrb(s);
@@ -617,7 +628,8 @@ InstallMethod(MultiplicativeZero, "for an acting semigroup",
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
 
-  if IsSemigroupIdeal(s) and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
+  if IsSemigroupIdeal(s)
+    and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
     return MultiplicativeZero(SupersemigroupOfIdeal(s));
   fi;
 
@@ -635,14 +647,18 @@ function(s)
   elif IsPartialPermSemigroup(s) then
     pos := EnumeratePosition(o, [], false);
   else
-    pos := LookForInOrb(o, function(o, x) return rank(x) = min; end, 2);
+    pos := LookForInOrb(o, function(o, x)
+                             return rank(x) = min;
+                           end, 2);
   fi;
 
   if pos <> fail and pos <> false then
     f := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
   else
     # lambda orb is closed, find an element with minimum rank
-    min_found := rank(o[2]); pos := 2; i := 1;
+    min_found := rank(o[2]);
+    pos := 2;
+    i := 1;
 
     while min_found > min and i < Length(o) do
       i := i + 1;
@@ -686,14 +702,19 @@ function(S)
   rank := LambdaRank(S);
   o := LambdaOrb(S);
 
-  pos := LookForInOrb(o, function(o, x) return rank(x) = MinActionRank(S); end, 2);
+  pos := LookForInOrb(o, function(o, x)
+                           return rank(x) = MinActionRank(S);
+                         end, 2);
 
   if pos = false then
-    min := rank(o[2]); pos := 2; len := Length(o);
+    min := rank(o[2]);
+    pos := 2;
+    len := Length(o);
     for i in [3 .. len] do
       m := rank(o[i]);
       if m < min then
-        pos := i; min := m;
+        pos := i;
+        min := m;
       fi;
     od;
   fi;
@@ -756,7 +777,9 @@ end);
 InstallMethod(SmallMonoidGeneratingSet,
 "for an acting monoid", [IsActingSemigroup and IsMonoid],
 function(S)
-  if IsEmpty(GeneratorsOfMonoid(S)) then return []; fi;
+  if IsEmpty(GeneratorsOfMonoid(S)) then
+    return [];
+  fi;
   return SmallMonoidGeneratingSet(GeneratorsOfMonoid(S));
 end);
 
@@ -771,7 +794,8 @@ function(coll)
   elif Length(coll) < 2 then
     return coll;
   else
-    return GeneratorsOfInverseSemigroup(InverseSemigroup(coll, rec(small := true)));
+    return GeneratorsOfInverseSemigroup(
+      InverseSemigroup(coll, rec(small := true)));
   fi;
 end);
 
@@ -862,7 +886,8 @@ function(s)
   fi;
 
   if MultiplicativeNeutralElement(s) = fail then
-    Error( "usage: <s> must have a multiplicative neutral element,");
+    Error( "Semigroups: IsomorphismTransformationMonoid: usage,\n",
+           "the argument <s> must have a multiplicative neutral element,");
     return;
   fi;
 
@@ -894,7 +919,7 @@ function(S)
   local n, F, T;
   n := Length(GeneratorsOfSemigroup(S)[1][1]);
   F := FieldOfMatrixList(GeneratorsOfSemigroup(S));
-  T := Semigroup(List(GeneratorsOfSemigroup(S), x -> 
+  T := Semigroup(List(GeneratorsOfSemigroup(S), x ->
    TransformationOp(x, Elements(F ^ n), OnRight)));
   return MappingByFunction(S, T,
    x -> TransformationOp(x, Elements(F ^ Size(F)), OnRight));
@@ -907,7 +932,9 @@ InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-   Error( "usage: a transformation semigroup satisfying IsGroupAsSemigroup,");
+   Error("Semigroups: IsomorphismPermGroup: usage,\n",
+         "the argument <s> must be a transformation semigroup ",
+         "satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -924,7 +951,9 @@ InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-   Error( "usage: a partial perm semigroup satisfying IsGroupAsSemigroup,");
+   Error( "Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <s> must be a partial perm semigroup ",
+          "satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -942,8 +971,9 @@ function(S)
   local rep;
 
   if not IsGroupAsSemigroup(S)  then
-   Error( "usage: a subsemigroup of a Rees 0-matrix semigroup satisfying\n",
-    "IsGroupAsSemigroup,");
+   Error( "Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
+          "semigroup satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -964,9 +994,10 @@ function(S)
   local en, act, gens;
 
   if not IsGroupAsSemigroup(S)  then
-   Error( "usage: the argument must be a semigroup satisfying\n",
-    "IsGroupAsSemigroup,");
-   return;
+    Error( "Semigroups: IsomorphismPermGroup: usage,\n",
+           "the argument must be a semigroup satisfying ",
+           "IsGroupAsSemigroup,");
+    return;
   fi;
 
   en := EnumeratorSorted(S);

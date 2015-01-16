@@ -75,7 +75,8 @@ function(f, s)
     return f in AsSSortedList(s);
   fi;
 
-  lambda_o := LambdaOrb(s); Enumerate(lambda_o, infinity);
+  lambda_o := LambdaOrb(s);
+  Enumerate(lambda_o, infinity);
   lambda_l := Position(lambda_o, LambdaFunc(s)(f));
 
   if lambda_l = fail then
@@ -128,8 +129,10 @@ end);
 
 #
 
-InstallMethod(\in, "for associative element and regular D-class of acting semigroup",
-[IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(\in,
+"for associative element and regular D-class of acting semigroup",
+[IsAssociativeElement, IsRegularClass and IsGreensDClass and
+IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
 
@@ -144,8 +147,9 @@ function(f, d)
   fi;
 
   g := f;
-  m := LambdaOrbSCCIndex(d); o := LambdaOrb(d); scc := OrbSCC(o);
-
+  m := LambdaOrbSCCIndex(d);
+  o := LambdaOrb(d);
+  scc := OrbSCC(o);
   l := Position(o, LambdaFunc(s)(g));
 
   if l = fail or OrbSCCLookup(o)[l] <> m then
@@ -156,7 +160,9 @@ function(f, d)
     g := g * LambdaOrbMult(o, m, l)[2];
   fi;
 
-  m := RhoOrbSCCIndex(d); o := RhoOrb(d); scc := OrbSCC(o);
+  m := RhoOrbSCCIndex(d);
+  o := RhoOrb(d);
+  scc := OrbSCC(o);
 
   l := Position(o, RhoFunc(s)(g));
 
@@ -212,7 +218,8 @@ end);
 InstallMethod(HClassReps, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, n, lambda_mults, f, rho_l, rho_m, rho_mults, lambda_m, j, k;
+  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, n,
+  lambda_mults, f, rho_l, rho_m, rho_mults, lambda_m, j, k;
 
   lambda_o := Enumerate(LambdaOrb(s), infinity);
   lambda_scc := OrbSCC(lambda_o);
@@ -451,7 +458,8 @@ end);
 InstallMethod(GreensHClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, type, n, lambda_mults, f, rho_l, rho_m, rho_mults, g, lambda_m, j, k;
+  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, type,
+  n, lambda_mults, f, rho_l, rho_m, rho_mults, g, lambda_m, j, k;
 
   lambda_o := Enumerate(LambdaOrb(s), infinity);
   lambda_scc := OrbSCC(lambda_o);
@@ -544,7 +552,8 @@ function(l)
     lambda_l := Position(lambda_o, LambdaFunc(s)(f));
   else
     lambda_o := GradedLambdaOrb(s, f, nc <> true);
-    lambda_l := lambda_o[2]; lambda_o := lambda_o[1];
+    lambda_l := lambda_o[2];
+    lambda_o := lambda_o[1];
   fi;
   lambda_m := OrbSCCLookup(lambda_o)[lambda_l];
 
@@ -566,7 +575,8 @@ end);
 InstallMethod(GreensHClasses, "for R-class of regular acting semigroup",
 [IsRegularClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local lambda_o, lambda_m, scc, mults, f, nc, s, rho_o, rho_l, rho_m, out, k, j;
+  local lambda_o, lambda_m, scc, mults, f, nc, s, rho_o, rho_l, rho_m, out, k,
+  j;
 
   lambda_o := LambdaOrb(r);
   lambda_m := LambdaOrbSCCIndex(r);
@@ -582,7 +592,8 @@ function(r)
     rho_l := Position(rho_o, RhoFunc(s)(f));
   else
     rho_o := GradedRhoOrb(s, f, nc <> true);
-    rho_l := rho_o[2]; rho_o := rho_o[1];
+    rho_l := rho_o[2];
+    rho_o := rho_o[1];
   fi;
   rho_m := OrbSCCLookup(rho_o)[rho_l];
 
@@ -604,7 +615,8 @@ end);
 InstallMethod(GreensLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, lambda_o, lambda_scc, len, out, n, rectify, m, f, mults, lambda_m, j;
+  local rho_o, lambda_o, lambda_scc, len, out, n, rectify, m, f, mults,
+  lambda_m, j;
 
   rho_o := RhoOrb(s);
   lambda_o := LambdaOrb(s);
@@ -664,7 +676,8 @@ end);
 InstallMethod(GreensRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, lambdafunc, out, n, f, lambda_l, lambda_m, mults, rho_m, j;
+  local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, lambdafunc, out, n,
+  f, lambda_l, lambda_m, mults, rho_m, j;
 
   rho_o := RhoOrb(s);
   rho_scc := OrbSCC(rho_o);
@@ -727,7 +740,8 @@ function(s, f)
   local o;
 
   if not f in s then
-    Error("the element does not belong to the semigroup,");
+    Error("Semigroups: GreensRClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
     return;
   fi;
 
@@ -768,7 +782,8 @@ function(s)
 
   for m in [2 .. r] do
     rho := rhofunc(LambdaOrbRep(lambda_o, m));
-    nr := nr + Length(lambda_scc[m]) * Length(rho_scc[lookup[Position(rho_o, rho)]]);
+    nr := nr + Length(lambda_scc[m])
+          * Length(rho_scc[lookup[Position(rho_o, rho)]]);
   od;
 
   return nr;
@@ -933,11 +948,14 @@ d -> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup and IsGreensHClass],
+[IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup and
+IsGreensHClass],
 function(h)
   local o, rep, s, p;
 
-  o := LambdaOrb(h); rep := Representative(h); s := Parent(h);
+  o := LambdaOrb(h);
+  rep := Representative(h);
+  s := Parent(h);
   p := LambdaConjugator(s)(RectifyLambda(s, o, rep).rep, rep);
 
   return LambdaOrbSchutzGp(o, LambdaOrbSCCIndex(h)) ^ p;
@@ -948,7 +966,8 @@ end);
 InstallMethod(Size, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup, start, rho, m;
+  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup, start,
+  rho, m;
 
   lambda_o := Enumerate(LambdaOrb(s), infinity);
   rho_o := Enumerate(RhoOrb(s), infinity);
@@ -962,7 +981,7 @@ function(s)
 
   for m in [2 .. r] do
     rho := rhofunc(LambdaOrbRep(lambda_o, m));
-    nr := nr + Length(lambda_scc[m]) * Size(LambdaOrbSchutzGp(lambda_o, m)) * 
+    nr := nr + Length(lambda_scc[m]) * Size(LambdaOrbSchutzGp(lambda_o, m)) *
      Length(rho_scc[lookup[Position(rho_o, rho)]]);
   od;
 
