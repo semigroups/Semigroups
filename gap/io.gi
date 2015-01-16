@@ -49,7 +49,13 @@ function(str)
     return rec(file := file, curr := ReadGeneratorsLine(IO_ReadLine(file)));
   end;
 
-  InstallAtExit(function() if not file!.closed then IO_Close(file); fi; end);
+  # TODO is this still necessary?
+  InstallAtExit(
+    function()
+      if not file!.closed then
+        IO_Close(file);
+      fi;
+    end);
 
   return IteratorByFunctions(record);
 end);
@@ -126,7 +132,9 @@ InstallGlobalFunction(ReadGeneratorsLine,
 function(line)
   local i, k, out, m, deg, f, j;
 
-  i := 2; k := 0; out := [];
+  i := 2;
+  k := 0;
+  out := [];
 
   while i < Length(line) do
     m := Int([line[i]]);                                      # blocksize

@@ -10,8 +10,8 @@
 
 # TODO the first three main functions should be updated!
 
-## Methods for inverse acting semigroups consisting of associative elements with a
-## method for InverseOp.
+# Methods for inverse acting semigroups consisting of associative
+# elements with a method for InverseOp.
 
 # Notes: everything here uses LambdaSomething, so don't use RhoAnything
 
@@ -73,8 +73,8 @@ function(f, s)
 
   if not (IsMonoid(s) and IsOne(f)) then
     if Length(Generators(s)) > 0
-      and ActionRank(s)(f) > MaximumList(List(Generators(s), f -> ActionRank(s)(f)))
-     then
+      and ActionRank(s)(f) > MaximumList(List(Generators(s),
+       f -> ActionRank(s)(f))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
        "semigroup.");
       return false;
@@ -119,7 +119,8 @@ function(f, s)
     return true;
   fi;
 
-  scc := OrbSCC(o)[m]; g := f;
+  scc := OrbSCC(o)[m];
+  g := f;
 
   if lambda_l <> scc[1] then
     g := g * LambdaOrbMult(o, m, lambda_l)[2];
@@ -254,8 +255,10 @@ end);
 
 #
 
-InstallMethod(\in, "for associative element and inverse op R-class of acting semigroup.",
-[IsAssociativeElement, IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+InstallMethod(\in,
+"for associative element and inverse op R-class of acting semigroup",
+[IsAssociativeElement, IsInverseOpClass and IsGreensRClass and
+IsActingSemigroupGreensClass],
 function(f, r)
   local rep, s, m, o, i, schutz, g, p;
 
@@ -559,7 +562,8 @@ function(s, f)
     i := Position(o, RhoFunc(s)(f));
   else
     o := GradedLambdaOrb(s, f, true);
-    i := o[2]; o := o[1];
+    i := o[2];
+    o := o[1];
   fi;
 
   m := OrbSCCLookup(o)[i];
@@ -699,7 +703,8 @@ end);
 # same method for ideals
 
 InstallMethod(GreensLClassOfElement, "for inverse op D-class and element",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
+IsAssociativeElement],
 function(d, f)
   local l;
 
@@ -720,7 +725,8 @@ end);
 # same method for ideals
 
 InstallMethod(GreensLClassOfElementNC, "for D-class and associative element",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
+IsAssociativeElement],
 function(d, f)
   local l;
 
@@ -937,11 +943,13 @@ InstallMethod(SchutzenbergerGroup, "for an inverse op L-class",
 function(l)
   local o, m, p;
 
-  o := LambdaOrb(l); m := LambdaOrbSCCIndex(l);
+  o := LambdaOrb(l);
+  m := LambdaOrbSCCIndex(l);
 
   if not IsGreensClassNC(l) then
     # go from the lambda-value in scc 1 to the lambda value of the rep of <l>
-    p := LambdaConjugator(Parent(l))(RightOne(LambdaOrbRep(o, m)), Representative(l));
+    p := LambdaConjugator(Parent(l))(RightOne(LambdaOrbRep(o, m)),
+         Representative(l));
     return LambdaOrbSchutzGp(o, m) ^ p;
   fi;
   return LambdaOrbSchutzGp(o, m);
@@ -954,8 +962,11 @@ InstallMethod(Size, "for an acting semigroup with inversion",
 function(s)
   local o, scc, r, nr, m;
 
-  o := LambdaOrb(s);   Enumerate(o, infinity);  scc := OrbSCC(o);
-  r := Length(scc);    nr := 0;
+  o := LambdaOrb(s);
+  Enumerate(o, infinity);
+  scc := OrbSCC(o);
+  r := Length(scc);
+  nr := 0;
 
   for m in [2 .. r] do
     nr := nr + Length(scc[m]) ^ 2 * Size(LambdaOrbSchutzGp(o, m));
@@ -1065,7 +1076,8 @@ s -> Length(Enumerate(LambdaOrb(s), infinity)) - 1);
 # same method for ideals
 
 InstallMethod(NrIdempotents, "for an inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+NrLClasses);
 
 # same method for ideals
 
@@ -1085,7 +1097,8 @@ InstallMethod(NrRClasses, "for an acting semigroup with inverse op",
 # same method for ideals
 
 InstallMethod(NrRClasses, "for inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+NrLClasses);
 
 # same method for ideals
 

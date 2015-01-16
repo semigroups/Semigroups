@@ -27,7 +27,8 @@ function(cong)
                ht := ht,
                elms := elms,
                found := false );
-  cong!.data := Objectify(NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
+  cong!.data := Objectify(
+                 NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
   return;
 end);
 
@@ -138,7 +139,8 @@ function(data, lookfunc)
   end;
 
   genstoapply := [1 .. Size(right[1])];
-  i := data!.pos; nr := Size(pairstoapply);
+  i := data!.pos;
+  nr := Size(pairstoapply);
   found := false;
 
   if i = 0 then

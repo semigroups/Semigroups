@@ -180,7 +180,8 @@ function( arg )
       else
         Error("Semigroups: SemigroupIdeal: usage,\n",
               "the second argument must be a",
-              "combination of generators,\n lists of generators, or semigroups,");
+              "combination of generators,\n lists of generators, ",
+              "or semigroups,");
         return;
       fi;
     od;
@@ -196,7 +197,8 @@ end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators, "for an associative element collection",
+InstallMethod(SemigroupIdealByGenerators,
+"for an associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection],
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, S!.opts);
@@ -297,8 +299,9 @@ function(I)
   local data, pos, partial, classes, out, i;
 
   data := SemigroupIdealData(I);
-  pos := [1 .. data!.genspos - 1]; # the D-classes of the generators in positions
-                             # [1..n-1] in data!.dorbit
+  pos := [1 .. data!.genspos - 1];
+  # the D-classes of the generators in positions
+  # [1..n-1] in data!.dorbit
 
   partial := data!.poset;
   classes := data!.dorbit;

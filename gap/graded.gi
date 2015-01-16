@@ -67,7 +67,8 @@ end);
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
-  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
+  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record,
+  gens, o, j, k, l;
 
   if not IsActingSemigroup(s) then
     Error("Semigroups: GradedLambdaOrb: usage,\n",
@@ -93,27 +94,36 @@ function(s, f, opt)
       return [graded[pos[1]][pos[2]], pos[3]];
     fi;
 
-    gradingfunc := function(o,x) return [LambdaRank(s)(x), x]; end;
+    gradingfunc := function(o,x)
+                     return [LambdaRank(s)(x), x];
+                   end;
     onlygrades := function(x, data_ht)
       return x[1] = LambdaRank(s)(lambda)
        and HTValue(data_ht, x[2]) = fail;
     end;
     onlygradesdata := GradedLambdaHT(s);
   else          #local
-    gradingfunc := function(o,x) return LambdaRank(s)(x); end;
+    gradingfunc := function(o,x)
+                     return LambdaRank(s)(x);
+                   end;
     onlygrades := function(x,data_ht)
-      return x = LambdaRank(s)(lambda);
-    end;
+                    return x = LambdaRank(s)(lambda);
+                  end;
     onlygradesdata := fail;
   fi;
 
   record := ShallowCopy(LambdaOrbOpts(s));
 
-  record.parent := s;               record.treehashsize := s!.opts.hashlen.M;
-  record.schreier := true;          record.orbitgraph := true;
-  record.storenumbers := true;      record.log := true;
-  record.onlygrades := onlygrades;  record.gradingfunc := gradingfunc;
-  record.scc_reps := [f];           record.onlygradesdata := onlygradesdata;
+  record.parent := s;
+  record.treehashsize := s!.opts.hashlen.M;
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.onlygrades := onlygrades;
+  record.gradingfunc := gradingfunc;
+  record.scc_reps := [f];
+  record.onlygradesdata := onlygradesdata;
 
   if IsSemigroupIdeal(s) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
@@ -144,7 +154,8 @@ end);
 
 InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
-  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens, o, j, k, l;
+  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens,
+  o, j, k, l;
 
   if not IsActingSemigroup(s) then
     Error("Semigroups: GradedRhoOrb: usage,\n",
@@ -170,29 +181,38 @@ function(s, f, opt)
       return [graded[pos[1]][pos[2]], pos[3]];
     fi;
 
-    gradingfunc := function(o,x) return [RhoRank(s)(x), x]; end;
+    gradingfunc := function(o,x)
+                     return [RhoRank(s)(x), x];
+                   end;
 
     onlygrades := function(x, data_ht)
-      return x[1] = RhoRank(s)(rho)
-       and HTValue(data_ht, x[2]) = fail;
-    end;
+                    return x[1] = RhoRank(s)(rho)
+                    and HTValue(data_ht, x[2]) = fail;
+                  end;
 
     onlygradesdata := GradedRhoHT(s);
   else          #local
-    gradingfunc := function(o,x) return RhoRank(s)(x); end;
-    onlygrades := function(x, data_ht)
-      return x = RhoRank(s)(RhoFunc(s)(f));
-    end;
+    gradingfunc := function(o,x)
+                     return RhoRank(s)(x);
+                   end;
+                   onlygrades := function(x, data_ht)
+                     return x = RhoRank(s)(RhoFunc(s)(f));
+                   end;
     onlygradesdata := fail;
   fi;
 
   record := ShallowCopy(RhoOrbOpts(s));
 
-  record.parent := s;               record.treehashsize := s!.opts.hashlen.M;
-  record.schreier := true;          record.orbitgraph := true;
-  record.storenumbers := true;      record.log := true;
-  record.onlygrades := onlygrades;  record.gradingfunc := gradingfunc;
-  record.scc_reps := [f];           record.onlygradesdata := onlygradesdata;
+  record.parent := s;
+  record.treehashsize := s!.opts.hashlen.M;
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.onlygrades := onlygrades;
+  record.gradingfunc := gradingfunc;
+  record.scc_reps := [f];
+  record.onlygradesdata := onlygradesdata;
 
   if IsSemigroupIdeal(s) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
@@ -330,8 +350,8 @@ function(s)
     if val <> fail then # previously calculated graded orbit
       o := GradedLambdaOrbs(s)[val[1]][val[2]];
     else # new graded orbit
-      o := GradedLambdaOrb(s,
-       EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, pos)), true)[1];
+      o := GradedLambdaOrb(s, EvaluateWord(lambda_o,
+        TraceSchreierTreeForward(lambda_o, pos)), true)[1];
       val := o!.position_in_graded;
     fi;
 

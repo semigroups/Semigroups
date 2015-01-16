@@ -33,8 +33,8 @@ function(s, kernel, traceBlocks)
   for a in kernel do
     for x in GeneratorsOfSemigroup(s) do
       if not a ^ x in kernel then
-        Error("Semigroups: InverseSemigroupCongruenceByCongruencePair: usage,\n",
-              "the second arg <kernel> must be self-conjugate,");
+  Error("Semigroups: InverseSemigroupCongruenceByCongruencePair: usage,\n",
+        "the second arg <kernel> must be self-conjugate,");
         return;
       fi;
     od;
@@ -112,7 +112,8 @@ end);
 
 InstallMethod(\=,
 "for two inverse semigroup congruences",
-[IsInverseSemigroupCongruenceByKernelTrace, IsInverseSemigroupCongruenceByKernelTrace],
+[IsInverseSemigroupCongruenceByKernelTrace,
+IsInverseSemigroupCongruenceByKernelTrace],
 function(cong1, cong2)
   return(Range(cong1) = Range(cong2) and
          cong1!.kernel = cong2!.kernel and
@@ -208,7 +209,8 @@ end);
 
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
-[InverseSemigroupCongruenceClassByKernelTrace, InverseSemigroupCongruenceClassByKernelTrace],
+[InverseSemigroupCongruenceClassByKernelTrace,
+InverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   return( ParentAttr(c1) = ParentAttr(c2) and
           [c1!.rep, c2!.rep] in ParentAttr(c1) );
@@ -229,7 +231,8 @@ end);
 
 InstallMethod( \*,
 "for two inverse semigroup congruence classes",
-[InverseSemigroupCongruenceClassByKernelTrace, InverseSemigroupCongruenceClassByKernelTrace],
+[InverseSemigroupCongruenceClassByKernelTrace,
+InverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
     Error("Semigroups: \*: usage,\n",

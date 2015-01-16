@@ -105,7 +105,8 @@ InstallMethod(IsBlockGroup, "for an acting semigroup", [IsActingSemigroup],
 function(S)
   local iter, d;
 
-  if HasParent(S) and HasIsBlockGroup(Parent(S)) and IsBlockGroup(Parent(S)) then
+  if HasParent(S) and HasIsBlockGroup(Parent(S))
+    and IsBlockGroup(Parent(S)) then
     return true;
   elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "inverse semigroup");
@@ -250,8 +251,10 @@ function(S)
 
   for f in GeneratorsOfSemigroup(S) do
     o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
-    pos := LookForInOrb(o, function(o, x)
-      return LambdaRank(S)(LambdaAct(S)(x, f)) <> LambdaRank(S)(x); end, 1);
+    pos := LookForInOrb(o,
+           function(o, x)
+             return LambdaRank(S)(LambdaAct(S)(x, f)) <> LambdaRank(S)(x);
+           end, 1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
 
@@ -322,7 +325,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup with generators",
+InstallMethod(IsFactorisableSemigroup,
+"for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) then
@@ -378,7 +382,8 @@ end);
 #same method for ideals
 
 InstallMethod(IsHTrivial, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass], d -> NrHClasses(d) = Size(d));
+[IsGreensDClass and IsActingSemigroupGreensClass],
+d -> NrHClasses(d) = Size(d));
 
 #same method for non-inverse ideals
 
@@ -419,7 +424,8 @@ end);
 #same method for ideals
 
 InstallMethod(IsLTrivial, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass], d -> NrLClasses(d) = Size(d));
+[IsGreensDClass and IsActingSemigroupGreensClass],
+d -> NrLClasses(d) = Size(d));
 
 #same method for ideals
 
@@ -612,7 +618,8 @@ function(S)
   # TODO shouldn't the below be Length(rho) = Length(lambda)?
   # and we should check that rho is closed.
   if not (IsClosed(rho) and Length(rho) >= Length(lambda)) then
-    Info(InfoSemigroups, 2, "the numbers of lambda and rho values are not equal");
+    Info(InfoSemigroups, 2,
+    "the numbers of lambda and rho values are not equal");
     return false;
   fi;
 
@@ -702,7 +709,8 @@ InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 
 # not applicable for ideals
 
-InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and HasGeneratorsOfSemigroup, 0,
+InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and
+HasGeneratorsOfSemigroup, 0,
 function(S)
   if Length(GeneratorsOfSemigroup(S)) = 1 then
     return true;
@@ -820,12 +828,14 @@ end);
 #same method for ideals
 
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
-[IsSemigroup], x -> not IsMonoid(x) and MultiplicativeNeutralElement(x) <> fail);
+[IsSemigroup],
+x -> not IsMonoid(x) and MultiplicativeNeutralElement(x) <> fail);
 
 # is there a better method? JDM
 # same method for ideals
 
-InstallMethod(IsOrthodoxSemigroup, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsOrthodoxSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
 function(S)
   local e, m, i, j;
 
@@ -834,7 +844,8 @@ function(S)
     return false;
   fi;
 
-  e := Idempotents(S); m := Length(e);
+  e := Idempotents(S);
+  m := Length(e);
 
   for i in [1 .. m] do
     for j in [1 .. m] do
@@ -947,7 +958,8 @@ end);
 
 #
 
-InstallMethod(IsRegularSemigroup, "for an acting star semigroup with generators",
+InstallMethod(IsRegularSemigroup,
+"for an acting star semigroup with generators",
 [IsActingSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local lookfunc, data, i;
@@ -1054,7 +1066,8 @@ function(S, x)
     k := Position(o, LambdaFunc(S)(x));
   else
     o := GradedLambdaOrb(S, x, true);
-    k := o[2]; o := o[1];
+    k := o[2];
+    o := o[1];
   fi;
 
   l := Position(o, RhoFunc(S)(x));
@@ -1180,7 +1193,8 @@ InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 
 # same method for ideals, JDM why is this not a synonym?
 
-InstallMethod(IsSemiband, "for a semigroup", [IsSemigroup], IsIdempotentGenerated);
+InstallMethod(IsSemiband, "for a semigroup", [IsSemigroup],
+IsIdempotentGenerated);
 
 # same method for ideals
 
@@ -1240,8 +1254,8 @@ function(S)
     lambdarank := LambdaRank(S);
     rank := lambdarank(lambdafunc(gens[1]));
 
-    if not ForAll([2 .. Length(gens)], i -> lambdarank(lambdafunc(gens[i])) = rank)
-     then
+    if not ForAll([2 .. Length(gens)],
+      i -> lambdarank(lambdafunc(gens[i])) = rank) then
       return false;
     fi;
 
@@ -1253,7 +1267,9 @@ function(S)
 
     for f in gens do
       o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), opts);
-      pos := LookForInOrb(o, function(o, x) return LambdaRank(S)(x) < rank; end, 1);
+      pos := LookForInOrb(o, function(o, x)
+                               return LambdaRank(S)(x) < rank;
+                             end, 1);
         #or LambdaRank(S)(LambdaAct(S)(x, f))<>LambdaRank(S)(x); end, 1);
       if pos <> false then
         return false;
@@ -1322,7 +1338,8 @@ function(S)
      o[scc[m][1]])) then
       return false;
     elif Length(scc[m]) > 1 then
-      rho := rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
+      rho := rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o,
+             scc[m][1])));
       for j in scc[m] do
         if not o[j] in graded then
           if not ForAny(GradedLambdaOrb(g, o[j], true)[1], x -> tester(x, rho))
@@ -1361,7 +1378,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsZeroRectangularBand, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsZeroRectangularBand, "for an acting semigroup",
+[IsActingSemigroup],
 function(S)
 
   if HasParent(S) and HasIsZeroRectangularBand(Parent(S))
@@ -1503,8 +1521,11 @@ InstallMethod(IsEUnitaryInverseSemigroup,
 "for an inverse semigroup which has NaturalLeqInverseSemigroup function",
 [IsInverseSemigroup],
 function(S)
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S) and not IsPartialPermBipartitionSemigroup(S) then
-    TryNextMethod();
+  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S)
+    and not IsPartialPermBipartitionSemigroup(S) then
+    TryNextMethod(); # FIXME is there one? if not, then just return an error
+                     # here or better still take an isomorphism to a partial
+                     # perm semigroup and answer the question there.
   fi;
   return IsMajorantlyClosed(S,IdempotentGeneratedSubsemigroup(S));
 end);

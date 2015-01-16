@@ -406,8 +406,8 @@ function(s)
     iter := IteratorList(AsSSortedList(s));
     SetIsIteratorOfSemigroup(iter, true);
   else
-    iter := IteratorByIterOfIters(rec(parent := s), IteratorOfRClasses(s), IdFunc,
-     [IsIteratorOfSemigroup]);
+    iter := IteratorByIterOfIters(rec(parent := s), IteratorOfRClasses(s),
+            IdFunc, [IsIteratorOfSemigroup]);
   fi;
   SetParent(iter, s);
   return iter;
@@ -666,7 +666,8 @@ end);
 # no method required for inverse/regular
 
 InstallMethod(Iterator, "for a full transformation semigroup",
-[IsTransformationSemigroup and IsFullTransformationSemigroup and HasGeneratorsOfSemigroup],
+[IsTransformationSemigroup and IsFullTransformationSemigroup and
+HasGeneratorsOfSemigroup],
 function(s)
   local iter;
 
@@ -731,8 +732,8 @@ function(s)
   return iter;
 end);
 
-# Notes: required until Enumerator for a trans. semigroup does not call iterator.
-# This works but is maybe not the best!
+# Notes: required until Enumerator for a trans. semigroup does not call
+# iterator. This works but is maybe not the best!
 
 # same method for regular/inverse
 
@@ -749,8 +750,8 @@ InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 s -> IteratorByIterator(IteratorOfDClasses(s), Representative,
 [IsIteratorOfDClassReps]));
 
-#JDM could be a different  method for regular/inverse using
-#IteratorOfHClassData (not yet written), see inverse_old.gi in semigroups-dev
+#JDM could be a different method for regular/inverse using IteratorOfHClassData
+#(not yet written), see inverse_old.gi in semigroups-dev
 
 InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 [IsActingSemigroup],
@@ -792,13 +793,15 @@ function(s)
       fi;
 
       if m = fail or m = Length(OrbSCC(iter!.o)) then
-        m := 1; l := 1;
+        m := 1;
+        l := 1;
         iter!.o := NextIterator(iter!.graded);
         if iter!.o = fail then
           return fail;
         fi;
       else
-        m := m + 1; l := OrbSCC(iter!.o)[m][1];
+        m := m + 1;
+        l := OrbSCC(iter!.o)[m][1];
       fi;
       iter!.m := m;
 
@@ -943,13 +946,15 @@ function(s)
       if iter!.o = fail then
         return fail;
       elif m = fail or m = Length(OrbSCC(iter!.o)) then
-        m := 1; l := 1;
+        m := 1;
+        l := 1;
         iter!.o := NextIterator(iter!.graded);
         if iter!.o = fail then
           return fail;
         fi;
       else
-        m := m + 1; l := OrbSCC(iter!.o)[m][1];
+        m := m + 1;
+        l := OrbSCC(iter!.o)[m][1];
       fi;
       iter!.m := m;
       o := iter!.o;
@@ -1008,7 +1013,8 @@ function(s)
       rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
 
       # rectify the lambda value of <rep>
-      rep := rep * LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];
+      rep := rep * LambdaOrbMult(o, lookup[i],
+              Position(o, LambdaFunc(s)(rep)))[2];
 
       return [s, lookup[i], o, rep, false];
     end;

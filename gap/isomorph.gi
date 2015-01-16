@@ -28,7 +28,8 @@ else
     diagS, phi, diaglitsS, minS, permS, tbllitsS, stabS;
 
     LitNum := function(ln, n)
-      return [QuoInt(ln - 1,n ^ 2) + 1,QuoInt((ln - 1) mod n ^ 2,n) + 1,(ln - 1) mod n + 1];
+      return [QuoInt(ln - 1,n ^ 2) + 1,QuoInt((ln - 1) mod n ^ 2,n) + 1,(ln - 1)
+               mod n + 1];
     end;
 
     NumLit := function(lit,n)
