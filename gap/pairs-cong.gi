@@ -18,8 +18,8 @@ function(cong)
   elms := Elements(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
                  x -> [Position(elms, x[1]), Position(elms, x[2])] );
-  ht := HTCreate( pairs[1], rec(forflatplainlists := true,
-              treehashsize := s!.opts.hashlen.L ) );
+  ht := HTCreate( [elms[1],elms[1]], rec(forflatplainlists := true,
+              treehashsize := SemigroupsOptionsRec.hashlen.L ) );
   data := rec( cong := cong,
                lookup := [1 .. Size(s)],
                pairstoapply := pairs,
