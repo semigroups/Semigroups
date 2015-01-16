@@ -13,13 +13,19 @@
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, ht, treehashsize, data;
+  local s, elms, pairs, hashlen, ht, data, pairstoapply, pos, found;
   s := Range(cong);
   elms := Elements(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
                  x -> [Position(elms, x[1]), Position(elms, x[2])] );
+
+  if IsBound(s!.opts) then 
+    hashlen := s!.hashlen.L;
+  else 
+    hashlen := SemigroupsOptionsRec.hashlen.L;
+  fi;
   ht := HTCreate( [elms[1],elms[1]], rec(forflatplainlists := true,
-              treehashsize := SemigroupsOptionsRec.hashlen.L ) );
+              treehashsize := hashlen ) );
   data := rec( cong := cong,
                lookup := [1 .. Size(s)],
                pairstoapply := pairs,
