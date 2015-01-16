@@ -49,13 +49,13 @@ function(m, k, n)
   k - 1 ));
 end);
 
-InstallMethod(SubsetNumber, "for pos int, pos int, pos int, pos int, pos int",
-[IsPosInt, IsPosInt, IsPosInt, IsPosInt],
-function(m, k, n, coeff)
-  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
-end);
+# FIXME what's this even for??
 
-
+#InstallMethod(SubsetNumber, "for pos int, pos int, pos int, pos int, pos int",
+#[IsPosInt, IsPosInt, IsPosInt, IsPosInt],
+#function(m, k, n, coeff)
+#  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
+#end);
 
 # the position of <set> in the set of subsets of [ 1 .. <n> ] with shortlex
 # ordering
@@ -71,6 +71,33 @@ function(set, n)
     return 1;
   elif m = 1 then
     return set[1] + 1;
+  fi;
+
+  nr := 1;
+  summand := n;
+
+  # position in power set before the first set with the same size as set
+  for i in [1 .. m - 1] do
+    nr := nr + summand;
+    summand := summand * (n - i) / (i + 1);
+  od;
+
+  return nr + NumberSubsetOfEqualSize(set, n);
+end);
+
+#
+
+InstallMethod(NumberSubsetOfEqualSize, "for a set and a pos int",
+[IsList, IsPosInt],
+function(set, n)
+  local m, helper, nr, summand, i;
+
+  m := Length(set);
+
+  if m = 0 then
+    return 1;
+  elif m = 1 then
+    return set[1];
   fi;
 
   # the position before the first occurrence in the ordered list of <m>-subsets
@@ -92,16 +119,7 @@ function(set, n)
     return sum;
   end;
 
-  nr := 1;
-  summand := n;
-
-  # position in power set before the first set with the same size as set
-  for i in [1 .. m - 1] do
-    nr := nr + summand;
-    summand := summand * (n - i) / (i + 1);
-  od;
-
-  nr := nr + helper(n, m, set[1]);
+  nr := helper(n, m, set[1]);
   m := m - 1;
 
   for i in [ 2 .. Length(set) ] do
@@ -111,6 +129,8 @@ function(set, n)
 
   return nr + 1;
 end);
+
+#
 
 InstallMethod(PartialPermNumber, "for pos int and pos int",
 [IsPosInt, IsPosInt],
@@ -141,22 +161,32 @@ function(m, n)
   return PartialPermNC(SubsetNumber(j, i, n), ArrangementNumber(m, i, n));
 end);
 
+#
+
 InstallMethod(NumberPartialPerm, "for a partial perm and a pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
-  local dom, i;
+  local dom, k, nr, i;
 
   dom := DomainOfPartialPerm(x);
-  i := Length(dom);
+  k := Length(dom);
 
-  if i = 0 then
+  if k = 0 then
     return 1;
   fi;
 
-  return Sum(List([1 .. i], Binomial(n, i)))
-   + ((NumberSubset(dom, n) - 1) * NrArrangements([1 .. 10], i))
-   + NumberArrangement(ImageSetOfPartialPerm(x), n);
+  # count all partial perms with smaller image
+  nr := 1;
+  for i in [1 .. k - 1] do
+    nr := nr + Binomial(n, i) * NrArrangements([1 .. n], i);
+  od;
+
+  return nr + (NumberSubsetOfEqualSize(dom, n) - 1)
+   * NrArrangements([1 .. n], k)
+   + NumberArrangement(ImageListOfPartialPerm(x), n);
 end);
+
+#
 
 InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup],
 function(S)

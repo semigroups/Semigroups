@@ -753,8 +753,7 @@ function(r)
    convert_out, convert_in, [], record);
 end);
 
-#JDM use these for enumerator of symmetric inverse semigroup
-# using EnumeratorByEnumerator
+#
 
 InstallGlobalFunction(NumberArrangement,
 function(arr, n)
