@@ -25,6 +25,7 @@ gap> List(sets, x-> NumberSubset(x, 10)) = [ 1 .. 2 ^ 10 ];
 true
 
 #T# SemiPPerm2: Enumerator for a symmetric inverse monoid
+gap> S := SymmetricInverseMonoid(3);;
 gap> enum := Enumerator(S);
 <enumerator of symmetric inverse monoid on 3 pts>
 gap> ForAll([1..Length(enum)], x-> Position(enum, enum[x]) = x);
