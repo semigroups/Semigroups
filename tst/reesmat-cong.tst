@@ -111,7 +111,7 @@ gap> uni := UniversalSemigroupCongruence(s);
 gap> [x,z] in uni;
 true
 gap> EquivalenceClasses(uni);
-[ {(1,(),1)} ]
+[ {(1,(1,4,5),3)} ]
 gap> eq := EquivalenceClassOfElement(uni, y);
 {(6,(1,3,5),1)}
 gap> eq := EquivalenceClassOfElement(uni, y);;
