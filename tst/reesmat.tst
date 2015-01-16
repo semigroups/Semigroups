@@ -555,6 +555,20 @@ gap> Factorization(U[4], x);
 gap> EvaluateWord(Generators(U[4]), last);
 (26,(6,9),5)
 
+#T# ReesMatTest31: Issue 108: IsRegularSemigroup for a RZMS returned false
+#   negative
+gap> t1 := Transformation( [ 4, 3, 1, 3 ] );;
+gap> t2 := Transformation( [ 3, 3, 2, 2 ] );;
+gap> T := Semigroup([ t1, t2 ]);;
+gap> IsRegularSemigroup(T);
+true
+gap> IsGroup(T);
+false
+gap> mat := [ [ t2, t1 ], [ t1, t2 ] ];;
+gap> R := ReesZeroMatrixSemigroup(T, mat);;
+gap> IsRegularSemigroup(R); #TODO this takes 3 seconds, ugh! No good method for Generators 
+true
+
 #T# ReesMatTest31 JDM: the following lines are commented out until we have a deterministic
 # method for AutomorphismGroup of a ReesMatrixSemigroup...
 #
