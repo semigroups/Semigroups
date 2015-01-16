@@ -208,7 +208,7 @@ end);
 
 # same method for regular/inverse,
 
-# also this has really awful performance 
+# also this has really awful performance
 # TODO write an improved version for enumerator sorted
 
 InstallMethod(Enumerator, "for an acting semigroup",
