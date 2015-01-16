@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+#
+
+DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");
+
 InstallGlobalFunction(SEMIGROUPS_SubsetNumber,
 function(m, k, n, set, min, nr, coeff)
   local i;
@@ -35,13 +39,6 @@ function(m, k, n, set, min, nr, coeff)
    # coeff = Binomial( n - i - 1, k - 2 )
 end);
 
-# the first occurrence in the ordered list of <m>-subsets of [ 1 .. <n> ] of
-# set with first element equal to <k>.
-
-InstallGlobalFunction(SEMIGROUPS_NumberSubset,
-function(n, k, m)
-  return Sum( List( [ 1 .. k - 1 ], i -> Binomial( n - i, m - 1 ) ) );
-end);
 
 # the <m>th subset of <[1..n]> with <k> elements
 
@@ -58,28 +55,61 @@ function(m, k, n, coeff)
   return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
 end);
 
-# the position of <set> in the set of subsets of [ 1 .. <n> ]
+
+
+# the position of <set> in the set of subsets of [ 1 .. <n> ] with shortlex
+# ordering
 
 InstallMethod(NumberSubset, "for a set and a pos int",
 [IsList, IsPosInt],
 function(set, n)
-  local m, nr, pos, k, prev, i;
+  local m, helper, nr, summand, i;
 
-  nr := Sum( List( [ 0 .. Length(set) - 1 ], i -> Binomial( n, i ) ) );
-
-  k := n;
-  prev := 0;
   m := Length(set);
 
-  for i in [ 1 .. Length(set) ] do
-    pos := Position( [ prev + 1 .. n ], set[i]);
-    nr := nr + SEMIGROUPS_NumberSubset( k, pos, m );
-    k := k - set[i];
-    prev := set[i];
+  if m = 0 then
+    return 1;
+  elif m = 1 then 
+    return set[1] + 1; 
+  fi;
+
+  # the position before the first occurrence in the ordered list of <m>-subsets
+  # of [ 1 .. <n> ] of set with first element equal to <k>.
+  
+  helper := function(n, m, k)
+    local summand, sum;
+    if k = 1 then 
+      return 0;
+    elif m = 1 then 
+      return k - 1;
+    fi;
+    summand := Binomial(n - 1, m - 1);
+    sum := summand;
+    for i in [1 .. k - 2] do 
+      summand := summand * (n - m - i + 1) / (n - i);
+      sum := sum + summand;
+    od;
+    return sum;
+  end;
+
+  nr := 1;
+  summand := n;
+
+  # position in power set before the first set with the same size as set
+  for i in [1 .. m - 1] do 
+    nr := nr + summand;
+    summand := summand * (n - i) / (i + 1);
+  od;
+   
+  nr := nr + helper(n, m, set[1]);
+  m := m - 1; 
+
+  for i in [ 2 .. Length(set) ] do
+    nr := nr + helper(n - set[i - 1], m, set[i] - set[i - 1]);
     m := m - 1;
   od;
 
-  return nr;
+  return nr + 1;
 end);
 
 InstallMethod(PartialPermNumber, "for pos int and pos int",

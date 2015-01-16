@@ -27,5 +27,3 @@ DeclareOperation("SubsetNumber", [IsPosInt, IsPosInt, IsPosInt, IsPosInt]);
 DeclareOperation("NumberSubset", [IsList, IsPosInt]);
 
 DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");
-DeclareGlobalFunction("SEMIGROUPS_NumberSubset");
-
