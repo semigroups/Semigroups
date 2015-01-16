@@ -69,23 +69,23 @@ function(set, n)
 
   if m = 0 then
     return 1;
-  elif m = 1 then 
-    return set[1] + 1; 
+  elif m = 1 then
+    return set[1] + 1;
   fi;
 
   # the position before the first occurrence in the ordered list of <m>-subsets
   # of [ 1 .. <n> ] of set with first element equal to <k>.
-  
+
   helper := function(n, m, k)
     local summand, sum;
-    if k = 1 then 
+    if k = 1 then
       return 0;
-    elif m = 1 then 
+    elif m = 1 then
       return k - 1;
     fi;
     summand := Binomial(n - 1, m - 1);
     sum := summand;
-    for i in [1 .. k - 2] do 
+    for i in [1 .. k - 2] do
       summand := summand * (n - m - i + 1) / (n - i);
       sum := sum + summand;
     od;
@@ -96,13 +96,13 @@ function(set, n)
   summand := n;
 
   # position in power set before the first set with the same size as set
-  for i in [1 .. m - 1] do 
+  for i in [1 .. m - 1] do
     nr := nr + summand;
     summand := summand * (n - i) / (i + 1);
   od;
-   
+
   nr := nr + helper(n, m, set[1]);
-  m := m - 1; 
+  m := m - 1;
 
   for i in [ 2 .. Length(set) ] do
     nr := nr + helper(n - set[i - 1], m, set[i] - set[i - 1]);
