@@ -1,14 +1,53 @@
 #############################################################################
 ##
 #W  semipperm.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-#
+InstallMethod(Enumerator, "for a symmetric inverse monoid",
+[IsSymmetricInverseMonoid],
+Maximum(RankFilter(IsActingSemigroup), RankFilter(IsSemigroupIdeal and
+HasGeneratorsOfSemigroupIdeal)) + 1,
+#to beat the method for an acting semigroup with generators
+function(S)
+  local n, Membership, PrintObj;
+
+  n := DegreeOfPartialPermSemigroup(S);
+
+  return EnumeratorByFunctions(S, rec(
+
+    ElementNumber := function(enum, pos)
+      if pos > Size(S) then
+        return fail;
+      fi;
+      return PartialPermNumber(pos, n);
+    end,
+
+    NumberElement := function(enum, elt)
+      if DegreeOfPartialPerm(elt) > n or CoDegreeOfPartialPerm(elt) > n then
+        return fail;
+      fi;
+      return NumberPartialPerm(elt, n);
+    end,
+
+    Length := function(enum);
+      return Size(S);
+    end,
+
+    Membership := function(elt, enum)
+      return elt in S;
+    end,
+
+    PrintObj := function(enum)
+      Print("<enumerator of symmetric inverse monoid on ", n," pts>");
+    end));
+end);
+
+# TODO improve this
 
 DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");
 
@@ -41,6 +80,7 @@ end);
 
 
 # the <m>th subset of <[1..n]> with <k> elements
+# TODO improve this
 
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
@@ -48,14 +88,6 @@ function(m, k, n)
   return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial( n - 1,
   k - 1 ));
 end);
-
-# FIXME what's this even for??
-
-#InstallMethod(SubsetNumber, "for pos int, pos int, pos int, pos int, pos int",
-#[IsPosInt, IsPosInt, IsPosInt, IsPosInt],
-#function(m, k, n, coeff)
-#  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
-#end);
 
 # the position of <set> in the set of subsets of [ 1 .. <n> ] with shortlex
 # ordering
