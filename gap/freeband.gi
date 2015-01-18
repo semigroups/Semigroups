@@ -46,6 +46,8 @@ function(elem)
   return out;
 end);
 
+InstallMethod(IsFreeBand,"return false if not known",[IsSemigroup],ReturnFalse);
+
 InstallGlobalFunction(FreeBand,
 function(arg)
   local names, F, type, gens, S, m, ngens;

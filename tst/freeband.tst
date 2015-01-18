@@ -61,11 +61,82 @@ x2x1
 gap> NextIterator(iter);
 x1x2x1
 
+#T# FreeBand: size
+gap> Size(FreeBand(1));
+1
+gap> Size(FreeBand(2));
+6
+gap> Size(FreeBand(3));
+159
+gap> Size(FreeBand(4));
+332380
+gap> Size(FreeBand(7));
+3641839910835401567626683593436003894250931310990279691
+
+#T# FreeBand: /<
+gap> S := FreeBand(3);
+<free band on the generators [ x1, x2, x3 ]>
+gap> x*y < y;
+false
+gap> x := Generators(S)[1];
+x1
+gap> y := Generators(S)[2];
+x2
+gap> z := Generators(S)[3];
+x3
+gap> x < y;
+true
+gap> y < z;
+true
+gap> x*y < z;
+true
+gap> x*y < y;
+false
+gap> z < x*y*x*y*x;
+false
+
+#T# FreeBand: full iterator
+S := FreeBand(3);
+<free band on the generators [ x1, x2, x3 ]>
+gap> list := [];;
+gap> iter := Iterator(S);;
+gap> next := NextIterator(iter);;
+gap> while next <> fail do
+> Add(list, next);
+> next := NextIterator(iter);
+> od;
+gap> Size(list);
+159
+gap> IsDuplicateFree(list);
+true
+
+#T# FreeBand: equality
+gap> S := FreeBand(3);
+<free band on the generators [ x1, x2, x3 ]>
+gap> x := Generators(S)[1];
+x1
+gap> y := Generators(S)[2];
+x2
+gap> z := Generators(S)[3];
+x3
+gap> x * y = z;
+false
+gap> x * y * y = z;
+false
+gap> x * x = x;
+true
+gap> x*y*x*y*z*x*y*z = x*y*z;
+true
+
 # FreeBand: IsFreeBand
 gap> IsFreeBand(FreeBand(4));
 true
 gap> IsFreeBand(FreeBand(4, "b"));
 true
+gap> IsFreeBand(SymmetricGroup(6));
+false
+gap> IsFreeBand(FullTransformationMonoid(7));
+false
 
 # FreeBand: Subsemigroup
 gap> iter := Iterator(FreeBand(4, "b"));

@@ -133,6 +133,9 @@ x1x2x2^-1x1^-1x1x2]]></Example>
   See Section 4.5 of <Cite Key = "howie" /> for more information on free bands.
   
   <#Include Label = "FreeBand">
+  <#Include Label = "IsFreeBand">
+  <#Include Label = "IsFreeBandElement">
+  <#Include Label = "IsFreeBandSubsemigroup">
   <#Include Label = "GreensDClassOfElement" > 
 </Section>
 </Chapter>
