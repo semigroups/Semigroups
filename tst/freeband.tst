@@ -6,7 +6,6 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-
 gap> START_TEST("Semigroups package: freeband.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -23,8 +22,6 @@ gap> Size(Elements(S));
 gap> S :=FreeBand(4);
 <free band on the generators [ x1, x2, x3, x4 ]>
 gap> Size(S);
-332380
-gap> Size(Elements(S));
 332380
 
 #T# FreeBand: D-class iterator
@@ -76,8 +73,6 @@ gap> Size(FreeBand(7));
 #T# FreeBand: /<
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
-gap> x*y < y;
-false
 gap> x := Generators(S)[1];
 x1
 gap> y := Generators(S)[2];
@@ -96,8 +91,7 @@ gap> z < x*y*x*y*x;
 false
 
 #T# FreeBand: full iterator
-S := FreeBand(3);
-<free band on the generators [ x1, x2, x3 ]>
+gap> S := FreeBand(3);;
 gap> list := [];;
 gap> iter := Iterator(S);;
 gap> next := NextIterator(iter);;
@@ -149,20 +143,6 @@ gap> IsFreeBandSubsemigroup(T);
 true
 gap> Size(T);
 5
-
-# FreeBand: Subsemigroup
-gap> iter := Iterator(FreeBand(4, "b"));
-<iterator>
-gap> x := NextIterator(iter);
-b1
-gap> for i in [1..10000] do NextIterator(iter); od;
-gap> y := NextIterator(iter);
-b3b4b1b3b4b3b2b1b4b2b4b3b2b3b4
-gap> T := Semigroup(x, y);
-<semigroup with 2 generators>
-gap> IsFreeBandSubsemigroup(T);
-true
-gap> Size(T);
 
 #E#
 gap> STOP_TEST("Semigroups package: freeband.tst");
