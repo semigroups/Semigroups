@@ -138,6 +138,18 @@ false
 gap> IsFreeBand(FullTransformationMonoid(7));
 false
 
+#T# FreeBand: \*
+gap> iter := Iterator(FreeBand(4, "b"));;
+gap> x := NextIterator(iter);;
+gap> for i in [1..10000] do NextIterator(iter); od;
+gap> y := NextIterator(iter);
+b3b4b1b3b4b3b2b1b4b2b4b3b2b3b4
+gap> T := Semigroup(x, y);;
+gap> IsFreeBandSubsemigroup(T);
+true
+gap> Size(T);
+5
+
 # FreeBand: Subsemigroup
 gap> iter := Iterator(FreeBand(4, "b"));
 <iterator>

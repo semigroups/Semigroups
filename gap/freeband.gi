@@ -401,7 +401,6 @@ function(x, y)
   local type, out, diff, new_first, new_prefix, new_last, new_sufix, copy;
 
   type := TypeObj(x);
-
   # if the content of two elements is the same we only need the prefix of the
   # first and the sufix of the second one
   # cont = blist
@@ -412,7 +411,7 @@ function(x, y)
     # new_first is the last letter to occur first in the product
     new_first := y!.tuple[1];
     new_prefix := y!.tuple[2];
-    repeat
+    while true do 
       if diff[new_first] and new_prefix = 0 then
 	copy := ShallowCopy(x); # are shallow copies necessary?
         out := [new_first, copy];
@@ -425,7 +424,7 @@ function(x, y)
         new_first := new_prefix!.tuple[1];
         new_prefix := new_prefix!.tuple[2];
       fi;
-    until IsBound(out[1]);
+    od;
   fi;
 
   if IsSubsetBlist(y!.cont, x!.cont) then
