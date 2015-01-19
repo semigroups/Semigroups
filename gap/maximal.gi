@@ -201,7 +201,7 @@ else
     # Check that matrix is regular (i.e. no zero-rows or zero-columns)
     if not IsRegularSemigroup(R) then
       Error("Semigroups: MaximalSubsemigroups,\n",
-      "not yet implemented for a non-regular Rees 0-matrix semigroup,");
+      "the first argument <R> must be a regular Rees 0-matrix semigroup,");
       return;
     fi;
 
@@ -363,8 +363,7 @@ else
     # Check that matrix is regular
     # If the underlying semigroup is a group, this means: no zero rows or cols
     if not IsRegularSemigroup(R) then
-      Error("Semigroups: MaximalSubsemigroups,\n",
-      "not yet implemented for a non-regular Rees 0-matrix semigroup,");
+      TryNextMethod();
       return;
     fi;
 

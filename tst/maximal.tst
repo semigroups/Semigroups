@@ -408,7 +408,7 @@ gap> IsRegularSemigroup(R4);
 false
 gap> MaximalSubsemigroups(R4, Group(()));
 Error, Semigroups: MaximalSubsemigroups,
-not yet implemented for a non-regular Rees 0-matrix semigroup,
+the first argument <R> must be a regular Rees 0-matrix semigroup,
 
 #T# MaximalSubsemigroups: for a transformation semigroup
 gap> S := Semigroup( Transformation( [  ] ) ); # trivial semigroup
