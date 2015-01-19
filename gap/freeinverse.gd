@@ -17,6 +17,7 @@ DeclareUserPreference(rec(
 
 DeclareCategory("IsFreeInverseSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeInverseSemigroupElement");
+DeclareCategory("IsFreeInverseSemigroupCategory", IsSemigroup);
 DeclareProperty("IsFreeInverseSemigroup", IsSemigroup);
 DeclareGlobalFunction("FreeInverseSemigroup");
 DeclareAttribute("MinimalWord", IsFreeInverseSemigroupElement);

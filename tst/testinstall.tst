@@ -816,5 +816,27 @@ true
 gap> IsReesZeroMatrixSemigroup(R2);
 false
 
+#T# TestInstall54: FreeBand
+gap> s := FreeBand("a", "b", "c", "d", "e");
+<free band on the generators [ a, b, c, d, e ]>
+gap> iter := Iterator(s);
+<iterator>
+gap> for i in [1 .. 100] do
+> NextIterator(iter);
+> od;
+gap> x := NextIterator(iter);
+bcabaca
+gap> for i in [1 .. 10] do
+> NextIterator(iter);
+> od;
+gap> y := NextIterator(iter);
+cbcacbab
+gap> x*y;
+bcacbab
+gap> x^2;
+bcabaca
+gap> y^2;
+cbcacbab
+
 #E#
 gap> STOP_TEST( "Semigroups package: testinstall.tst");
