@@ -11,29 +11,29 @@
 
 #
 
-BindGlobal("SemigroupsDocXMLFiles", [ "../PackageInfo.g"
-                                      "attributes-inverse.xml"
-                                      "attributes.xml"
-                                      "bipartition.xml"
-                                      "blocks.xml"
-                                      "display.xml"
-                                      "examples.xml"
-                                      "factor.xml"
-                                      "freeband.xml"
-                                      "freeinverse.xml"
-                                      "greens.xml"
-                                      "ideals.xml"
-                                      "isomorph.xml"
-                                      "maximal.xml"
-                                      "normalizer.xml"
-                                      "orbits.xml"
-                                      "properties.xml"
-                                      "reesmat-cong.xml"
-                                      "semibipart.xml"
-                                      "semigroups.xml"
-                                      "semipperm.xml"
-                                      "semitrans.xml"
-                                      "utils.xml"               ]);
+BindGlobal("SemigroupsDocXMLFiles", [ "../PackageInfo.g",
+                                      "attributes-inverse.xml",
+                                      "attributes.xml",
+                                      "bipartition.xml",
+                                      "blocks.xml",
+                                      "display.xml",
+                                      "examples.xml",
+                                      "factor.xml",
+                                      "freeband.xml",
+                                      "freeinverse.xml",
+                                      "greens.xml",
+                                      "ideals.xml",
+                                      "isomorph.xml",
+                                      "maximal.xml",
+                                      "normalizer.xml",
+                                      "orbits.xml",
+                                      "properties.xml",
+                                      "reesmat-cong.xml",
+                                      "semibipart.xml",
+                                      "semigroups.xml",
+                                      "semipperm.xml",
+                                      "semitrans.xml",
+                                      "utils.xml"                 ]);
 
 # arg is the number of threads, defaults to 2...
 
