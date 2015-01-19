@@ -73,7 +73,7 @@ ab]]></Example>
     Label="for a given semigroup"/>
     <Returns> True or False </Returns>
     <Description>
-    <C>IsFreeBand</C> returns <C>True</C> if the given semigroup <A>S</A> was
+    <C>IsFreeBand</C> returns <K>true</K> if the given semigroup <A>S</A> was
     created as a free band.
 <Example><![CDATA[
 gap> IsFreeBand(FreeBand(3));
@@ -89,8 +89,7 @@ false
 
 <#GAPDoc Label="IsFreeBandElement" >
 <ManSection>
-    <Filt Name = "IsFreeBandElement"
-    Type = "Category"/>
+    <Filt Name = "IsFreeBandElement" Type = "Category"/>
     <Description>
     <C>IsFreeBandElement</C> is a <C>Category</C> containing the
     elements of a free band.  
@@ -111,8 +110,8 @@ false
 <ManSection>
     <Filt Name = "IsFreeBandSubsemigroup"/>
     <Description>
-    <C>IsFreeBandSubsemigroup</C> is a <C>Filter</C> which return <C>True</C>
-    if a given object is a semigroup consisting of free band elements.
+      <C>IsFreeBandSubsemigroup</C> is a synonym for <C>IsSemigroup</C> and
+      <C>IsFreeBandElementCollection</C>.
 <Example><![CDATA[
 gap> S := FreeBand(2);
 <free band on the generators [ x1, x2 ]>

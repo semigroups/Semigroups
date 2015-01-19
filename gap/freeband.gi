@@ -46,7 +46,7 @@ function(elem)
   return out;
 end);
 
-InstallMethod(IsFreeBand,"return false if not known",[IsSemigroup],ReturnFalse);
+InstallMethod(IsFreeBand, "for a semigroup", [IsSemigroup], ReturnFalse);
 
 InstallGlobalFunction(FreeBand,
 function(arg)
@@ -250,7 +250,6 @@ InstallMethod(Iterator, "for a free band",
 function(s)
   local NextIterator_FreeBand, ShallowCopyLocal, record ;
 
-
   NextIterator_FreeBand := function(iter)
     local next_dclass_value, content, i, rep, dclass;
 
@@ -411,7 +410,7 @@ function(x, y)
     # new_first is the last letter to occur first in the product
     new_first := y!.tuple[1];
     new_prefix := y!.tuple[2];
-    while true do 
+    while true do
       if diff[new_first] and new_prefix = 0 then
 	copy := ShallowCopy(x); # are shallow copies necessary?
         out := [new_first, copy];
