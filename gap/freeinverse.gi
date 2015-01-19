@@ -539,26 +539,26 @@ function(s)
 
   if not IsInverseSemigroup(s) then
     return false;
-  fi;
-
-  gens := Generators(s);
-  occurs := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
-  used := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
-  for g in gens do
-    list := g![5];
-    for i in [ 2 .. Length(list)] do
-      used[Int((list[i] + 1) / 2)] := true;
+  elif IsFreeInverseSemigroupElementCollection(s) then
+    gens := Generators(s);
+    occurs := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+    used := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+    for g in gens do
+      list := g![5];
+      for i in [ 2 .. Length(list)] do
+        used[Int((list[i] + 1) / 2)] := true;
+      od;
+      if g![2] = 2 then
+        occurs[Int((g![5][2] + 1) / 2)] := true;
+      fi;
     od;
-    if g![2] = 2 then
-      occurs[Int((g![5][2] + 1) / 2)] := true;
-    fi;
-  od;
 
-  if occurs = used then
-    return true;
-  else
-    Error("Semigroups: IsFreeInverseSemigroup:\n",
-          "can not determine the answer");
-    return;
+    if occurs = used then
+      return true;
+    fi;
   fi;
+
+  Error("Semigroups: IsFreeInverseSemigroup:\n",
+        "can not determine the answer");
+  return;
 end);
