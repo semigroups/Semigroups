@@ -21,7 +21,7 @@
 <Example><![CDATA[
 gap> S := FreeBand(3, "b");
 <free band on the generators [ b1, b2, b3 ]>
-gap> x := S.1 * S.2;
+gap> x := Generators(S)[1] * Generators(S)[2];
 b1b2
 gap> D := GreensDClassOfElement(S, x);
 {b1b2}
