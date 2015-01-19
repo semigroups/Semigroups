@@ -11,7 +11,6 @@
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareCategory("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
-DeclareAttribute("SizeOfSemigroupData", IsSemigroupData);
 
 DeclareOperation("Enumerate", [IsSemigroupData]);
 DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);
@@ -20,7 +19,10 @@ DeclareOperation("OrbitGraphAsSets", [IsSemigroupData]);
 DeclareOperation("OrbitGraph", [IsSemigroupData]);
 DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
+# these must be here since UniversalFakeOne is used in lots of other places
+
 DeclareCategory("IsUniversalFakeOne", IsAssociativeElement);
+
 BindGlobal("UniversalFakeOneFamily",
   NewFamily("UniversalFakeOneFamily", IsUniversalFakeOne,
    CanEasilyCompareElements, CanEasilyCompareElements));

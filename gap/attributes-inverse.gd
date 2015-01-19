@@ -30,6 +30,8 @@ DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
 DeclareAttribute("SameMinorantsSubgroup",
   IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass);
 
+DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
+
 DeclareOperation("RightCosetsOfInverseSemigroup",
   [IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp]);
 DeclareAttribute("SmallerDegreePartialPermRepresentation",

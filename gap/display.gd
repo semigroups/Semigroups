@@ -16,11 +16,5 @@ DeclareOperation("DotDClasses", [IsReesZeroMatrixSemigroup, IsRecord]);
 
 DeclareGlobalFunction("TikzBipartition");
 DeclareGlobalFunction("TikzBlocks");
-
 DeclareGlobalFunction("TikzStringForBlocks");
 DeclareGlobalFunction("TikzStringForBipartition");
-DeclareGlobalFunction("TikzBipartitionRight");
-DeclareGlobalFunction("TikzBipartitionLeft");
-DeclareGlobalFunction("TikzBipartitionLeftRight");
-DeclareGlobalFunction("TikzRightBlocks");
-DeclareGlobalFunction("TikzLeftBlocks");

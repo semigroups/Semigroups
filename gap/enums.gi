@@ -15,7 +15,7 @@
 # should return <fail>, <convert_out> should have two arguments <enum> and <nr>
 # where <nr> refers to the position in <baseenum>.
 
-InstallGlobalFunction(EnumeratorByEnumerator,
+BindGlobal("EnumeratorByEnumerator",
 function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
 
@@ -101,7 +101,7 @@ end);
 
 #
 
-InstallGlobalFunction(EnumeratorByEnumOfEnums,
+BindGlobal("EnumeratorByEnumOfEnums",
 function(obj, record, baseenum, convert, filts)
   local enum, filt;
 

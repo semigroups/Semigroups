@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+# local declarations . . .
+
+
 # acting semigroups...
 
 # same method for ideals
@@ -722,16 +725,23 @@ function( data )
   if not(data!.looking) then
     Error("Semigroups: PositionOfFound: usage,\n",
           "not looking for anything,");
-    return fail;
+    return;
   fi;
   return data!.found;
 end);
 
 # same method for ideals
 
-InstallMethod(SizeOfSemigroupData, "for semigroup data", [IsSemigroupData],
+BindGlobal("SizeOfSemigroupData",
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
+
+  if not IsSemigroupData(data) then
+    Error("Semigroups: SizeOfSemigroupData: usage,\n",
+          "the arg <data> must be semigroup data,");
+    return;
+  fi;
+
 
   if not data!.init then
     return 0;
