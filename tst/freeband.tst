@@ -133,6 +133,20 @@ gap> IsFreeBand(FullTransformationMonoid(7));
 false
 
 #T# FreeBand: \*
+gap> s := FreeBand(7);;
+gap> gens := Generators(s);;
+gap> Product(List([1, 7], x -> gens[x]));
+x1x7
+gap> Product(List([1, 2, 3, 4, 3, 2, 1], x -> gens[x]));
+x1x2x3x4x3x2x1
+gap> Product(List([1, 5, 5, 6, 7, 2, 3, 2, 3], x -> gens[x]));
+x1x5x6x7x2x3
+gap> Product(List([1, 1, 1, 1, 2, 1, 1, 2], x -> gens[x]));
+x1x2
+gap> Product(List([5, 2, 4, 5, 1,7, 7, 6, 2, 1], x -> gens[x]));
+x5x2x4x2x4x5x1x2x4x5x1x7x2x4x5x1x7x6x4x5x1x7x6x2x5x1x7x6x2x7x6x2x1
+
+#T# FreeBand: Issue #112
 gap> iter := Iterator(FreeBand(4, "b"));;
 gap> x := NextIterator(iter);;
 gap> for i in [1..10000] do NextIterator(iter); od;
@@ -143,6 +157,28 @@ gap> IsFreeBandSubsemigroup(T);
 true
 gap> Size(T);
 5
+
+#T# FreeBand: hash tables
+gap> s := FreeBand(3);;
+gap> x := Generators(s)[1];;
+gap> y := Generators(s)[2];;
+gap> iter := Iterator(s);;
+gap> ht := HTCreate(x);
+<tree hash table len=100003 used=0 colls=0 accs=0>
+gap> for i in [1 .. 10] do
+> HTAdd(ht, NextIterator(iter), true);
+> od;
+gap> new := NextIterator(iter);
+x1x3x1
+gap> HTValue(ht, new);
+fail
+gap> HTAdd(ht, new, true);
+33159
+gap> while not IsDoneIterator(iter) do
+> HTAdd(ht, NextIterator(iter), true);
+> od;
+gap> ht;
+<tree hash table len=100003 used=159 colls=1 accs=160>
 
 #E#
 gap> STOP_TEST("Semigroups package: freeband.tst");
