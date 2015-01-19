@@ -53,5 +53,13 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
+#T# FreeInverseSemigroup: IsFreeInverseSemigroup
+gap> gens := Generators(FreeInverseSemigroup(2));
+[ x1, x2 ]
+gap> IsFreeInverseSemigroup(InverseSemigroup(gens));
+true
+gap> IsFreeInverseSemigroup(InverseSemigroup(gens{[1,2]}));
+true
+
 #E#
 gap> STOP_TEST("Semigroups package: freeinverse.tst");

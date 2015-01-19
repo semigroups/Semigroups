@@ -46,8 +46,6 @@ function(elem)
   return out;
 end);
 
-InstallMethod(IsFreeBand, "for a semigroup", [IsSemigroup], ReturnFalse);
-
 InstallGlobalFunction(FreeBand,
 function(arg)
   local names, F, type, gens, S, m, ngens;
@@ -90,9 +88,12 @@ function(arg)
   od;
 
   StoreInfoFreeMagma( F, names, IsFreeBandElement );
-  S := Semigroup(gens);
-  SetIsFreeBand(S, true);
 
+  S := Objectify( NewType( FamilyObj( gens ),
+                          IsFreeBandCategory and IsSemigroup and IsAttributeStoringRep ),
+                   rec() );
+  SetGeneratorsOfMagma( S, gens );
+  SetIsFreeBand(S, true);
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
 
@@ -101,6 +102,11 @@ function(arg)
   return S;
 end);
 
+InstallMethod(IsFreeBand, "for a semigroup",
+[IsSemigroup],
+function(s) 
+  return false;
+end);
 
 InstallMethod(Iterator, "for a Greens D-class of a free band",
 [IsFreeBandElementCollection and IsGreensDClass],
@@ -246,7 +252,7 @@ end);
 # A free band iteratror has component: content, dclass_iter.
 
 InstallMethod(Iterator, "for a free band",
-[IsFreeBand],
+[IsFreeBandCategory],
 function(s)
   local NextIterator_FreeBand, ShallowCopyLocal, record ;
 
@@ -302,7 +308,7 @@ end);
 #
 
 InstallMethod(GreensDClassOfElement, "for a free band an element",
-[IsFreeBand, IsFreeBandElement],
+[IsFreeBandCategory, IsFreeBandElement],
 function(s, x)
   local type, d;
 
@@ -334,7 +340,7 @@ end);
 
 InstallMethod(ViewObj,
 "for a free band",
-[IsFreeBand],
+[IsFreeBandCategory],
 function( S )
   if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
        Print( "<free band with ", Length( GeneratorsOfSemigroup( S ) ),
@@ -457,7 +463,7 @@ end);
 #
 
 InstallMethod(Size, "for a free band",
-[IsFreeBand and IsFinite and HasGeneratorsOfSemigroup],
+[IsFreeBandCategory and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local c, output, k, i, n;
 

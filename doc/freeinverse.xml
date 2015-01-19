@@ -41,16 +41,28 @@ b]]></Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsFreeInverseSemigroup">
+<#GAPDoc Label="IsFreeInverseSemigroupCategory">
   <ManSection>
-    <Filt Name='IsFreeInverseSemigroup' Arg='obj' Type='Category'/>
+    <Filt Name='IsFreeInverseSemigroupCategory' Arg='obj' Type='Category'/>
     <Description>
-      Every free inverse semigroup in &GAP; belongs to the category 
+      Every free inverse semigroup in &GAP; created by <Ref Oper =
+      "FreeInverseSemigroup" BookName = "ref"/> belongs to the category
       <C>IsFreeInverseSemigroup</C>. Basic operations for a free inverse
       semigroup are: <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>
       and <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>. Elements of a
-      free inverse semigroup belong to the category 
-      <Ref Filt="IsFreeInverseSemigroupElement"/>.
+      free inverse semigroup belong to the category <Ref
+      Filt="IsFreeInverseSemigroupElement"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFreeInverseSemigroup">
+  <ManSection>
+    <Prop Name='IsFreeInverseSemigroup' Arg='S' />
+    <Returns> <K>true</K> or <K>false</K> </Returns>
+    <Description>
+      Attempts to determine whether the given semigroup <A> S </A> is a free
+      inverse semigroup.
     </Description>
   </ManSection>
 <#/GAPDoc>

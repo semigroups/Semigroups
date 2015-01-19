@@ -53,6 +53,7 @@
   See <Ref Oper = "CanonicalForm" Label = "for a free inverse semigroup element"/>.
  
   <#Include Label = "FreeInverseSemigroup">
+  <#Include Label = "IsFreeInverseSemigroupCategory">
   <#Include Label = "IsFreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroupElement">
 </Section>
