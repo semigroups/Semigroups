@@ -110,8 +110,10 @@ gap> uni := UniversalSemigroupCongruence(s);
   Group([ (1,4,5), (1,5,3,4) ])>>
 gap> [x,z] in uni;
 true
-gap> EquivalenceClasses(uni);
-[ {(1,(1,4,5),3)} ]
+gap> Length(EquivalenceClasses(uni)) = 1 
+> and (Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(1,4,5),3)
+> or Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(),1)); # the first is after 4.7.7 the latter before
+true
 gap> eq := EquivalenceClassOfElement(uni, y);
 {(6,(1,3,5),1)}
 gap> eq := EquivalenceClassOfElement(uni, y);;
