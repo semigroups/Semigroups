@@ -46,7 +46,7 @@ function(elem)
   return out;
 end);
 
-InstallMethod(IsFreeBand,"return false if not known",[IsSemigroup],ReturnFalse);
+InstallMethod(IsFreeBand, "for a semigroup", [IsSemigroup], ReturnFalse);
 
 InstallGlobalFunction(FreeBand,
 function(arg)
@@ -249,7 +249,6 @@ InstallMethod(Iterator, "for a free band",
 [IsFreeBand],
 function(s)
   local NextIterator_FreeBand, ShallowCopyLocal, record ;
-
 
   NextIterator_FreeBand := function(iter)
     local next_dclass_value, content, i, rep, dclass;
