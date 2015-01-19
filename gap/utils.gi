@@ -11,13 +11,29 @@
 
 #
 
-BindGlobal("SemigroupsDocXMLFiles",
-  ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
-   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
-   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml",
-   "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml",
-   "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
-   "freeband.xml", "../PackageInfo.g"]);
+BindGlobal("SemigroupsDocXMLFiles", [ "../PackageInfo.g"
+                                      "attributes-inverse.xml"
+                                      "attributes.xml"
+                                      "bipartition.xml"
+                                      "blocks.xml"
+                                      "display.xml"
+                                      "examples.xml"
+                                      "factor.xml"
+                                      "freeband.xml"
+                                      "freeinverse.xml"
+                                      "greens.xml"
+                                      "ideals.xml"
+                                      "isomorph.xml"
+                                      "maximal.xml"
+                                      "normalizer.xml"
+                                      "orbits.xml"
+                                      "properties.xml"
+                                      "reesmat-cong.xml"
+                                      "semibipart.xml"
+                                      "semigroups.xml"
+                                      "semipperm.xml"
+                                      "semitrans.xml"
+                                      "utils.xml"               ]);
 
 # arg is the number of threads, defaults to 2...
 
