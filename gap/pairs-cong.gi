@@ -20,7 +20,7 @@ function(cong)
                  x -> [Position(elms, x[1]), Position(elms, x[2])] );
 
   if IsBound(s!.opts) then
-    hashlen := s!.hashlen.L;
+    hashlen := s!.opts.hashlen.L;
   else
     hashlen := SemigroupsOptionsRec.hashlen.L;
   fi;
