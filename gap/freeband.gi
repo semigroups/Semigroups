@@ -410,7 +410,7 @@ function(x, y)
     # new_first is the last letter to occur first in the product
     new_first := y!.tuple[1];
     new_prefix := y!.tuple[2];
-    while true do 
+    while true do
       if diff[new_first] and new_prefix = 0 then
 	copy := ShallowCopy(x); # are shallow copies necessary?
         out := [new_first, copy];
