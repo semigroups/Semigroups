@@ -83,14 +83,15 @@ function(arg)
                                    tuple := [m, 0, m, 0],
                                    cont := BlistList([1 .. ngens], [m]),
                                    word := [m]
-                                  )
-                        );
+                                   )
+                         );
   od;
 
   StoreInfoFreeMagma( F, names, IsFreeBandElement );
 
   S := Objectify( NewType( FamilyObj( gens ),
-                          IsFreeBandCategory and IsSemigroup and IsAttributeStoringRep ),
+                          IsFreeBandCategory and IsSemigroup and
+			  IsAttributeStoringRep ),
                    rec() );
   SetGeneratorsOfMagma( S, gens );
   SetIsFreeBand(S, true);
@@ -99,13 +100,39 @@ function(arg)
 
   SetIsWholeFamily( S, true);
 
-  return S;
+   return S;
 end);
 
 InstallMethod(IsFreeBand, "for a semigroup",
 [IsSemigroup],
-function(s) 
-  return false;
+function(s)
+  local used, occured, gens, max_d, g;
+
+  if not IsBand(s) then
+    return false;
+  fi;
+
+  if IsFreeBandSubsemigroup(s) then
+    gens := Generators(s);
+    used := BlistList([1 .. Length(gens[1]!.cont)], []);
+    occured := BlistList([1 .. Length(gens[1]!.cont)], []);
+    for g in gens do
+      used := IntersectionBlist(used, g!.cont);
+      if g!.tuple[2] = 0 then
+	occured[g!.tuple[1]] := true;
+      fi;
+    od;
+    if used = occured then
+      return true;
+    fi;
+  fi;
+
+  if not IsActingSemigroup(s) then
+    s := AsTransformationSemigroup(s);
+  fi;
+
+  max_d := MaximalDClasses(s);
+  return Size(s) = Size(FreeBand(Length(max_d)));
 end);
 
 InstallMethod(Iterator, "for a Greens D-class of a free band",

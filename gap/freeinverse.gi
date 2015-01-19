@@ -535,23 +535,22 @@ InstallMethod(Size,
 InstallMethod(IsFreeInverseSemigroup, "for a semigroup",
 [IsSemigroup],
 function(s)
-  local gens, gens_names, occurs, used, list, g, i;
+  local gens, occurs, used, list, g, i;
 
-  if not IsInverseSemigroup(s) then 
+  if not IsInverseSemigroup(s) then
     return false;
   fi;
 
   gens := Generators(s);
-  gens_names := FamilyObj(gens[1])!.names;
-  occurs := BlistList([1 .. Length(gens_names) / 2], []);
-  used := BlistList([1 .. Length(gens_names) / 2], []);
-  for g in gens do 
+  occurs := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+  used := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+  for g in gens do
     list := g![5];
     for i in [ 2 .. Length(list)] do
-      used[Int((list[i] + 1)/2)] := true;
+      used[Int((list[i] + 1) / 2)] := true;
     od;
     if g![2] = 2 then
-      occurs[Int((g![5][2] + 1)/2)] := true;
+      occurs[Int((g![5][2] + 1) / 2)] := true;
     fi;
   od;
 
@@ -562,4 +561,4 @@ function(s)
           "can not determine the answer");
     return;
   fi;
-end); 
+end);

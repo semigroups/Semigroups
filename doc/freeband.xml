@@ -67,14 +67,30 @@ ab]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsFreeBandCategory" >
+<ManSection>
+    <Filt Name = "IsFreeBandCategory" Type = "Category"/>
+    <Description>
+      <C>IsFreeBandCategory</C> is the category of semigroups created using
+      <Ref Oper = "FreeBand" />.
+<Example><![CDATA[
+gap> IsFreeBandCategory(FreeBand(3));
+true
+gap> IsFreeBand(SymmetricGroup(6));
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsFreeBand" >
 <ManSection>
     <Prop Name = "IsFreeBand" Arg = "S"
     Label="for a given semigroup"/>
-    <Returns> True or False </Returns>
+    <Returns> <K>true</K> or <K>false</K> </Returns>
     <Description>
-    <C>IsFreeBand</C> returns <K>true</K> if the given semigroup <A>S</A> was
-    created as a free band.
+      <C>IsFreeBand</C> returns <K>true</K> if the given semigroup <A>S</A> is a
+      free band.
 <Example><![CDATA[
 gap> IsFreeBand(FreeBand(3));
 true

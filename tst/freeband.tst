@@ -122,14 +122,14 @@ true
 gap> x*y*x*y*z*x*y*z = x*y*z;
 true
 
-# FreeBand: IsFreeBand
-gap> IsFreeBand(FreeBand(4));
+# FreeBand: IsFreeBandCategory
+gap> IsFreeBandCategory(FreeBand(4));
 true
-gap> IsFreeBand(FreeBand(4, "b"));
+gap> IsFreeBandCategory(FreeBand(4, "b"));
 true
-gap> IsFreeBand(SymmetricGroup(6));
+gap> IsFreeBandCategory(SymmetricGroup(6));
 false
-gap> IsFreeBand(FullTransformationMonoid(7));
+gap> IsFreeBandCategory(FullTransformationMonoid(7));
 false
 
 #T# FreeBand: \*
@@ -179,6 +179,22 @@ gap> while not IsDoneIterator(iter) do
 > od;
 gap> ht;
 <tree hash table len=100003 used=159 colls=1 accs=160>
+
+#T# FreeBand: IsFreeBand
+gap> gens := Generators(FreeBand(3));
+[ x1, x2, x3 ]
+gap> IsFreeBand(Semigroup(gens));
+true
+gap> IsFreeBand(Semigroup(gens{[1,2]}));
+true
+gap> IsFreeBand(Semigroup(gens[1]*gens[2]));
+true
+gap> IsFreeBand(Semigroup([gens[1]*gens[2], gens[1]*gens[3]]));
+true
+gap> IsFreeBand(SymmetricGroup(3));
+false
+gap> IsFreeBand(Semigroup([gens[1]*gens[2], gens[1]]));
+false
 
 #E#
 gap> STOP_TEST("Semigroups package: freeband.tst");
