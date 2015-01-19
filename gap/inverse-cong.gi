@@ -265,7 +265,6 @@ end);
 InstallMethod(TraceOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
-# FIXME why is the filter not IsInverseSemigroupCongruence?
 function(cong)
   local s, elms, trace, i, class, congClass, j;
   s := Range(cong);
@@ -297,7 +296,6 @@ end);
 InstallMethod(KernelOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
-# FIXME why is the filter not IsInverseSemigroupCongruence?
 function(cong)
   local s, gens;
   s := Range(cong);
@@ -315,7 +313,6 @@ end);
 InstallMethod(AsInverseSemigroupCongruenceByCongruencePair,
 "for semigroup congruence",
 [IsSemigroupCongruence],
-# FIXME why is the filter not IsInverseSemigroupCongruence?
 function(cong)
   if not IsInverseSemigroup(Range(cong)) then
     Error("Semigroups: AsInverseSemigroupCongruenceByCongruencePair: usage,\n",
