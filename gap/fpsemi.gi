@@ -12,7 +12,7 @@
 # requires a method for acting semigroup ideals)
 
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   FroidurePinExtendedAlg(S);
   return IsomorphismFpSemigroup(S);

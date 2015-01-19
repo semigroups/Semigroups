@@ -13,35 +13,35 @@ BindGlobal("IsGrapeLoaded", IsPackageMarkedForLoading("grape", "4.5"));
 BindGlobal("IsGrapeCompiled",
 ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")<>fail);
 
-if not IsGrapeLoaded then 
+if not IsGrapeLoaded then
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
-  BindGlobal("GrapeIsNotLoadedString", 
-  Concatenation("the GRAPE package is not loaded and", 
+  BindGlobal("GrapeIsNotLoadedString",
+  Concatenation("the GRAPE package is not loaded and",
   " so this function does not work"));
 fi;
 
 
-if not IsGrapeCompiled then 
+if not IsGrapeCompiled then
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
   Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
-  BindGlobal("GrapeIsNotCompiledString", 
-  Concatenation("the nauty/dreadnaut binaries for the GRAPE package are", 
-  " not loaded\n#I  and so this function does not work")); 
+  BindGlobal("GrapeIsNotCompiledString",
+  Concatenation("the nauty/dreadnaut binaries for the GRAPE package are",
+  " not loaded\n#I  and so this function does not work"));
 fi;
 
 #
 
-if TestPackageAvailability("genss")=fail then 
+if TestPackageAvailability("genss")=fail then
   Add(SemigroupsOmitFromTestManualExamples, "Normalizer");
 fi;
 
 # Issue 5 for Orb:
 
-if not IsBound( MappingPermListList_C ) then 
+if not IsBound( MappingPermListList_C ) then
   BIND_GLOBAL( "MappingPermListList_C", function( src, dst )
     local src_tab, dst_tab, d, out, next, i;
 
@@ -55,19 +55,19 @@ if not IsBound( MappingPermListList_C ) then
     src_tab:=[];
     dst_tab:=[];
     d:=Maximum(Maximum(src), Maximum(dst));
-    for i in [1..Length(src)] do 
+    for i in [1..Length(src)] do
       src_tab[src[i]]:=i;
     od;
-    for i in [1..Length(dst)] do 
+    for i in [1..Length(dst)] do
       dst_tab[dst[i]]:=i;
     od;
     out:=EmptyPlist(d);
     next:=1;
-    for i in [1..d] do 
-      if IsBound(src_tab[i]) then 
+    for i in [1..d] do
+      if IsBound(src_tab[i]) then
         out[i]:=dst[src_tab[i]];
       else
-        while IsBound(dst_tab[next]) do 
+        while IsBound(dst_tab[next]) do
           next:=next+1;
         od;
         out[i]:=next;
@@ -82,7 +82,7 @@ fi;
 # skip examples including partitions if we're in version less than 2.0
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
- then 
+ then
   Add(SemigroupsOmitFromTestManualExamples, "partition");
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
@@ -90,7 +90,6 @@ fi;
 #
 
 ReadPackage("semigroups/gap/grpperm.gi");
-ReadPackage("semigroups/gap/graph-inverse.gi");
 
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
@@ -122,8 +121,10 @@ ReadPackage("semigroups/gap/attributes-inverse.gi");
 ReadPackage("semigroups/gap/ideals.gi");
 
 ReadPackage("semigroups/gap/freeinverse.gi");
+ReadPackage("semigroups/gap/freeband.gi");
 
 ReadPackage("semigroups/gap/utils.gi");
+ReadPackage("semigroups/gap/io.gi");
 
 ReadPackage("semigroups/gap/display.gi");
 
@@ -136,5 +137,8 @@ ReadPackage("semigroups/gap/normalizer.gi");
 
 ReadPackage("semigroups/gap/quotients.gi");
 
+ReadPackage("semigroups/gap/pairs-cong.gi");
 ReadPackage("semigroups/gap/reesmat-cong.gi");
-ReadPackage("semigroups/gap/univcong.gi");
+ReadPackage("semigroups/gap/univ-cong.gi");
+ReadPackage("semigroups/gap/inverse-cong.gi");
+ReadPackage("semigroups/gap/simple-cong.gi");

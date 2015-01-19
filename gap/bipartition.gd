@@ -11,23 +11,22 @@
 DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
  IsAssociativeElementWithStar);
 DeclareCategoryCollections("IsBipartition");
+DeclareCategoryCollections("IsBipartitionCollection");
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
 
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
-DeclareAttribute("TransverseBlocksLookup", IsBipartition);
 DeclareAttribute("NrTransverseBlocks", IsBipartition);
 
-DeclareOperation("OneMutable", [IsBipartitionCollection]);
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("RandomBipartition", [IsPosInt]);
 
 DeclareOperation("NaturalLeqBlockBijection", [IsBipartition, IsBipartition]);
-DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition, 
+DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition,
  IsBipartition]);
 DeclareOperation("PartialPermLeqBipartition", [IsBipartition, IsBipartition]);
 
@@ -70,6 +69,6 @@ InstallTrueMethod(IsPermBipartition, IsTransBipartition and
 IsDualTransBipartition);
 InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
-#internal...
+# LambdaConjugator
 DeclareGlobalFunction("BipartRightBlocksConj");
 

@@ -8,9 +8,9 @@
 #############################################################################
 ##
 ##  This file contains algorithms for computing Green's relations
-##  and related notions for transformation semigroups and monoids. 
-##  The theory behind these algorithms is developed in 
-##  
+##  and related notions for transformation semigroups and monoids.
+##  The theory behind these algorithms is developed in
+##
 ##  [LPRR1] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
 ##  Groups  and actions in  transformation semigroups, to appear in Math Z.
 ##  (1998).
@@ -19,7 +19,7 @@
 ##
 ##  [LPRR2] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
 ##  Computing transformation semigroups, (1998), in preparation.
-##  
+##
 ##  Another reference is
 ##
 ##  [LM]  G.  Lallement and R. McFadden, On the   determination of Green's
@@ -29,11 +29,13 @@
 #############################################################################
 #############################################################################
 
+DeclareAttribute("RegularDClasses", IsSemigroup);
+
 #new
 
 # LambdaRhoLookup(d)[i]=j if orbit[j][4] in reps[i] (orbit[j][4] is one of the
 # R-reps of the D-class d) and LambdaRhoLookup(d) is only bound for those
-# indices i where there is an R-rep in the scc of the D-class in reps[i] 
+# indices i where there is an R-rep in the scc of the D-class in reps[i]
 DeclareAttribute("LambdaRhoLookup", IsGreensDClass and
 IsActingSemigroupGreensClass);
 
@@ -59,7 +61,7 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 #old
 
 DeclareOperation("GreensDClassOfElementNC", [IsSemigroup,
-IsAssociativeElement]); 
+IsAssociativeElement]);
 
 DeclareOperation("GreensHClassOfElementNC", [IsSemigroup,
 IsAssociativeElement]);
@@ -71,22 +73,22 @@ IsAssociativeElement]);
 DeclareOperation("GreensLClassOfElement", [IsGreensDClass,
 IsAssociativeElement]);
 DeclareOperation("GreensLClassOfElementNC", [IsSemigroup,
-IsAssociativeElement]); 
+IsAssociativeElement]);
 DeclareOperation("GreensLClassOfElementNC", [IsGreensDClass,
 IsAssociativeElement]);
 
 DeclareOperation("GreensRClassOfElement", [IsGreensDClass,
 IsAssociativeElement]);
 DeclareOperation("GreensRClassOfElementNC", [IsSemigroup,
-IsAssociativeElement]); 
+IsAssociativeElement]);
 DeclareOperation("GreensRClassOfElementNC", [IsGreensDClass,
 IsAssociativeElement]);
 
 DeclareAttribute("DClassReps", IsSemigroup);
 DeclareAttribute("HClassReps", IsSemigroup);
 DeclareAttribute("HClassReps", IsGreensClass);
-DeclareAttribute("LClassReps", IsSemigroup); 
-DeclareAttribute("LClassReps", IsGreensDClass); 
+DeclareAttribute("LClassReps", IsSemigroup);
+DeclareAttribute("LClassReps", IsGreensDClass);
 DeclareAttribute("RClassReps", IsSemigroup);
 DeclareAttribute("RClassReps", IsGreensDClass);
 
@@ -97,12 +99,11 @@ DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
 DeclareAttribute("StructureDescription", IsGreensHClass);
 
 DeclareProperty("IsRegularClass", IsGreensClass);
+DeclareProperty("IsInverseOpClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+
 DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
-DeclareCategory("IsInverseOpClass", IsGreensClass); 
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensDClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensRClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensLClass);
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
@@ -131,7 +132,7 @@ DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 
-DeclareAttribute("NrDClasses", IsSemigroup); 
+DeclareAttribute("NrDClasses", IsSemigroup);
 DeclareAttribute("NrHClasses", IsSemigroup);
 DeclareAttribute("NrHClasses", IsGreensClass);
 DeclareAttribute("NrLClasses", IsSemigroup);
@@ -139,7 +140,7 @@ DeclareAttribute("NrLClasses", IsGreensDClass);
 DeclareAttribute("NrRClasses", IsSemigroup);
 DeclareAttribute("NrRClasses", IsGreensDClass);
 
-DeclareAttribute("NrRegularDClasses", IsSemigroup); 
+DeclareAttribute("NrRegularDClasses", IsSemigroup);
 DeclareAttribute("NrIdempotents", IsSemigroup);
 DeclareAttribute("NrIdempotents", IsGreensClass);
 

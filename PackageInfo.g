@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011-14                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -161,7 +161,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "waw7@st-and.ac.uk",
-    WWWHome       := "http://wilf-wilson.net",
+    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~waw7",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
@@ -194,10 +194,9 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7.5",
-  NeededOtherPackages := [["orb", ">=4.7"], ["io", ">=4.3"], 
-  ["digraphs", ">=0.1"]],
+  NeededOtherPackages := [ ["orb", ">=4.7"], ["io", ">=4.3"] ],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
-  ["genss", ">=1.5"]], 
+  ["genss", ">=1.5"]],
   ExternalConditions := []),
 
   BannerString := Concatenation(

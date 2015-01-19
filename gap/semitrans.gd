@@ -20,7 +20,7 @@ DeclareAttribute("CyclesOfTransformationSemigroup",
 IsTransformationSemigroup);
 
 DeclareOperation("IsSynchronizingSemigroup", [IsTransformationSemigroup]);
-DeclareOperation("IsSynchronizingSemigroup", 
+DeclareOperation("IsSynchronizingSemigroup",
 [IsTransformationSemigroup, IsPosInt]);
 DeclareOperation("IsSynchronizingTransformationCollection",
 [IsTransformationCollection, IsPosInt]);
@@ -33,7 +33,3 @@ DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
 DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 DeclareAttribute("SmallestElementRClass", IsGreensRClass);
 DeclareAttribute("LargestElementRClass", IsGreensRClass);
-
-DeclareAttribute("EndomorphismMonoid", IsDigraph);
-
-

@@ -1,4 +1,4 @@
-#############################################################################
+#%T##########################################################################
 ##
 #W  attributes-inverse.tst
 ##  Test file for inverse semigroup attributes
@@ -11,7 +11,7 @@ gap> LoadPackage("semigroups", false);;
 # 
 gap> SemigroupsStartTest();
 
-# JoinIrreducibleDClasses
+#T# JoinIrreducibleDClasses
 gap> S:=InverseSemigroup([
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 2, 6 ] ),
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] ),
@@ -49,7 +49,7 @@ gap> JoinIrreducibleDClasses(J);
     , {Bipartition( [ [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], 
      [ 6, -6 ] ] )} ]
 
-# IsJoinIrreducible
+#T# IsJoinIrreducible
 gap> x:=PartialPerm( [ 1, 2, 4, 6 ], [ 2, 3, 1, 4 ] );;
 gap> xx:=x^iso;;
 gap> x in S;
@@ -88,7 +88,7 @@ true
 gap> IsJoinIrreducible(J, R);
 true
 
-# Minorants
+#T# TestMinorants1
 gap> Minorants(S, x);
 [ <empty partial perm>, [1,2], [2,3], [1,2,3], [4,1], [2,3][4,1], [4,1,2], 
   [4,1,2,3], [6,4], [6,4,1], [2,3][6,4], [2,3][6,4,1], [1,2][6,4], [6,4,1,2], 
@@ -160,7 +160,21 @@ gap> m1:=Minorants(J, Bipartition( [ [ 1, -6 ], [ 2, -5 ], [ 3, 5, 6, 7, -1, -3,
 gap> Size(m1);
 7
 
-# MajorantClosure and IsMajorantlyClosed
+#T# TestMinorants2
+gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ], [ 1, 5, 3, 8, 4 ]);;
+gap> f2:=PartialPermNC([ 1, 2, 3, 4, 5, 6 ] ,[ 6, 7, 1, 4, 3, 2 ]);;
+gap> f3:=PartialPermNC([ 1, 2, 3, 4, 5, 8 ] ,[ 5, 6, 3, 8, 4, 7 ]);;
+gap> f4:=PartialPermNC([ 1, 3, 4, 5, 6, 8 ] ,[ 8, 7, 5, 1, 3, 4 ]);;
+gap> f5:=PartialPermNC([ 1, 3, 4, 5, 7, 8 ] ,[ 6, 5, 7, 1, 4, 2 ]);;
+gap> s:=InverseSemigroup(f1,f2,f3,f4,f5);;
+gap> t:=Elements(s)[51624];
+[7,1][8,6](4,5)
+gap> Minorants(s,t);
+[ <empty partial perm>, [4,5], [5,4], (4,5), [7,1], [5,4][7,1], [4,5][7,1], 
+  [7,1](4,5), [8,6], [7,1][8,6], [5,4][8,6], [5,4][7,1][8,6], [4,5][8,6], 
+  [4,5][7,1][8,6], [8,6](4,5) ]
+
+#T# MajorantClosure and IsMajorantlyClosed
 gap> IsMajorantlyClosed(S,[x]);
 true
 gap> MajorantClosure(S, [x]) = [x];
@@ -222,7 +236,7 @@ true
 gap> Size(m);
 25
 
-# RightCosetsOfInverseSemigroup
+#T# RightCosetsOfInverseSemigroup
 gap> w:=PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 3, 4 ] );
 <identity partial perm on [ 1, 2, 3, 4 ]>
 gap> m:=MajorantClosure(S, [w]);;
@@ -350,53 +364,54 @@ gap> RightCosetsOfInverseSemigroup(J2, V);
       <block bijection: [ 1, -6 ], [ 2, -4 ], [ 3, -3 ], 
          [ 4, 5, 6, 7, -1, -2, -5, -7 ]> ] ]
 
-# SameMinorantsSubgroup
-gap> h:=GroupHClass(DClasses(S)[4]);
+#T# SameMinorantsSubgroup
+gap> h := GroupHClass(DClasses(S)[4]);
 {PartialPerm( [ 1, 4, 6 ], [ 1, 4, 6 ] )}
 gap> SameMinorantsSubgroup(h);
 [ <identity partial perm on [ 1, 4, 6 ]> ]
-gap> h:=GroupHClass(DClasses(A)[4]);
+gap> h := GroupHClass(DClasses(A)[4]);
 {Bipartition( [ [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
  [ -2 ], [ -3 ], [ -5 ], [ -7 ] ] )}
 gap> SameMinorantsSubgroup(h);
 [ <bipartition: [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
      [ -2 ], [ -3 ], [ -5 ], [ -7 ]> ]
-gap> h:=GroupHClass(DClasses(B)[6]);
+gap> h := GroupHClass(DClasses(B)[6]);
 {Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] 
   ] )}
 gap> SameMinorantsSubgroup(h);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], 
      [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ]> ]
-gap> h:=GroupHClass(DClasses(J)[4]);;
+gap> h := GroupHClass(DClasses(J)[4]);;
 gap> SameMinorantsSubgroup(h);
 [ <block bijection: [ 1, -1 ], [ 2, 3, 5, 6, 7, -2, -3, -5, -6, -7 ], 
      [ 4, -4 ]> ]
 
 # Non-trivial examples
-gap> f:=PartialPermNC( [ 2, 1, 4, 5, 3, 7, 6, 9, 10, 8 ] );;
-gap> g:=PartialPermNC([ 2, 1, 0, 0, 0, 7, 6 ]);;
-gap> F:=InverseSemigroup(f, g);;
-gap> W:=SemigroupIdeal(F, PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ));;
-gap> h1:=GroupHClass(DClasses(F)[1]);
+gap> f := PartialPermNC( [ 2, 1, 4, 5, 3, 7, 6, 9, 10, 8 ] );;
+gap> g := PartialPermNC([ 2, 1, 0, 0, 0, 7, 6 ]);;
+gap> F := InverseSemigroup(f, g);;
+gap> W := SemigroupIdeal(F, PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ));;
+gap> h1 := GroupHClass(DClasses(F)[1]);
 {PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
  [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] )}
-gap> m1:=SameMinorantsSubgroup(h1);
+gap> m1 := SameMinorantsSubgroup(h1);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]>, 
   (1)(2)(3,4,5)(6)(7)(8,9,10), (1)(2)(3,5,4)(6)(7)(8,10,9) ]
-gap> h2:=GroupHClass(DClasses(F)[2]);
+gap> h2 := GroupHClass(DClasses(F)[2]);
 {PartialPerm( [ 1, 2, 6, 7 ], [ 1, 2, 6, 7 ] )}
-gap> m2:=SameMinorantsSubgroup(h2);
+gap> m2 := SameMinorantsSubgroup(h2);
 [ <identity partial perm on [ 1, 2, 6, 7 ]>, (1,2)(6,7) ]
-gap> h1:=GroupHClass(DClasses(W)[1]);;
-gap> SameMinorantsSubgroup(h1)=m1;
+gap> h1 := GroupHClass(DClasses(W)[1]);;
+gap> SameMinorantsSubgroup(h1) = m1;
 true
-gap> h2:=GroupHClass(DClasses(W)[2]);;
-gap> SameMinorantsSubgroup(h2)=m2;
+gap> h2 := GroupHClass(DClasses(W)[2]);;
+gap> SameMinorantsSubgroup(h2) = m2;
 true
 
+#T# NaturalLeqInverseSemigroup
 # NaturalLeqInverseSemigroup for partial perms
-gap> a:=PartialPerm( [ 1 ], [ 6 ] );;
-gap> b:=PartialPerm( [ 1, 2, 5 ], [ 6, 3, 1 ] );;
+gap> a := PartialPerm( [ 1 ], [ 6 ] );;
+gap> b := PartialPerm( [ 1, 2, 5 ], [ 6, 3, 1 ] );;
 gap> NaturalLeqInverseSemigroup(a, b);
 true
 gap> NaturalLeqInverseSemigroup(b, a);
@@ -405,8 +420,10 @@ gap> NaturalLeqInverseSemigroup(a, a);
 true
 
 # NaturalLeqInverseSemigroup for block bijections
-gap> A:=Bipartition( [ [ 1, 2, 3, 4, 6, 7, 8, -1, -2, -4, -5, -6, -7, -8 ], [ 5, -3 ] ] );;
-gap> B:=Bipartition( [ [ 1, 2, 3, 4, 8, -4, -5, -6, -7, -8 ], [ 5, -3 ], [ 6, -2 ], [ 7, -1 ] ] );;
+gap> A := Bipartition( [ [ 1, 2, 3, 4, 6, 7, 8, -1, -2, -4, -5, -6, -7, -8 ],
+> [ 5, -3 ] ] );;
+gap> B := Bipartition( [ [ 1, 2, 3, 4, 8, -4, -5, -6, -7, -8 ], [ 5, -3 ],
+> [ 6, -2 ], [ 7, -1 ] ] );;
 gap> NaturalLeqInverseSemigroup(A, B);
 true
 gap> NaturalLeqInverseSemigroup(B, A);
@@ -416,29 +433,28 @@ true
 
 # NaturalLeqInverseSemigroup for partial perm bipartitions
 gap> f:=Bipartition( [ [ 1, -2 ], [ 2 ], [ -1 ] ] );;
-gap> f2:=Bipartition( [ [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ -1 ], [ -3 ], [-4 ], [ -5 ], [ -6 ] ] );;
-gap> g:=Bipartition( [ [ 1, -2 ], [ 2 ], [ 3, -5 ], [ 4 ], [ 5 ], [ -1 ], [ -3 ], [ -4 ] ] );;
-gap> NaturalLeqInverseSemigroup(f,g);
+gap> f2:=Bipartition( [ [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ -1 ],
+> [ -3 ], [-4 ], [ -5 ], [ -6 ] ] );;
+gap> g:=Bipartition( [ [ 1, -2 ], [ 2 ], [ 3, -5 ], [ 4 ], [ 5 ], [ -1 ],
+> [ -3 ], [ -4 ] ] );;
+gap> NaturalLeqInverseSemigroup(f, g);
 true
-gap> NaturalLeqInverseSemigroup(f2,g);
+gap> NaturalLeqInverseSemigroup(f2, g);
 true
-gap> AsPartialPerm(f)=AsPartialPerm(f2);
+gap> AsPartialPerm(f) = AsPartialPerm(f2);
 true
-gap> f=f2;
+gap> f = f2;
 false
-gap> NaturalLeqInverseSemigroup(f,f2);
+gap> NaturalLeqInverseSemigroup(f, f2);
 true
-gap> NaturalLeqInverseSemigroup(f2,f);
+gap> NaturalLeqInverseSemigroup(f2, f);
 true
-gap> NaturalLeqInverseSemigroup(g,g);
+gap> NaturalLeqInverseSemigroup(g, g);
 true
-gap> NaturalLeqInverseSemigroup(g,f);
+gap> NaturalLeqInverseSemigroup(g, f);
 false
-gap> NaturalLeqInverseSemigroup(g,f2);
+gap> NaturalLeqInverseSemigroup(g, f2);
 false
 
-#
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST("Semigroups package: attributes-inverse.tst", 10000);
+#E#
+gap> STOP_TEST("Semigroups package: attributes-inverse.tst");

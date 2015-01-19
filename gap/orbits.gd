@@ -10,7 +10,7 @@
 
 DeclareOperation("EvaluateWord", [IsBipartitionCollection, IsList]);
 DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
-DeclareOperation("EvaluateWord", 
+DeclareOperation("EvaluateWord",
 [IsReesZeroMatrixSemigroupElementCollection, IsList]);
 DeclareOperation("TraceSchreierTreeOfSCCForward",
 [IsOrbit, IsPosInt, IsPosInt]);

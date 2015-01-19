@@ -1,18 +1,19 @@
-#############################################################################
+###########################################################################
 ##
 ##  freeinverse,tst 
-#Y  Copyright (C) 2011-13
+#Y  Copyright (C) 2011-13                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
 gap> START_TEST("Semigroups package: freeinverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SemigroupsStartTest();
 
-#
+#T# FreeInverseSemigroup (with default generators) and basic methods
 gap> S := FreeInverseSemigroup(3);
 <free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> Size(S);
@@ -32,12 +33,12 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
-#
+#T# FreeInverseSemigroup (with named generators) and basic methods
 gap> S := FreeInverseSemigroup("a", "b", "c");
 <free inverse semigroup on the generators [ a, b, c ]>
 gap> Size(S);
 infinity
-gap>  x := S.1;
+gap> x := S.1;
 a
 gap> y := S.2;
 b
@@ -52,8 +53,13 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
-#
-gap> SemigroupsStopTest();
+#T# FreeInverseSemigroup: IsFreeInverseSemigroup
+gap> gens := Generators(FreeInverseSemigroup(2));
+[ x1, x2 ]
+gap> IsFreeInverseSemigroup(InverseSemigroup(gens));
+true
+gap> IsFreeInverseSemigroup(InverseSemigroup(gens{[1,2]}));
+true
 
-#
-gap> STOP_TEST("Semigroups package: freeinverse.tst", 0);
+#E#
+gap> STOP_TEST("Semigroups package: freeinverse.tst");

@@ -1,4 +1,4 @@
-#############################################################################
+###########################################################################
 ##
 #W  reesmat-cong.tst
 #Y  Copyright (C) 2014                                      Michael Torpey
@@ -13,6 +13,7 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
+#T# All ReesZeroMatrixSemigroup functions tested with a small example
 # Create a Rees 0-matrix semigroup
 gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
 gap> mat := [ [ 0, 0, (1,4,5), 0, 0, (1,4,3,5) ],
@@ -30,7 +31,8 @@ gap> n := Group([(1,4)(3,5),(1,5)(3,4)]);;
 gap> colBlocks := [ [ 1 ], [ 4 ], [ 2, 5 ], [ 3, 6 ] ];;
 gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
 gap> cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
-<RZMS congruence by linked triple (2^2,4,3)>
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,4,3)>
 gap> cong = congs[12];
 false
 gap> cong = congs[13];
@@ -85,9 +87,11 @@ gap> Size(classes[73]);
 
 # Join and meet congruences
 gap> JoinSemigroupCongruences(congs[12], congs[31]);
-<RZMS congruence by linked triple (S4,3,3)>
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (S4,3,3)>
 gap> MeetSemigroupCongruences(congs[12], congs[31]);
-<RZMS congruence by linked triple (2^2,6,3)>
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,6,3)>
 
 # Quotients
 gap> q := s / congs[13];;
@@ -102,11 +106,14 @@ true
 
 # Universal semigroup congruences
 gap> uni := UniversalSemigroupCongruence(s);
-<universal semigroup congruence>
+<universal semigroup congruence over <Rees 0-matrix semigroup 6x3 over 
+  Group([ (1,4,5), (1,5,3,4) ])>>
 gap> [x,z] in uni;
 true
-gap> EquivalenceClasses(uni);
-[ {(1,(),1)} ]
+gap> Length(EquivalenceClasses(uni)) = 1 
+> and (Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(1,4,5),3)
+> or Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(),1)); # the first is after 4.7.7 the latter before
+true
 gap> eq := EquivalenceClassOfElement(uni, y);
 {(6,(1,3,5),1)}
 gap> eq := EquivalenceClassOfElement(uni, y);;
@@ -118,8 +125,5 @@ true
 gap> Size(s / uni);
 1
 
-#
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: reesmat-cong.tst", 10000);
+#E#
+gap> STOP_TEST( "Semigroups package: reesmat-cong.tst");

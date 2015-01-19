@@ -1,16 +1,18 @@
-#%T##########################################################################
+############################################################################
 ##
 #W  maximal.tst
-##  Tests for algorithms relating to maximal subsemigroups of semigroups
-##  Written by Wilf Wilson
+#Y  Copyright (C) 2011-14                                  Wilfred Wilson
+##
+##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+## Tests for the maximal subsemigroups code
 gap> START_TEST("Semigroups package: maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
-# 
-gap> SemigroupsStartTest();
+#  
+gap> SemigroupsStartTest();;
 
 #T# IsMaximalSubsemigroup
 gap> S := Semigroup([
@@ -615,8 +617,17 @@ gap> Size(max);
 gap> S = max[1];
 false
 
-#E#
-gap> SemigroupsStopTest();
+#T# MaximalSubsemigroups: Issue 107 (problems with Green's classes of ideals,
+#   and inverse semigroups)
+gap> gens := [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 4 ], [ 3, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 5, 2, 3, 1 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 3, 4, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 5, 4, 3, 2, 1 ] ) ];;
+gap> S := InverseSemigroup(gens);;
+gap>  S := Semigroup(S);;
+gap> Length(MaximalSubsemigroups(S));
+9
 
-#
-gap> STOP_TEST("Semigroups package: maximal.tst", 10000);
+#E#
+gap> STOP_TEST("Semigroups package: maximal.tst");

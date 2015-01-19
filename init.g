@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-if not IsBound(ORBC) then 
+if not IsBound(ORBC) then
   BindGlobal("HTAdd_TreeHash_C", fail);
   BindGlobal("HTValue_TreeHash_C", fail);
 else # only do this if ORBC is available
@@ -26,9 +26,9 @@ else # only do this if ORBC is available
 fi;
 
 ReadPackage("semigroups/gap/grpperm.gd");
-ReadPackage("semigroups/gap/graph-inverse.gd");
 
 ReadPackage("semigroups/gap/utils.gd");
+ReadPackage("semigroups/gap/io.gd");
 ReadPackage("semigroups/gap/options.g");
 
 ReadPackage("semigroups/gap/setup.gd");
@@ -70,7 +70,12 @@ ReadPackage("semigroups/gap/normalizer.gd");
 
 ReadPackage("semigroups/gap/quotients.gd");
 
+ReadPackage("semigroups/gap/pairs-cong.gd");
 ReadPackage("semigroups/gap/reesmat-cong.gd");
-ReadPackage("semigroups/gap/univcong.gd");
+ReadPackage("semigroups/gap/univ-cong.gd");
+ReadPackage("semigroups/gap/inverse-cong.gd");
+ReadPackage("semigroups/gap/simple-cong.gd");
+
+ReadPackage("semigroups/gap/freeband.gd");
 
 DeclareInfoClass("InfoSemigroups");;
