@@ -621,7 +621,8 @@ gap> One(S) in T or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
 true
 
 #T# TestInstall38: Issue 33 (problem with Rees factor semigroups)
-gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), [Transformation([1,2,2,2])]);
+gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), 
+> [Transformation([1,2,2,2])]);
 <regular transformation semigroup ideal on 4 pts with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <semigroup congruence over <full transformation semigroup on 4 pts>>
@@ -638,7 +639,7 @@ gap> IsSemigroup(T);
 true
 gap> Size(T);
 169
-gap>  u := Image(hom, Transformation([1,1,1,1]));
+gap> u := Image(hom, Transformation([1,1,1,1]));
 {Transformation( [ 1, 1, 1, 1 ] )}
 gap> t := Image(hom, Transformation([2,1,2,3]));
 {Transformation( [ 2, 1, 2, 3 ] )}
