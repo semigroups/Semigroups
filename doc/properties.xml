@@ -841,7 +841,7 @@ gap> R:=Range(IsomorphismReesMatrixSemigroup(
       <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
       transformations <A>S</A> contains a transformation with constant value on
       <C>[1..<A>n</A>]</C>.
-      Note that this funciton will return true whenever <C><A>n</A> = 1</C>.
+      Note that this function will return true whenever <C><A>n</A> = 1</C>.
       See also <Ref Oper="ConstantTransformation" BookName="ref"/>.
       <P/>
 
