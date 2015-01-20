@@ -1,7 +1,7 @@
 ################################################################################
 ##
 #W  freeinverse.gi
-#Y  Copyright (C) 2013-14                                  Julius Jonusas
+#Y  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
