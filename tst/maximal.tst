@@ -91,9 +91,13 @@ gap> IsReesMatrixSubsemigroup(S);
 true
 gap> IsReesMatrixSemigroup(S);
 false
-gap> MaximalSubsemigroups(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalSubsemigroups' on 1 arguments
+gap> IsRegularSemigroup(S);
+true
+gap> max := MaximalSubsemigroups(S);;
+gap> IsDuplicateFreeList(max);
+true
+gap> Length(max);
+5
 gap> T := FullTransformationMonoid(3);
 <full transformation semigroup on 3 pts>
 gap> mat := [ [ Transformation([ 3, 2, 3 ]) ] ];;
@@ -108,8 +112,12 @@ false
 gap> IsSimpleSemigroup(T);
 false
 gap> MaximalSubsemigroups(R);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalSubsemigroups' on 1 arguments
+[ <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators> ]
 gap> S := Semigroup( [
 > Transformation( [ 1, 2, 1 ] ),
 > Transformation( [ 1, 2, 2 ] ) ]);
@@ -127,9 +135,8 @@ false
 gap> IsSimpleSemigroup(S);
 true
 gap> MaximalSubsemigroups(R);
-Error, Semigroups: MaximalSubsemigroups,
-not yet implemented for a Rees matrix semigroup over a simple
-non-group semigroup,
+[ <subsemigroup of 1x1 Rees matrix semigroup with 1 generator>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 1 generator> ]
 
 #T# MaximalSubsemigroups: for a Rees matrix semigroup and a maximal subgroup
 gap> G := Group([ (1,2,3) ]);
@@ -191,8 +198,7 @@ true
 gap> R := ReesZeroMatrixSemigroup(Group(()), [ [ 0 ] ]); # a non-regular RZMS
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> MaximalSubsemigroups(R);
-Error, Semigroups: MaximalSubsemigroups,
-not yet implemented for a non-regular Rees 0-matrix semigroup,
+[ <subsemigroup of 1x1 Rees 0-matrix semigroup with 1 generator> ]
 gap> R1 := ReesZeroMatrixSemigroup(Group(()), [ [ () ] ]); # 2-elt regular RZMS
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> MaximalSubsemigroups(R1);
@@ -247,9 +253,11 @@ true
 gap> SetIsRegularSemigroup(R3, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R3);
 true
-gap> MaximalSubsemigroups(R3);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalSubsemigroups' on 1 arguments
+gap> max := MaximalSubsemigroups(R3);;
+gap> Length(max);
+10
+gap> IsDuplicateFreeList(max);
+true
 gap> G := Group([ (1,2), (1,2,3) ]);;
 gap> mat := [ [ (1,2), 0 ], [ 0, (2,3) ] ];;
 gap> R := ReesZeroMatrixSemigroup(G, mat); # un-connected 2x2 inverse RZMS / S3
@@ -628,6 +636,20 @@ gap> S := InverseSemigroup(gens);;
 gap>  S := Semigroup(S);;
 gap> Length(MaximalSubsemigroups(S));
 9
+
+#T# TestInstall55: Issue 110 (allowing MaximalSubsemigroups for an acting 
+#   non-regular RZMS)
+gap> S := [ ReesZeroMatrixSemigroup( Group( () ), [ [ (), 0 ], [ 0, () ] ] ) ];;
+gap> S[2] := Semigroup(RMSElement(S[1], 2, (), 2), RMSElement(S[1], 1, (), 2));;
+gap> S[3] := MaximalSubsemigroups(S[2]);
+[ <subsemigroup of 2x2 Rees 0-matrix semigroup with 1 generator>, 
+  <subsemigroup of 2x2 Rees 0-matrix semigroup with 2 generators> ]
+gap> IsDuplicateFreeList(S[3]);
+true
+gap> ForAll(S[3], x -> IsMaximalSubsemigroup(S[2], x));
+true
+gap> Length(S[3]);
+2
 
 #E#
 gap> STOP_TEST("Semigroups package: maximal.tst");
