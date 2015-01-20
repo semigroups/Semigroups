@@ -1,11 +1,11 @@
-############################################################################# 
-## 
+#############################################################################
+##
 #W  semigroups.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
-## 
+#Y  Copyright (C) 2013-15                                James D. Mitchell
+##
 ##  Licensing information can be found in the README file of this package.
-## 
-############################################################################# 
+##
+#############################################################################
 ##
 
 DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
@@ -37,15 +37,15 @@ DeclareOperation("ClosureInverseSemigroup", [IsActingSemigroupWithInverseOp,
 IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection]);
-DeclareOperation("ClosureInverseSemigroup", 
+DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
-DeclareOperation("ClosureSemigroup", 
+DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
-DeclareOperation("ClosureSemigroup", 
+DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElement, IsRecord]);
@@ -71,12 +71,12 @@ DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
-DeclareOperation("SubsemigroupByProperty", 
+DeclareOperation("SubsemigroupByProperty",
 [IsActingSemigroup, IsFunction, IsPosInt]);
 
-DeclareOperation("InverseSubsemigroupByProperty", 
+DeclareOperation("InverseSubsemigroupByProperty",
 [IsSemigroup, IsFunction]);
-DeclareOperation("InverseSubsemigroupByProperty", 
+DeclareOperation("InverseSubsemigroupByProperty",
 [IsActingSemigroupWithInverseOp, IsFunction, IsPosInt]);
 
 # undoc

@@ -1,21 +1,19 @@
 #############################################################################
 ##
 #W  properties.tst
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
-#ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"properties.tst"));
 gap> START_TEST("Semigroups package: properties.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SemigroupsStartTest();
 
-#
+#T# PropertiesTest3
 gap> semis:=
 > [ Semigroup( [ Transformation( [ 2, 2, 4, 4 ] ), 
 >      Transformation( [ 5, 3, 4, 4, 6, 6 ] ) ] ), 
@@ -76,25 +74,25 @@ gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));
 gap> List([15..22], i-> IsCompletelyRegularSemigroup(semis[i]));  
 [ true, false, true, false, false, false, false, false ]
 
-#
+#T# PropertiesTest4
 gap> s:=Semigroup(Transformation([3,3,2,6,2,4,4,6]),
 > Transformation([3,3,2,6,2,4,4,6]));;
 gap> IsSimpleSemigroup(s);
 true
 
-#
+#T# PropertiesTest5
 gap> s:=Semigroup(Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] ));;
 gap> IsSimpleSemigroup(s);
 true
 
-#
+#T# PropertiesTest6
 gap> s:=Semigroup(Transformation([2,1,1,2,1]), Transformation([3,4,3,4,4]), 
 > Transformation([3,4,3,4,3]), Transformation([4,3,3,4,4]));;
 gap> IsCompletelySimpleSemigroup(s);
 true
 
-#
+#T# PropertiesTest7
 gap> s:=Semigroup(Transformation([4,4,4,1,1,6,7,8,9,10,11,1]),
 > Transformation([6,6,6,7,7,1,4,8,9,10,11,7]),
 > Transformation([8,8,8,9,9,10,11,1,4,6,7,9]),
@@ -105,7 +103,7 @@ gap> s:=Semigroup(Transformation([4,4,4,1,1,6,7,8,9,10,11,1]),
 gap> IsCompletelySimpleSemigroup(s);
 true
 
-#
+#T# PropertiesTest8
 gap> s:=Semigroup(Transformation([1,2,2,1,2]),
 > Transformation([3,4,3,4,4]),
 > Transformation([3,4,3,4,3]),
@@ -113,7 +111,7 @@ gap> s:=Semigroup(Transformation([1,2,2,1,2]),
 gap> IsCompletelySimpleSemigroup(s);
 true
 
-#
+#T# PropertiesTest9
 gap> s:=semis[12];;
 gap> d:=GreensDClassOfElement(s, 
 > Transformation( [ 12, 2, 1, 3, 6, 6, 12, 2, 3, 3, 11, 3 ] ));;
@@ -127,7 +125,7 @@ true
 gap> IsGroupAsSemigroup(semis[11]);
 false
 
-#
+#T# PropertiesTest10
 gap> List(semis, IsCliffordSemigroup);
 [ false, true, false, false, false, false, false, false, false, false, false, 
   false, false, false, false, false, false, false, false, false, false, false 
@@ -141,7 +139,7 @@ gap> ForAll(GreensDClasses(semis[2]), x-> Length(GreensHClasses(x))=1 and
 > IsRegularDClass(x));
 true
 
-#
+#T# PropertiesTest11
 gap> s:=Semigroup(Transformation([1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]),
 > Transformation([1,2,3,4,5,6,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4]),
 > Transformation([1,2,3,4,5,6,7,8,9,10,11,4,4,4,4,4,4,4,4,4,4]),
@@ -150,7 +148,7 @@ gap> s:=Semigroup(Transformation([1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]),
 gap> IsLTrivial(s);
 true
 
-#
+#T# PropertiesTest12
 gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
 gap> s:=Monoid(gens);;
 gap> IsLTrivial(s);
@@ -159,7 +157,7 @@ gap> d:=DClass(s, Transformation( [ 2, 2, 1, 1, 1 ] ));;
 gap> IsLTrivial(d);
 true
 
-#
+#T# PropertiesTest13
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -194,7 +192,7 @@ gap> NrRClasses(d);
 gap> IsRTrivial(s);
 false
 
-#
+#T# PropertiesTest14
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -202,7 +200,7 @@ gap> s:=Semigroup(gens);;
 gap> IsRTrivial(s);
 false
 
-#
+#T# PropertiesTest15
 gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Monoid(gens);;
@@ -211,7 +209,7 @@ false
 gap> IsHTrivial(s);
 false
 
-#
+#T# PropertiesTest16
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
@@ -220,7 +218,7 @@ gap> s:=Semigroup(gens);;
 gap> IsAperiodicSemigroup(s);
 false
 
-#
+#T# PropertiesTest17
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 >   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
 >   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
@@ -229,7 +227,7 @@ gap> s:=Monoid(gens);;
 gap> IsCombinatorialSemigroup(s);
 false
 
-#
+#T# PropertiesTest18
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -237,14 +235,14 @@ gap> s:=Semigroup(gens);;
 gap> IsAperiodicSemigroup(s);
 false
 
-#
+#T# PropertiesTest19
 gap> gens:=[Transformation( [ 13, 10, 9, 5, 1, 5, 13, 13, 8, 2, 7, 2, 6 ] ),
 > Transformation( [ 6, 11, 12, 10, 4, 10, 13, 5, 8, 5, 11, 6, 9 ] )];;
 gap> s:=Semigroup(gens);;
 gap> IsAperiodicSemigroup(s);
 false
 
-#
+#T# PropertiesTest20
 gap> gens:=[Transformation( [ 12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2 ] ),
 > Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ),
 > Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] )];;
@@ -252,7 +250,7 @@ gap> s:=Monoid(gens);;
 gap> IsAperiodicSemigroup(s);
 false
 
-#
+#T# PropertiesTest21
 gap> gens:=[Transformation([2,3,4,5,1,8,7,6,2,7]),
 > Transformation([5,4,1,2,3,7,6,5,4,1]),
 > Transformation([2,1,4,3,2,1,4,4,3,3])];;
@@ -260,13 +258,13 @@ gap> s:=Monoid(gens);;
 gap> IsAperiodicSemigroup(s);
 false
 
-#
+#T# PropertiesTest22
 gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
 gap> s:=Monoid(gens);;
 gap> IsAperiodicSemigroup(s);
 true
 
-#
+#T# PropertiesTest23
 gap> gens:=[ Transformation( [ 1, 3, 2, 6, 5, 4, 8, 7, 9, 10 ] ), 
 >  Transformation( [ 1, 2, 6, 4, 8, 3, 9, 5, 7, 10 ] ), 
 >  Transformation( [ 1, 10, 10, 10, 10, 10, 7, 8, 10, 10 ] ), 
@@ -275,7 +273,7 @@ gap> s:=Semigroup(gens);;
 gap> IsInverseSemigroup(s);
 true
 
-#
+#T# PropertiesTest24
 gap> gens:=[ Transformation( [ 1, 4, 5, 16, 2, 11, 13, 7, 12, 8, 15, 6, 14, 10, 9, 3, 17
 > ] ), 
 > Transformation( [ 1, 17, 17, 17, 17, 6, 7, 8, 9, 10, 11, 17, 17, 17, 17, 16, 17 ] ), 
@@ -286,7 +284,7 @@ gap> s:=Semigroup(gens);;
 gap> IsInverseSemigroup(s);
 true
 
-#
+#T# PropertiesTest25
 gap> gens:=[ Transformation( [ 1, 2, 10, 4, 5, 13, 7, 8, 15, 3, 11, 16, 
 > 6, 14, 9, 12, 17 ] ), 
 > Transformation( [ 1, 8, 10, 4, 5, 6, 14, 2, 15, 3, 11, 12, 13, 7, 9, 16, 17 ] ), 
@@ -304,7 +302,7 @@ gap> s:=Semigroup(gens);;
 gap> IsInverseSemigroup(s);
 true
 
-#
+#T# PropertiesTest26
 gap> gens:=[ Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 2, 1 ] ), 
 >   Transformation( [ 2, 2, 3 ] ), Transformation( [ 3, 2, 3 ] ), 
 >   Transformation( [ 1, 3, 3 ] ), Transformation( [ 1, 1, 3 ] ) ]
@@ -313,7 +311,7 @@ gap> s:=Semigroup(gens);;
 gap> IsIdempotentGenerated(s);
 true
 
-#
+#T# PropertiesTest27
 gap> gens:=[Transformation( [ 2, 6, 1, 8, 5, 3, 8, 8 ] ),
 > Transformation( [ 3, 7, 6, 4, 5, 2, 1, 8 ] )];;
 gap> s:=Semigroup(gens);;
@@ -323,7 +321,7 @@ Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )
 gap> IsLeftZeroSemigroup(i);
 true
 
-#
+#T# PropertiesTest28
 gap> gens:=[Transformation([2,3,4,5,6,7,8,9,1]),
 > Transformation([4,2,3,4,5,6,7,8,9])];;
 gap> s:=Semigroup(gens);;
@@ -340,7 +338,7 @@ fail
 gap> One(i);
 fail
 
-#
+#T# PropertiesTest29
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ] ),
 >   Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ];;
 gap> s:=Monoid(gens);;
@@ -359,7 +357,7 @@ true
 gap> IsSynchronizingSemigroup(i, 4);
 true
 
-#
+#T# PropertiesTest30
 gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,4,3,5,6,7,8,9,10]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
@@ -367,7 +365,7 @@ gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 gap> s:=Monoid(gens);;
 gap> g:=GroupOfUnits(s);;
 
-#
+#T# PropertiesTest31
 gap> gens:=[Transformation([4,4,4,1,1,6,7,8,9,10,11,1]),
 > Transformation([6,6,6,7,7,1,4,8,9,10,11,7]),
 > Transformation([8,8,8,9,9,10,11,1,4,6,7,9]),
@@ -379,7 +377,7 @@ gap> s:=Semigroup(gens);;
 gap> IsOrthodoxSemigroup(s);
 true
 
-#
+#T# PropertiesTest32
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -392,7 +390,7 @@ gap> s:=Semigroup(gens);;
 gap> IsOrthodoxSemigroup(s);
 false
 
-#
+#T# PropertiesTest33
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
@@ -401,7 +399,7 @@ gap> s:=Semigroup(gens);;
 gap> IsOrthodoxSemigroup(s);
 false
 
-#
+#T# PropertiesTest34
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 >   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
 >   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
@@ -410,7 +408,7 @@ gap> s:=Monoid(gens);;
 gap> IsOrthodoxSemigroup(s);
 false
 
-#
+#T# PropertiesTest35
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -418,7 +416,7 @@ gap> s:=Semigroup(gens);;
 gap> IsOrthodoxSemigroup(s);
 false
 
-#
+#T# PropertiesTest36
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
@@ -427,14 +425,14 @@ gap> s:=Monoid(gens);;
 gap> IsOrthodoxSemigroup(s);
 false
 
-#
+#T# PropertiesTest37
 gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Monoid(gens);;
 gap> IsOrthodoxSemigroup(s);
 true
 
-#
+#T# PropertiesTest38
 gap> gens:=[Transformation([2,3,4,5,1,8,7,6,2,7]),
 > Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] )];;
 gap> s:=Monoid(gens);;
@@ -442,7 +440,7 @@ gap> i:=MinimalIdeal(s);;
 gap> IsRectangularBand(i);
 true
 
-#
+#T# PropertiesTest39
 gap> gens:=[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8 ] ),
 >   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8 ] ) ];
 [ Transformation( [ 1, 4, 6, 2, 5, 3 ] ), 
@@ -454,7 +452,7 @@ true
 gap> MultiplicativeZero(i);
 Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )
 
-#
+#T# PropertiesTest40
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -474,7 +472,7 @@ true
 gap> IsRightZeroSemigroup(i);
 true
 
-#
+#T# PropertiesTest41
 gap> rms:=ReesMatrixSemigroup(Group(()), List([1..4], x-> List([1..3], y->
 > ())));;
 gap> s:=IsomorphismTransformationSemigroup(rms);;
@@ -484,7 +482,7 @@ true
 gap> IsRegularSemigroup(s);
 true
 
-#
+#T# PropertiesTest42
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ),
 >   Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1, 7 ] ),
 >   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] ),
@@ -499,7 +497,7 @@ gap> s:=Semigroup(gens);;
 gap> IsRegularSemigroup(s);
 false
 
-#
+#T# PropertiesTest43
 gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,4,3,5,6,7,8,9,10]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
@@ -508,7 +506,7 @@ gap> s:=Monoid(gens);;
 gap> IsRegularSemigroup(s);
 false
 
-#
+#T# PropertiesTest44
 gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Monoid(gens);;
@@ -524,7 +522,7 @@ gap> Size(t);
 gap> IsOrthodoxSemigroup(t);
 true
 
-#
+#T# PropertiesTest45
 gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation([2,3,4,5,6,8,7,1,2,2])];;
 gap> s:=Monoid(gens);;
@@ -534,7 +532,7 @@ false
 gap> IsBand(s);
 true
 
-#
+#T# PropertiesTest46
 gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 >   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];
 [ Transformation( [ 5, 6, 7, 3, 1, 4, 2 ] ), 
@@ -545,7 +543,7 @@ gap> Size(s);
 gap> IsSemilatticeAsSemigroup(s);
 true
 
-#
+#T# PropertiesTest47
 gap> s:=FullTransformationSemigroup(3);;
 gap> j:=0;;
 gap> for f in s do
@@ -556,7 +554,7 @@ gap> for f in s do
 gap> j;
 549
 
-#
+#T# PropertiesTest48
 gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 >   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
 >   Transformation( [ 1, 2, 4, 3, 5, 6 ] ),
@@ -572,13 +570,13 @@ true
 gap> IsZeroGroup(s);
 false
 
-#
+#T# PropertiesTest49
 gap> gens:=List(Tuples([1,2], 4), x-> TransformationNC(Concatenation([1,1], x)));;
 gap> s:=Semigroup(gens);;
 gap> IsZeroSemigroup(s);
 true
 
-#
+#T# PropertiesTest50
 gap> gens:=[ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10 ] ), 
 >  Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8, 10, 10 ] ), 
 >  Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2, 10, 10 ] ), 
@@ -588,7 +586,7 @@ gap> s:=Semigroup(gens);;
 gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10 ] )
 
-#
+#T# PropertiesTest51
 gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2 ] ),
 >   Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] ),
@@ -609,7 +607,7 @@ gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 
-# E-unitary
+#T# PropertiesTest52 Checking E-unitary
 gap> [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 1, 2, 5 ] ),
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 1, 4 ] ) ];;
 gap> s:=InverseSemigroup(last);;
@@ -628,7 +626,7 @@ gap> s:=InverseSemigroup(last);;
 gap> IsEUnitaryInverseSemigroup(s);
 false
 
-##
+#T# PropertiesTest53
 #gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 #>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 #>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -723,7 +721,7 @@ false
 #gap> IsAdequateSemigroup(s);
 #false
 #
-#
+# This is still part of PropertiesTest53
 gap> s:=Semigroup(
 > [ Transformation( [ 1, 2, 3, 2 ] ), Transformation( [ 1, 2, 3, 3 ] ), 
 >   Transformation( [ 1, 2, 3, 4, 5, 7, 6 ] ), Transformation( [ 1, 2, 4, 3 ] ),
@@ -737,7 +735,7 @@ gap> t:=IdempotentGeneratedSubsemigroup(s);;
 gap> Size(t);
 105
 
-#
+#T# PropertiesTest54
 #gap> gens:=[ [ [ 2 ], [ 1 ], [ 4 ], [ 2 ], [ 3, 4 ] ], 
 #>  [ [ 2, 3 ], [ 1, 2, 3, 4 ], [ 1 ], [ 1, 2, 4 ], [ 5 ] ], 
 #>  [ [ 3 ], [ 1, 4 ], [ 1, 2, 3 ], [ 1, 3, 4 ], [ 2, 4, 5 ] ] ];;
@@ -766,13 +764,22 @@ gap> S := Semigroup(
 gap> IsCongruenceFreeSemigroup(S);
 false
 
-#
-gap> SemigroupsStopTest();
+#T# IsSynchronizingSemigroup
+# for <IdentityTransformation>
+gap> t := Transformation( [ 1 ] );;
+gap> s := Semigroup(t);
+<trivial transformation group>
+gap> IsSynchronizingSemigroup(s, 2);
+false
+gap> IsSynchronizingSemigroup(s, 1);
+true
+gap> IsSynchronizingSemigroup(s);
+false
 
-#
+#E#
 gap> Unbind(semis); Unbind(file); Unbind(s); Unbind(d); 
 gap> Unbind(g); Unbind(gens); Unbind(t); Unbind(i); Unbind(f);
 gap> Unbind(g); Unbind(rms);
 
 #
-gap> STOP_TEST( "Semigroups package: properties.tst", 10000);
+gap> STOP_TEST( "Semigroups package: properties.tst");

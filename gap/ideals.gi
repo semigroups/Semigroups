@@ -1,11 +1,11 @@
-############################################################################# 
-## 
+#############################################################################
+##
 #W  ideals.gi
-#Y  Copyright (C) 2013-14                                 James D. Mitchell
-## 
-##  Licensing information can be found in the README file of this package. 
-## 
-############################################################################# 
+#Y  Copyright (C) 2013-15                                 James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
 ##
 
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
@@ -13,22 +13,22 @@ InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 
 #
 
-InstallMethod(PrintObj, 
-"for a semigroup ideal with ideal generators", 
+InstallMethod(PrintObj,
+"for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I) 
+function(I)
   Print(PrintString(I));
 end);
 
 #
 
-InstallMethod(PrintString, 
-"for an acting semigroup ideal with ideal generators", 
+InstallMethod(PrintString,
+"for an acting semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and IsActingSemigroup],
-function(I) 
+function(I)
   local str;
 
-  str:="\>\>SemigroupIdeal(\< \>";
+  str := "\>\>SemigroupIdeal(\< \>";
   Append(str, PrintString(SupersemigroupOfIdeal(I)));
   Append(str, ",\< \>");
   Append(str, PrintString(GeneratorsOfSemigroupIdeal(I)));
@@ -41,10 +41,10 @@ end);
 # ViewString. Hence the method for ViewString is never invoked without the
 # method below.
 
-InstallMethod(ViewObj, 
-"for a semigroup ideal with ideal generators", 
+InstallMethod(ViewObj,
+"for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 1,
-function(I) 
+function(I)
   Print(ViewString(I));
 end);
 
@@ -64,12 +64,13 @@ end);
 InstallMethod(\., "for a semigroup ideal with generators and pos int",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, IsPosInt],
 function(S, n)
-  S:=GeneratorsOfSemigroupIdeal(S);
-  n:=NameRNam(n);
-  n:=Int(n);
-  if n=fail or Length(S)<n then
-    Error("usage: the second argument <n> should be a positive integer\n",
-     "not greater than the number of generators of the semigroup <S> in\n", 
+  S := GeneratorsOfSemigroupIdeal(S);
+  n := NameRNam(n);
+  n := Int(n);
+  if n = fail or Length(S) < n then
+    Error("Semigroups: \.: usage,\n",
+    "the second argument <n> should be a positive integer\n",
+     "not greater than the number of generators of the semigroup <S> in\n",
      "the first argument,");
     return;
   fi;
@@ -78,52 +79,52 @@ end);
 
 #
 
-InstallMethod(\=, "for semigroup ideals", 
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
+InstallMethod(\=, "for semigroup ideals",
+[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal,
  IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(I, J)
-  
-  if SupersemigroupOfIdeal(I)=SupersemigroupOfIdeal(J) then 
-    return ForAll(GeneratorsOfMagmaIdeal(I), x-> x in J) and
-    ForAll(GeneratorsOfMagmaIdeal(J), x-> x in I);
-  else 
-    return ForAll(GeneratorsOfSemigroup(I), x-> x in J) and
-     ForAll(GeneratorsOfSemigroup(J), x-> x in I); 
+
+  if SupersemigroupOfIdeal(I) = SupersemigroupOfIdeal(J) then
+    return ForAll(GeneratorsOfMagmaIdeal(I), x -> x in J) and
+    ForAll(GeneratorsOfMagmaIdeal(J), x -> x in I);
+  else
+    return ForAll(GeneratorsOfSemigroup(I), x -> x in J) and
+     ForAll(GeneratorsOfSemigroup(J), x -> x in I);
   fi;
 
 end);
 
 #
 
-InstallMethod(\=, "for a semigroup ideal and semigroup with generators", 
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
+InstallMethod(\=, "for a semigroup ideal and semigroup with generators",
+[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal,
  IsSemigroup and HasGeneratorsOfSemigroup],
 function(I, S)
-  if ForAll(GeneratorsOfSemigroup(S), x-> x in I) then 
-    if S=Parent(I) then 
+  if ForAll(GeneratorsOfSemigroup(S), x -> x in I) then
+    if S = Parent(I) then
       return true;
-    elif HasGeneratorsOfSemigroup(I) then 
-      return ForAll(GeneratorsOfSemigroup(I), x-> x in S);
-    else 
-      return Size(I)=Size(S);
+    elif HasGeneratorsOfSemigroup(I) then
+      return ForAll(GeneratorsOfSemigroup(I), x -> x in S);
+    else
+      return Size(I) = Size(S);
     fi;
-  else 
+  else
     return false;
   fi;
 end);
 
 #
 
-InstallMethod(\=, "for a semigroup with generators and a semigroup ideal", 
-[IsSemigroup and HasGeneratorsOfSemigroup, 
-IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal], 
+InstallMethod(\=, "for a semigroup with generators and a semigroup ideal",
+[IsSemigroup and HasGeneratorsOfSemigroup,
+IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(S, I)
-  return I=S;
+  return I = S;
 end);
 
 #
 
-InstallMethod(Representative, "for a semigroup ideal", 
+InstallMethod(Representative, "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(I)
   return Representative(GeneratorsOfMagmaIdeal(I));
@@ -131,18 +132,20 @@ end);
 
 # a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
-InstallGlobalFunction(SemigroupIdeal, 
+InstallGlobalFunction(SemigroupIdeal,
 function( arg )
   local out, i;
 
-  if not IsSemigroup(arg[1]) then 
-    Error("usage: the first argument should be a semigroup,");
+  if not IsSemigroup(arg[1]) then
+    Error("Semigroups: SemigroupIdeal: usage,\n",
+          "the first argument must be a semigroup,");
     return;
   fi;
 
-  if Length(arg)=1 then 
-    Error("usage: there must be a second argument, which specifies\n",
-    "the ideal you are trying to create,");
+  if Length(arg) = 1 then
+    Error("Semigroups: SemigroupIdeal: usage,\n",
+          "there must be a second argument, which specifies\n",
+          "the generators of the ideal,");
     return;
   fi;
 
@@ -151,101 +154,105 @@ function( arg )
     return SemigroupIdealByGenerators(arg[1],  [arg[2]]);
 
   # list of generators
-  elif Length(arg)=2 and IsList(arg[2]) and 0 < Length(arg[2]) then
+  elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
     return SemigroupIdealByGenerators(arg[1], arg[2]);
-  
+
   # generators and collections of generators
-  elif IsAssociativeElement(arg[2]) 
+  elif IsAssociativeElement(arg[2])
    or IsAssociativeElementCollection(arg[2]) then
-    out:=[];
-    for i in [2..Length(arg)] do
+    out := [];
+    for i in [2 .. Length(arg)] do
       if IsAssociativeElement(arg[i]) then
         Add(out, arg[i]);
       elif IsAssociativeElementCollection(arg[i]) then
         if HasGeneratorsOfSemigroup(arg[i]) then
           Append(out, GeneratorsOfSemigroup(arg[i]));
-        elif HasGeneratorsOfSemigroupIdeal(arg[i]) then 
+        elif HasGeneratorsOfSemigroupIdeal(arg[i]) then
           Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
-        elif IsList(arg[i]) then 
+        elif IsList(arg[i]) then
           Append(out, arg[i]);
-        else 
-          Append(out, AsList(arg[1])); 
+        else
+          Append(out, AsList(arg[1]));
         fi;
-      #so that we can pass the options record in the Semigroups package 
-      elif i=Length(arg) and IsRecord(arg[i]) then
+      #so that we can pass the options record in the Semigroups package
+      elif i = Length(arg) and IsRecord(arg[i]) then
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
-        Error( "usage: the second argument should be some\n",
-        "combination of generators, lists of generators, or semigroups,");
+        Error("Semigroups: SemigroupIdeal: usage,\n",
+              "the second argument must be a",
+              "combination of generators,\n lists of generators, ",
+              "or semigroups,");
         return;
       fi;
     od;
     return SemigroupIdealByGenerators(arg[1], out);
   # no argument given, error
   else
-    Error( "usage: the second argument should be some\n",
-    "combination of generators, lists of generators, or semigroups,");
+    Error("Semigroups: SemigroupIdeal: usage,\n",
+          "the second argument must be a",
+          "combination of generators,\nlists of generators, or semigroups,");
     return;
   fi;
 end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators, "for an associative element collection",
-[IsActingSemigroup, IsAssociativeElementCollection], 
+InstallMethod(SemigroupIdealByGenerators,
+"for an associative element collection",
+[IsActingSemigroup, IsAssociativeElementCollection],
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, S!.opts);
 end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators, 
+InstallMethod(SemigroupIdealByGenerators,
 "for an acting semigroup, associative element collection and record",
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
-
-  if not ForAll(gens, x-> x in S) then 
-    Error("usage: the generators do not belong to the semigroup,");
-    return fail;
+  if not ForAll(gens, x -> x in S) then
+    Error("Semigroups: SemigroupIdealByGenerators: usage,\n",
+          "the second argument <gens> do not all belong to the semigroup,");
+    return;
   fi;
 
-  opts:=SemigroupOptions(opts);
-  gens:=AsList(gens);
-  
-  filts:=IsMagmaIdeal and IsAttributeStoringRep;
+  opts := SemigroupOptions(opts);
+  gens := AsList(gens);
 
-  if opts.acting then 
-    filts:=filts and IsActingSemigroup;
+  filts := IsMagmaIdeal and IsAttributeStoringRep;
+
+  if opts.acting then
+    filts := filts and IsActingSemigroup;
   fi;
 
-  I:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
-  
-  if opts.acting and IsActingSemigroupWithInverseOp(S) then 
+  I := Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := opts));
+
+  if opts.acting and IsActingSemigroupWithInverseOp(S) then
     SetFilterObj(I, IsActingSemigroupWithInverseOp);
   fi;
 
-  if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then 
+  if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then
     SetIsRegularSemigroup(I, true);
   fi;
-  
+
   if (HasIsRegularSemigroup(S) and not IsRegularSemigroup(S)) then
     # <S> is a non-regular semigroup or ideal
     SetSupersemigroupOfIdeal(I, S);
-  elif HasSupersemigroupOfIdeal(S) then 
+  elif HasSupersemigroupOfIdeal(S) then
     # <S> is a regular ideal
 
     # this takes precedence over the last case since we hope that the
     # supersemigroup of an ideal has fewer generators than the ideal...
     SetSupersemigroupOfIdeal(I, SupersemigroupOfIdeal(S));
   else
-    # <S> is a regular semigroup 
+    # <S> is a regular semigroup
     SetSupersemigroupOfIdeal(I, S);
   fi;
- 
-  SetParent(I, S); 
+
+  SetParent(I, S);
   SetGeneratorsOfMagmaIdeal(I, gens);
-  
+
   if not opts.acting then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif not (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) then
@@ -258,25 +265,25 @@ end);
 #
 
 InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal], 
+[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
-  
-  gens:=GeneratorsOfSemigroupIdeal(S); 
-  partial:=PartialOrderOfDClasses(S);
-  pos:=[]; 
-  o:=LambdaOrb(S); 
-  scc:=OrbSCCLookup(o);
 
-  for x in gens do 
-    #index of the D-class containing x 
-    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))]-1);
+  gens := GeneratorsOfSemigroupIdeal(S);
+  partial := PartialOrderOfDClasses(S);
+  pos := [];
+  o := LambdaOrb(S);
+  scc := OrbSCCLookup(o);
+
+  for x in gens do
+    #index of the D-class containing x
+    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))] - 1);
   od;
 
-  out:=[];
-  classes:=GreensDClasses(S);
-  for i in pos do 
-    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+  out := [];
+  classes := GreensDClasses(S);
+  for i in pos do
+    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
       Add(out, classes[i]);
     fi;
   od;
@@ -291,15 +298,16 @@ InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
 function(I)
   local data, pos, partial, classes, out, i;
 
-  data:=SemigroupIdealData(I); 
-  pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
-                             # [1..n-1] in data!.dorbit
-   
-  partial:=data!.poset;
-  classes:=data!.dorbit;
-  out:=[];
-  for i in pos do 
-    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+  data := SemigroupIdealData(I);
+  pos := [1 .. data!.genspos - 1];
+  # the D-classes of the generators in positions
+  # [1..n-1] in data!.dorbit
+
+  partial := data!.poset;
+  classes := data!.dorbit;
+  out := [];
+  for i in pos do
+    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
       Add(out, classes[i]);
     fi;
   od;
@@ -307,7 +315,7 @@ function(I)
   return out;
 end);
 
-# 
+#
 
 InstallMethod(MinimalIdealGeneratingSet, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
@@ -336,62 +344,62 @@ end);
 
 #
 
-InstallMethod(IsomorphismTransformationSemigroup, 
+InstallMethod(IsomorphismTransformationSemigroup,
 "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local iso, inv, J;
 
-  iso:=IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
-  inv:=InverseGeneralMapping(iso);
-  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+  iso := IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
+  inv := InverseGeneralMapping(iso);
+  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
 
-  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 #
 
-InstallMethod(IsomorphismBipartitionSemigroup, 
+InstallMethod(IsomorphismBipartitionSemigroup,
 "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local iso, inv, J;
 
-  iso:=IsomorphismBipartitionSemigroup(SupersemigroupOfIdeal(I));
-  inv:=InverseGeneralMapping(iso);
-  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+  iso := IsomorphismBipartitionSemigroup(SupersemigroupOfIdeal(I));
+  inv := InverseGeneralMapping(iso);
+  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
 
-  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 #
 
-InstallMethod(IsomorphismPartialPermSemigroup, 
+InstallMethod(IsomorphismPartialPermSemigroup,
 "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local iso, inv, J;
 
-  iso:=IsomorphismPartialPermSemigroup(SupersemigroupOfIdeal(I));
-  inv:=InverseGeneralMapping(iso);
-  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+  iso := IsomorphismPartialPermSemigroup(SupersemigroupOfIdeal(I));
+  inv := InverseGeneralMapping(iso);
+  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
 
-  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 #
 
-InstallMethod(IsomorphismBlockBijectionSemigroup, 
+InstallMethod(IsomorphismBlockBijectionSemigroup,
 "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local iso, inv, J;
 
-  iso:=IsomorphismBlockBijectionSemigroup(SupersemigroupOfIdeal(I));
-  inv:=InverseGeneralMapping(iso);
-  J:=SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+  iso := IsomorphismBlockBijectionSemigroup(SupersemigroupOfIdeal(I));
+  inv := InverseGeneralMapping(iso);
+  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
 
-  return MagmaIsomorphismByFunctionsNC(I, J, x-> x^iso, x-> x^inv);
+  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 #
@@ -400,15 +408,15 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)
   local x, y;
- 
+
   if HasParent(I) and HasIsCommutativeSemigroup(Parent(I)) and
-   IsCommutativeSemigroup(Parent(I)) then 
+   IsCommutativeSemigroup(Parent(I)) then
     return true;
   fi;
 
   for x in GeneratorsOfSemigroupIdeal(I) do
-    for y in GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)) do 
-      if not x*y=y*x then 
+    for y in GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)) do
+      if not x * y = y * x then
         return false;
       fi;
     od;
@@ -423,8 +431,8 @@ InstallMethod(IsTrivial, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)
   local gens;
-  
-  if HasIsTrivial(Parent(I)) and IsTrivial(Parent(I)) then 
+
+  if HasIsTrivial(Parent(I)) and IsTrivial(Parent(I)) then
     return true;
   fi;
 
@@ -438,7 +446,7 @@ InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup ideal",
 [IsSemigroupIdeal and IsInverseSemigroup],
 function(I)
 
-  if I=SupersemigroupOfIdeal(I) then 
+  if I = SupersemigroupOfIdeal(I) then
     return IsFactorisableSemigroup(SupersemigroupOfIdeal(I));
   fi;
   return false;
@@ -448,15 +456,15 @@ end);
 # method for IsSemigroup.
 
 InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
-[IsSemigroupIdeal], S-> NrRClasses(S)=1 and NrLClasses(S)=1);
+[IsSemigroupIdeal], S -> NrRClasses(S) = 1 and NrLClasses(S) = 1);
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-  return Length(OrbSCC(LambdaOrb(I)))-1;
+  return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);
 
-# 
+#
 
 InstallMethod(NrDClasses, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
@@ -476,24 +484,25 @@ end);
 
 #
 
-InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal", 
+InstallMethod(PartialOrderOfDClasses,
+"for a regular acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data;
 
-  data:=SemigroupIdealData(I);
+  data := SemigroupIdealData(I);
   Enumerate(data);
   return data!.poset;
 end);
 
 #
 
-InstallMethod(DClassReps, "for an acting semigroup ideal", 
+InstallMethod(DClassReps, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data;
 
-  data:=SemigroupIdealData(I);
+  data := SemigroupIdealData(I);
   Enumerate(data);
   return List(data!.dorbit, Representative);
 end);

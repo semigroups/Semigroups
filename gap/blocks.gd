@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  blocks.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,7 +11,6 @@
 DeclareCategory("IsBlocks", IsList);
 DeclareCategoryCollections("IsBlocks");
 
-DeclareGlobalFunction("ORB_HashFunctionForBlocks");
 DeclareGlobalFunction("BlocksNC");
 DeclareGlobalFunction("BlocksByIntRepNC");
 DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
@@ -32,8 +31,6 @@ DeclareAttribute("RightBlocks", IsBipartition);
 DeclareAttribute("ExtRepOfBlocks", IsBlocks);
 DeclareGlobalFunction("BlocksByExtRep");
 
-DeclareOperation("JoinOfBlocks", [IsBlocks, IsBlocks]);
-
 DeclareGlobalFunction("OnRightBlocks");
 DeclareGlobalFunction("OnLeftBlocks");
 
@@ -44,7 +41,3 @@ DeclareGlobalFunction("InverseRightBlocks");
 DeclareGlobalFunction("InverseLeftBlocks");
 DeclareGlobalFunction("BlocksIdempotentTester");
 DeclareGlobalFunction("BlocksIdempotentCreator");
-
-DeclareGlobalFunction("FuseRightBlocks");
-DeclareGlobalFunction("FuseLeftBlocks");
-

@@ -1,0 +1,147 @@
+#############################################################################
+##
+#W  freeband.xml
+#Y  Copyright (C) 2013-14                                   Julius Jonusas
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+
+<#GAPDoc Label="GreensDClassOfElement" >
+<ManSection>
+    <Oper Name = "GreensDClassOfElement" Arg = "s, x"
+    Label="for a free band and a free band element"/>
+    <Returns> A Green's D-class</Returns>
+    <Description>
+      Let <A> S </A> be a free band. Two elements of <A> S </A> are &D;-related
+      if and only if they have the same content i.e. the set of generators
+      appearing in any factorization of the elements. Therefore, a &D;-class of
+      a free band element <A> x </A> is the set of elements of <A> S </A> which
+      have the same content as <A> x </A>. 
+<Example><![CDATA[
+gap> S := FreeBand(3, "b");
+<free band on the generators [ b1, b2, b3 ]>
+gap> x := Generators(S)[1] * Generators(S)[2];
+b1b2
+gap> D := GreensDClassOfElement(S, x);
+{b1b2}
+gap> IsGreensDClass(D);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="FreeBand" >
+<ManSection>
+    <Oper Name = "FreeBand" Arg = "rank[, name]"
+    Label="for a given rank"/>
+    <Oper Name = "FreeBand" Arg = "name1, name2, ..."
+    Label="for a list of names"/>
+    <Oper Name = "FreeBand" Arg = "names"
+    Label="for various names"/>
+    <Returns> A free band. </Returns>
+    <Description>
+     Returns a free band on <A>rank</A> generators, for a positive integer
+     <A>rank</A>. If <A>rank</A> is not specified, the number of <A>names</A>
+     is used. The resulting semigroup is always finite.
+<Example><![CDATA[
+gap> FreeBand(6);
+<free band on the generators [ x1, x2, x3, x4, x5, x6 ]>
+gap> FreeBand(6, "b");
+<free band on the generators [ b1, b2, b3, b4, b5, b6 ]>
+gap> FreeBand("a", "b", "c");
+<free band on the generators [ a, b, c ]>
+gap> FreeBand("a", "b", "c");
+<free band on the generators [ a, b, c ]>
+gap> s := FreeBand(["a", "b", "c"]);
+<free band on the generators [ a, b, c ]>
+gap> Size(s);
+159
+gap> gens := Generators(s);
+[ a, b, c ]
+gap> a := gens[1];; b := gens[2];;
+gap> a * b;
+ab]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFreeBandCategory" >
+<ManSection>
+    <Filt Name = "IsFreeBandCategory" Type = "Category"/>
+    <Description>
+      <C>IsFreeBandCategory</C> is the category of semigroups created using
+      <Ref Oper = "FreeBand" Label="for a given rank" />.
+<Example><![CDATA[
+gap> IsFreeBandCategory(FreeBand(3));
+true
+gap> IsFreeBand(SymmetricGroup(6));
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFreeBand" >
+<ManSection>
+    <Prop Name = "IsFreeBand" Arg = "S"
+    Label="for a given semigroup"/>
+    <Returns> <K>true</K> or <K>false</K> </Returns>
+    <Description>
+      <C>IsFreeBand</C> returns <K>true</K> if the given semigroup <A>S</A> is a
+      free band.
+<Example><![CDATA[
+gap> IsFreeBand(FreeBand(3));
+true
+gap> IsFreeBand(SymmetricGroup(6));
+false
+gap> IsFreeBand(FullTransformationMonoid(7));
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFreeBandElement" >
+<ManSection>
+    <Filt Name = "IsFreeBandElement" Type = "Category"/>
+    <Description>
+    <C>IsFreeBandElement</C> is a <C>Category</C> containing the
+    elements of a free band.  
+<Example><![CDATA[
+gap> IsFreeBandElement(Generators(FreeBand(4))[1]);
+true
+gap> IsFreeBandElement(Transformation([1,3,4,1]));
+false
+gap> IsFreeBandElement((1,2,3,4));
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="IsFreeBandSubsemigroup" >
+<ManSection>
+    <Filt Name = "IsFreeBandSubsemigroup"/>
+    <Description>
+      <C>IsFreeBandSubsemigroup</C> is a synonym for <C>IsSemigroup</C> and
+      <C>IsFreeBandElementCollection</C>.
+<Example><![CDATA[
+gap> S := FreeBand(2);
+<free band on the generators [ x1, x2 ]>
+gap> x := Generators(S)[1];
+x1
+gap> y := Generators(S)[2];
+x2
+gap> new := Semigroup([x*y, x]);
+<semigroup with 2 generators>
+gap> IsFreeBand(new);
+false
+gap> IsFreeBandSubsemigroup(new);
+true
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

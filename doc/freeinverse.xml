@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  freeinverse.xml
-#Y  Copyright (C) 2011-14           
+#Y  Copyright (C) 2011-14                                   Julius Jonusas 
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -22,35 +22,47 @@
      specified, the number of <A>names</A> is used. If <C>S</C> is a
      free inverse semigroup, then the generators can be accessed by
      <C>S.1</C>, <C>S.2</C> and so on.
-<Example>
+<Example><![CDATA[
 gap> S := FreeInverseSemigroup(7);
-&lt;free inverse semigroup on the generators 
+<free inverse semigroup on the generators 
 [ x1, x2, x3, x4, x5, x6, x7 ]>
 gap> S := FreeInverseSemigroup(7,"s");
-&lt;free inverse semigroup on the generators 
+<free inverse semigroup on the generators 
 [ s1, s2, s3, s4, s5, s6, s7 ]>
 gap> S := FreeInverseSemigroup("a", "b", "c");
-&lt;free inverse semigroup on the generators [ a, b, c ]>
+<free inverse semigroup on the generators [ a, b, c ]>
 gap> S := FreeInverseSemigroup(["a", "b", "c"]);
-&lt;free inverse semigroup on the generators [ a, b, c ]>
+<free inverse semigroup on the generators [ a, b, c ]>
 gap> S.1;
 a
 gap> S.2;
-b</Example>
+b]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFreeInverseSemigroupCategory">
+  <ManSection>
+    <Filt Name="IsFreeInverseSemigroupCategory" Arg="obj" Type="Category"/>
+    <Description>
+      Every free inverse semigroup in &GAP; created by <Ref Oper =
+      "FreeInverseSemigroup" Label="for a given rank"/> belongs to the category
+      <C>IsFreeInverseSemigroup</C>. Basic operations for a free inverse
+      semigroup are: <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>
+      and <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>. Elements of a
+      free inverse semigroup belong to the category <Ref
+      Filt="IsFreeInverseSemigroupElement"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsFreeInverseSemigroup">
   <ManSection>
-    <Filt Name='IsFreeInverseSemigroup' Arg='obj' Type='Category'/>
+    <Prop Name="IsFreeInverseSemigroup" Arg="S" />
+    <Returns> <K>true</K> or <K>false</K> </Returns>
     <Description>
-      Every free inverse semigroup in &GAP; belongs to the category 
-      <C>IsFreeInverseSemigroup</C>. Basic operations for a free inverse
-      semigroup are: <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>
-      and <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>. Elements of a
-      free inverse semigroup belong to the category 
-      <Ref Filt="IsFreeInverseSemigroupElement"/>.
+      Attempts to determine whether the given semigroup <A> S </A> is a free
+      inverse semigroup.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -86,14 +98,14 @@ b</Example>
       Every element of a free inverse semigroup has a unique canonical form.
       If <A>w</A> is such an element, then <C>CanonicalForm</C> returns the
       canonical form of <A>w</A> as a string.
-<Example>
+<Example><![CDATA[
 gap> S := FreeInverseSemigroup(3);
-&lt;free inverse semigroup on the generators [ x1, x2, x3 ]>
+<free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> x := S.1; y := S.2;
 x1
 x2
 gap> CanonicalForm(x^3*y^3);
-"x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"</Example>
+"x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -110,16 +122,15 @@ gap> CanonicalForm(x^3*y^3);
 
       Note that there maybe more than one word of minimal length which is equal
       to <A>w</A> in <C>S</C>.
-<Example>
+<Example><![CDATA[
 gap> S := FreeInverseSemigroup(3);
-&lt;free inverse semigroup on the generators [ x1, x2, x3 ]>
+<free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> x := S.1;
 x1
 gap> y := S.2;
 x2
 gap> MinimalWord(x^3 * y^3);
-"x1*x1*x1*x2*x2*x2"
-</Example>
+"x1*x1*x1*x2*x2*x2"]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

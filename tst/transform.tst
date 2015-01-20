@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  transform.tst
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -16,7 +16,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#
+#T# TransformTest1
 gap> gens:=[ Transformation( [ 2, 3, 2, 4, 3 ] ), 
 > Transformation( [ 4, 5, 2, 2, 4 ] ), 
 > Transformation( [ 4, 3, 2, 1, 4 ] ), Transformation( [ 5, 5, 1, 3, 1 ] ) ];;
@@ -284,8 +284,5 @@ gap> Size(last);
 gap> IsRightZeroSemigroup(last2);
 true
 
-#
-gap> SemigroupsStopTest();
-
-#
-gap> STOP_TEST( "Semigroups package: transform.tst", 10000);
+#E#
+gap> STOP_TEST( "Semigroups package: transform.tst");

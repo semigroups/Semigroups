@@ -1,16 +1,16 @@
-############################################################################# 
-## 
+#############################################################################
+##
 #W  ideals.gd
-#Y  Copyright (C) 2013-14                                 James D. Mitchell
-## 
-##  Licensing information can be found in the README file of this package. 
-## 
-############################################################################# 
+#Y  Copyright (C) 2013-15                                 James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
 
 DeclareSynonymAttr("GeneratorsOfSemigroupIdeal", GeneratorsOfMagmaIdeal);
 DeclareGlobalFunction("SemigroupIdeal");
 
-DeclareOperation("SemigroupIdealByGenerators", 
+DeclareOperation("SemigroupIdealByGenerators",
   [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
 
 DeclareOperation("MinimalIdealGeneratingSet",
@@ -26,12 +26,12 @@ DeclareOperation("MinimalIdealGeneratingSet",
 # is <S>.  This is to avoid computing a generating set for <I>, in this example,
 # which is expensive and unnecessary since <I> is regular (in which case the
 # Green's relations of <I> are just restrictions of the Green's relations on
-# <S>). 
+# <S>).
 #
 # If <S> is a semigroup, <I> is a non-regular ideal of <S>, <J> is an ideal of
 # <I>, then <SupersemigroupOfIdeal(J)> is <I>, since we anyway currently have to
 # use a <GeneratorsOfSemigroup(I)> to compute anything about <I> other than its
-# size and membership. 
+# size and membership.
 
 DeclareAttribute("SupersemigroupOfIdeal", IsSemigroupIdeal);
 
