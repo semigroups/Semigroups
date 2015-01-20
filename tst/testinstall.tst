@@ -801,7 +801,9 @@ gap> GeneratorsOfSemigroup(I);
 #   inverse semigroups)
 gap> S:=[SymmetricInverseMonoid(2)];;
 gap> S[2]:=MaximalSubsemigroups(S[1]);;
-gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.7") then 
+gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.7")
+> and (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail) then
 > S[3]:=List(S[2], MaximalSubsemigroups);;
 > fi;
 
