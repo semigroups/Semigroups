@@ -106,12 +106,10 @@ function(R)
 
   if not IsGroup(G) then
     if IsSimpleSemigroup(R) then
+      TryNextMethod();
       # Take an isomorphism to a Rees matrix semigroup, find its maximal
       # subsemigroups, then pull those back (should specify some methods for the
       # pulling back part)
-      Error("Semigroups: MaximalSubsemigroups,\n",
-      "not yet implemented for a Rees matrix semigroup over a simple\n",
-      "non-group semigroup,");
       return;
     else
       TryNextMethod();
@@ -201,7 +199,7 @@ else
     # Check that matrix is regular (i.e. no zero-rows or zero-columns)
     if not IsRegularSemigroup(R) then
       Error("Semigroups: MaximalSubsemigroups,\n",
-      "not yet implemented for a non-regular Rees 0-matrix semigroup,");
+      "the first argument <R> must be a regular Rees 0-matrix semigroup,");
       return;
     fi;
 
@@ -363,8 +361,7 @@ else
     # Check that matrix is regular
     # If the underlying semigroup is a group, this means: no zero rows or cols
     if not IsRegularSemigroup(R) then
-      Error("Semigroups: MaximalSubsemigroups,\n",
-      "not yet implemented for a non-regular Rees 0-matrix semigroup,");
+      TryNextMethod();
       return;
     fi;
 
@@ -968,6 +965,33 @@ else
     Info(InfoSemigroups, 2, "generating all found maximal subsemigroups...");
     out := List(out, x -> Semigroup(x, rec( small := true )));
     return out;
+  end);
+fi;
+
+#
+
+if not (IsGrapeLoaded and IsGrapeCompiled) then
+  InstallMethod(MaximalSubsemigroups, "for an semigroup",
+  [IsSemigroup],
+  function(S)
+    Info(InfoWarning, 1, GrapeIsNotCompiledString);
+    return fail;
+  end);
+else
+  InstallMethod(MaximalSubsemigroups, "for an semigroup",
+  [IsSemigroup],
+  function(S)
+    local iso, inv, T, maxT, maxS, U;
+
+    iso := IsomorphismTransformationSemigroup(S);
+    inv := InverseGeneralMapping(iso);
+    T   := Range(iso);
+    maxT := List(MaximalSubsemigroups(T), GeneratorsOfSemigroup);
+    maxS := [  ];
+    for U in maxT do
+     Add(maxS, Semigroup(OnTuples(U, inv)));
+    od;
+    return maxS;
   end);
 fi;
 

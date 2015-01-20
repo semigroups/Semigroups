@@ -1,7 +1,7 @@
 ###########################################################################
 ##
-##  freeinverse,tst 
-#Y  Copyright (C) 2011-13                                   Julius Jonusas
+##  freeinverse.tst 
+#Y  Copyright (C) 2011-15                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

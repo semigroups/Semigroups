@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  freeband.tst
-#Y  Copyright (C) 2013-14                                   Julius Jonusas
+#Y  Copyright (C) 2013-15                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -79,7 +79,7 @@ gap> Size(FreeBand(4));
 gap> Size(FreeBand(7));
 3641839910835401567626683593436003894250931310990279691
 
-#T# FreeBand: /<
+#T# FreeBand: \<
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> x := Generators(S)[1];
@@ -131,7 +131,7 @@ true
 gap> x*y*x*y*z*x*y*z = x*y*z;
 true
 
-# FreeBand: IsFreeBandCategory
+#T# FreeBand: IsFreeBandCategory
 gap> IsFreeBandCategory(FreeBand(4));
 true
 gap> IsFreeBandCategory(FreeBand(4, "b"));

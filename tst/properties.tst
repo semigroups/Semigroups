@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  properties.tst
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -607,7 +607,7 @@ gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 
-#T# PropertiesTest52 E-unitary
+#T# PropertiesTest52 Checking E-unitary
 gap> [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 1, 2, 5 ] ),
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 1, 4 ] ) ];;
 gap> s:=InverseSemigroup(last);;
@@ -626,7 +626,7 @@ gap> s:=InverseSemigroup(last);;
 gap> IsEUnitaryInverseSemigroup(s);
 false
 
-#T# PropertiesTest53#
+#T# PropertiesTest53
 #gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 #>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 #>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -721,7 +721,7 @@ false
 #gap> IsAdequateSemigroup(s);
 #false
 #
-#
+# This is still part of PropertiesTest53
 gap> s:=Semigroup(
 > [ Transformation( [ 1, 2, 3, 2 ] ), Transformation( [ 1, 2, 3, 3 ] ), 
 >   Transformation( [ 1, 2, 3, 4, 5, 7, 6 ] ), Transformation( [ 1, 2, 4, 3 ] ),
