@@ -13,6 +13,15 @@ gap> LoadPackage("semigroups", false);;
 gap> SemigroupsStartTest();
 
 #T# FreeBand (with default generators) and basic methods
+gap> FreeBand(["a", "b", "c"]);
+<free band on the generators [ a, b, c ]>
+gap> FreeBand(3, "abc");
+<free band on the generators [ abc1, abc2, abc3 ]>
+gap> FreeBand("a", "b", "c");
+<free band on the generators [ a, b, c ]>
+gap> FreeBand(\<);
+Error, Semigroups: FreeBand: usage,
+FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> Size(S);
