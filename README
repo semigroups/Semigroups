@@ -1,33 +1,6 @@
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+                                                                           +
-+   Copyright (C) 2011-14                              James D. Mitchell    +
-+                                                                           +
-+   'Semigroups' is free software: you can redistribute it and/or modify    +
-+   it under the terms of the GNU General Public License as published by    +
-+   the Free Software Foundation, either version 2 of the license, or       +
-+   (at your option) any later version. For details see the FSF's own site  +
-+   http://www.gnu.org/licenses/gpl.html                                    +
-+                                                                           +
-+   'Semigroups' is distributed in the hope that it will be useful,         +
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of          +
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           +
-+   GNU General Public License for more details.                            +
-+                                                                           +
-+   You can find information about how to contact the authors of this       +
-+   package at the end of the README file and on the front page of the      +
-+   documentation.                                                          +
-+                                                                           +
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-       This is the 
-                   README
-                   ======
-                          file for the
-                                       GAP 4.7
-                                       =======
-                                               package
-                                                       'Semigroups'.
-                                                       ===========
+=============================================================
+README file for the `Graphs' GAP4 package by James Mitchell
+=============================================================
   
 Getting Semigroups
 ------------------
@@ -50,7 +23,7 @@ This will create a subdirectory 'semigroups-x.x'.
 Installation
 ------------
 
-It is assumed that you have a working copy of GAP with version number 4.7.3 or
+It is assumed that you have a working copy of GAP with version number 4.7.6 or
 higher.  The  most  up-to-date  version  of  GAP  and instructions on how to
 install it can be obtained from the main GAP webpage
   
@@ -59,15 +32,15 @@ install it can be obtained from the main GAP webpage
 The  following  is  a  summary of the steps that should lead to a successful
 installation of Semigroups:
 
- 1.  ensure that the IO package version 4.3 or higher is available. For more
+ 1.  ensure that the IO package version 4.4.4 or higher is available. For more
      details go to:
 
-       http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
+       http://gap-system.github.io/io/
  
- 2.  ensure that the Orb package version 4.7 or higher is available. For more
+ 2.  ensure that the Orb package version 4.7.3 or higher is available. For more
      details go to:
-
-       http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+       
+       http://gap-system.github.io/orb/
 
      Note that Orb and Semigroups both perform better if Orb is compiled.
 
@@ -88,7 +61,7 @@ installation of Semigroups:
      function, then please ensure that the genss package version 1.5 or higher
      is available. For more details go to:
 
-       http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
+       http://gap-system.github.io/genss/
 
  5.  download the package archive 'semigroups-x.x.tar.gz' from
 
