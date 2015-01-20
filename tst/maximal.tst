@@ -636,18 +636,5 @@ gap>  S := Semigroup(S);;
 gap> Length(MaximalSubsemigroups(S));
 9
 
-#T# Issue 110 (MaximalSubsemigroups for an acting non-regular RZMS)
-gap> S := [ ReesZeroMatrixSemigroup( Group( () ), [ [ (), 0 ], [ 0, () ] ] ) ];;
-gap> S[2] := Semigroup(RMSElement(S[1], 2, (), 2), RMSElement(S[1], 1, (), 2));;
-gap> S[3] := MaximalSubsemigroups(S[2]);
-[ <subsemigroup of 2x2 Rees 0-matrix semigroup with 1 generator>, 
-  <subsemigroup of 2x2 Rees 0-matrix semigroup with 2 generators> ]
-gap> IsDuplicateFreeList(S[3]);
-true
-gap> ForAll(S[3], x -> IsMaximalSubsemigroup(S[2], x));
-true
-gap> Length(S[3]);
-2
-
 #E#
 gap> STOP_TEST("Semigroups package: maximal.tst");

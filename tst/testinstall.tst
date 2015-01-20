@@ -838,5 +838,17 @@ bcabaca
 gap> y^2;
 cbcacbab
 
+#T# TestInstall55: Issue 110 (MaximalSubsemigroups for an non-regular RZMS)
+gap> S := [ ReesZeroMatrixSemigroup( Group( () ), [ [ (), 0 ], [ 0, () ] ] ) ];;
+gap> S[2] := Semigroup(RMSElement(S[1], 2, (), 2), RMSElement(S[1], 1, (), 2));;
+gap> (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail 
+> and IsDuplicateFreeList(MaximalSubsemigroups(S[2]))
+> and ForAll(MaximalSubsemigroups(S[2]), x -> IsMaximalSubsemigroup(S[2], x))
+> and Length(MaximalSubsemigroups(S[2])) = 2)
+> or (not (IsBound(GAPInfo.PackagesLoaded.grape)
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail));
+true
+
 #E#
 gap> STOP_TEST( "Semigroups package: testinstall.tst");
