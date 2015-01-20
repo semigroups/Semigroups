@@ -284,5 +284,5 @@ gap> Size(last);
 gap> IsRightZeroSemigroup(last2);
 true
 
-#E# TestInstall4
+#E#
 gap> STOP_TEST( "Semigroups package: transform.tst");

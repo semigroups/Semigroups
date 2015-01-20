@@ -7,10 +7,11 @@
 ##
 #############################################################################
 ##
-
-#
 gap> START_TEST("Semigroups package: semipperm.tst");
 gap> LoadPackage("semigroups", false);;
+
+#
+gap> SemigroupsStartTest();
 
 #T# SemiPPerm1: NumberSubset
 gap> sets := Combinations([1..10]);;
@@ -43,9 +44,6 @@ true
 gap> ForAll([1..10], m-> List(Combinations([1..10], m), x->
 > NumberSubsetOfEqualSize(x, 10)) = [1.. Binomial(10, m)]);
 true
-
-#
-gap> SemigroupsStartTest();
 
 #E#
 gap> STOP_TEST( "Semigroups package: semipperm.tst");

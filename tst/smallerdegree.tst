@@ -11,8 +11,7 @@ gap> LoadPackage("semigroups", false);;
 # 
 gap> SemigroupsStartTest();
 
-#T# VagnerPresetonRepresentation
-# A general Vagner-Preston Example
+#T# VagnerPresetonRepresentation: a basic example
 gap> f1:=PartialPermNC([1,2,4,3]);;
 gap> f2:=PartialPermNC([1]);;
 gap> f3:=PartialPermNC([0,2]);;
@@ -118,7 +117,8 @@ gap> ActionDegree(f);
 gap> ActionDegree(Image(F));
 19
 
-#T# Example made complicated by right regular representation of Sym(5). Genuine minimum degree of V is 7.
+#T# Example made complicated by right regular representation of Sym(5).
+# Genuine minimum degree of V is 7.
 gap> S:=SymmetricGroup(5);
 Sym( [ 1 .. 5 ] )
 gap> rho:=ActionHomomorphism(S,S);

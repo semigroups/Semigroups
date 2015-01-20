@@ -625,8 +625,7 @@ gap> Size(max);
 gap> S = max[1];
 false
 
-#T# MaximalSubsemigroups: Issue 107 (problems with Green's classes of ideals,
-#   and inverse semigroups)
+#T# Issue 107 (problems with Green's classes of ideals, and inverse semigroups)
 gap> gens := [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 5, 4 ] ), 
 >  PartialPerm( [ 1, 2, 4 ], [ 3, 5, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 5, 2, 3, 1 ] ), 
@@ -637,8 +636,7 @@ gap>  S := Semigroup(S);;
 gap> Length(MaximalSubsemigroups(S));
 9
 
-#T# TestInstall55: Issue 110 (allowing MaximalSubsemigroups for an acting 
-#   non-regular RZMS)
+#T# Issue 110 (MaximalSubsemigroups for an acting non-regular RZMS)
 gap> S := [ ReesZeroMatrixSemigroup( Group( () ), [ [ (), 0 ], [ 0, () ] ] ) ];;
 gap> S[2] := Semigroup(RMSElement(S[1], 2, (), 2), RMSElement(S[1], 1, (), 2));;
 gap> S[3] := MaximalSubsemigroups(S[2]);
