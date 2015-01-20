@@ -985,9 +985,9 @@ else
 
     iso := IsomorphismTransformationSemigroup(S);
     inv := InverseGeneralMapping(iso);
-    T := Range(iso);
+    T   := Range(iso);
     maxT := List(MaximalSubsemigroups(T), GeneratorsOfSemigroup);
-    maxS := [];
+    maxS := [  ];
     for U in maxT do
      Add(maxS, Semigroup(OnTuples(U, inv)));
     od;
