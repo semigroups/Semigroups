@@ -1,11 +1,15 @@
 #############################################################################
 ##
 #W  CHANGELOG
-#Y  Copyright (C) 2011-14                                   James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+2.1.1 -> 2.2 
+	    This is a minor release including some bug fixes, performance
+	    improvements, and additional functionality. 
 
 2.1 -> 2.1.1 
 	    This is a very minor release to fix an issue caused by only loading
