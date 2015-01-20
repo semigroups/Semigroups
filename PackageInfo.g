@@ -193,7 +193,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.7.7",
+  GAP := ">=4.7.6",
   NeededOtherPackages := [ ["orb", ">=4.7.3"], ["io", ">=4.4.4"] ],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
   ["genss", ">=1.5"]],
