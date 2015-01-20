@@ -1,7 +1,9 @@
 #%T##########################################################################
 ##
 #W  smallerdegree.tst
-##  Test file for St Andrews Pure Maths Summer School 2012
+#Y  Copyright (C) 2012-15                                  Wilfred Wilson
+##
+##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##

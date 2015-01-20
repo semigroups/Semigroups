@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  bipartition.tst
-#Y  Copyright (C) 2014                                    Attila Egri-Nagy
+#Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.

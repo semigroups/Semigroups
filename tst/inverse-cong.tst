@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  inverse-cong.tst
-#Y  Copyright (C) 2014                                      Michael Torpey
+#Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
