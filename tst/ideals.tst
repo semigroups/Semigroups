@@ -78,9 +78,13 @@ gap> I:=SemigroupIdeal(S, Representative(DClasses(S)[3]));
 <non-regular transformation semigroup ideal on 6 pts with 1 generator>
 gap> S:=JonesMonoid(6);
 <regular bipartition monoid on 6 pts with 5 generators>
-gap> I:=SemigroupIdeal(S, Random(S));
+gap> a := Bipartition( [ [ 1, -1 ], [ 2, 3 ], [ 4, -2 ], [ 5, -5 ], [ 6, -6 ],
+> [ -3, -4 ] ] );;
+gap> I:=SemigroupIdeal(S, a);
 <regular bipartition semigroup ideal on 6 pts with 1 generator>
-gap> InversesOfSemigroupElement(I, Random(I));
+gap> a := Bipartition( [ [ 1, 4 ], [ 2, 3 ], [ 5, 6 ], [ -1, -2 ],
+> [ -3, -6 ], [ -4, -5 ] ] );;
+gap> InversesOfSemigroupElement(I, a);
 [ <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ -1, -2 ], [ -3, -4 ], 
      [ -5, -6 ]>, <bipartition: [ 1, 4 ], [ 2, 3 ], [ 5, 6 ], [ -1, -2 ], 
      [ -3, -4 ], [ -5, -6 ]>, 
@@ -119,7 +123,9 @@ gap> InversesOfSemigroupElement(I, Random(I));
      [ -2, -5 ], [ -3, -4 ]>, 
   <bipartition: [ 1, 6 ], [ 2, 5 ], [ 3, 4 ], [ -1, -6 ], [ -2, -5 ], 
      [ -3, -4 ]> ]
-gap> InversesOfSemigroupElement(I, Random(I));
+gap> a := Bipartition( [ [ 1, 2 ], [ 3, 4 ], [ 5, -1 ], [ 6, -6 ], [ -2, -3 ],
+> [ -4, -5 ] ] );;
+gap> InversesOfSemigroupElement(I, a);
 [ <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, -5 ], [ 6, -6 ], [ -1, -2 ], 
      [ -3, -4 ]>, <bipartition: [ 1, 2 ], [ 3, -5 ], [ 4, 5 ], [ 6, -6 ], 
      [ -1, -2 ], [ -3, -4 ]>, 

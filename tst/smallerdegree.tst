@@ -155,10 +155,9 @@ gap> h:=PartialPerm(J);
 gap> 
 gap> V:=InverseSemigroup(H1,H2,h);
 <inverse partial perm monoid on 122 pts with 240 generators>
-gap> SmallerDegreePartialPermRepresentation(V);
-MappingByFunction( <inverse partial perm monoid on 122 pts
- with 240 generators>, <inverse partial perm semigroup on 12 pts
- with 240 generators>, function( x ) ... end, function( x ) ... end )
+gap> iso := SmallerDegreePartialPermRepresentation(V);;
+gap> ActionDegree(Range(iso)) <= 12;
+true
 
 #E#
 gap> STOP_TEST("Semigroups package: smallerdegree.tst");

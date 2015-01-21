@@ -329,8 +329,15 @@ gap> List(reps, RowOfReesZeroMatrixSemigroupElement) = [ 0 .. 26 ];
 true
 gap> LClassReps(R);
 [ (1,(1,5,3,7)(2,8,4,6),1), 0 ]
-gap> DClassReps(U[4]);
-[ (25,(),4), 0 ]
+gap> d := DClassReps(U[4]);;
+gap> Length(d);
+2
+gap> IsDuplicateFreeList(d);
+true
+gap> ForAll(d, x -> x in U[4]);
+true
+gap> MultiplicativeZero(U[4]) in d;
+true
 
 #T# ReesMatTest22 MultiplicativeZero
 gap> List(U, MultiplicativeZero);
@@ -570,8 +577,7 @@ gap> Factorization(R, x);
 gap> EvaluateWord(Generators(R), last);
 0
 gap> x:=RMSElement(U[4], 26,(6,9),5);;
-gap> Factorization(U[4], x);
-[ 7, 24, 8, 5 ]
+gap> Factorization(U[4], x);; # = [ 7, 24, 8, 5 ]
 gap> EvaluateWord(Generators(U[4]), last);
 (26,(6,9),5)
 
