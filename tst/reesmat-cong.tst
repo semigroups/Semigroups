@@ -14,7 +14,7 @@ gap> LoadPackage( "semigroups", false );;
 gap> SemigroupsStartTest();
 
 # All ReesZeroMatrixSemigroup functions tested with a small example
-# Create a Rees 0-matrix semigroup
+#T# Create a Rees 0-matrix semigroup
 gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
 gap> mat := [ [ 0, 0, (1,4,5), 0, 0, (1,4,3,5) ],
 > [ 0, (), 0, 0, (3,5), 0 ],
