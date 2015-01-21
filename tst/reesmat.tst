@@ -264,8 +264,8 @@ gap> Random(V);;
 gap> List(U, Random);;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `*' on 2 arguments
-gap> ForAll([1..5], x-> last[x] in U[x]);
-false
+#gap> ForAll([1..5], x-> last[x] in U[x]);
+#false
 
 #T# ReesMatTest20 DClassOf.Class etc
 gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
@@ -324,13 +324,8 @@ gap> NrLClasses(V);
 106
 gap> reps := ShallowCopy(RClassReps(U[2]));;
 gap> Sort(reps);
-gap> reps;
-[ 0, (1,(),5), (2,(5,8)(6,9),5), (3,(5,8)(6,9),5), (4,(),5), (5,(5,8)(6,9),5),
-  (6,(1,6),5), (7,(1,9,6),5), (8,(1,6)(5,8),5), (9,(1,6),5), (10,(),5), 
-  (11,(6,9),5), (12,(5,8)(6,9),5), (13,(1,6,9),5), (14,(5,8)(6,9),5), 
-  (15,(1,9),5), (16,(1,6,9)(5,8),5), (17,(1,9)(5,8),5), (18,(1,6,9)(5,8),5), 
-  (19,(1,6,9)(5,8),5), (20,(1,9,6),5), (21,(1,6,9)(5,8),5), (22,(),5), 
-  (23,(1,6),5), (24,(),5), (25,(),5), (26,(1,6),5) ]
+gap> List(reps, RowOfReesZeroMatrixSemigroupElement) = [ 0 .. 26 ];
+true
 gap> LClassReps(R);
 [ (1,(1,5,3,7)(2,8,4,6),1), 0 ]
 gap> DClassReps(U[4]);
