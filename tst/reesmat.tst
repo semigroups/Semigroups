@@ -211,11 +211,11 @@ gap> last2[1]=last2[2];
 true
 
 #T# ReesMatTest15 IrredundantGeneratingSubset
-gap> IrredundantGeneratingSubset(V);
-[ (1,(1,6),3), (2,(1,6),5), (6,(1,9)(5,8),1), (7,(1,6)(5,8),3), (11,(1,9),5), 
-  (13,(1,6)(5,8),3), (15,(1,9)(5,8),2), (22,(1,6),1), (23,(5,8),2), 
-  (24,(1,6)(5,8),4) ]
-gap> Length(last);
+gap> a := RMSElement(ParentAttr(V), 1, (1,6), 3);
+(1,(1,6),3)
+gap> a in IrredundantGeneratingSubset(V);
+true
+gap> Length(IrredundantGeneratingSubset(V));
 10
 gap> U[1]=Semigroup(IrredundantGeneratingSubset(U[1]));
 true
@@ -264,6 +264,7 @@ gap> Random(V);;
 gap> List(U, Random);;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `*' on 2 arguments
+
 #gap> ForAll([1..5], x-> last[x] in U[x]);
 #false
 
@@ -501,8 +502,7 @@ gap> List(U, IsRegularSemigroup);
 [ true, true, true, true, true, true ]
 gap> IsRegularSemigroup(V);      
 false
-gap> UU:=IdempotentGeneratedSubsemigroup(R);  
-<subsemigroup of 3x2 Rees 0-matrix semigroup with 3 generators>
+gap> UU:=IdempotentGeneratedSubsemigroup(R);;
 gap> IsSemilatticeAsSemigroup(UU);
 false
 gap> IsSimpleSemigroup(V);        
