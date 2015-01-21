@@ -26,8 +26,10 @@ gap> SmallGeneratingSet(s);;
 gap> s:=Semigroup(IrredundantGeneratingSubset(last));;
 gap> NrDClasses(s);
 4
-gap> List(GreensDClasses(s), Size);
-[ 1, 3, 3, 1 ]
+gap> sizes := List(GreensDClasses(s), Size);;
+gap> Sort(sizes);;
+gap> sizes;
+[ 1, 1, 3, 3 ]
 gap> PartialOrderOfDClasses(s);
 [ [ 1, 4 ], [ 2, 4 ], [ 1, 2, 3 ], [ 4 ] ]
 gap> IsRegularSemigroup(s);

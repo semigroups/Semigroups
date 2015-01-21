@@ -187,8 +187,7 @@ gap> GroupOfUnits(U[5]);
 fail
 
 #T# ReesMatTest14 IdempotentGeneratedSubsemigroup
-gap> eV:=IdempotentGeneratedSubsemigroup(V);
-<subsemigroup of 26x5 Rees 0-matrix semigroup with 9 generators>
+gap> eV:=IdempotentGeneratedSubsemigroup(V);;
 gap> Size(eV);
 15
 gap> Size(V);

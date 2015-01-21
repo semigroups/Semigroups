@@ -191,27 +191,25 @@ gap> Size(Range(iso));
 8
 
 #T# Symmetric (perm) group to a partial perm semigroup
-gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
+gap> s := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <inverse partial perm semigroup on 4 pts with 2 generators>
-gap> IsomorphismPermGroup(s);
+gap> iso := IsomorphismPermGroup(s);
 MappingByFunction( <partial perm group on 4 pts with 2 generators>
  , Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
-gap> iso:=last;
-MappingByFunction( <partial perm group on 4 pts with 2 generators>
- , Group([ (1,2,3,4), (1,
-2) ]), <Attribute "AsPermutation">, function( x ) ... end )
-gap> inv:=InverseGeneralMapping(iso);
+gap> inv := InverseGeneralMapping(iso);
 MappingByFunction( Group([ (1,2,3,4), (1,
 2) ]), <partial perm group on 4 pts with 2 generators>
  , function( x ) ... end, <Attribute "AsPermutation"> )
-gap> f:=Random(s);
+gap> f := PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 3, 4 ] );
 (1,2)(3)(4)
-gap> f^iso;       
+gap> f in s;
+true
+gap> f ^ iso;
 (1,2)
-gap> (f^iso)^inv; 
+gap> (f ^ iso) ^ inv;
 (1,2)(3)(4)
-gap> ForAll(s, f-> (f^iso)^inv=f);
+gap> ForAll(s, f -> (f ^ iso) ^ inv = f);
 true
 gap> Size(s);
 24
