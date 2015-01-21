@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -139,9 +139,9 @@ function()
 
   record.STOP_TEST := STOP_TEST;
 
-  MakeReadWriteGlobal("STOP_TEST");
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", SemigroupsStopTest);
+  MakeReadWriteGlobal("STOP_TEST");
 
   return;
 end);
@@ -192,9 +192,9 @@ function(file)
   Unbind( GAPInfo.TestData.START_TIME );
   Unbind( GAPInfo.TestData.START_NAME );
   Print(str);
-  MakeReadWriteGlobal("STOP_TEST");
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", record.STOP_TEST);
+  MakeReadWriteGlobal("STOP_TEST");
   return;
 end);
 

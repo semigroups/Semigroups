@@ -621,7 +621,8 @@ gap> One(S) in T or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
 true
 
 #T# TestInstall38: Issue 33 (problem with Rees factor semigroups)
-gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), [Transformation([1,2,2,2])]);
+gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), 
+> [Transformation([1,2,2,2])]);
 <regular transformation semigroup ideal on 4 pts with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <semigroup congruence over <full transformation semigroup on 4 pts>>
@@ -638,7 +639,7 @@ gap> IsSemigroup(T);
 true
 gap> Size(T);
 169
-gap>  u := Image(hom, Transformation([1,1,1,1]));
+gap> u := Image(hom, Transformation([1,1,1,1]));
 {Transformation( [ 1, 1, 1, 1 ] )}
 gap> t := Image(hom, Transformation([2,1,2,3]));
 {Transformation( [ 2, 1, 2, 3 ] )}
@@ -800,7 +801,9 @@ gap> GeneratorsOfSemigroup(I);
 #   inverse semigroups)
 gap> S:=[SymmetricInverseMonoid(2)];;
 gap> S[2]:=MaximalSubsemigroups(S[1]);;
-gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.7") then 
+gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.7")
+> and (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail) then
 > S[3]:=List(S[2], MaximalSubsemigroups);;
 > fi;
 
@@ -834,6 +837,18 @@ gap> x^2;
 bcabaca
 gap> y^2;
 cbcacbab
+
+#T# TestInstall55: Issue 110 (MaximalSubsemigroups for an non-regular RZMS)
+gap> S := [ ReesZeroMatrixSemigroup( Group( () ), [ [ (), 0 ], [ 0, () ] ] ) ];;
+gap> S[2] := Semigroup(RMSElement(S[1], 2, (), 2), RMSElement(S[1], 1, (), 2));;
+gap> (IsBound(GAPInfo.PackagesLoaded.grape) 
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail 
+> and IsDuplicateFreeList(MaximalSubsemigroups(S[2]))
+> and ForAll(MaximalSubsemigroups(S[2]), x -> IsMaximalSubsemigroup(S[2], x))
+> and Length(MaximalSubsemigroups(S[2])) = 2)
+> or (not (IsBound(GAPInfo.PackagesLoaded.grape)
+> and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail));
+true
 
 #E#
 gap> STOP_TEST( "Semigroups package: testinstall.tst");

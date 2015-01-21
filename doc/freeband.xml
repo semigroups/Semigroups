@@ -72,7 +72,7 @@ ab]]></Example>
     <Filt Name = "IsFreeBandCategory" Type = "Category"/>
     <Description>
       <C>IsFreeBandCategory</C> is the category of semigroups created using
-      <Ref Oper = "FreeBand" />.
+      <Ref Oper = "FreeBand" Label="for a given rank" />.
 <Example><![CDATA[
 gap> IsFreeBandCategory(FreeBand(3));
 true

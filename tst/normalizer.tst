@@ -152,8 +152,9 @@ Group([ (1,8)(2,7)(3,6)(4,5) ])
 
 #T# NormalizerTest19
 # it is best not to find rhostab or lambdastab here!
-gap> Normalizer(S, rec(rhostab:=false, lambdastab:=false, random:=true));
-Group([ (), (1,8)(2,7)(3,6)(4,5) ])
+gap> StructureDescription(Normalizer(S, 
+> rec(rhostab:=false, lambdastab:=false, random:=true)));
+"C2"
 
 #T# NormalizerTest20
 gap> S:=InverseSemigroup(
