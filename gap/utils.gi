@@ -33,6 +33,7 @@ BindGlobal("SemigroupsDocXMLFiles", [ "../PackageInfo.g",
                                       "semigroups.xml",
                                       "semipperm.xml",
                                       "semitrans.xml",
+                                      "simple-cong.xml",
                                       "utils.xml"                 ]);
 
 # arg is the number of threads, defaults to 2...
