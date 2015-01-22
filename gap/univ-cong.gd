@@ -15,6 +15,3 @@
 DeclareCategory("IsUniversalSemigroupCongruence",
         IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareOperation("UniversalSemigroupCongruence", [IsSemigroup]);
-
-DeclareCategory("IsUniversalSemigroupCongruenceClass",
-        IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);

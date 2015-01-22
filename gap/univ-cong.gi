@@ -11,6 +11,11 @@
 ## semigroup.
 ##
 
+DeclareCategory("IsUniversalSemigroupCongruenceClass",
+  IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
+
+#
+
 InstallMethod(UniversalSemigroupCongruence,
 "for a semigroup",
 [IsSemigroup],
