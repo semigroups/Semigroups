@@ -18,6 +18,7 @@
     <#Include Label="CongruenceClasses">
     <#Include Label="NrCongruenceClasses">
     <#Include Label="CongruencesOfSemigroup">
+    <#Include Label="AsLookupTable">
 
   </Section>
 
