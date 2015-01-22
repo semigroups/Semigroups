@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  display.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -139,7 +139,7 @@ end);
 
 # for bipartition
 
-InstallGlobalFunction(TikzRightBlocks,
+BindGlobal("TikzRightBlocks",
 function(f)
   return Concatenation(TikzInit,
     TikzStringForBlocks(RightBlocks(f), "bottom", "bottom"), TikzEnd);
@@ -147,7 +147,7 @@ end);
 
 # for bipartition
 
-InstallGlobalFunction(TikzLeftBlocks,
+BindGlobal("TikzLeftBlocks",
 function(f)
   return Concatenation(TikzInit,
    TikzStringForBlocks(LeftBlocks(f), "top", "top"), TikzEnd);
@@ -163,7 +163,7 @@ end);
 
 #
 
-InstallGlobalFunction(TikzBipartitionRight,
+BindGlobal("TikzBipartitionRight",
 function(f)
   return Concatenation(TikzInit, "\\begin{center}\n",
    TikzStringForBipartition(f), "\\bigskip\n",
@@ -173,7 +173,8 @@ end);
 
 #
 
-InstallGlobalFunction(TikzBipartitionLeft, function(f)
+BindGlobal("TikzBipartitionLeft",
+function(f)
   return Concatenation(TikzInit, "\\begin{center}\n",
    TikzStringForBipartition(f), "\\bigskip\n",
    TikzStringForBlocks(LeftBlocks(f), "none", "top"),
@@ -182,7 +183,7 @@ end);
 
 #
 
-InstallGlobalFunction(TikzBipartitionLeftRight,
+BindGlobal("TikzBipartitionLeftRight",
 function(f)
   return Concatenation(TikzInit, "\\begin{center}\n",
   TikzStringForBlocks(LeftBlocks(f), "none", "top"), "\\bigskip\n",

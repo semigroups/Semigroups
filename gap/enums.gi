@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  enums.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -15,7 +15,7 @@
 # should return <fail>, <convert_out> should have two arguments <enum> and <nr>
 # where <nr> refers to the position in <baseenum>.
 
-InstallGlobalFunction(EnumeratorByEnumerator,
+BindGlobal("EnumeratorByEnumerator",
 function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
 
@@ -101,7 +101,7 @@ end);
 
 #
 
-InstallGlobalFunction(EnumeratorByEnumOfEnums,
+BindGlobal("EnumeratorByEnumOfEnums",
 function(obj, record, baseenum, convert, filts)
   local enum, filt;
 
@@ -209,6 +209,7 @@ end);
 # same method for regular/inverse,
 
 # also this has really awful performance
+# TODO write an improved version for enumerator sorted
 
 InstallMethod(Enumerator, "for an acting semigroup",
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
@@ -753,8 +754,7 @@ function(r)
    convert_out, convert_in, [], record);
 end);
 
-#JDM use these for enumerator of symmetric inverse semigroup
-# using EnumeratorByEnumerator
+#
 
 InstallGlobalFunction(NumberArrangement,
 function(arr, n)

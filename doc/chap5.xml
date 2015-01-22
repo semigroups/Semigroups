@@ -53,6 +53,7 @@
   See <Ref Oper = "CanonicalForm" Label = "for a free inverse semigroup element"/>.
  
   <#Include Label = "FreeInverseSemigroup">
+  <#Include Label = "IsFreeInverseSemigroupCategory">
   <#Include Label = "IsFreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroupElement">
 </Section>
@@ -133,6 +134,32 @@ x1x2x2^-1x1^-1x1x2]]></Example>
   See Section 4.5 of <Cite Key = "howie" /> for more information on free bands.
   
   <#Include Label = "FreeBand">
+  <#Include Label = "IsFreeBandCategory">
+  <#Include Label = "IsFreeBand">
+  <#Include Label = "IsFreeBandElement">
+  <#Include Label = "IsFreeBandSubsemigroup">
+</Section>
+
+<Section>
+  <Heading>Operators and operations for free band elements
+  </Heading>
+  <List>
+    <Mark><C><A>u</A> * <A>v</A></C></Mark>
+    <Item>
+      returns the product of two free band elements <A>u</A>
+      and <A>v</A>.
+    </Item>
+    <Mark><C><A>u</A> = <A>v</A> </C></Mark>
+    <Item>
+      checks if two free band elements are equal.
+    </Item>
+    <Mark><C><A>u</A> &lt; <A>v</A> </C></Mark>
+    <Item>
+      compares the sizes of the internal representations of two free
+      band elements.
+    </Item>
+  </List>
+
   <#Include Label = "GreensDClassOfElement" > 
 </Section>
 </Chapter>

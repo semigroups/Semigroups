@@ -1,7 +1,7 @@
 ################################################################################
 ##
 #W  freeband.gi
-#Y  Copyright (C) 2013-14                                  Julius Jonusas
+#Y  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
@@ -83,22 +83,57 @@ function(arg)
                                    tuple := [m, 0, m, 0],
                                    cont := BlistList([1 .. ngens], [m]),
                                    word := [m]
-                                  )
-                        );
+                                   )
+                         );
   od;
 
   StoreInfoFreeMagma( F, names, IsFreeBandElement );
-  S := Semigroup(gens);
-  SetIsFreeBand(S, true);
 
+  S := Objectify( NewType( FamilyObj( gens ),
+                          IsFreeBandCategory and IsSemigroup and
+			  IsAttributeStoringRep ),
+                   rec() );
+  SetGeneratorsOfMagma( S, gens );
+  SetIsFreeBand(S, true);
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
 
   SetIsWholeFamily( S, true);
 
-  return S;
+   return S;
 end);
 
+InstallMethod(IsFreeBand, "for a semigroup",
+[IsSemigroup],
+function(s)
+  local used, occured, gens, max_d, g;
+
+  if not IsBand(s) then
+    return false;
+  fi;
+
+  if IsFreeBandSubsemigroup(s) then
+    gens := Generators(s);
+    used := BlistList([1 .. Length(gens[1]!.cont)], []);
+    occured := BlistList([1 .. Length(gens[1]!.cont)], []);
+    for g in gens do
+      used := IntersectionBlist(used, g!.cont);
+      if g!.tuple[2] = 0 then
+	occured[g!.tuple[1]] := true;
+      fi;
+    od;
+    if used = occured then
+      return true;
+    fi;
+  fi;
+
+  if not IsActingSemigroup(s) then
+    s := AsTransformationSemigroup(s);
+  fi;
+
+  max_d := MaximalDClasses(s);
+  return Size(s) = Size(FreeBand(Length(max_d)));
+end);
 
 InstallMethod(Iterator, "for a Greens D-class of a free band",
 [IsFreeBandElementCollection and IsGreensDClass],
@@ -244,10 +279,9 @@ end);
 # A free band iteratror has component: content, dclass_iter.
 
 InstallMethod(Iterator, "for a free band",
-[IsFreeBand],
+[IsFreeBandCategory],
 function(s)
   local NextIterator_FreeBand, ShallowCopyLocal, record ;
-
 
   NextIterator_FreeBand := function(iter)
     local next_dclass_value, content, i, rep, dclass;
@@ -301,7 +335,7 @@ end);
 #
 
 InstallMethod(GreensDClassOfElement, "for a free band an element",
-[IsFreeBand, IsFreeBandElement],
+[IsFreeBandCategory, IsFreeBandElement],
 function(s, x)
   local type, d;
 
@@ -333,7 +367,7 @@ end);
 
 InstallMethod(ViewObj,
 "for a free band",
-[IsFreeBand],
+[IsFreeBandCategory],
 function( S )
   if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
        Print( "<free band with ", Length( GeneratorsOfSemigroup( S ) ),
@@ -399,7 +433,6 @@ function(x, y)
   local type, out, diff, new_first, new_prefix, new_last, new_sufix, copy;
 
   type := TypeObj(x);
-
   # if the content of two elements is the same we only need the prefix of the
   # first and the sufix of the second one
   # cont = blist
@@ -410,7 +443,7 @@ function(x, y)
     # new_first is the last letter to occur first in the product
     new_first := y!.tuple[1];
     new_prefix := y!.tuple[2];
-    repeat
+    while true do
       if diff[new_first] and new_prefix = 0 then
 	copy := ShallowCopy(x); # are shallow copies necessary?
         out := [new_first, copy];
@@ -423,7 +456,7 @@ function(x, y)
         new_first := new_prefix!.tuple[1];
         new_prefix := new_prefix!.tuple[2];
       fi;
-    until IsBound(out[1]);
+    od;
   fi;
 
   if IsSubsetBlist(y!.cont, x!.cont) then
@@ -457,7 +490,7 @@ end);
 #
 
 InstallMethod(Size, "for a free band",
-[IsFreeBand and IsFinite and HasGeneratorsOfSemigroup],
+[IsFreeBandCategory and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
   local c, output, k, i, n;
 

@@ -1,12 +1,16 @@
 ############################################################################
 ##
 #W  bipartition.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+# local declarations
+
+DeclareOperation("OneMutable", [IsBipartitionCollection]);
 
 BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
  IsBipartition, CanEasilySortElements, CanEasilySortElements));
@@ -653,9 +657,15 @@ end);
 # returns a blist <out> for the Left blocks so that <out[i]> is <true> if
 # and only the <i>th block of <f> is a transverse block.
 
-InstallMethod(TransverseBlocksLookup, "for a bipartition", [IsBipartition],
+BindGlobal("TransverseBlocksLookup",
 function(f)
   local n, k, blocks, out, i;
+
+  if not IsBipartition(f) then
+    Error("Semigroups: TransverseBlocksLookup: usage\n",
+          "the argument must be a bipartition,");
+    return;
+  fi;
 
   if IsBound(f!.lookup) then
     return f!.lookup;
@@ -788,7 +798,7 @@ end);
 
 # xx^* - linear - 2*degree - attribute
 
-InstallMethod(LeftOne, "for a bipartition", [IsBipartition],
+InstallMethod(LeftProjection, "for a bipartition", [IsBipartition],
 function(f)
   local n, next, blocks, lookup, table, out, i;
 
@@ -1243,7 +1253,7 @@ function(f, p)
   SetNrLeftBlocks(out, NrLeftBlocks(f));
   SetNrBlocks(out, NrBlocks(f));
   SetRankOfBipartition(out, RankOfBipartition(f));
-  SetTransverseBlocksLookup(out, TransverseBlocksLookup(f));
+  out!.lookup := TransverseBlocksLookup(f);
 
   if HasLeftBlocks(f) then
     SetLeftBlocks(out, LeftBlocks(f));

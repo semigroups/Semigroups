@@ -1,7 +1,7 @@
 ################################################################################
 ##
 #W  freeinverse.gi
-#Y  Copyright (C) 2013-14                                  Julius Jonusas
+#Y  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
@@ -107,7 +107,7 @@ BindGlobal( "ShallowCopy_FreeInverseSemigroup", iter -> rec(
                  iter_list := ShallowCopy( iter!.iter_list ) ) );
 
 InstallMethod( Iterator,"for a free inverse semigroup",
-  [ IsFreeInverseSemigroup],  S -> IteratorByFunctions( rec(
+  [ IsFreeInverseSemigroupCategory ],  S -> IteratorByFunctions( rec(
 
   IsDoneIterator := ReturnFalse,
   NextIterator   := NextIterator_FreeInverseSemigroup,
@@ -174,7 +174,11 @@ function(arg)
     od;
     names := Concatenation(List(names, x -> [x, Concatenation(x, "^-1")]));
     StoreInfoFreeMagma( F, names, IsFreeInverseSemigroupElement );
-    S := InverseSemigroup(gens);
+    S := Objectify( NewType( FamilyObj( gens ),
+	                     IsFreeInverseSemigroupCategory and IsInverseSemigroup
+		             and IsAttributeStoringRep),
+		    rec() );
+    SetGeneratorsOfInverseSemigroup( S, gens);
     SetIsFreeInverseSemigroup(S, true);
   else
     Error("Semigroups: FreeInverseSemigroup: usage,\n",
@@ -218,7 +222,7 @@ end);
 
 InstallMethod(ViewObj,
 "for a free inverse semigroup containing the whole family",
-[IsFreeInverseSemigroup],
+[IsFreeInverseSemigroupCategory],
 function( S )
   if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
     Print( "<free inverse semigroup with ",
@@ -523,8 +527,38 @@ end);
 
 InstallMethod(Size,
   "for a free inverse semigroup",
-  [IsFreeInverseSemigroup],
+  [IsFreeInverseSemigroupCategory],
   function(S)
     return infinity;
   end);
 
+InstallMethod(IsFreeInverseSemigroup, "for a semigroup",
+[IsSemigroup],
+function(s)
+  local gens, occurs, used, list, g, i;
+
+  if not IsInverseSemigroup(s) then
+    return false;
+  elif IsFreeInverseSemigroupElementCollection(s) then
+    gens := Generators(s);
+    occurs := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+    used := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+    for g in gens do
+      list := g![5];
+      for i in [ 2 .. Length(list)] do
+        used[Int((list[i] + 1) / 2)] := true;
+      od;
+      if g![2] = 2 then
+        occurs[Int((g![5][2] + 1) / 2)] := true;
+      fi;
+    od;
+
+    if occurs = used then
+      return true;
+    fi;
+  fi;
+
+  Error("Semigroups: IsFreeInverseSemigroup:\n",
+        "can not determine the answer");
+  return;
+end);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  bipartition.tst
-#Y  Copyright (C) 2014                                    Attila Egri-Nagy
+#Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -38,10 +38,10 @@ MappingByFunction( <bipartition monoid of size 41, on 4 pts with 4 generators>
  , <transformation monoid on 41 pts with 4 generators>
  , function( x ) ... end, function( x ) ... end )
 
-#T# the number of iterations, change here to get faster test
+# the number of iterations, change here to get faster test
 gap> N := 333;;
 
-#T#  BASICS
+#T# BASICS
 gap> classes:=[[1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1], [-6]];;
 gap> f:=BipartitionNC(classes);
 <bipartition: [ 1, 2, 3, -2 ], [ 4, -5 ], [ 5, -7 ], [ 6, -3, -4 ], [ 7 ], 
@@ -50,7 +50,7 @@ gap> LeftProjection(f);
 <bipartition: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], 
  [ 7 ], [ -7 ]>
 
-#T#  different order of classes
+#T# different order of classes
 gap> classes2:=[[-6], [1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [-1], [7]];;
 gap> f = Bipartition(classes2);
 true
@@ -62,13 +62,13 @@ gap> LeftProjection(f);
 <bipartition: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, 7 ], [ 5, -5 ], [ 6 ], 
  [ 8, 9, -8, -9 ], [ -4, -7 ], [ -6 ]>
 
-#T#  ASSOCIATIVITY
+#T# ASSOCIATIVITY
 gap> l := List([1..3*N], i->RandomBipartition(17));;
 gap> triples := List([1..N], i -> [l[i],l[i+1],l[i+2]]);;
 gap> ForAll(triples, x-> ((x[1]*x[2])*x[3]) = (x[1]*(x[2]*x[3])));
 true
 
-#T#  EMBEDDING into T_n
+#T# EMBEDDING into T_n
 gap> l := List([1,2,3,4,5,15,35,1999,64999,65000],i->RandomTransformation(i));;
 gap> ForAll(l,t->t=AsTransformation(AsBipartition(t)));
 true
@@ -78,7 +78,7 @@ gap> l := List([1,2,3,4,5,15,35,1999,30101,54321],i->RandomTransformation(i));;
 gap> ForAll(l,t->IsTransBipartition(AsBipartition(t)));
 true
 
-#T#  check big size, identity, multiplication
+#T# check big size, identity, multiplication
 gap> bp := RandomBipartition(70000);;bp*One(bp)=bp;One(bp)*bp=bp;
 true
 true
@@ -247,8 +247,7 @@ gap> Size(S);
 gap> ForAll(S, x-> ForAll(S, y-> (x*y)^f=(x^f)*(y^f)));
 true
 
-#T# IsomorphismPartialPermSemigroup for a semigroup of bipartitions consisting of
-#IsPartialPermBipartition
+#T# IsomorphismPartialPermSemigroup for a semigroup of bipartitions consisting of IsPartialPermBipartition
 gap> f:=IsomorphismPartialPermSemigroup(T);;
 gap> g:=InverseGeneralMapping(f);;
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^f=(x^f)*(y^f)));
@@ -261,8 +260,7 @@ true
 gap> ForAll(S, x-> (x^g)^f=x);
 true
 
-#T#  testing the cases to which the new methods for IsomorphismPartialPermSemigroup
-# and IsomorphismTransformationSemigroup don't apply...
+#T# testing the cases to which the new methods for IsomorphismPartialPermSemigroup and IsomorphismTransformationSemigroup don't apply
 gap> S:=Semigroup(
 > Bipartition( [ [ 1, 2, 3, 4, -1, -2, -5 ], [ 5 ], [ -3, -4 ] ] ), 
 > Bipartition( [ [ 1, 2, 3 ], [ 4, -2, -4 ], [ 5, -1, -5 ], [ -3 ] ] ), 
@@ -274,7 +272,7 @@ fail
 gap> Range(IsomorphismTransformationSemigroup(S));
 <transformation semigroup on 208 pts with 5 generators>
 
-#T#  IsomorphismBipartitionSemigroup for a perm group
+#T# IsomorphismBipartitionSemigroup for a perm group
 gap> G:=DihedralGroup(IsPermGroup, 10);;
 gap> f:=IsomorphismBipartitionSemigroup(G);;
 gap> g:=InverseGeneralMapping(f);;
@@ -307,7 +305,7 @@ MappingByFunction( {Bipartition( [ [ 1 ], [ 2, -2 ], [ 3, -3 ],
  [ 4, -4, -5 ], [ 5 ], [ -1 ] ] )}, Group([ (2,4,3), (3,
 4) ]), function( x ) ... end, function( x ) ... end )
 
-#T#  IsomorphismBipartitionSemigroup for an inverse semigroup of partial perms
+#T# IsomorphismBipartitionSemigroup for an inverse semigroup of partial perms
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 3, 5, 7, 9 ], [ 7, 6, 5, 10, 1 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 9, 10, 4, 2, 5, 6 ] ) );;
@@ -327,8 +325,7 @@ gap> f:=last2;; g:=InverseGeneralMapping(f);;
 gap> ForAll(T, x-> (x^f)^g=x);
 true
 
-#T#  AsBlockBijection and IsomorphismBlockBijectionSemigroup for an inverse
-# semigroup of partial perms
+#T#  AsBlockBijection and IsomorphismBlockBijectionSemigroup for an inverse semigroup of partial perms
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;

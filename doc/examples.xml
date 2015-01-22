@@ -389,6 +389,7 @@ true]]></Example>
 <#GAPDoc Label="SingularTransformationSemigroup">
     <ManSection>
       <Oper Name="SingularTransformationSemigroup" Arg="n"/>
+      <Oper Name="SingularTransformationMonoid" Arg="n"/>
       <Returns>The semigroup of non-invertible transformations.</Returns>
       <Description>
         If <A>n</A> is a integer greater than 1, then this function

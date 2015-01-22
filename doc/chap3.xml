@@ -82,6 +82,7 @@
     <#Include Label="IsTransitive">
     <#Include Label="ComponentRepsOfPartialPermSemigroup">
     <#Include Label="ComponentsOfPartialPermSemigroup">
+    <#Include Label="CyclesOfPartialPerm">
     <#Include Label="CyclesOfPartialPermSemigroup">
     <#Include Label="Normalizer">
     <#Include Label="SmallestElementSemigroup">

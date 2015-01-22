@@ -1,7 +1,7 @@
 #############################################################################
 ###
 ##W  misc.tst
-##Y  Copyright (C) 2011-13                                James D. Mitchell
+##Y  Copyright (C) 2011-15                                James D. Mitchell
 ###
 ###  Licensing information can be found in the README file of this package.
 ###
@@ -3955,8 +3955,12 @@ gap> One(h);
 IdentityTransformation
 gap> IsGroupHClass(h);
 true
-gap> KnownPropertiesOfObject(h);
-[ "IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC" ]
+gap> KnownPropertiesOfObject(h) =
+> [ "IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC" ] or
+> KnownPropertiesOfObject(h) =
+> [ "IsFinite", "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsGroupHClass", 
+>   "IsGreensClassNC" ];
+true
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 
   "LambdaOrbSCCIndex", "RhoOrbSCCIndex", "LambdaOrb", "RhoOrb" ]

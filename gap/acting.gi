@@ -1,12 +1,15 @@
 ############################################################################
 ##
 #W  acting.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+# local declarations . . .
+
 
 # acting semigroups...
 
@@ -722,16 +725,23 @@ function( data )
   if not(data!.looking) then
     Error("Semigroups: PositionOfFound: usage,\n",
           "not looking for anything,");
-    return fail;
+    return;
   fi;
   return data!.found;
 end);
 
 # same method for ideals
 
-InstallMethod(SizeOfSemigroupData, "for semigroup data", [IsSemigroupData],
+BindGlobal("SizeOfSemigroupData",
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
+
+  if not IsSemigroupData(data) then
+    Error("Semigroups: SizeOfSemigroupData: usage,\n",
+          "the arg <data> must be semigroup data,");
+    return;
+  fi;
+
 
   if not data!.init then
     return 0;

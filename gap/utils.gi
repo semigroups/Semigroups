@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,13 +11,29 @@
 
 #
 
-BindGlobal("SemigroupsDocXMLFiles",
-  ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
-   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
-   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml",
-   "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml",
-   "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
-   "freeband.xml", "../PackageInfo.g"]);
+BindGlobal("SemigroupsDocXMLFiles", [ "../PackageInfo.g",
+                                      "attributes-inverse.xml",
+                                      "attributes.xml",
+                                      "bipartition.xml",
+                                      "blocks.xml",
+                                      "display.xml",
+                                      "examples.xml",
+                                      "factor.xml",
+                                      "freeband.xml",
+                                      "freeinverse.xml",
+                                      "greens.xml",
+                                      "ideals.xml",
+                                      "isomorph.xml",
+                                      "maximal.xml",
+                                      "normalizer.xml",
+                                      "orbits.xml",
+                                      "properties.xml",
+                                      "reesmat-cong.xml",
+                                      "semibipart.xml",
+                                      "semigroups.xml",
+                                      "semipperm.xml",
+                                      "semitrans.xml",
+                                      "utils.xml"                 ]);
 
 # arg is the number of threads, defaults to 2...
 
@@ -123,9 +139,9 @@ function()
 
   record.STOP_TEST := STOP_TEST;
 
-  MakeReadWriteGlobal("STOP_TEST");
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", SemigroupsStopTest);
+  MakeReadWriteGlobal("STOP_TEST");
 
   return;
 end);
@@ -176,9 +192,9 @@ function(file)
   Unbind( GAPInfo.TestData.START_TIME );
   Unbind( GAPInfo.TestData.START_NAME );
   Print(str);
-  MakeReadWriteGlobal("STOP_TEST");
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", record.STOP_TEST);
+  MakeReadWriteGlobal("STOP_TEST");
   return;
 end);
 
