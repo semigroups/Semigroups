@@ -11,6 +11,9 @@
 ## generating pairs, using a union-find method.
 ##
 
+DeclareCategory("IsSemigroupCongruenceData", IsRecord);
+DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
+
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
   local s, elms, pairs, hashlen, ht, data, pairstoapply, pos, found;

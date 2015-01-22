@@ -12,6 +12,4 @@
 ##
 
 DeclareGlobalFunction("SEMIGROUPS_SetupCongData");
-DeclareCategory("IsSemigroupCongruenceData", IsRecord);
 DeclareAttribute("AsLookupTable", IsSemigroupCongruence);
-DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
