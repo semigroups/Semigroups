@@ -77,7 +77,7 @@ function(arg)
     IsInverseSemigroup(s) then
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
-    return InverseSemigroupCongruenceByCongruencePair(s, arg[2], arg[3]);
+    return InverseSemigroupCongruenceByKernelTrace(s, arg[2], arg[3]);
   else
     TryNextMethod();
   fi;
