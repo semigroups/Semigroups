@@ -100,6 +100,7 @@
     An analogous condition exists for finite simple Rees matrix semigroups
     without zero.<P/>
     
+    <#Include Label="IsRZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceClassByLinkedTriple">
     <#Include Label="IsLinkedTriple">
