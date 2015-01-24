@@ -1,12 +1,12 @@
+############################################################################
+##
+#W  setup.gd
+#Y  Copyright (C) 2013-15                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
 #############################################################################
-###
-##W  setup.gd
-##Y  Copyright (C) 2013-14                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
 
 DeclareCategory("IsActingSemigroup", IsSemigroup);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
@@ -54,7 +54,8 @@ DeclareAttribute("SchutzGpMembership", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsCollection]);
 
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction(
+"SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
 
 #EOF

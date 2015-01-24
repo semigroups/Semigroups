@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  greens.tst
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -16,7 +16,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#
+#T# GreensTest1
 gap> gens:=
 > [ [ Transformation( [ 3, 4, 4, 3, 1, 1, 5 ] ) ], 
 >   [ Transformation( [ 1, 1, 4, 3 ] ), Transformation( [ 2, 2, 2, 2 ] ), 
@@ -711,7 +711,8 @@ gap> f:=Transformation(
 gap> f in s;
 false
 gap> GreensRClassOfElement(s, f);
-Error, the element does not belong to the semigroup,
+Error, Semigroups: GreensRClassOfElement: usage,
+the element does not belong to the semigroup,
 gap> f:=Transformation( [ 1, 33, 49, 57, 61, 63, 1, 59, 53, 51, 55, 39, 41, 35,
 > 37, 45, 43, 47, 11, 15, 17, 3, 13, 7, 5, 9, 23, 25, 19, 21, 29, 27, 31, 3, 19,
 > 27, 31, 33, 29, 21, 23, 25, 5, 9, 11, 7, 13, 15, 17, 35, 43, 47, 49, 45, 37, 
@@ -1243,7 +1244,6 @@ gap> r:=RClass(s, f);
 gap> NrHClasses(r);
 177
 gap> GreensHClasses(r);;
-gap> 
 gap> Length(HClassReps(r))=NrHClasses(r);
 true
 gap> ForAll([1..177], i-> HClassReps(r)[i] in GreensHClasses(r)[i]);
@@ -1605,7 +1605,7 @@ gap> HClassReps(r);
   Transformation( [ 6, 4, 5, 7, 2, 3, 8, 8 ] ), 
   Transformation( [ 2, 6, 1, 3, 7, 4, 8, 8 ] ) ]
 
-#
+#T# GreensTest2
 gap> t:=FullTransformationSemigroup(5);;
 gap> iter:=Iterator(t);
 <iterator of <full transformation semigroup on 5 pts>>
@@ -1632,7 +1632,7 @@ gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true
 
-#GreensLClassOfElement(D-class, transformation);
+#T# GreensLClassOfElement(D-class, transformation);
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -1684,7 +1684,7 @@ gap> Size(s);
 gap> Set(HClasses(l))=Set(HClasses(ll));
 true
 
-#GreensHClassOfElement(D-class, transformation);
+#T# GreensHClassOfElement(D-class, transformation);
 gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,4,3,5,6,7,8,9,10]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
@@ -1719,7 +1719,7 @@ true
 gap> Elements(h)=Elements(hh);
 true
 
-#
+#T# GreensTest3
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> GreensDClasses(S);
@@ -1764,7 +1764,7 @@ gap> GreensHClasses(L);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
   {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
 
-#
+#T# GreensTest4
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> DClassReps(S);
@@ -1807,7 +1807,7 @@ gap> HClassReps(L);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 
-#
+#E# 
 gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
 > Unbind(out2); Unbind(out3); Unbind(a); Unbind(b); Unbind(M);
@@ -1818,5 +1818,4 @@ gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(R); Unbind(x); Unbind(i);;
 
 #
-gap> SemigroupsStopTest();
-gap> STOP_TEST( "Semigroups package: greens.tst", 10000);
+gap> STOP_TEST( "Semigroups package: greens.tst");

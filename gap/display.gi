@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  display.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -21,22 +21,24 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
   function(arg)
     local opt, path, dir, tdir, file, viewer, type, filetype;
 
-    if not IsString(arg[1]) then 
-      Error("usage: the first argument must be a string,");
+    if not IsString(arg[1]) then
+      Error("Semigroups: Splash: usage,\n",
+            "the first argument must be a string,");
       return;
     fi;
 
     if IsBound(arg[2]) then
-      if not IsRecord(arg[2]) then 
-        Error("usage: the second argument must be a record,");
+      if not IsRecord(arg[2]) then
+        Error("Semigroups: Splash: usage,\n",
+              "the second argument must be a record,");
         return;
       else
-        opt:=arg[2];
+        opt := arg[2];
       fi;
     else
-      opt:=rec();
+      opt := rec();
     fi;
-    
+
     #path
     if IsBound(opt.path) then
       path := opt.path;
@@ -72,36 +74,38 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
       viewer := opt.viewer;
     else
       viewer := First(VizViewers, x ->
-       Filename(DirectoriesSystemPrograms(),x)<>fail);
+       Filename(DirectoriesSystemPrograms(),x) <> fail);
     fi;
 
     # type
-    if IsBound(opt.type) and (opt.type="latex" or opt.type="dot") then
+    if IsBound(opt.type) and (opt.type = "latex" or opt.type = "dot") then
       type := opt.type;
-    elif arg[1]{[1..6]}="%latex" then 
-      type:="latex";
-    elif arg[1]{[1..5]}="//dot" then 
-      type:="dot";
-    else 
-      Error("usage: the option <type> must be \"dot\" or \"latex\",");
+    elif arg[1]{[1 .. 6]} = "%latex" then
+      type := "latex";
+    elif arg[1]{[1 .. 5]} = "//dot" then
+      type := "dot";
+    else
+      Error("Semigroups: Splash: usage,\n",
+            "the option <type> must be \"dot\" or \"latex\",");
       return;
     fi;
-    
+
     # output type
     if IsBound(opt.filetype) then
       filetype := opt.filetype;
     else
-      filetype:="pdf";
+      filetype := "pdf";
     fi;
-    
+
     #
-    
-    if type="latex" then
+
+    if type = "latex" then
       FileString(Concatenation(dir, file, ".tex"), arg[1]);
-      Exec(Concatenation("cd ",dir,"; ","pdflatex ",dir,file, 
+      Exec(Concatenation("cd ",dir,"; ","pdflatex ",dir,file,
        " 2>/dev/null 1>/dev/null"));
-      Exec(Concatenation(viewer, " ", dir, file, ".pdf 2>/dev/null 1>/dev/null &"));
-    elif type="dot" then 
+      Exec(Concatenation(viewer, " ", dir, file,
+       ".pdf 2>/dev/null 1>/dev/null &"));
+    elif type = "dot" then
       FileString(Concatenation(dir,file,".dot"),arg[1]);
       Exec(Concatenation("dot -T",filetype," ",dir,file,".dot"," -o ",
        dir,file,".",filetype));
@@ -115,7 +119,7 @@ fi;
 #
 
 BindGlobal("TikzInit",
-  Concatenation("%latex\n", 
+  Concatenation("%latex\n",
    "\\documentclass{minimal}\n",
    "\\usepackage{tikz}\n",
    "\\begin{document}\n")
@@ -127,7 +131,7 @@ BindGlobal("TikzEnd", "\\end{document}");
 
 #
 
-InstallGlobalFunction(TikzBipartition, 
+InstallGlobalFunction(TikzBipartition,
 function(arg)
   return Concatenation(TikzInit, CallFuncList(TikzStringForBipartition, arg),
   TikzEnd);
@@ -135,30 +139,31 @@ end);
 
 # for bipartition
 
-InstallGlobalFunction(TikzRightBlocks,
+BindGlobal("TikzRightBlocks",
 function(f)
-  return Concatenation(TikzInit, 
+  return Concatenation(TikzInit,
     TikzStringForBlocks(RightBlocks(f), "bottom", "bottom"), TikzEnd);
 end);
 
 # for bipartition
 
-InstallGlobalFunction(TikzLeftBlocks,
+BindGlobal("TikzLeftBlocks",
 function(f)
-  return Concatenation(TikzInit, TikzStringForBlocks(LeftBlocks(f), "top", "top"), 
-    TikzEnd);
+  return Concatenation(TikzInit,
+   TikzStringForBlocks(LeftBlocks(f), "top", "top"), TikzEnd);
 end);
 
 # for blocks, JDM have a right/left version of this
 
-InstallGlobalFunction(TikzBlocks, 
+InstallGlobalFunction(TikzBlocks,
 function(blocks)
-  return Concatenation(TikzInit, TikzStringForBlocks(blocks, "top", "top"), TikzEnd);
+  return Concatenation(TikzInit,
+   TikzStringForBlocks(blocks, "top", "top"), TikzEnd);
 end);
 
 #
 
-InstallGlobalFunction(TikzBipartitionRight, 
+BindGlobal("TikzBipartitionRight",
 function(f)
   return Concatenation(TikzInit, "\\begin{center}\n",
    TikzStringForBipartition(f), "\\bigskip\n",
@@ -168,7 +173,8 @@ end);
 
 #
 
-InstallGlobalFunction(TikzBipartitionLeft, function(f)
+BindGlobal("TikzBipartitionLeft",
+function(f)
   return Concatenation(TikzInit, "\\begin{center}\n",
    TikzStringForBipartition(f), "\\bigskip\n",
    TikzStringForBlocks(LeftBlocks(f), "none", "top"),
@@ -177,9 +183,9 @@ end);
 
 #
 
-InstallGlobalFunction(TikzBipartitionLeftRight, 
+BindGlobal("TikzBipartitionLeftRight",
 function(f)
-  return Concatenation(TikzInit, "\\begin{center}\n", 
+  return Concatenation(TikzInit, "\\begin{center}\n",
   TikzStringForBlocks(LeftBlocks(f), "none", "top"), "\\bigskip\n",
   TikzStringForBipartition(f), "\\bigskip\n",
   TikzStringForBlocks(RightBlocks(f), "none", "bottom"),
@@ -191,80 +197,85 @@ end);
 InstallGlobalFunction(TikzStringForBlocks,
 function(blocks, labels, edges)
   local str, n, x, ext, block, y, i;
-  
-  str:="\\begin{tikzpicture}\n"; 
-  n:=DegreeOfBlocks(blocks);
+
+  str := "\\begin{tikzpicture}\n";
+  n := DegreeOfBlocks(blocks);
 
   # draw the nodes
-  for i in [1..n] do
-    if blocks[n+blocks[i]]=0 then #non-transverse block
+  for i in [1 .. n] do
+    if blocks[n + blocks[i]] = 0 then #non-transverse block
       #node
       Append(str, "  \\draw[ultra thick](");
-      Append(str, ViewString(n-i+1));
+      Append(str, ViewString(n - i + 1));
       Append(str, ",2)circle(.115);\n");
     else #transverse block
       #node
       Append(str, "  \\fill(");
-      Append(str, ViewString(n-i+1));
+      Append(str, ViewString(n - i + 1));
       Append(str, ",2)circle(.125);\n");
-    fi;  
-    
-    if labels<>"none" then  
-      if labels="top" then 
+    fi;
+
+    if labels <> "none" then
+      if labels = "top" then
         #node label
-        x:="1.8";
-      elif labels="bottom" then 
-        x:="2.2";
+        x := "1.8";
+      elif labels = "bottom" then
+        x := "2.2";
       else
-        Error("usage: <labels> should be \"bottom\", \"top\", or \"none\",");
+        Error("Semigroups: TikzStringForBlocks: usage,\n",
+              "the second argument <labels> must be \"bottom\",",
+              "\"top\", or \"none\",");
         return;
       fi;
       Append(str, "  \\draw(");
       Append(str, x);
-      Append(str, ","); 
-      Append(str, ViewString(n-i+1));
+      Append(str, ",");
+      Append(str, ViewString(n - i + 1));
       Append(str, ") node [");
       Append(str, labels);
-      Append(str, "] {{$"); 
+      Append(str, "] {{$");
       Append(str, ViewString(i));
-      Append(str, "$}};"); 
+      Append(str, "$}};");
       Append(str, "\n");
     fi;
   od;
-    
+
   # draw the edges
   Append(str, "\n");
-  ext:=ExtRepOfBlocks(blocks);
+  ext := ExtRepOfBlocks(blocks);
   for block in ext do
-    block:=ShallowCopy(block);
+    block := ShallowCopy(block);
     Apply(block, AbsInt);
-    
-    if edges="top" then 
-      x:="2.125";
-      y:=i-> ViewString(Float(2.5+(1/(2*n))*(block[i]-block[i-1])));
-    elif edges="bottom" then  
-      x:="1.875";
-      y:=i-> ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1])));
-    else 
-      Error("usage: <edges> should be \"top\" or \"bottom\",");
+
+    if edges = "top" then
+      x := "2.125";
+      y := i -> ViewString(Float(2.5 + (1 / (2 * n))
+            * (block[i] - block[i - 1])));
+    elif edges = "bottom" then
+      x := "1.875";
+      y := i -> ViewString(Float(1.5 - (1 / (2 * n))
+           * (block[i] - block[i - 1])));
+    else
+      Error("Semigroups: TikzStringForBlocks: usage,\n",
+            "the third argument <edges> should be \"top\" or \"bottom\",");
       return;
     fi;
-    
-    for i in [2..Length(block)] do
+
+    for i in [2 .. Length(block)] do
       Append(str, "  \\draw (");
-      Append(str, ViewString(n-block[i-1]+1));
+      Append(str, ViewString(n - block[i - 1] + 1));
       Append(str, ",");
       Append(str, x);
       Append(str, ") .. controls (");
-      Append(str, ViewString(n-block[i-1]+1));
+      Append(str, ViewString(n - block[i - 1] + 1));
       Append(str, ",");
       Append(str, y(i));
       Append(str, ") and (");
-      Append(str, ViewString(n-block[i]+1));
+      Append(str, ViewString(n - block[i] + 1));
       Append(str, ",");
       Append(str, y(i));
       Append(str, ") .. (");
-      Append(str, ViewString(n-block[i]+1));
+      Append(str, ViewString(n - block[i] + 1));
       Append(str, ",");
       Append(str, x);
       Append(str, ");\n");
@@ -280,107 +291,125 @@ end);
 InstallGlobalFunction(TikzStringForBipartition,
 function(arg)
   local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i, k;
-  
-  fill:=i-> "  \\fill(";
-  draw:=i-> "  \\draw(";
-  
-  f:=arg[1]; 
-  if IsBound(arg[2]) then 
-    opts:=arg[2]; 
-    if IsBound(opts.colors) and opts.colors=true and NrBlocks(f)<20 then 
-      colors:=["red", "green", "blue", "cyan", "magenta", "yellow", "black",
-      "gray", "darkgray", "lightgray", "brown", "lime", "olive", "orange", "pink",
-      "purple", "teal", "violet", "white"];
-      fill:=i-> Concatenation("  \\fill[", colors[i], "](");
-      draw:=i-> Concatenation("  \\draw[", colors[i], "](");
-    fi; 
+
+  fill := i -> "  \\fill(";
+  draw := i -> "  \\draw(";
+
+  f := arg[1];
+  if IsBound(arg[2]) then
+    opts := arg[2];
+    if IsBound(opts.colors) and opts.colors = true and NrBlocks(f) < 20 then
+      colors := ["red", "green", "blue", "cyan", "magenta", "yellow", "black",
+      "gray", "darkgray", "lightgray", "brown", "lime", "olive", "orange",
+      "pink", "purple", "teal", "violet", "white"];
+      fill := i -> Concatenation("  \\fill[", colors[i], "](");
+      draw := i -> Concatenation("  \\draw[", colors[i], "](");
+    fi;
   fi;
 
-  str:="\\begin{tikzpicture}\n"; 
-  ext:=ExtRepOfBipartition(f);
-  n:=DegreeOfBipartition(f);
- 
+  str := "\\begin{tikzpicture}\n";
+  ext := ExtRepOfBipartition(f);
+  n := DegreeOfBipartition(f);
+
   # draw the lines
-  for j in [1..Length(ext)] do
-    block:=ext[j];
+  for j in [1 .. Length(ext)] do
+    block := ext[j];
     Append(str, "\n");
     Append(str, "  %block #");
     Append(str, String(j));
     Append(str, "\n");
-    Append(str, "  %vertices and labels\n"); 
+    Append(str, "  %vertices and labels\n");
     # vertices and their labels
-    for i in block do 
-      if i>0 then 
+    for i in block do
+      if i > 0 then
         Append(str, fill(j));
-        Append(str, ViewString(i)); Append(str, ",2)circle(.125);\n");
-        
-        Append(str, draw(j)); Append(str, ViewString(i-0.05));
-        Append(str, ", 2.2) node [above] {{ $"); Append(str, ViewString(i));
-        Append(str, "$}};"); Append(str, "\n");
+        Append(str, ViewString(i));
+        Append(str, ",2)circle(.125);\n");
+        Append(str, draw(j));
+        Append(str, ViewString(i - 0.05));
+        Append(str, ", 2.2) node [above] {{ $");
+        Append(str, ViewString(i));
+        Append(str, "$}};");
+        Append(str, "\n");
       else
-        Append(str, fill(j)); 
-        Append(str, ViewString(-i)); Append(str, ",0)circle(.125);\n");
-      
-        Append(str, draw(j)); Append(str, ViewString(-i));
-        Append(str, ", -0.2) node [below] {{ $-"); Append(str, ViewString(-i));
-        Append(str, "$}};"); Append(str, "\n");
+        Append(str, fill(j));
+        Append(str, ViewString( - i));
+        Append(str, ",0)circle(.125);\n");
+        Append(str, draw(j));
+        Append(str, ViewString( - i));
+        Append(str, ", -0.2) node [below] {{ $-");
+        Append(str, ViewString( - i));
+        Append(str, "$}};");
+        Append(str, "\n");
       fi;
     od;
 
-    Append(str, "\n  %lines\n"); 
+    Append(str, "\n  %lines\n");
     # lines
-    up:=[]; down:=[];
-    for i in [2..Length(block)] do
-      if block[i-1]>0 and block[i]>0 then
-        AddSet(up, block[i-1]);
+    up := [];
+    down := [];
+    for i in [2 .. Length(block)] do
+      if block[i - 1] > 0 and block[i] > 0 then
+        AddSet(up, block[i - 1]);
         AddSet(up, block[i]);
         Append(str, draw(j));
-        Append(str, ViewString(block[i-1]));
+        Append(str, ViewString(block[i - 1]));
         Append(str, ",1.875) .. controls (");
-        Append(str, ViewString(block[i-1]));
+        Append(str, ViewString(block[i - 1]));
         Append(str, ",");
-        Append(str, ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(1.5 - (1 / (2 * n))
+         * (block[i] - block[i - 1]))));
         Append(str, ") and (");
         Append(str, ViewString(block[i]));
         Append(str, ",");
-        Append(str, ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(1.5 - (1 / (2 * n))
+         * (block[i] - block[i - 1]))));
         Append(str, ") .. (");
         Append(str, ViewString(block[i]));
         Append(str, ",1.875);\n");
-      elif block[i-1]<0 and block[i]<0 then 
-        AddSet(down, block[i-1]);
+      elif block[i - 1] < 0 and block[i] < 0 then
+        AddSet(down, block[i - 1]);
         AddSet(down, block[i]);
         Append(str,  draw(j));
-        Append(str, ViewString(-block[i-1]));
+        Append(str, ViewString( - block[i - 1]));
         Append(str, ",0.125) .. controls (");
-        Append(str, ViewString(-block[i-1]));
+        Append(str, ViewString( - block[i - 1]));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5+(-1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(0.5 + ( - 1 / (2 * n)) * (block[i] -
+        block[i - 1]))));
         Append(str, ") and (");
-        Append(str, ViewString(-block[i]));
+        Append(str, ViewString( - block[i]));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5+(-1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ViewString(Float(0.5 + ( - 1 / (2 * n)) * (block[i] -
+        block[i - 1]))));
         Append(str, ") .. (");
-        Append(str, ViewString(-block[i]));
+        Append(str, ViewString( - block[i]));
         Append(str, ",0.125);\n");
-      elif block[i-1]>0 and block[i]<0 then
-        AddSet(down, block[i]); AddSet(up, block[i-1]);
-      elif block[i-1]<0 and block[i]>0 then
-        AddSet(down, block[i-1]); AddSet(up, block[i]);
+      elif block[i - 1] > 0 and block[i] < 0 then
+        AddSet(down, block[i]);
+        AddSet(up, block[i - 1]);
+      elif block[i - 1] < 0 and block[i] > 0 then
+        AddSet(down, block[i - 1]);
+        AddSet(up, block[i]);
       fi;
     od;
-    if Length(up)<>0 and Length(down)<>0 then 
-      min:=[n+1]; down:=down*-1;
-      for i in up do 
-        for k in down do 
-          if AbsInt(i-k)<min[1] then 
-            min[1]:=AbsInt(i-k); min[2]:=i; min[3]:=k;
+    if Length(up) <> 0 and Length(down) <> 0 then
+      min := [n + 1];
+      down := down * - 1;
+      for i in up do
+        for k in down do
+          if AbsInt(i - k) < min[1] then
+            min[1] := AbsInt(i - k);
+            min[2] := i;
+            min[3] := k;
           fi;
         od;
       od;
-      Append(str, draw(j)); Append(str, ViewString(min[2]));
+      Append(str, draw(j));
+      Append(str, ViewString(min[2]));
       Append(str, ",2)--(");
-      Append(str, ViewString(min[3])); Append(str, ",0);\n");
+      Append(str, ViewString(min[3]));
+      Append(str, ",0);\n");
     fi;
   od;
   Append(str, "\\end{tikzpicture}\n\n");
@@ -390,18 +419,27 @@ end);
 #
 
 InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup], 
+[IsReesZeroMatrixSemigroup],
 function(S)
-  if IsActingSemigroup(S) then 
+  if IsActingSemigroup(S) then
     TryNextMethod();
   fi;
   return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)));
 end);
 
+InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup, IsRecord],
+function(S, opts)
+  if IsActingSemigroup(S) then
+    TryNextMethod();
+  fi;
+  return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)), opts);
+end);
+
 #
 
 InstallMethod(DotDClasses, "for an acting semigroup",
-[IsActingSemigroup], 
+[IsActingSemigroup],
 function(s)
   return DotDClasses(s, rec());
 end);
@@ -409,69 +447,110 @@ end);
 InstallMethod(DotDClasses, "for an acting semigroup and record",
 [IsActingSemigroup, IsRecord],
 function(s, opts)
-  local es, elts, str, i, gp, h, rel, j, k, di, dk, d, l, x;
+  local es, elts, str, i, gp, h, pos, color, rel, j, k, di, dk, x, d, l;
 
   # process the options
-  if not IsBound(opts.maximal) then 
-    opts.maximal:=false;
+  if not IsBound(opts.maximal) then
+    opts.maximal := false;
   fi;
-  if not IsBound(opts.number) then 
-    opts.number:=true;
+  if not IsBound(opts.number) then
+    opts.number := true;
   fi;
-  if not IsBound(opts.idempotentsemilattice) then 
-    opts.idempotentsemilattice:=false;
-  elif opts.idempotentsemilattice then 
-    es:=IdempotentGeneratedSubsemigroup(s);
-    elts:=Elements(es); #JDM could be enumerator sorted
+  if not IsBound(opts.highlight) then
+    opts.highlight := false; #JDM means highligh H-classes
+  else
+    for x in opts.highlight do
+      if not IsBound(x.HighlightGroupHClassColor) then
+        x.HighlightGroupHClassColor := "#880000";
+      fi;
+
+      if not IsBound(x.HighlightNonGroupHClassColor) then
+        x.HighlightNonGroupHClassColor := "#FF0000";
+      fi;
+    od;
   fi;
 
-  str:="//dot\n";
+  if not IsBound(opts.idempotentsemilattice) then
+    opts.idempotentsemilattice := false;
+  elif opts.idempotentsemilattice then
+    es := IdempotentGeneratedSubsemigroup(s);
+    elts := Elements(es); #JDM could be enumerator sorted
+  fi;
+
+  str := "//dot\n";
   Append(str, "digraph  DClasses {\n");
   Append(str, "node [shape=plaintext]\n");
-  Append(str, "edge [color=red,arrowhead=none]\n");
-  i:=0;
+  Append(str, "edge [color=black,arrowhead=none]\n");
+  i := 0;
 
   for d in DClasses(s) do
-    i:=i+1;
+    i := i + 1;
     Append(str, String(i));
-    Append(str, " [shape=box style=dotted label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\"");
+    Append(str, " [shape=box style=invisible ");
+    Append(str, "label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\"");
     Append(str, " CELLPADDING=\"10\" CELLSPACING=\"0\"");
     Append(str, Concatenation(" PORT=\"", String(i), "\">\n"));
 
     if opts.number then
       Append(str, "<TR BORDER=\"0\"><TD COLSPAN=\"");
       Append(str, String(NrRClasses(d)));
-      Append(str, "\" BORDER=\"0\" >");
+      Append(str, "\" BORDER = \"0\" > ");
       Append(str, String(i));
       Append(str, "</TD></TR>");
     fi;
 
     if opts.maximal and IsRegularDClass(d) then
-       gp:=StructureDescription(GroupHClass(d));
+       gp := StructureDescription(GroupHClass(d));
     fi;
-    
+
     for l in LClasses(d) do
       Append(str, "<TR>");
       if not IsRegularClass(l) then
-        for j in [1..NrRClasses(d)] do
-          Append(str, "<TD CELLPADDING=\"10\"> </TD>");
+        for x in HClasses(l) do
+          color := "white";
+          if opts.highlight <> false then
+            pos := PositionProperty(opts.highlight, record -> x in
+                   record.HClasses);
+            if pos <> fail then
+              color := opts.highlight[pos].HighlightNonGroupHClassColor;
+            fi;
+          fi;
+          Append(str, Concatenation("<TD CELLPADDING=\"10\" BGCOLOR=\"", color,
+            "\"></TD>"));
         od;
       else
-        h:=HClasses(l);
+        h := HClasses(l);
         for x in h do
           if IsGroupHClass(x) then
+            color := "gray";
+            if opts.highlight <> false then
+              pos := PositionProperty(opts.highlight, record -> x in
+                     record.HClasses);
+              if pos <> fail then
+                color := opts.highlight[pos].HighlightGroupHClassColor;
+              fi;
+            fi;
             if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"grey\">", gp, "</TD>"));
+              Append(str, Concatenation("<TD BGCOLOR=\"", color , "\">", gp,
+              "</TD>"));
             else
-              Append(str, "<TD BGCOLOR=\"grey\"");
-              if opts.idempotentsemilattice then 
+              Append(str, Concatenation("<TD BGCOLOR=\"", color, "\""));
+              if opts.idempotentsemilattice then
                 Append(str, Concatenation(" PORT=\"e", String(Position(elts,
                  Idempotents(x)[1])), "\""));
-              fi; 
+              fi;
               Append(str, ">*</TD>");
             fi;
           else
-            Append(str, "<TD></TD>");
+            color := "white";
+            if opts.highlight <> false then
+              pos := PositionProperty(opts.highlight, record -> x in
+                     record.HClasses);
+              if pos <> fail then
+                color := opts.highlight[pos].HighlightNonGroupHClassColor;
+              fi;
+            fi;
+            Append(str, Concatenation("<TD BGCOLOR=\"", color ,"\"></TD>"));
           fi;
         od;
       fi;
@@ -480,28 +559,30 @@ function(s, opts)
     Append(str, "</TABLE>>];\n");
   od;
 
-  rel:=PartialOrderOfDClasses(s);
-  rel:=List([1..Length(rel)], x-> Filtered(rel[x], y-> not x=y));
+  rel := PartialOrderOfDClasses(s);
+  rel := List([1 .. Length(rel)], x -> Filtered(rel[x], y -> not x = y));
 
-  for i in [1..Length(rel)] do
-    j:=Difference(rel[i], Union(rel{rel[i]})); i:=String(i);
+  for i in [1 .. Length(rel)] do
+    j := Difference(rel[i], Union(rel{rel[i]}));
+    i := String(i);
     for k in j do
-      k:=String(k);
+      k := String(k);
       Append(str, Concatenation(i, " -> ", k, "\n"));
     od;
   od;
 
   # add semilattice of idempotents
-  if opts.idempotentsemilattice then 
+  if opts.idempotentsemilattice then
     Append(str, "edge [color=blue,arrowhead=none,style=dashed]\n");
-    rel:=NaturalPartialOrder(es);
-    
-    for i in [1..Length(rel)] do 
-      di:=String(Position(DClasses(s), DClass(s, elts[i]))); 
-      j:=Difference(rel[i], Union(rel{rel[i]})); i:=String(i);
-      for k in j do 
-        dk:=String(Position(DClasses(s), DClass(s, elts[k]))); 
-        k:=String(k);
+    rel := NaturalPartialOrder(es);
+
+    for i in [1 .. Length(rel)] do
+      di := String(Position(DClasses(s), DClass(s, elts[i])));
+      j := Difference(rel[i], Union(rel{rel[i]}));
+      i := String(i);
+      for k in j do
+        dk := String(Position(DClasses(s), DClass(s, elts[k])));
+        k := String(k);
         Append(str, Concatenation(di, ":e", i, " -> ", dk, ":e", k, "\n"));
       od;
     od;
@@ -517,11 +598,11 @@ InstallMethod(DotSemilatticeOfIdempotents,
 function(S)
   local U, rel, elts, str, nr, V, j, i, k, D, v;
 
-  U:=IdempotentGeneratedSubsemigroup(S);
-  rel:=NaturalPartialOrder(U);
-  elts:=Elements(U); 
+  U := IdempotentGeneratedSubsemigroup(S);
+  rel := NaturalPartialOrder(U);
+  elts := Elements(U);
 
-  str:="//dot\n";
+  str := "//dot\n";
 
   #if Length(rel)<20 then
   #  Append(str,  "graph graphname {\n  node [shape=circle]\n");
@@ -530,12 +611,12 @@ function(S)
   #fi;
   Append(str, "ranksep=2;\n");
 
-  nr:=0;
-  for D in GreensDClasses(S) do 
-    nr:=nr+1;
-    V:=List(Idempotents(D), x-> String(Position(elts, x))); 
+  nr := 0;
+  for D in GreensDClasses(S) do
+    nr := nr + 1;
+    V := List(Idempotents(D), x -> String(Position(elts, x)));
     Append(str, Concatenation("subgraph cluster_", String(nr), "{\n"));
-    for v in V do 
+    for v in V do
       Append(str, v);
       Append(str, " ");
     od;
@@ -543,10 +624,11 @@ function(S)
     Append(str, "}\n");
   od;
 
-  for i in [1..Length(rel)] do
-    j:=Difference(rel[i], Union(rel{rel[i]})); i:=String(i);
+  for i in [1 .. Length(rel)] do
+    j := Difference(rel[i], Union(rel{rel[i]}));
+    i := String(i);
     for k in j do
-      k:=String(k);
+      k := String(k);
       Append(str, Concatenation(i, " -- ", k, "\n"));
     od;
   od;
@@ -554,6 +636,6 @@ function(S)
   Append(str, " }");
 
   return str;
-end); 
+end);
 
 #EOF
