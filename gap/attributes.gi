@@ -911,36 +911,36 @@ function(s)
 end);
 
 #T mpf: Will this still be needed? Should we have IsMatrixSemigroup and
-#T      IsMatrixObjSemigroup, or should IsMatrixSemigroup always be a 
+#T      IsMatrixObjSemigroup, or should IsMatrixSemigroup always be a
 #T      MatrixObjSemigroup?
 #
-#InstallMethod(IsomorphismTransformationSemigroup, 
+#InstallMethod(IsomorphismTransformationSemigroup,
 #"for a matrix semigroup",
-#[IsMatrixSemigroup], 
-#function(S)        
+#[IsMatrixSemigroup],
+#function(S)
 #  local n, F, T;
 #  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
-#  F:=FieldOfMatrixList(GeneratorsOfSemigroup(S));        
-#  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
-#   TransformationOp(x, Elements(F^n), OnRight)));        
+#  F:=FieldOfMatrixList(GeneratorsOfSemigroup(S));
+#  T:=Semigroup(List(GeneratorsOfSemigroup(S), x->
+#   TransformationOp(x, Elements(F^n), OnRight)));
 #  return MappingByFunction(S, T,
 #   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
 #end);
 
 # different method for ideals
 
-InstallMethod(IsomorphismTransformationSemigroup, 
-"for a matrix semigroup with generators", 
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup], 
-function(S)        
+InstallMethod(IsomorphismTransformationSemigroup,
+"for a matrix semigroup with generators",
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+function(S)
   local n, F, T, M;
-  n:=DimensionsMat(GeneratorsOfSemigroup(S)[1])[1];
-  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);
-  M:=List(Elements(F^n), x->NewRowVector(IsPlistVectorRep, F, x));
-  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
-   TransformationOp(x, M, \*)));        
+  n := DimensionsMat(GeneratorsOfSemigroup(S)[1])[1];
+  F := BaseDomain(GeneratorsOfSemigroup(S)[1]);
+  M := List(Elements(F ^ n), x -> NewRowVector(IsPlistVectorRep, F, x));
+  T := Semigroup(List(GeneratorsOfSemigroup(S), x ->
+   TransformationOp(x, M, \*)));
   return MappingByFunction(S, T,
-   x-> TransformationOp(x, Elements(F^Size(F)), \*));
+   x -> TransformationOp(x, Elements(F ^ Size(F)), \*));
 end);
 
 # same method for ideals

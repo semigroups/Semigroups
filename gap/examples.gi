@@ -49,7 +49,8 @@
 InstallMethod(EndomorphismsPartition, "for a list of positive integers",
 [IsCyclotomicCollection],
 function(partition)
-  local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x, m, y, w, i, j, k, block;
+  local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x,
+  m, y, w, i, j, k, block;
   
   if not ForAll(partition, IsPosInt) then 
     Error("usage: the argument <partition> must be a list of positive integers,");

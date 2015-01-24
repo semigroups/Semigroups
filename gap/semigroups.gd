@@ -36,15 +36,15 @@ DeclareOperation("ClosureInverseSemigroup", [IsActingSemigroupWithInverseOp,
 IsCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsCollection]);
-DeclareOperation("ClosureInverseSemigroup", 
+DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
-DeclareOperation("ClosureSemigroup", 
+DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsCollection, IsRecord]);
-DeclareOperation("ClosureSemigroup", 
+DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsCollection]);
 DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElement, IsRecord]);

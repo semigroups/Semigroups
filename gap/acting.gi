@@ -183,15 +183,15 @@ function(f, s)
   if repslens[m][ind] = max then
     return true;
   fi;
- 
-  membership:=SchutzGpMembership(s);
+
+  membership := SchutzGpMembership(s);
 
   # if schutz is false, then f has to be an R-rep which it is not...
   if schutz <> false then
 
     # check if f already corresponds to an element of reps[m][ind]
-    lambdaperm:=LambdaPerm(s);
-    for n in [1..repslens[m][ind]] do 
+    lambdaperm := LambdaPerm(s);
+    for n in [1 .. repslens[m][ind]] do
       if membership(schutz, lambdaperm(reps[m][ind][n], f)) then
         return true;
       fi;
@@ -232,8 +232,8 @@ function(f, s)
           if oldrepslens = max then
             return true;
           fi;
-          for i in [n+1..repslens[m][ind]] do 
-            if membership(schutz, lambdaperm(reps[m][ind][i], f)) then 
+          for i in [n + 1 .. repslens[m][ind]] do
+            if membership(schutz, lambdaperm(reps[m][ind][i], f)) then
               return true;
             fi;
           od;
@@ -388,12 +388,12 @@ function(data, limit, lookfunc)
   lambdaact := LambdaAct(s);
   lambdaperm := LambdaPerm(s);
 
-  o:=LambdaOrb(s);
-  oht:=o!.ht;
-  scc:=OrbSCC(o); 
-  lookup:=o!.scc_lookup;
- 
-  membership:=SchutzGpMembership(s);
+  o := LambdaOrb(s);
+  oht := o!.ht;
+  scc := OrbSCC(o);
+  lookup := o!.scc_lookup;
+
+  membership := SchutzGpMembership(s);
 
   #rho
   rho := RhoFunc(s);
@@ -559,12 +559,12 @@ function(data, limit, lookfunc)
             fi;
           else
           # the Schutzenberger group is neither trivial nor symmetric group
-            old:=false; 
-            for n in [1..repslens[m][ind]] do 
+            old := false;
+            for n in [1 .. repslens[m][ind]] do
               if membership(schutz, lambdaperm(reps[m][ind][n], x)) then
-                old:=true;
-                graph[i][j]:=repslookup[m][ind][n]; 
-                rho_orbitgraph[rholookup[i]][j]:=l;
+                old := true;
+                graph[i][j] := repslookup[m][ind][n];
+                rho_orbitgraph[rholookup[i]][j] := l;
                 break;
               fi;
             od;
@@ -660,7 +660,8 @@ end);
 InstallMethod(Position, "for semigroup data and an associative element",
 [IsSemigroupData, IsAssociativeElement, IsZeroCyc],
 function(data, x, n)
-  local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens, membership, lambdaperm;
+  local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
+  membership, lambdaperm;
 
   s := data!.parent;
   o := LambdaOrb(s);
@@ -704,13 +705,13 @@ function(data, x, n)
     return repslookup[1];
   fi;
 
-  reps:=data!.reps[m][ind]; 
-  repslens:=data!.repslens[m][ind];
-  membership:=SchutzGpMembership(s);
-  lambdaperm:=LambdaPerm(s);
+  reps := data!.reps[m][ind];
+  repslens := data!.repslens[m][ind];
+  membership := SchutzGpMembership(s);
+  lambdaperm := LambdaPerm(s);
 
-  for n in [1..repslens] do 
-    if membership(schutz, lambdaperm(reps[n], x)) then 
+  for n in [1 .. repslens] do
+    if membership(schutz, lambdaperm(reps[n], x)) then
       return repslookup[n];
     fi;
   od;

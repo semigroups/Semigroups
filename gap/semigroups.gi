@@ -168,7 +168,7 @@ end);
 # creating semigroups, monoids, inverse semigroups, etc
 
 InstallMethod(MagmaByGenerators, "for an associative element collection",
-[IsCollection], 
+[IsCollection],
 function(coll)
   if IsGeneratorsOfActingSemigroup(coll) then
     return SemigroupByGenerators(coll);
@@ -180,7 +180,7 @@ end);
 #
 
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
-[IsCollection], 
+[IsCollection],
 function(gens)
    if IsGeneratorsOfActingSemigroup(gens) then
      return SemigroupByGenerators(gens, SemigroupsOptionsRec);
@@ -248,8 +248,8 @@ function(gens, opts)
     filts := filts and IsActingSemigroup;
   fi;
 
-  if IsMatrixObj(gens[1]) then 
-    filts:=filts and IsMatrixSemigroup;
+  if IsMatrixObj(gens[1]) then
+    filts := filts and IsMatrixSemigroup;
   fi;
   s := Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := opts));
   if opts.regular then
@@ -258,7 +258,7 @@ function(gens, opts)
 
   SetGeneratorsOfMagma(s, gens);
 
-  #if IsGeneratorsOfSemigroup(gens) 
+  #if IsGeneratorsOfSemigroup(gens)
   if IsMultiplicativeElementWithOneCollection(gens)
    and CanEasilyCompareElements(gens) then
     pos := Position(gens, One(gens));
@@ -336,11 +336,11 @@ function(gens, record)
     fi;
     return s;
   fi;
-  
+
   filts := IsMonoid and IsAttributeStoringRep;
 
-  if IsMatrixObj(gens[1]) then 
-    filts:=filts and IsMatrixSemigroup;
+  if IsMatrixObj(gens[1]) then
+    filts := filts and IsMatrixSemigroup;
   fi;
 
   if record.acting then
@@ -372,7 +372,7 @@ end);
 
 InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection",
-[IsCollection], 16, 
+[IsCollection], 16,
 function(gens)
 
   if IsGeneratorsOfActingSemigroup(gens) then
@@ -386,7 +386,8 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection",
-[IsCollection], 16, # to beat the library method with IsAssociativeElementCollection
+[IsCollection], 16,
+# to beat the library method with IsAssociativeElementCollection
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then
     return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
@@ -459,7 +460,7 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
-[IsCollection, IsRecord], 
+[IsCollection, IsRecord],
 function(gens, record)
   local n, closure_opts, s, filts, pos, f;
 
@@ -513,7 +514,7 @@ end);
 InstallMethod(ClosureInverseSemigroup,
 "for acting semigroup with inverse op and associative element coll.",
 [IsActingSemigroupWithInverseOp, IsCollection],
-function(s, coll) 
+function(s, coll)
   return ClosureInverseSemigroup(s, coll, s!.opts);
 end);
 
@@ -1159,14 +1160,14 @@ InstallMethod(RandomMatrixSemigroup,
 "for a ring, positive integer, and positive integer",
 [IsRing, IsPosInt, IsPosInt],
 function(R, m, n)
-  return Semigroup(List([1..m], x-> RandomMatrixObj(n, n, R)));
+  return Semigroup(List([1 .. m], x -> RandomMatrixObj(n, n, R)));
 end);
 
-InstallMethod(RandomMatrixMonoid, 
+InstallMethod(RandomMatrixMonoid,
 "for a ring, positive integer, and positive integer",
-[IsRing, IsPosInt, IsPosInt], 
+[IsRing, IsPosInt, IsPosInt],
 function(R, m, n)
-  return Monoid(List([1..m], x-> RandomMatrixObj(n, n, R)));
+  return Monoid(List([1 .. m], x -> RandomMatrixObj(n, n, R)));
 end);
 
 #

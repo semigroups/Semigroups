@@ -276,31 +276,31 @@ function(o, m)
   one := LambdaIdentity(s)(rank);
   bound := LambdaBound(s)(rank);
 
-  if rank=0 then 
-    o!.schutzstab[m]:=false;
-    if IsPerm(one) then 
-      o!.schutz[m]:=Group(one);
+  if rank = 0 then
+    o!.schutzstab[m] := false;
+    if IsPerm(one) then
+      o!.schutz[m] := Group(one);
     else
-      o!.schutz[m]:=[one];
+      o!.schutz[m] := [one];
     fi;
     return o!.schutz[m];
   fi;
 
-  g:=Group(one);
-  
-  stop:=false; 
-  
+  g := Group(one);
+
+  stop := false;
+
   for k in scc do
     forward := LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do
-      if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        f:=lambdaperm(rep, rep*forward*gens[l]
-          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-        g:=ClosureGroup(g, f);
+      if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]] = m then
+        f := lambdaperm(rep, rep * forward * gens[l]
+          * LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+        g := ClosureGroup(g, f);
       fi;
-        
-      if Size(g)>=bound then
-        stop:=true;
+
+      if Size(g) >= bound then
+        stop := true;
         break;
       fi;
     od;
@@ -312,13 +312,13 @@ function(o, m)
   o!.schutz[m] := g;
 
   if stop then
-    o!.schutzstab[m]:=true;
-  elif Size(g)=1 then
-    o!.schutzstab[m]:=false;
+    o!.schutzstab[m] := true;
+  elif Size(g) = 1 then
+    o!.schutzstab[m] := false;
   elif IsPermGroup(g) then
-    o!.schutzstab[m]:=StabChainImmutable(g);
+    o!.schutzstab[m] := StabChainImmutable(g);
   else # if IsMatrixGroup(g)
-    o!.schutzstab[m]:=g;
+    o!.schutzstab[m] := g;
   fi;
 
   return g;
@@ -470,56 +470,58 @@ end);
 
 InstallGlobalFunction(RhoOrbSchutzGp,
 function(o, m, bound)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, one, lbound, lambdaperm, rep, rank, mults, stop, i, j;
-  
-  if IsBound(o!.schutz) then 
-    if IsBound(o!.schutz[m]) then 
+  local g, s, gens, nrgens, scc, lookup, orbitgraph, one, lbound, lambdaperm,
+   rep, rank, mults, stop, i, j;
+
+  if IsBound(o!.schutz) then
+    if IsBound(o!.schutz[m]) then
       return o!.schutz[m];
     fi;
   else
     o!.schutz := EmptyPlist(Length(OrbSCC(o)));
     o!.schutzstab := EmptyPlist(Length(OrbSCC(o)));
   fi;
-  
-  if bound=1 then 
-    o!.schutz[m]:=g;
-    o!.schutzstab[m]:=false;
+
+  if bound = 1 then
+    o!.schutz[m] := g;
+    o!.schutzstab[m] := false;
     return g;
   fi;
 
-  s:=o!.parent;
-  gens:=o!.gens;
-  nrgens:=Length(gens);
-  scc:=OrbSCC(o)[m];
-  lookup:=o!.scc_lookup;
-  orbitgraph:=OrbitGraph(o);
-  lambdaperm:=LambdaPerm(s);
-  rep:=RhoOrbRep(o, m);
-  mults:=RhoOrbMults(o, m);
-  
-  rank:=RhoRank(s)(o[scc[1]]);
-  
-  one := RhoIdentity(s)(rank);;
-  
-  if rank=0 then
-    o!.schutzstab[m]:=false;
-    if IsPerm(one) then 
-      o!.schutz[m]:=Group(one);
+  s := o!.parent;
+  gens := o!.gens;
+  nrgens := Length(gens);
+  scc := OrbSCC(o)[m];
+  lookup := o!.scc_lookup;
+  orbitgraph := OrbitGraph(o);
+  lambdaperm := LambdaPerm(s);
+  rep := RhoOrbRep(o, m);
+  mults := RhoOrbMults(o, m);
+
+  rank := RhoRank(s)(o[scc[1]]);
+
+  one := RhoIdentity(s)(rank);
+
+  if rank = 0 then
+    o!.schutzstab[m] := false;
+    if IsPerm(one) then
+      o!.schutz[m] := Group(one);
     else
-      o!.schutz[m]:=[one];
+      o!.schutz[m] := [one];
     fi;
     return o!.schutz[m];
   fi;
-      
-  g:=Group(one);
+
+  g := Group(one);
   stop := false;
-  
-  for i in scc do 
-    for j in [1..nrgens] do 
-      if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]]=m then 
-        g:=ClosureGroup(g, 
-         lambdaperm(rep, mults[orbitgraph[i][j]][2]*gens[j]*mults[i][1]*rep));
-        if Size(g)>=bound then 
+
+  for i in scc do
+    for j in [1 .. nrgens] do
+      if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
+        g := ClosureGroup(g,
+         lambdaperm(rep, mults[orbitgraph[i][j]][2] * gens[j] * mults[i][1] *
+         rep));
+        if Size(g) >= bound then
           stop := true;
           break;
         fi;
@@ -529,16 +531,16 @@ function(o, m, bound)
         break;
     fi;
   od;
-  o!.schutz[m]:=g;
+  o!.schutz[m] := g;
 
   if stop then
-    o!.schutzstab[m]:=true;
-  elif Size(g)=1 then
-    o!.schutzstab[m]:=false;
+    o!.schutzstab[m] := true;
+  elif Size(g) = 1 then
+    o!.schutzstab[m] := false;
   elif IsPermGroup(g) then
-    o!.schutzstab[m]:=StabChainImmutable(g);
+    o!.schutzstab[m] := StabChainImmutable(g);
   else # if IsMatrixGroup(g)
-    o!.schutzstab[m]:=g;
+    o!.schutzstab[m] := g;
   fi;
   return g;
 end);

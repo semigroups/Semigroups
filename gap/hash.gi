@@ -22,7 +22,7 @@ function(x,data)
         return 1;
     fi;
     res := 0;
-    for i in [1..DimensionsMat(x)[1]] do
+    for i in [1 .. DimensionsMat(x)[1]] do
         res := (res * 1001 + SEMIG_HashFunctionForPlistVects(x[i], data))
              mod data + 1;
     od;
@@ -41,12 +41,12 @@ function(x,data)
     if Length(basis) = 0 then
         res := 1;
     else
-        for i in [1..Length(basis)] do
+        for i in [1 .. Length(basis)] do
             res := (res * 1001 + SEMIG_HashFunctionForPlistVects(basis[i],data))
-                mod data+1;
+                mod data + 1;
         od;
     fi;
-    
+
     return res;
 end );
 

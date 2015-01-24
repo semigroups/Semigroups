@@ -13,7 +13,8 @@
 
 #T Is there a better way of saying what a matrix semigroup is?
 
-DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl and IsAssociativeElementCollection);
+DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl and
+IsAssociativeElementCollection);
 
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 
@@ -26,7 +27,7 @@ DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 #T This should really be IsSemiringCollCollColl or alternatively
 ## IsAssociativeElementList.
 ## The MatrixObj interface requires the base domain to be a ring,
-## which can be  non-associative, but declares matrices to be a 
+## which can be  non-associative, but declares matrices to be a
 ## CollColl, which makes it impossible to tell whether a list
 ## of Matrices has IsAssociativeElementCollection
 
@@ -51,7 +52,8 @@ DeclareProperty( "IsGeneralLinearGroupAsMatrixSemigroup", IsMatrixSemigroup);
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 DeclareOperation("CanonicalRowSpace", [ IsMatrixObj and IsFFECollColl ]);
 DeclareOperation("RowSpaceTransformation", [ IsMatrixObj and IsFFECollColl ]);
-DeclareOperation("RowSpaceTransformationInv", [ IsMatrixObj and IsFFECollColl ]);
+DeclareOperation("RowSpaceTransformationInv",
+[ IsMatrixObj and IsFFECollColl ]);
 
 # Right action of a matrix over a field on a row space
 DeclareGlobalFunction("MatrixObjRowSpaceRightAction");

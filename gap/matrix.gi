@@ -17,16 +17,17 @@ InstallMethod( TriangulizeMat,
     [ IsMatrixObj and IsMutable ],
     function ( mat )
     local d, m, n, i, j, k, row, zero, x, row2;
-                  
+
     Info( InfoMatrix, 1, "TriangulizeMat called" );
 
     d := DimensionsMat(mat);
-    m := d[1]; n := d[2];
-    
-    if not (m = 0 or n = 0) then  
+    m := d[1];
+    n := d[2];
+
+    if not (m = 0 or n = 0) then
        # get the size of the matrix
        zero := Zero( BaseDomain(mat) );
-              
+
        # make sure that the rows are mutable
        # for i in [ 1 .. m ] do
        #   if not IsMutable( mat[i] ) then
@@ -36,10 +37,12 @@ InstallMethod( TriangulizeMat,
 
        # run through all columns of the matrix
        i := 0;
-       for k  in [1..n]  do
+       for k  in [1 .. n]  do
            # find a nonzero entry in this column
            j := i + 1;
-           while j <= m and mat[j][k] = zero  do j := j + 1;  od;
+           while j <= m and mat[j][k] = zero  do
+             j := j + 1;
+           od;
 
            # if there is a nonzero entry
            if j <= m  then
@@ -51,7 +54,7 @@ InstallMethod( TriangulizeMat,
                # make its row the current row and normalize it
                row    := mat[j];
                mat[j] := mat[i];
-               x:= Inverse( row[k] );
+               x := Inverse( row[k] );
                if x = fail then
                  TryNextMethod();
                fi;
@@ -59,14 +62,14 @@ InstallMethod( TriangulizeMat,
                mat[i] := row;
 
                # clear all entries in this column
-               for j  in [1..i-1] do
+               for j  in [1 .. i - 1] do
                    row2 := mat[j];
                    x := row2[k];
                    if   x <> zero  then
                        AddRowVector( row2, row, - x );
                    fi;
                od;
-               for j  in [i+1..m] do
+               for j  in [i + 1 .. m] do
                    row2 := mat[j];
                    x := row2[k];
                    if   x <> zero  then
@@ -85,7 +88,7 @@ end );
 #M  SemiEchelonMat( <mat> )
 ##
 InstallMethod( SemiEchelonMatDestructive,
-    "generic method for matrix objects", 
+    "generic method for matrix objects",
     [ IsMatrixObj and IsMutable],
     function( mat )
     local zero,      # zero of the field of <mat>
@@ -102,18 +105,18 @@ InstallMethod( SemiEchelonMatDestructive,
           inv;       # inverse of a matrix entry
 
     dims := DimensionsMat(mat);
-    
+
     nrows := dims[1];
     ncols := dims[2];
-    
+
     zero := Zero(BaseDomain(mat));
-    
-    heads:= ListWithIdenticalEntries( ncols, 0 );
-    nzheads := []; 
+
+    heads := ListWithIdenticalEntries( ncols, 0 );
+    nzheads := [];
     vectors := [];
-        
+
     for i in [ 1 .. nrows ] do
-       
+
         row := mat[i];
         # Reduce the row with the known basis vectors.
         for j in [ 1 .. Length(nzheads) ] do
@@ -122,26 +125,27 @@ InstallMethod( SemiEchelonMatDestructive,
               AddRowVector( row, vectors[ j ], - x );
             fi;
         od;
-          
+
         j := PositionNonZero( row );
-        
+
         if j <= ncols then
-          
+
             # We found a new basis vector.
-            inv:= Inverse( row[j] );
+            inv := Inverse( row[j] );
             if inv = fail then
-                Error("fail");
-                return fail;
+                Error("Semigroups: SemiEchelonMatDestructive:\n",
+                      "fail");
+                return;
             fi;
             MultRowVector( row, inv );
             Add( vectors, row );
             Add( nzheads, j );
-            heads[j]:= Length( vectors );
+            heads[j] := Length( vectors );
 
         fi;
-    
+
     od;
-       
+
     return rec( heads   := heads,
                 vectors := vectors );
 end );
@@ -151,7 +155,7 @@ InstallMethod( SemiEchelonMat,
         [ IsMatrixObj ],
 function(mat)
     local copy;
-    
+
     copy := MutableCopyMat(mat);
     return SemiEchelonMatDestructive(copy);
 end);
@@ -175,20 +179,20 @@ end);
 ##
 InstallGlobalFunction( BaseSteinitzMatrixObj, function(bas,mat)
     local mdims,	# Dimensions of mat
-          bdims,	# Dimensions of bas 
+          bdims,	# Dimensions of bas
           z,l,b,i,j,k,stop,v,dim,h,zv;
     bdims := DimensionsMat(bas);
-    
+
   # catch trivial case
   if bdims[1] = 0 then
-    return rec(subspace:=[],factorspace:=[]);
+    return rec(subspace := [],factorspace := []);
   fi;
 
   bas := MutableCopyMat(bas);
-  
+
   z := Zero(BaseDomain(bas));
   zv := Zero(bas[1]);
-  
+
   mdims := DimensionsMat(mat);
   dim := bdims[2];
   l := bdims[1] - mdims[1]; # missing dimension
@@ -196,63 +200,63 @@ InstallGlobalFunction( BaseSteinitzMatrixObj, function(bas,mat)
   h := [];
   i := 1;
   j := 1;
-  
+
   while Length(b) < l do
     stop := false;
     repeat
-      if j<=dim and (mdims[1]<i or mat[i][j]=z) then
+      if j <= dim and (mdims[1] < i or mat[i][j] = z) then
         # Add vector from bas with j-th component not zero (if any exists)
-        
-        v:=PositionProperty(Rows(bas),k->k[j]<>z);
-        if v<>fail then
+
+        v := PositionProperty(Rows(bas),k -> k[j] <> z);
+        if v <> fail then
           # add the vector
-          v:=bas[v];
-          v:=1/v[j]*v; # normed
+          v := bas[v];
+          v := 1 / v[j] * v; # normed
           Add(b,v);
-          h[j]:=Length(b);
+          h[j] := Length(b);
         # if fail, then this dimension is only dependent (and not needed)
         fi;
       else
-        stop:=true;
+        stop := true;
         # check whether we are running to fake zero columns
-        if i<=mdims[1] then
+        if i <= mdims[1] then
           # has a step, clean with basis vector
-          v:=mat[i];
-          v:=1/v[j]*v; # normed
-          h[j]:=-i;
+          v := mat[i];
+          v := 1 / v[j] * v; # normed
+          h[j] := - i;
         else
-          v:=fail;
+          v := fail;
         fi;
       fi;
-      if v<>fail then
+      if v <> fail then
         # clean j-th component from bas with v
-        for k in [1..Length(bas)] do
+        for k in [1 .. Length(bas)] do
           if not IsZero(bas[k][j]) then
-            bas[k]:=bas[k]-bas[k][j]/v[j]*v;
+            bas[k] := bas[k] - bas[k][j] / v[j] * v;
           fi;
         od;
-        v:=Zero(v);
-        bas:=Matrix(Filtered(Rows(bas),k->k<>v), bdims[2], bas);
+        v := Zero(v);
+        bas := Matrix(Filtered(Rows(bas),k -> k <> v), bdims[2], bas);
       fi;
-      j:=j+1;
+      j := j + 1;
     until stop;
-    i:=i+1;
+    i := i + 1;
   od;
-  
+
   # add subspace indices
   while i <= mdims[1] do
-    if mat[i][j]<>z then
-      h[j]:=-i;
-      i:=i+1;
+    if mat[i][j] <> z then
+      h[j] := - i;
+      i := i + 1;
     fi;
-    j:=j+1;
+    j := j + 1;
   od;
 
 
-  return rec(factorspace:=b,
-             factorzero:=zv,
-             subspace:=mat,
-             heads:=h);
+  return rec(factorspace := b,
+             factorzero := zv,
+             subspace := mat,
+             heads := h);
 end );
 
 InstallMethod( SemiEchelonMatTransformationDestructive,
@@ -272,7 +276,7 @@ InstallMethod( SemiEchelonMatTransformationDestructive,
           row, head, x, row2,f,dims;
 
     dims := DimensionsMat(mat);
-    
+
     nrows := dims[1];
     ncols := dims[2];
 
@@ -313,7 +317,7 @@ InstallMethod( SemiEchelonMatTransformationDestructive,
             fi;
             Add( coeffs,  row2 * x );
             Add( vectors, row  * x );
-            heads[j]:= Length( vectors );
+            heads[j] := Length( vectors );
 
         else
             Add( relations, row2 );
@@ -332,7 +336,7 @@ InstallMethod( SemiEchelonMatTransformation,
     [ IsMatrixObj ],
     function( mat )
     local copy;
-    
+
     copy := MutableCopyMat(mat);
 
     return SemiEchelonMatTransformationDestructive( copy );
@@ -342,9 +346,9 @@ end);
 InstallGlobalFunction(PedestrianLambdaInverse
         , function(f)
     local z, e, i, ech, info, zh;
-    
-    Error("wrong");
-    
+
+    #Error("wrong");
+
 end);
 
 #InstallMethod( IsGeneratorsOfMagmaWithInverses,
@@ -358,9 +362,9 @@ end);
 #            fi;
 #        fi;
 #    fi;
-#    
+#
 #    TryNextMethod();
-#            
+#
 #    end);
 
 #InstallMethod( DefaultScalarDomainOfMatrixList,
@@ -372,7 +376,7 @@ end);
 #            return BaseDomain(l[1]);
 #        fi;
 #    fi;
-#    
+#
 #    TryNextMethod();
 #end);
 
@@ -381,37 +385,38 @@ InstallMethod( PseudoInverse,
         [ IsMatrixObj ],
         function(mat)
             local W, se, n, k, i, j, u;
-        
-        # We assume that mat is quadratic
-        # we don't check this for performance reasons. If a semigroup decides to
-        # have non-quadratic matrices in it, something is seriously wrong anyway.
+
+        # We assume that mat is quadratic we don't check this for performance
+        # reasons. If a semigroup decides to have non-quadratic matrices in it,
+        # something is seriously wrong anyway.
         n := DimensionsMat(mat)[1];
 
         W := ZeroMatrix(n, 2 * n, mat);
-        
-        CopySubMatrix( mat, W, [1..n], [1..n], [1..n], [1..n]);
-        CopySubMatrix( One(mat), W, [1..n], [1..n], [1..n], [n+1..2*n]);
-        
+
+        CopySubMatrix( mat, W, [1 .. n], [1 .. n], [1 .. n], [1 .. n]);
+        CopySubMatrix( One(mat), W, [1 .. n], [1 .. n], [1 .. n], 
+          [n + 1 .. 2 * n]);
+
         se := SemiEchelonMatDestructive(W);
 
         u := One(BaseDomain(W));
         j := Length(se.vectors) + 1;
-        for i in [1..n] do
+        for i in [1 .. n] do
             if se.heads[i] = 0 then
                 W[j][i] := u;
-                j := j+1;
+                j := j + 1;
             fi;
         od;
-        
+
         TriangulizeMat(W);
-        
-        return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
- 
+
+        return ExtractSubMatrix(W, [1 .. n], [n + 1 .. 2 * n]);
+
 end);
 
 #############################################################################
 ##
-#F  RandomMatrixObj( <m>, <n> [, <R>] ) . . . . . . . . . . .  make a random matrix
+#F  RandomMatrixObj( <m>, <n> [, <R>] ) . . . . . . . .  make a random matrix
 ##
 ##  'RandomMatrixObj' returns a random plist matrix object with
 ##  <m> rows and <n> columns with elements taken from the ring <R>,
@@ -432,14 +437,15 @@ InstallGlobalFunction( RandomMatrixObj, function ( arg )
         n := arg[2];
         R := arg[3];
     else
-        Error("usage: RandomMat( <m>, <n> [, <F>] )");
+        Error("Semigroups: RandomMatrixObj: usage\n",
+        "RandomMat( <m>, <n> [, <F>] )");
     fi;
 
     # now construct the random matrix
     mat := [];
-    for i  in [1..m]  do
+    for i  in [1 .. m]  do
         row := [];
-        for k  in [1..n]  do
+        for k  in [1 .. n]  do
             row[k] := Random( R );
         od;
         mat[i] := row;

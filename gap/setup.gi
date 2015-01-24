@@ -206,7 +206,7 @@ function(s)
   return RankOfBipartition;
 end);
 
-InstallMethod(ActionRank, 
+InstallMethod(ActionRank,
 "for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(f, n)
@@ -259,7 +259,7 @@ InstallMethod(MinActionRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], x -> 0);
 
 InstallMethod(MinActionRank, "for a matrix semigroup",
-[IsMatrixSemigroup], x-> 0);
+[IsMatrixSemigroup], x -> 0);
 
 # options passed to LambdaOrb(s) when it is created
 
@@ -341,7 +341,7 @@ end);
 
 # JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s->
+[IsPartialPermSemigroup], s ->
   function(set, f)
     return OnPosIntSetsPartialPerm(set, f ^ - 1);
   end);
@@ -387,8 +387,8 @@ function(s)
     local rep;
     rep := Representative(s);
 
-    return NewZeroMatrix(IsPlistMatrixRep, BaseDomain(rep), RowLength(rep)+1,
-     RowLength(rep)+1);
+    return NewZeroMatrix(IsPlistMatrixRep, BaseDomain(rep), RowLength(rep) + 1,
+     RowLength(rep) + 1);
 end);
 
 # the seed or dummy start point for RhoOrb
@@ -499,7 +499,7 @@ end);
 InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-    return x -> Length(CanonicalRowSpace(x)); 
+    return x -> Length(CanonicalRowSpace(x));
 end);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
@@ -562,7 +562,7 @@ function(k, x)
 end);
 
 InstallMethod(LambdaInverse, "for a matrix semigroup",
-[IsMatrixSemigroup], s->
+[IsMatrixSemigroup], s ->
 function(rsp, mat)
     return MatrixObjLocalRightInverse(s, rsp, mat);
 end);
@@ -597,9 +597,10 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> InverseLeftBlocks);
 
 InstallMethod(RhoInverse, "for a matrix semigroup",
-[IsMatrixSemigroup], s->
+[IsMatrixSemigroup], s ->
 function(rsp, mat)
-  Error("RhoInverse for matrix semigroups not implemented yet\n");
+  Error("Semigroups: RhoInverse:\n",
+  "for matrix semigroups not implemented yet\n");
 end);
 
 InstallMethod(LambdaBound, "for a transformation semigroup",
@@ -662,6 +663,7 @@ function(r)
     return infinity;
   fi;
 end);
+
 InstallMethod(RhoBound, "for a matrix semigroup",
 [IsMatrixSemigroup], LambdaBound);
 
@@ -670,31 +672,50 @@ InstallMethod(RhoBound, "for a matrix semigroup",
 # elements produced by LambdaPerm
 InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
 InstallMethod(RhoIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
 
 InstallMethod(LambdaIdentity, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
+
 InstallMethod(RhoIdentity, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
 
 InstallMethod(LambdaIdentity, "for a partial perm semigroup",
 [IsBipartitionSemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
+
 InstallMethod(RhoIdentity, "for a partial perm semigroup",
 [IsBipartitionSemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
 
 InstallMethod(LambdaIdentity, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
+
 InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
-  s -> function(r) return (); end);
+  s -> function(r)
+    return ();
+  end);
 
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
@@ -706,6 +727,7 @@ function(r)
 
   return one;
 end);
+
 InstallMethod(RhoIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(r)
@@ -716,7 +738,6 @@ function(r)
 
   return one;
 end);
-
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
@@ -741,7 +762,7 @@ function(x, y)
 end);
 
 InstallMethod(LambdaPerm, "for a matrix semigroup",
-[IsMatrixSemigroup], s->
+[IsMatrixSemigroup], s ->
 function(x,y)
   return MatrixObjSchutzGrpElement(s,x,y);
 end);
@@ -769,7 +790,7 @@ function(f, g)
 end);
 
 InstallMethod(LambdaConjugator, "for a matrix semigroup",
-[IsMatrixSemigroup], s->
+[IsMatrixSemigroup], s ->
 function(x, y)
     return MatrixObjLambdaConjugator(s,x,y);
 end);
@@ -862,8 +883,9 @@ function(x, p)
 end);
 
 InstallMethod(StabilizerAction, "for a matrix semigroup",
-        [IsMatrixSemigroup], S -> function(x,y) return MatrixObjStabilizerAction(S,x,y);
-    end);
+[IsMatrixSemigroup], S -> function(x,y)
+  return MatrixObjStabilizerAction(S,x,y);
+end);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
@@ -895,7 +917,7 @@ InstallMethod(SchutzGpMembership, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
   return function(stab, x)
-    return SiftedPermutation(stab, x)=();
+    return SiftedPermutation(stab, x) = ();
   end;
 end);
 
@@ -903,7 +925,7 @@ InstallMethod(SchutzGpMembership, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
   return function(stab, x)
-    return SiftedPermutation(stab, x)=();
+    return SiftedPermutation(stab, x) = ();
   end;
 end);
 
@@ -911,7 +933,7 @@ InstallMethod(SchutzGpMembership, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(S)
   return function(stab, x)
-    return SiftedPermutation(stab, x)=();
+    return SiftedPermutation(stab, x) = ();
   end;
 end);
 
@@ -919,12 +941,15 @@ InstallMethod(SchutzGpMembership, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
   return function(stab, x)
-    return SiftedPermutation(stab, x)=();
+    return SiftedPermutation(stab, x) = ();
   end;
 end);
 
 InstallMethod(SchutzGpMembership, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> function(stab, x) return x in stab; end);
+[IsMatrixSemigroup], S ->
+function(stab, x)
+  return x in stab;
+end);
 
 # One or a fake one for those types of object without one.
 

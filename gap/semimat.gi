@@ -20,12 +20,12 @@ end);
 InstallMethod(OneMutable,
     "for ring element coll coll coll",
     [IsRingElementCollCollColl],
-    x-> One(Representative(x)));
+    x -> One(Representative(x)));
 
 InstallMethod(IsGroupAsSemigroup,
     "for a matrix semigroup",
     [IsMatrixSemigroup],
-    s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
+    s -> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
 
 #############################################################################
 ##
@@ -57,7 +57,7 @@ InstallGlobalFunction(MatrixObjRowSpaceRightAction,
       nvsp := MutableCopyMat(nvsp);
       TriangulizeMat(nvsp);
       n := DimensionsMat(nvsp)[1];
-      for i in [n,n-1..1] do
+      for i in [n,n - 1 .. 1] do
         if IsZero(nvsp[i]) then
           Remove(nvsp, i);
         fi;
@@ -85,29 +85,29 @@ function( S, V, mat )
         W := ZeroMatrix(n, 2 * n, mat);
 
         #T I think this should all be done in place
-        CopySubMatrix( V * mat, W, [1..k], [1..k], [1..n], [1..n]);
-        CopySubMatrix( V, W, [1..k], [1..k], [1..n], [n+1..2*n]);
+        CopySubMatrix( V * mat, W, [1 .. k], [1 .. k], [1 .. n], [1 .. n]);
+        CopySubMatrix( V, W, [1 .. k], [1 .. k], [1 .. n], [n + 1 .. 2 * n]);
 
         se := SemiEchelonMat(W);
 
-        for i in [1..Length(se.vectors)] do
+        for i in [1 .. Length(se.vectors)] do
             W[i] := ShallowCopy(se.vectors[i]);
         od;
 
         # add missing heads
         u := One(BaseDomain(W));
-        j := k+1;
-        for i in [1..n] do
+        j := k + 1;
+        for i in [1 .. n] do
             if se.heads[i] = 0 then
                 W[j][i] := u;
-                W[j][n+i] := u;
-                j := j+1;
+                W[j][n + i] := u;
+                j := j + 1;
             fi;
         od;
 
         TriangulizeMat(W);
 
-        return ExtractSubMatrix(W, [1..n], [n+1..2*n]);
+        return ExtractSubMatrix(W, [1 .. n], [n + 1 .. 2 * n]);
 end);
 
 #T returns an invertible matrix
@@ -124,12 +124,14 @@ function(S, x, y)
     if IsZero(x) then
         res := [[One(BaseDomain(x))]];
     else
-	eqs := MutableCopyMat(TransposedMat(Concatenation(TransposedMat(x),TransposedMat(y))));
+        eqs := MutableCopyMat(TransposedMat(Concatenation(TransposedMat(x),
+                TransposedMat(y))));
 	TriangulizeMat(eqs);
 
 	idx := [];
+        col := 1;
+        row := 1;
 
-	col := 1; row := 1;
 	while col <= k do
 		while IsZero(eqs[row][col]) and col <= k do
 			col := col + 1;
@@ -140,7 +142,7 @@ function(S, x, y)
 			col := col + 1;
 		fi;
 	od;
-	sch := ExtractSubMatrix(eqs, [1..n], idx + k);
+	sch := ExtractSubMatrix(eqs, [1 .. n], idx + k);
 
         res := List(sch, List);
     fi;
@@ -157,11 +159,11 @@ function(S, x, m)
     k := LambdaRank(S)(x);
     g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);
     rsp := g * CanonicalRowSpace(x);
-    
-    for i in [1..n-k] do
+
+    for i in [1 .. n - k] do
         Add(rsp, ZeroVector(n, rsp));
     od;
-    
+
     return RowSpaceTransformationInv(x) * rsp;
 end);
 
@@ -171,20 +173,22 @@ function(S, x, y)
 
 	Print("conjugator\n");
 
-    if x^(-1) <> fail then
-        res := List(x^(-1) * y, List);
+    if x ^ ( - 1) <> fail then
+        res := List(x ^ ( - 1) * y, List);
     elif IsZero(x) then
         res := [[One(BaseDomain(x))]];
     else
         xse := SemiEchelonMat(x);
-        h := Filtered(xse.heads, x->x<>0);
-        p := Matrix(One(BaseDomain(x)) * PermutationMat(SortingPerm(h), Length(h), BaseDomain(x)), x);
+        h := Filtered(xse.heads, x -> x <> 0);
+        p := Matrix(One(BaseDomain(x)) * PermutationMat(SortingPerm(h),
+             Length(h), BaseDomain(x)), x);
 
         yse := SemiEchelonMat(y);
-        h := Filtered(yse.heads, x->x<>0);
-        q := Matrix(One(BaseDomain(y)) * PermutationMat(SortingPerm(h), Length(h), BaseDomain(y)), y);
+        h := Filtered(yse.heads, x -> x <> 0);
+        q := Matrix(One(BaseDomain(y)) * PermutationMat(SortingPerm(h),
+             Length(h), BaseDomain(y)), y);
 
-        res := List(p * q^(-1), List);
+        res := List(p * q ^ ( - 1), List);
     fi;
     return res;
 end);
@@ -236,7 +240,7 @@ function(S)
             Print(dims[1], "x", dims[2]);
             Print(" matrices over ", BaseDomain(gens[1]));
             Print(" with ", Length(gens), " generator");
-        else 
+        else
             gens := GeneratorsOfSemigroup(S);
             dims := DimensionsMat(gens[1]);
             Print("<semigroup of ");
@@ -244,7 +248,7 @@ function(S)
             Print(" matrices over ", BaseDomain(gens[1]));
             Print(" with ", Length(gens), " generator");
         fi;
-        if Length(gens)>1 then
+        if Length(gens) > 1 then
           Print("s");
         fi;
         Print(">");
@@ -281,34 +285,34 @@ end);
 InstallGlobalFunction(ComputeRowSpaceAndTransformation,
 function(m)
     local rows, cols, rsp, i;
-    
+
     Info(InfoMatrixSemigroups, 2, "ComputeRowSpaceAndTransformation called");
 
     rows := DimensionsMat(m)[1];
     cols := DimensionsMat(m)[2];
-    
+
     rsp := ZeroMatrix(cols, 2 * cols, m);
-    CopySubMatrix( m, rsp, [1..rows], [1..rows],
-                           [1..cols], [1..cols]);
-    for i in [1..cols] do
-        rsp[i][cols+i] := One(BaseDomain(m));
+    CopySubMatrix( m, rsp, [1 .. rows], [1 .. rows],
+                           [1 .. cols], [1 .. cols]);
+    for i in [1 .. cols] do
+        rsp[i][cols + i] := One(BaseDomain(m));
     od;
     TriangulizeMat(rsp);
-    
+
     # This is dangerous, we are using positions in
     # matrixobj which are undocumented
     # This can be done more efficiently by determining the rank
     # above and then just extracting the basis
-    m![5] := ExtractSubMatrix(rsp, [1..cols], [1..cols]);
-    for i in [cols,cols-1..1] do
+    m![5] := ExtractSubMatrix(rsp, [1 .. cols], [1 .. cols]);
+    for i in [cols,cols - 1 .. 1] do
         if IsZero(m![5][i]) then
             Remove(m![5], i);
         fi;
     od;
-    
+
     # Remove 0?
-    m![6] := ExtractSubMatrix(rsp, [1..cols], [cols+1..2*cols]);
-    m![7] := m![6]^(-1);
+    m![6] := ExtractSubMatrix(rsp, [1 .. cols], [cols + 1 .. 2 * cols]);
+    m![7] := m![6] ^ ( - 1);
 end);
 
 InstallMethod( CanonicalRowSpace,
@@ -316,7 +320,7 @@ InstallMethod( CanonicalRowSpace,
         [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
 function( m )
     local info;
-    
+
     Info(InfoMatrixSemigroups, 2, "CanonicalRowSpace called");
     if not IsBound(m![5]) then
         ComputeRowSpaceAndTransformation(m);
@@ -330,7 +334,7 @@ InstallMethod( RowSpaceTransformation,
         [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
 function( m )
     local info;
-    
+
     Info(InfoMatrixSemigroups, 2, "RowSpaceTransformation");
     if not IsBound(m![6]) then
         ComputeRowSpaceAndTransformation(m);
@@ -344,7 +348,7 @@ InstallMethod( RowSpaceTransformationInv,
         [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
 function( m )
     local info;
-    
+
     Info(InfoMatrixSemigroups, 2, "RowSpaceTransformationInv");
     if not IsBound(m![7]) then
         ComputeRowSpaceAndTransformation(m);
@@ -372,7 +376,8 @@ function(arg)
     local gens, field, n, ListOfGens, ListOfGensAndField;
 
     if Length(arg) > 0 then
-        if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then # Just the generators
+        if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then
+          # Just the generators
             gens := arg;
         elif Length(arg) = 1 then # List of generators
             gens := arg[1];
@@ -384,19 +389,28 @@ function(arg)
             field := arg[2];
             n := arg[3];
         else                      # just the generators
-            Error("usage: MatrixSemigroup(gens [, F, n])");
+            Error("Semigroups: MatrixSemigroup: usage,\n",
+            "MatrixSemigroup(gens [, F, n])");
+            return;
         fi;
     else
-        Error("usage: MatrixSemigroup(gens [, F, n])");
+      Error("Semigroups: MatrixSemigroup: usage,\n",
+            "MatrixSemigroup(gens [, F, n])");
+      return;
     fi;
 
     if Length(gens) = 0 then
-        Error("empty generating sets are not supported");
+      Error("Semigroups: MatrixSemigroup: usage,\n",
+            "empty generating sets are not supported");
+      return;
     fi;
 
     if (not IsFFECollCollColl(gens)) or
        (not IsHomogeneousList(gens)) then
-        Error("only matrices over finite fields are supported as generating sets");
+      Error("Semigroups: MatrixSemigroup: usage,\n",
+            "only matrices over finite fields are supported as generating",
+            " sets");
+      return;
     fi;
 
     if not IsBound(field) then
@@ -412,7 +426,7 @@ function(arg)
     return Semigroup(gens);
 end);
 
-InstallMethod(IsomorphismMatrixSemigroup, 
+InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
@@ -429,10 +443,10 @@ function(S, R)
 
   basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
 
-  gens := List(GeneratorsOfSemigroup(S), 
+  gens := List(GeneratorsOfSemigroup(S),
    x -> basis{ ImageListOfTransformation(x, n) });
 
-  return MagmaIsomorphismByFunctionsNC(S, SemigroupByGenerators(gens), 
+  return MagmaIsomorphismByFunctionsNC(S, SemigroupByGenerators(gens),
    x -> basis{ ImageListOfTransformation(x, n) },
    x -> Transformation(List(x, PositionNonZero)));
 end);
@@ -464,7 +478,8 @@ function(S)
   return Range(IsomorphismMatrixSemigroup(S));
 end);
 
-InstallMethod(AsMatrixSemigroup, "for a semigroup and a ring", [IsSemigroup, IsRing],
+InstallMethod(AsMatrixSemigroup, "for a semigroup and a ring",
+[IsSemigroup, IsRing],
 function(S, R)
     return Range(IsomorphismMatrixSemigroup(S,R));
 end);
