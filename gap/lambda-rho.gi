@@ -252,7 +252,7 @@ end);
 InstallGlobalFunction(LambdaOrbSchutzGp,
 function(o, m)
   local s, gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, rank,
-   bound, g, stop, forward, f, k, l;
+  one, bound, g, stop, forward, f, k, l;
 
   if IsBound(o!.schutz) then
     if IsBound(o!.schutz[m]) then

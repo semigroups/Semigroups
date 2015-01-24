@@ -62,9 +62,9 @@ InstallMethod(\in,
 "for an associative element and acting semigroup",
 [IsAssociativeElement, IsActingSemigroup],
 function(f, s)
-  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup,
-  lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens,
-  found, n, i;
+  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, new,
+  lookfunc, schutz, ind, reps, repslens, max, membership, lambdaperm,
+  oldrepslens, found, n, i;
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
     or (IsActingSemigroupWithFixedDegreeMultiplication(s)
@@ -322,10 +322,10 @@ function(data, limit, lookfunc)
   local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht,
   repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos,
   schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact,
-  lambdaperm, o, oht, scc, lookup, rho, rho_o, rho_orb, rho_nr, rho_ht,
-  rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth,
-  rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, pt,
-  ind, schutz, data_val, old, j, n;
+  lambdaperm, o, oht, scc, lookup, membership, rho, rho_o, rho_orb, rho_nr,
+  rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos,
+  rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m,
+  rhox, l, ind, pt, schutz, data_val, old, j, n;
 
  if lookfunc <> ReturnFalse then
     looking := true;
