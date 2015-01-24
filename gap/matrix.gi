@@ -394,7 +394,7 @@ InstallMethod( PseudoInverse,
         W := ZeroMatrix(n, 2 * n, mat);
 
         CopySubMatrix( mat, W, [1 .. n], [1 .. n], [1 .. n], [1 .. n]);
-        CopySubMatrix( One(mat), W, [1 .. n], [1 .. n], [1 .. n], 
+        CopySubMatrix( One(mat), W, [1 .. n], [1 .. n], [1 .. n],
           [n + 1 .. 2 * n]);
 
         se := SemiEchelonMatDestructive(W);
