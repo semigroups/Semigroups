@@ -8,6 +8,13 @@
 #############################################################################
 ##
 
+InstallMethod(AsList, "for an ideal orb", [IsIdealOrb],
+function(o)
+  return Concatenation(List(o!.orbits, AsList));
+end);
+
+#
+
 InstallMethod(Enumerate, "for an ideal orb, and a number",
 [IsIdealOrb, IsCyclotomic],
 function(o, limit)
@@ -362,7 +369,8 @@ function(o, pt, x, pos, gen, ind, lookfunc)
 
   if len <> 0 then
     record.gradingfunc := function(new, x)
-      return x in o;
+      return HTValue(o!.ht, x) <> fail;
+      #return x in o;
     end;
     record.onlygrades := function(x, data);
       return not x;
@@ -475,7 +483,8 @@ function(o, pt, x, pos, gen, ind, lookfunc)
 
   if len <> 0 then
     record.gradingfunc := function(new, x)
-      return x in o;
+      return HTValue(o!.ht, x) <> fail;
+      #return x in o;
     end;
     record.onlygrades := function(x, data);
       return not x;
