@@ -6,8 +6,8 @@
   herein were written by Markus Pfeiffer.<P/>
 
   A <E>matrix semigroup</E> for the purposes of this document is a subsemigroup
-  of the full monoid of <M>n\times n</M> matrices over a <E>finite field</E>
-  <M>\mathbb{F}</M>,.
+  of the full monoid of <M>n \times n</M> matrices over a <E>finite field</E>
+  <M>\mathbb{F}</M>.
 
   More general matrix semigroups are planned, but not implemented yet.
 

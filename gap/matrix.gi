@@ -13,74 +13,74 @@
 #T This will be moved to a more appropriate place
 #
 InstallMethod( TriangulizeMat,
-    "generic method for mutable matrix objects",
-    [ IsMatrixObj and IsMutable ],
-    function ( mat )
-    local d, m, n, i, j, k, row, zero, x, row2;
+"for a mutable matrix obj",
+[ IsMatrixObj and IsMutable ],
+function ( mat )
+  local d, m, n, i, j, k, row, zero, x, row2;
 
-    Info( InfoMatrix, 1, "TriangulizeMat called" );
+  Info( InfoMatrix, 1, "TriangulizeMat called" );
 
-    d := DimensionsMat(mat);
-    m := d[1];
-    n := d[2];
+  d := DimensionsMat(mat);
+  m := d[1];
+  n := d[2];
 
-    if not (m = 0 or n = 0) then
-       # get the size of the matrix
-       zero := Zero( BaseDomain(mat) );
+  if not (m = 0 or n = 0) then
+    # get the size of the matrix
+    zero := Zero( BaseDomain(mat) );
 
-       # make sure that the rows are mutable
-       # for i in [ 1 .. m ] do
-       #   if not IsMutable( mat[i] ) then
-       #     mat[i]:= ShallowCopy( mat[i] );
-       #   fi;
-       # od;
+    # make sure that the rows are mutable
+    # for i in [ 1 .. m ] do
+    #   if not IsMutable( mat[i] ) then
+    #     mat[i]:= ShallowCopy( mat[i] );
+    #   fi;
+    # od;
 
-       # run through all columns of the matrix
-       i := 0;
-       for k  in [1 .. n]  do
-           # find a nonzero entry in this column
-           j := i + 1;
-           while j <= m and mat[j][k] = zero  do
-             j := j + 1;
-           od;
+    # run through all columns of the matrix
+    i := 0;
+    for k  in [1 .. n]  do
+      # find a nonzero entry in this column
+      j := i + 1;
+      while j <= m and mat[j][k] = zero  do
+        j := j + 1;
+      od;
 
-           # if there is a nonzero entry
-           if j <= m  then
+      # if there is a nonzero entry
+      if j <= m  then
 
-               # increment the rank
-               Info( InfoMatrix, 2, "  nonzero columns: ", k );
-               i := i + 1;
+        # increment the rank
+        Info( InfoMatrix, 2, "  nonzero columns: ", k );
+        i := i + 1;
 
-               # make its row the current row and normalize it
-               row    := mat[j];
-               mat[j] := mat[i];
-               x := Inverse( row[k] );
-               if x = fail then
-                 TryNextMethod();
-               fi;
-               MultRowVector( row, x );
-               mat[i] := row;
+        # make its row the current row and normalize it
+        row    := mat[j];
+        mat[j] := mat[i];
+        x := Inverse( row[k] );
+        if x = fail then
+          TryNextMethod();
+        fi;
+        MultRowVector( row, x );
+        mat[i] := row;
 
-               # clear all entries in this column
-               for j  in [1 .. i - 1] do
-                   row2 := mat[j];
-                   x := row2[k];
-                   if   x <> zero  then
-                       AddRowVector( row2, row, - x );
-                   fi;
-               od;
-               for j  in [i + 1 .. m] do
-                   row2 := mat[j];
-                   x := row2[k];
-                   if   x <> zero  then
-                       AddRowVector( row2, row, - x );
-                   fi;
-               od;
-           fi;
-       od;
-    fi;
+        # clear all entries in this column
+        for j  in [1 .. i - 1] do
+          row2 := mat[j];
+          x := row2[k];
+          if   x <> zero  then
+            AddRowVector( row2, row, - x );
+          fi;
+        od;
+        for j  in [i + 1 .. m] do
+          row2 := mat[j];
+          x := row2[k];
+          if   x <> zero  then
+            AddRowVector( row2, row, - x );
+          fi;
+        od;
+      fi;
+    od;
+  fi;
 
-    Info( InfoMatrix, 1, "TriangulizeMat returns" );
+  Info( InfoMatrix, 1, "TriangulizeMat returns" );
 end );
 
 #############################################################################
@@ -151,23 +151,19 @@ InstallMethod( SemiEchelonMatDestructive,
 end );
 
 InstallMethod( SemiEchelonMat,
-        "generic method for matrix objects",
-        [ IsMatrixObj ],
+"generic method for matrix objects",
+[ IsMatrixObj ],
 function(mat)
-    local copy;
-
-    copy := MutableCopyMat(mat);
-    return SemiEchelonMatDestructive(copy);
+  return SemiEchelonMatDestructive(MutableCopyMat(mat));
 end);
 
 ##########################################################################
 ##
 #F  BaseSteinitzMatrixObj( <bas>, <mat> )
 ##
-##  find vectors extending mat to a basis spanning the span of <bas>.
-##  'BaseSteinitz'  returns a
-##  record  describing  a base  for the factorspace   and ways   to decompose
-##  vectors:
+## find vectors extending mat to a basis spanning the span of <bas>.  #
+## 'BaseSteinitz'  returns a record  describing  a base  for the factorspace
+## and ways to decompose vectors:
 ##
 ##  zero:           zero of <V> and <U>
 ##  factorzero:     zero of complement
@@ -381,36 +377,35 @@ end);
 #end);
 
 
-InstallMethod( PseudoInverse,
-        [ IsMatrixObj ],
-        function(mat)
-            local W, se, n, k, i, j, u;
+InstallMethod( PseudoInverse, "for a matrix obj", [IsMatrixObj],
+function(mat)
+  local W, se, n, k, i, j, u;
 
-        # We assume that mat is quadratic we don't check this for performance
-        # reasons. If a semigroup decides to have non-quadratic matrices in it,
-        # something is seriously wrong anyway.
-        n := DimensionsMat(mat)[1];
+  # We assume that mat is quadratic we don't check this for performance
+  # reasons. If a semigroup decides to have non-quadratic matrices in it,
+  # something is seriously wrong anyway.
+  n := DimensionsMat(mat)[1];
 
-        W := ZeroMatrix(n, 2 * n, mat);
+  W := ZeroMatrix(n, 2 * n, mat);
 
-        CopySubMatrix( mat, W, [1 .. n], [1 .. n], [1 .. n], [1 .. n]);
-        CopySubMatrix( One(mat), W, [1 .. n], [1 .. n], [1 .. n],
-          [n + 1 .. 2 * n]);
+  CopySubMatrix( mat, W, [1 .. n], [1 .. n], [1 .. n], [1 .. n]);
+  CopySubMatrix( One(mat), W, [1 .. n], [1 .. n], [1 .. n],
+  [n + 1 .. 2 * n]);
 
-        se := SemiEchelonMatDestructive(W);
+  se := SemiEchelonMatDestructive(W);
 
-        u := One(BaseDomain(W));
-        j := Length(se.vectors) + 1;
-        for i in [1 .. n] do
-            if se.heads[i] = 0 then
-                W[j][i] := u;
-                j := j + 1;
-            fi;
-        od;
+  u := One(BaseDomain(W));
+  j := Length(se.vectors) + 1;
+  for i in [1 .. n] do
+    if se.heads[i] = 0 then
+      W[j][i] := u;
+      j := j + 1;
+    fi;
+  od;
 
-        TriangulizeMat(W);
+  TriangulizeMat(W);
 
-        return ExtractSubMatrix(W, [1 .. n], [n + 1 .. 2 * n]);
+  return ExtractSubMatrix(W, [1 .. n], [n + 1 .. 2 * n]);
 
 end);
 
