@@ -2021,7 +2021,7 @@ function(d)
     fi;
   elif rho_stab = false then
     SetRhoOrbStabChain(d, false);
-    SetRhoCosets(d, rho_schutz);
+    SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
     return rho_schutz;
   fi;
 
