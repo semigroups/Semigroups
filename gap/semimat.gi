@@ -9,6 +9,40 @@
 #############################################################################
 ##
 
+# from here 
+
+InstallMethod(\*, "for a right coset and null map matrix",
+[IsRightCoset, IsNullMapMatrix], 
+function(coset, x)
+  return coset;
+end);
+
+InstallMethod(\^, "for a null map matrix and int",
+[IsNullMapMatrix, IsInt], 
+function(x, n)
+  return x;
+end);
+
+InstallMethod(InverseMutable, "for a null map matrix",
+[IsNullMapMatrix], IdFunc);
+
+InstallMethod(IsGeneratorsOfMagmaWithInverses, "for a list",
+[IsList], 
+function(list) 
+  if Length(list) = 1 and IsNullMapMatrix(list[1]) then 
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
+InstallTrueMethod(IsOne, IsNullMapMatrix);
+
+InstallMethod(One, "for a null map matrix", 
+[IsNullMapMatrix], IdFunc);
+
+# to here is a hack to make it possible to make a group consisting of the null
+# map matrix . . . 
+
 InstallMethod(IsGeneratorsOfSemigroup, [IsFFECollCollColl],
         function(L)
 #T do checking of dimensions
@@ -206,6 +240,7 @@ end);
 InstallGlobalFunction(MatrixObjIdempotentCreator,
 function(S, x, y)
     local m, m2, p1, p2, f;
+    
     m := TransposedMat(y) * x;
 
     m2 := m * m;
@@ -214,7 +249,7 @@ function(S, x, y)
 
     f := m[p1][p2] / m2[p1][p2];
 
-    m := f * m;
+    m := f * m; # FIXME: this doesn't work.
 
     if f * m2 = m then
         return m;
@@ -229,45 +264,41 @@ end);
 ##
 
 InstallMethod( ViewObj,
-    "for a matrix semigroup with generators",
-    [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
+"for a matrix semigroup with generators",
+[ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
 function(S)
-    local gens, dims;
-        if HasIsMonoid(S) and IsMonoid(S) then
-            gens := GeneratorsOfMonoid(S);
-            dims := DimensionsMat(gens[1]);
-            Print("<monoid of ");
-            Print(dims[1], "x", dims[2]);
-            Print(" matrices over ", BaseDomain(gens[1]));
-            Print(" with ", Length(gens), " generator");
-        else
-            gens := GeneratorsOfSemigroup(S);
-            dims := DimensionsMat(gens[1]);
-            Print("<semigroup of ");
-            Print(dims[1], "x", dims[2]);
-            Print(" matrices over ", BaseDomain(gens[1]));
-            Print(" with ", Length(gens), " generator");
-        fi;
-        if Length(gens) > 1 then
-          Print("s");
-        fi;
-        Print(">");
+  local gens, dims;
+  if HasIsMonoid(S) and IsMonoid(S) then
+    gens := GeneratorsOfMonoid(S);
+    dims := DimensionsMat(gens[1]);
+    Print("<monoid of ");
+    Print(dims[1], "x", dims[2]);
+    Print(" matrices over ", BaseDomain(gens[1]));
+    Print(" with ", Length(gens), " generator");
+  else
+    gens := GeneratorsOfSemigroup(S);
+    dims := DimensionsMat(gens[1]);
+    Print("<semigroup of ");
+    Print(dims[1], "x", dims[2]);
+    Print(" matrices over ", BaseDomain(gens[1]));
+    Print(" with ", Length(gens), " generator");
+  fi;
+  if Length(gens) > 1 then
+    Print("s");
+  fi;
+  Print(">");
 end);
 
-#############################################################################
-##
-#M  PrintObj( <matsemigrp> )
-##
-InstallMethod( PrintObj,"for a matrix semigroup",
-    [ IsMatrixSemigroup ],
+InstallMethod( PrintObj, "for a matrix semigroup",
+[ IsMatrixSemigroup ],
 function(S)
-    local l;
-    l := GeneratorsOfSemigroup(S);
-    if Length(l) = 0 then
-        Print("Semigroup([])");
-    else
-        Print("Semigroup(",l,")");
-    fi;
+  local l;
+  l := GeneratorsOfSemigroup(S);
+  if Length(l) = 0 then
+    Print("Semigroup([])");
+  else
+    Print("Semigroup(",l,")");
+  fi;
 end);
 
 # Note that this method assumes that the object is

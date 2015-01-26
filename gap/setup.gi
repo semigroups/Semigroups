@@ -596,11 +596,13 @@ end);
 InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> InverseLeftBlocks);
 
+# FIXME is this right? JDM
+
 InstallMethod(RhoInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-  Error("Semigroups: RhoInverse:\n",
-  "for matrix semigroups not implemented yet\n");
+  return TransposedMat(MatrixObjLocalRightInverse(s, rsp, 
+                        TransposedMat(mat)));
 end);
 
 InstallMethod(LambdaBound, "for a transformation semigroup",
@@ -668,13 +670,15 @@ InstallMethod(RhoBound, "for a matrix semigroup",
 [IsMatrixSemigroup], LambdaBound);
 
 # LamdaIdentity(s) returns a function that returns
-# the identity element of the schuetzenberger group
+# the identity element of the Schutzenberger group
 # elements produced by LambdaPerm
+
 InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
   s -> function(r)
     return ();
   end);
+
 InstallMethod(RhoIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
   s -> function(r)
@@ -718,25 +722,15 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
   end);
 
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
-[IsMatrixSemigroup], s ->
+[IsMatrixSemigroup], S ->
 function(r)
-  local f, one;
-
-  f := Representative(s);
-  one := IdentityMat(r, BaseDomain(f));
-
-  return one;
+  return IdentityMat(r, BaseDomain(Representative(S)));
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
-[IsMatrixSemigroup], s ->
+[IsMatrixSemigroup], S ->
 function(r)
-  local f, one;
-
-  f := Representative(s);
-  one := IdentityMat(r, BaseDomain(f));
-
-  return one;
+  return IdentityMat(r, BaseDomain(Representative(S)));
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with

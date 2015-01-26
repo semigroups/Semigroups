@@ -278,11 +278,7 @@ function(o, m)
 
   if rank = 0 then
     o!.schutzstab[m] := false;
-    if IsPerm(one) then
-      o!.schutz[m] := Group(one);
-    else
-      o!.schutz[m] := [one];
-    fi;
+    o!.schutz[m] := Group(one);
     return o!.schutz[m];
   fi;
 
@@ -504,11 +500,7 @@ function(o, m, bound)
 
   if rank = 0 then
     o!.schutzstab[m] := false;
-    if IsPerm(one) then
-      o!.schutz[m] := Group(one);
-    else
-      o!.schutz[m] := [one];
-    fi;
+    o!.schutz[m] := Group(one);
     return o!.schutz[m];
   fi;
 

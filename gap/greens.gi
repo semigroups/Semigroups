@@ -1995,7 +1995,8 @@ end);
 
 # different method for regular/inverse, same for ideals
 
-InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
+InstallMethod(SchutzenbergerGroup, 
+"for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local o, m, lambda_schutz, lambda_stab, rho_schutz, rho_stab, schutz, p;
@@ -2020,14 +2021,19 @@ function(d)
     fi;
   elif rho_stab = false then
     SetRhoOrbStabChain(d, false);
-    SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
+    SetRhoCosets(d, rho_schutz);
     return rho_schutz;
   fi;
 
   p := LambdaConjugator(Parent(d))(RhoOrbRep(o, m), Representative(d));
   rho_schutz := rho_schutz ^ p;
 
-  SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
+  # FIXME should make the following case distinction unnecessary
+  if IsPermGroup(rho_schutz) then
+    SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
+  else # if IsMatrixGroup(g)
+    SetRhoOrbStabChain(d, rho_schutz);
+  fi;
 
   if lambda_stab = false then
     SetRhoCosets(d, Enumerator(rho_schutz));
@@ -2074,7 +2080,7 @@ function(h)
 
   lambda_p := LambdaOrbMult(lambda_o, lambda_m, Position(lambda_o,
    LambdaFunc(s)(rep)))[2];
-   #LambdaConjugator seems to be used for two different things here!
+   #FIXME LambdaConjugator seems to be used for two different things here!
   lambda_p := LambdaConjugator(s)(rep * lambda_p, rep);
 
   if rho_stab = true then

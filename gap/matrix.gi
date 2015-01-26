@@ -9,6 +9,34 @@
 #############################################################################
 ##
 
+InstallMethod(\*, "for a matrix obj and ffe", 
+[IsMatrixObj, IsFFE],
+function(mat, x)
+  if not x in BaseDomain(mat) then 
+    Error("Semigroups: \*: usage\n", 
+          "cannot multiply a matrix obj and FFE not in the base domain ", 
+          "of the matrix,");
+    return;
+  fi;
+  
+   return  NewMatrix(IsPlistMatrixRep, BaseDomain(mat),
+                     Length(mat), List(mat, y-> y * x));
+end);
+
+InstallMethod(\*, "for ffe and a matrix obj", 
+[IsFFE, IsMatrixObj],
+function(x, mat)
+  if not x in BaseDomain(mat) then 
+    Error("Semigroups: \*: usage\n", 
+          "cannot multiply a matrix obj and FFE not in the base domain ", 
+          "of the matrix,");
+    return;
+  fi;
+  
+   return  NewMatrix(IsPlistMatrixRep, BaseDomain(mat),
+                     Length(mat), List(mat, y-> x * y));
+end);
+
 #
 #T This will be moved to a more appropriate place
 #

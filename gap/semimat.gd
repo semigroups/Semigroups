@@ -11,6 +11,9 @@
 ## Some of this code is based on code taken from grpmat.gd in the GAP
 ## library
 
+DeclareOperation("InverseMutable", [IsNullMapMatrix]);
+
+
 #T Is there a better way of saying what a matrix semigroup is?
 
 DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl and

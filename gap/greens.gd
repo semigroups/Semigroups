@@ -107,6 +107,8 @@ DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
+#DeclareFilter("IsSchutzenbergerGroup");
+
 
 # abbreviations...
 
