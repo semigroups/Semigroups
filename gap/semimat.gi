@@ -230,6 +230,8 @@ end);
 #T is there a complete direct way of testing whether
 #T this idempotent exists (without constructing it)?
 #T the method below is already pretty efficient
+
+# TODO: remove redundant S as an argument here.
 InstallGlobalFunction(MatrixObjIdempotentTester,
 function(S, x, y)
     return MatrixObjIdempotentCreator(S,x,y) <> fail;
@@ -237,6 +239,8 @@ end);
 
 # Attempt to construct an idempotent m with RowSpace(m) = x
 # ColumnSpace(m) = y
+# TODO: remove redundant S as an argument here.
+# FIXME: this doesn't work. 
 InstallGlobalFunction(MatrixObjIdempotentCreator,
 function(S, x, y)
     local m, m2, p1, p2, f;
@@ -244,12 +248,21 @@ function(S, x, y)
     m := TransposedMat(y) * x;
 
     m2 := m * m;
+    
     p1 := PositionNonZero(m2);
+    if p1 = Length(m2) + 1 then 
+      if m2 = m then 
+        return m;
+      else
+        return fail;
+      fi;
+    fi;
+    
     p2 := PositionNonZero(m2[p1]);
 
     f := m[p1][p2] / m2[p1][p2];
 
-    m := f * m; # FIXME: this doesn't work.
+    m := f * m; 
 
     if f * m2 = m then
         return m;

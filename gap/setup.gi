@@ -818,8 +818,8 @@ function(j,i)
 end);
 
 InstallMethod(IdempotentTester, "for a matrix semigroup",
-[IsMatrixSemigroup], s -> function(x,y)
-    return MatrixObjIdempotentTester(s, x, y);
+[IsMatrixSemigroup], S -> function(x, y)
+    return MatrixObjIdempotentTester(S, x, y);
 end);
 
 # the function used to create an idempotent with the specified lambda and rho
@@ -847,8 +847,8 @@ function(j,i)
 end);
 
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
-[IsMatrixSemigroup], s -> function(x,y)
-    return MatrixObjIdempotentCreator(s,x,y);
+[IsMatrixSemigroup], S -> function(x, y)
+    return MatrixObjIdempotentCreator(S, x, y);
 end);
 
 # the action of elements of the stabiliser of a lambda-value on any element of
