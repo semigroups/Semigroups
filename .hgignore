@@ -1,4 +1,5 @@
 syntax: glob
+tags
 *.orig
 *.DS_Store
 *.swp
