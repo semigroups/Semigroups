@@ -554,36 +554,6 @@ function(r)
   return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);
 end);
 
-#JDM this should be improved at some point
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfDClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local iter;
-
-  if IsClosedData(SemigroupData(s)) then
-    iter := IteratorList(GreensDClasses(s));
-    SetIsIteratorOfDClasses(iter, true);
-    return iter;
-  fi;
-
-  return IteratorByIterator(
-    IteratorOfRClassData(s),  # baseiter
-    function(iter, x)         # convert
-      local d;
-      d := DClassOfRClass(CallFuncList(CreateRClassNC, x));
-      Add(iter!.classes, d);
-      return d;
-    end,
-    [IsIteratorOfDClasses],
-    function(iter, x)         #isnew
-      return x = fail or ForAll(iter!.classes, d -> not x[4] in d);
-     end,
-    rec(classes := []));        #iter
-end);
-
 # JDM could use IteratorOfRClasses here instead, not sure which is better...
 # JDM could be different method for regular/inverse, see inverse_old.gi in
 # semigroups-dev.
@@ -620,22 +590,6 @@ function(s)
   GreensLClasses, [IsIteratorOfLClasses]);
 end);
 
-# same method for regular/inverse
-
-InstallMethod(IteratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local iter;
-
-  if HasGreensRClasses(s) then
-    iter := IteratorList(GreensRClasses(s));
-    SetIsIteratorOfRClasses(iter, true);
-    return iter;
-  fi;
-
-  return IteratorByIterator(IteratorOfRClassData(s), x ->
-   CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]);
-end);
 
 #different method for regular/inverse
 
@@ -903,31 +857,12 @@ function(s)
    [IsIteratorOfDClassReps]);
 end);
 
-# same method for inverse
-
-InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(s)
-  if HasGreensDClasses(s) then
-    return IteratorList(GreensDClasses(s));
-  fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x ->
-   CallFuncList(CreateDClassNC, x), [IsIteratorOfDClasses]);
-end);
-
 # different method for inverse
 
 InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 s -> IteratorByIterator(IteratorOfLClassData(s), x -> x[4],
 [IsIteratorOfLClassReps]));
-
-# different method for inverse
-
-InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-s -> IteratorByIterator(IteratorOfLClassData(s), x ->
-CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 #for inverse acting semigroups...
 
@@ -1031,16 +966,6 @@ InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 s -> IteratorByIterator(IteratorOfRClassData(s), x -> Inverse(x[4]),
 [IsIteratorOfLClassReps]));
-
-#
-
-InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
-s -> IteratorByIterator(IteratorOfRClassData(s),
-function(x)
-  x[4] := Inverse(x[4]); #JDM is this a good idea??
-  return CallFuncList(CreateInverseOpLClass, x);
-end, [IsIteratorOfLClasses]));
 
 #
 

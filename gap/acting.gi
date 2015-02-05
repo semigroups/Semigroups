@@ -10,7 +10,6 @@
 
 # local declarations . . .
 
-
 # acting semigroups...
 
 # same method for ideals

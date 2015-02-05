@@ -8,63 +8,73 @@
 #############################################################################
 ##
 
-# returns the element <f> premultiplied by RhoOrbMult so that the resulting
+# returns the element <x> premultiplied by RhoOrbMult so that the resulting
 # element has its RhoValue in the first position of its scc.
 
-# s, o, f, l, m
-
-InstallGlobalFunction(RectifyRho,
+BindGlobal("SEMIGROUPS_RectifyRho",
 function(arg)
-  local f, l, m;
+  local S, o, x, record;
 
-  if not IsClosed(arg[2]) then
-    Enumerate(arg[2], infinity);
+  S := arg[1];
+  o := arg[2];
+  x := arg[3];
+  
+  if Length(arg) > 3 then 
+    record := arg[4];
+  else 
+    record := rec();
   fi;
 
-  f := arg[3];
-  if not IsBound(arg[4]) or arg[4] = fail then
-    l := Position(arg[2], RhoFunc(arg[1])(f));
-  else
-    l := arg[4];
+  if not IsClosed(o) then
+    Enumerate(o, infinity);
+  fi;
+  
+  if not IsBound(record.RhoPos) then 
+    record.RhoPos := Position(o, RhoFunc(S)(x));
   fi;
 
-  if not IsBound(arg[5]) or arg[5] = fail then
-    m := OrbSCCLookup(arg[2])[l];
-  else
-    m := arg[5];
+  if not IsBound(record.RhoSCCIndex) then 
+    record.RhoSCCIndex := OrbSCCLookup(o)[record.RhoPos];
   fi;
 
-  if l <> OrbSCC(arg[2])[m][1] then
-    f := RhoOrbMult(arg[2], m, l)[2] * f;
+  if record.RhoPos <> OrbSCC(o)[record.RhoSCCIndex][1] then
+    record.rep := RhoOrbMult(o, record.RhoSCCIndex, record.RhoPos)[2] * x;
   fi;
-  return rec(l := l, m := m, rep := f);
+
+  return record.rep;
 end);
 
-#
-
-InstallGlobalFunction(RectifyLambda,
+BindGlobal("SEMIGROUPS_RectifyLambda",
 function(arg)
-  local f, l, m;
-  if not IsClosed(arg[2]) then
-    Enumerate(arg[2], infinity);
+  local S, o, x, record;
+
+  S := arg[1];
+  o := arg[2];
+  x := arg[3];
+  
+  if Length(arg) > 3 then 
+    record := arg[4];
+  else 
+    record := rec();
   fi;
 
-  f := arg[3];
-  if not IsBound(arg[4]) or arg[4] = fail then
-    l := Position(arg[2], LambdaFunc(arg[1])(f));
-  else
-    l := arg[4];
+  if not IsClosed(o) then
+    Enumerate(o, infinity);
   fi;
-  if not IsBound(arg[5]) or arg[5] = fail then
-    m := OrbSCCLookup(arg[2])[l];
-  else
-    m := arg[5];
+  
+  if not IsBound(record.LambdaPos) then 
+    record.LambdaPos := Position(o, LambdaFunc(S)(x));
   fi;
 
-  if l <> OrbSCC(arg[2])[m][1] then
-    f := f * LambdaOrbMult(arg[2], m, l)[2];
+  if not IsBound(record.LambdaSCCIndex) then 
+    record.LambdaSCCIndex := OrbSCCLookup(o)[record.LambdaPos];
   fi;
-  return rec(l := l, m := m, rep := f);
+
+  if record.LambdaPos <> OrbSCC(o)[record.LambdaSCCIndex][1] then
+    record.rep := x * LambdaOrbMult(o, record.LambdaSCCIndex, record.LambdaPos)[2];
+  fi;
+
+  return record.rep;
 end);
 
 #

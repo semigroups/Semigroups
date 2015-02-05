@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  regular.gi
+#W  greens-regular.gi
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,6 +9,73 @@
 ##
 
 ## Methods for Green's classes of regular acting semigroups
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+s -> IteratorByIterator(IteratorOfLClassData(s), x ->
+CallFuncList(SEMIGROUPS_CreateLClassNC, x), [IsIteratorOfLClasses]));
+
+# same method for inverse
+
+InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  if HasGreensDClasses(s) then
+    return IteratorList(GreensDClasses(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassData(s), x ->
+   CallFuncList(SEMIGROUPS_CreateDClassNC, x), [IsIteratorOfDClasses]);
+end);
+
+# different method for inverse
+
+# Notes: the only purpose for this is the method for NumberElement.  Otherwise
+# use (if nothing much is known) IteratorOfRClasses or if everything is know
+# just use RClasses.
+
+InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local o;
+
+  o := RhoOrb(s);
+  Enumerate(o, infinity);
+
+  return EnumeratorByFunctions(s, rec(
+
+    parent := s,
+
+    Length := enum -> NrRClasses(enum!.parent),
+
+    Membership := function(r, enum)
+      return Representative(r) in enum!.parent;
+    end,
+
+    NumberElement := function(enum, r)
+      local pos;
+      pos := Position(RhoOrb(enum!.parent),
+       RhoFunc(enum!.parent)(Representative(r)));
+      if pos = fail then
+        return fail;
+      fi;
+      return pos - 1;
+    end,
+
+   ElementNumber := function(enum, nr)
+    local s, o, m;
+    s := enum!.parent;
+    o := RhoOrb(s);
+    m := OrbSCCLookup(o)[nr + 1];
+    return SEMIGROUPS_CreateRClass(s, m, LambdaOrb(s),
+     RhoOrbMult(o, m, nr + 1)[1] * RhoOrbRep(o, m), false);
+   end,
+   PrintObj := function(enum)
+     Print( "<enumerator of R-classes of ", ViewString(s), ">");
+     return;
+   end));
+end);
 
 InstallMethod(RhoCosets, "for a regular class of an acting semigroup",
 [IsRegularClass and IsActingSemigroupGreensClass],
@@ -447,7 +514,7 @@ function(s)
 
   for m in [2 .. len] do
     rectify := RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m));
-    out[m - 1] := CreateDClassNC(s, m, lambda_o, rectify.m, rho_o, rectify.rep,
+    out[m - 1] := SEMIGROUPS_CreateDClassNC(s, m, lambda_o, rectify.m, rho_o, rectify.rep,
      false);
   od;
   return out;
@@ -485,7 +552,7 @@ function(s)
       f := g * lambda_mults[j][1];
       for k in rho_scc[rho_m] do
         n := n + 1;
-        out[n] := CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
+        out[n] := SEMIGROUPS_CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
          rho_mults[k][1] * f, false);
 
       od;
@@ -523,7 +590,7 @@ function(d)
     g := f * lambda_mults[i][1];
     for j in rho_scc do
       k := k + 1;
-      out[k] := CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
+      out[k] := SEMIGROUPS_CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
        rho_mults[j][1] * g, nc);
     od;
   od;
@@ -562,7 +629,7 @@ function(l)
 
   for j in scc do
     k := k + 1;
-    out[k] := CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
+    out[k] := SEMIGROUPS_CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
      mults[j][1] * f, nc);
     SetLClassOfHClass(out[k], l);
   od;
@@ -602,7 +669,7 @@ function(r)
 
   for j in scc do
     k := k + 1;
-    out[k] := CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
+    out[k] := SEMIGROUPS_CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
      f * mults[j][1], nc);
     SetLClassOfHClass(out[k], r);
   od;
@@ -635,8 +702,8 @@ function(s)
     for j in lambda_scc[lambda_m] do
       n := n + 1;
       # use NC here to avoid running RectifyRho repeatedly in this loop
-      # maybe expand this to not use CreateLClassNC JDM?
-      out[n] := CreateLClassNC(s, m, rho_o, f * mults[j][1], false);
+      # maybe expand this to not use SEMIGROUPS_CreateLClassNC JDM?
+      out[n] := SEMIGROUPS_CreateLClassNC(s, m, rho_o, f * mults[j][1], false);
     od;
   od;
   return out;
@@ -663,8 +730,8 @@ function(d)
   for i in scc do
     k := k + 1;
     #use NC since f has rho value in first place of scc
-    #JDM maybe don't use CreateLClassNC here, and rather expand!
-    out[k] := CreateLClassNC(s, m, o, f * mults[i][1], nc);
+    #JDM maybe don't use SEMIGROUPS_CreateLClassNC here, and rather expand!
+    out[k] := SEMIGROUPS_CreateLClassNC(s, m, o, f * mults[i][1], nc);
     SetDClassOfLClass(out[k], d);
   od;
 
@@ -699,7 +766,7 @@ function(s)
     mults := RhoOrbMults(rho_o, rho_m);
     for j in rho_scc[rho_m] do
       n := n + 1;
-      out[n] := CreateRClassNC(s, lambda_m, lambda_o, mults[j][1] * f, false);
+      out[n] := SEMIGROUPS_CreateRClassNC(s, lambda_m, lambda_o, mults[j][1] * f, false);
     od;
   od;
   return out;
@@ -726,7 +793,7 @@ function(d)
   k := 0;
   for i in scc do
     k := k + 1;
-    out[k] := CreateRClassNC(s, m, o, mults[i][1] * f, nc);
+    out[k] := SEMIGROUPS_CreateRClassNC(s, m, o, mults[i][1] * f, nc);
   od;
 
   return out;
@@ -751,7 +818,7 @@ function(s, f)
     o := GradedLambdaOrb(s, f, true)[1];
   fi;
 
-  return CreateRClass(s, fail, o, f, false);
+  return SEMIGROUPS_CreateRClass(s, fail, o, f, false);
 end);
 
 # same method for inverse/ideals

@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
+
+#
+
 InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
 Maximum(RankFilter(IsActingSemigroup), RankFilter(IsSemigroupIdeal and
