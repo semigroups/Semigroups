@@ -8,11 +8,38 @@
 #############################################################################
 ##
 
-InstallMethod(LambdaOrb, "for a Green's class", 
-[IsActingSemigroupGreensClass], 
-function(C)
-  return C!.LambdaOrb;
+# Notes:
+# - D-class reps must have rectified lambda and rho value
+
+DeclareGlobalFunction("SEMIGROUPS_IsRegularClass");
+DeclareGlobalFunction("SEMIGROUPS_Idempotents");
+DeclareGlobalFunction("SEMIGROUPS_NrIdempotents");
+
+# same method for regular/different for inverse
+
+BindGlobal("SEMIGROUPS_CreateGreensClassNC",
+function(S, isGreensClassNC, record, type)
+  local C;
+
+  C := ObjectifyWithAttributes(record,          type, 
+                               Parent,          S,  
+                               IsGreensClassNC, isGreensClassNC, 
+                               Representative,  record.rep);
+  if IsGreensDClass(C) then 
+    SetEquivalenceClassRelation(C, GreensDRelation(S));
+  elif IsGreensRClass(C) then 
+    SetEquivalenceClassRelation(C, GreensRRelation(S));
+  elif IsGreensLClass(C) then 
+    SetEquivalenceClassRelation(C, GreensLRelation(S));
+  elif IsGreensHClass(C) then 
+    SetEquivalenceClassRelation(C, GreensHRelation(S));
+  fi;
+
+  return C;
 end);
+
+InstallMethod(LambdaOrb, "for a Green's class", 
+[IsActingSemigroupGreensClass], C -> C!.LambdaOrb);
 
 InstallMethod(LambdaOrb, "for a Green's L-class", 
 [IsGreensLClass and IsActingSemigroupGreensClass], 
@@ -21,7 +48,17 @@ function(L)
         "L-classes do not have this attribute,");
 end);
 
-InstallMethod(LambdaOrb, "for a Green's class", 
+InstallMethod(LambdaOrbSCCIndex, "for a Green's class", 
+[IsActingSemigroupGreensClass], C -> C!.LambdaOrbSCCIndex);
+
+InstallMethod(LambdaOrbSCCIndex, "for a Green's L-class", 
+[IsGreensLClass and IsActingSemigroupGreensClass], 
+function(L)
+  Error("Semigroups: LambdaOrbSCCIndex: usage\n", 
+        "L-classes do not have this attribute,");
+end);
+
+InstallMethod(RhoOrb, "for a Green's class", 
 [IsActingSemigroupGreensClass], 
 function(C)
   return C!.RhoOrb;
@@ -34,201 +71,36 @@ function(R)
         "R-classes do not have this attribute,");
 end);
 
-DeclareGlobalFunction("SEMIGROUPS_IsRegularClass");
-DeclareGlobalFunction("SEMIGROUPS_Idempotents");
-DeclareGlobalFunction("SEMIGROUPS_NrIdempotents");
+InstallMethod(RhoOrbSCCIndex, "for a Green's class", 
+[IsActingSemigroupGreensClass], C -> C!.RhoOrbSCCIndex);
 
-# same method for regular/different for inverse
-
-BindGlobal("SEMIGROUPS_CreateGreensClassNC",
-function(S, isGreensClassNC, record, type, relation)
-  local C;
-  C := ObjectifyWithAttributes(record, 
-                               type, 
-                               Parent,                   S,  
-                               IsGreensClassNC,          isGreensClassNC,
-                               EquivalenceClassRelation, relation);
-  return C;
+InstallMethod(RhoOrbSCCIndex, "for a Green's L-class", 
+[IsGreensLClass and IsActingSemigroupGreensClass], 
+function(L)
+  Error("Semigroups: RhoOrbSCCIndex: usage\n", 
+        "L-classes do not have this attribute,");
 end);
 
-# Usage:
-# arg[1] = semigroup;
-# arg[2] = lambda orb scc index;
-# arg[3] = lambda orb;
-# arg[4] = rho orb scc index;
-# arg[5] = rho orb;
-# arg[6] = rep;
-# arg[7] = IsGreensClassNC.
+# same method for regular/inverse/ideals
 
-# arg[4] and arg[5] should be fail if we are creating the D-class of an acting
-# semigroup with inverse op.
+InstallMethod(LambdaOrbSCC, "for a Green's class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsGreensClass],
+C -> OrbSCC(LambdaOrb(C))[LambdaOrbSCCIndex(C)]);
 
-# NC version not required since H-class reps are not rectified.
+# same method for regular/inverse/ideals
 
-# same method for regular/inverse
+InstallMethod(RhoOrbSCC, "for a Green's class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsGreensClass],
+C -> OrbSCC(RhoOrb(C))[RhoOrbSCCIndex(C)]);
 
-InstallGlobalFunction(SEMIGROUPS_CreateHClass,
-function(arg)
-  local h;
-
-  h := Objectify(HClassType(arg[1]), rec());
-  SetParent(h, arg[1]);
-
-  SetLambdaOrbSCCIndex(h, arg[2]);
-  SetLambdaOrb(h, arg[3]);
-  if arg[4] <> fail then
-    SetRhoOrbSCCIndex(h, arg[4]);
-    SetRhoOrb(h, arg[5]);
-  fi;
-
-  SetRepresentative(h, arg[6]);
-  SetEquivalenceClassRelation(h, GreensHRelation(arg[1]));
-  SetIsGreensClassNC(h, arg[7]);
-  return h;
+InstallMethod(SemigroupDataIndex,
+"for an acting semigroup Green's class",
+[IsActingSemigroupGreensClass],
+function(C)
+  return Position(SemigroupData(Parent(C)), Representative(C));
 end);
 
-# Usage:
-# s = semigroup;
-# m = rho orb scc index;
-# o = rho orb;
-# rep = representative;
-# nc = IsGreensClassNC.
-
-# use the NC version for already rectified reps.
-
-# different method for inverse, same method for regular
-
-InstallGlobalFunction(SEMIGROUPS_CreateLClass,
-function(s, m, o, rep, nc)
-  local rectify;
-  rectify := RectifyRho(s, o, rep, fail, m);
-  return SEMIGROUPS_CreateLClassNC(s, rectify.m, o, rectify.rep, nc);
-end);
-
-# Usage:
-# arg[1] = semigroup;
-# arg[2] = rho orb scc index;
-# arg[3] = rho orb;
-# arg[4] = rep;
-# arg[5] = IsGreensClassNC.
-
-# NC indicates that the representative is assumed to be in the correct form,
-# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the rho orb.
-
-# different method for inverse, same method for regular
-
-InstallGlobalFunction(SEMIGROUPS_CreateLClassNC,
-function(s, m, o, rep, nc)
-  local l;
-
-  l := Objectify(LClassType(s), rec());
-  SetParent(l, s);
-  SetRepresentative(l, rep);
-  SetRhoOrb(l, o);
-  SetRhoOrbSCCIndex(l, m);
-  SetEquivalenceClassRelation(l, GreensLRelation(s));
-  SetIsGreensClassNC(l, nc);
-  return l;
-end);
-
-# arg[1] = semigroup;
-# arg[2] = lambda orb scc index;
-# arg[3] = lambda orb;
-# arg[4] = rep;
-# arg[5] = Green's class NC
-
-# use the NC version for already rectified reps.
-
-# same method for regular/inverse
-
-InstallGlobalFunction(SEMIGROUPS_CreateRClass,
-function(s, m, o, rep, nc)
-  local rectify;
-  rectify := RectifyLambda(s, o, rep, fail, m);
-  return SEMIGROUPS_CreateRClassNC(s, rectify.m, o, rectify.rep, nc);
-end);
-
-# Usage:
-# arg[1] = semigroup;
-# arg[2] = lambda orb scc index;
-# arg[3] = lambda orb;
-# arg[4] = rep;
-# arg[5] = IsRClassNC.
-# arg[6] = semigroup data index (optional).
-
-# NC indicates that the representative is assumed to be in the correct form,
-# i.e. LambdaFunc(s)(arg[2]) is in the first place of the scc of the lambda
-# orb.
-
-# same method for regular/inverse
-
-InstallGlobalFunction(SEMIGROUPS_CreateRClassNC,
-function(arg)
-  local r;
-
-  r := Objectify(RClassType(arg[1]), rec());
-
-  SetParent(r, arg[1]);
-  SetLambdaOrbSCCIndex(r, arg[2]);
-  SetLambdaOrb(r, arg[3]);
-  SetRepresentative(r, arg[4]);
-  SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
-  SetIsGreensClassNC(r, arg[5]);
-  if IsBound(arg[6]) then
-    SetSemigroupDataIndex(r, arg[6]);
-  fi;
-
-  return r;
-end);
-
-# same method for regular/inverse
-
-InstallMethod(IteratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local iter;
-
-  if HasGreensRClasses(s) then
-    iter := IteratorList(GreensRClasses(s));
-    SetIsIteratorOfRClasses(iter, true);
-    return iter;
-  fi;
-
-  return IteratorByIterator(IteratorOfRClassData(s), x ->
-   CallFuncList(SEMIGROUPS_CreateRClassNC, x), [IsIteratorOfRClasses]);
-end);
-
-#TODO this should be improved at some point
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfDClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local iter;
-
-  if IsClosedData(SemigroupData(s)) then
-    iter := IteratorList(GreensDClasses(s));
-    SetIsIteratorOfDClasses(iter, true);
-    return iter;
-  fi;
-
-  return IteratorByIterator(
-    IteratorOfRClassData(s),  # baseiter
-    function(iter, x)         # convert
-      local d;
-      d := DClassOfRClass(CallFuncList(SEMIGROUPS_CreateRClassNC, x));
-      Add(iter!.classes, d);
-      return d;
-    end,
-    [IsIteratorOfDClasses],
-    function(iter, x)         #isnew
-      return x = fail or ForAll(iter!.classes, d -> not x[4] in d);
-     end,
-    rec(classes := []));        #iter
-end);
-
-# TODO improve the performance of this also sucks
+# TODO improve the performance of this
 
 # Notes: the only purpose for this is the method for NumberElement.  Otherwise
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
@@ -238,31 +110,29 @@ end);
 
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
-  local enum;
+function(S)
 
-  return EnumeratorByFunctions(s, rec(
+  return EnumeratorByFunctions(S, rec(
 
     ElementNumber := function(enum, pos)
-      return GreensRClasses(s)[pos];
+      return GreensRClasses(S)[pos];
     end,
 
-    NumberElement := function(enum, r)
-      return Position(SemigroupData(s), Representative(r)) - 1;
+    NumberElement := function(enum, R)
+      return Position(SemigroupData(S), Representative(R)) - 1;
     end,
 
-    Membership := function(r, enum)
-      return Position(enum, r) <> fail;
+    Membership := function(R, enum)
+      return Position(enum, R) <> fail;
     end,
 
-    Length := enum -> NrRClasses(s),
+    Length := enum -> NrRClasses(S),
 
     PrintObj := function(enum)
-      Print( "<enumerator of R-classes of ", ViewString(s), ">");
+      Print( "<enumerator of R-classes of ", ViewString(S), ">");
       return;
     end));
 
-  return enum;
 end);
 
 # same method for regular/inverse
@@ -310,55 +180,17 @@ function( S )
          IsActingSemigroupGreensClass);
 end);
 
-# Notes:
-# - D-class reps must have rectified lambda and rho value
-
-# acting...
-
-InstallMethod(SemigroupDataIndex,
-"for an acting semigroup Green's class",
-[IsActingSemigroupGreensClass],
-function(C)
-  return Position(SemigroupData(Parent(C)), Representative(C));
-end);
-
-# this won't work for ideals, but isn't currently used for anything
-
-InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  local data, orb_scc, orblookup1, orblookup2, out, i;
-
-  data := SemigroupData(Parent(d));
-
-  # scc of R-reps corresponding to d
-  orb_scc := SemigroupDataSCC(d);
-
-  # positions in reps containing R-reps in d
-  orblookup1 := data!.orblookup1;
-  orblookup2 := data!.orblookup2;
-
-  out := [];
-  for i in orb_scc do
-    if not IsBound(out[orblookup1[i]]) then
-      out[orblookup1[i]] := [];
-    fi;
-    Add(out[orblookup1[i]], orblookup2[i]);
-  od;
-
-  return out;
-end);
-
 # not required for regular/inverse, same method for ideals
 
 InstallMethod(LambdaCosets, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  return RightTransversal(LambdaOrbSchutzGp(LambdaOrb(d),
-   LambdaOrbSCCIndex(d)), SchutzenbergerGroup(d));
+function(D)
+  return RightTransversal(LambdaOrbSchutzGp(LambdaOrb(D),
+   LambdaOrbSCCIndex(D)), SchutzenbergerGroup(D));
 end);
 
 # not required for regular/inverse, same method for ideals
+# TODO refactor this to remove the call to SchutzenbergerGroup
 
 InstallMethod(RhoCosets, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -375,7 +207,7 @@ end);
 # the first place of its scc.
 
 # different method for regular, same method for ideals
-
+# TODO refactor this
 InstallMethod(RhoCosets, "for a L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(L)
@@ -403,20 +235,9 @@ function(L)
   return RhoCosets(D);
 end);
 
-# same method for regular/inverse/ideals
-
-InstallMethod(LambdaOrbSCC, "for a Green's class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsGreensClass],
-x -> OrbSCC(LambdaOrb(x))[LambdaOrbSCCIndex(x)]);
-
-# same method for regular/inverse/ideals
-
-InstallMethod(RhoOrbSCC, "for a Green's class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsGreensClass],
-x -> OrbSCC(RhoOrb(x))[RhoOrbSCCIndex(x)]);
 
 # different method for regular/inverse, same for ideals
-
+# TODO refactor this
 InstallMethod(RhoOrbStabChain, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
@@ -428,30 +249,18 @@ end);
 
 InstallMethod(RhoOrbStabChain, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local g;
+function(L)
+  local G;
 
-  g := SchutzenbergerGroup(l);
+  G := SchutzenbergerGroup(L);
 
-  if IsTrivial(g) then
+  if IsTrivial(G) then
     return false;
-  elif IsNaturalSymmetricGroup(g) and
-   NrMovedPoints(g) = ActionRank(Parent(l))(Representative(l)) then
+  elif IsNaturalSymmetricGroup(G) and
+   NrMovedPoints(G) = ActionRank(Parent(L))(Representative(L)) then
     return true;
   fi;
-  return StabChainImmutable(g);
-end);
-
-# this is useful in PartialOrderOfDClasses, different method required for ideals
-
-InstallMethod(SemigroupDataSCC, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  local data;
-  data := SemigroupData(Parent(d));
-
-  # scc of R-reps corresponding to d
-  return OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
+  return StabChainImmutable(G);
 end);
 
 # main
@@ -676,69 +485,53 @@ function(c)
 end);
 
 # same method for regular/inverse/ideals
-# only for L-classes not created during GreensLClasses! Those created via
-# GreensLClasses should already know DClassOfLClass
 
 InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local s, f, nc, o, i, m;
+function(L)
+  local S, x, record, o;
 
-  s := Parent(l);
-  f := Representative(l);
-  nc := IsGreensClassNC(l);
+  S := Parent(L);
+  x := Representative(L);
 
-  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) and not nc then
-    o := LambdaOrb(s);
-    i := Position(o, LambdaFunc(s)(f));
+  record := rec(RhoOrb := RhoOrb(L), 
+                RhoOrbSCCIndex := RhoOrbSCCIndex(L));
+
+  if HasLambdaOrb(S) and IsClosed(LambdaOrb(S)) and not IsGreensClassNC(L) then
+    o := LambdaOrb(S);
   else
-    o := GradedLambdaOrb(s, f, nc <> true);
-    i := o[2];
-    o := o[1];
+    o := GradedLambdaOrb(S, x, IsGreensClassNC(L) <> true, record);
   fi;
 
-  if nc then
-    m := 1;
-  else
-    m := OrbSCCLookup(o)[i];
-    if i <> OrbSCC(o)[m][1] then
-      f := f * LambdaOrbMult(o, m, i)[2];
-    fi;
-  fi;
+  SEMIGROUPS_RectifyLambda(S, o, x, record);
 
-  return SEMIGROUPS_CreateDClassNC(s, m, o, RhoOrbSCCIndex(l), RhoOrb(l), f, nc);
+  return SEMIGROUPS_CreateGreensClassNC(S, IsGreensClassNC(L), record,
+    DClassType(S));
 end);
 
 # same method for regular, different method for inverse, same for ideals
 
 InstallMethod(DClassOfRClass, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local s, f, nc, o, i, m;
+function(R)
+  local S, x, record, o;
 
-  s := Parent(r);
-  f := Representative(r);
-  nc := IsGreensClassNC(r);
+  S := Parent(R);
+  x := Representative(R);
 
-  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) and not nc then
-    o := RhoOrb(s);
-    i := Position(o, RhoFunc(s)(f));
+  record := rec(LambdaOrb := LambdaOrb(R), 
+                LambdaOrbSCCIndex := LambdaOrbSCCIndex(R));
+
+  if HasRhoOrb(S) and IsClosed(RhoOrb(S)) and not IsGreensClassNC(R) then
+    o := RhoOrb(S);
   else
-    o := GradedRhoOrb(s, f, nc <> true);
-    i := o[2];
-    o := o[1];
+    o := GradedRhoOrb(S, x, IsGreensClassNC(R) <> true, record);
   fi;
 
-  if nc then
-    m := 1;
-  else
-    m := OrbSCCLookup(o)[i];
-    if i <> OrbSCC(o)[m][1] then
-      f := RhoOrbMult(o, m, i)[2] * f;
-    fi;
-  fi;
+  SEMIGROUPS_RectifyRho(S, o, x, record);
 
-  return SEMIGROUPS_CreateDClassNC(s, LambdaOrbSCCIndex(r), LambdaOrb(r), m, o, f, nc);
+  return SEMIGROUPS_CreateGreensClassNC(S, IsGreensClassNC(R), record,
+    DClassType(S));
 end);
 
 # same method for regular, different method for inverse semigroups,
@@ -746,130 +539,138 @@ end);
 
 InstallMethod(DClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-function(h)
-  local s, lambda_o, lambda_m, rho_o, rho_m, rectify;
+function(H)
+  local S, x, record;
 
-  s := Parent(h);
-  lambda_o := LambdaOrb(h);
-  lambda_m := LambdaOrbSCCIndex(h);
-  rho_o := RhoOrb(h);
-  rho_m := RhoOrbSCCIndex(h);
+  S := Parent(H);
+  x := Representative(H);
+  
+  record := rec(RhoOrb := RhoOrb(L), 
+                RhoOrbSCCIndex := RhoOrbSCCIndex(L),
+                LambdaOrb := LambdaOrb(R), 
+                LambdaOrbSCCIndex := LambdaOrbSCCIndex(R));
 
-  rectify := RectifyRho(s, rho_o, Representative(h), fail, rho_m);
-  rectify := RectifyLambda(s, lambda_o, rectify.rep, fail, lambda_m);
+  SEMIGROUPS_RectifyRho(S, RhoOrb(H), x, record);
+  SEMIGROUPS_RectifyLambda(S, LambdaOrb(H), record.rep, record);
 
-  return SEMIGROUPS_CreateDClassNC(s, lambda_m, lambda_o, rho_m, rho_o, rectify.rep,
-  IsGreensClassNC(h));
-end);
+  return SEMIGROUPS_CreateGreensClassNC(S, IsGreensClassNC(H), record,
+   HClassType(S));
+end); 
+
 
 # same method for regular, different method for inverse, same for ideals
 
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-# use non-NC so that rho value of f is rectified
-h -> SEMIGROUPS_CreateLClass(Parent(h), RhoOrbSCCIndex(h), RhoOrb(h),
- Representative(h), IsGreensClassNC(h)));
+function(H)
+  local record, S;
+  
+  record := rec(RhoOrb := RhoOrb(H), 
+                RhoOrbSCCIndex := RhoOrbSCCIndex(H));
+
+  S := Parent(H);
+  SEMIGROUPS_RectifyRho(S, RhoOrb(H), Representative(H), record);
+
+  return SEMIGROUPS_CreateGreensClassNC(S, IsGreensClassNC(H), record,
+   HClassType(S));
+end);
 
 # same method for regular/inverse semigroups, same for ideals
 
 InstallMethod(RClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-h -> SEMIGROUPS_CreateRClass(Parent(h), LambdaOrbSCCIndex(h), LambdaOrb(h),
- Representative(h), IsGreensClassNC(h)));
+function(H)
+  local record, S;
+  
+  record := rec(LambdaOrb := LambdaOrb(H), 
+                LambdaOrbSCCIndex := LambdaOrbSCCIndex(H));
 
-# Notes: this could be written in a more compact way but it is not for
-# performance reasons.
+  S := Parent(H);
+  SEMIGROUPS_RectifyLambda(S, LambdaOrb(H), Representative(H), record);
+
+  return SEMIGROUPS_CreateGreensClassNC(S, IsGreensClassNC(H), record,
+   HClassType(S));
+end);
 
 # different method for regular/inverse/ideals
 
+# TODO check that this isn't too much slower than before. 
+
 InstallMethod(GreensDClasses, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
-  local data, scc, out, type, drel, o, arg, d, rectify, i;
+function(S)
+  local data, scc, out, type, next, record, D, i;
 
-  data := Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  data := Enumerate(SemigroupData(S), infinity, ReturnFalse);
 
   scc := OrbSCC(data);
   out := EmptyPlist(Length(scc));
-  type := DClassType(s);
-  drel := GreensDRelation(s);
-  o := RhoOrb(s);
+  type := DClassType(S);
 
   for i in [2 .. Length(scc)] do
-    arg := data[scc[i][1]];
-    d := Objectify(type, rec());
-    SetParent(d, s);
-    SetLambdaOrbSCCIndex(d, arg[2]);
-    SetLambdaOrb(d, arg[3]);
-    SetSemigroupDataIndex(d, arg[6]);
+    next := data[scc[i][1]];
+    
+    record := rec(LambdaOrb := LambdaOrb(S), 
+                  LambdaOrbSCCIndex := next[2],
+                  RhoOrb := RhoOrb(S),
+                  RhoPos := data!.rholookup(next[6]));
 
-    #JDM expand!
-    rectify := RectifyRho(arg[1], o, arg[4]);
-
-    SetRepresentative(d, rectify.rep);
-    SetRhoOrb(d, o);
-    SetRhoOrbSCCIndex(d, rectify.m);
-    SetEquivalenceClassRelation(d, drel);
-    SetIsGreensClassNC(d, false);
-
-    out[i - 1] := d;
+    SEMIGROUPS_RectifyRho(S, o, next[4], record);
+    
+    D := SEMIGROUPS_CreateGreensClassNC(S, false, record, type);
+    SetSemigroupDataIndex(d, next[6]);
+    out[i - 1] := D;
   od;
+
   return out;
 end);
 
 # different method for regular/inverse, same method for ideals
 
 InstallMethod(GreensHClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  return Concatenation(List(GreensDClasses(s), GreensHClasses));
-end);
-
-# JDM could this be better/more efficient?!
+[IsActingSemigroup], S -> Concatenation(List(GreensDClasses(S),
+GreensHClasses)));
 
 # different method for regular/inverse, same method for ideals
 
 InstallMethod(GreensHClasses, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  return Concatenation(List(GreensRClasses(d), GreensHClasses));
-end);
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+D -> Concatenation(List(GreensRClasses(D), GreensHClasses)));
 
 # different method for regular/inverse, same method for ideals
 
 InstallMethod(GreensHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local rho_o, rho_m, s, scc, mults, d, lambda_o, lambda_m, cosets, f, nc, act,
-  out, k, i, j;
+function(L)
+  local D, record, scc, mults, cosets, S, x, out, type, nr, i, j;
+  
+  D := DClassOfLClass(L);
 
-  rho_o := RhoOrb(l);
-  rho_m := RhoOrbSCCIndex(l);
-  s := Parent(l);
+  record := rec( LambdaOrb := LambdaOrb(D), 
+                 LambdaOrbSCCIndex := LambdaOrbSCCIndex(D),
+                 RhoOrb := RhoOrb(L), 
+                 RhoOrbSCCIndex := RhoOrbSCCIndex(L));
 
-  scc := OrbSCC(rho_o)[rho_m];
-  mults := RhoOrbMults(rho_o, rho_m);
-
-  d := DClassOfLClass(l);
-  lambda_o := LambdaOrb(d);
-  lambda_m := LambdaOrbSCCIndex(d);
-
-  cosets := RhoCosets(l);
-  f := Representative(l);
-  nc := IsGreensClassNC(l);
-  act := StabilizerAction(s);
-
+  scc := RhoOrbSCC(L);
+  mults := RhoOrbMults(RhoOrb(L), RhoOrbSCCIndex(L));
+  cosets := RhoCosets(L);
+  S := Parent(L);
+  x := Representative(L);
+  act := StabilizerAction(S);
   out := EmptyPlist(Length(scc) * Length(cosets));
-  k := 0;
+  type := HClassType(S);
+  nr := 0;
 
   for i in scc do
-    i := mults[i][1] * f;
+    record.rep := mults[i][1] * x;
     for j in cosets do
-      k := k + 1;
-      out[k] := SEMIGROUPS_CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, act(i, j),
-      nc);
-      SetLClassOfHClass(out[k], l);
-      SetDClassOfHClass(out[k], d);
+      # TODO check if we need to copy record here!
+      record.rep := act(record.rep, j);
+      nr := nr + 1;
+      out[nr] := 
+       SEMIGROUPS_CreateGreensClassNC(S, IsGreensClassNC(L), record, type);
+      SetLClassOfHClass(out[nr], L);
+      SetDClassOfHClass(out[nr], D);
     od;
   od;
   return out;
@@ -879,39 +680,34 @@ end);
 
 InstallMethod(GreensHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local lambda_o, lambda_m, s, scc, mults, d, rho_o, rho_m, cosets, f, nc, act,
-  out, k, i, j;
+function(R)
+  
+  D := DClassOfLClass(R);
 
-  lambda_o := LambdaOrb(r);
-  lambda_m := LambdaOrbSCCIndex(r);
-  s := Parent(r);
+  record := rec( LambdaOrb := LambdaOrb(R), 
+                 LambdaOrbSCCIndex := LambdaOrbSCCIndex(R),
+                 RhoOrb := RhoOrb(D), 
+                 RhoOrbSCCIndex := RhoOrbSCCIndex(D));
 
-  scc := OrbSCC(lambda_o)[lambda_m];
-  mults := LambdaOrbMults(lambda_o, lambda_m);
-
-  d := DClassOfRClass(r);
-  rho_o := RhoOrb(d);
-  rho_m := RhoOrbSCCIndex(d);
-
-  cosets := LambdaCosets(d);
-  f := Representative(r);
-  nc := IsGreensClassNC(r);
-  act := StabilizerAction(Parent(r));
-
+  scc := LambdaOrbSCC(R);
+  mults := LambdaOrbMults(LambdaOrb(R), LambdaOrbSCCIndex(R));
+  cosets := LambdaCosets(D);
+  S := Parent(R);
+  x := Representative(R);
   out := EmptyPlist(Length(scc) * Length(cosets));
-  k := 0;
+  type := HClassType(S);
+  nr := 0;
 
-  for i in cosets do
-    i := act(f, i);
-    for j in scc do
-      k := k + 1;
-      # JDM maybe a bad idea to use SEMIGROUPS_CreateHClass here, perhaps expand?
-      out[k] := SEMIGROUPS_CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
-       i * mults[j][1], nc);
-      SetRClassOfHClass(out[k], r);
-      SetDClassOfHClass(out[k], d);
-      #JDM also set schutz gp here!
+  for p in cosets do
+    record.rep := act(x, p);
+    for i in scc do
+      # TODO check if we need to copy record here!
+      record.rep := record.rep * mults[i][1];
+      nr := nr + 1;
+      out[nr] := 
+       SEMIGROUPS_CreateGreensClassNC(S, IsGreensClassNC(R), record, type);
+      SetRClassOfHClass(out[nr], R);
+      SetDClassOfHClass(out[nr], D);
     od;
   od;
   return out;
@@ -919,22 +715,15 @@ end);
 
 # different method for regular/inverse, same for ideals
 
+#TODO check that this isn't slower than before. 
 InstallMethod(GreensLClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local D, out, d;
+[IsActingSemigroup], 
+S -> Concatenation(List(GreensDClasses(S), GreensLClasses)));
 
-  D := GreensDClasses(s);
-  out := EmptyPlist(NrLClasses(s));
-
-  for d in D do
-    Append(out, GreensLClasses(d));
-  od;
-  return out;
-end);
+# FIXME
 
 # different method for regular/inverse, same for ideals
-
+#JDM here!
 InstallMethod(GreensLClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
 function(d)
@@ -1040,8 +829,7 @@ function(S, x)
   
   SEMIGROUPS_RectifyRho(S, record.RhoOrb, record.rep, record);
 
-  return SEMIGROUPS_CreateDClassNC(S, true, record, DClassType(S),
-   GreensDRelation(S));
+  return SEMIGROUPS_CreateGreensClassNC(S, false, record, DClassType(S));
 end);
 
 # same method for regular, different method for inverse, same for ideals
@@ -2109,7 +1897,7 @@ function(s)
 
   for i in [1 .. n] do
     # collect info about left multiplying R-class reps of d[i] by gens
-    for j in SemigroupDataSCC(d[i]) do
+    for j in OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d[i])]] do
       for k in graph[j] do
         AddSet(out[i], datalookup[k]);
       od;
@@ -2347,3 +2135,51 @@ InstallMethod(Size, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 l -> Size(SchutzenbergerGroup(l)) * Length(RhoOrbSCC(l)));
 
+# same method for regular/inverse
+#TODO refactor
+
+InstallMethod(IteratorOfRClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local iter;
+
+  if HasGreensRClasses(s) then
+    iter := IteratorList(GreensRClasses(s));
+    SetIsIteratorOfRClasses(iter, true);
+    return iter;
+  fi;
+
+  return IteratorByIterator(IteratorOfRClassData(s), x ->
+   CallFuncList(SEMIGROUPS_CreateRClassNC, x), [IsIteratorOfRClasses]);
+end);
+
+#TODO this should be improved at some point
+
+# different method for regular/inverse
+#TODO refactor
+
+InstallMethod(IteratorOfDClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local iter;
+
+  if IsClosedData(SemigroupData(s)) then
+    iter := IteratorList(GreensDClasses(s));
+    SetIsIteratorOfDClasses(iter, true);
+    return iter;
+  fi;
+
+  return IteratorByIterator(
+    IteratorOfRClassData(s),  # baseiter
+    function(iter, x)         # convert
+      local d;
+      d := DClassOfRClass(CallFuncList(SEMIGROUPS_CreateRClassNC, x));
+      Add(iter!.classes, d);
+      return d;
+    end,
+    [IsIteratorOfDClasses],
+    function(iter, x)         #isnew
+      return x = fail or ForAll(iter!.classes, d -> not x[4] in d);
+     end,
+    rec(classes := []));        #iter
+end);
