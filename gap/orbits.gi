@@ -8,6 +8,18 @@
 #############################################################################
 ##
 
+InstallGlobalFunction(OrbSCCIndex, 
+function(o, x)
+  local pos;
+
+  pos := Position(o, x);
+  if pos <> fail then 
+    return OrbSCCLookup(o)[pos];
+  else 
+    return fail;
+  fi;
+end);
+
 #JDM this should work for the RhoOrb too!
 
 InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)",

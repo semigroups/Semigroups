@@ -63,7 +63,7 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-#
+# TODO make the last argument options
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(S, x, global, record)
@@ -91,7 +91,7 @@ function(S, x, global, record)
     pos := HTValue(GradedLambdaHT(S), lambda);
 
     if pos <> fail then
-      record.LambdaPos := pos[3];
+      record!.LambdaPos := pos[3];
       return graded[pos[1]][pos[2]];
     fi;
 
@@ -153,11 +153,11 @@ function(S, x, global, record)
     o!.position_in_graded := [j,k];
     graded!.lens[j] := k;
   fi;
-  record.LambdaPos := 1;
+  record!.LambdaPos := 1;
   return o;
 end);
 
-#
+# FIXME this must be updated like GradedLambdaOrb
 
 InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
