@@ -63,7 +63,7 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-# TODO make the last argument options
+# TODO make the last argument optional
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(S, x, global, record)
