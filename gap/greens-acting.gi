@@ -9,10 +9,10 @@
 ##
 
 # TODO 
-# 1) make sure all non-nc functions return/use nc version to avoid duplicate
-# code
+# 1) recheck the "same/different" method comments
+#
 
-# Helper functions for the creation of Green's classes
+## Helper functions for the creation of Green's classes . . .
 
 # same method for regular/different for inverse
 
@@ -34,7 +34,8 @@ function(arg)
     nc := arg[3];
   fi;
 
-  C := ObjectifyWithAttributes(rec(rep:=rep),         
+  C := ObjectifyWithAttributes(rec(rep:=rep), 
+                               DClassType(parent),
                                Parent,          parent,  
                                IsGreensClassNC, nc);
 
@@ -346,7 +347,7 @@ function( S )
          IsActingSemigroupGreensClass);
 end);
 
-## Individual classes
+## Individual classes . . .
 
 # same method for regular/inverse FIXME is this necessary?
 
@@ -690,6 +691,8 @@ function(D, x)
   return R;
 end);
 
+## Collections of classes, and reps
+
 # These are not rho-rectified!
 
 # different methods for regular/inverse/ideals
@@ -739,9 +742,20 @@ end);
 
 # different method for regular/inverse, same method for ideals
 
+InstallMethod(HClassReps, "for an acting semigroup",
+[IsActingSemigroup], S -> Concatenation(List(GreensDClasses(S), HClassReps)));
+
+# different method for regular/inverse, same method for ideals
+
 InstallMethod(GreensHClasses, "for an acting semigroup",
 [IsActingSemigroup], S -> Concatenation(List(GreensDClasses(S),
 GreensHClasses)));
+
+# different method for regular/inverse, same method for ideals
+
+InstallMethod(HClassReps, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+D -> Concatenation(List(GreensRClasses(d), HClassReps)));
 
 # different method for regular/inverse, same method for ideals
 
@@ -957,6 +971,31 @@ function(D)
   return out;
 end);
 
+# different method for regular/inverse, same for ideals
+
+# could do better not to create the D-classes. Maybe not, we must store the
+# schutz gp of the D-class somewhere and so it might as well be the D-class.
+
+InstallMethod(NrLClasses, "for an acting semigroup",
+[IsActingSemigroup], S -> Sum(List(GreensDClasses(S), NrLClasses)));
+
+# different method for regular/inverse, same for ideals
+
+InstallMethod(NrLClasses, "for a D-class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsGreensDClass],
+D -> Length(LambdaCosets(D)) * Length(LambdaOrbSCC(D)));
+
+# different method for regular/inverse, same for ideals
+
+InstallMethod(NrRClasses, "for an acting semigroup", [IsActingSemigroup],
+S -> Length(Enumerate(SemigroupData(S), infinity, ReturnFalse)) - 1);
+
+# different method for regular/inverse, same for ideals
+
+InstallMethod(NrRClasses, "for a D-class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsGreensDClass],
+D -> Length(RhoCosets(D)) * Length(RhoOrbSCC(D)));
+
 # same method for regular, different method for inverse, same for ideals
 
 InstallMethod(GroupHClassOfGreensDClass, "for a D-class of an acting semigroup",
@@ -991,42 +1030,155 @@ function(D)
   return fail;
 end);
 
-# different method for regular/inverse, same method for ideals
+# same method for regular/inverse, same method for ideals
 
-InstallMethod(HClassReps, "for an acting semigroup",
-[IsActingSemigroup], S -> Concatenation(List(GreensRClasses(S), HClassReps)));
+InstallMethod(IsGroupHClass, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(H)
+  local S, x;
 
-# different method for regular/inverse, same method for ideals
+  S := Parent(H);
+  x := Representative(H);
+  return IdempotentTester(S)(LambdaFunc(S)(x), RhoFunc(S)(x));
+end);
 
-InstallMethod(HClassReps, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-D -> Concatenation(List(GreensRClasses(d), HClassReps)));
+# same method for regular/inverse, same method for ideals
 
-# JDM here!
+InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(H)
 
+  if not IsGroupHClass(H) then
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the H-class is not a group,");
+    return;
+  fi;
 
-#
+  return MappingByFunction(h, SchutzenbergerGroup(H),
+   x -> LambdaPerm(Parent(H))(Representative(H), x),
+   x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
+end);
 
-InstallGlobalFunction(SEMIGROUPS_Idempotents,
+## Idempotents . . .
+
+# same method for regular, different method for inverse, same for ideals
+
+InstallMethod(Idempotents, "for an acting semigroup", [IsActingSemigroup],
+function(S)
+  local out, nr, tester, creator, rho_o, scc, lambda_o, gens, rhofunc, lookup,
+   rep, rho, j, i, k;
+  
+  if HasRClasses(S) or not IsRegularSemigroup(S) then 
+    return Concatenation(List(GreensRClasses(S), Idempotents));
+  fi;
+
+  out := [];
+  nr := 0;
+  tester := IdempotentTester(S);
+  creator := IdempotentCreator(S);
+  rho_o := RhoOrb(S);
+  scc := OrbSCC(rho_o);
+  lambda_o := LambdaOrb(S);
+  Enumerate(lambda_o, infinity);
+  gens := lambda_o!.gens;
+  rhofunc := RhoFunc(S);
+  lookup := OrbSCCLookup(rho_o);
+
+  for i in [2 .. Length(lambda_o)] do
+    # TODO this could be better, just take the product with the next
+    # schreiergen every time
+    rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
+    rho := rhofunc(rep);
+    j := lookup[Position(rho_o, rho)];
+
+    for k in scc[j] do
+      if tester(lambda_o[i], rho_o[k]) then
+        nr := nr + 1;
+        out[nr] := creator(lambda_o[i], rho_o[k]);
+      fi;
+    od;
+  od;
+
+  if not HasNrIdempotents(S) then
+    SetNrIdempotents(s, nr);
+  fi;
+  return out;
+end);
+
+# same method for regular, different method for inverse, same method for ideals
+
+InstallMethod(Idempotents,
+"for an acting semigroup and a positive integer",
+[IsActingSemigroup , IsInt],
+function(S, n)
+  local out, nr, tester, creator, rho_o, scc, lambda_o, gens, rhofunc, lookup,
+   rank, rep, rho, j, i, k;
+
+  if n < 0 then
+    Error("Semigroups: Idempotents: usage,\n",
+          "the second argument <n> must be a non-negative integer,");
+    return;
+  fi;
+
+  if HasIdempotents(S) or not IsRegularSemigroup(S) then
+    return Filtered(Idempotents(S), x -> ActionRank(S)(x) = n);
+  fi;
+
+  out := [];
+  nr := 0;
+  tester := IdempotentTester(S);
+  creator := IdempotentCreator(S);
+  rho_o := RhoOrb(S);
+  scc := OrbSCC(rho_o);
+  lambda_o := LambdaOrb(S);
+  Enumerate(lambda_o, infinity);
+  gens := lambda_o!.gens;
+  rhofunc := RhoFunc(S);
+  lookup := OrbSCCLookup(rho_o);
+  rank := RhoRank(S);
+
+  for i in [2 .. Length(lambda_o)] do
+    # TODO this could be better, just take the product with the next
+    # schreiergen every time
+    rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
+    rho := rhofunc(rep);
+    j := lookup[Position(rho_o, rho)];
+    if rank(rho_o[scc[j][1]]) = n then
+      for k in scc[j] do
+        if tester(lambda_o[i], rho_o[k]) then
+          nr := nr + 1;
+          out[nr] := creator(lambda_o[i], rho_o[k]);
+        fi;
+      od;
+    fi;
+  od;
+
+  return out;
+end);
+
+# helper function for Green's class, lambda/rho value, rho/lambda scc,
+# rho/lambda orbit, and boolean
+
+BindGlobal("SEMIGROUPS_Idempotents",
 function(x, value, scc, o, onright)
-  local s, out, j, tester, creator, i;
+  local S, out, j, tester, creator, i;
 
   if HasIsRegularClass(x) and not IsRegularClass(x) then
     return [];
   fi;
 
-  s := Parent(x);
+  S := Parent(x);
 
-  if IsActingSemigroupWithFixedDegreeMultiplication(s)
-   and IsMultiplicativeElementWithOneCollection(s)
-   and ActionRank(s)(Representative(x)) = ActionDegree(Representative(x)) then
-    return [One(s)];
+  if IsActingSemigroupWithFixedDegreeMultiplication(S)
+   and IsMultiplicativeElementWithOneCollection(S)
+   and ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+    return [One(S)];
   fi;
 
   out := EmptyPlist(Length(scc));
   j := 0;
-  tester := IdempotentTester(s);
-  creator := IdempotentCreator(s);
+  tester := IdempotentTester(S);
+  creator := IdempotentCreator(S);
 
   if onright then
     for i in scc do
@@ -1054,183 +1206,47 @@ function(x, value, scc, o, onright)
   return out;
 end);
 
-# Notes: this could be more compacted but it is not for performance reasons.
+# same method for regular, different method for inverse, same for ideals
+
+InstallMethod(Idempotents, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+L -> SEMIGROUPS_Idempotents(L, LambdaFunc(Parent(L))(Representative(L)),
+RhoOrbSCC(L), RhoOrb(L), false));
 
 # same method for regular, different method for inverse, same for ideals
 
-InstallMethod(Idempotents, "for an acting semigroup", [IsActingSemigroup],
-function(s)
-  local lambda_o, creator, r, l, out, nr, tester, rho_o, scc, gens, rhofunc,
-  lookup, rep, rho, j, i, k;
+InstallMethod(Idempotents, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+R -> SEMIGROUPS_Idempotents(R, RhoFunc(Parent(R))(Representative(R)),
+LambdaOrbSCC(R), LambdaOrb(R), true));
 
-  if IsRegularSemigroup(s) then
+# same method for regular/inverse, same method for ideals
 
-    out := [];
-    nr := 0;
-    tester := IdempotentTester(s);
-    creator := IdempotentCreator(s);
-    rho_o := RhoOrb(s);
-    scc := OrbSCC(rho_o);
-    lambda_o := LambdaOrb(s);
-    Enumerate(lambda_o, infinity);
-    gens := lambda_o!.gens;
-    rhofunc := RhoFunc(s);
-    lookup := OrbSCCLookup(rho_o);
+InstallMethod(Idempotents, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(H)
+  local S, x;
 
-    for i in [2 .. Length(lambda_o)] do
-      rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
-      rho := rhofunc(rep);
-      j := lookup[Position(rho_o, rho)];
-
-      for k in scc[j] do
-        if tester(lambda_o[i], rho_o[k]) then
-          nr := nr + 1;
-          out[nr] := creator(lambda_o[i], rho_o[k]);
-        fi;
-      od;
-    od;
-
-    if not HasNrIdempotents(s) then
-      SetNrIdempotents(s, nr);
-    fi;
-    return out;
+  if not IsGroupHClass(H) then
+    return [];
   fi;
 
-  return Concatenation(List(GreensRClasses(s), Idempotents));
-end);
-
-# same method for regular, different method for inverse, same method for ideals
-
-InstallMethod(Idempotents,
-"for an acting semigroup and a positive integer",
-[IsActingSemigroup , IsInt],
-function(s, n)
-  local out, nr, tester, creator, rho_o, scc, lambda_o, gens, rhofunc, lookup,
-  rank, rep, rho, j, i, k;
-
-  if n < 0 then
-    Error("Semigroups: Idempotents: usage,\n",
-          "the second argument <n> must be a non-negative integer,");
-    return;
-  fi;
-
-  if HasIdempotents(s) or not IsRegularSemigroup(s) then
-    return Filtered(Idempotents(s), x -> ActionRank(s)(x) = n);
-  else
-
-    out := [];
-    nr := 0;
-    tester := IdempotentTester(s);
-    creator := IdempotentCreator(s);
-    rho_o := RhoOrb(s);
-    scc := OrbSCC(rho_o);
-    lambda_o := LambdaOrb(s);
-    Enumerate(lambda_o, infinity);
-    gens := lambda_o!.gens;
-    rhofunc := RhoFunc(s);
-    lookup := OrbSCCLookup(rho_o);
-    rank := RhoRank(s);
-
-    for i in [2 .. Length(lambda_o)] do
-      # TODO this could be better, just take the product with the next
-      # schreiergen every time
-      rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
-      rho := rhofunc(rep);
-      j := lookup[Position(rho_o, rho)];
-      if rank(rho_o[scc[j][1]]) = n then
-        for k in scc[j] do
-          if tester(lambda_o[i], rho_o[k]) then
-            nr := nr + 1;
-            out[nr] := creator(lambda_o[i], rho_o[k]);
-          fi;
-        od;
-      fi;
-    od;
-
-    return out;
-  fi;
+  S := Parent(H);
+  x := Representative(H);
+  return [IdempotentCreator(S)(LambdaFunc(S)(x), RhoFunc(S)(x))];
 end);
 
 # same method for regular, different method for inverse, same for ideals
 
 InstallMethod(Idempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  local out, lambda_o, lambda_scc, rho_o, rho_scc, i;
+D -> Concatenation(List(GreensRClasses(D), Idempotents)));
 
-  out := [];
-  lambda_o := LambdaOrb(d);
-  lambda_scc := LambdaOrbSCC(d);
-  rho_o := RhoOrb(d);
-  rho_scc := RhoOrbSCC(d);
 
-  for i in lambda_scc do
-    Append(out, SEMIGROUPS_Idempotents(d, lambda_o[i], rho_scc, rho_o, false));
-  od;
-  return out;
-end);
 
-# same method for regular/inverse, same method for ideals
+# JDM here!
 
-InstallMethod(Idempotents, "for an H-class of an acting semigroup",
-[IsGreensHClass and IsActingSemigroupGreensClass],
-function(h)
-  local s, f;
-
-  if not IsGroupHClass(h) then
-    return [];
-  fi;
-
-  s := Parent(h);
-  f := Representative(h);
-  return [IdempotentCreator(s)(LambdaFunc(s)(f), RhoFunc(s)(f))];
-end);
-
-# same method for regular, different method for inverse, same for ideals
-
-InstallMethod(Idempotents, "for an L-class of an acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass],
-l -> SEMIGROUPS_Idempotents(l, LambdaFunc(Parent(l))(Representative(l)),
-RhoOrbSCC(l), RhoOrb(l), false));
-
-# same method for regular, different method for inverse, same for ideals
-
-InstallMethod(Idempotents, "for an R-class of an acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-r -> SEMIGROUPS_Idempotents(r, RhoFunc(Parent(r))(Representative(r)),
-LambdaOrbSCC(r), LambdaOrb(r), true));
-
-# same method for regular/inverse, same method for ideals
-
-InstallMethod(IsGroupHClass, "for an H-class of an acting semigroup",
-[IsGreensHClass and IsActingSemigroupGreensClass],
-function(h)
-  local s, f;
-  s := Parent(h);
-  f := Representative(h);
-  return IdempotentTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
-end);
-
-# same method for regular/inverse, same method for ideals
-
-InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
-[IsGreensHClass and IsActingSemigroupGreensClass],
-function(h)
-
-  if not IsGroupHClass(h) then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the H-class is not a group,");
-    return;
-  fi;
-
-  return MappingByFunction(h, SchutzenbergerGroup(h),
-   x -> LambdaPerm(Parent(h))(Representative(h), x),
-   x -> StabilizerAction(Parent(h))(MultiplicativeNeutralElement(h), x));
-end);
-
-#
-
-InstallGlobalFunction(SEMIGROUPS_IsRegularClass,
+BindGlobal("SEMIGROUPS_IsRegularClass",
 function(x, value, scc, o, onright)
   local s, data, m, tester, i;
 
@@ -1299,11 +1315,6 @@ InstallMethod(IsRegularClass, "for an R-class of an acting semigroup",
 r -> SEMIGROUPS_IsRegularClass(r, RhoFunc(Parent(r))(Representative(r)),
 LambdaOrbSCC(r), LambdaOrb(r), true));
 
-# different method for regular/inverse/ideals
-
-InstallMethod(NrDClasses, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-s -> Length(OrbSCC(SemigroupData(s))) - 1);
 
 # different method for regular/inverse/ideals
 
@@ -1336,46 +1347,10 @@ function(s)
   return nr;
 end);
 
-# different method for regular/inverse, same for ideals
-
-# could do better not to create the D-classes. Maybe not, we must store the
-# schutz gp of the D-class somewhere and so it might as well be the D-class.
-
-InstallMethod(NrLClasses, "for an acting semigroup",
-[IsActingSemigroup], S -> Sum(List(GreensDClasses(S), NrLClasses)));
-
-# different method for regular/inverse, same for ideals
-
-InstallMethod(NrLClasses, "for a D-class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsGreensDClass],
-function(d)
-  return Length(LambdaCosets(d)) * Length(LambdaOrbSCC(d));
-end);
-
-# different method for regular/inverse, same for ideals
-
-InstallMethod(NrRClasses, "for an acting semigroup", [IsActingSemigroup],
-function(s)
-  local data;
-
-  data := Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  return Length(data!.orbit) - 1;
-end);
-
-# different method for regular/inverse, same for ideals
-
-InstallMethod(NrRClasses, "for a D-class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsGreensDClass],
-d -> Length(RhoCosets(d)) * Length(RhoOrbSCC(d)));
 
 #
 
-# FIXME use BindGlobal instead!
-
-DeclareGlobalFunction("SEMIGROUPS_IsRegularClass");
-DeclareGlobalFunction("SEMIGROUPS_Idempotents");
-DeclareGlobalFunction("SEMIGROUPS_NrIdempotents");
-InstallGlobalFunction(SEMIGROUPS_NrIdempotents,
+BindGlobal("SEMIGROUPS_NrIdempotents",
 function(x, value, scc, o, onright)
   local s, data, m, nr, tester, i;
 
