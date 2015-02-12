@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-
 #
 
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",

@@ -139,6 +139,7 @@ InstallMethod(NrHClasses, "for a Green's L-class",
 
 InstallMethod(NrHClasses, "for a Green's R-class",
 [IsGreensRClass], R -> NrLClasses(DClassOfRClass(R)));
+
 #same method for inverse/regular, same for ideals
 
 InstallMethod(StructureDescription, "for a Green's H-class",

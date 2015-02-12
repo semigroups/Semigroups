@@ -972,9 +972,12 @@ function(D)
 end);
 
 # different method for regular/inverse, same for ideals
+#
+InstallMethod(NrDClasses, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+S -> Length(OrbSCC(SemigroupData(S))) - 1);
 
-# could do better not to create the D-classes. Maybe not, we must store the
-# schutz gp of the D-class somewhere and so it might as well be the D-class.
+# different method for regular/inverse, same for ideals
 
 InstallMethod(NrLClasses, "for an acting semigroup",
 [IsActingSemigroup], S -> Sum(List(GreensDClasses(S), NrLClasses)));
@@ -1242,113 +1245,7 @@ InstallMethod(Idempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 D -> Concatenation(List(GreensRClasses(D), Idempotents)));
 
-
-
 # JDM here!
-
-BindGlobal("SEMIGROUPS_IsRegularClass",
-function(x, value, scc, o, onright)
-  local s, data, m, tester, i;
-
-  if HasNrIdempotents(x) then
-    return NrIdempotents(x) <> 0;
-  fi;
-
-  s := Parent(x);
-
-  if HasSemigroupDataIndex(x) then
-    data := SemigroupData(s);
-    m := LambdaOrbSCCIndex(x);
-    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]] > 1 then
-      return false;
-    fi;
-  fi;
-
-  # is x the group of units...
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) and
-    ActionRank(s)(Representative(x)) = ActionDegree(Representative(x)) then
-    return true;
-  fi;
-
-  tester := IdempotentTester(s);
-
-  if onright then
-    for i in scc do
-      if tester(o[i], value) then
-        return true;
-      fi;
-    od;
-  else
-    for i in scc do
-      if tester(value, o[i]) then
-        return true;
-      fi;
-    od;
-  fi;
-
-  return false;
-end);
-
-# not required for regular/inverse, same for ideals
-
-InstallMethod(IsRegularClass, "for an D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-d -> SEMIGROUPS_IsRegularClass(d, RhoFunc(Parent(d))(Representative(d)),
-LambdaOrbSCC(d), LambdaOrb(d), true));
-
-# same method for regular/inverse, same method for ideals
-
-InstallMethod(IsRegularClass, "for an H-class of an acting semigroup",
-[IsGreensHClass and IsActingSemigroupGreensClass], IsGroupHClass);
-
-# not required for regular/inverse, same for ideals
-
-InstallMethod(IsRegularClass, "for an L-class of an acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass],
-l -> SEMIGROUPS_IsRegularClass(l, LambdaFunc(Parent(l))(Representative(l)),
-RhoOrbSCC(l), RhoOrb(l), false));
-
-# not required for regular/inverse, same for ideals
-
-InstallMethod(IsRegularClass, "for an R-class of an acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-r -> SEMIGROUPS_IsRegularClass(r, RhoFunc(Parent(r))(Representative(r)),
-LambdaOrbSCC(r), LambdaOrb(r), true));
-
-
-# different method for regular/inverse/ideals
-
-InstallMethod(NrRegularDClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local data, datascc, rhofunc, tester, nr, r, x, o, scc, rho, i, j;
-
-  data := Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  datascc := OrbSCC(data);
-
-  rhofunc := RhoFunc(s);
-  tester := IdempotentTester(s);
-  nr := 0;
-
-  for i in [2 .. Length(datascc)] do
-    # data of the first R-class in the D-class corresponding to x
-    x := data[datascc[i][1]];
-    o := x[3];
-    scc := OrbSCC(o)[x[2]];
-    rho := rhofunc(x[4]);
-
-    for j in scc do
-      if tester(o[j], rho) then
-        nr := nr + 1;
-        break;
-      fi;
-    od;
-  od;
-  return nr;
-end);
-
-
-#
 
 BindGlobal("SEMIGROUPS_NrIdempotents",
 function(x, value, scc, o, onright)
@@ -1446,8 +1343,8 @@ RhoOrbSCC(l), RhoOrb(l), false));
 
 InstallMethod(NrIdempotents, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-r -> SEMIGROUPS_NrIdempotents(r, RhoFunc(Parent(r))(Representative(r)), LambdaOrbSCC(r),
-LambdaOrb(r), true));
+r -> SEMIGROUPS_NrIdempotents(r, RhoFunc(Parent(r))(Representative(r)),
+LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # different method for regular/inverse, same for ideals
 
@@ -1490,6 +1387,107 @@ function(s)
 
   return nr;
 end);
+
+BindGlobal("SEMIGROUPS_IsRegularClass",
+function(x, value, scc, o, onright)
+  local s, data, m, tester, i;
+
+  if HasNrIdempotents(x) then
+    return NrIdempotents(x) <> 0;
+  fi;
+
+  s := Parent(x);
+
+  if HasSemigroupDataIndex(x) then
+    data := SemigroupData(s);
+    m := LambdaOrbSCCIndex(x);
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]] > 1 then
+      return false;
+    fi;
+  fi;
+
+  # is x the group of units...
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and
+    ActionRank(s)(Representative(x)) = ActionDegree(Representative(x)) then
+    return true;
+  fi;
+
+  tester := IdempotentTester(s);
+
+  if onright then
+    for i in scc do
+      if tester(o[i], value) then
+        return true;
+      fi;
+    od;
+  else
+    for i in scc do
+      if tester(value, o[i]) then
+        return true;
+      fi;
+    od;
+  fi;
+
+  return false;
+end);
+
+# not required for regular/inverse, same for ideals
+
+InstallMethod(IsRegularClass, "for an D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+d -> SEMIGROUPS_IsRegularClass(d, RhoFunc(Parent(d))(Representative(d)),
+LambdaOrbSCC(d), LambdaOrb(d), true));
+
+# same method for regular/inverse, same method for ideals
+
+InstallMethod(IsRegularClass, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass], IsGroupHClass);
+
+# not required for regular/inverse, same for ideals
+
+InstallMethod(IsRegularClass, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+l -> SEMIGROUPS_IsRegularClass(l, LambdaFunc(Parent(l))(Representative(l)),
+RhoOrbSCC(l), RhoOrb(l), false));
+
+# not required for regular/inverse, same for ideals
+
+InstallMethod(IsRegularClass, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+r -> SEMIGROUPS_IsRegularClass(r, RhoFunc(Parent(r))(Representative(r)),
+LambdaOrbSCC(r), LambdaOrb(r), true));
+
+# different method for regular/inverse/ideals
+
+InstallMethod(NrRegularDClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local data, datascc, rhofunc, tester, nr, r, x, o, scc, rho, i, j;
+
+  data := Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  datascc := OrbSCC(data);
+
+  rhofunc := RhoFunc(s);
+  tester := IdempotentTester(s);
+  nr := 0;
+
+  for i in [2 .. Length(datascc)] do
+    # data of the first R-class in the D-class corresponding to x
+    x := data[datascc[i][1]];
+    o := x[3];
+    scc := OrbSCC(o)[x[2]];
+    rho := rhofunc(x[4]);
+
+    for j in scc do
+      if tester(o[j], rho) then
+        nr := nr + 1;
+        break;
+      fi;
+    od;
+  od;
+  return nr;
+end);
+
 
 # different method for regular/inverse/ideals
 
