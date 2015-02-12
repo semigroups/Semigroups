@@ -394,78 +394,146 @@ end);
 InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local n, gens, nrgens, nrpairs, graph, combs, NumberPair, PairNumber, pair, act, inn, which, range, seen_pairs, dfs, word, i, j;
+  local n, gens, nrgens, minrank, rank, minrankgen, nrpairs, combs, NumberPair, PairNumber, inn, labels, pair, act, range, recursion, seen_pairs, elts, p, t, im, y, i, j, a, x;
 
+  # Find n such that S <= T_n
   n := DegreeOfTransformationSemigroup(S);
 
-  if n = 0 then
-    return Elements(S)[1];
+  if n = 0 then # S is the trivial transformation semigroup
+    return S.1;
   fi;
+
+  # It can not be that n = 1, since T_1 has degree 0. So n >= 2.
+
+  if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
+    # Semigroup is known to have a zero
+    # Therefore { 0 } is the minimal ideal
+    return MultiplicativeZero(S);
+  fi;
+
+  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+    # Semigroup is simple so everything is in the minimal ideal
+    return S.1;
+  fi;
+
+  #if HasIsSynchronizingSemigroup(S) and IsSynchronizingSemigroup(S) then
+  #  # Semigroup has a constant mapping
+  #  Error("Not yet got a special case for when we know there to be a constant",
+  #  "mapping,");
+  #  return;
+  #fi;
 
   gens := GeneratorsOfSemigroup(S);
   nrgens := Length(gens);
-  nrpairs := Binomial(n, 2);
+  minrank := n;
 
-  # a hack till I implement a nicer way of doing this
+  # Find the ranks of the generators (is this repeating work?)
+  for i in [ 1 .. nrgens ] do
+    rank := RankOfTransformation(gens[i], n);
+    if rank = 1 then # if we have a generator of rank 1, we are done
+      #SetIsSynchronizingSemigroup(S, true);
+      return gens[i];
+    fi;
+    if rank < minrank then
+      minrank := rank;
+      minrankgen := gens[i];
+    fi;
+  od;
+
+  if minrank = n then # if we have a generator of rank n, we are done
+    SetIsGroupAsSemigroup(S, true);
+    return S.1;
+  fi;
+
+  nrpairs := Binomial(n, 2);
   combs := Combinations( [ 1 .. n ], 2 );
 
   NumberPair := function(pair)
-    local pos;
     if Length(pair) = 1 then
       return pair[1];
     fi;
-    pos := Position(combs, pair);
-    if pos = fail then
-      Error("Error: NumberPair: this pair is not valid...");
-    fi;
-    return n + pos;
+    return n + Position(combs, pair);
   end;
 
   PairNumber := function(k)
+    if k <= n then
+      return k;
+    fi;
     return combs[k - n];
   end;
 
-  inn := List( [ 1 .. n + nrpairs ], x -> [  ] );
-  which := List( [ 1 .. n + nrpairs ], x -> [  ] );
-
+  # Construct the graph
+  inn    := List( [ 1 .. n + nrpairs ], x -> [  ] );
+  labels := List( [ 1 .. n + nrpairs ], x -> [  ] );
   for i in [(n + 1) .. (n + nrpairs)] do
     pair := PairNumber(i);
     for j in [ 1 .. nrgens ] do
       act := OnSets(pair, gens[j]);
       range := NumberPair(act);
       Add(inn[range], i);
-      Add(which[range], j);
+      Add(labels[range], j);
     od;
   od;
 
-  # find a word describing a path from each (possible) pair to a constant
-  dfs := function(i, p)
-    local j, k, prod;
-    for k in [ 1 .. Length(inn[i]) ] do
-      j := inn[i][k];
-      if not seen_pairs[j] then
-        prod := (gens[ which[i][k] ] * p);
-        word := word * prod;
-        #Print("Path from pair ",PairNumber(j)," to constant is described by:");
-        #Print("\n", prod, "\n");
-        seen_pairs[j] := true;
-        dfs(j, prod);
+  # find a word describing a path from each collapsible pair to a singleton
+  recursion := function(a)
+    local b, k;
+
+    for k in [ 1 .. Length(inn[a]) ] do
+      b := inn[a][k];
+      if not seen_pairs[b] then
+        seen_pairs[b] := true;
+        if a <= n then
+          elts[b] := [ labels[a][k] ];
+        else
+          elts[b] := Concatenation( [ labels[a][k] ], elts[a] );
+        fi;
+        recursion(b);
       fi;
     od;
     return;
   end;
 
-  word := Transformation([1]);
-  seen_pairs := BlistList( [ 1 .. n + nrpairs ], [ ]);
-  for i in [ 1 .. n ] do
-    # start DFS from here
-    dfs(i, word);
+  seen_pairs := BlistList( [ 1 .. n + nrpairs ], [  ]);
+  elts := EmptyPlist(n + nrpairs);
+  for a in [ 1 .. n ] do
+    recursion(a);
   od;
 
-  # if by now word has not been added too, then the semigroup is a group of
-  # permutations (as transformations) and the identity is indeed an element of
-  # the minimal ideal
-  return word;
+  p := Number(seen_pairs, x -> x);
+
+  if p = 0 then
+    #Print("<S> is a group of permutations\n");
+    return S.1;
+  fi;
+
+  if p = nrpairs then
+    #Print("<S> is a synchronizing semigroup\n");
+  fi;
+
+  t := minrankgen;
+
+  while true do
+    im := ImageSetOfTransformation(t);
+
+    if Length(im) = 1 then
+      break;
+    fi;
+
+    for x in Combinations(im, 2) do
+      y := NumberPair(x);
+      if seen_pairs[y] then
+        t := t * EvaluateWord(gens, elts[y]);
+        continue;
+      fi;
+    od;
+
+    break;
+
+  od;
+
+  return t;
+
 end);
 
 #
