@@ -1,12 +1,55 @@
 #############################################################################
 ##
 #W  semipperm.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+InstallMethod(Enumerator, "for a symmetric inverse monoid",
+[IsSymmetricInverseMonoid],
+Maximum(RankFilter(IsActingSemigroup), RankFilter(IsSemigroupIdeal and
+HasGeneratorsOfSemigroupIdeal)) + 1,
+#to beat the method for an acting semigroup with generators
+function(S)
+  local n, Membership, PrintObj;
+
+  n := DegreeOfPartialPermSemigroup(S);
+
+  return EnumeratorByFunctions(S, rec(
+
+    ElementNumber := function(enum, pos)
+      if pos > Size(S) then
+        return fail;
+      fi;
+      return PartialPermNumber(pos, n);
+    end,
+
+    NumberElement := function(enum, elt)
+      if DegreeOfPartialPerm(elt) > n or CoDegreeOfPartialPerm(elt) > n then
+        return fail;
+      fi;
+      return NumberPartialPerm(elt, n);
+    end,
+
+    Length := function(enum);
+      return Size(S);
+    end,
+
+    Membership := function(elt, enum)
+      return elt in S;
+    end,
+
+    PrintObj := function(enum)
+      Print("<enumerator of symmetric inverse monoid on ", n," pts>");
+    end));
+end);
+
+# TODO improve this
+
+DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");
 
 InstallGlobalFunction(SEMIGROUPS_SubsetNumber,
 function(m, k, n, set, min, nr, coeff)
@@ -35,51 +78,91 @@ function(m, k, n, set, min, nr, coeff)
    # coeff = Binomial( n - i - 1, k - 2 )
 end);
 
-# the first occurrence in the ordered list of <m>-subsets of [ 1 .. <n> ] of
-# set with first element equal to <k>.
-
-InstallGlobalFunction(SEMIGROUPS_NumberSubset,
-function(n, k, m)
-  return Sum( List( [ 1 .. k - 1 ], i -> Binomial( n - i, m - 1 ) ) );
-end);
 
 # the <m>th subset of <[1..n]> with <k> elements
+# TODO improve this
 
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
 function(m, k, n)
-  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial( n - 1, k - 1 ));
+  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial( n - 1,
+  k - 1 ));
 end);
 
-InstallMethod(SubsetNumber, "for pos int, pos int, pos int, pos int, pos int",
-[IsPosInt, IsPosInt, IsPosInt, IsPosInt],
-function(m, k, n, coeff)
-  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, coeff);
-end);
-
-# the position of <set> in the set of subsets of [ 1 .. <n> ]
+# the position of <set> in the set of subsets of [ 1 .. <n> ] with shortlex
+# ordering
 
 InstallMethod(NumberSubset, "for a set and a pos int",
 [IsList, IsPosInt],
 function(set, n)
-  local m, nr, pos, k, prev, i;
+  local m, helper, nr, summand, i;
 
-  nr := Sum( List( [ 0 .. Length(set) - 1 ], i -> Binomial( n, i ) ) );
-
-  k := n;
-  prev := 0;
   m := Length(set);
 
-  for i in [ 1 .. Length(set) ] do
-    pos := Position( [ prev + 1 .. n ], set[i]);
-    nr := nr + SEMIGROUPS_NumberSubset( k, pos, m );
-    k := k - set[i];
-    prev := set[i];
+  if m = 0 then
+    return 1;
+  elif m = 1 then
+    return set[1] + 1;
+  fi;
+
+  nr := 1;
+  summand := n;
+
+  # position in power set before the first set with the same size as set
+  for i in [1 .. m - 1] do
+    nr := nr + summand;
+    summand := summand * (n - i) / (i + 1);
+  od;
+
+  return nr + NumberSubsetOfEqualSize(set, n);
+end);
+
+#
+
+InstallMethod(NumberSubsetOfEqualSize, "for a set and a pos int",
+[IsList, IsPosInt],
+function(set, n)
+  local m, helper, nr, summand, i;
+
+  m := Length(set);
+
+  if m = 0 then
+    return 1;
+  elif m = 1 then
+    return set[1];
+  fi;
+
+  # the position before the first occurrence in the ordered list of <m>-subsets
+  # of [ 1 .. <n> ] of set with first element equal to <k>.
+
+  helper := function(n, m, k)
+    local summand, sum;
+    if k = 1 then
+      return 0;
+    elif m = 1 then
+      return k - 1;
+    fi;
+    summand := Binomial(n - 1, m - 1);
+    sum := summand;
+    for i in [1 .. k - 2] do
+      summand := summand * (n - m - i + 1) / (n - i);
+      sum := sum + summand;
+    od;
+    return sum;
+  end;
+
+  nr := helper(n, m, set[1]);
+  m := m - 1;
+
+  for i in [ 2 .. Length(set) ] do
+    nr := nr + helper(n - set[i - 1], m, set[i] - set[i - 1]);
     m := m - 1;
   od;
 
-  return nr;
+  return nr + 1;
 end);
+
+#
 
 InstallMethod(PartialPermNumber, "for pos int and pos int",
 [IsPosInt, IsPosInt],
@@ -110,22 +193,32 @@ function(m, n)
   return PartialPermNC(SubsetNumber(j, i, n), ArrangementNumber(m, i, n));
 end);
 
+#
+
 InstallMethod(NumberPartialPerm, "for a partial perm and a pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
-  local dom, i;
+  local dom, k, nr, i;
 
   dom := DomainOfPartialPerm(x);
-  i := Length(dom);
+  k := Length(dom);
 
-  if i = 0 then
+  if k = 0 then
     return 1;
   fi;
 
-  return Sum(List([1 .. i], Binomial(n, i)))
-   + ((NumberSubset(dom, n) - 1) * NrArrangements([1 .. 10], i))
-   + NumberArrangement(ImageSetOfPartialPerm(x), n);
+  # count all partial perms with smaller image
+  nr := 1;
+  for i in [1 .. k - 1] do
+    nr := nr + Binomial(n, i) * NrArrangements([1 .. n], i);
+  od;
+
+  return nr + (NumberSubsetOfEqualSize(dom, n) - 1)
+   * NrArrangements([1 .. n], k)
+   + NumberArrangement(ImageListOfPartialPerm(x), n);
 end);
+
+#
 
 InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
@@ -303,7 +396,8 @@ function(S)
   repeat
     o := Orb(gens, [next], OnSets, opts);
     Enumerate(o);
-    if PositionOfFound(o) <> false and reps[o[PositionOfFound(o)][1]] = true then
+    if PositionOfFound(o) <> false
+      and reps[o[PositionOfFound(o)][1]] = true then
       if not IsEmpty(o[PositionOfFound(o)]) then
         reps[o[PositionOfFound(o)][1]] := fail;
       fi;
@@ -337,7 +431,8 @@ function(S)
   pts := [1 .. DegreeOfPartialPermSemigroup(S)];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
-  next := 1;  nr := 0;
+  next := 1;
+  nr := 0;
   opts := rec(lookingfor := function(o, x)
     if not IsEmpty(x) then
       return IsPosInt(comp[x[1]]);
@@ -393,7 +488,9 @@ function(S)
   pts := [1 .. DegreeOfPartialPermSemigroup(S)];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
-  next := 1;  nr := 0; cycles := [];
+  next := 1;
+  nr := 0;
+  cycles := [];
   opts := rec(lookingfor := function(o, x)
     if not IsEmpty(x) then
       return IsPosInt(comp[x[1]]);

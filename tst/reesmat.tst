@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  reesmat.tst
-#Y  Copyright (C) 2011-13                               James D. Mitchell
+#Y  Copyright (C) 2011-15                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -138,7 +138,7 @@ gap> Length(SmallGeneratingSet(V))<Length(Generators(V));
 true
 gap> Apply(U, x-> Semigroup(SmallGeneratingSet(x)));
 
-#T# ReesMatTest11MinimalIdeal
+#T# ReesMatTest11 MinimalIdeal
 gap> MinimalIdeal(V);
 <simple Rees 0-matrix semigroup ideal with 1 generator>
 gap> List(U, MinimalIdeal);
@@ -149,7 +149,7 @@ gap> List(U, MinimalIdeal);
 <simple Rees 0-matrix semigroup ideal with 1 generator>, 
 <simple Rees 0-matrix semigroup ideal with 1 generator> ]
 
-#T# ReesMatTest12IsomorphismPermGroup
+#T# ReesMatTest12 IsomorphismPermGroup
 gap> R:=ReesZeroMatrixSemigroup(QuaternionGroup(IsPermGroup, 8), [[()]]);;
 gap> T:=Semigroup(Filtered(Generators(R), x-> x![1]<>0));;
 gap> iso:=IsomorphismPermGroup(T);              
@@ -176,7 +176,7 @@ gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y->
 > (x*y)^iso=x^iso*y^iso));
 true
 
-#T# ReesMatTest13GroupOfUnits
+#T# ReesMatTest13 GroupOfUnits
 gap> R:=Semigroup(Generators(R));
 <subsemigroup of 1x1 Rees 0-matrix semigroup with 3 generators>
 gap> GroupOfUnits(R);
@@ -186,7 +186,7 @@ fail
 gap> GroupOfUnits(U[5]);
 fail
 
-#T# ReesMatTest14IdempotentGeneratedSubsemigroup
+#T# ReesMatTest14 IdempotentGeneratedSubsemigroup
 gap> eV:=IdempotentGeneratedSubsemigroup(V);
 <subsemigroup of 26x5 Rees 0-matrix semigroup with 9 generators>
 gap> Size(eV);
@@ -199,7 +199,7 @@ gap> List(last, Size);
 gap> last2[1]=last2[2];
 true
 
-#T# ReesMatTest15IrredundantGeneratingSubset
+#T# ReesMatTest15 IrredundantGeneratingSubset
 gap> IrredundantGeneratingSubset(V);
 [ (1,(1,6),3), (2,(1,6),5), (6,(1,9)(5,8),1), (7,(1,6)(5,8),3), (11,(1,9),5), 
   (13,(1,6)(5,8),3), (15,(1,9)(5,8),2), (22,(1,6),1), (23,(5,8),2), 
@@ -555,7 +555,24 @@ gap> Factorization(U[4], x);
 gap> EvaluateWord(Generators(U[4]), last);
 (26,(6,9),5)
 
-#T# ReesMatTest31 JDM: the following lines are commented out until we have a deterministic
+#T# ReesMatTest31: Issue 108: IsRegularSemigroup for a RZMS returned false negative
+gap> t1 := Transformation( [ 4, 3, 1, 3 ] );;
+gap> t2 := Transformation( [ 3, 3, 2, 2 ] );;
+gap> T := Semigroup([ t1, t2 ]);;
+gap> IsRegularSemigroup(T);
+true
+gap> IsGroup(T);
+false
+gap> mat := [ [ t2, t1 ], [ t1, t2 ] ];;
+
+#TODO this takes 3 seconds, ugh! No good method for Generators 
+gap> R := ReesZeroMatrixSemigroup(T, mat);;
+gap> (CompareVersionNumbers(GAPInfo.Version,"4.7.7") and IsRegularSemigroup(R))
+> or not CompareVersionNumbers(GAPInfo.Version,"4.7.7"); 
+true
+
+#T# ReesMatTest31
+# JDM: the following lines are commented out until we have a deterministic
 # method for AutomorphismGroup of a ReesMatrixSemigroup...
 #
 # AutomorphismGroup of a ReesMatrixSemigroup
@@ -652,5 +669,4 @@ gap> EvaluateWord(Generators(U[4]), last);
 #[ true, [ (), (), (), (), (), (), (), () ] ]
 
 #E#
-#
 gap> STOP_TEST( "Semigroups package: reesmat.tst");

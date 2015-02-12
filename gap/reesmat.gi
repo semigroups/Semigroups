@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  reesmat.gi
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#Y  Copyright (C) 2014-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -108,7 +108,9 @@ else
   function(R)
     local mat, n, m, adj;
 
-    mat := Matrix(R); n := Length(mat); m := Length(mat[1]);
+    mat := Matrix(R);
+    n := Length(mat);
+    m := Length(mat[1]);
 
     adj := function(x,y)
       if x <= m and y > m then

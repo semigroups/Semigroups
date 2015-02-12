@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  lambda-rho.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -77,9 +77,12 @@ function(s)
   record := ShallowCopy(LambdaOrbOpts(s));
   record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
 
-  record.schreier := true;        record.orbitgraph := true;
-  record.storenumbers := true;    record.log := true;
-  record.parent := s;             record.treehashsize := s!.opts.hashlen.M;
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.parent := s;
+  record.treehashsize := s!.opts.hashlen.M;
 
   o := Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
 
@@ -111,14 +114,18 @@ function(o, m)
     o!.hasmults := BlistList([1 .. Length(scc)], []);
   fi;
 
-  o!.hasmults[m] := true;    scc := OrbSCC(o)[m];
-  gens := o!.gens;        one := FakeOne(gens);
+  o!.hasmults[m] := true;
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
   mults := o!.mults;
 
-  #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
-  #JDM and shouldn't there be a second case of inverse orbits here??
+  # it would be better to use the SchreierTree here not the ReverseSchreierTree
+  # and shouldn't there be a second case of inverse orbits here??
   genpos := ReverseSchreierTreeOfSCC(o, m);
-  inv := function(lambda, x) return LambdaInverse(o!.parent)(lambda, x); end;
+  inv := function(lambda, x)
+           return LambdaInverse(o!.parent)(lambda, x);
+         end;
 
   trace := function(i)
     local x;
@@ -155,13 +162,17 @@ function(o, m, i)
     o!.mults := EmptyPlist(Length(o));
   fi;
 
-  scc := OrbSCC(o)[m];    gens := o!.gens;    one := FakeOne(gens);
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
   mults := o!.mults;
 
   if not IsActingSemigroupWithInverseOp(o!.parent) then
-  #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
+  # it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos := ReverseSchreierTreeOfSCC(o, m);
-    inv := function(lambda, x) return LambdaInverse(o!.parent)(lambda, x); end;
+    inv := function(lambda, x)
+             return LambdaInverse(o!.parent)(lambda, x);
+           end;
 
     trace := function(i)
       local x;
@@ -252,10 +263,14 @@ function(o, m)
     o!.schutzstab := EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  s := o!.parent;                   gens := o!.gens;
-  scc := OrbSCC(o)[m];              lookup := o!.scc_lookup;
-  orbitgraph := OrbitGraph(o);      genstoapply := [1 .. Length(gens)];
-  lambdaperm := LambdaPerm(s);      rep := LambdaOrbRep(o, m);
+  s := o!.parent;
+  gens := o!.gens;
+  scc := OrbSCC(o)[m];
+  lookup := o!.scc_lookup;
+  orbitgraph := OrbitGraph(o);
+  genstoapply := [1 .. Length(gens)];
+  lambdaperm := LambdaPerm(s);
+  rep := LambdaOrbRep(o, m);
   rank := LambdaRank(s)(o[scc[1]]);
 
   if rank < 100 then
@@ -264,7 +279,8 @@ function(o, m)
     bound := infinity;
   fi;
 
-  g := Group(()); stop := false;
+  g := Group(());
+  stop := false;
 
   for k in scc do
     forward := LambdaOrbMult(o, m, k)[1];
@@ -336,9 +352,12 @@ function(s)
   local record, o;
 
   record := ShallowCopy(RhoOrbOpts(s));
-  record.schreier := true;        record.orbitgraph := true;
-  record.storenumbers := true;    record.log := true;
-  record.parent := s;             record.treehashsize := s!.opts.hashlen.M;
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.parent := s;
+  record.treehashsize := s!.opts.hashlen.M;
   record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
 
   o := Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
@@ -364,7 +383,9 @@ function(o, m, i)
     o!.mults := EmptyPlist(Length(o));
   fi;
 
-  scc := OrbSCC(o)[m];    gens := o!.gens;    one := FakeOne(gens);
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
 
   mults := o!.mults;
 
@@ -406,8 +427,10 @@ function(o, m)
     o!.hasmults := BlistList([1 .. Length(scc)], []);
   fi;
 
-  o!.hasmults[m] := true;  scc := OrbSCC(o)[m];
-  gens := o!.gens;         one := FakeOne(gens);
+  o!.hasmults[m] := true;
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
   mults := o!.mults;
 
   genpos := SchreierTreeOfSCC(o, m);
@@ -436,7 +459,8 @@ end);
 
 InstallGlobalFunction(RhoOrbSchutzGp,
 function(o, m, bound)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, rho_rank, i, j;
+  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults,
+  rho_rank, i, j;
 
   if IsBound(o!.schutz) then
     if IsBound(o!.schutz[m]) then
@@ -479,7 +503,8 @@ function(o, m, bound)
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
         g := ClosureGroup(g,
-         lambdaperm(rep, mults[orbitgraph[i][j]][2] * gens[j] * mults[i][1] * rep));
+         lambdaperm(rep,
+          mults[orbitgraph[i][j]][2] * gens[j] * mults[i][1] * rep));
         if Size(g) >= bound then
           break;
         fi;

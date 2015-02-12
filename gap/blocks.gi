@@ -1,12 +1,14 @@
 ############################################################################
 ##
 #W  blocks.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+# local declarations
 
 # blocks are stored internally as a list consisting of:
 # [ nr of blocks, internal rep of blocks, transverse blocks ]
@@ -19,6 +21,103 @@ BindGlobal("BlocksFamily", NewFamily("BlocksFamily",
 
 BindGlobal("BlocksType", NewType(BlocksFamily,
  IsBlocks and IsComponentObjectRep and IsAttributeStoringRep));
+
+#
+
+BindGlobal("FuseLeftBlocks",
+function(blocks, f)
+  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
+
+  n := DegreeOfBlocks(blocks);
+  fblocks := f!.blocks;
+  nrblocks := NrBlocks(blocks);
+  nrfblocks := NrBlocks(f);
+
+  fuse := [1 .. nrblocks + nrfblocks];
+  fuseit := function(i)
+    while fuse[i] < i do
+      i := fuse[i];
+    od;
+    return i;
+  end;
+
+  for i in [1 .. n] do
+    x := fuseit(blocks[i]);
+    y := fuseit(fblocks[n + i] + nrblocks);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+  return fuseit;
+end);
+
+# fuse <blocks> with <f>. <sign> should be true to keep track of signed and
+# unsigned blocks and false not to keep track.
+
+BindGlobal("FuseRightBlocks",
+function(blocks, f, sign)
+  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
+
+  n := DegreeOfBlocks(blocks);
+  fblocks := f!.blocks;
+  nrblocks := NrBlocks(blocks);
+  nrfblocks := NrBlocks(f);
+
+  fuse := [1 .. nrblocks + nrfblocks];
+  fuseit := function(i)
+    while fuse[i] < i do
+      i := fuse[i];
+    od;
+    return i;
+  end;
+
+  if sign then
+    sign := EmptyPlist(nrfblocks + nrblocks);
+
+    for i in [1 .. nrblocks] do
+      sign[i] := blocks[n + i];
+    od;
+    for i in [nrblocks + 1 .. nrfblocks + nrblocks] do
+      sign[i] := 0;
+    od;
+
+    for i in [1 .. n] do
+      x := fuseit(blocks[i]);
+      y := fuseit(fblocks[i] + nrblocks);
+      if x <> y then
+        if x < y then
+          fuse[y] := x;
+          if sign[y] = 1 then
+            sign[x] := 1;
+          fi;
+        else
+          fuse[x] := y;
+          if sign[x] = 1 then
+            sign[y] := 1;
+          fi;
+        fi;
+      fi;
+    od;
+    return [fuseit, sign];
+  else
+    for i in [1 .. n] do
+      x := fuseit(blocks[i]);
+      y := fuseit(fblocks[i] + nrblocks);
+      if x <> y then
+        if x < y then
+          fuse[y] := x;
+        else
+          fuse[x] := y;
+        fi;
+      fi;
+    od;
+    return fuseit;
+  fi;
+end);
 
 # not a synonym since NrTransverseBlocks applies to a bipartition also
 InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
@@ -33,58 +132,59 @@ end);
 
 #
 
-InstallMethod(JoinOfBlocks, "for blocks",
-[IsBlocks, IsBlocks],
-function(blocks1, blocks2)
-  local n, nrblocks1, nrblocks2, fuse, fuseit, x, y, lookup, nr, out, j, i;
-
-  n := DegreeOfBlocks(blocks1);
-
-  if NrBlocks(blocks1) = 1 then
-    return blocks1;
-  elif NrBlocks(blocks2) = 1 then
-    return blocks2;
-  fi;
-
-  nrblocks1 := NrBlocks(blocks1);
-  blocks1 := blocks1!.blocks;
-  blocks2 := blocks2!.blocks;
-
-  fuse := [1 .. nrblocks1 + blocks2[1]];
-
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  for i in [2 .. n + 1] do
-    x := fuseit(blocks1[i]);
-    y := fuseit(blocks2[i] + nrblocks1);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
-      fi;
-    fi;
-  od;
-
-  lookup := []; out := [0];
-
-  for i in [2 .. n + 1] do
-    x := fuseit(blocks1[i]);
-    if not IsBound(lookup[x]) then
-      out[1] := out[1] + 1;
-      out[n + 1 + out[1]] := 1;
-      lookup[x] := out[1];
-    fi;
-    out[i] := lookup[x];
-  od;
-
-  return BlocksByIntRepNC(out);
-end);
+#InstallMethod(JoinOfBlocks, "for blocks",
+#[IsBlocks, IsBlocks],
+#function(blocks1, blocks2)
+#  local n, nrblocks1, nrblocks2, fuse, fuseit, x, y, lookup, nr, out, j, i;
+#
+#  n := DegreeOfBlocks(blocks1);
+#
+#  if NrBlocks(blocks1) = 1 then
+#    return blocks1;
+#  elif NrBlocks(blocks2) = 1 then
+#    return blocks2;
+#  fi;
+#
+#  nrblocks1 := NrBlocks(blocks1);
+#  blocks1 := blocks1!.blocks;
+#  blocks2 := blocks2!.blocks;
+#
+#  fuse := [1 .. nrblocks1 + blocks2[1]];
+#
+#  fuseit := function(i)
+#    while fuse[i] < i do
+#      i := fuse[i];
+#    od;
+#    return i;
+#  end;
+#
+#  for i in [2 .. n + 1] do
+#    x := fuseit(blocks1[i]);
+#    y := fuseit(blocks2[i] + nrblocks1);
+#    if x <> y then
+#      if x < y then
+#        fuse[y] := x;
+#      else
+#        fuse[x] := y;
+#      fi;
+#    fi;
+#  od;
+#
+#  lookup := [];
+#  out := [0];
+#
+#  for i in [2 .. n + 1] do
+#    x := fuseit(blocks1[i]);
+#    if not IsBound(lookup[x]) then
+#      out[1] := out[1] + 1;
+#      out[n + 1 + out[1]] := 1;
+#      lookup[x] := out[1];
+#    fi;
+#    out[i] := lookup[x];
+#  od;
+#
+#  return BlocksByIntRepNC(out);
+#end);
 
 #
 
@@ -118,7 +218,7 @@ end);
 
 #
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionForBlocks,
+BindGlobal("SEMIGROUPS_HashFunctionForBlocks",
 function(blocks, data)
   return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
 end);
@@ -369,7 +469,8 @@ end);
 
 InstallGlobalFunction(OnLeftBlocks,
 function(blocks, f)
-  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
+  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
+  next, i;
 
   if blocks!.blocks = [0] then
     return LeftBlocks(f);
@@ -493,7 +594,8 @@ function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 
   if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
-    Error("the degrees of the blocks <lambda> and <rho> must be equal,");
+    Error("Semigroups: BlocksIdempotentTester: usage,\n",
+          "the degrees of the blocks <lambda> and <rho> must be equal,");
     return;
   fi;
 
@@ -641,7 +743,9 @@ function(blocks, f)
   fblocks := f!.blocks;
 
   fuseit := FuseRightBlocks(blocks, f, false);
-  signed := []; tab := []; next := 0;
+  signed := [];
+  tab := [];
+  next := 0;
 
   # JDM could stop here after reaching the maximum signed class of <blocks>
   for i in [n + 1 .. 2 * n] do
@@ -695,7 +799,9 @@ function(blocks, f)
   fuseit := fusesign[1];
   sign := fusesign[2];
 
-  out := []; junk := 0; next := 0;
+  out := [];
+  junk := 0;
+  next := 0;
 
   # find the left blocks of the output
   tab1 := [];
@@ -760,7 +866,8 @@ function(blocks, f)
   fblocks := f!.blocks;
 
   fuseit := FuseLeftBlocks(blocks, f);
-  out := []; tab := [];
+  out := [];
+  tab := [];
 
   for i in [1 .. nrblocks] do
     if blocks[n + i] = 1 then
@@ -786,100 +893,5 @@ function(blocks, f)
   return out;
 end);
 
-# fuse <blocks> with <f>. <sign> should be true to keep track of signed and
-# unsigned blocks and false not to keep track.
 
-InstallGlobalFunction(FuseRightBlocks,
-function(blocks, f, sign)
-  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
-
-  n := DegreeOfBlocks(blocks);
-  fblocks := f!.blocks;
-  nrblocks := NrBlocks(blocks);
-  nrfblocks := NrBlocks(f);
-
-  fuse := [1 .. nrblocks + nrfblocks];
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  if sign then
-    sign := EmptyPlist(nrfblocks + nrblocks);
-
-    for i in [1 .. nrblocks] do
-      sign[i] := blocks[n + i];
-    od;
-    for i in [nrblocks + 1 .. nrfblocks + nrblocks] do
-      sign[i] := 0;
-    od;
-
-    for i in [1 .. n] do
-      x := fuseit(blocks[i]);
-      y := fuseit(fblocks[i] + nrblocks);
-      if x <> y then
-        if x < y then
-          fuse[y] := x;
-          if sign[y] = 1 then
-            sign[x] := 1;
-          fi;
-        else
-          fuse[x] := y;
-          if sign[x] = 1 then
-            sign[y] := 1;
-          fi;
-        fi;
-      fi;
-    od;
-    return [fuseit, sign];
-  else
-    for i in [1 .. n] do
-      x := fuseit(blocks[i]);
-      y := fuseit(fblocks[i] + nrblocks);
-      if x <> y then
-        if x < y then
-          fuse[y] := x;
-        else
-          fuse[x] := y;
-        fi;
-      fi;
-    od;
-    return fuseit;
-  fi;
-end);
-
-#
-
-InstallGlobalFunction(FuseLeftBlocks,
-function(blocks, f)
-  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
-
-  n := DegreeOfBlocks(blocks);
-  fblocks := f!.blocks;
-  nrblocks := NrBlocks(blocks);
-  nrfblocks := NrBlocks(f);
-
-  fuse := [1 .. nrblocks + nrfblocks];
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  for i in [1 .. n] do
-    x := fuseit(blocks[i]);
-    y := fuseit(fblocks[n + i] + nrblocks);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
-      fi;
-    fi;
-  od;
-  return fuseit;
-end);
 

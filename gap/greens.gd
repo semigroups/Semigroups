@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  greens.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -28,6 +28,8 @@
 ##
 #############################################################################
 #############################################################################
+
+DeclareAttribute("RegularDClasses", IsSemigroup);
 
 #new
 
@@ -97,12 +99,11 @@ DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
 DeclareAttribute("StructureDescription", IsGreensHClass);
 
 DeclareProperty("IsRegularClass", IsGreensClass);
+DeclareProperty("IsInverseOpClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+
 DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
-DeclareCategory("IsInverseOpClass", IsGreensClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensDClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensRClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensLClass);
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);

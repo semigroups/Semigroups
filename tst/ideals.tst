@@ -1,9 +1,9 @@
 #############################################################################
 ##
 #W  ideals.tst
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                       Julius Jonusas 
-##                                                       Wilf Wilson
+##                                                       Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

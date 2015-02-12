@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,13 +11,29 @@
 
 #
 
-BindGlobal("SemigroupsDocXMLFiles",
-  ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
-   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
-   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml",
-   "factor.xml", "freeinverse.xml", "display.xml", "normalizer.xml",
-   "maximal.xml", "reesmat-cong.xml", "ideals.xml", "isomorph.xml",
-   "../PackageInfo.g"]);
+BindGlobal("SemigroupsDocXMLFiles", [ "../PackageInfo.g",
+                                      "attributes-inverse.xml",
+                                      "attributes.xml",
+                                      "bipartition.xml",
+                                      "blocks.xml",
+                                      "display.xml",
+                                      "examples.xml",
+                                      "factor.xml",
+                                      "freeband.xml",
+                                      "freeinverse.xml",
+                                      "greens.xml",
+                                      "ideals.xml",
+                                      "isomorph.xml",
+                                      "maximal.xml",
+                                      "normalizer.xml",
+                                      "orbits.xml",
+                                      "properties.xml",
+                                      "reesmat-cong.xml",
+                                      "semibipart.xml",
+                                      "semigroups.xml",
+                                      "semipperm.xml",
+                                      "semitrans.xml",
+                                      "utils.xml"                 ]);
 
 # arg is the number of threads, defaults to 2...
 
@@ -33,7 +49,8 @@ function(arg)
   fi;
 
   Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
-  dir_str := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+  dir_str :=
+   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
   tst := DirectoryContents(dir_str);
   dir := Directory(dir_str);
 
@@ -94,36 +111,37 @@ function()
   record := SemigroupsTestRec;
 
   # handle info levels etc
-  record.InfoLevelInfoWarning := InfoLevel(InfoWarning);;
-  record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);;
+  record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
+  record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);
 
-  record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");;
+  record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
   record.TransformationDisplayLimit
-   := UserPreference("TransformationDisplayLimit");;
-  record.NotationForPartialPerms := UserPreference("NotationForPartialPerms");;
-  record.NotationForTransformations := 
-   UserPreference("NotationForTransformations");;
+   := UserPreference("TransformationDisplayLimit");
+  record.NotationForPartialPerms := UserPreference("NotationForPartialPerms");
+  record.NotationForTransformations :=
+   UserPreference("NotationForTransformations");
 
   record.FreeInverseSemigroupElementDisplay := UserPreference("semigroups",
     "FreeInverseSemigroupElementDisplay");
 
-  SetInfoLevel(InfoWarning, 0);;
+  SetInfoLevel(InfoWarning, 0);
   SetInfoLevel(InfoSemigroups, 0);
 
-  SetUserPreference("PartialPermDisplayLimit", 100);;
-  SetUserPreference("TransformationDisplayLimit", 100);;
-  SetUserPreference("NotationForPartialPerms", "component");;
-  SetUserPreference("NotationForTransformations", "input");;
-  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
+  SetUserPreference("PartialPermDisplayLimit", 100);
+  SetUserPreference("TransformationDisplayLimit", 100);
+  SetUserPreference("NotationForPartialPerms", "component");
+  SetUserPreference("NotationForTransformations", "input");
+  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+   "minimal");
 
   # timing
   record.timeofday := IO_gettimeofday();
 
   record.STOP_TEST := STOP_TEST;
 
-  MakeReadWriteGlobal("STOP_TEST");
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", SemigroupsStopTest);
+  MakeReadWriteGlobal("STOP_TEST");
 
   return;
 end);
@@ -138,7 +156,7 @@ function(file)
 
   record := SemigroupsTestRec;
 
-  SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);;
+  SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
 
   SetUserPreference("PartialPermDisplayLimit",
@@ -163,8 +181,9 @@ function(file)
   Append(str, "ms\n");
 
   if not IsBound( GAPInfo.TestData.START_TIME )  then
-      Error( "`STOP_TEST' command without `START_TEST' command for `",
-       file, "'" );
+      Error( "Semigroups: SemigroupsStopTest:\n",
+      "`STOP_TEST' command without `START_TEST' command for `", file, "'" );
+      return;
   fi;
   Print( GAPInfo.TestData.START_NAME, "\n" );
 
@@ -173,9 +192,9 @@ function(file)
   Unbind( GAPInfo.TestData.START_TIME );
   Unbind( GAPInfo.TestData.START_NAME );
   Print(str);
-  MakeReadWriteGlobal("STOP_TEST");
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", record.STOP_TEST);
+  MakeReadWriteGlobal("STOP_TEST");
   return;
 end);
 
@@ -192,7 +211,7 @@ InstallGlobalFunction(SemigroupsMakeDoc,
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
    InstallationPath, "/doc"), "main.xml", SemigroupsDocXMLFiles, "semigroups",
-   "MathJax", "../../..");;
+   "MathJax", "../../..");
   return;
 end);
 
@@ -203,7 +222,8 @@ function()
   local dir_str, tst, dir, omit, ex, filesplit, test, stringfile, str, filename;
 
   Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
-  dir_str := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+  dir_str :=
+   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
   tst := DirectoryContents(dir_str);
   dir := Directory(dir_str);
 
@@ -246,7 +266,7 @@ end);
 InstallGlobalFunction(SemigroupsTestInstall,
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
-   "testinstall.tst"));;
+   "testinstall.tst"));
   return;
 end);
 

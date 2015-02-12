@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  display.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -16,11 +16,5 @@ DeclareOperation("DotDClasses", [IsReesZeroMatrixSemigroup, IsRecord]);
 
 DeclareGlobalFunction("TikzBipartition");
 DeclareGlobalFunction("TikzBlocks");
-
 DeclareGlobalFunction("TikzStringForBlocks");
 DeclareGlobalFunction("TikzStringForBipartition");
-DeclareGlobalFunction("TikzBipartitionRight");
-DeclareGlobalFunction("TikzBipartitionLeft");
-DeclareGlobalFunction("TikzBipartitionLeftRight");
-DeclareGlobalFunction("TikzRightBlocks");
-DeclareGlobalFunction("TikzLeftBlocks");

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  semigroups.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -54,7 +54,8 @@ function(s)
   fi;
 
   Append(str, "\>bipartition\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s) < 2 ^ 64 then
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
+    and Size(s) < 2 ^ 64 then
     Append(str, "\>of size\> ");
     Append(str, String(Size(s)));
     Append(str, ",\<\< ");
@@ -139,7 +140,8 @@ function(s)
   fi;
 
   Append(str, "\>partial perm\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s) < 2 ^ 64 then
+  if HasIsTrivial(s) and not IsTrivial(s)
+    and HasSize(s) and Size(s) < 2 ^ 64 then
     Append(str, "\>of size\> ");
     Append(str, String(Size(s)));
     Append(str, ",\<\< ");
@@ -205,9 +207,11 @@ function(gens, opts)
   # try to find a smaller generating set
   if opts.small and Length(gens) > 1 then
     gens := SSortedList(gens); #remove duplicates
-    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
     n := ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x, n) > ActionRank(y, n); end);;
+    Sort(gens, function(x, y)
+                 return ActionRank(x, n) > ActionRank(y, n);
+               end);
 
     #remove the identity
     if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n) = n then
@@ -295,9 +299,11 @@ function(gens, record)
 
   if record.small and Length(gens) > 1 then #small gen. set
     gens := SSortedList(gens); #remove duplicates
-    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
     n := ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x, n) > ActionRank(y, n); end);;
+    Sort(gens, function(x, y)
+                 return ActionRank(x, n) > ActionRank(y, n);
+               end);
 
     if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n) = n then
       #remove id
@@ -398,9 +404,11 @@ function(gens, record)
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
-    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
     n := ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x,n) > ActionRank(y,n); end);;
+    Sort(gens, function(x, y)
+                 return ActionRank(x,n) > ActionRank(y,n);
+               end);
 
     closure_opts := rec(small := false, hashlen := record.hashlen);
     s := InverseMonoid(gens[1], closure_opts);
@@ -456,9 +464,11 @@ function(gens, record)
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
-    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
     n := ActionDegree(gens);
-    Sort(gens, function(x, y) return ActionRank(x,n) > ActionRank(y,n); end);;
+    Sort(gens, function(x, y)
+                 return ActionRank(x,n) > ActionRank(y,n);
+               end);
 
     closure_opts := rec(small := false, hashlen := record.hashlen);
     s := InverseSemigroup(gens[1], closure_opts);
@@ -527,18 +537,21 @@ function(s, coll, record)
   local n;
 
   if not IsGeneratorsOfActingSemigroup(coll) then
-    Error("usage: the second argument <coll> should be a collection",
-    " satisfying IsGeneratorsOfActingSemigroup,");
+    Error("Semigroups: ClosureInverseSemigroup: usage,\n",
+          "the second argument <coll> should be a collection ",
+          "satisfying\nIsGeneratorsOfActingSemigroup,");
     return;
   fi;
 
   if not ElementsFamily(FamilyObj(s)) = FamilyObj(Representative(coll)) then
-    Error("the semigroup and collection of elements are not of the same type,");
+    Error("Semigroups: ClosureInverseSemigroup: usage,\n",
+          "the semigroup and collection of elements are not of the same type,");
     return;
   fi;
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    Error("<coll> is a collection of generators of an inverse semigroup,");
+    Error("Semigroups: ClosureInverseSemigroup: usage,\n",
+          "<coll> is a collection of generators of an inverse semigroup,");
     return;
   fi;
 
@@ -574,15 +587,22 @@ function(s, coll, record)
   o := StructuralCopy(LambdaOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
-  #should be a case split here for semigroups and monoids JDM
+  #TODO should be a case split here for semigroups and monoids?
   t := InverseSemigroupByGenerators(
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
 
   #remove everything related to strongly connected components
-  Unbind(o!.scc);     Unbind(o!.trees);    Unbind(o!.scc_lookup);
-  Unbind(o!.mults);   Unbind(o!.schutz);   Unbind(o!.reverse);
-  Unbind(o!.rev);     Unbind(o!.truth);    Unbind(o!.schutzstab);
-  Unbind(o!.exhaust); Unbind(o!.factors);
+  Unbind(o!.scc);
+  Unbind(o!.trees);
+  Unbind(o!.scc_lookup);
+  Unbind(o!.mults);
+  Unbind(o!.schutz);
+  Unbind(o!.reverse);
+  Unbind(o!.rev);
+  Unbind(o!.truth);
+  Unbind(o!.schutzstab);
+  Unbind(o!.exhaust);
+  Unbind(o!.factors);
 
   o!.parent := t;
   o!.scc_reps := [FakeOne(Generators(t))];
@@ -630,13 +650,15 @@ function(s, coll, record)
   fi;
 
   if not IsGeneratorsOfActingSemigroup(coll) then
-    Error("usage: the second argument <coll> should be a collection",
-    " satisfying IsGeneratorsOfActingSemigroup,");
+    Error("Semigroups: ClosureSemigroup: usage,\n",
+    "the second argument <coll> should be a collection ",
+    "satisfying\nIsGeneratorsOfActingSemigroup,");
     return;
   fi;
 
   if not ElementsFamily(FamilyObj(s)) = FamilyObj(Representative(coll)) then
-    Error("the semigroup and collection of elements are not of the same type,");
+    Error("Semigroups: ClosureSemigroup: usage,\n",
+          "the semigroup and collection of elements are not of the same type,");
     return;
   fi;
 
@@ -648,7 +670,8 @@ function(s, coll, record)
 
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and
     ActionDegree(s) <> ActionDegree(Representative(coll)) then
-    Error("usage: the degree of the semigroup and collection must be equal,");
+    Error("Semigroups: ClosureSemigroup: usage,\n",
+          "usage: the degree of the semigroup and collection must be equal,");
     return;
   fi;
 
@@ -705,7 +728,14 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup, rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new, htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old, n, j;
+  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
+  rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr,
+  graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1,
+  orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos,
+  new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens,
+  nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new,
+  htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old,
+  n, j;
 
   if coll = [] then
     Info(InfoSemigroups, 2, "every element in the collection belong to the ",
@@ -744,10 +774,17 @@ function(s, coll, opts)
   # unbind everything related to strongly connected components, since
   # even if the orbit length doesn't change the strongly connected components
   # might
-  Unbind(o!.scc);     Unbind(o!.trees);    Unbind(o!.scc_lookup);
-  Unbind(o!.mults);   Unbind(o!.schutz);   Unbind(o!.reverse);
-  Unbind(o!.rev);     Unbind(o!.truth);    Unbind(o!.schutzstab);
-  Unbind(o!.exhaust); Unbind(o!.factors);
+  Unbind(o!.scc);
+  Unbind(o!.trees);
+  Unbind(o!.scc_lookup);
+  Unbind(o!.mults);
+  Unbind(o!.schutz);
+  Unbind(o!.reverse);
+  Unbind(o!.rev);
+  Unbind(o!.truth);
+  Unbind(o!.schutzstab);
+  Unbind(o!.exhaust);
+  Unbind(o!.factors);
 
   o!.parent := t;
   o!.scc_reps := [FakeOne(GeneratorsOfSemigroup(t))];
@@ -758,7 +795,10 @@ function(s, coll, opts)
     return t;
   fi;
 
-  oht := o!.ht; scc := OrbSCC(o); old_scc := OrbSCC(old_o); lookup := o!.scc_lookup;
+  oht := o!.ht;
+  scc := OrbSCC(o);
+  old_scc := OrbSCC(old_o);
+  lookup := o!.scc_lookup;
 
   old_lookup := old_o!.scc_lookup;
 
@@ -769,9 +809,15 @@ function(s, coll, opts)
   # unbind everything related to strongly connected components, since
   # even if the orbit length doesn't change the strongly connected components
   # might
-  Unbind(rho_o!.scc);   Unbind(rho_o!.trees);  Unbind(rho_o!.scc_lookup);
-  Unbind(rho_o!.mults); Unbind(rho_o!.schutz); Unbind(rho_o!.reverse);
-  Unbind(rho_o!.rev);   Unbind(rho_o!.truth);  Unbind(rho_o!.schutzstab);
+  Unbind(rho_o!.scc);
+  Unbind(rho_o!.trees);
+  Unbind(rho_o!.scc_lookup);
+  Unbind(rho_o!.mults);
+  Unbind(rho_o!.schutz);
+  Unbind(rho_o!.reverse);
+  Unbind(rho_o!.rev);
+  Unbind(rho_o!.truth);
+  Unbind(rho_o!.schutzstab);
 
   rho_o!.parent := t;
   rho_o!.scc_reps := [FakeOne(GeneratorsOfSemigroup(t))];
@@ -950,7 +996,8 @@ function(s, coll, opts)
           # the Schutzenberger group is neither trivial nor symmetric group
            old := false;
             for n in [1 .. repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = () then
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = ()
+                then
                 old := true;
                 old_to_new[i] := repslookup[m][ind][n];
                 break;

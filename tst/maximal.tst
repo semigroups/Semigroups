@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  maximal.tst
-#Y  Copyright (C) 2011-14                                  Wilfred Wilson
+#Y  Copyright (C) 2012-15                                  Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -91,9 +91,13 @@ gap> IsReesMatrixSubsemigroup(S);
 true
 gap> IsReesMatrixSemigroup(S);
 false
-gap> MaximalSubsemigroups(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalSubsemigroups' on 1 arguments
+gap> IsRegularSemigroup(S);
+true
+gap> max := MaximalSubsemigroups(S);;
+gap> IsDuplicateFreeList(max);
+true
+gap> Length(max);
+5
 gap> T := FullTransformationMonoid(3);
 <full transformation semigroup on 3 pts>
 gap> mat := [ [ Transformation([ 3, 2, 3 ]) ] ];;
@@ -108,8 +112,12 @@ false
 gap> IsSimpleSemigroup(T);
 false
 gap> MaximalSubsemigroups(R);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalSubsemigroups' on 1 arguments
+[ <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 5 generators> ]
 gap> S := Semigroup( [
 > Transformation( [ 1, 2, 1 ] ),
 > Transformation( [ 1, 2, 2 ] ) ]);
@@ -127,9 +135,8 @@ false
 gap> IsSimpleSemigroup(S);
 true
 gap> MaximalSubsemigroups(R);
-Error, Semigroups: MaximalSubsemigroups,
-not yet implemented for a Rees matrix semigroup over a simple
-non-group semigroup,
+[ <subsemigroup of 1x1 Rees matrix semigroup with 1 generator>, 
+  <subsemigroup of 1x1 Rees matrix semigroup with 1 generator> ]
 
 #T# MaximalSubsemigroups: for a Rees matrix semigroup and a maximal subgroup
 gap> G := Group([ (1,2,3) ]);
@@ -191,8 +198,7 @@ true
 gap> R := ReesZeroMatrixSemigroup(Group(()), [ [ 0 ] ]); # a non-regular RZMS
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> MaximalSubsemigroups(R);
-Error, Semigroups: MaximalSubsemigroups,
-not yet implemented for a non-regular Rees 0-matrix semigroup,
+[ <subsemigroup of 1x1 Rees 0-matrix semigroup with 1 generator> ]
 gap> R1 := ReesZeroMatrixSemigroup(Group(()), [ [ () ] ]); # 2-elt regular RZMS
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> MaximalSubsemigroups(R1);
@@ -247,9 +253,11 @@ true
 gap> SetIsRegularSemigroup(R3, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R3);
 true
-gap> MaximalSubsemigroups(R3);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalSubsemigroups' on 1 arguments
+gap> max := MaximalSubsemigroups(R3);;
+gap> Length(max);
+10
+gap> IsDuplicateFreeList(max);
+true
 gap> G := Group([ (1,2), (1,2,3) ]);;
 gap> mat := [ [ (1,2), 0 ], [ 0, (2,3) ] ];;
 gap> R := ReesZeroMatrixSemigroup(G, mat); # un-connected 2x2 inverse RZMS / S3
@@ -408,7 +416,7 @@ gap> IsRegularSemigroup(R4);
 false
 gap> MaximalSubsemigroups(R4, Group(()));
 Error, Semigroups: MaximalSubsemigroups,
-not yet implemented for a non-regular Rees 0-matrix semigroup,
+the first argument <R> must be a regular Rees 0-matrix semigroup,
 
 #T# MaximalSubsemigroups: for a transformation semigroup
 gap> S := Semigroup( Transformation( [  ] ) ); # trivial semigroup
@@ -616,6 +624,17 @@ gap> Size(max);
 40
 gap> S = max[1];
 false
+
+#T# Issue 107 (problems with Green's classes of ideals, and inverse semigroups)
+gap> gens := [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 4 ], [ 3, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 5, 2, 3, 1 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 3, 4, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 5, 4, 3, 2, 1 ] ) ];;
+gap> S := InverseSemigroup(gens);;
+gap>  S := Semigroup(S);;
+gap> Length(MaximalSubsemigroups(S));
+9
 
 #E#
 gap> STOP_TEST("Semigroups package: maximal.tst");

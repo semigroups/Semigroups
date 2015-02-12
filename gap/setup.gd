@@ -1,7 +1,7 @@
 #############################################################################
 ###
 ##W  setup.gd
-##Y  Copyright (C) 2013-14                                James D. Mitchell
+##Y  Copyright (C) 2013-15                                James D. Mitchell
 ###
 ###  Licensing information can be found in the README file of this package.
 ###
@@ -10,7 +10,8 @@
 
 DeclareCategory("IsActingSemigroup", IsSemigroup);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
-DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
+DeclareProperty("IsGeneratorsOfActingSemigroup",
+IsAssociativeElementCollection);
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
@@ -49,7 +50,8 @@ DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction(
+"SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
 
 #EOF

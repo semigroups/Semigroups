@@ -1,10 +1,10 @@
 #############################################################################
 ##
 #W  attributes-inverse.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell,
-##                                                       Wilf Wilson,
-##                                                       Rhiannon Dougall,
-##                                                       Robert Hancock
+#Y  Copyright (C) 2013-15                               James D. Mitchell,
+##                                                      Wilf Wilson,
+##                                                      Rhiannon Dougall,
+##                                                      Robert Hancock
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -69,7 +69,8 @@ function(S)
     subsets := Filtered(o, x -> IsSubset(dom, x));
     for n in [1 .. Length(conjclass[i])] do
       j := j + 1;
-      conjreps[n + conjlens[i]] := AsPartialPerm(Representative(conjclass[i][n]), dom);
+      conjreps[n + conjlens[i]] :=
+        AsPartialPerm(Representative(conjclass[i][n]), dom);
       for y in subsets do
         x := RestrictedPartialPerm(conjreps[n + conjlens[i]], y);
         if y = ImageSetOfPartialPerm(x) then
@@ -78,7 +79,8 @@ function(S)
           u := LambdaOrbMult(o, m, l);
           x := AsPermutation(u[1] * x * u[2]);
           m := (m - 1) ^ p;
-          k := PositionProperty(conjclass[m], class -> x in class) + conjlens[m];
+          k := PositionProperty(conjclass[m], class -> x in class)
+               + conjlens[m];
           A[k][j] := A[k][j] + 1;
         fi;
       od;
@@ -119,8 +121,10 @@ InstallMethod(PrimitiveIdempotents, "for an acting semigroup with inverse op",
 function(s)
   local o, scc, rank, min, l, min2, m;
 
-  o := LambdaOrb(s);      scc := OrbSCC(o);
-  rank := LambdaRank(s);  min := ActionDegree(s);
+  o := LambdaOrb(s);
+  scc := OrbSCC(o);
+  rank := LambdaRank(s);
+  min := ActionDegree(s);
 
   if MultiplicativeZero(s) = fail then
     for m in [2 .. Length(scc)] do
@@ -134,7 +138,8 @@ function(s)
     for m in [2 .. Length(scc)] do
       l := rank(o[scc[m][1]]);
       if l < min then
-        min2 := min; min := l;
+        min2 := min;
+        min := l;
       fi;
     od;
     return Idempotents(s, min2);
@@ -150,7 +155,8 @@ function(S, x)
   local y, elts, i, k, singleline, sup, j;
 
   if not x in S then
-    Error("usage: the second argument must be an element of first,");
+    Error("Semigroups: IsJoinIrreducible: usage,\n",
+          "the second argument <x> must be an element of the first,");
     return;
   fi;
 
@@ -212,7 +218,8 @@ InstallMethod(IsMajorantlyClosed,
 [IsActingSemigroupWithInverseOp, IsActingSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
-    Error("usage: the second argument must be a subsemigroup of the first,");
+    Error("Semigroups: IsMajorantlyClosed: usage,\n",
+          "the second argument must be a subsemigroup of the first,");
     return;
   else
     return IsMajorantlyClosedNC(S, Elements(T));
@@ -226,7 +233,9 @@ InstallMethod(IsMajorantlyClosed,
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
-    Error("The second argument should be a subset of the first");
+    Error("Semigroups: IsMajorantlyClosed: usage,\n",
+          "the second argument should be a subset of the first,");
+    return;
   else
     return IsMajorantlyClosedNC(S, T);
   fi;
@@ -266,7 +275,7 @@ function(S)
   local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p;
 
   D := GreensDClasses(S);
-  elts := Set(Idempotents(S));;
+  elts := Set(Idempotents(S));
   out := EmptyPlist(Length(D));
   seen_zero := false;
 
@@ -279,7 +288,8 @@ function(S)
     fi;
 
     i := Position(elts, rep);
-    k := First([i - 1,i - 2 .. 1], j -> NaturalLeqInverseSemigroup(elts[j], rep));
+    k := First([i - 1,i - 2 .. 1],
+          j -> NaturalLeqInverseSemigroup(elts[j], rep));
 
     if k = fail then # d is the minimal non-trivial D-class
       Add(out, d);
@@ -336,7 +346,8 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(S)
-  return Filtered(GreensDClasses(S), x -> IsJoinIrreducible(S, Representative(x)));
+  return Filtered(GreensDClasses(S),
+    x -> IsJoinIrreducible(S, Representative(x)));
 end);
 
 # same method for ideals
@@ -346,10 +357,11 @@ InstallMethod(MajorantClosure,
 [IsActingSemigroupWithInverseOp, IsActingSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
-    Error("usage: the second argument must be a subset of the first,");
+    Error("Semigroups: MajorantClosure: usage,\n",
+          "the second argument must be a subset of the first,");
     return;
   else
-    return MajorantClosureNC(S, Elements(T));;
+    return MajorantClosureNC(S, Elements(T));
   fi;
 end);
 
@@ -360,7 +372,8 @@ InstallMethod(MajorantClosure,
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
-    Error("usage: the second argument must be a subset of the first,");
+    Error("Semigroups: MajorantClosure: usage,\n",
+          "the second argument must be a subset of the first,");
     return;
   else
     return MajorantClosureNC(S,T);
@@ -416,8 +429,9 @@ function(S, f)
   local out, elts, i, j, k, NaturalLeq;
 
   if not f in S then
-    Error("usage: the second argument is not an element of the first,");
-    return fail;
+    Error("Semigroups: Minorant: usage,\n",
+          "the second argument is not an element of the first,");
+    return;
   fi;
 
   if HasNaturalPartialOrder(S) then
@@ -454,6 +468,7 @@ function(S, f)
 end);
 
 # same method for ideals
+# TODO: rename this RightCosets
 
 InstallMethod(RightCosetsOfInverseSemigroup,
 "for acting semigroups with inverse op",
@@ -463,14 +478,17 @@ function(S, T)
 
 
   if not IsSubsemigroup(S, T) then
-    Error("The second argument should be a subsemigroup of the first");
-    return fail;
+    Error("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
+          "the second argument should be a subsemigroup of the first,");
+    return;
   fi;
 
   elts := Elements(T);
 
   if not IsMajorantlyClosedNC(S, elts) then
-    Error("The second argument should be majorantly closed.");
+    Error("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
+          "the second argument must be majorantly closed,");
+    return;
   fi;
 
   idem := Representative(MinimalIdeal(T));
@@ -488,7 +506,9 @@ function(S, T)
       fi;
     od;
 
-    if dupe then continue; fi;
+    if dupe then
+      continue;
+    fi;
 
     Add(usedreps, s);
 
@@ -537,7 +557,9 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, sup, trivialse, psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, h, nrcosets, j, reps, lookup, gen, offset, rep, box, subbox, T, d, i, k, m;
+  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, sup, trivialse,
+  psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, h, nrcosets, j, reps,
+  lookup, gen, offset, rep, box, subbox, T, d, i, k, m;
 
   oldgens := Generators(S);
   newgens := List(oldgens, x -> []);
@@ -648,10 +670,7 @@ function(S)
 
 end);
 
-#
-
-#JDM c method, don't document until generalised
-#JDM review this...
+#TODO review and generalise this...
 
 InstallGlobalFunction(SupremumIdempotentsNC,
 function(coll, type)
@@ -662,7 +681,9 @@ function(coll, type)
     if IsList(coll) and IsEmpty(coll) then
       return PartialPerm([]);
     elif not IsPartialPermCollection(coll) then
-      Error("the argument should be a collection of partial perms,");
+      Error("Semigroups: SupremumIdempotentsNC: usage,\n",
+            "the argument must be a collection of partial perms,");
+      return;
     fi;
     dom := DomainOfPartialPermCollection(coll);
     return PartialPerm(dom, dom);
@@ -673,7 +694,9 @@ function(coll, type)
       return Bipartition(Concatenation([1 .. DegreeOfBipartition(type)],
         - [1 .. DegreeOfBipartition(type)]));
     elif not IsBipartitionCollection(coll) then
-      Error("the argument should be a collection of block bijections,");
+      Error("Semigroups: SupremumIdempotentsNC: usage,\n",
+            "the argument must be a collection of block bijections,");
+      return;
     fi;
 
     reps := List(coll,ExtRepOfBipartition);
@@ -696,10 +719,14 @@ function(coll, type)
     return Bipartition(out);
 
   elif IsBipartition(type) and IsPartialPermBipartition(type) then
-    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm),
-     PartialPerm([])));
+    #FIXME shouldn't there be a check here like above?
+    return AsBipartition(SupremumIdempotentsNC(
+      List(coll, AsPartialPerm), PartialPerm([])));
   else
-    Error("this function does not work for this type of element");
+    Error("Semigroups: SupremumIdempotentsNC: usage,\n",
+          "the argument must be a collection of partial perms, block ",
+          "bijections,\n", "or partial perm bipartitions,");
+    return;
   fi;
 end);
 

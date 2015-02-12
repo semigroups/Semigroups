@@ -1,12 +1,15 @@
 ############################################################################
 ##
 #W  acting.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+# local declarations . . .
+
 
 # acting semigroups...
 
@@ -25,26 +28,27 @@ function(s)
   gens := GeneratorsOfSemigroup(s);
 
   data := rec(
-           gens := gens,
-           genstoapply := [1 .. Length(gens)],
-           graph := [EmptyPlist(Length(gens))],
-           ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
-           init := false,
-           lambdarhoht := [],
-           lenreps := [0],
-           orbit := [[,,,FakeOne(gens)]],
-           orblookup1 := [],
-           orblookup2 := [],
-           parent := s,
-           pos := 0,
-           reps := [],
-           repslens := [],
-           repslookup := [],
-           rholookup := [1],
-           schreiergen := [fail],
-           schreiermult := [fail],
-           schreierpos := [fail],
-           stopper := false );
+               gens := gens,
+               genstoapply := [1 .. Length(gens)],
+               graph := [EmptyPlist(Length(gens))],
+               ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
+               init := false,
+               lambdarhoht := [],
+               lenreps := [0],
+               orbit := [[,,,FakeOne(gens)]],
+               orblookup1 := [],
+               orblookup2 := [],
+               parent := s,
+               pos := 0,
+               reps := [],
+               repslens := [],
+               repslookup := [],
+               rholookup := [1],
+               schreiergen := [fail],
+               schreiermult := [fail],
+               schreierpos := [fail],
+               stopper := false
+             );
 
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
@@ -58,7 +62,9 @@ InstallMethod(\in,
 "for an associative element and acting semigroup",
 [IsAssociativeElement, IsActingSemigroup],
 function(f, s)
-  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
+  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup,
+  lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens,
+  found, n, i;
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
     or (IsActingSemigroupWithFixedDegreeMultiplication(s)
@@ -69,8 +75,8 @@ function(f, s)
 
   if not (IsMonoid(s) and IsOne(f)) then
     if Length(Generators(s)) > 0
-      and ActionRank(s)(f) > MaximumList(List(Generators(s), f -> ActionRank(s)(f)))
-     then
+      and ActionRank(s)(f) >
+        MaximumList(List(Generators(s), f -> ActionRank(s)(f))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
        "semigroup.");
       return false;
@@ -169,7 +175,8 @@ function(f, s)
     return true;
   fi;
 
-  reps := data!.reps;       repslens := data!.repslens;
+  reps := data!.reps;
+  repslens := data!.repslens;
 
   max := Factorial(LambdaRank(s)(lambda)) / Size(LambdaOrbSchutzGp(lambdao, m));
 
@@ -311,7 +318,13 @@ InstallMethod(Enumerate,
 "for an semigroup data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho, rho_o, rho_orb, rho_nr, rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, pt, ind, schutz, data_val, old, j, n;
+  local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht,
+  repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos,
+  schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact,
+  lambdaperm, o, oht, scc, lookup, rho, rho_o, rho_orb, rho_nr, rho_ht,
+  rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth,
+  rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, pt,
+  ind, schutz, data_val, old, j, n;
 
  if lookfunc <> ReturnFalse then
     looking := true;
@@ -333,25 +346,26 @@ function(data, limit, lookfunc)
   nr := Length(orb);
   i := data!.pos;       # points in orb in position at most i have descendants
   graph := data!.graph; # orbit graph of orbit of R-classes under left mult
-  reps := data!.reps;   # reps grouped by equal lambda-scc-index and rho-value-index
+  reps := data!.reps;   # reps grouped by equal lambda-scc-index and
+                        # rho-value-index
 
   repslens := data!.repslens;       # Length(reps[m][i])=repslens[m][i]
   lenreps := data!.lenreps;         # lenreps[m]=Length(reps[m])
 
-  lambdarhoht := data!.lambdarhoht; # HTValue(lambdarhoht, [m,l])=position in reps[m]
-                                  # of R-reps with lambda-scc-index=m and
-                                  # rho-value-index=l
+  lambdarhoht := data!.lambdarhoht; # HTValue(lambdarhoht, [m,l])=position
+                                    # in reps[m] of R-reps with
+                                    # lambda-scc-index=m and rho-value-index=l
 
   repslookup := data!.repslookup; # Position(orb, reps[m][i][j])
-                                # = repslookup[m][i][j]
-                                # = HTValue(ht, reps[m][i][j])
+                                  # = repslookup[m][i][j]
+                                  # = HTValue(ht, reps[m][i][j])
 
   orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m] containing
-                                # orb[i][4] (the R-rep)
+                                  # orb[i][4] (the R-rep)
 
   orblookup2 := data!.orblookup2; # orblookup2[i] position in
-                                # reps[m][orblookup1[i]]
-                                # containing orb[i][4] (the R-rep)
+                                  # reps[m][orblookup1[i]]
+                                  # containing orb[i][4] (the R-rep)
 
   rholookup := data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
 
@@ -424,7 +438,8 @@ function(data, limit, lookfunc)
       rho_depth := rho_depth + 1;
       rho_depthmarks[rho_depth + 1] := rho_nr + 1;
     fi;
-    rho_logind[rholookup[i]] := rho_logpos; suc := false;
+    rho_logind[rholookup[i]] := rho_logpos;
+    suc := false;
     #                                               #
 
     for j in genstoapply do #JDM
@@ -543,7 +558,8 @@ function(data, limit, lookfunc)
           # the Schutzenberger group is neither trivial nor symmetric group
             old := false;
             for n in [1 .. repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = () then
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))
+                = () then
                 old := true;
                 graph[i][j] := repslookup[m][ind][n];
                 rho_orbitgraph[rholookup[i]][j] := l;
@@ -688,7 +704,8 @@ function(data, x, n)
     return repslookup[1];
   fi;
 
-  reps := data!.reps[m][ind]; repslens := data!.repslens[m][ind];
+  reps := data!.reps[m][ind];
+  repslens := data!.repslens[m][ind];
 
   lambdaperm := LambdaPerm(s);
   for n in [1 .. repslens] do
@@ -706,17 +723,25 @@ InstallMethod(PositionOfFound,"for semigroup data",
 [IsSemigroupData],
 function( data )
   if not(data!.looking) then
-    Error("not looking for anything,");
-    return fail;
+    Error("Semigroups: PositionOfFound: usage,\n",
+          "not looking for anything,");
+    return;
   fi;
   return data!.found;
 end);
 
 # same method for ideals
 
-InstallMethod(SizeOfSemigroupData, "for semigroup data", [IsSemigroupData],
+BindGlobal("SizeOfSemigroupData",
 function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
+
+  if not IsSemigroupData(data) then
+    Error("Semigroups: SizeOfSemigroupData: usage,\n",
+          "the arg <data> must be semigroup data,");
+    return;
+  fi;
+
 
   if not data!.init then
     return 0;

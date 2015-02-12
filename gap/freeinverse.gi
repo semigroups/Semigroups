@@ -1,7 +1,7 @@
 ################################################################################
 ##
 #W  freeinverse.gi
-#Y  Copyright (C) 2013-14                                  Julius Jonusas
+#Y  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
@@ -26,7 +26,8 @@
 ##  representation x1 is refered by 1, x1^-1 by 2, x2 by 3 and so on.
 ##
 
-InstallTrueMethod(IsGeneratorsOfInverseSemigroup, IsFreeInverseSemigroupElementCollection);
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
+IsFreeInverseSemigroupElementCollection);
 
 ################################################################################
 ##
@@ -54,7 +55,9 @@ BindGlobal( "NextIterator_FreeInverseSemigroup", function( iter )
     output := GeneratorsOfInverseSemigroup(semigroup)[word[1]] ^ word[2];
     i := 3;
     while i < Length(word) do
-      output := output * GeneratorsOfInverseSemigroup(semigroup)[word[i]] ^ word[i + 1];
+      output := output
+                * GeneratorsOfInverseSemigroup(semigroup)[word[i]]
+                 ^ word[i + 1];
       i := i + 2;
     od;
 
@@ -104,7 +107,7 @@ BindGlobal( "ShallowCopy_FreeInverseSemigroup", iter -> rec(
                  iter_list := ShallowCopy( iter!.iter_list ) ) );
 
 InstallMethod( Iterator,"for a free inverse semigroup",
-  [ IsFreeInverseSemigroup],  S -> IteratorByFunctions( rec(
+  [ IsFreeInverseSemigroupCategory ],  S -> IteratorByFunctions( rec(
 
   IsDoneIterator := ReturnFalse,
   NextIterator   := NextIterator_FreeInverseSemigroup,
@@ -113,7 +116,8 @@ InstallMethod( Iterator,"for a free inverse semigroup",
   semigroup      := S,
   seq            := [1],
   words          := [S.1],
-  iter_list      := [Iterator(FreeGroup(Length(GeneratorsOfInverseSemigroup(S))))])));
+  iter_list      :=
+   [Iterator(FreeGroup(Length(GeneratorsOfInverseSemigroup(S))))])));
 
 ############################################################################
 ##
@@ -143,7 +147,10 @@ function(arg)
                           and ForAll( arg[1], IsString ) then
     names := arg[1];
   else
-    Error("usage: FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name])");
+    Error("Semigroups: FreeInverseSemigroup: usage,\n",
+          "FreeInverseSemigroup(<name1>,<name2>..) or ",
+          "FreeInverseSemigroup(<rank> [, name]),");
+    return;
   fi;
 
   F := NewFamily( "FreeInverseSemigroupElementsFamily",
@@ -153,8 +160,9 @@ function(arg)
   type := NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
   if IsEmpty( names ) then
-    Error("usage: the number of generators of a free inverse semigroup must",
-      " be non-zero,");
+    Error("Semigroups: FreeInverseSemigroup: usage,\n",
+          "the number of generators of a free inverse semigroup must ",
+          "be non-zero,");
     return;
   elif IsFinite( names ) then
     gens := EmptyPlist( Length(names) );
@@ -166,11 +174,16 @@ function(arg)
     od;
     names := Concatenation(List(names, x -> [x, Concatenation(x, "^-1")]));
     StoreInfoFreeMagma( F, names, IsFreeInverseSemigroupElement );
-    S := InverseSemigroup(gens);
+    S := Objectify( NewType( FamilyObj( gens ),
+	                     IsFreeInverseSemigroupCategory and IsInverseSemigroup
+		             and IsAttributeStoringRep),
+		    rec() );
+    SetGeneratorsOfInverseSemigroup( S, gens);
     SetIsFreeInverseSemigroup(S, true);
   else
-    Error("usage: the number of generators of a free inverse semigroup must",
-      " be finite,");
+    Error("Semigroups: FreeInverseSemigroup: usage,\n",
+          "the number of generators of a free inverse semigroup must ",
+          "be finite,");
     return;
   fi;
 
@@ -197,7 +210,8 @@ InstallMethod(ViewObj, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
 
-  if UserPreference("semigroups","FreeInverseSemigroupElementDisplay") = "minimal" then
+  if UserPreference("semigroups","FreeInverseSemigroupElementDisplay") =
+    "minimal" then
     Print(MinimalWord(x));
   else
     Print(CanonicalForm(x));
@@ -208,10 +222,11 @@ end);
 
 InstallMethod(ViewObj,
 "for a free inverse semigroup containing the whole family",
-[IsFreeInverseSemigroup],
+[IsFreeInverseSemigroupCategory],
 function( S )
   if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
-    Print( "<free inverse semigroup with ", Length( GeneratorsOfInverseSemigroup( S ) ),
+    Print( "<free inverse semigroup with ",
+           Length( GeneratorsOfInverseSemigroup( S ) ),
            " generators>" );
   else
     Print( "<free inverse semigroup on the generators ",
@@ -229,7 +244,8 @@ end );
 InstallMethod(MinimalWord, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
-  local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words, pos, part, temp_word, out, labels, names;
+  local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words, pos,
+  part, temp_word, out, labels, names;
 
   InvertGenerator := function(n)
     if n mod 2 = 0 then
@@ -371,12 +387,15 @@ function(tree)
   if Length(maxleftreduced) = 1 and
      Length(maxleftreduced[1]) = 2 and
      Length(groupelem) > 0 and
-    ( (maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] = maxleftreduced[1][1] + 1 ) or
-      (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] = maxleftreduced[1][1] - 1 ))
+    ( (maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] =
+    maxleftreduced[1][1] + 1 ) or
+      (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] =
+      maxleftreduced[1][1] - 1 ))
   then
     output := Concatenation(List(groupelem, x -> FamilyObj(tree)!.names[x]));
   else
-    output := Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
+    output :=
+          Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
     groupelem), x -> FamilyObj(tree)!.names[x]));
   fi;
   return output;
@@ -431,7 +450,8 @@ function(tree1, tree2)
   #product := StructuralCopy(tree1);
   product := [];
   for i in [1 .. tree1![2] + 5] do
-    product[i] := ShallowCopy(tree1![i]); od;
+    product[i] := ShallowCopy(tree1![i]);
+  od;
 
   for i in [2 .. tree2![2]] do
     parent := new_names[tree2![4][i]];
@@ -462,11 +482,15 @@ InstallMethod(\^, "for elements of a free inverse semigroup",
 function(tree,n)
   local new_names, old_names,result, product, current_old, i, j, label;
 
-  product := []; product[1] := tree![1]; product[2] := tree![2];
-  old_names := []; old_names[1] := tree![3];
-  new_names := []; new_names[tree![3]] := 1;
-
-  product[4] := []; product[5] := [];
+  product := [];
+  product[1] := tree![1];
+  product[2] := tree![2];
+  old_names := [];
+  old_names[1] := tree![3];
+  new_names := [];
+  new_names[tree![3]] := 1;
+  product[4] := [];
+  product[5] := [];
 
   label := 2;
 
@@ -488,7 +512,8 @@ function(tree,n)
   od;
 
   product[3] := new_names[1];
-  product[4][1] := fail; product[5][1] := fail;
+  product[4][1] := fail;
+  product[5][1] := fail;
 
   result := Objectify(TypeObj(tree), product);
   return result ^ ( - n);
@@ -502,8 +527,38 @@ end);
 
 InstallMethod(Size,
   "for a free inverse semigroup",
-  [IsFreeInverseSemigroup],
+  [IsFreeInverseSemigroupCategory],
   function(S)
     return infinity;
   end);
 
+InstallMethod(IsFreeInverseSemigroup, "for a semigroup",
+[IsSemigroup],
+function(s)
+  local gens, occurs, used, list, g, i;
+
+  if not IsInverseSemigroup(s) then
+    return false;
+  elif IsFreeInverseSemigroupElementCollection(s) then
+    gens := Generators(s);
+    occurs := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+    used := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
+    for g in gens do
+      list := g![5];
+      for i in [ 2 .. Length(list)] do
+        used[Int((list[i] + 1) / 2)] := true;
+      od;
+      if g![2] = 2 then
+        occurs[Int((g![5][2] + 1) / 2)] := true;
+      fi;
+    od;
+
+    if occurs = used then
+      return true;
+    fi;
+  fi;
+
+  Error("Semigroups: IsFreeInverseSemigroup:\n",
+        "can not determine the answer");
+  return;
+end);

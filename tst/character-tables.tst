@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  character-tables.tst
-#Y  Copyright (C) 2011-13                               James D. Mitchell
+#Y  Copyright (C) 2011-15                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,7 +13,7 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-#T#  some random examples to test consistency of old code with new
+#T# Some random examples to test consistency of old code with new
 gap> gens:=[[ PartialPerm( [ 1, 2, 3, 4, 6, 8, 9 ], [ 1, 5, 3, 8, 9, 4, 10 ] ) ],
 > [ PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 3, 8, 4, 6, 5, 7 ] ), 
 >   PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 1, 4, 3, 2, 7, 6 ] ), 

@@ -1,12 +1,16 @@
 ############################################################################
 ##
 #W  bipartition.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+# local declarations
+
+DeclareOperation("OneMutable", [IsBipartitionCollection]);
 
 BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
  IsBipartition, CanEasilySortElements, CanEasilySortElements));
@@ -35,16 +39,19 @@ function(f, g)
   local fblocks, gblocks, n, lookup, i;
 
   if not IsBlockBijection(f) or not IsBlockBijection(g) then
-    Error("usage: the arguments must be block bijections,");
+    Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
+          "the arguments must be block bijections,");
     return;
   elif DegreeOfBipartition(f) <> DegreeOfBipartition(g) then
-    Error("usage: the arguments must be block bijections of equal degree,");
+    Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
+          "the arguments must be block bijections of equal degree,");
     return;
   elif NrBlocks(f) > NrBlocks(g) then
     return false;
   fi;
 
-  fblocks := f!.blocks; gblocks := g!.blocks;
+  fblocks := f!.blocks;
+  gblocks := g!.blocks;
   n := DegreeOfBipartition(f);
 
   lookup := [];
@@ -71,12 +78,15 @@ function(f, g)
   local fblocks, gblocks, n, m, i;
 
   if not IsPartialPermBipartition(f) or not IsPartialPermBipartition(g) then
-    Error("usage: the arguments must be partial perm bipartitions,");
+    Error("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
+          "the arguments must be partial perm bipartitions,");
     return;
   fi;
 
-  fblocks := f!.blocks; gblocks := g!.blocks;
-  n := DegreeOfBipartition(f); m := DegreeOfBipartition(g);
+  fblocks := f!.blocks;
+  gblocks := g!.blocks;
+  n := DegreeOfBipartition(f);
+  m := DegreeOfBipartition(g);
 
   for i in [1 .. n] do
     if fblocks[n + i] <= n then
@@ -100,7 +110,9 @@ function(f, g)
   elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
     return NaturalLeqPartialPermBipartition(f, g);
   fi;
-  Error("usage: the bipartitions should be block bijections or partial perms,");
+  Error("Semigroups: NaturalLeqPartialPermBipartition: usage\n",
+        "the bipartitions should be block bijections or partial perms,");
+  return;
 end);
 
 #
@@ -130,7 +142,8 @@ end);
 InstallMethod(\*, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition],
 function(a,b)
-  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next, nrleft, c, i;
+  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next,
+  nrleft, c, i;
 
   n := DegreeOfBipartition(a);
   Assert(1,n = DegreeOfBipartition(b));
@@ -304,7 +317,8 @@ function(f, g)
   local n, nr, fblocks, gblocks, p, i;
 
   if LeftBlocks(f) <> LeftBlocks(g) or RightBlocks(f) <> RightBlocks(g) then
-    Error("usage: the arguments must have equal left and right blocks,");
+    Error("Semigroups: PermLeftQuoBipartition: usage,\n",
+          "the arguments must have equal left and right blocks,");
     return;
   fi;
   return PermLeftQuoBipartitionNC(f, g);
@@ -480,7 +494,7 @@ function(f, n)
     od;
   fi;
 
-  r := RankOfTransformation(f, n);;
+  r := RankOfTransformation(f, n);
   ker := FlatKernelOfTransformation(f, n);
 
   out := EmptyPlist(2 * n);
@@ -510,7 +524,9 @@ end);
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition], IdFunc);
 
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition, IsZeroCyc],
-function(f, n) return Bipartition([]); end);
+function(f, n)
+  return Bipartition([]);
+end);
 
 InstallMethod(AsBipartition, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
@@ -641,9 +657,15 @@ end);
 # returns a blist <out> for the Left blocks so that <out[i]> is <true> if
 # and only the <i>th block of <f> is a transverse block.
 
-InstallMethod(TransverseBlocksLookup, "for a bipartition", [IsBipartition],
+BindGlobal("TransverseBlocksLookup",
 function(f)
   local n, k, blocks, out, i;
+
+  if not IsBipartition(f) then
+    Error("Semigroups: TransverseBlocksLookup: usage\n",
+          "the argument must be a bipartition,");
+    return;
+  fi;
 
   if IsBound(f!.lookup) then
     return f!.lookup;
@@ -768,14 +790,15 @@ end);
 InstallMethod(IsPermBipartition, "for a bipartition",
 [IsBipartition],
 function(f)
-  return IsPartialPermBipartition(f) and NrTransverseBlocks(f) = DegreeOfBipartition(f);
+  return IsPartialPermBipartition(f)
+    and NrTransverseBlocks(f) = DegreeOfBipartition(f);
 end);
 
 # creating
 
 # xx^* - linear - 2*degree - attribute
 
-InstallMethod(LeftOne, "for a bipartition", [IsBipartition],
+InstallMethod(LeftProjection, "for a bipartition", [IsBipartition],
 function(f)
   local n, next, blocks, lookup, table, out, i;
 
@@ -943,20 +966,25 @@ InstallGlobalFunction(Bipartition,
 function(classes)
   local n, copy, i, j;
 
-  if not ForAll(classes, IsList) or not ForAll(classes, IsDuplicateFree) then
-    Error("<classes> must consist of duplicate-free lists,");
+  if not (IsList(classes) and ForAll(classes, x ->
+          IsHomogeneousList(x) and IsDuplicateFree(x))) then
+    Error("Semigroups: Bipartition: usage,\n",
+          "the argument <classes> must consist of duplicate-free lists,");
     return;
   fi;
 
   if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
-    Error("<classes> must consist of positive and negative integers,");
+    Error("Semigroups: Bipartition: usage,\n",
+          "the argument <classes> must consist of positive and negative ",
+          "integers,");
     return;
   fi;
 
   copy := Union(classes);
   if not (copy = classes or copy = Concatenation([Minimum(copy) .. - 1],
     [1 .. Maximum(copy)])) then
-    Error("the union of <classes> must be [-n..-1, 1..n],");
+    Error("Semigroups: Bipartition: usage,\n",
+          "the union of the argument <classes> must be [-n..-1, 1..n],");
     return;
   fi;
 
@@ -1025,7 +1053,7 @@ InstallMethod(OneMutable, "for a bipartition",
 #
 
 InstallMethod(OneMutable, "for a bipartition collection",
-[IsBipartitionCollection], x -> 
+[IsBipartitionCollection], x ->
 IdentityBipartition(DegreeOfBipartitionCollection(x)));
 
 #
@@ -1091,14 +1119,17 @@ function(blocks)
   local n, next, seen, nrleft, rank, lookup, out, i;
 
   n := Length(blocks);
+
   if not IsEvenInt(n) then
-    Error("the length of <blocks> must be an even integer,");
+    Error("Semigroups: BipartitionByIntRep: usage,\n",
+          "the length of the argument <blocks> must be an even integer,");
     return;
   fi;
 
   n := n / 2;
   if not ForAll(blocks, IsPosInt) then
-    Error("the elements of <blocks> must be positive integers,");
+    Error("Semigroups: BipartitionByIntRep: usage,\n",
+          "the elements of the argument <blocks> must be positive integers,");
     return;
   fi;
 
@@ -1109,7 +1140,8 @@ function(blocks)
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
-        Error("expected ", next, " but found ", blocks[i], ",");
+        Error("Semigroups: BipartitionByIntRep: usage,\n",
+              "expected ", next, " but found ", blocks[i], ",");
         return;
       fi;
       seen[blocks[i]] := true;
@@ -1122,7 +1154,8 @@ function(blocks)
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
-        Error("expected ", next, " but found ", blocks[i], ",");
+        Error("Semigroups: BipartitionByIntRep: usage,\n",
+              "expected ", next, " but found ", blocks[i], ",");
         return;
       fi;
       seen[blocks[i]] := true;
@@ -1164,7 +1197,8 @@ function(f, g)
     fi;
   od;
 
-  src := []; dst := [];
+  src := [];
+  dst := [];
   next := 0;
   seen := BlistList([1 .. 2 * n], []);
   for i in [n + 1 .. 2 * n] do
@@ -1219,7 +1253,7 @@ function(f, p)
   SetNrLeftBlocks(out, NrLeftBlocks(f));
   SetNrBlocks(out, NrBlocks(f));
   SetRankOfBipartition(out, RankOfBipartition(f));
-  SetTransverseBlocksLookup(out, TransverseBlocksLookup(f));
+  out!.lookup := TransverseBlocksLookup(f);
 
   if HasLeftBlocks(f) then
     SetLeftBlocks(out, LeftBlocks(f));
@@ -1324,7 +1358,9 @@ function(coll)
 
   deg := DegreeOfBipartition(coll[1]);
   if not ForAll(coll, x -> DegreeOfBipartition(x) = deg) then
-    Error("usage: collection of bipartitions of equal degree,");
+    Error("Semigroups: DegreeOfBipartitionCollection: usage,\n",
+          "the argument <coll> must be a collection of bipartitions of ",
+          "equal degree,");
     return;
   fi;
 

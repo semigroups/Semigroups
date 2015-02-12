@@ -49,10 +49,13 @@ function(arg)
             "each pair should contain elements from the semigroup <s>,");
       return;
     fi;
-    if ((HasIsSimpleSemigroup(s) or IsActingSemigroup(s)) and IsSimpleSemigroup(s)) or
-       ((HasIsZeroSimpleSemigroup(s) or IsActingSemigroup(s)) and IsZeroSimpleSemigroup(s)) then
+    if ((HasIsSimpleSemigroup(s) or IsActingSemigroup(s)) and
+      IsSimpleSemigroup(s)) or
+       ((HasIsZeroSimpleSemigroup(s) or IsActingSemigroup(s)) and
+       IsZeroSimpleSemigroup(s)) then
       return SEMIGROUPS_SimpleCongFromPairs(s, pairs);
-    elif (HasIsInverseSemigroup(s) or IsActingSemigroup(s)) and IsInverseSemigroup(s) then
+    elif (HasIsInverseSemigroup(s) or IsActingSemigroup(s)) and
+      IsInverseSemigroup(s) then
       return SEMIGROUPS_InverseCongFromPairs(s, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(s, pairs);
@@ -63,15 +66,17 @@ function(arg)
     if Range(IsomorphismReesMatrixSemigroup(s)) = Range(arg[2]) then
       return SEMIGROUPS_SimpleCongFromRMSCong(s, arg[2]);
     else
-      Error("Semigroups: SemigroupCongruence: usage,\n<cong> should be ",
-            "over a Rees (0-)matrix semigroup isomorphic to <s>");
+      Error("Semigroups: SemigroupCongruence: usage,\n",
+            "<cong> should be over a Rees (0-)matrix semigroup ",
+            "isomorphic to <s>");
       return;
     fi;
   elif Length(arg) = 3 and
     IsInverseSemigroup(arg[2]) and
     IsDenseList(arg[3]) and
     IsInverseSemigroup(s) then
-    # We should have the kernel and trace of a congruence on an inverse semigroup
+    # We should have the kernel and trace of a congruence on an inverse
+    # semigroup
     return InverseSemigroupCongruenceByCongruencePair(s, arg[2], arg[3]);
   else
     TryNextMethod();
@@ -86,9 +91,11 @@ function(s, pairs)
 
   # If s is a RMS/RZMS, then just create the linked triple congruence
   if IsReesMatrixSemigroup(s) then
-    cong := AsRMSCongruenceByLinkedTriple( SemigroupCongruenceByGeneratingPairs(s,pairs));
+    cong := AsRMSCongruenceByLinkedTriple(
+            SemigroupCongruenceByGeneratingPairs(s,pairs));
   elif IsReesZeroMatrixSemigroup(s) then
-    cong := AsRZMSCongruenceByLinkedTriple(SemigroupCongruenceByGeneratingPairs(s,pairs));
+    cong := AsRZMSCongruenceByLinkedTriple(
+            SemigroupCongruenceByGeneratingPairs(s,pairs));
   else
     # Otherwise, create a SIMPLECONG
     iso := IsomorphismReesMatrixSemigroup(s);
@@ -136,7 +143,8 @@ function(cong, rmsclass)
   class := Objectify( NewType(fam, SEMIGROUPS_CongClassSimple),
                       rec(rmsclass := rmsclass, iso := iso) );
   SetParentAttr(class, cong);
-  SetRepresentative(class, Representative(rmsclass) ^ InverseGeneralMapping(iso));
+  SetRepresentative(class,
+    Representative(rmsclass) ^ InverseGeneralMapping(iso));
   SetEquivalenceClassRelation(class, cong);
   return class;
 end);
@@ -162,13 +170,15 @@ InstallMethod(CongruencesOfSemigroup,
 [IsSemigroup],
 function(s)
   local congs, i;
-  if not (IsFinite(s) and (IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s))) then
+  if not (IsFinite(s)
+    and (IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s))) then
     TryNextMethod();
   fi;
   if IsReesMatrixSemigroup(s) or IsReesZeroMatrixSemigroup(s) then
     return CongruencesOfSemigroup(s);
   fi;
-  congs := ShallowCopy(CongruencesOfSemigroup(Range(IsomorphismReesMatrixSemigroup(s))));
+  congs := ShallowCopy( CongruencesOfSemigroup( Range(
+           IsomorphismReesMatrixSemigroup(s))));
   for i in [1 .. Length(congs)] do
     if IsUniversalSemigroupCongruence(congs[i]) then
       congs[i] := UniversalSemigroupCongruence(s);
@@ -227,14 +237,11 @@ function(pair, cong)
   local s;
   # Check for validity
   if Size(pair) <> 2 then
-    Error("usage: 1st argument <pair> must be a list of length 2,");
-    return;
+    return false;
   fi;
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
-    Error("usage: the elements of the 1st argument <pair> ",
-          "must be in the range of the 2nd argument <cong>,");
-    return;
+    return false;
   fi;
   return [pair[1] ^ cong!.iso, pair[2] ^ cong!.iso] in cong!.rmscong;
 end);

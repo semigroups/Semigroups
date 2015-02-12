@@ -13,13 +13,19 @@
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, ht, treehashsize, data;
+  local s, elms, pairs, hashlen, ht, data, pairstoapply, pos, found;
   s := Range(cong);
   elms := Elements(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
                  x -> [Position(elms, x[1]), Position(elms, x[2])] );
-  ht := HTCreate( pairs[1], rec(forflatplainlists := true,
-              treehashsize := s!.opts.hashlen.L ) );
+
+  if IsBound(s!.opts) then
+    hashlen := s!.opts.hashlen.L;
+  else
+    hashlen := SemigroupsOptionsRec.hashlen.L;
+  fi;
+  ht := HTCreate( [elms[1],elms[1]], rec(forflatplainlists := true,
+              treehashsize := hashlen ) );
   data := rec( cong := cong,
                lookup := [1 .. Size(s)],
                pairstoapply := pairs,
@@ -27,7 +33,8 @@ function(cong)
                ht := ht,
                elms := elms,
                found := false );
-  cong!.data := Objectify(NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
+  cong!.data := Objectify(
+                 NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
   return;
 end);
 
@@ -40,11 +47,16 @@ function(pair, cong)
   local s, elms, p1, p2, table, find, lookfunc;
   # Input checks
   if not Size(pair) = 2 then
-    Error("1st arg <pair> must be a list of length 2,"); return;
+    Error("Semigroups: \in: usage,\n",
+          "the first arg <pair> must be a list of length 2,");
+    return;
   fi;
   s := Range(cong);
   if not (pair[1] in s and pair[2] in s) then
-    Error("Elements of <pair> must be in range of <cong>,"); return;
+    Error("Semigroups: \in: usage,\n",
+          "elements of the first arg <pair> must be in range",
+          "of the second\narg <cong>,");
+    return;
   fi;
   if not (HasIsFinite(s) and IsFinite(s)) then
     TryNextMethod();
@@ -100,11 +112,11 @@ InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
 [IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, s, table, pairstoapply, ht, right, left, find, union, genstoapply, 
+  local cong, s, table, pairstoapply, ht, right, left, find, union, genstoapply,
         i, nr, found, x, j, y, next, newtable, ii, result;
   cong := data!.cong;
   s := Range(cong);
-  
+
   table := data!.lookup;
   pairstoapply := data!.pairstoapply;
   ht := data!.ht;
@@ -133,9 +145,10 @@ function(data, lookfunc)
   end;
 
   genstoapply := [1 .. Size(right[1])];
-  i := data!.pos; nr := Size(pairstoapply);
+  i := data!.pos;
+  nr := Size(pairstoapply);
   found := false;
-  
+
   if i = 0 then
     # Add the generating pairs themselves
     for x in pairstoapply do
@@ -179,7 +192,7 @@ function(data, lookfunc)
         fi;
       fi;
     od;
-    
+
     if found then
       # Save our place
       data!.pos := i;
@@ -188,7 +201,7 @@ function(data, lookfunc)
     fi;
 
   od;
-  
+
   # "Normalise" the table for clean lookup
   next := 1;
   newtable := [];
@@ -280,7 +293,8 @@ InstallMethod(\*,
 [IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
   if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    Error("usage: arguments must be classes of the same congruence,");
+    Error("Semigroups: \*: usage,\n",
+          "the args must be classes of the same congruence,");
     return;
   fi;
   return CongruenceClassOfElement(EquivalenceClassRelation(class1),

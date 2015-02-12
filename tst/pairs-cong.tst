@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  pairs-cong.tst
-#Y  Copyright (C) 2014                                      Michael Torpey
+#Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -65,6 +65,21 @@ true
 gap> Size(classx);
 3084
 gap> q := s / cong;;
+gap> P := [ [ (), 0, (1,3), (1,3), 0, (), 0 ],
+>   [ (), (1,3), 0, 0, (1,3), (), 0 ], [ (), (1,3), 0, (), 0, 0, () ],          
+>   [ 0, (), (1,3), (1,3), (), 0, 0 ], [ 0, 0, 0, (), (), (1,3), () ],
+>   [ (), 0, (1,3), 0, (), 0, () ] ];;                                
+gap> R := ReesZeroMatrixSemigroup(Group([(1,3)]), P);;
+gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1,3), 1);;
+gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x,y]]);;
+gap> c := EquivalenceClasses(cong);;
+gap> Size(c) = 43;
+true
+gap> cong := SemigroupCongruenceByGeneratingPairs(R, [ ]);;
+gap> c := EquivalenceClasses(cong);;
+gap> Size(c) = 85;
+true
 
 #E#
 gap> STOP_TEST( "Semigroups package: simple-cong.tst");

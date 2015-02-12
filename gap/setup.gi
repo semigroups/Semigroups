@@ -2,7 +2,7 @@
 ###########################################################################
 ##
 #W  setup.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -51,8 +51,10 @@ end);
 # IsActingSemigroupWithInverseOp
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
+IsPartialPermSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
+IsBlockBijectionSemigroup);
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
 IsPartialPermBipartitionSemigroup);
 
@@ -280,7 +282,7 @@ end);
 
 # JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> 
+[IsPartialPermSemigroup], s ->
   function(set, f)
     return OnPosIntSetsPartialPerm(set, f ^ - 1);
   end);
@@ -389,7 +391,7 @@ InstallMethod(LambdaRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x -> RankOfBlocks);
 
 InstallMethod(LambdaRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R -> 
+[IsReesZeroMatrixSubsemigroup], R ->
 function(x)
   if x = 0 then
     return 0;
@@ -418,7 +420,7 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x -> RankOfBlocks);
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R -> 
+[IsReesZeroMatrixSubsemigroup], R ->
 function(x)
   if x = 0 then
     return 0;
@@ -436,13 +438,15 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s -> INV_LIST_TRANS);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> function(x, f) return f ^ - 1; end);
+[IsPartialPermSemigroup], s -> function(x, f)
+                                 return f ^ - 1;
+                               end);
 
 InstallMethod(LambdaInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> InverseRightBlocks);
 
 InstallMethod(LambdaInverse, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> 
+[IsReesZeroMatrixSubsemigroup], s ->
 function(k, x)
   local i;
   if x![1] = 0 or k = 0 then
@@ -460,7 +464,7 @@ InstallMethod(RhoInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s -> INV_KER_TRANS);
 
 InstallMethod(RhoInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> 
+[IsPartialPermSemigroup], s ->
   function(dom, f)
     return f ^ - 1;
   end);
@@ -468,7 +472,7 @@ InstallMethod(RhoInverse, "for a partial perm semigroup",
 #JDM better method for this!!
 
 InstallMethod(RhoInverse, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> 
+[IsReesZeroMatrixSubsemigroup], s ->
 function(k, x)
   local i;
   if x![1] = 0 or k = 0 then
@@ -496,7 +500,7 @@ InstallMethod(LambdaPerm, "for a partial perm semigroup",
 [IsBipartitionSemigroup], s -> PermLeftQuoBipartitionNC);
 
 InstallMethod(LambdaPerm, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> 
+[IsReesZeroMatrixSubsemigroup], s ->
 function(x, y)
   if x![1] = 0 or y![1] = 0 then
     return ();
@@ -512,7 +516,7 @@ InstallMethod(LambdaConjugator, "for a transformation semigroup",
 
 # c method
 InstallMethod(LambdaConjugator, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> 
+[IsPartialPermSemigroup], s ->
 function(f, g)
   return MappingPermListList(IMAGE_PPERM(f), IMAGE_PPERM(g));
 end);
@@ -521,7 +525,7 @@ InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> BipartRightBlocksConj);
 
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> 
+[IsReesZeroMatrixSubsemigroup], s ->
 function(f, g)
   return ();
 end);
@@ -530,7 +534,7 @@ end);
 # lambda and rho values.
 
 InstallMethod(IdempotentTester, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> 
+[IsTransformationSemigroup], s ->
 function(img, ker)
   if IsEmpty(img) then
     return IsEmpty(ker);
@@ -545,7 +549,7 @@ InstallMethod(IdempotentTester, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> BlocksIdempotentTester);
 
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R -> 
+[IsReesZeroMatrixSubsemigroup], R ->
 function(j,i)
   if i = 0 and j = 0 then
     return true;
@@ -567,7 +571,7 @@ InstallMethod(IdempotentCreator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> BlocksIdempotentCreator);
 
 InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R -> 
+[IsReesZeroMatrixSubsemigroup], R ->
 function(j,i)
   local mat;
   if i = 0 and j = 0 then
@@ -594,7 +598,7 @@ InstallMethod(StabilizerAction, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> OnRightBlocksBipartitionByPerm);
 
 InstallMethod(StabilizerAction, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> 
+[IsReesZeroMatrixSubsemigroup], s ->
 function(x, p)
 
   if x![1] = 0 then
@@ -618,7 +622,8 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 
 #this is not really relevant here.
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
-"for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup], ReturnFalse);
+"for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup],
+ReturnFalse);
 
 # One or a fake one for those types of object without one.
 

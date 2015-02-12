@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  enums.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -15,29 +15,36 @@
 # should return <fail>, <convert_out> should have two arguments <enum> and <nr>
 # where <nr> refers to the position in <baseenum>.
 
-InstallGlobalFunction(EnumeratorByEnumerator,
+BindGlobal("EnumeratorByEnumerator",
 function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    Error("usage: <obj> must be a domain or a collections family,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the first argument <obj> must be a domain or a collections family,");
     return;
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
-    Error("usage: <baseenum> must be an enumerator or a list,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the second argument <baseenum> must be an enumerator or a list,");
     return;
   elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
-    Error("usage: <convert_out> and <convert_in> must be functions,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the third and fourth arguments <convert_out> and <convert_in>\n",
+          "must be functions,");
     return;
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    Error("usage: <filts> must be a list of filters,");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the fifth argument <filts> must be a list of filters,");
     return;
   elif not (IsRecord(record) and IsMutable(record) and not
   IsBound(record.baseenum) and not IsBound(record.convert_out) and not
   IsBound(record.convert_in) and not IsBound(record.NumberElement) and not
   IsBound(record.ElementNumber)) then
-    Error("usage: <record> must be a mutable record with no components ",
-    " named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',",
-    " or `NumberElement',");
+    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
+          "the sixth argument <record> must be a mutable record",
+          "with no components\n",
+          "named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',\n",
+          "or `NumberElement',");
     return;
   fi;
 
@@ -94,24 +101,30 @@ end);
 
 #
 
-InstallGlobalFunction(EnumeratorByEnumOfEnums,
+BindGlobal("EnumeratorByEnumOfEnums",
 function(obj, record, baseenum, convert, filts)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    Error("usage: <obj> must be a domain or a collections family,");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+          "the first argument <obj> must be a domain or a collections family,");
     return;
   elif not IsRecord(record) or IsBound(record.ElementNumber)
    or IsBound(record.NumberElement) or IsBound(record.baseenum)
    or IsBound(record.enumofenums) then
-    Error("usage: <record> must be a record with no components named:\n ",
-    "`NumberElement', `ElementNumber', `baseenum', or `enumofenums',");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+          "the second argument  <record> must be a record",
+          "with no components named:\n",
+          "`NumberElement', `ElementNumber', `baseenum', or `enumofenums',");
     return;
+  # TODO add check for third arg
   elif not IsFunction(convert) then
-    Error("usage: <convert> must be functions,");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+           "the fourth argument <convert> must be a function,");
     return;
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    Error("usage: <filts> must be a list of filters,");
+    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+          "the fifth argument <filts> must be a list of filters,");
     return;
   fi;
 
@@ -161,14 +174,20 @@ function(obj, record, baseenum, convert, filts)
     baseenum := enum!.baseenum;
     enumofenums := enum!.enumofenums;
     conv := convert(enum, elt);
-    if conv = fail then return fail; fi;
+    if conv = fail then
+      return fail;
+    fi;
     basepos := Position(baseenum, conv);
-    if basepos = fail then return fail; fi;
+    if basepos = fail then
+      return fail;
+    fi;
     if not IsBound(enumofenums[basepos]) then
       enumofenums[basepos] := Enumerator(baseenum[basepos]);
     fi;
     pos := Position(enumofenums[basepos], elt);
-    if pos = fail then return fail; fi;
+    if pos = fail then
+      return fail;
+    fi;
     for i in [1 .. basepos - 1] do
       if not IsBound(enumofenums[i]) then
         enumofenums[i] := Enumerator(baseenum[i]);
@@ -190,6 +209,7 @@ end);
 # same method for regular/inverse,
 
 # also this has really awful performance
+# TODO write an improved version for enumerator sorted
 
 InstallMethod(Enumerator, "for an acting semigroup",
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
@@ -409,8 +429,11 @@ function(d)
   #
   convert_out := function(enum, tuple)
     local d, rep, act;
-    if tuple = fail then return fail; fi;
-    d := enum!.parent; rep := Representative(d);
+    if tuple = fail then
+      return fail;
+    fi;
+    d := enum!.parent;
+    rep := Representative(d);
     act := StabilizerAction(Parent(d));
     return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1] * rep,
      tuple[2]) * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
@@ -467,8 +490,11 @@ function(d)
   #
   convert_out := function(enum, tuple)
     local d, rep, act;
-    if tuple = fail then return fail; fi;
-    d := enum!.parent; rep := Representative(d);
+    if tuple = fail then
+      return fail;
+    fi;
+    d := enum!.parent;
+    rep := Representative(d);
     act := StabilizerAction(Parent(d));
     return act(LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[1])[2]
      * rep, tuple[2]) * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d),
@@ -574,7 +600,9 @@ function(l)
   #
   convert_out := function(enum, tuple)
     local l, rep, act;
-    if tuple = fail then return fail; fi;
+    if tuple = fail then
+      return fail;
+    fi;
     l := enum!.parent;
     rep := Representative(l);
     act := StabilizerAction(Parent(l));
@@ -632,7 +660,9 @@ function(l)
   #
   convert_out := function(enum, tuple)
     local l, rep, act;
-    if tuple = fail then return fail; fi;
+    if tuple = fail then
+      return fail;
+    fi;
     l := enum!.parent;
     rep := Representative(l);
     act := StabilizerAction(Parent(l));
@@ -689,7 +719,9 @@ function(r)
   #
   convert_out := function(enum, tuple)
     local r, rep;
-    if tuple = fail then return fail; fi;
+    if tuple = fail then
+      return fail;
+    fi;
     r := enum!.parent;
     rep := Representative(r);
     return StabilizerAction(Parent(r))(rep,tuple[1])
@@ -722,8 +754,7 @@ function(r)
    convert_out, convert_in, [], record);
 end);
 
-#JDM use these for enumerator of symmetric inverse semigroup
-# using EnumeratorByEnumerator
+#
 
 InstallGlobalFunction(NumberArrangement,
 function(arr, n)
@@ -744,7 +775,9 @@ function(arr, n)
   for i in [2 .. m] do
     k := 0;
     for j in [1 .. arr[i] - 1] do
-      if not bool[j] then k := k + 1; fi;
+      if not bool[j] then
+        k := k + 1;
+      fi;
     od;
     bool[arr[i]] := true;
     factor := factor - 1;
@@ -777,18 +810,24 @@ function(r, m, n)
     factor := factor - 1;
     mult := mult / factor;
     q := QuotientRemainder(q[2], mult);
-    j := 0; k := 0;
+    j := 0;
+    k := 0;
     repeat
       j := j + 1;
-      if not bool[j] then k := k + 1; fi;
+      if not bool[j] then
+        k := k + 1;
+      fi;
     until k = q[1] + 1;
     bool[j] := true;
     out[i] := j;
   od;
-  j := 0; k := 0;
+  j := 0;
+  k := 0;
   repeat
     j := j + 1;
-    if not bool[j] then k := k + 1; fi;
+    if not bool[j] then
+      k := k + 1;
+    fi;
   until k = q[2] + 1;
   out[m] := j;
   return out;
@@ -801,13 +840,18 @@ function(m, n)
   local convert_out, convert_in, fam;
 
   if not IsPosInt(n) then
-    Error("usage: <n> must be a positive integer,");
+    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
+          "the second argument <n> must be a positive integer,");
     return;
   elif not (IsInt(m) and m >= 0) then
-    Error("usage: <m> must be a non-negative integer,");
+    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
+          "the first argument <m> must be a non-negative integer,");
     return;
   elif m > n then
-    Error("usage: <m> must be no greater than <n>,");
+    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
+          "the first argument <m> must be no greater than the\n",
+          "second argument <n>,");
+    return;
   fi;
 
   convert_out := function(enum, x)

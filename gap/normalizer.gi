@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  normalizer.gi
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#Y  Copyright (C) 2014-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,9 +9,9 @@
 ##
 
 if not IsBound(POW_KER_PERM) then
-  POW_KER_PERM := function(pt, x)
+  BindGlobal("POW_KER_PERM", function(pt, x)
     return FlatKernelOfTransformation(TransformationNC(pt) ^ x, Length(pt));
-  end;
+  end);
 fi;
 
 #
@@ -19,7 +19,8 @@ fi;
 InstallMethod(Normalizer, "for a transformation semigroup and record",
 [IsTransformationSemigroup, IsRecord],
 function(S, opts)
-  return Normalizer(SymmetricGroup(DegreeOfTransformationSemigroup(S)), S, opts);
+  return Normalizer(SymmetricGroup(DegreeOfTransformationSemigroup(S)), S,
+  opts);
 end);
 
 InstallMethod(Normalizer, "for a partial perm semigroup and record",
@@ -101,7 +102,8 @@ function(S, opts)
   if not IsBound(opts.lambdastab) then
     opts.lambdastab := true;
   elif not IsBool(opts.lambdastab) then
-    Error("usage: the component `lambdastab' must be a boolean,");
+    Error("Semigroups: NormalizerOptsRec@: usage,\n",
+          "the component `lambdastab' must be a boolean,");
     return;
   fi;
 
@@ -110,7 +112,8 @@ function(S, opts)
   elif not IsBound(opts.rhostab) then
     opts.rhostab := true;
   elif not IsBool(opts.rhostab) then
-    Error("usage: the component `rhostab' must be a boolean,");
+    Error("Semigroups: NormalizerOptsRec@: usage,\n",
+          "the component `rhostab' must be a boolean,");
     return;
   fi;
 
@@ -123,8 +126,11 @@ BindGlobal("LambdaOrbForNormalizer@",
 function(G, S, func)
   local o, i, nr;
 
-  o := LambdaOrb(S);    Enumerate(o, infinity);
-  o := ShallowCopy(o);  Remove(o, 1);  Sort(o, func);
+  o := LambdaOrb(S);
+  Enumerate(o, infinity);
+  o := ShallowCopy(o);
+  Remove(o, 1);
+  Sort(o, func);
 
   if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
 
@@ -153,19 +159,22 @@ function(G, S, opts)
   local o, i, nr, act, deg, U, gens, nrgens, P;
 
   if not IsPermGroup(G) then
-    Error("usage: the 1st argument must be a permutation group,");
+    Error("Semigroups: DeterministicSemigroupNormalizer: usage,\n",
+          "the first arg must be a permutation group,");
     return;
   fi;
 
   if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) or
     IsBipartitionSemigroup(S)) then
-    Error("usage: the 2nd argument must be a transformation, partial perm\n",
-    "or bipartition semigroup,");
+    Error("Semigroups: DeterministicSemigroupNormalizer: usage,\n",
+          "the second arg must be a semigroup of transformations,\n",
+          "partial perms or bipartitions,");
     return;
   fi;
 
   if not IsRecord(opts) then
-    Error("usage: the 3rd argument must be a record,");
+    Error("Semigroups: DeterministicSemigroupNormalizer: usage,\n",
+          "the third argument must be a record,");
     return;
   fi;
 
@@ -176,9 +185,9 @@ function(G, S, opts)
   opts := NormalizerOptsRec@(S, opts);
 
   # the example of the JonesMonoid(8), and the inverse semigroup example
-  # immediately after it in normalizer.tst show that calculating the
-  # stabilizer of lambda/rho values isn't always worth it. But then the test file
-  # is 2 second quicker with this than without...
+  # immediately after it in normalizer.tst show that calculating the stabilizer
+  # of lambda/rho values isn't always worth it. But then the test file is 2
+  # second quicker with this than without...
 
   if opts.lambdastab then
     o := LambdaOrbForNormalizer@(G, S, LT);
@@ -201,8 +210,11 @@ function(G, S, opts)
   fi;
 
   if Size(U) > 1 and opts.rhostab then
-    o := RhoOrb(S);       Enumerate(o, infinity);
-    o := ShallowCopy(o);  Remove(o, 1);  Sort(o);
+    o := RhoOrb(S);
+    Enumerate(o, infinity);
+    o := ShallowCopy(o);
+    Remove(o, 1);
+    Sort(o);
 
     if IsTransformationSemigroup(S) then
       act := function(pt, x)
@@ -259,19 +271,22 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       "`random' set to <false> for a deterministic (but slower) answer.");
 
     if not IsPermGroup(G) then
-      Error("usage: the 1st argument must be a permutation group,");
+      Error("Semigroups: NonDeterministicSemigroupNormalizer: usage,\n",
+            "the first arg must be a permutation group,");
       return;
     fi;
 
     if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) or
       IsBipartitionSemigroup(S)) then
-      Error("usage: the 2nd argument must be a transformation, partial perm\n",
-      "or bipartition semigroup,");
+      Error("Semigroups: NonDeterministicSemigroupNormalizer: usage,\n",
+            "the second arg must be a semigroup of transformations,\n",
+            "partial perms or bipartitions,");
       return;
     fi;
 
     if not IsRecord(opts) then
-      Error("usage: the 3rd argument must be a record,");
+      Error("Semigroups: NonDeterministicSemigroupNormalizer: usage,\n",
+            "the third arg must be a record,");
       return;
     fi;
 
@@ -286,14 +301,19 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
         act := OnSets;
         o := LambdaOrbForNormalizer@(G, S,
-          function(x,y) return Length(x) < Length(y); end);
+          function(x,y)
+            return Length(x) < Length(y);
+          end);
       else
         deg := DegreeOfBipartitionSemigroup(S);
         act := function(pt, x)
-               return RightBlocks(ProjectionFromBlocks(pt) * AsBipartition(x, deg));
-             end;
+                 return RightBlocks(ProjectionFromBlocks(pt)
+                 * AsBipartition(x, deg));
+               end;
         o := LambdaOrbForNormalizer@(G, S,
-          function(x,y) return NrBlocks(x) < NrBlocks(y); end);
+          function(x,y)
+            return NrBlocks(x) < NrBlocks(y);
+          end);
       fi;
       Info(InfoSemigroups, 2, "finding the stabilizer of the images...");
       U := SetwiseStabilizer(G, act, o).setstab;
@@ -303,9 +323,13 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
     fi;
 
     if Size(U) > 1 and opts.rhostab then
-      o := RhoOrb(S);       Enumerate(o, infinity);
-      o := ShallowCopy(o);  Remove(o, 1);
-      Sort(o, function(x, y) return Maximum(x) < Maximum(y); end);
+      o := RhoOrb(S);
+      Enumerate(o, infinity);
+      o := ShallowCopy(o);
+      Remove(o, 1);
+      Sort(o, function(x, y)
+                return Maximum(x) < Maximum(y);
+              end);
 
       if IsTransformationSemigroup(S) then
         act := POW_KER_PERM;
@@ -314,8 +338,9 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       else
         deg := DegreeOfBipartitionSemigroup(S);
         act := function(pt, x)
-               return LeftBlocks(AsBipartition(x ^ - 1, deg) * ProjectionFromBlocks(pt));
-             end;
+          return LeftBlocks(AsBipartition(x ^ - 1, deg)
+          * ProjectionFromBlocks(pt));
+        end;
       fi;
       Info(InfoSemigroups, 2, "finding the stabilizer of the kernels...");
       U := SetwiseStabilizer(U, act, o).setstab;

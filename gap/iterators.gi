@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  iterators.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -82,13 +82,16 @@ function(n, m)
   local convert;
 
   if not IsPosInt(n) then
-    Error("usage: <n> must be a positive integer,");
+    Error("Semigroups: IteratorOfArrangements: usage,\n",
+          "the first arg <n> must be a positive integer,");
     return;
   elif not (IsInt(m) and m >= 0) then
-    Error("usage: <m> must be a non-negative integer,");
+    Error("Semigroups: IteratorOfArrangements: usage,\n",
+          "the second arg <m> must be a non-negative integer,");
     return;
   elif m > n then
-    Error("usage: <m> must be no greater than <n>,");
+    Error("Semigroups: IteratorOfArrangements: usage,\n",
+          "the second arg <m> must be no greater than the first arg <n>,");
   fi;
 
   convert := function(iter, x)
@@ -111,10 +114,12 @@ function(o, func, start)
   local func2, record, iter;
 
   if not IsOrbit(o) then
-    Error("usage: <o> must be an orbit,");
+    Error("Semigroups: IteratorByOrbFunc: usage,\n",
+          "the first arg <o> must be an orbit,");
     return;
   elif not IsFunction(func) then
-    Error("usage: <func> must be a function,");
+    Error("Semigroups: IteratorByOrbFunc: usage,\n",
+          " the second arg <func> must be a function,");
     return;
   fi;
 
@@ -165,14 +170,16 @@ function(record)
 
   if not ( IsRecord( record ) and IsBound( record.NextIterator )
                               and IsBound( record.ShallowCopy ) ) then
-    Error("usage: <record> must be a record with components `NextIterator'\n",
-    "and `ShallowCopy',");
+    Error("Semigroups: IteratorByNextIterator: usage,\n",
+          "the arg <record> must be a record with components `NextIterator'\n",
+          "and `ShallowCopy',");
     return;
   elif IsRecord (record ) and ( IsBound(record.last_called_by_is_done)
                           or IsBound(record.next_value)
                           or IsBound(record.IsDoneIterator) ) then
-    Error("usage: <record> must be a record with no components named\n",
-    "`last_called_by_is_done', `next_value', or `IsDoneIterator',");
+    Error("Semigroups: IteratorByNextIterator: usage,\n",
+          "the arg <record> must be a record with no components named\n",
+          "`last_called_by_is_done', `next_value', or `IsDoneIterator',");
     return;
   fi;
 
@@ -229,18 +236,22 @@ function(record, baseiter, convert, filts)
   if not IsRecord(record) or IsBound(record.baseiter)
     or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator)
     or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then
-    Error("usage: <record> must be a record with no components named:\n",
-    "`baseiter', `iterofiters', `IsDoneIterator', `NextIterator', or\n",
-    "`ShallowCopy'");
+    Error("Semigroups: IteratorByIterOfIters: usage,\n",
+          "the first arg <record> must be a record with no components named:\n",
+          "`baseiter', `iterofiters', `IsDoneIterator', `NextIterator', or\n",
+          "`ShallowCopy'");
     return;
   elif not IsIterator(baseiter) then
-    Error("usage: <baseiter> must be an iterator,");
+    Error("Semigroups: IteratorByIterOfIters: usage,\n",
+          "the second arg <baseiter> must be an iterator,");
     return;
   elif not IsFunction(convert) then
-    Error("usage: <convert> must be a function,");
+    Error("Semigroups: IteratorByIterOfIters: usage,\n",
+          "the third arg <convert> must be a function,");
     return;
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    Error("usage: <filts> must be a list of filters,");
+    Error("Semigroups: IteratorByIterOfIters: usage,\n",
+          "the fourth arg <filts> must be a list of filters,");
     return;
   fi;
 
@@ -361,7 +372,8 @@ function(arg)
 
   if IsBound(arg[2]) then
     if not IsPosInt(arg[2]) then
-      Error("usage: the second argument must be a positive integer,");
+      Error("Semigroups: ListIterator: usage,\n",
+            "the second argument must be a positive integer,");
       return;
     fi;
     out := EmptyPlist(arg[2]);
@@ -394,8 +406,8 @@ function(s)
     iter := IteratorList(AsSSortedList(s));
     SetIsIteratorOfSemigroup(iter, true);
   else
-    iter := IteratorByIterOfIters(rec(parent := s), IteratorOfRClasses(s), IdFunc,
-     [IsIteratorOfSemigroup]);
+    iter := IteratorByIterOfIters(rec(parent := s), IteratorOfRClasses(s),
+            IdFunc, [IsIteratorOfSemigroup]);
   fi;
   SetParent(iter, s);
   return iter;
@@ -485,7 +497,7 @@ function(h)
   fi;
 
   s := Parent(h);
-  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x -> 
+  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x ->
    StabilizerAction(s)(Representative(h), x), [IsIteratorOfHClassElements]);
 end);
 
@@ -621,7 +633,7 @@ function(s)
     return iter;
   fi;
 
-  return IteratorByIterator(IteratorOfRClassData(s), x -> 
+  return IteratorByIterator(IteratorOfRClassData(s), x ->
    CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]);
 end);
 
@@ -654,7 +666,8 @@ end);
 # no method required for inverse/regular
 
 InstallMethod(Iterator, "for a full transformation semigroup",
-[IsTransformationSemigroup and IsFullTransformationSemigroup and HasGeneratorsOfSemigroup],
+[IsTransformationSemigroup and IsFullTransformationSemigroup and
+HasGeneratorsOfSemigroup],
 function(s)
   local iter;
 
@@ -669,7 +682,7 @@ function(s)
 
     IsDoneIterator := iter -> IsDoneIterator(iter!.tups),
 
-    ShallowCopy := iter -> rec(tups := 
+    ShallowCopy := iter -> rec(tups :=
       IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(s)],
        DegreeOfTransformationSemigroup(s)))));
 
@@ -719,8 +732,8 @@ function(s)
   return iter;
 end);
 
-# Notes: required until Enumerator for a trans. semigroup does not call iterator.
-# This works but is maybe not the best!
+# Notes: required until Enumerator for a trans. semigroup does not call
+# iterator. This works but is maybe not the best!
 
 # same method for regular/inverse
 
@@ -737,8 +750,8 @@ InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 s -> IteratorByIterator(IteratorOfDClasses(s), Representative,
 [IsIteratorOfDClassReps]));
 
-#JDM could be a different  method for regular/inverse using
-#IteratorOfHClassData (not yet written), see inverse_old.gi in semigroups-dev
+#JDM could be a different method for regular/inverse using IteratorOfHClassData
+#(not yet written), see inverse_old.gi in semigroups-dev
 
 InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 [IsActingSemigroup],
@@ -780,13 +793,15 @@ function(s)
       fi;
 
       if m = fail or m = Length(OrbSCC(iter!.o)) then
-        m := 1; l := 1;
+        m := 1;
+        l := 1;
         iter!.o := NextIterator(iter!.graded);
         if iter!.o = fail then
           return fail;
         fi;
       else
-        m := m + 1; l := OrbSCC(iter!.o)[m][1];
+        m := m + 1;
+        l := OrbSCC(iter!.o)[m][1];
       fi;
       iter!.m := m;
 
@@ -896,7 +911,7 @@ function(s)
   if HasGreensDClasses(s) then
     return IteratorList(GreensDClasses(s));
   fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x -> 
+  return IteratorByIterator(IteratorOfDClassData(s), x ->
    CallFuncList(CreateDClassNC, x), [IsIteratorOfDClasses]);
 end);
 
@@ -911,7 +926,7 @@ s -> IteratorByIterator(IteratorOfLClassData(s), x -> x[4],
 
 InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-s -> IteratorByIterator(IteratorOfLClassData(s), x -> 
+s -> IteratorByIterator(IteratorOfLClassData(s), x ->
 CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 #for inverse acting semigroups...
@@ -931,13 +946,15 @@ function(s)
       if iter!.o = fail then
         return fail;
       elif m = fail or m = Length(OrbSCC(iter!.o)) then
-        m := 1; l := 1;
+        m := 1;
+        l := 1;
         iter!.o := NextIterator(iter!.graded);
         if iter!.o = fail then
           return fail;
         fi;
       else
-        m := m + 1; l := OrbSCC(iter!.o)[m][1];
+        m := m + 1;
+        l := OrbSCC(iter!.o)[m][1];
       fi;
       iter!.m := m;
       o := iter!.o;
@@ -996,7 +1013,8 @@ function(s)
       rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
 
       # rectify the lambda value of <rep>
-      rep := rep * LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];
+      rep := rep * LambdaOrbMult(o, lookup[i],
+              Position(o, LambdaFunc(s)(rep)))[2];
 
       return [s, lookup[i], o, rep, false];
     end;

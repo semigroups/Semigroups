@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  isomorph.gi
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#Y  Copyright (C) 2014-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -28,7 +28,8 @@ else
     diagS, phi, diaglitsS, minS, permS, tbllitsS, stabS;
 
     LitNum := function(ln, n)
-      return [QuoInt(ln - 1,n ^ 2) + 1,QuoInt((ln - 1) mod n ^ 2,n) + 1,(ln - 1) mod n + 1];
+      return [QuoInt(ln - 1,n ^ 2) + 1,QuoInt((ln - 1) mod n ^ 2,n) + 1,(ln - 1)
+               mod n + 1];
     end;
 
     NumLit := function(lit,n)
@@ -122,7 +123,9 @@ else
       return SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
     fi;
 
-    Error("not yet implemented,");
+    Error("Semigroups: IsIsomorphicSemigroup:\n",
+          "not yet implemented,");
+    return;
 
   end);
 fi;

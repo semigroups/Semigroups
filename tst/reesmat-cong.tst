@@ -1,7 +1,7 @@
 ###########################################################################
 ##
 #W  reesmat-cong.tst
-#Y  Copyright (C) 2014                                      Michael Torpey
+#Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,7 +13,7 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-#T# All ReesZeroMatrixSemigroup functions tested with a small example
+# All ReesZeroMatrixSemigroup functions tested with a small example
 # Create a Rees 0-matrix semigroup
 gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
 gap> mat := [ [ 0, 0, (1,4,5), 0, 0, (1,4,3,5) ],
@@ -21,12 +21,12 @@ gap> mat := [ [ 0, 0, (1,4,5), 0, 0, (1,4,3,5) ],
 > [ (), 0, 0, (3,5), 0, 0 ] ];;
 gap> s := ReesZeroMatrixSemigroup(g, mat);;
 
-# Find all its congruences
+#T# Find all its congruences
 gap> congs := CongruencesOfSemigroup(s);;
 gap> Size(congs);
 33
 
-# Construct one congruence manually
+#T# Construct a congruence manually
 gap> n := Group([(1,4)(3,5),(1,5)(3,4)]);;
 gap> colBlocks := [ [ 1 ], [ 4 ], [ 2, 5 ], [ 3, 6 ] ];;
 gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
@@ -38,7 +38,7 @@ false
 gap> cong = congs[13];
 true
 
-# Try some methods
+#T# Testing membership
 gap> x := ReesZeroMatrixSemigroupElement(s, 3, (4,5), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(s, 3, (1,5,3,4), 1);;
 gap> z := ReesZeroMatrixSemigroupElement(s, 1, (1,3,5), 2);;
@@ -50,7 +50,7 @@ gap> y := ReesZeroMatrixSemigroupElement(s, 6, (1,3,5), 1);;
 gap> [x,y] in cong;
 true
 
-# Equivalence classes
+#T# Equivalence classes
 gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
@@ -85,7 +85,7 @@ gap> Size(classes[72]);
 gap> Size(classes[73]);
 1
 
-# Join and meet congruences
+#T# Join and meet congruences
 gap> JoinSemigroupCongruences(congs[12], congs[31]);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
  (1,5,3,4) ])> with linked triple (S4,3,3)>
@@ -93,25 +93,27 @@ gap> MeetSemigroupCongruences(congs[12], congs[31]);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
  (1,5,3,4) ])> with linked triple (2^2,6,3)>
 
-# Quotients
+#T# Quotients
 gap> q := s / congs[13];;
 gap> Size(q);
 73
 
-# Convert to and from semigroup congruence by generating pairs
+#T# Convert to and from semigroup congruence by generating pairs
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
 gap> ccong := AsRZMSCongruenceByLinkedTriple(cong);;
 gap> congs[2] = ccong;
 true
 
-# Universal semigroup congruences
+#T# Universal semigroup congruences
 gap> uni := UniversalSemigroupCongruence(s);
 <universal semigroup congruence over <Rees 0-matrix semigroup 6x3 over 
   Group([ (1,4,5), (1,5,3,4) ])>>
 gap> [x,z] in uni;
 true
-gap> EquivalenceClasses(uni);
-[ {(1,(),1)} ]
+gap> Length(EquivalenceClasses(uni)) = 1 
+> and (Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(1,4,5),3)
+> or Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(),1)); # the first is after 4.7.7 the latter before
+true
 gap> eq := EquivalenceClassOfElement(uni, y);
 {(6,(1,3,5),1)}
 gap> eq := EquivalenceClassOfElement(uni, y);;

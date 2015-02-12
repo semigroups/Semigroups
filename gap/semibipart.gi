@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  semibipart.gi
-#Y  Copyright (C) 2013-14                                 James D. Mitchell
+#Y  Copyright (C) 2013-15                                 James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -77,7 +77,8 @@ end);
 
 #
 
-InstallImmediateMethod(IsBlockBijectionSemigroup, IsSemigroup and HasGeneratorsOfSemigroup, 0,
+InstallImmediateMethod(IsBlockBijectionSemigroup, IsSemigroup and
+HasGeneratorsOfSemigroup, 0,
 function(S)
   return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
    IsBlockBijection);
@@ -94,7 +95,8 @@ end);
 
 #
 
-InstallImmediateMethod(IsPermBipartitionGroup, IsSemigroup and HasGeneratorsOfSemigroup, 0,
+InstallImmediateMethod(IsPermBipartitionGroup, IsSemigroup and
+HasGeneratorsOfSemigroup, 0,
 function(S)
   return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
   IsPermBipartition);
@@ -144,7 +146,9 @@ InstallMethod(NaturalPartialOrder,
 function(S)
   local elts, p, n, out, i, j;
 
-  elts := Elements(S);  n := Length(elts); out := List([1 .. n], x -> []);
+  elts := Elements(S);
+  n := Length(elts);
+  out := List([1 .. n], x -> []);
 
   for i in [n,n - 1 .. 2] do
     for j in [i - 1,i - 2 .. 1] do
@@ -166,7 +170,9 @@ InstallMethod(NaturalPartialOrder,
 function(S)
   local elts, p, n, out, i, j;
 
-  elts := ShallowCopy(Elements(S));  n := Length(elts); out := List([1 .. n], x -> []);
+  elts := ShallowCopy(Elements(S));
+  n := Length(elts);
+  out := List([1 .. n], x -> []);
   p := Sortex(elts, PartialPermLeqBipartition) ^ - 1;
 
   for i in [n,n - 1 .. 2] do
@@ -201,7 +207,8 @@ function(S)
    act), Length(en) + 1));
 
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-   x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act), Length(en) + 1),
+   x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),
+   Length(en) + 1),
    x -> en[(Length(en) + 1) ^ AsTransformation(x)]);
 end);
 
@@ -257,7 +264,8 @@ InstallMethod(IsomorphismBipartitionSemigroup,
 function(S)
   local n, source, range, i;
 
-  n := Maximum(DegreeOfPartialPermSemigroup(S), CodegreeOfPartialPermSemigroup(S));
+  n := Maximum(DegreeOfPartialPermSemigroup(S),
+       CodegreeOfPartialPermSemigroup(S));
   source := GeneratorsOfSemigroup(S);
   range := EmptyPlist(Length(source));
 
@@ -297,11 +305,13 @@ end);
 
 InstallMethod(IsomorphismBipartitionSemigroup,
 "for a partial perm inverse semigroup with generators",
-[IsPartialPermSemigroup and IsInverseSemigroup and HasGeneratorsOfInverseSemigroup],
+[IsPartialPermSemigroup and IsInverseSemigroup and
+HasGeneratorsOfInverseSemigroup],
 function(S)
   local n, source, range, i;
 
-  n := Maximum(DegreeOfPartialPermSemigroup(S), CodegreeOfPartialPermSemigroup(S));
+  n := Maximum(DegreeOfPartialPermSemigroup(S),
+       CodegreeOfPartialPermSemigroup(S));
   source := GeneratorsOfInverseSemigroup(S);
   range := EmptyPlist(Length(source));
 
@@ -317,7 +327,8 @@ end);
 
 InstallMethod(IsomorphismPartialPermSemigroup,
 "for a bipartition inverse semigroup with generators",
-[IsBipartitionSemigroup and IsInverseSemigroup and HasGeneratorsOfInverseSemigroup],
+[IsBipartitionSemigroup and IsInverseSemigroup and
+HasGeneratorsOfInverseSemigroup],
 function(S)
   local n, source, range, i;
 
@@ -391,14 +402,16 @@ function(S)
   iso := IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));
   inv := InverseGeneralMapping(iso);
 
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso), x -> x ^ iso, x -> x ^ inv);
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
+    x -> x ^ iso, x -> x ^ inv);
 end);
 
 # this is one way, i.e. no converse method
 
 InstallMethod(IsomorphismBlockBijectionSemigroup,
 "for an inverse partial perm semigroup with generators",
-[IsPartialPermSemigroup and IsInverseSemigroup and HasGeneratorsOfInverseSemigroup],
+[IsPartialPermSemigroup and IsInverseSemigroup and
+HasGeneratorsOfInverseSemigroup],
 function(S)
   local n, source, range, i, inv;
 
@@ -448,7 +461,8 @@ InstallMethod(IsomorphismBlockBijectionSemigroup,
 function(S)
   local n, source, range, i, inv;
 
-  n := Maximum(DegreeOfPartialPermSemigroup(S), CodegreeOfPartialPermSemigroup(S)) + 1;
+  n := Maximum(DegreeOfPartialPermSemigroup(S),
+       CodegreeOfPartialPermSemigroup(S)) + 1;
   source := GeneratorsOfSemigroup(S);
   range := EmptyPlist(Length(source));
 
@@ -494,7 +508,8 @@ end);
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
-  return ForAll(coll, IsBlockBijection) or ForAll(coll, IsPartialPermBipartition);
+  return ForAll(coll, IsBlockBijection)
+   or ForAll(coll, IsPartialPermBipartition);
 end);
 
 #
@@ -635,7 +650,8 @@ function(s)
     fi;
   fi;
 
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s) < 2 ^ 64 then
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
+    and Size(s) < 2 ^ 64 then
     Append(str, "\>of size\> ");
     Append(str, String(Size(s)));
     Append(str, ",\<\< ");

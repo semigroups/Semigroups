@@ -19,27 +19,39 @@ function(s, n, colBlocks, rowBlocks)
 
   # Basic checks
   if not IsNormal(g,n) then
-    Error("2nd argument <n> must be a normal subgroup,"); return;
+    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+          "the second arg <n> must be a normal subgroup,");
+    return;
   fi;
   if not ForAll(colBlocks, IsList) then
-    Error("3rd argument <colBlocks> must be a list of lists,"); return;
+    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+          "the third arg <colBlocks> must be a list of lists,");
+    return;
   fi;
   if not ForAll(rowBlocks, IsList) then
-    Error("4th argument <rowBlocks> must be a list of lists,"); return;
+    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+          "the fourth arg <rowBlocks> must be a list of lists,");
+    return;
   fi;
   if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
-    Error("3rd argument <colBlocks> must be a partition ",
-          "of the columns of the matrix of <s>,"); return;
+    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+          "the third arg <colBlocks> must be a partition ",
+          "of the columns of the matrix of <s>,");
+    return;
   fi;
   if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
-    Error("4th argument <rowBlocks> must be a partition ",
-          "of the rows of the matrix of <s>,"); return;
+    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+          "the fourth arg <rowBlocks> must be a partition ",
+          "of the rows of the matrix of <s>,");
+    return;
   fi;
 
   if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
     return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
   else
-    Error("Not a valid linked triple,"); return;
+    Error("Semigroups: RMSCongruenceByLinkedTriple:\n",
+          "invalid triple,");
+    return;
   fi;
 end);
 
@@ -52,28 +64,46 @@ function(s, n, colBlocks, rowBlocks)
   g := UnderlyingSemigroup(s);
 
   # Basic checks
+  if not (IsGroup(g) and IsGroup(n)) then
+    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+          "the first arg <s> must be a Rees 0-matrix semigroup over a group,");
+    return;
+  fi;
+
   if not IsNormal(g,n) then
-    Error("2nd argument <n> must be a normal subgroup,"); return;
+    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+          "the second arg <n> must be a normal subgroup,");
+    return;
   fi;
   if not ForAll(colBlocks, IsList) then
-    Error("3rd argument <colBlocks> must be a list of lists,"); return;
+    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+          "the third arg <colBlocks> must be a list of lists,");
+    return;
   fi;
   if not ForAll(rowBlocks, IsList) then
-    Error("4th argument <rowBlocks> must be a list of lists,"); return;
+    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+          "the fourth arg <rowBlocks> must be a list of lists,");
+    return;
   fi;
   if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
-    Error("3rd argument <colBlocks> must be a partition ",
-          "of the columns of the matrix of <s>,"); return;
+    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+          "the third arg <colBlocks> must be a partition ",
+          "of the columns of the matrix of <s>,");
+    return;
   fi;
   if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
-    Error("4th argument <rowBlocks> must be a partition ",
-          "of the rows of the matrix of <s>,"); return;
+    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+          "the fourth arg <rowBlocks> must be a partition ",
+          "of the rows of the matrix of <s>,");
+    return;
   fi;
 
   if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
     return RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
   else
-    Error("Not a valid linked triple,"); return;
+    Error("Semigroups: RZMSCongruenceByLinkedTriple:\n",
+          "invalid triple,");
+    return;
   fi;
 end);
 
@@ -276,7 +306,8 @@ function(s)
   maxColBlocks := List([1 .. Size(mat[1])], i -> [i]);
   for i in [1 .. Size(mat[1])] do
     for j in [i + 1 .. Size(mat[1])] do
-      if ForAll([1 .. Size(mat)], u -> ( (mat[u][i] = 0) = (mat[u][j] = 0) ) ) then
+      if ForAll([1 .. Size(mat)],
+       u -> ( (mat[u][i] = 0) = (mat[u][j] = 0) ) ) then
         AddRelation(maxColBlocks, i, j);
       fi;
     od;
@@ -286,7 +317,8 @@ function(s)
   maxRowBlocks := List([1 .. Size(mat)], u -> [u]);
   for u in [1 .. Size(mat)] do
     for v in [u + 1 .. Size(mat)] do
-      if ForAll([1 .. Size(mat[1])], i -> ( (mat[u][i] = 0) = (mat[v][i] = 0) ) ) then
+      if ForAll([1 .. Size(mat[1])],
+       i -> ( (mat[u][i] = 0) = (mat[v][i] = 0) ) ) then
         AddRelation(maxRowBlocks, u, v);
       fi;
     od;
@@ -304,7 +336,8 @@ function(s)
     for colBlocks in colBlocksList do
       for rowBlocks in rowBlocksList do
         if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-          Add(congs, RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
+          Add(congs,
+           RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
         fi;
       od;
     od;
@@ -323,7 +356,8 @@ function(s, n, colBlocks, rowBlocks)
   local mat, block, bi, bj, i, j, u, v, bu, bv;
   # Check the semigroup is valid
   if not (IsFinite(s) and IsSimpleSemigroup(s)) then
-    Error("usage: 1st arg <s> must be a finite simple Rees matrix semigroup");
+    Error("Semigroups: IsLinkedTriple: usage,\n",
+          "first arg <s> must be a finite simple Rees matrix semigroup,");
     return;
   fi;
   mat := Matrix(s);
@@ -338,7 +372,8 @@ function(s, n, colBlocks, rowBlocks)
         # Check all pairs of rows (u,v)
         for u in [1 .. Size(mat)] do
           for v in [u + 1 .. Size(mat)] do
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+             in n then
               return false;
             fi;
           od;
@@ -357,7 +392,8 @@ function(s, n, colBlocks, rowBlocks)
         # Check all pairs of columns (i,j)
         for i in [1 .. Size(mat[1])] do
           for j in [i + 1 .. Size(mat[1])] do
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+            in n then
               return false;
             fi;
           od;
@@ -378,7 +414,9 @@ function(s, n, colBlocks, rowBlocks)
   local mat, block, i, j, u, v, bi, bj, bu, bv;
   # Check the semigroup is valid
   if not (IsFinite(s) and IsZeroSimpleSemigroup(s)) then
-    Error("usage: 1st arg <s> must be a finite 0-simple Rees 0-matrix semigroup");
+    Error("Semigroups: IsLinkedTriple: usage,\n",
+          "the first arg <s> must be a finite 0-simple Rees 0-matrix ",
+          "semigroup");
     return;
   fi;
   mat := Matrix(s);
@@ -400,10 +438,15 @@ function(s, n, colBlocks, rowBlocks)
         j := block[bj];
         # Check all pairs of rows (u,v)
         for u in [1 .. Size(mat)] do
-          if mat[u][i] = 0 then continue; fi;
+          if mat[u][i] = 0 then
+            continue;
+          fi;
           for v in [u + 1 .. Size(mat)] do
-            if mat[v][i] = 0 then continue; fi;
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
+            if mat[v][i] = 0 then
+              continue;
+            fi;
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+             in n then
               return false;
             fi;
           od;
@@ -429,10 +472,15 @@ function(s, n, colBlocks, rowBlocks)
         v := block[bv];
         # Check all pairs of columns (i,j)
         for i in [1 .. Size(mat[1])] do
-          if mat[u][i] = 0 then continue; fi;
+          if mat[u][i] = 0 then
+            continue;
+          fi;
           for j in [i + 1 .. Size(mat[1])] do
-            if mat[u][j] = 0 then continue; fi;
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1) in n then
+          if mat[u][j] = 0 then
+          continue;
+          fi;
+            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+            in n then
               return false;
             fi;
           od;
@@ -457,12 +505,16 @@ function(elm)
   else
     # RZMS case
     for v in [1 .. Size(mat)] do
-      if mat[v][i] <> 0 then break; fi;
+      if mat[v][i] <> 0 then
+        break;
+      fi;
     od;
     for j in [1 .. Size(mat[1])] do
-      if mat[u][j] <> 0 then break; fi;
+      if mat[u][j] <> 0 then
+        break;
+      fi;
     od;
-    return(mat[v][i] * elm[2] * mat[u][j]);
+    return mat[v][i] * elm[2] * mat[u][j];
   fi;
 end);
 
@@ -493,26 +545,32 @@ end);
 #
 
 InstallMethod(\in,
-"for Rees matrix semigroup element collection and a semigroup congruence by linked triple",
+"for RMS element coll and a semigroup congruence by linked triple",
 [IsReesMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
 function(pair, cong)
   local s, i, a, u, j, b, v, mat, gpElm;
 
   # Check for validity
   if Size(pair) <> 2 then
-    Error("usage: 1st argument <pair> must be a list of length 2,");
+    Error("Semigroups: \in: usage,\n",
+          "the first arg <pair> must be a list of length 2,");
     return;
   fi;
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
-    Error("usage: the elements of the 1st argument <pair> ",
-          "must be in the range of the 2nd argument <cong>,");
+    Error("Semigroups: \in: usage,\n",
+          "the elements of the first arg <pair> ",
+          "must be in the range of the second arg <cong>,");
     return;
   fi;
 
   # Read the elements as (i,a,u) and (j,b,v)
-  i := pair[1][1]; a := pair[1][2]; u := pair[1][3];
-  j := pair[2][1]; b := pair[2][2]; v := pair[2][3];
+  i := pair[1][1];
+  a := pair[1][2];
+  u := pair[1][3];
+  j := pair[2][1];
+  b := pair[2][2];
+  v := pair[2][3];
 
   # First, the columns and rows must be related
   if not (cong!.colLookup[i] = cong!.colLookup[j] and
@@ -529,20 +587,22 @@ end);
 #
 
 InstallMethod(\in,
-"for Rees 0-matrix semigroup element collection and a semigroup congruence by linked triple",
+"for RZMS elements and semigroup congruence by linked triple",
 [IsReesZeroMatrixSemigroupElementCollection, IsRZMSCongruenceByLinkedTriple],
 function(pair, cong)
   local s, mat, gpElm, row, col, rows, cols, a, i, u, j, b, v;
 
   # Check for validity
   if Size(pair) <> 2 then
-    Error("usage: 1st argument <pair> must be a list of length 2,");
+    Error("Semigroups: \in: usage,\n",
+          "the first arg <pair> must be a list of length 2,");
     return;
   fi;
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
-    Error("usage: the elements of the 1st argument <pair> ",
-          "must be in the range of the 2nd argument <cong>,");
+    Error("Semigroups: \in: usage,\n",
+          "the elements of the first arg <pair> ",
+          "must be in the range of the second arg <cong>,");
     return;
   fi;
 
@@ -554,8 +614,12 @@ function(pair, cong)
   fi;
 
   # Read the elements as (i,a,u) and (j,b,v)
-  i := pair[1][1]; a := pair[1][2]; u := pair[1][3];
-  j := pair[2][1]; b := pair[2][2]; v := pair[2][3];
+  i := pair[1][1];
+  a := pair[1][2];
+  u := pair[1][3];
+  j := pair[2][1];
+  b := pair[2][2];
+  v := pair[2][3];
 
   # First, the columns and rows must be related
   if not (cong!.colLookup[i] = cong!.colLookup[j] and
@@ -570,7 +634,7 @@ function(pair, cong)
   # Pick a valid column and row
   col := PositionProperty(rows[u], x -> x <> 0);
   row := PositionProperty(cols[i], x -> x <> 0);
-  gpElm := mat[row][i] * a * mat[u][col] * 
+  gpElm := mat[row][i] * a * mat[u][col] *
            Inverse(mat[row][j] * b * mat[v][col]);
   return(gpElm in cong!.n);
 end);
@@ -585,25 +649,24 @@ function(cong, elm)
   s := Range(cong);
   mat := Matrix(s);
   if not elm in s then
-    Error("1st and 2nd args <cong> and <elm> must refer to the same semigroup,");
+    Error("Semigroups: ImagesElm: usage,\n",
+          "the args <cong> and <elm> must refer to the same semigroup,");
     return;
   fi;
   # List of all elements congruent to elm under cong
   images := [];
   # Read the element as (i,a,u)
-  i := elm[1]; a := elm[2]; u := elm[3];
+  i := elm[1];
+  a := elm[2];
+  u := elm[3];
   # Construct congruent elements as (j,b,v)
   for j in cong!.colBlocks[cong!.colLookup[i]] do
     for v in cong!.rowBlocks[cong!.rowLookup[u]] do
       for nElm in cong!.n do
         # Might be better to use congruence classes after all
-        b := mat[1][j] ^ - 1
-             * nElm
-             * mat[1][i]
-             * a
-             * mat[u][1]
+        b := mat[1][j] ^ - 1 * nElm * mat[1][i] * a * mat[u][1]
              * mat[v][1] ^ - 1;
-        Add(images, ReesMatrixSemigroupElement(s, j, b, v));
+        Add(images, RMSElement(s, j, b, v));
       od;
     od;
   od;
@@ -620,7 +683,8 @@ function(cong, elm)
   s := Range(cong);
   mat := Matrix(s);
   if not elm in s then
-    Error("1st and 2nd args <cong> and <elm> must refer to the same semigroup,");
+    Error("Semigroups: ImagesElm: usage,\n",
+          "the args <cong> and <elm> must refer to the same semigroup,");
     return;
   fi;
   # Special case for 0
@@ -630,14 +694,20 @@ function(cong, elm)
   # List of all elements congruent to elm under cong
   images := [];
   # Read the element as (i,a,u)
-  i := elm[1]; a := elm[2]; u := elm[3];
+  i := elm[1];
+  a := elm[2];
+  u := elm[3];
   # Find a non-zero row for this class of columns
   for row in [1 .. Size(mat)] do
-    if mat[row][i] <> 0 then break; fi;
+    if mat[row][i] <> 0 then
+      break;
+    fi;
   od;
   # Find a non-zero column for this class of rows
   for col in [1 .. Size(mat[1])] do
-    if mat[u][col] <> 0 then break; fi;
+    if mat[u][col] <> 0 then
+      break;
+    fi;
   od;
 
   # Construct congruent elements as (j,b,v)
@@ -651,7 +721,7 @@ function(cong, elm)
              * a
              * mat[u][col]
              * mat[v][col] ^ - 1;
-        Add(images, ReesZeroMatrixSemigroupElement(s, j, b, v));
+        Add(images, RMSElement(s, j, b, v));
       od;
     od;
   od;
@@ -674,7 +744,7 @@ function(cong)
   for colClass in [1 .. Size(colBlocks)] do
     for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g,n), Representative) do
-        elm := ReesMatrixSemigroupElement(
+        elm := RMSElement(
                        s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1] );
         Add(list, EquivalenceClassOfElement(cong, elm));
       od;
@@ -699,7 +769,7 @@ function(cong)
   for colClass in [1 .. Size(colBlocks)] do
     for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g,n), Representative) do
-        elm := ReesZeroMatrixSemigroupElement(
+        elm := RMSElement(
                        s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1] );
         Add(list, EquivalenceClassOfElement(cong, elm));
       od;
@@ -747,7 +817,9 @@ InstallMethod(JoinSemigroupCongruences,
 function(c1, c2)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
   if Range(c1) <> Range(c2) then
-    Error("congruences must be defined over the same semigroup,"); return;
+    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
+          "congruences must be defined over the same semigroup,");
+    return;
   fi;
   # n is the product of the normal subgroups
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
@@ -793,7 +865,9 @@ InstallMethod(JoinSemigroupCongruences,
 function(c1, c2)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
   if Range(c1) <> Range(c2) then
-    Error("congruences must be defined over the same semigroup,"); return;
+    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
+          "the args must be defined over the same semigroup,");
+    return;
   fi;
   # n is the product of the normal subgroups
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
@@ -839,25 +913,37 @@ InstallMethod(MeetSemigroupCongruences,
 function(c1, c2)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
-    Error("congruences must be defined over the same semigroup,"); return;
+    Error("Semigroups: MeetSemigroupCongruences: usage,\n",
+          "the args must be defined over the same semigroup,");
+    return;
   fi;
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
   # Calculate the intersection of the column and row relations
-  colBlocks := []; cols := [1 .. Size(c1!.colLookup)];
-  rowBlocks := []; rows := [1 .. Size(c1!.rowLookup)];
+  colBlocks := [];
+  cols := [1 .. Size(c1!.colLookup)];
+  rowBlocks := [];
+  rows := [1 .. Size(c1!.rowLookup)];
   for i in [1 .. Size(cols)] do
-    if cols[i] = 0 then continue; fi;
+    if cols[i] = 0 then
+      continue;
+    fi;
     block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
                           c2!.colBlocks[c2!.colLookup[i]]);
-    for j in block do cols[j] := 0; od;
+    for j in block do
+      cols[j] := 0;
+    od;
     Add(colBlocks, block);
   od;
   for u in [1 .. Size(rows)] do
-    if rows[u] = 0 then continue; fi;
+    if rows[u] = 0 then
+      continue;
+    fi;
     block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
                           c2!.rowBlocks[c2!.rowLookup[u]]);
-    for v in block do rows[v] := 0; od;
+    for v in block do
+      rows[v] := 0;
+    od;
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
@@ -872,25 +958,37 @@ InstallMethod(MeetSemigroupCongruences,
 function(c1, c2)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
-    Error("congruences must be defined over the same semigroup,"); return;
+    Error("Semigroups: MeetSemigroupCongruences: usage,\n",
+          "the args must be defined over the same semigroup,");
+    return;
   fi;
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
   # Calculate the intersection of the column and row relations
-  colBlocks := []; cols := [1 .. Size(c1!.colLookup)];
-  rowBlocks := []; rows := [1 .. Size(c1!.rowLookup)];
+  colBlocks := [];
+  cols := [1 .. Size(c1!.colLookup)];
+  rowBlocks := [];
+  rows := [1 .. Size(c1!.rowLookup)];
   for i in [1 .. Size(cols)] do
-    if cols[i] = 0 then continue; fi;
+    if cols[i] = 0 then
+      continue;
+    fi;
     block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
                           c2!.colBlocks[c2!.colLookup[i]]);
-    for j in block do cols[j] := 0; od;
+    for j in block do
+      cols[j] := 0;
+    od;
     Add(colBlocks, block);
   od;
   for u in [1 .. Size(rows)] do
-    if rows[u] = 0 then continue; fi;
+    if rows[u] = 0 then
+      continue;
+    fi;
     block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
                           c2!.rowBlocks[c2!.rowLookup[u]]);
-    for v in block do rows[v] := 0; od;
+    for v in block do
+      rows[v] := 0;
+    od;
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
@@ -907,14 +1005,20 @@ function(cong, nCoset, colClass, rowClass)
   local g;
   g := UnderlyingSemigroup(Range(cong));
   if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
-    Error("2nd argument <nCoset> must be a coset of <cong>'s field n in the ",
-          "underlying (semi)group of the Rees 0-matrix semigroup,"); return;
+    Error("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
+          "the second arg <nCoset> must be a right coset of ", cong!.n,
+          " inside ", g, ",");
+    return;
   fi;
   if not colClass in [1 .. Size(cong!.colBlocks)] then
-    Error("3rd argument <colClass> is out of range,"); return;
+    Error("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
+          "the third arg <colClass> is out of range,");
+    return;
   fi;
   if not rowClass in [1 .. Size(cong!.rowBlocks)] then
-    Error("4th argument <rowClass> is out of range,"); return;
+    Error("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
+          "the fourth arg <rowClass> is out of range,");
+    return;
   fi;
   return RMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
 end);
@@ -929,14 +1033,20 @@ function(cong, nCoset, colClass, rowClass)
   local g;
   g := UnderlyingSemigroup(Range(cong));
   if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
-    Error("2nd argument <nCoset> must be a coset of <cong>'s field n in the ",
-          "underlying (semi)group of the Rees 0-matrix semigroup,"); return;
+    Error("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
+          "the second arg <nCoset> must be a right coset of ", cong!.n,
+          " inside ", g, ",");
+    return;
   fi;
   if not colClass in [1 .. Size(cong!.colBlocks)] then
-    Error("3rd argument <colClass> is out of range,"); return;
+    Error("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
+          "the third arg <colClass> is out of range,");
+    return;
   fi;
   if not rowClass in [1 .. Size(cong!.rowBlocks)] then
-    Error("4th argument <rowClass> is out of range,"); return;
+    Error("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
+          "the fourth arg <rowClass> is out of range,");
+    return;
   fi;
   return RZMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
 end);
@@ -980,13 +1090,14 @@ end);
 #
 
 InstallMethod(EquivalenceClassOfElement,
-"for Rees matrix semigroup congruence by linked triple and a Rees matrix semigroup element",
+"for Rees matrix semigroup congruence by linked triple and element",
 [IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
 function(cong, elm)
-  # Check that the arguments make sense
+  # Check that the args make sense
   if not elm in Range(cong) then
-    Error("usage: 2nd argument <elm> should be ",
-          "in the semigroup of 1st argument <cong>");
+    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
+          "the second arg <elm> must be in the semigroup of ",
+          "first arg <cong>");
     return;
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
@@ -995,13 +1106,14 @@ end);
 #
 
 InstallMethod(EquivalenceClassOfElement,
-"for Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
+"for Rees 0-matrix semigroup congruence by linked triple and an element",
 [IsRZMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
 function(cong, elm)
-  # Check that the arguments make sense
+  # Check that the args make sense
   if not elm in Range(cong) then
-    Error("usage: 2nd argument <elm> should be ",
-          "in the semigroup of 1st argument <cong>");
+    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
+          "the second arg <elm> must be ",
+          "in the semigroup of first arg <cong>");
     return;
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
@@ -1010,7 +1122,7 @@ end);
 #
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for Rees matrix semigroup congruence by linked triple and a Rees matrix semigroup element",
+"for Rees matrix semigroup congruence by linked triple and element",
 [IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
 function(cong, elm)
   local fam, class, mat, nCoset, colClass, rowClass;
@@ -1031,7 +1143,7 @@ end);
 #
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for Rees 0-matrix semigroup congruence by linked triple and a Rees 0-matrix semigroup element",
+"for Rees 0-matrix semigroup congruence by linked triple and element",
 [IsRZMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
 function(cong, elm)
   local fam, class, mat, nCoset, colClass, rowClass;
@@ -1100,7 +1212,9 @@ InstallMethod( \*,
 function(c1, c2)
   local elm;
   if not Parent(c1) = Parent(c2) then
-    Error("<c1> and <c2> must be classes of the same congruence,"); return;
+    Error("Semigroups: \*: usage,\n",
+          "the args <c1> and <c2> must be classes of the same congruence,");
+    return;
   fi;
   elm := Representative(c1) * Representative(c2);
   return( EquivalenceClassOfElementNC(Parent(c1), elm) );
@@ -1114,7 +1228,9 @@ InstallMethod( \*,
 function(c1, c2)
   local elm;
   if not Parent(c1) = Parent(c2) then
-    Error("<c1> and <c2> must be classes of the same congruence,"); return;
+    Error("Semigroups: \*: usage,\n",
+          "<c1> and <c2> must be classes of the same congruence,");
+    return;
   fi;
   elm := Representative(c1) * Representative(c2);
   return( EquivalenceClassOfElementNC(Parent(c1), elm) );
@@ -1146,8 +1262,8 @@ InstallMethod(Size,
 function(class)
   local cong;
   cong := Parent(class);
-  return( Size(cong!.n) * 
-          Size(cong!.colBlocks[class!.colClass]) * 
+  return( Size(cong!.n) *
+          Size(cong!.colBlocks[class!.colClass]) *
           Size(cong!.rowBlocks[class!.rowClass]) );
 end);
 
@@ -1164,8 +1280,8 @@ function(class)
   fi;
   # Otherwise
   cong := Parent(class);
-  return( Size(cong!.n) * 
-          Size(cong!.colBlocks[class!.colClass]) * 
+  return( Size(cong!.n) *
+          Size(cong!.colBlocks[class!.colClass]) *
           Size(cong!.rowBlocks[class!.rowClass]) );
 end);
 
@@ -1213,7 +1329,7 @@ function(class)
   a := mat[1][i] ^ - 1
        * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
        * mat[u][1] ^ - 1;
-  return ReesMatrixSemigroupElement(s, i, a, u);
+  return RMSElement(s, i, a, u);
 end);
 
 #
@@ -1235,15 +1351,19 @@ function(class)
   # Pick another row and column with appropriate non-zero entries
   mat := Matrix(s);
   for v in [1 .. Size(mat)] do
-    if mat[v][i] <> 0 then break; fi;
+    if mat[v][i] <> 0 then
+      break;
+    fi;
   od;
   for j in [1 .. Size(mat[1])] do
-    if mat[u][j] <> 0 then break; fi;
+    if mat[u][j] <> 0 then
+      break;
+    fi;
   od;
   a := mat[v][i] ^ - 1
        * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
        * mat[u][j] ^ - 1;
-  return ReesZeroMatrixSemigroupElement(s, i, a, u);
+  return RMSElement(s, i, a, u);
 end);
 
 #
@@ -1264,8 +1384,8 @@ function(cong)
   # for each x in the subgroup,
   # (1,x,1) is related to (1,id,1)
   for x in cong!.n do
-    Add(pairs, [ReesMatrixSemigroupElement(s,1,x,1),
-                ReesMatrixSemigroupElement(s,1,One(g),1) ] );
+    Add(pairs, [RMSElement(s,1,x,1),
+                RMSElement(s,1,One(g),1) ] );
   od;
 
   # PAIRS FROM THE COLUMNS RELATION
@@ -1276,8 +1396,8 @@ function(cong)
       # For each row in the matrix...
       for rowNo in [1 .. Size(m)] do
         Add(pairs,
-            [ReesMatrixSemigroupElement(s,bl[1],m[rowNo][bl[1]] ^ - 1,rowNo),
-             ReesMatrixSemigroupElement(s,bl[j],m[rowNo][bl[j]] ^ - 1,rowNo)]);
+            [RMSElement(s,bl[1],m[rowNo][bl[1]] ^ - 1,rowNo),
+             RMSElement(s,bl[j],m[rowNo][bl[j]] ^ - 1,rowNo)]);
       od;
     od;
   od;
@@ -1290,8 +1410,8 @@ function(cong)
       # For each column in the matrix...
       for colNo in [1 .. Size(m[1])] do
         Add(pairs,
-            [ReesMatrixSemigroupElement(s,colNo,m[bl[1]][colNo] ^ - 1,bl[1]),
-             ReesMatrixSemigroupElement(s,colNo,m[bl[i]][colNo] ^ - 1,bl[i])]);
+            [RMSElement(s,colNo,m[bl[1]][colNo] ^ - 1,bl[1]),
+             RMSElement(s,colNo,m[bl[i]][colNo] ^ - 1,bl[i])]);
       od;
     od;
   od;
@@ -1319,8 +1439,8 @@ function(cong)
   # for each x in the subgroup,
   # (i1,x,1) is related to (i1,id,1)
   for x in cong!.n do
-    Add(pairs, [ReesZeroMatrixSemigroupElement(s,i1,x,1),
-                ReesZeroMatrixSemigroupElement(s,i1,One(g),1) ] );
+    Add(pairs, [RMSElement(s,i1,x,1),
+                RMSElement(s,i1,One(g),1) ] );
   od;
 
   # PAIRS FROM THE COLUMNS RELATION
@@ -1332,8 +1452,8 @@ function(cong)
       for rowNo in [1 .. Size(m)] do
         if m[rowNo][bl[1]] <> 0 then
           Add(pairs,
-              [ReesZeroMatrixSemigroupElement(s,bl[1],m[rowNo][bl[1]] ^ - 1,rowNo),
-               ReesZeroMatrixSemigroupElement(s,bl[j],m[rowNo][bl[j]] ^ - 1,rowNo)] );
+          [RMSElement(s,bl[1],m[rowNo][bl[1]] ^ - 1,rowNo),
+          RMSElement(s,bl[j],m[rowNo][bl[j]] ^ - 1,rowNo)] );
         fi;
       od;
     od;
@@ -1348,8 +1468,8 @@ function(cong)
       for colNo in [1 .. Size(m[1])] do
         if m[bl[1]][colNo] <> 0 then
           Add(pairs,
-              [ReesZeroMatrixSemigroupElement(s,colNo,m[bl[1]][colNo] ^ - 1,bl[1]),
-               ReesZeroMatrixSemigroupElement(s,colNo,m[bl[i]][colNo] ^ - 1,bl[i])] );
+              [RMSElement(s,colNo,m[bl[1]][colNo] ^ - 1,bl[1]),
+               RMSElement(s,colNo,m[bl[i]][colNo] ^ - 1,bl[i])] );
         fi;
       od;
     od;
@@ -1555,7 +1675,9 @@ function(cong)
     od;
     i := PositionProperty([1 .. Size(mat[1])], k -> mat[pair[1][3]][k] <> 0);
     for j in [i + 1 .. Size(mat[1])] do
-      if mat[pair[1][3]][j] = 0 then continue; fi;
+      if mat[pair[1][3]][j] = 0 then
+        continue;
+      fi;
       n := ClosureGroup( n,
                    mat[pair[1][3]][i]
                    * mat[pair[2][3]][i] ^ - 1
