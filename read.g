@@ -104,6 +104,7 @@ ReadPackage("semigroups/gap/acting.gi");
 ReadPackage("semigroups/gap/ideals-acting.gi");
 ReadPackage("semigroups/gap/graded.gi");
 ReadPackage("semigroups/gap/semigroups.gi");
+ReadPackage("semigroups/gap/semigroups-acting.gi");
 ReadPackage("semigroups/gap/greens-generic.gi");
 ReadPackage("semigroups/gap/greens-acting.gi");
 ReadPackage("semigroups/gap/ideals-greens.gi");

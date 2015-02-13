@@ -266,7 +266,7 @@ function(o, m)
     fi;
   fi;
 
-  RhoOrbSchutzGp(o, m, infinity);
+  RhoOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
 
@@ -399,9 +399,9 @@ end);
 # JDM could use IsRegular here to speed up?
 
 InstallGlobalFunction(RhoOrbSchutzGp,
-function(o, m, bound)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults,
-  rho_rank, i, j;
+function(o, m)
+  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, i,
+  bound, rho_rank, j;
 
   if IsBound(o!.schutz) then
     if IsBound(o!.schutz[m]) then
@@ -414,11 +414,12 @@ function(o, m, bound)
 
   g := Group(());
 
-  if bound = 1 then
-    o!.schutz[m] := g;
-    o!.schutzstab[m] := false;
-    return g;
-  fi;
+  # FIXME delete this hunk
+  #if bound = 1 then
+  #  o!.schutz[m] := g;
+  #  o!.schutzstab[m] := false;
+  #  return g;
+  #fi;
 
   s := o!.parent;
   gens := o!.gens;
@@ -433,13 +434,11 @@ function(o, m, bound)
   i := RhoRank(s)(o[scc[1]]);
 
   if i < 1000 then
-    j := Factorial(i);
-    if bound > j then
-      bound := j;
-    fi;
+    bound := Factorial(i);
   else
     bound := infinity;
   fi;
+
   for i in scc do
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
