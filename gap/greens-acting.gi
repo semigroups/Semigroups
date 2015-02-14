@@ -11,16 +11,62 @@
 # TODO 
 # 1) recheck the "same/different" method comments
 
+#############################################################################
 ## This file contains methods for Green's classes etc for acting semigroups.
 ## It is organized as follows:
 ## 
 ##   1. Helper functions for the creation of Green's classes
 ##
-##   2. 
+##   2. Technical Green's stuff (types, representative, etc)
 ##
+##   3. Individual Green's classes (constructors, size, membership)
+## 
+##   4. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
+## 
+##   5. Idempotents and NrIdempotents
+##   
+##   6. Regularity of Green's classes
+## 
+##   7. Iterators and enumerators
+#############################################################################
 
+#############################################################################
+## Green's classes are created as follows:
+## 
+##   1. Create the class C using SEMIGROUPS_CreateXClass, this sets the type,
+##      equivalence relations, whether or not the class is NC, the parent, and
+##      the element used to create the class (stored in C!.rep)
+##
+##   2. Copy or set the lambda/rho orbits using SEMIGROUPS_CopyLambda/Rho and
+##      SEMIGROUPS_SetLambda/Rho. After calling any combination of these two
+##      functions Lambda/RhoOrb and Lambda/RhoOrbSCCIndex for the class are set. 
+##
+##      The former simply copies the orbit and the index of the strongly
+##      connected component containing the lambda/rho value of the element used
+##      to create the class. This is useful, for example, when trying to create
+##      an R-class of a D-class, when the lambda orbit and scc index are just
+##      the same as those for the D-class. 
+##      
+##      The latter uses the lambda/rho orbit of the whole semigroup if it is
+##      known and the class is not nc. Otherwise it creates/finds the graded
+##      lambda/rho orbit. If the graded lambda/rho orbit is created/found, then
+##      the position of the lambda/rho value of C!.rep (the element used to
+##      create the class) in the orbit is stored in C!.Lambda/RhoPos. 
+##
+##   3. Rectify the lambda/rho value of the representative. The representative
+##      of an R-class, for example, must have its lambda-value in the first
+##      position of the scc containing it. Representatives of L-classes must
+##      have the rho-value must be in the first position of the scc containing
+##      it, D-class reps must have both lambda- and rho-values in the respective
+##      first positions, the lambda- and rho-values of H-class reps must not be
+##      modified. The functions SEMIGROUPS_RectifyLambda/Rho can used to modify
+##      C!.rep (in place) so that its lambda/rho-value is in the first place of
+##      its scc. These functions depend on the previous 2 steps being called. 
+#############################################################################
 
+#############################################################################
 ## 1. Helper functions for the creation of Green's classes . . .
+#############################################################################
 
 # same method for regular/different for inverse
 
@@ -52,24 +98,90 @@ function(arg)
 end);
 
 # same method for regular/inverse
-# FIXME update this like CreateDClass 
 
 BindGlobal("SEMIGROUPS_CreateRClass",
-function(old)
+function(arg)
+  local S, nc, rep, C;
+
+  if Length(arg) = 1 then # arg is a Green's class
+    S := Parent(arg[1]);
+    nc := IsGreensClassNC(arg[1]);
+    rep := Representative(arg[1]);
+  elif Length(arg) = 2 then # arg is a Green's class and rep
+    S := Parent(arg[1]);
+    nc := IsGreensClassNC(arg[1]);
+    rep := arg[2];
+  else  # arg is semigroup, rep, and boolean
+    S := arg[1];
+    rep := arg[2];
+    nc := arg[3];
+  fi;
+
+  C := ObjectifyWithAttributes(rec(rep:=rep), 
+                               RClassType(S),
+                               Parent,          S,  
+                               IsGreensClassNC, nc);
+
+  SetEquivalenceClassRelation(C, GreensRRelation(S));
+  return C;
 end);
 
 # same method for regular/inverse
-# FIXME update this like CreateDClass 
 
 BindGlobal("SEMIGROUPS_CreateLClass",
-function(old)
+function(arg)
+  local S, nc, rep, C;
+
+  if Length(arg) = 1 then # arg is a Green's class
+    S := Parent(arg[1]);
+    nc := IsGreensClassNC(arg[1]);
+    rep := Representative(arg[1]);
+  elif Length(arg) = 2 then # arg is a Green's class and rep
+    S := Parent(arg[1]);
+    nc := IsGreensClassNC(arg[1]);
+    rep := arg[2];
+  else  # arg is semigroup, rep, and boolean
+    S := arg[1];
+    rep := arg[2];
+    nc := arg[3];
+  fi;
+
+  C := ObjectifyWithAttributes(rec(rep:=rep), 
+                               LClassType(S),
+                               Parent,          S,  
+                               IsGreensClassNC, nc);
+
+  SetEquivalenceClassRelation(C, GreensLRelation(S));
+  return C;
 end);
 
 # same method for regular/inverse
-# FIXME update this like CreateDClass 
 
 BindGlobal("SEMIGROUPS_CreateHClass",
-function(old)
+function(arg)
+  local S, nc, rep, C;
+
+  if Length(arg) = 1 then # arg is a Green's class
+    S := Parent(arg[1]);
+    nc := IsGreensClassNC(arg[1]);
+    rep := Representative(arg[1]);
+  elif Length(arg) = 2 then # arg is a Green's class and rep
+    S := Parent(arg[1]);
+    nc := IsGreensClassNC(arg[1]);
+    rep := arg[2];
+  else  # arg is semigroup, rep, and boolean
+    S := arg[1];
+    rep := arg[2];
+    nc := arg[3];
+  fi;
+
+  C := ObjectifyWithAttributes(rec(rep:=rep), 
+                               HClassType(S),
+                               Parent,          S,  
+                               IsGreensClassNC, nc);
+
+  SetEquivalenceClassRelation(C, GreensHRelation(S));
+  return C;
 end);
 
 #
@@ -134,12 +246,12 @@ function(C)
     i := C!.LambdaPos;
   fi;
   #FIXME comment out this if-condition except the else part
-  if not HasLambdaOrbSCCIndex(C) then 
-    m := OrbSCCLookup(o)[i];
-    SetLambdaOrbSCCIndex(C, m);
-  else
+  #if not HasLambdaOrbSCCIndex(C) then 
+  #  m := OrbSCCLookup(o)[i];
+  #  SetLambdaOrbSCCIndex(C, m);
+  #else
     m := LambdaOrbSCCIndex(C);
-  fi;
+  #fi;
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := C!.rep * LambdaOrbMult(o, m, i)[2];
@@ -168,12 +280,12 @@ function(C)
   fi;
 
   #FIXME comment out this if-condition except the else part
-  if not HasRhoOrbSCCIndex(C) then 
-    m := OrbSCCLookup(o)[i];
-    SetRhoOrbSCCIndex(C, m);
-  else 
+  #if not HasRhoOrbSCCIndex(C) then 
+  #  m := OrbSCCLookup(o)[i];
+  #  SetRhoOrbSCCIndex(C, m);
+  #else 
     m := RhoOrbSCCIndex(C);
-  fi;
+  #fi;
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := RhoOrbMult(o, m, i)[2] * C!.rep; 
@@ -328,7 +440,9 @@ function(H)
                       SchutzenbergerGroup(RClassOfHClass(H)));
 end);
 
-## Technical Green's classes stuff . . .
+#############################################################################
+## 2. Technical Green's classes stuff . . .
+#############################################################################
 
 InstallMethod(Representative, 
 "for an acting semigroup Green's class",
@@ -384,7 +498,9 @@ function( S )
          IsActingSemigroupGreensClass);
 end);
 
-## Individual classes . . .
+#############################################################################
+## 3. Individual classes . . .
+#############################################################################
 
 # same method for regular/inverse FIXME is this necessary?
 
@@ -928,7 +1044,9 @@ function(x, H)
   return LambdaPerm(S)(rep, x) in SchutzenbergerGroup(H);
 end);
 
-## Collections of classes, and reps
+#############################################################################
+## 4. Collections of classes, and reps
+#############################################################################
 
 # These are not rho-rectified!
 
@@ -1378,7 +1496,9 @@ function(s)
   return out;
 end);
 
-## Idempotents . . .
+#############################################################################
+## 5. Idempotents . . .
+#############################################################################
 
 # same method for regular, different method for inverse, same for ideals
 
@@ -1561,7 +1681,7 @@ function(H)
   return [IdempotentCreator(S)(LambdaFunc(S)(x), RhoFunc(S)(x))];
 end);
 
-## Number of idempotents . . .
+# Number of idempotents . . .
 
 # different method for regular/inverse, same for ideals
 
@@ -1688,7 +1808,9 @@ function(H)
   return 0;
 end);
 
-## Regular classes . . . 
+#############################################################################
+## 6. Regular classes . . . 
+#############################################################################
 
 # helper function, for: Green's class, lambda/rho value, rho/lambda scc,
 # rho/lambda orbit, and boolean
@@ -1791,8 +1913,9 @@ function(S)
   return nr;
 end);
 
-
-## Iterators and enumerators . . .
+#############################################################################
+## 7. Iterators and enumerators . . .
+#############################################################################
 
 # TODO improve the performance of this
 
@@ -1830,50 +1953,60 @@ function(S)
 end);
 
 # same method for regular/inverse
-#TODO refactor
 
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
-  local iter;
+function(S)
+  local iter, convert;
 
-  if HasGreensRClasses(s) then
-    iter := IteratorList(GreensRClasses(s));
+  if HasGreensRClasses(S) then
+    iter := IteratorList(GreensRClasses(S));
     SetIsIteratorOfRClasses(iter, true);
     return iter;
   fi;
-
-  return IteratorByIterator(IteratorOfRClassData(s), x ->
-   CallFuncList(SEMIGROUPS_CreateRClassNC, x), [IsIteratorOfRClasses]);
+  
+  convert := function(x)
+    R := SEMIGROUPS_CreateRClass(S, x[4], false);
+    SetLambdaOrb(R, x[3]);
+    SetLambdaOrbSCCIndex(out[i], x[2]);
+    return R;
+  end;
+  return IteratorByIterator(IteratorOfRClassData(s), convert,
+   [IsIteratorOfRClasses]);
 end);
 
 #TODO this should be improved at some point
 
 # different method for regular/inverse
-#TODO refactor
 
 InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local iter;
 
-  if IsClosedData(SemigroupData(s)) then
-    iter := IteratorList(GreensDClasses(s));
+  if IsClosedData(SemigroupData(S)) then
+    iter := IteratorList(GreensDClasses(S));
     SetIsIteratorOfDClasses(iter, true);
     return iter;
   fi;
 
   return IteratorByIterator(
-    IteratorOfRClassData(s),  # baseiter
+    IteratorOfRClassData(S),  # baseiter
     function(iter, x)         # convert
-      local d;
-      d := DClassOfRClass(CallFuncList(SEMIGROUPS_CreateRClassNC, x));
-      Add(iter!.classes, d);
-      return d;
+      local D;
+      convert := function(x)
+        R := SEMIGROUPS_CreateRClass(S, x[4], false);
+        SetLambdaOrb(R, x[3]);
+        SetLambdaOrbSCCIndex(out[i], x[2]);
+        return R;
+      end;
+      D := DClassOfRClass(convert(x));
+      Add(iter!.classes, D);
+      return D;
     end,
     [IsIteratorOfDClasses],
     function(iter, x)         #isnew
-      return x = fail or ForAll(iter!.classes, d -> not x[4] in d);
+      return x = fail or ForAll(iter!.classes, D -> not x[4] in D);
      end,
-    rec(classes := []));        #iter
+    rec(classes := []));      #iter
 end);
