@@ -15,7 +15,8 @@
 ## This file contains methods for Green's classes etc for acting semigroups.
 ## It is organized as follows:
 ##
-##   1. Helper functions for the creation of Green's classes
+##   1. Helper functions for the creation of Green's classes, and lambda-rho
+##      stuff.
 ##
 ##   2. Technical Green's stuff (types, representative, etc)
 ##
@@ -28,6 +29,7 @@
 ##   6. Regularity of Green's classes
 ##
 ##   7. Iterators and enumerators
+## 
 #############################################################################
 
 #############################################################################
@@ -786,8 +788,7 @@ function(D, x)
   return L;
 end);
 
-# different method for regular/inverse, same for ideals, #TODO review this
-# comment
+# same method for regular/inverse/ideals
 
 InstallMethod(GreensRClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
@@ -800,7 +801,7 @@ function(S, x)
     return;
   fi;
   R := SEMIGROUPS_CreateRClass(S, x, false);
-  SetLambdaOrb(R, LambdaOrb(S));
+  SEMIGROUPS_SetLambda(R);
   SEMIGROUPS_RectifyLambda(R);
   return R;
 end);
@@ -877,17 +878,17 @@ InstallMethod(Size, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 L -> Size(SchutzenbergerGroup(L)) * Length(RhoOrbSCC(L)));
 
-# different method for regular/inverse, same for ideals
+# same method for regular/ideals, different for inverse
 
 InstallMethod(\in, "for associative element and D-class of acting semigroup",
 [IsAssociativeElement, IsGreensDClass and IsActingSemigroupGreensClass],
 function(x, D)
-  local rep, S, m, o, scc, l, schutz, cosets, p;
+  local S, rep, m, o, scc, l, schutz, cosets, p;
 
-  rep := Representative(D);
   S := Parent(D);
+  rep := Representative(D);
 
-  # <ActionRank> method selection causes slow down here...
+  # FIXME ActionRank method selection causes slow down here...
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
     or (IsActingSemigroupWithFixedDegreeMultiplication(S)
         and ActionDegree(x) <> ActionDegree(rep))
