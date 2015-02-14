@@ -1967,12 +1967,13 @@ function(S)
   fi;
 
   convert := function(x)
+    local R;
     R := SEMIGROUPS_CreateRClass(S, x[4], false);
     SetLambdaOrb(R, x[3]);
-    SetLambdaOrbSCCIndex(out[i], x[2]);
+    SetLambdaOrbSCCIndex(R, x[2]);
     return R;
   end;
-  return IteratorByIterator(IteratorOfRClassData(s), convert,
+  return IteratorByIterator(IteratorOfRClassData(S), convert,
    [IsIteratorOfRClasses]);
 end);
 
@@ -1994,11 +1995,12 @@ function(S)
   return IteratorByIterator(
     IteratorOfRClassData(S),  # baseiter
     function(iter, x)         # convert
-      local D;
+      local D, convert;
       convert := function(x)
+        local R;
         R := SEMIGROUPS_CreateRClass(S, x[4], false);
         SetLambdaOrb(R, x[3]);
-        SetLambdaOrbSCCIndex(out[i], x[2]);
+        SetLambdaOrbSCCIndex(R, x[2]);
         return R;
       end;
       D := DClassOfRClass(convert(x));
@@ -2006,7 +2008,7 @@ function(S)
       return D;
     end,
     [IsIteratorOfDClasses],
-    function(iter, x)         #isnew
+    function(iter, x)         #isnew FIXME ugh!!
       return x = fail or ForAll(iter!.classes, D -> not x[4] in D);
      end,
     rec(classes := []));      #iter
