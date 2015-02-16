@@ -104,7 +104,7 @@ InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 
 # H-classes . . .
 
-# same method for regular/inverse, same method for ideals
+# 
 
 InstallMethod(MultiplicativeNeutralElement,
 "for a H-class of a semigroup", [IsGreensHClass],
@@ -115,32 +115,30 @@ function(H)
   return Idempotents(H)[1];
 end);
 
-# different method for regular/inverse, same method for ideals
+# 
 
 InstallMethod(NrHClasses, "for a semigroup", [IsSemigroup],
-function(S)
-  return Sum(List(GreensDClasses(S), NrHClasses));
-end);
+S -> Sum(List(GreensDClasses(S), NrHClasses)));
 
 InstallMethod(NrHClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensHClasses(S)));
 
-# different method for regular/inverse, same for ideals
+# 
 
 InstallMethod(NrHClasses, "for a Green's D-class",
 [IsGreensDClass], D -> NrRClasses(D) * NrLClasses(D));
 
-# different method for regular/inverse, same for ideals
+# 
 
 InstallMethod(NrHClasses, "for a Green's L-class",
 [IsGreensLClass], L -> NrRClasses(DClassOfLClass(L)));
 
-# different method for regular/inverse, same for ideals
+# 
 
 InstallMethod(NrHClasses, "for a Green's R-class",
 [IsGreensRClass], R -> NrLClasses(DClassOfRClass(R)));
 
-#same method for inverse/regular, same for ideals
+#
 
 InstallMethod(StructureDescription, "for a Green's H-class",
 [IsGreensHClass],
