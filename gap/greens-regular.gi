@@ -10,7 +10,7 @@
 
 ## This file contains methods for Green's classes of regular acting semigroups.
 ## See the start of greens-acting.gi for details of how to create Green's
-## classes of acting semigroups. 
+## classes of acting semigroups.
 
 #############################################################################
 ## This file contains methods for Green's classes etc for acting semigroups.
@@ -30,7 +30,7 @@
 ##   6. Regularity of Green's classes
 ##
 ##   7. Iterators and enumerators
-## 
+##
 #############################################################################
 
 #############################################################################
@@ -508,7 +508,7 @@ function(S)
 end);
 
 # different method for inverse semigroups
-# FIXME move this 
+# FIXME move this
 
 InstallMethod(Size, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
