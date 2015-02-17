@@ -607,7 +607,7 @@ gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 
-#T# PropertiesTest52 Checking E-unitary
+#T# PropertiesTest52: Checking E-unitary
 gap> [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 1, 2, 5 ] ),
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 1, 4 ] ) ];;
 gap> s:=InverseSemigroup(last);;
@@ -764,7 +764,7 @@ gap> S := Semigroup(
 gap> IsCongruenceFreeSemigroup(S);
 false
 
-#T# IsSynchronizingSemigroup
+#T# PropertiesTest55: IsSynchronizingSemigroup
 # for <IdentityTransformation>
 gap> t := Transformation( [ 1 ] );;
 gap> s := Semigroup(t);

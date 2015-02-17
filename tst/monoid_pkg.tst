@@ -146,7 +146,7 @@ false
 gap> IsBand(S);
 false
 
-#T# MonoidPkgTest6 from greens.tst
+#T# MonoidPkgTest6: from greens.tst
 gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ), 
 >  Transformation( [ 5, 5, 3, 8, 3, 7, 4, 6 ] ), 
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
@@ -933,7 +933,7 @@ gap> AsSet(Enumerate(RhoOrb(S)));
 [ [ 0 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ] ]
 
-#T# MonoidPkgTest7 from install_no_grape.tst
+#T# MonoidPkgTest7: from install_no_grape.tst
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> s:=Semigroup(gens);;

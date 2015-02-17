@@ -16,7 +16,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#T# Inverse semigroup of partial perms
+#T# SemigroupsTest1: Inverse semigroup of partial perms
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9 ], [ 8, 9, 6, 7, 3, 4, 5 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 8, 9 ], [ 2, 4, 1, 7, 3, 10, 8 ] ),
@@ -151,7 +151,7 @@ gap> s:=InverseSemigroup(gens, rec(small:=true));;
 gap> NrDClasses(s);
 14
 
-#T# Inverse monoid of partial perms
+#T# SemigroupsTest2: Inverse monoid of partial perms
 gap> s:=InverseMonoid(PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 6, 8, 2 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 9, 10 ], [ 7, 2, 1, 5, 9, 4 ] ) );;
 gap> Generators(s);
@@ -169,7 +169,7 @@ gap> GeneratorsOfMonoid(s);
 [ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9), [6,2,5,1][8,3], 
   [4,10][7,1,3](2)(5)(9) ]
 
-#T# Dihedral (perm) group to a partial perm semigroup
+#T# SemigroupsTest3: Dihedral (perm) group to a partial perm semigroup
 gap> g:=DihedralGroup(8);;
 gap> g:=Range(IsomorphismPermGroup(g));;
 gap> iso:=IsomorphismPartialPermSemigroup(g);
@@ -190,7 +190,7 @@ true
 gap> Size(Range(iso));
 8
 
-#T# Symmetric (perm) group to a partial perm semigroup
+#T# SemigroupsTest4: Symmetric (perm) group to a partial perm semigroup
 gap> s := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <inverse partial perm semigroup on 4 pts with 2 generators>
 gap> iso := IsomorphismPermGroup(s);
@@ -216,7 +216,7 @@ gap> Size(s);
 gap> Size(Range(iso));
 24
 
-#T# FreeInverseSemigroup
+#T# SemigroupsTest5: FreeInverseSemigroup
 gap> S := FreeInverseSemigroup(3);
 <free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> Size(S);
