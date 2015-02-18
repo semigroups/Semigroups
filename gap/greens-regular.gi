@@ -303,7 +303,7 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 NrDClasses);
 
 #############################################################################
-## 7. Iterators and enumerators . . . 
+## 7. Iterators and enumerators . . .
 ## FIXME move this whole section to another file
 #############################################################################
 
@@ -312,11 +312,11 @@ NrDClasses);
 InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(S)
-  if HasGreensLClasses(S) then 
+  if HasGreensLClasses(S) then
     return IteratorList(GreensLClasses(S));
   fi;
 
-  return IteratorByIterator(IteratorOfLClassReps(S), 
+  return IteratorByIterator(IteratorOfLClassReps(S),
                             x -> GreensLClassOfElementNC(S, x),
                             [IsIteratorOfLClasses]);
 end);
@@ -329,7 +329,7 @@ function(S)
   if HasGreensDClasses(S) then
     return IteratorList(GreensDClasses(S));
   fi;
-  return IteratorByIterator(IteratorOfDClassReps(S), 
+  return IteratorByIterator(IteratorOfDClassReps(S),
                             x -> GreensDClassOfElementNC(S, x),
                             [IsIteratorOfDClasses]);
 end);

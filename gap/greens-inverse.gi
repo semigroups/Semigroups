@@ -20,13 +20,13 @@
 
 # the following is only for inverse op semigroups!
 
-BindGlobal("SEMIGROUPS_DClassOfXClass", 
+BindGlobal("SEMIGROUPS_DClassOfXClass",
 function(X)
   local D;
   D := SEMIGROUPS_CreateDClass(X);
   SEMIGROUPS_CopyLambda(X, D);
   SEMIGROUPS_RectifyLambda(D);
-  D!.rep := RightOne(D!.rep); 
+  D!.rep := RightOne(D!.rep);
   # so that lambda and rho are rectified!
   return D;
 end);
@@ -74,7 +74,7 @@ function(L)
     p := LambdaConjugator(Parent(L))(RightOne(LambdaOrbRep(o, m)),
           Representative(L));
     return LambdaOrbSchutzGp(o, m) ^ p;
-  else 
+  else
     return LambdaOrbSchutzGp(o, m);
   fi;
 end);
@@ -134,28 +134,28 @@ end);
 #############################################################################
 
 
-InstallMethod(DClassOfLClass, 
+InstallMethod(DClassOfLClass,
 "for an L-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 SEMIGROUPS_DClassOfXClass);
 
 #
 
-InstallMethod(DClassOfRClass, 
+InstallMethod(DClassOfRClass,
 "for an R-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 SEMIGROUPS_DClassOfXClass);
 
 #
 
-InstallMethod(DClassOfHClass, 
+InstallMethod(DClassOfHClass,
 "for an H-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 SEMIGROUPS_DClassOfXClass);
 
 #
 
-InstallMethod(LClassOfHClass, 
+InstallMethod(LClassOfHClass,
 "for an H-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
@@ -187,7 +187,7 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensDClassOfElementNC, 
+InstallMethod(GreensDClassOfElementNC,
 "for an inverse op acting semigroup and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
@@ -200,7 +200,7 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensLClassOfElement, 
+InstallMethod(GreensLClassOfElement,
 "for an inverse op acting semigroup and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
@@ -220,7 +220,7 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensLClassOfElementNC, 
+InstallMethod(GreensLClassOfElementNC,
 "for an inverse op acting semigroup and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
@@ -233,8 +233,10 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensLClassOfElementNC, "for D-class and associative element",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+InstallMethod(GreensLClassOfElementNC,
+"for inverse op D-class and associative element",
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
+IsAssociativeElement],
 function(D, x)
   local L;
   L := SEMIGROUPS_CreateLClass(D, x);
@@ -246,7 +248,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensHClassOfElement, "for an inverse op acting semigroup and element",
+InstallMethod(GreensHClassOfElement,
+"for an inverse op acting semigroup and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
   local H;
@@ -265,7 +268,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensHClassOfElementNC, "for an inverse op acting semigroup and element",
+InstallMethod(GreensHClassOfElementNC,
+"for an inverse op acting semigroup and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
   local H;
@@ -278,12 +282,13 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensHClassOfElementNC, "for a inverse op class and element",
-[IsInverseOpClass and IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement],
+[IsInverseOpClass and IsActingSemigroupGreensClass and IsGreensDClass,
+IsAssociativeElement],
 function(C, x)
   local H;
   H := SEMIGROUPS_CreateHClass(C, x);
   SEMIGROUPS_CopyLambda(C, H);
-  
+
   if IsGreensLClass(C) then
     SetLClassOfHClass(H, C);
   elif IsGreensRClass(C) then
@@ -319,7 +324,7 @@ function(x, D)
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
     or (IsActingSemigroupWithFixedDegreeMultiplication(S) and
-        ActionDegree(x) <> ActionDegree(rep)) 
+        ActionDegree(x) <> ActionDegree(rep))
     or ActionRank(S)(x) <> ActionRank(S)(rep) then
     return false;
   fi;
@@ -331,17 +336,17 @@ function(x, D)
 
   if l = fail or OrbSCCLookup(o)[l] <> m then
     return false;
-  elif l <> scc[m][1] then 
+  elif l <> scc[m][1] then
     x := LambdaOrbMult(o, m, l)[1] * x;
   fi;
-  
+
   l := Position(o, LambdaFunc(S)(x));
   if l = fail or OrbSCCLookup(o)[l] <> m then
     return false;
-  elif l <> scc[m][1] then 
+  elif l <> scc[m][1] then
     x := x * LambdaOrbMult(o, m, l)[2];
   fi;
-  
+
   schutz := LambdaOrbStabChain(o, m);
   if schutz = true then
     return true;
@@ -377,7 +382,7 @@ function(x, L)
   scc := OrbSCC(o);
   l := Position(o, RhoFunc(S)(x));
   schutz := LambdaOrbStabChain(o, m);
-  
+
   if l = fail or OrbSCCLookup(o)[l] <> m then
     return false;
   elif schutz = true then
@@ -497,7 +502,7 @@ L -> Length(LambdaOrbSCC(L)));
 
 InstallMethod(NrHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
-S -> 
+S ->
 return Sum(List(OrbSCC(Enumerate(LambdaOrb(S))), x -> Length(x) ^ 2)) - 1));
 
 # same method for inverse ideals
@@ -584,7 +589,7 @@ function(S, n)
   fi;
 
   o := LambdaOrb(S);
-  
+
   if not IsClosed(o) then
     Enumerate(o, infinity);
   fi;

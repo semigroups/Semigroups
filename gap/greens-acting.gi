@@ -29,7 +29,7 @@
 ##   6. Regularity of Green's classes
 ##
 ##   7. Iterators and enumerators
-## 
+##
 #############################################################################
 
 #############################################################################
@@ -104,26 +104,30 @@ end);
 
 BindGlobal("SEMIGROUPS_CreateDClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, DClassType(arg[1]), GreensDRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, DClassType(arg[1]),
+   GreensDRelation(arg[1]));
 end);
 
 BindGlobal("SEMIGROUPS_CreateRClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, RClassType(arg[1]), GreensRRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, RClassType(arg[1]),
+   GreensRRelation(arg[1]));
 end);
 
 # same method for regular/inverse
 
 BindGlobal("SEMIGROUPS_CreateLClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, LClassType(arg[1]), GreensLRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, LClassType(arg[1]),
+   GreensLRelation(arg[1]));
 end);
 
 # same method for regular/inverse
 
 BindGlobal("SEMIGROUPS_CreateHClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, HClassType(arg[1]), GreensHRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, HClassType(arg[1]),
+   GreensHRelation(arg[1]));
 end);
 
 #
@@ -444,7 +448,7 @@ end);
 ## 3. Individual classes . . .
 #############################################################################
 
-# same method for regular/inverse 
+# same method for regular/inverse
 # FIXME is this necessary?
 
 InstallMethod(GreensJClassOfElement, "for acting semigroup and element",
