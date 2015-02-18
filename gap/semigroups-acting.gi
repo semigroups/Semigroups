@@ -218,6 +218,7 @@ function(x, S)
 end);
 
 # same method for inverse ideals
+# TODO clean this up
 
 InstallMethod(\in,
 "for an associative element and acting semigroup with inversion",
@@ -302,8 +303,13 @@ function(f, s)
     return false;
   fi;
 
-  # the D-class rep corresponding to lambda_o and scc.
-  rep := RectifyInverseRho(s, o, LambdaOrbRep(o, m));
+  rep := LambdaOrbRep(LambdaOrb(s), m);
+  rho_l := Position(LambdaOrb(s), RhoFunc(s)(rep));
+
+  if rho_l <> OrbSCC(RhoOrb(s))[m][1] then
+    # the D-class rep corresponding to lambda_o and scc.
+    rep := LambdaOrbMult(LambdaOrb(s), n, rho_l)[1] * rep;
+  fi;
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g)) = ();
 end);
 

@@ -52,7 +52,7 @@ function(C)
   m := LambdaOrbSCCIndex(C);
 
   if i <> OrbSCC(o)[m][1] then
-    C!.rep := LambdaOrbMult(o, m, l)[1] * C!.rep;
+    C!.rep := LambdaOrbMult(o, m, i)[1] * C!.rep;
     # don't set Representative in case we must also rectify Lambda
   fi;
 
@@ -463,7 +463,7 @@ function(L)
   m := LambdaOrbSCCIndex(L);
   scc := OrbSCC(o)[m];
   mults := LambdaOrbMults(o, m);
-  rep := Representative(l);
+  rep := Representative(L);
   out := EmptyPlist(Length(scc));
   nr := 0;
   for i in scc do
@@ -503,7 +503,7 @@ L -> Length(LambdaOrbSCC(L)));
 InstallMethod(NrHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 S ->
-return Sum(List(OrbSCC(Enumerate(LambdaOrb(S))), x -> Length(x) ^ 2)) - 1));
+Sum(List(OrbSCC(Enumerate(LambdaOrb(S))), x -> Length(x) ^ 2)) - 1);
 
 # same method for inverse ideals
 
@@ -521,7 +521,7 @@ end);
 InstallMethod(PartialOrderOfDClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(S)
-  local D, n, out, o, gens, lookup, lambdafunc, i, x, f;
+  local D, n, out, o, gens, lookup, lambdafunc, i, x, y;
 
   D := GreensDClasses(S);
   n := Length(D);
@@ -686,7 +686,7 @@ function(S)
 
     NumberElement := function(enum, R)
       local pos;
-      pos := Position(LambdaOrbOrb(enum!.parent),
+      pos := Position(LambdaOrb(enum!.parent),
        RhoFunc(enum!.parent)(Representative(R)));
       if pos = fail then
         return fail;
