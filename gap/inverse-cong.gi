@@ -315,10 +315,10 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local s, idsmgp, ids, pos, hashlen, ht, treehashsize, right, left, find, 
-        union, enumerate_trace, enforce_conditions, compute_kernel, genpairs, 
-        pairstoapply, nr, traceLookup, kernel, kernelgenstoapply, oldLookup, 
-        oldKernel, traceBlocks;
+  local s, idsmgp, ids, pos, hashlen, ht, treehashsize, right, left, 
+        genstoapply, find, union, enumerate_trace, enforce_conditions, 
+        compute_kernel, genpairs, pairstoapply, nr, nrk, traceLookup, kernel, 
+        kernelgenstoapply, oldLookup, oldKernel, traceBlocks;
   # Check that the argument makes sense
   s := Range(cong);
   if not IsInverseSemigroup(s) then
@@ -341,6 +341,7 @@ function(cong)
   
   right := RightCayleyGraphSemigroup(idsmgp);
   left := LeftCayleyGraphSemigroup(idsmgp);
+  genstoapply := [1 .. Length(right[1])];
   
   find := function(i)
     while traceLookup[i] <> i do
@@ -371,7 +372,6 @@ function(cong)
           union(x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(s) do
-            nr := nr + 1;
             y := [Position(ids, a^-1 * ids[x[1]] * a),
                   Position(ids, a^-1 * ids[x[2]] * a)];
             if y[1] <> y[2] and HTValue(ht, y) = fail then
@@ -413,6 +413,7 @@ function(cong)
 
   # STEPS (6)+(5)
   enforce_conditions := function()
+    local a, e, f, fclass;
     for a in s do
       if a in kernel then
         e := Position(ids, LeftOne(a));
@@ -425,7 +426,8 @@ function(cong)
         fclass := find(Position(ids, RightOne(a)));
         for e in [1 .. Length(traceLookup)] do
           if (find(e) = fclass) and (a*ids[e] in kernel) then
-            put_in_kernel(a);
+            nrk := nrk + 1;
+            kernelgenstoapply[nrk] := a;
           fi;
         od;
       fi;
@@ -434,20 +436,19 @@ function(cong)
   
   # STEPS (3)+(4)
   compute_kernel := function()
-    local nr;
-    nr := Length(kernelgenstoapply);
-    while nr > 0 do
+    local a, n, x;
+    while nrk > 0 do
       # Take the inverse semigroup containing the new elements
       kernel := ClosureInverseSemigroup(kernel, kernelgenstoapply);
       kernelgenstoapply := [];
-      nr := 0;
+      nrk := 0;
       # Take the normal closure
       for a in GeneratorsOfSemigroup(s) do
         for n in kernel do
           x := n ^ a;
           if not x in kernel then
-            nr := nr + 1;
-            kernelgenstoapply[nr] := x;
+            nrk := nrk + 1;
+            kernelgenstoapply[nrk] := x;
           fi;
         od;
       od;
@@ -457,12 +458,13 @@ function(cong)
   
   # Retrieve the initial information
   genpairs := GeneratingPairsOfSemigroupCongruence(cong);
-  pairstoapply := List(pairs, x -> [Position(elms, RightOne(x[1])),
-                                    Position(elms, RightOne(x[2]))] );
+  pairstoapply := List(genpairs, x -> [Position(ids, RightOne(x[1])),
+                                       Position(ids, RightOne(x[2]))] );
+  kernelgenstoapply := List(genpairs, x -> x[1] * x[2]^-1);
   nr := Length(pairstoapply);
+  nrk := Length(kernelgenstoapply);
   traceLookup := [1 .. Length(ids)];
   kernel := IdempotentGeneratedSubsemigroup(s);
-  kernelgenstoapply := List(pairs, x -> x[1] * x[2]^-1);
   
   # Keep applying the method until no new info is found
   repeat
@@ -478,7 +480,7 @@ function(cong)
                          i-> List(Positions(traceLookup, i), 
                                  j-> ids[j])));
   
-  return InverseSemigroupCongruenceByKernelTraceNC(s, kernel, traceBlocks);
+  return InverseSemigroupCongruenceByKernelTrace(s, kernel, traceBlocks);
 end);
 
 #
