@@ -396,6 +396,7 @@ end);
 # Notes: the previous inverse method used D-classes instead of R-classes.
 
 # same method for regular/inverse
+#FIXME move this!
 
 InstallMethod(Iterator, "for an acting semigroup",
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
@@ -414,6 +415,7 @@ function(s)
 end);
 
 # different method for regular/inverse
+#FIXME move this!
 
 InstallMethod(Iterator, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -431,6 +433,7 @@ function(d)
 end);
 
 # different method for inverse
+#FIXME move this!
 
 InstallMethod(Iterator, "for a regular D-class of an acting semigroup",
 [IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
@@ -459,6 +462,7 @@ end);
 
 #JDM again this method is redundant if we introduce RhoOrb for inverse
 #semigroups
+#FIXME move this!
 
 InstallMethod(Iterator, "for a D-class of an inverse acting semigroup",
 [IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
@@ -484,6 +488,7 @@ function(d)
 end);
 
 # same method for regular/inverse
+#FIXME move this!
 
 InstallMethod(Iterator, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -502,6 +507,7 @@ function(h)
 end);
 
 # same method for regular, different method for inverse
+#FIXME move this!
 
 InstallMethod(Iterator, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -529,6 +535,7 @@ end);
 # Notes: this method makes Iterator of a semigroup much better!!
 
 # same method for regular/inverse
+#FIXME move this!
 
 InstallMethod(Iterator, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -557,6 +564,7 @@ end);
 # JDM could use IteratorOfRClasses here instead, not sure which is better...
 # JDM could be different method for regular/inverse, see inverse_old.gi in
 # semigroups-dev.
+#FIXME move this!
 
 InstallMethod(IteratorOfHClasses, "for an acting semigroup",
 [IsActingSemigroup],
@@ -574,23 +582,24 @@ function(s)
 end);
 
 # different method for regular/inverse
-
+#FIXME move this!
 InstallMethod(IteratorOfLClasses, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local iter;
 
-  if HasGreensLClasses(s) then
-    iter := IteratorList(GreensLClasses(s));
+  if HasGreensLClasses(S) then
+    iter := IteratorList(GreensLClasses(S));
     SetIsIteratorOfLClasses(iter, true);
     return iter;
   fi;
 
-  return IteratorByIterOfIters(rec(parent := s), IteratorOfDClasses(s),
-  GreensLClasses, [IsIteratorOfLClasses]);
+  return IteratorByIterOfIters(rec(parent := S), IteratorOfDClasses(S),
+    GreensLClasses, [IsIteratorOfLClasses]);
 end);
 
 
+#FIXME move this!
 #different method for regular/inverse
 
 InstallMethod(IteratorOfRClassData, "for an acting semigroup",
@@ -619,6 +628,7 @@ end);
 
 # no method required for inverse/regular
 
+#FIXME move this!
 InstallMethod(Iterator, "for a full transformation semigroup",
 [IsTransformationSemigroup and IsFullTransformationSemigroup and
 HasGeneratorsOfSemigroup],
@@ -644,6 +654,7 @@ function(s)
   return iter;
 end);
 
+#FIXME move this!
 InstallMethod(Iterator, "for a symmetric inverse semigroup",
 [IsPartialPermSemigroup and IsSymmetricInverseSemigroup
 and HasGeneratorsOfSemigroup],
@@ -690,6 +701,7 @@ end);
 # iterator. This works but is maybe not the best!
 
 # same method for regular/inverse
+#FIXME move this!
 
 InstallMethod(Iterator, "for a trivial acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
@@ -698,6 +710,7 @@ function(s)
 end);
 
 # different method for regular/inverse
+#FIXME move this!
 
 InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
@@ -706,6 +719,7 @@ s -> IteratorByIterator(IteratorOfDClasses(s), Representative,
 
 #JDM could be a different method for regular/inverse using IteratorOfHClassData
 #(not yet written), see inverse_old.gi in semigroups-dev
+#FIXME move this!
 
 InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 [IsActingSemigroup],
@@ -713,6 +727,7 @@ s -> IteratorByIterator(IteratorOfHClasses(s), Representative,
 [IsIteratorOfHClassReps]));
 
 # different method for regular/inverse
+#FIXME move this!
 
 InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
 [IsActingSemigroup],
@@ -720,6 +735,7 @@ s -> IteratorByIterator(IteratorOfLClasses(s), Representative,
 [IsIteratorOfLClassReps]));
 
 # same method for inverse/regular.
+#FIXME move this!
 
 InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 [IsActingSemigroup],
@@ -727,6 +743,7 @@ s -> IteratorByIterator(IteratorOfRClassData(s), x -> x[4],
 [IsIteratorOfRClassReps]));
 
 # for regular acting semigroups...
+#FIXME move this!
 
 # different method for inverse
 
@@ -783,6 +800,7 @@ function(s)
 end);
 
 # no method required for inverse (it's not used for anything)
+#FIXME move this!
 
 InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -814,6 +832,7 @@ function(s)
 end);
 
 # different method for inverse
+#FIXME move this!
 
 InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -846,6 +865,7 @@ function(s)
 end);
 
 # same method for inverse
+#FIXME move this!
 
 InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -858,6 +878,7 @@ function(s)
 end);
 
 # different method for inverse
+#FIXME move this!
 
 InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -865,6 +886,7 @@ s -> IteratorByIterator(IteratorOfLClassData(s), x -> x[4],
 [IsIteratorOfLClassReps]));
 
 #for inverse acting semigroups...
+#FIXME move this!
 
 InstallMethod(IteratorOfDClassData, "for inverse acting semigroup",
 [IsActingSemigroupWithInverseOp and IsRegularSemigroup],
@@ -920,6 +942,7 @@ function(s)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(IteratorOfRClassData, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -961,6 +984,7 @@ function(s)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -968,6 +992,7 @@ s -> IteratorByIterator(IteratorOfRClassData(s), x -> Inverse(x[4]),
 [IsIteratorOfLClassReps]));
 
 #
+#FIXME move this!
 
 InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
@@ -994,6 +1019,7 @@ function(l)
 end);
 
 #
+#FIXME move this!
 # Printing...
 
 InstallMethod(PrintObj, [IsIteratorOfDClassElements],
@@ -1003,6 +1029,7 @@ function(iter)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfHClassElements],
 function(iter)
@@ -1012,6 +1039,7 @@ end);
 
 #
 
+#FIXME move this!
 InstallMethod(PrintObj, [IsIteratorOfLClassElements],
 function(iter)
   Print( "<iterator of L-class>");
@@ -1020,6 +1048,7 @@ end);
 
 #
 
+#FIXME move this!
 InstallMethod(PrintObj, [IsIteratorOfRClassElements],
 function(iter)
   Print("<iterator of R-class>");
@@ -1027,6 +1056,7 @@ function(iter)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfDClassReps],
 function(iter)
@@ -1035,6 +1065,7 @@ function(iter)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfHClassReps],
 function(iter)
@@ -1042,6 +1073,7 @@ function(iter)
   return;
 end);
 
+#FIXME move this!
 #
 
 InstallMethod(PrintObj, [IsIteratorOfLClassReps],
@@ -1050,6 +1082,7 @@ function(iter)
   return;
 end);
 
+#FIXME move this!
 #
 
 InstallMethod(PrintObj, [IsIteratorOfRClassReps],
@@ -1059,6 +1092,7 @@ function(iter)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfDClasses],
 function(iter)
@@ -1067,6 +1101,7 @@ function(iter)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfHClasses],
 function(iter)
@@ -1074,6 +1109,7 @@ function(iter)
   return;
 end);
 
+#FIXME move this!
 #
 
 InstallMethod(PrintObj, [IsIteratorOfLClasses],
@@ -1083,6 +1119,7 @@ function(iter)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfRClasses],
 function(iter)
@@ -1091,6 +1128,7 @@ function(iter)
 end);
 
 #
+#FIXME move this!
 
 InstallMethod(ViewString, [IsIteratorOfSemigroup],
 function(iter)

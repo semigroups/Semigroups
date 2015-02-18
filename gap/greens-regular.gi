@@ -183,6 +183,8 @@ InstallMethod(GreensRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 S -> Concatenation(List(GreensDClasses(S), GreensRClasses)));
 
+#############################################################################
+
 # same method for inverse/ideals
 
 InstallMethod(NrDClasses, "for a regular acting semigroup with generators",
@@ -301,28 +303,35 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 NrDClasses);
 
 #############################################################################
-## 7. Iterators and enumerators . . .
+## 7. Iterators and enumerators . . . 
+## FIXME move this whole section to another file
 #############################################################################
-
-# JDM here
 
 # different method for inverse
 
 InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-s -> IteratorByIterator(IteratorOfLClassData(s), x ->
-CallFuncList(SEMIGROUPS_CreateLClassNC, x), [IsIteratorOfLClasses]));
+function(S)
+  if HasGreensLClasses(S) then 
+    return IteratorList(GreensLClasses(S));
+  fi;
+
+  return IteratorByIterator(IteratorOfLClassReps(S), 
+                            x -> GreensLClassOfElementNC(S, x),
+                            [IsIteratorOfLClasses]);
+end);
 
 # same method for inverse
 
 InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-function(s)
-  if HasGreensDClasses(s) then
-    return IteratorList(GreensDClasses(s));
+function(S)
+  if HasGreensDClasses(S) then
+    return IteratorList(GreensDClasses(S));
   fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x ->
-   CallFuncList(SEMIGROUPS_CreateDClassNC, x), [IsIteratorOfDClasses]);
+  return IteratorByIterator(IteratorOfDClassReps(S), 
+                            x -> GreensDClassOfElementNC(S, x),
+                            [IsIteratorOfDClasses]);
 end);
 
 # different method for inverse
@@ -333,26 +342,22 @@ end);
 
 InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-function(s)
-  local o;
+function(S)
 
-  o := RhoOrb(s);
-  Enumerate(o, infinity);
+  return EnumeratorByFunctions(S, rec(
 
-  return EnumeratorByFunctions(s, rec(
-
-    parent := s,
+    parent := S,
 
     Length := enum -> NrRClasses(enum!.parent),
 
-    Membership := function(r, enum)
-      return Representative(r) in enum!.parent;
+    Membership := function(R, enum)
+      return Representative(R) in enum!.parent;
     end,
 
-    NumberElement := function(enum, r)
+    NumberElement := function(enum, R)
       local pos;
       pos := Position(RhoOrb(enum!.parent),
-       RhoFunc(enum!.parent)(Representative(r)));
+       RhoFunc(enum!.parent)(Representative(R)));
       if pos = fail then
         return fail;
       fi;
@@ -360,177 +365,15 @@ function(s)
     end,
 
    ElementNumber := function(enum, nr)
-    local s, o, m;
-    s := enum!.parent;
-    o := RhoOrb(s);
-    m := OrbSCCLookup(o)[nr + 1];
-    return SEMIGROUPS_CreateRClass(s, m, LambdaOrb(s),
-     RhoOrbMult(o, m, nr + 1)[1] * RhoOrbRep(o, m), false);
+    local S, o;
+    S := enum!.parent;
+    o := RhoOrb(S);
+    return GreensRClassOfElementNC(S,
+      EvaluateWord(o!.gens, TraceSchreierTreeForward(o, nr)));
    end,
+
    PrintObj := function(enum)
-     Print( "<enumerator of R-classes of ", ViewString(s), ">");
+     Print( "<enumerator of R-classes of ", ViewString(S), ">");
      return;
    end));
-end);
-
-#############################################################################
-#############################################################################
-#############################################################################
-
-# different method for inverse, same method for ideals
-# FIXME move this
-
-InstallMethod(\in, "for an associative element and regular acting semigroup",
-[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup],
-function(f, s)
-  local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
-
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-        and ActionDegree(f) <> ActionDegree(s))
-    or ActionDegree(f) > ActionDegree(s) then
-    return false;
-  fi;
-
-  if not (IsMonoid(s) and IsOne(f)) then
-    if Length(Generators(s)) > 0 and
-      ActionRank(s)(f) > MaximumList(List(Generators(s), f -> ActionRank(s)(f)))
-     then
-      Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-       "semigroup.");
-      return false;
-    fi;
-  fi;
-
-  if HasMinimalIdeal(s) then
-    if ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
-      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-       "semigroup.");
-      return false;
-    fi;
-  fi;
-
-  if HasAsSSortedList(s) then
-    return f in AsSSortedList(s);
-  fi;
-
-  lambda_o := LambdaOrb(s);
-  Enumerate(lambda_o, infinity);
-  lambda_l := Position(lambda_o, LambdaFunc(s)(f));
-
-  if lambda_l = fail then
-    return false;
-  fi;
-
-  rho_o := RhoOrb(s);
-  rho_l := EnumeratePosition(rho_o, RhoFunc(s)(f), false);
-  # this is worth it in the case that schutz=true below! For example, in the
-  # full transformation monoid on 12 points (see Issue 22 in testinstall.tst)
-
-  if rho_l = fail then
-    return false;
-  fi;
-
-  m := OrbSCCLookup(lambda_o)[lambda_l];
-  schutz := LambdaOrbStabChain(lambda_o, m);
-
-  if schutz = true then
-    return true;
-  fi;
-
-  g := f;
-
-  if lambda_l <> OrbSCC(lambda_o)[m][1] then
-    g := g * LambdaOrbMult(lambda_o, m, lambda_l)[2];
-  fi;
-
-  Enumerate(rho_o, infinity); # in case <s> is an ideal...
-  n := OrbSCCLookup(rho_o)[rho_l];
-
-  if rho_l <> OrbSCC(rho_o)[n][1] then
-    g := RhoOrbMult(rho_o, n, rho_l)[2] * g;
-  fi;
-
-  if IsIdempotent(g) then
-    return true;
-  fi;
-
-  rep := RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m)).rep;
-
-  if rep = g then
-    return true;
-  elif schutz = false then
-    return false;
-  fi;
-
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g)) = ();
-end);
-
-# different method for inverse, same method for ideals
-# FIXME move this
-InstallMethod(Random, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(S)
-  local gens, i, w, x, o, m;
-
-  if not IsClosed(LambdaOrb(S)) or not IsClosed(RhoOrb(S)) then
-    if HasGeneratorsOfSemigroup(S) then
-      gens := GeneratorsOfSemigroup(S);
-      i := Random([1 .. 2 * Int(Length(gens))]);
-      w := List([1 .. i], x -> Random([1 .. Length(gens)]));
-      return EvaluateWord(gens, w);
-    else
-      x := Random(GeneratorsOfSemigroupIdeal(S));
-      gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-
-      i := Random([1 .. Length(gens)]);
-      w := List([1 .. i], x -> Random([1 .. Length(gens)]));
-
-      x := x * EvaluateWord(gens, w);
-
-      i := Random([1 .. Length(gens)]);
-      w := List([1 .. i], x -> Random([1 .. Length(gens)]));
-      return EvaluateWord(gens, w) * x;
-    fi;
-  fi;
-
-  o := LambdaOrb(S);
-  i := Random([2 .. Length(o)]);
-  m := OrbSCCLookup(o)[i];
-  x := LambdaOrbRep(o, m) * Random(LambdaOrbSchutzGp(o, m))
-   * LambdaOrbMult(o, m, i)[1];
-
-  o := RhoOrb(S);
-  m := OrbSCCLookup(o)[Position(o, RhoFunc(S)(x))];
-  i := Random(OrbSCC(o)[m]);
-
-  return RhoOrbMult(o, m, i)[1] * x;
-end);
-
-# different method for inverse semigroups
-# FIXME move this
-
-InstallMethod(Size, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(s)
-  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup, start,
-  rho, m;
-
-  lambda_o := Enumerate(LambdaOrb(s), infinity);
-  rho_o := Enumerate(RhoOrb(s), infinity);
-
-  nr := 0;
-  lambda_scc := OrbSCC(lambda_o);
-  rho_scc := OrbSCC(rho_o);
-  r := Length(lambda_scc);
-  rhofunc := RhoFunc(s);
-  lookup := OrbSCCLookup(rho_o);
-
-  for m in [2 .. r] do
-    rho := rhofunc(LambdaOrbRep(lambda_o, m));
-    nr := nr + Length(lambda_scc[m]) * Size(LambdaOrbSchutzGp(lambda_o, m)) *
-     Length(rho_scc[lookup[Position(rho_o, rho)]]);
-  od;
-
-  return nr;
 end);

@@ -444,12 +444,13 @@ end);
 ## 3. Individual classes . . .
 #############################################################################
 
-# same method for regular/inverse FIXME is this necessary?
+# same method for regular/inverse 
+# FIXME is this necessary?
 
 InstallMethod(GreensJClassOfElement, "for acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement], GreensDClassOfElement);
 
-# same method for regular/inverse/ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -462,7 +463,7 @@ function(L)
   return D;
 end);
 
-# same method for regular, different method for inverse, same for ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(DClassOfRClass, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -490,7 +491,7 @@ function(H)
   return D;
 end);
 
-# same method for regular, different method for inverse, same for ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -502,7 +503,7 @@ function(H)
   return L;
 end);
 
-# same method for regular/inverse semigroups, same for ideals
+# same method for regular/inverse/ideals
 
 InstallMethod(RClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -514,7 +515,7 @@ function(H)
   return R;
 end);
 
-# same method for regular, different method for inverse, same for ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensDClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
@@ -535,7 +536,7 @@ function(S, x)
   return D;
 end);
 
-# same method for regular, different method for inverse, same for ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensDClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
@@ -549,7 +550,126 @@ function(S, x)
   return D;
 end);
 
-# same method for regular, different method for inverse, same method for ideals
+# same method for regular/ideals, different method for inverse
+
+InstallMethod(GreensLClassOfElement, "for an acting semigroup and element",
+[IsActingSemigroup, IsAssociativeElement],
+function(S, x)
+  local L;
+
+  if not x in S then
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  L := SEMIGROUPS_CreateLClass(S, x, false);
+  SEMIGROUPS_SetRho(L);
+  SEMIGROUPS_RectifyRho(L);
+  return L;
+end);
+
+# same method for regular/ideals, different method for inverse
+
+InstallMethod(GreensLClassOfElementNC, "for an acting semigroup and element",
+[IsActingSemigroup, IsAssociativeElement],
+function(S, x)
+  local L;
+  L := SEMIGROUPS_CreateLClass(S, x, true);
+  SEMIGROUPS_SetRho(L);
+  SEMIGROUPS_RectifyRho(L);
+  return L;
+end);
+
+# same method for regular/ideals/inverse
+
+InstallMethod(GreensLClassOfElement,
+"for D-class of acting semigroup and element",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+function(D, x)
+
+  if not x in D then
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the D-class,");
+    return;
+  fi;
+
+  return GreensLClassOfElementNC(D, x);
+end);
+
+# same method for regular/ideals, different method for inverse
+
+InstallMethod(GreensLClassOfElementNC, "for D-class and associative element",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+function(D, x)
+  local L;
+  L := SEMIGROUPS_CreateLClass(D, x);
+  SEMIGROUPS_CopyRho(D, L);
+  SEMIGROUPS_RectifyRho(L);
+  SetDClassOfLClass(L, D);
+  return L;
+end);
+
+# same method for regular/inverse/ideals
+
+InstallMethod(GreensRClassOfElement, "for an acting semigroup and element",
+[IsActingSemigroup, IsAssociativeElement],
+function(S, x)
+  local R;
+
+  if not x in S then
+    Error("Semigroups: GreensRClassOfElement: usage,\n",
+          "the element does not belong to the semigroup,");
+    return;
+  fi;
+  R := SEMIGROUPS_CreateRClass(S, x, false);
+  SEMIGROUPS_SetLambda(R);
+  SEMIGROUPS_RectifyLambda(R);
+  return R;
+end);
+
+# same method for regular/inverse/ideals
+
+InstallMethod(GreensRClassOfElementNC, "for an acting semigroup and element",
+[IsActingSemigroup, IsAssociativeElement],
+function(S, x)
+  local R;
+  R := SEMIGROUPS_CreateRClass(S, x, true);
+  SEMIGROUPS_SetLambda(R);
+  SEMIGROUPS_RectifyLambda(R);
+  return R;
+end);
+
+# same method for regular/inverse/ideals
+
+InstallMethod(GreensRClassOfElement,
+"for an acting semigroup D-class and associative element",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+function(D, x)
+
+  if not x in D then
+    Error("Semigroups: GreensRClassOfElement: usage,\n",
+          "the element does not belong to the D-class,");
+    return;
+  fi;
+
+  return GreensRClassOfElementNC(D, x);
+end);
+
+# same method for regular/inverse/ideals
+
+InstallMethod(GreensRClassOfElementNC, "for D-class and associative element",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
+function(D, x)
+  local R;
+  R := SEMIGROUPS_CreateRClass(D, x);
+  SEMIGROUPS_CopyLambda(D, R);
+  SEMIGROUPS_RectifyLambda(R);
+  SetDClassOfRClass(R, D);
+  return R;
+end);
+
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensHClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
@@ -583,7 +703,7 @@ function(S, x)
   return H;
 end);
 
-# same method for regular, different method for inverse, same method for ideals
+# same method for regular/ideals/inverse
 
 InstallMethod(GreensHClassOfElement, "for D-class and element",
 [IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement],
@@ -597,7 +717,7 @@ function(D, x)
   return GreensHClassOfElementNC(D, x);
 end);
 
-# same method for regular, different method for inverse, same method for ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensHClassOfElementNC, "for a D-class and element",
 [IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement],
@@ -610,7 +730,7 @@ function(D, x)
   return H;
 end);
 
-# same method for regular, different method for inverse, same method for ideals
+# same method for regular/ideals/inverse
 
 InstallMethod(GreensHClassOfElement, "for L-class and element",
 [IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement],
@@ -624,7 +744,7 @@ function(L, x)
   return GreensHClassOfElementNC(L, x);
 end);
 
-# same method for regular, different method for inverse, same method for ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensHClassOfElementNC, "for an L-class and element",
 [IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement],
@@ -637,7 +757,7 @@ function(L, x)
   return H;
 end);
 
-# same method for regular/ideals, different method for inverse
+# same method for regular/ideals/inverse
 
 InstallMethod(GreensHClassOfElement, "for R-class and element",
 [IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement],
@@ -667,125 +787,6 @@ function(R, x)
   return H;
 end);
 
-# same method for regular, different method for inverse, same for ideals
-
-InstallMethod(GreensLClassOfElement, "for an acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement],
-function(S, x)
-  local L;
-
-  if not x in S then
-    Error("Semigroups: GreensLClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
-  fi;
-
-  L := SEMIGROUPS_CreateLClass(S, x, false);
-  SEMIGROUPS_SetRho(L);
-  SEMIGROUPS_RectifyRho(L);
-  return L;
-end);
-
-# same method for regular, different method for inverse, same for ideals
-
-InstallMethod(GreensLClassOfElementNC, "for an acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement],
-function(S, x)
-  local L;
-  L := SEMIGROUPS_CreateLClass(S, x, true);
-  SEMIGROUPS_SetRho(L);
-  SEMIGROUPS_RectifyRho(L);
-  return L;
-end);
-
-# same method for regular, different method for inverse, same for ideals
-
-InstallMethod(GreensLClassOfElement,
-"for D-class of acting semigroup and element",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
-function(D, x)
-
-  if not x in D then
-    Error("Semigroups: GreensLClassOfElement: usage,\n",
-          "the element does not belong to the D-class,");
-    return;
-  fi;
-
-  return GreensLClassOfElementNC(D, x);
-end);
-
-# same method for regular, different method for inverse, same for ideals
-
-InstallMethod(GreensLClassOfElementNC, "for D-class and associative element",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
-function(D, x)
-  local L;
-  L := SEMIGROUPS_CreateLClass(D, x);
-  SEMIGROUPS_CopyRho(D, L);
-  SEMIGROUPS_RectifyRho(L);
-  SetDClassOfLClass(L, D);
-  return L;
-end);
-
-# same method for regular/inverse/ideals
-
-InstallMethod(GreensRClassOfElement, "for an acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement],
-function(S, x)
-  local R;
-
-  if not x in S then
-    Error("Semigroups: GreensRClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
-  fi;
-  R := SEMIGROUPS_CreateRClass(S, x, false);
-  SEMIGROUPS_SetLambda(R);
-  SEMIGROUPS_RectifyLambda(R);
-  return R;
-end);
-
-# same method for regular/inverse, same for ideals
-
-InstallMethod(GreensRClassOfElementNC, "for an acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement],
-function(S, x)
-  local R;
-  R := SEMIGROUPS_CreateRClass(S, x, true);
-  SEMIGROUPS_SetLambda(R);
-  SEMIGROUPS_RectifyLambda(R);
-  return R;
-end);
-
-# same method for regular/inverse, same for ideals
-
-InstallMethod(GreensRClassOfElement,
-"for an acting semigroup D-class and associative element",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
-function(D, x)
-
-  if not x in D then
-    Error("Semigroups: GreensRClassOfElement: usage,\n",
-          "the element does not belong to the D-class,");
-    return;
-  fi;
-
-  return GreensRClassOfElementNC(D, x);
-end);
-
-# same method for regular/inverse, same for ideals
-
-InstallMethod(GreensRClassOfElementNC, "for D-class and associative element",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
-function(D, x)
-  local R;
-  R := SEMIGROUPS_CreateRClass(D, x);
-  SEMIGROUPS_CopyLambda(D, R);
-  SEMIGROUPS_RectifyLambda(R);
-  SetDClassOfRClass(R, D);
-  return R;
-end);
-
 # different method for inverse/regular, same for ideals
 
 InstallMethod(Size, "for a D-class of an acting semigroup",
@@ -801,12 +802,6 @@ end);
 
 # same method for inverse/regular/ideals
 
-InstallMethod(Size, "for an H-class of an acting semigroup",
-[IsGreensHClass and IsActingSemigroupGreensClass],
-H -> Size(SchutzenbergerGroup(H)));
-
-# same method for inverse/regular/ideals
-
 InstallMethod(Size, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 R -> Size(SchutzenbergerGroup(R)) * Length(LambdaOrbSCC(R)));
@@ -816,6 +811,12 @@ R -> Size(SchutzenbergerGroup(R)) * Length(LambdaOrbSCC(R)));
 InstallMethod(Size, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 L -> Size(SchutzenbergerGroup(L)) * Length(RhoOrbSCC(L)));
+
+# same method for inverse/regular/ideals
+
+InstallMethod(Size, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+H -> Size(SchutzenbergerGroup(H)));
 
 # same method for regular/ideals, different for inverse
 
@@ -880,8 +881,7 @@ function(x, D)
   return false;
 end);
 
-
-# same method for regular, different method for inverse, same for ideals
+# same method for regular/ideals, different method for inverse
 
 InstallMethod(\in, "for associative element and L-class of acting semigroup",
 [IsAssociativeElement, IsGreensLClass and IsActingSemigroupGreensClass],
@@ -963,7 +963,7 @@ function(x, R)
   return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
 end);
 
-# same method for regular/inverse, same for ideals
+# same method for regular/inverse/ideals
 
 InstallMethod(\in, "for element and acting semigroup H-class",
 [IsAssociativeElement, IsGreensHClass and IsActingSemigroupGreensClass],
@@ -1052,7 +1052,7 @@ InstallMethod(GreensLClasses, "for an acting semigroup",
 [IsActingSemigroup],
 S -> Concatenation(List(GreensDClasses(S), GreensLClasses)));
 
-# same method for regular/inverse, same for ideals
+# same method for regular/inverse/ideals
 
 InstallMethod(LClassReps, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1080,7 +1080,7 @@ function(D)
   return out;
 end);
 
-# same method for regular/ideals, same for ideals
+# same method for regular/ideals, different for inverse
 
 InstallMethod(GreensLClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
@@ -1264,6 +1264,8 @@ end);
 InstallMethod(GreensHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 L -> List(HClassReps(L), x -> GreensHClassOfElementNC(L, x)));
+
+#############################################################################
 
 # different method for regular/inverse, same for ideals
 
@@ -1736,7 +1738,7 @@ InstallMethod(NrIdempotents, "for an R-class of an acting semigroup",
 R -> SEMIGROUPS_NrIdempotents(R, RhoFunc(Parent(R))(Representative(R)),
 LambdaOrbSCC(R), LambdaOrb(R), true));
 
-# same method for regular/inverse, same method for ideals
+# same method for regular/inverse/ideals
 
 InstallMethod(NrIdempotents, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -1855,6 +1857,8 @@ end);
 #############################################################################
 ## 7. Iterators and enumerators . . .
 #############################################################################
+
+# FIXME move to separate file
 
 # TODO improve the performance of this
 
