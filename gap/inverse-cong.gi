@@ -18,7 +18,8 @@ function(s, kernel, traceBlocks)
   # Check that the kernel is an inverse subsemigroup
   if not IsInverseSubsemigroup(s, kernel) then
     Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
-          "the second arg <kernel> must be an inverse subsemigroup of first arg <S>,");
+          "the second arg <kernel> must be an inverse subsemigroup of the\n",
+          "first arg <S>,");
     return;
   fi;
   # CHECK KERNEL IS NORMAL:
@@ -311,17 +312,66 @@ end);
 #
 
 InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
-"for semigroup congruence",
-[IsSemigroupCongruence],
+"for semigroup congruence with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
+  local a, x, traceClass, f, l, e;
   if not IsInverseSemigroup(Range(cong)) then
     Error("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,\n",
           "the argument <cong> must be over an inverse semigroup,");
     return;
   fi;
-  return InverseSemigroupCongruenceByKernelTraceNC( Range(cong),
-                 KernelOfSemigroupCongruence(cong),
-                 TraceOfSemigroupCongruence(cong) );
+  # Check that the kernel is an inverse subsemigroup
+  if not IsInverseSubsemigroup(s, kernel) then
+    Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
+          "the second arg <kernel> must be an inverse subsemigroup of the\n",
+          "first arg <S>,");
+    return;
+  fi;
+  # CHECK KERNEL IS NORMAL:
+  # (1) Must contain all the idempotents of s
+  if NrIdempotents(kernel) <> NrIdempotents(s) then
+    Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
+          "the second arg <kernel> must contain all the idempotents of the\n",
+          "first arg <S>,");
+    return;
+  fi;
+  # (2) Must be self-conjugate
+  for a in kernel do
+    for x in GeneratorsOfSemigroup(s) do
+      if not a ^ x in kernel then
+  Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
+        "the second arg <kernel> must be self-conjugate,");
+        return;
+      fi;
+    od;
+  od;
+  # Check conditions for a congruence pair: Howie p.156
+  for traceClass in traceBlocks do
+    for f in traceClass do
+      l := LClass(s,f);
+      for a in l do
+        if a in kernel then
+          # Condition (C2): aa' related to a'a
+          if not a * a ^ - 1 in traceClass then
+            Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
+                  "not a valid congruence pair,");
+            return;
+          fi;
+        else
+          # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
+          for e in traceClass do
+            if a * e in kernel then
+              Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
+                    "not a valid congruence pair,");
+              return;
+            fi;
+          od;
+        fi;
+      od;
+    od;
+  od;
+  return InverseSemigroupCongruenceByKernelTraceNC(s, kernel, traceBlocks);
 end);
 
 #
