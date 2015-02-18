@@ -67,8 +67,8 @@ end);
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(arg)
-  local S, x, global, record, lambda, graded, pos, gradingfunc, onlygrades,
-   onlygradesdata, orb, gens, o, j, k, l;
+  local S, x, global, obj, lambda, graded, pos, gradingfunc, onlygrades,
+  onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then 
     Error("Semigroups: GradedLambdaOrb: usage,\n",
@@ -170,7 +170,7 @@ function(arg)
   return o;
 end);
 
-# 
+# TODO negate the global option so that it corresponds to NC
 
 InstallGlobalFunction(GradedRhoOrb,
 function(arg)
