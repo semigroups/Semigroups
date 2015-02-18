@@ -77,11 +77,11 @@ BindGlobal("SEMIGROUPS_CreateXClass",
 function(arg, type, rel)
   local S, nc, rep, C;
 
-  if Length(arg) = 3 then # arg is a Green's class
+  if Length(arg) = 1 then # arg is a Green's class
     S := Parent(arg[1]);
     nc := IsGreensClassNC(arg[1]);
     rep := Representative(arg[1]);
-  elif Length(arg) = 4 then # arg is a Green's class and rep
+  elif Length(arg) = 2 then # arg is a Green's class and rep
     S := Parent(arg[1]);
     nc := IsGreensClassNC(arg[1]);
     rep := arg[2];
@@ -90,13 +90,13 @@ function(arg, type, rel)
     rep := arg[2];
     nc := arg[3];
   fi;
-
-  C := ObjectifyWithAttributes(rec(rep := rep),
-                               type,
-                               Parent,          S,
-                               IsGreensClassNC, nc);
-
-  SetEquivalenceClassRelation(C, rel);
+  
+  C := rec(rep := rep);
+  ObjectifyWithAttributes(C,
+                          type(S),
+                          ParentAttr,               S,
+                          IsGreensClassNC,          nc, 
+                          EquivalenceClassRelation, rel(S));
   return C;
 end);
 
@@ -104,30 +104,28 @@ end);
 
 BindGlobal("SEMIGROUPS_CreateDClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, DClassType(arg[1]),
-   GreensDRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, DClassType, GreensDRelation); 
 end);
+
+# same method for regular/inverse
 
 BindGlobal("SEMIGROUPS_CreateRClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, RClassType(arg[1]),
-   GreensRRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, RClassType, GreensRRelation);
 end);
 
 # same method for regular/inverse
 
 BindGlobal("SEMIGROUPS_CreateLClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, LClassType(arg[1]),
-   GreensLRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, LClassType, GreensLRelation);
 end);
 
 # same method for regular/inverse
 
 BindGlobal("SEMIGROUPS_CreateHClass",
 function(arg)
-  return SEMIGROUPS_CreateXClass(arg, HClassType(arg[1]),
-   GreensHRelation(arg[1]));
+  return SEMIGROUPS_CreateXClass(arg, HClassType, GreensHRelation);
 end);
 
 #
@@ -1031,7 +1029,7 @@ function(S)
     SetLambdaOrb(D, LambdaOrb(S));
     SetLambdaOrbSCCIndex(D, next[2]);
     SetRhoOrb(D, RhoOrb(S));
-    SetRhoOrbSCCIndex(D,  OrbSCCLookup(RhoOrb(S))[data!.rholookup(next[6])]);
+    SetRhoOrbSCCIndex(D,  OrbSCCLookup(RhoOrb(S))[data!.rholookup[next[6]]]);
     SetSemigroupDataIndex(D, next[6]);
     SEMIGROUPS_RectifyRho(D);
     out[i - 1] := D;

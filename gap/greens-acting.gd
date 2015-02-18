@@ -10,8 +10,8 @@
 # Green's relations, classes, etc for acting semigroups.
 
 
-DeclareAttribute("LambdaOrb", IsActingSemigroupGreensClass);
-DeclareAttribute("RhoOrb", IsActingSemigroupGreensClass);
+DeclareAttribute("LambdaOrb", IsActingSemigroupGreensClass, "mutable");
+DeclareAttribute("RhoOrb", IsActingSemigroupGreensClass, "mutable");
 
 DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("LambdaOrbSCCIndex", IsActingSemigroupGreensClass);
