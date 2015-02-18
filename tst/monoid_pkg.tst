@@ -62,7 +62,7 @@ gap> MultiplicativeZero(s) in i;
 true
 gap> h:=List(GreensDClasses(s), GroupHClass);;
 gap> List(h, x-> StructureDescription(x));
-[ "1", "C3", "C3", "1" ]
+[ "C3", "1", "C3", "1" ]
 gap> IsCliffordSemigroup(s);
 true
 
