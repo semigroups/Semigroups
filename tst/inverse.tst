@@ -805,7 +805,9 @@ gap> Idempotents(r);
 [ <identity partial perm on [ 2, 4, 9, 10 ]> ]
 
 #T# InverseTest14
-gap> s:=RandomInverseSemigroup(2,10);
+gap> s := InverseSemigroup([
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 9 ], [ 1, 5, 9, 2, 6, 10, 7 ] ),
+> PartialPerm( [ 1, 3, 4, 7, 8, 9 ], [ 9, 4, 1, 6, 2, 8 ] )]);
 <inverse partial perm semigroup on 10 pts with 2 generators>
 gap> ForAll(RClasses(s), IsRegularClass);
 true
