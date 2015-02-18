@@ -1031,7 +1031,7 @@ function(S, f)
   if IsClosed(LambdaOrb(S)) then
     o := LambdaOrb(S);
   else
-    o := GradedLambdaOrb(S, f, true)[1];
+    o := GradedLambdaOrb(S, f, true);
   fi;
 
   scc := OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(S)(f))]];
@@ -1064,12 +1064,11 @@ function(S, x)
 
   if IsClosed(LambdaOrb(S)) then
     o := LambdaOrb(S);
-    k := Position(o, LambdaFunc(S)(x));
   else
     o := GradedLambdaOrb(S, x, true);
-    k := o[2];
-    o := o[1];
   fi;
+  
+  k := Position(o, LambdaFunc(S)(x));
 
   l := Position(o, RhoFunc(S)(x));
   return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
@@ -1091,7 +1090,7 @@ function(S, x)
     fi;
   else
     # this has to be false, since we're not sure if <x> in <S>
-    o := GradedLambdaOrb(S, x, false)[1];
+    o := GradedLambdaOrb(S, x, false);
     l := 1;
   fi;
 
@@ -1121,7 +1120,7 @@ function(S, x)
     fi;
   else
     # this has to be false, since we're not sure if <x> in <S>
-    o := GradedLambdaOrb(S, x, false)[1];
+    o := GradedLambdaOrb(S, x, false);
     k := 1;
   fi;
   l := Position(o, RhoFunc(S)(x));
@@ -1343,7 +1342,7 @@ function(S)
              scc[m][1])));
       for j in scc[m] do
         if not o[j] in graded then
-          if not ForAny(GradedLambdaOrb(g, o[j], true)[1], x -> tester(x, rho))
+          if not ForAny(GradedLambdaOrb(g, o[j], true), x -> tester(x, rho))
            then
             return false;
           fi;

@@ -189,13 +189,12 @@ function(C)
   else
     i := C!.LambdaPos;
   fi;
-  #FIXME comment out this if-condition except the else part
-  #if not HasLambdaOrbSCCIndex(C) then
-  #  m := OrbSCCLookup(o)[i];
-  #  SetLambdaOrbSCCIndex(C, m);
-  #else
+  if not HasLambdaOrbSCCIndex(C) then
+    m := OrbSCCLookup(o)[i];
+    SetLambdaOrbSCCIndex(C, m);
+  else
     m := LambdaOrbSCCIndex(C);
-  #fi;
+  fi;
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := C!.rep * LambdaOrbMult(o, m, i)[2];
@@ -223,13 +222,12 @@ function(C)
     i := C!.RhoPos;
   fi;
 
-  #FIXME comment out this if-condition except the else part
-  #if not HasRhoOrbSCCIndex(C) then
-  #  m := OrbSCCLookup(o)[i];
-  #  SetRhoOrbSCCIndex(C, m);
-  #else
+  if not HasRhoOrbSCCIndex(C) then
+    m := OrbSCCLookup(o)[i];
+    SetRhoOrbSCCIndex(C, m);
+  else
     m := RhoOrbSCCIndex(C);
-  #fi;
+  fi;
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := RhoOrbMult(o, m, i)[2] * C!.rep;
@@ -267,8 +265,14 @@ end);
 InstallMethod(RhoCosets, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
-  return RightTransversal(RhoOrbSchutzGp(RhoOrb(D),
-   RhoOrbSCCIndex(D)), SchutzenbergerGroup(D));
+  local o, m, S;
+
+  o := RhoOrb(D);
+  m := RhoOrbSCCIndex(D);
+  S := Parent(D);
+  return RightTransversal(
+     RhoOrbSchutzGp(o, m) ^ LambdaConjugator(S)(RhoOrbRep(o, m), Representative(D)),
+     SchutzenbergerGroup(D));
 end);
 
 # note that the RhoCosets of the D-class containing an L-class are not the same

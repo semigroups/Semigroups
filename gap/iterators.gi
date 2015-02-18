@@ -851,7 +851,7 @@ function(s)
     # We don't rectify the lambda val of <rep> in <o> since we require to
     # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
     # true) then this get more complicated.
-    return [s, 1, GradedLambdaOrb(s, rep, false)[1], rep, true];
+    return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
   end;
 
   if not IsClosed(o) then
@@ -958,7 +958,7 @@ function(s)
       # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
       # this is no longer the case, and this is would be more complicated.
 
-      return [s, 1, GradedLambdaOrb(s, rep, false)[1], rep, true];
+      return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
     end;
     iter := IteratorByOrbFunc(o, func, 2);
   else

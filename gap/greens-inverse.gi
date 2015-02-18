@@ -49,7 +49,12 @@ function(C)
     i := C!.RhoPos;
   fi;
 
-  m := LambdaOrbSCCIndex(C);
+  if not HasLambdaOrbSCCIndex(C) then
+    m := OrbSCCLookup(o)[i];
+    SetLambdaOrbSCCIndex(C, m);
+  else
+    m := LambdaOrbSCCIndex(C);
+  fi;
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := LambdaOrbMult(o, m, i)[1] * C!.rep;

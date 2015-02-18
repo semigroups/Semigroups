@@ -414,13 +414,6 @@ function(o, m)
 
   g := Group(());
 
-  # FIXME delete this hunk
-  #if bound = 1 then
-  #  o!.schutz[m] := g;
-  #  o!.schutzstab[m] := false;
-  #  return g;
-  #fi;
-
   s := o!.parent;
   gens := o!.gens;
   nrgens := Length(gens);
