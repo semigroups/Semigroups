@@ -15,10 +15,10 @@ InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
 [IsInverseSemigroup and IsFinite, IsInverseSemigroup, IsDenseList],
 function(s, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
-  # Check that the kernel is a subsemigroup
-  if not IsSubsemigroup(s, kernel) then
+  # Check that the kernel is an inverse subsemigroup
+  if not IsInverseSubsemigroup(s, kernel) then
     Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
-          "the second arg <kernel> must be a subsemigroup of first arg <S>,");
+          "the second arg <kernel> must be an inverse subsemigroup of first arg <S>,");
     return;
   fi;
   # CHECK KERNEL IS NORMAL:
