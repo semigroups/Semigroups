@@ -238,7 +238,7 @@ function(arg)
 
   orb := ShallowCopy(RhoOrbOpts(S));
   orb.parent := S;
-  orb.treehashsize := S!.globals.hashlen.M;
+  orb.treehashsize := S!.opts.hashlen.M;
   orb.schreier := true;
   orb.orbitgraph := true;
   orb.storenumbers := true;
