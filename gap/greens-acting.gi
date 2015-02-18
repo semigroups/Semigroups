@@ -1211,7 +1211,7 @@ function(R)
 
   scc := LambdaOrbSCC(R);
   mults := LambdaOrbMults(LambdaOrb(R), LambdaOrbSCCIndex(R));
-  cosets := LambdaCosets(R);
+  cosets := LambdaCosets(DClassOfRClass(R));
   rep := Representative(R);
   act := StabilizerAction(Parent(R));
   out := EmptyPlist(Length(scc) * Length(cosets));
@@ -1832,7 +1832,7 @@ InstallMethod(IsRegularClass, "for an H-class of an acting semigroup",
 InstallMethod(NrRegularDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local data, datascc, rho, lambda, scc, rholookup, tester, nr, rhoval, i, j;
+  local data, datascc, rho, lambda, scc, rholookup, tester, nr, j, rhoval, i, k;
 
   data := SemigroupData(S);
   datascc := OrbSCC(data);
@@ -1844,10 +1844,11 @@ function(S)
   nr := 0;
 
   for i in [2 .. Length(datascc)] do
+    j := datascc[i][1];
     # data of the first R-class in the D-class corresponding to x
-    rhoval := rho[rholookup[datascc[i][1]]];
-    for j in scc[data[i][2]] do
-      if tester(lambda[j], rhoval) then
+    rhoval := rho[rholookup[j]];
+    for k in scc[data[j][2]] do
+      if tester(lambda[k], rhoval) then
         nr := nr + 1;
         break;
       fi;
