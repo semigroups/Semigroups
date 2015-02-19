@@ -652,7 +652,8 @@ gap> S:=Semigroup(u,t);
 gap> Size(S);
 2
 
-#T# TestInstall39: Issue 56 (Monoid/InverseMonoid removes One inappropriately sometimes)
+#T# TestInstall39: Issue 56
+# (Monoid/InverseMonoid removes One inappropriately sometimes)
 gap> M:=InverseMonoid( PartialPerm([1,2]), PartialPerm([1]) );
 <commutative inverse partial perm monoid on 2 pts with 1 generator>
 gap> One(M) in M;

@@ -3004,7 +3004,7 @@ gap> NrIdempotents(d);
 gap> ForAll(Idempotents(d), x-> x in d);
 true
 
-#T# MiscTest27 R-class
+#T# MiscTest27: R-class
 gap> gens:=[Transformation([2,2,3,5,5,6,7,8,14,16,16,17,18,14,16,16,17,18]),
 > Transformation([1,3,3,4,5,6, 7, 8, 9,10,11,12,13,14,15,16,17,18]),
 > Transformation([1,2,4,4,5,6,7,8,9, 10,11,12,13,15,15,16,17,18]),
@@ -3633,7 +3633,7 @@ gap> NrHClasses(r);
 gap> Number(HClassReps(s), x-> x in r);
 20
 
-#T# MiscTest36 H-class tests
+#T# MiscTest36: H-class tests
 gap> gens:=[ Transformation( [ 8, 7, 6, 5, 4, 3, 2, 1 ] ),
 >   Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] ),
 >   Transformation( [ 7, 6, 5, 4, 3, 2, 1, 2 ] ),

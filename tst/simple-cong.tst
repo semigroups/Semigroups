@@ -13,18 +13,18 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-# Create a simple semigroup
+#T# SimpleCongTest1: Create a simple semigroup
 gap> s := Semigroup( [Transformation( [ 2, 1, 1, 2, 1 ] ), 
 >                     Transformation( [ 3, 4, 3, 4, 4 ] ),
 >                     Transformation( [ 3, 4, 3, 4, 3 ] ), 
 >                     Transformation( [ 4, 3, 3, 4, 4 ] ) ] );;
 
-#T# Find all congruences of a simple semigroup
+#T# SimpleCongTest2: Find all congruences of a simple semigroup
 gap> congs := CongruencesOfSemigroup(s);;
 gap> Size(congs);
 34
 
-#T# Construct a congruence by generating pairs
+#T# SimpleCongTest3: Construct a congruence by generating pairs
 gap> cong := SemigroupCongruence(s,
 > [ [ Transformation( [ 1, 2, 1, 2, 2 ] ),
 >     Transformation( [ 2, 1, 2, 1, 2 ] ) ], 
@@ -37,7 +37,7 @@ true
 gap> cong = congs[11];
 false
 
-#T# Testing membership in a congruence
+#T# SimpleCongTest4: Testing membership in a congruence
 gap> x := Transformation( [ 1, 2, 2, 1, 1 ] );;
 gap> y := Transformation( [ 1, 2, 2, 1, 2 ] );;
 gap> z := Transformation( [ 2, 1, 2, 1, 1 ] );;
@@ -46,7 +46,7 @@ true
 gap> [x,z] in cong;
 false
 
-#T# Congruence classes
+#T# SimpleCongTest5: Congruence classes
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
@@ -75,7 +75,7 @@ false
 gap> Size(classx);
 4
 
-#T# Join and meet congruences
+#T# SimpleCongTest6: Join and meet congruences
 gap> JoinSemigroupCongruences(congs[6],congs[11]) = congs[12];
 true
 gap> JoinSemigroupCongruences(congs[18],congs[11]) = congs[22];
@@ -85,10 +85,10 @@ true
 gap> MeetSemigroupCongruences(congs[34],congs[34]) = congs[34];
 true
 
-#T# Quotients
+#T# SimpleCongTest7: Quotients
 gap> q := s / congs[13];;
 
-#T# Convert to and from semigroup congruence by generating pairs
+#T# SimpleCongTest8: Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(congs[4]);;
 gap> cong := SemigroupCongruence(s, pairs);
 <semigroup congruence over <simple transformation semigroup 

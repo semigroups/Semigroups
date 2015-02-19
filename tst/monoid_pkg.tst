@@ -26,8 +26,10 @@ gap> SmallGeneratingSet(s);;
 gap> s:=Semigroup(IrredundantGeneratingSubset(last));;
 gap> NrDClasses(s);
 4
-gap> List(GreensDClasses(s), Size);
-[ 1, 3, 3, 1 ]
+gap> sizes := List(GreensDClasses(s), Size);;
+gap> Sort(sizes);;
+gap> sizes;
+[ 1, 1, 3, 3 ]
 gap> PartialOrderOfDClasses(s);
 [ [ 1, 4 ], [ 2, 4 ], [ 1, 2, 3 ], [ 4 ] ]
 gap> IsRegularSemigroup(s);
@@ -36,15 +38,16 @@ gap> ForAll(s, x-> x in s);
 true
 gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
-gap> List(s, x-> InversesOfSemigroupElement(s, x)); 
-[ [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ], 
-  [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ], 
-  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
+gap> h := List(s, x-> InversesOfSemigroupElement(s, x));;
+gap> Sort(h);
+gap> h;
+[ [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ], 
+  [ IdentityTransformation ], [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ]
+    , [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ], 
   [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ], 
-  [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ], 
   [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ], 
-  [ IdentityTransformation ], 
-  [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ] ]
+  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
+  [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ] ]
 gap> IsMonoidAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
@@ -58,8 +61,10 @@ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )
 gap> MultiplicativeZero(s) in i;
 true
 gap> h:=List(GreensDClasses(s), GroupHClass);;
-gap> List(h, x-> StructureDescription(x));
-[ "1", "C3", "C3", "1" ]
+gap> h:=List(h, x-> StructureDescription(x));;
+gap> Sort(h);
+gap> h;
+[ "1", "1", "C3", "C3" ]
 gap> IsCliffordSemigroup(s);
 true
 
@@ -143,7 +148,7 @@ false
 gap> IsBand(S);
 false
 
-#T# MonoidPkgTest6 from greens.tst
+#T# MonoidPkgTest6: from greens.tst
 gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ), 
 >  Transformation( [ 5, 5, 3, 8, 3, 7, 4, 6 ] ), 
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
@@ -930,7 +935,7 @@ gap> AsSet(Enumerate(RhoOrb(S)));
 [ [ 0 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ] ]
 
-#T# MonoidPkgTest7 from install_no_grape.tst
+#T# MonoidPkgTest7: from install_no_grape.tst
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> s:=Semigroup(gens);;

@@ -1632,7 +1632,7 @@ gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true
 
-#T# GreensLClassOfElement(D-class, transformation);
+#T# GreensTest3: GreensLClassOfElement(D-class, transformation);
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -1684,7 +1684,7 @@ gap> Size(s);
 gap> Set(HClasses(l))=Set(HClasses(ll));
 true
 
-#T# GreensHClassOfElement(D-class, transformation);
+#T# GreensTest4: GreensHClassOfElement(D-class, transformation);
 gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,4,3,5,6,7,8,9,10]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
@@ -1719,7 +1719,7 @@ true
 gap> Elements(h)=Elements(hh);
 true
 
-#T# GreensTest3
+#T# GreensTest5
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> GreensDClasses(S);
@@ -1764,7 +1764,7 @@ gap> GreensHClasses(L);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
   {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
 
-#T# GreensTest4
+#T# GreensTest6
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> DClassReps(S);
