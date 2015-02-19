@@ -105,7 +105,9 @@ function(arg)
     pos := HTValue(GradedLambdaHT(S), lambda);
 
     if pos <> fail then
-      obj!.LambdaPos := pos[3];
+      if IsBound(obj) then 
+        obj!.LambdaPos := pos[3];
+      fi;
       return graded[pos[1]][pos[2]];
     fi;
 
@@ -166,7 +168,9 @@ function(arg)
     o!.position_in_graded := [j,k];
     graded!.lens[j] := k;
   fi;
-  obj!.LambdaPos := 1;
+  if IsBound(obj) then 
+    obj!.LambdaPos := 1;
+  fi;
   return o;
 end);
 
@@ -212,7 +216,9 @@ function(arg)
     pos := HTValue(GradedRhoHT(S), rho);
 
     if pos <> fail then
-      obj!.RhoPos := pos[3];
+      if IsBound(obj) then 
+        obj!.RhoPos := pos[3];
+      fi;
       return graded[pos[1]][pos[2]];
     fi;
 
@@ -269,7 +275,9 @@ function(arg)
     # store the position of RhoFunc(S)(x) in o
     graded!.lens[j] := k;
   fi;
-  obj!.RhoPos := 1;
+  if IsBound(obj) then 
+    obj!.RhoPos := 1;
+  fi;
   return o;
 end);
 

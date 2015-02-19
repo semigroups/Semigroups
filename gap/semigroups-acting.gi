@@ -287,17 +287,16 @@ function(f, s)
   fi;
 
   scc := OrbSCC(o)[m];
-  g := f;
 
   if lambda_l <> scc[1] then
-    g := g * LambdaOrbMult(o, m, lambda_l)[2];
+    f := f * LambdaOrbMult(o, m, lambda_l)[2];
   fi;
 
   if rho_l <> scc[1] then
-    g := LambdaOrbMult(o, m, rho_l)[1] * g;
+    f := LambdaOrbMult(o, m, rho_l)[1] * f;
   fi;
 
-  if IsIdempotent(g) then
+  if IsIdempotent(f) then
     return true;
   elif schutz = false then
     return false;
@@ -308,9 +307,9 @@ function(f, s)
 
   if rho_l <> OrbSCC(RhoOrb(s))[m][1] then
     # the D-class rep corresponding to lambda_o and scc.
-    rep := LambdaOrbMult(LambdaOrb(s), n, rho_l)[1] * rep;
+    rep := LambdaOrbMult(LambdaOrb(s), m, rho_l)[1] * rep;
   fi;
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g)) = ();
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, f)) = ();
 end);
 
 #############################################################################

@@ -220,13 +220,13 @@ gap> NrHClasses(l); NrHClasses(ll);
 4
 gap> HClassReps(l);
 [ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
-  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
 gap> HClassReps(ll);
 [ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
-  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
 gap> Idempotents(l);    
 [  ]

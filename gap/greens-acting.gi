@@ -180,7 +180,7 @@ function(C)
 
   o := LambdaOrb(C);
 
-  if not IsClosed(o) then
+  if not (IsClosed(o) or IsIdealOrb(o)) then
     Enumerate(o, infinity);
   fi;
 
@@ -189,6 +189,7 @@ function(C)
   else
     i := C!.LambdaPos;
   fi;
+
   if not HasLambdaOrbSCCIndex(C) then
     m := OrbSCCLookup(o)[i];
     SetLambdaOrbSCCIndex(C, m);
@@ -212,7 +213,7 @@ function(C)
 
   o := RhoOrb(C);
 
-  if not IsClosed(o) then
+  if not (IsClosed(o) or IsIdealOrb(o)) then
     Enumerate(o, infinity);
   fi;
 
@@ -758,7 +759,7 @@ function(L, x)
   local H;
   H := SEMIGROUPS_CreateHClass(L, x);
   SEMIGROUPS_CopyRho(L, H);
-  SEMIGROUPS_SetLambda(L);
+  SEMIGROUPS_SetLambda(H);
   SetLClassOfHClass(H, L);
   return H;
 end);
@@ -1225,7 +1226,7 @@ function(R)
     x := act(rep, p);
     for i in scc do
       nr := nr + 1;
-      out[nr] :=  mults[i][1] * rep;
+      out[nr] :=  x * mults[i][1];
     od;
   od;
   return out;

@@ -325,7 +325,7 @@ end);
 # the same time have an additional "orbit" consisting of D-class reps.
 
 InstallMethod(Enumerate,
-"for semigroup ideal data, limit, and func",
+"for semigroup ideal data, limit, and record",
 [IsSemigroupIdealData, IsCyclotomic, IsRecord],
 function(data, limit, record)
   local lookfunc, looking, lambdalookfunc, lambdalooking, rholookfunc,

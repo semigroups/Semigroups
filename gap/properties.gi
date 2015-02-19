@@ -725,7 +725,7 @@ InstallMethod(IsMonogenicSemigroup, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local gens, I, f, i;
-
+  #TODO this if-condition is redundant due to the previous immediate method
   if HasGeneratorsOfSemigroup(S) then
 
     gens := GeneratorsOfSemigroup(S);

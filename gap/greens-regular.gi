@@ -365,11 +365,13 @@ function(S)
     end,
 
    ElementNumber := function(enum, nr)
-    local S, o;
+    local S, o, m;
     S := enum!.parent;
     o := RhoOrb(S);
-    return GreensRClassOfElementNC(S,
-      EvaluateWord(o!.gens, TraceSchreierTreeForward(o, nr)));
+    m := OrbSCCLookup(o)[nr + 1];
+    return 
+      GreensRClassOfElementNC(S, 
+                              RhoOrbMult(o, m, nr + 1)[1] * RhoOrbRep(o, m));
    end,
 
    PrintObj := function(enum)

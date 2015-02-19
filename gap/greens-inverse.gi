@@ -700,11 +700,14 @@ function(S)
     end,
 
    ElementNumber := function(enum, nr)
-    local S, o;
+    local S, o, m;
     S := enum!.parent;
     o := LambdaOrb(S);
-    return GreensRClassOfElementNC(S,
-      Inverse(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, nr))));
+    m := OrbSCCLookup(o)[nr + 1];
+    return 
+      GreensRClassOfElementNC(S,
+                              LambdaOrbMult(o, m, nr + 1)[2] *
+                              RightOne(LambdaOrbRep(o, m)));
     end,
 
    PrintObj := function(enum)
