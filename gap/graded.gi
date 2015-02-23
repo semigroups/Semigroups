@@ -70,7 +70,7 @@ function(arg)
   local S, x, global, obj, lambda, graded, pos, gradingfunc, onlygrades,
   onlygradesdata, orb, gens, o, j, k, l;
 
-  if Length(arg) < 3 then 
+  if Length(arg) < 3 then
     Error("Semigroups: GradedLambdaOrb: usage,\n",
           "there must be at least 3 arguments,");
     return;
@@ -80,7 +80,7 @@ function(arg)
   x := arg[2];
   global := arg[3];
 
-  if Length(arg) > 3 then 
+  if Length(arg) > 3 then
     obj := arg[4];
   fi;
 
@@ -105,7 +105,7 @@ function(arg)
     pos := HTValue(GradedLambdaHT(S), lambda);
 
     if pos <> fail then
-      if IsBound(obj) then 
+      if IsBound(obj) then
         obj!.LambdaPos := pos[3];
       fi;
       return graded[pos[1]][pos[2]];
@@ -168,7 +168,7 @@ function(arg)
     o!.position_in_graded := [j,k];
     graded!.lens[j] := k;
   fi;
-  if IsBound(obj) then 
+  if IsBound(obj) then
     obj!.LambdaPos := 1;
   fi;
   return o;
@@ -181,7 +181,7 @@ function(arg)
   local S, x, global, obj, rho, graded, pos, gradingfunc, onlygrades,
   onlygradesdata, orb, gens, o, j, k, l;
 
-  if Length(arg) < 3 then 
+  if Length(arg) < 3 then
     Error("Semigroups: GradedLambdaOrb: usage,\n",
           "there must be at least 3 arguments,");
     return;
@@ -191,7 +191,7 @@ function(arg)
   x := arg[2];
   global := arg[3];
 
-  if Length(arg) > 3 then 
+  if Length(arg) > 3 then
     obj := arg[4];
   fi;
 
@@ -216,7 +216,7 @@ function(arg)
     pos := HTValue(GradedRhoHT(S), rho);
 
     if pos <> fail then
-      if IsBound(obj) then 
+      if IsBound(obj) then
         obj!.RhoPos := pos[3];
       fi;
       return graded[pos[1]][pos[2]];
@@ -275,7 +275,7 @@ function(arg)
     # store the position of RhoFunc(S)(x) in o
     graded!.lens[j] := k;
   fi;
-  if IsBound(obj) then 
+  if IsBound(obj) then
     obj!.RhoPos := 1;
   fi;
   return o;

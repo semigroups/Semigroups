@@ -8,14 +8,14 @@
 #############################################################################
 ##
 
-InstallGlobalFunction(OrbSCCIndex, 
+InstallGlobalFunction(OrbSCCIndex,
 function(o, x)
   local pos;
 
   pos := Position(o, x);
-  if pos <> fail then 
+  if pos <> fail then
     return OrbSCCLookup(o)[pos];
-  else 
+  else
     return fail;
   fi;
 end);

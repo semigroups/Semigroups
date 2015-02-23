@@ -369,8 +369,8 @@ function(S)
     S := enum!.parent;
     o := RhoOrb(S);
     m := OrbSCCLookup(o)[nr + 1];
-    return 
-      GreensRClassOfElementNC(S, 
+    return
+      GreensRClassOfElementNC(S,
                               RhoOrbMult(o, m, nr + 1)[1] * RhoOrbRep(o, m));
    end,
 

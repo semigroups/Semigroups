@@ -9,7 +9,7 @@
 ##
 
 ## This file contains methods for Green's classes/relations for generic
-## semigroups. 
+## semigroups.
 
 # Semigroups . . .
 
@@ -64,9 +64,9 @@ end);
 InstallMethod(\=, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
-  if   (IsGreensRClass(x) and IsGreensRClass(y)) 
-    or (IsGreensLClass(x) and IsGreensLClass(y)) 
-    or (IsGreensDClass(x) and IsGreensDClass(y)) 
+  if   (IsGreensRClass(x) and IsGreensRClass(y))
+    or (IsGreensLClass(x) and IsGreensLClass(y))
+    or (IsGreensDClass(x) and IsGreensDClass(y))
     or (IsGreensHClass(x) and IsGreensHClass(y)) then
     return Parent(x) = Parent(y) and Representative(x) in y;
   fi;
@@ -79,9 +79,9 @@ end);
 InstallMethod(\<, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
-  if   (IsGreensRClass(x) and IsGreensRClass(y)) 
-    or (IsGreensLClass(x) and IsGreensLClass(y)) 
-    or (IsGreensDClass(x) and IsGreensDClass(y)) 
+  if   (IsGreensRClass(x) and IsGreensRClass(y))
+    or (IsGreensLClass(x) and IsGreensLClass(y))
+    or (IsGreensDClass(x) and IsGreensDClass(y))
     or (IsGreensHClass(x) and IsGreensHClass(y)) then
     return Parent(x) = Parent(y) and Representative(x) <
      Representative(y) and (not Representative(x) in y);
@@ -94,7 +94,7 @@ end);
 InstallMethod(IsRegularDClass, "for a Green's D-class",
 [IsGreensDClass], IsRegularClass);
 
-# FIXME are these really necessary? 
+# FIXME are these really necessary?
 
 InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
 InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
@@ -104,7 +104,7 @@ InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 
 # H-classes . . .
 
-# 
+#
 
 InstallMethod(MultiplicativeNeutralElement,
 "for a H-class of a semigroup", [IsGreensHClass],
@@ -115,7 +115,7 @@ function(H)
   return Idempotents(H)[1];
 end);
 
-# 
+#
 
 InstallMethod(NrHClasses, "for a semigroup", [IsSemigroup],
 S -> Sum(List(GreensDClasses(S), NrHClasses)));
@@ -123,17 +123,17 @@ S -> Sum(List(GreensDClasses(S), NrHClasses)));
 InstallMethod(NrHClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensHClasses(S)));
 
-# 
+#
 
 InstallMethod(NrHClasses, "for a Green's D-class",
 [IsGreensDClass], D -> NrRClasses(D) * NrLClasses(D));
 
-# 
+#
 
 InstallMethod(NrHClasses, "for a Green's L-class",
 [IsGreensLClass], L -> NrRClasses(DClassOfLClass(L)));
 
-# 
+#
 
 InstallMethod(NrHClasses, "for a Green's R-class",
 [IsGreensRClass], R -> NrLClasses(DClassOfRClass(R)));

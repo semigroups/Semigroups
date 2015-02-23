@@ -1067,7 +1067,7 @@ function(S, x)
   else
     o := GradedLambdaOrb(S, x, true);
   fi;
-  
+
   k := Position(o, LambdaFunc(S)(x));
 
   l := Position(o, RhoFunc(S)(x));

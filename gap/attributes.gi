@@ -110,10 +110,10 @@ end);
 
 InstallMethod(StructureDescriptionSchutzenbergerGroups,
 "for an acting semigroup", [IsActingSemigroup],
-function(s)
+function(S)
   local o, scc, out, m;
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   Enumerate(o, infinity);
   scc := OrbSCC(o);
   out := [];

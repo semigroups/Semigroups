@@ -165,7 +165,7 @@ InstallMethod(LClassOfHClass,
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
   local L;
-  L := SEMIGROUPS_CreateLClass(L);
+  L := SEMIGROUPS_CreateLClass(H);
   SEMIGROUPS_CopyLambda(H, L);
   SEMIGROUPS_InverseRectifyRho(L);
   return L;
@@ -704,7 +704,7 @@ function(S)
     S := enum!.parent;
     o := LambdaOrb(S);
     m := OrbSCCLookup(o)[nr + 1];
-    return 
+    return
       GreensRClassOfElementNC(S,
                               LambdaOrbMult(o, m, nr + 1)[2] *
                               RightOne(LambdaOrbRep(o, m)));

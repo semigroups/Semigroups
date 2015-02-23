@@ -344,6 +344,18 @@ function(C)
   return Position(SemigroupData(Parent(C)), Representative(C));
 end);
 
+# different method for regular/inverse/ideals
+# FIXME this is slow!
+InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(D)
+  local x;
+
+  x := Representative(D);
+  return Intersection(SchutzenbergerGroup(GreensLClassOfElementNC(D, x)),
+                      SchutzenbergerGroup(GreensRClassOfElementNC(D, x)));
+end);
+
 # same method for regular/inverse/ideals
 
 InstallMethod(SchutzenbergerGroup, "for an R-class of an acting semigroup",
@@ -368,20 +380,8 @@ function(L)
   fi;
 end);
 
-# different method for regular/inverse/ideals
-
-InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(D)
-  local x;
-
-  x := Representative(D);
-  return Intersection(SchutzenbergerGroup(GreensLClassOfElementNC(D, x)),
-                      SchutzenbergerGroup(GreensRClassOfElementNC(D, x)));
-end);
-
 # different method for regular/inverse, same method for ideals
-
+# FIXME this method is incorrect since the 
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)

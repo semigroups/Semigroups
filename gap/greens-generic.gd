@@ -7,7 +7,7 @@
 ##
 
 ## This file contains methods for Green's classes/relations for generic
-## semigroups. 
+## semigroups.
 
 # different types of class
 
@@ -29,7 +29,7 @@ DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
 # D-classes
 
-DeclareOperation("GreensDClassOfElementNC", 
+DeclareOperation("GreensDClassOfElementNC",
  [IsSemigroup, IsAssociativeElement]);
 DeclareAttribute("RegularDClasses", IsSemigroup);
 DeclareAttribute("NrRegularDClasses", IsSemigroup);
@@ -37,9 +37,9 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 
 # H-classes
 
-DeclareOperation("GreensHClassOfElement", 
+DeclareOperation("GreensHClassOfElement",
   [IsGreensClass, IsAssociativeElement]);
-DeclareOperation("GreensHClassOfElementNC", 
+DeclareOperation("GreensHClassOfElementNC",
   [IsCollection, IsAssociativeElement]);
 DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
 DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
@@ -48,16 +48,16 @@ DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 
 # L-classes
 
-DeclareOperation("GreensLClassOfElement", 
+DeclareOperation("GreensLClassOfElement",
   [IsGreensClass, IsAssociativeElement]);
-DeclareOperation("GreensLClassOfElementNC", 
+DeclareOperation("GreensLClassOfElementNC",
   [IsCollection, IsAssociativeElement]);
 
 # R-classes
 
-DeclareOperation("GreensRClassOfElement", 
+DeclareOperation("GreensRClassOfElement",
   [IsGreensClass, IsAssociativeElement]);
-DeclareOperation("GreensRClassOfElementNC", 
+DeclareOperation("GreensRClassOfElementNC",
   [IsCollection, IsAssociativeElement]);
 DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
 
