@@ -381,12 +381,53 @@ function(L)
 end);
 
 # different method for regular/inverse, same method for ideals
-# FIXME this method is incorrect since the 
+
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
-  return Intersection(SchutzenbergerGroup(LClassOfHClass(H)),
-                      SchutzenbergerGroup(RClassOfHClass(H)));
+  local lambda_o, lambda_m, lambda_schutz, lambda_stab, rho_o, rho_m,
+   rho_schutz, rho_stab, S, rep, lambda_mult, lambda_p, rho_mult, rho_p;
+
+  lambda_o := LambdaOrb(H);
+  lambda_m := LambdaOrbSCCIndex(H);
+  lambda_schutz := LambdaOrbSchutzGp(lambda_o, lambda_m);
+  lambda_stab := LambdaOrbStabChain(lambda_o, lambda_m);
+
+  if lambda_stab = false then
+    return lambda_schutz;
+  fi;
+
+  rho_o := RhoOrb(H);
+  rho_m := RhoOrbSCCIndex(H);
+  rho_schutz := RhoOrbSchutzGp(rho_o, rho_m);
+  rho_stab := RhoOrbStabChain(rho_o, rho_m);
+
+  if rho_stab = false then
+    return rho_schutz;
+  fi;
+
+  S := Parent(H);
+  rep := Representative(H);
+
+  lambda_mult := LambdaOrbMult(lambda_o, lambda_m, Position(lambda_o,
+   LambdaFunc(S)(rep)))[2];
+  # the points acted on by LambdaSchutzGp mapped to the lambda value of rep
+  lambda_p := LambdaConjugator(S)(rep * lambda_mult, rep);
+
+  if rho_stab = true then
+    return lambda_schutz ^ lambda_p;
+  fi;
+
+  rho_mult := RhoOrbMult(rho_o, rho_m, Position(rho_o, RhoFunc(S)(rep)))[2];
+  # the points acted on by RhoSchutzGp mapped to the corresponding points for
+  # rep (the rho value mapped through the rep so that it is on the right)
+  rho_p := LambdaConjugator(S)(RhoOrbRep(rho_o, rho_m), rho_mult * rep);
+
+  if lambda_stab = true then
+    return rho_schutz ^ rho_p;
+  fi;
+
+  return Intersection(lambda_schutz ^ lambda_p, rho_schutz ^ rho_p);
 end);
 
 #############################################################################
