@@ -780,7 +780,7 @@ InstallMethod(GreensHClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(S, x)
   local H;
-  H := SEMIGROUPS_CreateHClass(S, x, false);
+  H := SEMIGROUPS_CreateHClass(S, x, true);
   SetLambdaOrb(H, GradedLambdaOrb(S, x, false));
   SetLambdaOrbSCCIndex(H, 1);
   SetRhoOrb(H, GradedRhoOrb(S, x, false));
