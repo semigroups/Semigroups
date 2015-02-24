@@ -1233,7 +1233,7 @@ InstallMethod(HClassReps, "for an acting semigroup",
 # same method for regular/inverse/ideals
 
 InstallMethod(GreensHClasses, "for an acting semigroup",
-[IsActingSemigroup], S -> Concatenation(List(GreensRClasses(S),
+[IsActingSemigroup], S -> Concatenation(List(GreensDClasses(S),
 GreensHClasses)));
 
 # same method for regular/inverse/ideals
