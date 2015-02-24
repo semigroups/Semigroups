@@ -345,15 +345,52 @@ function(C)
 end);
 
 # different method for regular/inverse/ideals
-# FIXME this is slow!
+
 InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
-  local x;
+  local o, m, lambda_schutz, lambda_stab, rho_schutz, rho_stab, schutz, p;
 
-  x := Representative(D);
-  return Intersection(SchutzenbergerGroup(GreensLClassOfElementNC(D, x)),
-                      SchutzenbergerGroup(GreensRClassOfElementNC(D, x)));
+  o := LambdaOrb(D);
+  m := LambdaOrbSCCIndex(D);
+  lambda_schutz := LambdaOrbSchutzGp(o, m);
+  lambda_stab := LambdaOrbStabChain(o, m);
+
+  o := RhoOrb(D);
+  m := RhoOrbSCCIndex(D);
+  rho_schutz := RhoOrbSchutzGp(o, m);
+  rho_stab := RhoOrbStabChain(o, m);
+
+  if rho_stab = true then
+    schutz := lambda_schutz;
+    if lambda_stab = true then
+      SetRhoOrbStabChain(D, true);
+      #right transversal required so can use PositionCanonical
+      SetRhoCosets(D, RightTransversal(schutz, schutz));
+      return lambda_schutz;
+    fi;
+  elif rho_stab = false then
+    SetRhoOrbStabChain(D, false);
+    SetRhoCosets(D, RightTransversal(rho_schutz, rho_schutz));
+    return rho_schutz;
+  fi;
+
+  p := LambdaConjugator(Parent(D))(RhoOrbRep(o, m), Representative(D));
+  rho_schutz := rho_schutz ^ p;
+
+  SetRhoOrbStabChain(D, StabChainImmutable(rho_schutz));
+
+  if lambda_stab = false then
+    SetRhoCosets(D, Enumerator(rho_schutz));
+    return lambda_schutz;
+  elif lambda_stab = true then
+    schutz := rho_schutz;
+  else
+    schutz := Intersection(lambda_schutz, rho_schutz);
+  fi;
+
+  SetRhoCosets(D, RightTransversal(rho_schutz, schutz));
+  return schutz;
 end);
 
 # same method for regular/inverse/ideals
