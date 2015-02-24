@@ -106,6 +106,9 @@ end);
 #
 #T do this "by hand", and in place, or find a
 #T kernel function that does this.
+#
+# FIXME this might not be possible, in the case that mat acts non-injectively on 
+# V, this function should return fail!
 InstallGlobalFunction(MatrixObjLocalRightInverse,
 function( S, V, mat )
         local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
@@ -239,35 +242,17 @@ end);
 
 # Attempt to construct an idempotent m with RowSpace(m) = x
 # ColumnSpace(m) = y
-# TODO: remove redundant S as an argument here.
-# FIXME: this doesn't work. 
+
 InstallGlobalFunction(MatrixObjIdempotentCreator,
 function(S, x, y)
-    local m, m2, p1, p2, f;
+  local m, inv;
     
     m := TransposedMat(y) * x;
-
-    m2 := m * m;
-    
-    p1 := PositionNonZero(m2);
-    if p1 = Length(m2) + 1 then 
-      if m2 = m then 
-        return m;
-      else
-        return fail;
-      fi;
-    fi;
-    
-    p2 := PositionNonZero(m2[p1]);
-
-    f := m[p1][p2] / m2[p1][p2];
-
-    m := f * m; 
-
-    if f * m2 = m then
-        return m;
+    inv := MatrixObjLocalRightInverse(S, x, m);
+    if inv = fail then 
+      return fail;
     else
-        return fail;
+      return m * inv;
     fi;
 end);
 
