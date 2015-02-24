@@ -637,8 +637,8 @@ gap> Idempotents(L);
 gap> D:=DClassOfLClass(L);
 {Transformation( [ 1, 1, 3, 3 ] )}
 gap> Idempotents(D);
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
-  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> L:=GreensLClassOfElement(S, Transformation( [ 3, 1, 1, 3 ] ));;
 gap> Idempotents(L);
 [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ) ]
@@ -876,11 +876,11 @@ gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
 gap> R:=RClass(S, f);
-{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+{Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )}
 gap> NrHClasses(R);
 12
 gap> D:=DClass(R);
-{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+{Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )}
 gap> NrHClasses(D);
 72
 gap> L:=LClass(S, f);

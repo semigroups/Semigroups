@@ -127,7 +127,7 @@ end);
 ## 4. Collections of classes, and reps
 #############################################################################
 
-# same method for inverse.
+# different method for inverse.
 
 # Note that these are not rectified!
 

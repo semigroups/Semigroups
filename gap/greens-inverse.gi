@@ -309,7 +309,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensHClassOfElementNC, "for a inverse op class and element",
-[IsInverseOpClass and IsActingSemigroupGreensClass and IsGreensDClass,
+[IsInverseOpClass and IsActingSemigroupGreensClass,
 IsAssociativeElement],
 function(C, x)
   local H;
@@ -431,13 +431,28 @@ end);
 ## 4. Collections of classes, and reps
 #############################################################################
 
+# This is required since it is used elsewhere in the code that DClassReps of an
+# inverse semigroup are all idempotents. 
+
+InstallMethod(DClassReps, "for an inverse op acting semigroup with generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+function(S)
+  local o, out, m;
+  o := LambdaOrb(S);
+  out := EmptyPlist(Length(OrbSCC(o)));
+  for m in [2 .. Length(OrbSCC(o))] do
+    out[m - 1] := RightOne(LambdaOrbRep(o, m));
+  od;
+  return out;
+end);
+
 # same method for inverse ideals
 
 InstallMethod(GreensDClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(S)
   local o, scc, out, D, i;
-
+ 
   o := LambdaOrb(S);
   scc := OrbSCC(o);
   out := EmptyPlist(Length(scc) - 1);
