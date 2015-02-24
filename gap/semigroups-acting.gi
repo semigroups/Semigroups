@@ -305,7 +305,7 @@ function(f, s)
   rep := LambdaOrbRep(LambdaOrb(s), m);
   rho_l := Position(LambdaOrb(s), RhoFunc(s)(rep));
 
-  if rho_l <> OrbSCC(RhoOrb(s))[m][1] then
+  if rho_l <> OrbSCC(LambdaOrb(s))[m][1] then
     # the D-class rep corresponding to lambda_o and scc.
     rep := LambdaOrbMult(LambdaOrb(s), m, rho_l)[1] * rep;
   fi;
