@@ -11,8 +11,30 @@
 # This file contains methods for inverse acting semigroups consisting of
 # associative elements with a method for InverseOp.
 
+## See the start of greens-acting.gi for details of how to create Green's
+## classes of acting semigroups.
+
 # Methods here are similar to methods in greens-regular but without any use of
 # RhoAnything!
+
+#############################################################################
+## This file contains methods for Green's classes etc for acting semigroups.
+## It is organized as follows:
+##
+##   1. Helper functions for the creation of Green's classes, and lambda-rho
+##      stuff.
+##
+##   2. Technical Green's stuff (types, representative, etc)
+##
+##   3. Individual Green's classes (constructors, size, membership)
+##
+##   4. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
+##
+##   5. Idempotents and NrIdempotents
+##
+##   6. Iterators and enumerators
+##
+#############################################################################
 
 #############################################################################
 ## 1. Helper functions for the creation of Green's classes . . .

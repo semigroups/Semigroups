@@ -217,6 +217,12 @@ D -> Length(RhoOrbSCC(D)));
 
 # different method for inverse semigroups
 
+InstallMethod(NrHClasses, "for a D-class of regular acting semigroup",
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensRClass],
+R -> Length(LambdaOrbSCC(R)) * Length(RhoOrbSCC(R)));
+
+# different method for inverse semigroups
+
 InstallMethod(NrHClasses, "for a L-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensLClass],
 L -> Length(RhoOrbSCC(L)));

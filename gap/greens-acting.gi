@@ -1343,6 +1343,13 @@ InstallMethod(NrRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
 D -> Length(RhoCosets(D)) * Length(RhoOrbSCC(D)));
 
+# same method for regular/inverse/ideals
+
+InstallMethod(NrHClasses, "for an acting semigroup", [IsActingSemigroup],
+function(S)
+  return Sum(List(GreensDClasses(S), NrHClasses));
+end);
+
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(GroupHClassOfGreensDClass, "for a D-class of an acting semigroup",

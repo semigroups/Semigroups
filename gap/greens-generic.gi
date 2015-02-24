@@ -117,9 +117,6 @@ end);
 
 #
 
-InstallMethod(NrHClasses, "for a semigroup", [IsSemigroup],
-S -> Sum(List(GreensDClasses(S), NrHClasses)));
-
 InstallMethod(NrHClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensHClasses(S)));
 
