@@ -101,14 +101,13 @@ InstallGlobalFunction(MatrixObjRowSpaceRightAction,
 end);
 
 
-# Under the assumption that rank mat >= dim V compute
-# a matrix N such that mat * N = id_V
+# 
+# If dim(V * mat) = dim(V) compute a right inverse for mat, otherwise
+# return fail.
 #
 #T do this "by hand", and in place, or find a
 #T kernel function that does this.
 #
-# FIXME this might not be possible, in the case that mat acts non-injectively on 
-# V, this function should return fail!
 InstallGlobalFunction(MatrixObjLocalRightInverse,
 function( S, V, mat )
         local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
@@ -126,6 +125,13 @@ function( S, V, mat )
         CopySubMatrix( V, W, [1 .. k], [1 .. k], [1 .. n], [n + 1 .. 2 * n]);
 
         se := SemiEchelonMat(W);
+
+		# If the matrix does not act injectively on V,
+		# then there is no right inverse
+		# FIXME: I think we can now simplify things below
+        if Number(se.heads, IsZero) > 2 * n - k then
+            return fail;
+        fi;
 
         for i in [1 .. Length(se.vectors)] do
             W[i] := ShallowCopy(se.vectors[i]);
