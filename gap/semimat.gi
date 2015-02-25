@@ -129,7 +129,7 @@ function( S, V, mat )
 		# If the matrix does not act injectively on V,
 		# then there is no right inverse
 		# FIXME: I think we can now simplify things below
-        if Number(se.heads, IsZero) > 2 * n - k then
+        if Number(se.heads{[1..n]}, IsZero) > n - k then
             return fail;
         fi;
 
@@ -212,9 +212,7 @@ end);
 
 InstallGlobalFunction(MatrixObjLambdaConjugator,
 function(S, x, y)
-     local xse, xhe, yse, yhe, he, h, p, q, i, RemoveZeroRows, res;
-
-	Print("conjugator\n");
+   local xse, xhe, yse, yhe, he, h, p, q, i, RemoveZeroRows, res;
 
     if x ^ ( - 1) <> fail then
         res := List(x ^ ( - 1) * y, List);
