@@ -33,7 +33,7 @@ function(arg)
     # We should have a list of generating pairs
     if Length(arg) = 2 then
       pairs := arg[2];
-      if not IsList(pairs[1]) then
+      if not IsEmpty(pairs) and not IsList(pairs[1]) then
         pairs := [pairs];
       fi;
     elif Length(arg) > 2 then
