@@ -510,7 +510,7 @@ true
 gap> ForAll(h, x-> x in s);
 true
 gap> IsGreensClassNC(h);
-false
+true
 gap> f:=PartialPermNC([ 2, 8, 9 ], [ 8, 10, 5 ]);;
 gap> l:=LClass(s, f);
 {PartialPerm( [ 4, 7, 8 ], [ 8, 10, 5 ] )}

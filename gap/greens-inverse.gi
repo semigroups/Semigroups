@@ -260,13 +260,33 @@ end);
 
 # same method for inverse ideals
 
+InstallMethod(GreensLClassOfElement,
+"for inverse op D-class and associative element",
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
+IsAssociativeElement],
+function(D, x)
+  local L;
+    if not x in D then
+    Error("Semigroups: GreensLClassOfElement: usage,\n",
+          "the element does not belong to the D-class,");
+    return;
+  fi;
+  L := SEMIGROUPS_CreateLClass(D, x, IsGreensClassNC(D));
+  SEMIGROUPS_CopyLambda(D, L);
+  SEMIGROUPS_InverseRectifyRho(L);
+  SetDClassOfLClass(L, D);
+  return L;
+end);
+
+# same method for inverse ideals
+
 InstallMethod(GreensLClassOfElementNC,
 "for inverse op D-class and associative element",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
 IsAssociativeElement],
 function(D, x)
   local L;
-  L := SEMIGROUPS_CreateLClass(D, x);
+  L := SEMIGROUPS_CreateLClass(D, x, true);
   SEMIGROUPS_CopyLambda(D, L);
   SEMIGROUPS_InverseRectifyRho(L);
   SetDClassOfLClass(L, D);
@@ -313,7 +333,7 @@ InstallMethod(GreensHClassOfElementNC, "for a inverse op class and element",
 IsAssociativeElement],
 function(C, x)
   local H;
-  H := SEMIGROUPS_CreateHClass(C, x);
+  H := SEMIGROUPS_CreateHClass(C, x, true);
   SEMIGROUPS_CopyLambda(C, H);
 
   if IsGreensLClass(C) then
@@ -477,7 +497,7 @@ function(D)
   for i in [ 1 .. Length(reps) ] do
     # don't use GreensLClassOfElementNC cos we don't need to rectify the
     # rho-value
-    out[i] := SEMIGROUPS_CreateLClass(D, reps[i]);
+    out[i] := SEMIGROUPS_CreateLClass(D, reps[i], IsGreensClassNC(D));
     SEMIGROUPS_CopyLambda(D, out[i]);
     SetDClassOfLClass(out[i], D);
   od;
