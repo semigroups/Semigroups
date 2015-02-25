@@ -82,6 +82,8 @@ function(arg, type, rel)
     nc := IsGreensClassNC(arg[1]);
     rep := Representative(arg[1]);
   elif Length(arg) = 2 then # arg is a Green's class and rep
+#FIXME this isn't right, NC reflects whether we checked if rep belongs to
+#S/arg[1], and so this is set incorrectly here!!
     S := Parent(arg[1]);
     nc := IsGreensClassNC(arg[1]);
     rep := arg[2];

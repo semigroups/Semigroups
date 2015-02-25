@@ -22,5 +22,4 @@ DeclareAttribute("RhoOrbSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
 
-DeclareAttribute("SemigroupDataSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
