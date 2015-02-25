@@ -307,8 +307,8 @@ end);
 #
 
 InstallMethod(NrCongruenceClasses,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
+"for a semigroup congruence with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
   local s;
   s := Range(cong);
