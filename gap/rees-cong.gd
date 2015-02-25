@@ -1,0 +1,1 @@
+DeclareAttribute("SemigroupIdealOfReesCongruence", IsReesCongruence);

@@ -75,6 +75,7 @@ ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univ-cong.gd");
 ReadPackage("semigroups/gap/inverse-cong.gd");
 ReadPackage("semigroups/gap/simple-cong.gd");
+ReadPackage("semigroups/gap/rees-cong.gd");
 
 ReadPackage("semigroups/gap/freeband.gd");
 
