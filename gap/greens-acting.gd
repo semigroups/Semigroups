@@ -9,7 +9,6 @@
 
 # Green's relations, classes, etc for acting semigroups.
 
-
 DeclareAttribute("LambdaOrb", IsActingSemigroupGreensClass, "mutable");
 DeclareAttribute("RhoOrb", IsActingSemigroupGreensClass, "mutable");
 
@@ -23,3 +22,6 @@ DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
 
 DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
+
+DeclareOperation("GreensHClassOfElementNC", 
+[IsGreensClass, IsAssociativeElement, IsBool]);

@@ -300,13 +300,11 @@ InstallMethod(GreensHClassOfElement,
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
   local H;
-
   if not x in S then
     Error("Semigroups: GreensHClassOfElement: usage,\n",
           "the element does not belong to the semigroup,");
     return;
   fi;
-
   H := SEMIGROUPS_CreateHClass(S, x, false);
   SetLambdaOrb(H, LambdaOrb(S));
   SetLambdaOrbSCCIndex(H, OrbSCCIndex(LambdaOrb(S), LambdaFunc(S)(x)));
@@ -323,6 +321,30 @@ function(S, x)
   H := SEMIGROUPS_CreateHClass(S, x, true);
   SetLambdaOrb(H, GradedLambdaOrb(S, x, false));
   SetLambdaOrbSCCIndex(H, 1);
+  return H;
+end);
+
+# same method for inverse ideals
+
+InstallMethod(GreensHClassOfElement, "for a inverse op class and element",
+[IsInverseOpClass and IsActingSemigroupGreensClass,
+IsAssociativeElement],
+function(C, x)
+  local H;
+  if not x in C then
+    Error("Semigroups: GreensHClassOfElement: usage,\n",
+          "the element does not belong to the Green's class,");
+    return;
+  fi; 
+  H := SEMIGROUPS_CreateHClass(C, x, IsGreensClassNC(C));
+  SEMIGROUPS_CopyLambda(C, H);
+  if IsGreensLClass(C) then
+    SetLClassOfHClass(H, C);
+  elif IsGreensRClass(C) then
+    SetRClassOfHClass(H, C);
+  elif IsGreensDClass(C) then
+    SetDClassOfHClass(H, C);
+  fi;
   return H;
 end);
 
@@ -405,6 +427,8 @@ function(x, D)
 
   return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
 end);
+
+#
 
 InstallMethod(\in,
 "for associative element and inverse op L-class of acting semigroup.",
@@ -532,6 +556,38 @@ function(L)
     nr := nr + 1;
     out[nr] := mults[i][2] * rep;
   od;
+  return out;
+end);
+
+#
+
+InstallMethod(GreensHClasses, 
+"for an inverse op class of an acting semigroup",
+[IsInverseOpClass and IsActingSemigroupGreensClass],
+function(C)
+  local reps, out, setter, i;
+
+  reps := HClassReps(C);
+  out := [];
+  
+  if IsGreensLClass(C) then
+    setter := SetLClassOfHClass;
+  elif IsGreensRClass(C) then
+    setter := SetRClassOfHClass;
+  elif IsGreensDClass(C) then
+    setter := SetDClassOfHClass;
+  else 
+    Error("Semigroups: GreensHClasses: usage,\n",
+          "an L-, R-, or D-class,");
+    return;
+  fi;
+  
+  for i in [1..Length(reps)] do 
+    out[i] := SEMIGROUPS_CreateHClass(C, reps[i], IsGreensClassNC(C));
+    SEMIGROUPS_CopyLambda(C, out[i]);
+    setter(out[i], C);
+  od;
+
   return out;
 end);
 

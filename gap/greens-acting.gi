@@ -782,7 +782,7 @@ end);
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensHClassOfElementNC, "for an acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement],
+[IsActingSemigroup, IsAssociativeElement, IsBool],
 function(S, x)
   local H;
   H := SEMIGROUPS_CreateHClass(S, x, true);
@@ -795,95 +795,78 @@ end);
 
 # same method for regular/ideals/inverse
 
-InstallMethod(GreensHClassOfElement, "for D-class and element",
-[IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement],
-function(D, x)
-  local H;
-  if not x in D then
+InstallMethod(GreensHClassOfElement, "for a Green's class and element",
+[IsActingSemigroupGreensClass and IsGreensClass, IsAssociativeElement],
+function(C, x)
+  if not x in C then
     Error("Semigroups: GreensHClassOfElement: usage,\n",
           "the element does not belong to the D-class,");
     return;
   fi;
-  H := SEMIGROUPS_CreateHClass(D, x, IsGreensClassNC(D));
+  return GreensHClassOfElementNC(C, x, IsGreensClassNC(C));
+end);
+
+# same method for regular/ideals/inverse
+
+InstallMethod(GreensHClassOfElementNC, "for a Green's class and element",
+[IsActingSemigroupGreensClass and IsGreensClass, IsAssociativeElement],
+function(C, x)
+  return GreensHClassOfElementNC(C, x, true);
+end);
+
+# same method for regular/ideals, different method for inverse TODO double
+# check it!
+
+InstallMethod(GreensHClassOfElementNC, "for a D-class, element, and bool",
+[IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement, IsBool],
+function(D, x, isGreensClassNC)
+  local H;
+  H := SEMIGROUPS_CreateHClass(D, x, isGreensClassNC);
   SEMIGROUPS_CopyLambda(D, H);
   SEMIGROUPS_CopyRho(D, H);
   SetDClassOfHClass(H, D);
   return H;
 end);
 
-# same method for regular/ideals, different method for inverse
+# same method for regular/ideals, different method for inverse TODO double
+# check it!
 
-InstallMethod(GreensHClassOfElementNC, "for a D-class and element",
-[IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement],
-function(D, x)
+InstallMethod(GreensHClassOfElementNC, "for an L-class, element, and bool",
+[IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement, IsBool],
+function(L, x, isGreensClassNC)
   local H;
-  H := SEMIGROUPS_CreateHClass(D, x, true);
-  SEMIGROUPS_CopyLambda(D, H);
-  SEMIGROUPS_CopyRho(D, H);
-  SetDClassOfHClass(H, D);
-  return H;
-end);
-
-# same method for regular/ideals/inverse
-
-InstallMethod(GreensHClassOfElement, "for L-class and element",
-[IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement],
-function(L, x)
-  local H;
-  if not x in L then
-    Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the L-class,");
-    return;
-  fi;
-  H := SEMIGROUPS_CreateHClass(L, x, IsGreensClassNC(L));
+  H := SEMIGROUPS_CreateHClass(L, x, isGreensClassNC);
   SEMIGROUPS_CopyRho(L, H);
   SEMIGROUPS_SetLambda(H);
   SetLClassOfHClass(H, L);
   return H;
 end);
 
-# same method for regular/ideals, different method for inverse
+# same method for regular/ideals, different method for inverse TODO double
+# check it!
 
-InstallMethod(GreensHClassOfElementNC, "for an L-class and element",
-[IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement],
-function(L, x)
+InstallMethod(GreensHClassOfElementNC, "for an R-class, element, and bool",
+[IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement, IsBool],
+function(R, x, isGreensClassNC)
   local H;
-  H := SEMIGROUPS_CreateHClass(L, x, true);
-  SEMIGROUPS_CopyRho(L, H);
-  SEMIGROUPS_SetLambda(H);
-  SetLClassOfHClass(H, L);
-  return H;
-end);
-
-# same method for regular/ideals/inverse
-
-InstallMethod(GreensHClassOfElement, "for R-class and element",
-[IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement],
-function(R, x)
-  local H;
-  if not x in R then
-    Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the R-class,");
-    return;
-  fi;
-  H := SEMIGROUPS_CreateHClass(R, x, IsGreensClassNC(R));
+  H := SEMIGROUPS_CreateHClass(R, x, isGreensClassNC);
   SEMIGROUPS_CopyLambda(R, H);
   SEMIGROUPS_SetRho(H);
   SetRClassOfHClass(H, R);
   return H;
 end);
 
-# same method for regular/ideals, different method for inverse
+# same method for regular/ideals, different method for inverse TODO double
+# check it!
 
-InstallMethod(GreensHClassOfElementNC, "for an R-class and element",
-[IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement],
-function(R, x)
-  local H;
-  H := SEMIGROUPS_CreateHClass(R, x, true);
-  SEMIGROUPS_CopyLambda(R, H);
-  SEMIGROUPS_SetRho(H);
-  SetRClassOfHClass(H, R);
-  return H;
+InstallMethod(GreensHClassOfElementNC, "for an H-class, element, and bool",
+[IsActingSemigroupGreensClass and IsGreensHClass, IsAssociativeElement, IsBool],
+function(old, x, isGreensClassNC)
+  local new;
+  new := SEMIGROUPS_CreateHClass(old, x, isGreensClassNC);
+  SEMIGROUPS_CopyLambda(old, new);
+  SEMIGROUPS_CopyRho(old, new);
+  return new;
 end);
 
 # different method for inverse/regular, same for ideals
@@ -1321,7 +1304,18 @@ end);
 
 InstallMethod(GreensHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-R -> List(HClassReps(R), x -> GreensHClassOfElementNC(R, x)));
+function(R)
+  local reps, out, i;
+  reps := HClassReps(R);
+  out := [GreensHClassOfElementNC(R, reps[1], IsGreensClassNC(R))];
+  # do this rather than GreensHClassOfElement(R, reps[i]) to 
+  # avoid recomputing the RhoOrb.
+  for i in [2 .. Length(reps)] do 
+    out[i] := GreensHClassOfElementNC(out[1], reps[i], IsGreensClassNC(R));
+    SetRClassOfHClass(out[i], R);
+  od;
+  return out;
+end);
 
 # same method for regular/ideals, different method for inverse
 
@@ -1351,11 +1345,21 @@ function(L)
   return out;
 end);
 
-# same method for regular/inverse/ideals
+# same method for regular/ideals, different for inverse
 
 InstallMethod(GreensHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-L -> List(HClassReps(L), x -> GreensHClassOfElementNC(L, x)));
+function(L)
+  local reps, out, i;
+  out := [GreensHClassOfElementNC(L, reps[1], IsGreensClassNC(L))];
+  # do this rather than GreensHClassOfElement(R, reps[i]) to 
+  # avoid recomputing the RhoOrb.
+  for i in [2 .. Length(reps)] do 
+    out[i] := GreensHClassOfElementNC(out[1], reps[i], IsGreensClassNC(L));
+    SetLClassOfHClass(out[i], L);
+  od;
+  return out;
+end);
 
 #############################################################################
 
@@ -1416,7 +1420,10 @@ function(D)
       if not HasIsRegularClass(D) then
         SetIsRegularClass(D, true);
       fi;
-      H := GreensHClassOfElementNC(D, IdempotentCreator(S)(o[i], rho));
+      H := SEMIGROUPS_CreateHClass(D, IdempotentCreator(S)(o[i], rho),
+                                   IsGreensClassNC(D));
+      SEMIGROUPS_CopyLambda(D, H);
+      SEMIGROUPS_CopyRho(D, H);
       SetIsGroupHClass(H, true);
       return H;
     fi;
