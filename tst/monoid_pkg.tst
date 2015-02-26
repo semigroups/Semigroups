@@ -876,13 +876,13 @@ gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
 gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
 gap> M:=Semigroup(a,b);;
 gap> rc:=GreensRClassOfElement(M, a*b*a);
-{Transformation( [ 3, 2, 5, 4, 1, 1 ] )}
+{Transformation( [ 5, 2, 1, 4, 3, 3 ] )}
 gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
 > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 2, 4, 2, 5, 3 ] );;
 gap> r:=RClass(S, f);
-{Transformation( [ 5, 2, 5, 3, 1 ] )}
+{Transformation( [ 3, 1, 3, 5, 2 ] )}
 gap> LambdaOrb(r);
 <closed orbit, 25 points with Schreier tree with log>
 gap> AsList(last);

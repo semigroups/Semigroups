@@ -161,6 +161,7 @@ function(S)
   Enumerate(RhoOrb(S));
 
   for i in [2 .. Length(scc)] do
+    # don't use GreensDClassOfElementNC here to avoid rectifying lambda
     D := SEMIGROUPS_CreateDClass(S, LambdaOrbRep(o, i), false);
     SetLambdaOrb(D, o);
     SetLambdaOrbSCCIndex(D, i);

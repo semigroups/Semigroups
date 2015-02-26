@@ -91,9 +91,6 @@ end);
 
 # D-classes . . .
 
-InstallMethod(IsRegularDClass, "for a Green's D-class",
-[IsGreensDClass], IsRegularClass);
-
 # FIXME are these really necessary?
 
 InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);

@@ -195,18 +195,13 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensDClassOfElement,
-"for acting semigroup with inverse op and element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
-function(S, x)
+InstallMethod(GreensDClassOfElementNC,
+"for an inverse op acting semigroup, element, and bool",
+[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+function(S, x, isGreensClassNC)
   local D;
-  if not x in S then
-    Error("Semigroups: GreensDClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
-  fi;
-  D := SEMIGROUPS_CreateDClass(S, x, false);
-  SetLambdaOrb(D, LambdaOrb(S));
+  D := SEMIGROUPS_CreateDClass(S, x, isGreensClassNC);
+  SEMIGROUPS_SetLambda(D);
   SEMIGROUPS_RectifyLambda(D);
   D!.rep := RightOne(D!.rep);
   return D;
@@ -214,32 +209,12 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensDClassOfElementNC,
-"for an inverse op acting semigroup and element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
-function(S, x)
-  local D;
-  D := SEMIGROUPS_CreateDClass(S, RightOne(x), true);
-  SetLambdaOrb(D, GradedLambdaOrb(S, x, false));
-  SetLambdaOrbSCCIndex(D, 1);
-  return D;
-end);
-
-# same method for inverse ideals
-
-InstallMethod(GreensLClassOfElement,
-"for an inverse op acting semigroup and element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
-function(S, x)
+InstallMethod(GreensLClassOfElementNC, 
+"for an inverse op acting semigroup, element, and bool",
+[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+function(S, x, isGreensClassNC)
   local L;
-
-  if not x in S then
-    Error("Semigroups: GreensLClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
-  fi;
-
-  L := SEMIGROUPS_CreateLClass(S, x, false);
+  L := SEMIGROUPS_CreateLClass(S, x, isGreensClassNC);
   SEMIGROUPS_SetLambda(L);
   SEMIGROUPS_InverseRectifyRho(L);
   return L;
@@ -248,116 +223,40 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensLClassOfElementNC,
-"for an inverse op acting semigroup and element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
-function(S, x)
-  local L;
-  L := SEMIGROUPS_CreateLClass(S, x, true);
-  SEMIGROUPS_SetLambda(L);
-  SEMIGROUPS_InverseRectifyRho(L);
-  return L;
-end);
-
-# same method for inverse ideals
-
-InstallMethod(GreensLClassOfElement,
-"for inverse op D-class and associative element",
+"for inverse op D-class, element, and bool",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
-IsAssociativeElement],
-function(D, x)
+IsAssociativeElement, IsBool],
+function(D, x, isGreensClassNC)
   local L;
-    if not x in D then
-    Error("Semigroups: GreensLClassOfElement: usage,\n",
-          "the element does not belong to the D-class,");
-    return;
-  fi;
-  L := SEMIGROUPS_CreateLClass(D, x, IsGreensClassNC(D));
+  L := SEMIGROUPS_CreateLClass(D, x, isGreensClassNC);
   SEMIGROUPS_CopyLambda(D, L);
   SEMIGROUPS_InverseRectifyRho(L);
   SetDClassOfLClass(L, D);
   return L;
-end);
-
-# same method for inverse ideals
-
-InstallMethod(GreensLClassOfElementNC,
-"for inverse op D-class and associative element",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
-IsAssociativeElement],
-function(D, x)
-  local L;
-  L := SEMIGROUPS_CreateLClass(D, x, true);
-  SEMIGROUPS_CopyLambda(D, L);
-  SEMIGROUPS_InverseRectifyRho(L);
-  SetDClassOfLClass(L, D);
-  return L;
-end);
-
-# same method for inverse ideals
-
-InstallMethod(GreensHClassOfElement,
-"for an inverse op acting semigroup and element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
-function(S, x)
-  local H;
-  if not x in S then
-    Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
-  fi;
-  H := SEMIGROUPS_CreateHClass(S, x, false);
-  SetLambdaOrb(H, LambdaOrb(S));
-  SetLambdaOrbSCCIndex(H, OrbSCCIndex(LambdaOrb(S), LambdaFunc(S)(x)));
-  return H;
 end);
 
 # same method for inverse ideals
 
 InstallMethod(GreensHClassOfElementNC,
-"for an inverse op acting semigroup and element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
-function(S, x)
+"for an inverse op acting semigroup, element, and bool",
+[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+function(S, x, isGreensClassNC)
   local H;
-  H := SEMIGROUPS_CreateHClass(S, x, true);
-  SetLambdaOrb(H, GradedLambdaOrb(S, x, false));
-  SetLambdaOrbSCCIndex(H, 1);
+  H := SEMIGROUPS_CreateHClass(S, x, isGreensClassNC);
+  SEMIGROUPS_SetLambda(H);
   return H;
 end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensHClassOfElement, "for a inverse op class and element",
-[IsInverseOpClass and IsActingSemigroupGreensClass,
-IsAssociativeElement],
-function(C, x)
+InstallMethod(GreensHClassOfElementNC, 
+"for a inverse op class, element, and bool",
+[IsInverseOpClass and IsActingSemigroupGreensClass, IsAssociativeElement,
+ IsBool],
+function(C, x, isGreensClassNC)
   local H;
-  if not x in C then
-    Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the Green's class,");
-    return;
-  fi; 
-  H := SEMIGROUPS_CreateHClass(C, x, IsGreensClassNC(C));
+  H := SEMIGROUPS_CreateHClass(C, x, isGreensClassNC);
   SEMIGROUPS_CopyLambda(C, H);
-  if IsGreensLClass(C) then
-    SetLClassOfHClass(H, C);
-  elif IsGreensRClass(C) then
-    SetRClassOfHClass(H, C);
-  elif IsGreensDClass(C) then
-    SetDClassOfHClass(H, C);
-  fi;
-  return H;
-end);
-
-# same method for inverse ideals
-
-InstallMethod(GreensHClassOfElementNC, "for a inverse op class and element",
-[IsInverseOpClass and IsActingSemigroupGreensClass,
-IsAssociativeElement],
-function(C, x)
-  local H;
-  H := SEMIGROUPS_CreateHClass(C, x, true);
-  SEMIGROUPS_CopyLambda(C, H);
-
   if IsGreensLClass(C) then
     SetLClassOfHClass(H, C);
   elif IsGreensRClass(C) then
@@ -502,6 +401,8 @@ function(S)
   out := EmptyPlist(Length(scc) - 1);
 
   for i in [2 .. Length(scc)] do
+    # don't use GreensDClassOfElementNC cos we don't need to rectify the
+    # rho-value
     D := SEMIGROUPS_CreateDClass(S, RightOne(LambdaOrbRep(o, i)), false);
     SetLambdaOrb(D, o);
     SetLambdaOrbSCCIndex(D, i);
