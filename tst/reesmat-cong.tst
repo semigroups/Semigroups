@@ -125,5 +125,28 @@ true
 gap> Size(s / uni);
 1
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(z);
+gap> Unbind(colBlocks);
+gap> Unbind(g);
+gap> Unbind(eq);
+gap> Unbind(nCoset);
+gap> Unbind(cong);
+gap> Unbind(ccong);
+gap> Unbind(n);
+gap> Unbind(q);
+gap> Unbind(class);
+gap> Unbind(s);
+gap> Unbind(classes);
+gap> Unbind(uni);
+gap> Unbind(class1);
+gap> Unbind(rowBlocks);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(congs);
+gap> Unbind(class2);
+gap> Unbind(class3);
+gap> Unbind(mat);
+
 #E#
 gap> STOP_TEST( "Semigroups package: reesmat-cong.tst");

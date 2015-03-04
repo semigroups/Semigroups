@@ -284,5 +284,29 @@ gap> Size(last);
 gap> IsRightZeroSemigroup(last2);
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(filt);
+gap> Unbind(perms);
+gap> Unbind(inv);
+gap> Unbind(im);
+gap> Unbind(m18);
+gap> Unbind(perm);
+gap> Unbind(m6);
+gap> Unbind(m1);
+gap> Unbind(g2);
+gap> Unbind(g1);
+gap> Unbind(dc);
+gap> Unbind(S);
+gap> Unbind(hc);
+gap> Unbind(ker);
+gap> Unbind(d);
+gap> Unbind(f);
+gap> Unbind(h);
+gap> Unbind(gens);
+gap> Unbind(s);
+gap> Unbind(iso);
+gap> Unbind(t);
+gap> Unbind(x);
+
 #E#
 gap> STOP_TEST( "Semigroups package: transform.tst");

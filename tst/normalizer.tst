@@ -176,5 +176,12 @@ Group(())
 gap> Normalizer(S, rec(lambdastab:=false, random:=true));
 Group(())
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(random);
+gap> Unbind(rhostab);
+gap> Unbind(G);
+gap> Unbind(lambdastab);
+
 #E#
 gap> STOP_TEST( "Semigroups package: normalizer.tst");

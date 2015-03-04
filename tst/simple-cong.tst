@@ -98,5 +98,19 @@ true
 gap> ForAll(congs, cong-> cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(pairs);
+gap> Unbind(classy);
+gap> Unbind(congs);
+gap> Unbind(q);
+gap> Unbind(s);
+gap> Unbind(classes);
+gap> Unbind(classz);
+gap> Unbind(classx);
+gap> Unbind(cong);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(z);
+
 #E#
 gap> STOP_TEST( "Semigroups package: simple-cong.tst");

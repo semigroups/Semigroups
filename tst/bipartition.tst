@@ -2903,5 +2903,33 @@ true
 gap> ForAll(S, x-> (x^iso)^inv=x);
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(elts);
+gap> Unbind(DD);
+gap> Unbind(gens);
+gap> Unbind(HH);
+gap> Unbind(LL);
+gap> Unbind(r);
+gap> Unbind(inv);
+gap> Unbind(triples);
+gap> Unbind(D);
+gap> Unbind(G);
+gap> Unbind(H);
+gap> Unbind(L);
+gap> Unbind(N);
+gap> Unbind(S);
+gap> Unbind(R);
+gap> Unbind(bp);
+gap> Unbind(T);
+gap> Unbind(e);
+gap> Unbind(g);
+gap> Unbind(classes2);
+gap> Unbind(f);
+gap> Unbind(l);
+gap> Unbind(s);
+gap> Unbind(classes);
+gap> Unbind(iso);
+gap> Unbind(x);
+
 #E# 
 gap> STOP_TEST( "Semigroups package: bipartition.tst");

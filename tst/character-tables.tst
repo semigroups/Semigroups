@@ -506,5 +506,9 @@ gap> CharacterTableOfInverseSemigroup(S[10]);
       <identity partial perm on [ 1, 4 ]>, <identity partial perm on [ 4 ]>, 
       <empty partial perm> ] ]
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(gens);
+
 #E#
 gap> STOP_TEST( "Semigroups package: character-tables.tst");

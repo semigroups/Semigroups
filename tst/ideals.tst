@@ -853,5 +853,30 @@ MappingByFunction( <transformation group of size 720,
  on 6 pts with 3 generators>, Group([ (), (1,2,3,4,5,6), (1,
 2) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(ideals);
+gap> Unbind(gensL);
+gap> Unbind(gensJ);
+gap> Unbind(gensK);
+gap> Unbind(gensI);
+gap> Unbind(A);
+gap> Unbind(C);
+gap> Unbind(B);
+gap> Unbind(I);
+gap> Unbind(K);
+gap> Unbind(J);
+gap> Unbind(M);
+gap> Unbind(L);
+gap> Unbind(S);
+gap> Unbind(R);
+gap> Unbind(U);
+gap> Unbind(T);
+gap> Unbind(data);
+gap> Unbind(a);
+gap> Unbind(gens);
+gap> Unbind(o);
+gap> Unbind(s);
+gap> Unbind(x);
+
 #E# 
 gap> STOP_TEST( "Semigroups package: ideals.tst");

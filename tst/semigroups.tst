@@ -236,6 +236,20 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(g);
+gap> Unbind(f);
+gap> Unbind(i);
+gap> Unbind(inv);
+gap> Unbind(gens);
+gap> Unbind(s);
+gap> Unbind(iso);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(z);
+gap> Unbind(u);
+
 #E#
 gap> Unbind(s);; Unbind(S);; Unbind(gens);;
 gap> STOP_TEST( "Semigroups package: semigroups.tst");

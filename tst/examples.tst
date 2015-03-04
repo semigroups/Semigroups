@@ -2316,5 +2316,9 @@ false
 gap> IsZeroSemigroup(s);
 false
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(s);
+gap> Unbind(gens);
+
 #E# 
 gap> STOP_TEST("Semigroups package: examples.tst");

@@ -776,10 +776,21 @@ true
 gap> IsSynchronizingSemigroup(s);
 false
 
-#E#
-gap> Unbind(semis); Unbind(file); Unbind(s); Unbind(d); 
-gap> Unbind(g); Unbind(gens); Unbind(t); Unbind(i); Unbind(f);
-gap> Unbind(g); Unbind(rms);
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(rms);
+gap> Unbind(d);
+gap> Unbind(g);
+gap> Unbind(f);
+gap> Unbind(i);
+gap> Unbind(inv);
+gap> Unbind(j);
+gap> Unbind(gens);
+gap> Unbind(iter);
+gap> Unbind(semis);
+gap> Unbind(s);
+gap> Unbind(iso);
+gap> Unbind(t);
 
-#
+#E#
 gap> STOP_TEST( "Semigroups package: properties.tst");

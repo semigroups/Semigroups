@@ -4918,6 +4918,49 @@ gap> NrHClasses(r);
 gap> Number(HClassReps(s), x-> x in r);
 20
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(rectify);
+gap> Unbind(inv);
+gap> Unbind(scc);
+gap> Unbind(gens);
+gap> Unbind(rho_schutz);
+gap> Unbind(o);
+gap> Unbind(a3);
+gap> Unbind(rr);
+gap> Unbind(rep);
+gap> Unbind(rho_stab);
+gap> Unbind(schutz);
+gap> Unbind(D);
+gap> Unbind(cosets);
+gap> Unbind(H);
+gap> Unbind(dd);
+gap> Unbind(enum);
+gap> Unbind(reps);
+gap> Unbind(L);
+gap> Unbind(lambda_schutz);
+gap> Unbind(P);
+gap> Unbind(hh);
+gap> Unbind(a2);
+gap> Unbind(a5);
+gap> Unbind(a4);
+gap> Unbind(a6);
+gap> Unbind(a1);
+gap> Unbind(e);
+gap> Unbind(d);
+gap> Unbind(g);
+gap> Unbind(f);
+gap> Unbind(i);
+gap> Unbind(h);
+gap> Unbind(m);
+gap> Unbind(l);
+gap> Unbind(iter);
+gap> Unbind(p);
+gap> Unbind(s);
+gap> Unbind(r);
+gap> Unbind(iso);
+gap> Unbind(lambda_stab);
+gap> Unbind(K18g);
+
 #E#
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(l); Unbind(iter);
 gap> STOP_TEST( "Semigroups package: misc.tst");

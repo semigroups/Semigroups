@@ -693,5 +693,47 @@ true
 #gap> RMSInducedFunction(R, (4,7), gam, ());
 #[ true, [ (), (), (), (), (), (), (), () ] ]
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(f1);
+gap> Unbind(f2);
+gap> Unbind(f3);
+gap> Unbind(f4);
+gap> Unbind(f5);
+gap> Unbind(f6);
+gap> Unbind(f7);
+gap> Unbind(f8);
+gap> Unbind(inv);
+gap> Unbind(M);
+gap> Unbind(l);
+gap> Unbind(inj);
+gap> Unbind(mat);
+gap> Unbind(gam);
+gap> Unbind(eV);
+gap> Unbind(A);
+gap> Unbind(map);
+gap> Unbind(D);
+gap> Unbind(G);
+gap> Unbind(H);
+gap> Unbind(reps);
+gap> Unbind(S);
+gap> Unbind(R);
+gap> Unbind(U);
+gap> Unbind(T);
+gap> Unbind(V);
+gap> Unbind(a);
+gap> Unbind(e);
+gap> Unbind(d);
+gap> Unbind(g);
+gap> Unbind(f);
+gap> Unbind(UU);
+gap> Unbind(h);
+gap> Unbind(t2);
+gap> Unbind(gens);
+gap> Unbind(t1);
+gap> Unbind(i);
+gap> Unbind(iso);
+gap> Unbind(y);
+gap> Unbind(x);
+
 #E#
 gap> STOP_TEST( "Semigroups package: reesmat.tst");

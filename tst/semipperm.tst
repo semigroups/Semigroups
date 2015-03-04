@@ -45,5 +45,10 @@ gap> ForAll([1..10], m -> List(Combinations([1 .. 10], m), x ->
 > NumberSubsetOfEqualSize(x, 10)) = [1 .. Binomial(10, m)]);
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(enum);
+gap> Unbind(sets);
+
 #E#
 gap> STOP_TEST( "Semigroups package: semipperm.tst");
