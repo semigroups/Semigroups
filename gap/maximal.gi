@@ -616,7 +616,7 @@ else
   function(S)
     local out, gens, po, reps, classes, D, lookup, count, max, found_case1,
     nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, UnionOfHClassRecursion,
-    HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H, basicgens,
+    HClassClosure, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H, basicgens,
     graph, components, nrcomponents, rows, NonGroupRecursion, transversal,
     maxgens, mat, h, ii, jj, lastideal, nrgens;
 
