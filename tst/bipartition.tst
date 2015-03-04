@@ -160,7 +160,8 @@ gap> x:=RMSElement(R, 12,(),8);;
 gap> ForAll(R, y-> (x^f)*(y^f)=(x*y)^f);               
 true
 
-#T# BipartitionTest14: IsomorphismBipartitionSemigroup for a transformation semigroup
+#T# BipartitionTest14: IsomorphismBipartitionSemigroup
+# for a transformation semigroup
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ), 
 >   Transformation( [ 4, 2, 1, 5, 5 ] ), 
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -209,7 +210,8 @@ gap> Size(S);
 gap> Size(Range(f));
 602
 
-#T# BipartitionTest16: IsomorphismBipartitionSemigroup for a partial perm semigroup
+#T# BipartitionTest16: IsomorphismBipartitionSemigroup
+# for a partial perm semigroup
 gap> S:=Semigroup(
 > [ PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ), 
@@ -247,7 +249,8 @@ gap> Size(S);
 gap> ForAll(S, x-> ForAll(S, y-> (x*y)^f=(x^f)*(y^f)));
 true
 
-#T# BipartitionTest17: IsomorphismPartialPermSemigroup for a semigroup of bipartitions consisting of IsPartialPermBipartition
+#T# BipartitionTest17: IsomorphismPartialPermSemigroup
+# for a semigroup of bipartitions consisting of IsPartialPermBipartition
 gap> f:=IsomorphismPartialPermSemigroup(T);;
 gap> g:=InverseGeneralMapping(f);;
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^f=(x^f)*(y^f)));
@@ -260,7 +263,10 @@ true
 gap> ForAll(S, x-> (x^g)^f=x);
 true
 
-#T# BipartitionTest18: testing the cases to which the new methods for IsomorphismPartialPermSemigroup and IsomorphismTransformationSemigroup don't apply
+#T# BipartitionTest18
+# Testing the cases to which the new methods for 
+# IsomorphismPartialPermSemigroup and IsomorphismTransformationSemigroup
+# don't apply
 gap> S:=Semigroup(
 > Bipartition( [ [ 1, 2, 3, 4, -1, -2, -5 ], [ 5 ], [ -3, -4 ] ] ), 
 > Bipartition( [ [ 1, 2, 3 ], [ 4, -2, -4 ], [ 5, -1, -5 ], [ -3 ] ] ), 
@@ -297,7 +303,8 @@ true
 gap> ForAll(Range(f), x-> (x^g)^f=x);
 true
 gap> D:=DClass(PartitionMonoid(5), 
-> Bipartition( [ [ 1 ], [ 2, -3 ], [ 3, -4 ], [ 4, -5 ], [ 5 ], [ -1 ], [ -2 ] ]));;
+> Bipartition( [ [ 1 ], [ 2, -3 ], [ 3, -4 ], [ 4, -5 ], [ 5 ], [ -1 ],
+>   [ -2 ] ]));;
 gap> G:=GroupHClass(D);
 {Bipartition( [ [ 1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4, -5 ], [ 5 ], [ -1 ] ] )}
 gap> IsomorphismPermGroup(G);
@@ -305,7 +312,8 @@ MappingByFunction( {Bipartition( [ [ 1 ], [ 2, -2 ], [ 3, -3 ],
  [ 4, -4, -5 ], [ 5 ], [ -1 ] ] )}, Group([ (2,4,3), (3,
 4) ]), function( x ) ... end, function( x ) ... end )
 
-#T# BipartitionTest21: IsomorphismBipartitionSemigroup for an inverse semigroup of partial perms
+#T# BipartitionTest21: IsomorphismBipartitionSemigroup
+# for an inverse semigroup of partial perms
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 3, 5, 7, 9 ], [ 7, 6, 5, 10, 1 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 9, 10, 4, 2, 5, 6 ] ) );;
@@ -325,7 +333,8 @@ gap> f:=last2;; g:=InverseGeneralMapping(f);;
 gap> ForAll(T, x-> (x^f)^g=x);
 true
 
-#T# BipartitionTest22: AsBlockBijection and IsomorphismBlockBijectionSemigroup for an inverse semigroup of partial perms
+#T# BipartitionTest22: AsBlockBijection and IsomorphismBlockBijectionSemigroup
+# for an inverse semigroup of partial perms
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
@@ -441,7 +450,8 @@ gap> S:=Semigroup(
 >   Bipartition( [ [ 1, 2, 4 ], [ 3, 5, -1, -4 ], [ -2, -5 ], [ -3 ] ] ), 
 >   Bipartition( [ [ 1, 2 ], [ 3, -1, -3 ], [ 4, 5, -4, -5 ], [ -2 ] ] ), 
 >   Bipartition( [ [ 1, 3, 4, -4 ], [ 2 ], [ 5 ], [ -1, -2, -3 ], [ -5 ] ] ), 
->   Bipartition( [ [ 1, -3 ], [ 2, -5 ], [ 3, -1 ], [ 4, 5 ], [ -2, -4 ] ] ) ] );;
+>   Bipartition( [ [ 1, -3 ], [ 2, -5 ], [ 3, -1 ], [ 4, 5 ],
+>     [ -2, -4 ] ] ) ] );;
 gap> x:=S.1*S.2*S.3*S.4*S.5;
 <bipartition: [ 1, 2, 3, 5 ], [ 4 ], [ -1, -3, -5 ], [ -2, -4 ]>
 gap> Factorization(S, x);
@@ -451,7 +461,8 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
 gap> IsInverseSemigroup(S);
 false
 
-#T# BipartitionTest26: tests of things in greens.xml in the order they appear in that file. 
+#T# BipartitionTest26:
+# Tests of things in greens.xml in the order they appear in that file. 
 gap> S:=Semigroup(
 > Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -8 ], 
 >      [ 6, -9 ], [ 7, -10 ], [ 8, -11 ], [ 9, -12 ], [ 10, -13 ], [ 11, -5 ], 

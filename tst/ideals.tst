@@ -434,23 +434,36 @@ gap> MinimalDClass(S);
 {Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )}
 
 #T# IdealsTest10
-gap> R:=Semigroup( [ Bipartition( [ [ 1, 2, 3, 5, -3 ], [ 4, 6, 7, -5 ], [ -1 ],
-> [ -2, -4, -7 ], [ -6 ] ] ), Bipartition( [ [ 1, 2, 6, -5 ], [ 3 ], [ 4, 5, -2 ],
-> [ 7, -1, -3, -4, -7 ], [ -6 ] ] ), Bipartition( [ [ 1, 3, 4, 5, -2, -3, -5 ], [
-> 2, 6, -1, -6, -7 ], [ 7 ], [ -4 ] ] ), Bipartition( [ [ 1, 3, 4, 6, -7 ], [ 2,
-> 5, -1, -5 ], [ 7, -2, -3, -4 ], [ -6 ] ] ), Bipartition( [ [ 1, 3 ], [ 2, 5, 6,
-> -1, -2, -3 ], [ 4, 7, -4, -7 ], [ -5 ], [ -6 ] ] ), Bipartition( [ [ 1, 4, 5,
-> -1, -2, -4, -6 ], [ 2, 3, 7, -3, -5, -7 ], [ 6 ] ] ), Bipartition( [ [ 1, -1, -4
-> ], [ 2, 3, 4, 5, 6, 7, -2, -6 ], [ -3, -5, -7 ] ] ), Bipartition( [ [ 1, 7, -6
-> ], [ 2, 3, 4, 5, -1, -2, -4 ], [ 6, -3, -5 ], [ -7 ] ] ), Bipartition( [ [ 1, 5,
-> -2, -7 ], [ 2, 3, 6, -4 ], [ 4, -1, -5, -6 ], [ 7 ], [ -3 ] ] ), Bipartition( [
-> [ 1, -3, -4 ], [ 2 ], [ 3, 7, -1, -7 ], [ 4, 5, -6 ], [ 6, -5 ], [ -2 ] ] ) ]
-> );; 
-gap> gens:= [ Bipartition( [ [ 1, 2, 3, 5, -3 ], [ 4, 6, 7, -5 ], [ -1 ], [
-> -2, -4, -7 ], [ -6 ] ] ), Bipartition( [ [ 1, 2, 6, -5 ], [ 3 ], [ 4, 5, -2 ], [
-> 7, -1, -3, -4, -7 ], [ -6 ] ] ), Bipartition( [ [ 1, 3 ], [ 2, 5, 6, -1, -2, -3
-> ], [ 4, 7, -4, -7 ], [ -5 ], [ -6 ] ] ), Bipartition( [ [ 1, -3, -4 ], [ 2 ], [
-> 3, 7, -1, -7 ], [ 4, 5, -6 ], [ 6, -5 ], [ -2 ] ] ) ];;
+gap> R:=Semigroup( [
+> Bipartition( [ [ 1, 2, 3, 5, -3 ], [ 4, 6, 7, -5 ], [ -1 ], [ -2, -4, -7 ],
+>   [ -6 ] ] ),
+> Bipartition( [ [ 1, 2, 6, -5 ], [ 3 ], [ 4, 5, -2 ], [ 7, -1, -3, -4, -7 ],
+>   [ -6 ] ] ),
+> Bipartition( [ [ 1, 3, 4, 5, -2, -3, -5 ], [ 2, 6, -1, -6, -7 ], [ 7 ],
+>   [ -4 ] ] ),
+> Bipartition( [ [ 1, 3, 4, 6, -7 ], [ 2, 5, -1, -5 ], [ 7, -2, -3, -4 ],
+>   [ -6 ] ] ),
+> Bipartition( [ [ 1, 3 ], [ 2, 5, 6, -1, -2, -3 ], [ 4, 7, -4, -7 ], [ -5 ],
+>   [ -6 ] ] ),
+> Bipartition( [ [ 1, 4, 5, -1, -2, -4, -6 ], [ 2, 3, 7, -3, -5, -7 ], [ 6 ]
+>   ] ),
+> Bipartition( [ [ 1, -1, -4 ], [ 2, 3, 4, 5, 6, 7, -2, -6 ], [ -3, -5, -7 ]
+>   ] ),
+> Bipartition( [ [ 1, 7, -6 ], [ 2, 3, 4, 5, -1, -2, -4 ], [ 6, -3, -5 ],
+>   [ -7 ] ] ),
+> Bipartition( [ [ 1, 5, -2, -7 ], [ 2, 3, 6, -4 ], [ 4, -1, -5, -6 ], [ 7 ],
+>   [ -3 ] ] ),
+> Bipartition( [ [ 1, -3, -4 ], [ 2 ], [ 3, 7, -1, -7 ], [ 4, 5, -6 ],
+> [ 6, -5 ], [ -2 ] ] ) ] );; 
+gap> gens:= [
+> Bipartition( [ [ 1, 2, 3, 5, -3 ], [ 4, 6, 7, -5 ], [ -1 ],
+>   [ -2, -4, -7 ], [ -6 ] ] ),
+> Bipartition( [ [ 1, 2, 6, -5 ], [ 3 ], [ 4, 5, -2 ], [ 7, -1, -3, -4, -7 ],
+>   [ -6 ] ] ),
+> Bipartition( [ [ 1, 3 ], [ 2, 5, 6, -1, -2, -3 ], [ 4, 7, -4, -7 ], [ -5 ],
+>   [ -6 ] ] ),
+> Bipartition( [ [ 1, -3, -4 ], [ 2 ], [ 3, 7, -1, -7 ], [ 4, 5, -6 ],
+>   [ 6, -5 ], [ -2 ] ] ) ];;
 gap> M:=SemigroupIdeal(R, gens);
 <non-regular bipartition semigroup ideal on 7 pts with 4 generators>
 gap> Length(MaximalDClasses(M));
@@ -844,7 +857,8 @@ gap> Size(I);
 gap> Size(SemigroupIdeal(S, I));
 35136
 
-#T# IdealsTest23: IsomorphismPermGroup for an ideal which happens to be a group...
+#T# IdealsTest23: IsomorphismPermGroup
+# for an ideal which happens to be a group...
 gap> S:=FullTransformationSemigroup(6);;
 gap> S:=Semigroup(GroupOfUnits(S));;
 gap> I:=SemigroupIdeal(S, S);;

@@ -20,7 +20,8 @@ gap> SemigroupsStartTest();
 #gap> S:=Semigroup(
 #> Transformation( [ 1, 8, 11, 2, 5, 16, 13, 14, 3, 6, 15, 10, 7, 4, 9, 12 ] ),
 #> Transformation( [ 1, 16, 9, 6, 5, 8, 13, 12, 15, 2, 3, 4, 7, 10, 11, 14 ] ),
-#> Transformation( [ 1, 3, 7, 9, 1, 15, 5, 11, 13, 11, 13, 3, 5, 15, 7, 9 ] ) );;
+#> Transformation(
+#>   [ 1, 3, 7, 9, 1, 15, 5, 11, 13, 11, 13, 3, 5, 15, 7, 9 ] ) );;
 #gap> Size(Normalizer(SymmetricGroup(16), S, rec(random:=true)));
 #I  Computing adjusted stabilizer chain...
 #I  Computing adjusted stabilizer chain...

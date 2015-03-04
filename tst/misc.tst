@@ -2735,7 +2735,8 @@ gap> LClassReps(dd);
 gap> LClassReps(d);
 [ [3,8], [3,6], <identity partial perm on [ 3 ]>, [3,5], [3,7], [3,2], [3,9], 
   [3,4] ]
-gap> Set(List(LClassReps(d), x-> LClass(d, x)))=Set(List(LClassReps(dd), x-> LClass(d, x)));
+gap> Set(List(LClassReps(d), x-> LClass(d, x))) =
+> Set(List(LClassReps(dd), x-> LClass(d, x)));
 true
 gap> Set(List(LClassReps(d), x-> LClass(d, x)))=Set(List(LClassReps(dd),
 > x-> LClass(dd, x)));

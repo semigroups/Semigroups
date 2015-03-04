@@ -9,7 +9,8 @@
 ##
 
 #
-# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"semigroups.tst")); 
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),
+# > "semigroups.tst")); 
 gap> START_TEST("Semigroups package: semigroups.tst");
 gap> LoadPackage("semigroups", false);;
 

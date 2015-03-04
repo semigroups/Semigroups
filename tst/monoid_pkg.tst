@@ -591,7 +591,8 @@ gap> res:=List(semis, x-> [Length(GreensLClasses(x)), Size(x)]);
   [ 333, 1382 ], [ 74, 1074 ], [ 2, 2 ], [ 28, 535 ], [ 3, 6 ], [ 3, 3 ], 
   [ 35, 1834 ], [ 93, 1776 ], [ 18, 326 ], [ 16, 45 ], [ 25, 379 ], 
   [ 33, 149 ] ]
-gap> ForAll(GreensLClasses(m), x-> ForAll(Idempotents(x), y-> y in x));                 
+gap> ForAll(GreensLClasses(m), x ->
+> ForAll(Idempotents(x), y -> y in x));                 
 true
 gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
 [ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
@@ -749,7 +750,8 @@ gap> List(semis, s-> Length(GreensHClasses(s)));
   14, 29, 274, 22, 17, 26, 253, 10, 1, 2, 13, 64, 605, 20, 25, 33, 2, 1, 
   1520, 307, 9625, 41, 1885, 945, 54, 1297, 58, 18, 1, 173, 1, 25, 737, 2807, 
   636, 495, 2, 201, 3, 3, 471, 715, 118, 28, 197, 88 ]
-gap> ForAll(semis, s-> Number(GreensHClasses(s), IsGroupHClass)=Length(Idempotents(s)));
+gap> ForAll(semis, s ->
+> Number(GreensHClasses(s), IsGroupHClass) = Length(Idempotents(s)));
 true
 gap> List(semis, s-> Number(GreensDClasses(s), IsRegularDClass));
 [ 1, 2, 2, 4, 3, 6, 1, 5, 4, 1, 6, 3, 3, 4, 3, 3, 4, 4, 1, 4, 6, 4, 4, 4, 1, 
@@ -841,7 +843,8 @@ gap> IsTransformationSemigroupGreensClass(last);
 true
 gap> f:=FreeSemigroup(3);;
 gap> a:=f.1;; b:=f.2;; c:=f.3;; 
-gap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], [c*a,c], [b*c,b],[c*b,c]] ;
+gap> s := f / [ [ a ^ 2, a ], [ b ^ 2, b ], [ c ^ 2, c ], [ a * b, a ],
+> [ b * a, b ], [ a * c, a ], [ c * a, c ], [ b * c, b ],[ c * b, c ] ] ;
 <fp semigroup on the generators [ s1, s2, s3 ]>
 gap> Size(s);
 3
@@ -1227,7 +1230,8 @@ gap> g1:=Transformation( [ 4, 6, 3, 8, 5, 6, 10, 4, 3, 7 ] );;
 gap> g2:=Transformation( [ 5, 6, 6, 3, 8, 6, 3, 7, 8, 4 ] );;
 gap> g3:=Transformation( [ 8, 6, 3, 2, 8, 10, 9, 2, 6, 2 ] );;
 gap> m23:=Monoid(g1,g2,g3);;
-gap> SmallMonoids:=[m1, m2, m3, m4, m5, m6, m7, m8, m9, m11, m14, m15, m18, m22, m23];;
+gap> SmallMonoids :=
+> [ m1, m2, m3, m4, m5, m6, m7, m8, m9, m11, m14, m15, m18, m22, m23 ];;
 gap> List(SmallMonoids, IsCompletelyRegularSemigroup);  
 [ false, true, false, false, true, true, true, true, true, false, false, 
   false, false, true, false ]

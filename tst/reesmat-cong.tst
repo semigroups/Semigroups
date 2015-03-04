@@ -98,7 +98,8 @@ gap> q := s / congs[13];;
 gap> Size(q);
 73
 
-#T# ReesMatCongTest8: Convert to and from semigroup congruence by generating pairs
+#T# ReesMatCongTest8
+# Convert to and from semigroup congruence by generating pairs
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
 gap> ccong := AsRZMSCongruenceByLinkedTriple(cong);;
 gap> congs[2] = ccong;
@@ -112,7 +113,8 @@ gap> [x,z] in uni;
 true
 gap> Length(EquivalenceClasses(uni)) = 1 
 > and (Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(1,4,5),3)
-> or Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(),1)); # the first is after 4.7.7 the latter before
+> or Representative(EquivalenceClasses(uni)[1]) =
+>   RMSElement(s, 1,(),1)); # the first is after 4.7.7 the latter before
 true
 gap> eq := EquivalenceClassOfElement(uni, y);
 {(6,(1,3,5),1)}
