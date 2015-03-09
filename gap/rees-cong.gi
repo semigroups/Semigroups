@@ -95,6 +95,24 @@ end);
 
 #
 
+InstallMethod(JoinSemigroupCongruences,
+"for two Rees congruences",
+[IsReesCongruence, IsReesCongruence],
+function(c1, c2)
+  
+end);
+
+#
+  
+InstallMethod(MeetSemigroupCongruences,
+"for two Rees congruences",
+[IsReesCongruence, IsReesCongruence],
+function(c1, c2)
+  
+end);
+
+#
+
 InstallMethod(EquivalenceClasses,
 "for Rees congruence",
 [IsReesCongruence],
@@ -113,43 +131,63 @@ end);
 
 #
 
-InstallMethod(JoinSemigroupCongruences,
-"for two Rees congruences",
-[IsReesCongruence, IsReesCongruence],
-function(c1, c2)
-  
+InstallMethod(EquivalenceClassOfElement,
+"for Rees congruence and an associative element",
+[IsReesCongruence, IsAssociativeElement],
+function(cong, elm)
+  # Check that the args make sense
+  if not elm in Range(cong) then
+    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
+          "the second arg <elm> must be ",
+          "in the semigroup of first arg <cong>");
+    return;
+  fi;
+  return EquivalenceClassOfElementNC(cong, elm);
 end);
 
 #
-  
-  
-InstallMethod(MeetSemigroupCongruences,
-"for two Rees congruences",
-[IsReesCongruence, IsReesCongruence],
-function(c1, c2)
-  
+
+InstallMethod(EquivalenceClassOfElementNC,
+"for Rees congruence and an associative element",
+[IsReesCongruence, IsAssociativeElement],
+function(cong, elm)
+  fam := CollectionsFamily( FamilyObj(elm) );
+  class := Objectify(NewType(fam, IsReesCongruenceClass),
+      rec(is_ideal_class := elm in SemigroupIdealOfReesCongruence(cong)) );
+  SetParentAttr(class, cong);
+  SetEquivalenceClassRelation(class, cong);
+  SetRepresentative(class, elm);
+  return class;
 end);
 
 #
-        
-#InstallMethod(EquivalenceClassOfElement,
-#"for Rees matrix semigroup congruence by linked triple and element",
-#[IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
-#        
-#        
+
 #InstallMethod( \in,
-#"for Rees matrix semigroup element and a congruence class by linked triple",
-#[IsReesMatrixSemigroupElement, IsRMSCongruenceClassByLinkedTriple],
-#        
+#"for associative element and a Rees congruence class",
+#[IsAssociativeElement, IsReesCongruenceClass],
+#function(elm, class)
+#  i := SemigroupIdealOfReesCongruence(class);
+#  rep := Representative(class);
+#  return elm = rep or (elm in i and rep in i);
+#end);
+#
+#
+
 #InstallMethod( \*,
 #"for two RMS congruence classes by linked triple",
 #[IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
 #function(c1, c2)
 #  
+#end);
+#
+#
+#
 #InstallMethod(Size,
-#"for RMS congruence class by linked triple",
-#[IsRMSCongruenceClassByLinkedTriple],
-#        
+#"for Rees congruence class",
+#[],
+#function(class)
+#end);
+#
 #InstallMethod( \=,
 #"for two congruence classes by linked triple",
 #[IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
