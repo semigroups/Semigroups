@@ -997,6 +997,143 @@ fi;
 
 #
 
+InstallMethod(MaximalInverseSubsemigroups,
+"for an inverse Rees 0-matrix subsemigroup",
+[IsInverseSemigroup and IsReesZeroMatrixSubsemigroup],
+function(R)
+  local G, out, elts, I, nrrows, new, mat, graph, components, basicgens, perm, j, i, s, id, gens, thething, k, J, an, H, xa;
+
+  if not IsReesZeroMatrixSemigroup(R) then
+    Error("Semigroups: MaximalInverseSubsemigroups: usage,\n",
+    "this method only works for an inverse Rees 0-matrix semigroup ",
+    "over a group,\n");
+    return;
+  fi;
+
+  G := UnderlyingSemigroup(R);
+
+  if not IsGroup(G) then
+    Error("Semigroups: MaximalInverseSubsemigroups: usage,\n",
+    "this method only works for an inverse Rees 0-matrix semigroup ",
+    "over a group,\n");
+    return;
+  fi;
+
+  out := [  ];
+  # if |R| = 2, every singleton subset is a maximal inverse subsemigroup of R
+  if Size(R) = 2 then
+    elts := Elements(R);
+    Add(out, Semigroup(elts[1]));
+    Add(out, Semigroup(elts[2]));
+    for i in out do
+      SetIsInverseSemigroup(i, true);
+    od;
+    return out;
+  fi;
+
+  I := Rows(R);
+  nrrows := Length(I);
+
+  # if R is a 1 x 1 inverse RZMS then
+  #   R\{0} is a maximal inverse subsemigroup of R
+  if nrrows = 1 then
+    new := ShallowCopy(GeneratorsOfSemigroup(R));
+    Remove(new, Position(new, MultiplicativeZero(R))); 
+    Add(out, Semigroup(new));
+  fi;
+
+  mat := Matrix(R);
+
+  # Maximal inverse subsemigroups of maximal subgroup type
+  # calculate whether it's worth doing this preprocessing if G = 1
+  graph := rec( adjacencies := EmptyPlist(2 * nrrows) );
+  components := EmptyPlist(nrrows);
+  basicgens  := [ MultiplicativeZero(R) ];
+  perm := EmptyPlist(nrrows);
+  for i in I do
+    j := First(I, x -> mat[x][i] <> 0);
+    Add(basicgens, RMSElement(R, i, mat[j][i] ^ - 1, j));
+    perm[i] := j;
+    j := j + nrrows;
+    graph.adjacencies[i] := [ j ];
+    graph.adjacencies[j] := [ i ];
+    components[i] := [ i, j ];
+  od;
+  i := 1;
+  j := components[1][2] - nrrows;
+
+  for H in MaximalSubgroups(G) do
+    Append(out,
+     MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [i, j]));
+  od;
+
+  s := AsPermutation(Transformation(perm));
+  id := G.1;
+  gens := GeneratorsOfGroup(G);
+
+  thething := function(xa)
+    local xb, basicgens, x1, y1, gen, i;
+
+    xb := Difference(I, xa);
+    basicgens := [ MultiplicativeZero(R) ];
+
+    x1 := xa[1];
+    y1 := x1^s;
+    for gen in gens do
+      Add(basicgens, RMSElement(R, x1, gen * mat[y1][x1] ^ -1, y1));
+    od;
+    for i in xa do
+      if i = x1 then
+        continue;
+      fi;
+      Add(basicgens, RMSElement(R, i, mat[i^s][i] ^ -1, i^s));
+      Add(basicgens, RMSElement(R, i, id, y1));
+      Add(basicgens, RMSElement(R, x1, id, i^s));
+    od;
+
+    x1 := xb[1];
+    y1 := x1^s;
+    for gen in gens do
+      Add(basicgens, RMSElement(R, x1, gen * mat[y1][x1] ^ -1, y1));
+    od;
+    for i in xb do
+      if i = x1 then
+        continue;
+      fi;
+      Add(basicgens, RMSElement(R, i, mat[i^s][i] ^ -1, i^s));
+      Add(basicgens, RMSElement(R, i, id, y1));
+      Add(basicgens, RMSElement(R, x1, id, i^s));
+    od;
+
+    return Semigroup(basicgens);
+  end;
+
+  if nrrows = 2 then
+    Add(out, thething([1]));
+  else
+    for k in [ 1 .. Int( (nrrows - 1) / 2 ) ] do
+      for xa in IteratorOfCombinations(I, k) do
+        Add(out, thething(xa));
+      od;
+    od;
+    if nrrows mod 2 = 0 then
+      k := nrrows / 2;
+      J := [ 2 .. nrrows ];
+      for xa in IteratorOfCombinations(J, k - 1) do
+        Add(out, thething(Concatenation([1], xa)));
+      od;
+    fi;
+  fi;
+
+  for i in out do
+    #SetIsInverseSemigroup(i, true);
+  od;
+  return out;
+
+end);
+
+#
+
 #Subsemigroups:=function(R)
 #  local max, o, U, V;
 #
