@@ -99,7 +99,16 @@ InstallMethod(EquivalenceClasses,
 "for Rees congruence",
 [IsReesCongruence],
 function(cong)
-  
+  classes := EmptyPlist(NrCongruenceClasses(cong));
+  i := SemigroupIdealOfReesCongruence(cong);
+  classes[1] := EquivalenceClassOfElementNC(cong, i.1);
+  next := 2;
+  for x in Range(cong) do
+    if not (x in i) then
+      classes[next] := EquivalenceClassOfElementNC(cong, x);
+    fi;
+  od;
+  return classes;
 end);
 
 #
