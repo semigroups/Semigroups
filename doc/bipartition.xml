@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="PartialPermLeqBipartition">
   <ManSection>
-    <Filt Name="PartialPermLeqBipartition" Arg="x, y"/>
+    <Oper Name="PartialPermLeqBipartition" Arg="x, y"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       If <A>x</A> and <A>y</A> are partial perm bipartitions, i.e. they satisfy 
@@ -22,7 +22,7 @@
 
 <#GAPDoc Label="NaturalLeqPartialPermBipartition">
   <ManSection>
-    <Filt Name="NaturalLeqPartialPermBipartition" Arg="x, y"/>
+    <Oper Name="NaturalLeqPartialPermBipartition" Arg="x, y"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The <E>natural partial order</E> <M>\leq</M> on an inverse semigroup
@@ -45,7 +45,7 @@
 
 <#GAPDoc Label="NaturalLeqBlockBijection">
   <ManSection>
-    <Filt Name="NaturalLeqBlockBijection" Arg="x, y"/>
+    <Oper Name="NaturalLeqBlockBijection" Arg="x, y"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The <E>natural partial order</E> <M>\leq</M> on an inverse semigroup
@@ -81,7 +81,7 @@ true]]></Example>
 
 <#GAPDoc Label="IsDualTransBipartition">
   <ManSection>
-    <Filt Name="IsDualTransBipartition" Arg="f"/>
+    <Prop Name="IsDualTransBipartition" Arg="f"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
     If the star of the bipartition <A>f</A> defines a transformation, then
@@ -109,7 +109,7 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 
 <#GAPDoc Label="IsBlockBijection">
   <ManSection>
-    <Filt Name="IsBlockBijection" Arg="f"/>
+    <Prop Name="IsBlockBijection" Arg="f"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       If the bipartition <A>f</A> induces a bijection from the quotient of
@@ -565,7 +565,7 @@ gap> PermRightBlocks(RightBlocks(f), last);
 
 <#GAPDoc Label="OnRightBlocksBipartitionByPerm">
   <ManSection>
-    <Oper Name="OnRightBlocksBipartitionByPerm" Arg="f, p"/>
+    <Func Name="OnRightBlocksBipartitionByPerm" Arg="f, p"/>
     <Returns>A bipartition.</Returns>
     <Description>
       If <A>f</A> is a bipartition and <A>p</A> is a permutation of the
@@ -586,7 +586,7 @@ gap> OnRightBlocksBipartitionByPerm(f, (1,2,3));
 
 <#GAPDoc Label="IdentityBipartition">
   <ManSection>
-    <Func Name="IdentityBipartition" Arg="n"/>
+    <Oper Name="IdentityBipartition" Arg="n"/>
     <Returns>The identity bipartition.</Returns>
     <Description>
       Returns the identity bipartition with degree <A>n</A>. 
@@ -780,7 +780,7 @@ true]]></Example>
 
 <#GAPDoc Label="RandomBipartition">
   <ManSection>
-    <Attr Name="RandomBipartition" Arg="n"/>
+    <Oper Name="RandomBipartition" Arg="n"/>
     <Returns>A bipartition.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then <C>RandomBipartition</C> returns

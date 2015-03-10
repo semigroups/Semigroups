@@ -1331,7 +1331,7 @@ function(R)
     x := act(rep, p);
     for i in scc do
       nr := nr + 1;
-      out[nr] :=  x * mults[i][1];
+      out[nr] := x * mults[i][1];
     od;
   od;
   return out;

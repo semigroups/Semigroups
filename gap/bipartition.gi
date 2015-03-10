@@ -10,13 +10,17 @@
 
 # local declarations
 
-DeclareOperation("OneMutable", [IsBipartitionCollection]);
-
 BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
  IsBipartition, CanEasilySortElements, CanEasilySortElements));
 
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
+
+# implications
+
+InstallTrueMethod(IsPermBipartition, IsTransBipartition and
+IsDualTransBipartition);
+InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
 #
 
@@ -141,12 +145,12 @@ end);
 
 InstallMethod(\*, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition],
-function(a,b)
+function(a, b)
   local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next,
   nrleft, c, i;
 
   n := DegreeOfBipartition(a);
-  Assert(1,n = DegreeOfBipartition(b));
+  Assert(1, n = DegreeOfBipartition(b));
   anr := NrBlocks(a);
 
   fuse := [1 .. anr + NrBlocks(b)];
@@ -209,7 +213,7 @@ end);
 
 InstallMethod(\*, "for a bipartition and a perm",
 [IsBipartition, IsPerm],
-function(f,g)
+function(f, g)
   return f * AsBipartition(g, DegreeOfBipartition(f));
 end);
 
@@ -217,7 +221,7 @@ end);
 
 InstallMethod(\*, "for a perm and a bipartition",
 [IsPerm, IsBipartition],
-function(f,g)
+function(f, g)
   return AsBipartition(f, DegreeOfBipartition(g)) * g;
 end);
 
@@ -225,7 +229,7 @@ end);
 
 InstallMethod(\*, "for a bipartition and a transformation",
 [IsBipartition, IsTransformation],
-function(f,g)
+function(f, g)
   return f * AsBipartition(g, DegreeOfBipartition(f));
 end);
 
@@ -233,7 +237,7 @@ end);
 
 InstallMethod(\*, "for a transformation and a bipartition",
 [IsTransformation, IsBipartition],
-function(f,g)
+function(f, g)
   return AsBipartition(f, DegreeOfBipartition(g)) * g;
 end);
 
@@ -241,7 +245,7 @@ end);
 
 InstallMethod(\*, "for a bipartition and a partial perm",
 [IsBipartition, IsPartialPerm],
-function(f,g)
+function(f, g)
   return f * AsBipartition(g, DegreeOfBipartition(f));
 end);
 
@@ -249,7 +253,7 @@ end);
 
 InstallMethod(\*, "for a partial perm and a bipartition",
 [IsPartialPerm, IsBipartition],
-function(f,g)
+function(f, g)
   return AsBipartition(f, DegreeOfBipartition(g)) * g;
 end);
 
@@ -281,7 +285,7 @@ end);
 
 InstallGlobalFunction(PermLeftQuoBipartitionNC,
 function(f, g)
-  local n, nr, fblocks, gblocks, p, tab, nrblocks, i;
+  local n, fblocks, gblocks, p, nr, tab, i;
 
   n := DegreeOfBipartition(f);
   fblocks := f!.blocks;
@@ -314,7 +318,6 @@ end);
 InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition],
 function(f, g)
-  local n, nr, fblocks, gblocks, p, i;
 
   if LeftBlocks(f) <> LeftBlocks(g) or RightBlocks(f) <> RightBlocks(g) then
     Error("Semigroups: PermLeftQuoBipartition: usage,\n",
@@ -357,7 +360,7 @@ end);
 
 InstallMethod(AsPermutation, "for a bipartition", [IsBipartition],
 function(f)
-  local n, blocks, nr, im, out, i;
+  local n, blocks, im, out, i;
 
   if not IsPermBipartition(f) then
     Info(InfoWarning, 2, "<f> does not define a permutation,");
@@ -570,7 +573,7 @@ function(f, n)
       nrblocks := nrblocks + 1;
       out[i] := nrblocks;
     od;
-    nrleft := nrblocks; #=n-deg+NrLeftBlocks(f)
+    nrleft := nrblocks; # = n - deg + NrLeftBlocks(f)
     for i in [n + 1 .. n + deg] do
       if blocks[i - n + deg] <= nrleft - n + deg then #it's a left block
         out[i] := blocks[i - n + deg];
@@ -1027,7 +1030,7 @@ function(classes)
     k := 0; # detect if the class is transverse or not
     for j in classes[i] do
       if j < 0 then
-        blocks[ - j + n] := i;
+        blocks[- j + n] := i;
       else
         nrleft := i;
         blocks[j] := i;
@@ -1082,7 +1085,7 @@ end);
 
 InstallMethod(BipartitionByIntRepNC, "for a list", [IsList],
 function(blocks)
-  local n, next, seen, nrleft, rank, lookup, out, i;
+  local n, next, seen, nrleft, out, i;
 
   n := Length(blocks) / 2;
   next := 0;
@@ -1116,7 +1119,7 @@ end);
 
 InstallMethod(BipartitionByIntRep, "for a list", [IsList],
 function(blocks)
-  local n, next, seen, nrleft, rank, lookup, out, i;
+  local n, next, seen, nrleft, out, i;
 
   n := Length(blocks);
 
@@ -1341,7 +1344,7 @@ end);
 InstallMethod(PrintObj, "for an equivalence class of bipartitions",
 [IsBipartitionCollection and IsEquivalenceClass],
 function(c)
-  Print( "{", Representative( c ), "}" );
+  Print("{", Representative(c), "}");
   return;
 end);
 

@@ -22,32 +22,30 @@ InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local gens, data, opts;
+  local gens, data;
 
   gens := GeneratorsOfSemigroup(s);
 
-  data := rec(
-               gens := gens,
-               genstoapply := [1 .. Length(gens)],
-               graph := [EmptyPlist(Length(gens))],
-               ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
-               init := false,
-               lambdarhoht := [],
-               lenreps := [0],
-               orbit := [[,,,FakeOne(gens)]],
-               orblookup1 := [],
-               orblookup2 := [],
-               parent := s,
-               pos := 0,
-               reps := [],
-               repslens := [],
-               repslookup := [],
-               rholookup := [1],
-               schreiergen := [fail],
-               schreiermult := [fail],
-               schreierpos := [fail],
-               stopper := false
-             );
+  data := rec(gens := gens,
+              genstoapply := [1 .. Length(gens)],
+              graph := [EmptyPlist(Length(gens))],
+              ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
+              init := false,
+              lambdarhoht := [],
+              lenreps := [0],
+              orbit := [[,,,FakeOne(gens)]],
+              orblookup1 := [],
+              orblookup2 := [],
+              parent := s,
+              pos := 0,
+              reps := [],
+              repslens := [],
+              repslookup := [],
+              rholookup := [1],
+              schreiergen := [fail],
+              schreiermult := [fail],
+              schreierpos := [fail],
+              stopper := false);
 
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
@@ -557,8 +555,8 @@ function(data, limit, lookfunc)
           # the Schutzenberger group is neither trivial nor symmetric group
             old := false;
             for n in [1 .. repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))
-                = () then
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = ()
+                then
                 old := true;
                 graph[i][j] := repslookup[m][ind][n];
                 rho_orbitgraph[rholookup[i]][j] := l;
@@ -718,9 +716,9 @@ end);
 
 #
 
-InstallMethod(PositionOfFound,"for semigroup data",
+InstallMethod(PositionOfFound, "for semigroup data",
 [IsSemigroupData],
-function( data )
+function(data)
   if not(data!.looking) then
     Error("Semigroups: PositionOfFound: usage,\n",
           "not looking for anything,");
@@ -740,7 +738,6 @@ function(data)
           "the arg <data> must be semigroup data,");
     return;
   fi;
-
 
   if not data!.init then
     return 0;

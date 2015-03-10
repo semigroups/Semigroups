@@ -483,7 +483,7 @@ function(C)
     return;
   fi;
   
-  for i in [1..Length(reps)] do 
+  for i in [1 .. Length(reps)] do 
     out[i] := SEMIGROUPS_CreateHClass(C, reps[i], IsGreensClassNC(C));
     SEMIGROUPS_CopyLambda(C, out[i]);
     setter(out[i], C);

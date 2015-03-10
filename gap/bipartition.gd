@@ -63,12 +63,7 @@ DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
 #collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 
-# implications
-
-InstallTrueMethod(IsPermBipartition, IsTransBipartition and
-IsDualTransBipartition);
-InstallTrueMethod(IsBlockBijection, IsPermBipartition);
-
-# LambdaConjugator
+# LambdaConjugator #TODO document or make internal!
 DeclareGlobalFunction("BipartRightBlocksConj");
 
+DeclareOperation("OneMutable", [IsBipartitionCollection]);

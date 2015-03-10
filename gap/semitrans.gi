@@ -53,7 +53,7 @@ function(R)
         return iter!.rep * p;
       end,
       [IsIteratorSorted], ReturnTrue,
-      rec( rep :=  Transformation(image) ) );
+      rec( rep := Transformation(image) ) );
   od;
   return CallFuncList(IteratorSortedOp, out);
 end);

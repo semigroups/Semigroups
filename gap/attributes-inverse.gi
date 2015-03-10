@@ -21,7 +21,7 @@ function(S)
   j, conjreps, dom, subsets, x, m, u, k, h, i, n, y;
 
   reps := ShallowCopy(DClassReps(S));
-  p := Sortex(reps, function(x,y)
+  p := Sortex(reps, function(x, y)
     return RankOfPartialPerm(x) > RankOfPartialPerm(y);
   end);
 
@@ -105,10 +105,10 @@ function(S)
     elif Length(partial[x]) = 1 and partial[partial[x][1]] = partial[x] then
       return false;
     fi;
-    return ForAny(partial[x], z -> z <> x and comp_index(z,y));
+    return ForAny(partial[x], z -> z <> x and comp_index(z, y));
   end;
 
-  return function(x,y)
+  return function(x, y)
     return comp_index(OrbSCCLookup(o)[Position(o, LambdaFunc(S)(x))] - 1,
       OrbSCCLookup(o)[Position(o, LambdaFunc(S)(y))] - 1);
   end;
@@ -178,7 +178,7 @@ function(S, x)
   singleline := true;
 
   # Find an element smaller than y, k
-  for j in [i - 1,i - 2 .. 1] do
+  for j in [i - 1, i - 2 .. 1] do
     if NaturalLeqInverseSemigroup(elts[j], elts[i]) then
       k := j;
       break;
@@ -288,7 +288,7 @@ function(S)
     fi;
 
     i := Position(elts, rep);
-    k := First([i - 1,i - 2 .. 1],
+    k := First([i - 1, i - 2 .. 1],
           j -> NaturalLeqInverseSemigroup(elts[j], rep));
 
     if k = fail then # d is the minimal non-trivial D-class
@@ -376,7 +376,7 @@ function(S, T)
           "the second argument must be a subset of the first,");
     return;
   else
-    return MajorantClosureNC(S,T);
+    return MajorantClosureNC(S, T);
   fi;
 end);
 
@@ -426,7 +426,7 @@ InstallMethod(Minorants,
 "for an acting semigroup with inverse op and associative element collections",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, f)
-  local out, elts, i, j, k, NaturalLeq;
+  local out, elts, i, j, k;
 
   if not f in S then
     Error("Semigroups: Minorant: usage,\n",
@@ -475,7 +475,6 @@ InstallMethod(RightCosetsOfInverseSemigroup,
 [IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp],
 function(S, T)
   local elts, idem, usedreps, out, dupe, coset, s, rep, t;
-
 
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
@@ -534,7 +533,7 @@ InstallMethod(SameMinorantsSubgroup,
 "for a group H-class of an acting semigroup with op",
 [IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass],
 function(h)
-  local S, e, F, out, i, NaturalLeq;
+  local S, e, F, out, i;
 
   S := Parent(h);
 
@@ -608,7 +607,7 @@ function(S)
       fi;
 
       ##### Generate representatives for all the H-Classes in the R-Class of He
-      h := HClassReps( RClassNC(d, e) );
+      h := HClassReps(RClassNC(d, e));
       nrcosets := Size(h) * Length(cosets);
 
       # Generate representatives for ALL the cosets the generator will act
@@ -636,7 +635,7 @@ function(S)
         for k in [1 .. nrcosets] do
           rep := reps[k] * gen;
           # Will the new generator will be defined at this point?
-          if not rep * rep ^ ( - 1) in stabpp then
+          if not rep * rep ^ (- 1) in stabpp then
             Add(newgens[j], 0);
           else
             box := lookup[Position(LambdaOrb(d), ImageSetOfPartialPerm(rep))];
@@ -645,7 +644,7 @@ function(S)
             else
               ## Below, could be ^sigma instead of AsPermutation
               subbox := PositionCanonical(cosets,
-               AsPermutation((rep * h[box] ^ ( - 1))));
+               AsPermutation(rep * h[box] ^ (- 1)));
             fi;
             Add(newgens[j], (box - 1) * Length(cosets) + subbox + offset);
           fi;
@@ -653,7 +652,6 @@ function(S)
       od;
     od;
   od;
-
 
   T := InverseSemigroup(List(newgens, x -> PartialPermNC(x)));
 
@@ -699,7 +697,7 @@ function(coll, type)
       return;
     fi;
 
-    reps := List(coll,ExtRepOfBipartition);
+    reps := List(coll, ExtRepOfBipartition);
     todo := [1 .. DegreeOfBipartition(type)];
     out := [];
     for i in todo do
@@ -714,7 +712,7 @@ function(coll, type)
       od;
       inter := Intersection(inter);
       AddSet(out, inter);
-      todo := Difference(todo,inter);
+      todo := Difference(todo, inter);
     od;
     return Bipartition(out);
 
