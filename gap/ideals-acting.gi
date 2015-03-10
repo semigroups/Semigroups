@@ -369,10 +369,10 @@ function(data, limit, record)
 
   data!.looking := looking;
 
-  ht := data!.ht;       # so far found R-reps
-  orb := data!.orbit;   # the so far found R-reps data
+  ht   := data!.ht;     # so far found R-reps
+  orb  := data!.orbit;  # the so far found R-reps data
   nr_r := Length(orb);
-  d := data!.dorbit;    # the so far found D-classes
+  d    := data!.dorbit; # the so far found D-classes
   nr_d := Length(d);
   reps := data!.reps;   # reps grouped by equal lambda-scc-index and
                         # rho-value-index
@@ -448,7 +448,7 @@ function(data, limit, record)
   datalookup := data!.scc_lookup;
 
   log := data!.log;
-  # log[i+1] is the last position in orb=data!.orbit where the # R-class reps
+  # log[i+1] is the last position in orb=data!.orbit where the R-class reps
   # of d[i] appear...
 
   tester := IdempotentTester(I);
