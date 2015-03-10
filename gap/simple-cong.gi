@@ -71,6 +71,8 @@ function(arg)
             "isomorphic to <s>");
       return;
     fi;
+  elif IsSemigroupIdeal(arg[2]) and Parent(arg[2]) = s then
+    return ReesCongruenceOfSemigroupIdeal(arg[2]);
   elif Length(arg) = 3 and
     IsInverseSemigroup(arg[2]) and
     IsDenseList(arg[3]) and
