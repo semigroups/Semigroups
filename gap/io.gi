@@ -182,6 +182,7 @@ function(arg)
   if not (mode = "a" or mode = "w") then
     Error("Semigroups: WriteGenerators: usage,\n",
           "the third argument must be \"a\" or \"w\",");
+    return;
   fi;
 
   if IsTransformationCollection(coll)
