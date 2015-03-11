@@ -335,3 +335,20 @@ function(cong)
 end);
 
 #
+
+InstallMethod(PrintObj,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+1,
+function(cong)
+  Print("SemigroupCongruence( ");
+  PrintObj(Range(cong));
+  Print(", ");
+  if HasGeneratingPairsOfMagmaCongruence(cong) then
+    Print(GeneratingPairsOfSemigroupCongruence(cong));
+  fi;
+  Print(")");
+end);
+
+#
+
