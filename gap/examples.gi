@@ -161,7 +161,7 @@ function(partition)
       x := blocks{equal[i]};
 
       if n > 1 then
-        x[2] := Permuted(x[2], (1,2));
+        x[2] := Permuted(x[2], (1, 2));
       fi;
 
       if IsOddInt(m) or IsOddInt(n) then

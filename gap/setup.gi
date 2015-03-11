@@ -644,7 +644,7 @@ InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
   function(x, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
+  return rec( func := SEMIGROUPS_HashFunctionRZMSE,
               data := hashlen );
 end);
 
@@ -660,7 +660,7 @@ function(x, data)
  return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
+InstallGlobalFunction(SEMIGROUPS_HashFunctionRZMSE,
 function(x, data)
   local p, l;
 

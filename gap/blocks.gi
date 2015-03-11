@@ -227,9 +227,9 @@ end);
 
 InstallMethod(ChooseHashFunction, "for blocks",
 [IsBlocks, IsInt],
-function(t,hashlen)
+function(t, hashlen)
   return rec(func := SEMIGROUPS_HashFunctionForBlocks, data := hashlen);
-end );
+end);
 
 #
 
@@ -829,6 +829,3 @@ function(blocks, f)
   SetNrBlocks(out, nrblocks + 1);
   return out;
 end);
-
-
-
