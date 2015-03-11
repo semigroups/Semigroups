@@ -11,6 +11,9 @@
 ## This file contains methods for Green's classes/relations for generic
 ## semigroups.
 
+InstallTrueMethod(IsRegularClass, IsRegularDClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+
 # Semigroups . . .
 
 InstallMethod(NrDClasses, "for a semigroup",

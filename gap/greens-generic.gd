@@ -15,9 +15,6 @@ DeclareProperty("IsGreensClassNC", IsGreensClass);
 DeclareProperty("IsRegularClass", IsGreensClass);
 DeclareProperty("IsInverseOpClass", IsGreensClass);
 
-InstallTrueMethod(IsRegularClass, IsRegularDClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass);
-
 DeclareAttribute("DClassType", IsSemigroup);
 DeclareAttribute("HClassType", IsSemigroup);
 DeclareAttribute("LClassType", IsSemigroup);
@@ -80,7 +77,6 @@ DeclareAttribute("NrRClasses", IsCollection);
 DeclareAttribute("Idempotents", IsGreensClass);
 DeclareOperation("Idempotents", [IsSemigroup, IsInt]);
 DeclareAttribute("NrIdempotents", IsCollection);
-
 
 # abbreviations and synonyms
 
