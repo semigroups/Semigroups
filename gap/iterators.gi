@@ -65,7 +65,7 @@ function(arg)
       base := arg(iter!.base, ShallowCopy);
       return rec(base := base,
                  indices := iter!.indices,
-                 current := arg(base, NextIterator) );
+                 current := arg(base, NextIterator));
     end;
 
     iter := IteratorByFunctions(record);
