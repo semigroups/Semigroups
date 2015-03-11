@@ -71,7 +71,6 @@ end);
 InstallMethod(MatrixEntries, "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup],
 function(R)
-  local P;
   return Union(Matrix(R){Columns(R)}{Rows(R)});
   # in case R is a proper subsemigroup of another RMS
 end);
@@ -112,7 +111,7 @@ else
     n := Length(mat);
     m := Length(mat[1]);
 
-    adj := function(x,y)
+    adj := function(x, y)
       if x <= m and y > m then
         return not mat[y - m][x] = 0;
       elif x > m and y <= m then

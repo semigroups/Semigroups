@@ -187,7 +187,7 @@ function(arg)
   if IsTransformationCollection(coll)
     or IsPartialPermCollection(coll)
     or IsBipartitionCollection(coll) then
-    coll := [ coll ];
+    coll := [coll];
   elif not (IsTransformationCollColl(coll)
     or IsPartialPermCollColl(coll)
     or IsBipartitionCollColl(coll)) then
@@ -212,7 +212,7 @@ function(arg)
     return;
   fi;
 
-  for i in [ 1 .. Length(coll) ] do
+  for i in [1 .. Length(coll)] do
     if IsSemigroup(coll[i]) then
       coll[i] := GeneratorsOfSemigroup(coll[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
