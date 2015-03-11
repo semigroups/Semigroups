@@ -499,7 +499,7 @@ function(S, T)
     # Check if Ts is a duplicate coset
     dupe := false;
     for rep in [1 .. Length(usedreps)] do
-      if s * usedreps[rep] ^ - 1 in elts then
+      if s * usedreps[rep] ^ -1 in elts then
         dupe := true;
         break;
       fi;
@@ -742,7 +742,7 @@ function(S)
 
   iso := function(x)
     local dom;
-    dom := Set(elts * (x ^ - 1));
+    dom := Set(elts * (x ^ -1));
     return PartialPermNC(List(dom, y -> Position(elts, y)),
      List(List(dom, y -> y * x), y -> Position(elts, y)));
   end;

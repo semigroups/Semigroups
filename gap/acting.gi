@@ -603,7 +603,7 @@ function(data, limit, lookfunc)
 
     # for the rho-orbit
     if suc then
-      rho_log[rho_logpos - 2] := - rho_log[rho_logpos - 2];
+      rho_log[rho_logpos - 2] := -rho_log[rho_logpos - 2];
     else
       rho_logind[rholookup[i]] := 0;
     fi;

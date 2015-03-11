@@ -291,8 +291,8 @@ function(d)
       if y![1] = 0 then
         return y;
       fi;
-      return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]] ^ - 1
-      * x * rep![2] ^ - 1 * y![2], y![3], y![4]]);
+      return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]] ^ -1
+      * x * rep![2] ^ -1 * y![2], y![3], y![4]]);
     end;
   fi;
 
@@ -307,10 +307,10 @@ function(d)
         if not IsBound(inv_r[j]) then
           # could use lreps[i]*rreps[j]^-1*lreps[i] instead if there was a
           # method for ^-1...
-          inv_r[j] := leftact(mat[i][j] ^ - 1, lreps[i]);
+          inv_r[j] := leftact(mat[i][j] ^ -1, lreps[i]);
         fi;
         if not IsBound(inv_l[i]) then
-          inv_l[i] := rightact(rreps[j], mat[i][j] ^ - 1);
+          inv_l[i] := rightact(rreps[j], mat[i][j] ^ -1);
         fi;
       else
         mat[i][j] := 0;

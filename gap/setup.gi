@@ -313,7 +313,7 @@ InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> EmptyBlocks);
 
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> - 1);
+[IsReesZeroMatrixSubsemigroup], s -> -1);
 
 # the seed or dummy start point for RhoOrb
 

@@ -279,7 +279,7 @@ function(blocks)
     if blocks[blocks[i] + n] = 1 then
       Add(ext[blocks[i]], i);
     else
-      Add(ext[blocks[i]], - i);
+      Add(ext[blocks[i]], -i);
     fi;
   od;
   return ext;
@@ -486,7 +486,7 @@ function(ext)
 
   for i in [1 .. n] do
     if ext[i] < 0 then
-      out[i + 1] := - 1 * ext[i];
+      out[i + 1] := -1 * ext[i];
       out[n + 1 + out[i + 1]] := 0;
     else
       out[i + 1] := ext[i];
