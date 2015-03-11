@@ -1,14 +1,14 @@
 InstallMethod(ReesCongruenceOfSemigroupIdeal,
 "for a semigroup ideal",
 [IsSemigroupIdeal],
-1,  # Use this method instead of the library
+1,
 function(i)
   local s, fam, type, cong;
   s := Parent(i);
   # Construct the object
   fam := GeneralMappingsFamily(
                  ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)) );
+                 ElementsFamily(FamilyObj(s)));
   type := NewType(fam, IsSemigroupCongruence and IsAttributeStoringRep);
   cong := Objectify(type, rec());
   # Set some attributes
@@ -43,7 +43,7 @@ end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for two Rees congrunces",
 [IsReesCongruence, IsReesCongruence],
 function(c1, c2)
@@ -52,7 +52,7 @@ function(c1, c2)
 end);
 
 #
-  
+
 InstallMethod(\in,
 "for an associative element collection and a Rees congruence",
 [IsAssociativeElementCollection, IsReesCongruence],
@@ -95,21 +95,21 @@ end);
 
 #
 
-InstallMethod(JoinSemigroupCongruences,
-"for two Rees congruences",
-[IsReesCongruence, IsReesCongruence],
-function(c1, c2)
-  
-end);
+#InstallMethod(JoinSemigroupCongruences,
+#"for two Rees congruences",
+#[IsReesCongruence, IsReesCongruence],
+#function(c1, c2)
+#
+#end);
 
 #
-  
-InstallMethod(MeetSemigroupCongruences,
-"for two Rees congruences",
-[IsReesCongruence, IsReesCongruence],
-function(c1, c2)
-  
-end);
+
+#InstallMethod(MeetSemigroupCongruences,
+#"for two Rees congruences",
+#[IsReesCongruence, IsReesCongruence],
+#function(c1, c2)
+#
+#end);
 
 #
 
@@ -161,11 +161,11 @@ function(cong, elm)
   else
     is_ideal_class := false;
   fi;
-  
+
   # Construct the object
-  fam := CollectionsFamily( FamilyObj(elm) );
+  fam := CollectionsFamily(FamilyObj(elm));
   class := Objectify(NewType(fam, IsReesCongruenceClass),
-      rec(is_ideal_class := is_ideal_class) );
+      rec(is_ideal_class := is_ideal_class));
   SetParentAttr(class, cong);
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
@@ -174,7 +174,7 @@ end);
 
 #
 
-InstallMethod( \in,
+InstallMethod(\in,
 "for an associative element and a Rees congruence class",
 [IsAssociativeElement, IsReesCongruenceClass],
 function(elm, class)
@@ -187,7 +187,7 @@ end);
 
 #
 
-InstallMethod( \*,
+InstallMethod(\*,
 "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
@@ -214,14 +214,14 @@ InstallMethod(Size,
 function(class)
   if class!.is_ideal_class then
     return Size(SemigroupIdealOfReesCongruence(
-                   EquivalenceClassRelation(class) ));
+                   EquivalenceClassRelation(class)));
   fi;
   return 1;
 end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
@@ -244,8 +244,8 @@ function(cong)
   cong := SemigroupCongruence(s, pairs);
   for y in min do
     for x in gens do
-      if not [x,y] in cong then
-        Add(pairs, [x,y]);
+      if not [x, y] in cong then
+        Add(pairs, [x, y]);
         cong := SemigroupCongruence(s, pairs);
       fi;
     od;
@@ -260,5 +260,5 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 [IsReesCongruence],
 function(cong)
   return GeneratingPairsOfSemigroupCongruence(
-                 AsSemigroupCongruenceByGeneratingPairs(cong) );
+                 AsSemigroupCongruenceByGeneratingPairs(cong));
 end);
