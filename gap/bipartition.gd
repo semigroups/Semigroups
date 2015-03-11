@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-
 DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
  IsAssociativeElementWithStar);
 DeclareCategoryCollections("IsBipartition");
