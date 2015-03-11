@@ -8,10 +8,16 @@
 #############################################################################
 ##
 
+
 DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
  IsAssociativeElementWithStar);
 DeclareCategoryCollections("IsBipartition");
 DeclareCategoryCollections("IsBipartitionCollection");
+
+BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
+ IsBipartition, CanEasilySortElements, CanEasilySortElements));
+BindGlobal("BipartitionType", NewType(BipartitionFamily,
+ IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
@@ -73,3 +79,4 @@ DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 DeclareGlobalFunction("BipartRightBlocksConj");
 
 DeclareOperation("OneMutable", [IsBipartitionCollection]);
+

@@ -91,11 +91,11 @@ fi;
 
 ReadPackage("semigroups/gap/grpperm.gi");
 
+ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");
-ReadPackage("semigroups/gap/blocks.gi");
 
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/lambda-rho.gi");

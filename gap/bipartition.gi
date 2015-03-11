@@ -8,14 +8,6 @@
 #############################################################################
 ##
 
-# local declarations
-
-BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
- IsBipartition, CanEasilySortElements, CanEasilySortElements));
-
-BindGlobal("BipartitionType", NewType(BipartitionFamily,
- IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
-
 # implications
 
 InstallTrueMethod(IsPermBipartition, IsTransBipartition and

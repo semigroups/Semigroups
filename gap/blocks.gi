@@ -8,19 +8,11 @@
 #############################################################################
 ##
 
-# local declarations
-
 # blocks are stored internally as a list consisting of:
 # [ nr of blocks, internal rep of blocks, transverse blocks ]
 # <nr of blocks> is a non-negative integer, <internal rep of blocks>[i]=j if <i>
 # belongs to the <j>th block, <transverse blocks>[j]=1 if block <j> is
 # transverse and 0 if it is not.
-
-BindGlobal("BlocksFamily", NewFamily("BlocksFamily",
- IsBlocks, CanEasilySortElements, CanEasilySortElements));
-
-BindGlobal("BlocksType", NewType(BlocksFamily,
- IsBlocks and IsComponentObjectRep and IsAttributeStoringRep));
 
 #
 
