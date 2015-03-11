@@ -372,7 +372,7 @@ function(s, n, colBlocks, rowBlocks)
         # Check all pairs of rows (u,v)
         for u in [1 .. Size(mat)] do
           for v in [u + 1 .. Size(mat)] do
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+            if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ - 1)
              in n then
               return false;
             fi;
