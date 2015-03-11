@@ -132,7 +132,6 @@ function(R)
   fi;
 end);
 
-
 # the number of points in the range of the action
 
 InstallMethod(ActionRank, "for a transformation and positive integer",
@@ -550,7 +549,7 @@ InstallMethod(IdempotentTester, "for a bipartition semigroup",
 
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
-function(j,i)
+function(j, i)
   if i = 0 and j = 0 then
     return true;
   fi;
@@ -572,7 +571,7 @@ InstallMethod(IdempotentCreator, "for a bipartition semigroup",
 
 InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
-function(j,i)
+function(j, i)
   local mat;
   if i = 0 and j = 0 then
     return Objectify(TypeReesMatrixSemigroupElements(R), [0]);
@@ -637,22 +636,22 @@ InstallMethod(FakeOne, "for a bipartition collection",
 [IsBipartitionCollection], One);
 
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
-[IsReesZeroMatrixSemigroupElementCollection],  R -> UniversalFakeOne);
+[IsReesZeroMatrixSemigroupElementCollection], R -> UniversalFakeOne);
 
 # missing hash functions
 
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
   function(x, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
-              data := hashlen );
+  return rec(func := SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
+             data := hashlen);
 end);
 
 InstallMethod(ChooseHashFunction, "for a bipartition",
 [IsBipartition, IsInt],
   function(x, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionBipartition,
-              data := hashlen );
+  return rec(func := SEMIGROUPS_HashFunctionBipartition,
+             data := hashlen);
 end);
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionBipartition,
@@ -674,16 +673,16 @@ function(x, data)
   if IsPerm4Rep(p) then
     # is it a proper 4byte perm?
     if l > 65536 then
-      return (x![1] + x![3] + HashKeyBag(p,255,0,4 * l)) mod data + 1;
+      return (x![1] + x![3] + HashKeyBag(p, 255, 0, 4 * l)) mod data + 1;
     else
       # the permutation does not require 4 bytes. Trim in two
       # byte representation (we need to do this to get consistent
       # hash keys, regardless of representation.)
-      TRIM_PERM(p,l);
+      TRIM_PERM(p, l);
     fi;
   fi;
   # now we have a Perm2Rep:
-  return (x![1] + x![3] + HashKeyBag(p,255,0,2 * l)) mod data + 1;
+  return (x![1] + x![3] + HashKeyBag(p, 255, 0, 2 * l)) mod data + 1;
 end);
 
 #EOF
