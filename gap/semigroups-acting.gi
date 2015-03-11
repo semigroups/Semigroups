@@ -47,7 +47,7 @@ function(s)
 
   g := Random(LambdaOrbSchutzGp(o, m));
   i := Random(OrbSCC(o)[m]);
-  return StabilizerAction(s)(rep,g) * LambdaOrbMult(o, m, i)[1];
+  return StabilizerAction(s)(rep, g) * LambdaOrbMult(o, m, i)[1];
 end);
 
 # different method for inverse, same method for ideals

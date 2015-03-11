@@ -49,18 +49,6 @@ fail]]></Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsPartialPermSemigroupGreensClass">
-  <ManSection>
-    <Prop Name="IsPartialPermSemigroupGreensClass" Arg="class"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
-      property <C>IsPartialPermSemigroupGreensClass</C> if and only if <C>S</C>
-      is a semigroup of partial perms. 
-    </Description> 
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IsBipartitionSemigroupGreensClass">
   <ManSection>
     <Prop Name="IsBipartitionSemigroupGreensClass" Arg="class"/>
@@ -69,18 +57,6 @@ fail]]></Example>
       A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
       property <C>IsBipartitionSemigroupGreensClass</C> if and only if <C>S</C>
       is a semigroup of bipartitions. 
-    </Description> 
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="IsTransformationSemigroupGreensClass">
-  <ManSection>
-    <Prop Name="IsTransformationSemigroupGreensClass" Arg="class"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
-      property <C>IsTransformationSemigroupGreensClass</C> if and only if
-      <C>S</C> is a semigroup of transformations. 
     </Description> 
   </ManSection>
 <#/GAPDoc>

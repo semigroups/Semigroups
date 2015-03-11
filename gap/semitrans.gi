@@ -37,11 +37,11 @@ function(R)
   scc := OrbSCC(o)[m];
   base := DuplicateFreeList(ImageListOfTransformation(rep, n));
   S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  out := [ IteratorByIterator(
+  out := [IteratorByIterator(
     IteratorSortedConjugateStabChain(S, ()), p -> rep * p ,
-    [IsIteratorSorted] ) ];
+    [IsIteratorSorted])];
 
-  for i in [ 2 .. Length(scc) ] do
+  for i in [2 .. Length(scc)] do
     x := rep * EvaluateWord(o!.gens,
      TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     image := ImageListOfTransformation(x, n);
@@ -53,7 +53,7 @@ function(R)
         return iter!.rep * p;
       end,
       [IsIteratorSorted], ReturnTrue,
-      rec( rep := Transformation(image) ) );
+      rec(rep := Transformation(image)));
   od;
   return CallFuncList(IteratorSortedOp, out);
 end);
@@ -138,7 +138,7 @@ function(R, largest)
 
   scc := OrbSCC(o)[m];
 
-  for i in [ 2 .. Length(scc) ] do
+  for i in [2 .. Length(scc)] do
     y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     basei := DuplicateFreeList(ImageListOfTransformation(rep * y, n));
     p := MappingPermListList(base, basei);
