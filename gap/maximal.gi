@@ -59,13 +59,13 @@ function(R, H)
   # Produce a necessary elt for every row and column for our generating set
   basicgens := [];
   for i in [1 .. Minimum(I, J)] do
-    Add(basicgens, RMSElement(R, i, (mat[i][i] ^ - 1), i));
+    Add(basicgens, RMSElement(R, i, (mat[i][i] ^ -1), i));
   od;
   for i in [J + 1 .. I] do
-    Add(basicgens, RMSElement(R, i, (mat[1][i] ^ - 1), 1));
+    Add(basicgens, RMSElement(R, i, (mat[1][i] ^ -1), 1));
   od;
   for j in [I + 1 .. J] do
-    Add(basicgens, RMSElement(R, 1, (mat[j][1] ^ - 1), j));
+    Add(basicgens, RMSElement(R, 1, (mat[j][1] ^ -1), j));
   od;
 
   return MaximalSubsemigroupsNC(R, H, basicgens, mat[1][1]);
@@ -81,7 +81,7 @@ function(R, H, basicgens, h)
   local U;
 
   U := Semigroup(basicgens,
-   List(GeneratorsOfGroup(H), x -> RMSElement(R, 1, x * (h ^ - 1), 1)));
+   List(GeneratorsOfGroup(H), x -> RMSElement(R, 1, x * (h ^ -1), 1)));
   if Size(U) < Size(R) then
     return [U];
   fi;
@@ -129,13 +129,13 @@ function(R)
   basicgens := [];
   # The below 3 loops use more code, but ensure a smallest generating set
   for i in [1 .. Minimum(Length(I), Length(J))] do
-    Add(basicgens, RMSElement(R, i, (mat[i][i] ^ - 1), i));
+    Add(basicgens, RMSElement(R, i, (mat[i][i] ^ -1), i));
   od;
   for i in [Length(J) + 1 .. Length(I)] do
-    Add(basicgens, RMSElement(R, i, (mat[1][i] ^ - 1), 1));
+    Add(basicgens, RMSElement(R, i, (mat[1][i] ^ -1), 1));
   od;
   for j in [Length(I) + 1 .. Length(J)] do
-    Add(basicgens, RMSElement(R, 1, (mat[j][1] ^ - 1), j));
+    Add(basicgens, RMSElement(R, 1, (mat[j][1] ^ -1), j));
   od;
   for H in MaximalSubgroups(G) do
     out := Concatenation(out,
@@ -233,7 +233,7 @@ else
     for i in Rows(R) do
       for j in Columns(R) do
         if mat[j][i] <> 0 then
-          Add(basicgens, RMSElement(R, i, mat[j][i] ^ - 1, j));
+          Add(basicgens, RMSElement(R, i, mat[j][i] ^ -1, j));
         fi;
       od;
     od;
@@ -267,7 +267,7 @@ function(R, H, graph, components, basicgens, indices)
   Hsize := Size(H);
   transversal := RightTransversal(UnderlyingSemigroup(R), H);
   maxgens := List(GeneratorsOfSemigroup(H),
-   x -> RMSElement(R, i, x * (mat[j][i] ^ - 1), j));
+   x -> RMSElement(R, i, x * (mat[j][i] ^ -1), j));
 
   # If R is an inverse semigroup, then every possible choice is valid - we now
   # only need to enumerate them all
@@ -285,7 +285,7 @@ function(R, H, graph, components, basicgens, indices)
         b := graph.adjacencies[a][1] - nrrows;
         # one choice for each coset
         for x in transversal do
-          h := (mat[b][a] ^ - 1) * (x ^ - 1) * (mat[j][i] ^ - 1);
+          h := (mat[b][a] ^ -1) * (x ^ -1) * (mat[j][i] ^ -1);
           nextchoice := [RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
           NonGroupRecursion(k + 1, t, nextchoice);
         od;
@@ -318,7 +318,7 @@ function(R, H, graph, components, basicgens, indices)
           b := graph.adjacencies[a][1] - nrrows;
           # one choice for each coset
           for x in transversal do
-            h := (mat[b][a] ^ - 1) * (x ^ - 1) * (mat[j][i] ^ - 1);
+            h := (mat[b][a] ^ -1) * (x ^ -1) * (mat[j][i] ^ -1);
             nextchoice := [RMSElement(R, i, x, b), RMSElement(R, a, h, j)];
             NonGroupRecursion(k + 1, t, nextchoice);
           od;
@@ -414,7 +414,7 @@ else
         if mat[j][i] = 0 then
           seen_zero := true;
         else
-          Add(basicgens, RMSElement(R, i, mat[j][i] ^ - 1, j));
+          Add(basicgens, RMSElement(R, i, mat[j][i] ^ -1, j));
         fi;
       od;
     od;
@@ -566,21 +566,21 @@ else
       j := First(J, j -> mat[j][i] <> 0 and not j + len in rectangles[r]);
       if IsTrivial(G) then
         new := [Objectify(TypeReesMatrixSemigroupElements(R),
-         [i, mat[j][i] ^ - 1, j, mat])];
+         [i, mat[j][i] ^ -1, j, mat])];
       else
         new := List(gens, x -> Objectify(TypeReesMatrixSemigroupElements(R),
-          [i, x * mat[j][i] ^ - 1, j, mat]));
+          [i, x * mat[j][i] ^ -1, j, mat]));
       fi;
 
       j := First(rectangles[r], j -> j > len) - len;
       i := First(I, i -> mat[j][i] <> 0 and not i in rectangles[r]);
       if IsTrivial(G) then
         Add(new, Objectify(TypeReesMatrixSemigroupElements(R),
-         [i, mat[j][i] ^ - 1, j, mat]));
+         [i, mat[j][i] ^ -1, j, mat]));
       else
         Append(new, List(gens, x ->
         Objectify(TypeReesMatrixSemigroupElements(R),
-          [i, x * mat[j][i] ^ - 1, j, mat])));
+          [i, x * mat[j][i] ^ -1, j, mat])));
       fi;
 
       for k in rectangles[r] do
@@ -812,17 +812,17 @@ else
         if IsReesMatrixSemigroup(R) then
           basicgens := [];
           for ii in [1 .. Minimum(I, J)] do
-            Add(basicgens, RMSElement(R, ii, mat[ii][ii] ^ - 1, ii));
+            Add(basicgens, RMSElement(R, ii, mat[ii][ii] ^ -1, ii));
           od;
           for ii in [J + 1 .. I] do
-            Add(basicgens, RMSElement(R, ii, mat[1][ii] ^ - 1, 1));
+            Add(basicgens, RMSElement(R, ii, mat[1][ii] ^ -1, 1));
           od;
           for jj in [I + 1 .. J] do
-            Add(basicgens, RMSElement(R, 1, mat[jj][1] ^ - 1, jj));
+            Add(basicgens, RMSElement(R, 1, mat[jj][1] ^ -1, jj));
           od;
 
           for H in MaximalSubgroups(G) do
-            for UU in MaximalSubsemigroupsNC(R, H, basicgens, mat[1][1] ^ - 1)
+            for UU in MaximalSubsemigroupsNC(R, H, basicgens, mat[1][1] ^ -1)
               do
               UU := Semigroup(Images(inj, GeneratorsOfSemigroup(UU)), U);
               # UU (plus the ideal) is either maximal or equals S. So check
@@ -846,7 +846,7 @@ else
           for ii in Rows(R) do
             for jj in Columns(R) do
               if mat[jj][ii] <> 0 then
-                Add(basicgens, RMSElement(R, ii, mat[jj][ii] ^ - 1, jj));
+                Add(basicgens, RMSElement(R, ii, mat[jj][ii] ^ -1, jj));
               fi;
             od;
           od;

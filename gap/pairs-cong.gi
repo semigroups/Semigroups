@@ -16,23 +16,23 @@ function(cong)
   local s, elms, pairs, hashlen, ht, data, pairstoapply, pos, found;
   s := Range(cong);
   elms := Elements(s);
-  pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
-                 x -> [Position(elms, x[1]), Position(elms, x[2])] );
+  pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
+                x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
   if IsBound(s!.opts) then
     hashlen := s!.opts.hashlen.L;
   else
     hashlen := SemigroupsOptionsRec.hashlen.L;
   fi;
-  ht := HTCreate( [elms[1],elms[1]], rec(forflatplainlists := true,
-              treehashsize := hashlen ) );
-  data := rec( cong := cong,
-               lookup := [1 .. Size(s)],
-               pairstoapply := pairs,
-               pos := 0,
-               ht := ht,
-               elms := elms,
-               found := false );
+  ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
+              treehashsize := hashlen));
+  data := rec(cong := cong,
+              lookup := [1 .. Size(s)],
+              pairstoapply := pairs,
+              pos := 0,
+              ht := ht,
+              elms := elms,
+              found := false);
   cong!.data := Objectify(
                  NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
   return;
@@ -75,7 +75,7 @@ function(pair, cong)
     if not IsBound(cong!.data) then
       SEMIGROUPS_SetupCongData(cong);
     fi;
-    find := function(table,i)
+    find := function(table, i)
       while table[i] <> i do
         i := table[i];
       od;
