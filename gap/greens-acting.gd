@@ -23,20 +23,20 @@ DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
 
 DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 
-DeclareOperation("GreensDClassOfElementNC", 
+DeclareOperation("GreensDClassOfElementNC",
 [IsActingSemigroup, IsAssociativeElement, IsBool]);
-DeclareOperation("GreensLClassOfElementNC", 
+DeclareOperation("GreensLClassOfElementNC",
 [IsActingSemigroup, IsAssociativeElement, IsBool]);
-DeclareOperation("GreensRClassOfElementNC", 
+DeclareOperation("GreensRClassOfElementNC",
 [IsActingSemigroup, IsAssociativeElement, IsBool]);
-DeclareOperation("GreensHClassOfElementNC", 
+DeclareOperation("GreensHClassOfElementNC",
 [IsActingSemigroup, IsAssociativeElement, IsBool]);
 
-DeclareOperation("GreensDClassOfElementNC", 
+DeclareOperation("GreensDClassOfElementNC",
 [IsGreensClass, IsAssociativeElement, IsBool]);
-DeclareOperation("GreensLClassOfElementNC", 
+DeclareOperation("GreensLClassOfElementNC",
 [IsGreensClass, IsAssociativeElement, IsBool]);
-DeclareOperation("GreensRClassOfElementNC", 
+DeclareOperation("GreensRClassOfElementNC",
 [IsGreensClass, IsAssociativeElement, IsBool]);
-DeclareOperation("GreensHClassOfElementNC", 
+DeclareOperation("GreensHClassOfElementNC",
 [IsGreensClass, IsAssociativeElement, IsBool]);
