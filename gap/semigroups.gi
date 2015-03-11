@@ -81,8 +81,9 @@ end);
 
 #
 
-SEMIGROUPS_ViewStringForGroupOfTransformations := function(s)
-local str, nrgens;
+BindGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations",
+function(s)
+  local str, nrgens;
   str := "\><";
   if HasIsTrivial(s) and IsTrivial(s) then
     Append(str, "\>trivial\< ");
@@ -115,17 +116,18 @@ local str, nrgens;
   Append(str, ">\<");
 
   return str;
-end;
+end);
 
 InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroupAsSemigroup],
-ViewStringForGroupOfTransformations@);
+SEMIGROUPS_ViewStringForGroupOfTransformations);
 
 InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroup],
-ViewStringForGroupOfTransformations@);
+SEMIGROUPS_ViewStringForGroupOfTransformations);
 
-Unbind(ViewStringForGroupOfTransformations@);
+MakeReadWriteGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations");
+Unbind(SEMIGROUPS_ViewStringForGroupOfTransformations);
 
 #
 
@@ -467,7 +469,7 @@ function(gens, record)
     gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
     n := ActionDegree(gens);
     Sort(gens, function(x, y)
-                 return ActionRank(x,n) > ActionRank(y,n);
+                 return ActionRank(x, n) > ActionRank(y, n);
                end);
 
     closure_opts := rec(small := false, hashlen := record.hashlen);
@@ -486,7 +488,7 @@ function(gens, record)
     filts := filts and IsActingSemigroupWithInverseOp;
   fi;
 
-  s := Objectify( NewType (FamilyObj( gens ), filts), rec(opts := record));
+  s := Objectify(NewType(FamilyObj(gens), filts), rec(opts := record));
   SetGeneratorsOfInverseSemigroup(s, AsList(gens));
 
   if IsMultiplicativeElementWithOneCollection(gens) then
@@ -1130,7 +1132,6 @@ InstallMethod(InverseSubsemigroupByProperty,
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);
-
 
 #miscellaneous
 

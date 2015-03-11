@@ -54,8 +54,6 @@ end);
 
 # TODO improve this
 
-DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");
-
 InstallGlobalFunction(SEMIGROUPS_SubsetNumber,
 function(m, k, n, set, min, nr, coeff)
   local i;
@@ -79,10 +77,9 @@ function(m, k, n, set, min, nr, coeff)
   set[nr] := min;
 
   return SEMIGROUPS_SubsetNumber(m, k - 1, n - i, set, min, nr,
-   coeff * (k - 1) / (n - i) );
+   coeff * (k - 1) / (n - i));
    # coeff = Binomial( n - i - 1, k - 2 )
 end);
-
 
 # the <m>th subset of <[1..n]> with <k> elements
 # TODO improve this
@@ -90,8 +87,8 @@ end);
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
 function(m, k, n)
-  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial( n - 1,
-  k - 1 ));
+  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial(n - 1,
+  k - 1));
 end);
 
 # the position of <set> in the set of subsets of [ 1 .. <n> ] with shortlex
@@ -141,7 +138,7 @@ function(set, n)
   # of [ 1 .. <n> ] of set with first element equal to <k>.
 
   helper := function(n, m, k)
-    local summand, sum;
+    local summand, sum, j;
     if k = 1 then
       return 0;
     elif m = 1 then
@@ -149,8 +146,8 @@ function(set, n)
     fi;
     summand := Binomial(n - 1, m - 1);
     sum := summand;
-    for i in [1 .. k - 2] do
-      summand := summand * (n - m - i + 1) / (n - i);
+    for j in [1 .. k - 2] do
+      summand := summand * (n - m - j + 1) / (n - j);
       sum := sum + summand;
     od;
     return sum;
@@ -159,7 +156,7 @@ function(set, n)
   nr := helper(n, m, set[1]);
   m := m - 1;
 
-  for i in [ 2 .. Length(set) ] do
+  for i in [2 .. Length(set)] do
     nr := nr + helper(n - set[i - 1], m, set[i] - set[i - 1]);
     m := m - 1;
   od;
@@ -180,13 +177,13 @@ function(m, n)
 
   m := m - 1;
   i := 1;
-  base := [ 1 .. n ];
+  base := [1 .. n];
   coeff := n ^ 2; # Binomial( n, 1 ) * NrArrangements([1..n], 1)
 
   while m > coeff do
     m := m - coeff;
     i := i + 1;
-    coeff := Binomial( n, i ) * NrArrangements(base, i);
+    coeff := Binomial(n, i) * NrArrangements(base, i);
   od;
 
   j := 1;
