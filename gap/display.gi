@@ -194,7 +194,7 @@ end);
 
 #
 
-InstallGlobalFunction(TikzStringForBlocks,
+BindGlobal("TikzStringForBlocks",
 function(blocks, labels, edges)
   local str, n, x, ext, block, y, i;
 
@@ -288,7 +288,7 @@ end);
 
 #
 
-InstallGlobalFunction(TikzStringForBipartition,
+BindGlobal("TikzStringForBipartition",
 function(arg)
   local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i, k;
 
