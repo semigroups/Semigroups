@@ -120,8 +120,8 @@ end);
 
 InstallMethod(DClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+  return NewType(FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensDClass
          and IsActingSemigroupGreensClass);
 end);
@@ -130,8 +130,8 @@ end);
 
 InstallMethod(HClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+  return NewType(FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensHClass
          and IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup);
 end);
@@ -140,8 +140,8 @@ end);
 
 InstallMethod(LClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+  return NewType(FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensLClass
          and IsActingSemigroupGreensClass);
 end);
@@ -150,8 +150,8 @@ end);
 
 InstallMethod(RClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
+function(S)
+  return NewType(FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensRClass
          and IsActingSemigroupGreensClass);
 end);
@@ -159,7 +159,6 @@ end);
 #############################################################################
 ## 3. Individual classes . . .
 #############################################################################
-
 
 InstallMethod(DClassOfLClass,
 "for an L-class of an inverse op acting semigroup",
@@ -209,7 +208,7 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensLClassOfElementNC, 
+InstallMethod(GreensLClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement, IsBool],
 function(S, x, isGreensClassNC)
@@ -249,7 +248,7 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensHClassOfElementNC, 
+InstallMethod(GreensHClassOfElementNC,
 "for a inverse op class, element, and bool",
 [IsInverseOpClass and IsActingSemigroupGreensClass, IsAssociativeElement,
  IsBool],
@@ -367,7 +366,7 @@ function(x, L)
     return false;
   fi;
 
-  return SiftedPermutation(schutz,  LambdaPerm(S)(rep, x)) = ();
+  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
 end);
 
 #############################################################################
@@ -375,7 +374,7 @@ end);
 #############################################################################
 
 # This is required since it is used elsewhere in the code that DClassReps of an
-# inverse semigroup are all idempotents. 
+# inverse semigroup are all idempotents.
 
 InstallMethod(DClassReps, "for an inverse op acting semigroup with generators",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
@@ -395,7 +394,7 @@ InstallMethod(GreensDClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(S)
   local o, scc, out, D, i;
- 
+
   o := LambdaOrb(S);
   scc := OrbSCC(o);
   out := EmptyPlist(Length(scc) - 1);
@@ -419,7 +418,7 @@ function(D)
   local reps, out, i;
   reps := LClassReps(D);
   out := EmptyPlist(Length(reps));
-  for i in [ 1 .. Length(reps) ] do
+  for i in [1 .. Length(reps)] do
     # don't use GreensLClassOfElementNC cos we don't need to rectify the
     # rho-value
     out[i] := SEMIGROUPS_CreateLClass(D, reps[i], IsGreensClassNC(D));
@@ -462,7 +461,7 @@ end);
 
 #
 
-InstallMethod(GreensHClasses, 
+InstallMethod(GreensHClasses,
 "for an inverse op class of an acting semigroup",
 [IsInverseOpClass and IsActingSemigroupGreensClass],
 function(C)
@@ -470,20 +469,20 @@ function(C)
 
   reps := HClassReps(C);
   out := [];
-  
+
   if IsGreensLClass(C) then
     setter := SetLClassOfHClass;
   elif IsGreensRClass(C) then
     setter := SetRClassOfHClass;
   elif IsGreensDClass(C) then
     setter := SetDClassOfHClass;
-  else 
+  else
     Error("Semigroups: GreensHClasses: usage,\n",
           "an L-, R-, or D-class,");
     return;
   fi;
-  
-  for i in [1 .. Length(reps)] do 
+
+  for i in [1 .. Length(reps)] do
     out[i] := SEMIGROUPS_CreateHClass(C, reps[i], IsGreensClassNC(C));
     SEMIGROUPS_CopyLambda(C, out[i]);
     setter(out[i], C);

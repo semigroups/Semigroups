@@ -77,7 +77,7 @@ end);
 InstallMethod(DClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(S)
-  return NewType( FamilyObj(S), IsEquivalenceClass and
+  return NewType(FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensDClass
          and IsActingSemigroupGreensClass);
 end);
@@ -87,7 +87,7 @@ end);
 InstallMethod(LClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(S)
-  return NewType( FamilyObj(S), IsEquivalenceClass and
+  return NewType(FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensLClass and
          IsActingSemigroupGreensClass);
 end);
@@ -97,7 +97,7 @@ end);
 InstallMethod(RClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(S)
-  return NewType( FamilyObj(S), IsEquivalenceClass and
+  return NewType(FamilyObj(S), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
          IsActingSemigroupGreensClass);
 end);
@@ -107,7 +107,7 @@ end);
 InstallMethod(HClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(S);
- return NewType( FamilyObj(S), IsEquivalenceClass and
+ return NewType(FamilyObj(S), IsEquivalenceClass and
   IsEquivalenceClassDefaultRep and IsGreensHClass and
   IsHClassOfRegularSemigroup and IsActingSemigroupGreensClass);
 end);
