@@ -339,7 +339,7 @@ end);
 InstallMethod(\^, "for a bipartition and permutation",
 [IsBipartition, IsPerm],
 function(f, p)
-  return p ^ - 1 * f * p;
+  return p ^ -1 * f * p;
 end);
 
 # LambdaPerm
@@ -483,7 +483,7 @@ end);
 InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(f, n)
-  return BipartitionByIntRepNC(Concatenation([1 .. n], ListPerm(f ^ - 1, n)));
+  return BipartitionByIntRepNC(Concatenation([1 .. n], ListPerm(f ^ -1, n)));
 end);
 
 InstallMethod(AsBipartition, "for a permutation",
@@ -776,7 +776,7 @@ function(f)
     if i <= n then
       Add(ext[blocks[i]], i);
     else
-      Add(ext[blocks[i]], - (i - n));
+      Add(ext[blocks[i]], -(i - n));
     fi;
   od;
 
@@ -1068,7 +1068,7 @@ function(classes)
   for i in [1 .. Length(copy)] do
     for j in [1 .. Length(copy[i])] do
       if copy[i][j] > n then
-        copy[i][j] := - copy[i][j] + n;
+        copy[i][j] := -copy[i][j] + n;
       fi;
     od;
   od;
@@ -1296,7 +1296,7 @@ function(f, p)
   tab1 := EmptyPlist(2 * n);
   tab2 := EmptyPlist(2 * n);
   next := 0;
-  q := p ^ - 1;
+  q := p ^ -1;
 
   for i in [n + 1 .. 2 * n] do
     if not IsBound(tab1[blocks[i]]) then
