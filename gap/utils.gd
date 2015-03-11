@@ -12,8 +12,6 @@ DeclareGlobalFunction("SemigroupsDir");
 DeclareGlobalFunction("SemigroupsStartTest");
 DeclareGlobalFunction("SemigroupsStopTest");
 DeclareGlobalFunction("SemigroupsMakeDoc");
-DeclareGlobalFunction("SemigroupsMathJaxLocal");
-DeclareGlobalFunction("SemigroupsMathJaxDefault");
 DeclareGlobalFunction("SemigroupsTestAll");
 DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestManualExamples");
