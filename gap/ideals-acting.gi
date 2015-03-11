@@ -152,7 +152,7 @@ function(I)
   if HasGeneratorsOfInverseSemigroup(I) then
     # JDM could remove repeats and only add necessary inverses...
     out := ShallowCopy(GeneratorsOfInverseSemigroup(I));
-    Append(out, List(out, x -> x ^ - 1));
+    Append(out, List(out, x -> x ^ -1));
     return out;
   fi;
 
@@ -252,28 +252,28 @@ function(I)
 
   gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
 
-  data := rec(  gens := gens,
-                parent := I,
-                log := [1],
-                genspos := 0,
-                ht := HTCreate(gens[1], rec(treehashsize := I!.opts.hashlen.L)),
-                pos := 0,
-                init := false,
-                reps := [],
-                repslookup := [],
-                orblookup1 := [],
-                orblookup2 := [],
-                rholookup := [fail],
-                lenreps := [0],
-                orbit := [fail,],
-                dorbit := [],
-                repslens := [],
-                lambdarhoht := [],
-                regular := [],
-                genstoapply := [1 .. Length(gens)],
-                stopper := false,
-                poset := [],
-                scc_lookup := []
+  data := rec(gens := gens,
+              parent := I,
+              log := [1],
+              genspos := 0,
+              ht := HTCreate(gens[1], rec(treehashsize := I!.opts.hashlen.L)),
+              pos := 0,
+              init := false,
+              reps := [],
+              repslookup := [],
+              orblookup1 := [],
+              orblookup2 := [],
+              rholookup := [fail],
+              lenreps := [0],
+              orbit := [fail],
+              dorbit := [],
+              repslens := [],
+              lambdarhoht := [],
+              regular := [],
+              genstoapply := [1 .. Length(gens)],
+              stopper := false,
+              poset := [],
+              scc_lookup := []
              );
 
   if HasIsRegularSemigroup(I) and IsRegularSemigroup(I) then
@@ -316,7 +316,6 @@ InstallMethod(Enumerate, "for semigroup ideal data, limit, looking function",
 function(data, limit, lookfunc)
   return Enumerate(data, limit, rec(lookfunc := lookfunc));
 end);
-
 
 # We concentrate on the case when nothing is known about the parent of the
 # ideal.
@@ -579,7 +578,7 @@ function(data, limit, record)
         nr_r := nr_r + 1;
 
         repslens[m][ind] := repslens[m][ind] + 1;
-        reps[m][ind][repslens[m][ind]] := act(y, z ^ - 1);
+        reps[m][ind][repslens[m][ind]] := act(y, z ^ -1);
         repslookup[m][ind][repslens[m][ind]] := nr_r;
         orblookup1[nr_r] := ind;
         orblookup2[nr_r] := repslens[m][ind];
@@ -1029,7 +1028,7 @@ function(data, limit, record)
   # data and if not adds it in the appropriate place
 
   UpdateSemigroupIdealData := function(x, pos, gen, idealpos)
-    local new, xx, l, m, mm, schutz, mults, cosets, y, n, z, ind, val;
+    local new, xx, l, m, mm, schutz, mults, y, n, ind, val;
 
     new := false;
 
