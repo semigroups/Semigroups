@@ -33,7 +33,7 @@ InstallMethod(ViewObj, "for the automorphism group of a Rees matrix semigroup",
 function(A)
   Print("<automorphism group of ");
   ViewObj(Source(A.1));
-  Print( " with ", Length(GeneratorsOfGroup(A)), " generator");
+  Print(" with ", Length(GeneratorsOfGroup(A)), " generator");
   if Length(GeneratorsOfGroup(A)) > 1 then
     Print("s");
   fi;
@@ -68,6 +68,7 @@ function(A)
 end);
 
 #
+
 if not IsBound(GAPInfo.PackagesLoaded.genss) then
   InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
   [IsReesMatrixSemigroup],
@@ -80,8 +81,8 @@ else
   InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
   [IsReesMatrixSemigroup],
   function(R)
-    local G, mat, m, n, agroup, A, hom, agraph, OnMatrix, S1, S2, mat_elts, U,
-    V, iso, inv, T, tester, y, D, P, elts, B, g, x, proj1, proj2, stab, gens, i,
+    local G, mat, m, n, agroup, A, hom, agraph, OnMatrix, S1, S2, U,
+    V, iso, inv, T, tester, g, x, proj1, proj2, stab, i,
     blist, right, pruner, lambda, gamma, entries;
 
     G := UnderlyingSemigroup(R);
@@ -96,10 +97,10 @@ else
       return Group(List(GeneratorsOfGroup(AutomorphismGroup(G)), x ->
        RMSIsoByTriple(R, R, [(), x, [One(G), One(G)]])));
     elif n = 2 and m = 1 then
-      agraph := Group((2,3));
+      agraph := Group((2, 3));
       SetSize(agraph, 2);
     elif n > 2 and m = 1 then
-      agraph := Group((2,3), PermList(Concatenation([1],[3 .. n + m],[2])));
+      agraph := Group((2, 3), PermList(Concatenation([1], [3 .. n + m], [2])));
       SetSize(agraph, Factorial(n));
     else
       agraph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
@@ -124,7 +125,8 @@ else
     S1 := Stab(agraph, mat, OnMatrix);
     Info(InfoSemigroups, 2, "...it has size ", Size(S1.stab));
 
-    #Info(InfoSemigroups, 2, "calculating an isomorphism from the automorphisms",
+    #Info(InfoSemigroups,
+    #2, "calculating an isomorphism from the automorphisms",
     #" of the group to a\n#I  perm group...");
     hom := NaturalHomomorphismByNormalSubgroupNC(agroup,
      InnerAutomorphismsAutomorphismGroup(agroup));
@@ -553,7 +555,7 @@ else
         return fail;
       fi;
       graphiso := List(AutGroupGraph(graph1,
-                  [[1 .. m],[m + 1 .. n + m]]), x -> x * g);
+                  [[1 .. m], [m + 1 .. n + m]]), x -> x * g);
     fi;
 
     #find an induced function, if there is one
@@ -748,7 +750,7 @@ end);
 InstallMethod(ImagesRepresentative,
 "for an RMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
-function( triple, x)
+function(triple, x)
   local g, i, j, lambda, gamma, f, m;
 
   m := Length(Rows(Source(triple)));
@@ -759,7 +761,7 @@ function( triple, x)
   lambda := triple[1];
   gamma := triple[2];
   f := triple[3];
-  return RMSElement(Range(triple), i ^ lambda, f[i] * ImageElm(gamma,g) / f[j],
+  return RMSElement(Range(triple), i ^ lambda, f[i] * ImageElm(gamma, g) / f[j],
    j ^ lambda - m);
 end);
 
@@ -785,13 +787,12 @@ function(triple, x)
       return MultiplicativeZero(Source(triple));
     else
       return RMSElement(Range(triple),
-      i ^ lambda, f[i] * ImageElm(gamma,g) / f[j], j ^ lambda - m);
+      i ^ lambda, f[i] * ImageElm(gamma, g) / f[j], j ^ lambda - m);
     fi;
   else
     return x;
   fi;
 end);
-
 
 #
 
@@ -872,9 +873,9 @@ end);
 
 InstallMethod(PrintObj, "for object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
-function( obj )
-  Print( "RMSIsoByTriple ( ", Source(obj), ",", Range(obj), "," , obj[1], " ",
-    obj[2], " ",  obj[3], " )" );
+function(obj)
+  Print("RMSIsoByTriple ( ", Source(obj), ",", Range(obj), "," , obj[1], " ",
+    obj[2], " ", obj[3], ")");
   return;
 end);
 
@@ -882,26 +883,26 @@ end);
 
 InstallMethod(PrintObj, "for object in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
-function( obj )
-  Print( "RZMSIsoByTriple ( ", Source(obj) , ",", Range(obj), "," , obj[1], " ",
-    obj[2], " ",  obj[3], " )" );
+function(obj)
+  Print("RZMSIsoByTriple ( ", Source(obj) , ",", Range(obj), "," , obj[1], " ",
+    obj[2], " ", obj[3], " )");
   return;
 end);
 
 #
 
-InstallMethod( ViewObj, "for object in `IsRMSIsoByTriple'",
+InstallMethod(ViewObj, "for object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
-function( obj )
-  Print( "(", obj[1],", ",  obj[2],", ",  obj[3], ")" );
-end );
+function(obj)
+  Print("(", obj[1], ", ", obj[2], ", ", obj[3], ")");
+end);
 
 #
 
-InstallMethod( ViewObj, "for object in `IsRZMSIsoByTriple'",
+InstallMethod(ViewObj, "for object in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
 function(obj)
-  Print( "(", obj[1], ", ", obj[2], ", ", obj[3], ")" );
+  Print("(", obj[1], ", ", obj[2], ", ", obj[3], ")");
   return;
 end);
 
