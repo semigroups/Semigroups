@@ -26,6 +26,33 @@
 
 # a better method for MinimalIdeal of a simple semigroup.
 
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
+IsRegularStarSemigroup and IsActingSemigroup);
+InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
+InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
+InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
+InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
+InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsHTrivial, IsLTrivial);
+InstallTrueMethod(IsHTrivial, IsRTrivial);
+InstallTrueMethod(IsInverseMonoid, IsInverseSemigroup and IsMonoid);
+InstallTrueMethod(IsLeftSimple, IsInverseSemigroup and IsGroupAsSemigroup);
+InstallTrueMethod(IsLeftZeroSemigroup, IsInverseSemigroup and IsTrivial);
+InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
+InstallTrueMethod(IsLTrivial, IsDTrivial);
+InstallTrueMethod(IsRectangularBand, IsHTrivial and IsSimpleSemigroup);
+InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
+InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
+InstallTrueMethod(IsRTrivial, IsDTrivial);
+InstallTrueMethod(IsSemilatticeAsSemigroup, IsDTrivial and IsInverseSemigroup);
+InstallTrueMethod(IsMonogenicInverseSemigroup, IsInverseSemigroup and
+IsMonogenicSemigroup);
+InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);
+InstallTrueMethod(IsZeroGroup, IsZeroRectangularBand and IsInverseSemigroup);
+InstallTrueMethod(IsRegularSemigroup, IsRegularStarSemigroup);
+InstallTrueMethod(IsInverseSemigroup, IsGroup);
+InstallTrueMethod(IsInverseSemigroup, IsBlockGroup and IsRegularSemigroup);
+
 InstallMethod(OneMutable, "for ring element coll coll coll",
 [IsRingElementCollCollColl], x -> One(Representative(x)));
 
@@ -221,7 +248,7 @@ function(S)
   for i in [1 .. n] do
     for j in [i + 1 .. n] do
       if not gens[i] * gens[j] = gens[j] * gens[i] then
-        Info(InfoSemigroups, 2, "generators ", i, " and ",  j,
+        Info(InfoSemigroups, 2, "generators ", i, " and ", j,
          " do not commute");
         return false;
       fi;
@@ -237,7 +264,7 @@ InstallMethod(IsCompletelyRegularSemigroup,
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local record, o, pos, f, n;
+  local record, o, pos, f;
 
   if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
    IsCompletelyRegularSemigroup(Parent(S)) then
@@ -391,7 +418,7 @@ d -> NrHClasses(d) = Size(d));
 InstallMethod(IsLTrivial, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local iter, o, d;
+  local iter, d;
 
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
@@ -710,8 +737,9 @@ InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 
 # not applicable for ideals
 
-InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and
-HasGeneratorsOfSemigroup, 0,
+InstallImmediateMethod(IsMonogenicSemigroup,
+IsSemigroup and HasGeneratorsOfSemigroup,
+0,
 function(S)
   if Length(GeneratorsOfSemigroup(S)) = 1 then
     return true;
@@ -852,7 +880,7 @@ function(S)
     for j in [1 .. m] do
 
       if not IsIdempotent(e[i] * e[j]) then
-        Info(InfoSemigroups, 2, "the product of idempotents ", i," and ", j,
+        Info(InfoSemigroups, 2, "the product of idempotents ", i, " and ", j,
         " is not an idempotent");
         return false;
       fi;
@@ -902,7 +930,7 @@ end);
 InstallMethod(IsRegularSemigroup, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local tester, n, rhofunc, lookfunc, data, i;
+  local tester, rhofunc, lookfunc, data, i;
 
   if IsSimpleSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is simple");
@@ -1237,7 +1265,7 @@ end);
 
 InstallMethod(IsSimpleSemigroup, "for an acting semigroup", [IsActingSemigroup],
 function(S)
-  local gens, lambdafunc, lambdarank, rank, opts, o, pos, iter, name, f, n;
+  local gens, lambdafunc, lambdarank, rank, opts, o, pos, iter, name, f;
 
   if HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -1527,7 +1555,7 @@ function(S)
                      # here or better still take an isomorphism to a partial
                      # perm semigroup and answer the question there.
   fi;
-  return IsMajorantlyClosed(S,IdempotentGeneratedSubsemigroup(S));
+  return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
 end);
 
 #EOF
