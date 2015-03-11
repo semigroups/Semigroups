@@ -162,10 +162,10 @@ function(arg)
     graded[j][k] := o;
     Enumerate(o);
     for l in [1 .. Length(o)] do
-      HTAdd(onlygradesdata, o[l], [j,k,l]);
+      HTAdd(onlygradesdata, o[l], [j, k, l]);
     od;
     # remove this it is only used in once place in this file TODO
-    o!.position_in_graded := [j,k];
+    o!.position_in_graded := [j, k];
     graded!.lens[j] := k;
   fi;
   if IsBound(obj) then
@@ -270,7 +270,7 @@ function(arg)
     graded[j][k] := o;
     Enumerate(o);
     for l in [1 .. Length(o)] do
-      HTAdd(onlygradesdata, o[l], [j,k,l]);
+      HTAdd(onlygradesdata, o[l], [j, k, l]);
     od;
     # store the position of RhoFunc(S)(x) in o
     graded!.lens[j] := k;
@@ -290,8 +290,8 @@ function(s)
 
   fam := CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs),
-   rec( orbits := List([1 .. ActionDegree(s) + 1], x -> []),
-     lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
+   rec(orbits := List([1 .. ActionDegree(s) + 1], x -> []),
+       lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
 end);
 
 # stores so far calculated GradedRhoOrbs
