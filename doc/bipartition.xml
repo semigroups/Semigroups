@@ -8,6 +8,130 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="RightBlocks">
+  <ManSection>
+    <Attr Name="RightBlocks" Arg="f"/>
+    <Returns>The right blocks of a bipartition.</Returns>
+    <Description>
+      <C>RightBlocks</C> returns the right blocks of the
+      bipartition <A>f</A>.  <P/>
+      
+      The <E>right blocks</E> of a bipartition <A>f</A> are just the
+      intersections of the blocks of <A>f</A> with <C>[-n..-1]</C> where
+      <C>n</C> is the degree of <A>f</A>, the values in transverse blocks are
+      positive, and the values in non-transverse blocks are negative. <P/>
+
+      The right blocks of bipartition are &GAP; objects in their own right, and
+      are not simply a list of blocks of <A>f</A>; see <Ref
+        Sect="section-blocks"/> for more information. <P/>
+
+      The significance of this notion lies in the fact that bipartitions
+      <C>x</C> and <C>y</C> are &L;-related in the partition monoid if and only
+      if they have equal right blocks. 
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], 
+> [ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;
+gap> RightBlocks(f);
+<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>
+gap> LeftBlocks(f);
+<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LeftBlocks">
+  <ManSection>
+    <Attr Name="LeftBlocks" Arg="f"/>
+    <Returns>The left blocks of a bipartition.</Returns>
+    <Description>
+      <C>LeftBlocks</C> returns the left blocks of the
+      bipartition <A>f</A>.  <P/>
+      
+      The <E>left blocks</E> of a bipartition <A>f</A> are just the
+      intersections of the blocks of <A>f</A> with <C>[1..n]</C> where <C>n</C>
+      is the degree of <A>f</A>, the values in transverse blocks are positive,
+      and the values in non-transverse blocks are negative. <P/>
+      
+      The left blocks of bipartition are &GAP; objects in their own right, and
+      are not simply a list of blocks of <A>f</A>; see <Ref
+        Sect="section-blocks"/> for more information. <P/>
+      
+      The significance of this notion lies in the fact that bipartitions
+      <C>x</C> and <C>y</C> are &R;-related in the partition monoid if and only
+      if they have equal left blocks. 
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], 
+> [ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;
+gap> RightBlocks(f);
+<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>
+gap> LeftBlocks(f);
+<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrBlocks">
+  <ManSection>
+    <Attr Name="NrBlocks" Arg="blocks" Label="for blocks"/>
+    <Attr Name="NrBlocks" Arg="f" Label="for a bipartition"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      If <A>blocks</A> is some blocks or <A>f</A> is a bipartition, then
+      <C>NrBlocks</C> returns the number of blocks in <A>blocks</A> or <A>f</A>,
+      respectively. 
+      <Example><![CDATA[
+gap> blocks:=BlocksNC([[ -1, -2, -3, -4 ], [ -5 ], [ 6 ]]);
+<blocks: [ -1, -2, -3, -4 ], [ -5 ], [ 6 ]>
+gap> NrBlocks(blocks);
+3
+gap> f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], 
+> [ -3 ] ] );
+<bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], 
+ [ -3 ]>
+gap> NrBlocks(f);
+4]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrLeftBlocks">
+  <ManSection>
+    <Attr Name="NrLeftBlocks" Arg="f"/>
+    <Returns>A non-negative integer.</Returns>
+    <Description>
+      When the argument is a bipartition <A>f</A>, <C>NrLeftBlocks</C> returns
+      the number of left blocks of <A>f</A>, i.e. the number of blocks of
+      <A>f</A> intersecting <C>[1..n]</C> non-trivially. 
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 2, 3, 4, 5, 6, 8 ], [ 7, -2, -3 ], 
+> [ -1, -4, -7, -8 ], [ -5, -6 ] ] );;
+gap> NrLeftBlocks(f);
+2
+gap> LeftBlocks(f);
+<blocks: [ -1, -2, -3, -4, -5, -6, -8 ], [ 7 ]>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrRightBlocks">
+  <ManSection>
+    <Attr Name="NrRightBlocks" Arg="f"/>
+    <Returns>A non-negative integer.</Returns>
+    <Description>
+      When the argument is a bipartition <A>f</A>, <C>NrRightBlocks</C> returns
+      the number of right blocks of <A>f</A>, i.e. the number of blocks of
+      <A>f</A> intersecting <C>[-n..-1]</C> non-trivially. 
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 2, 3, 4, 6, -2, -7 ], [ 5, -1, -3, -8 ], 
+> [ 7, -4, -6 ], [ 8 ], [ -5 ] ] );;
+gap> RightBlocks(f);
+<blocks: [ 1, 3, 8 ], [ 2, 7 ], [ 4, 6 ], [ -5 ]>
+gap> NrRightBlocks(f);
+4]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="PartialPermLeqBipartition">
   <ManSection>
     <Oper Name="PartialPermLeqBipartition" Arg="x, y"/>

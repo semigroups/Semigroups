@@ -141,6 +141,67 @@ function(f)
   return NrBlocks(f) - NrLeftBlocks(f) + NrTransverseBlocks(f);
 end);
 
+# could use TransverseBlocksLookup if known here JDM
+
+InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
+function(f)
+  local n, blocks, tab, out, nrblocks, i;
+
+  n := DegreeOfBipartition(f);
+  blocks := f!.blocks;
+  tab := List([1 .. n], x -> false);
+  out := EmptyPlist(n + 2);
+  out[1] := 0;
+  out[n + 2] := [];
+  nrblocks := 0;
+
+  for i in [1 .. n] do
+    out[i + 1] := blocks[i];
+    if not tab[blocks[i]] then
+      out[1] := out[1] + 1;
+      out[n + 1 + blocks[i]] := 0;
+      tab[blocks[i]] := true;
+    fi;
+  od;
+
+  for i in [n + 1 .. 2 * n] do
+    if blocks[i] <= out[1] then #transverse block!
+      out[n + 1 + blocks[i]] := 1;
+    fi;
+  od;
+
+  out := Objectify(BlocksType, rec(blocks := out));
+  return out;
+end);
+
+#
+
+InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
+function(f)
+  local n, blocks, tab, out, nrblocks, i;
+
+  n := DegreeOfBipartition(f);
+  blocks := f!.blocks;
+  tab := EmptyPlist(2 * n);
+  out := [];
+  nrblocks := 0;
+
+  for i in [n + 1 .. 2 * n] do
+    if not IsBound(tab[blocks[i]]) then
+      nrblocks := nrblocks + 1;
+      tab[blocks[i]] := nrblocks;
+      if blocks[i] <= NrLeftBlocks(f) then
+        out[n + 1 + nrblocks] := 1; #signed
+      else
+        out[n + 1 + nrblocks] := 0; #unsigned
+      fi;
+    fi;
+    out[i - n + 1] := tab[blocks[i]];
+  od;
+  out[1] := nrblocks;
+  out := Objectify(BlocksType, rec(blocks := out));
+  return out;
+end);
 #operators
 
 InstallMethod(\*, "for a bipartition and bipartition",

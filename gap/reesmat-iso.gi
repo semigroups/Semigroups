@@ -124,8 +124,8 @@ else
     S1 := Stab(agraph, mat, OnMatrix);
     Info(InfoSemigroups, 2, "...it has size ", Size(S1.stab));
 
-    Info(InfoSemigroups, 2, "calculating an isomorphism from the automorphisms",
-    " of the group to a\n#I  perm group...");
+    #Info(InfoSemigroups, 2, "calculating an isomorphism from the automorphisms",
+    #" of the group to a\n#I  perm group...");
     hom := NaturalHomomorphismByNormalSubgroupNC(agroup,
      InnerAutomorphismsAutomorphismGroup(agroup));
     iso := IsomorphismPermGroup(ImagesSource(hom));

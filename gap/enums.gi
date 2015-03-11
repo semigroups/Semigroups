@@ -597,7 +597,7 @@ function(r)
     fi;
     r := enum!.parent;
     rep := Representative(r);
-    return StabilizerAction(Parent(r))(rep,tuple[1])
+    return StabilizerAction(Parent(r))(rep, tuple[1])
      * LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), tuple[2])[1];
   end;
   #
@@ -675,7 +675,7 @@ function(r, m, n)
   r := r - 1;
   mult := Product([n - m + 1 .. n - 1]);
   factor := n;
-  q := QuotientRemainder(r,mult);
+  q := QuotientRemainder(r, mult);
   out := [q[1] + 1];
   bool[q[1] + 1] := true;
 

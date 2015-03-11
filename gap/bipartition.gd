@@ -19,6 +19,12 @@ DeclareGlobalFunction("Bipartition");
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
 DeclareAttribute("NrTransverseBlocks", IsBipartition);
+DeclareAttribute("NrLeftBlocks", IsBipartition);
+DeclareAttribute("NrRightBlocks", IsBipartition);
+DeclareAttribute("NrBlocks", IsBipartition);
+
+DeclareAttribute("LeftBlocks", IsBipartition);
+DeclareAttribute("RightBlocks", IsBipartition);
 
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
