@@ -392,7 +392,7 @@ function(s, n, colBlocks, rowBlocks)
         # Check all pairs of columns (i,j)
         for i in [1 .. Size(mat[1])] do
           for j in [i + 1 .. Size(mat[1])] do
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+            if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
             in n then
               return false;
             fi;
@@ -445,7 +445,7 @@ function(s, n, colBlocks, rowBlocks)
             if mat[v][i] = 0 then
               continue;
             fi;
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+            if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
              in n then
               return false;
             fi;
@@ -479,7 +479,7 @@ function(s, n, colBlocks, rowBlocks)
           if mat[u][j] = 0 then
           continue;
           fi;
-            if not (mat[u][i] * mat[v][i] ^ - 1 * mat[v][j] * mat[u][j] ^ - 1)
+            if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
             in n then
               return false;
             fi;
@@ -664,8 +664,8 @@ function(cong, elm)
     for v in cong!.rowBlocks[cong!.rowLookup[u]] do
       for nElm in cong!.n do
         # Might be better to use congruence classes after all
-        b := mat[1][j] ^ - 1 * nElm * mat[1][i] * a * mat[u][1]
-             * mat[v][1] ^ - 1;
+        b := mat[1][j] ^ -1 * nElm * mat[1][i] * a * mat[u][1]
+             * mat[v][1] ^ -1;
         Add(images, RMSElement(s, j, b, v));
       od;
     od;
@@ -715,12 +715,12 @@ function(cong, elm)
     for v in cong!.rowBlocks[cong!.rowLookup[u]] do
       for nElm in cong!.n do
         # Might be better to use congruence classes after all
-        b := mat[row][j] ^ - 1
+        b := mat[row][j] ^ -1
              * nElm
              * mat[row][i]
              * a
              * mat[u][col]
-             * mat[v][col] ^ - 1;
+             * mat[v][col] ^ -1;
         Add(images, RMSElement(s, j, b, v));
       od;
     od;
@@ -1326,9 +1326,9 @@ function(class)
   u := cong!.rowBlocks[class!.rowClass][1];
   # Pick another row and column
   mat := Matrix(s);
-  a := mat[1][i] ^ - 1
+  a := mat[1][i] ^ -1
        * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
-       * mat[u][1] ^ - 1;
+       * mat[u][1] ^ -1;
   return RMSElement(s, i, a, u);
 end);
 
@@ -1360,9 +1360,9 @@ function(class)
       break;
     fi;
   od;
-  a := mat[v][i] ^ - 1
+  a := mat[v][i] ^ -1
        * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
-       * mat[u][j] ^ - 1;
+       * mat[u][j] ^ -1;
   return RMSElement(s, i, a, u);
 end);
 
@@ -1396,8 +1396,8 @@ function(cong)
       # For each row in the matrix...
       for rowNo in [1 .. Size(m)] do
         Add(pairs,
-            [RMSElement(s, bl[1], m[rowNo][bl[1]] ^ - 1, rowNo),
-             RMSElement(s, bl[j], m[rowNo][bl[j]] ^ - 1, rowNo)]);
+            [RMSElement(s, bl[1], m[rowNo][bl[1]] ^ -1, rowNo),
+             RMSElement(s, bl[j], m[rowNo][bl[j]] ^ -1, rowNo)]);
       od;
     od;
   od;
@@ -1410,8 +1410,8 @@ function(cong)
       # For each column in the matrix...
       for colNo in [1 .. Size(m[1])] do
         Add(pairs,
-            [RMSElement(s, colNo, m[bl[1]][colNo] ^ - 1, bl[1]),
-             RMSElement(s, colNo, m[bl[i]][colNo] ^ - 1, bl[i])]);
+            [RMSElement(s, colNo, m[bl[1]][colNo] ^ -1, bl[1]),
+             RMSElement(s, colNo, m[bl[i]][colNo] ^ -1, bl[i])]);
       od;
     od;
   od;
@@ -1452,8 +1452,8 @@ function(cong)
       for rowNo in [1 .. Size(m)] do
         if m[rowNo][bl[1]] <> 0 then
           Add(pairs,
-          [RMSElement(s, bl[1], m[rowNo][bl[1]] ^ - 1, rowNo),
-           RMSElement(s, bl[j], m[rowNo][bl[j]] ^ - 1, rowNo)]);
+          [RMSElement(s, bl[1], m[rowNo][bl[1]] ^ -1, rowNo),
+           RMSElement(s, bl[j], m[rowNo][bl[j]] ^ -1, rowNo)]);
         fi;
       od;
     od;
@@ -1468,8 +1468,8 @@ function(cong)
       for colNo in [1 .. Size(m[1])] do
         if m[bl[1]][colNo] <> 0 then
           Add(pairs,
-              [RMSElement(s, colNo, m[bl[1]][colNo] ^ - 1, bl[1]),
-               RMSElement(s, colNo, m[bl[i]][colNo] ^ - 1, bl[i])]);
+              [RMSElement(s, colNo, m[bl[1]][colNo] ^ -1, bl[1]),
+               RMSElement(s, colNo, m[bl[i]][colNo] ^ -1, bl[i])]);
         fi;
       od;
     od;
@@ -1539,22 +1539,22 @@ function(cong)
     union(rowLookup, pair[1][3], pair[2][3]);
 
     # Associate group entries in the normal subgroup
-    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ - 1);
+    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ -1);
 
     # Ensure linkedness
     for v in [2 .. Size(mat)] do
       n := ClosureGroup(n,
                    mat[1][pair[1][1]]
-                   * mat[v][pair[1][1]] ^ - 1
+                   * mat[v][pair[1][1]] ^ -1
                    * mat[v][pair[2][1]]
-                   * mat[1][pair[2][1]] ^ - 1);
+                   * mat[1][pair[2][1]] ^ -1);
     od;
     for j in [2 .. Size(mat[1])] do
       n := ClosureGroup(n,
                    mat[pair[1][3]][1]
-                   * mat[pair[2][3]][1] ^ - 1
+                   * mat[pair[2][3]][1] ^ -1
                    * mat[pair[2][3]][j]
-                   * mat[pair[1][3]][j] ^ - 1);
+                   * mat[pair[1][3]][j] ^ -1);
     od;
   od;
 
@@ -1659,7 +1659,7 @@ function(cong)
     union(rowLookup, pair[1][3], pair[2][3]);
 
     # Associate group entries in the normal subgroup
-    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ - 1);
+    n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ -1);
 
     # Ensure linkedness
     u := PositionProperty([1 .. Size(mat)], u -> mat[u][pair[1][1]] <> 0);
@@ -1669,9 +1669,9 @@ function(cong)
       fi;
       n := ClosureGroup(n,
                    mat[u][pair[1][1]]
-                   * mat[v][pair[1][1]] ^ - 1
+                   * mat[v][pair[1][1]] ^ -1
                    * mat[v][pair[2][1]]
-                   * mat[u][pair[2][1]] ^ - 1);
+                   * mat[u][pair[2][1]] ^ -1);
     od;
     i := PositionProperty([1 .. Size(mat[1])], k -> mat[pair[1][3]][k] <> 0);
     for j in [i + 1 .. Size(mat[1])] do
@@ -1680,9 +1680,9 @@ function(cong)
       fi;
       n := ClosureGroup(n,
                    mat[pair[1][3]][i]
-                   * mat[pair[2][3]][i] ^ - 1
+                   * mat[pair[2][3]][i] ^ -1
                    * mat[pair[2][3]][j]
-                   * mat[pair[1][3]][j] ^ - 1);
+                   * mat[pair[1][3]][j] ^ -1);
     od;
   od;
 

@@ -277,15 +277,15 @@ function(R, l, g, x)
   #FIXME for loop for this and the next
   out{[m + 1 .. n + m]} :=
    List([m + 1 .. n + m],
-   v -> mat[v ^ l - m][1 ^ l] * x * (mat[v - m][1] ^ g) ^ - 1);
+   v -> mat[v ^ l - m][1 ^ l] * x * (mat[v - m][1] ^ g) ^ -1);
 
   out{[2 .. m]} := List([2 .. m],
-   v -> (mat[(m + 1) ^ l - m][v ^ l]) ^ - 1 * out[m + 1] *
+   v -> (mat[(m + 1) ^ l - m][v ^ l]) ^ -1 * out[m + 1] *
     (mat[1][v] ^ g));
 
   for j in [m + 2 .. n + m] do
     for i in [2 .. m] do
-      if mat[j ^ l - m][i ^ l] <> out[j] * mat[j - m][i] ^ g * out[i] ^ - 1 then
+      if mat[j ^ l - m][i ^ l] <> out[j] * mat[j - m][i] ^ g * out[i] ^ -1 then
         return [false, out];
       fi;
     od;
@@ -331,8 +331,8 @@ else
     else
       sub := InducedSubgraph(graph, component);
       perm := MappingPermListList(VertexNames(sub), Vertices(sub));
-      edges := OnTuplesTuples(DirectedEdges(sub), perm ^ - 1);
-      bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ - 1);
+      edges := OnTuplesTuples(DirectedEdges(sub), perm ^ -1);
+      bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ -1);
     fi;
 
     defined := [];
@@ -354,9 +354,9 @@ else
 
           if Last in bicomps[1] then
             new := mat[v ^ l - m][Last ^ l] * out[Last]
-                  * (mat[v - m][Last] ^ g) ^ - 1;
+                  * (mat[v - m][Last] ^ g) ^ -1;
           else
-            new := (mat[Last ^ l - m][v ^ l]) ^ - 1 * out[Last]
+            new := (mat[Last ^ l - m][v ^ l]) ^ -1 * out[Last]
                    * (mat[Last - m][v] ^ g);
           fi;
 
@@ -405,8 +405,8 @@ else
       else
         sub := InducedSubgraph(rmsgraph, components[i]);
         perm := MappingPermListList(VertexNames(sub), Vertices(sub));
-        edges := OnTuplesTuples(DirectedEdges(sub), perm ^ - 1);
-        bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ - 1);
+        edges := OnTuplesTuples(DirectedEdges(sub), perm ^ -1);
+        bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ -1);
       fi;
 
       defined := [];
@@ -427,9 +427,9 @@ else
 
             if Last in bicomps[1] then
               new := mat2[v ^ l - m][Last ^ l]
-                     * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ - 1;
+                     * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ -1;
             else
-              new := (mat2[Last ^ l - m][v ^ l]) ^ - 1
+              new := (mat2[Last ^ l - m][v ^ l]) ^ -1
                      * imagelist[Last] * (mat1[Last - m][v] ^ g);
             fi;
 
@@ -807,8 +807,8 @@ function(a)
   g := a[2];
   f := a[3];
 
-  return RMSIsoByTriple(Range(a), Source(a), [l ^ - 1, g ^ - 1,
-   List([1 .. n], x -> (f[x ^ l] ^ (g ^ - 1)) ^ - 1)]);
+  return RMSIsoByTriple(Range(a), Source(a), [l ^ -1, g ^ -1,
+   List([1 .. n], x -> (f[x ^ l] ^ (g ^ -1)) ^ -1)]);
 end);
 
 #
@@ -829,8 +829,8 @@ function(a)
   g := a[2];
   f := a[3];
 
-  return RZMSIsoByTriple(Range(a), Source(a), [l ^ - 1, g ^ - 1, List([1 .. n],
-   x -> (f[x ^ l] ^ (g ^ - 1)) ^ - 1)]);
+  return RZMSIsoByTriple(Range(a), Source(a), [l ^ -1, g ^ -1, List([1 .. n],
+   x -> (f[x ^ l] ^ (g ^ -1)) ^ -1)]);
 end);
 
 #
@@ -857,7 +857,7 @@ InstallMethod(PreImagesRepresentative,
 "for an RMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
 function(triple, x)
-  return ImagesRepresentative(triple ^ - 1, x);
+  return ImagesRepresentative(triple ^ -1, x);
 end);
 
 #
@@ -866,7 +866,7 @@ InstallMethod(PreImagesRepresentative,
 "for an RZMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
 function(triple, x)
-  return ImagesRepresentative(triple ^ - 1, x);
+  return ImagesRepresentative(triple ^ -1, x);
 end);
 
 #

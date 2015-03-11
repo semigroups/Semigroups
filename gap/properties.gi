@@ -627,7 +627,7 @@ function(S)
 
   if HasGeneratorsOfSemigroup(S) and
     IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) and
-    ForAll(GeneratorsOfSemigroup(S), x -> x ^ - 1 in S) then
+    ForAll(GeneratorsOfSemigroup(S), x -> x ^ -1 in S) then
     return true;
   fi;
 

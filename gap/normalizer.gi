@@ -225,7 +225,7 @@ function(G, S, opts)
     else
       deg := DegreeOfBipartitionSemigroup(S);
       act := function(pt, x)
-             x := AsBipartition(x ^ - 1, deg);
+             x := AsBipartition(x ^ -1, deg);
              return Set(pt, y -> LeftBlocks(x * ProjectionFromBlocks(y)));
            end;
     fi;
@@ -301,7 +301,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
         act := OnSets;
         o := LambdaOrbForNormalizer@(G, S,
-          function(x,y)
+          function(x, y)
             return Length(x) < Length(y);
           end);
       else
@@ -311,7 +311,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
                  * AsBipartition(x, deg));
                end;
         o := LambdaOrbForNormalizer@(G, S,
-          function(x,y)
+          function(x, y)
             return NrBlocks(x) < NrBlocks(y);
           end);
       fi;
@@ -338,7 +338,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       else
         deg := DegreeOfBipartitionSemigroup(S);
         act := function(pt, x)
-          return LeftBlocks(AsBipartition(x ^ - 1, deg)
+          return LeftBlocks(AsBipartition(x ^ -1, deg)
           * ProjectionFromBlocks(pt));
         end;
       fi;
@@ -356,7 +356,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
 
     # recalculate the stabilizer chain using the generators of <S> as the base
     # points
-    U := StabilizerChain(U, rec( Cand := rec( points := gens,
+    U := StabilizerChain(U, rec(Cand := rec(points := gens,
      ops := ListWithIdenticalEntries(nrgens, OnPoints), used := 0),
      StrictlyUseCandidates := true));
 
