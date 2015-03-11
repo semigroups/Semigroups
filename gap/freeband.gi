@@ -7,7 +7,9 @@
 ##
 ################################################################################
 
-DeclareGlobalFunction("SEMIGROUPS_FreeBandElmToWord");
+InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
+
+#
 
 InstallGlobalFunction(SEMIGROUPS_FreeBandElmToWord,
 function(elem)
@@ -20,7 +22,7 @@ function(elem)
   elif tuple = [] then
     out := [];
   elif tuple![2] = 0 then # tuple corresponds to one the generators
-    out := [ tuple![1] ];
+    out := [tuple![1]];
   else
     first := tuple![1];
     pre_tuple := tuple![2]; # tuple correspoding to the prefix
@@ -30,11 +32,11 @@ function(elem)
     # if first = last we only need a single letter
     if first = last then
       out := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first],
-	                   SEMIGROUPS_FreeBandElmToWord(su_tuple));
+                           SEMIGROUPS_FreeBandElmToWord(su_tuple));
     # otherwise we need distinct letters for both first and last
     else
       word1 := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first]);
-      word2 := Concatenation([last],SEMIGROUPS_FreeBandElmToWord(su_tuple));
+      word2 := Concatenation([last], SEMIGROUPS_FreeBandElmToWord(su_tuple));
       if word1 = word2 then
         out := word1;
       else
@@ -51,16 +53,16 @@ function(arg)
   local names, F, type, gens, S, m, ngens;
 
   # Get and check the argument list, and construct names if necessary.
-  if Length( arg ) = 1 and IsInt( arg[1] ) and 0 < arg[1] then
-    names := List( [ 1 .. arg[1] ],
-                  i -> Concatenation( "x", String(i) ) );
-  elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 < arg[1] then
-    names := List( [ 1 .. arg[1] ],
-                  i -> Concatenation( arg[2], String(i) ) );
-  elif 1 <= Length( arg ) and ForAll( arg, IsString ) then
+  if Length(arg) = 1 and IsInt(arg[1]) and 0 < arg[1] then
+    names := List([1 .. arg[1]],
+                  i -> Concatenation("x", String(i)));
+  elif Length(arg) = 2 and IsInt(arg[1]) and 0 < arg[1] then
+    names := List([1 .. arg[1]],
+                  i -> Concatenation(arg[2], String(i)));
+  elif 1 <= Length(arg) and ForAll(arg, IsString) then
     names := arg;
-  elif Length( arg ) = 1 and IsList( arg[1] )
-                          and ForAll( arg[1], IsString ) then
+  elif Length(arg) = 1 and IsList(arg[1])
+                          and ForAll(arg[1], IsString) then
     names := arg[1];
   else
     Error("Semigroups: FreeBand: usage,\n",
@@ -68,39 +70,37 @@ function(arg)
     return;
   fi;
 
-  MakeImmutable( names );
+  MakeImmutable(names);
 
-  F := NewFamily( "FreeBandElementsFamily", IsFreeBandElement,
+  F := NewFamily("FreeBandElementsFamily", IsFreeBandElement,
        CanEasilySortElements);
 
   type := NewType(F, IsFreeBandElement and IsPositionalObjectRep);
 
   ngens := Length(names);
-  gens := EmptyPlist( ngens );
+  gens := EmptyPlist(ngens);
 
-  for m in  [1 .. ngens ] do
-    gens[m] := Objectify(type, rec(
-                                   tuple := [m, 0, m, 0],
+  for m in  [1 .. ngens] do
+    gens[m] := Objectify(type, rec(tuple := [m, 0, m, 0],
                                    cont := BlistList([1 .. ngens], [m]),
                                    word := [m]
-                                   )
-                         );
+                                   ));
   od;
 
-  StoreInfoFreeMagma( F, names, IsFreeBandElement );
+  StoreInfoFreeMagma(F, names, IsFreeBandElement);
 
-  S := Objectify( NewType( FamilyObj( gens ),
-                          IsFreeBandCategory and IsSemigroup and
-			  IsAttributeStoringRep ),
-                   rec() );
-  SetGeneratorsOfMagma( S, gens );
+  S := Objectify(NewType(FamilyObj(gens),
+                         IsFreeBandCategory and IsSemigroup and
+                         IsAttributeStoringRep),
+                   rec());
+  SetGeneratorsOfMagma(S, gens);
   SetIsFreeBand(S, true);
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
 
-  SetIsWholeFamily( S, true);
+  SetIsWholeFamily(S, true);
 
-   return S;
+  return S;
 end);
 
 InstallMethod(IsFreeBand, "for a semigroup",
@@ -119,7 +119,7 @@ function(s)
     for g in gens do
       used := IntersectionBlist(used, g!.cont);
       if g!.tuple[2] = 0 then
-	occured[g!.tuple[1]] := true;
+        occured[g!.tuple[1]] := true;
       fi;
     od;
     if used = occured then
@@ -151,9 +151,9 @@ function(dclass)
 
     if iter!.element <> fail then
       # output := StructuralCopy(iter!.element); doesn't work
-      output := rec( tuple := StructuralCopy(iter!.element!.tuple),
-		     content := ShallowCopy(iter!.element!.content),
-		     word := ShallowCopy(iter!.element!.word));
+      output := rec(tuple := StructuralCopy(iter!.element!.tuple),
+		    content := ShallowCopy(iter!.element!.content),
+		    word := ShallowCopy(iter!.element!.word));
 
     else
       return fail;
@@ -233,7 +233,7 @@ function(dclass)
     local record, first, tempcont, elem;
 
     first := Position(content, true);
-    elem := Objectify(TypeObj(s.1), rec( tuple := [],
+    elem := Objectify(TypeObj(s.1), rec(tuple := [],
 	    content := content,
             word := fail));
 
@@ -241,19 +241,19 @@ function(dclass)
     if Position(content, true, first) = fail then
       elem!.tuple := [first, 0, first, 0];
       elem!.word := [first];
-      record := rec( element := elem,
-                     iter1 := fail,
-                     iter2 := fail,
-                     semigroup := s,
-                     content := content) ;
+      record := rec(element := elem,
+                    iter1 := fail,
+                    iter2 := fail,
+                    semigroup := s,
+                    content := content) ;
     else
       tempcont := ShallowCopy(content);
       tempcont[first] := false;
-      record := rec( element := elem,
-		     iter1 := NewIterator_FreeBandDClass(s, tempcont),
-                     iter2 := NewIterator_FreeBandDClass(s, tempcont),
-                     semigroup := s,
-                     content := content);
+      record := rec(element := elem,
+		    iter1 := NewIterator_FreeBandDClass(s, tempcont),
+                    iter2 := NewIterator_FreeBandDClass(s, tempcont),
+                    semigroup := s,
+                    content := content);
       record!.element!.tuple := [first,
                                  NextIterator_FreeBandDClass(record!.iter1),
                                  first,
@@ -324,9 +324,9 @@ function(s)
     IsDoneIterator := record!.IsDoneIterator,
     NextIterator := record!.NextIterator );
 
-  record := rec( content :=
-                  BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
-                 dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));
+  record := rec(content :=
+                 BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
+                dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));
   record!.NextIterator := NextIterator_FreeBand;
   record!.ShallowCopy := ShallowCopyLocal;
   return IteratorByNextIterator(record);
@@ -345,9 +345,9 @@ function(s, x)
     return;
   fi;
 
-  type := NewType( FamilyObj( s ), IsEquivalenceClass and
-                   IsEquivalenceClassDefaultRep and IsGreensDClass);
-  d := Objectify( type, rec());
+  type := NewType(FamilyObj(s), IsEquivalenceClass and
+                  IsEquivalenceClassDefaultRep and IsGreensDClass);
+  d := Objectify(type, rec());
   SetParent(d, s);
   SetRepresentative(d, x);
   # SetEquivalenceClassRelation(d, GreensDRelation(s));
@@ -360,21 +360,21 @@ end);
 InstallMethod(PrintObj, "for a free band element",
 [IsFreeBandElement],
 function(elem)
-  Print( Concatenation( List( SEMIGROUPS_FreeBandElmToWord(elem),
-                          x -> FamilyObj(elem)!.names[x] ) ) );
+  Print(Concatenation(List(SEMIGROUPS_FreeBandElmToWord(elem),
+                           x -> FamilyObj(elem)!.names[x])));
   return;
 end);
 
 InstallMethod(ViewObj,
 "for a free band",
 [IsFreeBandCategory],
-function( S )
-  if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
-       Print( "<free band with ", Length( GeneratorsOfSemigroup( S ) ),
-                 " generators>" );
+function(S)
+  if GAPInfo.ViewLength * 10 < Length(GeneratorsOfMagma(S)) then
+    Print("<free band with ", Length(GeneratorsOfSemigroup(S)),
+          " generators>");
   else
-    Print( "<free band on the generators ",
-           GeneratorsOfSemigroup( S ), ">" );
+    Print("<free band on the generators ",
+          GeneratorsOfSemigroup(S), ">");
   fi;
 end);
 
@@ -445,13 +445,13 @@ function(x, y)
     new_prefix := y!.tuple[2];
     while true do
       if diff[new_first] and new_prefix = 0 then
-	copy := ShallowCopy(x); # are shallow copies necessary?
+        copy := ShallowCopy(x); # are shallow copies necessary?
         out := [new_first, copy];
-	break;
+        break;
       elif diff[new_first] then
-	copy := ShallowCopy(x * new_prefix);
-        out := [ new_first, copy];
-	break;
+        copy := ShallowCopy(x * new_prefix);
+        out := [new_first, copy];
+        break;
       else
         new_first := new_prefix!.tuple[1];
         new_prefix := new_prefix!.tuple[2];
@@ -460,7 +460,7 @@ function(x, y)
   fi;
 
   if IsSubsetBlist(y!.cont, x!.cont) then
-    out{[3,4]} := [y!.tuple[3], y!.tuple[4]];
+    out{[3, 4]} := [y!.tuple[3], y!.tuple[4]];
   else
     diff := DifferenceBlist(x!.cont, y!.cont);
     # new_last is the first letter to occur for the last time in the product
@@ -468,13 +468,13 @@ function(x, y)
     new_sufix := x!.tuple[4];
     repeat
       if diff[new_last] and new_sufix = 0 then
-	copy := ShallowCopy(y);
+        copy := ShallowCopy(y);
         out{[3 .. 4]} := [new_last, copy];
-	break;
+        break;
       elif diff[new_last] then
-	copy := ShallowCopy(new_sufix * y);
-        out{[3,4]} := [ new_last, copy];
-	break;
+        copy := ShallowCopy(new_sufix * y);
+        out{[3, 4]} := [new_last, copy];
+        break;
       else
         new_last := new_sufix!.tuple[3];
         new_sufix := new_sufix!.tuple[4];
@@ -482,9 +482,9 @@ function(x, y)
     until IsBound(out[3]);
   fi;
 
-  return Objectify( type, rec(tuple := out,
-                    cont := UnionBlist(x!.cont, y!.cont),
-                              word := fail ) );
+  return Objectify(type, rec(tuple := out,
+                   cont := UnionBlist(x!.cont, y!.cont),
+                              word := fail));
 end);
 
 #
@@ -497,7 +497,7 @@ function(S)
   n := Length(FamilyObj(S.1)!.names);
 
   c := [];
-  for k in [ 1 .. n ] do
+  for k in [1 .. n] do
     c[k] := 1;
     for i in [1 .. k - 1] do
       c[k] := c[k] * (k - i + 1) ^ (2 ^ i);
@@ -505,8 +505,8 @@ function(S)
   od;
 
   output := 0;
-  for k in [ 1 .. n ] do
-    output := output + Binomial( n, k ) * c[k];
+  for k in [1 .. n] do
+    output := output + Binomial(n, k) * c[k];
   od;
 
   return output;

@@ -13,8 +13,8 @@ DeclareCategory("IsFreeBandCategory", IsSemigroup);
 DeclareProperty("IsFreeBand", IsSemigroup);
 DeclareSynonym("IsFreeBandSubsemigroup", IsSemigroup and
 IsFreeBandElementCollection);
-InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 DeclareGlobalFunction("FreeBand");
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForFreeBandElements");
+DeclareGlobalFunction("SEMIGROUPS_FreeBandElmToWord");
