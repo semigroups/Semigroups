@@ -63,9 +63,9 @@ function(arg)
     record.ShallowCopy := function(iter)
       local base;
       base := arg(iter!.base, ShallowCopy);
-      return rec( base := base,
-                  indices := iter!.indices,
-                  current := arg(base, NextIterator) );
+      return rec(base := base,
+                 indices := iter!.indices,
+                 current := arg(base, NextIterator) );
     end;
 
     iter := IteratorByFunctions(record);
@@ -136,7 +136,7 @@ function(o, func, start)
   record.pos := start - 1;
 
   record.NextIterator := function(iter)
-    local pos, f;
+    local pos;
 
     pos := iter!.pos;
 
@@ -159,7 +159,7 @@ function(o, func, start)
 
   record.ShallowCopy := iter -> rec(pos := 1);
 
- return IteratorByNextIterator( record );
+ return IteratorByNextIterator(record);
 end);
 
 # NextIterator in <opts> must return fail if the iterator is finished.
@@ -168,22 +168,22 @@ InstallGlobalFunction(IteratorByNextIterator,
 function(record)
   local iter, comp, shallow;
 
-  if not ( IsRecord( record ) and IsBound( record.NextIterator )
-                              and IsBound( record.ShallowCopy ) ) then
+  if not (IsRecord(record) and IsBound(record.NextIterator)
+                           and IsBound(record.ShallowCopy)) then
     Error("Semigroups: IteratorByNextIterator: usage,\n",
           "the arg <record> must be a record with components `NextIterator'\n",
           "and `ShallowCopy',");
     return;
-  elif IsRecord (record ) and ( IsBound(record.last_called_by_is_done)
-                          or IsBound(record.next_value)
-                          or IsBound(record.IsDoneIterator) ) then
+  elif IsRecord(record) and (IsBound(record.last_called_by_is_done)
+                         or IsBound(record.next_value)
+                         or IsBound(record.IsDoneIterator)) then
     Error("Semigroups: IteratorByNextIterator: usage,\n",
           "the arg <record> must be a record with no components named\n",
           "`last_called_by_is_done', `next_value', or `IsDoneIterator',");
     return;
   fi;
 
-  iter := rec( last_called_by_is_done := false,
+  iter := rec(last_called_by_is_done := false,
 
     next_value := fail,
 
@@ -550,7 +550,7 @@ function(r)
 
   baseiter := IteratorOfCartesianProduct(
     Enumerator(SchutzenbergerGroup(r)),
-     OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)] );
+     OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]);
 
   convert := function(x)
     return StabilizerAction(Parent(r))(Representative(r),
@@ -598,7 +598,6 @@ function(S)
     GreensLClasses, [IsIteratorOfLClasses]);
 end);
 
-
 #FIXME move this!
 #different method for regular/inverse
 
@@ -606,7 +605,7 @@ InstallMethod(IteratorOfRClassData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
 
-  return IteratorByNextIterator( rec(
+  return IteratorByNextIterator(rec(
 
     i := 1,
 
@@ -635,7 +634,7 @@ HasGeneratorsOfSemigroup],
 function(s)
   local iter;
 
-  iter := IteratorByFunctions( rec(
+  iter := IteratorByFunctions(rec(
 
     parent := s,
 
@@ -672,7 +671,7 @@ function(s)
   record.iter_imgs := fail;
 
   record.NextIterator := function(iter)
-    local out, img;
+    local img;
 
     if iter!.iter_imgs = fail or IsDoneIterator(iter!.iter_imgs) then
       if IsDoneIterator(iter!.iter_doms) then
@@ -686,7 +685,7 @@ function(s)
     return PartialPermNC(iter!.dom, img);
   end;
 
-  record.ShallowCopy := iter -> rec( parent := s,
+  record.ShallowCopy := iter -> rec(parent := s,
     iter_doms := IteratorOfCombinations([1 .. deg]),
     dom := fail,
     iter_imgs := fail);
@@ -1007,7 +1006,7 @@ function(l)
 
   baseiter := IteratorOfCartesianProduct(
     OrbSCC(LambdaOrb(l))[LambdaOrbSCCIndex(l)],
-    Enumerator(SchutzenbergerGroup(l)) );
+    Enumerator(SchutzenbergerGroup(l)));
 
   convert := function(x)
     return StabilizerAction(Parent(l))(
@@ -1024,7 +1023,7 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfDClassElements],
 function(iter)
-  Print( "<iterator of D-class>");
+  Print("<iterator of D-class>");
   return;
 end);
 
@@ -1033,7 +1032,7 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfHClassElements],
 function(iter)
-  Print( "<iterator of H-class>");
+  Print("<iterator of H-class>");
   return;
 end);
 
@@ -1042,7 +1041,7 @@ end);
 #FIXME move this!
 InstallMethod(PrintObj, [IsIteratorOfLClassElements],
 function(iter)
-  Print( "<iterator of L-class>");
+  Print("<iterator of L-class>");
   return;
 end);
 
@@ -1078,7 +1077,7 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfLClassReps],
 function(iter)
-  Print( "<iterator of L-class reps>");
+  Print("<iterator of L-class reps>");
   return;
 end);
 
@@ -1096,7 +1095,7 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfDClasses],
 function(iter)
-  Print( "<iterator of D-classes>");
+  Print("<iterator of D-classes>");
   return;
 end);
 
@@ -1105,7 +1104,7 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfHClasses],
 function(iter)
-  Print( "<iterator of H-classes>");
+  Print("<iterator of H-classes>");
   return;
 end);
 
@@ -1114,7 +1113,7 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfLClasses],
 function(iter)
-  Print( "<iterator of L-classes>");
+  Print("<iterator of L-classes>");
   return;
 end);
 
@@ -1123,7 +1122,7 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfRClasses],
 function(iter)
-  Print( "<iterator of R-classes>");
+  Print("<iterator of R-classes>");
   return;
 end);
 
