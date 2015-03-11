@@ -581,8 +581,8 @@ function(s, coll, record)
 
   coll_copy := Set(ShallowCopy(coll));
   for f in coll do
-    if not f ^ - 1 in coll then
-      Add(coll_copy, f ^ - 1);
+    if not f ^ -1 in coll then
+      Add(coll_copy, f ^ -1);
     fi;
   od;
 
