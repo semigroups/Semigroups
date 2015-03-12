@@ -90,7 +90,7 @@ end);
 
 #
 
-InstallMethod(AsLookupTablee,
+InstallMethod(AsLookupTable,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
@@ -359,17 +359,37 @@ function(class)
   # cong has not yet been enumerated: make functions
   record := rec();
   record.ElementNumber := function(enum, pos)
+    local lookfunc;
     if not IsBound(enum!.list) then
       enum!.cong := EquivalenceRelation(UnderlyingCollection(enum));
-      enum!.rep := Representative(UnderlyingCollection(enum));
+      enum!.elms := AsSSortedList(Range(enum!.cong));
+      enum!.rep := Position(elms, Representative(UnderlyingCollection(enum)));
       enum!.list := [];
+      enum!.found := BlistList(Size(elms), []);
       enum!.len := 0;
     fi;
-    if enum!.len <= pos then
-      return enum!.list[pos];
+    if pos <= enum!.len then
+      return enum!.elms[enum!.list[pos]];
     fi;
-    if not IsBound(cong!.data) then
-    Enumerate(enum!.cong!.data,
+    lookfunc := function(data, lastpair)
+      classno := find(data!.lookup, enum!.rep);
+      if classno = find(data!.lookup, lastpair[1]) then
+        for i in [1..Size(data!.lookup)] do
+          if find(data!.lookup, i) = classno and not enum!.found[i] then
+            enum!.found[i] := true;
+            enum!.len := enum!.len + 1;
+            enum!.list[enum!.len] := i;
+          fi;
+        od;
+      fi;
+      return enum!.len >= pos;
+    end;
+    Enumerate(enum!.cong, lookfunc);
+    if pos <= enum!.len then
+      return enum!.elms[enum!.list[pos]];
+    else
+      return fail;
+    fi;
   end;
   record.NumberElement := function(enum, elm)
     
