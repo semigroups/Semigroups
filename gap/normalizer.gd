@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-
 DeclareOperation("Normalizer", [IsPermGroup, IsSemigroup, IsRecord]);
 DeclareOperation("Normalizer", [IsSemigroup, IsRecord]);
 DeclareOperation("Normalizer", [IsSemigroup]);
