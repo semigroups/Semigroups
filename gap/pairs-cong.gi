@@ -18,7 +18,7 @@ InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
   local s, elms, pairs, hashlen, ht, data, pairstoapply, pos, found;
   s := Range(cong);
-  elms := Elements(s);
+  elms := AsSSortedList(s);
   pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
                  x -> [Position(elms, x[1]), Position(elms, x[2])] );
 
@@ -75,9 +75,6 @@ function(pair, cong)
     return table[p1] = table[p2];
   else
     # Otherwise, begin calculating the lookup table and look for this pair
-    if not IsBound(cong!.data) then
-      SEMIGROUPS_SetupCongData(cong);
-    fi;
     find := function(table,i)
       while table[i] <> i do
         i := table[i];
@@ -87,13 +84,13 @@ function(pair, cong)
     lookfunc := function(data, lastpair)
       return find(data!.lookup, p1) = find(data!.lookup, p2);
     end;
-    return Enumerate(cong!.data, lookfunc)!.found;
+    return Enumerate(cong, lookfunc)!.found;
   fi;
 end);
 
 #
 
-InstallMethod(AsLookupTable,
+InstallMethod(AsLookupTablee,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
@@ -102,14 +99,21 @@ function(cong)
           "<cong> must be a finite semigroup");
     return;
   fi;
-  if not IsBound(cong!.data) then
-    SEMIGROUPS_SetupCongData(cong);
-  fi;
-  Enumerate(cong!.data, ReturnFalse);
+  Enumerate(cong, ReturnFalse);
   return AsLookupTable(cong);
 end);
 
 #
+
+InstallMethod(Enumerate,
+"for a semigroup congruence and a function",
+[IsSemigroupCongruence, IsFunction],
+function(cong, lookfunc)
+  if not IsBound(cong!.data) then
+    SEMIGROUPS_SetupCongData(cong);
+  fi;
+  Enumerate(cong!.data, lookfunc);
+end);
 
 InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
@@ -306,6 +310,28 @@ end);
 
 #
 
+InstallMethod(ImagesElm,
+"for a semigroup congruence and an associative element",
+[IsSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  local elms, lookup, classNo;
+  elms := AsSSortedList(Range(cong));
+  lookup := AsLookupTable(cong);
+  classNo := lookup[Position(elms, elm)];
+  return elms{Positions(lookup, classNo)};
+end);
+
+#
+
+InstallMethod(AsList,
+"for a semigroup congruence class",
+[IsCongruenceClass],
+function(class)
+  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
+end);
+
+#
+
 InstallMethod(NrCongruenceClasses,
 "for a semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
@@ -316,6 +342,39 @@ function(cong)
     TryNextMethod();
   fi;
   return Maximum(AsLookupTable(cong));
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for a semigroup congruence class",
+[IsCongruenceClass],
+function(class)
+  cong := EquivalenceClassRelation(class);
+  # cong has been enumerated: return a list
+  if HasAsLookupTable(cong) then
+    return Enumerator(AsList(class));
+  fi;
+  
+  # cong has not yet been enumerated: make functions
+  record := rec();
+  record.ElementNumber := function(enum, pos)
+    if not IsBound(enum!.list) then
+      enum!.cong := EquivalenceRelation(UnderlyingCollection(enum));
+      enum!.rep := Representative(UnderlyingCollection(enum));
+      enum!.list := [];
+      enum!.len := 0;
+    fi;
+    if enum!.len <= pos then
+      return enum!.list[pos];
+    fi;
+    if not IsBound(cong!.data) then
+    Enumerate(enum!.cong!.data,
+  end;
+  record.NumberElement := function(enum, elm)
+    
+  end;
+  return EnumeratorByFunctions(class, record);
 end);
 
 #
@@ -351,4 +410,3 @@ function(cong)
 end);
 
 #
-
