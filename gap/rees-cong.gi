@@ -1,3 +1,41 @@
+InstallMethod(IsReesCongruence,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+1,
+function(cong)
+  local s, classes, sizes, pos, class, ideal;
+  # This function is adapted from code in the library
+  s := Range(cong);
+  if NrCongruenceClasses(cong) = Size(s) then
+    # Trivial congruence - only possible ideal is zero
+    if MultiplicativeZero(s) <> fail then
+      SetSemigroupIdealOfReesCongruence(cong, MinimalIdeal(s));
+      return true;
+    else
+      return false;
+    fi;
+  else
+    # Find all the non-trivial classes
+    classes := EquivalenceClasses(cong);
+    sizes := List(classes, Size);
+    pos := PositionsProperty(sizes, n-> n > 1);
+    if Length(pos) > 1 then
+      return false;
+    fi;
+    # Only one non-trivial class - check it is an ideal
+    class := classes[pos[1]];
+    ideal := SemigroupIdeal(s, AsList(class));
+    if Size(class) = Size(ideal) then
+      SetSemigroupIdealOfReesCongruence(cong, ideal);
+      return true;
+    else
+      return false;
+    fi;
+  fi;
+end);
+
+#
+
 InstallMethod(ReesCongruenceOfSemigroupIdeal,
 "for a semigroup ideal",
 [IsSemigroupIdeal],
