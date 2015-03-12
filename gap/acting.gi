@@ -175,7 +175,8 @@ function(f, s)
   reps := data!.reps;
   repslens := data!.repslens;
 
-  max := Factorial(LambdaRank(s)(lambda)) / Size(LambdaOrbSchutzGp(lambdao, m));
+  max := Factorial(LambdaRank(s)(lambda)) /
+          Size(LambdaOrbSchutzGp(lambdao, m));
 
   if repslens[m][ind] = max then
     return true;
@@ -357,8 +358,8 @@ function(data, limit, lookfunc)
                                   # = repslookup[m][i][j]
                                   # = HTValue(ht, reps[m][i][j])
 
-  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m] containing
-                                  # orb[i][4] (the R-rep)
+  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m]
+                                  # containing orb[i][4] (the R-rep)
 
   orblookup2 := data!.orblookup2; # orblookup2[i] position in
                                   # reps[m][orblookup1[i]]
@@ -648,8 +649,8 @@ function(data)
 end);
 
 # returns the index of the representative of the R-class containing x in the
-# parent of data. Note that this depends on the state of the data, it only tells
-# you if it is there already, it doesn't try to find it.
+# parent of data. Note that this depends on the state of the data, it only
+# tells you if it is there already, it doesn't try to find it.
 
 # same method for ideals
 

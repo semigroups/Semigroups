@@ -52,7 +52,7 @@ end);
 # different method for ideals/regular/inverse, although this method also works
 
 InstallMethod(MaximalDClasses, "for an acting semigroup",
-[IsActingSemigroup] ,
+[IsActingSemigroup],
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 
@@ -464,8 +464,8 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and associative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
-  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f,
-   lambdarank, creator, inv, out, k, g, i, name, rho;
+  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades,
+   rho_f, lambdarank, creator, inv, out, k, g, i, name, rho;
 
   regular := IsRegularSemigroup(s);
 
@@ -876,7 +876,8 @@ s -> StructureDescription(Range(IsomorphismPermGroup(s))));
 
 #
 
-InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
+InstallMethod(IsomorphismTransformationMonoid,
+"for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local id, dom, gens, inv;

@@ -874,7 +874,7 @@ end);
 InstallMethod(PrintObj, "for object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
 function(obj)
-  Print("RMSIsoByTriple ( ", Source(obj), ",", Range(obj), "," , obj[1], " ",
+  Print("RMSIsoByTriple ( ", Source(obj), ",", Range(obj), ",", obj[1], " ",
     obj[2], " ", obj[3], ")");
   return;
 end);
@@ -884,7 +884,7 @@ end);
 InstallMethod(PrintObj, "for object in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
 function(obj)
-  Print("RZMSIsoByTriple ( ", Source(obj) , ",", Range(obj), "," , obj[1], " ",
+  Print("RZMSIsoByTriple ( ", Source(obj), ",", Range(obj), ",", obj[1], " ",
     obj[2], " ", obj[3], " )");
   return;
 end);

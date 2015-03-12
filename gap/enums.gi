@@ -21,7 +21,8 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the first argument <obj> must be a domain or a collections family,");
+          "the first argument <obj> must be a domain or a collections",
+          "family,");
     return;
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
@@ -43,8 +44,8 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
           "the sixth argument <record> must be a mutable record",
           "with no components\n",
-          "named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',\n",
-          "or `NumberElement',");
+          "named:\n`baseenum', `convert_out', `convert_in',",
+          "`ElementNumber',\n or `NumberElement',");
     return;
   fi;
 
@@ -107,7 +108,8 @@ function(obj, record, baseenum, convert, filts)
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
     Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-          "the first argument <obj> must be a domain or a collections family,");
+          "the first argument <obj> must be a domain or a collections ",
+          "family,");
     return;
   elif not IsRecord(record) or IsBound(record.ElementNumber)
    or IsBound(record.NumberElement) or IsBound(record.baseenum)
@@ -309,7 +311,8 @@ function(d)
     rep := Representative(d);
     act := StabilizerAction(Parent(d));
     return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1] * rep,
-     tuple[2]) * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
+     tuple[2])
+     * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
   end;
   #
   convert_in := function(enum, elt)

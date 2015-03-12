@@ -197,7 +197,7 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
-  local deg, n, i, closure_opts, s, filts, pos, f;
+  local n, i, closure_opts, s, filts, pos, f;
 
   if not IsGeneratorsOfActingSemigroup(gens) then
     TryNextMethod();
@@ -290,7 +290,7 @@ InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local deg, n, i, closure_opts, s, filts, pos, f;
+  local n, i, closure_opts, s, filts, pos, f;
 
   if not IsGeneratorsOfActingSemigroup(gens) then
     TryNextMethod();
@@ -536,7 +536,6 @@ InstallMethod(ClosureInverseSemigroup,
 "for an acting semigroup with inverse op, associative elt coll, and record",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
-  local n;
 
   if not IsGeneratorsOfActingSemigroup(coll) then
     Error("Semigroups: ClosureInverseSemigroup: usage,\n",

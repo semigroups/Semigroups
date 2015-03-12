@@ -224,8 +224,7 @@ InstallMethod(\in,
 "for an associative element and acting semigroup with inversion",
 [IsAssociativeElement, IsActingSemigroupWithInverseOp],
 function(f, s)
-  local dom, o, lambda, lambda_l, rho, rho_l, lookingfor, m, schutz, scc, g,
-  rep, n;
+  local o, lambda, lambda_l, rho, rho_l, m, schutz, scc, rep;
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
     or (IsActingSemigroupWithFixedDegreeMultiplication(s)
@@ -319,7 +318,7 @@ end);
 InstallMethod(Size, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup, start,
+  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup,
   rho, m;
 
   lambda_o := Enumerate(LambdaOrb(s), infinity);

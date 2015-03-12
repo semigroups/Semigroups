@@ -60,11 +60,12 @@
 ##      of an R-class, for example, must have its lambda-value in the first
 ##      position of the scc containing it. Representatives of L-classes must
 ##      have the rho-value must be in the first position of the scc containing
-##      it, D-class reps must have both lambda- and rho-values in the respective
-##      first positions, the lambda- and rho-values of H-class reps must not be
-##      modified. The functions SEMIGROUPS_RectifyLambda/Rho can used to modify
-##      C!.rep (in place) so that its lambda/rho-value is in the first place of
-##      its scc. These functions depend on the previous 2 steps being called.
+##      it, D-class reps must have both lambda- and rho-values in the
+##      respective first positions, the lambda- and rho-values of H-class reps
+##      must not be modified. The functions SEMIGROUPS_RectifyLambda/Rho can
+##      used to modify C!.rep (in place) so that its lambda/rho-value is in the
+##      first place of its scc. These functions depend on the previous 2 steps
+##      being called.
 ##
 ## Note that a Green's class does not satisfies IsGreensClassNC if it is known
 ## that its representative is an element of the underlying semigroup, not if it
@@ -257,7 +258,8 @@ InstallMethod(LambdaOrbSCCIndex,
 function(C)
   local o;
   o := LambdaOrb(C);
-  return OrbSCCLookup(o)[Position(o, LambdaFunc(Parent(C))(Representative(C)))];
+  return OrbSCCLookup(o)[Position(o,
+                                  LambdaFunc(Parent(C))(Representative(C)))];
 end);
 
 # same method for regular/ideals, not required for inverse
@@ -670,8 +672,6 @@ end);
 InstallMethod(GreensLClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(S, x)
-  local L;
-
   if not x in S then
     Error("Semigroups: GreensLClassOfElement: usage,\n",
           "the element does not belong to the semigroup,");
@@ -707,7 +707,6 @@ InstallMethod(GreensLClassOfElement,
 "for D-class of acting semigroup and element",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(D, x)
-  local L;
   if not x in D then
     Error("Semigroups: GreensLClassOfElement: usage,\n",
           "the element does not belong to the D-class,");
@@ -728,7 +727,8 @@ end);
 
 InstallMethod(GreensLClassOfElementNC,
 "for D-class, associative element, and bool",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement, IsBool],
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement,
+ IsBool],
 function(D, x, isGreensClassNC)
   local L;
   L := SEMIGROUPS_CreateLClass(D, x, isGreensClassNC);
@@ -798,7 +798,8 @@ end);
 
 InstallMethod(GreensRClassOfElementNC,
 "for a D-class, associative element, and bool",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement, IsBool],
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement,
+ IsBool],
 function(D, x, isGreensClassNC)
   local R;
   R := SEMIGROUPS_CreateRClass(D, x, isGreensClassNC);
@@ -881,7 +882,8 @@ end);
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensHClassOfElementNC, "for an L-class, element, and bool",
-[IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement, IsBool],
+[IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement,
+ IsBool],
 function(L, x, isGreensClassNC)
   local H;
   H := SEMIGROUPS_CreateHClass(L, x, isGreensClassNC);
@@ -894,7 +896,8 @@ end);
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensHClassOfElementNC, "for an R-class, element, and bool",
-[IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement, IsBool],
+[IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement,
+ IsBool],
 function(R, x, isGreensClassNC)
   local H;
   H := SEMIGROUPS_CreateHClass(R, x, isGreensClassNC);
@@ -1129,7 +1132,7 @@ end);
 InstallMethod(GreensDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local data, scc, out, type, next, D, i;
+  local data, scc, out, next, D, i;
 
   data := Enumerate(SemigroupData(S), infinity, ReturnFalse);
   scc := OrbSCC(data);
@@ -1438,10 +1441,11 @@ end);
 
 # same method for regular/ideals, different method for inverse
 
-InstallMethod(GroupHClassOfGreensDClass, "for a D-class of an acting semigroup",
+InstallMethod(GroupHClassOfGreensDClass,
+"for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
-  local S, rho, o, scc, tester, H, i;
+  local S, rho, o, scc, tester, i;
 
   if HasIsRegularClass(D) and not IsRegularClass(D) then
     return fail;
@@ -1503,8 +1507,8 @@ InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local d, n, out, data, gens, graph, lambdarhoht, datalookup, reps, repslens,
-  ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup, schutz,
-  mults, f, l, m, val, j, i, x, k;
+  ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup,
+  schutz, mults, f, l, m, val, j, i, x, k;
 
   d := GreensDClasses(s);
   n := Length(d);
@@ -1629,7 +1633,7 @@ end);
 
 InstallMethod(Idempotents,
 "for an acting semigroup and a positive integer",
-[IsActingSemigroup , IsInt],
+[IsActingSemigroup, IsInt],
 function(S, n)
   local out, nr, tester, creator, rho_o, scc, lambda_o, gens, rhofunc, lookup,
    rank, rep, rho, j, i, k;
@@ -1970,7 +1974,8 @@ InstallMethod(IsRegularClass, "for an H-class of an acting semigroup",
 InstallMethod(NrRegularDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local data, datascc, rho, lambda, scc, rholookup, tester, nr, j, rhoval, i, k;
+  local data, datascc, rho, lambda, scc, rholookup, tester, nr, j, rhoval, i,
+   k;
 
   data := SemigroupData(S);
   datascc := OrbSCC(data);

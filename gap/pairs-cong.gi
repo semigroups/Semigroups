@@ -13,7 +13,8 @@
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, hashlen, ht, data, pairstoapply, pos, found;
+  local s, elms, pairs, hashlen, ht, data;
+
   s := Range(cong);
   elms := Elements(s);
   pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
@@ -112,8 +113,9 @@ InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
 [IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, s, table, pairstoapply, ht, right, left, find, union, genstoapply,
-        i, nr, found, x, j, y, next, newtable, ii, result;
+  local cong, s, table, pairstoapply, ht, right, left, find, union,
+        genstoapply, i, nr, found, x, j, y, next, newtable, ii;
+
   cong := data!.cong;
   s := Range(cong);
 
@@ -271,9 +273,9 @@ InstallMethod(\=,
 "for two congruence classes",
 [IsCongruenceClass and IsFinite, IsCongruenceClass and IsFinite],
 function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2) and
-         [Representative(class1), Representative(class2)]
-         in EquivalenceClassRelation(class1);
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and [Representative(class1), Representative(class2)]
+        in EquivalenceClassRelation(class1);
 end);
 
 #

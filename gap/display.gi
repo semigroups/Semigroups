@@ -290,7 +290,8 @@ end);
 
 InstallGlobalFunction(TikzStringForBipartition,
 function(arg)
-  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i, k;
+  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i,
+  k;
 
   fill := i -> "  \\fill(";
   draw := i -> "  \\draw(";
@@ -315,7 +316,7 @@ function(arg)
   for j in [1 .. Length(ext)] do
     block := ext[j];
     Append(str, "\n");
-    Append(str, "  %block #");
+    Append(str, "  %block number ");
     Append(str, String(j));
     Append(str, "\n");
     Append(str, "  %vertices and labels\n");
@@ -531,7 +532,7 @@ function(s, opts)
               fi;
             fi;
             if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"", color , "\">", gp,
+              Append(str, Concatenation("<TD BGCOLOR=\"", color, "\">", gp,
               "</TD>"));
             else
               Append(str, Concatenation("<TD BGCOLOR=\"", color, "\""));

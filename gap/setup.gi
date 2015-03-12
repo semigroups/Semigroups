@@ -185,7 +185,6 @@ end);
 InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U;
   return function(x)
     if x![1] = 0 then
       return 0;

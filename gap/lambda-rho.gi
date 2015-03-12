@@ -40,7 +40,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
-  local scc, mults, one, gens, genpos, inv, trace, x, i;
+  local scc, gens, one, mults, genpos, inv, trace, i;
 
   scc := OrbSCC(o);
 
@@ -314,7 +314,7 @@ end);
 
 InstallGlobalFunction(RhoOrbMult,
 function(o, m, i)
-  local mults, one, scc, gens, genpos, inv, trace, x;
+  local scc, gens, one, mults, genpos, inv, trace;
 
   if IsBound(o!.mults) then
     if IsBound(o!.mults[i]) then

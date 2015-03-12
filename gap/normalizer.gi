@@ -156,7 +156,7 @@ end);
 
 InstallGlobalFunction(DeterministicSemigroupNormalizer,
 function(G, S, opts)
-  local o, i, nr, act, deg, U, gens, nrgens, P;
+  local o, act, deg, U, gens, nrgens, P;
 
   if not IsPermGroup(G) then
     Error("Semigroups: DeterministicSemigroupNormalizer: usage,\n",
@@ -356,8 +356,11 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
 
     # recalculate the stabilizer chain using the generators of <S> as the base
     # points
-    U := StabilizerChain(U, rec(Cand := rec(points := gens,
-     ops := ListWithIdenticalEntries(nrgens, OnPoints), used := 0),
+    U := StabilizerChain(U, rec(Cand :=
+                                rec(points := gens,
+                                    ops := ListWithIdenticalEntries(nrgens,
+                                                                    OnPoints),
+                                    used := 0),
      StrictlyUseCandidates := true));
 
     P := function(x)

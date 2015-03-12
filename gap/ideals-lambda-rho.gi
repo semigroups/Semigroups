@@ -109,7 +109,8 @@ end);
 
 #
 
-InstallMethod(ComponentOfIndex, "for an inverse ideal orb and positive integer",
+InstallMethod(ComponentOfIndex,
+"for an inverse ideal orb and positive integer",
 [IsIdealOrb and IsInverseOrb, IsPosInt],
 function(o, i)
   return 1;

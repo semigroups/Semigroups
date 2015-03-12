@@ -1,11 +1,11 @@
-################################################################################
+###############################################################################
 ##
 #W  freeinverse.gi
 #Y  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
-################################################################################
+###############################################################################
 ##
 ##  Internal representation of the elements of free inverse semigroups is
 ##  is given as a list:
@@ -29,7 +29,7 @@
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
 IsFreeInverseSemigroupElementCollection);
 
-################################################################################
+###############################################################################
 ##
 ##  Iterator( <S> )
 ##
@@ -78,7 +78,7 @@ function(iter)
     words := [FG_NextIterator(iter_list[Length(seq)])];
     iter_list := [iter_list[Length(seq)]];
   elif seq[1] <> 1 then
-    seq := Concatenation([1] , seq);
+    seq := Concatenation([1], seq);
     words := Concatenation([GeneratorsOfInverseSemigroup(semigroup)[1]],
       words);
     iter_list := Concatenation([ShallowCopy(new_iterator)], iter_list);
@@ -241,8 +241,8 @@ end);
 InstallMethod(MinimalWord, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
-  local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words, pos,
-  part, temp_word, out, names;
+  local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words,
+   pos, part, temp_word, out, names;
 
   InvertGenerator := function(n)
     if n mod 2 = 0 then

@@ -10,8 +10,8 @@
 
 # blocks are stored internally as a list consisting of:
 # [ nr of blocks, internal rep of blocks, transverse blocks ]
-# <nr of blocks> is a non-negative integer, <internal rep of blocks>[i]=j if <i>
-# belongs to the <j>th block, <transverse blocks>[j]=1 if block <j> is
+# <nr of blocks> is a non-negative integer, <internal rep of blocks>[i]=j if
+# <i> belongs to the <j>th block, <transverse blocks>[j]=1 if block <j> is
 # transverse and 0 if it is not.
 
 #
@@ -259,7 +259,7 @@ end);
 
 InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks],
 function(blocks)
-  local n, bl, ext, i;
+  local n, ext, i;
 
   n := DegreeOfBlocks(blocks);
   ext := [];
@@ -698,11 +698,11 @@ end);
 # 2) disconnected right blocks of <f> (after fusing)
 # 3) connected right blocks of <f> (after fusing)
 # both types 1+2 of the disconnected blocks are unioned into one left block of
-# the output with index <junk>. The connected blocks 3 of <f> are given the next
-# available index, if they have not been seen before. The table <tab1> keeps
-# track of which connected right blocks of <f> have been seen before and the
-# corresponding index in the output, i.e. <tab1[x]> is the index in <out> of
-# the fused block with index <x>.
+# the output with index <junk>. The connected blocks 3 of <f> are given the
+# next available index, if they have not been seen before. The table <tab1>
+# keeps track of which connected right blocks of <f> have been seen before and
+# the corresponding index in the output, i.e. <tab1[x]> is the index in <out>
+# of the fused block with index <x>.
 
 # The right blocks of the output are:
 # 1) disconnected blocks of <blocks>; or
@@ -717,7 +717,7 @@ end);
 
 InstallGlobalFunction(InverseRightBlocks,
 function(blocks, f)
-  local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next,
+  local n, nrblocks, fblocks, fusesign, sign, fuseit, out, junk, next,
    tab1, x, nrleft, tab2, i;
 
   n := DegreeOfBlocks(blocks); # length of partition!!

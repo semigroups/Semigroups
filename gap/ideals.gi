@@ -48,8 +48,8 @@ function(I)
   Print(ViewString(I));
 end);
 
-# the above method usurps the method in the library for ViewObj hence we require
-# the following method for ideals for which we did not write a special
+# the above method usurps the method in the library for ViewObj hence we
+# require the following method for ideals for which we did not write a special
 # ViewString method for...
 
 InstallMethod(ViewString, "for a semigroup ideal with generators",

@@ -19,7 +19,7 @@ Maximum(RankFilter(IsActingSemigroup), RankFilter(IsSemigroupIdeal and
 HasGeneratorsOfSemigroupIdeal)) + 1,
 #to beat the method for an acting semigroup with generators
 function(S)
-  local n, Membership, PrintObj;
+  local n;
 
   n := DegreeOfPartialPermSemigroup(S);
 
@@ -97,7 +97,7 @@ end);
 InstallMethod(NumberSubset, "for a set and a pos int",
 [IsList, IsPosInt],
 function(set, n)
-  local m, helper, nr, summand, i;
+  local m, nr, summand, i;
 
   m := Length(set);
 
@@ -124,7 +124,7 @@ end);
 InstallMethod(NumberSubsetOfEqualSize, "for a set and a pos int",
 [IsList, IsPosInt],
 function(set, n)
-  local m, helper, nr, summand, i;
+  local m, helper, nr, i;
 
   m := Length(set);
 
@@ -278,13 +278,15 @@ end);
 #
 
 InstallMethod(DisplayString, "for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsPartialPermSemigroup and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal],
 ViewString);
 
 #
 
 InstallMethod(ViewString, "for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsPartialPermSemigroup and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal],
 function(I)
   local str, nrgens;
 

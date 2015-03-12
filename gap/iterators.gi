@@ -111,7 +111,7 @@ end);
 
 InstallGlobalFunction(IteratorByOrbFunc,
 function(o, func, start)
-  local func2, record, iter;
+  local func2, record;
 
   if not IsOrbit(o) then
     Error("Semigroups: IteratorByOrbFunc: usage,\n",
@@ -420,7 +420,7 @@ end);
 InstallMethod(Iterator, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local iter, s;
+  local iter;
 
   if HasAsSSortedList(d) then
     iter := IteratorList(AsSSortedList(d));
@@ -658,7 +658,7 @@ InstallMethod(Iterator, "for a symmetric inverse semigroup",
 [IsPartialPermSemigroup and IsSymmetricInverseSemigroup
 and HasGeneratorsOfSemigroup],
 function(s)
-  local deg, record, dom, iter_imgs, img, iter;
+  local deg, record, iter;
 
   deg := DegreeOfPartialPermSemigroup(s);
 
@@ -749,7 +749,7 @@ s -> IteratorByIterator(IteratorOfRClassData(s), x -> x[4],
 InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local record, o, scc, func, iter, f;
+  local record, o, scc, func;
 
   if not IsClosed(LambdaOrb(s)) then
     record := rec(m := fail, graded := IteratorOfGradedLambdaOrbs(s));

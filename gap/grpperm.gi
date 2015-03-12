@@ -8,8 +8,8 @@
 #############################################################################
 ##
 
-# in this file there are some methods for perm groups that were not found in the
-# library.
+# in this file there are some methods for perm groups that were not found in
+# the library.
 
 # returns an iterator of the sorted elements of the stab chain S^conj.
 
@@ -57,7 +57,8 @@ function(S, conj)
     if IsDoneIterator(iter!.indices) then
       return fail;
     fi;
-    return SortedStabChain(iter!.stabchain, (), NextIterator(iter!.indices), 1);
+    return SortedStabChain(iter!.stabchain, (), NextIterator(iter!.indices),
+                           1);
   end;
 
   record.ShallowCopy := function(iter)

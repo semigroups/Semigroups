@@ -143,7 +143,7 @@ InstallMethod(NaturalPartialOrder,
 "for an inverse block bijection semigroup",
 [IsBlockBijectionSemigroup and IsInverseSemigroup],
 function(S)
-  local elts, p, n, out, i, j;
+  local elts, n, out, i, j;
 
   elts := Elements(S);
   n := Length(elts);

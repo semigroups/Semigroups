@@ -43,8 +43,8 @@
 #     IsEndomorphismOfPartition(bl, x));
 # end;
 
-# from the `The rank of the semigroup of transformations stabilising a partition
-# of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014).
+# from the `The rank of the semigroup of transformations stabilising a
+# partition of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014).
 
 InstallMethod(EndomorphismsPartition, "for a list of positive integers",
 [IsCyclotomicCollection],
@@ -227,12 +227,14 @@ function(partition)
     if n > 1 then
       x[2] := Permuted(x[2], (1, 2));
     fi;
-    x := MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(x));
+    x := MappingPermListList(Concatenation(blocks{equal[r]}),
+                             Concatenation(x));
     Add(gens, AsTransformation(x)); # (x, id)=u in the paper
 
     y := Permuted(blocks{equal[r]}, (1, 2));
     y[1] := Permuted(y[1], PermList(Concatenation([2 .. n], [1])));
-    y := MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(y));
+    y := MappingPermListList(Concatenation(blocks{equal[r]}),
+                             Concatenation(y));
     y := y * MappingPermListList(blocks[unique[1]],
      Concatenation(blocks[unique[1]]{[2 .. Length(blocks[unique[1]])]},
      [blocks[unique[1]][1]])); # (y, (1,2,\ldots, l_1))=v in the paper
@@ -631,7 +633,7 @@ end);
 
 InstallMethod(JonesMonoid, "for a positive integer", [IsPosInt],
 function(n)
-  local gens, next, s, i, j;
+  local gens, next, i, j;
 
   if n = 1 then
     return Monoid(BipartitionNC([[1, -1]]));
@@ -866,8 +868,8 @@ InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-Error("Semigroups: SingularFactorisableDualSymmetricInverseSemigroup: usage,\n",
-    "the argument must be greater than 1,");
+    Error("Semigroups: SingularFactorisableDualSymmetricInverseSemigroup:",
+    " usage,\nthe argument must be greater than 1,");
     return;
   fi;
 

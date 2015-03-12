@@ -144,7 +144,8 @@ end);
 
 #
 
-InstallMethod(GeneratorsOfSemigroup, "for an inverse op acting semigroup ideal",
+InstallMethod(GeneratorsOfSemigroup,
+"for an inverse op acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
   local out, U, i, partial, D, pos, inj, j, C;
@@ -170,8 +171,8 @@ function(I)
 
   for i in pos do
     inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
-    U := ClosureInverseSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-     inj));
+    U := ClosureInverseSemigroup(U,
+         OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
   od;
 
   i := 0;
@@ -198,7 +199,6 @@ InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse op acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-
   local U, i, partial, D, pos, inj, j, C;
 
   if HasGeneratorsOfSemigroup(I) then
@@ -221,8 +221,8 @@ function(I)
 
   for i in pos do
     inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
-    U := ClosureInverseSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-     inj));
+    U := ClosureInverseSemigroup(U,
+         OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
   od;
 
   while Size(U) <> Size(I) do
@@ -388,8 +388,8 @@ function(data, limit, record)
                                   # = repslookup[m][i][j]
                                   # = HTValue(ht, reps[m][i][j])
 
-  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m] containing
-                                  # orb[i][4] (the R-rep)
+  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m]
+                                  # containing orb[i][4] (the R-rep)
 
   orblookup2 := data!.orblookup2; # orblookup2[i] position in
                                   # reps[m][orblookup1[i]]
@@ -453,7 +453,7 @@ function(data, limit, record)
   tester := IdempotentTester(I);
   regular := data!.regular;
 
-  ##############################################################################
+  #############################################################################
 
   # the function which checks if x is already R/D-related to something in the
   # data and if not adds it in the appropriate place
@@ -600,7 +600,7 @@ function(data, limit, record)
     od;
     log[nr_d + 1] := nr_r;
   end;
-  ##############################################################################
+  #############################################################################
 
   # initialise the data if necessary
   if data!.init = false then
@@ -908,8 +908,8 @@ function(data, limit, record)
   repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens,
   genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc,
   lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, rholen, act,
-  htadd, htvalue, drel, dtype, poset, datalookup, log, UpdateSemigroupIdealData,
-  idealgens, i, x, rreps, scc, pos, j, k, z;
+  htadd, htvalue, drel, dtype, poset, datalookup, log,
+  UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
 
   if IsBound(record.lookfunc) and record.lookfunc <> ReturnFalse then
     lookfunc := record.lookfunc;
@@ -956,20 +956,20 @@ function(data, limit, record)
   lenreps := data!.lenreps;         # lenreps[m]=Length(reps[m])
 
   lambdarhoht := data!.lambdarhoht;
-  # HTValue(lambdarhoht, [m,l])=position in reps[m]
-                                  # of R-reps with lambda-scc-index=m and
-                                  # rho-value-index=l
+                                  # HTValue(lambdarhoht, [m,l])=position in
+                                  # reps[m] of R-reps with lambda-scc-index=m
+                                  # and rho-value-index=l
 
   repslookup := data!.repslookup; # Position(orb, reps[m][i][j])
-                                # = repslookup[m][i][j]
-                                # = HTValue(ht, reps[m][i][j])
+                                  # = repslookup[m][i][j]
+                                  # = HTValue(ht, reps[m][i][j])
 
-  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m] containing
-                                # orb[i][4] (the R-rep)
+  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m]
+                                  # containing orb[i][4] (the R-rep)
 
   orblookup2 := data!.orblookup2; # orblookup2[i] position in
-                                # reps[m][orblookup1[i]]
-                                # containing orb[i][4] (the R-rep)
+                                  # reps[m][orblookup1[i]]
+                                  # containing orb[i][4] (the R-rep)
 
   rholookup := data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
 
@@ -1022,7 +1022,7 @@ function(data, limit, record)
   # log[i+1] is the last position in orb=data!.orbit where the
   # R-class reps of d[i] appear...
 
-  ##############################################################################
+  #############################################################################
 
   # the function which checks if x is already R/D-related to something in the
   # data and if not adds it in the appropriate place
@@ -1135,7 +1135,7 @@ function(data, limit, record)
     od;
     log[nr_d + 1] := nr_r;
   end;
-  ##############################################################################
+  #############################################################################
 
   # initialise the data if necessary
   if data!.init = false then

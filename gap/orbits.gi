@@ -26,9 +26,9 @@ InstallMethod(Enumerate, "for a lambda orbit and a limit (Semigroups)",
 [IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
 function(o, limit)
   local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht,
-  genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks,
-  grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd,
-  htvalue, suc, yy, pos, grade, j;
+  genstoapply, schreiergen, schreierpos, log, logind, logpos, depth,
+  depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph,
+  nrgens, htadd, htvalue, suc, yy, pos, grade, j;
 
   # Set a few local variables for faster access:
   orb := o!.orbit;
@@ -160,7 +160,7 @@ end);
 InstallMethod(EvaluateWord, "for bipartition coll and list of integers",
 [IsBipartitionCollection, IsList],
 function(gens, w)
-    local i, res, pts;
+    local i, res;
     if Length(w) = 0  then
       return One(gens);
     fi;
@@ -176,7 +176,7 @@ end);
 InstallMethod(EvaluateWord, "for partial perm coll and list of integers",
 [IsPartialPermCollection, IsList],
 function(gens, w)
-    local i, res, pts;
+    local i, res;
     if Length(w) = 0  then
       return One(gens);
     fi;
@@ -193,7 +193,7 @@ InstallMethod(EvaluateWord,
 "for Rees 0-matrix semigroup element collection and a list of positive ints",
 [IsReesZeroMatrixSemigroupElementCollection, IsList],
 function(gens, w)
-    local i, res, pts;
+    local i, res;
     if Length(w) = 0  then
       return UniversalFakeOne;
     fi;
@@ -346,8 +346,8 @@ end);
 
 InstallGlobalFunction(ReverseSchreierTreeOfSCC,
 function(o, i)
-  local r, rev, graph, j, len, nrgens, genstoapply, scc, gen, pos, seen, lookup,
-  oo, nroo, nrscc, k, l, m;
+  local r, rev, graph, j, len, nrgens, genstoapply, scc, gen, pos, seen,
+        lookup, oo, nroo, nrscc, k, l, m;
 
   r := Length(OrbSCC(o));
 

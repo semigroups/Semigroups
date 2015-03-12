@@ -208,7 +208,8 @@ function(S, x)
   sup := SupremumIdempotentsNC(Minorants(S, y), x);
 
   return y <> sup
-   and ForAny(HClass(S, y), x -> NaturalLeqInverseSemigroup(sup, x) and x <> y);
+   and ForAny(HClass(S, y), x -> NaturalLeqInverseSemigroup(sup, x)
+   and x <> y);
 end);
 
 # same method for ideals
@@ -229,7 +230,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for an acting semigroup with inverse op and an associative element collection",
+"for acting semigroup with inverse op and associative element collection",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
@@ -440,7 +441,7 @@ function(S, f)
     return elts{NaturalPartialOrder(S)[i]};
   fi;
 
-  if IsIdempotent(f) then #(always true if S is a D-Class rep of an inverse sgp)
+  if IsIdempotent(f) then #always true if S is a D-class rep of an inverse sgp
     out := EmptyPlist(NrIdempotents(S));
     elts := ShallowCopy(Idempotents(S));
   else
@@ -567,10 +568,11 @@ function(S)
   for d in D do
 
     e := Representative(d);
-    ## He is a group H-Class in our join-irreducible D-Class ##
-    ## Sigma: isomorphism to a perm group (unfortunately necessary)
-    ## Psi: homom from Schutzenberger Group corresponding to He, to a perm group
-    ## Rho: isomorphism to a smaller degree perm group
+    # He is a group H-Class in our join-irreducible D-Class ##
+    # Sigma: isomorphism to a perm group (unfortunately necessary)
+    # Psi: homom from Schutzenberger Group corresponding to He, to a perm
+    #      group
+    # Rho: isomorphism to a smaller degree perm group
     He := GroupHClass(d);
 
     sigma := IsomorphismPermGroup(He);

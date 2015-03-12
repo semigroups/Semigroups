@@ -219,7 +219,7 @@ end);
 
 InstallGlobalFunction(SemigroupsTestAll,
 function()
-  local dir_str, tst, dir, omit, ex, filesplit, test, stringfile, str, filename;
+  local dir_str, tst, dir, omit, filesplit, test, stringfile, str, filename;
 
   Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
   dir_str :=

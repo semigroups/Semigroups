@@ -8,14 +8,15 @@
 #############################################################################
 ##
 
-# WAW The more complicated version incorporating maximal subsemigroup theory did
-# not seem to perform significantly better and so was removed.
+# WAW The more complicated version incorporating maximal subsemigroup theory
+# did not seem to perform significantly better and so was removed.
 
 InstallMethod(IsMaximalSubsemigroup, "for a semigroup and a semigroup",
 [IsSemigroup, IsSemigroup],
 function(S, T)
   if IsSubsemigroup(S, T) and S <> T then
-    return ForAll(S, x -> x in T or Semigroup(GeneratorsOfSemigroup(T), x) = S);
+    return ForAll(S, x -> x in T
+                   or Semigroup(GeneratorsOfSemigroup(T), x) = S);
   fi;
   return false;
 end);
@@ -37,7 +38,8 @@ function(R, H)
 
   if not IsGroup(G) then
     Error("Semigroups: MaximalSubsemigroups: usage,\n",
-    "the first argument <R> must be a Rees matrix semigroup whose underlying\n",
+    "the first argument <R> must be a Rees matrix semigroup whose",
+    "underlying\n",
     "semigroup is a group,");
     return fail;
   elif not IsSubgroup(G, H) then
@@ -108,8 +110,8 @@ function(R)
     if IsSimpleSemigroup(R) then
       TryNextMethod();
       # Take an isomorphism to a Rees matrix semigroup, find its maximal
-      # subsemigroups, then pull those back (should specify some methods for the
-      # pulling back part)
+      # subsemigroups, then pull those back (should specify some methods for
+      # the pulling back part)
       return;
     else
       TryNextMethod();

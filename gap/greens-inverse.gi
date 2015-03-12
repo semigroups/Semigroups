@@ -666,12 +666,14 @@ NrLClasses);
 # same method for inverse ideals
 
 InstallMethod(NrIdempotents, "for an inverse op L-class",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass], L -> 1);
+[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+L -> 1);
 
 # same method for inverse ideals
 
 InstallMethod(NrIdempotents, "for an inverse op R-class",
-[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass], R -> 1);
+[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+R -> 1);
 
 #############################################################################
 ## 6. Iterators and enumerators . . .

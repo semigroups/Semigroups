@@ -38,7 +38,7 @@ function(R)
   base := DuplicateFreeList(ImageListOfTransformation(rep, n));
   S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
   out := [IteratorByIterator(
-    IteratorSortedConjugateStabChain(S, ()), p -> rep * p ,
+    IteratorSortedConjugateStabChain(S, ()), p -> rep * p,
     [IsIteratorSorted])];
 
   for i in [2 .. Length(scc)] do
@@ -226,7 +226,7 @@ InstallMethod(IsTransitive,
 "for a transformation collection and a positive int",
 [IsTransformationCollection, IsPosInt],
 function(coll, n)
-  local gens, nrgens, graph, i, x;
+  local nrgens, graph, i, x;
 
   nrgens := Length(coll);
   graph := EmptyPlist(n);
