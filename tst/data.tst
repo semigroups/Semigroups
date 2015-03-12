@@ -92,8 +92,12 @@ gap> AsList(last);
 [ [ 0 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
 
-#
-gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(iter); 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(s);
+gap> Unbind(r);
+gap> Unbind(gens);
+gap> Unbind(iter);
+gap> Unbind(f);
 
 #E#
 gap> STOP_TEST( "Semigroups package: data.tst");

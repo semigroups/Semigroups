@@ -34,7 +34,8 @@ MappingByFunction( <inverse partial perm semigroup on 5 pts
 gap> ForAll(f, x -> (x ^ VPR) ^ inv = x);
 true
 
-#T# SmallerDegreeTest2: VagnerPrestonRepresentation: SymmetricInverseSemigroup(5)
+#T# SmallerDegreeTest2: VagnerPrestonRepresentation
+# for SymmetricInverseSemigroup(5)
 gap> I5 := SymmetricInverseSemigroup(5);;
 gap> NrMovedPoints(I5);
 5
@@ -51,14 +52,21 @@ gap> NrMovedPoints(Image(I5));
 gap> Size(Image(I5));
 1546
 
-#T# SmallerDegreeTest3: VagnerPrestonRepresentation for a  bipartition semigroup
+#T# SmallerDegreeTest3: VagnerPrestonRepresentation
+# for a bipartition semigroup
 gap> B := Semigroup([
->  Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5, -5 ], [ 6 ], [ 7 ], [ -1 ], [ -3 ], [ -6 ], [ -7 ] ] ), 
->  Bipartition( [ [ 1, -5 ], [ 2, -6 ], [ 3, -7 ], [ 4, -3 ], [ 5 ], [ 6, -2 ], [ 7 ], [ -1 ], [ -4 ] ] ), 
->  Bipartition( [ [ 1, -4 ], [ 2, -7 ], [ 3 ], [ 4, -5 ], [ 5, -2 ], [ 6 ], [ 7, -1 ], [ -3 ], [ -6 ] ] ), 
->  Bipartition( [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4, -1 ], [ 5, -5 ], [ 6 ], [ 7 ], [ -3 ], [ -4 ], [ -6 ], [ -7 ] ] ), 
->  Bipartition( [ [ 1 ], [ 2, -6 ], [ 3, -4 ], [ 4 ], [ 5, -1 ], [ 6, -2 ], [ 7, -3 ], [ -5 ], [ -7 ] ] ), 
->  Bipartition( [ [ 1, -7 ], [ 2, -5 ], [ 3 ], [ 4, -1 ], [ 5, -4 ], [ 6 ], [ 7, -2 ], [ -3 ], [ -6 ] ] ) ]);;
+>  Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5, -5 ], [ 6 ],
+>    [ 7 ], [ -1 ], [ -3 ], [ -6 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1, -5 ], [ 2, -6 ], [ 3, -7 ], [ 4, -3 ], [ 5 ],
+>    [ 6, -2 ], [ 7 ], [ -1 ], [ -4 ] ] ), 
+>  Bipartition( [ [ 1, -4 ], [ 2, -7 ], [ 3 ], [ 4, -5 ], [ 5, -2 ],
+>    [ 6 ], [ 7, -1 ], [ -3 ], [ -6 ] ] ), 
+>  Bipartition( [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4, -1 ], [ 5, -5 ], [ 6 ],
+>    [ 7 ], [ -3 ], [ -4 ], [ -6 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1 ], [ 2, -6 ], [ 3, -4 ], [ 4 ], [ 5, -1 ],
+>    [ 6, -2 ], [ 7, -3 ], [ -5 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1, -7 ], [ 2, -5 ], [ 3 ], [ 4, -1 ], [ 5, -4 ],
+>    [ 6 ], [ 7, -2 ], [ -3 ], [ -6 ] ] ) ]);;
 gap> IsInverseSemigroup(B);
 true
 gap> V := Range(VagnerPrestonRepresentation(B));
@@ -109,8 +117,10 @@ gap> Size(Image(F));
 
 #T# SmallerDegreeTest7: SmallerDegreePartialPermRepresentation:
 # Example where the degree is reduced but not the number of moved points
-gap> f1:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 10, 11, 15, 16, 17, 18 ], [ 7, 5, 11, 8, 4, 2, 20, 14, 12, 17, 9, 3 ]);;
-gap> f2:=PartialPermNC([ 1, 2, 3, 6, 8, 10, 12, 15, 16, 17, 18, 19 ], [ 2, 4, 14, 3, 17, 7, 9, 16, 15, 10, 11, 1 ]);;
+gap> f1 := PartialPermNC([ 1, 2, 3, 4, 5, 6, 10, 11, 15, 16, 17, 18 ],
+> [ 7, 5, 11, 8, 4, 2, 20, 14, 12, 17, 9, 3 ]);;
+gap> f2 := PartialPermNC([ 1, 2, 3, 6, 8, 10, 12, 15, 16, 17, 18, 19 ],
+> [ 2, 4, 14, 3, 17, 7, 9, 16, 15, 10, 11, 1 ]);;
 gap> f:=InverseSemigroup(f1,f2);;
 gap> F:=SmallerDegreePartialPermRepresentation(f);;
 gap> NrMovedPoints(f);
@@ -161,6 +171,30 @@ gap> V := InverseSemigroup(H1, H2, h);
 gap> iso := SmallerDegreePartialPermRepresentation(V);;
 gap> ActionDegree(Range(iso)) <= 12; # Genuine minimum degree of V is 7.
 true
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(f1);
+gap> Unbind(f2);
+gap> Unbind(f3);
+gap> Unbind(inv);
+gap> Unbind(VPR);
+gap> Unbind(I5);
+gap> Unbind(B);
+gap> Unbind(F);
+gap> Unbind(J);
+gap> Unbind(L);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(rho);
+gap> Unbind(V);
+gap> Unbind(g);
+gap> Unbind(f);
+gap> Unbind(H2);
+gap> Unbind(h);
+gap> Unbind(H1);
+gap> Unbind(iso);
+gap> Unbind(y);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST("Semigroups package: smallerdegree.tst");

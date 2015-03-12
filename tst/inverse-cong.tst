@@ -80,5 +80,18 @@ true
 gap> [y,z] in ccong;
 false
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(pairs);
+gap> Unbind(classy);
+gap> Unbind(q);
+gap> Unbind(s);
+gap> Unbind(classz);
+gap> Unbind(ccong);
+gap> Unbind(classx);
+gap> Unbind(cong);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(z);
+
 #E# 
 gap> STOP_TEST( "Semigroups package: inverse-cong.tst");

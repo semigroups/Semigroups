@@ -13,7 +13,8 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-#T# ReesMatTest2: some semigroups to which the methods in Semigroups should not apply...
+#T# ReesMatTest2
+# Some semigroups to which the methods in Semigroups should not apply
 gap> R:=ReesZeroMatrixSemigroup(POI(5), [[0,0,0], [0,0,0]]);
 <Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid on 5 pts
  with 5 generators>>
@@ -38,7 +39,8 @@ gap> R:=Semigroup(Generators(R));
 gap> IsActingSemigroup(R);
 false
 
-#T# ReesMatTest3: find a source of interesting subsemigroups of Rees 0-matrix semigroups...
+#T# ReesMatTest3
+# Find a source of interesting subsemigroups of Rees 0-matrix semigroups
 gap> S:=Semigroup( 
 >  Transformation( [ 1, 1, 2, 7, 9, 8, 5, 9, 6 ] ), 
 >  Transformation( [ 1, 1, 7, 2, 8, 9, 9, 5, 6 ] ), 
@@ -581,7 +583,8 @@ gap> Factorization(U[4], x);; # = [ 7, 24, 8, 5 ]
 gap> EvaluateWord(Generators(U[4]), last);
 (26,(6,9),5)
 
-#T# ReesMatTest31: Issue 108: IsRegularSemigroup for a RZMS returned false negative
+#T# ReesMatTest31: Issue 108:
+# IsRegularSemigroup for a RZMS returned false negative
 gap> t1 := Transformation( [ 4, 3, 1, 3 ] );;
 gap> t2 := Transformation( [ 3, 3, 2, 2 ] );;
 gap> T := Semigroup([ t1, t2 ]);;
@@ -593,7 +596,8 @@ gap> mat := [ [ t2, t1 ], [ t1, t2 ] ];;
 
 #TODO this takes 3 seconds, ugh! No good method for Generators 
 gap> R := ReesZeroMatrixSemigroup(T, mat);;
-gap> (CompareVersionNumbers(GAPInfo.Version,"4.7.7") and IsRegularSemigroup(R))
+gap> (CompareVersionNumbers(GAPInfo.Version,"4.7.7") 
+> and IsRegularSemigroup(R))
 > or not CompareVersionNumbers(GAPInfo.Version,"4.7.7"); 
 true
 
@@ -692,6 +696,48 @@ true
 #[ false, [ (1,2), (), (), (), (), (1,2), (1,2), () ] ]
 #gap> RMSInducedFunction(R, (4,7), gam, ());
 #[ true, [ (), (), (), (), (), (), (), () ] ]
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(f1);
+gap> Unbind(f2);
+gap> Unbind(f3);
+gap> Unbind(f4);
+gap> Unbind(f5);
+gap> Unbind(f6);
+gap> Unbind(f7);
+gap> Unbind(f8);
+gap> Unbind(inv);
+gap> Unbind(M);
+gap> Unbind(l);
+gap> Unbind(inj);
+gap> Unbind(mat);
+gap> Unbind(gam);
+gap> Unbind(eV);
+gap> Unbind(A);
+gap> Unbind(map);
+gap> Unbind(D);
+gap> Unbind(G);
+gap> Unbind(H);
+gap> Unbind(reps);
+gap> Unbind(S);
+gap> Unbind(R);
+gap> Unbind(U);
+gap> Unbind(T);
+gap> Unbind(V);
+gap> Unbind(a);
+gap> Unbind(e);
+gap> Unbind(d);
+gap> Unbind(g);
+gap> Unbind(f);
+gap> Unbind(UU);
+gap> Unbind(h);
+gap> Unbind(t2);
+gap> Unbind(gens);
+gap> Unbind(t1);
+gap> Unbind(i);
+gap> Unbind(iso);
+gap> Unbind(y);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST( "Semigroups package: reesmat.tst");

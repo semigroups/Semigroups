@@ -1807,15 +1807,51 @@ gap> HClassReps(L);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 
-#E# 
-gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
-> Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
-> Unbind(out2); Unbind(out3); Unbind(a); Unbind(b); Unbind(M);
-> Unbind(f); Unbind(c); Unbind(gens); Unbind(S); Unbind(C); Unbind(rc);
-> Unbind(r1); Unbind(iter); Unbind(reps); Unbind(l); Unbind(h); Unbind(rr);
-> Unbind(ll); Unbind(hh); Unbind(dd); Unbind(g); Unbind(enum); Unbind(j);
-> Unbind(iter2); Unbind(iter1); Unbind(iter3); Unbind(r3); Unbind(elts);
-> Unbind(R); Unbind(x); Unbind(i);;
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(elts);
+gap> Unbind(idem);
+gap> Unbind(iter3);
+gap> Unbind(iter2);
+gap> Unbind(iter1);
+gap> Unbind(l);
+gap> Unbind(R);
+gap> Unbind(hh);
+gap> Unbind(out);
+gap> Unbind(rr);
+gap> Unbind(ll);
+gap> Unbind(r3);
+gap> Unbind(rc);
+gap> Unbind(C);
+gap> Unbind(D);
+gap> Unbind(I);
+gap> Unbind(H);
+gap> Unbind(dd);
+gap> Unbind(enum);
+gap> Unbind(M);
+gap> Unbind(c);
+gap> Unbind(L);
+gap> Unbind(reps);
+gap> Unbind(g);
+gap> Unbind(S);
+gap> Unbind(b);
+gap> Unbind(dr);
+gap> Unbind(r1);
+gap> Unbind(a);
+gap> Unbind(out2);
+gap> Unbind(out3);
+gap> Unbind(d);
+gap> Unbind(r2);
+gap> Unbind(f);
+gap> Unbind(i);
+gap> Unbind(h);
+gap> Unbind(j);
+gap> Unbind(m);
+gap> Unbind(gens);
+gap> Unbind(iter);
+gap> Unbind(s);
+gap> Unbind(r);
+gap> Unbind(t);
+gap> Unbind(x);
 
-#
+#E# 
 gap> STOP_TEST( "Semigroups package: greens.tst");

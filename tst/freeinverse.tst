@@ -85,5 +85,15 @@ a*b
 gap> IsDoneIterator(iter);
 false
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(i);
+gap> Unbind(gens);
+gap> Unbind(iter);
+gap> Unbind(S);
+gap> Unbind(u);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(z);
+
 #E#
 gap> STOP_TEST("Semigroups package: freeinverse.tst");

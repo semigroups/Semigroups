@@ -88,15 +88,31 @@ true
 #T# SimpleCongTest7: Quotients
 gap> q := s / congs[13];;
 
-#T# SimpleCongTest8: Convert to and from semigroup congruence by generating pairs
+#T# SimpleCongTest8
+# Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(congs[4]);;
 gap> cong := SemigroupCongruence(s, pairs);
 <semigroup congruence over <simple transformation semigroup 
  on 5 pts with 4 generators> with linked triple (1,2,2)>
 gap> congs[4] = cong;
 true
-gap> ForAll(congs, cong-> cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
+gap> ForAll(congs, cong ->
+> cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
 true
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(pairs);
+gap> Unbind(classy);
+gap> Unbind(congs);
+gap> Unbind(q);
+gap> Unbind(s);
+gap> Unbind(classes);
+gap> Unbind(classz);
+gap> Unbind(classx);
+gap> Unbind(cong);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(z);
 
 #E#
 gap> STOP_TEST( "Semigroups package: simple-cong.tst");

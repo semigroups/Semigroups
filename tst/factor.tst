@@ -139,5 +139,9 @@ gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
 > Factorization(s,f))=f);
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(s);
+gap> Unbind(gens);
+
 #E#
 gap> STOP_TEST("Semigroups package: factor.tst");

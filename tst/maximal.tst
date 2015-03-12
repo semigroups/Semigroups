@@ -639,5 +639,29 @@ gap>  S := Semigroup(S);;
 gap> Length(MaximalSubsemigroups(S));
 9
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(gens);
+gap> Unbind(R1);
+gap> Unbind(R2);
+gap> Unbind(s2);
+gap> Unbind(s1);
+gap> Unbind(H);
+gap> Unbind(correct);
+gap> Unbind(R4);
+gap> Unbind(C);
+gap> Unbind(B);
+gap> Unbind(mat);
+gap> Unbind(G);
+gap> Unbind(R3);
+gap> Unbind(max);
+gap> Unbind(T3);
+gap> Unbind(S);
+gap> Unbind(R);
+gap> Unbind(U);
+gap> Unbind(T);
+gap> Unbind(t2);
+gap> Unbind(t3);
+gap> Unbind(t1);
+
 #E#
 gap> STOP_TEST("Semigroups package: maximal.tst");

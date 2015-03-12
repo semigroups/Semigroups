@@ -287,5 +287,11 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 9
 22
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(i);
+gap> Unbind(s);
+gap> Unbind(gens);
+gap> Unbind(t);
+
 #E# 
 gap> STOP_TEST( "Semigroups package: closure.tst");
