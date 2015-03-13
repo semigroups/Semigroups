@@ -39,7 +39,7 @@ function(R, H)
   if not IsGroup(G) then
     Error("Semigroups: MaximalSubsemigroups: usage,\n",
     "the first argument <R> must be a Rees matrix semigroup whose",
-    "underlying\n",
+    " underlying\n",
     "semigroup is a group,");
     return fail;
   elif not IsSubgroup(G, H) then
@@ -756,8 +756,8 @@ else
 
       if not IsRegularDClass(classes[i]) then # remove entire non-regular class
         gens2 := ShallowCopy(gens);
-        Add(out, Semigroup(gens2, ideal));
         Remove(gens2, lookup[i][1]); # There is precisely 1 gen in this class
+        Add(out, Semigroup(gens2, ideal));
         Info(InfoSemigroups, 2, "found maximal subsemigroup arising from",
         " removing whole non-maximal non-regular D-class...");
       else # <classes[i]> is regular; lots of work to be done
