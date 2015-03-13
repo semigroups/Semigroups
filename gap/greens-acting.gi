@@ -1734,7 +1734,13 @@ end);
 
 InstallMethod(Idempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-D -> Concatenation(List(GreensRClasses(D), Idempotents)));
+function(D)
+  if HasIsRegularClass(D) and not IsRegularClass(D) then 
+    # this avoids creating the R-classes, which is an unnecessary overhead
+    return [];
+  fi;
+  return Concatenation(List(GreensRClasses(D), Idempotents));
+end);
 
 # same method for regular/ideals, different method for inverse
 

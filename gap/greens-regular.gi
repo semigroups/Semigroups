@@ -64,7 +64,8 @@ function(H)
   local S, rep, p;
   S := Parent(H);
   rep := Representative(H);
-  p := LambdaConjugator(S)(Representative(RClassOfHClass(H)), rep);
+  SEMIGROUPS_RectifyLambda(H);
+  p := LambdaConjugator(S)(H!.rep, rep);
   return LambdaOrbSchutzGp(LambdaOrb(H), LambdaOrbSCCIndex(H)) ^ p;
 end);
 
