@@ -441,7 +441,7 @@ MappingByFunction( <inverse partial perm monoid on 6721 pts
 
 <#GAPDoc Label="VagnerPrestonRepresentation">
 <ManSection>
-  <Func Name="VagnerPrestonRepresentation" Arg="S"/>
+  <Attr Name="VagnerPrestonRepresentation" Arg="S"/>
   <Returns>
     An isomorphism to an inverse semigroup of partial permutations.
   </Returns>

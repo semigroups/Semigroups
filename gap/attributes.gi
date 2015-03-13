@@ -26,6 +26,15 @@
 
 # same method for ideals
 
+InstallMethod(IsMultiplicativeZero, 
+"for an acting semigroup and element",
+[IsActingSemigroup, IsAssociativeElement],
+function(S, x)
+  return MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S);
+end);
+
+# same method for ideals
+
 InstallMethod(IsGreensDLeq, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
@@ -40,10 +49,10 @@ function(S)
     elif Length(partial[x]) = 1 and partial[partial[x][1]] = partial[x] then
       return false;
     fi;
-    return ForAny(partial[x], z -> z <> x and comp_index(z,y));
+    return ForAny(partial[x], z -> z <> x and comp_index(z, y));
   end;
 
-  return function(x,y)
+  return function(x, y)
     return comp_index(OrbSCCLookup(data)[Position(data, x)] - 1,
       OrbSCCLookup(data)[Position(data, y)] - 1);
   end;
@@ -52,7 +61,7 @@ end);
 # different method for ideals/regular/inverse, although this method also works
 
 InstallMethod(MaximalDClasses, "for an acting semigroup",
-[IsActingSemigroup] ,
+[IsActingSemigroup],
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 
@@ -110,10 +119,10 @@ end);
 
 InstallMethod(StructureDescriptionSchutzenbergerGroups,
 "for an acting semigroup", [IsActingSemigroup],
-function(s)
+function(S)
   local o, scc, out, m;
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   Enumerate(o, infinity);
   scc := OrbSCC(o);
   out := [];
@@ -291,8 +300,8 @@ function(d)
       if y![1] = 0 then
         return y;
       fi;
-      return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]] ^ - 1
-      * x * rep![2] ^ - 1 * y![2], y![3], y![4]]);
+      return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]] ^ -1
+      * x * rep![2] ^ -1 * y![2], y![3], y![4]]);
     end;
   fi;
 
@@ -307,10 +316,10 @@ function(d)
         if not IsBound(inv_r[j]) then
           # could use lreps[i]*rreps[j]^-1*lreps[i] instead if there was a
           # method for ^-1...
-          inv_r[j] := leftact(mat[i][j] ^ - 1, lreps[i]);
+          inv_r[j] := leftact(mat[i][j] ^ -1, lreps[i]);
         fi;
         if not IsBound(inv_l[i]) then
-          inv_l[i] := rightact(rreps[j], mat[i][j] ^ - 1);
+          inv_l[i] := rightact(rreps[j], mat[i][j] ^ -1);
         fi;
       else
         mat[i][j] := 0;
@@ -464,8 +473,8 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and associative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
-  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f,
-  lambdarank, creator, inv, out, k, g, rho, name, i, x;
+  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades,
+   rho_f, lambdarank, creator, inv, out, k, g, i, name, rho;
 
   regular := IsRegularSemigroup(s);
 
@@ -492,10 +501,10 @@ function(s, f)
     od;
   else
 
-    opts := rec(  treehashsize := s!.opts.hashlen.M,
+    opts := rec(treehashsize := s!.opts.hashlen.M,
                 gradingfunc := function(o, x) return rhorank(x); end,
                 onlygrades := function(x, y) return x >= rank; end,
-                onlygradesdata := fail );
+                onlygradesdata := fail);
 
     for name in RecNames(LambdaOrbOpts(s)) do
       opts.(name) := LambdaOrbOpts(s).(name);
@@ -537,10 +546,10 @@ function(s, f)
       fi;
     od;
   else
-     opts := rec(  treehashsize := s!.opts.hashlen.M,
-                gradingfunc := function(o, x) return lambdarank(x); end,
-                onlygrades := function(x, y) return x >= rank; end,
-                onlygradesdata := fail ); #shouldn't this be fail
+     opts := rec(treehashsize := s!.opts.hashlen.M,
+                 gradingfunc := function(o, x) return lambdarank(x); end,
+                 onlygrades := function(x, y) return x >= rank; end,
+                 onlygradesdata := fail); 
 
     for name in RecNames(LambdaOrbOpts(s)) do
       opts.(name) := LambdaOrbOpts(s).(name);
@@ -626,7 +635,7 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local min, o, rank, i, pos, f, m, rank_i, min_found, n;
+  local min, o, rank, i, pos, f, min_found, rank_i;
 
   if IsSemigroupIdeal(s)
     and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
@@ -670,7 +679,6 @@ function(s)
     od;
     f := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
   fi;
-
   if IsIdempotent(f) and Size(GreensRClassOfElementNC(s, f)) = 1 then
     return f;
   fi;
@@ -692,7 +700,7 @@ end);
 
 InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
 function(S)
-  local rank, o, pos, min, len, m, x, n, i;
+  local rank, o, pos, min, len, m, x, i;
 
   if IsSemigroupIdeal(S) and HasMinimalDClass(SupersemigroupOfIdeal(S)) then
     return GreensDClassOfElementNC(S,
@@ -876,7 +884,8 @@ s -> StructureDescription(Range(IsomorphismPermGroup(s))));
 
 #
 
-InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
+InstallMethod(IsomorphismTransformationMonoid,
+"for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local id, dom, gens, inv;
@@ -886,8 +895,8 @@ function(s)
   fi;
 
   if MultiplicativeNeutralElement(s) = fail then
-    Error( "Semigroups: IsomorphismTransformationMonoid: usage,\n",
-           "the argument <s> must have a multiplicative neutral element,");
+    Error("Semigroups: IsomorphismTransformationMonoid: usage,\n",
+          "the argument <s> must have a multiplicative neutral element,");
     return;
   fi;
 
@@ -951,9 +960,9 @@ InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-   Error( "Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <s> must be a partial perm semigroup ",
-          "satisfying IsGroupAsSemigroup,");
+   Error("Semigroups: IsomorphismPermGroup: usage,\n",
+         "the argument <s> must be a partial perm semigroup ",
+         "satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -971,9 +980,9 @@ function(S)
   local rep;
 
   if not IsGroupAsSemigroup(S)  then
-   Error( "Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
-          "semigroup satisfying IsGroupAsSemigroup,");
+   Error("Semigroups: IsomorphismPermGroup: usage,\n",
+         "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
+         "semigroup satisfying IsGroupAsSemigroup,");
    return;
   fi;
 
@@ -994,9 +1003,9 @@ function(S)
   local en, act, gens;
 
   if not IsGroupAsSemigroup(S)  then
-    Error( "Semigroups: IsomorphismPermGroup: usage,\n",
-           "the argument must be a semigroup satisfying ",
-           "IsGroupAsSemigroup,");
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument must be a semigroup satisfying ",
+          "IsGroupAsSemigroup,");
     return;
   fi;
 
@@ -1009,7 +1018,7 @@ function(S)
   gens := List(GeneratorsOfSemigroup(S),
    x -> Permutation(x, [1 .. Length(en)], act));
 
-  return MagmaIsomorphismByFunctionsNC( S, Group( gens ),
+  return MagmaIsomorphismByFunctionsNC(S, Group(gens),
    x -> Permutation(x, [1 .. Length(en)], act),
    x -> en[Position(en, MultiplicativeNeutralElement(S)) ^ x]);
 end);

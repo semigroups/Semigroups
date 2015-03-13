@@ -8,65 +8,6 @@
 #############################################################################
 ##
 
-# returns the element <f> premultiplied by RhoOrbMult so that the resulting
-# element has its RhoValue in the first position of its scc.
-
-# s, o, f, l, m
-
-InstallGlobalFunction(RectifyRho,
-function(arg)
-  local f, l, m;
-
-  if not IsClosed(arg[2]) then
-    Enumerate(arg[2], infinity);
-  fi;
-
-  f := arg[3];
-  if not IsBound(arg[4]) or arg[4] = fail then
-    l := Position(arg[2], RhoFunc(arg[1])(f));
-  else
-    l := arg[4];
-  fi;
-
-  if not IsBound(arg[5]) or arg[5] = fail then
-    m := OrbSCCLookup(arg[2])[l];
-  else
-    m := arg[5];
-  fi;
-
-  if l <> OrbSCC(arg[2])[m][1] then
-    f := RhoOrbMult(arg[2], m, l)[2] * f;
-  fi;
-  return rec(l := l, m := m, rep := f);
-end);
-
-#
-
-InstallGlobalFunction(RectifyLambda,
-function(arg)
-  local f, l, m;
-  if not IsClosed(arg[2]) then
-    Enumerate(arg[2], infinity);
-  fi;
-
-  f := arg[3];
-  if not IsBound(arg[4]) or arg[4] = fail then
-    l := Position(arg[2], LambdaFunc(arg[1])(f));
-  else
-    l := arg[4];
-  fi;
-  if not IsBound(arg[5]) or arg[5] = fail then
-    m := OrbSCCLookup(arg[2])[l];
-  else
-    m := arg[5];
-  fi;
-
-  if l <> OrbSCC(arg[2])[m][1] then
-    f := f * LambdaOrbMult(arg[2], m, l)[2];
-  fi;
-  return rec(l := l, m := m, rep := f);
-end);
-
 #
 
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",
@@ -99,7 +40,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
-  local scc, mults, one, gens, genpos, inv, trace, x, i;
+  local scc, gens, one, mults, genpos, inv, trace, i;
 
   scc := OrbSCC(o);
 
@@ -325,7 +266,7 @@ function(o, m)
     fi;
   fi;
 
-  RhoOrbSchutzGp(o, m, infinity);
+  RhoOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
 
@@ -373,7 +314,7 @@ end);
 
 InstallGlobalFunction(RhoOrbMult,
 function(o, m, i)
-  local mults, one, scc, gens, genpos, inv, trace, x;
+  local scc, gens, one, mults, genpos, inv, trace;
 
   if IsBound(o!.mults) then
     if IsBound(o!.mults[i]) then
@@ -458,9 +399,9 @@ end);
 # JDM could use IsRegular here to speed up?
 
 InstallGlobalFunction(RhoOrbSchutzGp,
-function(o, m, bound)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults,
-  rho_rank, i, j;
+function(o, m)
+  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, i,
+  bound, rho_rank, j;
 
   if IsBound(o!.schutz) then
     if IsBound(o!.schutz[m]) then
@@ -472,12 +413,6 @@ function(o, m, bound)
   fi;
 
   g := Group(());
-
-  if bound = 1 then
-    o!.schutz[m] := g;
-    o!.schutzstab[m] := false;
-    return g;
-  fi;
 
   s := o!.parent;
   gens := o!.gens;
@@ -492,13 +427,11 @@ function(o, m, bound)
   i := RhoRank(s)(o[scc[1]]);
 
   if i < 1000 then
-    j := Factorial(i);
-    if bound > j then
-      bound := j;
-    fi;
+    bound := Factorial(i);
   else
     bound := infinity;
   fi;
+
   for i in scc do
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then

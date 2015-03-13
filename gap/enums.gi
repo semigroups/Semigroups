@@ -21,7 +21,8 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the first argument <obj> must be a domain or a collections family,");
+          "the first argument <obj> must be a domain or a collections",
+          "family,");
     return;
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
@@ -43,8 +44,8 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
           "the sixth argument <record> must be a mutable record",
           "with no components\n",
-          "named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',\n",
-          "or `NumberElement',");
+          "named:\n`baseenum', `convert_out', `convert_in',",
+          "`ElementNumber',\n or `NumberElement',");
     return;
   fi;
 
@@ -107,7 +108,8 @@ function(obj, record, baseenum, convert, filts)
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
     Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-          "the first argument <obj> must be a domain or a collections family,");
+          "the first argument <obj> must be a domain or a collections ",
+          "family,");
     return;
   elif not IsRecord(record) or IsBound(record.ElementNumber)
    or IsBound(record.NumberElement) or IsBound(record.baseenum)
@@ -238,133 +240,6 @@ function(s)
    convert, []);
 end);
 
-# Notes: the only purpose for this is the method for NumberElement.  Otherwise
-# use (if nothing much is known) IteratorOfRClasses or if everything is know
-# just use RClasses.
-
-# different method for regular/inverse
-
-# JDM the performance of this also sucks
-
-InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local enum;
-
-  return EnumeratorByFunctions(s, rec(
-
-    ElementNumber := function(enum, pos)
-      return GreensRClasses(s)[pos];
-    end,
-
-    NumberElement := function(enum, r)
-      return Position(SemigroupData(s), Representative(r)) - 1;
-    end,
-
-    Membership := function(r, enum)
-      return Position(enum, r) <> fail;
-    end,
-
-    Length := enum -> NrRClasses(s),
-
-    PrintObj := function(enum)
-      Print( "<enumerator of R-classes of ", ViewString(s), ">");
-      return;
-    end));
-
-  return enum;
-end);
-
-# different method for inverse
-
-InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(s)
-  local o;
-
-  o := RhoOrb(s);
-  Enumerate(o, infinity);
-
-  return EnumeratorByFunctions(s, rec(
-
-    parent := s,
-
-    Length := enum -> NrRClasses(enum!.parent),
-
-    Membership := function(r, enum)
-      return Representative(r) in enum!.parent;
-    end,
-
-    NumberElement := function(enum, r)
-      local pos;
-      pos := Position(RhoOrb(enum!.parent),
-       RhoFunc(enum!.parent)(Representative(r)));
-      if pos = fail then
-        return fail;
-      fi;
-      return pos - 1;
-    end,
-
-   ElementNumber := function(enum, nr)
-    local s, o, m;
-    s := enum!.parent;
-    o := RhoOrb(s);
-    m := OrbSCCLookup(o)[nr + 1];
-    return CreateRClass(s, m, LambdaOrb(s),
-     RhoOrbMult(o, m, nr + 1)[1] * RhoOrbRep(o, m), false);
-   end,
-   PrintObj := function(enum)
-     Print( "<enumerator of R-classes of ", ViewString(s), ">");
-     return;
-   end));
-end);
-
-# JDM again this method might not nec. if inverse op semigroups have RhoOrb
-# method
-
-InstallMethod(EnumeratorOfRClasses, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp],
-function(s)
-  local o;
-
-  o := LambdaOrb(s);
-  Enumerate(o, infinity);
-
-  return EnumeratorByFunctions(s, rec(
-
-    parent := s,
-
-    Length := enum -> NrRClasses(enum!.parent),
-
-    Membership := function(r, enum)
-      return Representative(r) in enum!.parent;
-    end,
-
-    NumberElement := function(enum, r)
-      local pos;
-      pos := Position(LambdaOrb(enum!.parent),
-       RhoFunc(enum!.parent)(Representative(r)));
-      if pos = fail then
-        return fail;
-      fi;
-      return pos - 1;
-    end,
-
-   ElementNumber := function(enum, nr)
-    local s, o, m;
-    s := enum!.parent;
-    o := LambdaOrb(s);
-    m := OrbSCCLookup(o)[nr + 1];
-    return CreateRClassNC(s, m, LambdaOrb(s),
-     LambdaOrbMult(o, m, nr + 1)[2] * RightOne(LambdaOrbRep(o, m)), false);
-   end,
-
-   PrintObj := function(enum)
-     Print( "<enumerator of R-classes of ", ViewString(s), ">");
-     return;
-   end));
-end);
-
 # same method for regular/inverse
 
 #JDM this should be improved, using Iterator for a regular or inverse
@@ -436,7 +311,8 @@ function(d)
     rep := Representative(d);
     act := StabilizerAction(Parent(d));
     return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1] * rep,
-     tuple[2]) * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
+     tuple[2])
+     * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
   end;
   #
   convert_in := function(enum, elt)
@@ -724,7 +600,7 @@ function(r)
     fi;
     r := enum!.parent;
     rep := Representative(r);
-    return StabilizerAction(Parent(r))(rep,tuple[1])
+    return StabilizerAction(Parent(r))(rep, tuple[1])
      * LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), tuple[2])[1];
   end;
   #
@@ -802,7 +678,7 @@ function(r, m, n)
   r := r - 1;
   mult := Product([n - m + 1 .. n - 1]);
   factor := n;
-  q := QuotientRemainder(r,mult);
+  q := QuotientRemainder(r, mult);
   out := [q[1] + 1];
   bool[q[1] + 1] := true;
 

@@ -33,7 +33,7 @@ InstallMethod(ViewObj, "for the automorphism group of a Rees matrix semigroup",
 function(A)
   Print("<automorphism group of ");
   ViewObj(Source(A.1));
-  Print( " with ", Length(GeneratorsOfGroup(A)), " generator");
+  Print(" with ", Length(GeneratorsOfGroup(A)), " generator");
   if Length(GeneratorsOfGroup(A)) > 1 then
     Print("s");
   fi;
@@ -68,6 +68,7 @@ function(A)
 end);
 
 #
+
 if not IsBound(GAPInfo.PackagesLoaded.genss) then
   InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
   [IsReesMatrixSemigroup],
@@ -80,8 +81,8 @@ else
   InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
   [IsReesMatrixSemigroup],
   function(R)
-    local G, mat, m, n, agroup, A, hom, agraph, OnMatrix, S1, S2, mat_elts, U,
-    V, iso, inv, T, tester, y, D, P, elts, B, g, x, proj1, proj2, stab, gens, i,
+    local G, mat, m, n, agroup, A, hom, agraph, OnMatrix, S1, S2, U,
+    V, iso, inv, T, tester, g, x, proj1, proj2, stab, i,
     blist, right, pruner, lambda, gamma, entries;
 
     G := UnderlyingSemigroup(R);
@@ -96,10 +97,10 @@ else
       return Group(List(GeneratorsOfGroup(AutomorphismGroup(G)), x ->
        RMSIsoByTriple(R, R, [(), x, [One(G), One(G)]])));
     elif n = 2 and m = 1 then
-      agraph := Group((2,3));
+      agraph := Group((2, 3));
       SetSize(agraph, 2);
     elif n > 2 and m = 1 then
-      agraph := Group((2,3), PermList(Concatenation([1],[3 .. n + m],[2])));
+      agraph := Group((2, 3), PermList(Concatenation([1], [3 .. n + m], [2])));
       SetSize(agraph, Factorial(n));
     else
       agraph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
@@ -124,8 +125,9 @@ else
     S1 := Stab(agraph, mat, OnMatrix);
     Info(InfoSemigroups, 2, "...it has size ", Size(S1.stab));
 
-    Info(InfoSemigroups, 2, "calculating an isomorphism from the automorphisms",
-    " of the group to a\n#I  perm group...");
+    #Info(InfoSemigroups,
+    #2, "calculating an isomorphism from the automorphisms",
+    #" of the group to a\n#I  perm group...");
     hom := NaturalHomomorphismByNormalSubgroupNC(agroup,
      InnerAutomorphismsAutomorphismGroup(agroup));
     iso := IsomorphismPermGroup(ImagesSource(hom));
@@ -275,15 +277,15 @@ function(R, l, g, x)
   #FIXME for loop for this and the next
   out{[m + 1 .. n + m]} :=
    List([m + 1 .. n + m],
-   v -> mat[v ^ l - m][1 ^ l] * x * (mat[v - m][1] ^ g) ^ - 1);
+   v -> mat[v ^ l - m][1 ^ l] * x * (mat[v - m][1] ^ g) ^ -1);
 
   out{[2 .. m]} := List([2 .. m],
-   v -> (mat[(m + 1) ^ l - m][v ^ l]) ^ - 1 * out[m + 1] *
+   v -> (mat[(m + 1) ^ l - m][v ^ l]) ^ -1 * out[m + 1] *
     (mat[1][v] ^ g));
 
   for j in [m + 2 .. n + m] do
     for i in [2 .. m] do
-      if mat[j ^ l - m][i ^ l] <> out[j] * mat[j - m][i] ^ g * out[i] ^ - 1 then
+      if mat[j ^ l - m][i ^ l] <> out[j] * mat[j - m][i] ^ g * out[i] ^ -1 then
         return [false, out];
       fi;
     od;
@@ -329,8 +331,8 @@ else
     else
       sub := InducedSubgraph(graph, component);
       perm := MappingPermListList(VertexNames(sub), Vertices(sub));
-      edges := OnTuplesTuples(DirectedEdges(sub), perm ^ - 1);
-      bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ - 1);
+      edges := OnTuplesTuples(DirectedEdges(sub), perm ^ -1);
+      bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ -1);
     fi;
 
     defined := [];
@@ -352,9 +354,9 @@ else
 
           if Last in bicomps[1] then
             new := mat[v ^ l - m][Last ^ l] * out[Last]
-                  * (mat[v - m][Last] ^ g) ^ - 1;
+                  * (mat[v - m][Last] ^ g) ^ -1;
           else
-            new := (mat[Last ^ l - m][v ^ l]) ^ - 1 * out[Last]
+            new := (mat[Last ^ l - m][v ^ l]) ^ -1 * out[Last]
                    * (mat[Last - m][v] ^ g);
           fi;
 
@@ -403,8 +405,8 @@ else
       else
         sub := InducedSubgraph(rmsgraph, components[i]);
         perm := MappingPermListList(VertexNames(sub), Vertices(sub));
-        edges := OnTuplesTuples(DirectedEdges(sub), perm ^ - 1);
-        bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ - 1);
+        edges := OnTuplesTuples(DirectedEdges(sub), perm ^ -1);
+        bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ -1);
       fi;
 
       defined := [];
@@ -425,9 +427,9 @@ else
 
             if Last in bicomps[1] then
               new := mat2[v ^ l - m][Last ^ l]
-                     * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ - 1;
+                     * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ -1;
             else
-              new := (mat2[Last ^ l - m][v ^ l]) ^ - 1
+              new := (mat2[Last ^ l - m][v ^ l]) ^ -1
                      * imagelist[Last] * (mat1[Last - m][v] ^ g);
             fi;
 
@@ -553,7 +555,7 @@ else
         return fail;
       fi;
       graphiso := List(AutGroupGraph(graph1,
-                  [[1 .. m],[m + 1 .. n + m]]), x -> x * g);
+                  [[1 .. m], [m + 1 .. n + m]]), x -> x * g);
     fi;
 
     #find an induced function, if there is one
@@ -748,7 +750,7 @@ end);
 InstallMethod(ImagesRepresentative,
 "for an RMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
-function( triple, x)
+function(triple, x)
   local g, i, j, lambda, gamma, f, m;
 
   m := Length(Rows(Source(triple)));
@@ -759,7 +761,7 @@ function( triple, x)
   lambda := triple[1];
   gamma := triple[2];
   f := triple[3];
-  return RMSElement(Range(triple), i ^ lambda, f[i] * ImageElm(gamma,g) / f[j],
+  return RMSElement(Range(triple), i ^ lambda, f[i] * ImageElm(gamma, g) / f[j],
    j ^ lambda - m);
 end);
 
@@ -785,13 +787,12 @@ function(triple, x)
       return MultiplicativeZero(Source(triple));
     else
       return RMSElement(Range(triple),
-      i ^ lambda, f[i] * ImageElm(gamma,g) / f[j], j ^ lambda - m);
+      i ^ lambda, f[i] * ImageElm(gamma, g) / f[j], j ^ lambda - m);
     fi;
   else
     return x;
   fi;
 end);
-
 
 #
 
@@ -806,8 +807,8 @@ function(a)
   g := a[2];
   f := a[3];
 
-  return RMSIsoByTriple(Range(a), Source(a), [l ^ - 1, g ^ - 1,
-   List([1 .. n], x -> (f[x ^ l] ^ (g ^ - 1)) ^ - 1)]);
+  return RMSIsoByTriple(Range(a), Source(a), [l ^ -1, g ^ -1,
+   List([1 .. n], x -> (f[x ^ l] ^ (g ^ -1)) ^ -1)]);
 end);
 
 #
@@ -828,8 +829,8 @@ function(a)
   g := a[2];
   f := a[3];
 
-  return RZMSIsoByTriple(Range(a), Source(a), [l ^ - 1, g ^ - 1, List([1 .. n],
-   x -> (f[x ^ l] ^ (g ^ - 1)) ^ - 1)]);
+  return RZMSIsoByTriple(Range(a), Source(a), [l ^ -1, g ^ -1, List([1 .. n],
+   x -> (f[x ^ l] ^ (g ^ -1)) ^ -1)]);
 end);
 
 #
@@ -856,7 +857,7 @@ InstallMethod(PreImagesRepresentative,
 "for an RMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
 function(triple, x)
-  return ImagesRepresentative(triple ^ - 1, x);
+  return ImagesRepresentative(triple ^ -1, x);
 end);
 
 #
@@ -865,16 +866,16 @@ InstallMethod(PreImagesRepresentative,
 "for an RZMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
 function(triple, x)
-  return ImagesRepresentative(triple ^ - 1, x);
+  return ImagesRepresentative(triple ^ -1, x);
 end);
 
 #
 
 InstallMethod(PrintObj, "for object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
-function( obj )
-  Print( "RMSIsoByTriple ( ", Source(obj), ",", Range(obj), "," , obj[1], " ",
-    obj[2], " ",  obj[3], " )" );
+function(obj)
+  Print("RMSIsoByTriple ( ", Source(obj), ",", Range(obj), ",", obj[1], " ",
+    obj[2], " ", obj[3], ")");
   return;
 end);
 
@@ -882,26 +883,26 @@ end);
 
 InstallMethod(PrintObj, "for object in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
-function( obj )
-  Print( "RZMSIsoByTriple ( ", Source(obj) , ",", Range(obj), "," , obj[1], " ",
-    obj[2], " ",  obj[3], " )" );
+function(obj)
+  Print("RZMSIsoByTriple ( ", Source(obj), ",", Range(obj), ",", obj[1], " ",
+    obj[2], " ", obj[3], " )");
   return;
 end);
 
 #
 
-InstallMethod( ViewObj, "for object in `IsRMSIsoByTriple'",
+InstallMethod(ViewObj, "for object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
-function( obj )
-  Print( "(", obj[1],", ",  obj[2],", ",  obj[3], ")" );
-end );
+function(obj)
+  Print("(", obj[1], ", ", obj[2], ", ", obj[3], ")");
+end);
 
 #
 
-InstallMethod( ViewObj, "for object in `IsRZMSIsoByTriple'",
+InstallMethod(ViewObj, "for object in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
 function(obj)
-  Print( "(", obj[1], ", ", obj[2], ", ", obj[3], ")" );
+  Print("(", obj[1], ", ", obj[2], ", ", obj[3], ")");
   return;
 end);
 

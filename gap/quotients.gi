@@ -19,7 +19,7 @@ InstallMethod(\*, "for associative coll coll and congruence class",
 [IsAssociativeElementCollColl, IsCongruenceClass],
 function(list, nonlist)
   if ForAll(list, IsCongruenceClass) then
-    return PROD_LIST_SCL_DEFAULT( list, nonlist );
+    return PROD_LIST_SCL_DEFAULT(list, nonlist);
   fi;
   TryNextMethod();
 end);
@@ -28,7 +28,7 @@ InstallMethod(\*, "for congruence class and associative coll coll",
 [IsCongruenceClass, IsAssociativeElementCollColl],
 function(nonlist, list)
   if ForAll(list, IsCongruenceClass) then
-    return PROD_SCL_LIST_DEFAULT( nonlist, list );
+    return PROD_SCL_LIST_DEFAULT(nonlist, list);
   fi;
   TryNextMethod();
 end);

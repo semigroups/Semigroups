@@ -17,7 +17,7 @@ DeclareCategory("IsRMSCongruenceByLinkedTriple",
 DeclareCategory("IsRZMSCongruenceByLinkedTriple",
         IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareOperation("IsLinkedTriple",
-        [IsSemigroup, IsGroup, IsDenseList, IsDenseList] );
+        [IsSemigroup, IsGroup, IsDenseList, IsDenseList]);
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 DeclareGlobalFunction("RZMSCongruenceByLinkedTriple");
@@ -34,22 +34,22 @@ DeclareCategory("IsRZMSCongruenceClassByLinkedTriple",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
 DeclareOperation("RMSCongruenceClassByLinkedTriple",
         [IsRMSCongruenceByLinkedTriple,
-         IsRightCoset, IsPosInt, IsPosInt] );
+         IsRightCoset, IsPosInt, IsPosInt]);
 DeclareOperation("RZMSCongruenceClassByLinkedTriple",
         [IsRZMSCongruenceByLinkedTriple,
-         IsRightCoset, IsPosInt, IsPosInt] );
+         IsRightCoset, IsPosInt, IsPosInt]);
 DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
         [IsRMSCongruenceByLinkedTriple,
-         IsRightCoset, IsPosInt, IsPosInt] );
+         IsRightCoset, IsPosInt, IsPosInt]);
 DeclareOperation("RZMSCongruenceClassByLinkedTripleNC",
         [IsRZMSCongruenceByLinkedTriple,
-         IsRightCoset, IsPosInt, IsPosInt] );
-DeclareOperation("\*", [IsEquivalenceClass, IsList] );
-DeclareOperation("\*", [IsList, IsEquivalenceClass] );
+         IsRightCoset, IsPosInt, IsPosInt]);
+DeclareOperation("\*", [IsEquivalenceClass, IsList]);
+DeclareOperation("\*", [IsList, IsEquivalenceClass]);
 DeclareAttribute("CanonicalRepresentative", IsEquivalenceClass);
 
 # Conversion with semigroup congruences by generating pairs
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-        [IsSemigroupCongruence] );
-DeclareOperation("AsRMSCongruenceByLinkedTriple", [IsSemigroupCongruence] );
-DeclareOperation("AsRZMSCongruenceByLinkedTriple", [IsSemigroupCongruence] );
+        [IsSemigroupCongruence]);
+DeclareOperation("AsRMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);
+DeclareOperation("AsRZMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);
