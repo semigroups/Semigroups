@@ -183,7 +183,7 @@ gap> R := ReesMatrixSemigroup(T, mat);
 <Rees matrix semigroup 1x1 over <full transformation semigroup on 2 pts>>
 gap> MaximalSubsemigroups(R, Group(())); # not a RMS over a group
 Error, Semigroups: MaximalSubsemigroups: usage,
-the first argument <R> must be a Rees matrix semigroup whose underlying
+the first argument <R> must be a Rees matrix semigroup whoseunderlying
 semigroup is a group,
 gap> G := Group([ (1,2) ]);;
 gap> mat := [ [ (1,2), (1,2), (1,2) ], [ (1,2), (1,2), (1,2) ] ];;
@@ -231,7 +231,7 @@ false
 gap> IsZeroSimpleSemigroup(R);
 true
 gap> MaximalSubsemigroups(R);
-Error, Semigroups: MaximalSubsemigroups,
+Error, Semigroups: MaximalSubsemigroups:
 not yet implemented for a 0-simple Rees 0-matrix semigroup whose
 underlying semigroup is not a group,
 gap> t1 := Transformation( [ 4, 3, 1, 3 ] );;
@@ -416,7 +416,7 @@ true
 gap> IsRegularSemigroup(R4);
 false
 gap> MaximalSubsemigroups(R4, Group(()));
-Error, Semigroups: MaximalSubsemigroups,
+Error, Semigroups: MaximalSubsemigroups:
 the first argument <R> must be a regular Rees 0-matrix semigroup,
 
 #T# MaximalTest5: MaximalSubsemigroups for a transformation semigroup
