@@ -200,7 +200,7 @@ else
 
     # Check that matrix is regular (i.e. no zero-rows or zero-columns)
     if not IsRegularSemigroup(R) then
-      Error("Semigroups: MaximalSubsemigroups,\n",
+      Error("Semigroups: MaximalSubsemigroups:\n",
       "the first argument <R> must be a regular Rees 0-matrix semigroup,");
       return;
     fi;
@@ -374,7 +374,7 @@ else
         # take an isomorphism to a Rees 0-matrix semigroup, find its maximal
         # subsemigroups, then pull those back, (should specify some methods for
         # the pulling back part)
-        Error("Semigroups: MaximalSubsemigroups,\n",
+        Error("Semigroups: MaximalSubsemigroups:\n",
         "not yet implemented for a 0-simple Rees 0-matrix semigroup whose\n",
         "underlying semigroup is not a group,");
         return;

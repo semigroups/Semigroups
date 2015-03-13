@@ -205,7 +205,7 @@ InstallMethod(JoinMagmaCongruences,
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
   if Range(cong1) <> Range(cong2) then
-    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
+    Error("Semigroups: JoinMagmaCongruences: usage,\n",
           "<cong1> and <cong2> must be over the same semigroup,");
     return;
   fi;
@@ -220,7 +220,7 @@ InstallMethod(MeetMagmaCongruences,
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
   if Range(cong1) <> Range(cong2) then
-    Error("Semigroups: MeetSemigroupCongruences: usage,\n",
+    Error("Semigroups: MeetMagmaCongruences: usage,\n",
           "<cong1> and <cong2> must be over the same semigroup,");
     return;
   fi;

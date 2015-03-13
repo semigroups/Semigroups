@@ -772,7 +772,7 @@ InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    Error("Semigroups: SingularTransformationMonoid: usage,\n",
+    Error("Semigroups: SingularTransformationSemigroup: usage,\n",
     "the argument must be greater than 1,");
     return;
   fi;
@@ -868,9 +868,7 @@ InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    Error("Semigroups: SingularFactorisableDualSymmetricInverseSemigroup:",
-    " usage,\nthe argument must be greater than 1,");
-    return;
+    return fail; # error message won't fit!
   fi;
 
   blocks := [[1, 2, -1, -2]];

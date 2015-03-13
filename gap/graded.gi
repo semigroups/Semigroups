@@ -182,7 +182,7 @@ function(arg)
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    Error("Semigroups: GradedLambdaOrb: usage,\n",
+    Error("Semigroups: GradedRhoOrb: usage,\n",
           "there must be at least 3 arguments,");
     return;
   fi;

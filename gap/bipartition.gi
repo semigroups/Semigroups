@@ -106,7 +106,7 @@ function(f, g)
   elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
     return NaturalLeqPartialPermBipartition(f, g);
   fi;
-  Error("Semigroups: NaturalLeqPartialPermBipartition: usage\n",
+  Error("Semigroups: NaturalLeqInverseSemigroup: usage\n",
         "the bipartitions should be block bijections or partial perms,");
   return;
 end);

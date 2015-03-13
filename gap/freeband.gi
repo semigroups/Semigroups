@@ -340,7 +340,7 @@ function(s, x)
   local type, d;
 
   if not x in s then
-    Error("Semigroups: GreensDClassOfElements: usage,\n",
+    Error("Semigroups: GreensDClassOfElement: usage,\n",
           "the element does not belong to the semigroup,");
     return;
   fi;

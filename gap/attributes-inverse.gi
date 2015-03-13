@@ -430,7 +430,7 @@ function(S, f)
   local out, elts, i, j, k;
 
   if not f in S then
-    Error("Semigroups: Minorant: usage,\n",
+    Error("Semigroups: Minorants: usage,\n",
           "the second argument is not an element of the first,");
     return;
   fi;
