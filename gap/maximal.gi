@@ -146,8 +146,8 @@ function(R)
   tot := Length(out);
   Info(InfoSemigroups, 3, "...found ", tot, ".");
 
-  # Case 2: maximal subsemigroup of the form (I x G x J') where J' = J \ {j} for
-  # some j in J.
+  # Case 2: maximal subsemigroup of the form (I x G x J') where J' = J \ {j}
+  # for some j in J.
   Info(InfoSemigroups, 3,
    "Case 2: finding maximal subsemigroups obtained by removing a column...");
   if Length(J) > 1 then
@@ -215,12 +215,15 @@ else
     elif not IsSubgroup(G, H) then
       Error("Semigroups: MaximalSubsemigroups: usage,\n",
       "the second argument <H> must be a subgroup of the underlying\n",
-      "group of the Rees 0-matrix semigroup in the first first argument, <R>,");
+      "group of the Rees 0-matrix semigroup in the first first argument, ",
+      "<R>,");
+
       return fail;
     elif not H in MaximalSubgroups(G) then
       Error("Semigroups: MaximalSubsemigroups: usage,\n",
       "the second argument <H> must be a maximal subgroup of the underlying\n",
-      "group of the Rees 0-matrix semigroup in the first first argument, <R>,");
+      "group of the Rees 0-matrix semigroup in the first first argument, ",
+      "<R>,");
       return fail;
     fi;
 
@@ -229,8 +232,8 @@ else
     J     := Columns(R);
     graph := RZMSGraph(R);
 
-    # Add to the generators one element which *must* be in each group H-class of
-    # any maximal subsemigroup of the desired Case 1 form.
+    # Add to the generators one element which *must* be in each group H-class
+    # of any maximal subsemigroup of the desired Case 1 form.
     basicgens := [MultiplicativeZero(R)];
     for i in Rows(R) do
       for j in Columns(R) do
@@ -407,8 +410,8 @@ else
     Info(InfoSemigroups, 3,
      "...the matrix has ", nrcomponents, " connected component(s).");
 
-    # Add to the generators one element which *must* be in each group H-class of
-    # any maximal subsemigroup of the Case 1 form.
+    # Add to the generators one element which *must* be in each group H-class
+    # of any maximal subsemigroup of the Case 1 form.
     seen_zero := false;
     basicgens := [MultiplicativeZero(R)];
     for i in I do
@@ -441,14 +444,15 @@ else
     # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
     # maximal subgroup of G
     Info(InfoSemigroups, 3,
-     "Case 1: finding maximal subsemigroups arising from maximal subgroups...");
+    "Case 1: finding maximal subsemigroups arising from maximal subgroups...");
 
     # Pick a distinguished group H-class in the first component: H_i,j
     # For each maximal subgroup H we have: H_i,j = (i, H * (mat[j][i] ^ -1), j)
     i := 1;
     j := graph.adjacencies[1][1] - nrrows;
 
-    # For each max subgroup, start recursion with basic gens, and gens for H_i,j
+    # For each max subgroup, start recursion with basicgens,
+    # and gens for H_i,j
     for H in MaximalSubgroups(G) do
       Append(out,
        MaximalSubsemigroupsNC(R, H, graph, components, basicgens, [i, j]));
@@ -460,8 +464,9 @@ else
     # where J' = J \ { j } for some j in J,
     # and where the resultant matrix has no zero columns or rows.
 
-    # In the Graham-Houghton I x J bipartite graph, we can remove any vertex <j>
-    # in <J> which is not adjacent to a vertex <i> which is only adjacent to
+    # In the Graham-Houghton I x J bipartite graph,
+    # we can remove any vertex <j> in <J>
+    # :which is not adjacent to a vertex <i> which is only adjacent to
     # <j>. So, we run through the vertices <i> of <I> and find the ones of
     # degree 1, and we discard the vertices <j> adjacent to such <i>.
 
@@ -751,8 +756,8 @@ else
 
       if not IsRegularDClass(classes[i]) then # remove entire non-regular class
         gens2 := ShallowCopy(gens);
-        Remove(gens2, lookup[i][1]); # There's exactly 1 generator in this class
         Add(out, Semigroup(gens2, ideal));
+        Remove(gens2, lookup[i][1]); # There is precisely 1 gen in this class
         Info(InfoSemigroups, 2, "found maximal subsemigroup arising from",
         " removing whole non-maximal non-regular D-class...");
       else # <classes[i]> is regular; lots of work to be done
@@ -772,8 +777,8 @@ else
             if not ForAny(h, x -> x in known) then
               didtest := true;
               V := Semigroup(U, h);
-              # Above line could be: V:=HClassClosure(Semigroup(U, h)); but this
-              # is slower
+              # Above line could be: V:=HClassClosure(Semigroup(U, h));
+              # but this is slower
               if ForAll(XX, x -> not x in V) then # i.e. check that V<>S
                 ismax := false;
                 if ForAll(new_known, x -> not x in V) then
@@ -789,17 +794,18 @@ else
           if ismax then
             if not ForAny(out, W -> IsSubsemigroup(W, U)) then
               Add(out, Semigroup(U, ideal));
-              Info(InfoSemigroups, 2, "found maximal subsemigroup arising from",
-              " UnionOfHClassRecursion");
+              Info(InfoSemigroups, 2, "found maximal subsemigroup arising ",
+              "from UnionOfHClassRecursion");
             fi;
           fi;
           return;
         end;
 
-        # Case 1: Max. subsemigroups which intersect every H-class of classes[i]
+        # Case 1: Max subsemigroups which intersect every H-class of classes[i]
         Info(InfoSemigroups, 2, "Case 1: Looking for maximal subsemigroups ",
           "which intersect every H-class");
-        gens3 := gens{lookup[i]}; # gens3 is the set of generators in classes[i]
+        # gens3 is the set of generators in classes[i]
+        gens3 := gens{lookup[i]};
         gens2 := Difference(ShallowCopy(gens), gens3);
         U := Semigroup(gens2);
 
@@ -859,11 +865,11 @@ else
           ii := 1;
           jj := graph.adjacencies[1][1] - I;
 
-          # For each max subgroup, start recursion with basic gens, and gens for
-          # H_ii,jj
+          # For each max subgroup, start recursion with basicgens,
+          # and gens for H_ii,jj
           for H in MaximalSubgroups(G) do
-            for UU in MaximalSubsemigroupsNC(R, H, graph, components, basicgens,
-              [ii, jj]) do
+            for UU in MaximalSubsemigroupsNC(R, H, graph, components,
+              basicgens, [ii, jj]) do
               UU := Semigroup(Images(inj, GeneratorsOfSemigroup(UU)), U);
               # UU (plus the ideal) is either maximal or equals S. So check
               # if it lacks some of our generating set
@@ -884,7 +890,8 @@ else
           Info(InfoSemigroups, 2, "found no such results.");
         fi;
 
-        # Case 2: Max subsemigroups which are a union of H-classes in classes[i]
+        # Case 2: Max subsemigroups which are
+        # a union of H-classes in classes[i]
         Info(InfoSemigroups, 2, "Case 2: Looking for maximal subsemigroups ",
           "which are a union of H-classes.");
         for k in [1 .. Length(lookup[i])] do
