@@ -7,6 +7,10 @@
 ##
 #############################################################################
 
+2.2 -> 2.3  
+	    This is a minor release including some internal refactoring, and
+	    subsequent bugfixes, and stability improvements.
+
 2.1.1 -> 2.2 
 	    This is a minor release including some bug fixes, performance
 	    improvements, and additional functionality. 
