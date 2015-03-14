@@ -138,7 +138,7 @@ function(line)
 
   while i < Length(line) do
     m := Int([line[i]]);                                      # blocksize
-    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]}));       # max domain
+    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]})); # max domain
     f := line{[m + i + 1 .. i + m * (deg + 1)]};
     k := k + 1;
     out[k] := EmptyPlist(deg);

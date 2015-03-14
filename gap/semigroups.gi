@@ -546,7 +546,8 @@ function(s, coll, record)
 
   if not ElementsFamily(FamilyObj(s)) = FamilyObj(Representative(coll)) then
     Error("Semigroups: ClosureInverseSemigroup: usage,\n",
-          "the semigroup and collection of elements are not of the same type,");
+          "the semigroup and collection of elements are not of the same ",
+          "type,");
     return;
   fi;
 
@@ -659,7 +660,8 @@ function(s, coll, record)
 
   if not ElementsFamily(FamilyObj(s)) = FamilyObj(Representative(coll)) then
     Error("Semigroups: ClosureSemigroup: usage,\n",
-          "the semigroup and collection of elements are not of the same type,");
+          "the semigroup and collection of elements are not of the same ",
+          "type,");
     return;
   fi;
 
@@ -746,7 +748,8 @@ function(s, coll, opts)
 
   # init the semigroup or monoid
   if IsMonoid(s) and One(coll) = One(s) then
-    # it can be that these One's differ, and hence we shouldn't call Monoid here
+    # it can be that these One's differ, and hence we shouldn't call Monoid
+    # here
     t := Monoid(s, coll, opts);
   else
     t := Semigroup(s, coll, opts);
@@ -936,7 +939,8 @@ function(s, coll, opts)
     fi;
 
     rhox := rho(x);
-    l := htvalue(rho_ht, rhox); #l<>fail since we have copied the old rho values
+    l := htvalue(rho_ht, rhox);
+    #l<>fail since we have copied the old rho values
 
     if not IsBound(lambdarhoht[l]) then
     # old rho-value, but new lambda-rho-combination

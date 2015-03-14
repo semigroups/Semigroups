@@ -22,7 +22,8 @@ end);
 
 InstallMethod(ViewString,
 "for a bipartition semigroup ideal with ideal generators",
-[IsBipartitionSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsBipartitionSemigroup and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal],
 function(I)
   local str, nrgens;
 
@@ -189,7 +190,8 @@ end);
 # this is just a composition of IsomorphismTransformationSemigroup and the
 # method below for IsomorphismBipartitionSemigroup...
 
-InstallMethod(IsomorphismBipartitionSemigroup, "for a semigroup", [IsSemigroup],
+InstallMethod(IsomorphismBipartitionSemigroup, "for a semigroup",
+[IsSemigroup],
 function(S)
   local en, act, gens;
 
@@ -202,8 +204,9 @@ function(S)
     return Position(en, x);
   end;
 
-  gens := List(en, x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1],
-   act), Length(en) + 1));
+  gens := List(en, x ->
+               AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),
+               Length(en) + 1));
 
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
    x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),

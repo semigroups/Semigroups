@@ -205,14 +205,14 @@ function(cong)
         Size(cong!.rowBlocks), ")>");
 end);
 
-#
+#FIXME this should use find minimal congruences and then use JoinOfCongruences
 
 InstallMethod(CongruencesOfSemigroup,
 "for finite simple Rees matrix semigroup",
 [IsReesMatrixSemigroup and IsSimpleSemigroup and IsFinite],
 function(s)
-  local subpartitions, congs, mat, g, AddRelation, colBlocksList, rowBlocksList,
-        n, colBlocks, rowBlocks;
+  local subpartitions, congs, mat, g, AddRelation, colBlocksList,
+        rowBlocksList, n, colBlocks, rowBlocks;
 
   # Function to compute all subsets of a relation given by partitions
   subpartitions := function(part)
@@ -254,7 +254,8 @@ function(s)
     for colBlocks in colBlocksList do
       for rowBlocks in rowBlocksList do
         if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-          Add(congs, RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
+          Add(congs,
+              RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
         fi;
       od;
     od;

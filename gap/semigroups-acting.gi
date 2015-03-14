@@ -148,8 +148,8 @@ function(x, S)
 
   if not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0 and
-      ActionRank(S)(x) > MaximumList(List(Generators(S), y -> ActionRank(S)(y)))
-     then
+      ActionRank(S)(x) >
+      MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
        "semigroup");
       return false;
@@ -271,8 +271,8 @@ function(f, s)
     return false;
   fi;
 
-  # must use LambdaOrb(s) and not a graded lambda orb as LambdaOrbRep(o, m) when
-  # o is graded, is just f and hence \in will always return true!!
+  # must use LambdaOrb(s) and not a graded lambda orb as LambdaOrbRep(o, m)
+  # when o is graded, is just f and hence \in will always return true!!
   m := OrbSCCLookup(o)[lambda_l];
 
   if OrbSCCLookup(o)[rho_l] <> m then

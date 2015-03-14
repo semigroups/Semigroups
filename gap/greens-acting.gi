@@ -1735,7 +1735,7 @@ end);
 InstallMethod(Idempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
-  if HasIsRegularClass(D) and not IsRegularClass(D) then 
+  if HasIsRegularClass(D) and not IsRegularClass(D) then
     # this avoids creating the R-classes, which is an unnecessary overhead
     return [];
   fi;
