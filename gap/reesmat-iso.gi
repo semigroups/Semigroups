@@ -8,8 +8,8 @@
 #############################################################################
 ##
 
-# this file contains functions for isomorphisms and automorphisms of Rees matrix
-# and 0-matrix semigroup.
+# this file contains functions for isomorphisms and automorphisms of Rees
+# matrix and 0-matrix semigroup.
 
 #InstallGlobalFunction(HashFunctionMatrixOfRMS,
 #function(P, data)
@@ -705,8 +705,9 @@ function(a1, a2)
   f1 := a1!.triple[3];
   f2 := a2!.triple[3];
 
-  return RMSIsoByTriple(Source(a1), Range(a2), [l1 * l2, g1 * g2, List([1 .. n],
-   x -> f2[x ^ l1] * f1[x] ^ g2)]);
+  return RMSIsoByTriple(Source(a1), Range(a2),
+                        [l1 * l2, g1 * g2, List([1 .. n],
+                        x -> f2[x ^ l1] * f1[x] ^ g2)]);
 end);
 
 #
@@ -761,8 +762,9 @@ function(triple, x)
   lambda := triple[1];
   gamma := triple[2];
   f := triple[3];
-  return RMSElement(Range(triple), i ^ lambda, f[i] * ImageElm(gamma, g) / f[j],
-   j ^ lambda - m);
+  return RMSElement(Range(triple), i ^ lambda,
+                    f[i] * ImageElm(gamma, g) / f[j],
+                    j ^ lambda - m);
 end);
 
 #

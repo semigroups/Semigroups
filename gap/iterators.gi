@@ -222,9 +222,9 @@ function(record)
   return IteratorByFunctions(iter);
 end);
 
-# <baseiter> should be an iterator where NextIterator(baseiter) has a method for
-# Iterator. More specifically, if iter:=Iterator(x) where <x> is a returned
-# value of convert(NextIterator(baseiter)), then NextIterator of
+# <baseiter> should be an iterator where NextIterator(baseiter) has a method
+# for Iterator. More specifically, if iter:=Iterator(x) where <x> is a
+# returned value of convert(NextIterator(baseiter)), then NextIterator of
 # IteratorByIterOfIters returns NextIterator(iter) until IsDoneIterator(iter)
 # then iter is replaced by Iterator(convert(NextIterator(baseiter))) until
 # IsDoneIterator(baseiter), where <convert> is a function.
@@ -237,7 +237,8 @@ function(record, baseiter, convert, filts)
     or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator)
     or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then
     Error("Semigroups: IteratorByIterOfIters: usage,\n",
-          "the first arg <record> must be a record with no components named:\n",
+          "the first arg <record> must be a record with no components",
+          "named:\n",
           "`baseiter', `iterofiters', `IsDoneIterator', `NextIterator', or\n",
           "`ShallowCopy'");
     return;
@@ -260,7 +261,8 @@ function(record, baseiter, convert, filts)
 
   #
   record.IsDoneIterator := function(iter)
-    return IsDoneIterator(iter!.baseiter) and IsDoneIterator(iter!.iterofiters);
+    return IsDoneIterator(iter!.baseiter) and
+           IsDoneIterator(iter!.iterofiters);
   end;
 
   #
@@ -278,7 +280,8 @@ function(record, baseiter, convert, filts)
   end;
 
   #
-  record.ShallowCopy := iter -> rec(baseiter := baseiter, iterorfiters := fail);
+  record.ShallowCopy := iter -> rec(baseiter := baseiter,
+                                    iterorfiters := fail);
 
   iter := IteratorByFunctions(record);
 

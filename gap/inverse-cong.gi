@@ -55,8 +55,9 @@ function(s, kernel, traceBlocks)
           # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
           for e in traceClass do
             if a * e in kernel then
-              Error("Semigroups: InverseSemigroupCongruenceByCongruencePair:\n",
-                    "not a valid congruence pair,");
+              Error(
+                "Semigroups: InverseSemigroupCongruenceByCongruencePair:\n",
+                "not a valid congruence pair,");
               return;
             fi;
           od;
@@ -198,8 +199,9 @@ InstallMethod(EquivalenceClassOfElementNC,
 function(cong, elm)
   local fam, class;
   fam := FamilyObj(Range(cong));
-  class := Objectify(NewType(fam, InverseSemigroupCongruenceClassByKernelTrace),
-                   rec(rep := elm));
+  class := Objectify(NewType(fam,
+                     InverseSemigroupCongruenceClassByKernelTrace),
+                     rec(rep := elm));
   SetParentAttr(class, cong);
   SetRepresentative(class, elm);
   return class;

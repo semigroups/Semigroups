@@ -121,8 +121,9 @@ function(S)
   iter := IteratorOfDClasses(S);
 
   for d in iter do
-    if IsRegularDClass(d) and (ForAny(RClasses(d), x -> NrIdempotents(x) > 1) or
-      NrRClasses(d) <> NrLClasses(d)) then
+    if IsRegularDClass(d) and
+       (ForAny(RClasses(d), x -> NrIdempotents(x) > 1)
+        or NrRClasses(d) <> NrLClasses(d)) then
       return false;
     fi;
   od;
@@ -131,7 +132,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsBrandtSemigroup, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsBrandtSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
 S -> IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S));
 
 # same method for inverse ideals
@@ -288,8 +290,8 @@ end);
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsCliffordSemigroup);
 
-# Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
-# causes problems.
+# Notes: this test required to avoid conflict with Smallsemi,
+# DeclareSynonymAttr causes problems.
 
 #same method for ideals
 
@@ -776,7 +778,8 @@ function(S)
   if not IsInverseSemigroup(S) then
     return false;
   fi;
-  return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(S)));
+  return IsMonogenicInverseSemigroup(
+          Range(IsomorphismPartialPermSemigroup(S)));
 end);
 
 # same method for ideals
@@ -1236,7 +1239,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsSimpleSemigroup, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsSimpleSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
 function(S)
   local gens, lambdafunc, lambdarank, rank, opts, o, pos, iter, name, f;
 

@@ -868,7 +868,10 @@ InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    return fail; # error message won't fit!
+    Error(
+    "Semigroups: SingularFactorisableDualSymmetricInverseSemigroup: usage\n",
+    "the argument must be greater than 1");
+    return;
   fi;
 
   blocks := [[1, 2, -1, -2]];

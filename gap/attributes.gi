@@ -26,7 +26,7 @@
 
 # same method for ideals
 
-InstallMethod(IsMultiplicativeZero, 
+InstallMethod(IsMultiplicativeZero,
 "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(S, x)
@@ -549,7 +549,7 @@ function(s, f)
      opts := rec(treehashsize := s!.opts.hashlen.M,
                  gradingfunc := function(o, x) return lambdarank(x); end,
                  onlygrades := function(x, y) return x >= rank; end,
-                 onlygradesdata := fail); 
+                 onlygradesdata := fail);
 
     for name in RecNames(LambdaOrbOpts(s)) do
       opts.(name) := LambdaOrbOpts(s).(name);
