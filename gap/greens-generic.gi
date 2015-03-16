@@ -167,7 +167,7 @@ function(C)
   elif IsGreensJClass(C) then 
     Append(str, "J");
   fi;
-  Append(str, "-class of: ");
+  Append(str, "-class: ");
   Append(str, ViewString(Representative(C)));
   Append(str, ">\<");
   
