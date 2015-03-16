@@ -282,9 +282,19 @@ function(d)
   # FIXME remove this hack!
   if IsMatrixSemigroupGreensClass(d) and
    IsNullMapMatrixGroup(SchutzenbergerGroup(d)) then 
-    null := SchutzenbergerGroup(d).1;
-    return MappingByFunction(d, ReesMatrixSemigroup(Group(()), [[()]]), 
-                               x -> (), x-> null);
+
+    rms := ReesMatrixSemigroup(Group(()), [[()]]);
+    
+    iso := function(x)
+      return Objectify(TypeReesMatrixSemigroupElements(rms),
+                       [1, (), 1, Matrix(rms)]);
+    end;
+
+    null := Representative(d);
+    hom := MappingByFunction(d, rms, iso, x-> null);
+    SetIsInjective(hom, true);
+    SetIsTotal(hom, true);
+    return hom;
   fi;
 
   g := GroupHClass(d);

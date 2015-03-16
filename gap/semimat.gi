@@ -326,6 +326,18 @@ function(S)
   Print(">");
 end);
 
+InstallMethod(PrintObj, "for a matrix semigroup with generators",
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local l;
+  l := GeneratorsOfSemigroup(S);
+  if Length(l) = 0 then
+    Print("Semigroup([])");
+  else
+    Print("Semigroup(",l,")");
+  fi;
+end);
+
 InstallMethod(ViewObj,
 "for a matrix semigroup ideal with generators of semigroup ideal",
 [IsMatrixSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
@@ -342,18 +354,6 @@ function(S)
     Print("s");
   fi;
   Print(">");
-end);
-
-InstallMethod( PrintObj, "for a matrix semigroup",
-[ IsMatrixSemigroup ],
-function(S)
-  local l;
-  l := GeneratorsOfSemigroup(S);
-  if Length(l) = 0 then
-    Print("Semigroup([])");
-  else
-    Print("Semigroup(",l,")");
-  fi;
 end);
 
 # Note that this method assumes that the object is
