@@ -151,6 +151,7 @@ end);
 InstallMethod(ViewString, "for a Green's class",
 [IsGreensClass],
 function(C)
+  local str;
   
   str := "\><";
   Append(str, "\>Green's\< ");
@@ -166,9 +167,42 @@ function(C)
   elif IsGreensJClass(C) then 
     Append(str, "J");
   fi;
-  Append(str, "-class of ");
+  Append(str, "-class of: ");
   Append(str, ViewString(Representative(C)));
   Append(str, ">\<");
+  
+  return str;
+end);
+
+InstallMethod(PrintObj, "for a Green's class",
+[IsGreensClass], 
+function(C)
+  Print(PrintString(C));
+  return;
+end);
+
+InstallMethod(PrintString, "for a Green's class",
+[IsGreensClass],
+function(C)
+  local str;
+  
+  str := "\>\>\>Greens";
+  if IsGreensDClass(C) then 
+    Append(str, "D");
+  elif IsGreensRClass(C) then 
+    Append(str, "L");
+  elif IsGreensLClass(C) then 
+    Append(str, "L");
+  elif IsGreensHClass(C) then 
+    Append(str, "H");
+  elif IsGreensJClass(C) then 
+    Append(str, "J");
+  fi;
+  Append(str, "ClassOfElement\<(\>");
+  Append(str, PrintString(Parent(C)));
+  Append(str, ",\< \>");
+  Append(str, PrintString(Representative(C)));
+  Append(str, "\<)\<\<");
   
   return str;
 end);
