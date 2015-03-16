@@ -55,6 +55,8 @@ function(o, m, elt)
   bound := Size(LambdaOrbSchutzGp(o, m));
   nrgens := 0;
   stop := false;
+  
+  one := LambdaIdentity(S)(ActionDegree(S));
 
   for k in scc do
     uword := TraceSchreierTreeOfSCCForward(o, m, k);
@@ -67,7 +69,7 @@ function(o, m, elt)
         if not IsBound(ex) then
           nrgens := nrgens + 1;
           factors[nrgens] := Concatenation(uword, [l], vword);
-          ex := Orb([f], (), PROD, rec(hashlen := 2 * bound, schreier := true,
+          ex := Orb([f], one, PROD, rec(hashlen := 2 * bound, schreier := true,
                 log := true));
           Enumerate(ex);
         elif not f in ex then

@@ -11,6 +11,23 @@
 
 # from here 
 
+InstallImmediateMethod(IsNullMatMatrixGroup, IsGroup and HasGeneratorsOfGroup,
+0, 
+function(G)
+  if Length(GeneratorsOfGroup(G)) = 1 and
+      IsNullMapMatrix(GeneratorsOfGroup(G)[1]) then 
+    return true;
+  else
+    return false;
+  fi;
+end);
+
+InstallMethod(\^, "for a null mat matrix group and matrix",
+[IsNullMatMatrixGroup, IsMatrix], 
+function(x, mat)
+  return x;
+end);
+
 InstallMethod(\*, "for a right coset and null map matrix",
 [IsRightCoset, IsNullMapMatrix], 
 function(coset, x)
@@ -20,6 +37,12 @@ end);
 InstallMethod(\^, "for a null map matrix and int",
 [IsNullMapMatrix, IsInt], 
 function(x, n)
+  return x;
+end);
+
+InstallMethod(\^, "for a null map matrix and matrix",
+[IsNullMapMatrix, IsMatrix], 
+function(x, m)
   return x;
 end);
 

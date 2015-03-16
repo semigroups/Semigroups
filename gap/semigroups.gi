@@ -1010,8 +1010,8 @@ function(s, coll, opts)
           # the Schutzenberger group is neither trivial nor symmetric group
            old := false;
             for n in [1 .. repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = ()
-                then
+              if SchutzGpMembership(s)(schutz, lambdaperm(reps[m][ind][n], x))
+                  then
                 old := true;
                 old_to_new[i] := repslookup[m][ind][n];
                 break;

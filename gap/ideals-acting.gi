@@ -519,7 +519,7 @@ function(data, limit, record)
       fi;
 
       for n in [1 .. repslens[m][ind]] do
-        if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = () then
+        if SchutzGpMembership(I)(schutz, lambdaperm(reps[m][ind][n], x)) then
           if pos <> fail then
             AddSet(poset[i], datalookup[repslookup[m][ind][n]]);
           fi;
@@ -818,7 +818,7 @@ function(x, I)
     # check if f already corresponds to an element of reps[m][ind]
     lambdaperm := LambdaPerm(I);
     for n in [1 .. repslens[m][ind]] do
-      if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = () then
+      if SchutzGpMembership(I)(schutz, lambdaperm(reps[m][ind][n], x)) then
         return true;
       fi;
     od;
@@ -859,8 +859,7 @@ function(x, I)
             return true;
           fi;
           for i in [n + 1 .. repslens[m][ind]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[m][ind][i], x)) = ()
-             then
+            if SchutzGpMembership(I)(schutz, lambdaperm(reps[m][ind][i], x)) then
               return true;
             fi;
           od;

@@ -39,15 +39,14 @@
 
 InstallMethod(RhoCosets, "for a regular class of an acting semigroup",
 [IsRegularClass and IsActingSemigroupGreensClass],
-function(x)
-  return [()];
+function(C)
+  local S;
+  S := Parent(C);
+  return [LambdaIdentity(S)(LambdaRank(S)(LambdaFunc(S)(Representative(C))))];
 end);
 
 InstallMethod(LambdaCosets, "for a regular class of an acting semigroup",
-[IsRegularClass and IsActingSemigroupGreensClass],
-function(x)
-  return [()];
-end);
+[IsRegularClass and IsActingSemigroupGreensClass], RhoCosets);
 
 # same method for inverse
 
