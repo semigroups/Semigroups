@@ -85,4 +85,31 @@ gap> DClasses(S);
       [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ])} ]
 
 #
+gap> S := Semigroup(
+> [ NewMatrix(IsPlistMatrixRep,GF(3),3,
+>    [ [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3), Z(3) ], 
+>      [ Z(3), 0*Z(3), Z(3)^0 ] ]), NewMatrix(IsPlistMatrixRep,GF(3),3,
+>    [ [ Z(3), Z(3), 0*Z(3) ], [ Z(3)^0, Z(3)^0, 0*Z(3) ], 
+>      [ Z(3)^0, Z(3)^0, 0*Z(3) ] ]) ]);;
+gap> Size(S);
+137
+gap> NrIdempotents(S);
+42
+gap> MinimalIdeal(S);
+<ideal of semigroup of 3x3 matrices over GF(3) with 1 generator>
+gap> Size(last);
+1
+gap> MultiplicativeZero(S);
+<immutable 3x3-matrix over GF(3)>
+gap> MinimalDClass(S);
+<Green's D-class: <immutable 3x3-matrix over GF(3)>>
+gap> MaximalSubsemigroups(S);
+[ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
+  <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
+gap> time;
+4281
+gap> List(last2, U-> IsMaximalSubsemigroup(S, U));
+[ true, true ]
+
+#
 gap> STOP_TEST("Semigroups package: matrix.tst");

@@ -18,6 +18,11 @@ function(C)
 end);
 
 # from here 
+InstallMethod(ImagesRepresentative, "for a general mapping and null map",
+[IsGeneralMapping, IsNullMapMatrix], 
+function(map, g)
+  return g;
+end);
 
 InstallImmediateMethod(IsNullMapMatrixGroup, IsGroup and HasGeneratorsOfGroup,
 0, 
