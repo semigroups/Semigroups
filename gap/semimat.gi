@@ -237,8 +237,8 @@ InstallGlobalFunction(MatrixObjLambdaConjugator,
 function(S, x, y)
    local xse, xhe, yse, yhe, he, h, p, q, i, RemoveZeroRows, res;
 
-    if x ^ ( - 1) <> fail then
-        res := List(x ^ ( - 1) * y, List);
+    if x ^ -1 <> fail then
+        res := List(x ^ -1 * y, List);
     elif IsZero(x) then
         res := [[One(BaseDomain(x))]];
     else
@@ -283,12 +283,9 @@ function(S, x, y)
     fi;
 end);
 
-#############################################################################
-##
-#M  ViewObj( <matsemigrp> )
-##
+#
 
-InstallMethod( ViewObj,
+InstallMethod(ViewObj,
 "for a matrix semigroup with generators",
 [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
 function(S)
@@ -308,6 +305,24 @@ function(S)
     Print(" matrices over ", BaseDomain(gens[1]));
     Print(" with ", Length(gens), " generator");
   fi;
+  if Length(gens) > 1 then
+    Print("s");
+  fi;
+  Print(">");
+end);
+
+InstallMethod(ViewObj,
+"for a matrix semigroup ideal with generators of semigroup ideal",
+[IsMatrixSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(S)
+  local gens, dims;
+  gens := GeneratorsOfSemigroupIdeal(S);
+  dims := DimensionsMat(gens[1]);
+  Print("<ideal of semigroup of ");
+  Print(dims[1], "x", dims[2]);
+  Print(" matrices over ", BaseDomain(gens[1]));
+  Print(" with ", Length(gens), " generator");
+  
   if Length(gens) > 1 then
     Print("s");
   fi;

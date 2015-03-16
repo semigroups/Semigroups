@@ -37,9 +37,9 @@ IsCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
 [IsActingSemigroupWithInverseOp, IsCollection]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement]);
+[IsActingSemigroupWithInverseOp, IsMultiplicativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
+[IsActingSemigroupWithInverseOp, IsMultiplicativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
 DeclareOperation("ClosureSemigroup",
@@ -47,9 +47,9 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsCollection]);
 DeclareOperation("ClosureSemigroup",
-[IsActingSemigroup, IsAssociativeElement, IsRecord]);
+[IsActingSemigroup, IsMultiplicativeElement, IsRecord]);
 DeclareOperation("ClosureSemigroup",
-[IsActingSemigroup, IsAssociativeElement]);
+[IsActingSemigroup, IsMultiplicativeElement]);
 DeclareGlobalFunction("ClosureSemigroupNC");
 
 DeclareGlobalFunction("ChangeDegreeOfTransformationSemigroupOrb");

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  matrix.tst
-#Y  Copyright (C) 2014                                    Markus Pfeiffer
+#Y  Copyright (C) 2015                                    Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

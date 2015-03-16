@@ -158,25 +158,28 @@ function(arg)
     return SemigroupIdealByGenerators(arg[1], arg[2]);
 
   # generators and collections of generators
-  elif IsAssociativeElement(arg[2])
-   or IsAssociativeElementCollection(arg[2]) then
+  elif (IsMultiplicativeElement(arg[2]) 
+        and IsGeneratorsOfSemigroup([arg[2]]))
+      or (IsMultiplicativeElementCollection(arg[2]) 
+          and IsGeneratorsOfSemigroup(arg[2])) 
+      or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then 
     out := [];
     for i in [2 .. Length(arg)] do
-      if IsAssociativeElement(arg[i]) then
+      #so that we can pass the options record in the Semigroups package 
+      if i = Length(arg) and IsRecord(arg[i]) then
+        return SemigroupByGenerators(out, arg[i]);
+      elif IsMultiplicativeElement(arg[i]) and IsGeneratorsOfSemigroup([arg[i]]) then
         Add(out, arg[i]);
-      elif IsAssociativeElementCollection(arg[i]) then
-        if HasGeneratorsOfSemigroup(arg[i]) then
-          Append(out, GeneratorsOfSemigroup(arg[i]));
-        elif HasGeneratorsOfSemigroupIdeal(arg[i]) then
+      elif IsGeneratorsOfSemigroup(arg[i]) then
+        if HasGeneratorsOfSemigroupIdeal(arg[i]) then
           Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
-        elif IsList(arg[i]) then
+        elif HasGeneratorsOfSemigroup(arg[i]) then
+          Append(out, GeneratorsOfSemigroup(arg[i]));
+        elif IsList(arg[i]) then 
           Append(out, arg[i]);
         else
-          Append(out, AsList(arg[1]));
+          Append(out, AsList(arg[i]));
         fi;
-      #so that we can pass the options record in the Semigroups package
-      elif i = Length(arg) and IsRecord(arg[i]) then
-        return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
         Error("Semigroups: SemigroupIdeal: usage,\n",
               "the second argument must be a",
@@ -198,8 +201,8 @@ end);
 #
 
 InstallMethod(SemigroupIdealByGenerators,
-"for an associative element collection",
-[IsActingSemigroup, IsAssociativeElementCollection],
+"for acting semigroup and collection",
+[IsActingSemigroup, IsCollection],
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, S!.opts);
 end);
@@ -207,8 +210,8 @@ end);
 #
 
 InstallMethod(SemigroupIdealByGenerators,
-"for an acting semigroup, associative element collection and record",
-[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
+"for an acting semigroup, collection, and record",
+[IsActingSemigroup, IsCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
   if not ForAll(gens, x -> x in S) then
@@ -224,6 +227,10 @@ function(S, gens, opts)
 
   if opts.acting then
     filts := filts and IsActingSemigroup;
+  fi;
+  
+  if IsMatrixSemigroup(S) then 
+    filts := filts and IsMatrixSemigroup;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));

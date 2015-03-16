@@ -11,7 +11,7 @@ DeclareSynonymAttr("GeneratorsOfSemigroupIdeal", GeneratorsOfMagmaIdeal);
 DeclareGlobalFunction("SemigroupIdeal");
 
 DeclareOperation("SemigroupIdealByGenerators",
-  [IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
+  [IsActingSemigroup, IsCollection, IsRecord]);
 
 DeclareOperation("MinimalIdealGeneratingSet",
 [IsActingSemigroup and IsSemigroupIdeal]);
