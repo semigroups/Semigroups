@@ -90,7 +90,7 @@ end);
 
 #
 
-InstallMethod(AsLookupTablee,
+InstallMethod(AsLookupTable,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
