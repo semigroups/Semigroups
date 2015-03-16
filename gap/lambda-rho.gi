@@ -420,6 +420,7 @@ function(o, m)
   fi;
 
   S := o!.parent;
+  scc := OrbSCC(o)[m];
   rank := RhoRank(S)(o[scc[1]]);
   bound := RhoBound(S)(rank);
   one := RhoIdentity(S)(rank);
@@ -433,7 +434,6 @@ function(o, m)
 
   gens := o!.gens;
   nrgens := Length(gens);
-  scc := OrbSCC(o)[m];
   lookup := o!.scc_lookup;
   orbitgraph := OrbitGraph(o);
   lambdaperm := LambdaPerm(S);
