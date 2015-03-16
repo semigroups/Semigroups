@@ -1,5 +1,5 @@
 # README file 
-#####`Semigroups' package for by James Mitchell et al.
+#### `Semigroups' package for by James Mitchell et al.
   
 ## Getting Semigroups
 
