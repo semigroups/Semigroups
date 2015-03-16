@@ -221,7 +221,6 @@ end);
 InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U;
   return function(x)
     if x![1] = 0 then
       return 0;
@@ -315,7 +314,7 @@ InstallMethod(LambdaAct, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], x -> function(pt, x)
   if x![1] = 0 or pt = 0 then
     return 0;
-  elif pt = - 1 or x![4][pt][x![1]] <> 0 then
+  elif pt = -1 or x![4][pt][x![1]] <> 0 then
     return x![3];
   else
     return 0;
@@ -343,7 +342,7 @@ end);
 InstallMethod(RhoAct, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s ->
   function(set, f)
-    return OnPosIntSetsPartialPerm(set, f ^ - 1);
+    return OnPosIntSetsPartialPerm(set, f ^ -1);
   end);
 
 InstallMethod(RhoAct, "for a partial perm semigroup",
@@ -353,7 +352,7 @@ InstallMethod(RhoAct, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], x -> function(pt, x)
   if x![1] = 0 or pt = 0 then
     return 0;
-  elif pt = - 1 or x![4][x![3]][pt] <> 0 then
+  elif pt = -1 or x![4][x![3]][pt] <> 0 then
     return x![1];
   else
     return 0;
@@ -379,7 +378,7 @@ InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> EmptyBlocks);
 
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> - 1);
+[IsReesZeroMatrixSubsemigroup], s -> -1);
 
 InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 [IsMatrixSemigroup],
@@ -403,7 +402,7 @@ InstallMethod(RhoOrbSeed, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> EmptyBlocks);
 
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> - 1);
+[IsReesZeroMatrixSubsemigroup], s -> -1);
 
 InstallMethod(RhoOrbSeed, "for a matrix semigroup",
 [IsMatrixSemigroup], LambdaOrbSeed);
@@ -543,7 +542,7 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s -> function(x, f)
-                                 return f ^ - 1;
+                                 return f ^ -1;
                                end);
 
 InstallMethod(LambdaInverse, "for a bipartition semigroup",
@@ -558,7 +557,7 @@ function(k, x)
   fi;
   i := First([1 .. Length(x![4][x![3]])], i -> x![4][x![3]][i] <> 0);
   return Objectify(FamilyObj(x)!.type,
-   [i, (x![4][k][x![1]] * x![2] * x![4][x![3]][i]) ^ - 1, k, x![4]]);
+   [i, (x![4][k][x![1]] * x![2] * x![4][x![3]][i]) ^ -1, k, x![4]]);
 end);
 
 InstallMethod(LambdaInverse, "for a matrix semigroup",
@@ -576,7 +575,7 @@ InstallMethod(RhoInverse, "for a transformation semigroup",
 InstallMethod(RhoInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s ->
   function(dom, f)
-    return f ^ - 1;
+    return f ^ -1;
   end);
 
 #JDM better method for this!!
@@ -590,7 +589,7 @@ function(k, x)
   fi;
   i := First([1 .. Length(x![4])], i -> x![4][i][x![1]] <> 0);
   return Objectify(FamilyObj(x)!.type,
-    [k, (x![4][i][x![1]] * x![2] * x![4][x![3]][k]) ^ - 1, i, x![4]]);
+    [k, (x![4][i][x![1]] * x![2] * x![4][x![3]][k]) ^ -1, i, x![4]]);
 end);
 
 InstallMethod(RhoInverse, "for a bipartition semigroup",
@@ -752,7 +751,7 @@ function(x, y)
   if x![1] = 0 or y![1] = 0 then
     return ();
   fi;
-  return x![2] ^ - 1 * y![2];
+  return x![2] ^ -1 * y![2];
 end);
 
 InstallMethod(LambdaPerm, "for a matrix semigroup",
@@ -809,7 +808,7 @@ InstallMethod(IdempotentTester, "for a bipartition semigroup",
 
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
-function(j,i)
+function(j, i)
   if i = 0 and j = 0 then
     return true;
   fi;
@@ -836,14 +835,14 @@ InstallMethod(IdempotentCreator, "for a bipartition semigroup",
 
 InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
-function(j,i)
+function(j, i)
   local mat;
   if i = 0 and j = 0 then
     return Objectify(TypeReesMatrixSemigroupElements(R), [0]);
   fi;
   mat := Matrix(ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))));
   return Objectify(TypeReesMatrixSemigroupElements(R),
-     [i, mat[j][i] ^ - 1, j, mat]);
+     [i, mat[j][i] ^ -1, j, mat]);
 end);
 
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
@@ -957,7 +956,7 @@ InstallMethod(FakeOne, "for a bipartition collection",
 [IsBipartitionCollection], One);
 
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
-[IsReesZeroMatrixSemigroupElementCollection],  R -> UniversalFakeOne);
+[IsReesZeroMatrixSemigroupElementCollection], R -> UniversalFakeOne);
 
 # Matrix semigroup elements
 InstallMethod(FakeOne, "for an FFE coll coll coll",
@@ -967,15 +966,15 @@ InstallMethod(FakeOne, "for an FFE coll coll coll",
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
   function(x, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
-              data := hashlen );
+  return rec(func := SEMIGROUPS_HashFunctionRZMSE,
+             data := hashlen);
 end);
 
 InstallMethod(ChooseHashFunction, "for a bipartition",
 [IsBipartition, IsInt],
   function(x, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionBipartition,
-              data := hashlen );
+  return rec(func := SEMIGROUPS_HashFunctionBipartition,
+             data := hashlen);
 end);
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionBipartition,
@@ -983,7 +982,7 @@ function(x, data)
  return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements,
+InstallGlobalFunction(SEMIGROUPS_HashFunctionRZMSE,
 function(x, data)
   local p, l;
 
@@ -997,16 +996,16 @@ function(x, data)
   if IsPerm4Rep(p) then
     # is it a proper 4byte perm?
     if l > 65536 then
-      return (x![1] + x![3] + HashKeyBag(p,255,0,4 * l)) mod data + 1;
+      return (x![1] + x![3] + HashKeyBag(p, 255, 0, 4 * l)) mod data + 1;
     else
       # the permutation does not require 4 bytes. Trim in two
       # byte representation (we need to do this to get consistent
       # hash keys, regardless of representation.)
-      TRIM_PERM(p,l);
+      TRIM_PERM(p, l);
     fi;
   fi;
   # now we have a Perm2Rep:
-  return (x![1] + x![3] + HashKeyBag(p,255,0,2 * l)) mod data + 1;
+  return (x![1] + x![3] + HashKeyBag(p, 255, 0, 2 * l)) mod data + 1;
 end);
 
 #EOF

@@ -11,30 +11,30 @@
 
 #
 
-BindGlobal("SemigroupsDocXMLFiles", [ "../PackageInfo.g",
-                                      "attributes-inverse.xml",
-                                      "attributes.xml",
-                                      "bipartition.xml",
-                                      "blocks.xml",
-                                      "display.xml",
-                                      "examples.xml",
-                                      "factor.xml",
-                                      "freeband.xml",
-                                      "freeinverse.xml",
-                                      "greens.xml",
-                                      "ideals.xml",
-                                      "isomorph.xml",
-                                      "maximal.xml",
-                                      "normalizer.xml",
-                                      "orbits.xml",
-                                      "properties.xml",
-                                      "reesmat-cong.xml",
-                                      "semibipart.xml",
-                                      "semigroups.xml",
-                                      "semimat.xml",
-                                      "semipperm.xml",
-                                      "semitrans.xml",
-                                      "utils.xml"                 ]);
+BindGlobal("SemigroupsDocXMLFiles", ["../PackageInfo.g",
+                                     "attributes-inverse.xml",
+                                     "attributes.xml",
+                                     "bipartition.xml",
+                                     "blocks.xml",
+                                     "display.xml",
+                                     "examples.xml",
+                                     "factor.xml",
+                                     "freeband.xml",
+                                     "freeinverse.xml",
+                                     "greens.xml",
+                                     "ideals.xml",
+                                     "isomorph.xml",
+                                     "maximal.xml",
+                                     "normalizer.xml",
+                                     "orbits.xml",
+                                     "properties.xml",
+                                     "reesmat-cong.xml",
+                                     "semibipart.xml",
+                                     "semigroups.xml",
+                                     "semimat.xml",
+                                     "semipperm.xml",
+                                     "semitrans.xml",
+                                     "utils.xml"]);
 
 # arg is the number of threads, defaults to 2...
 
@@ -51,7 +51,7 @@ function(arg)
 
   Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
   dir_str :=
-   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath, "/tst");
   tst := DirectoryContents(dir_str);
   dir := Directory(dir_str);
 
@@ -181,17 +181,17 @@ function(file)
   Append(str, String(elapsed));
   Append(str, "ms\n");
 
-  if not IsBound( GAPInfo.TestData.START_TIME )  then
-      Error( "Semigroups: SemigroupsStopTest:\n",
-      "`STOP_TEST' command without `START_TEST' command for `", file, "'" );
+  if not IsBound(GAPInfo.TestData.START_TIME)  then
+      Error("Semigroups: SemigroupsStopTest:\n",
+      "`STOP_TEST' command without `START_TEST' command for `", file, "'");
       return;
   fi;
-  Print( GAPInfo.TestData.START_NAME, "\n" );
+  Print(GAPInfo.TestData.START_NAME, "\n");
 
-  SetAssertionLevel( GAPInfo.TestData.AssertionLevel );
-  Unbind( GAPInfo.TestData.AssertionLevel );
-  Unbind( GAPInfo.TestData.START_TIME );
-  Unbind( GAPInfo.TestData.START_NAME );
+  SetAssertionLevel(GAPInfo.TestData.AssertionLevel);
+  Unbind(GAPInfo.TestData.AssertionLevel);
+  Unbind(GAPInfo.TestData.START_TIME);
+  Unbind(GAPInfo.TestData.START_NAME);
   Print(str);
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", record.STOP_TEST);
@@ -220,11 +220,11 @@ end);
 
 InstallGlobalFunction(SemigroupsTestAll,
 function()
-  local dir_str, tst, dir, omit, ex, filesplit, test, stringfile, str, filename;
+  local dir_str, tst, dir, omit, filesplit, test, stringfile, str, filename;
 
   Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
   dir_str :=
-   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
+   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath, "/tst");
   tst := DirectoryContents(dir_str);
   dir := Directory(dir_str);
 
@@ -253,7 +253,7 @@ function()
         fi;
       od;
       if test then
-        Print("reading ", dir_str,"/", filename, " . . .\n");
+        Print("reading ", dir_str, "/", filename, " . . .\n");
         Test(Filename(dir, filename));
         Print("\n");
       fi;
@@ -266,7 +266,7 @@ end);
 
 InstallGlobalFunction(SemigroupsTestInstall,
 function()
-  Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
+  Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
    "testinstall.tst"));
   return;
 end);
@@ -276,8 +276,8 @@ end);
 InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return
-  ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"),
-  "main.xml",  SemigroupsDocXMLFiles, "Single" );
+  ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
+  "main.xml", SemigroupsDocXMLFiles, "Single");
 end);
 
 # if <arg> is some strings, then any example containing any of these strings is
@@ -302,7 +302,5 @@ function()
   SemigroupsStopTest("");
   return;
 end);
-
-
 
 #EOF

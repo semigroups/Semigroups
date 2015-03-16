@@ -12,12 +12,13 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#T# FreeInverseSemigroup (with default generators) and basic methods
+#T# FreeInverseTest1: Creating free inverse semigroups (with default 
+# generators) and basic methods
 gap> FreeInverseSemigroup(\<);
 Error, Semigroups: FreeInverseSemigroup: usage,
 FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
 ]),
-gap> FreeInverseSemigroup([]);
+gap> FreeInverseSemigroup([  ]);
 Error, Semigroups: FreeInverseSemigroup: usage,
 the number of generators of a free inverse semigroup must be non-zero,
 gap> FreeInverseSemigroup(20, "r");
@@ -41,7 +42,8 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
-#T# FreeInverseSemigroup (with named generators) and basic methods
+#T# FreeInverseTest2: Creating free inverse semigroups (with named
+# generators) and basic methods
 gap> S := FreeInverseSemigroup("a", "b", "c");
 <free inverse semigroup on the generators [ a, b, c ]>
 gap> Size(S);
@@ -54,14 +56,14 @@ gap> z := S.3;
 c
 gap> u := x^5 * y^3 * z;
 a*a*a*a*a*b*b*b*c
-gap> u^-1;
+gap> u ^ -1;
 c^-1*b^-1*b^-1*b^-1*a^-1*a^-1*a^-1*a^-1*a^-1
 gap>  x^2 * y = x^2 * y;
 true
 gap> x * x^-1 = y * y^-1;
 false
 
-#T# FreeInverseSemigroup: IsFreeInverseSemigroup
+#T# FreeInverseTest3: IsFreeInverseSemigroup
 gap> gens := Generators(FreeInverseSemigroup(2));
 [ x1, x2 ]
 gap> IsFreeInverseSemigroup(InverseSemigroup(gens));
@@ -72,7 +74,7 @@ gap> IsFreeInverseSemigroup(SymmetricGroup(3));
 Error, Semigroups: IsFreeInverseSemigroup:
 can not determine the answer
 
-#T# FreeInverseSemigroup: Iterator
+#T# FreeInverseTest4: Iterator for free inverse semigroups
 gap> iter := Iterator(FreeInverseSemigroup(["a", "b"]));
 <iterator>
 gap> for i in [1 .. 10] do
@@ -82,6 +84,16 @@ gap> NextIterator(iter);
 a*b
 gap> IsDoneIterator(iter);
 false
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(i);
+gap> Unbind(gens);
+gap> Unbind(iter);
+gap> Unbind(S);
+gap> Unbind(u);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(z);
 
 #E#
 gap> STOP_TEST("Semigroups package: freeinverse.tst");

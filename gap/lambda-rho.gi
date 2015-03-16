@@ -8,65 +8,6 @@
 #############################################################################
 ##
 
-# returns the element <f> premultiplied by RhoOrbMult so that the resulting
-# element has its RhoValue in the first position of its scc.
-
-# s, o, f, l, m
-
-InstallGlobalFunction(RectifyRho,
-function(arg)
-  local f, l, m;
-
-  if not IsClosed(arg[2]) then
-    Enumerate(arg[2], infinity);
-  fi;
-
-  f := arg[3];
-  if not IsBound(arg[4]) or arg[4] = fail then
-    l := Position(arg[2], RhoFunc(arg[1])(f));
-  else
-    l := arg[4];
-  fi;
-
-  if not IsBound(arg[5]) or arg[5] = fail then
-    m := OrbSCCLookup(arg[2])[l];
-  else
-    m := arg[5];
-  fi;
-
-  if l <> OrbSCC(arg[2])[m][1] then
-    f := RhoOrbMult(arg[2], m, l)[2] * f;
-  fi;
-  return rec(l := l, m := m, rep := f);
-end);
-
-#
-
-InstallGlobalFunction(RectifyLambda,
-function(arg)
-  local f, l, m;
-  if not IsClosed(arg[2]) then
-    Enumerate(arg[2], infinity);
-  fi;
-
-  f := arg[3];
-  if not IsBound(arg[4]) or arg[4] = fail then
-    l := Position(arg[2], LambdaFunc(arg[1])(f));
-  else
-    l := arg[4];
-  fi;
-  if not IsBound(arg[5]) or arg[5] = fail then
-    m := OrbSCCLookup(arg[2])[l];
-  else
-    m := arg[5];
-  fi;
-
-  if l <> OrbSCC(arg[2])[m][1] then
-    f := f * LambdaOrbMult(arg[2], m, l)[2];
-  fi;
-  return rec(l := l, m := m, rep := f);
-end);
-
 #
 
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",
@@ -99,7 +40,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
-  local scc, mults, one, gens, genpos, inv, trace, x, i;
+  local scc, gens, one, mults, genpos, inv, trace, i;
 
   scc := OrbSCC(o);
 
@@ -332,7 +273,7 @@ function(o, m)
     fi;
   fi;
 
-  RhoOrbSchutzGp(o, m, infinity);
+  RhoOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
 
@@ -380,7 +321,7 @@ end);
 
 InstallGlobalFunction(RhoOrbMult,
 function(o, m, i)
-  local mults, one, scc, gens, genpos, inv, trace, x;
+  local scc, gens, one, mults, genpos, inv, trace;
 
   if IsBound(o!.mults) then
     if IsBound(o!.mults[i]) then
@@ -462,12 +403,12 @@ function(o, m)
   return o!.mults;
 end);
 
-# JDM could use IsRegular here to speed up?
+# 
 
 InstallGlobalFunction(RhoOrbSchutzGp,
-function(o, m, bound)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, one, lbound, lambdaperm,
-   rep, rank, mults, stop, i, j;
+function(o, m)
+  local S, rank, bound, one, G, gens, nrgens, scc, lookup, orbitgraph,
+   lambdaperm, rep, mults, stop, i, j;
 
   if IsBound(o!.schutz) then
     if IsBound(o!.schutz[m]) then
@@ -478,42 +419,36 @@ function(o, m, bound)
     o!.schutzstab := EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  if bound = 1 then
-    o!.schutz[m] := g;
+  S := o!.parent;
+  rank := RhoRank(S)(o[scc[1]]);
+  bound := RhoBound(S)(rank);
+  one := RhoIdentity(S)(rank);
+  G := Group(one);
+  
+  if bound = 1 or rank = 0 then
+    o!.schutz[m] := G;
     o!.schutzstab[m] := false;
-    return g;
+    return G;
   fi;
 
-  s := o!.parent;
   gens := o!.gens;
   nrgens := Length(gens);
   scc := OrbSCC(o)[m];
   lookup := o!.scc_lookup;
   orbitgraph := OrbitGraph(o);
-  lambdaperm := LambdaPerm(s);
+  lambdaperm := LambdaPerm(S);
   rep := RhoOrbRep(o, m);
   mults := RhoOrbMults(o, m);
 
-  rank := RhoRank(s)(o[scc[1]]);
-
-  one := RhoIdentity(s)(rank);
-
-  if rank = 0 then
-    o!.schutzstab[m] := false;
-    o!.schutz[m] := Group(one);
-    return o!.schutz[m];
-  fi;
-
-  g := Group(one);
   stop := false;
-
+  
   for i in scc do
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
-        g := ClosureGroup(g,
-         lambdaperm(rep, mults[orbitgraph[i][j]][2] * gens[j] * mults[i][1] *
-         rep));
-        if Size(g) >= bound then
+        G := ClosureGroup(G,
+           lambdaperm(rep, mults[orbitgraph[i][j]][2] * gens[j] * mults[i][1] *
+            rep));
+        if Size(G) >= bound then
           stop := true;
           break;
         fi;
@@ -523,16 +458,16 @@ function(o, m, bound)
         break;
     fi;
   od;
-  o!.schutz[m] := g;
+  o!.schutz[m] := G;
 
   if stop then
     o!.schutzstab[m] := true;
-  elif Size(g) = 1 then
+  elif Size(G) = 1 then
     o!.schutzstab[m] := false;
-  elif IsPermGroup(g) then
-    o!.schutzstab[m] := StabChainImmutable(g);
+  elif IsPermGroup(G) then
+    o!.schutzstab[m] := StabChainImmutable(G);
   else # if IsMatrixGroup(g)
-    o!.schutzstab[m] := g;
+    o!.schutzstab[m] := G;
   fi;
-  return g;
+  return G;
 end);

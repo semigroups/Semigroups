@@ -9,12 +9,12 @@
 ##
 
 if not IsBound(Splash) then #This function is written by A. Egri-Nagy
-  if ARCH_IS_MAC_OS_X( ) then
-    BindGlobal("VizViewers", ["xpdf","open","evince", "okular", "gv"]);
-  elif ARCH_IS_UNIX( ) then
-    BindGlobal("VizViewers", ["xpdf","xdg-open","evince", "okular", "gv"]);
-  elif ARCH_IS_WINDOWS( ) then
-    BindGlobal("VizViewers", ["xpdf","evince", "okular", "gv"]);
+  if ARCH_IS_MAC_OS_X() then
+    BindGlobal("VizViewers", ["xpdf", "open", "evince", "okular", "gv"]);
+  elif ARCH_IS_UNIX() then
+    BindGlobal("VizViewers", ["xpdf", "xdg-open", "evince", "okular", "gv"]);
+  elif ARCH_IS_WINDOWS() then
+    BindGlobal("VizViewers", ["xpdf", "evince", "okular", "gv"]);
   fi;
 
   BindGlobal("Splash",
@@ -51,10 +51,10 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
       if not opt.directory in DirectoryContents(path) then
         Exec(Concatenation("mkdir ", path, opt.directory));
       fi;
-      dir := Concatenation(path,opt.directory,"/");
+      dir := Concatenation(path, opt.directory, "/");
     elif IsBound(opt.path) then
       if not "tmp.viz" in DirectoryContents(path) then
-        tdir := Directory(Concatenation(path,"/","tmp.viz"));
+        tdir := Directory(Concatenation(path, "/", "tmp.viz"));
         dir := Filename(tdir, "");
       fi;
     else
@@ -74,7 +74,7 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
       viewer := opt.viewer;
     else
       viewer := First(VizViewers, x ->
-       Filename(DirectoriesSystemPrograms(),x) <> fail);
+       Filename(DirectoriesSystemPrograms(), x) <> fail);
     fi;
 
     # type
@@ -101,14 +101,14 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
 
     if type = "latex" then
       FileString(Concatenation(dir, file, ".tex"), arg[1]);
-      Exec(Concatenation("cd ",dir,"; ","pdflatex ",dir,file,
+      Exec(Concatenation("cd ", dir, "; ", "pdflatex ", dir, file,
        " 2>/dev/null 1>/dev/null"));
       Exec(Concatenation(viewer, " ", dir, file,
        ".pdf 2>/dev/null 1>/dev/null &"));
     elif type = "dot" then
-      FileString(Concatenation(dir,file,".dot"),arg[1]);
-      Exec(Concatenation("dot -T",filetype," ",dir,file,".dot"," -o ",
-       dir,file,".",filetype));
+      FileString(Concatenation(dir, file, ".dot"), arg[1]);
+      Exec(Concatenation("dot -T", filetype, " ", dir, file, ".dot", " -o ",
+       dir, file, ".", filetype));
       Exec (Concatenation(viewer, " ", dir, file, ".", filetype,
        " 2>/dev/null 1>/dev/null &"));
     fi;
@@ -290,7 +290,8 @@ end);
 
 InstallGlobalFunction(TikzStringForBipartition,
 function(arg)
-  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i, k;
+  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i,
+  k;
 
   fill := i -> "  \\fill(";
   draw := i -> "  \\draw(";
@@ -315,7 +316,7 @@ function(arg)
   for j in [1 .. Length(ext)] do
     block := ext[j];
     Append(str, "\n");
-    Append(str, "  %block #");
+    Append(str, "  %block number ");
     Append(str, String(j));
     Append(str, "\n");
     Append(str, "  %vertices and labels\n");
@@ -333,12 +334,12 @@ function(arg)
         Append(str, "\n");
       else
         Append(str, fill(j));
-        Append(str, ViewString( - i));
+        Append(str, ViewString(- i));
         Append(str, ",0)circle(.125);\n");
         Append(str, draw(j));
-        Append(str, ViewString( - i));
+        Append(str, ViewString(- i));
         Append(str, ", -0.2) node [below] {{ $-");
-        Append(str, ViewString( - i));
+        Append(str, ViewString(- i));
         Append(str, "$}};");
         Append(str, "\n");
       fi;
@@ -370,20 +371,20 @@ function(arg)
       elif block[i - 1] < 0 and block[i] < 0 then
         AddSet(down, block[i - 1]);
         AddSet(down, block[i]);
-        Append(str,  draw(j));
-        Append(str, ViewString( - block[i - 1]));
+        Append(str, draw(j));
+        Append(str, ViewString(- block[i - 1]));
         Append(str, ",0.125) .. controls (");
-        Append(str, ViewString( - block[i - 1]));
+        Append(str, ViewString(- block[i - 1]));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5 + ( - 1 / (2 * n)) * (block[i] -
+        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n)) * (block[i] -
         block[i - 1]))));
         Append(str, ") and (");
-        Append(str, ViewString( - block[i]));
+        Append(str, ViewString(- block[i]));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5 + ( - 1 / (2 * n)) * (block[i] -
+        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n)) * (block[i] -
         block[i - 1]))));
         Append(str, ") .. (");
-        Append(str, ViewString( - block[i]));
+        Append(str, ViewString(- block[i]));
         Append(str, ",0.125);\n");
       elif block[i - 1] > 0 and block[i] < 0 then
         AddSet(down, block[i]);
@@ -531,7 +532,7 @@ function(s, opts)
               fi;
             fi;
             if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"", color , "\">", gp,
+              Append(str, Concatenation("<TD BGCOLOR=\"", color, "\">", gp,
               "</TD>"));
             else
               Append(str, Concatenation("<TD BGCOLOR=\"", color, "\""));
@@ -550,7 +551,7 @@ function(s, opts)
                 color := opts.highlight[pos].HighlightNonGroupHClassColor;
               fi;
             fi;
-            Append(str, Concatenation("<TD BGCOLOR=\"", color ,"\"></TD>"));
+            Append(str, Concatenation("<TD BGCOLOR=\"", color, "\"></TD>"));
           fi;
         od;
       fi;
@@ -607,7 +608,7 @@ function(S)
   #if Length(rel)<20 then
   #  Append(str,  "graph graphname {\n  node [shape=circle]\n");
   #else
-    Append(str,  "graph graphname {\n  node [shape=point]\n");
+    Append(str, "graph graphname {\n  node [shape=point]\n");
   #fi;
   Append(str, "ranksep=2;\n");
 

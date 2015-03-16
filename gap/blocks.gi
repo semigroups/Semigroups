@@ -8,19 +8,11 @@
 #############################################################################
 ##
 
-# local declarations
-
 # blocks are stored internally as a list consisting of:
 # [ nr of blocks, internal rep of blocks, transverse blocks ]
-# <nr of blocks> is a non-negative integer, <internal rep of blocks>[i]=j if <i>
-# belongs to the <j>th block, <transverse blocks>[j]=1 if block <j> is
+# <nr of blocks> is a non-negative integer, <internal rep of blocks>[i]=j if
+# <i> belongs to the <j>th block, <transverse blocks>[j]=1 if block <j> is
 # transverse and 0 if it is not.
-
-BindGlobal("BlocksFamily", NewFamily("BlocksFamily",
- IsBlocks, CanEasilySortElements, CanEasilySortElements));
-
-BindGlobal("BlocksType", NewType(BlocksFamily,
- IsBlocks and IsComponentObjectRep and IsAttributeStoringRep));
 
 #
 
@@ -227,9 +219,9 @@ end);
 
 InstallMethod(ChooseHashFunction, "for blocks",
 [IsBlocks, IsInt],
-function(t,hashlen)
+function(t, hashlen)
   return rec(func := SEMIGROUPS_HashFunctionForBlocks, data := hashlen);
-end );
+end);
 
 #
 
@@ -267,7 +259,7 @@ end);
 
 InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks],
 function(blocks)
-  local n, bl, ext, i;
+  local n, ext, i;
 
   n := DegreeOfBlocks(blocks);
   ext := [];
@@ -279,7 +271,7 @@ function(blocks)
     if blocks[blocks[i] + n] = 1 then
       Add(ext[blocks[i]], i);
     else
-      Add(ext[blocks[i]], - i);
+      Add(ext[blocks[i]], -i);
     fi;
   od;
   return ext;
@@ -331,68 +323,6 @@ function(blocks)
     fi;
   od;
   return BipartitionByIntRepNC(out);
-end);
-
-#
-
-InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, tab, out, nrblocks, i;
-
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  tab := EmptyPlist(2 * n);
-  out := [];
-  nrblocks := 0;
-
-  for i in [n + 1 .. 2 * n] do
-    if not IsBound(tab[blocks[i]]) then
-      nrblocks := nrblocks + 1;
-      tab[blocks[i]] := nrblocks;
-      if blocks[i] <= NrLeftBlocks(f) then
-        out[n + 1 + nrblocks] := 1; #signed
-      else
-        out[n + 1 + nrblocks] := 0; #unsigned
-      fi;
-    fi;
-    out[i - n + 1] := tab[blocks[i]];
-  od;
-  out[1] := nrblocks;
-  out := Objectify(BlocksType, rec(blocks := out));
-  return out;
-end);
-
-# could use TransverseBlocksLookup if known here JDM
-
-InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, tab, out, nrblocks, i;
-
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  tab := List([1 .. n], x -> false);
-  out := EmptyPlist(n + 2);
-  out[1] := 0;
-  out[n + 2] := [];
-  nrblocks := 0;
-
-  for i in [1 .. n] do
-    out[i + 1] := blocks[i];
-    if not tab[blocks[i]] then
-      out[1] := out[1] + 1;
-      out[n + 1 + blocks[i]] := 0;
-      tab[blocks[i]] := true;
-    fi;
-  od;
-
-  for i in [n + 1 .. 2 * n] do
-    if blocks[i] <= out[1] then #transverse block!
-      out[n + 1 + blocks[i]] := 1;
-    fi;
-  od;
-
-  out := Objectify(BlocksType, rec(blocks := out));
-  return out;
 end);
 
 # JDM use FuseRightBlocks here!
@@ -464,7 +394,6 @@ function(blocks, f)
   out := Objectify(BlocksType, rec(blocks := out));
   return out;
 end);
-
 #
 
 InstallGlobalFunction(OnLeftBlocks,
@@ -549,7 +478,7 @@ function(ext)
 
   for i in [1 .. n] do
     if ext[i] < 0 then
-      out[i + 1] := - 1 * ext[i];
+      out[i + 1] := -1 * ext[i];
       out[n + 1 + out[i + 1]] := 0;
     else
       out[i + 1] := ext[i];
@@ -769,11 +698,11 @@ end);
 # 2) disconnected right blocks of <f> (after fusing)
 # 3) connected right blocks of <f> (after fusing)
 # both types 1+2 of the disconnected blocks are unioned into one left block of
-# the output with index <junk>. The connected blocks 3 of <f> are given the next
-# available index, if they have not been seen before. The table <tab1> keeps
-# track of which connected right blocks of <f> have been seen before and the
-# corresponding index in the output, i.e. <tab1[x]> is the index in <out> of
-# the fused block with index <x>.
+# the output with index <junk>. The connected blocks 3 of <f> are given the
+# next available index, if they have not been seen before. The table <tab1>
+# keeps track of which connected right blocks of <f> have been seen before and
+# the corresponding index in the output, i.e. <tab1[x]> is the index in <out>
+# of the fused block with index <x>.
 
 # The right blocks of the output are:
 # 1) disconnected blocks of <blocks>; or
@@ -788,7 +717,7 @@ end);
 
 InstallGlobalFunction(InverseRightBlocks,
 function(blocks, f)
-  local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next,
+  local n, nrblocks, fblocks, fusesign, sign, fuseit, out, junk, next,
    tab1, x, nrleft, tab2, i;
 
   n := DegreeOfBlocks(blocks); # length of partition!!
@@ -892,6 +821,3 @@ function(blocks, f)
   SetNrBlocks(out, nrblocks + 1);
   return out;
 end);
-
-
-

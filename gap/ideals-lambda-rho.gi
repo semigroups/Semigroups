@@ -109,7 +109,8 @@ end);
 
 #
 
-InstallMethod(ComponentOfIndex, "for an inverse ideal orb and positive integer",
+InstallMethod(ComponentOfIndex,
+"for an inverse ideal orb and positive integer",
 [IsIdealOrb and IsInverseOrb, IsPosInt],
 function(o, i)
   return 1;
@@ -203,7 +204,7 @@ function(I)
   record.lens := [1];
   record.parent := I;
   record.scc := [[1]];
-  record.scc_reps := [fail,];
+  record.scc_reps := [fail];
   record.scc_lookup := [1];
   record.schreiergen := [fail];
   record.schreierpos := [fail];
@@ -241,7 +242,7 @@ function(I)
   record.lens := [1];
   record.parent := I;
   record.scc := [[1]];
-  record.scc_reps := [fail,];
+  record.scc_reps := [fail];
   record.scc_lookup := [1];
   record.schreiergen := [fail];
   record.schreierpos := [fail];
@@ -291,7 +292,6 @@ function(I)
   # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i and
   # orbtogen[Position(o, LambdaFunc(I)(gens[i]^-1))]=i+nrgens...
 
-
   gens := GeneratorsOfSemigroupIdeal(I);
   lambdafunc := LambdaFunc(I);
 
@@ -323,7 +323,7 @@ function(I)
       o!.orbtogen[nr] := i;
     fi;
 
-    lambda := lambdafunc(x ^ - 1);
+    lambda := lambdafunc(x ^ -1);
     if HTValue(ht, lambda) = fail then
       InstallPointInOrb(lambda);
       o!.orbtogen[nr] := nrgens + i;
@@ -628,12 +628,12 @@ function(o, i)
   od;
 
   if o!.orbtogen[i] > Length(GeneratorsOfSemigroupIdeal(o!.parent)) then
-    nr := - o!.orbtogen[i] + Length(GeneratorsOfSemigroupIdeal(o!.parent));
+    nr := -o!.orbtogen[i] + Length(GeneratorsOfSemigroupIdeal(o!.parent));
   else
     nr := o!.orbtogen[i];
   fi;
 
-  return [ [], nr, Reversed(rightword)];
+  return [[], nr, Reversed(rightword)];
 end);
 
 # returns a triple [leftword, nr, rightword] where <leftword>, <rightword> are

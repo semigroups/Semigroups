@@ -39,6 +39,7 @@ ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/acting.gd");
 ReadPackage("semigroups/gap/ideals-acting.gd");
 ReadPackage("semigroups/gap/semigroups.gd");
+ReadPackage("semigroups/gap/semigroups-acting.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
 ReadPackage("semigroups/gap/semibipart.gd");
@@ -46,7 +47,8 @@ ReadPackage("semigroups/gap/semitrans.gd");
 ReadPackage("semigroups/gap/semipperm.gd");
 ReadPackage("semigroups/gap/blocks.gd");
 
-ReadPackage("semigroups/gap/greens.gd");
+ReadPackage("semigroups/gap/greens-generic.gd");
+ReadPackage("semigroups/gap/greens-acting.gd");
 ReadPackage("semigroups/gap/lambda-rho.gd");
 ReadPackage("semigroups/gap/ideals-lambda-rho.gd");
 ReadPackage("semigroups/gap/orbits.gd");

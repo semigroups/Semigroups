@@ -8,15 +8,27 @@
 #############################################################################
 ##
 
+InstallGlobalFunction(OrbSCCIndex,
+function(o, x)
+  local pos;
+
+  pos := Position(o, x);
+  if pos <> fail then
+    return OrbSCCLookup(o)[pos];
+  else
+    return fail;
+  fi;
+end);
+
 #JDM this should work for the RhoOrb too!
 
-InstallMethod( Enumerate, "for a lambda orbit and a limit (Semigroups)",
+InstallMethod(Enumerate, "for a lambda orbit and a limit (Semigroups)",
 [IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
-function( o, limit )
+function(o, limit)
   local orb, i, nr, looking, lookfunc, found, stopper, op, gens, ht,
-  genstoapply, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks,
-  grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd,
-  htvalue, suc, yy, pos, grade, j;
+  genstoapply, schreiergen, schreierpos, log, logind, logpos, depth,
+  depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph,
+  nrgens, htadd, htvalue, suc, yy, pos, grade, j;
 
   # Set a few local variables for faster access:
   orb := o!.orbit;
@@ -30,7 +42,7 @@ function( o, limit )
     found := o!.found;
     if found <> false then
       for j in [found + 1 .. nr] do
-        if lookfunc(o,orb[j]) then
+        if lookfunc(o, orb[j]) then
           o!.found := j;
           return o;
         fi;
@@ -79,12 +91,12 @@ function( o, limit )
 
     # Now apply generators:
     for j in genstoapply do
-      yy := op(orb[i],gens[j]);
-      pos := htvalue(ht,yy);
+      yy := op(orb[i], gens[j]);
+      pos := htvalue(ht, yy);
       if gradingfunc <> false then
-        grade := gradingfunc(o,yy);
+        grade := gradingfunc(o, yy);
         if onlygrades <> false and
-          not(onlygrades(grade,onlygradesdata)) then
+          not(onlygrades(grade, onlygradesdata)) then
           pos := false;
         fi;
       fi;
@@ -96,7 +108,7 @@ function( o, limit )
           grades[nr] := grade;
         fi;
 
-        htadd(ht,yy,nr);
+        htadd(ht, yy, nr);
 
         orbitgraph[nr] := EmptyPlist(nrgens);
         orbitgraph[i][j] := nr;
@@ -113,7 +125,7 @@ function( o, limit )
 
         # Are we looking for something?
         if looking and not found then
-          if lookfunc(o,yy) then
+          if lookfunc(o, yy) then
             found := true;
             o!.found := nr;
           fi;
@@ -124,7 +136,7 @@ function( o, limit )
     od;
     # Now close the log for this point:
     if suc then
-      log[logpos - 2] := - log[logpos - 2];
+      log[logpos - 2] := -log[logpos - 2];
       if looking and found then
         i := i + 1;
         break;
@@ -141,20 +153,20 @@ function( o, limit )
     o!.orbind := [1 .. nr];
   fi;
   return o;
-end );
+end);
 
 #
 
 InstallMethod(EvaluateWord, "for bipartition coll and list of integers",
 [IsBipartitionCollection, IsList],
-function ( gens, w )
-    local  i, res, pts;
-    if Length( w ) = 0  then
-        return One(gens);
+function(gens, w)
+    local i, res;
+    if Length(w) = 0  then
+      return One(gens);
     fi;
     res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
-    for i  in [ 2 .. Length( w ) ]  do
-        res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
+    for i in [2 .. Length(w)]  do
+      res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
     od;
     return res;
 end);
@@ -163,14 +175,14 @@ end);
 
 InstallMethod(EvaluateWord, "for partial perm coll and list of integers",
 [IsPartialPermCollection, IsList],
-function ( gens, w )
-    local  i, res, pts;
-    if Length( w ) = 0  then
-        return One(gens);
+function(gens, w)
+    local i, res;
+    if Length(w) = 0  then
+      return One(gens);
     fi;
     res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
-    for i  in [ 2 .. Length( w ) ]  do
-        res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
+    for i  in [2 .. Length(w)]  do
+      res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
     od;
     return res;
 end);
@@ -180,14 +192,14 @@ end);
 InstallMethod(EvaluateWord,
 "for Rees 0-matrix semigroup element collection and a list of positive ints",
 [IsReesZeroMatrixSemigroupElementCollection, IsList],
-function ( gens, w )
-    local  i, res, pts;
-    if Length( w ) = 0  then
-        return UniversalFakeOne;
+function(gens, w)
+    local i, res;
+    if Length(w) = 0  then
+      return UniversalFakeOne;
     fi;
     res := gens[w[1]];
-    for i  in [ 2 .. Length( w ) ]  do
-        res := res * gens[w[i]];
+    for i in [2 .. Length(w)]  do
+      res := res * gens[w[i]];
     od;
     return res;
 end);
@@ -334,8 +346,8 @@ end);
 
 InstallGlobalFunction(ReverseSchreierTreeOfSCC,
 function(o, i)
-  local r, rev, graph, j, len, nrgens, genstoapply, scc, gen, pos, seen, lookup,
-  oo, nroo, nrscc, k, l, m;
+  local r, rev, graph, j, len, nrgens, genstoapply, scc, gen, pos, seen,
+        lookup, oo, nroo, nrscc, k, l, m;
 
   r := Length(OrbSCC(o));
 
@@ -502,7 +514,7 @@ function(o, i, j)
     mult := 1;
   else
     tree := SchreierTreeOfSCC(o, i);
-    mult := - 1;
+    mult := -1;
   fi;
 
   scc := OrbSCC(o)[i];

@@ -9,11 +9,11 @@
 
 <#GAPDoc Label="FreeInverseSemigroup" >
 <ManSection>
-    <Oper Name = "FreeInverseSemigroup" Arg = "rank[, name]"
+    <Func Name = "FreeInverseSemigroup" Arg = "rank[, name]"
     Label="for a given rank"/>
-    <Oper Name = "FreeInverseSemigroup" Arg = "name1, name2, ..."
+    <Func Name = "FreeInverseSemigroup" Arg = "name1, name2, ..."
     Label="for a list of names"/>
-    <Oper Name = "FreeInverseSemigroup" Arg = "names"
+    <Func Name = "FreeInverseSemigroup" Arg = "names"
     Label="for various names"/>
     <Returns> A free inverse semigroup. </Returns>
     <Description>
@@ -91,7 +91,7 @@ b]]></Example>
 
 <#GAPDoc Label="CanonicalForm" >
   <ManSection>
-    <Oper Name = "CanonicalForm" Arg = "w" 
+    <Attr Name = "CanonicalForm" Arg = "w" 
       Label = "for a free inverse semigroup element" />
     <Returns> A string. </Returns>
     <Description>
@@ -112,7 +112,7 @@ gap> CanonicalForm(x^3*y^3);
 
 <#GAPDoc Label="MinimalWord" >
   <ManSection>
-    <Oper Name = "MinimalWord" Arg = "w" 
+    <Attr Name = "MinimalWord" Arg = "w" 
       Label = "for free inverse semigroup element" />
     <Returns> A string. </Returns>
     <Description>

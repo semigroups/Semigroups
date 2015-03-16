@@ -54,8 +54,7 @@ DeclareAttribute("SchutzGpMembership", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsCollection]);
 
-DeclareGlobalFunction(
-"SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionRZMSE");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
 
 #EOF

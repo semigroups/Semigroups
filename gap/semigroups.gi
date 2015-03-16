@@ -81,8 +81,9 @@ end);
 
 #
 
-ViewStringForGroupOfTransformations@ := function(s)
-local str, nrgens;
+BindGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations",
+function(s)
+  local str, nrgens;
   str := "\><";
   if HasIsTrivial(s) and IsTrivial(s) then
     Append(str, "\>trivial\< ");
@@ -115,17 +116,18 @@ local str, nrgens;
   Append(str, ">\<");
 
   return str;
-end;
+end);
 
 InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroupAsSemigroup],
-ViewStringForGroupOfTransformations@);
+SEMIGROUPS_ViewStringForGroupOfTransformations);
 
 InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroup],
-ViewStringForGroupOfTransformations@);
+SEMIGROUPS_ViewStringForGroupOfTransformations);
 
-Unbind(ViewStringForGroupOfTransformations@);
+MakeReadWriteGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations");
+Unbind(SEMIGROUPS_ViewStringForGroupOfTransformations);
 
 #
 
@@ -195,7 +197,7 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsCollection, IsRecord],
 function(gens, opts)
-  local deg, n, i, closure_opts, s, filts, pos, f;
+  local n, i, closure_opts, s, filts, pos, f;
 
   if not IsGeneratorsOfActingSemigroup(gens) then
     TryNextMethod();
@@ -251,14 +253,15 @@ function(gens, opts)
   if IsMatrixObj(gens[1]) then
     filts := filts and IsMatrixSemigroup;
   fi;
-  s := Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := opts));
+  s := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
+
   if opts.regular then
     SetIsRegularSemigroup(s, true);
   fi;
 
   SetGeneratorsOfMagma(s, gens);
 
-  #if IsGeneratorsOfSemigroup(gens)
+  #if IsGeneratorsOfSemigroup(gens) FIXME why is this here? JDM
   if IsMultiplicativeElementWithOneCollection(gens)
    and CanEasilyCompareElements(gens) then
     pos := Position(gens, One(gens));
@@ -291,7 +294,7 @@ InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsCollection, IsRecord],
 function(gens, record)
-  local deg, n, i, closure_opts, s, filts, pos, f;
+  local n, i, closure_opts, s, filts, pos, f;
 
   if not IsGeneratorsOfActingSemigroup(gens) then
     TryNextMethod();
@@ -347,7 +350,7 @@ function(gens, record)
     filts := filts and IsActingSemigroup;
   fi;
 
-  s := Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := record));
+  s := Objectify(NewType(FamilyObj(gens), filts), rec(opts := record));
 
   if record.regular then
     SetIsRegularSemigroup(s, true);
@@ -364,7 +367,7 @@ function(gens, record)
       SetGeneratorsOfMagma(s, Concatenation([One(gens)], gens));
     fi;
   fi;
-  SetGeneratorsOfMagmaWithOne( s, gens );
+  SetGeneratorsOfMagmaWithOne(s, gens);
   return s;
 end);
 
@@ -415,7 +418,7 @@ function(gens, record)
     gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
     n := ActionDegree(gens);
     Sort(gens, function(x, y)
-                 return ActionRank(x,n) > ActionRank(y,n);
+                 return ActionRank(x, n) > ActionRank(y, n);
                end);
 
     closure_opts := rec(small := false, hashlen := record.hashlen);
@@ -435,7 +438,7 @@ function(gens, record)
     filts := filts and IsActingSemigroupWithInverseOp;
   fi;
 
-  s := Objectify( NewType (FamilyObj( gens ), filts), rec(opts := record));
+  s := Objectify(NewType(FamilyObj(gens), filts), rec(opts := record));
 
   one := One(gens);
   SetOne(s, one);
@@ -475,7 +478,7 @@ function(gens, record)
     gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
     n := ActionDegree(gens);
     Sort(gens, function(x, y)
-                 return ActionRank(x,n) > ActionRank(y,n);
+                 return ActionRank(x, n) > ActionRank(y, n);
                end);
 
     closure_opts := rec(small := false, hashlen := record.hashlen);
@@ -494,7 +497,7 @@ function(gens, record)
     filts := filts and IsActingSemigroupWithInverseOp;
   fi;
 
-  s := Objectify( NewType (FamilyObj( gens ), filts), rec(opts := record));
+  s := Objectify(NewType(FamilyObj(gens), filts), rec(opts := record));
   SetGeneratorsOfInverseSemigroup(s, AsList(gens));
 
   if IsMultiplicativeElementWithOneCollection(gens) then
@@ -542,7 +545,6 @@ InstallMethod(ClosureInverseSemigroup,
 "for an acting semigroup with inverse op, associative elt coll, and record",
 [IsActingSemigroupWithInverseOp, IsCollection, IsRecord],
 function(s, coll, record)
-  local n;
 
   if not IsGeneratorsOfActingSemigroup(coll) then
     Error("Semigroups: ClosureInverseSemigroup: usage,\n",
@@ -553,7 +555,8 @@ function(s, coll, record)
 
   if not ElementsFamily(FamilyObj(s)) = FamilyObj(Representative(coll)) then
     Error("Semigroups: ClosureInverseSemigroup: usage,\n",
-          "the semigroup and collection of elements are not of the same type,");
+          "the semigroup and collection of elements are not of the same ",
+          "type,");
     return;
   fi;
 
@@ -587,8 +590,8 @@ function(s, coll, record)
 
   coll_copy := Set(ShallowCopy(coll));
   for f in coll do
-    if not f ^ - 1 in coll then
-      Add(coll_copy, f ^ - 1);
+    if not f ^ -1 in coll then
+      Add(coll_copy, f ^ -1);
     fi;
   od;
 
@@ -666,7 +669,8 @@ function(s, coll, record)
 
   if not ElementsFamily(FamilyObj(s)) = FamilyObj(Representative(coll)) then
     Error("Semigroups: ClosureSemigroup: usage,\n",
-          "the semigroup and collection of elements are not of the same type,");
+          "the semigroup and collection of elements are not of the same ",
+          "type,");
     return;
   fi;
 
@@ -753,11 +757,10 @@ function(s, coll, opts)
 
   # init the semigroup or monoid
   if IsMonoid(s) and One(coll) = One(s) then
-    # it can be that these One's differ, and hence we shouldn't call Monoid here
-    Info(InfoSemigroups, 2, "calling monoid");
+    # it can be that these One's differ, and hence we shouldn't call Monoid
+    # here
     t := Monoid(s, coll, opts);
   else
-    Info(InfoSemigroups, 2, "calling semigroup");
     t := Semigroup(s, coll, opts);
   fi;
 
@@ -945,7 +948,8 @@ function(s, coll, opts)
     fi;
 
     rhox := rho(x);
-    l := htvalue(rho_ht, rhox); #l<>fail since we have copied the old rho values
+    l := htvalue(rho_ht, rhox);
+    #l<>fail since we have copied the old rho values
 
     if not IsBound(lambdarhoht[l]) then
     # old rho-value, but new lambda-rho-combination
@@ -1141,7 +1145,6 @@ function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);
 
-
 #miscellaneous
 
 InstallGlobalFunction(RegularSemigroup,
@@ -1175,7 +1178,7 @@ end);
 InstallMethod(RandomBinaryRelationMonoid,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   local s;
 
   s := Monoid(List([1 .. m], x -> RandomBinaryRelationOnPoints(n)));
@@ -1188,7 +1191,7 @@ end);
 InstallMethod(RandomBinaryRelationSemigroup,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   local s;
 
   s := Semigroup(List([1 .. m], x -> RandomBinaryRelationOnPoints(n)));
@@ -1201,7 +1204,7 @@ end);
 InstallMethod(RandomBlockGroup,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return Semigroup(Set(List([1 .. m], x -> RandomPartialPerm(n))));
 end);
 
@@ -1210,7 +1213,7 @@ end);
 InstallMethod(RandomPartialPermMonoid,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return Monoid(Set(List([1 .. m], x -> RandomPartialPerm(n))));
 end);
 
@@ -1219,7 +1222,7 @@ end);
 InstallMethod(RandomInverseMonoid,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return InverseMonoid(Set(List([1 .. m], x -> RandomPartialPerm(n))));
 end);
 
@@ -1228,7 +1231,7 @@ end);
 InstallMethod(RandomInverseSemigroup,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return InverseSemigroup(Set(List([1 .. m], x -> RandomPartialPerm(n))));
 end);
 
@@ -1237,7 +1240,7 @@ end);
 InstallMethod(RandomTransformationSemigroup,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return Semigroup(Set(List([1 .. m], x -> RandomTransformation(n))));
 end);
 
@@ -1246,7 +1249,7 @@ end);
 InstallMethod(RandomTransformationMonoid,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return Monoid(Set(List([1 .. m], x -> RandomTransformation(n))));
 end);
 
@@ -1255,7 +1258,7 @@ end);
 InstallMethod(RandomBipartitionSemigroup,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return Semigroup(Set(List([1 .. m], x -> RandomBipartition(n))));
 end);
 
@@ -1264,7 +1267,7 @@ end);
 InstallMethod(RandomBipartitionMonoid,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
-function(m,n)
+function(m, n)
   return Monoid(Set(List([1 .. m], x -> RandomBipartition(n))));
 end);
 

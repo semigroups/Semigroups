@@ -48,8 +48,8 @@ function(I)
   Print(ViewString(I));
 end);
 
-# the above method usurps the method in the library for ViewObj hence we require
-# the following method for ideals for which we did not write a special
+# the above method usurps the method in the library for ViewObj hence we
+# require the following method for ideals for which we did not write a special
 # ViewString method for...
 
 InstallMethod(ViewString, "for a semigroup ideal with generators",
@@ -133,7 +133,7 @@ end);
 # a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
 InstallGlobalFunction(SemigroupIdeal,
-function( arg )
+function(arg)
   local out, i;
 
   if not IsSemigroup(arg[1]) then
@@ -150,8 +150,8 @@ function( arg )
   fi;
 
   # special case for matrices, because they may look like lists
-  if Length( arg ) = 2 and IsMatrix( arg[2] )  then
-    return SemigroupIdealByGenerators(arg[1],  [arg[2]]);
+  if Length(arg) = 2 and IsMatrix(arg[2])  then
+    return SemigroupIdealByGenerators(arg[1], [arg[2]]);
 
   # list of generators
   elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
@@ -226,7 +226,7 @@ function(S, gens, opts)
     filts := filts and IsActingSemigroup;
   fi;
 
-  I := Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := opts));
+  I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
 
   if opts.acting and IsActingSemigroupWithInverseOp(S) then
     SetFilterObj(I, IsActingSemigroupWithInverseOp);

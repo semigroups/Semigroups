@@ -12,7 +12,7 @@ DeclareGlobalFunction("RMSInducedFunction");
 DeclareGlobalFunction("RZMSInducedFunction");
 DeclareGlobalFunction("RZMStoRZMSInducedFunction");
 
-DeclareCategory("IsRMSIsoByTriple",  IsGeneralMapping and IsSPGeneralMapping and
+DeclareCategory("IsRMSIsoByTriple", IsGeneralMapping and IsSPGeneralMapping and
    IsTotal and IsSingleValued and IsInjective and IsSurjective and
    IsAttributeStoringRep);
 DeclareCategory("IsRZMSIsoByTriple", IsGeneralMapping and IsSPGeneralMapping and

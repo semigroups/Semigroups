@@ -28,6 +28,6 @@ DeclareGlobalFunction("SEMIGROUPS_InverseCongFromPairs");
 DeclareCategory("InverseSemigroupCongruenceClassByKernelTrace",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
 DeclareOperation("InverseSemigroupCongruenceClass",
-        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement] );
+        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement]);
 DeclareOperation("InverseSemigroupCongruenceClassNC",
-        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement] );
+        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement]);

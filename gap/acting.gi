@@ -10,7 +10,6 @@
 
 # local declarations . . .
 
-
 # acting semigroups...
 
 # same method for ideals
@@ -23,32 +22,30 @@ InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local gens, data, opts;
+  local gens, data;
 
   gens := GeneratorsOfSemigroup(s);
 
-  data := rec(
-               gens := gens,
-               genstoapply := [1 .. Length(gens)],
-               graph := [EmptyPlist(Length(gens))],
-               ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
-               init := false,
-               lambdarhoht := [],
-               lenreps := [0],
-               orbit := [[,,,FakeOne(gens)]],
-               orblookup1 := [],
-               orblookup2 := [],
-               parent := s,
-               pos := 0,
-               reps := [],
-               repslens := [],
-               repslookup := [],
-               rholookup := [1],
-               schreiergen := [fail],
-               schreiermult := [fail],
-               schreierpos := [fail],
-               stopper := false
-             );
+  data := rec(gens := gens,
+              genstoapply := [1 .. Length(gens)],
+              graph := [EmptyPlist(Length(gens))],
+              ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
+              init := false,
+              lambdarhoht := [],
+              lenreps := [0],
+              orbit := [[,,,FakeOne(gens)]],
+              orblookup1 := [],
+              orblookup2 := [],
+              parent := s,
+              pos := 0,
+              reps := [],
+              repslens := [],
+              repslookup := [],
+              rholookup := [1],
+              schreiergen := [fail],
+              schreiermult := [fail],
+              schreierpos := [fail],
+              stopper := false);
 
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
@@ -178,7 +175,8 @@ function(f, s)
   reps := data!.reps;
   repslens := data!.repslens;
 
-  max := Factorial(LambdaRank(s)(lambda)) / Size(LambdaOrbSchutzGp(lambdao, m));
+  max := Factorial(LambdaRank(s)(lambda)) /
+          Size(LambdaOrbSchutzGp(lambdao, m));
 
   if repslens[m][ind] = max then
     return true;
@@ -361,8 +359,8 @@ function(data, limit, lookfunc)
                                   # = repslookup[m][i][j]
                                   # = HTValue(ht, reps[m][i][j])
 
-  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m] containing
-                                  # orb[i][4] (the R-rep)
+  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m]
+                                  # containing orb[i][4] (the R-rep)
 
   orblookup2 := data!.orblookup2; # orblookup2[i] position in
                                   # reps[m][orblookup1[i]]
@@ -607,7 +605,7 @@ function(data, limit, lookfunc)
 
     # for the rho-orbit
     if suc then
-      rho_log[rho_logpos - 2] := - rho_log[rho_logpos - 2];
+      rho_log[rho_logpos - 2] := -rho_log[rho_logpos - 2];
     else
       rho_logind[rholookup[i]] := 0;
     fi;
@@ -652,8 +650,8 @@ function(data)
 end);
 
 # returns the index of the representative of the R-class containing x in the
-# parent of data. Note that this depends on the state of the data, it only tells
-# you if it is there already, it doesn't try to find it.
+# parent of data. Note that this depends on the state of the data, it only
+# tells you if it is there already, it doesn't try to find it.
 
 # same method for ideals
 
@@ -721,9 +719,9 @@ end);
 
 #
 
-InstallMethod(PositionOfFound,"for semigroup data",
+InstallMethod(PositionOfFound, "for semigroup data",
 [IsSemigroupData],
-function( data )
+function(data)
   if not(data!.looking) then
     Error("Semigroups: PositionOfFound: usage,\n",
           "not looking for anything,");
@@ -743,7 +741,6 @@ function(data)
           "the arg <data> must be semigroup data,");
     return;
   fi;
-
 
   if not data!.init then
     return 0;

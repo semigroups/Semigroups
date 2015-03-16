@@ -7,15 +7,13 @@
   
   <Section Label = "sect:Free inverse semigroups">
   <Heading> Free inverse semigroups </Heading>
-  <M>F</M> is a <E>free inverse
-  semigroup</E> on a non-empty set <M>X</M> if <M>F</M> is an inverse
-  semigroup with a map <M>f</M> from <M>F</M> to <M>X</M> such that for every
-  inverse semigroup
-  <M>S</M> and a map <M>g</M> from <M>X</M> to <M>S</M> there exists a 
-  unique homomorphism <M>g'</M> from <M>F</M> to <M>S</M>
-  such that <M>fg' = g</M>. Moreover, by the universal property, every inverse
-  semigroup can be expressed as a quotient of a free inverse
-  semigroup.<P/>
+  <M>F</M> is a <E>free inverse semigroup</E> on a non-empty set <M>X</M> if
+  <M>F</M> is an inverse semigroup with a map <M>f</M> from <M>F</M> to <M>X</M>
+  such that for every inverse semigroup <M>S</M> and a map <M>g</M> from
+  <M>X</M> to <M>S</M> there exists a unique homomorphism <M>g'</M> from
+  <M>F</M> to <M>S</M> such that <M>fg' = g</M>. Moreover, by the universal
+  property, every inverse semigroup can be expressed as a quotient of a free
+  inverse semigroup.<P/>
 
   The internal representation of an element of a free inverse semigroup
   uses a Munn tree. A <E>Munn tree</E> is a directed tree with distinguished

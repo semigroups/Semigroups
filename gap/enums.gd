@@ -11,5 +11,3 @@
 DeclareGlobalFunction("NumberArrangement");
 DeclareGlobalFunction("ArrangementNumber");
 DeclareGlobalFunction("EnumeratorOfArrangements");
-
-DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
