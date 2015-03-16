@@ -554,7 +554,7 @@ function(S, R)
   gens := List(GeneratorsOfSemigroup(S),
    x -> basis{ ImageListOfTransformation(x, n) });
 
-  return MagmaIsomorphismByFunctionsNC(S, SemigroupByGenerators(gens),
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
    x -> basis{ ImageListOfTransformation(x, n) },
    x -> Transformation(List(x, PositionNonZero)));
 end);

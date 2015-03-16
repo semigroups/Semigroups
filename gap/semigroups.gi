@@ -260,10 +260,8 @@ function(gens, opts)
   fi;
 
   SetGeneratorsOfMagma(s, gens);
-
-  #if IsGeneratorsOfSemigroup(gens) FIXME why is this here? JDM
-  if IsMultiplicativeElementWithOneCollection(gens)
-   and CanEasilyCompareElements(gens) then
+  if (IsMultiplicativeElementWithOneCollection(gens)
+      and CanEasilyCompareElements(gens)) or IsMatrixObj(gens[1]) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(s, IsMonoid);
