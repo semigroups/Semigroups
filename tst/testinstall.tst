@@ -194,9 +194,9 @@ gap> s:=Semigroup([ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ),
 gap> f:= Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] );;
 gap> d:=DClass(s, Transformation( [ 1, 8, 6, 2, 7, 8, 8, 9, 5 ] ));;
 gap> l:=LClass(d, f);
-{Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
+<Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
 gap> ll:=LClass(s, f);
-{Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
+<Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
 gap> List(HClassReps(ll), x-> x in ll);
 [ true, true, true, true ]
 gap> List(HClassReps(l), x-> x in l);
@@ -342,7 +342,7 @@ gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 3, 5, 6, 7 ], [ 9, 1, 5, 3, 8 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9, 10 ], [ 4, 10, 5, 6, 7, 1, 3, 2 ] ) ]);;
 gap> d:=DClasses(s)[14];
-{PartialPerm( [ 2, 10 ], [ 2, 10 ] )}
+<Green's D-class: <identity partial perm on [ 2, 10 ]>>
 gap> F:=IsomorphismReesMatrixSemigroup(d);;
 gap> G:=InverseGeneralMapping(F);;
 gap> ForAll(d, f-> (f^F)^G=f);        
@@ -465,7 +465,7 @@ gap> R:=ReesZeroMatrixSemigroup(Group(()),
 gap> R:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 gap> H:=First(HClasses(R), IsGroupHClass);
-{0}
+<Green's H-class: 0>
 gap> Elements(H);   
 [ 0 ]
 gap> f:=IsomorphismPermGroup(H);;
