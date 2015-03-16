@@ -360,6 +360,7 @@ end);
 
 InstallMethod(ViewString, "for a plist matrix", [IsPlistMatrixRep],
 function(m)
+  local out;
   out := "\><";
   if IsCheckingMatrix(m) then 
     Append(out, "\>checking\< "); 
@@ -367,12 +368,12 @@ function(m)
   if not IsMutable(m) then 
     Append(out, "\>immutable\< "); 
   fi;
-  Append(out, "\>"
+  Append(out, "\>");
   Append(out, String(Length(m![ROWSPOS])));
-  Append(out, ,"x");
+  Append(out, "x");
   Append(out, String(m![RLPOS]));
   Append(out, "-matrix\< \>over\< \>");
-  Append(out, m![BDPOS])
+  Append(out, String(m![BDPOS]));
   Append(out, "\<>\<");
   return out;
 end);
