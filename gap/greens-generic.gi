@@ -146,4 +146,31 @@ function(H)
   return StructureDescription(Range(IsomorphismPermGroup(H)));
 end);
 
+# Viewing, printing, etc
+
+InstallMethod(ViewString, "for a Green's class",
+[IsGreensClass],
+function(C)
+  
+  str := "\><";
+  Append(str, "\>Green's\< ");
+
+  if IsGreensDClass(C) then 
+    Append(str, "D");
+  elif IsGreensRClass(C) then 
+    Append(str, "L");
+  elif IsGreensLClass(C) then 
+    Append(str, "L");
+  elif IsGreensHClass(C) then 
+    Append(str, "H");
+  elif IsGreensJClass(C) then 
+    Append(str, "J");
+  fi;
+  Append(str, "-class of ");
+  Append(str, ViewString(Representative(C)));
+  Append(str, ">\<");
+  
+  return str;
+end);
+
 #EOF
