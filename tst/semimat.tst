@@ -111,5 +111,29 @@ gap> time;
 gap> List(last2, U-> IsMaximalSubsemigroup(S, U));
 [ true, true ]
 
+# 
+gap> func := IsGreensDLeq(S);
+function( x, y ) ... end
+gap> x := Random(S);
+<3x3-matrix over GF(3)>
+gap> y := Random(S);
+<3x3-matrix over GF(3)>
+gap> IsGreensDLeq(x, y);
+gap> func(x, y);        
+true
+gap> func(y, x);
+true
+gap> DClass(S, x) = DClass(S, y);
+true
+gap> Print(x);
+NewMatrix(IsPlistMatrixRep,GF(3),3,
+[ [ Z(3), Z(3)^0, Z(3)^0 ], [ Z(3)^0, Z(3), Z(3) ], [ Z(3)^0, Z(3), Z(3) ] ])
+gap> Print(y);
+NewMatrix(IsPlistMatrixRep,GF(3),3,
+[ [ 0*Z(3), 0*Z(3), Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3) ] ])
+
+
+
 #
 gap> STOP_TEST("Semigroups package: matrix.tst");
