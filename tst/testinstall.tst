@@ -903,4 +903,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST( "Semigroups package: testinstall.tst");
+gap> STOP_TEST("Semigroups package: testinstall.tst");
