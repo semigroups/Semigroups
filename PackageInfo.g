@@ -173,7 +173,7 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README",
+  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README.md",
 PackageInfoURL := 
   "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
 
