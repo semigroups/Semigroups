@@ -1,13 +1,15 @@
 #############################################################################
 ##
 #W  semimat.gd
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2015                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+#
 
 InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
 [IsGreensClass],
@@ -87,14 +89,9 @@ end);
 #T Are these still needed
 #T This returns immutable
 InstallMethod(OneMutable,
-    "for ring element coll coll coll",
-    [IsRingElementCollCollColl],
-    x -> One(Representative(x)));
-
-InstallMethod(IsGroupAsSemigroup,
-    "for a matrix semigroup",
-    [IsMatrixSemigroup],
-    s -> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
+"for ring element coll coll coll",
+[IsRingElementCollCollColl],
+x -> One(Representative(x)));
 
 #############################################################################
 ##
@@ -250,13 +247,33 @@ end);
 
 InstallGlobalFunction(MatrixObjLambdaConjugator,
 function(S, x, y)
-   local xse, xhe, yse, yhe, he, h, p, q, i, RemoveZeroRows, res;
+  local res, zero, xse, h, p, yse, q, i;
 
     if x ^ -1 <> fail then
         res := List(x ^ -1 * y, List);
-    elif IsZero(x) then
-        res := [[One(BaseDomain(x))]];
     else
+      # FIXME this is totally fucked up, IsZero is a property which get stored
+      # as false for some element in the semigroup
+      # S := Semigroup(
+      # [ NewMatrix(IsPlistMatrixRep,GF(3),3,
+      #     [ [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3), Z(3) ], 
+      #       [ Z(3), 0*Z(3), Z(3)^0 ] ]), NewMatrix(IsPlistMatrixRep,GF(3),3,
+      #     [ [ Z(3), Z(3), 0*Z(3) ], [ Z(3)^0, Z(3)^0, 0*Z(3) ], 
+      #       [ Z(3)^0, Z(3)^0, 0*Z(3) ] ]) ]);;
+      # then the matrix "becomes" zero, and the value of IsZero is false. 
+      # I don't know how this could happend. Change this back to IsZero and
+      # then run MaximalSubsemigroups on the semigroup S above to see what I
+      # mean. Then quit from the break loop and do MaximalSubsemigroups again,
+      # and watch GAP seg fault. 
+      zero := true;
+      for i in [1..Length(x![ROWSPOS])] do
+          if not IsZero(x![ROWSPOS][i]) then
+              zero := false;
+          fi;
+      od;
+      if zero then
+        res := [[One(BaseDomain(x))]];
+      else
         xse := SemiEchelonMat(x);
         h := Filtered(xse.heads, x -> x <> 0);
         p := Matrix(One(BaseDomain(x)) * PermutationMat(SortingPerm(h),
@@ -268,6 +285,7 @@ function(S, x, y)
              Length(h), BaseDomain(y)), y);
 
         res := List(p * q ^ ( - 1), List);
+      fi;
     fi;
     return res;
 end);

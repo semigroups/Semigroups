@@ -270,8 +270,8 @@ s -> InverseSemigroup(Idempotents(s), rec(small := true)));
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local null, g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact,
-   rightact, f, rms, iso, inv, hom, i, j;
+  local rms, iso, null, hom, rep, isop, g, rreps, lreps, mat, inv_l, inv_r,
+   rightact, lambdaperm, leftact, f, inv, i, j;
 
   if not IsRegularDClass(d) then
     Error("Semigroups: InjectionPrincipalFactor: usage,\n",
@@ -297,9 +297,9 @@ function(d)
     return hom;
   fi;
 
-  g := GroupHClass(d);
-  rep := Representative(g);
-  g := Range(IsomorphismPermGroup(g));
+  rep := Representative(GroupHClass(d));
+  isop := IsomorphismPermGroup(GroupHClass(d));
+  g := Range(isop);
 
   rreps := HClassReps(LClass(d, rep));
   lreps := HClassReps(RClass(d, rep));
@@ -308,12 +308,13 @@ function(d)
   inv_l := EmptyPlist(Length(lreps));
   inv_r := EmptyPlist(Length(rreps));
 
+  rightact := StabilizerAction(Parent(d));
   lambdaperm := LambdaPerm(Parent(d));
+  
   # FIXME remove this to elsewhere
   if IsTransformationSemigroupGreensClass(d)
     or IsPartialPermSemigroupGreensClass(d)
-    or IsBipartitionSemigroupGreensClass(d) 
-    or IsMatrixSemigroupGreensClass(d) then
+    or IsBipartitionSemigroupGreensClass(d) then
     leftact := PROD;
   elif IsReesZeroMatrixSubsemigroup(Parent(d)) then
     leftact := function(x, y)
@@ -323,9 +324,18 @@ function(d)
       return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]] ^ -1
       * x * rep![2] ^ -1 * y![2], y![3], y![4]]);
     end;
+  elif IsMatrixSemigroupGreensClass(d) then 
+    leftact := function(x, y)
+      return x ^ InverseGeneralMapping(isop) * y;
+    end;
+    rightact := function(x, y)
+      return x * y ^ InverseGeneralMapping(isop);
+    end;
+    lambdaperm := function(x, y)
+      return StabilizerAction(Parent(d))(rep, LambdaPerm(Parent(d))(x, y)) ^
+       isop;
+    end;
   fi;
-
-  rightact := StabilizerAction(Parent(d));
 
   for i in [1 .. Length(lreps)] do
     mat[i] := [];

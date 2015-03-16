@@ -1502,16 +1502,25 @@ end);
 InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
+  local iso, inv;
 
   if not IsGroupHClass(H) then
     Error("Semigroups: IsomorphismPermGroup: usage,\n",
           "the H-class is not a group,");
     return;
   fi;
-
-  return MappingByFunction(H, SchutzenbergerGroup(H),
-   x -> LambdaPerm(Parent(H))(Representative(H), x),
-   x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
+  
+  if IsMatrixSemigroupGreensClass(H) then 
+    iso := IsomorphismPermGroup(SchutzenbergerGroup(H));
+    inv := InverseGeneralMapping(iso);
+    return MappingByFunction(H, Range(iso),
+     x -> LambdaPerm(Parent(H))(Representative(H), x) ^ iso,
+     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x ^ inv));
+  else
+    return MappingByFunction(H, SchutzenbergerGroup(H),
+     x -> LambdaPerm(Parent(H))(Representative(H), x),
+     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
+  fi;
 end);
 
 # different method for regular/inverse/ideals
