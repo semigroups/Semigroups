@@ -270,13 +270,21 @@ s -> InverseSemigroup(Idempotents(s), rec(small := true)));
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact,
-  f, rms, iso, inv, hom, i, j;
+  local null, g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact,
+   rightact, f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
     Error("Semigroups: InjectionPrincipalFactor: usage,\n",
     "the argument <d> must be a regular D-class,");
     return;
+  fi;
+
+  # FIXME remove this hack!
+  if IsMatrixSemigroupGreensClass(d) and
+   IsNullMapMatrixGroup(SchutzenbergerGroup(d)) then 
+    null := SchutzenbergerGroup(d).1;
+    return MappingByFunction(d, ReesMatrixSemigroup(Group(()), [[()]]), 
+                               x -> (), x-> null);
   fi;
 
   g := GroupHClass(d);
@@ -291,9 +299,11 @@ function(d)
   inv_r := EmptyPlist(Length(rreps));
 
   lambdaperm := LambdaPerm(Parent(d));
+  # FIXME remove this to elsewhere
   if IsTransformationSemigroupGreensClass(d)
     or IsPartialPermSemigroupGreensClass(d)
-    or IsBipartitionSemigroupGreensClass(d) then
+    or IsBipartitionSemigroupGreensClass(d) 
+    or IsMatrixSemigroupGreensClass(d) then
     leftact := PROD;
   elif IsReesZeroMatrixSubsemigroup(Parent(d)) then
     leftact := function(x, y)

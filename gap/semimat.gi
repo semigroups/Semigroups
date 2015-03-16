@@ -9,9 +9,15 @@
 #############################################################################
 ##
 
+InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
+[IsGreensClass],
+function(C)
+  return IsMatrixSemigroup(Parent(C));
+end);
+
 # from here 
 
-InstallImmediateMethod(IsNullMatMatrixGroup, IsGroup and HasGeneratorsOfGroup,
+InstallImmediateMethod(IsNullMapMatrixGroup, IsGroup and HasGeneratorsOfGroup,
 0, 
 function(G)
   if Length(GeneratorsOfGroup(G)) = 1 and
@@ -23,9 +29,15 @@ function(G)
 end);
 
 InstallMethod(\^, "for a null mat matrix group and matrix",
-[IsNullMatMatrixGroup, IsMatrix], 
+[IsNullMapMatrixGroup, IsMatrix], 
 function(x, mat)
   return x;
+end);
+
+InstallMethod(\/, "for a matrix and null map matrix", 
+[IsMatrix, IsNullMapMatrix],
+function(mat, null)
+  return null;
 end);
 
 InstallMethod(\*, "for a right coset and null map matrix",
@@ -220,7 +232,10 @@ end);
 InstallGlobalFunction(MatrixObjStabilizerAction,
 function(S, x, m)
     local rsp, g, coeff, i, n, k;
-
+    
+    if IsZero(x) then 
+      return x;
+    fi;
     n := DimensionsMat(x)[1];
     k := LambdaRank(S)(x);
     g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);

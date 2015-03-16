@@ -994,7 +994,7 @@ function(x, D)
   cosets := LambdaCosets(D);
   x := LambdaPerm(S)(rep, x);
   membership := SchutzGpMembership(S);
-  one := LambdaIdentity(S)(ActionDegree(S));
+  one := LambdaIdentity(S)(ActionRank(S)(rep));
 
   if schutz <> false then
     for p in cosets do
