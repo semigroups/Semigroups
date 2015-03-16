@@ -331,7 +331,7 @@ function(L)
   
   if IsRegularClass(L) or Length(RhoCosets(D)) = 1 then
     #maybe <L> is regular and doesn't know it!
-    return [LambdaIdentity(S)(LambdaRank(S)(OrbSCC(o)[m][1]))];
+    return [LambdaIdentity(S)(LambdaRank(S)(o[OrbSCC(o)[m][1]]))];
   fi;
 
   rep := Representative(L);
@@ -367,7 +367,12 @@ function(L)
    NrMovedPoints(G) = ActionRank(Parent(L))(Representative(L)) then
     return true;
   fi;
-  return StabChainImmutable(G);
+
+  if IsPermGroup(G) then
+    return StabChainImmutable(G);
+  else # if IsMatrixGroup(g)
+    return G;
+  fi;
 end);
 
 #
@@ -948,7 +953,7 @@ H -> Size(SchutzenbergerGroup(H)));
 InstallMethod(\in, "for associative element and D-class of acting semigroup",
 [IsAssociativeElement, IsGreensDClass and IsActingSemigroupGreensClass],
 function(x, D)
-  local S, rep, o, m, scc, l, schutz, cosets, membership, p;
+  local S, rep, o, m, scc, l, schutz, cosets, membership, one, p;
 
   S := Parent(D);
   rep := Representative(D);
