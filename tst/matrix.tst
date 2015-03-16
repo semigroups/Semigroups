@@ -12,6 +12,8 @@ gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
+
+#
 gap> M := NewMatrix(IsPlistMatrixRep, GF(2), 16,
 > [[ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
 > [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],
@@ -79,4 +81,6 @@ gap> DClasses(S);
       [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
       [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
       [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ])} ]
+
+#
 gap> STOP_TEST("Semigroups package: matrix.tst");
