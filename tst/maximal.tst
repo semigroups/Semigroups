@@ -231,7 +231,7 @@ false
 gap> IsZeroSimpleSemigroup(R);
 true
 gap> MaximalSubsemigroups(R);
-Error, Semigroups: MaximalSubsemigroups,
+Error, Semigroups: MaximalSubsemigroups:
 not yet implemented for a 0-simple Rees 0-matrix semigroup whose
 underlying semigroup is not a group,
 gap> t1 := Transformation( [ 4, 3, 1, 3 ] );;
@@ -416,7 +416,7 @@ true
 gap> IsRegularSemigroup(R4);
 false
 gap> MaximalSubsemigroups(R4, Group(()));
-Error, Semigroups: MaximalSubsemigroups,
+Error, Semigroups: MaximalSubsemigroups:
 the first argument <R> must be a regular Rees 0-matrix semigroup,
 
 #T# MaximalTest5: MaximalSubsemigroups for a transformation semigroup

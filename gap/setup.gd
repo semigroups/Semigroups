@@ -50,8 +50,7 @@ DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
-DeclareGlobalFunction(
-"SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionRZMSE");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
 
 #EOF

@@ -2784,8 +2784,8 @@ gap> Size(LL);
 gap> x:=Bipartition( [ [ 1 ], [ 2, 4 ], [ 3, 6, 8, -1, -3, -5, -7 ], 
 >  [ 5, 7, -4, -6, -8 ], [ -2 ] ] );;
 gap> D:=DClass(RClassNC(S, x));
-{Bipartition( [ [ 1, 3, 4, 6, 7, -4, -6, -8 ], [ 2, 5, 8, -1, -3, -5, -7 ], 
- [ -2 ] ] )}
+{Bipartition( [ [ 1 ], [ 2, 4 ], [ 3, 6, 8, -1, -3, -5, -7 ], 
+ [ 5, 7, -4, -6, -8 ], [ -2 ] ] )}
 gap> GroupHClass(D);
 fail
 gap> IsRegularDClass(D);

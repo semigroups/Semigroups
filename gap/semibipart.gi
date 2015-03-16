@@ -22,7 +22,8 @@ end);
 
 InstallMethod(ViewString,
 "for a bipartition semigroup ideal with ideal generators",
-[IsBipartitionSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsBipartitionSemigroup and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal],
 function(I)
   local str, nrgens;
 
@@ -73,7 +74,6 @@ function(I)
 
   return str;
 end);
-
 
 #
 
@@ -144,14 +144,14 @@ InstallMethod(NaturalPartialOrder,
 "for an inverse block bijection semigroup",
 [IsBlockBijectionSemigroup and IsInverseSemigroup],
 function(S)
-  local elts, p, n, out, i, j;
+  local elts, n, out, i, j;
 
   elts := Elements(S);
   n := Length(elts);
   out := List([1 .. n], x -> []);
 
-  for i in [n,n - 1 .. 2] do
-    for j in [i - 1,i - 2 .. 1] do
+  for i in [n, n - 1 .. 2] do
+    for j in [i - 1, i - 2 .. 1] do
       if NaturalLeqBlockBijection(elts[j], elts[i]) then
         AddSet(out[i], j);
       fi;
@@ -173,10 +173,10 @@ function(S)
   elts := ShallowCopy(Elements(S));
   n := Length(elts);
   out := List([1 .. n], x -> []);
-  p := Sortex(elts, PartialPermLeqBipartition) ^ - 1;
+  p := Sortex(elts, PartialPermLeqBipartition) ^ -1;
 
-  for i in [n,n - 1 .. 2] do
-    for j in [i - 1,i - 2 .. 1] do
+  for i in [n, n - 1 .. 2] do
+    for j in [i - 1, i - 2 .. 1] do
       if NaturalLeqPartialPermBipartition(elts[j], elts[i]) then
         AddSet(out[i ^ p], j ^ p);
       fi;
@@ -190,7 +190,8 @@ end);
 # this is just a composition of IsomorphismTransformationSemigroup and the
 # method below for IsomorphismBipartitionSemigroup...
 
-InstallMethod(IsomorphismBipartitionSemigroup, "for a semigroup", [IsSemigroup],
+InstallMethod(IsomorphismBipartitionSemigroup, "for a semigroup",
+[IsSemigroup],
 function(S)
   local en, act, gens;
 
@@ -203,8 +204,9 @@ function(S)
     return Position(en, x);
   end;
 
-  gens := List(en, x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1],
-   act), Length(en) + 1));
+  gens := List(en, x ->
+               AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),
+               Length(en) + 1));
 
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
    x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),
@@ -426,7 +428,7 @@ function(S)
   # AsPartialPerm for a block bijection created using AsBlockBijection with
   # argument a partial perm
   inv := function(x)
-    local blocks, n, seen, i, lookup, out, bigblock;
+    local blocks, n, bigblock, lookup, out, i;
 
     blocks := x!.blocks;
     n := DegreeOfBipartition(x);
@@ -473,7 +475,7 @@ function(S)
   # AsPartialPerm for a block bijection created using AsBlockBijection with
   # argument a partial perm
   inv := function(x)
-    local blocks, n, seen, i, lookup, out, bigblock;
+    local blocks, n, bigblock, lookup, out, i;
 
     blocks := x!.blocks;
     n := DegreeOfBipartition(x);
@@ -522,8 +524,8 @@ function(s)
 
   gens := ShallowCopy(GeneratorsOfSemigroup(s));
   for f in gens do
-    pos := Position(gens, f ^ - 1);
-    if pos <> fail and f <> f ^ - 1 then
+    pos := Position(gens, f ^ -1);
+    if pos <> fail and f <> f ^ -1 then
       Remove(gens, pos);
     fi;
   od;
@@ -542,8 +544,8 @@ function(s)
   gens := ShallowCopy(GeneratorsOfMonoid(s));
   one := One(s);
   for f in gens do
-    pos := Position(gens, f ^ - 1);
-    if pos <> fail and (f <> f ^ - 1 or f = one) then
+    pos := Position(gens, f ^ -1);
+    if pos <> fail and (f <> f ^ -1 or f = one) then
       Remove(gens, pos);
     fi;
   od;
@@ -561,7 +563,7 @@ function(s)
   gens := ShallowCopy(GeneratorsOfInverseSemigroup(s));
   for f in gens do
     if not IsPermBipartition(f) then
-      f := f ^ - 1;
+      f := f ^ -1;
       if not f in gens then
         Add(gens, f);
       fi;
@@ -576,12 +578,12 @@ end);
 InstallImmediateMethod(GeneratorsOfMonoid,
 IsBipartitionMonoid and HasGeneratorsOfInverseMonoid, 0,
 function(s)
-  local gens, pos, f;
+  local gens, f;
 
   gens := ShallowCopy(GeneratorsOfInverseMonoid(s));
   for f in gens do
     if not IsPermBipartition(f) then
-      f := f ^ - 1;
+      f := f ^ -1;
       if not f in gens then
         Add(gens, f);
       fi;

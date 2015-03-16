@@ -104,7 +104,7 @@ end);
 InstallMethod(TraceSchreierTreeForward, "for semigroup data and pos int",
 [IsSemigroupData, IsPosInt],
 function(data, pos)
-  local word1, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
+  local word1, word2, schreiergen, schreierpos, schreiermult, orb;
 
   word1 := []; # the word obtained by tracing schreierpos and schreiergen
              # (left multiplication)
@@ -264,7 +264,8 @@ function(s, f)
 
   k := Position(o, LambdaFunc(s)(rep));
   word2 := TraceSchreierTreeOfSCCBack(o, m, k);
-  rep := rep * EvaluateWord(gens, word2); #the R-class rep of the R-class of <f>
+  rep := rep * EvaluateWord(gens, word2);
+  #the R-class rep of the R-class of <f>
   Append(word1, word2);               #and this word equals <rep>
 
   #compensate for the action of the multipliers

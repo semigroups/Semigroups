@@ -230,7 +230,7 @@ gap> H:=First(HClasses(V), IsRegularClass);
 gap> MultiplicativeNeutralElement(H);
 0
 gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
-{(23,(6,9),3)}
+{(13,(1,9)(5,8),5)}
 gap> MultiplicativeNeutralElement(H);
 fail
 gap> h := RMSElement(ParentAttr(U[5]), 17, (1,9)(5,8), 5);
@@ -272,13 +272,13 @@ Error, no 1st choice method found for `*' on 2 arguments
 
 #T# ReesMatTest20: DClassOf.Class etc
 gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
-{(23,(6,9),3)}
+{(13,(1,9)(5,8),5)}
 gap> DClass(H);
 {(13,(1,6)(5,8),3)}
 gap> RClass(H);
-{(23,(6,9),3)}
-gap> LClass(H);
 {(13,(1,6)(5,8),3)}
+gap> LClass(H);
+{(13,(1,9)(5,8),5)}
 gap> LClass(H)<LClass(V, Representative(V));
 false
 

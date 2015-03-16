@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.2">
+##  <!ENTITY VERSION "2.3">
 ##  <!ENTITY GAPVERS "4.7.6">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.2">
+##  <!ENTITY ARCHIVENAME "semigroups-2.3">
 ##  <!ENTITY COPYRIGHTYEARS "2011-15">
 ##  <#/GAPDoc>
 
@@ -38,9 +38,9 @@ end;
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "2.2",
-Date := "20/01/2015",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.2",
+Version := "2.3",
+Date := "16/03/2015",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.3",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -173,7 +173,7 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README",
+  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README.md",
 PackageInfoURL := 
   "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
 

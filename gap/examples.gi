@@ -43,8 +43,8 @@
 #     IsEndomorphismOfPartition(bl, x));
 # end;
 
-# from the `The rank of the semigroup of transformations stabilising a partition
-# of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014).
+# from the `The rank of the semigroup of transformations stabilising a
+# partition of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014).
 
 InstallMethod(EndomorphismsPartition, "for a list of positive integers",
 [IsCyclotomicCollection],
@@ -161,7 +161,7 @@ function(partition)
       x := blocks{equal[i]};
 
       if n > 1 then
-        x[2] := Permuted(x[2], (1,2));
+        x[2] := Permuted(x[2], (1, 2));
       fi;
 
       if IsOddInt(m) or IsOddInt(n) then
@@ -175,8 +175,8 @@ function(partition)
       Add(gens, AsTransformation(x));
 
       y := blocks{equal[i]};
-      y[1] := Permuted(y[1],  PermList(Concatenation([2 .. n], [1])));
-      y := Permuted(y, (1,2));
+      y[1] := Permuted(y[1], PermList(Concatenation([2 .. n], [1])));
+      y := Permuted(y, (1, 2));
       y := MappingPermListList(Concatenation(blocks{equal[i]}),
            Concatenation(y));
       Add(gens, AsTransformation(y));
@@ -193,7 +193,7 @@ function(partition)
       x := blocks{equal[i]};
 
       if n > 1 then
-        x[2] := Permuted(x[2], (1,2));
+        x[2] := Permuted(x[2], (1, 2));
       fi;
 
       if IsOddInt(m) or IsOddInt(n) then
@@ -207,8 +207,8 @@ function(partition)
       Add(gens, AsTransformation(x));
 
       y := blocks{equal[i]};
-      y[1] := Permuted(y[1],  PermList(Concatenation([2 .. n], [1])));
-      y := Permuted(y, (1,2));
+      y[1] := Permuted(y[1], PermList(Concatenation([2 .. n], [1])));
+      y := Permuted(y, (1, 2));
       y := MappingPermListList(Concatenation(blocks{equal[i]}),
            Concatenation(y));
       Add(gens, AsTransformation(y));
@@ -225,14 +225,16 @@ function(partition)
     fi;
 
     if n > 1 then
-      x[2] := Permuted(x[2], (1,2));
+      x[2] := Permuted(x[2], (1, 2));
     fi;
-    x := MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(x));
+    x := MappingPermListList(Concatenation(blocks{equal[r]}),
+                             Concatenation(x));
     Add(gens, AsTransformation(x)); # (x, id)=u in the paper
 
-    y := Permuted(blocks{equal[r]}, (1,2));
-    y[1] := Permuted(y[1],  PermList(Concatenation([2 .. n], [1])));
-    y := MappingPermListList(Concatenation(blocks{equal[r]}), Concatenation(y));
+    y := Permuted(blocks{equal[r]}, (1, 2));
+    y[1] := Permuted(y[1], PermList(Concatenation([2 .. n], [1])));
+    y := MappingPermListList(Concatenation(blocks{equal[r]}),
+                             Concatenation(y));
     y := y * MappingPermListList(blocks[unique[1]],
      Concatenation(blocks[unique[1]]{[2 .. Length(blocks[unique[1]])]},
      [blocks[unique[1]][1]])); # (y, (1,2,\ldots, l_1))=v in the paper
@@ -240,14 +242,14 @@ function(partition)
 
     if Length(blocks[unique[1]]) > 1 then
       w := MappingPermListList(blocks[unique[1]], Permuted(blocks[unique[1]],
-           (1,2)));
+           (1, 2)));
       Add(gens, AsTransformation(w)); # (id, (1,2))=w in the paper
     fi;
   fi;
   if s - r >= 2 then # the (s-r) generators of W_2 in the proof
     for i in [1 .. s - r - 1] do
       if Length(blocks[unique[i]]) <> 1 then
-        x := Permuted(blocks[unique[i]], (1,2));
+        x := Permuted(blocks[unique[i]], (1, 2));
       else
         x := ShallowCopy(blocks[unique[i]]);
       fi;
@@ -278,7 +280,7 @@ function(partition)
     else
       Append(x, blocks[unique[1]]);
     fi;
-    Append(x, Permuted(blocks[unique[s - r]], (1,2)));
+    Append(x, Permuted(blocks[unique[s - r]], (1, 2)));
     x := MappingPermListList(Concatenation(blocks[unique[1]], blocks[unique[s -
          r]]), x);
     Add(gens, AsTransformation(x));
@@ -294,10 +296,10 @@ InstallMethod(RegularBinaryRelationSemigroup, "for a positive integer",
 function(n)
   local gens, s;
 
-  gens := [ Concatenation(List([2 .. n], x -> [x]),[[1]]),
-          Concatenation([[2],[1]], List([3 .. n], x -> [x])),
-          Concatenation(List([1 .. n - 1], x -> [x]), [[1,n]]),
-          Concatenation(List([1 .. n - 1], x -> [x]), [[]]) ] ;
+  gens := [Concatenation(List([2 .. n], x -> [x]), [[1]]),
+           Concatenation([[2], [1]], List([3 .. n], x -> [x])),
+           Concatenation(List([1 .. n - 1], x -> [x]), [[1, n]]),
+           Concatenation(List([1 .. n - 1], x -> [x]), [[]])] ;
 
   s := Semigroup(List(gens, BinaryRelationByListOfImagesNC));
   #SetIsBinaryRelationCollection(s, true);
@@ -308,7 +310,7 @@ end);
 
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",
 [IsPosInt, IsPosInt],
-function(d,q)
+function(d, q)
   local g, S;
 
   g := List([1 .. d], x -> List([1 .. d],
@@ -320,10 +322,10 @@ function(d,q)
          fi;
        end));
 
-  g := OneMutable(GeneratorsOfGroup(GL(d,q))[1]);
+  g := OneMutable(GeneratorsOfGroup(GL(d, q))[1]);
   g[d][d] := Z(q) * 0;
 
-  S := Monoid(Concatenation(GeneratorsOfGroup(GL(d,q)), [g]));
+  S := Monoid(Concatenation(GeneratorsOfGroup(GL(d, q)), [g]));
   SetIsFinite(S, true);
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
@@ -386,7 +388,7 @@ else
   # JDM use ClosureInverseSemigroup to improve things here!
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
   function(s)
-  local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal, IdentityTrans,
+  local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal,
   d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
 
     if not IsSemilatticeAsSemigroup(s) then
@@ -406,8 +408,9 @@ else
           adj[i] := sl[i];
         fi;
       od;
-      return Graph(Group(()), ideal, OnPoints, function(i,j) return j in adj[i];
-      end, true);
+      return Graph(Group(()), ideal, OnPoints, function(i, j)
+                                                 return j in adj[i];
+                                               end, true);
     end;
 
     ############
@@ -424,7 +427,7 @@ else
       local g;
       g := GraphFromIdeal(sl, ideal);
       return AutGroupGraph(g) ^ (MappingPermListList(ideal,
-       Vertices(g)) ^ - 1);
+       Vertices(g)) ^ -1);
     end;
 
    ############
@@ -434,7 +437,7 @@ else
     ideals := List([1 .. max], x -> []);
 
     for i in [1 .. Length(d)] do
-      Add(ideals[Length(d[i])],d[i]);
+      Add(ideals[Length(d[i])], d[i]);
     od;
 
     out := [];
@@ -472,7 +475,7 @@ else
             p := MappingPermListList(j,
              Vertices(g_j)) * p * MappingPermListList(Vertices(g_k), k);
             Add(out, f * p);
-            Add(out, PartialPermNC(k, k) * p ^ - 1);
+            Add(out, PartialPermNC(k, k) * p ^ -1);
           else
             Add(not_iso, k);
           fi;
@@ -544,13 +547,13 @@ function(n)
   local gens;
 
   if n = 1 then
-    return Monoid(BipartitionNC([[1],[ - 1]]));
+    return Monoid(BipartitionNC([[1], [-1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
   Add(gens, AsBipartition(PartialPermNC([2 .. n], [2 .. n]), n));
-  Add(gens, BipartitionNC(Concatenation([[1,2, - 1, - 2]],
-   List([3 .. n], x -> [x, - x]))));
+  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
+   List([3 .. n], x -> [x, -x]))));
 
   return Monoid(gens, rec(regular := true));
 end);
@@ -563,16 +566,16 @@ function(n)
   local gens, s;
 
   if n = 1 then
-    return Semigroup(BipartitionNC([[1, - 1]]));
+    return Semigroup(BipartitionNC([[1, -1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
 
   if n = 2 then
-    Add(gens, BipartitionNC([[1,2, - 1, - 2]]));
+    Add(gens, BipartitionNC([[1, 2, -1, -2]]));
   else
-    Add(gens, BipartitionNC(Concatenation([[1,2, - 3], [3, - 1, - 2]],
-     List([4 .. n], x -> [x, - x]))));
+    Add(gens, BipartitionNC(Concatenation([[1, 2, -3], [3, -1, -2]],
+     List([4 .. n], x -> [x, -x]))));
   fi;
   s := InverseMonoid(gens);
   return s;
@@ -589,8 +592,8 @@ function(n)
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1,2, - 1, - 2]],
-   List([3 .. n], x -> [x, - x]))));
+  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
+   List([3 .. n], x -> [x, -x]))));
   return InverseMonoid(gens);
 end);
 
@@ -601,11 +604,11 @@ function(n)
   local gens;
 
   if n = 1 then
-    return Semigroup(BipartitionNC([[1, - 1]]));
+    return Semigroup(BipartitionNC([[1, -1]]));
   fi;
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1,2]],
-   List([3 .. n], x -> [x, - x]),[[ - 1, - 2]])));
+  Add(gens, BipartitionNC(Concatenation([[1, 2]],
+   List([3 .. n], x -> [x, -x]), [[-1, -2]])));
   return Monoid(gens, rec(regular := true));
 end);
 
@@ -616,12 +619,12 @@ function(n)
   local gens;
 
   if n = 1 then
-    return Semigroup(BipartitionNC([[1, - 1]]));
+    return Semigroup(BipartitionNC([[1, -1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1,2]],
-   List([3 .. n], x -> [x, - x]),[[ - 1, - 2]])));
+  Add(gens, BipartitionNC(Concatenation([[1, 2]],
+   List([3 .. n], x -> [x, -x]), [[-1, -2]])));
   Add(gens, AsBipartition(PartialPermNC([2 .. n], [2 .. n]), n));
   return Monoid(gens, rec(regular := true));
 end);
@@ -630,10 +633,10 @@ end);
 
 InstallMethod(JonesMonoid, "for a positive integer", [IsPosInt],
 function(n)
-  local gens, next, s, i, j;
+  local gens, next, i, j;
 
   if n = 1 then
-    return Monoid(BipartitionNC([[1, - 1]]));
+    return Monoid(BipartitionNC([[1, -1]]));
   fi;
 
   gens := [];
@@ -711,10 +714,10 @@ InstallMethod(POPI, "for a positive integer",
 [IsPosInt],
 function(n)
   if n = 1 then
-    return InverseMonoid( PartialPerm([1]), PartialPerm([]));
+    return InverseMonoid(PartialPerm([1]), PartialPerm([]));
   fi;
-  return InverseMonoid(PartialPermNC(Concatenation([2 .. n],[1])),
-     PartialPermNC(Concatenation([1 .. n - 2],[n])));
+  return InverseMonoid(PartialPermNC(Concatenation([2 .. n], [1])),
+     PartialPermNC(Concatenation([1 .. n - 2], [n])));
 end);
 
 # TODO improve and document this
@@ -752,12 +755,12 @@ function(n)
   local blocks, i;
 
   if n = 1 then
-    return SemigroupIdeal(PartitionMonoid(1), Bipartition([[1], [ - 1]]));
+    return SemigroupIdeal(PartitionMonoid(1), Bipartition([[1], [-1]]));
   fi;
 
-  blocks := [[1,2, - 1, - 2]];
+  blocks := [[1, 2, -1, -2]];
   for i in [3 .. n] do
-    blocks[i - 1] := [i, - i];
+    blocks[i - 1] := [i, -i];
   od;
   return SemigroupIdeal(PartitionMonoid(n), Bipartition(blocks));
 end);
@@ -769,7 +772,7 @@ InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    Error("Semigroups: SingularTransformationMonoid: usage,\n",
+    Error("Semigroups: SingularTransformationSemigroup: usage,\n",
     "the argument must be greater than 1,");
     return;
   fi;
@@ -807,9 +810,9 @@ function(n)
     return;
   fi;
 
-  blocks := [[1,2], [ - 1, - 2]];
+  blocks := [[1, 2], [-1, -2]];
   for i in [3 .. n] do
-    blocks[i] := [i, - i];
+    blocks[i] := [i, -i];
   od;
   x := Bipartition(blocks);
   S := BrauerMonoid(n);
@@ -828,9 +831,9 @@ function(n)
     return;
   fi;
 
-  blocks := [[1,2], [ - 1, - 2]];
+  blocks := [[1, 2], [-1, -2]];
   for i in [3 .. n] do
-    blocks[i] := [i, - i];
+    blocks[i] := [i, -i];
   od;
   x := Bipartition(blocks);
   S := JonesMonoid(n);
@@ -849,9 +852,9 @@ function(n)
     return;
   fi;
 
-  blocks := [[1,2, - 1, - 2]];
+  blocks := [[1, 2, -1, -2]];
   for i in [3 .. n] do
-    blocks[i - 1] := [i, - i];
+    blocks[i - 1] := [i, -i];
   od;
   x := Bipartition(blocks);
   S := DualSymmetricInverseMonoid(n);
@@ -865,14 +868,15 @@ InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-Error("Semigroups: SingularFactorisableDualSymmetricInverseSemigroup: usage,\n",
-    "the argument must be greater than 1,");
+    Error(
+    "Semigroups: SingularFactorisableDualSymmetricInverseSemigroup: usage\n",
+    "the argument must be greater than 1");
     return;
   fi;
 
-  blocks := [[1,2, - 1, - 2]];
+  blocks := [[1, 2, -1, -2]];
   for i in [3 .. n] do
-    blocks[i - 1] := [i, - i];
+    blocks[i - 1] := [i, -i];
   od;
 
   x := Bipartition(blocks);

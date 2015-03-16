@@ -15,4 +15,3 @@ IsList, IsAssociativeElement]);
 DeclareOperation("MaximalSubsemigroupsNC", [IsReesZeroMatrixSubsemigroup,
 IsGroup, IsRecord, IsList, IsList, IsList]);
 DeclareOperation("IsMaximalSubsemigroup", [IsSemigroup, IsSemigroup]);
-DeclareAttribute("MaximalInverseSubsemigroups", IsInverseSemigroup and IsReesZeroMatrixSubsemigroup);
