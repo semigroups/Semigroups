@@ -310,7 +310,7 @@ end);
 # for the general linear group plus one element of rank n-1
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",
 [IsPosInt, IsPosInt],
-function(d,q)
+function(d, q)
   local g, gens, S;
 
   # This hack is required, because matplistobj has a bug in
@@ -328,6 +328,26 @@ function(d,q)
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
   SetIsRegularSemigroup(S, true);
+
+  return S;
+end);
+
+InstallMethod(SpecialLinearSemigroup, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(d, q)
+  local g, gens, S;
+
+  # This hack is required, because matplistobj has a bug in
+  # current versions of GAP. This is fixed in the default branch.
+  gens := GeneratorsOfGroup(SL(d,q));
+  gens := List(gens, x -> List(x, y -> Unpack(y)));
+  gens := List(gens, x -> NewMatrix(IsPlistMatrixRep, GF(q), d, x));
+
+  g := OneMutable(gens[1]);
+  g[d][d] := Z(q) * 0;
+  Add(gens, g);
+
+  S := Monoid(gens);
 
   return S;
 end);

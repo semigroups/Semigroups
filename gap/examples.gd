@@ -24,9 +24,7 @@ DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
 
 DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
 
-DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("TriapsisMonoid", [IsPosInt]);
-DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 # DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 # DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 DeclareOperation("MunnSemigroup", [IsSemigroup]);
@@ -41,6 +39,13 @@ DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
 SingularTransformationSemigroup);
+
+
+# Matrix semigroups . . .
+
+DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("SpecialLinearSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);
