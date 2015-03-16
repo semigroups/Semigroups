@@ -356,6 +356,27 @@ function(S)
   Print(">");
 end);
 
+# TODO this had better go in the library
+
+InstallMethod(ViewString, "for a plist matrix", [IsPlistMatrixRep],
+function(m)
+  out := "\><";
+  if IsCheckingMatrix(m) then 
+    Append(out, "\>checking\< "); 
+  fi;
+  if not IsMutable(m) then 
+    Append(out, "\>immutable\< "); 
+  fi;
+  Append(out, "\>"
+  Append(out, String(Length(m![ROWSPOS])));
+  Append(out, ,"x");
+  Append(out, String(m![RLPOS]));
+  Append(out, "-matrix\< \>over\< \>");
+  Append(out, m![BDPOS])
+  Append(out, "\<>\<");
+  return out;
+end);
+
 # Note that this method assumes that the object is
 # IsPlistMatrixRep and that we are using a position
 # in the positionalobjectrep for storing the row space (this
