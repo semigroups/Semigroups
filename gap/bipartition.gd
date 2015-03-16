@@ -13,12 +13,23 @@ DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
 DeclareCategoryCollections("IsBipartition");
 DeclareCategoryCollections("IsBipartitionCollection");
 
+BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
+ IsBipartition, CanEasilySortElements, CanEasilySortElements));
+BindGlobal("BipartitionType", NewType(BipartitionFamily,
+ IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
+
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
 
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
 DeclareAttribute("NrTransverseBlocks", IsBipartition);
+DeclareAttribute("NrLeftBlocks", IsBipartition);
+DeclareAttribute("NrRightBlocks", IsBipartition);
+DeclareAttribute("NrBlocks", IsBipartition);
+
+DeclareAttribute("LeftBlocks", IsBipartition);
+DeclareAttribute("RightBlocks", IsBipartition);
 
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
@@ -63,12 +74,8 @@ DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
 #collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 
-# implications
-
-InstallTrueMethod(IsPermBipartition, IsTransBipartition and
-IsDualTransBipartition);
-InstallTrueMethod(IsBlockBijection, IsPermBipartition);
-
-# LambdaConjugator
+# LambdaConjugator #TODO document or make internal!
 DeclareGlobalFunction("BipartRightBlocksConj");
+
+DeclareOperation("OneMutable", [IsBipartitionCollection]);
 

@@ -63,181 +63,222 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-#
+# TODO negate the global option so that it corresponds to NC
 
 InstallGlobalFunction(GradedLambdaOrb,
-function(s, f, opt)
-  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record,
-  gens, o, j, k, l;
+function(arg)
+  local S, x, global, obj, lambda, graded, pos, gradingfunc, onlygrades,
+  onlygradesdata, orb, gens, o, j, k, l;
 
-  if not IsActingSemigroup(s) then
+  if Length(arg) < 3 then
     Error("Semigroups: GradedLambdaOrb: usage,\n",
-          "the first argument <S> must be an acting semigroup,");
-    return;
-  elif not IsAssociativeElement(f) then
-    Error("Semigroups: GradedLambdaOrb: usage,\n",
-          "the second argument <f> must be an associative element,");
-    return;
-  elif not IsBool(opt) then
-    Error("Semigroups: GradedLambdaOrb: usage,\n",
-          "the third argument <opt> must be a boolean,");
+          "there must be at least 3 arguments,");
     return;
   fi;
 
-  lambda := LambdaFunc(s)(f);
+  S := arg[1];
+  x := arg[2];
+  global := arg[3];
 
-  if opt then   #global
-    graded := GradedLambdaOrbs(s);
-    pos := HTValue(GradedLambdaHT(s), lambda);
+  if Length(arg) > 3 then
+    obj := arg[4];
+  fi;
+
+  if not IsActingSemigroup(S) then
+    Error("Semigroups: GradedLambdaOrb: usage,\n",
+          "the first argument <S> must be an acting semigroup,");
+    return;
+  elif not IsAssociativeElement(x) then
+    Error("Semigroups: GradedLambdaOrb: usage,\n",
+          "the second argument <x> must be an associative element,");
+    return;
+  elif not IsBool(global) then
+    Error("Semigroups: GradedLambdaOrb: usage,\n",
+          "the third argument <global> must be a boolean,");
+    return;
+  fi;
+
+  lambda := LambdaFunc(S)(x);
+
+  if global then
+    graded := GradedLambdaOrbs(S);
+    pos := HTValue(GradedLambdaHT(S), lambda);
 
     if pos <> fail then
-      return [graded[pos[1]][pos[2]], pos[3]];
+      if IsBound(obj) then
+        obj!.LambdaPos := pos[3];
+      fi;
+      return graded[pos[1]][pos[2]];
     fi;
 
-    gradingfunc := function(o,x)
-                     return [LambdaRank(s)(x), x];
+    gradingfunc := function(o, x)
+                     return [LambdaRank(S)(x), x];
+                   end;
+
+    onlygrades := function(x, data_ht)
+                    return x[1] = LambdaRank(S)(lambda)
+                     and HTValue(data_ht, x[2]) = fail;
+                  end;
+
+    onlygradesdata := GradedLambdaHT(S);
+
+  else #local
+
+    gradingfunc := function(o, x)
+                     return LambdaRank(S)(x);
                    end;
     onlygrades := function(x, data_ht)
-      return x[1] = LambdaRank(s)(lambda)
-       and HTValue(data_ht, x[2]) = fail;
-    end;
-    onlygradesdata := GradedLambdaHT(s);
-  else          #local
-    gradingfunc := function(o,x)
-                     return LambdaRank(s)(x);
-                   end;
-    onlygrades := function(x,data_ht)
-                    return x = LambdaRank(s)(lambda);
+                    return x = LambdaRank(S)(lambda);
                   end;
     onlygradesdata := fail;
   fi;
 
-  record := ShallowCopy(LambdaOrbOpts(s));
+  orb := ShallowCopy(LambdaOrbOpts(S));
+  # TODO include as much of the following as appropriate in LambdaOrbOpts
+  orb.parent := S;
+  orb.treehashsize := S!.opts.hashlen.M;
+  orb.schreier := true;
+  orb.orbitgraph := true;
+  orb.storenumbers := true;
+  orb.log := true;
+  orb.onlygrades := onlygrades;
+  orb.gradingfunc := gradingfunc;
+  orb.scc_reps := [x];
+  orb.onlygradesdata := onlygradesdata;
 
-  record.parent := s;
-  record.treehashsize := s!.opts.hashlen.M;
-  record.schreier := true;
-  record.orbitgraph := true;
-  record.storenumbers := true;
-  record.log := true;
-  record.onlygrades := onlygrades;
-  record.gradingfunc := gradingfunc;
-  record.scc_reps := [f];
-  record.onlygradesdata := onlygradesdata;
-
-  if IsSemigroupIdeal(s) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
+  if IsSemigroupIdeal(S) then
+    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
   else
-    gens := GeneratorsOfSemigroup(s);
+    gens := GeneratorsOfSemigroup(S);
   fi;
 
-  o := Orb(gens, lambda, LambdaAct(s), record);
+  o := Orb(gens, lambda, LambdaAct(S), orb);
   SetFilterObj(o, IsGradedLambdaOrb);
 
-  if opt then # store o
-    j := LambdaRank(s)(lambda) + 1;
+  if global then # store o
+    j := LambdaRank(S)(lambda) + 1;
     # the +1 is essential as the rank can be 0
     k := graded!.lens[j] + 1;
     graded[j][k] := o;
     Enumerate(o);
     for l in [1 .. Length(o)] do
-      HTAdd(onlygradesdata, o[l], [j,k,l]);
+      HTAdd(onlygradesdata, o[l], [j, k, l]);
     od;
-    o!.position_in_graded := [j,k];
+    # remove this it is only used in once place in this file TODO
+    o!.position_in_graded := [j, k];
     graded!.lens[j] := k;
   fi;
-
-  return [o, 1];
+  if IsBound(obj) then
+    obj!.LambdaPos := 1;
+  fi;
+  return o;
 end);
 
-#
+# TODO negate the global option so that it corresponds to NC
 
 InstallGlobalFunction(GradedRhoOrb,
-function(s, f, opt)
-  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, gens,
-  o, j, k, l;
+function(arg)
+  local S, x, global, obj, rho, graded, pos, gradingfunc, onlygrades,
+  onlygradesdata, orb, gens, o, j, k, l;
 
-  if not IsActingSemigroup(s) then
+  if Length(arg) < 3 then
+    Error("Semigroups: GradedRhoOrb: usage,\n",
+          "there must be at least 3 arguments,");
+    return;
+  fi;
+
+  S := arg[1];
+  x := arg[2];
+  global := arg[3];
+
+  if Length(arg) > 3 then
+    obj := arg[4];
+  fi;
+
+  if not IsActingSemigroup(S) then
     Error("Semigroups: GradedRhoOrb: usage,\n",
           "the first argument <S> must be an acting semigroup,");
     return;
-  elif not IsAssociativeElement(f) then
+  elif not IsAssociativeElement(x) then
     Error("Semigroups: GradedRhoOrb: usage,\n",
           "the second argument <f> must be an associative element,");
     return;
-  elif not IsBool(opt) then
-    Error("Semigroups: GradedRhpOrb: usage,\n",
+  elif not IsBool(global) then
+    Error("Semigroups: GradedRhoOrb: usage,\n",
           "the third argument <opt> must be a boolean,");
     return;
   fi;
 
-  rho := RhoFunc(s)(f);
+  rho := RhoFunc(S)(x);
 
-  if opt then   #global
-    graded := GradedRhoOrbs(s);
-    pos := HTValue(GradedRhoHT(s), rho);
+  if global then
+    graded := GradedRhoOrbs(S);
+    pos := HTValue(GradedRhoHT(S), rho);
 
     if pos <> fail then
-      return [graded[pos[1]][pos[2]], pos[3]];
+      if IsBound(obj) then
+        obj!.RhoPos := pos[3];
+      fi;
+      return graded[pos[1]][pos[2]];
     fi;
 
-    gradingfunc := function(o,x)
-                     return [RhoRank(s)(x), x];
+    gradingfunc := function(o, x)
+                     return [RhoRank(S)(x), x];
                    end;
 
     onlygrades := function(x, data_ht)
-                    return x[1] = RhoRank(s)(rho)
-                    and HTValue(data_ht, x[2]) = fail;
+                    return x[1] = RhoRank(S)(rho)
+                     and HTValue(data_ht, x[2]) = fail;
                   end;
 
-    onlygradesdata := GradedRhoHT(s);
-  else          #local
-    gradingfunc := function(o,x)
-                     return RhoRank(s)(x);
+    onlygradesdata := GradedRhoHT(S);
+  else #local
+    gradingfunc := function(o, x)
+                     return RhoRank(S)(x);
                    end;
-                   onlygrades := function(x, data_ht)
-                     return x = RhoRank(s)(RhoFunc(s)(f));
-                   end;
+    onlygrades := function(x, data_ht)
+                    return x = RhoRank(S)(rho);
+                  end;
     onlygradesdata := fail;
   fi;
 
-  record := ShallowCopy(RhoOrbOpts(s));
+  orb := ShallowCopy(RhoOrbOpts(S));
+  orb.parent := S;
+  orb.treehashsize := S!.opts.hashlen.M;
+  orb.schreier := true;
+  orb.orbitgraph := true;
+  orb.storenumbers := true;
+  orb.log := true;
+  orb.onlygrades := onlygrades;
+  orb.gradingfunc := gradingfunc;
+  orb.scc_reps := [x];
+  orb.onlygradesdata := onlygradesdata;
 
-  record.parent := s;
-  record.treehashsize := s!.opts.hashlen.M;
-  record.schreier := true;
-  record.orbitgraph := true;
-  record.storenumbers := true;
-  record.log := true;
-  record.onlygrades := onlygrades;
-  record.gradingfunc := gradingfunc;
-  record.scc_reps := [f];
-  record.onlygradesdata := onlygradesdata;
-
-  if IsSemigroupIdeal(s) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
+  if IsSemigroupIdeal(S) then
+    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
   else
-    gens := GeneratorsOfSemigroup(s);
+    gens := GeneratorsOfSemigroup(S);
   fi;
 
-  o := Orb(gens, rho, RhoAct(s), record);
+  o := Orb(gens, rho, RhoAct(S), orb);
   SetFilterObj(o, IsGradedRhoOrb);
 
-  if opt then # store o
-    j := RhoRank(s)(RhoFunc(s)(f)) + 1;
+  if global then # store o
+    j := RhoRank(S)(rho) + 1;
     # the +1 is essential as the rank can be 0
     k := graded!.lens[j] + 1;
     graded[j][k] := o;
     Enumerate(o);
     for l in [1 .. Length(o)] do
-      HTAdd(onlygradesdata, o[l], [j,k,l]);
+      HTAdd(onlygradesdata, o[l], [j, k, l]);
     od;
-
-    # store the position of RhoFunc(s)(f) in o
+    # store the position of RhoFunc(S)(x) in o
     graded!.lens[j] := k;
   fi;
-
-  return [o, 1];
+  if IsBound(obj) then
+    obj!.RhoPos := 1;
+  fi;
+  return o;
 end);
 
 # stores so far calculated GradedLambdaOrbs
@@ -249,8 +290,8 @@ function(s)
 
   fam := CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs),
-   rec( orbits := List([1 .. ActionDegree(s) + 1], x -> []),
-     lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
+   rec(orbits := List([1 .. ActionDegree(s) + 1], x -> []),
+       lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
 end);
 
 # stores so far calculated GradedRhoOrbs
@@ -351,7 +392,7 @@ function(s)
       o := GradedLambdaOrbs(s)[val[1]][val[2]];
     else # new graded orbit
       o := GradedLambdaOrb(s, EvaluateWord(lambda_o,
-        TraceSchreierTreeForward(lambda_o, pos)), true)[1];
+        TraceSchreierTreeForward(lambda_o, pos)), true);
       val := o!.position_in_graded;
     fi;
 

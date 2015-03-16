@@ -8,7 +8,8 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"transform.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),
+# > "transform.tst"));
 # around 2.3s.
 gap> START_TEST("Semigroups Package: transform.tst");
 gap> LoadPackage("semigroups", false);;
@@ -17,7 +18,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SemigroupsStartTest();
 
 #T# TransformTest1
-gap> gens:=[ Transformation( [ 2, 3, 2, 4, 3 ] ), 
+gap> gens := [ Transformation( [ 2, 3, 2, 4, 3 ] ), 
 > Transformation( [ 4, 5, 2, 2, 4 ] ), 
 > Transformation( [ 4, 3, 2, 1, 4 ] ), Transformation( [ 5, 5, 1, 3, 1 ] ) ];;
 gap> S:=Semigroup(gens);;
@@ -57,7 +58,7 @@ gap> List(Elements(S), x-> IsRegularSemigroupElement(S, x));
   true, true, true, true ]
 gap> Collected(last);
 [ [ true, 357 ], [ false, 31 ] ]
-gap> gens:=[ Transformation( [ 3, 4, 4, 2, 5, 4 ] ), 
+gap> gens := [ Transformation( [ 3, 4, 4, 2, 5, 4 ] ), 
 > Transformation( [ 2, 4, 5, 3, 2, 3 ] ), 
 > Transformation( [ 5, 4, 3, 4, 1, 5 ] ),
 > Transformation( [ 1, 6, 2, 1, 4, 5 ] ), 
@@ -68,7 +69,7 @@ gap> gens:=[ Transformation( [ 3, 4, 4, 2, 5, 4 ] ),
 gap> S:=Semigroup(gens);;
 gap> Collected(List(Elements(S), x-> IsRegularSemigroupElement(S, x)));  
 [ [ true, 21786 ] ]
-gap> gens:=[ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),
+gap> gens := [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),
 > Transformation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ),
 > Transformation( [ 1, 4, 4, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ),
 > Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 2, 2, 1, 2 ] ),
@@ -143,10 +144,10 @@ true
 gap> g1:=Transformation([2,1,4,5,6,7,3,2,1]);;
 gap> g2:=Transformation([2,1,4,2,1,4,2,1,4]);; 
 gap> m18:=Monoid(g1, g2);;
-gap> dc:=GreensDClasses(m18)[2];;
+gap> dc := GreensDClasses(m18)[2];;
 gap> RankOfTransformation(Representative(dc));
 7
-gap> hc:=GroupHClassOfGreensDClass(dc);
+gap> hc := GroupHClassOfGreensDClass(dc);
 {Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1, 2 ] )}
 gap> iso:=IsomorphismPermGroup(hc);;
 gap> s:=Semigroup(Elements(hc));;
@@ -158,8 +159,8 @@ gap> iso:=IsomorphismPermGroup(s);;
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
 gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
 gap> m6:=Semigroup(g1,g2);;
-gap> dc:=GreensDClasses(m6);;
-gap> hc:=GroupHClassOfGreensDClass(dc[1]);
+gap> dc := GreensDClasses(m6);;
+gap> hc := GroupHClassOfGreensDClass(dc[1]);
 {Transformation( [ 2, 2, 3, 4, 3, 6, 6, 4 ] )}
 gap> s:=Semigroup(Elements(hc));;
 gap> iso:=IsomorphismPermGroup(s);;
@@ -217,12 +218,16 @@ gap> IsRegularSemigroupElement(s, f);
 true
 gap> ForAll(inv, g-> f*g*f=f and g*f*g=g);
 true
-gap> gens:=[ Transformation( [ 3, 6, 4, 2, 4, 5 ] ), 
+gap> gens := [ Transformation( [ 3, 6, 4, 2, 4, 5 ] ), 
 > Transformation( [ 5, 1, 5, 4, 1, 5 ] ), 
-> Transformation( [ 5, 6, 5, 3, 4, 2 ] ), Transformation( [ 6, 6, 6, 4, 6, 2 ] ), 
-> Transformation( [ 4, 4, 4, 2, 4, 3 ] ), Transformation( [ 1, 1, 2, 2, 6, 2 ] ), 
-> Transformation( [ 5, 2, 4, 4, 6, 5 ] ), Transformation( [ 4, 6, 3, 5, 6, 6 ] ), 
-> Transformation( [ 4, 6, 3, 3, 1, 2 ] ), Transformation( [ 1, 6, 4, 4, 5, 4 ]) ];;
+> Transformation( [ 5, 6, 5, 3, 4, 2 ] ),
+> Transformation( [ 6, 6, 6, 4, 6, 2 ] ), 
+> Transformation( [ 4, 4, 4, 2, 4, 3 ] ),
+> Transformation( [ 1, 1, 2, 2, 6, 2 ] ), 
+> Transformation( [ 5, 2, 4, 4, 6, 5 ] ),
+> Transformation( [ 4, 6, 3, 5, 6, 6 ] ), 
+> Transformation( [ 4, 6, 3, 3, 1, 2 ] ),
+> Transformation( [ 1, 6, 4, 4, 5, 4 ]) ];;
 gap> s:=Semigroup(gens);;
 gap> Number(GreensRClasses(s), IsRegularClass);
 98
@@ -230,12 +235,12 @@ gap> Number(RClassReps(s), x-> IsRegularSemigroupElement(s, x));
 98
 gap> Size(s);
 8175
-gap> Transformation( [ 9, 45, 53, 15, 42, 97, 71, 66, 7, 88, 6, 98, 95, 36, 20, 59, 
->  94, 6, 81, 70, 65, 29, 78, 37, 74, 48, 52, 4, 32, 93, 18, 13, 55, 94, 49, 42, 
->  99, 46, 35, 84, 52, 79, 80, 7, 85, 53, 89, 70, 79, 27, 84, 99, 9, 73, 33, 70, 
->  77, 69, 41, 18, 63, 29, 42, 33, 75, 56, 79, 63, 89, 90, 64, 98, 49, 35, 100, 
->  89, 71, 3, 70, 20, 2, 26, 11, 39, 9, 7, 89, 90, 48, 89, 85, 8, 56, 42, 10, 61, 
->  25, 98, 55, 39 ] );;
+gap> Transformation( [ 9, 45, 53, 15, 42, 97, 71, 66, 7, 88, 6, 98, 95, 36,
+> 20, 59, 94, 6, 81, 70, 65, 29, 78, 37, 74, 48, 52, 4, 32, 93, 18, 13, 55,
+> 94, 49, 42, 99, 46, 35, 84, 52, 79, 80, 7, 85, 53, 89, 70, 79, 27, 84,
+> 99, 9, 73, 33, 70, 77, 69, 41, 18, 63, 29, 42, 33, 75, 56, 79, 63, 89,
+> 90, 64, 98, 49, 35, 100, 89, 71, 3, 70, 20, 2, 26, 11, 39, 9, 7, 89, 90,
+> 48, 89, 85, 8, 56, 42, 10, 61, 25, 98, 55, 39 ] );;
 gap> f:=last;;
 gap> SmallestIdempotentPower(f);
 12
@@ -258,7 +263,8 @@ gap> InversesOfSemigroupElement(s, f);
   Transformation( [ 6, 1, 3, 4, 5, 3 ] ) ]
 gap> ForAll(last, g-> f*g*f=f and g*f*g=g);
 true
-gap> gens:=[ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),   
+gap> gens := [
+>  Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),   
 >  Transformation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ),
 >  Transformation( [ 1, 4, 4, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ),
 >  Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 2, 2, 1, 2 ] ),
@@ -283,6 +289,30 @@ gap> Size(last);
 4
 gap> IsRightZeroSemigroup(last2);
 true
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(filt);
+gap> Unbind(perms);
+gap> Unbind(inv);
+gap> Unbind(im);
+gap> Unbind(m18);
+gap> Unbind(perm);
+gap> Unbind(m6);
+gap> Unbind(m1);
+gap> Unbind(g2);
+gap> Unbind(g1);
+gap> Unbind(dc);
+gap> Unbind(S);
+gap> Unbind(hc);
+gap> Unbind(ker);
+gap> Unbind(d);
+gap> Unbind(f);
+gap> Unbind(h);
+gap> Unbind(gens);
+gap> Unbind(s);
+gap> Unbind(iso);
+gap> Unbind(t);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST( "Semigroups package: transform.tst");

@@ -7,6 +7,15 @@
 ##
 #############################################################################
 
+2.2 -> 2.3  
+	    This is a minor release including some internal refactoring, and
+	    subsequent bugfixes, and stability improvements.
+
+	    • Issue 116 was resolved. In some cases when the default length of
+	    hash tables in Semigroups was set to be very small, a segmentation
+	    fault occurred. This is a bug in the Orb package (see Issue
+	    10), but we worked around it to resolve this issue. 
+
 2.1.1 -> 2.2 
 	    This is a minor release including some bug fixes, performance
 	    improvements, and additional functionality. 

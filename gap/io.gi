@@ -138,7 +138,7 @@ function(line)
 
   while i < Length(line) do
     m := Int([line[i]]);                                      # blocksize
-    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]}));       # max domain
+    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]})); # max domain
     f := line{[m + i + 1 .. i + m * (deg + 1)]};
     k := k + 1;
     out[k] := EmptyPlist(deg);
@@ -182,12 +182,13 @@ function(arg)
   if not (mode = "a" or mode = "w") then
     Error("Semigroups: WriteGenerators: usage,\n",
           "the third argument must be \"a\" or \"w\",");
+    return;
   fi;
 
   if IsTransformationCollection(coll)
     or IsPartialPermCollection(coll)
     or IsBipartitionCollection(coll) then
-    coll := [ coll ];
+    coll := [coll];
   elif not (IsTransformationCollColl(coll)
     or IsPartialPermCollColl(coll)
     or IsBipartitionCollColl(coll)) then
@@ -212,7 +213,7 @@ function(arg)
     return;
   fi;
 
-  for i in [ 1 .. Length(coll) ] do
+  for i in [1 .. Length(coll)] do
     if IsSemigroup(coll[i]) then
       coll[i] := GeneratorsOfSemigroup(coll[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
