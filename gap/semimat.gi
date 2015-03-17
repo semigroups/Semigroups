@@ -9,6 +9,26 @@
 #############################################################################
 ##
 
+InstallMethod(Size, "for a matrix semigroup",
+[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 400,
+function(S)
+  return Size(Group(List(GeneratorsOfSemigroup(S), 
+   x-> List(MutableCopyMat(x), List))));
+end);
+
+
+InstallMethod(DefaultFieldOfMatrixGroup, "for a matrix semigroup",
+[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
+S -> BaseDomain(GeneratorsOfSemigroup(S)[1]));
+
+InstallMethod(DimensionOfMatrixGroup, "for a matrix semigroup", 
+[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
+S -> Length(GeneratorsOfSemigroup(S)[1]));
+
+InstallMethod(GeneratorsOfGroup, "for a matrix semigroup", 
+[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 400,
+S -> GeneratorsOfSemigroup(S));
+
 #
 
 InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
@@ -103,6 +123,7 @@ x -> One(Representative(x)));
 ## Methods for acting semigroups setup
 ##
 #############################################################################
+
 InstallOtherMethod(FakeOne,
     "for a list of matrices (hack)",
     [IsHomogeneousList and IsRingElementCollCollColl],

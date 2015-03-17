@@ -1082,7 +1082,7 @@ function(S, func, limit)
   if not func(f) then
     return fail; # should really return the empty semigroup
   fi;
-
+  
   T := Semigroup(f);
 
   while Size(T) < limit and not IsDoneIterator(iter) do
