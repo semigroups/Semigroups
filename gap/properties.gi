@@ -121,8 +121,9 @@ function(S)
   iter := IteratorOfDClasses(S);
 
   for d in iter do
-    if IsRegularDClass(d) and (ForAny(RClasses(d), x -> NrIdempotents(x) > 1) or
-      NrRClasses(d) <> NrLClasses(d)) then
+    if IsRegularDClass(d) and
+       (ForAny(RClasses(d), x -> NrIdempotents(x) > 1)
+        or NrRClasses(d) <> NrLClasses(d)) then
       return false;
     fi;
   od;
@@ -131,7 +132,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsBrandtSemigroup, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsBrandtSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
 S -> IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S));
 
 # same method for inverse ideals
@@ -221,7 +223,7 @@ function(S)
   for i in [1 .. n] do
     for j in [i + 1 .. n] do
       if not gens[i] * gens[j] = gens[j] * gens[i] then
-        Info(InfoSemigroups, 2, "generators ", i, " and ",  j,
+        Info(InfoSemigroups, 2, "generators ", i, " and ", j,
          " do not commute");
         return false;
       fi;
@@ -237,7 +239,7 @@ InstallMethod(IsCompletelyRegularSemigroup,
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local record, o, pos, f, n;
+  local record, o, pos, f;
 
   if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
    IsCompletelyRegularSemigroup(Parent(S)) then
@@ -288,8 +290,8 @@ end);
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsCliffordSemigroup);
 
-# Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
-# causes problems.
+# Notes: this test required to avoid conflict with Smallsemi,
+# DeclareSynonymAttr causes problems.
 
 #same method for ideals
 
@@ -391,7 +393,7 @@ d -> NrHClasses(d) = Size(d));
 InstallMethod(IsLTrivial, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local iter, o, d;
+  local iter, d;
 
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
@@ -600,7 +602,7 @@ function(S)
 
   if HasGeneratorsOfSemigroup(S) and
     IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) and
-    ForAll(GeneratorsOfSemigroup(S), x -> x ^ - 1 in S) then
+    ForAll(GeneratorsOfSemigroup(S), x -> x ^ -1 in S) then
     return true;
   fi;
 
@@ -710,8 +712,9 @@ InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 
 # not applicable for ideals
 
-InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and
-HasGeneratorsOfSemigroup, 0,
+InstallImmediateMethod(IsMonogenicSemigroup,
+IsSemigroup and HasGeneratorsOfSemigroup,
+0,
 function(S)
   if Length(GeneratorsOfSemigroup(S)) = 1 then
     return true;
@@ -725,7 +728,7 @@ InstallMethod(IsMonogenicSemigroup, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local gens, I, f, i;
-
+  #TODO this if-condition is redundant due to the previous immediate method
   if HasGeneratorsOfSemigroup(S) then
 
     gens := GeneratorsOfSemigroup(S);
@@ -775,7 +778,8 @@ function(S)
   if not IsInverseSemigroup(S) then
     return false;
   fi;
-  return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(S)));
+  return IsMonogenicInverseSemigroup(
+          Range(IsomorphismPartialPermSemigroup(S)));
 end);
 
 # same method for ideals
@@ -852,7 +856,7 @@ function(S)
     for j in [1 .. m] do
 
       if not IsIdempotent(e[i] * e[j]) then
-        Info(InfoSemigroups, 2, "the product of idempotents ", i," and ", j,
+        Info(InfoSemigroups, 2, "the product of idempotents ", i, " and ", j,
         " is not an idempotent");
         return false;
       fi;
@@ -902,7 +906,7 @@ end);
 InstallMethod(IsRegularSemigroup, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local tester, n, rhofunc, lookfunc, data, i;
+  local tester, rhofunc, lookfunc, data, i;
 
   if IsSimpleSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is simple");
@@ -1031,7 +1035,7 @@ function(S, f)
   if IsClosed(LambdaOrb(S)) then
     o := LambdaOrb(S);
   else
-    o := GradedLambdaOrb(S, f, true)[1];
+    o := GradedLambdaOrb(S, f, true);
   fi;
 
   scc := OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(S)(f))]];
@@ -1064,12 +1068,11 @@ function(S, x)
 
   if IsClosed(LambdaOrb(S)) then
     o := LambdaOrb(S);
-    k := Position(o, LambdaFunc(S)(x));
   else
     o := GradedLambdaOrb(S, x, true);
-    k := o[2];
-    o := o[1];
   fi;
+
+  k := Position(o, LambdaFunc(S)(x));
 
   l := Position(o, RhoFunc(S)(x));
   return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
@@ -1091,7 +1094,7 @@ function(S, x)
     fi;
   else
     # this has to be false, since we're not sure if <x> in <S>
-    o := GradedLambdaOrb(S, x, false)[1];
+    o := GradedLambdaOrb(S, x, false);
     l := 1;
   fi;
 
@@ -1121,7 +1124,7 @@ function(S, x)
     fi;
   else
     # this has to be false, since we're not sure if <x> in <S>
-    o := GradedLambdaOrb(S, x, false)[1];
+    o := GradedLambdaOrb(S, x, false);
     k := 1;
   fi;
   l := Position(o, RhoFunc(S)(x));
@@ -1236,9 +1239,10 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsSimpleSemigroup, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsSimpleSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
 function(S)
-  local gens, lambdafunc, lambdarank, rank, opts, o, pos, iter, name, f, n;
+  local gens, lambdafunc, lambdarank, rank, opts, o, pos, iter, name, f;
 
   if HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -1343,7 +1347,7 @@ function(S)
              scc[m][1])));
       for j in scc[m] do
         if not o[j] in graded then
-          if not ForAny(GradedLambdaOrb(g, o[j], true)[1], x -> tester(x, rho))
+          if not ForAny(GradedLambdaOrb(g, o[j], true), x -> tester(x, rho))
            then
             return false;
           fi;
@@ -1528,7 +1532,7 @@ function(S)
                      # here or better still take an isomorphism to a partial
                      # perm semigroup and answer the question there.
   fi;
-  return IsMajorantlyClosed(S,IdempotentGeneratedSubsemigroup(S));
+  return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
 end);
 
 #EOF

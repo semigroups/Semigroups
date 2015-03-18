@@ -18,11 +18,11 @@ gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ),
 > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
 gap> r:=GreensRClassOfElement(s,
 > Generators(s)[1]*Generators(s)[2]*Generators(s)[1]);
-{Transformation( [ 3, 2, 5, 4, 1, 1 ] )}
+{Transformation( [ 5, 2, 1, 4, 3, 3 ] )}
 gap> Transformation( [ 4, 1, 6, 5, 2, 2 ] ) in r;
 true
 gap> Representative(r);
-Transformation( [ 3, 2, 5, 4, 1, 1 ] )
+Transformation( [ 5, 2, 1, 4, 3, 3 ] )
 gap> AsList(LambdaOrb(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
 [ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
@@ -92,8 +92,12 @@ gap> AsList(last);
 [ [ 0 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
 
-#
-gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(iter); 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(s);
+gap> Unbind(r);
+gap> Unbind(gens);
+gap> Unbind(iter);
+gap> Unbind(f);
 
 #E#
 gap> STOP_TEST( "Semigroups package: data.tst");

@@ -1,11 +1,11 @@
-################################################################################
+###############################################################################
 ##
 #W  freeinverse.gi
 #Y  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
-################################################################################
+###############################################################################
 ##
 ##  Internal representation of the elements of free inverse semigroups is
 ##  is given as a list:
@@ -29,11 +29,12 @@
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
 IsFreeInverseSemigroupElementCollection);
 
-################################################################################
+###############################################################################
 ##
 ##  Iterator( <S> )
 ##
-BindGlobal( "NextIterator_FreeInverseSemigroup", function( iter )
+BindGlobal("NextIterator_FreeInverseSemigroup",
+function(iter)
   local nrgen, i, minimal_seq, FG_NextIterator, new_iterator, seq, words,
         iter_list, output, semigroup;
 
@@ -70,7 +71,6 @@ BindGlobal( "NextIterator_FreeInverseSemigroup", function( iter )
   semigroup := iter!.semigroup;
   nrgen := Length(GeneratorsOfInverseSemigroup(semigroup));
 
-
   new_iterator := Iterator(FreeGroup(nrgen));
 
   if seq = minimal_seq(Length(seq)) then
@@ -78,7 +78,7 @@ BindGlobal( "NextIterator_FreeInverseSemigroup", function( iter )
     words := [FG_NextIterator(iter_list[Length(seq)])];
     iter_list := [iter_list[Length(seq)]];
   elif seq[1] <> 1 then
-    seq := Concatenation([1] , seq);
+    seq := Concatenation([1], seq);
     words := Concatenation([GeneratorsOfInverseSemigroup(semigroup)[1]],
       words);
     iter_list := Concatenation([ShallowCopy(new_iterator)], iter_list);
@@ -95,19 +95,19 @@ BindGlobal( "NextIterator_FreeInverseSemigroup", function( iter )
 
   output := words[1];
   for i in [2 .. Length(words)] do
-    output := words[i] * words[i] ^ ( - 1) * output ;
+    output := words[i] * words[i] ^ (-1) * output ;
   od;
   return output;
 end);
 
-BindGlobal( "ShallowCopy_FreeInverseSemigroup", iter -> rec(
+BindGlobal("ShallowCopy_FreeInverseSemigroup", iter -> rec(
                  semigroup := iter!.semigroup,
                  seq       := iter!.seq,
                  words     := iter!.words,
                  iter_list := ShallowCopy( iter!.iter_list ) ) );
 
-InstallMethod( Iterator,"for a free inverse semigroup",
-  [ IsFreeInverseSemigroupCategory ],  S -> IteratorByFunctions( rec(
+InstallMethod(Iterator, "for a free inverse semigroup",
+  [IsFreeInverseSemigroupCategory], S -> IteratorByFunctions(rec(
 
   IsDoneIterator := ReturnFalse,
   NextIterator   := NextIterator_FreeInverseSemigroup,
@@ -131,20 +131,20 @@ function(arg)
   local names, F, type, gens, S, m;
 
   # Get and check the argument list, and construct names if necessary.
-  if Length( arg ) = 1 and IsInt( arg[1] ) and 0 < arg[1] then
-    names := List( [ 1 .. arg[1] ],
-                  i -> Concatenation( "x", String(i) ) );
-    MakeImmutable( names );
-  elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 < arg[1] then
-    names := List( [ 1 .. arg[1] ],
-                  i -> Concatenation( arg[2], String(i) ) );
-    MakeImmutable( names );
-  elif Length( arg ) = 1 and IsList( arg[1] ) and IsEmpty( arg[1] ) then
+  if Length(arg) = 1 and IsInt(arg[1]) and 0 < arg[1] then
+    names := List([1 .. arg[1]],
+                  i -> Concatenation("x", String(i)));
+    MakeImmutable(names);
+  elif Length(arg) = 2 and IsInt(arg[1]) and 0 < arg[1] then
+    names := List([1 .. arg[1]],
+                  i -> Concatenation(arg[2], String(i)));
+    MakeImmutable(names);
+  elif Length(arg) = 1 and IsList(arg[1]) and IsEmpty(arg[1]) then
     names := arg[1];
-  elif 1 <= Length( arg ) and ForAll( arg, IsString ) then
+  elif 1 <= Length(arg) and ForAll(arg, IsString) then
     names := arg;
-  elif Length( arg ) = 1 and IsList( arg[1] )
-                          and ForAll( arg[1], IsString ) then
+  elif Length(arg) = 1 and IsList(arg[1])
+                          and ForAll(arg[1], IsString) then
     names := arg[1];
   else
     Error("Semigroups: FreeInverseSemigroup: usage,\n",
@@ -153,32 +153,33 @@ function(arg)
     return;
   fi;
 
-  F := NewFamily( "FreeInverseSemigroupElementsFamily",
+  F := NewFamily("FreeInverseSemigroupElementsFamily",
       IsFreeInverseSemigroupElement,
       CanEasilySortElements);
 
   type := NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
-  if IsEmpty( names ) then
+  if IsEmpty(names) then
     Error("Semigroups: FreeInverseSemigroup: usage,\n",
           "the number of generators of a free inverse semigroup must ",
           "be non-zero,");
     return;
-  elif IsFinite( names ) then
-    gens := EmptyPlist( Length(names) );
+  elif IsFinite(names) then
+    gens := EmptyPlist(Length(names));
     for m in [1 .. Length(names)] do
       gens[m] := Objectify(type,
-       [Length(names), 2, 2, [fail, 1], [fail,2 * m - 1], [], []]);
+       [Length(names), 2, 2, [fail, 1], [fail, 2 * m - 1], [], []]);
       gens[m]![6][2 * m - 1] := 2;
       gens[m]![7][2 * m] := 1;
     od;
     names := Concatenation(List(names, x -> [x, Concatenation(x, "^-1")]));
-    StoreInfoFreeMagma( F, names, IsFreeInverseSemigroupElement );
-    S := Objectify( NewType( FamilyObj( gens ),
-	                     IsFreeInverseSemigroupCategory and IsInverseSemigroup
-		             and IsAttributeStoringRep),
-		    rec() );
-    SetGeneratorsOfInverseSemigroup( S, gens);
+    StoreInfoFreeMagma(F, names, IsFreeInverseSemigroupElement);
+    S := Objectify(NewType(FamilyObj(gens),
+                           IsFreeInverseSemigroupCategory
+                            and IsInverseSemigroup
+                            and IsAttributeStoringRep),
+                   rec());
+    SetGeneratorsOfInverseSemigroup(S, gens);
     SetIsFreeInverseSemigroup(S, true);
   else
     Error("Semigroups: FreeInverseSemigroup: usage,\n",
@@ -190,12 +191,11 @@ function(arg)
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
 
-  SetIsWholeFamily( S, true );
-  SetIsTrivial( S, Length(names) = 0);
+  SetIsWholeFamily(S, true);
+  SetIsTrivial(S, Length(names) = 0);
 
   return S;
-end );
-
+end);
 
 ############################################################################
 ##
@@ -205,12 +205,11 @@ end );
 InstallMethod(PrintObj, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement], ViewObj);
 
-
 InstallMethod(ViewObj, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
 
-  if UserPreference("semigroups","FreeInverseSemigroupElementDisplay") =
+  if UserPreference("semigroups", "FreeInverseSemigroupElementDisplay") =
     "minimal" then
     Print(MinimalWord(x));
   else
@@ -223,18 +222,16 @@ end);
 InstallMethod(ViewObj,
 "for a free inverse semigroup containing the whole family",
 [IsFreeInverseSemigroupCategory],
-function( S )
-  if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
-    Print( "<free inverse semigroup with ",
-           Length( GeneratorsOfInverseSemigroup( S ) ),
-           " generators>" );
+function(S)
+  if GAPInfo.ViewLength * 10 < Length(GeneratorsOfMagma(S)) then
+    Print("<free inverse semigroup with ",
+          Length(GeneratorsOfInverseSemigroup(S)),
+           " generators>");
   else
-    Print( "<free inverse semigroup on the generators ",
-           GeneratorsOfInverseSemigroup( S ), ">" );
+    Print("<free inverse semigroup on the generators ",
+          GeneratorsOfInverseSemigroup(S), ">");
   fi;
-end );
-
-
+end);
 
 ############################################################################
 ##
@@ -244,8 +241,8 @@ end );
 InstallMethod(MinimalWord, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
-  local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words, pos,
-  part, temp_word, out, labels, names;
+  local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words,
+   pos, part, temp_word, out, names;
 
   InvertGenerator := function(n)
     if n mod 2 = 0 then
@@ -301,9 +298,9 @@ function(x)
   names := FamilyObj(x)!.names;
 
   for i in path do
-    Append(out, List(words[stop_start[i]], l -> Concatenation(names[l],"*")));
+    Append(out, List(words[stop_start[i]], l -> Concatenation(names[l], "*")));
     if i + 1 <= Length(path) then
-     Add(out, Concatenation(names[gen[path[i + 1]]],"*"));
+     Add(out, Concatenation(names[gen[path[i + 1]]], "*"));
     fi;
   od;
 
@@ -315,14 +312,13 @@ function(x)
   return out;
 end);
 
-
 ##############################################################################
 ##
 ## CanonicalForm( s )
 ##
 ##
 
-InstallMethod( CanonicalForm, "for a free inverse semigroup element",
+InstallMethod(CanonicalForm, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(tree)
   local output, maxleftreduced, maxleftreducedpath, pivot, i, InvertGenerator,
@@ -352,7 +348,7 @@ function(tree)
 
     result := [];
     for i in list2 do
-      Add(result, Concatenation(list1,[i]));
+      Add(result, Concatenation(list1, [i]));
     od;
     return result;
   end;
@@ -361,7 +357,7 @@ function(tree)
     return list[Length(list)];
   end;
 
-  maxleftreducedpath := fork( [], children(1));
+  maxleftreducedpath := fork([], children(1));
   for pivot in maxleftreducedpath do
     while children(tail(pivot)) <> [] do
       maxleftreducedpath := fork(pivot, children(tail(pivot)));
@@ -387,10 +383,10 @@ function(tree)
   if Length(maxleftreduced) = 1 and
      Length(maxleftreduced[1]) = 2 and
      Length(groupelem) > 0 and
-    ( (maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] =
-    maxleftreduced[1][1] + 1 ) or
+    ((maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] =
+    maxleftreduced[1][1] + 1) or
       (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] =
-      maxleftreduced[1][1] - 1 ))
+      maxleftreduced[1][1] - 1))
   then
     output := Concatenation(List(groupelem, x -> FamilyObj(tree)!.names[x]));
   else
@@ -410,7 +406,7 @@ InstallMethod(\=, "for elements of a free inverse semigroup",
 IsIdenticalObj,
 [IsFreeInverseSemigroupElement, IsFreeInverseSemigroupElement],
 function(tree1, tree2)
-  local isequal,i;
+  local isequal, i;
 
   isequal := true;
   for i in [1 .. 5 + tree1![2]] do
@@ -425,7 +421,8 @@ function(tree1, tree2)
   fi;
 
   return isequal;
-end );
+end);
+
 ##############################################################################
 ##
 ## Multiplication
@@ -478,9 +475,9 @@ end);
 ##
 
 InstallMethod(\^, "for elements of a free inverse semigroup",
-[IsFreeInverseSemigroupElement,IsNegInt],
-function(tree,n)
-  local new_names, old_names,result, product, current_old, i, j, label;
+[IsFreeInverseSemigroupElement, IsNegInt],
+function(tree, n)
+  local product, old_names, new_names, label, current_old, result, i, j;
 
   product := [];
   product[1] := tree![1];
@@ -494,7 +491,7 @@ function(tree,n)
 
   label := 2;
 
-  for i in [1 .. tree![2] ] do
+  for i in [1 .. tree![2]] do
     product[5 + i] := [];
     for j in [1 .. 2 * tree![1]] do
       if IsBound(tree![old_names[i] + 5][j]) then
@@ -516,9 +513,8 @@ function(tree,n)
   product[5][1] := fail;
 
   result := Objectify(TypeObj(tree), product);
-  return result ^ ( - n);
+  return result ^ (-n);
 end);
-
 
 ###########################################################################
 ##
@@ -545,7 +541,7 @@ function(s)
     used := BlistList([1 .. Length(FamilyObj(gens[1])!.names) / 2], []);
     for g in gens do
       list := g![5];
-      for i in [ 2 .. Length(list)] do
+      for i in [2 .. Length(list)] do
         used[Int((list[i] + 1) / 2)] := true;
       od;
       if g![2] = 2 then

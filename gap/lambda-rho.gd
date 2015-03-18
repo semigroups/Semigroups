@@ -8,10 +8,6 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("RectifyLambda");
-DeclareGlobalFunction("RectifyRho");
-DeclareGlobalFunction("RectifyInverseRho");
-
 DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
 DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
 DeclareFilter("IsLambdaOrb", IsOrbit);
