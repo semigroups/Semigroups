@@ -643,6 +643,8 @@ function(s)
   fi;
 
   if HasIsTrivial(s) and IsTrivial(s) then
+    # To catch the case when S = Semigroup(Transformation( [ 1 ] ));
+    # This would otherwise cause an infinite loop in the following repeat loop
     return GeneratorsOfSemigroup(s)[1];
   fi;
 
@@ -650,16 +652,19 @@ function(s)
   o := LambdaOrb(s);
   rank := LambdaRank(s);
 
-  #is there an element in s with minimum possible rank
+  # is there an element in s with minimum possible rank
   if IsTransformationSemigroup(s) then
+    # i.e. rank 1
     i := 0;
     repeat
       i := i + 1;
       pos := EnumeratePosition(o, [i], false);
     until pos <> fail or i = ActionDegree(s);
   elif IsPartialPermSemigroup(s) then
+    # i.e. rank 0
     pos := EnumeratePosition(o, [], false);
   else
+    # i.e. rank = MinActionRank(s);
     pos := LookForInOrb(o, function(o, x)
                              return rank(x) = min;
                            end, 2);
@@ -683,6 +688,7 @@ function(s)
     od;
     f := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
   fi;
+  # The following line necessary but not sufficient to return f
   if IsIdempotent(f) and Size(GreensRClassOfElementNC(s, f)) = 1 then
     return f;
   fi;
