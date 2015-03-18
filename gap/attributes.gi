@@ -642,6 +642,10 @@ function(s)
     return MultiplicativeZero(SupersemigroupOfIdeal(s));
   fi;
 
+  if HasIsTrivial(s) and IsTrivial(s) then
+    return GeneratorsOfSemigroup(s)[1];
+  fi;
+
   min := MinActionRank(s);
   o := LambdaOrb(s);
   rank := LambdaRank(s);

@@ -792,6 +792,30 @@ true
 gap> IsSynchronizingSemigroup(s);
 false
 
+#T# PropertiesTest56: IsZeroSemigroup
+gap> t := Transformation( [ 1 ] );;
+gap> s := Semigroup(t);
+<trivial transformation group>
+gap> IsZeroSemigroup(s);
+true
+gap> t := Transformation( [ 1, 1, 2 ] );;
+gap> s := Semigroup(t);
+<commutative transformation semigroup on 3 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t ^ 2);
+<commutative regular transformation semigroup ideal on 3 pts with 1 generator>
+gap> IsZeroSemigroup(I);
+true
+gap> IsZeroSemigroup(s);
+true
+gap> I := SemigroupIdeal(s, t ^ 2);;
+gap> IsZeroSemigroup(I);
+true
+gap> t := Transformation( [ 2, 1 ] );;
+gap> s := Semigroup(t);
+<commutative transformation semigroup on 2 pts with 1 generator>
+gap>  IsZeroSemigroup(s);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(rms);
