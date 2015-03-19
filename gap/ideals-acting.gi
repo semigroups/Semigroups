@@ -333,7 +333,8 @@ function(data, limit, record)
   genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc,
   lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd,
   htvalue, drel, dtype, poset, datalookup, log, tester, regular,
-  UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
+  UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, setter, j, k, z,
+  D;
 
   if IsBound(record.lookfunc) then
     lookfunc := record.lookfunc;
@@ -436,12 +437,9 @@ function(data, limit, record)
 
   # new stuff
   drel := GreensDRelation(I);
-  dtype := DClassType(I);
-  #FIXME the following are not required for anything here, just to make sure
-  # that the types of Green's classes are consistent
-  LClassType(I);
-  RClassType(I);
-  HClassType(I);
+  dtype := NewType(FamilyObj(I), IsEquivalenceClass and
+            IsEquivalenceClassDefaultRep and IsGreensDClass and
+            IsActingSemigroupGreensClass);
 
   poset := data!.poset;  # the D-class poset
   datalookup := data!.scc_lookup;
@@ -662,10 +660,18 @@ function(data, limit, record)
     SetFilterObj(rhoo, IsClosed);
     SetFilterObj(data, IsClosedData);
     if not HasIsRegularSemigroup(I) then
-      SetIsRegularSemigroup(data!.parent, ForAll(regular, x -> x = true));
-      if IsRegularSemigroup(data!.parent) then
-        SetGreensDClasses(data!.parent, d);
+      SetIsRegularSemigroup(I, ForAll(regular, x -> x = true));
+    fi;
+    if IsRegularSemigroup(I) then
+      SetGreensDClasses(I, d);
+      if IsActingSemigroupWithInverseOp(I) then
+        setter := SetIsInverseOpClass;
+      else
+        setter := SetIsRegularClass;
       fi;
+      for D in GreensDClasses(I) do
+        setter(D, true);
+      od;
     fi;
   fi;
   return data;
