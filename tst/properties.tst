@@ -815,7 +815,11 @@ gap> HasIsZeroSemigroup(s);
 false
 gap> IsZeroSemigroup(s);
 true
-gap> I := SemigroupIdeal(s, t ^ 2);; # parent does know it is zero
+gap> I := SemigroupIdeal(s, t);; # parent does know it is zero
+gap> IsZeroSemigroup(I);
+true
+gap> I := SemigroupIdeal(s, t);; # parent does know it is zero.
+gap> GeneratorsOfSemigroup(I);;  # ideal now can use normal method
 gap> IsZeroSemigroup(I);
 true
 
@@ -829,6 +833,16 @@ gap> I := SemigroupIdeal(s, Transformation([ 1, 2 ]));
 <commutative regular transformation semigroup ideal on 2 pts with 1 generator>
 gap> IsZeroSemigroup(I); # parent knows that it is not zero
 false
+
+# For a zero-group as a transformation semigroup
+gap> s := Semigroup([
+> Transformation( [ 1, 3, 2, 3 ] ),
+> Transformation( [ 1, 1, 1, 1 ] ) ]); # s is a 0-simple semigroup
+<transformation semigroup on 4 pts with 2 generators>
+gap> IsZeroSemigroup(s);
+false
+gap> IsZeroSimpleSemigroup(s);
+true
 
 # For a non-trivial inverse semigroup of partial perms (semigroup with a zero)
 gap> s := InverseSemigroup([
