@@ -645,6 +645,8 @@ function(s)
   if HasIsTrivial(s) and IsTrivial(s) then
     # To catch the case when S = Semigroup(Transformation( [ 1 ] ));
     # This would otherwise cause an infinite loop in the following repeat loop
+    # However it applies to other cases too.
+    # WW: Is there a better way to quickly return *the* single element of S?
     return GeneratorsOfSemigroup(s)[1];
   fi;
 
@@ -652,7 +654,7 @@ function(s)
   o := LambdaOrb(s);
   rank := LambdaRank(s);
 
-  # is there an element in s with minimum possible rank
+  # is there an element in s with minimum possible rank?
   if IsTransformationSemigroup(s) then
     # i.e. elt of rank 1?
     i := 0;
@@ -696,6 +698,7 @@ function(s)
     out := fail;
   fi;
 
+  # Stored learned information
   if IsSemigroupIdeal(s) then
     SetMultiplicativeZero(SupersemigroupOfIdeal(s), out);
   fi;

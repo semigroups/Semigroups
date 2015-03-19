@@ -865,6 +865,13 @@ gap> (IsBound(GAPInfo.PackagesLoaded.grape)
 > and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail));
 true
 
+#T# TestInstall56: Issue 121:
+# MultiplicativeZero for full transformation monoid on one point
+gap> t := Transformation( [ 1 ] );;
+gap> s := Semigroup(t);;
+gap> MultiplicativeZero(s) = t;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
