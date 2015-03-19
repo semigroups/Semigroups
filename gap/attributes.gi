@@ -635,7 +635,7 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local min, o, rank, i, pos, f, min_found, rank_i;
+  local min, o, rank, i, pos, f, min_found, rank_i, out;
 
   if IsSemigroupIdeal(s)
     and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
@@ -692,10 +692,16 @@ function(s)
   if IsIdempotent(f)
    and Size(GreensRClassOfElementNC(s, f)) = 1
    and Size(GreensLClassOfElementNC(s, f)) = 1 then
-    return f;
+    out := f;
+  else
+    out := fail;
   fi;
 
-  return fail;
+  if IsSemigroupIdeal(s) then
+    SetMultiplicativeZero(SupersemigroupOfIdeal(s), out);
+  fi;
+
+  return out;
 end);
 
 # same method for ideals

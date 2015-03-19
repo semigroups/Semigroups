@@ -55,8 +55,12 @@ gap> s := Semigroup([
 gap> t := Transformation( [ 1, 1, 1, 1 ] );;
 gap> I := SemigroupIdeal(s, t);
 <regular transformation semigroup ideal on 4 pts with 1 generator>
+gap> HasMultiplicativeZero(s);
+false
 gap> MultiplicativeZero(I); # does not know whether parent has a zero
 fail
+gap> HasMultiplicativeZero(s);
+true
 gap> MultiplicativeZero(s);
 fail
 gap> I := SemigroupIdeal(s, t);
