@@ -689,8 +689,7 @@ function(s)
     f := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
   fi;
 
-  if IsIdempotent(f)
-   and Size(GreensRClassOfElementNC(s, f)) = 1
+  if Size(GreensRClassOfElementNC(s, f)) = 1
    and Size(GreensLClassOfElementNC(s, f)) = 1 then
     out := f;
   else
