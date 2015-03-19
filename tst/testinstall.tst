@@ -872,6 +872,23 @@ gap> s := Semigroup(t);;
 gap> MultiplicativeZero(s) = t;
 true
 
+#T# TestInstall57: Issue 123:
+# Error in IsZeroSemigroup for non-acting semigroups / ones without generators
+gap> t := Transformation([ 1, 1, 2, 3 ]);;
+gap> s := Semigroup(t);
+<commutative transformation semigroup on 4 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t);
+<commutative non-regular transformation semigroup ideal 
+ on 4 pts with 1 generator>
+gap> IsZeroSemigroup(s);
+false
+gap> IsZeroSemigroup(Semigroup(t, rec(acting := false)));
+false
+gap> IsZeroSemigroup(I);
+false
+gap> Elements(s) = Elements(I);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
