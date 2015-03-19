@@ -71,8 +71,39 @@ fail
 #T# AttributesTest2: MultiplicativeZero
 # for a partial perm semigroup/ideal
 gap> t := PartialPerm( [  ], [  ] );;
-gap> s := Semigroup(t);
-<trivial partial perm group on 0 pts with 0 generators>
+
+# MultiplicativeZero for S = { <empty mapping> }
+gap> s := Semigroup(t);;
+gap> MultiplicativeZero(s) = t;
+true
+
+# MultiplicativeZero for other trivial partial perm semigroups
+gap> t := PartialPerm( [ 2, 4 ], [ 2, 4 ] );;
+gap> s := Semigroup(t);;
+gap> MultiplicativeZero(s) = t;
+true
+
+# MultiplicativeZero for a partial perm semigroup ideal
+gap> s := Semigroup([
+> PartialPerm( [ 1, 2, 3, 4 ], [ 2, 3, 4, 1 ] ),
+> PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 3, 4 ] ),
+> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]); 
+<partial perm semigroup on 4 pts with 3 generators>
+gap> t := PartialPerm( [  ], [  ] );;
+gap> I := SemigroupIdeal(s, t);
+<inverse partial perm semigroup ideal on 4 pts with 1 generator>
+gap> HasMultiplicativeZero(s);
+false
+gap> MultiplicativeZero(I) = t; # does not know whether parent has a zero
+true
+gap> HasMultiplicativeZero(s);
+true
+gap> MultiplicativeZero(s) = t;
+true
+gap> I := SemigroupIdeal(s, t);
+<inverse partial perm semigroup ideal on 4 pts with 1 generator>
+gap> MultiplicativeZero(I) = t; # does know whether parent has a zero
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
