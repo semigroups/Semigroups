@@ -54,7 +54,7 @@ that:
 * there should be exactly one space after a comma `,` except if it is at the end
   of line
 * there should not be adjacent empty lines
-* there should not variables which are declared but not used
+* there should not be variables which are declared but not used
 * everything declared in the file `gap/blah.gd` should be documented in the file
   `doc/blah.xml`.  If a function or method is for internal use only, then its
   name should have the prefix `SEMIGROUPS_` or it should have the suffix `NC`.
