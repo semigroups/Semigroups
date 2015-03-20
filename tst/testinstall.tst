@@ -877,6 +877,18 @@ gap> L := GreensLClassOfElement(I, x);
 gap> SchutzenbergerGroup(L); 
 Group(())
 
+#T# TestInstall57: Issue 123 (Incorrect method for IsZeroSemigroup for
+# non-acting semigroup)
+gap> x := Transformation([ 1, 1, 2, 3 ]);;
+gap> S := Semigroup(x);;
+gap> I := SemigroupIdeal(S, x);;
+gap> IsZeroSemigroup(S);
+false
+gap> IsZeroSemigroup(Semigroup(x, rec(acting := false)));
+false
+gap> IsZeroSemigroup(I);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
