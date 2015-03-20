@@ -24,15 +24,13 @@
 ##   1. Helper functions for the creation of Green's classes, and lambda-rho
 ##      stuff.
 ##
-##   2. Technical Green's stuff (types, representative, etc)
+##   2. Individual Green's classes (constructors, size, membership)
 ##
-##   3. Individual Green's classes (constructors, size, membership)
+##   3. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
 ##
-##   4. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
+##   4. Idempotents and NrIdempotents
 ##
-##   5. Idempotents and NrIdempotents
-##
-##   6. Iterators and enumerators
+##   5. Iterators and enumerators
 ##
 #############################################################################
 
@@ -107,73 +105,7 @@ function(L)
 end);
 
 #############################################################################
-## 2. Technical Green's classes stuff . . .
-#############################################################################
-
-# This method should not be installed! It is only left here to remind us of
-# this. The reason is that if a Green's D-class is not created as an
-# InverseOpClass, then its rep is rectified wrt Lambda and Rho, but if it is
-# subsequently considered as an InverseOpClass, then the Rho value of the rep
-# will be wrong (i.e. not nec. in the first position of the scc of the
-# LambdaOrb containing its Rho-value, but in the first position of the scc of
-# the RhoOrb containing it). Lots of methods in this file use the fact that the
-# rep of an inverse-op D-class has the representative with Lambda and Rho
-# values in the first position of the scc of the *LambdaOrb* containing them.
-# The same comments apply to inverse-op L-classes, their reps must have their
-# Rho value in the first pos of the scc of the *LambdaOrb* containing the Rho
-# value. So, an L-class created as a non-inverse-op class, which later becomes
-# an inverse-op class will have the wrong representative. Therefore we don't
-# allow classes to change from non-inverse-op to inverse-op.
-# representative
-
-#InstallMethod(IsInverseOpClass, "for a Green's class",
-#[IsGreensClass],
-#function(class)
-#  return IsActingSemigroupWithInverseOp(Parent(class));
-#end);
-
-#
-
-#InstallMethod(DClassType, "for acting semigroup with inverse op",
-#[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-#function(S)
-#  return NewType(FamilyObj(S), IsEquivalenceClass and
-#         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensDClass
-#         and IsActingSemigroupGreensClass);
-#end);
-#
-##
-#
-#InstallMethod(HClassType, "for acting semigroup with inverse op",
-#[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-#function(S)
-#  return NewType(FamilyObj(S), IsEquivalenceClass and
-#         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensHClass
-#         and IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup);
-#end);
-#
-##
-#
-#InstallMethod(LClassType, "for acting semigroup with inverse op",
-#[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-#function(S)
-#  return NewType(FamilyObj(S), IsEquivalenceClass and
-#         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensLClass
-#         and IsActingSemigroupGreensClass);
-#end);
-#
-##
-#
-#InstallMethod(RClassType, "for acting semigroup with inverse op",
-#[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-#function(S)
-#  return NewType(FamilyObj(S), IsEquivalenceClass and
-#         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensRClass
-#         and IsActingSemigroupGreensClass);
-#end);
-
-#############################################################################
-## 3. Individual classes . . .
+## 2. Individual classes . . .
 #############################################################################
 
 InstallMethod(DClassOfLClass,
@@ -234,22 +166,6 @@ function(S, x, isGreensClassNC)
   SEMIGROUPS_InverseRectifyRho(L);
   return L;
 end);
-
-# same method for inverse ideals
-# FIXME this method is redundant
-
-#InstallMethod(GreensLClassOfElementNC,
-#"for inverse op D-class, element, and bool",
-#[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
-#IsAssociativeElement, IsBool],
-#function(D, x, isGreensClassNC)
-#  local L;
-#  L := SEMIGROUPS_CreateLClass(D, x, isGreensClassNC);
-#  SEMIGROUPS_CopyLambda(D, L);
-#  SEMIGROUPS_InverseRectifyRho(L);
-#  SetDClassOfLClass(L, D);
-#  return L;
-#end);
 
 # same method for inverse ideals
 
@@ -387,7 +303,7 @@ function(x, L)
 end);
 
 #############################################################################
-## 4. Collections of classes, and reps
+## 3. Collections of classes, and reps
 #############################################################################
 
 # This is required since it is used elsewhere in the code that DClassReps of an
@@ -580,7 +496,7 @@ function(S)
 end);
 
 #############################################################################
-## 5. Idempotents . . .
+## 4. Idempotents . . .
 #############################################################################
 
 # same method for inverse ideals
@@ -693,7 +609,7 @@ InstallMethod(NrIdempotents, "for an inverse op R-class",
 R -> 1);
 
 #############################################################################
-## 6. Iterators and enumerators . . .
+## 5. Iterators and enumerators . . .
 #############################################################################
 
 # FIXME move this elsewhere

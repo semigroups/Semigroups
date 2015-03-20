@@ -13,7 +13,6 @@
 
 DeclareProperty("IsGreensClassNC", IsGreensClass);
 DeclareProperty("IsRegularClass", IsGreensClass);
-DeclareCategory("IsInverseOpClass", IsGreensClass);
 
 DeclareAttribute("DClassType", IsSemigroup);
 DeclareAttribute("HClassType", IsSemigroup);

@@ -19,17 +19,15 @@
 ##   1. Helper functions for the creation of Green's classes, and lambda-rho
 ##      stuff.
 ##
-##   2. Technical Green's stuff (types, representative, etc)
+##   2. Individual Green's classes (constructors, size, membership)
 ##
-##   3. Individual Green's classes (constructors, size, membership)
+##   3. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
 ##
-##   4. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
+##   4. Idempotents and NrIdempotents
 ##
-##   5. Idempotents and NrIdempotents
+##   5. Regularity of Green's classes
 ##
-##   6. Regularity of Green's classes
-##
-##   7. Iterators and enumerators
+##   6. Iterators and enumerators
 ##
 #############################################################################
 
@@ -70,51 +68,7 @@ function(H)
 end);
 
 #############################################################################
-## 2. Technical Green's classes stuff . . .
-#############################################################################
-
-## different method for inverse semigroups
-#
-#InstallMethod(DClassType, "for a regular acting semigroup",
-#[IsRegularSemigroup and IsActingSemigroup],
-#function(S)
-#  return NewType(FamilyObj(S), IsEquivalenceClass and
-#         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensDClass
-#         and IsActingSemigroupGreensClass);
-#end);
-#
-## different method for inverse semigroups
-#
-#InstallMethod(LClassType, "for a regular acting semigroup",
-#[IsRegularSemigroup and IsActingSemigroup],
-#function(S)
-#  return NewType(FamilyObj(S), IsEquivalenceClass and
-#         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensLClass and
-#         IsActingSemigroupGreensClass);
-#end);
-#
-## different method for inverse semigroups
-#
-#InstallMethod(RClassType, "for a regular acting semigroup",
-#[IsRegularSemigroup and IsActingSemigroup],
-#function(S)
-#  return NewType(FamilyObj(S), IsEquivalenceClass and
-#         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
-#         IsActingSemigroupGreensClass);
-#end);
-#
-## different method for inverse semigroups
-#
-#InstallMethod(HClassType, "for a regular acting semigroup",
-#[IsRegularSemigroup and IsActingSemigroup],
-#function(S);
-# return NewType(FamilyObj(S), IsEquivalenceClass and
-#  IsEquivalenceClassDefaultRep and IsGreensHClass and
-#  IsHClassOfRegularSemigroup and IsActingSemigroupGreensClass);
-#end);
-
-#############################################################################
-## 3. Individual classes . . .
+## 2. Individual classes . . .
 #############################################################################
 
 InstallMethod(Size, "for a regular D-class of an acting semigroup",
@@ -125,7 +79,7 @@ function(D)
 end);
 
 #############################################################################
-## 4. Collections of classes, and reps
+## 3. Collections of classes, and reps
 #############################################################################
 
 # different method for inverse.
@@ -267,7 +221,7 @@ function(S)
 end);
 
 #############################################################################
-## 5. Idempotents . . .
+## 4. Idempotents . . .
 #############################################################################
 
 # different method for inverse, same for ideals
@@ -301,7 +255,7 @@ function(S)
 end);
 
 #############################################################################
-## 6. Regular classes . . .
+## 5. Regular classes . . .
 #############################################################################
 
 # same method for inverse semigroups, same for ideals
@@ -311,7 +265,7 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 NrDClasses);
 
 #############################################################################
-## 7. Iterators and enumerators . . .
+## 6. Iterators and enumerators . . .
 ## FIXME move this whole section to another file
 #############################################################################
 
