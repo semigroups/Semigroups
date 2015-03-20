@@ -108,12 +108,12 @@ function(arg, type, rel)
                           IsGreensClassNC, nc,
                           EquivalenceClassRelation, rel(S));
 
-  if IsActingSemigroupWithInverseOp(S) then 
+  if IsActingSemigroupWithInverseOp(S) then
     SetFilterObj(C, IsInverseOpClass);
-  elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then 
-    if type <> HClassType then 
+  elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
+    if type <> HClassType then
       SetIsRegularClass(C, true);
-    else 
+    else
       SetFilterObj(C, IsHClassOfRegularSemigroup);
     fi;
   fi;
@@ -745,10 +745,10 @@ function(D, x, isGreensClassNC)
   L := SEMIGROUPS_CreateLClass(D, x, isGreensClassNC);
   # this is a special case, D might not be an inverse-op class but
   # L might be an inverse-op class.
-  if IsInverseOpClass(L) then 
+  if IsInverseOpClass(L) then
     SEMIGROUPS_CopyLambda(D, L);
     SEMIGROUPS_InverseRectifyRho(L);
-  else 
+  else
     SEMIGROUPS_CopyRho(D, L);
     SEMIGROUPS_RectifyRho(L);
   fi;

@@ -333,8 +333,7 @@ function(data, limit, record)
   genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc,
   lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd,
   htvalue, drel, dtype, poset, datalookup, log, tester, regular,
-  UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, setter, j, k, z,
-  D;
+  UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
 
   if IsBound(record.lookfunc) then
     lookfunc := record.lookfunc;
