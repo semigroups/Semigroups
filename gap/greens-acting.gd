@@ -40,3 +40,6 @@ DeclareOperation("GreensRClassOfElementNC",
 [IsGreensClass, IsAssociativeElement, IsBool]);
 DeclareOperation("GreensHClassOfElementNC",
 [IsGreensClass, IsAssociativeElement, IsBool]);
+
+# the following is required in green-acting and greens-inverse.
+DeclareGlobalFunction("SEMIGROUPS_InverseRectifyRho");

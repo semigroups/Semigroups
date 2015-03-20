@@ -73,45 +73,45 @@ end);
 ## 2. Technical Green's classes stuff . . .
 #############################################################################
 
-# different method for inverse semigroups
-
-InstallMethod(DClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensDClass
-         and IsActingSemigroupGreensClass);
-end);
-
-# different method for inverse semigroups
-
-InstallMethod(LClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensLClass and
-         IsActingSemigroupGreensClass);
-end);
-
-# different method for inverse semigroups
-
-InstallMethod(RClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
-         IsActingSemigroupGreensClass);
-end);
-
-# different method for inverse semigroups
-
-InstallMethod(HClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(S);
- return NewType(FamilyObj(S), IsEquivalenceClass and
-  IsEquivalenceClassDefaultRep and IsGreensHClass and
-  IsHClassOfRegularSemigroup and IsActingSemigroupGreensClass);
-end);
+## different method for inverse semigroups
+#
+#InstallMethod(DClassType, "for a regular acting semigroup",
+#[IsRegularSemigroup and IsActingSemigroup],
+#function(S)
+#  return NewType(FamilyObj(S), IsEquivalenceClass and
+#         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensDClass
+#         and IsActingSemigroupGreensClass);
+#end);
+#
+## different method for inverse semigroups
+#
+#InstallMethod(LClassType, "for a regular acting semigroup",
+#[IsRegularSemigroup and IsActingSemigroup],
+#function(S)
+#  return NewType(FamilyObj(S), IsEquivalenceClass and
+#         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensLClass and
+#         IsActingSemigroupGreensClass);
+#end);
+#
+## different method for inverse semigroups
+#
+#InstallMethod(RClassType, "for a regular acting semigroup",
+#[IsRegularSemigroup and IsActingSemigroup],
+#function(S)
+#  return NewType(FamilyObj(S), IsEquivalenceClass and
+#         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
+#         IsActingSemigroupGreensClass);
+#end);
+#
+## different method for inverse semigroups
+#
+#InstallMethod(HClassType, "for a regular acting semigroup",
+#[IsRegularSemigroup and IsActingSemigroup],
+#function(S);
+# return NewType(FamilyObj(S), IsEquivalenceClass and
+#  IsEquivalenceClassDefaultRep and IsGreensHClass and
+#  IsHClassOfRegularSemigroup and IsActingSemigroupGreensClass);
+#end);
 
 #############################################################################
 ## 3. Individual classes . . .

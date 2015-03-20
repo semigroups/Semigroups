@@ -151,7 +151,7 @@ function(I)
   local out, U, i, partial, D, pos, inj, j, C;
 
   if HasGeneratorsOfInverseSemigroup(I) then
-    # JDM could remove repeats and only add necessary inverses...
+    # TODO could remove repeats and only add necessary inverses...
     out := ShallowCopy(GeneratorsOfInverseSemigroup(I));
     Append(out, List(out, x -> x ^ -1));
     return out;
@@ -437,9 +437,7 @@ function(data, limit, record)
 
   # new stuff
   drel := GreensDRelation(I);
-  dtype := NewType(FamilyObj(I), IsEquivalenceClass and
-            IsEquivalenceClassDefaultRep and IsGreensDClass and
-            IsActingSemigroupGreensClass);
+  dtype := DClassType(I);
 
   poset := data!.poset;  # the D-class poset
   datalookup := data!.scc_lookup;
@@ -534,6 +532,7 @@ function(data, limit, record)
 
     nr_d := nr_d + 1;
     d[nr_d] := rec();
+    # FIXME: use SEMIGROUPS_CreateDClass here!
     ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
       EquivalenceClassRelation, drel, IsGreensClassNC, false,
       Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
@@ -664,14 +663,6 @@ function(data, limit, record)
     fi;
     if IsRegularSemigroup(I) then
       SetGreensDClasses(I, d);
-      if IsActingSemigroupWithInverseOp(I) then
-        setter := SetIsInverseOpClass;
-      else
-        setter := SetIsRegularClass;
-      fi;
-      for D in GreensDClasses(I) do
-        setter(D, true);
-      od;
     fi;
   fi;
   return data;

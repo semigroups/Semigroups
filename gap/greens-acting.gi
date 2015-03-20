@@ -107,6 +107,17 @@ function(arg, type, rel)
                           ParentAttr, S,
                           IsGreensClassNC, nc,
                           EquivalenceClassRelation, rel(S));
+
+  if IsActingSemigroupWithInverseOp(S) then 
+    SetFilterObj(C, IsInverseOpClass);
+  elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then 
+    if type <> HClassType then 
+      SetIsRegularClass(C, true);
+    else 
+      SetFilterObj(C, IsHClassOfRegularSemigroup);
+    fi;
+  fi;
+
   return C;
 end);
 
@@ -732,8 +743,15 @@ InstallMethod(GreensLClassOfElementNC,
 function(D, x, isGreensClassNC)
   local L;
   L := SEMIGROUPS_CreateLClass(D, x, isGreensClassNC);
-  SEMIGROUPS_CopyRho(D, L);
-  SEMIGROUPS_RectifyRho(L);
+  # this is a special case, D might not be an inverse-op class but
+  # L might be an inverse-op class.
+  if IsInverseOpClass(L) then 
+    SEMIGROUPS_CopyLambda(D, L);
+    SEMIGROUPS_InverseRectifyRho(L);
+  else 
+    SEMIGROUPS_CopyRho(D, L);
+    SEMIGROUPS_RectifyRho(L);
+  fi;
   SetDClassOfLClass(L, D);
   return L;
 end);

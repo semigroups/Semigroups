@@ -13,6 +13,7 @@
 
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
 InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+InstallTrueMethod(IsHClassOfRegularSemigroup, IsInverseOpClass and IsGreensHClass);
 
 # Semigroups . . .
 
