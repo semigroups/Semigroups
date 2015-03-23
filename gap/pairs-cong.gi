@@ -16,26 +16,27 @@ DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, hashlen, ht, data, pairstoapply, pos, found;
+  local s, elms, pairs, hashlen, ht, data;
+
   s := Range(cong);
   elms := AsSSortedList(s);
-  pairs := List( GeneratingPairsOfSemigroupCongruence(cong),
-                 x -> [Position(elms, x[1]), Position(elms, x[2])] );
+  pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
+                x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
   if IsBound(s!.opts) then
     hashlen := s!.opts.hashlen.L;
   else
     hashlen := SemigroupsOptionsRec.hashlen.L;
   fi;
-  ht := HTCreate( [elms[1],elms[1]], rec(forflatplainlists := true,
-              treehashsize := hashlen ) );
-  data := rec( cong := cong,
-               lookup := [1 .. Size(s)],
-               pairstoapply := pairs,
-               pos := 0,
-               ht := ht,
-               elms := elms,
-               found := false );
+  ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
+              treehashsize := hashlen));
+  data := rec(cong := cong,
+              lookup := [1 .. Size(s)],
+              pairstoapply := pairs,
+              pos := 0,
+              ht := ht,
+              elms := elms,
+              found := false);
   cong!.data := Objectify(
                  NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
   return;
@@ -75,7 +76,7 @@ function(pair, cong)
     return table[p1] = table[p2];
   else
     # Otherwise, begin calculating the lookup table and look for this pair
-    find := function(table,i)
+    find := function(table, i)
       while table[i] <> i do
         i := table[i];
       od;
@@ -119,8 +120,9 @@ InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
 [IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, s, table, pairstoapply, ht, right, left, find, union, genstoapply,
-        i, nr, found, x, j, y, next, newtable, ii, result;
+  local cong, s, table, pairstoapply, ht, right, left, find, union,
+        genstoapply, i, nr, found, x, j, y, next, newtable, ii;
+
   cong := data!.cong;
   s := Range(cong);
 
@@ -278,9 +280,9 @@ InstallMethod(\=,
 "for two congruence classes",
 [IsCongruenceClass and IsFinite, IsCongruenceClass and IsFinite],
 function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2) and
-         [Representative(class1), Representative(class2)]
-         in EquivalenceClassRelation(class1);
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and [Representative(class1), Representative(class2)]
+        in EquivalenceClassRelation(class1);
 end);
 
 #

@@ -207,3 +207,50 @@ gap> CyclesOfTransformationSemigroup(S);
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsSynchronizingSemigroup">
+  <ManSection>
+    <Oper Name="IsSynchronizingSemigroup" Arg="S[, n]"/>
+    <Returns><K>true</K> or <K>false</K>.  </Returns>
+    <Description>
+      For a positive integer <A>n</A>,
+      <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
+      transformations <A>S</A> contains a transformation with constant value on
+      <C>[1..<A>n</A>]</C>.
+      Note that this function will return true whenever <C><A>n</A> = 1</C>.
+      See also <Ref Oper="ConstantTransformation" BookName="ref"/>.
+      <P/>
+
+      If the optional second argument is not specified, then <A>n</A> will be
+      taken to be the value of 
+      <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/> for <A>S</A>.
+      
+      Note that the semigroup consisting of the identity
+      transformation has degree <C>0</C>, and for this special case the
+      function <C>IsSynchronizingSemigroup</C> will return <K>false</K>.
+
+            <Example><![CDATA[
+gap> S:=Semigroup( Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 
+>  Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
+gap> IsSynchronizingSemigroup(S, 10);
+true
+gap> S:=Semigroup( Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ), 
+>  Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
+gap> IsSynchronizingSemigroup(S, 10);
+false
+gap> Representative(MinimalIdeal(S));
+Transformation( [ 7, 8, 8, 8, 8, 8, 8, 7, 8, 8 ] )]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsTransformationSemigroupGreensClass">
+  <ManSection>
+    <Prop Name="IsTransformationSemigroupGreensClass" Arg="class"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
+      property <C>IsTransformationSemigroupGreensClass</C> if and only if
+      <C>S</C> is a semigroup of transformations. 
+    </Description> 
+  </ManSection>
+<#/GAPDoc>

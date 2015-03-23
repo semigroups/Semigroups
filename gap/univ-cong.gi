@@ -23,7 +23,7 @@ function(s)
   local fam, cong;
   fam := GeneralMappingsFamily(
                  ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)) );
+                 ElementsFamily(FamilyObj(s)));
   cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
   SetSource(cong, s);
   SetRange(cong, s);
@@ -43,16 +43,16 @@ end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for two universal semigroup congruences",
 [IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong1, cong2)
-  return( Range(cong1) = Range(cong2) );
+  return(Range(cong1) = Range(cong2));
 end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for universal congruence and RZMS congruence by linked triple",
 [IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
 function(ucong, cong)
@@ -61,7 +61,7 @@ end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for RZMS congruence by linked triple and universal congruence",
 [IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
@@ -70,13 +70,13 @@ end);
 
 #
 
-InstallMethod( \in,
+InstallMethod(\in,
 "for dense list and universal semigroup congruence",
 [IsDenseList, IsUniversalSemigroupCongruence],
 function(pair, cong)
-  return( Size(pair) = 2
+  return(Size(pair) = 2
           and pair[1] in Range(cong)
-          and pair[2] in Range(cong) );
+          and pair[2] in Range(cong));
 end);
 
 #
@@ -188,8 +188,8 @@ InstallMethod(EquivalenceClassOfElementNC,
 [IsUniversalSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   local fam, class;
-  fam := CollectionsFamily( FamilyObj(elm) );
-  class := Objectify(NewType(fam, IsUniversalSemigroupCongruenceClass), rec() );
+  fam := CollectionsFamily(FamilyObj(elm));
+  class := Objectify(NewType(fam, IsUniversalSemigroupCongruenceClass), rec());
   SetParentAttr(class, cong);
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
@@ -198,16 +198,16 @@ end);
 
 #
 
-InstallMethod( \in,
+InstallMethod(\in,
 "for associative element and universal semigroup congruence class",
 [IsAssociativeElement, IsUniversalSemigroupCongruenceClass],
 function(elm, class)
-  return( elm in Range(ParentAttr(class)) );
+  return(elm in Range(ParentAttr(class)));
 end);
 
 #
 
-InstallMethod( \*,
+InstallMethod(\*,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
@@ -230,11 +230,11 @@ end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
-  return( ParentAttr(c1) = ParentAttr(c2) );
+  return(ParentAttr(c1) = ParentAttr(c2));
 end);
 
 #

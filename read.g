@@ -91,11 +91,11 @@ fi;
 
 ReadPackage("semigroups/gap/grpperm.gi");
 
+ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");
-ReadPackage("semigroups/gap/blocks.gi");
 
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/lambda-rho.gi");
@@ -104,11 +104,13 @@ ReadPackage("semigroups/gap/acting.gi");
 ReadPackage("semigroups/gap/ideals-acting.gi");
 ReadPackage("semigroups/gap/graded.gi");
 ReadPackage("semigroups/gap/semigroups.gi");
-ReadPackage("semigroups/gap/greens.gi");
+ReadPackage("semigroups/gap/semigroups-acting.gi");
+ReadPackage("semigroups/gap/greens-generic.gi");
+ReadPackage("semigroups/gap/greens-acting.gi");
 ReadPackage("semigroups/gap/ideals-greens.gi");
 ReadPackage("semigroups/gap/factor.gi");
-ReadPackage("semigroups/gap/regular.gi");
-ReadPackage("semigroups/gap/inverse.gi");
+ReadPackage("semigroups/gap/greens-regular.gi");
+ReadPackage("semigroups/gap/greens-inverse.gi");
 ReadPackage("semigroups/gap/enums.gi");
 ReadPackage("semigroups/gap/iterators.gi");
 ReadPackage("semigroups/gap/properties.gi");

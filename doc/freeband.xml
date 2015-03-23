@@ -34,11 +34,11 @@ true]]></Example>
 
 <#GAPDoc Label="FreeBand" >
 <ManSection>
-    <Oper Name = "FreeBand" Arg = "rank[, name]"
+    <Func Name = "FreeBand" Arg = "rank[, name]"
     Label="for a given rank"/>
-    <Oper Name = "FreeBand" Arg = "name1, name2, ..."
+    <Func Name = "FreeBand" Arg = "name1, name2, ..."
     Label="for a list of names"/>
-    <Oper Name = "FreeBand" Arg = "names"
+    <Func Name = "FreeBand" Arg = "names"
     Label="for various names"/>
     <Returns> A free band. </Returns>
     <Description>

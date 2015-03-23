@@ -81,5 +81,21 @@ gap> c := EquivalenceClasses(cong);;
 gap> Size(c) = 85;
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(c);
+gap> Unbind(classy);
+gap> Unbind(gens);
+gap> Unbind(q);
+gap> Unbind(P);
+gap> Unbind(s);
+gap> Unbind(classes);
+gap> Unbind(classz);
+gap> Unbind(classx);
+gap> Unbind(cong);
+gap> Unbind(y);
+gap> Unbind(x);
+gap> Unbind(R);
+gap> Unbind(z);
+
 #E#
 gap> STOP_TEST( "Semigroups package: simple-cong.tst");

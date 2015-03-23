@@ -8,8 +8,8 @@
 #############################################################################
 ##
 
-# in this file there are some methods for perm groups that were not found in the
-# library.
+# in this file there are some methods for perm groups that were not found in
+# the library.
 
 # returns an iterator of the sorted elements of the stab chain S^conj.
 
@@ -20,9 +20,9 @@ function(S, conj)
   # finds the element of the group with stab chain S corresponding to the tuple
   # <indices>.
   SortedStabChain := function(S, rep, indices, level)
-    local pnt, x, val, next, gen;
+    local pnt, x, next, gen;
 
-    if Length( S.generators ) = 0  then
+    if Length(S.generators) = 0  then
       return rep;
     fi;
 
@@ -32,11 +32,11 @@ function(S, conj)
 
     while next <> pnt do
       gen := S.transversal[next];
-      rep := LeftQuotient( gen ^ conj, rep );
+      rep := LeftQuotient(gen ^ conj, rep);
       next := next ^ gen;
     od;
 
-    return SortedStabChain( S.stabilizer, rep, indices, level + 1);
+    return SortedStabChain(S.stabilizer, rep, indices, level + 1);
   end;
 
   record := rec();
@@ -46,7 +46,7 @@ function(S, conj)
   T := S;
 
   while Length(T.generators) <> 0 do
-    Add(indices, [ 1 .. Length(T.orbit) ]);
+    Add(indices, [1 .. Length(T.orbit)]);
     T := T.stabilizer;
   od;
 
@@ -57,12 +57,13 @@ function(S, conj)
     if IsDoneIterator(iter!.indices) then
       return fail;
     fi;
-    return SortedStabChain(iter!.stabchain, (), NextIterator(iter!.indices), 1);
+    return SortedStabChain(iter!.stabchain, (), NextIterator(iter!.indices),
+                           1);
   end;
 
   record.ShallowCopy := function(iter)
-    return rec( indices := ShallowCopy(iter!.indices),
-                stabchain := iter!.stabchain);
+    return rec(indices := ShallowCopy(iter!.indices),
+               stabchain := iter!.stabchain);
   end;
 
   iter := IteratorByNextIterator(record);
@@ -76,7 +77,7 @@ InstallGlobalFunction(LargestElementConjugateStabChain,
 function(S, rep, conj)
   local pnt, max, val, gen, i;
 
-    if Length( S.generators ) = 0  then
+    if Length(S.generators) = 0  then
       return rep;
     fi;
 
@@ -93,10 +94,10 @@ function(S, rep, conj)
 
     while pnt <> max  do
       gen := S.transversal[max];
-      rep := LeftQuotient( gen ^ conj, rep );
+      rep := LeftQuotient(gen ^ conj, rep);
       max := max ^ gen;
     od;
 
-    return LargestElementConjugateStabChain( S.stabilizer, rep, conj );
+    return LargestElementConjugateStabChain(S.stabilizer, rep, conj);
 end);
 

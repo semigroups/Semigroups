@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-
 DeclareGlobalFunction("IteratorOfArrangements");
 
 # constructors for iterators
