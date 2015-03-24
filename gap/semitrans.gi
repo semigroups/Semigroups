@@ -316,12 +316,27 @@ InstallMethod(IsSynchronizingTransformationCollection,
 "for a transformation collection and positive integer",
 [IsTransformationCollection, IsPosInt],
 function(gens, n)
-  local NumberPair, PairNumber, genstoapply, act, graph, constants, x, adj, y,
-  num, marked, squashed, i, j;
+  local all_perms, r, NumberPair, PairNumber, genstoapply, act, graph, x, adj,
+  y, num, marked, squashed, i, j;
 
   if n = 1 then
     return true;
   fi;
+
+  all_perms := true;
+  for x in gens do
+    r := RankOfTransformation(x, n);
+    if r = 1 then
+      return true;
+    elif r < n then
+      all_perms := false;
+    fi;
+  od;
+  if all_perms then
+    return false; # S = <gens> is a group of transformations
+  fi;
+
+  #graph := SEMIGROUPS_RightActionGraphOnPairs2(gens, n);
 
   NumberPair := function(x)
     if x[2] > x[1] then
@@ -349,7 +364,6 @@ function(gens, n)
   end;
 
   graph := List([1 .. n ^ 2], x -> []);
-  constants := false;
 
   # add edges for pairs
   for i in [1 .. n ^ 2 - n] do
@@ -364,19 +378,13 @@ function(gens, n)
       else
         AddSet(graph[n ^ 2 - n + y[1]], i);
         AddSet(adj, n ^ 2 - n + y[1]);
-        constants := true;
       fi;
-
     od;
     if Length(adj) = 1 and adj[1] = i then
       # can't get anywhere by applying things to this pair
       return false;
     fi;
   od;
-
-  if not constants then
-    return false;
-  fi;
 
   marked := BlistList([1 .. n ^ 2], [n ^ 2 - n + 1 .. n ^ 2]);
   squashed := [n ^ 2 - n + 1 .. n ^ 2];
@@ -394,102 +402,116 @@ end);
 
 # WW: UNFINISHED!
 
+SEMIGROUPS_RightActionGraphOnPairs2 := function(gens, n)
+  local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair, act,
+  range, i, j;
+
+  nrgens     := Length(gens);
+  nrpairs    := Binomial(n, 2);
+  PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
+
+  # Currently assume <x> is sorted and is a valid combination of [1 .. n]
+  NumberPair := function(n, x)
+    if Length(x) = 1 then
+      return x[1];
+    fi;
+    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
+  end;
+
+  in_nbs := List([1 .. n + nrpairs], x -> []);
+  labels := List([1 .. n + nrpairs], x -> []);
+  for i in [(n + 1) .. (n + nrpairs)] do
+    pair := PairNumber[i];
+    #isolated_pair := true;
+    for j in [1 .. nrgens] do
+      act := OnSets(pair, gens[j]);
+      range := NumberPair(n, act);
+      Add(in_nbs[range], i);
+      Add(labels[range], j);
+      #if range <> pair and isolated_pair then
+        #isolated_pair := false;
+      #fi;
+    od;
+    #if isolated_pair then
+      # S is not synchronizing
+    #fi;
+  od;
+
+  return rec(degree := n,
+             in_nbs := in_nbs,
+             labels := labels,
+             PairNumber := PairNumber,
+             NumberPair := NumberPair);
+
+end;
+
+SEMIGROUPS_RightActionGraphOnPairs := function(S) 
+  local n;
+
+  n := DegreeOfTransformationSemigroup(S);
+  if n = 0 then
+    return fail;
+  fi;
+
+  return SEMIGROUPS_RightActionGraphOnPairs2(GeneratorsOfSemigroup(S), n);
+end;
+
+# WW: UNFINISHED!
+
 InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local n, gens, nrgens, minrank, rank, minrankgen, nrpairs, combs, NumberPair, PairNumber, inn, labels, pair, act, range, recursion, seen_pairs, elts, p, t, im, y, i, j, a, x;
-
-  # Find n such that S <= T_n
-  n := DegreeOfTransformationSemigroup(S);
-
-  if n = 0 then # S is the trivial transformation semigroup
-    return S.1;
-  fi;
-
-  # It can not be that n = 1, since T_1 has degree 0. So n >= 2.
+  local gens, nrgens, n, min_rank, rank, min_rank_index, graph, recursion,
+  nrpairs, elts, seen_pairs, p, t, im, y, i, a, x;
 
   if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
-    # Semigroup is known to have a zero
-    # Therefore { 0 } is the minimal ideal
     return MultiplicativeZero(S);
   fi;
 
-  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
-    # Semigroup is simple so everything is in the minimal ideal
-    return S.1;
-  fi;
-
-  #if HasIsSynchronizingSemigroup(S) and IsSynchronizingSemigroup(S) then
-  #  # Semigroup has a constant mapping
-  #  Error("Not yet got a special case for when we know there to be a constant",
-  #  "mapping,");
-  #  return;
-  #fi;
-
   gens := GeneratorsOfSemigroup(S);
-  nrgens := Length(gens);
-  minrank := n;
 
-  # Find the ranks of the generators (is this repeating work?)
-  for i in [ 1 .. nrgens ] do
-    rank := RankOfTransformation(gens[i], n);
-    if rank = 1 then # if we have a generator of rank 1, we are done
-      #SetIsSynchronizingSemigroup(S, true);
-      return gens[i];
-    fi;
-    if rank < minrank then
-      minrank := rank;
-      minrankgen := gens[i];
-    fi;
-  od;
-
-  if minrank = n then # if we have a generator of rank n, we are done
-    SetIsGroupAsSemigroup(S, true);
-    return S.1;
+  # This also catches T_1 and known trivial semigroups
+  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+    return gens[1];
   fi;
 
-  nrpairs := Binomial(n, 2);
-  combs := Combinations( [ 1 .. n ], 2 );
+  nrgens := Length(gens);
+  n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
+                                           # We must have n >= 2.
 
-  NumberPair := function(pair)
-    if Length(pair) = 1 then
-      return pair[1];
+  # Find the minimum rank of a generator
+  min_rank := n;
+  for i in [1 .. nrgens] do
+    rank := RankOfTransformation(gens[i], n);
+    if rank = 1 then
+      # SetIsSynchronizingSemigroup(S, true);
+      # WW IsSynchronizingSemigroup is not a property. Shouldn't it be?
+      return gens[i];
+    elif rank < min_rank then
+      min_rank := rank;
+      min_rank_index := i;
     fi;
-    return n + Position(combs, pair);
-  end;
-
-  PairNumber := function(k)
-    if k <= n then
-      return k;
-    fi;
-    return combs[k - n];
-  end;
-
-  # Construct the graph
-  inn    := List( [ 1 .. n + nrpairs ], x -> [  ] );
-  labels := List( [ 1 .. n + nrpairs ], x -> [  ] );
-  for i in [(n + 1) .. (n + nrpairs)] do
-    pair := PairNumber(i);
-    for j in [ 1 .. nrgens ] do
-      act := OnSets(pair, gens[j]);
-      range := NumberPair(act);
-      Add(inn[range], i);
-      Add(labels[range], j);
-    od;
   od;
+
+  if min_rank = n then
+    SetIsGroupAsSemigroup(S, true);
+    return gens[1];
+  fi;
+
+  graph := SEMIGROUPS_RightActionGraphOnPairs(S);
 
   # find a word describing a path from each collapsible pair to a singleton
   recursion := function(a)
     local b, k;
 
-    for k in [ 1 .. Length(inn[a]) ] do
-      b := inn[a][k];
+    for k in [1 .. Length(graph.in_nbs[a])] do
+      b := graph.in_nbs[a][k];
       if not seen_pairs[b] then
         seen_pairs[b] := true;
         if a <= n then
-          elts[b] := [ labels[a][k] ];
+          elts[b] := [graph.labels[a][k]];
         else
-          elts[b] := Concatenation( [ labels[a][k] ], elts[a] );
+          elts[b] := Concatenation([graph.labels[a][k]], elts[a]);
         fi;
         recursion(b);
       fi;
@@ -497,24 +519,18 @@ function(S)
     return;
   end;
 
-  seen_pairs := BlistList( [ 1 .. n + nrpairs ], [  ]);
+  nrpairs := Binomial(n, 2);
   elts := EmptyPlist(n + nrpairs);
-  for a in [ 1 .. n ] do
+  seen_pairs := BlistList([1 .. n + nrpairs], []);
+  for a in [1 .. n] do
     recursion(a);
   od;
 
+  # Count the number of pairs which have been seen
+  # p > 0 since p = 0 iff every generator has rank n. This is already checked
   p := Number(seen_pairs, x -> x);
 
-  if p = 0 then
-    #Print("<S> is a group of permutations\n");
-    return S.1;
-  fi;
-
-  if p = nrpairs then
-    #Print("<S> is a synchronizing semigroup\n");
-  fi;
-
-  t := minrankgen;
+  t := gens[min_rank_index];
 
   while true do
     im := ImageSetOfTransformation(t);
@@ -524,7 +540,7 @@ function(S)
     fi;
 
     for x in Combinations(im, 2) do
-      y := NumberPair(x);
+      y := graph.NumberPair(n, x);
       if seen_pairs[y] then
         t := t * EvaluateWord(gens, elts[y]);
         continue;
@@ -532,11 +548,9 @@ function(S)
     od;
 
     break;
-
   od;
 
   return t;
-
 end);
 
 #
