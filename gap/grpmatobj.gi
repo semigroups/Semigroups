@@ -91,7 +91,7 @@ function(G, x)
   return ClosureGroupNC(G, [x]);
 end);
 
-InstallMethod(ClosureGroup, "for a matrix obj group and matrix obj",
+InstallMethod(ClosureGroup, "for a matrix obj group and collection",
 [SEMIGROUPS_IsMatrixObjGroup, IsCollection],
 SEMIGROUPS_MatrixObjGroupRankIncrement,
 function(G, coll) 
@@ -103,4 +103,12 @@ function(G, coll)
     return;
   fi;
   return ClosureGroupNC(G, coll);
+end);
+
+InstallMethod(ClosureGroupNC, "for a matrix obj group and collection",
+[SEMIGROUPS_IsMatrixObjGroup, IsCollection],
+SEMIGROUPS_MatrixObjGroupRankIncrement,
+function(G, coll) 
+  return Range(IsomorphismMatrixObjGroup(ClosureGroup(AsMatrixGroup(G),
+                                                      List(coll, AsMatrix))));
 end);
