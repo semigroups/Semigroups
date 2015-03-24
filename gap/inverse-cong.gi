@@ -491,7 +491,7 @@ end);
 InstallGlobalFunction(SEMIGROUPS_InverseCongFromPairs,
 function(s, pairs)
   local cong;
-  cong := AsInverseSemigroupCongruenceByCongruencePair(
+  cong := AsInverseSemigroupCongruenceByKernelTrace(
                   SemigroupCongruenceByGeneratingPairs(s, pairs));
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
