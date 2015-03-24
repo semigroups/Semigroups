@@ -15,9 +15,17 @@ InstallMethod(DefaultFieldOfMatrixGroup, "for a matrix semigroup",
 [IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
 S -> BaseDomain(GeneratorsOfSemigroup(S)[1]));
 
-InstallMethod(DimensionOfMatrixGroup, "for a matrix semigroup", 
+InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
+[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup],
+S -> RowLength(GeneratorsOfSemigroup(S)[1]));
+
+InstallMethod(DimensionOfMatrixGroup, "for a matrix semigroup",
+[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup],
+DegreeOfMatrixSemigroup);
+
+InstallMethod(DimensionsOfMatrixSemigroup, "for a matrix semigroup", 
 [IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
-S -> Length(GeneratorsOfSemigroup(S)[1]));
+S -> DimensionsMat(GeneratorsOfSemigroup(S)[1]));
 
 InstallMethod(GeneratorsOfGroup, "for a matrix semigroup", 
 [IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 400,

@@ -37,6 +37,7 @@ DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 ## CollColl, which makes it impossible to tell whether a list
 ## of Matrices has IsAssociativeElementCollection
 
+DeclareAttribute("DimensionsOfMatrixSemigroup", IsMatrixSemigroup);
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
 
 #############################################################################
