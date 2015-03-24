@@ -262,7 +262,7 @@ function(S, gens, opts)
 
   if not opts.acting then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
-  elif not (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) then
+  elif not (HasIsRegularSemigroup(I) and IsRegularSemigroup(I)) then
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
   fi;
 

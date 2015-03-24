@@ -1391,9 +1391,7 @@ end);
 
 # different method for ideals
 
-InstallMethod(IsZeroSemigroup,
-"for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsZeroSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
   local z, gens, m, i, j;
 
@@ -1422,15 +1420,6 @@ function(S)
   od;
 
   return true;
-end);
-
-InstallMethod(IsZeroSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  if HasParent(S) and HasIsZeroSemigroup(Parent(S)) and
-   IsZeroSemigroup(Parent(S)) then
-    return true;
-  fi;
-  return NrRegularDClasses(S) = 1 and MultiplicativeZero(S) <> fail;
 end);
 
 # same method for ideals

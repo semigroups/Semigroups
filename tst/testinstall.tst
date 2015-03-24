@@ -865,9 +865,34 @@ gap> (IsBound(GAPInfo.PackagesLoaded.grape)
 > and Filename(DirectoriesPackagePrograms("grape"),"dreadnautB")<>fail));
 true
 
+#T# TestInstall56: Issue 122 (Problem with XClassType for inverse ideals)
+gap> S := Semigroup(
+> PartialPerm( [ 1, 2, 3, 4 ], [ 2, 3, 4, 1 ] ),
+> PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 3, 4 ] ),
+> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) );;
+gap> x := PartialPerm( [  ], [  ] );;
+gap> I := SemigroupIdeal(S, x);;
+gap> L := GreensLClassOfElement(I, x);
+{PartialPerm( [  ], [  ] )}
+gap> SchutzenbergerGroup(L); 
+Group(())
+
+#T# TestInstall57: Issue 123 (Incorrect method for IsZeroSemigroup for
+# non-acting semigroup)
+gap> x := Transformation([ 1, 1, 2, 3 ]);;
+gap> S := Semigroup(x);;
+gap> I := SemigroupIdeal(S, x);;
+gap> IsZeroSemigroup(S);
+false
+gap> IsZeroSemigroup(Semigroup(x, rec(acting := false)));
+false
+gap> IsZeroSemigroup(I);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
+gap> Unbind(L);
 gap> Unbind(iter);
 gap> Unbind(file);
 gap> Unbind(cong);

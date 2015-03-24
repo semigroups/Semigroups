@@ -24,15 +24,13 @@
 ##   1. Helper functions for the creation of Green's classes, and lambda-rho
 ##      stuff.
 ##
-##   2. Technical Green's stuff (types, representative, etc)
+##   2. Individual Green's classes (constructors, size, membership)
 ##
-##   3. Individual Green's classes (constructors, size, membership)
+##   3. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
 ##
-##   4. Collections of Green's classes (GreensXClasses, XClassReps, NrXClasses)
+##   4. Idempotents and NrIdempotents
 ##
-##   5. Idempotents and NrIdempotents
-##
-##   6. Iterators and enumerators
+##   5. Iterators and enumerators
 ##
 #############################################################################
 
@@ -55,7 +53,7 @@ end);
 
 #
 
-BindGlobal("SEMIGROUPS_InverseRectifyRho",
+InstallGlobalFunction(SEMIGROUPS_InverseRectifyRho,
 function(C)
   local o, i, m;
 
@@ -107,57 +105,7 @@ function(L)
 end);
 
 #############################################################################
-## 2. Technical Green's classes stuff . . .
-#############################################################################
-
-InstallMethod(IsInverseOpClass, "for a Green's class",
-[IsGreensClass],
-function(class)
-  return IsActingSemigroupWithInverseOp(Parent(class));
-end);
-
-#
-
-InstallMethod(DClassType, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensDClass
-         and IsActingSemigroupGreensClass);
-end);
-
-#
-
-InstallMethod(HClassType, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensHClass
-         and IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup);
-end);
-
-#
-
-InstallMethod(LClassType, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensLClass
-         and IsActingSemigroupGreensClass);
-end);
-
-#
-
-InstallMethod(RClassType, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp and IsActingSemigroup],
-function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensRClass
-         and IsActingSemigroupGreensClass);
-end);
-
-#############################################################################
-## 3. Individual classes . . .
+## 2. Individual classes . . .
 #############################################################################
 
 InstallMethod(DClassOfLClass,
@@ -216,21 +164,6 @@ function(S, x, isGreensClassNC)
   L := SEMIGROUPS_CreateLClass(S, x, isGreensClassNC);
   SEMIGROUPS_SetLambda(L);
   SEMIGROUPS_InverseRectifyRho(L);
-  return L;
-end);
-
-# same method for inverse ideals
-
-InstallMethod(GreensLClassOfElementNC,
-"for inverse op D-class, element, and bool",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass,
-IsAssociativeElement, IsBool],
-function(D, x, isGreensClassNC)
-  local L;
-  L := SEMIGROUPS_CreateLClass(D, x, isGreensClassNC);
-  SEMIGROUPS_CopyLambda(D, L);
-  SEMIGROUPS_InverseRectifyRho(L);
-  SetDClassOfLClass(L, D);
   return L;
 end);
 
@@ -370,7 +303,7 @@ function(x, L)
 end);
 
 #############################################################################
-## 4. Collections of classes, and reps
+## 3. Collections of classes, and reps
 #############################################################################
 
 # This is required since it is used elsewhere in the code that DClassReps of an
@@ -563,7 +496,7 @@ function(S)
 end);
 
 #############################################################################
-## 5. Idempotents . . .
+## 4. Idempotents . . .
 #############################################################################
 
 # same method for inverse ideals
@@ -676,7 +609,7 @@ InstallMethod(NrIdempotents, "for an inverse op R-class",
 R -> 1);
 
 #############################################################################
-## 6. Iterators and enumerators . . .
+## 5. Iterators and enumerators . . .
 #############################################################################
 
 # FIXME move this elsewhere
