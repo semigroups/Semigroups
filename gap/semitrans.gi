@@ -277,6 +277,51 @@ function(coll, set)
   return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
 end);
 
+# stop_on_isolated_pair:
+#   if true, this function returns false if there is an isolated pair-vertex
+BindGlobal("SEMIGROUPS_GraphOfRightActionOnPairs",
+function(gens, n, stop_on_isolated_pair)
+  local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair,
+  isolated_pair, act, range, i, j;
+
+  nrgens     := Length(gens);
+  nrpairs    := Binomial(n, 2);
+  PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
+
+  # Currently assume <x> is sorted and is a valid combination of [1 .. n]
+  NumberPair := function(n, x)
+    if Length(x) = 1 then
+      return x[1];
+    fi;
+    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
+  end;
+
+  in_nbs := List([1 .. n + nrpairs], x -> []);
+  labels := List([1 .. n + nrpairs], x -> []);
+  for i in [(n + 1) .. (n + nrpairs)] do
+    pair := PairNumber[i];
+    isolated_pair := true;
+    for j in [1 .. nrgens] do
+      act := OnSets(pair, gens[j]);
+      range := NumberPair(n, act);
+      Add(in_nbs[range], i);
+      Add(labels[range], j);
+      if range <> pair and isolated_pair then
+        isolated_pair := false;
+      fi;
+    od;
+    if stop_on_isolated_pair and isolated_pair then
+      return false;
+    fi;
+  od;
+
+  return rec(degree := n,
+             in_nbs := in_nbs,
+             labels := labels,
+             PairNumber := PairNumber,
+             NumberPair := NumberPair);
+end);
+
 # same method for ideals
 
 InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",
@@ -287,6 +332,14 @@ function(S)
   deg := DegreeOfTransformationSemigroup(S);
   if deg = 0 then
     return false;
+  fi;
+
+  if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
+    return RankOfTransformation(MultiplicativeZero(S), deg) = 1;
+  fi;
+
+  if HasRepresentativeOfMinimalIdeal(S) then
+    return RankOfTransformation(RepresentativeOfMinimalIdeal(S), deg) = 1;
   fi;
 
   return IsSynchronizingSemigroup(S, deg);
@@ -310,14 +363,12 @@ function(S, n)
 end);
 
 # this method comes from PJC's slides from the Lisbon Workshop in July 2014
-# not applicable to ideals
 
 InstallMethod(IsSynchronizingTransformationCollection,
 "for a transformation collection and positive integer",
 [IsTransformationCollection, IsPosInt],
 function(gens, n)
-  local all_perms, r, NumberPair, PairNumber, genstoapply, act, graph, x, adj,
-  y, num, marked, squashed, i, j;
+  local all_perms, r, graph, marked, squashed, x, i, j;
 
   if n = 1 then
     return true;
@@ -336,141 +387,45 @@ function(gens, n)
     return false; # S = <gens> is a group of transformations
   fi;
 
-  #graph := SEMIGROUPS_RightActionGraphOnPairs2(gens, n);
+  graph := SEMIGROUPS_GraphOfRightActionOnPairs(gens, n, true);
 
-  NumberPair := function(x)
-    if x[2] > x[1] then
-      return n * (x[1] - 1) + x[2] - x[1];
-    else
-      return (n - 1) * (x[1] - 1) + x[2];
-    fi;
-  end;
-
-  PairNumber := function(x)
-    local q, r;
-    q := QuoInt(x - 1, n - 1);
-    r := (x - 1) - q * (n - 1);
-    if q > r then
-      return [q + 1, r + 1];
-    else
-      return [q + 1, r + 2];
-    fi;
-  end;
-
-  genstoapply := [1 .. Length(gens)];
-
-  act := function(set, f)
-    return OnPosIntSetsTrans(set, f, n);
-  end;
-
-  graph := List([1 .. n ^ 2], x -> []);
-
-  # add edges for pairs
-  for i in [1 .. n ^ 2 - n] do
-    x := PairNumber(i);
-    adj := [];
-    for j in genstoapply do
-      y := act(x, gens[j]);
-      if Length(y) = 2 then
-        num := NumberPair(act(x, gens[j]));
-        AddSet(graph[num], i);
-        AddSet(adj, num);
-      else
-        AddSet(graph[n ^ 2 - n + y[1]], i);
-        AddSet(adj, n ^ 2 - n + y[1]);
-      fi;
-    od;
-    if Length(adj) = 1 and adj[1] = i then
-      # can't get anywhere by applying things to this pair
-      return false;
-    fi;
-  od;
-
-  marked := BlistList([1 .. n ^ 2], [n ^ 2 - n + 1 .. n ^ 2]);
-  squashed := [n ^ 2 - n + 1 .. n ^ 2];
-  for i in squashed do
-    for j in graph[i] do
-      if not marked[j] then
-        marked[j] := true;
-        squashed[Length(squashed) + 1] := j;
-      fi;
-    od;
-  od;
-
-  return Length(squashed) = n ^ 2;
-end);
-
-# WW: UNFINISHED!
-
-SEMIGROUPS_RightActionGraphOnPairs2 := function(gens, n)
-  local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair, act,
-  range, i, j;
-
-  nrgens     := Length(gens);
-  nrpairs    := Binomial(n, 2);
-  PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
-
-  # Currently assume <x> is sorted and is a valid combination of [1 .. n]
-  NumberPair := function(n, x)
-    if Length(x) = 1 then
-      return x[1];
-    fi;
-    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
-  end;
-
-  in_nbs := List([1 .. n + nrpairs], x -> []);
-  labels := List([1 .. n + nrpairs], x -> []);
-  for i in [(n + 1) .. (n + nrpairs)] do
-    pair := PairNumber[i];
-    #isolated_pair := true;
-    for j in [1 .. nrgens] do
-      act := OnSets(pair, gens[j]);
-      range := NumberPair(n, act);
-      Add(in_nbs[range], i);
-      Add(labels[range], j);
-      #if range <> pair and isolated_pair then
-        #isolated_pair := false;
-      #fi;
-    od;
-    #if isolated_pair then
-      # S is not synchronizing
-    #fi;
-  od;
-
-  return rec(degree := n,
-             in_nbs := in_nbs,
-             labels := labels,
-             PairNumber := PairNumber,
-             NumberPair := NumberPair);
-
-end;
-
-SEMIGROUPS_RightActionGraphOnPairs := function(S) 
-  local n;
-
-  n := DegreeOfTransformationSemigroup(S);
-  if n = 0 then
-    return fail;
+  if graph = false then
+    return false;
   fi;
 
-  return SEMIGROUPS_RightActionGraphOnPairs2(GeneratorsOfSemigroup(S), n);
-end;
+  marked := BlistList([1 .. n + Binomial(n, 2)], []);
+  squashed := [1 .. n];
+  for i in squashed do
+    for j in graph.in_nbs[i] do
+      if not marked[j] then
+        marked[j] := true;
+        Add(squashed, j);
+      fi;
+    od;
+  od;
 
-# WW: UNFINISHED!
+  return Length(squashed) = n + Binomial(n, 2);
+end);
+
+#
 
 InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local gens, nrgens, n, min_rank, rank, min_rank_index, graph, recursion,
-  nrpairs, elts, seen_pairs, p, t, im, y, i, a, x;
+  local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
+  marked, squashed, j, t, im, reduced, y, i, k, x;
 
   if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
     return MultiplicativeZero(S);
   fi;
 
-  gens := GeneratorsOfSemigroup(S);
+  if HasGeneratorsOfSemigroup(S) then
+    gens := GeneratorsOfSemigroup(S);
+  else
+    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  fi;
 
-  # This also catches T_1 and known trivial semigroups
+  # This catches T_1. This also catches known trivial semigroups.
   if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
     return gens[1];
   fi;
@@ -485,7 +440,6 @@ function(S)
     rank := RankOfTransformation(gens[i], n);
     if rank = 1 then
       # SetIsSynchronizingSemigroup(S, true);
-      # WW IsSynchronizingSemigroup is not a property. Shouldn't it be?
       return gens[i];
     elif rank < min_rank then
       min_rank := rank;
@@ -498,55 +452,46 @@ function(S)
     return gens[1];
   fi;
 
-  graph := SEMIGROUPS_RightActionGraphOnPairs(S);
+  graph := SEMIGROUPS_GraphOfRightActionOnPairs(gens, n, false);
 
   # find a word describing a path from each collapsible pair to a singleton
-  recursion := function(a)
-    local b, k;
-
-    for k in [1 .. Length(graph.in_nbs[a])] do
-      b := graph.in_nbs[a][k];
-      if not seen_pairs[b] then
-        seen_pairs[b] := true;
-        if a <= n then
-          elts[b] := [graph.labels[a][k]];
-        else
-          elts[b] := Concatenation([graph.labels[a][k]], elts[a]);
-        fi;
-        recursion(b);
-      fi;
-    od;
-    return;
-  end;
-
   nrpairs := Binomial(n, 2);
   elts := EmptyPlist(n + nrpairs);
-  seen_pairs := BlistList([1 .. n + nrpairs], []);
-  for a in [1 .. n] do
-    recursion(a);
-  od;
-
-  # Count the number of pairs which have been seen
-  # p > 0 since p = 0 iff every generator has rank n. This is already checked
-  p := Number(seen_pairs, x -> x);
-
-  t := gens[min_rank_index];
-
-  while true do
-    im := ImageSetOfTransformation(t);
-
-    if Length(im) = 1 then
-      break;
-    fi;
-
-    for x in Combinations(im, 2) do
-      y := graph.NumberPair(n, x);
-      if seen_pairs[y] then
-        t := t * EvaluateWord(gens, elts[y]);
-        continue;
+  marked := BlistList([1 .. n + nrpairs], []);
+  squashed := [1 .. n];
+  for i in squashed do
+    for k in [1 .. Length(graph.in_nbs[i])] do
+      j := graph.in_nbs[i][k];
+      if not marked[j] then
+        marked[j] := true;
+        if i <= n then
+          elts[j] := [graph.labels[i][k]];
+        else
+          elts[j] := Concatenation([graph.labels[i][k]], elts[i]);
+        fi;
+        Add(squashed, j);
       fi;
     od;
+  od;
 
+  t := gens[min_rank_index];
+  im := ImageSetOfTransformation(t);
+
+  # find a word in S of minimal rank by repeatedly collapsing pairs in im(t)
+  while true do
+    reduced := false;
+    for x in IteratorOfCombinations(im, 2) do
+      y := graph.NumberPair(n, x);
+      if marked[y] then
+        t := t * EvaluateWord(gens, elts[y]);
+        im := ImageSetOfTransformation(t);
+        reduced := true;
+        break;
+      fi;
+    od;
+    if reduced then
+      continue;
+    fi;
     break;
   od;
 

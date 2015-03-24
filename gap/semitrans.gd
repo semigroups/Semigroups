@@ -24,7 +24,7 @@ DeclareOperation("IsSynchronizingSemigroup",
 [IsTransformationSemigroup, IsPosInt]);
 DeclareOperation("IsSynchronizingTransformationCollection",
 [IsTransformationCollection, IsPosInt]);
-DeclareOperation("RepresentativeOfMinimalIdeal", [IsTransformationSemigroup]);
+DeclareAttribute("RepresentativeOfMinimalIdeal", IsTransformationSemigroup);
 
 DeclareProperty("IsTransitive", IsTransformationSemigroup);
 DeclareOperation("IsTransitive", [IsTransformationCollection, IsPosInt]);
