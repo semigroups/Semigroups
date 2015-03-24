@@ -306,7 +306,7 @@ function(gens, n, stop_on_isolated_pair)
       range := NumberPair(n, act);
       Add(in_nbs[range], i);
       Add(labels[range], j);
-      if range <> pair and isolated_pair then
+      if range <> i and isolated_pair then
         isolated_pair := false;
       fi;
     od;
@@ -419,10 +419,6 @@ function(S)
    (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
    or not HasGeneratorsOfSemigroup(S)) then
     return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  fi;
-
-  if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
-    return MultiplicativeZero(S);
   fi;
 
   gens := GeneratorsOfSemigroup(S);
