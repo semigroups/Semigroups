@@ -25,6 +25,9 @@ DeclareAttribute("IsomorphismMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);
 DeclareAttribute("IsomorphismMatrixObjGroup", IsMatrixGroup);
 DeclareAttribute("AsMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);
 
+DeclareOperation("ClosureGroupNC", 
+                 [SEMIGROUPS_IsMatrixObjGroup, IsCollection]);
+
 DeclareOperation("\^", [SEMIGROUPS_IsMatrixObjGroup, IsMatrixObj]);
 
 BindGlobal("SEMIGROUPS_MatrixObjGroupRankIncrement" , 400);
