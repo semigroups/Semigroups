@@ -300,10 +300,52 @@ fail
 gap> Size(MinimalIdeal(I)) = 1;
 false
 
+#T# AttributesTest5:
+# MultiplicativeZero where MinimalDClass is known
+gap> s := FullTransformationMonoid(10);
+<full transformation semigroup on 10 pts>
+gap> MinimalDClass(s);;
+gap> HasSize(last);
+false
+gap> MultiplicativeZero(s);
+fail
+gap> s := Semigroup(s);;
+gap> HasMinimalDClass(s);
+false
+gap> Size(MinimalDClass(s));
+10
+gap> HasMinimalDClass(s) and HasSize(MinimalDClass(s));
+true
+gap> MultiplicativeZero(s);
+fail
+gap> gens := [
+> Transformation( [ 1, 13, 11, 4, 11, 12, 3, 1, 1, 1, 1, 4, 15, 2, 13 ] ),
+> Transformation( [ 3, 11, 14, 4, 11, 13, 13, 5, 3, 11, 14, 14, 10, 15, 12 ] ),
+> Transformation( [ 5, 13, 11, 4, 9, 13, 8, 1, 2, 12, 6, 12, 11, 8, 1 ] ) ];;
+gap> s := Semigroup(gens);
+<transformation semigroup on 15 pts with 3 generators>
+gap> HasMinimalDClass(s);
+false
+gap> MultiplicativeZero(s);
+Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
+gap> s := Semigroup(gens);;
+gap> MinimalDClass(s);
+{Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )}
+gap> HasSize(MinimalDClass(s));
+false
+gap> MultiplicativeZero(s);
+Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
+gap> s := Semigroup(gens);;
+gap> Size(MinimalDClass(s));
+1
+gap> MultiplicativeZero(s);
+Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(I);
+gap> Unbind(gens);
 
 #E#
 gap> STOP_TEST( "Semigroups package: attributes.tst");
