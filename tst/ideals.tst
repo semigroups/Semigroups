@@ -41,11 +41,11 @@ gap> Sort(idems);
 gap> idems;
 [ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ),
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
   Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
   Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
-  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ] 
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
 gap> Idempotents(I, 2);
 [  ]
 gap> x in R;
@@ -60,11 +60,11 @@ gap> Sort(idems);
 gap> idems;
 [ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ),
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
   Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ), 
   Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
   Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ] 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
 gap> Idempotents(I, 2);
 [  ]
 gap> S:=Semigroup([ Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
