@@ -713,7 +713,7 @@ function(S)
   
   if IsSemigroupIdeal(S)
    and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
-    return RepresentativeOfMinimalIdeal(SuperSemigroupOfIdeal(S));
+    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
   fi;
 
   rank := LambdaRank(S);

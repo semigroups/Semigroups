@@ -418,7 +418,7 @@ function(S)
   if IsSemigroupIdeal(S) and
    (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
    or not HasGeneratorsOfSemigroup(S)) then
-    return RepresentativeOfMinimalIdeal(SuperSemigroupOfIdeal(S));
+    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
   fi;
 
   if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
