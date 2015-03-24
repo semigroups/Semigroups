@@ -26,7 +26,8 @@
 # Our Matrix objects
 #
 DeclareCategory("IsSMatrix",
-  IsMatrixObj and IsAttributeStoringRep);
+  IsMatrixObj );
+#and IsAttributeStoringRep);
 
 DeclareAttribute("RowSpaceBasis", IsSMatrix);
 DeclareAttribute("ColSpaceBasis", IsSMatrix);
