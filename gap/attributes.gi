@@ -661,9 +661,9 @@ function(s)
   gens := GeneratorsOfSemigroup(s);
   if ForAll(gens, x -> x * rep = rep and rep * x = rep) then
     return rep;
-  else
-    return fail;
   fi;
+
+  return fail;
 end);
 
 # same method for ideals

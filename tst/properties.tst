@@ -796,6 +796,106 @@ true
 gap> IsSynchronizingSemigroup(s);
 false
 
+#T# PropertiesTest56: IsZeroSemigroup
+gap> t := Transformation( [ 1 ] );;
+
+# For a trivial transformation semigroup
+gap> s := Semigroup(t);
+<trivial transformation group>
+gap> IsZeroSemigroup(s);
+true
+
+# For a non-trivial zero semigroup of transformations & an ideal
+gap> t := Transformation( [ 1, 1, 2 ] );;
+gap> s := Semigroup(t);
+<commutative transformation semigroup on 3 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t ^ 2);
+<commutative regular transformation semigroup ideal on 3 pts with 1 generator>
+gap> HasIsZeroSemigroup(s);
+false
+gap> IsZeroSemigroup(I); # parent does not know it is zero
+true
+gap> HasIsZeroSemigroup(s);
+false
+gap> IsZeroSemigroup(s);
+true
+gap> I := SemigroupIdeal(s, t);; # parent does know it is zero
+gap> IsZeroSemigroup(I);
+true
+gap> I := SemigroupIdeal(s, t);; # parent does know it is zero.
+gap> GeneratorsOfSemigroup(I);;  # ideal now can use normal method
+gap> IsZeroSemigroup(I);
+true
+
+# For a non-trivial transformation group (semigroup without a zero)
+gap> t := Transformation( [ 2, 1 ] );;
+gap> s := Semigroup(t);
+<commutative transformation semigroup on 2 pts with 1 generator>
+gap> IsZeroSemigroup(s);
+false
+gap> I := SemigroupIdeal(s, Transformation([ 1, 2 ]));
+<commutative regular transformation semigroup ideal on 2 pts with 1 generator>
+gap> IsZeroSemigroup(I); # parent knows that it is not zero
+false
+
+# For a zero-group as a transformation semigroup
+gap> s := Semigroup([
+> Transformation( [ 1, 3, 2, 3 ] ),
+> Transformation( [ 1, 1, 1, 1 ] ) ]); # s is a 0-simple semigroup
+<transformation semigroup on 4 pts with 2 generators>
+gap> IsZeroSemigroup(s);
+false
+gap> IsZeroSimpleSemigroup(s);
+true
+
+# For a non-trivial inverse semigroup of partial perms (semigroup with a zero)
+gap> s := InverseSemigroup([
+> PartialPerm( [ 1, 2 ], [ 3, 1 ] ),
+> PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) ]);
+<inverse partial perm semigroup on 4 pts with 2 generators>
+gap> MultiplicativeZero(s);
+<empty partial perm>
+gap> IsZeroSemigroup(s);
+false
+gap> s := InverseSemigroup(MultiplicativeZero(s));;
+gap> IsZeroSemigroup(s);
+true
+
+#T# PropertiesTest57:
+# IsZeroSemigroup: for a non-acting semigroup
+# (Rees 0-matrix semigroup) and ideals
+gap> s := ReesZeroMatrixSemigroup(Group(()), [ [ 0 ] ]);
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> t := First(s, x -> not x = MultiplicativeZero(s));
+(1,(),1)
+gap> I := SemigroupIdeal(s, t);
+<commutative Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsZeroSemigroup(I);
+true
+gap> HasIsZeroSemigroup(s);
+false
+gap> IsZeroSemigroup(s);
+true
+gap> I := SemigroupIdeal(s, t);;
+gap> IsZeroSemigroup(I);
+true
+gap> s := ReesZeroMatrixSemigroup(Group(()), [ [ () ] ]);
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> t := First(s, x -> not x = MultiplicativeZero(s));
+(1,(),1)
+gap> I := SemigroupIdeal(s, t);
+<Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsZeroSemigroup(I);
+false
+gap> HasIsZeroSemigroup(s);
+false
+gap> IsZeroSemigroup(s);
+false
+gap> I := SemigroupIdeal(s, MultiplicativeZero(s));
+<Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsZeroSemigroup(I);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(rms);
