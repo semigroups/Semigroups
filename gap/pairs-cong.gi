@@ -23,7 +23,7 @@ function(cong)
   if IsBound(s!.opts) then
     hashlen := s!.opts.hashlen.L;
   else
-    hashlen := SemigroupsOptionsRec.hashlen.L;
+    hashlen := SemigroupOptions(s).hashlen.L;
   fi;
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
               treehashsize := hashlen));

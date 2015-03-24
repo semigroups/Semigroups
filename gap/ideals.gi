@@ -227,7 +227,7 @@ end);
 InstallMethod(SemigroupIdealByGenerators, 
 "for semigroup, associative element collection, and record",
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
-function(S, gens, record)
+function(S, gens, opts)
   local filts, I;
   if not ForAll(gens, x -> x in S) then
     Error("Semigroups: SemigroupIdealByGenerators: usage,\n",
@@ -239,12 +239,12 @@ function(S, gens, record)
   
   filts:=IsMagmaIdeal and IsAttributeStoringRep;
   
-  if not record.generic and (IsActingSemigroup(S) 
+  if not opts.generic and (IsActingSemigroup(S) 
     or IsGeneratorsOfActingSemigroup(gens)) then 
     filts:=filts and IsActingSemigroup;
   fi;
 
-  I:=Objectify(NewType(FamilyObj(gens), filts), rec(opts:=record));
+  I:=Objectify(NewType(FamilyObj(gens), filts), rec(opts:=opts));
   
   if IsSemigroupWithInverseOp(S) then 
     SetFilterObj(I, IsSemigroupWithInverseOp);

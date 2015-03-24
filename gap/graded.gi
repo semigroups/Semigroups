@@ -302,7 +302,7 @@ InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 function(S)
   return Objectify(NewType(FamilyObj(S), IsGradedRhoOrbs), rec(
     orbits := List([1 .. ActionDegree(S) + 1], x -> []),
-    lens := [1 .. ActionDegree(S) + 1] * 0, parent := s));
+    lens := [1 .. ActionDegree(S) + 1] * 0, parent := S));
 end);
 
 #

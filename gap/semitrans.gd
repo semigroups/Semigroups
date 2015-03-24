@@ -11,8 +11,6 @@
 DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
 DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 
-DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
-
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
 IsTransformationSemigroup);
 DeclareAttribute("ComponentsOfTransformationSemigroup",

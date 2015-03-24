@@ -632,11 +632,10 @@ end);
 
 #FIXME move this!
 InstallMethod(Iterator, "for a full transformation semigroup",
-[IsTransformationSemigroup and IsFullTransformationSemigroup and HasGeneratorsOfSemigroup], 
+[IsTransformationSemigroup and IsFullTransformationSemigroup and
+ HasGeneratorsOfSemigroup], 
 7, #to beat the method for acting semigroups TODO check this is necessary!!
 function(S)
-[IsTransformationSemigroup and IsFullTransformationSemigroup and
-HasGeneratorsOfSemigroup],
   local iter;
 
   iter := IteratorByFunctions(rec(
@@ -1072,7 +1071,6 @@ function(iter)
 end);
 
 #FIXME move this!
-#
 
 InstallMethod(PrintObj, [IsIteratorOfLClassReps],
 function(iter)
@@ -1081,7 +1079,6 @@ function(iter)
 end);
 
 #FIXME move this!
-#
 
 InstallMethod(PrintObj, [IsIteratorOfRClassReps],
 function(iter)
@@ -1089,7 +1086,6 @@ function(iter)
   return;
 end);
 
-#
 #FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfDClasses],
@@ -1098,7 +1094,6 @@ function(iter)
   return;
 end);
 
-#
 #FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfHClasses],
@@ -1108,7 +1103,6 @@ function(iter)
 end);
 
 #FIXME move this!
-#
 
 InstallMethod(PrintObj, [IsIteratorOfLClasses],
 function(iter)
@@ -1116,7 +1110,6 @@ function(iter)
   return;
 end);
 
-#
 #FIXME move this!
 
 InstallMethod(PrintObj, [IsIteratorOfRClasses],

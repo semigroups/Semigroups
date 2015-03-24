@@ -40,8 +40,7 @@ end);
 #
 
 InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
-  return Range(IsomorphismBlockBijectionSemigroup(S));
-end);
+S-> Range(IsomorphismBlockBijectionSemigroup(S)));
 
 #
 

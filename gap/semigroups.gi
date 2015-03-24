@@ -255,7 +255,7 @@ function(gens, record)
    and CanEasilyCompareElements(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
-      SetFilterObj(s, IsMonoid);
+      SetFilterObj(S, IsMonoid);
       gens := ShallowCopy(gens);
       Remove(gens, pos);
       SetGeneratorsOfMonoid(S, gens);
@@ -410,7 +410,7 @@ function(gens, record)
     Remove(gens, pos);
     SetGeneratorsOfInverseMonoid(S, gens);
   else
-    SetGeneratorsOfInverseMonoid(s, gens);
+    SetGeneratorsOfInverseMonoid(S, gens);
     gens := ShallowCopy(gens);
     Add(gens, one);
     SetGeneratorsOfInverseSemigroup(S, gens);

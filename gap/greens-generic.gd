@@ -86,14 +86,3 @@ DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 
-DeclareAttribute("NrDClasses", IsSemigroup); 
-DeclareAttribute("NrHClasses", IsSemigroup);
-DeclareAttribute("NrHClasses", IsGreensClass);
-DeclareAttribute("NrLClasses", IsSemigroup);
-DeclareAttribute("NrLClasses", IsGreensDClass);
-DeclareAttribute("NrRClasses", IsSemigroup);
-DeclareAttribute("NrRClasses", IsGreensDClass);
-
-DeclareAttribute("NrRegularDClasses", IsSemigroup); 
-DeclareAttribute("NrIdempotents", IsSemigroup);
-DeclareAttribute("NrIdempotents", IsGreensClass);

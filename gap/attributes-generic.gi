@@ -9,12 +9,12 @@
 ##
 
 # this file contains methods for finding attributes of semigroups satisfying
-# IsExhaustiveSemigroup.
+# IsSemigroup.
 
 # same method for ideals
 
 InstallMethod(MinimalIdeal, "for an generic semigroup",
-[IsExhaustiveSemigroup],
+[IsSemigroup],
 function(S)
   local data, scc;
   data:=Enumerate(GenericSemigroupData(S));

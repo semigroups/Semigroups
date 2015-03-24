@@ -9,10 +9,10 @@
 ##
 
 BindGlobal("SEMIGROUPS_OptionsRec", 
-  rec(  small:=false,
-        hashlen:=rec(S:=251, M:=6257, L:=25013),
-        regular:=false,
-        generic:=false  ));
+  rec(small:=false,
+      hashlen:=rec(S:=251, M:=6257, L:=25013),
+      regular:=false,
+      generic:=false));
 
 MakeReadWriteGlobal("SEMIGROUPS_OptionsRec");
 

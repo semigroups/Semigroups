@@ -34,7 +34,7 @@ DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass and IsInverseOpClass
 DeclareOperation("RightCosetsOfInverseSemigroup",
                  [IsSemigroupWithInverseOp and IsActingSemigroup,
                   IsSemigroupWithInverseOp and IsActingSemigroup]);
-DeclareAttribute("SmallerDegreePartialPermRepresentation",
+DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
 DeclareAttribute("VagnerPrestonRepresentation", IsSemigroupWithInverseOp and

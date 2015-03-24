@@ -9,7 +9,7 @@
 ##
 
 # this file contains the main algorithms for computing semigroups belonging to
-# IsExhaustiveSemigroup. 
+# IsSemigroup. 
 
 #  for details see:
 #
@@ -22,7 +22,7 @@
 # different method for ideals
 
 InstallMethod(Enumerator, "for an generic semigroup with generators",
-[IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, record;
   
@@ -58,7 +58,7 @@ end);
 # different method for ideals
 
 InstallMethod(Size, "for an generic semigroup with generators", 
-[IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   return Length(Enumerate(GenericSemigroupData(S), infinity, ReturnFalse)!.elts);
 end);
@@ -66,7 +66,7 @@ end);
 # different method for ideals
 
 InstallMethod(\in, "for an associative element and finite semigroup with generators",
-[IsAssociativeElement, IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
+[IsAssociativeElement, IsSemigroup and HasGeneratorsOfSemigroup],
 function(x, S)
   return Position(GenericSemigroupData(S), x)<>fail;
 end);
@@ -75,7 +75,7 @@ end);
 # JDM: can probably do better than this by considering Green's classes.
 
 InstallMethod(Idempotents, "for an generic semigroup with generators",
-[IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, elts, idempotents, nr, i;
 

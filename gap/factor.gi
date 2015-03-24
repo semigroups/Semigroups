@@ -17,7 +17,7 @@
 
 InstallMethod(Factorization,
 "for an generic semigroup and an associative element",
-[IsExhaustiveSemigroup, IsAssociativeElement],
+[IsSemigroup, IsAssociativeElement],
 function(S, x)
   local pos;
   pos:=Position(GenericSemigroupData(S), x); 

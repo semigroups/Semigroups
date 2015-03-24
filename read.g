@@ -10,70 +10,69 @@
 
 # deal with GRAPE being loaded or not, compiled or not
 BindGlobal("IsGrapeLoaded", IsPackageMarkedForLoading("grape", "4.5"));
-
-BindGlobal("IsGrapeAvailable", TestPackageAvailability("grape")<>fail);
 BindGlobal("IsGrapeCompiled",
-ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")<>fail);
+           ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")
+           <> fail);
 
-if not IsGrapeAvailable then 
+if not IsGrapeLoaded then
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
-  BindGlobal("GrapeIsNotAvailableString", 
-  Concatenation("the GRAPE package is not available and", 
+  BindGlobal("GrapeIsNotAvailableString",
+  Concatenation("the GRAPE package is not loaded and",
   " so this function does not work"));
 fi;
 
-
-if not IsGrapeCompiled then 
+if not IsGrapeCompiled then
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
   Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
   Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
   Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
-  BindGlobal("GrapeIsNotCompiledString", 
-  Concatenation("the nauty/dreadnaut binaries for the GRAPE package are", 
-  " not available\n#I  and so this function does not work")); 
+  BindGlobal("GrapeIsNotCompiledString",
+  Concatenation("the nauty/dreadnaut binaries for the GRAPE package are",
+  " not loaded\n#I  and so this function does not work"));
 fi;
 
 #
 
-if TestPackageAvailability("genss")=fail then 
+if TestPackageAvailability("genss") = fail then
   Add(SemigroupsOmitFromTestManualExamples, "Normalizer");
 fi;
 
 # Issue 5 for Orb:
 
-if not IsBound( MappingPermListList_C ) then 
-  BIND_GLOBAL( "MappingPermListList_C", function( src, dst )
+if not IsBound(MappingPermListList_C) then
+  BindGlobal("MappingPermListList_C",
+  function(src, dst)
     local src_tab, dst_tab, d, out, next, i;
 
     if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
-       Error("usage: MappingPermListList( <lst1>, <lst2> )");
+       return fail;
     fi;
 
-    if IsEmpty( src )  then
+    if IsEmpty(src)  then
       return ();
     fi;
-    src_tab:=[];
-    dst_tab:=[];
-    d:=Maximum(Maximum(src), Maximum(dst));
-    for i in [1..Length(src)] do 
-      src_tab[src[i]]:=i;
+    src_tab := [];
+    dst_tab := [];
+    d := Maximum(Maximum(src), Maximum(dst));
+    for i in [1 .. Length(src)] do
+      src_tab[src[i]] := i;
     od;
-    for i in [1..Length(dst)] do 
-      dst_tab[dst[i]]:=i;
+    for i in [1 .. Length(dst)] do
+      dst_tab[dst[i]] := i;
     od;
-    out:=EmptyPlist(d);
-    next:=1;
-    for i in [1..d] do 
-      if IsBound(src_tab[i]) then 
-        out[i]:=dst[src_tab[i]];
+    out := EmptyPlist(d);
+    next := 1;
+    for i in [1 .. d] do
+      if IsBound(src_tab[i]) then
+        out[i] := dst[src_tab[i]];
       else
-        while IsBound(dst_tab[next]) do 
-          next:=next+1;
+        while IsBound(dst_tab[next]) do
+          next := next + 1;
         od;
-        out[i]:=next;
-        next:=next+1;
+        out[i] := next;
+        next := next + 1;
       fi;
     od;
 
@@ -84,41 +83,41 @@ fi;
 # skip examples including partitions if we're in version less than 2.0
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
- then 
+ then
   Add(SemigroupsOmitFromTestManualExamples, "partition");
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
 
 #
 
-ReadPackage("semigroups/gap/digraph.gi");
+ReadPackage("semigroups/gap/grpperm.gi");
 
+ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");
-ReadPackage("semigroups/gap/blocks.gi");
 
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/lambda-rho.gi");
 ReadPackage("semigroups/gap/ideals-lambda-rho.gi");
-ReadPackage("semigroups/gap/non-exhaust.gi");
-ReadPackage("semigroups/gap/ideals-non-exhaust.gi");
+ReadPackage("semigroups/gap/acting.gi");
+ReadPackage("semigroups/gap/ideals-acting.gi");
 ReadPackage("semigroups/gap/graded.gi");
 ReadPackage("semigroups/gap/semigroups.gi");
-ReadPackage("semigroups/gap/greens.gi");
-ReadPackage("semigroups/gap/greens-non-exhaust.gi");
-ReadPackage("semigroups/gap/greens-exhaust.gi");
+ReadPackage("semigroups/gap/semigroups-acting.gi");
+ReadPackage("semigroups/gap/greens-generic.gi");
+ReadPackage("semigroups/gap/greens-acting.gi");
 ReadPackage("semigroups/gap/ideals-greens.gi");
 ReadPackage("semigroups/gap/factor.gi");
-ReadPackage("semigroups/gap/regular.gi");
-ReadPackage("semigroups/gap/inverse.gi");
+ReadPackage("semigroups/gap/greens-regular.gi");
+ReadPackage("semigroups/gap/greens-inverse.gi");
 ReadPackage("semigroups/gap/enums.gi");
 ReadPackage("semigroups/gap/iterators.gi");
 ReadPackage("semigroups/gap/properties.gi");
 ReadPackage("semigroups/gap/attributes.gi");
-ReadPackage("semigroups/gap/attributes-non-exhaust.gi");
-ReadPackage("semigroups/gap/attributes-exhaust.gi");
+ReadPackage("semigroups/gap/attributes-acting.gi");
+ReadPackage("semigroups/gap/attributes-generic.gi");
 ReadPackage("semigroups/gap/examples.gi");
 ReadPackage("semigroups/gap/orbits.gi");
 
@@ -127,8 +126,10 @@ ReadPackage("semigroups/gap/attributes-inverse.gi");
 ReadPackage("semigroups/gap/ideals.gi");
 
 ReadPackage("semigroups/gap/freeinverse.gi");
+ReadPackage("semigroups/gap/freeband.gi");
 
 ReadPackage("semigroups/gap/utils.gi");
+ReadPackage("semigroups/gap/io.gi");
 
 ReadPackage("semigroups/gap/display.gi");
 
@@ -141,10 +142,11 @@ ReadPackage("semigroups/gap/normalizer.gi");
 
 ReadPackage("semigroups/gap/quotients.gi");
 
+ReadPackage("semigroups/gap/pairs-cong.gi");
 ReadPackage("semigroups/gap/reesmat-cong.gi");
-ReadPackage("semigroups/gap/univcong.gi");
+ReadPackage("semigroups/gap/univ-cong.gi");
+ReadPackage("semigroups/gap/inverse-cong.gi");
+ReadPackage("semigroups/gap/simple-cong.gi");
 
-ReadPackage("semigroups/gap/semigroupe.gi");
-ReadPackage("semigroups/gap/exhaust.gi");
-ReadPackage("semigroups/gap/ideals-exhaust.gi");
-
+ReadPackage("semigroups/gap/semigroups-generic.gi");
+ReadPackage("semigroups/gap/ideals-generic.gi");

@@ -11,10 +11,6 @@
 # This file contains declarations of everything required for a semigroup
 # belonging to IsActingSemigroup...
 
-DeclareCategory("IsActingSemigroup", IsSemigroup);
-DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
-DeclareProperty("IsGeneratorsOfActingSemigroup",
-                IsAssociativeElementCollection);
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);

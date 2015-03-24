@@ -31,9 +31,11 @@ DeclareAttribute("SmallMonoidGeneratingSet", IsMonoid and IsFinite);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet",
                  IsSemigroupWithInverseOp);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet",
-                 IsInverseSemigroup and IsActingSemigroup);
+                 IsGeneratorsOfInverseSemigroup);
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
                  IsInverseMonoid and IsSemigroupWithInverseOp);
+DeclareAttribute("SmallInverseMonoidGeneratingSet",
+                 IsGeneratorsOfInverseSemigroup);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);

@@ -15,9 +15,9 @@ DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
 # so that the rank of IsActingSemigroup is higher than that of
 # IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and
 # IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
+DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
-DeclareAttribute("SizeOfSemigroupData", IsSemigroupData);
 DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
                 IsActingSemigroup);
