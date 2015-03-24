@@ -342,7 +342,7 @@ gap> Size(i);
 81
 gap> i := Semigroup(Generators(i), rec(small:=true));;
 gap> Size(i);
-81
+3
 gap> IsLeftZeroSemigroup(i);
 false
 gap> IsSimpleSemigroup(i);
