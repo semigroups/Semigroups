@@ -9,6 +9,10 @@
 #############################################################################
 ##
 
+InstallMethod(AsMatrix, "for a semigroups matrix in plist representation",
+[IsSMatrix and IsSPlistMatrixRep],
+x -> List(x![SEMIGROUPS_ROWSPOS], List));
+
 InstallMethod(IsSMatrixCollection, "for a collection",
 [IsCollection], 
 function(coll) 

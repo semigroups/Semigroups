@@ -38,6 +38,8 @@ DeclareAttribute("NrRows", IsSMatrix);
 DeclareAttribute("NrCols", IsSMatrix);
 DeclareAttribute("RowRank", IsSMatrix);
 DeclareAttribute("ColRank", IsSMatrix);
+DeclareOperation("AsMatrix", [IsSMatrix]);
+
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
 # We also need operations for acting on Row/Column spaces.
 
@@ -58,8 +60,16 @@ DeclareAttribute( "SemiEchelonMatTransformation",
 #
 #T Do the rows of our SPlistMatrixRep need to be SPlistRowVectorRep? Or is
 #T it good enough to allow IsPlistRowVectorRep?
+#
+# What about AttributeStoringRep? Is it desirable to just store RowSpaceBasis
+# ColumnSpaceBasis as Attributes?
 DeclareRepresentation("IsSPlistMatrixRep",
   IsRowListMatrix and IsPositionalObjectRep, [] );
+
+BindGlobal("SEMIGROUPS_BDPOS", 1);
+BindGlobal("SEMIGROUPS_EMPOS", 2);
+BindGlobal("SEMIGROUPS_RLPOS", 3);
+BindGlobal("SEMIGROUPS_ROWSPOS", 4);
 
 DeclareGlobalFunction( "RandomSMatrix" );
 

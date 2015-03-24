@@ -9,11 +9,6 @@
 #############################################################################
 ##
 
-# FIXME move this
-
-InstallMethod(AsMatrix, "for a matrix obj", 
-[IsMatrixObj], x -> List(x![ROWSPOS], List));
-
 # FIXME this should be a method for IsMatrixSemigroup
 
 InstallMethod(BaseDomain, "for a matrix obj group", 
@@ -95,7 +90,7 @@ InstallMethod(ClosureGroup, "for a matrix obj group and collection",
 [SEMIGROUPS_IsMatrixObjGroup, IsCollection],
 SEMIGROUPS_MatrixObjGroupRankIncrement,
 function(G, coll) 
-  if not (IsMatrixObjCollection(coll) 
+  if not (IsSMatrixCollection(coll) 
       and IsGeneratorsOfSemigroup(coll) 
       and DimensionsMat(coll[1]) = DimensionsOfMatrixSemigroup(G) 
       and BaseDomain(coll[1]) = BaseDomain(G)) then 

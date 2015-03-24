@@ -14,13 +14,10 @@
 # possible to create these objects using the function Group, use Semigroup
 # instead. 
 
-#FIXME move this
-DeclareOperation("AsMatrix", [IsMatrixObj]);
 
 DeclareSynonym("SEMIGROUPS_IsMatrixObjGroup",
                IsGroup and IsMatrixSemigroup);
 
-DeclareAttribute("BaseDomain", SEMIGROUPS_IsMatrixObjGroup);
 DeclareAttribute("IsomorphismMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);
 DeclareAttribute("IsomorphismMatrixObjGroup", IsMatrixGroup);
 DeclareAttribute("AsMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);

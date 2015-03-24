@@ -11,6 +11,7 @@
 ## Some of this code is based on code taken from grpmat.gd in the GAP
 ## library
 
+
 DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsNullMapMatrixGroup", IsMatrixGroup);
 DeclareOperation("POW", [IsNullMapMatrixGroup, IsMatrix]);
@@ -21,6 +22,8 @@ DeclareOperation("InverseMutable", [IsNullMapMatrix]);
 
 DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl and
 IsAssociativeElementCollection);
+
+DeclareAttribute("BaseDomain", IsMatrixSemigroup);
 
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 
