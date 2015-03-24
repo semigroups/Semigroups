@@ -477,7 +477,7 @@ function(S)
   od;
 
   t := gens[min_rank_index];
-  im := ImageSetOfTransformation(t);
+  im := ImageSetOfTransformation(t, n);
 
   # find a word in S of minimal rank by repeatedly collapsing pairs in im(t)
   while true do
@@ -486,7 +486,7 @@ function(S)
       y := graph.NumberPair(n, x);
       if marked[y] then
         t := t * EvaluateWord(gens, elts[y]);
-        im := ImageSetOfTransformation(t);
+        im := ImageSetOfTransformation(t, n);
         reduced := true;
         break;
       fi;
