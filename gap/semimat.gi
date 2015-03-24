@@ -245,9 +245,7 @@ function(S, x, y)
 			col := col + 1;
 		fi;
 	od;
-	sch := ExtractSubMatrix(eqs, [1 .. n], idx + k);
-
-        res := List(sch, List);
+	return ExtractSubMatrix(eqs, [1 .. n], idx + k);
     fi;
 
     return res;
