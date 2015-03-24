@@ -1161,14 +1161,14 @@ InstallMethod(RandomMatrixSemigroup,
 "for a ring, positive integer, and positive integer",
 [IsRing, IsPosInt, IsPosInt],
 function(R, m, n)
-  return Semigroup(List([1 .. m], x -> RandomMatrixObj(n, n, R)));
+  return Semigroup(List([1 .. m], x -> RandomSMatrix(n, n, R)));
 end);
 
 InstallMethod(RandomMatrixMonoid,
 "for a ring, positive integer, and positive integer",
 [IsRing, IsPosInt, IsPosInt],
 function(R, m, n)
-  return Monoid(List([1 .. m], x -> RandomMatrixObj(n, n, R)));
+  return Monoid(List([1 .. m], x -> RandomSMatrix(n, n, R)));
 end);
 
 #
