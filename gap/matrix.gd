@@ -6,24 +6,22 @@
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
-#############################################################################
+############################################################################
 ##
 
+############################################################################
 #
 # In the best spirit of GAP development we implement our own matrix
 # methods.
 #
-# This aims to be compatible with the MatrixObj interface in the
-# GAP library and might at some point be moved to the library
-#
 # We declare our own representation so we do not interfere with the GAP
 # library or other libraries and dispatch to things we know to work.
 #
-
 # This code is based on the IsPlistMatrixRep code from the GAP library
 # There is almost no hope whatsoever that we will ever be able to use
 # MatrixObj in general for semigroups
-
+#
+############################################################################
 #
 # Our Matrix objects
 #
@@ -76,4 +74,3 @@ DeclareGlobalFunction( "RandomSMatrix" );
 # Does such a collection need to be of matrices in the same representation,
 # or are we happy as long as we get the attributes and operations above?
 DeclareOperation("IsSMatrixCollection", [IsCollection]);
-
