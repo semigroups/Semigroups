@@ -18,10 +18,6 @@ InstallMethod(BaseDomain, "for a matrix obj group",
 [SEMIGROUPS_IsMatrixObjGroup and HasGeneratorsOfSemigroup], 
 G -> BaseDomain(G.1));
 
-InstallMethod(DimensionsOfMatrixObjGroup, "for a matrix obj group", 
-[SEMIGROUPS_IsMatrixObjGroup and HasGeneratorsOfSemigroup], 
-G -> DimensionsMat(G.1));
-
 InstallMethod(IsomorphismMatrixGroup, "for a matrix obj group",
 [SEMIGROUPS_IsMatrixObjGroup], 
 function(G)
@@ -67,7 +63,7 @@ InstallMethod(\^, "for a matrix obj group and matrix obj",
 [SEMIGROUPS_IsMatrixObjGroup, IsMatrixObj],
 SEMIGROUPS_MatrixObjGroupRankIncrement,
 function(G, x)
-  if DimensionsMat(x) <> DimensionsOfMatrixObjGroup(G) or BaseDomain(x) <> BaseDomain(G) then 
+  if DimensionsMat(x) <> DimensionsOfMatrixSemigroup(G) or BaseDomain(x) <> BaseDomain(G) then 
     Error("can't do it");
     return;
   elif IsOne(x) or DimensionsMat(x) = [0, 0] then 
