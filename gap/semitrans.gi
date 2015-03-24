@@ -415,15 +415,17 @@ function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
 
+  if IsSemigroupIdeal(S) and
+   (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
+   or not HasGeneratorsOfSemigroup(S)) then
+    return RepresentativeOfMinimalIdeal(SuperSemigroupOfIdeal(S));
+  fi;
+
   if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
     return MultiplicativeZero(S);
   fi;
 
-  if HasGeneratorsOfSemigroup(S) then
-    gens := GeneratorsOfSemigroup(S);
-  else
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  fi;
+  gens := GeneratorsOfSemigroup(S);
 
   # This catches T_1. This also catches known trivial semigroups.
   if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then

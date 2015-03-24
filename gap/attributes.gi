@@ -691,7 +691,7 @@ end);
 InstallMethod(MinimalIdeal, "for an acting semigroup", [IsActingSemigroup],
 function(S)
   local I;
-  I := SemigroupIdeal(S, Representative(MinimalDClass(S)));
+  I := SemigroupIdeal(S, RepresentativeOfMinimalIdeal(S));
   SetIsSimpleSemigroup(I, true);
   return I;
 end);
@@ -700,11 +700,20 @@ end);
 
 InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
 function(S)
-  local rank, o, pos, min, len, m, x, i;
+  return GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S));
+end);
 
-  if IsSemigroupIdeal(S) and HasMinimalDClass(SupersemigroupOfIdeal(S)) then
-    return GreensDClassOfElementNC(S,
-     Representative(MinimalDClass(SupersemigroupOfIdeal(S))));
+#
+
+InstallMethod(RepresentativeOfMinimalIdeal,
+"for an acting semigroup",
+[IsActingSemigroup],
+function(S)
+  local rank, o, pos, min, len, m, n, i;
+  
+  if IsSemigroupIdeal(S)
+   and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
+    return RepresentativeOfMinimalIdeal(SuperSemigroupOfIdeal(S));
   fi;
 
   rank := LambdaRank(S);
@@ -727,8 +736,7 @@ function(S)
     od;
   fi;
 
-  x := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
-  return GreensDClassOfElementNC(S, x);
+  return EvaluateWord(o, TraceSchreierTreeForward(o, pos));
 end);
 
 #
