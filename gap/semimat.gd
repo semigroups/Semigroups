@@ -11,7 +11,7 @@
 ## Some of this code is based on code taken from grpmat.gd in the GAP
 ## library
 
-
+DeclareAttribute("BaseDomain", [IsMatrixSemigroup]);
 DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsNullMapMatrixGroup", IsMatrixGroup);
 DeclareOperation("POW", [IsNullMapMatrixGroup, IsMatrix]);

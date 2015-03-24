@@ -10,6 +10,8 @@
 ##
 
 
+InstallMethod(BaseDomain, "for a matrix semigroup", 
+[IsMatrixSemigroup], S -> BaseDomain(Representative(S)));
 
 InstallMethod(DefaultFieldOfMatrixGroup, "for a matrix semigroup",
 [IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 

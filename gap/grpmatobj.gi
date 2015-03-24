@@ -14,12 +14,6 @@
 InstallMethod(AsMatrix, "for a matrix obj", 
 [IsMatrixObj], x -> List(x![ROWSPOS], List));
 
-# FIXME this should be a method for IsMatrixSemigroup
-
-InstallMethod(BaseDomain, "for a matrix obj group", 
-[SEMIGROUPS_IsMatrixObjGroup and HasGeneratorsOfSemigroup], 
-G -> BaseDomain(G.1));
-
 InstallMethod(IsomorphismMatrixGroup, "for a matrix obj group",
 [SEMIGROUPS_IsMatrixObjGroup], 
 function(G)

@@ -20,7 +20,6 @@ DeclareOperation("AsMatrix", [IsMatrixObj]);
 DeclareSynonym("SEMIGROUPS_IsMatrixObjGroup",
                IsGroup and IsMatrixSemigroup);
 
-DeclareAttribute("BaseDomain", SEMIGROUPS_IsMatrixObjGroup);
 DeclareAttribute("IsomorphismMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);
 DeclareAttribute("IsomorphismMatrixObjGroup", IsMatrixGroup);
 DeclareAttribute("AsMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);
