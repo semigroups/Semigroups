@@ -44,6 +44,8 @@ DeclareGlobalFunction( "PedestrianLambdaInverse" );
 
 DeclareGlobalFunction( "RandomMatrixObj" );
 
+DeclareOperation("IsMatrixObjCollection", [IsCollection]);
+
 # To make the GAP library code happy for now
 #DeclareOperation( "ImmutableMatrix", [ IsObject, IsMatrixObj ]);
 

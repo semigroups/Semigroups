@@ -9,6 +9,15 @@
 #############################################################################
 ##
 
+InstallMethod(IsMatrixObjCollection, "for a collection",
+[IsCollection], 
+function(coll) 
+  if IsEmpty(coll) then 
+    return false;
+  fi;
+  return IsMatrixObj(coll[1]) and IsHomogeneousList(coll);
+end);
+
 InstallMethod(\*, "for a matrix obj and ffe", 
 [IsMatrixObj, IsFFE],
 function(mat, x)

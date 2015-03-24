@@ -14,6 +14,8 @@
 InstallMethod(AsMatrix, "for a matrix obj", 
 [IsMatrixObj], x -> List(x![ROWSPOS], List));
 
+# FIXME this should be a method for IsMatrixSemigroup
+
 InstallMethod(BaseDomain, "for a matrix obj group", 
 [SEMIGROUPS_IsMatrixObjGroup and HasGeneratorsOfSemigroup], 
 G -> BaseDomain(G.1));
@@ -63,7 +65,8 @@ InstallMethod(\^, "for a matrix obj group and matrix obj",
 [SEMIGROUPS_IsMatrixObjGroup, IsMatrixObj],
 SEMIGROUPS_MatrixObjGroupRankIncrement,
 function(G, x)
-  if DimensionsMat(x) <> DimensionsOfMatrixSemigroup(G) or BaseDomain(x) <> BaseDomain(G) then 
+  if DimensionsMat(x) <> DimensionsOfMatrixSemigroup(G) 
+      or BaseDomain(x) <> BaseDomain(G) then 
     Error("can't do it");
     return;
   elif IsOne(x) or DimensionsMat(x) = [0, 0] then 
@@ -76,4 +79,28 @@ function(G, x)
   fi;
 end);
 
+InstallMethod(ClosureGroup, "for a matrix obj group and matrix obj",
+[SEMIGROUPS_IsMatrixObjGroup, IsMatrixObj],
+SEMIGROUPS_MatrixObjGroupRankIncrement,
+function(G, x) 
+  if DimensionsMat(x) <> DimensionsOfMatrixSemigroup(G) 
+      or BaseDomain(x) <> BaseDomain(G) then 
+    Error("can't do it");
+    return;
+  fi;
+  return ClosureGroupNC(G, [x]);
+end);
 
+InstallMethod(ClosureGroup, "for a matrix obj group and matrix obj",
+[SEMIGROUPS_IsMatrixObjGroup, IsCollection],
+SEMIGROUPS_MatrixObjGroupRankIncrement,
+function(G, coll) 
+  if not (IsMatrixObjCollection(coll) 
+      and IsGeneratorsOfSemigroup(coll) 
+      and DimensionsMat(coll[1]) = DimensionsOfMatrixSemigroup(G) 
+      and BaseDomain(coll[1]) = BaseDomain(G)) then 
+    Error("can't do it");
+    return;
+  fi;
+  return ClosureGroupNC(G, coll);
+end);
