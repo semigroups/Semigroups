@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  init.g
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -25,15 +25,18 @@ else # only do this if ORBC is available
   fi;
 fi;
 
-ReadPackage("semigroups/gap/digraph.gd");
+ReadPackage("semigroups/gap/grpperm.gd");
 
 ReadPackage("semigroups/gap/utils.gd");
+ReadPackage("semigroups/gap/io.gd");
 ReadPackage("semigroups/gap/options.g");
 
 ReadPackage("semigroups/gap/setup.gd");
-ReadPackage("semigroups/gap/non-exhaust.gd");
-ReadPackage("semigroups/gap/ideals-non-exhaust.gd");
+ReadPackage("semigroups/gap/acting.gd");
+ReadPackage("semigroups/gap/ideals-acting.gd");
+ReadPackage("semigroups/gap/ideals-generic.gd");
 ReadPackage("semigroups/gap/semigroups.gd");
+ReadPackage("semigroups/gap/semigroups-acting.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
 ReadPackage("semigroups/gap/semibipart.gd");
@@ -41,9 +44,8 @@ ReadPackage("semigroups/gap/semitrans.gd");
 ReadPackage("semigroups/gap/semipperm.gd");
 ReadPackage("semigroups/gap/blocks.gd");
 
-ReadPackage("semigroups/gap/greens.gd");
-ReadPackage("semigroups/gap/greens-non-exhaust.gd");
-ReadPackage("semigroups/gap/greens-exhaust.gd");
+ReadPackage("semigroups/gap/greens-generic.gd");
+ReadPackage("semigroups/gap/greens-acting.gd");
 ReadPackage("semigroups/gap/lambda-rho.gd");
 ReadPackage("semigroups/gap/ideals-lambda-rho.gd");
 ReadPackage("semigroups/gap/orbits.gd");
@@ -60,6 +62,7 @@ ReadPackage("semigroups/gap/ideals.gd");
 ReadPackage("semigroups/gap/attributes-inverse.gd");
 
 ReadPackage("semigroups/gap/freeinverse.gd");
+ReadPackage("semigroups/gap/freeband.gd");
 
 ReadPackage("semigroups/gap/display.gd");
 
@@ -71,9 +74,12 @@ ReadPackage("semigroups/gap/normalizer.gd");
 
 ReadPackage("semigroups/gap/quotients.gd");
 
+ReadPackage("semigroups/gap/pairs-cong.gd");
 ReadPackage("semigroups/gap/reesmat-cong.gd");
-ReadPackage("semigroups/gap/univcong.gd");
+ReadPackage("semigroups/gap/univ-cong.gd");
+ReadPackage("semigroups/gap/inverse-cong.gd");
+ReadPackage("semigroups/gap/simple-cong.gd");
 
-ReadPackage("semigroups/gap/exhaust.gd");
+ReadPackage("semigroups/gap/semigroups-generic.gd");
 
-DeclareInfoClass("InfoSemigroups");;
+DeclareInfoClass("InfoSemigroups");

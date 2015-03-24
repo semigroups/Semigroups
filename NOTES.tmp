@@ -1,0 +1,14 @@
+
+* about to redo read.g
+
+General notes:
+
+* attributes.gi is so different that it has not been merged.
+* HasGeneratorsOfMagmaIdeal has been changed to HasGeneratorsOfSemigroupIdeal
+  in lots of places.
+
+New features in this branch:
+
+* IsInverseOpSemigroup 
+* SemigroupOptions is an attribute, has a component generic which is set to
+  true or false

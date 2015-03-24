@@ -8,7 +8,9 @@
 #############################################################################
 ##
 
-# deal with GRAPE being available or not, compiled or not
+# deal with GRAPE being loaded or not, compiled or not
+BindGlobal("IsGrapeLoaded", IsPackageMarkedForLoading("grape", "4.5"));
+
 BindGlobal("IsGrapeAvailable", TestPackageAvailability("grape")<>fail);
 BindGlobal("IsGrapeCompiled",
 ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")<>fail);
