@@ -38,7 +38,7 @@ end;
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "2.3",
+Version := "2.4",
 Date := "16/03/2015",
 ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.3",
 ArchiveFormats := ".tar.gz",

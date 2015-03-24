@@ -635,7 +635,7 @@ gap> gens := [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 5, 4 ] ),
 >  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 3, 4, 1 ] ), 
 >  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 5, 4, 3, 2, 1 ] ) ];;
 gap> S := InverseSemigroup(gens);;
-gap>  S := Semigroup(S);;
+gap> S := Semigroup(S);;
 gap> Length(MaximalSubsemigroups(S));
 9
 
