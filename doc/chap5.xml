@@ -1,21 +1,19 @@
 <Chapter Label="Free inverse semigroups">
-  <Heading>Free inverse semigroups</Heading>
+  <Heading>Free inverse semigroups and free bands</Heading>
 
-  This chapter describes the functions in &Semigroups; for dealing with
-  free inverse semigroups. This part of the manual and the functions described
-  herein were written by Julius Jonu&#353;as.<P/>
-
-  A <E>free inverse semigroup</E> is an inverse semigroup having the following
-  universal property. An inverse semigroup <M>F</M> is a <E>free inverse
-    semigroup</E> on a non-empty set <M>X</M> if <M>F</M> is an inverse
-  semigroup with a map <M>f</M> from <M>F</M> to <M>X</M> such that for every
-  inverse semigroup
-  <M>S</M> and a map <M>g</M> from <M>X</M> to <M>S</M> there exists a 
-  unique morphism <M>g'</M> from <M>F</M> to <M>S</M>
-  such that <M>fg' = g</M>. This object is unique up to isomorphism.
-  Moreover, by the universal property, every inverse
-  semigroup can be expressed as a quotient of a free inverse
-  semigroup.<P/>
+  This chapter describes the functions in &Semigroups; for dealing with free
+  inverse semigroups and free bands. This part of the manual and the functions
+  described herein were written by Julius Jonu&#353;as.<P/>
+  
+  <Section Label = "sect:Free inverse semigroups">
+  <Heading> Free inverse semigroups </Heading>
+  <M>F</M> is a <E>free inverse semigroup</E> on a non-empty set <M>X</M> if
+  <M>F</M> is an inverse semigroup with a map <M>f</M> from <M>F</M> to <M>X</M>
+  such that for every inverse semigroup <M>S</M> and a map <M>g</M> from
+  <M>X</M> to <M>S</M> there exists a unique homomorphism <M>g'</M> from
+  <M>F</M> to <M>S</M> such that <M>fg' = g</M>. Moreover, by the universal
+  property, every inverse semigroup can be expressed as a quotient of a free
+  inverse semigroup.<P/>
 
   The internal representation of an element of a free inverse semigroup
   uses a Munn tree. A <E>Munn tree</E> is a directed tree with distinguished
@@ -29,16 +27,17 @@
   <Ref Chap = "Partial permutations" BookName = "ref"/> and <Ref Sect = "Free
     Groups, Monoids and Semigroups" BookName = "ref" />.<P/> 
 
-  An element of a free inverse semigroup in &Semigroups; is displayed, by
-  default, as a shortest word corresponding to the element.  However, there
-  might be more than one word of the minimum length. For example, if <M>x</M>
+  An element of a free inverse semigroup in &Semigroups; is be displayed, by
+  default, as a shortest word corresponding to the element. 
+  However, there might
+  be more than one word of the minimum length. For example, if <M>x</M>
   and <M>y</M> are generators of a free inverse semigroups, then 
-  <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1};</Display>
-  see <Ref Oper="MinimalWord" Label = "for free inverse semigroup element"/>.
-  Therefore we provide a another method for printing elements of a free inverse
-  semigroup: a unique canonical form.  Suppose an element of a free inverse
-  semigroup is given as a Munn tree. Let <M>L</M> be the set of words
-  corresponding to the shortest paths from
+  <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.</Display>
+  See <Ref Oper="MinimalWord" Label = "for free inverse semigroup element"/> 
+  Therefore we provide a another method for printing elements of a free
+  inverse semigroup: a unique canonical form.
+  Suppose an element of a free inverse semigroup is given as a Munn tree. Let 
+  <M>L</M> be the set of words corresponding to the shortest paths from
   the start vertex to the leaves of the tree. Also let <M>w</M>
   be a word corresponding to the shortest path from start to terminal
   vertices. The word <M>vv^{-1}</M> is an idempotent for every <M>v</M> in
@@ -51,15 +50,14 @@
   <Display>xxx^{-1}x^{-1}xyy^{-1}x^{-1}.</Display>
   See <Ref Oper = "CanonicalForm" Label = "for a free inverse semigroup element"/>.
  
-<Section Label = "sect:Free inverse semigroups">
-  <Heading>Creating free inverse semigroups</Heading>
   <#Include Label = "FreeInverseSemigroup">
+  <#Include Label = "IsFreeInverseSemigroupCategory">
   <#Include Label = "IsFreeInverseSemigroup">
   <#Include Label = "IsFreeInverseSemigroupElement">
-  </Section>
+</Section>
 
 <Section>
-  <Heading>Displaying free inverse semigroup elements</Heading>
+  <Heading> Displaying free inverse semigroup elements </Heading>
   There is a way to change how &GAP; displays free inverse semigroup
   elements using the user preference <C>FreeInverseSemigroupElementDisplay</C>.
   See <Ref Func = "UserPreference" BookName = "ref"/> for more information
@@ -79,41 +77,87 @@
     </Item>
   </List>
 
-  <Example>
-gap> SetUserPreference("semigroups", 
-> "FreeInverseSemigroupElementDisplay", "minimal");
+<Example><![CDATA[
+gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
 gap> S:=FreeInverseSemigroup(2);
-&lt;free inverse semigroup on the generators [ x1, x2 ]>
+<free inverse semigroup on the generators [ x1, x2 ]>
 gap> S.1 * S.2;
 x1*x2
-gap> SetUserPreference("semigroups", 
-> "FreeInverseSemigroupElementDisplay", "canonical");
+gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "canonical");
 gap> S.1 * S.2;
-x1x2x2^-1x1^-1x1x2</Example>
+x1x2x2^-1x1^-1x1x2]]></Example>
 </Section>
 
-  <Section>
-    <Heading>Operators and operations for free inverse semigroup elements
-    </Heading>
-    <List>
-<Mark><C><A>w</A> ^ -1</C></Mark>
-<Item>
-  returns the semigroup inverse of the free inverse semigroup element <A>w</A>.
-</Item>
+<Section>
+  <Heading>Operators and operations for free inverse semigroup elements
+  </Heading>
+  <List>
+    <Mark><C><A>w</A> ^ -1</C></Mark>
+    <Item>
+      returns the semigroup inverse of the free inverse semigroup element <A>w</A>.
+    </Item>
 
-<Mark><C><A>u</A> * <A>v</A></C></Mark>
-<Item>
-  returns the product of two free inverse semigroup elements <A>u</A>
-  and <A>v</A>.
-</Item>
-<Mark><C><A>u</A> = <A>v</A> </C></Mark>
-  <Item>
-    checks if two free inverse semigroup elements are equal, by comparing their
-    canonical forms.
-  </Item>
-</List>
+    <Mark><C><A>u</A> * <A>v</A></C></Mark>
+    <Item>
+      returns the product of two free inverse semigroup elements <A>u</A>
+      and <A>v</A>.
+    </Item>
+    <Mark><C><A>u</A> = <A>v</A> </C></Mark>
+    <Item>
+      checks if two free inverse semigroup elements are equal, by comparing their
+      canonical forms.
+    </Item>
+  </List>
 
   <#Include Label = "CanonicalForm"> 
   <#Include Label = "MinimalWord">
+</Section>
+
+
+<Section Label = "sect:FreeBand">
+  <Heading> Free bands </Heading>
+  A semigroup <M>B</M> is a <E>free band</E> on a non-empty set <M>X</M> if
+  <M>B</M> is a band with a map <M> f </M> from <M> B </M> to <M>X</M> such that
+  for every band <M> S </M> and every map <M> g </M> from <M>X</M> to <M> B </M>
+  there exists a unique homomorphism <M> g'</M> from <M>B</M> to <M>S</M> such
+  that <M>fg' = g</M>. The free band on a set <M>X</M> is unique up to
+  isomorphism.  Moreover, by the universal property, every band can be expressed
+  as a quotient of a free band.<P/>
+
+  For an alternative description of a free band. Suppose that <M> X </M> is a
+  non-empty set and <M> X^+ </M> a free semigroup on <M> X </M>. Also suppose
+  that <M> b </M> is the smallest congurance on <M> X^+ </M> containing the set
+  <Display> \{ (w^2, w) : w \in X^+ \}. </Display> Then the free band on 
+  <M> X </M> is isomorphic to the quotient of <M> X^+ </M> by <M> b </M>.
+  See Section 4.5 of <Cite Key = "howie" /> for more information on free bands.
+  
+  <#Include Label = "FreeBand">
+  <#Include Label = "IsFreeBandCategory">
+  <#Include Label = "IsFreeBand">
+  <#Include Label = "IsFreeBandElement">
+  <#Include Label = "IsFreeBandSubsemigroup">
+</Section>
+
+<Section>
+  <Heading>Operators and operations for free band elements
+  </Heading>
+  <List>
+    <Mark><C><A>u</A> * <A>v</A></C></Mark>
+    <Item>
+      returns the product of two free band elements <A>u</A>
+      and <A>v</A>.
+    </Item>
+    <Mark><C><A>u</A> = <A>v</A> </C></Mark>
+    <Item>
+      checks if two free band elements are equal.
+    </Item>
+    <Mark><C><A>u</A> &lt; <A>v</A> </C></Mark>
+    <Item>
+      compares the sizes of the internal representations of two free
+      band elements.
+    </Item>
+  </List>
+
+  <#Include Label = "GreensDClassOfElement" > 
 </Section>
 </Chapter>

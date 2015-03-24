@@ -9,17 +9,17 @@
 ##
 
 # this file contains methods for finding attributes of semigroups satisfying
-# IsNonExhaustiveSemigroup. 
+# IsActingSemigroup. 
 
 # same method for ideals
 
-InstallMethod(IsGreensDLeq, "for a non-exhaustive semigroup",
-[IsNonExhaustiveSemigroup],
+InstallMethod(IsGreensDLeq, "for a acting semigroup",
+[IsActingSemigroup],
 function(S)
   local partial, data, comp_index;
 
   partial:=PartialOrderOfDClasses(S);
-  data:=NonExhaustiveData(S);
+  data:=SemigroupData(S);
 
   comp_index:=function(x, y)
     if y in partial[x] then
@@ -38,14 +38,14 @@ end);
 
 # different method for ideals/regular/inverse, although this method will work too
 
-InstallMethod(MaximalDClasses, "for a non-exhaustive semigroup",
-[IsNonExhaustiveSemigroup] ,
+InstallMethod(MaximalDClasses, "for a acting semigroup",
+[IsActingSemigroup] ,
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 
   gens:=GeneratorsOfSemigroup(s); 
   partial:=PartialOrderOfDClasses(s);
-  data:=NonExhaustiveData(s);
+  data:=SemigroupData(s);
   pos:=[];
   for x in gens do 
     i:=OrbSCCLookup(data)[Position(data, x)]-1; 
@@ -66,8 +66,8 @@ end);
 
 # same method for inverse, different method for inverse ideals
 
-InstallMethod(MaximalDClasses, "for a regular non-exhaustive semigroup",
-[IsNonExhaustiveSemigroup and IsRegularSemigroup], 
+InstallMethod(MaximalDClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup], 
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
   
@@ -96,7 +96,7 @@ end);
 # same method for ideals
 
 InstallMethod(StructureDescriptionSchutzenbergerGroups, 
-"for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
+"for a acting semigroup", [IsActingSemigroup],
 function(s)
   local o, scc, out, m;
 
@@ -115,7 +115,7 @@ end);
 # same method for ideals
 
 InstallMethod(StructureDescriptionMaximalSubgroups, 
-"for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
+"for a acting semigroup", [IsActingSemigroup],
 function(s)
   local out, d;
 
@@ -131,8 +131,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(InjectionPrincipalFactor, "for a D-class of a non-exhaustive semigroup",
-[IsGreensDClass and IsNonExhaustiveSemigroupGreensClass],
+InstallMethod(InjectionPrincipalFactor, "for a D-class of a acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
 
@@ -233,8 +233,8 @@ end);
 # different method for ideals
 
 InstallMethod(InversesOfSemigroupElementNC, 
-"for a non-exhaustive semigroup and associative element",
-[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
+"for a acting semigroup and associative element",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
 
@@ -338,8 +338,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(MultiplicativeNeutralElement, "for a non-exhaustive semigroup",
-[IsNonExhaustiveSemigroup],
+InstallMethod(MultiplicativeNeutralElement, "for a acting semigroup",
+[IsActingSemigroup],
 function(s)
   local gens, rank, lambda, max, r, rep, f;
 
@@ -384,8 +384,8 @@ end);
 
 # same method for ideals...
 
-InstallMethod(MultiplicativeZero, "for a non-exhaustive semigroup",
-[IsNonExhaustiveSemigroup],
+InstallMethod(MultiplicativeZero, "for a acting semigroup",
+[IsActingSemigroup],
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
  
@@ -436,7 +436,7 @@ end);
 
 # same method for inverse/ideals
 
-InstallMethod(MinimalDClass, "for a non-exhaustive semigroup", [IsNonExhaustiveSemigroup],
+InstallMethod(MinimalDClass, "for a acting semigroup", [IsActingSemigroup],
 function(S)
   local rank, o, pos, min, len, m, x, n, i;
 

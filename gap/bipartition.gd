@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  bipartition.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,23 +11,33 @@
 DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
  IsAssociativeElementWithStar);
 DeclareCategoryCollections("IsBipartition");
+DeclareCategoryCollections("IsBipartitionCollection");
+
+BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
+ IsBipartition, CanEasilySortElements, CanEasilySortElements));
+BindGlobal("BipartitionType", NewType(BipartitionFamily,
+ IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
 
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
-DeclareAttribute("TransverseBlocksLookup", IsBipartition);
 DeclareAttribute("NrTransverseBlocks", IsBipartition);
+DeclareAttribute("NrLeftBlocks", IsBipartition);
+DeclareAttribute("NrRightBlocks", IsBipartition);
+DeclareAttribute("NrBlocks", IsBipartition);
 
-DeclareOperation("OneMutable", [IsBipartitionCollection]);
+DeclareAttribute("LeftBlocks", IsBipartition);
+DeclareAttribute("RightBlocks", IsBipartition);
+
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("RandomBipartition", [IsPosInt]);
 
 DeclareOperation("NaturalLeqBlockBijection", [IsBipartition, IsBipartition]);
-DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition, 
+DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition,
  IsBipartition]);
 DeclareOperation("PartialPermLeqBipartition", [IsBipartition, IsBipartition]);
 
@@ -64,12 +74,8 @@ DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
 #collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 
-# implications
-
-InstallTrueMethod(IsPermBipartition, IsTransBipartition and
-IsDualTransBipartition);
-InstallTrueMethod(IsBlockBijection, IsPermBipartition);
-
-#internal...
+# LambdaConjugator #TODO document or make internal!
 DeclareGlobalFunction("BipartRightBlocksConj");
+
+DeclareOperation("OneMutable", [IsBipartitionCollection]);
 

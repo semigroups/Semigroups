@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-# this file contains method specific to exhaustive ideals of semigroups. 
+# this file contains method specific to generic ideals of semigroups. 
 
 # We use the result of enumerating the ExhaustiveData of the supersemigroup of an ideal
 # to calculate elements, size, test membership, find idempotents, etc. We get a
@@ -193,7 +193,7 @@ function(x, I)
   return Position(Enumerator(I), x)<>fail;
 end);
 
-#JDM: this should be better, more like the method in ideals-non-exhaustive.gi
+#JDM: this should be better, more like the method in ideals-acting.gi
 
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],

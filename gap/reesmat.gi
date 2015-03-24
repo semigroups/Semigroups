@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  reesmat.gi
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#Y  Copyright (C) 2014-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -12,6 +12,7 @@
 # specific to Rees 0-matrix semigroups.
 
 # same method for ideals
+#FIXME double check this isn't already in the library
 
 InstallMethod(IsomorphismPermGroup,
 "for a subsemigroup of a Rees 0-matrix semigroup",
@@ -36,7 +37,7 @@ function(S)
 end);
 
 # same method for ideals
-
+#FIXME double check this isn't already in the library
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(s)
@@ -59,10 +60,11 @@ function(s)
   return u;
 end);
 
-# this method is better than the generic one for non-exhaustive semigroups
+# this method is better than the generic one for acting semigroups
+#FIXME double check this isn't already in the library
 
 InstallMethod(Random, "for a Rees 0-matrix semigroup", 
-[IsReesZeroMatrixSemigroup], 3, # to beat the method for regular non-exhaustive semigroups
+[IsReesZeroMatrixSemigroup], 3, # to beat the method for regular acting semigroups
 function(R)
   return Objectify(TypeReesMatrixSemigroupElements(R), 
    [Random(Rows(R)), Random(UnderlyingSemigroup(R)),
@@ -70,8 +72,10 @@ function(R)
 end);
 
 # this method is just a copy of the library method in GAP 4.7.5 with the extra
-# line GeneratorsOfSemigroup, so that the correct (i.e. non-exhaustive) methods
+# line GeneratorsOfSemigroup, so that the correct (i.e. acting) methods
 # are used for ReesZeroMatrixSemigroups when the package is loaded. 
+
+#FIXME double check this isn't already in the library
 
 InstallMethod(ReesZeroMatrixSemigroup, "for a semigroup and a dense list",
 [IsSemigroup, IsDenseList], 
@@ -122,57 +126,57 @@ end);
 
 #
 
-InstallMethod(IsGeneratorsOfInverseSemigroup, 
+InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a collection of Rees 0-matrix semigroup elements",
 [IsReesZeroMatrixSemigroupElementCollection], ReturnFalse);
 
 #
 
-InstallMethod(ViewString, 
+InstallMethod(ViewString,
 "for a Rees 0-matrix subsemigroup ideal with ideal generators",
 [IsReesZeroMatrixSubsemigroup and IsSemigroupIdeal and
-HasGeneratorsOfSemigroupIdeal], 
+HasGeneratorsOfSemigroupIdeal],
 function(I)
   local str, nrgens;
-  
-  str:="\><";
 
-  if HasIsTrivial(I) and IsTrivial(I) then 
+  str := "\><";
+
+  if HasIsTrivial(I) and IsTrivial(I) then
     Append(str, "\>trivial\< ");
-  else 
-    if HasIsCommutative(I) and IsCommutative(I) then 
+  else
+    if HasIsCommutative(I) and IsCommutative(I) then
       Append(str, "\>commutative\< ");
     fi;
   fi;
 
-  if HasIsTrivial(I) and IsTrivial(I) then 
-  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then 
+  if HasIsTrivial(I) and IsTrivial(I) then
+  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
     Append(str, "\>0-simple\< ");
-  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then 
+  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
     Append(str, "\>simple\< ");
   fi;
 
-  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then 
+  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
     Append(str, "\>inverse\< ");
-  elif HasIsRegularSemigroup(I) 
-   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then 
-    if IsRegularSemigroup(I) then 
+  elif HasIsRegularSemigroup(I)
+   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+    if IsRegularSemigroup(I) then
       Append(str, "\>regular\< ");
     else
       Append(str, "\>non-regular\< ");
     fi;
   fi;
-  
+
   Append(str, "\>Rees\< \>0-matrix\< \>semigroup\< \>ideal\< ");
   Append(str, "\<with\> ");
-  
-  nrgens:=Length(GeneratorsOfSemigroupIdeal(I));
+
+  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
   Append(str, ViewString(nrgens));
   Append(str, "\< generator");
 
-  if nrgens>1 or nrgens=0 then 
+  if nrgens > 1 or nrgens = 0 then
     Append(str, "s\<");
-  else 
+  else
     Append(str, "\<");
   fi;
   Append(str, ">\<");
@@ -183,17 +187,16 @@ end);
 #
 
 InstallMethod(MatrixEntries, "for a Rees matrix semigroup",
-[IsReesMatrixSemigroup], 
+[IsReesMatrixSemigroup],
 function(R)
-  local P;
-  return Union(Matrix(R){Columns(R)}{Rows(R)}); 
+  return Union(Matrix(R){Columns(R)}{Rows(R)});
   # in case R is a proper subsemigroup of another RMS
 end);
 
 InstallMethod(MatrixEntries, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(R)
-  return Union(Matrix(R){Columns(R)}{Rows(R)}); 
+  return Union(Matrix(R){Columns(R)}{Rows(R)});
 end);
 
 #
@@ -202,39 +205,41 @@ InstallMethod(GreensHClassOfElement, "for a RZMS, pos int, and pos int",
 [IsReesZeroMatrixSemigroup, IsPosInt, IsPosInt],
 function(R, i, j)
   local rep;
-  
-  rep:=RMSElement(R, i, Representative(UnderlyingSemigroup(R)), j);
+
+  rep := RMSElement(R, i, Representative(UnderlyingSemigroup(R)), j);
   return GreensHClassOfElement(R, rep);
 end);
 
 #
 
-if not IsGrapeAvailable then 
+if not IsGrapeLoaded then
   InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
   function(R)
-    Info(InfoWarning, 1, GrapeIsNotAvailableString);
+    Info(InfoWarning, 1, GrapeIsNotLoadedString);
     return fail;
-  end);  
+  end);
 
 else
 
   InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
-  function(R) 
+  function(R)
     local mat, n, m, adj;
 
-    mat:=Matrix(R); n:=Length(mat); m:=Length(mat[1]);
+    mat := Matrix(R);
+    n := Length(mat);
+    m := Length(mat[1]);
 
-    adj:=function(x,y)
-      if x<=m and y>m then 
-        return not mat[y-m][x]=0;
-      elif x>m and y<=m then 
-        return not mat[x-m][y]=0;
-      else 
+    adj := function(x, y)
+      if x <= m and y > m then
+        return not mat[y - m][x] = 0;
+      elif x > m and y <= m then
+        return not mat[x - m][y] = 0;
+      else
         return false;
       fi;
     end;
 
-    return Graph(Group(()), [1..n+m], OnPoints, adj, true);
+    return Graph(Group(()), [1 .. n + m], OnPoints, adj, true);
   end);
 
 fi;

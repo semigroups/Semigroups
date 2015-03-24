@@ -1,15 +1,21 @@
-############################################################################
+#############################################################################
 ##
 #W  setup.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-# this file contains declarations of everything required for a semigroup
-# belonging to IsNonExhaustiveSemigroup...
+# This file contains declarations of everything required for a semigroup
+# belonging to IsActingSemigroup...
+
+DeclareCategory("IsActingSemigroup", IsSemigroup);
+DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
+DeclareProperty("IsGeneratorsOfActingSemigroup",
+                IsAssociativeElementCollection);
+DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
@@ -44,7 +50,5 @@ DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionReesZeroMatrixSemigroupElements");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionRZMSE");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
-
-#EOF

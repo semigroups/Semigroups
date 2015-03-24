@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  character-tables.tst
-#Y  Copyright (C) 2011-13                               James D. Mitchell
+#Y  Copyright (C) 2011-15                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,8 +13,10 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-# some random examples to test consistency of old code with new
-gap> gens:=[[ PartialPerm( [ 1, 2, 3, 4, 6, 8, 9 ], [ 1, 5, 3, 8, 9, 4, 10 ] ) ],
+#T# CharacterTablesTest1
+# Some random examples to test consistency of old code with new
+gap> gens:=[
+> [ PartialPerm( [ 1, 2, 3, 4, 6, 8, 9 ], [ 1, 5, 3, 8, 9, 4, 10 ] ) ],
 > [ PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 3, 8, 4, 6, 5, 7 ] ), 
 >   PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 1, 4, 3, 2, 7, 6 ] ), 
 >   PartialPerm( [ 1, 2, 3, 5, 6, 8 ], [ 5, 7, 1, 4, 2, 6 ] ) ],
@@ -506,7 +508,9 @@ gap> CharacterTableOfInverseSemigroup(S[10]);
       <identity partial perm on [ 1, 4 ]>, <identity partial perm on [ 4 ]>, 
       <empty partial perm> ] ]
 
-#
-#
-gap> SemigroupsStopTest();
-gap> STOP_TEST( "Semigroups package: character-tables.tst", 10000);
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(gens);
+
+#E#
+gap> STOP_TEST( "Semigroups package: character-tables.tst");

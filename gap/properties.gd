@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  properties.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -27,7 +27,9 @@ DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
 DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
 DeclareProperty("IsLeftSimple", IsSemigroup);
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
-DeclareOperation("IsRegularSemigroupElementNC", [IsSemigroup, IsMultiplicativeElement and IsAssociativeElement]);
+DeclareOperation("IsRegularSemigroupElementNC", 
+                 [IsSemigroup, IsMultiplicativeElement and
+                               IsAssociativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
@@ -35,11 +37,14 @@ DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
 
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and IsRegularStarSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and IsPartialPermSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and IsBlockBijectionSemigroup);
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-IsPartialPermBipartitionSemigroup);
+                                            IsRegularStarSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
+                                            IsPartialPermSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
+                                            IsBlockBijectionSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
+                                            IsPartialPermBipartitionSemigroup);
 
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
@@ -58,11 +63,10 @@ InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
 InstallTrueMethod(IsRTrivial, IsDTrivial);
 InstallTrueMethod(IsSemilatticeAsSemigroup, IsDTrivial and IsInverseSemigroup);
-InstallTrueMethod(IsMonogenicInverseSemigroup, IsInverseSemigroup and IsMonogenicSemigroup);
+InstallTrueMethod(IsMonogenicInverseSemigroup, IsInverseSemigroup and
+                                               IsMonogenicSemigroup);
 InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);
 InstallTrueMethod(IsZeroGroup, IsZeroRectangularBand and IsInverseSemigroup);
 InstallTrueMethod(IsRegularSemigroup, IsRegularStarSemigroup);
 InstallTrueMethod(IsInverseSemigroup, IsGroup);
 InstallTrueMethod(IsInverseSemigroup, IsBlockGroup and IsRegularSemigroup);
-
-#EOF

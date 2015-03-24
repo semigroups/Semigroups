@@ -1,37 +1,54 @@
-InstallGlobalFunction(UniversalSemigroupCongruence,
+############################################################################
+##
+#W  univ-cong.gi
+#Y  Copyright (C) 2015                                   Michael C. Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## This file contains methods for the unique universal congruence on a
+## semigroup.
+##
+
+InstallMethod(UniversalSemigroupCongruence,
+"for a semigroup",
+[IsSemigroup],
 function(s)
   local fam, cong;
   fam := GeneralMappingsFamily(
                  ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)) );
+                 ElementsFamily(FamilyObj(s)));
   cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
   SetSource(cong, s);
   SetRange(cong, s);
   return cong;
 end);
-        
+
 #
 
 InstallMethod(ViewObj,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
 function(cong)
-  Print("<universal semigroup congruence>");
+  Print("<universal semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(">");
 end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for two universal semigroup congruences",
 [IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong1, cong2)
-  return( Range(cong1) = Range(cong2) );
+  return(Range(cong1) = Range(cong2));
 end);
 
 #
 
-InstallMethod( \=,
-"for universal semigroup congruence and Rees 0-matrix semigroup congruence by linked triple",
+InstallMethod(\=,
+"for universal congruence and RZMS congruence by linked triple",
 [IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
 function(ucong, cong)
   return false;
@@ -39,8 +56,8 @@ end);
 
 #
 
-InstallMethod( \=,
-"for Rees 0-matrix semigroup congruence by linked triple and universal semigroup congruence",
+InstallMethod(\=,
+"for RZMS congruence by linked triple and universal congruence",
 [IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   return false;
@@ -48,13 +65,13 @@ end);
 
 #
 
-InstallMethod( \in,
+InstallMethod(\in,
 "for dense list and universal semigroup congruence",
 [IsDenseList, IsUniversalSemigroupCongruence],
 function(pair, cong)
-  return( Size(pair) = 2
+  return(Size(pair) = 2
           and pair[1] in Range(cong)
-          and pair[2] in Range(cong) );
+          and pair[2] in Range(cong));
 end);
 
 #
@@ -64,7 +81,9 @@ InstallMethod(ImagesElm,
 [IsUniversalSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    Error("usage: 2nd argument <elm> must be in <cong>'s semigroup"); return; 
+    Error("Semigroups: ImagesElm: usage,\n",
+          "the second argument <elm> must be in <cong>'s semigroup");
+    return;
   fi;
   return Elements(Range(cong));
 end);
@@ -90,7 +109,7 @@ end);
 #
 
 InstallMethod(JoinSemigroupCongruences,
-"for Rees 0-matrix semigroup congruence by linked triple and universal semigroup congruence",
+"for RZMS congruence by linked triple and universal congruence",
 [IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   return ucong;
@@ -99,7 +118,7 @@ end);
 #
 
 InstallMethod(JoinSemigroupCongruences,
-"for universal semigroup congruence and Rees 0-matrix semigroup congruence by linked triple",
+"for universal congruence and RZMS congruence by linked triple",
 [IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
 function(ucong, cong)
   return ucong;
@@ -117,7 +136,7 @@ end);
 #
 
 InstallMethod(MeetSemigroupCongruences,
-"for Rees 0-matrix semigroup congruence by linked triple and universal semigroup congruence",
+"for RZMS congruence by linked triple and universal congruence",
 [IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   return cong;
@@ -126,7 +145,7 @@ end);
 #
 
 InstallMethod(MeetSemigroupCongruences,
-"for universal semigroup congruence and Rees 0-matrix semigroup congruence by linked triple",
+"for universal congruence and RZMS congruence by linked triple",
 [IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
 function(ucong, cong)
   return cong;
@@ -149,8 +168,9 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check that the arguments make sense
   if not elm in Range(cong) then
-    Error("usage: 2nd argument <elm> should be ",
-          "in the semigroup of 1st argument <cong>");
+    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
+          "the second argument <elm> must be ",
+          "in the semigroup of 1st argument <cong>,");
     return;
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
@@ -163,31 +183,33 @@ InstallMethod(EquivalenceClassOfElementNC,
 [IsUniversalSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   local fam, class;
-  fam := CollectionsFamily( FamilyObj(elm) );
-  class := Objectify(NewType(fam, IsUniversalSemigroupCongruenceClass), rec() );
+  fam := CollectionsFamily(FamilyObj(elm));
+  class := Objectify(NewType(fam, IsUniversalSemigroupCongruenceClass), rec());
   SetParentAttr(class, cong);
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
 end);
-        
+
 #
 
-InstallMethod( \in,
+InstallMethod(\in,
 "for associative element and universal semigroup congruence class",
 [IsAssociativeElement, IsUniversalSemigroupCongruenceClass],
 function(elm, class)
-  return( elm in Range(ParentAttr(class)) );
+  return(elm in Range(ParentAttr(class)));
 end);
 
 #
 
-InstallMethod( \*,
+InstallMethod(\*,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
   if ParentAttr(c1) <> ParentAttr(c2) then
-    Error("arguments <c1> and <c2> must be over the same congruence"); return;
+    Error("Semigroups: \*: usage,\n",
+          "the args <c1> and <c2> must be over the same congruence");
+    return;
   fi;
   return c1;
 end);
@@ -203,11 +225,11 @@ end);
 
 #
 
-InstallMethod( \=,
+InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
-  return( ParentAttr(c1) = ParentAttr(c2) );
+  return(ParentAttr(c1) = ParentAttr(c2));
 end);
 
 #
@@ -218,7 +240,7 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 function(cong)
   local s;
   s := Range(cong);
-  return List(Elements(s), x-> [x, Representative(s)]);
+  return List(Elements(s), x -> [x, Representative(s)]);
 end);
 
 #

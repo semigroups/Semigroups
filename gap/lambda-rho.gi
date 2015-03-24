@@ -1,76 +1,38 @@
 ############################################################################
 ##
 #W  lambda-rho.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-# returns the element <f> premultiplied by RhoOrbMult so that the resulting 
-# element has its RhoValue in the first position of its scc.
-
-InstallGlobalFunction(SEMIGROUPS_RectifyRho,
-function(S, x)
-  local o, l, m;
-
-  o:=RhoOrb(S);
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
-  fi;
-
-  l:=Position(o, RhoFunc(S)(f));
-  m:=OrbSCCLookup(o)[l];
-
-  if l<>OrbSCC(o)[m][1] then
-    x:=RhoOrbMult(o, m, l)[2]*x;
-  fi;
-  return rec(Position:=l, OrbSCCIndex:=m, Representative:=x);
-end);
-
 #
 
-InstallGlobalFunction(SEMIGROUPS_RectifyLambda,
-function(S, x)
-  local o, l, m;
-
-  o:=LambdaOrb(S);
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
-  fi;
-
-  l:=Position(o, LambdaFunc(S)(f));
-  m:=OrbSCCLookup(o)[l];
-
-  if l<>OrbSCC(o)[m][1] then
-    x:=x*LambdaOrbMult(o, m, l)[2];
-  fi;
-  return rec(Position:=l, OrbSCCIndex:=m, Representative:=x);
-end);
-
-#
-
-InstallMethod(LambdaOrb, "for a non-exhaustive semigroup with generators",
-[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(LambdaOrb, "for a acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local record, o;
-  
-  record:=ShallowCopy(LambdaOrbOpts(s));
-  record.scc_reps:=[FakeOne(GeneratorsOfSemigroup(s))];
-  
-  record.schreier:=true;        record.orbitgraph:=true;
-  record.storenumbers:=true;    record.log:=true;
-  record.parent:=s;             record.treehashsize:=SemigroupOptions(s).hashlen.M;
 
-  o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
-  
+  record := ShallowCopy(LambdaOrbOpts(s));
+  record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
+
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.parent := s;
+  record.treehashsize := s!.opts.hashlen.M;
+
+  o := Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
+
   SetFilterObj(o, IsLambdaOrb);
   
   if IsSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
   fi;
-  
+
   return o;
 end);
 
@@ -78,45 +40,49 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
-  local scc, mults, one, gens, genpos, inv, trace, x, i;
+  local scc, gens, one, mults, genpos, inv, trace, i;
 
-  scc:=OrbSCC(o);
+  scc := OrbSCC(o);
 
   if IsBound(o!.hasmults) then
-    if IsBound(o!.hasmults[m]) and o!.hasmults[m] then 
+    if IsBound(o!.hasmults[m]) and o!.hasmults[m] then
       return o!.mults;
     fi;
-  else 
-    if not IsBound(o!.mults) then 
-      o!.mults:=EmptyPlist(Length(o));
+  else
+    if not IsBound(o!.mults) then
+      o!.mults := EmptyPlist(Length(o));
     fi;
-    o!.hasmults:=BlistList([1..Length(scc)], []);
+    o!.hasmults := BlistList([1 .. Length(scc)], []);
   fi;
 
-  o!.hasmults[m]:=true;    scc:=OrbSCC(o)[m];    
-  gens:=o!.gens;        one:=FakeOne(gens);
-  mults:=o!.mults;      
+  o!.hasmults[m] := true;
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
+  mults := o!.mults;
 
-  #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
-  #JDM and shouldn't there be a second case of inverse orbits here??
-  genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(lambda, x) return LambdaInverse(o!.parent)(lambda, x); end;
+  # it would be better to use the SchreierTree here not the ReverseSchreierTree
+  # and shouldn't there be a second case of inverse orbits here??
+  genpos := ReverseSchreierTreeOfSCC(o, m);
+  inv := function(lambda, x)
+           return LambdaInverse(o!.parent)(lambda, x);
+         end;
 
-  trace:=function(i)
+  trace := function(i)
     local x;
-    if IsBound(mults[i]) then 
+    if IsBound(mults[i]) then
       return mults[i][2];
-    elif i=scc[1] then 
-      mults[i]:=[one, one];
+    elif i = scc[1] then
+      mults[i] := [one, one];
       return one;
     fi;
-    x:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[inv(o[i], x), x];
+    x := gens[genpos[1][i]] * trace(genpos[2][i]);
+    mults[i] := [inv(o[i], x), x];
     return x;
   end;
 
-  for i in scc do 
-    trace(i);  
+  for i in scc do
+    trace(i);
   od;
   return o!.mults;
 end);
@@ -134,42 +100,46 @@ function(o, m, i)
       return o!.mults[i];
     fi;
   else
-    o!.mults:=EmptyPlist(Length(o));
+    o!.mults := EmptyPlist(Length(o));
   fi;
 
-  scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
-  mults:=o!.mults;      
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
+  mults := o!.mults;
 
   if not IsSemigroupWithInverseOp(o!.parent) then
-  #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
+  #FIXME it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
-    inv:=function(lambda, x) return LambdaInverse(o!.parent)(lambda, x); end;
+    inv := function(lambda, x)
+             return LambdaInverse(o!.parent)(lambda, x);
+           end;
 
-    trace:=function(i)
+    trace := function(i)
       local x;
-      if IsBound(mults[i]) then 
+      if IsBound(mults[i]) then
         return mults[i][2];
-      elif i=scc[1] then 
-        mults[i]:=[one, one];
+      elif i = scc[1] then
+        mults[i] := [one, one];
         return one;
       fi;
-      x:=gens[genpos[1][i]]*trace(genpos[2][i]);
-      mults[i]:=[inv(o[i], x), x];
+      x := gens[genpos[1][i]] * trace(genpos[2][i]);
+      mults[i] := [inv(o[i], x), x];
       return x;
     end;
   else
-    genpos:=SchreierTreeOfSCC(o, m);
+    genpos := SchreierTreeOfSCC(o, m);
 
-    trace:=function(i)
+    trace := function(i)
       local x;
-      if IsBound(mults[i]) then 
+      if IsBound(mults[i]) then
         return mults[i][2];
-      elif i=scc[1] then 
-        mults[i]:=[one, one];
+      elif i = scc[1] then
+        mults[i] := [one, one];
         return one;
       fi;
-      x:=INV(gens[genpos[1][i]])*trace(genpos[2][i]);
-      mults[i]:=[INV(x), x];
+      x := INV(gens[genpos[1][i]]) * trace(genpos[2][i]);
+      mults[i] := [INV(x), x];
       return x;
     end;
   fi;
@@ -178,7 +148,7 @@ function(o, m, i)
   return o!.mults[i];
 end);
 
-# JDM this is really slow (due to EvaluateWord) for large degree 
+# JDM this is really slow (due to EvaluateWord) for large degree
 
 InstallGlobalFunction(LambdaOrbRep,
 function(o, m)
@@ -187,76 +157,81 @@ function(o, m)
   if IsBound(o!.scc_reps[m]) then
     return o!.scc_reps[m];
   fi;
-  
-  w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  o!.scc_reps[m]:=EvaluateWord(o, w);
 
-  if not IsIdealOrb(o) then 
-    o!.scc_reps[m]:=o!.scc_reps[1]*o!.scc_reps[m];
+  w := TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
+  o!.scc_reps[m] := EvaluateWord(o, w);
+
+  if not IsIdealOrb(o) then
+    o!.scc_reps[m] := o!.scc_reps[1] * o!.scc_reps[m];
   fi;
-  
+
   return o!.scc_reps[m];
 end);
 
 #
 
-InstallGlobalFunction(RhoOrbRep, 
+InstallGlobalFunction(RhoOrbRep,
 function(o, m)
   local w;
 
-  if IsBound(o!.scc_reps[m]) then 
+  if IsBound(o!.scc_reps[m]) then
     return o!.scc_reps[m];
   fi;
 
-  w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
-  o!.scc_reps[m]:=EvaluateWord(o, Reversed(w));
+  w := TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
+  o!.scc_reps[m] := EvaluateWord(o, Reversed(w));
 
-  if not IsIdealOrb(o) then 
-    o!.scc_reps[m]:=o!.scc_reps[m]*o!.scc_reps[1];
+  if not IsIdealOrb(o) then
+    o!.scc_reps[m] := o!.scc_reps[m] * o!.scc_reps[1];
   fi;
-  
+
   return o!.scc_reps[m];
 end);
 
 #
 
-InstallGlobalFunction(LambdaOrbSchutzGp, 
+InstallGlobalFunction(LambdaOrbSchutzGp,
 function(o, m)
   local s, gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, rank,
    bound, g, stop, forward, f, k, l;
-  
-  if IsBound(o!.schutz) then 
-    if IsBound(o!.schutz[m]) then 
+
+  if IsBound(o!.schutz) then
+    if IsBound(o!.schutz[m]) then
       return o!.schutz[m];
     fi;
   else
-    o!.schutz:=EmptyPlist(Length(OrbSCC(o))); 
-    o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
+    o!.schutz := EmptyPlist(Length(OrbSCC(o)));
+    o!.schutzstab := EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  s:=o!.parent;                   gens:=o!.gens; 
-  scc:=OrbSCC(o)[m];              lookup:=o!.scc_lookup;
-  orbitgraph:=OrbitGraph(o);      genstoapply:=[1..Length(gens)];
-  lambdaperm:=LambdaPerm(s);      rep:=LambdaOrbRep(o, m);
-  rank:=LambdaRank(s)(o[scc[1]]);
+  s := o!.parent;
+  gens := o!.gens;
+  scc := OrbSCC(o)[m];
+  lookup := o!.scc_lookup;
+  orbitgraph := OrbitGraph(o);
+  genstoapply := [1 .. Length(gens)];
+  lambdaperm := LambdaPerm(s);
+  rep := LambdaOrbRep(o, m);
+  rank := LambdaRank(s)(o[scc[1]]);
 
-  if rank<100 then
-    bound:=Factorial(rank);
+  if rank < 100 then
+    bound := Factorial(rank);
   else
-    bound:=infinity;
+    bound := infinity;
   fi;
 
-  g:=Group(()); stop:=false; 
-  
+  g := Group(());
+  stop := false;
+
   for k in scc do
-    forward:=LambdaOrbMult(o, m, k)[1];
+    forward := LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do
-      if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        f:=lambdaperm(rep, rep*forward*gens[l]
-          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-        g:=ClosureGroup(g, f);
-        if Size(g)>=bound then
-          stop:=true;
+      if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]] = m then
+        f := lambdaperm(rep, rep * forward * gens[l]
+          * LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+        g := ClosureGroup(g, f);
+        if Size(g) >= bound then
+          stop := true;
           break;
         fi;
       fi;
@@ -266,14 +241,14 @@ function(o, m)
     fi;
   od;
 
-  o!.schutz[m]:=g;
+  o!.schutz[m] := g;
 
   if stop then
-    o!.schutzstab[m]:=true;
-  elif Size(g)=1 then
-    o!.schutzstab[m]:=false;
+    o!.schutzstab[m] := true;
+  elif Size(g) = 1 then
+    o!.schutzstab[m] := false;
   else
-    o!.schutzstab[m]:=StabChainImmutable(g);
+    o!.schutzstab[m] := StabChainImmutable(g);
   fi;
 
   return g;
@@ -284,47 +259,50 @@ end);
 InstallMethod(RhoOrbStabChain, "for a rho orb and scc index",
 [IsOrbit, IsPosInt],
 function(o, m)
-  
-  if IsBound(o!.schutzstab) then 
-    if IsBound(o!.schutzstab[m]) then 
+
+  if IsBound(o!.schutzstab) then
+    if IsBound(o!.schutzstab[m]) then
       return o!.schutzstab[m];
     fi;
   fi;
- 
-  RhoOrbSchutzGp(o, m, infinity);
+
+  RhoOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
 
 #
 
-InstallGlobalFunction(LambdaOrbStabChain, 
+InstallGlobalFunction(LambdaOrbStabChain,
 function(o, m)
-  
-  if IsBound(o!.schutzstab) then 
-    if IsBound(o!.schutzstab[m]) then 
+
+  if IsBound(o!.schutzstab) then
+    if IsBound(o!.schutzstab[m]) then
       return o!.schutzstab[m];
     fi;
   fi;
- 
+
   LambdaOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
 
 #
 
-InstallMethod(RhoOrb, "for a non-exhaustive semigroup with generators",
-[IsNonExhaustiveSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(RhoOrb, "for a acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local record, o;
 
-  record:=ShallowCopy(RhoOrbOpts(s));
-  record.schreier:=true;        record.orbitgraph:=true;
-  record.storenumbers:=true;    record.log:=true;
-  record.parent:=s;             record.treehashsize:=SemigroupOptions(s).hashlen.M;
-  record.scc_reps:=[FakeOne(GeneratorsOfSemigroup(s))];
+  record := ShallowCopy(RhoOrbOpts(s));
+  record.schreier := true;
+  record.orbitgraph := true;
+  record.storenumbers := true;
+  record.log := true;
+  record.parent := s;
+  record.treehashsize := s!.opts.hashlen.M;
+  record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
 
-  o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
-  
+  o := Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
+
   SetFilterObj(o, IsRhoOrb);
   if IsSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
@@ -336,33 +314,35 @@ end);
 
 InstallGlobalFunction(RhoOrbMult,
 function(o, m, i)
-  local mults, one, scc, gens, genpos, inv, trace, x;
+  local scc, gens, one, mults, genpos, inv, trace;
 
   if IsBound(o!.mults) then
     if IsBound(o!.mults[i]) then
       return o!.mults[i];
     fi;
   else
-    o!.mults:=EmptyPlist(Length(o));
+    o!.mults := EmptyPlist(Length(o));
   fi;
 
-  scc:=OrbSCC(o)[m];    gens:=o!.gens;    one:=FakeOne(gens);
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
 
-  mults:=o!.mults;
-  
-  genpos:=SchreierTreeOfSCC(o, m);
-  inv:=x-> RhoInverse(o!.parent)(o[scc[1]], x);
-  
-  trace:=function(i)
+  mults := o!.mults;
+
+  genpos := SchreierTreeOfSCC(o, m);
+  inv := x -> RhoInverse(o!.parent)(o[scc[1]], x);
+
+  trace := function(i)
     local x;
-    if IsBound(mults[i]) then 
+    if IsBound(mults[i]) then
       return mults[i][1];
-    elif i=scc[1] then 
-      mults[i]:=[one, one];
+    elif i = scc[1] then
+      mults[i] := [one, one];
       return one;
     fi;
-    x:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[x, inv(x)];
+    x := gens[genpos[1][i]] * trace(genpos[2][i]);
+    mults[i] := [x, inv(x)];
     return x;
   end;
 
@@ -375,112 +355,108 @@ end);
 InstallGlobalFunction(RhoOrbMults,
 function(o, m)
   local scc, gens, one, mults, genpos, inv, trace, i;
-  
-  scc:=OrbSCC(o);
+
+  scc := OrbSCC(o);
   if IsBound(o!.hasmults) then
-    if IsBound(o!.hasmults[m]) and o!.hasmults[m] then 
+    if IsBound(o!.hasmults[m]) and o!.hasmults[m] then
       return o!.mults;
     fi;
-  else 
-    if not IsBound(o!.mults) then 
-      o!.mults:=EmptyPlist(Length(o));
+  else
+    if not IsBound(o!.mults) then
+      o!.mults := EmptyPlist(Length(o));
     fi;
-    o!.hasmults:=BlistList([1..Length(scc)], []);
+    o!.hasmults := BlistList([1 .. Length(scc)], []);
   fi;
-  
-  o!.hasmults[m]:=true;  scc:=OrbSCC(o)[m];
-  gens:=o!.gens;         one:=FakeOne(gens);
-  mults:=o!.mults;
-  
-  genpos:=SchreierTreeOfSCC(o, m);
-  inv:=x-> RhoInverse(o!.parent)(o[scc[1]], x);
-  
-  trace:=function(i)
+
+  o!.hasmults[m] := true;
+  scc := OrbSCC(o)[m];
+  gens := o!.gens;
+  one := FakeOne(gens);
+  mults := o!.mults;
+
+  genpos := SchreierTreeOfSCC(o, m);
+  inv := x -> RhoInverse(o!.parent)(o[scc[1]], x);
+
+  trace := function(i)
     local x;
-    if IsBound(mults[i]) then 
+    if IsBound(mults[i]) then
       return mults[i][1];
-    elif i=scc[1] then 
-      mults[i]:=[one, one];
+    elif i = scc[1] then
+      mults[i] := [one, one];
       return one;
     fi;
-    x:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[x, inv(x)];
+    x := gens[genpos[1][i]] * trace(genpos[2][i]);
+    mults[i] := [x, inv(x)];
     return x;
   end;
 
-  for i in scc do 
-    trace(i);  
+  for i in scc do
+    trace(i);
   od;
   return o!.mults;
 end);
 
 # JDM could use IsRegular here to speed up?
 
-InstallGlobalFunction(RhoOrbSchutzGp, 
-function(o, m, bound)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, rho_rank, i, j;
-  
-  if IsBound(o!.schutz) then 
-    if IsBound(o!.schutz[m]) then 
+InstallGlobalFunction(RhoOrbSchutzGp,
+function(o, m)
+  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, i,
+  bound, rho_rank, j;
+
+  if IsBound(o!.schutz) then
+    if IsBound(o!.schutz[m]) then
       return o!.schutz[m];
     fi;
   else
-    o!.schutz:=EmptyPlist(Length(OrbSCC(o)));
-    o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
-  fi;
-  
-  g:=Group(());
-
-  if bound=1 then 
-    o!.schutz[m]:=g;
-    o!.schutzstab[m]:=false;
-    return g;
+    o!.schutz := EmptyPlist(Length(OrbSCC(o)));
+    o!.schutzstab := EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  s:=o!.parent;
-  gens:=o!.gens;
-  nrgens:=Length(gens);
-  scc:=OrbSCC(o)[m];
-  lookup:=o!.scc_lookup;
-  orbitgraph:=OrbitGraph(o);
-  lambdaperm:=LambdaPerm(s);
-  rep:=RhoOrbRep(o, m);
-  mults:=RhoOrbMults(o, m);
-  
-  i:=RhoRank(s)(o[scc[1]]);
+  g := Group(());
 
-  if i<1000 then
-    j:=Factorial(i);
-    if bound>j then 
-      bound:=j;
-    fi;
+  s := o!.parent;
+  gens := o!.gens;
+  nrgens := Length(gens);
+  scc := OrbSCC(o)[m];
+  lookup := o!.scc_lookup;
+  orbitgraph := OrbitGraph(o);
+  lambdaperm := LambdaPerm(s);
+  rep := RhoOrbRep(o, m);
+  mults := RhoOrbMults(o, m);
+
+  i := RhoRank(s)(o[scc[1]]);
+
+  if i < 1000 then
+    bound := Factorial(i);
   else
-    bound:=infinity;
+    bound := infinity;
   fi;
-  for i in scc do 
-    for j in [1..nrgens] do 
-      if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]]=m then 
-        g:=ClosureGroup(g, 
-         lambdaperm(rep, mults[orbitgraph[i][j]][2]*gens[j]*mults[i][1]*rep));
-        if Size(g)>=bound then 
+
+  for i in scc do
+    for j in [1 .. nrgens] do
+      if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
+        g := ClosureGroup(g,
+         lambdaperm(rep,
+          mults[orbitgraph[i][j]][2] * gens[j] * mults[i][1] * rep));
+        if Size(g) >= bound then
           break;
         fi;
       fi;
     od;
-    if Size(g)>=bound then 
+    if Size(g) >= bound then
       break;
     fi;
   od;
-  
-  o!.schutz[m]:=g;
-  rho_rank:=RhoRank(s)(o[scc[1]]);
 
-  if rho_rank<1000 and Size(g)=Factorial(rho_rank) then 
-    o!.schutzstab[m]:=true;
-  elif Size(g)=1 then 
-    o!.schutzstab[m]:=false;
+  o!.schutz[m] := g;
+  rho_rank := RhoRank(s)(o[scc[1]]);
+
+  if rho_rank < 1000 and Size(g) = Factorial(rho_rank) then
+    o!.schutzstab[m] := true;
+  elif Size(g) = 1 then
+    o!.schutzstab[m] := false;
   else
-    o!.schutzstab[m]:=StabChainImmutable(g);
+    o!.schutzstab[m] := StabChainImmutable(g);
   fi;
 
   return g;

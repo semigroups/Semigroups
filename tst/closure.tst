@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  closure.tst
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -15,7 +15,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
-#
+#T# ClosureTest1
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
 >  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
 >  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
@@ -36,7 +36,7 @@ gap> NrDClasses(s);
 gap> GroupOfUnits(s);
 <trivial transformation group>
 
-#
+#T# ClosureTest2
 gap> gens:=
 > [ Transformation( [ 1, 3, 9, 3, 12, 1, 15, 1, 19, 3, 1, 9, 1, 9, 22, 15, 3, 1,
 >      24, 15, 1, 26, 1, 28, 1, 30, 1, 32, 1, 34, 1, 36, 1, 38, 1, 40, 1, 42, 1,
@@ -98,7 +98,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-#
+#T# ClosureTest3
 gap> s:=Semigroup(gens[1]);; Size(s);
 30
 gap> for i in [2..Length(gens)] do 
@@ -121,7 +121,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-#
+#T# ClosureTest4
 gap> gens:=[ Transformation( [ 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ] ), 
 >  Transformation( [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10 ] ), 
 >  Transformation( [ 2, 3, 4, 5, 6, 7, 8, 7, 8, 9, 10 ] ), 
@@ -154,7 +154,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
-#
+#T# ClosureTest5
 gap> s:=Semigroup(gens[1]);;        
 gap> s:=ClosureSemigroup(s, gens[2]);;
 gap> for i in [2..Length(gens)] do
@@ -177,7 +177,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
-#
+#T# ClosureTest6
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -194,7 +194,7 @@ fail
 gap> GroupOfUnits(s);
 <trivial transformation group>
 
-#
+#T# ClosureTest7
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -211,7 +211,7 @@ fail
 gap> GroupOfUnits(s);
 <trivial transformation group>
 
-#
+#T# ClosureTest8
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
@@ -231,7 +231,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 20
 
-#
+#T# ClosureTest9
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
@@ -251,7 +251,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 20
 
-#
+#T# ClosureTest10
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 2, 4, 1, 1 ] ),
@@ -269,7 +269,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 29
 
-#
+#T# ClosureTest11
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
@@ -287,6 +287,11 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 9
 22
 
-#
-gap> SemigroupsStopTest(); 
-gap> STOP_TEST( "Semigroups package: closure.tst", 10000);
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(i);
+gap> Unbind(s);
+gap> Unbind(gens);
+gap> Unbind(t);
+
+#E# 
+gap> STOP_TEST( "Semigroups package: closure.tst");

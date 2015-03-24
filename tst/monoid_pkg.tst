@@ -1,23 +1,20 @@
 #############################################################################
 ##
 #W  monoid_pkg.tst
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 #
 #############################################################################
 ##
-#ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"monoid_pkg.tst"));
-# approx. 9s
-# a concatenation of relevant tests from the monoid/tst. 
-# Miscellaneous
+## a concatenation of relevant tests from the monoid/tst. 
 gap> START_TEST("Semigroups package: monoid_pkg.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SemigroupsStartTest();
 
-#
+#T# MonoidPkgTest2
 gap> g:=CyclicGroup(3);;
 gap> r:=GF(2);;
 gap> gr:=GroupRing(r, g);;
@@ -29,8 +26,10 @@ gap> SmallGeneratingSet(s);;
 gap> s:=Semigroup(IrredundantGeneratingSubset(last));;
 gap> NrDClasses(s);
 4
-gap> List(GreensDClasses(s), Size);
-[ 1, 3, 3, 1 ]
+gap> sizes := List(GreensDClasses(s), Size);;
+gap> Sort(sizes);;
+gap> sizes;
+[ 1, 1, 3, 3 ]
 gap> PartialOrderOfDClasses(s);
 [ [ 1, 4 ], [ 2, 4 ], [ 1, 2, 3 ], [ 4 ] ]
 gap> IsRegularSemigroup(s);
@@ -39,15 +38,16 @@ gap> ForAll(s, x-> x in s);
 true
 gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
-gap> List(s, x-> InversesOfSemigroupElement(s, x)); 
-[ [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ], 
-  [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ], 
-  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
+gap> h := List(s, x-> InversesOfSemigroupElement(s, x));;
+gap> Sort(h);
+gap> h;
+[ [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ], 
+  [ IdentityTransformation ], [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ]
+    , [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ], 
   [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ], 
-  [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ], 
   [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ], 
-  [ IdentityTransformation ], 
-  [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ] ]
+  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
+  [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ] ]
 gap> IsMonoidAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
@@ -61,19 +61,21 @@ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )
 gap> MultiplicativeZero(s) in i;
 true
 gap> h:=List(GreensDClasses(s), GroupHClass);;
-gap> List(h, x-> StructureDescription(x));
-[ "1", "C3", "C3", "1" ]
+gap> h:=List(h, x-> StructureDescription(x));;
+gap> Sort(h);
+gap> h;
+[ "1", "1", "C3", "C3" ]
 gap> IsCliffordSemigroup(s);
 true
 
-#
+#T# MonoidPkgTest3
 gap> a:=Idempotent([3,5,6,7,8], [ 1, 2, 1, 1, 2, 3, 4, 5 ])*(3,5);;
 gap> b:=a*(3,5)*(3,6,7,8);;
 gap> s:=Semigroup(a,b);;
 gap> IsGroupAsSemigroup(s);
 true
 
-#
+#T# MonoidPkgTest4
 gap> gens:=[Transformation([3,5,3,3,5,6]), Transformation([6,2,4,2,2,6])];;
 gap> S:=Semigroup(gens);;
 gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
@@ -82,7 +84,7 @@ gap> IsomorphismPermGroup(last);
 MappingByFunction( {Transformation( [ 6, 2, 2, 2, 2, 6 ] )
  }, Group(()), function( x ) ... end, function( x ) ... end )
 
-#
+#T# MonoidPkgTest5
 gap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ),
 >   Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ),
 >   Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ),
@@ -146,7 +148,7 @@ false
 gap> IsBand(S);
 false
 
-# from greens.tst
+#T# MonoidPkgTest6: from greens.tst
 gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ), 
 >  Transformation( [ 5, 5, 3, 8, 3, 7, 4, 6 ] ), 
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
@@ -589,7 +591,8 @@ gap> res:=List(semis, x-> [Length(GreensLClasses(x)), Size(x)]);
   [ 333, 1382 ], [ 74, 1074 ], [ 2, 2 ], [ 28, 535 ], [ 3, 6 ], [ 3, 3 ], 
   [ 35, 1834 ], [ 93, 1776 ], [ 18, 326 ], [ 16, 45 ], [ 25, 379 ], 
   [ 33, 149 ] ]
-gap> ForAll(GreensLClasses(m), x-> ForAll(Idempotents(x), y-> y in x));                 
+gap> ForAll(GreensLClasses(m), x ->
+> ForAll(Idempotents(x), y -> y in x));                 
 true
 gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
 [ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
@@ -747,7 +750,8 @@ gap> List(semis, s-> Length(GreensHClasses(s)));
   14, 29, 274, 22, 17, 26, 253, 10, 1, 2, 13, 64, 605, 20, 25, 33, 2, 1, 
   1520, 307, 9625, 41, 1885, 945, 54, 1297, 58, 18, 1, 173, 1, 25, 737, 2807, 
   636, 495, 2, 201, 3, 3, 471, 715, 118, 28, 197, 88 ]
-gap> ForAll(semis, s-> Number(GreensHClasses(s), IsGroupHClass)=Length(Idempotents(s)));
+gap> ForAll(semis, s ->
+> Number(GreensHClasses(s), IsGroupHClass) = Length(Idempotents(s)));
 true
 gap> List(semis, s-> Number(GreensDClasses(s), IsRegularDClass));
 [ 1, 2, 2, 4, 3, 6, 1, 5, 4, 1, 6, 3, 3, 4, 3, 3, 4, 4, 1, 4, 6, 4, 4, 4, 1, 
@@ -839,7 +843,8 @@ gap> IsTransformationSemigroupGreensClass(last);
 true
 gap> f:=FreeSemigroup(3);;
 gap> a:=f.1;; b:=f.2;; c:=f.3;; 
-gap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], [c*a,c], [b*c,b],[c*b,c]] ;
+gap> s := f / [ [ a ^ 2, a ], [ b ^ 2, b ], [ c ^ 2, c ], [ a * b, a ],
+> [ b * a, b ], [ a * c, a ], [ c * a, c ], [ b * c, b ],[ c * b, c ] ] ;
 <fp semigroup on the generators [ s1, s2, s3 ]>
 gap> Size(s);
 3
@@ -874,13 +879,13 @@ gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
 gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
 gap> M:=Semigroup(a,b);;
 gap> rc:=GreensRClassOfElement(M, a*b*a);
-{Transformation( [ 3, 2, 5, 4, 1, 1 ] )}
+{Transformation( [ 5, 2, 1, 4, 3, 3 ] )}
 gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
 > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 2, 4, 2, 5, 3 ] );;
 gap> r:=RClass(S, f);
-{Transformation( [ 5, 2, 5, 3, 1 ] )}
+{Transformation( [ 3, 1, 3, 5, 2 ] )}
 gap> LambdaOrb(r);
 <closed orbit, 25 points with Schreier tree with log>
 gap> AsList(last);
@@ -933,7 +938,7 @@ gap> AsSet(Enumerate(RhoOrb(S)));
 [ [ 0 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ] ]
 
-# from install_no_grape.tst
+#T# MonoidPkgTest7: from install_no_grape.tst
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
@@ -960,7 +965,7 @@ gap> s:=Semigroup(gens);
 gap> NrRegularDClasses(s);
 3
 
-#
+#T# MonoidPkgTest8
 gap> g1:=Transformation([2,2,4,4,5,6]);;
 gap> g2:=Transformation([5,3,4,4,6,6]);;
 gap> m1:=Monoid(g1,g2);;
@@ -1011,7 +1016,7 @@ gap> g2:=Transformation( [ 5, 6, 6, 3, 8, 6, 3, 7, 8, 4 ] );;
 gap> g3:=Transformation( [ 8, 6, 3, 2, 8, 10, 9, 2, 6, 2 ] );;
 gap> m23:=Monoid(g1,g2,g3);;
 
-#
+#T# MonoidPkgTest9
 gap> SmallMonoids:=[m1, m2, m3, m4, m5, m6, m7, m8, m9, m11, m14, m15, m18,
 > m22, m23];;
 gap> List(SmallMonoids, IsCompletelyRegularSemigroup);
@@ -1051,7 +1056,7 @@ gap> List(SmallMonoids, IsZeroGroup);
 [ false, false, false, false, false, false, false, false, false, false, 
   false, false, false, false, false ]
 
-#
+#T# MonoidPkgTest10
 gap> gens:=[ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 >   Transformation( [ 3, 2, 8, 8, 4, 4, 8, 6, 5, 7 ] ),
 >   Transformation( [ 4, 10, 6, 6, 1, 2, 4, 10, 9, 7 ] ),
@@ -1225,7 +1230,8 @@ gap> g1:=Transformation( [ 4, 6, 3, 8, 5, 6, 10, 4, 3, 7 ] );;
 gap> g2:=Transformation( [ 5, 6, 6, 3, 8, 6, 3, 7, 8, 4 ] );;
 gap> g3:=Transformation( [ 8, 6, 3, 2, 8, 10, 9, 2, 6, 2 ] );;
 gap> m23:=Monoid(g1,g2,g3);;
-gap> SmallMonoids:=[m1, m2, m3, m4, m5, m6, m7, m8, m9, m11, m14, m15, m18, m22, m23];;
+gap> SmallMonoids :=
+> [ m1, m2, m3, m4, m5, m6, m7, m8, m9, m11, m14, m15, m18, m22, m23 ];;
 gap> List(SmallMonoids, IsCompletelyRegularSemigroup);  
 [ false, true, false, false, true, true, true, true, true, false, false, 
   false, false, true, false ]
@@ -1490,8 +1496,82 @@ gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> Unbind(semis); Unbind(S); Unbind(m);
 
-#
-gap> SemigroupsStopTest();
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(idem);
+gap> Unbind(g5);
+gap> Unbind(gr);
+gap> Unbind(g6);
+gap> Unbind(rms);
+gap> Unbind(m20);
+gap> Unbind(BigMonoids);
+gap> Unbind(m21);
+gap> Unbind(m11);
+gap> Unbind(m10);
+gap> Unbind(m13);
+gap> Unbind(m12);
+gap> Unbind(m15);
+gap> Unbind(m14);
+gap> Unbind(m17);
+gap> Unbind(m16);
+gap> Unbind(m19);
+gap> Unbind(m18);
+gap> Unbind(SmallMonoids);
+gap> Unbind(mat);
+gap> Unbind(res);
+gap> Unbind(m5);
+gap> Unbind(m4);
+gap> Unbind(m7);
+gap> Unbind(m6);
+gap> Unbind(m1);
+gap> Unbind(m3);
+gap> Unbind(rc);
+gap> Unbind(c4);
+gap> Unbind(m9);
+gap> Unbind(m8);
+gap> Unbind(g7);
+gap> Unbind(m22);
+gap> Unbind(C);
+gap> Unbind(g4);
+gap> Unbind(g3);
+gap> Unbind(g2);
+gap> Unbind(g1);
+gap> Unbind(I);
+gap> Unbind(H);
+gap> Unbind(m2);
+gap> Unbind(M);
+gap> Unbind(dc);
+gap> Unbind(g9);
+gap> Unbind(g8);
+gap> Unbind(semis);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(x);
+gap> Unbind(c3);
+gap> Unbind(D);
+gap> Unbind(dr);
+gap> Unbind(d);
+gap> Unbind(a);
+gap> Unbind(c);
+gap> Unbind(b);
+gap> Unbind(r2);
+gap> Unbind(g);
+gap> Unbind(sizes);
+gap> Unbind(i);
+gap> Unbind(h);
+gap> Unbind(f);
+gap> Unbind(m);
+gap> Unbind(gens);
+gap> Unbind(o);
+gap> Unbind(m23);
+gap> Unbind(s);
+gap> Unbind(r);
+gap> Unbind(iso);
+gap> Unbind(t);
+gap> Unbind(cs5);
+gap> Unbind(cs4);
+gap> Unbind(cs1);
+gap> Unbind(cs3);
+gap> Unbind(cs2);
 
-#
-gap> STOP_TEST( "Semigroups package: monoid_pkg.tst", 10000);
+#E#
+gap> STOP_TEST( "Semigroups package: monoid_pkg.tst");

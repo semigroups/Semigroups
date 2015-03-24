@@ -1,11 +1,11 @@
-############################################################################# 
-## 
+#############################################################################
+##
 #W  semigroups.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
-## 
+#Y  Copyright (C) 2013-15                                James D. Mitchell
+##
 ##  Licensing information can be found in the README file of this package.
-## 
-############################################################################# 
+##
+#############################################################################
 ##
 
 DeclareCategory("IsSemigroupWithInverseOp", IsInverseSemigroup);
@@ -76,7 +76,7 @@ DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty", 
 [IsSemigroup, IsFunction, IsPosInt]);
 
-DeclareOperation("InverseSubsemigroupByProperty", 
+DeclareOperation("InverseSubsemigroupByProperty",
 [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
@@ -85,5 +85,3 @@ DeclareOperation("InverseSubsemigroupByProperty",
 
 DeclareProperty("IsBinaryRelationSemigroup", IsSemigroup);
 DeclareGlobalFunction("RegularSemigroup");
-
-#EOF

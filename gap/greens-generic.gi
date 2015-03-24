@@ -1,14 +1,70 @@
 #############################################################################
 ##
-#W  greens.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#W  greens-generic.gi
+#Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-#
+## This file contains methods for Green's classes/relations for generic
+## semigroups.
+
+InstallTrueMethod(IsRegularClass, IsRegularDClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+InstallTrueMethod(IsHClassOfRegularSemigroup,
+                  IsInverseOpClass and IsGreensHClass);
+
+# Semigroups . . .
+
+InstallMethod(NrDClasses, "for a semigroup",
+[IsSemigroup], S -> Length(GreensDClasses(S)));
+
+# TODO improve the method below, using a similar method to the one for
+# NrRegularDClasses
+
+InstallMethod(RegularDClasses, "for a semigroup",
+[IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularClass));
+
+InstallMethod(NrLClasses, "for a semigroup",
+[IsSemigroup], S -> Length(GreensLClasses(S)));
+
+InstallMethod(NrRClasses, "for a semigroup",
+[IsSemigroup], S -> Length(GreensRClasses(S)));
+
+InstallMethod(NrIdempotents, "for a semigroup",
+[IsSemigroup], S -> Length(Idempotents(S)));
+
+# Green's classes . . .
+
+InstallMethod(EquivalenceClassOfElement,
+"for Green's D-relation and associative element",
+[IsGreensDRelation, IsAssociativeElement],
+function(D, x)
+  return GreensDClassOfElement(UnderlyingDomainOfBinaryRelation(D), x);
+end);
+
+InstallMethod(EquivalenceClassOfElement,
+"for Green's R-relation and associative element",
+[IsGreensRRelation, IsAssociativeElement],
+function(R, x)
+  return GreensRClassOfElement(UnderlyingDomainOfBinaryRelation(R), x);
+end);
+
+InstallMethod(EquivalenceClassOfElement,
+"for Green's L-relation and associative element",
+[IsGreensLRelation, IsAssociativeElement],
+function(L, x)
+  return GreensLClassOfElement(UnderlyingDomainOfBinaryRelation(L), x);
+end);
+
+InstallMethod(EquivalenceClassOfElement,
+"for Green's H-relation and associative element",
+[IsGreensHRelation, IsAssociativeElement],
+function(H, x)
+  return GreensHClassOfElement(UnderlyingDomainOfBinaryRelation(H), x);
+end);
 
 InstallMethod(GreensRClassOfElement, 
 "for a finite semigroup and associative element",
@@ -89,7 +145,37 @@ function(C)
   return ConstantTimeAccessList(EnumeratorSorted(C));
 end);
 
+InstallMethod(\=, "for Green's classes",
+[IsGreensClass, IsGreensClass],
+function(x, y)
+  if   (IsGreensRClass(x) and IsGreensRClass(y))
+    or (IsGreensLClass(x) and IsGreensLClass(y))
+    or (IsGreensDClass(x) and IsGreensDClass(y))
+    or (IsGreensHClass(x) and IsGreensHClass(y)) then
+    return Parent(x) = Parent(y) and Representative(x) in y;
+  fi;
+  return Parent(x) = Parent(y) and Representative(x) in y and
+   Size(x) = Size(y);
+end);
+
 #
+InstallMethod(NrHClasses, "for a semigroup",
+[IsSemigroup], S -> Length(GreensHClasses(S)));
+
+#
+
+InstallMethod(NrHClasses, "for a Green's D-class",
+[IsGreensDClass], D -> NrRClasses(D) * NrLClasses(D));
+
+#
+
+InstallMethod(NrHClasses, "for a Green's L-class",
+[IsGreensLClass], L -> NrRClasses(DClassOfLClass(L)));
+
+#
+
+InstallMethod(NrHClasses, "for a Green's R-class",
+[IsGreensRClass], R -> NrLClasses(DClassOfRClass(R)));
 
 InstallMethod(NrDClasses, "for a finite semigroup", [IsSemigroup and IsFinite],
 function(S)
@@ -135,17 +221,20 @@ end);
 InstallMethod(\<, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
-  if (IsGreensRClass(x) and IsGreensRClass(y)) or
-   (IsGreensLClass(x) and IsGreensLClass(y)) or
-   (IsGreensDClass(x) and IsGreensDClass(y)) or
-   (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return Parent(x)=Parent(y) and Representative(x) <
-     Representative(y) and (not Representative(x) in y);
+  if   (IsGreensRClass(x) and IsGreensRClass(y))
+    or (IsGreensLClass(x) and IsGreensLClass(y))
+    or (IsGreensDClass(x) and IsGreensDClass(y))
+    or (IsGreensHClass(x) and IsGreensHClass(y)) then
+    return Parent(x) = Parent(y) 
+           and Representative(x) < Representative(y) 
+           and (not Representative(x) in y);
   fi;
-  return fail;
+  return false;
 end);
 
-#
+# D-classes . . .
+
+# FIXME are these really necessary?
 
 InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
 InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
@@ -155,5 +244,27 @@ InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 
 InstallMethod(IsRegularDClass, "for a D-class of a semigroup",
 [IsGreensDClass], IsRegularClass);
+
+# H-classes . . .
+
+InstallMethod(MultiplicativeNeutralElement,
+"for a H-class of a semigroup", [IsGreensHClass],
+function(H)
+  if not IsGroupHClass(H) then
+    return fail;
+  fi;
+  return Idempotents(H)[1];
+end);
+
+#
+
+InstallMethod(StructureDescription, "for a Green's H-class",
+[IsGreensHClass],
+function(H)
+  if not IsGroupHClass(H) then
+    return fail;
+  fi;
+  return StructureDescription(Range(IsomorphismPermGroup(H)));
+end);
 
 #EOF

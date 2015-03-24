@@ -11,10 +11,10 @@
 # there is a good reason this is not a category!
 DeclareProperty("IsExhaustiveSemigroup", IsSemigroup and IsFinite);
 InstallImmediateMethod(IsExhaustiveSemigroup, IsSemigroup and IsFinite, 
-0, S-> not IsNonExhaustiveSemigroup(S));
+0, S-> not IsActingSemigroup(S));
 
 DeclareAttribute("ExhaustiveData", IsFinite and IsSemigroup, "mutable");
-# a non-exhaustive semigroup can have exhaustive data but not the other way
+# a acting semigroup can have generic data but not the other way
 # around. 
 
 DeclareProperty("IsExhaustiveData", IsSemigroupData);

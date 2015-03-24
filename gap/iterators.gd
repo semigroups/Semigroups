@@ -1,13 +1,12 @@
 ############################################################################
 ##
 #W  iterators.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
 
 DeclareGlobalFunction("IteratorOfArrangements");
 
@@ -20,12 +19,12 @@ DeclareGlobalFunction("ListIterator");
 
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfHClasses", [IsSemigroup]);
-DeclareOperation("IteratorOfLClasses", [IsSemigroup]); 
+DeclareOperation("IteratorOfLClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
 
-DeclareOperation("IteratorOfDClassReps", [IsSemigroup]); 
-DeclareOperation("IteratorOfLClassReps", [IsSemigroup]); 
-DeclareOperation("IteratorOfHClassReps", [IsSemigroup]); 
+DeclareOperation("IteratorOfDClassReps", [IsSemigroup]);
+DeclareOperation("IteratorOfLClassReps", [IsSemigroup]);
+DeclareOperation("IteratorOfHClassReps", [IsSemigroup]);
 DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);
 
 DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
@@ -48,5 +47,8 @@ DeclareProperty("IsIteratorOfRClassElements", IsIterator);
 DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 DeclareProperty("IsIteratorOfHClassElements", IsIterator);
+
+DeclareFilter("IsIteratorSorted", IsIterator);
+DeclareGlobalFunction("IteratorSortedOp");
 
 #EOF

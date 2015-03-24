@@ -21,7 +21,7 @@
 
 # different method for ideals
 
-InstallMethod(Enumerator, "for an exhaustive semigroup with generators",
+InstallMethod(Enumerator, "for an generic semigroup with generators",
 [IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, record;
@@ -57,7 +57,7 @@ end);
 
 # different method for ideals
 
-InstallMethod(Size, "for an exhaustive semigroup with generators", 
+InstallMethod(Size, "for an generic semigroup with generators", 
 [IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   return Length(Enumerate(ExhaustiveData(S), infinity, ReturnFalse)!.elts);
@@ -74,7 +74,7 @@ end);
 # different method for ideals
 # JDM: can probably do better than this by considering Green's classes.
 
-InstallMethod(Idempotents, "for an exhaustive semigroup with generators",
+InstallMethod(Idempotents, "for an generic semigroup with generators",
 [IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, elts, idempotents, nr, i;

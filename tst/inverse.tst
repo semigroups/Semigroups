@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  inverse.tst
-#Y  Copyright (C) 2011-13                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # 
 gap> SemigroupsStartTest();
 
-#
+#T# InverseTest1
 gap> gens:=[PartialPermNC( [ 1, 2, 4 ], [ 1, 5, 2 ] ),
 > PartialPermNC( [ 1, 2, 3 ], [ 2, 3, 5 ] ),
 > PartialPermNC( [ 1, 3, 4 ], [ 2, 5, 4 ] ),
@@ -31,13 +31,13 @@ gap> Size(s);
 gap> NrRClasses(s);
 31
 gap> RClassReps(s);
-[ [5,2,4](1), [3,4][5,1](2), [5,2,4,1], [3,1,2,4], [3,2](1,4), [5,1,4,2], 
-  <identity partial perm on [ 1, 2, 4 ]>, [3,2][5,4](1), [3,4,1](2), 
-  [3,2][5,4,1], [5,3](1,2,4), [5,1](2,3,4), 
-  <identity partial perm on [ 1, 2, 3, 4 ]>, [5,2,4](1,3), (1,5)(2)(3,4), 
-  [5,4](1), [2,1][3,4], [3,1,4], [3,1][5,4], 
-  <identity partial perm on [ 1, 4 ]>, [2,4,1], [5,4,1], [3,4,1], [2,4][5,1], 
-  [2,4](1), [2,1], [5,1], <identity partial perm on [ 1 ]>, [3,1], [4,1], 
+[ <identity partial perm on [ 1, 2, 5 ]>, [3,2,5,1], [4,1](2)(5), [3,1,5](2), 
+  [3,5][4,1,2], [4,5,1,2], [4,2,5](1), [3,5,2](1), [3,2,5][4,1], 
+  [3,5,2][4,1], <identity partial perm on [ 1, 2, 4, 5 ]>, [3,2,5,4,1], 
+  [3,5](1,4,2), [3,4](1,5)(2), <identity partial perm on [ 1, 2, 3, 4, 5 ]>, 
+  <identity partial perm on [ 1, 5 ]>, [2,1][3,5], [3,1,5], [3,1](5), 
+  [4,5](1), [2,5][4,1], [4,1](5), [3,5][4,1], [2,5,1], [2,5](1), 
+  <identity partial perm on [ 2 ]>, [5,2], [1,2], [3,2], [4,2], 
   <empty partial perm> ]
 gap> List(last, DomainOfPartialPerm);
 [ [ 1, 2, 5 ], [ 2, 3, 5 ], [ 2, 4, 5 ], [ 1, 2, 3 ], [ 1, 3, 4 ], 
@@ -49,24 +49,23 @@ gap> List(last, DomainOfPartialPerm);
 gap> IsDuplicateFreeList(last);
 true
 
-#
+#T# InverseTest2
 gap> s:=InverseSemigroup(PartialPermNC([ 1, 2 ], [ 1, 2 ]),
 > PartialPermNC([ 1, 2 ], [ 1, 3 ]));;
 gap> GreensHClasses(s);
-[ {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 2 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
+[ {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 2 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
   {PartialPerm( [ 1 ], [ 1 ] )} ]
 gap> s:=InverseSemigroup(Generators(s));;
 gap> HClassReps(s);
-[ <identity partial perm on [ 1, 2 ]>, <identity partial perm on [ 1 ]>, 
-  [2,3](1), <identity partial perm on [ 1 ]>, 
-  <identity partial perm on [ 1 ]> ]
+[ <identity partial perm on [ 1, 2 ]>, [2,3](1), [3,2](1), 
+  <identity partial perm on [ 1, 3 ]>, <identity partial perm on [ 1 ]> ]
 gap> GreensHClasses(s);
-[ {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 2 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
+[ {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 2 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
   {PartialPerm( [ 1 ], [ 1 ] )} ]
 
-#
+#T# InverseTest3
 gap> gens:=[PartialPermNC( [ 1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19 ], 
 > [ 9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20 ], 
@@ -177,13 +176,13 @@ gap> h:=NextIterator(iter);
 gap> Size(h);
 1
 gap> h:=NextIterator(iter);
-{PartialPerm( [ 1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19 ], 
- [ 9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1 ] )}
+{PartialPerm( [ 1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20 ], 
+ [ 19, 6, 8, 1, 5, 16, 12, 7, 2, 11, 3 ] )}
 gap> Size(h);
 1
 gap> h:=NextIterator(iter);
-{PartialPerm( [ 1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20 ], 
- [ 19, 6, 8, 1, 5, 16, 12, 7, 2, 11, 3 ] )}
+{PartialPerm( [ 1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19 ], 
+ [ 9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1 ] )}
 gap> Size(h);
 1
 gap> iter:=IteratorOfHClasses(s);
@@ -235,7 +234,8 @@ gap> iter:=IteratorOfHClassReps(s);
 gap> i:=0;
 0
 
-#JDM this breaks when i=38360 fairly reliably, it seems to be a problem in 
+#T# InverseTest4 
+#JDM this breaks when i=38360 fairly reliably, it seems to be a problem in
 # IsDoneIterator of iter. 
 #gap> for f in iter do i:=i+1; if not
 #f in s then Print("yikes"); break; fi; if i=38360 then break; fi; od;
@@ -263,7 +263,7 @@ gap> d;
 gap> Size(DClass(h))=Size(RClass(h))^2/2;
 true
 
-#
+#T# InverseTest5 
 gap> s:=Semigroup( [ Transformation( [ 3, 2, 1, 6, 5, 4 ] ), 
 > Transformation( [ 4, 7, 3, 1, 6, 5, 7 ] ) ] );
 <transformation semigroup on 7 pts with 2 generators>
@@ -277,7 +277,7 @@ Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] )
 gap> ForAll(s, f-> (f^iso)^inv=f);
 true
 
-#
+#T# InverseTest6 
 gap> s:=Semigroup( Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
 > Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
@@ -306,8 +306,9 @@ gap> f:=Random(s);;
 gap> (f^iso)^inv=f;
 true
 
+#T# InverseTest7  
 # this is too slow, it used to work better! but the method was incorrect in
-# generalJDM
+# general FIXME
 #gap> ForAll(s, f-> (f^iso)^inv=f);
 #true
 gap> Size(Range(iso));
@@ -317,7 +318,7 @@ true
 gap> Size(s);
 631
 
-#
+#T# InverseTest8 
 gap> s:=InverseSemigroup( PartialPermNC( [ 1, 2, 3 ], [ 2, 4, 1 ] ),
 > PartialPermNC( [ 1, 3, 4 ], [ 3, 4, 1 ] ) );;
 gap> GreensDClasses(s);
@@ -327,36 +328,36 @@ gap> GreensDClasses(s);
   {PartialPerm( [  ], [  ] )} ]
 gap> GreensHClasses(s);
 [ {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] )}, 
   {PartialPerm( [ 1, 2, 4 ], [ 3, 1, 2 ] )}, 
+  {PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] )}, 
   {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}, 
   {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 2, 4 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 3, 1 ] )}, {PartialPerm( [ 2, 3 ], [ 1, 3 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 1, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 1 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 1 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 1 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 2, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 2 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 3, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 2, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 2 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 3 ], [ 3, 4 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, {PartialPerm( [ 1, 4 ], [ 4, 3 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 4 ], [ 4 ] )}, {PartialPerm( [ 1 ], [ 4 ] )}, 
-  {PartialPerm( [ 3 ], [ 4 ] )}, {PartialPerm( [ 2 ], [ 4 ] )}, 
-  {PartialPerm( [ 4 ], [ 1 ] )}, {PartialPerm( [ 1 ], [ 1 ] )}, 
-  {PartialPerm( [ 3 ], [ 1 ] )}, {PartialPerm( [ 2 ], [ 1 ] )}, 
-  {PartialPerm( [ 4 ], [ 3 ] )}, {PartialPerm( [ 1 ], [ 3 ] )}, 
-  {PartialPerm( [ 3 ], [ 3 ] )}, {PartialPerm( [ 2 ], [ 3 ] )}, 
-  {PartialPerm( [ 4 ], [ 2 ] )}, {PartialPerm( [ 1 ], [ 2 ] )}, 
-  {PartialPerm( [ 3 ], [ 2 ] )}, {PartialPerm( [ 2 ], [ 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 2, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 3, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 2 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, 
+  {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 2, 3 ], [ 2, 1 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 2, 3 ], [ 3, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 3, 4 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 2, 1 ] )}, {PartialPerm( [ 3, 4 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 1, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 1, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 1, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 4 ] )}, 
+  {PartialPerm( [ 4 ], [ 4 ] )}, {PartialPerm( [ 4 ], [ 1 ] )}, 
+  {PartialPerm( [ 4 ], [ 3 ] )}, {PartialPerm( [ 4 ], [ 2 ] )}, 
+  {PartialPerm( [ 1 ], [ 4 ] )}, {PartialPerm( [ 1 ], [ 1 ] )}, 
+  {PartialPerm( [ 1 ], [ 3 ] )}, {PartialPerm( [ 1 ], [ 2 ] )}, 
+  {PartialPerm( [ 3 ], [ 4 ] )}, {PartialPerm( [ 3 ], [ 1 ] )}, 
+  {PartialPerm( [ 3 ], [ 3 ] )}, {PartialPerm( [ 3 ], [ 2 ] )}, 
+  {PartialPerm( [ 2 ], [ 4 ] )}, {PartialPerm( [ 2 ], [ 1 ] )}, 
+  {PartialPerm( [ 2 ], [ 3 ] )}, {PartialPerm( [ 2 ], [ 2 ] )}, 
   {PartialPerm( [  ], [  ] )} ]
 gap> IsDuplicateFree(last);
 true
@@ -399,41 +400,41 @@ gap> GreensRClasses(D);
   {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, 
   {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 2, 4 ] )} ]
 gap> GreensHClasses(D);
-[ {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 2, 4 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 3, 1 ] )}, {PartialPerm( [ 2, 3 ], [ 1, 3 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 1, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 1 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 1 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 1 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 2, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 2 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 3, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 2, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 2 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 3 ], [ 3, 4 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, {PartialPerm( [ 1, 4 ], [ 4, 3 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 4 ] )} ]
+[ {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 2, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 3, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 2 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, 
+  {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 2, 3 ], [ 2, 1 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 2, 3 ], [ 3, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 3, 4 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 2, 1 ] )}, {PartialPerm( [ 3, 4 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 1, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 1, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 1, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 4 ] )} ]
 gap> h:=last[9];;
 gap> L:=LClass(D, Representative(h));
-{PartialPerm( [ 2, 4 ], [ 3, 1 ] )}
+{PartialPerm( [ 2, 4 ], [ 1, 2 ] )}
 gap> Position(HClasses(L), h);
-3
+2
 gap> DClassOfLClass(L)=D;
 true
 gap> LClassOfHClass(h)=L;
 true
 gap> R:=RClassOfHClass(h);
-{PartialPerm( [ 1, 2 ], [ 2, 4 ] )}
+{PartialPerm( [ 1, 3 ], [ 4, 2 ] )}
 gap> Position(HClasses(R), h);
-2
+3
 gap> DClassOfRClass(R)=D;
 true
 
-#
+#T# InverseTest9 
 gap> s:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 5 ], [ 1, 4, 6, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 6 ], [ 3, 6, 4, 5, 1 ] ) );;
@@ -458,7 +459,7 @@ gap> HClass(s, f)=HClass(L, f);
 true
 gap> 
 
-#
+#T# InverseTest10
 gap> s:=POI(10);
 <inverse partial perm monoid on 10 pts with 10 generators>
 gap> f:=PartialPermNC([ 2, 4, 5, 7 ], [ 2, 3, 5, 7 ]);;
@@ -587,7 +588,7 @@ true
 gap> HClass(D, f)=HClassNC(s, f);  
 true
 
-#
+#T# InverseTest11
 gap> m:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 
 >  18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 
@@ -687,25 +688,27 @@ gap> LClassReps(d);
 [ <identity partial perm on [ 32, 64 ]>, [32,59](64), [32,60](64), 
   [32,61](64), [32,62](64), [32,63](64) ]
 gap> RClassReps(m);             
-[ (1)(2)(3)(4)(5)(6)(7)(8)(9)(10)(11)(12)(13)(14)(15)(16)(17,33)(18,34)(19,35)
-    (20,36)(21,37)(22,39)(23,40)(24,41)(25,43)(26,44)(27,46)(28,49)(29,50)
-    (30,52)(31,55)(32,59)(38)(42)(45)(47)(48)(51)(53)(54)(56)(57)(58)(60)(61)
-    (62)(63)(64), [3,2][7,6][11,10][15,14][19,18][25,23][26,24][31,30][35,34]
-    [43,40][44,41][45,42][55,52][56,53][57,54][63,62](4)(8)(13)(16)(22)(28)
-    (29)(32)(39)(49)(50)(51)(59)(60)(61)(64), 
+[ <identity partial perm on 
+    [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 2\
+1, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,\
+ 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 6\
+0, 61, 62, 63, 64 ]>, 
   <identity partial perm on 
-    [ 2, 4, 6, 8, 10, 13, 14, 16, 18, 22, 23, 24, 28, 29, 30, 32, 34, 39, 40, \
-41, 42, 49, 50, 51, 52, 53, 54, 59, 60, 61, 62, 64 ]>, 
-  [5,2][7,6,4][12,10][15,14,13][20,18][25,23,22][27,24][31,30,29][36,34]
-    [43,40,39][46,41][47,42][55,52,50][56,53,51][58,54][63,62,61](8)(16)(28)
-    (32)(49)(59)(60)(64), [9,2][11,6][12,10,4][15,14,13,8][21,18][26,23]
-    [27,24,22][31,30,29,28][37,34][44,40][46,41,39][48,42][55,52,50,49][57,53]
-    [58,54,51][63,62,61,60](16)(32)(59)(64), 
-  [17,2][19,6][20,10][21,18,4][25,14][26,23,13][27,24,22,8][31,30,29,28,16]
-    [38,34][45,40][47,41][48,42,39][56,52][57,53,50][58,54,51,49]
-    [63,62,61,60,59](32)(64), [33,2][35,6][36,10][37,18][38,34,4][43,14]
-    [44,23][45,40,13][46,24][47,41,22][48,42,39,8][55,30][56,52,29]
-    [57,53,50,28][58,54,51,49,16][63,62,61,60,59,32](64), 
+    [ 3, 4, 7, 8, 11, 13, 15, 16, 19, 22, 25, 26, 28, 29, 31, 32, 35, 39, 43, \
+44, 45, 49, 50, 51, 55, 56, 57, 59, 60, 61, 63, 64 ]>, 
+  [2,3][6,7][10,11][14,15][18,19][23,25][24,26][30,31][34,35][40,43][41,44]
+    [42,45][52,55][53,56][54,57][62,63](4)(8)(13)(16)(22)(28)(29)(32)(39)(49)
+    (50)(51)(59)(60)(61)(64), [5,3][6,4][12,11][14,13][20,19][23,22][27,26]
+    [30,29][36,35][40,39][46,44][47,45][52,50][53,51][58,57][62,61](7)(8)(15)
+    (16)(25)(28)(31)(32)(43)(49)(55)(56)(59)(60)(63)(64), 
+  [9,3][10,4][12,11,7][14,13,8][21,19][24,22][27,26,25][30,29,28][37,35]
+    [41,39][46,44,43][48,45][52,50,49][54,51][58,57,56][62,61,60](15)(16)(31)
+    (32)(55)(59)(63)(64), [17,3][18,4][20,11][21,19,7][23,13][24,22,8]
+    [27,26,25,15][30,29,28,16][38,35][42,39][47,44][48,45,43][53,50][54,51,49]
+    [58,57,56,55][62,61,60,59](31)(32)(63)(64), 
+  [33,3][34,4][36,11][37,19][38,35,7][40,13][41,22][42,39,8][46,26][47,44,25]
+    [48,45,43,15][52,29][53,50,28][54,51,49,16][58,57,56,55,31]
+    [62,61,60,59,32](63)(64), 
   <identity partial perm on 
     [ 4, 8, 13, 16, 22, 28, 29, 32, 39, 49, 50, 51, 59, 60, 61, 64 ]>, 
   [7,4][15,13][25,22][31,29][43,39][55,50][56,51][63,61](8)(16)(28)(32)(49)
@@ -761,7 +764,7 @@ gap> Size(d);
 gap> Size(DClasses(m)[6]);
 36
 
-#
+#T# InverseTest12
 gap> s:=InverseSemigroup( [ PartialPermNC( [ 1, 2, 3, 5 ], [ 2, 1, 6, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 6 ], [ 3, 5, 2, 6 ] ) ]);;
 gap> f:=PartialPermNC([ 1 .. 3 ], [ 6, 3, 1 ]);;
@@ -778,7 +781,7 @@ gap> First(DClasses(s), x-> not IsTrivial(GroupHClass(x)));
 gap> StructureDescription(GroupHClass(last));
 "C2"
 
-#
+#T# InverseTest13
 gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 7 ], [ 10, 6, 3, 4, 9, 1 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 6, 10, 7, 4, 8, 2, 9, 1 ] ) ]);;
@@ -802,13 +805,15 @@ gap> r:=RClassNC(s, f);
 gap> Idempotents(r);
 [ <identity partial perm on [ 2, 4, 9, 10 ]> ]
 
-#
-gap> s:=RandomInverseSemigroup(2,10);
+#T# InverseTest14
+gap> s := InverseSemigroup([
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 9 ], [ 1, 5, 9, 2, 6, 10, 7 ] ),
+> PartialPerm( [ 1, 3, 4, 7, 8, 9 ], [ 9, 4, 1, 6, 2, 8 ] )]);
 <inverse partial perm semigroup on 10 pts with 2 generators>
 gap> ForAll(RClasses(s), IsRegularClass);
 true
 
-#
+#T# InverseTest15
 gap> s:=InverseSemigroup( 
 > PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14, 15 ], 
 > [ 6, 4, 18, 3, 11, 8, 5, 14, 19, 13, 12, 20, 1 ] ),
@@ -926,7 +931,7 @@ gap> iter:=IteratorOfRClassReps(s);
 <iterator of R-class reps>
 gap> for i in iter do od;
 
-#
+#T# InverseTest16
 gap> s:=RandomInverseSemigroup(100,100);
 <inverse partial perm semigroup on 100 pts with 100 generators>
 gap> iter:=IteratorOfRClasses(s);       
@@ -936,7 +941,7 @@ gap> iter:=IteratorOfLClasses(s);
 <iterator of L-classes>
 gap> for i in [1..100] do NextIterator(iter); od;
 
-#
+#T# InverseTest17
 gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 2, 3, 5, 7, 9, 10 ], [ 6, 7, 2, 9, 1, 5, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9, 10 ], [ 8, 1, 9, 4, 10, 5, 6, 7 ] ) ]);;
@@ -957,7 +962,7 @@ true
 gap> NrIdempotents(last2);
 13
 
-#
+#T# InverseTest18
 gap> S:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3 ], [ 1, 3, 5 ] ),
 > PartialPermNC( [ 1, 2, 4 ], [ 1, 2, 3 ] ),
@@ -974,7 +979,7 @@ Group(())
 gap> List(DClasses(S), SchutzenbergerGroup);
 [ Group(()), Group(()), Group(()), Group(()), Group([ (2,5) ]), Group(()) ]
 
-#
+#T# InverseTest19
 gap> s:=InverseSemigroup(
 > [ PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ),
 >  PartialPerm( [ 1, 2, 3, 4, 5, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 7, 8, 9 ] ), 
@@ -987,7 +992,7 @@ gap> Size(s);
 gap> IsDTrivial(s);
 false
 
-#
+#T# InverseTest20 
 gap> IsIsometryPP:=function(f)
 > local n, i, j, k, l;
 >  n:=RankOfPartialPerm(f);
@@ -1015,8 +1020,28 @@ gap> s:=InverseSubsemigroupByProperty(SymmetricInverseSemigroup(7),
 gap> Size(s);
 686
 
-#
-gap> SemigroupsStopTest();
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(d);
+gap> Unbind(f);
+gap> Unbind(S);
+gap> Unbind(h);
+gap> Unbind(inv);
+gap> Unbind(j);
+gap> Unbind(m);
+gap> Unbind(l);
+gap> Unbind(iter);
+gap> Unbind(gens);
+gap> Unbind(i);
+gap> Unbind(s);
+gap> Unbind(r);
+gap> Unbind(iso);
+gap> Unbind(n);
+gap> Unbind(R);
+gap> Unbind(IsIsometryPP);
+gap> Unbind(hh);
+gap> Unbind(k);
+gap> Unbind(L);
+gap> Unbind(D);
 
-#
-gap> STOP_TEST("Semigroups package: inverse.tst", 10000);
+#E# 
+gap> STOP_TEST("Semigroups package: inverse.tst");

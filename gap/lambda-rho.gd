@@ -1,19 +1,15 @@
 ############################################################################
 ##
 #W  lambda-rho.gd
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-DeclareGlobalFunction("RectifyLambda");
-DeclareGlobalFunction("RectifyRho");
-DeclareGlobalFunction("RectifyInverseRho");
-
-DeclareAttribute("LambdaOrb", IsNonExhaustiveSemigroup, "mutable");
-DeclareAttribute("RhoOrb", IsNonExhaustiveSemigroup, "mutable");
+DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
+DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
 DeclareFilter("IsLambdaOrb", IsOrbit);
 DeclareFilter("IsRhoOrb", IsOrbit);
 DeclareFilter("IsInverseOrb", IsOrbit);
@@ -27,7 +23,5 @@ DeclareGlobalFunction("LambdaOrbRep");
 DeclareGlobalFunction("RhoOrbRep");
 DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
-DeclareAttribute("RhoOrbStabChain", IsNonExhaustiveSemigroupGreensClass);
+DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
 DeclareOperation("RhoOrbStabChain", [IsOrbit, IsPosInt]);
-
-#EOF

@@ -13,7 +13,7 @@
 
 # same method for ideals
 
-InstallMethod(MinimalIdeal, "for an exhaustive semigroup",
+InstallMethod(MinimalIdeal, "for an generic semigroup",
 [IsExhaustiveSemigroup],
 function(S)
   local data, scc;

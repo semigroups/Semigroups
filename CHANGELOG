@@ -1,11 +1,73 @@
 #############################################################################
 ##
 #W  CHANGELOG
-#Y  Copyright (C) 2011-14                                   James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+2.2 -> 2.3  
+	    This is a minor release including some internal refactoring, and
+	    subsequent bugfixes, and stability improvements.
+
+	    • Issue 116 was resolved. In some cases when the default length of
+	    hash tables in Semigroups was set to be very small, a segmentation
+	    fault occurred. This is a bug in the Orb package (see Issue
+	    10), but we worked around it to resolve this issue. 
+
+2.1.1 -> 2.2 
+	    This is a minor release including some bug fixes, performance
+	    improvements, and additional functionality. 
+
+	    *************************New features*************************
+
+	    • The functions SmallestElementSemigroup, LargestElementSemigroup, 
+	      and GeneratorsSmallest.
+
+	    • Free bands are introduced. 
+
+	    • Error messages are more uniform.
+
+	    • The function RegularDClasses was introduced to resolve Issue 102.
+
+	    • The documentation and code for semigroup congruences has been
+	    improved, and is better integrated with the core GAP system.
+
+	    • The functions ReadGenerators and WriteGenerators were improved. 
+
+	    *************************Resolved issues************************* 
+
+	    • Some minor corrections were made to the methods for creating the
+	    ideals of some semigroups in standard examples semigroups, such as
+	    SingularTransformationSemigroup.
+
+	    • Issue 102: we introduced RegularDClasses. 
+
+	    • Issue 104: the performance of MaximalSubsemigroups when applied to
+	    an inverse semigroup has been improved. 
+
+	    • Issue 105: CyclesOfPartialPerm is now documented and does not
+	    return nonsense. 
+	    
+	    • Issue 106: MaximalSubsemigroups sometimes failed when the
+	    ResClasses package was loaded. We refactored the code so that the
+	    method from ResClasses is no longer applied.
+
+	    • Issue 107: A bug in the creation of Green's classes of an ideal of
+	    a semigroup, which sometimes caused an error, has been resolved.
+	    This issue often caused MaximalSubsemigroups to stop in an error.
+
+	    • Issue 110: MaximalSubsemigroups can be applied to any class of
+	    semigroup where it is possible to find an isomorphism to a
+	    transformation semigroup. 
+	    
+	    • Issue 111: POPI(1) returned the wrong semigroup. Similar issues
+	    existed in other corner cases, and these have been resolved too.
+
+2.1 -> 2.1.1 
+	    This is a very minor release to fix an issue caused by only loading
+	    the packages needed (but not required) by Semigroups.
 
 2.0 -> 2.1  
 	    This is a minor release including some bug fixes and performance
