@@ -630,7 +630,7 @@ end);
 InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 [IsPartialPermSemigroup], One);
 
-# same method for ideals...
+# same method for ideals
 
 InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup],
