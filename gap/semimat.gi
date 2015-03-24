@@ -110,7 +110,24 @@ InstallMethod(One, "for a null map matrix",
 InstallMethod(IsGeneratorsOfSemigroup, [IsFFECollCollColl],
         function(L)
 #T do checking of dimensions
-    return ForAll(L, IsMatrixObj);
+  local dom, deg, m;
+  if Length(L) > 0 then
+    if IsMatrixObj(L[1]) then
+      dom := BaseDomain(L[1]);
+      deg := RowLength(L[1]);
+      for m in L do
+        if BaseDomain(m) <> dom
+           or RowLength(m) <> deg then
+          return false;
+        fi;
+      od;
+    else
+      return false;
+    fi;
+  else
+    return false;
+  fi;
+  return true;
 end);
 
 #T Are these still needed
