@@ -9,13 +9,13 @@
 #############################################################################
 ##
 
-InstallMethod(IsMatrixObjCollection, "for a collection",
+InstallMethod(IsSMatrixCollection, "for a collection",
 [IsCollection], 
 function(coll) 
   if IsEmpty(coll) then 
     return false;
   fi;
-  return IsMatrixObj(coll[1]) and IsHomogeneousList(coll);
+  return IsSMatrix(coll[1]) and IsHomogeneousList(coll);
 end);
 
 InstallMethod(\*, "for a matrix obj and ffe", 
@@ -51,7 +51,7 @@ end);
 #
 InstallMethod( TriangulizeMat,
 "for a mutable matrix obj",
-[ IsMatrixObj and IsMutable ],
+[ IsSMatrix and IsSPlistMatrixRep ],
 function ( mat )
   local d, m, n, i, j, k, row, zero, x, row2;
 
@@ -126,7 +126,7 @@ end );
 ##
 InstallMethod( SemiEchelonMatDestructive,
     "generic method for matrix objects",
-    [ IsMatrixObj and IsMutable],
+    [ IsSMatrix and IsMutable and IsSPlistMatrixRep ],
     function( mat )
     local zero,      # zero of the field of <mat>
           dims,      # dims of matrix entries
@@ -187,114 +187,9 @@ InstallMethod( SemiEchelonMatDestructive,
                 vectors := vectors );
 end );
 
-InstallMethod( SemiEchelonMat,
-"generic method for matrix objects",
-[ IsMatrixObj ],
-function(mat)
-  return SemiEchelonMatDestructive(MutableCopyMat(mat));
-end);
-
-##########################################################################
-##
-#F  BaseSteinitzMatrixObj( <bas>, <mat> )
-##
-## find vectors extending mat to a basis spanning the span of <bas>.  #
-## 'BaseSteinitz'  returns a record  describing  a base  for the factorspace
-## and ways to decompose vectors:
-##
-##  zero:           zero of <V> and <U>
-##  factorzero:     zero of complement
-##  subspace:       triangulized basis of <mat>
-##  factorspace:    base of a complement of <U> in <V>
-##  heads:          a list of integers i_j, such that  if i_j>0 then a vector
-##                  with head j is at position i_j  in factorspace.  If i_j<0
-##                  then the vector is in subspace.
-##
-InstallGlobalFunction( BaseSteinitzMatrixObj, function(bas,mat)
-    local mdims,	# Dimensions of mat
-          bdims,	# Dimensions of bas
-          z,l,b,i,j,k,stop,v,dim,h,zv;
-    bdims := DimensionsMat(bas);
-
-  # catch trivial case
-  if bdims[1] = 0 then
-    return rec(subspace := [],factorspace := []);
-  fi;
-
-  bas := MutableCopyMat(bas);
-
-  z := Zero(BaseDomain(bas));
-  zv := Zero(bas[1]);
-
-  mdims := DimensionsMat(mat);
-  dim := bdims[2];
-  l := bdims[1] - mdims[1]; # missing dimension
-  b := [];
-  h := [];
-  i := 1;
-  j := 1;
-
-  while Length(b) < l do
-    stop := false;
-    repeat
-      if j <= dim and (mdims[1] < i or mat[i][j] = z) then
-        # Add vector from bas with j-th component not zero (if any exists)
-
-        v := PositionProperty(Rows(bas),k -> k[j] <> z);
-        if v <> fail then
-          # add the vector
-          v := bas[v];
-          v := 1 / v[j] * v; # normed
-          Add(b,v);
-          h[j] := Length(b);
-        # if fail, then this dimension is only dependent (and not needed)
-        fi;
-      else
-        stop := true;
-        # check whether we are running to fake zero columns
-        if i <= mdims[1] then
-          # has a step, clean with basis vector
-          v := mat[i];
-          v := 1 / v[j] * v; # normed
-          h[j] := - i;
-        else
-          v := fail;
-        fi;
-      fi;
-      if v <> fail then
-        # clean j-th component from bas with v
-        for k in [1 .. Length(bas)] do
-          if not IsZero(bas[k][j]) then
-            bas[k] := bas[k] - bas[k][j] / v[j] * v;
-          fi;
-        od;
-        v := Zero(v);
-        bas := Matrix(Filtered(Rows(bas),k -> k <> v), bdims[2], bas);
-      fi;
-      j := j + 1;
-    until stop;
-    i := i + 1;
-  od;
-
-  # add subspace indices
-  while i <= mdims[1] do
-    if mat[i][j] <> z then
-      h[j] := - i;
-      i := i + 1;
-    fi;
-    j := j + 1;
-  od;
-
-
-  return rec(factorspace := b,
-             factorzero := zv,
-             subspace := mat,
-             heads := h);
-end );
-
 InstallMethod( SemiEchelonMatTransformationDestructive,
     "generic method for matrices",
-    [ IsMatrixObj and IsMutable],
+    [ IsSMatrix and IsMutable and IsSPlistMatrixRep ],
     function( mat )
     local zero,      # zero of the field of <mat>
           nrows,     # number of rows in <mat>
@@ -366,7 +261,7 @@ end );
 
 InstallMethod( SemiEchelonMatTransformation,
     "generic method for matrices",
-    [ IsMatrixObj ],
+    [ IsSMatrix and IsSPlistMatrixRep ],
     function( mat )
     local copy;
 
@@ -375,88 +270,17 @@ InstallMethod( SemiEchelonMatTransformation,
     return SemiEchelonMatTransformationDestructive( copy );
 end);
 
-
-InstallGlobalFunction(PedestrianLambdaInverse
-        , function(f)
-    local z, e, i, ech, info, zh;
-
-    #Error("wrong");
-
-end);
-
-#InstallMethod( IsGeneratorsOfMagmaWithInverses,
-#        "for lists of MatrixObj",
-#        [ IsHomogeneousList and IsRingElementCollCollColl ],
-#        function(l)
-#    if Length(l) > 0 then
-#        if IsMatrixObj(l[1]) then
-#            if ForAll(l, x -> x^(-1) <> fail) then
-#                return true;
-#            fi;
-#        fi;
-#    fi;
-#
-#    TryNextMethod();
-#
-#    end);
-
-#InstallMethod( DefaultScalarDomainOfMatrixList,
- #       [ IsHomogeneousList and IsRingElementCollCollColl ],
-#        15,
-#        function(l)
-#     if Length(l) > 0 then
-#        if IsMatrixObj(l[1]) then
-#            return BaseDomain(l[1]);
-#        fi;
-#    fi;
-#
-#    TryNextMethod();
-#end);
-
-
-InstallMethod( PseudoInverse, "for a matrix obj", [IsMatrixObj],
-function(mat)
-  local W, se, n, k, i, j, u;
-
-  # We assume that mat is quadratic we don't check this for performance
-  # reasons. If a semigroup decides to have non-quadratic matrices in it,
-  # something is seriously wrong anyway.
-  n := DimensionsMat(mat)[1];
-
-  W := ZeroMatrix(n, 2 * n, mat);
-
-  CopySubMatrix( mat, W, [1 .. n], [1 .. n], [1 .. n], [1 .. n]);
-  CopySubMatrix( One(mat), W, [1 .. n], [1 .. n], [1 .. n],
-  [n + 1 .. 2 * n]);
-
-  se := SemiEchelonMatDestructive(W);
-
-  u := One(BaseDomain(W));
-  j := Length(se.vectors) + 1;
-  for i in [1 .. n] do
-    if se.heads[i] = 0 then
-      W[j][i] := u;
-      j := j + 1;
-    fi;
-  od;
-
-  TriangulizeMat(W);
-
-  return ExtractSubMatrix(W, [1 .. n], [n + 1 .. 2 * n]);
-
-end);
-
 #############################################################################
 ##
-#F  RandomMatrixObj( <m>, <n> [, <R>] ) . . . . . . . .  make a random matrix
+#F  RandomSMatrix( <m>, <n> [, <R>] ) . . . . . . . .  make a random matrix
 ##
-##  'RandomMatrixObj' returns a random plist matrix object with
-##  <m> rows and <n> columns with elements taken from the ring <R>,
-##  which defaults to 'Integers'.
+##  'RandomSMatrix' returns a random semigroups matrix object
+##  in IsSMatrixPlistRep with <m> rows and <n> columns with elements taken 
+##  from the ring <R>, which defaults to 'Integers'.
 ##
-#W  This returns a matrix in IsPlistMatrixRep
+#W  This returns a matrix in IsSPlistMatrixRep
 #T  this function should take either a filter or a sample matrix
-InstallGlobalFunction( RandomMatrixObj, function ( arg )
+InstallGlobalFunction( RandomSMatrix, function ( arg )
     local   mat, m, n, R, i, row, k;
 
     # check the arguments and get the list of elements
@@ -483,6 +307,6 @@ InstallGlobalFunction( RandomMatrixObj, function ( arg )
         mat[i] := row;
     od;
 
-    return NewMatrix(IsPlistMatrixRep, R, n, One(R) * mat);
+    return NewMatrix(IsSPlistMatrixRep, R, n, One(R) * mat);
 end );
 

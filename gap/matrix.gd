@@ -16,37 +16,54 @@
 # This aims to be compatible with the MatrixObj interface in the
 # GAP library and might at some point be moved to the library
 #
-DeclareOperation( "TriangulizeMat",
-        [ IsMatrixObj and IsMutable ]);
+# We declare our own representation so we do not interfere with the GAP
+# library or other libraries and dispatch to things we know to work.
+#
 
+# This code is based on the IsPlistMatrixRep code from the GAP library
+# There is almost no hope whatsoever that we will ever be able to use
+# MatrixObj in general for semigroups
+
+#
+# Our Matrix objects
+#
+DeclareCategory("IsSMatrix",
+  IsMatrixObj and IsAttributeStoringRep);
+
+DeclareAttribute("RowSpaceBasis", IsSMatrix);
+DeclareAttribute("ColSpaceBasis", IsSMatrix);
+DeclareAttribute("RightInverse", IsSMatrix);
+DeclareAttribute("LeftInverse", IsSMatrix);
+DeclareAttribute("NrRows", IsSMatrix);
+DeclareAttribute("NrCols", IsSMatrix);
+DeclareAttribute("RowRank", IsSMatrix);
+DeclareAttribute("ColRank", IsSMatrix);
+# We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
+# We also need operations for acting on Row/Column spaces.
+
+# The following  should really be obsolete, or at the very least not needed
+# for our purposes. We need to compute a RowReduced form and a ColumnReduced form
+# and store the transformation matrices.
+DeclareOperation( "TriangulizeMat", [ IsSMatrix ]);
 DeclareOperation( "SemiEchelonMatDestructive",
-        [ IsMatrixObj and IsMutable ]);
-
-DeclareAttribute( "SemiEchelonMat",
-        IsMatrixObj );
-
+        [ IsSMatrix and IsMutable ]);
 DeclareOperation( "SemiEchelonMatTransformationDestructive",
-        [ IsMatrixObj and IsMutable ]);
-
+        [ IsSMatrix and IsMutable ]);
 DeclareAttribute( "SemiEchelonMatTransformation",
-        IsMatrixObj );
+        IsSMatrix );
 
-DeclareGlobalFunction( "BaseSteinitzMatrixObj");
+# For the time being we are "happy" with the PlistMatrixRep representation
+# as showcased in the library code. Of course we implement our own variant
+# of it just to be sure that we duplicate enough code
+#
+#T Do the rows of our SPlistMatrixRep need to be SPlistRowVectorRep? Or is
+#T it good enough to allow IsPlistRowVectorRep?
+DeclareRepresentation("IsSPlistMatrixRep",
+  IsRowListMatrix and IsPositionalObjectRep, [] );
 
+DeclareGlobalFunction( "RandomSMatrix" );
 
-DeclareOperation( "MoorePenroseInverse",
-        [ IsMatrixObj ] );
-
-DeclareOperation( "PseudoInverse",
-        [ IsMatrixObj ] );
-
-DeclareGlobalFunction( "PedestrianLambdaInverse" );
-
-DeclareGlobalFunction( "RandomMatrixObj" );
-
-DeclareOperation("IsMatrixObjCollection", [IsCollection]);
-
-# To make the GAP library code happy for now
-#DeclareOperation( "ImmutableMatrix", [ IsObject, IsMatrixObj ]);
-
+# Does such a collection need to be of matrices in the same representation,
+# or are we happy as long as we get the attributes and operations above?
+DeclareOperation("IsSMatrixCollection", [IsCollection]);
 
