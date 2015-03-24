@@ -11,7 +11,6 @@
 ## Some of this code is based on code taken from grpmat.gd in the GAP
 ## library
 
-
 DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsNullMapMatrixGroup", IsMatrixGroup);
 DeclareOperation("POW", [IsNullMapMatrixGroup, IsMatrix]);
@@ -20,8 +19,20 @@ DeclareOperation("InverseMutable", [IsNullMapMatrix]);
 
 #T Is there a better way of saying what a matrix semigroup is?
 
-DeclareCategory("IsMatrixSemigroup", IsSemigroup and IsFFECollCollColl and
-IsAssociativeElementCollection);
+DeclareProperty("IsMatrixSemigroup", IsSemigroup);
+InstallImmediateMethod(IsMatrixSemigroup, IsSemigroup, 0, 
+function(S)
+  return IsFFECollCollColl(S) and IsMatrixObj(Representative(S));
+end);
+    
+DeclareAttribute("DimensionsOfMatrixSemigroup", 
+IsMatrixSemigroup);
+DeclareAttribute("BaseDomain", IsMatrixSemigroup);
+
+DeclareAttribute("DefaultFieldOfMatrixGroup", 
+IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup);
+DeclareAttribute("DimensionOfMatrixGroup", 
+IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup);
 
 DeclareAttribute("BaseDomain", IsMatrixSemigroup);
 
@@ -39,7 +50,6 @@ DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 ## CollColl, which makes it impossible to tell whether a list
 ## of Matrices has IsAssociativeElementCollection
 
-DeclareAttribute("DimensionsOfMatrixSemigroup", IsMatrixSemigroup);
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
 
 #############################################################################

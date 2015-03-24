@@ -10,8 +10,8 @@
 ##
 
 #T these are basically stolen from cvec
-InstallGlobalFunction( SEMIG_HashFunctionForPlistVects,
-function(x,data)
+InstallGlobalFunction(SEMIG_HashFunctionForPlistVects,
+function(x, data)
     return ORB_HashFunctionForPlainFlatList(x![2], data);
 end);
 
@@ -30,7 +30,7 @@ function(x,data)
 end );
 
 InstallGlobalFunction( SEMIG_HashFunctionForFiniteDimensionalVectorSpaces,
-function(x,data)
+function(x, data)
     local i,basis,res;
     #T This is an attribute and is thus only computed once
     #T If we cannot compute a canonical basis we are stuffed atm.
@@ -53,7 +53,7 @@ end );
 InstallMethod( ChooseHashFunction, "for plain list vector objects",
     [IsPlistVectorRep, IsInt],
 function(vec, hashlen)
-    return rec( func := ORB_HashFunctionForPlainFlatList,
+    return rec( func := SEMIG_HashFunctionForPlistVects,
                 data := hashlen );
 end);
 
