@@ -151,7 +151,7 @@ function(I)
   local out, U, i, partial, D, pos, inj, j, C;
 
   if HasGeneratorsOfInverseSemigroup(I) then
-    # JDM could remove repeats and only add necessary inverses...
+    # TODO could remove repeats and only add necessary inverses...
     out := ShallowCopy(GeneratorsOfInverseSemigroup(I));
     Append(out, List(out, x -> x ^ -1));
     return out;
@@ -437,11 +437,6 @@ function(data, limit, record)
   # new stuff
   drel := GreensDRelation(I);
   dtype := DClassType(I);
-  #FIXME the following are not required for anything here, just to make sure
-  # that the types of Green's classes are consistent
-  LClassType(I);
-  RClassType(I);
-  HClassType(I);
 
   poset := data!.poset;  # the D-class poset
   datalookup := data!.scc_lookup;
@@ -536,6 +531,7 @@ function(data, limit, record)
 
     nr_d := nr_d + 1;
     d[nr_d] := rec();
+    # FIXME: use SEMIGROUPS_CreateDClass here!
     ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
       EquivalenceClassRelation, drel, IsGreensClassNC, false,
       Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
@@ -662,10 +658,10 @@ function(data, limit, record)
     SetFilterObj(rhoo, IsClosed);
     SetFilterObj(data, IsClosedData);
     if not HasIsRegularSemigroup(I) then
-      SetIsRegularSemigroup(data!.parent, ForAll(regular, x -> x = true));
-      if IsRegularSemigroup(data!.parent) then
-        SetGreensDClasses(data!.parent, d);
-      fi;
+      SetIsRegularSemigroup(I, ForAll(regular, x -> x = true));
+    fi;
+    if IsRegularSemigroup(I) then
+      SetGreensDClasses(I, d);
     fi;
   fi;
   return data;
