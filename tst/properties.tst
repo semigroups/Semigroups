@@ -334,11 +334,15 @@ gap> IsLeftZeroSemigroup(i);
 true
 
 #T# PropertiesTest28
-gap> gens := [ Transformation([2,3,4,5,6,7,8,9,1]),
-> Transformation([4,2,3,4,5,6,7,8,9])];;
+gap> gens := [ Transformation( [ 2, 3, 4, 5, 6, 7, 8, 9, 1 ]),
+> Transformation([ 4, 2, 3, 4, 5, 6, 7, 8, 9 ]) ];;
 gap> s := Semigroup(gens);;
 gap> i := MinimalIdeal(s);;
+gap> Size(i);
+81
 gap> i := Semigroup(Generators(i), rec(small:=true));;
+gap> Size(i);
+81
 gap> IsLeftZeroSemigroup(i);
 false
 gap> IsSimpleSemigroup(i);
