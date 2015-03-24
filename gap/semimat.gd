@@ -25,16 +25,13 @@ function(S)
   return IsFFECollCollColl(S) and IsMatrixObj(Representative(S));
 end);
     
-DeclareAttribute("DimensionsOfMatrixSemigroup", 
-IsMatrixSemigroup);
+DeclareAttribute("DimensionsOfMatrixSemigroup", IsMatrixSemigroup);
 DeclareAttribute("BaseDomain", IsMatrixSemigroup);
 
 DeclareAttribute("DefaultFieldOfMatrixGroup", 
 IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup);
 DeclareAttribute("DimensionOfMatrixGroup", 
 IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup);
-
-DeclareAttribute("BaseDomain", IsMatrixSemigroup);
 
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 
