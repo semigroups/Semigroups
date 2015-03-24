@@ -10,7 +10,7 @@
 
 # this file contains method specific to generic ideals of semigroups. 
 
-# We use the result of enumerating the ExhaustiveData of the supersemigroup of an ideal
+# We use the result of enumerating the GenericSemigroupData of the supersemigroup of an ideal
 # to calculate elements, size, test membership, find idempotents, etc. We get a
 # generating set and use that otherwise. 
 
@@ -40,7 +40,7 @@ function(enum, limit, lookfunc)
   lookup:=enum!.lookup;
   indices:=enum!.indices;
 
-  data:=ExhaustiveData(SupersemigroupOfIdeal(UnderlyingCollection(enum)));
+  data:=GenericSemigroupData(SupersemigroupOfIdeal(UnderlyingCollection(enum)));
   left:=data!.left;
   right:=data!.right;
   genstoapply:=data!.genstoapply;
@@ -122,7 +122,7 @@ InstallMethod(Enumerator, "for a semigroup ideal with generators",
 function(I)
   local record, data, gens, i, pos;
 
-  data:=ExhaustiveData(SupersemigroupOfIdeal(I));
+  data:=GenericSemigroupData(SupersemigroupOfIdeal(I));
 
   record:=rec(
     pos:=1,       # the first position in <indices> whose descendants might not
@@ -219,7 +219,7 @@ InstallMethod(Idempotents, "for a semigroup ideal with generators",
 function(I)
   local enum, elts, indices, idempotents, nr, i;
 
-  elts:=ExhaustiveData(SupersemigroupOfIdeal(I))!.elts;
+  elts:=GenericSemigroupData(SupersemigroupOfIdeal(I))!.elts;
   enum:=Enumerator(I);
   if not IsBound(enum!.idempotents) then 
     SEMIGROUPS_EnumerateIdeal(enum, infinity, ReturnFalse);

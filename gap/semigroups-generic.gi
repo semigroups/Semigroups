@@ -29,11 +29,11 @@ function(S)
   record:=rec();
 
   record.NumberElement:=function(enum, elt)
-    return Position(ExhaustiveData(S), elt);
+    return Position(GenericSemigroupData(S), elt);
   end;
 
   record.ElementNumber:=function(enum, nr)
-    data:=ExhaustiveData(S);
+    data:=GenericSemigroupData(S);
     if not IsBound(data!.elts[nr]) then 
       Enumerate(data, nr);
     fi;
@@ -42,14 +42,14 @@ function(S)
 
   record.Length:=enum -> Size(S);
 
-  record.AsList:=enum -> Enumerate(ExhaustiveData(S))!.elts;
+  record.AsList:=enum -> Enumerate(GenericSemigroupData(S))!.elts;
 
   record.Membership:=function(enum, elt)
-    return Position(ExhaustiveData(S), elt)<>fail;
+    return Position(GenericSemigroupData(S), elt)<>fail;
   end;
 
   record.IsBound\[\]:=function(enum, nr)
-    return IsBound(ExhaustiveData(S)!.elts[nr]);
+    return IsBound(GenericSemigroupData(S)!.elts[nr]);
   end;
 
   return EnumeratorByFunctions(S, record);
@@ -60,7 +60,7 @@ end);
 InstallMethod(Size, "for an generic semigroup with generators", 
 [IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(Enumerate(ExhaustiveData(S), infinity, ReturnFalse)!.elts);
+  return Length(Enumerate(GenericSemigroupData(S), infinity, ReturnFalse)!.elts);
 end);
 
 # different method for ideals
@@ -68,7 +68,7 @@ end);
 InstallMethod(\in, "for an associative element and finite semigroup with generators",
 [IsAssociativeElement, IsExhaustiveSemigroup and HasGeneratorsOfSemigroup],
 function(x, S)
-  return Position(ExhaustiveData(S), x)<>fail;
+  return Position(GenericSemigroupData(S), x)<>fail;
 end);
 
 # different method for ideals
@@ -79,7 +79,7 @@ InstallMethod(Idempotents, "for an generic semigroup with generators",
 function(S)
   local data, elts, idempotents, nr, i;
 
-  data:=Enumerate(ExhaustiveData(S));
+  data:=Enumerate(GenericSemigroupData(S));
 
   if not IsBound(data!.idempotents) then 
 
@@ -288,7 +288,7 @@ fi;
 
 # same method for ideals
 
-InstallMethod(ExhaustiveData, "for a finite semigroup",
+InstallMethod(GenericSemigroupData, "for a finite semigroup",
 [IsFinite and IsSemigroup], 
 function(S)
   local data, hashlen, nrgens, nr, val, i;
@@ -365,20 +365,20 @@ function(S)
   
   data.nr:=nr;
 
-  return Objectify(NewType(FamilyObj(S), IsExhaustiveData and IsMutable and
+  return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable and
    IsAttributeStoringRep), data);
 end);
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for SEE data", [IsExhaustiveData], 
+InstallMethod(Enumerate, "for SEE data", [IsGenericSemigroupData], 
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
 #
 
-InstallMethod(Enumerate, "for SEE data and cyclotomic", [IsExhaustiveData, IsCyclotomic], 
+InstallMethod(Enumerate, "for SEE data and cyclotomic", [IsGenericSemigroupData, IsCyclotomic], 
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
@@ -388,7 +388,7 @@ end);
 
 if IsBound(ENUMERATE_SEE_DATA) then 
   InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
-  [IsExhaustiveData, IsCyclotomic, IsFunction], 
+  [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     
     data:=ENUMERATE_SEE_DATA(data, limit, lookfunc, lookfunc<>ReturnFalse);
@@ -402,7 +402,7 @@ if IsBound(ENUMERATE_SEE_DATA) then
 else
 
   InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
-  [IsExhaustiveData, IsCyclotomic, IsFunction], 
+  [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     local looking, found, i, nr, len, one, stopper, nrrules, elts, gens, nrgens,
     genstoapply, genslookup, lenindex, first, final, prefix, suffix, words,
@@ -578,7 +578,7 @@ fi;
 #
 
 InstallMethod(Position, "for SEE data, an associative element, zero cyc",
-[IsExhaustiveData, IsAssociativeElement, IsZeroCyc], 
+[IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc], 
 function(data, x, n)
   local pos, lookfunc;
 
@@ -602,7 +602,7 @@ end);
 
 #
 
-InstallMethod(Length, "for SEE data", [IsExhaustiveData], 
+InstallMethod(Length, "for SEE data", [IsGenericSemigroupData], 
 function(data)
   return Length(data!.elts);
 end);
@@ -610,14 +610,14 @@ end);
 #
 
 InstallMethod(ELM_LIST, "for SEE data, and pos int",
-[IsExhaustiveData, IsPosInt], 
+[IsGenericSemigroupData, IsPosInt], 
 function(data, nr)
   return data!.elts[nr];
 end);
 
 #
 
-InstallMethod(ViewObj, [IsExhaustiveData], 
+InstallMethod(ViewObj, [IsGenericSemigroupData], 
 function(data)
   Print("<");
 
@@ -635,7 +635,7 @@ end);
 
 #
 
-InstallMethod(PrintObj, [IsExhaustiveData], 2, # to beat the method for an enumerator!
+InstallMethod(PrintObj, [IsGenericSemigroupData], 2, # to beat the method for an enumerator!
 function(data)
   local recnames, com, i, nam;
   

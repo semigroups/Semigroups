@@ -17,7 +17,7 @@ InstallMethod(MinimalIdeal, "for an generic semigroup",
 [IsExhaustiveSemigroup],
 function(S)
   local data, scc;
-  data:=Enumerate(ExhaustiveData(S));
+  data:=Enumerate(GenericSemigroupData(S));
   scc:=GreensRRelation(S)!.data;
   return SemigroupIdeal(S, data!.elts[scc.comps[1][1]]);
   # the first component (i.e. the inner most) of the strongly connected

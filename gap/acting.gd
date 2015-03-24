@@ -8,8 +8,7 @@
 #############################################################################
 ##
 
-# IsSemigroupData contains both IsExhaustiveData and IsSemigroupData.
-DeclareAttribute("IsSemigroupData", IsList);
+DeclareCategory("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
 
 DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
@@ -18,12 +17,10 @@ DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
 # IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
-DeclareCategory("IsSemigroupData", IsSemigroupData);
 DeclareAttribute("SizeOfSemigroupData", IsSemigroupData);
 DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
-IsActingSemigroup);
-
+                IsActingSemigroup);
 
 DeclareOperation("Enumerate", [IsSemigroupData]);
 DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);

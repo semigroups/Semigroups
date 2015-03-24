@@ -43,7 +43,7 @@ InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
 function(S)
   local rules, F, A, rels, Q, B;
 
-  rules:=Enumerate(ExhaustiveData(S))!.rules;
+  rules:=Enumerate(GenericSemigroupData(S))!.rules;
 
   F:=FreeMonoid(Length(GeneratorsOfMonoid(S)));
   A:=GeneratorsOfMonoid(F);
@@ -150,7 +150,7 @@ function(S)
 <<<<<<< local
   local rules, F, A, rels, Q, B;
 
-  rules:=Enumerate(ExhaustiveData(S))!.rules;
+  rules:=Enumerate(GenericSemigroupData(S))!.rules;
 
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
@@ -215,7 +215,7 @@ function(s)
   end;
   #convert words in generators of monoid to words in generators of semigroup
 
-  rules:=Enumerate(ExhaustiveData(S))!.rules;
+  rules:=Enumerate(GenericSemigroupData(S))!.rules;
 
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
@@ -243,7 +243,7 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  return Enumerate(ExhaustiveData(S))!.right;
+  return Enumerate(GenericSemigroupData(S))!.right;
 =======
 InstallMethod(GroupOfUnits, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -308,7 +308,7 @@ InstallMethod(GroupOfUnits, "for a bipartition semigroup",
 >>>>>>> other
 function(S)
 <<<<<<< local
-  return Enumerate(ExhaustiveData(S))!.left;
+  return Enumerate(GenericSemigroupData(S))!.left;
 =======
   local R, G, deg, U;
 

@@ -20,11 +20,11 @@ InstallMethod(Factorization,
 [IsExhaustiveSemigroup, IsAssociativeElement],
 function(S, x)
   local pos;
-  pos:=Position(ExhaustiveData(S), x); 
+  pos:=Position(GenericSemigroupData(S), x); 
   if pos=fail then 
     return fail;
   fi;
-  return ExhaustiveData(S)!.words[pos];
+  return GenericSemigroupData(S)!.words[pos];
 end);
 
 # same method for ideals
@@ -40,7 +40,7 @@ function(S, x)
     return;
   fi;
 
-  return ExhaustiveData(S)!.words[Position(ExhaustiveData(S), x)];
+  return GenericSemigroupData(S)!.words[Position(GenericSemigroupData(S), x)];
 end);
 
 # factorisation of Schutzenberger group element, the same method works for
