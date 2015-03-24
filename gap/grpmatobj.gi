@@ -11,6 +11,20 @@
 
 # FIXME move this
 
+#InstallMethod(GroupByGenerators, "for a collection",
+#[IsCollection], 
+#function(coll)
+#  Error();
+#  if not IsMatrixObjCollection(coll) then 
+#    TryNextMethod();
+#  fi;
+#  Print("here\n");
+#  if IsGeneratorsOfSemigroup(coll)
+#    and ForAll(coll, x -> Inverse(x) <> fail) then 
+#    return Semigroup(coll);
+#  fi;
+#end);
+
 InstallMethod(AsMatrix, "for a matrix obj", 
 [IsMatrixObj], x -> List(x![ROWSPOS], List));
 

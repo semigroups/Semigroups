@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  semimat.gd
+#W  semimat.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
@@ -13,27 +13,31 @@
 InstallMethod(BaseDomain, "for a matrix semigroup", 
 [IsMatrixSemigroup], S -> BaseDomain(Representative(S)));
 
+# FIXME delete some of the stuff from here
+
 InstallMethod(DefaultFieldOfMatrixGroup, "for a matrix semigroup",
 [IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
 S -> BaseDomain(GeneratorsOfSemigroup(S)[1]));
 
 InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup],
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
 S -> RowLength(GeneratorsOfSemigroup(S)[1]));
+
+# this is only required for the view method
 
 InstallMethod(DimensionOfMatrixGroup, "for a matrix semigroup",
 [IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup],
 DegreeOfMatrixSemigroup);
 
 InstallMethod(DimensionsOfMatrixSemigroup, "for a matrix semigroup", 
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup], 
 S -> DimensionsMat(GeneratorsOfSemigroup(S)[1]));
 
 InstallMethod(GeneratorsOfGroup, "for a matrix semigroup", 
 [IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 400,
 S -> GeneratorsOfSemigroup(S));
 
-#
+# to here #FIXME
 
 InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
 [IsGreensClass],
@@ -142,7 +146,6 @@ end);
 InstallGlobalFunction(MatrixObjRowSpaceRightAction,
   function(s, vsp, mat)
     local basis, nvsp, i, n;
-
       # This takes care of the token element
       if DimensionsMat(vsp)[1] > DimensionsMat(mat)[1] then
           nvsp := mat;
@@ -158,7 +161,7 @@ InstallGlobalFunction(MatrixObjRowSpaceRightAction,
           Remove(nvsp, i);
         fi;
       od;
-
+      #MakeImmutable(nvsp);
       return nvsp;
 end);
 

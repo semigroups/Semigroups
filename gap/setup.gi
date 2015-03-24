@@ -672,6 +672,8 @@ InstallMethod(RhoBound, "for a matrix semigroup",
 # the identity element of the Schutzenberger group
 # elements produced by LambdaPerm
 
+# FIXME these functions don't need the argument <r> any more
+
 InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
   s -> function(r)
@@ -723,7 +725,7 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return NewIdentityMatrix(Representative(S), BaseDomain(S),
+  return NewIdentityMatrix(IsPlistMatrixRep, BaseDomain(S),
    DegreeOfMatrixSemigroup(S));
 end);
 
