@@ -1,22 +1,83 @@
 ############################################################################
 ##
-#W  grpmatobj.gd
+#W  grpmatobj.gi
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                       Markus Pfeiffer
 ##
-##  Licensing information can be found in the README file of this package.
+##  Licensing inforxion can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+# FIXME move this
+
+InstallMethod(AsMatrix, "for a matrix obj", 
+[IsMatrixObj], x -> List(x![ROWSPOS], List));
+
+InstallMethod(BaseDomain, "for a matrix obj group", 
+[SEMIGROUPS_IsMatrixObjGroup and HasGeneratorsOfSemigroup], 
+G -> BaseDomain(G.1));
+
+InstallMethod(DimensionsOfMatrixObjGroup, "for a matrix obj group", 
+[SEMIGROUPS_IsMatrixObjGroup and HasGeneratorsOfSemigroup], 
+G -> DimensionsMat(G.1));
 
 InstallMethod(IsomorphismMatrixGroup, "for a matrix obj group",
 [SEMIGROUPS_IsMatrixObjGroup], 
 function(G)
   local gens;
-
   gens := GeneratorsOfGroup(G);
-  return GroupHomomorphismByFunction(G, Group(List(gens, g -> g![ROWSPOS])), 
-    g -> g![ROWSPOS], 
+  return GroupHomomorphismByFunction(G, Group(List(gens, AsMatrix)), 
+    AsMatrix, 
     g -> NewMatrix(IsPlistMatrixRep, BaseDomain(G), Length(g), g));
 end);
+
+InstallMethod(IsomorphismMatrixObjGroup, "for a matrix group",
+[IsMatrixGroup], 
+function(G)
+  local gens, iso;
+  gens := GeneratorsOfGroup(G);
+  iso := g -> NewMatrix(IsPlistMatrixRep, DefaultFieldOfMatrixGroup(G),
+                        Length(g), g);
+  return GroupHomomorphismByFunction(G, Semigroup(List(gens, iso)), iso,
+                                     AsMatrix);
+end);
+
+InstallMethod(AsMatrixGroup, "for a matrix obj group", 
+[SEMIGROUPS_IsMatrixObjGroup], 
+G -> Range(IsomorphismMatrixGroup(G)));
+
+InstallMethod(Size, "for a matrix obj group",
+[SEMIGROUPS_IsMatrixObjGroup and HasGeneratorsOfSemigroup],
+SEMIGROUPS_MatrixObjGroupRankIncrement,
+S -> Size(Range(IsomorphismMatrixGroup(S))));
+
+InstallMethod(\in, "for a matrix obj and matrix obj group",
+[IsMatrixObj, SEMIGROUPS_IsMatrixObjGroup],
+SEMIGROUPS_MatrixObjGroupRankIncrement,
+function(x, G)
+  if BaseDomain(G) <> BaseDomain(x) then 
+    return false;
+  else
+    return AsMatrix(x) in AsMatrixGroup(G);
+  fi;
+end);
+
+InstallMethod(\^, "for a matrix obj group and matrix obj",
+[SEMIGROUPS_IsMatrixObjGroup, IsMatrixObj],
+SEMIGROUPS_MatrixObjGroupRankIncrement,
+function(G, x)
+  if DimensionsMat(x) <> DimensionsOfMatrixObjGroup(G) or BaseDomain(x) <> BaseDomain(G) then 
+    Error("can't do it");
+    return;
+  elif IsOne(x) or DimensionsMat(x) = [0, 0] then 
+    return G;
+  elif x ^ -1 <> fail then 
+    return Range(IsomorphismMatrixObjGroup(AsMatrixGroup(G) ^ AsMatrix(x)));
+  else 
+    Error("can't do it");
+    return;
+  fi;
+end);
+
 

@@ -34,6 +34,7 @@ ReadPackage("semigroups/gap/options.g");
 ReadPackage("semigroups/gap/hash.gd");
 ReadPackage("semigroups/gap/matrix.gd");
 ReadPackage("semigroups/gap/semimat.gd");
+ReadPackage("semigroups/gap/grpmatobj.gd");
 
 ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/acting.gd");

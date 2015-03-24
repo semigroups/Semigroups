@@ -100,6 +100,7 @@ ReadPackage("semigroups/gap/semipperm.gi");
 ReadPackage("semigroups/gap/hash.gi");
 ReadPackage("semigroups/gap/matrix.gi");
 ReadPackage("semigroups/gap/semimat.gi");
+ReadPackage("semigroups/gap/grpmatobj.gi");
 
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/lambda-rho.gi");

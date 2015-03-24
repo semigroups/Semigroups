@@ -9,12 +9,6 @@
 #############################################################################
 ##
 
-InstallMethod(Size, "for a matrix semigroup",
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 400,
-function(S)
-  return Size(Group(List(GeneratorsOfSemigroup(S), 
-   x-> List(MutableCopyMat(x), List))));
-end);
 
 
 InstallMethod(DefaultFieldOfMatrixGroup, "for a matrix semigroup",
