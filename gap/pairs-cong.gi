@@ -13,6 +13,29 @@
 
 DeclareCategory("IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
+DeclareOperation("Enumerate", [IsSemigroupCongruence, IsFunction]);
+
+InstallGlobalFunction(SEMIGROUPS_UF_Find,
+function(table, i)
+  while table[i] <> i do
+    i := table[i];
+  od;
+  return i;
+end);
+
+InstallGlobalFunction(SEMIGROUPS_UF_Union,
+function(table, pair)
+  local ii, jj;
+  
+  ii := SEMIGROUPS_UF_Find(table, pair[1]);
+  jj := SEMIGROUPS_UF_Find(table, pair[2]);
+  
+  if ii < jj then
+    table[jj] := ii;
+  elif jj < ii then
+    table[ii] := jj;
+  fi;
+end);
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
@@ -48,7 +71,7 @@ InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
-  local s, elms, p1, p2, table, find, lookfunc;
+  local s, elms, p1, p2, table, lookfunc;
   # Input checks
   if not Size(pair) = 2 then
     Error("Semigroups: \in: usage,\n",
@@ -76,14 +99,9 @@ function(pair, cong)
     return table[p1] = table[p2];
   else
     # Otherwise, begin calculating the lookup table and look for this pair
-    find := function(table, i)
-      while table[i] <> i do
-        i := table[i];
-      od;
-      return i;
-    end;
     lookfunc := function(data, lastpair)
-      return find(data!.lookup, p1) = find(data!.lookup, p2);
+      return SEMIGROUPS_UF_Find(data!.lookup, p1)
+             = SEMIGROUPS_UF_Find(data!.lookup, p2);
     end;
     return Enumerate(cong, lookfunc)!.found;
   fi;
@@ -116,14 +134,19 @@ function(cong, lookfunc)
   Enumerate(cong!.data, lookfunc);
 end);
 
+#
+
 InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
 [IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, s, table, pairstoapply, ht, right, left, find, union,
-        genstoapply, i, nr, found, x, j, y, next, newtable, ii;
+  local cong, s, table, pairstoapply, ht, right, left, genstoapply, i, nr, 
+        found, x, j, y, next, newtable, ii;
 
   cong := data!.cong;
+  if HasAsLookupTable(cong) then
+    return data;
+  fi;
   s := Range(cong);
 
   table := data!.lookup;
@@ -132,26 +155,6 @@ function(data, lookfunc)
 
   right := RightCayleyGraphSemigroup(s);
   left := LeftCayleyGraphSemigroup(s);
-
-  find := function(i)
-    while table[i] <> i do
-      i := table[i];
-    od;
-    return i;
-  end;
-
-  union := function(pair)
-    local ii, jj;
-
-    ii := find(pair[1]);
-    jj := find(pair[2]);
-
-    if ii < jj then
-      table[jj] := ii;
-    elif jj < ii then
-      table[ii] := jj;
-    fi;
-  end;
 
   genstoapply := [1 .. Size(right[1])];
   i := data!.pos;
@@ -163,7 +166,7 @@ function(data, lookfunc)
     for x in pairstoapply do
       if x[1] <> x[2] and HTValue(ht, x) = fail then
         HTAdd(ht, x, true);
-        union(x);
+        SEMIGROUPS_UF_Union(table, x);
         # Have we found what we were looking for?
         if lookfunc(data, x) then
           data!.found := true;
@@ -183,7 +186,7 @@ function(data, lookfunc)
         HTAdd(ht, y, true);
         nr := nr + 1;
         pairstoapply[nr] := y;
-        union(y);
+        SEMIGROUPS_UF_Union(table, y);
         if lookfunc(data, y) then
           found := true;
         fi;
@@ -195,7 +198,7 @@ function(data, lookfunc)
         HTAdd(ht, y, true);
         nr := nr + 1;
         pairstoapply[nr] := y;
-        union(y);
+        SEMIGROUPS_UF_Union(table, y);
         if lookfunc(data, y) then
           found := true;
         fi;
@@ -215,7 +218,7 @@ function(data, lookfunc)
   next := 1;
   newtable := [];
   for i in [1 .. Size(table)] do
-    ii := find(i);
+    ii := SEMIGROUPS_UF_Find(table, i);
     if ii = i then
       newtable[i] := next;
       next := next + 1;
@@ -352,6 +355,7 @@ InstallMethod(Enumerator,
 "for a semigroup congruence class",
 [IsCongruenceClass],
 function(class)
+  local cong, record, lookfunc;
   cong := EquivalenceClassRelation(class);
   # cong has been enumerated: return a list
   if HasAsLookupTable(cong) then
@@ -363,21 +367,22 @@ function(class)
   record.ElementNumber := function(enum, pos)
     local lookfunc;
     if not IsBound(enum!.list) then
-      enum!.cong := EquivalenceRelation(UnderlyingCollection(enum));
+      enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
       enum!.elms := AsSSortedList(Range(enum!.cong));
-      enum!.rep := Position(elms, Representative(UnderlyingCollection(enum)));
-      enum!.list := [];
-      enum!.found := BlistList(Size(elms), []);
-      enum!.len := 0;
+      enum!.rep := Position(enum!.elms, Representative(UnderlyingCollection(enum)));
+      enum!.list := [enum!.rep];
+      enum!.found := BlistList(enum!.elms, [enum!.rep]);
+      enum!.len := 1;
     fi;
     if pos <= enum!.len then
       return enum!.elms[enum!.list[pos]];
     fi;
     lookfunc := function(data, lastpair)
-      classno := find(data!.lookup, enum!.rep);
-      if classno = find(data!.lookup, lastpair[1]) then
+      local classno, i;
+      classno := SEMIGROUPS_UF_Find(data!.lookup, enum!.rep);
+      if classno = SEMIGROUPS_UF_Find(data!.lookup, lastpair[1]) then
         for i in [1..Size(data!.lookup)] do
-          if find(data!.lookup, i) = classno and not enum!.found[i] then
+          if SEMIGROUPS_UF_Find(data!.lookup, i) = classno and not enum!.found[i] then
             enum!.found[i] := true;
             enum!.len := enum!.len + 1;
             enum!.list[enum!.len] := i;
@@ -394,7 +399,7 @@ function(class)
     fi;
   end;
   record.NumberElement := function(enum, elm)
-    
+    # TODO
   end;
   return EnumeratorByFunctions(class, record);
 end);

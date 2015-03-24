@@ -13,3 +13,5 @@
 
 DeclareGlobalFunction("SEMIGROUPS_SetupCongData");
 DeclareAttribute("AsLookupTable", IsSemigroupCongruence);
+DeclareGlobalFunction("SEMIGROUPS_UF_Find");
+DeclareGlobalFunction("SEMIGROUPS_UF_Union");
