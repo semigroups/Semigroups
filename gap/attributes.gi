@@ -635,55 +635,35 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local min, o, rank, i, pos, f, min_found, rank_i;
+  local d, rep, gens;
 
-  if IsSemigroupIdeal(s)
-    and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
+  if IsSemigroupIdeal(s) and
+   HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
     return MultiplicativeZero(SupersemigroupOfIdeal(s));
   fi;
 
-  min := MinActionRank(s);
-  o := LambdaOrb(s);
-  rank := LambdaRank(s);
-
-  #is there an element in s with minimum possible rank
-  if IsTransformationSemigroup(s) then
-    i := 0;
-    repeat
-      i := i + 1;
-      pos := EnumeratePosition(o, [i], false);
-    until pos <> fail or i = ActionDegree(s);
-  elif IsPartialPermSemigroup(s) then
-    pos := EnumeratePosition(o, [], false);
-  else
-    pos := LookForInOrb(o, function(o, x)
-                             return rank(x) = min;
-                           end, 2);
-  fi;
-
-  if pos <> fail and pos <> false then
-    f := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
-  else
-    # lambda orb is closed, find an element with minimum rank
-    min_found := rank(o[2]);
-    pos := 2;
-    i := 1;
-
-    while min_found > min and i < Length(o) do
-      i := i + 1;
-      rank_i := rank(o[i]);
-      if rank_i < min_found then
-        min_found := rank_i;
-        pos := i;
+  if HasMinimalDClass(s) then
+    d := MinimalDClass(s);
+    if HasSize(d) then
+      if Size(d) = 1 then
+        return Representative(d);
+      else
+        return fail;
       fi;
-    od;
-    f := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
-  fi;
-  if IsIdempotent(f) and Size(GreensRClassOfElementNC(s, f)) = 1 then
-    return f;
+    fi;
   fi;
 
-  return fail;
+  if not HasGeneratorsOfSemigroup(s) then
+    return MultiplicativeZero(SupersemigroupOfIdeal(s));
+  fi;
+
+  rep := RepresentativeOfMinimalIdeal(s);
+  gens := GeneratorsOfSemigroup(s);
+  if ForAll(gens, x -> x * rep = rep and rep * x = rep) then
+    return rep;
+  else
+    return fail;
+  fi;
 end);
 
 # same method for ideals
