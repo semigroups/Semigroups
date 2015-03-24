@@ -9,4 +9,7 @@
 #############################################################################
 ##
 
-DeclareCategory( "SEMIGROUPS_IsMatrix
+DeclareSynonym( "SEMIGROUPS_IsMatrixObjGroup",
+  IsGroup and CategoryCollections(IsMatrixObj));
+
+
