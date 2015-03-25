@@ -11,6 +11,20 @@
 
 # TODO special cases for 0 dimensional s-matrices
 
+InstallMethod(IsomorphismPermGroup, "for an s-matrix group",
+[IsSMatrixGroup], 
+function(G)
+  local iso1, iso2;
+
+  iso1 := IsomorphismMatrixGroup(G);
+  iso2 := IsomorphismPermGroup(Range(iso1));
+  return GroupHomomorphismByFunction(G, 
+                                     Range(iso2), 
+                                     x -> (x ^ iso1) ^ iso2, 
+                                     x -> (x ^ InverseGeneralMapping(iso2)) ^
+                                          InverseGeneralMapping(iso1));
+end);
+
 # TODO ViewString
 
 InstallMethod(ViewObj,
