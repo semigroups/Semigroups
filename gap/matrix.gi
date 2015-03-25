@@ -18,7 +18,7 @@
 # big enough, and that all entries are given inside the field. This will
 # prevent us and users from creating stupid matrix objects.
 
-InstallMethod(NewMatrix, "for IsSPlistMatrixRep, a ring, an int, and a list",
+InstallMethod(NewSMatrix, "for IsSPlistMatrixRep, a ring, an int, and a list",
 [IsSPlistMatrixRep, IsRing, IsInt, IsList],
 function(filter, basedomain, rl, l)
   local m,i,e,filter2;
