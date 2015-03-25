@@ -26,7 +26,7 @@
 # Our Matrix objects
 #
 DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and 
- IsAssociativeElement );
+                             IsAssociativeElement);
 DeclareCategoryCollections("IsSMatrix");
 DeclareCategoryCollections("IsSMatrixCollection");
 

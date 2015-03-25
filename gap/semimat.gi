@@ -9,7 +9,6 @@
 #############################################################################
 ##
 
-
 InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> BaseDomain(Representative(S)));
 
@@ -23,6 +22,64 @@ InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
 
 InstallMethod(OneMutable, "for an smatrix", [IsSMatrixCollection],
 coll -> One(Representative(coll)));
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+    return IsomorphismMatrixSemigroup(S, GF(2));
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a semigroup and a ring",
+[IsTransformationSemigroup, IsRing],
+function(S, R)
+  local n, basis, gens;
+
+  n := DegreeOfTransformationSemigroup(S);
+
+  basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
+
+  gens := List(GeneratorsOfSemigroup(S),
+   x -> basis{ImageListOfTransformation(x, n)});
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
+   x -> basis{ImageListOfTransformation(x, n)},
+   x -> Transformation(List(x, PositionNonZero)));
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a matrix semigroup and a ring",
+[IsMatrixSemigroup, IsRing],
+function(S, R)
+    local f, g;
+    if BaseDomain(Representative(S)) = R then
+      return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
+    else
+      # This is obviously not ideal!
+      f := IsomorphismTransformationSemigroup(S);
+      g := IsomorphismMatrixSemigroup(Range(f),R);
+      return f * g;
+    fi;
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a semigroup and a ring",
+[IsSemigroup, IsRing],
+function(S, R)
+  return IsomorphismMatrixSemigroup(AsTransformationSemigroup(S), R);
+end);
+
+InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return Range(IsomorphismMatrixSemigroup(S));
+end);
+
+InstallMethod(AsMatrixSemigroup, "for a semigroup and a ring",
+[IsSemigroup, IsRing],
+function(S, R)
+  return Range(IsomorphismMatrixSemigroup(S, R));
+end);
 
 # from here 
 #InstallMethod(ImagesRepresentative, "for a general mapping and null map",
@@ -554,60 +611,3 @@ function(arg)
     return Semigroup(gens);
 end);
 
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-    return IsomorphismMatrixSemigroup(S, GF(2));
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup and a ring",
-[IsTransformationSemigroup, IsRing],
-function(S, R)
-  local n, basis, gens;
-
-  n := DegreeOfTransformationSemigroup(S);
-
-  basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
-
-  gens := List(GeneratorsOfSemigroup(S),
-   x -> basis{ ImageListOfTransformation(x, n) });
-
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-   x -> basis{ ImageListOfTransformation(x, n) },
-   x -> Transformation(List(x, PositionNonZero)));
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a matrix semigroup and a ring",
-[IsMatrixSemigroup, IsRing],
-function(S, R)
-    local f,g;
-    if BaseDomain(Representative(S)) = R then
-        return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
-    else
-        # This is obviously not ideal!
-	f := IsomorphismTransformationSemigroup(S);
-	g := IsomorphismMatrixSemigroup(Range(f),R);
-        return f * g;
-    fi;
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup and a ring",
-[IsSemigroup, IsRing],
-function(S, R)
-    return IsomorphismMatrixSemigroup(AsTransformationSemigroup(S), R);
-end);
-
-InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  return Range(IsomorphismMatrixSemigroup(S));
-end);
-
-InstallMethod(AsMatrixSemigroup, "for a semigroup and a ring",
-[IsSemigroup, IsRing],
-function(S, R)
-    return Range(IsomorphismMatrixSemigroup(S,R));
-end);
