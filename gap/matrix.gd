@@ -39,6 +39,8 @@ DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsList]);
 
 # These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsSMatrix);
+DeclareAttribute("RowSpaceTransformation", IsSMatrix);
+DeclareAttribute("RowSpaceTransformationInv", IsSMatrix);
 DeclareAttribute("ColSpaceBasis", IsSMatrix);
 DeclareAttribute("RightInverse", IsSMatrix);
 DeclareAttribute("LeftInverse", IsSMatrix);
@@ -96,3 +98,7 @@ DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
 DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);
 DeclareAttribute("BaseDomain", IsSMatrixCollection);
+
+##
+DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
+

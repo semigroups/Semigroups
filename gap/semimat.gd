@@ -24,11 +24,6 @@ InstallTrueMethod(CanComputeSize, IsMatrixSemigroup and IsFinite);
 DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 
-#FIXME are the next 3 really required??
-DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
-DeclareOperation("RowSpaceTransformation", [IsSMatrix]);
-DeclareOperation("RowSpaceTransformationInv", [IsSMatrix]);
-
 # Right action of a matrix over a field on a row space
 DeclareGlobalFunction("SMatrixRowSpaceRightAction");
 # Given a row space rsp and a matrix mat, computes
