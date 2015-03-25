@@ -689,8 +689,8 @@ InstallMethod(RepresentativeOfMinimalIdeal,
 "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local rank, o, pos, min, len, m, n, i;
-  
+  local rank, o, pos, min, len, m, i;
+
   if IsSemigroupIdeal(S)
    and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
     return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
