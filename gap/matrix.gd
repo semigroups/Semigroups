@@ -30,10 +30,10 @@ DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and
 DeclareCategoryCollections("IsSMatrix");
 DeclareCategoryCollections("IsSMatrixCollection");
 
-BindGlobal("SMatrixFamily", NewFamily("SMatrixFamily",
- IsSMatrix, CanEasilyCompareElements));
-BindGlobal("SMatrixType", NewType(SMatrixFamily,
- IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep));
+#BindGlobal("SMatrixFamily", NewFamily("SMatrixFamily",
+# IsSMatrix, CanEasilyCompareElements));
+#BindGlobal("SMatrixType", NewType(SMatrixFamily,
+# IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep));
 
 DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsList]);
 
@@ -71,13 +71,19 @@ DeclareAttribute( "SemiEchelonMatTransformation",
 #
 # What about AttributeStoringRep? Is it desirable to just store RowSpaceBasis
 # ColumnSpaceBasis as Attributes?
-DeclareRepresentation("IsSPlistMatrixRep",
-  IsRowListMatrix and IsPositionalObjectRep, [] );
+DeclareRepresentation("IsPlistSMatrixRep",
+  IsComponentObjectRep, []);
+BindGlobal("PlistSMatrixFamily", NewFamily("PlistSMatrixFamily",
+  IsSMatrix, CanEasilyCompareElements));
+BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
+  IsSMatrix and IsPlistSMatrixRep));
 
-BindGlobal("SEMIGROUPS_BDPOS", 1);
-BindGlobal("SEMIGROUPS_EMPOS", 2);
-BindGlobal("SEMIGROUPS_RLPOS", 3);
-BindGlobal("SEMIGROUPS_ROWSPOS", 4);
+DeclareRepresentation("IsCVECSMatrixRep",
+  IsComponentObjectRep, []);
+BindGlobal("PlistSMatrixFamily", NewFamily("PlistSMatrixFamily",
+  IsSMatrix, CanEasilyCompareElements));
+BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
+  IsSMatrix and IsCVECSMatrixRep));
 
 DeclareGlobalFunction( "RandomSMatrix" );
 
