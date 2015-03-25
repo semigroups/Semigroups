@@ -23,13 +23,14 @@ InstallMethod(NewSMatrix, "for IsSPlistMatrixRep, a ring, an int, and a list",
 function(filter, basedomain, rl, l)
   local m,i,e,filter2;
   m := [basedomain,e,rl,l];
-  filter2 := filter and IsSMatrix and IsMutable;
+  filter2 := filter and IsSMatrix;
   if HasCanEasilyCompareElements(Representative(basedomain))
      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
   Objectify( NewType(CollectionsFamily(FamilyObj(basedomain)),
-                     filter2), m );
+                     filter2), rec( l ) );
+  Set
   return m;
 end);
 
