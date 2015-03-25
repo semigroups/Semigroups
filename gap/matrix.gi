@@ -407,3 +407,8 @@ InstallGlobalFunction( RandomSMatrix, function ( arg )
     return NewMatrix(IsSPlistMatrixRep, R, n, One(R) * mat);
 end );
 
+InstallMethod(IdentitySMatrix, "for a finite field and pos int",
+[IsField and IsFinite, IsPosInt], 
+function(R, n)
+  return AsSMatrix(IdentityMatrix(n, R));
+end);

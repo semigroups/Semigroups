@@ -87,3 +87,5 @@ BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
 
 DeclareGlobalFunction( "RandomSMatrix" );
 
+DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
+DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
