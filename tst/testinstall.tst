@@ -873,7 +873,7 @@ gap> S := Semigroup(
 gap> x := PartialPerm( [  ], [  ] );;
 gap> I := SemigroupIdeal(S, x);;
 gap> L := GreensLClassOfElement(I, x);
-{PartialPerm( [  ], [  ] )}
+<Green's L-class: <empty partial perm>>
 gap> SchutzenbergerGroup(L); 
 Group(())
 
