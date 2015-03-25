@@ -398,11 +398,11 @@ function(smat)
   return AsSMatrix(smat, mat);
 end);
 
-InstallMethod(AsSMatrix, "for an s-matrix splist matrix rep and a matrix", 
-[IsSMatrix and IsPlistSMatrixRep, IsMatrix],
+InstallMethod(AsSMatrix, "for an s-matrix and a matrix", 
+[IsSMatrix, IsMatrix],
 function(smat, mat)
-  return NewSMatrix(IsPlistSMatrixRep, BaseDomain(smat), DegreeOfSMatrix(smat), 
-   mat);
+  return NewSMatrix(ConstructingFilter(smat), BaseDomain(smat),
+                    DegreeOfSMatrix(smat), mat);
 end);
 
 InstallMethod(DegreeOfSMatrixCollection, "for an s-matrix collection",
@@ -413,10 +413,42 @@ function(coll)
   deg := DegreeOfSMatrix(coll[1]);
   if not ForAll(coll, x -> DegreeOfSMatrix(x) = deg) then
     Error("Semigroups: DegreeOfSMatrixCollection: usage,\n",
-          "the argument <coll> must be a collection of SMatrixs of ",
+          "the argument <coll> must be a collection of s-matrices of ",
           "equal degree,");
     return;
   fi;
 
   return deg;
+end);
+
+InstallMethod(BaseDomain, "for an s-matrix collection",
+[IsSMatrixCollection],
+function(coll)
+  local base;
+  base := BaseDomain(coll[1]);
+  if not ForAll(coll, x -> BaseDomain(x) = base) then
+    Error("Semigroups: DegreeOfSMatrixCollection: usage,\n",
+          "the argument <coll> must be a collection of s-matrices of ",
+          "with the same base domain,");
+    return;
+  fi;
+
+  return base;
+end);
+
+InstallMethod(OneMutable, "for an s-matrix", [IsSMatrix], 
+x-> AsSMatrix(x, One(x!.mat)));
+
+InstallMethod(\=, "for an s-matrix", [IsSMatrix, IsSMatrix], 
+function(x, y)
+  return BaseDomain(x) = BaseDomain(y) and x!.mat = y!.mat;
+end);
+
+InstallMethod(\<, "for an s-matrix", [IsSMatrix, IsSMatrix], 
+function(x, y)
+  return DegreeOfSMatrix(x) < DegreeOfSMatrix(y) 
+    or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y) 
+        and BaseDomain(x) < BaseDomain(y)) 
+    or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y) 
+        and BaseDomain(x) = BaseDomain(y) and x!.mat < y!.mat);
 end);

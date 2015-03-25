@@ -15,15 +15,23 @@
 
 InstallMethod(ViewObj,
 "for a s-matrix group with generators",
-[IsSMatrixGroup and HasGeneratorsOfGroup],
+[IsSMatrixGroup],
 function(G)
-  local deg;
-  deg := DegreeOfSMatrix(G.1);
+  local gens, deg;
+
+  if HasGeneratorsOfGroup(G) then 
+    gens := GeneratorsOfGroup(G);
+  elif HasGeneratorsOfSemigroup(G) then  
+    gens := GeneratorsOfSemigroup(G);
+  else 
+    TryNextMethod(); #FIXME ok?
+  fi;
+  deg := DegreeOfSMatrix(gens[1]);
   Print("<group of ");
   Print(deg, "x", deg);
   Print(" s-matrices over ", BaseDomain(G));
-  Print(" with ", Length(GeneratorsOfGroup(G)), " generator");
-  if Length(GeneratorsOfGroup(G)) > 1 then
+  Print(" with ", Length(gens), " generator");
+  if Length(gens) > 1 then
     Print("s");
   fi;
   Print(">");
@@ -35,15 +43,13 @@ function(coll)
   return ForAll(coll, x -> Inverse(x) <> fail);
 end);
 
-InstallImmediateMethod(GeneratorsOfGroup, 
-                       IsSMatrixGroup and HasGeneratorsOfSemigroup, 
-                       0, 
-                       GeneratorsOfSemigroup);
+InstallMethod(GeneratorsOfGroup,  
+"for an s-matrix group with semigroup generators",
+[IsSMatrixGroup and HasGeneratorsOfSemigroup], GeneratorsOfSemigroup);
 
-InstallImmediateMethod(GeneratorsOfSemigroup, 
-                       IsSMatrixGroup and HasGeneratorsOfGroup, 
-                       0, 
-                       GeneratorsOfGroup);
+InstallMethod(GeneratorsOfSemigroup, 
+"for an s-matrix group with group generators",
+[IsSMatrixGroup and HasGeneratorsOfGroup], GeneratorsOfGroup);
 
 InstallMethod(IsomorphismMatrixGroup, "for an s-matrix group",
 [IsSMatrixGroup], 
@@ -68,7 +74,8 @@ function(G)
   if Length(gens) = 0 then 
     Error("not yet implemented");
   fi;
-  iso := g -> AsSMatrix(Representative(G), g);
+  iso := g -> NewSMatrix(IsPlistSMatrixRep, DefaultFieldOfMatrixGroup(G), 
+                         DimensionOfMatrixGroup(G), g);
   return GroupHomomorphismByFunction(G, 
                                      Semigroup(List(gens, iso)), 
                                      iso,

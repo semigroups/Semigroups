@@ -8,15 +8,14 @@
 ##
 #############################################################################
 ##
-## Some of this code is based on code taken from grpmat.gd in the GAP
-## library
+
+# This file contains 
 
 #FIXME move to matrix.gd
 DeclareOperation("OneMutable", [IsSMatrixCollection]);
 
 DeclareSynonym("IsMatrixSemigroup", IsSMatrixCollection and IsSemigroup);
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
-DeclareAttribute("BaseDomain", IsMatrixSemigroup);
 DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
 InstallTrueMethod(CanComputeSize, IsMatrixSemigroup and IsFinite);
 

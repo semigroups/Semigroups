@@ -90,6 +90,9 @@ BindGlobal("CVECSMatrixType", NewType(CVECSMatrixFamily,
 
 DeclareGlobalFunction( "RandomSMatrix" );
 
+DeclareOperation("OneMutable", [IsSMatrix]);
+
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
 DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);
+DeclareAttribute("BaseDomain", IsSMatrixCollection);
