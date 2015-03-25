@@ -280,22 +280,22 @@ function(d)
   fi;
 
   # FIXME remove this hack!
-  if IsMatrixSemigroupGreensClass(d) and
-   IsNullMapMatrixGroup(SchutzenbergerGroup(d)) then 
-
-    rms := ReesMatrixSemigroup(Group(()), [[()]]);
-    
-    iso := function(x)
-      return Objectify(TypeReesMatrixSemigroupElements(rms),
-                       [1, (), 1, Matrix(rms)]);
-    end;
-
-    null := Representative(d);
-    hom := MappingByFunction(d, rms, iso, x-> null);
-    SetIsInjective(hom, true);
-    SetIsTotal(hom, true);
-    return hom;
-  fi;
+  #if IsMatrixSemigroupGreensClass(d) and
+  # IsNullMapMatrixGroup(SchutzenbergerGroup(d)) then 
+  #
+  #  rms := ReesMatrixSemigroup(Group(()), [[()]]);
+  #  
+  #  iso := function(x)
+  #    return Objectify(TypeReesMatrixSemigroupElements(rms),
+  #                     [1, (), 1, Matrix(rms)]);
+  #  end;
+  #
+  #  null := Representative(d);
+  #  hom := MappingByFunction(d, rms, iso, x-> null);
+  #  SetIsInjective(hom, true);
+  #  SetIsTotal(hom, true);
+  #  return hom;
+  #fi;
 
   rep := Representative(GroupHClass(d));
   isop := IsomorphismPermGroup(GroupHClass(d));
