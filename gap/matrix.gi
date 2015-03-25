@@ -40,15 +40,13 @@ end);
 ############################################################################
 ## Printing and viewing methods:
 #############################################################################
-#InstallMethod(ViewObj, "for a semigroups plist matrix",
-#[IsPlistSMatrixRep],
-#function( m )
-#  Print("<semigroups ");
-#  if IsCheckingMatrix(m) then Print("checking "); fi;
-#  if not(IsMutable(m)) then Print("immutable "); fi;
-#  Print(Length(m![SEMIGROUPS_ROWSPOS]), "x", m![SEMIGROUPS_RLPOS],
-#         "-matrix over ",m![SEMIGROUPS_BDPOS],">");
-#end );
+InstallMethod(ViewObj, "for a semigroups plist matrix",
+[IsPlistSMatrixRep],
+function(m)
+  Print("<s-matrix of degree ");
+  Print(DegreeOfSMatrix(m),
+         " over ", BaseDomain(m),">");
+end );
 #
 #InstallMethod(PrintObj, "for a semigroups plist matrix",
 #[IsPlistSMatrixRep],
