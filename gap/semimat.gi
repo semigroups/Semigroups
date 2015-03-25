@@ -193,59 +193,6 @@ function(s, vsp, m)
   return nvsp;
 end);
 
-
-# 
-# If dim(V * mat) = dim(V) compute a right inverse for mat, otherwise
-# return fail.
-#
-#T do this "by hand", and in place, or find a
-#T kernel function that does this.
-#
-InstallGlobalFunction(SMatrixLocalRightInverse,
-function( S, V, mat )
-        local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
-
-        # We assume that mat is quadratic but we don't check this.
-        # If a semigroup decides to have non-quadratic matrices in it,
-        # something is seriously wrong anyway.
-        n := DimensionsMat(mat)[1];
-        k := DimensionsMat(V)[1];
-
-        W := ZeroMatrix(n, 2 * n, mat);
-
-        #T I think this should all be done in place
-        CopySubMatrix( V * mat, W, [1 .. k], [1 .. k], [1 .. n], [1 .. n]);
-        CopySubMatrix( V, W, [1 .. k], [1 .. k], [1 .. n], [n + 1 .. 2 * n]);
-
-        se := SemiEchelonMat(W);
-
-		# If the matrix does not act injectively on V,
-		# then there is no right inverse
-		# FIXME: I think we can now simplify things below
-        if Number(se.heads{[1..n]}, IsZero) > n - k then
-            return fail;
-        fi;
-
-        for i in [1 .. Length(se.vectors)] do
-            W[i] := ShallowCopy(se.vectors[i]);
-        od;
-
-        # add missing heads
-        u := One(BaseDomain(W));
-        j := k + 1;
-        for i in [1 .. n] do
-            if se.heads[i] = 0 then
-                W[j][i] := u;
-                W[j][n + i] := u;
-                j := j + 1;
-            fi;
-        od;
-
-        TriangulizeMat(W);
-
-        return ExtractSubMatrix(W, [1 .. n], [n + 1 .. 2 * n]);
-end);
-
 #T returns an invertible matrix
 #T make pretty and efficient (in that order)
 #T In particular the setup for the matrix should be much more
@@ -367,7 +314,7 @@ function(S, x, y)
   local m, inv;
     
     m := TransposedMat(y) * x;
-    inv := SMatrixLocalRightInverse(S, x, m);
+    inv := RightInverse(x, m);
     if inv = fail then 
       return fail;
     else
@@ -387,14 +334,14 @@ function(S)
     deg := DegreeOfSMatrix(gens[1]);
     Print("<monoid of ");
     Print(deg, "x", deg);
-    Print(" matrices over ", BaseDomain(S));
+    Print(" s-matrices over ", BaseDomain(S));
     Print(" with ", Length(gens), " generator");
   else
     gens := GeneratorsOfSemigroup(S);
     deg := DegreeOfSMatrix(gens[1]);
     Print("<semigroup of ");
     Print(deg, "x", deg);
-    Print(" matrices over ", BaseDomain(S));
+    Print(" s-matrices over ", BaseDomain(S));
     Print(" with ", Length(gens), " generator");
   fi;
   if Length(gens) > 1 then
@@ -424,7 +371,7 @@ function(S)
   dims := DimensionsMat(gens[1]);
   Print("<ideal of semigroup of ");
   Print(dims[1], "x", dims[2]);
-  Print(" matrices over ", BaseDomain(gens[1]));
+  Print(" s-matrices over ", BaseDomain(gens[1]));
   Print(" with ", Length(gens), " generator");
   
   if Length(gens) > 1 then

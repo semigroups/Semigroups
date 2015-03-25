@@ -544,7 +544,7 @@ end);
 InstallMethod(LambdaInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-    return SMatrixLocalRightInverse(s, rsp, mat);
+    return RightInverse(mat);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
@@ -577,12 +577,10 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> InverseLeftBlocks);
 
 # FIXME is this right? JDM
-
 InstallMethod(RhoInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-  return TransposedMat(SMatrixLocalRightInverse(s, rsp, 
-                        TransposedMat(mat)));
+  return LeftInverse(mat);
 end);
 
 InstallMethod(LambdaBound, "for a transformation semigroup",

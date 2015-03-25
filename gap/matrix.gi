@@ -84,6 +84,15 @@ function( m )
   return st;
 end);
 
+#T known information can be copied!
+InstallMethod(TransposedMatImmutable, "for a plist s-matrix",
+[IsSMatrix and IsPlistSMatrixRep],
+function(m)
+  local n;
+  n := AsSMatrix(m, TransposedMat(m!.mat));
+  return n;
+end);
+
 InstallMethod(AsMatrix, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
 x -> x!.mat);
@@ -127,6 +136,12 @@ function(m)
   return AsSMatrix(m, rsp{[1..deg]}{[deg + 1 .. 2 * deg]});
 end);
 
+InstallMethod(LeftInverse, "for a plist s-matrix",
+[IsSMatrix and IsPlistSMatrixRep],
+function(m)
+  return TransposedMat(RightInverse(TransposedMat(m)));
+end);
+
 ############################################################################
 ## Helper functions to deal with s-matrices.
 #############################################################################
@@ -160,7 +175,6 @@ function(m)
   SetRowSpaceTransformation(m, rsp{[1 .. deg]}{[deg + 1 .. 2 * deg] }); 
   SetRowSpaceTransformationInv(m, RowSpaceTransformation(m)^(-1));
 end);
-
 
 ##############################################################################
 ###
