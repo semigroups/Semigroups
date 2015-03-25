@@ -199,7 +199,7 @@ InstallGlobalFunction( RandomSMatrix, function ( arg )
     mat[i] := row;
   od;
 
-  return NewMatrix(IsPlistSMatrixRep, R, n, One(R) * mat);
+  return NewSMatrix(IsPlistSMatrixRep, R, n, One(R) * mat);
 end);
 
 InstallMethod(IdentitySMatrix, "for a finite field and pos int",
