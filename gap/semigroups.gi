@@ -195,10 +195,10 @@ end);
 InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
-function(gens, record)
+function(gens, opts)
   local n, i, opts, S, filts, pos, f;
 
-  record:=SEMIGROUPS_ProcessOptionsRec(record);
+  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
   gens:=AsList(gens);
   
   # try to find a smaller generating set
@@ -215,7 +215,7 @@ function(gens, record)
       Remove(gens, 1);
     fi;
 
-    opts:=ShallowCopy(record);  
+    opts:=ShallowCopy(opts);  
     opts.small:=false;  
     opts.regular:=false;
     S:=Semigroup(gens[1], opts);
@@ -238,14 +238,14 @@ function(gens, record)
 
   filts := IsSemigroup and IsAttributeStoringRep;
 
-  if not record.generic and IsGeneratorsOfActingSemigroup(gens) then 
+  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then 
     filts:=filts and IsActingSemigroup;
   fi;
 
   S:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
-  SetSemigroupOptions(S, record);
+  SetSemigroupOptions(S, opts);
   
-  if record.regular then 
+  if opts.regular then 
     SetIsRegularSemigroup(S, true);
   fi;
  
