@@ -47,7 +47,7 @@ DeclareAttribute("RowRank", IsSMatrix);
 DeclareAttribute("ColRank", IsSMatrix);
 DeclareAttribute("BaseDomain", IsMatrix);
 DeclareOperation("AsMatrix", [IsSMatrix]);
-DeclareOperation("AsSMatrix", [IsMatrix]);
+DeclareOperation("AsSMatrix", [IsSMatrix, IsMatrix]);
 
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
 # We also need operations for acting on Row/Column spaces.
@@ -90,4 +90,4 @@ DeclareGlobalFunction( "RandomSMatrix" );
 
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
-
+DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);

@@ -11,9 +11,39 @@
 
 # TODO special cases for 0 dimensional s-matrices
 
-InstallMethod(GeneratorsOfGroup, 
-"for an s-matrix group with semigroup generators",
-[IsSMatrixGroup and HasGeneratorsOfSemigroup], GeneratorsOfSemigroup);
+# TODO ViewString
+
+InstallMethod(ViewObj,
+"for a s-matrix group with generators",
+[IsSMatrixGroup and HasGeneratorsOfGroup],
+function(G)
+  local deg;
+  deg := DegreeOfSMatrix(G.1);
+  Print("<group of ");
+  Print(deg, "x", deg);
+  Print(" s-matrices over ", BaseDomain(G));
+  Print(" with ", Length(GeneratorsOfGroup(G)), " generator");
+  if Length(GeneratorsOfGroup(G)) > 1 then
+    Print("s");
+  fi;
+  Print(">");
+end);
+
+InstallMethod(IsGeneratorsOfMagmaWithInverses, "for an s-matrix collection", 
+[IsSMatrixCollection], 
+function(coll)
+  return ForAll(coll, x -> Inverse(x) <> fail);
+end);
+
+InstallImmediateMethod(GeneratorsOfGroup, 
+                       IsSMatrixGroup and HasGeneratorsOfSemigroup, 
+                       0, 
+                       GeneratorsOfSemigroup);
+
+InstallImmediateMethod(GeneratorsOfSemigroup, 
+                       IsSMatrixGroup and HasGeneratorsOfGroup, 
+                       0, 
+                       GeneratorsOfGroup);
 
 InstallMethod(IsomorphismMatrixGroup, "for an s-matrix group",
 [IsSMatrixGroup], 
@@ -64,7 +94,7 @@ function(x, G)
 end);
 
 InstallMethod(\^, "for an s-matrix group and s-matrix",
-[IsSMatrixGroup, IsMatrixObj],
+[IsSMatrixGroup, IsSMatrix],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x) 
       or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) 
@@ -79,7 +109,7 @@ function(G, x)
 end);
 
 InstallMethod(ClosureGroup, "for an s-matrix group and s-matrix",
-[IsSMatrixGroup, IsMatrixObj],
+[IsSMatrixGroup, IsSMatrix],
 function(G, x) 
   if BaseDomain(G) <> BaseDomain(x) 
       or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) 

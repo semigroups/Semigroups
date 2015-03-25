@@ -13,7 +13,10 @@ InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> BaseDomain(Representative(S)));
 
 InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> Degree(Representative(S)));
+[IsMatrixSemigroup], S -> DegreeOfSMatrix(Representative(S)));
+
+InstallMethod(DegreeOfSMatrixCollection, "for a matrix semigroup",
+[IsMatrixSemigroup], DegreeOfMatrixSemigroup);
 
 InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], C -> IsMatrixSemigroup(Parent(C)));
@@ -375,7 +378,7 @@ function(S, x, y)
     fi;
 end);
 
-#
+# TODO ViewString
 
 InstallMethod(ViewObj,
 "for a matrix semigroup with generators",

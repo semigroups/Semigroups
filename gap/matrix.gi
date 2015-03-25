@@ -414,3 +414,37 @@ InstallMethod(IdentitySMatrix, "for a finite field and pos int",
 function(R, n)
   return AsSMatrix(IdentityMatrix(n, R));
 end);
+
+InstallMethod(InverseOp, "for an s-matrix", 
+[IsSMatrix], 
+function(smat)
+  local mat;
+  mat := Inverse(smat!.mat);
+  if mat = fail then 
+    return fail;
+  fi;
+  return AsSMatrix(smat, mat);
+end);
+
+InstallMethod(AsSMatrix, "for an s-matrix splist matrix rep and a matrix", 
+[IsSMatrix and IsPlistSMatrixRep, IsMatrix],
+function(smat, mat)
+  return NewSMatrix(IsPlistSMatrixRep, BaseDomain(smat), DegreeOfSMatrix(smat), 
+   mat);
+end);
+
+InstallMethod(DegreeOfSMatrixCollection, "for an s-matrix collection",
+[IsSMatrixCollection],
+function(coll)
+  local deg;
+
+  deg := DegreeOfSMatrix(coll[1]);
+  if not ForAll(coll, x -> DegreeOfSMatrix(x) = deg) then
+    Error("Semigroups: DegreeOfSMatrixCollection: usage,\n",
+          "the argument <coll> must be a collection of SMatrixs of ",
+          "equal degree,");
+    return;
+  fi;
+
+  return deg;
+end);
