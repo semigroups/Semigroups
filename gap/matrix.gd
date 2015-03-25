@@ -72,14 +72,14 @@ DeclareAttribute( "SemiEchelonMatTransformation",
 # What about AttributeStoringRep? Is it desirable to just store RowSpaceBasis
 # ColumnSpaceBasis as Attributes?
 DeclareRepresentation("IsPlistSMatrixRep",
-  IsComponentObjectRep, []);
+  IsSMatrix and IsComponentObjectRep, []);
 BindGlobal("PlistSMatrixFamily", NewFamily("PlistSMatrixFamily",
   IsSMatrix, CanEasilyCompareElements));
 BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
   IsSMatrix and IsPlistSMatrixRep));
 
 DeclareRepresentation("IsCVECSMatrixRep",
-  IsComponentObjectRep, []);
+  IsSMatrix and IsComponentObjectRep, []);
 BindGlobal("CVECSMatrixFamily", NewFamily("CVECSMatrixFamily",
   IsSMatrix, CanEasilyCompareElements));
 BindGlobal("CVECSMatrixType", NewType(CVECSMatrixFamily,
