@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  semimat.gd
+#W  semimat.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
@@ -9,136 +9,149 @@
 #############################################################################
 ##
 
-
 InstallMethod(BaseDomain, "for a matrix semigroup",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
-S -> BaseDomain(GeneratorsOfSemigroup(S)[1]));
-
-InstallMethod(DefaultFieldOfMatrixGroup, "for a matrix semigroup",
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
-S -> BaseDomain(GeneratorsOfSemigroup(S)[1]));
+[IsMatrixSemigroup], S -> BaseDomain(Representative(S)));
 
 InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup],
-S -> RowLength(GeneratorsOfSemigroup(S)[1]));
-
-InstallMethod(DimensionOfMatrixGroup, "for a matrix semigroup",
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup],
-DegreeOfMatrixSemigroup);
-
-InstallMethod(DimensionsOfMatrixSemigroup, "for a matrix semigroup", 
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 
-S -> DimensionsMat(GeneratorsOfSemigroup(S)[1]));
-
-InstallMethod(GeneratorsOfGroup, "for a matrix semigroup", 
-[IsMatrixSemigroup and IsGroup and HasGeneratorsOfSemigroup], 400,
-S -> GeneratorsOfSemigroup(S));
-
-#
+[IsMatrixSemigroup], S -> Degree(Representative(S)));
 
 InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
-[IsGreensClass],
-function(C)
-  return IsMatrixSemigroup(Parent(C));
+[IsGreensClass], C -> IsMatrixSemigroup(Parent(C)))
+
+InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
+
+InstallMethod(OneMutable, "for an smatrix", [IsSMatrixCollection],
+coll -> One(Representative(coll)));
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+    return IsomorphismMatrixSemigroup(S, GF(2));
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a semigroup and a ring",
+[IsTransformationSemigroup, IsRing],
+function(S, R)
+  local n, basis, gens;
+
+  n := DegreeOfTransformationSemigroup(S);
+
+  basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
+
+  gens := List(GeneratorsOfSemigroup(S),
+   x -> basis{ImageListOfTransformation(x, n)});
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
+   x -> basis{ImageListOfTransformation(x, n)},
+   x -> Transformation(List(x, PositionNonZero)));
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a matrix semigroup and a ring",
+[IsMatrixSemigroup, IsRing],
+function(S, R)
+    local f, g;
+    if BaseDomain(Representative(S)) = R then
+      return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
+    else
+      # This is obviously not ideal!
+      f := IsomorphismTransformationSemigroup(S);
+      g := IsomorphismMatrixSemigroup(Range(f),R);
+      return f * g;
+    fi;
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a semigroup and a ring",
+[IsSemigroup, IsRing],
+function(S, R)
+  return IsomorphismMatrixSemigroup(AsTransformationSemigroup(S), R);
+end);
+
+InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return Range(IsomorphismMatrixSemigroup(S));
+end);
+
+InstallMethod(AsMatrixSemigroup, "for a semigroup and a ring",
+[IsSemigroup, IsRing],
+function(S, R)
+  return Range(IsomorphismMatrixSemigroup(S, R));
 end);
 
 # from here 
-InstallMethod(ImagesRepresentative, "for a general mapping and null map",
-[IsGeneralMapping, IsNullMapMatrix], 
-function(map, g)
-  return g;
-end);
-
-InstallImmediateMethod(IsNullMapMatrixGroup, IsGroup and HasGeneratorsOfGroup,
-0, 
-function(G)
-  if Length(GeneratorsOfGroup(G)) = 1 and
-      IsNullMapMatrix(GeneratorsOfGroup(G)[1]) then 
-    return true;
-  else
-    return false;
-  fi;
-end);
-
-InstallMethod(\^, "for a null mat matrix group and matrix",
-[IsNullMapMatrixGroup, IsMatrix], 
-function(x, mat)
-  return x;
-end);
-
-InstallMethod(\/, "for a matrix and null map matrix", 
-[IsMatrix, IsNullMapMatrix],
-function(mat, null)
-  return null;
-end);
-
-InstallMethod(\*, "for a right coset and null map matrix",
-[IsRightCoset, IsNullMapMatrix], 
-function(coset, x)
-  return coset;
-end);
-
-InstallMethod(\^, "for a null map matrix and int",
-[IsNullMapMatrix, IsInt], 
-function(x, n)
-  return x;
-end);
-
-InstallMethod(\^, "for a null map matrix and matrix",
-[IsNullMapMatrix, IsMatrix], 
-function(x, m)
-  return x;
-end);
-
-InstallMethod(InverseMutable, "for a null map matrix",
-[IsNullMapMatrix], IdFunc);
-
-InstallMethod(IsGeneratorsOfMagmaWithInverses, "for a list",
-[IsList], 
-function(list) 
-  if Length(list) = 1 and IsNullMapMatrix(list[1]) then 
-    return true;
-  fi;
-  TryNextMethod();
-end);
-
-InstallTrueMethod(IsOne, IsNullMapMatrix);
-
-InstallMethod(One, "for a null map matrix", 
-[IsNullMapMatrix], IdFunc);
+#InstallMethod(ImagesRepresentative, "for a general mapping and null map",
+#[IsGeneralMapping, IsNullMapMatrix], 
+#function(map, g)
+#  return g;
+#end);
+#
+#InstallImmediateMethod(IsNullMapMatrixGroup, IsGroup and HasGeneratorsOfGroup,
+#0, 
+#function(G)
+#  if Length(GeneratorsOfGroup(G)) = 1 and
+#      IsNullMapMatrix(GeneratorsOfGroup(G)[1]) then 
+#    return true;
+#  else
+#    return false;
+#  fi;
+#end);
+#
+#InstallMethod(\^, "for a null mat matrix group and matrix",
+#[IsNullMapMatrixGroup, IsMatrix], 
+#function(x, mat)
+#  return x;
+#end);
+#
+#InstallMethod(\/, "for a matrix and null map matrix", 
+#[IsMatrix, IsNullMapMatrix],
+#function(mat, null)
+#  return null;
+#end);
+#
+#InstallMethod(\*, "for a right coset and null map matrix",
+#[IsRightCoset, IsNullMapMatrix], 
+#function(coset, x)
+#  return coset;
+#end);
+#
+#InstallMethod(\^, "for a null map matrix and int",
+#[IsNullMapMatrix, IsInt], 
+#function(x, n)
+#  return x;
+#end);
+#
+#InstallMethod(\^, "for a null map matrix and matrix",
+#[IsNullMapMatrix, IsMatrix], 
+#function(x, m)
+#  return x;
+#end);
+#
+#InstallMethod(InverseMutable, "for a null map matrix",
+#[IsNullMapMatrix], IdFunc);
+#
+#InstallMethod(IsGeneratorsOfMagmaWithInverses, "for a list",
+#[IsList], 
+#function(list) 
+#  if Length(list) = 1 and IsNullMapMatrix(list[1]) then 
+#    return true;
+#  fi;
+#  TryNextMethod();
+#end);
+#
+#InstallTrueMethod(IsOne, IsNullMapMatrix);
+#
+#InstallMethod(One, "for a null map matrix", 
+#[IsNullMapMatrix], IdFunc);
 
 # to here is a hack to make it possible to make a group consisting of the null
 # map matrix . . . 
 
-InstallMethod(IsGeneratorsOfSemigroup, [IsFFECollCollColl],
-        function(L)
-#T do checking of dimensions
-  local dom, deg, m;
-  if Length(L) > 0 then
-    if IsMatrixObj(L[1]) then
-      dom := BaseDomain(L[1]);
-      deg := RowLength(L[1]);
-      for m in L do
-        if BaseDomain(m) <> dom
-           or RowLength(m) <> deg then
-          return false;
-        fi;
-      od;
-    else
-      return false;
-    fi;
-  else
-    return false;
-  fi;
-  return true;
-end);
 
 #T Are these still needed
 #T This returns immutable
-InstallMethod(OneMutable,
-"for ring element coll coll coll",
-[IsRingElementCollCollColl],
-x -> One(Representative(x)));
 
 #############################################################################
 ##
@@ -598,60 +611,3 @@ function(arg)
     return Semigroup(gens);
 end);
 
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-    return IsomorphismMatrixSemigroup(S, GF(2));
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup and a ring",
-[IsTransformationSemigroup, IsRing],
-function(S, R)
-  local n, basis, gens;
-
-  n := DegreeOfTransformationSemigroup(S);
-
-  basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
-
-  gens := List(GeneratorsOfSemigroup(S),
-   x -> basis{ ImageListOfTransformation(x, n) });
-
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-   x -> basis{ ImageListOfTransformation(x, n) },
-   x -> Transformation(List(x, PositionNonZero)));
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a matrix semigroup and a ring",
-[IsMatrixSemigroup, IsRing],
-function(S, R)
-    local f,g;
-    if BaseDomain(Representative(S)) = R then
-        return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
-    else
-        # This is obviously not ideal!
-	f := IsomorphismTransformationSemigroup(S);
-	g := IsomorphismMatrixSemigroup(Range(f),R);
-        return f * g;
-    fi;
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup and a ring",
-[IsSemigroup, IsRing],
-function(S, R)
-    return IsomorphismMatrixSemigroup(AsTransformationSemigroup(S), R);
-end);
-
-InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  return Range(IsomorphismMatrixSemigroup(S));
-end);
-
-InstallMethod(AsMatrixSemigroup, "for a semigroup and a ring",
-[IsSemigroup, IsRing],
-function(S, R)
-    return Range(IsomorphismMatrixSemigroup(S,R));
-end);
