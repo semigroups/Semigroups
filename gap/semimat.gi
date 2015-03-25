@@ -162,15 +162,13 @@ end);
 ##
 #############################################################################
 
-InstallOtherMethod(FakeOne,
-    "for a list of matrices (hack)",
-    [IsHomogeneousList and IsRingElementCollCollColl],
-function(elts)
-    if IsGeneratorsOfActingSemigroup(elts) then
-        return One(elts[1]);
-    else
-        TryNextMethod();
-    fi;
+InstallOtherMethod(FakeOne, "for an s-matrix collection",
+[IsSMatrixCollection],
+function(coll)
+  if IsGeneratorsOfActingSemigroup(coll) then
+    return One(Representative(coll));
+  fi;
+  return fail;
 end);
 
 InstallGlobalFunction(SMatrixRowSpaceRightAction,
