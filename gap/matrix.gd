@@ -25,18 +25,19 @@
 #
 # Our Matrix objects
 #
-DeclareCategory("IsSMatrix",
-  IsMatrixObj );
-#and IsAttributeStoringRep);
+DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and 
+ IsAssociativeElement  );
+DeclareCategoryCollections("IsSMatrix");
 
+# These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsSMatrix);
 DeclareAttribute("ColSpaceBasis", IsSMatrix);
 DeclareAttribute("RightInverse", IsSMatrix);
 DeclareAttribute("LeftInverse", IsSMatrix);
-DeclareAttribute("NrRows", IsSMatrix);
-DeclareAttribute("NrCols", IsSMatrix);
+DeclareAttribute("Degree", IsSMatrix);
 DeclareAttribute("RowRank", IsSMatrix);
 DeclareAttribute("ColRank", IsSMatrix);
+DeclareAttribute("BaseDomain", IsMatrix);
 DeclareOperation("AsMatrix", [IsSMatrix]);
 
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?

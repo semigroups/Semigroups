@@ -117,6 +117,12 @@ InstallMethod(String, "for a semigroups plist matrix",
     return st;
   end );
 
+InstallMethod(BaseDomain, "for a semigroups plist matrix",
+[IsSmatrix and IsSPlistMatrixRep],
+function(m)
+  return m![SEMIGROPS_BDPOS];
+end);
+
 InstallMethod(AsMatrix, "for a semigroups matrix in plist representation",
 [IsSMatrix and IsSPlistMatrixRep],
 x -> List(x![SEMIGROUPS_ROWSPOS], List));
