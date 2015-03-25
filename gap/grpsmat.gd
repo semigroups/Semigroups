@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  grpmatobj.gd
+#W  grpsmat.gd
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                       Markus Pfeiffer
 ##
@@ -9,25 +9,12 @@
 #############################################################################
 ##
 
-# Unfortunately, matrix obj groups are also matrix groups, since IsMatrixGroup
-# is just a synonym for IsRingElementCollCollColl and IsGroup. Also it is not
-# possible to create these objects using the function Group, use Semigroup
-# instead. 
+# This file contains everything required to create and manipulate groups of
+# S-matrices. These essentially just delegate to the library methods via an
+# isomorphism.
 
-
-DeclareSynonym("SEMIGROUPS_IsMatrixObjGroup",
-               IsGroup and IsMatrixSemigroup);
-
-DeclareAttribute("IsomorphismMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);
-DeclareAttribute("IsomorphismMatrixObjGroup", IsMatrixGroup);
-DeclareAttribute("AsMatrixGroup", SEMIGROUPS_IsMatrixObjGroup);
-
-DeclareOperation("ClosureGroupNC", 
-                 [SEMIGROUPS_IsMatrixObjGroup, IsCollection]);
-
-DeclareOperation("\^", [SEMIGROUPS_IsMatrixObjGroup, IsMatrixObj]);
-
-BindGlobal("SEMIGROUPS_MatrixObjGroupRankIncrement" , 400);
-
-#InstallTrueMethod(IsMagmaWithInverses, CategoryCollections(IsMatrixObj));
-
+DeclareSynonym("IsSMatrixGroup", IsGroup and IsMatrixSemigroup);
+DeclareAttribute("IsomorphismMatrixGroup", IsSMatrixGroup);
+DeclareAttribute("AsMatrixGroup", IsSMatrixGroup);
+DeclareAttribute("AsSMatrixGroup", IsMatrixGroup);
+DeclareOperation("\^", [IsSMatrixGroup, IsSMatrix]);
