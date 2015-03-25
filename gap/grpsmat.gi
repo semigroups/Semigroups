@@ -18,7 +18,12 @@ InstallMethod(GeneratorsOfGroup,
 InstallMethod(IsomorphismMatrixGroup, "for an s-matrix group",
 [IsSMatrixGroup], 
 function(G)
-  local gens;
+  local H, gens;
+
+  if DegreeOfMatrixSemigroup(G) = 0 then 
+    H := TrivialGroup();
+    return GroupHomomorphismByFunction(G, H, x-> One(H), x-> One(G));
+  fi;
   gens := GeneratorsOfGroup(G);
   return GroupHomomorphismByFunction(G, Group(List(gens, AsMatrix)), 
     AsMatrix, 
@@ -26,10 +31,13 @@ function(G)
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group",
-[IsMatrixGroup], 
+[IsMatrixGroup and HasGeneratorsOfGroup], 
 function(G)
   local gens, iso;
   gens := GeneratorsOfGroup(G);
+  if Length(gens) = 0 then 
+    Error("not yet implemented");
+  fi;
   iso := g -> AsSMatrix(Representative(G), g);
   return GroupHomomorphismByFunction(G, 
                                      Semigroup(List(gens, iso)), 
@@ -90,6 +98,8 @@ function(G, coll)
       or ForAny(coll, x-> Inverse(x) = fail) then 
     Error("can't do it");
     return;
+  elif DegreeOfMatrixSemigroup(G) = 0 then 
+    return G;
   fi;
   return Range(IsomorphismMatrixSemigroup(ClosureGroup(AsMatrixGroup(G),
                                                        List(coll, AsMatrix))));
