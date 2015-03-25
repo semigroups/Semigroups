@@ -9,6 +9,107 @@
 #############################################################################
 ##
 
+############################################################################
+## Creating a matrix
+#############################################################################
+#
+# Create a new matrix. We will actually check whether all entries are in the
+# correct domain, i.e. that the field over which we operate is chosen
+# big enough, and that all entries are given inside the field. This will
+# prevent us and users from creating stupid matrix objects.
+
+InstallMethod(NewMatrix, "for IsSPlistMatrixRep, a ring, an int, and a list",
+[IsSPlistMatrixRep, IsRing, IsInt, IsList],
+function(filter, basedomain, rl, l)
+  local m,i,e,filter2;
+  m := [basedomain,e,rl,l];
+  filter2 := filter and IsSMatrix and IsMutable;
+  if HasCanEasilyCompareElements(Representative(basedomain))
+     and CanEasilyCompareElements(Representative(basedomain)) then
+    filter2 := filter2 and CanEasilyCompareElements;
+  fi;
+  Objectify( NewType(CollectionsFamily(FamilyObj(basedomain)),
+                     filter2), m );
+  return m;
+end);
+
+############################################################################
+## Printing and viewing methods:
+#############################################################################
+InstallMethod(ViewObj, "for a semigroups plist matrix",
+[IsSPlistMatrixRep],
+function( m )
+  Print("<semigroups ");
+  if IsCheckingMatrix(m) then Print("checking "); fi;
+  if not(IsMutable(m)) then Print("immutable "); fi;
+  Print(Length(m![SEMIGROUPS_ROWSPOS]), "x", m![SEMIGROUPS_RLPOS],
+         "-matrix over ",m![SEMIGROUPS_BDPOS],">");
+end );
+
+InstallMethod(PrintObj, "for a semigroups plist matrix",
+[IsSPlistMatrixRep],
+function(m)
+  Print("NewMatrix(IsSPlistMatrixRep");
+  if IsCheckingMatrix(m) then
+    Print(" and IsCheckingMatrix");
+  fi;
+  if IsFinite(m![SEMIGROUPS_BDPOS]) and IsField(m![SEMIGROUPS_BDPOS]) then
+    Print(",GF(",Size(m![SEMIGROUPS_BDPOS]),"),");
+  else
+    Print(",",String(m![SEMIGROUPS_BDPOS]),",");
+  fi;
+  Print(RowLength(m),",",Unpack(m),")");
+end);
+
+InstallMethod(Display, "for a semigroups plist matrix",
+[IsPlistMatrixRep],
+function( m )
+  local i;
+  Print("<semigroups ");
+  if IsCheckingMatrix(m) then Print("checking "); fi;
+  if not(IsMutable(m)) then Print("immutable "); fi;
+  Print(Length(m![ROWSPOS]),"x",m![RLPOS],"-matrix over ",m![BDPOS],":\n");
+  for i in [1..Length(m![ROWSPOS])] do
+    if i = 1 then
+      Print("[");
+    else
+      Print(" ");
+    fi;
+    Print(m![ROWSPOS][i]![ELSPOS],"\n");
+  od;
+  Print("]>\n");
+end);
+
+InstallMethod(String, "for a semigroups plist matrix",
+[IsPlistMatrixRep ],
+  function( m )
+    local st;
+    st := "NewMatrix(IsSPlistMatrixRep";
+    if IsCheckingMatrix(m) then
+        Append(st," and IsCheckingMatrix");
+    fi;
+    Add(st,',');
+    if IsFinite(m![BDPOS]) and IsField(m![BDPOS]) then
+        Append(st,"GF(");
+        Append(st,String(Size(m![BDPOS])));
+        Append(st,"),");
+    else
+        Append(st,String(m![BDPOS]));
+        Append(st,",");
+    fi;
+    Append(st,String(RowLength(m)));
+    Add(st,',');
+    Append(st,String(Unpack(m)));
+    Add(st,')');
+    return st;
+  end );
+
+InstallMethod(BaseDomain, "for a semigroups plist matrix",
+[IsSmatrix and IsSPlistMatrixRep],
+function(m)
+  return m![SEMIGROPS_BDPOS];
+end);
+
 InstallMethod(AsMatrix, "for a semigroups matrix in plist representation",
 [IsSMatrix and IsSPlistMatrixRep],
 x -> List(x![SEMIGROUPS_ROWSPOS], List));
