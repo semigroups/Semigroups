@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  matrix.gd
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#Y  Copyright (C) 2015                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -26,8 +26,16 @@
 # Our Matrix objects
 #
 DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and 
- IsAssociativeElement  );
+ IsAssociativeElement );
 DeclareCategoryCollections("IsSMatrix");
+DeclareCategoryCollections("IsSMatrixCollection");
+
+BindGlobal("SMatrixFamily", NewFamily("SMatrixFamily",
+ IsSMatrix, CanEasilyCompareElements));
+BindGlobal("SMatrixType", NewType(SMatrixFamily,
+ IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep));
+
+DeclareGlobalFunction("SMatrix");
 
 # These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsSMatrix);

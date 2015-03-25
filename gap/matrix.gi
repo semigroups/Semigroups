@@ -17,25 +17,12 @@
 # correct domain, i.e. that the field over which we operate is chosen
 # big enough, and that all entries are given inside the field. This will
 # prevent us and users from creating stupid matrix objects.
+
 InstallMethod(NewMatrix, "for IsSPlistMatrixRep, a ring, an int, and a list",
-[IsSPlistMatrixRep and IsCheckingMatrix, IsRing, IsInt, IsList],
+[IsSPlistMatrixRep, IsRing, IsInt, IsList],
 function(filter, basedomain, rl, l)
   local m,i,e,filter2;
-  if IsIdenticalObj(IsSPlistMatrixRep,filter) then
-    filter2 := IsPlistVectorRep;
-  else
-    filter2 := IsPlistVectorRep and IsCheckingVector;
-  fi;
-  m := 0*[1..Length(l)];
-  e := NewRowVector(filter2, basedomain, []);
-  for i in [1..Length(l)] do
-    if IsRowVectorObj(l[i]) and IsPlistVectorRep(l[i]) then
-      m[i] := ShallowCopy(l[i]);
-    else
-      m[i] := Vector( l[i], e );
-    fi;
-  od;
-  m := [basedomain,e,rl,m];
+  m := [basedomain,e,rl,l];
   filter2 := filter and IsSMatrix and IsMutable;
   if HasCanEasilyCompareElements(Representative(basedomain))
      and CanEasilyCompareElements(Representative(basedomain)) then
