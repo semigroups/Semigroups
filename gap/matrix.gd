@@ -48,6 +48,8 @@ DeclareAttribute("ColRank", IsSMatrix);
 DeclareAttribute("BaseDomain", IsMatrix);
 DeclareOperation("AsMatrix", [IsSMatrix]);
 DeclareOperation("AsSMatrix", [IsSMatrix, IsMatrix]);
+DeclareOperation("AsSMatrix", [IsMatrix]);
+DeclareOperation("ConstructingFilter", [IsSMatrix]);
 
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
 # We also need operations for acting on Row/Column spaces.
