@@ -43,11 +43,67 @@ SingularTransformationSemigroup);
 
 # Matrix semigroups . . .
 
+DeclareProperty("IsClassicalMatrixSemigroup", IsMatrixSemigroup);
+DeclareOperation("SEMIGROUPS_MatrixSemigroupConstructor", [IsFunction, IsList, IsString, IsString]);
+DeclareOperation("SEMIGROUPS_MatrixGroupConstructor", [IsFunction]);
+DeclareAttribute("SEMIGROUPS_MatrixSemigroupViewString", IsClassicalMatrixSemigroup);
+DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString", IsClassicalMatrixSemigroup);
+
+# SuzukiSemigroup? ReeSemigroup? 
+
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("SpecialLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("GLS", GeneralLinearSemigroup);
-DeclareSynonym("SLS", SpecialLinearSemigroup);
 DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);
+
+DeclareOperation("SpecialLinearSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("SLS", SpecialLinearSemigroup);
+
+DeclareOperation("GeneralUnitarySemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("GUS", GeneralUnitarySemigroup);
+
+DeclareOperation("SpecialUnitarySemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("SUS", SpecialUnitarySemigroup);
+
+DeclareOperation("SymplecticSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("SpS", SymplecticSemigroup);
+
+DeclareOperation("GeneralOrthogonalSemigroup", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("GeneralOrthogonalSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("GOS", GeneralOrthogonalSemigroup);
+
+DeclareOperation("SpecialOrthogonalSemigroup", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("SpecialOrthogonalSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("SOS", SpecialOrthogonalSemigroup);
+
+DeclareOperation("OmegaSemigroup", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("OmegaSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("OmegaS", OmegaSemigroup);
+
+DeclareOperation("GeneralSemilinearSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("GammaLS", GeneralSemilinearSemigroup);
+
+DeclareOperation("SpecialSemilinearSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("SigmaLS", SpecialSemilinearSemigroup);
+
+#DeclareOperation("ProjectiveGeneralLinearSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("PGLS", ProjectiveGeneralLinearSemigroup);
+
+#DeclareOperation("ProjectiveSpecialLinearSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("PSLS", ProjectiveSpecialLinearSemigroup);
+
+#DeclareOperation("ProjectiveGeneralUnitarySemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("PGUS", ProjectiveGeneralUnitarySemigroup);
+
+#DeclareOperation("ProjectiveSpecialUnitarySemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("PSUS", ProjectiveSpecialUnitarySemigroup);
+
+#DeclareOperation("ProjectiveSymplecticSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("PSPS", ProjectiveSymplecticSemigroup);
+#DeclareSynonym("PSpS", ProjectiveSymplecticSemigroup);
+
+#DeclareOperation("ProjectiveOmegaSemigroup", [IsPosInt, IsPosInt, IsPosInt]);
+#DeclareOperation("ProjectiveOmegaSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("POmegaS", ProjectiveOmegaSemigroup);
 
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);
