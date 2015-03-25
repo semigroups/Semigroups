@@ -35,14 +35,14 @@ BindGlobal("SMatrixFamily", NewFamily("SMatrixFamily",
 BindGlobal("SMatrixType", NewType(SMatrixFamily,
  IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep));
 
-DeclareGlobalFunction("SMatrix");
+DeclareOperationFunction("NewSMatrix");
 
 # These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsSMatrix);
 DeclareAttribute("ColSpaceBasis", IsSMatrix);
 DeclareAttribute("RightInverse", IsSMatrix);
 DeclareAttribute("LeftInverse", IsSMatrix);
-DeclareAttribute("Degree", IsSMatrix);
+DeclareAttribute("DegreeOfSMatrix", IsSMatrix);
 DeclareAttribute("RowRank", IsSMatrix);
 DeclareAttribute("ColRank", IsSMatrix);
 DeclareAttribute("BaseDomain", IsMatrix);
