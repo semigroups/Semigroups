@@ -16,7 +16,7 @@ InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> Degree(Representative(S)));
 
 InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], C -> IsMatrixSemigroup(Parent(C)))
+[IsGreensClass], C -> IsMatrixSemigroup(Parent(C)));
 
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
 
@@ -170,7 +170,7 @@ function(elts)
     fi;
 end);
 
-InstallGlobalFunction(MatrixObjRowSpaceRightAction,
+InstallGlobalFunction(SMatrixRowSpaceRightAction,
   function(s, vsp, mat)
     local basis, nvsp, i, n;
 
@@ -201,7 +201,7 @@ end);
 #T do this "by hand", and in place, or find a
 #T kernel function that does this.
 #
-InstallGlobalFunction(MatrixObjLocalRightInverse,
+InstallGlobalFunction(SMatrixLocalRightInverse,
 function( S, V, mat )
         local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
 
@@ -250,7 +250,7 @@ end);
 #T make pretty and efficient (in that order)
 #T In particular the setup for the matrix should be much more
 #T efficient.
-InstallGlobalFunction(MatrixObjSchutzGrpElement,
+InstallGlobalFunction(SMatrixSchutzGrpElement,
 function(S, x, y)
     local eqs, sch, res, n, k, idx, row, col;
 
@@ -285,7 +285,7 @@ function(S, x, y)
 end);
 
 ## StabilizerAction
-InstallGlobalFunction(MatrixObjStabilizerAction,
+InstallGlobalFunction(SMatrixStabilizerAction,
 function(S, x, m)
     local rsp, g, coeff, i, n, k;
     
@@ -295,7 +295,7 @@ function(S, x, m)
     n := DimensionsMat(x)[1];
     k := LambdaRank(S)(x);
     g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);
-    rsp := g * CanonicalRowSpace(x);
+    rsp := g * RowSpaceBasis(x);
 
     for i in [1 .. n - k] do
         Add(rsp, ZeroVector(n, rsp));
@@ -304,7 +304,7 @@ function(S, x, m)
     return RowSpaceTransformationInv(x) * rsp;
 end);
 
-InstallGlobalFunction(MatrixObjLambdaConjugator,
+InstallGlobalFunction(SMatrixLambdaConjugator,
 function(S, x, y)
   local res, zero, xse, h, p, yse, q, i;
 
@@ -354,20 +354,20 @@ end);
 #T the method below is already pretty efficient
 
 # TODO: remove redundant S as an argument here.
-InstallGlobalFunction(MatrixObjIdempotentTester,
+InstallGlobalFunction(SMatrixIdempotentTester,
 function(S, x, y)
-    return MatrixObjIdempotentCreator(S,x,y) <> fail;
+    return SMatrixIdempotentCreator(S,x,y) <> fail;
 end);
 
 # Attempt to construct an idempotent m with RowSpace(m) = x
 # ColumnSpace(m) = y
 
-InstallGlobalFunction(MatrixObjIdempotentCreator,
+InstallGlobalFunction(SMatrixIdempotentCreator,
 function(S, x, y)
   local m, inv;
     
     m := TransposedMat(y) * x;
-    inv := MatrixObjLocalRightInverse(S, x, m);
+    inv := SMatrixLocalRightInverse(S, x, m);
     if inv = fail then 
       return fail;
     else
@@ -433,32 +433,10 @@ function(S)
   Print(">");
 end);
 
-# TODO this had better go in the library
-
-InstallMethod(ViewString, "for a plist matrix", [IsPlistMatrixRep],
-function(m)
-  local out;
-  out := "\><";
-  if IsCheckingMatrix(m) then 
-    Append(out, "\>checking\< "); 
-  fi;
-  if not IsMutable(m) then 
-    Append(out, "\>immutable\< "); 
-  fi;
-  Append(out, "\>");
-  Append(out, String(Length(m![ROWSPOS])));
-  Append(out, "x");
-  Append(out, String(m![RLPOS]));
-  Append(out, "-matrix\< \>over\< \>");
-  Append(out, String(m![BDPOS]));
-  Append(out, "\<>\<");
-  return out;
-end);
-
 # Note that this method assumes that the object is
 # IsPlistMatrixRep and that we are using a position
 # in the positionalobjectrep for storing the row space (this
-# is mainly because MatrixObj, PlistMatrixObj are not
+# is mainly because SMatrix, PlistSMatrix are not
 # in IsAttributeStoringRep
 #
 # We compute a basis for the rowspace and coefficients to express
@@ -485,7 +463,7 @@ function(m)
     TriangulizeMat(rsp);
 
     # This is dangerous, we are using positions in
-    # matrixobj which are undocumented
+    # SMatrix which are undocumented
     # This can be done more efficiently by determining the rank
     # above and then just extracting the basis
     m![5] := ExtractSubMatrix(rsp, [1 .. cols], [1 .. cols]);
@@ -500,13 +478,13 @@ function(m)
     m![7] := m![6] ^ ( - 1);
 end);
 
-InstallMethod( CanonicalRowSpace,
+InstallMethod( RowSpaceBasis,
         "for a matrix object in PlistMatrixRep over a finite field",
-        [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
+        [ IsSMatrix   ],
 function( m )
     local info;
 
-    Info(InfoMatrixSemigroups, 2, "CanonicalRowSpace called");
+    Info(InfoMatrixSemigroups, 2, "RowSpaceBasis called");
     if not IsBound(m![5]) then
         ComputeRowSpaceAndTransformation(m);
     fi;
@@ -516,7 +494,7 @@ end);
 
 InstallMethod( RowSpaceTransformation,
         "for a matrix object in PlistMatrixRep over a finite field",
-        [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
+        [ IsSMatrix   ],
 function( m )
     local info;
 
@@ -530,7 +508,7 @@ end);
 
 InstallMethod( RowSpaceTransformationInv,
         "for a matrix object in PlistMatrixRep over a finite field",
-        [ IsMatrixObj and IsPlistMatrixRep and IsFFECollColl ],
+        [ IsSMatrix   ],
 function( m )
     local info;
 
@@ -541,73 +519,3 @@ function( m )
 
     return m![7];
 end);
-
-#############################################################################
-##
-#M  MatrixSemigroup(gens, [F, n] )
-##
-#############################################################################
-##
-## This is the kitchen-sink matrix semigroup creation tool
-##
-## This needs more/better checking since GAP does not have any means
-## of determining _whether there is_ a common scalar domain for
-## a list of matrices for example, it just complains with a
-## "no method found" error if handed a list of matrices over different
-## incompatible domains.
-##
-InstallGlobalFunction(MatrixSemigroup,
-function(arg)
-    local gens, field, n, ListOfGens, ListOfGensAndField;
-
-    if Length(arg) > 0 then
-        if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then
-          # Just the generators
-            gens := arg;
-        elif Length(arg) = 1 then # List of generators
-            gens := arg[1];
-        elif Length(arg) = 2 then # List of generators, field
-            gens := arg[1];
-            field := arg[2];
-        elif Length(arg) = 3 then # List of generators, field, matrix dimensions
-            gens := arg[1];
-            field := arg[2];
-            n := arg[3];
-        else                      # just the generators
-            Error("Semigroups: MatrixSemigroup: usage,\n",
-            "MatrixSemigroup(gens [, F, n])");
-            return;
-        fi;
-    else
-      Error("Semigroups: MatrixSemigroup: usage,\n",
-            "MatrixSemigroup(gens [, F, n])");
-      return;
-    fi;
-
-    if Length(gens) = 0 then
-      Error("Semigroups: MatrixSemigroup: usage,\n",
-            "empty generating sets are not supported");
-      return;
-    fi;
-
-    if (not IsFFECollCollColl(gens)) or
-       (not IsHomogeneousList(gens)) then
-      Error("Semigroups: MatrixSemigroup: usage,\n",
-            "only matrices over finite fields are supported as generating",
-            " sets");
-      return;
-    fi;
-
-    if not IsBound(field) then
-        field := DefaultScalarDomainOfMatrixList(gens);
-    fi;
-
-    if not IsBound(n) then
-        n := Length(gens[1]);
-    fi;
-
-    gens := List(gens, x -> NewMatrix(IsPlistMatrixRep, field, n, x));
-
-    return Semigroup(gens);
-end);
-

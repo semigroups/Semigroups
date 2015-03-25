@@ -11,11 +11,13 @@
 ## Some of this code is based on code taken from grpmat.gd in the GAP
 ## library
 
+#FIXME move to matrix.gd
+DeclareOperation("OneMutable", [IsSMatrixCollection]);
+
 DeclareSynonym("IsMatrixSemigroup", IsSMatrixCollection and IsSemigroup);
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
 DeclareAttribute("BaseDomain", IsMatrixSemigroup);
 DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
-
 InstallTrueMethod(CanComputeSize, IsMatrixSemigroup and IsFinite);
 
 # (mp) This is defined for groups, and already difficult there, so I
@@ -26,8 +28,7 @@ DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 #DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 #DeclareOperation("CanonicalRowSpace", [IsMatrixObj and IsFFECollColl]);
 #DeclareOperation("RowSpaceTransformation", [IsMatrixObj and IsFFECollColl]);
-#DeclareOperation("RowSpaceTransformationInv",
-#[IsMatrixObj and IsFFECollColl]);
+DeclareOperation("RowSpaceTransformationInv", [IsSMatrix]);
 
 # Right action of a matrix over a field on a row space
 DeclareGlobalFunction("SMatrixRowSpaceRightAction");
