@@ -223,7 +223,7 @@ function(o, m)
     return o!.schutz[m];
   fi;
 
-  g := GroupByGenerators(one);
+  g := Group(one);
 
   stop := false;
 
