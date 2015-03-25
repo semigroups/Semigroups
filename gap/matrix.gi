@@ -18,19 +18,19 @@
 # big enough, and that all entries are given inside the field. This will
 # prevent us and users from creating stupid matrix objects.
 
-InstallMethod(NewSMatrix, "for IsSPlistMatrixRep, a ring, an int, and a list",
-[IsSPlistMatrixRep, IsRing, IsInt, IsList],
+InstallMethod(NewSMatrix, "for IsPlistSMatrixRep, a ring, an int, and a list",
+[IsPlistSMatrixRep, IsRing, IsInt, IsList],
 function(filter, basedomain, rl, l)
   local m,i,e,filter2;
-  m := [basedomain,e,rl,l];
   filter2 := filter and IsSMatrix;
   if HasCanEasilyCompareElements(Representative(basedomain))
      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
-  Objectify( NewType(CollectionsFamily(FamilyObj(basedomain)),
-                     filter2), rec( l ) );
+  m := rec( l );
+  Objectify( SMatrixType, m );
   Set
+
   return m;
 end);
 
@@ -38,7 +38,7 @@ end);
 ## Printing and viewing methods:
 #############################################################################
 InstallMethod(ViewObj, "for a semigroups plist matrix",
-[IsSPlistMatrixRep],
+[IsPlistSMatrixRep],
 function( m )
   Print("<semigroups ");
   if IsCheckingMatrix(m) then Print("checking "); fi;
@@ -48,9 +48,9 @@ function( m )
 end );
 
 InstallMethod(PrintObj, "for a semigroups plist matrix",
-[IsSPlistMatrixRep],
+[IsPlistSMatrixRep],
 function(m)
-  Print("NewMatrix(IsSPlistMatrixRep");
+  Print("NewMatrix(IsPlistSMatrixRep");
   if IsCheckingMatrix(m) then
     Print(" and IsCheckingMatrix");
   fi;
@@ -63,7 +63,7 @@ function(m)
 end);
 
 InstallMethod(Display, "for a semigroups plist matrix",
-[IsPlistMatrixRep],
+[IsPlistSMatrixRep],
 function( m )
   local i;
   Print("<semigroups ");
@@ -82,7 +82,7 @@ function( m )
 end);
 
 InstallMethod(String, "for a semigroups plist matrix",
-[IsPlistMatrixRep ],
+[IsPlistSMatrixRep ],
   function( m )
     local st;
     st := "NewMatrix(IsSPlistMatrixRep";
@@ -106,23 +106,14 @@ InstallMethod(String, "for a semigroups plist matrix",
   end );
 
 InstallMethod(BaseDomain, "for a semigroups plist matrix",
-[IsSmatrix and IsSPlistMatrixRep],
+[IsSMatrix and IsPlistSMatrixRep],
 function(m)
   return m![SEMIGROPS_BDPOS];
 end);
 
 InstallMethod(AsMatrix, "for a semigroups matrix in plist representation",
-[IsSMatrix and IsSPlistMatrixRep],
+[IsSMatrix and IsPlistSMatrixRep],
 x -> List(x![SEMIGROUPS_ROWSPOS], List));
-
-InstallMethod(IsSMatrixCollection, "for a collection",
-[IsCollection], 
-function(coll) 
-  if IsEmpty(coll) then 
-    return false;
-  fi;
-  return IsSMatrix(coll[1]) and IsHomogeneousList(coll);
-end);
 
 InstallMethod(\*, "for a matrix obj and ffe", 
 [IsMatrixObj, IsFFE],
