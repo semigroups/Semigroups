@@ -172,26 +172,25 @@ function(coll)
 end);
 
 InstallGlobalFunction(SMatrixRowSpaceRightAction,
-  function(s, vsp, mat)
-    local basis, nvsp, i, n;
+function(s, vsp, m)
+  local basis, nvsp, i, n, deg;
 
-      # This takes care of the token element
-      if DimensionsMat(vsp)[1] > DimensionsMat(mat)[1] then
-          nvsp := mat;
-      else
-          nvsp := vsp * mat;
-      fi;
-      #T WHY? This is not correct, i think
-      nvsp := MutableCopyMat(nvsp);
-      TriangulizeMat(nvsp);
-      n := DimensionsMat(nvsp)[1];
-      for i in [n,n - 1 .. 1] do
-        if IsZero(nvsp[i]) then
-          Remove(nvsp, i);
-        fi;
-      od;
+  deg := DegreeOfSMatrix(deg);
+  # This takes care of the token element
+  if Length(vsp) > DegreeOfSMatrix(m) then
+    nvsp := m!.mat;
+  else
+    nvsp := vsp * m!.mat;
+  fi;
+  TriangulizeMat(nvsp);
 
-      return nvsp;
+  for i in [deg,deg - 1 .. 1] do
+    if IsZero(nvsp[i]) then
+      Remove(nvsp, i);
+    fi;
+  od;
+
+  return nvsp;
 end);
 
 
