@@ -80,9 +80,9 @@ BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
 
 DeclareRepresentation("IsCVECSMatrixRep",
   IsComponentObjectRep, []);
-BindGlobal("PlistSMatrixFamily", NewFamily("PlistSMatrixFamily",
+BindGlobal("CVECSMatrixFamily", NewFamily("CVECSMatrixFamily",
   IsSMatrix, CanEasilyCompareElements));
-BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
+BindGlobal("CVECSMatrixType", NewType(CVECSMatrixFamily,
   IsSMatrix and IsCVECSMatrixRep));
 
 DeclareGlobalFunction( "RandomSMatrix" );
