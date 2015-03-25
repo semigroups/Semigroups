@@ -53,7 +53,7 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 function(coll)
   local dims, x;
 
-  if (Length(coll) > 0) and (IsMatrixObj(coll[1])) then
+  if (Length(coll) > 0) and (IsSMatrix(coll[1])) then
     dims := DimensionsMat(coll[1]);
 
     if dims[1] <> dims[2] then
@@ -103,7 +103,7 @@ function(x)
 end);
 
 InstallMethod(ActionDegree, "for a matrix object",
-[IsMatrixObj], RowLength);
+[IsSMatrix], RowLength);
 
 #
 
@@ -232,15 +232,15 @@ function(R)
 end);
 
 InstallMethod(ActionRank, "for a matrix object and integer",
-[IsMatrixObj, IsInt],
+[IsSMatrix, IsInt],
 function(x, i)
-  return Length(CanonicalRowSpace(x));
+  return Length(RowSpaceBasis(x));
 end);
 
 InstallMethod(ActionRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-  return x -> Length(CanonicalRowSpace(x));
+  return x -> Length(RowSpaceBasis(x));
 end);
 
 # the minimum possible rank of an element
@@ -324,7 +324,7 @@ end);
 InstallMethod(LambdaAct, "for a matrix semigroup",
 [IsMatrixSemigroup],
 s -> function(vsp, mat)
-  return MatrixObjRowSpaceRightAction(s, vsp, mat);
+  return SMatrixRowSpaceRightAction(s, vsp, mat);
 end);
 
 InstallMethod(RhoAct, "for a transformation semigroup",
@@ -439,7 +439,7 @@ InstallMethod(LambdaFunc, "for a matrix semigroup",
 [IsMatrixSemigroup],
 s -> function(mat)
   # a function that returns the row space
-    return CanonicalRowSpace(mat);
+    return RowSpaceBasis(mat);
 end);
 
 InstallMethod(RhoFunc, "for a transformation semigroup",
@@ -498,7 +498,7 @@ end);
 InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-    return x -> Length(CanonicalRowSpace(x));
+    return x -> Length(RowSpaceBasis(x));
 end);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
@@ -563,7 +563,7 @@ end);
 InstallMethod(LambdaInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-    return MatrixObjLocalRightInverse(s, rsp, mat);
+    return SMatrixLocalRightInverse(s, rsp, mat);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
@@ -600,7 +600,7 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 InstallMethod(RhoInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-  return TransposedMat(MatrixObjLocalRightInverse(s, rsp, 
+  return TransposedMat(SMatrixLocalRightInverse(s, rsp, 
                         TransposedMat(mat)));
 end);
 
@@ -760,7 +760,7 @@ end);
 InstallMethod(LambdaPerm, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(x,y)
-  return MatrixObjSchutzGrpElement(s,x,y);
+  return SMatrixSchutzGrpElement(s,x,y);
 end);
 
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that
@@ -788,7 +788,7 @@ end);
 InstallMethod(LambdaConjugator, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(x, y)
-    return MatrixObjLambdaConjugator(s,x,y);
+    return SMatrixLambdaConjugator(s,x,y);
 end);
 
 # the function used to test if there is an idempotent with the specified
@@ -821,7 +821,7 @@ end);
 
 InstallMethod(IdempotentTester, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> function(x, y)
-    return MatrixObjIdempotentTester(S, x, y);
+    return SMatrixIdempotentTester(S, x, y);
 end);
 
 # the function used to create an idempotent with the specified lambda and rho
@@ -850,7 +850,7 @@ end);
 
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> function(x, y)
-    return MatrixObjIdempotentCreator(S, x, y);
+    return SMatrixIdempotentCreator(S, x, y);
 end);
 
 # the action of elements of the stabiliser of a lambda-value on any element of
@@ -880,7 +880,7 @@ end);
 
 InstallMethod(StabilizerAction, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> function(x,y)
-  return MatrixObjStabilizerAction(S,x,y);
+  return SMatrixStabilizerAction(S,x,y);
 end);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
