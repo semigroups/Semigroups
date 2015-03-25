@@ -46,7 +46,7 @@ InstallMethod(ConstructingFilter, "for a cvec s-matrix",
 ############################################################################
 ## Printing and viewing methods:
 #############################################################################
-InstallMethod(ViewObj, "for a semigroups plist matrix",
+InstallMethod(ViewObj, "for a plist s-matrix",
 [IsPlistSMatrixRep],
 function(m)
   Print("<s-matrix of degree ");
@@ -54,14 +54,14 @@ function(m)
          " over ", BaseDomain(m),">");
 end );
 
-InstallMethod(PrintObj, "for a semigroups plist matrix",
+InstallMethod(PrintObj, "for a plist s-matrix",
 [IsPlistSMatrixRep],
 function(m)
   Print("NewSMatrix(IsPlistSMatrixRep",BaseDomain(m),
     DegreeOfSMatrix(m),",",m!.mat,")");
 end);
 
-InstallMethod(Display, "for a semigroups plist matrix",
+InstallMethod(Display, "for a plist s-matrix",
 [IsPlistSMatrixRep],
 function(m)
   local i;
@@ -70,7 +70,7 @@ function(m)
   Print(">\n");
 end);
 
-InstallMethod(String, "for a semigroups plist matrix",
+InstallMethod(String, "for a plist s-matrix",
 [IsPlistSMatrixRep ],
 function( m )
   local st;
@@ -84,41 +84,58 @@ function( m )
   return st;
 end);
 
-InstallMethod(AsMatrix, "for a semigroups matrix in plist representation",
+InstallMethod(AsMatrix, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
 x -> x!.mat);
 
-#InstallMethod(\*, "for a matrix obj and ffe", 
-#[IsMatrixObj, IsFFE],
-#function(mat, x)
-#  if not x in BaseDomain(mat) then 
-#    Error("Semigroups: \*: usage\n", 
-#          "cannot multiply a matrix obj and FFE not in the base domain ", 
-#          "of the matrix,");
-#    return;
-#  fi;
-#  
-#   return  NewMatrix(IsPlistMatrixRep, BaseDomain(mat),
-#                     Length(mat), List(mat, y-> y * x));
-#end);
-#
-#InstallMethod(\*, "for ffe and a matrix obj", 
-#[IsFFE, IsMatrixObj],
-#function(x, mat)
-#  if not x in BaseDomain(mat) then 
-#    Error("Semigroups: \*: usage\n", 
-#          "cannot multiply a matrix obj and FFE not in the base domain ", 
-#          "of the matrix,");
-#    return;
-#  fi;
-#  
-#   return  NewMatrix(IsPlistMatrixRep, BaseDomain(mat),
-#                     Length(mat), List(mat, y-> x * y));
-#end);
-#
-##
-##T This will be moved to a more appropriate place
-##
+InstallMethod(RowSpaceBasis, "for a plist s-matrix",
+[IsSMatrix and IsPlistSMatrixRep],
+function(m)
+   ComputeRowSpaceAndTransformation(m);
+   return RowSpaceBasis(m);
+end);
+
+
+############################################################################
+## Helper functions to deal with s-matrices.
+#############################################################################
+
+InstallGlobalFunction(ComputeRowSpaceAndTransformation,
+function(m)
+  local deg, rsp, i, zv, bas;
+
+  if not IsPlistSMatrixRep(m) then
+    Error("semigroups: Matrix not in the correct representation");
+  fi;
+  Info(InfoMatrixSemigroups, 2, "ComputeRowSpaceAndTransformation called");
+
+  deg := DegreeOfSMatrix(m);
+
+  rsp := StructuralCopy(m!.mat);
+  zv := [1..deg] * Zero(BaseDomain(m));
+  for i in [1 .. deg] do
+    Append(rsp[i], zv);
+    rsp[i][deg + i] := One(BaseDomain(m));
+  od;
+  TriangulizeMat(rsp);
+
+  # This is dangerous, we are using positions in
+  # SMatrix which are undocumented
+  # This can be done more efficiently by determining the rank
+  # above and then just extracting the basis
+  bas := rsp{ [1..deg] }{ [1..deg] };
+  for i in [deg, deg - 1 .. 1] do
+    if IsZero(bas[i]) then
+      Remove(bas, i);
+    fi;
+  od;
+  SetRowSpaceBasis(m, bas);
+  SetRowRank(m, Length(bas));
+  SetRowSpaceTransformation(m, rsp{[1 .. deg]}{[deg + 1 .. 2 * deg] }); 
+  SetRowSpaceTransformationInv(m, RowSpaceTransformation(m)^(-1));
+end);
+
+
 #InstallMethod( TriangulizeMat,
 #"for a mutable matrix obj",
 #[ IsSMatrix and IsSPlistMatrixRep ],
