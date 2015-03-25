@@ -37,6 +37,12 @@ function(filter, basedomain, rl, l)
   return m;
 end);
 
+InstallMethod(ConstructingFilter, "for a plist s-matrix",
+[IsPlistSMatrixRep], m->IsPlistSMatrixRep);
+
+InstallMethod(ConstructingFilter, "for a cvec s-matrix",
+[IsCVECSMatrixRep], m->IsCVECSMatrixRep);
+
 ############################################################################
 ## Printing and viewing methods:
 #############################################################################
@@ -47,75 +53,41 @@ function(m)
   Print(DegreeOfSMatrix(m),
          " over ", BaseDomain(m),">");
 end );
-#
-#InstallMethod(PrintObj, "for a semigroups plist matrix",
-#[IsPlistSMatrixRep],
-#function(m)
-#  Print("NewMatrix(IsPlistSMatrixRep");
-#  if IsCheckingMatrix(m) then
-#    Print(" and IsCheckingMatrix");
-#  fi;
-#  if IsFinite(m![SEMIGROUPS_BDPOS]) and IsField(m![SEMIGROUPS_BDPOS]) then
-#    Print(",GF(",Size(m![SEMIGROUPS_BDPOS]),"),");
-#  else
-#    Print(",",String(m![SEMIGROUPS_BDPOS]),",");
-#  fi;
-#  Print(RowLength(m),",",Unpack(m),")");
-#end);
-#
-#InstallMethod(Display, "for a semigroups plist matrix",
-#[IsPlistSMatrixRep],
-#function( m )
-#  local i;
-#  Print("<semigroups ");
-#  if IsCheckingMatrix(m) then Print("checking "); fi;
-#  if not(IsMutable(m)) then Print("immutable "); fi;
-#  Print(Length(m![ROWSPOS]),"x",m![RLPOS],"-matrix over ",m![BDPOS],":\n");
-#  for i in [1..Length(m![ROWSPOS])] do
-#    if i = 1 then
-#      Print("[");
-#    else
-#      Print(" ");
-#    fi;
-#    Print(m![ROWSPOS][i]![ELSPOS],"\n");
-#  od;
-#  Print("]>\n");
-#end);
-#
-#InstallMethod(String, "for a semigroups plist matrix",
-#[IsPlistSMatrixRep ],
-#  function( m )
-#    local st;
-#    st := "NewMatrix(IsSPlistMatrixRep";
-#    if IsCheckingMatrix(m) then
-#        Append(st," and IsCheckingMatrix");
-#    fi;
-#    Add(st,',');
-#    if IsFinite(m![BDPOS]) and IsField(m![BDPOS]) then
-#        Append(st,"GF(");
-#        Append(st,String(Size(m![BDPOS])));
-#        Append(st,"),");
-#    else
-#        Append(st,String(m![BDPOS]));
-#        Append(st,",");
-#    fi;
-#    Append(st,String(RowLength(m)));
-#    Add(st,',');
-#    Append(st,String(Unpack(m)));
-#    Add(st,')');
-#    return st;
-#  end );
-#
-#InstallMethod(BaseDomain, "for a semigroups plist matrix",
-#[IsSMatrix and IsPlistSMatrixRep],
-#function(m)
-#  return m![SEMIGROPS_BDPOS];
-#end);
-#
-#InstallMethod(AsMatrix, "for a semigroups matrix in plist representation",
-#[IsSMatrix and IsPlistSMatrixRep],
-#x -> List(x![SEMIGROUPS_ROWSPOS], List));
-#
+
+InstallMethod(PrintObj, "for a semigroups plist matrix",
+[IsPlistSMatrixRep],
+function(m)
+  Print("NewSMatrix(IsPlistSMatrixRep",BaseDomain(m),
+    DegreeOfSMatrix(m),",",m!.mat,")");
+end);
+
+InstallMethod(Display, "for a semigroups plist matrix",
+[IsPlistSMatrixRep],
+function(m)
+  local i;
+  Print("<s-matrix of degree ", DegreeOfSMatrix(m), "\n");
+  Print(m!.mat);
+  Print(">\n");
+end);
+
+InstallMethod(String, "for a semigroups plist matrix",
+[IsPlistSMatrixRep ],
+function( m )
+  local st;
+  st := "NewSMatrix(IsPlistSMatrixRep,";
+  Append(st,String(BaseDomain(m)));
+  Append(st,",");
+  Append(st,String(DegreeOfSMatrix(m)));
+  Append(st,",");
+  Append(st,String(m!.mat));
+  Append(st,")");
+  return st;
+end);
+
+InstallMethod(AsMatrix, "for a semigroups matrix in plist representation",
+[IsSMatrix and IsPlistSMatrixRep],
+x -> x!.mat);
+
 #InstallMethod(\*, "for a matrix obj and ffe", 
 #[IsMatrixObj, IsFFE],
 #function(mat, x)
