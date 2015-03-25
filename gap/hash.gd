@@ -10,3 +10,4 @@
 ##
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistSMatrices");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForFFECollColl");

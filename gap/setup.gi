@@ -364,11 +364,9 @@ InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(s)
-    local rep;
-    rep := Representative(s);
-
-    return NewZeroMatrix(IsPlistMatrixRep, BaseDomain(rep), RowLength(rep) + 1,
-     RowLength(rep) + 1);
+    local deg;
+    deg := DegreeOfMatrixSemigroup(s) + 1;
+    return List([1..deg], x -> [1..deg] * Zero(BaseDomain(s)));
 end);
 
 # the seed or dummy start point for RhoOrb
@@ -476,10 +474,18 @@ function(x)
   fi;
 end);
 
+#T Why are there row spaces and matrices passed in here?
 InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-    return x -> Length(RowSpaceBasis(x));
+    return function(x)
+    Print("Rank of: ",String(x),"\n");
+    if IsPlistSMatrixRep(x) then
+      return RowRank(x);
+    else
+      return Length(x);
+    fi;
+    end;
 end);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
@@ -638,7 +644,7 @@ function(r)
 
   if r < 100 then
     f := Representative(s);
-    return Size(GL(DimensionsMat(f)[1], BaseDomain(f)));
+    return Size(GL(DegreeOfMatrixSemigroup(s), BaseDomain(s)));
   else
     return infinity;
   fi;
@@ -704,8 +710,8 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return NewIdentityMatrix(IsPlistMatrixRep, BaseDomain(S),
-   DegreeOfMatrixSemigroup(S));
+  Print("lambda identity", r, "\n");
+  return One(BaseDomain(S)) * IdentityMat(r);
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",

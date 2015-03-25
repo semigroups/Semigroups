@@ -95,6 +95,7 @@ BindGlobal("CVECSMatrixType", NewType(CVECSMatrixFamily,
 
 DeclareGlobalFunction( "RandomSMatrix" );
 
+DeclareProperty("IsZero", IsSMatrix);
 DeclareOperation("OneMutable", [IsSMatrix]);
 
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
@@ -105,3 +106,5 @@ DeclareAttribute("BaseDomain", IsSMatrixCollection);
 ##
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 
+## We need a mutable copy of matrices sometimes to do calculations
+DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");

@@ -28,8 +28,9 @@ function(filter, basedomain, rl, l)
      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
-  m := rec( mat := l );
+  m := rec( mat := StructuralCopy(l) );
   Objectify( PlistSMatrixType, m );
+  MakeImmutable(m!.mat);
 
   SetDegreeOfSMatrix(m, rl);
   SetBaseDomain(m, basedomain); 
@@ -104,6 +105,13 @@ function(m)
    return RowSpaceBasis(m);
 end);
 
+InstallMethod(RowRank, "for a plist s-matrix",
+[IsSMatrix and IsPlistSMatrixRep],
+function(m)
+  ComputeRowSpaceAndTransformation(m);
+  return RowRank(m);
+end);
+
 #T Should this go in a helper function, it also works
 #T similarly to the thing done below. 
 InstallMethod(RightInverse, "for a plist s-matrix",
@@ -155,8 +163,7 @@ function(m)
   Info(InfoMatrixSemigroups, 2, "ComputeRowSpaceAndTransformation called");
 
   deg := DegreeOfSMatrix(m);
-
-  rsp := StructuralCopy(m!.mat);
+  rsp := SEMIGROUPS_MutableCopyMat(m!.mat);
   zv := [1..deg] * Zero(BaseDomain(m));
   for i in [1 .. deg] do
     Append(rsp[i], zv);
@@ -271,15 +278,22 @@ function(coll)
   return base;
 end);
 
-InstallMethod(OneMutable, "for an s-matrix", [IsSMatrix], 
+InstallMethod(IsZero, "for an s-matrix",
+[IsSMatrix],
+x -> IsZero(x!.mat));
+
+InstallMethod(OneMutable, "for an s-matrix",
+[IsSMatrix], 
 x-> AsSMatrix(x, One(x!.mat)));
 
-InstallMethod(\=, "for an s-matrix", [IsSMatrix, IsSMatrix], 
+InstallMethod(\=, "for an s-matrix",
+[IsSMatrix, IsSMatrix], 
 function(x, y)
   return BaseDomain(x) = BaseDomain(y) and x!.mat = y!.mat;
 end);
 
-InstallMethod(\<, "for an s-matrix", [IsSMatrix, IsSMatrix], 
+InstallMethod(\<, "for an s-matrix",
+[IsSMatrix, IsSMatrix], 
 function(x, y)
   return DegreeOfSMatrix(x) < DegreeOfSMatrix(y) 
     or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y) 
@@ -297,4 +311,15 @@ function(x, y)
   fi;
 
   return AsSMatrix(x, x!.mat * y!.mat);
+end);
+
+InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
+function(m)
+  local res, r;
+
+  res := [];
+  for r in m do
+    Add(res, ShallowCopy(r));
+  od;
+  return res;
 end);

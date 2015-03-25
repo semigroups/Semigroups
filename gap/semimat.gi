@@ -175,15 +175,15 @@ InstallGlobalFunction(SMatrixRowSpaceRightAction,
 function(s, vsp, m)
   local basis, nvsp, i, n, deg;
 
-  deg := DegreeOfSMatrix(deg);
   # This takes care of the token element
   if Length(vsp) > DegreeOfSMatrix(m) then
-    nvsp := m!.mat;
+    return RowSpaceBasis(m);
   else
-    nvsp := vsp * m!.mat;
+    nvsp := SEMIGROUPS_MutableCopyMat(vsp * m!.mat);
   fi;
   TriangulizeMat(nvsp);
 
+  deg := Length(nvsp);
   for i in [deg,deg - 1 .. 1] do
     if IsZero(nvsp[i]) then
       Remove(nvsp, i);
@@ -199,36 +199,36 @@ end);
 #T efficient.
 InstallGlobalFunction(SMatrixSchutzGrpElement,
 function(S, x, y)
-    local eqs, sch, res, n, k, idx, row, col;
+  local deg, n, eqs, sch, res, idx, row, col;
 
-    k := DimensionsMat(x)[2];
-    n := LambdaRank(S)(x);
+  deg := DegreeOfSMatrix(x);
+  n := RowRank(x);
 
-    if IsZero(x) then
-        res := [[One(BaseDomain(x))]];
-    else
-        eqs := MutableCopyMat(TransposedMat(Concatenation(TransposedMat(x),
-                TransposedMat(y))));
+  if IsZero(x) then
+    res := [[One(BaseDomain(x))]];
+  else
+    eqs := TransposedMatMutable(
+      Concatenation(TransposedMat(x!.mat),
+                    TransposedMat(y!.mat)));
 	TriangulizeMat(eqs);
 
 	idx := [];
-        col := 1;
-        row := 1;
+    col := 1;
+    row := 1;
 
-	while col <= k do
-		while IsZero(eqs[row][col]) and col <= k do
-			col := col + 1;
-		od;
-		if col <= k then
-			Add(idx, col);
-			row := row + 1;
-			col := col + 1;
-		fi;
-	od;
-	return ExtractSubMatrix(eqs, [1 .. n], idx + k);
-    fi;
-
-    return res;
+	while col <= deg do
+      while IsZero(eqs[row][col]) and col <= deg do
+        col := col + 1;
+      od;
+      if col <= deg then
+        Add(idx, col);
+        row := row + 1;
+        col := col + 1;
+      fi;
+    od;
+	res := eqs{[1 .. n]}{idx + deg};
+  fi;
+  return res;
 end);
 
 ## StabilizerAction
