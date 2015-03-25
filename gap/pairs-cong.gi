@@ -361,19 +361,12 @@ function(class)
   if HasAsLookupTable(cong) then
     return Enumerator(AsList(class));
   fi;
-  
+
   # cong has not yet been enumerated: make functions
   record := rec();
+
   record.ElementNumber := function(enum, pos)
     local lookfunc;
-    if not IsBound(enum!.list) then
-      enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
-      enum!.elms := AsSSortedList(Range(enum!.cong));
-      enum!.rep := Position(enum!.elms, Representative(UnderlyingCollection(enum)));
-      enum!.list := [enum!.rep];
-      enum!.found := BlistList(enum!.elms, [enum!.rep]);
-      enum!.len := 1;
-    fi;
     if pos <= enum!.len then
       return enum!.elms[enum!.list[pos]];
     fi;
@@ -398,10 +391,37 @@ function(class)
       return fail;
     fi;
   end;
+
   record.NumberElement := function(enum, elm)
-    # TODO
+    local x;
+    x := Position(enum!.elms, elm);
+    if [x, enum!.rep] in enum!.cong then
+      # elm is in the class
+      if enum!.found[x] then
+        # elm already has a position
+        return Position(enum!.list, x);
+      else
+        # put elm in the next available position
+        enum!.found[x] := true;
+        enum!.len := enum!.len + 1;
+        enum!.list[enum!.len] := x;
+        return enum!.len;
+      fi;
+    else
+      # elm is not in the class
+      return fail;
+    fi;
   end;
-  return EnumeratorByFunctions(class, record);
+  
+  enum := EnumeratorByFunctions(class, record);
+  enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
+  enum!.elms := AsSSortedList(Range(enum!.cong));
+  enum!.rep := Position(enum!.elms, Representative(UnderlyingCollection(enum)));
+  enum!.list := [enum!.rep];
+  enum!.found := BlistList(enum!.elms, [enum!.rep]);
+  enum!.len := 1;
+  
+  return enum;
 end);
 
 #
