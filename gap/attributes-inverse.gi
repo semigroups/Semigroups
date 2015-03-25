@@ -167,10 +167,14 @@ function(S, x)
   y := LeftOne(x);
   elts := ShallowCopy(Idempotents(S));
 
-  if IsPartialPermBipartitionSemigroup(S) then
-    Sort(elts, PartialPermLeqBipartition);
+  if IsBipartitionSemigroup(S) then
+    SortBy(elts, RankOfBipartition);
+  elif IsPartialPermSemigroup(S) then
+    SortBy(elts, RankOfPartialPerm);
   else
-    elts := Set(elts);
+    Info(InfoSemigroups, 0, "this function has not been tested with inverse",
+    " semigroups of this type...");
+    Sort(elts);
   fi;
 
   i := Position(elts, y);
@@ -201,7 +205,7 @@ function(S, x)
 
   if singleline then
     return true;
-  elif Size(HClass(S, y)) = 1 then
+  elif Size(GreensHClassOfElementNC(S, y)) = 1 then
     return false;
   fi;
 
@@ -449,10 +453,14 @@ function(S, f)
     elts := ShallowCopy(Elements(S));
   fi;
 
-  if IsPartialPermBipartitionSemigroup(S) then
-    Sort(elts, PartialPermLeqBipartition);
+  if IsBipartitionSemigroup(S) then
+    SortBy(elts, RankOfBipartition);
+  elif IsPartialPermSemigroup(S) then
+    SortBy(elts, RankOfPartialPerm);
   else
-    elts := SSortedList(elts);
+    Info(InfoSemigroups, 0, "this function has not been tested with inverse",
+    " semigroups of this type...");
+    Sort(elts);
   fi;
 
   i := Position(elts, f);
