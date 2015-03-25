@@ -35,7 +35,7 @@ BindGlobal("SMatrixFamily", NewFamily("SMatrixFamily",
 BindGlobal("SMatrixType", NewType(SMatrixFamily,
  IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep));
 
-DeclareOperationFunction("NewSMatrix");
+DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsList]);
 
 # These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsSMatrix);
@@ -81,6 +81,3 @@ BindGlobal("SEMIGROUPS_ROWSPOS", 4);
 
 DeclareGlobalFunction( "RandomSMatrix" );
 
-# Does such a collection need to be of matrices in the same representation,
-# or are we happy as long as we get the attributes and operations above?
-DeclareOperation("IsSMatrixCollection", [IsCollection]);
