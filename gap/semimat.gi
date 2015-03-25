@@ -384,20 +384,20 @@ InstallMethod(ViewObj,
 "for a matrix semigroup with generators",
 [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
 function(S)
-  local gens, dims;
+  local gens, deg;
   if HasIsMonoid(S) and IsMonoid(S) then
     gens := GeneratorsOfMonoid(S);
-    dims := DimensionsMat(gens[1]);
+    deg := DegreeOfSMatrix(gens[1]);
     Print("<monoid of ");
-    Print(dims[1], "x", dims[2]);
-    Print(" matrices over ", BaseDomain(gens[1]));
+    Print(deg, "x", deg);
+    Print(" matrices over ", BaseDomain(S));
     Print(" with ", Length(gens), " generator");
   else
     gens := GeneratorsOfSemigroup(S);
-    dims := DimensionsMat(gens[1]);
+    deg := DegreeOfSMatrix(gens[1]);
     Print("<semigroup of ");
-    Print(dims[1], "x", dims[2]);
-    Print(" matrices over ", BaseDomain(gens[1]));
+    Print(deg, "x", deg);
+    Print(" matrices over ", BaseDomain(S));
     Print(" with ", Length(gens), " generator");
   fi;
   if Length(gens) > 1 then
@@ -434,4 +434,15 @@ function(S)
     Print("s");
   fi;
   Print(">");
+end);
+
+InstallMethod(IsGeneratorsOfSemigroup, "for an s-matrix collection", 
+[IsSMatrixCollection], 
+function(coll) 
+
+  if ForAny(coll, x -> DegreeOfSMatrix(x) <> DegreeOfSMatrix(coll[1]) 
+                       or BaseDomain(x) <> BaseDomain(coll[1])) then
+    return false;
+  fi;
+  return true;
 end);

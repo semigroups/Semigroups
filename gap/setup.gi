@@ -48,27 +48,8 @@ function(coll)
 end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
-"for a homogeneous list in IsFFECollCollColl",
-[IsHomogeneousList and IsFFECollCollColl],
-function(coll)
-  local dims, x;
-
-  if (Length(coll) > 0) and (IsSMatrix(coll[1])) then
-    dims := DimensionsMat(coll[1]);
-
-    if dims[1] <> dims[2] then
-      return false;
-    fi;
-    for x in coll do
-      if DimensionsMat(x) <> dims then
-        return false;
-      fi;
-    od;
-    return true;
-  else
-    return false;
-  fi;
-end);
+"for an s-matrix collection",
+[IsSMatrixCollection], IsGeneratorsOfSemigroup);
 
 # IsActingSemigroupWithInverseOp
 

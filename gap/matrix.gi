@@ -469,3 +469,14 @@ function(x, y)
     or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y) 
         and BaseDomain(x) = BaseDomain(y) and x!.mat < y!.mat);
 end);
+
+InstallMethod(\*, "for s-matrices", [IsSMatrix, IsSMatrix], 
+function(x, y)
+  if DegreeOfSMatrix(x) <> DegreeOfSMatrix(y) 
+      or BaseDomain(x) <> BaseDomain(y) then 
+    Error("can't");
+    return;
+  fi;
+
+  return AsSMatrix(x, x!.mat * y!.mat);
+end);

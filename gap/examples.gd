@@ -45,7 +45,9 @@ SingularTransformationSemigroup);
 
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("SpecialLinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("GLS", GeneralLinearSemigroup);
+DeclareSynonym("SLS", SpecialLinearSemigroup);
+DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);
 
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);

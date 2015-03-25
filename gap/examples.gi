@@ -313,11 +313,8 @@ InstallMethod(FullMatrixSemigroup, "for pos int and pos int",
 function(d, q)
   local g, gens, S;
 
-  # This hack is required, because matplistobj has a bug in
-  # current versions of GAP. This is fixed in the default branch.
   gens := GeneratorsOfGroup(GL(d,q));
-  gens := List(gens, x -> List(x, y -> Unpack(y)));
-  gens := List(gens, x -> NewMatrix(IsPlistMatrixRep, GF(q), d, x));
+  gens := List(gens, x -> NewSMatrix(IsPlistSMatrixRep, GF(q), d, x));
 
   g := OneMutable(gens[1]);
   g[d][d] := Z(q) * 0;
@@ -335,21 +332,14 @@ end);
 InstallMethod(SpecialLinearSemigroup, "for pos int and pos int",
 [IsPosInt, IsPosInt],
 function(d, q)
-  local g, gens, S;
+  local gens, x;
 
-  # This hack is required, because matplistobj has a bug in
-  # current versions of GAP. This is fixed in the default branch.
-  gens := GeneratorsOfGroup(SL(d,q));
-  gens := List(gens, x -> List(x, y -> Unpack(y)));
-  gens := List(gens, x -> NewMatrix(IsPlistMatrixRep, GF(q), d, x));
-
-  g := OneMutable(gens[1]);
-  g[d][d] := Z(q) * 0;
-  Add(gens, g);
-
-  S := Monoid(gens);
-
-  return S;
+  gens := GeneratorsOfGroup(SL(d, q));
+  x := OneMutable(gens[1]);
+  x[d][d] := Z(q) * 0;
+  gens := List(gens, x -> NewSMatrix(IsPlistSMatrixRep, GF(q), d, x));
+  Add(gens, AsSMatrix(gens[1], x));
+  return Monoid(gens);
 end);
 
 #
@@ -364,11 +354,6 @@ function(s)
   Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]));
   Print(">");
 end);
-
-#
-
-InstallMethod(GeneralLinearSemigroup, "for 2 pos ints",
-[IsPosInt, IsPosInt], FullMatrixSemigroup);
 
 #
 
