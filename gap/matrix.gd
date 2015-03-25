@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  matrix.gd
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#Y  Copyright (C) 2015                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
