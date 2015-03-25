@@ -9,7 +9,4 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction( "SEMIG_HashFunctionForPlistVects" );
-DeclareGlobalFunction( "SEMIG_HashFunctionForPlistMats" );
-DeclareGlobalFunction( "SEMIG_HashFunctionForFiniteDimensionalVectorSpaces");
-
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistSMatrices");
