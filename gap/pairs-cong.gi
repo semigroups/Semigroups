@@ -355,7 +355,7 @@ InstallMethod(Enumerator,
 "for a semigroup congruence class",
 [IsCongruenceClass],
 function(class)
-  local cong, record, lookfunc;
+  local cong, record, lookfunc, x, enum;
   cong := EquivalenceClassRelation(class);
   # cong has been enumerated: return a list
   if HasAsLookupTable(cong) then
@@ -395,7 +395,7 @@ function(class)
   record.NumberElement := function(enum, elm)
     local x;
     x := Position(enum!.elms, elm);
-    if [x, enum!.rep] in enum!.cong then
+    if [x, enum!.rep] in enum!.cong then # this does the calculations
       # elm is in the class
       if enum!.found[x] then
         # elm already has a position
