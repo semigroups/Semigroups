@@ -54,7 +54,8 @@ InstallTrueMethod(IsRightZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
 InstallTrueMethod(IsLTrivial, IsDTrivial);
-InstallTrueMethod(IsRectangularBand, IsHTrivial and IsSimpleSemigroup);
+InstallTrueMethod(IsRectangularBand, IsHTrivial and
+IsCompletelySimpleSemigroup);
 InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
 InstallTrueMethod(IsRTrivial, IsDTrivial);
@@ -70,5 +71,6 @@ InstallTrueMethod(IsCommutativeSemigroup, IsZeroSemigroup);
 InstallTrueMethod(IsTrivial, IsLeftZeroSemigroup and
 IsRightZeroSemigroup);
 InstallTrueMethod(IsBand, IsRectangularBand);
+InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 
 #EOF
