@@ -478,14 +478,13 @@ end);
 InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-    return function(x)
-    Print("Rank of: ",x,"\n");
+  return function(x)
     if IsPlistSMatrixRep(x) then
       return RowRank(x);
     else
       return Length(x);
     fi;
-    end;
+  end;
 end);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
