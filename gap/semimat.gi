@@ -218,6 +218,54 @@ function(s, vsp, m)
   return nvsp;
 end);
 
+InstallGlobalFunction(SMatrixLocalRightInverse,
+function(S, V, mat)
+  local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
+
+  n := DegreeOfSMatrix(mat);
+  k := Length(V);
+
+  W := SEMIGROUPS_MutableCopyMat( V * mat );
+
+  for i in [1 .. k] do
+    Append(W[i], V[i]);
+  od;
+  se := SemiEchelonMat(W);
+  # If the matrix does not act injectively on V,
+  # then there is no right inverse
+  # FIXME: I think we can now simplify things below
+  if Number(se.heads{[1..n]}, IsZero) > n - k then
+    return fail;
+  fi;
+
+  for i in [1 .. Length(se.vectors)] do
+    W[i] := ShallowCopy(se.vectors[i]);
+  od;
+  
+  zv := [1..2*n] * Zero(BaseDomain(mat));
+  for i in [1..n-Length(W)] do
+    Add(W, zv);
+  od;
+
+  # add missing heads
+  u := One(BaseDomain(mat));
+  j := k + 1;
+  for i in [1 .. n] do
+    if se.heads[i] = 0 then
+      W[j][i] := u;
+      W[j][n + i] := u;
+      j := j + 1;
+    fi;
+  od;
+
+  TriangulizeMat(W);
+
+  return AsSMatrix(mat, W{[1 .. n]}{[n + 1 .. 2 * n]});
+end);
+
+
+
+
 #T returns an invertible matrix
 #T make pretty and efficient (in that order)
 #T In particular the setup for the matrix should be much more

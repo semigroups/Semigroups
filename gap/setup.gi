@@ -549,7 +549,7 @@ end);
 InstallMethod(LambdaInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-    return RightInverse(mat);
+  return SMatrixLocalRightInverse(s, rsp, mat);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g

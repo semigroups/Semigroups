@@ -34,6 +34,7 @@ DeclareGlobalFunction("SMatrixStabilizerAction");
 DeclareGlobalFunction("SMatrixLambdaConjugator");
 DeclareGlobalFunction("SMatrixIdempotentTester");
 DeclareGlobalFunction("SMatrixIdempotentCreator");
+DeclareGlobalFunction("SMatrixLocalRightInverse");
 
 # Constructor for matrix semigroups, we want the flexibility
 # to pass a list of generators, a field and a list of generators
