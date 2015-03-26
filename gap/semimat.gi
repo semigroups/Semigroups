@@ -326,8 +326,9 @@ InstallGlobalFunction(SMatrixLambdaConjugator,
 function(S, x, y)
   local res, zero, xse, h, p, yse, q, i;
 
-  if x ^ -1 <> fail then
-    res := List(x ^ -1 * y, List);
+  res := x^(-1);
+  if res <> fail then
+    res := res * y;
   else
     # Note: If IsZero is still broken, we have a debugging
     # function SEMIGROUPS_CheckReallyZero
@@ -346,7 +347,7 @@ function(S, x, y)
                       One(BaseDomain(y)) * PermutationMat(SortingPerm(h),
                                              Length(h), BaseDomain(y)));
 
-      res := p * q ^ (-1);
+      res := p * q^(-1);
     fi;
   fi;
   return res;
@@ -410,7 +411,7 @@ function(S)
 end);
 
 InstallMethod(ViewObj,
-"for a matrix semigroup with generators",
+"for an s-matrix semigroup with generators",
 [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
 function(S)
   local gens, deg;
@@ -468,7 +469,6 @@ end);
 InstallMethod(IsGeneratorsOfSemigroup, "for an s-matrix collection", 
 [IsSMatrixCollection], 
 function(coll) 
-
   if ForAny(coll, x -> DegreeOfSMatrix(x) <> DegreeOfSMatrix(coll[1]) 
                        or BaseDomain(x) <> BaseDomain(coll[1])) then
     return false;
