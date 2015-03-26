@@ -978,7 +978,8 @@ function(m, n)
       SetIsRightZeroSemigroup(R, true);
     else
       SetIsRightZeroSemigroup(R, false);
-    elif n = 1 then
+    fi;
+    if n = 1 then
       SetIsLeftZeroSemigroup(R, true);
     else
       SetIsLeftZeroSemigroup(R, false);
