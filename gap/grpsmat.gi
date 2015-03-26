@@ -83,15 +83,21 @@ end);
 InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group",
 [IsMatrixGroup and HasGeneratorsOfGroup], 
 function(G)
+  return IsomorphismMatrixSemigroup(G, DefaultFieldOfMatrixGroup(G));
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group and ring",
+[IsMatrixGroup and HasGeneratorsOfGroup, IsRing], 
+function(G, R)
   local gens, iso;
   gens := GeneratorsOfGroup(G);
   if Length(gens) = 0 then 
     Error("not yet implemented");
   fi;
-  iso := g -> NewSMatrix(IsPlistSMatrixRep, DefaultFieldOfMatrixGroup(G), 
+  iso := g -> NewSMatrix(IsPlistSMatrixRep, R, 
                          DimensionOfMatrixGroup(G), g);
   return GroupHomomorphismByFunction(G, 
-                                     Semigroup(List(gens, iso)), 
+                                     Group(List(gens, iso)), 
                                      iso,
                                      AsMatrix);
 end);
@@ -101,6 +107,10 @@ InstallMethod(AsMatrixGroup, "for an s-matrix group",
 
 InstallMethod(Size, "for an s-matrix group",
 [IsSMatrixGroup and HasGeneratorsOfSemigroup],
+S -> Size(Range(IsomorphismMatrixGroup(S))));
+
+InstallMethod(Size, "for an s-matrix group",
+[IsSMatrixGroup and HasGeneratorsOfGroup],
 S -> Size(Range(IsomorphismMatrixGroup(S))));
 
 InstallMethod(\in, "for an s-matrix and s-matrix group",
@@ -153,5 +163,5 @@ function(G, coll)
     return G;
   fi;
   return Range(IsomorphismMatrixSemigroup(ClosureGroup(AsMatrixGroup(G),
-                                                       List(coll, AsMatrix))));
+                                                       List(coll, AsMatrix)), BaseDomain(G)));
 end);

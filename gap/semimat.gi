@@ -93,7 +93,7 @@ InstallMethod(IsomorphismMatrixSemigroup,
 function(S, R)
   local map;
   map := IsomorphismTransformationSemigroup(S);
-  return map * IsomorphismMatrixSemigroup(Range(map));
+  return map * IsomorphismMatrixSemigroup(Range(map), R);
 end);
 
 InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
