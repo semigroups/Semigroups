@@ -304,22 +304,22 @@ end);
 ## StabilizerAction
 InstallGlobalFunction(SMatrixStabilizerAction,
 function(S, x, m)
-    local rsp, g, coeff, i, n, k, zv;
+  local rsp, g, coeff, i, n, k, zv;
     
-    if IsZero(x) then 
-      return x;
-    fi;
-    n := DegreeOfMatrixSemigroup(S);
-    k := LambdaRank(S)(x);
-    g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);
-    rsp := SEMIGROUPS_MutableCopyMat(m * RowSpaceBasis(x));
+  if IsZero(x) then 
+    return x;
+  fi;
+  n := DegreeOfMatrixSemigroup(S);
+  k := LambdaRank(S)(x);
+  g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);
+  rsp := SEMIGROUPS_MutableCopyMat(m * RowSpaceBasis(x));
 
-    zv := [1 .. n] * Zero(BaseDomain(x)); 
-    for i in [1 .. n - k] do
-        Add(rsp, zv);
-    od;
+  zv := [1 .. n] * Zero(BaseDomain(x)); 
+  for i in [1 .. n - k] do
+    Add(rsp, zv);
+  od;
 
-    return RowSpaceTransformationInv(x) * rsp;
+  return RowSpaceTransformationInv(x) * rsp;
 end);
 
 InstallGlobalFunction(SMatrixLambdaConjugator,
@@ -369,16 +369,45 @@ InstallGlobalFunction(SMatrixIdempotentCreator,
 function(S, x, y)
   local m, inv;
     
-    m := TransposedMat(y) * x;
-    inv := RightInverse(x, m);
-    if inv = fail then 
-      return fail;
-    else
-      return m * inv;
-    fi;
+  m := TransposedMat(y) * x;
+  inv := RightInverse(x, m);
+  if inv = fail then 
+    return fail;
+  else
+    return m * inv;
+  fi;
 end);
 
 # TODO ViewString
+
+InstallMethod(ViewString,
+"for an s-matrix semigroup with generators",
+[ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
+function(S)
+  local gens, deg, res;
+  if HasIsMonoid(S) and IsMonoid(S) then
+    gens := GeneratorsOfMonoid(S);
+    deg := DegreeOfSMatrix(gens[1]);
+    res := "<monoid of ";
+    Append(res, Concatenation(String(deg), "x", String(deg));
+    Append(res, " s-matrices over ");
+    Append(res, String(BaseDomain(S)));
+    Append(res, Concatenation(" with ", Length(gens), " generator"));
+  else
+    gens := GeneratorsOfSemigroup(S);
+    deg := DegreeOfSMatrix(gens[1]);
+    res := "<semigroup of ";
+    Append(res, Concatenation(String(deg), "x", String(deg)));
+    Append(res, " s-matrices over ");
+    Append(res, String(BaseDomain(S)));
+    Append(res, Concatenation(" with ", Length(gens), " generator"));
+  fi;
+  if Length(gens) > 1 then
+    Append(res, "s");
+  fi;
+  Append(res,">");
+  return res;
+end);
 
 InstallMethod(ViewObj,
 "for a matrix semigroup with generators",
