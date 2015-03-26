@@ -53,24 +53,23 @@ function(S)
     return IsomorphismMatrixSemigroup(S, GF(2));
 end);
 
-# FIXME this should be updated
-
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup and a ring",
 [IsTransformationSemigroup, IsRing],
 function(S, R)
-  local n, basis, gens;
+  local n, basis, iso, gens;
 
   n := DegreeOfTransformationSemigroup(S);
-
   basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
+  iso := x -> NewSMatrix(IsPlistSMatrixRep, R, n,
+                         basis{ImageListOfTransformation(x, n)});
+  gens := List(GeneratorsOfSemigroup(S), iso);
 
-  gens := List(GeneratorsOfSemigroup(S),
-   x -> basis{ImageListOfTransformation(x, n)});
-
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-   x -> basis{ImageListOfTransformation(x, n)},
-   x -> Transformation(List(x, PositionNonZero)));
+  return MagmaIsomorphismByFunctionsNC(S, 
+                                       Semigroup(gens),
+                                       iso,
+                                       x -> 
+                                         Transformation(List(x, PositionNonZero)));
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
@@ -79,11 +78,11 @@ InstallMethod(IsomorphismMatrixSemigroup,
 function(S, R)
     local f, g;
     if BaseDomain(Representative(S)) = R then
-      return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
+      return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
     else
       # This is obviously not ideal!
       f := IsomorphismTransformationSemigroup(S);
-      g := IsomorphismMatrixSemigroup(Range(f),R);
+      g := IsomorphismMatrixSemigroup(Range(f), R);
       return f * g;
     fi;
 end);
@@ -92,7 +91,9 @@ InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup and a ring",
 [IsSemigroup, IsRing],
 function(S, R)
-  return IsomorphismMatrixSemigroup(AsTransformationSemigroup(S), R);
+  local map;
+  map := IsomorphismMatrixSemigroup(S);
+  return map * IsomorphismMatrixSemigroup(Range(map));
 end);
 
 InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],

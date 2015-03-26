@@ -38,6 +38,13 @@ function(filter, basedomain, rl, l)
   return m;
 end);
 
+InstallMethod(NewSMatrix, 
+"for IsPlistSMatrixRep, a ring, an int, and IsPlistMatrixRep",
+[IsPlistSMatrixRep, IsRing, IsInt, IsPlistMatrixRep],
+function(filter, basedomain, rl, mat)
+  return NewSMatrix(filter, basedomain, rl, AsMatrix(mat));
+end);
+
 InstallMethod(ConstructingFilter, "for a plist s-matrix",
 [IsPlistSMatrixRep], m->IsPlistSMatrixRep);
 

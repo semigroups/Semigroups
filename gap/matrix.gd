@@ -36,6 +36,7 @@ DeclareCategoryCollections("IsSMatrixCollection");
 # IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep));
 
 DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsList]);
+DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsPlistMatrixRep]);
 
 # These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsSMatrix);
