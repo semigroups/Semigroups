@@ -188,6 +188,8 @@ function(m)
       Remove(bas, i);
     fi;
   od;
+  ConvertToVectorRep(bas);
+  MakeImmutable(bas);
   SetRowSpaceBasis(m, bas);
   SetRowRank(m, Length(bas));
   SetRowSpaceTransformation(m, rsp{[1 .. deg]}{[deg + 1 .. 2 * deg] }); 
@@ -326,24 +328,22 @@ end);
 
 #T This might call for a separate SVector implementaion actually
 #T At least check lengths
+InstallOtherMethod(\*, "for an empty list and an s-matrix",
+[IsList and IsEmpty, IsSMatrix],
+function(l,m)
+  return l;
+end);
+
 InstallMethod(\*, "for a list of vectors and an s-matrix",
 [IsFFECollection, IsSMatrix],
 function(l, m)
-  if l = [] then
-    return l;
-  else
-    return l * m!.mat;
-  fi;
+  return l * m!.mat;
 end);
 
 InstallMethod(\*, "for a list of vectors and an s-matrix",
 [IsFFECollColl, IsSMatrix],
 function(l, m)
-  if l = [] then
-    return l;
-  else
-    return l * m!.mat;
-  fi;
+  return l * m!.mat;
 end);
 
 InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
