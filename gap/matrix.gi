@@ -65,8 +65,8 @@ end );
 InstallMethod(PrintObj, "for a plist s-matrix",
 [IsPlistSMatrixRep],
 function(m)
-  Print("NewSMatrix(IsPlistSMatrixRep,",BaseDomain(m),",",
-    DegreeOfSMatrix(m),",",m!.mat,")");
+  Print("NewSMatrix(IsPlistSMatrixRep, ",BaseDomain(m),", ",
+    DegreeOfSMatrix(m), ", ", m!.mat, ")");
 end);
 
 InstallMethod(Display, "for a plist s-matrix",
@@ -102,12 +102,10 @@ function(m)
 end);
 
 InstallMethod(AsMatrix, "for a matrix obj plist matrix rep",
-[IsMatrixObj and IsPlistMatrixRep], 
-x-> List(x![ROWSPOS], List));
+[IsPlistMatrixRep], x-> List(x![ROWSPOS], List));
 
 InstallMethod(AsMatrix, "for a plist s-matrix",
-[IsSMatrix and IsPlistSMatrixRep],
-x -> x!.mat);
+[IsPlistSMatrixRep], x -> x!.mat);
 
 InstallMethod(RowSpaceBasis, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
