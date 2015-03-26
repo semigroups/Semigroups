@@ -313,6 +313,20 @@ function(x, y)
   return AsSMatrix(x, x!.mat * y!.mat);
 end);
 
+#T This might call for a separate SVector implementaion actually
+#T At least check lengths
+InstallMethod(\*, "for a list of vectors and an s-matrix",
+[IsFFECollection, IsSMatrix],
+function(l, m)
+  return l * m!.mat;
+end);
+
+InstallMethod(\*, "for a list of vectors and an s-matrix",
+[IsFFECollColl, IsSMatrix],
+function(l, m)
+  return l * m!.mat;
+end);
+
 InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
 function(m)
   local res, r;

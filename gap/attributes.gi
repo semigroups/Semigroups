@@ -960,7 +960,7 @@ function(S)
   F := BaseDomain(S);
   M := Elements(F ^ n);
   T := Semigroup(List(GeneratorsOfSemigroup(S), x ->
-   TransformationOp(x, M, function(pnt, f) return pnt \* f!.mat end)));
+   TransformationOp(x, M, OnRight)));
   return MappingByFunction(S, T,
    x -> TransformationOp(x, Elements(F ^ Size(F)), \*));
 end);
