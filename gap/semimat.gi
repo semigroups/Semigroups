@@ -26,12 +26,34 @@ InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
 InstallMethod(OneMutable, "for an smatrix", [IsSMatrixCollection],
 coll -> One(Representative(coll)));
 
+InstallMethod(IsomorphismMatrixSemigroup, 
+"for a matrix obj semigroup",
+[IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl], 
+function(S)
+  local gens, R, n, iso;
+
+  gens := GeneratorsOfSemigroup(S);
+  if IsMatrixObj(gens[1]) then 
+    R := BaseDomain(gens[1]);
+    n := DimensionsMat(gens[1])[1];
+    iso := x -> NewSMatrix(IsPlistSMatrixRep, R, n, AsMatrix(x));
+    return MagmaIsomorphismByFunctionsNC(S, 
+                                         Semigroup(List(gens, iso)), 
+                                         iso,
+                                         AsMatrix);
+  else
+    Error("not yet implemented"); #TODO
+  fi;
+end);
+
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
     return IsomorphismMatrixSemigroup(S, GF(2));
 end);
+
+# FIXME this should be updated
 
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup and a ring",

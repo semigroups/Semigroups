@@ -94,6 +94,10 @@ function(m)
   return n;
 end);
 
+InstallMethod(AsMatrix, "for a matrix obj plist matrix rep",
+[IsMatrixObj and IsPlistMatrixRep], 
+x-> List(x![ROWSPOS], List));
+
 InstallMethod(AsMatrix, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
 x -> x!.mat);
