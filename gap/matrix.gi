@@ -65,7 +65,7 @@ end );
 InstallMethod(PrintObj, "for a plist s-matrix",
 [IsPlistSMatrixRep],
 function(m)
-  Print("NewSMatrix(IsPlistSMatrixRep",BaseDomain(m),
+  Print("NewSMatrix(IsPlistSMatrixRep,",BaseDomain(m),",",
     DegreeOfSMatrix(m),",",m!.mat,")");
 end);
 

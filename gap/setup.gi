@@ -478,14 +478,13 @@ end);
 InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-    return function(x)
-    Print("Rank of: ",x,"\n");
+  return function(x)
     if IsPlistSMatrixRep(x) then
       return RowRank(x);
     else
       return Length(x);
     fi;
-    end;
+  end;
 end);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
@@ -711,13 +710,13 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return IdentitySMatrix(BaseDomain(S), r);
+  return IdentitySMatrix(Representative(S), r);
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return IdentitySMatrix(BaseDomain(S), r);
+  return IdentitySMatrix(Representative(S), r);
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
