@@ -23,10 +23,10 @@ NewSMatrix(IsPlistSMatrixRep,GF(3),5,
 upper := function(mat)
   local zero, n, i, j;
   zero := Zero(BaseDomain(mat));
-  n := Length(mat);
+  n := DegreeOfSMatrix(mat);
   for i in [2 .. n] do 
     for j in [1 .. i - 1] do 
-      if mat[i][j] <> zero then 
+      if mat!.mat[i][j] <> zero then 
         return false;
       fi;
     od;
