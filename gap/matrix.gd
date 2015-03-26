@@ -52,6 +52,7 @@ DeclareAttribute("ColRank", IsSMatrix);
 DeclareAttribute("BaseDomain", IsSMatrix);
 DeclareAttribute("TransposedMatImmutable", IsSMatrix);
 DeclareOperation("AsMatrix", [IsSMatrix]);
+DeclareOperation("AsMatrix", [IsMatrixObj]);
 DeclareOperation("AsSMatrix", [IsSMatrix, IsMatrix]);
 DeclareOperation("AsSMatrix", [IsMatrix]);
 DeclareOperation("ConstructingFilter", [IsSMatrix]);

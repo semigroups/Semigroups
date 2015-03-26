@@ -634,6 +634,7 @@ function(r)
     return infinity;
   fi;
 end);
+
 InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup], LambdaBound);
 
