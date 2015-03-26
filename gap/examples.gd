@@ -51,6 +51,7 @@ DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString", IsClassicalMatrixSemig
 
 # SuzukiSemigroup? ReeSemigroup? 
 
+DeclareOperation("ProjectiveOmegaSemigroup", [IsPosInt, IsPosInt, IsPosInt]); 
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("GLS", GeneralLinearSemigroup);
 DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);
