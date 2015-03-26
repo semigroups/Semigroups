@@ -234,18 +234,19 @@ end);
 ## StabilizerAction
 InstallGlobalFunction(SMatrixStabilizerAction,
 function(S, x, m)
-    local rsp, g, coeff, i, n, k;
+    local rsp, g, coeff, i, n, k, zv;
     
     if IsZero(x) then 
       return x;
     fi;
-    n := DimensionsMat(x)[1];
+    n := DegreeOfMatrixSemigroup(S);
     k := LambdaRank(S)(x);
     g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);
-    rsp := g * RowSpaceBasis(x);
+    rsp := SEMIGROUPS_MutableCopyMat(m * RowSpaceBasis(x));
 
+    zv := [1 .. n] * Zero(BaseDomain(x)); 
     for i in [1 .. n - k] do
-        Add(rsp, ZeroVector(n, rsp));
+        Add(rsp, zv);
     od;
 
     return RowSpaceTransformationInv(x) * rsp;

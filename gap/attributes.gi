@@ -956,11 +956,11 @@ InstallMethod(IsomorphismTransformationSemigroup,
 [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local n, F, T, M;
-  n := DimensionsMat(GeneratorsOfSemigroup(S)[1])[1];
-  F := BaseDomain(GeneratorsOfSemigroup(S)[1]);
-  M := List(Elements(F ^ n), x -> NewRowVector(IsPlistVectorRep, F, x));
+  n := DegreeOfMatrixSemigroup(S);
+  F := BaseDomain(S);
+  M := Elements(F ^ n);
   T := Semigroup(List(GeneratorsOfSemigroup(S), x ->
-   TransformationOp(x, M, \*)));
+   TransformationOp(x, M, function(pnt, f) return pnt \* f!.mat end)));
   return MappingByFunction(S, T,
    x -> TransformationOp(x, Elements(F ^ Size(F)), \*));
 end);

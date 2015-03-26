@@ -122,7 +122,7 @@ function(m)
   deg := DegreeOfSMatrix(m);
   u := One(BaseDomain(m));
 
-  rsp := StructuralCopy(m!.mat);
+  rsp := SEMIGROUPS_MutableCopyMat(m!.mat);
   zv := [1..deg] * Zero(BaseDomain(m));
   for i in [1 .. deg] do
     Append(rsp[i], zv);
