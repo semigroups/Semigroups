@@ -178,6 +178,8 @@ function(s, vsp, m)
   # This takes care of the token element
   if Length(vsp) > DegreeOfSMatrix(m) then
     return RowSpaceBasis(m);
+  elif vsp = [] then
+    return [];
   else
     nvsp := SEMIGROUPS_MutableCopyMat(vsp * m!.mat);
   fi;
@@ -205,7 +207,7 @@ function(S, x, y)
   n := RowRank(x);
 
   if IsZero(x) then
-    res := [[One(BaseDomain(x))]];
+    res := x;
   else
     eqs := TransposedMatMutable(
       Concatenation(TransposedMat(x!.mat),
@@ -226,7 +228,8 @@ function(S, x, y)
         col := col + 1;
       fi;
     od;
-	res := eqs{[1 .. n]}{idx + deg};
+	res := NewSMatrix(ConstructingFilter(x), BaseDomain(x),
+                      n, eqs{[1 .. n]}{idx + deg});
   fi;
   return res;
 end);

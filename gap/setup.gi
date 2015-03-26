@@ -710,8 +710,12 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  Print("lambda identity", r, "\n");
-  return One(BaseDomain(S)) * IdentityMat(r);
+  local res;
+  Print("lambda identity rank:", r, " base domain: ", BaseDomain(S), "\n");
+  res := NewSMatrix(ConstructingFilter(Representative(S)),
+           BaseDomain(S), r, One(BaseDomain(S)) * IdentityMat(r));
+  Print("base domain: ", BaseDomain(res), "\n");
+  return res;
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
