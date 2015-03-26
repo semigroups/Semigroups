@@ -268,8 +268,11 @@ end);
 #T efficient.
 InstallGlobalFunction(SMatrixSchutzGrpElement,
 function(S, x, y)
-  local deg, n, eqs, sch, res, idx, row, col;
+  local deg, n, eqs, sch, res, idx, row, col,
+        check1, check2;
 
+  check1 := SEMIGROUPS_MutableCopyMat(x!.mat);
+  check2 := SEMIGROUPS_MutableCopyMat(y!.mat);
   deg := DegreeOfSMatrix(x);
   n := RowRank(x);
 
@@ -298,6 +301,9 @@ function(S, x, y)
 	res := NewSMatrix(ConstructingFilter(x), BaseDomain(x),
                       n, eqs{[1 .. n]}{idx + deg});
   fi;
+  if res^(-1) = fail then
+    Error("Schutz element not invertible");
+  fi;
   return res;
 end);
 
@@ -305,21 +311,19 @@ end);
 InstallGlobalFunction(SMatrixStabilizerAction,
 function(S, x, m)
   local rsp, g, coeff, i, n, k, zv;
-    
   if IsZero(x) then 
     return x;
   fi;
-  n := DegreeOfMatrixSemigroup(S);
-  k := LambdaRank(S)(x);
-  g := NewMatrix(IsPlistMatrixRep, BaseDomain(x), Length(m), m);
-  rsp := SEMIGROUPS_MutableCopyMat(m * RowSpaceBasis(x));
+  n := DegreeOfSMatrix(m);
+  k := RowRank(x);
+  rsp := ShallowCopy(m!.mat * RowSpaceBasis(x));
 
   zv := [1 .. n] * Zero(BaseDomain(x)); 
   for i in [1 .. n - k] do
-    Add(rsp, zv);
+    Add(rsp, ShallowCopy(zv));
   od;
 
-  return RowSpaceTransformationInv(x) * rsp;
+  return AsSMatrix(x,RowSpaceTransformationInv(x) * rsp);
 end);
 
 InstallGlobalFunction(SMatrixLambdaConjugator,
@@ -370,8 +374,8 @@ InstallGlobalFunction(SMatrixIdempotentCreator,
 function(S, x, y)
   local m, inv;
     
-  m := TransposedMat(y) * x;
-  inv := RightInverse(x, m);
+  m := AsSMatrix(Representative(S), TransposedMat(y) * x);
+  inv := SMatrixLocalRightInverse(S, x, m);
   if inv = fail then 
     return fail;
   else

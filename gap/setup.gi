@@ -84,7 +84,7 @@ function(x)
 end);
 
 InstallMethod(ActionDegree, "for a matrix object",
-[IsSMatrix], RowLength);
+[IsSMatrix], DegreeOfSMatrix);
 
 #
 
@@ -113,6 +113,7 @@ end);
 InstallMethod(ActionDegree, "for a matrix object collection",
 [IsHomogeneousList and IsFFECollCollColl],
 function(coll)
+  Error("obsolete?");
   return RowLength(coll[1]);
 end);
 
@@ -586,7 +587,8 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 InstallMethod(RhoInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-  return LeftInverse(mat);
+  return TransposedSMat(SMatrixLocalRightInverse(s,
+                          rsp, TransposedSMat(mat)));
 end);
 
 InstallMethod(LambdaBound, "for a transformation semigroup",
