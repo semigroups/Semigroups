@@ -130,7 +130,9 @@ function(G, x)
   if BaseDomain(G) <> BaseDomain(x) 
       or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) 
       or Inverse(x) = fail then 
-    Error("can't do it");
+    Error("Semigroups: ^ (for s-matrix group and s-matrix): usage\n",
+          " the args must have the same base domain, degree, and\n",
+          " the second arg must be invertible");
     return;
   elif IsOne(x) or DegreeOfSMatrix(x) = 0 then 
     return G;
@@ -145,7 +147,9 @@ function(G, x)
   if BaseDomain(G) <> BaseDomain(x) 
       or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) 
       or Inverse(x) = fail then 
-    Error("can't do it");
+    Error("Semigroups: ClosureGroup (for s-matrix group and s-matrix): usage\n",
+          " the args must have the same base domain, degree, and\n",
+          " the second arg must be invertible");
     return;
   fi;
   return ClosureGroup(G, [x]);
@@ -157,7 +161,9 @@ function(G, coll)
   if BaseDomain(G) <> BaseDomain(coll) 
       or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrixCollection(coll) 
       or ForAny(coll, x-> Inverse(x) = fail) then 
-    Error("can't do it");
+    Error("Semigroups: ClosureGroup (for s-matrix group and s-matrix): usage\n",
+          " the args must have the same base domain, degree, and\n",
+          " every matrix in the second arg must be invertible");
     return;
   elif DegreeOfMatrixSemigroup(G) = 0 then 
     return G;
