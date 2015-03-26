@@ -368,3 +368,16 @@ function(m)
   od;
   return res;
 end);
+
+InstallGlobalFunction(SEMIGROUPS_CheckReallyZero,
+function(m)
+  local r,e;
+  for r in m!.mat do
+    for e in r do
+      if not IsZero(e) then
+        return false;
+      fi;
+    od;
+  od;
+  return true;
+end);
