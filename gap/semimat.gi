@@ -263,9 +263,6 @@ function(S, V, mat)
   return AsSMatrix(mat, W{[1 .. n]}{[n + 1 .. 2 * n]});
 end);
 
-
-
-
 #T returns an invertible matrix
 #T make pretty and efficient (in that order)
 #T In particular the setup for the matrix should be much more
@@ -330,45 +327,30 @@ InstallGlobalFunction(SMatrixLambdaConjugator,
 function(S, x, y)
   local res, zero, xse, h, p, yse, q, i;
 
-    if x ^ -1 <> fail then
-        res := List(x ^ -1 * y, List);
+  if x ^ -1 <> fail then
+    res := List(x ^ -1 * y, List);
+  else
+    # Note: If IsZero is still broken, we have a debugging
+    # function SEMIGROUPS_CheckReallyZero
+    if IsZero(x) then
+      res := x;
     else
-      # FIXME this is totally fucked up, IsZero is a property which get stored
-      # as false for some element in the semigroup
-      # S := Semigroup(
-      # [ NewMatrix(IsPlistMatrixRep,GF(3),3,
-      #     [ [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3), Z(3) ], 
-      #       [ Z(3), 0*Z(3), Z(3)^0 ] ]), NewMatrix(IsPlistMatrixRep,GF(3),3,
-      #     [ [ Z(3), Z(3), 0*Z(3) ], [ Z(3)^0, Z(3)^0, 0*Z(3) ], 
-      #       [ Z(3)^0, Z(3)^0, 0*Z(3) ] ]) ]);;
-      # then the matrix "becomes" zero, and the value of IsZero is false. 
-      # I don't know how this could happend. Change this back to IsZero and
-      # then run MaximalSubsemigroups on the semigroup S above to see what I
-      # mean. Then quit from the break loop and do MaximalSubsemigroups again,
-      # and watch GAP seg fault. 
-      zero := true;
-      for i in [1..Length(x![ROWSPOS])] do
-          if not IsZero(x![ROWSPOS][i]) then
-              zero := false;
-          fi;
-      od;
-      if zero then
-        res := [[One(BaseDomain(x))]];
-      else
-        xse := SemiEchelonMat(x);
-        h := Filtered(xse.heads, x -> x <> 0);
-        p := Matrix(One(BaseDomain(x)) * PermutationMat(SortingPerm(h),
-             Length(h), BaseDomain(x)), x);
+      xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
+      h := Filtered(xse.heads, x -> x <> 0);
+      p := NewSMatrix(ConstructingFilter(x), BaseDomain(x), Length(h),
+                      One(BaseDomain(x)) * PermutationMat(SortingPerm(h),
+                                             Length(h), BaseDomain(x)));
 
-        yse := SemiEchelonMat(y);
-        h := Filtered(yse.heads, x -> x <> 0);
-        q := Matrix(One(BaseDomain(y)) * PermutationMat(SortingPerm(h),
-             Length(h), BaseDomain(y)), y);
+      yse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(y!.mat));
+      h := Filtered(yse.heads, x -> x <> 0);
+      q := NewSMatrix(ConstructingFilter(y), BaseDomain(y), Length(h),
+                      One(BaseDomain(y)) * PermutationMat(SortingPerm(h),
+                                             Length(h), BaseDomain(y)));
 
-        res := List(p * q ^ ( - 1), List);
-      fi;
+      res := p * q ^ (-1);
     fi;
-    return res;
+  fi;
+  return res;
 end);
 
 #T is there a complete direct way of testing whether

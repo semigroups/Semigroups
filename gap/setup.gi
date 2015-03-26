@@ -480,6 +480,7 @@ InstallMethod(LambdaRank, "for a matrix semigroup",
 function(S)
   return function(x)
     if IsPlistSMatrixRep(x) then
+      Error("Can't use s-matrices here");
       return RowRank(x);
     else
       return Length(x);

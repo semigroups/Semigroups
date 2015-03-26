@@ -111,3 +111,8 @@ DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 
 ## We need a mutable copy of matrices sometimes to do calculations
 DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");
+## IsZero is an attribute that is stored, and hence we have 
+## this function for debugging purposes that checks whether a 
+## matrix is actually zero by inspecting all entries
+DeclareGlobalFunction("SEMIGROUPS_CheckReallyZero");
+;
