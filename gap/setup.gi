@@ -480,12 +480,7 @@ InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
   return function(x)
-    if IsPlistSMatrixRep(x) then
-      Error("Can't use s-matrices here");
-      return RowRank(x);
-    else
       return Length(x);
-    fi;
   end;
 end);
 
@@ -723,7 +718,11 @@ end);
 InstallMethod(RhoIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return IdentitySMatrix(Representative(S), r);
+  if r = 0 then
+    return IdentitySMatrix(Representative(S), 1);
+  else
+    return IdentitySMatrix(Representative(S), r);
+  fi;
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with

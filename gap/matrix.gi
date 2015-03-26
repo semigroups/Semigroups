@@ -248,6 +248,7 @@ function(R, n)
   return NewSMatrix(IsPlistSMatrixRep, R, 0, []);
 end);
 
+#T This will break transparency wrt representations
 InstallMethod(IdentitySMatrix, "for a finite field and pos int",
 [IsField and IsFinite, IsPosInt], 
 function(R, n)
@@ -257,7 +258,8 @@ end);
 InstallMethod(IdentitySMatrix, "for an s-matrix and pos int",
 [IsSMatrix, IsPosInt], 
 function(smat, n)
-  return AsSMatrix(smat, IdentityMat(n, BaseDomain(smat)));
+  return NewSMatrix(ConstructingFilter(smat), BaseDomain(smat),
+                    n, IdentityMat(n, BaseDomain(smat)));
 end);
 
 InstallMethod(InverseOp, "for an s-matrix", 

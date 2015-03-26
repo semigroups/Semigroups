@@ -337,7 +337,8 @@ function(S, x, y)
     # Note: If IsZero is still broken, we have a debugging
     # function SEMIGROUPS_CheckReallyZero
     if IsZero(x) then
-      res := x;
+      Error("blarp");
+      res := NewSMatrix(ConstructingFilter(x), BaseDomain(x), 1, [[One(BaseDomain(x))]]);
     else
       xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
       h := Filtered(xse.heads, x -> x <> 0);
@@ -374,12 +375,16 @@ InstallGlobalFunction(SMatrixIdempotentCreator,
 function(S, x, y)
   local m, inv;
     
-  m := AsSMatrix(Representative(S), TransposedMat(y) * x);
-  inv := SMatrixLocalRightInverse(S, x, m);
-  if inv = fail then 
-    return fail;
+  if IsZero(x) then
+    return IdentitySMatrix(Representative(S),1); 
   else
-    return m * inv;
+    m := AsSMatrix(Representative(S), TransposedMat(y) * x);
+    inv := SMatrixLocalRightInverse(S, x, m);
+    if inv = fail then 
+      return fail;
+    else
+      return m * inv;
+    fi;
   fi;
 end);
 

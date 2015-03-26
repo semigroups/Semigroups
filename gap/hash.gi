@@ -17,7 +17,7 @@ function(x, data)
   fi;
   res := 0;
   for i in [1 .. DegreeOfSMatrix(x)] do
-    res := (res * 1001 + ORB_HashFunctionForPlainFlatList(x!.mat[i], data))
+    res := (res * 1001 + ORB_HashFunctionForPlainFlatList(AsPlist(x!.mat[i]), data))
            mod data + 1;
   od;
   return res;
