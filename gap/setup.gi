@@ -479,7 +479,7 @@ InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
     return function(x)
-    Print("Rank of: ",String(x),"\n");
+    Print("Rank of: ",x,"\n");
     if IsPlistSMatrixRep(x) then
       return RowRank(x);
     else

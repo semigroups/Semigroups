@@ -318,13 +318,21 @@ end);
 InstallMethod(\*, "for a list of vectors and an s-matrix",
 [IsFFECollection, IsSMatrix],
 function(l, m)
-  return l * m!.mat;
+  if l = [] then
+    return l;
+  else
+    return l * m!.mat;
+  fi;
 end);
 
 InstallMethod(\*, "for a list of vectors and an s-matrix",
 [IsFFECollColl, IsSMatrix],
 function(l, m)
-  return l * m!.mat;
+  if l = [] then
+    return l;
+  else
+    return l * m!.mat;
+  fi;
 end);
 
 InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
