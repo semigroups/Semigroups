@@ -41,6 +41,19 @@ end);
 
 #
 
+InstallImmediateMethod(IsFinite,
+"for a semigroup congruence",
+IsSemigroupCongruence and HasRange,
+0,
+function(cong)
+  if IsFinite(Range(cong)) then
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
+#
+
 InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
@@ -60,7 +73,9 @@ function(pair, cong)
     return;
   fi;
   if not (HasIsFinite(s) and IsFinite(s)) then
-    TryNextMethod();
+    Error("Semigroups: \in: usage,\n",
+          "<cong> must be a congruence of a finite semigroup,");
+    return;
   fi;
 
   elms := Elements(s);
@@ -97,7 +112,7 @@ InstallMethod(AsLookupTable,
 function(cong)
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
     Error("Semigroups: AsLookupTable: usage,\n",
-          "<cong> must be a finite semigroup");
+          "<cong> must be a congruence of a finite semigroup,");
     return;
   fi;
   if not IsBound(cong!.data) then
@@ -231,7 +246,9 @@ InstallMethod(EquivalenceClasses,
 function(cong)
   local classes, next, tab, elms, i;
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-    TryNextMethod();
+    Error("Semigroups: EquivalenceClasses: usage,\n",
+          "<cong> must be a congruence of a finite semigroup,");
+    return;
   fi;
   classes := [];
   next := 1;
@@ -312,7 +329,9 @@ function(cong)
   local s;
   s := Range(cong);
   if not (HasIsFinite(s) and IsFinite(s)) then
-    TryNextMethod();
+    Error("Semigroups: NrCongruenceClasses: usage,\n",
+          "<cong> must be a congruence of a finite semigroup,");
+    return;
   fi;
   return Maximum(AsLookupTable(cong));
 end);
