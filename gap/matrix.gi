@@ -239,7 +239,13 @@ end);
 InstallMethod(IdentitySMatrix, "for a finite field and pos int",
 [IsField and IsFinite, IsPosInt], 
 function(R, n)
-  return AsSMatrix(IdentityMatrix(n, R));
+  return NewSMatrix(IsPlistSMatrixRep, R, n, IdentityMat(n, R));
+end);
+
+InstallMethod(IdentitySMatrix, "for an s-matrix and pos int",
+[IsSMatrix, IsPosInt], 
+function(smat, n)
+  return AsSMatrix(smat, IdentityMat(n, BaseDomain(smat)));
 end);
 
 InstallMethod(InverseOp, "for an s-matrix", 

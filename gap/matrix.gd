@@ -101,6 +101,7 @@ DeclareProperty("IsZero", IsSMatrix);
 DeclareOperation("OneMutable", [IsSMatrix]);
 
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
+DeclareOperation("IdentitySMatrix", [IsSMatrix, IsPosInt]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
 DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);
 DeclareAttribute("BaseDomain", IsSMatrixCollection);
