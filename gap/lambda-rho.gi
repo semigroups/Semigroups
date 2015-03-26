@@ -234,7 +234,6 @@ function(o, m)
         f := lambdaperm(rep, rep * forward * gens[l]
           * LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g := ClosureGroup(g, f);
-        Error();
       fi;
 
       if Size(g) >= bound then
