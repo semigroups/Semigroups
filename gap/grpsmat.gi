@@ -75,6 +75,10 @@ function(G)
     return GroupHomomorphismByFunction(G, H, x-> One(H), x-> One(G));
   fi;
   gens := GeneratorsOfGroup(G);
+  if Length(gens) = 0 then
+    H := TrivialGroup(); 
+    return GroupHomomorphismByFunction(G, H, x->One(H), x->One(G));
+  fi;
   return GroupHomomorphismByFunction(G, Group(List(gens, AsMatrix)), 
     AsMatrix, 
     g -> AsSMatrix(Representative(G), g));

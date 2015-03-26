@@ -343,7 +343,7 @@ end);
 InstallMethod(RhoAct, "for a matrix semigroup", [IsMatrixSemigroup],
 function(S)
   return function(vsp, mat)
-    return LambdaAct(S)(vsp, TransposedMat(mat));
+    return LambdaAct(S)(vsp, TransposedSMat(mat));
   end;
 end);
 
@@ -447,7 +447,7 @@ function(S)
   # a function that returns the column space
   return
     function(mat)
-      return LambdaFunc(S)(TransposedMat(mat));
+      return LambdaFunc(S)(TransposedSMat(mat));
     end;
 end);
 

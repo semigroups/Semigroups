@@ -364,6 +364,12 @@ function(l, m)
   return l * m!.mat;
 end);
 
+InstallMethod(TransposedSMat, "for an s-matrix",
+[IsSMatrix],
+function(m)
+  return AsSMatrix(m, TransposedMat(m!.mat));
+end);
+
 InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
 function(m)
   local res, r;

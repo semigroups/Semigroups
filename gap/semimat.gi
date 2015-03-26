@@ -390,7 +390,7 @@ function(S)
     gens := GeneratorsOfMonoid(S);
     deg := DegreeOfSMatrix(gens[1]);
     res := "<monoid of ";
-    Append(res, Concatenation(String(deg), "x", String(deg));
+    Append(res, Concatenation(String(deg), "x", String(deg)));
     Append(res, " s-matrices over ");
     Append(res, String(BaseDomain(S)));
     Append(res, Concatenation(" with ", Length(gens), " generator"));

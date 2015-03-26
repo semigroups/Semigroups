@@ -61,17 +61,6 @@ DeclareOperation("ConstructingFilter", [IsSMatrix]);
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
 # We also need operations for acting on Row/Column spaces.
 
-# The following  should really be obsolete, or at the very least not needed
-# for our purposes. We need to compute a RowReduced form and a ColumnReduced form
-# and store the transformation matrices.
-DeclareOperation( "TriangulizeMat", [ IsSMatrix ]);
-DeclareOperation( "SemiEchelonMatDestructive",
-        [ IsSMatrix and IsMutable ]);
-DeclareOperation( "SemiEchelonMatTransformationDestructive",
-        [ IsSMatrix and IsMutable ]);
-DeclareAttribute( "SemiEchelonMatTransformation",
-        IsSMatrix );
-
 # For the time being we are "happy" with the PlistMatrixRep representation
 # as showcased in the library code. Of course we implement our own variant
 # of it just to be sure that we duplicate enough code
@@ -104,8 +93,10 @@ DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsInt and IsZero]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
 DeclareOperation("IdentitySMatrix", [IsSMatrix, IsPosInt]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
+DeclareOperation("TransposedSMat", [IsSMatrix]);
 DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);
 DeclareAttribute("BaseDomain", IsSMatrixCollection);
+
 
 ##
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
