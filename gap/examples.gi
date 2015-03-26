@@ -884,4 +884,108 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
+# ww special types of semigroup
+
+# Creates a zero partial perm semigroup of order n
+
+InstallMethod(ZeroSemigroup,
+"for a positive integer",
+[IsPosInt],
+function(n)
+  local zero, gens, elts, out, i;
+
+  zero := PartialPerm([], []);
+  if n = 1 then
+    gens := [zero];
+    elts := gens;
+  else
+    gens := EmptyPlist(n - 1);
+    for i in [1 .. n - 1] do
+      gens[i] := PartialPerm([2 * i - 1], [2 * i]);
+    od;
+    elts := Concatenation(gens, [zero]);
+  fi;
+
+  out := Semigroup(gens);
+  SetSize(out, n);
+  SetAsList(out, elts);
+  SetIsZeroSemigroup(out, true);
+  SetMultiplicativeZero(out, zero);
+
+  if IsNonTrivial(out) then
+    SetIsGroupAsSemigroup(out, false);
+    SetIsRegularSemigroup(out, false);
+    if n > 2 then
+      SetIsMonogenicSemigroup(out, false);
+    fi;
+  fi;
+
+  return out;
+end);
+
+# Creates a monogenic transformation semigroup with index m and period r
+
+InstallMethod(MonogenicSemigroup,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, r)
+  local t, out;
+
+  t := [1 .. r] + 1;
+  t[r] := 1;
+
+  if not m = 1 then # m = 1 specifies a cyclic group
+    Append(t, [1 .. m] + r - 1);
+  fi;
+
+  out := Semigroup(Transformation(t));
+  SetSize(out, m + r - 1);
+  SetIsMonogenicSemigroup(out, true);
+
+  if m = 1 then
+    SetIsGroupAsSemigroup(out, true);
+  else
+    SetIsGroupAsSemigroup(out, false);
+    SetIsRegularSemigroup(out, false);
+  fi;
+
+  if r = 1 and m < 3 then
+    SetIsZeroSemigroup(out, true);
+  else
+    SetIsZeroSemigroup(out, false);
+  fi;
+
+  return out;
+end);
+
+# Creates an m x n RMS over the trivial group
+
+InstallMethod(RectangularBand,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local id, mat, R;
+
+  id := ();
+  mat := List([1 .. n], x -> List([1 .. m], y -> id));
+  R := ReesMatrixSemigroup(Group(id), mat);
+
+  SetSize(R, m * n);
+  SetIsRectangularBand(R, true);
+  if not (m = 1 and n = 1) then
+    SetIsZeroSemigroup(R, false);
+    if m = 1 then
+      SetIsRightZeroSemigroup(R, true);
+    else
+      SetIsRightZeroSemigroup(R, false);
+    elif n = 1 then
+      SetIsLeftZeroSemigroup(R, true);
+    else
+      SetIsLeftZeroSemigroup(R, false);
+    fi;
+  fi;
+  
+  return R;
+end);
+
 #EOF

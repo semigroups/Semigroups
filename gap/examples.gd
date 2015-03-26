@@ -42,6 +42,10 @@ DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
 SingularTransformationSemigroup);
 
+DeclareOperation("ZeroSemigroup", [IsPosInt]);
+DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RectangularBand", [IsPosInt, IsPosInt]);
+
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);
 DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);
