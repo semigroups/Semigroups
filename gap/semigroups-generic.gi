@@ -298,11 +298,7 @@ function(S)
     nrrules := 0, prefix := [  ], reduced := [ [  ] ], right := [  ], 
     rules := [  ], stopper := false, suffix := [  ], words := [  ] );
   
-  if HasSemigroupOptions(S) then 
-    hashlen:=SemigroupOptions(S).hashlen.L;
-  else
-    hashlen:=SEMIGROUPS_OptionsRec.hashlen.L;
-  fi;
+  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
   if IsMonoid(S) then 
     data.gens:=ShallowCopy(GeneratorsOfMonoid(S));

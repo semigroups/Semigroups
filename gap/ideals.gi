@@ -219,7 +219,7 @@ InstallMethod(SemigroupIdealByGenerators,
 "for a semigroup, associative element collection",
 [IsSemigroup, IsAssociativeElementCollection], 
 function(S, gens)
-  return SemigroupIdealByGenerators(S, gens, SemigroupOptions(S));
+  return SemigroupIdealByGenerators(S, gens, SEMIGROUPS_OptionsRec(S));
 end);
 
 #
@@ -271,7 +271,7 @@ function(S, gens, opts)
   SetParent(I, S);
   SetGeneratorsOfMagmaIdeal(I, gens);
 
-  if not opts.acting then # to keep the craziness in the library happy!
+  if opts.generic then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif IsActingSemigroup(I) and not (HasIsRegularSemigroup(I) and
     IsRegularSemigroup(I)) then

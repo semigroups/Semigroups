@@ -263,10 +263,10 @@ function(s, f)
     od;
   else
       
-    opts:=rec(  treehashsize:=SemigroupOptions(s).hashlen.M, 
-                gradingfunc:=function(o, x) return rhorank(x); end,
-                onlygrades:=function(x, y) return x>=rank; end,
-                onlygradesdata:=fail );
+    opts:=rec(treehashsize:=SEMIGROUPS_OptionsRec(s).hashlen.M, 
+              gradingfunc:=function(o, x) return rhorank(x); end,
+              onlygrades:=function(x, y) return x>=rank; end,
+              onlygradesdata:=fail );
     
     for name in RecNames(LambdaOrbOpts(s)) do
       opts.(name):=LambdaOrbOpts(s).(name);
@@ -307,10 +307,10 @@ function(s, f)
       fi;
     od;
   else
-     opts:=rec(  treehashsize:=SemigroupOptions(s).hashlen.M, 
-                gradingfunc:=function(o, x) return lambdarank(x); end,
-                onlygrades:=function(x, y) return x>=rank; end,
-                onlygradesdata:=fail ); #shouldn't this be fail
+     opts:=rec(treehashsize:=SEMIGROUPS_OptionsRec(s).hashlen.M, 
+               gradingfunc:=function(o, x) return lambdarank(x); end,
+               onlygrades:=function(x, y) return x>=rank; end,
+               onlygradesdata:=fail ); #shouldn't this be fail
     
     for name in RecNames(LambdaOrbOpts(s)) do
       opts.(name):=LambdaOrbOpts(s).(name);

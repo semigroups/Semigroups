@@ -8,36 +8,39 @@
 #############################################################################
 ##
 
-BindGlobal("SEMIGROUPS_OptionsRec", 
+BindGlobal("SEMIGROUPS_DefaultOptionsRec", 
   rec(small:=false,
       hashlen:=rec(S:=251, M:=6257, L:=25013),
       regular:=false,
       generic:=false));
 
-MakeReadWriteGlobal("SEMIGROUPS_OptionsRec");
+MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 
 BindGlobal("SEMIGROUPS_ProcessOptionsRec", 
-function(record)
+function(opts)
   local n, x;
-  
-  for x in RecNames(SEMIGROUPS_OptionsRec) do 
-    if not IsBound(record.(x)) then 
-      record.(x):=SEMIGROUPS_OptionsRec.(x);
+ 
+  for x in RecNames(SEMIGROUPS_DefaultOptionsRec) do 
+    if not IsBound(opts.(x)) then 
+      opts.(x):=SEMIGROUPS_DefaultOptionsRec.(x);
     fi;
   od;
 
-  if IsBound(record.hashlen) and IsPosInt(record.hashlen) then
-    n := record.hashlen;
-    record.hashlen := rec(S := NextPrimeInt(Int(n / 100)),
+  if IsBound(opts.hashlen) and IsPosInt(opts.hashlen) then
+    n := opts.hashlen;
+    opts.hashlen := rec(S := NextPrimeInt(Int(n / 100)),
      M := NextPrimeInt(Int(n / 4)), L := NextPrimeInt(n));
   fi;
 
-  return record;
+  return opts;
 end);
 
-DeclareAttribute("SemigroupOptions", IsSemigroup);
-
-InstallMethod(SemigroupOptions, "for a semigroup", [IsSemigroup], 
+BindGlobal("SEMIGROUPS_OptionsRec", 
 function(S)
-  return SEMIGROUPS_OptionsRec;
+  if not IsBound(S!.opts) then 
+    Info(InfoWarning, 1, 
+    "Semigroups: SEMIGROUPS_OptionsRec: using default options!");
+    return SEMIGROUPS_DefaultOptionsRec;
+  fi;
+  return S!.opts;
 end);

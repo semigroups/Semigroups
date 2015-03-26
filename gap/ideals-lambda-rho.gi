@@ -224,7 +224,7 @@ function(I)
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
   
   htopts:=ShallowCopy(LambdaOrbOpts(I)); 
-  htopts.treehashsize:=SemigroupOptions(I).hashlen.M;
+  htopts.treehashsize:=SEMIGROUPS_OptionsRec(I).hashlen.M;
   record.ht:=HTCreate(LambdaFunc(I)(Representative(I)), htopts);
   
   fam:=CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
@@ -262,7 +262,7 @@ function(I)
   # and <orbtogen[ComponentOfIndex(Position(o, RhoFunc(I)(gens[i])))]=i>
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
   htopts:=ShallowCopy(RhoOrbOpts(I)); 
-  htopts.treehashsize:=SemigroupOptions(I).hashlen.M;
+  htopts.treehashsize:=SEMIGROUPS_OptionsRec(I).hashlen.M;
   record.ht:=HTCreate(RhoFunc(I)(Representative(I)), htopts);
   
   fam:=CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));

@@ -521,11 +521,11 @@ end);
 ##
 
 InstallMethod(Size,
-  "for a free inverse semigroup",
-  [IsFreeInverseSemigroupCategory],
-  function(S)
-    return infinity;
-  end);
+"for a free inverse semigroup",
+[IsFreeInverseSemigroupCategory],
+function(S)
+  return infinity;
+end);
 
 InstallMethod(IsFreeInverseSemigroup, "for a semigroup",
 [IsSemigroup],

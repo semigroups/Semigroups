@@ -21,22 +21,23 @@ InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
 
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local gens, data;
 
-  gens := GeneratorsOfSemigroup(s);
+  gens := GeneratorsOfSemigroup(S);
 
   data := rec(gens := gens,
               genstoapply := [1 .. Length(gens)],
               graph := [EmptyPlist(Length(gens))],
-              ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
+              ht := HTCreate(gens[1], rec(treehashsize :=
+                    SEMIGROUPS_OptionsRec(S).hashlen.L)),
               init := false,
               lambdarhoht := [],
               lenreps := [0],
               orbit := [[,,,FakeOne(gens)]],
               orblookup1 := [],
               orblookup2 := [],
-              parent := s,
+              parent := S,
               pos := 0,
               reps := [],
               repslens := [],
@@ -47,7 +48,7 @@ function(s)
               schreierpos := [fail],
               stopper := false);
 
-  Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
+  Objectify(NewType(FamilyObj(S), IsSemigroupData), data);
 
   return data;
 end);

@@ -187,7 +187,7 @@ InstallMethod(MagmaByGenerators, "for an associative element collection",
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
-   return SemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
+   return SemigroupByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
 end);
 
 #
@@ -196,7 +196,7 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
-  local n, i, opts, S, filts, pos, f;
+  local n, i, S, filts, pos, f;
 
   opts:=SEMIGROUPS_ProcessOptionsRec(opts);
   gens:=AsList(gens);
@@ -242,8 +242,7 @@ function(gens, opts)
     filts:=filts and IsActingSemigroup;
   fi;
 
-  S:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
-  SetSemigroupOptions(S, opts);
+  S:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := opts));
   
   if opts.regular then 
     SetIsRegularSemigroup(S, true);
@@ -270,7 +269,7 @@ end);
 InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
-  return MonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
+  return MonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
 end);
 
 #
@@ -278,13 +277,13 @@ end);
 InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
-function(gens, record)
-  local n, opts, S, filts, pos, i, f;
+function(gens, opts)
+  local n, S, filts, pos, i, f;
 
-  record:=SEMIGROUPS_ProcessOptionsRec(record);
+  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
   gens:=ShallowCopy(gens);
 
-  if record.small and Length(gens)>1 then #small gen. set
+  if opts.small and Length(gens)>1 then #small gen. set
     gens:=SSortedList(gens); #remove duplicates 
     if IsGeneratorsOfActingSemigroup(gens) then 
       gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
@@ -296,7 +295,7 @@ function(gens, record)
       fi;
     fi;
 
-    opts:=ShallowCopy(record);  
+    opts:=ShallowCopy(opts);  
     opts.small:=false;  
     opts.regular:=false;
     S:=Monoid(gens[1], opts);
@@ -319,14 +318,13 @@ function(gens, record)
 
   filts:=IsMonoid and IsAttributeStoringRep;
 
-  if not record.generic and IsGeneratorsOfActingSemigroup(gens) then 
+  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then 
     filts:=filts and IsActingSemigroup;
   fi;
 
-  S:=Objectify( NewType( FamilyObj( gens ), filts ), rec());
-  SetSemigroupOptions(S, record);
+  S:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := opts));
 
-  if record.regular then 
+  if opts.regular then 
     SetIsRegularSemigroup(S, true);
   fi;
 
@@ -351,7 +349,7 @@ InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
-  return InverseMonoidByGenerators(gens, SEMIGROUPS_OptionsRec);
+  return InverseMonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
 end);
 
 #
@@ -360,7 +358,7 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
-  return InverseSemigroupByGenerators(gens, SEMIGROUPS_OptionsRec);
+  return InverseSemigroupByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
 end);
 
 #
@@ -368,12 +366,12 @@ end);
 InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
-function(gens, record)
-  local n, opts, S, filts, one, pos, f;
+function(gens, opts)
+  local n, S, filts, one, pos, f;
   
-  record:=SEMIGROUPS_ProcessOptionsRec(record);
+  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
 
-  if record.small and Length(gens) > 1 then 
+  if opts.small and Length(gens) > 1 then 
     gens := SSortedList(ShallowCopy(gens));
     if IsGeneratorsOfActingSemigroup(gens) then 
       gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));
@@ -382,7 +380,7 @@ function(gens, record)
                    return ActionRank(x, n) > ActionRank(y, n); 
                  end);
     fi;
-    opts:=ShallowCopy(record);  
+    opts:=ShallowCopy(opts);  
     opts.small:=false;  
     S:=InverseMonoid(gens[1], opts);
     
@@ -394,12 +392,11 @@ function(gens, record)
 
   filts := IsMagmaWithOne and IsInverseSemigroup and IsAttributeStoringRep;
   
-  if not record.generic and IsGeneratorsOfActingSemigroup(gens) then 
+  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then 
     filts:=filts and IsActingSemigroup;
   fi;
 
-  S := Objectify(NewType(FamilyObj(gens), filts), rec());
-  SetSemigroupOptions(S, record);
+  S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   one:=One(gens); 
   SetOne(S, one);
   pos:=Position(gens, one);
@@ -424,12 +421,12 @@ end);
 InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
-function(gens, record)
-  local n, opts, S, filts, pos, f;
+function(gens, opts)
+  local n, S, filts, pos, f;
 
-  record:=SEMIGROUPS_ProcessOptionsRec(record);
+  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
   
-  if record.small and Length(gens)>1 then 
+  if opts.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
    if IsGeneratorsOfActingSemigroup(gens) then 
       gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
@@ -437,7 +434,7 @@ function(gens, record)
       Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
     fi;
     
-    opts:=ShallowCopy(record);  
+    opts:=ShallowCopy(opts);  
     opts.small:=false;
     
     S:=InverseSemigroup(gens[1], opts);
@@ -449,12 +446,11 @@ function(gens, record)
   
   filts:=IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
   
-  if not record.generic and IsGeneratorsOfActingSemigroup(gens) then 
+  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then 
     filts:=filts and IsActingSemigroup;
   fi;
 
-  S:=Objectify( NewType(FamilyObj( gens ), filts), rec());
-  SetSemigroupOptions(S, record);
+  S:=Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   SetGeneratorsOfInverseSemigroup(S, AsList(gens));
   
   if IsMultiplicativeElementWithOneCollection(gens) then 
@@ -475,7 +471,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op and associative element coll.",
 [IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, coll) 
-  return ClosureInverseSemigroup(S, coll, ShallowCopy(SemigroupOptions(S)));
+  return ClosureInverseSemigroup(S, coll, ShallowCopy(SEMIGROUPS_OptionsRec(S)));
 end);
 
 #
@@ -483,8 +479,8 @@ end);
 InstallMethod(ClosureInverseSemigroup, 
 "for a semigroup with inverse op and an associative element",
 [IsSemigroupWithInverseOp, IsAssociativeElement],
-function(S, f) 
-  return ClosureInverseSemigroup(S, [f], ShallowCopy(SemigroupOptions(S)));
+function(S, x) 
+  return ClosureInverseSemigroup(S, [x], ShallowCopy(SEMIGROUPS_OptionsRec(S)));
 end);
 
 #
@@ -492,8 +488,8 @@ end);
 InstallMethod(ClosureInverseSemigroup, 
 "for semigroup with inverse op, associative element, record",
 [IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
-function(S, f, record) 
-  return ClosureInverseSemigroup(S, [f], record);
+function(S, x, opts) 
+  return ClosureInverseSemigroup(S, [x], opts);
 end);
 
 #
@@ -502,7 +498,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for a acting semigroup with inverse op, associative elt coll, and record",
 [IsSemigroupWithInverseOp and IsActingSemigroup,
  IsAssociativeElementCollection, IsRecord],
-function(S, coll, record)
+function(S, coll, opts)
   
   if IsEmpty(coll) then 
     return S;
@@ -532,10 +528,10 @@ function(S, coll, record)
     coll := GeneratorsOfSemigroup(coll);
   fi;
 
-  record.small:=false;
+  opts.small:=false;
 
   return ClosureInverseSemigroupNC(S, Filtered(coll, x-> not x in S),
-   SEMIGROUPS_ProcessOptionsRec(record));
+   SEMIGROUPS_ProcessOptionsRec(opts));
 end);
 
 #
@@ -543,7 +539,7 @@ end);
 InstallMethod(ClosureInverseSemigroup, 
 "for a semigroup with inverse op, associative elt coll, and record",
 [IsSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
-function(S, coll, record)
+function(S, coll, opts)
   
   if IsEmpty(coll) then 
     return S;
@@ -558,13 +554,13 @@ function(S, coll, record)
     coll:=GeneratorsOfSemigroup(coll);
   fi;
 
-  return InverseSemigroup(S, coll, record);
+  return InverseSemigroup(S, coll, opts);
 end);
 
 #
 
 InstallGlobalFunction(ClosureInverseSemigroupNC,
-function(s, coll, record)
+function(s, coll, opts)
   local t, coll_copy, o, f;
 
   if coll = [] then
@@ -572,7 +568,7 @@ function(s, coll, record)
     "semigroup,");
     return s;
   elif IsSemigroupIdeal(s) then
-    return InverseSemigroup(s, coll, record);
+    return InverseSemigroup(s, coll, opts);
   fi;
 
   coll_copy := Set(ShallowCopy(coll));
@@ -587,7 +583,7 @@ function(s, coll, record)
 
   #TODO should be a case split here for semigroups and monoids?
   t := InverseSemigroupByGenerators(
-   Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
+   Concatenation(GeneratorsOfInverseSemigroup(s), coll), opts);
 
   #remove everything related to strongly connected components
   Unbind(o!.scc);
@@ -615,7 +611,7 @@ InstallMethod(ClosureSemigroup,
 "for a semigroup and associative element collection",
 [IsSemigroup, IsAssociativeElementCollection],
 function(S, coll)
-  return ClosureSemigroup(S, coll, ShallowCopy(SemigroupOptions(S)));
+  return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS_OptionsRec(S)));
 end);
 
 #
@@ -623,7 +619,7 @@ end);
 InstallMethod(ClosureSemigroup, "for a semigroup and associative element",
 [IsSemigroup, IsAssociativeElement],
 function(S, x)
-  return ClosureSemigroup(S, [x], ShallowCopy(SemigroupOptions(S)));
+  return ClosureSemigroup(S, [x], ShallowCopy(SEMIGROUPS_OptionsRec(S)));
 end);
 
 #
@@ -631,8 +627,8 @@ end);
 InstallMethod(ClosureSemigroup, 
 "for a semigroup, associative element, and record",
 [IsSemigroup, IsAssociativeElement, IsRecord],
-function(S, x, record)
-  return ClosureSemigroup(S, [x], record);
+function(S, x, opts)
+  return ClosureSemigroup(S, [x], opts);
 end);
 
 #
@@ -640,7 +636,7 @@ end);
 InstallMethod(ClosureSemigroup, 
 "for an acting semigroup, associative element collection, and record",
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
-function(S, coll, record)
+function(S, coll, opts)
  
   if IsEmpty(coll) then 
     return S;
@@ -667,10 +663,10 @@ function(S, coll, record)
     coll:=GeneratorsOfSemigroup(coll); #JDM: was just Generators, ok?
   fi;
   
-  record.small:=false;
+  opts.small:=false;
   
   return ClosureSemigroupNC(S, Filtered(coll, x-> not x in S),
-   SEMIGROUPS_ProcessOptionsRec(record));
+   SEMIGROUPS_ProcessOptionsRec(opts));
 end);
 
 #
@@ -678,7 +674,7 @@ end);
 InstallMethod(ClosureSemigroup, 
 "for a semigroup, associative element collection, and record",
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
-function(S, coll, record)
+function(S, coll, opts)
  
   if IsEmpty(coll) then 
     return S;
@@ -694,7 +690,7 @@ function(S, coll, record)
   fi;
 
   return Semigroup(S, Filtered(coll, x-> not x in S), 
-   SEMIGROUPS_ProcessOptionsRec(record));
+   SEMIGROUPS_ProcessOptionsRec(opts));
 end);
 
 #recreate the lambda/rho orb using the higher degree!

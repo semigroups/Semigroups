@@ -16,7 +16,7 @@ function(S)
   local record;
 
   record:=ShallowCopy(LambdaOrbOpts(S));
-  record.treehashsize:=SemigroupOptions(S).hashlen.S;
+  record.treehashsize:=SEMIGROUPS_OptionsRec(S).hashlen.S;
   return HTCreate(LambdaFunc(S)(Representative(S)), record);
 end);
 
@@ -28,7 +28,7 @@ function(S)
   local record;
 
   record:=ShallowCopy(RhoOrbOpts(S));
-  record.treehashsize:=SemigroupOptions(S).hashlen.S;
+  record.treehashsize:=SEMIGROUPS_OptionsRec(S).hashlen.S;
   return HTCreate(RhoFunc(S)(Representative(S)), record);
 end);
 
