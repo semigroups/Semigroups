@@ -92,7 +92,7 @@ InstallMethod(IsomorphismMatrixSemigroup,
 [IsSemigroup, IsRing],
 function(S, R)
   local map;
-  map := IsomorphismMatrixSemigroup(S);
+  map := IsomorphismTransformationSemigroup(S);
   return map * IsomorphismMatrixSemigroup(Range(map));
 end);
 
