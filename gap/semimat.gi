@@ -337,7 +337,6 @@ function(S, x, y)
     # Note: If IsZero is still broken, we have a debugging
     # function SEMIGROUPS_CheckReallyZero
     if IsZero(x) then
-      Error("blarp");
       res := NewSMatrix(ConstructingFilter(x), BaseDomain(x), 1, [[One(BaseDomain(x))]]);
     else
       xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
