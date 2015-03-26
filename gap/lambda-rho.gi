@@ -213,7 +213,6 @@ function(o, m)
   lambdaperm := LambdaPerm(s);
   rep := LambdaOrbRep(o, m);
   rank := LambdaRank(s)(o[scc[1]]);
-
   one := LambdaIdentity(s)(rank);
   bound := LambdaBound(s)(rank);
 

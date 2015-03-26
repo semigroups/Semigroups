@@ -23,6 +23,13 @@ InstallMethod(NewSMatrix, "for IsPlistSMatrixRep, a ring, an int, and a list",
 [IsPlistSMatrixRep, IsRing, IsInt, IsList],
 function(filter, basedomain, rl, l)
   local m,i,e,filter2;
+  
+  if not Length(l) = rl then 
+    Error("Semigroups: NewSMatrix: usage,\n",
+          "the arguments are wrong!");
+    return;
+  fi;
+
   filter2 := filter and IsSMatrix;
   if HasCanEasilyCompareElements(Representative(basedomain))
      and CanEasilyCompareElements(Representative(basedomain)) then
@@ -54,6 +61,7 @@ InstallMethod(ConstructingFilter, "for a cvec s-matrix",
 ############################################################################
 ## Printing and viewing methods:
 #############################################################################
+
 InstallMethod(ViewObj, "for a plist s-matrix",
 [IsPlistSMatrixRep],
 function(m)
@@ -261,7 +269,7 @@ InstallMethod(AsSMatrix, "for an s-matrix and a matrix",
 [IsSMatrix, IsMatrix],
 function(smat, mat)
   return NewSMatrix(ConstructingFilter(smat), BaseDomain(smat),
-                    DegreeOfSMatrix(smat), mat);
+                    Length(mat), mat);
 end);
 
 InstallMethod(DegreeOfSMatrixCollection, "for an s-matrix collection",
