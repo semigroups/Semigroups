@@ -76,7 +76,7 @@ function(G)
   fi;
   gens := GeneratorsOfGroup(G);
   if Length(gens) = 0 then
-    H := TrivialGroup(); 
+    H := Group(AsMatrix(One(G))); 
     return GroupHomomorphismByFunction(G, H, x->One(H), x->One(G));
   fi;
   return GroupHomomorphismByFunction(G, Group(List(gens, AsMatrix)), 

@@ -379,8 +379,6 @@ function(S, x, y)
   fi;
 end);
 
-# TODO ViewString
-
 InstallMethod(ViewString,
 "for an s-matrix semigroup with generators",
 [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
