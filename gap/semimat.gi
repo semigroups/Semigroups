@@ -244,7 +244,7 @@ function(S, V, mat)
   
   zv := [1..2*n] * Zero(BaseDomain(mat));
   for i in [1..n-Length(W)] do
-    Add(W, zv);
+    Add(W, ShallowCopy(zv));
   od;
 
   # add missing heads
@@ -257,9 +257,8 @@ function(S, V, mat)
       j := j + 1;
     fi;
   od;
-
   TriangulizeMat(W);
-
+ 
   return AsSMatrix(mat, W{[1 .. n]}{[n + 1 .. 2 * n]});
 end);
 

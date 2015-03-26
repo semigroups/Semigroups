@@ -711,7 +711,11 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return IdentitySMatrix(Representative(S), r);
+  if r = 0 then
+    return IdentitySMatrix(Representative(S), 1);
+  else 
+    return IdentitySMatrix(Representative(S), r);
+  fi;
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",

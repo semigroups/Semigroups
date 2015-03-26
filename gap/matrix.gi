@@ -242,6 +242,12 @@ InstallGlobalFunction( RandomSMatrix, function ( arg )
   return NewSMatrix(IsPlistSMatrixRep, R, n, One(R) * mat);
 end);
 
+InstallMethod(IdentitySMatrix, "for a finite field and zero",
+[IsField and IsFinite, IsInt and IsZero ],
+function(R, n)
+  return NewSMatrix(IsPlistSMatrixRep, R, 0, []);
+end);
+
 InstallMethod(IdentitySMatrix, "for a finite field and pos int",
 [IsField and IsFinite, IsPosInt], 
 function(R, n)
