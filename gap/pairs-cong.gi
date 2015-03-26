@@ -46,7 +46,7 @@ InstallImmediateMethod(IsFinite,
 IsSemigroupCongruence and HasRange,
 0,
 function(cong)
-  if IsFinite(Range(cong)) then
+  if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
     return true;
   fi;
   TryNextMethod();
