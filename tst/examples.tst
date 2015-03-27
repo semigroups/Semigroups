@@ -2332,6 +2332,9 @@ the optional first argument <filter> must be a filter,
 gap> s := ZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `ZeroSemigroupCons' on 2 arguments
+gap> s := ZeroSemigroup(IsPartialPermSemigroup, 2, true);
+Error, Semigroups: ZeroSemigroup: usage:
+this function takes at most two arguments,
 
 # IsTransformationSemigroup
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 1));
