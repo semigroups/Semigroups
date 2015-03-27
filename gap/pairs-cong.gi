@@ -23,6 +23,8 @@ function(table, i)
   return i;
 end);
 
+#
+
 InstallGlobalFunction(SEMIGROUPS_UF_Union,
 function(table, pair)
   local ii, jj;
@@ -36,6 +38,8 @@ function(table, pair)
     table[ii] := jj;
   fi;
 end);
+
+#
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
@@ -128,10 +132,13 @@ InstallMethod(Enumerate,
 "for a semigroup congruence and a function",
 [IsSemigroupCongruence, IsFunction],
 function(cong, lookfunc)
+  if HasAsLookupTable(cong) then
+    return fail;
+  fi;
   if not IsBound(cong!.data) then
     SEMIGROUPS_SetupCongData(cong);
   fi;
-  Enumerate(cong!.data, lookfunc);
+  return Enumerate(cong!.data, lookfunc);
 end);
 
 #
@@ -144,9 +151,6 @@ function(data, lookfunc)
         found, x, j, y, next, newtable, ii;
 
   cong := data!.cong;
-  if HasAsLookupTable(cong) then
-    return data;
-  fi;
   s := Range(cong);
 
   table := data!.lookup;
@@ -355,7 +359,7 @@ InstallMethod(Enumerator,
 "for a semigroup congruence class",
 [IsCongruenceClass],
 function(class)
-  local cong, record, lookfunc, x, enum;
+  local cong, record, x, enum;
   cong := EquivalenceClassRelation(class);
   # cong has been enumerated: return a list
   if HasAsLookupTable(cong) then
@@ -364,9 +368,9 @@ function(class)
 
   # cong has not yet been enumerated: make functions
   record := rec();
-
+  
   record.ElementNumber := function(enum, pos)
-    local lookfunc;
+    local lookfunc, result, table, classno, i;
     if pos <= enum!.len then
       return enum!.elms[enum!.list[pos]];
     fi;
@@ -384,7 +388,25 @@ function(class)
       fi;
       return enum!.len >= pos;
     end;
-    Enumerate(enum!.cong, lookfunc);
+    result := Enumerate(enum!.cong, lookfunc);
+    if result = fail then
+      # cong has AsLookupTable
+      table := AsLookupTable(enum!.cong);
+      classno := table[enum!.rep];
+      for i in [1..Size(Range(enum!.cong))] do
+        if table[i] = classno and not enum!.found[i] then
+          enum!.found[i] := true;
+          enum!.len := enum!.len + 1;
+          enum!.list[enum!.len] := i;
+        fi;
+      od;
+      #TODO: erase these 3 lines
+      if enum!.len <> Size(class) then
+        Error("This should never happen!"); return;
+      fi;
+      SetSize(class, enum!.len);
+      SetAsList(class, enum!.list);
+    fi;
     if pos <= enum!.len then
       return enum!.elms[enum!.list[pos]];
     else
@@ -418,7 +440,7 @@ function(class)
   enum!.elms := AsSSortedList(Range(enum!.cong));
   enum!.rep := Position(enum!.elms, Representative(UnderlyingCollection(enum)));
   enum!.list := [enum!.rep];
-  enum!.found := BlistList(enum!.elms, [enum!.rep]);
+  enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
   enum!.len := 1;
   
   return enum;
