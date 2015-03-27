@@ -117,6 +117,19 @@ function(coll)
   return RowLength(coll[1]);
 end);
 
+InstallMethod(ActionDegree, "for a matrix object collection",
+[IsHomogeneousList and IsSMatrixCollection],
+function(coll)
+  if Length(coll) > 0 then
+    return DegreeOfSMatrix(coll[1]);
+  else
+    Error("Semigroups: what is the ActionDegree of an empty collection?");
+  fi;
+end);
+
+
+
+
 #
 
 InstallMethod(ActionDegree, "for a transformation semigroup",

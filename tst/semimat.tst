@@ -13,7 +13,7 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
-#
+#T# MatrixSemigroupTest1: Create and Size
 gap> M := NewSMatrix(IsPlistSMatrixRep, GF(2), 16,
 > [[ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
 > [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],
@@ -33,11 +33,23 @@ gap> M := NewSMatrix(IsPlistSMatrixRep, GF(2), 16,
 > [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ]
 > ]);;
 gap> S := Semigroup(M);
-<semigroup of 16x16 matrices over GF(2) with 1 generator>
+<semigroup of 16x16 s-matrices over GF(2) with 1 generator>
 gap> Size(S);
 7161
+gap> NrDClasses(S);
+1
+gap> PartialOrderOfDClasses(S);
+[ [ 1 ] ]
+gap> StructureDescriptionSchutzenbergerGroups(S);
+[ "C7161" ]
+gap> T := AsTransformationSemigroup(S);
+gap> Size(T);
+7161
+gap> Size(S) = Size(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
 
-#
+#T# MatrixSemigroupTest2: Create and Size
 gap> S := Semigroup(
 > [ NewSMatrix(IsPlistSMatrixRep,GF(3),5,
 > [ [ Z(3), Z(3), Z(3)^0, Z(3), Z(3)^0 ],
@@ -55,38 +67,14 @@ gap> Size(S);
 170080803
 gap> NrIdempotents(S);
 43844
-gap> DClasses(S);
-[ {NewMatrix(IsPlistMatrixRep,GF(3),5,[ [ Z(3), Z(3), Z(3)^0, Z(3), Z(3)^0 ], 
-      [ 0*Z(3), 0*Z(3), Z(3), 0*Z(3), Z(3)^0 ], 
-      [ Z(3), Z(3), Z(3)^0, 0*Z(3), Z(3) ], 
-      [ Z(3)^0, Z(3)^0, Z(3), Z(3), 0*Z(3) ], 
-      [ Z(3), Z(3)^0, Z(3), Z(3)^0, 0*Z(3) ] ])}, 
-  {NewMatrix(IsPlistMatrixRep,GF(3),5,
-    [ [ 0*Z(3), Z(3), Z(3), 0*Z(3), 0*Z(3) ], 
-      [ Z(3), 0*Z(3), Z(3)^0, Z(3), Z(3)^0 ], 
-      [ Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], 
-      [ 0*Z(3), Z(3), Z(3), 0*Z(3), 0*Z(3) ], 
-      [ Z(3), Z(3)^0, Z(3), Z(3), Z(3)^0 ] ])}, 
-  {NewMatrix(IsPlistMatrixRep,GF(3),5,
-    [ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ Z(3), Z(3)^0, Z(3)^0, Z(3)^0, 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), Z(3), Z(3), Z(3) ], 
-      [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ Z(3), Z(3)^0, Z(3)^0, Z(3)^0, 0*Z(3) ] ])}, 
-  {NewMatrix(IsPlistMatrixRep,GF(3),5,
-    [ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0 ], 
-      [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0 ], 
-      [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0 ] ])}, 
-  {NewMatrix(IsPlistMatrixRep,GF(3),5,
-    [ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-      [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ])} ]
+gap> PartialOrderOfDClasses(S);
+[ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5 ] ]
+gap> S := Semigroup(GeneratorsOfSemigroup(S));
+<semigroup of 5x5 s-matrices over GF(3) with 2 generators>
+gap> PartialOrderOfDClasses(S);
+[ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5 ] ]
 
-#
+#T# MatrixSemigroupTest3: Create, Size, MinimalIdeal
 gap> S := Semigroup(
 > [ NewSMatrix(IsPlistSMatrixRep,GF(3),3,
 >    [ [ Z(3), Z(3), Z(3)^0 ],
@@ -116,7 +104,40 @@ gap> time;
 gap> List(last2, U-> IsMaximalSubsemigroup(S, U));
 [ true, true ]
 
-# 
+#T# MatrixSemigroups3: Upper triangular matrices, SubsemigroupByProperty
+# This fails and gets a semigroup that is too small!
+upper := function(mat)
+>   local zero, n, i, j;
+>   zero := Zero(BaseDomain(mat));
+>   n := DegreeOfSMatrix(mat);
+>   for i in [2 .. n] do 
+>     for j in [1 .. i - 1] do 
+>       if mat!.mat[i][j] <> zero then 
+>         return false;
+>       fi;
+>     od;
+>   od;
+>   return true;
+> end;;
+gap> S := GeneralLinearSemigroup(3,3);;
+gap> T := SubsemigroupByProperty(S, upper);
+<monoid of 3x3 s-matrices over GF(3) with 24 generators>
+gap> Size(T);
+729
+
+#T# MatrixSemigroups4: ClosureSemigroup
+# This *also* fails
+gap> elms := Filtered(Elements(GLS(3,3), upper);;
+gap> S := Semigroup(elms[1]);;
+gap> for i in [2..Length(elms)] do
+  S := ClosureSemigroup(S, elms[i]);
+od;
+gap> S;
+<monoid of 3x3 s-matrices over GF(3) with 53 generators>
+gap> Size(S);
+729
+
+#T# MatrixSemigroups5:  
 gap> func := IsGreensDLeq(S);
 function( x, y ) ... end
 gap> x := Random(S);
@@ -131,14 +152,25 @@ true
 gap> DClass(S, x) = DClass(S, y);
 true
 gap> Print(x);
-NewMatrix(IsPlistMatrixRep,GF(3),3,
+NewSMatrix(IsPlistSMatrixRep,GF(3),3,
 [ [ Z(3), Z(3)^0, Z(3)^0 ], [ Z(3)^0, Z(3), Z(3) ], [ Z(3)^0, Z(3), Z(3) ] ])
 gap> Print(y);
-NewMatrix(IsPlistMatrixRep,GF(3),3,
+NewSMatrix(IsPlistSMatrixRep,GF(3),3,
 [ [ 0*Z(3), 0*Z(3), Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3) ] ])
 
+#T# MatrixSemigroups6:
+gap> T := Semigroup(Transformation( [ 1, 2, 7, 3, 2, 1, 4, 3 ] ), Transformation( [ 5, 7, 8, 2, 7, 3, 8, 5 ] ));
+<transformation semigroup on 8 pts with 2 generators>
+gap> Size(T);
+416
+gap> S := AsMatrixSemigroup(T);
+<semigroup of 8x8 s-matrices over GF(2) with 2 generators>
+gap> Size(S);
+416
+gap> Size(S) = Size(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
 
-
-#
+#E#
 gap> STOP_TEST("Semigroups package: matrix.tst");

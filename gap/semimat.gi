@@ -26,26 +26,6 @@ InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
 InstallMethod(OneMutable, "for an smatrix", [IsSMatrixCollection],
 coll -> One(Representative(coll)));
 
-InstallMethod(IsomorphismMatrixSemigroup, 
-"for a matrix obj semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl], 
-function(S)
-  local gens, R, n, iso;
-
-  gens := GeneratorsOfSemigroup(S);
-  if IsMatrixObj(gens[1]) then 
-    R := BaseDomain(gens[1]);
-    n := DimensionsMat(gens[1])[1];
-    iso := x -> NewSMatrix(IsPlistSMatrixRep, R, n, AsMatrix(x));
-    return MagmaIsomorphismByFunctionsNC(S, 
-                                         Semigroup(List(gens, iso)), 
-                                         iso,
-                                         AsMatrix);
-  else
-    Error("not yet implemented"); #TODO
-  fi;
-end);
-
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
@@ -458,11 +438,11 @@ InstallMethod(ViewObj,
 "for a matrix semigroup ideal with generators of semigroup ideal",
 [IsMatrixSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(S)
-  local gens, dims;
+  local deg, gens;
   gens := GeneratorsOfSemigroupIdeal(S);
-  dims := DimensionsMat(gens[1]);
+  deg := DegreeOfSMatrix(gens[1]);
   Print("<ideal of semigroup of ");
-  Print(dims[1], "x", dims[2]);
+  Print(deg, "x", deg);
   Print(" s-matrices over ", BaseDomain(gens[1]));
   Print(" with ", Length(gens), " generator");
   
