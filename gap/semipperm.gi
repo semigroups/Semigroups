@@ -548,7 +548,7 @@ InstallMethod(ZeroSemigroupCons,
 "for a filter and a positive integer",
 [IsPartialPermSemigroup and IsFinite, IsPosInt],
 function(filter, n)
-  local zero, gens, elts, out, i;
+  local zero, gens, out, i;
 
   zero := PartialPerm([], []);
   if n = 1 then

@@ -1000,7 +1000,7 @@ function(m, n)
       SetIsLeftZeroSemigroup(R, false);
     fi;
   fi;
-  
+
   return R;
 end);
 

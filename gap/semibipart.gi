@@ -710,7 +710,7 @@ function(filter, n)
     gens := [zero];
   elif n = 2 then
     points := Concatenation([1 .. 3], [-3 .. -1]);
-    zero := Bipartition([points]); 
+    zero := Bipartition([points]);
     gens := [Bipartition([[1, -2], [-1, 2, 3, -3]])];
   else
     points := Concatenation([1 .. 2 * (n - 1)], -[1 .. 2 * (n - 1)]);
