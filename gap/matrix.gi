@@ -68,7 +68,16 @@ function(m)
   Print("<s-matrix of degree ");
   Print(DegreeOfSMatrix(m),
          " over ", BaseDomain(m),">");
-end );
+end);
+
+InstallMethod(ViewString, "for a plist s-matrix",
+[IsPlistSMatrixRep],
+function(m)
+  return STRINGIFY("<s-matrix of degree ",
+                   DegreeOfSMatrix(m),
+                   " over ",
+                   BaseDomain(m)); 
+end);
 
 InstallMethod(PrintObj, "for a plist s-matrix",
 [IsPlistSMatrixRep],
@@ -86,8 +95,8 @@ function(m)
   Print(">\n");
 end);
 
-InstallMethod(String, "for a plist s-matrix",
-[IsPlistSMatrixRep ],
+InstallMethod(PrintString, "for a plist s-matrix",
+[IsPlistSMatrixRep],
 function( m )
   local st;
   st := "NewSMatrix(IsPlistSMatrixRep,";

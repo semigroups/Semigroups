@@ -1,20 +1,20 @@
 #############################################################################
 ##
-#W  matrix.tst
+#W  semimat.tst
 #Y  Copyright (C) 2015                                    Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: matrix.tst");
+gap> START_TEST("Semigroups package: semimat.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
 #
-gap> M := NewMatrix(IsPlistMatrixRep, GF(2), 16,
+gap> M := NewSMatrix(IsPlistSMatrixRep, GF(2), 16,
 > [[ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
 > [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],
 > [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],
@@ -39,13 +39,13 @@ gap> Size(S);
 
 #
 gap> S := Semigroup(
-> [ NewMatrix(IsPlistMatrixRep,GF(3),5,
+> [ NewSMatrix(IsPlistSMatrixRep,GF(3),5,
 > [ [ Z(3), Z(3), Z(3)^0, Z(3), Z(3)^0 ],
 >   [ 0*Z(3), 0*Z(3), Z(3), 0*Z(3), Z(3)^0 ],
 >   [ Z(3), Z(3), Z(3)^0, 0*Z(3), Z(3) ],
 >   [ Z(3)^0, Z(3)^0, Z(3), Z(3), 0*Z(3) ],
 >   [ Z(3), Z(3)^0, Z(3), Z(3)^0, 0*Z(3) ] ]),
-> NewMatrix(IsPlistMatrixRep,GF(3),5,
+> NewSMatrix(IsPlistSMatrixRep,GF(3),5,
 > [ [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3), Z(3) ],
 >   [ Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ],
 >   [ Z(3), Z(3), Z(3)^0, Z(3), Z(3) ],
@@ -53,6 +53,8 @@ gap> S := Semigroup(
 >   [ Z(3), Z(3), Z(3)^0, Z(3)^0, Z(3) ] ]) ]);;
 gap> Size(S);
 170080803
+gap> NrIdempotents(S);
+43844
 gap> DClasses(S);
 [ {NewMatrix(IsPlistMatrixRep,GF(3),5,[ [ Z(3), Z(3), Z(3)^0, Z(3), Z(3)^0 ], 
       [ 0*Z(3), 0*Z(3), Z(3), 0*Z(3), Z(3)^0 ], 
@@ -86,10 +88,13 @@ gap> DClasses(S);
 
 #
 gap> S := Semigroup(
-> [ NewMatrix(IsPlistMatrixRep,GF(3),3,
->    [ [ Z(3), Z(3), Z(3)^0 ], [ 0*Z(3), Z(3), Z(3) ], 
->      [ Z(3), 0*Z(3), Z(3)^0 ] ]), NewMatrix(IsPlistMatrixRep,GF(3),3,
->    [ [ Z(3), Z(3), 0*Z(3) ], [ Z(3)^0, Z(3)^0, 0*Z(3) ], 
+> [ NewSMatrix(IsPlistSMatrixRep,GF(3),3,
+>    [ [ Z(3), Z(3), Z(3)^0 ],
+>      [ 0*Z(3), Z(3), Z(3) ], 
+>      [ Z(3), 0*Z(3), Z(3)^0 ] ]),
+>   NewSMatrix(IsPlistSMatrixRep,GF(3),3,
+>    [ [ Z(3), Z(3), 0*Z(3) ],
+>      [ Z(3)^0, Z(3)^0, 0*Z(3) ], 
 >      [ Z(3)^0, Z(3)^0, 0*Z(3) ] ]) ]);;
 gap> Size(S);
 137
