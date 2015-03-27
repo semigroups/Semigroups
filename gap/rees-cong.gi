@@ -133,12 +133,22 @@ end);
 
 #
 
-#InstallMethod(JoinSemigroupCongruences,
-#"for two Rees congruences",
-#[IsReesCongruence, IsReesCongruence],
-#function(c1, c2)
-#
-#end);
+InstallMethod(JoinSemigroupCongruences,
+"for two Rees congruences",
+[IsReesCongruence, IsReesCongruence],
+function(c1, c2)
+  local gens1, gens2, i;
+  if Range(c1) <> Range(c2) then
+    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
+          "the args <c1> and <c2> must be congruences of the same semigroup,");
+    return;
+  fi;
+  gens1 := GeneratorsOfSemigroupIdeal(SemigroupIdealOfReesCongruence(c1));
+  gens2 := GeneratorsOfSemigroupIdeal(SemigroupIdealOfReesCongruence(c2));
+  i := SemigroupIdeal(Range(c1), Concatenation(gens1, gens2));
+  i := SemigroupIdeal(Range(c1), MinimalIdealGeneratingSet(i));
+  return ReesCongruenceOfSemigroupIdeal(i);
+end);
 
 #
 
