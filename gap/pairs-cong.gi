@@ -379,7 +379,7 @@ function(class)
       classno := SEMIGROUPS_UF_Find(data!.lookup, enum!.rep);
       if classno = SEMIGROUPS_UF_Find(data!.lookup, lastpair[1]) then
         for i in [1..Size(data!.lookup)] do
-          if SEMIGROUPS_UF_Find(data!.lookup, i) = classno and not enum!.found[i] then
+          if (not enum!.found[i]) and SEMIGROUPS_UF_Find(data!.lookup, i) = classno then
             enum!.found[i] := true;
             enum!.len := enum!.len + 1;
             enum!.list[enum!.len] := i;
