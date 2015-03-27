@@ -886,38 +886,53 @@ end);
 
 # ww special types of semigroup
 
-# Creates a zero partial perm semigroup of order n
+BindGlobal("ZeroSemigroup",
+function(arg)
+  local filter, n, out;
 
-InstallMethod(ZeroSemigroup,
-"for a positive integer",
-[IsPosInt],
-function(n)
-  local zero, gens, elts, out, i;
-
-  zero := PartialPerm([], []);
-  if n = 1 then
-    gens := [zero];
-    elts := gens;
+  if Length(arg) = 1  then
+    filter := IsPartialPermSemigroup;
+    n := arg[1];
+  elif Length(arg) = 2 then
+    filter := arg[1];
+    if not IsFilter(filter) then
+      Error("Semigroups: ZeroSemigroup: usage:\n",
+            "the optional first argument <filter> must be a filter,");
+      return;
+    fi;
+    n := arg[2];
   else
-    gens := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      gens[i] := PartialPerm([2 * i - 1], [2 * i]);
-    od;
-    elts := Concatenation(gens, [zero]);
+    Error("Semigroups: ZeroSemigroup: usage:\n",
+          "this function takes at most two arguments,");
+    return;
   fi;
 
-  out := Semigroup(gens);
-  SetSize(out, n);
-  SetAsList(out, elts);
-  SetIsZeroSemigroup(out, true);
-  SetMultiplicativeZero(out, zero);
+  if not IsPosInt(n) then
+    Error("Semigroups: ZeroSemigroup: usage:\n",
+          "the argument <n> must be a positive integer,");
+    return;
+  fi;
 
-  if IsNonTrivial(out) then
+  if n = 1 and "IsReesZeroMatrixSemigroup" in NamesFilter(filter) then
+    Error("Semigroups: ZeroSemigroup: usage:\n",
+          "there is no Rees 0-matrix semigroup of order 1,");
+    return;
+  fi;
+
+  out := ZeroSemigroupCons(filter, n);
+  SetSize(out, n);
+  SetIsZeroSemigroup(out, true);
+
+  if IsTrivial(out) then
+    SetAsList(out, GeneratorsOfSemigroup(out));
+  else
     SetIsGroupAsSemigroup(out, false);
     SetIsRegularSemigroup(out, false);
     if n > 2 then
       SetIsMonogenicSemigroup(out, false);
     fi;
+    SetAsList(out, Concatenation(GeneratorsOfSemigroup(out),
+                                 [MultiplicativeZero(out)]));
   fi;
 
   return out;

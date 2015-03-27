@@ -710,4 +710,30 @@ function(S)
   return cycles;
 end);
 
+#
+
+InstallMethod(ZeroSemigroupCons,
+"for a filter and a positive integer",
+[IsTransformationSemigroup and IsFinite, IsPosInt],
+function(filter, n)
+  local zero, gens, out, i;
+
+  if n = 1 then
+    zero := Transformation([1]);
+    gens := [zero];
+  else
+    zero := Transformation(List([1 .. 2 * n + 1], x -> 1));
+    gens := EmptyPlist(n - 1);
+    for i in [1 .. n - 1] do
+      gens[i] := Transformation(
+                  Concatenation([1 .. (2 * i) - 1] * 0 + 1,
+                                [2 * i + 1],
+                                [2 * i + 1 .. 2 * n - 1] * 0 + 1));
+    od;
+  fi;
+  out := Semigroup(gens);
+  SetMultiplicativeZero(out, zero);
+  return out;
+end);
+
 #EOF

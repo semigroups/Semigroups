@@ -2318,8 +2318,124 @@ false
 
 #T# ExamplesTest32: ZeroSemigroup
 gap> s := ZeroSemigroup(0);
+Error, Semigroups: ZeroSemigroup: usage:
+the argument <n> must be a positive integer,
+gap> s := ZeroSemigroup(IsPartialPermSemigroup, 0);
+Error, Semigroups: ZeroSemigroup: usage:
+the argument <n> must be a positive integer,
+gap> s := ZeroSemigroup(0, 1);
+Error, Semigroups: ZeroSemigroup: usage:
+the optional first argument <filter> must be a filter,
+gap> s := ZeroSemigroup(0, 0);
+Error, Semigroups: ZeroSemigroup: usage:
+the optional first argument <filter> must be a filter,
+gap> s := ZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `ZeroSemigroup' on 1 arguments
+Error, no 1st choice method found for `ZeroSemigroupCons' on 2 arguments
+
+# IsTransformationSemigroup
+gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 1));
+<trivial transformation group>
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+1
+gap> Elements(s);
+[ IdentityTransformation ]
+gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 2));
+<commutative transformation semigroup on 3 pts with 1 generator>
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+2
+gap> Elements(s);
+[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 3, 1 ] ) ]
+gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 10));
+<transformation semigroup on 19 pts with 9 generators>
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+10
+gap> Elements(s);
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+     1, 19, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+     1, 17, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+     1, 15, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 13, 1, 1, 1, 1, 1, 1,
+      1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1,
+      1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1,
+     1, 1, 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 1, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1 ] ), Transformation( [ 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+     1, 1, 1 ] ) ]
+
+# IsReesZeroMatrixSemigroup
+gap> s := ZeroSemigroup(IsReesZeroMatrixSemigroup, 1);
+Error, Semigroups: ZeroSemigroup: usage:
+there is no Rees 0-matrix semigroup of order 1,
+gap> s := ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 1);
+Error, Semigroups: ZeroSemigroupCons: usage:
+there is no Rees 0-matrix semigroup of order 1,
+gap> s := Semigroup(ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 2));;
+gap> IsReesZeroMatrixSemigroup(s);
+true
+gap> s;
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+2
+gap> s := Semigroup(ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 20));;
+gap> IsReesZeroMatrixSemigroup(s);
+true
+gap> s;
+<Rees 0-matrix semigroup 19x1 over Group(())>
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+20
+
+# IsBipartitionSemigroup and IsBlockBijectionSemigroup
+gap> s := ZeroSemigroup(IsBipartitionSemigroup, 1);
+<trivial bipartition monoid on 1 pts with 0 generators>
+gap> s := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
+<trivial bipartition monoid on 1 pts with 0 generators>
+gap> last = last2;
+true
+gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 2));
+<commutative bipartition semigroup on 2 pts with 1 generator>
+gap> IsBlockBijectionSemigroup(s);
+false
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+2
+gap> s := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 2));
+<commutative bipartition semigroup on 3 pts with 1 generator>
+gap> IsBlockBijectionSemigroup(s);
+true
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+2
+gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 20));
+<bipartition semigroup on 38 pts with 19 generators>
+gap> IsBlockBijectionSemigroup(s);
+true
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+20
+gap> s := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 20));
+<bipartition semigroup on 38 pts with 19 generators>
+gap> IsBlockBijectionSemigroup(s);
+true
+gap> IsZeroSemigroup(s);
+true
+gap> Size(s);
+20
 
 # Zero semigroup of order 1
 gap> s := ZeroSemigroup(1);
