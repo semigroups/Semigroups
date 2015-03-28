@@ -11,9 +11,9 @@
 
   More general matrix semigroups are planned, but not implemented yet.
 
-  The matrix semigroup functions in &Semigroups; rely on <Ref Filt="IsMatrixObj"/>
-  objects defined in the GAP library, but take every precaution to hide
-  this fact from the user of &Semigroups;.
+  For technical reasons, the matrix semigroup functions in &Semigroups; rely
+  on a custom wrapper for matrices <Ref Filt="IsSMatrixObj"/>.
+  We take every precaution to hide this fact from the user of &Semigroups;.
  
 <Section Label = "sect:Matrix semigroups">
   <Heading>Creating matrix semigroups</Heading>

@@ -93,9 +93,9 @@ gap> MinimalIdeal(S);
 gap> Size(last);
 1
 gap> MultiplicativeZero(S);
-<immutable 3x3-matrix over GF(3)>
+<s-matrix of degree 3 over GF(3)>
 gap> MinimalDClass(S);
-<Green's D-class: <immutable 3x3-matrix over GF(3)>>
+<Green's D-class: <s-matrix of degree 3 over GF(3)>>
 gap> MaximalSubsemigroups(S);
 [ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
   <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
