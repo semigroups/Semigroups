@@ -46,4 +46,6 @@ DeclareGlobalFunction("MatrixSemigroup");
 DeclareAttribute("IsomorphismMatrixSemigroup", IsSemigroup);
 DeclareAttribute("AsMatrixSemigroup", IsSemigroup);
 DeclareOperation("IsomorphismMatrixSemigroup", [IsSemigroup, IsRing]);
+#T One would want to choose a representation as well, but this doesn't work
+#DeclareOperation("IsomorphismMatrixSemigroup", [IsSemigroup, IsOperation]);
 DeclareOperation("AsMatrixSemigroup", [IsSemigroup, IsRing]);

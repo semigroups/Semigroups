@@ -26,6 +26,31 @@ InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
 InstallMethod(OneMutable, "for an smatrix", [IsSMatrixCollection],
 coll -> One(Representative(coll)));
 
+#T is it inconsistent to have the filter first for NewSMatrix
+#T but last for isomorphism?
+#T Why does it not seem to be possible to do the same as for
+#T constructors? IsObject seems a bit out there
+InstallOtherMethod(IsomorphismMatrixSemigroup,
+"for a semigroup of matrices and a constructing filter",
+[IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl, IsObject],
+function(S, filter)
+  local gens, dom, deg, iso, T;
+  dom := DefaultFieldOfMatrix(Representative(S));
+  deg := Length(Representative(S));
+  iso := x -> NewSMatrix(filter, dom, deg, x);
+  gens := List(GeneratorsOfSemigroup(S), iso);
+  T := Semigroup(gens);
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), iso, AsMatrix);
+end);
+
+# This chooses as default representation to be IsPlistSMatrixRep
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a semigroup of matrices",
+[IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
+function(S)
+  return IsomorphismMatrixSemigroup(S, IsPlistSMatrixRep);
+end);
+
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
