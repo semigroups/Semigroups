@@ -23,7 +23,16 @@ InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
 
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
 
-InstallMethod(OneMutable, "for an smatrix", [IsSMatrixCollection],
+InstallMethod(IsGeneratorsOfInverseSemigroup,
+"for an s-matrix collection",
+[IsSMatrixCollection],
+function(coll)
+  return ForAll(coll, x -> x^(-1) <> fail);
+end);
+
+#T Why?
+InstallMethod(OneMutable, "for an s-matrix collection",
+[IsSMatrixCollection],
 coll -> One(Representative(coll)));
 
 #T is it inconsistent to have the filter first for NewSMatrix

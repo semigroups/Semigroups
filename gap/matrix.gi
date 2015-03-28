@@ -178,7 +178,7 @@ function(m)
   for i in [1 .. deg] do
     if se.heads[i] = 0 then
       rsp[i][i] := u;
-      rsp[i][deg + i] := u;
+      rsp[i][deg + i] := Zero(BaseDomain(m));
     fi;
   od;
   TriangulizeMat(rsp);
@@ -192,12 +192,18 @@ function(m)
   return TransposedMat(RightInverse(TransposedMat(m)));
 end);
 
+InstallMethod(InverseOp, "for a plist s-matrix",
+[IsSMatrix and IsPlistSMatrixRep],
+function(m)
+
+end);
+
 ############################################################################
 ## Helper functions to deal with s-matrices.
 #############################################################################
 InstallGlobalFunction(ComputeRowSpaceAndTransformation,
 function(m)
-  local deg, rsp, i, zv, bas;
+  local deg, rsp, i, j, zv, bas, heads, tm, inv;
 
   if not IsPlistSMatrixRep(m) then
     Error("semigroups: Matrix not in the correct representation");
@@ -213,18 +219,50 @@ function(m)
   od;
   TriangulizeMat(rsp);
 
+  heads := [];
   bas := rsp{ [1..deg] }{ [1..deg] };
   for i in [deg, deg - 1 .. 1] do
     if IsZero(bas[i]) then
       Remove(bas, i);
+    else
+      heads[PositionNonZero(bas[i])] := i;
     fi;
   od;
+ 
+  # Check whether this matrix has a semigroup inverse, i.e.
+  # a matrix t such that t * m * t = t and m * t * m = m.
+  # If it does this matrix is the transformation we computed
+  # otherwise we set fail 
+  tm := TransposedMat(bas);
+  inv := true;
+  for i in [1..deg] do
+    if not IsBound(heads[i]) then
+      if not IsZero(tm[i]) then
+        inv := false;
+      fi;
+    fi;
+  od;
+  
   ConvertToVectorRep(bas);
   MakeImmutable(bas);
   SetRowSpaceBasis(m, bas);
   SetRowRank(m, Length(bas));
   SetRowSpaceTransformation(m, rsp{[1 .. deg]}{[deg + 1 .. 2 * deg] }); 
   SetRowSpaceTransformationInv(m, RowSpaceTransformation(m)^(-1));
+  if inv then
+    SetSemigroupInverse(m, RightInverse(m));
+  else
+    SetSemigroupInverse(m, fail);
+  fi;
+end);
+
+InstallMethod(InverseOp, "for an s-matrix",
+[IsPlistSMatrixRep],
+function(m)
+  if not HasSemigroupInverse(m) then
+    ComputeRowSpaceAndTransformation(m);
+  fi;
+  return SemigroupInverse(m);
 end);
 
 ##############################################################################

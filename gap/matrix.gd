@@ -44,6 +44,8 @@ DeclareAttribute("ColSpaceTransformation", IsSMatrix);
 DeclareAttribute("ColSpaceTransformationInv", IsSMatrix);
 DeclareAttribute("RightInverse", IsSMatrix);
 DeclareAttribute("LeftInverse", IsSMatrix);
+DeclareAttribute("SemigroupInvertable", IsSMatrix);
+DeclareAttribute("SemigroupInverse", IsSMatrix);
 DeclareAttribute("DegreeOfSMatrix", IsSMatrix);
 DeclareAttribute("RowRank", IsSMatrix);
 DeclareAttribute("ColRank", IsSMatrix);

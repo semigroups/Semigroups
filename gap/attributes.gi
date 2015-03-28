@@ -268,7 +268,7 @@ function(s)
   r := GreensRClassOfElementNC(s, e);
   g := SchutzenbergerGroup(r);
 
-  u := Monoid(List(GeneratorsOfGroup(g), x -> AsSMatrix(e, x)));
+  u := Monoid(GeneratorsOfGroup(g));
 
   SetIsGroupAsSemigroup(u, true);
   UseIsomorphismRelation(u, g);
