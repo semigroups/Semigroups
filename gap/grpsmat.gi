@@ -123,6 +123,8 @@ function(x, G)
   if BaseDomain(G) <> BaseDomain(x) 
       or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) then 
     return false;
+  elif DegreeOfMatrixSemigroup(G) = 0 and DegreeOfSMatrix(x) = 0 then
+    return true;
   else
     return AsMatrix(x) in AsMatrixGroup(G);
   fi;

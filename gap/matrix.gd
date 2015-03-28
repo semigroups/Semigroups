@@ -88,10 +88,10 @@ DeclareGlobalFunction( "RandomSMatrix" );
 DeclareProperty("IsZero", IsSMatrix);
 DeclareOperation("OneMutable", [IsSMatrix]);
 
-DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsInt and IsZero]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
-DeclareOperation("IdentitySMatrix", [IsSMatrix, IsPosInt]);
 DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
+DeclareOperation("IdentitySMatrix", [IsSMatrix, IsPosInt]);
+DeclareOperation("IdentitySMatrix", [IsSMatrix, IsZeroCyc]);
 DeclareOperation("TransposedSMat", [IsSMatrix]);
 DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);
 DeclareAttribute("BaseDomain", IsSMatrixCollection);

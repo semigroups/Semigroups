@@ -380,7 +380,7 @@ InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 function(s)
     local deg;
     deg := DegreeOfMatrixSemigroup(s) + 1;
-    return List([1..deg], x -> [1..deg] * Zero(BaseDomain(s)));
+    return NullMat(deg, deg, BaseDomain(s));
 end);
 
 # the seed or dummy start point for RhoOrb
@@ -490,12 +490,7 @@ end);
 
 #T Why are there row spaces and matrices passed in here?
 InstallMethod(LambdaRank, "for a matrix semigroup",
-[IsMatrixSemigroup],
-function(S)
-  return function(x)
-      return Length(x);
-  end;
-end);
+[IsMatrixSemigroup], x -> Length);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> function(x)
@@ -721,21 +716,13 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  if r = 0 then
-    return IdentitySMatrix(Representative(S), 1);
-  else 
-    return IdentitySMatrix(Representative(S), r);
-  fi;
+  return IdentitySMatrix(Representative(S), r);
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  if r = 0 then
-    return IdentitySMatrix(Representative(S), 1);
-  else
-    return IdentitySMatrix(Representative(S), r);
-  fi;
+  return IdentitySMatrix(Representative(S), r);
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with

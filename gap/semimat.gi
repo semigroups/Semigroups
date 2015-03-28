@@ -279,7 +279,7 @@ function(S, x, y)
     # Note: If IsZero is still broken, we have a debugging
     # function SEMIGROUPS_CheckReallyZero
     if IsZero(x) then
-      res := NewSMatrix(ConstructingFilter(x), BaseDomain(x), 1, [[One(BaseDomain(x))]]);
+      res := NewIdentitySMatrix(ConstructingFilter(x), BaseDomain(x), 0);
     else
       xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
       h := Filtered(xse.heads, x -> x <> 0);

@@ -54,15 +54,30 @@ end);
 
 InstallMethod(NewIdentitySMatrix,
 "for IsPlistSMatrixRep, a ring, and an int",
-[IsPlistSMatrixRep, IsRing, IsInt],
+[IsPlistSMatrixRep, IsRing, IsPosInt],
 function(filter, basedomain, deg)
   return NewSMatrix(filter, basedomain, deg,
                     IdentityMat(deg, basedomain));
 end);
 
+InstallMethod(NewIdentitySMatrix,
+"for IsPlistSMatrixRep, a ring, and zero",
+[IsPlistSMatrixRep, IsRing, IsZeroCyc],
+function(filter, basedomain, deg)
+  local m;
+  m := NewSMatrix(filter, basedomain, deg,
+                  IdentityMat(deg, basedomain));
+  SetRowSpaceBasis(m, []);
+  SetRowRank(m, 0);
+  SetRowSpaceTransformation(m, m);
+  SetRowSpaceTransformationInv(m, m);
+  SetSemigroupInverse(m, m);
+  return m;
+end);
+
 InstallMethod(NewZeroSMatrix,
 "for IsPlistSMatrixRep, a ring, and an int",
-[IsPlistSMatrixRep, IsRing, IsInt],
+[IsPlistSMatrixRep, IsRing, IsPosInt],
 function(filter, basedomain, deg)
   return NewSMatrix(filter, basedomain, deg,
                     NullMat(deg, deg, basedomain));
@@ -192,10 +207,14 @@ function(m)
   return TransposedMat(RightInverse(TransposedMat(m)));
 end);
 
+#T This might lead to funny effects?
 InstallMethod(InverseOp, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
 function(m)
-
+  if not HasSemigroupInverse(m) then
+    ComputeRowSpaceAndTransformation(m);
+  fi;
+  return SemigroupInverse(m);
 end);
 
 ############################################################################
@@ -203,7 +222,7 @@ end);
 #############################################################################
 InstallGlobalFunction(ComputeRowSpaceAndTransformation,
 function(m)
-  local deg, rsp, i, j, zv, bas, heads, tm, inv;
+  local deg, rsp, i, j, zv, bas, heads, tm, inv, tr, tri, bd;
 
   if not IsPlistSMatrixRep(m) then
     Error("semigroups: Matrix not in the correct representation");
@@ -211,49 +230,63 @@ function(m)
   Info(InfoMatrixSemigroups, 2, "ComputeRowSpaceAndTransformation called");
 
   deg := DegreeOfSMatrix(m);
-  rsp := SEMIGROUPS_MutableCopyMat(m!.mat);
-  zv := [1..deg] * Zero(BaseDomain(m));
-  for i in [1 .. deg] do
-    Append(rsp[i], zv);
-    rsp[i][deg + i] := One(BaseDomain(m));
-  od;
-  TriangulizeMat(rsp);
-
-  heads := [];
-  bas := rsp{ [1..deg] }{ [1..deg] };
-  for i in [deg, deg - 1 .. 1] do
-    if IsZero(bas[i]) then
-      Remove(bas, i);
+  bd := BaseDomain(m);
+  if IsZero(m) then
+    bas := []; 
+    tr := NewIdentitySMatrix(IsPlistSMatrixRep, bd, deg);
+    tri := tr;
+    if deg = 0 then
+       inv := tr;
     else
-      heads[PositionNonZero(bas[i])] := i;
+       inv := fail;
     fi;
-  od;
- 
-  # Check whether this matrix has a semigroup inverse, i.e.
-  # a matrix t such that t * m * t = t and m * t * m = m.
-  # If it does this matrix is the transformation we computed
-  # otherwise we set fail 
-  tm := TransposedMat(bas);
-  inv := true;
-  for i in [1..deg] do
-    if not IsBound(heads[i]) then
-      if not IsZero(tm[i]) then
-        inv := false;
+  else
+    rsp := SEMIGROUPS_MutableCopyMat(m!.mat);
+    zv := [1..deg] * Zero(bd);
+    for i in [1 .. deg] do
+      Append(rsp[i], ShallowCopy(zv));
+      rsp[i][deg + i] := One(bd);
+    od;
+    TriangulizeMat(rsp);
+
+    heads := [];
+    bas := rsp{ [1..deg] }{ [1..deg] };
+    for i in [deg, deg - 1 .. 1] do
+      if IsZero(bas[i]) then
+        Remove(bas, i);
+      else
+        heads[PositionNonZero(bas[i])] := i;
       fi;
-    fi;
-  od;
-  
+    od;
+    # Check whether this matrix has a semigroup inverse, i.e.
+    # a matrix t such that t * m * t = t and m * t * m = m.
+    # If it does this matrix is the transformation we computed
+    # otherwise we set fail 
+    tm := TransposedMat(bas);
+    inv := true;
+    for i in [1..deg] do
+      if not IsBound(heads[i]) then
+        if not IsZero(tm[i]) then
+          inv := fail;
+        fi;
+      fi;
+    od;
+    #T This is obviously totally ridiculous to do the same computation
+    #T twice
+    if inv = true then
+       inv := RightInverse(m);
+    fi; 
+    tr := rsp{[1 .. deg]}{[deg + 1 .. 2 * deg]};
+    tri := tr^(-1);
+  fi;
+ 
   ConvertToVectorRep(bas);
   MakeImmutable(bas);
   SetRowSpaceBasis(m, bas);
   SetRowRank(m, Length(bas));
-  SetRowSpaceTransformation(m, rsp{[1 .. deg]}{[deg + 1 .. 2 * deg] }); 
-  SetRowSpaceTransformationInv(m, RowSpaceTransformation(m)^(-1));
-  if inv then
-    SetSemigroupInverse(m, RightInverse(m));
-  else
-    SetSemigroupInverse(m, fail);
-  fi;
+  SetRowSpaceTransformation(m, tr); 
+  SetRowSpaceTransformationInv(m, tri);
+  SetSemigroupInverse(m, inv);
 end);
 
 InstallMethod(InverseOp, "for an s-matrix",
@@ -354,34 +387,41 @@ end);
 #T really not be doing this and instead use a sample object
 #T or we should be using NewIdentitySMatrix
 InstallMethod(IdentitySMatrix, "for a finite field and zero",
-[IsField and IsFinite, IsInt and IsZero ],
+[IsField and IsFinite, IsZeroCyc ],
 function(R, n)
-  return NewSMatrix(IsPlistSMatrixRep, R, 0, []);
+  return NewIdentitySMatrix(IsPlistSMatrixRep, R, n);
 end);
 
 InstallMethod(IdentitySMatrix, "for a finite field and pos int",
 [IsField and IsFinite, IsPosInt], 
 function(R, n)
-  return NewSMatrix(IsPlistSMatrixRep, R, n, IdentityMat(n, R));
+  return NewIdentitySMatrix(IsPlistSMatrixRep, R, n);
+end);
+
+InstallMethod(IdentitySMatrix, "for an s-matrix and zero",
+[IsSMatrix, IsZeroCyc], 
+function(smat, n)
+  return NewIdentitySMatrix(ConstructingFilter(smat), BaseDomain(smat),
+                    n);
 end);
 
 InstallMethod(IdentitySMatrix, "for an s-matrix and pos int",
 [IsSMatrix, IsPosInt], 
 function(smat, n)
-  return NewSMatrix(ConstructingFilter(smat), BaseDomain(smat),
-                    n, IdentityMat(n, BaseDomain(smat)));
+  return NewIdentitySMatrix(ConstructingFilter(smat), BaseDomain(smat),
+                    n);
 end);
 
-InstallMethod(InverseOp, "for an s-matrix", 
-[IsSMatrix], 
-function(smat)
-  local mat;
-  mat := Inverse(smat!.mat);
-  if mat = fail then 
-    return fail;
-  fi;
-  return AsSMatrix(smat, mat);
-end);
+#InstallMethod(InverseOp, "for an s-matrix", 
+#[IsSMatrix], 
+#function(smat)
+#  local mat;
+#  mat := Inverse(smat!.mat);
+#  if mat = fail then 
+#    return fail;
+#  fi;
+#  return AsSMatrix(smat, mat);
+#end);
 
 InstallMethod(AsSMatrix, "for an s-matrix and a matrix", 
 [IsSMatrix, IsMatrix],
@@ -427,7 +467,7 @@ x -> IsZero(x!.mat));
 
 InstallMethod(OneMutable, "for an s-matrix",
 [IsSMatrix], 
-x-> AsSMatrix(x, One(x!.mat)));
+x -> IdentitySMatrix(x, DegreeOfSMatrix(x)));
 
 InstallMethod(\=, "for an s-matrix",
 [IsSMatrix, IsSMatrix], 
