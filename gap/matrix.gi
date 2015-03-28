@@ -312,9 +312,9 @@ function(R,m,n,ranks)
   return List([1..m], x->RandomSquareSMatrixWithRanks(R,n,ranks));
 end);
 
-
 #T This will break transparency wrt representations, so we should 
 #T really not be doing this and instead use a sample object
+#T or we should be using NewIdentitySMatrix
 InstallMethod(IdentitySMatrix, "for a finite field and zero",
 [IsField and IsFinite, IsInt and IsZero ],
 function(R, n)

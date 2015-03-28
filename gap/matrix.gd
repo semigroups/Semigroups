@@ -94,8 +94,7 @@ DeclareOperation("TransposedSMat", [IsSMatrix]);
 DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);
 DeclareAttribute("BaseDomain", IsSMatrixCollection);
 
-
-##
+## Helper functions
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 DeclareGlobalFunction("RandomListOfMatricesWithRanks");
 DeclareGlobalFunction("RandomSquareSMatrixWithRanks");
