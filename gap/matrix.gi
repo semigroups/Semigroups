@@ -52,6 +52,22 @@ function(filter, basedomain, rl, mat)
   return NewSMatrix(filter, basedomain, rl, AsMatrix(mat));
 end);
 
+InstallMethod(NewIdentitySMatrix,
+"for IsPlistSMatrixRep, a ring, and an int",
+[IsPlistSMatrixRep, IsRing, IsInt],
+function(filter, basedomain, deg)
+  return NewSMatrix(filter, basedomain, deg,
+                    IdentityMat(deg, basedomain));
+end);
+
+InstallMethod(NewZeroSMatrix,
+"for IsPlistSMatrixRep, a ring, and an int",
+[IsPlistSMatrixRep, IsRing, IsInt],
+function(filter, basedomain, deg)
+  return NewSMatrix(filter, basedomain, deg,
+                    NullMat(deg, deg, basedomain));
+end);
+
 InstallMethod(ConstructingFilter, "for a plist s-matrix",
 [IsPlistSMatrixRep], m->IsPlistSMatrixRep);
 
@@ -222,7 +238,7 @@ end);
 ##W  This returns a matrix in IsSPlistMatrixRep
 ##T  this function should take either a filter or a sample matrix
 InstallGlobalFunction( RandomSMatrix, function ( arg )
-  local   mat, m, n, R, i, row, k;
+  local   mat, m, n, R, rks, i, row, k;
 
   # check the arguments and get the list of elements
   if Length(arg) = 2  then
@@ -251,13 +267,60 @@ InstallGlobalFunction( RandomSMatrix, function ( arg )
   return NewSMatrix(IsPlistSMatrixRep, R, n, One(R) * mat);
 end);
 
+InstallGlobalFunction(RandomSquareSMatrixWithRanks,
+function(R, n, ranks)
+  local i, j, k, rk, z, zv, mat, conj, gens;
+
+  if ForAny(ranks, x -> (x<0) or (x>n)) then
+    Error("Semigroups: RandomSquareSMatrixWithRank usage: the list of ranks ",
+          "has to consist of numbers >0 and <n.");
+  fi;
+
+  gens := [];
+  z := Zero(R);
+  # Choose a matrix of given rank
+  rk := Random(ranks);
+  if rk = 0 then
+    return NewZeroSMatrix(IsPlistMatrixRep, R, n);
+  else
+    mat := SEMIGROUPS_MutableCopyMat(Random(GL(rk, R)));
+    # Extend it to n x n
+    zv := [1..n-rk] * z;
+    for j in [1..rk] do
+      Append(mat[j], zv); 
+    od;
+    zv := [1..n] * z;
+    for j in [1..n-rk] do
+      Add(mat, zv);
+    od;
+    # Swirl around
+    #T Is Permuting rows/columns enough?
+    conj := Random(GL(n, R)); # PermutationMat(Random(Sym(n)), n, R);
+    return NewSMatrix(IsPlistSMatrixRep, R, n, mat ^ conj);
+  fi; 
+end);
+
+InstallGlobalFunction(RandomListOfMatricesWithRanks,
+function(R,m,n,ranks)
+  local i, j, k, rk, z, zv, mat, conj, gens;
+
+  if ForAny(ranks, x -> (x<0) or (x>n)) then
+    Error("Semigroups: RandomListOfMatricesWithRank usage: the list of ranks ",
+          "has to consist of numbers >0 and <n.");
+  fi;
+
+  return List([1..m], x->RandomSquareSMatrixWithRanks(R,n,ranks));
+end);
+
+
+#T This will break transparency wrt representations, so we should 
+#T really not be doing this and instead use a sample object
 InstallMethod(IdentitySMatrix, "for a finite field and zero",
 [IsField and IsFinite, IsInt and IsZero ],
 function(R, n)
   return NewSMatrix(IsPlistSMatrixRep, R, 0, []);
 end);
 
-#T This will break transparency wrt representations
 InstallMethod(IdentitySMatrix, "for a finite field and pos int",
 [IsField and IsFinite, IsPosInt], 
 function(R, n)
@@ -381,39 +444,6 @@ function(m)
   return AsSMatrix(m, TransposedMat(m!.mat));
 end);
 
-InstallGlobalFunction(RandomListOfMatricesWithRanks,
-function(R,m,n,ranks)
-  local i, j, k, rk, z, zv, mat, conj, gens;
-
-  if ForAny(ranks, x -> (x<0) or (x>n)) then
-    Error("Semigroups: RandomListOfMatricesWithRank usage: the list of ranks ",
-          "has to consist of numbers >0 and <n.");
-  fi;
-
-  gens := [];
-  z := Zero(R);
-  for i in [1..m] do 
-    # Choose a matrix of given rank
-    rk := Random(ranks);
-    mat := SEMIGROUPS_MutableCopyMat(Random(GL(rk, R)));
-    # Extend it to n x n
-    zv := [1..n-rk] * z;
-    for j in [1..rk] do
-      Append(mat[j], zv); 
-    od;
-    zv := [1..n] * z;
-    for j in [1..n-rk] do
-      Add(mat, zv);
-    od;
-    # Swirl around
-    #T Is Permuting rows/columns enough?
-    conj := Random(GL(n, R)); # PermutationMat(Random(Sym(n)), n, R);
-    Add(gens, conj^(-1) * mat * conj);
-  od; 
-  gens := List(gens, x->NewSMatrix(IsPlistSMatrixRep, R, n, x));
-
-  return gens;
-end);
 
 InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
 function(m)

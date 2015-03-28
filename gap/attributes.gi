@@ -254,6 +254,28 @@ function(s)
   return u;
 end);
 
+InstallMethod(GroupOfUnits, "for an s-matrix semigroup",
+[IsMatrixSemigroup],
+function(s)
+  local r, g, e, u;
+
+  e := MultiplicativeNeutralElement(s);
+
+  if e = fail then
+    return fail;
+  fi;
+
+  r := GreensRClassOfElementNC(s, e);
+  g := SchutzenbergerGroup(r);
+
+  u := Monoid(List(GeneratorsOfGroup(g), x -> AsSMatrix(e, x)));
+
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+
 # same method for ideals
 
 InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",

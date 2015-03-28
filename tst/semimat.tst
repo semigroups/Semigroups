@@ -226,9 +226,9 @@ gap> PartialOrderOfDClasses(S);
 #gap> StructureDescriptionOfSchutzenbergerGroups(S); 
 #T This takes ages, and this is probably due to the
 #T StructureDescription for s-matrix groups not being
-#T very efficient. 
+#T very efficient.
+#T It seems to be going through permutation groups
 #T Making a Schutzenberger group into a normal GAP
-#T 
 #T Matrix group yields a result instantly:
 gap> G := Group(List(GeneratorsOfGroup(SchutzenbergerGroup(DClasses(S)[2])), AsMatrix));
 <matrix group with 3 generators>

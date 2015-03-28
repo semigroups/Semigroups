@@ -30,13 +30,10 @@ DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and
 DeclareCategoryCollections("IsSMatrix");
 DeclareCategoryCollections("IsSMatrixCollection");
 
-#BindGlobal("SMatrixFamily", NewFamily("SMatrixFamily",
-# IsSMatrix, CanEasilyCompareElements));
-#BindGlobal("SMatrixType", NewType(SMatrixFamily,
-# IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep));
-
 DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsList]);
 DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsPlistMatrixRep]);
+DeclareConstructor("NewIdentitySMatrix", [IsSMatrix, IsRing, IsInt]);
+DeclareConstructor("NewZeroSMatrix", [IsSMatrix, IsRing, IsInt]);
 
 # These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsSMatrix);
@@ -101,6 +98,7 @@ DeclareAttribute("BaseDomain", IsSMatrixCollection);
 ##
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 DeclareGlobalFunction("RandomListOfMatricesWithRanks");
+DeclareGlobalFunction("RandomSquareSMatrixWithRanks");
 
 ## We need a mutable copy of matrices sometimes to do calculations
 DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");
