@@ -386,7 +386,7 @@ function(R,m,n,ranks)
   local i, j, k, rk, z, zv, mat, conj, gens;
 
   if ForAny(ranks, x -> (x<0) or (x>n)) then
-    Error("Semigroups: RandomMatrixSemigroup usage: the list of ranks ",
+    Error("Semigroups: RandomListOfMatricesWithRank usage: the list of ranks ",
           "has to consist of numbers >0 and <n.");
   fi;
 
