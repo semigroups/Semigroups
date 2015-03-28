@@ -210,6 +210,31 @@ gap> S := Semigroup(
 >      [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ]) );
 <monoid of 16x16 s-matrices over GF(2) with 2 generators>
 gap> Size(S);
-
+21392255076846796801
+gap> IsGroupAsSemigroup(S);
+false
+gap> NrIdempotents(S);
+5
+gap> NrRClasses(S);
+3
+gap> NrLClasses(S);
+3
+gap> SchutzenbergerGroup(DClasses(S)[2]);
+<group of 8x8 s-matrices over GF(2) with 3 generators>
+gap> PartialOrderOfDClasses(S);
+[ [ 1, 2 ], [ 2 ] ]
+#gap> StructureDescriptionOfSchutzenbergerGroups(S); 
+#T This takes ages, and this is probably due to the
+#T StructureDescription for s-matrix groups not being
+#T very efficient. 
+#T Making a Schutzenberger group into a normal GAP
+#T 
+#T Matrix group yields a result instantly:
+gap> G := Group(List(GeneratorsOfGroup(SchutzenbergerGroup(DClasses(S)[2])), AsMatrix));
+<matrix group with 3 generators>
+gap> Size(G);
+5348063769211699200
+gap> StructureDescription(G);
+"PSL(8,2)"
 #E#
 gap> STOP_TEST("Semigroups package: matrix.tst");
