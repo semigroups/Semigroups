@@ -1171,7 +1171,19 @@ function(R, m, n)
   return Monoid(List([1 .. m], x -> RandomSMatrix(n, n, R)));
 end);
 
-#
+InstallMethod(RandomMatrixSemigroup,
+"for a ring, positive integer, positive integer, and a list",
+[IsRing, IsPosInt, IsPosInt, IsList],
+function(R, m, n, ranks)
+  return Semigroup(RandomListOfMatricesWithRanks(R, m, n, ranks));
+end);
+
+InstallMethod(RandomMatrixSemigroup,
+"for a ring, positive integer, positive integer, and a list",
+[IsRing, IsPosInt, IsPosInt, IsList],
+function(R, m, n, ranks)
+  return Monoid(RandomListOfMatricesWithRanks(R, m, n, ranks));
+end);
 
 InstallMethod(RandomBinaryRelationMonoid,
 "for positive integer and positive integer",

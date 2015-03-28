@@ -60,6 +60,8 @@ DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt]);
+DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt, IsList]);
+DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt, IsList]);
 DeclareOperation("RandomBlockGroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);

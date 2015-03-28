@@ -100,6 +100,7 @@ DeclareAttribute("BaseDomain", IsSMatrixCollection);
 
 ##
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
+DeclareGlobalFunction("RandomListOfMatricesWithRanks");
 
 ## We need a mutable copy of matrices sometimes to do calculations
 DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");

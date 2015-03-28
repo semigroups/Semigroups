@@ -381,6 +381,40 @@ function(m)
   return AsSMatrix(m, TransposedMat(m!.mat));
 end);
 
+InstallGlobalFunction(RandomListOfMatricesWithRanks,
+function(R,m,n,ranks)
+  local i, j, k, rk, z, zv, mat, conj, gens;
+
+  if ForAny(ranks, x -> (x<0) or (x>n)) then
+    Error("Semigroups: RandomMatrixSemigroup usage: the list of ranks ",
+          "has to consist of numbers >0 and <n.");
+  fi;
+
+  gens := [];
+  z := Zero(R);
+  for i in [1..m] do 
+    # Choose a matrix of given rank
+    rk := Random(ranks);
+    mat := SEMIGROUPS_MutableCopyMat(Random(GL(rk, R)));
+    # Extend it to n x n
+    zv := [1..n-rk] * z;
+    for j in [1..rk] do
+      Append(mat[j], zv); 
+    od;
+    zv := [1..n] * z;
+    for j in [1..n-rk] do
+      Add(mat, zv);
+    od;
+    # Swirl around
+    #T Is Permuting rows/columns enough?
+    conj := Random(GL(n, R)); # PermutationMat(Random(Sym(n)), n, R);
+    Add(gens, conj^(-1) * mat * conj);
+  od; 
+  gens := List(gens, x->NewSMatrix(IsPlistSMatrixRep, R, n, x));
+
+  return gens;
+end);
+
 InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
 function(m)
   local res, r;
