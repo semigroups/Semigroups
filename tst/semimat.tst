@@ -236,5 +236,11 @@ gap> Size(G);
 5348063769211699200
 gap> StructureDescription(G);
 "PSL(8,2)"
+
+
+#T# 
+gap> S := AsMatrixSemigroup(Semigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
+>                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]]));
+
 #E#
 gap> STOP_TEST("Semigroups package: matrix.tst");

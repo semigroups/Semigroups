@@ -167,6 +167,10 @@ function(S, V, mat)
   n := DegreeOfSMatrix(mat);
   k := Length(V);
 
+  if n = 0 or k = 0 then
+    Error("nullspace");
+  fi;
+
   W := SEMIGROUPS_MutableCopyMat( V * mat );
 
   for i in [1 .. k] do
@@ -213,8 +217,8 @@ function(S, x, y)
   local deg, n, eqs, sch, res, idx, row, col,
         check1, check2;
 
-  check1 := SEMIGROUPS_MutableCopyMat(x!.mat);
-  check2 := SEMIGROUPS_MutableCopyMat(y!.mat);
+#  check1 := SEMIGROUPS_MutableCopyMat(x!.mat);
+#  check2 := SEMIGROUPS_MutableCopyMat(y!.mat);
   deg := DegreeOfSMatrix(x);
   n := RowRank(x);
 
@@ -224,13 +228,13 @@ function(S, x, y)
     eqs := TransposedMatMutable(
       Concatenation(TransposedMat(x!.mat),
                     TransposedMat(y!.mat)));
-	TriangulizeMat(eqs);
+    TriangulizeMat(eqs);
 
-	idx := [];
+    idx := [];
     col := 1;
     row := 1;
 
-	while col <= deg do
+    while col <= deg do
       while IsZero(eqs[row][col]) and col <= deg do
         col := col + 1;
       od;
@@ -240,7 +244,7 @@ function(S, x, y)
         col := col + 1;
       fi;
     od;
-	res := NewSMatrix(ConstructingFilter(x), BaseDomain(x),
+    res := NewSMatrix(ConstructingFilter(x), BaseDomain(x),
                       n, eqs{[1 .. n]}{idx + deg});
   fi;
   if res^(-1) = fail then
@@ -268,33 +272,27 @@ function(S, x, m)
   return AsSMatrix(x,RowSpaceTransformationInv(x) * rsp);
 end);
 
+# This should be doable in a much more efficient way
 InstallGlobalFunction(SMatrixLambdaConjugator,
 function(S, x, y)
   local res, zero, xse, h, p, yse, q, i;
 
-  res := x^(-1);
-  if res <> fail then
-    res := res * y;
+  if IsZero(x) then
+    res := NewIdentitySMatrix(ConstructingFilter(x), BaseDomain(x), 0);
   else
-    # Note: If IsZero is still broken, we have a debugging
-    # function SEMIGROUPS_CheckReallyZero
-    if IsZero(x) then
-      res := NewIdentitySMatrix(ConstructingFilter(x), BaseDomain(x), 0);
-    else
-      xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
-      h := Filtered(xse.heads, x -> x <> 0);
-      p := NewSMatrix(ConstructingFilter(x), BaseDomain(x), Length(h),
-                      One(BaseDomain(x)) * PermutationMat(SortingPerm(h),
+    xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
+    h := Filtered(xse.heads, x -> x <> 0);
+    p := NewSMatrix(ConstructingFilter(x), BaseDomain(x), Length(h),
+                    One(BaseDomain(x)) * PermutationMat(SortingPerm(h),
                                              Length(h), BaseDomain(x)));
 
-      yse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(y!.mat));
-      h := Filtered(yse.heads, x -> x <> 0);
-      q := NewSMatrix(ConstructingFilter(y), BaseDomain(y), Length(h),
-                      One(BaseDomain(y)) * PermutationMat(SortingPerm(h),
-                                             Length(h), BaseDomain(y)));
+    yse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(y!.mat));
+    h := Filtered(yse.heads, x -> x <> 0);
+    q := NewSMatrix(ConstructingFilter(y), BaseDomain(y), Length(h),
+                    One(BaseDomain(y)) * PermutationMat(SortingPerm(h),
+                                           Length(h), BaseDomain(y)));
 
-      res := p * q^(-1);
-    fi;
+    res := p * q^(-1);
   fi;
   return res;
 end);
@@ -317,7 +315,7 @@ function(S, x, y)
   local m, inv;
     
   if IsZero(x) then
-    return IdentitySMatrix(Representative(S),1); 
+    return IdentitySMatrix(Representative(S), 0); 
   else
     m := AsSMatrix(Representative(S), TransposedMat(y) * x);
     inv := SMatrixLocalRightInverse(S, x, m);

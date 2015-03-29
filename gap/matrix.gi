@@ -9,6 +9,95 @@
 #############################################################################
 ##
 
+InstallMethod(NewSVector, "for IsPlistSVectorRep, a ring, an int, and a list",
+[IsPlistSVectorRep, IsRing, IsInt, IsList],
+function(filter, basedomain, rl, l)
+  local v,i,e,filter2;
+
+  if not Length(l) = rl then
+    Error("Semigroups: NewSVector: usage,\n",
+          "the arguments are wrong!");
+    return;
+  fi;
+
+  filter2 := filter and IsSVector;
+  if HasCanEasilyCompareElements(Representative(basedomain))
+     and CanEasilyCompareElements(Representative(basedomain)) then
+    filter2 := filter2 and CanEasilyCompareElements;
+  fi;
+  v := rec( vec := StructuralCopy(l) );
+  Objectify( PlistSVectorType, v );
+  MakeImmutable(v!.vec);
+
+  SetDegreeOfSVector(v, rl);
+  SetBaseDomain(v, basedomain); 
+
+  return v;
+end);
+
+#T Establish the usefulness of this method
+#InstallMethod(NewSVector, "for IsPlistSVectorRep, a ring, an int, and a plist vector",
+#[IsPlistSVectorRep, IsRing, IsInt, IsPlistVectorRep],
+#function(filter, basedomain, rl, l)
+#  return NewSVector(filter, basedomain, rl, AsVector(l));
+#end);
+
+InstallMethod(NewZeroSVector, "for IsPlistSVectorRep, a ring, and an int",
+[IsPlistSVectorRep, IsRing, IsInt],
+function(filter, basedomain, rl)
+  return NewSVector(filter, basedomain, rl, [1..rl] * Zero(basedomain));
+end);
+
+InstallMethod(ViewObj, "for a plist s-vector",
+[IsPlistSVectorRep],
+function(v)
+  Print("<s-vector of degree ");
+  Print(DegreeOfSVector(v),
+         " over ", BaseDomain(v),">");
+end);
+
+InstallMethod(ViewString, "for a plist s-vector",
+[IsPlistSVectorRep],
+function(v)
+  return STRINGIFY("<s-vector of degree ",
+                   DegreeOfSVector(v),
+                   " over ",
+                   BaseDomain(v)); 
+end);
+
+InstallMethod(PrintObj, "for a plist s-vector",
+[IsPlistSVectorRep],
+function(v)
+  Print("NewSVector(IsPlistSVectorRep, ",
+        BaseDomain(v), ", ",
+        DegreeOfSVector(v), ", ",
+        v!.vec, ")");
+end);
+
+InstallMethod(Display, "for a plist s-vector",
+[IsPlistSVectorRep],
+function(v)
+  local i;
+  Print("<s-vector of degree ",
+        DegreeOfSVector(v), "\n");
+  Print(v!.vec);
+  Print(">\n");
+end);
+
+InstallMethod(PrintString, "for a plist s-vector",
+[IsPlistSVectorRep],
+function( v )
+  local st;
+  st := "NewSMatrix(IsPlistSVectorRep,";
+  Append(st,String(BaseDomain(v)));
+  Append(st,",");
+  Append(st,String(DegreeOfSVector(v)));
+  Append(st,",");
+  Append(st,String(v!.vec));
+  Append(st,")");
+  return st;
+end);
+
 ############################################################################
 ## Creating a matrix
 #############################################################################
@@ -207,14 +296,25 @@ function(m)
   return TransposedMat(RightInverse(TransposedMat(m)));
 end);
 
-#T This might lead to funny effects?
+#T Trying to use "Inverse" in the semigroup sense
+#T here leads to problems with other operations, 
+#T so we have to be very careful
 InstallMethod(InverseOp, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
 function(m)
-  if not HasSemigroupInverse(m) then
-    ComputeRowSpaceAndTransformation(m);
+  local x;
+  
+  if DegreeOfSMatrix(m) = 0 then
+    return m;
+  else
+    x := m!.mat^(-1);
+
+    if x = fail then
+      return fail;
+    else 
+      return AsSMatrix(m,x);
+    fi;
   fi;
-  return SemigroupInverse(m);
 end);
 
 ############################################################################
@@ -222,7 +322,7 @@ end);
 #############################################################################
 InstallGlobalFunction(ComputeRowSpaceAndTransformation,
 function(m)
-  local deg, rsp, i, j, zv, bas, heads, tm, inv, tr, tri, bd;
+  local deg, rsp, i, j, zv, bas, heads, tm, inv, sinv, tr, tri, bd;
 
   if not IsPlistSMatrixRep(m) then
     Error("semigroups: Matrix not in the correct representation");
@@ -237,8 +337,10 @@ function(m)
     tri := tr;
     if deg = 0 then
        inv := tr;
+       sinv := tr;
     else
        inv := fail;
+       sinv := fail;
     fi;
   else
     rsp := SEMIGROUPS_MutableCopyMat(m!.mat);
@@ -263,19 +365,24 @@ function(m)
     # If it does this matrix is the transformation we computed
     # otherwise we set fail 
     tm := TransposedMat(bas);
-    inv := true;
+    sinv := true;
     for i in [1..deg] do
       if not IsBound(heads[i]) then
         if not IsZero(tm[i]) then
-          inv := fail;
+          sinv := fail;
         fi;
       fi;
     od;
     #T This is obviously totally ridiculous to do the same computation
     #T twice
-    if inv = true then
-       inv := RightInverse(m);
-    fi; 
+    if sinv = true then
+       sinv := RightInverse(m);
+    fi;
+    if Length(bas) = deg then
+       inv := sinv;
+    else
+       inv := fail;
+    fi;
     tr := rsp{[1 .. deg]}{[deg + 1 .. 2 * deg]};
     tri := tr^(-1);
   fi;
@@ -286,16 +393,8 @@ function(m)
   SetRowRank(m, Length(bas));
   SetRowSpaceTransformation(m, tr); 
   SetRowSpaceTransformationInv(m, tri);
-  SetSemigroupInverse(m, inv);
-end);
-
-InstallMethod(InverseOp, "for an s-matrix",
-[IsPlistSMatrixRep],
-function(m)
-  if not HasSemigroupInverse(m) then
-    ComputeRowSpaceAndTransformation(m);
-  fi;
-  return SemigroupInverse(m);
+  SetSemigroupInverse(m, sinv);
+  SetInverse(m, inv);
 end);
 
 ##############################################################################
@@ -519,7 +618,11 @@ end);
 InstallMethod(TransposedSMat, "for an s-matrix",
 [IsSMatrix],
 function(m)
-  return AsSMatrix(m, TransposedMat(m!.mat));
+  if DegreeOfSMatrix(m) = 0 then
+    return m;
+  else
+    return AsSMatrix(m, TransposedMat(m!.mat));
+  fi;
 end);
 
 

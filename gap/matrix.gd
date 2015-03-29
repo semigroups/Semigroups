@@ -30,11 +30,14 @@
 # Our Vector objects
 DeclareCategory("IsSVector", IsAdditiveElementWithInverse);
 DeclareCategoryCollections("IsSVector");
-DeclareCategoryCollections("IsSMatrixCollection");
+DeclareCategoryCollections("IsSVectorCollection");
 
 DeclareConstructor("NewSVector", [IsSVector, IsRing, IsInt, IsList]);
-DeclareConstructor("NewSVector", [IsSVector, IsRing, IsInt, IsPlistMatrixRep]);
+DeclareConstructor("NewSVector", [IsSVector, IsRing, IsInt, IsPlistVectorRep]);
 DeclareConstructor("NewZeroSVector", [IsSVector, IsRing, IsInt]);
+
+DeclareAttribute("DegreeOfSVector", IsSVector);
+DeclareAttribute("BaseDomain", IsSVector);
 
 # Our Matrix objects
 DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and 
@@ -70,6 +73,19 @@ DeclareOperation("AsSMatrix", [IsMatrix]);
 DeclareOperation("ConstructingFilter", [IsSMatrix]);
 
 
+# We need to wrap vector collections to circumvent problems
+# with zero spaces.
+#DeclareCategory("IsSRowBasis", IsSVectorCollection);
+#DeclareCategory("NewSRowBasis", [IsSRowBasis, IsRing, IsSVectorCollection]);
+
+#DeclareAttribute("Rank", IsSRowBasis);
+#DeclareRepresentation("IsPlistSVectorRep",
+#  IsSVector and IsComponentObjectRep and IsAttributeStoringRep, ["vec"]);
+#BindGlobal("PlistSVectorFamily", NewFamily("PlistSVectorFamily",
+#  IsSVector, CanEasilyCompareElements));
+#BindGlobal("PlistSVectorType", NewType(PlistSVectorFamily,
+#  IsSVector and IsPlistSVectorRep ));
+
 #
 # Here come two concrete implementations of SVectors and SMatrices
 #
@@ -90,8 +106,8 @@ DeclareOperation("ConstructingFilter", [IsSMatrix]);
 DeclareRepresentation("IsPlistSVectorRep",
   IsSVector and IsComponentObjectRep and IsAttributeStoringRep, ["vec"]);
 BindGlobal("PlistSVectorFamily", NewFamily("PlistSVectorFamily",
-  IsSVector, CanEasilyCompareElements);
-BindGlobal("PlistSVectorType, NewType(PlistSVectorFamily,
+  IsSVector, CanEasilyCompareElements));
+BindGlobal("PlistSVectorType", NewType(PlistSVectorFamily,
   IsSVector and IsPlistSVectorRep ));
 
 DeclareRepresentation("IsPlistSMatrixRep",
@@ -106,7 +122,7 @@ DeclareRepresentation("IsCVECSVectorRep",
   IsSVector and IsComponentObjectRep and IsAttributeStoringRep, []);
 BindGlobal("CVECSVectorFamily", NewFamily("CVECSVectorFamily",
   IsSVector, CanEasilyCompareElements));
-BindGlobal("CVECSVectorType", NewType(CVECSMatrixFamily,
+BindGlobal("CVECSVectorType", NewType(CVECSVectorFamily,
   IsSVector and IsCVECSVectorRep));
 
 DeclareRepresentation("IsCVECSMatrixRep",

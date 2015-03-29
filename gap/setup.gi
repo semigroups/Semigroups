@@ -83,7 +83,7 @@ function(x)
   fi;
 end);
 
-InstallMethod(ActionDegree, "for a matrix object",
+InstallMethod(ActionDegree, "for an s-matrix object",
 [IsSMatrix], DegreeOfSMatrix);
 
 #
@@ -127,9 +127,6 @@ function(coll)
   fi;
 end);
 
-
-
-
 #
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
@@ -156,7 +153,7 @@ function(R)
   fi;
 end);
 
-InstallMethod(ActionDegree, "for a matrix semigroup",
+InstallMethod(ActionDegree, "for an s-matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
     return ActionDegree(Representative(S));

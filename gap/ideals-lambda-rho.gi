@@ -225,7 +225,8 @@ function(I)
 
   htopts := ShallowCopy(LambdaOrbOpts(I));
   htopts.treehashsize := I!.opts.hashlen.M;
-  record.ht := HTCreate(LambdaFunc(I)(Representative(I)), htopts);
+  #record.ht := HTCreate(LambdaFunc(I)(Representative(I)), htopts);
+  record.ht := HTCreate(LambdaOrbSeed(I), htopts);
 
   fam := CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
   return Objectify(NewType(fam, IsIdealOrb and IsLambdaOrb), record);
@@ -262,7 +263,8 @@ function(I)
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
   htopts := ShallowCopy(RhoOrbOpts(I));
   htopts.treehashsize := I!.opts.hashlen.M;
-  record.ht := HTCreate(RhoFunc(I)(Representative(I)), htopts);
+  #record.ht := HTCreate(RhoFunc(I)(Representative(I)), htopts);
+  record.ht := HTCreate(RhoOrbSeed(I), htopts);
 
   fam := CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
   return Objectify(NewType(fam, IsIdealOrb and IsRhoOrb), record);
