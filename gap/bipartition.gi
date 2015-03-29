@@ -477,15 +477,15 @@ function(f, n)
 end);
 
 InstallMethod(AsBipartition, "for a permutation",
-[IsPerm], x -> AsBipartition(f, LargestMovedPoint(f)));
+[IsPerm], x -> AsBipartition(x, LargestMovedPoint(x)));
 
 #
 
 InstallMethod(AsBipartition, "for a partial perm",
 [IsPartialPerm],
 function(x)
-  return AsBipartition(f, Maximum(DegreeOfPartialPerm(f),
-                                  CodegreeOfPartialPerm(f)));
+  return AsBipartition(x, Maximum(DegreeOfPartialPerm(x),
+                                  CodegreeOfPartialPerm(x)));
 end);
 
 InstallMethod(AsBipartition, "for a partial perm and zero",
@@ -1011,7 +1011,7 @@ function(classes)
 
   if not IsList(classes)
       or ForAny(classes, x -> not IsHomogeneousList(x)
-                                  and IsDuplicateFree(x))) then
+                                  and IsDuplicateFree(x)) then
     Error("Semigroups: Bipartition: usage,\n",
           "the argument <classes> must consist of duplicate-free lists,");
     return;
@@ -1025,8 +1025,8 @@ function(classes)
   fi;
 
   copy := Union(classes);
-  if copy <> Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
-      or copy <> classes then
+  if not (copy = Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
+          or copy = classes) then
     Error("Semigroups: Bipartition: usage,\n",
           "the union of the argument <classes> must be [-n..-1, 1..n],");
     return;
