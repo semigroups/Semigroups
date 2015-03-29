@@ -18,13 +18,25 @@
 # library or other libraries and dispatch to things we know to work.
 #
 # This code is based on the IsPlistMatrixRep code from the GAP library
+#
 # There is almost no hope whatsoever that we will ever be able to use
-# MatrixObj in general for semigroups
+# MatrixObj in general for semigroups, because of MatrixObjs being in
+# CategoryCollections of their entries and this leading to conflicts when
+# checking for IsAssociativeElementCollection (which is false for collections
+# of IsMatrixObj).
 #
 ############################################################################
-#
+
+# Our Vector objects
+DeclareCategory("IsSVector", IsAdditiveElementWithInverse);
+DeclareCategoryCollections("IsSVector");
+DeclareCategoryCollections("IsSMatrixCollection");
+
+DeclareConstructor("NewSVector", [IsSVector, IsRing, IsInt, IsList]);
+DeclareConstructor("NewSVector", [IsSVector, IsRing, IsInt, IsPlistMatrixRep]);
+DeclareConstructor("NewZeroSVector", [IsSVector, IsRing, IsInt]);
+
 # Our Matrix objects
-#
 DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and 
                              IsAssociativeElement);
 DeclareCategoryCollections("IsSMatrix");
@@ -57,6 +69,10 @@ DeclareOperation("AsSMatrix", [IsSMatrix, IsMatrix]);
 DeclareOperation("AsSMatrix", [IsMatrix]);
 DeclareOperation("ConstructingFilter", [IsSMatrix]);
 
+
+#
+# Here come two concrete implementations of SVectors and SMatrices
+#
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
 # We also need operations for acting on Row/Column spaces.
 
@@ -69,12 +85,29 @@ DeclareOperation("ConstructingFilter", [IsSMatrix]);
 #
 # What about AttributeStoringRep? Is it desirable to just store RowSpaceBasis
 # ColumnSpaceBasis as Attributes?
+
+# Vectors and matrices stored as GAP Plists
+DeclareRepresentation("IsPlistSVectorRep",
+  IsSVector and IsComponentObjectRep and IsAttributeStoringRep, ["vec"]);
+BindGlobal("PlistSVectorFamily", NewFamily("PlistSVectorFamily",
+  IsSVector, CanEasilyCompareElements);
+BindGlobal("PlistSVectorType, NewType(PlistSVectorFamily,
+  IsSVector and IsPlistSVectorRep ));
+
 DeclareRepresentation("IsPlistSMatrixRep",
-  IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep, []);
+  IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep, ["mat"]);
 BindGlobal("PlistSMatrixFamily", NewFamily("PlistSMatrixFamily",
   IsSMatrix, CanEasilyCompareElements));
 BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
   IsSMatrix and IsPlistSMatrixRep ));
+
+# Vectors and matrices from the CVEC package
+DeclareRepresentation("IsCVECSVectorRep",
+  IsSVector and IsComponentObjectRep and IsAttributeStoringRep, []);
+BindGlobal("CVECSVectorFamily", NewFamily("CVECSVectorFamily",
+  IsSVector, CanEasilyCompareElements));
+BindGlobal("CVECSVectorType", NewType(CVECSMatrixFamily,
+  IsSVector and IsCVECSVectorRep));
 
 DeclareRepresentation("IsCVECSMatrixRep",
   IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep, []);
