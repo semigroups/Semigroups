@@ -1,3 +1,16 @@
+############################################################################
+##
+#W  rees-cong.gi
+#Y  Copyright (C) 2015                                   Michael C. Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## This file contains methods for Rees congruences; i.e. semigroup congruences
+## defined by a two-sided ideal.
+##
+
 InstallMethod(IsReesCongruence,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
@@ -18,7 +31,7 @@ function(cong)
     # Find all the non-trivial classes
     classes := EquivalenceClasses(cong);
     sizes := List(classes, Size);
-    pos := PositionsProperty(sizes, n-> n > 1);
+    pos := PositionsProperty(sizes, n -> n > 1);
     if Length(pos) > 1 then
       return false;
     fi;
@@ -44,9 +57,8 @@ function(i)
   local s, fam, type, cong;
   s := Parent(i);
   # Construct the object
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)));
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
+                               ElementsFamily(FamilyObj(s)));
   type := NewType(fam, IsSemigroupCongruence and IsAttributeStoringRep);
   cong := Objectify(type, rec());
   # Set some attributes
@@ -75,9 +87,7 @@ end);
 InstallMethod(NrCongruenceClasses,
 "for a Rees congruence",
 [IsReesCongruence],
-function(cong)
-  return Size(Range(cong)) - Size(SemigroupIdealOfReesCongruence(cong)) + 1;
-end);
+cong -> Size(Range(cong)) - Size(SemigroupIdealOfReesCongruence(cong)) + 1);
 
 #
 
@@ -213,7 +223,7 @@ function(cong, elm)
   # Construct the object
   fam := CollectionsFamily(FamilyObj(elm));
   class := Objectify(NewType(fam, IsReesCongruenceClass),
-      rec(is_ideal_class := is_ideal_class));
+                     rec(is_ideal_class := is_ideal_class));
   SetParentAttr(class, cong);
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
@@ -251,7 +261,7 @@ function(c1, c2)
     return c2;
   fi;
   return EquivalenceClassOfElementNC(Parent(c1),
-                 Representative(c1) * Representative(c2));
+                                     Representative(c1) * Representative(c2));
 end);
 
 #
@@ -306,7 +316,5 @@ end);
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for a Rees congruence",
 [IsReesCongruence],
-function(cong)
-  return GeneratingPairsOfSemigroupCongruence(
-                 AsSemigroupCongruenceByGeneratingPairs(cong));
-end);
+cong -> GeneratingPairsOfSemigroupCongruence(
+        AsSemigroupCongruenceByGeneratingPairs(cong)));
