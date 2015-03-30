@@ -423,18 +423,19 @@ end);
 
 BindGlobal("SEMIGROUPS_EquivalenceClassOfElement", 
 function(rel, rep, type)
-  local pos, out;
+  local pos, out, S;
 
-  pos:=Position(GenericSemigroupData(Source(rel)), rep);
-  if pos=fail then 
+  pos := Position(GenericSemigroupData(Source(rel)), rep);
+  if pos = fail then 
     Error("usage: the element in the 2nd argument does not belong to the ", 
-    "semigroup,");
+          "semigroup,");
     return;
   fi;
 
-  out:=rec(); 
-  ObjectifyWithAttributes(out, type, EquivalenceClassRelation, rel,
-    Representative, rep, ParentAttr, Source(rel));
+  out := rec(); 
+  S := Source(rel);
+  ObjectifyWithAttributes(out, type(S), EquivalenceClassRelation, rel,
+                          Representative, rep, ParentAttr, S);
   
   out!.index:=rel!.data.id[pos];
 
@@ -447,28 +448,28 @@ InstallMethod(EquivalenceClassOfElement,
 "for an generic semigroup Green's R-relation and an associative element", 
 [IsGreensRRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensRClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, RClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement, 
 "for an generic semigroup Green's L-relation and an associative element", 
 [IsGreensLRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensLClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, LClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement, 
 "for an generic semigroup Green's H-relation and an associative element", 
 [IsGreensHRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensHClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, HClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement, 
 "for an generic semigroup Green's D-relation and an associative element", 
 [IsGreensDRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, IsGreensDClass);
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, DClassType);
 end);
 
 #
@@ -482,7 +483,7 @@ function(S, GreensXRelation, GreensXClassOfElement)
   out:=EmptyPlist(Length(comps));
 
   for i in [1..Length(comps)] do
-    C:=GreensXClassOfElement(S, elts[i]);
+    C:=GreensXClassOfElement(S, elts[comps[i][1]]);
     C!.index:=i;
     out[i]:=C;
   od;

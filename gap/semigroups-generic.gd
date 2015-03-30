@@ -1,7 +1,7 @@
 ###########################################################################
 ##
-#W  exhaust.gd
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#W  semigroups-generic.gd
+#Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -14,8 +14,7 @@
 DeclareCategory("IsGenericSemigroupData", IsList);
 
 # there is a good reason this is not a category!
-
-DeclareAttribute("GenericSemigroupData", IsFinite and IsSemigroup, "mutable");
+DeclareAttribute("GenericSemigroupData", IsSemigroup, "mutable");
 
 DeclareOperation("Enumerate", [IsGenericSemigroupData]);
 DeclareOperation("Enumerate", [IsGenericSemigroupData, IsCyclotomic]);

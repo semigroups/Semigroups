@@ -288,15 +288,27 @@ fi;
 
 # same method for ideals
 
-InstallMethod(GenericSemigroupData, "for a finite semigroup",
-[IsFinite and IsSemigroup], 
+InstallMethod(GenericSemigroupData, "for a semigroup",
+[IsSemigroup], # FIXME should be and IsFinite!!
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
-  data:=rec( elts := [  ], final := [  ], first := [  ], found := false, 
-    genslookup := [  ], left := [  ], len := 1, lenindex := [  ], 
-    nrrules := 0, prefix := [  ], reduced := [ [  ] ], right := [  ], 
-    rules := [  ], stopper := false, suffix := [  ], words := [  ] );
+  data:=rec(elts := [], 
+            final := [], 
+            first := [], 
+            found := false, 
+            genslookup := [], 
+            left := [], 
+            len := 1, 
+            lenindex := [], 
+            nrrules := 0, 
+            prefix := [], 
+            reduced := [[]], 
+            right := [], 
+            rules := [], 
+            stopper := false, 
+            suffix := [], 
+            words := []);
   
   hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
