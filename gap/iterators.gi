@@ -401,7 +401,7 @@ end);
 # same method for regular/inverse
 #FIXME move this!
 
-InstallMethod(Iterator, "for a acting semigroup",
+InstallMethod(Iterator, "for an acting semigroup",
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
   local iter;
@@ -438,7 +438,7 @@ end);
 # different method for inverse
 #FIXME move this!
 
-InstallMethod(Iterator, "for a regular D-class of a acting semigroup",
+InstallMethod(Iterator, "for a regular D-class of an acting semigroup",
 [IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
 function(d)
   local iter, baseiter, convert;
@@ -512,7 +512,7 @@ end);
 # same method for regular, different method for inverse
 #FIXME move this!
 
-InstallMethod(Iterator, "for an L-class of a acting semigroup",
+InstallMethod(Iterator, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
   local iter, baseiter, convert;
@@ -540,7 +540,7 @@ end);
 # same method for regular/inverse
 #FIXME move this!
 
-InstallMethod(Iterator, "for an R-class of a acting semigroup",
+InstallMethod(Iterator, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
   local iter, baseiter, convert;
@@ -569,7 +569,7 @@ end);
 # semigroups-dev.
 #FIXME move this!
 
-InstallMethod(IteratorOfHClasses, "for a acting semigroup",
+InstallMethod(IteratorOfHClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local iter;
@@ -605,7 +605,7 @@ end);
 #FIXME move this!
 #different method for regular/inverse
 
-InstallMethod(IteratorOfRClassData, "for a acting semigroup",
+InstallMethod(IteratorOfRClassData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
 
@@ -890,7 +890,7 @@ s -> IteratorByIterator(IteratorOfLClassData(s), x -> x[4],
 #FIXME move this!
 
 InstallMethod(IteratorOfDClassData, "for inverse acting semigroup",
-[IsActingSemigroupWithInverseOp and IsRegularSemigroup],
+[IsActingSemigroup and IsSemigroupWithInverseOp and IsRegularSemigroup],
 function(s)
   local graded, record, o, scc, func;
 

@@ -286,7 +286,7 @@ end);
 #
 
 InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
 
@@ -482,7 +482,7 @@ InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal], S -> NrRClasses(S) = 1 and NrLClasses(S) = 1);
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);

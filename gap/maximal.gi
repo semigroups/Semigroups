@@ -618,7 +618,7 @@ if not (IsGrapeLoaded and IsGrapeCompiled) then
     return fail;
   end);
 else
-  InstallMethod(MaximalSubsemigroups, "for a acting semigroup",
+  InstallMethod(MaximalSubsemigroups, "for an acting semigroup",
   [IsActingSemigroup],
   function(S)
     local max, out, gens, nrgens, po, classes, D, lookup, nonmax, tot, gens2,

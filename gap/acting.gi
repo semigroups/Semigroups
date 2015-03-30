@@ -15,7 +15,7 @@
 # same method for ideals
 
 InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], ReturnFail);
+[IsActingSemigroup and IsSemigroupWithInverseOp], ReturnFail);
 
 # different method for ideals
 

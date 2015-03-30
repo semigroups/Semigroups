@@ -53,7 +53,7 @@ gap> FreeBand("a", "b", "c");
 <free band on the generators [ a, b, c ]>
 gap> S := FreeBand(["a", "b", "c"]);
 <free band on the generators [ a, b, c ]>
-gap> Size(s);
+gap> Size(S);
 159
 gap> gens := Generators(S);
 [ a, b, c ]

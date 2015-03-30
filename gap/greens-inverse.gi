@@ -144,7 +144,7 @@ end);
 
 InstallMethod(GreensDClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local D;
   D := SEMIGROUPS_CreateDClass(S, x, isGreensClassNC);
@@ -158,7 +158,7 @@ end);
 
 InstallMethod(GreensLClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local L;
   L := SEMIGROUPS_CreateLClass(S, x, isGreensClassNC);
@@ -171,7 +171,7 @@ end);
 
 InstallMethod(GreensHClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local H;
   H := SEMIGROUPS_CreateHClass(S, x, isGreensClassNC);
@@ -310,7 +310,7 @@ end);
 # inverse semigroup are all idempotents.
 
 InstallMethod(DClassReps, "for an inverse op acting semigroup with generators",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+[IsActingSemigroup and IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 function(S)
   local o, out, m;
   o := LambdaOrb(S);
@@ -324,7 +324,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensDClasses, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+[IsActingSemigroup and IsSemigroupWithInverseOp],
 function(S)
   local o, scc, out, D, i;
 
@@ -364,7 +364,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(RClassReps, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], S -> List(LClassReps(S), x -> Inverse(x)));
+[IsActingSemigroup and IsSemigroupWithInverseOp], S -> List(LClassReps(S), x -> Inverse(x)));
 
 # same method for inverse ideals
 
@@ -429,7 +429,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(NrRClasses, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], NrLClasses);
+[IsActingSemigroup and IsSemigroupWithInverseOp], NrLClasses);
 
 # same method for inverse ideals
 
@@ -452,7 +452,7 @@ L -> Length(LambdaOrbSCC(L)));
 # same method for inverse ideals
 
 InstallMethod(NrHClasses, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+[IsActingSemigroup and IsSemigroupWithInverseOp],
 S ->
 Sum(List(OrbSCC(Enumerate(LambdaOrb(S))), x -> Length(x) ^ 2)) - 1);
 
@@ -470,7 +470,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(PartialOrderOfDClasses, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+[IsActingSemigroup and IsSemigroupWithInverseOp],
 function(S)
   local D, n, out, o, gens, lookup, lambdafunc, i, x, y;
 
@@ -502,7 +502,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(Idempotents, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+[IsActingSemigroup and IsSemigroupWithInverseOp],
 function(s)
   local o, creator, r, out, i;
 
@@ -525,7 +525,7 @@ end);
 
 InstallMethod(Idempotents,
 "for acting semigroup with inverse op and non-negative integer",
-[IsActingSemigroupWithInverseOp, IsInt],
+[IsActingSemigroup and IsSemigroupWithInverseOp, IsInt],
 function(S, n)
   local o, creator, out, rank, nr, i;
 
@@ -587,7 +587,7 @@ R -> [LeftOne(Representative(R))]);
 # same method for inverse ideals
 
 InstallMethod(NrIdempotents, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+[IsActingSemigroup and IsSemigroupWithInverseOp],
 S -> Length(Enumerate(LambdaOrb(S))) - 1);
 
 # same method for inverse ideals
@@ -622,7 +622,7 @@ R -> 1);
 # just use RClasses.
 
 InstallMethod(EnumeratorOfRClasses, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp],
+[IsActingSemigroup and IsSemigroupWithInverseOp],
 function(S)
 
   Enumerate(LambdaOrb(S));

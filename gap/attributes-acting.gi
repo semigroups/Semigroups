@@ -13,7 +13,7 @@
 
 # same method for ideals
 
-InstallMethod(IsGreensDLeq, "for a acting semigroup",
+InstallMethod(IsGreensDLeq, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local partial, data, comp_index;
@@ -38,7 +38,7 @@ end);
 
 # different method for ideals/regular/inverse, although this method will work too
 
-InstallMethod(MaximalDClasses, "for a acting semigroup",
+InstallMethod(MaximalDClasses, "for an acting semigroup",
 [IsActingSemigroup] ,
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
@@ -96,7 +96,7 @@ end);
 # same method for ideals
 
 InstallMethod(StructureDescriptionSchutzenbergerGroups, 
-"for a acting semigroup", [IsActingSemigroup],
+"for an acting semigroup", [IsActingSemigroup],
 function(s)
   local o, scc, out, m;
 
@@ -115,7 +115,7 @@ end);
 # same method for ideals
 
 InstallMethod(StructureDescriptionMaximalSubgroups, 
-"for a acting semigroup", [IsActingSemigroup],
+"for an acting semigroup", [IsActingSemigroup],
 function(s)
   local out, d;
 
@@ -131,7 +131,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(InjectionPrincipalFactor, "for a D-class of a acting semigroup",
+InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
@@ -233,7 +233,7 @@ end);
 # different method for ideals
 
 InstallMethod(InversesOfSemigroupElementNC, 
-"for a acting semigroup and associative element",
+"for an acting semigroup and associative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
@@ -338,7 +338,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(MultiplicativeNeutralElement, "for a acting semigroup",
+InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local gens, rank, lambda, max, r, rep, f;
@@ -384,7 +384,7 @@ end);
 
 # same method for ideals...
 
-InstallMethod(MultiplicativeZero, "for a acting semigroup",
+InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
@@ -436,7 +436,7 @@ end);
 
 # same method for inverse/ideals
 
-InstallMethod(MinimalDClass, "for a acting semigroup", [IsActingSemigroup],
+InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
 function(S)
   local rank, o, pos, min, len, m, x, n, i;
 

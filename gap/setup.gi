@@ -47,15 +47,6 @@ function(coll)
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
-#FIXME are these required anymore? 
-InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-                                                  IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-                                                  IsBlockBijectionSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-                                                  IsPartialPermBipartitionSemigroup);
-
 # JDM should remove this since it is not possible to have an generic Rees
 # 0-matrix semigroup (or to specify any of the other options)
 # InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
@@ -617,12 +608,12 @@ InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 IsBipartitionSemigroup and IsActingSemigroup);
 
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
-"for a acting partial perm semigroup", 
+"for an acting partial perm semigroup", 
 [IsPartialPermSemigroup and IsActingSemigroup], ReturnFalse);
 
 #this is not really relevant here.
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
-"for a acting Rees 0-matrix subsemigroup", 
+"for an acting Rees 0-matrix subsemigroup", 
 [IsReesZeroMatrixSubsemigroup and IsActingSemigroup], ReturnFalse);
 
 # One or a fake one for those types of object without one.

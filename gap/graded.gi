@@ -22,7 +22,7 @@ end);
 
 #
 
-InstallMethod(GradedRhoHT, "for a acting semigroup",
+InstallMethod(GradedRhoHT, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local record;

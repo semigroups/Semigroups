@@ -573,7 +573,7 @@ function(s, opts)
 end);
 
 InstallMethod(DotSemilatticeOfIdempotents,
-"for a acting semigroup with inverse op",
+"for an acting semigroup with inverse op",
 [IsSemigroupWithInverseOp and IsActingSemigroup],
 function(S)
   local U, rel, elts, str, nr, V, j, i, k, D, v;

@@ -390,7 +390,7 @@ D -> NrHClasses(D) = Size(D));
 
 #same method for non-inverse ideals
 
-InstallMethod(IsLTrivial, "for a acting semigroup",
+InstallMethod(IsLTrivial, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local iter, d;
@@ -469,7 +469,7 @@ end);
 
 # same method for non-inverse ideals
 
-InstallMethod(IsRTrivial, "for a acting semigroup",
+InstallMethod(IsRTrivial, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local iter, x;
@@ -647,7 +647,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsLeftSimple, "for a acting semigroup", [IsActingSemigroup],
+InstallMethod(IsLeftSimple, "for an acting semigroup", [IsActingSemigroup],
 function(S)
   local iter;
 
@@ -772,7 +772,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsMonogenicInverseSemigroup, "for a acting semigroup",
+InstallMethod(IsMonogenicInverseSemigroup, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   if not IsInverseSemigroup(S) then
@@ -1134,7 +1134,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsRightSimple, "for a acting semigroup", [IsActingSemigroup],
+InstallMethod(IsRightSimple, "for an acting semigroup", [IsActingSemigroup],
 function(S)
   local iter;
 
@@ -1361,7 +1361,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsZeroGroup, "for a acting semigroup",
+InstallMethod(IsZeroGroup, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
 
@@ -1439,7 +1439,7 @@ InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 
 # same method for ideals
 
-InstallMethod(IsZeroSimpleSemigroup, "for a acting semigroup",
+InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local iter, D;

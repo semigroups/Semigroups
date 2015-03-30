@@ -495,7 +495,7 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for a acting semigroup with inverse op, associative elt coll, and record",
+"for an acting semigroup with inverse op, associative elt coll, and record",
 [IsSemigroupWithInverseOp and IsActingSemigroup,
  IsAssociativeElementCollection, IsRecord],
 function(S, coll, opts)

@@ -10,7 +10,7 @@
 
 #
 
-InstallMethod(LambdaOrb, "for a acting semigroup with generators",
+InstallMethod(LambdaOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local record, o;
@@ -287,7 +287,7 @@ end);
 
 #
 
-InstallMethod(RhoOrb, "for a acting semigroup with generators",
+InstallMethod(RhoOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local record, o;
