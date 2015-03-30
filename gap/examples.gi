@@ -1003,5 +1003,3 @@ function(m, n)
 
   return R;
 end);
-
-#EOF
