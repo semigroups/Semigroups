@@ -92,7 +92,7 @@ gap> q := s / congs[13];;
 # Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(congs[4]);;
 gap> cong := SemigroupCongruence(s, pairs);
-<semigroup congruence over <simple transformation semigroup 
+<semigroup congruence over <simple transformation semigroup of size 16, 
  on 5 pts with 4 generators> with linked triple (1,2,2)>
 gap> congs[4] = cong;
 true

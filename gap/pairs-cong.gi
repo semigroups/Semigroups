@@ -69,6 +69,22 @@ function(cong)
   return;
 end);
 
+# This is a temporary fix to make congruences know that they are finite
+# This allows MT's congruence methods for finite congruences to be selected
+
+# TODO Make finite semigroup congruences be set as such at creation
+# TODO Make IsFinite method for IsSemigroupCongruence
+InstallImmediateMethod(IsFinite,
+"for a semigroup congruence",
+IsSemigroupCongruence and HasRange,
+0,
+function(cong)
+  if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
 #
 
 InstallMethod(\in,
@@ -90,7 +106,9 @@ function(pair, cong)
     return;
   fi;
   if not (HasIsFinite(s) and IsFinite(s)) then
-    TryNextMethod();
+    Error("Semigroups: \in: usage,\n",
+          "<cong> must be a congruence of a finite semigroup,");
+    return;
   fi;
 
   elms := Elements(s);
@@ -119,7 +137,7 @@ InstallMethod(AsLookupTable,
 function(cong)
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
     Error("Semigroups: AsLookupTable: usage,\n",
-          "<cong> must be a finite semigroup");
+          "<cong> must be a congruence of a finite semigroup,");
     return;
   fi;
   Enumerate(cong, ReturnFalse);
@@ -245,7 +263,9 @@ InstallMethod(EquivalenceClasses,
 function(cong)
   local classes, next, tab, elms, i;
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-    TryNextMethod();
+    Error("Semigroups: EquivalenceClasses: usage,\n",
+          "<cong> must be a congruence of a finite semigroup,");
+    return;
   fi;
   classes := [];
   next := 1;
@@ -348,7 +368,9 @@ function(cong)
   local s;
   s := Range(cong);
   if not (HasIsFinite(s) and IsFinite(s)) then
-    TryNextMethod();
+    Error("Semigroups: NrCongruenceClasses: usage,\n",
+          "<cong> must be a congruence of a finite semigroup,");
+    return;
   fi;
   return Maximum(AsLookupTable(cong));
 end);
