@@ -13,7 +13,7 @@
 
 # Inverse Congruences By Congruence Pair
 DeclareCategory("IsInverseSemigroupCongruenceByKernelTrace",
-        IsSemigroupCongruence and IsAttributeStoringRep);
+        IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTrace");
 DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTraceNC");
 

@@ -315,7 +315,7 @@ end);
 #
 
 InstallMethod(\=,
-"for two semigroup congruences",
+"for two finite semigroup congruences",
 [IsSemigroupCongruence and IsFinite, IsSemigroupCongruence and IsFinite],
 function(cong1, cong2)
   return Range(cong1) = Range(cong2) and
