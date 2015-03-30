@@ -9,9 +9,9 @@
 ##
 
 DeclareOperation("IrredundantGeneratingSubset",
-[IsAssociativeElementCollection]);
-DeclareOperation("InversesOfSemigroupElementNC", [IsSemigroup,
-                                                  IsAssociativeElement]);
+                 [IsAssociativeElementCollection]);
+DeclareOperation("InversesOfSemigroupElementNC",
+                 [IsActingSemigroup, IsAssociativeElement]);
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
@@ -35,7 +35,8 @@ DeclareAttribute("SmallInverseSemigroupGeneratingSet",
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
                  IsInverseMonoid and IsSemigroupWithInverseOp);
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
-                 IsGeneratorsOfInverseSemigroup);
+                 IsGeneratorsOfInverseSemigroup
+                 and IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);

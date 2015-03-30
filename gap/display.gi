@@ -74,7 +74,7 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
       viewer := opt.viewer;
     else
       viewer := First(VizViewers, x ->
-       Filename(DirectoriesSystemPrograms(), x) <> fail);
+                      Filename(DirectoriesSystemPrograms(), x) <> fail);
     fi;
 
     # type
@@ -102,15 +102,15 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     if type = "latex" then
       FileString(Concatenation(dir, file, ".tex"), arg[1]);
       Exec(Concatenation("cd ", dir, "; ", "pdflatex ", dir, file,
-       " 2>/dev/null 1>/dev/null"));
+                         " 2>/dev/null 1>/dev/null"));
       Exec(Concatenation(viewer, " ", dir, file,
-       ".pdf 2>/dev/null 1>/dev/null &"));
+                         ".pdf 2>/dev/null 1>/dev/null &"));
     elif type = "dot" then
       FileString(Concatenation(dir, file, ".dot"), arg[1]);
       Exec(Concatenation("dot -T", filetype, " ", dir, file, ".dot", " -o ",
-       dir, file, ".", filetype));
+                         dir, file, ".", filetype));
       Exec (Concatenation(viewer, " ", dir, file, ".", filetype,
-       " 2>/dev/null 1>/dev/null &"));
+                          " 2>/dev/null 1>/dev/null &"));
     fi;
     return;
   end);
@@ -120,10 +120,9 @@ fi;
 
 BindGlobal("TikzInit",
   Concatenation("%latex\n",
-   "\\documentclass{minimal}\n",
-   "\\usepackage{tikz}\n",
-   "\\begin{document}\n")
-);
+                "\\documentclass{minimal}\n",
+                "\\usepackage{tikz}\n",
+                "\\begin{document}\n"));
 
 #
 
@@ -133,16 +132,18 @@ BindGlobal("TikzEnd", "\\end{document}");
 
 InstallGlobalFunction(TikzBipartition,
 function(arg)
-  return Concatenation(TikzInit, CallFuncList(TikzStringForBipartition, arg),
-  TikzEnd);
+  return Concatenation(TikzInit,
+                       CallFuncList(TikzStringForBipartition, arg),
+                       TikzEnd);
 end);
 
 # for bipartition
 
 BindGlobal("TikzRightBlocks",
-function(f)
+function(x)
   return Concatenation(TikzInit,
-    TikzStringForBlocks(RightBlocks(f), "bottom", "bottom"), TikzEnd);
+                       TikzStringForBlocks(RightBlocks(x), "bottom", "bottom"),
+                       TikzEnd);
 end);
 
 # for bipartition
@@ -150,7 +151,8 @@ end);
 BindGlobal("TikzLeftBlocks",
 function(f)
   return Concatenation(TikzInit,
-   TikzStringForBlocks(LeftBlocks(f), "top", "top"), TikzEnd);
+                       TikzStringForBlocks(LeftBlocks(f), "top", "top"),
+                       TikzEnd);
 end);
 
 # for blocks, JDM have a right/left version of this
@@ -158,38 +160,49 @@ end);
 InstallGlobalFunction(TikzBlocks,
 function(blocks)
   return Concatenation(TikzInit,
-   TikzStringForBlocks(blocks, "top", "top"), TikzEnd);
+                       TikzStringForBlocks(blocks, "top", "top"),
+                       TikzEnd);
 end);
 
 #
 
 BindGlobal("TikzBipartitionRight",
-function(f)
-  return Concatenation(TikzInit, "\\begin{center}\n",
-   TikzStringForBipartition(f), "\\bigskip\n",
-   TikzStringForBlocks(RightBlocks(f), "none", "bottom"),
-    "\\end{center}\n", TikzEnd);
+function(x)
+  return Concatenation(TikzInit,
+                       "\\begin{center}\n",
+                       TikzStringForBipartition(x),
+                       "\\bigskip\n",
+                       TikzStringForBlocks(RightBlocks(x), "none", "bottom"),
+                       "\\end{center}\n",
+                       TikzEnd);
 end);
 
 #
 
 BindGlobal("TikzBipartitionLeft",
 function(f)
-  return Concatenation(TikzInit, "\\begin{center}\n",
-   TikzStringForBipartition(f), "\\bigskip\n",
-   TikzStringForBlocks(LeftBlocks(f), "none", "top"),
-    "\\end{center}\n", TikzEnd);
+  return Concatenation(TikzInit,
+                       "\\begin{center}\n",
+                       TikzStringForBipartition(f),
+                       "\\bigskip\n",
+                       TikzStringForBlocks(LeftBlocks(f), "none", "top"),
+                       "\\end{center}\n",
+                       TikzEnd);
 end);
 
 #
 
 BindGlobal("TikzBipartitionLeftRight",
 function(f)
-  return Concatenation(TikzInit, "\\begin{center}\n",
-  TikzStringForBlocks(LeftBlocks(f), "none", "top"), "\\bigskip\n",
-  TikzStringForBipartition(f), "\\bigskip\n",
-  TikzStringForBlocks(RightBlocks(f), "none", "bottom"),
-  "\\end{center}\n", TikzEnd);
+  return Concatenation(TikzInit,
+                       "\\begin{center}\n",
+                       TikzStringForBlocks(LeftBlocks(f), "none", "top"),
+                       "\\bigskip\n",
+                       TikzStringForBipartition(f),
+                       "\\bigskip\n",
+                       TikzStringForBlocks(RightBlocks(f), "none", "bottom"),
+                       "\\end{center}\n",
+                       TikzEnd);
 end);
 
 #
@@ -250,11 +263,11 @@ function(blocks, labels, edges)
     if edges = "top" then
       x := "2.125";
       y := i -> ViewString(Float(2.5 + (1 / (2 * n))
-            * (block[i] - block[i - 1])));
+                           * (block[i] - block[i - 1])));
     elif edges = "bottom" then
       x := "1.875";
       y := i -> ViewString(Float(1.5 - (1 / (2 * n))
-           * (block[i] - block[i - 1])));
+                           * (block[i] - block[i - 1])));
     else
       Error("Semigroups: TikzStringForBlocks: usage,\n",
             "the third argument <edges> should be \"top\" or \"bottom\",");
@@ -301,8 +314,8 @@ function(arg)
     opts := arg[2];
     if IsBound(opts.colors) and opts.colors = true and NrBlocks(f) < 20 then
       colors := ["red", "green", "blue", "cyan", "magenta", "yellow", "black",
-      "gray", "darkgray", "lightgray", "brown", "lime", "olive", "orange",
-      "pink", "purple", "teal", "violet", "white"];
+                 "gray", "darkgray", "lightgray", "brown", "lime", "olive",
+                 "orange", "pink", "purple", "teal", "violet", "white"];
       fill := i -> Concatenation("  \\fill[", colors[i], "](");
       draw := i -> Concatenation("  \\draw[", colors[i], "](");
     fi;
@@ -359,12 +372,12 @@ function(arg)
         Append(str, ViewString(block[i - 1]));
         Append(str, ",");
         Append(str, ViewString(Float(1.5 - (1 / (2 * n))
-         * (block[i] - block[i - 1]))));
+                               * (block[i] - block[i - 1]))));
         Append(str, ") and (");
         Append(str, ViewString(block[i]));
         Append(str, ",");
         Append(str, ViewString(Float(1.5 - (1 / (2 * n))
-         * (block[i] - block[i - 1]))));
+                               * (block[i] - block[i - 1]))));
         Append(str, ") .. (");
         Append(str, ViewString(block[i]));
         Append(str, ",1.875);\n");
@@ -376,13 +389,13 @@ function(arg)
         Append(str, ",0.125) .. controls (");
         Append(str, ViewString(- block[i - 1]));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n)) * (block[i] -
-        block[i - 1]))));
+        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n))
+                               * (block[i] - block[i - 1]))));
         Append(str, ") and (");
         Append(str, ViewString(- block[i]));
         Append(str, ",");
-        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n)) * (block[i] -
-        block[i - 1]))));
+        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n))
+                               * (block[i] - block[i - 1]))));
         Append(str, ") .. (");
         Append(str, ViewString(- block[i]));
         Append(str, ",0.125);\n");
@@ -489,14 +502,14 @@ function(s, opts)
         for x in HClasses(l) do
           color := "white";
           if opts.highlight <> false then
-            pos := PositionProperty(opts.highlight, record -> x in
-                   record.HClasses);
+            pos := PositionProperty(opts.highlight,
+                                    record -> x in record.HClasses);
             if pos <> fail then
               color := opts.highlight[pos].HighlightNonGroupHClassColor;
             fi;
           fi;
-          Append(str, Concatenation("<TD CELLPADDING=\"10\" BGCOLOR=\"", color,
-            "\"></TD>"));
+          Append(str, Concatenation("<TD CELLPADDING=\"10\" BGCOLOR=\"",
+                                    color, "\"></TD>"));
         od;
       else
         h := HClasses(l);
@@ -504,28 +517,30 @@ function(s, opts)
           if IsGroupHClass(x) then
             color := "gray";
             if opts.highlight <> false then
-              pos := PositionProperty(opts.highlight, record -> x in
-                     record.HClasses);
+              pos := PositionProperty(opts.highlight,
+                                      record -> x in record.HClasses);
               if pos <> fail then
                 color := opts.highlight[pos].HighlightGroupHClassColor;
               fi;
             fi;
             if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"", color, "\">", gp,
-              "</TD>"));
+              Append(str, Concatenation("<TD BGCOLOR=\"", color,
+                                        "\">", gp, "</TD>"));
             else
               Append(str, Concatenation("<TD BGCOLOR=\"", color, "\""));
               if opts.idempotentsemilattice then
-                Append(str, Concatenation(" PORT=\"e", String(Position(elts,
-                 Idempotents(x)[1])), "\""));
+                Append(str,
+                       Concatenation(" PORT=\"e",
+                                     String(Position(elts, Idempotents(x)[1])),
+                                            "\""));
               fi;
               Append(str, ">*</TD>");
             fi;
           else
             color := "white";
             if opts.highlight <> false then
-              pos := PositionProperty(opts.highlight, record -> x in
-                     record.HClasses);
+              pos := PositionProperty(opts.highlight,
+                                      record -> x in record.HClasses);
               if pos <> fail then
                 color := opts.highlight[pos].HighlightNonGroupHClassColor;
               fi;
@@ -617,5 +632,3 @@ function(S)
 
   return str;
 end);
-
-#EOF

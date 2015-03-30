@@ -33,8 +33,10 @@ DeclareOperation("PositionOfFound", [IsSemigroupData]);
 DeclareCategory("IsUniversalFakeOne", IsAssociativeElement);
 
 BindGlobal("UniversalFakeOneFamily",
-  NewFamily("UniversalFakeOneFamily", IsUniversalFakeOne,
-   CanEasilyCompareElements, CanEasilyCompareElements));
+           NewFamily("UniversalFakeOneFamily", IsUniversalFakeOne,
+                     CanEasilyCompareElements, CanEasilyCompareElements));
 
 BindGlobal("UniversalFakeOne",
-Objectify(NewType(UniversalFakeOneFamily, IsUniversalFakeOne), rec()));
+           Objectify(NewType(UniversalFakeOneFamily,
+                             IsUniversalFakeOne),
+                     rec()));

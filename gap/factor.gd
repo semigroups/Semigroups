@@ -1,12 +1,12 @@
+############################################################################
+##
+#W  factor.gd
+#Y  Copyright (C) 2013-15                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
 #############################################################################
-###
-##W  factor.gd
-##Y  Copyright (C) 2013-15                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
 
 DeclareOperation("MinimalFactorization", [IsSemigroup and IsFinite, IsAssociativeElement]);
 DeclareOperation("Factorization", [IsLambdaOrb, IsPosInt, IsPerm]);

@@ -11,14 +11,13 @@
 # deal with GRAPE being loaded or not, compiled or not
 BindGlobal("IsGrapeLoaded", IsPackageMarkedForLoading("grape", "4.5"));
 BindGlobal("IsGrapeCompiled",
-           ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")
-           <> fail);
+ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail);
 
 if not IsGrapeLoaded then
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
   BindGlobal("GrapeIsNotAvailableString",
   Concatenation("the GRAPE package is not loaded and",
-  " so this function does not work"));
+                " so this function does not work"));
 fi;
 
 if not IsGrapeCompiled then
@@ -29,8 +28,8 @@ if not IsGrapeCompiled then
   Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
   Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
   BindGlobal("GrapeIsNotCompiledString",
-  Concatenation("the nauty/dreadnaut binaries for the GRAPE package are",
-  " not loaded\n#I  and so this function does not work"));
+    Concatenation("the nauty/dreadnaut binaries for the GRAPE package are",
+                  " not loaded\n#I  and so this function does not work"));
 fi;
 
 #
@@ -47,7 +46,9 @@ if not IsBound(MappingPermListList_C) then
     local src_tab, dst_tab, d, out, next, i;
 
     if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
-       return fail;
+       Error("Semigroups: MappingPermListList_C: usage\n",
+             "the arguments must be lists of equal length,");
+       return;
     fi;
 
     if IsEmpty(src)  then
@@ -83,12 +84,10 @@ fi;
 # skip examples including partitions if we're in version less than 2.0
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
- then
+    then
   Add(SemigroupsOmitFromTestManualExamples, "partition");
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
-
-#
 
 ReadPackage("semigroups/gap/grpperm.gi");
 
