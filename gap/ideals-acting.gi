@@ -73,7 +73,7 @@ end);
 
 #
 
-InstallMethod(GreensDClasses, "for a acting semigroup ideal",
+InstallMethod(GreensDClasses, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   Enumerate(SemigroupIdealData(I));
@@ -82,7 +82,7 @@ end);
 
 #
 
-InstallMethod(PartialOrderOfDClasses, "for a acting semigroup ideal", 
+InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal", 
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data;
@@ -94,7 +94,7 @@ end);
 
 #
 
-InstallMethod(DClassReps, "for a acting semigroup ideal", 
+InstallMethod(DClassReps, "for an acting semigroup ideal", 
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   local data;
@@ -113,7 +113,7 @@ SemigroupIdealData);
 # JDM this method should become obsolete in time...
 # <I> is not known to be regular if this function is invoked...
 
-InstallMethod(SemigroupData, "for a acting semigroup ideal",
+InstallMethod(SemigroupData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
@@ -178,7 +178,7 @@ end);
 
 #
 
-InstallMethod(GeneratorsOfSemigroup, "for a acting semigroup ideal",
+InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
@@ -341,7 +341,7 @@ end);
 
 # this could be simplier for ideals which know they are regular a priori.
 
-InstallMethod(SemigroupIdealData, "for a acting semigroup ideal",
+InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local gens, data, filt;
