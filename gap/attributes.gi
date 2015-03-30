@@ -637,8 +637,8 @@ InstallMethod(MultiplicativeZero, "for an acting semigroup",
 function(s)
   local d, rep, gens;
 
-  if IsSemigroupIdeal(s) and
-   HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
+  if IsSemigroupIdeal(s)
+      and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
     return MultiplicativeZero(SupersemigroupOfIdeal(s));
   fi;
 
@@ -678,13 +678,6 @@ end);
 
 # same method for inverse/ideals
 
-InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
-function(S)
-  return GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S));
-end);
-
-#
-
 InstallMethod(RepresentativeOfMinimalIdeal,
 "for an acting semigroup",
 [IsActingSemigroup],
@@ -692,7 +685,7 @@ function(S)
   local rank, o, pos, min, len, m, i;
 
   if IsSemigroupIdeal(S)
-   and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
+      and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
     return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
   fi;
 
@@ -717,6 +710,13 @@ function(S)
   fi;
 
   return EvaluateWord(o, TraceSchreierTreeForward(o, pos));
+end);
+
+#
+
+InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
+function(S)
+  return GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S));
 end);
 
 #
