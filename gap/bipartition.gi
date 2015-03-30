@@ -129,9 +129,7 @@ RankOfBipartition);
 #
 
 InstallMethod(NrRightBlocks, "for a bipartition", [IsBipartition],
-function(f)
-  return NrBlocks(f) - NrLeftBlocks(f) + NrTransverseBlocks(f);
-end);
+x -> NrBlocks(x) - NrLeftBlocks(x) + NrTransverseBlocks(x));
 
 # could use TransverseBlocksLookup if known here JDM
 
@@ -479,18 +477,15 @@ function(f, n)
 end);
 
 InstallMethod(AsBipartition, "for a permutation",
-[IsPerm],
-function(f)
-  return AsBipartition(f, LargestMovedPoint(f));
-end);
+[IsPerm], x -> AsBipartition(x, LargestMovedPoint(x)));
 
 #
 
 InstallMethod(AsBipartition, "for a partial perm",
 [IsPartialPerm],
-function(f)
-  return AsBipartition(f, Maximum(DegreeOfPartialPerm(f),
-   CodegreeOfPartialPerm(f)));
+function(x)
+  return AsBipartition(x, Maximum(DegreeOfPartialPerm(x),
+                                  CodegreeOfPartialPerm(x)));
 end);
 
 InstallMethod(AsBipartition, "for a partial perm and zero",
@@ -525,10 +520,7 @@ end);
 #
 
 InstallMethod(AsBipartition, "for a transformation",
-[IsTransformation],
-function(f)
-  return AsBipartition(f, DegreeOfTransformation(f));
-end);
+[IsTransformation], x -> AsBipartition(x, DegreeOfTransformation(x)));
 
 InstallMethod(AsBipartition, "for a transformation and zero",
 [IsTransformation, IsZeroCyc],
@@ -653,7 +645,7 @@ InstallMethod(AsBlockBijection, "for a partial perm",
 [IsPartialPerm],
 function(f)
   return AsBlockBijection(f, Maximum(DegreeOfPartialPerm(f),
-   CodegreeOfPartialPerm(f)) + 1);
+                                     CodegreeOfPartialPerm(f)) + 1);
 end);
 
 InstallMethod(AsBlockBijection, "for a partial perm and zero",
@@ -745,10 +737,7 @@ end);
 #
 
 InstallMethod(RankOfBipartition, "for a bipartition",
-[IsBipartition],
-function(f)
-  return Number(TransverseBlocksLookup(f), x -> x = true);
-end);
+[IsBipartition], x -> Number(TransverseBlocksLookup(x), y -> y = true));
 
 # return the classes of <f> as a list of lists
 
@@ -779,9 +768,7 @@ end);
 
 InstallMethod(IsBlockBijection, "for a bipartition",
 [IsBipartition],
-function(f)
-  return NrBlocks(f) = NrLeftBlocks(f) and NrRightBlocks(f) = NrLeftBlocks(f);
-end);
+x -> NrBlocks(x) = NrLeftBlocks(x) and NrRightBlocks(x) = NrLeftBlocks(x));
 
 #
 
@@ -1022,8 +1009,9 @@ InstallGlobalFunction(Bipartition,
 function(classes)
   local n, copy, i, j;
 
-  if not (IsList(classes) and ForAll(classes, x ->
-          IsHomogeneousList(x) and IsDuplicateFree(x))) then
+  if not IsList(classes)
+      or ForAny(classes, x -> not IsHomogeneousList(x)
+                                  and IsDuplicateFree(x)) then
     Error("Semigroups: Bipartition: usage,\n",
           "the argument <classes> must consist of duplicate-free lists,");
     return;
@@ -1037,8 +1025,8 @@ function(classes)
   fi;
 
   copy := Union(classes);
-  if not (copy = classes or copy = Concatenation([Minimum(copy) .. - 1],
-    [1 .. Maximum(copy)])) then
+  if not (copy = Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
+          or copy = classes) then
     Error("Semigroups: Bipartition: usage,\n",
           "the union of the argument <classes> must be [-n..-1, 1..n],");
     return;
@@ -1215,7 +1203,7 @@ function(blocks)
         return;
       fi;
       seen[blocks[i]] := true;
-   fi;
+    fi;
   od;
 
   out := Objectify(BipartitionType, rec(blocks := blocks));
@@ -1422,14 +1410,3 @@ function(coll)
 
   return deg;
 end);
-
-# Results:
-
-# n=1 partitions=2 idempots=2
-# n=2 partitions=15 idempots=12
-# n=3 partitions=203 idempots=114
-# n=4 partitions=4140 idempots=1512
-# n=5 partitions=115975 idempots=25826
-# n=6 partitions=4213597 idempots=541254, 33 seconds
-# n=7 partitions=190899322 idempots=13479500, 1591 seconds
-

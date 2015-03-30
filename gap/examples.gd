@@ -17,7 +17,7 @@ DeclareOperation("PartialBrauerMonoid", [IsPosInt]);
 DeclareOperation("SingularBrauerMonoid", [IsPosInt]);
 DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup",
-[IsPosInt]);
+                 [IsPosInt]);
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
 DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
@@ -40,7 +40,7 @@ DeclareOperation("POPI", [IsPosInt]);
 DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
-SingularTransformationSemigroup);
+               SingularTransformationSemigroup);
 
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);
