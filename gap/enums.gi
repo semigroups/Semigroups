@@ -268,7 +268,9 @@ function(d)
   fi;
   record := rec(parent := d);
 
-  record.PrintObj := enum -> Print("<enumerator of D-class>");
+  record.PrintObj := function(enum)
+    Print("<enumerator of D-class>");
+  end;
 
   convert := function(enum, elt)
     return GreensRClassOfElement(enum!.parent, elt);
@@ -361,7 +363,9 @@ function(d)
   Enumerate(LambdaOrb(d), infinity);
 
   record := rec(parent := d);
-  record.PrintObj := enum -> Print("<enumerator of D-class>");
+  record.PrintObj := function(enum)
+    Print("<enumerator of D-class>");
+  end;
 
   #
   convert_out := function(enum, tuple)
@@ -449,7 +453,9 @@ function(h)
 
         Length := enum -> Size(h),
 
-        PrintObj := enum -> Print( "<enumerator of H-class>")));
+        PrintObj := function(enum)
+          Print("<enumerator of H-class>");
+        end));
 end);
 
 # same method for regular, different method for inverse
@@ -467,7 +473,9 @@ function(l)
   record.Membership := function(elm, enum)
     return elm in l;
   end;
-  record.PrintObj := enum -> Print("<enumerator of L-class>");
+  record.PrintObj := function(enum)
+    Print("<enumerator of L-class>");
+  end;
 
   record.Length := enum -> Size(l);
   #
@@ -526,8 +534,11 @@ function(l)
   record.Membership := function(elm, enum)
     return elm in l;
   end;
-  record.PrintObj := enum -> Print("<enumerator of L-class>");
-  record.Length   := enum -> Size(l);
+  record.PrintObj := function(enum)
+    Print("<enumerator of L-class>");
+  end;
+
+  record.Length := enum -> Size(l);
   #
   convert_out := function(enum, tuple)
     local l, rep, act;
@@ -583,8 +594,11 @@ function(r)
   record.Membership := function(elm, enum)
     return elm in r;
   end;
-  record.PrintObj := enum -> Print("<enumerator of R-class>");
-  record.Length   := enum -> Size(r);
+  record.PrintObj := function(enum)
+    Print("<enumerator of R-class>");
+  end;
+
+  record.Length := enum -> Size(r);
   #
   convert_out := function(enum, tuple)
     local r, rep;
