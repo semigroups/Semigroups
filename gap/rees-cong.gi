@@ -84,6 +84,17 @@ end);
 
 #
 
+InstallMethod(PrintObj,
+"for a Rees congruence",
+[IsReesCongruence],
+function(cong)
+  Print("ReesCongruenceOfSemigroupIdeal( ");
+  PrintObj(SemigroupIdealOfReesCongruence(cong));
+  Print(" )");
+end);
+
+#
+
 InstallMethod(NrCongruenceClasses,
 "for a Rees congruence",
 [IsReesCongruence],
@@ -115,8 +126,8 @@ function(pair, cong)
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
     Error("Semigroups: \in: usage,\n",
-          "the elements of the first arg <pair> ",
-          "must be in the range of the second arg <cong>,");
+          "the elements of 1st arg <pair> ",
+          "must be in the range of 2nd arg <cong>,");
     return;
   fi;
   i := SemigroupIdealOfReesCongruence(cong);
@@ -199,7 +210,7 @@ function(cong, elm)
   if not elm in Range(cong) then
     Error("Semigroups: EquivalenceClassOfElement: usage,\n",
           "the second arg <elm> must be ",
-          "in the semigroup of first arg <cong>");
+          "in the semigroup of first arg <cong>,");
     return;
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
@@ -237,7 +248,7 @@ InstallMethod(\in,
 [IsAssociativeElement, IsReesCongruenceClass],
 function(elm, class)
   if class!.is_ideal_class then
-    return elm in SemigroupIdealOfReesCongruence(class);
+    return elm in SemigroupIdealOfReesCongruence(Parent(class));
   else
     return elm = Representative(class);
   fi;
