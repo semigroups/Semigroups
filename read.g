@@ -142,3 +142,4 @@ ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univ-cong.gi");
 ReadPackage("semigroups/gap/inverse-cong.gi");
 ReadPackage("semigroups/gap/simple-cong.gi");
+ReadPackage("semigroups/gap/rees-cong.gi");

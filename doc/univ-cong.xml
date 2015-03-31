@@ -1,0 +1,53 @@
+#############################################################################
+##
+#W  univ-cong.xml
+#Y  Copyright (C) 2015                                      Michael Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsUniversalSemigroupCongruence">
+  <ManSection>
+    <Filt Name="IsUniversalSemigroupCongruence" Arg="obj" Type="category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      This category describes a type of semigroup congruence, which must refer
+      to the <E>universal semigroup congruence</E> <M>S \times S</M>.
+      Externally, an object of this type may be used in the same way as any
+      other object in the category <Ref Prop="IsSemigroupCongruence"
+      BookName="ref"/>.<P/>
+
+      An object of this type may be constructed with
+      <C>UniversalSemigroupCongruence</C> or this representation may be selected
+      automatically as an alternative to an
+      <C>IsRZMSCongruenceByLinkedTriple</C> object (since the universal
+      congruence cannot be represented by a linked triple).
+
+      <Example><![CDATA[
+gap> S := Semigroup([ Transformation([ 3, 2, 3 ]) ]);;
+gap> U := UniversalSemigroupCongruence(S);;
+gap> IsUniversalSemigroupCongruence(U);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="UniversalSemigroupCongruence">
+<ManSection> 
+  <Oper Name="UniversalSemigroupCongruence" Arg="S"/>
+  <Returns>A universal semigroup congruence.</Returns>
+  <Description>
+    This operation returns the universal semigroup congruence for the
+    semigroup <A>S</A>.  It can be used in the same way as any other
+    semigroup congruence object.
+    <Example><![CDATA[
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(),(1,3,2)],[(1,2),0]]);;
+gap> UniversalSemigroupCongruence(S);
+<universal semigroup congruence over 
+<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
