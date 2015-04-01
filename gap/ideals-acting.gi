@@ -802,7 +802,7 @@ function(x, I)
 
   reps := data!.reps;
   repslens := data!.repslens;
-  max := Factorial(LambdaRank(I)(xx)) / Size(LambdaOrbSchutzGp(o, m));
+  max := LambdaBound(I)(LambdaRank(I)(xx)) / Size(LambdaOrbSchutzGp(o, m));
 
   if repslens[m][ind] = max then
     return true;
