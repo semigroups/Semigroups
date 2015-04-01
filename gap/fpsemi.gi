@@ -17,5 +17,3 @@ function(S)
   FroidurePinExtendedAlg(S);
   return IsomorphismFpSemigroup(S);
 end);
-
-#EOF

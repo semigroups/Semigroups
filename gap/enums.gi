@@ -37,10 +37,12 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
           "the fifth argument <filts> must be a list of filters,");
     return;
-  elif not (IsRecord(record) and IsMutable(record) and not
-  IsBound(record.baseenum) and not IsBound(record.convert_out) and not
-  IsBound(record.convert_in) and not IsBound(record.NumberElement) and not
-  IsBound(record.ElementNumber)) then
+  elif not (IsRecord(record) and IsMutable(record))
+      or IsBound(record.baseenum)
+      or IsBound(record.convert_out)
+      or IsBound(record.convert_in)
+      or IsBound(record.NumberElement)
+      or IsBound(record.ElementNumber) then
     Error("Semigroups: EnumeratorByEnumerator: usage,\n",
           "the sixth argument <record> must be a mutable record",
           "with no components\n",
@@ -111,15 +113,17 @@ function(obj, record, baseenum, convert, filts)
           "the first argument <obj> must be a domain or a collections ",
           "family,");
     return;
-  elif not IsRecord(record) or IsBound(record.ElementNumber)
-   or IsBound(record.NumberElement) or IsBound(record.baseenum)
-   or IsBound(record.enumofenums) then
+  elif not IsRecord(record)
+      or IsBound(record.ElementNumber)
+      or IsBound(record.NumberElement)
+      or IsBound(record.baseenum)
+      or IsBound(record.enumofenums) then
     Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
           "the second argument  <record> must be a record",
           "with no components named:\n",
           "`NumberElement', `ElementNumber', `baseenum', or `enumofenums',");
     return;
-  # TODO add check for third arg
+    # TODO add check for third arg
   elif not IsFunction(convert) then
     Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
            "the fourth argument <convert> must be a function,");
@@ -163,7 +167,7 @@ function(obj, record, baseenum, convert, filts)
     while pos > Length(enumofenums[i]) do
       pos := pos - Length(enumofenums[i]);
       i := i + 1;
-     if not IsBound(enumofenums[i]) then
+      if not IsBound(enumofenums[i]) then
         enumofenums[i] := Enumerator(baseenum[i]);
       fi;
     od;
@@ -237,20 +241,18 @@ function(s)
   end;
 
   return EnumeratorByEnumOfEnums(s, record, EnumeratorOfRClasses(s),
-   convert, []);
+                                 convert, []);
 end);
 
 # same method for regular/inverse
 
-#JDM this should be improved, using Iterator for a regular or inverse
+#FIXME this should be improved, using Iterator for a regular or inverse
 #semigroup, invokes IteratorOfRClassData which repeatedly recomputes the graded
 #lambda orbs of the R-class reps.
 
 InstallMethod(EnumeratorSorted, "for an acting semigroup",
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
-function(s)
-  return Immutable(SSortedList(ListIterator(Iterator(s), Size(s))));
-end);
+S -> Immutable(SSortedList(ListIterator(Iterator(S), Size(S)))));
 
 # different method for regular/inverse
 
@@ -274,8 +276,8 @@ function(d)
     return GreensRClassOfElement(enum!.parent, elt);
   end;
 
-  return EnumeratorByEnumOfEnums(d, record, GreensRClasses(d), convert,
-   []);
+  return EnumeratorByEnumOfEnums(d, record, GreensRClasses(d),
+                                 convert, []);
 end);
 
 # different method for inverse
@@ -297,9 +299,8 @@ function(d)
   record.Membership := function(elt, enum)
     return elt in d;
   end;
-  record.PrintObj := function(enum)
-    Print("<enumerator of D-class>");
-  end;
+
+  record.PrintObj := enum -> Print("<enumerator of D-class>");
 
   #
   convert_out := function(enum, tuple)
@@ -310,9 +311,9 @@ function(d)
     d := enum!.parent;
     rep := Representative(d);
     act := StabilizerAction(Parent(d));
-    return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1] * rep,
-     tuple[2])
-     * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
+    return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d),
+               tuple[1])[1] * rep, tuple[2])
+           * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
   end;
   #
   convert_in := function(enum, elt)
@@ -338,10 +339,13 @@ function(d)
   #
   rho_scc := OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)];
   lambda_scc := OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
-  #
+
+  # gaplint: ignore 5
   return EnumeratorByEnumerator(d,
-    EnumeratorOfCartesianProduct(rho_scc, SchutzenbergerGroup(d), lambda_scc),
-    convert_out, convert_in, [], record);
+           EnumeratorOfCartesianProduct(rho_scc,
+                                        SchutzenbergerGroup(d),
+                                        lambda_scc),
+           convert_out, convert_in, [], record);
 end);
 
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
@@ -373,8 +377,9 @@ function(d)
     rep := Representative(d);
     act := StabilizerAction(Parent(d));
     return act(LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[1])[2]
-     * rep, tuple[2]) * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d),
-     tuple[3])[1];
+               * rep, tuple[2])
+               * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d),
+                               tuple[3])[1];
   end;
   #
   convert_in := function(enum, elt)
@@ -399,10 +404,12 @@ function(d)
   end;
   #
   lambda_scc := OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
-  #
+  # gaplint: ignore 5
   return EnumeratorByEnumerator(d,
-    EnumeratorOfCartesianProduct(lambda_scc, SchutzenbergerGroup(d),
-     lambda_scc), convert_out, convert_in, [], record);
+     EnumeratorOfCartesianProduct(lambda_scc,
+                                  SchutzenbergerGroup(d),
+                                  lambda_scc),
+     convert_out, convert_in, [], record);
 end);
 
 # same method for inverse/regular
@@ -414,43 +421,41 @@ function(h)
   if HasAsSSortedList(h) then
     return AsSSortedList(h);
   fi;
+  # gaplint: ignore 2
+  return EnumeratorByFunctions(h,
+    rec(schutz := Enumerator(SchutzenbergerGroup(h)),
 
-  return EnumeratorByFunctions(h, rec(
+        ElementNumber := function(enum, pos)
+          if pos > Length(enum) then
+            return fail;
+          fi;
 
-    schutz := Enumerator(SchutzenbergerGroup(h)),
+          return StabilizerAction(Parent(h))(Representative(h),
+                                             enum!.schutz[pos]);
+        end,
 
-    ElementNumber := function(enum, pos)
-      if pos > Length(enum) then
-        return fail;
-      fi;
+        NumberElement := function(enum, f)
+          local s, rep;
+          s := Parent(h);
+          rep := Representative(h);
 
-      return StabilizerAction(Parent(h))(Representative(h), enum!.schutz[pos]);
-    end,
+          if LambdaFunc(s)(f) <> LambdaFunc(s)(rep)
+              or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+            return fail;
+          fi;
 
-    NumberElement := function(enum, f)
-      local s, rep;
-      s := Parent(h);
-      rep := Representative(h);
+          return Position(enum!.schutz, LambdaPerm(s)(rep, f));
+        end,
 
-      if LambdaFunc(s)(f) <> LambdaFunc(s)(rep)
-        or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
-        return fail;
-      fi;
+        Membership := function(elm, enum)
+          return elm in h; #the H-class itself!
+        end,
 
-      return Position(enum!.schutz, LambdaPerm(s)(rep, f));
-    end,
+        Length := enum -> Size(h),
 
-    Membership := function(elm, enum)
-      return elm in h; #the H-class itself!
-    end,
-
-    Length := enum -> Size(h),
-
-    PrintObj := function(enum)
-      Print( "<enumerator of H-class>");
-      return;
-
-  end));
+        PrintObj := function(enum)
+          Print("<enumerator of H-class>");
+        end));
 end);
 
 # same method for regular, different method for inverse
@@ -482,8 +487,8 @@ function(l)
     l := enum!.parent;
     rep := Representative(l);
     act := StabilizerAction(Parent(l));
-    return act(RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l),
-      tuple[1])[1] * rep, tuple[2]);
+    return act(RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), tuple[1])[1]
+               * rep, tuple[2]);
   end;
   #
   convert_in := function(enum, elt)
@@ -506,10 +511,11 @@ function(l)
   end;
   #
   scc := OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)];
-
+  # gaplint: ignore 4
   return EnumeratorByEnumerator(l,
-   EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(l)),
-   convert_out, convert_in, [], record);
+    EnumeratorOfCartesianProduct(scc,
+                                 SchutzenbergerGroup(l)),
+    convert_out, convert_in, [], record);
 end);
 
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
@@ -543,7 +549,7 @@ function(l)
     rep := Representative(l);
     act := StabilizerAction(Parent(l));
     return act(LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), tuple[1])[2]
-     * rep, tuple[2]);
+               * rep, tuple[2]);
   end;
   #
   convert_in := function(enum, elt)
@@ -566,10 +572,11 @@ function(l)
   end;
   #
   scc := OrbSCC(LambdaOrb(l))[LambdaOrbSCCIndex(l)];
-
+  # gaplint: ignore 4
   return EnumeratorByEnumerator(l,
-   EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(l)),
-   convert_out, convert_in, [], record);
+           EnumeratorOfCartesianProduct(scc,
+                                        SchutzenbergerGroup(l)),
+           convert_out, convert_in, [], record);
 end);
 
 # same method for regular/inverse
@@ -624,10 +631,11 @@ function(r)
   end;
   #
   scc := OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)];
-
+  # gaplint: ignore 4
   return EnumeratorByEnumerator(r,
-   EnumeratorOfCartesianProduct(SchutzenbergerGroup(r), scc),
-   convert_out, convert_in, [], record);
+           EnumeratorOfCartesianProduct(SchutzenbergerGroup(r),
+                                        scc),
+           convert_out, convert_in, [], record);
 end);
 
 #
@@ -741,8 +749,6 @@ function(m, n)
   fam := CollectionsFamily(FamilyObj(ArrangementNumber(1, m, n)));
 
   return EnumeratorByEnumerator(fam,
-   Enumerator([1 .. NrArrangements([1 .. n], m)]), convert_out, convert_in, [],
-    rec());
+                                Enumerator([1 .. NrArrangements([1 .. n], m)]),
+                                convert_out, convert_in, [], rec());
 end);
-
-#EOF

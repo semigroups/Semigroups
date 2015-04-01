@@ -204,9 +204,7 @@ end);
 #
 
 InstallGlobalFunction(BlocksByIntRepNC,
-function(blocks)
-  return Objectify(BlocksType, rec(blocks := blocks));
-end);
+x -> Objectify(BlocksType, rec(blocks := x)));
 
 #
 
@@ -251,9 +249,7 @@ end);
 #
 
 InstallMethod(NrBlocks, "for blocks", [IsBlocks],
-function(blocks)
-  return blocks!.blocks[1]; #don't change this!!
-end);
+x -> x!.blocks[1]); #don't change this!!
 
 #
 
@@ -512,9 +508,7 @@ end);
 #
 
 InstallMethod(DegreeOfBlocks, "for blocks", [IsBlocks],
-function(b)
-  return Length(b!.blocks) - b!.blocks[1] - 1;
-end);
+x -> Length(x!.blocks) - x!.blocks[1] - 1);
 
 #
 

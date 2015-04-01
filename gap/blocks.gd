@@ -36,8 +36,10 @@ DeclareGlobalFunction("InverseLeftBlocks");
 DeclareGlobalFunction("BlocksIdempotentTester");
 DeclareGlobalFunction("BlocksIdempotentCreator");
 
-BindGlobal("BlocksFamily", NewFamily("BlocksFamily",
- IsBlocks, CanEasilySortElements, CanEasilySortElements));
+BindGlobal("BlocksFamily",
+           NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,
+                     CanEasilySortElements));
 
-BindGlobal("BlocksType", NewType(BlocksFamily,
- IsBlocks and IsComponentObjectRep and IsAttributeStoringRep));
+BindGlobal("BlocksType",
+           NewType(BlocksFamily, IsBlocks and IsComponentObjectRep and
+                   IsAttributeStoringRep));
