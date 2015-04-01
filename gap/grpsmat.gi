@@ -134,8 +134,8 @@ InstallMethod(\^, "for an s-matrix group and s-matrix",
 [IsSMatrixGroup, IsSMatrix],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x) 
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) 
-      or Inverse(x) = fail then 
+      or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) then
+#      or Inverse(x) = fail then 
     Error("Semigroups: ^ (for s-matrix group and s-matrix): usage\n",
           " the args must have the same base domain, degree, and\n",
           " the second arg must be invertible");

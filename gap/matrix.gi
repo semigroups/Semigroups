@@ -165,6 +165,14 @@ function(filter, basedomain, deg)
 end);
 
 InstallMethod(NewZeroSMatrix,
+"for IsPlistSMatrixRep, a ring, and zero",
+[IsPlistSMatrixRep, IsRing, IsZeroCyc],
+function(filter, basedomain, deg)
+  return NewSMatrix(filter, basedomain, deg,
+                    IdentityMat(deg, basedomain));
+end);
+
+InstallMethod(NewZeroSMatrix,
 "for IsPlistSMatrixRep, a ring, and an int",
 [IsPlistSMatrixRep, IsRing, IsPosInt],
 function(filter, basedomain, deg)

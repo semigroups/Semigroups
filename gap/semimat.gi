@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################r
 ##
 #W  semimat.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
@@ -222,7 +222,10 @@ function(S, x, y)
   deg := DegreeOfSMatrix(x);
   n := RowRank(x);
 
-  if IsZero(x) then
+  if n = 0 then
+    return NewIdentitySMatrix(ConstructingFilter(x), BaseDomain(x),
+                              n);
+    Error();
     res := x;
   else
     eqs := TransposedMatMutable(
@@ -246,9 +249,11 @@ function(S, x, y)
     od;
     res := NewSMatrix(ConstructingFilter(x), BaseDomain(x),
                       n, eqs{[1 .. n]}{idx + deg});
-  fi;
+
   if res^(-1) = fail then
     Error("Schutz element not invertible");
+  fi;
+ 
   fi;
   return res;
 end);
@@ -278,7 +283,8 @@ function(S, x, y)
   local res, zero, xse, h, p, yse, q, i;
 
   if IsZero(x) then
-    res := NewIdentitySMatrix(ConstructingFilter(x), BaseDomain(x), 0);
+    res := NewZeroSMatrix(ConstructingFilter(x), BaseDomain(x), Length(RowSpaceBasis(x)));
+    Print(res);
   else
     xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
     h := Filtered(xse.heads, x -> x <> 0);
@@ -315,7 +321,8 @@ function(S, x, y)
   local m, inv;
     
   if IsZero(x) then
-    return IdentitySMatrix(Representative(S), 0); 
+    return NewZeroSMatrix(ConstructingFilter(Representative(S)),
+                          BaseDomain(S), DegreeOfMatrixSemigroup(S)); 
   else
     m := AsSMatrix(Representative(S), TransposedMat(y) * x);
     inv := SMatrixLocalRightInverse(S, x, m);
