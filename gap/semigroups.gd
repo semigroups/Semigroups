@@ -8,7 +8,13 @@
 #############################################################################
 ##
 
-DeclareCategory("IsSemigroupWithInverseOp", IsInverseSemigroup);
+# This is required since IsInverseSemigroup is a property of semigroups and so
+# objectifying something using IsInverseSemigroup does not result in a
+# semigroup
+InstallTrueMethod(IsSemigroup, IsInverseSemigroup);
+
+DeclareCategory("IsSemigroupWithInverseOp", 
+                IsInverseSemigroup);
 
 DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
 DeclareCategoryCollections("IsAssociativeElementWithStar");

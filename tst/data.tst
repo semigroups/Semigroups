@@ -67,18 +67,18 @@ gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
 > Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] );;
-gap> f in NonExhaustiveData(s);
+gap> f in SemigroupData(s);
 false
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> NextIterator(iter);;
 gap> NextIterator(iter);
 {Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )}
-gap> f in NonExhaustiveData(s);
+gap> f in SemigroupData(s);
 false
 gap> NextIterator(iter);
 {Transformation( [ 5, 1, 4, 1, 4, 4 ] )}
-gap> f in NonExhaustiveData(s);
+gap> f in SemigroupData(s);
 true
 
 #T# DataTest4
