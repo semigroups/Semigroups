@@ -13,10 +13,13 @@
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, hashlen, ht, data;
-
+  local s, sdata, elms, pairs, hashlen, ht, treehashsize, data, lookup, 
+        pairstoapply, pos, found;
+  
   s := Range(cong);
-  elms := Elements(s);
+  sdata := Enumerate(GenericSemigroupData(s));
+  elms := sdata!.elts;
+  # FIXME: These last two lines, and all occurrences of sdata in this file
   pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
                 x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
@@ -45,7 +48,7 @@ InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
-  local s, elms, p1, p2, table, find, lookfunc;
+  local s, sdata, elms, p1, p2, table, find, lookfunc;
   # Input checks
   if not Size(pair) = 2 then
     Error("Semigroups: \in: usage,\n",
@@ -63,7 +66,8 @@ function(pair, cong)
     TryNextMethod();
   fi;
 
-  elms := Elements(s);
+  sdata := Enumerate(GenericSemigroupData(s));
+  elms := sdata!.elts;
   p1 := Position(elms, pair[1]);
   p2 := Position(elms, pair[2]);
 
@@ -229,14 +233,15 @@ InstallMethod(EquivalenceClasses,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local classes, next, tab, elms, i;
+  local classes, next, tab, sdata, elms, i;
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
     TryNextMethod();
   fi;
   classes := [];
   next := 1;
   tab := AsLookupTable(cong);
-  elms := Elements(Range(cong));
+  sdata := Enumerate(GenericSemigroupData(Range(cong)));
+  elms := sdata!.elts;
   for i in [1 .. Size(tab)] do
     if tab[i] = next then
       classes[next] := EquivalenceClassOfElementNC(cong, elms[i]);
@@ -261,8 +266,10 @@ InstallMethod(Size,
 "for a finite congruence class",
 [IsCongruenceClass and IsFinite],
 function(class)
-  local p, tab;
-  p := Position(Elements(Parent(class)), Representative(class));
+  local sdata, elms, p, tab;
+  sdata := Enumerate(GenericSemigroupData(Parent(class)));
+  elms := sdata!.elts;
+  p := Position(elms, Representative(class));
   tab := AsLookupTable(EquivalenceClassRelation(class));
   return Number(tab, n -> n = tab[p]);
 end);

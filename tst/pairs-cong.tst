@@ -54,9 +54,9 @@ gap> y in classx;
 true
 gap> x in classz;
 false
-gap> classx = classes[1];
+gap> classx = classes[4];
 true
-gap> classz = classes[133];
+gap> classz = classes[2];
 true
 gap> z * y in classz * classy;
 true
