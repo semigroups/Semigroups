@@ -48,6 +48,7 @@ S -> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(S))));
 #  fi;
 #
 #  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
+#  # replace s!.opts by SEMIGROUPS_OptionsRec here!
 #  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
 #  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
 #  reg:=[]; i:=0;

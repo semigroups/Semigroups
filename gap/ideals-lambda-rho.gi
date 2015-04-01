@@ -288,7 +288,7 @@ function(I)
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := I!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
   record.orbtogen := [];
   # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i and
 
@@ -362,7 +362,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := I!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
 
   len := Length(o);
 
@@ -475,7 +475,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := I!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
 
   len := Length(o);
 
