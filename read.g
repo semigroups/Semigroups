@@ -15,7 +15,7 @@ ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail);
 
 if not IsGrapeLoaded then
   Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
-  BindGlobal("GrapeIsNotAvailableString",
+  BindGlobal("GrapeIsNotLoadedString",
   Concatenation("the GRAPE package is not loaded and",
                 " so this function does not work"));
 fi;
