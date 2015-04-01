@@ -7,6 +7,47 @@
 ##
 #############################################################################
 
+2.3 -> 2.4  
+	    This is a minor release including several bugfixes, and
+	    improvements in performance. 
+
+	    *************************New features*************************
+
+	    • The function RepresentativeOfMinimalIdeal is introduced. [Wilf
+	    Wilson]
+
+	    • Transformation semigroup now have a polynomial (quadratic in the
+	    degree) algorithm for computing the minimal ideal [Wilf Wilson]
+
+	    • The functions RectangularBand, ZeroSemigroup, and
+	    MonogenicSemigroup are introduced. [Wilf Wilson]
+
+	    • A method for choosing a random element of a semigroup has been
+	    introduced in the case that the semigroup knows its set of
+	    elements. This new method choose elements at random with uniform
+	    probability. [Wilf Wilson]
+
+	    • The documentation and tests for congruences has been improved.
+	    [Michael Torpey and Wilf Wilson]
+
+	    • The functionality for Rees congruences has been rewritten and
+	    improved. [Michael Torpey]
+
+	    • There is a new Enumerator method for congruence classes of a
+	    semigroup congruence. [Michael Torpey]
+
+	    *************************Resolved issues************************* 
+	    
+	    • Issue 119: NrCongruencesClasses and related methods now work for
+	    Rees congruences.
+
+	    • Issue 95: The class containing the zero element of a Rees
+	    0-matrix semigroup is now returned by EquivalenceClasses of a
+	    congruence over a Rees 0-matrix semigroup.
+	    
+
+
+
 2.2 -> 2.3  
 	    This is a minor release including some internal refactoring, and
 	    subsequent bugfixes, and stability improvements.
