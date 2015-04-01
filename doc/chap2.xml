@@ -180,6 +180,9 @@ true</Log>
     <#Include Label="OPOIPOPI">
     <#Include Label="SingularTransformationSemigroup">
     <#Include Label="RegularBinaryRelationSemigroup">
+    <#Include Label="MonogenicSemigroup">
+    <#Include Label="RectangularBand">
+    <#Include Label="ZeroSemigroup">
   </Section>
 
 </Chapter>

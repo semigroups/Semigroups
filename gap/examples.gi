@@ -889,3 +889,123 @@ function(n)
   S := FactorisableDualSymmetricInverseSemigroup(n);
   return SemigroupIdeal(S, x);
 end);
+
+# ww special types of semigroup
+
+BindGlobal("ZeroSemigroup",
+function(arg)
+  local filter, n, out;
+
+  if Length(arg) = 1  then
+    filter := IsPartialPermSemigroup;
+    n := arg[1];
+  elif Length(arg) = 2 then
+    filter := arg[1];
+    if not IsFilter(filter) then
+      Error("Semigroups: ZeroSemigroup: usage:\n",
+            "the optional first argument <filter> must be a filter,");
+      return;
+    fi;
+    n := arg[2];
+  else
+    Error("Semigroups: ZeroSemigroup: usage:\n",
+          "this function takes at most two arguments,");
+    return;
+  fi;
+
+  if not IsPosInt(n) then
+    Error("Semigroups: ZeroSemigroup: usage:\n",
+          "the argument <n> must be a positive integer,");
+    return;
+  fi;
+
+  if n = 1 and "IsReesZeroMatrixSemigroup" in NamesFilter(filter) then
+    Error("Semigroups: ZeroSemigroup: usage:\n",
+          "there is no Rees 0-matrix semigroup of order 1,");
+    return;
+  fi;
+
+  out := ZeroSemigroupCons(filter, n);
+  SetSize(out, n);
+  SetIsZeroSemigroup(out, true);
+
+  if IsTrivial(out) then
+    SetAsList(out, GeneratorsOfSemigroup(out));
+  else
+    SetIsGroupAsSemigroup(out, false);
+    SetIsRegularSemigroup(out, false);
+    if n > 2 then
+      SetIsMonogenicSemigroup(out, false);
+    fi;
+    SetAsList(out, Concatenation(GeneratorsOfSemigroup(out),
+                                 [MultiplicativeZero(out)]));
+  fi;
+
+  return out;
+end);
+
+# Creates a monogenic transformation semigroup with index m and period r
+
+InstallMethod(MonogenicSemigroup,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, r)
+  local t, out;
+
+  t := [1 .. r] + 1;
+  t[r] := 1;
+
+  if not m = 1 then # m = 1 specifies a cyclic group
+    Append(t, [1 .. m] + r - 1);
+  fi;
+
+  out := Semigroup(Transformation(t));
+  SetSize(out, m + r - 1);
+  SetIsMonogenicSemigroup(out, true);
+
+  if m = 1 then
+    SetIsGroupAsSemigroup(out, true);
+  else
+    SetIsGroupAsSemigroup(out, false);
+    SetIsRegularSemigroup(out, false);
+  fi;
+
+  if r = 1 and m < 3 then
+    SetIsZeroSemigroup(out, true);
+  else
+    SetIsZeroSemigroup(out, false);
+  fi;
+
+  return out;
+end);
+
+# Creates an m x n RMS over the trivial group
+
+InstallMethod(RectangularBand,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local id, mat, R;
+
+  id := ();
+  mat := List([1 .. n], x -> List([1 .. m], y -> id));
+  R := ReesMatrixSemigroup(Group(id), mat);
+
+  SetSize(R, m * n);
+  SetIsRectangularBand(R, true);
+  if not (m = 1 and n = 1) then
+    SetIsZeroSemigroup(R, false);
+    if m = 1 then
+      SetIsRightZeroSemigroup(R, true);
+    else
+      SetIsRightZeroSemigroup(R, false);
+    fi;
+    if n = 1 then
+      SetIsLeftZeroSemigroup(R, true);
+    else
+      SetIsLeftZeroSemigroup(R, false);
+    fi;
+  fi;
+
+  return R;
+end);

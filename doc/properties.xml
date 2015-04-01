@@ -699,8 +699,17 @@ true]]></Example>
       <C>IsRectangularBand</C> returns <K>true</K> if the semigroup <A>S</A> 
       is a rectangular band and <K>false</K> if it is not.<P/>
       
-      A semigroup <A>S</A> is a <E>rectangular band</E> if for all <C>x,y,z</C> 
-      in <A>S</A> we have that <C>x^2=x</C> and <C>xyz=xz</C>.
+      A semigroup <A>S</A> is a <E>rectangular band</E> if for all 
+      <M>x, y, z</M>  in <A>S</A>
+      we have that <M>x^2 = x</M> and <M>xyz = xz</M>.<P/>
+
+      Equivalently, <A>S</A> is a <E>rectangular band</E> if
+      <A>S</A> is isomorphic to a semigroup of the form
+      <M>I \times \Lambda</M> with multiplication
+      <M>(i,\lambda)(j,\mu) = (i,\mu)</M>.
+      In this case, <A>S</A> is called an
+      <M>|I| \times |\Lambda|</M> <E>rectangular band</E>.<P/>
+
       An inverse semigroup is a rectangular band if and only if it is a group.
       <Example><![CDATA[
 gap> gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 

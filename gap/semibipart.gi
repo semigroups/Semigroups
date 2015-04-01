@@ -681,3 +681,49 @@ InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> DegreeOfBipartition(Representative(s)));
 
 #
+
+InstallMethod(ZeroSemigroupCons,
+"for a filter and a positive integer",
+[IsBipartitionSemigroup and IsFinite, IsPosInt],
+function(filter, n)
+  local zero, out;
+
+  if n = 2 then
+    zero := Bipartition([[1], [2], [-1], [-2]]);
+    out := Semigroup(Bipartition([[1, -2], [2], [-1]]));
+    SetMultiplicativeZero(out, zero);
+    return out;
+  fi;
+  return ZeroSemigroupCons(IsBlockBijectionSemigroup, n);
+end);
+
+#
+
+InstallMethod(ZeroSemigroupCons,
+"for a filter and a positive integer",
+[IsBlockBijectionSemigroup and IsFinite, IsPosInt],
+function(filter, n)
+  local zero, gens, points, pair, out, i;
+
+  if n = 1 then
+    zero := Bipartition([[1, -1]]);
+    gens := [zero];
+  elif n = 2 then
+    points := Concatenation([1 .. 3], [-3 .. -1]);
+    zero := Bipartition([points]);
+    gens := [Bipartition([[1, -2], [-1, 2, 3, -3]])];
+  else
+    points := Concatenation([1 .. 2 * (n - 1)], -[1 .. 2 * (n - 1)]);
+    zero := Bipartition([points]);
+    gens := EmptyPlist(n - 1);
+    for i in [1 .. n - 1] do
+      pair := [2 * i - 1, -(2 * i)];
+      gens[i] := Bipartition([pair, Difference(points, pair)]);
+    od;
+  fi;
+  out := Semigroup(gens);
+  SetMultiplicativeZero(out, zero);
+  return out;
+end);
+
+#EOF
