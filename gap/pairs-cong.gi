@@ -39,22 +39,6 @@ function(cong)
   return;
 end);
 
-# This is a temporary fix to make congruences know that they are finite
-# This allows MT's congruence methods for finite congruences to be selected
-
-# TODO Make finite semigroup congruences be set as such at creation
-# TODO Make IsFinite method for IsSemigroupCongruence
-InstallImmediateMethod(IsFinite,
-"for a semigroup congruence",
-IsSemigroupCongruence and HasRange,
-0,
-function(cong)
-  if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
-    return true;
-  fi;
-  TryNextMethod();
-end);
-
 #
 
 InstallMethod(\in,
