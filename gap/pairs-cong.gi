@@ -23,11 +23,7 @@ function(cong)
   pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
                 x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
-  if IsBound(s!.opts) then
-    hashlen := s!.opts.hashlen.L;
-  else
-    hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
-  fi;
+  hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
               treehashsize := hashlen));
   data := rec(cong := cong,

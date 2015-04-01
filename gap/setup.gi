@@ -49,7 +49,9 @@ end);
 
 # JDM should remove this since it is not possible to have an generic Rees
 # 0-matrix semigroup (or to specify any of the other options)
-# InstallTrueMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
+# InstallMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
+# FIXME this shouldn't be here because some RZMS are not acting, if they are
+# defined over a transformation semigroup for example.
 
 # the largest point involved in the action
 
@@ -634,8 +636,21 @@ InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
 
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
-  function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionRZMSE,
+function(x, hashlen)
+  local R, under, func;
+ 
+  R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
+  if IsMultiplicativeZero(R, x) then 
+    x := Representative(UnderlyingSemigroup(R));
+    under := ChooseHashFunction(x, hashlen).func;
+  else
+    under := ChooseHashFunction(x![2], hashlen).func;
+  fi;
+  func := function(x, hashlen)
+    return SEMIGROUPS_HashFunctionRZMSE(x, hashlen, under);
+  end;
+
+  return rec(func := func,
              data := hashlen);
 end);
 
@@ -652,29 +667,10 @@ function(x, data)
 end);
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionRZMSE,
-function(x, data)
-  local p, l;
-
+function(x, data, func)
   if x![1] = 0 then
     return 1;
   fi;
 
-  p := x![2];
-  l := LARGEST_MOVED_POINT_PERM(p);
-
-  if IsPerm4Rep(p) then
-    # is it a proper 4byte perm?
-    if l > 65536 then
-      return (x![1] + x![3] + HashKeyBag(p, 255, 0, 4 * l)) mod data + 1;
-    else
-      # the permutation does not require 4 bytes. Trim in two
-      # byte representation (we need to do this to get consistent
-      # hash keys, regardless of representation.)
-      TRIM_PERM(p, l);
-    fi;
-  fi;
-  # now we have a Perm2Rep:
-  return (x![1] + x![3] + HashKeyBag(p, 255, 0, 2 * l)) mod data + 1;
+  return (x![1] + x![3] + func(x![2], data)) mod data + 1;
 end);
-
-#EOF

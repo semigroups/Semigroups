@@ -19,6 +19,9 @@
 # semigroup <S> are stored in the !.data component of the corresponding Green's
 # relation.
 
+InstallMethod(IsRegularClass, "for a Green's class of a semigroup",
+[IsGreensClass], D -> First(Enumerator(D), x-> IsIdempotent(x)) <> fail);
+
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
 InstallTrueMethod(IsRegularClass, IsInverseOpClass);
 InstallTrueMethod(IsHClassOfRegularSemigroup,
@@ -386,7 +389,7 @@ function(S)
   return rel;
 end);
 
-#
+# TODO make this a proper enumerator method?!
 
 InstallMethod(Enumerator, "for an generic semigroup Green's class",
 [IsGreensClass], 
