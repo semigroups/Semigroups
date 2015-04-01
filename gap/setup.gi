@@ -672,20 +672,5 @@ function(x, data, func)
     return 1;
   fi;
 
-  #p := x![2];
-  #l := LARGEST_MOVED_POINT_PERM(p);
-
-  #if IsPerm4Rep(p) then
-  #  # is it a proper 4byte perm?
-  #  if l > 65536 then
-  #    return (x![1] + x![3] + HashKeyBag(p, 255, 0, 4 * l)) mod data + 1;
-  #  else
-  #    # the permutation does not require 4 bytes. Trim in two
-  #    # byte representation (we need to do this to get consistent
-  #    # hash keys, regardless of representation.)
-  #    TRIM_PERM(p, l);
-  #  fi;
-  #fi;
-  # now we have a Perm2Rep:
   return (x![1] + x![3] + func(x![2], data)) mod data + 1;
 end);
