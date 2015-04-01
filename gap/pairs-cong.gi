@@ -381,8 +381,15 @@ InstallMethod(Enumerator,
 "for a semigroup congruence class",
 [IsCongruenceClass],
 function(class)
-  local cong, record, x, enum;
+  local cong, s, record, x, enum;
+
   cong := EquivalenceClassRelation(class);
+  s := Range(cong);
+
+  if not (HasIsFinite(s) and IsFinite(s)) then
+    TryNextMethod();
+  fi;
+
   # cong has been enumerated: return a list
   if HasAsLookupTable(cong) then
     return Enumerator(AsList(class));
