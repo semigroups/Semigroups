@@ -718,9 +718,7 @@ end);
 #
 
 InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
-function(S)
-  return GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S));
-end);
+x -> GreensDClassOfElementNC(x, RepresentativeOfMinimalIdeal(x)));
 
 #
 
