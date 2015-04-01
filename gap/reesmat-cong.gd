@@ -13,9 +13,9 @@
 
 # Congruences by linked triple
 DeclareCategory("IsRMSCongruenceByLinkedTriple",
-        IsSemigroupCongruence and IsAttributeStoringRep);
+        IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 DeclareCategory("IsRZMSCongruenceByLinkedTriple",
-        IsSemigroupCongruence and IsAttributeStoringRep);
+        IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 DeclareOperation("IsLinkedTriple",
         [IsSemigroup, IsGroup, IsDenseList, IsDenseList]);
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");

@@ -18,6 +18,7 @@
     <#Include Label="CongruenceClasses">
     <#Include Label="NrCongruenceClasses">
     <#Include Label="CongruencesOfSemigroup">
+    <#Include Label="AsLookupTable">
 
   </Section>
 
@@ -100,6 +101,7 @@
     An analogous condition exists for finite simple Rees matrix semigroups
     without zero.<P/>
     
+    <#Include Label="IsRZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceClassByLinkedTriple">
     <#Include Label="IsLinkedTriple">
@@ -127,6 +129,7 @@
     define <C>IsUniversalSemigroupCongruenceClass</C>, which represents the single
     congruence class of the universal congruence.<P/>
 
+    <#Include Label="IsUniversalSemigroupCongruence">
     <#Include Label="UniversalSemigroupCongruence">
   </Section>
 </Chapter>

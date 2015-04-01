@@ -628,29 +628,37 @@ gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 > [Transformation([1,2,2,2])]);
 <regular transformation semigroup ideal on 4 pts with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<semigroup congruence over <full transformation semigroup on 4 pts>>
+<Rees congruence of <regular transformation semigroup ideal 
+ on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
 gap> hom := HomomorphismQuotientSemigroup(cong);
 MappingByFunction( <full transformation semigroup on 4 pts>, <quotient of Mono\
 id( [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), 
-  Transformation( [ 1, 2, 3, 1 ] ) 
- ] ) by SemigroupCongruence( ... )>, function( x ) ... end )
+  Transformation( [ 1, 2, 3, 1 ] ) ] ) by ReesCongruenceOfSemigroupIdeal( 
+SemigroupIdeal( 
+ Monoid( 
+  [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), Transformati\
+on( [ 1, 2, 3, 1 ] ) ] ), [ Transformation( [ 1, 2, 2, 2 ] ) ] )
+  )>, function( x ) ... end )
 gap> T := Range(hom);
 <quotient of Monoid( [ Transformation( [ 2, 3, 4, 1 ] ), 
   Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 3, 1 ] ) 
- ] ) by SemigroupCongruence( ... )>
+ ] ) by ReesCongruenceOfSemigroupIdeal( SemigroupIdeal( 
+ Monoid( 
+  [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), Transformati\
+on( [ 1, 2, 3, 1 ] ) ] ), [ Transformation( [ 1, 2, 2, 2 ] ) ] ) )>
 gap> IsSemigroup(T);
 true
 gap> Size(T);
 169
 gap> u := Image(hom, Transformation([1,1,1,1]));
-{Transformation( [ 1, 1, 1, 1 ] )}
+{Transformation( [ 1, 2, 2, 2 ] )}
 gap> t := Image(hom, Transformation([2,1,2,3]));
 {Transformation( [ 2, 1, 2, 3 ] )}
-gap> u*t;
-{Transformation( [ 2, 2, 2, 2 ] )}
-gap> t*u;
-{Transformation( [ 1, 1, 1, 1 ] )}
-gap> S:=Semigroup(u,t);
+gap> u * t;
+{Transformation( [ 1, 2, 2, 2 ] )}
+gap> t * u;
+{Transformation( [ 1, 2, 2, 2 ] )}
+gap> S := Semigroup(u, t);
 <semigroup with 2 generators>
 gap> Size(S);
 2
@@ -724,7 +732,15 @@ gap> S/I;
   Transformation( [ 2, 2, 3, 1 ] ), Transformation( [ 2, 4, 3, 4 ] ), 
   Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 2, 2, 1, 3 ] ), 
   Transformation( [ 1, 2, 2, 3 ] ), Transformation( [ 2, 4, 3, 2 ] ), 
-  Transformation( [ 2, 3, 3, 3 ] ) ] ) by SemigroupCongruence( ... )>
+  Transformation( [ 2, 3, 3, 3 ] ) ] ) by ReesCongruenceOfSemigroupIdeal( 
+SemigroupIdeal( 
+ Monoid( 
+  [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ), Transf\
+ormation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ), Transformation( \
+[ 1, 4, 4, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ), Transformation( [ 2, 4, 3,\
+ 4 ] ), Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 2, 2, 1, 3 ] ), Tr\
+ansformation( [ 1, 2, 2, 3 ] ), Transformation( [ 2, 4, 3, 2 ] ), Transformati\
+on( [ 2, 3, 3, 3 ] ) ] ), [ Transformation( [ 2, 3, 2, 3 ] ) ] ) )>
 
 #T# TestInstall43: Issue 89 
 gap> S:=Semigroup( [ Transformation( [ 2, 1, 3, 1, 4, 3 ] ), 

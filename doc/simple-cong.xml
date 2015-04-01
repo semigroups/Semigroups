@@ -1,0 +1,66 @@
+#############################################################################
+##
+#W  simple-cong.xml
+#Y  Copyright (C) 2015                                      Michael Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="SemigroupCongruence">
+  <ManSection>
+    <Func Name="SemigroupCongruence" Arg="S, pairs"/>
+    <Returns>A semigroup congruence.</Returns>
+    <Description>
+      This function returns a semigroup congruence over the semigroup
+      <A>S</A>.<P/>
+
+      If <A>pairs</A> is a list of lists of size 2 with elements from <A>S</A>,
+      then this function will return the semigroup congruence defined by these
+      generating pairs.  The individual pairs may instead be given as separate
+      arguments.<P/>
+
+      <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [ Transformation( [ 3, 4, 3, 4, 3 ] ),
+>               Transformation( [ 1, 2, 1, 2, 1 ] ) ];;
+gap> pair2 := [ Transformation( [ 4, 3, 4, 3, 4 ] ),
+>               Transformation( [ 3, 4, 3, 4, 3 ] ) ];;
+gap> SemigroupCongruence(S, [pair1, pair2]);
+<semigroup congruence over <simple transformation semigroup 
+ on 5 pts with 4 generators> with linked triple (2,4,1)>
+gap> SemigroupCongruence(S, pair1, pair2);
+<semigroup congruence over <simple transformation semigroup 
+ on 5 pts with 4 generators> with linked triple (2,4,1)>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CongruencesOfSemigroup">
+  <ManSection> 
+    <Attr Name="CongruencesOfSemigroup" Arg="S"/>
+    <Returns>The congruences of a semigroup.</Returns>
+    <Description>
+      This attribute gives a list of the congruences of the semigroup
+      <A>S</A>. <P/>
+
+      At present this only works for simple and 0-simple semigroups.
+      <Example><![CDATA[
+gap> s := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(),(1,3,2)],[(1,2),0]]);;
+gap> congs := CongruencesOfSemigroup(s);
+[ <universal semigroup congruence over 
+    <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>, 
+  <semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )> with linked triple (1,2,2)>, 
+  <semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>, 
+  <semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )> with linked triple (S3,2,2)> ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
