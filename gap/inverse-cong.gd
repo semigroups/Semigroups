@@ -11,21 +11,21 @@
 ## "kernel and trace" representation - see Howie 5.3
 ##
 
-# Inverse Congruences By Congruence Pair
+# Inverse Congruences By Kernel and Trace
 DeclareCategory("IsInverseSemigroupCongruenceByKernelTrace",
-        IsSemigroupCongruence and IsAttributeStoringRep);
-DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePair");
-DeclareGlobalFunction("InverseSemigroupCongruenceByCongruencePairNC");
+        IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTrace");
+DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTraceNC");
 
 DeclareAttribute("TraceOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
-DeclareAttribute("AsInverseSemigroupCongruenceByCongruencePair",
+DeclareAttribute("AsInverseSemigroupCongruenceByKernelTrace",
         IsSemigroupCongruence);
 
 DeclareGlobalFunction("SEMIGROUPS_InverseCongFromPairs");
 
 # Congruence Classes
-DeclareCategory("InverseSemigroupCongruenceClassByKernelTrace",
+DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
         IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
 DeclareOperation("InverseSemigroupCongruenceClass",
         [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement]);

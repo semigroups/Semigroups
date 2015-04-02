@@ -244,4 +244,21 @@ else
 
 fi;
 
+#
+
+InstallMethod(ZeroSemigroupCons,
+"for a filter and a positive integer",
+[IsReesZeroMatrixSemigroup and IsFinite, IsPosInt],
+function(filter, n)
+  local mat;
+
+  if n = 1 then
+    Error("Semigroups: ZeroSemigroupCons: usage:\n",
+          "there is no Rees 0-matrix semigroup of order 1,");
+    return;
+  fi;
+  mat := [[1 .. n - 1] * 0];
+  return ReesZeroMatrixSemigroup(Group(()), mat);
+end);
+
 #EOF

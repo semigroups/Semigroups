@@ -238,7 +238,7 @@ gap> S:=Semigroup( Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ),
 gap> IsSynchronizingSemigroup(S, 10);
 false
 gap> Representative(MinimalIdeal(S));
-Transformation( [ 7, 8, 8, 8, 8, 8, 8, 7, 8, 8 ] )]]></Example>
+Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

@@ -1160,6 +1160,16 @@ end);
 
 #random
 
+InstallMethod(Random,
+"for a semigroup with AsList",
+[IsSemigroup and HasAsList],
+20, # to beat other random methods
+function(S)
+  return AsList(S)[Random([1 .. Size(S)])];
+end);
+
+#
+
 InstallMethod(RandomMatrixSemigroup,
 "for a ring, positive integer and positive integer",
 [IsRing, IsPosInt, IsPosInt],

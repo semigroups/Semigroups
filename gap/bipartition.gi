@@ -1025,9 +1025,9 @@ function(classes)
   fi;
 
   copy := Union(classes);
-  if not (copy = classes or 
+  if not (copy = classes or
           copy = Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)]))
-          then 
+          then
     Error("Semigroups: Bipartition: usage,\n",
           "the union of the argument <classes> must be [-n..-1, 1..n],");
     return;

@@ -146,6 +146,7 @@ ReadPackage("semigroups/gap/reesmat-cong.gi");
 ReadPackage("semigroups/gap/univ-cong.gi");
 ReadPackage("semigroups/gap/inverse-cong.gi");
 ReadPackage("semigroups/gap/simple-cong.gi");
+ReadPackage("semigroups/gap/rees-cong.gi");
 
 ReadPackage("semigroups/gap/semigroups-generic.gi");
 ReadPackage("semigroups/gap/ideals-generic.gi");
