@@ -13,6 +13,8 @@
 
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
 InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+InstallTrueMethod(IsHClassOfRegularSemigroup,
+                  IsInverseOpClass and IsGreensHClass);
 
 # Semigroups . . .
 
@@ -20,10 +22,14 @@ InstallMethod(NrDClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensDClasses(S)));
 
 # TODO improve the method below, using a similar method to the one for
-# NrRegularDClasses
+# NrRegularDClasses (WW: this doesn't exists)
+
+# WW NrRegularDClasses doesn't exist in this file so I created this
+InstallMethod(NrRegularDClasses, "for a semigroup",
+[IsSemigroup], S -> Length(RegularDClasses(S)));
 
 InstallMethod(RegularDClasses, "for a semigroup",
-[IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularClass));
+[IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularDClass));
 
 InstallMethod(NrLClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensLClasses(S)));

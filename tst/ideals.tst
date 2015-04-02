@@ -36,14 +36,16 @@ gap> IsRegularSemigroup(I);
 true
 gap> Idempotents(I, 0);
 [  ]
-gap> Idempotents(I);
-[ Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+gap> idems := ShallowCopy(Idempotents(I));;
+gap> Sort(idems);
+gap> idems;
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
-  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
   Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ), 
   Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ) ]
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
 gap> Idempotents(I, 2);
 [  ]
 gap> x in R;
@@ -53,14 +55,16 @@ gap> I:=MinimalIdeal(I);
 gap> IsRegularSemigroup(I);;
 gap> Idempotents(I, 0);
 [  ]
-gap> Idempotents(I);
-[ Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+gap> idems := ShallowCopy(Idempotents(I));;
+gap> Sort(idems);
+gap> idems;
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
-  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
   Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ), 
   Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ) ]
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
 gap> Idempotents(I, 2);
 [  ]
 gap> S:=Semigroup([ Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
@@ -891,6 +895,7 @@ gap> Unbind(gens);
 gap> Unbind(o);
 gap> Unbind(s);
 gap> Unbind(x);
+gap> Unbind(idems);
 
 #E# 
 gap> STOP_TEST( "Semigroups package: ideals.tst");

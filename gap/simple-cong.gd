@@ -15,7 +15,7 @@
 ##
 
 DeclareCategory("SEMIGROUPS_CongSimple",
-        IsSemigroupCongruence and IsAttributeStoringRep);
+        IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 
 DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromRMSCong");
 DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromPairs");

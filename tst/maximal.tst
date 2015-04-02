@@ -170,11 +170,11 @@ gap> MaximalSubsemigroups(R, Group([ (1,2,3), (1,2) ])); # no results exist
 gap> MaximalSubsemigroups(R, Group([ (1,3,5) ])); # not a subgroup
 Error, Semigroups: MaximalSubsemigroups: usage,
 the second argument <H> must be a subgroup of the underlying
-group of the Rees matrix semigroup in the first first argument, <R>,
+group of the Rees matrix semigroup in the first argument, <R>,
 gap> MaximalSubsemigroups(R, Group(())); # not a maximal subgroup
 Error, Semigroups: MaximalSubsemigroups: usage,
 the second argument <H> must be a maximal subgroup of the underlying
-group of the Rees matrix semigroup in the first first argument, <R>,
+group of the Rees matrix semigroup in the first argument, <R>,
 gap> T := FullTransformationMonoid(2);
 <full transformation semigroup on 2 pts>
 gap> mat := [ [ Transformation( [ ] ) ] ];
@@ -221,7 +221,6 @@ gap> R := ReesZeroMatrixSemigroup( S, [ [ s1 ] ] ); # 0-simple RZMS over non-gp
   on 3 pts with 2 generators>>
 gap> IsReesZeroMatrixSemigroup(R);
 true
-gap> SetIsRegularSemigroup(R, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R);
 true
 gap> G := UnderlyingSemigroup(R);
@@ -250,7 +249,6 @@ gap> IsReesZeroMatrixSubsemigroup(R3);
 true
 gap> IsReesZeroMatrixSemigroup(R3);
 true
-gap> SetIsRegularSemigroup(R3, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R3);
 true
 gap> max := MaximalSubsemigroups(R3);;
@@ -368,11 +366,11 @@ gap> MaximalSubsemigroups(R1, Group([ (2,4,5) ])); # no results exist
 gap> MaximalSubsemigroups(R1, Group([ (6,7) ])); # not a subgroup
 Error, Semigroups: MaximalSubsemigroups: usage,
 the second argument <H> must be a subgroup of the underlying
-group of the Rees 0-matrix semigroup in the first first argument, <R>,
+group of the Rees 0-matrix semigroup in the first argument, <R>,
 gap> MaximalSubsemigroups(R1, Group(())); # not a maximal subgroup
 Error, Semigroups: MaximalSubsemigroups: usage,
 the second argument <H> must be a maximal subgroup of the underlying
-group of the Rees 0-matrix semigroup in the first first argument, <R>,
+group of the Rees 0-matrix semigroup in the first argument, <R>,
 gap> R2 := Semigroup( RMSElement( R1, 1, (1,4,2), 3 ) ); # not a RZMS
 <subsemigroup of 5x5 Rees 0-matrix semigroup with 1 generator>
 gap> IsReesZeroMatrixSubsemigroup(R2);
@@ -400,7 +398,6 @@ gap> IsReesZeroMatrixSubsemigroup(R3);
 true
 gap> IsReesZeroMatrixSemigroup(R3);
 true
-gap> SetIsRegularSemigroup(R3, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R3);
 true
 gap> MaximalSubsemigroups(R3, Group(()));
@@ -635,7 +632,7 @@ gap> gens := [ PartialPerm( [ 1, 2, 3, 4 ], [ 3, 2, 5, 4 ] ),
 >  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 3, 4, 1 ] ), 
 >  PartialPerm( [ 1, 2, 3, 4, 5 ], [ 5, 4, 3, 2, 1 ] ) ];;
 gap> S := InverseSemigroup(gens);;
-gap>  S := Semigroup(S);;
+gap> S := Semigroup(S);;
 gap> Length(MaximalSubsemigroups(S));
 9
 

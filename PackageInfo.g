@@ -9,37 +9,37 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.3">
+##  <!ENTITY VERSION "2.4">
 ##  <!ENTITY GAPVERS "4.7.6">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.3">
+##  <!ENTITY ARCHIVENAME "semigroups-2.4">
 ##  <!ENTITY COPYRIGHTYEARS "2011-15">
 ##  <#/GAPDoc>
 
 RecogsFunnyNameFormatterFunction := function(st)
   if Length(st) = 0 then 
-      return st;
+    return st;
   else
-      return Concatenation(" (",st,")");
+    return Concatenation(" (",st,")");
   fi;
 end;
 
 RecogsFunnyWWWURLFunction := function(re)
   if IsBound(re.WWWHome) then
-      return re.WWWHome;
+    return re.WWWHome;
   else
-      return "";
+    return "";
   fi;
 end;
 
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "2.3",
-Date := "16/03/2015",
+Version := "2.4",
+Date := "02/04/2015",
 ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.3",
 ArchiveFormats := ".tar.gz",
 Persons := [
@@ -161,7 +161,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "waw7@st-and.ac.uk",
-    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~waw7",
+    WWWHome       := "http://wilf.me",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 

@@ -122,7 +122,8 @@ gap> eq := EquivalenceClassOfElement(uni, y);;
 gap> z in eq;
 true
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(uni);;
-gap> AsRZMSCongruenceByLinkedTriple(cong) = uni;
+gap> cong := AsRZMSCongruenceByLinkedTriple(cong);;
+gap> cong = uni;
 true
 gap> Size(s / uni);
 1

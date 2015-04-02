@@ -33,7 +33,7 @@ function(arg)
     # We should have a list of generating pairs
     if Length(arg) = 2 then
       pairs := arg[2];
-      if not IsList(pairs[1]) then
+      if not IsEmpty(pairs) and not IsList(pairs[1]) then
         pairs := [pairs];
       fi;
     elif Length(arg) > 2 then
@@ -71,13 +71,15 @@ function(arg)
             "isomorphic to <s>");
       return;
     fi;
+  elif IsSemigroupIdeal(arg[2]) and Parent(arg[2]) = s then
+    return ReesCongruenceOfSemigroupIdeal(arg[2]);
   elif Length(arg) = 3 and
     IsInverseSemigroup(arg[2]) and
     IsDenseList(arg[3]) and
     IsInverseSemigroup(s) then
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
-    return InverseSemigroupCongruenceByCongruencePair(s, arg[2], arg[3]);
+    return InverseSemigroupCongruenceByKernelTrace(s, arg[2], arg[3]);
   else
     TryNextMethod();
   fi;
