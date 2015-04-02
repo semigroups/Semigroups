@@ -13,7 +13,7 @@ improvements in performance, and some new features.
 * The function `RepresentativeOfMinimalIdeal` is introduced. [[Wilf
 Wilson](http://wilf.me)]
 
-* Transformation semigroup now have a polynomial (quadratic in the
+* Transformation semigroups now have a polynomial time (quadratic in the
 degree) algorithm for computing the minimal ideal [[Wilf Wilson](http://wilf.me)]
 
 * The functions `RectangularBand`, `ZeroSemigroup`, and
@@ -25,7 +25,7 @@ elements. This new method choose elements at random with uniform
 probability. [[Wilf Wilson](http://wilf.me)]
 
 * The documentation and tests for congruences has been improved.
-[Michael Torpey and [[Wilf Wilson](http://wilf.me)]
+[Michael Torpey and [Wilf Wilson](http://wilf.me)]
 
 * The functionality for Rees congruences has been rewritten and
 improved. [Michael Torpey]
@@ -45,7 +45,7 @@ inverse semigroup ideal resulted in a call to
 by 0 pairs of elements) returned an error. 
 
 * [Issue 95](https://bitbucket.org/james-d-mitchell/semigroups/issue/95/): The class containing the zero element of a Rees
-0-matrix semigroup is was not returned by `EquivalenceClasses` of a
+0-matrix semigroup was not returned by `EquivalenceClasses` of a
 congruence over a Rees 0-matrix semigroup.
 
 * [Issue 108](https://bitbucket.org/james-d-mitchell/semigroups/issue/108/): `IsRegularSemigroup` with argument a Rees 0-matrix
