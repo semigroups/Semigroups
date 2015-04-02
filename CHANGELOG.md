@@ -2,7 +2,7 @@
 ### Semigroups package for GAP
 
 #### Copyright (C) 2011-15 James D. Mitchell
-#### Licensing information can be found in the README.md file of this package.
+#### Licensing information can be found in the LICENSE file.
 
 ## Version 2.4 
 This is a minor release including several bugfixes, and
