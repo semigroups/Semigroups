@@ -1,3 +1,9 @@
+#
+# semigroups: Methods for semigroups
+#
+# This file is part of the build system of a GAP kernel extension.
+# Requires automake.
+#
 ACLOCAL_AMFLAGS = -I m4
 
 BINARCHDIR = bin/$(GAPARCH)
@@ -5,7 +11,7 @@ GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
 
 lib_LTLIBRARIES = semigroups.la
 
-semigroups_la_SOURCES = src/semigroups.c
+semigroups_la_SOURCES = src/semigroups.cc
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
 # Note that the latter is only for GAP 4.4.12
 semigroups_la_LDFLAGS = -module -avoid-version
@@ -26,3 +32,7 @@ distclean-local:
 	rm -rf bin/*
 	(cd doc ; ./clean)
 
+doc: doc/manual.six
+
+doc/manual.six: doc/*.xml PackageInfo.g
+	($(GAPROOT)/bin/gap.sh -A makedoc.g)
