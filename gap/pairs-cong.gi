@@ -43,19 +43,16 @@ end);
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, sdata, elms, pairs, hashlen, ht, treehashsize, data, lookup, 
-        pairstoapply, pos, found;
-  
+  local s, elms, pairs, hashlen, ht, data;
+
   s := Range(cong);
-  sdata := Enumerate(GenericSemigroupData(s));
-  elms := sdata!.elts;
-  # FIXME: These last two lines, and all occurrences of sdata in this file
+  elms := Elements(s);
   pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
                 x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
-              treehashsize := hashlen));
+                                         treehashsize := hashlen));
   data := rec(cong := cong,
               lookup := [1 .. Size(s)],
               pairstoapply := pairs,
@@ -90,7 +87,7 @@ InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
-  local s, sdata, elms, p1, p2, table, find, lookfunc;
+  local s, elms, p1, p2, table, find, lookfunc;
   # Input checks
   if not Size(pair) = 2 then
     Error("Semigroups: \in: usage,\n",
@@ -111,8 +108,7 @@ function(pair, cong)
     return;
   fi;
 
-  sdata := Enumerate(GenericSemigroupData(s));
-  elms := sdata!.elts;
+  elms := Elements(s);
   p1 := Position(elms, pair[1]);
   p2 := Position(elms, pair[2]);
 
@@ -145,7 +141,8 @@ function(cong)
   return AsLookupTable(cong);
 end);
 
-#
+# FIXME this should be a method for IsSemigroupCongruenceData not
+# IsSemigroupCongruence
 
 InstallMethod(Enumerate,
 "for a semigroup congruence and a function",
@@ -262,7 +259,8 @@ InstallMethod(EquivalenceClasses,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local classes, next, tab, sdata, elms, i;
+  local classes, next, tab, elms, i;
+  
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
     Error("Semigroups: EquivalenceClasses: usage,\n",
           "this function currently only works if <cong> is a congruence of a ",
@@ -272,8 +270,7 @@ function(cong)
   classes := [];
   next := 1;
   tab := AsLookupTable(cong);
-  sdata := Enumerate(GenericSemigroupData(Range(cong)));
-  elms := sdata!.elts;
+  elms := Elements(Range(cong));
   for i in [1 .. Size(tab)] do
     if tab[i] = next then
       classes[next] := EquivalenceClassOfElementNC(cong, elms[i]);
@@ -298,9 +295,8 @@ InstallMethod(Size,
 "for a finite congruence class",
 [IsCongruenceClass and IsFinite],
 function(class)
-  local sdata, elms, p, tab;
-  sdata := Enumerate(GenericSemigroupData(Parent(class)));
-  elms := sdata!.elts;
+  local elms, p, tab;
+  elms := Elements(Range(Parent(class)));;
   p := Position(elms, Representative(class));
   tab := AsLookupTable(EquivalenceClassRelation(class));
   return Number(tab, n -> n = tab[p]);

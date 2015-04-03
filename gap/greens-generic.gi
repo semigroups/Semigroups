@@ -287,24 +287,29 @@ end);
 InstallMethod(GreensRRelation, "for an generic semigroup", 
 [IsSemigroup], 
 function(S)
-  local fam, rel, sc;
+  local fam, rel, data;
 
-  fam := GeneralMappingsFamily( ElementsFamily(FamilyObj(S)),
-           ElementsFamily(FamilyObj(S)) );
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
 
-  rel := Objectify(NewType(fam, IsEquivalenceRelation 
-                                and IsEquivalenceRelationDefaultRep
-                                and IsGreensRRelation), rec());
+  rel := Objectify(NewType(fam, 
+                           IsEquivalenceRelation 
+                             and IsEquivalenceRelationDefaultRep
+                             and IsGreensRRelation), 
+                           rec());
 
   SetSource(rel, S);
   SetRange(rel, S);
-  SetIsLeftSemigroupCongruence(rel,true);
+  SetIsLeftSemigroupCongruence(rel, true);
+
   if HasIsFinite(S) and IsFinite(S) then
-   SetIsFiniteSemigroupGreensRelation(rel, true);
+    SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
   if not IsActingSemigroup(S) then  
-    rel!.data:=GABOW_SCC(GenericSemigroupData(S)!.right);
+    data := Enumerate(GenericSemigroupData(S));
+    rel!.data:=GABOW_SCC(data!.right);
   fi;
+
   return rel;
 end);
 
@@ -313,10 +318,10 @@ end);
 InstallMethod(GreensLRelation, "for an generic semigroup",
 [IsSemigroup], 
 function(S)
-  local fam, rel;
+  local fam, rel, data;
 
-  fam := GeneralMappingsFamily( ElementsFamily(FamilyObj(S)),
-          ElementsFamily(FamilyObj(S)) );
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+          ElementsFamily(FamilyObj(S)));
 
   rel := Objectify(NewType(fam, IsEquivalenceRelation 
                                 and IsEquivalenceRelationDefaultRep
@@ -329,8 +334,9 @@ function(S)
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
 
-  if not IsActingSemigroup(S) then  
-    rel!.data:=GABOW_SCC(GenericSemigroupData(S)!.left);
+  if not IsActingSemigroup(S) then 
+    data := Enumerate(GenericSemigroupData(S));
+    rel!.data:=GABOW_SCC(data!.left);
   fi;
   return rel;
 end);
@@ -375,7 +381,7 @@ function(S)
     local fam, rel;
 
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
-          ElementsFamily(FamilyObj(S)));
+                               ElementsFamily(FamilyObj(S)));
 
   rel := Objectify(NewType(fam, IsEquivalenceRelation 
                                 and IsEquivalenceRelationDefaultRep 
