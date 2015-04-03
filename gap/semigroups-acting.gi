@@ -204,7 +204,9 @@ function(x, S)
   rep := LambdaOrbRep(LambdaOrb(S), m);
   pos_rho := Position(RhoOrb(S), RhoFunc(S)(rep));
 
-  if pos_rho <> OrbSCC(RhoOrb(S))[n][1] then
+  if OrbSCCLookup(RhoOrb(S))[pos_rho] <> n then 
+    return false;
+  elif pos_rho <> OrbSCC(RhoOrb(S))[n][1] then
     rep := RhoOrbMult(RhoOrb(S), n, pos_rho)[2] * rep;
   fi;
 

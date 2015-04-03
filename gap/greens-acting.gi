@@ -83,23 +83,23 @@
 # same method for regular/different for inverse
 
 BindGlobal("SEMIGROUPS_CreateXClass",
-function(arg, type, rel)
+function(args, type, rel)
   local S, nc, rep, C;
 
-  if Length(arg) = 1 then # arg is a Green's class
+  if Length(args) = 1 then # arg is a Green's class
     # for creating bigger classes containing smaller ones
-    S := Parent(arg[1]);
-    nc := IsGreensClassNC(arg[1]);
-    rep := Representative(arg[1]);
+    S := Parent(args[1]);
+    nc := IsGreensClassNC(args[1]);
+    rep := Representative(args[1]);
   else  # arg is semigroup/Green's class, rep, and boolean
         # for creating smaller classes inside bigger ones
-    if IsGreensClass(arg[1]) then
-      S := Parent(arg[1]);
+    if IsGreensClass(args[1]) then
+      S := Parent(args[1]);
     else
-      S := arg[1];
+      S := args[1];
     fi;
-    rep := arg[2];
-    nc := arg[3];
+    rep := args[2];
+    nc := args[3];
   fi;
 
   C := rec(rep := rep);
