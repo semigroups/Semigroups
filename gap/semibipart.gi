@@ -18,19 +18,19 @@ InstallMethod(GroupOfUnits, "for a bipartition semigroup",
 function(S)
   local R, G, deg, U;
 
-  if MultiplicativeNeutralElement(S)=fail then
+  if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
-  R:=GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
-  G:=SchutzenbergerGroup(R);
-  deg:=DegreeOfBipartitionSemigroup(S);
-  
-  U:=Monoid(List(GeneratorsOfGroup(G), x-> AsBipartition(x, deg)));
-  
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation, 
-   x-> AsBipartition(x, deg)));
-   
+  R := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  G := SchutzenbergerGroup(R);
+  deg := DegreeOfBipartitionSemigroup(S);
+
+  U := Monoid(List(GeneratorsOfGroup(G), x -> AsBipartition(x, deg)));
+
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
+                                               x -> AsBipartition(x, deg)));
+
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 

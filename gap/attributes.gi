@@ -1,15 +1,15 @@
 #############################################################################
 ##
 #W  attributes.gi
-#Y  Copyright (C) 2013-14                                James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-# this file contains methods for finding various attributes of finite semigroups
-# that can satisfy either IsActingSemigroup or ActingSemigroup.
+# This file contains methods for finding various attributes of finite
+# semigroups, where no better method is known.
 
 # Note about the difference between One and MultiplicativeNeutralElement 
 # (the same goes for Zero and MultplicativeZero):
@@ -130,19 +130,7 @@ function(S)
   return Enumerate(GenericSemigroupData(S))!.left;
 end);
 
-# same method for ideals 
-
-InstallMethod(IdempotentGeneratedSubsemigroup, "for finite semigroup",
-[IsActingSemigroup], S-> Semigroup(Idempotents(S), rec(small:=true)));
-
-# same method for ideals 
-
-InstallMethod(IdempotentGeneratedSubsemigroup, 
-"for a finite inverse op semigroup", 
-[IsSemigroupWithInverseOp and IsFinite],
-S-> InverseSemigroup(Idempotents(S), rec(small:=true)));
-
-# same method for ideals
+# same method for ideals, 
 
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class", [IsGreensDClass],
 InjectionPrincipalFactor);
@@ -202,20 +190,22 @@ end);
 #
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for a finite simple or 0-simplesemigroup", [IsFinite and IsSemigroup],
+"for a finite simple or 0-simple semigroup", [IsFinite and IsSemigroup],
 function(S)
   local D, iso, inv;
-  if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then 
-    TryNextMethod();
+  if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then
+    TryNextMethod(); #TODO is there another method?
   fi;
-  D:=GreensDClasses(S)[1];
-  if IsZeroSimpleSemigroup(S) 
-   and IsMultiplicativeZero(S, Representative(D)) then 
-    D:=GreensDClasses(S)[2];
+  D := GreensDClasses(S)[1];
+  if IsZeroSimpleSemigroup(S)
+      and IsMultiplicativeZero(S, Representative(D)) then
+    D := GreensDClasses(S)[2];
   fi;
-  iso:=IsomorphismReesMatrixSemigroup(D);
-  inv:=InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso), x-> x^iso, x->x^inv);
+  iso := IsomorphismReesMatrixSemigroup(D);
+  inv := InverseGeneralMapping(iso);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso),
+                                       x -> x ^ iso, x -> x ^ inv);
 end);
 
 # same method for ideals
@@ -247,7 +237,7 @@ end);
 InstallMethod(PrincipalFactor, "for a Green's D-class", 
 [IsGreensDClass], D-> Range(InjectionPrincipalFactor(D)));
 
-#
+# FIXME delete the following method???
 
 InstallMethod(PrincipalFactor, "for a D-class",
 [IsGreensDClass], AssociatedReesMatrixSemigroupOfDClass);
@@ -386,10 +376,8 @@ InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup], 
 function(S)
   if IsGroup(S) then # since groups (even perm groups) satisfy IsGroupAsSemigroup
-    TryNextMethod();
+    TryNextMethod(); #FIXME is this appropriate?? Shouldn't we return false?
   fi;
   
   return StructureDescription(Range(IsomorphismPermGroup(S)));
 end);
-
-#EOF

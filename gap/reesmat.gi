@@ -12,7 +12,6 @@
 # specific to Rees 0-matrix semigroups.
 
 # same method for ideals
-#FIXME double check this isn't already in the library
 
 InstallMethod(IsomorphismPermGroup,
 "for a subsemigroup of a Rees 0-matrix semigroup",
@@ -21,43 +20,46 @@ function(S)
   local rep;
 
   if not IsGroupAsSemigroup(S)  then
-   Error( "usage: a subsemigroup of a Rees 0-matrix semigroup satisfying\n", 
-    "IsGroupAsSemigroup,");
-   return; 
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
+          "semigroup satisfying IsGroupAsSemigroup,");
+    return;
   fi;
 
-  rep:=S.1;
-  if rep![1]=0 then # special case for the group consisting of 0
-    return MagmaIsomorphismByFunctionsNC(S, Group(()), x-> (), x-> rep);
+  rep := Representative(S);
+  if rep![1] = 0 then # special case for the group consisting of 0
+    return MagmaIsomorphismByFunctionsNC(S, Group(()), x -> (), x -> rep);
   fi;
 
-  return MagmaIsomorphismByFunctionsNC(S, 
-    Group(List(GeneratorsOfSemigroup(S), x-> x![2])),
-      x-> x![2], x-> RMSElement(S, rep![1], x, rep![3]));
+  # gaplint: ignore 4
+  return MagmaIsomorphismByFunctionsNC(S,
+           Group(List(GeneratorsOfSemigroup(S), x -> x![2])),
+           x -> x![2],
+           x -> RMSElement(S, rep![1], x, rep![3]));
 end);
 
 # same method for ideals
-#FIXME double check this isn't already in the library
+
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
-function(s)
-  local r, g, i, j, u;
+function(S)
+  local R, G, i, j, U;
 
-  if MultiplicativeNeutralElement(s)=fail then
+  if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
-  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g:=SchutzenbergerGroup(r);
-  i:=MultiplicativeNeutralElement(s)![1];
-  j:=MultiplicativeNeutralElement(s)![3];
+  R := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  G := SchutzenbergerGroup(R);
+  i := MultiplicativeNeutralElement(S)![1];
+  j := MultiplicativeNeutralElement(S)![3];
 
-  u:=Semigroup(List(GeneratorsOfGroup(g), x-> RMSElement(s, i, x, j)));
-  
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
+  U := Semigroup(List(GeneratorsOfGroup(G), x -> RMSElement(S, i, x, j)));
 
-  return u;
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, G);
+
+  return U;
 end);
 
 # this method is better than the generic one for acting semigroups

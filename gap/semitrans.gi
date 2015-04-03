@@ -283,13 +283,16 @@ function(coll, set)
 end);
 
 # not relevant for ideals
+
 InstallMethod(Size, "for a monogenic transformation semigroup",
 [IsTransformationSemigroup and IsMonogenicSemigroup],
-function(s)
+function(S)
   local ind;
-  ind:=IndexPeriodOfTransformation(GeneratorsOfSemigroup(s)[1]);
-  if ind[1]>0 then 
-    return Sum(ind)-1;
+  # FIXME this must be wrong what if <S> is monogenic but is defined by more
+  # than one generator? 
+  ind := IndexPeriodOfTransformation(GeneratorsOfSemigroup(S)[1]);
+  if ind[1] > 0 then
+    return Sum(ind) - 1;
   fi;
   return Sum(ind);
 end);
@@ -513,38 +516,41 @@ end);
 
 #
 
-InstallMethod(IsomorphismTransformationMonoid, 
-"for a transformation semigroup with generators",
+InstallMethod(IsomorphismTransformationMonoid,
+"for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local id, dom, gens, inv;
 
-  if IsMonoid(s) then 
+  if IsMonoid(s) then
     return MappingByFunction(s, s, IdFunc, IdFunc);
   fi;
 
-  if MultiplicativeNeutralElement(s)=fail then 
-    Error( "usage: <s> must have a multiplicative neutral element,");
+  if MultiplicativeNeutralElement(s) = fail then
+    Error("Semigroups: IsomorphismTransformationMonoid: usage,\n",
+          "the argument <s> must have a multiplicative neutral element,");
     return;
   fi;
-  
-  id:=MultiplicativeNeutralElement(s);
-  dom:=ImageSetOfTransformation(id);
-  
-  gens:=List(Generators(s), x-> TransformationOp(x, dom));
 
-  inv:=function(f)
+  id := MultiplicativeNeutralElement(s);
+  dom := ImageSetOfTransformation(id);
+
+  gens := List(Generators(s), x -> TransformationOp(x, dom));
+
+  inv := function(f)
     local out, i;
 
-    out:=[1..DegreeOfTransformationSemigroup(s)];
-    for i in [1..Length(dom)] do 
-      out[dom[i]]:=dom[i^f];
+    out := [1 .. DegreeOfTransformationSemigroup(s)];
+    for i in [1 .. Length(dom)] do
+      out[dom[i]] := dom[i ^ f];
     od;
-    return id*Transformation(out);
+    return id * Transformation(out);
   end;
 
-  return MappingByFunction(s, Monoid(gens), f-> TransformationOp(f, dom), 
-   inv);
+  return MappingByFunction(s,
+                           Monoid(gens),
+                           f -> TransformationOp(f, dom),
+                           inv);
 end);
 
 #
@@ -557,19 +563,21 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
- 
-  if not IsGroupAsSemigroup(s)  then
-   Error( "usage: a transformation semigroup satisfying IsGroupAsSemigroup,");
-   return; 
-  fi;
 
-  return MagmaIsomorphismByFunctionsNC(s, 
-   Group(List(GeneratorsOfSemigroup(s), PermutationOfImage)), 
-    PermutationOfImage, 
-    x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
+  if not IsGroupAsSemigroup(s) then
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <s> must be a transformation semigroup ",
+          "satisfying IsGroupAsSemigroup,");
+    return;
+  fi;
+  # gaplint: ignore 4
+  return MagmaIsomorphismByFunctionsNC(s,
+           Group(List(GeneratorsOfSemigroup(s), PermutationOfImage)),
+           PermutationOfImage,
+           x -> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
 end);
 
 # same method for ideals
@@ -579,19 +587,19 @@ InstallMethod(GroupOfUnits, "for a transformation semigroup",
 function(s)
   local r, g, deg, u;
 
-  if MultiplicativeNeutralElement(s)=fail then
+  if MultiplicativeNeutralElement(s) = fail then
     return fail;
   fi;
 
-  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g:=SchutzenbergerGroup(r);
-  deg:=DegreeOfTransformationSemigroup(s);   
- 
-  u:=Monoid(List(GeneratorsOfGroup(g), x-> AsTransformation(x, deg)));
-  
-  SetIsomorphismPermGroup(u, MappingByFunction(u, g, PermutationOfImage, 
-   x-> AsTransformation(x, deg)));
-   
+  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g := SchutzenbergerGroup(r);
+  deg := DegreeOfTransformationSemigroup(s);
+
+  u := Monoid(List(GeneratorsOfGroup(g), x -> AsTransformation(x, deg)));
+
+  SetIsomorphismPermGroup(u, MappingByFunction(u, g, PermutationOfImage,
+                                               x -> AsTransformation(x, deg)));
+
   SetIsGroupAsSemigroup(u, true);
   UseIsomorphismRelation(u, g);
 

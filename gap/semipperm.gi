@@ -232,18 +232,24 @@ end);
 
 # same method for ideals
 
+# same method for ideals
+
 InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-   Error( "usage: a partial perm semigroup satisfying IsGroupAsSemigroup,");
-   return; 
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <s> must be a partial perm semigroup ",
+          "satisfying IsGroupAsSemigroup,");
+    return;
   fi;
 
+  # gaplint: ignore 3
   return MagmaIsomorphismByFunctionsNC(s,
-   Group(List(GeneratorsOfSemigroup(s), AsPermutation)),
-    AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
+           Group(List(GeneratorsOfSemigroup(s), AsPermutation)),
+           AsPermutation,
+           x -> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
 end);
 
 # it just so happens that the MultiplicativeNeutralElement of a semigroup of
@@ -262,20 +268,20 @@ InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 function(s)
   local r, g, deg, u;
 
-  if MultiplicativeNeutralElement(s)=fail then
+  if MultiplicativeNeutralElement(s) = fail then
     return fail;
   fi;
 
-  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g:=SchutzenbergerGroup(r);
-  deg:=Maximum(DegreeOfPartialPermSemigroup(s),
-   CodegreeOfPartialPermSemigroup(s));   
- 
-  u:=Monoid(List(GeneratorsOfGroup(g), x-> AsPartialPerm(x, deg)));
-  
-  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation, 
-   x-> AsPartialPerm(x, deg)));
-   
+  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g := SchutzenbergerGroup(r);
+  deg := Maximum(DegreeOfPartialPermSemigroup(s),
+                 CodegreeOfPartialPermSemigroup(s));
+
+  u := Monoid(List(GeneratorsOfGroup(g), x -> AsPartialPerm(x, deg)));
+
+  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation,
+                                               x -> AsPartialPerm(x, deg)));
+
   SetIsGroupAsSemigroup(u, true);
   UseIsomorphismRelation(u, g);
 

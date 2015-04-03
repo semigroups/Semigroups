@@ -625,27 +625,10 @@ true
 
 #T# TestInstall38: Issue 33 (problem with Rees factor semigroups)
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), 
-> [Transformation([1,2,2,2])]);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
-gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
-gap> hom := HomomorphismQuotientSemigroup(cong);
-MappingByFunction( <full transformation semigroup on 4 pts>, <quotient of Mono\
-id( [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), 
-  Transformation( [ 1, 2, 3, 1 ] ) ] ) by ReesCongruenceOfSemigroupIdeal( 
-SemigroupIdeal( 
- Monoid( 
-  [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), Transformati\
-on( [ 1, 2, 3, 1 ] ) ] ), [ Transformation( [ 1, 2, 2, 2 ] ) ] )
-  )>, function( x ) ... end )
-gap> T := Range(hom);
-<quotient of Monoid( [ Transformation( [ 2, 3, 4, 1 ] ), 
-  Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 3, 1 ] ) 
- ] ) by ReesCongruenceOfSemigroupIdeal( SemigroupIdeal( 
- Monoid( 
-  [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), Transformati\
-on( [ 1, 2, 3, 1 ] ) ] ), [ Transformation( [ 1, 2, 2, 2 ] ) ] ) )>
+> [Transformation([1,2,2,2])]);;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
+gap> hom := HomomorphismQuotientSemigroup(cong);;
+gap> T := Range(hom);;
 gap> IsSemigroup(T);
 true
 gap> Size(T);
@@ -950,7 +933,7 @@ gap> R := ReesZeroMatrixSemigroup(Group([(1,3)]), P);;
 gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1,3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x,y]]);;
-gap> c := EquivalenceClasses(cong);
+gap> c := Set(EquivalenceClasses(cong));
 [ {0}, {(1,(),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, 
   {(1,(),6)}, {(2,(),1)}, {(2,(),2)}, {(2,(),3)}, {(2,(),4)}, {(2,(),5)}, 
   {(2,(),6)}, {(3,(),1)}, {(3,(),2)}, {(3,(),3)}, {(3,(),4)}, {(3,(),5)}, 
