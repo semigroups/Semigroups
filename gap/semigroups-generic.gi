@@ -1,14 +1,14 @@
 ###########################################################################
 ##
-#W  exhaust.gi
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#W  semigroups-generic.gi
+#Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-# this file contains the main algorithms for computing semigroups belonging to
+# This file contains the main algorithms for computing semigroups belonging to
 # IsSemigroup. 
 
 #  for details see:
@@ -24,35 +24,35 @@
 InstallMethod(Enumerator, "for an generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local data, record;
+  local data, enum;
   
-  record:=rec();
+  enum := rec();
 
-  record.NumberElement:=function(enum, elt)
+  enum.NumberElement := function(enum, elt)
     return Position(GenericSemigroupData(S), elt);
   end;
 
-  record.ElementNumber:=function(enum, nr)
-    data:=GenericSemigroupData(S);
+  enum.ElementNumber := function(enum, nr)
+    data := GenericSemigroupData(S);
     if not IsBound(data!.elts[nr]) then 
       Enumerate(data, nr);
     fi;
     return data!.elts[nr];
   end;
 
-  record.Length:=enum -> Size(S);
+  enum.Length := enum -> Size(S);
 
-  record.AsList:=enum -> Enumerate(GenericSemigroupData(S))!.elts;
+  enum.AsList := enum -> Enumerate(GenericSemigroupData(S))!.elts;
 
-  record.Membership:=function(enum, elt)
-    return Position(GenericSemigroupData(S), elt)<>fail;
+  enum.Membership := function(enum, elt)
+    return Position(GenericSemigroupData(S), elt) <> fail;
   end;
 
-  record.IsBound\[\]:=function(enum, nr)
+  enum.IsBound\[\] := function(enum, nr)
     return IsBound(GenericSemigroupData(S)!.elts[nr]);
   end;
 
-  return EnumeratorByFunctions(S, record);
+  return EnumeratorByFunctions(S, enum);
 end);    
 
 # different method for ideals

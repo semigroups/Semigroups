@@ -303,7 +303,7 @@ function(S)
    SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
   if not IsActingSemigroup(S) then  
-    rel!.data:=GABOW_SCC(RightCayleyGraphSemigroup(S));
+    rel!.data:=GABOW_SCC(GenericSemigroupData(S)!.right);
   fi;
   return rel;
 end);
@@ -330,7 +330,7 @@ function(S)
   fi;
 
   if not IsActingSemigroup(S) then  
-    rel!.data:=GABOW_SCC(LeftCayleyGraphSemigroup(S));
+    rel!.data:=GABOW_SCC(GenericSemigroupData(S)!.left);
   fi;
   return rel;
 end);
