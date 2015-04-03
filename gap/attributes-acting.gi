@@ -429,31 +429,32 @@ end);
 
 InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
-  local d, rep, gens;
+function(S)
+  local D, rep, gens;
 
-  if IsSemigroupIdeal(s)
-      and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
-    return MultiplicativeZero(SupersemigroupOfIdeal(s));
+  if IsSemigroupIdeal(S)
+      and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then
+    return MultiplicativeZero(SupersemigroupOfIdeal(S));
   fi;
 
-  if HasMinimalDClass(s) then
-    d := MinimalDClass(s);
-    if HasSize(d) then
-      if Size(d) = 1 then
-        return Representative(d);
+  if HasMinimalDClass(S) then
+    D := MinimalDClass(S);
+    if HasSize(D) then
+      if Size(D) = 1 then
+        return Representative(D);
       else
         return fail;
       fi;
     fi;
   fi;
 
-  if not HasGeneratorsOfSemigroup(s) then
-    return MultiplicativeZero(SupersemigroupOfIdeal(s));
+  if IsSemigroupIdeal(S) then
+    return MultiplicativeZero(SupersemigroupOfIdeal(S));
   fi;
 
-  rep := RepresentativeOfMinimalIdeal(s);
-  gens := GeneratorsOfSemigroup(s);
+  rep := RepresentativeOfMinimalIdeal(S);
+  gens := GeneratorsOfSemigroup(S);
+
   if ForAll(gens, x -> x * rep = rep and rep * x = rep) then
     return rep;
   fi;

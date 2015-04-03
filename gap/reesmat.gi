@@ -11,6 +11,19 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
+InstallMethod(MultiplicativeZero, "for a Rees 0-matrix semigroup", 
+[IsReesZeroMatrixSubsemigroup],
+function(R)
+  local rep, zero;
+
+  rep := Representative(R);
+  zero := MultiplicativeZero(ReesMatrixSemigroupOfFamily(FamilyObj(rep)));
+  if IsReesMatrixSemigroup(R) or zero in R then 
+    return zero;
+  fi;
+  return fail;
+end);
+
 # same method for ideals
 
 InstallMethod(IsomorphismPermGroup,
