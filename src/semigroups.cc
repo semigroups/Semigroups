@@ -2,20 +2,32 @@
  * semigroups: Methods for semigroups
  */
 
+#include "semigroups.h"
+
 #include <iostream>
 
+Obj NewWrap(CayleyGraph* graph){
+    Obj o = NewBag(T_SEMI, 1*sizeof(Obj));
+    SET_WRAP<CayleyGraph>(o, graph);
+    return o;
+}
+
+void SemigroupsFreeFunc(Obj o) { 
+    delete GET_WRAP<std::vector <u_int32_t> >(o);
+}
+
+
 extern "C" {
-#include "src/compiled.h"          /* GAP headers                */
-Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
-Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj obj, Obj val);
+  #include "src/compiled.h"          /* GAP headers                */
+  Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
+  Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj obj, Obj val);
 }
 
 #define ELM_PLIST2(plist, i, j)       ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j)       INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
-//#define DEBUG 1
-
+#define DEBUG 1
 
 static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
@@ -26,12 +38,11 @@ static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // assumes the length of data!.elts is at most 2^28
 
 Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
-  Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix, 
+  Obj   found, elts, gens, genslookup, left, first, final, prefix, suffix, 
         reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
         empty, oldword, x;
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
-  
 
   //remove nrrules 
   if(looking==True){
@@ -71,8 +82,8 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   #ifdef DEBUG
     Pr("here 2\n", 0L, 0L);
   #endif 
-  //lists of lists
-  right = ElmPRec(data, RNamName("right")); 
+
+  //right = ElmPRec(data, RNamName("right")); 
   // elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
   left = ElmPRec(data, RNamName("left"));                 
   // elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
@@ -111,6 +122,11 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   stop = 0;
   found = False;
   
+  //lists of lists
+  auto right = new CayleyGraph(nrgens);
+  //AssPRec(data, RNamName("right"), NewWrap(right));  
+  std::cout << "right->size() = " << right->size() << "\n";
+
   #ifdef DEBUG
     Pr("here 4\n", 0L, 0L);
   #endif 
@@ -119,33 +135,37 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
     while(i<=nr&&LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
       b=INT_INTOBJ(ELM_PLIST(first, i)); 
       s=INT_INTOBJ(ELM_PLIST(suffix, i));
-      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); //from T_PLIST_EMPTY
+      //RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); //from T_PLIST_EMPTY
       for(j = 1;j <= nrgens;j++){
         #ifdef DEBUG
           Pr("i=%d\n", (Int) i, 0L);
           Pr("j=%d\n", (Int) j, 0L);
         #endif
         if(s != 0&&ELM_PLIST2(reduced, s, j) == False){
-          r = INT_PLIST2(right, s, j);
+          r = right->get(s, j);
+          //r = INT_PLIST2(right, s, j);
           if(INT_PLIST(prefix, r) != 0){
             #ifdef DEBUG
               Pr("Case 1!\n", 0L, 0L);
             #endif
             intval = INT_PLIST2(left, INT_PLIST(prefix, r), b);
-            SET_ELM_PLIST2(right, i, j, ELM_PLIST2(right, intval, INT_PLIST(final, r)));
+            //SET_ELM_PLIST2(right, i, j, ELM_PLIST2(right, intval, INT_PLIST(final, r)));
+            right->set(i, j, right->get(intval, INT_PLIST(final, r)));
             SET_ELM_PLIST2(reduced, i, j, False);
           } else if (r == one){
             #ifdef DEBUG
               Pr("Case 2!\n", 0L, 0L);
             #endif
-            SET_ELM_PLIST2(right, i, j, ELM_PLIST(genslookup, b));
+            //SET_ELM_PLIST2(right, i, j, ELM_PLIST(genslookup, b));
+            right->set(i, j, INT_PLIST(genslookup, b));
             SET_ELM_PLIST2(reduced, i, j, False);
           } else {
             #ifdef DEBUG
               Pr("Case 3!\n", 0L, 0L);
             #endif
-            SET_ELM_PLIST2(right, i, j, 
-              ELM_PLIST2(right, INT_PLIST(genslookup, b), INT_PLIST(final, r)));
+            right->set(i, j, right->get(INT_PLIST(genslookup, b), INT_PLIST(final, r)));
+            //SET_ELM_PLIST2(right, i, j, 
+            //  ELM_PLIST2(right, INT_PLIST(genslookup, b), INT_PLIST(final, r)));
             SET_ELM_PLIST2(reduced, i, j, False);
           }
         } else {
@@ -172,7 +192,8 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
             CHANGED_BAG(newrule);
             nrrules++;
             AssPlist(rules, nrrules, newrule);
-            SET_ELM_PLIST2(right, i, j, objval);
+            right->set(i, j, INT_INTOBJ(objval));
+            //SET_ELM_PLIST2(right, i, j, objval);
           } else {
             #ifdef DEBUG
               Pr("Case 5!\n", 0L, 0L);
@@ -197,7 +218,8 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
             }
 
             if(s!=0){
-              AssPlist(suffix, nr, ELM_PLIST2(right, s, j));
+              AssPlist(suffix, nr, INTOBJ_INT(right->get(s, j)));
+                //ELM_PLIST2(right, s, j));
             } else {
               AssPlist(suffix, nr, ELM_PLIST(genslookup, j));
             }
@@ -208,9 +230,11 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
             AssPlist(final, nr, INTOBJ_INT(j));
             AssPlist(prefix, nr, INTOBJ_INT(i));
             
-            empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
-            SET_LEN_PLIST(empty, 0);
-            AssPlist(right, nr, empty);
+            //empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
+            //SET_LEN_PLIST(empty, 0);
+            //AssPlist(right, nr, empty);
+            std::cout << "right->size() = " << right->size() << "\n";
+            right->expand();
             
             empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
             SET_LEN_PLIST(empty, 0);
@@ -224,7 +248,13 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
             AssPlist(reduced, nr, empty);
             
             SET_ELM_PLIST2(reduced, i, j, True);
-            SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));
+            //SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));
+            std::cout << "right->size() = " << right->size() << "\n";
+            std::cout << "i = " << i << "\n";
+            std::cout << "j = " << j << "\n";
+            std::cout << "nrgens = " << nrgens << "\n";
+
+            right->set(i, j, nr);
             
             if(looking==True&&found==False&&
                 CALL_2ARGS(lookfunc, data, INTOBJ_INT(nr))==True){
@@ -253,7 +283,8 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
           p=INT_INTOBJ(ELM_PLIST(prefix, j)); 
           b=INT_INTOBJ(ELM_PLIST(final, j));
           for(k=1;k<=nrgens;k++){ 
-            SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST2(left, p, k), b));
+            SET_ELM_PLIST2(left, j, k, INTOBJ_INT(right->get(INT_PLIST2(left, p, k), b)));
+                //ELM_PLIST2(right, INT_PLIST2(left, p, k), b));
           }
         }
       } else if(len==1){ 
@@ -264,7 +295,8 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
           RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
           b=INT_INTOBJ(ELM_PLIST(final, j));
           for(k=1;k<=nrgens;k++){ 
-            SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST(genslookup, k) , b));
+            SET_ELM_PLIST2(left, j, k, INTOBJ_INT(right->get(INT_PLIST(genslookup, k), b)));
+                //ELM_PLIST2(right, INT_PLIST(genslookup, k) , b));
           }
         }
       }

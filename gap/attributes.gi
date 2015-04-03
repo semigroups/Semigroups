@@ -126,6 +126,7 @@ function(S)
 end);
 
 # same method for ideals
+# the performance of this sucks: FIXME!!
 
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
