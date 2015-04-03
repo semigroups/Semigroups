@@ -345,7 +345,7 @@ gap> MinimalIdeal(J);
 gap> last=last2;
 true
 gap> MinimalDClass(I);
-{Transformation( [ 1, 1, 1, 1, 1, 1 ] )}
+{Transformation( [ 5, 5, 5, 5, 5, 5 ] )}
 gap> MinimalDClass(J);
 {Transformation( [ 5, 5, 5, 5, 5, 5 ] )}
 
@@ -497,7 +497,7 @@ fail
 gap> MinimalIdeal(M);
 <simple bipartition semigroup ideal on 7 pts with 1 generator>
 gap> MinimalDClass(M);
-{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1 ], [ -2, -4, -7 ], [ -3, -5 ], 
+{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], 
  [ -6 ] ] )}
 gap> MinimalDClass(R);
 {Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], 

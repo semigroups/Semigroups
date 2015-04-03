@@ -233,7 +233,7 @@ end);
 InstallMethod(MinimalIdeal, "for a finite semigroup", [IsFinite and IsSemigroup],
 function(S)
   local I;  
-  I:=SemigroupIdeal(S, Representative(MinimalDClass(S)));
+  I := SemigroupIdeal(S, RepresentativeOfMinimalIdeal(S));
   SetIsSimpleSemigroup(I, true);
   return I;
 end);

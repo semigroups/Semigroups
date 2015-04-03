@@ -884,7 +884,7 @@ gap> s := ReesZeroMatrixSemigroup(Group(()), [ [ () ] ]);
 gap> t := First(s, x -> not x = MultiplicativeZero(s));
 (1,(),1)
 gap> I := SemigroupIdeal(s, t);
-<Rees 0-matrix semigroup ideal with 1 generator>
+<regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> IsZeroSemigroup(I);
 false
 gap> HasIsZeroSemigroup(s);
@@ -892,7 +892,7 @@ false
 gap> IsZeroSemigroup(s);
 false
 gap> I := SemigroupIdeal(s, MultiplicativeZero(s));
-<Rees 0-matrix semigroup ideal with 1 generator>
+<regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> IsZeroSemigroup(I);
 true
 
