@@ -296,7 +296,7 @@ InstallMethod(Size,
 [IsCongruenceClass and IsFinite],
 function(class)
   local elms, p, tab;
-  elms := Elements(Range(Parent(class)));;
+  elms := Elements(Parent(class));;
   p := Position(elms, Representative(class));
   tab := AsLookupTable(EquivalenceClassRelation(class));
   return Number(tab, n -> n = tab[p]);
