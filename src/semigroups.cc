@@ -654,7 +654,10 @@ static Int InitKernel( StructInitInfo *module )
 {
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
-
+    InfoBags[T_SEMI].name = "Semigroups package C++ type";
+    InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
+    InitFreeFuncBag(T_SEMI, &SemigroupsFreeFunc);
+    
     /* return success                                                      */
     return 0;
 }
