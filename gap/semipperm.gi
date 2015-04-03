@@ -564,4 +564,128 @@ function(filter, n)
   return out;
 end);
 
-#EOF
+#
+
+InstallMethod(RepresentativeOfMinimalIdealNC,
+"for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(S)
+  local gens, nrgens, domain, rank, deg, range, codeg, smallest_I_n, n,
+  min_rank, min_rank_index, len, in_nbs, labels, collapsed, nr_collapsed,
+  in_range, i, act, pos, marked, squashed, elts, j, m, k;
+
+  # Is it possible to not have the generators of a partial perm semigroup?
+  gens := GeneratorsOfSemigroup(S);
+  nrgens := Length(gens);
+
+  # DomainOfPartialPermCollection   Union of the domains of the gens
+  domain := DomainOfPartialPermCollection(gens);
+
+  # RankOfPartialPermSemigroup      Size of union of the domains of the gens
+  rank := Length(domain);
+  if rank = 0 then
+    #Print("Rank 0,\n");
+    return gens[1];
+  fi;
+
+  # DegreeOfPartialPermSemigroup    Largest point in any domain
+  deg := Maximum(domain);
+  # ImageOfPartialPermCollection    Union of the images of the gens
+  range := ImageOfPartialPermCollection(gens);
+  # CodegreeOfPartialPermSemigroup  Largest point in any range
+  codeg := Maximum(range);
+
+  # Smallest n such that S <= I_n
+  smallest_I_n := Maximum(deg, codeg); 
+  
+  if rank = 1 then
+    #Print("Rank 1: ");
+    if domain = range then
+      #Print("trivial semigroup,\n");
+      return gens[1];
+    else
+      #Print("null semigroup of order 2,\n");
+      return PartialPerm([], []);
+    fi;
+  fi;
+
+  n := rank;
+  # Find the minimum rank of a generator
+  # WW: Is this worth it?
+  min_rank := n;
+  for i in [1 .. nrgens] do
+    rank := RankOfPartialPerm(gens[i]);
+    if rank = 0 then
+      return gens[i];
+    elif rank < min_rank then
+      min_rank := rank;
+      min_rank_index := i;
+    fi;
+  od;
+
+  if min_rank = n and domain = range then
+    SetIsGroupAsSemigroup(S, true);
+    #Print("A semigroup of permtations as partial permutations,\n");
+    return gens[1];
+  fi;
+
+  #Print("Minimum rank: ", min_rank, " for ", gens[min_rank_index]);
+
+  # Should probably be done with hash tables
+  len := Length(range);
+  in_nbs := List([1 .. len + 1], x -> []);
+  labels := List([1 .. len + 1], x -> []);
+  collapsed := BlistList([1 .. len], []);
+  nr_collapsed := 0;
+  in_range := BlistList([1 .. smallest_I_n], range);
+  for m in [1 .. len] do
+    i := range[m];
+    for j in [1 .. nrgens] do
+      act := i ^ gens[j];
+      if act = 0 then
+        Add(in_nbs[len + 1], m);
+        Add(labels[len + 1], j);
+        collapsed[m] := true;
+        nr_collapsed := nr_collapsed + 1;
+        break;
+      fi;
+      if in_range[act] then
+        pos := PositionSorted(range, act); # WW make better. Has table?
+        Add(in_nbs[pos], m);
+        Add(labels[pos], j);
+        if collapsed[pos] then
+          break;
+        fi;
+      fi;
+    od;
+  od;
+
+  if nr_collapsed = len then
+    return PartialPerm([], []);
+  fi;
+
+  marked := BlistList([1 .. len], []);
+  squashed := [len + 1];
+  elts := EmptyPlist(len);
+  for i in squashed do
+    for k in [1 .. Length(in_nbs[i])] do
+      j := in_nbs[i][k];
+      if not marked[j] then
+        marked[j] := true;
+        if i = len + 1 then
+          elts[j] := [labels[i][k]];
+        else
+          elts[j] := Concatenation([labels[i][k]], elts[i]);
+        fi;
+        Add(squashed, j);
+      fi;
+    od;
+  od;
+
+  if Length(squashed) = len + 1 then
+    return PartialPerm([], []);
+  fi;
+  Print("Not got this far yet: <empty partial perm> isn't in this semigroup,");
+  return fail;
+end);
+
