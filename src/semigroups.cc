@@ -5,17 +5,69 @@
 #include "semigroups.h"
 
 #include <iostream>
+#include <assert.h>
 
-Obj NewWrap(CayleyGraph* graph){
-    Obj o = NewBag(T_SEMI, 1*sizeof(Obj));
-    SET_WRAP<CayleyGraph>(o, graph);
-    return o;
-}
+//#include <assert> what is the right things here!
+
+//#define DEBUG 1
+
+class RecVec {
+        
+      public:
+        
+        RecVec (const RecVec& copy) = delete;
+        RecVec& operator= (RecVec const& copy) = delete;
+        
+        RecVec(size_t nrcols, size_t nrrows=0) : _vec(new std::vector<u_int32_t>()), 
+                                                 _nrcols(nrcols),
+                                                 _nrrows(0){
+          std::cout << "constructed!!\n";
+          this->expand(nrrows);
+        }
+        
+        ~RecVec() {
+          std::cout << "destructed!!\n";
+          delete _vec;
+        }
+        
+        u_int32_t get (size_t i, size_t j) {
+          assert(i - 1 < _nrrows && j - 1 < _nrcols);
+          return _vec->at((i - 1) * _nrcols + (j - 1)); 
+        }
+        
+        void set (size_t i, size_t j, u_int32_t val) {
+          assert(i - 1 < _nrrows && j - 1 < _nrcols);
+          _vec->at((i - 1) * _nrcols + (j - 1)) = val; 
+        }
+
+        void expand (size_t nr=1) {
+          _nrrows += nr;
+          for (size_t i = 0; i < _nrcols * nr; i++) {
+            _vec->push_back(0);
+          }
+        }
+
+        size_t size () {
+          return _vec->size();
+        }
+
+      private:
+
+        std::vector<u_int32_t>* _vec;
+        size_t _nrcols;
+        size_t _nrrows;
+};
 
 void SemigroupsFreeFunc(Obj o) { 
-    delete GET_WRAP<std::vector <u_int32_t> >(o);
+  std::cout << "freeing!!\n";
+  delete GET_WRAP<RecVec>(o);
 }
 
+Obj NewWrap(RecVec* rv){
+    Obj o = NewBag(T_SEMI, 1 * sizeof(Obj));
+    SET_WRAP<RecVec>(o, rv);
+    return o;
+}
 
 extern "C" {
   #include "src/compiled.h"          /* GAP headers                */
@@ -27,7 +79,6 @@ extern "C" {
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j)       INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
-#define DEBUG 1
 
 static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
@@ -48,9 +99,12 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   if(looking==True){
     AssPRec(data, RNamName("found"), False);
   }
+
   int_limit = INT_INTOBJ(limit);
   i = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
+  // TODO check the position and init the data
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+
 
   if(i>nr){
     return data;
@@ -64,6 +118,7 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   elts = ElmPRec(data, RNamName("elts")); 
   // the so far enumerated elements
   gens = ElmPRec(data, RNamName("gens")); 
+  nrgens=LEN_PLIST(gens);
   // the generators
   genslookup = ElmPRec(data, RNamName("genslookup"));     
   // genslookup[i]=Position(elts, gens[i], this is not always <i+1>!
@@ -79,10 +134,18 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   suffix = ElmPRec(data, RNamName("suffix"));             
   // see first, 0 if suffix is empty i.e. elts[i] is a gen
   
-  #ifdef DEBUG
-    Pr("here 2\n", 0L, 0L);
+  #ifdef DEBUG 
+    Pr("here 2\n", 0L, 0L); 
   #endif 
 
+  RecVec* right;
+  if (i == 1) {
+    right = new RecVec(nrgens, nrgens);
+    AssPRec(data, RNamName("right"), NewWrap(right));
+  } else {
+    right = GET_WRAP<RecVec>(ElmPRec(data, RNamName("right")));
+  }
+  //lists of lists
   //right = ElmPRec(data, RNamName("right")); 
   // elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
   left = ElmPRec(data, RNamName("left"));                 
@@ -118,14 +181,8 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   nrrules=INT_INTOBJ(ElmPRec(data, RNamName("nrrules")));           
   // Length(rules)
   
-  nrgens=LEN_PLIST(gens);
   stop = 0;
   found = False;
-  
-  //lists of lists
-  auto right = new CayleyGraph(nrgens);
-  //AssPRec(data, RNamName("right"), NewWrap(right));  
-  std::cout << "right->size() = " << right->size() << "\n";
 
   #ifdef DEBUG
     Pr("here 4\n", 0L, 0L);
@@ -233,7 +290,6 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
             //empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
             //SET_LEN_PLIST(empty, 0);
             //AssPlist(right, nr, empty);
-            std::cout << "right->size() = " << right->size() << "\n";
             right->expand();
             
             empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
@@ -249,11 +305,6 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
             
             SET_ELM_PLIST2(reduced, i, j, True);
             //SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));
-            std::cout << "right->size() = " << right->size() << "\n";
-            std::cout << "i = " << i << "\n";
-            std::cout << "j = " << j << "\n";
-            std::cout << "nrgens = " << nrgens << "\n";
-
             right->set(i, j, nr);
             
             if(looking==True&&found==False&&
@@ -312,7 +363,7 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   AssPRec(data, RNamName("len"), INTOBJ_INT(len));  
 
   CHANGED_BAG(data); 
-  
+  //SemigroupsFreeFunc(ElmPRec(data, RNamName("right")));
   return data;
 }
 
@@ -619,6 +670,7 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
   AssPRec(out, RNamName("id"), id);
   AssPRec(out, RNamName("comps"), comps);
   CHANGED_BAG(out);
+
   return out;
 }
 
