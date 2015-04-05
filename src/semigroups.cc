@@ -8,14 +8,19 @@
 #include <iostream>
 #include <assert.h>
 
-//using namespace semigroups;
-//using Transformation = semigroups::Transformation;
+//#define DEBUG
+//#define NDEBUG 
 
-//class Element; 
-//class Transformation; 
-//Transformation* x = new Transformation(image);
-
-//#define DEBUG 1
+Element* ElementFromObj (Obj o, u_int16_t n) {
+  if (TNUM_OBJ(o) == T_TRANS2) {
+    std::vector<u_int16_t> image;
+    UInt2* ptf = ADDR_TRANS2(o);
+    for (size_t i = 0; i < n; i++) {
+      image.push_back(ptf[i]);
+    }
+    return new Transformation(image);
+  }
+}
 
 class RecVec {
         
@@ -101,18 +106,37 @@ static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // assumes the length of data!.elts is at most 2^28
 
 Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
-  Obj   found, elts, gens, genslookup, left, first, final, prefix, suffix, 
+  Obj   found, //elts,
+        gens, genslookup, left, first, final, prefix, suffix, 
         reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
         empty, oldword, x;
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
 
   std::vector<u_int16_t> image;
+  image.push_back(3);
+  image.push_back(3);
+  image.push_back(3);
+  image.push_back(3);
   Transformation* xxx = new Transformation(image);
-  std::unordered_map<Transformation, u_int16_t> map;
-  map.insert(std::make_pair(xxx, 1)); 
-  
+  std::cout << xxx->hash_value() << "\n";
+  std::unordered_map<u_int16_t, u_int16_t> map;
+  map.insert(std::make_pair(xxx->hash_value(), 1)); 
+  std::cout << map.find(xxx->hash_value())->second << "\n";
   delete xxx;
+  image.push_back(1);
+  image.push_back(3);
+  image.push_back(3);
+  image.push_back(3);
+  xxx = new Transformation(image);
+  auto it = map.find(xxx->hash_value());
+  if (it == map.end()) {
+    std::cout << "not found \n";
+  } else {
+    std::cout << "found \n";
+  }
+
+  
   //remove nrrules 
   if(looking==True){
     AssPRec(data, RNamName("found"), False);
@@ -132,11 +156,18 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   // get everything out of <data>
   
   //lists of integers, objects
-  elts = ElmPRec(data, RNamName("elts")); 
+  //elts = ElmPRec(data, RNamName("elts")); 
   // the so far enumerated elements
   gens = ElmPRec(data, RNamName("gens")); 
   nrgens=LEN_PLIST(gens);
   // the generators
+  std::vector<Element*> elts;
+  for (i = 0; i < nrgens; i++) {
+    auto x = ElementFromObj(ELM_PLIST(gens, i + 1), 5);
+    elts.push_back(x);
+    std::cout << x-> hash_value() << "\n";
+  }
+/*
   genslookup = ElmPRec(data, RNamName("genslookup"));     
   // genslookup[i]=Position(elts, gens[i], this is not always <i+1>!
   lenindex = ElmPRec(data, RNamName("lenindex"));         
@@ -380,7 +411,7 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   AssPRec(data, RNamName("one"), ((one!=0)?INTOBJ_INT(one):False));  
   AssPRec(data, RNamName("pos"), INTOBJ_INT(i));  
   AssPRec(data, RNamName("len"), INTOBJ_INT(len));  
-
+*/
   CHANGED_BAG(data); 
   //SemigroupsFreeFunc(ElmPRec(data, RNamName("right")));
   return data;

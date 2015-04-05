@@ -51,82 +51,80 @@ class Element {
     
     Element () {}
     Element (const Element& copy) {}
-    //Element& operator= (Element const& copy) {}
-    virtual ~Element () {}
-    //virtual Element operator * (Element other) {}
-    //virtual Element operator == (Element other) {}
+    virtual ~Element () {};
+    //virtual Element& operator= (Element const& copy) = 0;
+    virtual void redefine (Element const*, Element const*) = 0;
+    virtual bool operator == (Element const*) const = 0;
+    virtual u_int16_t hash_value () = 0;
+    virtual u_int16_t degree () const = 0;
+
+  private:
+    u_int16_t _deg;
+    u_int16_t _hash_value;
 
 };
-
-class Transformation;
-namespace std {
-  template<>
-  class hash<Transformation> {
-    public:
-      size_t operator()(const Transformation &x) const;
-  };
-}
 
 class Transformation : public Element {
 
   public: 
 
     Transformation (std::vector<u_int16_t> image) : _image(image),
-                                                    _deg(image.size()) {
+                                                    _deg(image.size()){
                                                       std::cout << "transformation constructor!!\n";
                                                     }
+    
+    Transformation (const Transformation& copy) : _image(copy.image()),
+                                                  _deg(copy.degree()){
+                                                  std::cout << "copying transformation!!\n";
+                                                  }
+
     ~Transformation () {std::cout << "transformation destructed!!\n";}
 
     /* required methods */
-    Transformation operator * (Transformation* other) {
-      assert(other->degree() == this->degree());
-      std::vector<u_int16_t> out;
-      out.reserve(_deg);
+    void redefine (Element const* x, Element const* y) {
+      assert(x->degree() == this->degree());
+      assert(x->degree() == y->degree());
+      Transformation const* xx = static_cast<Transformation const*>(x);
+      Transformation const* yy = static_cast<Transformation const*>(y);
       for (u_int16_t i = 0; i < _deg; i++) {
-        out[i] = this->_image[other->_image[i]];
+        _image[i] = xx->_image[yy->_image[i]];
       }
-      return Transformation(out);
     }
     
-    bool operator == (Transformation* other) const {
-      assert(other->degree() == this->degree());
+    bool operator == (Element const* other) const {
+      Transformation const* that = static_cast<Transformation const*>(other);
+      assert(that->degree() == this->degree());
       for (size_t i = 0; i < _deg; i++) {
-        if (this->_image[i] != other->_image[i]) {
+        if (this->_image[i] != that->_image[i]) {
           return false;
         }
       }
       return true;
     }
+    
+    u_int16_t hash_value () {
+      if (_hash_value == 0) {
+        for (size_t i = 0; i < _deg; i++) {
+          _hash_value = (_hash_value * (_deg) + _image[i]);
+        }
+      }
+      return _hash_value;
+    }
 
+    /* specific methods for this class */
     std::vector<u_int16_t> image () const {
       return _image;
     }
 
-    /* specific to Transformation methods */
     u_int16_t degree () const {
       return _deg;
     }
-    
-    //TODO hash function
-
-    friend size_t std::hash<Transformation>::operator ()(const Transformation&) const;
 
   private:
     std::vector<u_int16_t> _image;
     u_int16_t _deg;
+    u_int16_t _hash_value;
 
 };
-
-namespace std {
-    size_t hash<Transformation>::operator()(const Transformation &x) const {
-      size_t h = 0;
-      u_int16_t deg = x.degree();
-      std::vector<u_int16_t> img = x.image();
-      for (size_t i = 0; i < deg; i++) {
-        h = (h * (deg + 1) + img[i]);
-      }
-      return h;
-    }
-}
 
 //#endif

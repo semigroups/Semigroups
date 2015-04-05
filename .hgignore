@@ -73,3 +73,6 @@ src/pkgconfig.h
 src/semigroups_la-semigroups.lo
 src/stamp-h1
 pkgconfig.h.in~
+src/semigroups_la-elements.lo
+src/.deps/semigroups_la-elements.Plo
+src/.libs/semigroups_la-elements.o
