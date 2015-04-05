@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <iostream>
+//#include "elements.h"
+
 extern "C" {
   #include "src/compiled.h"          /* GAP headers                */
 }

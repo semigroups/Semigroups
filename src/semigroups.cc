@@ -3,11 +3,17 @@
  */
 
 #include "semigroups.h"
-
+#include "elements.h"
+#include <unordered_map>
 #include <iostream>
 #include <assert.h>
 
-//#include <assert> what is the right things here!
+//using namespace semigroups;
+//using Transformation = semigroups::Transformation;
+
+//class Element; 
+//class Transformation; 
+//Transformation* x = new Transformation(image);
 
 //#define DEBUG 1
 
@@ -58,6 +64,10 @@ class RecVec {
         size_t _nrrows;
 };
 
+//class GenericData {
+//
+//};
+
 void SemigroupsFreeFunc(Obj o) { 
   std::cout << "freeing!!\n";
   delete GET_WRAP<RecVec>(o);
@@ -69,16 +79,18 @@ Obj NewWrap(RecVec* rv){
     return o;
 }
 
+
+
 extern "C" {
   #include "src/compiled.h"          /* GAP headers                */
   Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
   Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj obj, Obj val);
 }
 
+
 #define ELM_PLIST2(plist, i, j)       ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j)       INT_INTOBJ(ELM_PLIST2(plist, i, j))
-
 
 static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
@@ -95,6 +107,12 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
 
+  std::vector<u_int16_t> image;
+  Transformation* xxx = new Transformation(image);
+  std::unordered_map<Transformation, u_int16_t> map;
+  map.insert(std::make_pair(xxx, 1)); 
+  
+  delete xxx;
   //remove nrrules 
   if(looking==True){
     AssPRec(data, RNamName("found"), False);
@@ -104,7 +122,6 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
   i = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   // TODO check the position and init the data
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
-
 
   if(i>nr){
     return data;
@@ -355,7 +372,9 @@ Obj ENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking
       AssPlist(lenindex, len, INTOBJ_INT(i));  
     }
   }
-  
+  if (i > nr) {
+    // free stuff
+  }
   AssPRec(data, RNamName("nr"), INTOBJ_INT(nr));  
   AssPRec(data, RNamName("nrrules"), INTOBJ_INT(nrrules));  
   AssPRec(data, RNamName("one"), ((one!=0)?INTOBJ_INT(one):False));  

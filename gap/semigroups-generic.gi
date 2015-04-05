@@ -293,24 +293,24 @@ InstallMethod(GenericSemigroupData, "for a semigroup",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
-  data:=rec(elts := [], 
-            final := [], 
-            first := [], 
+  data:=rec(elts := EmptyPlist(10^5), 
+            final := EmptyPlist(10^5), 
+            first := EmptyPlist(10^5), 
             found := false, 
-            genslookup := [], 
-            left := [], 
+            genslookup := EmptyPlist(10^5), 
+            left := EmptyPlist(10^5), 
             len := 1, 
-            lenindex := [], 
+            lenindex := EmptyPlist(10^5), 
             nrrules := 0, 
-            prefix := [], 
-            reduced := [[]], 
-            right := [], 
-            rules := [], 
+            prefix := EmptyPlist(10^5), 
+            reduced := [EmptyPlist(10^5)], 
+            right := EmptyPlist(10^5), 
+            rules := EmptyPlist(10^5), 
             stopper := false, 
-            suffix := [], 
-            words := []);
+            suffix := EmptyPlist(10^5), 
+            words := EmptyPlist(10^5));
   
-  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
+  hashlen := NextPrimeInt(10^6);
 
   if IsMonoid(S) then 
     data.gens:=ShallowCopy(GeneratorsOfMonoid(S));
@@ -399,9 +399,9 @@ if IsBound(ENUMERATE_SEE_DATA) then
   [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     
-    data:=ENUMERATE_SEE_DATA(data, limit, lookfunc, lookfunc<>ReturnFalse);
+    data := ENUMERATE_SEE_DATA(data, limit, lookfunc, lookfunc<>ReturnFalse);
 
-    if data!.pos>data!.nr then
+    if data!.pos > data!.nr then
       SetFilterObj(data, IsClosedData);
     fi;
 
