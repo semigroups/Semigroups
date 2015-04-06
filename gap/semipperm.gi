@@ -572,10 +572,14 @@ InstallMethod(RepresentativeOfMinimalIdealNC,
 function(S)
   local gens, nrgens, domain, rank, deg, range, codeg, smallest_I_n, n,
   min_rank, min_rank_index, len, in_nbs, labels, collapsed, nr_collapsed,
-  in_range, i, act, pos, marked, squashed, elts, j, m, k;
+  in_range, i, act, pos, marked, squashed, elts, j, m, k, empty_map;
 
   # Is it possible to not have the generators of a partial perm semigroup?
   gens := GeneratorsOfSemigroup(S);
+  empty_map := PartialPerm([], []);
+  if empty_map in gens then
+    return empty_map;
+  fi;
   nrgens := Length(gens);
 
   # DomainOfPartialPermCollection   Union of the domains of the gens
@@ -601,6 +605,8 @@ function(S)
   if rank = 1 then
     #Print("Rank 1: ");
     if domain = range then
+      # Either trivial semigroup or 0-simple semigroup of order 2
+      # We know not the latter since <empty mapping> not a generator
       #Print("trivial semigroup,\n");
       return gens[1];
     else
@@ -685,6 +691,7 @@ function(S)
   if Length(squashed) = len + 1 then
     return PartialPerm([], []);
   fi;
+  TryNextMethod();
   Print("Not got this far yet: <empty partial perm> isn't in this semigroup,");
   return fail;
 end);
