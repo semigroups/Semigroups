@@ -179,7 +179,7 @@ function(arg)
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
         Error("Semigroups: SemigroupIdeal: usage,\n",
-              "the second argument must be a",
+              "the second argument must be a ",
               "combination of generators,\n lists of generators, ",
               "or semigroups,");
         return;
@@ -189,7 +189,7 @@ function(arg)
   # no argument given, error
   else
     Error("Semigroups: SemigroupIdeal: usage,\n",
-          "the second argument must be a",
+          "the second argument must be a ",
           "combination of generators,\nlists of generators, or semigroups,");
     return;
   fi;
