@@ -76,3 +76,7 @@ pkgconfig.h.in~
 src/semigroups_la-elements.lo
 src/.deps/semigroups_la-elements.Plo
 src/.libs/semigroups_la-elements.o
+src/semigroups_la-interface.lo
+src/.deps/semigroups_la-interface.Plo
+src/.deps/semigroups_la-semigroup.Plo
+src/.libs/semigroups_la-interface.o

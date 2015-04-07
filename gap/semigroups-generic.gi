@@ -483,7 +483,7 @@ else
               reduced[i][j]:=false;
             elif r=one then               # <elts[r]> is the identity
               right[i][j]:=genslookup[b]; 
-              reduced[i][j]:=true;        # <elts[i]*gens[j]=b> and it is reduced
+              reduced[i][j]:=false;        # <elts[i]*gens[j]=b> and it is reduced
             else # prefix[r]=0, i.e. elts[r] is one of the generators
               right[i][j]:=right[genslookup[b]][final[r]];
               # elts[i]*gens[j]=gens[b]*gens[final[r]];
@@ -562,8 +562,9 @@ else
             od;
           od;
         fi;
-        len:=len+1;
+        Error();
         lenindex[len]:=i;
+        len:=len+1;
       fi;
     od;
     

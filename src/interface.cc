@@ -1,497 +1,97 @@
 /*
- * semigroups: Methods for semigroups
+ * Semigroups GAP package
+ *
+ * This file contains an interface between GAP and Semigroups++.
+ *
  */
 
-#include "semigroups.h"
-#include <unordered_map>
-#include <iostream>
+#include "interface.h"
+
 #include <assert.h>
+#include <iostream>
 #include <tuple>
+#include <unordered_map>
+#include <time.h>
 
 //#define DEBUG
 //#define NDEBUG 
 
-extern "C" {
-  #include "src/compiled.h"          /* GAP headers                */
-  Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
-  Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj obj, Obj val);
-}
-
-// the following is for the GAP kernel version of the code
+// macros for the GAP version of the algorithm (used in case we have a
+// semigroup of some type not implemented here). 
 
 #define ELM_PLIST2(plist, i, j)       ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j)       INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
-static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
+inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
   SET_LEN_PLIST(ELM_PLIST(plist, i), j);
   CHANGED_BAG(plist);
 }
 
-
-/*template <typename T>
-void SemigroupsFreeFunc(Obj o) { 
-  std::cout << "freeing!!\n";
-  delete GET_WRAP<RecVec<T>>(o);
-}*/
-
-/*Obj NewWrap(RecVec* rv){
-    Obj o = NewBag(T_SEMI, 1 * sizeof(Obj));
-    SET_WRAP<RecVec>(o, rv);
-    return o;
-}*/
+// wrap the C++ semigroup object in a GAP bag for garbage collection
 
 template <typename T>
-class Data {
-  
-  public:
-    Data (std::vector<Element<T>*> gens): 
-            _elements   (),
-            _final      (),
-            _first      (),    
-            _found_one  (false),
-            _gens       (gens), 
-            _genslookup (),
-            _lenindex   (), 
-            _map        (), 
-            _nr         (0), 
-            _nrgens     (gens.size()),
-            _nrrules    (0), 
-            _pos        (0), 
-            _pos_one    (0), 
-            _prefix     (), 
-            _rules      (), 
-            _schreiergen(), 
-            _schreierpos(), 
-            _suffix     (), 
-            _undefined  (gens.size() + 1), 
-            _wordlen    (0) {
-        assert(_nrgens != 0);
-
-        _lenindex.push_back(0);
-        _left = RecVec<size_t>(gens.size());
-        _reduced = RecVec<bool>(gens.size());
-        _right = RecVec<size_t>(gens.size());
-
-        // init genslookup FIXME better way?
-        for (size_t i = 0; i < _nrgens; i++) {
-          _genslookup.push_back(0);
-        }
-        
-        Element<T>* id = _gens.at(1)->identity();
-        // add the generators 
-        for (size_t i = 0; i < _nrgens; i++) {
-          Element<T>* x = _gens.at(i);
-          auto it = _map.find(x->hash_value());
-          if (it != _map.end()) { // duplicate generator
-            // TODO make this an "new_rule" method
-            _genslookup.at(i) = it->second;
-            _nrrules++;
-            std::vector<size_t> rule = {_undefined, i, it->second};
-            _rules.push_back(rule);
-          } else {
-            // TODO make this an "new_element" method
-            if (!_found_one && x == id) {
-              _pos_one == _nr;
-              _found_one == true;
-            }
-            _genslookup.at(i) = _nr;
-            _map.insert(std::make_pair(x->hash_value(), _nr));
-            _elements.push_back(new Element<T>(x));
-            _schreierpos.push_back(0); 
-            // schreierpos is off by 1, i.e. if schreierpos[nr] = j, then 
-            // _elements[nr] was obtained from _elements[j - 1]!!!!!!!!!
-            _schreiergen.push_back(i);
-            _first.push_back(i);
-            _final.push_back(i);
-            _prefix.push_back(i);
-            _suffix.push_back(i);
-            _left.expand();
-            _right.expand();
-            _reduced.expand();
-            _nr++;
-          }
-      }
-    }
-
-    Data (const Data& copy) = delete;
-    Data& operator= (Data const& copy) = delete;
-   
-    ~Data() {
-      for (Element<T>* x: _elements) {
-        delete x;
-      }
-      /*delete _elements;
-      delete _final;
-      delete _first;
-      delete _gens;
-      delete _genslookup;
-      delete _left;
-      delete _lenindex;
-      delete _map;
-      delete _prefix;
-      delete _reduced;
-      delete _right;
-      delete _rules;
-      delete _schreiergen;
-      delete _schreierpos;
-      delete _suffix;*/
-    }
-
-  private:
-    // TODO add stopper, found, lookfunc
-    std::vector<Element<T>*>                         _elements;
-    std::vector<size_t>                              _final;
-    std::vector<size_t>                              _first;
-    bool                                             _found_one;
-    std::vector<Element<T>*>                         _gens;
-    std::vector<size_t>                              _genslookup;  //TODO tuple?
-    RecVec<size_t>                                   _left;
-    std::vector<size_t>                              _lenindex;
-    std::unordered_map<T, size_t>                    _map;         // TODO should T = u_intmax here!?
-    size_t                                           _nr;
-    size_t                                           _nrgens;
-    size_t                                           _nrrules;
-    size_t                                           _pos;
-    size_t                                           _pos_one;
-    std::vector<size_t>                              _prefix;
-    RecVec<bool>                                     _reduced;
-    RecVec<size_t>                                   _right;
-    std::vector<std::vector<size_t> > _rules; // (word1 index, gen, word2 index) 
-                                                             // word1 * gen = word2
-    std::vector<size_t>                              _schreiergen;
-    std::vector<size_t>                              _schreierpos;
-    std::vector<size_t>                              _suffix;
-    size_t                                           _undefined;   // for rules with no existing word
-    size_t                                           _wordlen;
-};
-
-/*void Enumerate (Data data) {
-
-  std::vector<u_int16_t> image;
-  image.push_back(3);
-  image.push_back(3);
-  image.push_back(3);
-  image.push_back(3);
-  Transformation* xxx = new Transformation(image);
-  std::cout << xxx->hash_value() << "\n";
-  std::unordered_map<u_int16_t, u_int16_t> map;
-  map.insert(std::make_pair(xxx->hash_value(), 1)); 
-  std::cout << map.find(xxx->hash_value())->second << "\n";
-  delete xxx;
-  image.push_back(1);
-  image.push_back(3);
-  image.push_back(3);
-  image.push_back(3);
-  xxx = new Transformation(image);
-  auto it = map.find(xxx->hash_value());
-  if (it == map.end()) {
-    std::cout << "not found \n";
-  } else {
-    std::cout << "found \n";
-  }
-
-  
-  //remove nrrules 
-  if(looking==True){
-    AssPRec(data, RNamName("found"), False);
-  }
-
-  int_limit = INT_INTOBJ(limit);
-  i = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
-  // TODO check the position and init the data
-  nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
-
-  if(i>nr){
-    return data;
-  }
-  #ifdef DEBUG
-    Pr("here 1\n", 0L, 0L);
-  #endif 
-  // get everything out of <data>
-  
-  //lists of integers, objects
-  //elts = ElmPRec(data, RNamName("elts")); 
-  // the so far enumerated elements
-  gens = ElmPRec(data, RNamName("gens")); 
-  nrgens=LEN_PLIST(gens);
-  // the generators
-  std::vector<Element<u_int16_t>*> elts;
-  for (i = 0; i < nrgens; i++) {
-    auto x = NewTransformation(ELM_PLIST(gens, i + 1), 5);
-    elts.push_back(x);
-    std::cout << x-> hash_value() << "\n";
-  }
-
-  genslookup = ElmPRec(data, RNamName("genslookup"));     
-  // genslookup[i]=Position(elts, gens[i], this is not always <i+1>!
-  lenindex = ElmPRec(data, RNamName("lenindex"));         
-  // lenindex[len]=position in <words> and <elts> of first element of length
-  // <len> 
-  first = ElmPRec(data, RNamName("first"));
-  // elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
-  final = ElmPRec(data, RNamName("final"));
-  // elts[i]=elts[prefix[i]]*gens[final[i]]
-  prefix = ElmPRec(data, RNamName("prefix"));
-  // see final, 0 if prefix is empty i.e. elts[i] is a gen
-  suffix = ElmPRec(data, RNamName("suffix"));             
-  // see first, 0 if suffix is empty i.e. elts[i] is a gen
-  
-  #ifdef DEBUG 
-    Pr("here 2\n", 0L, 0L); 
-  #endif 
-
-  RecVec* right;
-  if (i == 1) {
-    right = new RecVec(nrgens, nrgens);
-    AssPRec(data, RNamName("right"), NewWrap(right));
-  } else {
-    right = GET_WRAP<RecVec>(ElmPRec(data, RNamName("right")));
-  }
-  //lists of lists
-  //right = ElmPRec(data, RNamName("right")); 
-  // elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
-  left = ElmPRec(data, RNamName("left"));                 
-  // elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
-  reduced = ElmPRec(data, RNamName("reduced"));           
-  // words[right[i][j]] is reduced if reduced[i][j]=true
-  words = ElmPRec(data, RNamName("words"));
-  // words[i] is a word in the gens equal to elts[i]
-  rules = ElmPRec(data, RNamName("rules"));               
-  if(TNUM_OBJ(rules)==T_PLIST_EMPTY){
-    RetypeBag(rules, T_PLIST_CYC);
-  }
-  // the relations
- 
-  //hash table
-  ht = ElmPRec(data, RNamName("ht"));                     
-  // HTValue(ht, x)=Position(elts, x)
- 
-  #ifdef DEBUG
-    Pr("here 3\n", 0L, 0L);
-  #endif 
-  //integers
-  len=INT_INTOBJ(ElmPRec(data, RNamName("len"))); 
-  // current word length
-  if(IS_INTOBJ(ElmPRec(data, RNamName("one")))){
-    one=INT_INTOBJ(ElmPRec(data, RNamName("one")));
-  } else {
-    one=0;
-  }
-  // <elts[one]> is the mult. neutral element
-  stopper=INT_INTOBJ(ElmPRec(data, RNamName("stopper")));
-  // stop when we have applied generators to elts[stopper] 
-  nrrules=INT_INTOBJ(ElmPRec(data, RNamName("nrrules")));           
-  // Length(rules)
-  
-  stop = 0;
-  found = False;
-
-  #ifdef DEBUG
-    Pr("here 4\n", 0L, 0L);
-  #endif 
-
-  while(i<=nr&&!stop){
-    while(i<=nr&&LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
-      b=INT_INTOBJ(ELM_PLIST(first, i)); 
-      s=INT_INTOBJ(ELM_PLIST(suffix, i));
-      //RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); //from T_PLIST_EMPTY
-      for(j = 1;j <= nrgens;j++){
-        #ifdef DEBUG
-          Pr("i=%d\n", (Int) i, 0L);
-          Pr("j=%d\n", (Int) j, 0L);
-        #endif
-        if(s != 0&&ELM_PLIST2(reduced, s, j) == False){
-          r = right->get(s, j);
-          //r = INT_PLIST2(right, s, j);
-          if(INT_PLIST(prefix, r) != 0){
-            #ifdef DEBUG
-              Pr("Case 1!\n", 0L, 0L);
-            #endif
-            intval = INT_PLIST2(left, INT_PLIST(prefix, r), b);
-            //SET_ELM_PLIST2(right, i, j, ELM_PLIST2(right, intval, INT_PLIST(final, r)));
-            right->set(i, j, right->get(intval, INT_PLIST(final, r)));
-            SET_ELM_PLIST2(reduced, i, j, False);
-          } else if (r == one){
-            #ifdef DEBUG
-              Pr("Case 2!\n", 0L, 0L);
-            #endif
-            //SET_ELM_PLIST2(right, i, j, ELM_PLIST(genslookup, b));
-            right->set(i, j, INT_PLIST(genslookup, b));
-            SET_ELM_PLIST2(reduced, i, j, False);
-          } else {
-            #ifdef DEBUG
-              Pr("Case 3!\n", 0L, 0L);
-            #endif
-            right->set(i, j, right->get(INT_PLIST(genslookup, b), INT_PLIST(final, r)));
-            //SET_ELM_PLIST2(right, i, j, 
-            //  ELM_PLIST2(right, INT_PLIST(genslookup, b), INT_PLIST(final, r)));
-            SET_ELM_PLIST2(reduced, i, j, False);
-          }
-        } else {
-          newElt = PROD(ELM_PLIST(elts, i), ELM_PLIST(gens, j)); 
-          oldword = ELM_PLIST(words, i);
-          len = LEN_PLIST(oldword);
-          newword = NEW_PLIST(T_PLIST_CYC, len+1);
-
-          memcpy( (void *)((char *)(ADDR_OBJ(newword)) + sizeof(Obj)), 
-                  (void *)((char *)(ADDR_OBJ(oldword)) + sizeof(Obj)), 
-                  (size_t)(len*sizeof(Obj)) );
-          SET_ELM_PLIST(newword, len+1, INTOBJ_INT(j));
-          SET_LEN_PLIST(newword, len+1);
-
-          objval = HTValue_TreeHash_C(self, ht, newElt); 
-          if(objval!=Fail){
-            #ifdef DEBUG
-              Pr("Case 4!\n", 0L, 0L);
-            #endif
-            newrule = NEW_PLIST(T_PLIST, 2);
-            SET_ELM_PLIST(newrule, 1, newword);
-            SET_ELM_PLIST(newrule, 2, ELM_PLIST(words, INT_INTOBJ(objval)));
-            SET_LEN_PLIST(newrule, 2);
-            CHANGED_BAG(newrule);
-            nrrules++;
-            AssPlist(rules, nrrules, newrule);
-            right->set(i, j, INT_INTOBJ(objval));
-            //SET_ELM_PLIST2(right, i, j, objval);
-          } else {
-            #ifdef DEBUG
-              Pr("Case 5!\n", 0L, 0L);
-            #endif
-            nr++;
-            
-            HTAdd_TreeHash_C(self, ht, newElt, INTOBJ_INT(nr));
-
-            if(one==0){
-              one=nr;
-              for(k=1;k<=nrgens;k++){
-                x = ELM_PLIST(gens, k);
-                if(!EQ(PROD(newElt, x), x)){
-                  one=0;
-                  break;
-                }
-                if(!EQ(PROD(x, newElt), x)){
-                  one=0;
-                  break;
-                }
-              }
-            }
-
-            if(s!=0){
-              AssPlist(suffix, nr, INTOBJ_INT(right->get(s, j)));
-                //ELM_PLIST2(right, s, j));
-            } else {
-              AssPlist(suffix, nr, ELM_PLIST(genslookup, j));
-            }
-          
-            AssPlist(elts, nr, newElt);
-            AssPlist(words, nr, newword);
-            AssPlist(first, nr, INTOBJ_INT(b));
-            AssPlist(final, nr, INTOBJ_INT(j));
-            AssPlist(prefix, nr, INTOBJ_INT(i));
-            
-            //empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
-            //SET_LEN_PLIST(empty, 0);
-            //AssPlist(right, nr, empty);
-            right->expand();
-            
-            empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
-            SET_LEN_PLIST(empty, 0);
-            AssPlist(left, nr, empty);
-            
-            empty = NEW_PLIST(T_PLIST_CYC, nrgens);
-            for(k=1;k<=nrgens;k++){
-              SET_ELM_PLIST(empty, k, False);
-            }
-            SET_LEN_PLIST(empty, nrgens);
-            AssPlist(reduced, nr, empty);
-            
-            SET_ELM_PLIST2(reduced, i, j, True);
-            //SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));
-            right->set(i, j, nr);
-            
-            if(looking==True&&found==False&&
-                CALL_2ARGS(lookfunc, data, INTOBJ_INT(nr))==True){
-                found=True;
-                stop=1;
-                AssPRec(data,  RNamName("found"), INTOBJ_INT(nr)); 
-            } else {
-              stop=(nr>=int_limit);
-            }
-          }
-        }
-      }//finished applying gens to <elts[i]>
-      stop=(stop||i==stopper);
-      i++;
-    }//finished words of length <len> or <stop>
-    #ifdef DEBUG
-      Pr("finished processing words of len %d\n", (Int) len, 0L);
-    #endif
-    if(i>nr||LEN_PLIST(ELM_PLIST(words, i))!=len){
-      if(len>1){
-        #ifdef DEBUG
-          Pr("Case 6!\n", 0L, 0L);
-        #endif
-        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
-          p=INT_INTOBJ(ELM_PLIST(prefix, j)); 
-          b=INT_INTOBJ(ELM_PLIST(final, j));
-          for(k=1;k<=nrgens;k++){ 
-            SET_ELM_PLIST2(left, j, k, INTOBJ_INT(right->get(INT_PLIST2(left, p, k), b)));
-                //ELM_PLIST2(right, INT_PLIST2(left, p, k), b));
-          }
-        }
-      } else if(len==1){ 
-        #ifdef DEBUG
-          Pr("Case 7!\n", 0L, 0L);
-        #endif
-        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
-          b=INT_INTOBJ(ELM_PLIST(final, j));
-          for(k=1;k<=nrgens;k++){ 
-            SET_ELM_PLIST2(left, j, k, INTOBJ_INT(right->get(INT_PLIST(genslookup, k), b)));
-                //ELM_PLIST2(right, INT_PLIST(genslookup, k) , b));
-          }
-        }
-      }
-      len++;
-      AssPlist(lenindex, len, INTOBJ_INT(i));  
-    }
-  }
-  if (i > nr) {
-    // free stuff
-  }
-  AssPRec(data, RNamName("nr"), INTOBJ_INT(nr));  
-  AssPRec(data, RNamName("nrrules"), INTOBJ_INT(nrrules));  
-  AssPRec(data, RNamName("one"), ((one!=0)?INTOBJ_INT(one):False));  
-  AssPRec(data, RNamName("pos"), INTOBJ_INT(i));  
-  AssPRec(data, RNamName("len"), INTOBJ_INT(len));  
-  CHANGED_BAG(data); 
-  //SemigroupsFreeFunc(ElmPRec(data, RNamName("right")));
-  return data;
+Obj NewSemigroup(Semigroup<T>* S){
+    Obj o = NewBag(T_SEMI, 1 * sizeof(Obj));
+    SET_WRAP<Semigroup<T> >(o, S);
+    return o;
 }
 
-#define ELM_PLIST2(plist, i, j)       ELM_PLIST(ELM_PLIST(plist, i), j)
-#define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
-#define INT_PLIST2(plist, i, j)       INT_INTOBJ(ELM_PLIST2(plist, i, j))
+template <typename T>
+void SemigroupFreeFunc(Obj o) { 
+  std::cout << "freeing!!\n";
+  delete GET_WRAP<Semigroup<T> >(o);
+}
 
-//#define DEBUG 1
+// convert GAP object to Element
 
-Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj new );
-Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj new, Obj val);
+template <typename T>
+Transformation<u_int16_t>* NewTransformation (Obj o, size_t n) {
+  Element<T>* out;
+  assert(DEG_TRANS2(o) <= n);
+  assert(TNUM_OBJ(o) == T_TRANS2);
+  std::vector<u_int16_t> image;
+  UInt2* ptf = ADDR_TRANS2(o);
+  for (size_t i = 0; i < DEG_TRANS2(o); i++) {
+    image.push_back(ptf[i]);
+  }
+  for (size_t i = DEG_TRANS2(o); i < n; i++) {
+    image.push_back(i);
+  }
+  return new Transformation<u_int16_t>(image);
+}
 
-static void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
-  SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
-  SET_LEN_PLIST(ELM_PLIST(plist, i), j);
-  CHANGED_BAG(plist);
+// run Semigroups++ in case we are one of the types of implemented elements.
+// TODO add limit etc 
+// FIXME this should take a partially enumerated Semigroup obj wrapped in a GAP
+// object
+
+Obj ENUMERATE_SEMIGROUP_CC (Obj self, Obj gens, Obj deg) {
+  std::vector<Transformation<u_int16_t>*> gens_cc;
+  u_int16_t deg_cc = INT_INTOBJ(deg);
+
+  PLAIN_LIST(gens);
+  for(size_t i = 1; i <= LEN_PLIST(gens); i++) {
+    gens_cc.push_back(NewTransformation<u_int16_t>(ELM_PLIST(gens, i), deg_cc));
+  }
+
+  Semigroup<Transformation<u_int16_t> >* S = new Semigroup<Transformation<u_int16_t> >(gens_cc, deg_cc);
+  auto clock0 = clock();
+  size_t out = S->size();
+  auto clock1 = clock();
+  auto delta1 = clock1 - clock0;
+  std::cout << delta1/CLOCKS_PER_SEC << "s  ";
+  std::cout << ((delta1-(delta1/CLOCKS_PER_SEC)*CLOCKS_PER_SEC)*100)/CLOCKS_PER_SEC << "\n";
+  delete S;
+  return INTOBJ_INT(out);
 }
 
 // assumes the length of data!.elts is at most 2^28
 
-static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
+static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
   Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix, 
-        reduced, words, ht, rules, lenindex, new, newword, objval, newrule,
+        reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
         empty, oldword, x;
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
@@ -612,7 +212,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
             SET_ELM_PLIST2(reduced, i, j, False);
           }
         } else {
-          new = PROD(ELM_PLIST(elts, i), ELM_PLIST(gens, j)); 
+          newElt = PROD(ELM_PLIST(elts, i), ELM_PLIST(gens, j)); 
           oldword = ELM_PLIST(words, i);
           len = LEN_PLIST(oldword);
           newword = NEW_PLIST(T_PLIST_CYC, len+1);
@@ -623,7 +223,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
           SET_ELM_PLIST(newword, len+1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len+1);
 
-          objval = HTValue_TreeHash_C(self, ht, new); 
+          objval = HTValue_TreeHash_C(self, ht, newElt); 
           if(objval!=Fail){
             #ifdef DEBUG
               Pr("Case 4!\n", 0L, 0L);
@@ -642,17 +242,17 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
             #endif
             nr++;
             
-            HTAdd_TreeHash_C(self, ht, new, INTOBJ_INT(nr));
+            HTAdd_TreeHash_C(self, ht, newElt, INTOBJ_INT(nr));
 
             if(one==0){
               one=nr;
               for(k=1;k<=nrgens;k++){
                 x = ELM_PLIST(gens, k);
-                if(!EQ(PROD(new, x), x)){
+                if(!EQ(PROD(newElt, x), x)){
                   one=0;
                   break;
                 }
-                if(!EQ(PROD(x, new), x)){
+                if(!EQ(PROD(x, newElt), x)){
                   one=0;
                   break;
                 }
@@ -665,7 +265,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
               AssPlist(suffix, nr, ELM_PLIST(genslookup, j));
             }
           
-            AssPlist(elts, nr, new);
+            AssPlist(elts, nr, newElt);
             AssPlist(words, nr, newword);
             AssPlist(first, nr, INTOBJ_INT(b));
             AssPlist(final, nr, INTOBJ_INT(j));
@@ -744,7 +344,7 @@ static Obj FuncENUMERATE_SEE_DATA (Obj self, Obj data, Obj limit, Obj lookfunc, 
   CHANGED_BAG(data); 
   
   return data;
-}*/
+}
 
 /****************************************************************************
 **
@@ -1065,17 +665,17 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
-    /*GVAR_FUNC_TABLE_ENTRY("semigroups.c", ENUMERATE_SEE_DATA, 4, 
-                          "data, limit, lookfunc, looking"),*/
-    GVAR_FUNC_TABLE_ENTRY("semigroups.c", GABOW_SCC, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP_CC, 2, 
+                          "gens, deg"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
+                          "data, limit, lookfunc, looking"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", GABOW_SCC, 1, 
                           "digraph"),
-    GVAR_FUNC_TABLE_ENTRY("semigroups.c", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.c", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
                           "scc1, scc2"),
-    GVAR_FUNC_TABLE_ENTRY("semigroups.c", FIND_HCLASSES, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_HCLASSES, 2, 
                           "left, right"),
-
-	{ 0 } /* Finish with an empty entry */
-
+    { 0 } /* Finish with an empty entry */
 };
 
 /******************************************************************************
