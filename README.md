@@ -35,7 +35,6 @@ installation of [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigrou
  
 * get the [Orb](http://gap-system.github.io/orb/) package version 4.7.3
   or higher. 
-  
     Both [Orb](http://gap-system.github.io/orb/) and
   [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php)
   perform better if [Orb](http://gap-system.github.io/orb/) is compiled, so
@@ -49,7 +48,7 @@ installation of [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigrou
  sure that the [Grape](http://www.maths.qmul.ac.uk/~leonard/grape/) package
  version 4.5 or higher is available.
         
-  If [Grape](http://www.maths.qmul.ac.uk/~leonard/grape/) is not fully
+    If [Grape](http://www.maths.qmul.ac.uk/~leonard/grape/) is not fully
   installed, then
   [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php) can
   be used as normal with  the  exception that the functions listed in the first
@@ -69,7 +68,7 @@ installation of [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigrou
     gunzip semigroups-x.x.tar.gz; tar xvf semigroups-x.x.tar
     ```
   
-  this should create a directory called `semigroups-x.x`.
+    this should create a directory called `semigroups-x.x`.
 
 * locate  the  `pkg`  directory  of your GAP directory, which contains the
   directories `lib`, `doc` and so on. Move the directory `semigroups-x.x`
