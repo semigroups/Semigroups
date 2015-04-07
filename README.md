@@ -25,7 +25,7 @@ tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
 It is assumed that you have a working copy of GAP with version number 4.7.6 or
 higher.  The  most  up-to-date  version  of  GAP  and instructions on how to
-install it can be obtained from the main [GAP](http://www.gap-system.org).
+install it can be obtained from the main [GAP](http://www.gap-system.org) page.
 
 The  following  is  a  summary of the steps that should lead to a successful
 installation of [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php):
@@ -80,4 +80,3 @@ installation of [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigrou
 * type `LoadPackage("semigroups");`
 
 Enjoy!
-
