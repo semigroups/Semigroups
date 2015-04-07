@@ -7,6 +7,7 @@
 
 #ifndef SEMIGROUPS_ELEMENTS_H
 #define SEMIGROUPS_ELEMENTS_H
+#define NDEBUG 
 
 #include <iostream>
 #include <vector>

@@ -7,6 +7,7 @@
 
 #ifndef SEMIGROUPS_BASICS_H
 #define SEMIGROUPS_BASICS_H
+#define NDEBUG 
 
 #include <assert.h>
 #include <iostream>

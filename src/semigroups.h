@@ -8,8 +8,8 @@
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
 
+#define NDEBUG
 //#define DEBUG
-//#define NDEBUG 
 
 #include "basics.h"
 #include "elements.h"
