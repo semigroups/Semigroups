@@ -89,8 +89,8 @@ class Semigroup {
           _genslookup.at(i) = _nr;
           _map.insert(std::make_pair(x->hash_value(), _nr));
           _elements.push_back(new T(*x));
-          _schreiergen.push_back(i);
-          _schreierpos.push_back(0); // this has special meaning here!!
+          //_schreiergen.push_back(i);
+          //_schreierpos.push_back(0); // this has special meaning here!!
           _first.push_back(i);
           _final.push_back(i);
           _prefix.push_back(i);
@@ -143,20 +143,30 @@ class Semigroup {
             } else {
               tmp.redefine(_elements.at(_pos), _gens.at(j)); 
               auto it = _map.find(tmp.hash_value()); 
+              size_t x_pos;
 
-              if (it != _map.end()) {
-               //newrule(_pos, j, it->second);
-                _right.set(_pos, j, it->second);
-              } else {
+              if (it == _map.end()) {
+                _map.insert(std::make_pair(tmp.hash_value(), _nr));
+                _elements.push_back(new T(tmp));
+                x_pos = _nr++;
                 if (!_found_one && tmp == _id) {
-                  _pos_one = _nr;
+                  _pos_one = x_pos;
                   _found_one = true;
                 }
-                T* x = new T(tmp);
-                _map.insert(std::make_pair(x->hash_value(), _nr));
-                _elements.push_back(x);
-                _schreiergen.push_back(j);
-                _schreierpos.push_back(_pos); 
+              } else {
+                x_pos = it->second;
+              }
+              _right.set(_pos, j, x_pos);
+              if (x_pos > _pos && (!_found_one || x_pos != _pos_one )) {
+                _reduced.set(_pos, j, true);
+              } else {
+                _reduced.set(_pos, j, false);
+              }
+              if (x_pos <= _pos) {
+                _nrrules++;
+                _reduced.set(_pos, j, false);
+              } else {
+                _reduced.set(_pos, j, true);
                 _first.push_back(b);
                 _final.push_back(j);
                 _prefix.push_back(_pos);
@@ -165,10 +175,9 @@ class Semigroup {
                 } else {
                   _suffix.push_back(_genslookup.at(j));
                 }
-                _reduced.set(_pos, j, true);
-                _right.set(_pos, j, _nr);
+                //_schreiergen.push_back(j);
+                //_schreierpos.push_back(_pos); 
 
-                _nr++;
                 //stop = (_nr >= limit);
               }
             }
