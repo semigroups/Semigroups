@@ -221,7 +221,6 @@ gap> R := ReesZeroMatrixSemigroup( S, [ [ s1 ] ] ); # 0-simple RZMS over non-gp
   on 3 pts with 2 generators>>
 gap> IsReesZeroMatrixSemigroup(R);
 true
-gap> SetIsRegularSemigroup(R, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R);
 true
 gap> G := UnderlyingSemigroup(R);
@@ -250,7 +249,6 @@ gap> IsReesZeroMatrixSubsemigroup(R3);
 true
 gap> IsReesZeroMatrixSemigroup(R3);
 true
-gap> SetIsRegularSemigroup(R3, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R3);
 true
 gap> max := MaximalSubsemigroups(R3);;
@@ -400,7 +398,6 @@ gap> IsReesZeroMatrixSubsemigroup(R3);
 true
 gap> IsReesZeroMatrixSemigroup(R3);
 true
-gap> SetIsRegularSemigroup(R3, true); # temp hack till Issue #108 is resolved
 gap> IsRegularSemigroup(R3);
 true
 gap> MaximalSubsemigroups(R3, Group(()));

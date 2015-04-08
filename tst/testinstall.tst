@@ -911,6 +911,67 @@ gap> t := Transformation( [ 1 ] );;
 gap> s := Semigroup(t);;
 gap> MultiplicativeZero(s) = t;
 true
+gap> gens := [ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ) ];;
+gap> S := Semigroup(gens);;
+gap> IsRectangularBand(S) and not IsTrivial(S);
+true
+gap> MultiplicativeZero(S);
+fail
+
+#T# TestInstall59: Issue 88:
+# Something called by `JoinIrreducibleDClasses` of an ideal of a bipartition
+# semigroup calls `GeneratorsOfSemigroup`
+gap> S := DualSymmetricInverseMonoid(6);;
+gap> x := Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], 
+> [ 5, -5 ], [ 6, -6 ] ] );;
+gap> I := SemigroupIdeal(S, x);
+<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+gap> JoinIrreducibleDClasses(I);
+[ {Bipartition( [ [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], [ 6, -6 ] ] )} ]
+gap> I;
+<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+
+#T# TestInstall60: Issue 94:
+# EquivalenceClasses of trivial congruence returns empty list
+gap> S:=FullTransformationSemigroup(6);;
+gap> R:=PrincipalFactor(MinimalDClass(S));
+<Rees matrix semigroup 1x6 over Group(())>
+gap> cong := SemigroupCongruenceByGeneratingPairs(R, [ ]);;
+gap> EquivalenceClasses(cong);
+[ {(1,(),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, {(1,(),6)} ]
+
+#T# TestInstall61: Issue 95:
+# No zero class in semigroup congruence EquivalenceClasses (generating pairs)
+gap> P := [ [ (), 0, (1,3), (1,3), 0, (), 0 ],
+>   [ (), (1,3), 0, 0, (1,3), (), 0 ], [ (), (1,3), 0, (), 0, 0, () ],
+>   [ 0, (), (1,3), (1,3), (), 0, 0 ], [ 0, 0, 0, (), (), (1,3), () ],
+>   [ (), 0, (1,3), 0, (), 0, () ] ];;
+gap> R := ReesZeroMatrixSemigroup(Group([(1,3)]), P);;
+gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1,3), 1);;
+gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x,y]]);;
+gap> c := EquivalenceClasses(cong);
+[ {0}, {(1,(),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, 
+  {(1,(),6)}, {(2,(),1)}, {(2,(),2)}, {(2,(),3)}, {(2,(),4)}, {(2,(),5)}, 
+  {(2,(),6)}, {(3,(),1)}, {(3,(),2)}, {(3,(),3)}, {(3,(),4)}, {(3,(),5)}, 
+  {(3,(),6)}, {(4,(),1)}, {(4,(),2)}, {(4,(),3)}, {(4,(),4)}, {(4,(),5)}, 
+  {(4,(),6)}, {(5,(),1)}, {(5,(),2)}, {(5,(),3)}, {(5,(),4)}, {(5,(),5)}, 
+  {(5,(),6)}, {(6,(),1)}, {(6,(),2)}, {(6,(),3)}, {(6,(),4)}, {(6,(),5)}, 
+  {(6,(),6)}, {(7,(),1)}, {(7,(),2)}, {(7,(),3)}, {(7,(),4)}, {(7,(),5)}, 
+  {(7,(),6)} ]
+gap> ForAny(c, x->MultiplicativeZero(R) in x);
+true
+
+#T# TestInstall62: Issue 119:
+# Bug in NrCongruenceClasses for Rees congruences
+gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
+> [Transformation([1,2,2,2])]);
+<regular transformation semigroup ideal on 4 pts with 1 generator>
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);
+<Rees congruence of <regular transformation semigroup ideal 
+ on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
+gap> NrCongruenceClasses(cong);
+169
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
