@@ -408,7 +408,7 @@ if IsBound(ENUMERATE_SEE_DATA) then
     return data;
   end);
 else
-
+  #FIXME this is broken!!
   InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
   [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)

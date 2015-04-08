@@ -5,10 +5,24 @@
  *
  */
 
+// TODO
+// 1) a bit of rearranging to move the expands() out of the inner loop to the
+// end of the words of length n - 1 have been considered
+// 1.5) maybe process the generators in the constructor to avoid the special
+// cases in enumerate()
+// 2) a proper hash function for transformations
+// 2.5) looking etc. This probably won't work with GAP transformations, better
+// use the other algorithm in that case.
+// 3) the rest of the functionality, and interface!
+// 4) other types of semigroups
+// 5) a specialist version for small transformations/elements (using bit
+// flipping)
+// 6) the other functionality of Semigroupe.
+
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
 
-#define NDEBUG
+//#define NDEBUG
 //#define DEBUG
 
 #include "basics.h"
@@ -42,7 +56,7 @@ class Semigroup {
       _prefix     (), 
       _reduced    (RecVec<bool>(gens.size())),
       _right      (RecVec<size_t>(gens.size())),
-      _rules      (RecVec<size_t>(3)), 
+      //_rules      (RecVec<size_t>(3)), 
       _schreiergen(), 
       _schreierpos(), 
       _suffix     (), 
@@ -65,7 +79,7 @@ class Semigroup {
         auto it = _map.find(x->hash_value());
         if (it != _map.end()) { // duplicate generator
           _genslookup.at(i) = it->second;
-          newrule(_undefined, i, it->second);
+          //newrule(_undefined, i, it->second);
         } else {
           // TODO make this an "new_element" method?
           if (!_found_one && x == _id) {
@@ -119,7 +133,7 @@ class Semigroup {
             if (s != b && !_reduced.get(s, j)) {
               size_t r = _right.get(s, j);
               _reduced.set(_pos, j, false);
-              if (_prefix.at(r) != 0){
+              if (_prefix.at(r) != _final.at(r)){ 
                 _right.set(_pos, j, _right.get(_left.get(_prefix.at(r), b), _final.at(r)));
               } else if (_found_one && r == _pos_one) {
                 _right.set(_pos, j, _genslookup.at(b));
@@ -131,8 +145,9 @@ class Semigroup {
               auto it = _map.find(tmp.hash_value()); 
 
               if (it != _map.end()) {
-                newrule(_pos, j, it->second);
+               //newrule(_pos, j, it->second);
                 _right.set(_pos, j, it->second);
+                _reduced.set(_pos, j, false);
               } else {
                 if (!_found_one && tmp == _id) {
                   _pos_one = _nr;
@@ -154,9 +169,6 @@ class Semigroup {
                 _reduced.set(_pos, j, true);
                 _right.set(_pos, j, _nr);
 
-                _left.expand();
-                _right.expand();
-                _reduced.expand();
                 _nr++;
                 //stop = (_nr >= limit);
               }
@@ -183,22 +195,25 @@ class Semigroup {
           }
           _lenindex.push_back(_nr);
           _wordlen++;
+          _left.expand(_nr - _pos);
+          _right.expand(_nr - _pos);
+          _reduced.expand(_nr - _pos);
         }
       }
-      //if (i > nr) {
+      //if (_pos > _nr) {
       // free stuff
       //}
     }
       
   private:
 
-    void newrule (size_t word1, size_t gen, size_t word2) {
+    /*void inline newrule (size_t word1, size_t gen, size_t word2) {
       _rules.expand();
       _rules.set(_nrrules, 0, word1);
       _rules.set(_nrrules, 1, gen);
       _rules.set(_nrrules, 2, word2);
       _nrrules++;
-    }
+    }*/
 
     // TODO add stopper, found, lookfunc
     size_t                             _degree;
@@ -220,7 +235,7 @@ class Semigroup {
     std::vector<size_t>                _prefix;
     RecVec<bool>                       _reduced;
     RecVec<size_t>                     _right;
-    RecVec<size_t>                     _rules; // (word1 index, gen, word2 index) 
+//  RecVec<size_t>                     _rules; // (word1 index, gen, word2 index) 
                                                // word1 * gen = word2
     std::vector<size_t>                _schreiergen;
     std::vector<size_t>                _schreierpos;

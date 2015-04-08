@@ -40,23 +40,19 @@ class RecVec {
         ~RecVec() {
         }
         
-        u_int32_t get (size_t i, size_t j) {
+        size_t inline get (size_t i, size_t j) {
           assert(i < _nrrows && j  < _nrcols);
           return _vec.at(i * _nrcols + j); 
         }
-        
-        void setNrCols (size_t nrcols) {
-          assert(_nrcols == 0);
-          _nrcols = nrcols;
-        }
-
-        void set (size_t i, size_t j, T val) {
+         
+        void inline set (size_t i, size_t j, T val) {
           assert(i < _nrrows && j < _nrcols);
           _vec.at(i * _nrcols + j) = val; 
         }
 
-        void expand (size_t nr = 1) {
+        void inline expand (size_t nr = 1) {
           _nrrows += nr;
+          _vec.reserve(_nrrows);
           for (size_t i = 0; i < _nrcols * nr; i++) {
             _vec.push_back(0);
           }
