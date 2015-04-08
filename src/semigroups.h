@@ -147,7 +147,6 @@ class Semigroup {
               if (it != _map.end()) {
                //newrule(_pos, j, it->second);
                 _right.set(_pos, j, it->second);
-                _reduced.set(_pos, j, false);
               } else {
                 if (!_found_one && tmp == _id) {
                   _pos_one = _nr;
