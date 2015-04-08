@@ -130,9 +130,8 @@ class Semigroup {
           size_t b = _first.at(_pos);
           size_t s = _suffix.at(_pos); 
           for (size_t j = 0; j < _nrgens; j++) {
-            if (s != b && !_reduced.get(s, j)) {
+            if (s != _genslookup.at(b) && !_reduced.get(s, j)) {
               size_t r = _right.get(s, j);
-              _reduced.set(_pos, j, false);
               if (_prefix.at(r) != _final.at(r)){ 
                 _right.set(_pos, j, _right.get(_left.get(_prefix.at(r), b), _final.at(r)));
               } else if (_found_one && r == _pos_one) {
@@ -143,41 +142,29 @@ class Semigroup {
             } else {
               tmp.redefine(_elements.at(_pos), _gens.at(j)); 
               auto it = _map.find(tmp.hash_value()); 
-              size_t x_pos;
 
-              if (it == _map.end()) {
-                _map.insert(std::make_pair(tmp.hash_value(), _nr));
-                _elements.push_back(new T(tmp));
-                x_pos = _nr++;
+              if (it != _map.end()) {
+               //newrule(_pos, j, it->second);
+                _right.set(_pos, j, it->second);
+                _nrrules++;
+              } else {
                 if (!_found_one && tmp == _id) {
-                  _pos_one = x_pos;
+                  _pos_one = _nr;
                   _found_one = true;
                 }
-              } else {
-                x_pos = it->second;
-              }
-              _right.set(_pos, j, x_pos);
-              if (x_pos > _pos && (!_found_one || x_pos != _pos_one )) {
                 _reduced.set(_pos, j, true);
-              } else {
-                _reduced.set(_pos, j, false);
-              }
-              if (x_pos <= _pos) {
-                _nrrules++;
-                _reduced.set(_pos, j, false);
-              } else {
-                _reduced.set(_pos, j, true);
+                _right.set(_pos, j, _nr);
+                _map.insert(std::make_pair(tmp.hash_value(), _nr));
+                _elements.push_back(new T(tmp));
                 _first.push_back(b);
                 _final.push_back(j);
                 _prefix.push_back(_pos);
-                if (s != b) {
+                if (s != _genslookup.at(b)) {
                   _suffix.push_back(_right.get(s, j));
                 } else {
                   _suffix.push_back(_genslookup.at(j));
                 }
-                //_schreiergen.push_back(j);
-                //_schreierpos.push_back(_pos); 
-
+                _nr++;
                 //stop = (_nr >= limit);
               }
             }
@@ -211,6 +198,7 @@ class Semigroup {
       //if (_pos > _nr) {
       // free stuff
       //}
+      std::cout << _nrrules << "\n";
     }
       
   private:

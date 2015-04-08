@@ -394,12 +394,12 @@ end);
 # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
 # <[1..Length(data!.elts)]>.
 
-if IsBound(ENUMERATE_SEE_DATA) then 
+if IsBound(ENUMERATE_SEMIGROUP) then 
   InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
   [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     
-    data := ENUMERATE_SEE_DATA(data, limit, lookfunc, lookfunc<>ReturnFalse);
+    data := ENUMERATE_SEMIGROUP(data, limit, lookfunc, lookfunc<>ReturnFalse);
 
     if data!.pos > data!.nr then
       SetFilterObj(data, IsClosedData);
