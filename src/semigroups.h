@@ -124,15 +124,14 @@ class Semigroup {
 
       bool stop = false;
       T tmp(_degree);
-
       while (_pos < _nr && !stop) {
         while (_pos < _lenindex.at(_wordlen + 1) && !stop) {
           size_t b = _first.at(_pos);
           size_t s = _suffix.at(_pos); 
           for (size_t j = 0; j < _nrgens; j++) {
-            if (s != _genslookup.at(b) && !_reduced.get(s, j)) {
+            if (_pos >=  _lenindex.at(1) && !_reduced.get(s, j)) {
               size_t r = _right.get(s, j);
-              if (_prefix.at(r) != _final.at(r)){ 
+              if (_pos >= _lenindex.at(1)) { 
                 _right.set(_pos, j, _right.get(_left.get(_prefix.at(r), b), _final.at(r)));
               } else if (_found_one && r == _pos_one) {
                 _right.set(_pos, j, _genslookup.at(b));
@@ -159,7 +158,7 @@ class Semigroup {
                 _first.push_back(b);
                 _final.push_back(j);
                 _prefix.push_back(_pos);
-                if (s != _genslookup.at(b)) {
+                if (_pos >= _lenindex.at(1)) {
                   _suffix.push_back(_right.get(s, j));
                 } else {
                   _suffix.push_back(_genslookup.at(j));
@@ -198,7 +197,7 @@ class Semigroup {
       //if (_pos > _nr) {
       // free stuff
       //}
-      std::cout << _nrrules << "\n";
+      std::cout << "_nrrules = " << _nrrules << "\n";
     }
       
   private:
