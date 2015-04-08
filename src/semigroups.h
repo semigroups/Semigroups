@@ -197,8 +197,24 @@ class Semigroup {
       //if (_pos > _nr) {
       // free stuff
       //}
-      std::cout << "_nrrules = " << _nrrules << "\n";
     }
+
+    // spanning_tree () { // should look for places in reduced which are true
+    // this gives a spanning tree
+    //
+    // trace (pos) { trace the spanning tree
+    //
+    // relations () { // have to check for places where neither _pos nor the
+    // suffix of _pos is reduced, then trace the spanning tree
+    //
+    // left_cayley_graph () {
+    // }
+    //
+    // right_cayley_graph () {
+    // }
+    // 
+    // 
+    //
       
   private:
 
@@ -238,6 +254,8 @@ class Semigroup {
     size_t                             _undefined;   // for rules with no existing word
     size_t                             _wordlen;
 };
+
+// strongly connected components
 
   
 #endif
