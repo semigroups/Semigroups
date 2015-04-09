@@ -21,15 +21,43 @@ class Element {
 
   public:
     
-    Element () {}
-    Element (const Element& copy) {}
-    virtual ~Element () {};
-    //virtual Element& operator= (Element const& copy) = 0;
+    Element (T degree) : _data() {
+      _data.reserve(degree);
+      for (T i = 0; i < degree; i++) {
+        _data.push_back(0);
+      }
+    }
+    
+    Element (std::vector<T> data) : _data(data) {
+    }
+    
+    Element (const Element& copy) : _data(copy.data()) {
+    }
+
+    virtual ~Element () {}
+    
     virtual void redefine (Element const*, Element const*) = 0;
-    virtual bool operator == (Element const*) const = 0;
-    virtual size_t hash_value () = 0;
-    virtual T degree () const = 0;
+    virtual bool operator == (const Element<T> &) const = 0;
     virtual Element<T>* identity () = 0;
+    
+    std::vector<T> data () const {
+      return _data;
+    }
+
+    inline T at (T pos) const {
+      return _data.at(pos);
+    }
+    
+    inline void set (T pos, T val) {
+      _data[pos] = val;
+    }
+    
+    size_t degree () const {
+      return _data.size();
+    }
+
+  protected:
+    std::vector<T> _data;
 };
 
 // template for transformations
@@ -39,76 +67,42 @@ class Transformation : public Element<T> {
 
   public: 
     
-    Transformation (T deg) : _image(), _deg(deg), _hash_value(0), _identity(nullptr) {
-      for (T i = 0; i < _deg; i++) {
-        _image.push_back(0);
-      }
-    }
-
-    Transformation (std::vector<T> image) : _image(image),
-                                            _deg(image.size()),
-                                            _hash_value(0), 
-                                            _identity(nullptr){
-      //std::cout << "transformation constructor!!\n";
-    }
-    
-    Transformation (const Transformation& copy) : _image(copy.image()),
-                                                  _deg(copy.degree()),
-                                                  _hash_value(copy._hash_value),
-                                                  _identity(nullptr){
-                                                  //std::cout << "copying transformation!!\n";
-                                                  }
-
-    ~Transformation () {
-      //std::cout << "transformation destructed!!\n";
+    Transformation (T degree) : Element<T>(degree), _identity(nullptr) {}
+    Transformation (std::vector<T> data) : Element<T>(data), _identity(nullptr) {}
+    Transformation (const Transformation& copy) : Element<T>(copy), _identity(nullptr) {}
+    ~Transformation () { 
       if (_identity != nullptr) {
         delete _identity;
       }
     }
-
+    
     // required methods 
     void redefine (Element<T> const* x, Element<T> const* y) {
       assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
 
       Transformation const* xx = static_cast<Transformation const*>(x);
       Transformation const* yy = static_cast<Transformation const*>(y);
-      
-      _deg = x->degree();
-      _hash_value = 0;
-
-      for (T i = 0; i < _deg; i++) {
-        _image.at(i) = yy->_image[xx->_image[i]];
+       
+      for (T i = 0; i < this->degree(); i++) {
+        this->set(i, yy->at(xx->at(i)));
       }
     }
     
-    bool operator == (Element<T> const* other) const {
-      Transformation const* that = static_cast<Transformation const*>(other);
-      assert(that->degree() == this->degree());
-      for (size_t i = 0; i < _deg; i++) {
-        if (this->_image[i] != that->_image[i]) {
+    bool operator == (const Element<T> &other) const {
+      for (T i = 0; i < this->degree(); i++) {
+        if (this->at(i) != other.at(i)) {
           return false;
         }
       }
       return true;
     }
-    // FIXME this is not really ideal 
-    // TODO test if it is better to do the commented out code below, or 
-    // to actually define a hash function for Transformations
-    size_t hash_value () {
-      if (_hash_value == 0) {
-        for (size_t i = 0; i < _deg; i++) {
-          _hash_value = (_hash_value * (_deg) + _image[i]);
-          //seed ^= std::hash<u_int16_t>(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        }
-      }
-      return _hash_value;
-    }
-
+    
     Element<T>* identity () {
       if (_identity == nullptr) {
         std::vector<T> image;
-        image.reserve(_deg);
-        for (size_t i = 0; i < _deg; i++) {
+        image.reserve(this->degree());
+        for (T i = 0; i < this->degree(); i++) {
           image.push_back(i);
         }
         _identity = static_cast<Element<T>*>(new Transformation(image));
@@ -116,21 +110,34 @@ class Transformation : public Element<T> {
       return _identity;
     }
 
-    // specific methods for this class
-    std::vector<T> image () const {
-      return _image;
-    }
-
-    T degree () const {
-      return _deg;
-    }
+    // FIXME this is not really ideal 
+    /*size_t hash_value () {
+      if (_hash_value == 0) {
+        for (size_t i = 0; i < ; i++) {
+          //_hash_value = (_hash_value * (_deg) + _data[i]);
+          _hash_value ^= std::hash<size_t>(_data[i]) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        }
+      }
+      return _hash_value;
+    }*/
 
   private:
-    std::vector<T>  _image;
-    T               _deg;
-    size_t          _hash_value;
     Element<T>*     _identity;
+};
 
+template <typename T>
+struct std::hash<Transformation<T> > {
+  size_t operator() (const Transformation<T>& x) const {
+    size_t seed = 0;
+    T deg = x.degree();
+    //std::cout << "hashing!";
+    for (T i = 0; i < deg; i++) {
+      //seed = ((seed * deg) + x.at(i));
+      seed ^= _int_hasher((seed * deg) + x.at(i)) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
+    return seed;
+  }
+  std::hash<T> _int_hasher;
 };
 
 #endif
