@@ -82,10 +82,7 @@ class Semigroup {
           //newrule(_undefined, i, it->second);
         } else {
           // TODO make this an "new_element" method?
-          if (!_found_one && x == _id) {
-            _pos_one = _nr;
-            _found_one = true;
-          }
+          is_one(x);
           _genslookup.at(i) = _nr;
           _map.insert(std::make_pair(x->hash_value(), _nr));
           _elements.push_back(new T(*x));
@@ -121,23 +118,59 @@ class Semigroup {
     //TODO reintroduce limit
     void enumerate () {
       if(_pos >= _nr) return;
+      
+      T tmp(_degree);
+
+      while (_pos < _lenindex.at(1)) { //multiply the generators by every generator
+        for (size_t j = 0; j < _nrgens; j++) {
+          tmp.redefine(_elements.at(_pos), _gens.at(j)); 
+          auto it = _map.find(tmp.hash_value()); 
+
+          if (it != _map.end()) {
+            _right.set(_pos, j, it->second);
+            _nrrules++;
+          } else {
+            is_one(tmp);
+            _reduced.set(_pos, j, true);
+            _right.set(_pos, j, _nr);
+            _map.insert(std::make_pair(tmp.hash_value(), _nr));
+            _elements.push_back(new T(tmp));
+            _first.push_back(_first.at(_pos));
+            _final.push_back(j);
+            _prefix.push_back(_pos);
+            _suffix.push_back(_genslookup.at(j));
+            _nr++;
+          }
+        }
+        _pos++;
+      }
+      for (size_t i = 0; i < _pos; i++) { 
+        size_t b = _final.at(i); 
+        for (size_t j = 0; j < _nrgens; j++) { 
+          _left.set(i, j, _right.get(_genslookup.at(j), b));
+        }
+      }
+      _lenindex.push_back(_nr);
+      _wordlen++;
+      _left.expand(_nr - _pos);
+      _right.expand(_nr - _pos);
+      _reduced.expand(_nr - _pos);
 
       bool stop = false;
-      T tmp(_degree);
+
       while (_pos < _nr && !stop) {
         while (_pos < _lenindex.at(_wordlen + 1) && !stop) {
           size_t b = _first.at(_pos);
           size_t s = _suffix.at(_pos); 
           for (size_t j = 0; j < _nrgens; j++) {
-            if (_pos >=  _lenindex.at(1) && !_reduced.get(s, j)) {
+            if (!_reduced.get(s, j)) {
               size_t r = _right.get(s, j);
-              if (_pos >= _lenindex.at(1)) { 
-                _right.set(_pos, j, _right.get(_left.get(_prefix.at(r), b), _final.at(r)));
-              } else if (_found_one && r == _pos_one) {
+              if (_found_one && r == _pos_one) {
                 _right.set(_pos, j, _genslookup.at(b));
               } else {
-                _right.set(_pos, j, _right.get(_genslookup.at(b), _final.at(r)));
-              }
+                _right.set(_pos, j, _right.get(_left.get(_prefix.at(r), b),
+                                               _final.at(r)));
+              } 
             } else {
               tmp.redefine(_elements.at(_pos), _gens.at(j)); 
               auto it = _map.find(tmp.hash_value()); 
@@ -147,10 +180,7 @@ class Semigroup {
                 _right.set(_pos, j, it->second);
                 _nrrules++;
               } else {
-                if (!_found_one && tmp == _id) {
-                  _pos_one = _nr;
-                  _found_one = true;
-                }
+                is_one(tmp);
                 _reduced.set(_pos, j, true);
                 _right.set(_pos, j, _nr);
                 _map.insert(std::make_pair(tmp.hash_value(), _nr));
@@ -158,33 +188,20 @@ class Semigroup {
                 _first.push_back(b);
                 _final.push_back(j);
                 _prefix.push_back(_pos);
-                if (_pos >= _lenindex.at(1)) {
-                  _suffix.push_back(_right.get(s, j));
-                } else {
-                  _suffix.push_back(_genslookup.at(j));
-                }
+                _suffix.push_back(_right.get(s, j));
                 _nr++;
                 //stop = (_nr >= limit);
               }
             }
           } // finished applying gens to <_elements.at(_pos)>
           _pos++;
-        } // finished words of length <wordlen>
+        } // finished words of length <wordlen> + 1
         if (_pos > _nr || _pos == _lenindex.at(_wordlen + 1)) {
-          if (_wordlen > 0) {
-            for (size_t i = _lenindex.at(_wordlen); i < _pos; i++) { 
-              size_t p = _prefix.at(i);
-              size_t b = _final.at(i); 
-              for (size_t j = 0; j < _nrgens; j++) { 
-                _left.set(i, j, _right.get(_left.get(p, j), b));
-              }
-            }
-          } else if (_wordlen == 0) { // FIXME can't be anything other than 1
-            for (size_t i = _lenindex.at(_wordlen); i < _pos; i++) { 
-              size_t b = _final.at(i); 
-              for (size_t j = 0; j < _nrgens; j++) { 
-                _left.set(i, j, _right.get(_genslookup.at(j), b));
-              }
+          for (size_t i = _lenindex.at(_wordlen); i < _pos; i++) { 
+            size_t p = _prefix.at(i);
+            size_t b = _final.at(i); 
+            for (size_t j = 0; j < _nrgens; j++) { 
+              _left.set(i, j, _right.get(_left.get(p, j), b));
             }
           }
           _lenindex.push_back(_nr);
@@ -225,6 +242,13 @@ class Semigroup {
       _rules.set(_nrrules, 2, word2);
       _nrrules++;
     }*/
+
+    void inline is_one (T x) {
+      if (!_found_one && x == _id) {
+        _pos_one = _nr;
+        _found_one = true;
+      }
+    }
 
     // TODO add stopper, found, lookfunc
     size_t                             _degree;
