@@ -70,7 +70,7 @@ class Transformation : public Element<T> {
     
     Transformation (T degree) : Element<T>(degree), _identity(nullptr), _hash_value(0){}
     Transformation (std::vector<T> data) : Element<T>(data), _identity(nullptr), _hash_value(0) {}
-    Transformation (const Transformation& copy) : Element<T>(copy), _identity(nullptr), _hash_value(0) {}
+    Transformation (const Transformation& copy) : Element<T>(copy), _identity(nullptr), _hash_value(copy._hash_value) {}
     ~Transformation () { 
       if (_identity != nullptr) {
         delete _identity;
@@ -81,7 +81,7 @@ class Transformation : public Element<T> {
     void redefine (Element<T> const* x, Element<T> const* y) {
       assert(x->degree() == y->degree());
       assert(x->degree() == this->degree());
-
+      _hash_value = 0;
       Transformation const* xx = static_cast<Transformation const*>(x);
       Transformation const* yy = static_cast<Transformation const*>(y);
        
