@@ -1404,8 +1404,9 @@ InstallMethod(IsZeroSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
   local z, gens, m, i, j;
 
-  if HasParent(S) and HasIsZeroSemigroup(Parent(S)) and
-   IsZeroSemigroup(Parent(S)) then
+  if HasParent(S)
+   and HasIsZeroSemigroup(Parent(S))
+   and IsZeroSemigroup(Parent(S)) then
     return true;
   fi;
 

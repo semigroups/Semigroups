@@ -107,7 +107,8 @@ function(pair, cong)
   fi;
   if not (HasIsFinite(s) and IsFinite(s)) then
     Error("Semigroups: \in: usage,\n",
-          "<cong> must be a congruence of a finite semigroup,");
+          "this function currently only works if <cong> is a congruence of a ",
+          "semigroup\nwhich is known to be finite,");
     return;
   fi;
 
@@ -264,7 +265,8 @@ function(cong)
   local classes, next, tab, elms, i;
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
     Error("Semigroups: EquivalenceClasses: usage,\n",
-          "<cong> must be a congruence of a finite semigroup,");
+          "this function currently only works if <cong> is a congruence of a ",
+          "semigroup\nwhich is known to be finite,");
     return;
   fi;
   classes := [];
@@ -369,7 +371,8 @@ function(cong)
   s := Range(cong);
   if not (HasIsFinite(s) and IsFinite(s)) then
     Error("Semigroups: NrCongruenceClasses: usage,\n",
-          "<cong> must be a congruence of a finite semigroup,");
+          "this function currently only works if <cong> is a congruence of a ",
+          "semigroup\nwhich is known to be finite,");
     return;
   fi;
   return Maximum(AsLookupTable(cong));
@@ -381,8 +384,15 @@ InstallMethod(Enumerator,
 "for a semigroup congruence class",
 [IsCongruenceClass],
 function(class)
-  local cong, record, x, enum;
+  local cong, s, record, x, enum;
+
   cong := EquivalenceClassRelation(class);
+  s := Range(cong);
+
+  if not (HasIsFinite(s) and IsFinite(s)) then
+    TryNextMethod();
+  fi;
+
   # cong has been enumerated: return a list
   if HasAsLookupTable(cong) then
     return Enumerator(AsList(class));

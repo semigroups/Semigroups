@@ -152,7 +152,7 @@ InstallMethod(IsJoinIrreducible,
 "for an acting semigroup with inverse op and an associative element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
-  local y, elts, i, k, singleline, sup, j;
+  local y, elts, rank, i, k, singleline, sup, j;
 
   if not x in S then
     Error("Semigroups: IsJoinIrreducible: usage,\n",
@@ -167,11 +167,8 @@ function(S, x)
   y := LeftOne(x);
   elts := ShallowCopy(Idempotents(S));
 
-  if IsPartialPermBipartitionSemigroup(S) then
-    Sort(elts, PartialPermLeqBipartition);
-  else
-    elts := Set(elts);
-  fi;
+  rank := ActionRank(S);
+  SortBy(elts, rank);
 
   i := Position(elts, y);
   k := 0;
@@ -201,7 +198,7 @@ function(S, x)
 
   if singleline then
     return true;
-  elif Size(HClass(S, y)) = 1 then
+  elif Size(GreensHClassOfElementNC(S, y)) = 1 then
     return false;
   fi;
 
@@ -427,7 +424,7 @@ InstallMethod(Minorants,
 "for an acting semigroup with inverse op and associative element collections",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, f)
-  local out, elts, i, j, k;
+  local elts, i, out, rank, j, k;
 
   if not f in S then
     Error("Semigroups: Minorants: usage,\n",
@@ -449,11 +446,8 @@ function(S, f)
     elts := ShallowCopy(Elements(S));
   fi;
 
-  if IsPartialPermBipartitionSemigroup(S) then
-    Sort(elts, PartialPermLeqBipartition);
-  else
-    elts := SSortedList(elts);
-  fi;
+  rank := ActionRank(S);
+  SortBy(elts, rank);
 
   i := Position(elts, f);
   j := 0;

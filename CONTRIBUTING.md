@@ -1,4 +1,7 @@
-# Contributing to Semigroups
+## Contributing to the Semigroups package for GAP
+
+#### Copyright (C) 2011-15 James D. Mitchell
+#### Licensing information is available in the LICENSE file.   
 
 We invite everyone to contribute by submitting patches, pull requests, and bug
 reports. We would like to make the contributing process as easy as possible.
@@ -43,6 +46,11 @@ that:
 ## Coding conventions
 
 * 2 spaces for indentation
+* continuation of lines containing `if`, `for`, `while` should be indented by
+  an extra 2 spaces
+* continuation of lines containing an opening bracket but not the matching
+  closed bracket should be indented so that the content of the next line is
+  aligned with the opening bracket. 
 * no tabs
 * no trailing whitespace
 * no line containing more than one semicolon `;`

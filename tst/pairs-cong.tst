@@ -101,16 +101,19 @@ gap> cong := SemigroupCongruence(s, gens);
 1 generating pairs>
 gap> gens in cong;
 Error, Semigroups: in: usage,
-<cong> must be a congruence of a finite semigroup,
+this function currently only works if <cong> is a congruence of a semigroup
+which is known to be finite,
 gap> AsLookupTable(cong);
 Error, Semigroups: AsLookupTable: usage,
 <cong> must be a congruence of a finite semigroup,
 gap> EquivalenceClasses(cong);
 Error, Semigroups: EquivalenceClasses: usage,
-<cong> must be a congruence of a finite semigroup,
+this function currently only works if <cong> is a congruence of a semigroup
+which is known to be finite,
 gap> NrCongruenceClasses(cong);
 Error, Semigroups: NrCongruenceClasses: usage,
-<cong> must be a congruence of a finite semigroup,
+this function currently only works if <cong> is a congruence of a semigroup
+which is known to be finite,
 
 # PairsCongTest3: \= for two semigroup congruences
 gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ) ];;
