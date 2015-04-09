@@ -55,7 +55,7 @@ class Transformation : public Element<T> {
     Transformation (const Transformation& copy) : _image(copy.image()),
                                                   _deg(copy.degree()),
                                                   _hash_value(copy._hash_value),
-                                                  _identity(copy._identity){
+                                                  _identity(nullptr){
                                                   //std::cout << "copying transformation!!\n";
                                                   }
 
