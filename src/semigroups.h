@@ -75,7 +75,7 @@ class Semigroup {
       // add the generators 
       for (size_t i = 0; i < _nrgens; i++) {
         T* x = _gens.at(i);
-        auto it = _map.find(*x);
+        auto it = _map.find(x->hash_value());
         if (it != _map.end()) { // duplicate generator
           _genslookup.at(i) = it->second;
           _nrrules++;
@@ -87,7 +87,7 @@ class Semigroup {
           _first.push_back(i);
           _final.push_back(i);
           _genslookup.at(i) = _nr;
-          _map.insert(std::make_pair(*_elements.back(), _nr));
+          _map.insert(std::make_pair(x->hash_value(), _nr));
           _prefix.push_back(_nr);
           _suffix.push_back(_nr);
           _nr++;
@@ -120,7 +120,7 @@ class Semigroup {
       while (_pos < _lenindex.at(1)) { 
         for (size_t j = 0; j < _nrgens; j++) {
           x.redefine(_elements.at(_pos), _gens.at(j)); 
-          auto it = _map.find(x); 
+          auto it = _map.find(x.hash_value()); 
 
           if (it != _map.end()) {
             _right.set(_pos, j, it->second);
@@ -130,7 +130,7 @@ class Semigroup {
             _elements.push_back(new T(x));
             _first.push_back(_first.at(_pos));
             _final.push_back(j);
-            _map.insert(std::make_pair(*_elements.back(), _nr));
+            _map.insert(std::make_pair(x.hash_value(), _nr));
             _prefix.push_back(_pos);
             _reduced.set(_pos, j, true);
             _right.set(_pos, j, _nr);
@@ -167,7 +167,7 @@ class Semigroup {
               } 
             } else {
               x.redefine(_elements.at(_pos), _gens.at(j)); 
-              auto it = _map.find(x); 
+              auto it = _map.find(x.hash_value()); 
 
               if (it != _map.end()) {
                //newrule(_pos, j, it->second);
@@ -178,7 +178,7 @@ class Semigroup {
                 _elements.push_back(new T(x));
                 _first.push_back(b);
                 _final.push_back(j);
-                _map.insert(std::make_pair(*_elements.back(), _nr));
+                _map.insert(std::make_pair(x.hash_value(), _nr));
                 _prefix.push_back(_pos);
                 _reduced.set(_pos, j, true);
                 _right.set(_pos, j, _nr);
@@ -263,7 +263,7 @@ class Semigroup {
     T*                                 _id; 
     RecVec<size_t>                     _left;
     std::vector<size_t>                _lenindex;
-    std::unordered_map<T, size_t>      _map;         
+    std::unordered_map<size_t, size_t> _map;         
     size_t                             _nr;
     size_t                             _nrgens;
     size_t                             _nrrules;

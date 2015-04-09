@@ -38,7 +38,8 @@ class Element {
     
     virtual void redefine (Element const*, Element const*) = 0;
     virtual bool operator == (const Element<T> &) const = 0;
-    virtual Element<T>* identity () = 0;
+    virtual Element<T>* identity ()  = 0;
+    virtual size_t hash_value () = 0;
     
     std::vector<T> data () const {
       return _data;
@@ -67,9 +68,9 @@ class Transformation : public Element<T> {
 
   public: 
     
-    Transformation (T degree) : Element<T>(degree), _identity(nullptr) {}
-    Transformation (std::vector<T> data) : Element<T>(data), _identity(nullptr) {}
-    Transformation (const Transformation& copy) : Element<T>(copy), _identity(nullptr) {}
+    Transformation (T degree) : Element<T>(degree), _identity(nullptr), _hash_value(0){}
+    Transformation (std::vector<T> data) : Element<T>(data), _identity(nullptr), _hash_value(0) {}
+    Transformation (const Transformation& copy) : Element<T>(copy), _identity(nullptr), _hash_value(0) {}
     ~Transformation () { 
       if (_identity != nullptr) {
         delete _identity;
@@ -111,18 +112,20 @@ class Transformation : public Element<T> {
     }
 
     // FIXME this is not really ideal 
-    /*size_t hash_value () {
+    size_t hash_value () {
       if (_hash_value == 0) {
-        for (size_t i = 0; i < ; i++) {
-          //_hash_value = (_hash_value * (_deg) + _data[i]);
-          _hash_value ^= std::hash<size_t>(_data[i]) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        T deg = this->degree();
+        for (size_t i = 0; i < deg; i++) {
+          _hash_value = ((_hash_value * deg) + this->at(i));
+          //_hash_value ^= std::hash<size_t>(_data[i]) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
         }
       }
       return _hash_value;
-    }*/
+    }
 
   private:
     Element<T>*     _identity;
+    size_t          _hash_value;
 };
 
 template <typename T>
