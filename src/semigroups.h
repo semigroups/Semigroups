@@ -60,7 +60,6 @@ class Semigroup {
       _schreiergen(), 
       _schreierpos(), 
       _suffix     (), 
-      _undefined  (gens.size() + 1), 
       _wordlen    (0) // (length of the current word) - 1
     { 
       assert(_nrgens != 0);
@@ -206,7 +205,11 @@ class Semigroup {
       // free stuff
       //}
     }
-
+    
+    size_t nrrules () {
+      return _nrrules;
+    }
+    
     // spanning_tree () { // should look for places in reduced which are true
     // this gives a spanning tree
     //
@@ -255,11 +258,11 @@ class Semigroup {
     std::vector<size_t>                _first;
     bool                               _found_one;
     std::vector<T*>                    _gens;
-    std::vector<size_t>                _genslookup;  //TODO tuple?
+    std::vector<size_t>                _genslookup;  
     T*                                 _id; 
     RecVec<size_t>                     _left;
     std::vector<size_t>                _lenindex;
-    std::unordered_map<size_t, size_t> _map;         // TODO should T = u_intmax here!?
+    std::unordered_map<size_t, size_t> _map;         
     size_t                             _nr;
     size_t                             _nrgens;
     size_t                             _nrrules;
@@ -273,7 +276,6 @@ class Semigroup {
     std::vector<size_t>                _schreiergen;
     std::vector<size_t>                _schreierpos;
     std::vector<size_t>                _suffix;
-    size_t                             _undefined;   // for rules with no existing word
     size_t                             _wordlen;
 };
 
