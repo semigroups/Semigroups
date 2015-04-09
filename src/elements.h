@@ -110,17 +110,6 @@ class Transformation : public Element<T> {
       return _identity;
     }
 
-    // FIXME this is not really ideal 
-    /*size_t hash_value () {
-      if (_hash_value == 0) {
-        for (size_t i = 0; i < ; i++) {
-          //_hash_value = (_hash_value * (_deg) + _data[i]);
-          _hash_value ^= std::hash<size_t>(_data[i]) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        }
-      }
-      return _hash_value;
-    }*/
-
   private:
     Element<T>*     _identity;
 };
