@@ -482,10 +482,7 @@ function(cong)
     enumerate_trace();
     Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceLookup);
     Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
-    compute_kernel();
-    Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceLookup);
-    Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
-  until (oldLookup = traceLookup) and (oldKernel = kernel);
+  until (oldLookup = traceLookup) and (nrk = 0);
 
   # Convert traceLookup to traceBlocks
   traceBlocks := Filtered(List([1 .. Maximum(traceLookup)],
