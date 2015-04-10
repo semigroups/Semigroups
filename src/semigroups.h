@@ -279,8 +279,5 @@ class Semigroup {
     std::vector<size_t>                _suffix;
     size_t                             _wordlen;
 };
-
-// strongly connected components
-
-  
+ 
 #endif
