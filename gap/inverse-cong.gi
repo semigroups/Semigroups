@@ -49,7 +49,7 @@ function(s, kernel, traceBlocks)
           # Condition (C2): aa' related to a'a
           if not a * a ^ -1 in traceClass then
             Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
-                  "not a valid congruence pair,");
+                  "not a valid congruence pair 1,");
             return;
           fi;
         else
@@ -58,7 +58,7 @@ function(s, kernel, traceBlocks)
             if a * e in kernel then
               Error(
                 "Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
-                "not a valid congruence pair,");
+                "not a valid congruence pair 2,");
               return;
             fi;
           od;
@@ -309,7 +309,7 @@ function(cong)
   fi;
   gens := Union(List(Idempotents(s),
            e -> EquivalenceClassOfElementNC(cong, e)));
-  return InverseSemigroup(gens, rec(small := true));
+  return InverseSemigroup(gens, rec(small := false));
 end);
 
 #
@@ -443,6 +443,9 @@ function(cong)
     while nrk > 0 do
       # Take the inverse semigroup containing the new elements
       kernel := ClosureInverseSemigroup(kernel, kernelgenstoapply);
+      Info(InfoSemigroups, 1, "Start: ", Size(kernelgenstoapply), " gens to apply");
+      Info(InfoSemigroups, 1, (kernelgenstoapply));
+
       kernelgenstoapply := [];
       nrk := 0;
       # Take the normal closure
@@ -456,6 +459,7 @@ function(cong)
         od;
       od;
     od;
+    Info(InfoSemigroups, 1, "End: ", Size(kernelgenstoapply), " gens to apply");
     kernel := InverseSemigroup(kernel, rec(small:=true));
   end;
 
@@ -471,17 +475,22 @@ function(cong)
 
   # Keep applying the method until no new info is found
   repeat
-    oldLookup := traceLookup;
+    oldLookup := StructuralCopy(traceLookup);
     oldKernel := kernel;
     compute_kernel();
     enforce_conditions();
     enumerate_trace();
+    Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceLookup);
+    Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
+    compute_kernel();
+    Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceLookup);
+    Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
   until (oldLookup = traceLookup) and (oldKernel = kernel);
 
   # Convert traceLookup to traceBlocks
-  traceBlocks := Set(List([1 .. Maximum(traceLookup)],
+  traceBlocks := Filtered(List([1 .. Maximum(traceLookup)],
                          i-> List(Positions(traceLookup, i),
-                                 j-> ids[j])));
+                                 j-> ids[j])), x-> not IsEmpty(x));
 
   return InverseSemigroupCongruenceByKernelTrace(s, kernel, traceBlocks);
 end);
