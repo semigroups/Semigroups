@@ -367,7 +367,7 @@ static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj
 ** the implementation of STRONGLY_CONNECTED_COMPONENTS_DIGRAPH in listfunc.c.
 */
 
-Obj GABOW_SCC(Obj self, Obj digraph) {
+Obj SEMIGROUPS_GABOW_SCC (Obj self, Obj digraph) {
   UInt end1, end2, count, level, w, v, n, nr, idw, *frames, *stack2;
   Obj  id, stack1, out, comp, comps, adj; 
  
@@ -669,7 +669,7 @@ static StructGVarFunc GVarFuncs [] = {
                           "gens, deg"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", GABOW_SCC, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
                           "scc1, scc2"),

@@ -108,8 +108,8 @@ end);
 # the scc index 1 corresponds to the "deepest" scc, i.e. the minimal ideal in
 # our case...
 
-if not IsBound(GABOW_SCC) then # non-recursive version below...
-  BindGlobal("GABOW_SCC", 
+if not IsBound(SEMIGROUPS_GABOW_SCC) then # non-recursive version below...
+  BindGlobal("SEMIGROUPS_GABOW_SCC", 
   function(digraph)   
     local n, stack1, len1, stack2, len2, id, count, comps, fptr, level, l, comp, w, v;
     

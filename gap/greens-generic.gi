@@ -294,7 +294,7 @@ function(S)
   fi;
   if not IsActingSemigroup(S) then
     data := Enumerate(GenericSemigroupData(S));
-    rel!.data := GABOW_SCC(data!.right);
+    rel!.data := SEMIGROUPS_GABOW_SCC(data!.right);
   fi;
 
   return rel;
@@ -324,7 +324,7 @@ function(S)
   fi;
   if not IsActingSemigroup(S) then
     data := Enumerate(GenericSemigroupData(S));
-    rel!.data := GABOW_SCC(data!.left);
+    rel!.data := SEMIGROUPS_GABOW_SCC(data!.left);
   fi;
   return rel;
 end);
