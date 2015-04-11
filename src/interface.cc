@@ -75,7 +75,8 @@ Obj ENUMERATE_SEMIGROUP_CC (Obj self, Obj gens, Obj deg) {
   for(size_t i = 1; i <= LEN_PLIST(gens); i++) {
     gens_cc.push_back(NewTransformation<u_int16_t>(ELM_PLIST(gens, i), deg_cc));
   }
-
+  std::cout << "sizeof(Transformation<u_int16_t>) = " << sizeof(Transformation<u_int16_t>) << "\n";
+  std::cout << "sizeof(Element<u_int16_t>) = " << sizeof(Element<u_int16_t>) << "\n";
   Semigroup<Transformation<u_int16_t> >* S = new Semigroup<Transformation<u_int16_t> >(gens_cc, deg_cc);
   auto clock0 = clock();
   size_t out = S->size();

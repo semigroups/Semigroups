@@ -22,7 +22,7 @@
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
 
-//#define NDEBUG
+#define NDEBUG
 //#define DEBUG
 
 #include "basics.h"
@@ -63,7 +63,6 @@ class Semigroup {
       _wordlen    (0) // (length of the current word) - 1
     { 
       assert(_nrgens != 0);
-
       _lenindex.push_back(0);
 
       // init genslookup FIXME better way?
@@ -71,7 +70,7 @@ class Semigroup {
         _genslookup.push_back(0);
       }
 
-      _id = static_cast<T*>(_gens.at(0)->identity());
+      //_id = static_cast<T*>(_gens.at(0)->identity());
       // add the generators 
       for (size_t i = 0; i < _nrgens; i++) {
         T* x = _gens.at(i);
@@ -83,7 +82,7 @@ class Semigroup {
           //TODO don't forget these rules!
         } else {
           is_one(*x);
-          _elements.push_back(new T(*x));
+          _elements.push_back(static_cast<T*>(x->copy()));
           _first.push_back(i);
           _final.push_back(i);
           _genslookup.at(i) = _nr;
@@ -101,6 +100,7 @@ class Semigroup {
    
     ~Semigroup () {
       for (T* x: _elements) {
+        x->delete_data();
         delete x;
       }
     }
@@ -127,7 +127,7 @@ class Semigroup {
             _nrrules++;
           } else {
             is_one(x);
-            _elements.push_back(new T(x));
+            _elements.push_back(static_cast<T*>(x.copy()));
             _first.push_back(_first.at(_pos));
             _final.push_back(j);
             _map.insert(std::make_pair(*_elements.back(), _nr));
@@ -175,7 +175,7 @@ class Semigroup {
                 _nrrules++;
               } else {
                 is_one(x);
-                _elements.push_back(new T(x));
+                _elements.push_back(static_cast<T*>(x.copy()));
                 _first.push_back(b);
                 _final.push_back(j);
                 _map.insert(std::make_pair(*_elements.back(), _nr));
@@ -239,10 +239,11 @@ class Semigroup {
     }*/
 
     void inline is_one (T& x) {
+      /*
       if (!_found_one && x == (*_id)) {
         _pos_one = _nr;
         _found_one = true;
-      }
+      }*/
     }
     
     void inline expand () {
@@ -263,7 +264,7 @@ class Semigroup {
     T*                                 _id; 
     RecVec<size_t>                     _left;
     std::vector<size_t>                _lenindex;
-    std::unordered_map<T, size_t>      _map;         
+    std::unordered_map<const T, size_t>      _map;         
     size_t                             _nr;
     size_t                             _nrgens;
     size_t                             _nrrules;

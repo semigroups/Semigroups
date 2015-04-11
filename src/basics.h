@@ -7,7 +7,7 @@
 
 #ifndef SEMIGROUPS_BASICS_H
 #define SEMIGROUPS_BASICS_H
-//#define NDEBUG 
+#define NDEBUG 
 
 #include <assert.h>
 #include <iostream>
@@ -52,7 +52,6 @@ class RecVec {
 
         void inline expand (size_t nr = 1) {
           _nrrows += nr;
-          _vec.reserve(_nrrows);
           for (size_t i = 0; i < _nrcols * nr; i++) {
             _vec.push_back(0);
           }
