@@ -106,12 +106,16 @@ class Semigroup {
       _id->delete_data();
       delete _id;
     }
+   
+    size_t nrgens () {
+      return _gens.size();
+    }
 
     size_t size () {
       enumerate();
       return _elements.size();
     }
-
+    
     //TODO reintroduce limit
     void enumerate () {
       if(_pos >= _nr) return;
@@ -213,9 +217,16 @@ class Semigroup {
       return _nrrules;
     }
     
-    // spanning_tree () { // should look for places in reduced which are true
-    // this gives a spanning tree
-    //
+    std::vector<size_t> schreierpos () { 
+      spanning_tree();
+      return _schreierpos;
+    }
+    
+    std::vector<size_t> schreiergen () { 
+      spanning_tree();
+      return _schreiergen;
+    }
+    
     // trace (pos) { trace the spanning tree
     //
     // relations () { // have to check for places where neither _pos nor the
@@ -254,6 +265,30 @@ class Semigroup {
       _right.expand(_nr - _pos);
     }
 
+    void spanning_tree () {
+      if (_schreierpos.size() == 0) { 
+        // init _schreierpos/gen
+        _schreierpos.reserve(this->size());
+        _schreiergen.reserve(this->size());
+        
+        for (size_t i = 0; i < this->size(); i++) {
+          _schreierpos.push_back(0);
+          _schreiergen.push_back(0);
+        }
+
+        // find places in _reduced that are true
+        for (size_t i = 0; i < this->size(); i++) {
+          for (size_t j = 0; j < this->nrgens(); j++) {
+            if (_reduced.get(i, j)) {
+              size_t r = _right.get(i, j);
+              _schreierpos.at(r) = i;
+              _schreiergen.at(r) = j;
+            }
+          }
+        }
+      }
+    }
+
     // TODO add stopper, found, lookfunc
     size_t                               _degree;
     std::vector<T*>                      _elements;
@@ -274,8 +309,6 @@ class Semigroup {
     std::vector<size_t>                  _prefix;
     RecVec<bool>                         _reduced;
     RecVec<size_t>                       _right;
-//  RecVec<size_t>                       _rules; // (word1 index, gen, word2 index) 
-                                                 // word1 * gen = word2
     std::vector<size_t>                  _schreiergen;
     std::vector<size_t>                  _schreierpos;
     std::vector<size_t>                  _suffix;

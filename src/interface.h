@@ -8,7 +8,7 @@
 #ifndef SEMIGROUPS_GAP_INTERFACE_H
 #define SEMIGROUPS_GAP_INTERFACE_H
 
-#define NDEBUG 
+//#define NDEBUG 
 #include "semigroups.h"
 
 extern "C" {
@@ -21,16 +21,18 @@ extern "C" {
 #define T_SEMI T_SPARE2
 #endif
 
-// wrap one of our objects inside a GAP bag
+enum SemigroupType {
+  UNKNOWN = 0,
+  SEMI_TRANS2 = 1,
+  SEMI_TRANS4 = 2,
+  SEMI_BIPART = 3
+};
 
-template<typename T>
-inline void SET_WRAP(Obj o, T* p) {
-    ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(p);
-}
+//#define IS_SEMI(o) (TNUM_OBJ(o) == T_SEMI);
+//#define IS_TRANS_SEMI(o) (IS_SEMI(o) && (Int)(ADDR_OBJ(o)[0]) == SEMI_TRANS);
+//#define IS_PPERM_SEMI(o) (IS_SEMI(o) && (Int)(ADDR_OBJ(o)[0]) == SEMI_PPERM);
 
-template<typename T>
-inline T* GET_WRAP(Obj o) {
-    return reinterpret_cast<T*>(ADDR_OBJ(o)[0]);
-}
+// wrap one of our semigroups inside a GAP bag
+
 
 #endif

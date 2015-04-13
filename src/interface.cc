@@ -16,6 +16,135 @@
 //#define DEBUG
 //#define NDEBUG 
 
+
+
+// wrap the C++ semigroup object in a GAP bag for garbage collection
+
+template<typename T>
+inline void SET_SEMI(Obj o, Semigroup<T>* p) {
+    ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(p);
+}
+
+template<typename T>
+inline Semigroup<T>* GET_SEMI(Obj o) {
+    return reinterpret_cast<Semigroup<T>*>(ADDR_OBJ(o)[1]);
+}
+
+Obj NewSemigroup(Semigroup<Transformation<u_int16_t> >* S){
+  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
+  SET_SEMI<Transformation<u_int16_t> >(o, S);
+  ADDR_OBJ(o)[0] = (Obj) SEMI_TRANS2;
+  return o;
+}
+
+Obj NewSemigroup(Semigroup<Transformation<u_int32_t> >* S){
+  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
+  SET_SEMI<Transformation<u_int32_t> >(o, S);
+  ADDR_OBJ(o)[0] = (Obj) SEMI_TRANS4;
+  return o;
+}
+
+Int SemigroupType (Obj data) {
+  //FIXME check gens not empty, and that gens is a component of data
+  Int type = TNUM_OBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
+  switch (type) {
+    case T_TRANS2:
+      return SEMI_TRANS2;
+    case T_TRANS4:
+      return SEMI_TRANS4;
+    default:
+      return UNKNOWN;
+  }
+}
+
+void SemigroupFreeFunc(Obj o) { 
+  switch ((Int) ADDR_OBJ(o)[0]){
+    case SEMI_TRANS2:
+      delete GET_SEMI<Transformation<u_int16_t> >(o);
+      break;
+    case SEMI_TRANS4:
+      delete GET_SEMI<Transformation<u_int32_t> >(o);
+      break;
+    /*case SEMI_BIPART:
+      delete GET_SEMI<Semigroup<Bipartition<u_int16_t> > >(o);*/
+  }
+}
+
+// convert GAP object to corresponding Element
+
+template <typename T>
+class Converter {
+  public:
+    virtual T* convert (Obj, size_t);
+};
+
+class NewTrans2 : public Converter<Transformation<u_int16_t> > {
+  public: 
+    Transformation<u_int16_t>* convert (Obj o, size_t n) {
+      assert(DEG_TRANS2(o) <= n);
+      assert(TNUM_OBJ(o) == T_TRANS2);
+      
+      auto x = new Transformation<u_int16_t>(n);
+      UInt2* ptf = ADDR_TRANS2(o);
+      size_t i;
+      for (i = 0; i < DEG_TRANS2(o); i++) {
+        x->set(i, ptf[i]);
+      }
+      for (; i < n; i++) {
+        x->set(i, i);
+      }
+      return x;
+    }
+};
+
+size_t SemigroupDegreeFromData (Obj data); //TODO write a method for this!!
+
+template <typename T>
+void InitSemigroupFromData_C (Obj data, Converter<T> converter) {
+    
+  Obj gens =  ElmPRec(data, RNamName("gens"));
+  //FIXME check gens not empty, and that gens is a component of data
+  
+  std::vector<T*> gens_c;
+  size_t deg_c = SemigroupDegreeFromData(data);
+
+  PLAIN_LIST(gens);
+  for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
+    gens_c.push_back(converter.convert(ELM_PLIST(gens, i), deg_c));
+  }
+  
+  auto S = new Semigroup<T>(gens_c, deg_c);
+  AssPRec(data, RNamName("SemigroupData_C"), NewSemigroup(S));
+}
+
+template <typename T>
+Semigroup<T>* SemigroupFromData_C (Obj data) {
+
+  if (!IsbPRec(data, RNamName("SemigroupData_C"))) {
+    switch (SemigroupType(data)){
+      case SEMI_TRANS2:
+        NewTrans2 converter;
+        InitSemigroupFromData_C<T>(data, converter);
+        break;
+    }
+  }
+  return GET_SEMI<T>(ElmPRec(data, RNamName("SemigroupData_C")));
+}
+
+// run Semigroups++ in case we are one of the types of implemented elements.
+// TODO add limit etc 
+
+template <typename T>
+Obj EnumerateSemigroupData_C (Obj data,
+                              Obj limit, 
+                              Obj lookfunc, 
+                              Obj looking) {
+  
+  Semigroup<T>* S = SemigroupFromData_C<T>(data);
+  S->enumerate();
+  return data;
+}
+
 // macros for the GAP version of the algorithm (used in case we have a
 // semigroup of some type not implemented here). 
 
@@ -29,65 +158,6 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   CHANGED_BAG(plist);
 }
 
-// wrap the C++ semigroup object in a GAP bag for garbage collection
-
-template <typename T>
-Obj NewSemigroup(Semigroup<T>* S){
-    Obj o = NewBag(T_SEMI, 1 * sizeof(Obj));
-    SET_WRAP<Semigroup<T> >(o, S);
-    return o;
-}
-
-template <typename T>
-void SemigroupFreeFunc(Obj o) { 
-  std::cout << "freeing!!\n";
-  delete GET_WRAP<Semigroup<T> >(o);
-}
-
-// convert GAP object to Element
-
-template <typename T>
-Transformation<u_int16_t>* NewTransformation (Obj o, size_t n) {
-  Element<T>* out;
-  assert(DEG_TRANS2(o) <= n);
-  assert(TNUM_OBJ(o) == T_TRANS2);
-  std::vector<u_int16_t> image;
-  UInt2* ptf = ADDR_TRANS2(o);
-  for (size_t i = 0; i < DEG_TRANS2(o); i++) {
-    image.push_back(ptf[i]);
-  }
-  for (size_t i = DEG_TRANS2(o); i < n; i++) {
-    image.push_back(i);
-  }
-  return new Transformation<u_int16_t>(image);
-}
-
-// run Semigroups++ in case we are one of the types of implemented elements.
-// TODO add limit etc 
-// FIXME this should take a partially enumerated Semigroup obj wrapped in a GAP
-// object
-
-Obj ENUMERATE_SEMIGROUP_CC (Obj self, Obj gens, Obj deg) {
-  std::vector<Transformation<u_int16_t>*> gens_cc;
-  u_int16_t deg_cc = INT_INTOBJ(deg);
-
-  PLAIN_LIST(gens);
-  for(size_t i = 1; i <= LEN_PLIST(gens); i++) {
-    gens_cc.push_back(NewTransformation<u_int16_t>(ELM_PLIST(gens, i), deg_cc));
-  }
-  std::cout << "sizeof(Transformation<u_int16_t>) = " << sizeof(Transformation<u_int16_t>) << "\n";
-  std::cout << "sizeof(Element<u_int16_t>) = " << sizeof(Element<u_int16_t>) << "\n";
-  Semigroup<Transformation<u_int16_t> >* S = new Semigroup<Transformation<u_int16_t> >(gens_cc, deg_cc);
-  auto clock0 = clock();
-  size_t out = S->size();
-  auto clock1 = clock();
-  auto delta1 = clock1 - clock0;
-  std::cout << delta1/CLOCKS_PER_SEC << "s  ";
-  std::cout << ((delta1-(delta1/CLOCKS_PER_SEC)*CLOCKS_PER_SEC)*100)/CLOCKS_PER_SEC << "\n";
-  delete S;
-  return INTOBJ_INT(out);
-}
-
 // assumes the length of data!.elts is at most 2^28
 
 static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
@@ -97,6 +167,17 @@ static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
   
+  switch (SemigroupType(data)) {
+    case UNKNOWN:
+      break;
+    case SEMI_TRANS2:
+      EnumerateSemigroupData_C<Transformation<u_int16_t> >(data, limit, lookfunc, looking);
+    //case SEMI_TRANS4:
+    //  EnumerateSemigroupData_C<Transformation<u_int32_t> >(data, limit, lookfunc, looking);
+    default: 
+      return data;
+  }
+
   //remove nrrules 
   if(looking==True){
     AssPRec(data, RNamName("found"), False);
@@ -666,8 +747,6 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
-    GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP_CC, 2, 
-                          "gens, deg"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
@@ -688,7 +767,7 @@ static Int InitKernel( StructInitInfo *module )
     InitHdlrFuncsFromTable( GVarFuncs );
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
-    //InitFreeFuncBag(T_SEMI, &SemigroupsFreeFunc);
+    InitFreeFuncBag(T_SEMI, &SemigroupFreeFunc);
     
     /* return success                                                      */
     return 0;
