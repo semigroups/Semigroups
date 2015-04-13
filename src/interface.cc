@@ -75,7 +75,7 @@ void SemigroupFreeFunc(Obj o) {
 template <typename T>
 class Converter {
   public:
-    virtual T* convert (Obj, size_t) {};
+    virtual T* convert (Obj, size_t) = 0;
 };
 
 class NewTrans2 : public Converter<Transformation<u_int16_t> > {
@@ -101,7 +101,7 @@ class NewTrans2 : public Converter<Transformation<u_int16_t> > {
 size_t SemigroupDegreeFromData (Obj data); //TODO write a method for this!!
 
 template <typename T>
-void InitSemigroupFromData_C (Obj data, Converter<T> converter) {
+void InitSemigroupFromData_C (Obj data, Converter<T>* converter) {
     
   Obj gens =  ElmPRec(data, RNamName("gens"));
   //FIXME check gens not empty, and that gens is a component of data
@@ -111,7 +111,7 @@ void InitSemigroupFromData_C (Obj data, Converter<T> converter) {
 
   PLAIN_LIST(gens);
   for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
-    gens_c.push_back(converter.convert(ELM_PLIST(gens, i), deg_c));
+    gens_c.push_back(converter->convert(ELM_PLIST(gens, i), deg_c));
   }
   
   auto S = new Semigroup<T>(gens_c, deg_c);
@@ -125,7 +125,7 @@ Semigroup<T>* SemigroupFromData_C (Obj data) {
     switch (SemigroupType(data)){
       case SEMI_TRANS2:
         NewTrans2 converter;
-        InitSemigroupFromData_C<T>(data, converter);
+        InitSemigroupFromData_C<T>(data, &converter);
         break;
     }
   }
