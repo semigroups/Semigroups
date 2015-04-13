@@ -56,21 +56,21 @@ class Semigroup {
       _prefix     (), 
       _reduced    (RecVec<bool>(gens.size())),
       _right      (RecVec<size_t>(gens.size())),
-      //_rules      (RecVec<size_t>(3)), 
       _schreiergen(), 
       _schreierpos(), 
       _suffix     (), 
       _wordlen    (0) // (length of the current word) - 1
     { 
       assert(_nrgens != 0);
+      
       _lenindex.push_back(0);
+      _id = static_cast<T*>(_gens.at(0)->identity());
 
-      // init genslookup FIXME better way?
+      // init genslookup
       for (size_t i = 0; i < _nrgens; i++) {
         _genslookup.push_back(0);
       }
 
-      //_id = static_cast<T*>(_gens.at(0)->identity());
       // add the generators 
       for (size_t i = 0; i < _nrgens; i++) {
         T* x = _gens.at(i);
@@ -103,6 +103,8 @@ class Semigroup {
         x->delete_data();
         delete x;
       }
+      _id->delete_data();
+      delete _id;
     }
 
     size_t size () {
@@ -170,7 +172,6 @@ class Semigroup {
               auto it = _map.find(x); 
 
               if (it != _map.end()) {
-               //newrule(_pos, j, it->second);
                 _right.set(_pos, j, it->second);
                 _nrrules++;
               } else {
@@ -202,6 +203,7 @@ class Semigroup {
           expand();
         }
       }
+      x.delete_data();
       //if (_pos > _nr) {
       // free stuff
       //}
@@ -239,11 +241,10 @@ class Semigroup {
     }*/
 
     void inline is_one (T& x) {
-      /*
       if (!_found_one && x == (*_id)) {
         _pos_one = _nr;
         _found_one = true;
-      }*/
+      }
     }
     
     void inline expand () {
@@ -254,31 +255,31 @@ class Semigroup {
     }
 
     // TODO add stopper, found, lookfunc
-    size_t                             _degree;
-    std::vector<T*>                    _elements;
-    std::vector<size_t>                _final;
-    std::vector<size_t>                _first;
-    bool                               _found_one;
-    std::vector<T*>                    _gens;
-    std::vector<size_t>                _genslookup;  
-    T*                                 _id; 
-    RecVec<size_t>                     _left;
-    std::vector<size_t>                _lenindex;
-    std::unordered_map<const T, size_t>      _map;         
-    size_t                             _nr;
-    size_t                             _nrgens;
-    size_t                             _nrrules;
-    size_t                             _pos;
-    size_t                             _pos_one;
-    std::vector<size_t>                _prefix;
-    RecVec<bool>                       _reduced;
-    RecVec<size_t>                     _right;
-//  RecVec<size_t>                     _rules; // (word1 index, gen, word2 index) 
-                                               // word1 * gen = word2
-    std::vector<size_t>                _schreiergen;
-    std::vector<size_t>                _schreierpos;
-    std::vector<size_t>                _suffix;
-    size_t                             _wordlen;
+    size_t                               _degree;
+    std::vector<T*>                      _elements;
+    std::vector<size_t>                  _final;
+    std::vector<size_t>                  _first;
+    bool                                 _found_one;
+    std::vector<T*>                      _gens;
+    std::vector<size_t>                  _genslookup;  
+    T*                                   _id; 
+    RecVec<size_t>                       _left;
+    std::vector<size_t>                  _lenindex;
+    std::unordered_map<const T, size_t>  _map;         
+    size_t                               _nr;
+    size_t                               _nrgens;
+    size_t                               _nrrules;
+    size_t                               _pos;
+    size_t                               _pos_one;
+    std::vector<size_t>                  _prefix;
+    RecVec<bool>                         _reduced;
+    RecVec<size_t>                       _right;
+//  RecVec<size_t>                       _rules; // (word1 index, gen, word2 index) 
+                                                 // word1 * gen = word2
+    std::vector<size_t>                  _schreiergen;
+    std::vector<size_t>                  _schreierpos;
+    std::vector<size_t>                  _suffix;
+    size_t                               _wordlen;
 };
  
 #endif
