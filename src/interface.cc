@@ -75,11 +75,12 @@ void SemigroupFreeFunc(Obj o) {
 template <typename T>
 class Converter {
   public:
-    virtual T* convert (Obj, size_t);
+    virtual T* convert (Obj, size_t) {};
 };
 
 class NewTrans2 : public Converter<Transformation<u_int16_t> > {
   public: 
+
     Transformation<u_int16_t>* convert (Obj o, size_t n) {
       assert(DEG_TRANS2(o) <= n);
       assert(TNUM_OBJ(o) == T_TRANS2);
