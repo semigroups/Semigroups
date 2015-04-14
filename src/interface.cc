@@ -17,34 +17,48 @@
 //#define NDEBUG 
 
 /*******************************************************************************
+ * Get the type of C++ semigroup wrapped in a GAP data object
+*******************************************************************************/
+
+Int SemigroupTypeFunc (Obj data) {
+  //FIXME check gens not empty, and that gens is a component of data
+  Int type = TNUM_OBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
+  switch (type) {
+    case T_TRANS2:
+      return SEMI_TRANS2;
+    case T_TRANS4:
+      return SEMI_TRANS4;
+    default:
+      return UNKNOWN;
+  }
+}
+
+bool IsSemigroup_CC (Obj data) {
+  return (SemigroupTypeFunc(data) != UNKNOWN);
+}
+
+/*******************************************************************************
  * wrap C++ semigroup object in a GAP bag for garbage collection
 *******************************************************************************/
 
+// put C++ semigroup into GAP object
+
 template<typename T>
-inline void SET_SEMI(Obj o, Semigroup<T>* p) {
-    ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(p);
+Obj NewSemigroup(Semigroup<T>* S, Obj data){
+  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
+  ADDR_OBJ(o)[0] = (Obj) SemigroupTypeFunc(data);
+  ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(S);
+  return o;
 }
+
+// get C++ semigroup from GAP object
 
 template<typename T>
 inline Semigroup<T>* GET_SEMI(Obj o) {
     return reinterpret_cast<Semigroup<T>*>(ADDR_OBJ(o)[1]);
 }
 
-//TODO make NewSemigroup a template, if possible
-
-Obj NewSemigroup(Semigroup<Transformation<u_int16_t> >* S){
-  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
-  SET_SEMI<Transformation<u_int16_t> >(o, S);
-  ADDR_OBJ(o)[0] = (Obj) SEMI_TRANS2;
-  return o;
-}
-
-Obj NewSemigroup(Semigroup<Transformation<u_int32_t> >* S){
-  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
-  SET_SEMI<Transformation<u_int32_t> >(o, S);
-  ADDR_OBJ(o)[0] = (Obj) SEMI_TRANS4;
-  return o;
-}
+// free C++ semigroup inside GAP object
 
 void SemigroupFreeFunc(Obj o) { 
   switch ((Int) ADDR_OBJ(o)[0]){
@@ -60,25 +74,8 @@ void SemigroupFreeFunc(Obj o) {
 }
 
 /*******************************************************************************
- * Get the type of C++ semigroup wrapped in a GAP data object
+ * get the C++ semigroup from the GAP data
 *******************************************************************************/
-
-Int SemigroupType (Obj data) {
-  //FIXME check gens not empty, and that gens is a component of data
-  Int type = TNUM_OBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
-  switch (type) {
-    case T_TRANS2:
-      return SEMI_TRANS2;
-    case T_TRANS4:
-      return SEMI_TRANS4;
-    default:
-      return UNKNOWN;
-  }
-}
-
-bool IsSemigroup_CC (Obj data) {
-  return (SemigroupType(data) != UNKNOWN);
-}
 
 template<typename T>
 Semigroup<T>* Semigroup_CC (Obj data) {
@@ -175,7 +172,7 @@ void InitSemigroupFromData_CC (Obj data, Converter<T>* converter) {
   }
   
   auto S = new Semigroup<T>(gens_c, deg_c);
-  AssPRec(data, RNamName("Semigroup_CC"), NewSemigroup(S));
+  AssPRec(data, RNamName("Semigroup_CC"), NewSemigroup<T>(S, data));
   CHANGED_BAG(data);
 }
 
@@ -278,7 +275,7 @@ bool ENUMERATE_SEMIGROUP_CC (Obj data,
                              Obj lookfunc, 
                              Obj looking) {
   
-  switch (SemigroupType(data)) {
+  switch (SemigroupTypeFunc(data)) {
     case UNKNOWN:
       return false;
     case SEMI_TRANS2:
@@ -302,7 +299,7 @@ bool ENUMERATE_SEMIGROUP_CC (Obj data,
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
 
   if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupType(data)) {
+    switch (SemigroupTypeFunc(data)) {
       case SEMI_TRANS2:{
         RightCayleyGraph<Transformation<u_int16_t> >(data);
         break;
@@ -319,7 +316,7 @@ Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
 Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 
   if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupType(data)) {
+    switch (SemigroupTypeFunc(data)) {
       case SEMI_TRANS2:{
         LeftCayleyGraph<Transformation<u_int16_t> >(data);
         break;
@@ -336,7 +333,7 @@ Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
 
   if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupType(data)) {
+    switch (SemigroupTypeFunc(data)) {
       case SEMI_TRANS2:{
         ConverterTrans2 ct2;
         Elements<Transformation<u_int16_t> >(data, &ct2);
@@ -355,7 +352,7 @@ Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
 
   if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupType(data)) {
+    switch (SemigroupTypeFunc(data)) {
       case SEMI_TRANS2:{
         ConverterTrans2 ct2;
         Relations<Transformation<u_int16_t> >(data);
