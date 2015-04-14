@@ -17,10 +17,10 @@
 //#define NDEBUG 
 
 /*******************************************************************************
- * Macros
+ * Imported types from the library
 *******************************************************************************/
 
-// None so far!
+Obj BipartitionType; // Imported from the library to be able to check type
 
 /*******************************************************************************
  * Get the type of C++ semigroup wrapped in a GAP data object
@@ -36,9 +36,13 @@ Int SemigroupTypeFunc (Obj data) {
       return SEMI_TRANS2;
     case T_TRANS4:
       return SEMI_TRANS4;
-    default:
-      return UNKNOWN;
   }
+  
+  Obj objtype = TYPE_COMOBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
+  if (objtype == BipartitionType) {
+      return SEMI_BIPART;
+  }
+  return UNKNOWN;
 }
 
 bool IsSemigroup_CC (Obj data) {
@@ -1024,6 +1028,7 @@ static Int InitKernel( StructInitInfo *module )
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &SemigroupFreeFunc);
+    ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
     
     /* return success                                                      */
     return 0;

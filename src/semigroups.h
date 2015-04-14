@@ -6,17 +6,11 @@
  */
 
 // TODO
-// 1) a bit of rearranging to move the expands() out of the inner loop to the
-// end of the words of length n - 1 have been considered
-// 1.5) maybe process the generators in the constructor to avoid the special
-// cases in enumerate()
-// 2) a proper hash function for transformations
 // 2.5) looking etc. This probably won't work with GAP transformations, better
 // use the other algorithm in that case.
 // 3) the rest of the functionality, and interface!
 // 4) other types of semigroups
-// 5) a specialist version for small transformations/elements (using bit
-// flipping)
+// 5) bit flipping?
 // 6) the other functionality of Semigroupe.
 
 #ifndef SEMIGROUPS_H
