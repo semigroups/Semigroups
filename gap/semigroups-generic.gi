@@ -293,24 +293,41 @@ InstallMethod(GenericSemigroupData, "for a semigroup",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
-  data:=rec(elts := EmptyPlist(10^5), 
-            final := EmptyPlist(10^5), 
-            first := EmptyPlist(10^5), 
+  # this is required for the C++ version
+  if IsTransformationSemigroup(S) then 
+    data := rec();
+    if IsMonoid(S) then 
+      data.gens := ShallowCopy(GeneratorsOfMonoid(S));
+    else 
+      data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
+    fi;
+
+    data.nr := 0;
+    data.pos := 0;
+    data.degree := DegreeOfTransformationSemigroup(S);
+
+    return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
+                                           and IsAttributeStoringRep), data);;
+  fi;
+
+  data:=rec(elts := [], 
+            final := [], 
+            first := [], 
             found := false, 
-            genslookup := EmptyPlist(10^5), 
-            left := EmptyPlist(10^5), 
+            genslookup := [], 
+            left := [], 
             len := 1, 
-            lenindex := EmptyPlist(10^5), 
+            lenindex := [], 
             nrrules := 0, 
-            prefix := EmptyPlist(10^5), 
-            reduced := [EmptyPlist(10^5)], 
-            right := EmptyPlist(10^5), 
-            rules := EmptyPlist(10^5), 
+            prefix := [], 
+            reduced := [[]], 
+            right := [], 
+            rules := [], 
             stopper := false, 
-            suffix := EmptyPlist(10^5), 
-            words := EmptyPlist(10^5));
+            suffix := [], 
+            words := []);
   
-  hashlen := NextPrimeInt(10^6);
+  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
   if IsMonoid(S) then 
     data.gens:=ShallowCopy(GeneratorsOfMonoid(S));
@@ -324,7 +341,6 @@ function(S)
     data.final[1]:=0;
     data.prefix[1]:=0;   
     data.suffix[1]:=0;
-    #data.reduced[1]:=BlistList([1..nrgens], [1..nrgens]);
     data.reduced[1]:=List([1..nrgens], ReturnTrue);
     data.one:=1;
     data.pos:=2; # we don't apply generators to the One(S)
@@ -359,7 +375,6 @@ function(S)
       data.right[nr]:=EmptyPlist(nrgens);
       data.genslookup[i]:=nr;
       data.reduced[nr]:=List([1..nrgens], ReturnFalse);
-      #data.reduced[nr]:=BlistList(data.genstoapply, []);
       
       if data.one=false and ForAll(data.gens, y-> data.gens[i]*y=y and y*data.gens[i]=y) then 
         data.one:=nr;
@@ -628,6 +643,10 @@ end);
 
 InstallMethod(ViewObj, [IsGenericSemigroupData], 
 function(data)
+  if not IsBound(data!.elts) then 
+    Print("<generic semigroup data>");
+    return;
+  fi;
   Print("<");
 
   if IsClosedData(data) then 

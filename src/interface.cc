@@ -76,9 +76,10 @@ template <typename T>
 class Converter {
   public:
     virtual T* convert (Obj, size_t) = 0;
+    //virtual T* unconvert (Obj, size_t) = 0;
 };
 
-class NewTrans2 : public Converter<Transformation<u_int16_t> > {
+class ConverterTrans2 : public Converter<Transformation<u_int16_t> > {
   public: 
 
     Transformation<u_int16_t>* convert (Obj o, size_t n) {
@@ -98,16 +99,34 @@ class NewTrans2 : public Converter<Transformation<u_int16_t> > {
     }
 };
 
-size_t SemigroupDegreeFromData (Obj data); //TODO write a method for this!!
+class ConverterTrans4 : public Converter<Transformation<u_int32_t> > {
+  public: 
+
+    Transformation<u_int32_t>* convert (Obj o, size_t n) {
+      assert(DEG_TRANS4(o) <= n);
+      assert(TNUM_OBJ(o) == T_TRANS4);
+      
+      auto x = new Transformation<u_int32_t>(n);
+      UInt4* ptf = ADDR_TRANS4(o);
+      size_t i;
+      for (i = 0; i < DEG_TRANS4(o); i++) {
+        x->set(i, ptf[i]);
+      }
+      for (; i < n; i++) {
+        x->set(i, i);
+      }
+      return x;
+    }
+};
 
 template <typename T>
-void InitSemigroupFromData_C (Obj data, Converter<T>* converter) {
+void InitSemigroupFromData_CC (Obj data, Converter<T>* converter) {
     
   Obj gens =  ElmPRec(data, RNamName("gens"));
   //FIXME check gens not empty, and that gens is a component of data
   
   std::vector<T*> gens_c;
-  size_t deg_c = SemigroupDegreeFromData(data);
+  size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
 
   PLAIN_LIST(gens);
   for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
@@ -115,35 +134,51 @@ void InitSemigroupFromData_C (Obj data, Converter<T>* converter) {
   }
   
   auto S = new Semigroup<T>(gens_c, deg_c);
-  AssPRec(data, RNamName("SemigroupData_C"), NewSemigroup(S));
+  AssPRec(data, RNamName("SemigroupData_CC"), NewSemigroup(S));
 }
+
 
 template <typename T>
-Semigroup<T>* SemigroupFromData_C (Obj data) {
+void Enumerate (Obj data, Obj limit, Obj lookfunc, Obj looking) {
 
-  if (!IsbPRec(data, RNamName("SemigroupData_C"))) {
-    switch (SemigroupType(data)){
-      case SEMI_TRANS2:
-        NewTrans2 converter;
-        InitSemigroupFromData_C<T>(data, &converter);
-        break;
-    }
-  }
-  return GET_SEMI<T>(ElmPRec(data, RNamName("SemigroupData_C")));
+  Semigroup<T>* S = GET_SEMI<T>(data);
+  S->enumerate();
+  std::cout << S->size() << "\n";  
 }
 
-// run Semigroups++ in case we are one of the types of implemented elements.
 // TODO add limit etc 
 
-template <typename T>
-Obj EnumerateSemigroupData_C (Obj data,
-                              Obj limit, 
-                              Obj lookfunc, 
-                              Obj looking) {
+bool ENUMERATE_SEMIGROUP_CC (Obj data,
+                             Obj limit, 
+                             Obj lookfunc, 
+                             Obj looking) {
   
-  Semigroup<T>* S = SemigroupFromData_C<T>(data);
-  S->enumerate();
-  return data;
+  switch (SemigroupType(data)) {
+    case UNKNOWN:
+      return false;
+    case SEMI_TRANS2:
+      if (!IsbPRec(data, RNamName("SemigroupData_CC"))) {
+        ConverterTrans2 ct2;
+        InitSemigroupFromData_CC<Transformation<u_int16_t> >(data, &ct2);
+      }
+      Enumerate<Transformation<u_int16_t> >(ElmPRec(data, RNamName("SemigroupData_CC")),
+                                            limit, 
+                                            lookfunc, 
+                                            looking);
+      //intentional fall through
+    case SEMI_TRANS4:
+      if (!IsbPRec(data, RNamName("SemigroupData_CC"))) {
+        ConverterTrans4 ct4;
+        InitSemigroupFromData_CC<Transformation<u_int32_t> >(data, &ct4);
+      }
+      Enumerate<Transformation<u_int32_t> >(ElmPRec(data, RNamName("SemigroupData_CC")), 
+                                            limit, 
+                                            lookfunc, 
+                                            looking);
+      //intentional fall through
+    default: 
+      return data;
+  }
 }
 
 // macros for the GAP version of the algorithm (used in case we have a
@@ -168,15 +203,8 @@ static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
   
-  switch (SemigroupType(data)) {
-    case UNKNOWN:
-      break;
-    case SEMI_TRANS2:
-      EnumerateSemigroupData_C<Transformation<u_int16_t> >(data, limit, lookfunc, looking);
-    //case SEMI_TRANS4:
-    //  EnumerateSemigroupData_C<Transformation<u_int32_t> >(data, limit, lookfunc, looking);
-    default: 
-      return data;
+  if (ENUMERATE_SEMIGROUP_CC(data, limit, lookfunc, looking)) {
+    return data;
   }
 
   //remove nrrules 

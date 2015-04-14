@@ -119,6 +119,7 @@ class Semigroup {
     //TODO reintroduce limit
     void enumerate () {
       if(_pos >= _nr) return;
+      std::cout << "enumerating!\n";
       
       T x(_degree);
 
