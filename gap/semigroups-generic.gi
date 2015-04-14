@@ -296,12 +296,7 @@ function(S)
   # this is required for the C++ version
   if IsTransformationSemigroup(S) then 
     data := rec();
-    if IsMonoid(S) then 
-      data.gens := ShallowCopy(GeneratorsOfMonoid(S));
-    else 
-      data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
-    fi;
-
+    data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;
     data.pos := 0;
     data.degree := DegreeOfTransformationSemigroup(S);

@@ -7,7 +7,7 @@
 
 #ifndef SEMIGROUPS_BASICS_H
 #define SEMIGROUPS_BASICS_H
-#define NDEBUG 
+//#define NDEBUG 
 
 #include <assert.h>
 #include <iostream>
@@ -24,12 +24,6 @@ class RecVec {
           this->expand(nrrows);
         }
         
-        /*RecVec() : _vec(), 
-                   _nrcols(0),
-                   _nrrows(0){
-          std::cout << "RecVec constructed 0 args!!\n";
-        }*/
-
         RecVec (const RecVec& copy) : _vec(copy._vec),
                                       _nrcols(copy._nrcols), 
                                       _nrrows(copy._nrrows) {
@@ -59,6 +53,18 @@ class RecVec {
 
         size_t size () {
           return _vec.size();
+        }
+
+        std::vector<T> vector () {
+          return _vec;
+        }
+        
+        size_t nrrows () {
+          return _nrrows;
+        }
+        
+        size_t nrcols () {
+          return _nrcols;
         }
 
       private:

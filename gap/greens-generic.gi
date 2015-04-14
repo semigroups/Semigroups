@@ -293,8 +293,8 @@ function(S)
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
   if not IsActingSemigroup(S) then
-    data := Enumerate(GenericSemigroupData(S));
-    rel!.data := SEMIGROUPS_GABOW_SCC(data!.right);
+    rel!.data := SEMIGROUPS_GABOW_SCC(RightCayleyGraphSemigroup(S));
+    #TODO change the other GreensXRelations to that they look like this!
   fi;
 
   return rel;

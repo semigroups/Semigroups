@@ -236,8 +236,10 @@ class Semigroup {
     // left_cayley_graph () {
     // }
     //
-    // right_cayley_graph () {
-    // }
+    RecVec<size_t> right_cayley_graph () {
+      enumerate();
+      return _right;
+    }
     // 
     // 
     //

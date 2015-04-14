@@ -119,10 +119,7 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local data, perm;
-  data := Enumerate(GenericSemigroupData(S));
-  perm := SortingPerm(data!.elts);
-  return Permuted(List(data!.right, x-> OnTuples(x, perm)), perm);
+  return RIGHT_CAYLEY_GRAPH(Enumerate(GenericSemigroupData(S)));
 end);
 
 # same method for ideals

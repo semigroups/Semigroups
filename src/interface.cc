@@ -16,7 +16,9 @@
 //#define DEBUG
 //#define NDEBUG 
 
-
+#ifndef ADDR_TRANS
+#define ADDR_TRANS(x) (TNUM_OBJ(x)==T_TRANS2?ADDR_TRANS2(x):ADDR_TRANS4(x))
+#endif
 
 // wrap the C++ semigroup object in a GAP bag for garbage collection
 
@@ -29,6 +31,8 @@ template<typename T>
 inline Semigroup<T>* GET_SEMI(Obj o) {
     return reinterpret_cast<Semigroup<T>*>(ADDR_OBJ(o)[1]);
 }
+
+//TODO make NewSemigroup a template, if possible
 
 Obj NewSemigroup(Semigroup<Transformation<u_int16_t> >* S){
   Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
@@ -57,6 +61,15 @@ Int SemigroupType (Obj data) {
   }
 }
 
+bool IsSemigroup_CC (Obj data) {
+  return (SemigroupType(data) != UNKNOWN);
+}
+
+template<typename T>
+Semigroup<T>* Semigroup_CC (Obj data) {
+  return GET_SEMI<T>(ElmPRec(data, RNamName("Semigroup_CC")));
+}
+
 void SemigroupFreeFunc(Obj o) { 
   switch ((Int) ADDR_OBJ(o)[0]){
     case SEMI_TRANS2:
@@ -79,23 +92,34 @@ class Converter {
     //virtual T* unconvert (Obj, size_t) = 0;
 };
 
+// TODO make the following some kind of template too
+
 class ConverterTrans2 : public Converter<Transformation<u_int16_t> > {
   public: 
 
     Transformation<u_int16_t>* convert (Obj o, size_t n) {
-      assert(DEG_TRANS2(o) <= n);
       assert(TNUM_OBJ(o) == T_TRANS2);
+      assert(DEG_TRANS2(o) <= n);
       
       auto x = new Transformation<u_int16_t>(n);
-      UInt2* ptf = ADDR_TRANS2(o);
+      UInt2* pto = ADDR_TRANS2(o);
       size_t i;
       for (i = 0; i < DEG_TRANS2(o); i++) {
-        x->set(i, ptf[i]);
+        x->set(i, pto[i]);
       }
       for (; i < n; i++) {
         x->set(i, i);
       }
       return x;
+    }
+
+    Obj unconvert (Transformation<u_int16_t>* x) {
+      Obj o = NEW_TRANS2(x->degree());
+      UInt2* pto = ADDR_TRANS2(o);
+      for (u_int16_t i = 0; i < x->degree(); i++) {
+        pto[i] = x->at(i);
+      }
+      return o;
     }
 };
 
@@ -103,8 +127,8 @@ class ConverterTrans4 : public Converter<Transformation<u_int32_t> > {
   public: 
 
     Transformation<u_int32_t>* convert (Obj o, size_t n) {
-      assert(DEG_TRANS4(o) <= n);
       assert(TNUM_OBJ(o) == T_TRANS4);
+      assert(DEG_TRANS4(o) <= n);
       
       auto x = new Transformation<u_int32_t>(n);
       UInt4* ptf = ADDR_TRANS4(o);
@@ -134,16 +158,38 @@ void InitSemigroupFromData_CC (Obj data, Converter<T>* converter) {
   }
   
   auto S = new Semigroup<T>(gens_c, deg_c);
-  AssPRec(data, RNamName("SemigroupData_CC"), NewSemigroup(S));
+  AssPRec(data, RNamName("Semigroup_CC"), NewSemigroup(S));
+  CHANGED_BAG(data);
 }
-
 
 template <typename T>
 void Enumerate (Obj data, Obj limit, Obj lookfunc, Obj looking) {
 
-  Semigroup<T>* S = GET_SEMI<T>(data);
+  Semigroup<T>* S = Semigroup_CC<T>(data);
   S->enumerate();
   std::cout << S->size() << "\n";  
+}
+
+template <typename T>
+void RightCayleyGraph (Obj data) {
+
+  Semigroup<T>* S = Semigroup_CC<T>(data);
+  RecVec<size_t> right = S->right_cayley_graph();
+
+  Obj out = NEW_PLIST(T_PLIST, right.nrrows());
+  SET_LEN_PLIST(out, right.nrrows());
+
+  for (size_t i = 0; i < right.nrrows(); i++) {
+    Obj next = NEW_PLIST(T_PLIST_CYC, right.nrcols());
+    SET_LEN_PLIST(next, right.nrcols());
+    for (size_t j = 0; j < right.nrcols(); j++) {
+      SET_ELM_PLIST(next, j + 1, INTOBJ_INT(right.get(i, j) + 1));
+    }
+    SET_ELM_PLIST(out, i + 1, next);
+    CHANGED_BAG(out);
+  }
+  AssPRec(data, RNamName("right"), out);
+  CHANGED_BAG(data);
 }
 
 // TODO add limit etc 
@@ -157,28 +203,38 @@ bool ENUMERATE_SEMIGROUP_CC (Obj data,
     case UNKNOWN:
       return false;
     case SEMI_TRANS2:
-      if (!IsbPRec(data, RNamName("SemigroupData_CC"))) {
+      if (!IsbPRec(data, RNamName("Semigroup_CC"))) {
         ConverterTrans2 ct2;
         InitSemigroupFromData_CC<Transformation<u_int16_t> >(data, &ct2);
       }
-      Enumerate<Transformation<u_int16_t> >(ElmPRec(data, RNamName("SemigroupData_CC")),
-                                            limit, 
-                                            lookfunc, 
-                                            looking);
-      //intentional fall through
+      Enumerate<Transformation<u_int16_t> >(data, limit, lookfunc, looking);
+      return true;
     case SEMI_TRANS4:
-      if (!IsbPRec(data, RNamName("SemigroupData_CC"))) {
+      if (!IsbPRec(data, RNamName("Semigroup_CC"))) {
         ConverterTrans4 ct4;
         InitSemigroupFromData_CC<Transformation<u_int32_t> >(data, &ct4);
       }
-      Enumerate<Transformation<u_int32_t> >(ElmPRec(data, RNamName("SemigroupData_CC")), 
-                                            limit, 
-                                            lookfunc, 
-                                            looking);
-      //intentional fall through
-    default: 
-      return data;
+      Enumerate<Transformation<u_int32_t> >(data, limit, lookfunc, looking);
+      return true;
   }
+  return true;
+}
+
+Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
+
+  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
+    switch (SemigroupType(data)) {
+      case SEMI_TRANS2:{
+        RightCayleyGraph<Transformation<u_int16_t> >(data);
+        break;
+      }
+      case SEMI_TRANS4:{
+        RightCayleyGraph<Transformation<u_int32_t> >(data);
+        break;
+      }
+    }
+  }
+  return ElmPRec(data, RNamName("right"));
 }
 
 // macros for the GAP version of the algorithm (used in case we have a
@@ -778,6 +834,8 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", RIGHT_CAYLEY_GRAPH, 1, 
+                          "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
