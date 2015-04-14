@@ -82,17 +82,10 @@ void SemigroupFreeFunc(Obj o) {
 }
 
 /*******************************************************************************
- * get the C++ semigroup from the GAP data
-*******************************************************************************/
-
-template<typename T>
-Semigroup<T>* Semigroup_CC (Obj data) {
-  return GET_SEMI<T>(ElmPRec(data, RNamName("Semigroup_CC")));
-}
-
-/*******************************************************************************
  * Converters to and from GAP objects
 *******************************************************************************/
+
+// abstract base class
 
 template <typename T>
 class Converter {
@@ -101,10 +94,14 @@ class Converter {
     virtual Obj unconvert (T*) = 0;
 };
 
+// helper for getting ADDR_TRANS2/4
+
 template <typename T> 
 inline T* ADDR_TRANS (Obj x) {
   return ((T*)((Obj*)(ADDR_OBJ(x))+3));
 }
+
+// converter between C++ transformations and GAP transformations
 
 template <typename T>
 class ConverterTrans : public Converter<Transformation<T> > {
@@ -140,11 +137,22 @@ class ConverterTrans : public Converter<Transformation<T> > {
  * Interface to semigroups.h
 *******************************************************************************/
 
+// get the C++ semigroup from the GAP level data.
+
+template<typename T>
+Semigroup<T>* Semigroup_CC (Obj data) {
+  return GET_SEMI<T>(ElmPRec(data, RNamName("Semigroup_CC")));
+}
+
+// initialise the C++ semigroup by converting data!.gens, and storing the C++
+// semigroup in a bag, then storing this bag in the GAP level data.
+
 template <typename T>
 void InitSemigroupFromData_CC (Obj data, Converter<T>* converter) {
-    
+  assert(IsbPRec(data, RNamName("gens")));
+  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+  
   Obj gens =  ElmPRec(data, RNamName("gens"));
-  //FIXME check gens not empty, and that gens is a component of data
   
   std::vector<T*> gens_c;
   size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
@@ -159,6 +167,8 @@ void InitSemigroupFromData_CC (Obj data, Converter<T>* converter) {
   CHANGED_BAG(data);
 }
 
+// enumerate on the C++ semigroup stored in the GAP level data
+
 template <typename T>
 void Enumerate (Obj data, Obj limit, Obj lookfunc, Obj looking) {
 
@@ -166,6 +176,8 @@ void Enumerate (Obj data, Obj limit, Obj lookfunc, Obj looking) {
   S->enumerate();
   std::cout << S->size() << "\n";  
 }
+
+// helper function to convert a RecVec to a GAP plist of GAP plists.
 
 Obj ConvertFromRecVec (RecVec<size_t> rv) {
   Obj out = NEW_PLIST(T_PLIST, rv.nrrows());
@@ -183,15 +195,8 @@ Obj ConvertFromRecVec (RecVec<size_t> rv) {
   return out;
 }
 
-Obj ConvertFromVec (std::vector<size_t> vec) {
-  Obj out = NEW_PLIST(T_PLIST, vec.size());
-  SET_LEN_PLIST(out, vec.size());
-
-  for (size_t i = 0; i < vec.size(); i++) {
-    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec.at(i) + 1));
-  }
-  return out;
-}
+// get and store the right Cayley graph from C++ semigroup stored in the GAP
+// level data
 
 template <typename T>
 void RightCayleyGraph (Obj data) {
@@ -200,12 +205,18 @@ void RightCayleyGraph (Obj data) {
   CHANGED_BAG(data);
 }
 
+// get and store the left Cayley graph from C++ semigroup stored in the GAP
+// level data
+
 template <typename T>
 void LeftCayleyGraph (Obj data) {
   Semigroup<T>* S = Semigroup_CC<T>(data);
   AssPRec(data, RNamName("left"), ConvertFromRecVec(S->left_cayley_graph()));
   CHANGED_BAG(data);
 }
+
+// get and store the elements from C++ semigroup stored in the GAP
+// level data
 
 template <typename T>
 void Elements (Obj data, Converter<T>* converter) {
@@ -224,6 +235,21 @@ void Elements (Obj data, Converter<T>* converter) {
   CHANGED_BAG(data);
 }
 
+// helper function to convert a vector to a plist of GAP integers
+
+Obj ConvertFromVec (std::vector<size_t> vec) {
+  Obj out = NEW_PLIST(T_PLIST, vec.size());
+  SET_LEN_PLIST(out, vec.size());
+
+  for (size_t i = 0; i < vec.size(); i++) {
+    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec.at(i) + 1));
+  }
+  return out;
+}
+
+// get and store the relations from the C++ semigroup stored in the GAP level
+// data.
+
 template <typename T>
 void Relations (Obj data) {
 
@@ -231,7 +257,6 @@ void Relations (Obj data) {
   auto relations = S->relations();
   Obj out = NEW_PLIST(T_PLIST, relations.size());
   SET_LEN_PLIST(out, relations.size());
-  std::cout << relations.size() << "\n";
   for (size_t i = 0; i < relations.size(); i++) {
     Obj next = NEW_PLIST(T_PLIST, 2);
     SET_LEN_PLIST(next, 2);
@@ -245,6 +270,8 @@ void Relations (Obj data) {
   AssPRec(data, RNamName("rules"), out);
   CHANGED_BAG(data);
 }
+
+// TODO clean up from here!
 
 // TODO add limit etc 
 // FIXME figure out how to make these not all have a switch in them!
@@ -465,7 +492,7 @@ static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj
   #endif 
 
   while(i<=nr&&!stop){
-    while(i<=nr&&LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
+    while(i<=nr&&(UInt) LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
       b=INT_INTOBJ(ELM_PLIST(first, i)); 
       s=INT_INTOBJ(ELM_PLIST(suffix, i));
       RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); //from T_PLIST_EMPTY
@@ -591,7 +618,7 @@ static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj
     #ifdef DEBUG
       Pr("finished processing words of len %d\n", (Int) len, 0L);
     #endif
-    if(i>nr||LEN_PLIST(ELM_PLIST(words, i))!=len){
+    if(i>nr||(UInt)LEN_PLIST(ELM_PLIST(words, i))!=len){
       if(len>1){
         #ifdef DEBUG
           Pr("Case 6!\n", 0L, 0L);
@@ -773,8 +800,9 @@ Obj SEMIGROUPS_GABOW_SCC (Obj self, Obj digraph) {
 // semigroup, the following function calculates the strongly connected
 // components of the union of these two graphs.
 
-Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2)
-{ UInt  n, len, nr, i, j, k, l, *ptr;
+Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
+  UInt  *ptr;
+  Int   i, n, len, nr, j, k, l;
   Obj   comps1, id2, comps2, id, comps, seen, comp1, comp2, new_comp, x, out;
 
   n = LEN_PLIST(ElmPRec(scc1, RNamName("id")));
@@ -849,7 +877,8 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2)
 // http://www.liafa.jussieu.fr/~jep/PDF/Exposes/StAndrews.pdf
 
 Obj FIND_HCLASSES(Obj self, Obj right, Obj left){ 
-  UInt  n, nrcomps, i, hindex, rindex, init, j, k, len, *nextpos, *sorted, *lookup;
+  UInt  *nextpos, *sorted, *lookup, init;
+  Int   n, nrcomps, i, hindex, rindex, j, k, len;
   Obj   rightid, leftid, comps, buf, id, out, comp;
   
   rightid = ElmPRec(right, RNamName("id"));
@@ -967,7 +996,7 @@ static StructGVarFunc GVarFuncs [] = {
                           "scc1, scc2"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_HCLASSES, 2, 
                           "left, right"),
-    { 0 } /* Finish with an empty entry */
+    { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
 /******************************************************************************
@@ -1012,7 +1041,9 @@ static StructInitInfo module = {
  /* checkInit   = */ 0,
  /* preSave     = */ 0,
  /* postSave    = */ 0,
- /* postRestore = */ 0
+ /* postRestore = */ 0,
+ /* filename    = */ (char*) "pkg/semigroups/src/interface.cc",
+ /* isGapRootR  = */ true
 };
 
 extern "C"
