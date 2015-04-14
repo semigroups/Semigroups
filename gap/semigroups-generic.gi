@@ -32,22 +32,25 @@ function(S)
     return Position(GenericSemigroupData(S), elt);
   end;
 
+  # FIXME only works for non-C++
   enum.ElementNumber := function(enum, nr)
     data := GenericSemigroupData(S);
     if not IsBound(data!.elts[nr]) then 
-      Enumerate(data, nr);
+      Enumerate(data, nr); 
     fi;
     return data!.elts[nr];
   end;
 
   enum.Length := enum -> Size(S);
 
-  enum.AsList := enum -> Enumerate(GenericSemigroupData(S))!.elts;
+  enum.AsList := enum -> ELEMENTS_SEMIGROUP(Enumerate(GenericSemigroupData(S)));
 
   enum.Membership := function(enum, elt)
     return Position(GenericSemigroupData(S), elt) <> fail;
   end;
 
+  # FIXME is this correct? Shouldn't it be enumerated to the end first?? 
+  # FIXME only works for non-C++
   enum.IsBound\[\] := function(enum, nr)
     return IsBound(GenericSemigroupData(S)!.elts[nr]);
   end;
@@ -60,7 +63,7 @@ end);
 InstallMethod(Size, "for an generic semigroup with generators", 
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(Enumerate(GenericSemigroupData(S), infinity, ReturnFalse)!.elts);
+  return Length(ELEMENTS_SEMIGROUP(Enumerate(GenericSemigroupData(S))));
 end);
 
 # different method for ideals
@@ -79,26 +82,25 @@ InstallMethod(Idempotents, "for an generic semigroup with generators",
 function(S)
   local data, elts, idempotents, nr, i;
 
-  data:=Enumerate(GenericSemigroupData(S));
+  data := Enumerate(GenericSemigroupData(S));
 
   if not IsBound(data!.idempotents) then 
+    elts := ELEMENTS_SEMIGROUP(data);
+    idempotents := EmptyPlist(Length(elts));
+    nr := 0;
 
-    elts:=data!.elts;
-    idempotents:=EmptyPlist(Length(elts));
-    nr:=0;
-
-    for i in [1..Length(elts)] do 
-      if elts[i]*elts[i]=elts[i] then 
-        nr:=nr+1;
-        idempotents[nr]:=i;
+    for i in [1 .. Length(elts)] do 
+      if elts[i] * elts[i] = elts[i] then 
+        nr := nr + 1;
+        idempotents[nr] := i;
       fi;
     od;
     
-    data!.idempotents:=idempotents;
+    data!.idempotents := idempotents;
     ShrinkAllocationPlist(idempotents);
   fi;
 
-  return data!.elts{data!.idempotents};
+  return ELEMENTS_SEMIGROUP(data){data!.idempotents};
 end);
 
 
@@ -389,14 +391,14 @@ end);
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for SEE data", [IsGenericSemigroupData], 
+InstallMethod(Enumerate, "for generic semigroup data", [IsGenericSemigroupData], 
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
 #
 
-InstallMethod(Enumerate, "for SEE data and cyclotomic", [IsGenericSemigroupData, IsCyclotomic], 
+InstallMethod(Enumerate, "for generic semigroup data and cyclotomic", [IsGenericSemigroupData, IsCyclotomic], 
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
@@ -405,7 +407,7 @@ end);
 # <[1..Length(data!.elts)]>.
 
 if IsBound(ENUMERATE_SEMIGROUP) then 
-  InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
+  InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
   [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     
@@ -419,7 +421,7 @@ if IsBound(ENUMERATE_SEMIGROUP) then
   end);
 else
   #FIXME this is broken!!
-  InstallMethod(Enumerate, "for SEE data, cyclotomic, function",
+  InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
   [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     local looking, found, i, nr, len, one, stopper, nrrules, elts, gens, nrgens,
@@ -594,9 +596,9 @@ else
   end);
 fi;
 
-#
+# FIXME only works for non-C++ stuff
 
-InstallMethod(Position, "for SEE data, an associative element, zero cyc",
+InstallMethod(Position, "for generic semigroup data, an associative element, zero cyc",
 [IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc], 
 function(data, x, n)
   local pos, lookfunc;
@@ -607,7 +609,7 @@ function(data, x, n)
     return pos;
   else
     lookfunc:=function(data, i)
-      return data!.elts[i]=x;
+      return data!.elts[i]=x; 
     end;
     
     pos:=Enumerate(data, infinity, lookfunc)!.found;
@@ -619,22 +621,22 @@ function(data, x, n)
   return fail;
 end);
 
-#
+# FIXME only works for non-C++ stuff
 
-InstallMethod(Length, "for SEE data", [IsGenericSemigroupData], 
+InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData], 
 function(data)
   return Length(data!.elts);
 end);
 
-#
+# FIXME only works for non-C++ stuff
 
-InstallMethod(ELM_LIST, "for SEE data, and pos int",
+InstallMethod(ELM_LIST, "for generic semigroup data, and pos int",
 [IsGenericSemigroupData, IsPosInt], 
 function(data, nr)
   return data!.elts[nr];
 end);
 
-#
+# FIXME this ought to work for C++ stuff too
 
 InstallMethod(ViewObj, [IsGenericSemigroupData], 
 function(data)
@@ -656,7 +658,7 @@ function(data)
   return;
 end);
 
-#
+# FIXME only works for non-C++ stuff
 
 InstallMethod(PrintObj, [IsGenericSemigroupData], 2, # to beat the method for an enumerator!
 function(data)
@@ -694,77 +696,3 @@ function(data)
   
   return;
 end);
-
-
-# non-recursive versions of the above...
-
-#graph:=[[2,6], [3,4,5], [1], [3,5], [1], [7,10,11], [5,8,9], [5], [8], [11], [], [10,11], 
-#[9,11,15], [13], [14]];
-
-#GABOW_SCC_2:=function(digraph)   
-#  local stack1, len1, stack2, len2, id, count, dfs, v;
-#
-#  stack1:=[]; len1:=0;
-#  stack2:=[]; len2:=0;
-#  id:=[1..Length(digraph)]*0;
-#  count:=Length(digraph);
-#  
-#  #
-#  dfs:=function(graph, v)
-#    local w;
-#    len1:=len1+1;
-#    len2:=len2+1;
-#    stack1[len1]:=v;    # all vertices visited in one run 
-#    stack2[len2]:=len1; # strictly weakly visited vertices (i.e. 1-way only)
-#    
-#    id[v]:=len1;
-#
-#    #Print("v=", v, "\n");
-#    #Print("stack1=", stack1{[1..len1]}, "\n");
-#    #Print("stack2=", stack2{[1..len2]}, "\n");
-#    #Print("id=", id, "\n");
-#
-#    for w in digraph[v] do 
-#      if id[w]=0 then 
-#        #Print("dfs on ", w, " from ", v, "\n\n");
-#        dfs(digraph, w);
-#      else # we saw <w> earlier in this run
-#        while stack2[len2] > id[w] do
-#          len2:=len2-1; # pop from stack2
-#        od;
-#        #Print("v=", v, "\n");
-#        #Print("id[", w, "]<>0\n");
-#        #Print("stack1=", stack1{[1..len1]}, "\n");
-#        #Print("stack2=", stack2{[1..len2]}, "\n");
-#      fi;
-#    od;
-#
-#    if stack2[len2]=id[v] then
-#      len2:=len2-1;
-#      count:=count+1;
-#      repeat
-#        w:=stack1[len1];
-#        id[w]:=count;
-#        len1:=len1-1; #pop from stack1
-#      until w=v;
-#      #Print("v=", v, "\n");
-#      #Print("stack2[len2]=", v, "\n");
-#      #Print("stack1=", stack1{[1..len1]}, "\n");
-#      #Print("stack2=", stack2{[1..len2]}, "\n");
-#      #Print("id=", id);
-#
-#    fi;
-#    #Print("\n");
-#  end;
-#  #
-#
-#  for v in [1..Length(digraph)] do 
-#    if id[v]=0 then 
-#      dfs(digraph, v);
-#    fi;
-#  od;
-#
-#  return rec(id:=id-Length(digraph), count:=count-Length(digraph));
-#end;
-
-

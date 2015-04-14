@@ -82,7 +82,7 @@ function(S)
   lookup:=List(GeneratorsOfMonoid(S), x-> Position(GeneratorsOfSemigroup(S), x));
   one:=Position(GeneratorsOfSemigroup(S), One(S));
   # if One(S) appears more than once in the generators of S, then this causes
-  # problems here... JDM
+  # problems here... FIXME
   convert:=function(w)
     if not IsEmpty(w) then 
       return List(w, i-> lookup[i]); 

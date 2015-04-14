@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-#W  ideals-exhaust.gi
+#W  ideals-generic.gi
 #Y  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -10,10 +10,9 @@
 
 # this file contains method specific to generic ideals of semigroups. 
 
-# We use the result of enumerating the GenericSemigroupData of the supersemigroup of an ideal
-# to calculate elements, size, test membership, find idempotents, etc. We get a
-# generating set and use that otherwise. 
-
+# We use the result of enumerating the GenericSemigroupData of the
+# supersemigroup of an ideal to calculate elements, size, test membership, find
+# idempotents, etc. We get a generating set and use that otherwise. 
 
 # enumerate the ideal until <enum[limit]> is bound or <lookfunc(enum, nr)> is
 # <true>
@@ -41,9 +40,9 @@ function(enum, limit, lookfunc)
   indices:=enum!.indices;
 
   data:=GenericSemigroupData(SupersemigroupOfIdeal(UnderlyingCollection(enum)));
-  left:=data!.left;
-  right:=data!.right;
-  genstoapply:=data!.genstoapply;
+  left := data!.left;
+  right := data!.right;
+  genstoapply := data!.genstoapply;
   
   while nr <= limit and i <= nr and not (looking and found) do
 

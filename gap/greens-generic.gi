@@ -395,9 +395,9 @@ InstallMethod(Enumerator, "for an generic semigroup Green's class",
 [IsGreensClass],
 function(C)
   local data, rel;
-  data:=GenericSemigroupData(Parent(C));
-  rel:=EquivalenceClassRelation(C);
-  return data!.elts{rel!.data.comps[C!.index]};
+  data := Enumerate(GenericSemigroupData(Parent(C)));
+  rel := EquivalenceClassRelation(C);
+  return ELEMENTS_SEMIGROUP(data){rel!.data.comps[C!.index]};
 end);
 
 #
@@ -481,8 +481,8 @@ BindGlobal("SEMIGROUPS_GreensXClasses",
 function(S, GreensXRelation, GreensXClassOfElement)
   local comps, elts, out, C, i;
 
-  comps:=GreensXRelation(S)!.data.comps;
-  elts:=GenericSemigroupData(S)!.elts;
+  comps := GreensXRelation(S)!.data.comps;
+  elts:= ELEMENTS_SEMIGROUP(GenericSemigroupData(S));
   out:=EmptyPlist(Length(comps));
 
   for i in [1..Length(comps)] do
@@ -535,7 +535,7 @@ function(C, GreensXRelation, GreensXClassOfElement)
   comp:=EquivalenceClassRelation(C)!.data.comps[C!.index];
   id:=GreensXRelation(Parent(C))!.data.id;
   seen:=BlistList([1..Length(id)], []);
-  elts:=GenericSemigroupData(S)!.elts;
+  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S));
   out:=EmptyPlist(Length(comp));
 
   for i in comp do
