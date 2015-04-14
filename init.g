@@ -22,6 +22,7 @@ else # only do this if ORBC is available
 fi;
 
 ReadPackage("semigroups/gap/grpperm.gd");
+ReadPackage("semigroups/gap/fpsemi.gd");
 
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/io.gd");

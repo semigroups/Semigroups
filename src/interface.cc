@@ -178,7 +178,7 @@ void Enumerate (Obj data, Obj limit, Obj lookfunc, Obj looking) {
   std::cout << S->size() << "\n";  
 }
 
-Obj ConvertFromRecVec(RecVec<size_t> rv) {
+Obj ConvertFromRecVec (RecVec<size_t> rv) {
   Obj out = NEW_PLIST(T_PLIST, rv.nrrows());
   SET_LEN_PLIST(out, rv.nrrows());
 
@@ -190,6 +190,16 @@ Obj ConvertFromRecVec(RecVec<size_t> rv) {
     }
     SET_ELM_PLIST(out, i + 1, next);
     CHANGED_BAG(out);
+  }
+  return out;
+}
+
+Obj ConvertFromVec (std::vector<size_t> vec) {
+  Obj out = NEW_PLIST(T_PLIST, vec.size());
+  SET_LEN_PLIST(out, vec.size());
+
+  for (size_t i = 0; i < vec.size(); i++) {
+    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec.at(i) + 1));
   }
   return out;
 }
@@ -222,6 +232,28 @@ void Elements (Obj data, Converter<T>* converter) {
   }
   CHANGED_BAG(out);
   AssPRec(data, RNamName("elts"), out);
+  CHANGED_BAG(data);
+}
+
+template <typename T>
+void Relations (Obj data) {
+
+  Semigroup<T>* S = Semigroup_CC<T>(data);
+  auto relations = S->relations();
+  Obj out = NEW_PLIST(T_PLIST, relations.size());
+  SET_LEN_PLIST(out, relations.size());
+  std::cout << relations.size() << "\n";
+  for (size_t i = 0; i < relations.size(); i++) {
+    Obj next = NEW_PLIST(T_PLIST, 2);
+    SET_LEN_PLIST(next, 2);
+    SET_ELM_PLIST(next, 1, ConvertFromVec(relations.at(i).first));
+    CHANGED_BAG(next);
+    SET_ELM_PLIST(next, 2, ConvertFromVec(relations.at(i).second));
+    CHANGED_BAG(next);
+    SET_ELM_PLIST(out, i + 1, next);
+    CHANGED_BAG(out);
+  }
+  AssPRec(data, RNamName("rules"), out);
   CHANGED_BAG(data);
 }
 
@@ -304,6 +336,25 @@ Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
     }
   }
   return ElmPRec(data, RNamName("elts"));
+}
+
+Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
+
+  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
+    switch (SemigroupType(data)) {
+      case SEMI_TRANS2:{
+        ConverterTrans2 ct2;
+        Relations<Transformation<u_int16_t> >(data);
+        break;
+      }
+      case SEMI_TRANS4:{
+        ConverterTrans4 ct4;
+        Relations<Transformation<u_int32_t> >(data);
+        break;
+      }
+    }
+  }
+  return ElmPRec(data, RNamName("rules"));
 }
 
 // macros for the GAP version of the algorithm (used in case we have a
@@ -908,6 +959,8 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", ELEMENTS_SEMIGROUP, 1, 
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", RELATIONS_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),

@@ -55,7 +55,7 @@ InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
 function(S)
   local rules, F, A, rels, Q, B;
   
-  rules:=Enumerate(GenericSemigroupData(S))!.rules;
+  rules:=RELATIONS_SEMIGROUP(Enumerate(GenericSemigroupData(S)));
   
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);

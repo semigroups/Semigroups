@@ -28,11 +28,4 @@ enum SemigroupType {
   SEMI_BIPART = 3
 };
 
-//#define IS_SEMI(o) (TNUM_OBJ(o) == T_SEMI);
-//#define IS_TRANS_SEMI(o) (IS_SEMI(o) && (Int)(ADDR_OBJ(o)[0]) == SEMI_TRANS);
-//#define IS_PPERM_SEMI(o) (IS_SEMI(o) && (Int)(ADDR_OBJ(o)[0]) == SEMI_PPERM);
-
-// wrap one of our semigroups inside a GAP bag
-
-
 #endif

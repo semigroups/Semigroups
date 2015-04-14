@@ -22,7 +22,7 @@
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
 
-#define NDEBUG
+//#define NDEBUG
 //#define DEBUG
 
 #include "basics.h"
@@ -135,24 +135,86 @@ class Semigroup {
       return _left;
     }
     
-    std::vector<size_t> schreierpos () { 
+    size_t schreierpos (size_t pos) { 
       spanning_tree();
-      return _schreierpos;
+      return _schreierpos[pos];
     }
     
-    std::vector<size_t> schreiergen () { 
+    size_t schreiergen (size_t pos) { 
       spanning_tree();
-      return _schreiergen;
+      return _schreiergen[pos];
     }
     
-    // trace (pos) { trace the spanning tree
-    //
-    // relations () { // have to check for places where neither _pos nor the
-    // suffix of _pos is reduced, then trace the spanning tree
-    //
-    // left_cayley_graph () {
-    // }
-    //
+    std::vector<size_t> trace (size_t pos) { // trace the spanning tree
+      // caching the words seems to be slower ....
+      /*if (_words.empty()) {
+        _words.reserve(_elements.size());
+        for (size_t i = 0; i < _elements.size(); i++) {
+          _words.push_back(std::vector<size_t>());
+        }
+        for (size_t i = 0; i < _genslookup.size(); i++) {
+          if (_words.at(_genslookup.at(i)).empty()) {
+            _words.at(_genslookup.at(i)).push_back(i);
+          }
+        }
+      }
+
+      std::vector<size_t> word2;
+      while (_words.at(pos).empty()) {
+        word2.push_back(this->schreiergen(pos));
+        pos = this->schreierpos(pos);
+      }
+      //word.push_back(_genslookup.at(pos));
+      std::reverse(word2.begin(), word2.end());
+      std::vector<size_t> word1(_words.at(pos));
+      word1.insert(word1.end(), word2.begin(), word2.end());
+      return word1;*/
+
+      std::vector<size_t> word;
+      while (pos > _genslookup.back()) {
+        word.push_back(this->schreiergen(pos));
+        pos = this->schreierpos(pos);
+      }
+      word.push_back(_genslookup.at(pos));
+      std::reverse(word.begin(), word.end());
+      return word;
+    }
+
+    std::vector<std::pair<std::vector<size_t>, std::vector<size_t> > > relations () {
+      std::vector<std::pair<std::vector<size_t>, std::vector<size_t> > > relations;
+      std::cout << "_nrrules = " << _nrrules << "\n";
+      size_t nr = _nrrules;
+
+      for (size_t i = 1; i < _gens.size(); i++) {
+        if (_genslookup.at(i) <= _genslookup.at(i - 1)) {
+          nr--;
+          std::vector<size_t> lhs(i);
+          std::vector<size_t> rhs(_genslookup.at(i));
+          relations.push_back(std::make_pair(lhs, rhs));
+        }
+      }
+
+      size_t i;
+      for (i = 0; i <= _genslookup.back(); i++) {
+        for (size_t j = 0; j < _reduced.nrcols(); j++) {
+          if (!_reduced.get(i, j)) {
+            nr--;
+            relations.push_back(make_relation(i, j));
+          }
+        }
+      }
+
+      for (; i < _reduced.nrrows(); i++) {
+        for (size_t j = 0; j < _reduced.nrcols(); j++) {
+          if (_reduced.get(_suffix.at(i), j) && !_reduced.get(i, j)) {
+            nr--;
+            relations.push_back(make_relation(i, j));
+          }
+        }
+      }
+      assert(nr == 0);
+      return relations;
+    }
     
     //TODO reintroduce limit
     void enumerate () {
@@ -259,14 +321,13 @@ class Semigroup {
     //
       
   private:
-
-    /*void inline newrule (size_t word1, size_t gen, size_t word2) {
-      _rules.expand();
-      _rules.set(_nrrules, 0, word1);
-      _rules.set(_nrrules, 1, gen);
-      _rules.set(_nrrules, 2, word2);
-      _nrrules++;
-    }*/
+    
+    std::pair<std::vector<size_t>,std::vector<size_t> > make_relation (size_t i, size_t j) {
+      std::vector<size_t> lhs(this->trace(i));
+      lhs.push_back(j);
+      std::vector<size_t> rhs(this->trace(_right.get(i, j)));
+      return std::make_pair(lhs, rhs);
+    }
 
     void inline is_one (T& x) {
       if (!_found_one && x == (*_id)) {
@@ -330,6 +391,7 @@ class Semigroup {
     std::vector<size_t>                  _schreierpos;
     std::vector<size_t>                  _suffix;
     size_t                               _wordlen;
+    std::vector<std::vector<size_t> >    _words;
 };
  
 #endif
