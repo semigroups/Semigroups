@@ -78,8 +78,6 @@ class Semigroup {
         if (it != _map.end()) { // duplicate generator
           _genslookup.at(i) = it->second;
           _nrrules++;
-          //newrule(_undefined, i, it->second);
-          //TODO don't forget these rules!
         } else {
           is_one(*x);
           _elements.push_back(static_cast<T*>(x->copy()));

@@ -16,11 +16,9 @@
 //#define DEBUG
 //#define NDEBUG 
 
-#ifndef ADDR_TRANS
-#define ADDR_TRANS(x) (TNUM_OBJ(x)==T_TRANS2?ADDR_TRANS2(x):ADDR_TRANS4(x))
-#endif
-
-// wrap the C++ semigroup object in a GAP bag for garbage collection
+/*******************************************************************************
+ * wrap C++ semigroup object in a GAP bag for garbage collection
+*******************************************************************************/
 
 template<typename T>
 inline void SET_SEMI(Obj o, Semigroup<T>* p) {
@@ -48,6 +46,23 @@ Obj NewSemigroup(Semigroup<Transformation<u_int32_t> >* S){
   return o;
 }
 
+void SemigroupFreeFunc(Obj o) { 
+  switch ((Int) ADDR_OBJ(o)[0]){
+    case SEMI_TRANS2:
+      delete GET_SEMI<Transformation<u_int16_t> >(o);
+      break;
+    case SEMI_TRANS4:
+      delete GET_SEMI<Transformation<u_int32_t> >(o);
+      break;
+    /*case SEMI_BIPART:
+      delete GET_SEMI<Semigroup<Bipartition<u_int16_t> > >(o);*/
+  }
+}
+
+/*******************************************************************************
+ * Get the type of C++ semigroup wrapped in a GAP data object
+*******************************************************************************/
+
 Int SemigroupType (Obj data) {
   //FIXME check gens not empty, and that gens is a component of data
   Int type = TNUM_OBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
@@ -70,20 +85,9 @@ Semigroup<T>* Semigroup_CC (Obj data) {
   return GET_SEMI<T>(ElmPRec(data, RNamName("Semigroup_CC")));
 }
 
-void SemigroupFreeFunc(Obj o) { 
-  switch ((Int) ADDR_OBJ(o)[0]){
-    case SEMI_TRANS2:
-      delete GET_SEMI<Transformation<u_int16_t> >(o);
-      break;
-    case SEMI_TRANS4:
-      delete GET_SEMI<Transformation<u_int32_t> >(o);
-      break;
-    /*case SEMI_BIPART:
-      delete GET_SEMI<Semigroup<Bipartition<u_int16_t> > >(o);*/
-  }
-}
-
-// convert GAP object to corresponding Element
+/*******************************************************************************
+ * Converters to and from GAP objects
+*******************************************************************************/
 
 template <typename T>
 class Converter {
@@ -141,6 +145,7 @@ class ConverterTrans4 : public Converter<Transformation<u_int32_t> > {
       }
       return x;
     }
+
     Obj unconvert (Transformation<u_int32_t>* x) {
       Obj o = NEW_TRANS4(x->degree());
       UInt4* pto = ADDR_TRANS4(o);
@@ -150,6 +155,10 @@ class ConverterTrans4 : public Converter<Transformation<u_int32_t> > {
       return o;
     }
 };
+
+/*******************************************************************************
+ * Interface to semigroups.h
+*******************************************************************************/
 
 template <typename T>
 void InitSemigroupFromData_CC (Obj data, Converter<T>* converter) {
@@ -258,6 +267,11 @@ void Relations (Obj data) {
 }
 
 // TODO add limit etc 
+// FIXME figure out how to make these not all have a switch in them!
+
+/*******************************************************************************
+ * GAP level functions
+*******************************************************************************/
 
 bool ENUMERATE_SEMIGROUP_CC (Obj data,
                              Obj limit, 
@@ -357,8 +371,13 @@ Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
   return ElmPRec(data, RNamName("rules"));
 }
 
-// macros for the GAP version of the algorithm (used in case we have a
-// semigroup of some type not implemented here). 
+/*******************************************************************************
+ * GAP kernel version of the algorithm for other types of semigroups
+*******************************************************************************/
+
+// TODO split from here down into a new file
+
+// macros for the GAP version of the algorithm 
 
 #define ELM_PLIST2(plist, i, j)       ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
