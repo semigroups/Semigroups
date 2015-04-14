@@ -89,7 +89,7 @@ template <typename T>
 class Converter {
   public:
     virtual T* convert (Obj, size_t) = 0;
-    //virtual T* unconvert (Obj, size_t) = 0;
+    virtual Obj unconvert (T*) = 0;
 };
 
 // TODO make the following some kind of template too
@@ -141,6 +141,14 @@ class ConverterTrans4 : public Converter<Transformation<u_int32_t> > {
       }
       return x;
     }
+    Obj unconvert (Transformation<u_int32_t>* x) {
+      Obj o = NEW_TRANS4(x->degree());
+      UInt4* pto = ADDR_TRANS4(o);
+      for (u_int32_t i = 0; i < x->degree(); i++) {
+        pto[i] = x->at(i);
+      }
+      return o;
+    }
 };
 
 template <typename T>
@@ -170,25 +178,50 @@ void Enumerate (Obj data, Obj limit, Obj lookfunc, Obj looking) {
   std::cout << S->size() << "\n";  
 }
 
-template <typename T>
-void RightCayleyGraph (Obj data) {
+Obj ConvertFromRecVec(RecVec<size_t> rv) {
+  Obj out = NEW_PLIST(T_PLIST, rv.nrrows());
+  SET_LEN_PLIST(out, rv.nrrows());
 
-  Semigroup<T>* S = Semigroup_CC<T>(data);
-  RecVec<size_t> right = S->right_cayley_graph();
-
-  Obj out = NEW_PLIST(T_PLIST, right.nrrows());
-  SET_LEN_PLIST(out, right.nrrows());
-
-  for (size_t i = 0; i < right.nrrows(); i++) {
-    Obj next = NEW_PLIST(T_PLIST_CYC, right.nrcols());
-    SET_LEN_PLIST(next, right.nrcols());
-    for (size_t j = 0; j < right.nrcols(); j++) {
-      SET_ELM_PLIST(next, j + 1, INTOBJ_INT(right.get(i, j) + 1));
+  for (size_t i = 0; i < rv.nrrows(); i++) {
+    Obj next = NEW_PLIST(T_PLIST_CYC, rv.nrcols());
+    SET_LEN_PLIST(next, rv.nrcols());
+    for (size_t j = 0; j < rv.nrcols(); j++) {
+      SET_ELM_PLIST(next, j + 1, INTOBJ_INT(rv.get(i, j) + 1));
     }
     SET_ELM_PLIST(out, i + 1, next);
     CHANGED_BAG(out);
   }
-  AssPRec(data, RNamName("right"), out);
+  return out;
+}
+
+template <typename T>
+void RightCayleyGraph (Obj data) {
+  Semigroup<T>* S = Semigroup_CC<T>(data);
+  AssPRec(data, RNamName("right"), ConvertFromRecVec(S->right_cayley_graph()));
+  CHANGED_BAG(data);
+}
+
+template <typename T>
+void LeftCayleyGraph (Obj data) {
+  Semigroup<T>* S = Semigroup_CC<T>(data);
+  AssPRec(data, RNamName("left"), ConvertFromRecVec(S->left_cayley_graph()));
+  CHANGED_BAG(data);
+}
+
+template <typename T>
+void Elements (Obj data, Converter<T>* converter) {
+
+  Semigroup<T>* S = Semigroup_CC<T>(data);
+  std::vector<T*> elements = S->elements();
+
+  Obj out = NEW_PLIST(T_PLIST, elements.size());
+  SET_LEN_PLIST(out, elements.size());
+
+  for (size_t i = 0; i < elements.size(); i++) {
+    SET_ELM_PLIST(out, i + 1, converter->unconvert(elements.at(i)));
+  }
+  CHANGED_BAG(out);
+  AssPRec(data, RNamName("elts"), out);
   CHANGED_BAG(data);
 }
 
@@ -235,6 +268,42 @@ Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
     }
   }
   return ElmPRec(data, RNamName("right"));
+}
+
+Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
+
+  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
+    switch (SemigroupType(data)) {
+      case SEMI_TRANS2:{
+        LeftCayleyGraph<Transformation<u_int16_t> >(data);
+        break;
+      }
+      case SEMI_TRANS4:{
+        LeftCayleyGraph<Transformation<u_int32_t> >(data);
+        break;
+      }
+    }
+  }
+  return ElmPRec(data, RNamName("left"));
+}
+
+Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
+
+  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
+    switch (SemigroupType(data)) {
+      case SEMI_TRANS2:{
+        ConverterTrans2 ct2;
+        Elements<Transformation<u_int16_t> >(data, &ct2);
+        break;
+      }
+      case SEMI_TRANS4:{
+        ConverterTrans4 ct4;
+        Elements<Transformation<u_int32_t> >(data, &ct4);
+        break;
+      }
+    }
+  }
+  return ElmPRec(data, RNamName("elts"));
 }
 
 // macros for the GAP version of the algorithm (used in case we have a
@@ -835,6 +904,10 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RIGHT_CAYLEY_GRAPH, 1, 
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", ELEMENTS_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),

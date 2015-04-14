@@ -324,7 +324,7 @@ function(S)
   fi;
   if not IsActingSemigroup(S) then
     data := Enumerate(GenericSemigroupData(S));
-    rel!.data := SEMIGROUPS_GABOW_SCC(data!.left);
+    rel!.data := SEMIGROUPS_GABOW_SCC(LeftCayleyGraphSemigroup(S));
   fi;
   return rel;
 end);

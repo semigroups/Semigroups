@@ -123,15 +123,11 @@ function(S)
 end);
 
 # same method for ideals
-# the performance of this sucks: FIXME!!
 
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local data, perm;
-  data := Enumerate(GenericSemigroupData(S));
-  perm := SortingPerm(data!.elts);
-  return Permuted(List(data!.left, x-> OnTuples(x, perm)), perm);
+  return LEFT_CAYLEY_GRAPH(Enumerate(GenericSemigroupData(S)));
 end);
 
 # same method for ideals, 

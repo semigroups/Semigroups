@@ -25,7 +25,7 @@ InstallMethod(Enumerator, "for an generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, enum;
-  
+   
   enum := rec();
 
   enum.NumberElement := function(enum, elt)

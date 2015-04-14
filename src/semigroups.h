@@ -116,6 +116,44 @@ class Semigroup {
       return _elements.size();
     }
     
+    std::vector<T*> elements () {
+      enumerate();
+      return _elements;
+    }
+    
+    size_t nrrules () {
+      return _nrrules;
+    }
+    
+    RecVec<size_t> right_cayley_graph () {
+      enumerate();
+      return _right;
+    }
+    
+    RecVec<size_t> left_cayley_graph () {
+      enumerate();
+      return _left;
+    }
+    
+    std::vector<size_t> schreierpos () { 
+      spanning_tree();
+      return _schreierpos;
+    }
+    
+    std::vector<size_t> schreiergen () { 
+      spanning_tree();
+      return _schreiergen;
+    }
+    
+    // trace (pos) { trace the spanning tree
+    //
+    // relations () { // have to check for places where neither _pos nor the
+    // suffix of _pos is reduced, then trace the spanning tree
+    //
+    // left_cayley_graph () {
+    // }
+    //
+    
     //TODO reintroduce limit
     void enumerate () {
       if(_pos >= _nr) return;
@@ -168,9 +206,11 @@ class Semigroup {
               size_t r = _right.get(s, j);
               if (_found_one && r == _pos_one) {
                 _right.set(_pos, j, _genslookup.at(b));
-              } else {
+              } else if (r > _genslookup.back()) {
                 _right.set(_pos, j, _right.get(_left.get(_prefix.at(r), b),
                                                _final.at(r)));
+              } else { // TODO it would be nice to get rid of this case somehow
+                _right.set(_pos, j, _right.get(_genslookup.at(b), _final.at(r)));
               } 
             } else {
               x.redefine(_elements.at(_pos), _gens.at(j)); 
@@ -214,32 +254,6 @@ class Semigroup {
       //}
     }
     
-    size_t nrrules () {
-      return _nrrules;
-    }
-    
-    std::vector<size_t> schreierpos () { 
-      spanning_tree();
-      return _schreierpos;
-    }
-    
-    std::vector<size_t> schreiergen () { 
-      spanning_tree();
-      return _schreiergen;
-    }
-    
-    // trace (pos) { trace the spanning tree
-    //
-    // relations () { // have to check for places where neither _pos nor the
-    // suffix of _pos is reduced, then trace the spanning tree
-    //
-    // left_cayley_graph () {
-    // }
-    //
-    RecVec<size_t> right_cayley_graph () {
-      enumerate();
-      return _right;
-    }
     // 
     // 
     //
