@@ -17,11 +17,19 @@
 //#define NDEBUG 
 
 /*******************************************************************************
+ * Macros
+*******************************************************************************/
+
+// None so far!
+
+/*******************************************************************************
  * Get the type of C++ semigroup wrapped in a GAP data object
 *******************************************************************************/
 
 Int SemigroupTypeFunc (Obj data) {
-  //FIXME check gens not empty, and that gens is a component of data
+  assert(IsbPRec(data, RNamName("gens")));
+  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+
   Int type = TNUM_OBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
   switch (type) {
     case T_TRANS2:
@@ -93,19 +101,23 @@ class Converter {
     virtual Obj unconvert (T*) = 0;
 };
 
-// TODO make the following some kind of template too
+template <typename T> 
+inline T* ADDR_TRANS (Obj x) {
+  return ((T*)((Obj*)(ADDR_OBJ(x))+3));
+}
 
-class ConverterTrans2 : public Converter<Transformation<u_int16_t> > {
+template <typename T>
+class ConverterTrans : public Converter<Transformation<T> > {
   public: 
 
-    Transformation<u_int16_t>* convert (Obj o, size_t n) {
-      assert(TNUM_OBJ(o) == T_TRANS2);
-      assert(DEG_TRANS2(o) <= n);
+    Transformation<T>* convert (Obj o, size_t n) {
+      assert(IS_TRANS(o));
+      assert(DEG_TRANS(o) <= n);
       
-      auto x = new Transformation<u_int16_t>(n);
-      UInt2* pto = ADDR_TRANS2(o);
-      size_t i;
-      for (i = 0; i < DEG_TRANS2(o); i++) {
+      auto x = new Transformation<T>(n);
+      T* pto = ADDR_TRANS<T>(o);
+      T i;
+      for (i = 0; i < DEG_TRANS(o); i++) {
         x->set(i, pto[i]);
       }
       for (; i < n; i++) {
@@ -114,39 +126,10 @@ class ConverterTrans2 : public Converter<Transformation<u_int16_t> > {
       return x;
     }
 
-    Obj unconvert (Transformation<u_int16_t>* x) {
+    Obj unconvert (Transformation<T>* x) {
       Obj o = NEW_TRANS2(x->degree());
-      UInt2* pto = ADDR_TRANS2(o);
-      for (u_int16_t i = 0; i < x->degree(); i++) {
-        pto[i] = x->at(i);
-      }
-      return o;
-    }
-};
-
-class ConverterTrans4 : public Converter<Transformation<u_int32_t> > {
-  public: 
-
-    Transformation<u_int32_t>* convert (Obj o, size_t n) {
-      assert(TNUM_OBJ(o) == T_TRANS4);
-      assert(DEG_TRANS4(o) <= n);
-      
-      auto x = new Transformation<u_int32_t>(n);
-      UInt4* ptf = ADDR_TRANS4(o);
-      size_t i;
-      for (i = 0; i < DEG_TRANS4(o); i++) {
-        x->set(i, ptf[i]);
-      }
-      for (; i < n; i++) {
-        x->set(i, i);
-      }
-      return x;
-    }
-
-    Obj unconvert (Transformation<u_int32_t>* x) {
-      Obj o = NEW_TRANS4(x->degree());
-      UInt4* pto = ADDR_TRANS4(o);
-      for (u_int32_t i = 0; i < x->degree(); i++) {
+      T* pto = ADDR_TRANS<T>(o);
+      for (T i = 0; i < x->degree(); i++) {
         pto[i] = x->at(i);
       }
       return o;
@@ -280,14 +263,14 @@ bool ENUMERATE_SEMIGROUP_CC (Obj data,
       return false;
     case SEMI_TRANS2:
       if (!IsbPRec(data, RNamName("Semigroup_CC"))) {
-        ConverterTrans2 ct2;
+        ConverterTrans<u_int16_t> ct2;
         InitSemigroupFromData_CC<Transformation<u_int16_t> >(data, &ct2);
       }
       Enumerate<Transformation<u_int16_t> >(data, limit, lookfunc, looking);
       return true;
     case SEMI_TRANS4:
       if (!IsbPRec(data, RNamName("Semigroup_CC"))) {
-        ConverterTrans4 ct4;
+        ConverterTrans<u_int32_t> ct4;
         InitSemigroupFromData_CC<Transformation<u_int32_t> >(data, &ct4);
       }
       Enumerate<Transformation<u_int32_t> >(data, limit, lookfunc, looking);
@@ -335,12 +318,12 @@ Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
   if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
     switch (SemigroupTypeFunc(data)) {
       case SEMI_TRANS2:{
-        ConverterTrans2 ct2;
+        ConverterTrans<u_int16_t> ct2;
         Elements<Transformation<u_int16_t> >(data, &ct2);
         break;
       }
       case SEMI_TRANS4:{
-        ConverterTrans4 ct4;
+        ConverterTrans<u_int32_t> ct4;
         Elements<Transformation<u_int32_t> >(data, &ct4);
         break;
       }
@@ -354,12 +337,12 @@ Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
   if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
     switch (SemigroupTypeFunc(data)) {
       case SEMI_TRANS2:{
-        ConverterTrans2 ct2;
+        ConverterTrans<u_int16_t> ct2;
         Relations<Transformation<u_int16_t> >(data);
         break;
       }
       case SEMI_TRANS4:{
-        ConverterTrans4 ct4;
+        ConverterTrans<u_int32_t> ct4;
         Relations<Transformation<u_int32_t> >(data);
         break;
       }
