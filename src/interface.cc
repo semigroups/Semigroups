@@ -280,6 +280,8 @@ void Relations (Obj data) {
  * GAP level functions
 *******************************************************************************/
 
+// TODO probably move this out of here (it isn't a GAP level function)
+
 bool ENUMERATE_SEMIGROUP_CC (Obj data,
                              Obj limit, 
                              Obj lookfunc, 
@@ -305,6 +307,19 @@ bool ENUMERATE_SEMIGROUP_CC (Obj data,
   }
   return true;
 }
+
+/* inline void CallFunc (Obj data, void (*func)(Obj data)) {
+  switch (SemigroupTypeFunc(data)) {
+    case SEMI_TRANS2:{
+      func<Transformation<u_int16_t> >(data);
+      break;
+    }
+    case SEMI_TRANS4:{
+      func<Transformation<u_int32_t> >(data);
+      break;
+    }
+  }
+}*/
 
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
 
