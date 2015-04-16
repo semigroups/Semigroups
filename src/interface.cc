@@ -88,6 +88,7 @@ void InterfaceFreeFunc(Obj o) {
 template <typename T>
 class Converter {
   public:
+    virtual ~ Converter () {};
     virtual T* convert (Obj, size_t) = 0;
     virtual Obj unconvert (T*) = 0;
 };
@@ -285,7 +286,8 @@ InterfaceBase* InterfaceFromData (Obj data) {
   InterfaceBase* interface;
   switch (type) {
     case T_TRANS2:
-      interface = new Interface<u_int16_t>(data, new TransConverter<u_int16_t>());
+      auto ct2 = new TransConverter<u_int16_t>();
+      interface = new Interface<Transformation<u_int16_t> >(data, ct2);
       break;
     /*case T_TRANS4:
       interface = new Interface<u_int32_t>(data, new TransConverter<u_int32_t>());
@@ -299,6 +301,7 @@ InterfaceBase* InterfaceFromData (Obj data) {
     }*/
   }
   AssPRec(data, RNamName("Interface_CC"), OBJ_INTERFACE(interface));
+  return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
 }
 
 // TODO add limit etc 
