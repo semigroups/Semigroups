@@ -176,9 +176,21 @@ class Interface : public InterfaceBase {
       delete _converter;
       delete _semigroup;
     };
-
+    
+    // not currently used, TODO remove?
     InterfaceType type () {
       return _type;
+    }
+    
+    // enumerate the C++ semigroup
+    // TODO add limit etc 
+    void enumerate () {
+      _semigroup->enumerate();
+    }
+    
+    // get the size of the C++ semigroup
+    size_t size () {
+      return _semigroup->size();
     }
 
     // get the right Cayley graph from C++ semgroup, store it in data
@@ -196,27 +208,16 @@ class Interface : public InterfaceBase {
               ConvertFromRecVec(_semigroup->left_cayley_graph()));
       CHANGED_BAG(data);
     }
-
-    // enumerate the C++ semigroup
-    // TODO add limit etc 
-    void enumerate () {
-      _semigroup->enumerate();
-    }
-    
-    // get the size of the C++ semigroup
-    size_t size () {
-      return _semigroup->size();
-    }
     
     // get the elements of the C++ semigroup, store them in data
     void elements (Obj data) {
-      std::vector<T*> elements(_semigroup->elements());
+      std::vector<T*>* elements = _semigroup->elements();
 
-      Obj out = NEW_PLIST(T_PLIST, elements.size());
-      SET_LEN_PLIST(out, elements.size());
+      Obj out = NEW_PLIST(T_PLIST, elements->size());
+      SET_LEN_PLIST(out, elements->size());
 
-      for (size_t i = 0; i < elements.size(); i++) {
-        SET_ELM_PLIST(out, i + 1, _converter->unconvert(elements.at(i)));
+      for (size_t i = 0; i < elements->size(); i++) {
+        SET_ELM_PLIST(out, i + 1, _converter->unconvert(elements->at(i)));
       }
       CHANGED_BAG(out);
       AssPRec(data, RNamName("elts"), out);
@@ -226,34 +227,35 @@ class Interface : public InterfaceBase {
     // get the relations of the C++ semigroup, store them in data
     void relations (Obj data) {
       auto relations(_semigroup->relations());
-      Obj out = NEW_PLIST(T_PLIST, relations.size());
-      SET_LEN_PLIST(out, relations.size());
-      for (size_t i = 0; i < relations.size(); i++) {
+      Obj out = NEW_PLIST(T_PLIST, relations->size());
+      SET_LEN_PLIST(out, relations->size());
+      for (size_t i = 0; i < relations->size(); i++) {
         Obj next = NEW_PLIST(T_PLIST, 2);
         SET_LEN_PLIST(next, 2);
-        SET_ELM_PLIST(next, 1, ConvertFromVec(relations.at(i).first));
+        SET_ELM_PLIST(next, 1, ConvertFromVec(relations->at(i).first));
         CHANGED_BAG(next);
-        SET_ELM_PLIST(next, 2, ConvertFromVec(relations.at(i).second));
+        SET_ELM_PLIST(next, 2, ConvertFromVec(relations->at(i).second));
         CHANGED_BAG(next);
         SET_ELM_PLIST(out, i + 1, next);
         CHANGED_BAG(out);
       }
       AssPRec(data, RNamName("rules"), out);
       CHANGED_BAG(data);
+      delete relations;
     }
     
   private:
 
     // helper function to convert a RecVec to a GAP plist of GAP plists.
-    Obj ConvertFromRecVec (RecVec<size_t> rv) {
-      Obj out = NEW_PLIST(T_PLIST, rv.nrrows());
-      SET_LEN_PLIST(out, rv.nrrows());
+    Obj ConvertFromRecVec (RecVec<size_t>* rv) {
+      Obj out = NEW_PLIST(T_PLIST, rv->nrrows());
+      SET_LEN_PLIST(out, rv->nrrows());
 
-      for (size_t i = 0; i < rv.nrrows(); i++) {
-        Obj next = NEW_PLIST(T_PLIST_CYC, rv.nrcols());
-        SET_LEN_PLIST(next, rv.nrcols());
-        for (size_t j = 0; j < rv.nrcols(); j++) {
-          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(rv.get(i, j) + 1));
+      for (size_t i = 0; i < rv->nrrows(); i++) {
+        Obj next = NEW_PLIST(T_PLIST_CYC, rv->nrcols());
+        SET_LEN_PLIST(next, rv->nrcols());
+        for (size_t j = 0; j < rv->nrcols(); j++) {
+          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(rv->get(i, j) + 1));
         }
         SET_ELM_PLIST(out, i + 1, next);
         CHANGED_BAG(out);
@@ -278,7 +280,7 @@ class Interface : public InterfaceBase {
 };
 
 /*******************************************************************************
- * Interface to semigroups.h
+ * Instantiate Interface for the particular type of semigroup passed from GAP
 *******************************************************************************/
 
 InterfaceBase* InterfaceFromData (Obj data) {
@@ -315,15 +317,17 @@ InterfaceBase* InterfaceFromData (Obj data) {
   return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
 }
 
-
 /*******************************************************************************
  * GAP level functions
 *******************************************************************************/
+
+Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
 
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
     InterfaceFromData(data)->right_cayley_graph(data);
   }
+  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("right"));
 }
 
@@ -331,6 +335,7 @@ Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
     InterfaceFromData(data)->left_cayley_graph(data);
   }
+  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("left"));
 }
 
@@ -338,13 +343,15 @@ Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("elts"))) { 
     InterfaceFromData(data)->elements(data);
   }
+  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("elts"));
 }
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
-    InterfaceFromData(data)->elements(data);
+    InterfaceFromData(data)->relations(data);
   }
+  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("rules"));
 }
 
@@ -352,8 +359,8 @@ Obj SIZE_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->size());
   }
+  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
-
 }
 
 /*******************************************************************************
@@ -373,8 +380,10 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 }
 
 // assumes the length of data!.elts is at most 2^28
+// TODO move this into the previous section, and put the actual function in another function
 
-static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
+
+Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
   Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix, 
         reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
         empty, oldword, x;
@@ -961,12 +970,14 @@ static StructGVarFunc GVarFuncs [] = {
                           "data, limit, lookfunc, looking"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RIGHT_CAYLEY_GRAPH, 1, 
                           "data"),
-    /*GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", ELEMENTS_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RELATIONS_SEMIGROUP, 1, 
-                          "data"),*/
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", SIZE_SEMIGROUP, 1, 
+                          "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 

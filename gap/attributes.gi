@@ -55,7 +55,7 @@ InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
 function(S)
   local rules, F, A, rels, Q, B;
   
-  rules:=RELATIONS_SEMIGROUP(Enumerate(GenericSemigroupData(S)));
+  rules := RELATIONS_SEMIGROUP(GenericSemigroupData(S));
   
   F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A:=GeneratorsOfSemigroup(F);
@@ -119,7 +119,7 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  return RIGHT_CAYLEY_GRAPH(Enumerate(GenericSemigroupData(S)));
+  return RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
 end);
 
 # same method for ideals
@@ -127,7 +127,7 @@ end);
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  return LEFT_CAYLEY_GRAPH(Enumerate(GenericSemigroupData(S)));
+  return LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
 end);
 
 # same method for ideals, 

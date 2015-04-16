@@ -43,7 +43,7 @@ function(S)
 
   enum.Length := enum -> Size(S);
 
-  enum.AsList := enum -> ELEMENTS_SEMIGROUP(Enumerate(GenericSemigroupData(S)));
+  enum.AsList := enum -> ELEMENTS_SEMIGROUP(GenericSemigroupData(S));
 
   enum.Membership := function(enum, elt)
     return Position(GenericSemigroupData(S), elt) <> fail;
@@ -63,7 +63,7 @@ end);
 InstallMethod(Size, "for an generic semigroup with generators", 
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(ELEMENTS_SEMIGROUP(Enumerate(GenericSemigroupData(S))));
+  return SIZE_SEMIGROUP(GenericSemigroupData(S));
 end);
 
 # different method for ideals
