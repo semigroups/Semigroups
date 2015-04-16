@@ -45,7 +45,7 @@ Int SemigroupTypeFunc (Obj data) {
   return UNKNOWN;
 }
 
-bool IsSemigroup_CC (Obj data) {
+bool IsCPPSemigroup (Obj data) {
   return (SemigroupTypeFunc(data) != UNKNOWN);
 }
 
@@ -53,36 +53,30 @@ bool IsSemigroup_CC (Obj data) {
  * wrap C++ semigroup object in a GAP bag for garbage collection
 *******************************************************************************/
 
+class InterfaceBase {
+  public:
+    virtual ~InterfaceBase () = 0;
+    virtual void enumerate () = 0;
+    virtual void right_cayley_graph (Obj data) = 0;
+};
+
 // put C++ semigroup into GAP object
 
-template<typename T>
-Obj NewSemigroup(Semigroup<T>* S, Obj data){
-  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
-  ADDR_OBJ(o)[0] = (Obj) SemigroupTypeFunc(data);
-  ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(S);
+Obj OBJ_INTERFACE(InterfaceBase* interface){
+  Obj o = NewBag(T_SEMI, 1 * sizeof(Obj));
+  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(interface);
   return o;
 }
 
 // get C++ semigroup from GAP object
 
-template<typename T>
-inline Semigroup<T>* GET_SEMI(Obj o) {
-    return reinterpret_cast<Semigroup<T>*>(ADDR_OBJ(o)[1]);
+inline InterfaceBase* INTERFACE_OBJ(Obj o) {
+    return reinterpret_cast<InterfaceBase*>(ADDR_OBJ(o)[0]);
 }
 
 // free C++ semigroup inside GAP object
-
-void SemigroupFreeFunc(Obj o) { 
-  switch ((Int) ADDR_OBJ(o)[0]){
-    case SEMI_TRANS2:
-      delete GET_SEMI<Transformation<u_int16_t> >(o);
-      break;
-    case SEMI_TRANS4:
-      delete GET_SEMI<Transformation<u_int32_t> >(o);
-      break;
-    /*case SEMI_BIPART:
-      delete GET_SEMI<Semigroup<Bipartition<u_int16_t> > >(o);*/
-  }
+void InterfaceFreeFunc(Obj o) { 
+  delete INTERFACE_OBJ(o);
 }
 
 /*******************************************************************************
@@ -99,7 +93,7 @@ class Converter {
 };
 
 // helper for getting ADDR_TRANS2/4
-
+// TODO make this a method for TransConverter
 template <typename T> 
 inline T* ADDR_TRANS (Obj x) {
   return ((T*)((Obj*)(ADDR_OBJ(x))+3));
@@ -108,7 +102,7 @@ inline T* ADDR_TRANS (Obj x) {
 // converter between C++ transformations and GAP transformations
 
 template <typename T>
-class ConverterTrans : public Converter<Transformation<T> > {
+class TransConverter : public Converter<Transformation<T> > {
   public: 
 
     Transformation<T>* convert (Obj o, size_t n) {
@@ -138,211 +132,189 @@ class ConverterTrans : public Converter<Transformation<T> > {
 };
 
 /*******************************************************************************
+ * Class for containing a C++ semigroup and accessing its methods
+*******************************************************************************/
+
+template<typename T>
+class Interface : public InterfaceBase {
+  public: 
+
+    // enum for the type 
+    enum InterfaceType {
+      UNKNOWN = 0,
+      SEMI_TRANS2 = 1,
+      SEMI_TRANS4 = 2,
+      SEMI_BIPART = 3
+    };
+    
+    Interface () = delete;
+
+    // constructor
+    Interface (Obj data, Converter<T>* converter) : _converter(converter) {
+      // assert is record
+      assert(IsbPRec(data, RNamName("gens")));
+      assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+      
+      Obj gens =  ElmPRec(data, RNamName("gens"));
+      
+      std::vector<T*> gens_c;
+      size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
+
+      PLAIN_LIST(gens);
+      for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
+        gens_c.push_back(converter->convert(ELM_PLIST(gens, i), deg_c));
+      }
+      
+      _semigroup = new Semigroup<T>(gens_c, deg_c);
+    }
+
+    // destructor
+    ~Interface() {
+      delete _converter;
+      delete _semigroup;
+    };
+
+    InterfaceType type () {
+      return _type;
+    }
+
+    // get the right Cayley graph from C++ semgroup store it in data
+    void right_cayley_graph (Obj data) {
+      _semigroup->enumerate();
+      AssPRec(data, RNamName("right"), 
+              ConvertFromRecVec(_semigroup->right_cayley_graph()));
+      CHANGED_BAG(data);
+    }
+
+    // get the left Cayley graph from C++ semgroup store it in data
+    void left_cayley_graph (Obj data) {
+      _semigroup->enumerate();
+      AssPRec(data, RNamName("left"), 
+              ConvertFromRecVec(_semigroup->left_cayley_graph()));
+      CHANGED_BAG(data);
+    }
+
+    // enumerate on the C++ semigroup stored in the GAP level data
+    void enumerate () {
+      _semigroup->enumerate();
+      std::cout << _semigroup->size() << "\n";  
+    }
+    
+    void elements (Obj data) {
+      std::vector<T*> elements(_semigroup->elements());
+
+      Obj out = NEW_PLIST(T_PLIST, elements.size());
+      SET_LEN_PLIST(out, elements.size());
+
+      for (size_t i = 0; i < elements.size(); i++) {
+        SET_ELM_PLIST(out, i + 1, _converter->unconvert(elements.at(i)));
+      }
+      CHANGED_BAG(out);
+      AssPRec(data, RNamName("elts"), out);
+      CHANGED_BAG(data);
+    }
+
+    void relations (Obj data) {
+      auto relations(_semigroup->relations());
+      Obj out = NEW_PLIST(T_PLIST, relations.size());
+      SET_LEN_PLIST(out, relations.size());
+      for (size_t i = 0; i < relations.size(); i++) {
+        Obj next = NEW_PLIST(T_PLIST, 2);
+        SET_LEN_PLIST(next, 2);
+        SET_ELM_PLIST(next, 1, ConvertFromVec(relations.at(i).first));
+        CHANGED_BAG(next);
+        SET_ELM_PLIST(next, 2, ConvertFromVec(relations.at(i).second));
+        CHANGED_BAG(next);
+        SET_ELM_PLIST(out, i + 1, next);
+        CHANGED_BAG(out);
+      }
+      AssPRec(data, RNamName("rules"), out);
+      CHANGED_BAG(data);
+    }
+  
+  private:
+
+    // helper function to convert a RecVec to a GAP plist of GAP plists.
+    Obj ConvertFromRecVec (RecVec<size_t> rv) {
+      Obj out = NEW_PLIST(T_PLIST, rv.nrrows());
+      SET_LEN_PLIST(out, rv.nrrows());
+
+      for (size_t i = 0; i < rv.nrrows(); i++) {
+        Obj next = NEW_PLIST(T_PLIST_CYC, rv.nrcols());
+        SET_LEN_PLIST(next, rv.nrcols());
+        for (size_t j = 0; j < rv.nrcols(); j++) {
+          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(rv.get(i, j) + 1));
+        }
+        SET_ELM_PLIST(out, i + 1, next);
+        CHANGED_BAG(out);
+      }
+      return out;
+    }
+    
+    // helper function to convert a vector to a plist of GAP integers
+    Obj ConvertFromVec (std::vector<size_t> vec) {
+      Obj out = NEW_PLIST(T_PLIST, vec.size());
+      SET_LEN_PLIST(out, vec.size());
+
+      for (size_t i = 0; i < vec.size(); i++) {
+        SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec.at(i) + 1));
+      }
+      return out;
+    }
+
+    InterfaceType _type;
+    Semigroup<T>* _semigroup;
+    Converter<T>* _converter;
+};
+
+/*******************************************************************************
  * Interface to semigroups.h
 *******************************************************************************/
 
-// get the C++ semigroup from the GAP level data.
+InterfaceBase* InterfaceFromData (Obj data) {
+  //assert(is record data!)
+  if (IsbPRec(data, RNamName("Interface_CC"))) {
+    return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
+  }
 
-template<typename T>
-Semigroup<T>* Semigroup_CC (Obj data) {
-  return GET_SEMI<T>(ElmPRec(data, RNamName("Semigroup_CC")));
-}
-
-// initialise the C++ semigroup by converting data!.gens, and storing the C++
-// semigroup in a bag, then storing this bag in the GAP level data.
-
-template <typename T>
-void InitSemigroupFromData_CC (Obj data, Converter<T>* converter) {
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-  
-  Obj gens =  ElmPRec(data, RNamName("gens"));
-  
-  std::vector<T*> gens_c;
-  size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
-
-  PLAIN_LIST(gens);
-  for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
-    gens_c.push_back(converter->convert(ELM_PLIST(gens, i), deg_c));
+   
+  Obj gen = ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
+  Int type = TNUM_OBJ(gen);
+  InterfaceBase* interface;
+  switch (type) {
+    case T_TRANS2:
+      interface = new Interface<u_int16_t>(data, new TransConverter<u_int16_t>());
+      break;
+    /*case T_TRANS4:
+      interface = new Interface<u_int32_t>(data, new TransConverter<u_int32_t>());
+      break;
+    case T_COMOBJ:{ 
+      Obj objtype = TYPE_COMOBJ(gen);
+      if (objtype == BipartitionType) {
+        _type = SEMI_BIPART;
+      }
+      break;
+    }*/
   }
-  
-  auto S = new Semigroup<T>(gens_c, deg_c);
-  AssPRec(data, RNamName("Semigroup_CC"), NewSemigroup<T>(S, data));
-  CHANGED_BAG(data);
+  AssPRec(data, RNamName("Interface_CC"), OBJ_INTERFACE(interface));
 }
-
-// enumerate on the C++ semigroup stored in the GAP level data
-
-template <typename T>
-void Enumerate (Obj data, Obj limit, Obj lookfunc, Obj looking) {
-
-  Semigroup<T>* S = Semigroup_CC<T>(data);
-  S->enumerate();
-  std::cout << S->size() << "\n";  
-}
-
-// helper function to convert a RecVec to a GAP plist of GAP plists.
-
-Obj ConvertFromRecVec (RecVec<size_t> rv) {
-  Obj out = NEW_PLIST(T_PLIST, rv.nrrows());
-  SET_LEN_PLIST(out, rv.nrrows());
-
-  for (size_t i = 0; i < rv.nrrows(); i++) {
-    Obj next = NEW_PLIST(T_PLIST_CYC, rv.nrcols());
-    SET_LEN_PLIST(next, rv.nrcols());
-    for (size_t j = 0; j < rv.nrcols(); j++) {
-      SET_ELM_PLIST(next, j + 1, INTOBJ_INT(rv.get(i, j) + 1));
-    }
-    SET_ELM_PLIST(out, i + 1, next);
-    CHANGED_BAG(out);
-  }
-  return out;
-}
-
-// get and store the right Cayley graph from C++ semigroup stored in the GAP
-// level data
-
-template <typename T>
-void RightCayleyGraph (Obj data) {
-  Semigroup<T>* S = Semigroup_CC<T>(data);
-  AssPRec(data, RNamName("right"), ConvertFromRecVec(S->right_cayley_graph()));
-  CHANGED_BAG(data);
-}
-
-// get and store the left Cayley graph from C++ semigroup stored in the GAP
-// level data
-
-template <typename T>
-void LeftCayleyGraph (Obj data) {
-  Semigroup<T>* S = Semigroup_CC<T>(data);
-  AssPRec(data, RNamName("left"), ConvertFromRecVec(S->left_cayley_graph()));
-  CHANGED_BAG(data);
-}
-
-// get and store the elements from C++ semigroup stored in the GAP
-// level data
-
-template <typename T>
-void Elements (Obj data, Converter<T>* converter) {
-
-  Semigroup<T>* S = Semigroup_CC<T>(data);
-  std::vector<T*> elements = S->elements();
-
-  Obj out = NEW_PLIST(T_PLIST, elements.size());
-  SET_LEN_PLIST(out, elements.size());
-
-  for (size_t i = 0; i < elements.size(); i++) {
-    SET_ELM_PLIST(out, i + 1, converter->unconvert(elements.at(i)));
-  }
-  CHANGED_BAG(out);
-  AssPRec(data, RNamName("elts"), out);
-  CHANGED_BAG(data);
-}
-
-// helper function to convert a vector to a plist of GAP integers
-
-Obj ConvertFromVec (std::vector<size_t> vec) {
-  Obj out = NEW_PLIST(T_PLIST, vec.size());
-  SET_LEN_PLIST(out, vec.size());
-
-  for (size_t i = 0; i < vec.size(); i++) {
-    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec.at(i) + 1));
-  }
-  return out;
-}
-
-// get and store the relations from the C++ semigroup stored in the GAP level
-// data.
-
-template <typename T>
-void Relations (Obj data) {
-
-  Semigroup<T>* S = Semigroup_CC<T>(data);
-  auto relations = S->relations();
-  Obj out = NEW_PLIST(T_PLIST, relations.size());
-  SET_LEN_PLIST(out, relations.size());
-  for (size_t i = 0; i < relations.size(); i++) {
-    Obj next = NEW_PLIST(T_PLIST, 2);
-    SET_LEN_PLIST(next, 2);
-    SET_ELM_PLIST(next, 1, ConvertFromVec(relations.at(i).first));
-    CHANGED_BAG(next);
-    SET_ELM_PLIST(next, 2, ConvertFromVec(relations.at(i).second));
-    CHANGED_BAG(next);
-    SET_ELM_PLIST(out, i + 1, next);
-    CHANGED_BAG(out);
-  }
-  AssPRec(data, RNamName("rules"), out);
-  CHANGED_BAG(data);
-}
-
-// TODO clean up from here!
 
 // TODO add limit etc 
-// FIXME figure out how to make these not all have a switch in them!
 
 /*******************************************************************************
  * GAP level functions
 *******************************************************************************/
 
-// TODO probably move this out of here (it isn't a GAP level function)
-
-bool ENUMERATE_SEMIGROUP_CC (Obj data,
-                             Obj limit, 
-                             Obj lookfunc, 
-                             Obj looking) {
-  
-  switch (SemigroupTypeFunc(data)) {
-    case UNKNOWN:
-      return false;
-    case SEMI_TRANS2:
-      if (!IsbPRec(data, RNamName("Semigroup_CC"))) {
-        ConverterTrans<u_int16_t> ct2;
-        InitSemigroupFromData_CC<Transformation<u_int16_t> >(data, &ct2);
-      }
-      Enumerate<Transformation<u_int16_t> >(data, limit, lookfunc, looking);
-      return true;
-    case SEMI_TRANS4:
-      if (!IsbPRec(data, RNamName("Semigroup_CC"))) {
-        ConverterTrans<u_int32_t> ct4;
-        InitSemigroupFromData_CC<Transformation<u_int32_t> >(data, &ct4);
-      }
-      Enumerate<Transformation<u_int32_t> >(data, limit, lookfunc, looking);
-      return true;
-  }
-  return true;
-}
-
-/* inline void CallFunc (Obj data, void (*func)(Obj data)) {
-  switch (SemigroupTypeFunc(data)) {
-    case SEMI_TRANS2:{
-      func<Transformation<u_int16_t> >(data);
-      break;
-    }
-    case SEMI_TRANS4:{
-      func<Transformation<u_int32_t> >(data);
-      break;
-    }
-  }
-}*/
-
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
-
-  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupTypeFunc(data)) {
-      case SEMI_TRANS2:{
-        RightCayleyGraph<Transformation<u_int16_t> >(data);
-        break;
-      }
-      case SEMI_TRANS4:{
-        RightCayleyGraph<Transformation<u_int32_t> >(data);
-        break;
-      }
-    }
+  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
+    InterfaceFromData(data)->right_cayley_graph(data);
   }
   return ElmPRec(data, RNamName("right"));
 }
 
-Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
+/*Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 
   if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
     switch (SemigroupTypeFunc(data)) {
@@ -395,7 +367,7 @@ Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
     }
   }
   return ElmPRec(data, RNamName("rules"));
-}
+}*/
 
 /*******************************************************************************
  * GAP kernel version of the algorithm for other types of semigroups
@@ -424,7 +396,8 @@ static Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
   
-  if (ENUMERATE_SEMIGROUP_CC(data, limit, lookfunc, looking)) {
+  if (IsCPPSemigroup(data)) {
+    InterfaceFromData(data)->enumerate();
     return data;
   }
 
@@ -1003,12 +976,12 @@ static StructGVarFunc GVarFuncs [] = {
                           "data, limit, lookfunc, looking"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RIGHT_CAYLEY_GRAPH, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
+    /*GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", ELEMENTS_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RELATIONS_SEMIGROUP, 1, 
-                          "data"),
+                          "data"),*/
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
@@ -1027,7 +1000,7 @@ static Int InitKernel( StructInitInfo *module )
     InitHdlrFuncsFromTable( GVarFuncs );
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
-    InitFreeFuncBag(T_SEMI, &SemigroupFreeFunc);
+    InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
     ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
     
     /* return success                                                      */
