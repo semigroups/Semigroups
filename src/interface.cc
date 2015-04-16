@@ -23,30 +23,28 @@
 Obj BipartitionType; // Imported from the library to be able to check type
 
 /*******************************************************************************
- * Get the type of C++ semigroup wrapped in a GAP data object
+ * Can we use Semigroup++?
 *******************************************************************************/
 
-Int SemigroupTypeFunc (Obj data) {
+bool IsCPPSemigroup (Obj data) {
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-
-  Int type = TNUM_OBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
-  switch (type) {
-    case T_TRANS2:
-      return SEMI_TRANS2;
-    case T_TRANS4:
-      return SEMI_TRANS4;
-  }
   
-  Obj objtype = TYPE_COMOBJ(ELM_PLIST(ElmPRec(data, RNamName("gens")), 1));
-  if (objtype == BipartitionType) {
-      return SEMI_BIPART;
-  }
-  return UNKNOWN;
-}
+  Obj x = ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
 
-bool IsCPPSemigroup (Obj data) {
-  return (SemigroupTypeFunc(data) != UNKNOWN);
+  switch (TNUM_OBJ(x)) {
+    case T_TRANS2:
+      // intentional fall through
+    case T_TRANS4:
+      return true;
+    case T_COMOBJ:{ 
+      if (TYPE_COMOBJ(x) ==  BipartitionType) {
+        return true;
+      }
+    default: 
+      return false;
+    }
+  }
 }
 
 /*******************************************************************************
@@ -57,7 +55,11 @@ class InterfaceBase {
   public:
     virtual ~InterfaceBase () = 0;
     virtual void enumerate () = 0;
+    virtual size_t size () = 0;
     virtual void right_cayley_graph (Obj data) = 0;
+    virtual void left_cayley_graph (Obj data) = 0;
+    virtual void elements (Obj data) = 0;
+    virtual void relations (Obj data) = 0;
 };
 
 // put C++ semigroup into GAP object
@@ -93,13 +95,6 @@ class Converter {
     virtual Obj unconvert (T*) = 0;
 };
 
-// helper for getting ADDR_TRANS2/4
-// TODO make this a method for TransConverter
-template <typename T> 
-inline T* ADDR_TRANS (Obj x) {
-  return ((T*)((Obj*)(ADDR_OBJ(x))+3));
-}
-
 // converter between C++ transformations and GAP transformations
 
 template <typename T>
@@ -111,7 +106,7 @@ class TransConverter : public Converter<Transformation<T> > {
       assert(DEG_TRANS(o) <= n);
       
       auto x = new Transformation<T>(n);
-      T* pto = ADDR_TRANS<T>(o);
+      T* pto = ADDR_TRANS(o);
       T i;
       for (i = 0; i < DEG_TRANS(o); i++) {
         x->set(i, pto[i]);
@@ -124,11 +119,18 @@ class TransConverter : public Converter<Transformation<T> > {
 
     Obj unconvert (Transformation<T>* x) {
       Obj o = NEW_TRANS2(x->degree());
-      T* pto = ADDR_TRANS<T>(o);
+      T* pto = ADDR_TRANS(o);
       for (T i = 0; i < x->degree(); i++) {
         pto[i] = x->at(i);
       }
       return o;
+    }
+
+  private:
+
+    // helper for getting ADDR_TRANS2/4
+    inline T* ADDR_TRANS (Obj x) {
+      return ((T*)((Obj*)(ADDR_OBJ(x))+3));
     }
 };
 
@@ -179,7 +181,7 @@ class Interface : public InterfaceBase {
       return _type;
     }
 
-    // get the right Cayley graph from C++ semgroup store it in data
+    // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
       _semigroup->enumerate();
       AssPRec(data, RNamName("right"), 
@@ -187,7 +189,7 @@ class Interface : public InterfaceBase {
       CHANGED_BAG(data);
     }
 
-    // get the left Cayley graph from C++ semgroup store it in data
+    // get the left Cayley graph from C++ semgroup, store it in data
     void left_cayley_graph (Obj data) {
       _semigroup->enumerate();
       AssPRec(data, RNamName("left"), 
@@ -195,12 +197,18 @@ class Interface : public InterfaceBase {
       CHANGED_BAG(data);
     }
 
-    // enumerate on the C++ semigroup stored in the GAP level data
+    // enumerate the C++ semigroup
+    // TODO add limit etc 
     void enumerate () {
       _semigroup->enumerate();
-      std::cout << _semigroup->size() << "\n";  
     }
     
+    // get the size of the C++ semigroup
+    size_t size () {
+      return _semigroup->size();
+    }
+    
+    // get the elements of the C++ semigroup, store them in data
     void elements (Obj data) {
       std::vector<T*> elements(_semigroup->elements());
 
@@ -215,6 +223,7 @@ class Interface : public InterfaceBase {
       CHANGED_BAG(data);
     }
 
+    // get the relations of the C++ semigroup, store them in data
     void relations (Obj data) {
       auto relations(_semigroup->relations());
       Obj out = NEW_PLIST(T_PLIST, relations.size());
@@ -232,7 +241,7 @@ class Interface : public InterfaceBase {
       AssPRec(data, RNamName("rules"), out);
       CHANGED_BAG(data);
     }
-  
+    
   private:
 
     // helper function to convert a RecVec to a GAP plist of GAP plists.
@@ -277,24 +286,26 @@ InterfaceBase* InterfaceFromData (Obj data) {
   if (IsbPRec(data, RNamName("Interface_CC"))) {
     return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
   }
-
+  assert(IsCPPSemigroup(data));
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
    
-  Obj gen = ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
-  Int type = TNUM_OBJ(gen);
+  Obj x = ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
   InterfaceBase* interface;
-  switch (type) {
-    case T_TRANS2:
+
+  switch (TNUM_OBJ(x)) {
+    case T_TRANS2:{
       auto ct2 = new TransConverter<u_int16_t>();
       interface = new Interface<Transformation<u_int16_t> >(data, ct2);
       break;
-    /*case T_TRANS4:
-      interface = new Interface<u_int32_t>(data, new TransConverter<u_int32_t>());
+    }
+    case T_TRANS4:{
+      auto ct4 = new TransConverter<u_int32_t>();
+      interface = new Interface<Transformation<u_int32_t> >(data, ct4);
       break;
-    case T_COMOBJ:{ 
-      Obj objtype = TYPE_COMOBJ(gen);
-      if (objtype == BipartitionType) {
+    }
+    /*case T_COMOBJ:{ 
+      if (TYPE_COMOBJ(x) == BipartitionType) {
         _type = SEMI_BIPART;
       }
       break;
@@ -304,7 +315,6 @@ InterfaceBase* InterfaceFromData (Obj data) {
   return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
 }
 
-// TODO add limit etc 
 
 /*******************************************************************************
  * GAP level functions
@@ -317,66 +327,38 @@ Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
   return ElmPRec(data, RNamName("right"));
 }
 
-/*Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
-
-  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupTypeFunc(data)) {
-      case SEMI_TRANS2:{
-        LeftCayleyGraph<Transformation<u_int16_t> >(data);
-        break;
-      }
-      case SEMI_TRANS4:{
-        LeftCayleyGraph<Transformation<u_int32_t> >(data);
-        break;
-      }
-    }
+Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
+  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
+    InterfaceFromData(data)->left_cayley_graph(data);
   }
   return ElmPRec(data, RNamName("left"));
 }
 
 Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
-
-  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupTypeFunc(data)) {
-      case SEMI_TRANS2:{
-        ConverterTrans<u_int16_t> ct2;
-        Elements<Transformation<u_int16_t> >(data, &ct2);
-        break;
-      }
-      case SEMI_TRANS4:{
-        ConverterTrans<u_int32_t> ct4;
-        Elements<Transformation<u_int32_t> >(data, &ct4);
-        break;
-      }
-    }
+  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("elts"))) { 
+    InterfaceFromData(data)->elements(data);
   }
   return ElmPRec(data, RNamName("elts"));
 }
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
-
-  if (IsSemigroup_CC(data)) { // FIXME should check if right is bound in data!!
-    switch (SemigroupTypeFunc(data)) {
-      case SEMI_TRANS2:{
-        ConverterTrans<u_int16_t> ct2;
-        Relations<Transformation<u_int16_t> >(data);
-        break;
-      }
-      case SEMI_TRANS4:{
-        ConverterTrans<u_int32_t> ct4;
-        Relations<Transformation<u_int32_t> >(data);
-        break;
-      }
-    }
+  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
+    InterfaceFromData(data)->elements(data);
   }
   return ElmPRec(data, RNamName("rules"));
-}*/
+}
+
+Obj SIZE_SEMIGROUP (Obj self, Obj data) {
+  if (IsCPPSemigroup(data)) { 
+    return INTOBJ_INT(InterfaceFromData(data)->size());
+  }
+  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+
+}
 
 /*******************************************************************************
  * GAP kernel version of the algorithm for other types of semigroups
 *******************************************************************************/
-
-// TODO split from here down into a new file
 
 // macros for the GAP version of the algorithm 
 

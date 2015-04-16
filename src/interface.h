@@ -29,11 +29,4 @@ extern "C" {
 #define T_SEMI T_SPARE2
 #endif
 
-enum SemigroupType {
-  UNKNOWN = 0,
-  SEMI_TRANS2 = 1,
-  SEMI_TRANS4 = 2,
-  SEMI_BIPART = 3
-};
-
 #endif
