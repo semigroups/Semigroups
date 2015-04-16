@@ -15,6 +15,8 @@
 
 //#define DEBUG
 //#define NDEBUG 
+//
+// TODO better asserts!
 
 /*******************************************************************************
  * Imported types from the library
@@ -53,7 +55,7 @@ bool IsCPPSemigroup (Obj data) {
 
 class InterfaceBase {
   public:
-    virtual ~InterfaceBase () = 0;
+    virtual ~InterfaceBase () {};
     virtual void enumerate () = 0;
     virtual size_t size () = 0;
     virtual void right_cayley_graph (Obj data) = 0;
@@ -78,7 +80,9 @@ inline InterfaceBase* INTERFACE_OBJ(Obj o) {
 
 // free C++ semigroup inside GAP object
 void InterfaceFreeFunc(Obj o) { 
+  std::cout << "FREEING1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
   delete INTERFACE_OBJ(o);
+  std::cout << "FREEING2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
 }
 
 /*******************************************************************************
@@ -90,7 +94,7 @@ void InterfaceFreeFunc(Obj o) {
 template <typename T>
 class Converter {
   public:
-    virtual ~ Converter () {};
+    virtual ~Converter () {};
     virtual T* convert (Obj, size_t) = 0;
     virtual Obj unconvert (T*) = 0;
 };
@@ -226,7 +230,7 @@ class Interface : public InterfaceBase {
 
     // get the relations of the C++ semigroup, store them in data
     void relations (Obj data) {
-      auto relations(_semigroup->relations());
+      auto relations = _semigroup->relations();
       Obj out = NEW_PLIST(T_PLIST, relations->size());
       SET_LEN_PLIST(out, relations->size());
       for (size_t i = 0; i < relations->size(); i++) {
@@ -264,13 +268,14 @@ class Interface : public InterfaceBase {
     }
     
     // helper function to convert a vector to a plist of GAP integers
-    Obj ConvertFromVec (std::vector<size_t> vec) {
+    Obj ConvertFromVec (std::vector<size_t>& vec) {
       Obj out = NEW_PLIST(T_PLIST, vec.size());
       SET_LEN_PLIST(out, vec.size());
 
       for (size_t i = 0; i < vec.size(); i++) {
         SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec.at(i) + 1));
       }
+      CHANGED_BAG(out);
       return out;
     }
 
