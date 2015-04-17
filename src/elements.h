@@ -121,23 +121,22 @@ struct std::hash<const Transformation<T> > {
 
 // template for bipartitions
 
-template <typename T>
-class Bipartition : public Element<T> {
+class Bipartition : public Element<u_int32_t> {
 
   public: 
     
-    Bipartition (std::vector<T> data) : Element<T>(data) {}
-    Bipartition (T degree) : Element<T>(degree) {}
+    Bipartition (std::vector<u_int32_t> data) : Element<u_int32_t>(data) {}
+    Bipartition (u_int32_t degree) : Element<u_int32_t>(degree) {}
     
     // multiply x and y into this
-    void redefine (Element<T> const* x, Element<T> const* y) {
+    void redefine (Element<u_int32_t> const* x, Element<u_int32_t> const* y) {
       assert(x->degree() == y->degree());
       assert(x->degree() == this->degree());
-      T n = this->degree();
-      T nrx = x->nrblocks();
-      T nry = y->nrblocks();
+      u_int32_t n = this->degree() / 2;
+      u_int32_t nrx = static_cast<const Bipartition*>(x)->nrblocks();
+      u_int32_t nry = static_cast<const Bipartition*>(y)->nrblocks();
 
-      std::vector<T> fuse; 
+      std::vector<u_int32_t> fuse; 
       // TODO maybe this should be pointer to local data, may slow down hashing
       // but speed up redefinition? 
       for (size_t i = 0; i < nrx + nry; i++) {
@@ -145,8 +144,8 @@ class Bipartition : public Element<T> {
       }
 
       for (size_t i = 0; i < n; i++) {
-        T xx = fuseit(fuse, x->at(i + n));
-        T yy = fuseit(fuse, y->at(i + nrx));
+        u_int32_t xx = fuseit(fuse, x->at(i + n));
+        u_int32_t yy = fuseit(fuse, y->at(i + nrx));
         if (xx != yy) {
           if (xx < yy) {
             fuse.at(yy) = xx;
@@ -156,12 +155,12 @@ class Bipartition : public Element<T> {
         }
       }
       
-      T next = 0;
-      std::vector<T> lookup;
+      u_int32_t next = 0;
+      std::vector<u_int32_t> lookup;
       lookup.reserve(nrx + nry);
       
       for (size_t i = 0; i < n; i++) {
-        T xx = fuseit(fuse, x->at(i));
+        u_int32_t xx = fuseit(fuse, x->at(i));
         if (xx > lookup.size()) {
           lookup.push_back(next);
           next++;
@@ -169,7 +168,7 @@ class Bipartition : public Element<T> {
         this->set(i, lookup.at(xx));
       }
       for (size_t i = n; i < 2 * n; i++) {
-        T xx = fuseit(fuse, y->at(i) + nrx);
+        u_int32_t xx = fuseit(fuse, y->at(i) + nrx);
         if (xx > lookup.size()) {
           lookup.push_back(next);
           next++;
@@ -179,10 +178,10 @@ class Bipartition : public Element<T> {
     }
 
     // the identity of this
-    Element<T>* identity () {
-      std::vector<T> image;
+    Element<u_int32_t>* identity () {
+      std::vector<u_int32_t> image;
       image.reserve(this->degree());
-      for (T i = 0; i < this->degree(); i++) {
+      for (u_int32_t i = 0; i < this->degree(); i++) {
         image.push_back(i);
       }
       return new Bipartition(image);
@@ -190,7 +189,7 @@ class Bipartition : public Element<T> {
     
   private: 
     
-    T fuseit (std::vector<T> const& fuse, T pos) {
+    u_int32_t fuseit (std::vector<u_int32_t> const& fuse, u_int32_t pos) {
       while (fuse.at(pos) < pos) {
         pos = fuse.at(pos);
       }
@@ -198,7 +197,7 @@ class Bipartition : public Element<T> {
     }
 
     // nr blocks
-    T nrblocks () {
+    u_int32_t nrblocks () const {
       size_t nr = 0;
       for (size_t i; i < this->degree(); i++) {
         if (this->at(i) > nr) {
@@ -212,17 +211,16 @@ class Bipartition : public Element<T> {
 // hash function for unordered_map
 // TODO improve this!
 
-template <typename T>
-struct std::hash<const Bipartition<T> > {
-  size_t operator() (const Bipartition<T>& x) const {
+template <>
+struct std::hash<const Bipartition> {
+  size_t operator() (const Bipartition& x) const {
     size_t seed = 0;
-    T deg = x.degree();
-    for (T i = 0; i < deg; i++) {
+    u_int32_t deg = x.degree();
+    for (u_int32_t i = 0; i < deg; i++) {
       seed = ((seed * deg) + x.at(i));
     }
     return seed;
   }
-
 };
 
 #endif

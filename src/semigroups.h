@@ -180,7 +180,6 @@ class Semigroup {
     std::vector<Relation>* relations () {
       enumerate();
       std::vector<Relation>* relations = new std::vector<Relation>();
-      std::cout << "_nrrules = " << _nrrules << "\n";
       size_t nr = _nrrules;
 
       for (size_t i = 1; i < _gens.size(); i++) {
@@ -210,6 +209,7 @@ class Semigroup {
           }
         }
       }
+      std::cout << "_nrrules = " << _nrrules << "\n";
       assert(nr == 0);
       return relations;
     }
@@ -217,7 +217,7 @@ class Semigroup {
     //TODO reintroduce limit
     void enumerate () {
       if(_pos >= _nr) return;
-      std::cout << "enumerating!\n";
+      std::cout << "C++ version\n";
       
       T x(_degree);
 
@@ -320,7 +320,7 @@ class Semigroup {
       
   private:
     
-    Relation make_relation (size_t i, size_t j) {
+    Relation inline make_relation (size_t i, size_t j) {
       std::vector<size_t> lhs(this->trace(i));
       lhs.push_back(j);
       std::vector<size_t> rhs(this->trace(_right->get(i, j)));

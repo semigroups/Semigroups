@@ -16,13 +16,42 @@
 //#define DEBUG
 //#define NDEBUG 
 //
-// TODO better asserts!
+// TODO 
+// 1) better asserts!
+// 2) improve relations probably don't make the relations in semigroups.h and then transfer them 
+// over here, just create them here using trace from semigroups.h and the
+// memmove method from ENUMERATE_SEMIGROUP in this file
 
 /*******************************************************************************
  * Imported types from the library
 *******************************************************************************/
 
 Obj BipartitionType; // Imported from the library to be able to check type
+Obj BipartitionNC;   // Imported from the library to be able to create bipartitions
+
+/*******************************************************************************
+ * For debugging
+*******************************************************************************/
+
+Bag TypeComObjFunc (Obj x) {
+  return TYPE_COMOBJ(x);
+}
+
+Bag TypePosObjFunc (Obj x) {
+  return TYPE_POSOBJ(x);
+}
+
+unsigned long long TNUM_OBJFunc (Obj x) {
+  return TNUM_OBJ(x);
+}
+
+bool IS_PLISTFunc (Obj x) {
+  return IS_PLIST(x);
+}
+
+bool IS_COMOBJFunc (Obj x) {
+  return IS_COMOBJ(x);
+}
 
 /*******************************************************************************
  * Can we use Semigroup++?
@@ -40,9 +69,10 @@ bool IsCPPSemigroup (Obj data) {
     case T_TRANS4:
       return true;
     case T_COMOBJ:{ 
-      if (TYPE_COMOBJ(x) ==  BipartitionType) {
+      if (TYPE_COMOBJ(x) == BipartitionType) {
         return true;
       }
+      // intentional fall through
     default: 
       return false;
     }
@@ -135,6 +165,37 @@ class TransConverter : public Converter<Transformation<T> > {
     // helper for getting ADDR_TRANS2/4
     inline T* ADDR_TRANS (Obj x) {
       return ((T*)((Obj*)(ADDR_OBJ(x))+3));
+    }
+};
+
+class BipartConverter : public Converter<Bipartition> {
+  public: 
+
+    Bipartition* convert (Obj o, size_t n) {
+      assert(TNUM_OBJ(o) == T_COMOBJ);
+      assert(TYPE_COMOBJ(o) ==  BipartitionType);
+      assert(IsbPRec(o, RNamName("blocks")));
+      
+      Obj blocks = ElmPRec(o, RNamName("blocks"));
+      PLAIN_LIST(blocks);
+
+      assert((size_t) LEN_PLIST(blocks) == n);
+      
+      auto x = new Bipartition(n);
+      for (u_int32_t i = 0; i < n; i++) {
+        x->set(i, INT_INTOBJ(ELM_PLIST(blocks, i + 1) - 1));
+      }
+      return x;
+    }
+
+    Obj unconvert (Bipartition* x) {
+      Obj o = NEW_PLIST(T_PLIST_CYC, x->degree());
+      SET_LEN_PLIST(o, x->degree());
+      for (u_int32_t i = 0; i < x->degree(); i++) {
+        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i)));
+      }
+      o = CALL_1ARGS(BipartitionNC, o);
+      return o;
     }
 };
 
@@ -245,6 +306,7 @@ class Interface : public InterfaceBase {
       }
       AssPRec(data, RNamName("rules"), out);
       CHANGED_BAG(data);
+
       delete relations;
     }
     
@@ -269,7 +331,7 @@ class Interface : public InterfaceBase {
     
     // helper function to convert a vector to a plist of GAP integers
     Obj ConvertFromVec (std::vector<size_t>& vec) {
-      Obj out = NEW_PLIST(T_PLIST, vec.size());
+      Obj out = NEW_PLIST(T_PLIST_CYC, vec.size());
       SET_LEN_PLIST(out, vec.size());
 
       for (size_t i = 0; i < vec.size(); i++) {
@@ -302,21 +364,22 @@ InterfaceBase* InterfaceFromData (Obj data) {
 
   switch (TNUM_OBJ(x)) {
     case T_TRANS2:{
-      auto ct2 = new TransConverter<u_int16_t>();
-      interface = new Interface<Transformation<u_int16_t> >(data, ct2);
+      auto tc2 = new TransConverter<u_int16_t>();
+      interface = new Interface<Transformation<u_int16_t> >(data, tc2);
       break;
     }
     case T_TRANS4:{
-      auto ct4 = new TransConverter<u_int32_t>();
-      interface = new Interface<Transformation<u_int32_t> >(data, ct4);
+      auto tc4 = new TransConverter<u_int32_t>();
+      interface = new Interface<Transformation<u_int32_t> >(data, tc4);
       break;
     }
-    /*case T_COMOBJ:{ 
+    case T_COMOBJ:{ 
       if (TYPE_COMOBJ(x) == BipartitionType) {
-        _type = SEMI_BIPART;
+        auto tb = new BipartConverter();
+        interface = new Interface<Bipartition>(data, tb);
       }
       break;
-    }*/
+    }
   }
   AssPRec(data, RNamName("Interface_CC"), OBJ_INTERFACE(interface));
   return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
@@ -399,6 +462,7 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
     InterfaceFromData(data)->enumerate();
     return data;
   }
+  std::cout << "GAP kernel version\n";
 
   //remove nrrules 
   if(looking==True){
@@ -1003,6 +1067,7 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
     ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
+    ImportGVarFromLibrary( "BipartitionNC", &BipartitionNC );
     
     /* return success                                                      */
     return 0;

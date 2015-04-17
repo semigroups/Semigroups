@@ -10,8 +10,8 @@
 
 # implications
 
-InstallTrueMethod(IsPermBipartition, IsTransBipartition and
-IsDualTransBipartition);
+InstallTrueMethod(IsPermBipartition, IsTransBipartition 
+                                     and IsDualTransBipartition);
 InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
 #
@@ -996,9 +996,9 @@ function(n)
 
   out := Objectify(BipartitionType, rec(blocks := out));
 
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, nrblocks);
+  #SetDegreeOfBipartition(out, n);
+  #SetNrLeftBlocks(out, nrleft);
+  #SetNrBlocks(out, nrblocks);
 
   return out;
 end);
