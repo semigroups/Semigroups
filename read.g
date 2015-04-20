@@ -91,6 +91,7 @@ fi;
 
 ReadPackage("semigroups/gap/grpperm.gi");
 
+ReadPackage("semigroups/gap/boolean.gi");
 ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");

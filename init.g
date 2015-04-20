@@ -36,6 +36,7 @@ ReadPackage("semigroups/gap/semigroups.gd");
 ReadPackage("semigroups/gap/semigroups-acting.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
+ReadPackage("semigroups/gap/boolean.gd");
 ReadPackage("semigroups/gap/semibipart.gd");
 ReadPackage("semigroups/gap/semitrans.gd");
 ReadPackage("semigroups/gap/semipperm.gd");
