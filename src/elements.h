@@ -10,56 +10,61 @@
 //#define NDEBUG 
 
 #include <assert.h>
+#include <bitset>
 #include <functional>
 #include <iostream>
+#include <math.h>
 #include <vector>
-//#include "MurmurHash2_64.hpp"
 
 // template for the base class for elements of a semigroup
 
-template <typename T>
+template <typename ContainerType, typename ElementType>
 class Element {
 
   public:
     
-    Element (T degree) {
-      _data = new std::vector<T>();
-      _data->reserve(degree);
-      for (T i = 0; i < degree; i++) {
-        _data->push_back(0);
-      }
+    Element () {
+      _data = new ContainerType();
     }
     
-    Element (std::vector<T> const& data) {
-      _data = new std::vector<T>(data);
+    Element (ContainerType const& data) {
+      _data = new ContainerType(data);
     } 
 
     Element (const Element& copy) : _data(copy._data) {}
     
     ~Element () {}
     
-    bool operator == (const Element<T> & that) const {
-      assert(this->degree() == that.degree());
-      for (T i = 0; i < this->degree(); i++) {
+    bool operator == (const Element<ContainerType, ElementType> & that) const {
+      assert(this->size() == that.size());
+      for (ElementType i = 0; i < this->size(); i++) {
         if ((*_data)[i] != (*that._data)[i]) {
           return false;
         }
       }
       return true;
     };
+    
+    virtual size_t degree () const {
+      return _data->size(); 
+    };
 
-    inline T at (T pos) const {
+    inline ElementType at (ElementType pos) const {
       return (*_data)[pos];
     }
     
-    inline void set (T pos, T val) {
+    inline void set (ElementType pos, ElementType val) {
       (*_data)[pos] = val;
     }
     
-    size_t degree () const {
-      return _data->size();
+    inline void push_back (ElementType const& val) {
+      _data->push_back(val);
     }
 
+    size_t size () const {
+      return _data->size();
+    }
+    
     Element* copy () const {
       return new Element(*_data);
     }
@@ -71,38 +76,45 @@ class Element {
     }
 
   protected:
-    std::vector<T>* _data;
+    ContainerType* _data;
 };
 
 // template for transformations
 
 template <typename T>
-class Transformation : public Element<T> {
+class Transformation : public Element<std::vector<T>, T> {
 
   public: 
     
-    Transformation (std::vector<T> data) : Element<T>(data) {}
-    Transformation (T degree) : Element<T>(degree) {}
+    Transformation (std::vector<T> data) : Element<std::vector<T>, T>(data) {}
+    
+    Transformation (T degree) : Element<std::vector<T>, T>() {
+      for (T i = 0; i < degree; i++) {
+        this->push_back(0);
+      }
+    }
     
     // multiply x and y into this
-    void redefine (Element<T> const* x, Element<T> const* y) {
-      assert(x->degree() == y->degree());
-      assert(x->degree() == this->degree());
+    void redefine (Element<std::vector<T>, T> const* x, 
+                   Element<std::vector<T>, T> const* y) {
+      assert(x->size() == y->size());
+      assert(x->size() == this->size());
 
-      for (T i = 0; i < this->degree(); i++) {
+      for (T i = 0; i < this->size(); i++) {
         this->set(i, y->at(x->at(i)));
       }
     }
 
     // the identity of this
-    Element<T>* identity () {
+    Element<std::vector<T>, T>* identity () {
       std::vector<T> image;
-      image.reserve(this->degree());
-      for (T i = 0; i < this->degree(); i++) {
+      image.reserve(this->size());
+      for (T i = 0; i < this->size(); i++) {
         image.push_back(i);
       }
       return new Transformation(image);
     }
+
 };
 
 // hash function for unordered_map
@@ -119,7 +131,66 @@ struct std::hash<const Transformation<T> > {
   }
 };
 
-// template for bipartitions
+template <size_t Size>
+class BooleanMat: public Element<std::bitset<Size>, bool> {
+
+  public: 
+    
+    BooleanMat () : Element<std::bitset<Size>, bool>() {}
+    BooleanMat (std::bitset<Size> const& data) : 
+      Element<std::bitset<Size>, bool>(data) {}
+    
+    size_t degree () const {
+      return sqrt(this->size());
+    }
+
+    // multiply x and y into this
+    void redefine (Element<std::bitset<Size>, bool> const* x, 
+                   Element<std::bitset<Size>, bool> const* y) {
+      assert(x->size() == y->size());
+      assert(x->size() == this->size());
+
+      for (size_t i = 0; i < Size; i++) {
+        for (size_t j = 0; j < Size; j++) {
+          size_t k;
+          for (k = 0; k < Size; k++) {
+            if (x->at(i * Size + k) & y->at(k * Size + j)) {
+              break;
+            }
+          }
+          this->set(i * Size + j, k < Size);
+        }
+      }
+    }
+      
+    // the identity of this
+    Element<std::bitset<Size>, bool>* identity () {
+      std::bitset<Size> mat;
+      for (size_t i = 0; i < this->degree(); i++) {
+        mat.set(i * Size + i);
+      }
+      return new BooleanMat(mat);
+    }
+};
+
+// hash function for unordered_map
+// TODO improve this!
+
+/*template <>
+struct std::hash<const Bipartition> {
+  size_t operator() (const Bipartition& x) const {
+    size_t seed = 0;
+    u_int32_t deg = x.degree();
+    for (u_int32_t i = 0; i < deg; i++) {
+      seed = ((seed * deg) + x.at(i));
+    }
+    return seed;
+  }
+};*/
+
+/*
+// bipartitions
+// FIXME redefine causes a seg fault
 
 class Bipartition : public Element<u_int32_t> {
 
@@ -221,6 +292,5 @@ struct std::hash<const Bipartition> {
     }
     return seed;
   }
-};
-
+};*/
 #endif

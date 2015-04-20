@@ -27,6 +27,7 @@ BindGlobal("BooleanMatType",
 
 DeclareGlobalFunction("BooleanMatNC");
 DeclareGlobalFunction("BooleanMat");
+DeclareGlobalFunction("BooleanMatByIntRep");
 
 DeclareOperation("AsBooleanMat", [IsPerm, IsPosInt]);
 
@@ -36,3 +37,5 @@ DeclareOperation("RandomBooleanMat", [IsPosInt]);
 DeclareOperation("RandomBooleanMatSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBooleanMatMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RegularBooleanMatSemigroup", [IsPosInt]);
+
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionBooleanMat");

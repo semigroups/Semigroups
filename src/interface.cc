@@ -22,6 +22,8 @@
 // over here, just create them here using trace from semigroups.h and the
 // memmove method from ENUMERATE_SEMIGROUP in this file
 
+#define GET_PLIST(plist, pos) INT_INTOBJ(ELM_PLIST(plist, pos))
+
 /*******************************************************************************
  * Imported types from the library
 *******************************************************************************/
@@ -29,9 +31,14 @@
 Obj BipartitionType; // Imported from the library to be able to check type
 Obj BipartitionNC;   // Imported from the library to be able to create bipartitions
 
+Obj BooleanMatType; // Imported from the library to be able to check type
+Obj BooleanMatByIntRep;   
+
 /*******************************************************************************
  * For debugging
 *******************************************************************************/
+
+#ifdef DEBUG
 
 Bag TypeComObjFunc (Obj x) {
   return TYPE_COMOBJ(x);
@@ -53,6 +60,8 @@ bool IS_COMOBJFunc (Obj x) {
   return IS_COMOBJ(x);
 }
 
+#endif
+
 /*******************************************************************************
  * Can we use Semigroup++?
 *******************************************************************************/
@@ -68,6 +77,10 @@ bool IsCPPSemigroup (Obj data) {
       // intentional fall through
     case T_TRANS4:
       return true;
+    case T_POSOBJ:
+      if (TYPE_POSOBJ(x) == BooleanMatType) {
+        return true;
+      }
     case T_COMOBJ:{ 
       if (TYPE_COMOBJ(x) == BipartitionType) {
         return true;
@@ -168,7 +181,37 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 };
 
-class BipartConverter : public Converter<Bipartition> {
+template<size_t T>
+class BoolMatConverter : public Converter<BooleanMat<T> > {
+  public: 
+
+    BooleanMat<T>* convert (Obj o, size_t n) {
+      assert(TNUM_OBJ(o) == T_POSOBJ);
+      assert(TYPE_POSOBJ(o) ==  BooleanMatType);
+       
+      auto x = new BooleanMat<T>();
+      for (size_t i = 0; i < T; i++) {
+        if (GET_PLIST(o, i + 2) == 1) {
+          x->set(i);
+        } else {
+          x->reset(i);
+        }
+      }
+      return x;
+    }
+
+    Obj unconvert (BooleanMat<T>* x) {
+      Obj o = NEW_PLIST(T_PLIST_CYC, x->size() + 1);
+      SET_LEN_PLIST(o, x->size() + 1);
+      SET_ELM_PLIST(o, 1, INTOBJ_INT(x->size()));
+      for (size_t i = 0; i < x->size(); i++) {
+        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x[i]));
+      }
+      return CALL_1ARGS(BooleanMatByIntRep, o);
+    }
+};
+
+/*class BipartConverter : public Converter<Bipartition> {
   public: 
 
     Bipartition* convert (Obj o, size_t n) {
@@ -197,7 +240,7 @@ class BipartConverter : public Converter<Bipartition> {
       o = CALL_1ARGS(BipartitionNC, o);
       return o;
     }
-};
+};*/
 
 /*******************************************************************************
  * Class for containing a C++ semigroup and accessing its methods
@@ -373,10 +416,11 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<Transformation<u_int32_t> >(data, tc4);
       break;
     }
-    case T_COMOBJ:{ 
-      if (TYPE_COMOBJ(x) == BipartitionType) {
-        auto tb = new BipartConverter();
-        interface = new Interface<Bipartition>(data, tb);
+    case T_POSOBJ:{ 
+      if (TYPE_POSOBJ(x) == BooleanMatType) {
+        size_t const n = INT_INTOBJ(ELM_PLIST(x, 1));
+        auto bmc = new BoolMatConverter<n>();
+        interface = new Interface<BooleanMat<n>>(data, bmc);
       }
       break;
     }
@@ -1066,8 +1110,11 @@ static Int InitKernel( StructInitInfo *module )
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
+
     ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
     ImportGVarFromLibrary( "BipartitionNC", &BipartitionNC );
+    ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );
+    ImportGVarFromLibrary( "BooleanMatByIntRep", &BooleanMatByIntRep );
     
     /* return success                                                      */
     return 0;

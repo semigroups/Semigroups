@@ -13,6 +13,11 @@
 # A boolean matrix <mat> is:
 #   ![1] = dimension
 
+InstallGlobalFunction(BooleanMatByIntRep, 
+function(x)
+  return Objectify(BooleanMatByIntRep, x);
+end);
+
 InstallGlobalFunction(BooleanMatNC,
 function(x)
   local out, row, col;
@@ -197,3 +202,21 @@ function(n)
   
   return Semigroup(gens);
 end);
+
+InstallMethod(ChooseHashFunction, "for a boolean matrix",
+[IsBooleanMat, IsInt],
+  function(x, hashlen)
+  return rec(func := SEMIGROUPS_HashFunctionBooleanMat,
+             data := hashlen);
+end);
+
+InstallGlobalFunction(SEMIGROUPS_HashFunctionBooleanMat,
+function(x, data)
+  local h, i;
+  h := 0;
+  for i in [2 .. x![1] ^ 2 + 1] do 
+    h := ((h / 2) + x![i]) mod data;
+  od;
+  return h + 1;
+end);
+
