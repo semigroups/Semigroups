@@ -15,7 +15,7 @@
 
 InstallGlobalFunction(BooleanMatByIntRep, 
 function(x)
-  return Objectify(BooleanMatByIntRep, x);
+  return Objectify(BooleanMatType, x);
 end);
 
 InstallGlobalFunction(BooleanMatNC,

@@ -296,14 +296,15 @@ function(S)
   local data, hashlen, nrgens, nr, val, i;
 
   # this is required for the C++ version
-  if IsTransformationSemigroup(S) or IsBipartitionSemigroup(S) then 
+  if IsTransformationSemigroup(S) or IsBooleanMatSemigroup(S) then 
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;
     data.pos := 0;
-    data.degree := ActionDegree(S);
-    if IsBipartitionSemigroup(S) then 
-      data.degree := 2 * data.degree;
+    if IsTransformationSemigroup(S) then 
+      data.degree := DegreeOfTransformationSemigroup(S);
+    else 
+      data.degree := S.1![1];
     fi;
   
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable

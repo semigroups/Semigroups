@@ -181,31 +181,30 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 };
 
-template<size_t T>
-class BoolMatConverter : public Converter<BooleanMat<T> > {
+class BoolMatConverter : public Converter<BooleanMat> {
   public: 
 
-    BooleanMat<T>* convert (Obj o, size_t n) {
+    BooleanMat* convert (Obj o, size_t n) {
       assert(TNUM_OBJ(o) == T_POSOBJ);
       assert(TYPE_POSOBJ(o) ==  BooleanMatType);
        
-      auto x = new BooleanMat<T>();
-      for (size_t i = 0; i < T; i++) {
+      auto x = new BooleanMat(n);
+      for (size_t i = 0; i < n; i++) {
         if (GET_PLIST(o, i + 2) == 1) {
-          x->set(i);
+          x->set(i, true);
         } else {
-          x->reset(i);
+          x->set(i, false);
         }
       }
       return x;
     }
 
-    Obj unconvert (BooleanMat<T>* x) {
-      Obj o = NEW_PLIST(T_PLIST_CYC, x->size() + 1);
-      SET_LEN_PLIST(o, x->size() + 1);
-      SET_ELM_PLIST(o, 1, INTOBJ_INT(x->size()));
-      for (size_t i = 0; i < x->size(); i++) {
-        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x[i]));
+    Obj unconvert (BooleanMat* x) {
+      Obj o = NEW_PLIST(T_PLIST_CYC, x->degree() + 1);
+      SET_LEN_PLIST(o, x->degree() + 1);
+      SET_ELM_PLIST(o, 1, INTOBJ_INT(x->degree()));
+      for (size_t i = 0; i < x->degree(); i++) {
+        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i)));
       }
       return CALL_1ARGS(BooleanMatByIntRep, o);
     }
@@ -419,8 +418,8 @@ InterfaceBase* InterfaceFromData (Obj data) {
     case T_POSOBJ:{ 
       if (TYPE_POSOBJ(x) == BooleanMatType) {
         size_t const n = INT_INTOBJ(ELM_PLIST(x, 1));
-        auto bmc = new BoolMatConverter<n>();
-        interface = new Interface<BooleanMat<n>>(data, bmc);
+        auto bmc = new BoolMatConverter();
+        interface = new Interface<BooleanMat>(data, bmc);
       }
       break;
     }

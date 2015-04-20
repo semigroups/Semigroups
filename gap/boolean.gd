@@ -14,6 +14,7 @@ DeclareCategory("IsBooleanMat",
                 IsMultiplicativeElementWithOne and IsPositionalObjectRep);
 DeclareCategoryCollections("IsBooleanMat");
 DeclareCategoryCollections("IsBooleanMatCollection");
+DeclareSynonym("IsBooleanMatSemigroup", IsBooleanMatCollection and IsSemigroup);
 
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsBooleanMatCollection);
 
