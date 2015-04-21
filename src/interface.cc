@@ -261,7 +261,6 @@ class Interface : public InterfaceBase {
 
     // constructor
     Interface (Obj data, Converter<T>* converter) : _converter(converter) {
-      // assert is record
       assert(IsbPRec(data, RNamName("gens")));
       assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
       

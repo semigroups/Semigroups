@@ -304,7 +304,7 @@ function(S)
     if IsTransformationSemigroup(S) then 
       data.degree := DegreeOfTransformationSemigroup(S);
     else 
-      data.degree := S.1![1];
+      data.degree := S.1![1] ^ 2;
     fi;
   
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable

@@ -124,16 +124,15 @@ class BooleanMat: public Element<bool> {
 
   public: 
     
-    BooleanMat (size_t deg) : Element<bool>(deg) {}
-    BooleanMat (std::vector<bool> const& data) : 
-      Element<bool> (data) {}
+    BooleanMat (size_t degree) : Element<bool>(degree) {}
+    BooleanMat (std::vector<bool> const& data) : Element<bool> (data) {}
     
     // multiply x and y into this
     void redefine (Element<bool> const* x, 
                    Element<bool> const* y) {
-      size_t deg = this->degree();
       assert(x->degree() == y->degree());
-      assert(x->degree() == deg);
+      assert(x->degree() == this->degree());
+      size_t deg = sqrt(this->degree());
 
       for (size_t i = 0; i < deg; i++) {
         for (size_t j = 0; j < deg; j++) {
