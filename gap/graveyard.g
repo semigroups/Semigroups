@@ -33,3 +33,18 @@ function(d)
 
   return out;
 end);
+  
+  # JDM below is an example of how to use FIND_SEMIGROUP, it used to be used in
+  # Position . . .
+  
+  #lookfunc := function(data, i)
+  #  return data!.elts[i] = x;
+  #end;
+
+  #FIND_SEMIGROUP(data, lookfunc, 1, infinity);
+
+  #if data!.found <> false then
+  #  return data!.found;
+  #fi;
+
+  #return fail;

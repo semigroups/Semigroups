@@ -21,8 +21,11 @@
 // 2) improve relations probably don't make the relations in semigroups.h and then transfer them 
 // over here, just create them here using trace from semigroups.h and the
 // memmove method from ENUMERATE_SEMIGROUP in this file
+// 3) set data!.pos and data!.nr so that the filter IsClosedData gets set at
+// the GAP level
 
 #define GET_PLIST(plist, pos) INT_INTOBJ(ELM_PLIST(plist, pos))
+#define BATCH_SIZE 8192
 
 /*******************************************************************************
  * Imported types from the library
@@ -35,7 +38,7 @@ Obj BooleanMatType; // Imported from the library to be able to check type
 Obj BooleanMatByIntRep;   
 
 /*******************************************************************************
- * For debugging
+ * For debugging TODO move these to their own file
 *******************************************************************************/
 
 #ifdef DEBUG
@@ -100,6 +103,7 @@ class InterfaceBase {
   public:
     virtual ~InterfaceBase () {};
     virtual void enumerate (Obj limit) = 0;
+    virtual bool is_done () = 0;
     virtual void find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
     virtual size_t size () = 0;
     virtual size_t current_size () = 0;
@@ -107,6 +111,7 @@ class InterfaceBase {
     virtual void right_cayley_graph (Obj data) = 0;
     virtual void left_cayley_graph (Obj data) = 0;
     virtual void elements (Obj data, Obj limit) = 0;
+    virtual Obj position (Obj data, Obj x) = 0;
     virtual void word (Obj data, Obj pos) = 0;
     virtual void relations (Obj data) = 0;
 };
@@ -127,9 +132,13 @@ inline InterfaceBase* INTERFACE_OBJ(Obj o) {
 
 // free C++ semigroup inside GAP object
 void InterfaceFreeFunc(Obj o) { 
+#ifdef DEBUG
   std::cout << "FREEING1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
+#endif
   delete INTERFACE_OBJ(o);
+#ifdef DEBUG
   std::cout << "FREEING2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
+#endif
 }
 
 /*******************************************************************************
@@ -297,6 +306,10 @@ class Interface : public InterfaceBase {
       _semigroup->enumerate(INT_INTOBJ(limit));
     }
     
+    bool is_done () {
+      return _semigroup->is_done();
+    }
+
     // get the size of the C++ semigroup
     size_t size () {
       return _semigroup->size();
@@ -363,7 +376,7 @@ class Interface : public InterfaceBase {
       if (pos < _semigroup->current_size()) {
         limit = _semigroup->current_size();
       } else {
-        limit = pos + 8192; //TODO good choice?
+        limit = pos + BATCH_SIZE; 
       }
 
       elements(data, limit); // get the elements out of _semigroup into "elts"
@@ -380,7 +393,7 @@ class Interface : public InterfaceBase {
           }
         }
         if (!found) {
-          limit += 8192;
+          limit += BATCH_SIZE;
           elements(data, limit); // get the elements out of _semigroup into "elts"
           nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))), INT_INTOBJ(end));
         }
@@ -404,6 +417,12 @@ class Interface : public InterfaceBase {
         }
       }
       CHANGED_BAG(data);
+    }
+
+    Obj position (Obj data, Obj x) {
+      size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
+      size_t pos = _semigroup->position(_converter->convert(x, deg_c));
+      return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos));
     }
 
     // get the relations of the C++ semigroup, store them in data
@@ -530,15 +549,6 @@ Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
   return ElmPRec(data, RNamName("left"));
 }
 
-Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
-  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("elts"))) { 
-    InterfaceFromData(data)->elements(data, INTOBJ_INT(-1));
-  } else {
-    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
-  }
-  return ElmPRec(data, RNamName("elts"));
-}
-
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
     InterfaceFromData(data)->relations(data);
@@ -555,6 +565,24 @@ Obj SIZE_SEMIGROUP (Obj self, Obj data) {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+}
+
+Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit) {
+  if (IsCPPSemigroup(data)) { 
+    InterfaceFromData(data)->elements(data, limit);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, limit, 0, False);
+  }
+  return ElmPRec(data, RNamName("elts"));
+}
+
+Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
+  if (IsCPPSemigroup(data)) { 
+    InterfaceFromData(data)->word(data, pos);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
+  }
+  return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
 }
 
 Obj FIND_SEMIGROUP (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
@@ -580,13 +608,34 @@ Obj NR_RULES_SEMIGROUP (Obj self, Obj data) {
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("nrrules"))));
 }
 
-Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
+Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
   if (IsCPPSemigroup(data)) { 
-    InterfaceFromData(data)->word(data, pos);
-  } else {
-    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
+    return InterfaceFromData(data)->position(data, x);
   }
-  return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
+
+  Obj ht = ElmPRec(data, RNamName("ht"));
+  size_t pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
+  size_t nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+  while (pos <= nr) { 
+    Obj val = HTValue_TreeHash_C(self, ht, x);
+    if (val != Fail) {
+      return val; 
+    }
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(0), 0, False);
+    pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
+    nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+  }
+  return Fail;
+}
+
+Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
+  if (IsCPPSemigroup(data)) {
+    return (InterfaceFromData(data)->is_done() ? True : False);
+  }
+
+  size_t pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
+  size_t nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+  return (pos > nr ? True : False);
 }
 
 /*******************************************************************************
@@ -627,9 +676,10 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   if(looking==True){
     AssPRec(data, RNamName("found"), False);
   }
-  int_limit = INT_INTOBJ(limit);
+
   i = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BATCH_SIZE));
 
   if(i>nr){
     return data;
@@ -1202,8 +1252,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", ELEMENTS_SEMIGROUP, 1, 
-                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", ELEMENTS_SEMIGROUP, 2, 
+                          "data, limit"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RELATIONS_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", WORD_SEMIGROUP, 2, 
@@ -1213,6 +1263,10 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.c", LENGTH_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", NR_RULES_SEMIGROUP, 1, 
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", POSITION_SEMIGROUP, 2, 
+                          "data, x"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", IS_CLOSED_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),

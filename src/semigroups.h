@@ -17,6 +17,8 @@
 //#define NDEBUG
 //#define DEBUG
 
+#define MIN_STEP 8192
+
 #include "basics.h"
 #include "elements.h"
 
@@ -120,7 +122,24 @@ class Semigroup {
       enumerate(-1);
       return _elements->size();
     }
-    
+   
+    size_t test_membership (T* x) {
+      return (position(x) != -1);
+    }
+
+    size_t position (T* x) {
+      while (true) { 
+        auto it = _map.find(*x);
+        if (it != _map.end()) {
+          return it->second;
+        }
+        if (is_done()) {
+          return -1;
+        }
+        enumerate(0);
+      }
+    }
+
     std::vector<T*>* elements (size_t limit) {
       enumerate(limit);
       return _elements;
@@ -231,7 +250,9 @@ class Semigroup {
     }
 
     void enumerate (size_t limit, size_t stopper) {
-      if(_pos >= _nr) return;
+      if (_pos >= _nr) return;
+      limit = std::max(limit, _nr + MIN_STEP);
+      
       std::cout << "C++ version\n";
       std::cout << "limit = " << limit << "\n";
       
