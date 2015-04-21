@@ -20,38 +20,51 @@
 # relation.
 
 InstallMethod(IsRegularClass, "for a Green's class of a semigroup",
-[IsGreensClass], D -> First(Enumerator(D), x -> IsIdempotent(x)) <> fail);
+[IsGreensClass], C -> First(Enumerator(C), x -> IsIdempotent(x)) <> fail);
 
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
 InstallTrueMethod(IsRegularClass, IsInverseOpClass);
 InstallTrueMethod(IsHClassOfRegularSemigroup,
                   IsInverseOpClass and IsGreensHClass);
 
-# Semigroups . . .
-
 InstallMethod(NrDClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensDClasses(S)));
 
-# TODO improve the method below, using a similar method to the one for
-# NrRegularDClasses (WW: this doesn't exists)
-
-# WW NrRegularDClasses doesn't exist in this file so I created this
 InstallMethod(NrRegularDClasses, "for a semigroup",
 [IsSemigroup], S -> Length(RegularDClasses(S)));
-
-InstallMethod(RegularDClasses, "for a semigroup",
-[IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularDClass));
 
 InstallMethod(NrLClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensLClasses(S)));
 
+InstallMethod(NrLClasses, "for a Green's D-class",
+[IsGreensDClass], D -> Length(GreensLClasses(D)));
+
 InstallMethod(NrRClasses, "for a semigroup",
 [IsSemigroup], S -> Length(GreensRClasses(S)));
+
+InstallMethod(NrRClasses, "for a Green's D-class",
+[IsGreensDClass], D -> Length(GreensRClasses(D)));
+
+InstallMethod(NrHClasses, "for a semigroup",
+[IsSemigroup], S -> Length(GreensHClasses(S)));
+
+InstallMethod(NrHClasses, "for a Green's D-class",
+[IsGreensDClass], D -> NrRClasses(D) * NrLClasses(D));
+
+InstallMethod(NrHClasses, "for a Green's L-class",
+[IsGreensLClass], L -> NrRClasses(DClassOfLClass(L)));
+
+InstallMethod(NrHClasses, "for a Green's R-class",
+[IsGreensRClass], R -> NrLClasses(DClassOfRClass(R)));
 
 InstallMethod(NrIdempotents, "for a semigroup",
 [IsSemigroup], S -> Length(Idempotents(S)));
 
-# Green's classes . . .
+# TODO improve this!
+InstallMethod(RegularDClasses, "for a semigroup",
+[IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularDClass));
+
+# Equivalence classes of a Green's relations
 
 InstallMethod(EquivalenceClassOfElement,
 "for Green's D-relation and associative element",
@@ -81,6 +94,8 @@ function(H, x)
   return GreensHClassOfElement(UnderlyingDomainOfBinaryRelation(H), x);
 end);
 
+# Green's classes of an element of a semigroup
+
 InstallMethod(GreensRClassOfElement,
 "for a finite semigroup and associative element",
 [IsSemigroup and IsFinite, IsAssociativeElement],
@@ -109,13 +124,11 @@ function(S, x)
   return EquivalenceClassOfElement(GreensDRelation(S), x);
 end);
 
-# same method for regular/inverse
-
 InstallMethod(GreensJClassOfElement,
 "for a finite semigroup and associative element",
 [IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElement);
 
-#
+# No check Green's classes of an element of a semigroup
 
 InstallMethod(GreensRClassOfElementNC,
 "for a finite semigroup and associative element",
@@ -145,64 +158,17 @@ function(S, x)
   return EquivalenceClassOfElementNC(GreensDRelation(S), x);
 end);
 
-# same method for regular/inverse
-
 InstallMethod(GreensJClassOfElementNC,
 "for a finite semigroup and associative element",
 [IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElementNC);
 
 # this should be removed after the library method for AsSSortedList
 # for a Green's class is removed. The default AsSSortedList for a collection
-# is what should be used (it is identical)! JDM
+# is what should be used (it is identical)! FIXME
 
 InstallMethod(AsSSortedList, "for a Green's class",
 [IsGreensClass], C -> ConstantTimeAccessList(EnumeratorSorted(C)));
 
-InstallMethod(\=, "for Green's classes",
-[IsGreensClass, IsGreensClass],
-function(x, y)
-  if   (IsGreensRClass(x) and IsGreensRClass(y))
-    or (IsGreensLClass(x) and IsGreensLClass(y))
-    or (IsGreensDClass(x) and IsGreensDClass(y))
-    or (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return Parent(x) = Parent(y) and Representative(x) in y;
-  fi;
-  return Parent(x) = Parent(y) and Representative(x) in y and
-   Size(x) = Size(y);
-end);
-
-#
-InstallMethod(NrHClasses, "for a semigroup",
-[IsSemigroup], S -> Length(GreensHClasses(S)));
-
-#
-
-InstallMethod(NrHClasses, "for a Green's D-class",
-[IsGreensDClass], D -> NrRClasses(D) * NrLClasses(D));
-
-#
-
-InstallMethod(NrHClasses, "for a Green's L-class",
-[IsGreensLClass], L -> NrRClasses(DClassOfLClass(L)));
-
-#
-
-InstallMethod(NrHClasses, "for a Green's R-class",
-[IsGreensRClass], R -> NrLClasses(DClassOfRClass(R)));
-
-InstallMethod(NrDClasses, "for a finite semigroup", [IsSemigroup and IsFinite],
-S -> Length(GreensDClasses(S)));
-
-InstallMethod(NrRClasses, "for a Green's D-class",
-[IsGreensDClass], D -> Length(GreensRClasses(D)));
-
-InstallMethod(NrLClasses, "for a Green's D-class",
-[IsGreensDClass], D -> Length(GreensLClasses(D)));
-
-InstallMethod(NrHClasses, "for a Green's class",
-[IsGreensClass], C -> Length(GreensHClasses(C)));
-
-# technical
 #JDM: is this necessary? I.e. is there a similar method in the library?
 
 InstallMethod(\=, "for Green's classes",

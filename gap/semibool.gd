@@ -12,6 +12,6 @@
 
 DeclareSynonym("IsBooleanMatSemigroup",
                IsBooleanMatCollection and IsSemigroup);
-
+InstallTrueMethod(IsFinite, IsBipartitionSemigroup);
 DeclareOperation("RandomBooleanMatSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBooleanMatMonoid", [IsPosInt, IsPosInt]);
