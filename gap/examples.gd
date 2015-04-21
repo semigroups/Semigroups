@@ -42,6 +42,8 @@ DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
                SingularTransformationSemigroup);
 
+DeclareOperation("RegularBooleanMatSemigroup", [IsPosInt]);
+
 DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
 DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RectangularBand", [IsPosInt, IsPosInt]);

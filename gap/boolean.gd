@@ -8,16 +8,15 @@
 #############################################################################
 ##
 
-# This file contains implementation of boolean matrices.
+# This file contains an implementation of boolean matrices.
 
 DeclareCategory("IsBooleanMat",
-                    IsMultiplicativeElementWithOne 
-                and IsAssociativeElement 
+                    IsMultiplicativeElementWithOne
+                and IsAssociativeElement
                 and IsPositionalObjectRep);
 
 DeclareCategoryCollections("IsBooleanMat");
 DeclareCategoryCollections("IsBooleanMatCollection");
-DeclareSynonym("IsBooleanMatSemigroup", IsBooleanMatCollection and IsSemigroup);
 
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsBooleanMatCollection);
 
@@ -37,9 +36,5 @@ DeclareOperation("AsBooleanMat", [IsPerm, IsPosInt]);
 
 DeclareAttribute("DimensionOfBooleanMat", IsBooleanMat);
 DeclareOperation("RandomBooleanMat", [IsPosInt]);
-
-DeclareOperation("RandomBooleanMatSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomBooleanMatMonoid", [IsPosInt, IsPosInt]);
-DeclareOperation("RegularBooleanMatSemigroup", [IsPosInt]);
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBooleanMat");

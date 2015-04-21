@@ -318,6 +318,38 @@ end);
 
 #
 
+InstallMethod(RegularBooleanMatSemigroup, "for a pos int",
+[IsPosInt],
+function(n)
+  local gens, i;
+
+  gens := [AsBooleanMat((1, 2), n)];
+
+  gens[2] := List([1 .. n], x -> [1 .. n] * 0);
+  for i in [1 .. n - 1] do
+    gens[2][i][i + 1] := 1;
+  od;
+  gens[2][n][1] := 1;
+  gens[2] := BooleanMatNC(gens[2]);
+
+  gens[3] := List([1 .. n], x -> [1 .. n] * 0);
+  for i in [1 .. n] do
+    gens[3][i][i] := 1;
+  od;
+  gens[3][n][1] := 1;
+  gens[3] := BooleanMatNC(gens[3]);
+
+  gens[4] := List([1 .. n], x -> [1 .. n] * 0);
+  for i in [1 .. n - 1] do
+    gens[4][i][i] := 1;
+  od;
+  gens[4] := BooleanMatNC(gens[4]);
+
+  return Semigroup(gens);
+end);
+
+#
+
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",
 [IsPosInt, IsPosInt],
 function(d, q)
