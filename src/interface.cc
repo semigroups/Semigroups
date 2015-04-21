@@ -406,7 +406,7 @@ class Interface : public InterfaceBase {
     // get the word from the C++ semigroup, store it in data
     void word (Obj data, Obj pos) {
       size_t pos_c = INT_INTOBJ(pos);
-      _semigroup->enumerate(pos_c);
+      _semigroup->enumerate(pos_c - 1);
       if (! IsbPRec(data, RNamName("words"))) {
         Obj words = NEW_PLIST(T_PLIST, pos_c);
         SET_LEN_PLIST(words, pos_c);
@@ -425,7 +425,7 @@ class Interface : public InterfaceBase {
     Obj position (Obj data, Obj x) {
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
       size_t pos = _semigroup->position(_converter->convert(x, deg_c));
-      return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos));
+      return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
     }
 
     // get the relations of the C++ semigroup, store them in data
@@ -683,11 +683,12 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
 
   i = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
-  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BATCH_SIZE));
 
-  if(i>nr){
+  if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
     return data;
   }
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BATCH_SIZE));
+  
   #ifdef DEBUG
     Pr("here 1\n", 0L, 0L);
   #endif 

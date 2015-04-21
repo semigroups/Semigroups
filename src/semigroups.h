@@ -136,7 +136,8 @@ class Semigroup {
         if (is_done()) {
           return -1;
         }
-        enumerate(0);
+        enumerate(_nr); 
+        // the _nr means we enumerate MIN_STEP more elements
       }
     }
 
@@ -250,7 +251,7 @@ class Semigroup {
     }
 
     void enumerate (size_t limit, size_t stopper) {
-      if (_pos >= _nr) return;
+      if (_pos >= _nr || limit < _nr) return;
       limit = std::max(limit, _nr + MIN_STEP);
       
       std::cout << "C++ version\n";
