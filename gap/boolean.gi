@@ -52,22 +52,39 @@ function(x)
   return str;
 end);
 
+InstallMethod(PrintString, "for a boolean mat collection", 
+[IsBooleanMatCollection],
+function(coll) 
+  local str, i;
+  str := ShallowCopy(PrintString(coll[1]));
+  Append(str, "\<, ");
+  for i in [2 .. Length(coll)]  do
+    Append(str, "\>");
+    Append(str, PrintString(coll[i]));
+    Append(str, "\<, ");
+  od;
+  Remove(str, Length(str));
+  Remove(str, Length(str));
+  return str;
+end);
+
 InstallMethod(PrintString, "for a boolean mat", [IsBooleanMat],
 function(x)
   local str, i, j;
-  str := "BooleanMat([";
+  str := "\>BooleanMat(\>[";
   for i in [1 .. x![1]] do
-    Append(str, "[");
+    Append(str, "\>\>[");
     Append(str, String(x![(i - 1) * x![1] + 2]));
     for j in [3 .. x![1] + 1] do
       Append(str, ", ");
       Append(str, String(x![(i - 1) * x![1] + j]));
     od;
-    Append(str, "], ");
+    Append(str, "]\<, \<");
   od;
-  Remove(str, Length(str));
-  Remove(str, Length(str));
-  Append(str, "])");
+  for i in [1 .. 5] do 
+    Remove(str, Length(str));
+  od;
+  Append(str, "\<\<]\<)\<");
   return str;
 end);
 

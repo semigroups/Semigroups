@@ -1274,5 +1274,3 @@ InstallMethod(RandomBipartitionMonoid,
 function(m, n)
   return Monoid(Set(List([1 .. m], x -> RandomBipartition(n))));
 end);
-
-#EOF

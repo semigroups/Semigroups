@@ -118,22 +118,18 @@ end);
 
 InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
-function(S)
-  return RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
-end);
+S -> RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S)));
 
 # same method for ideals
 
 InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
-function(S)
-  return LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
-end);
+S -> LEFT_CAYLEY_GRAPH(GenericSemigroupData(S)));
 
 # same method for ideals,
 
-InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class", [IsGreensDClass],
-InjectionPrincipalFactor);
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class", 
+[IsGreensDClass], InjectionPrincipalFactor);
 
 # same method for ideal
 

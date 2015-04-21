@@ -104,6 +104,9 @@ InstallMethod(Position,
 "for generic semigroup data, an associative element, zero cyc",
 [IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc],
 function(data, x, n)
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(data)) then 
+    return fail;
+  fi;
   return POSITION_SEMIGROUP(data, x);
 end);
 

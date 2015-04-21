@@ -78,6 +78,12 @@ DeclareOperation("DClass", [IsGreensClass]);
 DeclareOperation("LClass", [IsGreensHClass]);
 DeclareOperation("RClass", [IsGreensHClass]);
 
+InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
+InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
+InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
+InstallMethod(LClass, "for an H-class", [IsGreensHClass], LClassOfHClass);
+InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
+
 DeclareOperation("DClassNC", [IsGreensClass]);
 
 DeclareSynonymAttr("DClasses", GreensDClasses);
