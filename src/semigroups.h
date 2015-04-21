@@ -7,8 +7,6 @@
 
 // TODO
 // 1) make a distinction between monoid and semigroup presentations
-// 2.5) looking etc. This probably won't work with GAP transformations, better
-// use the other algorithm in that case.
 // 4) other types of semigroups
 // 5) bit flipping?
 // 6) the other functionality of Semigroupe.
@@ -27,11 +25,13 @@
 #include <assert.h>
 #include <iostream>
 
-typedef std::pair<std::vector<size_t>, std::vector<size_t> > Relation;
 
 template <typename T>
 class Semigroup {
   
+  typedef std::vector<size_t> Word;
+  typedef std::pair<Word*, Word*> Relation;
+
   public:
     Semigroup (std::vector<T*> gens, size_t degree): 
       _degree     (degree),
@@ -107,14 +107,22 @@ class Semigroup {
     size_t nrgens () {
       return _gens.size();
     }
+    
+    bool is_done () {
+      return (_pos >= _nr);
+    }
 
-    size_t size () {
-      enumerate();
+    size_t current_size () {
       return _elements->size();
     }
     
-    std::vector<T*>* elements () {
-      enumerate();
+    size_t size () {
+      enumerate(-1);
+      return _elements->size();
+    }
+    
+    std::vector<T*>* elements (size_t limit) {
+      enumerate(limit);
       return _elements;
     }
     
@@ -123,26 +131,32 @@ class Semigroup {
     }
     
     RecVec<size_t>* right_cayley_graph () {
-      enumerate();
+      enumerate(-1);
       return _right;
     }
     
     RecVec<size_t>* left_cayley_graph () {
-      enumerate();
+      enumerate(-1);
       return _left;
     }
     
-    size_t schreierpos (size_t pos) { 
+    size_t schreierpos (size_t pos) {
+      if (pos > current_size()) {
+        enumerate(pos);
+      }
       spanning_tree();
       return _schreierpos[pos];
     }
     
     size_t schreiergen (size_t pos) { 
+      if (pos > current_size()) {
+        enumerate(pos);
+      }
       spanning_tree();
       return _schreiergen[pos];
     }
     
-    std::vector<size_t> trace (size_t pos) { // trace the spanning tree
+    Word* trace (size_t pos) { // trace the spanning tree
       // caching the words seems to be slower ....
       /*if (_words.empty()) {
         _words.reserve(_elements.size());
@@ -167,27 +181,25 @@ class Semigroup {
       word1.insert(word1.end(), word2.begin(), word2.end());
       return word1;*/
 
-      std::vector<size_t> word;
+      Word* word = new Word();
       while (pos > _genslookup.back()) {
-        word.push_back(this->schreiergen(pos));
+        word->push_back(this->schreiergen(pos));
         pos = this->schreierpos(pos);
       }
-      word.push_back(_genslookup.at(pos));
-      std::reverse(word.begin(), word.end());
+      word->push_back(_genslookup.at(pos));
+      std::reverse(word->begin(), word->end());
       return word;
     }
 
     std::vector<Relation>* relations () {
-      enumerate();
+      enumerate(-1);
       std::vector<Relation>* relations = new std::vector<Relation>();
       size_t nr = _nrrules;
 
       for (size_t i = 1; i < _gens.size(); i++) {
         if (_genslookup.at(i) <= _genslookup.at(i - 1)) {
           nr--;
-          std::vector<size_t> lhs(i);
-          std::vector<size_t> rhs(_genslookup.at(i));
-          relations->push_back(std::make_pair(lhs, rhs));
+          relations->push_back(make_relation(i, _genslookup.at(i)));
         }
       }
 
@@ -214,48 +226,54 @@ class Semigroup {
       return relations;
     }
     
-    //TODO reintroduce limit
-    void enumerate () {
+    void enumerate(size_t limit) {
+      enumerate(limit, -1);
+    }
+
+    void enumerate (size_t limit, size_t stopper) {
       if(_pos >= _nr) return;
       std::cout << "C++ version\n";
+      std::cout << "limit = " << limit << "\n";
       
       T x(_degree);
 
       //multiply the generators by every generator
-      while (_pos < _lenindex.at(1)) { 
-        for (size_t j = 0; j < _nrgens; j++) {
-          x.redefine(_elements->at(_pos), _gens.at(j)); 
-          auto it = _map.find(x); 
+      if (_pos < _lenindex.at(1)) {
+        while (_pos < _lenindex.at(1)) { 
+          for (size_t j = 0; j < _nrgens; j++) {
+            x.redefine(_elements->at(_pos), _gens.at(j)); 
+            auto it = _map.find(x); 
 
-          if (it != _map.end()) {
-            _right->set(_pos, j, it->second);
-            _nrrules++;
-          } else {
-            is_one(x);
-            _elements->push_back(static_cast<T*>(x.copy()));
-            _first.push_back(_first.at(_pos));
-            _final.push_back(j);
-            _map.insert(std::make_pair(*_elements->back(), _nr));
-            _prefix.push_back(_pos);
-            _reduced.set(_pos, j, true);
-            _right->set(_pos, j, _nr);
-            _suffix.push_back(_genslookup.at(j));
-            _nr++;
+            if (it != _map.end()) {
+              _right->set(_pos, j, it->second);
+              _nrrules++;
+            } else {
+              is_one(x);
+              _elements->push_back(static_cast<T*>(x.copy()));
+              _first.push_back(_first.at(_pos));
+              _final.push_back(j);
+              _map.insert(std::make_pair(*_elements->back(), _nr));
+              _prefix.push_back(_pos);
+              _reduced.set(_pos, j, true);
+              _right->set(_pos, j, _nr);
+              _suffix.push_back(_genslookup.at(j));
+              _nr++;
+            }
+          }
+          _pos++;
+        }
+        for (size_t i = 0; i < _pos; i++) { 
+          size_t b = _final.at(i); 
+          for (size_t j = 0; j < _nrgens; j++) { 
+            _left->set(i, j, _right->get(_genslookup.at(j), b));
           }
         }
-        _pos++;
+        _wordlen++;
+        expand();
       }
-      for (size_t i = 0; i < _pos; i++) { 
-        size_t b = _final.at(i); 
-        for (size_t j = 0; j < _nrgens; j++) { 
-          _left->set(i, j, _right->get(_genslookup.at(j), b));
-        }
-      }
-      _wordlen++;
-      expand();
 
       //multiply the words of length > 1 by every generator
-      bool stop = false;
+      bool stop = (_nr >= limit);
 
       while (_pos < _nr && !stop) {
         while (_pos < _lenindex.at(_wordlen + 1) && !stop) {
@@ -290,10 +308,11 @@ class Semigroup {
                 _right->set(_pos, j, _nr);
                 _suffix.push_back(_right->get(s, j));
                 _nr++;
-                //stop = (_nr >= limit);
+                stop = (_nr >= limit);
               }
             }
           } // finished applying gens to <_elements->at(_pos)>
+          stop = (stop || _pos == stopper);
           _pos++;
         } // finished words of length <wordlen> + 1
         if (_pos > _nr || _pos == _lenindex.at(_wordlen + 1)) {
@@ -314,16 +333,12 @@ class Semigroup {
       //}
     }
     
-    // 
-    // 
-    //
-      
   private:
     
     Relation inline make_relation (size_t i, size_t j) {
-      std::vector<size_t> lhs(this->trace(i));
-      lhs.push_back(j);
-      std::vector<size_t> rhs(this->trace(_right->get(i, j)));
+      Word* lhs = this->trace(i);
+      lhs->push_back(j);
+      Word* rhs= this->trace(_right->get(i, j));
       return std::make_pair(lhs, rhs);
     }
 
@@ -342,30 +357,24 @@ class Semigroup {
     }
 
     void spanning_tree () {
-      if (_schreierpos.size() == 0) { 
-        // init _schreierpos/gen
-        _schreierpos.reserve(this->size());
-        _schreiergen.reserve(this->size());
-        
-        for (size_t i = 0; i < this->size(); i++) {
-          _schreierpos.push_back(0);
-          _schreiergen.push_back(0);
-        }
+      size_t prev_size = _schreierpos.size();
+      for (size_t i = prev_size; i < this->current_size(); i++) {
+        _schreierpos.push_back(0);
+        _schreiergen.push_back(0);
+      }
 
-        // find places in _reduced that are true
-        for (size_t i = 0; i < this->size(); i++) {
-          for (size_t j = 0; j < this->nrgens(); j++) {
-            if (_reduced.get(i, j)) {
-              size_t r = _right->get(i, j);
-              _schreierpos.at(r) = i;
-              _schreiergen.at(r) = j;
-            }
+      // find places in _reduced that are true
+      for (size_t i = prev_size; i < _pos; i++) {
+        for (size_t j = 0; j < this->nrgens(); j++) {
+          if (_reduced.get(i, j)) {
+            size_t r = _right->get(i, j);
+            _schreierpos.at(r) = i;
+            _schreiergen.at(r) = j;
           }
         }
       }
     }
 
-    // TODO add stopper, found, lookfunc
     size_t                               _degree;
     std::vector<T*>*                     _elements;
     std::vector<size_t>                  _final;

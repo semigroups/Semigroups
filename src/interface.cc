@@ -99,11 +99,15 @@ bool IsCPPSemigroup (Obj data) {
 class InterfaceBase {
   public:
     virtual ~InterfaceBase () {};
-    virtual void enumerate () = 0;
+    virtual void enumerate (Obj limit) = 0;
+    virtual void find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
     virtual size_t size () = 0;
+    virtual size_t current_size () = 0;
+    virtual size_t nrrules () = 0;
     virtual void right_cayley_graph (Obj data) = 0;
     virtual void left_cayley_graph (Obj data) = 0;
-    virtual void elements (Obj data) = 0;
+    virtual void elements (Obj data, Obj limit) = 0;
+    virtual void word (Obj data, Obj pos) = 0;
     virtual void relations (Obj data) = 0;
 };
 
@@ -202,9 +206,9 @@ class BoolMatConverter : public Converter<BooleanMat> {
     Obj unconvert (BooleanMat* x) {
       Obj o = NEW_PLIST(T_PLIST_CYC, x->degree() + 1);
       SET_LEN_PLIST(o, x->degree() + 1);
-      SET_ELM_PLIST(o, 1, INTOBJ_INT(x->degree()));
+      SET_ELM_PLIST(o, 1, INTOBJ_INT(sqrt(x->degree())));
       for (size_t i = 0; i < x->degree(); i++) {
-        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i)));
+        SET_ELM_PLIST(o, i + 2, INTOBJ_INT(x->at(i)));
       }
       return CALL_1ARGS(BooleanMatByIntRep, o);
     }
@@ -289,19 +293,26 @@ class Interface : public InterfaceBase {
     }
     
     // enumerate the C++ semigroup
-    // TODO add limit etc 
-    void enumerate () {
-      _semigroup->enumerate();
+    void enumerate (Obj limit) {
+      _semigroup->enumerate(INT_INTOBJ(limit));
     }
     
     // get the size of the C++ semigroup
     size_t size () {
       return _semigroup->size();
     }
+    
+    size_t current_size () {
+      return _semigroup->current_size();
+    }
+    
+    size_t nrrules () {
+      return _semigroup->nrrules();
+    }
 
     // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
-      _semigroup->enumerate();
+      _semigroup->enumerate(-1);
       AssPRec(data, RNamName("right"), 
               ConvertFromRecVec(_semigroup->right_cayley_graph()));
       CHANGED_BAG(data);
@@ -309,28 +320,94 @@ class Interface : public InterfaceBase {
 
     // get the left Cayley graph from C++ semgroup, store it in data
     void left_cayley_graph (Obj data) {
-      _semigroup->enumerate();
+      _semigroup->enumerate(-1);
       AssPRec(data, RNamName("left"), 
               ConvertFromRecVec(_semigroup->left_cayley_graph()));
       CHANGED_BAG(data);
     }
     
     // get the elements of the C++ semigroup, store them in data
-    void elements (Obj data) {
-      std::vector<T*>* elements = _semigroup->elements();
-
-      Obj out = NEW_PLIST(T_PLIST, elements->size());
-      SET_LEN_PLIST(out, elements->size());
-
-      for (size_t i = 0; i < elements->size(); i++) {
-        SET_ELM_PLIST(out, i + 1, _converter->unconvert(elements->at(i)));
+    void elements (Obj data, size_t limit) {
+      std::vector<T*>* elements = _semigroup->elements(limit);
+      if (! IsbPRec(data, RNamName("elts"))) {
+        Obj out = NEW_PLIST(T_PLIST, elements->size());
+        SET_LEN_PLIST(out, elements->size());
+        for (size_t i = 0; i < elements->size(); i++) {
+          SET_ELM_PLIST(out, i + 1, _converter->unconvert(elements->at(i)));
+        }
+        CHANGED_BAG(out);
+        AssPRec(data, RNamName("elts"), out);
+      } else {
+        Obj out = ElmPRec(data, RNamName("elts"));
+        for (size_t i = LEN_PLIST(out); i < elements->size(); i++) {
+          AssPlist(out, i + 1, _converter->unconvert(elements->at(i)));
+        }
       }
-      CHANGED_BAG(out);
-      AssPRec(data, RNamName("elts"), out);
+      CHANGED_BAG(data);
+    }
+
+    // FIXME this might be dangerous! Since this method can be confused for the
+    // previous one
+    void elements (Obj data, Obj limit) {
+      elements(data, INT_INTOBJ(limit));
+    }
+    
+    // return first place in _semigroup starting from pos, for which lookfunc
+    // returns true
+    void find (Obj data, Obj lookfunc, Obj start, Obj end) {
+      std::cout << "finding!!\n";
+      
+      AssPRec(data, RNamName("found"), False);
+      size_t pos = INT_INTOBJ(start);
+      size_t limit;
+      if (pos < _semigroup->current_size()) {
+        limit = _semigroup->current_size();
+      } else {
+        limit = pos + 8192; //TODO good choice?
+      }
+
+      elements(data, limit); // get the elements out of _semigroup into "elts"
+      
+      size_t nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))), INT_INTOBJ(end));
+      bool found = false;
+
+      while (!found && pos < nr) {
+        for (; pos < nr; pos++) {
+          if (CALL_2ARGS(lookfunc, data, INTOBJ_INT(pos)) == True) {
+            AssPRec(data,  RNamName("found"), INTOBJ_INT(pos)); 
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          limit += 8192;
+          elements(data, limit); // get the elements out of _semigroup into "elts"
+          nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))), INT_INTOBJ(end));
+        }
+      }
+    }
+    
+    // get the word from the C++ semigroup, store it in data
+    void word (Obj data, Obj pos) {
+      size_t pos_c = INT_INTOBJ(pos);
+      _semigroup->enumerate(pos_c);
+      if (! IsbPRec(data, RNamName("words"))) {
+        Obj words = NEW_PLIST(T_PLIST, pos_c);
+        SET_LEN_PLIST(words, pos_c);
+        SET_ELM_PLIST(words, pos_c, ConvertFromVec(_semigroup->trace(pos_c - 1)));
+        CHANGED_BAG(words);
+        AssPRec(data, RNamName("words"), words);
+      } else {
+        Obj words = ElmPRec(data, RNamName("words"));
+        if (pos_c > (size_t) LEN_PLIST(words) || ELM_PLIST(words, pos_c) == 0){
+          AssPlist(words, pos_c, ConvertFromVec(_semigroup->trace(pos_c - 1)));
+        }
+      }
       CHANGED_BAG(data);
     }
 
     // get the relations of the C++ semigroup, store them in data
+    // FIXME improve this, it repeatedly traces the schreier tree
     void relations (Obj data) {
       auto relations = _semigroup->relations();
       Obj out = NEW_PLIST(T_PLIST, relations->size());
@@ -347,12 +424,15 @@ class Interface : public InterfaceBase {
       }
       AssPRec(data, RNamName("rules"), out);
       CHANGED_BAG(data);
-
+      /*for (auto pair: relations) {
+        delete pair.first;
+        delete pair.second;
+      }*/
       delete relations;
     }
     
   private:
-
+    
     // helper function to convert a RecVec to a GAP plist of GAP plists.
     Obj ConvertFromRecVec (RecVec<size_t>* rv) {
       Obj out = NEW_PLIST(T_PLIST, rv->nrrows());
@@ -371,12 +451,12 @@ class Interface : public InterfaceBase {
     }
     
     // helper function to convert a vector to a plist of GAP integers
-    Obj ConvertFromVec (std::vector<size_t>& vec) {
-      Obj out = NEW_PLIST(T_PLIST_CYC, vec.size());
-      SET_LEN_PLIST(out, vec.size());
+    Obj ConvertFromVec (std::vector<size_t>* vec) {
+      Obj out = NEW_PLIST(T_PLIST_CYC, vec->size());
+      SET_LEN_PLIST(out, vec->size());
 
-      for (size_t i = 0; i < vec.size(); i++) {
-        SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec.at(i) + 1));
+      for (size_t i = 0; i < vec->size(); i++) {
+        SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec->at(i) + 1));
       }
       CHANGED_BAG(out);
       return out;
@@ -392,7 +472,6 @@ class Interface : public InterfaceBase {
 *******************************************************************************/
 
 InterfaceBase* InterfaceFromData (Obj data) {
-  //assert(is record data!)
   if (IsbPRec(data, RNamName("Interface_CC"))) {
     return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
   }
@@ -436,41 +515,78 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
     InterfaceFromData(data)->right_cayley_graph(data);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("right"));
 }
 
 Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
     InterfaceFromData(data)->left_cayley_graph(data);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("left"));
 }
 
 Obj ELEMENTS_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("elts"))) { 
-    InterfaceFromData(data)->elements(data);
+    InterfaceFromData(data)->elements(data, INTOBJ_INT(-1));
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("elts"));
 }
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
     InterfaceFromData(data)->relations(data);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return ElmPRec(data, RNamName("rules"));
 }
 
 Obj SIZE_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->size());
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+}
+
+Obj FIND_SEMIGROUP (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
+  if (IsCPPSemigroup(data)) { 
+    InterfaceFromData(data)->find(data, lookfunc, start, end);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, end, lookfunc, True);
+  }
+  return ElmPRec(data, RNamName("found"));
+}
+
+Obj LENGTH_SEMIGROUP (Obj self, Obj data) {
+  if (IsCPPSemigroup(data)) { 
+    return INTOBJ_INT(InterfaceFromData(data)->current_size());
+  }
+  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+}
+
+Obj NR_RULES_SEMIGROUP (Obj self, Obj data) {
+  if (IsCPPSemigroup(data)) { 
+    return INTOBJ_INT(InterfaceFromData(data)->nrrules());
+  }
+  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("nrrules"))));
+}
+
+Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
+  if (IsCPPSemigroup(data)) { 
+    InterfaceFromData(data)->word(data, pos);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
+  }
+  return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
 }
 
 /*******************************************************************************
@@ -492,7 +608,6 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // assumes the length of data!.elts is at most 2^28
 // TODO move this into the previous section, and put the actual function in another function
 
-
 Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
   Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix, 
         reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
@@ -501,10 +616,12 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
         intval, stop, one;
   
   if (IsCPPSemigroup(data)) {
-    InterfaceFromData(data)->enumerate();
+    InterfaceFromData(data)->enumerate(limit);
     return data;
   }
   std::cout << "GAP kernel version\n";
+  // TODO if looking check that something in elts doesn't already satisfy the
+  // lookfunc 
 
   //remove nrrules 
   if(looking==True){
@@ -1079,6 +1196,8 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_SEMIGROUP, 4, 
+                          "data, lookfunc, start, end"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RIGHT_CAYLEY_GRAPH, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
@@ -1087,7 +1206,13 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RELATIONS_SEMIGROUP, 1, 
                           "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", WORD_SEMIGROUP, 2, 
+                          "data, pos"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SIZE_SEMIGROUP, 1, 
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", LENGTH_SEMIGROUP, 1, 
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", NR_RULES_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),

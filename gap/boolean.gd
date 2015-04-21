@@ -11,7 +11,10 @@
 # This file contains implementation of boolean matrices.
 
 DeclareCategory("IsBooleanMat",
-                IsMultiplicativeElementWithOne and IsPositionalObjectRep);
+                    IsMultiplicativeElementWithOne 
+                and IsAssociativeElement 
+                and IsPositionalObjectRep);
+
 DeclareCategoryCollections("IsBooleanMat");
 DeclareCategoryCollections("IsBooleanMatCollection");
 DeclareSynonym("IsBooleanMatSemigroup", IsBooleanMatCollection and IsSemigroup);

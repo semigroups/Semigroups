@@ -415,7 +415,7 @@ if IsBound(ENUMERATE_SEMIGROUP) then
   [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
   function(data, limit, lookfunc)
     
-    data := ENUMERATE_SEMIGROUP(data, limit, lookfunc, lookfunc<>ReturnFalse);
+    data := ENUMERATE_SEMIGROUP(data, limit, lookfunc, lookfunc <> ReturnFalse);
 
     if data!.pos > data!.nr then
       SetFilterObj(data, IsClosedData);
@@ -597,39 +597,39 @@ else
   end);
 fi;
 
-# FIXME only works for non-C++ stuff
+#
 
 InstallMethod(Position, "for generic semigroup data, an associative element, zero cyc",
-[IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc], 
+[IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc], 21,
 function(data, x, n)
   local pos, lookfunc;
 
-  pos:=HTValue(data!.ht, x);
+  if IsBound(data!.ht) then 
+    pos := HTValue(data!.ht, x);
   
-  if pos<>fail then 
-    return pos;
-  else
-    lookfunc:=function(data, i)
-      return data!.elts[i]=x; 
-    end;
-    
-    pos:=Enumerate(data, infinity, lookfunc)!.found;
-    if pos<>false then 
+    if pos <> fail then 
       return pos;
     fi;
+  fi;
+  
+  lookfunc := function(data, i)
+    return data!.elts[i] = x; 
+  end;
+  
+  FIND_SEMIGROUP(data, lookfunc, 1, infinity);
+
+  if data!.found <> false then 
+    return data!.found;
   fi;
 
   return fail;
 end);
 
-# FIXME only works for non-C++ stuff
+# 
 
-InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData], 
-function(data)
-  return Length(data!.elts);
-end);
+InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData], LENGTH_SEMIGROUP);
 
-# FIXME only works for non-C++ stuff
+# 
 
 InstallMethod(ELM_LIST, "for generic semigroup data, and pos int",
 [IsGenericSemigroupData, IsPosInt], 
@@ -641,10 +641,6 @@ end);
 
 InstallMethod(ViewObj, [IsGenericSemigroupData], 
 function(data)
-  if not IsBound(data!.elts) then 
-    Print("<generic semigroup data>");
-    return;
-  fi;
   Print("<");
 
   if IsClosedData(data) then 
@@ -653,9 +649,9 @@ function(data)
     Print("open ");
   fi;
 
-  Print("semigroup data with ", Length(data!.elts), " elements, ");
-  Print(data!.nrrules, " relations, ");
-  Print("max word length ", Length(data!.words[data!.nr]), ">");
+  Print("semigroup data with ", LENGTH_SEMIGROUP(data), " elements, ");
+  Print(NR_RULES_SEMIGROUP(data), " relations, ");
+  Print("max word length ", Length(WORD_SEMIGROUP(data, LENGTH_SEMIGROUP(data))), ">");
   return;
 end);
 
