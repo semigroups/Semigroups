@@ -8,23 +8,21 @@
 #############################################################################
 ##
 
-# This file contains the main algorithms for computing semigroups belonging to
-# IsSemigroup.
+# This file contains methods for accessing the kernel level version of the
+# Froidure-Pin algorithm for enumerating arbitrary semigroups.
 
-#  for details see:
+#  For some details see:
 #
 #  V. Froidure, and J.-E. Pin, Algorithms for computing finite semigroups.
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-# methods for things declared in the GAP library
-
 # different method for ideals
 
-InstallMethod(Enumerator, "for an generic semigroup with generators",
+InstallMethod(Enumerator, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local data, enum;
+  local enum;
 
   enum := rec();
 
@@ -33,6 +31,7 @@ function(S)
   end;
 
   enum.ElementNumber := function(enum, nr)
+    local data;
     data := GenericSemigroupData(S);
     if not IsBound(data!.elts) or not IsBound(data!.elts[nr]) then
       ELEMENTS_SEMIGROUP(data, nr);
@@ -57,15 +56,14 @@ end);
 
 # different method for ideals
 
-InstallMethod(Size, "for an generic semigroup with generators",
+InstallMethod(Size, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  return SIZE_SEMIGROUP(GenericSemigroupData(S));
-end);
+S -> SIZE_SEMIGROUP(GenericSemigroupData(S)));
 
 # different method for ideals
 
-InstallMethod(\in, "for an associative element and finite semigroup with generators",
+InstallMethod(\in,
+"for an associative element and finite semigroup with generators",
 [IsAssociativeElement, IsSemigroup and HasGeneratorsOfSemigroup],
 function(x, S)
   return Position(GenericSemigroupData(S), x) <> fail;
@@ -74,7 +72,7 @@ end);
 # different method for ideals
 # TODO: use the same technique as used by Semigroupe
 
-InstallMethod(Idempotents, "for an generic semigroup with generators",
+InstallMethod(Idempotents, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local data, elts, idempotents, nr, i;
@@ -102,7 +100,8 @@ end);
 
 #
 
-InstallMethod(Position, "for generic semigroup data, an associative element, zero cyc",
+InstallMethod(Position,
+"for generic semigroup data, an associative element, zero cyc",
 [IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc],
 function(data, x, n)
   return POSITION_SEMIGROUP(data, x);
@@ -136,37 +135,38 @@ function(data)
 
   Print("semigroup data with ", LENGTH_SEMIGROUP(data), " elements, ");
   Print(NR_RULES_SEMIGROUP(data), " relations, ");
-  Print("max word length ", Length(WORD_SEMIGROUP(data, LENGTH_SEMIGROUP(data))), ">");
+  Print("max word length ",
+        Length(WORD_SEMIGROUP(data, LENGTH_SEMIGROUP(data))), ">");
   return;
 end);
 
 #
 
-InstallMethod(PrintObj, [IsGenericSemigroupData], 
+InstallMethod(PrintObj, [IsGenericSemigroupData],
 2, # to beat the method for an enumerator!
 function(data)
   local recnames, com, i, nam;
 
-  recnames := ["degree", "elts", "final", "first", "found", "gens", "genslookup",
-               "genstoapply", "ht", "left", "len", "lenindex", "nr", "nrrules",
-               "one", "pos", "prefix", "reduced", "right", "rules", "stopper",
-               "suffix", "words", "leftscc", "rightscc", "leftrightscc",
-               "hclasses", "idempotents"]; 
+  recnames := ["degree", "elts", "final", "first", "found", "gens",
+               "genslookup", "genstoapply", "ht", "left", "len", "lenindex",
+               "nr", "nrrules", "one", "pos", "prefix", "reduced", "right",
+               "rules", "stopper", "suffix", "words", "leftscc", "rightscc",
+               "leftrightscc", "hclasses", "idempotents"];
 
   Print("\>\>rec(\n\>\>");
   com := false;
   i := 1;
   for nam in Set(recnames) do
-    if IsBound(data!.(nam)) then 
+    if IsBound(data!.(nam)) then
       if com then
           Print("\<\<,\n\>\>");
       else
           com := true;
       fi;
       SET_PRINT_OBJ_INDEX(i);
-      i := i+1;
+      i := i + 1;
       Print(nam, "\< := \>");
-      if nam="ht" then
+      if nam = "ht" then
         ViewObj(data!.(nam));
       else
         PrintObj(data!.(nam));
@@ -181,12 +181,12 @@ end);
 # same method for ideals
 
 InstallMethod(GenericSemigroupData, "for a semigroup",
-[IsSemigroup], 
+[IsSemigroup],
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
   # this is required for the C++ version
-  # TODO declare a filter IsCPPSemigroup or similar for this. 
+  # TODO declare a filter IsCPPSemigroup or similar for this.
   if IsTransformationSemigroup(S) or IsBooleanMatSemigroup(S) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
@@ -199,97 +199,99 @@ function(S)
     fi;
 
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
-                                           and IsAttributeStoringRep), data);;
+                                           and IsAttributeStoringRep), data);
   fi;
 
-  data:=rec(elts := [],
-            final := [],
-            first := [],
-            found := false,
-            genslookup := [],
-            left := [],
-            len := 1,
-            lenindex := [],
-            nrrules := 0,
-            prefix := [],
-            reduced := [[]],
-            right := [],
-            rules := [],
-            stopper := false,
-            suffix := [],
-            words := []);
+  data := rec(elts := [],
+              final := [],
+              first := [],
+              found := false,
+              genslookup := [],
+              left := [],
+              len := 1,
+              lenindex := [],
+              nrrules := 0,
+              prefix := [],
+              reduced := [[]],
+              right := [],
+              rules := [],
+              stopper := false,
+              suffix := [],
+              words := []);
 
   hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
   if IsMonoid(S) then
-    data.gens:=ShallowCopy(GeneratorsOfMonoid(S));
-    nrgens:=Length(data.gens);
-    data.ht:=HTCreate(One(S), rec(treehashsize:=hashlen));
-    nr:=1;
+    data.gens := ShallowCopy(GeneratorsOfMonoid(S));
+    nrgens := Length(data.gens);
+    data.ht := HTCreate(One(S), rec(treehashsize := hashlen));
+    nr := 1;
     HTAdd(data.ht, One(S), 1);
-    data.elts[1]:=One(S);
-    data.words[1]:=[];
-    data.first[1]:=0;
-    data.final[1]:=0;
-    data.prefix[1]:=0;
-    data.suffix[1]:=0;
-    data.reduced[1]:=List([1..nrgens], ReturnTrue);
-    data.one:=1;
-    data.pos:=2; # we don't apply generators to the One(S)
-    data.left[1]:=data.genslookup;
-    data.right[1]:=data.genslookup;
-    data.lenindex[1]:=2;
+    data.elts[1] := One(S);
+    data.words[1] := [];
+    data.first[1] := 0;
+    data.final[1] := 0;
+    data.prefix[1] := 0;
+    data.suffix[1] := 0;
+    data.reduced[1] := List([1 .. nrgens], ReturnTrue);
+    data.one := 1;
+    data.pos := 2; # we don't apply generators to the One(S)
+    data.left[1] := data.genslookup;
+    data.right[1] := data.genslookup;
+    data.lenindex[1] := 2;
   else
-    data.gens:=ShallowCopy(GeneratorsOfSemigroup(S));
-    nrgens:=Length(data.gens);
-    data.ht:=HTCreate(data.gens[1], rec(treehashsize:=hashlen));
-    nr:=0;
-    data.one:=false;
-    data.pos:=1;
-    data.lenindex[1]:=1;
+    data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
+    nrgens := Length(data.gens);
+    data.ht := HTCreate(data.gens[1], rec(treehashsize := hashlen));
+    nr := 0;
+    data.one := false;
+    data.pos := 1;
+    data.lenindex[1] := 1;
   fi;
 
-  data.genstoapply:=[1..nrgens];
+  data.genstoapply := [1 .. nrgens];
 
   # add the generators
   for i in data.genstoapply do
-    val:=HTValue(data.ht, data.gens[i]);
-    if val=fail then # new generator
-      nr:=nr+1;
+    val := HTValue(data.ht, data.gens[i]);
+    if val = fail then # new generator
+      nr := nr + 1;
       HTAdd(data.ht, data.gens[i], nr);
-      data.elts[nr]:=data.gens[i];
-      data.words[nr]:=[i];
-      data.first[nr]:=i;
-      data.final[nr]:=i;
-      data.prefix[nr]:=0;
-      data.suffix[nr]:=0;
-      data.left[nr]:=EmptyPlist(nrgens);
-      data.right[nr]:=EmptyPlist(nrgens);
-      data.genslookup[i]:=nr;
-      data.reduced[nr]:=List([1..nrgens], ReturnFalse);
+      data.elts[nr] := data.gens[i];
+      data.words[nr] := [i];
+      data.first[nr] := i;
+      data.final[nr] := i;
+      data.prefix[nr] := 0;
+      data.suffix[nr] := 0;
+      data.left[nr] := EmptyPlist(nrgens);
+      data.right[nr] := EmptyPlist(nrgens);
+      data.genslookup[i] := nr;
+      data.reduced[nr] := List([1 .. nrgens], ReturnFalse);
 
-      if data.one=false and ForAll(data.gens, y-> data.gens[i]*y=y and y*data.gens[i]=y) then
-        data.one:=nr;
+      if data.one = false and ForAll(data.gens,
+                                     y -> data.gens[i] * y = y
+                                        and y * data.gens[i] = y) then
+        data.one := nr;
       fi;
     else # duplicate generator
-      data.genslookup[i]:=val;
-      data.nrrules:=data.nrrules+1;
-      data.rules[data.nrrules]:=[[i], [val]];
+      data.genslookup[i] := val;
+      data.nrrules := data.nrrules + 1;
+      data.rules[data.nrrules] := [[i], [val]];
     fi;
   od;
 
-  data.nr:=nr;
+  data.nr := nr;
 
-  return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable and
-   IsAttributeStoringRep), data);
+  return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData
+                                         and IsMutable
+                                         and IsAttributeStoringRep), data);
 end);
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for generic semigroup data", [IsGenericSemigroupData],
-function(data)
-  return Enumerate(data, infinity, ReturnFalse);
-end);
+InstallMethod(Enumerate, "for generic semigroup data",
+[IsGenericSemigroupData],
+data -> Enumerate(data, infinity, ReturnFalse));
 
 #
 
@@ -302,16 +304,15 @@ end);
 # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
 # <[1..Length(data!.elts)]>.
 
-if IsBound(ENUMERATE_SEMIGROUP) then
-  InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
-  [IsGenericSemigroupData, IsCyclotomic, IsFunction],
-  function(data, limit, lookfunc)
+InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
+[IsGenericSemigroupData, IsCyclotomic, IsFunction],
+function(data, limit, lookfunc)
+  data := ENUMERATE_SEMIGROUP(data, limit, lookfunc,
+                              lookfunc <> ReturnFalse);
 
-    data := ENUMERATE_SEMIGROUP(data, limit, lookfunc, lookfunc <> ReturnFalse);
+  if IS_CLOSED_SEMIGROUP(data) then
+    SetFilterObj(data, IsClosedData);
+  fi;
 
-    if IS_CLOSED_SEMIGROUP(data) then
-      SetFilterObj(data, IsClosedData);
-    fi;
-
-    return data;
-  end);
+  return data;
+end);

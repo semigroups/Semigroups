@@ -349,7 +349,7 @@ class Semigroup {
         }
       }
       x.delete_data();
-      //if (_pos > _nr) {
+      //if (_pos > _nr) {//FIXME do this!
       // free stuff
       //}
     }

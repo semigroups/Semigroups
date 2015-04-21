@@ -295,12 +295,14 @@ class Interface : public InterfaceBase {
       delete _converter;
       delete _semigroup;
     };
-    
+   
     // not currently used, TODO remove?
     InterfaceType type () {
       return _type;
     }
-    
+   
+    // TODO replace the methods from HERE . . .
+
     // enumerate the C++ semigroup
     void enumerate (Obj limit) {
       _semigroup->enumerate(INT_INTOBJ(limit));
@@ -322,6 +324,7 @@ class Interface : public InterfaceBase {
     size_t nrrules () {
       return _semigroup->nrrules();
     }
+    // . . . to HERE with calls to semigroup()->nrrules()
 
     // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
@@ -443,6 +446,7 @@ class Interface : public InterfaceBase {
       }
       AssPRec(data, RNamName("rules"), out);
       CHANGED_BAG(data);
+      //FIXME check that this doesn't leak memory
       /*for (auto pair: relations) {
         delete pair.first;
         delete pair.second;
