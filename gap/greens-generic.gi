@@ -66,32 +66,59 @@ InstallMethod(RegularDClasses, "for a semigroup",
 
 # Equivalence classes of a Green's relations
 
-InstallMethod(EquivalenceClassOfElement,
-"for Green's D-relation and associative element",
-[IsGreensDRelation, IsAssociativeElement],
-function(D, x)
-  return GreensDClassOfElement(UnderlyingDomainOfBinaryRelation(D), x);
+# there are not methods for EquivalenceClassOfElementNC in this case since we
+# require the variable <pos> below, and if it can't be determined, then we can't
+# make the Green's class.
+
+BindGlobal("SEMIGROUPS_EquivalenceClassOfElement",
+function(rel, rep, type)
+  local pos, out, S;
+
+  pos := Position(GenericSemigroupData(Source(rel)), rep);
+  if pos = fail then
+    Error("usage: the element in the 2nd argument does not belong to the ",
+          "semigroup,");
+    return;
+  fi;
+
+  out := rec();
+  S := Source(rel);
+  ObjectifyWithAttributes(out, type(S), EquivalenceClassRelation, rel,
+                          Representative, rep, ParentAttr, S);
+
+  out!.index := rel!.data.id[pos];
+
+  return out;
 end);
 
+#
+
 InstallMethod(EquivalenceClassOfElement,
-"for Green's R-relation and associative element",
+"for an generic semigroup Green's R-relation and an associative element",
 [IsGreensRRelation, IsAssociativeElement],
-function(R, x)
-  return GreensRClassOfElement(UnderlyingDomainOfBinaryRelation(R), x);
+function(rel, rep)
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, RClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for Green's L-relation and associative element",
+"for an generic semigroup Green's L-relation and an associative element",
 [IsGreensLRelation, IsAssociativeElement],
-function(L, x)
-  return GreensLClassOfElement(UnderlyingDomainOfBinaryRelation(L), x);
+function(rel, rep)
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, LClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for Green's H-relation and associative element",
+"for an generic semigroup Green's H-relation and an associative element",
 [IsGreensHRelation, IsAssociativeElement],
-function(H, x)
-  return GreensHClassOfElement(UnderlyingDomainOfBinaryRelation(H), x);
+function(rel, rep)
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, HClassType);
+end);
+
+InstallMethod(EquivalenceClassOfElement,
+"for an generic semigroup Green's D-relation and an associative element",
+[IsGreensDRelation, IsAssociativeElement],
+function(rel, rep)
+  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, DClassType);
 end);
 
 # Green's classes of an element of a semigroup
@@ -162,6 +189,43 @@ InstallMethod(GreensJClassOfElementNC,
 "for a finite semigroup and associative element",
 [IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElementNC);
 
+# Green's classes of Green's classes
+
+InstallMethod(DClassOfRClass, "for an R-class of a semigroup",
+[IsGreensRClass], 
+function(R)
+  return EquivalenceClassOfElement(GreensDRelation(Parent(R)),
+                                   Representative(R));
+end);
+
+InstallMethod(DClassOfLClass, "for an L-class of a semigroup",
+[IsGreensLClass], 
+function(L)
+  return EquivalenceClassOfElement(GreensDRelation(Parent(L)),
+                                   Representative(L));
+end);
+
+InstallMethod(DClassOfHClass, "for an H-class of a semigroup",
+[IsGreensHClass], 
+function(H)
+  return EquivalenceClassOfElement(GreensDRelation(Parent(H)),
+                                   Representative(H));
+end);
+
+InstallMethod(RClassOfHClass, "for an H-class of a semigroup",
+[IsGreensHClass], 
+function(H)
+  return EquivalenceClassOfElement(GreensRRelation(Parent(H)),
+                                   Representative(H));
+end);
+
+InstallMethod(LClassOfHClass, "for an H-class of a semigroup",
+[IsGreensHClass], 
+function(H)
+  return EquivalenceClassOfElement(GreensLRelation(Parent(H)),
+                                   Representative(H));
+end);
+
 # this should be removed after the library method for AsSSortedList
 # for a Green's class is removed. The default AsSSortedList for a collection
 # is what should be used (it is identical)! FIXME
@@ -180,9 +244,7 @@ function(x, y)
       or (IsGreensHClass(x) and IsGreensHClass(y)) then
     return Parent(x) = Parent(y) and Representative(x) in y;
   fi;
-  return Parent(x) = Parent(y)
-         and Representative(x) in y
-         and Size(x) = Size(y);
+  return false;
 end);
 
 #JDM: is this necessary? I.e. is there a similar method in the library?
@@ -375,60 +437,6 @@ function(x, C)
   return pos<>fail and EquivalenceClassRelation(C)!.data.id[pos]=C!.index;
 end);
 
-# there are not methods for EquivalenceClassOfElementNC in this case since we
-# require the variable <pos> below, and if it can't be determined, then we can't
-# make the Green's class.
-
-BindGlobal("SEMIGROUPS_EquivalenceClassOfElement",
-function(rel, rep, type)
-  local pos, out, S;
-
-  pos := Position(GenericSemigroupData(Source(rel)), rep);
-  if pos = fail then
-    Error("usage: the element in the 2nd argument does not belong to the ",
-          "semigroup,");
-    return;
-  fi;
-
-  out := rec();
-  S := Source(rel);
-  ObjectifyWithAttributes(out, type(S), EquivalenceClassRelation, rel,
-                          Representative, rep, ParentAttr, S);
-
-  out!.index := rel!.data.id[pos];
-
-  return out;
-end);
-
-#
-
-InstallMethod(EquivalenceClassOfElement,
-"for an generic semigroup Green's R-relation and an associative element",
-[IsGreensRRelation, IsAssociativeElement],
-function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, RClassType);
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for an generic semigroup Green's L-relation and an associative element",
-[IsGreensLRelation, IsAssociativeElement],
-function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, LClassType);
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for an generic semigroup Green's H-relation and an associative element",
-[IsGreensHRelation, IsAssociativeElement],
-function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, HClassType);
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for an generic semigroup Green's D-relation and an associative element",
-[IsGreensDRelation, IsAssociativeElement],
-function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, DClassType);
-end);
 
 #
 
