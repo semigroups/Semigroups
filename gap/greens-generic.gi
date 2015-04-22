@@ -99,7 +99,7 @@ function(C, GreensXRelation, GreensXClassOfElement)
   S := Parent(C);
   comp := EquivalenceClassRelation(C)!.data.comps[C!.index];
   id := GreensXRelation(Parent(C))!.data.id;
-  seen := BlistList([1..Length(id)], []);
+  seen := BlistList([1..Maximum(id)], []);
   elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
   out := EmptyPlist(Length(comp));
 

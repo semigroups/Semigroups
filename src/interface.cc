@@ -34,7 +34,7 @@
 Obj BipartitionType; // Imported from the library to be able to check type
 Obj BipartitionNC;   // Imported from the library to be able to create bipartitions
 
-Obj BooleanMatType; // Imported from the library to be able to check type
+Obj IsBooleanMat;
 Obj BooleanMatByIntRep;   
 
 /*******************************************************************************
@@ -81,7 +81,7 @@ bool IsCPPSemigroup (Obj data) {
     case T_TRANS4:
       return true;
     case T_POSOBJ:
-      if (TYPE_POSOBJ(x) == BooleanMatType) {
+      if (CALL_1ARGS(IsBooleanMat, x) == True) {
         return true;
       }
     case T_COMOBJ:{ 
@@ -199,7 +199,7 @@ class BoolMatConverter : public Converter<BooleanMat> {
 
     BooleanMat* convert (Obj o, size_t n) {
       assert(TNUM_OBJ(o) == T_POSOBJ);
-      assert(TYPE_POSOBJ(o) ==  BooleanMatType);
+      assert(CALL_1ARGS(IsBooleanMat, o) == True);
        
       auto x = new BooleanMat(n);
       for (size_t i = 0; i < n; i++) {
@@ -517,7 +517,7 @@ InterfaceBase* InterfaceFromData (Obj data) {
       break;
     }
     case T_POSOBJ:{ 
-      if (TYPE_POSOBJ(x) == BooleanMatType) {
+      if (CALL_1ARGS(IsBooleanMat, x) == True) {
         size_t const n = INT_INTOBJ(ELM_PLIST(x, 1));
         auto bmc = new BoolMatConverter();
         interface = new Interface<BooleanMat>(data, bmc);
@@ -672,7 +672,11 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
     InterfaceFromData(data)->enumerate(limit);
     return data;
   }
+
+#ifdef DEBUG
   std::cout << "GAP kernel version\n";
+#endif
+
   // TODO if looking check that something in elts doesn't already satisfy the
   // lookfunc 
 
@@ -1295,7 +1299,7 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
     ImportGVarFromLibrary( "BipartitionNC", &BipartitionNC );
-    ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );
+    ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary( "BooleanMatByIntRep", &BooleanMatByIntRep );
     
     /* return success                                                      */

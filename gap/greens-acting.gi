@@ -561,12 +561,6 @@ end);
 ## 3. Individual classes . . .
 #############################################################################
 
-# same method for regular/inverse
-# FIXME is this necessary?
-
-InstallMethod(GreensJClassOfElement, "for acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement], GreensDClassOfElement);
-
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
