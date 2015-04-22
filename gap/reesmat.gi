@@ -224,3 +224,41 @@ function(R)
 
   return IsInverseSemigroup(U);
 end);
+
+InstallMethod(Idempotents,
+"for an inverse Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup and IsInverseSemigroup],
+function(R)
+  local mat, I, star, e, k, out, i, j, x;
+
+  mat := Matrix(R);
+  I := Rows(R);
+  star := EmptyPlist(Length(I));
+  for i in I do
+    for j in I do
+      if mat[j][i] <> 0 then
+        star[i] := j;
+        break;
+      fi;
+    od;
+  od;
+
+  e := Idempotents(UnderlyingSemigroup(R));
+  k := 1;
+  out := EmptyPlist(NrIdempotents(R));
+  out[k] := MultiplicativeZero(R);
+
+  for i in I do
+    for x in e do
+      k := k + 1;
+      out[k] := RMSElement(R, i, x * mat[star[i]][i] ^ -1, star[i]);
+    od;
+  od;
+
+  return out;
+end);
+
+InstallMethod(NrIdempotents,
+"for an inverse Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup and IsInverseSemigroup],
+x -> NrIdempotents(UnderlyingSemigroup(x)) * Length(Rows(x)) + 1);
