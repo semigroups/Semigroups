@@ -15,32 +15,31 @@
 # this is declared in the library, but there is no method for semigroups in the
 # library.
 
-InstallMethod(Factorization,
-"for an generic semigroup and an associative element",
-[IsSemigroup, IsAssociativeElement],
-function(S, x)
-  local pos;
-  pos:=Position(GenericSemigroupData(S), x); 
-  if pos=fail then 
-    return fail;
-  fi;
-  return GenericSemigroupData(S)!.words[pos];
-end);
-
-# same method for ideals
-
-InstallMethod(MinimalFactorization, 
-"for a finite semigroup and associative element",
+InstallMethod(MinimalFactorization,
+"for a finite semigroup and an associative element",
 [IsSemigroup and IsFinite, IsAssociativeElement],
 function(S, x)
-  
+  local data, pos;
   if not x in S then 
     Error("usage: the second argument <x> is not an element of the semigroup <S>", 
     " in the second argument,");
     return;
   fi;
+  data := GenericSemigroupData(S);
+  pos := Position(data, x); 
+  if pos = fail then #TODO double check that the previous lines enumerates the data 
+    return fail;
+  fi;
+  return WORD_SEMIGROUP(data, pos);
+end);
 
-  return GenericSemigroupData(S)!.words[Position(GenericSemigroupData(S), x)];
+# same method for ideals
+
+InstallMethod(Factorization, 
+"for a finite semigroup and associative element",
+[IsSemigroup and IsFinite, IsAssociativeElement],
+function(S, x)
+  return MinimalFactorization(S, x); 
 end);
 
 # factorisation of Schutzenberger group element, the same method works for

@@ -149,6 +149,9 @@ function(x)
   return BooleanMatNC(out);
 end);
 
+InstallMethod(OneMutable, "for a boolean mat",
+[IsBooleanMat], OneImmutable);
+
 InstallMethod(RandomBooleanMat, "for a pos int", [IsPosInt],
 function(n)
   local out, i;

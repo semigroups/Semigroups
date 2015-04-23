@@ -21,7 +21,7 @@
 #
 # MultiplicativeNeutralElement on the other hand returns the element of s that
 # acts as the identity, note that this can be equal to One(s) but it can also
-# not be equal t One(s).
+# not be equal to One(s).
 #
 # A semigroup satisfies IsMonoidAsSemigroup(s) if
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
@@ -32,86 +32,65 @@
 InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
 [IsMonoid and IsFinite],
 function(S)
-  local rules, F, A, rels, Q, B;
+  local F, A, lookup, pos, data, rules, rels, convert, Q, B, rule;
+  
+  F := FreeMonoid(Length(GeneratorsOfMonoid(S)));
+  A := GeneratorsOfMonoid(F);
+  lookup := List(GeneratorsOfSemigroup(S), 
+                 x -> Position(GeneratorsOfMonoid(S), x));
+  pos := Position(lookup, fail);
+  
+  data := GenericSemigroupData(S);
+  rules := RELATIONS_SEMIGROUP(data);
+  rels := [];
 
-  rules:=Enumerate(GenericSemigroupData(S))!.rules;
+  convert := function(word)
+    local out, i;
+    out := One(F);
+    for i in word do 
+      if lookup[i] <> fail then 
+        out := out * A[lookup[i]];
+      fi;
+    od;
+    return out;
+  end;
 
-  F:=FreeMonoid(Length(GeneratorsOfMonoid(S)));
-  A:=GeneratorsOfMonoid(F);
-  rels:=List(rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
-
-  Q:=F/rels;
-  B:=GeneratorsOfMonoid(Q);
+  for rule in rules do 
+    # only include non-redundant rules
+    if Length(rule[1]) <> 2 
+        or (rule[1][1] <> pos and rule[1][Length(rule[1])] <> pos) then 
+      Add(rels, [convert(rule[1]), convert(rule[2])]);
+    fi;
+  od;
+   
+  Q := F / rels;
+  B := GeneratorsOfSemigroup(Q);
+  # gaplint: ignore 3
   return MagmaIsomorphismByFunctionsNC(S, Q,
-   x -> EvaluateWord(B, Factorization(S, x)),
-   x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S)));
-
+           x -> EvaluateWord(B, Factorization(S, x)),
+           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S)));
 end);
 
 # same method for ideals
 
 InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
-[IsFinite and IsSemigroup],
+[IsSemigroup and IsFinite],
 function(S)
   local rules, F, A, rels, Q, B;
 
   rules := RELATIONS_SEMIGROUP(GenericSemigroupData(S));
 
-  F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
-  A:=GeneratorsOfSemigroup(F);
-  rels:=List(rules, x-> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
+  F := FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
+  A := GeneratorsOfSemigroup(F);
+  rels := List(rules, x -> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
 
-  Q:=F/rels;
-  B:=GeneratorsOfSemigroup(Q);
+  Q := F / rels;
+  B := GeneratorsOfSemigroup(Q);
+  
+  # gaplint: ignore 3
   return MagmaIsomorphismByFunctionsNC(S, Q,
-   x -> EvaluateWord(B, Factorization(S, x)),
-   x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
-end);
-
-# same method for ideals
-
-InstallMethod(IsomorphismFpSemigroup, "for a finite monoid",
-[IsMonoid and IsFinite],
-function(S)
-  local rules, lookup, convert, F, A, rels, one, Q, B, i;
-
-  if GeneratorsOfSemigroup(S)=GeneratorsOfMonoid(S) then
-    return IsomorphismFpMonoid(S);
-  fi;
-
-  lookup:=List(GeneratorsOfMonoid(S), x-> Position(GeneratorsOfSemigroup(S), x));
-  one:=Position(GeneratorsOfSemigroup(S), One(S));
-  # if One(S) appears more than once in the generators of S, then this causes
-  # problems here... FIXME
-  convert:=function(w)
-    if not IsEmpty(w) then
-      return List(w, i-> lookup[i]);
-    else
-      return [one];
-    fi;
-  end;
-  #convert words in generators of monoid to words in generators of semigroup
-
-  rules:=Enumerate(GenericSemigroupData(S))!.rules;
-
-  F:=FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
-  A:=GeneratorsOfSemigroup(F);
-  rels:=Set(rules, x-> [EvaluateWord(A, convert(x[1])),
-   EvaluateWord(A, convert(x[2]))]);
-
-  # add relations for the identity
-  AddSet(rels, [A[one]^2, A[one]]);
-  for i in [1..Length(GeneratorsOfMonoid(S))] do
-    AddSet(rels, [A[lookup[i]]*A[one], A[lookup[i]]]);
-    AddSet(rels, [A[one]*A[lookup[i]], A[lookup[i]]]);
-  od;
-
-  Q:=F/rels;
-  B:=GeneratorsOfSemigroup(Q);
-  return MagmaIsomorphismByFunctionsNC(S, Q,
-   x -> EvaluateWord(B, convert(Factorization(S, x))),
-  # Factorization returns a word in the monoid generators of S
-   x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
+           x -> EvaluateWord(B, Factorization(S, x)),
+           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
 end);
 
 # same method for ideals

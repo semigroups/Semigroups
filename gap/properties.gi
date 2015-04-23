@@ -715,7 +715,7 @@ InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 # not applicable for ideals
 
 InstallImmediateMethod(IsMonogenicSemigroup,
-IsSemigroup and HasGeneratorsOfSemigroup,
+IsSemigroup and IsFinite and HasGeneratorsOfSemigroup,
 0,
 function(S)
   if Length(DuplicateFreeList(GeneratorsOfSemigroup(S))) = 1 then

@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+# This file contains declarations for attributes of semigroups. 
+
 DeclareOperation("IrredundantGeneratingSubset",
                  [IsAssociativeElementCollection]);
 DeclareOperation("InversesOfSemigroupElementNC",
@@ -19,7 +21,7 @@ DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("RepresentativeOfMinimalIdeal", IsSemigroup);
 DeclareSynonymAttr("RepresentativeOfMinimalDClass",
-RepresentativeOfMinimalIdeal);
+                   RepresentativeOfMinimalIdeal);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsSemigroup);
