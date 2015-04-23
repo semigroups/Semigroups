@@ -10,7 +10,7 @@
 
 # This file contains methods for determining properties of arbitrary
 # semigroups. There are not very many specialised methods for acting semigroups
-# and so we only have a single file. 
+# and so we only have a single file.
 
 # Ecom (commuting idempotents), LI (locally trivial),
 # LG (locally group), B1 (dot-depth one), DA (regular D-classes are idempotent)
@@ -47,19 +47,19 @@ IsSemilatticeAsSemigroup);
 
 # same method for ideals
 
-InstallMethod(IsBlockGroup, "for a semigroup", 
+InstallMethod(IsBlockGroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   local iter, D;
 
   if HasParent(S) and HasIsBlockGroup(Parent(S))
-    and IsBlockGroup(Parent(S)) then
+      and IsBlockGroup(Parent(S)) then
     return true;
   elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "inverse semigroup");
     return true;
   elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) and
-   (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
+      (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
     Info(InfoSemigroups, 2, "regular but non-inverse semigroup");
     return false;
   fi;
@@ -67,9 +67,9 @@ function(S)
   iter := IteratorOfDClasses(S);
 
   for D in iter do
-    if IsRegularDClass(D) and
-       (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
-        or NrRClasses(D) <> NrLClasses(D)) then
+    if IsRegularDClass(D)
+        and (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
+             or NrRClasses(D) <> NrLClasses(D)) then
       return false;
     fi;
   od;
@@ -77,7 +77,6 @@ function(S)
 end);
 
 #
-
 
 # same method for ideals
 
@@ -138,8 +137,8 @@ end);
 InstallMethod(IsCliffordSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) and
-   IsCliffordSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S))
+      and IsCliffordSemigroup(Parent(S)) then
     return true;
   else
     return IsRegularSemigroup(S) and NrHClasses(S) = NrDClasses(S);
@@ -154,7 +153,7 @@ InstallMethod(IsCliffordSemigroup,
 function(S)
   local gens, idem, f, g;
 
-  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) 
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S))
       and IsCliffordSemigroup(Parent(S)) then
     return true;
   elif HasIsInverseSemigroup(S) and not IsInverseSemigroup(S) then
@@ -203,8 +202,8 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 function(S)
   local gens, n, i, j;
 
-  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S)) and
-   IsCommutativeSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S))
+      and IsCommutativeSemigroup(Parent(S)) then
     return true;
   fi;
 
@@ -215,7 +214,7 @@ function(S)
     for j in [i + 1 .. n] do
       if not gens[i] * gens[j] = gens[j] * gens[i] then
         Info(InfoSemigroups, 2, "generators ", i, " and ", j,
-         " do not commute");
+             " do not commute");
         return false;
       fi;
     od;
@@ -232,23 +231,23 @@ InstallMethod(IsCompletelyRegularSemigroup,
 function(S)
   local record, o, pos, f;
 
-  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
-   IsCompletelyRegularSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S))
+      and IsCompletelyRegularSemigroup(Parent(S)) then
     return true;
   elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "semigroup is not regular");
     return false;
   fi;
 
-  record:=ShallowCopy(LambdaOrbOpts(S));
-  record.treehashsize:=SEMIGROUPS_OptionsRec(S).hashlen.M;
+  record := ShallowCopy(LambdaOrbOpts(S));
+  record.treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M;
 
   for f in GeneratorsOfSemigroup(S) do
     o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
-    pos := LookForInOrb(o,
-           function(o, x)
-             return LambdaRank(S)(LambdaAct(S)(x, f)) <> LambdaRank(S)(x);
-           end, 1);
+    pos := LookForInOrb(o, function(o, x)
+                             return LambdaRank(S)(LambdaAct(S)(x, f))
+                                    <> LambdaRank(S)(x);
+                           end, 1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
 
@@ -266,8 +265,8 @@ end);
 InstallMethod(IsCompletelyRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
-   IsCompletelyRegularSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S))
+      and IsCompletelyRegularSemigroup(Parent(S)) then
     return true;
   elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "semigroup is not regular");
@@ -293,20 +292,16 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 
 InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse op semigroup",
 [IsSemigroupWithInverseOp],
-function(S)
-  return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
-end);
+S -> IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S)));
 
 InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup],
-function(S)
-  return IsEUnitaryInverseSemigroup(AsPartialPermSemigroup(S));
-end);
+S -> IsEUnitaryInverseSemigroup(AsPartialPermSemigroup(S)));
 
 #different method for ideals
 
 InstallMethod(IsFactorisableSemigroup, "for an inverse op semigroup",
-[IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
+[IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 function(S)
   local G, iso, enum, f;
 
@@ -336,7 +331,7 @@ end);
 InstallMethod(IsFactorisableSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if IsInverseSemigroup(S) then 
+  if IsInverseSemigroup(S) then
     return IsFactorisableSemigroup(AsPartialPermSemigroup(S));
   fi;
   return false;
@@ -432,7 +427,7 @@ InstallMethod(IsLTrivial, "for a Green's D-class",
 [IsGreensDClass], D -> NrLClasses(D) = Size(D));
 
 InstallMethod(IsLTrivial, "for a semigroup",
-[IsSemigroup], 
+[IsSemigroup],
 function(S)
   if HasParent(S) and HasIsRTrivial(Parent(S)) and IsRTrivial(Parent(S)) then
     return true;
@@ -457,7 +452,7 @@ InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   if ForAny(GeneratorsOfSemigroup(S), x ->
-   ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
+            ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfTransformationSemigroup(S), x -> Length(x) = 1);
@@ -470,7 +465,7 @@ InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   if ForAny(GeneratorsOfSemigroup(S), x ->
-   ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
+            ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfPartialPermSemigroup(S), x -> Length(x) = 1);
@@ -617,7 +612,7 @@ function(S)
   elif IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is completely regular");
     return IsCliffordSemigroup(S);
-  elif IsActingSemigroup(S) then 
+  elif IsActingSemigroup(S) then
     lambda := LambdaOrb(S);
     Enumerate(lambda);
     rho := RhoOrb(S);
@@ -664,7 +659,7 @@ function(S)
   elif HasNrLClasses(S) then
     return NrLClasses(S) = 1;
   fi;
-  if IsActingSemigroup(S) then 
+  if IsActingSemigroup(S) then
     iter := IteratorOfLClassReps(S);
     NextIterator(iter);
     return IsDoneIterator(iter);
@@ -775,8 +770,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsMonogenicInverseSemigroup, 
-"for a semigroup with inverse op", 
+InstallMethod(IsMonogenicInverseSemigroup,
+"for a semigroup with inverse op",
 [IsSemigroupWithInverseOp],
 function(S)
   local gens, I, y, i;
@@ -817,7 +812,7 @@ function(S)
   od;
 
   Info(InfoSemigroups, 2, "at least one generator does not belong to the",
-   " inverse semigroup generated by any ");
+       " inverse semigroup generated by any ");
   Info(InfoSemigroups, 2, "other generator.");
   return false;
 end);
@@ -1133,7 +1128,7 @@ function(S)
   elif IsRightZeroSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a left zero semigroup");
     return true;
-  elif IsActingSemigroup(S) and not HasNrRClasses(S) then 
+  elif IsActingSemigroup(S) and not HasNrRClasses(S) then
     iter := IteratorOfRClassData(S);
     NextIterator(iter);
     return IsDoneIterator(iter);
@@ -1253,11 +1248,11 @@ function(S)
     rank := lambdarank(lambdafunc(gens[1]));
 
     if not ForAll([2 .. Length(gens)],
-      i -> lambdarank(lambdafunc(gens[i])) = rank) then
+                  i -> lambdarank(lambdafunc(gens[i])) = rank) then
       return false;
     fi;
 
-    opts:=rec(treehashsize:=SEMIGROUPS_OptionsRec(S).hashlen.M);
+    opts := rec(treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M);
 
     for name in RecNames(LambdaOrbOpts(S)) do
       opts.(name) := LambdaOrbOpts(S).(name);
@@ -1334,11 +1329,11 @@ function(S)
   for m in [2 .. Length(scc)] do
     dom := Union(Orbits(perm_g, o[scc[m][1]], OnPoints));
     if not IsSubgroup(Action(perm_g, dom), Action(LambdaOrbSchutzGp(o, m),
-     o[scc[m][1]])) then
+                      o[scc[m][1]])) then
       return false;
     elif Length(scc[m]) > 1 then
-      rho := rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o,
-             scc[m][1])));
+      rho := rhofunc(EvaluateWord(gens,
+                                  TraceSchreierTreeForward(o, scc[m][1])));
       for j in scc[m] do
         if not o[j] in graded then
           if not ForAny(GradedLambdaOrb(g, o[j], true), x -> tester(x, rho))
@@ -1417,7 +1412,7 @@ function(S)
     for j in [1 .. m] do
       if not gens[i] * gens[j] = z then
         Info(InfoSemigroups, 2, "the product of generators ", i, " and ", j,
-        " is not the multiplicative zero \n", z);
+             " is not the multiplicative zero \n", z);
         return false;
       fi;
     od;
@@ -1457,59 +1452,4 @@ end);
 
 InstallMethod(IsZeroSimpleSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup],
-function(S)
-  return MultiplicativeZero(S) <> fail and NrDClasses(S) = 2;
-end);
-
-
-
-# commented out stuff 
-
-#InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
-#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-#function(s)
-#  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
-#
-#  Info(InfoWarning, 1, "this will sometimes return a false positive.");
-#
-#  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
-#    Info(InfoSemigroups, 2, "semigroup is regular");
-#    return true;
-#  fi;
-#
-#  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
-#  # replace s!.opts by SEMIGROUPS_OptionsRec here!
-#  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
-#  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
-#  reg:=[]; i:=0;
-#
-#  repeat
-#    repeat #JDM this should become an method for IteratorOfRStarClasses
-#           # and IsAbundantRClass...
-#      data:=NextIterator(iter);
-#    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter);
-#    if not IsDoneIterator(iter) then
-#      HTAdd(ht_o, data{[1,2,4,5]}, true);
-#
-#      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
-#      val:=HTValue(ht, ker);
-#
-#      if val=fail then #new kernel
-#        i:=i+1; HTAdd(ht, ker, i);
-#        val:=i; reg[val]:=false;
-#      fi;
-#
-#      if reg[val]=false then #old kernel
-#        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
-#        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
-#      fi;
-#    fi;
-#  until IsDoneIterator(iter);
-#
-#  return ForAll(reg, x-> x);
-#end);
-
-#InstallMethod(IsAdequateSemigroup,
-#"for acting semigroup with generators",
-#[IsActingSemigroup and HasGeneratorsOfSemigroup],
-#s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
+S -> MultiplicativeZero(S) <> fail and NrDClasses(S) = 2);

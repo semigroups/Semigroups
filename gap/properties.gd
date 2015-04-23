@@ -10,10 +10,7 @@
 
 # This file contains methods for determining properties of arbitrary
 # semigroups. There are not very many specialised methods for acting semigroups
-# and so we only have a single file. 
-
-DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
-DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
+# and so we only have a single file.
 
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
@@ -31,7 +28,7 @@ DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
 DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
 DeclareProperty("IsLeftSimple", IsSemigroup);
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
-DeclareOperation("IsRegularSemigroupElementNC", 
+DeclareOperation("IsRegularSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement and
                                IsAssociativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);

@@ -8,25 +8,12 @@
 #############################################################################
 ##
 
-# this file contains methods for finding isomorphisms between semigroups and
-# related methods. Isomorphism.* methods for transformation, partial perm,
-# bipartition and Rees 0-matrix semigroups can be found in the files
-# semitrans.gi, semipperm.gi, semibipart.gi , and reesmat.gi.
-
-# different method for ideals
-
-InstallMethod(IsomorphismTransformationSemigroup, 
-"for a matrix semigroup with generators", 
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup], 
-function(S)        
-  local n, F, T;
-  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
-  F:=FieldOfMatrixList(GeneratorsOfSemigroup(S));        
-  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
-   TransformationOp(x, Elements(F^n), OnRight)));        
-  return MappingByFunction(S, T,
-   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
-end);
+# This file contains methods for finding isomorphisms between semigroups and
+# some related methods. 
+#
+# Isomorphism.* methods for transformation, partial perm, bipartition and Rees
+# 0-matrix semigroups can be found in the files semitrans.gi, semipperm.gi,
+# semibipart.gi , and reesmat.gi.
 
 # fall back method, same method for ideals
 
