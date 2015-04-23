@@ -228,6 +228,19 @@ function(S)
   return I;
 end);
 
+# same method for ideals
+
+InstallMethod(RepresentativeOfMinimalIdeal, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local data, comps;
+  data := Enumerate(GenericSemigroupData(S));
+  comps := GreensRRelation(S)!.data.comps;
+  return SemigroupIdeal(S, ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]]);
+  # the first component (i.e. the inner most) of the strongly connected
+  # components of the right Cayley graph corresponds the minimal ideal. 
+end);
+
 #
 
 InstallMethod(PrincipalFactor, "for a Green's D-class",

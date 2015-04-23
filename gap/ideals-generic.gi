@@ -19,7 +19,8 @@
 
 BindGlobal("SEMIGROUPS_EnumerateIdeal",
 function(enum, limit, lookfunc)
-  local nr, looking, found, i, lookup, indices, data, left, right, genstoapply, j, len, lookfunc2, l, k;
+  local nr, looking, found, i, lookup, indices, S, data, left, right,
+   genstoapply, j, len, lookfunc2, l, k;
   
   nr:=enum!.nr;
 
@@ -29,7 +30,8 @@ function(enum, limit, lookfunc)
 
   if lookfunc<>ReturnFalse then 
     looking:=true;              # only applied to new elements, not old ones!!!
-    enum!.found:=fail;          # in case we previously looked for something and found it
+    enum!.found:=fail;          # in case we previously looked for something
+                                # and found it
     found:=false;
   else
     looking:=false;
@@ -39,9 +41,10 @@ function(enum, limit, lookfunc)
   lookup:=enum!.lookup;
   indices:=enum!.indices;
 
-  data:=GenericSemigroupData(SupersemigroupOfIdeal(UnderlyingCollection(enum)));
-  left := data!.left;
-  right := data!.right;
+  S := SupersemigroupOfIdeal(UnderlyingCollection(enum));
+  data:=GenericSemigroupData(S);
+  left := LeftCayleyGraphSemigroup(S);
+  right := RightCayleyGraphSemigroup(S);
   genstoapply := data!.genstoapply;
   
   while nr <= limit and i <= nr and not (looking and found) do

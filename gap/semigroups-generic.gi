@@ -200,7 +200,7 @@ function(S)
     else
       data.degree := S.1![1] ^ 2;
     fi;
-
+    data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);
   fi;

@@ -11,15 +11,3 @@
 # this file contains methods for finding attributes of semigroups satisfying
 # IsSemigroup.
 
-# same method for ideals
-
-InstallMethod(MinimalIdeal, "for an generic semigroup",
-[IsSemigroup],
-function(S)
-  local data, scc;
-  data := Enumerate(GenericSemigroupData(S));
-  scc := GreensRRelation(S)!.data;
-  return SemigroupIdeal(S, ELEMENTS_SEMIGROUP(data, infinity)[scc.comps[1][1]]);
-  # the first component (i.e. the inner most) of the strongly connected
-  # components of the right Cayley graph corresponds the minimal ideal. 
-end);
