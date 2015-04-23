@@ -397,8 +397,10 @@ class Interface : public InterfaceBase {
         }
         if (!found) {
           limit += BATCH_SIZE;
-          elements(data, limit); // get the elements out of _semigroup into "elts"
-          nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))), INT_INTOBJ(end));
+          elements(data, limit); 
+          // get the elements out of _semigroup into "elts"
+          nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))),
+                        INT_INTOBJ(end));
         }
       }
     }
@@ -1096,39 +1098,40 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   SET_LEN_PLIST(id, n);
   seen = NewBag(T_DATOBJ, (LEN_PLIST(comps2)+1)*sizeof(UInt));
   ptr = (UInt *)ADDR_OBJ(seen);
+  
   //init id
-  for(i=1;i<=n;i++){
+  for (i = 1; i <= n; i++) {
     SET_ELM_PLIST(id, i, INTOBJ_INT(0));
     ptr[i] = 0;
   }
   
-  comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, LEN_PLIST(comps1));
+  comps = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, LEN_PLIST(comps1));
   SET_LEN_PLIST(comps, 0);
  
   nr = 0;
   
-  for(i=1;i<=LEN_PLIST(comps1);i++){
+  for (i = 1; i <= LEN_PLIST(comps1); i++) {
     comp1 = ELM_PLIST(comps1, i);
-    if(INT_INTOBJ(ELM_PLIST(id, INT_INTOBJ(ELM_PLIST(comp1, 1))))==0){
+    if (INT_INTOBJ(ELM_PLIST(id, INT_INTOBJ(ELM_PLIST(comp1, 1)))) == 0) {
       nr++;
       new_comp = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, LEN_PLIST(comp1));
       SET_LEN_PLIST(new_comp, 0);
-      for(j=1;j<=LEN_PLIST(comp1);j++){
-        k=INT_INTOBJ(ELM_PLIST(id2, INT_INTOBJ(ELM_PLIST(comp1, j))));
-        if((UInt *)ADDR_OBJ(seen)[k]==0){
-          ((UInt *)ADDR_OBJ(seen))[k]=1;
+      for (j = 1; j <= LEN_PLIST(comp1); j++) {
+        k = INT_INTOBJ(ELM_PLIST(id2, INT_INTOBJ(ELM_PLIST(comp1, j))));
+        if((UInt *)ADDR_OBJ(seen)[k] == 0){
+          ((UInt *)ADDR_OBJ(seen))[k] = 1;
           comp2 = ELM_PLIST(comps2, k);
-          for(l=1;l<=LEN_PLIST(comp2);l++){
-            x=ELM_PLIST(comp2, l);
+          for(l = 1; l <= LEN_PLIST(comp2); l++) {
+            x = ELM_PLIST(comp2, l);
             SET_ELM_PLIST(id, INT_INTOBJ(x), INTOBJ_INT(nr));
-            len=LEN_PLIST(new_comp);
-            AssPlist(new_comp, len+1, x);
-            SET_LEN_PLIST(new_comp, len+1);
+            len = LEN_PLIST(new_comp);
+            AssPlist(new_comp, len + 1, x);
+            SET_LEN_PLIST(new_comp, len + 1);
           }
         }
       }
       SHRINK_PLIST(new_comp, LEN_PLIST(new_comp));
-      len=LEN_PLIST(comps)+1;
+      len = LEN_PLIST(comps) + 1;
       SET_ELM_PLIST(comps, len, new_comp);
       SET_LEN_PLIST(comps, len);
       CHANGED_BAG(comps);

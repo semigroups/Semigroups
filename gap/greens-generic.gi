@@ -99,7 +99,7 @@ function(C, GreensXRelation, GreensXClassOfElement)
   S := Parent(C);
   comp := EquivalenceClassRelation(C)!.data.comps[C!.index];
   id := GreensXRelation(Parent(C))!.data.id;
-  seen := BlistList([1..Maximum(id)], []);
+  seen := BlistList([1 .. Maximum(id)], []);
   elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
   out := EmptyPlist(Length(comp));
 
@@ -311,8 +311,8 @@ function(S)
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
   if not IsActingSemigroup(S) then
-    rel!.data:=SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRRelation(S)!.data,
-                                                  GreensLRelation(S)!.data);
+    rel!.data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRRelation(S)!.data,
+                                                    GreensLRelation(S)!.data);
   fi;
 
   return rel;
@@ -596,23 +596,72 @@ end);
 InstallMethod(GreensLClasses, "for a Green's D-class",
 [IsGreensDClass],
 function(C)
-  return SEMIGROUPS_GreensXClassesOfClass(C, GreensLRelation, GreensLClassOfElement);
+  return SEMIGROUPS_GreensXClassesOfClass(C, GreensLRelation,
+                                          GreensLClassOfElement);
 end);
 
 InstallMethod(GreensRClasses, "for a Green's D-class",
 [IsGreensDClass],
 function(C)
-  return SEMIGROUPS_GreensXClassesOfClass(C, GreensRRelation, GreensRClassOfElement);
+  return SEMIGROUPS_GreensXClassesOfClass(C, GreensRRelation,
+                                          GreensRClassOfElement);
 end);
 
 InstallMethod(GreensHClasses, "for a generic semigroup Green's class",
 [IsGreensClass], 2, # to beat the library method
 function(C)
   if IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C) then
-    return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation, GreensHClassOfElement);
+    return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation,
+                                            GreensHClassOfElement);
   fi;
-  Error("usage: the argument should be a Greens R-, L-, or D-class,");
+  Error("usage: the argument should be a Green's R-, L-, or D-class,");
   return;
+end);
+
+InstallMethod(PartialOrderOfDClasses, "for a generic semigroup", 
+[IsSemigroup and IsFinite],
+function(S)
+  local comps, id, right_id, left_id, right_comps, left_comps, right, left,
+   genstoapply, out, seen, i, j, k, l;
+  
+  comps := GreensDRelation(S)!.data.comps;
+  id := GreensDRelation(S)!.data.id;
+  right_id := GreensRRelation(S)!.data.id;
+  left_id := GreensLRelation(S)!.data.id;
+  right_comps := GreensRRelation(S)!.data.comps;
+  left_comps := GreensLRelation(S)!.data.comps;
+  right := RightCayleyGraphSemigroup(S);
+  left := LeftCayleyGraphSemigroup(S);
+  
+  genstoapply := [1 .. Length(right[1])];
+  out := [];
+  
+  for i in [1 .. Length(comps)] do # loop over D-classes
+    out[i] := [];
+    seen := BlistList([1 .. Maximum(left_id)], []);
+    for j in comps[i] do           # loop over L-classes of a D-class
+      if not seen[left_id[j]] then
+        seen[left_id[j]] := true;
+        for k in left_comps[left_id[j]] do
+          for l in genstoapply do 
+            AddSet(out[i], id[right[k][l]]);
+          od;
+        od;
+      fi;
+    od;
+    seen := BlistList([1 .. Maximum(right_id)], []);
+    for j in comps[i] do           # loop over R-classes of a D-class
+      if not seen[right_id[j]] then
+        seen[right_id[j]] := true;
+        for k in right_comps[right_id[j]] do
+          for l in genstoapply do 
+            AddSet(out[i], id[left[k][l]]);
+          od;
+        od;
+      fi;
+    od;
+  od;
+  return out;
 end);
 
 #############################################################################
