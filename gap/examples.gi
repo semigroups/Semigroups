@@ -323,6 +323,10 @@ InstallMethod(RegularBooleanMatSemigroup, "for a pos int",
 function(n)
   local gens, i;
 
+  if n = 1 then 
+    return Semigroup(BooleanMatNC([[1]]), BooleanMatNC([[0]]));
+  fi;
+
   gens := [AsBooleanMat((1, 2), n)];
 
   gens[2] := List([1 .. n], x -> [1 .. n] * 0);

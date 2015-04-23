@@ -20,6 +20,9 @@
 # 2) BooleanMat non-NC version
 # 3) BooleanMat for a blist, and successors
 
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a boolean matrix coll",
+[IsBooleanMatCollection], ReturnFalse);
+
 InstallGlobalFunction(BooleanMatByIntRep, x -> Objectify(BooleanMatType, x));
 
 InstallGlobalFunction(BooleanMatNC,

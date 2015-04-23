@@ -33,7 +33,9 @@
 ##
 ##   7. Regularity of Green's classes
 ##
-##   8. Viewing, printing, displaying
+##   8. Iterators, enumerators etc
+##
+##   9. Viewing, printing, displaying
 ##
 #############################################################################
 
@@ -92,6 +94,19 @@ function(S, GreensXRelation, GreensXClassOfElement)
   return out;
 end);
 
+BindGlobal("SEMIGROUPS_XClassReps",
+function(S, GreensXRelation)
+  local comps, elts, out, i;
+
+  comps := GreensXRelation(S)!.data.comps;
+  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  out := EmptyPlist(Length(comps));
+  for i in [1 .. Length(comps)] do
+    out[i] := elts[comps[i][1]];
+  od;
+  return out;
+end);
+
 BindGlobal("SEMIGROUPS_GreensXClassesOfClass",
 function(C, GreensXRelation, GreensXClassOfElement)
   local S, comp, id, seen, elts, out, i;
@@ -109,6 +124,27 @@ function(C, GreensXRelation, GreensXClassOfElement)
       C := GreensXClassOfElement(S, elts[i]);
       C!.index := id[i];
       Add(out, C);
+    fi;
+  od;
+
+  return out;
+end);
+
+BindGlobal("SEMIGROUPS_XClassRepsOfClass",
+function(C, GreensXRelation)
+  local S, comp, id, seen, elts, out, i;
+
+  S := Parent(C);
+  comp := EquivalenceClassRelation(C)!.data.comps[C!.index];
+  id := GreensXRelation(Parent(C))!.data.id;
+  seen := BlistList([1 .. Maximum(id)], []);
+  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  out := EmptyPlist(Length(comp));
+
+  for i in comp do
+    if not seen[id[i]] then
+      seen[id[i]] := true;
+      Add(out, elts[i]);
     fi;
   od;
 
@@ -618,6 +654,31 @@ function(C)
   return;
 end);
 
+## Representatives
+
+InstallMethod(DClassReps, "for a semigroup",
+[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensDRelation));
+
+InstallMethod(RClassReps, "for a semigroup",
+[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensRRelation));
+
+InstallMethod(LClassReps, "for a semigroup",
+[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensLRelation));
+
+InstallMethod(HClassReps, "for a semigroup",
+[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensHRelation));
+
+InstallMethod(RClassReps, "for a Green's D-class (Semigroups)",
+[IsGreensDClass], D -> SEMIGROUPS_XClassRepsOfClass(D, GreensRRelation));
+
+InstallMethod(LClassReps, "for a Green's D-class (Semigroups)",
+[IsGreensDClass], D -> SEMIGROUPS_XClassRepsOfClass(D, GreensLRelation));
+
+InstallMethod(HClassReps, "for a Green's class (Semigroups)",
+[IsGreensClass], C -> SEMIGROUPS_XClassRepsOfClass(C, GreensHRelation));
+
+## Partial order of D-classes
+
 InstallMethod(PartialOrderOfDClasses, "for a generic semigroup", 
 [IsSemigroup and IsFinite],
 function(S)
@@ -695,7 +756,7 @@ function(C)
   idempotents := [];
 
   for x in C do 
-    if IsIdempotent(x) then #FIXME use IsIdempotent
+    if IsIdempotent(x) then 
       Add(idempotents, x);
       if IsGreensHClass(C) then 
         break;
@@ -719,7 +780,17 @@ InstallTrueMethod(IsHClassOfRegularSemigroup,
                   IsInverseOpClass and IsGreensHClass);
 
 #############################################################################
-## 8. Viewing, printing, etc . . .
+## 8. Enumerators, iterators etc
+#############################################################################
+
+InstallMethod(IteratorOfDClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite], GreensDClasses);
+
+InstallMethod(IteratorOfRClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite], GreensRClasses);
+
+#############################################################################
+## 9. Viewing, printing, etc . . .
 #############################################################################
 
 # Viewing, printing, etc

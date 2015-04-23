@@ -1,5 +1,14 @@
 # Here lies some dead code, may it rest in peace
 
+# a better method for MinimalIdeal of a simple semigroup.
+
+InstallMethod(OneMutable, "for ring element coll coll coll",
+[IsRingElementCollCollColl], x -> One(Representative(x)));
+
+InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
+[IsMatrixSemigroup],
+S -> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(S))));
+
 # LambdaRhoLookup(d)[i]=j if orbit[j][4] in reps[i] (orbit[j][4] is one of the
 # R-reps of the D-class d) and LambdaRhoLookup(d) is only bound for those
 # indices i where there is an R-rep in the scc of the D-class in reps[i]
