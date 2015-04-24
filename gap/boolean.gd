@@ -30,7 +30,6 @@ BindGlobal("BooleanMatType",
 
 DeclareGlobalFunction("BooleanMatNC");
 DeclareGlobalFunction("BooleanMat");
-DeclareGlobalFunction("BooleanMatByIntRep");
 
 DeclareOperation("AsBooleanMat", [IsPerm, IsPosInt]);
 

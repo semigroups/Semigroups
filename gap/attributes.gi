@@ -343,6 +343,46 @@ function(S)
   return StructureDescription(Range(IsomorphismPermGroup(S)));
 end);
 
+# same method for ideals
+
+InstallMethod(MultiplicativeZero, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local D, rep, gens;
+
+  if IsSemigroupIdeal(S)
+      and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then
+    return MultiplicativeZero(SupersemigroupOfIdeal(S));
+  fi;
+
+  if HasMinimalDClass(S) then
+    D := MinimalDClass(S);
+    if HasSize(D) then
+      if Size(D) = 1 then
+        return Representative(D);
+      else
+        return fail;
+      fi;
+    fi;
+  fi;
+
+  if IsSemigroupIdeal(S) then
+    return MultiplicativeZero(SupersemigroupOfIdeal(S));
+  fi;
+
+  rep := RepresentativeOfMinimalIdeal(S);
+  gens := GeneratorsOfSemigroup(S);
+
+  if ForAll(gens, x -> x * rep = rep and rep * x = rep) then
+    return rep;
+  fi;
+
+  return fail;
+end);
+
+InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
+x -> GreensDClassOfElementNC(x, RepresentativeOfMinimalIdeal(x)));
+
 #############################################################################
 ## 2. Methods for attributes where there are known better methods for acting
 ##    semigroups. 
@@ -435,7 +475,7 @@ function(S)
   local data, comps;
   data := Enumerate(GenericSemigroupData(S));
   comps := GreensRRelation(S)!.data.comps;
-  return SemigroupIdeal(S, ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]]);
+  return ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]];
   # the first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal. 
 end);
@@ -521,4 +561,50 @@ function(D)
   SetIsInjective(hom, true);
   SetIsTotal(hom, true);
   return hom;
+end);
+
+InstallMethod(MultiplicativeNeutralElement, "for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+function(S)
+  local gens, e;
+  
+  if IsMultiplicativeElementWithOneCollection(S) and One(S) in S then 
+    return One(S);
+  fi;
+  
+  gens := GeneratorsOfSemigroup(S);
+  for e in S do 
+    if ForAll(gens, x -> e * x = x and x * e = x) then 
+      return e;
+    fi;
+  od;
+  return fail;
+end);
+
+# fall back method, same method for ideals
+
+InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
+function(S)
+  local en, act, gens;
+
+  if not IsGroupAsSemigroup(S)  then
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument must be a semigroup satisfying ",
+          "IsGroupAsSemigroup,");
+    return;
+  fi;
+
+  en := EnumeratorSorted(S);
+
+  act := function(i, x)
+    return Position(en, en[i] * x);
+  end;
+
+  gens := List(GeneratorsOfSemigroup(S),
+               x -> Permutation(x, [1 .. Length(en)], act));
+
+  # gaplint: ignore 3
+  return MagmaIsomorphismByFunctionsNC(S, Group(gens),
+           x -> Permutation(x, [1 .. Length(en)], act),
+           x -> en[Position(en, MultiplicativeNeutralElement(S)) ^ x]);
 end);

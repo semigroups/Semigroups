@@ -23,7 +23,7 @@
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a boolean matrix coll",
 [IsBooleanMatCollection], ReturnFalse);
 
-InstallGlobalFunction(BooleanMatByIntRep, x -> Objectify(BooleanMatType, x));
+BindGlobal("BooleanMatByIntRep", x -> Objectify(BooleanMatType, x));
 
 InstallGlobalFunction(BooleanMatNC,
 function(x)
@@ -118,7 +118,7 @@ function(x)
   return str;
 end);
 
-InstallMethod(\=, "for a boolean mat", [IsBooleanMat, IsBooleanMat],
+InstallMethod(\=, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local i;
 
@@ -130,7 +130,7 @@ function(x, y)
   return true;
 end);
 
-InstallMethod(\<, "for a boolean mat", [IsBooleanMat, IsBooleanMat],
+InstallMethod(\<, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local i;
 
@@ -144,7 +144,7 @@ function(x, y)
   return false;
 end);
 
-InstallMethod(\*, "for a boolean mat", [IsBooleanMat, IsBooleanMat],
+InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local xy, i, j, k;
 
