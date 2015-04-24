@@ -46,7 +46,7 @@ function(cong)
   local s, elms, pairs, hashlen, ht, data;
 
   s := Range(cong);
-  elms := Elements(s);
+  elms := ELEMENTS_SEMIGROUP(GenericSemigroupData(s), infinity);
   pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
                 x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
@@ -108,7 +108,7 @@ function(pair, cong)
     return;
   fi;
 
-  elms := Elements(s);
+  elms := ELEMENTS_SEMIGROUP(GenericSemigroupData(s), infinity);
   p1 := Position(elms, pair[1]);
   p2 := Position(elms, pair[2]);
 
@@ -270,7 +270,7 @@ function(cong)
   classes := [];
   next := 1;
   tab := AsLookupTable(cong);
-  elms := Elements(Range(cong));
+  elms := ELEMENTS_SEMIGROUP(GenericSemigroupData(Range(cong)), infinity);
   for i in [1 .. Size(tab)] do
     if tab[i] = next then
       classes[next] := EquivalenceClassOfElementNC(cong, elms[i]);
@@ -296,7 +296,7 @@ InstallMethod(Size,
 [IsCongruenceClass and IsFinite],
 function(class)
   local elms, p, tab;
-  elms := Elements(Parent(class));;
+  elms := ELEMENTS_SEMIGROUP(GenericSemigroupData(Parent(class)), infinity);
   p := Position(elms, Representative(class));
   tab := AsLookupTable(EquivalenceClassRelation(class));
   return Number(tab, n -> n = tab[p]);

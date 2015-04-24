@@ -11,6 +11,25 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
+InstallMethod(ViewString, "for a Rees matrix semigroup element",
+[IsReesMatrixSemigroupElement],
+function(x)
+  return Concatenation("(", String(x![1]), ",", String(x![2]), ",",
+                       String(x![3]), ")");
+end);
+
+#
+
+InstallMethod(ViewString, "for a Rees 0-matrix semigroup element",
+[IsReesZeroMatrixSemigroupElement],
+function(x)
+  if x![1] = 0 then 
+    return "0";
+  fi;
+  return Concatenation("(", String(x![1]), ",", String(x![2]), ",",
+                       String(x![3]), ")");
+end);
+
 InstallMethod(MultiplicativeZero, "for a Rees 0-matrix semigroup", 
 [IsReesZeroMatrixSubsemigroup],
 function(R)
