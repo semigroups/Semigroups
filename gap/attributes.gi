@@ -27,6 +27,10 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true.
 
+#############################################################################
+## 1. Default methods, for which there are currently no better methods.
+#############################################################################
+
 # same method for ideals
 
 InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
@@ -120,10 +124,10 @@ function(coll)
 
    if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll)) or
    (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
-    coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
+    coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
 
-  if Size(coll)=1 then
+  if Size(coll) = 1 then
     return coll;
   fi;
 
@@ -185,21 +189,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(InversesOfSemigroupElement,
-"for a finite semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement],
-function(S, x)
-
-  if x in S then
-    return InversesOfSemigroupElementNC(S, x);
-  fi;
-
-  return fail;
-end);
-
-# same method for ideals
-
-InstallMethod(MinimalIdeal, "for a finite semigroup", [IsFinite and IsSemigroup],
+InstallMethod(MinimalIdeal, "for a finite semigroup", 
+[IsFinite and IsSemigroup],
 function(S)
   local I;
   I := SemigroupIdeal(S, RepresentativeOfMinimalIdeal(S));
@@ -207,28 +198,10 @@ function(S)
   return I;
 end);
 
-# same method for ideals
-
-InstallMethod(RepresentativeOfMinimalIdeal, "for a finite semigroup",
-[IsSemigroup and IsFinite],
-function(S)
-  local data, comps;
-  data := Enumerate(GenericSemigroupData(S));
-  comps := GreensRRelation(S)!.data.comps;
-  return SemigroupIdeal(S, ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]]);
-  # the first component (i.e. the inner most) of the strongly connected
-  # components of the right Cayley graph corresponds the minimal ideal. 
-end);
-
 #
 
 InstallMethod(PrincipalFactor, "for a Green's D-class",
 [IsGreensDClass], D-> Range(InjectionPrincipalFactor(D)));
-
-# FIXME delete the following method???
-
-InstallMethod(PrincipalFactor, "for a D-class",
-[IsGreensDClass], AssociatedReesMatrixSemigroupOfDClass);
 
 # different method for ideals, not yet implemented
 
@@ -236,10 +209,10 @@ InstallMethod(SmallSemigroupGeneratingSet,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(coll)
-  if Length(coll)<2 then
+  if Length(coll) < 2 then
     return coll;
   else
-    return GeneratorsOfSemigroup(Semigroup(coll, rec(small:=true)));
+    return GeneratorsOfSemigroup(Semigroup(coll, rec(small := true)));
   fi;
 end);
 
@@ -281,7 +254,7 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 "for generators of an inverse semigroup",
 [IsGeneratorsOfInverseSemigroup],
 function(coll)
-  if Length(coll)<2 then
+  if Length(coll) < 2 then
     return coll;
   else
     return GeneratorsOfInverseSemigroup(InverseSemigroup(coll, rec(small:=true)));
@@ -346,16 +319,16 @@ InstallMethod(StructureDescription, "for a Brandt semigroup",
 function(S)
   local x, D;
 
-  x:=First(Generators(S), x-> x<>MultiplicativeZero(S));
+  x := First(Generators(S), x-> x <> MultiplicativeZero(S));
 
-  if x=fail then
+  if x = fail then
     return "0";
   fi;
 
   D:=GreensDClassOfElementNC(S, x);
 
   return Concatenation("B(", StructureDescription(GroupHClass(D)), ", ",
-  String(NrRClasses(D)), ")");
+                       String(NrRClasses(D)), ")");
 end);
 
 # same method for ideals
@@ -368,4 +341,184 @@ function(S)
   fi;
 
   return StructureDescription(Range(IsomorphismPermGroup(S)));
+end);
+
+#############################################################################
+## 2. Methods for attributes where there are known better methods for acting
+##    semigroups. 
+#############################################################################
+
+# FIXME the performance of this really sucks, better form the transitive
+# reflexive closure of the partial order, then define this function
+
+InstallMethod(IsGreensDLeq, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local partial, data, comp_index;
+
+  partial := PartialOrderOfDClasses(S);
+  data := GenericSemigroupData(S);
+
+  comp_index := function(x, y)
+    if y in partial[x] then
+      return true;
+    elif Length(partial[x]) = 1 and partial[partial[x][1]] = partial[x] then
+      return false;
+    fi;
+    return ForAny(partial[x], z -> z <> x and comp_index(z, y));
+  end;
+
+  return function(x, y)
+    local i, j;
+    i := Position(data, x);
+    j := Position(data, y);
+    return comp_index(GreensDRelation(S)!.data.id[i],
+                      GreensDRelation(S)!.data.id[j]);
+  end;
+end);
+
+# 
+
+InstallMethod(MaximalDClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local gens, partial, data, id, pos, i, out, classes, x;
+
+  gens    := GeneratorsOfSemigroup(S);
+  partial := PartialOrderOfDClasses(S);
+  data    := GenericSemigroupData(S);
+  id      := GreensDRelation(S)!.data.id;
+  pos     := [];
+
+  for x in gens do
+    i := id[Position(data, x)];
+    #index of the D-class containing x
+    AddSet(pos, i);
+  od;
+
+  out := [];
+  classes := GreensDClasses(S);
+  for i in pos do
+    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
+# same method for ideals
+
+InstallMethod(StructureDescriptionMaximalSubgroups,
+"for a finite semigroup", [IsSemigroup and IsFinite],
+function(S)
+  local out, D;
+
+  out := [];
+  for D in RegularDClasses(S) do
+    AddSet(out, StructureDescription(GroupHClass(D)));
+  od;
+
+  return out;
+end);
+
+# 
+
+InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite], S -> Semigroup(Idempotents(S)));
+
+# same method for ideals
+
+InstallMethod(RepresentativeOfMinimalIdeal, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local data, comps;
+  data := Enumerate(GenericSemigroupData(S));
+  comps := GreensRRelation(S)!.data.comps;
+  return SemigroupIdeal(S, ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]]);
+  # the first component (i.e. the inner most) of the strongly connected
+  # components of the right Cayley graph corresponds the minimal ideal. 
+end);
+
+InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
+[IsGreensDClass],
+function(D)
+  local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
+
+  if not IsRegularDClass(D) then
+    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
+          "the argument <D> must be a regular D-class,");
+    return;
+  fi;
+  
+  map := IsomorphismPermGroup(GroupHClass(D));
+  inv := InverseGeneralMapping(map);
+
+  G := Range(map);
+  mat := [];
+
+  rep := Representative(GroupHClass(D));
+  R := HClassReps(LClass(D, rep));
+  L := HClassReps(RClass(D, rep));
+
+  for i in [1 .. Length(L)] do
+    mat[i] := [];
+    for j in [1 .. Length(R)] do
+      x := L[i] * R[j];
+      if x in D then
+        mat[i][j] := x ^ map;
+      else
+        mat[i][j] := 0;
+      fi;
+    od;
+  od;
+  
+  RR := EmptyPlist(Length(R));
+  LL := EmptyPlist(Length(L));
+  
+  for j in [1 .. Length(R)] do
+    for i in [1 .. Length(L)] do
+      if mat[i][j] <> 0 then
+        RR[j] := ((mat[i][j] ^ -1) ^ inv) * L[i];
+        break;
+      fi;
+    od;
+  od;
+  
+  for i in [1 .. Length(L)] do
+    for j in [1 .. Length(R)] do
+      if mat[i][j] <> 0 then
+        LL[i] := R[j] * (mat[i][j] ^ -1) ^ inv;
+        break;
+      fi;
+    od;
+  od;
+
+  if NrIdempotents(D) = NrHClasses(D) then
+    rms := ReesMatrixSemigroup(G, mat);
+  else
+    rms := ReesZeroMatrixSemigroup(G, mat);
+  fi;
+
+  iso := function(x)
+    i := PositionProperty(R, y -> y in RClass(D, x));
+    j := PositionProperty(L, y -> y in LClass(D, x));
+
+    if i = fail or j = fail then 
+      return fail;
+    fi;
+    return Objectify(TypeReesMatrixSemigroupElements(rms),
+                     [i, (rep * RR[i] * x * LL[j]) ^ map, j, mat]);
+  end;
+
+  hom := MappingByFunction(D, rms, iso, 
+                           function(x)
+                             if x![1] = 0 then
+                               return fail;
+                             fi;
+                             return R[x![1]] * (x![2] ^ inv) * L[x![3]];
+                           end);
+  SetIsInjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
 end);

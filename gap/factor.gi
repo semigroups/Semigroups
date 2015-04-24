@@ -27,7 +27,7 @@ function(S, x)
   fi;
   data := GenericSemigroupData(S);
   pos := Position(data, x); 
-  if pos = fail then #TODO double check that the previous lines enumerates the data 
+  if pos = fail then 
     return fail;
   fi;
   return WORD_SEMIGROUP(data, pos);

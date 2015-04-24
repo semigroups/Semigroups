@@ -196,7 +196,7 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
-  local n, i, S, filts, pos, f;
+  local n, i, S, filts, pos, x;
 
   opts:=SEMIGROUPS_ProcessOptionsRec(opts);
   gens:=AsList(gens);
@@ -205,10 +205,15 @@ function(gens, opts)
   if opts.small and Length(gens) > 1 then
     gens := SSortedList(gens); #remove duplicates
     gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
-    n := ActionDegree(gens);
-    Sort(gens, function(x, y)
-                 return ActionRank(x, n) > ActionRank(y, n);
-               end);
+
+    if IsGeneratorsOfActingSemigroup(gens) then 
+      n := ActionDegree(gens);
+      Sort(gens, function(x, y)
+                   return ActionRank(x, n) > ActionRank(y, n);
+                 end);
+    else 
+      Sort(gens, IsGreensDLeq(Semigroup(gens)));
+    fi;
 
     #remove the identity
     if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n) = n then
@@ -221,16 +226,16 @@ function(gens, opts)
     S:=Semigroup(gens[1], opts);
 
     if InfoLevel(InfoSemigroups)>1 then
-      n:=Length(gens);
+      n := Length(gens);
       for i in [2..n] do
-        S:=ClosureSemigroup(S, gens[i], opts);
+        S := ClosureSemigroup(S, gens[i], opts);
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far\r");
       od;
       Print("\n");
     else
-      for f in gens do
-        S:=ClosureSemigroup(S, f, opts);
+      for x in gens do
+        S := ClosureSemigroup(S, x, opts);
       od;
     fi;
     return S;
@@ -239,10 +244,10 @@ function(gens, opts)
   filts := IsSemigroup and IsAttributeStoringRep;
 
   if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then 
-    filts:=filts and IsActingSemigroup;
+    filts := filts and IsActingSemigroup;
   fi;
 
-  S:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts := opts));
+  S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   
   if opts.regular then 
     SetIsRegularSemigroup(S, true);

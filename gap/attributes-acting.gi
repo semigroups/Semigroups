@@ -22,6 +22,8 @@ function(S, x)
 end);
 
 # same method for ideals
+# TODO take the transitive closure of the partial order and use that instead of
+# comp_index
 
 InstallMethod(IsGreensDLeq, "for an acting semigroup",
 [IsActingSemigroup],
@@ -124,23 +126,6 @@ end);
 
 # same method for ideals
 
-InstallMethod(StructureDescriptionMaximalSubgroups,
-"for an acting semigroup", [IsActingSemigroup],
-function(s)
-  local out, d;
-
-  out := [];
-  for d in DClasses(s) do
-    if IsRegularClass(d) then
-      AddSet(out, StructureDescription(GroupHClass(d)));
-    fi;
-  od;
-
-  return out;
-end);
-
-# same method for ideals
-
 InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
 [IsActingSemigroup], S -> Semigroup(Idempotents(S), rec(small := true)));
 
@@ -152,7 +137,7 @@ InstallMethod(IdempotentGeneratedSubsemigroup,
 S -> InverseSemigroup(Idempotents(S), rec(small := true)));
 
 # same method for ideals
-# TODO method for non-acting semigroups
+
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
@@ -464,8 +449,7 @@ end);
 
 # same method for inverse/ideals
 
-InstallMethod(RepresentativeOfMinimalIdeal,
-"for an acting semigroup",
+InstallMethod(RepresentativeOfMinimalIdeal, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local rank, o, pos, min, len, m, i;

@@ -43,6 +43,33 @@ end);
 InstallMethod(DimensionOfBooleanMat, "for a boolean mat",
 [IsBooleanMat], x -> x![1]);
 
+InstallMethod(Display, "for a boolean mat collection",
+[IsBooleanMatCollection], 
+function(coll) 
+  Print(DisplayString(coll));
+end);
+
+InstallMethod(DisplayString, "for a boolean mat collection",
+[IsBooleanMatCollection],
+function(coll)
+  return JoinStringsWithSeparator(List(coll, DisplayString), "\n");
+end);
+
+InstallMethod(DisplayString, "for a boolean mat", [IsBooleanMat],
+function(x)
+  local str, i, j;
+  str := "";
+  for i in [1 .. x![1]] do 
+    for j in [1 .. x![1]] do 
+      Append(str, String(x![(i - 1) * x![1] + j + 1]));
+      Append(str, " ");
+    od;
+    Remove(str, Length(str));
+    Append(str, "\n");
+  od;
+  return str;
+end);
+
 InstallMethod(ViewString, "for a boolean mat", [IsBooleanMat],
 function(x)
   local str;
