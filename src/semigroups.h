@@ -128,6 +128,10 @@ class Semigroup {
     }
 
     size_t position (T* x) {
+      if (x->degree() != _degree) {
+        return -1;
+      }
+
       while (true) { 
         auto it = _map.find(*x);
         if (it != _map.end()) {

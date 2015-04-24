@@ -151,6 +151,17 @@ function(C, GreensXRelation)
   return out;
 end);
 
+BindGlobal("SEMIGROUPS_XClassIndex",
+function(C)
+  local pos;
+  if not IsBound(C!.index) then 
+    # in case of classes created using EquivalenceClassOfElementNC 
+    pos := Position(GenericSemigroupData(Parent(C)), Representative(C));
+    C!.index := EquivalenceClassRelation(C)!.data.id[pos];
+  fi;
+  return C!.index;
+end);
+
 #############################################################################
 ## 2. Technical Green's classes stuff . . .
 #############################################################################
@@ -165,7 +176,7 @@ InstallMethod(AsSSortedList, "for a Green's class",
 InstallMethod(Size, "for a generic semigroup Green's class",
 [IsGreensClass],
 function(C)
-  return Length(EquivalenceClassRelation(C)!.data.comps[C!.index]);
+  return Length(EquivalenceClassRelation(C)!.data.comps[SEMIGROUPS_XClassIndex(C)]);
 end);
 
 InstallMethod(\in,
@@ -173,9 +184,8 @@ InstallMethod(\in,
 [IsAssociativeElement, IsGreensClass],
 function(x, C)
   local pos;
-
-  pos:=Position(GenericSemigroupData(Parent(C)), x);
-  return pos<>fail and EquivalenceClassRelation(C)!.data.id[pos]=C!.index;
+  pos := Position(GenericSemigroupData(Parent(C)), x);
+  return pos <> fail and EquivalenceClassRelation(C)!.data.id[pos] = SEMIGROUPS_XClassIndex(C);
 end);
 
 #JDM: is this necessary? I.e. is there a similar method in the library?
@@ -390,12 +400,7 @@ function(C)
   local data, rel, pos;
   data := Enumerate(GenericSemigroupData(Parent(C)));
   rel := EquivalenceClassRelation(C);
-  if not IsBound(C!.index) then 
-    # in case of classes created using EquivalenceClassOfElementNC 
-    pos := Position(GenericSemigroupData(Source(rel)), Representative(C));
-    C!.index := rel!.data.id[pos];
-  fi;
-  return ELEMENTS_SEMIGROUP(data, infinity){rel!.data.comps[C!.index]};
+  return ELEMENTS_SEMIGROUP(data, infinity){rel!.data.comps[SEMIGROUPS_XClassIndex(C)]};
 end);
 
 InstallMethod(EquivalenceClassOfElement,
@@ -742,14 +747,10 @@ function(C)
 
   data := Enumerate(GenericSemigroupData(Parent(C)));
   rel := EquivalenceClassRelation(C);
-  if not IsBound(C!.index) then 
-    # in case of classes created using EquivalenceClassOfElementNC 
-    pos := Position(data, Representative(C));
-    C!.index := rel!.data.id[pos];
-  fi;
   
   if IsBound(data!.idempotents) then 
-    positions := Intersection(rel!.data.comps[C!.index], data!.idempotents);
+    positions := Intersection(rel!.data.comps[SEMIGROUPS_XClassIndex(C)],
+                              data!.idempotents);
     return ELEMENTS_SEMIGROUP(data, infinity){positions};
   fi;
 

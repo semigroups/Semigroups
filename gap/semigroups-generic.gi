@@ -20,7 +20,8 @@
 # different method for ideals
 
 InstallMethod(Enumerator, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+[IsSemigroup and HasGeneratorsOfSemigroup], 2, 
+# to beat the generic method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
 

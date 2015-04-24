@@ -163,7 +163,7 @@ class TransConverter : public Converter<Transformation<T> > {
 
     Transformation<T>* convert (Obj o, size_t n) {
       assert(IS_TRANS(o));
-      assert(DEG_TRANS(o) <= n);
+      //assert(DEG_TRANS(o) <= n);
       
       auto x = new Transformation<T>(n);
       T* pto = ADDR_TRANS(o);

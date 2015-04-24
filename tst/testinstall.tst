@@ -17,18 +17,17 @@ gap> LoadPackage( "semigroups", false );;
 gap> SemigroupsStartTest();
 
 #T# TestInstall3
-gap> s:=Semigroup(Transformation( [ 2, 3, 4, 1, 1, 1 ] ));;
-gap> IsMonoidAsSemigroup(s);
+gap> S := Semigroup(Transformation( [ 2, 3, 4, 1, 1, 1 ] ));;
+gap> IsMonoidAsSemigroup(S);
 true
-gap> IsMonoid(s);
+gap> IsMonoid(S);
 false
-gap> iso:=IsomorphismTransformationMonoid(s);
-MappingByFunction( <commutative transformation semigroup 
- on 6 pts with 1 generator>, <commutative transformation monoid 
- on 4 pts with 1 generator>, function( f ) ... end, function( f ) ... end )
+gap> iso := IsomorphismTransformationMonoid(S);;
+gap> Range(iso);
+<commutative transformation monoid on 4 pts with 1 generator>
 gap> RespectsMultiplication(iso);
 true
-gap> ForAll(s, x-> (x^iso)^InverseGeneralMapping(iso)=x);
+gap> ForAll(S, x -> (x ^ iso) ^ InverseGeneralMapping(iso) = x);
 true
 
 #T# TestInstall4
@@ -44,8 +43,8 @@ gap> Size(S);
 45936
 
 #T# TestInstall6
-gap> s:=Semigroup(IdentityTransformation);;
-gap> LambdaOrb(s);
+gap> S := Semigroup(IdentityTransformation);;
+gap> LambdaOrb(S);
 <open orbit, 1 points with Schreier tree with log>
 gap> Enumerate(last);
 <closed orbit, 2 points with Schreier tree with log>
@@ -245,10 +244,8 @@ gap> g:=SchutzenbergerGroup(ll);
 Group([ (5,9), (1,7) ])
 
 #T# TestInstall14: IsomorphismTransformationSemigroup/Monoid
-gap> IsomorphismTransformationSemigroup(g);
-MappingByFunction( Group([ (5,9), (1,7) ]), <transformation semigroup 
- of size 4, on 4 pts with 2 generators>
- , function( x ) ... end, function( x ) ... end )
+gap> g := Group([ (5,9), (1,7) ]);;
+gap> IsomorphismTransformationSemigroup(g);;
 gap> s:=Range(last);
 <transformation semigroup of size 4, on 4 pts with 2 generators>
 gap> IsGroupAsSemigroup(s);
@@ -265,9 +262,10 @@ gap> IsomorphismGroups(g, h);
 [ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
 
 #T# TestInstall15: Issue 22 - takes about 49ms
-gap> f := Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] );
-Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] )
-gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);
+gap> f := Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] );;
+gap> S := FullTransformationSemigroup(12);;
+gap> S := Semigroup(S, rec(generic := false, regular := true));;
+gap> InversesOfSemigroupElement(S, f);
 [ Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 6, 3, 6, 2 ] ), 

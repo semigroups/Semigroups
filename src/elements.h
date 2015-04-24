@@ -54,7 +54,9 @@ class Element {
     }
     
     inline void set (size_t pos, T val) {
-      (*_data)[pos] = val;
+      if (_data->size() > 0) {
+        (*_data)[pos] = val;
+      }
     }
     
     size_t degree () const {

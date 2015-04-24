@@ -11,6 +11,14 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
+InstallImmediateMethod(IsFinite, IsReesZeroMatrixSubsemigroup, 0, 
+function(R)
+  if ElementsFamily(FamilyObj(R))!.IsFinite then 
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
 InstallMethod(ViewString, "for a Rees matrix semigroup element",
 [IsReesMatrixSemigroupElement],
 function(x)
@@ -122,14 +130,20 @@ function(S, mat)
   fi;
 
   for x in mat do 
-    if ForAny(x, s-> not (s=0 or s in S)) then
+    if ForAny(x, s -> not (s = 0 or s in S)) then
       Error("usage: the entries of <mat> must be 0 or belong to <S>,");
       return;
     fi;
   od;
 
-  fam := NewFamily( "ReesZeroMatrixSemigroupElementsFamily",
-          IsReesZeroMatrixSemigroupElement);
+  fam := NewFamily("ReesZeroMatrixSemigroupElementsFamily",
+                   IsReesZeroMatrixSemigroupElement);
+  
+  if HasIsFinite(S) then 
+    fam!.IsFinite := IsFinite(S);
+  else 
+    fam!.IsFinite := false;
+  fi;
 
   # create the Rees matrix semigroup
   R := Objectify( NewType( CollectionsFamily( fam ), IsWholeFamily and
@@ -142,17 +156,20 @@ function(S, mat)
   SetTypeReesMatrixSemigroupElements(R, type); 
   SetReesMatrixSemigroupOfFamily(fam, R);
 
-  SetMatrix(R, mat);                 SetUnderlyingSemigroup(R, S);
-  SetRows(R, [1..Length(mat[1])]);   SetColumns(R, [1..Length(mat)]);
+  SetMatrix(R, mat);                 
+  SetUnderlyingSemigroup(R, S);
+  SetRows(R, [1..Length(mat[1])]);   
+  SetColumns(R, [1..Length(mat)]);
   SetMultiplicativeZero(R, 
-   Objectify(TypeReesMatrixSemigroupElements(R), [0]));
+                        Objectify(TypeReesMatrixSemigroupElements(R), [0]));
 
   # cannot set IsZeroSimpleSemigroup to be <true> here since the matrix may
   # contain a row or column consisting entirely of 0s!
 
-  if HasIsFinite(S) then 
-    SetIsFinite(R, IsFinite(S));
-  fi;
+  #if HasIsFinite(S) then 
+  #  SetIsFinite(R, IsFinite(S));
+  #fi;
+
   GeneratorsOfSemigroup(R); 
   SetIsSimpleSemigroup(R, false);
   return R;
