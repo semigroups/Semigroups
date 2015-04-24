@@ -194,9 +194,9 @@ gap> s:=Semigroup([ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ),
 gap> f:= Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] );;
 gap> d:=DClass(s, Transformation( [ 1, 8, 6, 2, 7, 8, 8, 9, 5 ] ));;
 gap> l:=LClass(d, f);
-{Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
+<Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
 gap> ll:=LClass(s, f);
-{Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
+<Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
 gap> List(HClassReps(ll), x-> x in ll);
 [ true, true, true, true ]
 gap> List(HClassReps(l), x-> x in l);
@@ -342,7 +342,7 @@ gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 3, 5, 6, 7 ], [ 9, 1, 5, 3, 8 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9, 10 ], [ 4, 10, 5, 6, 7, 1, 3, 2 ] ) ]);;
 gap> d:=DClasses(s)[14];
-{PartialPerm( [ 2, 10 ], [ 2, 10 ] )}
+<Green's D-class: <identity partial perm on [ 2, 10 ]>>
 gap> F:=IsomorphismReesMatrixSemigroup(d);;
 gap> G:=InverseGeneralMapping(F);;
 gap> ForAll(d, f-> (f^F)^G=f);        
@@ -465,7 +465,7 @@ gap> R:=ReesZeroMatrixSemigroup(Group(()),
 gap> R:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 gap> H:=First(HClasses(R), IsGroupHClass);
-{0}
+<Green's H-class: 0>
 gap> Elements(H);   
 [ 0 ]
 gap> f:=IsomorphismPermGroup(H);;
@@ -872,7 +872,7 @@ gap> S := Semigroup(
 gap> x := PartialPerm( [  ], [  ] );;
 gap> I := SemigroupIdeal(S, x);;
 gap> L := GreensLClassOfElement(I, x);
-{PartialPerm( [  ], [  ] )}
+<Green's L-class: <empty partial perm>>
 gap> SchutzenbergerGroup(L); 
 Group(())
 
@@ -910,7 +910,8 @@ gap> x := Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ],
 gap> I := SemigroupIdeal(S, x);
 <inverse bipartition semigroup ideal on 6 pts with 1 generator>
 gap> JoinIrreducibleDClasses(I);
-[ {Bipartition( [ [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], [ 6, -6 ] ] )} ]
+[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], 
+      [ 6, -6 ]>> ]
 gap> I;
 <inverse bipartition semigroup ideal on 6 pts with 1 generator>
 
@@ -934,14 +935,14 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1,3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x,y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ {0}, {(1,(),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, 
-  {(1,(),6)}, {(2,(),1)}, {(2,(),2)}, {(2,(),3)}, {(2,(),4)}, {(2,(),5)}, 
-  {(2,(),6)}, {(3,(),1)}, {(3,(),2)}, {(3,(),3)}, {(3,(),4)}, {(3,(),5)}, 
-  {(3,(),6)}, {(4,(),1)}, {(4,(),2)}, {(4,(),3)}, {(4,(),4)}, {(4,(),5)}, 
-  {(4,(),6)}, {(5,(),1)}, {(5,(),2)}, {(5,(),3)}, {(5,(),4)}, {(5,(),5)}, 
-  {(5,(),6)}, {(6,(),1)}, {(6,(),2)}, {(6,(),3)}, {(6,(),4)}, {(6,(),5)}, 
-  {(6,(),6)}, {(7,(),1)}, {(7,(),2)}, {(7,(),3)}, {(7,(),4)}, {(7,(),5)}, 
-  {(7,(),6)} ]
+[ {0}, {(2,(),1)}, {(1,(),2)}, {(2,(),2)}, {(1,(),3)}, {(2,(),3)}, 
+  {(1,(),4)}, {(2,(),4)}, {(1,(),5)}, {(2,(),5)}, {(1,(),6)}, {(1,(1,3),1)}, 
+  {(3,(),1)}, {(4,(),1)}, {(5,(),1)}, {(2,(),6)}, {(3,(),2)}, {(3,(),3)}, 
+  {(6,(),1)}, {(3,(),4)}, {(6,(),2)}, {(6,(),3)}, {(3,(),5)}, {(6,(),4)}, 
+  {(3,(),6)}, {(6,(),5)}, {(6,(),6)}, {(4,(),2)}, {(4,(),3)}, {(4,(),4)}, 
+  {(4,(),5)}, {(7,(),1)}, {(4,(),6)}, {(7,(),2)}, {(7,(),3)}, {(7,(),4)}, 
+  {(7,(),5)}, {(7,(),6)}, {(5,(),2)}, {(5,(),3)}, {(5,(),4)}, {(5,(),5)}, 
+  {(5,(),6)} ]
 gap> ForAny(c, x->MultiplicativeZero(R) in x);
 true
 

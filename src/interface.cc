@@ -627,11 +627,12 @@ Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
     if (val != Fail) {
       return val; 
     }
-    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(0), 0, False);
+    Obj limit = SumInt(ElmPRec(data, RNamName("nr")), INTOBJ_INT(1));
+    ENUMERATE_SEMIGROUP(self, data,  limit, 0, False);
     pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
     nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   } while (pos <= nr);
-  return Fail;
+  return HTValue_TreeHash_C(self, ht, x);
 }
 
 Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
