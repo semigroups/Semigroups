@@ -224,34 +224,13 @@ function(S)
 
   hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
-  if IsMonoid(S) then
-    data.gens := ShallowCopy(GeneratorsOfMonoid(S));
-    nrgens := Length(data.gens);
-    data.ht := HTCreate(One(S), rec(treehashsize := hashlen));
-    nr := 1;
-    HTAdd(data.ht, One(S), 1);
-    data.elts[1] := One(S);
-    data.words[1] := [];
-    data.first[1] := 0;
-    data.final[1] := 0;
-    data.prefix[1] := 0;
-    data.suffix[1] := 0;
-    data.reduced[1] := List([1 .. nrgens], ReturnTrue);
-    data.one := 1;
-    data.pos := 2; # we don't apply generators to the One(S)
-    data.left[1] := data.genslookup;
-    data.right[1] := data.genslookup;
-    data.lenindex[1] := 2;
-  else
-    data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
-    nrgens := Length(data.gens);
-    data.ht := HTCreate(data.gens[1], rec(treehashsize := hashlen));
-    nr := 0;
-    data.one := false;
-    data.pos := 1;
-    data.lenindex[1] := 1;
-  fi;
-
+  data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
+  nrgens := Length(data.gens);
+  data.ht := HTCreate(data.gens[1], rec(treehashsize := hashlen));
+  nr := 0;
+  data.one := false;
+  data.pos := 1;
+  data.lenindex[1] := 1;
   data.genstoapply := [1 .. nrgens];
 
   # add the generators

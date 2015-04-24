@@ -611,7 +611,7 @@ Obj NR_RULES_SEMIGROUP (Obj self, Obj data) {
   if (IsCPPSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->nrrules());
   }
-  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("nrrules"))));
+  return INTOBJ_INT(ElmPRec(data, RNamName("nrrules")));
 }
 
 Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
@@ -620,9 +620,9 @@ Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
   }
 
   Obj ht = ElmPRec(data, RNamName("ht"));
-  size_t pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
-  size_t nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
-  while (pos <= nr) { 
+  size_t pos, nr;
+  
+  do { 
     Obj val = HTValue_TreeHash_C(self, ht, x);
     if (val != Fail) {
       return val; 
@@ -630,7 +630,7 @@ Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(0), 0, False);
     pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
     nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
-  }
+  } while (pos <= nr);
   return Fail;
 }
 
@@ -675,10 +675,6 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
     return data;
   }
 
-#ifdef DEBUG
-  std::cout << "GAP kernel version\n";
-#endif
-
   // TODO if looking check that something in elts doesn't already satisfy the
   // lookfunc 
 
@@ -694,6 +690,10 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
     return data;
   }
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BATCH_SIZE));
+
+//#ifdef DEBUG
+  std::cout << "GAP kernel version\n";
+//#endif
   
   #ifdef DEBUG
     Pr("here 1\n", 0L, 0L);
