@@ -247,13 +247,13 @@ Group([ (5,9), (1,7) ])
 gap> g := Group([ (5,9), (1,7) ]);;
 gap> IsomorphismTransformationSemigroup(g);;
 gap> s:=Range(last);
-<transformation semigroup of size 4, on 4 pts with 2 generators>
+<transformation semigroup on 4 pts with 2 generators>
 gap> IsGroupAsSemigroup(s);
 true
 gap> Generators(s);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> t:=Range(IsomorphismTransformationMonoid(g));
-<transformation monoid of size 4, on 4 pts with 2 generators>
+<transformation monoid on 4 pts with 2 generators>
 gap> Generators(t);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));

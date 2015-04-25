@@ -167,7 +167,7 @@ function(I)
     if not IsBound(enum!.indices[nr]) then 
       SEMIGROUPS_EnumerateIdeal(enum, nr, ReturnFalse);
     fi;
-    return data!.elts[enum!.indices[nr]];
+    return ELEMENTS_SEMIGROUP(data, enum!.indices[nr])[enum!.indices[nr]];
   end;
 
   record.IsBound\[\]:=function(enum, nr)

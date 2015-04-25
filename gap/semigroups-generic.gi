@@ -40,7 +40,8 @@ function(S)
     return data!.elts[nr];
   end;
 
-  enum.Length := enum -> Size(S);
+  # FIXME this should be Size(S) hack around RZMS
+  enum.Length := enum -> SIZE_SEMIGROUP(GenericSemigroupData(S));
 
   enum.AsList := enum -> ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
 
@@ -48,8 +49,9 @@ function(S)
     return Position(GenericSemigroupData(S), elt) <> fail;
   end;
 
+  # FIXME this should be Size(S) hack around RZMS
   enum.IsBound\[\] := function(enum, nr)
-    return nr <= Size(S);
+    return nr <= SIZE_SEMIGROUP(GenericSemigroupData(S));
   end;
 
   return EnumeratorByFunctions(S, enum);
