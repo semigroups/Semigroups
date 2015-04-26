@@ -16,7 +16,7 @@ InstallMethod(IsMaximalSubsemigroup, "for a semigroup and a semigroup",
 function(S, T)
   if IsSubsemigroup(S, T) and S <> T then
     return ForAll(S, x -> x in T
-                   or Semigroup(GeneratorsOfSemigroup(T), x) = S);
+                  or Semigroup(GeneratorsOfSemigroup(T), x) = S);
   fi;
   return false;
 end);
@@ -618,15 +618,15 @@ fi;
 #
 
 if not (IsGrapeLoaded and IsGrapeCompiled) then
-  InstallMethod(MaximalSubsemigroups, "for an acting semigroup",
-  [IsActingSemigroup],
+  InstallMethod(MaximalSubsemigroups, "for a semigroup",
+  [IsSemigroup],
   function(S)
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end);
 else
-  InstallMethod(MaximalSubsemigroups, "for an acting semigroup",
-  [IsActingSemigroup],
+  InstallMethod(MaximalSubsemigroups, "for a semigroup",
+  [IsSemigroup],
   function(S)
     local max, out, gens, nrgens, po, classes, D, lookup, nonmax, tot, gens2,
     pos, V, inj, R, tuples, reps, ideal, lastideal, UnionOfHClassRecursion,
@@ -983,81 +983,5 @@ else
     Info(InfoSemigroups, 2, "generating all found maximal subsemigroups...");
     out := List(out, x -> Semigroup(x, rec(small := true)));
     return out;
-  end);
-fi;
-
-#
-
-#Subsemigroups:=function(R)
-#  local max, o, U, V;
-#
-#  max:=Set(MaximalSubsemigroups(R));
-#  o:=ShallowCopy(max);
-#
-#  for U in o do
-#    if Size(U)>1 then
-#      for V in MaximalSubsemigroups(U) do
-#        if not V in max then
-#          AddSet(max, V);
-#          Add(o, V);
-#        fi;
-#      od;
-#    fi;
-#  od;
-#
-#  return Concatenation(max, [R]);
-#end;
-#
-##
-#
-#NumberOfSubsemigroups:=function(R)
-#  local max, o, U, V, count;
-#
-#  max:=Set(MaximalSubsemigroups(R));
-#  o:=ShallowCopy(max);
-#  count:=Length(o)+1; # +1 for R itself
-#
-#  while not IsEmpty(o) do
-#    U:=o[1];
-#    if Size(U)>1 then
-#      for V in MaximalSubsemigroups(U) do
-#        if not V in max then
-#          AddSet(max, V);
-#          Add(o, V);
-#          count:=count+1;
-#          Print(count,"\n");
-#        fi;
-#      od;
-#    fi;
-#    Remove(o,1);
-#  od;
-#
-#  return count;
-#end;
-
-#
-
-if not (IsGrapeLoaded and IsGrapeCompiled) then
-  InstallMethod(MaximalSubsemigroups, "for an semigroup",
-  [IsSemigroup],
-  function(S)
-    Info(InfoWarning, 1, GrapeIsNotCompiledString);
-    return fail;
-  end);
-else
-  InstallMethod(MaximalSubsemigroups, "for an semigroup",
-  [IsSemigroup],
-  function(S)
-    local iso, inv, T, maxT, maxS, U;
-
-    iso := IsomorphismTransformationSemigroup(S);
-    inv := InverseGeneralMapping(iso);
-    T   := Range(iso);
-    maxT := List(MaximalSubsemigroups(T), GeneratorsOfSemigroup);
-    maxS := [];
-    for U in maxT do
-     Add(maxS, Semigroup(OnTuples(U, inv)));
-    od;
-    return maxS;
   end);
 fi;

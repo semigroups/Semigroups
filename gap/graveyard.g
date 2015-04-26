@@ -1,5 +1,54 @@
 # Here lies some dead code, may it rest in peace
 
+#
+
+#Subsemigroups:=function(R)
+#  local max, o, U, V;
+#
+#  max:=Set(MaximalSubsemigroups(R));
+#  o:=ShallowCopy(max);
+#
+#  for U in o do
+#    if Size(U)>1 then
+#      for V in MaximalSubsemigroups(U) do
+#        if not V in max then
+#          AddSet(max, V);
+#          Add(o, V);
+#        fi;
+#      od;
+#    fi;
+#  od;
+#
+#  return Concatenation(max, [R]);
+#end;
+#
+##
+#
+#NumberOfSubsemigroups:=function(R)
+#  local max, o, U, V, count;
+#
+#  max:=Set(MaximalSubsemigroups(R));
+#  o:=ShallowCopy(max);
+#  count:=Length(o)+1; # +1 for R itself
+#
+#  while not IsEmpty(o) do
+#    U:=o[1];
+#    if Size(U)>1 then
+#      for V in MaximalSubsemigroups(U) do
+#        if not V in max then
+#          AddSet(max, V);
+#          Add(o, V);
+#          count:=count+1;
+#          Print(count,"\n");
+#        fi;
+#      od;
+#    fi;
+#    Remove(o,1);
+#  od;
+#
+#  return count;
+#end;
+
 DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 

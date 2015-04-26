@@ -762,7 +762,8 @@ true
 #T# TestInstall45: Issue 97
 # (bug in normalizer and the kernel function POW_KER_TRANS)
 gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
->   G := Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation));
+>   G := Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation,
+>                                                rec(generic := false)));
 > else
 >   G := SymmetricGroup(3);
 > fi;
@@ -914,7 +915,7 @@ fail
 #T# TestInstall59: Issue 88:
 # Something called by `JoinIrreducibleDClasses` of an ideal of a bipartition
 # semigroup calls `GeneratorsOfSemigroup`
-gap> S := DualSymmetricInverseMonoid(6);;
+gap> S := InverseMonoid(DualSymmetricInverseMonoid(6), rec(generic := false));;
 gap> x := Bipartition([[1, 2, -3], [3, -1, -2], [4, -4],
 > [5, -5], [6, -6]]);;
 gap> I := SemigroupIdeal(S, x);

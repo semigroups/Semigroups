@@ -316,7 +316,7 @@ function(S)
     if singleline then
       Add(out, d);
       continue;
-    elif IsTrivial(SchutzenbergerGroup(d)) then
+    elif IsTrivial(GroupHClass(d)) then
       continue;
     fi;
 

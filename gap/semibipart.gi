@@ -565,10 +565,14 @@ function(S)
    x -> AsBlockBijection(x, n), inv);
 end);
 
-# JDM could have a method for
-# IsomorphismBlockBijectionSemigroup for IsPartialPermBipartitions too..
-# or just for general inverse semigroups, via composing
-# IsomorphismPartialPermSemigroup and IsomorphismBlockBijection
+# JDM could have a method for IsomorphismBlockBijectionSemigroup for
+# IsPartialPermBipartitions too..  or just for general inverse semigroups, via
+# composing IsomorphismPartialPermSemigroup and IsomorphismBlockBijection
+
+InstallMethod(IsGeneratorsOfInverseSemigroup, 
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+S -> IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)));
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],

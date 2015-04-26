@@ -9,7 +9,17 @@
 ##
 
 # This file contains methods semigroups which do not depend on whether they are
-# acting or not
+# acting or not.
+
+InstallMethod(IsGeneratorsOfInverseSemigroup, 
+"for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  if IsSemigroupWithInverseOp(S) then
+    return true;
+  fi;
+  return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
+end);
 
 # same method for ideals
 

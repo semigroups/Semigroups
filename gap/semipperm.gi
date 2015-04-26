@@ -265,27 +265,26 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 
 InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-function(s)
-  local r, g, deg, u;
+function(S)
+  local H, G, deg, U;
 
-  if MultiplicativeNeutralElement(s) = fail then
+  if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
-  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g := SchutzenbergerGroup(r);
-  deg := Maximum(DegreeOfPartialPermSemigroup(s),
-                 CodegreeOfPartialPermSemigroup(s));
+  H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  G := Range(IsomorphismPermGroup(H));
+  deg := Maximum(DegreeOfPartialPermSemigroup(S),
+                 CodegreeOfPartialPermSemigroup(S));
 
-  u := Monoid(List(GeneratorsOfGroup(g), x -> AsPartialPerm(x, deg)));
+  U := Monoid(List(GeneratorsOfGroup(G), x -> AsPartialPerm(x, deg)));
 
-  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation,
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
                                                x -> AsPartialPerm(x, deg)));
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, G);
 
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
-
-  return u;
+  return U;
 end);
 
 #

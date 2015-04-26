@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+#TODO Normalizer doesn't work for non-acting semigroups, there is no reason it
+#     shouldn't.
+
 if not IsBound(POW_KER_PERM) then
   BindGlobal("POW_KER_PERM", function(pt, x)
     return FlatKernelOfTransformation(TransformationNC(pt) ^ x, Length(pt));
@@ -17,20 +20,20 @@ fi;
 #
 
 InstallMethod(Normalizer, "for a transformation semigroup and record",
-[IsTransformationSemigroup, IsRecord],
+[IsTransformationSemigroup and IsActingSemigroup, IsRecord],
 function(S, opts)
   return Normalizer(SymmetricGroup(DegreeOfTransformationSemigroup(S)), S,
   opts);
 end);
 
 InstallMethod(Normalizer, "for a partial perm semigroup and record",
-[IsPartialPermSemigroup, IsRecord],
+[IsPartialPermSemigroup and IsActingSemigroup, IsRecord],
 function(S, opts)
   return Normalizer(SymmetricGroup(DegreeOfPartialPermSemigroup(S)), S, opts);
 end);
 
 InstallMethod(Normalizer, "for a bipartition semigroup and record",
-[IsBipartitionSemigroup, IsRecord],
+[IsBipartitionSemigroup and IsActingSemigroup, IsRecord],
 function(S, opts)
   return Normalizer(SymmetricGroup(DegreeOfBipartitionSemigroup(S)), S, opts);
 end);
@@ -38,21 +41,21 @@ end);
 #
 
 InstallMethod(Normalizer, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and IsActingSemigroup],
 function(S)
   return DeterministicSemigroupNormalizer(
    SymmetricGroup(DegreeOfTransformationSemigroup(S)), S, rec());
 end);
 
 InstallMethod(Normalizer, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
+[IsPartialPermSemigroup and IsActingSemigroup],
 function(S)
   return DeterministicSemigroupNormalizer(
    SymmetricGroup(DegreeOfPartialPermSemigroup(S)), S, rec());
 end);
 
 InstallMethod(Normalizer, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
+[IsBipartitionSemigroup and IsActingSemigroup],
 function(S)
   return DeterministicSemigroupNormalizer(
    SymmetricGroup(DegreeOfBipartitionSemigroup(S)), S, rec());
@@ -61,8 +64,8 @@ end);
 #
 
 InstallMethod(NormalizerOp,
-"for a permutation group and a semigroup",
-[IsPermGroup, IsSemigroup],
+"for a permutation group and an acting semigroup",
+[IsPermGroup, IsActingSemigroup],
 function(G, S)
   return DeterministicSemigroupNormalizer(G, S, rec()); #i.e. deterministic
 end);
