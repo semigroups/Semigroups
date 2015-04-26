@@ -116,6 +116,7 @@ function()
   # handle info levels etc
   record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
   record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);
+  record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
 
   record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
   record.TransformationDisplayLimit
@@ -129,6 +130,7 @@ function()
 
   SetInfoLevel(InfoWarning, 0);
   SetInfoLevel(InfoSemigroups, 0);
+  SetInfoLevel(InfoPackageLoading, 0);
 
   SetUserPreference("PartialPermDisplayLimit", 100);
   SetUserPreference("TransformationDisplayLimit", 100);
@@ -161,6 +163,7 @@ function(file)
 
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
+  SetInfoLevel(InfoSemigroups, record.InfoLevelInfoPackageLoading);
 
   SetUserPreference("PartialPermDisplayLimit",
    record.PartialPermDisplayLimit);
