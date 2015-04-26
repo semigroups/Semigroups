@@ -319,7 +319,7 @@ gap> Size(T);
 
 #T# TestInstall18
 gap> S := InverseSemigroup(PartialPermNC([1, 3, 5, 6, 7], [9, 1, 5, 3, 8]),
->                          PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10], 
+>                          PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10],
 >                                        [4, 10, 5, 6, 7, 1, 3, 2]));;
 gap> x := PartialPermNC([3, 4, 5, 6], [1, 3, 6, 5]);;
 gap> D := DClass(S, x);;
@@ -331,7 +331,7 @@ true
 
 #T# TestInstall18a
 gap> S := InverseSemigroup(PartialPermNC([1, 3, 5, 6, 7], [9, 1, 5, 3, 8]),
->                          PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10], 
+>                          PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10],
 >                                        [4, 10, 5, 6, 7, 1, 3, 2]));;
 gap> D := DClass(S, PartialPerm([2, 10], [2, 10]));
 <Green's D-class: <identity partial perm on [ 2, 10 ]>>
@@ -366,7 +366,7 @@ gap> x := PartialPerm([2 .. 7], [1 .. 6]);
 [7,6,5,4,3,2,1]
 
 #T# TestInstall22: from JS' SizeInverseMonoid.tst
-gap> S := InverseMonoid(PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], 
+gap> S := InverseMonoid(PartialPerm([1, 2, 3, 4, 5, 6, 7, 8],
 >                                   [1, 6, 3, 4, 8, 2, 7, 5]),
 >                       PartialPerm([1, 2, 3, 4, 5, 6, 7, 8],
 >                                   [1, 2, 7, 4, 8, 6, 3, 5]),
@@ -440,7 +440,7 @@ gap> (IsBound(GAPInfo.PackagesLoaded.grape)
 true
 
 #T# TestInstall29: ClosureSemigroup with an element of higher degree
-gap> S := Semigroup(Transformation([1, 3, 3, 2]), 
+gap> S := Semigroup(Transformation([1, 3, 3, 2]),
 >                   Transformation([4, 1, 4, 2]),
 >                   Transformation([4, 2, 3, 3]),
 >                   Transformation([4, 4, 4, 4]));;
@@ -563,7 +563,7 @@ gap> for i in [1 .. 6] do
 >                   PartialPerm([1, 2, 4, 6], [2, 1, 5, 3]),
 >                   PartialPerm([1, 2, 3, 6], [5, 2, 1, 3]),
 >                   PartialPerm([2, 3, 4, 6], [3, 2, 1, 6]),
->                   PartialPerm([1, 2, 6], [3, 2, 6])], 
+>                   PartialPerm([1, 2, 6], [3, 2, 6])],
 >                   rec(small := true));
 >   IsInverseSemigroup(V);
 > od;
@@ -728,7 +728,7 @@ on( [ 2, 3, 3, 3 ] ) ] ), [ Transformation( [ 2, 3, 2, 3 ] ) ] ) )>
 
 #T# TestInstall43: Issue 89
 gap> S := Semigroup(Transformation([2, 1, 3, 1, 4, 3]),
->                   Transformation([2, 2, 2, 2, 1, 2]), 
+>                   Transformation([2, 2, 2, 2, 1, 2]),
 >                   Transformation([5, 3, 4, 3, 5]),
 >                   Transformation([6, 4, 1, 4, 5, 3]),
 >                   Transformation([6, 5, 2, 6, 3, 4]));;
@@ -744,9 +744,9 @@ gap> S := Semigroup(Transformation([1, 2, 1]),
 >                   Transformation([4, 2, 1, 4]));;
 gap> T := Semigroup(Transformation([1, 2, 3, 1]),
 >                   Transformation([2, 2, 3, 1]),
->                   Transformation([2, 3, 3, 1]), 
+>                   Transformation([2, 3, 3, 1]),
 >                   Transformation([1, 3, 3]),
->                   Transformation([2, 3, 3, 3]), 
+>                   Transformation([2, 3, 3, 3]),
 >                   Transformation([3, 2, 3, 3]));;
 gap> (not (IsBound(GAPInfo.PackagesLoaded.grape)
 > and Filename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail)) or
@@ -822,7 +822,7 @@ gap> S := [SymmetricInverseMonoid(2)];;
 gap> S[2] := MaximalSubsemigroups(S[1]);;
 gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.7")
 >        and (IsBound(GAPInfo.PackagesLoaded.grape)
->        and Filename(DirectoriesPackagePrograms("grape"), 
+>        and Filename(DirectoriesPackagePrograms("grape"),
 >                     "dreadnautB") <> fail) then
 >      S[3] := List(S[2], MaximalSubsemigroups);;
 >    fi;
