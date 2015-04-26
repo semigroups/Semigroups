@@ -8,8 +8,8 @@
 #############################################################################
 ##
 
-# This file contains methods semigroups which do not depend on whether they are
-# acting or not.
+# This file contains methods for finite semigroups which do not depend on
+# whether they are acting or not, i.e. they should work for all semigroups.
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, 
 "for a semigroup with generators",

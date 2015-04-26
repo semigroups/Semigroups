@@ -843,13 +843,13 @@ gap> S := FreeBand("a", "b", "c", "d", "e");
 gap> iter := Iterator(S);
 <iterator>
 gap> for i in [1 .. 100] do
-> NextIterator(iter);
-> od;
+>      NextIterator(iter);
+>    od;
 gap> x := NextIterator(iter);
 bcabaca
 gap> for i in [1 .. 10] do
-> NextIterator(iter);
-> od;
+>      NextIterator(iter);
+>    od;
 gap> y := NextIterator(iter);
 cbcacbab
 gap> x * y;
