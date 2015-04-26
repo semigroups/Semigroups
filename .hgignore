@@ -1,4 +1,6 @@
 syntax: glob
+configure
+autom4te*
 *.orig
 *.DS_Store
 *.swp
