@@ -341,6 +341,33 @@ gap> Size(MinimalDClass(s));
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
 
+#T# attributes: IsomorphismFpMonoid, 
+gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
+>                Transformation([2, 4, 1, 5, 5]), 
+>                Transformation([2, 5, 3, 5, 3]),
+>                Transformation([4, 1, 2, 2, 1]), 
+>                Transformation([5, 5, 1, 1, 3]));;
+gap> map := IsomorphismFpMonoid(S);
+MappingByFunction( <transformation monoid on 5 pts with 5 generators>
+ , <fp monoid on the generators [ m1, m2, m3, m4, m5 
+ ]>, function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(map);
+MappingByFunction( <fp monoid on the generators [ m1, m2, m3, m4, m5 ]>, 
+<transformation monoid on 5 pts with 5 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> ForAll(S, x -> (x ^ map) ^ inv = x);
+true
+gap> map := IsomorphismFpSemigroup(S);
+MappingByFunction( <transformation monoid on 5 pts with 5 generators>
+ , <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
+ ]>, function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(map);
+MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
+ ]>, <transformation monoid on 5 pts with 5 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> ForAll(S, x -> (x ^ map) ^ inv = x);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);
