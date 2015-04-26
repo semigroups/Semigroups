@@ -428,7 +428,8 @@ end);
 #
 
 InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup], RankFilter(IsActingSemigroup), 
+# to beat the default method for acting semigroups
 function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;

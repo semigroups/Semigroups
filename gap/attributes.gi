@@ -193,7 +193,8 @@ InstallMethod(MinimalIdeal, "for a finite semigroup",
 [IsFinite and IsSemigroup],
 function(S)
   local I;
-  I := SemigroupIdeal(S, RepresentativeOfMinimalIdeal(S));
+  I := SemigroupIdealByGeneratorsNC(S, [RepresentativeOfMinimalIdeal(S)],
+                                    SEMIGROUPS_OptionsRec(S));
   SetIsSimpleSemigroup(I, true);
   return I;
 end);

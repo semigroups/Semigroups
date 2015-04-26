@@ -234,17 +234,25 @@ function(S, gens, opts)
           "the second argument <gens> do not all belong to the semigroup,");
     return;
   fi;
+  return SemigroupIdealByGeneratorsNC(S, gens, opts);
+end);
 
-  gens:=AsList(gens);
+InstallMethod(SemigroupIdealByGeneratorsNC, 
+"for semigroup, associative element collection, and record",
+[IsSemigroup, IsAssociativeElementCollection, IsRecord],
+function(S, gens, opts)
+  local filts, I;
+
+  gens := AsList(gens);
   
-  filts:=IsMagmaIdeal and IsAttributeStoringRep;
+  filts := IsMagmaIdeal and IsAttributeStoringRep;
   
   if not opts.generic and (IsActingSemigroup(S) 
     or IsGeneratorsOfActingSemigroup(gens)) then 
     filts:=filts and IsActingSemigroup;
   fi;
 
-  I:=Objectify(NewType(FamilyObj(gens), filts), rec(opts:=opts));
+  I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   
   if IsSemigroupWithInverseOp(S) then 
     SetFilterObj(I, IsSemigroupWithInverseOp);
@@ -274,7 +282,7 @@ function(S, gens, opts)
   if opts.generic then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif IsActingSemigroup(I) and not (HasIsRegularSemigroup(I) and
-    IsRegularSemigroup(I)) then
+      IsRegularSemigroup(I)) then
     # this is done so that the ideal knows it is regular or non-regular from the
     # point of creation...
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);

@@ -11,6 +11,8 @@ DeclareSynonymAttr("GeneratorsOfSemigroupIdeal", GeneratorsOfMagmaIdeal);
 DeclareGlobalFunction("SemigroupIdeal");
 DeclareOperation("SemigroupIdealByGenerators", 
   [IsSemigroup, IsAssociativeElementCollection, IsRecord]);
+DeclareOperation("SemigroupIdealByGeneratorsNC", 
+  [IsSemigroup, IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("MinimalIdealGeneratingSet", [IsSemigroupIdeal]);
 
 # the <Parent> of an ideal is the semigroup in which the ideal was created, i.e.
