@@ -996,9 +996,9 @@ function(n)
 
   out := Objectify(BipartitionType, rec(blocks := out));
 
-  #SetDegreeOfBipartition(out, n);
-  #SetNrLeftBlocks(out, nrleft);
-  #SetNrBlocks(out, nrblocks);
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrleft);
+  SetNrBlocks(out, nrblocks);
 
   return out;
 end);
@@ -1364,6 +1364,10 @@ InstallMethod(PrintString, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
   local str, i;
+  
+  if IsGreensClass(coll) or IsSemigroup(coll) then 
+    TryNextMethod();
+  fi;
 
   str := "\>[ ";
   for i in [1 .. Length(coll)] do
@@ -1379,15 +1383,6 @@ function(coll)
     fi;
   od;
   return str;
-end);
-
-# required to beat the method for bipartition collections...
-
-InstallMethod(PrintObj, "for an equivalence class of bipartitions",
-[IsBipartitionCollection and IsEquivalenceClass],
-function(c)
-  Print("{", Representative(c), "}");
-  return;
 end);
 
 #collections

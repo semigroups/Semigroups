@@ -109,7 +109,7 @@ InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 S -> LEFT_CAYLEY_GRAPH(GenericSemigroupData(S)));
 
-# same method for ideals,
+# same method for ideals
 
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 [IsGreensDClass], InjectionPrincipalFactor);
@@ -159,7 +159,7 @@ function(coll)
         AddSet(redund, x);
         gens := Difference(gens, [x]);
       else
-        AddSet(out, f);
+        AddSet(out, x);
       fi;
     fi;
   until Length(redund) + Length(out) = nrgens;

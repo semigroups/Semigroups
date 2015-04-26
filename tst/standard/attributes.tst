@@ -368,6 +368,50 @@ MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 
+#T# attributes: RightCayleyGraphSemigroup
+gap> S := Semigroup(PartialPerm([1, 2, 3], [1, 3, 4]),
+>                   PartialPerm([1, 2, 3], [2, 5, 3]),
+>                   PartialPerm([1, 2, 3], [4, 1, 2]),
+>                   PartialPerm([1, 2, 3, 4], [2, 4, 1, 5 ]),
+>                   PartialPerm([1, 3, 5], [5, 1, 3]));;
+gap> RightCayleyGraphSemigroup(S);;
+gap> Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(last)) = NrRClasses(S);
+true
+
+#T# attributes: LeftCayleyGraphSemigroup
+gap> S := Monoid(BooleanMatNC([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
+>                              [1, 1, 0, 1, 0], [1, 1, 1, 1, 1],
+>                              [1, 1, 0, 0, 0]]),
+>                BooleanMatNC([[0, 0, 1, 0, 0], [1, 0, 1, 1, 0],
+>                              [1, 0, 1, 1, 1], [0, 1, 1, 1, 0],
+>                              [0, 1, 1, 1, 0]]),
+>                BooleanMatNC([[0, 0, 0, 1, 1], [0, 0, 1, 1, 0],
+>                              [0, 0, 1, 1, 0], [1, 1, 0, 1, 0],
+>                              [1, 0, 1, 0, 1]]),
+>                BooleanMatNC([[0, 1, 1, 1, 0], [0, 0, 0, 1, 0],
+>                              [1, 1, 1, 0, 1], [1, 0, 1, 0, 0],
+>                              [1, 0, 1, 1, 0]]),
+>                BooleanMatNC([[1, 0, 0, 0, 1], [1, 0, 0, 0, 1],
+>                              [0, 0, 0, 0, 1], [0, 1, 1, 0, 1],
+>                              [1, 1, 1, 0, 1]]));;
+gap> LeftCayleyGraphSemigroup(S);;
+gap> Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(last)) = NrLClasses(S);
+true
+
+#T# attributes: IsomorphismReesMatrixSemigroup
+gap> D := GreensDClassOfElement(Semigroup(
+> Bipartition([[1, 2, 3, -3], [4, -4, -5], [5, -1], [-2]]),
+> Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]),
+> Bipartition([[1, 5], [2, 4, -3, -5], [3, -1, -2], [-4]]),
+> Bipartition([[1], [2], [3, 5, -1, -2], [4, -3], [-4, -5]]),
+> Bipartition([[1], [2], [3], [4, -1, -4], [5], [-2, -3], [-5]])), 
+> Bipartition([[1], [2], [3], [4, -1, -4], [5], [-2, -3], [-5]]));;
+gap> IsomorphismReesMatrixSemigroup(D);
+MappingByFunction( <Green's D-class: <bipartition: [ 1 ], [ 2 ], [ 3 ], 
+  [ 4, -1, -4 ], [ 5 ], [ -2, -3 ], [ -5 ]>>, 
+<Rees 0-matrix semigroup 12x15 over Group(())>
+ , function( f ) ... end, function( x ) ... end )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);
