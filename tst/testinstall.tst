@@ -61,11 +61,11 @@ gap> NrIdempotents(S); NrRegularDClasses(S); IsRegularSemigroup(S);
 22
 6
 false
-gap> f := Transformation([1, 3, 4, 1]);;
-gap> f in S;
+gap> x := Transformation([1, 3, 4, 1]);;
+gap> x in S;
 false
-gap> f := Transformation([1, 1, 3, 1]);;
-gap> f in S;
+gap> x := Transformation([1, 1, 3, 1]);;
+gap> x in S;
 true
 gap> T := Semigroup(gens{[1 .. 3]});
 <transformation semigroup on 4 pts with 3 generators>
@@ -80,21 +80,21 @@ gap> AsList(S);
 [ Transformation( [ 4, 4, 4, 4 ] ) ]
 
 #T# TestInstall9: Issue 3
-gap> s := Semigroup(Transformation([3, 5, 5, 5, 3]),
+gap> S := Semigroup(Transformation([3, 5, 5, 5, 3]),
 >                   Transformation([5, 5, 2, 1, 5]));;
-gap> f := Transformation([3, 3, 5, 3, 3]);;
-gap> IsRegularSemigroupElement(s, f);
+gap> x := Transformation([3, 3, 5, 3, 3]);;
+gap> IsRegularSemigroupElement(S, x);
 true
-gap> f := Transformation([5, 5, 5, 5, 5]);;
-gap> IsRegularSemigroupElement(s, f);
+gap> x := Transformation([5, 5, 5, 5, 5]);;
+gap> IsRegularSemigroupElement(S, x);
 true
-gap> f := Transformation([3, 5, 5, 5, 3]);;
-gap> IsRegularSemigroupElement(s, f);
+gap> x := Transformation([3, 5, 5, 5, 3]);;
+gap> IsRegularSemigroupElement(S, x);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 false
-gap> f := Transformation([5, 5, 2, 1, 5]);;
-gap> IsRegularSemigroupElement(s, f);
+gap> x := Transformation([5, 5, 2, 1, 5]);;
+gap> IsRegularSemigroupElement(S, x);
 false
 
 #T# TestInstall10: Issue 9
@@ -125,38 +125,32 @@ gap> gens := [Transformation([1, 2, 3, 9, 5, 11, 7, 8, 9, 10, 11, 12]),
 > Transformation([9, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
 > Transformation([9, 11, 8, 5, 11, 9, 12, 3, 5, 8, 9, 11]),
 > Transformation([11, 7, 9, 5, 10, 11, 12, 9, 12, 9, 11, 8])];;
-gap> s := Semigroup(gens);;
-gap> NrDClasses(s);
+gap> S := Semigroup(gens);;
+gap> NrDClasses(S);
 232
-gap> Size(s);
+gap> Size(S);
 11858
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1455
-gap> NrLClasses(s);
+gap> NrLClasses(S);
 690
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 5356
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 300
-gap> Sum(List(GreensDClasses(s), NrRClasses)) = NrRClasses(s);
+gap> Sum(List(GreensDClasses(S), NrRClasses)) = NrRClasses(S);
 true
-gap> ForAll(Concatenation(List(GreensDClasses(s), RClassReps)),
->                         x -> x in s);
+gap> ForAll(Concatenation(List(GreensDClasses(S), RClassReps)),
+>                         x -> x in S);
 true
-
-#T# TestInstall11
-#gap> ForAll([1..NrRClasses(s)], i->
-#> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
-#> RClassReps(s)[i]);
-#true
 
 #T# TestInstall12
 gap> gens := [Transformation([1, 2, 3, 5, 4, 6, 7, 8]),
->   Transformation([4, 4, 3, 1, 5, 6, 3, 8]),
->   Transformation([3, 6, 1, 7, 3, 4, 8, 3]),
->   Transformation([1, 2, 3, 4, 5, 3, 7, 8]),
->   Transformation([1, 2, 3, 4, 1, 6, 7, 8]),
->   Transformation([8, 8, 3, 4, 5, 7, 6, 1])];;
+>             Transformation([4, 4, 3, 1, 5, 6, 3, 8]),
+>             Transformation([3, 6, 1, 7, 3, 4, 8, 3]),
+>             Transformation([1, 2, 3, 4, 5, 3, 7, 8]),
+>             Transformation([1, 2, 3, 4, 1, 6, 7, 8]),
+>             Transformation([8, 8, 3, 4, 5, 7, 6, 1])];;
 gap> s := Monoid(gens);
 <transformation monoid on 8 pts with 6 generators>
 gap> t := ClosureSemigroup(s, [Transformation([4, 4, 3, 1, 5, 6, 3, 8])]);
@@ -188,82 +182,82 @@ gap> S := Semigroup(Transformation([1, 2, 3, 4, 5, 6, 7, 8, 9]),
 >                   Transformation([1, 2, 8, 8, 8, 1, 7, 9, 5]),
 >                   Transformation([7, 2, 7, 2, 5, 5, 1, 8, 9]),
 >                   rec(generic := false));;
-gap> f := Transformation([7, 7, 4, 2, 1, 8, 8, 9, 5]);;
-gap> d := DClass(S, Transformation([1, 8, 6, 2, 7, 8, 8, 9, 5]));;
-gap> l := LClass(d, f);
+gap> x := Transformation([7, 7, 4, 2, 1, 8, 8, 9, 5]);;
+gap> D := DClass(S, Transformation([1, 8, 6, 2, 7, 8, 8, 9, 5]));;
+gap> L := LClass(D, x);
 <Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
-gap> ll := LClass(S, f);
+gap> LL := LClass(S, x);
 <Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
-gap> List(HClassReps(ll), x -> x in ll);
+gap> List(HClassReps(LL), x -> x in LL);
 [ true, true, true, true ]
-gap> List(HClassReps(l), x -> x in l);
+gap> List(HClassReps(L), x -> x in L);
 [ true, true, true, true ]
-gap> l = ll;
+gap> L = LL;
 true
-gap> ll < l;
+gap> LL < L;
 false
-gap> l < ll;
+gap> L < LL;
 false
-gap> Elements(l) = Elements(ll);
+gap> Elements(L) = Elements(LL);
 true
-gap> Size(l); Size(ll);
+gap> Size(L); Size(LL);
 8
 8
-gap> DClassOfLClass(ll) = DClassOfLClass(l);
+gap> DClassOfLClass(LL) = DClassOfLClass(L);
 true
-gap> DClassOfLClass(l) = d;
+gap> DClassOfLClass(L) = D;
 true
-gap> NrHClasses(l); NrHClasses(ll);
+gap> NrHClasses(L); NrHClasses(LL);
 4
 4
-gap> HClassReps(l);
+gap> HClassReps(L);
 [ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
   Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
-gap> HClassReps(ll);
+gap> HClassReps(LL);
 [ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
   Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
-gap> Idempotents(l);
+gap> Idempotents(L);
 [  ]
-gap> Idempotents(ll);
+gap> Idempotents(LL);
 [  ]
-gap> IsRegularDClass(d);
+gap> IsRegularDClass(D);
 false
 gap> Size(S);
 6982
-gap> Set(HClasses(l)) = Set(HClasses(ll));
+gap> Set(HClasses(L)) = Set(HClasses(LL));
 true
-gap> SchutzenbergerGroup(l);
+gap> SchutzenbergerGroup(L);
 Group([ (5,9), (1,7) ])
-gap> g := SchutzenbergerGroup(ll);
+gap> g := SchutzenbergerGroup(LL);
 Group([ (5,9), (1,7) ])
 
 #T# TestInstall14: IsomorphismTransformationSemigroup/Monoid
-gap> g := Group([(5, 9), (1, 7)]);;
-gap> IsomorphismTransformationSemigroup(g);;
-gap> s := Range(last);
+gap> G := Group([(5, 9), (1, 7)]);;
+gap> IsomorphismTransformationSemigroup(G);;
+gap> S := Range(last);
 <transformation semigroup on 4 pts with 2 generators>
-gap> IsGroupAsSemigroup(s);
+gap> IsGroupAsSemigroup(S);
 true
-gap> Generators(s);
+gap> Generators(S);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
-gap> t := Range(IsomorphismTransformationMonoid(g));
+gap> T := Range(IsomorphismTransformationMonoid(G));
 <transformation monoid on 4 pts with 2 generators>
-gap> Generators(t);
+gap> Generators(T);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
-gap> h := Range(IsomorphismPermGroup(t));
+gap> H := Range(IsomorphismPermGroup(T));
 Group([ (), (2,4), (1,3) ])
-gap> IsomorphismGroups(g, h);
+gap> IsomorphismGroups(G, H);
 [ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
 
 #T# TestInstall15: Issue 22 - takes about 49ms
-gap> f := Transformation([2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11]);;
+gap> x := Transformation([2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11]);;
 gap> S := FullTransformationSemigroup(12);;
 gap> S := Semigroup(S, rec(generic := false, regular := true));;
-gap> InversesOfSemigroupElement(S, f);
+gap> InversesOfSemigroupElement(S, x);
 [ Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 6, 3, 6, 2 ] ), 
@@ -300,65 +294,65 @@ gap>  ReadGenerators(file, 1376);
  ]
 
 #T# TestInstall17
-gap> s := InverseSemigroup(
-> [PartialPermNC([1, 2], [3, 1]),
->   PartialPermNC([1, 2, 3], [1, 3, 4]),
->   PartialPermNC([1, 2, 3], [2, 4, 1]),
->   PartialPermNC([1, 3, 4], [3, 4, 1])]);;
-gap> Size(s); NrRClasses(s); NrLClasses(s); NrDClasses(s);
+gap> S := InverseSemigroup(
+> PartialPermNC([1, 2], [3, 1]),
+> PartialPermNC([1, 2, 3], [1, 3, 4]),
+> PartialPermNC([1, 2, 3], [2, 4, 1]),
+> PartialPermNC([1, 3, 4], [3, 4, 1]));;
+gap> Size(S); NrRClasses(S); NrLClasses(S); NrDClasses(S);
 116
 14
 14
 4
-gap> NrIdempotents(s); NrRegularDClasses(s); IsRegularSemigroup(s);
+gap> NrIdempotents(S); NrRegularDClasses(S); IsRegularSemigroup(S);
 14
 4
 true
-gap> ForAll(s, x -> x in s);
+gap> ForAll(S, x -> x in S);
 true
-gap> t := InverseSemigroup(Generators(s){[1 .. 3]});
+gap> T := InverseSemigroup(Generators(S){[1 .. 3]});
 <inverse partial perm semigroup on 4 pts with 3 generators>
-gap> ForAll(t, x -> x in s);
+gap> ForAll(T, x -> x in S);
 true
-gap> Size(t);
+gap> Size(T);
 98
 
 #T# TestInstall18
-gap> s := InverseSemigroup(
-> [PartialPermNC([1, 3, 5, 6, 7], [9, 1, 5, 3, 8]),
-> PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10], [4, 10, 5, 6, 7, 1, 3, 2])]);;
-gap> f := PartialPermNC([3, 4, 5, 6], [1, 3, 6, 5]);;
-gap> d := DClass(s, f);;
-gap> F := InjectionPrincipalFactor(d);; G := InverseGeneralMapping(F);;
-gap> (f ^ F) ^ G = f;
+gap> S := InverseSemigroup(PartialPermNC([1, 3, 5, 6, 7], [9, 1, 5, 3, 8]),
+>                          PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10], 
+>                                        [4, 10, 5, 6, 7, 1, 3, 2]));;
+gap> x := PartialPermNC([3, 4, 5, 6], [1, 3, 6, 5]);;
+gap> D := DClass(S, x);;
+gap> F := InjectionPrincipalFactor(D);; G := InverseGeneralMapping(F);;
+gap> (x ^ F) ^ G = x;
 true
-gap> ForAll(d, f -> (f ^ F) ^ G = f);
+gap> ForAll(D, x -> (x ^ F) ^ G = x);
 true
 
 #T# TestInstall18a
-gap> S := InverseSemigroup(
-> PartialPermNC([1, 3, 5, 6, 7], [9, 1, 5, 3, 8]),
-> PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10], [4, 10, 5, 6, 7, 1, 3, 2]));;
-gap> d := DClass(S, PartialPerm([2, 10], [2, 10]));
+gap> S := InverseSemigroup(PartialPermNC([1, 3, 5, 6, 7], [9, 1, 5, 3, 8]),
+>                          PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10], 
+>                                        [4, 10, 5, 6, 7, 1, 3, 2]));;
+gap> D := DClass(S, PartialPerm([2, 10], [2, 10]));
 <Green's D-class: <identity partial perm on [ 2, 10 ]>>
-gap> F := IsomorphismReesMatrixSemigroup(d);;
+gap> F := IsomorphismReesMatrixSemigroup(D);;
 gap> G := InverseGeneralMapping(F);;
-gap> ForAll(d, f -> (f ^ F) ^ G = f);
+gap> ForAll(D, x -> (x ^ F) ^ G = x);
 true
 
 #T# TestInstall19: from JS' MultiplicativeZero.tst
-gap> s := InverseMonoid(PartialPerm([1, 2, 3, 4]),
+gap> S := InverseMonoid(PartialPerm([1, 2, 3, 4]),
 >                       PartialPerm([1, 3, 2, 4]),
 >                       PartialPerm([1, 2, 0, 0]),
 >                       PartialPerm([1, 0, 0, 4]));;
-gap> f := PartialPerm([1, 0, 0, 0]);;
-gap> f in s;
+gap> x := PartialPerm([1, 0, 0, 0]);;
+gap> x in S;
 true
-gap> ForAll(s, x -> f * x = f and x * f = f);
+gap> ForAll(S, y -> x * y = x and y * x = x);
 true
-gap> f;
+gap> x;
 <identity partial perm on [ 1 ]>
-gap> MultiplicativeZero(s);
+gap> MultiplicativeZero(S);
 <identity partial perm on [ 1 ]>
 
 #T# TestInstall20: from JS' PartialPermInjective.tst
@@ -372,21 +366,22 @@ gap> x := PartialPerm([2 .. 7], [1 .. 6]);
 [7,6,5,4,3,2,1]
 
 #T# TestInstall22: from JS' SizeInverseMonoid.tst
-gap> S := InverseMonoid(
-> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [1, 6, 3, 4, 8, 2, 7, 5]),
-> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 7, 4, 8, 6, 3, 5]),
-> PartialPerm([1, 4, 5, 8], [1, 4, 5, 8]),
-> PartialPerm([1, 2, 4, 6], [1, 2, 4, 6]),
-> PartialPerm([1, 3, 4, 7], [1, 3, 4, 7]),
-> PartialPerm([1], [1]));;
+gap> S := InverseMonoid(PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], 
+>                                   [1, 6, 3, 4, 8, 2, 7, 5]),
+>                       PartialPerm([1, 2, 3, 4, 5, 6, 7, 8],
+>                                   [1, 2, 7, 4, 8, 6, 3, 5]),
+>                       PartialPerm([1, 4, 5, 8], [1, 4, 5, 8]),
+>                       PartialPerm([1, 2, 4, 6], [1, 2, 4, 6]),
+>                       PartialPerm([1, 3, 4, 7], [1, 3, 4, 7]),
+>                       PartialPerm([1], [1]));;
 gap> [Size(S), Size(AsSet(S))];
 [ 12, 12 ]
 
 #T# TestInstall23: from JS' email
-gap> s := InverseMonoid(PartialPerm([1, 3, 2]), PartialPerm([1]));;
-gap> [Size(s), Size(AsSet(s))];
+gap> S := InverseMonoid(PartialPerm([1, 3, 2]), PartialPerm([1]));;
+gap> [Size(S), Size(AsSet(S))];
 [ 3, 3 ]
-gap> Elements(s);
+gap> Elements(S);
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2, 3 ]>, 
   (1)(2,3) ]
 
@@ -411,19 +406,17 @@ gap> x * x ^ -1 = y * y ^ -1;
 false
 
 #T# TestInstall25: Issue 27 in the new numbering...
-gap> s := Semigroup(List(GeneratorsOfSemigroup(FullTransformationSemigroup(3)),
+gap> S := Semigroup(List(GeneratorsOfSemigroup(FullTransformationSemigroup(3)),
 >  x -> AsTransformation(x, 4)));;
-gap> IsFullTransformationSemigroup(s);
+gap> IsFullTransformationSemigroup(S);
 true
-gap> IdentityTransformation in s;
-true
-gap> IdentityTransformation in s;
+gap> IdentityTransformation in S;
 true
 
 #T# TestInstall26: Issue 23 in the new numbering...
 gap> S := FullTransformationSemigroup(3);;
-gap> f := Transformation([4, 3, 1, 2]);;
-gap> ClosureSemigroup(S, f);
+gap> x := Transformation([4, 3, 1, 2]);;
+gap> ClosureSemigroup(S, x);
 <transformation monoid on 4 pts with 4 generators>
 
 #T# TestInstall27: Issue 36 in the new numbering...
@@ -447,13 +440,14 @@ gap> (IsBound(GAPInfo.PackagesLoaded.grape)
 true
 
 #T# TestInstall29: ClosureSemigroup with an element of higher degree
-gap> S := Semigroup(
-> Transformation([1, 3, 3, 2]), Transformation([4, 1, 4, 2]),
-> Transformation([4, 2, 3, 3]), Transformation([4, 4, 4, 4]));;
+gap> S := Semigroup(Transformation([1, 3, 3, 2]), 
+>                   Transformation([4, 1, 4, 2]),
+>                   Transformation([4, 2, 3, 3]),
+>                   Transformation([4, 4, 4, 4]));;
 gap> Size(S);
 130
-gap> f := Transformation([3, 5, 1, 5, 2]);;
-gap> T := ClosureSemigroup(S, f);;
+gap> x := Transformation([3, 5, 1, 5, 2]);;
+gap> T := ClosureSemigroup(S, x);;
 gap> Size(T);
 1619
 
@@ -528,7 +522,7 @@ gap> S := InverseMonoid(
 >     [1, 5, 9, 13, 19, 23, 27, 31]),
 >  PartialPerm([1, 6, 9, 14, 17, 21, 26, 30],
 >     [1, 6, 9, 14, 17, 21, 26, 30]));;
-gap> ForAll(S, f -> ForAll(LClass(S, f), x -> x in S));
+gap> ForAll(S, x -> ForAll(LClass(S, x), y -> y in S));
 true
 
 #T# TestInstall33: From Jack Schmidt 07/02/14 by email
@@ -546,15 +540,13 @@ false
 #T# TestInstall35: Issue pointed out by WAW caused by
 # IsInvLambdaOrb being inherited from the argument of ClosureSemigroup
 # by its output, when the output wasn't an InverseOp semigroup...
-gap> S := Semigroup([
-> Bipartition([[1, -2], [2, -3], [3, -1]]),
-> Bipartition([[1, 2, -2], [3, -1, -3]]),
-> Bipartition([[1, -1, -3], [2, -2], [3]]),
-> Bipartition([[1, 3, -1], [2, -2], [-3]])]);;
-gap> gens := [
-> Bipartition([[1, 3, -1], [2, -2], [-3]]),
-> Bipartition([[1, -1, -3], [2, -2], [3]]),
-> Bipartition([[1, 2, -2], [3, -1, -3]])];;
+gap> S := Semigroup(Bipartition([[1, -2], [2, -3], [3, -1]]),
+>                   Bipartition([[1, 2, -2], [3, -1, -3]]),
+>                   Bipartition([[1, -1, -3], [2, -2], [3]]),
+>                   Bipartition([[1, 3, -1], [2, -2], [-3]]));;
+gap> gens := [Bipartition([[1, 3, -1], [2, -2], [-3]]),
+>             Bipartition([[1, -1, -3], [2, -2], [3]]),
+>             Bipartition([[1, 2, -2], [3, -1, -3]])];;
 gap> V := SemigroupIdealByGenerators(S, gens);;
 gap> tuples := [Bipartition([[1, -1], [2, -2], [3, -3]])];;
 gap> Semigroup(V, tuples, rec(small := true));;
@@ -563,16 +555,17 @@ gap> Semigroup(V, tuples, rec(small := true));;
 # (the parent of an R-class was set to be the subsemigroup not the new parent
 # semigroup)
 gap> for i in [1 .. 6] do
-> V := Semigroup([PartialPerm([1, 2, 4, 5, 6], [1, 5, 3, 4, 6]),
->  PartialPerm([1, 2, 4, 5, 6], [2, 1, 5, 4, 3]),
->  PartialPerm([1, 3, 4, 5, 6], [1, 4, 5, 2, 6]),
->  PartialPerm([1, 2, 3, 4, 5], [2, 1, 6, 5, 4]),
->  PartialPerm([1, 2, 3, 6], [4, 3, 2, 6]),
->  PartialPerm([1, 2, 4, 6], [2, 1, 5, 3]),
->  PartialPerm([1, 2, 3, 6], [5, 2, 1, 3]),
->  PartialPerm([2, 3, 4, 6], [3, 2, 1, 6]),
->  PartialPerm([1, 2, 6], [3, 2, 6])], rec(small := true));
-> IsInverseSemigroup(V);
+>   V := Semigroup([PartialPerm([1, 2, 4, 5, 6], [1, 5, 3, 4, 6]),
+>                   PartialPerm([1, 2, 4, 5, 6], [2, 1, 5, 4, 3]),
+>                   PartialPerm([1, 3, 4, 5, 6], [1, 4, 5, 2, 6]),
+>                   PartialPerm([1, 2, 3, 4, 5], [2, 1, 6, 5, 4]),
+>                   PartialPerm([1, 2, 3, 6], [4, 3, 2, 6]),
+>                   PartialPerm([1, 2, 4, 6], [2, 1, 5, 3]),
+>                   PartialPerm([1, 2, 3, 6], [5, 2, 1, 3]),
+>                   PartialPerm([2, 3, 4, 6], [3, 2, 1, 6]),
+>                   PartialPerm([1, 2, 6], [3, 2, 6])], 
+>                   rec(small := true));
+>   IsInverseSemigroup(V);
 > od;
 
 #T# TestInstall37: Issue #63 (problem with Monoid and InverseMonoid when one
@@ -693,8 +686,8 @@ gap> AddGeneratorsToOrbit(o, [gens[2]]);
 # (problem with IsomorphismTransformationSemigroup when applied to a
 # binary relation monoid)
 gap> B := Monoid(BinaryRelationOnPoints([[2], [1, 2], [1, 3]]),
-> BinaryRelationOnPoints([[3], [1, 2], [1, 3]]),
-> BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]]));;
+>                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]),
+>                BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]]));;
 gap> Size(B);
 16
 gap> IsMonoid(B);
@@ -734,24 +727,27 @@ ansformation( [ 1, 2, 2, 3 ] ), Transformation( [ 2, 4, 3, 2 ] ), Transformati\
 on( [ 2, 3, 3, 3 ] ) ] ), [ Transformation( [ 2, 3, 2, 3 ] ) ] ) )>
 
 #T# TestInstall43: Issue 89
-gap> S := Semigroup([Transformation([2, 1, 3, 1, 4, 3]),
->  Transformation([2, 2, 2, 2, 1, 2]), Transformation([5, 3, 4, 3, 5]),
-> Transformation([6, 4, 1, 4, 5, 3]),
->  Transformation([6, 5, 2, 6, 3, 4])]);;
+gap> S := Semigroup(Transformation([2, 1, 3, 1, 4, 3]),
+>                   Transformation([2, 2, 2, 2, 1, 2]), 
+>                   Transformation([5, 3, 4, 3, 5]),
+>                   Transformation([6, 4, 1, 4, 5, 3]),
+>                   Transformation([6, 5, 2, 6, 3, 4]));;
 gap> NrIdempotents(S) = Number(HClasses(S), IsGroupHClass)
 > or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
 true
 
 #T# TestInstall44: Issue 96 (problem with using the partial order of D-classes
 # as an isomorphism invariant)
-gap> S := Semigroup([Transformation([1, 2, 1]),
-> Transformation([1, 2, 3, 2]),
-> Transformation([2, 2, 2]),
-> Transformation([4, 2, 1, 4])]);;
+gap> S := Semigroup(Transformation([1, 2, 1]),
+>                   Transformation([1, 2, 3, 2]),
+>                   Transformation([2, 2, 2]),
+>                   Transformation([4, 2, 1, 4]));;
 gap> T := Semigroup(Transformation([1, 2, 3, 1]),
-> Transformation([2, 2, 3, 1]),
-> Transformation([2, 3, 3, 1]), Transformation([1, 3, 3]),
-> Transformation([2, 3, 3, 3]), Transformation([3, 2, 3, 3]));;
+>                   Transformation([2, 2, 3, 1]),
+>                   Transformation([2, 3, 3, 1]), 
+>                   Transformation([1, 3, 3]),
+>                   Transformation([2, 3, 3, 3]), 
+>                   Transformation([3, 2, 3, 3]));;
 gap> (not (IsBound(GAPInfo.PackagesLoaded.grape)
 > and Filename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail)) or
 > (IsBound(GAPInfo.PackagesLoaded.grape)
@@ -813,9 +809,9 @@ gap> CyclesOfPartialPerm(x);
 
 #T# TestInstall51: Issue 107
 # (problems with Green's classes of ideals, and inverse semigroups)
-gap> S := Monoid([PartialPermNC([1], [1]),
-> PartialPermNC([1], [2]),
-> PartialPermNC([2], [1])]);;
+gap> S := Monoid(PartialPermNC([1], [1]),
+>                PartialPermNC([1], [2]),
+>                PartialPermNC([2], [1]));;
 gap> I := SemigroupIdeal(S, PartialPermNC([], []));;
 gap> GeneratorsOfSemigroup(I);
 [ <empty partial perm> ]
@@ -825,10 +821,11 @@ gap> GeneratorsOfSemigroup(I);
 gap> S := [SymmetricInverseMonoid(2)];;
 gap> S[2] := MaximalSubsemigroups(S[1]);;
 gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.7")
-> and (IsBound(GAPInfo.PackagesLoaded.grape)
-> and Filename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail) then
-> S[3] := List(S[2], MaximalSubsemigroups);;
-> fi;
+>        and (IsBound(GAPInfo.PackagesLoaded.grape)
+>        and Filename(DirectoriesPackagePrograms("grape"), 
+>                     "dreadnautB") <> fail) then
+>      S[3] := List(S[2], MaximalSubsemigroups);;
+>    fi;
 
 #T# TestInstall53: Issue 109 (problem with IsReesZeroMatrixSemigroup on the
 # subsemigroup generated by 0)
@@ -841,9 +838,9 @@ gap> (CompareVersionNumbers(GAPInfo.Version, "4.7.7") and
 false
 
 #T# TestInstall54: FreeBand
-gap> s := FreeBand("a", "b", "c", "d", "e");
+gap> S := FreeBand("a", "b", "c", "d", "e");
 <free band on the generators [ a, b, c, d, e ]>
-gap> iter := Iterator(s);
+gap> iter := Iterator(S);
 <iterator>
 gap> for i in [1 .. 100] do
 > NextIterator(iter);
@@ -901,9 +898,9 @@ false
 
 #T# TestInstall58: Issue 121:
 # MultiplicativeZero for full transformation monoid on one point
-gap> t := Transformation([1]);;
-gap> s := Semigroup(t);;
-gap> MultiplicativeZero(s) = t;
+gap> T := Transformation([1]);;
+gap> S := Semigroup(T);;
+gap> MultiplicativeZero(S) = T;
 true
 gap> gens := [Transformation([1, 2, 1]), Transformation([1, 2, 2])];;
 gap> S := Semigroup(gens);;
@@ -969,6 +966,7 @@ gap> NrCongruenceClasses(cong);
 169
 
 #T# SEMIGROUPS_UnbindVariables
+# FIXME redo these!
 gap> Unbind(lookingfor);
 gap> Unbind(l);
 gap> Unbind(L);

@@ -21,13 +21,6 @@ function(S)
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
 end);
 
-# same method for ideals
-
-InstallMethod(NrIdempotents, "for a finite semigroup", [IsSemigroup and IsFinite], 
-function(S)
-  return Length(Idempotents(S));
-end);
-
 # star 
 
 InstallMethod(Star, "for an associative element with star",
