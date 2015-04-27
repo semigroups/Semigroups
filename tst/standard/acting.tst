@@ -1,24 +1,24 @@
 #%T##########################################################################
 ##
-#W  data.tst
+#W  acting.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: data.tst");
+gap> START_TEST("Semigroups package: acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SemigroupsStartTest();
 
-#T# DataTest1
+#T# ActingTest1
 gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
 > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
 gap> r:=GreensRClassOfElement(s,
 > Generators(s)[1]*Generators(s)[2]*Generators(s)[1]);
-{Transformation( [ 5, 2, 1, 4, 3, 3 ] )}
+<Green's R-class: Transformation( [ 5, 2, 1, 4, 3, 3 ] )>
 gap> Transformation( [ 4, 1, 6, 5, 2, 2 ] ) in r;
 true
 gap> Representative(r);
@@ -35,7 +35,7 @@ gap> LambdaOrbMults(LambdaOrb(r),
   [ Transformation( [ 2, 1, 6, 3, 4, 6 ] ), 
       Transformation( [ 2, 1, 4, 5, 6, 3 ] ) ] ]
 
-#T# DataTest2
+#T# ActingTest2
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
@@ -62,7 +62,7 @@ gap> LambdaOrbMults(LambdaOrb(r),
   [ Transformation( [ 1, 6, 3, 4, 5, 6 ] ), 
       Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ] ]
 
-#T# DataTest3
+#T# ActingTest3
 gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
 > Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
 gap> s:=Monoid(gens);;
@@ -73,15 +73,15 @@ gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> NextIterator(iter);;
 gap> NextIterator(iter);
-{Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )}
+<Green's R-class: Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )>
 gap> f in SemigroupData(s);
 false
 gap> NextIterator(iter);
-{Transformation( [ 5, 1, 4, 1, 4, 4 ] )}
+<Green's R-class: Transformation( [ 5, 1, 4, 1, 4, 4 ] )>
 gap> f in SemigroupData(s);
 true
 
-#T# DataTest4
+#T# ActingTest4
 gap> s:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ]);;
 gap> RhoOrb(s);
@@ -100,4 +100,4 @@ gap> Unbind(iter);
 gap> Unbind(f);
 
 #E#
-gap> STOP_TEST( "Semigroups package: data.tst");
+gap> STOP_TEST( "Semigroups package: acting.tst");
