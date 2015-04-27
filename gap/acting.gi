@@ -75,16 +75,16 @@ function(f, s)
     if Length(Generators(s)) > 0
         and ActionRank(s)(f) >
         MaximumList(List(Generators(s), f -> ActionRank(s)(f))) then
-      Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-           "semigroup.");
+      #Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+      #     "semigroup.");
       return false;
     fi;
   fi;
 
   if HasMinimalIdeal(s) then
     if ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
-      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-           "semigroup.");
+      #Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+      #     "semigroup.");
       return false;
     fi;
   fi;

@@ -32,6 +32,7 @@ DeclareGlobalFunction("BooleanMatNC");
 DeclareGlobalFunction("BooleanMat");
 
 DeclareOperation("AsBooleanMat", [IsPerm, IsPosInt]);
+DeclareOperation("AsBooleanMat", [IsTransformation, IsPosInt]);
 
 DeclareAttribute("DimensionOfBooleanMat", IsBooleanMat);
 DeclareOperation("RandomBooleanMat", [IsPosInt]);

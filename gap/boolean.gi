@@ -208,6 +208,22 @@ function(p, n)
   return BooleanMatNC(out);
 end);
 
+InstallMethod(AsBooleanMat, "for a transformation and pos int", 
+[IsTransformation, IsPosInt],
+function(x, n)
+  local out, i;
+  if ForAny([1 .. n], i -> i ^ x > n) then
+    Error("Semigroups: AsBooleanMat: usage\n",
+          "the first arg <x> must be map ...");
+  fi;
+
+  out := List([1 .. n], y -> [1 .. n] * 0);
+  for i in [1 .. n] do
+    out[i][i ^ x] := 1;
+  od;
+  return BooleanMatNC(out);
+end);
+
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],
   function(x, hashlen)

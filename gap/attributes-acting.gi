@@ -205,11 +205,11 @@ function(d)
     rms := ReesZeroMatrixSemigroup(g, mat);
   fi;
 
-  iso := function(f)
+  iso := function(x)
     local o, m, i, j;
     o := LambdaOrb(d);
     m := LambdaOrbSCCIndex(d);
-    i := Position(o, LambdaFunc(Parent(d))(f));
+    i := Position(o, LambdaFunc(Parent(d))(x));
 
     if i = fail or OrbSCCLookup(o)[i] <> m then
       return fail;
@@ -219,13 +219,13 @@ function(d)
       o := RhoOrb(d);
       m := RhoOrbSCCIndex(d);
     fi;
-    j := Position(o, RhoFunc(Parent(d))(f));
+    j := Position(o, RhoFunc(Parent(d))(x));
     if j = fail or OrbSCCLookup(o)[j] <> m then
       return fail;
     fi;
     j := Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
     return Objectify(TypeReesMatrixSemigroupElements(rms),
-                     [j, lambdaperm(rep, rep * inv_r[j] * f * inv_l[i]), i,
+                     [j, lambdaperm(rep, rep * inv_r[j] * x * inv_l[i]), i,
                       mat]);
   end;
 

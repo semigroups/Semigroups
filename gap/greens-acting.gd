@@ -38,6 +38,7 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 # wrong representative. Therefore we don't allow classes to change from
 # non-inverse-op to inverse-op.  representative
 
+#TODO should this work for non-acting semigroups too?
 DeclareCategory("IsInverseOpClass", IsGreensClass);
 
 DeclareOperation("GreensDClassOfElementNC",
