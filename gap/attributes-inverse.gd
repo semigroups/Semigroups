@@ -12,8 +12,8 @@
 ##
 
 DeclareAttribute("CharacterTableOfInverseSemigroup",
-                 IsInverseSemigroup and IsPartialPermSemigroup);
-
+                 IsInverseSemigroup and IsPartialPermSemigroup
+                 and IsActingSemigroup);
 DeclareOperation("IsJoinIrreducible",
                  [IsInverseSemigroup, IsAssociativeElement]);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
