@@ -61,8 +61,8 @@ gap> ForAny(s, x -> IsMultiplicativeZero(s, x));
 false
 
 # Other transformation semigroups
-gap> s := FullTransformationMonoid(10);
-<full transformation semigroup on 10 pts>
+gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
+<transformation monoid on 10 pts with 3 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -75,8 +75,7 @@ gap> s := Semigroup([
 > Transformation([3, 1, 1, 3])]);
 <transformation semigroup on 4 pts with 3 generators>
 gap> t := Transformation([1, 1, 1, 1]);;
-gap> I := SemigroupIdeal(s, t);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t);;
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I); # does not know whether parent has a zero
@@ -89,8 +88,7 @@ gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
-gap> I := SemigroupIdeal(s, t);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t);;
 gap> MultiplicativeZero(I); # does know whether parent has a zero
 fail
 gap> Size(MinimalIdeal(I)) = 1;
@@ -152,8 +150,7 @@ gap> s := Semigroup([
 > PartialPerm([1, 3], [2, 3])]);
 <partial perm semigroup on 4 pts with 3 generators>
 gap> t := PartialPerm([], []);;
-gap> I := SemigroupIdeal(s, t);
-<inverse partial perm semigroup ideal on 4 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t);;
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I) = t; # does not know whether parent has a zero
@@ -166,8 +163,7 @@ gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
 true
-gap> I := SemigroupIdeal(s, t);
-<inverse partial perm semigroup ideal on 4 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t);;
 gap> MultiplicativeZero(I) = t; # does know whether parent has a zero
 true
 gap> Size(MinimalIdeal(I)) = 1;
@@ -226,8 +222,7 @@ gap> Size(MinimalIdeal(I)) = 1;
 false
 gap> t := Bipartition([[1], [-1]]);;
 gap> s := Semigroup([t, Bipartition([[1, -1]])]);;
-gap> I := SemigroupIdeal(s, t);
-<commutative regular bipartition semigroup ideal on 1 pts with 1 generator>
+gap> I := SemigroupIdeal(s, t);;
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I);
@@ -301,14 +296,14 @@ false
 
 #T# AttributesTest5:
 # MultiplicativeZero where MinimalDClass is known
-gap> s := FullTransformationMonoid(10);
-<full transformation semigroup on 10 pts>
+gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
+<transformation monoid on 10 pts with 3 generators>
 gap> MinimalDClass(s);;
 gap> HasSize(last);
 false
 gap> MultiplicativeZero(s);
 fail
-gap> s := Semigroup(s);;
+gap> s := Semigroup(s, rec(generic := false));;
 gap> HasMinimalDClass(s);
 false
 gap> Size(MinimalDClass(s));
@@ -327,7 +322,7 @@ gap> HasMinimalDClass(s);
 false
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
-gap> s := Semigroup(gens);;
+gap> s := Semigroup(gens, rec(generic := false));;
 gap> MinimalDClass(s);
 <Green's D-class: Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
    4 ] )>
@@ -335,7 +330,7 @@ gap> HasSize(MinimalDClass(s));
 false
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
-gap> s := Semigroup(gens);;
+gap> s := Semigroup(gens, rec(generic := false));;
 gap> Size(MinimalDClass(s));
 1
 gap> MultiplicativeZero(s);
@@ -410,7 +405,7 @@ gap> IsomorphismReesMatrixSemigroup(D);
 MappingByFunction( <Green's D-class: <bipartition: [ 1 ], [ 2 ], [ 3 ], 
   [ 4, -1, -4 ], [ 5 ], [ -2, -3 ], [ -5 ]>>, 
 <Rees 0-matrix semigroup 12x15 over Group(())>
- , function( f ) ... end, function( x ) ... end )
+ , function( x ) ... end, function( x ) ... end )
 
 #T# attributes: IrredundantGeneratingSubset, for a collection of elements
 gap> G := CyclicGroup(3);;
@@ -431,12 +426,11 @@ gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
 
 #T# attributes: IrredundantGeneratingSubset: for a set with one element
 gap> S := Monoid( [ Transformation( [ 1, 1 ] ), Transformation( [ 2, 1 ] ),
->  Transformation( [ 2, 2 ] ) ] );
+>  Transformation( [ 2, 2 ] ) ], rec(generic := false) );
 <transformation monoid on 2 pts with 3 generators>
 gap> SetInfoLevel(InfoSemigroups, 3);
 gap> IrredundantGeneratingSubset(S);;
 at 	1 of 	4 with 	0 redundant, 	0 non-redundant
-#I  element has larger rank than any element of semigroup.
 at 	2 of 	4 with 	0 redundant, 	1 non-redundant
 at 	3 of 	4 with 	1 redundant, 	1 non-redundant
 at 	4 of 	4 with 	2 redundant, 	1 non-redundant
@@ -451,29 +445,20 @@ gap> S := SemigroupIdeal( Semigroup(
 >         [ -2, -8 ] ] ) ]
 >        ), [ Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7, 8, -1, -2, -4, -5, -6, -8 ],
 >       [ -3 ], [ -7 ] ] ) ] );;
-gap> IsomorphismReesMatrixSemigroup(S);
-MappingByFunction( <simple bipartition semigroup ideal 
- on 8 pts with 1 generator>, <Rees matrix semigroup 2x2 over Group(())>
- , function( x ) ... end, function( x ) ... end )
+gap> IsomorphismReesMatrixSemigroup(S);;
 
 #T# attributes: IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 1/2
 gap> S := Semigroup( [ Transformation( [ 1, 1, 5, 1, 3, 1, 9, 1, 7, 5 ] ),
 >   Transformation( [ 1, 1, 2, 1, 4, 1, 6, 1, 8, 2 ] ),
 >   Transformation( [ 1, 5, 1, 3, 1, 9, 1, 7, 1, 7 ] ) ] );;
-gap> IsomorphismReesMatrixSemigroup(S);
-MappingByFunction( <0-simple transformation semigroup 
- on 10 pts with 3 generators>, <Rees 0-matrix semigroup 2x2 over Group([ (3,5)
-(7,9) ])>, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismReesMatrixSemigroup(S);;
 
 #T# attributes: IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
 gap> S := Semigroup( [ Transformation( [ 1, 1, 5, 1, 3, 1, 9, 1, 7, 5 ] ),
 >   Transformation( [ 1, 1, 2, 1, 4, 1, 6, 1, 8, 2 ] ),
 >   Transformation( [ 1, 5, 1, 3, 1, 9, 1, 7, 1, 7 ] ) ] );;
 gap> S := Semigroup(MultiplicativeZero(S), S);;
-gap> IsomorphismReesMatrixSemigroup(S);
-MappingByFunction( <0-simple transformation semigroup 
- on 10 pts with 4 generators>, <Rees 0-matrix semigroup 2x2 over Group([ (3,5)
-(7,9) ])>, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismReesMatrixSemigroup(S);;
 
 #T# attributes: IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
 gap> S := Semigroup(Transformation( [ 2, 1 ] ), Transformation( [ 2, 2 ] ));;
