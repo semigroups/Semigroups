@@ -86,6 +86,9 @@ InstallMethod(PrintString, "for a boolean mat collection",
 [IsBooleanMatCollection],
 function(coll) 
   local str, i;
+  if IsGreensClass(coll) or IsSemigroup(coll) then 
+    TryNextMethod();
+  fi;
   str := ShallowCopy(PrintString(coll[1]));
   Append(str, "\<, ");
   for i in [2 .. Length(coll)]  do
@@ -101,7 +104,7 @@ end);
 InstallMethod(PrintString, "for a boolean mat", [IsBooleanMat],
 function(x)
   local str, i, j;
-  str := "\>BooleanMat(\>[";
+  str := "\>BooleanMatNC(\>[";
   for i in [1 .. x![1]] do
     Append(str, "\>\>[");
     Append(str, String(x![(i - 1) * x![1] + 2]));
@@ -111,7 +114,7 @@ function(x)
     od;
     Append(str, "]\<, \<");
   od;
-  for i in [1 .. 5] do 
+  for i in [1 .. 4] do 
     Remove(str, Length(str));
   od;
   Append(str, "\<\<]\<)\<");

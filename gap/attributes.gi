@@ -151,7 +151,7 @@ function(coll)
     x := coll[i];
     if InfoLevel(InfoSemigroups) >= 3 then
       Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund),
-            " redundant, \t", Length(out), " non-redundant\r");
+            " redundant, \t", Length(out), " non-redundant\n");
     fi;
 
     if not x in redund and not x in out then
@@ -164,7 +164,7 @@ function(coll)
     fi;
   until Length(redund) + Length(out) = nrgens;
 
-  if InfoLevel(InfoSemigroups) > 1 then
+  if InfoLevel(InfoSemigroups) >= 3 then
     Print("\n");
   fi;
 
@@ -217,9 +217,8 @@ InstallMethod(SmallSemigroupGeneratingSet,
 function(coll)
   if Length(coll) < 2 then
     return coll;
-  else
-    return GeneratorsOfSemigroup(Semigroup(coll, rec(small := true)));
   fi;
+  return GeneratorsOfSemigroup(Semigroup(coll, rec(small := true)));
 end);
 
 # different method for ideals, not yet implemented
@@ -235,10 +234,12 @@ InstallMethod(SmallMonoidGeneratingSet,
 [IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection],
 function(coll)
   if Length(coll) < 2 then
+    if coll[1] = One(coll) then 
+      return [];
+    fi;
     return coll;
-  else
-    return GeneratorsOfMonoid(Monoid(coll, rec(small := true)));
   fi;
+  return GeneratorsOfMonoid(Monoid(coll, rec(small := true)));
 end);
 
 # same method for ideals
@@ -260,10 +261,9 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 function(coll)
   if Length(coll) < 2 then
     return coll;
-  else
-    return GeneratorsOfInverseSemigroup(InverseSemigroup(coll,
-                                        rec(small := true)));
   fi;
+  return GeneratorsOfInverseSemigroup(InverseSemigroup(coll,
+                                                       rec(small := true)));
 end);
 
 #
@@ -280,9 +280,8 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 function(coll)
   if Length(coll) < 2 then
     return coll;
-  else
-    return GeneratorsOfInverseMonoid(InverseMonoid(coll, rec(small := true)));
   fi;
+  return GeneratorsOfInverseMonoid(InverseMonoid(coll, rec(small := true)));
 end);
 
 #
