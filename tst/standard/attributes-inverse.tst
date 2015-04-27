@@ -37,10 +37,12 @@ gap> J := SemigroupIdeal(B,
 >    [ 6, -6 ] ]),
 >  Bipartition([ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ]));
 <inverse bipartition semigroup ideal on 7 pts with 2 generators>
-gap> JoinIrreducibleDClasses(S);
-[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
-gap> JoinIrreducibleDClasses(I);
-[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
+gap> JoinIrreducibleDClasses(S)
+> = [GreensDClassOfElement(S, PartialPerm([2], [2]))];
+true
+gap> JoinIrreducibleDClasses(I)
+> = [GreensDClassOfElement(I, PartialPerm([2], [2]))];
+true
 gap> JoinIrreducibleDClasses(A);
 [ <Green's D-class: <bipartition: [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], 
       [ 6 ], [ 7 ], [ -1 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>> ]
@@ -221,8 +223,9 @@ gap> U := InverseSemigroup(
 > PartialPerm([ 1, 2, 3, 4, 5, 8 ] ,[ 5, 6, 3, 8, 4, 7 ]),
 > PartialPerm([ 1, 3, 4, 5, 6, 8 ] ,[ 8, 7, 5, 1, 3, 4 ]),
 > PartialPerm([ 1, 3, 4, 5, 7, 8 ] ,[ 6, 5, 7, 1, 4, 2 ]) );;
-gap> t := Elements(U)[51624];
-[7,1][8,6](4,5)
+gap> t := PartialPerm([4, 5, 7, 8], [5, 4, 1, 6]);;
+gap> t in U;
+true
 gap> Minorants(U, t);
 [ <empty partial perm>, [7,1], [4,5], [5,4], [8,6], (4,5), [4,5][8,6], 
   [5,4][8,6], [5,4][7,1], [7,1][8,6], [4,5][7,1], [7,1](4,5), [4,5][7,1][8,6],
@@ -509,21 +512,33 @@ gap> f := PartialPermNC( [ 2, 1, 4, 5, 3, 7, 6, 9, 10, 8 ] );;
 gap> g := PartialPermNC([ 2, 1, 0, 0, 0, 7, 6 ]);;
 gap> S := InverseSemigroup(f, g);;
 gap> T := SemigroupIdeal(S, PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ));;
-gap> h1 := GroupHClass(DClasses(S)[1]);
+gap> d := DClass(S, PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));;
+gap> h1 := GroupHClass(d);
 <Green's H-class: <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
  >>
-gap> m1 := SameMinorantsSubgroup(h1);
+gap> m1 := ShallowCopy(SameMinorantsSubgroup(h1));;
+gap> Sort(m1);
+gap> m1;
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]>, 
   (1)(2)(3,4,5)(6)(7)(8,9,10), (1)(2)(3,5,4)(6)(7)(8,10,9) ]
-gap> h2 := GroupHClass(DClasses(S)[2]);
+gap> d := DClass(S, PartialPerm([1, 2, 6, 7], [1, 2, 6, 7]));;
+gap> h2 := GroupHClass(d);
 <Green's H-class: <identity partial perm on [ 1, 2, 6, 7 ]>>
-gap> m2 := SameMinorantsSubgroup(h2);
+gap> m2 := ShallowCopy(SameMinorantsSubgroup(h2));;
+gap> Sort(m2);
+gap> m2;
 [ <identity partial perm on [ 1, 2, 6, 7 ]>, (1,2)(6,7) ]
-gap> h1 := GroupHClass(DClasses(T)[1]);;
-gap> SameMinorantsSubgroup(h1) = m1;
+gap> d := DClass(T, PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));;
+gap> h1 := GroupHClass(d);;
+gap> tmp := ShallowCopy(SameMinorantsSubgroup(h1));;
+gap> Sort(tmp);
+gap> tmp = m1;
 true
-gap> h2 := GroupHClass(DClasses(T)[2]);;
-gap> SameMinorantsSubgroup(h2) = m2;
+gap> d := DClass(T, PartialPerm([1, 2, 6, 7], [1, 2, 6, 7]));;
+gap> h2 := GroupHClass(d);;
+gap> tmp := ShallowCopy(SameMinorantsSubgroup(h2));;
+gap> Sort(tmp);
+gap> tmp = m2;
 true
 
 #T# AttributesInverseTest9: NaturalLeqInverseSemigroup
@@ -590,6 +605,7 @@ gap> Unbind(m2);
 gap> Unbind(A);
 gap> Unbind(C);
 gap> Unbind(B);
+gap> Unbind(d);
 gap> Unbind(I);
 gap> Unbind(J);
 gap> Unbind(Q);
