@@ -64,9 +64,8 @@ function(f, s)
   lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens,
   found, n, i;
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
-      or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-          and ActionDegree(f) <> ActionDegree(s))
+  if (IsActingSemigroupWithFixedDegreeMultiplication(s)
+      and ActionDegree(f) <> ActionDegree(s))
       or (ActionDegree(f) > ActionDegree(s)) then
     return false;
   fi;
@@ -151,6 +150,7 @@ function(f, s)
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
     # lambda-rho-combination not yet seen
     if IsClosedData(data) then
+      Print("Hre5");
       return false;
     fi;
 
