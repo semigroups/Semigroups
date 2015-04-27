@@ -412,6 +412,122 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1 ], [ 2 ], [ 3 ],
 <Rees 0-matrix semigroup 12x15 over Group(())>
  , function( f ) ... end, function( x ) ... end )
 
+#T# attributes: IrredundantGeneratingSubset, for a collection of elements
+gap> G := CyclicGroup(3);;
+gap> R := GF(2);;
+gap> GR := GroupRing(R, G);;
+gap> iso := IsomorphismTransformationSemigroup(GR);;
+gap> S := Range(iso);;
+gap> S := Semigroup(IrredundantGeneratingSubset(SmallGeneratingSet(S)));;
+
+#T# attributes: IrredundantGeneratingSubset: for a semigroup
+gap> S := RandomBooleanMatMonoid(10, 3);;
+gap> T := Semigroup(IrredundantGeneratingSubset(S));;
+gap> S = T;
+true
+
+#T# attributes: IrredundantGeneratingSubset: for a set with one element
+gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
+
+#T# attributes: IrredundantGeneratingSubset: for a set with one element
+gap> S := Monoid( [ Transformation( [ 1, 1 ] ), Transformation( [ 2, 1 ] ),
+>  Transformation( [ 2, 2 ] ) ] );
+<transformation monoid on 2 pts with 3 generators>
+gap> SetInfoLevel(InfoSemigroups, 3);
+gap> IrredundantGeneratingSubset(S);;
+at 	1 of 	4 with 	0 redundant, 	0 non-redundant
+#I  element has larger rank than any element of semigroup.
+at 	2 of 	4 with 	0 redundant, 	1 non-redundant
+at 	3 of 	4 with 	1 redundant, 	1 non-redundant
+at 	4 of 	4 with 	2 redundant, 	1 non-redundant
+
+gap> SetInfoLevel(InfoSemigroups, 0);
+
+#T# attributes: IsomorphismReesMatrixSemigroup: for a simple semigroup
+gap> S := SemigroupIdeal( Semigroup(
+>     [ Bipartition( [ [ 1, 2, 3, 6, 7, 8, -2, -4, -5, -6 ], [ 4, 5, -1, -8 ], [ -3 ],
+>         [ -7 ] ] ),
+>        Bipartition( [ [ 1, 5, 8 ], [ 2, 7, -3, -6 ], [ 3, 4, -4, -7 ], [ 6, -1, -5 ],
+>         [ -2, -8 ] ] ) ]
+>        ), [ Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7, 8, -1, -2, -4, -5, -6, -8 ],
+>       [ -3 ], [ -7 ] ] ) ] );;
+gap> IsomorphismReesMatrixSemigroup(S);
+MappingByFunction( <simple bipartition semigroup ideal 
+ on 8 pts with 1 generator>, <Rees matrix semigroup 2x2 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
+
+#T# attributes: IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 1/2
+gap> S := Semigroup( [ Transformation( [ 1, 1, 5, 1, 3, 1, 9, 1, 7, 5 ] ),
+>   Transformation( [ 1, 1, 2, 1, 4, 1, 6, 1, 8, 2 ] ),
+>   Transformation( [ 1, 5, 1, 3, 1, 9, 1, 7, 1, 7 ] ) ] );;
+gap> IsomorphismReesMatrixSemigroup(S);
+MappingByFunction( <0-simple transformation semigroup 
+ on 10 pts with 3 generators>, <Rees 0-matrix semigroup 2x2 over Group([ (3,5)
+(7,9) ])>, function( x ) ... end, function( x ) ... end )
+
+#T# attributes: IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
+gap> S := Semigroup( [ Transformation( [ 1, 1, 5, 1, 3, 1, 9, 1, 7, 5 ] ),
+>   Transformation( [ 1, 1, 2, 1, 4, 1, 6, 1, 8, 2 ] ),
+>   Transformation( [ 1, 5, 1, 3, 1, 9, 1, 7, 1, 7 ] ) ] );;
+gap> S := Semigroup(MultiplicativeZero(S), S);;
+gap> IsomorphismReesMatrixSemigroup(S);
+MappingByFunction( <0-simple transformation semigroup 
+ on 10 pts with 4 generators>, <Rees 0-matrix semigroup 2x2 over Group([ (3,5)
+(7,9) ])>, function( x ) ... end, function( x ) ... end )
+
+#T# attributes: IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
+gap> S := Semigroup(Transformation( [ 2, 1 ] ), Transformation( [ 2, 2 ] ));;
+gap> IsomorphismReesMatrixSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `IsomorphismReesMatrixSemigroup' on 1 ar\
+guments
+
+#T# attributes: PrincipalFactor: for a D-class
+gap> D := GreensDClassOfElement(
+>       Semigroup(
+>          BooleanMatNC([[0, 1, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0], [1, 1, 1, 0, 0, 0],
+>             [0, 1, 1, 1, 1, 1], [1, 0, 1, 0, 0, 1], [1, 0, 1, 0, 1, 1]]),
+>          BooleanMatNC([[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 1, 0], [0, 1, 0, 1, 1, 0],
+>             [1, 0, 1, 1, 1, 0], [1, 1, 1, 0, 0, 1], [1, 1, 0, 0, 0, 0]]) ),
+>      BooleanMatNC([[1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
+>         [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1]]));;
+gap> PrincipalFactor(D);
+<Rees matrix semigroup 1x1 over Group(())>
+
+#T# attributes: SmallSemigroupGeneratingSet: for a collection with > 1 elements
+gap> SmallSemigroupGeneratingSet([
+> Transformation( [ 1, 1, 1, 1, 4 ] ), Transformation( [ 1, 2, 2, 1, 1 ] ),
+> Transformation( [ 1, 2, 5, 4, 4 ] ), Transformation( [ 1, 3, 3, 5, 1 ] ),
+> Transformation( [ 2, 2, 1, 2, 4 ] ), Transformation( [ 3, 2, 3, 3, 2 ] ),
+> Transformation( [ 3, 5, 2, 4, 4 ] ), Transformation( [ 3, 5, 4, 5, 4 ] ),
+> Transformation( [ 4, 4, 2, 5, 5 ] ), Transformation( [ 5, 2, 3, 5, 2 ] ) ]);;
+
+#T# attributes: SmallSemigroupGeneratingSet: for a collection with 1 elements
+gap> SmallSemigroupGeneratingSet([BooleanMatNC([[0, 1, 0, 0], [0, 1, 1, 0], [0,
+> 1, 0, 0], [1, 0, 1, 1]])]);
+[ <4x4 boolean matrix> ]
+
+#T# attributes: SmallSemigroupGeneratingSet: for a semigroup
+gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 3, 2 ] ),
+> PartialPerm( [ 1, 2, 3 ], [ 2, 3, 4 ] ), 
+> PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ),
+> PartialPerm( [ 1, 4 ], [ 1, 3 ] ), 
+> PartialPerm( [ 1, 2, 3, 4 ], [ 3, 5, 1, 2 ] ),
+> PartialPerm( [ 1, 2, 3, 4 ], [ 5, 4, 2, 1 ] ),
+> PartialPerm( [ 1, 3, 5 ], [ 1, 4, 2 ] ),
+> PartialPerm( [ 1, 2, 4, 5 ], [ 3, 2, 5, 1 ] ),
+> PartialPerm( [ 1, 2, 4, 5 ], [ 3, 5, 1, 2 ] ),
+> PartialPerm( [ 1, 3, 5 ], [ 4, 3, 1 ] ) ] );;
+gap> SmallSemigroupGeneratingSet(S);;
+
+#T# attributes: SmallMonoidGeneratingSet: for a singleton set 1/2
+gap> SmallMonoidGeneratingSet([IdentityTransformation]);
+[  ]
+
+#T# attributes: SmallMonoidGeneratingSet: for a singleton set 2/2
+gap> SmallMonoidGeneratingSet([Transformation([2,1,2])]);
+[ Transformation( [ 2, 1, 2 ] ) ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);
