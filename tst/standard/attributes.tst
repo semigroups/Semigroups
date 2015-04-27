@@ -528,6 +528,280 @@ gap> SmallMonoidGeneratingSet([IdentityTransformation]);
 gap> SmallMonoidGeneratingSet([Transformation([2,1,2])]);
 [ Transformation( [ 2, 1, 2 ] ) ]
 
+#T# attributes: SmallMonoidGeneratingSet: for a 0 generator monoid
+gap> S := Monoid( Bipartition( [ [ 1, -1 ] ] ) );;
+gap> SmallMonoidGeneratingSet(S);
+[  ]
+
+#T# attributes: SmallInverseSemigroupGeneratingSet: for collection > 1 element 
+gap> SmallInverseSemigroupGeneratingSet(
+> [ PartialPerm( [ 1, 2 ], [ 4, 1 ] ),
+>   PartialPerm( [ 1, 2 ], [ 5, 2 ] ), PartialPerm( [ 1, 2, 3 ], [ 3, 2, 1 ] ),
+>   PartialPerm( [ 1, 2, 3 ], [ 3, 2, 4 ] ),
+>   PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 3, 5 ] ),
+>   PartialPerm( [ 1, 3, 4 ], [ 3, 2, 1 ] ), PartialPerm( [ 1, 2, 4 ], [ 3, 1, 2 ] ),
+>   PartialPerm( [ 1, 2, 3, 4, 5 ], [ 3, 1, 5, 4, 2 ] ),
+>   PartialPerm( [ 1, 2, 3, 5 ], [ 5, 4, 2, 3 ] ) ] );;
+
+#T# attributes: SmallInverseSemigroupGeneratingSet: for collection 1 element 
+gap> SmallInverseSemigroupGeneratingSet( [ PartialPerm( [ 1, 2, 3, 7, 9, 10,
+> 11, 12 ], [ 4, 6, 8, 12, 5, 9, 1, 3 ] ) ] );
+[ [2,6][7,12,3,8][10,9,5][11,1,4] ]
+
+#T# attributes: SmallInverseSemigroupGeneratingSet: for an inverse semigroup
+gap> S := 
+> InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ),
+>   PartialPerm( [ 1, 2, 4 ], [ 2, 3, 1 ] ), PartialPerm( [ 1, 3, 4 ], [ 3, 2, 4 ] ),
+>   PartialPerm( [ 1, 2, 4, 5 ], [ 1, 3, 5, 4 ] ),
+>   PartialPerm( [ 1, 2, 4, 5 ], [ 2, 1, 3, 5 ] ),
+>   PartialPerm( [ 1, 3, 5 ], [ 3, 1, 2 ] ),
+>   PartialPerm( [ 1, 2, 3, 5 ], [ 3, 1, 2, 5 ] ),
+>   PartialPerm( [ 1, 2, 3, 4, 5 ], [ 3, 5, 1, 2, 4 ] ),
+>   PartialPerm( [ 1, 3, 5 ], [ 4, 3, 2 ] ),
+>   PartialPerm( [ 1, 2, 3, 5 ], [ 4, 1, 2, 3 ] ) ] );;
+gap> SmallInverseSemigroupGeneratingSet(S);;
+
+#T# attributes: SmallInverseMonoidGeneratingSet: for 0 generators
+gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
+<trivial partial perm group on 3 pts with 0 generators>
+gap> SmallInverseMonoidGeneratingSet(S);
+[  ]
+
+#T# attributes: SmallInverseMonoidGeneratingSet: for > 0 generators 1/2
+gap> S := InverseMonoid( [ PartialPerm( [ 1, 3 ], [ 2, 3 ] ),
+>  PartialPerm( [ 1, 3 ], [ 3, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3 ], [ 3, 2, 4 ] ),
+>  PartialPerm( [ 1, 4 ], [ 1, 3 ] ) ] );;
+gap> SmallInverseMonoidGeneratingSet(S);;
+
+#T# attributes: SmallInverseMonoidGeneratingSet: for > 0 generators 2/2
+gap> SmallInverseMonoidGeneratingSet(DualSymmetricInverseMonoid(3));
+[ <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]>, 
+  <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>, 
+  <block bijection: [ 1, 2, -3 ], [ 3, -1, -2 ]> ]
+
+#T# attributes: SmallInverseSemigroupGeneratingSet: for a collection
+gap> coll := [ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ] ] ),
+>  Bipartition( [ [ 1, -1 ], [ 2, -4 ], [ 3, -3 ], [ 4 ], [ 5 ], [ -2 ], [ -5 ] ] ),
+>  Bipartition( [ [ 1, -2 ], [ 2, -4 ], [ 3, -3 ], [ 4 ], [ 5 ], [ -1 ], [ -5 ] ] ),
+>  Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ], [ 5 ], [ -2 ], [ -5 ] ] ),
+>  Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3 ], [ 4, -4 ], [ 5, -3 ], [ -5 ] ] ),
+>  Bipartition( [ [ 1, -1 ], [ 2, -5 ], [ 3, -4 ], [ 4 ], [ 5, -2 ], [ -3 ] ] ),
+>  Bipartition( [ [ 1, -3 ], [ 2 ], [ 3, -5 ], [ 4, -2 ], [ 5, -4 ], [ -1 ] ] ),
+>  Bipartition( [ [ 1, -3 ], [ 2, -1 ], [ 3, -5 ], [ 4 ], [ 5, -2 ], [ -4 ] ] ),
+>  Bipartition( [ [ 1, -4 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5, -5 ], [ -2 ], [ -3 ] ] ),
+>  Bipartition( [ [ 1, -5 ], [ 2 ], [ 3, -1 ], [ 4, -2 ], [ 5, -3 ], [ -4 ] ] ),
+>  Bipartition( [ [ 1, -5 ], [ 2, -3 ], [ 3 ], [ 4, -4 ], [ 5, -1 ], [ -2 ] ] ),
+>  Bipartition( [ [ 1, -1 ], [ 2 ], [ 3, -3 ], [ 4, -2 ], [ 5 ], [ -4 ], [ -5 ] ] ),
+>  Bipartition( [ [ 1 ], [ 2, -1 ], [ 3, -3 ], [ 4, -2 ], [ 5 ], [ -4 ], [ -5 ] ] ),
+>  Bipartition( [ [ 1, -4 ], [ 2 ], [ 3, -1 ], [ 4, -2 ], [ 5 ], [ -3 ], [ -5 ] ] ),
+>  Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -5 ], [ 4, -4 ], [ 5 ], [ -3 ] ] ),
+>  Bipartition( [ [ 1, -1 ], [ 2, -5 ], [ 3 ], [ 4, -3 ], [ 5, -2 ], [ -4 ] ] ),
+>  Bipartition( [ [ 1 ], [ 2, -4 ], [ 3, -1 ], [ 4, -5 ], [ 5, -3 ], [ -2 ] ] ),
+>  Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -5 ], [ 4 ], [ 5, -1 ], [ -2 ] ] ),
+>  Bipartition( [ [ 1, -5 ], [ 2 ], [ 3, -2 ], [ 4, -4 ], [ 5, -1 ], [ -3 ] ] ) ];;
+gap> SmallInverseSemigroupGeneratingSet(coll);;
+
+#T# attributes: SmallInverseMonoidGeneratingSet: for a collection
+gap> coll := [ PartialPerm( [ 1, 2, 3, 4, 5 ], [ 1, 2, 3, 4, 5 ] ),
+> PartialPerm( [ 1, 2 ], [ 1, 4 ] ), PartialPerm( [ 1, 2, 3 ], [ 1, 4, 2 ] ),
+> PartialPerm( [ 1, 2, 3 ], [ 3, 5, 2 ] ),
+> PartialPerm( [ 1, 2, 3, 4 ], [ 1, 5, 4, 2 ] ),
+> PartialPerm( [ 1, 2, 4 ], [ 2, 3, 1 ] ), PartialPerm( [ 1, 3, 4 ], [ 3, 2, 4 ] ),
+> PartialPerm( [ 1, 2, 3, 4 ], [ 5, 2, 3, 4 ] ),
+> PartialPerm( [ 1, 2, 4, 5 ], [ 1, 3, 5, 4 ] ),
+> PartialPerm( [ 1, 3, 5 ], [ 3, 1, 2 ] ),
+> PartialPerm( [ 1, 2, 4, 5 ], [ 5, 3, 2, 1 ] ), PartialPerm( [ 1, 4 ], [ 1, 2 ] ),
+> PartialPerm( [ 1, 2, 4 ], [ 1, 3, 2 ] ), PartialPerm( [ 2, 3, 5 ], [ 3, 1, 2 ] ),
+> PartialPerm( [ 1, 2, 4, 5 ], [ 1, 4, 3, 2 ] ),
+> PartialPerm( [ 1, 2, 3 ], [ 4, 1, 2 ] ), PartialPerm( [ 2, 3, 4 ], [ 3, 1, 4 ] ),
+> PartialPerm( [ 2, 3, 4, 5 ], [ 2, 3, 4, 1 ] ),
+> PartialPerm( [ 1, 3, 4, 5 ], [ 1, 2, 5, 4 ] ),
+> PartialPerm( [ 1, 2, 3 ], [ 3, 5, 1 ] ),
+> PartialPerm( [ 1, 2, 3, 5 ], [ 5, 4, 2, 1 ] ) ];;
+gap> SmallInverseMonoidGeneratingSet(coll);;
+
+#T# attributes: SmallInverseMonoidGeneratingSet: for a collection of 1 element
+gap> SmallInverseMonoidGeneratingSet([PartialPerm([1,2,4])]);
+[ [3,4](1)(2) ]
+
+#T# attributes: SmallInverseSemigroupGeneratingSet: for non-inverse-op elements
+gap> SmallInverseSemigroupGeneratingSet([RandomTransformation(10)]);
+Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage
+the argument must satisfy IsGeneratorsOfInverseSemigroup
+
+#T# attributes: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
+gap> SmallInverseMonoidGeneratingSet([RandomBooleanMat(10)]);
+Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage
+the argument must satisfy IsGeneratorsOfInverseSemigroup
+
+#T# attributes: SmallInverseMonoidGeneratingSet: for One
+gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 3])]);
+[  ]
+
+#T# attributes: SmallGeneratingSet: for an ideal
+gap> S := SemigroupIdeal( Semigroup(
+>     BooleanMatNC([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+>     BooleanMatNC([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
+>     BooleanMatNC([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+>     BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ),
+> BooleanMatNC([[1, 0, 0], [0, 0, 0], [1, 1, 0]]) );;
+gap> SmallGeneratingSet(S);
+[ <3x3 boolean matrix> ]
+
+#T# attributes: SmallGeneratingSet: for a group
+gap> S := Group(IdentityTransformation);
+<transformation group with 1 generator>
+gap> SmallGeneratingSet(S);
+[ IdentityTransformation ]
+
+#T# attributes: SmallGeneratingSet: for an inverse monoid
+gap> S := InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 3, 2 ] ),
+>  PartialPerm( [ 1, 2, 4 ], [ 2, 3, 1 ] ), PartialPerm( [ 1, 2, 4 ], [ 3, 4, 2 ] ),
+>  PartialPerm( [ 1, 4 ], [ 4, 2 ] ) ] );;
+gap> SmallGeneratingSet(S);;
+
+#T# attributes: SmallGeneratingSet: for an inverse semigroup
+gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 2, 3 ] ),
+>                             PartialPerm( [ 1, 3 ], [ 3, 1 ] ), 
+>                             PartialPerm( [ 1, 2, 3 ], [ 4, 3, 2 ] ) ] );;
+gap> SmallGeneratingSet(S);;
+
+#T# attributes: SmallGeneratingSet: for a semigroup 
+gap> S := Semigroup( [ Transformation( [ 3, 1, 4, 1, 3 ] ),
+>                      Transformation( [ 3, 5, 3, 2, 4 ] ) ] );;
+gap> SmallGeneratingSet(S);;
+
+#T# attributes: StructureDescription for a Brandt semigroup
+gap> S := SemigroupIdeal( InverseSemigroup(
+>  [ PartialPermNC( [ 1, 2, 3, 4 ], [ 4, 1, 2, 6 ] ), 
+>    PartialPermNC( [ 1, 2, 4 ], [ 5, 2, 3 ] ), 
+>    PartialPermNC( [ 1, 2, 3, 6 ], [ 1, 3, 4, 5 ] ), 
+>    PartialPermNC( [ 1, 2, 3, 4, 6 ], [ 2, 4, 6, 1, 5 ] ), 
+>    PartialPermNC( [ 1, 2, 3, 6 ], [ 5, 1, 6, 3 ] ) ] ),
+>   [ PartialPermNC( [ 2 ], [ 2 ] ) ] );;
+gap> IsBrandtSemigroup(S);
+true
+gap> StructureDescription(S);
+"B(1, 6)"
+
+#T# attributes: StructureDescription for a group as semigroup 1/3
+gap> S := AsTransformationSemigroup(AlternatingGroup(5));;
+gap> IsGroupAsSemigroup(S);
+true
+gap> StructureDescription(S);
+"A5"
+
+#T# attributes: StructureDescription for a group as semigroup 2/3
+gap> S := Semigroup(Transformation([2,1,1]));
+<commutative transformation semigroup on 3 pts with 1 generator>
+gap> IsGroupAsSemigroup(S);
+true
+gap> StructureDescription(S);
+"C2"
+
+#T# attributes: StructureDescription for a group as semigroup 3/3
+gap> S := SymmetricGroup(3);;
+gap> StructureDescription(S);
+"S3"
+
+#T# attributes: IsGreensDLeq
+gap> S := RegularBooleanMatSemigroup(3);;
+gap> foo := IsGreensDLeq(S);
+function( x, y ) ... end
+gap> x := BooleanMatNC([[1, 0, 1], [1, 1, 0], [1, 0, 1]]);;
+gap> y := BooleanMatNC([[1, 0, 1], [0, 0, 0], [1, 0, 0]]);;
+gap> foo(x, y);
+true
+gap> foo(y, x);
+false
+gap> z := RepresentativeOfMinimalIdeal(S);
+<3x3 boolean matrix>
+gap> foo(x, z);
+true
+gap> foo(z, x);
+false
+gap> foo(z, y);
+false
+gap> foo(y, z);
+true
+
+#T# attributes: MaximalDClasses
+gap> S := RegularBooleanMatSemigroup(3);
+<semigroup of 3x3 boolean matrices with 4 generators>
+gap> MaximalDClasses(S);
+[ <Green's D-class: <3x3 boolean matrix>> ]
+
+#T# attributes: StructureDescriptionMaximalSubgroups
+gap> S := RegularBooleanMatSemigroup(3);;
+gap> StructureDescriptionMaximalSubgroups(S);
+[ "1", "C2", "S3" ]
+
+#T# attributes: IdempotentGeneratedSubsemigroup
+gap> S := RegularBooleanMatSemigroup(3);;
+gap> IdempotentGeneratedSubsemigroup(S);
+<monoid of 3x3 boolean matrices with 122 generators>
+
+#T# attributes: InjectionPrincipalFactor
+gap> S := Monoid( [ BooleanMatNC([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
+>   BooleanMatNC([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
+>   BooleanMatNC([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+>   BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 1, 1]]),
+>   BooleanMatNC([[1, 0, 0], [1, 1, 0], [0, 0, 1]]),
+>   BooleanMatNC([[1, 1, 0], [0, 1, 0], [0, 0, 1]]),
+>   BooleanMatNC([[1, 1, 0], [0, 0, 0], [0, 1, 1]]),
+>   BooleanMatNC([[1, 0, 1], [0, 1, 0], [0, 0, 0]]),
+>   BooleanMatNC([[1, 0, 0], [0, 0, 1], [0, 0, 1]]),
+>   BooleanMatNC([[0, 0, 0], [0, 1, 0], [0, 0, 1]]),
+>   BooleanMatNC([[1, 0, 0], [0, 0, 0], [0, 0, 1]]),
+>   BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ] );;
+gap> D := DClass(S, BooleanMatNC([[1, 0, 1], [1, 1, 1], [1, 0, 1]]));;
+gap> map := InjectionPrincipalFactor(D);
+MappingByFunction( <Green's D-class: <3x3 boolean matrix>>, 
+<Rees 0-matrix semigroup 12x12 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(map);;
+gap> ForAll(D, x -> (x ^ map) ^ inv = x);
+true
+gap> MultiplicativeZero(Range(map)) ^ inv;
+fail
+gap> x := BooleanMatNC([[0, 0, 0], [1, 1, 0], [0, 0, 0]]);;
+gap> x ^ map;
+fail
+gap> D := First(DClasses(S), x-> not IsRegularClass(x));
+<Green's D-class: <3x3 boolean matrix>>
+gap> InjectionPrincipalFactor(D);
+Error, Semigroups: InjectionPrincipalFactor: usage,
+the argument <D> must be a regular D-class,
+
+#T# attributes: MultiplicativeNeutralElement
+gap> S := Semigroup( [ BooleanMatNC([[0, 0, 1], [0, 0, 1], [0, 1, 1]]),
+>  BooleanMatNC([[1, 0, 0], [1, 1, 0], [0, 1, 1]]) ] );;
+gap> MultiplicativeNeutralElement(S);
+fail
+gap> S := Semigroup(AsBooleanMat(Transformation([2,1,2]), 3));;
+gap> Display(MultiplicativeNeutralElement(S));
+1 0 0
+0 1 0
+1 0 0
+gap> S := RegularBooleanMatSemigroup(2);
+<semigroup of 2x2 boolean matrices with 4 generators>
+gap> MultiplicativeNeutralElement(S);
+<2x2 boolean matrix>
+
+#T# attributes: IsomorphismPermGroup
+gap> S := RegularBooleanMatSemigroup(2);
+<semigroup of 2x2 boolean matrices with 4 generators>
+gap> IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+gap> S := Semigroup( [ BooleanMatNC([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+>  BooleanMatNC([[0, 1, 0], [0, 0, 1], [1, 0, 0]]) ] );;
+gap> IsomorphismPermGroup(S);
+MappingByFunction( <simple semigroup of 3x3 boolean matrices with 2 generators
+>, Group([ (1,2)(3,5)(4,6), (1,5,4)
+(2,6,3) ]), function( x ) ... end, function( x ) ... end )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);

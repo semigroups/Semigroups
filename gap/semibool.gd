@@ -10,8 +10,8 @@
 
 # This file contains methods for semigroups of boolean matrices.
 
-DeclareSynonym("IsBooleanMatSemigroup",
-               IsBooleanMatCollection and IsSemigroup);
+DeclareSynonym("IsBooleanMatSemigroup", 
+               IsSemigroup and IsBooleanMatCollection);
 InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 DeclareOperation("RandomBooleanMatSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBooleanMatMonoid", [IsPosInt, IsPosInt]);

@@ -15,32 +15,6 @@
 # 0-matrix semigroups can be found in the files semitrans.gi, semipperm.gi,
 # semibipart.gi , and reesmat.gi.
 
-# fall back method, same method for ideals
-
-InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
-function(S)
-  local en, act, gens;
-
-  if not IsGroupAsSemigroup(S)  then
-   Error( "usage: the argument must be a semigroup satisfying\n", 
-    "IsGroupAsSemigroup,");
-   return; 
-  fi;
-
-  en:=EnumeratorSorted(S);
-  
-  act:=function(i, x)
-    return Position(en, en[i]*x);
-  end;
-  
-  gens := List(GeneratorsOfSemigroup(S), 
-   x-> Permutation(x, [1..Length(en)], act));
-
-  return MagmaIsomorphismByFunctionsNC( S, Group( gens ), 
-   x-> Permutation(x, [1..Length(en)], act), 
-   x-> en[Position(en, MultiplicativeNeutralElement(S))^x]);
-end);
-
 # not relevant for ideals
 
 InstallMethod(IsomorphismTransformationSemigroup, 

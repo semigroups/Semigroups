@@ -70,6 +70,7 @@ function(rel, rep, type)
 
   out := rec();
   S := Source(rel);
+  # TODO set IsInverseOpClass here???
   ObjectifyWithAttributes(out, type(S), EquivalenceClassRelation, rel,
                           Representative, rep, ParentAttr, S);
 

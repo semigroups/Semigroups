@@ -233,7 +233,7 @@ InstallMethod(SmallMonoidGeneratingSet,
 "for an associative element with one collection",
 [IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if Length(coll) < 2 then
+  if Length(coll) = 1 then
     if coll[1] = One(coll) then 
       return [];
     fi;
@@ -256,9 +256,14 @@ end);
 #
 
 InstallMethod(SmallInverseSemigroupGeneratingSet,
-"for generators of an inverse semigroup",
-[IsGeneratorsOfInverseSemigroup],
+"for a multiplicative element coll",
+[IsMultiplicativeElementCollection],
 function(coll)
+  if not IsGeneratorsOfInverseSemigroup(coll) then 
+    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage\n", 
+          "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    return;
+  fi;
   if Length(coll) < 2 then
     return coll;
   fi;
@@ -276,9 +281,17 @@ S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S)));
 
 InstallMethod(SmallInverseMonoidGeneratingSet,
 "for generators of an inverse monoid",
-[IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection],
+[IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if Length(coll) < 2 then
+  if not IsGeneratorsOfInverseSemigroup(coll) then 
+    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage\n", 
+          "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    return;
+  fi;
+  if Length(coll) = 1 then
+    if coll[1] = One(coll) then 
+      return [];
+    fi;
     return coll;
   fi;
   return GeneratorsOfInverseMonoid(InverseMonoid(coll, rec(small := true)));
@@ -289,7 +302,12 @@ end);
 InstallMethod(SmallInverseMonoidGeneratingSet,
 "for a monoid with inverse op",
 [IsSemigroupWithInverseOp and IsMonoid],
-S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseMonoid(S)));
+function(S)
+  if IsEmpty(GeneratorsOfInverseMonoid(S)) then 
+    return GeneratorsOfInverseMonoid(S);
+  fi;
+  return SmallMonoidGeneratingSet(GeneratorsOfInverseMonoid(S));
+end);
 
 #
 
@@ -299,8 +317,6 @@ function(S)
 
   if HasGeneratorsOfSemigroupIdeal(S) then
     return MinimalIdealGeneratingSet(S);
-  elif HasGeneratorsOfGroup(S) then
-    return SmallGeneratingSet(GeneratorsOfGroup(S));
   elif HasGeneratorsOfInverseMonoid(S) then
     return SmallInverseMonoidGeneratingSet(S);
   elif HasGeneratorsOfInverseSemigroup(S) then
@@ -319,14 +335,7 @@ InstallMethod(StructureDescription, "for a Brandt semigroup",
 function(S)
   local x, D;
 
-  x := First(Generators(S), x -> x <> MultiplicativeZero(S));
-
-  if x = fail then
-    return "0";
-  fi;
-
-  D := GreensDClassOfElementNC(S, x);
-
+  D := MaximalDClasses(S)[1];
   return Concatenation("B(", StructureDescription(GroupHClass(D)), ", ",
                        String(NrRClasses(D)), ")");
 end);
@@ -338,8 +347,7 @@ InstallMethod(StructureDescription, "for a group as semigroup",
 function(S)
   if IsGroup(S) then
     # since groups (even perm groups) satisfy IsGroupAsSemigroup
-    #TryNextMethod(); #FIXME is this appropriate?? Shouldn't we return false?
-    return fail;
+    TryNextMethod(); #this is appropriate, don't change it!
   fi;
 
   return StructureDescription(Range(IsomorphismPermGroup(S)));

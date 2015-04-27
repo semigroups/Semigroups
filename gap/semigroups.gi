@@ -214,13 +214,16 @@ function(gens, opts)
       Sort(gens, function(x, y)
                    return ActionRank(x, n) > ActionRank(y, n);
                  end);
+      #remove the identity
+      if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n) = n then
+        Remove(gens, 1);
+      fi;
     else 
       Sort(gens, IsGreensDLeq(Semigroup(gens)));
-    fi;
-
-    #remove the identity
-    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n) = n then
-      Remove(gens, 1);
+      if IsOne(gens[1]) and IsBound(gens[2]) 
+          and gens[1] in Semigroup(gens[2]) then 
+        Remove(gens, 1);
+      fi;
     fi;
 
     opts:=ShallowCopy(opts);  

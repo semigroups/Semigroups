@@ -34,14 +34,9 @@ DeclareAttribute("SmallMonoidGeneratingSet",
                  IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallMonoidGeneratingSet", IsMonoid and IsFinite);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet",
-                 IsSemigroupWithInverseOp);
-DeclareAttribute("SmallInverseSemigroupGeneratingSet",
-                 IsGeneratorsOfInverseSemigroup);
+                 IsMultiplicativeElementCollection);
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
-                 IsInverseMonoid and IsSemigroupWithInverseOp);
-DeclareAttribute("SmallInverseMonoidGeneratingSet",
-                 IsGeneratorsOfInverseSemigroup
-                 and IsMultiplicativeElementWithOneCollection);
+                 IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
