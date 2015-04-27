@@ -412,6 +412,15 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1 ], [ 2 ], [ 3 ],
 <Rees 0-matrix semigroup 12x15 over Group(())>
  , function( f ) ... end, function( x ) ... end )
 
+#T# attributes: IrredundantGeneratingSubset
+gap> G := CyclicGroup(3);;
+gap> R := GF(2);;
+gap> GR := GroupRing(R, G);;
+gap> iso := IsomorphismTransformationSemigroup(GR);;
+gap> S := Range(iso);;
+gap> S := Semigroup(IrredundantGeneratingSubset(SmallGeneratingSet(S)));;
+
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);

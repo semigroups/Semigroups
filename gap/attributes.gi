@@ -122,7 +122,7 @@ InstallMethod(IrredundantGeneratingSubset,
 function(coll)
   local gens, nrgens, deg, out, redund, i, x;
 
-   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll))
+  if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll))
        or (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
