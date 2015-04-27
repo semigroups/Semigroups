@@ -18,24 +18,18 @@ DeclareOperation("IsJoinIrreducible",
                  [IsInverseSemigroup, IsAssociativeElement]);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
 DeclareOperation("IsMajorantlyClosed",
-                 [IsActingSemigroup and IsSemigroupWithInverseOp,
-                  IsAssociativeElementCollection]);
+                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
 DeclareOperation("IsMajorantlyClosed",
-                 [IsActingSemigroup and IsSemigroupWithInverseOp,
-                  IsActingSemigroup]);
+                 [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp]);
 DeclareOperation("IsMajorantlyClosedNC",
-                 [IsSemigroupWithInverseOp and IsActingSemigroup,
-                  IsAssociativeElementCollection]);
+                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
 DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("MajorantClosureNC",
-                 [IsInverseSemigroup,
-                  IsAssociativeElementCollection]);
+                 [IsInverseSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
-DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass and IsInverseOpClass
-                                          and IsActingSemigroupGreensClass);
+DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
 DeclareOperation("RightCosetsOfInverseSemigroup",
-                 [IsSemigroupWithInverseOp and IsActingSemigroup,
-                  IsSemigroupWithInverseOp and IsActingSemigroup]);
+                 [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp]);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
