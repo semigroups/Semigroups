@@ -15,7 +15,7 @@
 
 InstallMethod(CharacterTableOfInverseSemigroup,
 "for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
+[IsInverseSemigroup and IsPartialPermSemigroup and IsActingSemigroup],
 function(S)
   local reps, p, H, C, r, tbl, id, l, A, o, lookup, scc, conjclass, conjlens,
   j, conjreps, dom, subsets, x, m, u, k, h, i, n, y;

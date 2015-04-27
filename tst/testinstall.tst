@@ -910,8 +910,8 @@ gap> MultiplicativeZero(S);
 fail
 
 #T# TestInstall59: Issue 88:
-# Something called by `JoinIrreducibleDClasses` of an ideal of a bipartition
-# semigroup calls `GeneratorsOfSemigroup`
+# Something called by `JoinIrreducibleDClasses` of an acting semigroup ideal
+# of a bipartition semigroup calls `GeneratorsOfSemigroup`
 gap> S := InverseMonoid(DualSymmetricInverseMonoid(6), rec(generic := false));;
 gap> x := Bipartition([[1, 2, -3], [3, -1, -2], [4, -4],
 > [5, -5], [6, -6]]);;
@@ -922,6 +922,12 @@ gap> JoinIrreducibleDClasses(I);
       [ 6, -6 ]>> ]
 gap> I;
 <inverse bipartition semigroup ideal on 6 pts with 1 generator>
+gap> S := InverseMonoid(DualSymmetricInverseMonoid(3));;
+gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
+gap> I := SemigroupIdeal(S, x);
+<inverse bipartition semigroup ideal on 3 pts with 1 generator>
+gap> JoinIrreducibleDClasses(I);
+[ <Green's D-class: <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ]>> ]
 
 #T# TestInstall60: Issue 94:
 # EquivalenceClasses of trivial congruence returns empty list
