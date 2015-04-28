@@ -275,8 +275,21 @@ end);
 
 InstallGlobalFunction(SemigroupsTestInstall,
 function()
+  local generic;
+  
+  generic := SEMIGROUPS_DefaultOptionsRec.generic;
+  
+  Print("SEMIGROUPS_DefaultOptionsRec.generic := false;\n");
+  SEMIGROUPS_DefaultOptionsRec.generic := false;
   Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
    "testinstall.tst"));
+  
+  Print("SEMIGROUPS_DefaultOptionsRec.generic := true;\n");
+  SEMIGROUPS_DefaultOptionsRec.generic := true;
+  Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
+   "testinstall.tst"));
+
+  SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return;
 end);
 
