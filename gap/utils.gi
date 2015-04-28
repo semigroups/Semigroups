@@ -117,6 +117,7 @@ function()
   record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
   record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);
   record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
+  record.SEMIGROUPS_DefaultOptionsRec := ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
 
   record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
   record.TransformationDisplayLimit
@@ -164,6 +165,9 @@ function(file)
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoPackageLoading);
+  UnbindGlobal("SEMIGROUPS_DefaultOptionsRec");
+  BindGlobal("SEMIGROUPS_DefaultOptionsRec", record.SEMIGROUPS_DefaultOptionsRec);
+  MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 
   SetUserPreference("PartialPermDisplayLimit",
    record.PartialPermDisplayLimit);

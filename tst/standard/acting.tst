@@ -12,8 +12,6 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SemigroupsStartTest();
-gap> _SEMIGROUPS_DefaultOptionsRec_generic :=
->     SEMIGROUPS_DefaultOptionsRec.generic;;
 gap> SEMIGROUPS_DefaultOptionsRec.generic := false;;
 
 #T# ActingTest1
@@ -365,9 +363,6 @@ gap> RandomPartialPerm(4) < UniversalFakeOne;
 false
 
 #T# SEMIGROUPS_UnbindVariables
-gap> SEMIGROUPS_DefaultOptionsRec.generic := 
-> _SEMIGROUPS_DefaultOptionsRec_generic;;
-gap> Unbind(_SEMIGROUPS_DefaultOptionsRec_generic);
 gap> Unbind(s);
 gap> Unbind(r);
 gap> Unbind(gens);
