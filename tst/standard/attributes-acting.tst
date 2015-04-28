@@ -78,7 +78,7 @@ gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 4, 3 ] ),
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse partial perm semigroup on 5 pts with 5 generators>
 
-#T# attributes-acting: InjectionPrincipalFactor 1/5
+#T# attributes-acting: InjectionPrincipalFactor 1/6
 gap> D := GreensDClassOfElement(
 >  Monoid( [ Bipartition( [ [ 1, 2, -2 ], [ 3, -3 ], [ -1 ] ] ),
 >      Bipartition( [ [ 1, 2 ], [ 3 ], [ -1, -3 ], [ -2 ] ] ),
@@ -96,7 +96,7 @@ fail
 gap> Star(Bipartition( [ [ 1, 2, -2 ], [ 3, -3 ], [ -1 ] ] )) ^ map;
 fail
 
-#T# attributes-acting: InjectionPrincipalFactor 2/5
+#T# attributes-acting: InjectionPrincipalFactor 2/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
 <Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
 gap> x := RMSElement(R, 9,(1,3,2,4),2);;
@@ -108,7 +108,7 @@ gap> InjectionPrincipalFactor(D);
 Error, Semigroups: InjectionPrincipalFactor: usage,
 the argument <d> must be a regular D-class,
 
-#T# attributes-acting: InjectionPrincipalFactor 3/5
+#T# attributes-acting: InjectionPrincipalFactor 3/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
 <Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
 gap> x := RMSElement(R, 9,(1,3,2,4),2);;
@@ -120,7 +120,7 @@ MappingByFunction( <Green's D-class: (9,(1,3,2,4),2)>,
 <Rees matrix semigroup 1x1 over Group([ (2,3,
 4) ])>, function( x ) ... end, function( x ) ... end )
 
-#T# attributes-acting: InjectionPrincipalFactor 4/5
+#T# attributes-acting: InjectionPrincipalFactor 4/6
 gap> D := GreensDClassOfElement(
 >  Semigroup(
 >     [ Transformation( [ 1, 3, 4, 1, 3 ] ), Transformation( [ 5, 5, 1, 1, 3 ] ) ]
@@ -132,7 +132,7 @@ MappingByFunction( <Green's D-class: Transformation( [ 5, 5, 1, 1, 3 ] )>,
 gap> Transformation( [ 5, 1, 1, 1, 3 ] ) ^ map;
 fail
 
-#T# attributes-acting: InjectionPrincipalFactor 5/5
+#T# attributes-acting: InjectionPrincipalFactor 5/6
 gap> D := GreensDClassOfElement(
 >   Semigroup(
 >      [ Transformation( [ 1, 3, 4, 1, 3 ] ), Transformation( [ 5, 5, 1, 1, 3 ] ) ]
@@ -140,6 +140,12 @@ gap> D := GreensDClassOfElement(
 gap> map := InverseGeneralMapping(InjectionPrincipalFactor(D));;
 gap> MultiplicativeZero(Source(map)) ^ map;
 fail
+
+#T# attributes-acting: InjectionPrincipalFactor 6/6
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [0, ()]]);;
+gap> S := Semigroup(RMSElement(S, 2, (), 2),
+>                   RMSElement(S, 1, (), 2));;
+gap> MaximalSubsemigroups(S);;
 
 #T# attributes-acting: InversesOfSemigroupElement, none, 1/2
 gap> S := Semigroup( [ Bipartition( [ [ 1, 2, -2 ], [ 3, -3 ], [ -1 ] ] ),

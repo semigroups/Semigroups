@@ -168,6 +168,9 @@ function(d)
     leftact := PROD;
   elif IsReesZeroMatrixSubsemigroup(Parent(d)) then
     leftact := function(x, y)
+      if y![1] = 0 then
+        return y;
+      fi;
       return Objectify(TypeObj(y),
                        [y![1], y![4][rep![3]][rep![1]] ^ -1 * x * rep![2] ^ -1
                         * y![2], y![3], y![4]]);
