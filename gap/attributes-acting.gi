@@ -168,9 +168,6 @@ function(d)
     leftact := PROD;
   elif IsReesZeroMatrixSubsemigroup(Parent(d)) then
     leftact := function(x, y)
-      if y![1] = 0 then
-        return y;
-      fi;
       return Objectify(TypeObj(y),
                        [y![1], y![4][rep![3]][rep![1]] ^ -1 * x * rep![2] ^ -1
                         * y![2], y![3], y![4]]);
@@ -278,7 +275,6 @@ function(s, f)
   j := 0;
 
   # can't use GradedRhoOrb here since there may be inverses not D-related to f
-  # JDM is this really true?
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
     o := RhoOrb(s);
     rhos := EmptyPlist(Length(o));
@@ -320,46 +316,48 @@ function(s, f)
 
   out := [];
   k := 0;
+  
+  #if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
+  # Notes: it seems that LambdaOrb(S) is always closed at this point
+  o := LambdaOrb(s);
+  Enumerate(o); # just in case
+  for i in [2 .. Length(o)] do
+    if lambdarank(o[i]) = rank and tester(o[i], rho_f) then
+      for rho in rhos do
+        g := creator(lambda, rho) * inv(o[i], f);
+        if regular or g in s then
+          k := k + 1;
+          out[k] := g;
+        fi;
+      od;
+    fi;
+  od;
+  #else
+  #   opts := rec(treehashsize := s!.opts.hashlen.M,
+  #               gradingfunc := function(o, x) return lambdarank(x); end,
+  #               onlygrades := function(x, y) return x >= rank; end,
+  #               onlygradesdata := fail);
 
-  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
-    o := LambdaOrb(s);
-    for i in [2 .. Length(o)] do
-      if lambdarank(o[i]) = rank and tester(o[i], rho_f) then
-        for rho in rhos do
-          g := creator(lambda, rho) * inv(o[i], f);
-          if regular or g in s then
-            k := k + 1;
-            out[k] := g;
-          fi;
-        od;
-      fi;
-    od;
-  else
-     opts := rec(treehashsize := s!.opts.hashlen.M,
-                 gradingfunc := function(o, x) return lambdarank(x); end,
-                 onlygrades := function(x, y) return x >= rank; end,
-                 onlygradesdata := fail);
+  #  for name in RecNames(LambdaOrbOpts(s)) do
+  #    opts.(name) := LambdaOrbOpts(s).(name);
+  #  od;
 
-    for name in RecNames(LambdaOrbOpts(s)) do
-      opts.(name) := LambdaOrbOpts(s).(name);
-    od;
+  #  o := Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
+  #  Enumerate(o);
+  #  grades := Grades(o);
 
-    o := Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
-    Enumerate(o);
-    grades := Grades(o);
-
-    for i in [2 .. Length(o)] do
-      if grades[i] = rank and tester(o[i], rho_f) then
-        for rho in rhos do
-          g := creator(lambda, rho) * inv(o[i], f);
-          if regular or g in s then
-            k := k + 1;
-            out[k] := g;
-          fi;
-        od;
-      fi;
-    od;
-  fi;
+  #  for i in [2 .. Length(o)] do
+  #    if grades[i] = rank and tester(o[i], rho_f) then
+  #      for rho in rhos do
+  #        g := creator(lambda, rho) * inv(o[i], f);
+  #        if regular or g in s then
+  #          k := k + 1;
+  #          out[k] := g;
+  #        fi;
+  #      od;
+  #    fi;
+  #  od;
+  #fi;
 
   return out;
 end);
@@ -368,28 +366,28 @@ end);
 
 InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
-  local gens, rank, lambda, max, r, rep, f;
+function(S)
+  local gens, rank, lambda, max, rep, r, e;
 
-  gens := Generators(s);
-  rank := LambdaRank(s);
-  lambda := LambdaFunc(s);
+  gens := Generators(S);
+  rank := LambdaRank(S);
+  lambda := LambdaFunc(S);
   max := 0;
   rep := gens[1];
 
-  for f in gens do
-    r := rank(lambda(f));
+  for e in gens do
+    r := rank(lambda(e));
     if r > max then
       max := r;
-      rep := f;
+      rep := e;
     fi;
   od;
 
-  if max = ActionDegree(s) and IsMultiplicativeElementWithOneCollection(s) then
-    return One(s);
+  if max = ActionDegree(S) and IsMultiplicativeElementWithOneCollection(S) then
+    return One(S);
   fi;
 
-  r := GreensRClassOfElementNC(s, rep);
+  r := GreensRClassOfElementNC(S, rep);
 
   if not NrIdempotents(r) = 1 then
     Info(InfoSemigroups, 2, "the number of idempotents in the R-class of the",
@@ -398,10 +396,10 @@ function(s)
     return fail;
   fi;
 
-  f := Idempotents(r)[1];
+  e := Idempotents(r)[1];
 
-  if ForAll(gens, x -> x * f = x and f * x = x) then
-    return f;
+  if ForAll(gens, x -> x * e = x and e * x = x) then
+    return e;
   fi;
 
   Info(InfoSemigroups, 2, "the unique idempotent in the R-class of the first",
