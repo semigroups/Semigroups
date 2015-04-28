@@ -148,9 +148,9 @@ function(f, s)
   fi;
 
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
+    new := true;
     # lambda-rho-combination not yet seen
     if IsClosedData(data) then
-      Print("Hre5");
       return false;
     fi;
 
@@ -161,7 +161,6 @@ function(f, s)
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
       return false;
     fi;
-    new := true;
   fi;
 
   schutz := LambdaOrbStabChain(lambdao, m);
@@ -490,10 +489,8 @@ function(data, limit, lookfunc)
 
       elif not IsBound(lambdarhoht[l]) then
         # old rho-value, but new lambda-rho-combination
-
         # update rho orbit graph
         rho_orbitgraph[rholookup[i]][j] := l;
-
         nr := nr + 1;
         lenreps[m] := lenreps[m] + 1;
         ind := lenreps[m];
@@ -648,12 +645,12 @@ InstallMethod(OrbitGraphAsSets, "for semigroup data",
 InstallMethod(Position, "for semigroup data and an associative element",
 [IsSemigroupData, IsAssociativeElement, IsZeroCyc],
 function(data, x, n)
-  local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
+  local S, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
   lambdaperm;
 
-  s := data!.parent;
-  o := LambdaOrb(s);
-  l := Position(o, LambdaFunc(s)(x));
+  S := data!.parent;
+  o := LambdaOrb(S);
+  l := Position(o, LambdaFunc(S)(x));
 
   if l = fail then
     return fail;
@@ -674,7 +671,7 @@ function(data, x, n)
     return fail;
   fi;
 
-  l := Position(RhoOrb(s), RhoFunc(s)(x));
+  l := Position(RhoOrb(S), RhoFunc(S)(x));
 
   if l = fail then
     return fail;
@@ -696,13 +693,12 @@ function(data, x, n)
   reps := data!.reps[m][ind];
   repslens := data!.repslens[m][ind];
 
-  lambdaperm := LambdaPerm(s);
+  lambdaperm := LambdaPerm(S);
   for n in [1 .. repslens] do
     if SiftedPermutation(schutz, lambdaperm(reps[n], x)) = () then
       return repslookup[n];
     fi;
   od;
-
   return fail;
 end);
 
