@@ -428,6 +428,116 @@ gap> IsUniformBlockBijection(Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] ));
 true
 
 # bipartition: IsUniformBlockBijection, for a bipartition 2/3
+gap> x := Bipartition( [ [ 1, -1 ], [ 2, 3, -2 ], [ -3 ] ] );;
+gap> IsUniformBlockBijection(x);
+false
+
+# bipartition: IsUniformBlockBijection, for a bipartition 3/3
+gap> x := Bipartition( [ [ 1, 3, -2 ], [ 2, -1, -3 ] ] );;
+gap> IsUniformBlockBijection(x);
+false
+
+# bipartition: IsDualTransBipartition, for a bipartition 1/2
+gap> x := Bipartition( [ [ 1, 3, -2 ], [ 2, -1, -3 ] ] );;
+gap> IsDualTransBipartition(x);
+false
+
+# bipartition: IsDualTransBipartition, for a bipartition 2/2
+gap> x := Star(AsBipartition(Transformation([2, 1, 2])));;
+gap> IsDualTransBipartition(x);
+true
+
+# bipartition: RightProjection
+gap> x := Bipartition( [ [ 1, 2, 4, 5, -1 ], [ 3, 6, -2 ], 
+> [ -3, -6 ], [ -4, -5 ] ] );;
+gap> RightProjection(x);
+<bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, 6 ], [ 4, 5 ], [ -3, -6 ], 
+ [ -4, -5 ]>
+
+# bipartition: Bipartition 1/3
+gap> Bipartition("test");
+Error, Semigroups: Bipartition: usage,
+the argument <classes> must consist of duplicate-free homogeneous lists,
+gap> Bipartition(["test"]);
+Error, Semigroups: Bipartition: usage,
+the argument <classes> must consist of duplicate-free homogeneous lists,
+gap> Bipartition([[1, 2],[3, "a"]]);
+Error, Semigroups: Bipartition: usage,
+the argument <classes> must consist of duplicate-free homogeneous lists,
+gap> Bipartition([[1, 2],[3, 3]]);
+Error, Semigroups: Bipartition: usage,
+the argument <classes> must consist of duplicate-free homogeneous lists,
+
+# bipartition: Bipartition 2/3
+gap> Bipartition([[1,2],[3,E(3)]]);
+Error, Semigroups: Bipartition: usage,
+the argument <classes> must consist of positive and/or negative integers,
+
+
+# bipartition: Bipartition 3/3
+gap> Bipartition([[1,2],[3,4]]);
+Error, Semigroups: Bipartition: usage,
+the union of the argument <classes> must be [-n..-1, 1..n],
+
+# bipartition: OneMutable, for a bipartition collection 1/1
+gap> OneMutable([IdentityBipartition(2)]);
+<block bijection: [ 1, -1 ], [ 2, -2 ]>
+
+# bipartition: BipartitionByIntRep 1/5
+gap> BipartitionByIntRep([1,2,3]);
+Error, Semigroups: BipartitionByIntRep: usage,
+the length of the argument <blocks> must be an even integer,
+
+# bipartition: BipartitionByIntRep 2/5
+gap> BipartitionByIntRep([1, 2, 3, "a"]);
+Error, Semigroups: BipartitionByIntRep: usage,
+the elements of the argument <blocks> must be positive integers,
+
+# bipartition: BipartitionByIntRep 3/5
+gap> BipartitionByIntRep([1, 2, 3, 5]);
+Error, Semigroups: BipartitionByIntRep: usage,
+expected 4 but found 5, in position 4
+
+# bipartition: BipartitionByIntRep 4/5
+gap> BipartitionByIntRep([1, 3, 3, 5]);
+Error, Semigroups: BipartitionByIntRep: usage,
+expected 2 but found 3, in position 2
+
+# bipartition: BipartitionByIntRep 5/5
+gap> BipartitionByIntRep([1, 2, 3, 1]);
+<bipartition: [ 1, -2 ], [ 2 ], [ -1 ]>
+
+# bipartition: BipartRightBlocksConj 1/1
+gap> x := Bipartition( [ [ 1, 3, -2, -3 ], [ 2, -1 ] ] );;
+gap> BipartRightBlocksConj(x, RightOne(x));
+(1,2)
+
+# bipartition: PrintString, for a bipartition 1/1
+gap> PrintString(Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] ));
+"\>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 ] \<] )\<"
+
+# bipartition: PrintString, for a bipartition collection 1/2
+gap> PrintString([Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] ), 
+> Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] )]);
+"\>[ \>\>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 ] \<] )\<,\<\n \>\
+\>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 ] \<] )\< ]\<\n"
+
+# bipartition: PrintString, for a bipartition collection 2/2
+gap> S := Semigroup(Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] ));;
+gap> PrintString(S);
+"\>Semigroup(\>\n\>\>[ \>\>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 \
+] \<] )\< ]\<\n\<\> \<)\<\<"
+
+# bipartition: DegreeOfBipartitionCollection, for a semigroup 1/1
+gap> DegreeOfBipartitionCollection(PartitionMonoid(2));
+2
+
+# bipartition: DegreeOfBipartitionCollection, error 1/1
+gap> x := Bipartition( [ [ 1, 2, -2 ], [ -1 ] ] );;
+gap> y := Bipartition( [ [ 1, 3 ], [ 2, -1 ], [ -2 ], [ -3 ] ] );;
+gap> DegreeOfBipartitionCollection([x, y]);
+Error, Semigroups: DegreeOfBipartitionCollection: usage,
+the argument <coll> must be a collection of bipartitions of equal degree,
 
 #
 gap> Unbind(elts);

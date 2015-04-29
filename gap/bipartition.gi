@@ -818,7 +818,6 @@ InstallMethod(IsBlockBijection, "for a bipartition",
 x -> NrBlocks(x) = NrLeftBlocks(x) and NrRightBlocks(x) = NrLeftBlocks(x));
 
 #
-# TODO continue code coverage from here . . .
 
 InstallMethod(IsUniformBlockBijection, "for a bipartition",
 [IsBipartition],
@@ -1059,23 +1058,24 @@ function(classes)
 
   if not IsList(classes)
       or ForAny(classes, x -> not IsHomogeneousList(x)
-                                  and IsDuplicateFree(x)) then
+                                  or not IsDuplicateFree(x)) then
     Error("Semigroups: Bipartition: usage,\n",
-          "the argument <classes> must consist of duplicate-free lists,");
+          "the argument <classes> must consist of duplicate-free ",
+          "homogeneous lists,");
     return;
   fi;
 
   if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
     Error("Semigroups: Bipartition: usage,\n",
-          "the argument <classes> must consist of positive and negative ",
-          "integers,");
+          "the argument <classes> must consist of positive and/or negative ",
+          "integers,\n");
     return;
   fi;
 
   copy := Union(classes);
-  if not (copy = classes or
-          copy = Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)]))
-          then
+  if not IsEmpty(classes)
+      and (copy <> Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
+           or Minimum(copy) > 0) then
     Error("Semigroups: Bipartition: usage,\n",
           "the union of the argument <classes> must be [-n..-1, 1..n],");
     return;
@@ -1227,14 +1227,15 @@ function(blocks)
   fi;
 
   next := 0;
-  seen := BlistList([1 .. 2 * n], []);
+  seen := BlistList([1 .. 2 * Maximum(blocks)], []);
 
   for i in [1 .. n] do
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
         Error("Semigroups: BipartitionByIntRep: usage,\n",
-              "expected ", next, " but found ", blocks[i], ",");
+              "expected ", next, " but found ", blocks[i],
+              ", in position ", i);
         return;
       fi;
       seen[blocks[i]] := true;
@@ -1248,7 +1249,8 @@ function(blocks)
       next := next + 1;
       if blocks[i] <> next then
         Error("Semigroups: BipartitionByIntRep: usage,\n",
-              "expected ", next, " but found ", blocks[i], ",");
+              "expected ", next, " but found ", blocks[i],
+              ", in position ", i);
         return;
       fi;
       seen[blocks[i]] := true;
@@ -1271,7 +1273,7 @@ end);
 InstallGlobalFunction(BipartRightBlocksConj,
 function(f, g)
   local n, fblocks, gblocks, nr, lookup, next, seen, src, dst, i;
-
+  
   n := DegreeOfBipartition(f);
   fblocks := f!.blocks;
   gblocks := g!.blocks;
@@ -1309,6 +1311,7 @@ function(f, g)
 end);
 
 # StabiliserAction
+# TODO continue code coverage from here . . .
 
 InstallGlobalFunction(OnRightBlocksBipartitionByPerm,
 function(f, p)
