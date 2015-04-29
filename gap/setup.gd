@@ -11,6 +11,16 @@
 # This file contains declarations of everything required for a semigroup
 # belonging to IsActingSemigroup...
 
+DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
+# so that the rank of IsActingSemigroup is higher than that of
+# IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and
+# IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
+
+DeclareProperty("IsGeneratorsOfActingSemigroup",
+                IsAssociativeElementCollection);
+DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
+                IsActingSemigroup);
+
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);

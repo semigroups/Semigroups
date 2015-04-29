@@ -12,6 +12,7 @@
 #
 
 BindGlobal("SemigroupsDocXMLFiles", ["../PackageInfo.g",
+                                     "attributes-acting.xml",
                                      "attributes-inverse.xml",
                                      "attributes.xml",
                                      "bipartition.xml",

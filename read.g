@@ -119,10 +119,9 @@ ReadPackage("semigroups/gap/properties.gi");
 ReadPackage("semigroups/gap/attributes.gi");
 ReadPackage("semigroups/gap/attributes-acting.gi");
 ReadPackage("semigroups/gap/attributes-generic.gi");
+ReadPackage("semigroups/gap/attributes-inverse.gi");
 ReadPackage("semigroups/gap/examples.gi");
 ReadPackage("semigroups/gap/orbits.gi");
-
-ReadPackage("semigroups/gap/attributes-inverse.gi");
 
 ReadPackage("semigroups/gap/ideals.gi");
 

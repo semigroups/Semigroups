@@ -11,15 +11,7 @@
 DeclareCategory("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
 
-DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
-# so that the rank of IsActingSemigroup is higher than that of
-# IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and
-# IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
-
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
-DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
-DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
-                IsActingSemigroup);
 
 DeclareOperation("Enumerate", [IsSemigroupData]);
 DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);

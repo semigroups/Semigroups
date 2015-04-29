@@ -31,6 +31,32 @@
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
+InstallMethod(GroupOfUnits, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local H, map, U;
+
+  if MultiplicativeNeutralElement(S) = fail then
+    return fail;
+  fi;
+
+  H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  map := IsomorphismPermGroup(H);
+
+  U := Monoid(List(GeneratorsOfGroup(Range(map)),
+                   x -> x ^ InverseGeneralMapping(map)));
+
+  map := MappingByFunction(U,
+                           Range(map),
+                           map,
+                           InverseGeneralMapping(map));
+
+  SetIsomorphismPermGroup(U, map);
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, Range(map));
+  return U;
+end);
+
 # same method for ideals
 
 InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
@@ -234,7 +260,7 @@ InstallMethod(SmallMonoidGeneratingSet,
 [IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection],
 function(coll)
   if Length(coll) = 1 then
-    if coll[1] = One(coll) then 
+    if coll[1] = One(coll) then
       return [];
     fi;
     return coll;
@@ -259,8 +285,8 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 "for a multiplicative element coll",
 [IsMultiplicativeElementCollection],
 function(coll)
-  if not IsGeneratorsOfInverseSemigroup(coll) then 
-    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage\n", 
+  if not IsGeneratorsOfInverseSemigroup(coll) then
+    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage\n",
           "the argument must satisfy IsGeneratorsOfInverseSemigroup");
     return;
   fi;
@@ -283,13 +309,13 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 "for generators of an inverse monoid",
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if not IsGeneratorsOfInverseSemigroup(coll) then 
-    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage\n", 
+  if not IsGeneratorsOfInverseSemigroup(coll) then
+    Error("Semigroups: SmallInverseMonoidGeneratingSet: usage\n",
           "the argument must satisfy IsGeneratorsOfInverseSemigroup");
     return;
   fi;
   if Length(coll) = 1 then
-    if coll[1] = One(coll) then 
+    if coll[1] = One(coll) then
       return [];
     fi;
     return coll;
@@ -303,7 +329,7 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 "for a monoid with inverse op",
 [IsSemigroupWithInverseOp and IsMonoid],
 function(S)
-  if IsEmpty(GeneratorsOfInverseMonoid(S)) then 
+  if IsEmpty(GeneratorsOfInverseMonoid(S)) then
     return GeneratorsOfInverseMonoid(S);
   fi;
   return SmallMonoidGeneratingSet(GeneratorsOfInverseMonoid(S));
@@ -333,7 +359,7 @@ end);
 InstallMethod(StructureDescription, "for a Brandt semigroup",
 [IsBrandtSemigroup],
 function(S)
-  local x, D;
+  local D;
 
   D := MaximalDClasses(S)[1];
   return Concatenation("B(", StructureDescription(GroupHClass(D)), ", ",

@@ -617,7 +617,7 @@ the argument must satisfy IsGeneratorsOfInverseSemigroup
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
 gap> SmallInverseMonoidGeneratingSet([RandomBooleanMat(10)]);
-Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage
+Error, Semigroups: SmallInverseMonoidGeneratingSet: usage
 the argument must satisfy IsGeneratorsOfInverseSemigroup
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for One
@@ -786,6 +786,21 @@ gap> IsomorphismPermGroup(S);
 MappingByFunction( <simple semigroup of 3x3 boolean matrices with 2 generators
 >, Group([ (1,2)(3,5)(4,6), (1,5,4)
 (2,6,3) ]), function( x ) ... end, function( x ) ... end )
+
+#T# attributes: GroupOfUnits, for a finite semigroup 1/2
+gap> S := RegularBooleanMatSemigroup(3);
+<semigroup of 3x3 boolean matrices with 4 generators>
+gap> GroupOfUnits(S);
+<simple monoid of 3x3 boolean matrices with 2 generators>
+gap> StructureDescription(last);
+"S3"
+
+#T# attributes: GroupOfUnits, fail 2/2
+gap> S := Semigroup(
+> BooleanMatNC([[1, 1, 0, 1], [0, 1, 1, 0], [1, 1, 0, 1], [1, 1, 0, 1]]),
+> BooleanMatNC([[1, 1, 0, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 0]]));;
+gap> GroupOfUnits(S);
+fail
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);

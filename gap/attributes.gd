@@ -8,12 +8,10 @@
 #############################################################################
 ##
 
-# This file contains declarations for attributes of semigroups. 
+# This file contains declarations for attributes of semigroups.
 
 DeclareOperation("IrredundantGeneratingSubset",
                  [IsAssociativeElementCollection]);
-DeclareOperation("InversesOfSemigroupElementNC",
-                 [IsSemigroup, IsAssociativeElement]);
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
@@ -41,8 +39,6 @@ DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
-DeclareAttribute("StructureDescriptionSchutzenbergerGroups",
-                 IsSemigroup and IsFinite);
 DeclareAttribute("StructureDescriptionMaximalSubgroups",
                  IsSemigroup and IsFinite);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
