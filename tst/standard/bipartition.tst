@@ -108,9 +108,9 @@ true
 gap> G:=SymmetricGroup(5);;
 gap> ForAll(G, x-> AsPermutation(AsBipartition(x))=x);
 true
-gap> G:=GroupOfUnits(PartitionMonoid(5));                   
-<bipartition group on 5 pts with 2 generators>
-gap> ForAll(G, x-> AsBipartition(AsPermutation(x), 5)=x);
+gap> G:=GroupOfUnits(PartitionMonoid(3));                   
+<bipartition group on 3 pts with 2 generators>
+gap> ForAll(G, x-> AsBipartition(AsPermutation(x), 3)=x);
 true
 
 #T# BipartitionTest22: AsBlockBijection and IsomorphismBlockBijectionSemigroup
@@ -142,47 +142,40 @@ gap> NaturalLeqBlockBijection(f, g);
 true
 gap> NaturalLeqBlockBijection(g, f);
 false
-gap> First(Idempotents(S), e-> e*g=f);
+gap> First(Idempotents(S), e -> e * g = f);
 <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>
-gap> Filtered(S, f-> NaturalLeqBlockBijection(f, g));
-[ <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]>, 
+gap> Set(Filtered(S, f-> NaturalLeqBlockBijection(f, g)));
+[ <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
   <block bijection: [ 1, 2, 4, -1, -2, -3 ], [ 3, -4 ]>, 
   <block bijection: [ 1, 3, 4, -3, -4 ], [ 2, -1, -2 ]>, 
-  <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
-  <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]> ]
-gap> Filtered(S, f-> ForAny(Idempotents(S), e-> e*f=g));
+  <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]>, 
+  <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]> ]
+gap> Filtered(S, f -> ForAny(Idempotents(S), e -> e * f=g));
 [ <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]> ]
-gap> Filtered(S, f-> ForAny(Idempotents(S), e-> e*g=f));
-[ <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]>, 
+gap> Set(Filtered(S, f -> ForAny(Idempotents(S), e -> e * g=f)));
+[ <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
   <block bijection: [ 1, 2, 4, -1, -2, -3 ], [ 3, -4 ]>, 
   <block bijection: [ 1, 3, 4, -3, -4 ], [ 2, -1, -2 ]>, 
-  <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
-  <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]> ]
+  <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]>, 
+  <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]> ]
 
 #T# BipartitionTest25: Factorization/EvaluateWord
 gap> S:=DualSymmetricInverseMonoid(6);;
 gap> f:=S.1*S.2*S.3*S.2*S.1;
 <block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
  [ 5, -1 ]>
-gap> Factorization(S, f);
-[ -2, -2, -2, -2, -2, 4, 2 ]
-gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+gap> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f));
 <block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
  [ 5, -1 ]>
-gap> S:=PartitionMonoid(5);;
-gap> f:= Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;
-gap> Factorization(S, f);
-[ 2, 3, 2, 5, 2, 2, 5, 2, 5, 4, 3, 4, 2, 4, 2, 2, 2, 5, 2, 5, 2, 1, 2, 3, 2, 
-  4, 2, 4, 5, 2, 3, 2, 2, 5, 2 ]
-gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
-<bipartition: [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ]>
+gap> S:=PartitionMonoid(3);;
+gap> f:= Bipartition( [ [ 1, -2, -3 ], [ 2, 3 ], [ -1 ] ] );;
+gap> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f));
+<bipartition: [ 1, -2, -3 ], [ 2, 3 ], [ -1 ]>
 gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
 <inverse bipartition monoid on 5 pts with 3 generators>
 gap> f:=S.1*S.2*S.3*S.2*S.1;
 <bipartition: [ 1 ], [ 2, -2 ], [ 3, -4 ], [ 4, -5 ], [ 5, -3 ], [ -1 ]>
-gap> Factorization(S, f);
-[ -1, 1, 3, 2, 1, 2, -1, -1, 2, 1, 2, -1, -1, 1 ]
-gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+gap> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f));
 <bipartition: [ 1 ], [ 2, -2 ], [ 3, -4 ], [ 4, -5 ], [ 5, -3 ], [ -1 ]>
 gap> S:=Semigroup(
 > [ Bipartition( [ [ 1, 2, 3, 5, -1, -4 ], [ 4 ], [ -2, -3 ], [ -5 ] ] ), 
@@ -193,9 +186,7 @@ gap> S:=Semigroup(
 >     [ -2, -4 ] ] ) ] );;
 gap> x:=S.1*S.2*S.3*S.4*S.5;
 <bipartition: [ 1, 2, 3, 5 ], [ 4 ], [ -1, -3, -5 ], [ -2, -4 ]>
-gap> Factorization(S, x);
-[ 1, 4, 1, 4, 5 ]
-gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+gap> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x));
 <bipartition: [ 1, 2, 3, 5 ], [ 4 ], [ -1, -3, -5 ], [ -2, -4 ]>
 gap> IsInverseSemigroup(S);
 false
