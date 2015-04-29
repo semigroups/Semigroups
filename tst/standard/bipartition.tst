@@ -362,6 +362,16 @@ gap> Bipartition( [ [ 1, -3 ], [ 2 ], [ 3, -2 ], [ 4, -1, -4 ] ] )
 > ^ (1,2,3,4);
 <bipartition: [ 1, -1, -2 ], [ 2, -4 ], [ 3 ], [ 4, -3 ]>
 
+# bipartition: \<, for bipartitions 1/2
+gap> Bipartition([ [ 1, 2, 3, -1, -2, -3] ]) < 
+> Bipartition( [ [ 1, 3 ], [ 2, -1 ], [ -2, -3 ] ] );
+true
+
+# bipartition: \<, for bipartitions 2/2
+gap> Bipartition([ [1, 2, 3, -1, -2, -3] , [4, -4] ]) < 
+> Bipartition( [ [ 1, 3 ], [ 2, -1 ], [ -2, -3 ] ] );
+true
+
 # bipartition: PermLeftQuoBipartition, error 1/2
 gap> x := Bipartition( [ [ 1, 2 ], [ -1, -2 ] ] );;
 gap> y := Bipartition( [ [ 1, -1, -2 ], [ 2 ] ] );;
@@ -374,23 +384,50 @@ gap> x := Bipartition( [ [ 1, 2 ], [ -1, -2 ] ] );;
 gap> PermLeftQuoBipartition(x, x);
 ()
 
-# bipartition: AsPartialPerm, fail 1/1
+# bipartition: AsPartialPerm, error 1/1
 gap> AsPartialPerm(Bipartition( [ [ 1, 2, -2 ], [ -1 ] ] ));
-fail
+Error, Semigroups: AsPartialPerm (for a bipartition):
+the argument does not define a partial perm,
 
-# bipartition: AsPermutation, fail 1/1
+# bipartition: AsPermutation, error 1/1
 gap> AsPermutation(Bipartition( [ [ 1, 2, -2 ], [ -1 ] ] ));
-fail
+Error, Semigroups: AsPermutation (for a bipartition):
+the argument does not define a permutation,
 
-# bipartition: AsTransformation, fail 1/1
-gap> AsPermutation(Star(Bipartition( [ [ 1, 2, -2 ], [ -1 ] ])));
-fail
+# bipartition: AsTransformation, error 1/1
+gap> AsTransformation(Star(Bipartition( [ [ 1, 2, -2 ], [ -1 ] ])));
+Error, Semigroups: AsTransformation (for a bipartition):
+the argument does not define a transformation,
 
-# bipartition: AsBipartition, for a perm 1/1
+# bipartition: AsBipartition, for a perm and pos int, error 1/1
 gap> AsBipartition((1,2,3,5), 4);
-Error, Semigroups: AsBipartition: usage
-the permutation <p> in the 1st argument must permute
-[1..n] where <n> is the 2nd argument,
+Error, Semigroups: AsBipartition (for a permutation and pos int):
+the permutation <p> in the 1st argument must permute [1 .. 4],
+
+# bipartition: AsBipartition, for a transformation and pos int, error 1/1
+gap> AsBipartition(Transformation([4, 4, 4, 4]), 2);
+Error, Semigroups: AsBipartition (for a transformation and pos int):
+the argument must map [1 .. 2] to itself,
+
+# bipartition: AsBipartition, for a bipartition and 0 1/1
+gap> AsBipartition(Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] ), 0);
+<empty bipartition>
+
+# bipartition: AsBlockBijection, for a partial perm and 0 1/1
+gap> AsBlockBijection(PartialPerm( [ 4, 1, 3, 2 ] ), 0);
+<empty bipartition>
+
+# bipartition: AsBlockBijection, for a partial perm and pos int, error 1/1
+gap> AsBlockBijection(PartialPerm( [ 1, 3, 2, 4 ] ), 1);
+Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
+the 2nd argument must be at least the maximum of the degree and
+codegree of the 1st argument,
+
+# bipartition: IsUniformBlockBijection, for a bipartition 1/3
+gap> IsUniformBlockBijection(Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] ));
+true
+
+# bipartition: IsUniformBlockBijection, for a bipartition 2/3
 
 #
 gap> Unbind(elts);

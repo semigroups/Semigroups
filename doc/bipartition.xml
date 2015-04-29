@@ -324,7 +324,7 @@ false]]></Example>
 <#GAPDoc Label="AsTransformation">
   <ManSection>
     <Oper Name="AsTransformation" Arg="f" Label="for a bipartition"/>
-    <Returns>A transformation or <K>fail</K>.</Returns>
+    <Returns>A transformation.</Returns>
     <Description>
       When the argument <A>f</A> is a bipartition, that mathematically defines
       a transformation, this function returns that transformation. A
@@ -352,7 +352,7 @@ fail]]></Example>
 <#GAPDoc Label="AsPermutation">
   <ManSection>
     <Oper Name="AsPermutation" Arg="f" Label="for a bipartition"/>
-    <Returns>A permutation or <K>fail</K>.</Returns>
+    <Returns>A permutation.</Returns>
     <Description>
       When the argument <A>f</A> is a bipartition that mathematically defines a
       permutation, this function returns that permutation. <P/>
@@ -377,7 +377,7 @@ true]]></Example>
 <#GAPDoc Label="AsPartialPerm">
   <ManSection>
     <Oper Name="AsPartialPerm" Arg="f" Label="for a bipartition"/>
-    <Returns>A partial perm or <K>fail</K>.</Returns>
+    <Returns>A partial perm.</Returns>
     <Description>
       When the argument <A>f</A> is a bipartition that mathematically defines a
       partial perm, this function returns that partial perm. <P/>
@@ -406,7 +406,7 @@ fail]]></Example>
 <#GAPDoc Label="AsBlockBijection">
   <ManSection>
     <Oper Name="AsBlockBijection" Arg="f[, n]"/>
-    <Returns>A block bijection or <K>fail</K>.</Returns>
+    <Returns>A block bijection.</Returns>
     <Description>
       When the argument <A>f</A> is a partial perm and <A>n</A> is a positive
       integer which is greater than the maximum of the degree and codegree of

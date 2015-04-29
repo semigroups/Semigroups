@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-# This file contains methods for finding various attributes of acting 
+# This file contains methods for finding various attributes of acting
 # semigroups, sometimes there is no better method than that given in
 # attributes.gi.
 
@@ -132,7 +132,7 @@ InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
 # same method for ideals
 
 InstallMethod(IdempotentGeneratedSubsemigroup,
-"for an inverse op acting semigroup", 
+"for an inverse op acting semigroup",
 [IsSemigroupWithInverseOp and IsActingSemigroup],
 S -> InverseSemigroup(Idempotents(S), rec(small := true)));
 
@@ -319,7 +319,7 @@ function(s, f)
 
   out := [];
   k := 0;
-  
+
   #if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
   # Notes: it seems that LambdaOrb(S) is always closed at this point
   o := LambdaOrb(s);
