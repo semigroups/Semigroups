@@ -14,14 +14,18 @@ InstallTrueMethod(IsPermBipartition, IsTransBipartition
                                      and IsDualTransBipartition);
 InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
-#
-
 InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
 [IsBipartition, IsBipartition],
 function(x, y)
 
   if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then
-    return fail;
+    Error("Semigroups: PartialPermLeqBipartition: usage,\n",
+          "the arguments must be partial perm bipartitions,");
+    return;
+  elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
+    Error("Semigroups: PartialPermLeqBipartition: usage,\n",
+          "the arguments must have equal degree,");
+    return;
   fi;
 
   return AsPartialPerm(x) < AsPartialPerm(y);
@@ -77,6 +81,10 @@ function(f, g)
     Error("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
           "the arguments must be partial perm bipartitions,");
     return;
+  elif DegreeOfBipartition(f) <> DegreeOfBipartition(g) then
+    Error("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
+          "the arguments must have equal degree,");
+    return;
   fi;
 
   fblocks := f!.blocks;
@@ -86,9 +94,7 @@ function(f, g)
 
   for i in [1 .. n] do
     if fblocks[n + i] <= n then
-      if not IsBound(gblocks[m + i]) then
-        return false;
-      elif fblocks[n + i] <> gblocks[m + i] then
+      if fblocks[n + i] <> gblocks[m + i] then
         return false;
       fi;
     fi;
@@ -265,7 +271,12 @@ end);
 InstallMethod(\*, "for a bipartition and a perm",
 [IsBipartition, IsPerm],
 function(f, g)
-  return f * AsBipartition(g, DegreeOfBipartition(f));
+  if LargestMovedPoint(g) <= DegreeOfBipartition(f) then 
+    return f * AsBipartition(g, DegreeOfBipartition(f));
+  fi;
+  Error("Semigroups: \* (for a bipartition and perm): usage,\n",
+        "the largest moved point of the perm must not be greater\n", 
+        "than the degree of the bipartition,");
 end);
 
 #
@@ -273,7 +284,12 @@ end);
 InstallMethod(\*, "for a perm and a bipartition",
 [IsPerm, IsBipartition],
 function(f, g)
-  return AsBipartition(f, DegreeOfBipartition(g)) * g;
+  if LargestMovedPoint(f) <= DegreeOfBipartition(g) then 
+    return AsBipartition(f, DegreeOfBipartition(g)) * g;
+  fi;
+  Error("Semigroups: \* (for a perm and bipartition): usage,\n",
+        "the largest moved point of the perm must not be greater\n", 
+        "than the degree of the bipartition,");
 end);
 
 #
@@ -281,7 +297,12 @@ end);
 InstallMethod(\*, "for a bipartition and a transformation",
 [IsBipartition, IsTransformation],
 function(f, g)
-  return f * AsBipartition(g, DegreeOfBipartition(f));
+  if DegreeOfTransformation(g) <= DegreeOfBipartition(f) then 
+    return f * AsBipartition(g, DegreeOfBipartition(f));
+  fi;
+  Error("Semigroups: \* (for a bipartition and transformation): usage,\n",
+        "the degree of the transformation must not be greater\n", 
+        "than the degree of the bipartition,");
 end);
 
 #
@@ -289,7 +310,12 @@ end);
 InstallMethod(\*, "for a transformation and a bipartition",
 [IsTransformation, IsBipartition],
 function(f, g)
-  return AsBipartition(f, DegreeOfBipartition(g)) * g;
+  if DegreeOfTransformation(f) <= DegreeOfBipartition(g) then 
+    return AsBipartition(f, DegreeOfBipartition(g)) * g;
+  fi;
+  Error("Semigroups: \* (for a transformation and bipartition): usage,\n",
+        "the degree of the transformation must not be greater\n", 
+        "than the degree of the bipartition,");
 end);
 
 #
@@ -297,7 +323,14 @@ end);
 InstallMethod(\*, "for a bipartition and a partial perm",
 [IsBipartition, IsPartialPerm],
 function(f, g)
-  return f * AsBipartition(g, DegreeOfBipartition(f));
+  local n;
+  n := DegreeOfBipartition(f);
+  if ForAll([1 .. n], i -> i ^ g <= n) then 
+    return f * AsBipartition(g, DegreeOfBipartition(f));
+  fi;
+  Error("Semigroups: \* (for a bipartition and partial perm): usage,\n",
+        "the partial perm must map [1 .. ", String(n), "] into\n", 
+        "[1 .. ", String(n), "],");
 end);
 
 #
@@ -305,7 +338,22 @@ end);
 InstallMethod(\*, "for a partial perm and a bipartition",
 [IsPartialPerm, IsBipartition],
 function(f, g)
-  return AsBipartition(f, DegreeOfBipartition(g)) * g;
+  local n;
+  n := DegreeOfBipartition(g);
+  if ForAll([1 .. n], i -> i ^ f <= n) then 
+    return AsBipartition(f, DegreeOfBipartition(g)) * g;
+  fi;
+  Error("Semigroups: \* (for a partial perm and a bipartition): usage,\n",
+        "the partial perm must map [1 .. ", String(n), "] into\n", 
+        "[1 .. ", String(n), "],");
+end);
+
+#
+
+InstallMethod(\^, "for a bipartition and permutation",
+[IsBipartition, IsPerm],
+function(f, p)
+  return p ^ -1 * f * p;
 end);
 
 #
@@ -324,13 +372,6 @@ function(f, g)
   return f!.blocks = g!.blocks;
 end);
 
-#
-
-InstallMethod(\^, "for a bipartition and permutation",
-[IsBipartition, IsPerm],
-function(f, p)
-  return p ^ -1 * f * p;
-end);
 
 # LambdaPerm
 
@@ -473,6 +514,11 @@ end);
 InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(f, n)
+  if OnSets([1..n], f) <> [1..n] then 
+    Error("Semigroups: AsBipartition: usage\n",
+          "the permutation <p> in the 1st argument must permute\n",
+          "[1..n] where <n> is the 2nd argument,");
+  fi;
   return BipartitionByIntRepNC(Concatenation([1 .. n], ListPerm(f ^ -1, n)));
 end);
 
@@ -528,6 +574,7 @@ function(f, n)
   return Bipartition([]);
 end);
 
+# TODO continue code coverage from here . . .
 InstallMethod(AsBipartition, "for a transformation and a positive integer",
 [IsTransformation, IsPosInt],
 function(f, n)
