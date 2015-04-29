@@ -33,17 +33,6 @@
   bipartition &x;, then we write (&i;,&j;)<M>\in</M>&x;.
   <P/>
 
-  <!--A block contained in <M>\mathbf{n}</M> is called a <E>left block</E> and 
-  a block contained in <M>-\mathbf{n}</M> is called a <E>right block</E>.
-  <P/>--> 
-
-  <!--A partition can be represented as a graph with vertices <M>\mathbf{n}\cup
-  -\mathbf{n}</M> and edges so that the connected components of the graph
-  correspond to the blocks of the partition.  Of course such a representation is
-  not unique but we will generally identify a partition with any graph
-  representing it.
-  <P/>-->
-  
   Let &x; and &y; be bipartitions of equal degree.   Then &x;&y; is
   the bipartition where &i;,&j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; belong to the
   same block of &x;&y; if there exist
@@ -231,10 +220,13 @@
     In this section, we describe the functions in the &Semigroups; package for
     creating and manipulating the left or right blocks of a bipartition.
 
+    <#Include Label="IsBlocks">
+    <#Include Label="BlocksFamily">
     <#Include Label="BlocksNC">
     <#Include Label="ExtRepOfBlocks">
     <#Include Label="RankOfBlocks">
     <#Include Label="DegreeOfBlocks">
+    <#Include Label="ProjectionFromBlocks">
   </Section>
 
   <Section><Heading>Actions on blocks</Heading>

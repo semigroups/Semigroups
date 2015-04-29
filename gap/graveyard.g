@@ -1,5 +1,36 @@
 # Here lies some dead code, may it rest in peace
 
+DeclareGlobalFunction("BlocksByExtRep");
+
+InstallGlobalFunction(BlocksByExtRep,
+function(ext)
+  local n, tab, out, nr, i;
+
+  n := Length(ext);
+  tab := EmptyPlist(n);
+  out := EmptyPlist(n + 2);
+  out[n + 2] := [];
+  nr := 0;
+
+  for i in [1 .. n] do
+    if ext[i] < 0 then
+      out[i + 1] := -1 * ext[i];
+      out[n + 1 + out[i + 1]] := 0;
+    else
+      out[i + 1] := ext[i];
+      out[n + 1 + ext[i]] := 1;
+    fi;
+    if not IsBound(tab[out[i + 1]]) then
+      tab[out[i + 1]] := true;
+      nr := nr + 1;
+    fi;
+  od;
+
+  out[1] := nr;
+  out := Objectify(BlocksType, rec(blocks := out));
+  return out;
+end);
+
 #
 
 #Subsemigroups:=function(R)

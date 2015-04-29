@@ -537,7 +537,7 @@ InstallMethod(IdempotentTester, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s -> EQ);
 
 InstallMethod(IdempotentTester, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> BlocksIdempotentTester);
+[IsBipartitionSemigroup], s -> SEMIGROUPS_BlocksIdempotentTester);
 
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
@@ -559,7 +559,7 @@ InstallMethod(IdempotentCreator, "for a partial perm semigp",
 [IsPartialPermSemigroup], s -> PartialPermNC);
 
 InstallMethod(IdempotentCreator, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> BlocksIdempotentCreator);
+[IsBipartitionSemigroup], s -> SEMIGROUPS_BlocksIdempotentCreator);
 
 InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->

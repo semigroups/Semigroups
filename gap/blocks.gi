@@ -462,37 +462,6 @@ end);
 
 #
 
-InstallGlobalFunction(BlocksByExtRep,
-function(ext)
-  local n, tab, out, nr, i;
-
-  n := Length(ext);
-  tab := EmptyPlist(n);
-  out := EmptyPlist(n + 2);
-  out[n + 2] := [];
-  nr := 0;
-
-  for i in [1 .. n] do
-    if ext[i] < 0 then
-      out[i + 1] := -1 * ext[i];
-      out[n + 1 + out[i + 1]] := 0;
-    else
-      out[i + 1] := ext[i];
-      out[n + 1 + ext[i]] := 1;
-    fi;
-    if not IsBound(tab[out[i + 1]]) then
-      tab[out[i + 1]] := true;
-      nr := nr + 1;
-    fi;
-  od;
-
-  out[1] := nr;
-  out := Objectify(BlocksType, rec(blocks := out));
-  return out;
-end);
-
-#
-
 InstallMethod(RankOfBlocks, "for blocks", [IsBlocks],
 function(blocks)
   local n, rank, i;
@@ -512,12 +481,12 @@ x -> Length(x!.blocks) - x!.blocks[1] - 1);
 
 #
 
-InstallGlobalFunction(BlocksIdempotentTester,
+InstallGlobalFunction(SEMIGROUPS_BlocksIdempotentTester,
 function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 
   if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
-    Error("Semigroups: BlocksIdempotentTester: usage,\n",
+    Error("Semigroups: SEMIGROUPS_BlocksIdempotentTester: usage,\n",
           "the degrees of the blocks <lambda> and <rho> must be equal,");
     return;
   fi;
@@ -581,9 +550,9 @@ function(lambda, rho)
   return true;
 end);
 
-# assumes that BlocksIdempotentTester returns true!
+# assumes that SEMIGROUPS_BlocksIdempotentTester returns true!
 
-InstallGlobalFunction(BlocksIdempotentCreator,
+InstallGlobalFunction(SEMIGROUPS_BlocksIdempotentCreator,
 function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, x, y, tab1, tab2, out, next, i;
 

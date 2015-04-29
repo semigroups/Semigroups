@@ -1,12 +1,71 @@
 #############################################################################
 ##
 #W  blocks.xml
-#Y  Copyright (C) 2011-14                                James D. Mitchell
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+<#GAPDoc Label="ProjectionFromBlocks">
+  <ManSection>
+    <Oper Name="ProjectionFromBlocks" Arg="blocks"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+      When the argument <A>blocks</A> is the left or right blocks of a
+      bipartition, this operation returns the unique bipartition whose left and
+      right blocks are equal to <A>blocks</A>. <P/>
+
+      If <A>blocks</A> is the left blocks of a bipartition <C>x</C>, then this
+      operation returns a bipartition equal to the left projection of <C>x</C>.
+      The analogous statement holds when <A>blocks</A> is the right blocks
+      of a bipartition. 
+
+      <Example><![CDATA[
+gap> x := Bipartition( [ [ 1 ], [ 2, -2, -3 ], [ 3 ], [ -1 ] ] );
+<bipartition: [ 1 ], [ 2, -2, -3 ], [ 3 ], [ -1 ]>
+gap> ProjectionFromBlocks(LeftBlocks(x));
+<bipartition: [ 1 ], [ 2, -2 ], [ 3 ], [ -1 ], [ -3 ]>
+gap> LeftProjection(x);
+<bipartition: [ 1 ], [ 2, -2 ], [ 3 ], [ -1 ], [ -3 ]>
+gap> ProjectionFromBlocks(RightBlocks(x));
+<bipartition: [ 1 ], [ 2, 3, -2, -3 ], [ -1 ]>
+gap> RightProjection(x);
+<bipartition: [ 1 ], [ 2, 3, -2, -3 ], [ -1 ]>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsBlocks">
+  <ManSection>
+    <Filt Name="IsBlocks" Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+   Every blocks object in &GAP; belongs to the category
+    <C>IsBlocks</C>. Basic operations for blocks are
+    <Ref Attr="ExtRepOfBlocks"/>,
+    <Ref Attr="RankOfBlocks"/>,
+    <Ref Attr="DegreeOfBlocks"/>,
+    <Ref Oper="OnRightBlocks"/>,
+    <Ref Oper="OnLeftBlocks"/>,
+    <Ref Oper="PermRightBlocks"/>, 
+    <Ref Func="InverseRightBlocks"/>, and
+    <Ref Func="InverseLeftBlocks"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BlocksFamily">
+  <ManSection>
+    <Var Name="BlocksFamily"/>
+    <Var Name="BlocksType"/>
+    <Description>
+      The family of all bipartitions is <C>BipartitionFamily</C> and the type
+      of every bipartition is <C>BipartitionType</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="PermRightBlocks">
   <ManSection>
