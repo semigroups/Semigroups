@@ -281,9 +281,11 @@ false]]></Example>
 
 <#GAPDoc Label="BipartitionFamily">
   <ManSection>
-    <Fam Name="BipartitionFamily"/>
+    <Var Name="BipartitionFamily"/>
+    <Var Name="BipartitionType"/>
     <Description>
-      The family of all bipartitions is <C>BipartitionFamily</C>.
+      The family of all bipartitions is <C>BipartitionFamily</C> and the type
+      of every bipartition is <C>BipartitionType</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>

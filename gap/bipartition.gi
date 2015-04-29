@@ -112,7 +112,7 @@ function(f, g)
   elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
     return NaturalLeqPartialPermBipartition(f, g);
   fi;
-  Error("Semigroups: NaturalLeqInverseSemigroup: usage\n",
+  Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
         "the bipartitions should be block bijections or partial perms,");
   return;
 end);
@@ -585,7 +585,7 @@ function(f, n)
     for i in [1 .. n] do
       if i ^ f > n then
         Error("Semigroups: AsBipartition (for a transformation and pos int):",
-        "\nthe argument must map [1 .. ", String(n), "] to itself,");
+              "\nthe argument must map [1 .. ", String(n), "] to itself,");
         return;
       fi;
     od;
@@ -783,7 +783,7 @@ end);
 #
 
 InstallMethod(RankOfBipartition, "for a bipartition",
-[IsBipartition], 
+[IsBipartition],
 x -> Number(SEMIGROUPS_TransBlocksLookup(x), y -> y = true));
 
 # return the classes of <f> as a list of lists
@@ -1270,10 +1270,10 @@ end);
 # LambdaConjugator: f and g have equal left blocks (rho value)
 # JDM: this will be better in c...
 
-InstallGlobalFunction(BipartRightBlocksConj,
+InstallGlobalFunction(BipartRightBlocksConjNC,
 function(f, g)
   local n, fblocks, gblocks, nr, lookup, next, seen, src, dst, i;
-  
+
   n := DegreeOfBipartition(f);
   fblocks := f!.blocks;
   gblocks := g!.blocks;

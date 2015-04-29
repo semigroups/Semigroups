@@ -513,7 +513,7 @@ function(f, g)
 end);
 
 InstallMethod(LambdaConjugator, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> BipartRightBlocksConj);
+[IsBipartitionSemigroup], s -> BipartRightBlocksConjNC);
 
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s ->
@@ -630,7 +630,7 @@ InstallMethod(FakeOne, "for a bipartition collection",
 [IsBipartitionCollection], One);
 
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
-[IsReesZeroMatrixSemigroupElementCollection], R -> UniversalFakeOne);
+[IsReesZeroMatrixSemigroupElementCollection], R -> SEMIGROUPS_UniversalFakeOne);
 
 # missing hash functions
 

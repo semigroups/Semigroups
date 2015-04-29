@@ -195,7 +195,7 @@ InstallMethod(EvaluateWord,
 function(gens, w)
     local i, res;
     if Length(w) = 0  then
-      return UniversalFakeOne;
+      return SEMIGROUPS_UniversalFakeOne;
     fi;
     res := gens[w[1]];
     for i in [2 .. Length(w)]  do

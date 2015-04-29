@@ -34,6 +34,6 @@ DeclareAttribute("SmallerDegreePartialPermRepresentation",
                  IsInverseSemigroup and IsPartialPermSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
-DeclareAttribute("VagnerPrestonRepresentation", IsSemigroupWithInverseOp); 
+DeclareAttribute("VagnerPrestonRepresentation", IsSemigroupWithInverseOp);
 DeclareOperation("NaturalLeqInverseSemigroup",
                  [IsAssociativeElement, IsAssociativeElement]);

@@ -286,7 +286,7 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 [IsMultiplicativeElementCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage\n",
+    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
           "the argument must satisfy IsGeneratorsOfInverseSemigroup");
     return;
   fi;
@@ -310,7 +310,7 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    Error("Semigroups: SmallInverseMonoidGeneratingSet: usage\n",
+    Error("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
           "the argument must satisfy IsGeneratorsOfInverseSemigroup");
     return;
   fi;
