@@ -103,16 +103,15 @@ gap> SEMIGROUPS_BlocksIdempotentTester(x, y);
 false
 
 # blocks: SEMIGROUPS_BlocksIdempotentCreator 1/3
-gap> Idempotents(PartitionMonoid(2));
-[ <block bijection: [ 1, -1 ], [ 2, -2 ]>, 
-  <bipartition: [ 1 ], [ 2, -2 ], [ -1 ]>, <bipartition: [ 1, 2, -2 ], [ -1 ]>
-    , <bipartition: [ 1 ], [ 2, -1, -2 ]>, <block bijection: [ 1, 2, -1, -2 ]>
-    , <bipartition: [ 1, -1, -2 ], [ 2 ]>, <bipartition: [ 1, 2, -1 ], [ -2 ]>
-    , <bipartition: [ 1, -1 ], [ 2 ], [ -2 ]>, 
-  <bipartition: [ 1 ], [ 2 ], [ -1 ], [ -2 ]>, 
-  <bipartition: [ 1, 2 ], [ -1 ], [ -2 ]>, 
+gap> Set(Idempotents(PartitionMonoid(2)));
+[ <block bijection: [ 1, 2, -1, -2 ]>, <bipartition: [ 1, 2, -1 ], [ -2 ]>, 
+  <bipartition: [ 1, 2, -2 ], [ -1 ]>, <bipartition: [ 1, 2 ], [ -1, -2 ]>, 
+  <bipartition: [ 1, 2 ], [ -1 ], [ -2 ]>, <bipartition: [ 1, -1, -2 ], [ 2 ]>
+    , <block bijection: [ 1, -1 ], [ 2, -2 ]>, 
+  <bipartition: [ 1, -1 ], [ 2 ], [ -2 ]>, <bipartition: [ 1 ], [ 2, -1, -2 ]>
+    , <bipartition: [ 1 ], [ 2, -2 ], [ -1 ]>, 
   <bipartition: [ 1 ], [ 2 ], [ -1, -2 ]>, 
-  <bipartition: [ 1, 2 ], [ -1, -2 ]> ]
+  <bipartition: [ 1 ], [ 2 ], [ -1 ], [ -2 ]> ]
 
 # blocks: PermRightBlocks 1/1
 gap> x := Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], 
