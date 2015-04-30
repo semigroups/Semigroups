@@ -69,8 +69,8 @@ gap> RightProjection(x);
 
 <#GAPDoc Label="PermRightBlocks">
   <ManSection>
-    <Oper Name="PermRightBlocks" Arg="blocks, f"/>
-    <Oper Name="PermLeftBlocks" Arg="blocks, f"/>
+    <Oper Name="PermRightBlocks" Arg="blocks, x"/>
+    <Oper Name="PermLeftBlocks" Arg="blocks, x"/>
     <Returns>A permutation.</Returns>
     <Description>
       If <A>f</A> is a bipartition that stabilises <A>blocks</A>, i.e.
@@ -82,13 +82,13 @@ gap> RightProjection(x);
       respect to <Ref Oper="OnLeftBlocks"/>. 
 
       <Example><![CDATA[
-gap> f:=Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], [ 5, -5 ], 
-> [ 7, 9, -2 ], [ -1, -10 ], [ -3, -4, -6, -8 ] ] );;
-gap> blocks:=BlocksNC([[ -1, -10 ], [ 2 ], [ -3, -4, -6, -8 ], [ 5 ], 
+gap> x := Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], 
+> [ 5, -5 ], [ 7, 9, -2 ], [ -1, -10 ], [ -3, -4, -6, -8 ] ] );;
+gap> blocks := BlocksNC([[ -1, -10 ], [ 2 ], [ -3, -4, -6, -8 ], [ 5 ], 
 > [ 7, 9 ]]);;
-gap> OnRightBlocks(blocks, f)=blocks;
+gap> OnRightBlocks(blocks, x) = blocks;
 true
-gap> PermRightBlocks(blocks, f);
+gap> PermRightBlocks(blocks, x);
 (2,5)]]></Example>
     </Description>
   </ManSection>
