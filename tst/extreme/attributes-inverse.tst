@@ -611,8 +611,70 @@ false
 gap> NaturalLeqInverseSemigroup(g, f2);
 false
 
+#T# SmallerDegreeTest1: VagnerPresetonRepresentation: a basic example
+gap> f1 := PartialPerm([ 1, 2, 4, 3 ]);;
+gap> f2 := PartialPerm([ 1 ]);;
+gap> f3 := PartialPerm([ 0, 2 ]);;
+gap> f := InverseSemigroup(f1, f2, f3);
+<inverse partial perm semigroup on 4 pts with 3 generators>
+gap> NrMovedPoints(f);
+2
+gap> Size(f);
+5
+gap> VPR := VagnerPrestonRepresentation(f);
+MappingByFunction( <inverse partial perm semigroup of size 5, on 4 pts
+ with 3 generators>, <inverse partial perm semigroup on 5 pts
+ with 3 generators>, function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(VPR);
+MappingByFunction( <inverse partial perm semigroup on 5 pts
+ with 3 generators>, <inverse partial perm semigroup of size 5, on 4 pts
+ with 3 generators>, function( x ) ... end, function( x ) ... end )
+gap> ForAll(f, x -> (x ^ VPR) ^ inv = x);
+true
+
+#T# SmallerDegreeTest2: VagnerPrestonRepresentation
+# for SymmetricInverseSemigroup(5)
+gap> I5 := SymmetricInverseSemigroup(5);;
+gap> NrMovedPoints(I5);
+5
+gap> Size(I5);
+1546
+gap> I5 := Range(VagnerPrestonRepresentation(I5));;
+gap> NrMovedPoints(I5);
+1545
+gap> Size(I5);
+1546
+gap> I5 := SmallerDegreePartialPermRepresentation(I5);;
+gap> NrMovedPoints(Image(I5));
+5
+gap> Size(Image(I5));
+1546
+
+#T# SmallerDegreeTest3: VagnerPrestonRepresentation
+# for a bipartition semigroup
+gap> B := Semigroup([
+>  Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5, -5 ], [ 6 ],
+>    [ 7 ], [ -1 ], [ -3 ], [ -6 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1, -5 ], [ 2, -6 ], [ 3, -7 ], [ 4, -3 ], [ 5 ],
+>    [ 6, -2 ], [ 7 ], [ -1 ], [ -4 ] ] ), 
+>  Bipartition( [ [ 1, -4 ], [ 2, -7 ], [ 3 ], [ 4, -5 ], [ 5, -2 ],
+>    [ 6 ], [ 7, -1 ], [ -3 ], [ -6 ] ] ), 
+>  Bipartition( [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4, -1 ], [ 5, -5 ], [ 6 ],
+>    [ 7 ], [ -3 ], [ -4 ], [ -6 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1 ], [ 2, -6 ], [ 3, -4 ], [ 4 ], [ 5, -1 ],
+>    [ 6, -2 ], [ 7, -3 ], [ -5 ], [ -7 ] ] ), 
+>  Bipartition( [ [ 1, -7 ], [ 2, -5 ], [ 3 ], [ 4, -1 ], [ 5, -4 ],
+>    [ 6 ], [ 7, -2 ], [ -3 ], [ -6 ] ] ) ]);;
+gap> IsInverseSemigroup(B);
+true
+gap> V := Range(VagnerPrestonRepresentation(B));
+<inverse partial perm semigroup on 664 pts with 6 generators>
+
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(f);
+gap> Unbind(f1);
 gap> Unbind(f2);
+gap> Unbind(f3);
 gap> Unbind(h2);
 gap> Unbind(h1);
 gap> Unbind(ww);
@@ -654,6 +716,9 @@ gap> Unbind(y);
 gap> Unbind(x);
 gap> Unbind(z);
 gap> Unbind(cosets);
+gap> Unbind(I5);
+gap> Unbind(inv);
+gap> Unbind(VPR);
 
 #E#
 gap> STOP_TEST("Semigroups package: attributes-inverse.tst");
