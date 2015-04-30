@@ -600,7 +600,8 @@ function(S)
 
     schutz := SchutzenbergerGroup(d);
     sup := SupremumIdempotentsNC(Minorants(S, e), e);
-    trivialse := not ForAny(He, x -> NaturalLeqPartialPerm(sup, x) and x <> e);
+    trivialse := not ForAny(He, x -> NaturalLeqInverseSemigroup(sup, x)
+                                     and x <> e);
 
     psi := ActionHomomorphism(schutz,
                               Difference(DomainOfPartialPerm(e),
