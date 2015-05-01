@@ -352,6 +352,23 @@ function(n)
   return Semigroup(gens);
 end);
 
+# Generators for B_3:
+#
+#Semigroup( [ BooleanMatNC([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+#  BooleanMatNC([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
+#  BooleanMatNC([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+#  BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 0, 0]]),
+#  BooleanMatNC([[1, 1, 0], [1, 0, 1], [0, 1, 1]]) ] )
+# 
+# Generators for B_4:
+# [ BooleanMatNC([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
+#  BooleanMatNC([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+#  BooleanMatNC([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 0]]),
+#  BooleanMatNC([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 1]]),
+#  BooleanMatNC([[1, 1, 0, 0], [1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 1]]),
+#  BooleanMatNC([[1, 1, 0, 0], [1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 0, 1]]),
+#  BooleanMatNC([[1, 1, 1, 0], [1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1]]) ]
+
 #
 
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",

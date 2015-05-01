@@ -37,4 +37,7 @@ DeclareOperation("AsBooleanMat", [IsTransformation, IsPosInt]);
 DeclareAttribute("DimensionOfBooleanMat", IsBooleanMat);
 DeclareOperation("RandomBooleanMat", [IsPosInt]);
 
+DeclareOperation("NumberBooleanMat", [IsBooleanMat]);
+DeclareOperation("BooleanMatNumber", [IsPosInt, IsPosInt]);
+
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBooleanMat");

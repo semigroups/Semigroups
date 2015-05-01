@@ -21,6 +21,35 @@
 # 2) BooleanMat non-NC version
 # 3) BooleanMat for a blist, and successors
 
+InstallMethod(NumberBooleanMat, "for a boolean mat", [IsBooleanMat], 
+function(x) 
+  local dim, n, i;
+  
+  dim := DimensionOfBooleanMat(x); 
+  n := 0; 
+  for i in [2 .. dim ^ 2 + 1] do 
+    n := 2 * n + x![i]; 
+  od; 
+  return n + 1;   # to be in [1 .. 2 ^ (n ^ 2)] 
+end); 
+
+InstallMethod(BooleanMatNumber,  
+"for a positive integer and positive integer", 
+[IsPosInt, IsPosInt],
+function(n, dim) 
+  local out, q, i, j;
+  out := List([1 .. dim], x -> EmptyPlist(dim));
+  n := n - 1;   # to be in [0 .. 2 ^ (n ^ 2) - 1] 
+  for i in [dim, dim - 1 .. 1] do
+    for j in [dim, dim - 1 .. 1] do 
+      q := n mod 2;
+      out[i][j] := q;
+      n := (n - q) / 2;
+    od;
+  od; 
+  return BooleanMatNC(out); 
+end); 
+
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a boolean matrix coll",
 [IsBooleanMatCollection], ReturnFalse);
 
