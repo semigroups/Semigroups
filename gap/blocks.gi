@@ -90,7 +90,7 @@ function(blocks)
 end);
 
 InstallMethod(PrintString, "for blocks", [IsBlocks],
-x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(blocks)), ")"));
+x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(x)), ")"));
 
 #
 

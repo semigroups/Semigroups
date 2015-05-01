@@ -1,9 +1,15 @@
+Gaplint:
+
+* NrLeftBlocks, NrBlocks are in gaplint_ignore since the every way to create 
+  a bipartition sets these attribute just after creation. Hence if I install a
+  method for these, then it will never be run, hence hurting our code coverage. 
+
+Code coverage:
 
 * bipartition.tst tests factor.gi to 80%
 
 General notes:
 
-* attributes.gi is so different that it has not been merged.
 * HasGeneratorsOfMagmaIdeal has been changed to HasGeneratorsOfSemigroupIdeal
   in lots of places.
 

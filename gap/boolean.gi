@@ -44,23 +44,21 @@ InstallMethod(DimensionOfBooleanMat, "for a boolean mat",
 [IsBooleanMat], x -> x![1]);
 
 InstallMethod(Display, "for a boolean mat collection",
-[IsBooleanMatCollection], 
-function(coll) 
+[IsBooleanMatCollection],
+function(coll)
   Print(DisplayString(coll));
 end);
 
 InstallMethod(DisplayString, "for a boolean mat collection",
 [IsBooleanMatCollection],
-function(coll)
-  return JoinStringsWithSeparator(List(coll, DisplayString), "\n");
-end);
+coll -> JoinStringsWithSeparator(List(coll, DisplayString), "\n"));
 
 InstallMethod(DisplayString, "for a boolean mat", [IsBooleanMat],
 function(x)
   local str, i, j;
   str := "";
-  for i in [1 .. x![1]] do 
-    for j in [1 .. x![1]] do 
+  for i in [1 .. x![1]] do
+    for j in [1 .. x![1]] do
       Append(str, String(x![(i - 1) * x![1] + j + 1]));
       Append(str, " ");
     od;
@@ -82,11 +80,11 @@ function(x)
   return str;
 end);
 
-InstallMethod(PrintString, "for a boolean mat collection", 
+InstallMethod(PrintString, "for a boolean mat collection",
 [IsBooleanMatCollection],
-function(coll) 
+function(coll)
   local str, i;
-  if IsGreensClass(coll) or IsSemigroup(coll) then 
+  if IsGreensClass(coll) or IsSemigroup(coll) then
     TryNextMethod();
   fi;
   str := ShallowCopy(PrintString(coll[1]));
@@ -114,7 +112,7 @@ function(x)
     od;
     Append(str, "]\<, \<");
   od;
-  for i in [1 .. 4] do 
+  for i in [1 .. 4] do
     Remove(str, Length(str));
   od;
   Append(str, "\<\<]\<)\<");
@@ -197,8 +195,10 @@ InstallMethod(AsBooleanMat, "for a perm and pos int", [IsPerm, IsPosInt],
 function(p, n)
   local out, i;
   if ForAny([1 .. n], i -> i ^ p > n) then
-    Error("Semigroups: AsBooleanMat: usage\n",
-          "the first arg <p> must be map ...");
+    Error("Semigroups: AsBooleanMat: usage,\n",
+          "the permutation in the first argument must permute ",
+          "[1 .. ", String(n), "],");
+    return;
   fi;
 
   out := List([1 .. n], y -> [1 .. n] * 0);
@@ -208,13 +208,15 @@ function(p, n)
   return BooleanMatNC(out);
 end);
 
-InstallMethod(AsBooleanMat, "for a transformation and pos int", 
+InstallMethod(AsBooleanMat, "for a transformation and pos int",
 [IsTransformation, IsPosInt],
 function(x, n)
   local out, i;
   if ForAny([1 .. n], i -> i ^ x > n) then
-    Error("Semigroups: AsBooleanMat: usage\n",
-          "the first arg <x> must be map ...");
+    Error("Semigroups: AsBooleanMat: usage,\n",
+          "the transformation in the first argument must map ",
+          "[1 .. ", String(n), "] to itself,");
+    return;
   fi;
 
   out := List([1 .. n], y -> [1 .. n] * 0);
