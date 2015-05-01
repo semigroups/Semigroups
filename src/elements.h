@@ -14,7 +14,6 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
-//#include "MurmurHash2_64.hpp"
 
 // template for the base class for elements of a semigroup
 
@@ -177,7 +176,6 @@ struct std::hash<const BooleanMat> {
   }
 };
 
-/*
 // bipartitions
 // FIXME redefine causes a seg fault
 
@@ -196,16 +194,21 @@ class Bipartition : public Element<u_int32_t> {
       u_int32_t nrx = static_cast<const Bipartition*>(x)->nrblocks();
       u_int32_t nry = static_cast<const Bipartition*>(y)->nrblocks();
 
-      std::vector<u_int32_t> fuse; 
+      std::vector<u_int32_t> fuse;
+      std::vector<u_int32_t> lookup;
+      fuse.reserve(nrx + nry);
+      lookup.reserve(nrx + nry);
+
       // TODO maybe this should be pointer to local data, may slow down hashing
       // but speed up redefinition? 
       for (size_t i = 0; i < nrx + nry; i++) {
         fuse.push_back(i);
+        lookup.push_back(-1);
       }
 
       for (size_t i = 0; i < n; i++) {
         u_int32_t xx = fuseit(fuse, x->at(i + n));
-        u_int32_t yy = fuseit(fuse, y->at(i + nrx));
+        u_int32_t yy = fuseit(fuse, y->at(i) + nrx);
         if (xx != yy) {
           if (xx < yy) {
             fuse.at(yy) = xx;
@@ -216,21 +219,19 @@ class Bipartition : public Element<u_int32_t> {
       }
       
       u_int32_t next = 0;
-      std::vector<u_int32_t> lookup;
-      lookup.reserve(nrx + nry);
       
       for (size_t i = 0; i < n; i++) {
         u_int32_t xx = fuseit(fuse, x->at(i));
-        if (xx > lookup.size()) {
-          lookup.push_back(next);
+        if (lookup.at(xx) == (u_int32_t) -1) {
+          lookup.at(xx) = next;
           next++;
         }
         this->set(i, lookup.at(xx));
       }
       for (size_t i = n; i < 2 * n; i++) {
         u_int32_t xx = fuseit(fuse, y->at(i) + nrx);
-        if (xx > lookup.size()) {
-          lookup.push_back(next);
+        if (lookup.at(xx) == (u_int32_t) -1) {
+          lookup.at(xx) = next;
           next++;
         }
         this->set(i, lookup.at(xx));
@@ -259,12 +260,12 @@ class Bipartition : public Element<u_int32_t> {
     // nr blocks
     u_int32_t nrblocks () const {
       size_t nr = 0;
-      for (size_t i; i < this->degree(); i++) {
+      for (size_t i = 0; i < this->degree(); i++) {
         if (this->at(i) > nr) {
           nr = this->at(i);
         }
       }
-      return nr;
+      return nr + 1;
     }
 };
 
@@ -281,5 +282,6 @@ struct std::hash<const Bipartition> {
     }
     return seed;
   }
-};*/
+};
+
 #endif

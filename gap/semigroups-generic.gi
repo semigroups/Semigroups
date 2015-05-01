@@ -157,7 +157,7 @@ function(data)
                "genslookup", "genstoapply", "ht", "left", "len", "lenindex",
                "nr", "nrrules", "one", "pos", "prefix", "reduced", "right",
                "rules", "stopper", "suffix", "words", "leftscc", "rightscc",
-               "leftrightscc", "hclasses", "idempotents"];
+               "leftrightscc", "hclasses", "idempotents", "Interface_CC"];
 
   Print("\>\>rec(\n\>\>");
   com := false;
@@ -193,15 +193,20 @@ function(S)
 
   # this is required for the C++ version
   # TODO declare a filter IsCPPSemigroup or similar for this.
-  if IsTransformationSemigroup(S) or IsBooleanMatSemigroup(S) then
+  if IsTransformationSemigroup(S) 
+      or IsBooleanMatSemigroup(S)
+      or IsBipartitionSemigroup(S) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;
     data.pos := 0;
+    # the degree is the length of the std::vector required to hold the object
     if IsTransformationSemigroup(S) then
       data.degree := DegreeOfTransformationSemigroup(S);
-    else
+    elif IsBooleanMatSemigroup(S) then 
       data.degree := Representative(S)![1] ^ 2;
+    elif IsBipartitionSemigroup(S) then 
+      data.degree := 2 * DegreeOfBipartitionSemigroup(S);
     fi;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable

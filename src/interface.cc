@@ -28,11 +28,19 @@
 #define BATCH_SIZE 8192
 
 /*******************************************************************************
+ * T_SEMI
+*******************************************************************************/
+
+void PrintSemi (Obj o) {
+  Pr("<interface to C++ semigroup object>", 0L, 0L);
+}
+
+/*******************************************************************************
  * Imported types from the library
 *******************************************************************************/
 
-Obj BipartitionType; // Imported from the library to be able to check type
-Obj BipartitionNC;   // Imported from the library to be able to create bipartitions
+Obj IsBipartition;
+Obj BipartitionByIntRepNC;   
 
 Obj IsBooleanMat;
 Obj BooleanMatByIntRep;   
@@ -84,14 +92,14 @@ bool IsCPPSemigroup (Obj data) {
       if (CALL_1ARGS(IsBooleanMat, x) == True) {
         return true;
       }
-    case T_COMOBJ:{ 
-      if (TYPE_COMOBJ(x) == BipartitionType) {
+      // intentional fall through
+    case T_COMOBJ:
+      if (CALL_1ARGS(IsBipartition, x) == True) {
         return true;
       }
       // intentional fall through
     default: 
       return false;
-    }
   }
 }
 
@@ -223,12 +231,12 @@ class BoolMatConverter : public Converter<BooleanMat> {
     }
 };
 
-/*class BipartConverter : public Converter<Bipartition> {
+class BipartConverter : public Converter<Bipartition> {
   public: 
 
     Bipartition* convert (Obj o, size_t n) {
       assert(TNUM_OBJ(o) == T_COMOBJ);
-      assert(TYPE_COMOBJ(o) ==  BipartitionType);
+      assert(CALL_1ARGS(IsBipartition, o) == True);
       assert(IsbPRec(o, RNamName("blocks")));
       
       Obj blocks = ElmPRec(o, RNamName("blocks"));
@@ -238,7 +246,7 @@ class BoolMatConverter : public Converter<BooleanMat> {
       
       auto x = new Bipartition(n);
       for (u_int32_t i = 0; i < n; i++) {
-        x->set(i, INT_INTOBJ(ELM_PLIST(blocks, i + 1) - 1));
+        x->set(i, INT_INTOBJ(ELM_PLIST(blocks, i + 1)) - 1);
       }
       return x;
     }
@@ -247,12 +255,12 @@ class BoolMatConverter : public Converter<BooleanMat> {
       Obj o = NEW_PLIST(T_PLIST_CYC, x->degree());
       SET_LEN_PLIST(o, x->degree());
       for (u_int32_t i = 0; i < x->degree(); i++) {
-        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i)));
+        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i) + 1));
       }
-      o = CALL_1ARGS(BipartitionNC, o);
+      o = CALL_1ARGS(BipartitionByIntRepNC, o);
       return o;
     }
-};*/
+};
 
 /*******************************************************************************
  * Class for containing a C++ semigroup and accessing its methods
@@ -525,6 +533,16 @@ InterfaceBase* InterfaceFromData (Obj data) {
         interface = new Interface<BooleanMat>(data, bmc);
       }
       break;
+    }
+    case T_COMOBJ:{
+      if (CALL_1ARGS(IsBipartition, x) == True) {
+        size_t const n = LEN_PLIST(ElmPRec(x, RNamName("blocks"))) / 2;
+        auto bc = new BipartConverter();
+        interface = new Interface<Bipartition>(data, bc);
+      }
+      break;
+
+
     }
   }
   AssPRec(data, RNamName("Interface_CC"), OBJ_INTERFACE(interface));
@@ -1298,11 +1316,12 @@ static Int InitKernel( StructInitInfo *module )
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
+    PrintObjFuncs[T_SEMI] = PrintSemi;
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
 
-    ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
-    ImportGVarFromLibrary( "BipartitionNC", &BipartitionNC );
+    ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
+    ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary( "BooleanMatByIntRep", &BooleanMatByIntRep );
     
