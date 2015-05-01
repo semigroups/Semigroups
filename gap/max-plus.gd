@@ -14,9 +14,6 @@
 
 DeclareCategory("IsMaxPlusMatrix", IsMatrixOverSemiring);
 
-DeclareCategoryCollections("IsMaxPlusMatrix");
-DeclareCategoryCollections("IsMaxPlusMatrixCollection");
-
 BindGlobal("MaxPlusMatrixFamily",
            NewFamily("MaxPlusMatrixFamily",
                      IsMaxPlusMatrix, CanEasilySortElements,
@@ -29,5 +26,3 @@ DeclareGlobalFunction("MaxPlusMatrix");
 DeclareGlobalFunction("MaxPlusMatrixNC");
 
 DeclareOperation("RandomMaxPlusMatrix", [IsPosInt]);
-
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionMaxPlusMatrix");

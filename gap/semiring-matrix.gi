@@ -149,6 +149,8 @@ function(x, y)
   return false;
 end);
 
+# FIXME this is not general enough, either fix it or rename it
+
 InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int", 
 [IsPosInt, IsObject, IsObject],
 function(n, source, type)
@@ -158,7 +160,7 @@ function(n, source, type)
     for j in [1 .. n] do
       out[i][j] := Random(Integers);
       if out[i][j] = 0 then 
-        out[i][j] := -infinity;
+        out[i][j] := source;
       elif out[i][j] < 0 then 
         out[i][j] := out[i][j] + 1;
       fi;
