@@ -15,6 +15,7 @@
 #   ![(i - 1) * dim + j + 1] = mat[i][j] for all i > 1
 
 # TODO
+# 0) convert to blists for storage compression
 # 1) more conversion methods AsBooleanMat for a transformation, partial perm,
 # etc
 # 2) BooleanMat non-NC version

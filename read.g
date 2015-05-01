@@ -91,6 +91,8 @@ fi;
 
 ReadPackage("semigroups/gap/grpperm.gi");
 
+ReadPackage("semigroups/gap/semiring-matrix.gi");
+ReadPackage("semigroups/gap/max-plus.gi");
 ReadPackage("semigroups/gap/boolean.gi");
 ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");

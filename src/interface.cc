@@ -392,7 +392,8 @@ class Interface : public InterfaceBase {
 
       elements(data, limit); // get the elements out of _semigroup into "elts"
       
-      size_t nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))), INT_INTOBJ(end));
+      size_t nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))),
+                           INT_INTOBJ(end));
       bool found = false;
 
       while (!found && pos < nr) {
