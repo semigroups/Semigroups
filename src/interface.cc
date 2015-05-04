@@ -270,7 +270,7 @@ template<typename T>
 class Interface : public InterfaceBase {
   public: 
 
-    // enum for the type 
+    // enum for the type, not currently used
     enum InterfaceType {
       UNKNOWN = 0,
       SEMI_TRANS2 = 1,
