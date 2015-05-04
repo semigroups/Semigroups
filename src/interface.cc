@@ -340,6 +340,8 @@ class Interface : public InterfaceBase {
       AssPRec(data, RNamName("right"), 
               ConvertFromRecVec(_semigroup->right_cayley_graph()));
       CHANGED_BAG(data);
+      // TODO do something like this
+      //delete _semigroup->right_cayley_graph();
     }
 
     // get the left Cayley graph from C++ semgroup, store it in data
@@ -348,6 +350,8 @@ class Interface : public InterfaceBase {
       AssPRec(data, RNamName("left"), 
               ConvertFromRecVec(_semigroup->left_cayley_graph()));
       CHANGED_BAG(data);
+      // TODO do something like this
+      //delete _semigroup->left_cayley_graph();
     }
     
     // get the elements of the C++ semigroup, store them in data

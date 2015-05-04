@@ -104,7 +104,6 @@ class Semigroup {
       delete _elements;
       _id->delete_data();
       delete _id;
-      delete _gens;
     }
    
     size_t nrgens () {
@@ -141,7 +140,7 @@ class Semigroup {
         if (is_done()) {
           return -1;
         }
-        enumerate(_nr); 
+        enumerate(_nr + 1); 
         // the _nr means we enumerate MIN_STEP more elements
       }
     }
@@ -256,7 +255,7 @@ class Semigroup {
     }
 
     void enumerate (size_t limit, size_t stopper) {
-      if (_pos >= _nr || limit < _nr) return;
+      if (_pos >= _nr || limit <= _nr) return;
       limit = std::max(limit, _nr + MIN_STEP);
       
       std::cout << "C++ version\n";
@@ -389,9 +388,13 @@ class Semigroup {
         _schreierpos.push_back(0);
         _schreiergen.push_back(0);
       }
+      
+      if (prev_size == _schreierpos.size()) return;
 
-      // find places in _reduced that are true
-      for (size_t i = prev_size; i < _pos; i++) {
+      size_t prev_pos = _schreierpos[prev_size];
+
+      // find places in _reduced that are true, continuing from the last _pos
+      for (size_t i = prev_pos; i < _pos; i++) {
         for (size_t j = 0; j < this->nrgens(); j++) {
           if (_reduced.get(i, j)) {
             size_t r = _right->get(i, j);
@@ -401,7 +404,8 @@ class Semigroup {
         }
       }
     }
-
+    // TODO make as much as possible here a pointer so that they can be freed
+    // when they aren't required anymore
     size_t                               _degree;
     std::vector<T*>*                     _elements;
     std::vector<size_t>                  _final;

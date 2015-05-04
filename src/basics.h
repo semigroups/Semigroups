@@ -34,7 +34,7 @@ class RecVec {
         ~RecVec() {
         }
         
-        size_t inline get (size_t i, size_t j) {
+        T inline get (size_t i, size_t j) {
           assert(i < _nrrows && j  < _nrcols);
           return _vec.at(i * _nrcols + j); 
         }
