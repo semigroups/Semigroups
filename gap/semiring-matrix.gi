@@ -121,11 +121,9 @@ function(x, y)
   n := DimensionOfMatrixOverSemiring(x);
 
   for i in [1 .. n] do
-    for j in [1 .. n] do
-      if x![i][j] <> y![i][j] then 
-        return false;
-      fi;
-    od;
+    if x![i] <> y![i] then 
+      return false;
+    fi;
   od;
   return true;
 end);
@@ -138,13 +136,11 @@ function(x, y)
   n := DimensionOfMatrixOverSemiring(x);
 
   for i in [1 .. n] do
-    for j in [1 .. n] do
-      if x![i][j] < y![i][j] then
-        return true;
-      elif x![i][j] > y![i][j] then
-        return false;
-      fi;
-    od;
+    if x![i] < y![i] then
+      return true;
+    elif x![i] > y![i] then
+      return false;
+    fi;
   od;
   return false;
 end);

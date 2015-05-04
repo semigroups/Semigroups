@@ -24,8 +24,19 @@
 // 3) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
 
-#define GET_PLIST(plist, pos) INT_INTOBJ(ELM_PLIST(plist, pos))
 #define BATCH_SIZE 8192
+
+size_t LEN_BLIST_FUNC (Obj blist) {
+  return LEN_BLIST(blist);
+}
+
+bool IS_BLIST_REP_FUNC (Obj blist) {
+  return IS_BLIST_REP(blist);
+}
+
+Obj ELM_PLIST_FUNC (Obj plist, size_t pos) {
+  return ELM_PLIST(plist, pos);
+}
 
 /*******************************************************************************
  * T_SEMI
@@ -43,7 +54,7 @@ Obj IsBipartition;
 Obj BipartitionByIntRepNC;   
 
 Obj IsBooleanMat;
-Obj BooleanMatByIntRep;   
+Obj BooleanMatNC;   
 
 /*******************************************************************************
  * For debugging TODO move these to their own file
@@ -208,26 +219,43 @@ class BoolMatConverter : public Converter<BooleanMat> {
     BooleanMat* convert (Obj o, size_t n) {
       assert(TNUM_OBJ(o) == T_POSOBJ);
       assert(CALL_1ARGS(IsBooleanMat, o) == True);
+      assert(LEN_PLIST(o) > 0);
+      assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
        
       auto x = new BooleanMat(n);
+      n = LEN_BLIST(ELM_PLIST(o, 1));
       for (size_t i = 0; i < n; i++) {
-        if (GET_PLIST(o, i + 2) == 1) {
-          x->set(i, true);
-        } else {
-          x->set(i, false);
+        Obj row = ELM_PLIST(o, i + 1);
+        for (size_t j = 0; j < n; j++) {
+          if (ELM_BLIST(row, j + 1) == True) {
+            x->set(i * n + j, true);
+          } else {
+            x->set(i * n + j, false);
+          }
         }
       }
       return x;
     }
 
     Obj unconvert (BooleanMat* x) {
-      Obj o = NEW_PLIST(T_PLIST_CYC, x->degree() + 1);
-      SET_LEN_PLIST(o, x->degree() + 1);
-      SET_ELM_PLIST(o, 1, INTOBJ_INT(sqrt(x->degree())));
-      for (size_t i = 0; i < x->degree(); i++) {
-        SET_ELM_PLIST(o, i + 2, INTOBJ_INT(x->at(i)));
+      size_t n = sqrt(x->degree());
+      Obj o = NEW_PLIST(T_PLIST, n);
+      SET_LEN_PLIST(o, n);
+      
+      for (size_t i = 0; i < n; i++) {
+        Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
+        SET_LEN_BLIST(blist, n);
+        for (size_t j = 0; j < n; j++) {
+          if (x->at(i * n + j)) {
+            SET_ELM_BLIST(blist, j + 1, True);
+          } else {
+            SET_ELM_BLIST(blist, j + 1, False);
+          }
+          SET_ELM_PLIST(o, i + 1, blist);
+          CHANGED_BAG(o);
+        }
       }
-      return CALL_1ARGS(BooleanMatByIntRep, o);
+      return CALL_1ARGS(BooleanMatNC, o);
     }
 };
 
@@ -1326,7 +1354,7 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
-    ImportGVarFromLibrary( "BooleanMatByIntRep", &BooleanMatByIntRep );
+    ImportGVarFromLibrary( "BooleanMatNC", &BooleanMatNC );
     
     /* return success                                                      */
     return 0;

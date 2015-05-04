@@ -321,33 +321,32 @@ end);
 InstallMethod(RegularBooleanMatSemigroup, "for a pos int",
 [IsPosInt],
 function(n)
-  local gens, i;
+  local gens, i, j;
 
   if n = 1 then 
-    return Semigroup(BooleanMatNC([[1]]), BooleanMatNC([[0]]));
+    return Semigroup(BooleanMatNC([[true]]), BooleanMatNC([[false]]));
   fi;
 
-  gens := [AsBooleanMat((1, 2), n)];
+  gens := [];
 
-  gens[2] := List([1 .. n], x -> [1 .. n] * 0);
-  for i in [1 .. n - 1] do
-    gens[2][i][i + 1] := 1;
+  gens[2] := List([1 .. n], x -> BlistList([1 .. n], []));
+  for j in [1 .. n - 1] do
+    gens[2][j][j + 1] := true;
   od;
-  gens[2][n][1] := 1;
-  gens[2] := BooleanMatNC(gens[2]);
+  gens[2][n][1] := true;
 
-  gens[3] := List([1 .. n], x -> [1 .. n] * 0);
-  for i in [1 .. n] do
-    gens[3][i][i] := 1;
+  for i in [3, 4] do
+    gens[i] := List([1 .. n], x -> BlistList([1 .. n], []));
+    for j in [1 .. n - 1] do
+      gens[i][j][j] := true;
+    od;
   od;
-  gens[3][n][1] := 1;
-  gens[3] := BooleanMatNC(gens[3]);
+  gens[3][n][1] := true;
+  gens[3][n][n] := true;
 
-  gens[4] := List([1 .. n], x -> [1 .. n] * 0);
-  for i in [1 .. n - 1] do
-    gens[4][i][i] := 1;
-  od;
-  gens[4] := BooleanMatNC(gens[4]);
+  Apply(gens, BooleanMatNC);
+  
+  gens[1] := AsBooleanMat((1, 2), n);
 
   return Semigroup(gens);
 end);

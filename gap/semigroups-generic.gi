@@ -204,7 +204,7 @@ function(S)
     if IsTransformationSemigroup(S) then
       data.degree := DegreeOfTransformationSemigroup(S);
     elif IsBooleanMatSemigroup(S) then 
-      data.degree := Representative(S)![1] ^ 2;
+      data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
     elif IsBipartitionSemigroup(S) then 
       data.degree := 2 * DegreeOfBipartitionSemigroup(S);
     fi;

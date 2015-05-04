@@ -17,7 +17,8 @@ InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a max-plus matrix",
 InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a max-plus matrix",
 [IsMaxPlusMatrix], x -> "MaxPlusMatrixNC");
 
-InstallGlobalFunction(MaxPlusMatrixNC, x -> Objectify(MaxPlusMatrixType, x));
+InstallGlobalFunction(MaxPlusMatrixNC, 
+x -> Objectify(MaxPlusMatrixType, x));
 
 InstallMethod(\*, "for max-plus matrices", [IsMaxPlusMatrix, IsMaxPlusMatrix],
 function(x, y)

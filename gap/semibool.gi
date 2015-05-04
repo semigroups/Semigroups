@@ -35,7 +35,7 @@ end);
 InstallMethod(ViewString, "for a boolean matrix semigroup with generators",
 [IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local str, nrgens;
+  local str, nrgens, n;
 
   str := "\><";
 
@@ -81,10 +81,10 @@ function(S)
       nrgens := Length(GeneratorsOfSemigroup(S));
     fi;
   fi;
-
+  
+  n := String(DimensionOfMatrixOverSemiring(Representative(S)));
   Append(str, "of ");
-  Append(str, Concatenation(String(Representative(S)![1]), "x",
-                            String(Representative(S)![1])));
+  Append(str, Concatenation(n, "x", n));
   Append(str, " boolean matrices with ");
 
   Append(str, ViewString(nrgens));

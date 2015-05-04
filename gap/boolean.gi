@@ -21,190 +21,46 @@
 # 2) BooleanMat non-NC version
 # 3) BooleanMat for a blist, and successors
 
-InstallMethod(NumberBooleanMat, "for a boolean mat", [IsBooleanMat], 
-function(x) 
-  local dim, n, i;
-  
-  dim := DimensionOfBooleanMat(x); 
-  n := 0; 
-  for i in [2 .. dim ^ 2 + 1] do 
-    n := 2 * n + x![i]; 
-  od; 
-  return n + 1;   # to be in [1 .. 2 ^ (n ^ 2)] 
-end); 
+InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a boolean matrix",
+[IsBooleanMat], x -> "boolean");
 
-InstallMethod(BooleanMatNumber,  
-"for a positive integer and positive integer", 
-[IsPosInt, IsPosInt],
-function(n, dim) 
-  local out, q, i, j;
-  out := List([1 .. dim], x -> EmptyPlist(dim));
-  n := n - 1;   # to be in [0 .. 2 ^ (n ^ 2) - 1] 
-  for i in [dim, dim - 1 .. 1] do
-    for j in [dim, dim - 1 .. 1] do 
-      q := n mod 2;
-      out[i][j] := q;
-      n := (n - q) / 2;
-    od;
-  od; 
-  return BooleanMatNC(out); 
-end); 
-
-InstallMethod(IsGeneratorsOfInverseSemigroup, "for a boolean matrix coll",
-[IsBooleanMatCollection], ReturnFalse);
-
-BindGlobal("BooleanMatByIntRep", x -> Objectify(BooleanMatType, x));
+InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a boolean matrix",
+[IsBooleanMat], x -> "BooleanNC");
 
 InstallGlobalFunction(BooleanMatNC,
-function(x)
-  local out, row, col;
-
-  out := [0];
-  for row in x do
-    out[1] := out[1] + 1;
-    for col in row do
-      Add(out, col);
-    od;
-  od;
-  Objectify(BooleanMatType, out);
-  return out;
-end);
-
-InstallMethod(DimensionOfBooleanMat, "for a boolean mat",
-[IsBooleanMat], x -> x![1]);
-
-InstallMethod(Display, "for a boolean mat collection",
-[IsBooleanMatCollection],
-function(coll)
-  Print(DisplayString(coll));
-end);
-
-InstallMethod(DisplayString, "for a boolean mat collection",
-[IsBooleanMatCollection],
-coll -> JoinStringsWithSeparator(List(coll, DisplayString), "\n"));
-
-InstallMethod(DisplayString, "for a boolean mat", [IsBooleanMat],
-function(x)
-  local str, i, j;
-  str := "";
-  for i in [1 .. x![1]] do
-    for j in [1 .. x![1]] do
-      Append(str, String(x![(i - 1) * x![1] + j + 1]));
-      Append(str, " ");
-    od;
-    Remove(str, Length(str));
-    Append(str, "\n");
-  od;
-  return str;
-end);
-
-InstallMethod(ViewString, "for a boolean mat", [IsBooleanMat],
-function(x)
-  local str;
-  str := "<";
-  Append(str, String(x![1]));
-  Append(str, "x");
-  Append(str, String(x![1]));
-  Append(str, " boolean matrix>");
-
-  return str;
-end);
-
-InstallMethod(PrintString, "for a boolean mat collection",
-[IsBooleanMatCollection],
-function(coll)
-  local str, i;
-  if IsGreensClass(coll) or IsSemigroup(coll) then
-    TryNextMethod();
-  fi;
-  str := ShallowCopy(PrintString(coll[1]));
-  Append(str, "\<, ");
-  for i in [2 .. Length(coll)]  do
-    Append(str, "\>");
-    Append(str, PrintString(coll[i]));
-    Append(str, "\<, ");
-  od;
-  Remove(str, Length(str));
-  Remove(str, Length(str));
-  return str;
-end);
-
-InstallMethod(PrintString, "for a boolean mat", [IsBooleanMat],
-function(x)
-  local str, i, j;
-  str := "\>BooleanMatNC(\>[";
-  for i in [1 .. x![1]] do
-    Append(str, "\>\>[");
-    Append(str, String(x![(i - 1) * x![1] + 2]));
-    for j in [3 .. x![1] + 1] do
-      Append(str, ", ");
-      Append(str, String(x![(i - 1) * x![1] + j]));
-    od;
-    Append(str, "]\<, \<");
-  od;
-  for i in [1 .. 4] do
-    Remove(str, Length(str));
-  od;
-  Append(str, "\<\<]\<)\<");
-  return str;
-end);
-
-InstallMethod(\=, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
-function(x, y)
-  local i;
-
-  for i in [1 .. x![1] ^ 2 + 1] do
-    if x![i] <> y![i] then
-      return false;
-    fi;
-  od;
-  return true;
-end);
-
-InstallMethod(\<, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
-function(x, y)
-  local i;
-
-  for i in [1 .. x![1] ^ 2 + 1] do
-    if x![i] < y![i] then
-      return true;
-    elif x![i] > y![i] then
-      return false;
-    fi;
-  od;
-  return false;
-end);
+x -> Objectify(BooleanMatType, x));
 
 InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
-  local xy, i, j, k;
+  local n, xy, val, i, j, k;
 
-  xy := [1 .. x![1] ^ 2 + 1] * 0;
-  xy[1] := x![1];
-  for i in [1 .. x![1]] do
-    for j in [1 .. x![1]] do
-      for k in [1 .. x![1]] do
-        if x![(i - 1) * x![1] + k + 1] = 1
-            and y![(k - 1) * y![1] + j + 1] = 1 then
-          xy[(i - 1) * x![1] + j + 1] := 1;
+  n := DimensionOfMatrixOverSemiring(x);
+  xy := List([1 .. n], x -> BlistList([1 .. n], []));
+
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      for k in [1 .. n] do
+        if x![i][k] and y![k][j] then 
+          xy![i][j] := true;
           break;
         fi;
       od;
     od;
   od;
-  return Objectify(BooleanMatType, xy);
+  return BooleanMatNC(xy);
 end);
 
 InstallMethod(OneImmutable, "for a boolean mat",
 [IsBooleanMat],
 function(x)
-  local out, i;
+  local n, id, i;
 
-  out := List([1 .. x![1]], y -> [1 .. x![1]] * 0);
-  for i in [1 .. x![1]] do
-    out[i][i] := 1;
+  n := DimensionOfMatrixOverSemiring(x);
+  id := List([1 .. n], x -> BlistList([1 .. n], []));
+  for i in [1 .. n] do
+    id[i][i] := true;
   od;
-  return BooleanMatNC(out);
+  return BooleanMatNC(id);
 end);
 
 InstallMethod(OneMutable, "for a boolean mat",
@@ -212,14 +68,53 @@ InstallMethod(OneMutable, "for a boolean mat",
 
 InstallMethod(RandomBooleanMat, "for a pos int", [IsPosInt],
 function(n)
-  local out, i;
+  local x, i, j;
 
-  out := [n];
-  for i in [1 .. n ^ 2] do
-    Add(out, Random([0, 1]));
+  n := DimensionOfMatrixOverSemiring(x);
+  x := List([1 .. n], x -> BlistList([1 .. n], []));
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      x[i][j] := Random([true, false]);
+    od;
   od;
-  return Objectify(BooleanMatType, out);
+  return BooleanMatNC(x);
 end);
+
+InstallMethod(NumberBooleanMat, "for a boolean mat", [IsBooleanMat], 
+function(x) 
+  local n, nr, i, j;
+  
+  n := DimensionOfMatrixOverSemiring(x); 
+  nr := 0; 
+  for i in [1 .. n] do 
+    for j in [1 .. n] do 
+      nr := 2 * n + x![i][j]; 
+    od;
+  od; 
+  return nr + 1;   # to be in [1 .. 2 ^ (n ^ 2)] 
+end); 
+
+InstallMethod(BooleanMatNumber,  
+"for a positive integer and positive integer", 
+[IsPosInt, IsPosInt],
+function(nr, n) 
+  local x, q, i, j;
+
+  x := List([1 .. n], x -> BlistList([1 .. n], []));
+  nr := nr - 1;   # to be in [0 .. 2 ^ (n ^ 2) - 1] 
+  for i in [n, n - 1 .. 1] do
+    for j in [n, n - 1 .. 1] do 
+      q := nr mod 2;
+      if q = 0 then 
+        x[i][j] := false;
+      else 
+        x[i][j] := true;
+      fi;
+      nr := (nr - q) / 2;
+    od;
+  od; 
+  return BooleanMatNC(x); 
+end); 
 
 InstallMethod(AsBooleanMat, "for a perm and pos int", [IsPerm, IsPosInt],
 function(p, n)
@@ -231,9 +126,9 @@ function(p, n)
     return;
   fi;
 
-  out := List([1 .. n], y -> [1 .. n] * 0);
+  out := List([1 .. n], x -> BlistList([1 .. n], []));
   for i in [1 .. n] do
-    out[i][i ^ p] := 1;
+    out[i][i ^ p] := true;
   od;
   return BooleanMatNC(out);
 end);
@@ -249,9 +144,9 @@ function(x, n)
     return;
   fi;
 
-  out := List([1 .. n], y -> [1 .. n] * 0);
+  out := List([1 .. n], x -> BlistList([1 .. n], []));
   for i in [1 .. n] do
-    out[i][i ^ x] := 1;
+    out[i][i ^ x] := true;
   od;
   return BooleanMatNC(out);
 end);
@@ -265,10 +160,18 @@ end);
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionBooleanMat,
 function(x, data)
-  local h, i;
+  local n, h, i, j;
+  
+  n := DimensionOfMatrixOverSemiring(x);
   h := 0;
-  for i in [2 .. x![1] ^ 2 + 1] do
-    h := ((h / 2) + x![i]) mod data;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if x![i][j] then 
+        h := ((h / 2) + 1) mod data;
+      else
+        h := (h / 2) mod data;
+      fi;
+    od;
   od;
   return h + 1;
 end);
