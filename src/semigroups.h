@@ -104,6 +104,7 @@ class Semigroup {
       delete _elements;
       _id->delete_data();
       delete _id;
+      delete _gens;
     }
    
     size_t nrgens () {

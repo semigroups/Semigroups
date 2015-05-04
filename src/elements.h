@@ -177,7 +177,6 @@ struct std::hash<const BooleanMat> {
 };
 
 // bipartitions
-// FIXME redefine causes a seg fault
 
 class Bipartition : public Element<u_int32_t> {
 

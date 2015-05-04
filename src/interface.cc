@@ -358,8 +358,8 @@ class Interface : public InterfaceBase {
         SET_LEN_PLIST(out, elements->size());
         for (size_t i = 0; i < elements->size(); i++) {
           SET_ELM_PLIST(out, i + 1, _converter->unconvert(elements->at(i)));
+          CHANGED_BAG(out);
         }
-        CHANGED_BAG(out);
         AssPRec(data, RNamName("elts"), out);
       } else {
         Obj out = ElmPRec(data, RNamName("elts"));
@@ -542,8 +542,6 @@ InterfaceBase* InterfaceFromData (Obj data) {
         interface = new Interface<Bipartition>(data, bc);
       }
       break;
-
-
     }
   }
   AssPRec(data, RNamName("Interface_CC"), OBJ_INTERFACE(interface));
