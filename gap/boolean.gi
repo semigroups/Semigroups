@@ -10,25 +10,73 @@
 
 # This file contains an implementation of boolean matrices.
 
-# A boolean matrix <mat> is:
-#   ![1] = dimension
-#   ![(i - 1) * dim + j + 1] = mat[i][j] for all i > 1
+# A boolean matrix <mat> is a positional object where mat![i] is the i-th row
+# of the matrix, and it is a blist in blist rep.
 
 # TODO
-# 0) convert to blists for storage compression
 # 1) more conversion methods AsBooleanMat for a transformation, partial perm,
 # etc
-# 2) BooleanMat non-NC version
-# 3) BooleanMat for a blist, and successors
 
 InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a boolean matrix",
 [IsBooleanMat], x -> "boolean");
 
 InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a boolean matrix",
-[IsBooleanMat], x -> "BooleanNC");
+[IsBooleanMat], x -> "BooleanMat");
 
 InstallGlobalFunction(BooleanMatNC,
 x -> Objectify(BooleanMatType, x));
+
+InstallGlobalFunction(BooleanMat,
+function(mat) 
+  local n, x, blist, i, j, row;
+
+  if (not IsHomogeneousList(mat))
+      or IsEmpty(mat) 
+      or not ForAll(mat, IsHomogeneousList) then 
+    Error("Semigroups: BooleanMat: usage,\n",
+          "the argmuent must be a non-empty homogeneous list ",
+          "of homogeneous lists,\n");
+    return;
+  elif IsRectangularTable(mat) then #0s and 1s or blists
+    if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then 
+      # 0s and 1s
+      n := Length(mat[1]);
+      x := EmptyPlist(n);
+      for i in [1 .. n] do 
+        blist := BlistList([1 .. n], []);
+        for j in [1 .. n] do
+          if mat[i][j] = 1 then 
+            blist[j] := true;
+          fi;
+        od;
+        Add(x, blist);
+      od;
+      return BooleanMatNC(x);
+    elif ForAll(mat, row -> ForAll(row, x -> x = true or x = false)) then 
+      # blists
+      x := ShallowCopy(mat);
+      for row in x do 
+        if not IsBlistRep(row) then 
+          ConvertToBlistRep(row);
+        fi;
+      od;
+      return BooleanMatNC(x);
+    fi;
+  else 
+    # successors 
+    n := Length(mat);
+    x := EmptyPlist(n);
+    for i in [1 .. n] do 
+      if not ForAll(mat[i], x -> IsPosInt(x) and x <= n) then 
+        Error("Semigroups: BooleanMat:\n",
+              "the entries of each list must not exceed ", n, ",");
+        return;
+      fi;
+      Add(x, BlistList([1 .. n], mat[i]));
+    od;
+    return BooleanMatNC(x);
+  fi;
+end);
 
 InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
@@ -70,14 +118,36 @@ InstallMethod(RandomBooleanMat, "for a pos int", [IsPosInt],
 function(n)
   local x, i, j;
 
-  n := DimensionOfMatrixOverSemiring(x);
   x := List([1 .. n], x -> BlistList([1 .. n], []));
   for i in [1 .. n] do
     for j in [1 .. n] do
       x[i][j] := Random([true, false]);
     od;
   od;
+  Perform(x, ConvertToBlistRep);
   return BooleanMatNC(x);
+end);
+
+InstallMethod(DisplayString, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, str, i, j;
+
+  n := DimensionOfMatrixOverSemiring(x);
+  str := "";
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if x![i][j] then 
+        Append(str, String(1));
+      else
+        Append(str, String(0));
+      fi;
+      Append(str, " ");
+    od;
+    Remove(str, Length(str));
+    Append(str, "\n");
+  od;
+  return str;
 end);
 
 InstallMethod(NumberBooleanMat, "for a boolean mat", [IsBooleanMat], 

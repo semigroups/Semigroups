@@ -374,19 +374,19 @@ gap> Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(last)) = NrRClasses(S);
 true
 
 #T# attributes: LeftCayleyGraphSemigroup
-gap> S := Monoid(BooleanMatNC([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
+gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
 >                              [1, 1, 0, 1, 0], [1, 1, 1, 1, 1],
 >                              [1, 1, 0, 0, 0]]),
->                BooleanMatNC([[0, 0, 1, 0, 0], [1, 0, 1, 1, 0],
+>                BooleanMat([[0, 0, 1, 0, 0], [1, 0, 1, 1, 0],
 >                              [1, 0, 1, 1, 1], [0, 1, 1, 1, 0],
 >                              [0, 1, 1, 1, 0]]),
->                BooleanMatNC([[0, 0, 0, 1, 1], [0, 0, 1, 1, 0],
+>                BooleanMat([[0, 0, 0, 1, 1], [0, 0, 1, 1, 0],
 >                              [0, 0, 1, 1, 0], [1, 1, 0, 1, 0],
 >                              [1, 0, 1, 0, 1]]),
->                BooleanMatNC([[0, 1, 1, 1, 0], [0, 0, 0, 1, 0],
+>                BooleanMat([[0, 1, 1, 1, 0], [0, 0, 0, 1, 0],
 >                              [1, 1, 1, 0, 1], [1, 0, 1, 0, 0],
 >                              [1, 0, 1, 1, 0]]),
->                BooleanMatNC([[1, 0, 0, 0, 1], [1, 0, 0, 0, 1],
+>                BooleanMat([[1, 0, 0, 0, 1], [1, 0, 0, 0, 1],
 >                              [0, 0, 0, 0, 1], [0, 1, 1, 0, 1],
 >                              [1, 1, 1, 0, 1]]));;
 gap> LeftCayleyGraphSemigroup(S);;
@@ -470,11 +470,11 @@ guments
 #T# attributes: PrincipalFactor: for a D-class
 gap> D := GreensDClassOfElement(
 >       Semigroup(
->          BooleanMatNC([[0, 1, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0], [1, 1, 1, 0, 0, 0],
+>          BooleanMat([[0, 1, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0], [1, 1, 1, 0, 0, 0],
 >             [0, 1, 1, 1, 1, 1], [1, 0, 1, 0, 0, 1], [1, 0, 1, 0, 1, 1]]),
->          BooleanMatNC([[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 1, 0], [0, 1, 0, 1, 1, 0],
+>          BooleanMat([[1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 1, 0], [0, 1, 0, 1, 1, 0],
 >             [1, 0, 1, 1, 1, 0], [1, 1, 1, 0, 0, 1], [1, 1, 0, 0, 0, 0]]) ),
->      BooleanMatNC([[1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
+>      BooleanMat([[1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
 >         [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1]]));;
 gap> PrincipalFactor(D);
 <Rees matrix semigroup 1x1 over Group(())>
@@ -488,7 +488,7 @@ gap> SmallSemigroupGeneratingSet([
 > Transformation( [ 4, 4, 2, 5, 5 ] ), Transformation( [ 5, 2, 3, 5, 2 ] ) ]);;
 
 #T# attributes: SmallSemigroupGeneratingSet: for a collection with 1 elements
-gap> SmallSemigroupGeneratingSet([BooleanMatNC([[0, 1, 0, 0], [0, 1, 1, 0], [0,
+gap> SmallSemigroupGeneratingSet([BooleanMat([[0, 1, 0, 0], [0, 1, 1, 0], [0,
 > 1, 0, 0], [1, 0, 1, 1]])]);
 [ <4x4 boolean matrix> ]
 
@@ -612,12 +612,12 @@ gap> SmallInverseMonoidGeneratingSet([PartialPerm([1,2,4])]);
 
 #T# attributes: SmallInverseSemigroupGeneratingSet: for non-inverse-op elements
 gap> SmallInverseSemigroupGeneratingSet([RandomTransformation(10)]);
-Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage
+Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage,
 the argument must satisfy IsGeneratorsOfInverseSemigroup
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
 gap> SmallInverseMonoidGeneratingSet([RandomBooleanMat(10)]);
-Error, Semigroups: SmallInverseMonoidGeneratingSet: usage
+Error, Semigroups: SmallInverseMonoidGeneratingSet: usage,
 the argument must satisfy IsGeneratorsOfInverseSemigroup
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for One
@@ -626,11 +626,11 @@ gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 3])]);
 
 #T# attributes: SmallGeneratingSet: for an ideal
 gap> S := SemigroupIdeal( Semigroup(
->     BooleanMatNC([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
->     BooleanMatNC([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
->     BooleanMatNC([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
->     BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ),
-> BooleanMatNC([[1, 0, 0], [0, 0, 0], [1, 1, 0]]) );;
+>     BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+>     BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
+>     BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+>     BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ),
+> BooleanMat([[1, 0, 0], [0, 0, 0], [1, 1, 0]]) );;
 gap> SmallGeneratingSet(S);
 [ <3x3 boolean matrix> ]
 
@@ -694,8 +694,8 @@ gap> StructureDescription(S);
 gap> S := RegularBooleanMatSemigroup(3);;
 gap> foo := IsGreensDLeq(S);
 function( x, y ) ... end
-gap> x := BooleanMatNC([[1, 0, 1], [1, 1, 0], [1, 0, 1]]);;
-gap> y := BooleanMatNC([[1, 0, 1], [0, 0, 0], [1, 0, 0]]);;
+gap> x := BooleanMat([[1, 0, 1], [1, 1, 0], [1, 0, 1]]);;
+gap> y := BooleanMat([[1, 0, 1], [0, 0, 0], [1, 0, 0]]);;
 gap> foo(x, y);
 true
 gap> foo(y, x);
@@ -728,19 +728,19 @@ gap> IdempotentGeneratedSubsemigroup(S);
 <monoid of 3x3 boolean matrices with 122 generators>
 
 #T# attributes: InjectionPrincipalFactor
-gap> S := Monoid( [ BooleanMatNC([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
->   BooleanMatNC([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
->   BooleanMatNC([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
->   BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 1, 1]]),
->   BooleanMatNC([[1, 0, 0], [1, 1, 0], [0, 0, 1]]),
->   BooleanMatNC([[1, 1, 0], [0, 1, 0], [0, 0, 1]]),
->   BooleanMatNC([[1, 1, 0], [0, 0, 0], [0, 1, 1]]),
->   BooleanMatNC([[1, 0, 1], [0, 1, 0], [0, 0, 0]]),
->   BooleanMatNC([[1, 0, 0], [0, 0, 1], [0, 0, 1]]),
->   BooleanMatNC([[0, 0, 0], [0, 1, 0], [0, 0, 1]]),
->   BooleanMatNC([[1, 0, 0], [0, 0, 0], [0, 0, 1]]),
->   BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ] );;
-gap> D := DClass(S, BooleanMatNC([[1, 0, 1], [1, 1, 1], [1, 0, 1]]));;
+gap> S := Monoid( [ BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
+>   BooleanMat([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
+>   BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+>   BooleanMat([[1, 0, 0], [0, 1, 0], [0, 1, 1]]),
+>   BooleanMat([[1, 0, 0], [1, 1, 0], [0, 0, 1]]),
+>   BooleanMat([[1, 1, 0], [0, 1, 0], [0, 0, 1]]),
+>   BooleanMat([[1, 1, 0], [0, 0, 0], [0, 1, 1]]),
+>   BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 0]]),
+>   BooleanMat([[1, 0, 0], [0, 0, 1], [0, 0, 1]]),
+>   BooleanMat([[0, 0, 0], [0, 1, 0], [0, 0, 1]]),
+>   BooleanMat([[1, 0, 0], [0, 0, 0], [0, 0, 1]]),
+>   BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ] );;
+gap> D := DClass(S, BooleanMat([[1, 0, 1], [1, 1, 1], [1, 0, 1]]));;
 gap> map := InjectionPrincipalFactor(D);
 MappingByFunction( <Green's D-class: <3x3 boolean matrix>>, 
 <Rees 0-matrix semigroup 12x12 over Group(())>
@@ -750,7 +750,7 @@ gap> ForAll(D, x -> (x ^ map) ^ inv = x);
 true
 gap> MultiplicativeZero(Range(map)) ^ inv;
 fail
-gap> x := BooleanMatNC([[0, 0, 0], [1, 1, 0], [0, 0, 0]]);;
+gap> x := BooleanMat([[0, 0, 0], [1, 1, 0], [0, 0, 0]]);;
 gap> x ^ map;
 fail
 gap> D := First(DClasses(S), x-> not IsRegularClass(x));
@@ -760,8 +760,8 @@ Error, Semigroups: InjectionPrincipalFactor: usage,
 the argument <D> must be a regular D-class,
 
 #T# attributes: MultiplicativeNeutralElement
-gap> S := Semigroup( [ BooleanMatNC([[0, 0, 1], [0, 0, 1], [0, 1, 1]]),
->  BooleanMatNC([[1, 0, 0], [1, 1, 0], [0, 1, 1]]) ] );;
+gap> S := Semigroup( [ BooleanMat([[0, 0, 1], [0, 0, 1], [0, 1, 1]]),
+>  BooleanMat([[1, 0, 0], [1, 1, 0], [0, 1, 1]]) ] );;
 gap> MultiplicativeNeutralElement(S);
 fail
 gap> S := Semigroup(AsBooleanMat(Transformation([2,1,2]), 3));;
@@ -780,12 +780,12 @@ gap> S := RegularBooleanMatSemigroup(2);
 gap> IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
-gap> S := Semigroup( [ BooleanMatNC([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
->  BooleanMatNC([[0, 1, 0], [0, 0, 1], [1, 0, 0]]) ] );;
+gap> S := Semigroup( [ BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+>  BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]) ] );;
 gap> IsomorphismPermGroup(S);
 MappingByFunction( <simple semigroup of 3x3 boolean matrices with 2 generators
->, Group([ (1,2)(3,5)(4,6), (1,5,4)
-(2,6,3) ]), function( x ) ... end, function( x ) ... end )
+>, Group([ (1,3)(2,4)(5,6), (1,4,5)
+(2,3,6) ]), function( x ) ... end, function( x ) ... end )
 
 #T# attributes: GroupOfUnits, for a finite semigroup 1/2
 gap> S := RegularBooleanMatSemigroup(3);
@@ -797,8 +797,8 @@ gap> StructureDescription(last);
 
 #T# attributes: GroupOfUnits, fail 2/2
 gap> S := Semigroup(
-> BooleanMatNC([[1, 1, 0, 1], [0, 1, 1, 0], [1, 1, 0, 1], [1, 1, 0, 1]]),
-> BooleanMatNC([[1, 1, 0, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 0]]));;
+> BooleanMat([[1, 1, 0, 1], [0, 1, 1, 0], [1, 1, 0, 1], [1, 1, 0, 1]]),
+> BooleanMat([[1, 1, 0, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 0]]));;
 gap> GroupOfUnits(S);
 fail
 

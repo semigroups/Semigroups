@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: bipartition.tst");
+gap> START_TEST("Semigroups package: blocks.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -156,4 +156,4 @@ gap> InverseLeftBlocks(blocks, x);
  [ 7, 8 ]>
 
 #E# 
-gap> STOP_TEST( "Semigroups package: bipartition.tst");
+gap> STOP_TEST( "Semigroups package: blocks.tst");
