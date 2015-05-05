@@ -6,10 +6,10 @@
  */
 
 // TODO
-// 1) make a distinction between monoid and semigroup presentations
-// 4) other types of semigroups
-// 5) bit flipping?
-// 6) the other functionality of Semigroupe.
+//
+// 1) bit flipping?
+//
+// 2) the other functionality of Semigroupe.
 
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
@@ -17,7 +17,9 @@
 //#define NDEBUG
 //#define DEBUG
 
-#define MIN_STEP 8192
+#ifndef BATCH_SIZE
+#define BATCH_SIZE 8192
+#endif
 
 #include "basics.h"
 #include "elements.h"
@@ -26,7 +28,6 @@
 #include <vector>
 #include <assert.h>
 #include <iostream>
-
 
 template <typename T>
 class Semigroup {
@@ -141,7 +142,7 @@ class Semigroup {
           return -1;
         }
         enumerate(_nr + 1); 
-        // the _nr means we enumerate MIN_STEP more elements
+        // the _nr means we enumerate BATCH_SIZE more elements
       }
     }
 
@@ -249,14 +250,14 @@ class Semigroup {
       assert(nr == 0);
       return relations;
     }
-    
-    void enumerate(size_t limit) {
-      enumerate(limit, -1);
+   
+    void enumerate (size_t limit) {
+      enumerate(limit, true);
     }
 
-    void enumerate (size_t limit, size_t stopper) {
+    void enumerate (size_t limit, bool report) {
       if (_pos >= _nr || limit <= _nr) return;
-      limit = std::max(limit, _nr + MIN_STEP);
+      limit = std::max(limit, _nr + BATCH_SIZE);
       
       std::cout << "C++ version\n";
       std::cout << "limit = " << limit << "\n";
@@ -338,7 +339,6 @@ class Semigroup {
               }
             }
           } // finished applying gens to <_elements->at(_pos)>
-          stop = (stop || _pos == stopper);
           _pos++;
         } // finished words of length <wordlen> + 1
         if (_pos > _nr || _pos == _lenindex.at(_wordlen + 1)) {
@@ -351,6 +351,11 @@ class Semigroup {
           }
           _wordlen++;
           expand();
+        }
+        if (report) {
+          std::cout << "found " << _nr << " elements, ";
+          std::cout << _nrrules << " rules, ";
+          std::cout << "max word length " << _wordlen << ", so far" << std::endl;
         }
       }
       x.delete_data();

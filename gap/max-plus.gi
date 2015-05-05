@@ -17,7 +17,7 @@ InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a max-plus matrix",
 InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a max-plus matrix",
 [IsMaxPlusMatrix], x -> "MaxPlusMatrixNC");
 
-InstallGlobalFunction(MaxPlusMatrixNC, 
+InstallGlobalFunction(MaxPlusMatrixNC,
 x -> Objectify(MaxPlusMatrixType, x));
 
 InstallMethod(\*, "for max-plus matrices", [IsMaxPlusMatrix, IsMaxPlusMatrix],
@@ -45,7 +45,7 @@ function(x)
   local n, id, i;
   n := DimensionOfMatrixOverSemiring(x);
   id := List([1 .. n], x -> [1 .. n] * -infinity);
-  for i in [1 .. n] do 
+  for i in [1 .. n] do
     id[i][i] := 0;
   od;
   return MaxPlusMatrixNC(id);
@@ -55,4 +55,4 @@ InstallMethod(OneMutable, "for a max-plus matrix",
 [IsMaxPlusMatrix], OneImmutable);
 
 InstallMethod(RandomMaxPlusMatrix, "for a pos int", [IsPosInt],
-n -> SEMIGROUPS_RandomMatrixOverSemiring(n, [-infinity], MaxPlusMatrixType));
+n -> SEMIGROUPS_RandomMatrixOverSemiring(n, -infinity, MaxPlusMatrixType));

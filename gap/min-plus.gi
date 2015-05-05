@@ -44,7 +44,7 @@ function(x)
   local n, id, i;
   n := DimensionOfMatrixOverSemiring(x);
   id := List([1 .. n], x -> [1 .. n] * infinity);
-  for i in [1 .. n] do 
+  for i in [1 .. n] do
     id[i][i] := 0;
   od;
   return MinPlusMatrixNC(id);

@@ -7,7 +7,7 @@
 
 #ifndef SEMIGROUPS_ELEMENTS_H
 #define SEMIGROUPS_ELEMENTS_H
-//#define NDEBUG 
+//#define NDEBUG
 
 #include <assert.h>
 #include <functional>
@@ -21,7 +21,7 @@ template <typename T>
 class Element {
 
   public:
-    
+
     Element (size_t degree) {
       _data = new std::vector<T>();
       _data->reserve(degree);
@@ -29,15 +29,15 @@ class Element {
         _data->push_back(0);
       }
     }
-    
+
     Element (std::vector<T> const& data) {
       _data = new std::vector<T>(data);
-    } 
+    }
 
     Element (const Element& copy) : _data(copy._data) {}
-    
+
     ~Element () {}
-    
+
     bool operator == (const Element<T> & that) const {
       assert(this->degree() == that.degree());
       for (size_t i = 0; i < this->degree(); i++) {
@@ -51,13 +51,13 @@ class Element {
     inline size_t at (size_t pos) const {
       return (*_data)[pos];
     }
-    
+
     inline void set (size_t pos, T val) {
       if (_data->size() > 0) {
         (*_data)[pos] = val;
       }
     }
-    
+
     size_t degree () const {
       return _data->size();
     }
@@ -65,7 +65,7 @@ class Element {
     Element* copy () const {
       return new Element(*_data);
     }
-    
+
     void delete_data () {
       if (_data != nullptr) {
         delete _data;
@@ -81,11 +81,11 @@ class Element {
 template <typename T>
 class Transformation : public Element<T> {
 
-  public: 
-    
+  public:
+
     Transformation (std::vector<T> data) : Element<T>(data) {}
     Transformation (T degree) : Element<T>(degree) {}
-    
+
     // multiply x and y into this
     void redefine (Element<T> const* x, Element<T> const* y) {
       assert(x->degree() == y->degree());
@@ -123,13 +123,13 @@ struct std::hash<const Transformation<T> > {
 
 class BooleanMat: public Element<bool> {
 
-  public: 
-    
+  public:
+
     BooleanMat (size_t degree) : Element<bool>(degree) {}
     BooleanMat (std::vector<bool> const& data) : Element<bool> (data) {}
-    
+
     // multiply x and y into this
-    void redefine (Element<bool> const* x, 
+    void redefine (Element<bool> const* x,
                    Element<bool> const* y) {
       assert(x->degree() == y->degree());
       assert(x->degree() == this->degree());
@@ -147,7 +147,7 @@ class BooleanMat: public Element<bool> {
         }
       }
     }
-      
+
     // the identity of this
     Element<bool>* identity () {
       std::vector<bool> mat;
@@ -180,11 +180,11 @@ struct std::hash<const BooleanMat> {
 
 class Bipartition : public Element<u_int32_t> {
 
-  public: 
-    
+  public:
+
     Bipartition (std::vector<u_int32_t> data) : Element<u_int32_t>(data) {}
     Bipartition (u_int32_t degree) : Element<u_int32_t>(degree) {}
-    
+
     // multiply x and y into this
     void redefine (Element<u_int32_t> const* x, Element<u_int32_t> const* y) {
       assert(x->degree() == y->degree());
@@ -199,7 +199,7 @@ class Bipartition : public Element<u_int32_t> {
       lookup.reserve(nrx + nry);
 
       // TODO maybe this should be pointer to local data, may slow down hashing
-      // but speed up redefinition? 
+      // but speed up redefinition?
       for (size_t i = 0; i < nrx + nry; i++) {
         fuse.push_back(i);
         lookup.push_back(-1);
@@ -216,9 +216,9 @@ class Bipartition : public Element<u_int32_t> {
           }
         }
       }
-      
+
       u_int32_t next = 0;
-      
+
       for (size_t i = 0; i < n; i++) {
         u_int32_t xx = fuseit(fuse, x->at(i));
         if (lookup.at(xx) == (u_int32_t) -1) {
@@ -246,9 +246,9 @@ class Bipartition : public Element<u_int32_t> {
       }
       return new Bipartition(image);
     }
-    
-  private: 
-    
+
+  private:
+
     u_int32_t fuseit (std::vector<u_int32_t> const& fuse, u_int32_t pos) {
       while (fuse.at(pos) < pos) {
         pos = fuse.at(pos);
@@ -278,6 +278,67 @@ struct std::hash<const Bipartition> {
     u_int32_t deg = x.degree();
     for (u_int32_t i = 0; i < deg; i++) {
       seed = ((seed * deg) + x.at(i));
+    }
+    return seed;
+  }
+};
+
+long inline PlusMinMax(long int x, long int y) {
+  if (x == LONG_MAX || y == LONG_MAX)
+    return LONG_MAX;
+  if (x == LONG_MIN || y == LONG_MIN)
+    return LONG_MIN;
+  return x + y;
+}
+
+class MaxPlusMatrix: public Element<long int> {
+
+  public:
+
+    MaxPlusMatrix (size_t degree) : Element<long int>(degree) {}
+    MaxPlusMatrix (std::vector<long int> const& data) : Element<long int> (data) {}
+
+    // multiply x and y into this
+    void redefine (Element<long int> const* x,
+                   Element<long int> const* y) {
+      assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
+      size_t deg = sqrt(this->degree());
+
+      for (size_t i = 0; i < deg; i++) {
+        for (size_t j = 0; j < deg; j++) {
+          long int v = LONG_MIN;
+          for (size_t k = 0; k < deg; k++) {
+            v = std::max(v, PlusMinMax(x->at(i * deg + k), y-> at(k * deg + j)));
+          }
+          this->set(i * deg + j, v);
+        }
+      }
+    }
+
+    // the identity of this
+    Element<long int>* identity () {
+      std::vector<long int> mat;
+      mat.reserve(this->degree());
+
+      for (size_t i = 0; i < this->degree(); i++) {
+        mat.push_back(LONG_MIN);
+      }
+      size_t n = sqrt(this->degree());
+      for (size_t i = 0; i < n; i++) {
+        mat.at(i * n + i) =  0;
+      }
+      return new MaxPlusMatrix(mat);
+    }
+};
+
+// hash function for unordered_map
+template <>
+struct std::hash<const MaxPlusMatrix> {
+  size_t operator() (const MaxPlusMatrix& x) const {
+    size_t seed = 0;
+    for (size_t i = 0; i < x.degree(); i++) {
+      seed = ((seed << 4) + x.at(i));
     }
     return seed;
   }

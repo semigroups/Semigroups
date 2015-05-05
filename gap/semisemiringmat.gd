@@ -12,3 +12,7 @@
 
 DeclareSynonym("IsMatrixOverSemiringSemigroup",
                IsSemigroup and IsMatrixOverSemiringCollection);
+DeclareSynonym("IsMaxPlusMatrixSemigroup",
+               IsSemigroup and IsMaxPlusMatrixCollection);
+DeclareSynonym("IsMinPlusMatrixSemigroup",
+               IsSemigroup and IsMaxPlusMatrixCollection);

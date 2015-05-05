@@ -8,22 +8,22 @@
 #############################################################################
 ##
 
-# This file contains declarations for matrices over semirings. 
+# This file contains declarations for matrices over semirings.
 
 # A matrix over semiring <mat> is:
 #   mat![i] = the ith row, entries are integers or -infinity
 
 InstallGlobalFunction(PlusMinMax,
 function(x, y)
-  if x = infinity or y = infinity then 
+  if x = infinity or y = infinity then
     return infinity;
-  elif x = -infinity or y = -infinity then 
+  elif x = -infinity or y = -infinity then
     return -infinity;
-  fi;    
+  fi;
   return x + y;
 end);
 
-InstallMethod(IsGeneratorsOfInverseSemigroup, 
+InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
 [IsMatrixOverSemiringCollection], ReturnFalse);
 
@@ -93,7 +93,7 @@ InstallMethod(PrintString, "for a matrix over semiring",
 [IsMatrixOverSemiring],
 function(x)
   local n, str, i, j;
-  
+
   n := DimensionOfMatrixOverSemiring(x);
   str := Concatenation("\>", TypePrintStringOfMatrixOverSemiring(x), "(\>[");
   for i in [1 .. n] do
@@ -117,18 +117,18 @@ InstallMethod(\=, "for matrices over a semiring",
 [IsMatrixOverSemiring, IsMatrixOverSemiring],
 function(x, y)
   local n, i, j;
-  
+
   n := DimensionOfMatrixOverSemiring(x);
 
   for i in [1 .. n] do
-    if x![i] <> y![i] then 
+    if x![i] <> y![i] then
       return false;
     fi;
   od;
   return true;
 end);
 
-InstallMethod(\<, "for matrices over a semiring", 
+InstallMethod(\<, "for matrices over a semiring",
 [IsMatrixOverSemiring, IsMatrixOverSemiring],
 function(x, y)
   local n, i, j;
@@ -147,7 +147,7 @@ end);
 
 # FIXME this is not general enough, either fix it or rename it
 
-InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int", 
+InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int",
 [IsPosInt, IsObject, IsObject],
 function(n, source, type)
   local out, i, j;
@@ -155,9 +155,9 @@ function(n, source, type)
   for i in [1 .. n] do
     for j in [1 .. n] do
       out[i][j] := Random(Integers);
-      if out[i][j] = 0 then 
+      if out[i][j] = 0 then
         out[i][j] := source;
-      elif out[i][j] < 0 then 
+      elif out[i][j] < 0 then
         out[i][j] := out[i][j] + 1;
       fi;
     od;
@@ -179,7 +179,7 @@ function(x, data)
   h := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if x![i][j] <> infinity and x![i][j] <> -infinity then 
+      if x![i][j] <> infinity and x![i][j] <> -infinity then
         h := ((h / 4) + x![i][j]) mod data;
       fi;
     od;

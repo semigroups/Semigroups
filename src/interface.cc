@@ -5,6 +5,16 @@
  *
  */
 
+// TODO 
+// 1) better asserts!
+//
+// 2) improve relations probably don't make the relations in semigroups.h and then transfer them 
+// over here, just create them here using trace from semigroups.h and the
+// memmove method from ENUMERATE_SEMIGROUP in this file
+//
+// 3) set data!.pos and data!.nr so that the filter IsClosedData gets set at
+// the GAP level
+
 #include "interface.h"
 
 #include <assert.h>
@@ -15,40 +25,23 @@
 
 //#define DEBUG
 //#define NDEBUG 
-//
-// TODO 
-// 1) better asserts!
-// 2) improve relations probably don't make the relations in semigroups.h and then transfer them 
-// over here, just create them here using trace from semigroups.h and the
-// memmove method from ENUMERATE_SEMIGROUP in this file
-// 3) set data!.pos and data!.nr so that the filter IsClosedData gets set at
-// the GAP level
 
 #define BATCH_SIZE 8192
 
-size_t LEN_BLIST_FUNC (Obj blist) {
-  return LEN_BLIST(blist);
-}
-
-bool IS_BLIST_REP_FUNC (Obj blist) {
-  return IS_BLIST_REP(blist);
-}
-
-Obj ELM_PLIST_FUNC (Obj plist, size_t pos) {
-  return ELM_PLIST(plist, pos);
-}
-
-/*******************************************************************************
- * T_SEMI
-*******************************************************************************/
-
-void PrintSemi (Obj o) {
-  Pr("<interface to C++ semigroup object>", 0L, 0L);
-}
+#define IS_BOOL_MAT(x)     (CALL_1ARGS(IsBooleanMat, x) == True)
+#define IS_BIPART(x)       (CALL_1ARGS(IsBipartition, x) == True)
+#define IS_MAX_PLUS_MAT(x) (CALL_1ARGS(IsMaxPlusMatrix, x) == True)
+#define IS_INFTY(x)        (CALL_1ARGS(IsInfinity, x) == True)
+#define IS_N_INFTY(x)      (CALL_1ARGS(IsNegInfinity, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
 *******************************************************************************/
+
+Obj IsInfinity;
+Obj infinity;
+Obj IsNegInfinity;
+Obj Ninfinity;
 
 Obj IsBipartition;
 Obj BipartitionByIntRepNC;   
@@ -56,39 +49,32 @@ Obj BipartitionByIntRepNC;
 Obj IsBooleanMat;
 Obj BooleanMatNC;   
 
+Obj IsMaxPlusMatrix;
+Obj MaxPlusMatrixNC;   
+
 /*******************************************************************************
- * For debugging TODO move these to their own file
+ * Temporary debug area
 *******************************************************************************/
 
-#ifdef DEBUG
-
-Bag TypeComObjFunc (Obj x) {
-  return TYPE_COMOBJ(x);
+bool IS_N_INFTY_FUNC (Obj x) {
+  return IS_N_INFTY(x);
 }
-
-Bag TypePosObjFunc (Obj x) {
-  return TYPE_POSOBJ(x);
-}
-
-unsigned long long TNUM_OBJFunc (Obj x) {
-  return TNUM_OBJ(x);
-}
-
-bool IS_PLISTFunc (Obj x) {
-  return IS_PLIST(x);
-}
-
-bool IS_COMOBJFunc (Obj x) {
-  return IS_COMOBJ(x);
-}
-
-#endif
 
 /*******************************************************************************
  * Can we use Semigroup++?
 *******************************************************************************/
 
-bool IsCPPSemigroup (Obj data) {
+// TODO use IsMatrixOverSemiring
+enum SemigroupType {
+  UNKNOWN,
+  TRANS2, 
+  TRANS4, 
+  BOOL_MAT, 
+  BIPART,
+  MAX_PLUS_MAT
+};
+
+SemigroupType TypeSemigroup (Obj data) {
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
   
@@ -96,22 +82,28 @@ bool IsCPPSemigroup (Obj data) {
 
   switch (TNUM_OBJ(x)) {
     case T_TRANS2:
-      // intentional fall through
+      return TRANS2;
     case T_TRANS4:
-      return true;
+      return TRANS4;
     case T_POSOBJ:
-      if (CALL_1ARGS(IsBooleanMat, x) == True) {
-        return true;
-      }
-      // intentional fall through
+      if (IS_BOOL_MAT(x)) {
+        return BOOL_MAT;
+      } else if (IS_MAX_PLUS_MAT(x)) {
+        return MAX_PLUS_MAT;
+      } 
+      return UNKNOWN;
     case T_COMOBJ:
-      if (CALL_1ARGS(IsBipartition, x) == True) {
-        return true;
+      if (IS_BIPART(x)) {
+        return BIPART;
       }
       // intentional fall through
     default: 
-      return false;
+      return UNKNOWN;
   }
+}
+
+bool inline IsCCSemigroup (Obj data) {
+  return TypeSemigroup(data) != UNKNOWN;
 }
 
 /*******************************************************************************
@@ -217,8 +209,7 @@ class BoolMatConverter : public Converter<BooleanMat> {
   public: 
 
     BooleanMat* convert (Obj o, size_t n) {
-      assert(TNUM_OBJ(o) == T_POSOBJ);
-      assert(CALL_1ARGS(IsBooleanMat, o) == True);
+      assert(IS_BOOL_MAT(o));
       assert(LEN_PLIST(o) > 0);
       assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
        
@@ -251,9 +242,9 @@ class BoolMatConverter : public Converter<BooleanMat> {
           } else {
             SET_ELM_BLIST(blist, j + 1, False);
           }
-          SET_ELM_PLIST(o, i + 1, blist);
-          CHANGED_BAG(o);
         }
+        SET_ELM_PLIST(o, i + 1, blist);
+        CHANGED_BAG(o);
       }
       return CALL_1ARGS(BooleanMatNC, o);
     }
@@ -263,8 +254,7 @@ class BipartConverter : public Converter<Bipartition> {
   public: 
 
     Bipartition* convert (Obj o, size_t n) {
-      assert(TNUM_OBJ(o) == T_COMOBJ);
-      assert(CALL_1ARGS(IsBipartition, o) == True);
+      assert(IS_BIPART(o));
       assert(IsbPRec(o, RNamName("blocks")));
       
       Obj blocks = ElmPRec(o, RNamName("blocks"));
@@ -286,6 +276,54 @@ class BipartConverter : public Converter<Bipartition> {
         SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i) + 1));
       }
       o = CALL_1ARGS(BipartitionByIntRepNC, o);
+      return o;
+    }
+};
+
+class MaxPlusMatrixConverter : public Converter<MaxPlusMatrix> {
+  public: 
+
+    MaxPlusMatrix* convert (Obj o, size_t n) {
+      assert(IS_MAX_PLUS_MAT(o));
+      assert(LEN_PLIST(o) > 0);
+      assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
+       
+      auto x = new MaxPlusMatrix(n);
+      n = LEN_PLIST(ELM_PLIST(o, 1));
+      for (size_t i = 0; i < n; i++) {
+        Obj row = ELM_PLIST(o, i + 1);
+        for (size_t j = 0; j < n; j++) {
+          Obj entry = ELM_PLIST(row, j + 1);
+          if (IS_N_INFTY(entry)) {
+            x->set(i * n + j, LONG_MIN);
+          } else {
+            x->set(i * n + j, INT_INTOBJ(entry));
+          }
+        }
+      }
+      return x;
+    }
+
+    Obj unconvert (MaxPlusMatrix* x) {
+      size_t n = sqrt(x->degree());
+      Obj o = NEW_PLIST(T_PLIST, n);
+      SET_LEN_PLIST(o, n);
+      
+      for (size_t i = 0; i < n; i++) {
+        Obj row = NEW_PLIST(T_PLIST_CYC, n);
+        SET_LEN_PLIST(row, n);
+        for (size_t j = 0; j < n; j++) {
+          Int entry = x->at(i * n + j);
+          if (entry == LONG_MIN) {
+            SET_ELM_PLIST(row, j + 1, Ninfinity);
+          } else {
+            SET_ELM_PLIST(row, j + 1, INTOBJ_INT(entry));
+          }
+        }
+        SET_ELM_PLIST(o, i + 1, row);
+        CHANGED_BAG(o);
+      }
+      o = CALL_1ARGS(MaxPlusMatrixNC, o);
       return o;
     }
 };
@@ -541,43 +579,41 @@ InterfaceBase* InterfaceFromData (Obj data) {
   if (IsbPRec(data, RNamName("Interface_CC"))) {
     return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
   }
-  assert(IsCPPSemigroup(data));
-  assert(IsbPRec(data, RNamName("gens")));
-  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-   
-  Obj x = ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
+  
   InterfaceBase* interface;
 
-  switch (TNUM_OBJ(x)) {
-    case T_TRANS2:{
+  switch (TypeSemigroup(data)) {
+    case TRANS2:{
       auto tc2 = new TransConverter<u_int16_t>();
       interface = new Interface<Transformation<u_int16_t> >(data, tc2);
       break;
     }
-    case T_TRANS4:{
+    case TRANS4:{
       auto tc4 = new TransConverter<u_int32_t>();
       interface = new Interface<Transformation<u_int32_t> >(data, tc4);
       break;
     }
-    case T_POSOBJ:{ 
-      if (CALL_1ARGS(IsBooleanMat, x) == True) {
-        size_t const n = INT_INTOBJ(ELM_PLIST(x, 1));
-        auto bmc = new BoolMatConverter();
-        interface = new Interface<BooleanMat>(data, bmc);
-      }
+    case BOOL_MAT:{ 
+      auto bmc = new BoolMatConverter();
+      interface = new Interface<BooleanMat>(data, bmc);
       break;
     }
-    case T_COMOBJ:{
-      if (CALL_1ARGS(IsBipartition, x) == True) {
-        size_t const n = LEN_PLIST(ElmPRec(x, RNamName("blocks"))) / 2;
-        auto bc = new BipartConverter();
-        interface = new Interface<Bipartition>(data, bc);
-      }
+    case MAX_PLUS_MAT:{
+      auto maxpmc = new MaxPlusMatrixConverter();
+      interface = new Interface<MaxPlusMatrix>(data, maxpmc);
       break;
+    }
+    case BIPART: {
+      auto bc = new BipartConverter();
+      interface = new Interface<Bipartition>(data, bc);
+      break;
+    }
+    default: {
+      assert(false);
     }
   }
   AssPRec(data, RNamName("Interface_CC"), OBJ_INTERFACE(interface));
-  return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
+  return interface;
 }
 
 /*******************************************************************************
@@ -587,7 +623,7 @@ InterfaceBase* InterfaceFromData (Obj data) {
 Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
 
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
-  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
     InterfaceFromData(data)->right_cayley_graph(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
@@ -596,7 +632,7 @@ Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
 }
 
 Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
-  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
     InterfaceFromData(data)->left_cayley_graph(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
@@ -605,7 +641,7 @@ Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 }
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
-  if (IsCPPSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
     InterfaceFromData(data)->relations(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
@@ -614,7 +650,7 @@ Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
 }
 
 Obj SIZE_SEMIGROUP (Obj self, Obj data) {
-  if (IsCPPSemigroup(data)) { 
+  if (IsCCSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->size());
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
@@ -623,7 +659,7 @@ Obj SIZE_SEMIGROUP (Obj self, Obj data) {
 }
 
 Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit) {
-  if (IsCPPSemigroup(data)) { 
+  if (IsCCSemigroup(data)) { 
     InterfaceFromData(data)->elements(data, limit);
   } else {
     ENUMERATE_SEMIGROUP(self, data, limit, 0, False);
@@ -632,7 +668,7 @@ Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit) {
 }
 
 Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
-  if (IsCPPSemigroup(data)) { 
+  if (IsCCSemigroup(data)) { 
     InterfaceFromData(data)->word(data, pos);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
@@ -641,7 +677,7 @@ Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
 }
 
 Obj FIND_SEMIGROUP (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
-  if (IsCPPSemigroup(data)) { 
+  if (IsCCSemigroup(data)) { 
     InterfaceFromData(data)->find(data, lookfunc, start, end);
   } else {
     ENUMERATE_SEMIGROUP(self, data, end, lookfunc, True);
@@ -650,21 +686,21 @@ Obj FIND_SEMIGROUP (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
 }
 
 Obj LENGTH_SEMIGROUP (Obj self, Obj data) {
-  if (IsCPPSemigroup(data)) { 
+  if (IsCCSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->current_size());
   }
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
 }
 
 Obj NR_RULES_SEMIGROUP (Obj self, Obj data) {
-  if (IsCPPSemigroup(data)) { 
+  if (IsCCSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->nrrules());
   }
   return INTOBJ_INT(ElmPRec(data, RNamName("nrrules")));
 }
 
 Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
-  if (IsCPPSemigroup(data)) { 
+  if (IsCCSemigroup(data)) { 
     return InterfaceFromData(data)->position(data, x);
   }
 
@@ -685,7 +721,7 @@ Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
 }
 
 Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
-  if (IsCPPSemigroup(data)) {
+  if (IsCCSemigroup(data)) {
     return (InterfaceFromData(data)->is_done() ? True : False);
   }
 
@@ -719,8 +755,8 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
         empty, oldword, x;
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
-  
-  if (IsCPPSemigroup(data)) {
+
+  if (IsCCSemigroup(data)) {
     InterfaceFromData(data)->enumerate(limit);
     return data;
   }
@@ -1294,6 +1330,14 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
   return out;
 }
 
+/*******************************************************************************
+ * GAP level print for a T_SEMI
+*******************************************************************************/
+
+void PrintSemi (Obj o) {
+  Pr("<interface to C++ semigroup object>", 0L, 0L);
+}
+
 /*****************************************************************************/
 
 typedef Obj (* GVarFunc)(/*arguments*/);
@@ -1350,11 +1394,18 @@ static Int InitKernel( StructInitInfo *module )
     PrintObjFuncs[T_SEMI] = PrintSemi;
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
+    
+    ImportGVarFromLibrary( "IsInfinity", &IsInfinity);
+    ImportGVarFromLibrary( "infinity", &infinity);
+    ImportGVarFromLibrary( "IsNegInfinity", &IsNegInfinity);
+    ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
 
     ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary( "BooleanMatNC", &BooleanMatNC );
+    ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
+    ImportGVarFromLibrary( "MaxPlusMatrixNC", &MaxPlusMatrixNC );
     
     /* return success                                                      */
     return 0;

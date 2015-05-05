@@ -10,8 +10,13 @@ Code coverage:
 
 General notes:
 
+* need to check usage of IsSemigroup and IsFinite, the max-plus matrix
+  semigroup examples can finite or infinite, we should check if they are finite
+  (somehow) and then use RightCayleyGraphSemigroup...
+
 * HasGeneratorsOfMagmaIdeal has been changed to HasGeneratorsOfSemigroupIdeal
   in lots of places.
+
 
 New features in this branch:
 

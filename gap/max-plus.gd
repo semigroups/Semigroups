@@ -8,11 +8,12 @@
 #############################################################################
 ##
 
-# This file contains declarations for max-plus matrices, i.e. matrices with
-# entries in the integer union {-infinity} where addition is max and
-# multiplication is plus.
+# This file contains declarations for max-plus, min-plus, tropical max-plus,
+# and tropical min-plus matrices.
 
 DeclareCategory("IsMaxPlusMatrix", IsMatrixOverSemiring);
+DeclareCategoryCollections("IsMaxPlusMatrix");
+DeclareCategoryCollections("IsMaxPlusMatrixCollection");
 
 BindGlobal("MaxPlusMatrixFamily",
            NewFamily("MaxPlusMatrixFamily",

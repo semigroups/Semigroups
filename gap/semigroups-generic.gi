@@ -195,7 +195,8 @@ function(S)
   # TODO declare a filter IsCPPSemigroup or similar for this.
   if IsTransformationSemigroup(S) 
       or IsBooleanMatSemigroup(S)
-      or IsBipartitionSemigroup(S) then
+      or IsBipartitionSemigroup(S) 
+      or IsMaxPlusMatrixSemigroup(S) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;
@@ -203,7 +204,7 @@ function(S)
     # the degree is the length of the std::vector required to hold the object
     if IsTransformationSemigroup(S) then
       data.degree := DegreeOfTransformationSemigroup(S);
-    elif IsBooleanMatSemigroup(S) then 
+    elif IsMatrixOverSemiringSemigroup(S) then 
       data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
     elif IsBipartitionSemigroup(S) then 
       data.degree := 2 * DegreeOfBipartitionSemigroup(S);
