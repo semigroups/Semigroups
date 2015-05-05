@@ -621,8 +621,10 @@ function(coll, type)
 
   elif IsBipartition(type) and IsPartialPermBipartition(type) then
     #FIXME shouldn't there be a check here like above?
-    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm),
-                                               PartialPerm([])));
+    i := DegreeOfBipartitionCollection(coll);
+    return AsBipartition(SupremumIdempotentsNC(
+                           List(coll, AsPartialPerm), PartialPerm([])),
+                         i);
   else
     Error("Semigroups: SupremumIdempotentsNC: usage,\n",
           "the argument must be a collection of partial perms, block ",

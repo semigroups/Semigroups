@@ -75,13 +75,15 @@ end);
 InstallMethod(NaturalLeqPartialPermBipartition, "for bipartitions",
 [IsBipartition, IsBipartition],
 function(f, g)
-  local fblocks, gblocks, n, m, i;
+  local n, fblocks, gblocks, val, i;
 
   if not IsPartialPermBipartition(f) or not IsPartialPermBipartition(g) then
     Error("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
           "the arguments must be partial perm bipartitions,");
     return;
-  elif DegreeOfBipartition(f) <> DegreeOfBipartition(g) then
+  fi;
+  n := DegreeOfBipartition(f);
+  if n <> DegreeOfBipartition(g) then
     Error("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
           "the arguments must have equal degree,");
     return;
@@ -89,14 +91,11 @@ function(f, g)
 
   fblocks := f!.blocks;
   gblocks := g!.blocks;
-  n := DegreeOfBipartition(f);
-  m := DegreeOfBipartition(g);
 
-  for i in [1 .. n] do
-    if fblocks[n + i] <= n then
-      if fblocks[n + i] <> gblocks[m + i] then
-        return false;
-      fi;
+  for i in [n + 1 .. 2 * n] do
+    val := fblocks[i];
+    if val <= n and val <> gblocks[i] then
+      return false;
     fi;
   od;
   return true;
