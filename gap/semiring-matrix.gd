@@ -8,11 +8,11 @@
 #############################################################################
 ##
 
-# This file contains declarations for matrices over semirings. 
+# This file contains declarations for matrices over semirings.
 
 DeclareGlobalFunction("PlusMinMax");
 
-DeclareCategory("IsMatrixOverSemiring", 
+DeclareCategory("IsMatrixOverSemiring",
                     IsMultiplicativeElementWithOne
                 and IsAssociativeElement
                 and IsPositionalObjectRep);
@@ -24,7 +24,7 @@ DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverSemiringCollection);
 
-DeclareOperation("SEMIGROUPS_RandomMatrixOverSemiring", 
+DeclareOperation("SEMIGROUPS_RandomMatrixOverSemiring",
                  [IsPosInt, IsObject, IsObject]);
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionMatrixOverSemiring");
 

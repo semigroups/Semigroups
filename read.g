@@ -97,7 +97,9 @@ ReadPackage("semigroups/gap/min-plus.gi");
 ReadPackage("semigroups/gap/boolean.gi");
 ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");
+
 ReadPackage("semigroups/gap/semibipart.gi");
+ReadPackage("semigroups/gap/semisemiringmat.gi");
 ReadPackage("semigroups/gap/semibool.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");

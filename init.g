@@ -41,11 +41,13 @@ ReadPackage("semigroups/gap/min-plus.gd");
 ReadPackage("semigroups/gap/boolean.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
+ReadPackage("semigroups/gap/blocks.gd");
+
 ReadPackage("semigroups/gap/semibipart.gd");
+ReadPackage("semigroups/gap/semisemiringmat.gd");
 ReadPackage("semigroups/gap/semibool.gd");
 ReadPackage("semigroups/gap/semitrans.gd");
 ReadPackage("semigroups/gap/semipperm.gd");
-ReadPackage("semigroups/gap/blocks.gd");
 
 ReadPackage("semigroups/gap/greens-generic.gd");
 ReadPackage("semigroups/gap/greens-acting.gd");

@@ -15,7 +15,6 @@ DeclareCategory("IsBooleanMat", IsMatrixOverSemiring);
 DeclareCategoryCollections("IsBooleanMat");
 DeclareCategoryCollections("IsBooleanMatCollection");
 
-
 BindGlobal("BooleanMatFamily",
            NewFamily("BooleanMatFamily",
                      IsBooleanMat, CanEasilySortElements,
