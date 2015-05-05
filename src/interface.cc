@@ -28,10 +28,11 @@
 
 #define BATCH_SIZE 8192
 
-#define IS_BOOL_MAT(x)        (CALL_1ARGS(IsBooleanMat, x) == True)
-#define IS_BIPART(x)          (CALL_1ARGS(IsBipartition, x) == True)
-#define IS_MAT_OVER_SEMI_RING (CALL_1ARGS(IsMatrixOverSemiring, x) == True)
-#define IS_MAX_PLUS_MAT(x)    (CALL_1ARGS(IsMaxPlusMatrix, x) == True)
+#define IS_BOOL_MAT(x)           (CALL_1ARGS(IsBooleanMat, x) == True)
+#define IS_BIPART(x)             (CALL_1ARGS(IsBipartition, x) == True)
+#define IS_MAT_OVER_SEMI_RING(x) (CALL_1ARGS(IsMatrixOverSemiring, x) == True)
+#define IS_MAX_PLUS_MAT(x)       (CALL_1ARGS(IsMaxPlusMatrix, x) == True)
+#define IS_MIN_PLUS_MAT(x)       (CALL_1ARGS(IsMinPlusMatrix, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
@@ -51,6 +52,9 @@ Obj IsMatrixOverSemiring;
 Obj IsMaxPlusMatrix;
 Obj MaxPlusMatrixNC;   
 
+Obj IsMinPlusMatrix;
+Obj MinPlusMatrixNC;   
+
 /*******************************************************************************
  * Temporary debug area
 *******************************************************************************/
@@ -66,7 +70,8 @@ enum SemigroupType {
   TRANS4, 
   BOOL_MAT, 
   BIPART,
-  MAX_PLUS_MAT
+  MAX_PLUS_MAT,
+  MIN_PLUS_MAT
 };
 
 SemigroupType TypeSemigroup (Obj data) {
@@ -85,6 +90,8 @@ SemigroupType TypeSemigroup (Obj data) {
         return BOOL_MAT;
       } else if (IS_MAX_PLUS_MAT(x)) {
         return MAX_PLUS_MAT;
+      } else if (IS_MIN_PLUS_MAT(x)) {
+        return MIN_PLUS_MAT;
       } 
       return UNKNOWN;
     case T_COMOBJ:
@@ -275,55 +282,6 @@ class BipartConverter : public Converter<Bipartition> {
     }
 };
 
-/*class MaxPlusMatrixConverter : public Converter<MaxPlusMatrix> {
-  public: 
-
-    MaxPlusMatrix* convert (Obj o, size_t n) {
-      assert(IS_MAX_PLUS_MAT(o));
-      assert(LEN_PLIST(o) > 0);
-      assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
-       
-      auto x = new MaxPlusMatrix(n);
-      n = LEN_PLIST(ELM_PLIST(o, 1));
-      for (size_t i = 0; i < n; i++) {
-        Obj row = ELM_PLIST(o, i + 1);
-        for (size_t j = 0; j < n; j++) {
-          Obj entry = ELM_PLIST(row, j + 1);
-          if (IS_N_INFTY(entry)) {
-            x->set(i * n + j, LONG_MIN);
-          } else {
-            x->set(i * n + j, INT_INTOBJ(entry));
-          }
-        }
-      }
-      return x;
-    }
-
-    Obj unconvert (MaxPlusMatrix* x) {
-      size_t n = sqrt(x->degree());
-      Obj o = NEW_PLIST(T_PLIST, n);
-      SET_LEN_PLIST(o, n);
-      
-      for (size_t i = 0; i < n; i++) {
-        Obj row = NEW_PLIST(T_PLIST_CYC, n);
-        SET_LEN_PLIST(row, n);
-        for (size_t j = 0; j < n; j++) {
-          Int entry = x->at(i * n + j);
-          if (entry == LONG_MIN) {
-            SET_ELM_PLIST(row, j + 1, Ninfinity);
-          } else {
-            SET_ELM_PLIST(row, j + 1, INTOBJ_INT(entry));
-          }
-        }
-        SET_ELM_PLIST(o, i + 1, row);
-        CHANGED_BAG(o);
-      }
-      o = CALL_1ARGS(MaxPlusMatrixNC, o);
-      return o;
-    }
-};*/
-
-
 class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
   public:
@@ -340,7 +298,7 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
         _gap_objectify_func(gap_objectify_func) {}
 
     MatrixOverSemiring* convert (Obj o, size_t n) {
-      //assert(IS_MAX_PLUS_MAT(o)); TODO replace this
+      assert(IS_MAT_OVER_SEMI_RING(o));
       assert(LEN_PLIST(o) > 0);
       assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
        
@@ -397,14 +355,6 @@ template<typename T>
 class Interface : public InterfaceBase {
   public: 
 
-    // enum for the type, not currently used
-    enum InterfaceType {
-      UNKNOWN = 0,
-      SEMI_TRANS2 = 1,
-      SEMI_TRANS4 = 2,
-      SEMI_BIPART = 3
-    };
-    
     Interface () = delete;
 
     // constructor
@@ -430,11 +380,6 @@ class Interface : public InterfaceBase {
       delete _converter;
       delete _semigroup;
     };
-   
-    // not currently used, TODO remove?
-    InterfaceType type () {
-      return _type;
-    }
    
     // TODO replace the methods from HERE . . .
 
@@ -627,7 +572,6 @@ class Interface : public InterfaceBase {
       return out;
     }
 
-    InterfaceType _type;
     Semigroup<T>* _semigroup;
     Converter<T>* _converter;
 };
@@ -654,6 +598,11 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<Transformation<u_int32_t> >(data, tc4);
       break;
     }
+    case BIPART: {
+      auto bc = new BipartConverter();
+      interface = new Interface<Bipartition>(data, bc);
+      break;
+    }
     case BOOL_MAT:{ 
       auto bmc = new BoolMatConverter();
       interface = new Interface<BooleanMat>(data, bmc);
@@ -666,9 +615,11 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<MatrixOverSemiring>(data, mosc);
       break;
     }
-    case BIPART: {
-      auto bc = new BipartConverter();
-      interface = new Interface<Bipartition>(data, bc);
+    case MIN_PLUS_MAT:{
+      auto mosc = new MatrixOverSemiringConverter(new MinPlusSemiring(), 
+                                                  infinity, 
+                                                  MinPlusMatrixNC);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
       break;
     }
     default: {
@@ -1471,6 +1422,9 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
     ImportGVarFromLibrary( "MaxPlusMatrixNC", &MaxPlusMatrixNC );
+    
+    ImportGVarFromLibrary( "IsMinPlusMatrix", &IsMinPlusMatrix );
+    ImportGVarFromLibrary( "MinPlusMatrixNC", &MinPlusMatrixNC );
     
     /* return success                                                      */
     return 0;

@@ -196,7 +196,8 @@ function(S)
   if IsTransformationSemigroup(S) 
       or IsBooleanMatSemigroup(S)
       or IsBipartitionSemigroup(S) 
-      or IsMaxPlusMatrixSemigroup(S) then
+      or IsMaxPlusMatrixSemigroup(S) # TODO eventually replace these last 2 by IsMatrixOver...
+      or IsMinPlusMatrixSemigroup(S) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;

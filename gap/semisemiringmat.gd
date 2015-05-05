@@ -15,4 +15,4 @@ DeclareSynonym("IsMatrixOverSemiringSemigroup",
 DeclareSynonym("IsMaxPlusMatrixSemigroup",
                IsSemigroup and IsMaxPlusMatrixCollection);
 DeclareSynonym("IsMinPlusMatrixSemigroup",
-               IsSemigroup and IsMaxPlusMatrixCollection);
+               IsSemigroup and IsMinPlusMatrixCollection);

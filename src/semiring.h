@@ -5,6 +5,9 @@
  *
  */
 
+#ifndef SEMIGROUPS_SEMIRING_H
+#define SEMIGROUPS_SEMIRING_H
+
 class Semiring {
 
   public:
@@ -67,3 +70,5 @@ class MinPlusSemiring : public Semiring {
       return std::min(x, y);
     }
 };
+
+#endif

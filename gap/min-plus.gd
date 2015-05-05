@@ -13,6 +13,8 @@
 # multiplication is plus.
 
 DeclareCategory("IsMinPlusMatrix", IsMatrixOverSemiring);
+DeclareCategoryCollections("IsMinPlusMatrix");
+DeclareCategoryCollections("IsMinPlusMatrixCollection");
 
 BindGlobal("MinPlusMatrixFamily",
            NewFamily("MinPlusMatrixFamily",
