@@ -21,8 +21,8 @@
       <C>n</C> is the degree of <A>f</A>, the values in transverse blocks are
       positive, and the values in non-transverse blocks are negative. <P/>
 
-      The right blocks of bipartition are &GAP; objects in their own right, and
-      are not simply a list of blocks of <A>f</A>; see <Ref
+      The right blocks of a bipartition are &GAP; objects in their own right, 
+      and are not simply a list of blocks of <A>f</A>; see <Ref
         Sect="section-blocks"/> for more information. <P/>
 
       The significance of this notion lies in the fact that bipartitions
@@ -52,8 +52,8 @@ gap> LeftBlocks(f);
       is the degree of <A>f</A>, the values in transverse blocks are positive,
       and the values in non-transverse blocks are negative. <P/>
       
-      The left blocks of bipartition are &GAP; objects in their own right, and
-      are not simply a list of blocks of <A>f</A>; see <Ref
+      The left blocks of a bipartition are &GAP; objects in their own right,
+      and are not simply a list of blocks of <A>f</A>; see <Ref
         Sect="section-blocks"/> for more information. <P/>
       
       The significance of this notion lies in the fact that bipartitions
