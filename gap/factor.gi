@@ -15,9 +15,11 @@
 # this is declared in the library, but there is no method for semigroups in the
 # library.
 
+# this works for infinite semigroups if x is really in there.
+
 InstallMethod(MinimalFactorization,
-"for a finite semigroup and an associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a semigroup and an associative element",
+[IsSemigroup, IsAssociativeElement],
 function(S, x)
   local data, pos;
   if not x in S then 
@@ -27,9 +29,6 @@ function(S, x)
   fi;
   data := GenericSemigroupData(S);
   pos := Position(data, x); 
-  if pos = fail then 
-    return fail;
-  fi;
   return WORD_SEMIGROUP(data, pos);
 end);
 
@@ -37,7 +36,7 @@ end);
 
 InstallMethod(Factorization, 
 "for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+[IsSemigroup, IsAssociativeElement],
 function(S, x)
   return MinimalFactorization(S, x); 
 end);
