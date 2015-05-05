@@ -9,6 +9,8 @@
 #define SEMIGROUPS_ELEMENTS_H
 //#define NDEBUG
 
+#include "semiring.h"
+
 #include <assert.h>
 #include <functional>
 #include <iostream>
@@ -83,8 +85,10 @@ class Transformation : public Element<T> {
 
   public:
 
+    Transformation (T degree, Element<T>* sample = nullptr) 
+      : Element<T>(degree) {}
+
     Transformation (std::vector<T> data) : Element<T>(data) {}
-    Transformation (T degree) : Element<T>(degree) {}
 
     // multiply x and y into this
     void redefine (Element<T> const* x, Element<T> const* y) {
@@ -125,7 +129,9 @@ class BooleanMat: public Element<bool> {
 
   public:
 
-    BooleanMat (size_t degree) : Element<bool>(degree) {}
+    BooleanMat (size_t degree, Element<bool>* sample = nullptr) 
+      : Element<bool>(degree) {}
+
     BooleanMat (std::vector<bool> const& data) : Element<bool> (data) {}
 
     // multiply x and y into this
@@ -181,9 +187,13 @@ struct std::hash<const BooleanMat> {
 class Bipartition : public Element<u_int32_t> {
 
   public:
+    
+    Bipartition (u_int32_t degree, 
+                 Element<u_int32_t>* sample = nullptr) 
+      : Element<u_int32_t>(degree) {}
 
-    Bipartition (std::vector<u_int32_t> data) : Element<u_int32_t>(data) {}
-    Bipartition (u_int32_t degree) : Element<u_int32_t>(degree) {}
+    Bipartition (std::vector<u_int32_t> data) 
+      : Element<u_int32_t>(data) {}
 
     // multiply x and y into this
     void redefine (Element<u_int32_t> const* x, Element<u_int32_t> const* y) {
@@ -283,7 +293,76 @@ struct std::hash<const Bipartition> {
   }
 };
 
-long inline PlusMinMax(long int x, long int y) {
+class MatrixOverSemiring: public Element<long> {
+  public:
+    MatrixOverSemiring (size_t degree, Semiring* semiring) 
+      : Element<long>(degree), 
+        _semiring(semiring) {}
+
+    MatrixOverSemiring (size_t degree, Element* sample) 
+      : Element<long>(degree), 
+        _semiring(static_cast<MatrixOverSemiring*>(sample)->semiring()) {}
+
+    MatrixOverSemiring (std::vector<long> const& data, Semiring* semiring) 
+      : Element<long>(data),
+        _semiring(semiring) {}
+  
+    void redefine (Element<long> const* x,
+                   Element<long> const* y) {
+      assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
+      size_t deg = sqrt(this->degree());
+
+      for (size_t i = 0; i < deg; i++) {
+        for (size_t j = 0; j < deg; j++) {
+          long v = _semiring->zero();
+          for (size_t k = 0; k < deg; k++) {
+            v = _semiring->plus(v, _semiring->prod(x->at(i * deg + k), 
+                                                   y->at(k * deg + j)));
+          }
+          this->set(i * deg + j, v);
+        }
+      }
+    }
+
+    // the identity
+    Element<long>* identity () {
+      std::vector<long> mat;
+      mat.reserve(this->degree());
+
+      for (size_t i = 0; i < this->degree(); i++) {
+        mat.push_back(_semiring->zero());
+      }
+      size_t n = sqrt(this->degree());
+      for (size_t i = 0; i < n; i++) {
+        mat.at(i * n + i) =  _semiring->one();
+      }
+      return new MatrixOverSemiring(mat, _semiring);
+    }
+  
+  Semiring* semiring () {
+    return _semiring;
+  }
+
+  private: 
+    Semiring* _semiring;
+}; 
+
+// hash function for unordered_map
+
+template <>
+struct std::hash<const MatrixOverSemiring> {
+  size_t operator() (const MatrixOverSemiring& x) const {
+    size_t seed = 0;
+    for (size_t i = 0; i < x.degree(); i++) {
+      seed = ((seed << 4) + x.at(i));
+    }
+    return seed;
+  }
+};
+
+
+/*long inline PlusMinMax(long x, long y) {
   if (x == LONG_MAX || y == LONG_MAX)
     return LONG_MAX;
   if (x == LONG_MIN || y == LONG_MIN)
@@ -291,23 +370,26 @@ long inline PlusMinMax(long int x, long int y) {
   return x + y;
 }
 
-class MaxPlusMatrix: public Element<long int> {
+
+
+
+class MaxPlusMatrix: public MatrixOverSemiring {
 
   public:
 
-    MaxPlusMatrix (size_t degree) : Element<long int>(degree) {}
-    MaxPlusMatrix (std::vector<long int> const& data) : Element<long int> (data) {}
+    MaxPlusMatrix (size_t degree) : Element<long>(degree) {}
+    MaxPlusMatrix (std::vector<long> const& data) : Element<long> (data) {}
 
     // multiply x and y into this
-    void redefine (Element<long int> const* x,
-                   Element<long int> const* y) {
+    void redefine (Element<long> const* x,
+                   Element<long> const* y) {
       assert(x->degree() == y->degree());
       assert(x->degree() == this->degree());
       size_t deg = sqrt(this->degree());
 
       for (size_t i = 0; i < deg; i++) {
         for (size_t j = 0; j < deg; j++) {
-          long int v = LONG_MIN;
+          long v = LONG_MIN;
           for (size_t k = 0; k < deg; k++) {
             v = std::max(v, PlusMinMax(x->at(i * deg + k), y-> at(k * deg + j)));
           }
@@ -317,8 +399,8 @@ class MaxPlusMatrix: public Element<long int> {
     }
 
     // the identity of this
-    Element<long int>* identity () {
-      std::vector<long int> mat;
+    Element<long>* identity () {
+      std::vector<long> mat;
       mat.reserve(this->degree());
 
       for (size_t i = 0; i < this->degree(); i++) {
@@ -342,6 +424,6 @@ struct std::hash<const MaxPlusMatrix> {
     }
     return seed;
   }
-};
+};*/
 
 #endif

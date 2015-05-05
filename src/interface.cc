@@ -28,19 +28,16 @@
 
 #define BATCH_SIZE 8192
 
-#define IS_BOOL_MAT(x)     (CALL_1ARGS(IsBooleanMat, x) == True)
-#define IS_BIPART(x)       (CALL_1ARGS(IsBipartition, x) == True)
-#define IS_MAX_PLUS_MAT(x) (CALL_1ARGS(IsMaxPlusMatrix, x) == True)
-#define IS_INFTY(x)        (CALL_1ARGS(IsInfinity, x) == True)
-#define IS_N_INFTY(x)      (CALL_1ARGS(IsNegInfinity, x) == True)
+#define IS_BOOL_MAT(x)        (CALL_1ARGS(IsBooleanMat, x) == True)
+#define IS_BIPART(x)          (CALL_1ARGS(IsBipartition, x) == True)
+#define IS_MAT_OVER_SEMI_RING (CALL_1ARGS(IsMatrixOverSemiring, x) == True)
+#define IS_MAX_PLUS_MAT(x)    (CALL_1ARGS(IsMaxPlusMatrix, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
 *******************************************************************************/
 
-Obj IsInfinity;
 Obj infinity;
-Obj IsNegInfinity;
 Obj Ninfinity;
 
 Obj IsBipartition;
@@ -49,16 +46,14 @@ Obj BipartitionByIntRepNC;
 Obj IsBooleanMat;
 Obj BooleanMatNC;   
 
+Obj IsMatrixOverSemiring;
+
 Obj IsMaxPlusMatrix;
 Obj MaxPlusMatrixNC;   
 
 /*******************************************************************************
  * Temporary debug area
 *******************************************************************************/
-
-bool IS_N_INFTY_FUNC (Obj x) {
-  return IS_N_INFTY(x);
-}
 
 /*******************************************************************************
  * Can we use Semigroup++?
@@ -280,7 +275,7 @@ class BipartConverter : public Converter<Bipartition> {
     }
 };
 
-class MaxPlusMatrixConverter : public Converter<MaxPlusMatrix> {
+/*class MaxPlusMatrixConverter : public Converter<MaxPlusMatrix> {
   public: 
 
     MaxPlusMatrix* convert (Obj o, size_t n) {
@@ -326,6 +321,72 @@ class MaxPlusMatrixConverter : public Converter<MaxPlusMatrix> {
       o = CALL_1ARGS(MaxPlusMatrixNC, o);
       return o;
     }
+};*/
+
+
+class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
+
+  public:
+
+    ~MatrixOverSemiringConverter () {
+      delete _semiring;
+    }
+
+    MatrixOverSemiringConverter (Semiring* semiring, 
+                                 Obj       gap_zero, 
+                                 Obj       gap_objectify_func) 
+      : _semiring(semiring), 
+        _gap_zero(gap_zero),
+        _gap_objectify_func(gap_objectify_func) {}
+
+    MatrixOverSemiring* convert (Obj o, size_t n) {
+      //assert(IS_MAX_PLUS_MAT(o)); TODO replace this
+      assert(LEN_PLIST(o) > 0);
+      assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
+       
+      auto x = new MatrixOverSemiring(n, _semiring);
+      n = LEN_PLIST(ELM_PLIST(o, 1));
+      for (size_t i = 0; i < n; i++) {
+        Obj row = ELM_PLIST(o, i + 1);
+        for (size_t j = 0; j < n; j++) {
+          Obj entry = ELM_PLIST(row, j + 1);
+          if (EQ(_gap_zero, entry)) {
+            x->set(i * n + j, _semiring->zero());
+          } else {
+            x->set(i * n + j, INT_INTOBJ(entry));
+          }
+        }
+      }
+      return x;
+    }
+
+    Obj unconvert (MatrixOverSemiring* x) {
+      size_t n = sqrt(x->degree());
+      Obj plist = NEW_PLIST(T_PLIST, n);
+      SET_LEN_PLIST(plist, n);
+      
+      for (size_t i = 0; i < n; i++) {
+        Obj row = NEW_PLIST(T_PLIST_CYC, n);
+        SET_LEN_PLIST(row, n);
+        for (size_t j = 0; j < n; j++) {
+          long entry = x->at(i * n + j);
+          if (entry == _semiring->zero()) {
+            SET_ELM_PLIST(row, j + 1, _gap_zero);
+          } else {
+            SET_ELM_PLIST(row, j + 1, INTOBJ_INT(entry));
+          }
+        }
+        SET_ELM_PLIST(plist, i + 1, row);
+        CHANGED_BAG(plist);
+      }
+      return CALL_1ARGS(_gap_objectify_func, plist);
+    }
+
+  private: 
+    
+    Semiring* _semiring;
+    Obj       _gap_zero;
+    Obj       _gap_objectify_func;
 };
 
 /*******************************************************************************
@@ -599,8 +660,10 @@ InterfaceBase* InterfaceFromData (Obj data) {
       break;
     }
     case MAX_PLUS_MAT:{
-      auto maxpmc = new MaxPlusMatrixConverter();
-      interface = new Interface<MaxPlusMatrix>(data, maxpmc);
+      auto mosc = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
+                                                  Ninfinity, 
+                                                  MaxPlusMatrixNC);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
       break;
     }
     case BIPART: {
@@ -1395,15 +1458,17 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
     
-    ImportGVarFromLibrary( "IsInfinity", &IsInfinity);
     ImportGVarFromLibrary( "infinity", &infinity);
-    ImportGVarFromLibrary( "IsNegInfinity", &IsNegInfinity);
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
 
     ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
+
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary( "BooleanMatNC", &BooleanMatNC );
+
+    ImportGVarFromLibrary( "IsMatrixOverSemiring", &IsMatrixOverSemiring);
+
     ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
     ImportGVarFromLibrary( "MaxPlusMatrixNC", &MaxPlusMatrixNC );
     

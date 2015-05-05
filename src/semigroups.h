@@ -262,7 +262,9 @@ class Semigroup {
       std::cout << "C++ version\n";
       std::cout << "limit = " << limit << "\n";
       
-      T x(_degree);
+      T x(_degree, _gens.at(0)); 
+      // pass in sample object to, for example, pass on the semiring for
+      // MatrixOverSemiring
 
       //multiply the generators by every generator
       if (_pos < _lenindex.at(1)) {
