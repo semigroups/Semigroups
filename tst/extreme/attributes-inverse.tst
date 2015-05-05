@@ -593,23 +593,34 @@ gap> f2 := Bipartition( [ [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ -1 ],
 gap> g := Bipartition( [ [ 1, -2 ], [ 2 ], [ 3, -5 ], [ 4 ], [ 5 ], [ -1 ],
 > [ -3 ], [ -4 ] ] );;
 gap> NaturalLeqInverseSemigroup(f, g);
-true
+Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
+the arguments must have equal degree,
 gap> NaturalLeqInverseSemigroup(f2, g);
+Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
+the arguments must have equal degree,
+gap> NaturalLeqInverseSemigroup(f, f2);
+Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
+the arguments must have equal degree,
+gap> NaturalLeqInverseSemigroup(AsPartialPerm(f), AsPartialPerm(f2));
 true
 gap> AsPartialPerm(f) = AsPartialPerm(f2);
 true
 gap> f = f2;
 false
-gap> NaturalLeqInverseSemigroup(f, f2);
+gap> f2 := Bipartition( [ [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ -1 ],
+> [ -3 ], [-4 ], [ -5 ] ] );;
+gap> g := Bipartition( [ [ 1, -2 ], [ 2 ], [ 3, -5 ], [ 4 ], [ 5 ], [ -1 ],
+> [ -3 ], [ -4 ] ] );;
+gap> NaturalLeqInverseSemigroup(f, f);
 true
-gap> NaturalLeqInverseSemigroup(f2, f);
+gap> NaturalLeqInverseSemigroup(f2, f2);
 true
 gap> NaturalLeqInverseSemigroup(g, g);
 true
-gap> NaturalLeqInverseSemigroup(g, f);
-false
 gap> NaturalLeqInverseSemigroup(g, f2);
 false
+gap> NaturalLeqInverseSemigroup(f2, g);
+true
 
 #T# SmallerDegreeTest1: VagnerPresetonRepresentation: a basic example
 gap> f1 := PartialPerm([ 1, 2, 4, 3 ]);;
