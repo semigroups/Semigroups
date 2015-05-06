@@ -252,7 +252,7 @@ class Semigroup {
     }
    
     void enumerate (size_t limit) {
-      enumerate(limit, true);
+      enumerate(limit, false);
     }
 
     void enumerate (size_t limit, bool report) {

@@ -32,6 +32,7 @@ dnl ## Set the language
 dnl ##
 AC_PROG_CXX
 AC_LANG([C++])
+AX_CXX_COMPILE_STDCXX_11
 
 dnl ##
 dnl ## Setup libtool (for building the GAP kernel extension)

@@ -334,11 +334,8 @@ function(cong)
   idsmgp := IdempotentGeneratedSubsemigroup(s);
   ids := Elements(idsmgp);
   pos := 0;
-  if IsBound(s!.opts) then
-    hashlen := s!.opts.hashlen.L;
-  else
-    hashlen := SemigroupsOptionsRec.hashlen.L;
-  fi;
+  hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
+
   ht := HTCreate( [ids[1],ids[1]], rec(forflatplainlists := true,
               treehashsize := hashlen ) );
 

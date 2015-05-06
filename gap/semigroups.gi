@@ -433,42 +433,44 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
-  local n, S, filts, pos, f;
+  local n, S, filts, pos, x;
 
-  opts:=SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS_ProcessOptionsRec(opts);
   
   if opts.small and Length(gens)>1 then 
-    gens:=SSortedList(ShallowCopy(gens));
+    gens := SSortedList(ShallowCopy(gens));
    if IsGeneratorsOfActingSemigroup(gens) then 
       gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
       n:=ActionDegree(gens);
-      Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
+      Sort(gens, function(x, y) 
+                   return ActionRank(x, n) > ActionRank(y, n); 
+                 end);
     fi;
     
-    opts:=ShallowCopy(opts);  
-    opts.small:=false;
+    opts := ShallowCopy(opts);  
+    opts.small := false;
     
     S:=InverseSemigroup(gens[1], opts);
-    for f in gens do
-      S:=ClosureInverseSemigroup(S, f, opts);
+    for x in gens do
+      S := ClosureInverseSemigroup(S, x, opts);
     od;
     return S;
   fi;
   
-  filts:=IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
+  filts := IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
   
   if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then 
-    filts:=filts and IsActingSemigroup;
+    filts := filts and IsActingSemigroup;
   fi;
 
-  S:=Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
+  S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   SetGeneratorsOfInverseSemigroup(S, AsList(gens));
   
   if IsMultiplicativeElementWithOneCollection(gens) then 
-    pos:=Position(gens, One(gens));
-    if pos<>fail then 
+    pos := Position(gens, One(gens));
+    if pos <> fail then 
       SetFilterObj(S, IsMonoid);
-      gens:=ShallowCopy(gens);
+      gens := ShallowCopy(gens);
       Remove(gens, pos);
       SetGeneratorsOfInverseMonoid(S, gens);
     fi;
@@ -541,8 +543,11 @@ function(S, coll, opts)
 
   opts.small:=false;
 
-  return ClosureInverseSemigroupNC(S, Filtered(coll, x-> not x in S),
-   SEMIGROUPS_ProcessOptionsRec(opts));
+  coll := Set(ShallowCopy(coll));
+
+  return ClosureInverseSemigroupNC(S, 
+                                   Filtered(coll, x-> not x in S),
+                                   SEMIGROUPS_ProcessOptionsRec(opts));
 end);
 
 #
@@ -571,49 +576,66 @@ end);
 #
 
 InstallGlobalFunction(ClosureInverseSemigroupNC,
-function(s, coll, opts)
-  local t, coll_copy, o, f;
+function(S, coll, opts)
+  local nrgens, o, T, n, x;
 
   if coll = [] then
     Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
-    "semigroup,");
-    return s;
-  elif IsSemigroupIdeal(s) then
-    return InverseSemigroup(s, coll, opts);
+         "semigroup,");
+    return S;
+  elif IsSemigroupIdeal(S) then
+    return InverseSemigroup(S, coll, opts);
   fi;
 
-  coll_copy := Set(ShallowCopy(coll));
-  for f in coll do
-    if not f ^ -1 in coll then
-      Add(coll_copy, f ^ -1);
+  if Length(coll) = 1 then 
+    
+    if not IsIdempotent(coll[1]) then  
+      Add(coll, coll[1] ^ -1);
+    fi;
+
+    o := StructuralCopy(LambdaOrb(S));
+    AddGeneratorsToOrbit(o, coll);
+
+    T := InverseSemigroupByGenerators(
+     Concatenation(GeneratorsOfInverseSemigroup(S), coll), opts);
+
+    #remove everything related to strongly connected components
+    Unbind(o!.scc);
+    Unbind(o!.trees);
+    Unbind(o!.scc_lookup);
+    Unbind(o!.mults);
+    Unbind(o!.schutz);
+    Unbind(o!.reverse);
+    Unbind(o!.rev);
+    Unbind(o!.truth);
+    Unbind(o!.schutzstab);
+    Unbind(o!.exhaust);
+    Unbind(o!.factors);
+
+    o!.parent := T; 
+    o!.scc_reps := [FakeOne(Generators(T))];
+
+    SetLambdaOrb(T, o);
+    return T;
+  fi;
+
+  if IsActingSemigroup(S) then 
+    coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
+    n := ActionDegree(coll);
+    Sort(coll, function(x, y) 
+                      return ActionRank(x, n) > ActionRank(y, n); 
+                    end);
+  fi;
+
+  opts.small := false;  
+  
+  for x in coll do
+    if not x in S then 
+      S := ClosureInverseSemigroupNC(S, [x], opts);
     fi;
   od;
 
-  o := StructuralCopy(LambdaOrb(s));
-  AddGeneratorsToOrbit(o, coll_copy);
-
-  #TODO should be a case split here for semigroups and monoids?
-  t := InverseSemigroupByGenerators(
-   Concatenation(GeneratorsOfInverseSemigroup(s), coll_copy), opts);
-
-  #remove everything related to strongly connected components
-  Unbind(o!.scc);
-  Unbind(o!.trees);
-  Unbind(o!.scc_lookup);
-  Unbind(o!.mults);
-  Unbind(o!.schutz);
-  Unbind(o!.reverse);
-  Unbind(o!.rev);
-  Unbind(o!.truth);
-  Unbind(o!.schutzstab);
-  Unbind(o!.exhaust);
-  Unbind(o!.factors);
-
-  o!.parent := t;
-  o!.scc_reps := [FakeOne(Generators(t))];
-
-  SetLambdaOrb(t, o);
-  return t;
+  return S;
 end);
 
 #
