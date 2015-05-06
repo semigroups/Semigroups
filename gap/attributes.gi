@@ -300,7 +300,8 @@ end);
 #
 
 InstallMethod(SmallInverseSemigroupGeneratingSet,
-"for a semigroup with inverse op", [IsSemigroupWithInverseOp],
+"for an inverse semigroup with inverse op",
+[IsInverseSemigroup and IsSemigroupWithInverseOp],
 S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S)));
 
 #
@@ -326,8 +327,8 @@ end);
 #
 
 InstallMethod(SmallInverseMonoidGeneratingSet,
-"for a monoid with inverse op",
-[IsSemigroupWithInverseOp and IsMonoid],
+"for an inverse monoid with inverse op",
+[IsInverseSemigroup and IsSemigroupWithInverseOp and IsMonoid],
 function(S)
   if IsEmpty(GeneratorsOfInverseMonoid(S)) then
     return GeneratorsOfInverseMonoid(S);

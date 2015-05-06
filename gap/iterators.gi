@@ -890,7 +890,8 @@ s -> IteratorByIterator(IteratorOfLClassData(s), x -> x[4],
 #FIXME move this!
 
 InstallMethod(IteratorOfDClassData, "for inverse acting semigroup",
-[IsActingSemigroup and IsSemigroupWithInverseOp and IsRegularSemigroup],
+[IsActingSemigroup and IsInverseSemigroup and IsSemigroupWithInverseOp and
+ IsRegularSemigroup],
 function(s)
   local graded, record, o, scc, func;
 
@@ -943,8 +944,9 @@ end);
 
 #FIXME move this!
 
-InstallMethod(IteratorOfRClassData, "for acting semigroup with inverse op",
-[IsSemigroupWithInverseOp and IsActingSemigroup], 
+InstallMethod(IteratorOfRClassData,
+"for an inverse acting semigroup with inverse op",
+[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup], 
 function(s)
   local o, func, iter, lookup;
 
@@ -984,8 +986,9 @@ end);
 
 #FIXME move this!
 
-InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(IteratorOfLClassReps,
+"for an inverse acting semigroup with inverse op",
+[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> Inverse(x[4]),
 [IsIteratorOfLClassReps]));
 
