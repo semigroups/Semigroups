@@ -8,6 +8,40 @@
 #############################################################################
 ##
 
+# This file contains methods for finding isomorphisms between semigroups and
+# some related methods. 
+#
+# Isomorphism.* methods for transformation, partial perm, bipartition and Rees
+# 0-matrix semigroups can be found in the files semitrans.gi, semipperm.gi,
+# semibipart.gi , and reesmat.gi.
+
+# not relevant for ideals
+
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for semigroup of binary relations with generators", 
+[IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup], 
+function(s)        
+  local n, pts, o, t, pos, i;
+  if not IsBinaryRelationOnPointsRep(Representative(s)) then 
+    TryNextMethod();
+  fi;
+  n:=DegreeOfBinaryRelation(GeneratorsOfSemigroup(s)[1]);
+  pts:=EmptyPlist(2^n);
+
+  for i in [1..n] do 
+    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
+    Enumerate(o);
+    pts:=Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  pos:=List([1..n], x-> Position(pts, [x]));
+  t:=Semigroup(List(GeneratorsOfSemigroup(s), 
+   x-> TransformationOpNC(x, pts, OnPoints)));
+  
+  return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),
+  x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
+end);
+
 # returns the lex-least multiplication table of the semigroup <S>
 
 if not IsGrapeLoaded then

@@ -27,7 +27,7 @@
 ##
 
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
-IsFreeInverseSemigroupElementCollection);
+                  IsFreeInverseSemigroupElementCollection);
 
 ###############################################################################
 ##
@@ -419,7 +419,6 @@ function(tree1, tree2)
   if not isequal then
     isequal := CanonicalForm(tree1) = CanonicalForm(tree2);
   fi;
-
   return isequal;
 end);
 
@@ -522,11 +521,11 @@ end);
 ##
 
 InstallMethod(Size,
-  "for a free inverse semigroup",
-  [IsFreeInverseSemigroupCategory],
-  function(S)
-    return infinity;
-  end);
+"for a free inverse semigroup",
+[IsFreeInverseSemigroupCategory],
+function(S)
+  return infinity;
+end);
 
 InstallMethod(IsFreeInverseSemigroup, "for a semigroup",
 [IsSemigroup],

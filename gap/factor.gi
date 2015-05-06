@@ -8,6 +8,39 @@
 #############################################################################
 ##
 
+# this file contains methods relating to factorising elements of a semigroup
+# over its generators.
+
+# same method for ideals
+# this is declared in the library, but there is no method for semigroups in the
+# library.
+
+# this works for infinite semigroups if x is really in there.
+
+InstallMethod(MinimalFactorization,
+"for a semigroup and an associative element",
+[IsSemigroup, IsAssociativeElement],
+function(S, x)
+  local data, pos;
+  if not x in S then 
+    Error("usage: the second argument <x> is not an element of the semigroup <S>", 
+    " in the second argument,");
+    return;
+  fi;
+  data := GenericSemigroupData(S);
+  pos := Position(data, x); 
+  return WORD_SEMIGROUP(data, pos);
+end);
+
+# same method for ideals
+
+InstallMethod(Factorization, 
+"for a finite semigroup and associative element",
+[IsSemigroup, IsAssociativeElement],
+function(S, x)
+  return MinimalFactorization(S, x); 
+end);
+
 # factorisation of Schutzenberger group element, the same method works for
 # ideals
 
@@ -183,7 +216,7 @@ end);
 
 InstallMethod(Factorization,
 "for an acting semigroup with inverse op with generators and element",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup,
+[IsSemigroupWithInverseOp and IsActingSemigroup and HasGeneratorsOfSemigroup,
  IsAssociativeElement],
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;

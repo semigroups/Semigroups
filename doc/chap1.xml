@@ -97,7 +97,7 @@
     <List>
       <Item> <Ref Oper="MunnSemigroup"/> </Item>
       <Item> 
-        <Ref Oper="MaximalSubsemigroups" Label="for an acting semigroup"/>
+        <Ref Oper="MaximalSubsemigroups" Label="for a non-exhaustive semigroup"/>
       </Item>
       <Item> <Ref Oper="IsIsomorphicSemigroup"/> </Item>
       <Item> <Ref Oper="IsomorphismSemigroups"/>. </Item>

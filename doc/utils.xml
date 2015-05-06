@@ -45,7 +45,7 @@
 
        The value of <C>SemigroupsOptionsRec</C> is defined in the file
        <C>semigroups/gap/options.g</C> as: 
-       <Log>rec( acting := true, hashlen := rec( L := 25013, M := 6257, S :=
+       <Log>rec( exhaustive := true, hashlen := rec( L := 25013, M := 6257, S :=
          251 ), regular := false, small := false )</Log>
      </Description> 
    </ManSection>

@@ -8,14 +8,77 @@
 #############################################################################
 ##
 
-InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
+# this file contains methods for every operation/attribute/property that is
+# specific to bipartition semigroups.
+
+# same method for ideals
+
+InstallMethod(GroupOfUnits, "for a bipartition semigroup",
+[IsBipartitionSemigroup and IsActingSemigroup],
 function(S)
-  return Range(IsomorphismBlockBijectionSemigroup(S));
+  local R, G, deg, U;
+
+  if MultiplicativeNeutralElement(S) = fail then
+    return fail;
+  fi;
+
+  R := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  G := SchutzenbergerGroup(R);
+  deg := DegreeOfBipartitionSemigroup(S);
+
+  U := Monoid(List(GeneratorsOfGroup(G), x -> AsBipartition(x, deg)));
+
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
+                                               x -> AsBipartition(x, deg)));
+
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, G);
+
+  return U;
 end);
 
-InstallMethod(AsBipartitionSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  return Range(IsomorphismBipartitionSemigroup(S));
+#
+
+InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
+S-> Range(IsomorphismBlockBijectionSemigroup(S)));
+
+#
+
+InstallMethod(ViewString, "for a group of bipartitions",
+[IsBipartitionSemigroup and IsGroupAsSemigroup],
+function(s)
+  local str, nrgens;
+  if IsGroup(s) then 
+    TryNextMethod();
+  fi;
+  str:="\><";
+  if HasIsTrivial(s) and IsTrivial(s) then
+    Append(str, "\>trivial\< ");
+  fi;
+
+  Append(str, "\>bipartition\< \>group\< ");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
+    Append(str, "\>of size\> ");
+    Append(str, String(Size(s)));
+    Append(str, ",\<\< ");
+  fi;
+
+  nrgens:=Length(Generators(s));
+  
+  Append(str, "\>on \>");
+  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
+  Append(str, "\< pts with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
 end);
 
 #
@@ -502,10 +565,9 @@ function(S)
    x -> AsBlockBijection(x, n), inv);
 end);
 
-# JDM could have a method for
-# IsomorphismBlockBijectionSemigroup for IsPartialPermBipartitions too..
-# or just for general inverse semigroups, via composing
-# IsomorphismPartialPermSemigroup and IsomorphismBlockBijection
+# JDM could have a method for IsomorphismBlockBijectionSemigroup for
+# IsPartialPermBipartitions too..  or just for general inverse semigroups, via
+# composing IsomorphismPartialPermSemigroup and IsomorphismBlockBijection
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],

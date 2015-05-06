@@ -17,8 +17,13 @@ DeclareUserPreference(rec(
 
 DeclareCategory("IsFreeInverseSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeInverseSemigroupElement");
-DeclareCategory("IsFreeInverseSemigroupCategory", IsSemigroup);
+
+DeclareCategory("IsFreeInverseSemigroupCategory", 
+                IsSemigroupWithInverseOp and
+                IsFreeInverseSemigroupElementCollection);
 DeclareProperty("IsFreeInverseSemigroup", IsSemigroup);
+
 DeclareGlobalFunction("FreeInverseSemigroup");
+
 DeclareAttribute("MinimalWord", IsFreeInverseSemigroupElement);
 DeclareAttribute("CanonicalForm", IsFreeInverseSemigroupElement);

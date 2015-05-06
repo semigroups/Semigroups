@@ -1,17 +1,26 @@
 #############################################################################
-###
-##W  setup.gd
-##Y  Copyright (C) 2013-15                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
+#W  setup.gd
+#Y  Copyright (C) 2013-15                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
-DeclareCategory("IsActingSemigroup", IsSemigroup);
-DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
+# This file contains declarations of everything required for a semigroup
+# belonging to IsActingSemigroup...
+
+DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
+# so that the rank of IsActingSemigroup is higher than that of
+# IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and
+# IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
+
 DeclareProperty("IsGeneratorsOfActingSemigroup",
-IsAssociativeElementCollection);
+                IsAssociativeElementCollection);
+DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
+                IsActingSemigroup);
+
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
@@ -43,14 +52,9 @@ DeclareAttribute("RhoOrbSeed", IsSemigroup);
 DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
-DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
-IsSemigroup);
-
 DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionRZMSE");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
-
-#EOF

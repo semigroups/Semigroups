@@ -1,12 +1,12 @@
+###########################################################################
+##
+#W  misc.tst
+#Y  Copyright (C) 2011-15                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
 #############################################################################
-###
-##W  misc.tst
-##Y  Copyright (C) 2011-15                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
 gap> START_TEST("Semigroups package: misc.tst"); 
 gap> LoadPackage("semigroups", false);;
 

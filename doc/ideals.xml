@@ -106,8 +106,9 @@ gap> I:=SemigroupIdeal(S, I, Idempotents(S));
       The <Ref Func="Parent" BookName="ref"/> of an ideal is the semigroup in
       which the ideal was created, i.e.
       the first argument of <Ref Func="SemigroupIdeal"/> or
-      <C>SemigroupByGenerators</C>. This function returns the semigroup 
-      containing <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> which are
+      <C>SemigroupIdealByGenerators</C>. This function returns the semigroup 
+      containing the generators of the semigroup 
+      (i.e. <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>) which are
       used to compute the ideal. <P/>
       
       For a regular semigroup ideal, <C>SupersemigroupOfIdeal</C> will always be
@@ -118,7 +119,7 @@ gap> I:=SemigroupIdeal(S, I, Idempotents(S));
       <C>S</C>.  This is to avoid computing a generating set for <C>I</C>,
       in this example, which is expensive and unnecessary since <C>I</C> is
       regular (in which case the Green's relations of <C>I</C> are just
-      restrictions of the Green's relations on <C>S</C>). 
+      restrictions of the Green's relations on <C>S</C>). <P/>
 
       If <C>S</C> is a semigroup, <C>I</C> is a non-regular ideal of <C>S</C>,
       <C>J</C> is an ideal of <C>I</C>, then <C>SupersemigroupOfIdeal(J)</C> is

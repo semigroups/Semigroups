@@ -5,95 +5,86 @@
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
+#############################################################################
 
 ## This file contains methods for Green's classes/relations for generic
 ## semigroups.
-
-# different types of class
-
-DeclareProperty("IsGreensClassNC", IsGreensClass);
-DeclareProperty("IsRegularClass", IsGreensClass);
 
 DeclareAttribute("DClassType", IsSemigroup);
 DeclareAttribute("HClassType", IsSemigroup);
 DeclareAttribute("LClassType", IsSemigroup);
 DeclareAttribute("RClassType", IsSemigroup);
 
-# Schutzenberger group
+DeclareProperty("IsGreensClassNC", IsGreensClass);
+DeclareProperty("IsRegularClass", IsGreensClass);
+DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
 
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
-# D-classes
+DeclareOperation("GreensDClassOfElementNC", 
+                 [IsSemigroup, IsAssociativeElement]);
+DeclareOperation("GreensJClassOfElementNC", 
+                 [IsSemigroup, IsAssociativeElement]); 
 
-DeclareOperation("GreensDClassOfElementNC",
- [IsSemigroup, IsAssociativeElement]);
 DeclareAttribute("RegularDClasses", IsSemigroup);
 DeclareAttribute("NrRegularDClasses", IsSemigroup);
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 
-# H-classes
-
-DeclareOperation("GreensHClassOfElement",
-  [IsGreensClass, IsAssociativeElement]);
-DeclareOperation("GreensHClassOfElementNC",
-  [IsCollection, IsAssociativeElement]);
-DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
-DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
-DeclareAttribute("StructureDescription", IsGreensHClass);
-DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
-
-# L-classes
-
 DeclareOperation("GreensLClassOfElement",
-  [IsGreensClass, IsAssociativeElement]);
+                 [IsGreensClass, IsAssociativeElement]);
 DeclareOperation("GreensLClassOfElementNC",
-  [IsCollection, IsAssociativeElement]);
-
-# R-classes
+                 [IsCollection, IsAssociativeElement]);
 
 DeclareOperation("GreensRClassOfElement",
-  [IsGreensClass, IsAssociativeElement]);
+                 [IsGreensClass, IsAssociativeElement]);
 DeclareOperation("GreensRClassOfElementNC",
-  [IsCollection, IsAssociativeElement]);
+                 [IsCollection, IsAssociativeElement]);
 DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
 
-# representatives
+DeclareOperation("GreensHClassOfElement",
+                 [IsGreensClass, IsAssociativeElement]);
+DeclareOperation("GreensHClassOfElementNC",
+                 [IsCollection, IsAssociativeElement]);
+
+DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
+DeclareAttribute("StructureDescription", IsGreensHClass);
+DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 
 DeclareAttribute("DClassReps", IsSemigroup);
 DeclareAttribute("HClassReps", IsCollection);
 DeclareAttribute("LClassReps", IsCollection);
 DeclareAttribute("RClassReps", IsCollection);
 
-# number of classes
-
 DeclareAttribute("NrDClasses", IsSemigroup);
 DeclareAttribute("NrHClasses", IsCollection);
 DeclareAttribute("NrLClasses", IsCollection);
 DeclareAttribute("NrRClasses", IsCollection);
 
-# idempotents
-
 DeclareAttribute("Idempotents", IsGreensClass);
 DeclareOperation("Idempotents", [IsSemigroup, IsInt]);
 DeclareAttribute("NrIdempotents", IsCollection);
 
-# abbreviations and synonyms
-
 DeclareSynonym("DClass", GreensDClassOfElement);
-DeclareSynonym("DClassNC", GreensDClassOfElementNC);
-DeclareOperation("DClass", [IsGreensClass]);
-DeclareOperation("DClassNC", [IsGreensClass]);
-
+DeclareSynonym("LClass", GreensLClassOfElement);
+DeclareSynonym("RClass", GreensRClassOfElement);
 DeclareSynonym("HClass", GreensHClassOfElement);
+
+DeclareSynonym("DClassNC", GreensDClassOfElementNC);
+DeclareSynonym("LClassNC", GreensLClassOfElementNC);
+DeclareSynonym("RClassNC", GreensRClassOfElementNC);
 DeclareSynonym("HClassNC", GreensHClassOfElementNC);
 
-DeclareSynonym("LClass", GreensLClassOfElement);
-DeclareSynonym("LClassNC", GreensLClassOfElementNC);
+DeclareOperation("DClass", [IsGreensClass]);
 DeclareOperation("LClass", [IsGreensHClass]);
-
-DeclareSynonym("RClass", GreensRClassOfElement);
-DeclareSynonym("RClassNC", GreensRClassOfElementNC);
 DeclareOperation("RClass", [IsGreensHClass]);
+
+InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
+InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
+InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
+InstallMethod(LClass, "for an H-class", [IsGreensHClass], LClassOfHClass);
+InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
+
+DeclareOperation("DClassNC", [IsGreensClass]);
 
 DeclareSynonymAttr("DClasses", GreensDClasses);
 DeclareSynonymAttr("HClasses", GreensHClasses);
@@ -101,4 +92,3 @@ DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 
-#EOF

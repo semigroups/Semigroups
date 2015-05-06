@@ -23,7 +23,6 @@ DeclareAttribute("NrTransverseBlocks", IsBlocks);
 DeclareAttribute("DegreeOfBlocks", IsBlocks);
 
 DeclareAttribute("ExtRepOfBlocks", IsBlocks);
-DeclareGlobalFunction("BlocksByExtRep");
 
 DeclareGlobalFunction("OnRightBlocks");
 DeclareGlobalFunction("OnLeftBlocks");
@@ -33,8 +32,8 @@ DeclareOperation("PermLeftBlocks", [IsList, IsBipartition]);
 
 DeclareGlobalFunction("InverseRightBlocks");
 DeclareGlobalFunction("InverseLeftBlocks");
-DeclareGlobalFunction("BlocksIdempotentTester");
-DeclareGlobalFunction("BlocksIdempotentCreator");
+DeclareGlobalFunction("SEMIGROUPS_BlocksIdempotentTester");
+DeclareGlobalFunction("SEMIGROUPS_BlocksIdempotentCreator");
 
 BindGlobal("BlocksFamily",
            NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,

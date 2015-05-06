@@ -50,6 +50,6 @@ DeclareAttribute("CanonicalRepresentative", IsEquivalenceClass);
 
 # Conversion with semigroup congruences by generating pairs
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-        [IsSemigroupCongruence]);
+                 [IsSemigroupCongruence]);
 DeclareOperation("AsRMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);
 DeclareOperation("AsRZMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);

@@ -23,13 +23,13 @@ function(s)
   record.storenumbers := true;
   record.log := true;
   record.parent := s;
-  record.treehashsize := s!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M;
 
   o := Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
 
   SetFilterObj(o, IsLambdaOrb);
-
-  if IsActingSemigroupWithInverseOp(s) then
+  
+  if IsSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
   fi;
 
@@ -108,9 +108,9 @@ function(o, m, i)
   one := FakeOne(gens);
   mults := o!.mults;
 
-  if not IsActingSemigroupWithInverseOp(o!.parent) then
-  # it would be better to use the SchreierTree here not the ReverseSchreierTree
-    genpos := ReverseSchreierTreeOfSCC(o, m);
+  if not IsSemigroupWithInverseOp(o!.parent) then
+  #FIXME it would be better to use the SchreierTree here not the ReverseSchreierTree
+    genpos:=ReverseSchreierTreeOfSCC(o, m);
     inv := function(lambda, x)
              return LambdaInverse(o!.parent)(lambda, x);
            end;
@@ -298,13 +298,13 @@ function(s)
   record.storenumbers := true;
   record.log := true;
   record.parent := s;
-  record.treehashsize := s!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M;
   record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
 
   o := Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
 
   SetFilterObj(o, IsRhoOrb);
-  if IsActingSemigroupWithInverseOp(s) then
+  if IsSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
   fi;
   return o;

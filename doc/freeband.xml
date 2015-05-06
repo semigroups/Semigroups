@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  freeband.xml
-#Y  Copyright (C) 2013-14                                   Julius Jonusas
+#Y  Copyright (C) 2013-15                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,9 +9,9 @@
 
 <#GAPDoc Label="GreensDClassOfElement" >
 <ManSection>
-    <Oper Name = "GreensDClassOfElement" Arg = "s, x"
-    Label="for a free band and a free band element"/>
-    <Returns> A Green's D-class</Returns>
+    <Oper Name = "GreensDClassOfElement" Arg = "S, x"
+    Label="for a free band and element"/>
+    <Returns> A Green's &D;-class</Returns>
     <Description>
       Let <A> S </A> be a free band. Two elements of <A> S </A> are &D;-related
       if and only if they have the same content i.e. the set of generators
@@ -34,13 +34,10 @@ true]]></Example>
 
 <#GAPDoc Label="FreeBand" >
 <ManSection>
-    <Func Name = "FreeBand" Arg = "rank[, name]"
-    Label="for a given rank"/>
-    <Func Name = "FreeBand" Arg = "name1, name2, ..."
-    Label="for a list of names"/>
-    <Func Name = "FreeBand" Arg = "names"
-    Label="for various names"/>
-    <Returns> A free band. </Returns>
+    <Func Name = "FreeBand" Arg = "rank[, name]" Label="for a given rank"/>
+    <Func Name = "FreeBand" Arg = "name1, name2, ..." Label="for a list of names"/>
+    <Func Name = "FreeBand" Arg = "names" Label="for various names"/>
+    <Returns> A free band.</Returns>
     <Description>
      Returns a free band on <A>rank</A> generators, for a positive integer
      <A>rank</A>. If <A>rank</A> is not specified, the number of <A>names</A>
@@ -54,14 +51,13 @@ gap> FreeBand("a", "b", "c");
 <free band on the generators [ a, b, c ]>
 gap> FreeBand("a", "b", "c");
 <free band on the generators [ a, b, c ]>
-gap> s := FreeBand(["a", "b", "c"]);
+gap> S := FreeBand(["a", "b", "c"]);
 <free band on the generators [ a, b, c ]>
-gap> Size(s);
+gap> Size(S);
 159
-gap> gens := Generators(s);
+gap> gens := Generators(S);
 [ a, b, c ]
-gap> a := gens[1];; b := gens[2];;
-gap> a * b;
+gap> S.1 * S.2;
 ab]]></Example>
     </Description>
   </ManSection>

@@ -1,15 +1,33 @@
 #############################################################################
 ##
 #W  ideals.gi
-#Y  Copyright (C) 2013-15                                 James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
+# This file contains methods for ideals of semigroups, which do not depend on
+# the representation as IsActingSemigroup.
+
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
+InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
+
+# this is here for generic semigroup ideals
+
+InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal", 
+[IsSemigroupIdeal],
+function(I)
+
+  if HasSupersemigroupOfIdeal(Parent(I)) then 
+    return SupersemigroupOfIdeal(Parent(I));
+  else
+    return Parent(I);
+  fi;
+
+end);
 
 #
 
@@ -22,10 +40,10 @@ end);
 
 #
 
-InstallMethod(PrintString,
-"for an acting semigroup ideal with ideal generators",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and IsActingSemigroup],
-function(I)
+InstallMethod(PrintString, 
+"for a semigroup ideal with ideal generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I) 
   local str;
 
   str := "\>\>SemigroupIdeal(\< \>";
@@ -53,7 +71,7 @@ end);
 # ViewString method for...
 
 InstallMethod(ViewString, "for a semigroup ideal with generators",
-[IsMagmaIdeal and IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+[IsMagmaIdeal and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(S)
   return Concatenation("<semigroup ideal with ",
    String(Length(GeneratorsOfMagmaIdeal(S))), " generators>");
@@ -79,9 +97,9 @@ end);
 
 #
 
-InstallMethod(\=, "for semigroup ideals",
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal,
- IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+InstallMethod(\=, "for semigroup ideals", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, 
+ IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I, J)
 
   if SupersemigroupOfIdeal(I) = SupersemigroupOfIdeal(J) then
@@ -96,8 +114,8 @@ end);
 
 #
 
-InstallMethod(\=, "for a semigroup ideal and semigroup with generators",
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal,
+InstallMethod(\=, "for a semigroup ideal and semigroup with generators", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, 
  IsSemigroup and HasGeneratorsOfSemigroup],
 function(I, S)
   if ForAll(GeneratorsOfSemigroup(S), x -> x in I) then
@@ -115,17 +133,17 @@ end);
 
 #
 
-InstallMethod(\=, "for a semigroup with generators and a semigroup ideal",
-[IsSemigroup and HasGeneratorsOfSemigroup,
-IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+InstallMethod(\=, "for a semigroup with generators and a semigroup ideal", 
+[IsSemigroup and HasGeneratorsOfSemigroup, 
+IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 
 function(S, I)
   return I = S;
 end);
 
 #
 
-InstallMethod(Representative, "for a semigroup ideal",
-[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+InstallMethod(Representative, "for a semigroup ideal", 
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   return Representative(GeneratorsOfMagmaIdeal(I));
 end);
@@ -197,18 +215,18 @@ end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators,
-"for an associative element collection",
-[IsActingSemigroup, IsAssociativeElementCollection],
+InstallMethod(SemigroupIdealByGenerators, 
+"for a semigroup, associative element collection",
+[IsSemigroup, IsAssociativeElementCollection], 
 function(S, gens)
-  return SemigroupIdealByGenerators(S, gens, S!.opts);
+  return SemigroupIdealByGenerators(S, gens, SEMIGROUPS_OptionsRec(S));
 end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators,
-"for an acting semigroup, associative element collection and record",
-[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
+InstallMethod(SemigroupIdealByGenerators, 
+"for semigroup, associative element collection, and record",
+[IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
   if not ForAll(gens, x -> x in S) then
@@ -216,20 +234,28 @@ function(S, gens, opts)
           "the second argument <gens> do not all belong to the semigroup,");
     return;
   fi;
+  return SemigroupIdealByGeneratorsNC(S, gens, opts);
+end);
 
-  opts := SemigroupOptions(opts);
+InstallMethod(SemigroupIdealByGeneratorsNC, 
+"for semigroup, associative element collection, and record",
+[IsSemigroup, IsAssociativeElementCollection, IsRecord],
+function(S, gens, opts)
+  local filts, I;
+
   gens := AsList(gens);
-
+  
   filts := IsMagmaIdeal and IsAttributeStoringRep;
-
-  if opts.acting then
-    filts := filts and IsActingSemigroup;
+  
+  if not opts.generic and (IsActingSemigroup(S) 
+    or IsGeneratorsOfActingSemigroup(gens)) then 
+    filts:=filts and IsActingSemigroup;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-
-  if opts.acting and IsActingSemigroupWithInverseOp(S) then
-    SetFilterObj(I, IsActingSemigroupWithInverseOp);
+  
+  if IsSemigroupWithInverseOp(S) then 
+    SetFilterObj(I, IsSemigroupWithInverseOp);
   fi;
 
   if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then
@@ -253,9 +279,12 @@ function(S, gens, opts)
   SetParent(I, S);
   SetGeneratorsOfMagmaIdeal(I, gens);
 
-  if not opts.acting then # to keep the craziness in the library happy!
+  if opts.generic then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
-  elif not (HasIsRegularSemigroup(I) and IsRegularSemigroup(I)) then
+  elif IsActingSemigroup(I) and not (HasIsRegularSemigroup(I) and
+      IsRegularSemigroup(I)) then
+    # this is done so that the ideal knows it is regular or non-regular from the
+    # point of creation...
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
   fi;
 
@@ -265,7 +294,7 @@ end);
 #
 
 InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
 
@@ -317,8 +346,8 @@ end);
 
 #
 
-InstallMethod(MinimalIdealGeneratingSet, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(MinimalIdealGeneratingSet, "for a semigroup ideal with generators",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local max, out;
 
@@ -334,10 +363,12 @@ function(I)
   return out;
 end);
 
-#JDM: is there a better method?
+# JDM: is there a better method? Certainly for regular acting ideals
+# there is
 
-InstallMethod(InversesOfSemigroupElementNC, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal, IsAssociativeElement],
+InstallMethod(InversesOfSemigroupElementNC, 
+"for a semigroup ideal and associative element",
+[IsSemigroupIdeal, IsAssociativeElement],
 function(I, x)
   return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
 end);
@@ -459,7 +490,7 @@ InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal], S -> NrRClasses(S) = 1 and NrLClasses(S) = 1);
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);
@@ -506,5 +537,3 @@ function(I)
   Enumerate(data);
   return List(data!.dorbit, Representative);
 end);
-
-#EOF

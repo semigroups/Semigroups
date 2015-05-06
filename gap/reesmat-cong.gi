@@ -1724,5 +1724,3 @@ function(cong)
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
 end);
-
-#

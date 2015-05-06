@@ -598,7 +598,7 @@ gap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], [c*a,c],
 <fp semigroup on the generators [ s1, s2, s3 ]>
 gap> Size(s);
 3
-gap> GreensLClassOfElement(s,a);
+gap> GreensLClassOfElement(s, s.1);
 {s1}
 gap> IsTransformationSemigroupGreensClass(last);
 false

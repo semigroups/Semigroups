@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareOperation("MinimalFactorization", [IsSemigroup, IsAssociativeElement]);
 DeclareOperation("Factorization", [IsLambdaOrb, IsPosInt, IsPerm]);
-DeclareOperation("Factorization", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("Factorization", [IsSemigroup, IsAssociativeElement]);
 DeclareOperation("TraceSchreierTreeForward", [IsSemigroupData, IsPosInt]);

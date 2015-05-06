@@ -19,6 +19,8 @@ DeclareAttribute("ComponentsOfPartialPermSemigroup",
 IsPartialPermSemigroup);
 
 DeclareOperation("AsPartialPermSemigroup", [IsSemigroup]);
+DeclareAttribute("SmallerDegreePartialPermRepresentation",
+                 IsInverseSemigroup and IsPartialPermSemigroup);
 
 DeclareOperation("NumberPartialPerm", [IsPartialPerm, IsPosInt]);
 DeclareOperation("PartialPermNumber", [IsPosInt, IsPosInt]);

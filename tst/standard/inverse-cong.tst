@@ -21,8 +21,6 @@ gap> s := InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 5 ], [ 2, 7, 3, 4 ] ),
 >  PartialPerm( [ 1, 2, 4, 6 ], [ 3, 1, 7, 2 ] ), 
 >  PartialPerm( [ 1, 2, 5, 6 ], [ 5, 1, 6, 3 ] ),
 >  PartialPerm( [ 1, 2, 3, 6 ], [ 7, 3, 4, 2 ] ) ] );;
-
-#T# InverseCongTest2: Construct one congruence by generating pairs
 gap> cong := SemigroupCongruence(s,
 >  [ PartialPerm( [ 4 ], [ 7 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] );
 <semigroup congruence over <inverse partial perm semigroup of size 4165, 

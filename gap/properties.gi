@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+# This file contains methods for determining properties of arbitrary
+# semigroups. There are not very many specialised methods for acting semigroups
+# and so we only have a single file.
+
 # Ecom (commuting idempotents), LI (locally trivial),
 # LG (locally group), B1 (dot-depth one), DA (regular D-classes are idempotent)
 # R v L (???), IsNilpotentSemigroup, inverses, local submonoid, right ideal,
@@ -23,65 +27,6 @@
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
 # IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
 # IsRightUnipotent, IsSemigroupWithClosedIdempotents, .
-
-# a better method for MinimalIdeal of a simple semigroup.
-
-InstallMethod(OneMutable, "for ring element coll coll coll",
-[IsRingElementCollCollColl], x -> One(Representative(x)));
-
-InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup],
-S -> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(S))));
-
-#
-
-#InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
-#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-#function(s)
-#  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
-#
-#  Info(InfoWarning, 1, "this will sometimes return a false positive.");
-#
-#  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
-#    Info(InfoSemigroups, 2, "semigroup is regular");
-#    return true;
-#  fi;
-#
-#  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
-#  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
-#  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
-#  reg:=[]; i:=0;
-#
-#  repeat
-#    repeat #JDM this should become an method for IteratorOfRStarClasses
-#           # and IsAbundantRClass...
-#      data:=NextIterator(iter);
-#    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter);
-#    if not IsDoneIterator(iter) then
-#      HTAdd(ht_o, data{[1,2,4,5]}, true);
-#
-#      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
-#      val:=HTValue(ht, ker);
-#
-#      if val=fail then #new kernel
-#        i:=i+1; HTAdd(ht, ker, i);
-#        val:=i; reg[val]:=false;
-#      fi;
-#
-#      if reg[val]=false then #old kernel
-#        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
-#        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
-#      fi;
-#    fi;
-#  until IsDoneIterator(iter);
-#
-#  return ForAll(reg, x-> x);
-#end);
-
-#InstallMethod(IsAdequateSemigroup,
-#"for acting semigroup with generators",
-#[IsActingSemigroup and HasGeneratorsOfSemigroup],
-#s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
 # same method for ideals
 
@@ -102,38 +47,41 @@ IsSemilatticeAsSemigroup);
 
 # same method for ideals
 
-InstallMethod(IsBlockGroup, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsBlockGroup, "for a semigroup",
+[IsSemigroup],
 function(S)
-  local iter, d;
+  local iter, D;
 
   if HasParent(S) and HasIsBlockGroup(Parent(S))
-    and IsBlockGroup(Parent(S)) then
+      and IsBlockGroup(Parent(S)) then
     return true;
   elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "inverse semigroup");
     return true;
   elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) and
-   (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
+      (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
     Info(InfoSemigroups, 2, "regular but non-inverse semigroup");
     return false;
   fi;
 
   iter := IteratorOfDClasses(S);
 
-  for d in iter do
-    if IsRegularDClass(d) and
-       (ForAny(RClasses(d), x -> NrIdempotents(x) > 1)
-        or NrRClasses(d) <> NrLClasses(d)) then
+  for D in iter do
+    if IsRegularDClass(D)
+        and (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
+             or NrRClasses(D) <> NrLClasses(D)) then
       return false;
     fi;
   od;
   return true;
 end);
 
+#
+
 # same method for ideals
 
-InstallMethod(IsBrandtSemigroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsBrandtSemigroup, "for a semigroup",
+[IsSemigroup],
 S -> IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S));
 
 # same method for inverse ideals
@@ -141,16 +89,72 @@ S -> IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S));
 InstallMethod(IsBrandtSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsZeroSimpleSemigroup);
 
+#same method for ideals
+
+InstallMethod(IsCongruenceFreeSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local t, p, rowsDiff;
+
+  rowsDiff := function(p)
+    local i, j;
+    for i in [1 .. Size(p) - 1] do
+      for j in [i + 1 .. Size(p)] do
+        if p[i] = p[j] then
+          return false;
+        fi;
+      od;
+    od;
+    return true;
+  end;
+
+  if Size(S) <= 2 then
+    return true;
+  fi;
+
+  if MultiplicativeZero(S) <> fail then
+    # CASE 1: s has zero
+    if IsZeroSimpleSemigroup(S) then
+      # Find an isomorphic RMS
+      t := Range(IsomorphismReesMatrixSemigroup(S));
+      if IsTrivial(UnderlyingSemigroup(t)) then
+        # Check that no two rows or columns are identical
+        p := Matrix(t);
+        if rowsDiff(p) and rowsDiff(TransposedMat(p)) then
+          return true;
+        fi;
+      fi;
+    fi;
+    return false;
+  else
+    # CASE 2: s has no zero
+    return IsGroup(S) and IsSimpleGroup(S);
+  fi;
+end);
+
+# same method for regular ideals, or non-regular without a generating set
+
+InstallMethod(IsCliffordSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S))
+      and IsCliffordSemigroup(Parent(S)) then
+    return true;
+  else
+    return IsRegularSemigroup(S) and NrHClasses(S) = NrDClasses(S);
+  fi;
+end);
+
 # same method for non-regular ideals
 
 InstallMethod(IsCliffordSemigroup,
-"for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, idem, f, g;
 
-  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) and
-   IsCliffordSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S))
+      and IsCliffordSemigroup(Parent(S)) then
     return true;
   elif HasIsInverseSemigroup(S) and not IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not inverse");
@@ -169,15 +173,14 @@ function(S)
   fi;
 
   gens := GeneratorsOfSemigroup(S);
-  idem := Set(List(gens, x ->
-   IdempotentCreator(S)(LambdaFunc(S)(x), RhoFunc(S)(x))));
+  idem := List(gens, x -> One(GreensHClassOfElementNC(S, x)));
 
   for f in gens do
     for g in idem do
       if not f * g = g * f then
         Info(InfoSemigroups, 2, "the idempotents are not central:");
         Info(InfoSemigroups, 2, "  ", f, "\n#I  and\n#I    ", g,
-         "\n#I  do not commute,");
+             "\n#I  do not commute,");
         return false;
       fi;
     od;
@@ -192,19 +195,6 @@ InstallMethod(IsCliffordSemigroup, "for an inverse acting semigroup",
 [IsInverseSemigroup and IsActingSemigroup],
 S -> ForAll(OrbSCC(LambdaOrb(S)), x -> Length(x) = 1));
 
-# same method for regular ideals, or non-regular without a generating set
-
-InstallMethod(IsCliffordSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) and
-   IsCliffordSemigroup(Parent(S)) then
-    return true;
-  else
-    return IsRegularSemigroup(S) and NrHClasses(S) = NrDClasses(S);
-  fi;
-end);
-
 # different method for ideals
 
 InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
@@ -212,8 +202,8 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 function(S)
   local gens, n, i, j;
 
-  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S)) and
-   IsCommutativeSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S))
+      and IsCommutativeSemigroup(Parent(S)) then
     return true;
   fi;
 
@@ -224,7 +214,7 @@ function(S)
     for j in [i + 1 .. n] do
       if not gens[i] * gens[j] = gens[j] * gens[i] then
         Info(InfoSemigroups, 2, "generators ", i, " and ", j,
-         " do not commute");
+             " do not commute");
         return false;
       fi;
     od;
@@ -241,8 +231,8 @@ InstallMethod(IsCompletelyRegularSemigroup,
 function(S)
   local record, o, pos, f;
 
-  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
-   IsCompletelyRegularSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S))
+      and IsCompletelyRegularSemigroup(Parent(S)) then
     return true;
   elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "semigroup is not regular");
@@ -250,14 +240,14 @@ function(S)
   fi;
 
   record := ShallowCopy(LambdaOrbOpts(S));
-  record.treehashsize := S!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M;
 
   for f in GeneratorsOfSemigroup(S) do
     o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
-    pos := LookForInOrb(o,
-           function(o, x)
-             return LambdaRank(S)(LambdaAct(S)(x, f)) <> LambdaRank(S)(x);
-           end, 1);
+    pos := LookForInOrb(o, function(o, x)
+                             return LambdaRank(S)(LambdaAct(S)(x, f))
+                                    <> LambdaRank(S)(x);
+                           end, 1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
 
@@ -275,8 +265,8 @@ end);
 InstallMethod(IsCompletelyRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
-   IsCompletelyRegularSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S))
+      and IsCompletelyRegularSemigroup(Parent(S)) then
     return true;
   elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "semigroup is not regular");
@@ -298,10 +288,20 @@ InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 [IsSemigroup], S -> IsSimpleSemigroup(S) and IsFinite(S));
 
+# same method for ideals
+
+InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse op semigroup",
+[IsSemigroupWithInverseOp],
+S -> IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S)));
+
+InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse semigroup",
+[IsInverseSemigroup],
+S -> IsEUnitaryInverseSemigroup(AsPartialPermSemigroup(S)));
+
 #different method for ideals
 
-InstallMethod(IsFactorisableSemigroup, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+InstallMethod(IsFactorisableSemigroup, "for an inverse op semigroup",
+[IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 function(S)
   local G, iso, enum, f;
 
@@ -328,12 +328,11 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsFactorisableSemigroup,
-"for an inverse semigroup with generators",
-[IsInverseSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsFactorisableSemigroup, "for a semigroup",
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) then
-    return IsFactorisableSemigroup(Range(IsomorphismPartialPermSemigroup(S)));
+  if IsInverseSemigroup(S) then
+    return IsFactorisableSemigroup(AsPartialPermSemigroup(S));
   fi;
   return false;
 end);
@@ -375,20 +374,18 @@ end);
 
 InstallMethod(IsHTrivial, "for a semigroup", [IsSemigroup],
 function(S)
-
   if HasParent(S) and HasIsHTrivial(Parent(S)) and IsHTrivial(Parent(S)) then
     return true;
   fi;
   return NrHClasses(S) = Size(S);
 end);
 
-#same method for ideals
+# same method for ideals
 
-InstallMethod(IsHTrivial, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-d -> NrHClasses(d) = Size(d));
+InstallMethod(IsHTrivial, "for a Green's D-class",
+[IsGreensDClass], D -> NrHClasses(D) = Size(D));
 
-#same method for non-inverse ideals
+# same method for non-inverse ideals
 
 InstallMethod(IsLTrivial, "for an acting semigroup",
 [IsActingSemigroup],
@@ -416,7 +413,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsLTrivial, "for an inverse acting semigroup",
-[IsActingSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 function(S)
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
@@ -426,15 +423,23 @@ end);
 
 #same method for ideals
 
-InstallMethod(IsLTrivial, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-d -> NrLClasses(d) = Size(d));
+InstallMethod(IsLTrivial, "for a Green's D-class",
+[IsGreensDClass], D -> NrLClasses(D) = Size(D));
+
+InstallMethod(IsLTrivial, "for a semigroup",
+[IsSemigroup],
+function(S)
+  if HasParent(S) and HasIsRTrivial(Parent(S)) and IsRTrivial(Parent(S)) then
+    return true;
+  fi;
+
+  return NrLClasses(S) = Size(S);
+end);
 
 #same method for ideals
 
-InstallMethod(IsRTrivial, "for D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-d -> NrRClasses(d) = Size(d));
+InstallMethod(IsRTrivial, "for a Green's D-class",
+[IsGreensDClass], D -> NrRClasses(D) = Size(D));
 
 #same method for ideals
 
@@ -447,7 +452,7 @@ InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   if ForAny(GeneratorsOfSemigroup(S), x ->
-   ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
+            ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfTransformationSemigroup(S), x -> Length(x) = 1);
@@ -460,7 +465,7 @@ InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   if ForAny(GeneratorsOfSemigroup(S), x ->
-   ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
+            ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfPartialPermSemigroup(S), x -> Length(x) = 1);
@@ -508,6 +513,16 @@ function(S)
   return Size(S) = NrRClasses(S);
 end);
 
+InstallMethod(IsGroupAsSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
+    and IsGroupAsSemigroup(Parent(S)) then
+    return true;
+  fi;
+  return NrRClasses(S) = 1 and NrLClasses(S) = 1;
+end);
+
 # same method for non-regular ideals
 
 InstallMethod(IsGroupAsSemigroup, "for an acting semigroup",
@@ -544,27 +559,12 @@ function(S)
   return true;
 end);
 
-# different method for inverse, regular ideals (so that it has higher rank)
-
-InstallMethod(IsGroupAsSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
-    and IsGroupAsSemigroup(Parent(S)) then
-    return true;
-  fi;
-  return NrRClasses(S) = 1 and NrLClasses(S) = 1;
-end);
-
-#JDM should gens in the following function be GeneratorsOfSemigroup?
-# IteratorOfIdempotents would be good here.
-
 # same method for ideals
 
-InstallMethod(IsIdempotentGenerated, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsIdempotentGenerated, "for a semigroup",
+[IsSemigroup],
 function(S)
-  local gens, t, min, new;
+  local gens, T, min, new;
 
   gens := Generators(S);
 
@@ -573,19 +573,19 @@ function(S)
     return true;
   fi;
 
-  if HasIdempotentGeneratedSubsemigroup(S) then
-    t := IdempotentGeneratedSubsemigroup(S);
+  if HasIdempotentGeneratedSubsemigroup(S) or not IsActingSemigroup(S) then
+    T := IdempotentGeneratedSubsemigroup(S);
   else
     min := MinimumList(List(gens, x -> ActionRank(S)(x)));
     new := Filtered(Idempotents(S), x -> ActionRank(S)(x) >= min);
     if new = [] then
       return false;
     fi;
-    t := Semigroup(new);
+    T := Semigroup(new);
   fi;
 
-  # this is not always the idempotent generated subsemigroup!
-  return ForAll(gens, f -> f in t);
+  # T is not always the idempotent generated subsemigroup!
+  return ForAll(gens, x -> x in T);
 end);
 
 # same method for inverse ideals
@@ -595,8 +595,8 @@ InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 
 # same method for ideals
 
-InstallMethod(IsInverseSemigroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsInverseSemigroup, "for a semigroup",
+[IsSemigroup],
 function(S)
   local lambda, rho, iter, x;
 
@@ -612,18 +612,18 @@ function(S)
   elif IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is completely regular");
     return IsCliffordSemigroup(S);
-  fi;
-
-  lambda := LambdaOrb(S);
-  Enumerate(lambda);
-  rho := RhoOrb(S);
-  Enumerate(rho, Length(lambda));
-  # TODO shouldn't the below be Length(rho) = Length(lambda)?
-  # and we should check that rho is closed.
-  if not (IsClosed(rho) and Length(rho) >= Length(lambda)) then
-    Info(InfoSemigroups, 2,
-    "the numbers of lambda and rho values are not equal");
-    return false;
+  elif IsActingSemigroup(S) then
+    lambda := LambdaOrb(S);
+    Enumerate(lambda);
+    rho := RhoOrb(S);
+    Enumerate(rho, Length(lambda));
+    # TODO shouldn't the below be Length(rho) = Length(lambda)?
+    # and we should check that rho is closed.
+    if not (IsClosed(rho) and Length(rho) = Length(lambda)) then
+      Info(InfoSemigroups, 2,
+           "the numbers of lambda and rho values are not equal");
+      return false;
+    fi;
   fi;
 
   if HasGreensDClasses(S) then
@@ -647,7 +647,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsLeftSimple, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsLeftSimple, "for a semigroup", [IsSemigroup],
 function(S)
   local iter;
 
@@ -659,10 +659,12 @@ function(S)
   elif HasNrLClasses(S) then
     return NrLClasses(S) = 1;
   fi;
-
-  iter := IteratorOfLClassReps(S);
-  NextIterator(iter);
-  return IsDoneIterator(iter);
+  if IsActingSemigroup(S) then
+    iter := IteratorOfLClassReps(S);
+    NextIterator(iter);
+    return IsDoneIterator(iter);
+  fi;
+  return NrLClasses(S) = 1;
 end);
 
 # same method for ideals
@@ -702,7 +704,7 @@ function(S)
     and IsLeftZeroSemigroup(Parent(S)) then
     return true;
   fi;
-  return NrLClasses(S) = 1 and Size(S) = NrRClasses(S);
+  return IsLeftSimple(S) and IsRTrivial(S);
 end);
 
 # same method for ideals
@@ -713,10 +715,10 @@ InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 # not applicable for ideals
 
 InstallImmediateMethod(IsMonogenicSemigroup,
-IsSemigroup and HasGeneratorsOfSemigroup,
+IsSemigroup and IsFinite and HasGeneratorsOfSemigroup,
 0,
 function(S)
-  if Length(GeneratorsOfSemigroup(S)) = 1 then
+  if Length(DuplicateFreeList(GeneratorsOfSemigroup(S))) = 1 then
     return true;
   fi;
   TryNextMethod();
@@ -724,25 +726,10 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsMonogenicSemigroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsMonogenicSemigroup, "for a semigroup",
+[IsSemigroup],
 function(S)
-  local gens, I, f, i;
-  #TODO this if-condition is redundant due to the previous immediate method
-  if HasGeneratorsOfSemigroup(S) then
-
-    gens := GeneratorsOfSemigroup(S);
-
-    if not IsDuplicateFreeList(gens) then
-      gens := ShallowCopy(DuplicateFreeList(gens));
-      Info(InfoSemigroups, 2, "there are repeated generators");
-    fi;
-
-    if Length(gens) = 1 then
-      Info(InfoSemigroups, 2, "the semigroup only has one generator");
-      return true;
-    fi;
-  fi;
+  local I, gens, y, i;
 
   I := MinimalIdeal(S);
 
@@ -757,37 +744,37 @@ function(S)
   gens := GeneratorsOfSemigroup(S);
 
   for i in [1 .. Length(gens)] do
-    f := gens[i];
-    if ForAll(gens, x -> x in Semigroup(f)) then
+    y := gens[i];
+    if ForAll(gens, x -> x in Semigroup(y)) then
       Info(InfoSemigroups, 2, "the semigroup is generated by generator ", i);
-      SetMinimalGeneratingSet(S, [f]);
+      SetMinimalGeneratingSet(S, [y]);
       return true;
     fi;
   od;
   Info(InfoSemigroups, 2, "at least one generator does not belong to the",
-   " semigroup generated by any ");
+       " semigroup generated by any ");
   Info(InfoSemigroups, 2, "other generator.");
   return false;
 end);
 
 # same method for ideals
 
-InstallMethod(IsMonogenicInverseSemigroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsMonogenicInverseSemigroup, "for a semigroup",
+[IsSemigroup],
 function(S)
   if not IsInverseSemigroup(S) then
     return false;
   fi;
-  return IsMonogenicInverseSemigroup(
-          Range(IsomorphismPartialPermSemigroup(S)));
+  return IsMonogenicInverseSemigroup(AsPartialPermSemigroup(S));
 end);
 
 # same method for ideals
 
 InstallMethod(IsMonogenicInverseSemigroup,
-"for an acting semigroup with inverse op", [IsActingSemigroupWithInverseOp],
+"for a semigroup with inverse op",
+[IsSemigroupWithInverseOp],
 function(S)
-  local gens, I, f, i;
+  local gens, I, y, i;
 
   if HasGeneratorsOfInverseSemigroup(S) then
     gens := GeneratorsOfInverseSemigroup(S);
@@ -816,16 +803,16 @@ function(S)
   gens := GeneratorsOfInverseSemigroup(S);
 
   for i in [1 .. Length(gens)] do
-    f := gens[i];
-    if ForAll(gens, x -> x in InverseSemigroup(f)) then
+    y := gens[i];
+    if ForAll(gens, x -> x in InverseSemigroup(y)) then
       Info(InfoSemigroups, 2, "the semigroup is generated by generator ", i);
-      SetMinimalGeneratingSet(S, [f]);
+      SetMinimalGeneratingSet(S, [y]);
       return true;
     fi;
   od;
 
   Info(InfoSemigroups, 2, "at least one generator does not belong to the",
-   " inverse semigroup generated by any ");
+       " inverse semigroup generated by any ");
   Info(InfoSemigroups, 2, "other generator.");
   return false;
 end);
@@ -839,8 +826,8 @@ x -> not IsMonoid(x) and MultiplicativeNeutralElement(x) <> fail);
 # is there a better method? JDM
 # same method for ideals
 
-InstallMethod(IsOrthodoxSemigroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsOrthodoxSemigroup, "for a semigroup",
+[IsSemigroup],
 function(S)
   local e, m, i, j;
 
@@ -854,10 +841,9 @@ function(S)
 
   for i in [1 .. m] do
     for j in [1 .. m] do
-
       if not IsIdempotent(e[i] * e[j]) then
         Info(InfoSemigroups, 2, "the product of idempotents ", i, " and ", j,
-        " is not an idempotent");
+             " is not an idempotent");
         return false;
       fi;
     od;
@@ -868,8 +854,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsRectangularBand, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsRectangularBand, "for a semigroup",
+[IsSemigroup],
 function(S)
 
   if HasParent(S) and HasIsRectangularBand(Parent(S))
@@ -1133,7 +1119,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsRightSimple, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(IsRightSimple, "for a semigroup", [IsSemigroup],
 function(S)
   local iter;
 
@@ -1142,13 +1128,12 @@ function(S)
   elif IsRightZeroSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a left zero semigroup");
     return true;
-  elif HasNrRClasses(S) then
-    return NrRClasses(S) = 1;
+  elif IsActingSemigroup(S) and not HasNrRClasses(S) then
+    iter := IteratorOfRClassData(S);
+    NextIterator(iter);
+    return IsDoneIterator(iter);
   fi;
-
-  iter := IteratorOfRClassData(S);
-  NextIterator(iter);
-  return IsDoneIterator(iter);
+  return NrRClasses(S) = 1;
 end);
 
 # same method for ideals
@@ -1195,7 +1180,7 @@ end);
 InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-# same method for ideals, JDM why is this not a synonym?
+# same method for ideals, FIXME make this a synonym?
 
 InstallMethod(IsSemiband, "for a semigroup", [IsSemigroup],
 IsIdempotentGenerated);
@@ -1237,6 +1222,9 @@ function(S)
   fi;
 end);
 
+InstallMethod(IsSimpleSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite], S -> NrDClasses(S) = 1);
+
 # same method for ideals
 
 InstallMethod(IsSimpleSemigroup, "for an acting semigroup",
@@ -1260,11 +1248,11 @@ function(S)
     rank := lambdarank(lambdafunc(gens[1]));
 
     if not ForAll([2 .. Length(gens)],
-      i -> lambdarank(lambdafunc(gens[i])) = rank) then
+                  i -> lambdarank(lambdafunc(gens[i])) = rank) then
       return false;
     fi;
 
-    opts := rec(treehashsize := S!.opts.hashlen.M);
+    opts := rec(treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M);
 
     for name in RecNames(LambdaOrbOpts(S)) do
       opts.(name) := LambdaOrbOpts(S).(name);
@@ -1309,6 +1297,7 @@ function(S)
 end);
 
 # same method for ideals
+# TODO generic method for this
 
 InstallMethod(IsUnitRegularSemigroup, "for an acting semigroup",
 [IsActingSemigroup],
@@ -1340,11 +1329,11 @@ function(S)
   for m in [2 .. Length(scc)] do
     dom := Union(Orbits(perm_g, o[scc[m][1]], OnPoints));
     if not IsSubgroup(Action(perm_g, dom), Action(LambdaOrbSchutzGp(o, m),
-     o[scc[m][1]])) then
+                      o[scc[m][1]])) then
       return false;
     elif Length(scc[m]) > 1 then
-      rho := rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o,
-             scc[m][1])));
+      rho := rhofunc(EvaluateWord(gens,
+                                  TraceSchreierTreeForward(o, scc[m][1])));
       for j in scc[m] do
         if not o[j] in graded then
           if not ForAny(GradedLambdaOrb(g, o[j], true), x -> tester(x, rho))
@@ -1360,8 +1349,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsZeroGroup, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsZeroGroup, "for a semigroup",
+[IsSemigroup],
 function(S)
 
   if HasParent(S) and HasIsZeroGroup(Parent(S)) and IsZeroGroup(Parent(S)) then
@@ -1383,8 +1372,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsZeroRectangularBand, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(IsZeroRectangularBand, "for a semigroup",
+[IsSemigroup],
 function(S)
 
   if HasParent(S) and HasIsZeroRectangularBand(Parent(S))
@@ -1423,7 +1412,7 @@ function(S)
     for j in [1 .. m] do
       if not gens[i] * gens[j] = z then
         Info(InfoSemigroups, 2, "the product of generators ", i, " and ", j,
-        " is not the multiplicative zero \n", z);
+             " is not the multiplicative zero \n", z);
         return false;
       fi;
     od;
@@ -1463,66 +1452,4 @@ end);
 
 InstallMethod(IsZeroSimpleSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup],
-function(S)
-  return MultiplicativeZero(S) <> fail and NrDClasses(S) = 2;
-end);
-
-#same method for ideals
-
-InstallMethod(IsCongruenceFreeSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local t, p, rowsDiff;
-
-  rowsDiff := function(p)
-    local i, j;
-    for i in [1 .. Size(p) - 1] do
-      for j in [i + 1 .. Size(p)] do
-        if p[i] = p[j] then
-          return false;
-        fi;
-      od;
-    od;
-    return true;
-  end;
-
-  if Size(S) <= 2 then
-    return true;
-  fi;
-
-  if MultiplicativeZero(S) <> fail then
-    # CASE 1: s has zero
-    if IsZeroSimpleSemigroup(S) then
-      # Find an isomorphic RMS
-      t := Range(IsomorphismReesMatrixSemigroup(S));
-      if IsTrivial(UnderlyingSemigroup(t)) then
-        # Check that no two rows or columns are identical
-        p := Matrix(t);
-        if rowsDiff(p) and rowsDiff(TransposedMat(p)) then
-          return true;
-        fi;
-      fi;
-    fi;
-    return false;
-  else
-    # CASE 2: s has no zero
-    return IsGroup(S) and IsSimpleGroup(S);
-  fi;
-end);
-
-# same method for ideals
-
-InstallMethod(IsEUnitaryInverseSemigroup,
-"for an inverse semigroup which has NaturalLeqInverseSemigroup function",
-[IsInverseSemigroup],
-function(S)
-  if not IsPartialPermSemigroup(S) and not IsBlockBijectionSemigroup(S)
-    and not IsPartialPermBipartitionSemigroup(S) then
-    TryNextMethod(); # FIXME is there one? if not, then just return an error
-                     # here or better still take an isomorphism to a partial
-                     # perm semigroup and answer the question there.
-  fi;
-  return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
-end);
-
-#EOF
+S -> MultiplicativeZero(S) <> fail and NrDClasses(S) = 2);

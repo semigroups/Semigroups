@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+# This file contains methods for every operation/attribute/property that is
+# specific to transformation semigroups.
+
+
+# different method required (but not yet given!!) for ideals
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
 
@@ -254,7 +259,7 @@ function(coll, set)
           "integers");
     return;
   fi;
-
+  
   n := Length(set);
   nrgens := Length(coll);
   graph := EmptyPlist(n);
@@ -277,17 +282,30 @@ function(coll, set)
   return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
 end);
 
+# not relevant for ideals
+
+InstallMethod(Size, "for a monogenic transformation semigroup",
+[IsTransformationSemigroup and IsMonogenicSemigroup],
+function(S)
+  local ind;
+  # FIXME this must be wrong what if <S> is monogenic but is defined by more
+  # than one generator? 
+  ind := IndexPeriodOfTransformation(GeneratorsOfSemigroup(S)[1]);
+  if ind[1] > 0 then
+    return Sum(ind) - 1;
+  fi;
+  return Sum(ind);
+end);
+
 # stop_on_isolated_pair:
 #   if true, this function returns false if there is an isolated pair-vertex
 BindGlobal("SEMIGROUPS_GraphOfRightActionOnPairs",
 function(gens, n, stop_on_isolated_pair)
   local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair,
   isolated_pair, act, range, i, j;
-
   nrgens     := Length(gens);
   nrpairs    := Binomial(n, 2);
   PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
-
   # Currently assume <x> is sorted and is a valid combination of [1 .. n]
   NumberPair := function(n, x)
     if Length(x) = 1 then
@@ -410,7 +428,8 @@ end);
 #
 
 InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup], RankFilter(IsActingSemigroup), 
+# to beat the default method for acting semigroups
 function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
@@ -498,11 +517,147 @@ end);
 
 #
 
+InstallMethod(IsomorphismTransformationMonoid,
+"for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local id, dom, gens, inv;
+
+  if IsMonoid(s) then
+    return MappingByFunction(s, s, IdFunc, IdFunc);
+  fi;
+
+  if MultiplicativeNeutralElement(s) = fail then
+    Error("Semigroups: IsomorphismTransformationMonoid: usage,\n",
+          "the argument <s> must have a multiplicative neutral element,");
+    return;
+  fi;
+
+  id := MultiplicativeNeutralElement(s);
+  dom := ImageSetOfTransformation(id);
+
+  gens := List(Generators(s), x -> TransformationOp(x, dom));
+
+  inv := function(f)
+    local out, i;
+
+    out := [1 .. DegreeOfTransformationSemigroup(s)];
+    for i in [1 .. Length(dom)] do
+      out[dom[i]] := dom[i ^ f];
+    od;
+    return id * Transformation(out);
+  end;
+
+  return MappingByFunction(s,
+                           Monoid(gens),
+                           f -> TransformationOp(f, dom),
+                           inv);
+end);
+
+#
+
 InstallMethod(AsTransformationSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   return Range(IsomorphismTransformationSemigroup(S));
 end);
+
+# same method for ideals
+
+InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+
+  if not IsGroupAsSemigroup(s) then
+    Error("Semigroups: IsomorphismPermGroup: usage,\n",
+          "the argument <s> must be a transformation semigroup ",
+          "satisfying IsGroupAsSemigroup,");
+    return;
+  fi;
+  # gaplint: ignore 4
+  return MagmaIsomorphismByFunctionsNC(s,
+           Group(List(GeneratorsOfSemigroup(s), PermutationOfImage)),
+           PermutationOfImage,
+           x -> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
+end);
+
+# same method for ideals
+
+InstallMethod(GroupOfUnits, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  local H, G, deg, U;
+
+  if MultiplicativeNeutralElement(S) = fail then
+    return fail;
+  fi;
+
+  H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  G := Range(IsomorphismPermGroup(H));
+  deg := DegreeOfTransformationSemigroup(S);
+
+  U := Monoid(List(GeneratorsOfGroup(G), x -> AsTransformation(x, deg)));
+
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
+                                               x -> AsTransformation(x, deg)));
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, G);
+
+  return U;
+end);
+
+#
+
+InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
+
+#
+
+ViewStringForGroupOfTransformations@:=function(s)
+local str, nrgens;
+  str:="\><";
+  if HasIsTrivial(s) and IsTrivial(s) then
+    Append(str, "\>trivial\< ");
+  fi;
+
+  Append(str, "\>transformation\< \>group\<");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) 
+   and Size(s)<2^64 then
+    Append(str, " \>of size \>");
+    Append(str, String(Size(s)));
+    Append(str, ",\<\<");
+  fi;
+
+  nrgens:=Length(Generators(s));
+  if DegreeOfTransformationSemigroup(s)>0 then  
+    Append(str, " \>on \>");
+    Append(str, ViewString(DegreeOfTransformationSemigroup(s)));
+    Append(str, "\< pts");
+  fi;
+  if nrgens>0 then 
+    Append(str, " with\> ");
+    Append(str, ViewString(nrgens));
+    Append(str, "\< generator");
+    if nrgens>1 or nrgens=0 then
+      Append(str, "s\<");
+    else
+      Append(str, "\<");
+    fi;
+  fi;
+  Append(str, ">\<");
+
+  return str;
+end;
+  
+InstallMethod(ViewString, "for a group of transformations",
+[IsTransformationSemigroup and IsGroupAsSemigroup],
+ViewStringForGroupOfTransformations@);
+
+InstallMethod(ViewString, "for a group of transformations",
+[IsTransformationSemigroup and IsGroup],
+ViewStringForGroupOfTransformations@);
+
+Unbind(ViewStringForGroupOfTransformations@);
 
 #
 

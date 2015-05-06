@@ -8,10 +8,10 @@
 #############################################################################
 ##
 
+# This file contains declarations for attributes of semigroups.
+
 DeclareOperation("IrredundantGeneratingSubset",
                  [IsAssociativeElementCollection]);
-DeclareOperation("InversesOfSemigroupElementNC",
-                 [IsActingSemigroup, IsAssociativeElement]);
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
@@ -19,34 +19,28 @@ DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("RepresentativeOfMinimalIdeal", IsSemigroup);
 DeclareSynonymAttr("RepresentativeOfMinimalDClass",
-RepresentativeOfMinimalIdeal);
+                   RepresentativeOfMinimalIdeal);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
-DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
+DeclareAttribute("MultiplicativeZero", IsSemigroup);
 
 DeclareAttribute("SmallSemigroupGeneratingSet",
                  IsAssociativeElementCollection);
-DeclareAttribute("SmallSemigroupGeneratingSet", IsActingSemigroup);
+DeclareAttribute("SmallSemigroupGeneratingSet", IsSemigroup and IsFinite);
 DeclareAttribute("SmallMonoidGeneratingSet",
-                 IsAssociativeElementCollection
-                 and IsMultiplicativeElementWithOneCollection);
-DeclareAttribute("SmallMonoidGeneratingSet", IsActingSemigroup and IsMonoid);
+                 IsAssociativeElementCollection and
+                 IsMultiplicativeElementWithOneCollection);
+DeclareAttribute("SmallMonoidGeneratingSet", IsMonoid and IsFinite);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet",
-                 IsGeneratorsOfInverseSemigroup);
-DeclareAttribute("SmallInverseSemigroupGeneratingSet",
-                 IsInverseSemigroup and IsActingSemigroup);
+                 IsMultiplicativeElementCollection);
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
-                 IsGeneratorsOfInverseSemigroup
-                 and IsMultiplicativeElementWithOneCollection);
-DeclareAttribute("SmallInverseMonoidGeneratingSet",
-                 IsInverseMonoid and IsActingSemigroup);
+                 IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
-DeclareAttribute("StructureDescriptionSchutzenbergerGroups",
-                 IsActingSemigroup);
-DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
+DeclareAttribute("StructureDescriptionMaximalSubgroups",
+                 IsSemigroup and IsFinite);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
-DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
+DeclareAttribute("IsGreensDLeq", IsSemigroup);

@@ -303,7 +303,7 @@ function(s)
       od;
       # Create the corresponding D-class, without actualy enumerating it.
       i := Position(content, true);
-      rep := UniversalFakeOne;
+      rep := SEMIGROUPS_UniversalFakeOne;
       while i <> fail do
         rep := rep * GeneratorsOfSemigroup(s)[i];
         i := Position(content, true, i);

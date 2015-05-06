@@ -38,8 +38,8 @@ end;
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "2.4",
-Date := "02/04/2015",
+Version := "3.0",
+Date := "??",
 ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.3",
 ArchiveFormats := ".tar.gz",
 Persons := [
@@ -218,10 +218,21 @@ Dependencies := rec(
   "------\n"
 ),
 
-  AvailabilityTest := ReturnTrue, 
+  AvailabilityTest := function()
+    if (not "semigroups" in SHOW_STAT()) and
+      (Filename(DirectoriesPackagePrograms("semigroups"), "semigroups.so") = fail)
+     then
+      Info(InfoWarning, 1, "Semigroups: the kernel module is not compiled, ",
+           "the package cannot be loaded.");
+      return fail;
+    fi;
+    return true;
+  end,
+
   Autoload := false,
   TestFile := "tst/testinstall.tst",
   Keywords := ["transformation semigroups", "partial permutations",
-  "inverse semigroups", "Green's relations", "free inverse semigroup", 
-  "partition monoid", "bipartitions", "Rees matrix semigroups"]
+               "inverse semigroups", "Green's relations", 
+               "free inverse semigroup", "partition monoid", "bipartitions",
+               "Rees matrix semigroups"]
 ));

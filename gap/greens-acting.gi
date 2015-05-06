@@ -108,7 +108,7 @@ function(args, type, rel)
                           IsGreensClassNC, nc,
                           EquivalenceClassRelation, rel(S));
 
-  if IsActingSemigroupWithInverseOp(S) then
+  if IsSemigroupWithInverseOp(S) then #it's a category
     SetFilterObj(C, IsInverseOpClass);
   elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
     if type <> HClassType then
@@ -517,16 +517,6 @@ InstallMethod(Representative,
 "for an acting semigroup Green's class",
 [IsActingSemigroupGreensClass], C -> C!.rep);
 
-# this should be removed after the library method for AsSSortedList
-# for a Green's class is removed. The default AsSSortedList for a collection
-# is what should be used (it is identical)!
-
-InstallMethod(AsSSortedList, "for a Green's class of an acting semigroup",
-[IsGreensClass and IsActingSemigroupGreensClass],
-function(C)
-  return ConstantTimeAccessList(EnumeratorSorted(C));
-end);
-
 # different method for regular/inverse
 
 InstallMethod(DClassType, "for an acting semigroup",
@@ -570,12 +560,6 @@ end);
 #############################################################################
 ## 3. Individual classes . . .
 #############################################################################
-
-# same method for regular/inverse
-# FIXME is this necessary?
-
-InstallMethod(GreensJClassOfElement, "for acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement], GreensDClassOfElement);
 
 # same method for regular/ideals, different method for inverse
 

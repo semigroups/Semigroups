@@ -1,76 +1,49 @@
-#%T##########################################################################
+#############################################################################
 ##
-#W  smallerdegree.tst
-#Y  Copyright (C) 2012-15                                  Wilfred Wilson
+#W  semipperm.tst
+#Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: smallerdegree.tst");
+gap> START_TEST("Semigroups package: semipperm.tst");
 gap> LoadPackage("semigroups", false);;
 
-# 
+#
 gap> SemigroupsStartTest();
 
-#T# SmallerDegreeTest1: VagnerPresetonRepresentation: a basic example
-gap> f1 := PartialPerm([ 1, 2, 4, 3 ]);;
-gap> f2 := PartialPerm([ 1 ]);;
-gap> f3 := PartialPerm([ 0, 2 ]);;
-gap> f := InverseSemigroup(f1, f2, f3);
-<inverse partial perm semigroup on 4 pts with 3 generators>
-gap> NrMovedPoints(f);
-2
-gap> Size(f);
-5
-gap> VPR := VagnerPrestonRepresentation(f);
-MappingByFunction( <inverse partial perm semigroup of size 5, on 4 pts
- with 3 generators>, <inverse partial perm semigroup on 5 pts
- with 3 generators>, function( x ) ... end, function( x ) ... end )
-gap> inv := InverseGeneralMapping(VPR);
-MappingByFunction( <inverse partial perm semigroup on 5 pts
- with 3 generators>, <inverse partial perm semigroup of size 5, on 4 pts
- with 3 generators>, function( x ) ... end, function( x ) ... end )
-gap> ForAll(f, x -> (x ^ VPR) ^ inv = x);
+#T# SemiPPermTest1: NumberSubset
+gap> sets := Combinations([1..10]);;
+gap> Sort(sets, 
+> function(x, y)
+>    if Length(x) <> Length(y) then 
+>      return Length(x) < Length(y);
+>    fi;
+>    return x < y;
+>  end);
+gap> List(sets, x -> NumberSubset(x, 10)) = [ 1 .. 2 ^ 10 ];
 true
 
-#T# SmallerDegreeTest2: VagnerPrestonRepresentation
-# for SymmetricInverseSemigroup(5)
-gap> I5 := SymmetricInverseSemigroup(5);;
-gap> NrMovedPoints(I5);
-5
-gap> Size(I5);
-1546
-gap> I5 := Range(VagnerPrestonRepresentation(I5));;
-gap> NrMovedPoints(I5);
-1545
-gap> Size(I5);
-1546
-gap> I5 := SmallerDegreePartialPermRepresentation(I5);;
-gap> NrMovedPoints(Image(I5));
-5
-gap> Size(Image(I5));
-1546
-
-#T# SmallerDegreeTest3: VagnerPrestonRepresentation
-# for a bipartition semigroup
-gap> B := Semigroup([
->  Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5, -5 ], [ 6 ],
->    [ 7 ], [ -1 ], [ -3 ], [ -6 ], [ -7 ] ] ), 
->  Bipartition( [ [ 1, -5 ], [ 2, -6 ], [ 3, -7 ], [ 4, -3 ], [ 5 ],
->    [ 6, -2 ], [ 7 ], [ -1 ], [ -4 ] ] ), 
->  Bipartition( [ [ 1, -4 ], [ 2, -7 ], [ 3 ], [ 4, -5 ], [ 5, -2 ],
->    [ 6 ], [ 7, -1 ], [ -3 ], [ -6 ] ] ), 
->  Bipartition( [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4, -1 ], [ 5, -5 ], [ 6 ],
->    [ 7 ], [ -3 ], [ -4 ], [ -6 ], [ -7 ] ] ), 
->  Bipartition( [ [ 1 ], [ 2, -6 ], [ 3, -4 ], [ 4 ], [ 5, -1 ],
->    [ 6, -2 ], [ 7, -3 ], [ -5 ], [ -7 ] ] ), 
->  Bipartition( [ [ 1, -7 ], [ 2, -5 ], [ 3 ], [ 4, -1 ], [ 5, -4 ],
->    [ 6 ], [ 7, -2 ], [ -3 ], [ -6 ] ] ) ]);;
-gap> IsInverseSemigroup(B);
+#T# SemiPPermTest2: Enumerator for a symmetric inverse monoid
+gap> S := SymmetricInverseMonoid(3);;
+gap> enum := Enumerator(S);
+<enumerator of symmetric inverse monoid on 3 pts>
+gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
 true
-gap> V := Range(VagnerPrestonRepresentation(B));
-<inverse partial perm semigroup on 664 pts with 6 generators>
+gap> ForAll(enum, x -> enum[Position(enum, x)] = x);              
+true
+gap> Length(enum) = Size(S);
+true
+gap> ForAll(enum, x -> x in S);
+true
+gap> ForAll(S, x -> x in enum);
+true
+
+#T# SemiPPerm3Test: NumberSubsetOfEqualSize
+gap> ForAll([1..10], m -> List(Combinations([1 .. 10], m), x ->
+> NumberSubsetOfEqualSize(x, 10)) = [1 .. Binomial(10, m)]);
+true
 
 #T# SmallerDegreeTest4: SmallerDegreePartialPermRepresentation Issue 1:
 # Example where the degree being returned was greater than the original degree
@@ -173,11 +146,12 @@ gap> ActionDegree(Range(iso)) <= 12; # Genuine minimum degree of V is 7.
 true
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(enum);
+gap> Unbind(sets);
 gap> Unbind(f1);
 gap> Unbind(f2);
 gap> Unbind(f3);
-gap> Unbind(inv);
-gap> Unbind(VPR);
 gap> Unbind(I5);
 gap> Unbind(B);
 gap> Unbind(F);
@@ -197,4 +171,4 @@ gap> Unbind(y);
 gap> Unbind(x);
 
 #E#
-gap> STOP_TEST("Semigroups package: smallerdegree.tst");
+gap> STOP_TEST( "Semigroups package: semipperm.tst");

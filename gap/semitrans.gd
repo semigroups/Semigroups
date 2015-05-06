@@ -8,9 +8,8 @@
 #############################################################################
 ##
 
-DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
-
 DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
+DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
 IsTransformationSemigroup);

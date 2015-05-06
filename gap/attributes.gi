@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+# This file contains methods for finding various attributes of finite
+# semigroups, where no better method is known.
+
 # Note about the difference between One and MultiplicativeNeutralElement
 # (the same goes for Zero and MultplicativeZero):
 #
@@ -18,364 +21,124 @@
 #
 # MultiplicativeNeutralElement on the other hand returns the element of s that
 # acts as the identity, note that this can be equal to One(s) but it can also
-# not be equal t One(s).
+# not be equal to One(s).
 #
 # A semigroup satisfies IsMonoidAsSemigroup(s) if
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true.
 
-# same method for ideals
+#############################################################################
+## 1. Default methods, for which there are currently no better methods.
+#############################################################################
 
-InstallMethod(IsMultiplicativeZero,
-"for an acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement],
-function(S, x)
-  return MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S);
-end);
-
-# same method for ideals
-
-InstallMethod(IsGreensDLeq, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(GroupOfUnits, "for a finite semigroup",
+[IsSemigroup and IsFinite],
 function(S)
-  local partial, data, comp_index;
-
-  partial := PartialOrderOfDClasses(S);
-  data := SemigroupData(S);
-
-  comp_index := function(x, y)
-    if y in partial[x] then
-      return true;
-    elif Length(partial[x]) = 1 and partial[partial[x][1]] = partial[x] then
-      return false;
-    fi;
-    return ForAny(partial[x], z -> z <> x and comp_index(z, y));
-  end;
-
-  return function(x, y)
-    return comp_index(OrbSCCLookup(data)[Position(data, x)] - 1,
-                      OrbSCCLookup(data)[Position(data, y)] - 1);
-  end;
-end);
-
-# different method for ideals/regular/inverse, although this method also works
-
-InstallMethod(MaximalDClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local gens, partial, data, pos, i, out, classes, x;
-
-  gens := GeneratorsOfSemigroup(s);
-  partial := PartialOrderOfDClasses(s);
-  data := SemigroupData(s);
-  pos := [];
-  for x in gens do
-    i := OrbSCCLookup(data)[Position(data, x)] - 1;
-    #index of the D-class containing x
-    AddSet(pos, i);
-  od;
-
-  out := [];
-  classes := GreensDClasses(s);
-  for i in pos do
-    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
-end);
-
-# same method for inverse, different method for inverse ideals
-
-InstallMethod(MaximalDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(S)
-  local gens, partial, pos, o, scc, out, classes, x, i;
-
-  gens := GeneratorsOfSemigroup(S);
-  partial := PartialOrderOfDClasses(S);
-  pos := [];
-  o := LambdaOrb(S);
-  scc := OrbSCCLookup(o);
-
-  for x in gens do
-    #index of the D-class containing x
-    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))] - 1);
-  od;
-
-  out := [];
-  classes := GreensDClasses(S);
-  for i in pos do
-    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
-end);
-
-# same method for ideals
-
-InstallMethod(StructureDescriptionSchutzenbergerGroups,
-"for an acting semigroup", [IsActingSemigroup],
-function(S)
-  local o, scc, out, m;
-
-  o := LambdaOrb(S);
-  Enumerate(o, infinity);
-  scc := OrbSCC(o);
-  out := [];
-
-  for m in [2 .. Length(scc)] do
-    AddSet(out, StructureDescription(LambdaOrbSchutzGp(o, m)));
-  od;
-
-  return out;
-end);
-
-# same method for ideals
-
-InstallMethod(StructureDescriptionMaximalSubgroups,
-"for an acting semigroup", [IsActingSemigroup],
-function(s)
-  local out, d;
-
-  out := [];
-  for d in DClasses(s) do
-    if IsRegularClass(d) then
-      AddSet(out, StructureDescription(GroupHClass(d)));
-    fi;
-  od;
-
-  return out;
-end);
-
-# same method for ideals
-
-InstallMethod(GroupOfUnits, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(s)
-  local r, g, deg, u;
-
-  if MultiplicativeNeutralElement(s) = fail then
-    return fail;
-  fi;
-
-  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g := SchutzenbergerGroup(r);
-  deg := DegreeOfTransformationSemigroup(s);
-
-  u := Monoid(List(GeneratorsOfGroup(g), x -> AsTransformation(x, deg)));
-
-  SetIsomorphismPermGroup(u, MappingByFunction(u, g, PermutationOfImage,
-                                               x -> AsTransformation(x, deg)));
-
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
-
-  return u;
-end);
-
-# same method for ideals
-
-InstallMethod(GroupOfUnits, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(s)
-  local r, g, deg, u;
-
-  if MultiplicativeNeutralElement(s) = fail then
-    return fail;
-  fi;
-
-  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g := SchutzenbergerGroup(r);
-  deg := Maximum(DegreeOfPartialPermSemigroup(s),
-                 CodegreeOfPartialPermSemigroup(s));
-
-  u := Monoid(List(GeneratorsOfGroup(g), x -> AsPartialPerm(x, deg)));
-
-  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation,
-                                               x -> AsPartialPerm(x, deg)));
-
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
-
-  return u;
-end);
-
-# same method for ideals
-
-InstallMethod(GroupOfUnits, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
-function(S)
-  local R, G, deg, U;
+  local H, map, U;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
-  R := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
-  G := SchutzenbergerGroup(R);
-  deg := DegreeOfBipartitionSemigroup(S);
+  H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  map := IsomorphismPermGroup(H);
 
-  U := Monoid(List(GeneratorsOfGroup(G), x -> AsBipartition(x, deg)));
+  U := Monoid(List(GeneratorsOfGroup(Range(map)),
+                   x -> x ^ InverseGeneralMapping(map)));
 
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
-                                               x -> AsBipartition(x, deg)));
+  map := MappingByFunction(U,
+                           Range(map),
+                           map,
+                           InverseGeneralMapping(map));
 
+  SetIsomorphismPermGroup(U, map);
   SetIsGroupAsSemigroup(U, true);
-  UseIsomorphismRelation(U, G);
-
+  UseIsomorphismRelation(U, Range(map));
   return U;
 end);
 
 # same method for ideals
 
-InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup],
-function(s)
-  local r, g, i, j, u;
+InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
+[IsMonoid and IsFinite],
+function(S)
+  local F, A, lookup, pos, data, rules, rels, convert, Q, B, rule;
 
-  if MultiplicativeNeutralElement(s) = fail then
-    return fail;
-  fi;
+  F := FreeMonoid(Length(GeneratorsOfMonoid(S)));
+  A := GeneratorsOfMonoid(F);
+  lookup := List(GeneratorsOfSemigroup(S),
+                 x -> Position(GeneratorsOfMonoid(S), x));
+  pos := Position(lookup, fail);
 
-  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g := SchutzenbergerGroup(r);
-  i := MultiplicativeNeutralElement(s)![1];
-  j := MultiplicativeNeutralElement(s)![3];
+  data := GenericSemigroupData(S);
+  rules := RELATIONS_SEMIGROUP(data);
+  rels := [];
 
-  u := Semigroup(List(GeneratorsOfGroup(g), x -> RMSElement(s, i, x, j)));
-
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
-
-  return u;
-end);
-
-# same method for ideals
-
-InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
-[IsActingSemigroup], s -> Semigroup(Idempotents(s), rec(small := true)));
-
-# same method for ideals
-
-InstallMethod(IdempotentGeneratedSubsemigroup,
-"for an inverse op acting semigroup", [IsActingSemigroupWithInverseOp],
-s -> InverseSemigroup(Idempotents(s), rec(small := true)));
-
-# same method for ideals
-
-InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact,
-  f, rms, iso, inv, hom, i, j;
-
-  if not IsRegularDClass(d) then
-    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
-          "the argument <d> must be a regular D-class,");
-    return;
-  fi;
-
-  g := GroupHClass(d);
-  rep := Representative(g);
-  g := Range(IsomorphismPermGroup(g));
-
-  rreps := HClassReps(LClass(d, rep));
-  lreps := HClassReps(RClass(d, rep));
-  mat := [];
-
-  inv_l := EmptyPlist(Length(lreps));
-  inv_r := EmptyPlist(Length(rreps));
-
-  lambdaperm := LambdaPerm(Parent(d));
-  if IsTransformationSemigroupGreensClass(d)
-      or IsPartialPermSemigroupGreensClass(d)
-      or IsBipartitionSemigroupGreensClass(d) then
-    leftact := PROD;
-  elif IsReesZeroMatrixSubsemigroup(Parent(d)) then
-    leftact := function(x, y)
-      if y![1] = 0 then
-        return y;
-      fi;
-      return Objectify(TypeObj(y),
-                       [y![1], y![4][rep![3]][rep![1]] ^ -1 * x * rep![2] ^ -1
-                        * y![2], y![3], y![4]]);
-    end;
-  fi;
-
-  rightact := StabilizerAction(Parent(d));
-
-  for i in [1 .. Length(lreps)] do
-    mat[i] := [];
-    for j in [1 .. Length(rreps)] do
-      f := lreps[i] * rreps[j];
-      if f in d then
-        mat[i][j] := lambdaperm(rep, f);
-        if not IsBound(inv_r[j]) then
-          # could use lreps[i]*rreps[j]^-1*lreps[i] instead if there was a
-          # method for ^-1...
-          inv_r[j] := leftact(mat[i][j] ^ -1, lreps[i]);
-        fi;
-        if not IsBound(inv_l[i]) then
-          inv_l[i] := rightact(rreps[j], mat[i][j] ^ -1);
-        fi;
-      else
-        mat[i][j] := 0;
+  convert := function(word)
+    local out, i;
+    out := One(F);
+    for i in word do
+      if lookup[i] <> fail then
+        out := out * A[lookup[i]];
       fi;
     od;
+    return out;
+  end;
+
+  for rule in rules do
+    # only include non-redundant rules
+    if Length(rule[1]) <> 2
+        or (rule[1][1] <> pos and rule[1][Length(rule[1])] <> pos) then
+      Add(rels, [convert(rule[1]), convert(rule[2])]);
+    fi;
   od;
 
-  if NrIdempotents(d) = NrHClasses(d) then
-    rms := ReesMatrixSemigroup(g, mat);
-  else
-    rms := ReesZeroMatrixSemigroup(g, mat);
-  fi;
-
-  iso := function(f)
-    local o, m, i, j;
-    o := LambdaOrb(d);
-    m := LambdaOrbSCCIndex(d);
-    i := Position(o, LambdaFunc(Parent(d))(f));
-
-    if i = fail or OrbSCCLookup(o)[i] <> m then
-      return fail;
-    fi;
-    i := Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
-    if not IsInverseOpClass(d) then
-      o := RhoOrb(d);
-      m := RhoOrbSCCIndex(d);
-    fi;
-    j := Position(o, RhoFunc(Parent(d))(f));
-    if j = fail or OrbSCCLookup(o)[j] <> m then
-      return fail;
-    fi;
-    j := Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
-    return Objectify(TypeReesMatrixSemigroupElements(rms),
-                     [j, lambdaperm(rep, rep * inv_r[j] * f * inv_l[i]), i,
-                      mat]);
-  end;
-
-  inv := function(x)
-    if x![1] = 0 then
-      return fail;
-    fi;
-    return rightact(rreps[x![1]], x![2]) * lreps[x![3]];
-  end;
-
-  hom := MappingByFunction(d, rms, iso, inv);
-  SetIsInjective(hom, true);
-  SetIsTotal(hom, true);
-  return hom;
+  Q := F / rels;
+  B := GeneratorsOfSemigroup(Q);
+  # gaplint: ignore 3
+  return MagmaIsomorphismByFunctionsNC(S, Q,
+           x -> EvaluateWord(B, Factorization(S, x)),
+           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S)));
 end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismReesMatrixSemigroup,
-"for D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass], InjectionPrincipalFactor);
+InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local rules, F, A, rels, Q, B;
+
+  rules := RELATIONS_SEMIGROUP(GenericSemigroupData(S));
+
+  F := FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
+  A := GeneratorsOfSemigroup(F);
+  rels := List(rules, x -> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
+
+  Q := F / rels;
+  B := GeneratorsOfSemigroup(Q);
+
+  # gaplint: ignore 3
+  return MagmaIsomorphismByFunctionsNC(S, Q,
+           x -> EvaluateWord(B, Factorization(S, x)),
+           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
+end);
+
+# same method for ideals
+
+InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+S -> RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S)));
+
+# same method for ideals
+
+InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+S -> LEFT_CAYLEY_GRAPH(GenericSemigroupData(S)));
+
+# same method for ideals
+
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
+[IsGreensDClass], InjectionPrincipalFactor);
 
 # same method for ideal
 
@@ -383,15 +146,10 @@ InstallMethod(IrredundantGeneratingSubset,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(coll)
-  local gens, nrgens, deg, out, redund, i, f;
+  local gens, nrgens, deg, out, redund, i, x;
 
-  if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then
-    Error("Semigroups: IrredundantGeneratingSubset: usage,\n",
-          "<coll> must be a generators of an acting semigroup,");
-  fi;
-
-  if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll)) or
-      (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
+  if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll))
+       or (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
 
@@ -401,11 +159,14 @@ function(coll)
 
   gens := Set(ShallowCopy(coll));
   nrgens := Length(gens);
-  deg := ActionDegree(coll);
-  coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
-  Sort(coll, function(x, y)
-               return ActionRank(x, deg) > ActionRank(y, deg);
-             end);
+
+  if IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll) then
+    deg := ActionDegree(coll);
+    coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
+    Sort(coll, function(x, y)
+                 return ActionRank(x, deg) > ActionRank(y, deg);
+               end);
+  fi;
 
   out := EmptyPlist(Length(coll));
   redund := EmptyPlist(Length(coll));
@@ -413,36 +174,37 @@ function(coll)
 
   repeat
     i := i + 1;
-    f := coll[i];
+    x := coll[i];
     if InfoLevel(InfoSemigroups) >= 3 then
       Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund),
-            " redundant, \t", Length(out), " non-redundant\r");
+            " redundant, \t", Length(out), " non-redundant\n");
     fi;
 
-    if not f in redund and not f in out then
-      if f in Semigroup(Difference(gens, [f])) then
-        AddSet(redund, f);
-        gens := Difference(gens, [f]);
+    if not x in redund and not x in out then
+      if x in Semigroup(Difference(gens, [x])) then
+        AddSet(redund, x);
+        gens := Difference(gens, [x]);
       else
-        AddSet(out, f);
+        AddSet(out, x);
       fi;
     fi;
   until Length(redund) + Length(out) = nrgens;
 
-  if InfoLevel(InfoSemigroups) > 1 then
+  if InfoLevel(InfoSemigroups) >= 3 then
     Print("\n");
   fi;
+
   return out;
 end);
 
 #
 
 InstallMethod(IsomorphismReesMatrixSemigroup,
-"for a simple or 0-simple acting semigroup", [IsActingSemigroup],
+"for a finite simple or 0-simple semigroup", [IsFinite and IsSemigroup],
 function(S)
   local D, iso, inv;
   if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then
-    TryNextMethod();
+    TryNextMethod(); #TODO is there another method?
   fi;
   D := GreensDClasses(S)[1];
   if IsZeroSimpleSemigroup(S)
@@ -458,278 +220,20 @@ end);
 
 # same method for ideals
 
-InstallMethod(InversesOfSemigroupElement,
-"for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement],
-function(S, x)
-
-  if x in S then
-    return InversesOfSemigroupElementNC(S, x);
-  fi;
-
-  return fail;
-end);
-
-# different method for ideals
-
-InstallMethod(InversesOfSemigroupElementNC,
-"for an acting semigroup and associative element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
-function(s, f)
-  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades,
-   rho_f, lambdarank, creator, inv, out, k, g, i, name, rho;
-
-  regular := IsRegularSemigroup(s);
-
-  if not (regular or IsRegularSemigroupElementNC(s, f)) then
-    return [];
-  fi;
-
-  lambda := LambdaFunc(s)(f);
-  rank := LambdaRank(s)(LambdaFunc(s)(f));
-  rhorank := RhoRank(s);
-  tester := IdempotentTester(s);
-  j := 0;
-
-  # can't use GradedRhoOrb here since there may be inverses not D-related to f
-  # JDM is this really true?
-  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
-    o := RhoOrb(s);
-    rhos := EmptyPlist(Length(o));
-    for i in [2 .. Length(o)] do
-      if rhorank(o[i]) = rank and tester(lambda, o[i]) then
-        j := j + 1;
-        rhos[j] := o[i];
-      fi;
-    od;
-  else
-
-    opts := rec(treehashsize := s!.opts.hashlen.M,
-                gradingfunc := function(o, x) return rhorank(x); end,
-                onlygrades := function(x, y) return x >= rank; end,
-                onlygradesdata := fail);
-
-    for name in RecNames(LambdaOrbOpts(s)) do
-      opts.(name) := LambdaOrbOpts(s).(name);
-    od;
-
-    o := Orb(s, RhoOrbSeed(s), RhoAct(s), opts);
-    Enumerate(o, infinity);
-
-    grades := Grades(o);
-    rhos := EmptyPlist(Length(o));
-    for i in [2 .. Length(o)] do
-      if grades[i] = rank and tester(lambda, o[i]) then
-        j := j + 1;
-        rhos[j] := o[i];
-      fi;
-    od;
-  fi;
-  ShrinkAllocationPlist(rhos);
-
-  rho_f := RhoFunc(s)(f);
-  lambdarank := LambdaRank(s);
-  creator := IdempotentCreator(s);
-  inv := LambdaInverse(s);
-
-  out := [];
-  k := 0;
-
-  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
-    o := LambdaOrb(s);
-    for i in [2 .. Length(o)] do
-      if lambdarank(o[i]) = rank and tester(o[i], rho_f) then
-        for rho in rhos do
-          g := creator(lambda, rho) * inv(o[i], f);
-          if regular or g in s then
-            k := k + 1;
-            out[k] := g;
-          fi;
-        od;
-      fi;
-    od;
-  else
-     opts := rec(treehashsize := s!.opts.hashlen.M,
-                 gradingfunc := function(o, x) return lambdarank(x); end,
-                 onlygrades := function(x, y) return x >= rank; end,
-                 onlygradesdata := fail);
-
-    for name in RecNames(LambdaOrbOpts(s)) do
-      opts.(name) := LambdaOrbOpts(s).(name);
-    od;
-
-    o := Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
-    Enumerate(o);
-    grades := Grades(o);
-
-    for i in [2 .. Length(o)] do
-      if grades[i] = rank and tester(o[i], rho_f) then
-        for rho in rhos do
-          g := creator(lambda, rho) * inv(o[i], f);
-          if regular or g in s then
-            k := k + 1;
-            out[k] := g;
-          fi;
-        od;
-      fi;
-    od;
-  fi;
-
-  return out;
-end);
-
-# same method for ideals
-
-InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local gens, rank, lambda, max, r, rep, f;
-
-  gens := Generators(s);
-  rank := LambdaRank(s);
-  lambda := LambdaFunc(s);
-  max := 0;
-  rep := gens[1];
-
-  for f in gens do
-    r := rank(lambda(f));
-    if r > max then
-      max := r;
-      rep := f;
-    fi;
-  od;
-
-  if max = ActionDegree(s) and IsMultiplicativeElementWithOneCollection(s) then
-    return One(s);
-  fi;
-
-  r := GreensRClassOfElementNC(s, rep);
-
-  if not NrIdempotents(r) = 1 then
-    Info(InfoSemigroups, 2, "the number of idempotents in the R-class of the",
-         " first maximum rank");
-    Info(InfoSemigroups, 2, " generator is not 1");
-    return fail;
-  fi;
-
-  f := Idempotents(r)[1];
-
-  if ForAll(gens, x -> x * f = x and f * x = x) then
-    return f;
-  fi;
-
-  Info(InfoSemigroups, 2, "the unique idempotent in the R-class of the first",
-       " maximum rank");
-  Info(InfoSemigroups, 2, " generator is not the identity");
-  return fail;
-end);
-
-# it just so happens that the MultiplicativeNeutralElement of a semigroup of
-# partial permutations has to coincide with the One. This is not the case for
-# transformation semigroups
-
-# same method for ideals
-
-InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
-[IsPartialPermSemigroup], One);
-
-# same method for ideals
-
-InstallMethod(MultiplicativeZero, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local d, rep, gens;
-
-  if IsSemigroupIdeal(s)
-      and HasMultiplicativeZero(SupersemigroupOfIdeal(s)) then
-    return MultiplicativeZero(SupersemigroupOfIdeal(s));
-  fi;
-
-  if HasMinimalDClass(s) then
-    d := MinimalDClass(s);
-    if HasSize(d) then
-      if Size(d) = 1 then
-        return Representative(d);
-      else
-        return fail;
-      fi;
-    fi;
-  fi;
-
-  if not HasGeneratorsOfSemigroup(s) then
-    return MultiplicativeZero(SupersemigroupOfIdeal(s));
-  fi;
-
-  rep := RepresentativeOfMinimalIdeal(s);
-  gens := GeneratorsOfSemigroup(s);
-  if ForAll(gens, x -> x * rep = rep and rep * x = rep) then
-    return rep;
-  fi;
-
-  return fail;
-end);
-
-# same method for ideals
-
-InstallMethod(MinimalIdeal, "for an acting semigroup", [IsActingSemigroup],
+InstallMethod(MinimalIdeal, "for a finite semigroup",
+[IsFinite and IsSemigroup],
 function(S)
   local I;
-  I := SemigroupIdeal(S, RepresentativeOfMinimalIdeal(S));
+  I := SemigroupIdealByGeneratorsNC(S, [RepresentativeOfMinimalIdeal(S)],
+                                    SEMIGROUPS_OptionsRec(S));
   SetIsSimpleSemigroup(I, true);
   return I;
 end);
 
-# same method for inverse/ideals
-
-InstallMethod(RepresentativeOfMinimalIdeal,
-"for an acting semigroup",
-[IsActingSemigroup],
-function(S)
-  local rank, o, pos, min, len, m, i;
-
-  if IsSemigroupIdeal(S)
-      and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
-    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  fi;
-
-  rank := LambdaRank(S);
-  o := LambdaOrb(S);
-
-  pos := LookForInOrb(o, function(o, x)
-                           return rank(x) = MinActionRank(S);
-                         end, 2);
-
-  if pos = false then
-    min := rank(o[2]);
-    pos := 2;
-    len := Length(o);
-    for i in [3 .. len] do
-      m := rank(o[i]);
-      if m < min then
-        pos := i;
-        min := m;
-      fi;
-    od;
-  fi;
-
-  return EvaluateWord(o, TraceSchreierTreeForward(o, pos));
-end);
-
 #
 
-InstallMethod(MinimalDClass, "for an acting semigroup", [IsActingSemigroup],
-x -> GreensDClassOfElementNC(x, RepresentativeOfMinimalIdeal(x)));
-
-#
-
-InstallMethod(PrincipalFactor, "for a D-class",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-d -> Range(InjectionPrincipalFactor(d)));
-
-#
-
-InstallMethod(PrincipalFactor, "for a D-class",
-[IsGreensDClass], AssociatedReesMatrixSemigroupOfDClass);
+InstallMethod(PrincipalFactor, "for a Green's D-class",
+[IsGreensDClass], D -> Range(InjectionPrincipalFactor(D)));
 
 # different method for ideals, not yet implemented
 
@@ -737,19 +241,16 @@ InstallMethod(SmallSemigroupGeneratingSet,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then
-    TryNextMethod();
-  elif Length(coll) < 2 then
+  if Length(coll) < 2 then
     return coll;
-  else
-    return GeneratorsOfSemigroup(Semigroup(coll, rec(small := true)));
   fi;
+  return GeneratorsOfSemigroup(Semigroup(coll, rec(small := true)));
 end);
 
 # different method for ideals, not yet implemented
 
 InstallMethod(SmallSemigroupGeneratingSet,
-"for an acting semigroup", [IsActingSemigroup],
+"for a finite semigroup", [IsSemigroup and IsFinite],
 S -> SmallSemigroupGeneratingSet(GeneratorsOfSemigroup(S)));
 
 #
@@ -758,19 +259,19 @@ InstallMethod(SmallMonoidGeneratingSet,
 "for an associative element with one collection",
 [IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then
-    TryNextMethod();
-  elif Length(coll) < 2 then
+  if Length(coll) = 1 then
+    if coll[1] = One(coll) then
+      return [];
+    fi;
     return coll;
-  else
-    return GeneratorsOfMonoid(Monoid(coll, rec(small := true)));
   fi;
+  return GeneratorsOfMonoid(Monoid(coll, rec(small := true)));
 end);
 
 # same method for ideals
 
-InstallMethod(SmallMonoidGeneratingSet,
-"for an acting monoid", [IsActingSemigroup and IsMonoid],
+InstallMethod(SmallMonoidGeneratingSet, "for a finite monoid",
+[IsFinite and IsMonoid],
 function(S)
   if IsEmpty(GeneratorsOfMonoid(S)) then
     return [];
@@ -781,47 +282,58 @@ end);
 #
 
 InstallMethod(SmallInverseSemigroupGeneratingSet,
-"for generators of an inverse semigroup",
-[IsGeneratorsOfInverseSemigroup],
+"for a multiplicative element coll",
+[IsMultiplicativeElementCollection],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then
-    TryNextMethod();
-  elif Length(coll) < 2 then
-    return coll;
-  else
-    return GeneratorsOfInverseSemigroup(InverseSemigroup(coll,
-                                                         rec(small := true)));
+  if not IsGeneratorsOfInverseSemigroup(coll) then
+    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
+          "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    return;
   fi;
+  if Length(coll) < 2 then
+    return coll;
+  fi;
+  return GeneratorsOfInverseSemigroup(InverseSemigroup(coll,
+                                                       rec(small := true)));
 end);
 
 #
 
 InstallMethod(SmallInverseSemigroupGeneratingSet,
-"for an acting inverse semigroup with generators",
-[IsActingSemigroup and IsInverseSemigroup],
+"for a semigroup with inverse op", [IsSemigroupWithInverseOp],
 S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S)));
 
 #
 
 InstallMethod(SmallInverseMonoidGeneratingSet,
 "for generators of an inverse monoid",
-[IsGeneratorsOfInverseSemigroup and IsMultiplicativeElementWithOneCollection],
+[IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if not IsGeneratorsOfActingSemigroup(coll) then
-    TryNextMethod();
-  elif Length(coll) < 2 then
-    return coll;
-  else
-    return GeneratorsOfInverseMonoid(InverseMonoid(coll, rec(small := true)));
+  if not IsGeneratorsOfInverseSemigroup(coll) then
+    Error("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
+          "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    return;
   fi;
+  if Length(coll) = 1 then
+    if coll[1] = One(coll) then
+      return [];
+    fi;
+    return coll;
+  fi;
+  return GeneratorsOfInverseMonoid(InverseMonoid(coll, rec(small := true)));
 end);
 
 #
 
 InstallMethod(SmallInverseMonoidGeneratingSet,
-"for an acting inverse semigroup with generators",
-[IsActingSemigroup and IsInverseMonoid],
-S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseMonoid(S)));
+"for a monoid with inverse op",
+[IsSemigroupWithInverseOp and IsMonoid],
+function(S)
+  if IsEmpty(GeneratorsOfInverseMonoid(S)) then
+    return GeneratorsOfInverseMonoid(S);
+  fi;
+  return SmallMonoidGeneratingSet(GeneratorsOfInverseMonoid(S));
+end);
 
 #
 
@@ -831,8 +343,6 @@ function(S)
 
   if HasGeneratorsOfSemigroupIdeal(S) then
     return MinimalIdealGeneratingSet(S);
-  elif HasGeneratorsOfGroup(S) then
-    return SmallGeneratingSet(GeneratorsOfGroup(S));
   elif HasGeneratorsOfInverseMonoid(S) then
     return SmallInverseMonoidGeneratingSet(S);
   elif HasGeneratorsOfInverseSemigroup(S) then
@@ -846,145 +356,266 @@ end);
 
 #
 
-InstallMethod(StructureDescription, "for an acting Brandt semigroup",
-[IsActingSemigroup and IsBrandtSemigroup],
-function(s)
-  local x, d;
+InstallMethod(StructureDescription, "for a Brandt semigroup",
+[IsBrandtSemigroup],
+function(S)
+  local D;
 
-  x := First(Generators(s), x -> x <> MultiplicativeZero(s));
-  d := GreensDClassOfElementNC(s, x);
-
-  return Concatenation("B(", StructureDescription(GroupHClass(d)), ", ",
-                       String(NrRClasses(d)), ")");
+  D := MaximalDClasses(S)[1];
+  return Concatenation("B(", StructureDescription(GroupHClass(D)), ", ",
+                       String(NrRClasses(D)), ")");
 end);
 
 # same method for ideals
 
-InstallMethod(StructureDescription,
-"for an acting group as semigroup",
-[IsActingSemigroup and IsGroupAsSemigroup],
-s -> StructureDescription(Range(IsomorphismPermGroup(s))));
+InstallMethod(StructureDescription, "for a group as semigroup",
+[IsGroupAsSemigroup],
+function(S)
+  if IsGroup(S) then
+    # since groups (even perm groups) satisfy IsGroupAsSemigroup
+    TryNextMethod(); #this is appropriate, don't change it!
+  fi;
+
+  return StructureDescription(Range(IsomorphismPermGroup(S)));
+end);
+
+# same method for ideals
+
+InstallMethod(MultiplicativeZero, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local D, rep, gens;
+
+  if IsSemigroupIdeal(S)
+      and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then
+    return MultiplicativeZero(SupersemigroupOfIdeal(S));
+  fi;
+
+  if HasMinimalDClass(S) then
+    D := MinimalDClass(S);
+    if HasSize(D) then
+      if Size(D) = 1 then
+        return Representative(D);
+      else
+        return fail;
+      fi;
+    fi;
+  fi;
+
+  if IsSemigroupIdeal(S) then
+    return MultiplicativeZero(SupersemigroupOfIdeal(S));
+  fi;
+
+  rep := RepresentativeOfMinimalIdeal(S);
+  gens := GeneratorsOfSemigroup(S);
+
+  if ForAll(gens, x -> x * rep = rep and rep * x = rep) then
+    return rep;
+  fi;
+
+  return fail;
+end);
+
+InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
+x -> GreensDClassOfElementNC(x, RepresentativeOfMinimalIdeal(x)));
+
+#############################################################################
+## 2. Methods for attributes where there are known better methods for acting
+##    semigroups.
+#############################################################################
+
+# FIXME the performance of this really sucks, better form the transitive
+# reflexive closure of the partial order, then define this function
+
+InstallMethod(IsGreensDLeq, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local partial, data, comp_index;
+
+  partial := PartialOrderOfDClasses(S);
+  data := GenericSemigroupData(S);
+
+  comp_index := function(x, y)
+    if y in partial[x] then
+      return true;
+    elif Length(partial[x]) = 1 and partial[partial[x][1]] = partial[x] then
+      return false;
+    fi;
+    return ForAny(partial[x], z -> z <> x and comp_index(z, y));
+  end;
+
+  return function(x, y)
+    local i, j;
+    i := Position(data, x);
+    j := Position(data, y);
+    return comp_index(GreensDRelation(S)!.data.id[i],
+                      GreensDRelation(S)!.data.id[j]);
+  end;
+end);
 
 #
 
-InstallMethod(IsomorphismTransformationMonoid,
-"for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local id, dom, gens, inv;
+InstallMethod(MaximalDClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local gens, partial, data, id, pos, i, out, classes, x;
 
-  if IsMonoid(s) then
-    return MappingByFunction(s, s, IdFunc, IdFunc);
-  fi;
+  gens    := GeneratorsOfSemigroup(S);
+  partial := PartialOrderOfDClasses(S);
+  data    := GenericSemigroupData(S);
+  id      := GreensDRelation(S)!.data.id;
+  pos     := [];
 
-  if MultiplicativeNeutralElement(s) = fail then
-    Error("Semigroups: IsomorphismTransformationMonoid: usage,\n",
-          "the argument <s> must have a multiplicative neutral element,");
+  for x in gens do
+    i := id[Position(data, x)];
+    #index of the D-class containing x
+    AddSet(pos, i);
+  od;
+
+  out := [];
+  classes := GreensDClasses(S);
+  for i in pos do
+    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
+# same method for ideals
+
+InstallMethod(StructureDescriptionMaximalSubgroups,
+"for a finite semigroup", [IsSemigroup and IsFinite],
+function(S)
+  local out, D;
+
+  out := [];
+  for D in RegularDClasses(S) do
+    AddSet(out, StructureDescription(GroupHClass(D)));
+  od;
+
+  return out;
+end);
+
+#
+
+InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite], S -> Semigroup(Idempotents(S)));
+
+# same method for ideals
+
+InstallMethod(RepresentativeOfMinimalIdeal, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local data, comps;
+  data := Enumerate(GenericSemigroupData(S));
+  comps := GreensRRelation(S)!.data.comps;
+  return ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]];
+  # the first component (i.e. the inner most) of the strongly connected
+  # components of the right Cayley graph corresponds the minimal ideal.
+end);
+
+InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
+[IsGreensDClass],
+function(D)
+  local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
+
+  if not IsRegularDClass(D) then
+    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
+          "the argument <D> must be a regular D-class,");
     return;
   fi;
 
-  id := MultiplicativeNeutralElement(s);
-  dom := ImageSetOfTransformation(id);
+  map := IsomorphismPermGroup(GroupHClass(D));
+  inv := InverseGeneralMapping(map);
 
-  gens := List(Generators(s), x -> TransformationOp(x, dom));
+  G := Range(map);
+  mat := [];
 
-  inv := function(f)
-    local out, i;
+  rep := Representative(GroupHClass(D));
+  R := HClassReps(LClass(D, rep));
+  L := HClassReps(RClass(D, rep));
 
-    out := [1 .. DegreeOfTransformationSemigroup(s)];
-    for i in [1 .. Length(dom)] do
-      out[dom[i]] := dom[i ^ f];
+  for i in [1 .. Length(L)] do
+    mat[i] := [];
+    for j in [1 .. Length(R)] do
+      x := L[i] * R[j];
+      if x in D then
+        mat[i][j] := x ^ map;
+      else
+        mat[i][j] := 0;
+      fi;
     od;
-    return id * Transformation(out);
+  od;
+
+  RR := EmptyPlist(Length(R));
+  LL := EmptyPlist(Length(L));
+
+  for j in [1 .. Length(R)] do
+    for i in [1 .. Length(L)] do
+      if mat[i][j] <> 0 then
+        RR[j] := ((mat[i][j] ^ -1) ^ inv) * L[i];
+        break;
+      fi;
+    od;
+  od;
+
+  for i in [1 .. Length(L)] do
+    for j in [1 .. Length(R)] do
+      if mat[i][j] <> 0 then
+        LL[i] := R[j] * (mat[i][j] ^ -1) ^ inv;
+        break;
+      fi;
+    od;
+  od;
+
+  if NrIdempotents(D) = NrHClasses(D) then
+    rms := ReesMatrixSemigroup(G, mat);
+  else
+    rms := ReesZeroMatrixSemigroup(G, mat);
+  fi;
+
+  iso := function(x)
+    i := PositionProperty(R, y -> y in RClass(D, x));
+    j := PositionProperty(L, y -> y in LClass(D, x));
+
+    if i = fail or j = fail then
+      return fail;
+    fi;
+    return Objectify(TypeReesMatrixSemigroupElements(rms),
+                     [i, (rep * RR[i] * x * LL[j]) ^ map, j, mat]);
   end;
 
-  return MappingByFunction(s,
-                           Monoid(gens),
-                           f -> TransformationOp(f, dom),
-                           inv);
+  hom := MappingByFunction(D, rms, iso,
+                           function(x)
+                             if x![1] = 0 then
+                               return fail;
+                             fi;
+                             return R[x![1]] * (x![2] ^ inv) * L[x![3]];
+                           end);
+  SetIsInjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
 end);
 
-# different method for ideals
-
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a matrix semigroup with generators",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(MultiplicativeNeutralElement,
+"for a finite semigroup with generators",
+[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  local n, F, T;
-  n := Length(GeneratorsOfSemigroup(S)[1][1]);
-  F := FieldOfMatrixList(GeneratorsOfSemigroup(S));
-  T := Semigroup(List(GeneratorsOfSemigroup(S),
-                      x -> TransformationOp(x, Elements(F ^ n), OnRight)));
-  return MappingByFunction(S, T,
-                           x -> TransformationOp(x,
-                                                 Elements(F ^ Size(F)),
-                                                 OnRight));
-end);
+  local gens, e;
 
-# same method for ideals
-
-InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(s)
-
-  if not IsGroupAsSemigroup(s) then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <s> must be a transformation semigroup ",
-          "satisfying IsGroupAsSemigroup,");
-    return;
-  fi;
-  # gaplint: ignore 4
-  return MagmaIsomorphismByFunctionsNC(s,
-           Group(List(GeneratorsOfSemigroup(s), PermutationOfImage)),
-           PermutationOfImage,
-           x -> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
-end);
-
-# same method for ideals
-
-InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(s)
-
-  if not IsGroupAsSemigroup(s)  then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <s> must be a partial perm semigroup ",
-          "satisfying IsGroupAsSemigroup,");
-    return;
+  if IsMultiplicativeElementWithOneCollection(S) and One(S) in S then
+    return One(S);
   fi;
 
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(s,
-           Group(List(GeneratorsOfSemigroup(s), AsPermutation)),
-           AsPermutation,
-           x -> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
-end);
-
-# same method for ideals
-
-InstallMethod(IsomorphismPermGroup,
-"for a subsemigroup of a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSubsemigroup],
-function(S)
-  local rep;
-
-  if not IsGroupAsSemigroup(S)  then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
-          "semigroup satisfying IsGroupAsSemigroup,");
-    return;
-  fi;
-
-  rep := S.1;
-  if rep![1] = 0 then # special case for the group consisting of 0
-    return MagmaIsomorphismByFunctionsNC(S, Group(()), x -> (), x -> rep);
-  fi;
-
-  # gaplint: ignore 4
-  return MagmaIsomorphismByFunctionsNC(S,
-           Group(List(GeneratorsOfSemigroup(S), x -> x![2])),
-           x -> x![2],
-           x -> RMSElement(S, rep![1], x, rep![3]));
+  gens := GeneratorsOfSemigroup(S);
+  for e in S do
+    if ForAll(gens, x -> e * x = x and x * e = x) then
+      return e;
+    fi;
+  od;
+  return fail;
 end);
 
 # fall back method, same method for ideals
@@ -1013,46 +644,4 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, Group(gens),
            x -> Permutation(x, [1 .. Length(en)], act),
            x -> en[Position(en, MultiplicativeNeutralElement(S)) ^ x]);
-end);
-
-# not relevant for ideals
-
-InstallMethod(IsomorphismTransformationSemigroup,
-"for semigroup of binary relations with generators",
-[IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup],
-function(s)
-  local n, pts, o, t, pos, i;
-  if not IsBinaryRelationOnPointsRep(Representative(s)) then
-    TryNextMethod();
-  fi;
-  n := DegreeOfBinaryRelation(GeneratorsOfSemigroup(s)[1]);
-  pts := EmptyPlist(2 ^ n);
-
-  for i in [1 .. n] do
-    o := Orb(s, [i], OnPoints); #JDM multiseed orb
-    Enumerate(o);
-    pts := Union(pts, AsList(o));
-  od;
-  ShrinkAllocationPlist(pts);
-  pos := List([1 .. n], x -> Position(pts, [x]));
-  t := Semigroup(List(GeneratorsOfSemigroup(s),
-                      x -> TransformationOpNC(x, pts, OnPoints)));
-  # gaplint: ignore 3
-  return MappingByFunction(s, t,
-           x -> TransformationOpNC(x, pts, OnPoints),
-           x -> BinaryRelationOnPoints(List([1 .. n], i -> pts[pos[i] ^ x])));
-end);
-
-# not relevant for ideals
-
-InstallMethod(Size, "for a monogenic transformation semigroup",
-[IsTransformationSemigroup and IsMonogenicSemigroup],
-function(s)
-  local ind;
-
-  ind := IndexPeriodOfTransformation(GeneratorsOfSemigroup(s)[1]);
-  if ind[1] > 0 then
-    return Sum(ind) - 1;
-  fi;
-  return Sum(ind);
 end);

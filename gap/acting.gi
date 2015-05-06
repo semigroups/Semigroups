@@ -15,28 +15,29 @@
 # same method for ideals
 
 InstallMethod(SemigroupData, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], ReturnFail);
+[IsActingSemigroup and IsSemigroupWithInverseOp], ReturnFail);
 
 # different method for ideals
 
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local gens, data;
 
-  gens := GeneratorsOfSemigroup(s);
+  gens := GeneratorsOfSemigroup(S);
 
   data := rec(gens := gens,
               genstoapply := [1 .. Length(gens)],
               graph := [EmptyPlist(Length(gens))],
-              ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
+              ht := HTCreate(gens[1], rec(treehashsize :=
+                                          SEMIGROUPS_OptionsRec(S).hashlen.L)),
               init := false,
               lambdarhoht := [],
               lenreps := [0],
               orbit := [[,,,FakeOne(gens)]],
               orblookup1 := [],
               orblookup2 := [],
-              parent := s,
+              parent := S,
               pos := 0,
               reps := [],
               repslens := [],
@@ -47,7 +48,7 @@ function(s)
               schreierpos := [fail],
               stopper := false);
 
-  Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
+  Objectify(NewType(FamilyObj(S), IsSemigroupData), data);
 
   return data;
 end);
@@ -63,9 +64,8 @@ function(f, s)
   lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens,
   found, n, i;
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
-      or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-          and ActionDegree(f) <> ActionDegree(s))
+  if (IsActingSemigroupWithFixedDegreeMultiplication(s)
+      and ActionDegree(f) <> ActionDegree(s))
       or (ActionDegree(f) > ActionDegree(s)) then
     return false;
   fi;
@@ -74,16 +74,16 @@ function(f, s)
     if Length(Generators(s)) > 0
         and ActionRank(s)(f) >
         MaximumList(List(Generators(s), f -> ActionRank(s)(f))) then
-      Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-           "semigroup.");
+      #Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+      #     "semigroup.");
       return false;
     fi;
   fi;
 
   if HasMinimalIdeal(s) then
     if ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
-      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-           "semigroup.");
+      #Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+      #     "semigroup.");
       return false;
     fi;
   fi;
@@ -148,6 +148,7 @@ function(f, s)
   fi;
 
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
+    new := true;
     # lambda-rho-combination not yet seen
     if IsClosedData(data) then
       return false;
@@ -160,7 +161,6 @@ function(f, s)
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
       return false;
     fi;
-    new := true;
   fi;
 
   schutz := LambdaOrbStabChain(lambdao, m);
@@ -489,10 +489,8 @@ function(data, limit, lookfunc)
 
       elif not IsBound(lambdarhoht[l]) then
         # old rho-value, but new lambda-rho-combination
-
         # update rho orbit graph
         rho_orbitgraph[rholookup[i]][j] := l;
-
         nr := nr + 1;
         lenreps[m] := lenreps[m] + 1;
         ind := lenreps[m];
@@ -647,12 +645,12 @@ InstallMethod(OrbitGraphAsSets, "for semigroup data",
 InstallMethod(Position, "for semigroup data and an associative element",
 [IsSemigroupData, IsAssociativeElement, IsZeroCyc],
 function(data, x, n)
-  local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
+  local S, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
   lambdaperm;
 
-  s := data!.parent;
-  o := LambdaOrb(s);
-  l := Position(o, LambdaFunc(s)(x));
+  S := data!.parent;
+  o := LambdaOrb(S);
+  l := Position(o, LambdaFunc(S)(x));
 
   if l = fail then
     return fail;
@@ -673,7 +671,7 @@ function(data, x, n)
     return fail;
   fi;
 
-  l := Position(RhoOrb(s), RhoFunc(s)(x));
+  l := Position(RhoOrb(S), RhoFunc(S)(x));
 
   if l = fail then
     return fail;
@@ -695,13 +693,12 @@ function(data, x, n)
   reps := data!.reps[m][ind];
   repslens := data!.repslens[m][ind];
 
-  lambdaperm := LambdaPerm(s);
+  lambdaperm := LambdaPerm(S);
   for n in [1 .. repslens] do
     if SiftedPermutation(schutz, lambdaperm(reps[n], x)) = () then
       return repslookup[n];
     fi;
   od;
-
   return fail;
 end);
 
@@ -772,24 +769,24 @@ end);
 # have one.
 
 InstallMethod(String, "for the universal fake one",
-[IsUniversalFakeOne], obj -> "<universal fake one>");
+[SEMIGROUPS_IsUniversalFakeOne], obj -> "<universal fake one>");
 
 InstallMethod(\*,
 "for the universal fake one and an associative element",
-[IsUniversalFakeOne, IsAssociativeElement],
+[SEMIGROUPS_IsUniversalFakeOne, IsAssociativeElement],
 function(x, y)
   return y;
 end);
 
 InstallMethod(\*,
 "for an associative element and the universal fake one",
-[IsAssociativeElement, IsUniversalFakeOne],
+[IsAssociativeElement, SEMIGROUPS_IsUniversalFakeOne],
 function(x, y)
   return x;
 end);
 
 InstallMethod(\<, "for the universal fake one and an associative element",
-[IsUniversalFakeOne, IsAssociativeElement], ReturnTrue);
+[SEMIGROUPS_IsUniversalFakeOne, IsAssociativeElement], ReturnTrue);
 
 InstallMethod(\<, "for an associative element and the universal fake one",
-[IsAssociativeElement, IsUniversalFakeOne], ReturnFalse);
+[IsAssociativeElement, SEMIGROUPS_IsUniversalFakeOne], ReturnFalse);

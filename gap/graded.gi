@@ -12,23 +12,24 @@
 
 InstallMethod(GradedLambdaHT, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local record;
 
-  record := ShallowCopy(LambdaOrbOpts(s));
-  record.treehashsize := s!.opts.hashlen.S;
-  return HTCreate(LambdaFunc(s)(Representative(s)), record);
+  record:=ShallowCopy(LambdaOrbOpts(S));
+  record.treehashsize:=SEMIGROUPS_OptionsRec(S).hashlen.S;
+  return HTCreate(LambdaFunc(S)(Representative(S)), record);
 end);
 
 #
 
-InstallMethod(GradedRhoHT, "for an acting semigroup", [IsActingSemigroup],
-function(s)
+InstallMethod(GradedRhoHT, "for an acting semigroup",
+[IsActingSemigroup],
+function(S)
   local record;
 
-  record := ShallowCopy(RhoOrbOpts(s));
-  record.treehashsize := s!.opts.hashlen.S;
-  return HTCreate(RhoFunc(s)(Representative(s)), record);
+  record:=ShallowCopy(RhoOrbOpts(S));
+  record.treehashsize:=SEMIGROUPS_OptionsRec(S).hashlen.S;
+  return HTCreate(RhoFunc(S)(Representative(S)), record);
 end);
 
 #
@@ -79,7 +80,7 @@ function(arg)
   S := arg[1];
   x := arg[2];
   global := arg[3];
-
+  
   if Length(arg) > 3 then
     obj := arg[4];
   fi;
@@ -136,7 +137,7 @@ function(arg)
   orb := ShallowCopy(LambdaOrbOpts(S));
   # TODO include as much of the following as appropriate in LambdaOrbOpts
   orb.parent := S;
-  orb.treehashsize := S!.opts.hashlen.M;
+  orb.treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M;
   orb.schreier := true;
   orb.orbitgraph := true;
   orb.storenumbers := true;
@@ -244,7 +245,7 @@ function(arg)
 
   orb := ShallowCopy(RhoOrbOpts(S));
   orb.parent := S;
-  orb.treehashsize := S!.opts.hashlen.M;
+  orb.treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M;
   orb.schreier := true;
   orb.orbitgraph := true;
   orb.storenumbers := true;
@@ -285,23 +286,23 @@ end);
 
 InstallMethod(GradedLambdaOrbs, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local fam;
 
-  fam := CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
+  fam := CollectionsFamily(FamilyObj(LambdaFunc(S)(Representative(S))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs),
-   rec(orbits := List([1 .. ActionDegree(s) + 1], x -> []),
-       lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
+   rec(orbits := List([1 .. ActionDegree(S) + 1], x -> []),
+       lens := [1 .. ActionDegree(S) + 1] * 0, parent := S));
 end);
 
 # stores so far calculated GradedRhoOrbs
 
 InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
-  return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs), rec(
-    orbits := List([1 .. ActionDegree(s) + 1], x -> []),
-    lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
+function(S)
+  return Objectify(NewType(FamilyObj(S), IsGradedRhoOrbs), rec(
+    orbits := List([1 .. ActionDegree(S) + 1], x -> []),
+    lens := [1 .. ActionDegree(S) + 1] * 0, parent := S));
 end);
 
 #

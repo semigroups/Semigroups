@@ -8,10 +8,12 @@
 #############################################################################
 ##
 
-DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
-IsBipartitionCollection);
-DeclareSynonym("IsBipartitionMonoid", IsMonoid and
-IsBipartitionCollection);
+DeclareSynonym("IsBipartitionSemigroup", 
+               IsSemigroup and IsBipartitionCollection);
+DeclareSynonym("IsBipartitionMonoid", 
+               IsMonoid and IsBipartitionCollection);
+
+InstallTrueMethod(IsFinite, IsBipartitionSemigroup);
 
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
@@ -24,7 +26,7 @@ DeclareProperty("IsBlockBijectionSemigroup", IsSemigroup);
 DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
 DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
 
-#JDM why are these declarations necessary?
+#JDM why are these declarations necessary? FIXME
 DeclareProperty("IsBlockBijectionSemigroup", IsSemigroupIdeal);
 DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroupIdeal);
 DeclareProperty("IsPermBipartitionGroup", IsSemigroupIdeal);

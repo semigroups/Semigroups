@@ -79,7 +79,7 @@ DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
 #collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 
-# LambdaConjugator #TODO document or make internal!
-DeclareGlobalFunction("BipartRightBlocksConj");
+# LambdaConjugator
+DeclareGlobalFunction("BipartRightBlocksConjNC");
 
 DeclareOperation("OneMutable", [IsBipartitionCollection]);

@@ -15,7 +15,7 @@
 
 InstallMethod(CharacterTableOfInverseSemigroup,
 "for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
+[IsInverseSemigroup and IsPartialPermSemigroup and IsActingSemigroup],
 function(S)
   local reps, p, H, C, r, tbl, id, l, A, o, lookup, scc, conjclass, conjlens,
   j, conjreps, dom, subsets, x, m, u, k, h, i, n, y;
@@ -92,7 +92,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsGreensDLeq, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 function(S)
   local partial, o, comp_index;
 
@@ -116,8 +116,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(PrimitiveIdempotents, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+InstallMethod(PrimitiveIdempotents, "for acting semigroup with inverse op",
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   local o, scc, rank, min, l, min2, m;
 
@@ -149,8 +149,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsJoinIrreducible,
-"for an acting semigroup with inverse op and an associative element",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
+"for acting semigroup with inverse op and an associative element",
+[IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
   local y, elts, rank, i, k, singleline, sup, j;
 
@@ -212,8 +212,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for an acting semigroup with inverse op and an acting semigroup",
-[IsActingSemigroupWithInverseOp, IsActingSemigroup],
+"for a semigroup with inverse op and acting semigroup",
+[IsSemigroupWithInverseOp, IsSemigroupWithInverseOp],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: IsMajorantlyClosed: usage,\n",
@@ -227,8 +227,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for acting semigroup with inverse op and associative element collection",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collection",
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     Error("Semigroups: IsMajorantlyClosed: usage,\n",
@@ -242,8 +242,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosedNC,
-"for an acting semigroup with inverse op and associative element collection",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collection",
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   local i, iter, t, u;
 
@@ -270,7 +270,8 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p;
+  local D, elts, out, seen_zero, rep, i, k, minorants, singleline, h, mov, d,
+  j, p;
 
   D := GreensDClasses(S);
   elts := Set(Idempotents(S));
@@ -278,7 +279,7 @@ function(S)
   seen_zero := false;
 
   for d in D do
-    rep := Representative(d);
+    rep := LeftOne(Representative(d));
 
     if not seen_zero and IsMultiplicativeZero(S, rep) then
       seen_zero := true;
@@ -290,6 +291,7 @@ function(S)
                j -> NaturalLeqInverseSemigroup(elts[j], rep));
 
     if k = fail then # d is the minimal non-trivial D-class
+                     # WW what do I mean by 'non-trivial' here?
       Add(out, d);
       continue;
     fi;
@@ -297,12 +299,18 @@ function(S)
     minorants := [k];
     singleline := true;
 
+    if IsActingSemigroup(S) then
+      h := SchutzenbergerGroup(d);
+    else
+      h := GroupHClass(d);
+    fi;
+
     for j in [1 .. k - 1] do
       if NaturalLeqInverseSemigroup(elts[j], rep) then
         if singleline and not NaturalLeqInverseSemigroup(elts[j], elts[k]) then
           # rep is the lub of {elts[j], elts[k]}, not quite
           singleline := false;
-          if IsTrivial(SchutzenbergerGroup(d)) then
+          if IsTrivial(h) then
             break;
           fi;
         else
@@ -314,7 +322,7 @@ function(S)
     if singleline then
       Add(out, d);
       continue;
-    elif IsTrivial(SchutzenbergerGroup(d)) then
+    elif IsTrivial(h) then
       continue;
     fi;
 
@@ -325,10 +333,11 @@ function(S)
       continue;
     fi;
 
-    for p in SchutzenbergerGroup(d) do
-      if p <> () and ForAll(MovedPoints(p), x -> not x in minorants) then
-        # rep*p<>rep and rep, rep*p>lub(minorants) and rep||rep*p and
-        # hence neither rep*p nor rep is of any set.
+    for p in h do # used to be SchutzenbergerGroup(d)
+      mov := MovedPoints(p);
+      if not IsEmpty(mov) and ForAll(mov, x -> not x in minorants) then
+        # rep * p <> rep and rep, rep * p > lub(minorants) and rep || rep * p
+        # and hence neither rep * p nor rep is of any set.
         Add(out, d);
         break;
       fi;
@@ -341,8 +350,8 @@ end);
 # same method for ideals
 
 InstallMethod(JoinIrreducibleDClasses,
-"for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+"for acting semigroup with inverse op",
+[IsSemigroupWithInverseOp],
 function(S)
   return Filtered(GreensDClasses(S),
                   x -> IsJoinIrreducible(S, Representative(x)));
@@ -351,8 +360,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure,
-"for an acting semigroup with inverse op and an acting semigroup",
-[IsActingSemigroupWithInverseOp, IsActingSemigroup],
+"for acting semigroup with inverse op and acting semigroup",
+[IsSemigroupWithInverseOp and IsActingSemigroup, IsActingSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: MajorantClosure: usage,\n",
@@ -366,8 +375,9 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure,
-"for an acting semigroup with inverse op and associative element collections",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collections",
+[IsSemigroupWithInverseOp,
+ IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     Error("Semigroups: MajorantClosure: usage,\n",
@@ -381,8 +391,9 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosureNC,
-"for an acting semigroup with inverse op and associative element collections",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collections",
+[IsSemigroupWithInverseOp,
+ IsAssociativeElementCollection],
 function(S, T)
   local elts, n, out, ht, k, val, t, i;
 
@@ -421,8 +432,8 @@ end);
 #C method? JDM
 
 InstallMethod(Minorants,
-"for an acting semigroup with inverse op and associative element collections",
-[IsActingSemigroupWithInverseOp, IsAssociativeElement],
+"for a semigroup with inverse op and associative element collections",
+[IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, f)
   local elts, i, out, rank, j, k;
 
@@ -446,12 +457,21 @@ function(S, f)
     elts := ShallowCopy(Elements(S));
   fi;
 
-  rank := ActionRank(S);
-  SortBy(elts, rank);
+  # Minorants always have lesser rank.
+  # If we sort the elts by rank then we can cut down our search space
+  if IsActingSemigroup(S) then
+    rank := ActionRank(S);
+    SortBy(elts, rank);
+  else
+    # WW note that IsGreensDLeq returns true if x is GREATER than y
+    rank := function(x, y)
+      return not IsGreensDLeq(S)(x, y);
+    end;
+    Sort(elts, rank);
+  fi;
 
   i := Position(elts, f);
   j := 0;
-
   for k in [1 .. i - 1] do
     if NaturalLeqInverseSemigroup(elts[k], f) and f <> elts[k] then
       j := j + 1;
@@ -466,10 +486,11 @@ end);
 # TODO: rename this RightCosets
 
 InstallMethod(RightCosetsOfInverseSemigroup,
-"for acting semigroups with inverse op",
-[IsActingSemigroupWithInverseOp, IsActingSemigroupWithInverseOp],
+"for two semigroups with inverse op",
+[IsSemigroupWithInverseOp,
+ IsSemigroupWithInverseOp],
 function(S, T)
-  local elts, idem, usedreps, out, dupe, coset, s, rep, t;
+  local elts, min, usedreps, out, dupe, coset, s, rep, t;
 
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
@@ -485,11 +506,11 @@ function(S, T)
     return;
   fi;
 
-  idem := Representative(MinimalIdeal(T));
+  min := RepresentativeOfMinimalIdeal(T);
   usedreps := [];
   out := [];
 
-  for s in RClass(S, idem) do
+  for s in RClass(S, min) do
 
     # Check if Ts is a duplicate coset
     dupe := false;
@@ -525,146 +546,29 @@ end);
 # same method for ideals
 
 InstallMethod(SameMinorantsSubgroup,
-"for a group H-class of an acting semigroup with op",
-[IsGroupHClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+"for a group H-class of a semigroup with inverse op",
+[IsGroupHClass],
 function(h)
-  local S, e, F, out, i;
+  local S, e, F, out, x;
 
   S := Parent(h);
 
+  # FIXME IsInverseOpClass should work for non-acting semigroup too
+  #       and then this could then become a filter for the method
+  if not IsSemigroupWithInverseOp(S) then
+    TryNextMethod();
+  fi;
+
   e := Representative(h);
   F := Minorants(S, e);
-  h := Elements(h);
-  out := [e];
+  out := [];
 
-  for i in [2 .. Length(h)] do
-    if ForAll(F, f -> NaturalLeqInverseSemigroup(f, h[i])) then
-      Add(out, h[i]);
+  for x in h do
+    if x = e or ForAll(F, f -> NaturalLeqInverseSemigroup(f, x)) then
+      Add(out, x);
     fi;
   od;
   return out;
-end);
-
-#
-
-InstallMethod(SmallerDegreePartialPermRepresentation,
-"for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(S)
-  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, sup, trivialse,
-  psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, h, nrcosets, j, reps,
-  lookup, gen, offset, rep, box, subbox, T, d, i, k, m;
-
-  oldgens := Generators(S);
-  newgens := List(oldgens, x -> []);
-  D := JoinIrreducibleDClasses(S);
-
-  for d in D do
-
-    e := Representative(d);
-    # He is a group H-Class in our join-irreducible D-Class ##
-    # Sigma: isomorphism to a perm group (unfortunately necessary)
-    # Psi: homom from Schutzenberger Group corresponding to He, to a perm
-    #      group
-    # Rho: isomorphism to a smaller degree perm group
-    He := GroupHClass(d);
-
-    sigma := IsomorphismPermGroup(He);
-    sigmainv := InverseGeneralMapping(sigma);
-
-    schutz := SchutzenbergerGroup(d);
-    sup := SupremumIdempotentsNC(Minorants(S, e), e);
-    trivialse := not ForAny(He, x -> NaturalLeqPartialPerm(sup, x) and x <> e);
-
-    psi := ActionHomomorphism(schutz,
-                              Difference(DomainOfPartialPerm(e),
-                                         DomainOfPartialPerm(sup)));
-    psiinv := InverseGeneralMapping(psi);
-
-    rho := SmallerDegreePermutationRepresentation(Image(psi));
-    rhoinv := InverseGeneralMapping(rho);
-
-    ##  Se is the subgroup of He whose elements have the same minorants as e
-    if trivialse then
-      orbits := [[ActionDegree(He) + 1]];
-      cosets := [e];
-      #stab:=schutz;
-      stabpp := He;
-    else
-      orbits := Orbits(Image(rho));
-    fi;
-
-    for i in orbits do
-
-      if not trivialse then
-        stab := ImagesSet(psiinv,
-                          ImagesSet(rhoinv, Stabilizer(Image(rho), i[1])));
-        cosets := RightTransversal(schutz, stab);
-        stabpp := ImagesSet(sigmainv, stab);
-      fi;
-
-      # Generate representatives for all the H-Classes in the R-Class of He
-      h := HClassReps(RClassNC(d, e));
-      nrcosets := Size(h) * Length(cosets);
-
-      # Generate representatives for ALL the cosets the generator will act
-      # on
-      # Divide every H-Class in the R-Class into 'cosets' like stab in
-      # He
-      j := 0;
-      reps := [];
-      lookup := EmptyPlist(Length(LambdaOrb(d)));
-      for k in [1 .. Size(h)] do
-        lookup[Position(LambdaOrb(d), ImageSetOfPartialPerm(h[k]))] := k;
-        for m in [1 .. Length(cosets)] do
-          j := j + 1;
-          reps[j] := cosets[m] * h[k];
-        od;
-      od;
-      ShrinkAllocationPlist(lookup);
-
-      # Loop over old generators of S to calculate its action on the cosets
-      for j in [1 .. Length(oldgens)] do
-
-        gen := oldgens[j];
-        offset := Length(newgens[j]);
-
-        # Loop over cosets to calculate the image of each under the generator
-        for k in [1 .. nrcosets] do
-          rep := reps[k] * gen;
-          # Will the new generator will be defined at this point?
-          if not rep * rep ^ (- 1) in stabpp then
-            Add(newgens[j], 0);
-          else
-            box := lookup[Position(LambdaOrb(d), ImageSetOfPartialPerm(rep))];
-            if trivialse then
-              subbox := 1;
-            else
-              ## Below, could be ^sigma instead of AsPermutation
-              subbox := PositionCanonical(cosets,
-                                          AsPermutation(rep * h[box] ^ (- 1)));
-            fi;
-            Add(newgens[j], (box - 1) * Length(cosets) + subbox + offset);
-          fi;
-        od;
-      od;
-    od;
-  od;
-
-  T := InverseSemigroup(List(newgens, x -> PartialPermNC(x)));
-
-  # Return identity mapping if nothing has been accomplished; else the result.
-  if NrMovedPoints(T) > NrMovedPoints(S)
-      or (NrMovedPoints(T) = NrMovedPoints(S)
-          and ActionDegree(T) >= ActionDegree(S)) then
-    return IdentityMapping(S);
-  else
-    # gaplint: ignore 3
-    return MagmaIsomorphismByFunctionsNC(S, T,
-      x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x)),
-      x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x)));
-  fi;
-
 end);
 
 #TODO review and generalise this...
@@ -717,8 +621,10 @@ function(coll, type)
 
   elif IsBipartition(type) and IsPartialPermBipartition(type) then
     #FIXME shouldn't there be a check here like above?
-    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm),
-                                               PartialPerm([])));
+    i := DegreeOfBipartitionCollection(coll);
+    return AsBipartition(SupremumIdempotentsNC(
+                           List(coll, AsPartialPerm), PartialPerm([])),
+                         i);
   else
     Error("Semigroups: SupremumIdempotentsNC: usage,\n",
           "the argument must be a collection of partial perms, block ",
@@ -730,8 +636,8 @@ end);
 # same method for ideals
 
 InstallMethod(VagnerPrestonRepresentation,
-"for an acting semigroup with inverse operation",
-[IsActingSemigroupWithInverseOp],
+"for a semigroup with inverse operation",
+[IsSemigroupWithInverseOp],
 function(S)
   local gens, elts, out, iso, T, inv, i;
 

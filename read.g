@@ -41,12 +41,14 @@ fi;
 # Issue 5 for Orb:
 
 if not IsBound(MappingPermListList_C) then
-  BindGlobal("MappingPermListList_C", function(src, dst)
+  BindGlobal("MappingPermListList_C",
+  function(src, dst)
     local src_tab, dst_tab, d, out, next, i;
 
     if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
        Error("Semigroups: MappingPermListList_C: usage\n",
              "the arguments must be lists of equal length,");
+       return;
     fi;
 
     if IsEmpty(src)  then
@@ -89,9 +91,16 @@ fi;
 
 ReadPackage("semigroups/gap/grpperm.gi");
 
+ReadPackage("semigroups/gap/semiring-matrix.gi");
+ReadPackage("semigroups/gap/max-plus.gi");
+ReadPackage("semigroups/gap/min-plus.gi");
+ReadPackage("semigroups/gap/boolean.gi");
 ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");
+
 ReadPackage("semigroups/gap/semibipart.gi");
+ReadPackage("semigroups/gap/semisemiringmat.gi");
+ReadPackage("semigroups/gap/semibool.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");
 
@@ -113,10 +122,11 @@ ReadPackage("semigroups/gap/enums.gi");
 ReadPackage("semigroups/gap/iterators.gi");
 ReadPackage("semigroups/gap/properties.gi");
 ReadPackage("semigroups/gap/attributes.gi");
+ReadPackage("semigroups/gap/attributes-acting.gi");
+ReadPackage("semigroups/gap/attributes-generic.gi");
+ReadPackage("semigroups/gap/attributes-inverse.gi");
 ReadPackage("semigroups/gap/examples.gi");
 ReadPackage("semigroups/gap/orbits.gi");
-
-ReadPackage("semigroups/gap/attributes-inverse.gi");
 
 ReadPackage("semigroups/gap/ideals.gi");
 
@@ -143,3 +153,6 @@ ReadPackage("semigroups/gap/univ-cong.gi");
 ReadPackage("semigroups/gap/inverse-cong.gi");
 ReadPackage("semigroups/gap/simple-cong.gi");
 ReadPackage("semigroups/gap/rees-cong.gi");
+
+ReadPackage("semigroups/gap/semigroups-generic.gi");
+ReadPackage("semigroups/gap/ideals-generic.gi");

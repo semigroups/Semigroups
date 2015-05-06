@@ -1,0 +1,42 @@
+#############################################################################
+##
+#W  attributes-acting.xml
+#Y  Copyright (C) 2015                                  James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="StructureDescriptionSchutzenbergerGroups">
+  <ManSection>
+    <Attr Name="StructureDescriptionSchutzenbergerGroups" Arg="S"/>
+    <Returns>Distinct structure descriptions of the Schutzenberger groups of a
+      semigroup.</Returns>
+    <Description>
+      <C>StructureDescriptionSchutzenbergerGroups</C> returns the distinct
+      values of <Ref Attr="StructureDescription" BookName="ref"/> when it is
+      applied to the Schutzenberger groups of the &R;-classes of the semigroup
+      <A>S</A>.
+      <Example><![CDATA[
+gap> S:=Semigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3 ], [ 4, 1, 2 ] ), 
+>  PartialPerm( [ 1, 2, 3 ], [ 5, 2, 3 ] ), 
+>  PartialPerm( [ 1, 2, 4, 5 ], [ 2, 1, 4, 3 ] ), 
+>  PartialPerm( [ 1, 2, 5 ], [ 2, 3, 5 ] ), 
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 2, 3, 5, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 4, 2, 5, 1 ] ), 
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 4, 3 ] ), 
+>  PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] ) );;
+gap> StructureDescriptionSchutzenbergerGroups(S);            
+[ "1", "C2", "S3" ]
+gap> S:=Monoid( 
+> Bipartition([[ 1, 2, 5, -1, -2 ], [ 3, 4, -3, -5 ], [ -4 ]]), 
+> Bipartition([[ 1, 2, -2 ], [ 3, -1 ], [ 4 ], [ 5 ], [ -3, -4 ], [ -5 ]]),
+> Bipartition([[ 1 ], [ 2, 3, -5 ], [ 4, -3 ], [ 5, -2 ], [ -1, -4 ]]));
+<bipartition monoid on 5 pts with 3 generators>
+gap> StructureDescriptionSchutzenbergerGroups(S);
+[ "1", "C2" ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

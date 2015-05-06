@@ -12,39 +12,26 @@
 ##
 
 DeclareAttribute("CharacterTableOfInverseSemigroup",
-                 IsInverseSemigroup and IsPartialPermSemigroup);
-
+                 IsInverseSemigroup and IsPartialPermSemigroup
+                 and IsActingSemigroup);
 DeclareOperation("IsJoinIrreducible",
                  [IsInverseSemigroup, IsAssociativeElement]);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
 DeclareOperation("IsMajorantlyClosed",
-                 [IsActingSemigroupWithInverseOp,
-                  IsAssociativeElementCollection]);
+                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
 DeclareOperation("IsMajorantlyClosed",
-                 [IsActingSemigroupWithInverseOp,
-                  IsActingSemigroup]);
+                 [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp]);
 DeclareOperation("IsMajorantlyClosedNC",
-                 [IsActingSemigroupWithInverseOp,
-                  IsAssociativeElementCollection]);
+                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
 DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("MajorantClosureNC",
-                 [IsInverseSemigroup,
-                  IsAssociativeElementCollection]);
+                 [IsInverseSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
-DeclareAttribute("SameMinorantsSubgroup",
-                 IsGroupHClass and IsInverseOpClass
-                 and IsActingSemigroupGreensClass);
-
-DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
-
+DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
 DeclareOperation("RightCosetsOfInverseSemigroup",
-                 [IsActingSemigroupWithInverseOp,
-                  IsActingSemigroupWithInverseOp]);
-DeclareAttribute("SmallerDegreePartialPermRepresentation",
-                 IsInverseSemigroup and IsPartialPermSemigroup);
+                 [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp]);
+DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
-
-DeclareAttribute("VagnerPrestonRepresentation",
-                 IsActingSemigroupWithInverseOp);
+DeclareAttribute("VagnerPrestonRepresentation", IsSemigroupWithInverseOp);
 DeclareOperation("NaturalLeqInverseSemigroup",
                  [IsAssociativeElement, IsAssociativeElement]);

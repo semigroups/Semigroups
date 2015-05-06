@@ -8,7 +8,103 @@
 #############################################################################
 ##
 
+# This file contains methods for ideals of acting semigroups.
+
+# attributes with better methods than the generic ones for
+# IsActingSemigroup.
+
+InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal], 
+function(S)
+  local gens, partial, pos, o, scc, out, classes, x, i;
+  
+  gens:=GeneratorsOfSemigroupIdeal(S); 
+  partial:=PartialOrderOfDClasses(S);
+  pos:=[]; 
+  o:=LambdaOrb(S); 
+  scc:=OrbSCCLookup(o);
+
+  for x in gens do 
+    #index of the D-class containing x 
+    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))]-1);
+  od;
+
+  out:=[];
+  classes:=GreensDClasses(S);
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
+# different method for inverse
+
+InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  local data, pos, partial, classes, out, i;
+
+  data:=SemigroupIdealData(I); 
+  pos:=[1..data!.genspos-1]; # the D-classes of the generators in positions
+                             # [1..n-1] in data!.dorbit
+   
+  partial:=data!.poset;
+  classes:=data!.dorbit;
+  out:=[];
+  for i in pos do 
+    if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+      Add(out, classes[i]);
+    fi;
+  od;
+
+  return out;
+end);
+
 #
+
+InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
+function(I)
+  return Length(OrbSCC(LambdaOrb(I)))-1;
+end);
+
+#
+
+InstallMethod(GreensDClasses, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  Enumerate(SemigroupIdealData(I));
+  return SemigroupIdealData(I)!.dorbit;
+end);
+
+#
+
+InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal", 
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  local data;
+
+  data:=SemigroupIdealData(I);
+  Enumerate(data);
+  return data!.poset;
+end);
+
+#
+
+InstallMethod(DClassReps, "for an acting semigroup ideal", 
+[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+function(I)
+  local data;
+
+  data:=SemigroupIdealData(I);
+  Enumerate(data);
+  return List(data!.dorbit, Representative);
+end);
+
+# the really technical stuff...
 
 InstallMethod(SemigroupData, "for a regular acting semigroup ideal",
 [IsActingSemigroup and IsRegularSemigroup and IsSemigroupIdeal],
@@ -144,9 +240,9 @@ end);
 
 #
 
-InstallMethod(GeneratorsOfSemigroup,
+InstallMethod(GeneratorsOfSemigroup, 
 "for an inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local out, U, i, partial, D, pos, inj, j, C;
 
@@ -195,9 +291,9 @@ end);
 
 #
 
-InstallMethod(GeneratorsOfInverseSemigroup,
+InstallMethod(GeneratorsOfInverseSemigroup, 
 "for an inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local U, i, partial, D, pos, inj, j, C;
 
@@ -256,7 +352,8 @@ function(I)
               parent := I,
               log := [1],
               genspos := 0,
-              ht := HTCreate(gens[1], rec(treehashsize := I!.opts.hashlen.L)),
+              ht := HTCreate(gens[1], 
+                             rec(treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.L)),
               pos := 0,
               init := false,
               reps := [],
@@ -273,8 +370,7 @@ function(I)
               genstoapply := [1 .. Length(gens)],
               stopper := false,
               poset := [],
-              scc_lookup := []
-             );
+              scc_lookup := []);
 
   if HasIsRegularSemigroup(I) and IsRegularSemigroup(I) then
     filt := IsRegularIdealData;
@@ -289,7 +385,7 @@ end);
 #
 
 InstallMethod(SemigroupIdealData, "for an inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal], ReturnFail);
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal], ReturnFail);
 
 #
 
@@ -675,7 +771,7 @@ InstallMethod(\in,
 IsRegularSemigroup],
 function(x, I)
   local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht,
-  schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
+    schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
 
   if ElementsFamily(FamilyObj(I)) <> FamilyObj(x)
     or (IsActingSemigroupWithFixedDegreeMultiplication(I)

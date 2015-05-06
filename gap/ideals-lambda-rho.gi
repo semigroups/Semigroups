@@ -222,12 +222,13 @@ function(I)
   # ComponentOfIndex(o, Position(o, LambdaFunc(M)(gens[orbtogen[i]])))=i
   # and <orbtogen[ComponentOfIndex(Position(o, LambdaFunc(I)(gens[i])))]=i>
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
+  
+  htopts:=ShallowCopy(LambdaOrbOpts(I)); 
+  htopts.treehashsize:=SEMIGROUPS_OptionsRec(I).hashlen.M;
+  record.ht:=HTCreate(LambdaFunc(I)(Representative(I)), htopts);
+  
+  fam:=CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
 
-  htopts := ShallowCopy(LambdaOrbOpts(I));
-  htopts.treehashsize := I!.opts.hashlen.M;
-  record.ht := HTCreate(LambdaFunc(I)(Representative(I)), htopts);
-
-  fam := CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
   return Objectify(NewType(fam, IsIdealOrb and IsLambdaOrb), record);
 end);
 
@@ -260,11 +261,11 @@ function(I)
   # <ComponentOfIndex(o, Position(o, RhoFunc(I)(gens[orbtogen[i]])))=i>
   # and <orbtogen[ComponentOfIndex(Position(o, RhoFunc(I)(gens[i])))]=i>
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
-  htopts := ShallowCopy(RhoOrbOpts(I));
-  htopts.treehashsize := I!.opts.hashlen.M;
-  record.ht := HTCreate(RhoFunc(I)(Representative(I)), htopts);
-
-  fam := CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
+  htopts:=ShallowCopy(RhoOrbOpts(I)); 
+  htopts.treehashsize:=SEMIGROUPS_OptionsRec(I).hashlen.M;
+  record.ht:=HTCreate(RhoFunc(I)(Representative(I)), htopts);
+  
+  fam:=CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
   return Objectify(NewType(fam, IsIdealOrb and IsRhoOrb), record);
 end);
 
@@ -273,8 +274,8 @@ end);
 # acting on the right by the generators (and their inverses) of the
 # supersemigroup. Hence we require a different case here.
 
-InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal",
-[IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
+InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal", 
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local record, gens, lambdafunc, o, ht, nr, nrgens, lambda, InstallPointInOrb,
    x, i;
@@ -287,10 +288,9 @@ function(I)
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := I!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
   record.orbtogen := [];
   # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i and
-  # orbtogen[Position(o, LambdaFunc(I)(gens[i]^-1))]=i+nrgens...
 
   gens := GeneratorsOfSemigroupIdeal(I);
   lambdafunc := LambdaFunc(I);
@@ -331,8 +331,8 @@ function(I)
   od;
 
   o!.pos := 2; #don't apply the generators of the supersemigroup of <I> to the
-             #dummy point at the start of the orbit (otherwise we just get the
-             #lambda orbit of the supersemigroup
+               #dummy point at the start of the orbit (otherwise we just get the
+               #lambda orbit of the supersemigroup
 
   SetFilterObj(o, IsLambdaOrb and IsInverseOrb and IsIdealOrb);
   return o;
@@ -357,13 +357,12 @@ function(o, pt, x, pos, gen, ind, lookfunc)
 
   I := o!.parent;
   record := ShallowCopy(LambdaOrbOpts(I));
-
   record.schreier := true;
   record.orbitgraph := true;
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := I!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
 
   len := Length(o);
 
@@ -471,13 +470,12 @@ function(o, pt, x, pos, gen, ind, lookfunc)
 
   I := o!.parent;
   record := ShallowCopy(RhoOrbOpts(I));
-
   record.schreier := true;
   record.orbitgraph := true;
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := I!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
 
   len := Length(o);
 

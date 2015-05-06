@@ -8,9 +8,10 @@
 #############################################################################
 ##
 
-DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareCategory("IsSemigroupData", IsList);
 DeclareFilter("IsClosedData", IsSemigroupData);
+
+DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 
 DeclareOperation("Enumerate", [IsSemigroupData]);
 DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);
@@ -19,15 +20,18 @@ DeclareOperation("OrbitGraphAsSets", [IsSemigroupData]);
 DeclareOperation("OrbitGraph", [IsSemigroupData]);
 DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
-# these must be here since UniversalFakeOne is used in lots of other places
+# these must be here since SEMIGROUPS_UniversalFakeOne is used in lots of other
+# places
 
-DeclareCategory("IsUniversalFakeOne", IsAssociativeElement);
+DeclareCategory("SEMIGROUPS_IsUniversalFakeOne", IsAssociativeElement);
 
-BindGlobal("UniversalFakeOneFamily",
-           NewFamily("UniversalFakeOneFamily", IsUniversalFakeOne,
-                     CanEasilyCompareElements, CanEasilyCompareElements));
+BindGlobal("SEMIGROUPS_UniversalFakeOneFamily",
+           NewFamily("SEMIGROUPS_UniversalFakeOneFamily",
+                     SEMIGROUPS_IsUniversalFakeOne,
+                     CanEasilyCompareElements,
+                     CanEasilyCompareElements));
 
-BindGlobal("UniversalFakeOne",
-           Objectify(NewType(UniversalFakeOneFamily,
-                             IsUniversalFakeOne),
+BindGlobal("SEMIGROUPS_UniversalFakeOne",
+           Objectify(NewType(SEMIGROUPS_UniversalFakeOneFamily,
+                             SEMIGROUPS_IsUniversalFakeOne),
                      rec()));

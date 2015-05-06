@@ -12,6 +12,7 @@
 #
 
 BindGlobal("SemigroupsDocXMLFiles", ["../PackageInfo.g",
+                                     "attributes-acting.xml",
                                      "attributes-inverse.xml",
                                      "attributes.xml",
                                      "bipartition.xml",
@@ -116,6 +117,8 @@ function()
   # handle info levels etc
   record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
   record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);
+  record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
+  record.SEMIGROUPS_DefaultOptionsRec := ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
 
   record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
   record.TransformationDisplayLimit
@@ -129,6 +132,7 @@ function()
 
   SetInfoLevel(InfoWarning, 0);
   SetInfoLevel(InfoSemigroups, 0);
+  SetInfoLevel(InfoPackageLoading, 0);
 
   SetUserPreference("PartialPermDisplayLimit", 100);
   SetUserPreference("TransformationDisplayLimit", 100);
@@ -161,6 +165,10 @@ function(file)
 
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
+  SetInfoLevel(InfoSemigroups, record.InfoLevelInfoPackageLoading);
+  UnbindGlobal("SEMIGROUPS_DefaultOptionsRec");
+  BindGlobal("SEMIGROUPS_DefaultOptionsRec", record.SEMIGROUPS_DefaultOptionsRec);
+  MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 
   SetUserPreference("PartialPermDisplayLimit",
    record.PartialPermDisplayLimit);
@@ -268,8 +276,21 @@ end);
 
 InstallGlobalFunction(SemigroupsTestInstall,
 function()
+  local generic;
+  
+  generic := SEMIGROUPS_DefaultOptionsRec.generic;
+  
+  Print("SEMIGROUPS_DefaultOptionsRec.generic := false;\n");
+  SEMIGROUPS_DefaultOptionsRec.generic := false;
   Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
    "testinstall.tst"));
+  
+  Print("SEMIGROUPS_DefaultOptionsRec.generic := true;\n");
+  SEMIGROUPS_DefaultOptionsRec.generic := true;
+  Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
+   "testinstall.tst"));
+
+  SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return;
 end);
 

@@ -432,32 +432,14 @@ end);
 
 #
 
-InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+InstallMethod(DotDClasses, "for a semigroup", [IsSemigroup],
 function(S)
-  if IsActingSemigroup(S) then
-    TryNextMethod();
-  fi;
-  return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)));
+  return DotDClasses(S, rec());
 end);
 
-InstallMethod(DotDClasses, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup, IsRecord],
+InstallMethod(DotDClasses, "for a semigroup and record",
+[IsSemigroup, IsRecord],
 function(S, opts)
-  if IsActingSemigroup(S) then
-    TryNextMethod();
-  fi;
-  return DotDClasses(Semigroup(GeneratorsOfSemigroup(S)), opts);
-end);
-
-#
-
-InstallMethod(DotDClasses, "for an acting semigroup",
-[IsActingSemigroup], S -> DotDClasses(S, rec()));
-
-InstallMethod(DotDClasses, "for an acting semigroup and record",
-[IsActingSemigroup, IsRecord],
-function(s, opts)
   local es, elts, str, i, gp, h, pos, color, rel, j, k, di, dk, x, d, l;
 
   # process the options
@@ -484,7 +466,7 @@ function(s, opts)
   if not IsBound(opts.idempotentsemilattice) then
     opts.idempotentsemilattice := false;
   elif opts.idempotentsemilattice then
-    es := IdempotentGeneratedSubsemigroup(s);
+    es := IdempotentGeneratedSubsemigroup(S);
     elts := Elements(es); #JDM could be enumerator sorted
   fi;
 
@@ -494,7 +476,7 @@ function(s, opts)
   Append(str, "edge [color=black,arrowhead=none]\n");
   i := 0;
 
-  for d in DClasses(s) do
+  for d in DClasses(S) do
     i := i + 1;
     Append(str, String(i));
     Append(str, " [shape=box style=invisible ");
@@ -572,7 +554,7 @@ function(s, opts)
     Append(str, "</TABLE>>];\n");
   od;
 
-  rel := PartialOrderOfDClasses(s);
+  rel := PartialOrderOfDClasses(S);
   rel := List([1 .. Length(rel)], x -> Filtered(rel[x], y -> not x = y));
 
   for i in [1 .. Length(rel)] do
@@ -590,11 +572,11 @@ function(s, opts)
     rel := NaturalPartialOrder(es);
 
     for i in [1 .. Length(rel)] do
-      di := String(Position(DClasses(s), DClass(s, elts[i])));
+      di := String(Position(DClasses(S), DClass(S, elts[i])));
       j := Difference(rel[i], Union(rel{rel[i]}));
       i := String(i);
       for k in j do
-        dk := String(Position(DClasses(s), DClass(s, elts[k])));
+        dk := String(Position(DClasses(S), DClass(S, elts[k])));
         k := String(k);
         Append(str, Concatenation(di, ":e", i, " -> ", dk, ":e", k, "\n"));
       od;
@@ -607,7 +589,7 @@ end);
 
 InstallMethod(DotSemilatticeOfIdempotents,
 "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 function(S)
   local U, rel, elts, str, nr, V, j, i, k, D, v;
 
