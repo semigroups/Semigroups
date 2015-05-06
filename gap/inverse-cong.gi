@@ -323,6 +323,7 @@ function(cong)
         compute_kernel, genpairs, pairstoapply, nr, nrk, traceLookup, kernel,
         kernelgenstoapply, oldLookup, oldKernel, traceBlocks;
   # Check that the argument makes sense
+  Error();
   s := Range(cong);
   if not IsInverseSemigroup(s) then
     Error("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,\n",
@@ -332,7 +333,7 @@ function(cong)
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);
-  ids := Elements(idsmgp);
+  ids := ELEMENTS_SEMIGROUP(GenericSemigroupData(idsmgp), infinity);
   pos := 0;
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
 
