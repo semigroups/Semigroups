@@ -24,6 +24,6 @@ General notes:
 
 New features in this branch:
 
-* IsInverseOpSemigroup 
+* IsSemigroupWithInverseOp 
 * SemigroupOptions is an attribute, has a component generic which is set to
   true or false
