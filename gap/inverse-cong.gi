@@ -332,7 +332,7 @@ function(cong)
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);
-  ids := Elements(idsmgp);
+  ids := ELEMENTS_SEMIGROUP(GenericSemigroupData(idsmgp), infinity);
   pos := 0;
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
 
@@ -341,7 +341,6 @@ function(cong)
 
   right := RightCayleyGraphSemigroup(idsmgp);
   left := LeftCayleyGraphSemigroup(idsmgp);
-  Print("here!!\n");
   genstoapply := [1 .. Length(right[1])];
 
   find := function(i)
@@ -422,6 +421,7 @@ function(cong)
         if find(e) <> find(f) then
           nr := nr + 1;
           pairstoapply[nr] := [e,f];
+          union([e,f]);
         fi;
       else
         fclass := find(Position(ids, RightOne(a)));
