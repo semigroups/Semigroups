@@ -24,6 +24,7 @@
 #include "basics.h"
 #include "elements.h"
 
+#include <algorithm>
 #include <unordered_map>
 #include <vector>
 #include <assert.h>
