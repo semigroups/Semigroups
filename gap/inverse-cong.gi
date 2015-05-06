@@ -439,10 +439,9 @@ function(cong)
   compute_kernel := function()
     local a, n, x;
     # Take the normal closure inverse semigroup containing the new elements
-    kernel := NormalClosureInverseSemigroup(kernel, kernelgenstoapply);
+    kernel := NormalClosureInverseSemigroup(s, kernel, kernelgenstoapply);
     kernelgenstoapply := [];
     nrk := 0;
-    kernel := InverseSemigroup(kernel, rec(small:=true));
   end;
 
   # Retrieve the initial information
