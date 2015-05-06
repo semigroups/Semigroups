@@ -13,16 +13,6 @@
 # A matrix over semiring <mat> is:
 #   mat![i] = the ith row, entries are integers or -infinity
 
-InstallGlobalFunction(PlusMinMax,
-function(x, y)
-  if x = infinity or y = infinity then
-    return infinity;
-  elif x = -infinity or y = -infinity then
-    return -infinity;
-  fi;
-  return x + y;
-end);
-
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
 [IsMatrixOverSemiringCollection], ReturnFalse);
@@ -145,11 +135,11 @@ function(x, y)
   return false;
 end);
 
-# FIXME this is not general enough, either fix it or rename it
+#
 
 InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int",
 [IsPosInt, IsObject, IsObject],
-function(n, source, type)
+function(n, source, constructor)
   local out, i, j;
   out := List([1 .. n], x -> EmptyPlist(n));
   for i in [1 .. n] do
@@ -162,7 +152,7 @@ function(n, source, type)
       fi;
     od;
   od;
-  return Objectify(type, out);
+  return constructor(out);
 end);
 
 InstallMethod(ChooseHashFunction, "for a matrix over semiring",

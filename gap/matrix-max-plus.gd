@@ -11,6 +11,7 @@
 # This file contains declarations for max-plus, min-plus, tropical max-plus,
 # and tropical min-plus matrices.
 
+
 #############################################################################
 ## 1. Max-plus matrices
 #############################################################################
@@ -52,3 +53,26 @@ DeclareGlobalFunction("MinPlusMatrix");
 DeclareGlobalFunction("MinPlusMatrixNC");
 
 DeclareOperation("RandomMinPlusMatrix", [IsPosInt]);
+
+#############################################################################
+## 3. Tropical max-plus matrices
+#############################################################################
+
+DeclareAttribute("ThresholdTropicalMatrix", IsMatrixOverSemiring);
+
+DeclareCategory("IsTropicalMaxPlusMatrix", IsMatrixOverSemiring);
+DeclareCategoryCollections("IsTropicalMaxPlusMatrix");
+DeclareCategoryCollections("IsTropicalMaxPlusMatrixCollection");
+
+BindGlobal("TropicalMaxPlusMatrixFamily",
+           NewFamily("TropicalMaxPlusMatrixFamily",
+                     IsTropicalMaxPlusMatrix, CanEasilySortElements,
+                     CanEasilySortElements));
+BindGlobal("TropicalMaxPlusMatrixType",
+           NewType(TropicalMaxPlusMatrixFamily,
+                   IsTropicalMaxPlusMatrix));
+
+DeclareGlobalFunction("TropicalMaxPlusMatrix");
+DeclareGlobalFunction("TropicalMaxPlusMatrixNC");
+
+DeclareOperation("RandomTropicalMaxPlusMatrix", [IsPosInt, IsPosInt]);
