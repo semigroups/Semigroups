@@ -12,19 +12,3 @@
 # entries in the integer union {infinity} where addition is min and
 # multiplication is plus.
 
-DeclareCategory("IsMinPlusMatrix", IsMatrixOverSemiring);
-DeclareCategoryCollections("IsMinPlusMatrix");
-DeclareCategoryCollections("IsMinPlusMatrixCollection");
-
-BindGlobal("MinPlusMatrixFamily",
-           NewFamily("MinPlusMatrixFamily",
-                     IsMinPlusMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-BindGlobal("MinPlusMatrixType",
-           NewType(MinPlusMatrixFamily,
-                   IsMinPlusMatrix));
-
-DeclareGlobalFunction("MinPlusMatrix");
-DeclareGlobalFunction("MinPlusMatrixNC");
-
-DeclareOperation("RandomMinPlusMatrix", [IsPosInt]);

@@ -37,7 +37,6 @@ ReadPackage("semigroups/gap/semigroups-acting.gd");
 
 ReadPackage("semigroups/gap/semiring-matrix.gd");
 ReadPackage("semigroups/gap/max-plus.gd");
-ReadPackage("semigroups/gap/min-plus.gd");
 ReadPackage("semigroups/gap/boolean.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
