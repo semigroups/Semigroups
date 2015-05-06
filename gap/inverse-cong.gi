@@ -429,7 +429,7 @@ function(cong)
       else
         fclass := find(Position(ids, RightOne(a)));
         for e in [1 .. Length(traceLookup)] do
-          if (find(e) = fclass) and (a*ids[e] in kernel) then
+          if (find(e) = fclass) and (a*ids[e] in kernel) and (not a in kernelgenstoapply) then
             nrk := nrk + 1;
             kernelgenstoapply[nrk] := a;
           fi;
@@ -444,7 +444,6 @@ function(cong)
 
     while nrk > 0 do
       # Take the inverse semigroup containing the new elements
-            Error();
       kernel := ClosureInverseSemigroup(kernel, kernelgenstoapply);
       Info(InfoSemigroups, 1, "Start: ", Size(kernelgenstoapply), " gens to apply");
       Info(InfoSemigroups, 1, (kernelgenstoapply));
@@ -455,7 +454,7 @@ function(cong)
       for a in GeneratorsOfSemigroup(s) do
         for n in kernel do
           x := n ^ a;
-          if not x in kernel then
+          if (not x in kernel) and (not x in kernelgenstoapply) then
             nrk := nrk + 1;
             kernelgenstoapply[nrk] := x;
           fi;
