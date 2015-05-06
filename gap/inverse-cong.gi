@@ -437,7 +437,6 @@ function(cong)
 
   # STEPS (3)+(4)
   compute_kernel := function()
-    local a, n, x;
     # Take the normal closure inverse semigroup containing the new elements
     kernel := NormalClosureInverseSemigroup(s, kernel, kernelgenstoapply);
     kernelgenstoapply := [];
