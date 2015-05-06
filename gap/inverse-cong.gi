@@ -438,27 +438,10 @@ function(cong)
   # STEPS (3)+(4)
   compute_kernel := function()
     local a, n, x;
-
-    while nrk > 0 do
-      # Take the inverse semigroup containing the new elements
-      kernel := ClosureInverseSemigroup(kernel, kernelgenstoapply);
-      Info(InfoSemigroups, 1, "Start: ", Size(kernelgenstoapply), " gens to apply");
-      Info(InfoSemigroups, 1, (kernelgenstoapply));
-
-      kernelgenstoapply := [];
-      nrk := 0;
-      # Take the normal closure
-      for a in GeneratorsOfSemigroup(s) do
-        for n in kernel do
-          x := n ^ a;
-          if (not x in kernel) and (not x in kernelgenstoapply) then
-            nrk := nrk + 1;
-            kernelgenstoapply[nrk] := x;
-          fi;
-        od;
-      od;
-    od;
-    Info(InfoSemigroups, 1, "End: ", Size(kernelgenstoapply), " gens to apply");
+    # Take the normal closure inverse semigroup containing the new elements
+    kernel := NormalClosureInverseSemigroup(kernel, kernelgenstoapply);
+    kernelgenstoapply := [];
+    nrk := 0;
     kernel := InverseSemigroup(kernel, rec(small:=true));
   end;
 
