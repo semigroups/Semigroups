@@ -392,8 +392,7 @@ end);
 
 InstallMethod(MajorantClosureNC,
 "for a semigroup with inverse op and associative element collections",
-[IsSemigroupWithInverseOp,
- IsAssociativeElementCollection],
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   local elts, n, out, ht, k, val, t, i;
 

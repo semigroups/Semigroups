@@ -11,6 +11,9 @@
 ## "kernel and trace" representation.
 ##
 
+# TODO: make a method for NrCongruenceClasses for an inverse semigroup by
+# congreunce pair JDM
+
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
 [IsInverseSemigroup and IsFinite, IsInverseSemigroup, IsDenseList],
 function(s, kernel, traceBlocks)
@@ -66,7 +69,7 @@ function(s, kernel, traceBlocks)
       od;
     od;
   od;
-  return InverseSemigroupCongruenceByKernelTraceNC(s, kernel, traceBlocks);
+  return InverseSemigroupCongruenceByKernelTrace(s, kernel, traceBlocks);
 end);
 
 #
@@ -294,7 +297,8 @@ function(cong)
   return trace;
 end);
 
-#
+# FIXME this method should be updated, in case that the congruence is given by
+# a congruence pair.
 
 InstallMethod(KernelOfSemigroupCongruence,
 "for semigroup congruence",
@@ -312,16 +316,45 @@ function(cong)
   return InverseSemigroup(gens, rec(small := false));
 end);
 
-#
+# assumes K is normal in the beginning!!!! 
+
+NormalClosureInverseSemigroup := function(S, K, coll)
+  local T, opts, x;
+  
+  T := ClosureInverseSemigroup(K, coll);
+
+  while K <> T do 
+    K := T;
+    opts := rec();
+    opts.gradingfunc := function(o, x)
+                          return x in K;
+                        end;
+
+    opts.onlygrades := function(x, data)
+                        return x = false;
+                       end;
+
+    opts.onlygradesdata := fail;
+
+    for x in K do 
+      T := ClosureInverseSemigroup(T, 
+                                   AsList(Orb(GeneratorsOfSemigroup(S), x, POW,
+                                   opts)));
+    od;
+  od;
+
+  return K;
+end;
 
 InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local s, idsmgp, ids, pos, hashlen, ht, treehashsize, right, left,
-        genstoapply, find, union, enumerate_trace, enforce_conditions,
-        compute_kernel, genpairs, pairstoapply, nr, nrk, traceLookup, kernel,
-        kernelgenstoapply, oldLookup, oldKernel, traceBlocks;
+  local s, idsmgp, ids, pos, hashlen, ht, right, left, genstoapply, find,
+  union, enumerate_trace, enforce_conditions, compute_kernel, genpairs,
+  pairstoapply, kernelgenstoapply, nr, nrk, traceLookup, kernel, StartTiming,
+  StopTiming, timing, oldLookup, oldKernel, traceBlocks, ht_e, i;
+
   # Check that the argument makes sense
   s := Range(cong);
   if not IsInverseSemigroup(s) then
@@ -333,6 +366,23 @@ function(cong)
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);
   ids := ELEMENTS_SEMIGROUP(GenericSemigroupData(idsmgp), infinity);
+  ht_e := HTCreate(ids[1]);
+  for i in [1 .. Length(ids)] do 
+    HTAdd(ht_e, ids[i], i);
+  od;
+
+StartTiming := function(record)
+  record.timeofday := IO_gettimeofday();
+end;
+
+StopTiming := function(record)
+  local timeofday, elapsed;
+  timeofday := IO_gettimeofday();
+  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
+   + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
+  Print("elapsed time: ", String(elapsed), "ms\n");
+end;
+
   pos := 0;
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
 
@@ -413,22 +463,32 @@ function(cong)
 
   # STEPS (6)+(5)
   enforce_conditions := function()
-    local a, e, f, fclass;
-    for a in s do
+    local a, e, f, fclass, outer, classes;
+    classes := [];
+    for e in [1 .. Length(traceLookup)] do
+      if not IsBound(classes[traceLookup[e]]) then 
+        classes[traceLookup[e]] := [e];
+      else 
+        Add(classes[traceLookup[e]], e);
+      fi;
+    od;
+
+    for a in Elements(s) do
       if a in kernel then
+
         e := Position(ids, LeftOne(a));
-        f := Position(ids,RightOne(a));
-        if find(e) <> find(f) then
+        f := Position(ids, RightOne(a));
+        if traceLookup[e] <> traceLookup[f] then
           nr := nr + 1;
           pairstoapply[nr] := [e,f];
-          union([e,f]);
+          #union([e,f]);
         fi;
       else
-        fclass := find(Position(ids, RightOne(a)));
-        for e in [1 .. Length(traceLookup)] do
-          if (find(e) = fclass) and (a*ids[e] in kernel) and (not a in kernelgenstoapply) then
+        fclass := traceLookup[HTValue(ht_e, RightOne(a))];
+        for e in classes[fclass] do
+          if a * ids[e] in kernel then
             nrk := nrk + 1;
-            kernelgenstoapply[nrk] := a;
+            AddSet(kernelgenstoapply, a);
           fi;
         od;
       fi;
@@ -438,9 +498,12 @@ function(cong)
   # STEPS (3)+(4)
   compute_kernel := function()
     # Take the normal closure inverse semigroup containing the new elements
-    kernel := NormalClosureInverseSemigroup(s, kernel, kernelgenstoapply);
-    kernelgenstoapply := [];
-    nrk := 0;
+    if kernelgenstoapply <> [] then 
+      kernel := NormalClosureInverseSemigroup(s, kernel, kernelgenstoapply);
+      Elements(kernel);
+      kernelgenstoapply := [];
+      nrk := 0;
+    fi;
   end;
 
   # Retrieve the initial information
@@ -452,14 +515,25 @@ function(cong)
   nrk := Length(kernelgenstoapply);
   traceLookup := [1 .. Length(ids)];
   kernel := IdempotentGeneratedSubsemigroup(s);
+  Elements(kernel); 
 
+  timing := rec();
   # Keep applying the method until no new info is found
   repeat
     oldLookup := StructuralCopy(traceLookup);
     oldKernel := kernel;
+    StartTiming(timing);
+    Print("compute_kernel: ");
     compute_kernel();
+    StopTiming(timing);
+    StartTiming(timing);
+    Print("enforce_conditions: ");
     enforce_conditions();
+    StopTiming(timing);
+    StartTiming(timing);
+    Print("enumerate_trace: ");
     enumerate_trace();
+    StopTiming(timing);
     Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceLookup);
     Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
   until (oldLookup = traceLookup) and (nrk = 0);
@@ -469,7 +543,7 @@ function(cong)
                          i-> List(Positions(traceLookup, i),
                                  j-> ids[j])), x-> not IsEmpty(x));
 
-  return InverseSemigroupCongruenceByKernelTrace(s, kernel, traceBlocks);
+  return InverseSemigroupCongruenceByKernelTraceNC(s, kernel, traceBlocks);
 end);
 
 #
