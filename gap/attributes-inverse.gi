@@ -284,7 +284,7 @@ function(S)
   j, p;
 
   D := GreensDClasses(S);
-  elts := Idempotents(S);
+  elts := ShallowCopy(Idempotents(S));
   SortBy(elts, RankOfPartialPerm);
   out := EmptyPlist(Length(D));
   seen_zero := false;
