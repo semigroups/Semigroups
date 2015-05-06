@@ -112,18 +112,19 @@ class Transformation : public Element<T> {
 };
 
 // hash function for unordered_map
-
-template <typename T>
-struct std::hash<const Transformation<T> > {
-  size_t operator() (const Transformation<T>& x) const {
-    size_t seed = 0;
-    T deg = x.degree();
-    for (T i = 0; i < deg; i++) {
-      seed = ((seed * deg) + x.at(i));
+namespace std {
+  template <typename T>
+    struct hash<const Transformation<T> > {
+    size_t operator() (const Transformation<T>& x) const {
+      size_t seed = 0;
+      T deg = x.degree();
+      for (T i = 0; i < deg; i++) {
+        seed = ((seed * deg) + x.at(i));
+      }
+      return seed;
     }
-    return seed;
-  }
-};
+  };
+}
 
 class BooleanMat: public Element<bool> {
 
@@ -170,17 +171,19 @@ class BooleanMat: public Element<bool> {
 };
 
 // hash function for unordered_map
-template <>
-struct std::hash<const BooleanMat> {
-  size_t operator() (const BooleanMat& x) const {
-    size_t seed = 0;
-    size_t deg = x.degree();
-    for (size_t i = 0; i < deg; i++) {
-      seed = ((seed << 1) + x.at(i));
+namespace std {
+  template <>
+    struct hash<const BooleanMat> {
+    size_t operator() (const BooleanMat& x) const {
+      size_t seed = 0;
+      size_t deg = x.degree();
+      for (size_t i = 0; i < deg; i++) {
+        seed = ((seed << 1) + x.at(i));
+      }
+      return seed;
     }
-    return seed;
-  }
-};
+  };
+}
 
 // bipartitions
 
@@ -280,18 +283,19 @@ class Bipartition : public Element<u_int32_t> {
 
 // hash function for unordered_map
 // TODO improve this!
-
-template <>
-struct std::hash<const Bipartition> {
-  size_t operator() (const Bipartition& x) const {
-    size_t seed = 0;
-    u_int32_t deg = x.degree();
-    for (u_int32_t i = 0; i < deg; i++) {
-      seed = ((seed * deg) + x.at(i));
+namespace std {
+  template <>
+    struct hash<const Bipartition> {
+    size_t operator() (const Bipartition& x) const {
+      size_t seed = 0;
+      u_int32_t deg = x.degree();
+      for (u_int32_t i = 0; i < deg; i++) {
+        seed = ((seed * deg) + x.at(i));
+      }
+      return seed;
     }
-    return seed;
-  }
-};
+  };
+}
 
 class MatrixOverSemiring: public Element<long> {
   public:
@@ -349,16 +353,17 @@ class MatrixOverSemiring: public Element<long> {
 }; 
 
 // hash function for unordered_map
-
-template <>
-struct std::hash<const MatrixOverSemiring> {
-  size_t operator() (const MatrixOverSemiring& x) const {
-    size_t seed = 0;
-    for (size_t i = 0; i < x.degree(); i++) {
-      seed = ((seed << 4) + x.at(i));
+namespace std {
+  template <>
+    struct hash<const MatrixOverSemiring> {
+    size_t operator() (const MatrixOverSemiring& x) const {
+      size_t seed = 0;
+      for (size_t i = 0; i < x.degree(); i++) {
+        seed = ((seed << 4) + x.at(i));
+      }
+      return seed;
     }
-    return seed;
-  }
-};
+  };
+}
 
 #endif

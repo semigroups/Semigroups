@@ -7,6 +7,9 @@
 
 #ifndef SEMIGROUPS_SEMIRING_H
 #define SEMIGROUPS_SEMIRING_H
+#include <limits.h>
+
+using namespace std;
 
 class Semiring {
 

@@ -24,6 +24,7 @@
 #include "basics.h"
 #include "elements.h"
 
+#include <algorithm>
 #include <unordered_map>
 #include <vector>
 #include <assert.h>
@@ -252,7 +253,7 @@ class Semigroup {
     }
    
     void enumerate (size_t limit) {
-      enumerate(limit, true);
+      enumerate(limit, false);
     }
 
     void enumerate (size_t limit, bool report) {
