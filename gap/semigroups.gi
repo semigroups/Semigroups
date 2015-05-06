@@ -556,13 +556,13 @@ function(S, coll, opts)
     return S;
   fi;
 
-  if not ElementsFamily(FamilyObj(S))=FamilyObj(Representative(coll)) then 
+  if not ElementsFamily(FamilyObj(S)) = FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
     return;
   fi;
   
   if IsSemigroup(coll) then 
-    coll:=GeneratorsOfSemigroup(coll);
+    coll := GeneratorsOfSemigroup(coll);
   fi;
 
   return InverseSemigroup(S, coll, opts);
@@ -594,7 +594,7 @@ function(s, coll, opts)
 
   #TODO should be a case split here for semigroups and monoids?
   t := InverseSemigroupByGenerators(
-   Concatenation(GeneratorsOfInverseSemigroup(s), coll), opts);
+   Concatenation(GeneratorsOfInverseSemigroup(s), coll_copy), opts);
 
   #remove everything related to strongly connected components
   Unbind(o!.scc);

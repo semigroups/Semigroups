@@ -344,6 +344,7 @@ function(cong)
 
   right := RightCayleyGraphSemigroup(idsmgp);
   left := LeftCayleyGraphSemigroup(idsmgp);
+  Print("here!!\n");
   genstoapply := [1 .. Length(right[1])];
 
   find := function(i)
@@ -440,8 +441,10 @@ function(cong)
   # STEPS (3)+(4)
   compute_kernel := function()
     local a, n, x;
+
     while nrk > 0 do
       # Take the inverse semigroup containing the new elements
+            Error();
       kernel := ClosureInverseSemigroup(kernel, kernelgenstoapply);
       Info(InfoSemigroups, 1, "Start: ", Size(kernelgenstoapply), " gens to apply");
       Info(InfoSemigroups, 1, (kernelgenstoapply));
@@ -467,7 +470,7 @@ function(cong)
   genpairs := GeneratingPairsOfSemigroupCongruence(cong);
   pairstoapply := List(genpairs, x -> [Position(ids, RightOne(x[1])),
                                        Position(ids, RightOne(x[2]))] );
-  kernelgenstoapply := List(genpairs, x -> x[1] * x[2]^-1);
+  kernelgenstoapply := Set(genpairs, x -> x[1] * x[2]^-1);
   nr := Length(pairstoapply);
   nrk := Length(kernelgenstoapply);
   traceLookup := [1 .. Length(ids)];
