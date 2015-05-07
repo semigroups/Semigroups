@@ -24,6 +24,3 @@ DeclareCategory("SEMIGROUPS_CongClassSimple",
         IsCongruenceClass and IsAttributeStoringRep and IsAssociativeElement);
 
 DeclareGlobalFunction("SEMIGROUPS_SimpleClassFromRMSclass");
-
-DeclareGlobalFunction("SemigroupCongruence");
-DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);

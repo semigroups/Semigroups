@@ -1239,24 +1239,6 @@ end);
 
 #
 
-InstallMethod(\*,
-"for an equivalence class and a list",
-[IsEquivalenceClass, IsList],
-function(class, list)
-  return List(list, x -> class * x);
-end);
-
-#
-
-InstallMethod(\*,
-"for a list and an equivalence class",
-[IsList, IsEquivalenceClass],
-function(list, class)
-  return List(list, x -> x * class);
-end);
-
-#
-
 InstallMethod(Size,
 "for RMS congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],

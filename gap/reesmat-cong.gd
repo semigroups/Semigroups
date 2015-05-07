@@ -22,10 +22,6 @@ DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RMSCongruenceByLinkedTripleNC");
 DeclareGlobalFunction("RZMSCongruenceByLinkedTriple");
 DeclareGlobalFunction("RZMSCongruenceByLinkedTripleNC");
-DeclareAttribute("NrCongruenceClasses", IsSemigroupCongruence);
-
-DeclareSynonym("CongruenceClasses", EquivalenceClasses);
-DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
 
 # Congruence Classes
 DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
@@ -44,12 +40,8 @@ DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
 DeclareOperation("RZMSCongruenceClassByLinkedTripleNC",
         [IsRZMSCongruenceByLinkedTriple,
          IsRightCoset, IsPosInt, IsPosInt]);
-DeclareOperation("\*", [IsEquivalenceClass, IsList]);
-DeclareOperation("\*", [IsList, IsEquivalenceClass]);
 DeclareAttribute("CanonicalRepresentative", IsEquivalenceClass);
 
 # Conversion with semigroup congruences by generating pairs
-DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-                 [IsSemigroupCongruence]);
 DeclareOperation("AsRMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);
 DeclareOperation("AsRZMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);
