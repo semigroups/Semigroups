@@ -100,6 +100,13 @@ gap> ForAll(congs, cong ->
 > cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
 true
 
+#T# SimpleCongTest9: The universal congruence
+gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup on 2 pts with 2 generators>
+gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+on 2 pts with 2 generators>>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
 gap> Unbind(classy);
