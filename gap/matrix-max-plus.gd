@@ -11,7 +11,6 @@
 # This file contains declarations for max-plus, min-plus, tropical max-plus,
 # and tropical min-plus matrices.
 
-
 #############################################################################
 ## 1. Max-plus matrices
 #############################################################################
@@ -55,12 +54,18 @@ DeclareGlobalFunction("MinPlusMatrixNC");
 DeclareOperation("RandomMinPlusMatrix", [IsPosInt]);
 
 #############################################################################
-## 3. Tropical max-plus matrices
+## 3. Tropical matrices
 #############################################################################
 
-DeclareAttribute("ThresholdTropicalMatrix", IsMatrixOverSemiring);
+DeclareCategory("IsTropicalMatrix", IsMatrixOverSemiring);
+DeclareCategoryCollections("IsTropicalMatrix");
+DeclareAttribute("ThresholdTropicalMatrix", IsTropicalMatrix);
 
-DeclareCategory("IsTropicalMaxPlusMatrix", IsMatrixOverSemiring);
+#############################################################################
+## 4. Tropical max-plus matrices
+#############################################################################
+
+DeclareCategory("IsTropicalMaxPlusMatrix", IsTropicalMatrix);
 DeclareCategoryCollections("IsTropicalMaxPlusMatrix");
 DeclareCategoryCollections("IsTropicalMaxPlusMatrixCollection");
 
@@ -76,3 +81,24 @@ DeclareGlobalFunction("TropicalMaxPlusMatrix");
 DeclareGlobalFunction("TropicalMaxPlusMatrixNC");
 
 DeclareOperation("RandomTropicalMaxPlusMatrix", [IsPosInt, IsPosInt]);
+
+#############################################################################
+## 5. Tropical min-plus matrices
+#############################################################################
+
+DeclareCategory("IsTropicalMinPlusMatrix", IsTropicalMatrix);
+DeclareCategoryCollections("IsTropicalMinPlusMatrix");
+DeclareCategoryCollections("IsTropicalMinPlusMatrixCollection");
+
+BindGlobal("TropicalMinPlusMatrixFamily",
+           NewFamily("TropicalMinPlusMatrixFamily",
+                     IsTropicalMinPlusMatrix, CanEasilySortElements,
+                     CanEasilySortElements));
+BindGlobal("TropicalMinPlusMatrixType",
+           NewType(TropicalMinPlusMatrixFamily,
+                   IsTropicalMinPlusMatrix));
+
+DeclareGlobalFunction("TropicalMinPlusMatrix");
+DeclareGlobalFunction("TropicalMinPlusMatrixNC");
+
+DeclareOperation("RandomTropicalMinPlusMatrix", [IsPosInt, IsPosInt]);

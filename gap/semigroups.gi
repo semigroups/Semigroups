@@ -1212,19 +1212,6 @@ end);
 
 #
 
-InstallMethod(RandomBinaryRelationMonoid,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  local s;
-
-  s := Monoid(List([1 .. m], x -> RandomBinaryRelationOnPoints(n)));
-  SetIsBinaryRelationSemigroup(s, true);
-  return s;
-end);
-
-#
-
 InstallMethod(RandomBinaryRelationSemigroup,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],

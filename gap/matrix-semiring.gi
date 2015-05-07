@@ -10,8 +10,12 @@
 
 # This file contains declarations for matrices over semirings.
 
-# A matrix over semiring <mat> is:
-#   mat![i] = the ith row, entries are integers or -infinity
+# A matrix over semiring <mat> is:  
+#   
+#   mat![i] = the ith row
+#
+# it is also square, any additional data (like the threshold for tropical
+# matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
@@ -137,7 +141,7 @@ end);
 
 #
 
-InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int",
+InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int, object, object",
 [IsPosInt, IsObject, IsObject],
 function(n, source, constructor)
   local out, i, j;

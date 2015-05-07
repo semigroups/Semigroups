@@ -13,23 +13,13 @@
 InstallMethod(RandomBooleanMatSemigroup, "for a pos ints",
 [IsPosInt, IsPosInt],
 function(nrgens, dim)
-  local gens, i;
-  gens := [];
-  for i in [1 .. nrgens] do
-    Add(gens, RandomBooleanMat(dim));
-  od;
-  return Semigroup(gens);
+  return Semigroup(Set([1 .. nrgens], x -> RandomBooleanMat(dim)));
 end);
 
 InstallMethod(RandomBooleanMatMonoid, "for a pos ints",
 [IsPosInt, IsPosInt],
 function(nrgens, dim)
-  local gens, i;
-  gens := [];
-  for i in [1 .. nrgens] do
-    Add(gens, RandomBooleanMat(dim));
-  od;
-  return Monoid(gens);
+  return Monoid(Set([1 .. nrgens], x -> RandomBooleanMat(dim)));
 end);
 
 # not relevant for ideals

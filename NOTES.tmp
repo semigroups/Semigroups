@@ -1,3 +1,10 @@
+TODO
+
+* remove C++11
+* gmp?
+* use namespace in the C++ code
+* clean up the memory usage in semigroups.h, interface.cc
+
 Gaplint:
 
 * NrLeftBlocks, NrBlocks are in gaplint_ignore since the every way to create 
@@ -9,10 +16,6 @@ Code coverage:
 * bipartition.tst tests factor.gi to 80%
 
 General notes:
-
-* TODO use namespace in the C++ code
-
-* TODO clean up the memory usage in semigroups.h, interface.cc
 
 * need to check usage of IsSemigroup and IsFinite, the max-plus matrix
   semigroup examples can finite or infinite, we should check if they are finite
