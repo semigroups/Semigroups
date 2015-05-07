@@ -38,6 +38,7 @@ ReadPackage("semigroups/gap/semigroups-acting.gd");
 ReadPackage("semigroups/gap/matrix-semiring.gd");
 ReadPackage("semigroups/gap/matrix-max-plus.gd");
 ReadPackage("semigroups/gap/matrix-boolean.gd");
+ReadPackage("semigroups/gap/matrix-finite-field.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
 ReadPackage("semigroups/gap/blocks.gd");

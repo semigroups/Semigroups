@@ -25,6 +25,32 @@ class Semiring {
     };
 };
 
+class FiniteField : public Semiring {
+
+  public: 
+
+    FiniteField (long n) : _n(n), Semiring() {}
+
+    long one () {
+      return 1;
+    }
+
+    long zero () {
+      return 0;
+    }
+    
+    long prod (long x, long y) {
+      return (x * y) % _n;
+    }
+
+    long plus (long x, long y) {
+      return (x + y) % _n;
+    }
+
+  private: 
+    long _n;
+};
+
 class MaxPlusSemiring : public Semiring {
 
   public: 

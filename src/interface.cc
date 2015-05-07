@@ -36,6 +36,7 @@
 #define IS_TROP_MAT(x)           (CALL_1ARGS(IsTropicalMatrix, x) == True)
 #define IS_TROP_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True)
 #define IS_TROP_MIN_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True)
+#define IS_MAT_OVER_FF(x)        (CALL_1ARGS(IsMatrixOverFiniteField, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
@@ -68,6 +69,10 @@ Obj TropicalMinPlusMatrixType;
 Obj IsTropicalMaxPlusMatrix;
 Obj TropicalMaxPlusMatrixType;
 
+Obj IntFFE;
+Obj IsMatrixOverFiniteField;
+Obj MatrixOverFiniteFieldType;
+
 /*******************************************************************************
  * Temporary debug area
 *******************************************************************************/
@@ -94,7 +99,8 @@ enum SemigroupType {
   MAX_PLUS_MAT,
   MIN_PLUS_MAT,
   TROP_MAX_PLUS_MAT,
-  TROP_MIN_PLUS_MAT
+  TROP_MIN_PLUS_MAT,
+  MAT_OVER_FF
 };
 
 SemigroupType TypeSemigroup (Obj data) {
@@ -119,6 +125,8 @@ SemigroupType TypeSemigroup (Obj data) {
         return TROP_MAX_PLUS_MAT;
       } else if (IS_TROP_MIN_PLUS_MAT(x)) {
         return TROP_MIN_PLUS_MAT;
+      } else if (IS_MAT_OVER_FF(x)) {
+        return MAT_OVER_FF;
       } 
       return UNKNOWN;
     case T_COMOBJ:
@@ -384,7 +392,6 @@ class BoolMatConverter : public Converter<BooleanMat> {
     }
 };
 
-
 class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
   public:
@@ -451,6 +458,17 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
     Obj       _gap_zero;
     Obj       _gap_type;
 };
+
+long inline Threshold (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_TROP_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
 
 /*******************************************************************************
  * Class for containing a C++ semigroup and accessing its methods
@@ -685,16 +703,6 @@ class Interface : public InterfaceBase {
  * Instantiate Interface for the particular type of semigroup passed from GAP
 *******************************************************************************/
 
-long inline Threshold (Obj data) {
-  Obj x = Representative(data);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_TROP_MAT(x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
-
-  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
-}
 
 InterfaceBase* InterfaceFromData (Obj data) {
   if (IsbPRec(data, RNamName("Interface_CC"))) {
@@ -1575,6 +1583,10 @@ static Int InitKernel( StructInitInfo *module )
     
     ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
     ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
+
+    ImportGVarFromLibrary( "IsMatrixOverFiniteField", &IsMatrixOverFiniteField );
+    ImportGVarFromLibrary( "MatrixOverFiniteFieldType", &MatrixOverFiniteFieldType );
+    ImportGVarFromLibrary( "FFEInt", &FFEInt );
 
     /* return success                                                      */
     return 0;
