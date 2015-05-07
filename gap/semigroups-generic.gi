@@ -110,6 +110,16 @@ function(data, x, n)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(data)) then 
     return fail;
   fi;
+  
+  if (IsTransformation(x) 
+      and DegreeOfTransformation(x) >
+      DegreeOfTransformationCollection(data!.gens))
+      or (IsPartialPerm(x) 
+          and DegreeOfPartialPerm(x) >
+          DegreeOfPartialPermCollection(data!.gens)) then 
+    return fail;
+  fi;
+
   return POSITION_SEMIGROUP(data, x);
 end);
 
@@ -194,6 +204,7 @@ function(S)
   # this is required for the C++ version
   # TODO declare a filter IsCPPSemigroup or similar for this.
   if IsTransformationSemigroup(S) 
+      or IsPartialPermSemigroup(S) 
       or IsBipartitionSemigroup(S) 
       or IsMatrixOverSemiringSemigroup(S) then
     data := rec();
@@ -203,6 +214,8 @@ function(S)
     # the degree is the length of the std::vector required to hold the object
     if IsTransformationSemigroup(S) then
       data.degree := DegreeOfTransformationSemigroup(S);
+    elif IsPartialPermSemigroup(S) then
+      data.degree := DegreeOfPartialPermSemigroup(S);
     elif IsMatrixOverSemiringSemigroup(S) then 
       data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
     elif IsBipartitionSemigroup(S) then 

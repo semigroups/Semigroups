@@ -160,7 +160,7 @@ function(coll)
   gens := Set(ShallowCopy(coll));
   nrgens := Length(gens);
 
-  if IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll) then
+  if IsGeneratorsOfActingSemigroup(coll) then
     deg := ActionDegree(coll);
     coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
     Sort(coll, function(x, y)

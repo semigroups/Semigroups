@@ -126,6 +126,54 @@ namespace std {
   };
 }
 
+// template for partial perms
+
+template <typename T>
+class PartialPerm : public Element<T> {
+
+  public:
+
+    PartialPerm (T degree, Element<T>* sample = nullptr) 
+      : Element<T>(degree) {}
+
+    PartialPerm (std::vector<T> data) : Element<T>(data) {}
+
+    // multiply x and y into this
+    void redefine (Element<T> const* x, Element<T> const* y) {
+      assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
+
+      for (T i = 0; i < this->degree(); i++) {
+        this->set(i, (x->at(i) == 0 ? 0 : y->at(x->at(i) - 1)));
+      }
+    }
+
+    // the identity on [1 .. degree], FIXME is this right? 
+    Element<T>* identity () {
+      std::vector<T> image;
+      image.reserve(this->degree());
+      for (T i = 0; i < this->degree(); i++) {
+        image.push_back(i + 1);
+      }
+      return new PartialPerm(image);
+    }
+};
+
+// hash function for unordered_map
+namespace std {
+  template <typename T>
+    struct hash<const PartialPerm<T> > {
+    size_t operator() (const PartialPerm<T>& x) const {
+      size_t seed = 0;
+      T deg = x.degree();
+      for (T i = 0; i < deg; i++) {
+        seed = ((seed * deg) + x.at(i));
+      }
+      return seed;
+    }
+  };
+}
+
 class BooleanMat: public Element<bool> {
 
   public:

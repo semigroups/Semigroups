@@ -87,6 +87,8 @@ enum SemigroupType {
   UNKNOWN,
   TRANS2, 
   TRANS4, 
+  PPERM2, 
+  PPERM4, 
   BOOL_MAT, 
   BIPART,
   MAX_PLUS_MAT,
@@ -102,6 +104,10 @@ SemigroupType TypeSemigroup (Obj data) {
       return TRANS2;
     case T_TRANS4:
       return TRANS4;
+    case T_PPERM2:
+      return PPERM2;
+    case T_PPERM4:
+      return PPERM4;
     case T_POSOBJ:
       if (IS_BOOL_MAT(x)) {
         return BOOL_MAT;
@@ -212,7 +218,7 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 
     Obj unconvert (Transformation<T>* x) {
-      Obj o = NEW_TRANS2(x->degree());
+      Obj o = NEW_TRANS(x->degree());
       T* pto = ADDR_TRANS(o);
       for (T i = 0; i < x->degree(); i++) {
         pto[i] = x->at(i);
@@ -221,10 +227,113 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 
   private:
+    
+    inline Obj NEW_TRANS (size_t deg) {
+      if (deg < 65536) {
+        return NEW_TRANS2(deg);
+      } else {
+        return NEW_TRANS4(deg);
+      }
+    }
 
     // helper for getting ADDR_TRANS2/4
     inline T* ADDR_TRANS (Obj x) {
       return ((T*)((Obj*)(ADDR_OBJ(x))+3));
+    }
+};
+
+template <typename T>
+class PPermConverter : public Converter<PartialPerm<T> > {
+  public: 
+
+    PartialPerm<T>* convert (Obj o, size_t n) {
+      assert(IS_PPERM(o));
+      
+      auto x = new PartialPerm<T>(n);
+      T* pto = ADDR_PPERM(o);
+      T i;
+      for (i = 0; i < DEG_PPERM(o); i++) {
+        x->set(i, pto[i]);
+      }
+      for (; i < n; i++) {
+        x->set(i, 0);
+      }
+      return x;
+    }
+
+    // similar to FuncDensePartialPermNC in gap/src/pperm.c
+    Obj unconvert (PartialPerm<T>* x) {
+      T deg = x->degree(); 
+
+      //remove trailing 0s
+      while (deg > 0 && x->at(deg - 1) == 0) {
+        deg--;
+      }
+      
+      Obj o = NEW_PPERM(deg);
+      T* pto = ADDR_PPERM(o);
+      T codeg = 0;
+      for (T i = 0; i < deg; i++) {
+        pto[i] = x->at(i);
+        if (pto[i] > codeg) {
+          codeg = pto[i];
+        }
+      }
+      set_codeg(o, deg, codeg);
+      return o;
+    }
+  
+  private:
+   
+    void set_codeg (Obj o, T deg, T codeg) {
+      if (deg < 65536) {
+        CODEG_PPERM2(o) = codeg;
+      } else {
+        CODEG_PPERM4(o) = codeg;
+      }
+    }
+
+    inline Obj NEW_PPERM (size_t deg) {
+      if (deg < 65536) {
+        return NEW_PPERM2(deg);
+      } else {
+        return NEW_PPERM4(deg);
+      }
+    }
+
+    // helper for getting ADDR_PPERM2/4
+    inline T* ADDR_PPERM (Obj x) {
+      return ((T*)((Obj*)(ADDR_OBJ(x))+2)+1);
+    }
+};
+
+class BipartConverter : public Converter<Bipartition> {
+  public: 
+
+    Bipartition* convert (Obj o, size_t n) {
+      assert(IS_BIPART(o));
+      assert(IsbPRec(o, RNamName("blocks")));
+      
+      Obj blocks = ElmPRec(o, RNamName("blocks"));
+      PLAIN_LIST(blocks);
+
+      assert((size_t) LEN_PLIST(blocks) == n);
+      
+      auto x = new Bipartition(n);
+      for (u_int32_t i = 0; i < n; i++) {
+        x->set(i, INT_INTOBJ(ELM_PLIST(blocks, i + 1)) - 1);
+      }
+      return x;
+    }
+
+    Obj unconvert (Bipartition* x) {
+      Obj o = NEW_PLIST(T_PLIST_CYC, x->degree());
+      SET_LEN_PLIST(o, x->degree());
+      for (u_int32_t i = 0; i < x->degree(); i++) {
+        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i) + 1));
+      }
+      o = CALL_1ARGS(BipartitionByIntRepNC, o);
+      return o;
     }
 };
 
@@ -234,13 +343,14 @@ class BoolMatConverter : public Converter<BooleanMat> {
     BooleanMat* convert (Obj o, size_t n) {
       assert(IS_BOOL_MAT(o));
       assert(LEN_PLIST(o) > 0);
-      assert(IS_PLIST(ELM_PLIST(o, 1)));
+      assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
       assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
        
       auto x = new BooleanMat(n);
       n = LEN_BLIST(ELM_PLIST(o, 1));
       for (size_t i = 0; i < n; i++) {
         Obj row = ELM_PLIST(o, i + 1);
+        assert(IS_BLIST_REP(row));
         for (size_t j = 0; j < n; j++) {
           if (ELM_BLIST(row, j + 1) == True) {
             x->set(i * n + j, true);
@@ -274,35 +384,6 @@ class BoolMatConverter : public Converter<BooleanMat> {
     }
 };
 
-class BipartConverter : public Converter<Bipartition> {
-  public: 
-
-    Bipartition* convert (Obj o, size_t n) {
-      assert(IS_BIPART(o));
-      assert(IsbPRec(o, RNamName("blocks")));
-      
-      Obj blocks = ElmPRec(o, RNamName("blocks"));
-      PLAIN_LIST(blocks);
-
-      assert((size_t) LEN_PLIST(blocks) == n);
-      
-      auto x = new Bipartition(n);
-      for (u_int32_t i = 0; i < n; i++) {
-        x->set(i, INT_INTOBJ(ELM_PLIST(blocks, i + 1)) - 1);
-      }
-      return x;
-    }
-
-    Obj unconvert (Bipartition* x) {
-      Obj o = NEW_PLIST(T_PLIST_CYC, x->degree());
-      SET_LEN_PLIST(o, x->degree());
-      for (u_int32_t i = 0; i < x->degree(); i++) {
-        SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i) + 1));
-      }
-      o = CALL_1ARGS(BipartitionByIntRepNC, o);
-      return o;
-    }
-};
 
 class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
@@ -631,6 +712,16 @@ InterfaceBase* InterfaceFromData (Obj data) {
     case TRANS4:{
       auto tc4 = new TransConverter<u_int32_t>();
       interface = new Interface<Transformation<u_int32_t> >(data, tc4);
+      break;
+    }
+    case PPERM2:{
+      auto pc2 = new PPermConverter<u_int16_t>();
+      interface = new Interface<PartialPerm<u_int16_t> >(data, pc2);
+      break;
+    }
+    case PPERM4:{
+      auto pc4 = new PPermConverter<u_int32_t>();
+      interface = new Interface<PartialPerm<u_int32_t> >(data, pc4);
       break;
     }
     case BIPART: {
