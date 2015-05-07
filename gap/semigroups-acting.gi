@@ -93,8 +93,9 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Random, "for an acting semigroup with inverse op and generators",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(Random,
+"for an acting inverse semigroup with inverse op",
+[IsActingSemigroup and IsInverseSemigroup and IsSemigroupWithInverseOp],
 function(S)
   local gens, i, w, x, o, m;
 
@@ -221,8 +222,9 @@ end);
 # TODO clean this up
 
 InstallMethod(\in,
-"for an associative element and acting semigroup with inversion",
-[IsAssociativeElement, IsActingSemigroup and IsSemigroupWithInverseOp],
+"for an associative element and acting inverse semigroup with inverse op",
+[IsAssociativeElement, IsActingSemigroup and IsInverseSemigroup and
+ IsSemigroupWithInverseOp],
 function(f, s)
   local o, lambda, lambda_l, rho, rho_l, m, schutz, scc, rep;
 
@@ -342,8 +344,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Size, "for an acting semigroup with inversion",
-[IsActingSemigroup and IsSemigroupWithInverseOp], 10,
+InstallMethod(Size, "for an acting inverse semigroup with inverse op",
+[IsActingSemigroup and IsInverseSemigroup and IsSemigroupWithInverseOp], 10,
 function(s)
   local o, scc, r, nr, m;
 

@@ -38,14 +38,10 @@ DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
 
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsRegularStarSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsPartialPermSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsBlockBijectionSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsPartialPermBipartitionSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsRegularStarSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsPartialPermSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsBlockBijectionSemigroup);
+InstallTrueMethod(IsSemigroupWithInverseOp, IsPartialPermBipartitionSemigroup);
 
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
