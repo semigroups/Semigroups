@@ -33,10 +33,15 @@
 #define IS_MAT_OVER_SEMI_RING(x) (CALL_1ARGS(IsMatrixOverSemiring, x) == True)
 #define IS_MAX_PLUS_MAT(x)       (CALL_1ARGS(IsMaxPlusMatrix, x) == True)
 #define IS_MIN_PLUS_MAT(x)       (CALL_1ARGS(IsMinPlusMatrix, x) == True)
+#define IS_TROP_MAT(x)           (CALL_1ARGS(IsTropicalMatrix, x) == True)
+#define IS_TROP_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True)
+#define IS_TROP_MIN_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
 *******************************************************************************/
+
+Obj Objectify;
 
 Obj infinity;
 Obj Ninfinity;
@@ -45,15 +50,23 @@ Obj IsBipartition;
 Obj BipartitionByIntRepNC;   
 
 Obj IsBooleanMat;
-Obj BooleanMatNC;   
+Obj BooleanMatType;   
 
 Obj IsMatrixOverSemiring;
 
 Obj IsMaxPlusMatrix;
-Obj MaxPlusMatrixNC;   
+Obj MaxPlusMatrixType;   
 
 Obj IsMinPlusMatrix;
-Obj MinPlusMatrixNC;   
+Obj MinPlusMatrixType;   
+
+Obj IsTropicalMatrix;
+
+Obj IsTropicalMinPlusMatrix;
+Obj TropicalMinPlusMatrixType;   
+
+Obj IsTropicalMaxPlusMatrix;
+Obj TropicalMaxPlusMatrixType;
 
 /*******************************************************************************
  * Temporary debug area
@@ -63,7 +76,13 @@ Obj MinPlusMatrixNC;
  * Can we use Semigroup++?
 *******************************************************************************/
 
-// TODO use IsMatrixOverSemiring
+Obj inline Representative (Obj data) {
+  assert(IsbPRec(data, RNamName("gens")));
+  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+  return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
+}
+
+// TODO use IsMatrixOverSemiring ?
 enum SemigroupType {
   UNKNOWN,
   TRANS2, 
@@ -71,15 +90,13 @@ enum SemigroupType {
   BOOL_MAT, 
   BIPART,
   MAX_PLUS_MAT,
-  MIN_PLUS_MAT
+  MIN_PLUS_MAT,
+  TROP_MAX_PLUS_MAT,
+  TROP_MIN_PLUS_MAT
 };
 
 SemigroupType TypeSemigroup (Obj data) {
-  assert(IsbPRec(data, RNamName("gens")));
-  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-  
-  Obj x = ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
-
+  Obj x = Representative(data);
   switch (TNUM_OBJ(x)) {
     case T_TRANS2:
       return TRANS2;
@@ -92,6 +109,10 @@ SemigroupType TypeSemigroup (Obj data) {
         return MAX_PLUS_MAT;
       } else if (IS_MIN_PLUS_MAT(x)) {
         return MIN_PLUS_MAT;
+      } else if (IS_TROP_MAX_PLUS_MAT(x)) {
+        return TROP_MAX_PLUS_MAT;
+      } else if (IS_TROP_MIN_PLUS_MAT(x)) {
+        return TROP_MIN_PLUS_MAT;
       } 
       return UNKNOWN;
     case T_COMOBJ:
@@ -213,6 +234,7 @@ class BoolMatConverter : public Converter<BooleanMat> {
     BooleanMat* convert (Obj o, size_t n) {
       assert(IS_BOOL_MAT(o));
       assert(LEN_PLIST(o) > 0);
+      assert(IS_PLIST(ELM_PLIST(o, 1)));
       assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
        
       auto x = new BooleanMat(n);
@@ -248,7 +270,7 @@ class BoolMatConverter : public Converter<BooleanMat> {
         SET_ELM_PLIST(o, i + 1, blist);
         CHANGED_BAG(o);
       }
-      return CALL_1ARGS(BooleanMatNC, o);
+      return CALL_2ARGS(Objectify, BooleanMatType, o);
     }
 };
 
@@ -292,14 +314,15 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
     MatrixOverSemiringConverter (Semiring* semiring, 
                                  Obj       gap_zero, 
-                                 Obj       gap_objectify_func) 
+                                 Obj       gap_type) 
       : _semiring(semiring), 
         _gap_zero(gap_zero),
-        _gap_objectify_func(gap_objectify_func) {}
+        _gap_type(gap_type) {}
 
     MatrixOverSemiring* convert (Obj o, size_t n) {
       assert(IS_MAT_OVER_SEMI_RING(o));
       assert(LEN_PLIST(o) > 0);
+      assert(IS_PLIST(ELM_PLIST(o, 1)));
       assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
        
       auto x = new MatrixOverSemiring(n, _semiring);
@@ -318,10 +341,11 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
       return x;
     }
 
-    Obj unconvert (MatrixOverSemiring* x) {
+    virtual Obj unconvert (MatrixOverSemiring* x) {
       size_t n = sqrt(x->degree());
-      Obj plist = NEW_PLIST(T_PLIST, n);
-      SET_LEN_PLIST(plist, n);
+      Obj plist = NEW_PLIST(T_PLIST, n + 1);
+      SET_LEN_PLIST(plist, n + 1);
+      SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
       
       for (size_t i = 0; i < n; i++) {
         Obj row = NEW_PLIST(T_PLIST_CYC, n);
@@ -337,14 +361,14 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
         SET_ELM_PLIST(plist, i + 1, row);
         CHANGED_BAG(plist);
       }
-      return CALL_1ARGS(_gap_objectify_func, plist);
+      return CALL_2ARGS(Objectify, _gap_type, plist);
     }
 
-  private: 
+  protected: 
     
     Semiring* _semiring;
     Obj       _gap_zero;
-    Obj       _gap_objectify_func;
+    Obj       _gap_type;
 };
 
 /*******************************************************************************
@@ -580,6 +604,17 @@ class Interface : public InterfaceBase {
  * Instantiate Interface for the particular type of semigroup passed from GAP
 *******************************************************************************/
 
+long inline Threshold (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_TROP_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
 InterfaceBase* InterfaceFromData (Obj data) {
   if (IsbPRec(data, RNamName("Interface_CC"))) {
     return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
@@ -611,15 +646,29 @@ InterfaceBase* InterfaceFromData (Obj data) {
     case MAX_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 
-                                                  MaxPlusMatrixNC);
+                                                  MaxPlusMatrixType);
       interface = new Interface<MatrixOverSemiring>(data, mosc);
       break;
     }
     case MIN_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MinPlusSemiring(), 
                                                   infinity, 
-                                                  MinPlusMatrixNC);
+                                                  MinPlusMatrixType);
       interface = new Interface<MatrixOverSemiring>(data, mosc);
+      break;
+    }
+    case TROP_MAX_PLUS_MAT:{
+      auto tmc = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(Threshold(data)), 
+                                                 Ninfinity, 
+                                                 TropicalMaxPlusMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, tmc);
+      break;
+    }
+    case TROP_MIN_PLUS_MAT:{
+      auto tmc = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(Threshold(data)), 
+                                                 infinity, 
+                                                 TropicalMinPlusMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, tmc);
       break;
     }
     default: {
@@ -1409,6 +1458,8 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
     
+    ImportGVarFromLibrary( "Objectify", &Objectify);
+
     ImportGVarFromLibrary( "infinity", &infinity);
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
 
@@ -1416,16 +1467,24 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
 
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
-    ImportGVarFromLibrary( "BooleanMatNC", &BooleanMatNC );
+    ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );
 
     ImportGVarFromLibrary( "IsMatrixOverSemiring", &IsMatrixOverSemiring);
 
     ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
-    ImportGVarFromLibrary( "MaxPlusMatrixNC", &MaxPlusMatrixNC );
+    ImportGVarFromLibrary( "MaxPlusMatrixType", &MaxPlusMatrixType );
     
     ImportGVarFromLibrary( "IsMinPlusMatrix", &IsMinPlusMatrix );
-    ImportGVarFromLibrary( "MinPlusMatrixNC", &MinPlusMatrixNC );
+    ImportGVarFromLibrary( "MinPlusMatrixType", &MinPlusMatrixType );
     
+    ImportGVarFromLibrary( "IsTropicalMatrix", &IsTropicalMatrix );
+
+    ImportGVarFromLibrary( "IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix );
+    ImportGVarFromLibrary( "TropicalMaxPlusMatrixType", &TropicalMaxPlusMatrixType );
+    
+    ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
+    ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
+
     /* return success                                                      */
     return 0;
 }

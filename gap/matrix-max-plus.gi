@@ -245,7 +245,7 @@ function(x, y)
       for k in [1 .. n] do
         val := Minimum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
       od;
-      if val > ThresholdTropicalMatrix(x) then
+      if val <> infinity and val > ThresholdTropicalMatrix(x) then
         val := ThresholdTropicalMatrix(x);
       fi;
       xy[i][j] := val;

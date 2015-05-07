@@ -194,10 +194,8 @@ function(S)
   # this is required for the C++ version
   # TODO declare a filter IsCPPSemigroup or similar for this.
   if IsTransformationSemigroup(S) 
-      or IsBooleanMatSemigroup(S)
       or IsBipartitionSemigroup(S) 
-      or IsMaxPlusMatrixSemigroup(S) # TODO eventually replace these last 2 by IsMatrixOver...
-      or IsMinPlusMatrixSemigroup(S) then
+      or IsMatrixOverSemiringSemigroup(S) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;
