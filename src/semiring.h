@@ -9,6 +9,7 @@
 #define SEMIGROUPS_SEMIRING_H
 #include <limits.h>
 
+//FIXME don't do this
 using namespace std;
 
 namespace semiring {
@@ -27,11 +28,11 @@ namespace semiring {
       };
   };
 
-  class FiniteField : public Semiring {
+  class PrimeField : public Semiring {
 
     public: 
 
-      FiniteField (long n) : _n(n), Semiring() {}
+      PrimeField (long n) : _n(n), Semiring() {}
 
       long one () {
         return 1;

@@ -31,6 +31,8 @@ using namespace semiring;
 
 #define BATCH_SIZE 8192
 
+#define IS_PRIME_INT(x)          (CALL_1ARGS(IsPrimeInt, INTOBJ_INT(x)) == True)
+
 #define IS_BOOL_MAT(x)           (CALL_1ARGS(IsBooleanMat, x) == True)
 #define IS_BIPART(x)             (CALL_1ARGS(IsBipartition, x) == True)
 #define IS_MAT_OVER_SEMI_RING(x) (CALL_1ARGS(IsMatrixOverSemiring, x) == True)
@@ -46,6 +48,7 @@ using namespace semiring;
 *******************************************************************************/
 
 Obj Objectify;
+Obj IsPrimeInt;
 
 Obj infinity;
 Obj Ninfinity;
@@ -78,6 +81,34 @@ Obj AsMatrixOverFiniteFieldNC;
 /*******************************************************************************
  * Temporary debug area
 *******************************************************************************/
+
+/*namespace semiring {
+  class FiniteField : public Semiring<Obj> {
+
+    public: 
+
+      FiniteField () : Semiring() {}
+
+      Obj one () {
+        return ONE(_sample);
+      }
+
+      Obj zero () {
+        return ZERO(_sample);
+      }
+      
+      Obj prod (Obj x, Obj y) {
+        return PROD(x, y);
+      }
+
+      Obj plus (Obj x, Obj y) {
+        return SUM(x, y);
+      }
+
+    private: 
+      Obj _sample;
+  };
+}*/
 
 /*******************************************************************************
  * Can we use Semigroup++?
@@ -461,15 +492,15 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
     Obj       _gap_type;
 };
 
-class MatrixOverFFConverter : public Converter<MatrixOverSemiring> {
+class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
 
   public:
 
-    ~MatrixOverFFConverter () {
+    ~MatrixOverPrimeFieldConverter () {
       delete _field;
     }
 
-    MatrixOverFFConverter (semiring::FiniteField* field) 
+    MatrixOverPrimeFieldConverter (PrimeField* field) 
       : _field(field) {}
 
     MatrixOverSemiring* convert (Obj o, size_t n) {
@@ -510,7 +541,7 @@ class MatrixOverFFConverter : public Converter<MatrixOverSemiring> {
 
   protected: 
     
-    semiring::FiniteField* _field;
+    PrimeField* _field;
 };
 
 long inline Threshold (Obj data) {
@@ -531,7 +562,6 @@ long inline SizeOfFF (Obj data) {
   assert(ELM_PLIST(x, 1) != 0);
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
-  std::cout << INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1)) << "\n";
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
 }
 
@@ -845,10 +875,14 @@ InterfaceBase* InterfaceFromData (Obj data) {
       break;
     }
     case MAT_OVER_FF:{
-      auto moffc = new MatrixOverFFConverter(new semiring::FiniteField(SizeOfFF(data)));
-      interface = new Interface<MatrixOverSemiring>(data, moffc);
-      break;
-
+      size_t n = SizeOfFF(data);
+      if (IS_PRIME_INT(n)) {
+        auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
+        interface = new Interface<MatrixOverSemiring>(data, mopfc);
+        break;
+      } else {
+        //TODO fill this in 
+      }
     }
     default: {
       assert(false);
@@ -1638,6 +1672,7 @@ static Int InitKernel( StructInitInfo *module )
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
     
     ImportGVarFromLibrary( "Objectify", &Objectify);
+    ImportGVarFromLibrary( "IsPrimeInt", &IsPrimeInt);
 
     ImportGVarFromLibrary( "infinity", &infinity);
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
