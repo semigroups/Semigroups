@@ -41,7 +41,7 @@ using namespace semiring;
 #define IS_TROP_MAT(x)           (CALL_1ARGS(IsTropicalMatrix, x) == True)
 #define IS_TROP_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True)
 #define IS_TROP_MIN_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True)
-#define IS_MAT_OVER_FF(x)        (CALL_1ARGS(IsMatrixOverFiniteField, x) == True)
+#define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
@@ -75,38 +75,12 @@ Obj TropicalMinPlusMatrixType;
 Obj IsTropicalMaxPlusMatrix;
 Obj TropicalMaxPlusMatrixType;
 
-Obj IsMatrixOverFiniteField;
-Obj AsMatrixOverFiniteFieldNC;
+Obj IsMatrixOverPrimeField;
+Obj AsMatrixOverPrimeFieldNC;
 
 /*******************************************************************************
  * Temporary debug area
 *******************************************************************************/
-
-/*namespace semiring {
-  class FiniteField : public Semiring {
-
-    public: 
-
-      Obj one () {
-        return ONE(_sample);
-      }
-
-      Obj zero () {
-        return ZERO(_sample);
-      }
-      
-      Obj prod (Obj x, Obj y) {
-        return PROD(x, y);
-      }
-
-      Obj plus (Obj x, Obj y) {
-        return SUM(x, y);
-      }
-
-    private: 
-      Obj _sample;
-  };
-}*/
 
 /*******************************************************************************
  * Can we use Semigroup++?
@@ -132,7 +106,7 @@ long inline Threshold (Obj data) {
 long inline SizeOfFF (Obj data) {
   Obj x = Representative(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_MAT_OVER_FF(x));
+  assert(IS_MAT_OVER_PF(x));
   assert(ELM_PLIST(x, 1) != 0);
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
@@ -178,7 +152,7 @@ SemigroupType TypeSemigroup (Obj data) {
       } else if (IS_TROP_MIN_PLUS_MAT(x)) {
         return TROP_MIN_PLUS_MAT;
         // TODO handle non-prime fields too!
-      } else if (IS_MAT_OVER_FF(x) && IS_PRIME_INT(SizeOfFF(data))) {
+      } else if (IS_MAT_OVER_PF(x) && IS_PRIME_INT(SizeOfFF(data))) {
         return MAT_OVER_FF;
       } 
       return UNKNOWN;
@@ -524,7 +498,7 @@ class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
       : _field(field) {}
 
     MatrixOverSemiring* convert (Obj o, size_t n) {
-      assert(IS_MAT_OVER_FF(o));
+      assert(IS_MAT_OVER_PF(o));
       assert(LEN_PLIST(o) > 0);
       assert(IS_PLIST(ELM_PLIST(o, 1)));
       assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
@@ -556,7 +530,7 @@ class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
         SET_ELM_PLIST(plist, i + 1, row);
         CHANGED_BAG(plist);
       }
-      return CALL_2ARGS(AsMatrixOverFiniteFieldNC, INTOBJ_INT(_field->size()), plist);
+      return CALL_2ARGS(AsMatrixOverPrimeFieldNC, INTOBJ_INT(_field->size()), plist);
     }
 
   protected: 
@@ -1694,8 +1668,8 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
     ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsMatrixOverFiniteField", &IsMatrixOverFiniteField );
-    ImportGVarFromLibrary( "AsMatrixOverFiniteFieldNC", &AsMatrixOverFiniteFieldNC );
+    ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
+    ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
 
     /* return success                                                      */
     return 0;
