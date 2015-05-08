@@ -39,3 +39,5 @@ DeclareOperation("AsMatrixOverFiniteField",
                  [IsPosInt, IsMatrix and IsCyclotomicCollColl]);
 DeclareOperation("AsMatrixOverFiniteFieldNC", 
                  [IsPosInt, IsObject]);
+
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForMatrixOverNonPrimeField");

@@ -164,3 +164,29 @@ function(p, x)
   return Objectify(MatrixOverFiniteFieldType, x);
 end);
 
+InstallMethod(ChooseHashFunction, "for a matrix over finite field",
+[IsMatrixOverFiniteField, IsInt],
+function(x, hashlen)
+  local data;
+
+  if IsPrimeField(BaseField(x)) then 
+    TryNextMethod(); # i.e. use the default method for matrices over a semiring
+  fi;
+
+  data := [hashlen, 
+           ChooseHashFunction(x![1], hashlen),
+           PowerMod(2, Length(x![1]), hashlen)];
+
+  return rec(func := SEMIGROUPS_HashFunctionForMatrixOverNonPrimeField, 
+             data := data);
+end);
+
+InstallGlobalFunction(SEMIGROUPS_HashFunctionForMatrixOverNonPrimeField,
+function(x, data)
+  local i, res;
+  res := 0;
+  for i in [1 .. DimensionOfMatrixOverSemiring(x)] do
+    res := (res * data[3] + data[2].func(x![i], data[2].data)) mod data[1];
+  od;
+  return res + 1;
+end);

@@ -206,7 +206,9 @@ function(S)
   if IsTransformationSemigroup(S) 
       or IsPartialPermSemigroup(S) 
       or IsBipartitionSemigroup(S) 
-      or IsMatrixOverSemiringSemigroup(S) then
+      or (IsMatrixOverSemiringSemigroup(S) 
+          and ((not IsField(BaseField(Representative(S)))) 
+                or IsPrimeField(BaseField(Representative(S))))) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;

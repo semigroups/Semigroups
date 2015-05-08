@@ -83,11 +83,9 @@ Obj AsMatrixOverFiniteFieldNC;
 *******************************************************************************/
 
 /*namespace semiring {
-  class FiniteField : public Semiring<Obj> {
+  class FiniteField : public Semiring {
 
     public: 
-
-      FiniteField () : Semiring() {}
 
       Obj one () {
         return ONE(_sample);
@@ -118,6 +116,27 @@ Obj inline Representative (Obj data) {
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
   return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
+}
+
+long inline Threshold (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_TROP_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
+long inline SizeOfFF (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_MAT_OVER_FF(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
 }
 
 // TODO use IsMatrixOverSemiring ?
@@ -158,7 +177,8 @@ SemigroupType TypeSemigroup (Obj data) {
         return TROP_MAX_PLUS_MAT;
       } else if (IS_TROP_MIN_PLUS_MAT(x)) {
         return TROP_MIN_PLUS_MAT;
-      } else if (IS_MAT_OVER_FF(x)) {
+        // TODO handle non-prime fields too!
+      } else if (IS_MAT_OVER_FF(x) && IS_PRIME_INT(SizeOfFF(data))) {
         return MAT_OVER_FF;
       } 
       return UNKNOWN;
@@ -544,26 +564,6 @@ class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
     PrimeField* _field;
 };
 
-long inline Threshold (Obj data) {
-  Obj x = Representative(data);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_TROP_MAT(x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
-
-  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
-}
-
-long inline SizeOfFF (Obj data) {
-  Obj x = Representative(data);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_MAT_OVER_FF(x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
-  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
-}
 
 /*******************************************************************************
  * Class for containing a C++ semigroup and accessing its methods
@@ -875,14 +875,9 @@ InterfaceBase* InterfaceFromData (Obj data) {
       break;
     }
     case MAT_OVER_FF:{
-      size_t n = SizeOfFF(data);
-      if (IS_PRIME_INT(n)) {
-        auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
-        interface = new Interface<MatrixOverSemiring>(data, mopfc);
-        break;
-      } else {
-        //TODO fill this in 
-      }
+      auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
+      interface = new Interface<MatrixOverSemiring>(data, mopfc);
+      break;
     }
     default: {
       assert(false);
