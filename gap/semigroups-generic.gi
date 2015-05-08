@@ -221,6 +221,7 @@ function(S)
     elif IsBipartitionSemigroup(S) then 
       data.degree := 2 * DegreeOfBipartitionSemigroup(S);
     fi;
+    data.report := SEMIGROUPS_OptionsRec(S).report;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);

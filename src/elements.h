@@ -17,6 +17,8 @@
 #include <math.h>
 #include <vector>
 
+using namespace semiring;
+
 // template for the base class for elements of a semigroup
 
 template <typename T>

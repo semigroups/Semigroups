@@ -11,173 +11,179 @@
 
 using namespace std;
 
-class Semiring {
+namespace semiring {
 
-  public:
+  class Semiring {
 
-    virtual ~Semiring () {};
-    virtual long one  () = 0;
-    virtual long zero () = 0;
-    virtual long plus (long, long) = 0;
-    virtual long prod (long, long) = 0;
-    virtual long threshold () {
-      return -1;
-    };
-};
+    public:
 
-class FiniteField : public Semiring {
+      virtual ~Semiring () {};
+      virtual long one  () = 0;
+      virtual long zero () = 0;
+      virtual long plus (long, long) = 0;
+      virtual long prod (long, long) = 0;
+      virtual long threshold () {
+        return -1;
+      };
+  };
 
-  public: 
+  class FiniteField : public Semiring {
 
-    FiniteField (long n) : _n(n), Semiring() {}
+    public: 
 
-    long one () {
-      return 1;
-    }
+      FiniteField (long n) : _n(n), Semiring() {}
 
-    long zero () {
-      return 0;
-    }
-    
-    long prod (long x, long y) {
-      return (x * y) % _n;
-    }
+      long one () {
+        return 1;
+      }
 
-    long plus (long x, long y) {
-      return (x + y) % _n;
-    }
+      long zero () {
+        return 0;
+      }
+      
+      long prod (long x, long y) {
+        return (x * y) % _n;
+      }
 
-  private: 
-    long _n;
-};
+      long plus (long x, long y) {
+        return (x + y) % _n;
+      }
 
-class MaxPlusSemiring : public Semiring {
+      long size () {
+        return _n;
+      }
 
-  public: 
+    private: 
+      long _n;
+  };
 
-    MaxPlusSemiring () : Semiring() {}
+  class MaxPlusSemiring : public Semiring {
 
-    long one () {
-      return 0;
-    }
+    public: 
 
-    long zero () {
-      return LONG_MIN;
-    }
-    
-    long prod (long x, long y) {
-      if (x == LONG_MIN || y == LONG_MIN) {
+      MaxPlusSemiring () : Semiring() {}
+
+      long one () {
+        return 0;
+      }
+
+      long zero () {
         return LONG_MIN;
       }
-      return x + y;
-    }
+      
+      long prod (long x, long y) {
+        if (x == LONG_MIN || y == LONG_MIN) {
+          return LONG_MIN;
+        }
+        return x + y;
+      }
 
-    long plus (long x, long y) {
-      return std::max(x, y);
-    }
-};
+      long plus (long x, long y) {
+        return std::max(x, y);
+      }
+  };
 
-class MinPlusSemiring : public Semiring {
+  class MinPlusSemiring : public Semiring {
 
-  public: 
+    public: 
 
-    MinPlusSemiring () : Semiring() {}
+      MinPlusSemiring () : Semiring() {}
 
-    long one () {
-      return 0;
-    }
+      long one () {
+        return 0;
+      }
 
-    long zero () {
-      return LONG_MAX;
-    }
-    
-    long prod (long x, long y) {
-      if (x == LONG_MAX || y == LONG_MAX) {
+      long zero () {
         return LONG_MAX;
       }
-      return x + y;
-    }
+      
+      long prod (long x, long y) {
+        if (x == LONG_MAX || y == LONG_MAX) {
+          return LONG_MAX;
+        }
+        return x + y;
+      }
 
-    long plus (long x, long y) {
-      return std::min(x, y);
-    }
-};
+      long plus (long x, long y) {
+        return std::min(x, y);
+      }
+  };
 
-class TropicalSemiring : public Semiring {
+  class TropicalSemiring : public Semiring {
 
-  public: 
+    public: 
 
-    TropicalSemiring (long threshold) : Semiring(), _threshold(threshold) {}
-    
-    long clipped (long x) {
-      if (x > _threshold) {
+      TropicalSemiring (long threshold) : Semiring(), _threshold(threshold) {}
+      
+      long clipped (long x) {
+        if (x > _threshold) {
+          return _threshold;
+        }
+        return x;
+      }
+      
+      long threshold () {
         return _threshold;
       }
-      return x;
-    }
-    
-    long threshold () {
-      return _threshold;
-    }
 
-  private: 
-    
-    long _threshold;
-};
+    private: 
+      
+      long _threshold;
+  };
 
-class TropicalMaxPlusSemiring : public TropicalSemiring {
+  class TropicalMaxPlusSemiring : public TropicalSemiring {
 
-  public: 
+    public: 
 
-    TropicalMaxPlusSemiring (long threshold) : TropicalSemiring(threshold) {}
+      TropicalMaxPlusSemiring (long threshold) : TropicalSemiring(threshold) {}
 
-    long one () {
-      return 0;
-    }
+      long one () {
+        return 0;
+      }
 
-    long zero () {
-      return LONG_MIN;
-    }
-    
-    long prod (long x, long y) {
-      if (x == LONG_MIN || y == LONG_MIN) {
+      long zero () {
         return LONG_MIN;
       }
-      return clipped(x + y);
-    }
+      
+      long prod (long x, long y) {
+        if (x == LONG_MIN || y == LONG_MIN) {
+          return LONG_MIN;
+        }
+        return clipped(x + y);
+      }
 
-    long plus (long x, long y) {
-      return clipped(std::max(x, y));
-    }
-};
+      long plus (long x, long y) {
+        return clipped(std::max(x, y));
+      }
+  };
 
-class TropicalMinPlusSemiring : public TropicalSemiring {
+  class TropicalMinPlusSemiring : public TropicalSemiring {
 
-  public: 
+    public: 
 
-    TropicalMinPlusSemiring (long threshold) : TropicalSemiring(threshold) {}
+      TropicalMinPlusSemiring (long threshold) : TropicalSemiring(threshold) {}
 
-    long one () {
-      return 0;
-    }
+      long one () {
+        return 0;
+      }
 
-    long zero () {
-      return LONG_MAX;
-    }
-    
-    long prod (long x, long y) {
-      if (x == LONG_MAX || y == LONG_MAX) {
+      long zero () {
         return LONG_MAX;
       }
-      return clipped(x + y);
-    }
-
-    long plus (long x, long y) {
-      if (x == LONG_MAX && y == LONG_MAX) {
-        return LONG_MAX;
+      
+      long prod (long x, long y) {
+        if (x == LONG_MAX || y == LONG_MAX) {
+          return LONG_MAX;
+        }
+        return clipped(x + y);
       }
-      return clipped(std::min(x, y));
-    }
-};
 
+      long plus (long x, long y) {
+        if (x == LONG_MAX && y == LONG_MAX) {
+          return LONG_MAX;
+        }
+        return clipped(std::min(x, y));
+      }
+  };
+}
 #endif

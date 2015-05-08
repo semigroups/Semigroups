@@ -1,9 +1,11 @@
 TODO
 
 * remove C++11
-* gmp?
+* gmp problems?
 * use namespace in the C++ code
 * clean up the memory usage in semigroups.h, interface.cc
+* add _report for all methods that call enumerate in semigroups.h
+
 
 Gaplint:
 

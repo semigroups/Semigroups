@@ -28,3 +28,14 @@ DeclareOperation("RandomMatrixOverFiniteField",
                  [IsPosInt, IsField and IsFinite]);
 DeclareOperation("RandomMatrixOverFiniteField", 
                  [IsPosInt, IsPosInt, IsPosInt]);
+
+DeclareOperation("AsMatrix", [IsMatrixOverFiniteField]);
+
+DeclareOperation("AsMatrixOverFiniteField", 
+                 [IsFinite and IsField, IsMatrix and IsFFECollColl]);
+DeclareOperation("AsMatrixOverFiniteField", 
+                 [IsPosInt, IsMatrix and IsFFECollColl]);
+DeclareOperation("AsMatrixOverFiniteField", 
+                 [IsPosInt, IsMatrix and IsCyclotomicCollColl]);
+DeclareOperation("AsMatrixOverFiniteFieldNC", 
+                 [IsPosInt, IsObject]);

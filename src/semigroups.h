@@ -120,8 +120,8 @@ class Semigroup {
       return _elements->size();
     }
     
-    size_t size () {
-      enumerate(-1);
+    size_t size (bool report) {
+      enumerate(-1, report);
       return _elements->size();
     }
    
@@ -358,7 +358,7 @@ class Semigroup {
         if (report) {
           std::cout << "found " << _nr << " elements, ";
           std::cout << _nrrules << " rules, ";
-          std::cout << "max word length " << _wordlen << ", so far" << std::endl;
+          std::cout << "max word length " << _wordlen + 1 << ", so far" << std::endl;
         }
       }
       x.delete_data();

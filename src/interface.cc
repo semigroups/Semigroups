@@ -15,6 +15,7 @@
 // 3) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
 
+#include "gap-debug.h"
 #include "interface.h"
 
 #include <assert.h>
@@ -22,6 +23,8 @@
 #include <tuple>
 #include <unordered_map>
 #include <time.h>
+
+using namespace semiring;
 
 //#define DEBUG
 //#define NDEBUG 
@@ -69,9 +72,8 @@ Obj TropicalMinPlusMatrixType;
 Obj IsTropicalMaxPlusMatrix;
 Obj TropicalMaxPlusMatrixType;
 
-Obj IntFFE;
 Obj IsMatrixOverFiniteField;
-Obj MatrixOverFiniteFieldType;
+Obj AsMatrixOverFiniteFieldNC;
 
 /*******************************************************************************
  * Temporary debug area
@@ -459,6 +461,58 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
     Obj       _gap_type;
 };
 
+class MatrixOverFFConverter : public Converter<MatrixOverSemiring> {
+
+  public:
+
+    ~MatrixOverFFConverter () {
+      delete _field;
+    }
+
+    MatrixOverFFConverter (semiring::FiniteField* field) 
+      : _field(field) {}
+
+    MatrixOverSemiring* convert (Obj o, size_t n) {
+      assert(IS_MAT_OVER_FF(o));
+      assert(LEN_PLIST(o) > 0);
+      assert(IS_PLIST(ELM_PLIST(o, 1)));
+      assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
+       
+      auto x = new MatrixOverSemiring(n, _field);
+      n = LEN_PLIST(ELM_PLIST(o, 1));
+      for (size_t i = 0; i < n; i++) {
+        Obj row = ELM_PLIST(o, i + 1);
+        for (size_t j = 0; j < n; j++) {
+          FFV entry = VAL_FFE(ELM_PLIST(row, j + 1));
+          x->set(i * n + j, entry);
+        }
+      }
+      return x;
+    }
+
+    virtual Obj unconvert (MatrixOverSemiring* x) {
+      size_t n = sqrt(x->degree());
+      Obj plist = NEW_PLIST(T_PLIST, n);
+      SET_LEN_PLIST(plist, n);
+      
+      for (size_t i = 0; i < n; i++) {
+        Obj row = NEW_PLIST(T_PLIST_CYC, n);
+        SET_LEN_PLIST(row, n);
+        for (size_t j = 0; j < n; j++) {
+          long entry = x->at(i * n + j);
+          SET_ELM_PLIST(row, j + 1, INTOBJ_INT(x->at(i * n + j)));
+        }
+        SET_ELM_PLIST(plist, i + 1, row);
+        CHANGED_BAG(plist);
+      }
+      return CALL_2ARGS(AsMatrixOverFiniteFieldNC, INTOBJ_INT(_field->size()), plist);
+    }
+
+  protected: 
+    
+    semiring::FiniteField* _field;
+};
+
 long inline Threshold (Obj data) {
   Obj x = Representative(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
@@ -467,6 +521,17 @@ long inline Threshold (Obj data) {
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
 
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
+long inline SizeOfFF (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_MAT_OVER_FF(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+  std::cout << INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1)) << "\n";
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
 }
 
@@ -486,7 +551,15 @@ class Interface : public InterfaceBase {
       assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
       
       Obj gens =  ElmPRec(data, RNamName("gens"));
-      
+
+      if (IsbPRec(data, RNamName("report"))) {
+        assert(ElmPRec(data, RNamName("report")) == True || 
+            ElmPRec(data, RNamName("report")) == False);
+        _report = (ElmPRec(data, RNamName("report")) == True ? true : false);
+      } else {
+        _report = false;
+      }
+
       std::vector<T*> gens_c;
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
 
@@ -508,7 +581,7 @@ class Interface : public InterfaceBase {
 
     // enumerate the C++ semigroup
     void enumerate (Obj limit) {
-      _semigroup->enumerate(INT_INTOBJ(limit));
+      _semigroup->enumerate(INT_INTOBJ(limit), _report);
     }
     
     bool is_done () {
@@ -517,7 +590,7 @@ class Interface : public InterfaceBase {
 
     // get the size of the C++ semigroup
     size_t size () {
-      return _semigroup->size();
+      return _semigroup->size(_report);
     }
     
     size_t current_size () {
@@ -531,7 +604,7 @@ class Interface : public InterfaceBase {
 
     // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
-      _semigroup->enumerate(-1);
+      _semigroup->enumerate(-1, _report);
       AssPRec(data, RNamName("right"), 
               ConvertFromRecVec(_semigroup->right_cayley_graph()));
       CHANGED_BAG(data);
@@ -541,7 +614,7 @@ class Interface : public InterfaceBase {
 
     // get the left Cayley graph from C++ semgroup, store it in data
     void left_cayley_graph (Obj data) {
-      _semigroup->enumerate(-1);
+      _semigroup->enumerate(-1, _report);
       AssPRec(data, RNamName("left"), 
               ConvertFromRecVec(_semigroup->left_cayley_graph()));
       CHANGED_BAG(data);
@@ -616,7 +689,7 @@ class Interface : public InterfaceBase {
     // get the word from the C++ semigroup, store it in data
     void word (Obj data, Obj pos) {
       size_t pos_c = INT_INTOBJ(pos);
-      _semigroup->enumerate(pos_c - 1);
+      _semigroup->enumerate(pos_c - 1, _report);
       if (! IsbPRec(data, RNamName("words"))) {
         Obj words = NEW_PLIST(T_PLIST, pos_c);
         SET_LEN_PLIST(words, pos_c);
@@ -697,6 +770,7 @@ class Interface : public InterfaceBase {
 
     Semigroup<T>* _semigroup;
     Converter<T>* _converter;
+    bool          _report;
 };
 
 /*******************************************************************************
@@ -769,6 +843,12 @@ InterfaceBase* InterfaceFromData (Obj data) {
                                                  TropicalMinPlusMatrixType);
       interface = new Interface<MatrixOverSemiring>(data, tmc);
       break;
+    }
+    case MAT_OVER_FF:{
+      auto moffc = new MatrixOverFFConverter(new semiring::FiniteField(SizeOfFF(data)));
+      interface = new Interface<MatrixOverSemiring>(data, moffc);
+      break;
+
     }
     default: {
       assert(false);
@@ -1585,8 +1665,7 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
 
     ImportGVarFromLibrary( "IsMatrixOverFiniteField", &IsMatrixOverFiniteField );
-    ImportGVarFromLibrary( "MatrixOverFiniteFieldType", &MatrixOverFiniteFieldType );
-    ImportGVarFromLibrary( "FFEInt", &FFEInt );
+    ImportGVarFromLibrary( "AsMatrixOverFiniteFieldNC", &AsMatrixOverFiniteFieldNC );
 
     /* return success                                                      */
     return 0;
