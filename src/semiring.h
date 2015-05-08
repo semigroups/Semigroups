@@ -17,7 +17,7 @@ namespace semiring {
   class Semiring {
 
     public:
-      virtual ~Semiring () = 0;
+      virtual ~Semiring () {};
       virtual long one  () = 0;
       virtual long zero () = 0;
       virtual long plus (long, long) = 0;
@@ -31,7 +31,7 @@ namespace semiring {
 
     public: 
 
-      PrimeField (long n) : _n(n) {}
+      PrimeField (long n) : _n(n), Semiring() {}
 
       long one () {
         return 1;
@@ -61,6 +61,8 @@ namespace semiring {
 
     public: 
 
+      MaxPlusSemiring () : Semiring() {}
+
       long one () {
         return 0;
       }
@@ -84,6 +86,8 @@ namespace semiring {
   class MinPlusSemiring : public Semiring {
 
     public: 
+
+      MinPlusSemiring () : Semiring() {}
 
       long one () {
         return 0;
@@ -109,7 +113,7 @@ namespace semiring {
 
     public: 
 
-      TropicalSemiring (long threshold) : _threshold(threshold) {}
+      TropicalSemiring (long threshold) : Semiring(), _threshold(threshold) {}
       
       long clipped (long x) {
         if (x > _threshold) {
