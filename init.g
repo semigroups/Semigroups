@@ -79,13 +79,13 @@ ReadPackage("semigroups/gap/normalizer.gd");
 
 ReadPackage("semigroups/gap/quotients.gd");
 
+ReadPackage("semigroups/gap/cong-pairs.gd");
+ReadPackage("semigroups/gap/cong-reesmat.gd");
+ReadPackage("semigroups/gap/cong-univ.gd");
+ReadPackage("semigroups/gap/cong-inverse.gd");
+ReadPackage("semigroups/gap/cong-simple.gd");
+ReadPackage("semigroups/gap/cong-rees.gd");
 ReadPackage("semigroups/gap/congruences.gd");
-ReadPackage("semigroups/gap/pairs-cong.gd");
-ReadPackage("semigroups/gap/reesmat-cong.gd");
-ReadPackage("semigroups/gap/univ-cong.gd");
-ReadPackage("semigroups/gap/inverse-cong.gd");
-ReadPackage("semigroups/gap/simple-cong.gd");
-ReadPackage("semigroups/gap/rees-cong.gd");
 
 ReadPackage("semigroups/gap/semigroups-generic.gd");
 
