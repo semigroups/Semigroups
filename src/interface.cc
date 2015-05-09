@@ -82,6 +82,29 @@ Obj AsMatrixOverPrimeFieldNC;
  * Temporary debug area
 *******************************************************************************/
 
+Obj IsColTrimBooleanMat (Obj self, Obj x) {
+  assert(IS_BOOL_MAT(x));
+  size_t n = LEN_BLIST(ELM_PLIST(x, 1));
+  
+  for (size_t i = 1; i < n; i++) {
+    for (size_t j = i + 1; j <= n; j++) {
+      size_t k;
+      bool contained = true;
+      for (k = 1; k <= n; k++) {
+        Obj row = ELM_PLIST(x, k);
+        if ((ELM_BLIST(row, j) == True && ELM_BLIST(row, i) == False)) {
+          contained = false;
+          break;
+        }
+      }
+      if (contained) {
+        return False;
+      }
+    }
+  }
+  return True;
+}
+
 /*******************************************************************************
  * Can we use Semigroup++?
 *******************************************************************************/
@@ -1595,6 +1618,8 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
+    GVAR_FUNC_TABLE_ENTRY("interface.c", IsColTrimBooleanMat, 1, 
+                          "x"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_SEMIGROUP, 4, 

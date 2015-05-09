@@ -205,7 +205,8 @@ function(S)
   # TODO declare a filter IsCPPSemigroup or similar for this.
   if IsTransformationSemigroup(S) 
       or IsPartialPermSemigroup(S) 
-      or IsBipartitionSemigroup(S) 
+      or IsBipartitionSemigroup(S)
+      or IsBooleanMatSemigroup(S) 
       or (IsMatrixOverSemiringSemigroup(S) 
           and ((not IsField(BaseField(Representative(S)))) 
                 or IsPrimeField(BaseField(Representative(S))))) then

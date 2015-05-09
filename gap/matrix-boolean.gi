@@ -128,6 +128,24 @@ function(n)
   return BooleanMatNC(x);
 end);
 
+# methods specific to Boolean matrices
+
+IsRowTrimBooleanMat := function(x)
+  local n, i, j;
+
+  n := Length(x![1]);
+  for i in [1 .. n - 1] do 
+    for j in [i + 1 .. n] do 
+      if IsSubsetBlist(x![i], x![j]) then 
+        return false;
+      fi;
+    od;
+  od;
+  return true;
+end;
+
+IsTrimBooleanMat := x -> IsRowTrimBooleanMat(x) and IsColTrimBooleanMat(x);
+
 InstallMethod(DisplayString, "for a boolean matrix",
 [IsBooleanMat],
 function(x)
@@ -158,7 +176,11 @@ function(x)
   nr := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      nr := 2 * n + x![i][j];
+      if x![i][j] then 
+        nr := 2 * nr + 1;
+      else 
+        nr := 2 * nr;
+      fi;
     od;
   od;
   return nr + 1;   # to be in [1 .. 2 ^ (n ^ 2)]
