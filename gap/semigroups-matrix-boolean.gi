@@ -22,35 +22,40 @@ function(nrgens, dim)
   return Monoid(Set([1 .. nrgens], x -> RandomBooleanMat(dim)));
 end);
 
-# not relevant for ideals
-# FIXME this doesn't yet work!
-#InstallMethod(IsomorphismTransformationSemigroup,
-#"for semigroup of boolean matrices with generators",
-#[IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
-#function(S)
-#
-#  act := function(vec, mat) # return the ith row of mat
-#    out := EmptyPlist(mat![1]);
-#    for j in [1 .. mat![1]] do
-#      out[j] := mat![(i - 1) * mat![1] + j];
-#    od;
-#    return out;
-#  end;
-#
-#  n := DimensionOfBooleanMat(GeneratorsOfSemigroup(S)[1]);
-#  pts := [];
-#
-#  for i in [1 .. n] do
-#    # TODO improve this to keep track of those things seen before.
-#    o := Enumerate(Orb(S, i, act));
-#    pts := Union(pts, AsList(o));
-#  od;
-#
-#  pos := List([1 .. n], x -> Position(pts, []));
-#  t := Semigroup(List(GeneratorsOfSemigroup(s),
-#                      x -> TransformationOpNC(x, pts, OnPoints)));
-#  # gaplint: ignore 3
-#  return MappingByFunction(s, t,
-#           x -> TransformationOpNC(x, pts, OnPoints),
-#           x -> BinaryRelationOnPoints(List([1 .. n], i -> pts[pos[i] ^ x])));
-#end);
+InstallMethod(IsomorphismTransformationSemigroup,
+"for a boolean matrix semigroup generators",
+[IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, pts, o, pos, T, i;
+
+  n := Length(Representative(S)![1]);
+  pts := EmptyPlist(2 ^ n);
+
+  for i in [1 .. n] do
+    o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlists)); 
+    pts := Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
+  T := Semigroup(List(GeneratorsOfSemigroup(S),
+                      x -> TransformationOpNC(x, pts, OnBlists)));
+  # gaplint: ignore 3
+  return MappingByFunction(S, T,
+           x -> TransformationOpNC(x, pts, OnBlists),
+           x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
+end);
+
+InstallGlobalFunction(OnBlists, 
+function(blist1, x)
+  local n, blist2, i, j;
+
+  n := Length(blist1);
+  blist2 := BlistList([1 .. n], []);
+  
+  for i in [1 .. n] do 
+    for j in [1 .. n] do 
+      blist2[i] := blist2[i] or (blist1[j] and x![j][i]);
+    od;
+  od;
+  return blist2;
+end);
