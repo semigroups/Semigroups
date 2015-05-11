@@ -208,7 +208,7 @@ function(S)
       or IsBipartitionSemigroup(S)
       or IsBooleanMatSemigroup(S) 
       or (IsMatrixOverSemiringSemigroup(S) 
-          and ((not IsField(BaseField(Representative(S)))) 
+          and ((not IsMatrixOverPrimeFieldSemigroup(S)) 
                 or IsPrimeField(BaseField(Representative(S))))) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));

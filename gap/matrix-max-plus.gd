@@ -102,3 +102,24 @@ DeclareGlobalFunction("TropicalMinPlusMatrix");
 DeclareGlobalFunction("TropicalMinPlusMatrixNC");
 
 DeclareOperation("RandomTropicalMinPlusMatrix", [IsPosInt, IsPosInt]);
+
+#############################################################################
+## 5. Projective max-plus matrices
+#############################################################################
+
+DeclareCategory("IsProjectiveMaxPlusMatrix", IsTropicalMatrix);
+DeclareCategoryCollections("IsProjectiveMaxPlusMatrix");
+DeclareCategoryCollections("IsProjectiveMaxPlusMatrixCollection");
+
+BindGlobal("ProjectiveMaxPlusMatrixFamily",
+           NewFamily("ProjectiveMaxPlusMatrixFamily",
+                     IsProjectiveMaxPlusMatrix, CanEasilySortElements,
+                     CanEasilySortElements));
+BindGlobal("ProjectiveMaxPlusMatrixType",
+           NewType(ProjectiveMaxPlusMatrixFamily,
+                   IsProjectiveMaxPlusMatrix));
+
+DeclareGlobalFunction("ProjectiveMaxPlusMatrix");
+DeclareGlobalFunction("ProjectiveMaxPlusMatrixNC");
+
+DeclareOperation("RandomProjectiveMaxPlusMatrix", [IsPosInt]);

@@ -99,6 +99,7 @@ ReadPackage("semigroups/gap/matrix-prime-field.gi");
 ReadPackage("semigroups/gap/semigroups-matrix-semiring.gi");
 ReadPackage("semigroups/gap/semigroups-matrix-max-plus.gi");
 ReadPackage("semigroups/gap/semigroups-matrix-boolean.gi");
+ReadPackage("semigroups/gap/semigroups-prime-fields.gi");
 
 ReadPackage("semigroups/gap/blocks.gi");
 ReadPackage("semigroups/gap/bipartition.gi");

@@ -46,6 +46,8 @@ ReadPackage("semigroups/gap/blocks.gd");
 ReadPackage("semigroups/gap/semigroups-matrix-semiring.gd");
 ReadPackage("semigroups/gap/semigroups-matrix-max-plus.gd");
 ReadPackage("semigroups/gap/semigroups-matrix-boolean.gd");
+ReadPackage("semigroups/gap/semigroups-matrix-prime-field.gd");
+
 ReadPackage("semigroups/gap/semibipart.gd");
 ReadPackage("semigroups/gap/semitrans.gd");
 ReadPackage("semigroups/gap/semipperm.gd");

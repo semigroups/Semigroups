@@ -10,13 +10,19 @@
 
 #############################################################################
 ## This file contains declarations for max-plus, min-plus, tropical max-plus,
-## and tropical min-plus matrices.
+## tropical min-plus matrices, projective. 
 ##
 ## It is organized as follows:
 ##
-##    1. Max-plus matrices
+##   1. Max-plus
 ##
-##    2. Min-plus matrices
+##   2. Min-plus
+##
+##   3. Tropical max-plus
+## 
+##   4. Tropical min-plus
+##
+##   5. Projective max-plus matrices
 ##
 #############################################################################
 
@@ -254,18 +260,76 @@ function(x, y)
   return TropicalMinPlusMatrixNC(xy, ThresholdTropicalMatrix(x));
 end);
 
-InstallMethod(OneImmutable, "for a max-plus matrix",
-[IsTropicalMaxPlusMatrix],
-x -> TropicalMaxPlusMatrixNC(SEMIGROUPS_IdentityMat(x, infinity, 0),
+InstallMethod(OneImmutable, "for tropical min-plus matrix",
+[IsTropicalMinPlusMatrix],
+x -> TropicalMinPlusMatrixNC(SEMIGROUPS_IdentityMat(x, infinity, 0),
                              ThresholdTropicalMatrix(x)));
 
 InstallMethod(OneMutable, "for a tropical min-plus matrix",
 [IsTropicalMinPlusMatrix], OneImmutable);
 
-InstallMethod(RandomTropicalMinPlusMatrix, "for a pos ints",
+InstallMethod(RandomTropicalMinPlusMatrix, "for pos ints",
 [IsPosInt, IsPosInt],
 function(dim, threshold)
   # gaplint: ignore 2
   return SEMIGROUPS_RandomMatrixOverSemiring(
     dim, infinity, x -> TropicalMinPlusMatrixNC(x, threshold));
 end);
+
+#############################################################################
+## 5. Projective max-plus matrices
+#############################################################################
+
+InstallMethod(TypeViewStringOfMatrixOverSemiring,
+"for a projective max-plus matrix",
+[IsProjectiveMaxPlusMatrix], x -> "projective max-plus");
+
+# TODO change it to non-NC version
+InstallMethod(TypePrintStringOfMatrixOverSemiring,
+"for a projective max-plus matrix",
+[IsProjectiveMaxPlusMatrix], x -> "ProjectiveMaxPlusMatrixNC");
+
+InstallGlobalFunction(ProjectiveMaxPlusMatrixNC,
+x -> Objectify(ProjectiveMaxPlusMatrixType, x));
+
+InstallMethod(\*, "for projective max-plus matrices",
+[IsProjectiveMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
+function(x, y)
+  local n, xy, norm, val, i, j, k;
+
+  n := DimensionOfMatrixOverSemiring(x);
+  xy := List([1 .. n], x -> EmptyPlist(n));
+  norm := -infinity;
+
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      val := -infinity;
+      for k in [1 .. n] do
+        val := Maximum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
+      od;
+      xy[i][j] := val;
+      if val > norm then 
+        norm := val;
+      fi;
+    od;
+  od;
+
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if xy[i][j] <> -infinity then 
+        xy[i][j] := xy[i][j] - norm;
+      fi;
+    od;
+  od;
+  return ProjectiveMaxPlusMatrixNC(xy);
+end);
+
+InstallMethod(OneImmutable, "for a projective max-plus matrix",
+[IsProjectiveMaxPlusMatrix],
+x -> ProjectiveMaxPlusMatrixNC(SEMIGROUPS_IdentityMat(x, -infinity, 0)));
+
+InstallMethod(RandomProjectiveMaxPlusMatrix, "for a pos int",
+[IsPosInt], 
+dim -> SEMIGROUPS_RandomMatrixOverSemiring(dim, 
+                                           -infinity,
+                                           ProjectiveMaxPlusMatrixNC));
