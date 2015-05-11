@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  pairs-cong.tst
+#W  cong-pairs.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##                                                          Wilfred Wilson
 ##
@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: pairs-cong.tst");
+gap> START_TEST("Semigroups package: cong-pairs.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -198,4 +198,4 @@ gap> Unbind(u);
 gap> Unbind(v);
 
 #E#
-gap> STOP_TEST( "Semigroups package: simple-cong.tst");
+gap> STOP_TEST( "Semigroups package: cong-simple.tst");

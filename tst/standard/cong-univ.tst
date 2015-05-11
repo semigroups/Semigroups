@@ -7,7 +7,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: pairs-cong.tst");
+gap> START_TEST("Semigroups package: cong-univ.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -78,4 +78,4 @@ gap> Unbind(pairs);
 gap> Unbind(cong);
 
 #E#
-gap> STOP_TEST( "Semigroups package: simple-cong.tst");
+gap> STOP_TEST( "Semigroups package: cong-simple.tst");

@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-#W  reesmat-cong.tst
+#W  cong-reesmat.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: reesmat-cong.tst");
+gap> START_TEST("Semigroups package: cong-reesmat.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -152,4 +152,4 @@ gap> Unbind(class3);
 gap> Unbind(mat);
 
 #E#
-gap> STOP_TEST( "Semigroups package: reesmat-cong.tst");
+gap> STOP_TEST( "Semigroups package: cong-reesmat.tst");

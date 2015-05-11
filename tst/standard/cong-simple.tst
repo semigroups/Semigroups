@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  simple-cong.tst
+#W  cong-simple.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: simple-cong.tst");
+gap> START_TEST("Semigroups package: cong-simple.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -122,4 +122,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST( "Semigroups package: simple-cong.tst");
+gap> STOP_TEST( "Semigroups package: cong-simple.tst");

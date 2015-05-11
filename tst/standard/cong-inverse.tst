@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  inverse-cong.tst
+#W  cong-inverse.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: inverse-cong.tst");
+gap> START_TEST("Semigroups package: cong-inverse.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -92,4 +92,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E# 
-gap> STOP_TEST( "Semigroups package: inverse-cong.tst");
+gap> STOP_TEST( "Semigroups package: cong-inverse.tst");
