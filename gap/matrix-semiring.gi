@@ -178,7 +178,7 @@ function(n, source, constructor)
   for i in [1 .. n] do
     for j in [1 .. n] do
       out[i][j] := Random(Integers);
-      if out[i][j] = 0 then
+      if out[i][j] = 0 and source <> false then
         out[i][j] := source;
       elif out[i][j] < 0 then
         out[i][j] := out[i][j] + 1;

@@ -277,7 +277,7 @@ function(dim, threshold)
 end);
 
 #############################################################################
-## 5. Projective max-plus matrices
+## 6. Projective max-plus matrices
 #############################################################################
 
 InstallMethod(TypeViewStringOfMatrixOverSemiring,
@@ -333,3 +333,84 @@ InstallMethod(RandomProjectiveMaxPlusMatrix, "for a pos int",
 dim -> SEMIGROUPS_RandomMatrixOverSemiring(dim, 
                                            -infinity,
                                            ProjectiveMaxPlusMatrixNC));
+
+#############################################################################
+## 7. Natural number matrices
+#############################################################################
+
+BindGlobal("SEMIGROUPS_NaturalizeMat",
+function(x, threshold, period)
+  local n, i, j;
+
+  n := Length(x);
+  x[n + 1] := threshold;
+  x[n + 2] := period;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      x[i][j] := AbsInt(x[i][j]);
+      if x[i][j] > threshold then
+        x[i][j] := threshold + (x[i][j] - threshold) mod period; 
+      fi;
+    od;
+  od;
+  return x;
+end);
+
+InstallMethod(ThresholdNaturalMatrix, "for a natural matrix",
+[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 1]);
+
+InstallMethod(PeriodNaturalMatrix, "for a natural matrix",
+[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
+
+InstallMethod(TypeViewStringOfMatrixOverSemiring,
+"for a natural number matrix",
+[IsNaturalMatrix], x -> "natural");
+
+# TODO change it to non-NC version
+InstallMethod(TypePrintStringOfMatrixOverSemiring,
+"for a natural number matrix",
+[IsNaturalMatrix], x -> "NaturalMatrixNC");
+
+InstallGlobalFunction(NaturalMatrixNC,
+function(x, threshold, period)
+  return Objectify(NaturalMatrixType, 
+                   SEMIGROUPS_NaturalizeMat(x, threshold, period));
+end);
+
+InstallMethod(\*, "for natural number matrices",
+[IsNaturalMatrix, IsNaturalMatrix],
+function(x, y)
+  local n, period, threshold, xy, i, j, k;
+  
+  n := DimensionOfMatrixOverSemiring(x);
+  period := PeriodNaturalMatrix(x);
+  threshold := ThresholdNaturalMatrix(x);
+  # TODO should really check that x and y are matrices over the same semiring!!
+  xy := List([1 .. n], x -> EmptyPlist(n));
+
+  for i in [1 .. n] do 
+    for j in [1 .. n] do 
+      xy[i][j] := 0;
+      for k in [1 .. n] do 
+        xy[i][j] := xy[i][j] + x![i][k] * y![k][j];
+      od;
+      if xy[i][j] > threshold then    
+        xy[i][j] := threshold + (xy[i][j] - threshold) mod period;
+      fi;
+    od;
+  od;
+  return NaturalMatrixNC(xy, threshold, period);
+end);
+
+InstallMethod(OneImmutable, "for a natural number matrix",
+[IsNaturalMatrix],
+x -> NaturalMatrixNC(SEMIGROUPS_IdentityMat(x, 0, 1)));
+
+InstallMethod(RandomNaturalMatrix, "for dimension, threshold, period (pos ints)",
+[IsPosInt, IsPosInt, IsPosInt], 
+function(dim, threshold, period)
+
+  return SEMIGROUPS_RandomMatrixOverSemiring(dim, 
+                                             false,
+                                             x -> NaturalMatrixNC(x, threshold, period));
+end);

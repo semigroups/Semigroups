@@ -9,7 +9,7 @@
 ##
 
 # This file contains declarations for max-plus, min-plus, tropical max-plus,
-# and tropical min-plus matrices.
+# tropical min-plus matrices, and natural number matrices.
 
 #############################################################################
 ## 1. Max-plus matrices
@@ -23,6 +23,7 @@ BindGlobal("MaxPlusMatrixFamily",
            NewFamily("MaxPlusMatrixFamily",
                      IsMaxPlusMatrix, CanEasilySortElements,
                      CanEasilySortElements));
+
 BindGlobal("MaxPlusMatrixType",
            NewType(MaxPlusMatrixFamily,
                    IsMaxPlusMatrix));
@@ -44,6 +45,7 @@ BindGlobal("MinPlusMatrixFamily",
            NewFamily("MinPlusMatrixFamily",
                      IsMinPlusMatrix, CanEasilySortElements,
                      CanEasilySortElements));
+
 BindGlobal("MinPlusMatrixType",
            NewType(MinPlusMatrixFamily,
                    IsMinPlusMatrix));
@@ -73,6 +75,7 @@ BindGlobal("TropicalMaxPlusMatrixFamily",
            NewFamily("TropicalMaxPlusMatrixFamily",
                      IsTropicalMaxPlusMatrix, CanEasilySortElements,
                      CanEasilySortElements));
+
 BindGlobal("TropicalMaxPlusMatrixType",
            NewType(TropicalMaxPlusMatrixFamily,
                    IsTropicalMaxPlusMatrix));
@@ -94,6 +97,7 @@ BindGlobal("TropicalMinPlusMatrixFamily",
            NewFamily("TropicalMinPlusMatrixFamily",
                      IsTropicalMinPlusMatrix, CanEasilySortElements,
                      CanEasilySortElements));
+
 BindGlobal("TropicalMinPlusMatrixType",
            NewType(TropicalMinPlusMatrixFamily,
                    IsTropicalMinPlusMatrix));
@@ -107,7 +111,7 @@ DeclareOperation("RandomTropicalMinPlusMatrix", [IsPosInt, IsPosInt]);
 ## 5. Projective max-plus matrices
 #############################################################################
 
-DeclareCategory("IsProjectiveMaxPlusMatrix", IsTropicalMatrix);
+DeclareCategory("IsProjectiveMaxPlusMatrix", IsMatrixOverSemiring);
 DeclareCategoryCollections("IsProjectiveMaxPlusMatrix");
 DeclareCategoryCollections("IsProjectiveMaxPlusMatrixCollection");
 
@@ -115,6 +119,7 @@ BindGlobal("ProjectiveMaxPlusMatrixFamily",
            NewFamily("ProjectiveMaxPlusMatrixFamily",
                      IsProjectiveMaxPlusMatrix, CanEasilySortElements,
                      CanEasilySortElements));
+
 BindGlobal("ProjectiveMaxPlusMatrixType",
            NewType(ProjectiveMaxPlusMatrixFamily,
                    IsProjectiveMaxPlusMatrix));
@@ -123,3 +128,29 @@ DeclareGlobalFunction("ProjectiveMaxPlusMatrix");
 DeclareGlobalFunction("ProjectiveMaxPlusMatrixNC");
 
 DeclareOperation("RandomProjectiveMaxPlusMatrix", [IsPosInt]);
+
+#############################################################################
+## 6. Natural number matrices
+#############################################################################
+
+
+DeclareCategory("IsNaturalMatrix", IsTropicalMatrix);
+DeclareCategoryCollections("IsNaturalMatrix");
+DeclareCategoryCollections("IsNaturalMatrixCollection");
+
+BindGlobal("NaturalMatrixFamily",
+           NewFamily("NaturalMatrixFamily",
+                     IsNaturalMatrix, CanEasilySortElements,
+                     CanEasilySortElements));
+
+BindGlobal("NaturalMatrixType",
+           NewType(NaturalMatrixFamily,
+                   IsNaturalMatrix));
+
+DeclareGlobalFunction("NaturalMatrix");
+DeclareGlobalFunction("NaturalMatrixNC");
+
+DeclareOperation("RandomNaturalMatrix", [IsPosInt, IsPosInt, IsPosInt]);
+
+DeclareAttribute("ThresholdNaturalMatrix", IsNaturalMatrix);
+DeclareAttribute("PeriodNaturalMatrix", IsNaturalMatrix);
