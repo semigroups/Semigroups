@@ -349,7 +349,9 @@ namespace std {
 }
 
 class MatrixOverSemiring: public Element<long> {
+
   public:
+
     MatrixOverSemiring (size_t degree, Semiring* semiring) 
       : Element<long>(degree), 
         _semiring(semiring) {}

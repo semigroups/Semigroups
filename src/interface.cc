@@ -516,6 +516,25 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
     Obj       _gap_type;
 };
 
+class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatrix>, 
+                                         public MatrixOverSemiringConverter {
+  public:
+    ProjectiveMaxPlusMatrixConverter(Semiring* semiring, 
+                                     Obj       gap_zero, 
+                                     Obj       gap_type)
+      : MatrixOverSemiringConverter(semiring, gap_zero, gap_type) {}
+
+    ProjectiveMaxPlusMatrix* convert (Obj o, size_t n) {
+      return
+        static_cast<ProjectiveMaxPlusMatrix*>(MatrixOverSemiringConverter::convert(o,
+                                                                                   n));
+    }
+
+    Obj unconvert (ProjectiveMaxPlusMatrix* x) {
+      return MatrixOverSemiringConverter::unconvert(x);
+    }
+};
+
 class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
 
   public:
@@ -849,8 +868,6 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<BooleanMat>(data, bmc);
       break;
     }
-    case PROJ_MAX_PLUS_MAT:
-      //intentional fall through
     case MAX_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 
@@ -878,6 +895,14 @@ InterfaceBase* InterfaceFromData (Obj data) {
                                                  TropicalMinPlusMatrixType);
       interface = new Interface<MatrixOverSemiring>(data, tmc);
       break;
+    }
+    case PROJ_MAX_PLUS_MAT:{
+      auto pmpmc = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
+                                                        Ninfinity, 
+                                                        ProjectiveMaxPlusMatrixType);
+      interface = new Interface<ProjectiveMaxPlusMatrix>(data, pmpmc);
+      break;
+
     }
     case MAT_OVER_PF:{
       auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
