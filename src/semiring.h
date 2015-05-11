@@ -185,5 +185,6 @@ namespace semiring {
         return clipped(std::min(x, y));
       }
   };
+  
 }
 #endif

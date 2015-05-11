@@ -41,6 +41,7 @@ using namespace semiring;
 #define IS_TROP_MAT(x)           (CALL_1ARGS(IsTropicalMatrix, x) == True)
 #define IS_TROP_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True)
 #define IS_TROP_MIN_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True)
+#define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
 #define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
 
 /*******************************************************************************
@@ -75,11 +76,14 @@ Obj TropicalMinPlusMatrixType;
 Obj IsTropicalMaxPlusMatrix;
 Obj TropicalMaxPlusMatrixType;
 
+Obj IsProjectiveMaxPlusMatrix;
+Obj ProjectiveMaxPlusMatrixType;
+
 Obj IsMatrixOverPrimeField;
 Obj AsMatrixOverPrimeFieldNC;
 
 /*******************************************************************************
- * Temporary debug area
+ * Temporary area
 *******************************************************************************/
 
 Obj IsColTrimBooleanMat (Obj self, Obj x) {
@@ -149,7 +153,8 @@ enum SemigroupType {
   MIN_PLUS_MAT,
   TROP_MAX_PLUS_MAT,
   TROP_MIN_PLUS_MAT,
-  MAT_OVER_FF
+  PROJ_MAX_PLUS_MAT,
+  MAT_OVER_PF
 };
 
 SemigroupType TypeSemigroup (Obj data) {
@@ -174,9 +179,11 @@ SemigroupType TypeSemigroup (Obj data) {
         return TROP_MAX_PLUS_MAT;
       } else if (IS_TROP_MIN_PLUS_MAT(x)) {
         return TROP_MIN_PLUS_MAT;
-        // TODO handle non-prime fields too!
+      } else if (IS_PROJ_MAX_PLUS_MAT(x)) {
+        return PROJ_MAX_PLUS_MAT;
       } else if (IS_MAT_OVER_PF(x) && IS_PRIME_INT(SizeOfFF(data))) {
-        return MAT_OVER_FF;
+        // TODO handle non-prime fields too!
+        return MAT_OVER_PF;
       } 
       return UNKNOWN;
     case T_COMOBJ:
@@ -561,7 +568,6 @@ class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
     PrimeField* _field;
 };
 
-
 /*******************************************************************************
  * Class for containing a C++ semigroup and accessing its methods
 *******************************************************************************/
@@ -843,6 +849,8 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<BooleanMat>(data, bmc);
       break;
     }
+    case PROJ_MAX_PLUS_MAT:
+      //intentional fall through
     case MAX_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 
@@ -871,7 +879,7 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<MatrixOverSemiring>(data, tmc);
       break;
     }
-    case MAT_OVER_FF:{
+    case MAT_OVER_PF:{
       auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
       interface = new Interface<MatrixOverSemiring>(data, mopfc);
       break;
@@ -1692,6 +1700,9 @@ static Int InitKernel( StructInitInfo *module )
     
     ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
     ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
+
+    ImportGVarFromLibrary( "IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
+    ImportGVarFromLibrary( "ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
 
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
     ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
