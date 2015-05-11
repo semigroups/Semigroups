@@ -371,17 +371,17 @@ function(cong)
     HTAdd(ht_e, ids[i], i);
   od;
 
-StartTiming := function(record)
-  record.timeofday := IO_gettimeofday();
-end;
+  StartTiming := function(record)
+    record.timeofday := IO_gettimeofday();
+  end;
 
-StopTiming := function(record)
-  local timeofday, elapsed;
-  timeofday := IO_gettimeofday();
-  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
-   + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
-  Print("elapsed time: ", String(elapsed), "ms\n");
-end;
+  StopTiming := function(record)
+    local timeofday, elapsed;
+    timeofday := IO_gettimeofday();
+    elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
+               + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
+    Print("elapsed time: ", String(elapsed), "ms\n");
+  end;
 
   pos := 0;
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
@@ -422,8 +422,8 @@ end;
           union(x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(s) do
-            y := [Position(ids, a^-1 * ids[x[1]] * a),
-                  Position(ids, a^-1 * ids[x[2]] * a)];
+            y := [HTValue(ht_e, a^-1 * ids[x[1]] * a),
+                  HTValue(ht_e, a^-1 * ids[x[2]] * a)];
             if y[1] <> y[2] and HTValue(ht, y) = fail then
               HTAdd(ht, y, true);
               nr := nr + 1;
@@ -476,8 +476,8 @@ end;
     for a in Elements(s) do
       if a in kernel then
 
-        e := Position(ids, LeftOne(a));
-        f := Position(ids, RightOne(a));
+        e := HTValue(ht_e, LeftOne(a));
+        f := HTValue(ht_e, RightOne(a));
         if traceLookup[e] <> traceLookup[f] then
           nr := nr + 1;
           pairstoapply[nr] := [e,f];
@@ -508,8 +508,8 @@ end;
 
   # Retrieve the initial information
   genpairs := GeneratingPairsOfSemigroupCongruence(cong);
-  pairstoapply := List(genpairs, x -> [Position(ids, RightOne(x[1])),
-                                       Position(ids, RightOne(x[2]))] );
+  pairstoapply := List(genpairs, x -> [HTValue(ht_e, RightOne(x[1])),
+                                       HTValue(ht_e, RightOne(x[2]))] );
   kernelgenstoapply := Set(genpairs, x -> x[1] * x[2]^-1);
   nr := Length(pairstoapply);
   nrk := Length(kernelgenstoapply);
