@@ -37,14 +37,43 @@ coll -> JoinStringsWithSeparator(List(coll, DisplayString), "\n"));
 InstallMethod(DisplayString, "for a matrix over semiring collection",
 [IsMatrixOverSemiring],
 function(x)
-  local n, str, i, j;
-
+  local n, max, length, pad, str, i, j;
+  
   n := DimensionOfMatrixOverSemiring(x);
+
+  # find the max max
+  max := 0;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if x![i][j] = infinity then 
+        length := 1;
+      elif x![i][j] = -infinity then 
+        length := 2;
+      else 
+        length := Length(String(x![i][j]));
+      fi;
+      if length > max then 
+        max := length;
+      fi;
+    od;
+  od;
+
+  pad := function(entry)
+    if entry = infinity then 
+      entry := "∞";
+    elif entry = -infinity then 
+      entry := "-∞";
+    else
+      entry := String(entry);
+    fi;
+    return Concatenation(ListWithIdenticalEntries(max - Length(entry), ' '),
+                         entry, " ");
+  end;
+
   str := "";
   for i in [1 .. n] do
     for j in [1 .. n] do
-      Append(str, String(x![i][j]));
-      Append(str, " ");
+      Append(str, pad(x![i][j]));
     od;
     Remove(str, Length(str));
     Append(str, "\n");
