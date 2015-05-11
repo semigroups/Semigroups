@@ -404,7 +404,9 @@ end);
 
 InstallMethod(OneImmutable, "for a natural number matrix",
 [IsNaturalMatrix],
-x -> NaturalMatrixNC(SEMIGROUPS_IdentityMat(x, 0, 1)));
+x -> NaturalMatrixNC(SEMIGROUPS_IdentityMat(x, 0, 1),
+                     ThresholdNaturalMatrix(x), 
+                     PeriodNaturalMatrix(x)));
 
 InstallMethod(RandomNaturalMatrix, "for dimension, threshold, period (pos ints)",
 [IsPosInt, IsPosInt, IsPosInt], 
