@@ -66,7 +66,7 @@ class Element {
       return _data->size();
     }
 
-    Element* copy () const {
+    virtual Element* copy () const {
       return new Element(*_data);
     }
 
@@ -364,6 +364,10 @@ class MatrixOverSemiring: public Element<long> {
       : Element<long>(data),
         _semiring(semiring) {}
   
+    Element* copy () const {
+      return new MatrixOverSemiring(*_data, _semiring);
+    }
+
     void redefine (Element<long> const* x,
                    Element<long> const* y) {
       assert(x->degree() == y->degree());

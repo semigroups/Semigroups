@@ -338,6 +338,12 @@ dim -> SEMIGROUPS_RandomMatrixOverSemiring(dim,
 ## 7. Natural number matrices
 #############################################################################
 
+InstallMethod(ThresholdNaturalMatrix, "for a natural matrix",
+[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 1]);
+
+InstallMethod(PeriodNaturalMatrix, "for a natural matrix",
+[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
+
 BindGlobal("SEMIGROUPS_NaturalizeMat",
 function(x, threshold, period)
   local n, i, j;
@@ -355,12 +361,6 @@ function(x, threshold, period)
   od;
   return x;
 end);
-
-InstallMethod(ThresholdNaturalMatrix, "for a natural matrix",
-[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 1]);
-
-InstallMethod(PeriodNaturalMatrix, "for a natural matrix",
-[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
 
 InstallMethod(TypeViewStringOfMatrixOverSemiring,
 "for a natural number matrix",

@@ -25,6 +25,9 @@ namespace semiring {
       virtual long threshold () {
         return -1;
       };
+      virtual long period () {
+        return -1;
+      };
   };
 
   class PrimeField : public Semiring {
@@ -184,6 +187,52 @@ namespace semiring {
         }
         return clipped(std::min(x, y));
       }
+  };
+  
+  class NaturalSemiring : public Semiring {
+
+    public: 
+
+      NaturalSemiring (long threshold, long period) 
+        : _threshold(threshold), 
+          _period(period),
+          Semiring() {}
+
+      long one () {
+        return 1;
+      }
+
+      long zero () {
+        return 0;
+      }
+      
+      long prod (long x, long y) {
+        return thresholdperiod(x * y);
+      }
+
+      long plus (long x, long y) {
+        return thresholdperiod(x + y);
+      }
+      
+      long threshold () {
+        return _threshold;
+      }
+      
+      long period () {
+        return _period;
+      }
+
+    private:
+
+      long thresholdperiod (long x) {
+        if (x > _threshold) {
+          return _threshold + (x - _threshold) % _period;
+        }
+        return x;
+      }
+
+      long _threshold;
+      long _period;
   };
   
 }

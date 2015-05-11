@@ -42,6 +42,7 @@ using namespace semiring;
 #define IS_TROP_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True)
 #define IS_TROP_MIN_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True)
 #define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
+#define IS_NAT_MAT(x)            (CALL_1ARGS(IsNaturalMatrix, x) == True)
 #define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
 
 /*******************************************************************************
@@ -78,6 +79,9 @@ Obj TropicalMaxPlusMatrixType;
 
 Obj IsProjectiveMaxPlusMatrix;
 Obj ProjectiveMaxPlusMatrixType;
+
+Obj IsNaturalMatrix;
+Obj NaturalMatrixType;
 
 Obj IsMatrixOverPrimeField;
 Obj AsMatrixOverPrimeFieldNC;
@@ -122,12 +126,23 @@ Obj inline Representative (Obj data) {
 long inline Threshold (Obj data) {
   Obj x = Representative(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_TROP_MAT(x));
+  assert(IS_TROP_MAT(x)||IS_NAT_MAT(x));
   assert(ELM_PLIST(x, 1) != 0);
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
 
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
+long inline Period (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_NAT_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
 }
 
 long inline SizeOfFF (Obj data) {
@@ -154,6 +169,7 @@ enum SemigroupType {
   TROP_MAX_PLUS_MAT,
   TROP_MIN_PLUS_MAT,
   PROJ_MAX_PLUS_MAT,
+  NAT_MAT,
   MAT_OVER_PF
 };
 
@@ -181,6 +197,8 @@ SemigroupType TypeSemigroup (Obj data) {
         return TROP_MIN_PLUS_MAT;
       } else if (IS_PROJ_MAX_PLUS_MAT(x)) {
         return PROJ_MAX_PLUS_MAT;
+      } else if (IS_NAT_MAT(x)) {
+        return NAT_MAT;
       } else if (IS_MAT_OVER_PF(x) && IS_PRIME_INT(SizeOfFF(data))) {
         // TODO handle non-prime fields too!
         return MAT_OVER_PF;
@@ -488,9 +506,10 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
     virtual Obj unconvert (MatrixOverSemiring* x) {
       size_t n = sqrt(x->degree());
-      Obj plist = NEW_PLIST(T_PLIST, n + 1);
-      SET_LEN_PLIST(plist, n + 1);
+      Obj plist = NEW_PLIST(T_PLIST, n + 2);
+      SET_LEN_PLIST(plist, n + 2);
       SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
+      SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
       
       for (size_t i = 0; i < n; i++) {
         Obj row = NEW_PLIST(T_PLIST_CYC, n);
@@ -883,17 +902,17 @@ InterfaceBase* InterfaceFromData (Obj data) {
       break;
     }
     case TROP_MAX_PLUS_MAT:{
-      auto tmc = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(Threshold(data)), 
-                                                 Ninfinity, 
-                                                 TropicalMaxPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, tmc);
+      auto mosc = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(Threshold(data)), 
+                                                  Ninfinity, 
+                                                  TropicalMaxPlusMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
       break;
     }
     case TROP_MIN_PLUS_MAT:{
-      auto tmc = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(Threshold(data)), 
-                                                 infinity, 
-                                                 TropicalMinPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, tmc);
+      auto mosc = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(Threshold(data)), 
+                                                  infinity, 
+                                                  TropicalMinPlusMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
       break;
     }
     case PROJ_MAX_PLUS_MAT:{
@@ -903,6 +922,14 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<ProjectiveMaxPlusMatrix>(data, pmpmc);
       break;
 
+    }
+    case NAT_MAT:{
+      auto mosc = new MatrixOverSemiringConverter(new NaturalSemiring(Threshold(data),
+                                                                      Period(data)), 
+                                                  INTOBJ_INT(0), 
+                                                  NaturalMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      break;
     }
     case MAT_OVER_PF:{
       auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
@@ -1728,6 +1755,9 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
     ImportGVarFromLibrary( "ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
+    
+    ImportGVarFromLibrary( "IsNaturalMatrix", &IsNaturalMatrix );
+    ImportGVarFromLibrary( "NaturalMatrixType", &NaturalMatrixType );
 
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
     ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
