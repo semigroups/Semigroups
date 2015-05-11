@@ -8,7 +8,7 @@
 #############################################################################
 ##
 ## This file contains methods for the unique universal congruence on a
-## semigroup.
+## semigroup, that is the relation SxS on a semigroup S.
 ##
 
 DeclareCategory("IsUniversalSemigroupCongruenceClass",

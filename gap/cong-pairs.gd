@@ -8,7 +8,8 @@
 #############################################################################
 ##
 ## This file contains functions for any finite semigroup congruence with
-## generating pairs, using a union-find method.
+## generating pairs, using a union-find method.  See Howie 1.5 and see MT's
+## MSc thesis "Computing with Semigroup Congruences", chapter 2
 ##
 
 DeclareGlobalFunction("SEMIGROUPS_SetupCongData");

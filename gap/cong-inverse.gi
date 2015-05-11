@@ -8,7 +8,7 @@
 #############################################################################
 ##
 ## This file contains methods for congruences on inverse semigroups, using the
-## "kernel and trace" representation.
+## "kernel and trace" representation - see Howie 5.3
 ##
 
 # TODO: make a method for NrCongruenceClasses for an inverse semigroup by

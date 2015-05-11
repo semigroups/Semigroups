@@ -8,7 +8,7 @@
 #############################################################################
 ##
 ## This file contains methods for Rees congruences; i.e. semigroup congruences
-## defined by a two-sided ideal.
+## defined by a two-sided ideal.  See Howie 1.7
 ##
 
 InstallMethod(IsReesCongruence,
