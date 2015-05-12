@@ -62,9 +62,9 @@ gap> y in classx;
 true
 gap> x in classz;
 false
-gap> classx = classes[1];
+gap> classx = classes[4];
 true
-gap> classz = classes[133];
+gap> classz = classes[2];
 true
 gap> z * y in classz * classy;
 true
@@ -156,7 +156,7 @@ true
 gap> v := SemigroupCongruence(s, [gens[1], gens[1]]); # trivial congruence
 <semigroup congruence over <commutative transformation semigroup of size 5, 
  on 10 pts with 1 generator> with 2 generating pairs>
-gap> classes := CongruenceClasses(v);
+gap> classes := Set(CongruenceClasses(v));
 [ {Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )}, 
   {Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )}, 
   {Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )}, 
