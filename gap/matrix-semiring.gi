@@ -209,3 +209,6 @@ function(x, data)
   od;
   return h + 1;
 end);
+
+InstallMethod(OneMutable, "for a matrix over semiring", 
+[IsMatrixOverSemiring], OneImmutable);
