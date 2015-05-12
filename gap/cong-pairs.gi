@@ -12,12 +12,15 @@
 ## MSc thesis "Computing with Semigroup Congruences", chapter 2
 ##
 
+DeclareCategory("IsUFData", IsRecord);
 DeclareCategory("IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
 DeclareOperation("Enumerate", [IsSemigroupCongruence, IsFunction]);
 
 InstallGlobalFunction(SEMIGROUPS_UF_Find,
-function(table, i)
+function(ufdata, i)
+  local table;
+  table := ufdata!.table;
   while table[i] <> i do
     i := table[i];
   od;
@@ -27,24 +30,27 @@ end);
 #
 
 InstallGlobalFunction(SEMIGROUPS_UF_Union,
-function(table, pair)
-  local ii, jj;
-  
-  ii := SEMIGROUPS_UF_Find(table, pair[1]);
-  jj := SEMIGROUPS_UF_Find(table, pair[2]);
+function(ufdata, pair)
+  local table, ii, jj;
+  table := ufdata!.table;
+  ii := SEMIGROUPS_UF_Find(ufdata, pair[1]);
+  jj := SEMIGROUPS_UF_Find(ufdata, pair[2]);
   
   if ii < jj then
     table[jj] := ii;
   elif jj < ii then
     table[ii] := jj;
   fi;
+
+  ufdata!.has_changed := true;
 end);
 
 #
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, hashlen, ht, data;
+  local s, elms, pairs, hashlen, ht, treehashsize, data, pairstoapply, pos, 
+        found, ufdata, has_changed;
 
   s := Range(cong);
   elms := ELEMENTS_SEMIGROUP(GenericSemigroupData(s), infinity);
@@ -55,12 +61,20 @@ function(cong)
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
                                          treehashsize := hashlen));
   data := rec(cong := cong,
-              lookup := [1 .. Size(s)],
               pairstoapply := pairs,
               pos := 0,
               ht := ht,
               elms := elms,
               found := false);
+  
+  ufdata := rec(table := [1 .. Size(s)],
+              # blocks := unbound,
+                has_changed := false,
+                size := Size(s));
+  
+  data.ufdata := Objectify(
+                  NewType(FamilyObj(cong), IsUFData), ufdata);
+  
   cong!.data := Objectify(
                  NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
   return;
@@ -120,8 +134,8 @@ function(pair, cong)
   else
     # Otherwise, begin calculating the lookup table and look for this pair
     lookfunc := function(data, lastpair)
-      return SEMIGROUPS_UF_Find(data!.lookup, p1)
-             = SEMIGROUPS_UF_Find(data!.lookup, p2);
+      return SEMIGROUPS_UF_Find(data!.ufdata, p1)
+             = SEMIGROUPS_UF_Find(data!.ufdata, p2);
     end;
     return Enumerate(cong, lookfunc)!.found;
   fi;
@@ -164,13 +178,13 @@ InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
 [IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, s, table, pairstoapply, ht, right, left, genstoapply, i, nr, 
+  local cong, s, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr, 
         found, x, j, y, next, newtable, ii;
 
   cong := data!.cong;
   s := Range(cong);
-
-  table := data!.lookup;
+  
+  ufdata := data!.ufdata;
   pairstoapply := data!.pairstoapply;
   ht := data!.ht;
 
@@ -187,7 +201,7 @@ function(data, lookfunc)
     for x in pairstoapply do
       if x[1] <> x[2] and HTValue(ht, x) = fail then
         HTAdd(ht, x, true);
-        SEMIGROUPS_UF_Union(table, x);
+        SEMIGROUPS_UF_Union(ufdata, x);
         # Have we found what we were looking for?
         if lookfunc(data, x) then
           data!.found := true;
@@ -207,7 +221,7 @@ function(data, lookfunc)
         HTAdd(ht, y, true);
         nr := nr + 1;
         pairstoapply[nr] := y;
-        SEMIGROUPS_UF_Union(table, y);
+        SEMIGROUPS_UF_Union(ufdata, y);
         if lookfunc(data, y) then
           found := true;
         fi;
@@ -219,7 +233,7 @@ function(data, lookfunc)
         HTAdd(ht, y, true);
         nr := nr + 1;
         pairstoapply[nr] := y;
-        SEMIGROUPS_UF_Union(table, y);
+        SEMIGROUPS_UF_Union(ufdata, y);
         if lookfunc(data, y) then
           found := true;
         fi;
@@ -238,8 +252,8 @@ function(data, lookfunc)
   # "Normalise" the table for clean lookup
   next := 1;
   newtable := [];
-  for i in [1 .. Size(table)] do
-    ii := SEMIGROUPS_UF_Find(table, i);
+  for i in [1 .. ufdata!.size] do
+    ii := SEMIGROUPS_UF_Find(ufdata, i);
     if ii = i then
       newtable[i] := next;
       next := next + 1;
@@ -408,10 +422,10 @@ function(class)
     fi;
     lookfunc := function(data, lastpair)
       local classno, i;
-      classno := SEMIGROUPS_UF_Find(data!.lookup, enum!.rep);
-      if classno = SEMIGROUPS_UF_Find(data!.lookup, lastpair[1]) then
-        for i in [1..Size(data!.lookup)] do
-          if (not enum!.found[i]) and SEMIGROUPS_UF_Find(data!.lookup, i) = classno then
+      classno := SEMIGROUPS_UF_Find(data!.ufdata, enum!.rep);
+      if classno = SEMIGROUPS_UF_Find(data!.ufdata, lastpair[1]) then
+        for i in [1..Size(data!.ufdata!.table)] do
+          if (not enum!.found[i]) and SEMIGROUPS_UF_Find(data!.ufdata, i) = classno then
             enum!.found[i] := true;
             enum!.len := enum!.len + 1;
             enum!.list[enum!.len] := i;
