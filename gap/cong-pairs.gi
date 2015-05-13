@@ -17,6 +17,14 @@ DeclareCategory("IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
 DeclareOperation("Enumerate", [IsSemigroupCongruence, IsFunction]);
 
+InstallGlobalFunction(SEMIGROUPS_UF_New,
+size-> Objectify(NewType(FamilyObj(rec()), IsUFData),
+                 rec(table := [1 .. size],
+                     has_changed := false,
+                     size := size)));
+
+#
+
 InstallGlobalFunction(SEMIGROUPS_UF_Find,
 function(ufdata, i)
   local table;
@@ -47,6 +55,31 @@ end);
 
 #
 
+InstallGlobalFunction(SEMIGROUPS_UF_Blocks,
+function(ufdata)
+  local blocks, table, i, ii;
+  if not IsBound(ufdata!.blocks) then
+    ufdata!.blocks := List([1 .. ufdata!.size], x-> [x]);
+  fi;
+  if ufdata!.has_changed then
+    blocks := ufdata!.blocks;
+    table := ufdata!.table;
+    for i in [1 .. ufdata!.size] do
+      if IsBound(blocks[i]) then
+        ii := SEMIGROUPS_UF_Find(ufdata, i);
+        if ii <> i then
+          Append(blocks[ii], blocks[i]);
+          Unbind(blocks[i]);
+        fi;
+      fi;
+    od;
+    ufdata!.has_changed := false;
+  fi;
+  return ufdata!.blocks;
+end);
+
+#
+
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
   local s, elms, pairs, hashlen, ht, treehashsize, data, pairstoapply, pos, 
@@ -67,14 +100,7 @@ function(cong)
               elms := elms,
               found := false);
   
-  ufdata := rec(table := [1 .. Size(s)],
-              # blocks := unbound,
-                has_changed := false,
-                size := Size(s));
-  
-  data.ufdata := Objectify(
-                  NewType(FamilyObj(cong), IsUFData), ufdata);
-  
+  ufdata := SEMIGROUPS_UF_New(Size(s));
   cong!.data := Objectify(
                  NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
   return;
@@ -398,7 +424,7 @@ InstallMethod(Enumerator,
 "for a semigroup congruence class",
 [IsCongruenceClass],
 function(class)
-  local cong, s, record, x, enum;
+  local cong, s, record, enum;
 
   cong := EquivalenceClassRelation(class);
   s := Range(cong);

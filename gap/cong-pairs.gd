@@ -13,5 +13,7 @@
 ##
 
 DeclareGlobalFunction("SEMIGROUPS_SetupCongData");
+DeclareGlobalFunction("SEMIGROUPS_UF_New");
 DeclareGlobalFunction("SEMIGROUPS_UF_Find");
 DeclareGlobalFunction("SEMIGROUPS_UF_Union");
+DeclareGlobalFunction("SEMIGROUPS_UF_Blocks");

@@ -350,10 +350,11 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local s, idsmgp, ids, pos, hashlen, ht, right, left, genstoapply, find,
-  union, enumerate_trace, enforce_conditions, compute_kernel, genpairs,
-  pairstoapply, kernelgenstoapply, nr, nrk, traceLookup, kernel, StartTiming,
-  StopTiming, timing, oldLookup, oldKernel, traceBlocks, ht_e, i;
+  local s, idsmgp, ids, ht_e, i, StartTiming, StopTiming, pos, hashlen, ht, 
+        treehashsize, right, left, genstoapply, enumerate_trace, 
+        enforce_conditions, compute_kernel, genpairs, pairstoapply, 
+        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup, 
+        oldKernel, traceBlocks;
 
   # Check that the argument makes sense
   s := Range(cong);
@@ -393,24 +394,6 @@ function(cong)
   left := LeftCayleyGraphSemigroup(idsmgp);
   genstoapply := [1 .. Length(right[1])];
 
-  find := function(i)
-    while traceLookup[i] <> i do
-      i := traceLookup[i];
-    od;
-    return i;
-  end;
-
-  union := function(pair)
-    local ii, jj;
-    ii := find(pair[1]);
-    jj := find(pair[2]);
-    if ii < jj then
-      traceLookup[jj] := ii;
-    elif jj < ii then
-      traceLookup[ii] := jj;
-    fi;
-  end;
-
   # STEPS (2)+(1)
   enumerate_trace := function()
     local x, a, y, j;
@@ -419,7 +402,7 @@ function(cong)
       for x in pairstoapply do
         if x[1] <> x[2] and HTValue(ht, x) = fail then
           HTAdd(ht, x, true);
-          union(x);
+          SEMIGROUPS_UF_Union(traceUF, x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(s) do
             y := [HTValue(ht_e, a^-1 * ids[x[1]] * a),
@@ -428,7 +411,7 @@ function(cong)
               HTAdd(ht, y, true);
               nr := nr + 1;
               pairstoapply[nr] := y;
-              union(y);
+              SEMIGROUPS_UF_Union(traceUF, y);
             fi;
           od;
         fi;
@@ -445,7 +428,7 @@ function(cong)
           HTAdd(ht, y, true);
           nr := nr + 1;
           pairstoapply[nr] := y;
-          union(y);
+          SEMIGROUPS_UF_Union(traceUF, y);
         fi;
 
         # Add the pair's right-multiples
@@ -454,38 +437,30 @@ function(cong)
           HTAdd(ht, y, true);
           nr := nr + 1;
           pairstoapply[nr] := y;
-          union(y);
+          SEMIGROUPS_UF_Union(traceUF, y);
         fi;
       od;
     od;
-    traceLookup := List(traceLookup, find);
+    traceUF!.table := List(traceUF!.table, i-> SEMIGROUPS_UF_Find(traceUF, i));
   end;
 
   # STEPS (6)+(5)
   enforce_conditions := function()
-    local a, e, f, fclass, outer, classes;
-    classes := [];
-    for e in [1 .. Length(traceLookup)] do
-      if not IsBound(classes[traceLookup[e]]) then 
-        classes[traceLookup[e]] := [e];
-      else 
-        Add(classes[traceLookup[e]], e);
-      fi;
-    od;
-
+    local traceTable, traceBlocks, a, e, f, classno;
+    traceTable := traceUF!.table;
+    traceBlocks := SEMIGROUPS_UF_Blocks(traceUF);
     for a in Elements(s) do
       if a in kernel then
-
         e := HTValue(ht_e, LeftOne(a));
         f := HTValue(ht_e, RightOne(a));
-        if traceLookup[e] <> traceLookup[f] then
+        if traceTable[e] <> traceTable[f] then
           nr := nr + 1;
           pairstoapply[nr] := [e,f];
-          #union([e,f]);
+          #SEMIGROUPS_UF_Union(traceUF, [e,f]);
         fi;
       else
-        fclass := traceLookup[HTValue(ht_e, RightOne(a))];
-        for e in classes[fclass] do
+        classno := traceTable[HTValue(ht_e, RightOne(a))];
+        for e in traceBlocks[classno] do
           if a * ids[e] in kernel then
             nrk := nrk + 1;
             AddSet(kernelgenstoapply, a);
@@ -513,14 +488,14 @@ function(cong)
   kernelgenstoapply := Set(genpairs, x -> x[1] * x[2]^-1);
   nr := Length(pairstoapply);
   nrk := Length(kernelgenstoapply);
-  traceLookup := [1 .. Length(ids)];
+  traceUF := SEMIGROUPS_UF_New(Length(ids));
   kernel := IdempotentGeneratedSubsemigroup(s);
   Elements(kernel); 
 
   timing := rec();
   # Keep applying the method until no new info is found
   repeat
-    oldLookup := StructuralCopy(traceLookup);
+    oldLookup := StructuralCopy(traceUF!.table);
     oldKernel := kernel;
     StartTiming(timing);
     Print("compute_kernel: ");
@@ -534,13 +509,14 @@ function(cong)
     Print("enumerate_trace: ");
     enumerate_trace();
     StopTiming(timing);
-    Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceLookup);
+    Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceUF!.table);
     Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
-  until (oldLookup = traceLookup) and (nrk = 0);
+    Info(InfoSemigroups, 1, "nrk = 0: ", nrk = 0);
+  until (oldLookup = traceUF!.table) and (nrk = 0);
 
   # Convert traceLookup to traceBlocks
-  traceBlocks := Filtered(List([1 .. Maximum(traceLookup)],
-                         i-> List(Positions(traceLookup, i),
+  traceBlocks := Filtered(List([1 .. Maximum(traceUF!.table)],
+                         i-> List(Positions(traceUF!.table, i),
                                  j-> ids[j])), x-> not IsEmpty(x));
 
   return InverseSemigroupCongruenceByKernelTraceNC(s, kernel, traceBlocks);
