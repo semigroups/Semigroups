@@ -5,6 +5,31 @@
  *
  */
 
+#ifndef GAP_PPERM_H
+
+#define IMG_PPERM(f)      (*(Obj*)(ADDR_OBJ(f)))
+#define DOM_PPERM(f)      (*((Obj*)(ADDR_OBJ(f))+1))
+
+#define NEW_PPERM2(deg)   NewBag(T_PPERM2, (deg+1)*sizeof(UInt2)+2*sizeof(Obj))
+#define CODEG_PPERM2(f)   (*(UInt2*)((Obj*)(ADDR_OBJ(f))+2))
+#define ADDR_PPERM2(f)    ((UInt2*)((Obj*)(ADDR_OBJ(f))+2)+1)
+#define DEG_PPERM2(f)     ((UInt)(SIZE_OBJ(f)-sizeof(UInt2)-2*sizeof(Obj))/sizeof(UInt2))
+#define RANK_PPERM2(f)    (IMG_PPERM(f)==NULL?INIT_PPERM2(f):LEN_PLIST(IMG_PPERM(f)))
+
+#define NEW_PPERM4(deg)   NewBag(T_PPERM4, (deg+1)*sizeof(UInt4)+2*sizeof(Obj))
+#define CODEG_PPERM4(f)   (*(UInt4*)((Obj*)(ADDR_OBJ(f))+2))
+#define ADDR_PPERM4(f)    ((UInt4*)((Obj*)(ADDR_OBJ(f))+2)+1)
+#define DEG_PPERM4(f)     ((UInt)(SIZE_OBJ(f)-sizeof(UInt4)-2*sizeof(Obj))/sizeof(UInt4))
+#define RANK_PPERM4(f)    (IMG_PPERM(f)==NULL?INIT_PPERM4(f):LEN_PLIST(IMG_PPERM(f)))
+
+#define IMAGEPP(i, ptf, deg) (i<=deg?ptf[i-1]:0)
+#define IS_PPERM(f)   (TNUM_OBJ(f)==T_PPERM2||TNUM_OBJ(f)==T_PPERM4)
+#define RANK_PPERM(f) (TNUM_OBJ(f)==T_PPERM2?RANK_PPERM2(f):RANK_PPERM4(f))
+#define DEG_PPERM(f)  (TNUM_OBJ(f)==T_PPERM2?DEG_PPERM2(f):DEG_PPERM4(f))
+#define CODEG_PPERM(f)(TNUM_OBJ(f)==T_PPERM2?CODEG_PPERM2(f):CODEG_PPERM4(f))
+
+#endif
+
 #ifndef SEMIGROUPS_GAP_INTERFACE_H
 #define SEMIGROUPS_GAP_INTERFACE_H
 
