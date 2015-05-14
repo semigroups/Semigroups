@@ -221,7 +221,7 @@ class Semigroup {
             relations->push_back(make_relation(i, j));
           }
         }
-        emigroupo
+      }
 
       for (; i < _reduced.nrrows(); i++) {
         for (size_t j = 0; j < _reduced.nrcols(); j++) {
