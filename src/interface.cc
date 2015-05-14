@@ -510,7 +510,7 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
       SET_LEN_PLIST(plist, n + 2);
       SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
       SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
-      
+       
       for (size_t i = 0; i < n; i++) {
         Obj row = NEW_PLIST(T_PLIST_CYC, n);
         SET_LEN_PLIST(row, n);

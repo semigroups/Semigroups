@@ -64,7 +64,7 @@ class Semigroup {
       _lenindex.push_back(0);
       _id = static_cast<T*>(_gens.at(0)->identity());
 
-      // init genslookup
+      // init genslookup//TODO remove this.
       for (size_t i = 0; i < _nrgens; i++) {
         _genslookup.push_back(0);
       }
@@ -74,7 +74,7 @@ class Semigroup {
         T* x = _gens.at(i);
         auto it = _map.find(*x);
         if (it != _map.end()) { // duplicate generator
-          _genslookup.at(i) = it->second;
+          _genslookup.at(i) = it->second; //TODO push_back here instead
           _nrrules++;
         } else {
           is_one(*x);
@@ -197,7 +197,10 @@ class Semigroup {
       word->push_back(_genslookup.at(pos));
       return word;
     }
-
+    
+    // TODO make this next_relation with gets handed in std::vector reference
+    // and which just puts the [element-index, generators, element-index] into
+    // the std::vector.
     std::vector<Relation>* relations () {
       enumerate(-1);
       std::vector<Relation>* relations = new std::vector<Relation>();
@@ -218,7 +221,7 @@ class Semigroup {
             relations->push_back(make_relation(i, j));
           }
         }
-      }
+        emigroupo
 
       for (; i < _reduced.nrrows(); i++) {
         for (size_t j = 0; j < _reduced.nrcols(); j++) {
