@@ -29,8 +29,7 @@ function(s)
 
   SetFilterObj(o, IsLambdaOrb);
   
-  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) and
-      IsSemigroupWithInverseOp(s) then 
+  if IsSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
   fi;
 
@@ -109,9 +108,8 @@ function(o, m, i)
   one := FakeOne(gens);
   mults := o!.mults;
 
-  if not (HasIsInverseSemigroup(o!.parent) and IsInverseSemigroup(o!.parent)
-      and IsSemigroupWithInverseOp(o!.parent)) then
-  #FIXME itd be better to use the SchreierTree here not the ReverseSchreierTree
+  if not IsSemigroupWithInverseOp(o!.parent) then
+  #FIXME it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
     inv := function(lambda, x)
              return LambdaInverse(o!.parent)(lambda, x);
@@ -306,8 +304,7 @@ function(s)
   o := Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
 
   SetFilterObj(o, IsRhoOrb);
-  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) and
-      IsSemigroupWithInverseOp(s) then 
+  if IsSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInverseOrb);
   fi;
   return o;

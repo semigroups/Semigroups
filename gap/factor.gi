@@ -215,9 +215,9 @@ end);
 #
 
 InstallMethod(Factorization,
-"for an inverse acting semigroup with inverse op with generators and element",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup and
- HasGeneratorsOfSemigroup, IsAssociativeElement],
+"for an acting semigroup with inverse op with generators and element",
+[IsSemigroupWithInverseOp and IsActingSemigroup and HasGeneratorsOfSemigroup,
+ IsAssociativeElement],
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 

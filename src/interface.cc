@@ -219,52 +219,6 @@ bool inline IsCCSemigroup (Obj data) {
 }
 
 /*******************************************************************************
- * wrap C++ semigroup object in a GAP bag for garbage collection
-*******************************************************************************/
-
-class InterfaceBase {
-  public:
-    virtual ~InterfaceBase () {};
-    virtual void enumerate (Obj limit) = 0;
-    virtual bool is_done () = 0;
-    virtual void find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
-    virtual size_t size () = 0;
-    virtual size_t current_size () = 0;
-    virtual size_t nrrules () = 0;
-    virtual void right_cayley_graph (Obj data) = 0;
-    virtual void left_cayley_graph (Obj data) = 0;
-    virtual void elements (Obj data, Obj limit) = 0;
-    virtual Obj position (Obj data, Obj x) = 0;
-    virtual void word (Obj data, Obj pos) = 0;
-    virtual void relations (Obj data) = 0;
-};
-
-// put C++ semigroup into GAP object
-
-Obj OBJ_INTERFACE(InterfaceBase* interface){
-  Obj o = NewBag(T_SEMI, 1 * sizeof(Obj));
-  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(interface);
-  return o;
-}
-
-// get C++ semigroup from GAP object
-
-inline InterfaceBase* INTERFACE_OBJ(Obj o) {
-    return reinterpret_cast<InterfaceBase*>(ADDR_OBJ(o)[0]);
-}
-
-// free C++ semigroup inside GAP object
-void InterfaceFreeFunc(Obj o) { 
-#ifdef DEBUG
-  std::cout << "FREEING1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
-#endif
-  delete INTERFACE_OBJ(o);
-#ifdef DEBUG
-  std::cout << "FREEING2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
-#endif
-}
-
-/*******************************************************************************
  * Converters to and from GAP objects
 *******************************************************************************/
 
@@ -510,7 +464,7 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
       SET_LEN_PLIST(plist, n + 2);
       SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
       SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
-      
+       
       for (size_t i = 0; i < n; i++) {
         Obj row = NEW_PLIST(T_PLIST_CYC, n);
         SET_LEN_PLIST(row, n);
@@ -851,7 +805,7 @@ class Interface : public InterfaceBase {
 
 InterfaceBase* InterfaceFromData (Obj data) {
   if (IsbPRec(data, RNamName("Interface_CC"))) {
-    return INTERFACE_OBJ(ElmPRec(data, RNamName("Interface_CC")));
+    return CLASS_OBJ<InterfaceBase>(ElmPRec(data, RNamName("Interface_CC")));
   }
   
   InterfaceBase* interface;
@@ -940,7 +894,7 @@ InterfaceBase* InterfaceFromData (Obj data) {
       assert(false);
     }
   }
-  AssPRec(data, RNamName("Interface_CC"), OBJ_INTERFACE(interface));
+  AssPRec(data, RNamName("Interface_CC"), NewInterfaceBag(interface));
   return interface;
 }
 
@@ -1762,7 +1716,7 @@ static Int InitKernel( StructInitInfo *module )
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     PrintObjFuncs[T_SEMI] = PrintSemi;
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
-    InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
+    InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
     
     ImportGVarFromLibrary( "Objectify", &Objectify);
     ImportGVarFromLibrary( "IsPrimeInt", &IsPrimeInt);
