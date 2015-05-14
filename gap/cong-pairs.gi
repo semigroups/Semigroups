@@ -55,6 +55,20 @@ end);
 
 #
 
+InstallGlobalFunction(SEMIGROUPS_UF_Flatten,
+function(ufdata)
+  ufdata!.table := List([1 .. ufdata!.size], i-> SEMIGROUPS_UF_Find(ufdata, i));
+end);
+
+#
+
+InstallGlobalFunction(SEMIGROUPS_UF_Table,
+function(ufdata)
+  return ufdata!.table;
+end);
+
+#
+
 InstallGlobalFunction(SEMIGROUPS_UF_Blocks,
 function(ufdata)
   local blocks, table, i, ii;

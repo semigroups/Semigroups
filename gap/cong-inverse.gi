@@ -441,13 +441,13 @@ function(cong)
         fi;
       od;
     od;
-    traceUF!.table := List(traceUF!.table, i-> SEMIGROUPS_UF_Find(traceUF, i));
+    SEMIGROUPS_UF_Flatten(traceUF);
   end;
 
   # STEPS (6)+(5)
   enforce_conditions := function()
     local traceTable, traceBlocks, a, e, f, classno;
-    traceTable := traceUF!.table;
+    traceTable := SEMIGROUPS_UF_Table(traceUF);
     traceBlocks := SEMIGROUPS_UF_Blocks(traceUF);
     for a in Elements(s) do
       if a in kernel then
@@ -495,7 +495,7 @@ function(cong)
   timing := rec();
   # Keep applying the method until no new info is found
   repeat
-    oldLookup := StructuralCopy(traceUF!.table);
+    oldLookup := StructuralCopy(SEMIGROUPS_UF_Table(traceUF));
     oldKernel := kernel;
     StartTiming(timing);
     Print("compute_kernel: ");
@@ -509,15 +509,14 @@ function(cong)
     Print("enumerate_trace: ");
     enumerate_trace();
     StopTiming(timing);
-    Info(InfoSemigroups, 1, "lookup: ", oldLookup=traceUF!.table);
+    Info(InfoSemigroups, 1, "lookup: ", oldLookup=SEMIGROUPS_UF_Table(traceUF));
     Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
     Info(InfoSemigroups, 1, "nrk = 0: ", nrk = 0);
-  until (oldLookup = traceUF!.table) and (nrk = 0);
+  until (oldLookup = SEMIGROUPS_UF_Table(traceUF)) and (nrk = 0);
 
   # Convert traceLookup to traceBlocks
-  traceBlocks := Filtered(List([1 .. Maximum(traceUF!.table)],
-                         i-> List(Positions(traceUF!.table, i),
-                                 j-> ids[j])), x-> not IsEmpty(x));
+  traceBlocks := Compacted(List(SEMIGROUPS_UF_Blocks(traceUF), b->
+                                List(b, i-> ids[i])));
 
   return InverseSemigroupCongruenceByKernelTraceNC(s, kernel, traceBlocks);
 end);
