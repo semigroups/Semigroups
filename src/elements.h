@@ -17,6 +17,8 @@
 #include <math.h>
 #include <vector>
 
+using namespace semiring;
+
 // template for the base class for elements of a semigroup
 
 template <typename T>
@@ -50,7 +52,7 @@ class Element {
       return true;
     };
 
-    inline size_t at (size_t pos) const {
+    inline T at (size_t pos) const {
       return (*_data)[pos];
     }
 
@@ -64,7 +66,7 @@ class Element {
       return _data->size();
     }
 
-    Element* copy () const {
+    virtual Element* copy () const {
       return new Element(*_data);
     }
 
@@ -75,6 +77,7 @@ class Element {
     }
 
   protected:
+
     std::vector<T>* _data;
 };
 
@@ -116,6 +119,54 @@ namespace std {
   template <typename T>
     struct hash<const Transformation<T> > {
     size_t operator() (const Transformation<T>& x) const {
+      size_t seed = 0;
+      T deg = x.degree();
+      for (T i = 0; i < deg; i++) {
+        seed = ((seed * deg) + x.at(i));
+      }
+      return seed;
+    }
+  };
+}
+
+// template for partial perms
+
+template <typename T>
+class PartialPerm : public Element<T> {
+
+  public:
+
+    PartialPerm (T degree, Element<T>* sample = nullptr) 
+      : Element<T>(degree) {}
+
+    PartialPerm (std::vector<T> data) : Element<T>(data) {}
+
+    // multiply x and y into this
+    void redefine (Element<T> const* x, Element<T> const* y) {
+      assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
+
+      for (T i = 0; i < this->degree(); i++) {
+        this->set(i, (x->at(i) == 0 ? 0 : y->at(x->at(i) - 1)));
+      }
+    }
+
+    // the identity on [1 .. degree], FIXME is this right? 
+    Element<T>* identity () {
+      std::vector<T> image;
+      image.reserve(this->degree());
+      for (T i = 0; i < this->degree(); i++) {
+        image.push_back(i + 1);
+      }
+      return new PartialPerm(image);
+    }
+};
+
+// hash function for unordered_map
+namespace std {
+  template <typename T>
+    struct hash<const PartialPerm<T> > {
+    size_t operator() (const PartialPerm<T>& x) const {
       size_t seed = 0;
       T deg = x.degree();
       for (T i = 0; i < deg; i++) {
@@ -298,7 +349,9 @@ namespace std {
 }
 
 class MatrixOverSemiring: public Element<long> {
+
   public:
+
     MatrixOverSemiring (size_t degree, Semiring* semiring) 
       : Element<long>(degree), 
         _semiring(semiring) {}
@@ -311,6 +364,10 @@ class MatrixOverSemiring: public Element<long> {
       : Element<long>(data),
         _semiring(semiring) {}
   
+    Element* copy () const {
+      return new MatrixOverSemiring(*_data, _semiring);
+    }
+
     void redefine (Element<long> const* x,
                    Element<long> const* y) {
       assert(x->degree() == y->degree());
@@ -327,6 +384,7 @@ class MatrixOverSemiring: public Element<long> {
           this->set(i * deg + j, v);
         }
       }
+      after(); // post process this
     }
 
     // the identity
@@ -344,11 +402,15 @@ class MatrixOverSemiring: public Element<long> {
       return new MatrixOverSemiring(mat, _semiring);
     }
   
-  Semiring* semiring () {
-    return _semiring;
-  }
+    Semiring* semiring () {
+      return _semiring;
+    }
 
   private: 
+
+    // a function applied after redefinition 
+    virtual void after () {}
+
     Semiring* _semiring;
 }; 
 
@@ -365,5 +427,51 @@ namespace std {
     }
   };
 }
+
+class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
+  public:
+
+    ProjectiveMaxPlusMatrix (size_t degree, Semiring* semiring) 
+      : MatrixOverSemiring(degree, semiring) {}
+    
+    ProjectiveMaxPlusMatrix (size_t degree, Element* sample) 
+      : MatrixOverSemiring(degree, sample) {}
+
+  private:
+
+    void after () {
+      long norm = LONG_MIN;
+      size_t deg = sqrt(this->degree());
+
+      for (size_t i = 0; i < deg; i++) {
+        for (size_t j = 0; j < deg; j++) {
+          if ((long) this->at(i * deg + j) > norm)  {
+            norm = this->at(i * deg + j);
+          }
+        }
+      }
+      for (size_t i = 0; i < deg; i++) {
+        for (size_t j = 0; j < deg; j++) {
+          if (this->at(i * deg + j) != LONG_MIN) {
+            this->set(i * deg + j, this->at(i * deg + j) - norm);
+          }
+        }
+      }
+    }
+};
+
+namespace std {
+  template <>
+    struct hash<const ProjectiveMaxPlusMatrix> {
+    size_t operator() (const ProjectiveMaxPlusMatrix& x) const {
+      size_t seed = 0;
+      for (size_t i = 0; i < x.degree(); i++) {
+        seed = ((seed << 4) + x.at(i));
+      }
+      return seed;
+    }
+  };
+}
+
 
 #endif

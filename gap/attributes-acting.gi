@@ -132,8 +132,8 @@ InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
 # same method for ideals
 
 InstallMethod(IdempotentGeneratedSubsemigroup,
-"for an inverse op acting semigroup",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+"for an inverse inverse op acting semigroup",
+[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup],
 S -> InverseSemigroup(Idempotents(S), rec(small := true)));
 
 # same method for ideals

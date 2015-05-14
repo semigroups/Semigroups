@@ -480,9 +480,13 @@ end);
 
 # closure
 
+# TODO We should have a version of  ClosureInverseSemigroup which takes
+# a non-inverse IsSemigroupWithInverseOp
+
 InstallMethod(ClosureInverseSemigroup, 
-"for a semigroup with inverse op and associative element coll.",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
+"for an inverse semigroup with inverse op and associative element coll.",
+[IsInverseSemigroup and IsSemigroupWithInverseOp,
+ IsAssociativeElementCollection],
 function(S, coll) 
   return ClosureInverseSemigroup(S, coll, ShallowCopy(SEMIGROUPS_OptionsRec(S)));
 end);
@@ -490,8 +494,8 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for a semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+"for an inverse semigroup with inverse op and an associative element",
+[IsInverseSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x) 
   return ClosureInverseSemigroup(S, [x], ShallowCopy(SEMIGROUPS_OptionsRec(S)));
 end);
@@ -499,8 +503,9 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for semigroup with inverse op, associative element, record",
-[IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
+"for an inverse semigroup with inverse op, associative element, record",
+[IsInverseSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement,
+IsRecord],
 function(S, x, opts) 
   return ClosureInverseSemigroup(S, [x], opts);
 end);
@@ -508,8 +513,8 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for an acting semigroup with inverse op, associative elt coll, and record",
-[IsSemigroupWithInverseOp and IsActingSemigroup,
+"for acting inv semigroup with inverse op, associative elt coll, and record",
+[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup,
  IsAssociativeElementCollection, IsRecord],
 function(S, coll, opts)
   
@@ -553,8 +558,9 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for a semigroup with inverse op, associative elt coll, and record",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
+"for an inverse semigroup with inverse op, associative elt coll, and record",
+[IsInverseSemigroup and IsSemigroupWithInverseOp,
+ IsAssociativeElementCollection, IsRecord],
 function(S, coll, opts)
   
   if IsEmpty(coll) then 
@@ -1135,8 +1141,8 @@ end);
 # <limit> is the max size of the subsemigroup.
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for a semigroup with inverse op, function, positive integer",
-[IsSemigroupWithInverseOp, IsFunction, IsPosInt], 
+"for an inverse semigroup with inverse op, function, positive integer",
+[IsInverseSemigroup and IsSemigroupWithInverseOp, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
 
@@ -1173,8 +1179,8 @@ end);
 #
 
 InstallMethod(InverseSubsemigroupByProperty, 
-"for semigroup with inverse op and function",
-[IsSemigroupWithInverseOp, IsFunction], 
+"for an inverse semigroup with inverse op and function",
+[IsInverseSemigroup and IsSemigroupWithInverseOp, IsFunction], 
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);
@@ -1208,19 +1214,6 @@ InstallMethod(RandomMatrixSemigroup,
 [IsRing, IsPosInt, IsPosInt],
 function(R, m, n)
   return Semigroup(List([1 .. m], x -> RandomMat(n, n, R)));
-end);
-
-#
-
-InstallMethod(RandomBinaryRelationMonoid,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  local s;
-
-  s := Monoid(List([1 .. m], x -> RandomBinaryRelationOnPoints(n)));
-  SetIsBinaryRelationSemigroup(s, true);
-  return s;
 end);
 
 #

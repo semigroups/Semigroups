@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  semibool.gd
+#W  semigroups-matrix-boolean.gd
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -15,3 +15,6 @@ DeclareSynonym("IsBooleanMatSemigroup",
 InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 DeclareOperation("RandomBooleanMatSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBooleanMatMonoid", [IsPosInt, IsPosInt]);
+
+#TODO move this to matrix-boolean
+DeclareGlobalFunction("OnBlists");

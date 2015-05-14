@@ -108,7 +108,8 @@ function(args, type, rel)
                           IsGreensClassNC, nc,
                           EquivalenceClassRelation, rel(S));
 
-  if IsSemigroupWithInverseOp(S) then #it's a category
+  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) and
+      IsSemigroupWithInverseOp(S) then #it's a category
     SetFilterObj(C, IsInverseOpClass);
   elif HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
     if type <> HClassType then

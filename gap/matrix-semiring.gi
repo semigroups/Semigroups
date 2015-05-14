@@ -10,18 +10,12 @@
 
 # This file contains declarations for matrices over semirings.
 
-# A matrix over semiring <mat> is:
-#   mat![i] = the ith row, entries are integers or -infinity
-
-InstallGlobalFunction(PlusMinMax,
-function(x, y)
-  if x = infinity or y = infinity then
-    return infinity;
-  elif x = -infinity or y = -infinity then
-    return -infinity;
-  fi;
-  return x + y;
-end);
+# A matrix over semiring <mat> is:  
+#   
+#   mat![i] = the ith row
+#
+# it is also square, any additional data (like the threshold for tropical
+# matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
@@ -43,14 +37,43 @@ coll -> JoinStringsWithSeparator(List(coll, DisplayString), "\n"));
 InstallMethod(DisplayString, "for a matrix over semiring collection",
 [IsMatrixOverSemiring],
 function(x)
-  local n, str, i, j;
-
+  local n, max, length, pad, str, i, j;
+  
   n := DimensionOfMatrixOverSemiring(x);
+
+  # find the max max
+  max := 0;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if x![i][j] = infinity then 
+        length := 1;
+      elif x![i][j] = -infinity then 
+        length := 2;
+      else 
+        length := Length(String(x![i][j]));
+      fi;
+      if length > max then 
+        max := length;
+      fi;
+    od;
+  od;
+
+  pad := function(entry)
+    if entry = infinity then 
+      entry := "∞";
+    elif entry = -infinity then 
+      entry := "-∞";
+    else
+      entry := String(entry);
+    fi;
+    return Concatenation(ListWithIdenticalEntries(max - Length(entry), ' '),
+                         entry, " ");
+  end;
+
   str := "";
   for i in [1 .. n] do
     for j in [1 .. n] do
-      Append(str, String(x![i][j]));
-      Append(str, " ");
+      Append(str, pad(x![i][j]));
     od;
     Remove(str, Length(str));
     Append(str, "\n");
@@ -145,24 +168,24 @@ function(x, y)
   return false;
 end);
 
-# FIXME this is not general enough, either fix it or rename it
+#
 
-InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int",
+InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int, object, object",
 [IsPosInt, IsObject, IsObject],
-function(n, source, type)
+function(n, source, constructor)
   local out, i, j;
   out := List([1 .. n], x -> EmptyPlist(n));
   for i in [1 .. n] do
     for j in [1 .. n] do
       out[i][j] := Random(Integers);
-      if out[i][j] = 0 then
+      if out[i][j] = 0 and source <> false then
         out[i][j] := source;
       elif out[i][j] < 0 then
         out[i][j] := out[i][j] + 1;
       fi;
     od;
   od;
-  return Objectify(type, out);
+  return constructor(out);
 end);
 
 InstallMethod(ChooseHashFunction, "for a matrix over semiring",
@@ -186,3 +209,6 @@ function(x, data)
   od;
   return h + 1;
 end);
+
+InstallMethod(OneMutable, "for a matrix over semiring", 
+[IsMatrixOverSemiring], OneImmutable);

@@ -357,6 +357,7 @@ function(cong)
         oldKernel, traceBlocks;
 
   # Check that the argument makes sense
+  Error();
   s := Range(cong);
   if not IsInverseSemigroup(s) then
     Error("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,\n",
@@ -383,7 +384,7 @@ function(cong)
                + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
     Print("elapsed time: ", String(elapsed), "ms\n");
   end;
-
+  
   pos := 0;
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
 

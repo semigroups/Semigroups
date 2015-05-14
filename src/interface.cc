@@ -15,6 +15,7 @@
 // 3) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
 
+#include "gap-debug.h"
 #include "interface.h"
 
 #include <assert.h>
@@ -23,20 +24,33 @@
 #include <unordered_map>
 #include <time.h>
 
+using namespace semiring;
+
 //#define DEBUG
 //#define NDEBUG 
 
 #define BATCH_SIZE 8192
+
+#define IS_PRIME_INT(x)          (CALL_1ARGS(IsPrimeInt, INTOBJ_INT(x)) == True)
 
 #define IS_BOOL_MAT(x)           (CALL_1ARGS(IsBooleanMat, x) == True)
 #define IS_BIPART(x)             (CALL_1ARGS(IsBipartition, x) == True)
 #define IS_MAT_OVER_SEMI_RING(x) (CALL_1ARGS(IsMatrixOverSemiring, x) == True)
 #define IS_MAX_PLUS_MAT(x)       (CALL_1ARGS(IsMaxPlusMatrix, x) == True)
 #define IS_MIN_PLUS_MAT(x)       (CALL_1ARGS(IsMinPlusMatrix, x) == True)
+#define IS_TROP_MAT(x)           (CALL_1ARGS(IsTropicalMatrix, x) == True)
+#define IS_TROP_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True)
+#define IS_TROP_MIN_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True)
+#define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
+#define IS_NAT_MAT(x)            (CALL_1ARGS(IsNaturalMatrix, x) == True)
+#define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
 *******************************************************************************/
+
+Obj Objectify;
+Obj IsPrimeInt;
 
 Obj infinity;
 Obj Ninfinity;
@@ -45,46 +59,131 @@ Obj IsBipartition;
 Obj BipartitionByIntRepNC;   
 
 Obj IsBooleanMat;
-Obj BooleanMatNC;   
+Obj BooleanMatType;   
 
 Obj IsMatrixOverSemiring;
 
 Obj IsMaxPlusMatrix;
-Obj MaxPlusMatrixNC;   
+Obj MaxPlusMatrixType;   
 
 Obj IsMinPlusMatrix;
-Obj MinPlusMatrixNC;   
+Obj MinPlusMatrixType;   
+
+Obj IsTropicalMatrix;
+
+Obj IsTropicalMinPlusMatrix;
+Obj TropicalMinPlusMatrixType;   
+
+Obj IsTropicalMaxPlusMatrix;
+Obj TropicalMaxPlusMatrixType;
+
+Obj IsProjectiveMaxPlusMatrix;
+Obj ProjectiveMaxPlusMatrixType;
+
+Obj IsNaturalMatrix;
+Obj NaturalMatrixType;
+
+Obj IsMatrixOverPrimeField;
+Obj AsMatrixOverPrimeFieldNC;
 
 /*******************************************************************************
- * Temporary debug area
+ * Temporary area
 *******************************************************************************/
+
+Obj IsColTrimBooleanMat (Obj self, Obj x) {
+  assert(IS_BOOL_MAT(x));
+  size_t n = LEN_BLIST(ELM_PLIST(x, 1));
+  
+  for (size_t i = 1; i < n; i++) {
+    for (size_t j = i + 1; j <= n; j++) {
+      size_t k;
+      bool contained = true;
+      for (k = 1; k <= n; k++) {
+        Obj row = ELM_PLIST(x, k);
+        if ((ELM_BLIST(row, j) == True && ELM_BLIST(row, i) == False)) {
+          contained = false;
+          break;
+        }
+      }
+      if (contained) {
+        return False;
+      }
+    }
+  }
+  return True;
+}
 
 /*******************************************************************************
  * Can we use Semigroup++?
 *******************************************************************************/
 
-// TODO use IsMatrixOverSemiring
+Obj inline Representative (Obj data) {
+  assert(IsbPRec(data, RNamName("gens")));
+  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+  return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
+}
+
+long inline Threshold (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_TROP_MAT(x)||IS_NAT_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
+long inline Period (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_NAT_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
+}
+
+long inline SizeOfFF (Obj data) {
+  Obj x = Representative(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_MAT_OVER_PF(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
+// TODO use IsMatrixOverSemiring ?
 enum SemigroupType {
   UNKNOWN,
   TRANS2, 
   TRANS4, 
+  PPERM2, 
+  PPERM4, 
   BOOL_MAT, 
   BIPART,
   MAX_PLUS_MAT,
-  MIN_PLUS_MAT
+  MIN_PLUS_MAT,
+  TROP_MAX_PLUS_MAT,
+  TROP_MIN_PLUS_MAT,
+  PROJ_MAX_PLUS_MAT,
+  NAT_MAT,
+  MAT_OVER_PF
 };
 
 SemigroupType TypeSemigroup (Obj data) {
-  assert(IsbPRec(data, RNamName("gens")));
-  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-  
-  Obj x = ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
-
+  Obj x = Representative(data);
   switch (TNUM_OBJ(x)) {
     case T_TRANS2:
       return TRANS2;
     case T_TRANS4:
       return TRANS4;
+    case T_PPERM2:
+      return PPERM2;
+    case T_PPERM4:
+      return PPERM4;
     case T_POSOBJ:
       if (IS_BOOL_MAT(x)) {
         return BOOL_MAT;
@@ -92,6 +191,17 @@ SemigroupType TypeSemigroup (Obj data) {
         return MAX_PLUS_MAT;
       } else if (IS_MIN_PLUS_MAT(x)) {
         return MIN_PLUS_MAT;
+      } else if (IS_TROP_MAX_PLUS_MAT(x)) {
+        return TROP_MAX_PLUS_MAT;
+      } else if (IS_TROP_MIN_PLUS_MAT(x)) {
+        return TROP_MIN_PLUS_MAT;
+      } else if (IS_PROJ_MAX_PLUS_MAT(x)) {
+        return PROJ_MAX_PLUS_MAT;
+      } else if (IS_NAT_MAT(x)) {
+        return NAT_MAT;
+      } else if (IS_MAT_OVER_PF(x) && IS_PRIME_INT(SizeOfFF(data))) {
+        // TODO handle non-prime fields too!
+        return MAT_OVER_PF;
       } 
       return UNKNOWN;
     case T_COMOBJ:
@@ -191,7 +301,7 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 
     Obj unconvert (Transformation<T>* x) {
-      Obj o = NEW_TRANS2(x->degree());
+      Obj o = NEW_TRANS(x->degree());
       T* pto = ADDR_TRANS(o);
       for (T i = 0; i < x->degree(); i++) {
         pto[i] = x->at(i);
@@ -200,6 +310,14 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 
   private:
+    
+    inline Obj NEW_TRANS (size_t deg) {
+      if (deg < 65536) {
+        return NEW_TRANS2(deg);
+      } else {
+        return NEW_TRANS4(deg);
+      }
+    }
 
     // helper for getting ADDR_TRANS2/4
     inline T* ADDR_TRANS (Obj x) {
@@ -207,48 +325,68 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 };
 
-class BoolMatConverter : public Converter<BooleanMat> {
+template <typename T>
+class PPermConverter : public Converter<PartialPerm<T> > {
   public: 
 
-    BooleanMat* convert (Obj o, size_t n) {
-      assert(IS_BOOL_MAT(o));
-      assert(LEN_PLIST(o) > 0);
-      assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
-       
-      auto x = new BooleanMat(n);
-      n = LEN_BLIST(ELM_PLIST(o, 1));
-      for (size_t i = 0; i < n; i++) {
-        Obj row = ELM_PLIST(o, i + 1);
-        for (size_t j = 0; j < n; j++) {
-          if (ELM_BLIST(row, j + 1) == True) {
-            x->set(i * n + j, true);
-          } else {
-            x->set(i * n + j, false);
-          }
-        }
+    PartialPerm<T>* convert (Obj o, size_t n) {
+      assert(IS_PPERM(o));
+      
+      auto x = new PartialPerm<T>(n);
+      T* pto = ADDR_PPERM(o);
+      T i;
+      for (i = 0; i < DEG_PPERM(o); i++) {
+        x->set(i, pto[i]);
+      }
+      for (; i < n; i++) {
+        x->set(i, 0);
       }
       return x;
     }
 
-    Obj unconvert (BooleanMat* x) {
-      size_t n = sqrt(x->degree());
-      Obj o = NEW_PLIST(T_PLIST, n);
-      SET_LEN_PLIST(o, n);
-      
-      for (size_t i = 0; i < n; i++) {
-        Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
-        SET_LEN_BLIST(blist, n);
-        for (size_t j = 0; j < n; j++) {
-          if (x->at(i * n + j)) {
-            SET_ELM_BLIST(blist, j + 1, True);
-          } else {
-            SET_ELM_BLIST(blist, j + 1, False);
-          }
-        }
-        SET_ELM_PLIST(o, i + 1, blist);
-        CHANGED_BAG(o);
+    // similar to FuncDensePartialPermNC in gap/src/pperm.c
+    Obj unconvert (PartialPerm<T>* x) {
+      T deg = x->degree(); 
+
+      //remove trailing 0s
+      while (deg > 0 && x->at(deg - 1) == 0) {
+        deg--;
       }
-      return CALL_1ARGS(BooleanMatNC, o);
+      
+      Obj o = NEW_PPERM(deg);
+      T* pto = ADDR_PPERM(o);
+      T codeg = 0;
+      for (T i = 0; i < deg; i++) {
+        pto[i] = x->at(i);
+        if (pto[i] > codeg) {
+          codeg = pto[i];
+        }
+      }
+      set_codeg(o, deg, codeg);
+      return o;
+    }
+  
+  private:
+   
+    void set_codeg (Obj o, T deg, T codeg) {
+      if (deg < 65536) {
+        CODEG_PPERM2(o) = codeg;
+      } else {
+        CODEG_PPERM4(o) = codeg;
+      }
+    }
+
+    inline Obj NEW_PPERM (size_t deg) {
+      if (deg < 65536) {
+        return NEW_PPERM2(deg);
+      } else {
+        return NEW_PPERM4(deg);
+      }
+    }
+
+    // helper for getting ADDR_PPERM2/4
+    inline T* ADDR_PPERM (Obj x) {
+      return ((T*)((Obj*)(ADDR_OBJ(x))+2)+1);
     }
 };
 
@@ -282,6 +420,53 @@ class BipartConverter : public Converter<Bipartition> {
     }
 };
 
+class BoolMatConverter : public Converter<BooleanMat> {
+  public: 
+
+    BooleanMat* convert (Obj o, size_t n) {
+      assert(IS_BOOL_MAT(o));
+      assert(LEN_PLIST(o) > 0);
+      assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
+      assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
+       
+      auto x = new BooleanMat(n);
+      n = LEN_BLIST(ELM_PLIST(o, 1));
+      for (size_t i = 0; i < n; i++) {
+        Obj row = ELM_PLIST(o, i + 1);
+        assert(IS_BLIST_REP(row));
+        for (size_t j = 0; j < n; j++) {
+          if (ELM_BLIST(row, j + 1) == True) {
+            x->set(i * n + j, true);
+          } else {
+            x->set(i * n + j, false);
+          }
+        }
+      }
+      return x;
+    }
+
+    Obj unconvert (BooleanMat* x) {
+      size_t n = sqrt(x->degree());
+      Obj o = NEW_PLIST(T_PLIST, n);
+      SET_LEN_PLIST(o, n);
+      
+      for (size_t i = 0; i < n; i++) {
+        Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
+        SET_LEN_BLIST(blist, n);
+        for (size_t j = 0; j < n; j++) {
+          if (x->at(i * n + j)) {
+            SET_ELM_BLIST(blist, j + 1, True);
+          } else {
+            SET_ELM_BLIST(blist, j + 1, False);
+          }
+        }
+        SET_ELM_PLIST(o, i + 1, blist);
+        CHANGED_BAG(o);
+      }
+      return CALL_2ARGS(Objectify, BooleanMatType, o);
+    }
+};
+
 class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
   public:
@@ -292,14 +477,15 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
     MatrixOverSemiringConverter (Semiring* semiring, 
                                  Obj       gap_zero, 
-                                 Obj       gap_objectify_func) 
+                                 Obj       gap_type) 
       : _semiring(semiring), 
         _gap_zero(gap_zero),
-        _gap_objectify_func(gap_objectify_func) {}
+        _gap_type(gap_type) {}
 
     MatrixOverSemiring* convert (Obj o, size_t n) {
       assert(IS_MAT_OVER_SEMI_RING(o));
       assert(LEN_PLIST(o) > 0);
+      assert(IS_PLIST(ELM_PLIST(o, 1)));
       assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
        
       auto x = new MatrixOverSemiring(n, _semiring);
@@ -318,10 +504,12 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
       return x;
     }
 
-    Obj unconvert (MatrixOverSemiring* x) {
+    virtual Obj unconvert (MatrixOverSemiring* x) {
       size_t n = sqrt(x->degree());
-      Obj plist = NEW_PLIST(T_PLIST, n);
-      SET_LEN_PLIST(plist, n);
+      Obj plist = NEW_PLIST(T_PLIST, n + 2);
+      SET_LEN_PLIST(plist, n + 2);
+      SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
+      SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
       
       for (size_t i = 0; i < n; i++) {
         Obj row = NEW_PLIST(T_PLIST_CYC, n);
@@ -337,14 +525,85 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
         SET_ELM_PLIST(plist, i + 1, row);
         CHANGED_BAG(plist);
       }
-      return CALL_1ARGS(_gap_objectify_func, plist);
+      return CALL_2ARGS(Objectify, _gap_type, plist);
     }
 
-  private: 
+  protected: 
     
     Semiring* _semiring;
     Obj       _gap_zero;
-    Obj       _gap_objectify_func;
+    Obj       _gap_type;
+};
+
+class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatrix>, 
+                                         public MatrixOverSemiringConverter {
+  public:
+    ProjectiveMaxPlusMatrixConverter(Semiring* semiring, 
+                                     Obj       gap_zero, 
+                                     Obj       gap_type)
+      : MatrixOverSemiringConverter(semiring, gap_zero, gap_type) {}
+
+    ProjectiveMaxPlusMatrix* convert (Obj o, size_t n) {
+      return
+        static_cast<ProjectiveMaxPlusMatrix*>(MatrixOverSemiringConverter::convert(o,
+                                                                                   n));
+    }
+
+    Obj unconvert (ProjectiveMaxPlusMatrix* x) {
+      return MatrixOverSemiringConverter::unconvert(x);
+    }
+};
+
+class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
+
+  public:
+
+    ~MatrixOverPrimeFieldConverter () {
+      delete _field;
+    }
+
+    MatrixOverPrimeFieldConverter (PrimeField* field) 
+      : _field(field) {}
+
+    MatrixOverSemiring* convert (Obj o, size_t n) {
+      assert(IS_MAT_OVER_PF(o));
+      assert(LEN_PLIST(o) > 0);
+      assert(IS_PLIST(ELM_PLIST(o, 1)));
+      assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
+       
+      auto x = new MatrixOverSemiring(n, _field);
+      n = LEN_PLIST(ELM_PLIST(o, 1));
+      for (size_t i = 0; i < n; i++) {
+        Obj row = ELM_PLIST(o, i + 1);
+        for (size_t j = 0; j < n; j++) {
+          FFV entry = VAL_FFE(ELM_PLIST(row, j + 1));
+          x->set(i * n + j, entry);
+        }
+      }
+      return x;
+    }
+
+    virtual Obj unconvert (MatrixOverSemiring* x) {
+      size_t n = sqrt(x->degree());
+      Obj plist = NEW_PLIST(T_PLIST, n);
+      SET_LEN_PLIST(plist, n);
+      
+      for (size_t i = 0; i < n; i++) {
+        Obj row = NEW_PLIST(T_PLIST_CYC, n);
+        SET_LEN_PLIST(row, n);
+        for (size_t j = 0; j < n; j++) {
+          long entry = x->at(i * n + j);
+          SET_ELM_PLIST(row, j + 1, INTOBJ_INT(x->at(i * n + j)));
+        }
+        SET_ELM_PLIST(plist, i + 1, row);
+        CHANGED_BAG(plist);
+      }
+      return CALL_2ARGS(AsMatrixOverPrimeFieldNC, INTOBJ_INT(_field->size()), plist);
+    }
+
+  protected: 
+    
+    PrimeField* _field;
 };
 
 /*******************************************************************************
@@ -363,7 +622,15 @@ class Interface : public InterfaceBase {
       assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
       
       Obj gens =  ElmPRec(data, RNamName("gens"));
-      
+
+      if (IsbPRec(data, RNamName("report"))) {
+        assert(ElmPRec(data, RNamName("report")) == True || 
+            ElmPRec(data, RNamName("report")) == False);
+        _report = (ElmPRec(data, RNamName("report")) == True ? true : false);
+      } else {
+        _report = false;
+      }
+
       std::vector<T*> gens_c;
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
 
@@ -385,7 +652,7 @@ class Interface : public InterfaceBase {
 
     // enumerate the C++ semigroup
     void enumerate (Obj limit) {
-      _semigroup->enumerate(INT_INTOBJ(limit));
+      _semigroup->enumerate(INT_INTOBJ(limit), _report);
     }
     
     bool is_done () {
@@ -394,7 +661,7 @@ class Interface : public InterfaceBase {
 
     // get the size of the C++ semigroup
     size_t size () {
-      return _semigroup->size();
+      return _semigroup->size(_report);
     }
     
     size_t current_size () {
@@ -408,7 +675,7 @@ class Interface : public InterfaceBase {
 
     // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
-      _semigroup->enumerate(-1);
+      _semigroup->enumerate(-1, _report);
       AssPRec(data, RNamName("right"), 
               ConvertFromRecVec(_semigroup->right_cayley_graph()));
       CHANGED_BAG(data);
@@ -418,7 +685,7 @@ class Interface : public InterfaceBase {
 
     // get the left Cayley graph from C++ semgroup, store it in data
     void left_cayley_graph (Obj data) {
-      _semigroup->enumerate(-1);
+      _semigroup->enumerate(-1, _report);
       AssPRec(data, RNamName("left"), 
               ConvertFromRecVec(_semigroup->left_cayley_graph()));
       CHANGED_BAG(data);
@@ -493,7 +760,7 @@ class Interface : public InterfaceBase {
     // get the word from the C++ semigroup, store it in data
     void word (Obj data, Obj pos) {
       size_t pos_c = INT_INTOBJ(pos);
-      _semigroup->enumerate(pos_c - 1);
+      _semigroup->enumerate(pos_c - 1, _report);
       if (! IsbPRec(data, RNamName("words"))) {
         Obj words = NEW_PLIST(T_PLIST, pos_c);
         SET_LEN_PLIST(words, pos_c);
@@ -574,11 +841,13 @@ class Interface : public InterfaceBase {
 
     Semigroup<T>* _semigroup;
     Converter<T>* _converter;
+    bool          _report;
 };
 
 /*******************************************************************************
  * Instantiate Interface for the particular type of semigroup passed from GAP
 *******************************************************************************/
+
 
 InterfaceBase* InterfaceFromData (Obj data) {
   if (IsbPRec(data, RNamName("Interface_CC"))) {
@@ -598,6 +867,16 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<Transformation<u_int32_t> >(data, tc4);
       break;
     }
+    case PPERM2:{
+      auto pc2 = new PPermConverter<u_int16_t>();
+      interface = new Interface<PartialPerm<u_int16_t> >(data, pc2);
+      break;
+    }
+    case PPERM4:{
+      auto pc4 = new PPermConverter<u_int32_t>();
+      interface = new Interface<PartialPerm<u_int32_t> >(data, pc4);
+      break;
+    }
     case BIPART: {
       auto bc = new BipartConverter();
       interface = new Interface<Bipartition>(data, bc);
@@ -611,15 +890,50 @@ InterfaceBase* InterfaceFromData (Obj data) {
     case MAX_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 
-                                                  MaxPlusMatrixNC);
+                                                  MaxPlusMatrixType);
       interface = new Interface<MatrixOverSemiring>(data, mosc);
       break;
     }
     case MIN_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MinPlusSemiring(), 
                                                   infinity, 
-                                                  MinPlusMatrixNC);
+                                                  MinPlusMatrixType);
       interface = new Interface<MatrixOverSemiring>(data, mosc);
+      break;
+    }
+    case TROP_MAX_PLUS_MAT:{
+      auto mosc = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(Threshold(data)), 
+                                                  Ninfinity, 
+                                                  TropicalMaxPlusMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      break;
+    }
+    case TROP_MIN_PLUS_MAT:{
+      auto mosc = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(Threshold(data)), 
+                                                  infinity, 
+                                                  TropicalMinPlusMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      break;
+    }
+    case PROJ_MAX_PLUS_MAT:{
+      auto pmpmc = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
+                                                        Ninfinity, 
+                                                        ProjectiveMaxPlusMatrixType);
+      interface = new Interface<ProjectiveMaxPlusMatrix>(data, pmpmc);
+      break;
+
+    }
+    case NAT_MAT:{
+      auto mosc = new MatrixOverSemiringConverter(new NaturalSemiring(Threshold(data),
+                                                                      Period(data)), 
+                                                  INTOBJ_INT(0), 
+                                                  NaturalMatrixType);
+      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      break;
+    }
+    case MAT_OVER_PF:{
+      auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
+      interface = new Interface<MatrixOverSemiring>(data, mopfc);
       break;
     }
     default: {
@@ -1400,6 +1714,8 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
+    GVAR_FUNC_TABLE_ENTRY("interface.c", IsColTrimBooleanMat, 1, 
+                          "x"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_SEMIGROUP, 4, 
@@ -1449,6 +1765,9 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &InterfaceFreeFunc);
     
+    ImportGVarFromLibrary( "Objectify", &Objectify);
+    ImportGVarFromLibrary( "IsPrimeInt", &IsPrimeInt);
+
     ImportGVarFromLibrary( "infinity", &infinity);
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
 
@@ -1456,16 +1775,33 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
 
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
-    ImportGVarFromLibrary( "BooleanMatNC", &BooleanMatNC );
+    ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );
 
     ImportGVarFromLibrary( "IsMatrixOverSemiring", &IsMatrixOverSemiring);
 
     ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
-    ImportGVarFromLibrary( "MaxPlusMatrixNC", &MaxPlusMatrixNC );
+    ImportGVarFromLibrary( "MaxPlusMatrixType", &MaxPlusMatrixType );
     
     ImportGVarFromLibrary( "IsMinPlusMatrix", &IsMinPlusMatrix );
-    ImportGVarFromLibrary( "MinPlusMatrixNC", &MinPlusMatrixNC );
+    ImportGVarFromLibrary( "MinPlusMatrixType", &MinPlusMatrixType );
     
+    ImportGVarFromLibrary( "IsTropicalMatrix", &IsTropicalMatrix );
+
+    ImportGVarFromLibrary( "IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix );
+    ImportGVarFromLibrary( "TropicalMaxPlusMatrixType", &TropicalMaxPlusMatrixType );
+    
+    ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
+    ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
+
+    ImportGVarFromLibrary( "IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
+    ImportGVarFromLibrary( "ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
+    
+    ImportGVarFromLibrary( "IsNaturalMatrix", &IsNaturalMatrix );
+    ImportGVarFromLibrary( "NaturalMatrixType", &NaturalMatrixType );
+
+    ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
+    ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
+
     /* return success                                                      */
     return 0;
 }

@@ -10,8 +10,6 @@
 
 # This file contains declarations for matrices over semirings.
 
-DeclareGlobalFunction("PlusMinMax");
-
 DeclareCategory("IsMatrixOverSemiring",
                     IsMultiplicativeElementWithOne
                 and IsAssociativeElement

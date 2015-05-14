@@ -258,6 +258,10 @@ function(S, gens, opts)
     SetFilterObj(I, IsSemigroupWithInverseOp);
   fi;
 
+  if (HasIsInverseSemigroup(S) and IsInverseSemigroup(S)) then
+    SetIsInverseSemigroup(I, true);
+  fi;
+
   if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then
     SetIsRegularSemigroup(I, true);
   fi;
@@ -283,7 +287,7 @@ function(S, gens, opts)
     SetActingDomain(I, S);
   elif IsActingSemigroup(I) and not (HasIsRegularSemigroup(I) and
       IsRegularSemigroup(I)) then
-    # this is done so that the ideal knows it is regular or non-regular from the
+    # this is done so that the ideal knows it's regular or non-regular from the
     # point of creation...
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
   fi;
@@ -293,8 +297,10 @@ end);
 
 #
 
-InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
+InstallMethod(MaximalDClasses,
+"for a inverse op acting inverse semigroup ideal",
+[IsActingSemigroup and IsInverseSemigroup and IsSemigroupWithInverseOp and
+ IsSemigroupIdeal],
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
 
@@ -489,8 +495,9 @@ end);
 InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal], S -> NrRClasses(S) = 1 and NrLClasses(S) = 1);
 
-InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
+InstallMethod(NrDClasses, "for an inverse acting inverse semigroup ideal",
+[IsActingSemigroup and IsInverseSemigroup and IsSemigroupWithInverseOp and
+ IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);

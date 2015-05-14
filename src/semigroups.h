@@ -56,8 +56,6 @@ class Semigroup {
       _prefix     (), 
       _reduced    (RecVec<bool>(gens.size())),
       _right      (new RecVec<size_t>(gens.size())),
-      _schreiergen(), 
-      _schreierpos(), 
       _suffix     (), 
       _wordlen    (0) // (length of the current word) - 1
     { 
@@ -120,8 +118,8 @@ class Semigroup {
       return _elements->size();
     }
     
-    size_t size () {
-      enumerate(-1);
+    size_t size (bool report) {
+      enumerate(-1, report);
       return _elements->size();
     }
    
@@ -166,22 +164,6 @@ class Semigroup {
       return _left;
     }
     
-    size_t schreierpos (size_t pos) {
-      if (pos > current_size()) {
-        enumerate(pos);
-      }
-      spanning_tree();
-      return _schreierpos[pos];
-    }
-    
-    size_t schreiergen (size_t pos) { 
-      if (pos > current_size()) {
-        enumerate(pos);
-      }
-      spanning_tree();
-      return _schreiergen[pos];
-    }
-    
     Word* trace (size_t pos) { // trace the spanning tree
       // caching the words seems to be slower ....
       /*if (_words.empty()) {
@@ -209,11 +191,10 @@ class Semigroup {
 
       Word* word = new Word();
       while (pos > _genslookup.back()) {
-        word->push_back(this->schreiergen(pos));
-        pos = this->schreierpos(pos);
+        word->push_back(_first.at(pos));
+        pos = _suffix.at(pos);
       }
       word->push_back(_genslookup.at(pos));
-      std::reverse(word->begin(), word->end());
       return word;
     }
 
@@ -358,7 +339,7 @@ class Semigroup {
         if (report) {
           std::cout << "found " << _nr << " elements, ";
           std::cout << _nrrules << " rules, ";
-          std::cout << "max word length " << _wordlen << ", so far" << std::endl;
+          std::cout << "max word length " << _wordlen + 1 << ", so far" << std::endl;
         }
       }
       x.delete_data();
@@ -390,28 +371,6 @@ class Semigroup {
       _right->expand(_nr - _pos);
     }
 
-    void spanning_tree () {
-      size_t prev_size = _schreierpos.size();
-      for (size_t i = prev_size; i < this->current_size(); i++) {
-        _schreierpos.push_back(0);
-        _schreiergen.push_back(0);
-      }
-      
-      if (prev_size == _schreierpos.size()) return;
-
-      size_t prev_pos = _schreierpos[prev_size];
-
-      // find places in _reduced that are true, continuing from the last _pos
-      for (size_t i = prev_pos; i < _pos; i++) {
-        for (size_t j = 0; j < this->nrgens(); j++) {
-          if (_reduced.get(i, j)) {
-            size_t r = _right->get(i, j);
-            _schreierpos.at(r) = i;
-            _schreiergen.at(r) = j;
-          }
-        }
-      }
-    }
     // TODO make as much as possible here a pointer so that they can be freed
     // when they aren't required anymore
     size_t                               _degree;
@@ -433,8 +392,6 @@ class Semigroup {
     std::vector<size_t>                  _prefix;
     RecVec<bool>                         _reduced;
     RecVec<size_t>*                      _right;
-    std::vector<size_t>                  _schreiergen;
-    std::vector<size_t>                  _schreierpos;
     std::vector<size_t>                  _suffix;
     size_t                               _wordlen;
     std::vector<std::vector<size_t> >    _words;
