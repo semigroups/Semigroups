@@ -1345,6 +1345,43 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
 }
 
 /*******************************************************************************
+ * Union-Find content (should go in its own file eventually)
+*******************************************************************************/
+
+class UF_DATA {
+public:
+  UF_DATA(int);
+  int get_size();
+  int *get_table();
+  int **get_blocks();
+  int find(int);
+  void unite(int, int);
+private:
+  int size;
+  int *table;
+  int **blocks;
+  bool has_changed;
+};
+
+UF_DATA::UF_DATA(int size) {
+  this->size = size;
+  table = new int[size];
+  for (int i=0; i<size; i++)
+    table[i] = i;
+  has_changed = false;
+}
+
+Obj RETURN_FIVE (Obj self, Obj x) {
+  return INTOBJ_INT(5);
+}
+
+Obj UF_NEW (Obj self, Obj size) {
+  Obj out = NEW_PREC(1);
+  AssPRec(out, RNamName("data"), UF_DATA(INT_INTOBJ(size)));
+  return out;
+}
+
+/*******************************************************************************
  * GAP level print for a T_SEMI
 *******************************************************************************/
 
@@ -1394,6 +1431,10 @@ static StructGVarFunc GVarFuncs [] = {
                           "scc1, scc2"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_HCLASSES, 2, 
                           "left, right"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_NEW, 1,
+                          "size"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", RETURN_FIVE, 1,
+                          "x"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
