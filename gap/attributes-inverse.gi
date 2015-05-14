@@ -91,8 +91,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsGreensDLeq, "for an inverse inverse op acting semigroup",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(IsGreensDLeq, "for an inverse op acting semigroup",
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 function(S)
   local partial, o, comp_index;
 
@@ -116,9 +116,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(PrimitiveIdempotents,
-"for an inverse acting semigroup with inverse op",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(PrimitiveIdempotents, "for acting semigroup with inverse op",
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   local o, scc, rank, min, l, min2, m;
 
@@ -150,8 +149,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsJoinIrreducible,
-"for an inverse semigroup and an associative element",
-[IsInverseSemigroup, IsAssociativeElement],
+"for acting semigroup with inverse op and an associative element",
+[IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
   local y, elts, rank, i, k, singleline, sup, j;
 
@@ -168,17 +167,8 @@ function(S, x)
   y := LeftOne(x);
   elts := ShallowCopy(Idempotents(S));
 
-  # If we sort the elts by rank then we can cut down our search space
-  if IsActingSemigroup(S) then
-    rank := ActionRank(S);
-    SortBy(elts, rank);
-  else
-    # note that IsGreensDLeq returns true if x is GREATER than y
-    rank := function(x, y)
-      return not IsGreensDLeq(S)(x, y);
-    end;
-    Sort(elts, rank);
-  fi;
+  rank := ActionRank(S);
+  SortBy(elts, rank);
 
   i := Position(elts, y);
   k := 0;
@@ -222,8 +212,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for an inverse semigroup and a semigroup with inverse op",
-[IsInverseSemigroup, IsSemigroup],
+"for a semigroup with inverse op and acting semigroup",
+[IsSemigroupWithInverseOp, IsSemigroupWithInverseOp],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: IsMajorantlyClosed: usage,\n",
@@ -237,8 +227,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for an inverse semigroup and associative element collection",
-[IsInverseSemigroup, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collection",
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     Error("Semigroups: IsMajorantlyClosed: usage,\n",
@@ -252,8 +242,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosedNC,
-"for an inverse semigroup and associative element collection",
-[IsInverseSemigroup, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collection",
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   local i, iter, t, u;
 
@@ -284,8 +274,7 @@ function(S)
   j, p;
 
   D := GreensDClasses(S);
-  elts := Idempotents(S);
-  SortBy(elts, RankOfPartialPerm);
+  elts := Set(Idempotents(S));
   out := EmptyPlist(Length(D));
   seen_zero := false;
 
@@ -361,8 +350,8 @@ end);
 # same method for ideals
 
 InstallMethod(JoinIrreducibleDClasses,
-"for an inverse semigroup",
-[IsInverseSemigroup],
+"for acting semigroup with inverse op",
+[IsSemigroupWithInverseOp],
 function(S)
   return Filtered(GreensDClasses(S),
                   x -> IsJoinIrreducible(S, Representative(x)));
@@ -371,8 +360,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure,
-"for an inverse semigroup and a semigroup",
-[IsInverseSemigroup, IsSemigroup],
+"for acting semigroup with inverse op and acting semigroup",
+[IsSemigroupWithInverseOp and IsActingSemigroup, IsActingSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: MajorantClosure: usage,\n",
@@ -386,8 +375,9 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure,
-"for an inverse semigroup and associative element collections",
-[IsInverseSemigroup, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collections",
+[IsSemigroupWithInverseOp,
+ IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     Error("Semigroups: MajorantClosure: usage,\n",
@@ -401,8 +391,9 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosureNC,
-"for an inverse semigroup and associative element collections",
-[IsInverseSemigroup, IsAssociativeElementCollection],
+"for a semigroup with inverse op and associative element collections",
+[IsSemigroupWithInverseOp,
+ IsAssociativeElementCollection],
 function(S, T)
   local elts, n, out, ht, k, val, t, i;
 
@@ -441,8 +432,8 @@ end);
 #C method? JDM
 
 InstallMethod(Minorants,
-"for an inverse semigroup and associative element",
-[IsInverseSemigroup, IsAssociativeElement],
+"for a semigroup with inverse op and associative element collections",
+[IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, f)
   local elts, i, out, rank, j, k;
 
@@ -496,8 +487,8 @@ end);
 
 InstallMethod(RightCosetsOfInverseSemigroup,
 "for two semigroups with inverse op",
-[IsInverseSemigroup and IsSemigroupWithInverseOp,
- IsInverseSemigroup and IsSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp,
+ IsSemigroupWithInverseOp],
 function(S, T)
   local elts, min, usedreps, out, dupe, coset, s, rep, t;
 
@@ -555,17 +546,17 @@ end);
 # same method for ideals
 
 InstallMethod(SameMinorantsSubgroup,
-"for a group H-class of an inverse semigroup",
+"for a group H-class of a semigroup with inverse op",
 [IsGroupHClass],
 function(h)
   local S, e, F, out, x;
 
   S := Parent(h);
 
-  if not IsInverseSemigroup(S) then
-    Error("Semigroups: SameMinorantsSubgroup: usage,\n",
-          "the parent semigroup of the group H-class <h> must be inverse,");
-    return;
+  # FIXME IsInverseOpClass should work for non-acting semigroup too
+  #       and then this could then become a filter for the method
+  if not IsSemigroupWithInverseOp(S) then
+    TryNextMethod();
   fi;
 
   e := Representative(h);
@@ -645,8 +636,8 @@ end);
 # same method for ideals
 
 InstallMethod(VagnerPrestonRepresentation,
-"for an inverse semigroup with inverse operation",
-[IsInverseSemigroup and IsSemigroupWithInverseOp],
+"for a semigroup with inverse operation",
+[IsSemigroupWithInverseOp],
 function(S)
   local gens, elts, out, iso, T, inv, i;
 

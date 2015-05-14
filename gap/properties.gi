@@ -290,8 +290,8 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 
 # same method for ideals
 
-InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse op inv semigroup",
-[IsInverseSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse op semigroup",
+[IsSemigroupWithInverseOp],
 S -> IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S)));
 
 InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse semigroup",
@@ -300,9 +300,8 @@ S -> IsEUnitaryInverseSemigroup(AsPartialPermSemigroup(S)));
 
 #different method for ideals
 
-InstallMethod(IsFactorisableSemigroup, "for an inverse op inverse semigroup",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and
- HasGeneratorsOfSemigroup],
+InstallMethod(IsFactorisableSemigroup, "for an inverse op semigroup",
+[IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 function(S)
   local G, iso, enum, f;
 
@@ -413,8 +412,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(IsLTrivial, "for an inverse acting semigroup with inverse op",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(IsLTrivial, "for an inverse acting semigroup",
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 function(S)
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
@@ -772,8 +771,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMonogenicInverseSemigroup,
-"for an inverse semigroup with inverse op",
-[IsInverseSemigroup and IsSemigroupWithInverseOp],
+"for a semigroup with inverse op",
+[IsSemigroupWithInverseOp],
 function(S)
   local gens, I, y, i;
 
