@@ -17,6 +17,14 @@
 # 1) more conversion methods AsBooleanMat for a transformation, partial perm,
 # etc
 
+InstallMethod(Successors, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n;
+  n := Length(x![1]);
+  return List([1 .. n], i -> ListBlist([1 .. n], x![i]));
+end);
+
 InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a boolean matrix",
 [IsBooleanMat], x -> "boolean");
 
@@ -62,20 +70,30 @@ function(mat)
       od;
       return BooleanMatNC(x);
     fi;
-  else
-    # successors
-    n := Length(mat);
-    x := EmptyPlist(n);
-    for i in [1 .. n] do
-      if not ForAll(mat[i], x -> IsPosInt(x) and x <= n) then
-        Error("Semigroups: BooleanMat:\n",
-              "the entries of each list must not exceed ", n, ",");
-        return;
-      fi;
-      Add(x, BlistList([1 .. n], mat[i]));
-    od;
-    return BooleanMatNC(x);
   fi;
+  # successors
+  n := Length(mat);
+  x := EmptyPlist(n);
+  for i in [1 .. n] do
+    if not ForAll(mat[i], x -> IsPosInt(x) and x <= n) then
+      Error("Semigroups: BooleanMat:\n",
+            "the entries of each list must not exceed ", n, ",");
+      return;
+    fi;
+    Add(x, BlistList([1 .. n], mat[i]));
+  od;
+  return BooleanMatNC(x);
+end);
+
+InstallGlobalFunction(BooleanMatBySuccessorsNC, 
+function(x)
+  local n, y, i;
+  n := Length(x);
+  y := EmptyPlist(n);
+  for i in [1 .. n] do
+    y[i] := BlistList([1 .. n], x[i]);
+  od;
+  return Objectify(BooleanMatType, y);
 end);
 
 InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
@@ -186,26 +204,37 @@ function(x)
   return nr + 1;   # to be in [1 .. 2 ^ (n ^ 2)]
 end);
 
-InstallMethod(BooleanMatNumber,
-"for a positive integer and positive integer",
-[IsPosInt, IsPosInt],
+InstallGlobalFunction(NumberBlist,
+function(blist)
+  local n, nr, i;
+  n := Length(blist);
+  nr := 0;
+  for i in [1 .. n] do
+    if blist[i] then 
+      nr := 2 * nr + 1;
+    else 
+      nr := 2 * nr;
+    fi;
+  od;
+  return nr + 1;   # to be in [1 .. 2 ^ n]
+end);
+
+InstallGlobalFunction(BlistNumber,
 function(nr, n)
   local x, q, i, j;
 
-  x := List([1 .. n], x -> BlistList([1 .. n], []));
-  nr := nr - 1;   # to be in [0 .. 2 ^ (n ^ 2) - 1]
+  x := BlistList([1 .. n], []);
+  nr := nr - 1;   # to be in [0 .. 2 ^ n - 1]
   for i in [n, n - 1 .. 1] do
-    for j in [n, n - 1 .. 1] do
-      q := nr mod 2;
-      if q = 0 then
-        x[i][j] := false;
-      else
-        x[i][j] := true;
-      fi;
-      nr := (nr - q) / 2;
-    od;
+    q := nr mod 2;
+    if q = 0 then
+      x[i] := false;
+    else
+      x[i] := true;
+    fi;
+    nr := (nr - q) / 2;
   od;
-  return BooleanMatNC(x);
+  return x;
 end);
 
 InstallMethod(AsBooleanMat, "for a perm and pos int", [IsPerm, IsPosInt],
@@ -254,7 +283,7 @@ InstallGlobalFunction(SEMIGROUPS_HashFunctionBooleanMat,
 function(x, data)
   local n, h, i, j;
 
-  n := DimensionOfMatrixOverSemiring(x);
+  n := Length(x![1]);
   h := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do

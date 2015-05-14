@@ -59,3 +59,19 @@ function(blist1, x)
   od;
   return blist2;
 end);
+
+GossipMonoid := function(n)
+  local gens, x, i, j;
+  
+  gens := [];
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+      x[i][j] := true;
+      x[j][i] := true;
+      Add(gens, BooleanMatNC(x));
+    od;
+  od;
+
+  return Monoid(gens);
+end;

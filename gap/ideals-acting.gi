@@ -13,10 +13,8 @@
 # attributes with better methods than the generic ones for
 # IsActingSemigroup.
 
-InstallMethod(MaximalDClasses,
-"for an inverse op acting inverse semigroup ideal",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup and
- IsSemigroupIdeal], 
+InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal], 
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
   
@@ -67,9 +65,8 @@ end);
 
 #
 
-InstallMethod(NrDClasses, "for an inverse acting inverse semigroup ideal",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup and
- IsSemigroupIdeal],
+InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I)))-1;
 end);
@@ -244,9 +241,8 @@ end);
 #
 
 InstallMethod(GeneratorsOfSemigroup, 
-"for an inverse op acting inverse semigroup ideal",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup and
- IsSemigroupIdeal],
+"for an inverse op acting semigroup ideal",
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local out, U, i, partial, D, pos, inj, j, C;
 
@@ -296,9 +292,8 @@ end);
 #
 
 InstallMethod(GeneratorsOfInverseSemigroup, 
-"for an inverse op acting inverse semigroup ideal",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup and
-IsSemigroupIdeal],
+"for an inverse op acting semigroup ideal",
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local U, i, partial, D, pos, inj, j, C;
 
@@ -390,8 +385,7 @@ end);
 #
 
 InstallMethod(SemigroupIdealData, "for an inverse op acting semigroup ideal",
-[IsInverseSemigroup and IsSemigroupWithInverseOp and IsActingSemigroup and
- IsSemigroupIdeal], ReturnFail);
+[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal], ReturnFail);
 
 #
 
