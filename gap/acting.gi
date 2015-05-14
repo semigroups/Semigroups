@@ -132,22 +132,22 @@ function(x, S)
   
   # for the lookahead
   rhoranks := data!.rhoranks;
-  lookahead_last := 0;
+  lookahead_last := 64;
   lookahead_fail := false;
 
   LookAhead := function()
     local i, start;
-    Error();
-    lookahead_last := Length(data!.orbit);
     start := Maximum(data!.pos, 1);
     for i in [start .. Length(data!.orbit)] do
       if not IsBound(rhoranks[rholookup[i]]) then 
         rhoranks[rholookup[i]] := rhoranker(rhoo[rholookup[i]]);
       fi;
       if rhoranks[rholookup[i]] >= rank then 
+        lookahead_last := i + 64;
         return true;
       fi;
     od;
+    lookahead_last := Length(data!.orbit) + 64;
     return Length(data!.orbit) = 1; # this means that we cannot obtain any further elements with
                                     # high enough rank to every find x 
   end;
@@ -161,7 +161,7 @@ function(x, S)
     fi;
     
     lookfunc := function(data, x)
-      if Length(data!.orbit) > lookahead_last + 1024 and not LookAhead() then 
+      if data!.pos > lookahead_last and not LookAhead() then 
         lookahead_fail := true;
         return true;
       fi;
@@ -182,14 +182,14 @@ function(x, S)
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
     new := true;
     # lambda-rho-combination not yet seen
-    if IsClosedData(data) or not LookAhead(lookahead_last) then
+    if IsClosedData(data) or not LookAhead() then
       return false;
     fi;
     
     lookahead_fail := false;
 
     lookfunc := function(data, x)
-      if Length(data!.orbit) > lookahead_last + 1024 and not LookAhead() then 
+      if data!.pos > lookahead_last and not LookAhead() then 
         lookahead_fail := true;
         return true;
       fi;
@@ -245,7 +245,7 @@ function(x, S)
     n := repslens[m][ind];
     lookahead_fail := false;
     lookfunc := function(data, x)
-      if Length(data!.orbit) > lookahead_last + 1024 and not LookAhead() then 
+      if data!.pos > lookahead_last and not LookAhead() then 
         lookahead_fail := true;
         return true;
       fi;
