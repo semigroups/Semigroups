@@ -1662,29 +1662,28 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
  * Union-Find content (should go in its own file eventually)
 *******************************************************************************/
 
-class UF_DATA {
+class UFData {
 public:
-  UF_DATA(int);
-  int get_size();
-  int *get_table();
-  int **get_blocks();
-  int find(int);
-  void unite(int, int);
+  UFData(size_t size) : _size(size) {
+    table = new int[size];
+    for (int i=0; i<size; i++) {
+      table[i] = i;
+    }
+    has_changed = false;
+  }
+  size_t get_size ();
+  std::vector<size_t> get_table ();
+  std::vector<std::vectore<size_t>*> get_blocks ();
+  size_t find (size_t);
+  void unite (size_t, size_t);
 private:
-  int size;
-  int *table;
-  int **blocks;
-  bool has_changed;
+  size_t _size;
+  std::vector<size_t> _table;
+  std::vector<std::vector<size_t>*> _blocks;
+  bool _haschanged;
 };
 
-UF_DATA::UF_DATA(int size) {
-  this->size = size;
-  table = new int[size];
-  for (int i=0; i<size; i++)
-    table[i] = i;
-  has_changed = false;
-}
-
+// semigroups.h 94-95
 Obj RETURN_FIVE (Obj self, Obj x) {
   return INTOBJ_INT(5);
 }
