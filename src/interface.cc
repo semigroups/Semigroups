@@ -1377,7 +1377,6 @@ Obj RETURN_FIVE (Obj self, Obj x) {
 
 Obj UF_NEW (Obj self, Obj size) {
   Obj out = NEW_PREC(1);
-  AssPRec(out, RNamName("data"), UF_DATA(INT_INTOBJ(size)));
   return out;
 }
 
