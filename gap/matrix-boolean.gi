@@ -17,13 +17,9 @@
 # 1) more conversion methods AsBooleanMat for a transformation, partial perm,
 # etc
 
-InstallMethod(Successors, "for a boolean matrix",
-[IsBooleanMat],
-function(x)
-  local n;
-  n := Length(x![1]);
-  return List([1 .. n], i -> ListBlist([1 .. n], x![i]));
-end);
+#############################################################################
+## Specializations of methods for MatrixOverSemiring 
+#############################################################################
 
 InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a boolean matrix",
 [IsBooleanMat], x -> "boolean");
@@ -85,16 +81,6 @@ function(mat)
   return BooleanMatNC(x);
 end);
 
-InstallGlobalFunction(BooleanMatBySuccessorsNC, 
-function(x)
-  local n, y, i;
-  n := Length(x);
-  y := EmptyPlist(n);
-  for i in [1 .. n] do
-    y[i] := BlistList([1 .. n], x[i]);
-  od;
-  return Objectify(BooleanMatType, y);
-end);
 
 InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
@@ -146,9 +132,47 @@ function(n)
   return BooleanMatNC(x);
 end);
 
-# methods specific to Boolean matrices
+#############################################################################
+## Methods for Boolean matrices
+#############################################################################
 
-IsRowTrimBooleanMat := function(x)
+InstallGlobalFunction(OnBlists, 
+function(blist1, x)
+  local n, blist2, i, j;
+
+  n := Length(blist1);
+  blist2 := BlistList([1 .. n], []);
+  
+  for i in [1 .. n] do 
+    for j in [1 .. n] do 
+      blist2[i] := blist2[i] or (blist1[j] and x![j][i]);
+    od;
+  od;
+  return blist2;
+end);
+
+InstallMethod(Successors, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n;
+  n := Length(x![1]);
+  return List([1 .. n], i -> ListBlist([1 .. n], x![i]));
+end);
+
+InstallGlobalFunction(BooleanMatBySuccessorsNC, 
+function(x)
+  local n, y, i;
+  n := Length(x);
+  y := EmptyPlist(n);
+  for i in [1 .. n] do
+    y[i] := BlistList([1 .. n], x[i]);
+  od;
+  return Objectify(BooleanMatType, y);
+end);
+
+InstallMethod(IsRowTrimBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
   local n, i, j;
 
   n := Length(x![1]);
@@ -160,9 +184,13 @@ IsRowTrimBooleanMat := function(x)
     od;
   od;
   return true;
-end;
+end);
 
-IsTrimBooleanMat := x -> IsRowTrimBooleanMat(x) and IsColTrimBooleanMat(x);
+InstallMethod(IsColTrimBooleanMat, "for a boolean matrix",
+[IsBooleanMat], IS_COL_TRIM_BOOL_MAT);
+
+InstallMethod(IsTrimBooleanMat, "for a boolean matrix",
+[IsBooleanMat], x -> IsRowTrimBooleanMat(x) and IsColTrimBooleanMat(x);
 
 InstallMethod(DisplayString, "for a boolean matrix",
 [IsBooleanMat],

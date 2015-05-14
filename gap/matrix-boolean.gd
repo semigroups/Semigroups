@@ -10,6 +10,10 @@
 
 # This file contains an implementation of boolean matrices.
 
+#############################################################################
+## Specializations of declarations for MatrixOverSemiring 
+#############################################################################
+
 DeclareCategory("IsBooleanMat", IsMatrixOverSemiring);
 
 DeclareCategoryCollections("IsBooleanMat");
@@ -28,6 +32,10 @@ DeclareGlobalFunction("BooleanMatNC");
 
 DeclareOperation("RandomBooleanMat", [IsPosInt]);
 
+#############################################################################
+## Declarations specifically for Boolean mats
+#############################################################################
+
 DeclareOperation("AsBooleanMat", [IsPerm, IsPosInt]);
 DeclareOperation("AsBooleanMat", [IsTransformation, IsPosInt]);
 
@@ -39,3 +47,9 @@ DeclareGlobalFunction("BlistNumber");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBooleanMat");
 DeclareAttribute("Successors", IsBooleanMat);
 DeclareGlobalFunction("BooleanMatBySuccessorsNC");
+
+DeclareAttribute("IsRowTrimBooleanMat", IsBooleanMat);
+DeclareAttribute("IsColTrimBooleanMat", IsBooleanMat);
+DeclareAttribute("IsTrimBooleanMat", IsBooleanMat);
+
+DeclareGlobalFunction("OnBlists");

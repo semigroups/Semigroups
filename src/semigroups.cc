@@ -1,27 +1,22 @@
 /*
  * Semigroups GAP package
  *
- * This file contains an interface between GAP and Semigroups++.
+ * This file contains the GAP kernel module of the Semigroups package.
  *
  */
 
 // TODO 
-// 1) better asserts!
-//
-// 2) improve relations probably don't make the relations in semigroups.h and then transfer them 
+// 1) improve relations probably don't make the relations in semigroups.h and then transfer them 
 // over here, just create them here using trace from semigroups.h and the
 // memmove method from ENUMERATE_SEMIGROUP in this file
 //
-// 3) set data!.pos and data!.nr so that the filter IsClosedData gets set at
+// 2) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
 
-#include "gap-debug.h"
-#include "interface.h"
+#include "semigroups.h"
 
 #include <assert.h>
 #include <iostream>
-#include <tuple>
-#include <unordered_map>
 #include <time.h>
 
 using namespace semiring;
@@ -58,7 +53,7 @@ Obj Ninfinity;
 Obj IsBipartition;
 Obj BipartitionByIntRepNC;   
 
-Obj IsBooleanMat;
+//Obj IsBooleanMat;
 Obj BooleanMatType;   
 
 Obj IsMatrixOverSemiring;
@@ -90,28 +85,10 @@ Obj AsMatrixOverPrimeFieldNC;
  * Temporary area
 *******************************************************************************/
 
-Obj IsColTrimBooleanMat (Obj self, Obj x) {
-  assert(IS_BOOL_MAT(x));
-  size_t n = LEN_BLIST(ELM_PLIST(x, 1));
-  
-  for (size_t i = 1; i < n; i++) {
-    for (size_t j = i + 1; j <= n; j++) {
-      size_t k;
-      bool contained = true;
-      for (k = 1; k <= n; k++) {
-        Obj row = ELM_PLIST(x, k);
-        if ((ELM_BLIST(row, j) == True && ELM_BLIST(row, i) == False)) {
-          contained = false;
-          break;
-        }
-      }
-      if (contained) {
-        return False;
-      }
-    }
-  }
-  return True;
-}
+/*******************************************************************************
+ * Some methods for Boolean matrices
+*******************************************************************************/
+
 
 /*******************************************************************************
  * Can we use Semigroup++?
@@ -1632,37 +1609,37 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
-    GVAR_FUNC_TABLE_ENTRY("interface.c", IsColTrimBooleanMat, 1, 
+    GVAR_FUNC_TABLE_ENTRY("boolean.cc", IS_COL_TRIM_BOOLEAN_MAT, 1, 
                           "x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", ENUMERATE_SEMIGROUP, 4, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", ENUMERATE_SEMIGROUP, 4, 
                           "data, limit, lookfunc, looking"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_SEMIGROUP, 4, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_SEMIGROUP, 4, 
                           "data, lookfunc, start, end"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", RIGHT_CAYLEY_GRAPH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", RIGHT_CAYLEY_GRAPH, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", LEFT_CAYLEY_GRAPH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", LEFT_CAYLEY_GRAPH, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", ELEMENTS_SEMIGROUP, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", ELEMENTS_SEMIGROUP, 2, 
                           "data, limit"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", RELATIONS_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", RELATIONS_SEMIGROUP, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", WORD_SEMIGROUP, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", WORD_SEMIGROUP, 2, 
                           "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", SIZE_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SIZE_SEMIGROUP, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", LENGTH_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", LENGTH_SEMIGROUP, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", NR_RULES_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", NR_RULES_SEMIGROUP, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", POSITION_SEMIGROUP, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", POSITION_SEMIGROUP, 2, 
                           "data, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", IS_CLOSED_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", IS_CLOSED_SEMIGROUP, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", SEMIGROUPS_GABOW_SCC, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
                           "scc1, scc2"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", FIND_HCLASSES, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_HCLASSES, 2, 
                           "left, right"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };

@@ -11,7 +11,7 @@ GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
 
 lib_LTLIBRARIES = semigroups.la
 
-semigroups_la_SOURCES = src/interface.cc
+semigroups_la_SOURCES = src/semigroups.cc
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
 # Note that the latter is only for GAP 4.4.12
 semigroups_la_LDFLAGS = -module -avoid-version

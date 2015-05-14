@@ -16,5 +16,3 @@ InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 DeclareOperation("RandomBooleanMatSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBooleanMatMonoid", [IsPosInt, IsPosInt]);
 
-#TODO move this to matrix-boolean
-DeclareGlobalFunction("OnBlists");
