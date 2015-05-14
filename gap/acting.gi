@@ -262,7 +262,7 @@ function(x, S)
             return true;
           fi;
         fi;
-      until not found;
+      until found = false;
     else
       repeat
         # look for more R-reps with same lambda-rho value
@@ -282,7 +282,7 @@ function(x, S)
           od;
           n := repslens[m][ind];
         fi;
-      until not found;
+      until found = false;
     fi;
   fi;
   return false;

@@ -350,16 +350,16 @@ gap> S := Semigroup(S);;
 gap> SizeOfSemigroupData(SemigroupData(S));
 0
 
-#T# acting: UniversalFakeOne
-gap> UniversalFakeOne * RandomBooleanMat(4);;
-gap> RandomTransformation(4) * UniversalFakeOne;;
-gap> String(UniversalFakeOne);
+#T# acting: SEMIGROUPS_UniversalFakeOne
+gap> SEMIGROUPS_UniversalFakeOne * RandomBooleanMat(4);;
+gap> RandomTransformation(4) * SEMIGROUPS_UniversalFakeOne;;
+gap> String(SEMIGROUPS_UniversalFakeOne);
 "<universal fake one>"
-gap> UniversalFakeOne < UniversalFakeOne;
+gap> SEMIGROUPS_UniversalFakeOne < SEMIGROUPS_UniversalFakeOne;
 false
-gap> UniversalFakeOne < RandomBipartition(4);
+gap> SEMIGROUPS_UniversalFakeOne < RandomBipartition(4);
 true
-gap> RandomPartialPerm(4) < UniversalFakeOne;
+gap> RandomPartialPerm(4) < SEMIGROUPS_UniversalFakeOne;
 false
 
 #T# SEMIGROUPS_UnbindVariables
