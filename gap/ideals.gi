@@ -258,6 +258,10 @@ function(S, gens, opts)
     SetFilterObj(I, IsSemigroupWithInverseOp);
   fi;
 
+  if (HasIsInverseSemigroup(S) and IsInverseSemigroup(S)) then
+    SetIsInverseSemigroup(I, true);
+  fi;
+
   if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then
     SetIsRegularSemigroup(I, true);
   fi;

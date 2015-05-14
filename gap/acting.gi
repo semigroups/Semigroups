@@ -43,6 +43,7 @@ function(S)
               repslens := [],
               repslookup := [],
               rholookup := [1],
+              rhoranks := [],
               schreiergen := [fail],
               schreiermult := [fail],
               schreierpos := [fail],
@@ -53,47 +54,49 @@ function(S)
   return data;
 end);
 
+
 # different method for regular ideals, regular/inverse semigroups, same method
 # for non-regular ideals
 
 InstallMethod(\in,
 "for an associative element and acting semigroup",
 [IsAssociativeElement, IsActingSemigroup],
-function(f, s)
-  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup,
-  lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens,
-  found, n, i;
+function(x, S)
+  local data, ht, lambda, lambdao, l, m, rhoranker, rho, rank, rhoo,
+  lambdarhoht, rholookup, rhoranks, LookAhead, new, lookfunc, schutz, ind, reps,
+  repslens, max, lambdaperm, n, found, i, lookahead_last, lookahead_fail;
 
-  if (IsActingSemigroupWithFixedDegreeMultiplication(s)
-      and ActionDegree(f) <> ActionDegree(s))
-      or (ActionDegree(f) > ActionDegree(s)) then
+  if (IsActingSemigroupWithFixedDegreeMultiplication(S)
+      and ActionDegree(x) <> ActionDegree(S))
+      or (ActionDegree(x) > ActionDegree(S)) then
     return false;
   fi;
 
-  if not (IsMonoid(s) and IsOne(f)) then
-    if Length(Generators(s)) > 0
-        and ActionRank(s)(f) >
-        MaximumList(List(Generators(s), f -> ActionRank(s)(f))) then
+  if not (IsMonoid(S) and IsOne(x)) then
+    if Length(Generators(S)) > 0
+        and ActionRank(S)(x) >
+        MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
       #Info(InfoSemigroups, 2, "element has larger rank than any element of ",
       #     "semigroup.");
       return false;
     fi;
   fi;
 
-  if HasMinimalIdeal(s) then
-    if ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
+  if HasMinimalIdeal(S) then
+    if ActionRank(S)(x) < ActionRank(S)(Representative(MinimalIdeal(S))) then
       #Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
       #     "semigroup.");
       return false;
     fi;
   fi;
 
-  data := SemigroupData(s);
+  data := SemigroupData(S);
   ht := data!.ht;
 
   # look for lambda!
-  lambda := LambdaFunc(s)(f);
-  lambdao := LambdaOrb(s);
+  lambda := LambdaFunc(S)(x);
+  lambdao := LambdaOrb(S);
+  # FIXME!! lookahead here too
   if not IsClosed(lambdao) then
     Enumerate(lambdao, infinity);
   fi;
@@ -107,40 +110,68 @@ function(f, s)
   # strongly connected component of lambda orb
   m := OrbSCCLookup(lambdao)[l];
 
-  # make sure lambda of f is in the first place of its scc
+  # make sure lambda of x is in the first place of its scc
   if l <> OrbSCC(lambdao)[m][1] then
-    f := f * LambdaOrbMult(lambdao, m, l)[2];
+    x := x * LambdaOrbMult(lambdao, m, l)[2];
   fi;
 
-  # check if f is an existing R-rep
-  if HTValue(ht, f) <> fail then
+  # check if x is an existing R-rep
+  if HTValue(ht, x) <> fail then
     return true;
   fi;
 
   # check if rho is already known
-  rho := RhoFunc(s)(f);
-  rhoo := RhoOrb(s);
+  rhoranker := RhoRank(S);
+  rho := RhoFunc(S)(x);
+  rank := rhoranker(rho);
+  rhoo := RhoOrb(S);
   l := Position(rhoo, rho);
   lambdarhoht := data!.lambdarhoht;
   rholookup := data!.rholookup;
+  
+  # for the lookahead
+  rhoranks := data!.rhoranks;
+  lookahead_last := 64;
+  lookahead_fail := false;
+
+  LookAhead := function()
+    local i, start;
+    start := Maximum(data!.pos, 1);
+    for i in [start .. Length(data!.orbit)] do
+      if not IsBound(rhoranks[rholookup[i]]) then 
+        rhoranks[rholookup[i]] := rhoranker(rhoo[rholookup[i]]);
+      fi;
+      if rhoranks[rholookup[i]] >= rank then 
+        lookahead_last := i + 64;
+        return true;
+      fi;
+    od;
+    lookahead_last := Length(data!.orbit) + 64;
+    return Length(data!.orbit) = 1; # this means that we cannot obtain any further elements with
+                                    # high enough rank to every find x 
+  end;
 
   new := false;
 
   if l = fail then
     # rho is not already known, so we look for it
-    if IsClosed(rhoo) then
+    if IsClosed(rhoo) or not LookAhead() then
       return false;
     fi;
-
+    
     lookfunc := function(data, x)
+      if data!.pos > lookahead_last and not LookAhead() then 
+        lookahead_fail := true;
+        return true;
+      fi;
       return rhoo[rholookup[x[6]]] = rho;
     end;
 
     data := Enumerate(data, infinity, lookfunc);
     l := PositionOfFound(data);
 
-    # rho is not found, so f not in s
-    if l = false then
+    # rho is not found, so x not in S
+    if l = false or lookahead_fail then
       return false;
     fi;
     l := rholookup[l];
@@ -150,14 +181,22 @@ function(f, s)
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
     new := true;
     # lambda-rho-combination not yet seen
-    if IsClosedData(data) then
+    if IsClosedData(data) or not LookAhead() then
       return false;
     fi;
+    
+    lookahead_fail := false;
 
     lookfunc := function(data, x)
+      if data!.pos > lookahead_last and not LookAhead() then 
+        lookahead_fail := true;
+        return true;
+      fi;
       return IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
     end;
+
     data := Enumerate(data, infinity, lookfunc);
+    
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
       return false;
     fi;
@@ -175,24 +214,24 @@ function(f, s)
   reps := data!.reps;
   repslens := data!.repslens;
 
-  max := Factorial(LambdaRank(s)(lambda)) /
+  max := Factorial(LambdaRank(S)(lambda)) /
           Size(LambdaOrbSchutzGp(lambdao, m));
 
   if repslens[m][ind] = max then
     return true;
   fi;
 
-  # if schutz is false, then f has to be an R-rep which it is not...
+  # if schutz is false, then x has to be an R-rep which it is not...
   if schutz <> false then
 
-    # check if f already corresponds to an element of reps[m][ind]
-    lambdaperm := LambdaPerm(s);
+    # check if x already corresponds to an element of reps[m][ind]
+    lambdaperm := LambdaPerm(S);
     for n in [1 .. repslens[m][ind]] do
-      if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], f)) = () then
+      if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = () then
         return true;
       fi;
     od;
-  elif new and HTValue(ht, f) <> fail then
+  elif new and HTValue(ht, x) <> fail then
     return true;
   fi;
 
@@ -202,41 +241,48 @@ function(f, s)
 
   # enumerate until we find f or finish
   if repslens[m][ind] < max then
-    oldrepslens := repslens[m][ind];
+    n := repslens[m][ind];
+    lookahead_fail := false;
     lookfunc := function(data, x)
-      return repslens[m][ind] > oldrepslens;
+      if data!.pos > lookahead_last and not LookAhead() then 
+        lookahead_fail := true;
+        return true;
+      fi;
+      return repslens[m][ind] > n;
     end;
     if schutz = false then
       repeat
         # look for more R-reps with same lambda-rho value
         data := Enumerate(data, infinity, lookfunc);
-        oldrepslens := repslens[m][ind];
         found := data!.found;
-        if found <> false then
-          if oldrepslens = max or f = data[found][4] then
+        if lookahead_fail = true then 
+          found := false;
+        elif found <> false then
+          if repslens[m][ind] = max or x = data[found][4] then
             return true;
           fi;
         fi;
-      until found = false;
+      until not found;
     else
       repeat
         # look for more R-reps with same lambda-rho value
         data := Enumerate(data, infinity, lookfunc);
-        oldrepslens := repslens[m][ind];
         found := data!.found;
-        if found <> false then
-          if oldrepslens = max then
+        if lookahead_fail = true then 
+          found := false;
+        elif found <> false then
+          if repslens[m][ind] = max then
             return true;
           fi;
           for i in [n + 1 .. repslens[m][ind]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[m][ind][i], f)) = ()
+            if SiftedPermutation(schutz, lambdaperm(reps[m][ind][i], x)) = ()
                 then
               return true;
             fi;
           od;
           n := repslens[m][ind];
         fi;
-      until found = false;
+      until not found;
     fi;
   fi;
   return false;
@@ -587,8 +633,8 @@ function(data, limit, lookfunc)
       # are we looking for something?
       if looking then
         # did we find it?
+        data!.pos := i - 1;
         if lookfunc(data, pt) then
-          data!.pos := i - 1;
           data!.found := nr;
           rho_o!.depth := rho_depth;
           return data;

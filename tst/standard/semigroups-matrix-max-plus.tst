@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  max-plus.tst
+#W  semigroups-matrix-max-plus.tst
 #Y  Copyright (C) 2015                                  James D. Mitchell
 ##                                                       
 ##
@@ -9,13 +9,13 @@
 #############################################################################
 ##
 
-gap> START_TEST("Semigroups package: max-plus.tst");
+gap> START_TEST("Semigroups package: semigroups-matrix-max-plus.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SemigroupsStartTest();
 
-# max-plus: C++ code working
+# semigroups-matrix-max-plus: C++ code working
 gap> S := Semigroup(MaxPlusMatrixNC([[0, -4], [-4, -1]]),
 >                   MaxPlusMatrixNC([[0, -3], [-3, -1]]));
 <semigroup of 2x2 max-plus matrices with 2 generators>
@@ -35,4 +35,4 @@ gap> MultiplicativeZero(S);
 fail
 
 #E# 
-gap> STOP_TEST( "Semigroups package: max-plus.tst");
+gap> STOP_TEST( "Semigroups package: semigroups-matrix-max-plus.tst");

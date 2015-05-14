@@ -60,7 +60,7 @@ InstallMethod(ActionDegree, "for a transformation",
 
 InstallMethod(ActionDegree, "for a partial perm",
 [IsPartialPerm], x -> Maximum(DegreeOfPartialPerm(x),
-CodegreeOfPartialPerm(x)));
+                              CodegreeOfPartialPerm(x)));
 
 InstallMethod(ActionDegree, "for a bipartition",
 [IsBipartition], DegreeOfBipartition);

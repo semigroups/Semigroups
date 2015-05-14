@@ -33,5 +33,9 @@ DeclareOperation("AsBooleanMat", [IsTransformation, IsPosInt]);
 
 DeclareOperation("NumberBooleanMat", [IsBooleanMat]);
 DeclareOperation("BooleanMatNumber", [IsPosInt, IsPosInt]);
+DeclareGlobalFunction("NumberBlist");
+DeclareGlobalFunction("BlistNumber");
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBooleanMat");
+DeclareAttribute("Successors", IsBooleanMat);
+DeclareGlobalFunction("BooleanMatBySuccessorsNC");

@@ -110,6 +110,16 @@ function(data, x, n)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(data)) then 
     return fail;
   fi;
+  
+  if (IsTransformation(x) 
+      and DegreeOfTransformation(x) >
+      DegreeOfTransformationCollection(data!.gens))
+      or (IsPartialPerm(x) 
+          and DegreeOfPartialPerm(x) >
+          DegreeOfPartialPermCollection(data!.gens)) then 
+    return fail;
+  fi;
+
   return POSITION_SEMIGROUP(data, x);
 end);
 
@@ -194,10 +204,12 @@ function(S)
   # this is required for the C++ version
   # TODO declare a filter IsCPPSemigroup or similar for this.
   if IsTransformationSemigroup(S) 
-      or IsBooleanMatSemigroup(S)
-      or IsBipartitionSemigroup(S) 
-      or IsMaxPlusMatrixSemigroup(S) # TODO eventually replace these last 2 by IsMatrixOver...
-      or IsMinPlusMatrixSemigroup(S) then
+      or IsPartialPermSemigroup(S) 
+      or IsBipartitionSemigroup(S)
+      or IsBooleanMatSemigroup(S) 
+      or (IsMatrixOverSemiringSemigroup(S) 
+          and ((not IsMatrixOverPrimeFieldSemigroup(S)) 
+                or IsPrimeField(BaseField(Representative(S))))) then
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;
@@ -205,11 +217,14 @@ function(S)
     # the degree is the length of the std::vector required to hold the object
     if IsTransformationSemigroup(S) then
       data.degree := DegreeOfTransformationSemigroup(S);
+    elif IsPartialPermSemigroup(S) then
+      data.degree := DegreeOfPartialPermSemigroup(S);
     elif IsMatrixOverSemiringSemigroup(S) then 
       data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
     elif IsBipartitionSemigroup(S) then 
       data.degree := 2 * DegreeOfBipartitionSemigroup(S);
     fi;
+    data.report := SEMIGROUPS_OptionsRec(S).report;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);
