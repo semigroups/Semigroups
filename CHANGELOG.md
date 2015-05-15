@@ -4,6 +4,10 @@
 #### Copyright (C) 2011-15 James D. Mitchell
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.4.1
+This is a extremely minor release to change 1 character in the PackageInfo.g
+file (wrong package archive URL). 
+
 ## Version 2.4 
 This is a minor release including several bugfixes, and
 improvements in performance, and some new features.
