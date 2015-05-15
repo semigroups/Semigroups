@@ -5,9 +5,9 @@
  *
  */
 
+#include "types.h"
 #include "converter.h"
 #include "interface.h"
-#include "types.h"
 
 #include "semigroups++/semigroups.h"
 

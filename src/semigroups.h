@@ -22,8 +22,9 @@
  * Import from GAP and Orb for hashing
 *******************************************************************************/
 
+#include "src/compiled.h" 
+
 extern "C" {
-  #include "src/compiled.h" 
   Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
   Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj obj, Obj val);
 }

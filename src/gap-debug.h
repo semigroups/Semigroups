@@ -5,9 +5,7 @@
 #ifndef SEMIGROUPS_GAP_DEBUG_H
 #define SEMIGROUPS_GAP_DEBUG_H 1
 
-extern "C" {
-  #include "src/compiled.h"
-}
+#include "src/compiled.h"
 
 //#ifdef DEBUG
 

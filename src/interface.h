@@ -12,9 +12,7 @@
  * GAP headers
 *******************************************************************************/
 
-extern "C" {
-  #include "src/compiled.h"
-}
+#include "src/compiled.h"
 
 /*******************************************************************************
  * Class for the interface from a GAP semigroup to a C++ semigroup and back 
