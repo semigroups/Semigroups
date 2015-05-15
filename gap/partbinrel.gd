@@ -20,7 +20,7 @@
 DeclareCategory("IsPartitionedBinaryRelation", 
                 IsMultiplicativeElementWithInverse and
                 IsAssociativeElementWithStar);
-DeclareSynonym("IsPBR", IsPartitionedBinaryRelation);
+                
 DeclareCategoryCollections("IsPartitionedBinaryRelation");
 DeclareCategoryCollections("IsPartitionedBinaryRelationCollection");
 
