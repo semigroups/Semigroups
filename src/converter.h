@@ -6,6 +6,7 @@
  */
 
 #include "src/compiled.h"          /* GAP headers                */
+#include "pperm.h"
 
 #include "semigroups++/elements.h"
 
