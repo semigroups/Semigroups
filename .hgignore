@@ -88,3 +88,6 @@ src/.deps/semigroups_la-boolean.Plo
 src/.deps/semigroups_la-types.Plo
 src/.libs/semigroups_la-boolean.o
 src/.libs/semigroups_la-types.o
+semigroups_la-converter.lo
+src/.deps/semigroups_la-converter.Plo
+src/.libs/semigroups_la-converter.o

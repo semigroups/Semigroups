@@ -1,14 +1,12 @@
-
-//TODO file header
-
+/*
+ * Semigroups GAP package
+ *
+ * This file contains types of semigroups for use in the Semigroups kernel
+ * module.
+ *
+ */
 
 #include "types.h"
-
-Obj inline Representative (Obj data) {
-  assert(IsbPRec(data, RNamName("gens")));
-  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-  return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
-}
 
 SemigroupType TypeSemigroup (Obj data) {
   Obj x = Representative(data);

@@ -19,6 +19,30 @@
  * Temporary stuff goes here!
 *******************************************************************************/
 
+Obj Objectify;
+Obj infinity;
+Obj Ninfinity;
+Obj IsBipartition;
+Obj BipartitionByIntRepNC;   
+Obj IsBooleanMat;
+Obj BooleanMatType;   
+Obj IsMatrixOverSemiring;
+Obj IsMaxPlusMatrix;
+Obj MaxPlusMatrixType;   
+Obj IsMinPlusMatrix;
+Obj MinPlusMatrixType;   
+Obj IsTropicalMatrix;
+Obj IsTropicalMinPlusMatrix;
+Obj TropicalMinPlusMatrixType;   
+Obj IsTropicalMaxPlusMatrix;
+Obj TropicalMaxPlusMatrixType;
+Obj IsProjectiveMaxPlusMatrix;
+Obj ProjectiveMaxPlusMatrixType;
+Obj IsNaturalMatrix;
+Obj NaturalMatrixType;
+Obj IsMatrixOverPrimeField;
+Obj AsMatrixOverPrimeFieldNC;
+
 /*******************************************************************************
  * PPerm macros in case they are not in pperm.h
 *******************************************************************************/
@@ -38,7 +62,7 @@
 #endif
 
 /*******************************************************************************
- * Functions for getting information from data
+ * Helper functions for getting information from data
 *******************************************************************************/
 
 long inline Threshold (Obj data) {
@@ -72,7 +96,6 @@ long inline SizeOfFF (Obj data) {
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
 }
-
 
 /*******************************************************************************
  * Class for containing a C++ semigroup and accessing its methods

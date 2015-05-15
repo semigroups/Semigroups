@@ -187,10 +187,10 @@ function(x)
 end);
 
 InstallMethod(IsColTrimBooleanMat, "for a boolean matrix",
-[IsBooleanMat], IS_COL_TRIM_BOOL_MAT);
+[IsBooleanMat], IS_COL_TRIM_BOOLEAN_MAT);
 
 InstallMethod(IsTrimBooleanMat, "for a boolean matrix",
-[IsBooleanMat], x -> IsRowTrimBooleanMat(x) and IsColTrimBooleanMat(x);
+[IsBooleanMat], x -> IsRowTrimBooleanMat(x) and IsColTrimBooleanMat(x));
 
 InstallMethod(DisplayString, "for a boolean matrix",
 [IsBooleanMat],

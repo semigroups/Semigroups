@@ -1,7 +1,8 @@
 /*
  * Semigroups GAP package
  *
- * This file contains types of semigroups from GAP. 
+ * This file contains types of semigroups for use in the Semigroups kernel
+ * module.
  *
  */
 
@@ -91,12 +92,6 @@ extern Obj IsMatrixOverPrimeField;
 extern Obj AsMatrixOverPrimeFieldNC;
 
 /*******************************************************************************
- * Get a representative of the semigroup from the data
-*******************************************************************************/
-
-Obj inline Representative (Obj data);
-
-/*******************************************************************************
  * What type of semigroup do we have?
 *******************************************************************************/
 
@@ -117,10 +112,20 @@ enum SemigroupType {
   MAT_OVER_PF
 };
 
-SemigroupType TypeSemigroup (Obj data);
+extern SemigroupType TypeSemigroup (Obj data);
 
 bool inline IsCCSemigroup (Obj data) {
   return TypeSemigroup(data) != UNKNOWN;
+}
+
+/*******************************************************************************
+ * Get a representative of the semigroup from the data
+*******************************************************************************/
+
+Obj inline Representative (Obj data) {
+  assert(IsbPRec(data, RNamName("gens")));
+  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+  return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
 }
 
 #endif
