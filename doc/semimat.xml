@@ -52,3 +52,18 @@ gap>
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="AsMatrixSemigroup">
+<ManSection>
+  <Attr Name="AsMatrixSemigroup" Arg="S[, F]"/>
+  <Returns>An isomorphism to a matrix semigroup.</Returns>
+  <Description>
+  <Example><![CDATA[
+  ]]></Example>
+
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+
+

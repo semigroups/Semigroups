@@ -224,6 +224,29 @@ gap> Size(T);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="ClassicalSemigroups">
+	<ManSection>
+	  <Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
+	  <Oper Name="SpecialLinearSemigroup" Arg="d, q"/>
+	  <Oper Name="GeneralUnitarySemigroup" Arg="d, q"/>
+	  <Oper Name="SpecialUnitarySemigroup" Arg="d, q"/>
+	  <Oper Name="SymplecticSemigroup" Arg="d, q"/>
+	  <Oper Name="GeneralOrthogonalSemigroup" Arg="d, q"/>
+	  <Oper Name="SpecialOrthogonalSemigroup" Arg="d, q"/>
+	  <Oper Name="OmegaSemigroupSemigroup" Arg="d, q"/>
+	  <Oper Name="ProjectiveOmegaSemigroup" Arg="d, q"/>
+	  <Oper Name="GeneralSemilinearSemigroup" Arg="d, q"/>
+	  <Oper Name="SpecialSemilinearSemigroup" Arg="d, q"/>
+      <Returns>A matrix semigroup.</Returns>
+      These functions create semigroups from classical groups by taking
+      a generating set for the classical group and adding an element of rank
+      <Example><![CDATA[
+gap> S:=RandomTransformationSemigroup(4,4);;
+gap>     <A>d-1</A> to it.
+	
+	</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsFullMatrixSemigroup">
   <ManSection>
     <Prop Name="IsFullMatrixSemigroup" Arg="S"/>      

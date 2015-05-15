@@ -413,8 +413,8 @@ end);
 
 # FIXME view could be better here, i.e. including the parameter <e>!
 
-InstallMethod(GeneralOrthogonalSemigroup, "for pos int, pos int, and pos int",
-[IsPosInt, IsPosInt, IsPosInt],
+InstallMethod(GeneralOrthogonalSemigroup, "for int, pos int, and pos int",
+[IsInt, IsPosInt, IsPosInt],
 function(e, d, q)
   return SEMIGROUPS_MatrixSemigroupConstructor(GO, [e, d, q], "general orthogonal", "GOS");
 end);
@@ -427,8 +427,8 @@ end);
 
 # FIXME view could be better here, i.e. including the parameter <e>!
 
-InstallMethod(SpecialOrthogonalSemigroup, "for pos int, pos int, and pos int",
-[IsPosInt, IsPosInt, IsPosInt],
+InstallMethod(SpecialOrthogonalSemigroup, "for int, pos int, and pos int",
+[IsInt, IsPosInt, IsPosInt],
 function(e, d, q)
   return SEMIGROUPS_MatrixSemigroupConstructor(SO, [e, d, q], "special orthogonal", "SOS");
 end);
@@ -443,8 +443,8 @@ end);
 
 # FIXME view could be better here, i.e. including the parameter <e>!
 
-InstallMethod(OmegaSemigroup, "for pos int, pos int, and pos int",
-[IsPosInt, IsPosInt, IsPosInt],
+InstallMethod(OmegaSemigroup, "for int, pos int, and pos int",
+[IsInt, IsPosInt, IsPosInt],
 function(e, d, q)
   return SEMIGROUPS_MatrixSemigroupConstructor(Omega, [e, d, q], "omega", "OmegaS");
 end);
@@ -452,8 +452,8 @@ end);
 
 # FIXME view could be better here, i.e. including the parameter <e>!
 
-InstallMethod(ProjectiveOmegaSemigroup, "for pos int, pos int, and pos int",
-[IsPosInt, IsPosInt, IsPosInt],
+InstallMethod(ProjectiveOmegaSemigroup, "for int, pos int, and pos int",
+[IsInt, IsPosInt, IsPosInt],
 function(e, d, q)
   return SEMIGROUPS_MatrixSemigroupConstructor(POmega, [e, d, q], "projective omega", "POmegaS");
 end);

@@ -158,9 +158,11 @@ true</Log>
       the types of semigroups defined in &Semigroups; which are not mentioned in
       the reference manual. 
       <#Include Label="AsTransformationSemigroup">
+      <#Include Label="AsMatrixSemigroup">
       <#Include Label="IsomorphismPermGroup">
       <#Include Label="IsomorphismBipartitionSemigroup">
       <#Include Label="IsomorphismBlockBijectionSemigroup">
+      <#Include Label="IsomorphismMatrixSemigroup">
   </Section>
   
   <Section Label="Examples"><Heading>Standard examples</Heading>
@@ -176,7 +178,15 @@ true</Log>
     <#Include Label="DualSymmetricInverseSemigroup">
     <#Include Label="PartialTransformationSemigroup"> 
     <#Include Label="FullMatrixSemigroup">
-    <#Include Label="IsFullMatrixSemigroup">
+    <#Include Label="SpecialLinearSemigroup">
+    <#Include Label="GeneralUnitarySemigroup">
+    <#Include Label="SpecialUnitarySemigroup">
+    <#Include Label="GeneralOrthogonalSemigroup">
+    <#Include Label="SpecialOrthogonalSemigroup">
+    <#Include Label="OmegaSemigroup">
+    <#Include Label="ProjectiveOmegaSemigroup">
+    <#Include Label="GeneralSemilinearSemigroup">
+    <#Include Label="SpecialSemilinearSemigroup">
     <#Include Label="MunnSemigroup">
     <#Include Label="OPOIPOPI">
     <#Include Label="SingularTransformationSemigroup">
