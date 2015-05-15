@@ -5,6 +5,10 @@
  *
  */
 
+extern "C" {
+  #include "src/compiled.h"          /* GAP headers                */
+}
+
 #include "semigroups++/elements.h"
 
 /*******************************************************************************
@@ -28,8 +32,30 @@ class TransConverter : public Converter<Transformation<T> > {
   
   public: 
 
-    Transformation<T>* convert (Obj o, size_t n);
-    Obj unconvert (Transformation<T>* x); 
+    Transformation<T>* convert (Obj o, size_t n) {
+      assert(IS_TRANS(o));
+      //assert(DEG_TRANS(o) <= n);
+
+      auto x = new Transformation<T>(n);
+      T* pto = ADDR_TRANS(o);
+      T i;
+      for (i = 0; i < DEG_TRANS(o); i++) {
+        x->set(i, pto[i]);
+      }
+      for (; i < n; i++) {
+        x->set(i, i);
+      }
+      return x;
+    }
+
+    Obj unconvert (Transformation<T>* x) {
+      Obj o = NEW_TRANS(x->degree());
+      T* pto = ADDR_TRANS(o);
+      for (T i = 0; i < x->degree(); i++) {
+        pto[i] = x->at(i);
+      }
+      return o;
+    }
 
   private:
     
@@ -56,9 +82,42 @@ class PPermConverter : public Converter<PartialPerm<T> > {
 
   public: 
 
-    PartialPerm<T>* convert (Obj o, size_t n);
+    PartialPerm<T>* convert (Obj o, size_t n) {
+      assert(IS_PPERM(o));
 
-    Obj unconvert (PartialPerm<T>* x);
+      auto x = new PartialPerm<T>(n);
+      T* pto = ADDR_PPERM(o);
+      T i;
+      for (i = 0; i < DEG_PPERM(o); i++) {
+        x->set(i, pto[i]);
+      }
+      for (; i < n; i++) {
+        x->set(i, 0);
+      }
+      return x;
+    }
+
+    // similar to FuncDensePartialPermNC in gap/src/pperm.c
+    Obj unconvert (PartialPerm<T>* x) {
+      T deg = x->degree(); 
+
+      //remove trailing 0s
+      while (deg > 0 && x->at(deg - 1) == 0) {
+        deg--;
+      }
+
+      Obj o = NEW_PPERM(deg);
+      T* pto = ADDR_PPERM(o);
+      T codeg = 0;
+      for (T i = 0; i < deg; i++) {
+        pto[i] = x->at(i);
+        if (pto[i] > codeg) {
+          codeg = pto[i];
+        }
+      }
+      set_codeg(o, deg, codeg);
+      return o;
+    }
   
   private:
    

@@ -2,8 +2,11 @@
  * For debugging access to GAP macros
 *******************************************************************************/
 
+#ifndef SEMIGROUPS_GAP_DEBUG_H
+#define SEMIGROUPS_GAP_DEBUG_H 1
+
 extern "C" {
-  #include "src/compiled.h"          /* GAP headers                */
+  #include "src/compiled.h"
 }
 
 //#ifdef DEBUG
@@ -60,4 +63,4 @@ Obj CALL_2ARGS_F (Obj func, Obj arg1, Obj arg2) {
   return CALL_2ARGS(func, arg1, arg2);
 }
 
-//#endif
+#endif

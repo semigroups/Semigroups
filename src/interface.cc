@@ -7,6 +7,9 @@
 
 #include "converter.h"
 #include "interface.h"
+#include "types.h"
+
+#include "semigroups++/semigroups.h"
 
 #include <assert.h>
 
@@ -404,8 +407,6 @@ InterfaceBase* InterfaceFromData (Obj data) {
       assert(false);
     }
   }
-  AssPRec(data, RNamName("Interface_CC"), NewInterfaceBag(interface));
+  AssPRec(data, RNamName("Interface_CC"), NewSemigroupsBag(interface, INTERFACE));
   return interface;
 }
-
-

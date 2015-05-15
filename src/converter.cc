@@ -9,76 +9,6 @@
 #include "types.h"
 
 /*******************************************************************************
- * Transformations
-*******************************************************************************/
-
-Transformation<T>* TransConverter::convert (Obj o, size_t n) {
-  assert(IS_TRANS(o));
-  //assert(DEG_TRANS(o) <= n);
-
-  auto x = new Transformation<T>(n);
-  T* pto = ADDR_TRANS(o);
-  T i;
-  for (i = 0; i < DEG_TRANS(o); i++) {
-    x->set(i, pto[i]);
-  }
-  for (; i < n; i++) {
-    x->set(i, i);
-  }
-  return x;
-}
-
-Obj TransConverter::unconvert (Transformation<T>* x) {
-  Obj o = NEW_TRANS(x->degree());
-  T* pto = ADDR_TRANS(o);
-  for (T i = 0; i < x->degree(); i++) {
-    pto[i] = x->at(i);
-  }
-  return o;
-}
-
-/*******************************************************************************
- * Partial perms
-*******************************************************************************/
-
-PartialPerm<T>* PPermConverter::convert (Obj o, size_t n) {
-  assert(IS_PPERM(o));
-
-  auto x = new PartialPerm<T>(n);
-  T* pto = ADDR_PPERM(o);
-  T i;
-  for (i = 0; i < DEG_PPERM(o); i++) {
-    x->set(i, pto[i]);
-  }
-  for (; i < n; i++) {
-    x->set(i, 0);
-  }
-  return x;
-}
-
-// similar to FuncDensePartialPermNC in gap/src/pperm.c
-Obj PPermConverter::unconvert (PartialPerm<T>* x) {
-  T deg = x->degree(); 
-
-  //remove trailing 0s
-  while (deg > 0 && x->at(deg - 1) == 0) {
-    deg--;
-  }
-
-  Obj o = NEW_PPERM(deg);
-  T* pto = ADDR_PPERM(o);
-  T codeg = 0;
-  for (T i = 0; i < deg; i++) {
-    pto[i] = x->at(i);
-    if (pto[i] > codeg) {
-      codeg = pto[i];
-    }
-  }
-  set_codeg(o, deg, codeg);
-  return o;
-}
-
-/*******************************************************************************
  * Bipartitions
 *******************************************************************************/
 
@@ -181,7 +111,7 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   return x;
 }
 
-Obj MatrixOverSemiring::unconvert (MatrixOverSemiring* x) {
+Obj MatrixOverSemiringConverter::unconvert (MatrixOverSemiring* x) {
   size_t n = sqrt(x->degree());
   Obj plist = NEW_PLIST(T_PLIST, n + 2);
   SET_LEN_PLIST(plist, n + 2);

@@ -9,7 +9,7 @@
 #define SEMIGROUPS_GAP_BOOLEAN_H 1
 
 extern "C" {
-  #include "src/compiled.h"          /* GAP headers                */
+  #include "src/compiled.h"
 }
 
 #include "types.h"

@@ -26,13 +26,11 @@ class RecVec {
         
         RecVec (const RecVec& copy) : _vec(copy._vec),
                                       _nrcols(copy._nrcols), 
-                                      _nrrows(copy._nrrows) {
-        };
+                                      _nrrows(copy._nrrows) {}
 
         RecVec& operator= (RecVec const& copy) = delete;
         
-        ~RecVec() {
-        }
+        ~RecVec() {}
         
         T inline get (size_t i, size_t j) {
           assert(i < _nrrows && j  < _nrcols);

@@ -15,6 +15,38 @@ extern "C" {
 #include <assert.h>
 
 /*******************************************************************************
+ * GAP TNUM for wrapping C++ semigroup
+*******************************************************************************/
+
+#ifndef T_SEMI
+#define T_SEMI T_SPARE2
+#endif
+
+enum SemigroupsBagType {
+  INTERFACE = 0,
+  UF_DATA   = 1
+};
+
+template <typename Class>
+inline Obj NewSemigroupsBag (Class* cpp_class, SemigroupsBagType type) {
+  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
+  ADDR_OBJ(o)[0] = (Obj)type;
+  ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(cpp_class);
+  return o;
+}
+
+// get C++ Class from GAP object
+
+template <typename Class>
+inline Class* CLASS_OBJ(Obj o) {
+    return reinterpret_cast<Class*>(ADDR_OBJ(o)[1]);
+}
+
+#define IS_T_SEMI(o)        (TNUM_OBJ(o) == T_SEMI)
+#define IS_INTERFACE_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == INTERFACE)
+#define IS_UF_DATA_BAG(o)   (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
+
+/*******************************************************************************
  * Macros for checking types of objects
 *******************************************************************************/
 
