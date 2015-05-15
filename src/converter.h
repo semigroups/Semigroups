@@ -5,9 +5,7 @@
  *
  */
 
-extern "C" {
-  #include "src/compiled.h"          /* GAP headers                */
-}
+#include "src/compiled.h"          /* GAP headers                */
 
 #include "semigroups++/elements.h"
 

@@ -12,8 +12,9 @@
  * GAP headers
 *******************************************************************************/
 
+#include "src/compiled.h"
+
 extern "C" {
-  #include "src/compiled.h"
   Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
 }
 
