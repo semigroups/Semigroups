@@ -8,6 +8,30 @@
 
 #include "types.h"
 
+Obj Objectify;
+Obj infinity;
+Obj Ninfinity;
+Obj IsBipartition;
+Obj BipartitionByIntRepNC;   
+Obj IsBooleanMat;
+Obj BooleanMatType;   
+Obj IsMatrixOverSemiring;
+Obj IsMaxPlusMatrix;
+Obj MaxPlusMatrixType;   
+Obj IsMinPlusMatrix;
+Obj MinPlusMatrixType;   
+Obj IsTropicalMatrix;
+Obj IsTropicalMinPlusMatrix;
+Obj TropicalMinPlusMatrixType;   
+Obj IsTropicalMaxPlusMatrix;
+Obj TropicalMaxPlusMatrixType;
+Obj IsProjectiveMaxPlusMatrix;
+Obj ProjectiveMaxPlusMatrixType;
+Obj IsNaturalMatrix;
+Obj NaturalMatrixType;
+Obj IsMatrixOverPrimeField;
+Obj AsMatrixOverPrimeFieldNC;
+
 SemigroupType TypeSemigroup (Obj data) {
   Obj x = Representative(data);
   switch (TNUM_OBJ(x)) {

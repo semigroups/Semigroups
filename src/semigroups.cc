@@ -22,8 +22,6 @@
 #include <iostream>
 #include <time.h>
 
-using namespace semiring;
-
 //#define DEBUG
 //#define NDEBUG 
 
@@ -140,8 +138,6 @@ Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
   size_t nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   return (pos > nr ? True : False);
 }
-
-
 
 /*******************************************************************************
  * GAP kernel version of the algorithm for other types of semigroups
