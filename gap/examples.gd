@@ -51,7 +51,7 @@ DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString", IsClassicalMatrixSemig
 
 # SuzukiSemigroup? ReeSemigroup? 
 
-DeclareOperation("ProjectiveOmegaSemigroup", [IsPosInt, IsPosInt, IsPosInt]); 
+DeclareOperation("ProjectiveOmegaSemigroup", [IsInt, IsPosInt, IsPosInt]); 
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("GLS", GeneralLinearSemigroup);
 DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);
@@ -68,15 +68,15 @@ DeclareSynonym("SUS", SpecialUnitarySemigroup);
 DeclareOperation("SymplecticSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("SpS", SymplecticSemigroup);
 
-DeclareOperation("GeneralOrthogonalSemigroup", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("GeneralOrthogonalSemigroup", [IsInt, IsPosInt, IsPosInt]);
 DeclareOperation("GeneralOrthogonalSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("GOS", GeneralOrthogonalSemigroup);
 
-DeclareOperation("SpecialOrthogonalSemigroup", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("SpecialOrthogonalSemigroup", [IsInt, IsPosInt, IsPosInt]);
 DeclareOperation("SpecialOrthogonalSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("SOS", SpecialOrthogonalSemigroup);
 
-DeclareOperation("OmegaSemigroup", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation("OmegaSemigroup", [IsInt, IsPosInt, IsPosInt]);
 DeclareOperation("OmegaSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("OmegaS", OmegaSemigroup);
 
