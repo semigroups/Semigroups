@@ -409,3 +409,117 @@ InterfaceBase* InterfaceFromData (Obj data) {
   AssPRec(data, RNamName("Interface_CC"), NewSemigroupsBag(interface, INTERFACE));
   return interface;
 }
+
+/*******************************************************************************
+ * GAP level functions
+*******************************************************************************/
+
+Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
+
+Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
+    InterfaceFromData(data)->right_cayley_graph(data);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
+  }
+  return ElmPRec(data, RNamName("right"));
+}
+
+Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
+    InterfaceFromData(data)->left_cayley_graph(data);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
+  }
+  return ElmPRec(data, RNamName("left"));
+}
+
+Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
+    InterfaceFromData(data)->relations(data);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
+  }
+  return ElmPRec(data, RNamName("rules"));
+}
+
+Obj SIZE_SEMIGROUP (Obj self, Obj data) {
+  if (IsCCSemigroup(data)) { 
+    return INTOBJ_INT(InterfaceFromData(data)->size());
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
+  }
+  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+}
+
+Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit) {
+  if (IsCCSemigroup(data)) { 
+    InterfaceFromData(data)->elements(data, limit);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, limit, 0, False);
+  }
+  return ElmPRec(data, RNamName("elts"));
+}
+
+Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
+  if (IsCCSemigroup(data)) { 
+    InterfaceFromData(data)->word(data, pos);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
+  }
+  return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
+}
+
+Obj FIND_SEMIGROUP (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
+  if (IsCCSemigroup(data)) { 
+    InterfaceFromData(data)->find(data, lookfunc, start, end);
+  } else {
+    ENUMERATE_SEMIGROUP(self, data, end, lookfunc, True);
+  }
+  return ElmPRec(data, RNamName("found"));
+}
+
+Obj LENGTH_SEMIGROUP (Obj self, Obj data) {
+  if (IsCCSemigroup(data)) { 
+    return INTOBJ_INT(InterfaceFromData(data)->current_size());
+  }
+  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+}
+
+Obj NR_RULES_SEMIGROUP (Obj self, Obj data) {
+  if (IsCCSemigroup(data)) { 
+    return INTOBJ_INT(InterfaceFromData(data)->nrrules());
+  }
+  return INTOBJ_INT(ElmPRec(data, RNamName("nrrules")));
+}
+
+Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x) {
+  if (IsCCSemigroup(data)) { 
+    return InterfaceFromData(data)->position(data, x);
+  }
+
+  Obj ht = ElmPRec(data, RNamName("ht"));
+  size_t pos, nr;
+  
+  do { 
+    Obj val = HTValue_TreeHash_C(self, ht, x);
+    if (val != Fail) {
+      return val; 
+    }
+    Obj limit = SumInt(ElmPRec(data, RNamName("nr")), INTOBJ_INT(1));
+    ENUMERATE_SEMIGROUP(self, data,  limit, 0, False);
+    pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
+    nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+  } while (pos <= nr);
+  return HTValue_TreeHash_C(self, ht, x);
+}
+
+Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
+  if (IsCCSemigroup(data)) {
+    return (InterfaceFromData(data)->is_done() ? True : False);
+  }
+
+  size_t pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
+  size_t nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+  return (pos > nr ? True : False);
+}

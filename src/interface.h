@@ -14,6 +14,7 @@
 
 extern "C" {
   #include "src/compiled.h"
+  Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
 }
 
 /*******************************************************************************
@@ -42,5 +43,31 @@ class InterfaceBase {
 *******************************************************************************/
 
 InterfaceBase* InterfaceFromData (Obj data);
+
+/*******************************************************************************
+ * GAP level functions
+*******************************************************************************/
+
+Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data);
+
+Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data);
+
+Obj RELATIONS_SEMIGROUP (Obj self, Obj data);
+
+Obj SIZE_SEMIGROUP (Obj self, Obj data);
+
+Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit);
+
+Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos);
+
+Obj FIND_SEMIGROUP (Obj self, Obj data, Obj lookfunc, Obj start, Obj end);
+
+Obj LENGTH_SEMIGROUP (Obj self, Obj data);
+
+Obj NR_RULES_SEMIGROUP (Obj self, Obj data);
+
+Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x);
+
+Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data);
 
 #endif

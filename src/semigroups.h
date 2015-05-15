@@ -10,10 +10,6 @@
 #ifndef SEMIGROUPS_GAP_H
 #define SEMIGROUPS_GAP_H 1
 
-/*******************************************************************************
- * includes
-*******************************************************************************/
-
 #include "gap-debug.h"
 #include "interface.h"
 #include "types.h"
