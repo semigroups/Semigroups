@@ -40,6 +40,7 @@ ReadPackage("semigroups/gap/matrix-max-plus.gd");
 ReadPackage("semigroups/gap/matrix-boolean.gd");
 ReadPackage("semigroups/gap/matrix-prime-field.gd");
 
+ReadPackage("semigroups/gap/partbinrel.gd");
 ReadPackage("semigroups/gap/bipartition.gd");
 ReadPackage("semigroups/gap/blocks.gd");
 

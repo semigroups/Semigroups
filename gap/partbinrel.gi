@@ -18,132 +18,192 @@
 # the function decomposes the relation into 4 relations on n points
 # Dom: 1..n
 # Codom: n+1..2n
-InstallMethod(PartitionedBinaryRelation, "for a binary relation on 2n points",
-        [IsBinaryRelation],
-function(binrel)
-  local a11, a12, a21, a22, deg, half, successors,i;
-  deg := DegreeOfBinaryRelation(binrel);
-  if not IsEvenInt(deg) then return fail; fi;
-  half := deg/2;
-  a11 := List([1..half], x->[]); 
-  a12 := List([1..half], x->[]); 
-  a21 := List([1..half], x->[]); 
-  a22 := List([1..half], x->[]); 
-  #sorting relations
-  successors := Successors(binrel);
-  for i in [1..half] do
-    a11[i] := Filtered(successors[i], x-> x <= half);
-    a12[i] := List(Filtered(successors[i], x-> x > half), y->y-half);
+
+# JDM: same as bipartitions pos and neg ints, 
+
+InstallGlobalFunction(PartitionedBinaryRelation,
+function(arg)
+  local left_adj, right_adj, n, i, j;
+
+  arg := ShallowCopy(arg);
+  left_adj := arg[1];  # things adjacent to positives
+  right_adj := arg[2]; # things adjacent to negatives
+  
+  n := Length(left_adj);
+
+  for i in [1 .. n] do
+    for j in [1 .. Length(left_adj[i])] do
+      if left_adj[i][j] < 0 then
+        left_adj[i][j] := -left_adj[i][j] + n;
+      fi;
+    od;
+    for j in [1 .. Length(right_adj[i])] do
+      if right_adj[i][j] < 0 then
+        right_adj[i][j] := -right_adj[i][j] + n;
+      fi;
+    od;
   od;
-  for i in [half+1..deg] do
-    a21[i-half] := Filtered(successors[i], x-> x <= half);
-    a22[i-half] := List(Filtered(successors[i], x-> x > half), y->y-half);  
-  od;
-  return PartitionedBinaryRelation(
-                 BinaryRelationOnPoints(a11),
-                 BinaryRelationOnPoints(a12),
-                 BinaryRelationOnPoints(a21),
-                 BinaryRelationOnPoints(a22));
+  arg := Concatenation([Length(arg[1])], Concatenation(arg));
+  return Objectify(PartitionedBinaryRelationType, arg);
 end);
 
-# in case you have the Dom-Dom, Dom-Codom, Codom-Dom, Codom-Codom relations
-# nicely separated
-InstallOtherMethod(PartitionedBinaryRelation, "for 4 binary relations on 2n points",
-        [IsBinaryRelation,IsBinaryRelation,IsBinaryRelation,IsBinaryRelation],
-function(a11, a12, a21, a22)
-  return Objectify(PartitionedBinaryRelationType,
-                 rec(a11:=a11,a12:=a12,a21:=a21,a22:=a22));    
-end);
-
-InstallGlobalFunction(CombinePartitionedBinaryRelations,
-function(alpha, beta)
-  local a11, a12, a21, a22,abs,bas, tmp;
-  
-  abs := AsSet(Monoid(alpha!.a22 * beta!.a11));
-  bas := AsSet(Monoid(beta!.a11 * alpha!.a22));
-  #a11
-  a11 := alpha!.a11;
-  tmp := List(abs, x->Product([alpha!.a12, beta!.a11, x, alpha!.a21]));
-  Perform(tmp, function(x) a11 := UnionOfBinaryRelations(a11,x); end);
-  
-  #a12
-  a12 := alpha!.a12 * beta!.a12;
-  tmp := List(bas, x->Product([alpha!.a12, x, beta!.a12]));
-  Perform(tmp, function(x) a12 := UnionOfBinaryRelations(a12,x); end);
-  
-  #a21
-  a21 := beta!.a21 * alpha!.a21;
-  tmp := List(abs, x->Product([beta!.a21, x, alpha!.a21]));
-  Perform(tmp, function(x) a21 := UnionOfBinaryRelations(a21,x); end);
-  
-  #a22
-  a22 := beta!.a22;
-  tmp := List(bas, x->Product([beta!.a21, alpha!.a22, x, beta!.a12]));
-  Perform(tmp, function(x) a22 := UnionOfBinaryRelations(a22,x); end);
-
-  return PartitionedBinaryRelation(a11,a12,a21,a22);
-end);
-
-InstallGlobalFunction(DegreeOfPartitionedBinaryRelation,
-        pbr->DegreeOfBinaryRelation(pbr!.a11));
+InstallMethod(DegreeOfPartitionedBinaryRelation, "for a partitioned binary relation", 
+[IsPartitionedBinaryRelation], pbr -> pbr![1]);
 
 InstallMethod(\*, "for partitioned binary relations",
-        [IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
-        CombinePartitionedBinaryRelations);
+[IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
+function(x, y)
+  local n, out, x_dfs, y_dfs, i;
 
-InstallMethod(\=, "for partitioned binary relations",
-        [IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
-function(p1, p2)
-  return p1!.a11 = p2!.a11 and 
-         p1!.a12 = p2!.a12 and 
-         p1!.a21 = p2!.a21 and 
-         p1!.a22 = p2!.a22;
-  end);
+  n := x![1];
   
-  FlatPBR := function(pbr)
-    return Concatenation([Successors(pbr!.a11),
-                   Successors(pbr!.a12),
-                   Successors(pbr!.a21),
-                   Successors(pbr!.a22)]);
+  out := Concatenation([n], List([1 ..  2 * n], x -> []));
+
+  x_dfs := function(i, adj, depth) # starting in x
+    local j;
+
+    for j in x![i + 1] do 
+      if i <= n and j <= n then 
+        if depth = 1 then 
+          Add(adj, j);
+        fi;
+      elif (i > n and j <= n) then 
+        Add(adj, j);
+      else # (i <= n and j > n) or (i > n and j > n)
+        y_dfs(j, adj, depth + 1);
+      fi;
+    od;
+    return;
   end;
   
-  InstallMethod(\<, "for partitioned binary relations",
-        [IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
-function(p1, p2)
-    return FlatPBR(p1) < FlatPBR(p2);
-  end);
+  y_dfs := function(i, adj, depth) # starting in y
+    local j;
 
+    for j in y![i + 1] do 
+      if i > n and j > n then 
+        if depth = 1 then 
+          Add(adj, j);
+        fi;
+      elif (i > n and j <= n) or (i <= n and j <= n) then 
+        x_dfs(j, adj, depth + 1);
+      else # i <= n and j > n
+        Add(adj, j);
+      fi;
+    od;
+    return;
+  end;
 
-InstallMethod(One, "for a partitioned binary relation",
-[IsPartitionedBinaryRelation],
-function(pbr)
-  local half, tmp;
-  half := DegreeOfBinaryRelation(pbr!.a11);
-  tmp := [];
-  Perform([1..half], function(x) tmp[x] := [half+x]; tmp[half+x]:=[x]; end);
-  return PartitionedBinaryRelation(
-                 BinaryRelationOnPoints(tmp));
+  for i in [1 .. n] do # find everything connected to vertex i
+    x_dfs(i, out[i + 1], 1);
+  od;
+
+  for i in [n .. 2 * n] do # find everything connected to vertex i
+    y_dfs(i, out[i + 1], 1);
+  od;
+
+  return Objectify(PartitionedBinaryRelationType, out);
+end);
+
+InstallGlobalFunction(ExtRepOfPBR, 
+function(x)
+  local n, out, i, j, k;
+  
+  if not IsPartitionedBinaryRelation(x) then 
+    Error();
+    return;
+  fi;
+  
+  n := x![1];
+  out := [[], []];
+  for i in [0, 1] do 
+    for j in [1 + n * i .. n + n * i] do 
+      Add(out[i + 1], []);
+      for k in x![j + 1] do 
+        if k > n then 
+          Add(out[i + 1][j - n * i], - (k - n));
+        else
+          Add(out[i + 1][j- n * i], k);
+        fi;
+      od;
+    od;
+  od;
+
+  return out;
+end);
+
+InstallMethod(ViewString, "for a partitioned binary relation",
+[IsPartitionedBinaryRelation], 
+function(x)
+  local str, ext, i;
+
+  str := "\>\>\>\><pbr: \>\>";
+
+  ext := ExtRepOfPBR(x);
+  Append(str, "\>\>");
+  Append(str, String(ext[1]));
+  Append(str, "\<\<");
+  Append(str, ", \>\>");
+  Append(str, String(ext[2]));
+  Append(str, "\<\<");
+  Append(str, "\<\<>\<\<\<\<");
+  return str;
 end);
 
 
-InstallMethod( ViewObj,"for partitioned binary relation",
-        [IsPartitionedBinaryRelation and IsPartitionedBinaryRelationRep],
-function(pbr)
-  Print("a11: ", Successors(pbr!.a11), " ");
-  Print("a12: ", Successors(pbr!.a12), " ");
-  Print("a21: ", Successors(pbr!.a21), " ");
-  Print("a22: ", Successors(pbr!.a22), " ");
-end);
 
-InstallMethod(Display,"for partitioned binary relation",
-        [IsPartitionedBinaryRelation and IsPartitionedBinaryRelationRep],
-function( pbr ) ViewObj(pbr); Print("\n"); end);
-
-#fully calculated elements
-PartitionedBinaryRelationMonoid := function(n)
-  local binrels;
-  binrels := List(Tuples(Combinations([1..n]),n),
-                  x -> BinaryRelationOnPoints(x));
-  return Semigroup(List(Tuples(binrels,4),
-                 x-> PartitionedBinaryRelation(x[1],x[2],x[3],x[4])));
-end;
+#InstallMethod(\=, "for partitioned binary relations",
+#        [IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
+#function(p1, p2)
+#  return p1!.a11 = p2!.a11 and 
+#         p1!.a12 = p2!.a12 and 
+#         p1!.a21 = p2!.a21 and 
+#         p1!.a22 = p2!.a22;
+#  end);
+#  
+#  FlatPBR := function(pbr)
+#    return Concatenation([Successors(pbr!.a11),
+#                   Successors(pbr!.a12),
+#                   Successors(pbr!.a21),
+#                   Successors(pbr!.a22)]);
+#  end;
+#  
+#  InstallMethod(\<, "for partitioned binary relations",
+#        [IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
+#function(p1, p2)
+#    return FlatPBR(p1) < FlatPBR(p2);
+#  end);
+#
+#
+#InstallMethod(One, "for a partitioned binary relation",
+#[IsPartitionedBinaryRelation],
+#function(pbr)
+#  local half, tmp;
+#  half := DegreeOfBinaryRelation(pbr!.a11);
+#  tmp := [];
+#  Perform([1..half], function(x) tmp[x] := [half+x]; tmp[half+x]:=[x]; end);
+#  return PartitionedBinaryRelation(
+#                 BinaryRelationOnPoints(tmp));
+#end);
+#
+#
+#InstallMethod( ViewObj,"for partitioned binary relation",
+#        [IsPartitionedBinaryRelation and IsPartitionedBinaryRelationRep],
+#function(pbr)
+#  Print("a11: ", Successors(pbr!.a11), " ");
+#  Print("a12: ", Successors(pbr!.a12), " ");
+#  Print("a21: ", Successors(pbr!.a21), " ");
+#  Print("a22: ", Successors(pbr!.a22), " ");
+#end);
+#
+#InstallMethod(Display,"for partitioned binary relation",
+#        [IsPartitionedBinaryRelation and IsPartitionedBinaryRelationRep],
+#function( pbr ) ViewObj(pbr); Print("\n"); end);
+#
+##fully calculated elements
+#PartitionedBinaryRelationMonoid := function(n)
+#  local binrels;
+#  binrels := List(Tuples(Combinations([1..n]),n),
+#                  x -> BinaryRelationOnPoints(x));
+#  return Semigroup(List(Tuples(binrels,4),
+#                 x-> PartitionedBinaryRelation(x[1],x[2],x[3],x[4])));
+#end;

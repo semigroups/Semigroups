@@ -15,30 +15,27 @@
 ## 
 ## This is the most general diagram semigroup containing all other types,
 ## therefore it can be used for testing the specialized implementations,
-## thus the efficiency is not the first prioroty here.
+## thus the efficiency is not the first priority here.
 
-DeclareCategory("IsPartitionedBinaryRelation", IsMultiplicativeElementWithOne
-        and IsAssociativeElement and IsAttributeStoringRep
-        and IsMultiplicativeElementWithInverse);
-
+DeclareCategory("IsPartitionedBinaryRelation", 
+                IsMultiplicativeElementWithInverse and
+                IsAssociativeElementWithStar);
+DeclareSynonym("IsPBR", IsPartitionedBinaryRelation);
 DeclareCategoryCollections("IsPartitionedBinaryRelation");
-
-DeclareRepresentation( "IsPartitionedBinaryRelationRep",
-                       IsComponentObjectRep,
-        [ "a11", # Dom to Dom
-          "a12", # Dom to Codom
-          "a21", # Codom to Dom
-          "a22"]); # Codom to Codom (see Sect. 5.4 in arxiv.org/abs/1102.0862)
+DeclareCategoryCollections("IsPartitionedBinaryRelationCollection");
 
 BindGlobal("PartitionedBinaryRelationFamily",
-        NewFamily("PartitionedBinaryRelationFamily",
-                IsPartitionedBinaryRelation and IsPartitionedBinaryRelationRep,
-                CanEasilySortElements,
-                CanEasilySortElements));
+           NewFamily("PartitionedBinaryRelationFamily",
+                     IsPartitionedBinaryRelation,
+                     CanEasilySortElements,
+                     CanEasilySortElements));
 
 BindGlobal("PartitionedBinaryRelationType",
-        NewType(PartitionedBinaryRelationFamily,IsPartitionedBinaryRelation));
+        NewType(PartitionedBinaryRelationFamily,
+                IsPartitionedBinaryRelation and IsPositionalObjectRep));
 
-DeclareOperation("PartitionedBinaryRelation",[IsBinaryRelation]);
-DeclareGlobalFunction("DegreeOfPartitionedBinaryRelation");
-DeclareGlobalFunction("CombinePartitionedBinaryRelations");
+DeclareAttribute("DegreeOfPartitionedBinaryRelation",
+                 IsPartitionedBinaryRelation);
+DeclareGlobalFunction("PartitionedBinaryRelation");
+DeclareSynonym("PBR", PartitionedBinaryRelation);
+DeclareGlobalFunction("ExtRepOfPBR");
