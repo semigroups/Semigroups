@@ -6,7 +6,7 @@
  */
 
 #ifndef SEMIGROUPS_GAP_TYPES_H
-#define SEMIGROUPS_GAP_TYPES_H
+#define SEMIGROUPS_GAP_TYPES_H 1
 
 extern "C" {
   #include "src/compiled.h"          /* GAP headers                */
@@ -34,52 +34,35 @@ extern "C" {
  * Imported types from the library
 *******************************************************************************/
 
-Obj Objectify;
-Obj IsPrimeInt;
-
-Obj infinity;
-Obj Ninfinity;
-
-Obj IsBipartition;
-Obj BipartitionByIntRepNC;   
-
-Obj IsBooleanMat;
-Obj BooleanMatType;   
-
-Obj IsMatrixOverSemiring;
-
-Obj IsMaxPlusMatrix;
-Obj MaxPlusMatrixType;   
-
-Obj IsMinPlusMatrix;
-Obj MinPlusMatrixType;   
-
-Obj IsTropicalMatrix;
-
-Obj IsTropicalMinPlusMatrix;
-Obj TropicalMinPlusMatrixType;   
-
-Obj IsTropicalMaxPlusMatrix;
-Obj TropicalMaxPlusMatrixType;
-
-Obj IsProjectiveMaxPlusMatrix;
-Obj ProjectiveMaxPlusMatrixType;
-
-Obj IsNaturalMatrix;
-Obj NaturalMatrixType;
-
-Obj IsMatrixOverPrimeField;
-Obj AsMatrixOverPrimeFieldNC;
+extern Obj Objectify;
+extern Obj infinity;
+extern Obj Ninfinity;
+extern Obj IsBipartition;
+extern Obj BipartitionByIntRepNC;   
+extern Obj IsBooleanMat;
+extern Obj BooleanMatType;   
+extern Obj IsMatrixOverSemiring;
+extern Obj IsMaxPlusMatrix;
+extern Obj MaxPlusMatrixType;   
+extern Obj IsMinPlusMatrix;
+extern Obj MinPlusMatrixType;   
+extern Obj IsTropicalMatrix;
+extern Obj IsTropicalMinPlusMatrix;
+extern Obj TropicalMinPlusMatrixType;   
+extern Obj IsTropicalMaxPlusMatrix;
+extern Obj TropicalMaxPlusMatrixType;
+extern Obj IsProjectiveMaxPlusMatrix;
+extern Obj ProjectiveMaxPlusMatrixType;
+extern Obj IsNaturalMatrix;
+extern Obj NaturalMatrixType;
+extern Obj IsMatrixOverPrimeField;
+extern Obj AsMatrixOverPrimeFieldNC;
 
 /*******************************************************************************
  * Get a representative of the semigroup from the data
 *******************************************************************************/
 
-Obj inline Representative (Obj data) {
-  assert(IsbPRec(data, RNamName("gens")));
-  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-  return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
-}
+Obj inline Representative (Obj data);
 
 /*******************************************************************************
  * What type of semigroup do we have?
@@ -102,46 +85,7 @@ enum SemigroupType {
   MAT_OVER_PF
 };
 
-SemigroupType TypeSemigroup (Obj data) {
-  Obj x = Representative(data);
-  switch (TNUM_OBJ(x)) {
-    case T_TRANS2:
-      return TRANS2;
-    case T_TRANS4:
-      return TRANS4;
-    case T_PPERM2:
-      return PPERM2;
-    case T_PPERM4:
-      return PPERM4;
-    case T_POSOBJ:
-      if (IS_BOOL_MAT(x)) {
-        return BOOL_MAT;
-      } else if (IS_MAX_PLUS_MAT(x)) {
-        return MAX_PLUS_MAT;
-      } else if (IS_MIN_PLUS_MAT(x)) {
-        return MIN_PLUS_MAT;
-      } else if (IS_TROP_MAX_PLUS_MAT(x)) {
-        return TROP_MAX_PLUS_MAT;
-      } else if (IS_TROP_MIN_PLUS_MAT(x)) {
-        return TROP_MIN_PLUS_MAT;
-      } else if (IS_PROJ_MAX_PLUS_MAT(x)) {
-        return PROJ_MAX_PLUS_MAT;
-      } else if (IS_NAT_MAT(x)) {
-        return NAT_MAT;
-      } else if (IS_MAT_OVER_PF(x)) {
-        // TODO handle non-prime fields too!
-        return MAT_OVER_PF;
-      } 
-      return UNKNOWN;
-    case T_COMOBJ:
-      if (IS_BIPART(x)) {
-        return BIPART;
-      }
-      // intentional fall through
-    default: 
-      return UNKNOWN;
-  }
-}
+SemigroupType TypeSemigroup (Obj data);
 
 bool inline IsCCSemigroup (Obj data) {
   return TypeSemigroup(data) != UNKNOWN;

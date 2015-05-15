@@ -14,6 +14,9 @@
 // the GAP level
 
 #include "semigroups.h"
+#include "boolean.h"
+
+#include "semigroups++/semigroups.h"
 
 #include <assert.h>
 #include <iostream>
@@ -808,7 +811,6 @@ static Int InitKernel( StructInitInfo *module )
     InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
     
     ImportGVarFromLibrary( "Objectify", &Objectify);
-    ImportGVarFromLibrary( "IsPrimeInt", &IsPrimeInt);
 
     ImportGVarFromLibrary( "infinity", &infinity);
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);

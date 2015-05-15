@@ -6,7 +6,7 @@
  */
 
 #ifndef SEMIGROUPS_GAP_INTERFACE_H
-#define SEMIGROUPS_GAP_INTERFACE_H
+#define SEMIGROUPS_GAP_INTERFACE_H 1
 
 /*******************************************************************************
  * GAP headers

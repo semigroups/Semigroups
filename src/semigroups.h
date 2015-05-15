@@ -8,17 +8,14 @@
 //#define NDEBUG 
 
 #ifndef SEMIGROUPS_GAP_H
-#define SEMIGROUPS_GAP_H
+#define SEMIGROUPS_GAP_H 1
 
 /*******************************************************************************
  * includes
 *******************************************************************************/
 
 #include "gap-debug.h"
-#include "types.h"
-#include "boolean.h"
 #include "interface.h"
-#include "semigroups++/semigroups.h"
 
 /*******************************************************************************
  * Import from GAP and Orb for hashing
