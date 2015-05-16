@@ -551,7 +551,6 @@ function(data, limit, record)
 
   UpdateSemigroupIdealData := function(x, pos, gen, idealpos)
     local new, xx, l, m, mm, schutz, mults, cosets, y, n, z, ind, val;
-
     new := false;
 
     # check, update, rectify the lambda value
@@ -1121,7 +1120,6 @@ function(data, limit, record)
 
   UpdateSemigroupIdealData := function(x, pos, gen, idealpos)
     local new, xx, l, m, mm, schutz, mults, y, n, ind, val;
-
     new := false;
 
     # check, update, rectify the lambda value
@@ -1175,8 +1173,8 @@ function(data, limit, record)
       ind := lambdarhoht[l][m];
       if pos <> fail then
         AddSet(poset[i], datalookup[repslookup[m][ind][1]]);
-        return;
       fi;
+      return;
     fi;
 
     # if we reach here, then x is a new R-rep, and hence a new D-rep
@@ -1292,5 +1290,3 @@ function(data, limit, record)
 
   return data;
 end);
-
-#EOF
