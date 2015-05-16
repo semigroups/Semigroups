@@ -1178,7 +1178,7 @@ function(R, m, n, ranks)
   return Semigroup(RandomListOfMatricesWithRanks(R, m, n, ranks));
 end);
 
-InstallMethod(RandomMatrixSemigroup,
+InstallMethod(RandomMatrixMonoid,
 "for a ring, positive integer, positive integer, and a list",
 [IsRing, IsPosInt, IsPosInt, IsList],
 function(R, m, n, ranks)
