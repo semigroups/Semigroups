@@ -92,3 +92,15 @@ src/stamp-h1
 pkgconfig.h.in~
 autom4te.*
 configure
+src/semigroups_la-boolean.lo
+src/semigroups_la-converter.lo
+src/semigroups_la-interface.lo
+src/semigroups_la-types.lo
+src/.deps/semigroups_la-boolean.Plo
+src/.deps/semigroups_la-converter.Plo
+src/.deps/semigroups_la-interface.Plo
+src/.deps/semigroups_la-types.Plo
+src/.libs/semigroups_la-boolean.o
+src/.libs/semigroups_la-converter.o
+src/.libs/semigroups_la-interface.o
+src/.libs/semigroups_la-types.o
