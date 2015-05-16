@@ -124,9 +124,8 @@ function(filter, basedomain, rl, l)
      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
-  m := rec( mat := StructuralCopy(l) );
+  m := rec( mat := ImmutableMatrix(basedomain, l));
   Objectify( PlistSMatrixType, m );
-  MakeImmutable(m!.mat);
 
   SetDegreeOfSMatrix(m, rl);
   SetBaseDomain(m, basedomain); 
