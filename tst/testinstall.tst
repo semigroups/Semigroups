@@ -973,6 +973,31 @@ gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 gap> NrCongruenceClasses(cong);
 169
 
+#T# TestInstall63: Issue 127:
+# Bug in Enumerate for an acting semigroup ideal that knows it is regular at its
+# point of creation. 
+gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)], 
+>                     [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
+>                     [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2)], 
+>                     [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0]],
+>                    [[Z(2^2), Z(2)^0, Z(2^2), Z(2)^0], 
+>                     [Z(2^2)^2, Z(2^2), Z(2^2)^2, Z(2^2)],
+>                     [Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2^2)^2],
+>                     [Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2^2)^2]],
+>                    [[0*Z(2), Z(2^2)^2, 0*Z(2), Z(2)^0], 
+>                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0],
+>                     [Z(2^2), Z(2)^0, 0*Z(2), 0*Z(2)],
+>                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
+<semigroup with 3 generators>
+gap> T := AsTransformationSemigroup(S);
+<transformation monoid on 256 pts with 2 generators>
+gap> Size(T);
+21
+gap> I := SemigroupIdeal(T, Idempotents(T));
+<regular transformation semigroup ideal on 256 pts with 8 generators>
+gap> Size(I);
+21
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
