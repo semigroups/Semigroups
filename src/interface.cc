@@ -113,6 +113,10 @@ class Interface : public InterfaceBase {
       return _semigroup->size(_report);
     }
     
+    size_t simple_size () {
+      return _semigroup->simple_size();
+    }
+    
     size_t current_size () {
       return _semigroup->current_size();
     }
@@ -397,6 +401,14 @@ InterfaceBase* InterfaceFromData (Obj data) {
 *******************************************************************************/
 
 Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
+
+Obj SIMPLE_SIZE(Obj self, Obj data) {
+  if (IsCCSemigroup(data)) { 
+    return INTOBJ_INT(InterfaceFromData(data)->simple_size());
+  }
+  std::cout << "don't call this function with non-CC semigroups\n";
+  return 0;
+}
 
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
