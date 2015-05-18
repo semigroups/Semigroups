@@ -10,7 +10,7 @@ dnl ## Setup autoconf
 dnl ##
 AC_PREREQ([2.68])
 AC_INIT([semigroups], m4_esyscmd([tr -d '\n' < VERSION]))
-AC_CONFIG_SRCDIR([src/interface.cc])
+AC_CONFIG_SRCDIR([src/semigroups.cc])
 AC_CONFIG_HEADER([src/pkgconfig.h:cnf/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([cnf])
@@ -32,7 +32,6 @@ dnl ## Set the language
 dnl ##
 AC_PROG_CXX
 AC_LANG([C++])
-AX_CXX_COMPILE_STDCXX_11
 
 dnl ##
 dnl ## Setup libtool (for building the GAP kernel extension)

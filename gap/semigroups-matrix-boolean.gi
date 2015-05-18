@@ -45,21 +45,6 @@ function(S)
            x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
 end);
 
-InstallGlobalFunction(OnBlists, 
-function(blist1, x)
-  local n, blist2, i, j;
-
-  n := Length(blist1);
-  blist2 := BlistList([1 .. n], []);
-  
-  for i in [1 .. n] do 
-    for j in [1 .. n] do 
-      blist2[i] := blist2[i] or (blist1[j] and x![j][i]);
-    od;
-  od;
-  return blist2;
-end);
-
 GossipMonoid := function(n)
   local gens, x, i, j;
   

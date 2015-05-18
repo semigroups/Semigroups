@@ -5,6 +5,7 @@ TODO
 * use namespace in the C++ code
 * clean up the memory usage in semigroups.h, interface.cc
 * add _report for all methods that call enumerate in semigroups.h
+* DClass(TransformationSemigroup, BooleanMat) sometimes seg faults or returns an answers which it shouldn't!
 
 
 Gaplint:

@@ -119,6 +119,7 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
   str := Concatenation("\>", TypePrintStringOfMatrixOverSemiring(x), "(\>[");
+  
   for i in [1 .. n] do
     Append(str, "\>\>[");
     for j in [1 .. n] do
@@ -129,10 +130,24 @@ function(x)
     Remove(str, Length(str));
     Append(str, "]\<, \<");
   od;
+
   for i in [1 .. 4] do
     Remove(str, Length(str));
   od;
-  Append(str, "\<\<]\<)\<");
+  Append(str, "\<\<]");
+  if IsTropicalMatrix(x) then 
+    Append(str, ", \>");
+    Append(str, String(ThresholdTropicalMatrix(x)));
+    Append(str, "\<");
+  elif IsNaturalMatrix(x) then 
+    Append(str, "\>");
+    Append(str, String(ThresholdNaturalMatrix(x)));
+    Append(str, "\<");
+    Append(str, ", \>");
+    Append(str, String(PeriodNaturalMatrix(x)));
+    Append(str, "\<");
+  fi;
+  Append(str, "\<)\<");
   return str;
 end);
 

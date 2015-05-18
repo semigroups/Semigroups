@@ -7,10 +7,9 @@
 
 #ifndef SEMIGROUPS_SEMIRING_H
 #define SEMIGROUPS_SEMIRING_H
-#include <limits.h>
 
-//FIXME don't do this
-using namespace std;
+#include <algorithm>
+#include <limits.h>
 
 namespace semiring {
    
