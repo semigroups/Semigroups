@@ -12,6 +12,7 @@
 #include "src/compiled.h"          /* GAP headers                */
 
 #include <assert.h>
+#include <vector>
 
 /*******************************************************************************
  * GAP TNUM for wrapping C++ semigroup
@@ -125,5 +126,51 @@ Obj inline Representative (Obj data) {
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
   return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
 }
+
+/*******************************************************************************
+ * Union-find data structure
+*******************************************************************************/
+typedef std::vector<size_t>   table_t;
+typedef std::vector<table_t*> blocks_t;
+
+class UFData {
+public:
+  UFData (size_t size) : _size(size), _haschanged(false) {
+    _table.reserve(size);
+    for (size_t i=0; i<size; i++) {
+      _table.push_back(i);
+    }
+  }
+  ~UFData () {
+    for (size_t i=0; i<_size; i++) {
+      delete _blocks[i];
+    }
+  }
+  size_t   get_size () { return _size; }
+  table_t  get_table () { return _table; }
+  blocks_t get_blocks ();
+  size_t   find (size_t i) {
+    while (i != _table[i]) {
+      i = _table[i];
+    }
+    return i;
+  }
+  void     unite (size_t i, size_t j) {
+    size_t ii, jj;
+    ii = find(i);
+    jj = find(j);
+    if (ii < jj) {
+      _table[jj] = ii;
+    } else {
+      _table[ii] = jj;
+    }
+    _haschanged = true;
+  }
+private:
+  size_t   _size;
+  table_t  _table;
+  blocks_t _blocks;
+  bool     _haschanged;
+};
 
 #endif

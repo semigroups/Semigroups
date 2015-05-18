@@ -635,7 +635,7 @@ Obj RETURN_FIVE (Obj self, Obj x) {
 }
 
 Obj UF_NEW (Obj self, Obj size) {
-  return NewUFDataBag(new UFData(INT_INTOBJ(size)));
+  return NewSemigroupsBag(new UFData(INT_INTOBJ(size)), UF_DATA);
 }
 
 /*******************************************************************************
