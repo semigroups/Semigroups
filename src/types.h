@@ -134,6 +134,7 @@ typedef std::vector<size_t>   table_t;
 typedef std::vector<table_t*> blocks_t;
 
 class UFData {
+  //TODO: Use pointers for all the local fields (less copying!)
 public:
   UFData (size_t size) : _size(size), _haschanged(false) {
     _table.reserve(size);
@@ -148,7 +149,37 @@ public:
   }
   size_t   get_size () { return _size; }
   table_t  get_table () { return _table; }
-  blocks_t get_blocks ();
+  blocks_t get_blocks () {
+    table_t *block;
+    // Is _blocks "bound" yet?
+    if (_blocks.size() == 0) {
+      _blocks.reserve(_size);
+      for (size_t i=0; i<_size; i++) {
+        block = new table_t(1, i);
+        _blocks.push_back(block);
+      }
+    }
+    // Do we need to update the blocks?
+    if (_haschanged) {
+      size_t ii;
+      for (size_t i=0; i<_size; i++) {
+        if (_blocks[i] != nullptr) {
+          ii = find(i);
+          if (ii != i) {
+            // Combine the two blocks
+            _blocks[ii]->reserve(_blocks[ii]->size() + _blocks[i]->size());
+            _blocks[ii]->insert(_blocks[ii]->end(),
+                               _blocks[i]->begin(),
+                               _blocks[i]->end());
+            delete _blocks[i];
+            _blocks[i] = nullptr;
+          }
+        }
+      }
+      _haschanged = false;
+    }
+    return _blocks;
+  }
   size_t   find (size_t i) {
     while (i != _table[i]) {
       i = _table[i];
