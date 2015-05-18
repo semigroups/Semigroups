@@ -78,6 +78,15 @@ true
 gap> [y,z] in ccong;
 false
 
+#T# InverseCongTest7: Universal congruence
+gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup on 2 pts with 2 generators>
+gap> Size(s);
+5
+gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup\
+ on 2 pts with 2 generators>>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
 gap> Unbind(classy);
