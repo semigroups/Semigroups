@@ -198,9 +198,11 @@ public:
 
   // find
   size_t find (size_t i) {
-    while (i != _table->at(i)) {
-      i = _table->at(i);
-    }
+    size_t ii = i;
+    do {
+      i = ii;
+      ii = _table->at(i);
+    } while (ii != i);
     return i;
   }
 
