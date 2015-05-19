@@ -135,6 +135,10 @@ typedef std::vector<table_t*> blocks_t;
 
 class UFData {
 public:
+  // Remove things that might cause copying
+  UFData (const UFData& copy) = delete;
+  UFData& operator= (UFData const& copy) = delete;
+
   // Constructor
   UFData (size_t size) : _size(size),
                          _haschanged(false),
@@ -198,10 +202,10 @@ public:
 
   // find
   size_t find (size_t i) {
-    size_t ii = i;
+    size_t ii;
     do {
-      i = ii;
-      ii = _table->at(i);
+      ii = i;
+      i = _table->at(ii);
     } while (ii != i);
     return i;
   }

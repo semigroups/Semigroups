@@ -629,7 +629,6 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
  * Union-Find content (should go in its own file eventually)
 *******************************************************************************/
 
-// semigroups.h 94-95
 Obj RETURN_FIVE (Obj self, Obj x) {
   return INTOBJ_INT(5);
 }
