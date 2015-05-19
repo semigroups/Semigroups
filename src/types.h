@@ -134,45 +134,60 @@ typedef std::vector<size_t>   table_t;
 typedef std::vector<table_t*> blocks_t;
 
 class UFData {
-  //TODO: Use pointers for all the local fields (less copying!)
 public:
-  UFData (size_t size) : _size(size), _haschanged(false) {
-    _table.reserve(size);
+  // Constructor
+  UFData (size_t size) : _size(size),
+                         _haschanged(false),
+                         _table(new table_t()),
+                         _blocks(nullptr) {
+    _table->reserve(size);
     for (size_t i=0; i<size; i++) {
-      _table.push_back(i);
+      _table->push_back(i);
     }
   }
+
+  // Destructor
   ~UFData () {
-    for (size_t i=0; i<_blocks.size(); i++) {
-      delete _blocks[i];
+    delete _table;
+    if (_blocks != nullptr) {
+      for (size_t i=0; i<_blocks->size(); i++) {
+        delete _blocks->at(i);
+      }
+      delete _blocks;
     }
   }
+
+  // Getters
   size_t   get_size () { return _size; }
-  table_t  get_table () { return _table; }
-  blocks_t get_blocks () {
+  table_t  *get_table () { return _table; }
+
+  // get_blocks
+  blocks_t *get_blocks () {
     table_t *block;
     // Is _blocks "bound" yet?
-    if (_blocks.size() == 0) {
-      _blocks.reserve(_size);
+    if (_blocks == nullptr) {
+      _blocks = new blocks_t();
+      _blocks->reserve(_size);
       for (size_t i=0; i<_size; i++) {
         block = new table_t(1, i);
-        _blocks.push_back(block);
+        _blocks->push_back(block);
       }
     }
     // Do we need to update the blocks?
     if (_haschanged) {
       size_t ii;
       for (size_t i=0; i<_size; i++) {
-        if (_blocks[i] != nullptr) {
+        if (_blocks->at(i) != nullptr) {
           ii = find(i);
           if (ii != i) {
             // Combine the two blocks
-            _blocks[ii]->reserve(_blocks[ii]->size() + _blocks[i]->size());
-            _blocks[ii]->insert(_blocks[ii]->end(),
-                               _blocks[i]->begin(),
-                               _blocks[i]->end());
-            delete _blocks[i];
-            _blocks[i] = nullptr;
+            _blocks->at(ii)->reserve(_blocks->at(ii)->size()
+                                     + _blocks->at(i)->size());
+            _blocks->at(ii)->insert(_blocks->at(ii)->end(),
+                                    _blocks->at(i)->begin(),
+                                    _blocks->at(i)->end());
+            delete _blocks->at(i);
+            _blocks->at(i) = nullptr;
           }
         }
       }
@@ -180,33 +195,39 @@ public:
     }
     return _blocks;
   }
-  size_t   find (size_t i) {
-    while (i != _table[i]) {
-      i = _table[i];
+
+  // find
+  size_t find (size_t i) {
+    while (i != _table->at(i)) {
+      i = _table->at(i);
     }
     return i;
   }
-  void     unite (size_t i, size_t j) {
+
+  // union
+  void unite (size_t i, size_t j) {
     size_t ii, jj;
     ii = find(i);
     jj = find(j);
     if (ii < jj) {
-      _table[jj] = ii;
+      _table->at(jj) = ii;
     } else {
-      _table[ii] = jj;
+      _table->at(ii) = jj;
     }
     _haschanged = true;
   }
-  void     flatten() {
+
+  // flatten
+  void flatten() {
     for (size_t i=0; i<_size; i++) {
-      _table[i] = find(i);
+      _table->at(i) = find(i);
     }
   }
 private:
-  size_t   _size;
-  table_t  _table;
-  blocks_t _blocks;
-  bool     _haschanged;
+  size_t    _size;
+  table_t*  _table;
+  blocks_t* _blocks;
+  bool      _haschanged;
 };
 
 #endif
