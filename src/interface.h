@@ -29,6 +29,7 @@ class InterfaceBase {
     virtual bool   is_done () = 0;
     virtual void   find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
     virtual size_t size () = 0;
+    virtual size_t simple_size () = 0;
     virtual size_t current_size () = 0;
     virtual size_t nrrules () = 0;
     virtual void   right_cayley_graph (Obj data) = 0;
@@ -54,6 +55,8 @@ Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data);
 Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data);
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data);
+
+Obj SIMPLE_SIZE (Obj self, Obj data);
 
 Obj SIZE_SEMIGROUP (Obj self, Obj data);
 

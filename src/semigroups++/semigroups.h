@@ -239,6 +239,29 @@ class Semigroup {
     void enumerate (size_t limit) {
       enumerate(limit, false);
     }
+    
+    size_t simple_size () {
+      T x(_degree, _gens.at(0)); 
+      size_t report = 0;
+      while (_pos < _nr) {
+        for (size_t j = 0; j < _nrgens; j++) {
+          x.redefine(_elements->at(_pos), _gens.at(j)); 
+          auto it = _map.find(x); 
+          if (it == _map.end()) {
+            _elements->push_back(static_cast<T*>(x.copy()));
+            _map.insert(std::make_pair(*_elements->back(), _nr));
+            _nr++;
+          }
+        }
+        _pos++;
+        if (_nr > report + 10000) {
+          report = _nr;
+          std::cout << "found " << _nr << " elements so far\n";
+        }
+      }
+      x.delete_data();
+      return _nr;
+    }
 
     void enumerate (size_t limit, bool report) {
       if (_pos >= _nr || limit <= _nr) return;

@@ -6,7 +6,7 @@ TODO
 * clean up the memory usage in semigroups.h, interface.cc
 * add _report for all methods that call enumerate in semigroups.h
 * DClass(TransformationSemigroup, BooleanMat) sometimes seg faults or returns an answers which it shouldn't!
-
+* reporting in semigroups.h (toggle_report and _report)
 
 Gaplint:
 
