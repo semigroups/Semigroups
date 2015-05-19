@@ -143,7 +143,7 @@ public:
     }
   }
   ~UFData () {
-    for (size_t i=0; i<_size; i++) {
+    for (size_t i=0; i<_blocks.size(); i++) {
       delete _blocks[i];
     }
   }
@@ -196,6 +196,11 @@ public:
       _table[ii] = jj;
     }
     _haschanged = true;
+  }
+  void     flatten() {
+    for (size_t i=0; i<_size; i++) {
+      _table[i] = find(i);
+    }
   }
 private:
   size_t   _size;

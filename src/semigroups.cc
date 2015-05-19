@@ -638,6 +638,62 @@ Obj UF_NEW (Obj self, Obj size) {
   return NewSemigroupsBag(new UFData(INT_INTOBJ(size)), UF_DATA);
 }
 
+Obj UF_FIND (Obj self, Obj ufdata, Obj i) {
+  return INTOBJ_INT(CLASS_OBJ<UFData>(ufdata)->find(INT_INTOBJ(i)-1)+1);
+}
+
+Obj UF_UNION (Obj self, Obj ufdata, Obj pair) {
+  CLASS_OBJ<UFData>(ufdata)->unite(INT_INTOBJ(ELM_PLIST(pair,1))-1,
+                                   INT_INTOBJ(ELM_PLIST(pair,2))-1);
+  return 0L;
+}
+
+Obj UF_FLATTEN (Obj self, Obj ufdata) {
+  CLASS_OBJ<UFData>(ufdata)->flatten();
+  return 0L;
+}
+
+Obj UF_TABLE (Obj self, Obj ufdata) {
+  table_t table     = CLASS_OBJ<UFData>(ufdata)->get_table();
+  size_t  size      = table.size();
+  Obj     gap_table = NEW_PLIST(T_PLIST, size);
+  SET_LEN_PLIST(gap_table, size);
+  for (size_t i=0; i<size; i++) {
+    SET_ELM_PLIST(gap_table, i+1, INTOBJ_INT(table[i]+1));
+  }
+  return gap_table;
+}
+
+Obj UF_BLOCKS (Obj self, Obj ufdata) {
+  blocks_t blocks = CLASS_OBJ<UFData>(ufdata)->get_blocks();
+  size_t   size   = blocks.size();
+  size_t   i, j;
+
+  // Rewrite each block as a PLIST object
+  std::vector<Obj> obj_list;
+  obj_list.reserve(size);
+  for (i=0; i<size; i++) {
+    if (blocks[i] == nullptr) {
+      obj_list.push_back(nullptr);
+    } else {
+      obj_list.push_back(NEW_PLIST(T_PLIST, blocks[i]->size()));
+      SET_LEN_PLIST(obj_list[i], blocks[i]->size());
+      for (j=0; j<blocks[i]->size(); j++) {
+        SET_ELM_PLIST(obj_list[i], j+1, INTOBJ_INT(blocks[i]->at(j)+1));
+      }
+    }
+  }
+
+  // Put these blocks into an overall PLIST
+  Obj gap_blocks = NEW_PLIST(T_PLIST, size);
+  SET_LEN_PLIST(gap_blocks, size);
+  for (i=0; i<size; i++) {
+    SET_ELM_PLIST(gap_blocks, i+1, obj_list[i]);
+  }
+
+  return gap_blocks;
+}
+
 /*******************************************************************************
  * GAP level print for a T_SEMI
 *******************************************************************************/
@@ -692,6 +748,16 @@ static StructGVarFunc GVarFuncs [] = {
                           "left, right"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_NEW, 1,
                           "size"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_FIND, 2,
+                          "ufdata, i"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_UNION, 2,
+                          "ufdata, pair"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_FLATTEN, 1,
+                          "ufdata"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_TABLE, 1,
+                          "ufdata"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_BLOCKS, 1,
+                          "ufdata"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", RETURN_FIVE, 1,
                           "x"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
