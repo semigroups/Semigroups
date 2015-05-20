@@ -284,7 +284,6 @@ function(S, x, y)
 
   if IsZero(x) then
     res := NewZeroSMatrix(ConstructingFilter(x), BaseDomain(x), Length(RowSpaceBasis(x)));
-    Print(res);
   else
     xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
     h := Filtered(xse.heads, x -> x <> 0);
