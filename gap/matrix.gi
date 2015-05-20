@@ -595,7 +595,7 @@ InstallMethod(\*, "for s-matrices", [IsSMatrix, IsSMatrix],
 function(x, y)
   if DegreeOfSMatrix(x) <> DegreeOfSMatrix(y) 
       or BaseDomain(x) <> BaseDomain(y) then 
-    Error("can't");
+    Error("\* for s-matrices degree or domain mismatch");
     return;
   fi;
 
