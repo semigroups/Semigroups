@@ -177,3 +177,9 @@ function(G, coll)
   return Range(IsomorphismMatrixSemigroup(ClosureGroup(AsMatrixGroup(G),
                                                        List(coll, AsMatrix)), BaseDomain(G)));
 end);
+
+InstallMethod(StructureDescription, "for an s-matrix group",
+[IsSMatrixGroup],
+function(G)
+  return StructureDescription(AsMatrixGroup(G));
+end);
