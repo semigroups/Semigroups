@@ -65,5 +65,16 @@ gap>
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsMatrixSemigroupGreensClass">
+  <ManSection>
+    <Prop Name="IsMatrixSemigroupGreensClass" Arg="class"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the 
+      property <C>IsMatrixSemigroupGreensClass</C> if and only if <C>S</C>
+      is a semigroup of matrices. 
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
 
 

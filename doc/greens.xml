@@ -1017,7 +1017,7 @@ true]]></Example>
 <#GAPDoc Label="SchutzenbergerGroup">
   <ManSection><Attr Name="SchutzenbergerGroup" Arg="class"/>
   <Returns> 
-    A permutation group.
+    A group.
   </Returns>
   <Description>
   <C>SchutzenbergerGroup</C> returns the generalized Schutzenberger group
