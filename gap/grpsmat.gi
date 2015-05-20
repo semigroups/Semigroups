@@ -178,6 +178,8 @@ function(G, coll)
                                                        List(coll, AsMatrix)), BaseDomain(G)));
 end);
 
+# We make sure that S-Matrix groups are always interpreted as matrix
+# groups
 InstallMethod(StructureDescription, "for an s-matrix group",
 [IsSMatrixGroup],
 function(G)
