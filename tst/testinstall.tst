@@ -974,6 +974,15 @@ gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 gap> NrCongruenceClasses(cong);
 169
 
+#T# TestInstall63: Bug fixed by changeset 949553d
+gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup on 2 pts with 2 generators>
+gap> Size(s);
+5
+gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+of size 5, on 2 pts with 2 generators>>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
