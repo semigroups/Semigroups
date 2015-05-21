@@ -7,19 +7,47 @@
 ##
 #############################################################################
 ##
-## Partitioned Binary Relations
-## Binary relations on 2n points with a different multiplication
-## as described in: MARTIN, Paul; MAZORCHUK, Volodymyr.
-## Partitioned Binary Relations. MATHEMATICA SCANDINAVICA,v113, n1, p. 30-52, 
-## http://arxiv.org/abs/1102.0862
-##  
 
-# input: a binary relation on 2n points
-# the function decomposes the relation into 4 relations on n points
-# Dom: 1..n
-# Codom: n+1..2n
+# This file contains an intitial implementation of partitioned binary
+# relations (PBRs) as defined in:
+# 
+# MARTIN, Paul; MAZORCHUK, Volodymyr.
+# Partitioned Binary Relations. MATHEMATICA SCANDINAVICA, v113, n1, p. 30-52, 
+# http://arxiv.org/abs/1102.0862
 
-# JDM: same as bipartitions pos and neg ints, 
+# Internally a PBR is stored as the adjacency list of digraph with 
+# vertices [1 .. 2 * n] for some n. More precisely if <x> is a PBR, then:
+# 
+#   * <x![1]> is equal to <n>
+#   
+#   * <x![i + 1]> is the vertices adjacent to <i> 
+# 
+# The number <n> is the *degree* of <x>.
+
+# TODO use RandomDigraph here!
+
+InstallMethod(RandomPartitionedBinaryRelation, "for a pos int", [IsPosInt],
+function(n)
+  local p, adj, k, i, j;
+
+  # probability of an edge  
+  p := Random([0..9999]);
+  
+  adj := [n];
+  for i in [2 .. 2 * n + 1] do
+    Add(adj, []);
+  od;
+
+  for i in [2 .. 2 * n + 1] do
+    for j in [1 .. 2 * n] do
+      k := Random(Integers) mod 10000;
+      if k < p then
+        Add(adj[i], j);
+      fi;
+    od;
+  od;
+  return Objectify(PartitionedBinaryRelationType, adj);
+end);
 
 InstallGlobalFunction(PartitionedBinaryRelation,
 function(arg)
@@ -72,10 +100,10 @@ function(x, y)
     for j in x![i + 1] do 
       if i <= n and j <= n then 
         if depth = 1 then 
-          Add(adj, j);
+          AddSet(adj, j);
         fi;
       elif i > n and j <= n then 
-        Add(adj, j);
+        AddSet(adj, j);
       else # i <> j then # (i <= n and j > n) or (i > n and j > n)
         y_dfs(j - n, adj, depth + 1);
       fi;
@@ -92,10 +120,10 @@ function(x, y)
     for j in y![i + 1] do 
       if i > n and j > n then 
         if depth = 1 then 
-          Add(adj, j);
+          AddSet(adj, j);
         fi;
       elif i <= n and j > n then 
-        Add(adj, j);
+        AddSet(adj, j);
       else #if i <> j then # ((i > n and j <= n) or (i <= n and j <= n)) 
         x_dfs(j + n, adj, depth + 1);
       fi;
