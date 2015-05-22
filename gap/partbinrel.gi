@@ -24,9 +24,37 @@
 # 
 # The number <n> is the *degree* of <x>.
 
-# TODO IsUniversalPBR, IsEmptyPBR, the embeddings from the paper, 
+# TODO UniversalPBR, EmptyPBR, the embeddings from the paper, 
 # IsBipartitionPBR, IsTransformationPBR, IsPartialPermPBR,
 # IsDualTransformationPBR, etc
+
+InstallMethod(IsEmptyPBR, "for a partition binary relation",
+[IsPartitionedBinaryRelation],
+function(x)
+  local n, i;
+
+  n := x![1];
+  for i in [2 .. 2 * n + 1] do
+    if Length(x![i]) > 0 then 
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(IsUniversalPBR, "for a partition binary relation",
+[IsPartitionedBinaryRelation],
+function(x)
+  local n, i;
+
+  n := x![1];
+  for i in [2 .. 2 * n + 1] do
+    if Length(x![i]) < n then
+      return false;
+    fi;
+  od;
+  return true;
+end);
 
 InstallMethod(AsBooleanMat, "for a partitioned binary relation",
 [IsPartitionedBinaryRelation],
@@ -217,6 +245,14 @@ InstallMethod(ViewString, "for a partitioned binary relation",
 [IsPartitionedBinaryRelation], 
 function(x)
   local str, n, ext, i;
+
+  if IsUniversalPBR(x) then 
+    return Concatenation("\><universal pbr on ", PrintString(x![1]),
+                         " points>\<");
+  elif IsEmptyPBR(x) then 
+    return Concatenation("\><empty pbr on ", PrintString(x![1]), 
+                         " points>\<");
+  fi;
 
   str := "\>\>\>\>\><pbr:";
 

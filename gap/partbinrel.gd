@@ -42,6 +42,9 @@ DeclareOperation("RandomPartitionedBinaryRelation", [IsPosInt]);
 DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement]);
 DeclareOperation("AsBooleanMat", [IsPartitionedBinaryRelation]);
 
+DeclareProperty("IsEmptyPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsUniversalPBR", IsPartitionedBinaryRelation);
+
 DeclareSynonym("PBR", PartitionedBinaryRelation);
 DeclareSynonym("AsPBR", AsPartitionedBinaryRelation);
 DeclareSynonym("RandomPBR", RandomPartitionedBinaryRelation);
