@@ -16,6 +16,7 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <unordered_set>
 
 using namespace semiring;
 
@@ -25,6 +26,8 @@ template <typename T>
 class Element {
 
   public:
+    
+    Element () {} // just for PBRs
 
     Element (size_t degree) {
       _data = new std::vector<T>();
@@ -429,6 +432,7 @@ namespace std {
 }
 
 class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
+
   public:
 
     ProjectiveMaxPlusMatrix (size_t degree, Semiring* semiring) 
@@ -473,5 +477,121 @@ namespace std {
   };
 }
 
+// partitioned binary relations
+
+class PBR: public Element<std::unordered_set<u_int32_t> > {
+
+  public:
+
+    PBR (u_int32_t degree, 
+         Element<std::unordered_set<u_int32_t> >* sample = nullptr) 
+      : Element<std::unordered_set<u_int32_t> >() {
+        _data = new std::vector<std::unordered_set<u_int32_t> >();
+        _data->reserve(degree);
+        for (size_t i = 0; i < degree; i++) {
+          _data->push_back(std::unordered_set<u_int32_t>());
+        }
+      }
+
+    PBR (std::vector<std::unordered_set<u_int32_t> > data) 
+      : Element<std::unordered_set<u_int32_t> >(data) {}
+    
+  private:
+
+    //FIXME this allocates lots of memory on every call, maybe better to keep
+    //the data in the class and overwrite it.
+    void redefine (Element<std::unordered_set<u_int32_t> > const* x, 
+                   Element<std::unordered_set<u_int32_t> > const* y) {
+      assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
+      u_int32_t n = this->degree() / 2;
+      
+      for (size_t i = 0; i < 2 * n; i++) {
+        this->at(i).clear();
+      }
+
+      std::vector<bool> x_seen;
+      std::vector<bool> y_seen;
+      
+      for (size_t i = 0; i < n; i++) {
+        reset_to_false(x_seen);
+        reset_to_false(y_seen);
+        x_dfs(n, i, (*this->_data)[i], x_seen, y_seen, x, y);
+      }
+      
+      for (size_t i = n; i < 2 * n; i++) {
+        reset_to_false(x_seen);
+        reset_to_false(y_seen);
+        y_dfs(n, i, (*this->_data)[i], x_seen, y_seen, x, y);
+      }
+    }
+    
+    Element<std::unordered_set<u_int32_t> >* identity () {
+      std::vector<std::unordered_set<u_int32_t> > adj;
+      adj.reserve(this->degree());
+      for (u_int32_t i = 0; i < this->degree(); i++) {
+        adj.push_back(std::unordered_set<u_int32_t>());
+      }
+      for (u_int32_t i = 0; i < this->degree() / 2; i++) {
+        adj.at(i).insert(i + this->degree());
+        adj.at(i + this->degree()).insert(i);
+      }
+      return new PBR(adj);
+    }
+
+  private: 
+
+    void inline reset_to_false (std::vector<bool>& v) {
+      for (size_t i = 0; i < v.size(); i++) {
+        v.at(i) = false;
+      }
+    }
+
+    void x_dfs (u_int32_t n,
+                u_int32_t i, 
+                std::unordered_set<u_int32_t>& adj, 
+                std::vector<bool>& x_seen,
+                std::vector<bool>& y_seen,
+                Element<std::unordered_set<u_int32_t> > const* x, 
+                Element<std::unordered_set<u_int32_t> > const* y) {
+
+      if (!x_seen.at(i)) {
+        x_seen.at(i) = true;
+        for (auto it = x->at(i).begin(); it != x->at(i).end(); ++it) { 
+          if ((*it) < n) {
+            auto it2 = adj.find(*it);
+            if (it2 == adj.end()) {
+              adj.insert(*it);
+            }
+          } else {
+            y_dfs(n, (*it) - n, adj, x_seen, y_seen, x, y);
+          }
+        }
+      }
+    }
+
+    void y_dfs (u_int32_t n,
+                u_int32_t i, 
+                std::unordered_set<u_int32_t>& adj, 
+                std::vector<bool>& x_seen,
+                std::vector<bool>& y_seen,
+                Element<std::unordered_set<u_int32_t> > const* x, 
+                Element<std::unordered_set<u_int32_t> > const* y) {
+
+      if (!y_seen.at(i)) {
+        y_seen.at(i) = true;
+        for (auto it = y->at(i).begin(); it != y->at(i).end(); ++it) { 
+          if ((*it) < n) {
+            auto it2 = adj.find(*it);
+            if (it2 == adj.end()) {
+              adj.insert(*it);
+            }
+          } else {
+            x_dfs(n, (*it) + n, adj, x_seen, y_seen, x, y);
+          }
+        }
+      }
+    }
+};
 
 #endif
