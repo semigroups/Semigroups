@@ -24,7 +24,37 @@
 # 
 # The number <n> is the *degree* of <x>.
 
-# TODO use RandomDigraph here!
+# IsUniversalPBR, IsEmptyPBR, the embeddings from the paper, 
+
+InstallMethod(AsPartitionedBinaryRelation, "for an associative element", 
+[IsAssociativeElement], x -> AsPartitionedBinaryRelation(AsBipartition(x)));
+
+InstallMethod(AsPartitionedBinaryRelation, "for a bipartition", 
+[IsBipartition],
+function(x)
+  local n, blocks, out, i, block;
+
+  n := DegreeOfBipartition(x); 
+  blocks := ExtRepOfBipartition(x);
+  out := [[], []];
+  
+  for block in blocks do 
+    for i in block do 
+      if i < 0 then 
+        i := -i;
+        out[2][i] := ShallowCopy(block);
+      else 
+        out[1][i] := ShallowCopy(block);
+      fi;
+    od;
+  od;
+
+  return CallFuncList(PartitionedBinaryRelation, out);
+end);
+
+# TODO use RandomDigraph here! 
+# TODO make a method that takes a float between 0 and 1 as the probability of
+# an edge existing.
 
 InstallMethod(RandomPartitionedBinaryRelation, "for a pos int", [IsPosInt],
 function(n)
@@ -78,6 +108,9 @@ end);
 InstallMethod(DegreeOfPartitionedBinaryRelation, "for a partitioned binary relation", 
 [IsPartitionedBinaryRelation], pbr -> pbr![1]);
 
+# can't we use some sort of Floyd-Warshall Algorithm here, the current method
+# involves searching in the same part of the graph repeatedly??
+
 InstallMethod(\*, "for partitioned binary relations",
 [IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
 function(x, y)
@@ -89,43 +122,35 @@ function(x, y)
 
   x_seen := BlistList([1 .. 2 * n], []);
   y_seen := BlistList([1 .. 2 * n], []);
-  empty := BlistList([1 .. 2 * n], []);
+  empty  := BlistList([1 .. 2 * n], []);
 
-  x_dfs := function(i, adj, depth) # starting in x
+  x_dfs := function(i, adj) # starting in x
     local j;
     if x_seen[i] then 
       return;
     fi;
     x_seen[i] := true;
     for j in x![i + 1] do 
-      if i <= n and j <= n then 
-        if depth = 1 then 
-          AddSet(adj, j);
-        fi;
-      elif i > n and j <= n then 
+      if j <= n then 
         AddSet(adj, j);
-      else # i <> j then # (i <= n and j > n) or (i > n and j > n)
-        y_dfs(j - n, adj, depth + 1);
+      else # j > n
+        y_dfs(j - n, adj);
       fi;
     od;
     return;
   end;
   
-  y_dfs := function(i, adj, depth) # starting in y
+  y_dfs := function(i, adj) # starting in y
     local j;
     if y_seen[i] then 
       return;
     fi;
     y_seen[i] := true;
     for j in y![i + 1] do 
-      if i > n and j > n then 
-        if depth = 1 then 
-          AddSet(adj, j);
-        fi;
-      elif i <= n and j > n then 
+      if j > n then 
         AddSet(adj, j);
-      else #if i <> j then # ((i > n and j <= n) or (i <= n and j <= n)) 
-        x_dfs(j + n, adj, depth + 1);
+      else # j <= n
+        x_dfs(j + n, adj);
       fi;
     od;
     return;
@@ -134,13 +159,13 @@ function(x, y)
   for i in [1 .. n] do # find everything connected to vertex i
     IntersectBlist(x_seen, empty);
     IntersectBlist(y_seen, empty);
-    x_dfs(i, out[i + 1], 1);
+    x_dfs(i, out[i + 1]);
   od;
 
   for i in [n + 1 .. 2 * n] do # find everything connected to vertex i
     IntersectBlist(x_seen, empty);
     IntersectBlist(y_seen, empty);
-    y_dfs(i, out[i + 1], 1);
+    y_dfs(i, out[i + 1]);
   od;
 
   return Objectify(PartitionedBinaryRelationType, out);
@@ -176,18 +201,28 @@ end);
 InstallMethod(ViewString, "for a partitioned binary relation",
 [IsPartitionedBinaryRelation], 
 function(x)
-  local str, ext, i;
+  local str, n, ext, i;
 
-  str := "\>\>\>\><pbr: \>\>";
+  str := "\>\>\>\>\><pbr:";
 
+  n := DegreeOfPartitionedBinaryRelation(x);
   ext := ExtRepOfPBR(x);
-  Append(str, "\>\>");
-  Append(str, String(ext[1]));
-  Append(str, "\<\<");
-  Append(str, ", \>\>");
-  Append(str, String(ext[2]));
-  Append(str, "\<\<");
-  Append(str, "\<\<>\<\<\<\<");
+  
+  Append(str, "\>");
+  Append(str, PRINT_STRINGIFY("[\>", ext[1][1]));
+  for i in [2 .. n] do 
+    Append(str, ",\< \>");
+    Append(str, PrintString(ext[1][i]));
+  od;
+  Append(str, "\<],\<");
+  Append(str, " \>");
+  Append(str, PRINT_STRINGIFY("[\>", ext[2][1]));
+  for i in [2 .. n] do 
+    Append(str, ",\< \>");
+    Append(str, PrintString(ext[2][i]));
+  od;
+  Append(str, "\<]\<");
+  Append(str, ">\<\<\<\<\<");
   return str;
 end);
 
@@ -200,10 +235,10 @@ function(x)
 
   ext := ExtRepOfPBR(x);
   Append(str, "\>");
-  Append(str, String(ext[1]));
+  Append(str, PrintString(ext[1]));
   Append(str, "\<");
   Append(str, ", \>");
-  Append(str, String(ext[2]));
+  Append(str, PrintString(ext[2]));
   Append(str, "\<");
   Append(str, "\<\<)\<\<");
   return str;

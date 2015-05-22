@@ -39,7 +39,8 @@ DeclareAttribute("DegreeOfPartitionedBinaryRelation",
 DeclareGlobalFunction("PartitionedBinaryRelation");
 DeclareGlobalFunction("ExtRepOfPBR");
 DeclareOperation("RandomPartitionedBinaryRelation", [IsPosInt]);
+DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement]);
 
 DeclareSynonym("PBR", PartitionedBinaryRelation);
+DeclareSynonym("AsPBR", AsPartitionedBinaryRelation);
 DeclareSynonym("RandomPBR", RandomPartitionedBinaryRelation);
-
