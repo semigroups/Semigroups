@@ -479,11 +479,11 @@ namespace std {
 
 // partitioned binary relations
 
-class PBR: public Element<std::unordered_set<u_int32_t> > {
+class PartitionedBinaryRelation: public Element<std::unordered_set<u_int32_t> > {
 
   public:
 
-    PBR (u_int32_t degree, 
+    PartitionedBinaryRelation (u_int32_t degree, 
          Element<std::unordered_set<u_int32_t> >* sample = nullptr) 
       : Element<std::unordered_set<u_int32_t> >() {
         _data = new std::vector<std::unordered_set<u_int32_t> >();
@@ -493,13 +493,15 @@ class PBR: public Element<std::unordered_set<u_int32_t> > {
         }
       }
 
-    PBR (std::vector<std::unordered_set<u_int32_t> > data) 
+    PartitionedBinaryRelation (std::vector<std::unordered_set<u_int32_t> > data) 
       : Element<std::unordered_set<u_int32_t> >(data) {}
     
   private:
 
     //FIXME this allocates lots of memory on every call, maybe better to keep
     //the data in the class and overwrite it.
+    //FIXME also we repeatedly search in the same part of the graph, and so
+    //there is probably a lot of repeated work in the dfs.
     void redefine (Element<std::unordered_set<u_int32_t> > const* x, 
                    Element<std::unordered_set<u_int32_t> > const* y) {
       assert(x->degree() == y->degree());
@@ -536,7 +538,7 @@ class PBR: public Element<std::unordered_set<u_int32_t> > {
         adj.at(i).insert(i + this->degree());
         adj.at(i + this->degree()).insert(i);
       }
-      return new PBR(adj);
+      return new PartitionedBinaryRelation(adj);
     }
 
   private: 

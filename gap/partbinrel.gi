@@ -122,6 +122,9 @@ function(n)
   return Objectify(PartitionedBinaryRelationType, adj);
 end);
 
+#TODO add checks that the argument makes sense, really the below should be an
+#     NC method, and we should add a new method with checks/.
+
 InstallGlobalFunction(PartitionedBinaryRelation,
 function(arg)
   local left_adj, right_adj, n, i, j;

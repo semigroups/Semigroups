@@ -728,6 +728,10 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
     ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
+    
+    ImportGVarFromLibrary( "IsPartitionedBinaryRelation", &IsPartitionedBinaryRelation);
+    ImportGVarFromLibrary( "PartitionedBinaryRelationType",
+                           &PartitionedBinaryRelationType );
 
     /* return success                                                      */
     return 0;

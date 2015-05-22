@@ -1,6 +1,7 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+* semigroups of pbrs
 * make 2.6 branch with new style Green's class printing in tests.
 * finish partitioned binary relation stuff (more tests and C++)
 * check that nothing is missing in semigroup-matrix-*
