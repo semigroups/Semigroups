@@ -6,7 +6,7 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-##
+
 ## Partitioned Binary Relations
 ## Binary relations on 2n points with a different multiplication
 ## as described in: MARTIN, Paul; MAZORCHUK, Volodymyr.

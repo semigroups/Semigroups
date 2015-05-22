@@ -50,6 +50,7 @@ ReadPackage("semigroups/gap/semigroups-matrix-boolean.gd");
 ReadPackage("semigroups/gap/semigroups-matrix-prime-field.gd");
 
 ReadPackage("semigroups/gap/semibipart.gd");
+ReadPackage("semigroups/gap/semipartbinrel.gd");
 ReadPackage("semigroups/gap/semitrans.gd");
 ReadPackage("semigroups/gap/semipperm.gd");
 

@@ -106,6 +106,7 @@ ReadPackage("semigroups/gap/semigroups-matrix-boolean.gi");
 ReadPackage("semigroups/gap/semigroups-prime-fields.gi");
 
 ReadPackage("semigroups/gap/semibipart.gi");
+ReadPackage("semigroups/gap/semipartbinrel.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");
 

@@ -183,12 +183,12 @@ Obj MatrixOverPrimeFieldConverter::unconvert (MatrixOverSemiring* x) {
 
 PartitionedBinaryRelation* PBRConverter::convert (Obj o, size_t n) {
   assert(IS_PBR(o));
-  assert(n == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
+  assert(n / 2 == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
 
   std::vector<std::unordered_set<u_int32_t> > pbr;
-  pbr.reserve(2 * n);
+  pbr.reserve(n);
 
-  for (u_int32_t i = 0; i < 2 * n; i++) {
+  for (u_int32_t i = 0; i < n; i++) {
     Obj adj = ELM_PLIST(o, i + 2);
     std::unordered_set<u_int32_t> next;
     for (u_int32_t j = 1; j <= LEN_PLIST(adj); j++) {

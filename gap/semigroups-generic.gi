@@ -207,7 +207,7 @@ function(S)
       or IsPartialPermSemigroup(S) 
       or IsBipartitionSemigroup(S)
       or IsBooleanMatSemigroup(S) 
-      or IsPartitionBinaryRelationSemigroup(S) 
+      or IsPartitionedBinaryRelationSemigroup(S) 
       or (IsMatrixOverSemiringSemigroup(S) 
           and ((not IsMatrixOverPrimeFieldSemigroup(S)) 
                 or IsPrimeField(BaseField(Representative(S))))) then
@@ -224,6 +224,8 @@ function(S)
       data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
     elif IsBipartitionSemigroup(S) then 
       data.degree := 2 * DegreeOfBipartitionSemigroup(S);
+    elif IsPartitionedBinaryRelationSemigroup(S) then 
+      data.degree := 2 * DegreeOfPartitionedBinaryRelationSemigroup(S);
     fi;
     data.report := SEMIGROUPS_OptionsRec(S).report;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
