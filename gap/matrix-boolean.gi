@@ -81,7 +81,6 @@ function(mat)
   return BooleanMatNC(x);
 end);
 
-
 InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local n, xy, i, j, k;

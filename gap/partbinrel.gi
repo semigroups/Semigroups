@@ -24,7 +24,10 @@
 # 
 # The number <n> is the *degree* of <x>.
 
-# IsUniversalPBR, IsEmptyPBR, the embeddings from the paper, 
+# TODO IsUniversalPBR, IsEmptyPBR, the embeddings from the paper, 
+# IsBipartitionPBR, IsTransformationPBR, IsPartialPermPBR,
+# IsDualTransformationPBR, etc
+
 InstallMethod(AsBooleanMat, "for a partitioned binary relation",
 [IsPartitionedBinaryRelation],
 function(x)

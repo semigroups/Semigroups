@@ -17,6 +17,29 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+InstallMethod(TransposedMat, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(x)
+  local n, y, i, j;
+
+  n := Length(x![1]);
+  y := EmptyPlist(2 * n);
+  for i in [1 .. n] do 
+    y[i] := [];
+    for j in [1 .. n] do 
+      y[i][j] := x![j][i];
+    od;
+  od;
+
+  if IsBound(x![n + 1]) then 
+    y[n + 1] := x![n + 1];
+    if IsBound(x![n + 2]) then 
+      y[n + 2] := x![n + 2];
+    fi;
+  fi;
+  return Objectify(TypeObj(x), y);
+end);
+
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
 [IsMatrixOverSemiringCollection], ReturnFalse);
@@ -185,7 +208,8 @@ end);
 
 #
 
-InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, "for a pos int, object, object",
+InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring, 
+"for a pos int, object, object",
 [IsPosInt, IsObject, IsObject],
 function(n, source, constructor)
   local out, i, j;
