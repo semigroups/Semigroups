@@ -207,6 +207,7 @@ function(S)
       or IsPartialPermSemigroup(S) 
       or IsBipartitionSemigroup(S)
       or IsBooleanMatSemigroup(S) 
+      or IsPartitionBinaryRelationSemigroup(S) 
       or (IsMatrixOverSemiringSemigroup(S) 
           and ((not IsMatrixOverPrimeFieldSemigroup(S)) 
                 or IsPrimeField(BaseField(Representative(S))))) then

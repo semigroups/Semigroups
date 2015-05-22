@@ -388,6 +388,11 @@ InterfaceBase* InterfaceFromData (Obj data) {
       interface = new Interface<MatrixOverSemiring>(data, mopfc);
       break;
     }
+    case PBR:{
+      auto pbrc = new PBRConverter();
+      interface = new Interface<PartitionedBinaryRelation>(data, pbrc);
+      break;
+    }
     default: {
       assert(false);
     }

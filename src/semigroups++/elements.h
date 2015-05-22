@@ -495,8 +495,6 @@ class PartitionedBinaryRelation: public Element<std::unordered_set<u_int32_t> > 
 
     PartitionedBinaryRelation (std::vector<std::unordered_set<u_int32_t> > data) 
       : Element<std::unordered_set<u_int32_t> >(data) {}
-    
-  private:
 
     //FIXME this allocates lots of memory on every call, maybe better to keep
     //the data in the class and overwrite it.
@@ -595,5 +593,21 @@ class PartitionedBinaryRelation: public Element<std::unordered_set<u_int32_t> > 
       }
     }
 };
+
+namespace std {
+  template <>
+    struct hash<const PartitionedBinaryRelation> {
+    size_t operator() (const PartitionedBinaryRelation& x) const {
+      size_t seed = 0;
+      size_t pow = 101;
+      for (size_t i = 0; i < x.degree(); i++) {
+        for (auto it = x.at(i).begin(); it != x.at(i).end(); ++it) { 
+          seed = (seed * pow) + (*it);
+        }
+      }
+      return seed;
+    }
+  };
+}
 
 #endif
