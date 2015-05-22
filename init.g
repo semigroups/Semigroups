@@ -12,16 +12,17 @@ if not IsBound(ORBC) then
   BindGlobal("HTAdd_TreeHash_C", fail);
   BindGlobal("HTValue_TreeHash_C", fail);
 else # only do this if ORBC is available
-  
+
   # load kernel function if it is installed:
   if (not IsBound(SEMIGROUPSC)) and ("semigroups" in SHOW_STAT()) then
     # try static module
     LoadStaticModule("semigroups");
   fi;
   if (not IsBound(SEMIGROUPSC)) and
-     (Filename(DirectoriesPackagePrograms("semigroups"), "semigroups.so") <> fail) then
+      (Filename(DirectoriesPackagePrograms("semigroups"),
+               "semigroups.so") <> fail) then
     LoadDynamicModule(Filename(DirectoriesPackagePrograms("semigroups"),
-    "semigroups.so"));
+                               "semigroups.so"));
   fi;
 fi;
 
@@ -81,6 +82,7 @@ ReadPackage("semigroups/gap/reesmat-cong.gd");
 ReadPackage("semigroups/gap/univ-cong.gd");
 ReadPackage("semigroups/gap/inverse-cong.gd");
 ReadPackage("semigroups/gap/simple-cong.gd");
+ReadPackage("semigroups/gap/rees-cong.gd");
 
 ReadPackage("semigroups/gap/freeband.gd");
 

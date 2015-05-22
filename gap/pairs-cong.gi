@@ -11,12 +11,42 @@
 ## generating pairs, using a union-find method.
 ##
 
+DeclareCategory("IsSemigroupCongruenceData", IsRecord);
+DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
+DeclareOperation("Enumerate", [IsSemigroupCongruence, IsFunction]);
+
+InstallGlobalFunction(SEMIGROUPS_UF_Find,
+function(table, i)
+  while table[i] <> i do
+    i := table[i];
+  od;
+  return i;
+end);
+
+#
+
+InstallGlobalFunction(SEMIGROUPS_UF_Union,
+function(table, pair)
+  local ii, jj;
+  
+  ii := SEMIGROUPS_UF_Find(table, pair[1]);
+  jj := SEMIGROUPS_UF_Find(table, pair[2]);
+  
+  if ii < jj then
+    table[jj] := ii;
+  elif jj < ii then
+    table[ii] := jj;
+  fi;
+end);
+
+#
+
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
   local s, elms, pairs, hashlen, ht, data;
 
   s := Range(cong);
-  elms := Elements(s);
+  elms := AsSSortedList(s);
   pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
                 x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
@@ -39,13 +69,29 @@ function(cong)
   return;
 end);
 
+# This is a temporary fix to make congruences know that they are finite
+# This allows MT's congruence methods for finite congruences to be selected
+
+# TODO Make finite semigroup congruences be set as such at creation
+# TODO Make IsFinite method for IsSemigroupCongruence
+InstallImmediateMethod(IsFinite,
+"for a semigroup congruence",
+IsSemigroupCongruence and HasRange,
+0,
+function(cong)
+  if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
 #
 
 InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
-  local s, elms, p1, p2, table, find, lookfunc;
+  local s, elms, p1, p2, table, lookfunc;
   # Input checks
   if not Size(pair) = 2 then
     Error("Semigroups: \in: usage,\n",
@@ -60,7 +106,10 @@ function(pair, cong)
     return;
   fi;
   if not (HasIsFinite(s) and IsFinite(s)) then
-    TryNextMethod();
+    Error("Semigroups: \in: usage,\n",
+          "this function currently only works if <cong> is a congruence of a ",
+          "semigroup\nwhich is known to be finite,");
+    return;
   fi;
 
   elms := Elements(s);
@@ -73,19 +122,11 @@ function(pair, cong)
     return table[p1] = table[p2];
   else
     # Otherwise, begin calculating the lookup table and look for this pair
-    if not IsBound(cong!.data) then
-      SEMIGROUPS_SetupCongData(cong);
-    fi;
-    find := function(table, i)
-      while table[i] <> i do
-        i := table[i];
-      od;
-      return i;
-    end;
     lookfunc := function(data, lastpair)
-      return find(data!.lookup, p1) = find(data!.lookup, p2);
+      return SEMIGROUPS_UF_Find(data!.lookup, p1)
+             = SEMIGROUPS_UF_Find(data!.lookup, p2);
     end;
-    return Enumerate(cong!.data, lookfunc)!.found;
+    return Enumerate(cong, lookfunc)!.found;
   fi;
 end);
 
@@ -97,14 +138,26 @@ InstallMethod(AsLookupTable,
 function(cong)
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
     Error("Semigroups: AsLookupTable: usage,\n",
-          "<cong> must be a finite semigroup");
+          "<cong> must be a congruence of a finite semigroup,");
     return;
+  fi;
+  Enumerate(cong, ReturnFalse);
+  return AsLookupTable(cong);
+end);
+
+#
+
+InstallMethod(Enumerate,
+"for a semigroup congruence and a function",
+[IsSemigroupCongruence, IsFunction],
+function(cong, lookfunc)
+  if HasAsLookupTable(cong) then
+    return fail;
   fi;
   if not IsBound(cong!.data) then
     SEMIGROUPS_SetupCongData(cong);
   fi;
-  Enumerate(cong!.data, ReturnFalse);
-  return AsLookupTable(cong);
+  return Enumerate(cong!.data, lookfunc);
 end);
 
 #
@@ -113,8 +166,8 @@ InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
 [IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, s, table, pairstoapply, ht, right, left, find, union,
-        genstoapply, i, nr, found, x, j, y, next, newtable, ii;
+  local cong, s, table, pairstoapply, ht, right, left, genstoapply, i, nr, 
+        found, x, j, y, next, newtable, ii;
 
   cong := data!.cong;
   s := Range(cong);
@@ -126,26 +179,6 @@ function(data, lookfunc)
   right := RightCayleyGraphSemigroup(s);
   left := LeftCayleyGraphSemigroup(s);
 
-  find := function(i)
-    while table[i] <> i do
-      i := table[i];
-    od;
-    return i;
-  end;
-
-  union := function(pair)
-    local ii, jj;
-
-    ii := find(pair[1]);
-    jj := find(pair[2]);
-
-    if ii < jj then
-      table[jj] := ii;
-    elif jj < ii then
-      table[ii] := jj;
-    fi;
-  end;
-
   genstoapply := [1 .. Size(right[1])];
   i := data!.pos;
   nr := Size(pairstoapply);
@@ -156,7 +189,7 @@ function(data, lookfunc)
     for x in pairstoapply do
       if x[1] <> x[2] and HTValue(ht, x) = fail then
         HTAdd(ht, x, true);
-        union(x);
+        SEMIGROUPS_UF_Union(table, x);
         # Have we found what we were looking for?
         if lookfunc(data, x) then
           data!.found := true;
@@ -176,7 +209,7 @@ function(data, lookfunc)
         HTAdd(ht, y, true);
         nr := nr + 1;
         pairstoapply[nr] := y;
-        union(y);
+        SEMIGROUPS_UF_Union(table, y);
         if lookfunc(data, y) then
           found := true;
         fi;
@@ -188,7 +221,7 @@ function(data, lookfunc)
         HTAdd(ht, y, true);
         nr := nr + 1;
         pairstoapply[nr] := y;
-        union(y);
+        SEMIGROUPS_UF_Union(table, y);
         if lookfunc(data, y) then
           found := true;
         fi;
@@ -208,7 +241,7 @@ function(data, lookfunc)
   next := 1;
   newtable := [];
   for i in [1 .. Size(table)] do
-    ii := find(i);
+    ii := SEMIGROUPS_UF_Find(table, i);
     if ii = i then
       newtable[i] := next;
       next := next + 1;
@@ -231,7 +264,10 @@ InstallMethod(EquivalenceClasses,
 function(cong)
   local classes, next, tab, elms, i;
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-    TryNextMethod();
+    Error("Semigroups: EquivalenceClasses: usage,\n",
+          "this function currently only works if <cong> is a congruence of a ",
+          "semigroup\nwhich is known to be finite,");
+    return;
   fi;
   classes := [];
   next := 1;
@@ -281,7 +317,7 @@ end);
 #
 
 InstallMethod(\=,
-"for two semigroup congruences",
+"for two finite semigroup congruences",
 [IsSemigroupCongruence and IsFinite, IsSemigroupCongruence and IsFinite],
 function(cong1, cong2)
   return Range(cong1) = Range(cong2) and
@@ -305,16 +341,141 @@ end);
 
 #
 
+InstallMethod(ImagesElm,
+"for a semigroup congruence and an associative element",
+[IsSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  local elms, lookup, classNo;
+  elms := AsSSortedList(Range(cong));
+  lookup := AsLookupTable(cong);
+  classNo := lookup[Position(elms, elm)];
+  return elms{Positions(lookup, classNo)};
+end);
+
+#
+
+InstallMethod(AsList,
+"for a semigroup congruence class",
+[IsCongruenceClass],
+function(class)
+  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
+end);
+
+#
+
 InstallMethod(NrCongruenceClasses,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
+"for a semigroup congruence with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
   local s;
   s := Range(cong);
   if not (HasIsFinite(s) and IsFinite(s)) then
-    TryNextMethod();
+    Error("Semigroups: NrCongruenceClasses: usage,\n",
+          "this function currently only works if <cong> is a congruence of a ",
+          "semigroup\nwhich is known to be finite,");
+    return;
   fi;
   return Maximum(AsLookupTable(cong));
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for a semigroup congruence class",
+[IsCongruenceClass],
+function(class)
+  local cong, s, record, x, enum;
+
+  cong := EquivalenceClassRelation(class);
+  s := Range(cong);
+
+  if not (HasIsFinite(s) and IsFinite(s)) then
+    TryNextMethod();
+  fi;
+
+  # cong has been enumerated: return a list
+  if HasAsLookupTable(cong) then
+    return Enumerator(AsList(class));
+  fi;
+
+  # cong has not yet been enumerated: make functions
+  record := rec();
+  
+  record.ElementNumber := function(enum, pos)
+    local lookfunc, result, table, classno, i;
+    if pos <= enum!.len then
+      return enum!.elms[enum!.list[pos]];
+    fi;
+    lookfunc := function(data, lastpair)
+      local classno, i;
+      classno := SEMIGROUPS_UF_Find(data!.lookup, enum!.rep);
+      if classno = SEMIGROUPS_UF_Find(data!.lookup, lastpair[1]) then
+        for i in [1..Size(data!.lookup)] do
+          if (not enum!.found[i]) and SEMIGROUPS_UF_Find(data!.lookup, i) = classno then
+            enum!.found[i] := true;
+            enum!.len := enum!.len + 1;
+            enum!.list[enum!.len] := i;
+          fi;
+        od;
+      fi;
+      return enum!.len >= pos;
+    end;
+    result := Enumerate(enum!.cong, lookfunc);
+    if result = fail then
+      # cong has AsLookupTable
+      table := AsLookupTable(enum!.cong);
+      classno := table[enum!.rep];
+      for i in [1..Size(Range(enum!.cong))] do
+        if table[i] = classno and not enum!.found[i] then
+          enum!.found[i] := true;
+          enum!.len := enum!.len + 1;
+          enum!.list[enum!.len] := i;
+        fi;
+      od;
+      #TODO: erase these 3 lines
+      if enum!.len <> Size(class) then
+        Error("This should never happen!"); return;
+      fi;
+      SetSize(class, enum!.len);
+      SetAsList(class, enum!.list);
+    fi;
+    if pos <= enum!.len then
+      return enum!.elms[enum!.list[pos]];
+    else
+      return fail;
+    fi;
+  end;
+
+  record.NumberElement := function(enum, elm)
+    local x;
+    x := Position(enum!.elms, elm);
+    if [x, enum!.rep] in enum!.cong then # this does the calculations
+      # elm is in the class
+      if enum!.found[x] then
+        # elm already has a position
+        return Position(enum!.list, x);
+      else
+        # put elm in the next available position
+        enum!.found[x] := true;
+        enum!.len := enum!.len + 1;
+        enum!.list[enum!.len] := x;
+        return enum!.len;
+      fi;
+    else
+      # elm is not in the class
+      return fail;
+    fi;
+  end;
+  
+  enum := EnumeratorByFunctions(class, record);
+  enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
+  enum!.elms := AsSSortedList(Range(enum!.cong));
+  enum!.rep := Position(enum!.elms, Representative(UnderlyingCollection(enum)));
+  enum!.list := [enum!.rep];
+  enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
+  enum!.len := 1;
+  
+  return enum;
 end);
 
 #
@@ -331,6 +492,22 @@ function(cong)
           " generating pairs");
   fi;
   Print(">");
+end);
+
+#
+
+InstallMethod(PrintObj,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+1,
+function(cong)
+  Print("SemigroupCongruence( ");
+  PrintObj(Range(cong));
+  Print(", ");
+  if HasGeneratingPairsOfMagmaCongruence(cong) then
+    Print(GeneratingPairsOfSemigroupCongruence(cong));
+  fi;
+  Print(")");
 end);
 
 #

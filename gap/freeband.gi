@@ -33,7 +33,7 @@ function(elem)
     if first = last then
       out := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first],
                            SEMIGROUPS_FreeBandElmToWord(su_tuple));
-    # otherwise we need distinct letters for both first and last
+      # otherwise we need distinct letters for both first and last
     else
       word1 := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first]);
       word2 := Concatenation([last], SEMIGROUPS_FreeBandElmToWord(su_tuple));
@@ -62,7 +62,7 @@ function(arg)
   elif 1 <= Length(arg) and ForAll(arg, IsString) then
     names := arg;
   elif Length(arg) = 1 and IsList(arg[1])
-                          and ForAll(arg[1], IsString) then
+      and ForAll(arg[1], IsString) then
     names := arg[1];
   else
     Error("Semigroups: FreeBand: usage,\n",
@@ -73,7 +73,7 @@ function(arg)
   MakeImmutable(names);
 
   F := NewFamily("FreeBandElementsFamily", IsFreeBandElement,
-       CanEasilySortElements);
+                                           CanEasilySortElements);
 
   type := NewType(F, IsFreeBandElement and IsPositionalObjectRep);
 
@@ -83,8 +83,7 @@ function(arg)
   for m in  [1 .. ngens] do
     gens[m] := Objectify(type, rec(tuple := [m, 0, m, 0],
                                    cont := BlistList([1 .. ngens], [m]),
-                                   word := [m]
-                                   ));
+                                   word := [m]));
   od;
 
   StoreInfoFreeMagma(F, names, IsFreeBandElement);
@@ -92,14 +91,12 @@ function(arg)
   S := Objectify(NewType(FamilyObj(gens),
                          IsFreeBandCategory and IsSemigroup and
                          IsAttributeStoringRep),
-                   rec());
+                 rec());
   SetGeneratorsOfMagma(S, gens);
   SetIsFreeBand(S, true);
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
-
   SetIsWholeFamily(S, true);
-
   return S;
 end);
 
@@ -152,9 +149,8 @@ function(dclass)
     if iter!.element <> fail then
       # output := StructuralCopy(iter!.element); doesn't work
       output := rec(tuple := StructuralCopy(iter!.element!.tuple),
-		    content := ShallowCopy(iter!.element!.content),
-		    word := ShallowCopy(iter!.element!.word));
-
+                    content := ShallowCopy(iter!.element!.content),
+                    word := ShallowCopy(iter!.element!.word));
     else
       return fail;
     fi;
@@ -207,12 +203,12 @@ function(dclass)
       tuple[2] := NextIterator_FreeBandDClass(iter!.iter1);
       iter!.element!.tuple := tuple;
     else
-     iter!.element := fail;
+      iter!.element := fail;
     fi;
     return output;
   end;
 
-#
+  #
 
   NextIterator_FreeBandDClassWithPrint := function(iter)
     local next_value;
@@ -227,17 +223,17 @@ function(dclass)
     fi;
   end;
 
-#
+  #
 
   NewIterator_FreeBandDClass := function(s, content)
     local record, first, tempcont, elem;
 
     first := Position(content, true);
     elem := Objectify(TypeObj(s.1), rec(tuple := [],
-	    content := content,
-            word := fail));
+                                        content := content,
+                                        word := fail));
 
-  # If the content is of size one
+    # If the content is of size one
     if Position(content, true, first) = fail then
       elem!.tuple := [first, 0, first, 0];
       elem!.word := [first];
@@ -250,7 +246,7 @@ function(dclass)
       tempcont := ShallowCopy(content);
       tempcont[first] := false;
       record := rec(element := elem,
-		    iter1 := NewIterator_FreeBandDClass(s, tempcont),
+                    iter1 := NewIterator_FreeBandDClass(s, tempcont),
                     iter2 := NewIterator_FreeBandDClass(s, tempcont),
                     semigroup := s,
                     content := content);
@@ -264,16 +260,16 @@ function(dclass)
 
   #
 
-  ShallowCopyLocal := record -> rec(
-    lasr_called_by_is_done := record!.last_called_by_is_done,
-    next_value := record!.next_value,
-    IsDoneIterator := record!.IsDoneIterator,
-    NextIterator := record!.NextIterator );
+  ShallowCopyLocal := record ->
+    rec(last_called_by_is_done := record!.last_called_by_is_done,
+        next_value := record!.next_value,
+        IsDoneIterator := record!.IsDoneIterator,
+        NextIterator := record!.NextIterator);
 
   record := NewIterator_FreeBandDClass(s, content);
   record!.NextIterator := NextIterator_FreeBandDClassWithPrint;
   record!.ShallowCopy := ShallowCopyLocal;
-   return IteratorByNextIterator(record);
+  return IteratorByNextIterator(record);
 end);
 
 # A free band iteratror has component: content, dclass_iter.
@@ -318,14 +314,14 @@ function(s)
     fi;
   end;
 
-  ShallowCopyLocal := record -> rec(
-    lasr_called_by_is_done := record!.last_called_by_is_done,
-    next_value := record!.next_value,
-    IsDoneIterator := record!.IsDoneIterator,
-    NextIterator := record!.NextIterator );
+  ShallowCopyLocal := record ->
+    rec(last_called_by_is_done := record!.last_called_by_is_done,
+        next_value := record!.next_value,
+        IsDoneIterator := record!.IsDoneIterator,
+        NextIterator := record!.NextIterator);
 
   record := rec(content :=
-                 BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
+                BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
                 dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));
   record!.NextIterator := NextIterator_FreeBand;
   record!.ShallowCopy := ShallowCopyLocal;
@@ -365,8 +361,7 @@ function(elem)
   return;
 end);
 
-InstallMethod(ViewObj,
-"for a free band",
+InstallMethod(ViewObj, "for a free band",
 [IsFreeBandCategory],
 function(S)
   if GAPInfo.ViewLength * 10 < Length(GeneratorsOfMagma(S)) then
@@ -381,8 +376,7 @@ end);
 # TODO Is there a more efficient way to compare elements? JJ
 
 InstallMethod(\=, "for elements of a free band",
-IsIdenticalObj,
-[IsFreeBandElement, IsFreeBandElement],
+IsIdenticalObj, [IsFreeBandElement, IsFreeBandElement],
 function(x, y)
   local i;
 
@@ -401,8 +395,7 @@ end);
 # TODO Is it possible to find a non recursive way to compare elements? JJ
 
 InstallMethod(\<, "for elements of a free band",
-IsIdenticalObj,
-[IsFreeBandElement, IsFreeBandElement],
+IsIdenticalObj, [IsFreeBandElement, IsFreeBandElement],
 function(x, y)
   local i, tuple1, tuple2;
 
@@ -483,8 +476,8 @@ function(x, y)
   fi;
 
   return Objectify(type, rec(tuple := out,
-                   cont := UnionBlist(x!.cont, y!.cont),
-                              word := fail));
+                             cont := UnionBlist(x!.cont, y!.cont),
+                             word := fail));
 end);
 
 #
@@ -517,7 +510,7 @@ end);
 InstallGlobalFunction(SEMIGROUPS_HashFunctionForFreeBandElements,
 function(x, data)
   return ORB_HashFunctionForPlainFlatList(SEMIGROUPS_FreeBandElmToWord(x),
-  data);
+                                          data);
 end);
 
 #
@@ -525,7 +518,6 @@ end);
 InstallMethod(ChooseHashFunction, "for a free band element and int",
 [IsFreeBandElement, IsInt],
 function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements, data :=
-  hashlen);
+  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements,
+             data := hashlen);
 end);
-

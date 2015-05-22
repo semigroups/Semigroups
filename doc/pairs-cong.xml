@@ -1,0 +1,34 @@
+#############################################################################
+##
+#W  pairs-cong.xml
+#Y  Copyright (C) 2015                                      Michael Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="AsLookupTable">
+  <ManSection> 
+    <Attr Name="AsLookupTable" Arg="cong"/>
+    <Returns>A list.</Returns>
+    <Description>
+      This attribute describes the semigroup congruence <A>cong</A> as a list of
+      positive integers with length the size of the semigroup over which
+      <A>cong</A> is defined.<P/>
+
+      Each position in the list corresponds to an element of the semigroup (in
+      the order defined by <C>SSortedList</C>) and the integer at that position
+      is a unique identifier for that element's congruence class under
+      <A>cong</A>.  Hence, two elements are congruent if and only if they have
+      the same number at their two positions in the list.<P/>
+      <Example><![CDATA[
+gap> s := Monoid( [ Transformation( [ 1, 2, 2 ] ),
+>                   Transformation( [ 3, 1, 3 ] ) ] );;
+gap> cong := SemigroupCongruence( s,
+>       [Transformation([1,2,1]),Transformation([2,1,2])] );;
+gap> AsLookupTable(cong);
+[ 1, 2, 3, 4, 5, 6, 3, 2, 1, 6, 5, 1 ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

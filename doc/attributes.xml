@@ -143,8 +143,9 @@ gap> StructureDescriptionSchutzenbergerGroups(S);
       than to find its &D;-classes. <P/>
 
       See also <Ref Attr="PartialOrderOfDClasses"/>,
-      <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
-      <Ref Attr="MinimalIdeal"/>.
+      <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>,
+      <Ref Attr="MinimalIdeal"/> and
+      <Ref Attr="RepresentativeOfMinimalIdeal"/>.
       <Example><![CDATA[
 gap> D:=MinimalDClass(JonesMonoid(8));
 {Bipartition( [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ], [ -1, -2 ], 
@@ -343,7 +344,8 @@ gap> MultiplicativeZero(S);
     It is significantly easier to find the minimal &D;-class of a semigroup,
     than to find its &D;-classes. <P/>
 
-    See also <Ref Attr="PartialOrderOfDClasses"/>,
+    See also <Ref Attr="RepresentativeOfMinimalIdeal"/>,
+    <Ref Attr="PartialOrderOfDClasses"/>,
     <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
     <Ref Attr="MinimalDClass"/>.
     <Example><![CDATA[
@@ -366,6 +368,44 @@ gap> MinimalIdeal(POI(10));
 <partial perm group on 10 pts with 1 generator>
 gap> MinimalIdeal(BrauerMonoid(6));
 <simple bipartition semigroup ideal on 6 pts with 1 generator>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RepresentativeOfMinimalIdeal">
+  <ManSection>
+    <Attr Name="RepresentativeOfMinimalIdeal" Arg="S"/>
+    <Attr Name="RepresentativeOfMinimalDClass" Arg="S"/>
+    <Returns>
+      An element of the minimal ideal of a semigroup.
+    </Returns>
+    <Description>
+      The minimal ideal of a semigroup is the least ideal with respect to
+      containment.<P/>
+      
+      This method returns a representative element of the
+      minimal ideal of <A>S</A> without having
+      to create the minimal ideal itself.<P/>
+    
+      See also <Ref Attr="MinimalIdeal"/> and <Ref Attr="MinimalDClass"/>.
+    <Example><![CDATA[
+gap> S := SymmetricInverseSemigroup(10);;
+gap> RepresentativeOfMinimalIdeal(S);
+<empty partial perm>
+gap> B := Semigroup([
+> Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], [ 4, 5, -3, -4 ],
+>  [ -1, -6 ], [ -5 ] ] ),
+> Bipartition( [ [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -3 ], 
+>  [ 5, 6, -5, -6 ], [ -2, -4 ] ] ) ]);;
+gap> RepresentativeOfMinimalIdeal(B);
+<bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -5, -6 ], 
+ [ -2, -4 ], [ -3 ]>
+gap> S := Semigroup([ Transformation( [ 5, 1, 6, 2, 2, 4 ] ),
+> Transformation( [ 3, 5, 5, 1, 6, 2 ] ) ]);;
+gap> RepresentativeOfMinimalDClass(S);
+Transformation( [ 1, 2, 2, 5, 5, 1 ] )
+gap> MinimalDClass(S);
+{Transformation( [ 1, 2, 2, 5, 5, 1 ] )}]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

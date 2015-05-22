@@ -74,6 +74,7 @@
     <#Include Label="MaximalSubsemigroups2">
     <#Include Label="IsMaximalSubsemigroup">
     <#Include Label="MinimalIdeal">
+    <#Include Label="RepresentativeOfMinimalIdeal">
     <#Include Label="MultiplicativeZero">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 

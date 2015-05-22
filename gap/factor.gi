@@ -15,8 +15,7 @@ InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
 function(o, m, elt)
   local pos, word, factors, out, s, gens, scc, lookup, orbitgraph, genstoapply,
-  lambdaperm, rep, bound, nrgens, stop, one, uword, u, vword, v, f, ex, i, k,
-  l;
+  lambdaperm, rep, bound, nrgens, uword, u, vword, v, f, ex, stop, i, k, l;
 
   if IsBound(o!.factors) then
     if IsBound(o!.factors[m]) then
@@ -70,8 +69,9 @@ function(o, m, elt)
         if not IsBound(ex) then
           nrgens := nrgens + 1;
           factors[nrgens] := Concatenation(uword, [l], vword);
-          ex := Orb([f], one, PROD, rec(hashlen := 2 * bound, schreier := true,
-                log := true));
+          ex := Orb([f], (), PROD, rec(hashlen := 2 * bound,
+                                       schreier := true,
+                                       log := true));
           Enumerate(ex);
         elif not f in ex then
           nrgens := nrgens + 1;
@@ -110,9 +110,9 @@ function(data, pos)
   local word1, word2, schreiergen, schreierpos, schreiermult, orb;
 
   word1 := []; # the word obtained by tracing schreierpos and schreiergen
-             # (left multiplication)
+               # (left multiplication)
   word2 := []; # the word corresponding to multipliers applied (if any)
-             # (right multiplication)
+               # (right multiplication)
 
   schreiergen := data!.schreiergen;
   schreierpos := data!.schreierpos;
@@ -122,8 +122,10 @@ function(data, pos)
 
   while pos > 1 do
     Add(word1, schreiergen[pos]);
-    Append(word2, Reversed(TraceSchreierTreeOfSCCBack(orb[pos][3], orb[pos][2],
-     schreiermult[pos])));
+    Append(word2,
+           Reversed(TraceSchreierTreeOfSCCBack(orb[pos][3],
+                                               orb[pos][2],
+                                               schreiermult[pos])));
     pos := schreierpos[pos];
   od;
 
@@ -159,8 +161,9 @@ function(s, f)
   #compensate for the action of the multipliers, if necessary
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f * LambdaInverse(s)(o[scc[1]],
-     EvaluateWord(o!.gens, word2)));
+    p := LambdaPerm(s)(rep, f *
+                       LambdaInverse(s)(o[scc[1]],
+                                        EvaluateWord(o!.gens, word2)));
   else
     word2 := [];
     p := LambdaPerm(s)(rep, f);
@@ -183,7 +186,7 @@ end);
 InstallMethod(Factorization,
 "for an acting semigroup with inverse op with generators and element",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup,
-IsAssociativeElement],
+ IsAssociativeElement],
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
@@ -215,8 +218,8 @@ function(s, f)
   # compensate for the action of the multipliers
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f
-         * LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(s)(rep, f *
+                       LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
     p := LambdaPerm(s)(rep, f);
@@ -239,7 +242,7 @@ end);
 InstallMethod(Factorization,
 "for a regular acting semigroup with generators and element",
 [IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
-IsAssociativeElement],
+ IsAssociativeElement],
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, p, word2;
 
@@ -275,8 +278,8 @@ function(s, f)
   #JDM: update this as above
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep,
-         f * LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(s)(rep, f *
+                       LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
     p := LambdaPerm(s)(rep, f);
@@ -293,5 +296,3 @@ function(s, f)
 
   return word1;
 end);
-
-#EOF

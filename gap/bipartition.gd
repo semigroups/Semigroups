@@ -8,16 +8,20 @@
 #############################################################################
 ##
 
-DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
-                                 IsAssociativeElementWithStar);
+DeclareCategory("IsBipartition",
+                IsMultiplicativeElementWithInverse and
+                IsAssociativeElementWithStar);
 DeclareCategoryCollections("IsBipartition");
 DeclareCategoryCollections("IsBipartitionCollection");
 
-BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
- IsBipartition, CanEasilySortElements, CanEasilySortElements));
-BindGlobal("BipartitionType", NewType(BipartitionFamily,
-                                      IsBipartition and IsComponentObjectRep 
-                                      and IsAttributeStoringRep));
+BindGlobal("BipartitionFamily",
+           NewFamily("BipartitionFamily",
+                     IsBipartition, CanEasilySortElements,
+                     CanEasilySortElements));
+BindGlobal("BipartitionType",
+           NewType(BipartitionFamily,
+                   IsBipartition and IsComponentObjectRep and
+                   IsAttributeStoringRep));
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
@@ -38,8 +42,8 @@ DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("RandomBipartition", [IsPosInt]);
 
 DeclareOperation("NaturalLeqBlockBijection", [IsBipartition, IsBipartition]);
-DeclareOperation("NaturalLeqPartialPermBipartition", [IsBipartition,
- IsBipartition]);
+DeclareOperation("NaturalLeqPartialPermBipartition",
+                 [IsBipartition, IsBipartition]);
 DeclareOperation("PartialPermLeqBipartition", [IsBipartition, IsBipartition]);
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);

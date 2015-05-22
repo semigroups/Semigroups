@@ -22,8 +22,8 @@ function(S)
 
   reps := ShallowCopy(DClassReps(S));
   p := Sortex(reps, function(x, y)
-    return RankOfPartialPerm(x) > RankOfPartialPerm(y);
-  end);
+                      return RankOfPartialPerm(x) > RankOfPartialPerm(y);
+                    end);
 
   H := List(reps, e -> SchutzenbergerGroup(HClass(S, e)));
   C := []; # the group character matrices
@@ -110,7 +110,7 @@ function(S)
 
   return function(x, y)
     return comp_index(OrbSCCLookup(o)[Position(o, LambdaFunc(S)(x))] - 1,
-      OrbSCCLookup(o)[Position(o, LambdaFunc(S)(y))] - 1);
+                      OrbSCCLookup(o)[Position(o, LambdaFunc(S)(y))] - 1);
   end;
 end);
 
@@ -152,7 +152,7 @@ InstallMethod(IsJoinIrreducible,
 "for an acting semigroup with inverse op and an associative element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
-  local y, elts, i, k, singleline, sup, j;
+  local y, elts, rank, i, k, singleline, sup, j;
 
   if not x in S then
     Error("Semigroups: IsJoinIrreducible: usage,\n",
@@ -167,11 +167,8 @@ function(S, x)
   y := LeftOne(x);
   elts := ShallowCopy(Idempotents(S));
 
-  if IsPartialPermBipartitionSemigroup(S) then
-    Sort(elts, PartialPermLeqBipartition);
-  else
-    elts := Set(elts);
-  fi;
+  rank := ActionRank(S);
+  SortBy(elts, rank);
 
   i := Position(elts, y);
   k := 0;
@@ -193,7 +190,7 @@ function(S, x)
   # Look for other elements smaller than y which are not smaller than k
   for j in [1 .. (k - 1)] do
     if NaturalLeqInverseSemigroup(elts[j], elts[i]) and not
-      NaturalLeqInverseSemigroup(elts[j], elts[k]) then
+        NaturalLeqInverseSemigroup(elts[j], elts[k]) then
       singleline := false;
       break;
     fi;
@@ -201,7 +198,7 @@ function(S, x)
 
   if singleline then
     return true;
-  elif Size(HClass(S, y)) = 1 then
+  elif Size(GreensHClassOfElementNC(S, y)) = 1 then
     return false;
   fi;
 
@@ -209,7 +206,7 @@ function(S, x)
 
   return y <> sup
    and ForAny(HClass(S, y), x -> NaturalLeqInverseSemigroup(sup, x)
-   and x <> y);
+                                 and x <> y);
 end);
 
 # same method for ideals
@@ -290,7 +287,7 @@ function(S)
 
     i := Position(elts, rep);
     k := First([i - 1, i - 2 .. 1],
-          j -> NaturalLeqInverseSemigroup(elts[j], rep));
+               j -> NaturalLeqInverseSemigroup(elts[j], rep));
 
     if k = fail then # d is the minimal non-trivial D-class
       Add(out, d);
@@ -348,7 +345,7 @@ InstallMethod(JoinIrreducibleDClasses,
 [IsActingSemigroupWithInverseOp],
 function(S)
   return Filtered(GreensDClasses(S),
-    x -> IsJoinIrreducible(S, Representative(x)));
+                  x -> IsJoinIrreducible(S, Representative(x)));
 end);
 
 # same method for ideals
@@ -427,7 +424,7 @@ InstallMethod(Minorants,
 "for an acting semigroup with inverse op and associative element collections",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(S, f)
-  local out, elts, i, j, k;
+  local elts, i, out, rank, j, k;
 
   if not f in S then
     Error("Semigroups: Minorants: usage,\n",
@@ -449,11 +446,8 @@ function(S, f)
     elts := ShallowCopy(Elements(S));
   fi;
 
-  if IsPartialPermBipartitionSemigroup(S) then
-    Sort(elts, PartialPermLeqBipartition);
-  else
-    elts := SSortedList(elts);
-  fi;
+  rank := ActionRank(S);
+  SortBy(elts, rank);
 
   i := Position(elts, f);
   j := 0;
@@ -582,8 +576,9 @@ function(S)
     sup := SupremumIdempotentsNC(Minorants(S, e), e);
     trivialse := not ForAny(He, x -> NaturalLeqPartialPerm(sup, x) and x <> e);
 
-    psi := ActionHomomorphism(
-     schutz, Difference(DomainOfPartialPerm(e), DomainOfPartialPerm(sup)));
+    psi := ActionHomomorphism(schutz,
+                              Difference(DomainOfPartialPerm(e),
+                                         DomainOfPartialPerm(sup)));
     psiinv := InverseGeneralMapping(psi);
 
     rho := SmallerDegreePermutationRepresentation(Image(psi));
@@ -602,19 +597,20 @@ function(S)
     for i in orbits do
 
       if not trivialse then
-        stab := ImagesSet(psiinv, ImagesSet(rhoinv,
-         Stabilizer(Image(rho), i[1])));
+        stab := ImagesSet(psiinv,
+                          ImagesSet(rhoinv, Stabilizer(Image(rho), i[1])));
         cosets := RightTransversal(schutz, stab);
         stabpp := ImagesSet(sigmainv, stab);
       fi;
 
-      ##### Generate representatives for all the H-Classes in the R-Class of He
+      # Generate representatives for all the H-Classes in the R-Class of He
       h := HClassReps(RClassNC(d, e));
       nrcosets := Size(h) * Length(cosets);
 
       # Generate representatives for ALL the cosets the generator will act
-      #on  #### Divide every H-Class in the R-Class into 'cosets' like stab in
-      #He
+      # on
+      # Divide every H-Class in the R-Class into 'cosets' like stab in
+      # He
       j := 0;
       reps := [];
       lookup := EmptyPlist(Length(LambdaOrb(d)));
@@ -627,7 +623,7 @@ function(S)
       od;
       ShrinkAllocationPlist(lookup);
 
-      ##### Loop over old generators of S to calculate its action on the cosets
+      # Loop over old generators of S to calculate its action on the cosets
       for j in [1 .. Length(oldgens)] do
 
         gen := oldgens[j];
@@ -646,7 +642,7 @@ function(S)
             else
               ## Below, could be ^sigma instead of AsPermutation
               subbox := PositionCanonical(cosets,
-               AsPermutation(rep * h[box] ^ (- 1)));
+                                          AsPermutation(rep * h[box] ^ (- 1)));
             fi;
             Add(newgens[j], (box - 1) * Length(cosets) + subbox + offset);
           fi;
@@ -659,10 +655,11 @@ function(S)
 
   # Return identity mapping if nothing has been accomplished; else the result.
   if NrMovedPoints(T) > NrMovedPoints(S)
-    or (NrMovedPoints(T) = NrMovedPoints(S)
-        and ActionDegree(T) >= ActionDegree(S)) then
+      or (NrMovedPoints(T) = NrMovedPoints(S)
+          and ActionDegree(T) >= ActionDegree(S)) then
     return IdentityMapping(S);
   else
+    # gaplint: ignore 3
     return MagmaIsomorphismByFunctionsNC(S, T,
       x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x)),
       x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x)));
@@ -692,7 +689,7 @@ function(coll, type)
 
     if IsList(coll) and IsEmpty(coll) then
       return Bipartition(Concatenation([1 .. DegreeOfBipartition(type)],
-        - [1 .. DegreeOfBipartition(type)]));
+                                       - [1 .. DegreeOfBipartition(type)]));
     elif not IsBipartitionCollection(coll) then
       Error("Semigroups: SupremumIdempotentsNC: usage,\n",
             "the argument must be a collection of block bijections,");
@@ -720,8 +717,8 @@ function(coll, type)
 
   elif IsBipartition(type) and IsPartialPermBipartition(type) then
     #FIXME shouldn't there be a check here like above?
-    return AsBipartition(SupremumIdempotentsNC(
-      List(coll, AsPartialPerm), PartialPerm([])));
+    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm),
+                                               PartialPerm([])));
   else
     Error("Semigroups: SupremumIdempotentsNC: usage,\n",
           "the argument must be a collection of partial perms, block ",
@@ -746,7 +743,7 @@ function(S)
     local dom;
     dom := Set(elts * (x ^ -1));
     return PartialPermNC(List(dom, y -> Position(elts, y)),
-     List(List(dom, y -> y * x), y -> Position(elts, y)));
+                         List(List(dom, y -> y * x), y -> Position(elts, y)));
   end;
 
   for i in [1 .. Length(gens)] do
@@ -758,6 +755,3 @@ function(S)
 
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
-
-#
-

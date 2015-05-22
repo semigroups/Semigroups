@@ -59,23 +59,23 @@ InstallMethod(\in,
 "for an associative element and acting semigroup",
 [IsAssociativeElement, IsActingSemigroup],
 function(f, s)
-  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, new,
-  lookfunc, schutz, ind, reps, repslens, max, membership, lambdaperm,
+  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup,
+  lookfunc, new, schutz, ind, reps, repslens, max, membership, lambdaperm,
   oldrepslens, found, n, i;
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-     and ActionDegree(f) <> ActionDegree(s))
-    or (ActionDegree(f) > ActionDegree(s)) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(s)
+          and ActionDegree(f) <> ActionDegree(s))
+      or (ActionDegree(f) > ActionDegree(s)) then
     return false;
   fi;
 
   if not (IsMonoid(s) and IsOne(f)) then
     if Length(Generators(s)) > 0
-      and ActionRank(s)(f) >
+        and ActionRank(s)(f) >
         MaximumList(List(Generators(s), f -> ActionRank(s)(f))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-       "semigroup.");
+           "semigroup.");
       return false;
     fi;
   fi;
@@ -83,7 +83,7 @@ function(f, s)
   if HasMinimalIdeal(s) then
     if ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
       Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-       "semigroup.");
+           "semigroup.");
       return false;
     fi;
   fi;
@@ -127,7 +127,7 @@ function(f, s)
   new := false;
 
   if l = fail then
-  # rho is not already known, so we look for it
+    # rho is not already known, so we look for it
     if IsClosed(rhoo) then
       return false;
     fi;
@@ -148,7 +148,7 @@ function(f, s)
   fi;
 
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
-  # lambda-rho-combination not yet seen
+    # lambda-rho-combination not yet seen
     if IsClosedData(data) then
       return false;
     fi;
@@ -289,16 +289,12 @@ end);
 # same method for ideals
 
 InstallMethod(Length, "for semigroup data", [IsSemigroupData],
-function(data)
-  return Length(data!.orbit);
-end);
+data -> Length(data!.orbit));
 
 # same method for ideals
 
 InstallMethod(Enumerate, "for semigroup data", [IsSemigroupData],
-function(data)
-  return Enumerate(data, infinity, ReturnFalse);
-end);
+data -> Enumerate(data, infinity, ReturnFalse));
 
 # same method for ideals
 
@@ -325,7 +321,7 @@ function(data, limit, lookfunc)
   rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m,
   rhox, l, ind, pt, schutz, data_val, old, j, n;
 
- if lookfunc <> ReturnFalse then
+  if lookfunc <> ReturnFalse then
     looking := true;
   else
     looking := false;
@@ -534,7 +530,7 @@ function(data, limit, lookfunc)
 
         pt := [s, m, o, x, false, nr];
       else
-      # old lambda-rho combination
+        # old lambda-rho combination
         ind := lambdarhoht[l][m];
         pt := [s, m, o, x, false, nr + 1];
 
@@ -542,13 +538,13 @@ function(data, limit, lookfunc)
         schutz := LambdaOrbStabChain(o, m);
 
         if schutz = true then
-        # the Schutzenberger group is the symmetric group
+          # the Schutzenberger group is the symmetric group
           graph[i][j] := repslookup[m][ind][1];
           rho_orbitgraph[rholookup[i]][j] := l;
           continue;
         else
           if schutz = false then
-          # the Schutzenberger group is trivial
+            # the Schutzenberger group is trivial
             data_val := htvalue(ht, x);
             if data_val <> fail then
               graph[i][j] := data_val;
@@ -556,7 +552,7 @@ function(data, limit, lookfunc)
               continue;
             fi;
           else
-          # the Schutzenberger group is neither trivial nor symmetric group
+            # the Schutzenberger group is neither trivial nor symmetric group
             old := false;
             for n in [1 .. repslens[m][ind]] do
               if membership(schutz, lambdaperm(reps[m][ind][n], x)) then
@@ -636,18 +632,12 @@ end);
 # not currently applicable for ideals
 
 InstallMethod(OrbitGraph, "for semigroup data",
-[IsSemigroupData],
-function(data)
-  return data!.graph;
-end);
+[IsSemigroupData], data -> data!.graph);
 
 # not currently applicable for ideals
 
 InstallMethod(OrbitGraphAsSets, "for semigroup data",
-[IsSemigroupData],
-function(data)
-  return List(data!.graph, Set);
-end);
+[IsSemigroupData], data -> List(data!.graph, Set));
 
 # returns the index of the representative of the R-class containing x in the
 # parent of data. Note that this depends on the state of the data, it only
@@ -775,8 +765,8 @@ function(data)
   Print("semigroup ");
 
   Print("data with ", Length(data!.orbit) - 1, " reps, ",
-   Length(LambdaOrb(data!.parent)) - 1, " lambda-values, ",
-   Length(RhoOrb(data!.parent)) - 1, " rho-values>");
+        Length(LambdaOrb(data!.parent)) - 1, " lambda-values, ",
+        Length(RhoOrb(data!.parent)) - 1, " rho-values>");
   return;
 end);
 
@@ -784,10 +774,7 @@ end);
 # have one.
 
 InstallMethod(String, "for the universal fake one",
-[IsUniversalFakeOne],
-function(obj)
-  return "<universal fake one>";
-end);
+[IsUniversalFakeOne], obj -> "<universal fake one>");
 
 InstallMethod(\*,
 "for the universal fake one and an associative element",
@@ -808,5 +795,3 @@ InstallMethod(\<, "for the universal fake one and an associative element",
 
 InstallMethod(\<, "for an associative element and the universal fake one",
 [IsAssociativeElement, IsUniversalFakeOne], ReturnFalse);
-
-#EOF

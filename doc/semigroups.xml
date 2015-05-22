@@ -337,3 +337,22 @@ gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(5), func);
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="Random">
+  <ManSection>
+    <Meth Name="Random" Arg="S" Label="for a semigroup"/>
+    <Returns>A random element.</Returns>
+    <Description>
+      This function returns a random element of the semigroup <A>S</A>.
+      If the elements of <A>S</A> have been calculated, then one of these
+      is chosen randomly.
+
+      Otherwise, if the data  structure for <A>S</A> is known,
+      then a random element of a randomly chosen &R;-class is returned. 
+      
+      If the data structure for <A>S</A> has not been calculated, then a short
+      product (at most <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>) of
+      generators is returned. 
+       
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
