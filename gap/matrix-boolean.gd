@@ -32,6 +32,16 @@ DeclareGlobalFunction("BooleanMatNC");
 
 DeclareOperation("RandomBooleanMat", [IsPosInt]);
 
+#TODO implement these!
+
+DeclareProperty("IsSymmetricBooleanMat", IsBooleanMat);
+DeclareProperty("IsAntiSymmetricBooleanMat", IsBooleanMat);
+DeclareProperty("IsTransitiveBooleanMat", IsBooleanMat);
+DeclareProperty("IsReflexiveBooleanMat", IsBooleanMat);
+
+#TODO synonyms for IsPartialOrderBooleanMat, IsEquivalenceRelationBooleanMat,
+#etc
+
 #############################################################################
 ## Declarations specifically for Boolean mats
 #############################################################################

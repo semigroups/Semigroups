@@ -24,7 +24,6 @@ x -> Objectify(MatrixOverPrimeFieldType, x));
 InstallMethod(BaseField, "for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> GF(x![DimensionOfMatrixOverSemiring(x) + 1]));
 
-
 InstallMethod(\*, "for matrices over a prime field", 
 [IsMatrixOverPrimeField, IsMatrixOverPrimeField],
 function(x, y)

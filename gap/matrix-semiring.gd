@@ -28,3 +28,5 @@ DeclareGlobalFunction("SEMIGROUPS_HashFunctionMatrixOverSemiring");
 
 DeclareAttribute("TypeViewStringOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("TypePrintStringOfMatrixOverSemiring", IsMatrixOverSemiring);
+
+DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
