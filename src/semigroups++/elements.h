@@ -619,7 +619,7 @@ namespace std {
       size_t seed = 0;
       size_t pow = 101;
       for (size_t i = 0; i < x.degree(); i++) {
-        for (auto it = x.at(i)->cbegin(); it != x.at(i)->end(); it++) { 
+        for (auto it = x.at(i)->cbegin(); it != x.at(i)->cend(); it++) { 
           seed = (seed * pow) + (*it);
         }
       }

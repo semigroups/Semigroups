@@ -29,7 +29,7 @@ bool IS_PLIST_F (Obj x) {
   return IS_PLIST(x);
 }
 
-unsigned long long LEN_PLIST_F (Obj x) {
+Int LEN_PLIST_F (Obj x) {
   return LEN_PLIST(x);
 }
 
