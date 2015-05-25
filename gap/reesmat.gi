@@ -143,4 +143,122 @@ function(filter, n)
   return ReesZeroMatrixSemigroup(Group(()), mat);
 end);
 
-#EOF
+InstallMethod(IsInverseSemigroup,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local U, mat, n, seen, mat_elts, G, i, j;
+
+  U := UnderlyingSemigroup(R);
+  mat := Matrix(R);
+
+  if HasIsInverseSemigroup(U) and not IsInverseSemigroup(U) then
+    return false;
+  fi;
+
+  if HasIsRegularSemigroup(U) and not IsRegularSemigroup(U) then
+    return false;
+  fi;
+
+  if HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)) then
+    return false;
+  fi;
+
+  if HasGroupOfUnits(U) and GroupOfUnits(U) = fail then
+    return false;
+  fi;
+
+  # Check that the matrix is square
+  n := Length(mat);
+  if Length(mat[1]) <> n then
+    return false;
+  fi;
+
+  # Check that each column of mat contains exactly one non-zero entry
+  # Also collect the non-zero entries of mat
+  seen := BlistList([1 .. n], []);
+  mat_elts := [];
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if mat[j][i] <> 0 then
+        if seen[i] then
+          return false;
+        else
+          seen[i] := true;
+          AddSet(mat_elts, mat[j][i]);
+        fi;
+      fi;
+    od;
+    if not seen[i] then
+      return false;
+    fi;
+  od;
+
+  # Check that each row of mat contains exactly one non-zero entry
+  seen := BlistList([1 ..n], []);
+  for j in [1 .. n] do
+    for i in [1 .. n] do
+      if mat[j][i] <> 0 then
+        if seen[j] then
+          return false;
+        else
+          seen[j] := true;
+        fi;
+      fi;
+    od;
+    if not seen[j] then
+      return false;
+    fi;
+  od;
+
+  # Get the group of units
+  G := GroupOfUnits(U);
+  if G = fail then
+    return false;
+  fi;
+
+  # Get that mat is over G^0
+  if ForAny(mat_elts, x -> not x in G) then
+    return false;
+  fi;
+
+  return IsInverseSemigroup(U);
+end);
+
+InstallMethod(Idempotents,
+"for an inverse Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup and IsInverseSemigroup],
+function(R)
+  local mat, I, star, e, k, out, i, j, x;
+
+  mat := Matrix(R);
+  I := Rows(R);
+  star := EmptyPlist(Length(I));
+  for i in I do
+    for j in I do
+      if mat[j][i] <> 0 then
+        star[i] := j;
+        break;
+      fi;
+    od;
+  od;
+
+  e := Idempotents(UnderlyingSemigroup(R));
+  k := 1;
+  out := EmptyPlist(NrIdempotents(R));
+  out[k] := MultiplicativeZero(R);
+
+  for i in I do
+    for x in e do
+      k := k + 1;
+      out[k] := RMSElement(R, i, x * mat[star[i]][i] ^ -1, star[i]);
+    od;
+  od;
+
+  return out;
+end);
+
+InstallMethod(NrIdempotents,
+"for an inverse Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup and IsInverseSemigroup],
+x -> NrIdempotents(UnderlyingSemigroup(x)) * Length(Rows(x)) + 1);
