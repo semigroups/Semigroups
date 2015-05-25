@@ -201,14 +201,14 @@ PartitionedBinaryRelation* PBRConverter::convert (Obj o, size_t n) {
 }
 
 Obj PBRConverter::unconvert (PartitionedBinaryRelation* x) {
-  Obj plist = NEW_PLIST(T_PLIST_TAB, x->degree() + 1);
+  Obj plist = NEW_PLIST(T_PLIST, x->degree() + 1);
   SET_LEN_PLIST(plist, x->degree() + 1);
   SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree() / 2));
   for (u_int32_t i = 0; i < x->degree(); i++) {
     size_t m = x->at(i)->size();
     Obj adj = NEW_PLIST(T_PLIST_CYC, m);
     SET_LEN_PLIST(adj, m);
-    size_t j = 2;
+    size_t j = 1;
     for (auto it = x->at(i)->cbegin(); it != x->at(i)->cend(); it++) { 
       SET_ELM_PLIST(adj, j++, INTOBJ_INT((*it) + 1));
     }
