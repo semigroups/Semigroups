@@ -185,14 +185,14 @@ PartitionedBinaryRelation* PBRConverter::convert (Obj o, size_t n) {
   assert(IS_PBR(o));
   assert(n / 2 == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
 
-  std::vector<std::unordered_set<u_int32_t> > pbr;
+  std::vector<std::unordered_set<u_int32_t>*> pbr;
   pbr.reserve(n);
 
   for (u_int32_t i = 0; i < n; i++) {
     Obj adj = ELM_PLIST(o, i + 2);
-    std::unordered_set<u_int32_t> next;
+    auto next = new std::unordered_set<u_int32_t>();
     for (u_int32_t j = 1; j <= LEN_PLIST(adj); j++) {
-      next.insert(INT_INTOBJ(ELM_PLIST(adj, j)) - 1);
+      next->insert(INT_INTOBJ(ELM_PLIST(adj, j)) - 1);
       // assumes that adj is duplicate-free
     }
     pbr.push_back(next);
@@ -205,11 +205,11 @@ Obj PBRConverter::unconvert (PartitionedBinaryRelation* x) {
   SET_LEN_PLIST(plist, x->degree() + 1);
   SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree() / 2));
   for (u_int32_t i = 0; i < x->degree(); i++) {
-    size_t m = x->at(i).size();
+    size_t m = x->at(i)->size();
     Obj adj = NEW_PLIST(T_PLIST_CYC, m);
     SET_LEN_PLIST(adj, m);
     size_t j = 1;
-    for (auto it = x->at(i).begin(); it != x->at(i).end(); ++it) { 
+    for (auto it = x->at(i)->cbegin(); it != x->at(i)->cend(); ++it) { 
       SET_ELM_PLIST(adj, j++, INTOBJ_INT(*it));
     }
     SET_ELM_PLIST(plist, i + 1, adj);
