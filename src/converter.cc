@@ -208,11 +208,11 @@ Obj PBRConverter::unconvert (PartitionedBinaryRelation* x) {
     size_t m = x->at(i)->size();
     Obj adj = NEW_PLIST(T_PLIST_CYC, m);
     SET_LEN_PLIST(adj, m);
-    size_t j = 1;
-    for (auto it = x->at(i)->cbegin(); it != x->at(i)->cend(); ++it) { 
-      SET_ELM_PLIST(adj, j++, INTOBJ_INT(*it));
+    size_t j = 2;
+    for (auto it = x->at(i)->cbegin(); it != x->at(i)->cend(); it++) { 
+      SET_ELM_PLIST(adj, j++, INTOBJ_INT((*it) + 1));
     }
-    SET_ELM_PLIST(plist, i + 1, adj);
+    SET_ELM_PLIST(plist, i + 2, adj);
     CHANGED_BAG(plist);
   }
   return CALL_2ARGS(Objectify, PartitionedBinaryRelationType, plist);
