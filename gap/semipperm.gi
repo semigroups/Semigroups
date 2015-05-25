@@ -568,11 +568,12 @@ end);
 
 InstallMethod(RepresentativeOfMinimalIdealNC,
 "for a partial perm semigroup",
-[IsPartialPermSemigroup],
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local gens, nrgens, domain, rank, deg, range, codeg, smallest_I_n, n,
-  min_rank, min_rank_index, len, in_nbs, labels, collapsed, nr_collapsed,
-  in_range, i, act, pos, marked, squashed, elts, j, m, k, empty_map;
+  local gens, empty_map, nrgens, domain, rank, deg, range, codeg,
+  smallest_I_n, n, min_rank, min_rank_index, len, in_nbs, labels, collapsed,
+  nr_collapsed, in_range, i, act, pos, marked, squashed, elts, j, t, dom, seen,
+  m, k, im;
 
   # Is it possible to not have the generators of a partial perm semigroup?
   gens := GeneratorsOfSemigroup(S);
@@ -587,10 +588,13 @@ function(S)
 
   # RankOfPartialPermSemigroup      Size of union of the domains of the gens
   rank := Length(domain);
-  if rank = 0 then
-    #Print("Rank 0,\n");
-    return gens[1];
-  fi;
+
+  # rank = 0 iff S = {<empty_map>}, so empty_map must be in the gens?
+
+#  if rank = 0 then
+#    Print("Semigroup has rank 0,\n");
+#    return gens[1];
+#  fi;
 
   # DegreeOfPartialPermSemigroup    Largest point in any domain
   deg := Maximum(domain);
@@ -602,17 +606,15 @@ function(S)
   # Smallest n such that S <= I_n
   smallest_I_n := Maximum(deg, codeg); 
   
-  if rank = 1 then
-    #Print("Rank 1: ");
+  if rank = 1 then # what about if Length(range) = 1?
     if domain = range then
       # Either trivial semigroup or 0-simple semigroup of order 2
       # We know not the latter since <empty mapping> not a generator
-      #Print("trivial semigroup,\n");
       return gens[1];
-    else
-      #Print("null semigroup of order 2,\n");
-      return PartialPerm([], []);
     fi;
+    # "else:"
+    # null semigroup of order 2
+    return empty_map;
   fi;
 
   n := rank;
@@ -621,9 +623,11 @@ function(S)
   min_rank := n;
   for i in [1 .. nrgens] do
     rank := RankOfPartialPerm(gens[i]);
-    if rank = 0 then
-      return gens[i];
-    elif rank < min_rank then
+    #if rank = 0 then # isnt this true iff gens[i] = empty_map? Which it's not?
+    #  Print("found a generator of rank 0,\n");
+    #  return gens[i];
+    #fi;
+    if rank < min_rank then
       min_rank := rank;
       min_rank_index := i;
     fi;
@@ -635,7 +639,7 @@ function(S)
     return gens[1];
   fi;
 
-  #Print("Minimum rank: ", min_rank, " for ", gens[min_rank_index]);
+  #Print("Minimum rank is ", min_rank, ", for:\n", gens[min_rank_index], ",\n");
 
   # Should probably be done with hash tables
   len := Length(range);
@@ -656,7 +660,7 @@ function(S)
         break;
       fi;
       if in_range[act] then
-        pos := PositionSorted(range, act); # WW make better. Has table?
+        pos := PositionSorted(range, act); # WW make better. Hash table?
         Add(in_nbs[pos], m);
         Add(labels[pos], j);
         if collapsed[pos] then
@@ -666,13 +670,18 @@ function(S)
     od;
   od;
 
+  # Do we already know that every point be mapped to NULL?
+  # If so, <empty mapping> \in S
   if nr_collapsed = len then
-    return PartialPerm([], []);
+    #Print("After constructing the graph we find every point is collapsible,");
+    #Print("\n");
+    return empty_map;
   fi;
 
-  marked := BlistList([1 .. len], []);
+  # Otherwise find a word describing
+  marked := BlistList([1 .. codeg], []);
   squashed := [len + 1];
-  elts := EmptyPlist(len);
+  elts := EmptyPlist(codeg);
   for i in squashed do
     for k in [1 .. Length(in_nbs[i])] do
       j := in_nbs[i][k];
@@ -688,11 +697,27 @@ function(S)
     od;
   od;
 
+  # Can every point be mapped to NULL? If so, <empty mapping> \in S
   if Length(squashed) = len + 1 then
-    return PartialPerm([], []);
+    #Print("After analysing the graph we find every point is collapsible,\n");
+    return empty_map;
   fi;
-  TryNextMethod();
-  Print("Not got this far yet: <empty partial perm> isn't in this semigroup,");
-  return fail;
-end);
 
+  t := gens[min_rank_index];
+  while true do
+    im := ImageListOfPartialPerm(t);
+    seen := false;
+    for i in im do
+      if marked[i] then
+        t := t * EvaluateWord(gens, elts[i]);
+        seen := true;
+        break;
+      fi;
+    od;
+    if not seen then
+      break;
+    fi;
+  od;
+
+  return t;
+end);
