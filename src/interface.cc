@@ -112,7 +112,8 @@ class Interface : public InterfaceBase {
     size_t size () {
       return _semigroup->size(_report);
     }
-    
+   
+    //TODO comment this out!
     size_t simple_size () {
       return _semigroup->simple_size();
     }

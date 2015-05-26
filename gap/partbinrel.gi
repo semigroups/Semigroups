@@ -49,7 +49,7 @@ function(x)
 
   n := x![1];
   for i in [2 .. 2 * n + 1] do
-    if Length(x![i]) < n then
+    if Length(x![i]) < 2 * n then
       return false;
     fi;
   od;
@@ -233,9 +233,9 @@ function(x)
       Add(out[i + 1], []);
       for k in x![j + 1] do 
         if k > n then 
-          Add(out[i + 1][j - n * i], - (k - n));
+          AddSet(out[i + 1][j - n * i], - (k - n));
         else
-          Add(out[i + 1][j- n * i], k);
+          AddSet(out[i + 1][j- n * i], k);
         fi;
       od;
     od;
@@ -318,12 +318,14 @@ function(x, y)
   local n, i;
 
   n := x![1];
-  for i in [1 .. 2 * n] do 
-    if x![i] > y![i] then 
+  for i in [1 .. 2 * n] do
+    if x![i] < y![i] then
+      return true;
+    elif x![i] > y![i] then
       return false;
     fi;
   od;
-  return true;
+  return false;
 end);
 
 InstallMethod(One, "for a partitioned binary relation",
