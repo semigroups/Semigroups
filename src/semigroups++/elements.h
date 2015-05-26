@@ -480,7 +480,7 @@ namespace std {
 // partitioned binary relations
 
 class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
-  //TODO equality operator
+  
   public:
   
     PartitionedBinaryRelation (u_int32_t degree, 
@@ -493,22 +493,10 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
         }
       }
     
-    //TODO is this necessary?
     PartitionedBinaryRelation (std::vector<std::vector<u_int32_t> >
                                const& data)
-      : Element<std::vector<u_int32_t> >(data) { }/*
-        _data = new std::vector<std::vector<u_int32_t> >();
-        _data->reserve(data.size());
-        for (size_t i = 0; i < data.size(); i++) {
-          _data->push_back(std::vector<u_int32_t>(data.at(i)));
-        }
-    }*/
+      : Element<std::vector<u_int32_t> >(data) { }
     
-    //TODO is this necessary?
-    /*Element* copy () const {
-      return new PartitionedBinaryRelation(*_data);
-    }*/
-
     //FIXME this allocates lots of memory on every call, maybe better to keep
     //the data in the class and overwrite it.
     //FIXME also we repeatedly search in the same part of the graph, and so
