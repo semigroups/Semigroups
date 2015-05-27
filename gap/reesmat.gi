@@ -152,20 +152,24 @@ function(R)
   U := UnderlyingSemigroup(R);
   mat := Matrix(R);
 
-  if HasIsInverseSemigroup(U) and not IsInverseSemigroup(U) then
-    return false;
-  fi;
+  if IsGroup(U) then
+    G := U;
+  else
+    if HasIsInverseSemigroup(U) and not IsInverseSemigroup(U) then
+      return false;
+    fi;
 
-  if HasIsRegularSemigroup(U) and not IsRegularSemigroup(U) then
-    return false;
-  fi;
+    if HasIsRegularSemigroup(U) and not IsRegularSemigroup(U) then
+      return false;
+    fi;
 
-  if HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)) then
-    return false;
-  fi;
+    if HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)) then
+      return false;
+    fi;
 
-  if HasGroupOfUnits(U) and GroupOfUnits(U) = fail then
-    return false;
+    if HasGroupOfUnits(U) and GroupOfUnits(U) = fail then
+      return false;
+    fi;
   fi;
 
   # Check that the matrix is square
@@ -212,9 +216,11 @@ function(R)
   od;
 
   # Get the group of units
-  G := GroupOfUnits(U);
-  if G = fail then
-    return false;
+  if not IsBound(G) then
+    G := GroupOfUnits(U);
+    if G = fail then
+      return false;
+    fi;
   fi;
 
   # Get that mat is over G^0
@@ -258,7 +264,70 @@ function(R)
   return out;
 end);
 
+# The following works for RZMS's over groups
+
+InstallMethod(Idempotents,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local U, iso, inv, out, mat, i, j;
+
+  U := UnderlyingSemigroup(R);
+  if IsGroup(U) then
+    iso := IdentityMapping(U);
+    inv := iso;
+  elif IsGroupAsSemigroup(U) <> fail then
+    iso := IsomorphismPermGroup(U);
+    inv := InverseGeneralMapping(iso);
+  else
+    TryNextMethod();
+  fi;
+
+  out := EmptyPlist(NrIdempotents(R));
+  out[1] := MultiplicativeZero(R);
+
+  mat := Matrix(R);
+  for i in Rows(R) do
+    for j in Columns(R) do
+      if mat[j][i] <> 0 then
+        Add(out, RMSElement(R, i, ((mat[j][i] ^ iso) ^ -1) ^ inv, j));
+      fi;
+    od;
+  od;
+
+  return out;
+end);
+
+#
+
 InstallMethod(NrIdempotents,
 "for an inverse Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup and IsInverseSemigroup],
 x -> NrIdempotents(UnderlyingSemigroup(x)) * Length(Rows(x)) + 1);
+
+# The following works for RZMS's over groups
+
+InstallMethod(NrIdempotents,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local U, count, mat, row, i;
+
+  U := UnderlyingSemigroup(R);
+  if not IsGroup(U) and IsGroupAsSemigroup(U) = fail then
+    TryNextMethod();
+  fi;
+
+  count := 1;
+
+  mat := Matrix(R);
+  for row in mat do
+    for i in row do
+      if i <> 0 then
+        count := count + 1;
+      fi;
+    od;
+  od;
+
+  return count;
+end);
