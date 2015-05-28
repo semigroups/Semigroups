@@ -195,9 +195,6 @@ function(R)
       return false;
     fi;
   od;
-  if not ForAll(seen_col, x -> x = true) then
-    return false;
-  fi;
 
   # Get the group of units
   if not IsBound(G) then
