@@ -664,7 +664,7 @@ function(S)
   # For each collapsible image point analyse graph find a word to collapse it
   collapsible := BlistList([1 .. codeg], []);
   squashed := [lenrange + 1];
-  elts := List([1 .. codeg], x -> []);
+  elts := List([1 .. lenrange + 1], x -> []);
   for i in squashed do
     for k in [1 .. Length(in_nbs[i])] do
       j := in_nbs[i][k];
