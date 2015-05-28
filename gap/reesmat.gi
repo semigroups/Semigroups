@@ -182,13 +182,13 @@ function(R)
   mat_elts := [];
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if mat[j][i] <> 0 then
+      if mat[i][j] <> 0 then
         if seen_row[i] or seen_col[j] then
           return false;
         fi;
         seen_row[i] := true;
         seen_col[j] := true;
-        AddSet(mat_elts, mat[j][i]);
+        AddSet(mat_elts, mat[i][j]);
       fi;
     od;
     if not seen_row[i] then

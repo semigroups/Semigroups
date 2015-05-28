@@ -697,6 +697,199 @@ true
 #gap> RMSInducedFunction(R, (4,7), gam, ());
 #[ true, [ (), (), (), (), (), (), (), () ] ]
 
+#T# ReesMatTest100: IsInverseSemigroup (easy true examples)
+gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> IsInverseSemigroup(R);
+true
+gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+true
+
+#
+gap> T := Semigroup(Transformation([2, 1]));
+<commutative transformation semigroup on 2 pts with 1 generator>
+gap> IsGroupAsSemigroup(T);
+true
+gap> R := ReesZeroMatrixSemigroup(T, [[Transformation([2, 1])]]);
+<Rees 0-matrix semigroup 1x1 over <transformation group 
+  on 2 pts with 1 generator>>
+gap> IsInverseSemigroup(R);
+true
+gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+true
+
+#T# ReesMatTest101: IsInverseSemigroup (false because of underlying semigroup)
+gap> x := Transformation([1, 1, 2]);;
+gap> T := Semigroup(x);;
+gap> IsInverseSemigroup(T);
+false
+gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
+  on 3 pts with 1 generator>>
+gap> IsInverseSemigroup(R);
+false
+gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+false
+
+# T is known not to be regular
+gap> T := Semigroup(x);;
+gap> IsRegularSemigroup(T);
+false
+gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+false
+
+# T is known not to be a monoid
+gap> T := Semigroup(x);;
+gap> IsMonoidAsSemigroup(T);
+false
+gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+false
+
+# T is known not to have group of units
+gap> T := Semigroup(x);;
+gap> GroupOfUnits(T);
+fail
+gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+false
+
+# T does not have a group of units
+gap> T := Semigroup(x);;
+gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [0, x ^ 2]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+false
+
+#T# ReesMatTest102: IsInverseSemigroup (false because of matrix)
+gap> S := Semigroup(SymmetricInverseMonoid(5));
+<partial perm monoid on 5 pts with 4 generators>
+gap> id := Identity(S);
+<identity partial perm on [ 1, 2, 3, 4, 5 ]>
+gap> zero := MultiplicativeZero(S);
+<empty partial perm>
+
+# Non-square matrix
+gap> R := ReesZeroMatrixSemigroup(S, [[zero, id]]);
+<Rees 0-matrix semigroup 2x1 over <partial perm monoid on 5 pts
+ with 4 generators>>
+gap> IsInverseSemigroup(R);
+false
+
+# Non-diagonal matrix: Rows or columns without precisely one non-zero entry
+gap> R := ReesZeroMatrixSemigroup(S, [[0, id, 0], [id, 0, 0], [0, 0, 0]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> R := ReesZeroMatrixSemigroup(S, [[0, 0, 0], [id, 0, 0], [0, id, 0]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> R := ReesZeroMatrixSemigroup(S, [[0, 0, id], [id, id, 0], [0, id, 0]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> R := ReesZeroMatrixSemigroup(S, [[0, id, 0], [0, id, 0], [0, id, 0]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [id, id, 0], [0, id, 0]]);;
+gap> IsInverseSemigroup(R);
+false
+
+# Matrix entries not in the group of units
+gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, 0, id], [0, zero, 0]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> y := PartialPerm([1,2,3,4,0]);
+<identity partial perm on [ 1, 2, 3, 4 ]>
+gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, 0, id], [0, y, 0]]);;
+gap> IsInverseSemigroup(R);
+false
+
+# Semigroup is not an inverse monoid
+gap> T := FullTransformationMonoid(5);;
+gap> R := ReesZeroMatrixSemigroup(T, [[Identity(T)]]);;
+gap> IsInverseSemigroup(R);
+false
+
+# Example which returns true
+gap> y := PartialPerm([4, 3, 5, 1, 2]);;
+gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, id, 0], [0, 0, y]]);;
+gap> IsInverseSemigroup(R);
+true
+
+#T# ReesMatTest103: NrIdempotents and Idempotents for an inverse RZMS
+gap> S := SymmetricInverseMonoid(4);
+<symmetric inverse semigroup on 4 pts>
+gap> x := PartialPerm([2, 1, 4, 3]);;
+gap> y := PartialPerm([2, 4, 3, 1]);;
+gap> R := ReesZeroMatrixSemigroup(S, [[0, x], [y, 0]]);
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+gap> IsInverseSemigroup(R);
+true
+gap> NrIdempotents(R);
+33
+gap> NrIdempotents(R) = NrIdempotents(S) * Length(Rows(R)) + 1;
+true
+gap> idems := Idempotents(R);;
+gap> IsDuplicateFreeList(idems);
+true
+gap> Length(idems) = NrIdempotents(R);
+true
+gap> ForAll(R, x -> x in R or not IsIdempotent(x));
+true
+
+#T# ReesMatTest104: NrIdempotents and Idempotents (for a RZMS over a group)
+gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> NrIdempotents(R);
+2
+gap> Idempotents(R);
+[ 0, (1,(),1) ]
+gap> Idempotents(R) = Elements(R);
+true
+gap> IsBand(R);
+true
+
+#
+gap> x := Transformation([2, 1]);;
+gap> T := Semigroup(x);
+<commutative transformation semigroup on 2 pts with 1 generator>
+gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
+  on 2 pts with 1 generator>>
+gap> NrIdempotents(R);
+4
+gap> Idempotents(R);
+[ 0, (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
+  (2,IdentityTransformation,2) ]
+gap> ForAll(Idempotents(R), x -> x * x = x);
+true
+gap> ForAll(R, x -> x in Idempotents(R) or not IsIdempotent(x));
+true
+
+#
+gap> x := Transformation([1, 1, 2]);;
+gap> T := Semigroup(x);
+<commutative transformation semigroup on 3 pts with 1 generator>
+gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [0, x ^ 2]]);
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
+  on 3 pts with 1 generator>>
+gap> NrIdempotents(R);
+3
+gap> Idempotents(R);
+[ 0, (1,Transformation( [ 1, 1, 1 ] ),1), (2,Transformation( [ 1, 1, 1 ] ),2) 
+ ]
+gap> ForAll(Idempotents(R), x -> x * x = x);
+true
+gap> ForAll(R, x -> x in Idempotents(R) or not IsIdempotent(x));
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(f1);
 gap> Unbind(f2);
@@ -738,6 +931,8 @@ gap> Unbind(i);
 gap> Unbind(iso);
 gap> Unbind(y);
 gap> Unbind(x);
+gap> Unbind(id);
+gap> Unbind(zero);
 
 #E#
 gap> STOP_TEST( "Semigroups package: reesmat.tst");
