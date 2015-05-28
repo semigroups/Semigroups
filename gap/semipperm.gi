@@ -570,12 +570,11 @@ InstallMethod(RepresentativeOfMinimalIdealNC,
 "for a partial perm semigroup",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local gens, empty_map, nrgens, domain, rank, deg, range, codeg,
-  smallest_I_n, n, min_rank, min_rank_index, len, in_nbs, labels, collapsed,
-  nr_collapsed, in_range, i, act, pos, marked, squashed, elts, j, t, dom, seen,
-  m, k, im;
+  local gens, empty_map, nrgens, min_rank, doms, ims, rank, min_rank_index,
+  domain, range, lenrange, deg, codeg, in_nbs, labels, positions, collapsed,
+  nr_collapsed, i, act, pos, collapsible, squashed, elts, j, t, im,
+  reduced_rank, m, k;
 
-  # Is it possible to not have the generators of a partial perm semigroup?
   gens := GeneratorsOfSemigroup(S);
   empty_map := PartialPerm([], []);
   if empty_map in gens then
@@ -583,138 +582,118 @@ function(S)
   fi;
   nrgens := Length(gens);
 
-  # DomainOfPartialPermCollection   Union of the domains of the gens
-  domain := DomainOfPartialPermCollection(gens);
-
-  # RankOfPartialPermSemigroup      Size of union of the domains of the gens
-  rank := Length(domain);
-
-  # rank = 0 iff S = {<empty_map>}, so empty_map must be in the gens?
-
-#  if rank = 0 then
-#    Print("Semigroup has rank 0,\n");
-#    return gens[1];
-#  fi;
-
-  # DegreeOfPartialPermSemigroup    Largest point in any domain
-  deg := Maximum(domain);
-  # ImageOfPartialPermCollection    Union of the images of the gens
-  range := ImageOfPartialPermCollection(gens);
-  # CodegreeOfPartialPermSemigroup  Largest point in any range
-  codeg := Maximum(range);
-
-  # Smallest n such that S <= I_n
-  smallest_I_n := Maximum(deg, codeg); 
-  
-  if rank = 1 then # what about if Length(range) = 1?
-    if domain = range then
-      # Either trivial semigroup or 0-simple semigroup of order 2
-      # We know not the latter since <empty mapping> not a generator
-      return gens[1];
-    fi;
-    # "else:"
-    # null semigroup of order 2
-    return empty_map;
-  fi;
-
-  n := rank;
   # Find the minimum rank of a generator
-  # WW: Is this worth it?
-  min_rank := n;
+  min_rank := infinity;
+  doms := EmptyPlist(nrgens);
+  ims := EmptyPlist(nrgens);
   for i in [1 .. nrgens] do
-    rank := RankOfPartialPerm(gens[i]);
-    #if rank = 0 then # isnt this true iff gens[i] = empty_map? Which it's not?
-    #  Print("found a generator of rank 0,\n");
-    #  return gens[i];
-    #fi;
+    doms[i] := DomainOfPartialPerm(gens[i]);
+    ims[i] := ImageListOfPartialPerm(gens[i]);
+    rank := Length(doms[i]);
     if rank < min_rank then
       min_rank := rank;
       min_rank_index := i;
+      if min_rank = 1 then
+        if not IsIdempotent(gens[i]) then
+          return empty_map;
+        fi;
+      fi;
     fi;
   od;
 
-  if min_rank = n and domain = range then
+  # Union of the domains and images of the gens
+  domain := Union(doms);
+  rank := Length(domain);
+  range := Union(ims);
+  lenrange := Length(range);
+  deg := Maximum(domain);
+  codeg := Maximum(range);
+
+  if min_rank = rank and domain = range then
     SetIsGroupAsSemigroup(S, true);
-    #Print("A semigroup of permtations as partial permutations,\n");
     return gens[1];
   fi;
 
-  #Print("Minimum rank is ", min_rank, ", for:\n", gens[min_rank_index], ",\n");
+  if rank = 1 or lenrange = 1 then
+    # note that domain <> range otherwise we match the previous if statement.
+    # S must contain the empty map: all generators have rank 1
+    # And one of those generators has domain <> range
+    return empty_map;
+  fi;
 
-  # Should probably be done with hash tables
-  len := Length(range);
-  in_nbs := List([1 .. len + 1], x -> []);
-  labels := List([1 .. len + 1], x -> []);
-  collapsed := BlistList([1 .. len], []);
+  # The labelled action graph, defined by in-neighbours
+  # Vertex lenrange + 1 corresponds to NULL
+  in_nbs := List([1 .. lenrange + 1], x -> []);
+  labels := List([1 .. lenrange + 1], x -> []);
+  positions := EmptyPlist(codeg);
+  for m in [1 .. lenrange] do
+    positions[range[m]] := m;
+  od;
+
+  # Record of which image points (and how many) can be mapped to NULL
+  collapsed := BlistList([1 .. lenrange], []);
   nr_collapsed := 0;
-  in_range := BlistList([1 .. smallest_I_n], range);
-  for m in [1 .. len] do
+
+  for m in [1 .. lenrange] do
     i := range[m];
     for j in [1 .. nrgens] do
       act := i ^ gens[j];
       if act = 0 then
-        Add(in_nbs[len + 1], m);
-        Add(labels[len + 1], j);
+        Add(in_nbs[lenrange + 1], m);
+        Add(labels[lenrange + 1], j);
         collapsed[m] := true;
         nr_collapsed := nr_collapsed + 1;
         break;
       fi;
-      if in_range[act] then
-        pos := PositionSorted(range, act); # WW make better. Hash table?
-        Add(in_nbs[pos], m);
-        Add(labels[pos], j);
-        if collapsed[pos] then
-          break;
-        fi;
+      pos := positions[act];
+      Add(in_nbs[pos], m);
+      Add(labels[pos], j);
+      if collapsed[pos] then
+        collapsed[m] := true;
+        nr_collapsed := nr_collapsed + 1;
+        break;
       fi;
     od;
   od;
 
-  # Do we already know that every point be mapped to NULL?
-  # If so, <empty mapping> \in S
-  if nr_collapsed = len then
-    #Print("After constructing the graph we find every point is collapsible,");
-    #Print("\n");
+  # Do we know that every point be mapped to NULL? If so, empty_map is in S
+  if nr_collapsed = lenrange then
     return empty_map;
   fi;
 
-  # Otherwise find a word describing
-  marked := BlistList([1 .. codeg], []);
-  squashed := [len + 1];
-  elts := EmptyPlist(codeg);
+  # For each collapsible image point analyse graph find a word to collapse it
+  collapsible := BlistList([1 .. codeg], []);
+  squashed := [lenrange + 1];
+  elts := List([1 .. codeg], x -> []);
   for i in squashed do
     for k in [1 .. Length(in_nbs[i])] do
       j := in_nbs[i][k];
-      if not marked[j] then
-        marked[j] := true;
-        if i = len + 1 then
-          elts[j] := [labels[i][k]];
-        else
-          elts[j] := Concatenation([labels[i][k]], elts[i]);
-        fi;
+      if not collapsible[j] then
+        collapsible[j] := true;
+        elts[j] := Concatenation([labels[i][k]], elts[i]);
         Add(squashed, j);
       fi;
     od;
   od;
 
-  # Can every point be mapped to NULL? If so, <empty mapping> \in S
-  if Length(squashed) = len + 1 then
-    #Print("After analysing the graph we find every point is collapsible,\n");
+  # Can every point be mapped to NULL? If so, empty_map is in S
+  if Length(squashed) = lenrange + 1 then
     return empty_map;
   fi;
 
+  # empty_map is not in S; now multiply generators to minimize rank
   t := gens[min_rank_index];
   while true do
     im := ImageListOfPartialPerm(t);
-    seen := false;
+    reduced_rank := false;
     for i in im do
-      if marked[i] then
+      if collapsible[i] then
         t := t * EvaluateWord(gens, elts[i]);
-        seen := true;
+        reduced_rank := true;
         break;
       fi;
     od;
-    if not seen then
+    if not reduced_rank then
       break;
     fi;
   od;

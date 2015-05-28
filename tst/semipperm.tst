@@ -58,6 +58,14 @@ true
 gap> empty_map in s;
 true
 
+# S = 0-simple semigroup of order 2
+gap> s := Semigroup(empty_map, PartialPerm([1],[1]));
+<commutative partial perm monoid on 1 pts with 1 generator>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
 # empty_map is a generator 
 gap> s := Semigroup(PartialPerm([1, 2, 3], [1, 3, 4]), empty_map); 
 <partial perm semigroup on 3 pts with 2 generators>
@@ -66,7 +74,7 @@ true
 gap> empty_map in s;
 true
 
-# Rank of size 1
+# Length(DomainOfPartialPermCollection) of size 1
 gap> s := Semigroup(PartialPerm([2], [1]));
 <commutative partial perm semigroup on 1 pts with 1 generator>
 gap> RepresentativeOfMinimalIdeal(s) = empty_map;
@@ -74,7 +82,7 @@ true
 gap> empty_map in s;
 true
 
-# Rank of size 1
+# Length(DomainOfPartialPermCollection) of size 1
 gap> s := Semigroup(PartialPerm([2], [2]), PartialPerm([2], [3]));
 <partial perm semigroup on 1 pts with 2 generators>
 gap> RepresentativeOfMinimalIdeal(s) = empty_map;
@@ -82,7 +90,40 @@ true
 gap> empty_map in s;
 true
 
+# Length(DomainOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([2], [4]), PartialPerm([2], [3]));
+<partial perm semigroup on 1 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Length(ImageOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([2], [2]), PartialPerm([3], [2]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Length(ImageOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([4], [2]), PartialPerm([3], [2]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
 # Construction of graph reveals that empty_map in S
+gap> s := Semigroup(PartialPerm([2, 0, 0, 4, 0]),
+> PartialPerm([3, 0, 0, 0, 5]));
+<partial perm semigroup on 3 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Rank 1 generator is not idempotent
 gap> s := Semigroup(PartialPerm([3],[2]), PartialPerm([2],[1]));
 <partial perm semigroup on 2 pts with 2 generators>
 gap> RepresentativeOfMinimalIdeal(s) = empty_map;
@@ -90,8 +131,16 @@ true
 gap> empty_map in s;
 true
 
-# Analysis of graph reveals that empty_map in S (but not construction)
+# Rank 1 generator is not idempotent
 gap> s := Semigroup(PartialPerm([2],[1]), PartialPerm([3],[2]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Analysis of graph reveals that empty_map in S (but not construction)
+gap> s := Semigroup(PartialPerm([3, 2, 0]), PartialPerm([2, 3, 0]));
 <partial perm semigroup on 2 pts with 2 generators>
 gap> RepresentativeOfMinimalIdeal(s) = empty_map;
 true
