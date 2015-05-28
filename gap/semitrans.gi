@@ -410,7 +410,7 @@ end);
 #
 
 InstallMethod(RepresentativeOfMinimalIdealNC, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
@@ -723,5 +723,3 @@ function(filter, n)
   SetMultiplicativeZero(out, zero);
   return out;
 end);
-
-#EOF
