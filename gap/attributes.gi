@@ -682,15 +682,29 @@ end);
 # same method for inverse/ideals
 
 InstallMethod(RepresentativeOfMinimalIdeal,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  if IsSemigroupIdeal(S) and
+      (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
+      or not HasGeneratorsOfSemigroup(S)) then
+    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
+  fi;
+
+  # This catches known trivial semigroups
+  # WW: The idea is to quickly get at an arbitrary element of the semigroup
+  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+    return GeneratorsOfSemigroup(S)[1];
+  fi;
+
+  return RepresentativeOfMinimalIdealNC(S);
+end);
+
+InstallMethod(RepresentativeOfMinimalIdealNC,
 "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local rank, o, pos, min, len, m, i;
-
-  if IsSemigroupIdeal(S)
-      and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
-    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  fi;
 
   rank := LambdaRank(S);
   o := LambdaOrb(S);

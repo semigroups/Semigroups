@@ -409,25 +409,13 @@ end);
 
 #
 
-InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
+InstallMethod(RepresentativeOfMinimalIdealNC, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
 
-  if IsSemigroupIdeal(S) and
-   (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
-   or not HasGeneratorsOfSemigroup(S)) then
-    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  fi;
-
   gens := GeneratorsOfSemigroup(S);
-
-  # This catches T_1. This also catches known trivial semigroups.
-  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
-    return gens[1];
-  fi;
-
   nrgens := Length(gens);
   n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
                                            # We must have n >= 2.
