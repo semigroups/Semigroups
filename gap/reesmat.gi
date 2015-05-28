@@ -17,7 +17,7 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 InstallMethod(ViewString,
 "for a Rees 0-matrix subsemigroup ideal with ideal generators",
 [IsReesZeroMatrixSubsemigroup and IsSemigroupIdeal and
-HasGeneratorsOfSemigroupIdeal],
+ HasGeneratorsOfSemigroupIdeal],
 function(I)
   local str, nrgens;
 
@@ -41,7 +41,7 @@ function(I)
   if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
     Append(str, "\>inverse\< ");
   elif HasIsRegularSemigroup(I)
-   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+      and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
     if IsRegularSemigroup(I) then
       Append(str, "\>regular\< ");
     else
@@ -76,10 +76,7 @@ function(R)
 end);
 
 InstallMethod(MatrixEntries, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
-function(R)
-  return Union(Matrix(R){Columns(R)}{Rows(R)});
-end);
+[IsReesZeroMatrixSemigroup], x -> Union(Matrix(x){Columns(x)}{Rows(x)}));
 
 #
 
@@ -199,7 +196,7 @@ function(R)
   od;
 
   # Check that each row of mat contains exactly one non-zero entry
-  seen := BlistList([1 ..n], []);
+  seen := BlistList([1 .. n], []);
   for j in [1 .. n] do
     for i in [1 .. n] do
       if mat[j][i] <> 0 then
