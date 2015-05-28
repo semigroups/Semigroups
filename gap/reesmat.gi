@@ -144,12 +144,12 @@ InstallMethod(IsInverseSemigroup,
 "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(R)
-  local U, mat, n, seen, mat_elts, G, i, j;
+  local U, mat, G, n, seen_row, seen_col, mat_elts, seen, i, j;
 
   U := UnderlyingSemigroup(R);
   mat := Matrix(R);
 
-  if IsGroup(U) then
+  if IsGroup(U) or HasIsGroupAsSemigroup(U) and IsGroupAsSemigroup(U) then
     G := U;
   else
     if HasIsInverseSemigroup(U) and not IsInverseSemigroup(U) then
@@ -175,42 +175,29 @@ function(R)
     return false;
   fi;
 
-  # Check that each column of mat contains exactly one non-zero entry
+  # Check that each row and column of mat contains exactly one non-zero entry
   # Also collect the non-zero entries of mat
-  seen := BlistList([1 .. n], []);
+  seen_row := BlistList([1 .. n], []);
+  seen_col := BlistList([1 .. n], []);
   mat_elts := [];
   for i in [1 .. n] do
     for j in [1 .. n] do
       if mat[j][i] <> 0 then
-        if seen[i] then
+        if seen_row[i] or seen_col[j] then
           return false;
-        else
-          seen[i] := true;
-          AddSet(mat_elts, mat[j][i]);
         fi;
+        seen_row[i] := true;
+        seen_col[j] := true;
+        AddSet(mat_elts, mat[j][i]);
       fi;
     od;
-    if not seen[i] then
+    if not seen_row[i] then
       return false;
     fi;
   od;
-
-  # Check that each row of mat contains exactly one non-zero entry
-  seen := BlistList([1 .. n], []);
-  for j in [1 .. n] do
-    for i in [1 .. n] do
-      if mat[j][i] <> 0 then
-        if seen[j] then
-          return false;
-        else
-          seen[j] := true;
-        fi;
-      fi;
-    od;
-    if not seen[j] then
-      return false;
-    fi;
-  od;
+  if not ForAll(seen_col, x -> x = true) then
+    return false;
+  fi;
 
   # Get the group of units
   if not IsBound(G) then
@@ -273,7 +260,7 @@ function(R)
   if IsGroup(U) then
     iso := IdentityMapping(U);
     inv := iso;
-  elif IsGroupAsSemigroup(U) <> fail then
+  elif IsGroupAsSemigroup(U) <> fail and IsGroupAsSemigroup(U) then
     iso := IsomorphismPermGroup(U);
     inv := InverseGeneralMapping(iso);
   else
@@ -311,7 +298,8 @@ function(R)
   local U, count, mat, row, i;
 
   U := UnderlyingSemigroup(R);
-  if not IsGroup(U) and IsGroupAsSemigroup(U) = fail then
+  if not IsGroup(U)
+      and (IsGroupAsSemigroup(U) = fail or not IsGroupAsSemigroup(U)) then
     TryNextMethod();
   fi;
 
