@@ -264,8 +264,6 @@ gap> StructureDescription(H);
 #T# ReesMatTest19: Random
 gap> Random(V);;
 gap> List(U, Random);;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `*' on 2 arguments
 
 #gap> ForAll([1..5], x-> last[x] in U[x]);
 #false
@@ -890,6 +888,116 @@ true
 gap> ForAll(R, x -> x in Idempotents(R) or not IsIdempotent(x));
 true
 
+#T# ReesMatTest105: IsInverseSemigroup and Idempotents using sub-RZMS
+gap> S := SymmetricInverseMonoid(4);;
+gap> x := PartialPerm([2, 1, 4, 3]);;
+gap> y := PartialPerm([2, 4, 3, 1]);;
+gap> z := PartialPerm([0, 0, 0, 0]);;
+gap> R := ReesZeroMatrixSemigroup(S, [[x, x, 0], [y, 0, 0], [0, 0, x]]);
+<Rees 0-matrix semigroup 3x3 over <symmetric inverse semigroup on 4 pts>>
+gap> IsInverseSemigroup(R);
+false
+
+#
+gap> T := Semigroup(RMSElement(R, 1, x, 1));
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 1 generator>
+gap> IsInverseSemigroup(T);
+true
+gap> IsReesZeroMatrixSemigroup(T);
+false
+gap> NrIdempotents(T);
+1
+gap> Idempotents(T);
+[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1) ]
+gap> T := Semigroup(RMSElement(R, 1, x, 1));
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 1 generator>
+gap> IsReesZeroMatrixSemigroup(T);
+false
+gap> NrIdempotents(T);
+1
+gap> Idempotents(T);
+[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1) ]
+gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 1 generator>
+gap> IsInverseSemigroup(T);
+true
+gap> NrIdempotents(T);
+1
+gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
+gap> IsInverseSemigroup(T);
+true
+gap> Idempotents(T);
+[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
+gap> NrIdempotents(T);
+1
+gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
+gap> Idempotents(T);
+[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
+gap> SetIsInverseSemigroup(T, true);
+gap> Idempotents(T);
+[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+
+#
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2, 3]);
+<Rees 0-matrix semigroup 2x3 over <symmetric inverse semigroup on 4 pts>>
+gap> IsInverseSemigroup(T);
+false
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2]);
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+gap> IsInverseSemigroup(T);
+false
+gap> T := ReesZeroMatrixSubsemigroup(R, [1, 2], S, [2, 3]);
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+gap> IsInverseSemigroup(T);
+false
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 3]);
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+gap> IsInverseSemigroup(T);
+true
+gap> NrIdempotents(T);
+33
+gap> idems := Idempotents(T);;
+gap> ForAll(T, x -> x in idems or not IsIdempotent(x));
+true
+gap> R := ReesZeroMatrixSemigroup(S, [[z, x, 0], [0, 0, y]]);;
+gap> IsInverseSemigroup(R);
+false
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2]);;
+gap> NrIdempotents(T);
+33
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2]);;
+gap> idems := Idempotents(T);;
+gap> ForAll(T, x -> IsIdempotent(x) and x in idems or not IsIdempotent(x));
+true
+gap> G := GroupOfUnits(S);;
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [1, 2]);
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 96 generators>
+gap> SetUnderlyingSemigroup(T, G);
+gap> IsInverseSemigroup(T);
+true
+gap> NrIdempotents(T);
+3
+gap> Idempotents(T);
+[ 0, (2,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1), 
+  (3,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [1, 2]);;
+gap> SetUnderlyingSemigroup(T, G);
+gap> SetIsInverseSemigroup(T, true);
+gap> NrIdempotents(T);
+3
+gap> Idempotents(T);
+[ 0, (2,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1), 
+  (3,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [1, 2]);;
+gap> SetUnderlyingSemigroup(T, G);
+gap> NrIdempotents(T);
+3
+gap> Idempotents(T);
+[ 0, (2,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1), 
+  (3,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(f1);
 gap> Unbind(f2);
@@ -933,6 +1041,7 @@ gap> Unbind(y);
 gap> Unbind(x);
 gap> Unbind(id);
 gap> Unbind(zero);
+gap> Unbind(idems);
 
 #E#
 gap> STOP_TEST( "Semigroups package: reesmat.tst");

@@ -141,10 +141,14 @@ function(filter, n)
 end);
 
 InstallMethod(IsInverseSemigroup,
-"for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+"for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U, mat, G, n, seen_row, seen_col, mat_elts, seen, i, j;
+  local U, mat, G, seen_col, mat_elts, seen_row_i, i, j;
+
+  if not IsReesZeroMatrixSemigroup(R) then
+    TryNextMethod();
+  fi;
 
   U := UnderlyingSemigroup(R);
   mat := Matrix(R);
@@ -170,28 +174,27 @@ function(R)
   fi;
 
   # Check that the matrix is square
-  n := Length(mat);
-  if Length(mat[1]) <> n then
+  if Length(Columns(R)) <> Length(Rows(R)) then
     return false;
   fi;
 
   # Check that each row and column of mat contains exactly one non-zero entry
   # Also collect the non-zero entries of mat
-  seen_row := BlistList([1 .. n], []);
-  seen_col := BlistList([1 .. n], []);
+  seen_col := BlistList([1 .. Length(mat[1])], []);
   mat_elts := [];
-  for i in [1 .. n] do
-    for j in [1 .. n] do
+  for i in Columns(R) do
+    seen_row_i := false;
+    for j in Rows(R) do
       if mat[i][j] <> 0 then
-        if seen_row[i] or seen_col[j] then
+        if seen_row_i or seen_col[j] then
           return false;
         fi;
-        seen_row[i] := true;
+        seen_row_i := true;
         seen_col[j] := true;
         AddSet(mat_elts, mat[i][j]);
       fi;
     od;
-    if not seen_row[i] then
+    if not seen_row_i then
       return false;
     fi;
   od;
@@ -213,16 +216,21 @@ function(R)
 end);
 
 InstallMethod(Idempotents,
-"for an inverse Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup and IsInverseSemigroup],
+"for an inverse Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup and IsInverseSemigroup],
 function(R)
-  local mat, I, star, e, k, out, i, j, x;
+  local mat, I, J, star, e, k, out, i, j, x;
+
+  if not IsReesZeroMatrixSemigroup(R) then
+    TryNextMethod();
+  fi;
 
   mat := Matrix(R);
   I := Rows(R);
+  J := Columns(R);
   star := EmptyPlist(Length(I));
   for i in I do
-    for j in I do
+    for j in J do
       if mat[j][i] <> 0 then
         star[i] := j;
         break;
@@ -248,10 +256,14 @@ end);
 # The following works for RZMS's over groups
 
 InstallMethod(Idempotents,
-"for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+"for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
 function(R)
   local U, iso, inv, out, mat, i, j;
+
+  if not IsReesZeroMatrixSemigroup(R) then
+    TryNextMethod();
+  fi;
 
   U := UnderlyingSemigroup(R);
   if IsGroup(U) then
@@ -282,17 +294,26 @@ end);
 #
 
 InstallMethod(NrIdempotents,
-"for an inverse Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup and IsInverseSemigroup],
-x -> NrIdempotents(UnderlyingSemigroup(x)) * Length(Rows(x)) + 1);
+"for an inverse Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup and IsInverseSemigroup],
+function(R)
+  if not IsReesZeroMatrixSemigroup(R) then
+    TryNextMethod();
+  fi;
+  return NrIdempotents(UnderlyingSemigroup(R)) * Length(Rows(R)) + 1;
+end);
 
 # The following works for RZMS's over groups
 
 InstallMethod(NrIdempotents,
-"for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+"for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U, count, mat, row, i;
+  local U, count, mat, i, j;
+
+  if not IsReesZeroMatrixSemigroup(R) then
+    TryNextMethod();
+  fi;
 
   U := UnderlyingSemigroup(R);
   if not IsGroup(U)
@@ -303,9 +324,9 @@ function(R)
   count := 1;
 
   mat := Matrix(R);
-  for row in mat do
-    for i in row do
-      if i <> 0 then
+  for i in Rows(R) do
+    for j in Columns(R) do
+      if mat[j][i] <> 0 then
         count := count + 1;
       fi;
     od;
