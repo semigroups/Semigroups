@@ -350,14 +350,14 @@ gap> ForAll(d, f-> (f^F)^G=f);
 true
 
 #T# TestInstall19: from JS' MultiplicativeZero.tst
-gap> s:=InverseMonoid( PartialPerm( [1,2,3,4] ),
-> PartialPerm( [1,3,2,4] ),
-> PartialPerm( [1,2,0,0] ),
-> PartialPerm( [1,0,0,4] ) );;
-gap> f := PartialPerm( [1,0,0,0] );;
+gap> s := InverseMonoid(PartialPerm([1, 2, 3, 4]),
+> PartialPerm([1, 3, 2, 4]),
+> PartialPerm([1, 2, 0, 0]),
+> PartialPerm([1, 0, 0, 4]));;
+gap> f := PartialPerm([1, 0, 0, 0]);;
 gap> f in s;
 true
-gap> ForAll(s, x -> f*x = f and x*f = f );
+gap> ForAll(s, x -> f * x = f and x * f = f );
 true
 gap> f;
 <identity partial perm on [ 1 ]>
@@ -974,7 +974,32 @@ gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 gap> NrCongruenceClasses(cong);
 169
 
-#T# TestInstall63: Bug fixed by changeset 949553d
+#T# TestInstall63: Issue 127:
+# Bug in Enumerate for an acting semigroup ideal that knows it is regular at its
+# point of creation. 
+gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)], 
+>                     [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
+>                     [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2)], 
+>                     [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0]],
+>                    [[Z(2^2), Z(2)^0, Z(2^2), Z(2)^0], 
+>                     [Z(2^2)^2, Z(2^2), Z(2^2)^2, Z(2^2)],
+>                     [Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2^2)^2],
+>                     [Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2^2)^2]],
+>                    [[0*Z(2), Z(2^2)^2, 0*Z(2), Z(2)^0], 
+>                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0],
+>                     [Z(2^2), Z(2)^0, 0*Z(2), 0*Z(2)],
+>                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
+<semigroup with 3 generators>
+gap> T := AsTransformationSemigroup(S);
+<transformation monoid on 256 pts with 2 generators>
+gap> Size(T);
+21
+gap> I := SemigroupIdeal(T, Idempotents(T));
+<regular transformation semigroup ideal on 256 pts with 8 generators>
+gap> Size(I);
+21
+
+#T# TestInstall64: Bug fixed by changeset 949553d
 gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup on 2 pts with 2 generators>
 gap> Size(s);
