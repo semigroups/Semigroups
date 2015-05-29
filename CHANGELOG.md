@@ -17,6 +17,15 @@ is introduced, along with new methods for `Idempotents` and
 `NrIdempotents` for inverse Rees 0-matrix semigroups
 [[Wilf Wilson](http://wilf.me)]
 
+* The documentation for congruences has been improved and new tests have
+been added.
+
+
+###Issue Resolved in Version 2.4
+
+* The universal congruence specified by generating pairs on a (0-)simple
+semigroup no longer causes an error. [[Michael Torpey]]
+	
 ## Version 2.4 
 This is a minor release including several bugfixes, and
 improvements in performance, and some new features.
