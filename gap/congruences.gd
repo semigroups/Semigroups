@@ -26,10 +26,11 @@ DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
 
 DeclareSynonym("CongruenceClasses", EquivalenceClasses);
 DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
-DeclareAttribute("NrCongruenceClasses", IsSemigroupCongruence);
 DeclareOperation("\*", [IsEquivalenceClass, IsList]);
 DeclareOperation("\*", [IsList, IsEquivalenceClass]);
 
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
         [IsSemigroupCongruence]);
-DeclareAttribute("AsLookupTable", IsSemigroupCongruence);
+DeclareAttribute("AsLookupTable", IsEquivalenceRelation);
+DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
+DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);

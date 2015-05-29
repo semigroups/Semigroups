@@ -14,7 +14,6 @@
 
 DeclareCategory("IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
-DeclareOperation("Enumerate", [IsSemigroupCongruence, IsFunction]);
 
 #
 
@@ -48,9 +47,20 @@ end);
 
 # TODO Make finite semigroup congruences be set as such at creation
 # TODO Make IsFinite method for IsSemigroupCongruence
+
+for Filter in [IsSemigroupCongruence,
+               IsLeftSemigroupCongruence,
+               IsRightSemigroupCongruence] do
+
+#
+  
+DeclareOperation("Enumerate", [Filter, IsFunction]);
+
+#
+
 InstallImmediateMethod(IsFinite,
 "for a semigroup congruence",
-IsSemigroupCongruence and HasRange,
+Filter and HasRange,
 0,
 function(cong)
   if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
@@ -63,7 +73,7 @@ end);
 
 InstallMethod(\in,
 "for dense list and semigroup congruence",
-[IsDenseList, IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+[IsDenseList, Filter and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
   local s, elms, p1, p2, table, find, lookfunc;
   # Input checks
@@ -108,7 +118,7 @@ end);
 
 InstallMethod(AsLookupTable,
 "for semigroup congruence",
-[IsSemigroupCongruence],
+[Filter],
 function(cong)
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
     Error("Semigroups: AsLookupTable: usage,\n",
@@ -119,12 +129,11 @@ function(cong)
   return AsLookupTable(cong);
 end);
 
-# FIXME this should be a method for IsSemigroupCongruenceData not
-# IsSemigroupCongruence
+#
 
 InstallMethod(Enumerate,
 "for a semigroup congruence and a function",
-[IsSemigroupCongruence, IsFunction],
+[Filter, IsFunction],
 function(cong, lookfunc)
   if HasAsLookupTable(cong) then
     return fail;
@@ -151,8 +160,11 @@ function(data, lookfunc)
   pairstoapply := data!.pairstoapply;
   ht := data!.ht;
 
-  right := RightCayleyGraphSemigroup(s);
-  left := LeftCayleyGraphSemigroup(s);
+  if IsRightSemigroupCongruence(cong) then
+    right := RightCayleyGraphSemigroup(s);
+  elif IsLeftSemigroupCongruence(cong) then
+    left := LeftCayleyGraphSemigroup(s);
+  fi;
 
   genstoapply := [1 .. Size(right[1])];
   i := data!.pos;
@@ -177,31 +189,37 @@ function(data, lookfunc)
   while i < nr do
     i := i + 1;
     x := pairstoapply[i];
-    for j in genstoapply do
-      # Add the pair's left-multiples
-      y := [right[x[1]][j], right[x[2]][j]];
-      if y[1] <> y[2] and HTValue(ht, y) = fail then
-        HTAdd(ht, y, true);
-        nr := nr + 1;
-        pairstoapply[nr] := y;
-        UF_UNION(ufdata, y);
-        if lookfunc(data, y) then
-          found := true;
+    # Add the pair's left-multiples
+    if IsLeftSemigroupCongruence(cong) then
+      for j in genstoapply do
+        y := [left[x[1]][j], left[x[2]][j]];
+        if y[1] <> y[2] and HTValue(ht, y) = fail then
+          HTAdd(ht, y, true);
+          nr := nr + 1;
+          pairstoapply[nr] := y;
+          UF_UNION(ufdata, y);
+          if lookfunc(data, y) then
+            found := true;
+          fi;
         fi;
-      fi;
+      od;
+    fi;
 
+    if IsRightSemigroupCongruence(cong) then
       # Add the pair's right-multiples
-      y := [left[x[1]][j], left[x[2]][j]];
-      if y[1] <> y[2] and HTValue(ht, y) = fail then
-        HTAdd(ht, y, true);
-        nr := nr + 1;
-        pairstoapply[nr] := y;
-        UF_UNION(ufdata, y);
-        if lookfunc(data, y) then
-          found := true;
+      for j in genstoapply do
+        y := [right[x[1]][j], right[x[2]][j]];
+        if y[1] <> y[2] and HTValue(ht, y) = fail then
+          HTAdd(ht, y, true);
+          nr := nr + 1;
+          pairstoapply[nr] := y;
+          UF_UNION(ufdata, y);
+          if lookfunc(data, y) then
+            found := true;
+          fi;
         fi;
-      fi;
-    od;
+      od;
+    fi;
 
     if found then
       # Save our place
@@ -209,7 +227,6 @@ function(data, lookfunc)
       data!.found := found;
       return data;
     fi;
-
   od;
 
   # "Normalise" the table for clean lookup
@@ -235,7 +252,7 @@ end);
 
 InstallMethod(EquivalenceClasses,
 "for a semigroup congruence",
-[IsSemigroupCongruence],
+[Filter],
 function(cong)
   local classes, next, tab, elms, i;
   
@@ -295,7 +312,7 @@ end);
 
 InstallMethod(\=,
 "for two finite semigroup congruences",
-[IsSemigroupCongruence and IsFinite, IsSemigroupCongruence and IsFinite],
+[Filter and IsFinite, Filter and IsFinite],
 function(cong1, cong2)
   return Range(cong1) = Range(cong2) and
          AsLookupTable(cong1) = AsLookupTable(cong2);
@@ -320,7 +337,7 @@ end);
 
 InstallMethod(ImagesElm,
 "for a semigroup congruence and an associative element",
-[IsSemigroupCongruence, IsAssociativeElement],
+[Filter, IsAssociativeElement],
 function(cong, elm)
   local elms, lookup, classNo;
   elms := AsSSortedList(Range(cong));
@@ -342,7 +359,7 @@ end);
 
 InstallMethod(NrCongruenceClasses,
 "for a semigroup congruence with generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+[Filter and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
   local s;
   s := Range(cong);
@@ -459,7 +476,7 @@ end);
 
 InstallMethod(ViewObj,
 "for a semigroup congruence",
-[IsSemigroupCongruence],
+[Filter],
 1,
 function(cong)
   Print("<semigroup congruence over ");
@@ -475,7 +492,7 @@ end);
 
 InstallMethod(PrintObj,
 "for a semigroup congruence",
-[IsSemigroupCongruence],
+[Filter],
 1,
 function(cong)
   Print("SemigroupCongruence( ");
@@ -488,3 +505,5 @@ function(cong)
 end);
 
 #
+
+od;
