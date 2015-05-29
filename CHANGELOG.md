@@ -18,13 +18,15 @@ is introduced, along with new methods for `Idempotents` and
 [[Wilf Wilson](http://wilf.me)]
 
 * The documentation for congruences has been improved and new tests have
-been added.
+been added. [Michael Torpey]
 
+* A `UniversalSemigroupCongruence` object now returns a much smaller set
+of generating pairs. [Michael Torpey]
 
 ###Issue Resolved in Version 2.4
 
 * The universal congruence specified by generating pairs on a (0-)simple
-semigroup no longer causes an error. [[Michael Torpey]]
+semigroup no longer causes an error. [Michael Torpey]
 	
 ## Version 2.4 
 This is a minor release including several bugfixes, and
