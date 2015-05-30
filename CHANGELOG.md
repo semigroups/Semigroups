@@ -4,6 +4,30 @@
 #### Copyright (C) 2011-15 James D. Mitchell
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.5
+
+###New Features in Version 2.5
+
+* Semigroups of partial permutations now have a polynomial time
+(quadratic in the degree) algorithm for computing the minimal ideal
+[[Wilf Wilson](http://wilf.me)]
+
+* A more efficient `IsInverseSemigroup` method for Rees 0-matrix semigroups
+is introduced, along with new methods for `Idempotents` and
+`NrIdempotents` for inverse Rees 0-matrix semigroups
+[[Wilf Wilson](http://wilf.me)]
+
+* The documentation for congruences has been improved and new tests have
+been added. [Michael Torpey]
+
+* A `UniversalSemigroupCongruence` object now returns a much smaller set
+of generating pairs. [Michael Torpey]
+
+###Issue Resolved in Version 2.5
+
+* The universal congruence specified by generating pairs on a (0-)simple
+semigroup no longer causes an error. [Michael Torpey]
+	
 ## Version 2.4.1
 This is a extremely minor release to change 1 character in the PackageInfo.g
 file (wrong package archive URL). 
@@ -17,7 +41,7 @@ improvements in performance, and some new features.
 * The function `RepresentativeOfMinimalIdeal` is introduced. [[Wilf
 Wilson](http://wilf.me)]
 
-* Transformation semigroups now have a polynomial time (quadratic in the
+* Transformation semigroups now have a polynomial time (cubic in the
 degree) algorithm for computing the minimal ideal [[Wilf Wilson](http://wilf.me)]
 
 * The functions `RectangularBand`, `ZeroSemigroup`, and

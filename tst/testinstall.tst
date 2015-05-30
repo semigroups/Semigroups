@@ -149,6 +149,7 @@ gap> ForAll(Concatenation(List(GreensDClasses(s), RClassReps)),
 true
 
 #T# TestInstall11
+
 #gap> ForAll([1..NrRClasses(s)], i->
 #> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
 #> RClassReps(s)[i]);
@@ -349,14 +350,14 @@ gap> ForAll(d, f-> (f^F)^G=f);
 true
 
 #T# TestInstall19: from JS' MultiplicativeZero.tst
-gap> s:=InverseMonoid( PartialPerm( [1,2,3,4] ),
-> PartialPerm( [1,3,2,4] ),
-> PartialPerm( [1,2,0,0] ),
-> PartialPerm( [1,0,0,4] ) );;
-gap> f := PartialPerm( [1,0,0,0] );;
+gap> s := InverseMonoid(PartialPerm([1, 2, 3, 4]),
+> PartialPerm([1, 3, 2, 4]),
+> PartialPerm([1, 2, 0, 0]),
+> PartialPerm([1, 0, 0, 4]));;
+gap> f := PartialPerm([1, 0, 0, 0]);;
 gap> f in s;
 true
-gap> ForAll(s, x -> f*x = f and x*f = f );
+gap> ForAll(s, x -> f * x = f and x * f = f );
 true
 gap> f;
 <identity partial perm on [ 1 ]>
@@ -997,6 +998,15 @@ gap> I := SemigroupIdeal(T, Idempotents(T));
 <regular transformation semigroup ideal on 256 pts with 8 generators>
 gap> Size(I);
 21
+
+#T# TestInstall64: Bug fixed by changeset 949553d
+gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup on 2 pts with 2 generators>
+gap> Size(s);
+5
+gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+of size 5, on 2 pts with 2 generators>>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);

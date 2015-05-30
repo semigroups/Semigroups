@@ -18,6 +18,7 @@ DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("RepresentativeOfMinimalIdeal", IsSemigroup);
+DeclareOperation("RepresentativeOfMinimalIdealNC", [IsSemigroup]);
 DeclareSynonymAttr("RepresentativeOfMinimalDClass",
 RepresentativeOfMinimalIdeal);
 DeclareAttribute("MinimalIdeal", IsSemigroup);

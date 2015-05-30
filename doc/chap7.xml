@@ -1,15 +1,40 @@
 <Chapter Label="chapter-congruence">
   <Heading>Congruences</Heading>
-  
-  In this chapter we describe the various ways to define a congruence on a
-  semigroup.<P/>
 
-  Support for congruences in &Semigroups; is currently rather limited but
-  there are plans to improve this in the future. <P/>
+  Congruences in &Semigroups; can be described in several different ways:<P/>
+
+  <List>
+    <Item>
+      Generating pairs -- the minimal congruence which contains these pairs
+    </Item>
+    <Item>
+      Rees congruences -- the congruence specified by a given ideal
+    </Item>
+    <Item>
+      Universal congruences -- the unique congruence with only one class
+    </Item>
+    <Item>
+      Linked triples -- only for simple or 0-simple semigroups (see below)
+    </Item>
+    <Item>
+      Kernel and trace -- only for inverse semigroups
+    </Item>
+  </List>
+
+  The operation <Ref Func="SemigroupCongruence"/> can be used to create any of
+  these, interpreting the arguments in a smart way.  The usual way of specifying
+  a congruence will be by giving a set of generating pairs, but a user with an
+  ideal could instead create a Rees congruence or universal congruence.<P/>
+
+  If a congruence is specified by generating pairs on a simple, 0-simple, or
+  inverse semigroup, then the congruence will be converted automatically to one
+  of the last two items in the above list, to reduce the complexity of any
+  calculations to be performed.  The user need not manually specify, or even be
+  aware of, the congruence's linked triple or kernel and trace.
 
   <Section><Heading>Creating congruences</Heading>
 
-    <#Include Label="SemigroupCongruence">
+  <#Include Label="SemigroupCongruence">
 
   </Section>
   <Section><Heading>Congruence classes</Heading>

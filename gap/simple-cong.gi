@@ -109,7 +109,12 @@ function(s, pairs)
     else  #elif IsReesZeroMatrixSemigroup(r) then
       rmscong := AsRZMSCongruenceByLinkedTriple(pcong);
     fi;
-    cong := SEMIGROUPS_SimpleCongFromRMSCong(s, rmscong);
+    # Special case for the universal congruence
+    if IsUniversalSemigroupCongruence(rmscong) then
+      cong := UniversalSemigroupCongruence(s);
+    else
+      cong := SEMIGROUPS_SimpleCongFromRMSCong(s, rmscong);
+    fi;
   fi;
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;

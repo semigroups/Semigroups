@@ -13,4 +13,3 @@ DeclareOperation("GreensHClassOfElement", [IsReesZeroMatrixSemigroup, IsPosInt,
 IsPosInt]);
 DeclareAttribute("MatrixEntries", IsReesZeroMatrixSemigroup);
 DeclareAttribute("MatrixEntries", IsReesMatrixSemigroup);
-

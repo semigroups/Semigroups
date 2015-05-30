@@ -385,7 +385,15 @@ gap> MinimalIdeal(BrauerMonoid(6));
       
       This method returns a representative element of the
       minimal ideal of <A>S</A> without having
-      to create the minimal ideal itself.<P/>
+      to create the minimal ideal itself.
+      In general, beyond being a member of the minimal ideal,
+      the returned element is not guaranteed to have any special properties.
+      However, the element will coincide with the zero element of <A>S</A>
+      if one exists.
+      <P/>
+      
+      This method works particularly well if <A>S</A> is a semigroup
+      of transformations or partial permutations.<P/>
     
       See also <Ref Attr="MinimalIdeal"/> and <Ref Attr="MinimalDClass"/>.
     <Example><![CDATA[

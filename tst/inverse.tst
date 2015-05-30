@@ -237,8 +237,17 @@ gap> i:=0;
 #T# InverseTest4 
 #JDM this breaks when i=38360 fairly reliably, it seems to be a problem in
 # IsDoneIterator of iter. 
-#gap> for f in iter do i:=i+1; if not
-#f in s then Print("yikes"); break; fi; if i=38360 then break; fi; od;
+
+#gap> for f in iter do
+#>   i := i + 1;
+#>   if not f in s then
+#>     Print("yikes");
+#>     break;
+#>   fi;
+#>   if i = 38360 then
+#>     break;
+#>   fi;
+#> od;
 gap> iter:=IteratorOfHClasses(s);                                  
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
@@ -309,6 +318,7 @@ true
 #T# InverseTest7  
 # this is too slow, it used to work better! but the method was incorrect in
 # general FIXME
+
 #gap> ForAll(s, f-> (f^iso)^inv=f);
 #true
 gap> Size(Range(iso));
