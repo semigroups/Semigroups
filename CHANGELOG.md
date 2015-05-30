@@ -4,7 +4,9 @@
 #### Copyright (C) 2011-15 James D. Mitchell
 #### Licensing information can be found in the LICENSE file.
 
-## Version 2.5
+## Version 2.5 (released 30/05/15)
+
+This is a minor release including several bugfixes, and improvements in performance, and some new features.
 
 ###New Features in Version 2.5
 
@@ -20,11 +22,19 @@ is introduced, along with new methods for `Idempotents` and
 * The documentation for congruences has been improved and new tests have
 been added. [Michael Torpey]
 
-* A `UniversalSemigroupCongruence` object now returns a much smaller set
+* A `UniversalSemigroupCongruence` now returns a much smaller set
 of generating pairs. [Michael Torpey]
 
 ###Issue Resolved in Version 2.5
 
+Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
+
+*  [Issue 126](https://bitbucket.org/james-d-mitchell/semigroups/issue/126/): testing membership in a Rees 0-matrix semigroup that knows it is inverse sometimes resulted in an error. [[James Mitchell](http://tinyurl.com/jdmitchell)]
+
+*  [Issue 127](https://bitbucket.org/james-d-mitchell/semigroups/issue/127/): the main algorithm for computing with ideals of acting semigroups which know they are regular contained a bug that resulted in incorrect results. In some cases, some \\(\mathscr{D}\\)-classes were counted more than once, and the returned value of `Size` was higher than the actual size of the ideal. [[James Mitchell](http://tinyurl.com/jdmitchell)]
+  
+*  [Issue 128](https://bitbucket.org/james-d-mitchell/semigroups/issue/128/): in some special cases `UnderlyingSemigroup`, `ViewObj`, `Size`, and related methods, for Rees 0-matrix semigroups over non-groups returned an error. [[James Mitchell](http://tinyurl.com/jdmitchell)]
+  
 * The universal congruence specified by generating pairs on a (0-)simple
 semigroup no longer causes an error. [Michael Torpey]
 	
