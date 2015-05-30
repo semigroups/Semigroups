@@ -504,7 +504,7 @@ function(s, f)
     od;
   else
 
-    opts := rec(treehashsize := s!.opts.hashlen.M,
+    opts := rec(treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M,
                 gradingfunc := function(o, x) return rhorank(x); end,
                 onlygrades := function(x, y) return x >= rank; end,
                 onlygradesdata := fail);
@@ -549,7 +549,7 @@ function(s, f)
       fi;
     od;
   else
-     opts := rec(treehashsize := s!.opts.hashlen.M,
+     opts := rec(treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M,
                  gradingfunc := function(o, x) return lambdarank(x); end,
                  onlygrades := function(x, y) return x >= rank; end,
                  onlygradesdata := fail);

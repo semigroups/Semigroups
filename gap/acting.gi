@@ -29,7 +29,8 @@ function(s)
   data := rec(gens := gens,
               genstoapply := [1 .. Length(gens)],
               graph := [EmptyPlist(Length(gens))],
-              ht := HTCreate(gens[1], rec(treehashsize := s!.opts.hashlen.L)),
+              ht := HTCreate(gens[1], rec(treehashsize :=
+                                          SEMIGROUPS_OptionsRec(s).hashlen.L)),
               init := false,
               lambdarhoht := [],
               lenreps := [0],

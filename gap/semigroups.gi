@@ -185,7 +185,7 @@ InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
    if IsGeneratorsOfActingSemigroup(gens) then
-     return SemigroupByGenerators(gens, SemigroupsOptionsRec);
+     return SemigroupByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
    else
      TryNextMethod();
     fi;
@@ -203,7 +203,7 @@ function(gens, opts)
     TryNextMethod();
   fi;
 
-  opts := SemigroupOptions(opts);
+  opts := SEMIGROUPS_ProcessOptionsRec(opts);
   gens := AsList(gens);
 
   # try to find a smaller generating set
@@ -278,7 +278,7 @@ InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then
-    return MonoidByGenerators(gens, SemigroupsOptionsRec);
+    return MonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
   else
     TryNextMethod();
   fi;
@@ -296,7 +296,7 @@ function(gens, record)
     TryNextMethod();
   fi;
 
-  record := SemigroupOptions(record);
+  record := SEMIGROUPS_ProcessOptionsRec(record);
   gens := ShallowCopy(gens);
 
   if record.small and Length(gens) > 1 then #small gen. set
@@ -371,7 +371,7 @@ InstallMethod(InverseMonoidByGenerators,
 function(gens)
 
   if IsGeneratorsOfActingSemigroup(gens) then
-    return InverseMonoidByGenerators(gens, SemigroupsOptionsRec);
+    return InverseMonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
   else
     TryNextMethod();
   fi;
@@ -384,7 +384,7 @@ InstallMethod(InverseSemigroupByGenerators,
 [IsAssociativeElementCollection],
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then
-    return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
+    return InverseSemigroupByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
   else
     TryNextMethod();
   fi;
@@ -402,7 +402,7 @@ function(gens, record)
     TryNextMethod();
   fi;
 
-  record := SemigroupOptions(record);
+  record := SEMIGROUPS_ProcessOptionsRec(record);
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
@@ -462,7 +462,7 @@ function(gens, record)
     TryNextMethod();
   fi;
 
-  record := SemigroupOptions(record);
+  record := SEMIGROUPS_ProcessOptionsRec(record);
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
@@ -509,7 +509,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for acting semigroup with inverse op and associative element coll.",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(s, coll)
-  return ClosureInverseSemigroup(s, coll, s!.opts);
+  return ClosureInverseSemigroup(s, coll, SEMIGROUPS_OptionsRec(s));
 end);
 
 #
@@ -518,7 +518,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for acting semigroup with inverse op and an associative element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
-  return ClosureInverseSemigroup(s, [f], s!.opts);
+  return ClosureInverseSemigroup(s, [f], SEMIGROUPS_OptionsRec(s));
 end);
 
 #
@@ -562,7 +562,7 @@ function(s, coll, record)
   fi;
 
   return ClosureInverseSemigroupNC(s, Filtered(coll, x -> not x in s),
-   SemigroupOptions(record));
+   SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #
@@ -619,7 +619,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup and associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection],
 function(s, coll)
-  return ClosureSemigroup(s, coll, s!.opts);
+  return ClosureSemigroup(s, coll, SEMIGROUPS_OptionsRec(s));
 end);
 
 #
@@ -628,7 +628,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement],
 function(s, f)
-  return ClosureSemigroup(s, [f], s!.opts);
+  return ClosureSemigroup(s, [f], SEMIGROUPS_OptionsRec(s));
 end);
 
 #
@@ -637,7 +637,7 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup, associative element, and record",
 [IsActingSemigroup, IsAssociativeElement, IsRecord],
 function(s, f, record)
-  return ClosureSemigroup(s, [f], SemigroupOptions(record));
+  return ClosureSemigroup(s, [f], SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #
@@ -679,7 +679,7 @@ function(s, coll, record)
   fi;
 
   return ClosureSemigroupNC(s, Filtered(coll, x -> not x in s),
-   SemigroupOptions(record));
+   SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #recreate the lambda/rho orb using the higher degree!

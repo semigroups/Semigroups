@@ -8,6 +8,18 @@
 #############################################################################
 ##
 
+# this should really be in the library
+
+InstallImmediateMethod(GeneratorsOfSemigroup, 
+IsPartialPermSemigroup and IsGroup and HasGeneratorsOfGroup, 
+0, GeneratorsOfGroup);
+
+InstallMethod(RankOfPartialPermSemigroup,
+"for a partial perm semigroup",
+[IsPartialPermSemigroup], RankOfPartialPermCollection);
+
+#
+
 InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
 

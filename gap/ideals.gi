@@ -201,7 +201,7 @@ InstallMethod(SemigroupIdealByGenerators,
 "for an associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection],
 function(S, gens)
-  return SemigroupIdealByGenerators(S, gens, S!.opts);
+  return SemigroupIdealByGenerators(S, gens, SEMIGROUPS_OptionsRec(S));
 end);
 
 #
@@ -217,7 +217,7 @@ function(S, gens, opts)
     return;
   fi;
 
-  opts := SemigroupOptions(opts);
+  opts := SEMIGROUPS_ProcessOptionsRec(opts);
   gens := AsList(gens);
 
   filts := IsMagmaIdeal and IsAttributeStoringRep;

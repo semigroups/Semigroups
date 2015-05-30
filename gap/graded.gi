@@ -16,7 +16,7 @@ function(s)
   local record;
 
   record := ShallowCopy(LambdaOrbOpts(s));
-  record.treehashsize := s!.opts.hashlen.S;
+  record.treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.S;
   return HTCreate(LambdaFunc(s)(Representative(s)), record);
 end);
 
@@ -27,7 +27,7 @@ function(s)
   local record;
 
   record := ShallowCopy(RhoOrbOpts(s));
-  record.treehashsize := s!.opts.hashlen.S;
+  record.treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.S;
   return HTCreate(RhoFunc(s)(Representative(s)), record);
 end);
 
@@ -136,7 +136,7 @@ function(arg)
   orb := ShallowCopy(LambdaOrbOpts(S));
   # TODO include as much of the following as appropriate in LambdaOrbOpts
   orb.parent := S;
-  orb.treehashsize := S!.opts.hashlen.M;
+  orb.treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M;
   orb.schreier := true;
   orb.orbitgraph := true;
   orb.storenumbers := true;
@@ -244,7 +244,7 @@ function(arg)
 
   orb := ShallowCopy(RhoOrbOpts(S));
   orb.parent := S;
-  orb.treehashsize := S!.opts.hashlen.M;
+  orb.treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M;
   orb.schreier := true;
   orb.orbitgraph := true;
   orb.storenumbers := true;
