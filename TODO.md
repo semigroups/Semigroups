@@ -1,12 +1,15 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
-* semigroups of pbrs
+* Boolean matrix stuff (`CanonicalRep` and things from semigroups-dev)
+* try to find the full PBR monoid when n = 1, 2. 
+* `AsBipartitionSemigroup`, `AsPBRSemigroup`
+* tests for pbrs 
+* semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
 * make 2.6 branch with new style Green's class printing in tests.
 * finish partitioned binary relation stuff (more tests and C++)
 * check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
-* non-prime finite fields
 * remove C++11
 * gmp problems?
 * use namespace in the C++ code
@@ -25,6 +28,9 @@
 #DONE
 
 * `TransposedMat` methods for matrix over semiring variants (so far only done boolean matrices and a generic method)
+
+#DO LATER
+* non-prime finite fields
 
 #Gaplint - Notes#
 
