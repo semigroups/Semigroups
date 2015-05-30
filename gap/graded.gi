@@ -290,8 +290,9 @@ function(s)
 
   fam := CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs),
-   rec(orbits := List([1 .. ActionDegree(s) + 1], x -> []),
-       lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
+                   rec(orbits := List([1 .. ActionDegree(s) + 1], x -> []),
+                       lens := [1 .. ActionDegree(s) + 1] * 0, 
+                       parent := s));
 end);
 
 # stores so far calculated GradedRhoOrbs
@@ -299,9 +300,10 @@ end);
 InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs), rec(
-    orbits := List([1 .. ActionDegree(s) + 1], x -> []),
-    lens := [1 .. ActionDegree(s) + 1] * 0, parent := s));
+  return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs),
+                   rec(orbits := List([1 .. ActionDegree(s) + 1], x -> []),
+                       lens := [1 .. ActionDegree(s) + 1] * 0, 
+                       parent := s));
 end);
 
 #
@@ -367,18 +369,20 @@ function(s)
   record := rec(seen := [], l := 2);
 
   record.NextIterator := function(iter)
-    local seen, pos, val, o, lambda_o;
+    local seen, lambda_o, pos, val, o, word;
 
     seen := iter!.seen;
     lambda_o := LambdaOrb(s);
     pos := LookForInOrb(lambda_o,
-      function(o, x)
-        local val;
-        val := Position(GradedLambdaOrbs(s), x);
-        return val = fail
-          or not IsBound(seen[val[1]])
-          or (IsBound(seen[val[1]]) and not IsBound(seen[val[1]][val[2]]));
-      end, iter!.l);
+                        function(o, x)
+                          local val;
+                          val := Position(GradedLambdaOrbs(s), x);
+                          return val = fail
+                            or not IsBound(seen[val[1]])
+                            or (IsBound(seen[val[1]]) and not
+                                IsBound(seen[val[1]][val[2]]));
+                        end,
+                        iter!.l);
 
     if pos = false then
       return fail;
@@ -391,8 +395,8 @@ function(s)
     if val <> fail then # previously calculated graded orbit
       o := GradedLambdaOrbs(s)[val[1]][val[2]];
     else # new graded orbit
-      o := GradedLambdaOrb(s, EvaluateWord(lambda_o,
-        TraceSchreierTreeForward(lambda_o, pos)), true);
+      word := TraceSchreierTreeForward(lambda_o, pos);
+      o := GradedLambdaOrb(s, EvaluateWord(lambda_o, word), true);
       val := o!.position_in_graded;
     fi;
 
@@ -407,5 +411,3 @@ function(s)
 
   return IteratorByNextIterator(record);
 end);
-
-#EOF

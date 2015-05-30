@@ -20,7 +20,7 @@ DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("RepresentativeOfMinimalIdeal", IsSemigroup);
 DeclareOperation("RepresentativeOfMinimalIdealNC", [IsSemigroup]);
 DeclareSynonymAttr("RepresentativeOfMinimalDClass",
-RepresentativeOfMinimalIdeal);
+                   RepresentativeOfMinimalIdeal);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsActingSemigroup);

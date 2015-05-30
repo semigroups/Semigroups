@@ -302,7 +302,8 @@ InstallMethod(LambdaCosets, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
   return RightTransversal(LambdaOrbSchutzGp(LambdaOrb(D),
-   LambdaOrbSCCIndex(D)), SchutzenbergerGroup(D));
+                                            LambdaOrbSCCIndex(D)),
+                          SchutzenbergerGroup(D));
 end);
 
 # not required for regular/inverse, same method for ideals
@@ -311,14 +312,13 @@ InstallMethod(RhoCosets, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
   local o, m, S;
-
   o := RhoOrb(D);
   m := RhoOrbSCCIndex(D);
   S := Parent(D);
-  return RightTransversal(
-     RhoOrbSchutzGp(o, m) ^
-      LambdaConjugator(S)(RhoOrbRep(o, m), Representative(D)),
-       SchutzenbergerGroup(D));
+  return RightTransversal(RhoOrbSchutzGp(o, m) ^
+                          LambdaConjugator(S)(RhoOrbRep(o, m),
+                                              Representative(D)),
+                          SchutzenbergerGroup(D));
 end);
 
 # note that the RhoCosets of the D-class containing an L-class are not the same
@@ -374,7 +374,7 @@ function(L)
   if IsTrivial(G) then
     return false;
   elif IsNaturalSymmetricGroup(G) and
-   NrMovedPoints(G) = ActionRank(Parent(L))(Representative(L)) then
+      NrMovedPoints(G) = ActionRank(Parent(L))(Representative(L)) then
     return true;
   fi;
   return StabChainImmutable(G);
@@ -485,8 +485,10 @@ function(H)
   S := Parent(H);
   rep := Representative(H);
 
-  lambda_mult := LambdaOrbMult(lambda_o, lambda_m, Position(lambda_o,
-   LambdaFunc(S)(rep)))[2];
+  lambda_mult := LambdaOrbMult(lambda_o,
+                               lambda_m,
+                               Position(lambda_o, LambdaFunc(S)(rep)))[2];
+
   # the points acted on by LambdaSchutzGp mapped to the lambda value of rep
   lambda_p := LambdaConjugator(S)(rep * lambda_mult, rep);
 
@@ -532,9 +534,10 @@ end);
 InstallMethod(DClassType, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-          IsEquivalenceClassDefaultRep and IsGreensDClass and
-          IsActingSemigroupGreensClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensDClass
+                               and IsActingSemigroupGreensClass);
 end);
 
 # different method for regular/inverse
@@ -542,9 +545,10 @@ end);
 InstallMethod(HClassType, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
- return NewType(FamilyObj(S), IsEquivalenceClass and
-  IsEquivalenceClassDefaultRep and IsGreensHClass and
-  IsActingSemigroupGreensClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensHClass
+                               and IsActingSemigroupGreensClass);
 end);
 
 # different method for regular/inverse
@@ -552,9 +556,10 @@ end);
 InstallMethod(LClassType, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensLClass and
-         IsActingSemigroupGreensClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensLClass
+                               and IsActingSemigroupGreensClass);
 end);
 
 # different method for regular/inverse
@@ -562,9 +567,10 @@ end);
 InstallMethod(RClassType, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  return NewType(FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensRClass and
-         IsActingSemigroupGreensClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensRClass
+                               and IsActingSemigroupGreensClass);
 end);
 
 #############################################################################
@@ -967,9 +973,9 @@ function(x, D)
 
   # FIXME ActionRank method selection causes slow down here...
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(S)
-        and ActionDegree(x) <> ActionDegree(rep))
-    or ActionRank(S)(x) <> ActionRank(S)(rep) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S)
+          and ActionDegree(x) <> ActionDegree(rep))
+      or ActionRank(S)(x) <> ActionRank(S)(rep) then
     return false;
   fi;
 
@@ -1029,10 +1035,10 @@ function(x, L)
   rep := Representative(L);
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(S)
-        and ActionDegree(x) <> ActionDegree(rep))
-    or ActionRank(S)(x) <> ActionRank(S)(rep)
-    or LambdaFunc(S)(x) <> LambdaFunc(S)(rep) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S)
+          and ActionDegree(x) <> ActionDegree(rep))
+      or ActionRank(S)(x) <> ActionRank(S)(rep)
+      or LambdaFunc(S)(x) <> LambdaFunc(S)(rep) then
     return false;
   fi;
 
@@ -1070,10 +1076,10 @@ function(x, R)
   rep := Representative(R);
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(S)
-        and ActionDegree(x) <> ActionDegree(rep))
-    or ActionRank(S)(x) <> ActionRank(S)(rep)
-    or RhoFunc(S)(x) <> RhoFunc(S)(rep) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S)
+          and ActionDegree(x) <> ActionDegree(rep))
+      or ActionRank(S)(x) <> ActionRank(S)(rep)
+      or RhoFunc(S)(x) <> RhoFunc(S)(rep) then
     return false;
   fi;
 
@@ -1111,11 +1117,11 @@ function(x, H)
   rep := Representative(H);
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(S)
-        and ActionDegree(x) <> ActionDegree(rep))
-    or ActionRank(S)(x) <> ActionRank(S)(rep)
-    or RhoFunc(S)(x) <> RhoFunc(S)(rep)
-    or LambdaFunc(S)(x) <> LambdaFunc(S)(rep) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S)
+          and ActionDegree(x) <> ActionDegree(rep))
+      or ActionRank(S)(x) <> ActionRank(S)(rep)
+      or RhoFunc(S)(x) <> RhoFunc(S)(rep)
+      or LambdaFunc(S)(x) <> LambdaFunc(S)(rep) then
     return false;
   fi;
 
@@ -1318,8 +1324,8 @@ InstallMethod(HClassReps, "for an acting semigroup",
 # same method for regular/inverse/ideals
 
 InstallMethod(GreensHClasses, "for an acting semigroup",
-[IsActingSemigroup], S -> Concatenation(List(GreensDClasses(S),
-GreensHClasses)));
+[IsActingSemigroup],
+S -> Concatenation(List(GreensDClasses(S), GreensHClasses)));
 
 # same method for regular/inverse/ideals
 
@@ -1513,7 +1519,7 @@ function(H)
           "the H-class is not a group,");
     return;
   fi;
-
+  # gaplint: ignore 3
   return MappingByFunction(H, SchutzenbergerGroup(H),
    x -> LambdaPerm(Parent(H))(Representative(H), x),
    x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
@@ -1585,7 +1591,7 @@ function(s)
             repeat
               n := n + 1;
               if SiftedPermutation(schutz[m],
-                lambdaperm(reps[m][val][n], f)) = () then
+                                   lambdaperm(reps[m][val][n], f)) = () then
                 j := repslookup[m][val][n];
               fi;
             until j <> 0;
@@ -1712,8 +1718,9 @@ function(x, value, scc, o, onright)
   S := Parent(x);
 
   if IsActingSemigroupWithFixedDegreeMultiplication(S)
-   and IsMultiplicativeElementWithOneCollection(S)
-   and ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+      and IsMultiplicativeElementWithOneCollection(S)
+      and ActionRank(S)(Representative(x))
+          = ActionDegree(Representative(x)) then
     return [One(S)];
   fi;
 
@@ -1765,14 +1772,14 @@ end);
 InstallMethod(Idempotents, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 L -> SEMIGROUPS_Idempotents(L, LambdaFunc(Parent(L))(Representative(L)),
-RhoOrbSCC(L), RhoOrb(L), false));
+                            RhoOrbSCC(L), RhoOrb(L), false));
 
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(Idempotents, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 R -> SEMIGROUPS_Idempotents(R, RhoFunc(Parent(R))(Representative(R)),
-LambdaOrbSCC(R), LambdaOrb(R), true));
+                            LambdaOrbSCC(R), LambdaOrb(R), true));
 
 # same method for regular/inverse/ideals
 
@@ -1847,8 +1854,8 @@ function(x, value, scc, o, onright)
   S := Parent(x);
 
   # check if we already know this...
-  if HasSemigroupDataIndex(x) and not (HasIsRegularClass(x) and
-   IsRegularClass(x)) then
+  if HasSemigroupDataIndex(x)
+      and not (HasIsRegularClass(x) and IsRegularClass(x)) then
     data := SemigroupData(S);
     m := LambdaOrbSCCIndex(x);
     if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]] > 1 then
@@ -1858,7 +1865,7 @@ function(x, value, scc, o, onright)
 
   # is r the group of units...
   if IsActingSemigroupWithFixedDegreeMultiplication(S) and
-   ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+      ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
     return 1;
   fi;
 
@@ -1897,14 +1904,14 @@ D -> Sum(List(GreensRClasses(D), NrIdempotents)));
 InstallMethod(NrIdempotents, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 L -> SEMIGROUPS_NrIdempotents(L, LambdaFunc(Parent(L))(Representative(L)),
-RhoOrbSCC(L), RhoOrb(L), false));
+                              RhoOrbSCC(L), RhoOrb(L), false));
 
 # same method for regular/ideals, different method inverse
 
 InstallMethod(NrIdempotents, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 R -> SEMIGROUPS_NrIdempotents(R, RhoFunc(Parent(R))(Representative(R)),
-LambdaOrbSCC(R), LambdaOrb(R), true));
+                              LambdaOrbSCC(R), LambdaOrb(R), true));
 
 # same method for regular/inverse/ideals
 
@@ -1972,21 +1979,21 @@ end);
 InstallMethod(IsRegularClass, "for an D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 D -> SEMIGROUPS_IsRegularClass(D, RhoFunc(Parent(D))(Representative(D)),
-LambdaOrbSCC(D), LambdaOrb(D), true));
+                               LambdaOrbSCC(D), LambdaOrb(D), true));
 
 # not required for regular/inverse, same for ideals
 
 InstallMethod(IsRegularClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 L -> SEMIGROUPS_IsRegularClass(L, LambdaFunc(Parent(L))(Representative(L)),
-RhoOrbSCC(L), RhoOrb(L), false));
+                               RhoOrbSCC(L), RhoOrb(L), false));
 
 # not required for regular/inverse, same for ideals
 
 InstallMethod(IsRegularClass, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 R -> SEMIGROUPS_IsRegularClass(R, RhoFunc(Parent(R))(Representative(R)),
-LambdaOrbSCC(R), LambdaOrb(R), true));
+                               LambdaOrbSCC(R), LambdaOrb(R), true));
 
 # same method for regular/inverse, same method for ideals
 
@@ -2041,7 +2048,7 @@ end);
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-
+  # gaplint: ignore 20
   return EnumeratorByFunctions(S, rec(
 
     ElementNumber := function(enum, pos)
@@ -2086,8 +2093,9 @@ function(S)
     SetLambdaOrbSCCIndex(R, x[2]);
     return R;
   end;
-  return IteratorByIterator(IteratorOfRClassData(S), convert,
-   [IsIteratorOfRClasses]);
+  return IteratorByIterator(IteratorOfRClassData(S),
+                            convert,
+                            [IsIteratorOfRClasses]);
 end);
 
 #TODO this should be improved at some point
@@ -2104,7 +2112,7 @@ function(S)
     SetIsIteratorOfDClasses(iter, true);
     return iter;
   fi;
-
+  # gaplint: ignore 20
   return IteratorByIterator(
     IteratorOfRClassData(S), # baseiter
     function(iter, x)        # convert
