@@ -109,7 +109,8 @@ function(o, m, i)
   mults := o!.mults;
 
   if not IsActingSemigroupWithInverseOp(o!.parent) then
-  # it would be better to use the SchreierTree here not the ReverseSchreierTree
+    # it would be better to use the SchreierTree here not the
+    # ReverseSchreierTree
     genpos := ReverseSchreierTreeOfSCC(o, m);
     inv := function(lambda, x)
              return LambdaInverse(o!.parent)(lambda, x);
@@ -228,7 +229,7 @@ function(o, m)
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]] = m then
         f := lambdaperm(rep, rep * forward * gens[l]
-          * LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+                             * LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g := ClosureGroup(g, f);
         if Size(g) >= bound then
           stop := true;
@@ -435,9 +436,9 @@ function(o, m)
   for i in scc do
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
-        g := ClosureGroup(g,
-         lambdaperm(rep,
-          mults[orbitgraph[i][j]][2] * gens[j] * mults[i][1] * rep));
+        g := ClosureGroup(g, lambdaperm(rep,
+                                        mults[orbitgraph[i][j]][2] * gens[j] *
+                                        mults[i][1] * rep));
         if Size(g) >= bound then
           break;
         fi;

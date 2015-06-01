@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareOperation("IsomorphismSemigroups", [IsSemigroup, IsSemigroup]);
+
 DeclareGlobalFunction("RMSInducedFunction");
 DeclareGlobalFunction("RZMSInducedFunction");
 DeclareGlobalFunction("RZMStoRZMSInducedFunction");

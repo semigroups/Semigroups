@@ -9,8 +9,6 @@
 ##
 
 DeclareAttribute("SmallestMultiplicationTable", IsSemigroup);
-DeclareOperation("IsomorphismSemigroups", [IsSemigroup, IsSemigroup]);
-DeclareOperation("IsIsomorphicSemigroup", [IsSemigroup and
-HasGeneratorsOfSemigroup, IsSemigroup and HasGeneratorsOfSemigroup]);
-
-#EOF
+DeclareOperation("IsIsomorphicSemigroup",
+                 [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
+                  HasGeneratorsOfSemigroup]);

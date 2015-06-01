@@ -99,7 +99,7 @@ fi;
 if not (IsGrapeLoaded and IsGrapeCompiled) then
   InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
-  HasGeneratorsOfSemigroup],
+   HasGeneratorsOfSemigroup],
   function(S, T)
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
@@ -107,17 +107,17 @@ if not (IsGrapeLoaded and IsGrapeCompiled) then
 else
   InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
-  HasGeneratorsOfSemigroup],
+   HasGeneratorsOfSemigroup],
   function(S, T)
     if Size(S) <> Size(T) or NrRClasses(S) <> NrRClasses(T) or
-      NrDClasses(S) <> NrDClasses(T) or NrLClasses(S) <> NrLClasses(T) or
-      NrHClasses(S) <> NrHClasses(T) or NrIdempotents(S) <> NrIdempotents(T)
-     then
+        NrDClasses(S) <> NrDClasses(T) or NrLClasses(S) <> NrLClasses(T) or
+        NrHClasses(S) <> NrHClasses(T) or NrIdempotents(S) <> NrIdempotents(T)
+        then
       return false;
     elif Size(S) = 1 then
       return true;
     elif Size(S) < 32 or (HasSmallestMultiplicationTable(S)
-     and HasSmallestMultiplicationTable(T)) then
+                          and HasSmallestMultiplicationTable(T)) then
       return SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
     fi;
 
@@ -127,5 +127,3 @@ else
 
   end);
 fi;
-
-#EOF
