@@ -16,6 +16,67 @@ if not IsBound(POW_KER_PERM) then
   end);
 fi;
 
+# process the options record...
+
+BindGlobal("SEMIGROUPS_NormalizerOptsRec",
+function(S, opts)
+
+  # don't check the component `random' since this is only called inside
+  # (Non)SEMIGROUPS_DeterministicNormalizer...
+
+  if not IsBound(opts.lambdastab) then
+    opts.lambdastab := true;
+  elif not IsBool(opts.lambdastab) then
+    Error("Semigroups: SEMIGROUPS_NormalizerOptsRec: usage,\n",
+          "the component `lambdastab' must be a boolean,");
+    return;
+  fi;
+
+  if (IsPartialPermSemigroup(S) and IsInverseSemigroup(S)) then
+    opts.rhostab := false;
+  elif not IsBound(opts.rhostab) then
+    opts.rhostab := true;
+  elif not IsBool(opts.rhostab) then
+    Error("Semigroups: SEMIGROUPS_NormalizerOptsRec: usage,\n",
+          "the component `rhostab' must be a boolean,");
+    return;
+  fi;
+
+  return opts;
+end);
+
+# process the lambda-orb
+
+BindGlobal("SEMIGROUPS_LambdaOrbForNormalizer",
+function(G, S, func)
+  local o, i, nr;
+
+  o := LambdaOrb(S);
+  Enumerate(o, infinity);
+  o := ShallowCopy(o);
+  Remove(o, 1);
+  Sort(o, func);
+
+  if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
+
+    if IsEmpty(o[1]) then
+      Remove(o, 1);
+    fi;
+    i := (MinActionRank(S) + 1) mod 2 + 1;
+    nr := i - 1;
+    while nr < Length(o) and Length(o[nr + 1]) = 1 do
+      nr := nr + 1;
+    od;
+
+    if o{[i .. nr]} = NrMovedPoints(G) then
+      for i in [i .. nr] do
+        Remove(o, 1);
+      od;
+    fi;
+  fi;
+  return o;
+end);
+
 #
 
 BindGlobal("SEMIGROUPS_DeterministicNormalizer",
@@ -46,7 +107,7 @@ function(G, S, opts)
     return G;
   fi;
 
-  opts := NormalizerOptsRec@(S, opts);
+  opts := SEMIGROUPS_NormalizerOptsRec(S, opts);
 
   # the example of the JonesMonoid(8), and the inverse semigroup example
   # immediately after it in normalizer.tst show that calculating the stabilizer
@@ -54,7 +115,7 @@ function(G, S, opts)
   # second quicker with this than without...
 
   if opts.lambdastab then
-    o := LambdaOrbForNormalizer@(G, S, LT);
+    o := SEMIGROUPS_LambdaOrbForNormalizer(G, S, LT);
 
     if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
       act := OnSetsSets;
@@ -125,7 +186,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
 
   BindGlobal("SEMIGROUPS_NonDeterministicNormalizer",
   function(G, S, opts)
-    local o, act, deg, U, gens, nrgens, P, pruner, out;
+    local o, act, deg, U, gens, nrgens, P, pruner, out, func;
 
     Info(InfoWarning, 1,
          "This function uses random methods and so there is some chance that");
@@ -159,26 +220,27 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       return G;
     fi;
 
-    opts := NormalizerOptsRec@(S, opts);
+    opts := SEMIGROUPS_NormalizerOptsRec(S, opts);
 
     if opts.lambdastab then
 
       if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
         act := OnSets;
-        o := LambdaOrbForNormalizer@(G, S,
-                                     function(x, y)
-                                       return Length(x) < Length(y);
-                                     end);
+        o := SEMIGROUPS_LambdaOrbForNormalizer(G, S,
+                                               function(x, y)
+                                                 return Length(x) < Length(y);
+                                               end);
       else
         deg := DegreeOfBipartitionSemigroup(S);
         act := function(pt, x)
                  return RightBlocks(ProjectionFromBlocks(pt)
                                     * AsBipartition(x, deg));
                end;
-        o := LambdaOrbForNormalizer@(G, S,
-                                     function(x, y)
-                                       return NrBlocks(x) < NrBlocks(y);
-                                     end);
+
+        func := function(x, y)
+                  return NrBlocks(x) < NrBlocks(y);
+                 end;
+        o := SEMIGROUPS_LambdaOrbForNormalizer(G, S, func);
       fi;
       Info(InfoSemigroups, 2, "finding the stabilizer of the images...");
       U := SetwiseStabilizer(G, act, o).setstab;
@@ -329,64 +391,3 @@ else
   SEMIGROUPS_DeterministicNormalizer);
 
 fi;
-
-# process the options record...
-
-BindGlobal("NormalizerOptsRec@",
-function(S, opts)
-
-  # don't check the component `random' since this is only called inside
-  # (Non)SEMIGROUPS_DeterministicNormalizer...
-
-  if not IsBound(opts.lambdastab) then
-    opts.lambdastab := true;
-  elif not IsBool(opts.lambdastab) then
-    Error("Semigroups: NormalizerOptsRec@: usage,\n",
-          "the component `lambdastab' must be a boolean,");
-    return;
-  fi;
-
-  if (IsPartialPermSemigroup(S) and IsInverseSemigroup(S)) then
-    opts.rhostab := false;
-  elif not IsBound(opts.rhostab) then
-    opts.rhostab := true;
-  elif not IsBool(opts.rhostab) then
-    Error("Semigroups: NormalizerOptsRec@: usage,\n",
-          "the component `rhostab' must be a boolean,");
-    return;
-  fi;
-
-  return opts;
-end);
-
-# process the lambda-orb
-
-BindGlobal("LambdaOrbForNormalizer@",
-function(G, S, func)
-  local o, i, nr;
-
-  o := LambdaOrb(S);
-  Enumerate(o, infinity);
-  o := ShallowCopy(o);
-  Remove(o, 1);
-  Sort(o, func);
-
-  if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
-
-    if IsEmpty(o[1]) then
-      Remove(o, 1);
-    fi;
-    i := (MinActionRank(S) + 1) mod 2 + 1;
-    nr := i - 1;
-    while nr < Length(o) and Length(o[nr + 1]) = 1 do
-      nr := nr + 1;
-    od;
-
-    if o{[i .. nr]} = NrMovedPoints(G) then
-      for i in [i .. nr] do
-        Remove(o, 1);
-      od;
-    fi;
-  fi;
-  return o;
-end);
