@@ -194,8 +194,8 @@ else
       tester := function(x)
         local g, pre;
         for g in T do
-          pre := PreImagesRepresentative(hom, (x ^ proj2) ^ inv), g)[1]
-          if RMSInducedFunction(R, x, pre) then
+          pre := PreImagesRepresentative(hom, (x ^ proj2) ^ inv);
+          if RMSInducedFunction(R, x, pre, g)[1] then
             return true;
           fi;
         od;
