@@ -1,12 +1,12 @@
 ##CHANGELOG
 ### Semigroups package for GAP
 
-#### Copyright (C) 2011-15 James D. Mitchell
+#### Copyright (C) 2011-15 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
-## Version 2.5 (released 30/05/15)
+## Version 2.5 (released 01/06/15)
 
-This is a minor release including several bugfixes, and improvements in performance, and some new features.
+This is a minor release including several bugfixes, lots of minor improvements in the documentation, some improvements in performance, and some new features.
 
 ###New Features in Version 2.5
 
