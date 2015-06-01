@@ -140,18 +140,18 @@ function(x, S)
   local pos_lambda, pos_rho, m, schutz, n, rep;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(S)
-        and ActionDegree(x) <> ActionDegree(S))
-    or ActionDegree(x) > ActionDegree(S) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S)
+          and ActionDegree(x) <> ActionDegree(S))
+      or ActionDegree(x) > ActionDegree(S) then
     return false;
   fi;
 
   if not (IsMonoid(S) and IsOne(x)) then
-    if Length(Generators(S)) > 0 and
-      ActionRank(S)(x) >
-      MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
+    if Length(Generators(S)) > 0
+        and ActionRank(S)(x) >
+        MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-       "semigroup");
+           "semigroup");
       return false;
     fi;
   fi;
@@ -159,7 +159,7 @@ function(x, S)
   if HasMinimalIdeal(S) then
     if ActionRank(S)(x) < ActionRank(S)(Representative(MinimalIdeal(S))) then
       Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-       "semigroup.");
+           "semigroup.");
       return false;
     fi;
   fi;
@@ -229,9 +229,9 @@ function(f, s)
   local o, lambda, lambda_l, rho, rho_l, m, schutz, scc, rep;
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-        and ActionDegree(f) <> ActionDegree(s))
-    or ActionDegree(f) > ActionDegree(s) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(s)
+          and ActionDegree(f) <> ActionDegree(s))
+      or ActionDegree(f) > ActionDegree(s) then
     return false;
   fi;
 
@@ -241,10 +241,10 @@ function(f, s)
 
   if not (IsMonoid(s) and IsOne(f)) then
     if Length(Generators(s)) > 0
-      and ActionRank(s)(f) > MaximumList(List(Generators(s),
-       f -> ActionRank(s)(f))) then
+        and ActionRank(s)(f) >
+        MaximumList(List(Generators(s), f -> ActionRank(s)(f))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-       "semigroup.");
+           "semigroup.");
       return false;
     fi;
   fi;
@@ -252,7 +252,7 @@ function(f, s)
   if HasMinimalIdeal(s) then
     if ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
       Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-       "semigroup.");
+           "semigroup.");
       return false;
     fi;
   fi;

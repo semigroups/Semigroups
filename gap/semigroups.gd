@@ -83,5 +83,3 @@ DeclareOperation("InverseSubsemigroupByProperty",
 
 DeclareProperty("IsBinaryRelationSemigroup", IsSemigroup);
 DeclareGlobalFunction("RegularSemigroup");
-
-#EOF

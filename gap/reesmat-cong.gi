@@ -1144,7 +1144,7 @@ function(cong, elm)
                          colClass := colClass,
                          rowClass := rowClass));
   SetParentAttr(class, cong);
-  SetEquivalenceClassReation(class, cong);
+  SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
 end);
