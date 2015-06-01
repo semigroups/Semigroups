@@ -11,8 +11,10 @@
 InstallMethod(GeneratorsOfSemigroup, "for a quotient semigroup",
 [IsQuotientSemigroup],
 function(S)
+  local T;
+  T := QuotientSemigroupPreimage(S);
   return DuplicateFreeList(Images(QuotientSemigroupHomomorphism(S),
-   GeneratorsOfSemigroup(QuotientSemigroupPreimage(S))));
+                                  GeneratorsOfSemigroup(T)));
 end);
 
 InstallMethod(\*, "for associative coll coll and congruence class",
@@ -38,4 +40,3 @@ InstallMethod(\/, "for a semigroup and an ideal",
 function(S, I)
   return S / ReesCongruenceOfSemigroupIdeal(I);
 end);
-
