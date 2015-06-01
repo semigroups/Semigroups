@@ -11,6 +11,8 @@
 ## (0-)matrix semigroups, using linked triples.
 ##
 
+# TODO: remove brackets around return statements everywhere in this file.
+
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 function(s, n, colBlocks, rowBlocks)
   local mat, g;
@@ -129,14 +131,14 @@ function(s, n, colBlocks, rowBlocks)
     od;
   od;
   # Construct the object
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)));
-  cong := Objectify(
-                  NewType(fam, IsRMSCongruenceByLinkedTriple),
-                  rec(n := n,
-                      colBlocks := colBlocks, colLookup := colLookup,
-                      rowBlocks := rowBlocks, rowLookup := rowLookup) );
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
+                               ElementsFamily(FamilyObj(s)));
+  cong := Objectify(NewType(fam, IsRMSCongruenceByLinkedTriple),
+                    rec(n := n,
+                        colBlocks := colBlocks,
+                        colLookup := colLookup,
+                        rowBlocks := rowBlocks,
+                        rowLookup := rowLookup));
   SetSource(cong, s);
   SetRange(cong, s);
   return cong;
@@ -164,14 +166,14 @@ function(s, n, colBlocks, rowBlocks)
     od;
   od;
   # Construct the object
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)));
-  cong := Objectify(
-                  NewType(fam, IsRZMSCongruenceByLinkedTriple),
-                  rec(n := n,
-                      colBlocks := colBlocks, colLookup := colLookup,
-                      rowBlocks := rowBlocks, rowLookup := rowLookup) );
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
+                               ElementsFamily(FamilyObj(s)));
+  cong := Objectify(NewType(fam, IsRZMSCongruenceByLinkedTriple),
+                    rec(n := n,
+                        colBlocks := colBlocks,
+                        colLookup := colLookup,
+                        rowBlocks := rowBlocks,
+                        rowLookup := rowLookup));
   SetSource(cong, s);
   SetRange(cong, s);
   return cong;
@@ -308,7 +310,7 @@ function(s)
   for i in [1 .. Size(mat[1])] do
     for j in [i + 1 .. Size(mat[1])] do
       if ForAll([1 .. Size(mat)],
-       u -> ((mat[u][i] = 0) = (mat[u][j] = 0))) then
+                u -> ((mat[u][i] = 0) = (mat[u][j] = 0))) then
         AddRelation(maxColBlocks, i, j);
       fi;
     od;
@@ -319,7 +321,7 @@ function(s)
   for u in [1 .. Size(mat)] do
     for v in [u + 1 .. Size(mat)] do
       if ForAll([1 .. Size(mat[1])],
-       i -> ((mat[u][i] = 0) = (mat[v][i] = 0))) then
+                i -> ((mat[u][i] = 0) = (mat[v][i] = 0))) then
         AddRelation(maxRowBlocks, u, v);
       fi;
     od;
@@ -337,8 +339,10 @@ function(s)
     for colBlocks in colBlocksList do
       for rowBlocks in rowBlocksList do
         if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
-          Add(congs,
-           RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks));
+          Add(congs, RZMSCongruenceByLinkedTripleNC(s,
+                                                    n,
+                                                    colBlocks,
+                                                    rowBlocks));
         fi;
       od;
     od;
@@ -745,8 +749,10 @@ function(cong)
   for colClass in [1 .. Size(colBlocks)] do
     for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g, n), Representative) do
-        elm := RMSElement(
-                       s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1]);
+        elm := RMSElement(s,
+                          colBlocks[colClass][1],
+                          rep,
+                          rowBlocks[rowClass][1]);
         Add(list, EquivalenceClassOfElement(cong, elm));
       od;
     od;
@@ -770,8 +776,10 @@ function(cong)
   for colClass in [1 .. Size(colBlocks)] do
     for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g, n), Representative) do
-        elm := RMSElement(
-                       s, colBlocks[colClass][1], rep, rowBlocks[rowClass][1]);
+        elm := RMSElement(s,
+                          colBlocks[colClass][1],
+                          rep,
+                          rowBlocks[rowClass][1]);
         Add(list, EquivalenceClassOfElement(cong, elm));
       od;
     od;
@@ -1062,9 +1070,9 @@ function(cong, nCoset, colClass, rowClass)
   local fam, class;
   fam := FamilyObj(Range(cong));
   class := Objectify(NewType(fam, IsRMSCongruenceClassByLinkedTriple),
-                   rec(nCoset := nCoset,
-                       colClass := colClass,
-                       rowClass := rowClass) );
+                     rec(nCoset := nCoset,
+                         colClass := colClass,
+                         rowClass := rowClass));
   SetParentAttr(class, cong);
   SetRepresentative(class, CanonicalRepresentative(class));
   return class;
@@ -1080,9 +1088,9 @@ function(cong, nCoset, colClass, rowClass)
   local fam, class;
   fam := FamilyObj(Range(cong));
   class := Objectify(NewType(fam, IsRZMSCongruenceClassByLinkedTriple),
-                   rec(nCoset := nCoset,
-                       colClass := colClass,
-                       rowClass := rowClass) );
+                     rec(nCoset := nCoset,
+                         colClass := colClass,
+                         rowClass := rowClass));
   SetParentAttr(class, cong);
   SetRepresentative(class, CanonicalRepresentative(class));
   return class;
@@ -1132,11 +1140,11 @@ function(cong, elm)
   colClass := cong!.colLookup[elm[1]];
   rowClass := cong!.rowLookup[elm[3]];
   class := Objectify(NewType(fam, IsRMSCongruenceClassByLinkedTriple),
-                   rec(nCoset := nCoset,
-                       colClass := colClass,
-                       rowClass := rowClass) );
+                     rec(nCoset := nCoset,
+                         colClass := colClass,
+                         rowClass := rowClass));
   SetParentAttr(class, cong);
-  SetEquivalenceClassRelation(class, cong);
+  SetEquivalenceClassReation(class, cong);
   SetRepresentative(class, elm);
   return class;
 end);
@@ -1453,8 +1461,8 @@ function(cong)
       for rowNo in [1 .. Size(m)] do
         if m[rowNo][bl[1]] <> 0 then
           Add(pairs,
-          [RMSElement(s, bl[1], m[rowNo][bl[1]] ^ -1, rowNo),
-           RMSElement(s, bl[j], m[rowNo][bl[j]] ^ -1, rowNo)]);
+              [RMSElement(s, bl[1], m[rowNo][bl[1]] ^ -1, rowNo),
+               RMSElement(s, bl[j], m[rowNo][bl[j]] ^ -1, rowNo)]);
         fi;
       od;
     od;
@@ -1544,18 +1552,16 @@ function(cong)
 
     # Ensure linkedness
     for v in [2 .. Size(mat)] do
-      n := ClosureGroup(n,
-                   mat[1][pair[1][1]]
-                   * mat[v][pair[1][1]] ^ -1
-                   * mat[v][pair[2][1]]
-                   * mat[1][pair[2][1]] ^ -1);
+      n := ClosureGroup(n, mat[1][pair[1][1]]
+                           * mat[v][pair[1][1]] ^ -1
+                           * mat[v][pair[2][1]]
+                           * mat[1][pair[2][1]] ^ -1);
     od;
     for j in [2 .. Size(mat[1])] do
-      n := ClosureGroup(n,
-                   mat[pair[1][3]][1]
-                   * mat[pair[2][3]][1] ^ -1
-                   * mat[pair[2][3]][j]
-                   * mat[pair[1][3]][j] ^ -1);
+      n := ClosureGroup(n, mat[pair[1][3]][1]
+                           * mat[pair[2][3]][1] ^ -1
+                           * mat[pair[2][3]][j]
+                           * mat[pair[1][3]][j] ^ -1);
     od;
   od;
 
@@ -1647,11 +1653,11 @@ function(cong)
     if pair[1] = MultiplicativeZero(s)
        or pair[2] = MultiplicativeZero(s)
        or ForAny([1 .. Size(mat)],
-               u -> (mat[u][pair[1][1]] = 0)
-               <>   (mat[u][pair[2][1]] = 0))
+                 u -> (mat[u][pair[1][1]] = 0)
+                 <>   (mat[u][pair[2][1]] = 0))
        or ForAny([1 .. Size(mat[1])],
-               i -> (mat[pair[1][3]][i] = 0)
-               <>   (mat[pair[2][3]][i] = 0)) then
+                 i -> (mat[pair[1][3]][i] = 0)
+                 <>   (mat[pair[2][3]][i] = 0)) then
       return UniversalSemigroupCongruence(s);
     fi;
 
@@ -1668,22 +1674,20 @@ function(cong)
       if mat[v][pair[1][1]] = 0 then
         continue;
       fi;
-      n := ClosureGroup(n,
-                   mat[u][pair[1][1]]
-                   * mat[v][pair[1][1]] ^ -1
-                   * mat[v][pair[2][1]]
-                   * mat[u][pair[2][1]] ^ -1);
+      n := ClosureGroup(n, mat[u][pair[1][1]]
+                           * mat[v][pair[1][1]] ^ -1
+                           * mat[v][pair[2][1]]
+                           * mat[u][pair[2][1]] ^ -1);
     od;
     i := PositionProperty([1 .. Size(mat[1])], k -> mat[pair[1][3]][k] <> 0);
     for j in [i + 1 .. Size(mat[1])] do
       if mat[pair[1][3]][j] = 0 then
         continue;
       fi;
-      n := ClosureGroup(n,
-                   mat[pair[1][3]][i]
-                   * mat[pair[2][3]][i] ^ -1
-                   * mat[pair[2][3]][j]
-                   * mat[pair[1][3]][j] ^ -1);
+      n := ClosureGroup(n, mat[pair[1][3]][i]
+                           * mat[pair[2][3]][i] ^ -1
+                           * mat[pair[2][3]][j]
+                           * mat[pair[1][3]][j] ^ -1);
     od;
   od;
 
