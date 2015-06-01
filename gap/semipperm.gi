@@ -10,8 +10,8 @@
 
 # this should really be in the library
 
-InstallImmediateMethod(GeneratorsOfSemigroup, 
-IsPartialPermSemigroup and IsGroup and HasGeneratorsOfGroup, 
+InstallImmediateMethod(GeneratorsOfSemigroup,
+IsPartialPermSemigroup and IsGroup and HasGeneratorsOfGroup,
 0, GeneratorsOfGroup);
 
 InstallMethod(RankOfPartialPermSemigroup,
@@ -27,41 +27,41 @@ InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 
 InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
-Maximum(RankFilter(IsActingSemigroup), RankFilter(IsSemigroupIdeal and
-HasGeneratorsOfSemigroupIdeal)) + 1,
+Maximum(RankFilter(IsActingSemigroup),
+        RankFilter(IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal)) + 1,
 #to beat the method for an acting semigroup with generators
 function(S)
-  local n;
+  local n, record;
 
   n := DegreeOfPartialPermSemigroup(S);
+  record := rec(ElementNumber := function(enum, pos)
+                  if pos > Size(S) then
+                    return fail;
+                  fi;
+                  return PartialPermNumber(pos, n);
+                end,
 
-  return EnumeratorByFunctions(S, rec(
+                NumberElement := function(enum, elt)
+                  if DegreeOfPartialPerm(elt) > n
+                      or CoDegreeOfPartialPerm(elt) > n then
+                    return fail;
+                  fi;
+                  return NumberPartialPerm(elt, n);
+                end,
 
-    ElementNumber := function(enum, pos)
-      if pos > Size(S) then
-        return fail;
-      fi;
-      return PartialPermNumber(pos, n);
-    end,
+                Length := function(enum);
+                  return Size(S);
+                end,
 
-    NumberElement := function(enum, elt)
-      if DegreeOfPartialPerm(elt) > n or CoDegreeOfPartialPerm(elt) > n then
-        return fail;
-      fi;
-      return NumberPartialPerm(elt, n);
-    end,
+                Membership := function(elt, enum)
+                  return elt in S;
+                end,
 
-    Length := function(enum);
-      return Size(S);
-    end,
+                PrintObj := function(enum)
+                  Print("<enumerator of symmetric inverse monoid on ", n," pts>");
+                end);
 
-    Membership := function(elt, enum)
-      return elt in S;
-    end,
-
-    PrintObj := function(enum)
-      Print("<enumerator of symmetric inverse monoid on ", n," pts>");
-    end));
+  return EnumeratorByFunctions(S, record);
 end);
 
 # TODO improve this
@@ -89,7 +89,7 @@ function(m, k, n, set, min, nr, coeff)
   set[nr] := min;
 
   return SEMIGROUPS_SubsetNumber(m, k - 1, n - i, set, min, nr,
-   coeff * (k - 1) / (n - i));
+                                 coeff * (k - 1) / (n - i));
    # coeff = Binomial( n - i - 1, k - 2 )
 end);
 
@@ -100,7 +100,7 @@ InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
 function(m, k, n)
   return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial(n - 1,
-  k - 1));
+                                 k - 1));
 end);
 
 # the position of <set> in the set of subsets of [ 1 .. <n> ] with shortlex
@@ -322,7 +322,7 @@ function(I)
   if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
     Append(str, "inverse ");
   elif HasIsRegularSemigroup(I)
-   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+      and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
     if IsRegularSemigroup(I) then
       Append(str, "\>regular\< ");
     else
@@ -396,12 +396,12 @@ function(S)
   # true=its a rep, false=not seen it, fail=its not a rep
   next := 1;
   opts := rec(lookingfor := function(o, x)
-    if not IsEmpty(x) then
-      return reps[x[1]] = true or reps[x[1]] = fail;
-    else
-      return false;
-    fi;
-  end);
+                              if not IsEmpty(x) then
+                                return reps[x[1]] = true or reps[x[1]] = fail;
+                              else
+                                return false;
+                              fi;
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -413,7 +413,7 @@ function(S)
     o := Orb(gens, [next], OnSets, opts);
     Enumerate(o);
     if PositionOfFound(o) <> false
-      and reps[o[PositionOfFound(o)][1]] = true then
+        and reps[o[PositionOfFound(o)][1]] = true then
       if not IsEmpty(o[PositionOfFound(o)]) then
         reps[o[PositionOfFound(o)][1]] := fail;
       fi;
@@ -450,12 +450,12 @@ function(S)
   next := 1;
   nr := 0;
   opts := rec(lookingfor := function(o, x)
-    if not IsEmpty(x) then
-      return IsPosInt(comp[x[1]]);
-    else
-      return false;
-    fi;
-  end);
+                              if not IsEmpty(x) then
+                                return IsPosInt(comp[x[1]]);
+                              else
+                                return false;
+                              fi;
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -508,12 +508,12 @@ function(S)
   nr := 0;
   cycles := [];
   opts := rec(lookingfor := function(o, x)
-    if not IsEmpty(x) then
-      return IsPosInt(comp[x[1]]);
-    else
-      return false;
-    fi;
-  end);
+                              if not IsEmpty(x) then
+                                return IsPosInt(comp[x[1]]);
+                              else
+                                return false;
+                              fi;
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
