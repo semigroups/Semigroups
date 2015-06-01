@@ -55,7 +55,7 @@ function(s)
 
   Append(str, "\>bipartition\< \>group\< ");
   if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-    and Size(s) < 2 ^ 64 then
+      and Size(s) < 2 ^ 64 then
     Append(str, "\>of size\> ");
     Append(str, String(Size(s)));
     Append(str, ",\<\< ");
@@ -91,7 +91,7 @@ function(s)
 
   Append(str, "\>transformation\< \>group\<");
   if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-   and Size(s) < 2 ^ 64 then
+      and Size(s) < 2 ^ 64 then
     Append(str, " \>of size \>");
     Append(str, String(Size(s)));
     Append(str, ",\<\<");
@@ -143,7 +143,7 @@ function(s)
 
   Append(str, "\>partial perm\< \>group\< ");
   if HasIsTrivial(s) and not IsTrivial(s)
-    and HasSize(s) and Size(s) < 2 ^ 64 then
+      and HasSize(s) and Size(s) < 2 ^ 64 then
     Append(str, "\>of size\> ");
     Append(str, String(Size(s)));
     Append(str, ",\<\< ");
@@ -231,7 +231,7 @@ function(gens, opts)
           s := ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-        " generators so far\r");
+              " generators so far\r");
       od;
       Print("\n");
     else
@@ -259,7 +259,7 @@ function(gens, opts)
   SetGeneratorsOfMagma(s, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens)
-   and CanEasilyCompareElements(gens) then
+      and CanEasilyCompareElements(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(s, IsMonoid);
@@ -323,7 +323,7 @@ function(gens, record)
           s := ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-        " generators so far");
+              " generators so far");
       od;
       Print("\n");
     else
@@ -561,19 +561,20 @@ function(s, coll, record)
     coll := GeneratorsOfSemigroup(coll);
   fi;
 
-  return ClosureInverseSemigroupNC(s, Filtered(coll, x -> not x in s),
-   SEMIGROUPS_ProcessOptionsRec(record));
+  return ClosureInverseSemigroupNC(s,
+                                   Filtered(coll, x -> not x in s),
+                                   SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #
 
 InstallGlobalFunction(ClosureInverseSemigroupNC,
 function(s, coll, record)
-  local t, coll_copy, o, f;
+  local t, coll_copy, o, f, gens;
 
   if coll = [] then
     Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
-    "semigroup,");
+         "semigroup,");
     return s;
   elif IsSemigroupIdeal(s) then
     return InverseSemigroup(s, coll, record);
@@ -590,8 +591,8 @@ function(s, coll, record)
   AddGeneratorsToOrbit(o, coll_copy);
 
   #TODO should be a case split here for semigroups and monoids?
-  t := InverseSemigroupByGenerators(
-   Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
+  gens := GeneratorsOfInverseSemigroup(s);
+  t := InverseSemigroupByGenerators(Concatenation(gens, coll), record);
 
   #remove everything related to strongly connected components
   Unbind(o!.scc);
@@ -653,8 +654,8 @@ function(s, coll, record)
 
   if not IsGeneratorsOfActingSemigroup(coll) then
     Error("Semigroups: ClosureSemigroup: usage,\n",
-    "the second argument <coll> should be a collection ",
-    "satisfying\nIsGeneratorsOfActingSemigroup,");
+          "the second argument <coll> should be a collection ",
+          "satisfying\nIsGeneratorsOfActingSemigroup,");
     return;
   fi;
 
@@ -672,18 +673,19 @@ function(s, coll, record)
   fi;
 
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and
-    ActionDegree(s) <> ActionDegree(Representative(coll)) then
+      ActionDegree(s) <> ActionDegree(Representative(coll)) then
     Error("Semigroups: ClosureSemigroup: usage,\n",
           "usage: the degree of the semigroup and collection must be equal,");
     return;
   fi;
 
-  return ClosureSemigroupNC(s, Filtered(coll, x -> not x in s),
-   SEMIGROUPS_ProcessOptionsRec(record));
+  return ClosureSemigroupNC(s,
+                            Filtered(coll, x -> not x in s),
+                            SEMIGROUPS_ProcessOptionsRec(record));
 end);
 
 #recreate the lambda/rho orb using the higher degree!
-InstallGlobalFunction(ChangeDegreeOfTransformationSemigroupOrb,
+BindGlobal("SEMIGROUPS_ChangeDegree", # for a transformation semigroup
 function(o, old_deg, t)
   local deg, extra, ht, max, i, orb;
   deg := DegreeOfTransformationSemigroup(t);
@@ -742,7 +744,7 @@ function(s, coll, opts)
 
   if coll = [] then
     Info(InfoSemigroups, 2, "every element in the collection belong to the ",
-    " semigroup,");
+         " semigroup,");
     return s;
   fi;
 
@@ -768,8 +770,8 @@ function(s, coll, opts)
   if IsTransformationSemigroup(s) then
     old_deg := DegreeOfTransformationSemigroup(s);
     if old_deg < DegreeOfTransformationSemigroup(t) then
-      ChangeDegreeOfTransformationSemigroupOrb(o, old_deg, t);
-      ChangeDegreeOfTransformationSemigroupOrb(rho_o, old_deg, t);
+      SEMIGROUPS_ChangeDegree(o, old_deg, t);
+      SEMIGROUPS_ChangeDegree(rho_o, old_deg, t);
     fi;
   fi;
 
@@ -929,7 +931,7 @@ function(s, coll, opts)
     rank := ActionRank(t)(x);
 
     if rank > max_rank or scc[m][1] = old_scc[old_lookup[pos]][1] then
-    # in either case x is an old R-rep and so has rectified lambda value.
+      # in either case x is an old R-rep and so has rectified lambda value.
     elif pos = old_scc[old_lookup[pos]][1] then
       x := x * LambdaOrbMult(o, m, pos)[2];
     else
@@ -943,7 +945,7 @@ function(s, coll, opts)
     #l<>fail since we have copied the old rho values
 
     if not IsBound(lambdarhoht[l]) then
-    # old rho-value, but new lambda-rho-combination
+      # old rho-value, but new lambda-rho-combination
 
       new_nr := new_nr + 1;
       lenreps[m] := lenreps[m] + 1;
@@ -960,7 +962,7 @@ function(s, coll, opts)
 
       pt := [t, m, o, x, false, new_nr];
     elif not IsBound(lambdarhoht[l][m]) then
-    # old rho-value, but new lambda-rho-combination
+      # old rho-value, but new lambda-rho-combination
 
       new_nr := new_nr + 1;
       lenreps[m] := lenreps[m] + 1;
@@ -976,33 +978,33 @@ function(s, coll, opts)
 
       pt := [t, m, o, x, false, new_nr];
     else
-    # old rho value, and maybe we already have a rep of y's R-class...
+      # old rho value, and maybe we already have a rep of y's R-class...
       ind := lambdarhoht[l][m];
       pt := [t, m, o, x, false, new_nr + 1];
       if not rank > max_rank then
-      # this is maybe a new R-reps and so tests are required...
+        # this is maybe a new R-reps and so tests are required...
 
         #check membership in Schutzenberger group via stabiliser chain
         schutz := LambdaOrbStabChain(o, m);
 
         if schutz = true then
-        # the Schutzenberger group is the symmetric group
+          # the Schutzenberger group is the symmetric group
           old_to_new[i] := repslookup[m][ind][1];
           continue;
         else
           if schutz = false then
-           # the Schutzenberger group is trivial
+            # the Schutzenberger group is trivial
             data_val := htvalue(ht, x);
             if data_val <> fail then
               old_to_new[i] := data_val;
               continue;
             fi;
           else
-          # the Schutzenberger group is neither trivial nor symmetric group
-           old := false;
+            # the Schutzenberger group is neither trivial nor symmetric group
+            old := false;
             for n in [1 .. repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = ()
-                then
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))
+                  = () then
                 old := true;
                 old_to_new[i] := repslookup[m][ind][n];
                 break;
@@ -1264,5 +1266,3 @@ InstallMethod(RandomBipartitionMonoid,
 function(m, n)
   return Monoid(Set(List([1 .. m], x -> RandomBipartition(n))));
 end);
-
-#EOF
