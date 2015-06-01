@@ -100,4 +100,3 @@ function(S, rep, conj)
 
     return LargestElementConjugateStabChain(S.stabilizer, rep, conj);
 end);
-

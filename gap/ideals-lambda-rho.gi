@@ -43,11 +43,11 @@ function(o, limit, lookfunc)
     return IsClosed(o) or Length(o) >= limit;
   end;
   if IsLambdaOrb(o) then
-    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc := newlookfunc,
-     lambdalookfunc := lookfunc));
+    Enumerate(SemigroupData(o!.parent), infinity,
+              rec(lookfunc := newlookfunc, lambdalookfunc := lookfunc));
   elif IsRhoOrb(o) then
-    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc := newlookfunc,
-     rholookfunc := lookfunc));
+    Enumerate(SemigroupData(o!.parent), infinity,
+              rec(lookfunc := newlookfunc, rholookfunc := lookfunc));
   fi;
 
   return o;
@@ -97,7 +97,7 @@ end);
 InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
 function(o, i)
-local nr;
+  local nr;
 
   nr := 1;
   while i > Length(o!.orbits[nr]) do
@@ -295,8 +295,9 @@ function(I)
   gens := GeneratorsOfSemigroupIdeal(I);
   lambdafunc := LambdaFunc(I);
 
-  o := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), LambdaOrbSeed(I),
-   LambdaAct(I), record);
+  o := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
+           LambdaOrbSeed(I),
+           LambdaAct(I), record);
 
   # install the lambda values of the generators
   ht := o!.ht;
@@ -378,8 +379,10 @@ function(o, pt, x, pos, gen, ind, lookfunc)
     record.onlygradesdata := fail;
   fi;
 
-  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), pt, LambdaAct(I),
-   record);
+  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
+             pt,
+             LambdaAct(I),
+             record);
   Enumerate(new);
 
   ht := o!.ht;
@@ -492,8 +495,10 @@ function(o, pt, x, pos, gen, ind, lookfunc)
     record.onlygradesdata := fail;
   fi;
 
-  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), pt, RhoAct(I),
-         record);
+  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
+             pt,
+             RhoAct(I),
+             record);
   Enumerate(new);
 
   ht := o!.ht;
@@ -717,4 +722,3 @@ function(o, i)
 
   return out;
 end);
-
