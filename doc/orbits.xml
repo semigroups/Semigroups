@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="EnumeratePosition">
   <ManSection> 
-    <Oper Name="EnumeratePosition" Arg="o, val[, onlynew]"/>
+    <Func Name="EnumeratePosition" Arg="o, val[, onlynew]"/>
     <Returns>A positive integer or <K>fail</K>.</Returns>
     <Description> 
       This function returns the position of the value <A>val</A> in the orbit
@@ -30,7 +30,7 @@
 
 <#GAPDoc Label="LookForInOrb">
   <ManSection> 
-    <Oper Name="LookForInOrb" Arg="o, func, start"/>
+    <Func Name="LookForInOrb" Arg="o, func, start"/>
     <Returns><K>false</K> or a positive integer.</Returns>
     <Description>
       The arguments of this function should be an orbit <A>o</A>, a function
@@ -41,15 +41,15 @@
       <K>true</K> or the enumeration ends. In the former case, the position of
       the first point in <A>o</A> for which <A>func</A> returns <K>true</K> is
       returned, and in the latter <K>false</K> is returned.  
-<Example>
+<Example><![CDATA[
 gap> o:=Orb(SymmetricGroup(100), 1, OnPoints);
-&lt;open Int-orbit, 1 points>
+<open Int-orbit, 1 points>
 gap> func:=function(o, x) return x=42; end;
 function( o, x ) ... end
 gap> LookForInOrb(o, func, 1);
 42
 gap> o;
-&lt;open Int-orbit, 42 points></Example>
+<open Int-orbit, 42 points>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -89,7 +89,7 @@ gap> o;
       Note that <C>EvaluateWord(<A>gens</A>, [])</C> returns
       <C>One(<A>gens</A>)</C> if <A>gens</A> belongs to the category
       <Ref Filt="IsMultiplicativeElementWithOne" BookName="ref"/>.
-<Example>
+<Example><![CDATA[
 gap> gens:=[ Transformation( [ 2, 4, 4, 6, 8, 8, 6, 6 ] ), 
 > Transformation( [ 2, 7, 4, 1, 4, 6, 5, 2 ] ), 
 > Transformation( [ 3, 6, 2, 4, 2, 2, 2, 8 ] ), 
@@ -112,7 +112,7 @@ gap> Factorization(S, f);
   2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 3, 2, 2, 2, 2, 2, 3, 4, -3, -2, 
   -3, -2, -3, -2, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 3, 2 ]
 gap> EvaluateWord(GeneratorsOfSemigroup(S), last); 
-[3,7][8,1,2,6,9][10,5]</Example>
+[3,7][8,1,2,6,9][10,5]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -129,13 +129,13 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
 
       See also <Ref Func="OrbSCCLookup"/> and <Ref Func="OrbSCCTruthTable"/>.
 
-<Example>
+<Example><![CDATA[
 gap> S:=FullTransformationSemigroup(4);;
 gap> o:=LambdaOrb(S);
-&lt;open orbit, 1 points with Schreier tree with log>
+<open orbit, 1 points with Schreier tree with log>
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
-  [ 13, 14, 15, 16 ] ]</Example>
+  [ 13, 14, 15, 16 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -154,7 +154,7 @@ gap> OrbSCC(o);
 
       See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCTruthTable"/>.
       
-<Example>
+<Example><![CDATA[
 gap> S:=FullTransformationSemigroup(4);;
 gap> o:=LambdaOrb(S);;
 gap> OrbSCC(o);
@@ -165,7 +165,7 @@ gap> OrbSCCLookup(o);
 gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; 
 1
 3
-4</Example>
+4]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -184,7 +184,7 @@ gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7];
 
       See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCLookup"/>.
 
-<Example>
+<Example><![CDATA[
 gap> S:=FullTransformationSemigroup(4);;
 gap> o:=LambdaOrb(S);;
 gap> OrbSCC(o);
@@ -200,7 +200,7 @@ gap> OrbSCCTruthTable(o);
   [ false, false, false, false, false, false, true, true, true, true, 
       true, true, false, false, false, false ], 
   [ false, false, false, false, false, false, false, false, false, 
-      false, false, false, true, true, true, true ] ]</Example>
+      false, false, false, true, true, true, true ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -223,7 +223,7 @@ gap> OrbSCCTruthTable(o);
     See also <Ref Func="OrbSCC"/>, <Ref Func="TraceSchreierTreeOfSCCBack"/>, 
     <Ref Func="SchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCForward"/>.
-<Example>
+<Example><![CDATA[
 gap> S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), 
 > Transformation( [ 3, 3, 3, 4, 5 ] ),
 > Transformation( [ 5, 1, 4, 5, 5 ] ) );;
@@ -237,7 +237,7 @@ gap> ReverseSchreierTreeOfSCC(o, 7);
 gap> OnSets(o[11], Generators(S)[1]);
 [ 1, 4 ]
 gap> Position(o, last);
-7</Example>
+7]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -260,7 +260,7 @@ gap> Position(o, last);
     See also <Ref Func="OrbSCC"/>, <Ref Func="TraceSchreierTreeOfSCCBack"/>, 
     <Ref Func="ReverseSchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCForward"/>.
-<Example>
+<Example><![CDATA[
 gap> S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), 
 > Transformation( [ 3, 3, 3, 4, 5 ] ),
 > Transformation( [ 5, 1, 4, 5, 5 ] ) );;
@@ -274,14 +274,14 @@ gap> SchreierTreeOfSCC(o, 7);
 gap> OnSets(o[6], Generators(S)[2]);
 [ 3, 5 ]
 gap> Position(o, last);
-11</Example>
+11]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="TraceSchreierTreeOfSCCBack"/>
   <ManSection> 
-    <Func Name="TraceSchreierTreeOfSCCBack" Arg="orb, m, nr"/>
+    <Oper Name="TraceSchreierTreeOfSCCBack" Arg="orb, m, nr"/>
     <Returns>A word in the generators.</Returns>
     <Description>
     <A>orb</A>  must  be  an  orbit  object  with  a Schreier tree and orbit
@@ -302,7 +302,7 @@ gap> Position(o, last);
     <Ref Func="ReverseSchreierTreeOfSCC"/>, 
     <Ref Func="SchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCForward"/>.
-    <Example>
+    <Example><![CDATA[
 gap> S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), 
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ), 
@@ -315,14 +315,14 @@ gap> ReverseSchreierTreeOfSCC(o, 4);
 gap> TraceSchreierTreeOfSCCBack(o, 4, 7);
 [ 1 ]
 gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
-[ 3 ]</Example>
+[ 3 ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="TraceSchreierTreeOfSCCForward"/>
   <ManSection> 
-    <Func Name="TraceSchreierTreeOfSCCForward" Arg="orb, m, nr"/>
+    <Oper Name="TraceSchreierTreeOfSCCForward" Arg="orb, m, nr"/>
     <Returns>A word in the generators.</Returns>
     <Description>
     <A>orb</A>  must  be  an  orbit  object  with  a Schreier tree and orbit
@@ -343,7 +343,7 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
     <Ref Func="ReverseSchreierTreeOfSCC"/>, 
     <Ref Func="SchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCBack"/>.
-    <Example>
+    <Example><![CDATA[
 gap> S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), 
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ), 
@@ -356,7 +356,7 @@ gap> SchreierTreeOfSCC(o, 4);
 gap> TraceSchreierTreeOfSCCForward(o, 4, 8);
 [ 4 ]
 gap> TraceSchreierTreeOfSCCForward(o, 4, 7);
-[ 2, 2 ]</Example>
+[ 2, 2 ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

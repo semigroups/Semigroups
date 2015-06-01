@@ -80,7 +80,7 @@ function(iter)
   elif seq[1] <> 1 then
     seq := Concatenation([1], seq);
     words := Concatenation([GeneratorsOfInverseSemigroup(semigroup)[1]],
-      words);
+                           words);
     iter_list := Concatenation([ShallowCopy(new_iterator)], iter_list);
   else
     i := 1;
@@ -89,7 +89,7 @@ function(iter)
     od;
     seq := Concatenation([seq[i] + 1], seq{[i + 1 .. Length(seq)]});
     words := Concatenation([FG_NextIterator(iter_list[i])],
-      iter_list{[i + 1 .. Length(iter_list)]});
+                           iter_list{[i + 1 .. Length(iter_list)]});
     iter_list := iter_list{[i .. Length(iter_list)]};
   fi;
 
@@ -107,17 +107,20 @@ BindGlobal("ShallowCopy_FreeInverseSemigroup", iter -> rec(
                  iter_list := ShallowCopy( iter!.iter_list ) ) );
 
 InstallMethod(Iterator, "for a free inverse semigroup",
-  [IsFreeInverseSemigroupCategory], S -> IteratorByFunctions(rec(
+[IsFreeInverseSemigroupCategory],
+function(S)
+  local iter, record;
+  iter := [Iterator(FreeGroup(Length(GeneratorsOfInverseSemigroup(S))))];
+  record := rec(IsDoneIterator := ReturnFalse,
+                NextIterator   := NextIterator_FreeInverseSemigroup,
+                ShallowCopy    := ShallowCopy_FreeInverseSemigroup,
 
-  IsDoneIterator := ReturnFalse,
-  NextIterator   := NextIterator_FreeInverseSemigroup,
-  ShallowCopy    := ShallowCopy_FreeInverseSemigroup,
-
-  semigroup      := S,
-  seq            := [1],
-  words          := [S.1],
-  iter_list      :=
-   [Iterator(FreeGroup(Length(GeneratorsOfInverseSemigroup(S))))])));
+                semigroup      := S,
+                seq            := [1],
+                words          := [S.1],
+                iter_list      := iter);
+  return IteratorByFunctions(record);
+end);
 
 ############################################################################
 ##
@@ -154,8 +157,8 @@ function(arg)
   fi;
 
   F := NewFamily("FreeInverseSemigroupElementsFamily",
-      IsFreeInverseSemigroupElement,
-      CanEasilySortElements);
+                 IsFreeInverseSemigroupElement,
+                 CanEasilySortElements);
 
   type := NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
@@ -167,8 +170,8 @@ function(arg)
   elif IsFinite(names) then
     gens := EmptyPlist(Length(names));
     for m in [1 .. Length(names)] do
-      gens[m] := Objectify(type,
-       [Length(names), 2, 2, [fail, 1], [fail, 2 * m - 1], [], []]);
+      gens[m] := Objectify(type, [Length(names), 2, 2, [fail, 1],
+                                  [fail, 2 * m - 1], [], []]);
       gens[m]![6][2 * m - 1] := 2;
       gens[m]![7][2 * m] := 1;
     od;
@@ -209,8 +212,8 @@ InstallMethod(ViewObj, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
 
-  if UserPreference("semigroups", "FreeInverseSemigroupElementDisplay") =
-    "minimal" then
+  if UserPreference("semigroups", "FreeInverseSemigroupElementDisplay")
+      = "minimal" then
     Print(MinimalWord(x));
   else
     Print(CanonicalForm(x));
@@ -279,15 +282,18 @@ function(x)
       j := is_a_child_of[j];
     od;
     temp_word := Concatenation(List(Reversed(temp_word), InvertGenerator),
-     temp_word);
+                               temp_word);
     if IsBound(stop_start[j]) and not IsBound(words[stop_start[j]]) then
       #first time in this part of the tree
       words[stop_start[j]] := temp_word;
       part[j] := stop_start[j];
       pos[j] := 0;
     else # been in this part before
-      words[part[j]] := Concatenation(words[part[j]]{[1 .. pos[j]]}, temp_word,
-       words[part[j]]{[pos[j] + 1 .. Length(words[part[j]])]});
+      words[part[j]] := Concatenation(words[part[j]]{[1 .. pos[j]]},
+                                      temp_word,
+      # gaplint: ignore 2
+                                      words[part[j]]{[pos[j] + 1 ..
+                                        Length(words[part[j]])]});
     fi;
     i := i - 1;
   od;
@@ -300,7 +306,7 @@ function(x)
   for i in path do
     Append(out, List(words[stop_start[i]], l -> Concatenation(names[l], "*")));
     if i + 1 <= Length(path) then
-     Add(out, Concatenation(names[gen[path[i + 1]]], "*"));
+      Add(out, Concatenation(names[gen[path[i + 1]]], "*"));
     fi;
   od;
 
@@ -353,9 +359,7 @@ function(tree)
     return result;
   end;
 
-  tail := function(list)
-    return list[Length(list)];
-  end;
+  tail := list -> list[Length(list)];
 
   maxleftreducedpath := fork([], children(1));
   for pivot in maxleftreducedpath do
@@ -369,7 +373,8 @@ function(tree)
   for i in [1 .. Length(maxleftreducedpath)] do
     maxleftreduced[i] := List(maxleftreducedpath[i], x -> tree![5][x]);
     maxleftreduced[i] := Concatenation(maxleftreduced[i],
-                         Reversed(List(maxleftreduced[i], InvertGenerator)));
+                                       Reversed(List(maxleftreduced[i],
+                                                     InvertGenerator)));
   od;
 
   groupelem := [];
@@ -381,18 +386,18 @@ function(tree)
   groupelem := Reversed(List(groupelem, x -> tree![5][x]));
 
   if Length(maxleftreduced) = 1 and
-     Length(maxleftreduced[1]) = 2 and
-     Length(groupelem) > 0 and
-    ((maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] =
-    maxleftreduced[1][1] + 1) or
-      (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] =
-      maxleftreduced[1][1] - 1))
-  then
+       Length(maxleftreduced[1]) = 2 and
+       Length(groupelem) > 0 and
+      ((maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] =
+        maxleftreduced[1][1] + 1) or
+       (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] =
+        maxleftreduced[1][1] - 1)) then
     output := Concatenation(List(groupelem, x -> FamilyObj(tree)!.names[x]));
   else
     output :=
           Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
-    groupelem), x -> FamilyObj(tree)!.names[x]));
+                                           groupelem),
+                        x -> FamilyObj(tree)!.names[x]));
   fi;
   return output;
 end);
@@ -521,12 +526,8 @@ end);
 ## Size
 ##
 
-InstallMethod(Size,
-  "for a free inverse semigroup",
-  [IsFreeInverseSemigroupCategory],
-  function(S)
-    return infinity;
-  end);
+InstallMethod(Size, "for a free inverse semigroup",
+[IsFreeInverseSemigroupCategory], S -> infinity);
 
 InstallMethod(IsFreeInverseSemigroup, "for a semigroup",
 [IsSemigroup],

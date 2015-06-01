@@ -34,8 +34,8 @@ function(s, kernel, traceBlocks)
   for a in kernel do
     for x in GeneratorsOfSemigroup(s) do
       if not a ^ x in kernel then
-  Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
-        "the second arg <kernel> must be self-conjugate,");
+        Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:",
+              " usage,\nthe second arg <kernel> must be self-conjugate,");
         return;
       fi;
     od;
@@ -56,9 +56,8 @@ function(s, kernel, traceBlocks)
           # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
           for e in traceClass do
             if a * e in kernel then
-              Error(
-                "Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
-                "not a valid congruence pair,");
+              Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
+                    "not a valid congruence pair,");
               return;
             fi;
           od;
@@ -84,14 +83,12 @@ function(s, kernel, traceBlocks)
     od;
   od;
   # Construct the object
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)));
-  cong := Objectify(
-                  NewType(fam, IsInverseSemigroupCongruenceByKernelTrace),
-                  rec(kernel := kernel,
-                      traceBlocks := traceBlocks,
-                      traceLookup := traceLookup));
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
+                               ElementsFamily(FamilyObj(s)));
+  cong := Objectify(NewType(fam, IsInverseSemigroupCongruenceByKernelTrace),
+                    rec(kernel := kernel,
+                        traceBlocks := traceBlocks,
+                        traceLookup := traceLookup));
   SetSource(cong, s);
   SetRange(cong, s);
   return cong;
@@ -115,7 +112,7 @@ end);
 InstallMethod(\=,
 "for two inverse semigroup congruences",
 [IsInverseSemigroupCongruenceByKernelTrace,
-IsInverseSemigroupCongruenceByKernelTrace],
+ IsInverseSemigroupCongruenceByKernelTrace],
 function(cong1, cong2)
   return(Range(cong1) = Range(cong2) and
          cong1!.kernel = cong2!.kernel and
@@ -169,7 +166,7 @@ function(pair, cong)
   fi;
   # Is (a^-1 a, b^-1 b) in the trace?
   if pair[1] ^ -1 * pair[1] in
-     First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
+      First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
     # Is ab^-1 in the kernel?
     if pair[1] * pair[2] ^ -1 in cong!.kernel then
       return true;
@@ -186,7 +183,8 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   if not elm in Range(cong) then
     Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-    "the second arg <elm> must be in the semigroup of the first arg <cong>,");
+          "the second arg <elm> must be in the semigroup of the first arg",
+          " <cong>,");
     return;
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
@@ -213,7 +211,7 @@ end);
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
 [IsInverseSemigroupCongruenceClassByKernelTrace,
-IsInverseSemigroupCongruenceClassByKernelTrace],
+ IsInverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   return(ParentAttr(c1) = ParentAttr(c2) and
           [c1!.rep, c2!.rep] in ParentAttr(c1));
@@ -235,7 +233,7 @@ end);
 InstallMethod(\*,
 "for two inverse semigroup congruence classes",
 [IsInverseSemigroupCongruenceClassByKernelTrace,
-IsInverseSemigroupCongruenceClassByKernelTrace],
+ IsInverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
     Error("Semigroups: \*: usage,\n",
@@ -308,7 +306,7 @@ function(cong)
     return;
   fi;
   gens := Union(List(Idempotents(s),
-           e -> EquivalenceClassOfElementNC(cong, e)));
+                     e -> EquivalenceClassOfElementNC(cong, e)));
   return InverseSemigroup(gens, rec(small := true));
 end);
 
@@ -326,9 +324,10 @@ function(cong)
           "the argument <cong> must be over an inverse semigroup,");
     return;
   fi;
+  # gaplint: ignore 3
   return InverseSemigroupCongruenceByKernelTraceNC(Range(cong),
-                 KernelOfSemigroupCongruence(cong),
-                 TraceOfSemigroupCongruence(cong));
+           KernelOfSemigroupCongruence(cong),
+           TraceOfSemigroupCongruence(cong));
 end);
 
 #
@@ -336,10 +335,8 @@ end);
 InstallGlobalFunction(SEMIGROUPS_InverseCongFromPairs,
 function(s, pairs)
   local cong;
-  cong := AsInverseSemigroupCongruenceByKernelTrace(
-                  SemigroupCongruenceByGeneratingPairs(s, pairs));
+  cong := SemigroupCongruenceByGeneratingPairs(s, pairs);
+  cong := AsInverseSemigroupCongruenceByKernelTrace(cong);
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
 end);
-
-#

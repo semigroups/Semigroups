@@ -14,9 +14,9 @@
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A Green's class <A>class</A> of a semigroup <C>S</C> satisfies
-      <C>IsGreensClassNC</C> if it was known to &GAP; that the representative
-      of <A>class</A> was an element of <C>S</C> at the point that
-      <A>class</A> was created. 
+      <C>IsGreensClassNC</C> if it was not known to &GAP; that the
+      representative of <A>class</A> was an element of <C>S</C> at the point
+      that <A>class</A> was created. 
     </Description> 
   </ManSection>
 <#/GAPDoc>

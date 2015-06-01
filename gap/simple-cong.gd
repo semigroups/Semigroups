@@ -15,13 +15,14 @@
 ##
 
 DeclareCategory("SEMIGROUPS_CongSimple",
-        IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+                IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 
 DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromRMSCong");
 DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromPairs");
 
 DeclareCategory("SEMIGROUPS_CongClassSimple",
-        IsCongruenceClass and IsAttributeStoringRep and IsAssociativeElement);
+                IsCongruenceClass and IsAttributeStoringRep and
+                IsAssociativeElement);
 
 DeclareGlobalFunction("SEMIGROUPS_SimpleClassFromRMSclass");
 

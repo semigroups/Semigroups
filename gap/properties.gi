@@ -30,8 +30,7 @@ InstallMethod(OneMutable, "for ring element coll coll coll",
 [IsRingElementCollCollColl], x -> One(Representative(x)));
 
 InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup],
-S -> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(S))));
+[IsMatrixSemigroup], S -> IsGroupAsSemigroup(AsTransformationSemigroup(S)));
 
 #
 
@@ -107,13 +106,13 @@ function(S)
   local iter, d;
 
   if HasParent(S) and HasIsBlockGroup(Parent(S))
-    and IsBlockGroup(Parent(S)) then
+      and IsBlockGroup(Parent(S)) then
     return true;
   elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "inverse semigroup");
     return true;
-  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) and
-   (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
+  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S))
+      and (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
     Info(InfoSemigroups, 2, "regular but non-inverse semigroup");
     return false;
   fi;
@@ -122,8 +121,8 @@ function(S)
 
   for d in iter do
     if IsRegularDClass(d) and
-       (ForAny(RClasses(d), x -> NrIdempotents(x) > 1)
-        or NrRClasses(d) <> NrLClasses(d)) then
+         (ForAny(RClasses(d), x -> NrIdempotents(x) > 1)
+          or NrRClasses(d) <> NrLClasses(d)) then
       return false;
     fi;
   od;
@@ -149,8 +148,8 @@ InstallMethod(IsCliffordSemigroup,
 function(S)
   local gens, idem, f, g;
 
-  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) and
-   IsCliffordSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S))
+      and IsCliffordSemigroup(Parent(S)) then
     return true;
   elif HasIsInverseSemigroup(S) and not IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not inverse");
@@ -169,15 +168,16 @@ function(S)
   fi;
 
   gens := GeneratorsOfSemigroup(S);
-  idem := Set(List(gens, x ->
-   IdempotentCreator(S)(LambdaFunc(S)(x), RhoFunc(S)(x))));
+  idem := Set(List(gens,
+                   x -> IdempotentCreator(S)(LambdaFunc(S)(x),
+                                             RhoFunc(S)(x))));
 
   for f in gens do
     for g in idem do
       if not f * g = g * f then
         Info(InfoSemigroups, 2, "the idempotents are not central:");
         Info(InfoSemigroups, 2, "  ", f, "\n#I  and\n#I    ", g,
-         "\n#I  do not commute,");
+             "\n#I  do not commute,");
         return false;
       fi;
     od;
@@ -197,8 +197,8 @@ S -> ForAll(OrbSCC(LambdaOrb(S)), x -> Length(x) = 1));
 InstallMethod(IsCliffordSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsCliffordSemigroup(Parent(S)) and
-   IsCliffordSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCliffordSemigroup(Parent(S))
+      and IsCliffordSemigroup(Parent(S)) then
     return true;
   else
     return IsRegularSemigroup(S) and NrHClasses(S) = NrDClasses(S);
@@ -212,8 +212,8 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 function(S)
   local gens, n, i, j;
 
-  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S)) and
-   IsCommutativeSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S))
+      and IsCommutativeSemigroup(Parent(S)) then
     return true;
   fi;
 
@@ -224,7 +224,7 @@ function(S)
     for j in [i + 1 .. n] do
       if not gens[i] * gens[j] = gens[j] * gens[i] then
         Info(InfoSemigroups, 2, "generators ", i, " and ", j,
-         " do not commute");
+             " do not commute");
         return false;
       fi;
     od;
@@ -241,8 +241,8 @@ InstallMethod(IsCompletelyRegularSemigroup,
 function(S)
   local record, o, pos, f;
 
-  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
-   IsCompletelyRegularSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S))
+      and IsCompletelyRegularSemigroup(Parent(S)) then
     return true;
   elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "semigroup is not regular");
@@ -250,14 +250,16 @@ function(S)
   fi;
 
   record := ShallowCopy(LambdaOrbOpts(S));
-  record.treehashsize := S!.opts.hashlen.M;
+  record.treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M;
 
   for f in GeneratorsOfSemigroup(S) do
     o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
     pos := LookForInOrb(o,
-           function(o, x)
-             return LambdaRank(S)(LambdaAct(S)(x, f)) <> LambdaRank(S)(x);
-           end, 1);
+                        function(o, x)
+                          return LambdaRank(S)(LambdaAct(S)(x, f)) <>
+                                 LambdaRank(S)(x);
+                        end,
+                        1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
 
@@ -275,8 +277,8 @@ end);
 InstallMethod(IsCompletelyRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S)) and
-   IsCompletelyRegularSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S))
+      and IsCompletelyRegularSemigroup(Parent(S)) then
     return true;
   elif HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "semigroup is not regular");
@@ -333,7 +335,7 @@ InstallMethod(IsFactorisableSemigroup,
 [IsInverseSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) then
-    return IsFactorisableSemigroup(Range(IsomorphismPartialPermSemigroup(S)));
+    return IsFactorisableSemigroup(AsPartialPermSemigroup(S));
   fi;
   return false;
 end);
@@ -446,8 +448,8 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if ForAny(GeneratorsOfSemigroup(S), x ->
-   ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
+  if ForAny(GeneratorsOfSemigroup(S),
+            x -> ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfTransformationSemigroup(S), x -> Length(x) = 1);
@@ -459,8 +461,8 @@ end);
 InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if ForAny(GeneratorsOfSemigroup(S), x ->
-   ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
+  if ForAny(GeneratorsOfSemigroup(S),
+            x -> ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfPartialPermSemigroup(S), x -> Length(x) = 1);
@@ -622,7 +624,7 @@ function(S)
   # and we should check that rho is closed.
   if not (IsClosed(rho) and Length(rho) >= Length(lambda)) then
     Info(InfoSemigroups, 2,
-    "the numbers of lambda and rho values are not equal");
+         "the numbers of lambda and rho values are not equal");
     return false;
   fi;
 
@@ -765,7 +767,7 @@ function(S)
     fi;
   od;
   Info(InfoSemigroups, 2, "at least one generator does not belong to the",
-   " semigroup generated by any ");
+       " semigroup generated by any ");
   Info(InfoSemigroups, 2, "other generator.");
   return false;
 end);
@@ -778,8 +780,7 @@ function(S)
   if not IsInverseSemigroup(S) then
     return false;
   fi;
-  return IsMonogenicInverseSemigroup(
-          Range(IsomorphismPartialPermSemigroup(S)));
+  return IsMonogenicInverseSemigroup(AsPartialPermSemigroup(S));
 end);
 
 # same method for ideals
@@ -825,7 +826,7 @@ function(S)
   od;
 
   Info(InfoSemigroups, 2, "at least one generator does not belong to the",
-   " inverse semigroup generated by any ");
+       " inverse semigroup generated by any ");
   Info(InfoSemigroups, 2, "other generator.");
   return false;
 end);
@@ -857,7 +858,7 @@ function(S)
 
       if not IsIdempotent(e[i] * e[j]) then
         Info(InfoSemigroups, 2, "the product of idempotents ", i, " and ", j,
-        " is not an idempotent");
+             " is not an idempotent");
         return false;
       fi;
     od;
@@ -1260,11 +1261,11 @@ function(S)
     rank := lambdarank(lambdafunc(gens[1]));
 
     if not ForAll([2 .. Length(gens)],
-      i -> lambdarank(lambdafunc(gens[i])) = rank) then
+                  i -> lambdarank(lambdafunc(gens[i])) = rank) then
       return false;
     fi;
 
-    opts := rec(treehashsize := S!.opts.hashlen.M);
+    opts := rec(treehashsize := SEMIGROUPS_OptionsRec(S).hashlen.M);
 
     for name in RecNames(LambdaOrbOpts(S)) do
       opts.(name) := LambdaOrbOpts(S).(name);
@@ -1339,12 +1340,12 @@ function(S)
 
   for m in [2 .. Length(scc)] do
     dom := Union(Orbits(perm_g, o[scc[m][1]], OnPoints));
-    if not IsSubgroup(Action(perm_g, dom), Action(LambdaOrbSchutzGp(o, m),
-     o[scc[m][1]])) then
+    if not IsSubgroup(Action(perm_g, dom),
+                      Action(LambdaOrbSchutzGp(o, m), o[scc[m][1]])) then
       return false;
     elif Length(scc[m]) > 1 then
-      rho := rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o,
-             scc[m][1])));
+      rho := rhofunc(EvaluateWord(gens,
+                                  TraceSchreierTreeForward(o, scc[m][1])));
       for j in scc[m] do
         if not o[j] in graded then
           if not ForAny(GradedLambdaOrb(g, o[j], true), x -> tester(x, rho))
@@ -1423,7 +1424,7 @@ function(S)
     for j in [1 .. m] do
       if not gens[i] * gens[j] = z then
         Info(InfoSemigroups, 2, "the product of generators ", i, " and ", j,
-        " is not the multiplicative zero \n", z);
+             " is not the multiplicative zero \n", z);
         return false;
       fi;
     od;
@@ -1524,5 +1525,3 @@ function(S)
   fi;
   return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
 end);
-
-#EOF

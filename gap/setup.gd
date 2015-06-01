@@ -1,17 +1,17 @@
+############################################################################
+##
+#W  setup.gd
+#Y  Copyright (C) 2013-15                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
 #############################################################################
-###
-##W  setup.gd
-##Y  Copyright (C) 2013-15                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
 
 DeclareCategory("IsActingSemigroup", IsSemigroup);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsGeneratorsOfActingSemigroup",
-IsAssociativeElementCollection);
+                IsAssociativeElementCollection);
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
@@ -44,7 +44,7 @@ DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
-IsSemigroup);
+                IsSemigroup);
 
 DeclareAttribute("StabilizerAction", IsSemigroup);
 
@@ -52,5 +52,3 @@ DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionRZMSE");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
-
-#EOF
