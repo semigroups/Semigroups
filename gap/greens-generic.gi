@@ -73,10 +73,10 @@ end);
 InstallMethod(\=, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
-  if   (IsGreensRClass(x) and IsGreensRClass(y))
-    or (IsGreensLClass(x) and IsGreensLClass(y))
-    or (IsGreensDClass(x) and IsGreensDClass(y))
-    or (IsGreensHClass(x) and IsGreensHClass(y)) then
+  if (IsGreensRClass(x) and IsGreensRClass(y))
+      or (IsGreensLClass(x) and IsGreensLClass(y))
+      or (IsGreensDClass(x) and IsGreensDClass(y))
+      or (IsGreensHClass(x) and IsGreensHClass(y)) then
     return Parent(x) = Parent(y) and Representative(x) in y;
   fi;
   return Parent(x) = Parent(y) and Representative(x) in y and
@@ -88,10 +88,10 @@ end);
 InstallMethod(\<, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
-  if   (IsGreensRClass(x) and IsGreensRClass(y))
-    or (IsGreensLClass(x) and IsGreensLClass(y))
-    or (IsGreensDClass(x) and IsGreensDClass(y))
-    or (IsGreensHClass(x) and IsGreensHClass(y)) then
+  if (IsGreensRClass(x) and IsGreensRClass(y))
+      or (IsGreensLClass(x) and IsGreensLClass(y))
+      or (IsGreensDClass(x) and IsGreensDClass(y))
+      or (IsGreensHClass(x) and IsGreensHClass(y)) then
     return Parent(x) = Parent(y) and Representative(x) <
      Representative(y) and (not Representative(x) in y);
   fi;
@@ -148,7 +148,7 @@ InstallMethod(StructureDescription, "for a Green's H-class",
 function(H)
   if not IsGroupHClass(H) then
     return fail;
-  fi;
+ fi;
   return StructureDescription(Range(IsomorphismPermGroup(H)));
 end);
 
@@ -212,5 +212,3 @@ function(C)
   
   return str;
 end);
-
-#EOF

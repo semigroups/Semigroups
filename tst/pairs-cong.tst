@@ -89,7 +89,7 @@ gap> c := EquivalenceClasses(cong);;
 gap> Size(c) = 85;
 true
 
-# PairsCongTest2: Checking robustness against infinite semigroups
+#T# PairsCongTest2: Checking robustness against infinite semigroups
 gap> s := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> x := GeneratorsOfSemigroup(s)[1];
@@ -115,7 +115,7 @@ Error, Semigroups: NrCongruenceClasses: usage,
 this function currently only works if <cong> is a congruence of a semigroup
 which is known to be finite,
 
-# PairsCongTest3: \= for two semigroup congruences
+#T# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ) ];;
 gap> s := Semigroup(Transformation([ 1 ]));;
 gap> t := Monoid(gens);;
@@ -144,7 +144,7 @@ true
 gap> NrCongruenceClasses(u);
 1
 
-# PairsCongTest4: \* for two semigroups congruence classes
+#T# PairsCongTest4: \* for two semigroups congruence classes
 gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ) ];;
 gap> s := Semigroup(gens);;
 gap> gens := List(s, x -> [ gens[1], x ]);;

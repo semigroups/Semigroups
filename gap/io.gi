@@ -50,12 +50,11 @@ function(str)
   end;
 
   # TODO is this still necessary?
-  InstallAtExit(
-    function()
-      if not file!.closed then
-        IO_Close(file);
-      fi;
-    end);
+  InstallAtExit(function()
+                  if not file!.closed then
+                    IO_Close(file);
+                  fi;
+                end);
 
   return IteratorByFunctions(record);
 end);
@@ -186,12 +185,12 @@ function(arg)
   fi;
 
   if IsTransformationCollection(coll)
-    or IsPartialPermCollection(coll)
-    or IsBipartitionCollection(coll) then
+      or IsPartialPermCollection(coll)
+      or IsBipartitionCollection(coll) then
     coll := [coll];
   elif not (IsTransformationCollColl(coll)
-    or IsPartialPermCollColl(coll)
-    or IsBipartitionCollColl(coll)) then
+            or IsPartialPermCollColl(coll)
+            or IsBipartitionCollColl(coll)) then
     Error("Semigroups: WriteGenerators: usage,\n",
           "the second arg must be a transformation, partial perm,\n",
           "or bipartition collection, or coll coll,");
@@ -222,7 +221,7 @@ function(arg)
     fi;
   od;
 
-  #####
+  #
 
   append := function(str, pt, m)
     local i, j;
@@ -235,7 +234,7 @@ function(arg)
     return str;
   end;
 
-  #####
+  #
 
   for x in coll do
     if IsTransformationCollection(x) then
@@ -254,8 +253,8 @@ function(arg)
       line := "p";
       for f in x do
         deg := String(DegreeOfPartialPerm(f));
-        nrdigits := Length(String(Maximum(
-         DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f))));
+        nrdigits := Length(String(Maximum(DegreeOfPartialPerm(f),
+                                          CodegreeOfPartialPerm(f))));
         Append(line, String(nrdigits));
         append(line, deg, nrdigits);
         for i in [1 .. DegreeOfPartialPerm(f)] do
@@ -311,4 +310,3 @@ function(f)
   od;
   return line;
 end);
-

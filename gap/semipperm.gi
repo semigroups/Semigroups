@@ -8,6 +8,18 @@
 #############################################################################
 ##
 
+# this should really be in the library
+
+InstallImmediateMethod(GeneratorsOfSemigroup,
+IsPartialPermSemigroup and IsGroup and HasGeneratorsOfGroup,
+0, GeneratorsOfGroup);
+
+InstallMethod(RankOfPartialPermSemigroup,
+"for a partial perm semigroup",
+[IsPartialPermSemigroup], RankOfPartialPermCollection);
+
+#
+
 InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
 
@@ -15,41 +27,41 @@ InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 
 InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
-Maximum(RankFilter(IsActingSemigroup), RankFilter(IsSemigroupIdeal and
-HasGeneratorsOfSemigroupIdeal)) + 1,
+Maximum(RankFilter(IsActingSemigroup),
+        RankFilter(IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal)) + 1,
 #to beat the method for an acting semigroup with generators
 function(S)
-  local n;
+  local n, record;
 
   n := DegreeOfPartialPermSemigroup(S);
+  record := rec(ElementNumber := function(enum, pos)
+                  if pos > Size(S) then
+                    return fail;
+                  fi;
+                  return PartialPermNumber(pos, n);
+                end,
 
-  return EnumeratorByFunctions(S, rec(
+                NumberElement := function(enum, elt)
+                  if DegreeOfPartialPerm(elt) > n
+                      or CoDegreeOfPartialPerm(elt) > n then
+                    return fail;
+                  fi;
+                  return NumberPartialPerm(elt, n);
+                end,
 
-    ElementNumber := function(enum, pos)
-      if pos > Size(S) then
-        return fail;
-      fi;
-      return PartialPermNumber(pos, n);
-    end,
+                Length := function(enum);
+                  return Size(S);
+                end,
 
-    NumberElement := function(enum, elt)
-      if DegreeOfPartialPerm(elt) > n or CoDegreeOfPartialPerm(elt) > n then
-        return fail;
-      fi;
-      return NumberPartialPerm(elt, n);
-    end,
+                Membership := function(elt, enum)
+                  return elt in S;
+                end,
 
-    Length := function(enum);
-      return Size(S);
-    end,
+                PrintObj := function(enum)
+                  Print("<enumerator of symmetric inverse monoid on ", n," pts>");
+                end);
 
-    Membership := function(elt, enum)
-      return elt in S;
-    end,
-
-    PrintObj := function(enum)
-      Print("<enumerator of symmetric inverse monoid on ", n," pts>");
-    end));
+  return EnumeratorByFunctions(S, record);
 end);
 
 # TODO improve this
@@ -77,7 +89,7 @@ function(m, k, n, set, min, nr, coeff)
   set[nr] := min;
 
   return SEMIGROUPS_SubsetNumber(m, k - 1, n - i, set, min, nr,
-   coeff * (k - 1) / (n - i));
+                                 coeff * (k - 1) / (n - i));
    # coeff = Binomial( n - i - 1, k - 2 )
 end);
 
@@ -88,7 +100,7 @@ InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
 function(m, k, n)
   return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial(n - 1,
-  k - 1));
+                                 k - 1));
 end);
 
 # the position of <set> in the set of subsets of [ 1 .. <n> ] with shortlex
@@ -310,7 +322,7 @@ function(I)
   if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
     Append(str, "inverse ");
   elif HasIsRegularSemigroup(I)
-   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+      and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
     if IsRegularSemigroup(I) then
       Append(str, "\>regular\< ");
     else
@@ -384,12 +396,12 @@ function(S)
   # true=its a rep, false=not seen it, fail=its not a rep
   next := 1;
   opts := rec(lookingfor := function(o, x)
-    if not IsEmpty(x) then
-      return reps[x[1]] = true or reps[x[1]] = fail;
-    else
-      return false;
-    fi;
-  end);
+                              if not IsEmpty(x) then
+                                return reps[x[1]] = true or reps[x[1]] = fail;
+                              else
+                                return false;
+                              fi;
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -401,7 +413,7 @@ function(S)
     o := Orb(gens, [next], OnSets, opts);
     Enumerate(o);
     if PositionOfFound(o) <> false
-      and reps[o[PositionOfFound(o)][1]] = true then
+        and reps[o[PositionOfFound(o)][1]] = true then
       if not IsEmpty(o[PositionOfFound(o)]) then
         reps[o[PositionOfFound(o)][1]] := fail;
       fi;
@@ -438,12 +450,12 @@ function(S)
   next := 1;
   nr := 0;
   opts := rec(lookingfor := function(o, x)
-    if not IsEmpty(x) then
-      return IsPosInt(comp[x[1]]);
-    else
-      return false;
-    fi;
-  end);
+                              if not IsEmpty(x) then
+                                return IsPosInt(comp[x[1]]);
+                              else
+                                return false;
+                              fi;
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -496,12 +508,12 @@ function(S)
   nr := 0;
   cycles := [];
   opts := rec(lookingfor := function(o, x)
-    if not IsEmpty(x) then
-      return IsPosInt(comp[x[1]]);
-    else
-      return false;
-    fi;
-  end);
+                              if not IsEmpty(x) then
+                                return IsPosInt(comp[x[1]]);
+                              else
+                                return false;
+                              fi;
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -564,4 +576,139 @@ function(filter, n)
   return out;
 end);
 
-#EOF
+#
+
+InstallMethod(RepresentativeOfMinimalIdealNC,
+"for a partial perm semigroup",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local gens, empty_map, nrgens, min_rank, doms, ims, rank, min_rank_index,
+  domain, range, lenrange, deg, codeg, in_nbs, labels, positions, collapsed,
+  nr_collapsed, i, act, pos, collapsible, squashed, elts, j, t, im,
+  reduced_rank, m, k;
+
+  gens := GeneratorsOfSemigroup(S);
+  empty_map := PartialPerm([], []);
+  if empty_map in gens then
+    return empty_map;
+  fi;
+  nrgens := Length(gens);
+
+  # Find the minimum rank of a generator
+  min_rank := infinity;
+  doms := EmptyPlist(nrgens);
+  ims := EmptyPlist(nrgens);
+  for i in [1 .. nrgens] do
+    doms[i] := DomainOfPartialPerm(gens[i]);
+    ims[i] := ImageListOfPartialPerm(gens[i]);
+    rank := Length(doms[i]);
+    if rank < min_rank then
+      min_rank := rank;
+      min_rank_index := i;
+      if min_rank = 1 then
+        if not IsIdempotent(gens[i]) then
+          return empty_map;
+        fi;
+      fi;
+    fi;
+  od;
+
+  # Union of the domains and images of the gens
+  domain := Union(doms);
+  rank := Length(domain);
+  range := Union(ims);
+  lenrange := Length(range);
+  deg := Maximum(domain);
+  codeg := Maximum(range);
+
+  if min_rank = rank and domain = range then
+    SetIsGroupAsSemigroup(S, true);
+    return gens[1];
+  fi;
+
+  if rank = 1 or lenrange = 1 then
+    # note that domain <> range otherwise we match the previous if statement.
+    # S must contain the empty map: all generators have rank 1
+    # And one of those generators has domain <> range
+    return empty_map;
+  fi;
+
+  # The labelled action graph, defined by in-neighbours
+  # Vertex lenrange + 1 corresponds to NULL
+  in_nbs := List([1 .. lenrange + 1], x -> []);
+  labels := List([1 .. lenrange + 1], x -> []);
+  positions := EmptyPlist(codeg);
+  for m in [1 .. lenrange] do
+    positions[range[m]] := m;
+  od;
+
+  # Record of which image points (and how many) can be mapped to NULL
+  collapsed := BlistList([1 .. lenrange], []);
+  nr_collapsed := 0;
+
+  for m in [1 .. lenrange] do
+    i := range[m];
+    for j in [1 .. nrgens] do
+      act := i ^ gens[j];
+      if act = 0 then
+        Add(in_nbs[lenrange + 1], m);
+        Add(labels[lenrange + 1], j);
+        collapsed[m] := true;
+        nr_collapsed := nr_collapsed + 1;
+        break;
+      fi;
+      pos := positions[act];
+      Add(in_nbs[pos], m);
+      Add(labels[pos], j);
+      if collapsed[pos] then
+        collapsed[m] := true;
+        nr_collapsed := nr_collapsed + 1;
+        break;
+      fi;
+    od;
+  od;
+
+  # Do we know that every point be mapped to NULL? If so, empty_map is in S
+  if nr_collapsed = lenrange then
+    return empty_map;
+  fi;
+
+  # For each collapsible image point analyse graph find a word to collapse it
+  collapsible := BlistList([1 .. codeg], []);
+  squashed := [lenrange + 1];
+  elts := List([1 .. lenrange + 1], x -> []);
+  for i in squashed do
+    for k in [1 .. Length(in_nbs[i])] do
+      j := in_nbs[i][k];
+      if not collapsible[j] then
+        collapsible[j] := true;
+        elts[j] := Concatenation([labels[i][k]], elts[i]);
+        Add(squashed, j);
+      fi;
+    od;
+  od;
+
+  # Can every point be mapped to NULL? If so, empty_map is in S
+  if Length(squashed) = lenrange + 1 then
+    return empty_map;
+  fi;
+
+  # empty_map is not in S; now multiply generators to minimize rank
+  t := gens[min_rank_index];
+  while true do
+    im := ImageListOfPartialPerm(t);
+    reduced_rank := false;
+    for i in im do
+      if collapsible[i] then
+        t := t * EvaluateWord(gens, elts[i]);
+        reduced_rank := true;
+        break;
+      fi;
+    od;
+    if not reduced_rank then
+      break;
+    fi;
+  od;
+
+  return t;
+end);

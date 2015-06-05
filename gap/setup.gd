@@ -47,7 +47,7 @@ DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
-IsSemigroup);
+                IsSemigroup);
 
 DeclareAttribute("StabilizerAction", IsSemigroup);
 DeclareAttribute("SchutzGpMembership", IsSemigroup);
@@ -56,5 +56,3 @@ DeclareOperation("FakeOne", [IsCollection]);
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionRZMSE");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
-
-#EOF

@@ -420,10 +420,9 @@ gap> Elements(S);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, 
   (1,2)(3,4)(5,6)(7,8) ]
 gap> T:=SmallerDegreePartialPermRepresentation(S);
-MappingByFunction( <commutative inverse partial perm semigroup 
-of size 2, on 8 pts
- with 1 generator>, <commutative inverse partial perm semigroup 
-on 2 pts
+MappingByFunction( <partial perm group of size 2, 
+ on 8 pts with 1 generator>
+ , <commutative inverse partial perm semigroup on 2 pts
  with 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> R:=Range(T);
 <commutative inverse partial perm semigroup on 2 pts with 1 generator>

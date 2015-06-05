@@ -43,7 +43,7 @@ function(I)
     if IsRegularDClass(D[i]) then
       inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
       U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-           inj));
+                                        inj));
     else
       U := ClosureSemigroup(U, D[i]);
     fi;
@@ -63,7 +63,7 @@ function(I)
         if IsRegularDClass(C) then
           inj := InverseGeneralMapping(InjectionPrincipalFactor(C));
           U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-           inj));
+                                            inj));
         else
           U := ClosureSemigroup(U, AsList(C));
         fi;
@@ -111,7 +111,7 @@ function(I)
     if IsRegularDClass(D[i]) then
       inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
       U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-           inj));
+                                        inj));
     else
       U := ClosureSemigroup(U, D[i]);
     fi;
@@ -131,7 +131,7 @@ function(I)
         if IsRegularDClass(C) then
           inj := InverseGeneralMapping(InjectionPrincipalFactor(C));
           U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-           inj));
+                                            inj));
         else
           U := ClosureSemigroup(U, AsList(C));
         fi;
@@ -148,7 +148,7 @@ InstallMethod(GeneratorsOfSemigroup,
 "for an inverse op acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-  local out, U, i, partial, D, pos, inj, j, C;
+  local out, U, partial, D, pos, inj, i, j, C, gens;
 
   if HasGeneratorsOfInverseSemigroup(I) then
     # TODO could remove repeats and only add necessary inverses...
@@ -166,13 +166,14 @@ function(I)
 
   # positions of the D-classes containing generators of the ideal...
   pos := Set(GeneratorsOfSemigroupIdeal(I),
-   x -> OrbSCCLookup(LambdaOrb(I))[Position(LambdaOrb(I), LambdaFunc(I)(x))] -
-   1);
+             x -> OrbSCCLookup(LambdaOrb(I))[Position(LambdaOrb(I),
+                                                      LambdaFunc(I)(x))] - 1);
 
   for i in pos do
     inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
     U := ClosureInverseSemigroup(U,
-         OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
+                                 OnTuples(GeneratorsOfSemigroup(Source(inj)),
+                                          inj));
   od;
 
   i := 0;
@@ -184,8 +185,8 @@ function(I)
       if Length(partial[i]) = 1 or partial[i][j] <> i then
         C := D[partial[i][j]];
         inj := InverseGeneralMapping(InjectionPrincipalFactor(C));
-        U := ClosureInverseSemigroup(U,
-             OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
+        gens := GeneratorsOfSemigroup(Source(inj));
+        U := ClosureInverseSemigroup(U, OnTuples(gens, inj));
       fi;
     od;
   od;
@@ -199,7 +200,7 @@ InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse op acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],
 function(I)
-  local U, i, partial, D, pos, inj, j, C;
+  local U, i, partial, D, pos, inj, gens, j, C;
 
   if HasGeneratorsOfSemigroup(I) then
     # JDM: could remove inverses...
@@ -216,13 +217,13 @@ function(I)
 
   # positions of the D-classes containing generators of the ideal...
   pos := Set(GeneratorsOfSemigroupIdeal(I),
-   x -> OrbSCCLookup(LambdaOrb(I))[Position(LambdaOrb(I),
-    LambdaFunc(I)(x))] - 1);
+             x -> OrbSCCLookup(LambdaOrb(I))[Position(LambdaOrb(I),
+                                                      LambdaFunc(I)(x))] - 1);
 
   for i in pos do
     inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
-    U := ClosureInverseSemigroup(U,
-         OnTuples(GeneratorsOfSemigroup(Source(inj)), inj));
+    gens := GeneratorsOfSemigroup(Source(inj));
+    U := ClosureInverseSemigroup(U, OnTuples(gens, inj));
   od;
 
   while Size(U) <> Size(I) do
@@ -233,9 +234,8 @@ function(I)
       if Length(partial[i]) = 1 or partial[i][j] <> i then
         C := D[partial[i][j]];
         inj := InverseGeneralMapping(InjectionPrincipalFactor(C));
-        U := ClosureInverseSemigroup(U,
-             OnTuples(GeneratorsOfSemigroup(Source(inj)),
-         inj));
+        gens := GeneratorsOfSemigroup(Source(inj));
+        U := ClosureInverseSemigroup(U, OnTuples(gens, inj));
       fi;
     od;
   od;
@@ -256,7 +256,8 @@ function(I)
               parent := I,
               log := [1],
               genspos := 0,
-              ht := HTCreate(gens[1], rec(treehashsize := I!.opts.hashlen.L)),
+              ht := HTCreate(gens[1], rec(treehashsize :=
+                                          SEMIGROUPS_OptionsRec(I).hashlen.L)),
               pos := 0,
               init := false,
               reps := [],
@@ -273,8 +274,7 @@ function(I)
               genstoapply := [1 .. Length(gens)],
               stopper := false,
               poset := [],
-              scc_lookup := []
-             );
+              scc_lookup := []);
 
   if HasIsRegularSemigroup(I) and IsRegularSemigroup(I) then
     filt := IsRegularIdealData;
@@ -304,8 +304,8 @@ function(data)
   Print("semigroup ideal ");
 
   Print("data with ", Length(data!.orbit) - 1, " reps, ",
-   Length(LambdaOrb(data!.parent)) - 1, " lambda-values, ",
-   Length(RhoOrb(data!.parent)) - 1, " rho-values>");
+        Length(LambdaOrb(data!.parent)) - 1, " lambda-values, ",
+        Length(RhoOrb(data!.parent)) - 1, " rho-values>");
   return;
 end);
 
@@ -462,7 +462,7 @@ function(data, limit, record)
     l := htvalue(lambdaoht, xx);
     if l = fail then
       l := UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos,
-           lambdalookfunc);
+                                lambdalookfunc);
 
       # update the lists of reps
       for n in [lenscc + 1 .. lenscc + Length(lambdascc)] do
@@ -501,7 +501,7 @@ function(data, limit, record)
 
     # check if x is R-related to one of the known R-reps
     if not new and schutz <> false and IsBound(lambdarhoht[l])
-      and IsBound(lambdarhoht[l][m]) then
+        and IsBound(lambdarhoht[l][m]) then
        # if schutz=false or these are not bound, then x is a new R-rep
 
       ind := lambdarhoht[l][m];
@@ -532,9 +532,10 @@ function(data, limit, record)
     d[nr_d] := rec();
     # FIXME: use SEMIGROUPS_CreateDClass here!
     ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
-      EquivalenceClassRelation, drel, IsGreensClassNC, false,
-      Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
-      RhoOrb, rhoo, RhoOrbSCCIndex, mm, RhoOrbSCC, rhoscc[mm]);
+                            EquivalenceClassRelation, drel, IsGreensClassNC,
+                            false, Representative, x, LambdaOrb, lambdao,
+                            LambdaOrbSCCIndex, m, RhoOrb, rhoo, RhoOrbSCCIndex,
+                            mm, RhoOrbSCC, rhoscc[mm]);
     regular[nr_d] := false;
 
     # install the point in the poset
@@ -580,8 +581,8 @@ function(data, limit, record)
         rholookup[nr_r] := l;
         datalookup[nr_r] := nr_d;
 
-        orb[nr_r] := [I, m, lambdao, reps[m][ind][repslens[m][ind]], false,
-        nr_r];
+        orb[nr_r] := [I, m, lambdao, reps[m][ind][repslens[m][ind]],
+                      false, nr_r];
         htadd(ht, reps[m][ind][repslens[m][ind]], nr_r);
 
         if looking then
@@ -625,8 +626,8 @@ function(data, limit, record)
       for k in genstoapply do
         UpdateSemigroupIdealData(gens[k] * orb[j][4], pos, k, fail);
         if (looking and data!.found <> false)
-         or (lambdalooking and lambdao!.found <> false)
-         or (rholooking and rhoo!.found <> false) then
+            or (lambdalooking and lambdao!.found <> false)
+            or (rholooking and rhoo!.found <> false) then
           data!.pos := i - 1;
           return data;
         fi;
@@ -640,8 +641,8 @@ function(data, limit, record)
       for k in genstoapply do
         UpdateSemigroupIdealData(z * gens[k], pos, k, fail);
         if (looking and data!.found <> false)
-         or (lambdalooking and lambdao!.found <> false)
-         or (rholooking and rhoo!.found <> false) then
+            or (lambdalooking and lambdao!.found <> false)
+            or (rholooking and rhoo!.found <> false) then
           data!.pos := i - 1;
           return data;
         fi;
@@ -670,30 +671,30 @@ end);
 
 InstallMethod(\in,
 "for an associative element and regular acting semigroup ideal",
-[IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal and
-IsRegularSemigroup],
+[IsAssociativeElement,
+ IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(x, I)
   local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht,
   schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
 
   if ElementsFamily(FamilyObj(I)) <> FamilyObj(x)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(I)
-     and ActionDegree(x) <> ActionDegree(I))
-    or (ActionDegree(x) > ActionDegree(I)) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(I)
+          and ActionDegree(x) <> ActionDegree(I))
+      or (ActionDegree(x) > ActionDegree(I)) then
     return false;
   fi;
 
-  if ActionRank(I)(x) > MaximumList(List(Generators(I), f -> ActionRank(I)(x)))
-   then
+  if ActionRank(I)(x) >
+      MaximumList(List(Generators(I), f -> ActionRank(I)(x))) then
     Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-     "semigroup.");
+         "semigroup.");
     return false;
   fi;
 
   if HasMinimalIdeal(I) then
     if ActionRank(I)(x) < ActionRank(I)(Representative(MinimalIdeal(I))) then
       Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-       "semigroup.");
+           "semigroup.");
       return false;
     fi;
   fi;
@@ -1030,7 +1031,7 @@ function(data, limit, record)
     l := htvalue(lambdaoht, xx);
     if l = fail then
       l := UpdateIdealLambdaOrb(lambdao, xx, x, pos, gen, idealpos,
-           lambdalookfunc);
+                                lambdalookfunc);
 
       # update the lists of reps
       for n in [lenscc + 1 .. lenscc + Length(lambdascc)] do
@@ -1089,9 +1090,10 @@ function(data, limit, record)
     nr_d := nr_d + 1;
     d[nr_d] := rec();
     ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
-      EquivalenceClassRelation, drel, IsGreensClassNC, false,
-      Representative, x, LambdaOrb, lambdao, LambdaOrbSCCIndex, m,
-      RhoOrb, rhoo, RhoOrbSCCIndex, mm, RhoOrbSCC, rhoscc[mm]);
+                            EquivalenceClassRelation, drel, IsGreensClassNC,
+                            false, Representative, x, LambdaOrb, lambdao,
+                            LambdaOrbSCCIndex, m, RhoOrb, rhoo, RhoOrbSCCIndex,
+                            mm, RhoOrbSCC, rhoscc[mm]);
 
     # install the point in the poset
     if pos <> fail  then
@@ -1158,8 +1160,8 @@ function(data, limit, record)
       for k in genstoapply do
         UpdateSemigroupIdealData(gens[k] * orb[j][4], pos, k, fail);
         if (looking and data!.found <> false)
-         or (lambdalooking and lambdao!.found <> false)
-         or (rholooking and rhoo!.found <> false) then
+            or (lambdalooking and lambdao!.found <> false)
+            or (rholooking and rhoo!.found <> false) then
           data!.pos := i - 1;
           return data;
         fi;
@@ -1173,8 +1175,8 @@ function(data, limit, record)
       for k in genstoapply do
         UpdateSemigroupIdealData(z * gens[k], pos, k, fail);
         if (looking and data!.found <> false)
-         or (lambdalooking and lambdao!.found <> false)
-         or (rholooking and rhoo!.found <> false) then
+            or (lambdalooking and lambdao!.found <> false)
+            or (rholooking and rhoo!.found <> false) then
           data!.pos := i - 1;
           return data;
         fi;

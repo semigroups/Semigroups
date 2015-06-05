@@ -20,4 +20,3 @@ DeclareGlobalFunction("SemigroupsTestSMatrices");
 DeclareGlobalFunction("SemigroupsTestMatrixSemigroups");
 
 BindGlobal("SemigroupsOmitFromTestManualExamples", []);
-

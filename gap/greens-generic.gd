@@ -26,7 +26,7 @@ DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 # D-classes
 
 DeclareOperation("GreensDClassOfElementNC",
- [IsSemigroup, IsAssociativeElement]);
+                 [IsSemigroup, IsAssociativeElement]);
 DeclareAttribute("RegularDClasses", IsSemigroup);
 DeclareAttribute("NrRegularDClasses", IsSemigroup);
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
@@ -34,9 +34,9 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 # H-classes
 
 DeclareOperation("GreensHClassOfElement",
-  [IsGreensClass, IsAssociativeElement]);
+                 [IsGreensClass, IsAssociativeElement]);
 DeclareOperation("GreensHClassOfElementNC",
-  [IsCollection, IsAssociativeElement]);
+                 [IsCollection, IsAssociativeElement]);
 DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
 DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
 DeclareAttribute("StructureDescription", IsGreensHClass);
@@ -45,16 +45,16 @@ DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 # L-classes
 
 DeclareOperation("GreensLClassOfElement",
-  [IsGreensClass, IsAssociativeElement]);
+                 [IsGreensClass, IsAssociativeElement]);
 DeclareOperation("GreensLClassOfElementNC",
-  [IsCollection, IsAssociativeElement]);
+                 [IsCollection, IsAssociativeElement]);
 
 # R-classes
 
 DeclareOperation("GreensRClassOfElement",
-  [IsGreensClass, IsAssociativeElement]);
+                 [IsGreensClass, IsAssociativeElement]);
 DeclareOperation("GreensRClassOfElementNC",
-  [IsCollection, IsAssociativeElement]);
+                 [IsCollection, IsAssociativeElement]);
 DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
 
 # representatives
@@ -100,5 +100,3 @@ DeclareSynonymAttr("HClasses", GreensHClasses);
 DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
-
-#EOF

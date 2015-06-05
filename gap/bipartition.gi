@@ -106,7 +106,7 @@ function(f, g)
   elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
     return NaturalLeqPartialPermBipartition(f, g);
   fi;
-  Error("Semigroups: NaturalLeqInverseSemigroup: usage\n",
+  Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
         "the bipartitions should be block bijections or partial perms,");
   return;
 end);
@@ -710,7 +710,7 @@ function(f)
   local n, k, blocks, out, i;
 
   if not IsBipartition(f) then
-    Error("Semigroups: TransverseBlocksLookup: usage\n",
+    Error("Semigroups: TransverseBlocksLookup: usage,\n",
           "the argument must be a bipartition,");
     return;
   fi;

@@ -9,4 +9,3 @@
 ##
 
 DeclareOperation("\/", [IsSemigroup, IsSemigroupIdeal]);
-

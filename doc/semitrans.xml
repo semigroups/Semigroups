@@ -214,7 +214,8 @@ gap> CyclesOfTransformationSemigroup(S);
 <#GAPDoc Label="IsSynchronizingSemigroup">
   <ManSection>
     <Oper Name="IsSynchronizingSemigroup" Arg="S[, n]"/>
-    <Returns><K>true</K> or <K>false</K>.  </Returns>
+    <Oper Name="IsSynchronizingTransformationCollection" Arg="coll[, n]"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       For a positive integer <A>n</A>,
       <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
@@ -227,10 +228,17 @@ gap> CyclesOfTransformationSemigroup(S);
       If the optional second argument is not specified, then <A>n</A> will be
       taken to be the value of 
       <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/> for <A>S</A>.
+      <P/>
+
+      The operation <C>IsSynchronizingTransformationCollection</C> behaves in
+      the same way as <C>IsSynchronizingSemigroup</C> but can be applied to any
+      collection of transformations and not only semigroups. <P/>
       
       Note that the semigroup consisting of the identity
       transformation has degree <C>0</C>, and for this special case the
-      function <C>IsSynchronizingSemigroup</C> will return <K>false</K>.
+      function <C>IsSynchronizingSemigroup</C> will return <K>false</K>.<P/>
+
+
 
             <Example><![CDATA[
 gap> S:=Semigroup( Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 

@@ -539,7 +539,7 @@ function(s, f)
     od;
   else
 
-    opts := rec(treehashsize := s!.opts.hashlen.M,
+    opts := rec(treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M,
                 gradingfunc := function(o, x) return rhorank(x); end,
                 onlygrades := function(x, y) return x >= rank; end,
                 onlygradesdata := fail);
@@ -584,7 +584,7 @@ function(s, f)
       fi;
     od;
   else
-     opts := rec(treehashsize := s!.opts.hashlen.M,
+     opts := rec(treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M,
                  gradingfunc := function(o, x) return lambdarank(x); end,
                  onlygrades := function(x, y) return x >= rank; end,
                  onlygradesdata := fail);
@@ -717,15 +717,29 @@ end);
 # same method for inverse/ideals
 
 InstallMethod(RepresentativeOfMinimalIdeal,
-"for an acting semigroup",
-[IsActingSemigroup],
+"for a semigroup",
+[IsSemigroup],
 function(S)
-  local rank, o, pos, min, len, m, i;
-
-  if IsSemigroupIdeal(S)
-      and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
+  if IsSemigroupIdeal(S) and
+      (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
+       or not HasGeneratorsOfSemigroup(S)) then
     return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
   fi;
+
+  # This catches known trivial semigroups
+  # WW: The idea is to quickly get at an arbitrary element of the semigroup
+  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+    return GeneratorsOfSemigroup(S)[1];
+  fi;
+
+  return RepresentativeOfMinimalIdealNC(S);
+end);
+
+InstallMethod(RepresentativeOfMinimalIdealNC,
+"for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local rank, o, pos, min, len, m, i;
 
   rank := LambdaRank(S);
   o := LambdaOrb(S);

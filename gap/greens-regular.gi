@@ -56,7 +56,7 @@ D -> LambdaOrbSchutzGp(LambdaOrb(D), LambdaOrbSCCIndex(D)));
 
 InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup and
-IsGreensHClass],
+ IsGreensHClass],
 function(H)
   local S, rep, p;
   S := Parent(H);
@@ -304,7 +304,7 @@ end);
 InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(S)
-
+  # gaplint: ignore 35
   return EnumeratorByFunctions(S, rec(
 
     parent := S,

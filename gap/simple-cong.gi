@@ -50,12 +50,12 @@ function(arg)
       return;
     fi;
     if ((HasIsSimpleSemigroup(s) or IsActingSemigroup(s)) and
-      IsSimpleSemigroup(s)) or
+        IsSimpleSemigroup(s)) or
        ((HasIsZeroSimpleSemigroup(s) or IsActingSemigroup(s)) and
-       IsZeroSimpleSemigroup(s)) then
+        IsZeroSimpleSemigroup(s)) then
       return SEMIGROUPS_SimpleCongFromPairs(s, pairs);
-    elif (HasIsInverseSemigroup(s) or IsActingSemigroup(s)) and
-      IsInverseSemigroup(s) then
+    elif (HasIsInverseSemigroup(s) or IsActingSemigroup(s))
+        and IsInverseSemigroup(s) then
       return SEMIGROUPS_InverseCongFromPairs(s, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(s, pairs);
@@ -93,9 +93,11 @@ function(s, pairs)
 
   # If s is a RMS/RZMS, then just create the linked triple congruence
   if IsReesMatrixSemigroup(s) then
+    # gaplint: ignore 2
     cong := AsRMSCongruenceByLinkedTriple(
             SemigroupCongruenceByGeneratingPairs(s, pairs));
   elif IsReesZeroMatrixSemigroup(s) then
+    # gaplint: ignore 2
     cong := AsRZMSCongruenceByLinkedTriple(
             SemigroupCongruenceByGeneratingPairs(s, pairs));
   else
@@ -109,7 +111,12 @@ function(s, pairs)
     else  #elif IsReesZeroMatrixSemigroup(r) then
       rmscong := AsRZMSCongruenceByLinkedTriple(pcong);
     fi;
-    cong := SEMIGROUPS_SimpleCongFromRMSCong(s, rmscong);
+    # Special case for the universal congruence
+    if IsUniversalSemigroupCongruence(rmscong) then
+      cong := UniversalSemigroupCongruence(s);
+    else
+      cong := SEMIGROUPS_SimpleCongFromRMSCong(s, rmscong);
+    fi;
   fi;
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
@@ -125,9 +132,8 @@ function(s, rmscong)
   r := Range(rmscong);
 
   # Construct the object
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)));
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
+                               ElementsFamily(FamilyObj(s)));
   cong := Objectify(NewType(fam, SEMIGROUPS_CongSimple),
                     rec(rmscong := rmscong, iso := iso));
   SetSource(cong, s);
@@ -145,8 +151,8 @@ function(cong, rmsclass)
   class := Objectify(NewType(fam, SEMIGROUPS_CongClassSimple),
                      rec(rmsclass := rmsclass, iso := iso));
   SetParentAttr(class, cong);
-  SetRepresentative(class,
-    Representative(rmsclass) ^ InverseGeneralMapping(iso));
+  SetRepresentative(class, Representative(rmsclass) ^
+                           InverseGeneralMapping(iso));
   SetEquivalenceClassRelation(class, cong);
   return class;
 end);
@@ -171,16 +177,16 @@ InstallMethod(CongruencesOfSemigroup,
 "for a (0-)simple or simple semigroup",
 [IsSemigroup],
 function(s)
-  local congs, i;
-  if not (IsFinite(s)
-    and (IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s))) then
+  local R, congs, i;
+  if not (IsFinite(s) and (IsSimpleSemigroup(s)
+                           or IsZeroSimpleSemigroup(s))) then
     TryNextMethod();
   fi;
   if IsReesMatrixSemigroup(s) or IsReesZeroMatrixSemigroup(s) then
     return CongruencesOfSemigroup(s);
   fi;
-  congs := ShallowCopy(CongruencesOfSemigroup(Range(
-           IsomorphismReesMatrixSemigroup(s))));
+  R := Range(IsomorphismReesMatrixSemigroup(s));
+  congs := ShallowCopy(CongruencesOfSemigroup(R));
   for i in [1 .. Length(congs)] do
     if IsUniversalSemigroupCongruence(congs[i]) then
       congs[i] := UniversalSemigroupCongruence(s);
@@ -206,13 +212,14 @@ InstallMethod(JoinMagmaCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
+  local join;
   if Range(cong1) <> Range(cong2) then
     Error("Semigroups: JoinMagmaCongruences: usage,\n",
           "<cong1> and <cong2> must be over the same semigroup,");
     return;
   fi;
-  return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1),
-                 JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong));
+  join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
+  return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), join);
 end);
 
 #
@@ -221,13 +228,14 @@ InstallMethod(MeetMagmaCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
+  local meet;
   if Range(cong1) <> Range(cong2) then
     Error("Semigroups: MeetMagmaCongruences: usage,\n",
           "<cong1> and <cong2> must be over the same semigroup,");
     return;
   fi;
-  return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1),
-                 MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong));
+  meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
+  return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), meet);
 end);
 
 #
@@ -289,8 +297,9 @@ InstallMethod(EquivalenceClassOfElementNC,
 "for a (0-)simple semigroup congruence and associative element",
 [SEMIGROUPS_CongSimple, IsAssociativeElement],
 function(cong, elm)
-  return SEMIGROUPS_SimpleClassFromRMSclass(cong,
-                 EquivalenceClassOfElementNC(cong!.rmscong, elm ^ cong!.iso));
+  local class;
+  class := EquivalenceClassOfElementNC(cong!.rmscong, elm ^ cong!.iso);
+  return SEMIGROUPS_SimpleClassFromRMSclass(cong, class);
 end);
 
 #
@@ -318,7 +327,7 @@ InstallMethod(\*,
 [SEMIGROUPS_CongClassSimple, SEMIGROUPS_CongClassSimple],
 function(c1, c2)
   return SEMIGROUPS_SimpleClassFromRMSclass(EquivalenceClassRelation(c1),
-                                    c1!.rmsclass * c2!.rmsclass);
+                                            c1!.rmsclass * c2!.rmsclass);
 end);
 
 #
@@ -360,5 +369,3 @@ InstallMethod(CanonicalRepresentative,
 function(class)
   return CanonicalRepresentative(class!.rmsclass) ^ class!.iso;
 end);
-
-#
