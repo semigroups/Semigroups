@@ -353,12 +353,16 @@ end);
 
 #
 
-InstallMethod(PrintObj, "for a free band element",
+InstallMethod(ViewString, "for a free band element",
+[IsFreeBandElement], PrintString);
+
+#
+
+InstallMethod(PrintString, "for a free band element",
 [IsFreeBandElement],
 function(elem)
-  Print(Concatenation(List(SEMIGROUPS_FreeBandElmToWord(elem),
-                           x -> FamilyObj(elem)!.names[x])));
-  return;
+  return Concatenation(List(SEMIGROUPS_FreeBandElmToWord(elem),
+                            x -> FamilyObj(elem)!.names[x]));
 end);
 
 InstallMethod(ViewObj, "for a free band",
