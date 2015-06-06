@@ -928,7 +928,8 @@ gap> x := Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ],
 gap> I := SemigroupIdeal(S, x);
 <inverse bipartition semigroup ideal on 6 pts with 1 generator>
 gap> JoinIrreducibleDClasses(I);
-[ {Bipartition( [ [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], [ 6, -6 ] ] )} ]
+[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], 
+      [ 6, -6 ]>> ]
 gap> I;
 <inverse bipartition semigroup ideal on 6 pts with 1 generator>
 

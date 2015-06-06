@@ -137,7 +137,7 @@ gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
 gap> s:=Monoid(g1,g2);;
 gap> d:=GreensDClasses(s);;
 gap> h:=GroupHClassOfGreensDClass(d[3]);
-{Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] )}
+<Green's H-class: Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] )>
 gap> perm:=IsomorphismPermGroup(h);;
 gap> Size(Range(perm))=Size(h);
 true
@@ -148,7 +148,7 @@ gap> dc := GreensDClasses(m18)[2];;
 gap> RankOfTransformation(Representative(dc));
 7
 gap> hc := GroupHClassOfGreensDClass(dc);
-{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1, 2 ] )}
+<Green's H-class: Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1, 2 ] )>
 gap> iso:=IsomorphismPermGroup(hc);;
 gap> s:=Semigroup(Elements(hc));;
 gap> Size(s);
@@ -161,7 +161,7 @@ gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
 gap> m6:=Semigroup(g1,g2);;
 gap> dc := GreensDClasses(m6);;
 gap> hc := GroupHClassOfGreensDClass(dc[1]);
-{Transformation( [ 2, 2, 3, 4, 3, 6, 6, 4 ] )}
+<Green's H-class: Transformation( [ 2, 2, 3, 4, 3, 6, 6, 4 ] )>
 gap> s:=Semigroup(Elements(hc));;
 gap> iso:=IsomorphismPermGroup(s);;
 gap> g1:=Transformation([2,2,4,4,5,6]);;
@@ -273,7 +273,7 @@ gap> gens := [
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 3, 1, 1, 3 ] );;
 gap> d:=DClass(s, f);
-{Transformation( [ 2, 4, 4, 2 ] )}
+<Green's D-class: Transformation( [ 2, 4, 4, 2 ] )>
 gap> Size(s);;
 gap> Size(d);
 84

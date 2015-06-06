@@ -165,7 +165,7 @@ function(C)
   if IsGreensDClass(C) then 
     Append(str, "D");
   elif IsGreensRClass(C) then 
-    Append(str, "L");
+    Append(str, "R");
   elif IsGreensLClass(C) then 
     Append(str, "L");
   elif IsGreensHClass(C) then 

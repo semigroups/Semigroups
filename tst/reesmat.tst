@@ -116,15 +116,16 @@ gap> StructureDescriptionSchutzenbergerGroups(U[5]);
 
 #T# ReesMatTest7: MinimalDClass
 gap> List(U, MinimalDClass);
-[ {0}, {0}, {0}, {0}, {0}, {0} ]
+[ <Green's D-class: 0>, <Green's D-class: 0>, <Green's D-class: 0>, 
+  <Green's D-class: 0>, <Green's D-class: 0>, <Green's D-class: 0> ]
 gap> MinimalDClass(V);
-{0}
+<Green's D-class: 0>
 
 #T# ReesMatTest8: MaximalDClasses
 gap> MaximalDClasses(V);
-[ {(13,(1,6)(5,8),3)}, {(22,(1,6),1)} ]
+[ <Green's D-class: (13,(1,6)(5,8),3)>, <Green's D-class: (22,(1,6),1)> ]
 gap> MaximalDClasses(U[4]);
-[ {(1,(),1)} ]
+[ <Green's D-class: (1,(),1)> ]
 gap> V:=Semigroup(MultiplicativeZero(R), 
 > RMSElement(R, 13, (1,6)(5,8),3),
 > RMSElement(R, 1,(1,6),3), 
@@ -140,7 +141,7 @@ gap> V:=Semigroup(MultiplicativeZero(R),
 
 #T# ReesMatTest9: PrincipalFactor
 gap> D:=Filtered(DClasses(V), IsRegularClass)[2];
-{(13,(1,6)(5,8),3)}
+<Green's D-class: (13,(1,6)(5,8),3)>
 gap> inj:=InjectionPrincipalFactor(D);; inv:=InverseGeneralMapping(inj);;
 gap> ForAll(D, x-> (x^inj)^inv=x);                                         
 true
@@ -226,17 +227,17 @@ true
 
 #T# ReesMatTest17: MultiplicativeNeutralElement (for an H-class)
 gap> H:=First(HClasses(V), IsRegularClass);
-{0}
+<Green's H-class: 0>
 gap> MultiplicativeNeutralElement(H);
 0
 gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
-{(13,(1,9)(5,8),5)}
+<Green's H-class: (13,(1,9)(5,8),5)>
 gap> MultiplicativeNeutralElement(H);
 fail
 gap> h := RMSElement(ParentAttr(U[5]), 17, (1,9)(5,8), 5);
 (17,(1,9)(5,8),5)
 gap> H := GreensHClassOfElement(U[5], h);
-{(17,(1,9)(5,8),5)}
+<Green's H-class: (17,(1,9)(5,8),5)>
 gap> IsRegularClass(H);
 true
 gap> e := MultiplicativeNeutralElement(H);
@@ -250,7 +251,7 @@ true
 gap> h := RMSElement(ParentAttr(U[5]), 21, (1,9,6)(5,8), 5);
 (21,(1,9,6)(5,8),5)
 gap> H := GreensHClassOfElement(U[5], h);
-{(21,(1,9,6)(5,8),5)}
+<Green's H-class: (21,(1,9,6)(5,8),5)>
 gap> IsRegularClass(H);
 false
 gap> MultiplicativeNeutralElement(H);
@@ -270,55 +271,84 @@ gap> List(U, Random);;
 
 #T# ReesMatTest20: DClassOf.Class etc
 gap> H:=First(HClasses(V), x-> not IsRegularClass(x));
-{(13,(1,9)(5,8),5)}
+<Green's H-class: (13,(1,9)(5,8),5)>
 gap> DClass(H);
-{(13,(1,6)(5,8),3)}
+<Green's D-class: (13,(1,6)(5,8),3)>
 gap> RClass(H);
-{(13,(1,6)(5,8),3)}
+<Green's R-class: (13,(1,6)(5,8),3)>
 gap> LClass(H);
-{(13,(1,9)(5,8),5)}
+<Green's L-class: (13,(1,9)(5,8),5)>
 gap> LClass(H)<LClass(V, Representative(V));
 false
 
 #T# ReesMatTest21: DClasses etc...
 gap> RClasses(V);
-[ {0}, {(13,(1,6)(5,8),3)}, {(1,(1,6),3)}, {(7,(1,6)(5,8),3)}, 
-  {(23,(6,9),3)}, {(22,(1,6),1)}, {(11,(1,6),3)}, {(2,(6,9),3)}, 
-  {(24,(5,8)(6,9),3)}, {(6,(1,9)(5,8),1)}, {(15,(1,6,9),3)}, {(22,(),3)}, 
-  {(6,(1,9,6)(5,8),3)} ]
+[ <Green's R-class: 0>, <Green's R-class: (13,(1,6)(5,8),3)>, 
+  <Green's R-class: (1,(1,6),3)>, <Green's R-class: (7,(1,6)(5,8),3)>, 
+  <Green's R-class: (23,(6,9),3)>, <Green's R-class: (22,(1,6),1)>, 
+  <Green's R-class: (11,(1,6),3)>, <Green's R-class: (2,(6,9),3)>, 
+  <Green's R-class: (24,(5,8)(6,9),3)>, <Green's R-class: (6,(1,9)(5,8),1)>, 
+  <Green's R-class: (15,(1,6,9),3)>, <Green's R-class: (22,(),3)>, 
+  <Green's R-class: (6,(1,9,6)(5,8),3)> ]
 gap> LClasses(V);
-[ {0}, {(13,(1,6)(5,8),3)}, {(13,(1,9,6),2)}, {(13,(1,9)(5,8),5)}, 
-  {(13,(1,9)(5,8),4)}, {(1,(1,6),3)}, {(1,(1,9,6)(5,8),2)}, {(1,(1,9),5)}, 
-  {(1,(1,9),4)}, {(1,(5,8),3)}, {(1,(6,9),2)}, {(1,(1,6,9)(5,8),5)}, 
-  {(1,(1,6,9)(5,8),4)}, {(1,(5,8)(6,9),3)}, {(1,(),2)}, {(1,(1,6)(5,8),5)}, 
-  {(1,(1,6)(5,8),4)}, {(1,(1,9,6)(5,8),3)}, {(1,(1,6),2)}, {(1,(5,8),5)}, 
-  {(1,(5,8),4)}, {(1,(1,9),3)}, {(1,(1,6,9)(5,8),2)}, {(1,(6,9),5)}, 
-  {(1,(6,9),4)}, {(1,(1,6,9),3)}, {(1,(1,9)(5,8),2)}, {(1,(1,9,6),5)}, 
-  {(1,(1,9,6),4)}, {(1,(1,9,6),3)}, {(1,(1,6)(5,8),2)}, {(1,(),5)}, 
-  {(1,(),4)}, {(1,(1,9)(5,8),3)}, {(1,(1,6,9),2)}, {(1,(5,8)(6,9),5)}, 
-  {(1,(5,8)(6,9),4)}, {(1,(1,6,9)(5,8),3)}, {(1,(1,9),2)}, 
-  {(1,(1,9,6)(5,8),5)}, {(1,(1,9,6)(5,8),4)}, {(1,(1,6)(5,8),3)}, 
-  {(1,(1,9,6),2)}, {(1,(1,9)(5,8),5)}, {(1,(1,9)(5,8),4)}, {(1,(),3)}, 
-  {(1,(5,8)(6,9),2)}, {(1,(1,6,9),5)}, {(1,(1,6,9),4)}, {(1,(6,9),3)}, 
-  {(1,(5,8),2)}, {(1,(1,6),5)}, {(1,(1,6),4)}, {(22,(1,6),1)}, 
-  {(15,(1,6,9),3)}, {(15,(1,9)(5,8),2)}, {(15,(1,9,6),5)}, {(15,(1,9,6),4)}, 
-  {(15,(5,8)(6,9),3)}, {(15,(),2)}, {(15,(1,6)(5,8),5)}, {(15,(1,6)(5,8),4)}, 
-  {(15,(5,8),3)}, {(15,(6,9),2)}, {(15,(1,6,9)(5,8),5)}, 
-  {(15,(1,6,9)(5,8),4)}, {(15,(1,9)(5,8),3)}, {(15,(1,6,9),2)}, 
-  {(15,(5,8)(6,9),5)}, {(15,(5,8)(6,9),4)}, {(15,(1,9,6),3)}, 
-  {(15,(1,6)(5,8),2)}, {(15,(),5)}, {(15,(),4)}, {(15,(1,6),3)}, 
-  {(15,(1,9,6)(5,8),2)}, {(15,(1,9),5)}, {(15,(1,9),4)}, {(15,(1,9),3)}, 
-  {(15,(1,6,9)(5,8),2)}, {(15,(6,9),5)}, {(15,(6,9),4)}, 
-  {(15,(1,9,6)(5,8),3)}, {(15,(1,6),2)}, {(15,(5,8),5)}, {(15,(5,8),4)}, 
-  {(15,(1,6)(5,8),3)}, {(15,(1,9,6),2)}, {(15,(1,9)(5,8),5)}, 
-  {(15,(1,9)(5,8),4)}, {(15,(1,6,9)(5,8),3)}, {(15,(1,9),2)}, 
-  {(15,(1,9,6)(5,8),5)}, {(15,(1,9,6)(5,8),4)}, {(15,(6,9),3)}, 
-  {(15,(5,8),2)}, {(15,(1,6),5)}, {(15,(1,6),4)}, {(15,(),3)}, 
-  {(15,(5,8)(6,9),2)}, {(15,(1,6,9),5)}, {(15,(1,6,9),4)}, {(22,(),3)}, 
-  {(22,(5,8)(6,9),2)}, {(22,(1,6,9),5)}, {(22,(1,6,9),4)} ]
+[ <Green's L-class: 0>, <Green's L-class: (13,(1,6)(5,8),3)>, 
+  <Green's L-class: (13,(1,9,6),2)>, <Green's L-class: (13,(1,9)(5,8),5)>, 
+  <Green's L-class: (13,(1,9)(5,8),4)>, <Green's L-class: (1,(1,6),3)>, 
+  <Green's L-class: (1,(1,9,6)(5,8),2)>, <Green's L-class: (1,(1,9),5)>, 
+  <Green's L-class: (1,(1,9),4)>, <Green's L-class: (1,(5,8),3)>, 
+  <Green's L-class: (1,(6,9),2)>, <Green's L-class: (1,(1,6,9)(5,8),5)>, 
+  <Green's L-class: (1,(1,6,9)(5,8),4)>, <Green's L-class: (1,(5,8)(6,9),3)>, 
+  <Green's L-class: (1,(),2)>, <Green's L-class: (1,(1,6)(5,8),5)>, 
+  <Green's L-class: (1,(1,6)(5,8),4)>, <Green's L-class: (1,(1,9,6)(5,8),3)>, 
+  <Green's L-class: (1,(1,6),2)>, <Green's L-class: (1,(5,8),5)>, 
+  <Green's L-class: (1,(5,8),4)>, <Green's L-class: (1,(1,9),3)>, 
+  <Green's L-class: (1,(1,6,9)(5,8),2)>, <Green's L-class: (1,(6,9),5)>, 
+  <Green's L-class: (1,(6,9),4)>, <Green's L-class: (1,(1,6,9),3)>, 
+  <Green's L-class: (1,(1,9)(5,8),2)>, <Green's L-class: (1,(1,9,6),5)>, 
+  <Green's L-class: (1,(1,9,6),4)>, <Green's L-class: (1,(1,9,6),3)>, 
+  <Green's L-class: (1,(1,6)(5,8),2)>, <Green's L-class: (1,(),5)>, 
+  <Green's L-class: (1,(),4)>, <Green's L-class: (1,(1,9)(5,8),3)>, 
+  <Green's L-class: (1,(1,6,9),2)>, <Green's L-class: (1,(5,8)(6,9),5)>, 
+  <Green's L-class: (1,(5,8)(6,9),4)>, <Green's L-class: (1,(1,6,9)(5,8),3)>, 
+  <Green's L-class: (1,(1,9),2)>, <Green's L-class: (1,(1,9,6)(5,8),5)>, 
+  <Green's L-class: (1,(1,9,6)(5,8),4)>, <Green's L-class: (1,(1,6)(5,8),3)>, 
+  <Green's L-class: (1,(1,9,6),2)>, <Green's L-class: (1,(1,9)(5,8),5)>, 
+  <Green's L-class: (1,(1,9)(5,8),4)>, <Green's L-class: (1,(),3)>, 
+  <Green's L-class: (1,(5,8)(6,9),2)>, <Green's L-class: (1,(1,6,9),5)>, 
+  <Green's L-class: (1,(1,6,9),4)>, <Green's L-class: (1,(6,9),3)>, 
+  <Green's L-class: (1,(5,8),2)>, <Green's L-class: (1,(1,6),5)>, 
+  <Green's L-class: (1,(1,6),4)>, <Green's L-class: (22,(1,6),1)>, 
+  <Green's L-class: (15,(1,6,9),3)>, <Green's L-class: (15,(1,9)(5,8),2)>, 
+  <Green's L-class: (15,(1,9,6),5)>, <Green's L-class: (15,(1,9,6),4)>, 
+  <Green's L-class: (15,(5,8)(6,9),3)>, <Green's L-class: (15,(),2)>, 
+  <Green's L-class: (15,(1,6)(5,8),5)>, <Green's L-class: (15,(1,6)(5,8),4)>, 
+  <Green's L-class: (15,(5,8),3)>, <Green's L-class: (15,(6,9),2)>, 
+  <Green's L-class: (15,(1,6,9)(5,8),5)>, <Green's L-class: (15,(1,6,9)
+   (5,8),4)>, <Green's L-class: (15,(1,9)(5,8),3)>, 
+  <Green's L-class: (15,(1,6,9),2)>, <Green's L-class: (15,(5,8)(6,9),5)>, 
+  <Green's L-class: (15,(5,8)(6,9),4)>, <Green's L-class: (15,(1,9,6),3)>, 
+  <Green's L-class: (15,(1,6)(5,8),2)>, <Green's L-class: (15,(),5)>, 
+  <Green's L-class: (15,(),4)>, <Green's L-class: (15,(1,6),3)>, 
+  <Green's L-class: (15,(1,9,6)(5,8),2)>, <Green's L-class: (15,(1,9),5)>, 
+  <Green's L-class: (15,(1,9),4)>, <Green's L-class: (15,(1,9),3)>, 
+  <Green's L-class: (15,(1,6,9)(5,8),2)>, <Green's L-class: (15,(6,9),5)>, 
+  <Green's L-class: (15,(6,9),4)>, <Green's L-class: (15,(1,9,6)(5,8),3)>, 
+  <Green's L-class: (15,(1,6),2)>, <Green's L-class: (15,(5,8),5)>, 
+  <Green's L-class: (15,(5,8),4)>, <Green's L-class: (15,(1,6)(5,8),3)>, 
+  <Green's L-class: (15,(1,9,6),2)>, <Green's L-class: (15,(1,9)(5,8),5)>, 
+  <Green's L-class: (15,(1,9)(5,8),4)>, <Green's L-class: (15,(1,6,9)
+   (5,8),3)>, <Green's L-class: (15,(1,9),2)>, <Green's L-class: (15,(1,9,6)
+   (5,8),5)>, <Green's L-class: (15,(1,9,6)(5,8),4)>, 
+  <Green's L-class: (15,(6,9),3)>, <Green's L-class: (15,(5,8),2)>, 
+  <Green's L-class: (15,(1,6),5)>, <Green's L-class: (15,(1,6),4)>, 
+  <Green's L-class: (15,(),3)>, <Green's L-class: (15,(5,8)(6,9),2)>, 
+  <Green's L-class: (15,(1,6,9),5)>, <Green's L-class: (15,(1,6,9),4)>, 
+  <Green's L-class: (22,(),3)>, <Green's L-class: (22,(5,8)(6,9),2)>, 
+  <Green's L-class: (22,(1,6,9),5)>, <Green's L-class: (22,(1,6,9),4)> ]
 gap> DClasses(V);
-[ {0}, {(13,(1,6)(5,8),3)}, {(1,(1,6),3)}, {(22,(1,6),1)}, {(15,(1,6,9),3)}, 
-  {(22,(),3)} ]
+[ <Green's D-class: 0>, <Green's D-class: (13,(1,6)(5,8),3)>, 
+  <Green's D-class: (1,(1,6),3)>, <Green's D-class: (22,(1,6),1)>, 
+  <Green's D-class: (15,(1,6,9),3)>, <Green's D-class: (22,(),3)> ]
 gap> NrHClasses(V);
 131
 gap> NrLClasses(V);
@@ -347,15 +377,15 @@ true
 
 #T# ReesMatTest23: GroupHClass
 gap> D:=Filtered(DClasses(U[1]), IsRegularClass)[2];
-{0}
+<Green's D-class: 0>
 gap> GroupHClass(D);
-{0}
+<Green's H-class: 0>
 gap> StructureDescription(last);
 "1"
 gap> D:=First(DClasses(V), IsRegularClass);         
-{0}
+<Green's D-class: 0>
 gap> GroupHClass(D);
-{0}
+<Green's H-class: 0>
 gap> StructureDescription(last);
 "1"
 
@@ -369,17 +399,16 @@ true
 gap> reps := ShallowCopy(Idempotents(U[2]));;
 gap> Sort(reps);
 gap> reps;
-[ 0, (1,(),1), (2,(5,8)(6,9),4), (2,(5,8)(6,9),5), (3,(5,8)(6,9),4), 
-  (3,(5,8)(6,9),5), (4,(),4), (4,(),5), (5,(5,8)(6,9),4), (5,(5,8)(6,9),5), 
+[ 0, (1,(),1), (2,(5,8)(6,9),4), (2,(5,8)(6,9),5), (3,(5,8)(6,9),4), (3,(5,8)
+  (6,9),5), (4,(),4), (4,(),5), (5,(5,8)(6,9),4), (5,(5,8)(6,9),5), 
   (6,(1,6),1), (7,(),2), (7,(),3), (8,(1,9)(5,8),2), (8,(1,9)(5,8),3), 
-  (9,(1,9),2), (9,(1,9),3), (10,(),1), (11,(1,6),2), (11,(1,6),3), 
-  (12,(1,6)(5,8),2), (12,(1,6)(5,8),3), (13,(1,9,6),2), (13,(1,9,6),3), 
-  (14,(5,8)(6,9),1), (15,(1,9),1), (16,(1,9,6)(5,8),2), (16,(1,9,6)(5,8),3), 
-  (17,(1,9)(5,8),4), (17,(1,9)(5,8),5), (18,(1,9,6)(5,8),2), 
-  (18,(1,9,6)(5,8),3), (19,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),3), (20,(),2), 
-  (20,(),3), (21,(1,9,6)(5,8),2), (21,(1,9,6)(5,8),3), (22,(),1), 
-  (23,(1,6),4), (23,(1,6),5), (24,(),4), (24,(),5), (25,(),4), (25,(),5), 
-  (26,(1,9),2), (26,(1,9),3) ]
+  (9,(1,9),2), (9,(1,9),3), (10,(),1), (11,(1,6),2), (11,(1,6),3), (12,(1,6)
+  (5,8),2), (12,(1,6)(5,8),3), (13,(1,9,6),2), (13,(1,9,6),3), (14,(5,8)
+  (6,9),1), (15,(1,9),1), (16,(1,9,6)(5,8),2), (16,(1,9,6)(5,8),3), (17,(1,9)
+  (5,8),4), (17,(1,9)(5,8),5), (18,(1,9,6)(5,8),2), (18,(1,9,6)(5,8),3), 
+  (19,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),3), (20,(),2), (20,(),3), (21,(1,9,6)
+  (5,8),2), (21,(1,9,6)(5,8),3), (22,(),1), (23,(1,6),4), (23,(1,6),5), 
+  (24,(),4), (24,(),5), (25,(),4), (25,(),5), (26,(1,9),2), (26,(1,9),3) ]
 gap> ForAll(last, IsIdempotent);
 true
 
@@ -908,7 +937,7 @@ false
 gap> NrIdempotents(T);
 1
 gap> Idempotents(T);
-[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1) ]
+[ (1,(1,2)(3,4),1) ]
 gap> T := Semigroup(RMSElement(R, 1, x, 1));
 <subsemigroup of 3x3 Rees 0-matrix semigroup with 1 generator>
 gap> IsReesZeroMatrixSemigroup(T);
@@ -916,7 +945,7 @@ false
 gap> NrIdempotents(T);
 1
 gap> Idempotents(T);
-[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1) ]
+[ (1,(1,2)(3,4),1) ]
 gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));
 <subsemigroup of 3x3 Rees 0-matrix semigroup with 1 generator>
 gap> IsInverseSemigroup(T);
@@ -927,17 +956,17 @@ gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
 gap> IsInverseSemigroup(T);
 true
 gap> Idempotents(T);
-[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+[ (1,(1,4,2)(3),2) ]
 gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
 gap> NrIdempotents(T);
 1
 gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
 gap> Idempotents(T);
-[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+[ (1,(1,4,2)(3),2) ]
 gap> T := Semigroup(RMSElement(R, 1, y ^ -1, 2));;
 gap> SetIsInverseSemigroup(T, true);
 gap> Idempotents(T);
-[ (1,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+[ (1,(1,4,2)(3),2) ]
 
 #
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2, 3]);
@@ -980,23 +1009,20 @@ true
 gap> NrIdempotents(T);
 3
 gap> Idempotents(T);
-[ 0, (2,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1), 
-  (3,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+[ 0, (2,(1,2)(3,4),1), (3,(1,4,2)(3),2) ]
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [1, 2]);;
 gap> SetUnderlyingSemigroup(T, G);
 gap> SetIsInverseSemigroup(T, true);
 gap> NrIdempotents(T);
 3
 gap> Idempotents(T);
-[ 0, (2,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1), 
-  (3,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+[ 0, (2,(1,2)(3,4),1), (3,(1,4,2)(3),2) ]
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [1, 2]);;
 gap> SetUnderlyingSemigroup(T, G);
 gap> NrIdempotents(T);
 3
 gap> Idempotents(T);
-[ 0, (2,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1), 
-  (3,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
+[ 0, (2,(1,2)(3,4),1), (3,(1,4,2)(3),2) ]
 
 #T# ReesMatTest106: Test for Issue #128
 gap> S := SymmetricInverseMonoid(5);;
