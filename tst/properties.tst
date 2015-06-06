@@ -171,7 +171,7 @@ gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or IsLTrivial(d);
 gap> d;
-{Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )}
+<Green's D-class: Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )>
 gap> IsLTrivial(d);
 true
 gap> IsRTrivial(d);

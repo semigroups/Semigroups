@@ -330,7 +330,8 @@ gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
 gap> s := Semigroup(gens);;
 gap> MinimalDClass(s);
-{Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )}
+<Green's D-class: Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+   4 ] )>
 gap> HasSize(MinimalDClass(s));
 false
 gap> MultiplicativeZero(s);

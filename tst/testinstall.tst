@@ -466,7 +466,7 @@ gap> R:=ReesZeroMatrixSemigroup(Group(()),
 gap> R:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 gap> H:=First(HClasses(R), IsGroupHClass);
-<Green's H-class: <object>>
+<Green's H-class: 0>
 gap> Elements(H);   
 [ 0 ]
 gap> f:=IsomorphismPermGroup(H);;
