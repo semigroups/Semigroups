@@ -186,7 +186,7 @@ function(gens, opts)
       n := Length(gens);
       for i in [2 .. n] do
         if not gens[i] in S then
-          S := ClosureSemigroupNC(S, [gens[i]], closure_opts);
+          S := ClosureSemigroupNC(S, [gens[i]], opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far\r");
@@ -277,10 +277,10 @@ function(gens, opts)
     if InfoLevel(InfoSemigroups) > 1 then
       n := Length(gens);
       for i in [2 .. n] do
-        if not gens[i] in s then
-          S := ClosureSemigroupNC(S, [gens[i]], closure_opts);
+        if not gens[i] in S then
+          S := ClosureSemigroupNC(S, [gens[i]], opts);
         fi;
-        Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
+        Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far");
       od;
       Print("\n");

@@ -671,7 +671,7 @@ function(C)
     return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation,
                                             GreensHClassOfElement);
   fi;
-  Error("Semigroups: GreensHClasses (for a generic semigroup Green's class):"
+  Error("Semigroups: GreensHClasses (for a generic semigroup Green's class):",
         " usage,\nthe argument should be a Green's R-, L-, or D-class,");
   return;
 end);

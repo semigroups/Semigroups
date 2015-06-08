@@ -1002,7 +1002,7 @@ end);
 #FIXME move this!
 
 InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
+[IsSemigroupWithInverseOp and IsActingSemigroup],
 S -> IteratorByIterator(IteratorOfRClassData(S),
                         x -> Inverse(x[4]),
                         [IsIteratorOfLClassReps]));

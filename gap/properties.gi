@@ -330,7 +330,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
-[IsInverseSemigroup], sCliffordSemigroup);
+[IsInverseSemigroup], IsCliffordSemigroup);
 
 # Notes: this test required to avoid conflict with Smallsemi,
 # DeclareSynonymAttr causes problems.

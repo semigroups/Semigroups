@@ -12,92 +12,6 @@
 #       it shouldn't.
 # TODO: remove this?
 
-if not IsBound(POW_KER_PERM) then
-  BindGlobal("POW_KER_PERM", function(pt, x)
-    return FlatKernelOfTransformation(TransformationNC(pt) ^ x, Length(pt));
-  end);
-fi;
-
-#
-
-InstallMethod(Normalizer, "for a transformation semigroup and record",
-[IsTransformationSemigroup and IsActingSemigroup, IsRecord],
-function(S, opts)
-  return Normalizer(SymmetricGroup(DegreeOfTransformationSemigroup(S)),
-                    S, opts);
-end);
-
-InstallMethod(Normalizer, "for a partial perm semigroup and record",
-[IsPartialPermSemigroup and IsActingSemigroup, IsRecord],
-function(S, opts)
-  return Normalizer(SymmetricGroup(DegreeOfPartialPermSemigroup(S)), S, opts);
-end);
-
-InstallMethod(Normalizer, "for a bipartition semigroup and record",
-[IsBipartitionSemigroup and IsActingSemigroup, IsRecord],
-function(S, opts)
-  return Normalizer(SymmetricGroup(DegreeOfBipartitionSemigroup(S)), S, opts);
-end);
-
-#
-
-InstallMethod(Normalizer, "for a transformation semigroup",
-[IsTransformationSemigroup and IsActingSemigroup],
-function(S)
-  local deg;
-  deg := DegreeOfTransformationSemigroup(S);
-  return DeterministicSemigroupNormalizer(SymmetricGroup(deg, S, rec()));
-end);
-
-InstallMethod(Normalizer, "for a partial perm semigroup",
-[IsPartialPermSemigroup and IsActingSemigroup],
-function(S)
-  local deg;
-  deg := DegreeOfPartialPermSemigroup(S);
-  return DeterministicSemigroupNormalizer(SymmetricGroup(deg), S, rec());
-end);
-
-InstallMethod(Normalizer, "for a bipartition semigroup",
-[IsBipartitionSemigroup and IsActingSemigroup],
-function(S)
-  local deg;
-  deg := DegreeOfBipartitionSemigroup(S);
-  return DeterministicSemigroupNormalizer(SymmetricGroup(deg), S, rec());
-end);
-
-#
-
-InstallMethod(NormalizerOp,
-"for a permutation group and an acting semigroup",
-[IsPermGroup, IsActingSemigroup],
-function(G, S)
-  return DeterministicSemigroupNormalizer(G, S, rec()); #i.e. deterministic
-end);
-
-#
-
-if IsBound(GAPInfo.PackagesLoaded.genss) then
-
-  InstallMethod(Normalizer,
-  "for a permutation group, a semigroup, a record",
-  [IsPermGroup, IsSemigroup, IsRecord],
-  function(G, S, opts)
-    if IsBound(opts.random) and opts.random then
-      return NonDeterministicSemigroupNormalizer(G, S, opts);
-    else
-      return DeterministicSemigroupNormalizer(G, S, opts);
-    fi;
-  end);
-
-else
-
-  InstallMethod(Normalizer,
-  "for a permutation group, a semigroup, a record",
-  [IsPermGroup, IsSemigroup, IsRecord],
-  DeterministicSemigroupNormalizer);
-
-fi;
-
 # process the options record...
 
 BindGlobal("SEMIGROUPS_NormalizerOptsRec",
@@ -390,6 +304,12 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
     out := Group(U!.orb!.gens);
     SetStabilizerChain(out, U);
     return out;
+  end);
+fi;
+
+if not IsBound(POW_KER_PERM) then
+  BindGlobal("POW_KER_PERM", function(pt, x)
+    return FlatKernelOfTransformation(TransformationNC(pt) ^ x, Length(pt));
   end);
 fi;
 

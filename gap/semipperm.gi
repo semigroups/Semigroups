@@ -781,7 +781,7 @@ function(S)
           fi;
         od;
       od;
-    fi;
+    od;
   od;
 
   T := InverseSemigroup(List(newgens, x -> PartialPermNC(x)));

@@ -632,20 +632,20 @@ end);
 
 # different method for ideals
 
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a matrix semigroup with generators",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local n, F, T;
-  n := Length(GeneratorsOfSemigroup(S)[1][1]);
-  F := FieldOfMatrixList(GeneratorsOfSemigroup(S));
-  T := Semigroup(List(GeneratorsOfSemigroup(S),
-                      x -> TransformationOp(x, Elements(F ^ n), OnRight)));
-  return MappingByFunction(S, T,
-                           x -> TransformationOp(x,
-                                                 Elements(F ^ Size(F)),
-                                                 OnRight));
-end);
+#InstallMethod(IsomorphismTransformationSemigroup,
+#"for a matrix semigroup with generators",
+#[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+#function(S)
+#  local n, F, T;
+#  n := Length(GeneratorsOfSemigroup(S)[1][1]);
+#  F := FieldOfMatrixList(GeneratorsOfSemigroup(S));
+# T := Semigroup(List(GeneratorsOfSemigroup(S),
+#                      x -> TransformationOp(x, Elements(F ^ n), OnRight)));
+#  return MappingByFunction(S, T,
+#                           x -> TransformationOp(x,
+#                                                 Elements(F ^ Size(F)),
+#                                                 OnRight));
+#end);
 
 # fall back method, same method for ideals
 

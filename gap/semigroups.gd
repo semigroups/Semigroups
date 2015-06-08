@@ -34,12 +34,15 @@ DeclareOperation("MonoidByGenerators",
                  [IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("InverseMonoidByGenerators",
                  [IsAssociativeElementCollection and
-                  IsMultplicativeElementWithOneCollection, IsRecord]);
+                  IsMultiplicativeElementWithOneCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGenerators",
                  [IsAssociativeElementCollection, IsRecord]);
 
 DeclareOperation("ClosureInverseSemigroup",
                  [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
+DeclareOperation("ClosureInverseSemigroup",
+                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection,
+                  IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
                  [IsSemigroupWithInverseOp, IsAssociativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
@@ -74,7 +77,7 @@ DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty",
-                 [IsActingSemigroup, IsFunction, IsPosInt]);
+                 [IsSemigroup, IsFunction, IsPosInt]);
 
 DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroup, IsFunction]);
