@@ -218,7 +218,12 @@ function(o, m)
   bound := LambdaBound(s)(rank);
 
   if rank = 0 then
-    o!.schutzstab[m] := false;
+    # The group is the symmetric group
+    # if rank = 0
+    # mpf: Is this the correct fix? if we put false
+    #      here, PartialOrderOfDClasses fails because
+    #      mults are not defined
+    o!.schutzstab[m] := true;
     o!.schutz[m] := Group(one);
     return o!.schutz[m];
   fi;
