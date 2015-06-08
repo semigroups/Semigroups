@@ -13,10 +13,6 @@
 # A boolean matrix <mat> is a positional object where mat![i] is the i-th row
 # of the matrix, and it is a blist in blist rep.
 
-# TODO
-# 1) more conversion methods AsBooleanMat for a transformation, partial perm,
-# etc
-
 #############################################################################
 ## Specializations of methods for MatrixOverSemiring
 #############################################################################
