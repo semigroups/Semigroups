@@ -156,9 +156,7 @@ function(gens, opts)
 
   # try to find a smaller generating set
   if opts.small and Length(gens) > 1 then
-    gens := SSortedList(gens); #remove duplicates
-    gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
-
+    gens := Shuffle(SSortedList(gens)); #remove duplicates, permute
     if IsGeneratorsOfActingSemigroup(gens) then
       n := ActionDegree(gens);
       Sort(gens, function(x, y)
@@ -248,9 +246,8 @@ function(gens, opts)
   gens := ShallowCopy(gens);
 
   if opts.small and Length(gens) > 1 then #small gen. set
-    gens := SSortedList(gens); #remove duplicates
+    gens := Shuffle(SSortedList(gens));
     if IsGeneratorsOfActingSemigroup(gens) then
-      gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
       n := ActionDegree(gens);
       Sort(gens, function(x, y)
                    return ActionRank(x, n) > ActionRank(y, n);
@@ -355,9 +352,8 @@ function(gens, opts)
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
 
   if opts.small and Length(gens) > 1 then
-    gens := SSortedList(ShallowCopy(gens));
+    gens := Shuffle(Set(gens));
     if IsGeneratorsOfActingSemigroup(gens) then
-      gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
       n := ActionDegree(gens);
       Sort(gens, function(x, y)
                    return ActionRank(x, n) > ActionRank(y, n);
@@ -417,9 +413,8 @@ function(gens, opts)
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
 
   if opts.small and Length(gens) > 1 then
-    gens := SSortedList(ShallowCopy(gens));
+    gens := Shuffle(Set(gens));
     if IsGeneratorsOfActingSemigroup(gens) then
-      gens := Permuted(gens, Random(SymmetricGroup(Length(gens))));
       n := ActionDegree(gens);
       Sort(gens, function(x, y)
                    return ActionRank(x, n) > ActionRank(y, n);
@@ -519,7 +514,7 @@ function(S, coll, opts)
     coll := GeneratorsOfSemigroup(coll);
   fi;
 
-  coll := Set(ShallowCopy(coll));
+  coll := Set(coll);
 
   return ClosureInverseSemigroupNC(S,
                                    Filtered(coll, x -> not x in S),
@@ -571,7 +566,7 @@ function(S, coll, opts)
     return T;
   fi;
 
-  coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
+  Shuffle(coll);
   n := ActionDegree(coll);
   Sort(coll, function(x, y)
                return ActionRank(x, n) > ActionRank(y, n);

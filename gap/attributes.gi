@@ -157,12 +157,12 @@ function(coll)
     return coll;
   fi;
 
-  gens := Set(ShallowCopy(coll));
+  gens := Set(coll);
   nrgens := Length(gens);
 
   if IsGeneratorsOfActingSemigroup(coll) then
     deg := ActionDegree(coll);
-    coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
+    Shuffle(coll);
     Sort(coll, function(x, y)
                  return ActionRank(x, deg) > ActionRank(y, deg);
                end);
