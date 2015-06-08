@@ -264,22 +264,68 @@ function(nr, n)
   return x;
 end);
 
-InstallMethod(AsBooleanMat, "for a perm and pos int", [IsPerm, IsPosInt],
-function(p, n)
-  local out, i;
-  if ForAny([1 .. n], i -> i ^ p > n) then
+InstallMethod(AsBooleanMat, "for a partitioned binary relation",
+[IsPartitionedBinaryRelation],
+x -> AsBooleanMat(x, 2 * DegreeOfPBR(x)));
+
+InstallMethod(AsBooleanMat, "for a partitioned binary relation and pos int",
+[IsPartitionedBinaryRelation, IsPosInt],
+function(x, n)
+  local y, i;
+
+  if n < 2 * x![1] then
     Error("Semigroups: AsBooleanMat: usage,\n",
-          "the permutation in the first argument must permute ",
-          "[1 .. ", String(n), "],");
+          "the pbr in the first argument is defined on more than ",
+          String(n), " points,");
     return;
   fi;
 
-  out := List([1 .. n], x -> BlistList([1 .. n], []));
-  for i in [1 .. n] do
-    out[i][i ^ p] := true;
+  y := EmptyPlist(2 * n);
+  for i in [2 ..  2 * x![1] + 1] do 
+    Add(y, BlistList([1 .. 2 * n], x![i]));
   od;
-  return BooleanMatNC(out);
+  for i in [2 * x![1] + 1 .. n] do 
+    Add(y, BlistList([1 .. 2 * n], []));
+  od;
+  return BooleanMat(y);
 end);
+
+InstallMethod(AsBooleanMat, "for a bipartition", 
+[IsBipartition], x -> AsBooleanMat(x, DegreeOfBipartition(x)));
+
+InstallMethod(AsBooleanMat, "for a bipartition and pos int", 
+[IsBipartition, IsPosInt],
+function(x, n)
+  local deg, blocks, out, i, block;
+
+  deg := DegreeOfBipartition(x);
+  if 2 * n < deg then
+    Error("Semigroups: AsBooleanMat: usage,\n",
+          "the bipartition in the first argument must have degree ",
+          "at least ", String(2 * n), ",");
+    return;
+  fi;
+
+  blocks := ShallowCopy(ExtRepOfBipartition(x));
+  out := EmptyPlist(2 * n);
+  
+  for block in blocks do
+    block := ShallowCopy(block);
+    for i in [1 .. Length(block)] do 
+      if block[i] < 0 then 
+        block[i] := -block[i] + deg;
+      fi;
+    od;
+    for i in block do 
+      out[i] := BlistList([1 .. 2 * n], block);
+    od;
+  od;
+
+  return BooleanMat(out);
+end);
+
+InstallMethod(AsBooleanMat, "for a transformation", 
+[IsTransformation], x -> AsBooleanMat(x, DegreeOfTransformation(x)));
 
 InstallMethod(AsBooleanMat, "for a transformation and pos int",
 [IsTransformation, IsPosInt],
@@ -295,6 +341,42 @@ function(x, n)
   out := List([1 .. n], x -> BlistList([1 .. n], []));
   for i in [1 .. n] do
     out[i][i ^ x] := true;
+  od;
+  return BooleanMatNC(out);
+end);
+
+InstallMethod(AsBooleanMat, "for a perm", 
+[IsPerm], x -> AsBooleanMat(AsTransformation(x)));
+
+InstallMethod(AsBooleanMat, "for a perm", 
+[IsPerm, IsPosInt], 
+function(x, n)
+  return AsBooleanMat(AsTransformation(x), n);
+end);
+
+InstallMethod(AsBooleanMat, "for a partial perm", 
+[IsPartialPerm], 
+x -> AsBooleanMat(x, Maximum(DegreeOfPartialPerm(x),
+                             CodegreeOfPartialPerm(x))));
+
+InstallMethod(AsBooleanMat, "for a transformation and pos int",
+[IsPartialPerm, IsPosInt],
+function(x, n)
+  local out, j, i;
+  
+  if ForAny([1 .. n], i -> i ^ x > n) then
+    Error("Semigroups: AsBooleanMat: usage,\n",
+          "the partial perm in the first argument must map ",
+          "[1 .. ", String(n), "] into itself,");
+    return;
+  fi;
+
+  out := List([1 .. n], x -> BlistList([1 .. n], []));
+  for i in [1 .. n] do
+    j := i ^ x;
+    if j <> 0 then 
+      out[i][j] := true;
+    fi;
   od;
   return BooleanMatNC(out);
 end);

@@ -36,11 +36,11 @@ BindGlobal("PartitionedBinaryRelationType",
 
 DeclareAttribute("DegreeOfPartitionedBinaryRelation",
                  IsPartitionedBinaryRelation);
+DeclareSynonymAttr("DegreeOfPBR", DegreeOfPartitionedBinaryRelation);
 DeclareGlobalFunction("PartitionedBinaryRelation");
 DeclareGlobalFunction("ExtRepOfPBR");
 DeclareOperation("RandomPartitionedBinaryRelation", [IsPosInt]);
 DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement]);
-DeclareOperation("AsBooleanMat", [IsPartitionedBinaryRelation]);
 
 DeclareProperty("IsEmptyPBR", IsPartitionedBinaryRelation);
 DeclareProperty("IsUniversalPBR", IsPartitionedBinaryRelation);

@@ -37,8 +37,8 @@ DeclareOperation("RandomBooleanMat", [IsPosInt]);
 ## Declarations specifically for Boolean mats
 #############################################################################
 
-DeclareOperation("AsBooleanMat", [IsPerm, IsPosInt]);
-DeclareOperation("AsBooleanMat", [IsTransformation, IsPosInt]);
+DeclareOperation("AsBooleanMat", [IsAssociativeElement, IsPosInt]);
+DeclareOperation("AsBooleanMat", [IsAssociativeElement]);
 
 DeclareOperation("NumberBooleanMat", [IsBooleanMat]);
 DeclareOperation("BooleanMatNumber", [IsPosInt, IsPosInt]);
@@ -63,8 +63,6 @@ DeclareOperation("CanonicalBooleanMat",
                  [IsPermGroup, IsPermGroup, IsBooleanMat]);
 DeclareOperation("CanonicalBooleanMatNC", 
                  [IsPermGroup, IsPermGroup, IsBooleanMat]);
-
-#TODO implement these!
 
 DeclareProperty("IsSymmetricBooleanMat", IsBooleanMat);
 DeclareProperty("IsAntiSymmetricBooleanMat", IsBooleanMat);
