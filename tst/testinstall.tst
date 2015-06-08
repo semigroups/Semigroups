@@ -1021,20 +1021,19 @@ gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
 >                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
 <semigroup with 3 generators>
 gap> T := AsTransformationSemigroup(S);
-<transformation monoid on 256 pts with 2 generators>
+<transformation semigroup on 22 pts with 3 generators>
 gap> Size(T);
 21
-gap> I := SemigroupIdeal(T, Idempotents(T));
-<regular transformation semigroup ideal on 256 pts with 8 generators>
+gap> I := SemigroupIdeal(T, Idempotents(T));;
 gap> Size(I);
 21
 
 #T# TestInstall64: Bug fixed by changeset 949553d
-gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup on 2 pts with 2 generators>
-gap> Size(s);
+gap> Size(S);
 5
-gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
+gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
 of size 5, on 2 pts with 2 generators>>
 

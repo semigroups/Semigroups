@@ -242,6 +242,10 @@ function(H)
   fi;
   return StructureDescription(Range(IsomorphismPermGroup(H)));
 end);
+<<<<<<< local
+<<<<<<< local
+=======
+>>>>>>> other
 
 InstallMethod(DClassType, "for a generic semigroup",
 [IsSemigroup],
@@ -401,6 +405,15 @@ end);
 #############################################################################
 ## 4. Individual classes . . .
 #############################################################################
+
+InstallMethod(OneMutable, "for an H-class",
+[IsGreensHClass],
+function(H)
+  if not IsGroupHClass(H) then 
+    return fail;
+  fi;
+  return Idempotents(H)[1];
+end);
 
 InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
 InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
@@ -938,3 +951,8 @@ function(rel)
 
   return str;
 end);
+<<<<<<< local
+=======
+>>>>>>> other
+=======
+>>>>>>> other

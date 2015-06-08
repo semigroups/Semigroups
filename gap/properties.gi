@@ -678,18 +678,6 @@ function(S)
     fi;
   fi;
 
-  lambda := LambdaOrb(S);
-  Enumerate(lambda);
-  rho := RhoOrb(S);
-  Enumerate(rho, Length(lambda));
-  # TODO shouldn't the below be Length(rho) = Length(lambda)?
-  # and we should check that rho is closed.
-  if not (IsClosed(rho) and Length(rho) >= Length(lambda)) then
-    Info(InfoSemigroups, 2,
-         "the numbers of lambda and rho values are not equal");
-    return false;
-  fi;
-
   if HasGreensDClasses(S) then
     iter := GreensDClasses(S);
     for x in iter do

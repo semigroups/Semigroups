@@ -329,14 +329,12 @@ function(R)
   if (HasIsInverseSemigroup(U) and not IsInverseSemigroup(U)) 
       or (HasIsRegularSemigroup(U) and not IsRegularSemigroup(U))
       or (HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)))
-      or (HasGroupOfUnits(U) and GroupOfUnits(U) = fail)) 
       or Length(Columns(R)) <> Length(Rows(R)) 
       or Length(MatrixEntries(R)) <> Length(Rows(R)) then 
     return false;
   fi;
 
   G := GroupOfUnits(U);
-
   return G <> fail and ForAny(MatrixEntries(R), x -> x <> 0 and not x in G) 
          and IsInverseSemigroup(U) and IsRegularSemigroup(R);
 end);

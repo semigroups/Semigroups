@@ -617,7 +617,7 @@ end);
 #
 
 InstallMethod(ClosureSemigroup,
-"for an acting semigroup, associative element collection, and record",
+"for a semigroup, associative element collection, and record",
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, coll, opts)
 
@@ -632,8 +632,9 @@ function(S, coll, opts)
     return;
   fi;
 
-  if IsActingSemigroupWithFixedDegreeMultiplication(S) and
-      ActionDegree(S) <> ActionDegree(Representative(coll)) then
+  if IsActingSemigroup(S)
+      and IsActingSemigroupWithFixedDegreeMultiplication(S)
+      and ActionDegree(S) <> ActionDegree(Representative(coll)) then
     Error("Semigroups: ClosureSemigroup: usage,\n",
           "the degree of the semigroup and collection must be equal,");
     return;

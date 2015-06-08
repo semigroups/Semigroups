@@ -327,6 +327,10 @@ function(cong)
           "the argument <cong> must be over an inverse semigroup,");
     return;
   fi;
+<<<<<<< local
+<<<<<<< local
+=======
+>>>>>>> other
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);
@@ -339,7 +343,6 @@ function(cong)
 
   right := RightCayleyGraphSemigroup(idsmgp);
   left := LeftCayleyGraphSemigroup(idsmgp);
-  Print("here!!\n");
   genstoapply := [1 .. Length(right[1])];
 
   find := function(i)
@@ -424,7 +427,8 @@ function(cong)
       else
         fclass := find(Position(ids, RightOne(a)));
         for e in [1 .. Length(traceLookup)] do
-          if (find(e) = fclass) and (a*ids[e] in kernel) and (not a in kernelgenstoapply) then
+          if (find(e) = fclass) and (a*ids[e] in kernel) and (not a in
+              kernelgenstoapply) then
             nrk := nrk + 1;
             kernelgenstoapply[nrk] := a;
           fi;
