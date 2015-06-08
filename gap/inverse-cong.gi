@@ -327,10 +327,6 @@ function(cong)
           "the argument <cong> must be over an inverse semigroup,");
     return;
   fi;
-<<<<<<< local
-<<<<<<< local
-=======
->>>>>>> other
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);

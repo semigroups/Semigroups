@@ -242,10 +242,6 @@ function(H)
   fi;
   return StructureDescription(Range(IsomorphismPermGroup(H)));
 end);
-<<<<<<< local
-<<<<<<< local
-=======
->>>>>>> other
 
 InstallMethod(DClassType, "for a generic semigroup",
 [IsSemigroup],
@@ -951,8 +947,3 @@ function(rel)
 
   return str;
 end);
-<<<<<<< local
-=======
->>>>>>> other
-=======
->>>>>>> other
