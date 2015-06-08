@@ -243,4 +243,4 @@ gap> S := AsMatrixSemigroup(Semigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]]));
 
 #E#
-gap> STOP_TEST("Semigroups package: matrix.tst");
+gap> STOP_TEST("Semigroups package: semimat.tst");

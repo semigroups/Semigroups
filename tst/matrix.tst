@@ -7,6 +7,7 @@
 ##
 #############################################################################
 ##
+
 gap> START_TEST("Semigroups package: matrix.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -18,11 +19,7 @@ gap> M := NewSMatrix(IsPlistSMatrixRep, GF(2), 4,
 > Z(2) * [[1,0,1,0],[0,1,0,1],[0,1,0,0],[0,0,0,1]]);
 <s-matrix of degree 4 over GF(2)>
 
-#T# MatrixTest3: View
-gap> View(M);
-<s-matrix of degree 4 over GF(2)>
-
-#T# MatrixTest4: EvalPrintString
+#T# MatrixTest2: EvalPrintString
 gap> EvalString(PrintString(M));
 <s-matrix of degree 4 over GF(2)>
 
