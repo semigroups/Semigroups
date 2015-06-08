@@ -503,6 +503,9 @@ end);
 InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite], S -> Semigroup(Idempotents(S)));
 
+InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite inverse semigroup",
+[IsSemigroupWithInverseOp and IsFinite], S -> InverseSemigroup(Idempotents(S)));
+
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)

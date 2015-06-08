@@ -1028,7 +1028,8 @@ gap> I := SemigroupIdeal(T, Idempotents(T));;
 gap> Size(I);
 21
 
-#T# TestInstall64: Bug fixed by changeset 949553d
+#T# TestInstall64: Bug fixed by changeset 949553d FIXME what was this bug? Add
+# a brief explanation
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup on 2 pts with 2 generators>
 gap> Size(S);
