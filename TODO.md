@@ -1,7 +1,6 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
-* Boolean matrix stuff (`CanonicalRep` and things from semigroups-dev)
 * try to find the full PBR monoid when n = 1, 2. 
 * `AsBipartitionSemigroup`, `AsPBRSemigroup`
 * tests for pbrs 
@@ -25,7 +24,7 @@
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 #DONE
-
+* Boolean matrix stuff (`CanonicalRep` and things from semigroups-dev)
 * replace `Permuted(gens, Random(SymmetricGroup...)` by `Shuffle`
 * `TransposedMat` methods for matrix over semiring variants (so far only done boolean matrices and a generic method)
 * make 2.6 branch with new style Green's class printing in tests.

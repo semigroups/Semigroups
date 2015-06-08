@@ -18,7 +18,7 @@
 # etc
 
 #############################################################################
-## Specializations of methods for MatrixOverSemiring 
+## Specializations of methods for MatrixOverSemiring
 #############################################################################
 
 InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a boolean matrix",
@@ -135,15 +135,15 @@ end);
 ## Methods for Boolean matrices
 #############################################################################
 
-InstallGlobalFunction(OnBlists, 
+InstallGlobalFunction(OnBlists,
 function(blist1, x)
   local n, blist2, i, j;
 
   n := Length(blist1);
   blist2 := BlistList([1 .. n], []);
-  
-  for i in [1 .. n] do 
-    for j in [1 .. n] do 
+
+  for i in [1 .. n] do
+    for j in [1 .. n] do
       blist2[i] := blist2[i] or (blist1[j] and x![j][i]);
     od;
   od;
@@ -158,7 +158,7 @@ function(x)
   return List([1 .. n], i -> ListBlist([1 .. n], x![i]));
 end);
 
-InstallGlobalFunction(BooleanMatBySuccessorsNC, 
+InstallGlobalFunction(BooleanMatBySuccessorsNC,
 function(x)
   local n, y, i;
   n := Length(x);
@@ -175,9 +175,9 @@ function(x)
   local n, i, j;
 
   n := Length(x![1]);
-  for i in [1 .. n - 1] do 
-    for j in [i + 1 .. n] do 
-      if IsSubsetBlist(x![i], x![j]) then 
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      if IsSubsetBlist(x![i], x![j]) then
         return false;
       fi;
     od;
@@ -221,9 +221,9 @@ function(x)
   nr := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if x![i][j] then 
+      if x![i][j] then
         nr := 2 * nr + 1;
-      else 
+      else
         nr := 2 * nr;
       fi;
     od;
@@ -237,9 +237,9 @@ function(blist)
   n := Length(blist);
   nr := 0;
   for i in [1 .. n] do
-    if blist[i] then 
+    if blist[i] then
       nr := 2 * nr + 1;
-    else 
+    else
       nr := 2 * nr;
     fi;
   od;
@@ -341,7 +341,7 @@ InstallMethod(BooleanMatSet, "for a homogeneous set",
 function(set)
   local n, x, i;
   n := Length(set);
-  x := EmptyPlist(n); 
+  x := EmptyPlist(n);
   for i in [1 .. n] do
     x[i] := BlistNumber(set[i] - (i - 1) * 2 ^ n, n);
   od;
@@ -367,8 +367,8 @@ InstallMethod(CanonicalBooleanMat, "for perm group and boolean mat",
 function(G, H, x)
   local n;
   n := Length(x![1]);
-  if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then 
-    Error("Semigroups: CanonicalBooleanMat: usage,\n", 
+  if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then
+    Error("Semigroups: CanonicalBooleanMat: usage,\n",
           "the largest moved point of the first argument must not",
           " exceed the dimension of the Boolean matrix,");
     return;
@@ -376,13 +376,12 @@ function(G, H, x)
   return CanonicalBooleanMatNC(G, H, x);
 end);
 
-InstallMethod(CanonicalBooleanMatNC, 
+InstallMethod(CanonicalBooleanMatNC,
 "for perm group, perm group, and boolean mat",
 [IsPermGroup, IsPermGroup, IsBooleanMat],
 function(G, H, x)
   local n, V, phi, act, map;
-  Error();
-  n := Length(x![1]); 
+  n := Length(x![1]);
   V := DirectProduct(G, H);
   phi := Projection(V, 2);
 
@@ -395,7 +394,67 @@ function(G, H, x)
     nr := NumberBlist(Permuted(BlistNumber(r + 1, n), p));
     return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n; # and then the row
   end;
- 
+
    map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
    return BooleanMatSet(SmallestImageSet(Image(map), SetBooleanMat(x)));
+end);
+
+InstallMethod(IsSymmetricBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, i, j;
+  n := Length(x![1]);
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      if x![i][j] <> x![j][i] then
+        return false;
+      fi;
+    od;
+  od;
+  return true;
+end);
+
+InstallMethod(IsReflexiveBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, i;
+  n := Length(x![1]);
+  for i in [1 .. n] do
+    if not x![i][i] then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(IsTransitiveBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, i, j, k;
+  n := [1 .. Length(x![1])];
+  for i in n do
+    for j in n do
+      for k in n do
+        if x![i][k] and x![k][j] and not x![i][j] then
+          return false;
+        fi;
+      od;
+    od;
+  od;
+  return true;
+end);
+
+InstallMethod(IsAntiSymmetricBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, i, j;
+  n := Length(x![1]);
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      if x![i][j] and x![j][i] then
+        return false;
+      fi;
+    od;
+  od;
+  return true;
 end);
