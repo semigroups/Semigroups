@@ -43,11 +43,13 @@ gap> PartialOrderOfDClasses(S);
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "C7161" ]
 gap> T := AsTransformationSemigroup(S);
+<commutative transformation semigroup on 65536 pts with 1 generator>
 gap> Size(T);
 7161
 gap> Size(S) = Size(T);
 true
 gap> NrIdempotents(S) = NrIdempotents(T);
+true
 
 #T# MatrixSemigroupTest2: Create and Size
 gap> S := Semigroup(
@@ -121,13 +123,13 @@ upper := function(mat)
 > end;;
 gap> S := GeneralLinearSemigroup(3,3);;
 gap> T := SubsemigroupByProperty(S, upper);
-<monoid of 3x3 s-matrices over GF(3) with 24 generators>
+<monoid of 3x3 s-matrices over GF(3) with 12 generators>
 gap> Size(T);
 729
 
 #T# MatrixSemigroups4: ClosureSemigroup
 # This *also* fails
-gap> elms := Filtered(Elements(GLS(3,3), upper);;
+gap> elms := Filtered(Elements(GLS(3,3)), upper);;
 gap> S := Semigroup(elms[1]);;
 gap> for i in [2..Length(elms)] do
   S := ClosureSemigroup(S, elms[i]);
@@ -144,9 +146,8 @@ gap> x := Random(S);
 <3x3-matrix over GF(3)>
 gap> y := Random(S);
 <3x3-matrix over GF(3)>
-gap> IsGreensDLeq(x, y);
 gap> func(x, y);        
-true
+false
 gap> func(y, x);
 true
 gap> DClass(S, x) = DClass(S, y);
@@ -171,6 +172,7 @@ gap> Size(S);
 gap> Size(S) = Size(T);
 true
 gap> NrIdempotents(S) = NrIdempotents(T);
+true
 
 #T# MatrixSemigroups7:
 gap> S := Semigroup( 
