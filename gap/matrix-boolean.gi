@@ -323,3 +323,79 @@ function(x, data)
   od;
   return h + 1;
 end);
+
+InstallMethod(SetBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, out, i;
+  n := Length(x![1]);
+  out := EmptyPlist(n);
+  for i in [1 .. n] do
+    out[i] := NumberBlist(x![i]) + (i - 1) * 2 ^ n;
+  od;
+  return out;
+end);
+
+InstallMethod(BooleanMatSet, "for a homogeneous set",
+[IsHomogeneousList and IsSSortedList],
+function(set)
+  local n, x, i;
+  n := Length(set);
+  x := EmptyPlist(n); 
+  for i in [1 .. n] do
+    x[i] := BlistNumber(set[i] - (i - 1) * 2 ^ n, n);
+  od;
+  return BooleanMatNC(x);
+end);
+
+InstallMethod(CanonicalBooleanMat, "for boolean mat",
+[IsBooleanMat],
+function(x)
+  local n;
+  n := Length(x![1]);
+  return CanonicalBooleanMatNC(SymmetricGroup(n), SymmetricGroup(n), x);
+end);
+
+InstallMethod(CanonicalBooleanMat, "for perm group and boolean mat",
+[IsPermGroup, IsBooleanMat],
+function(G, x)
+  return CanonicalBooleanMatNC(G, G, x);
+end);
+
+InstallMethod(CanonicalBooleanMat, "for perm group and boolean mat",
+[IsPermGroup, IsPermGroup, IsBooleanMat],
+function(G, H, x)
+  local n;
+  n := Length(x![1]);
+  if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then 
+    Error("Semigroups: CanonicalBooleanMat: usage,\n", 
+          "the largest moved point of the first argument must not",
+          " exceed the dimension of the Boolean matrix,");
+    return;
+  fi;
+  return CanonicalBooleanMatNC(G, H, x);
+end);
+
+InstallMethod(CanonicalBooleanMatNC, 
+"for perm group, perm group, and boolean mat",
+[IsPermGroup, IsPermGroup, IsBooleanMat],
+function(G, H, x)
+  local n, V, phi, act, map;
+  Error();
+  n := Length(x![1]); 
+  V := DirectProduct(G, H);
+  phi := Projection(V, 2);
+
+  act := function(pt, p)
+    local q, r, nr;
+    pt := pt - 1;
+    q := QuoInt(pt, 2 ^ n); #row
+    r := pt - q * 2 ^ n; # number blist of the row
+    # permute columns
+    nr := NumberBlist(Permuted(BlistNumber(r + 1, n), p));
+    return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n; # and then the row
+  end;
+ 
+   map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
+   return BooleanMatSet(SmallestImageSet(Image(map), SetBooleanMat(x)));
+end);

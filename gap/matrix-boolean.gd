@@ -32,15 +32,6 @@ DeclareGlobalFunction("BooleanMatNC");
 
 DeclareOperation("RandomBooleanMat", [IsPosInt]);
 
-#TODO implement these!
-
-DeclareProperty("IsSymmetricBooleanMat", IsBooleanMat);
-DeclareProperty("IsAntiSymmetricBooleanMat", IsBooleanMat);
-DeclareProperty("IsTransitiveBooleanMat", IsBooleanMat);
-DeclareProperty("IsReflexiveBooleanMat", IsBooleanMat);
-
-#TODO synonyms for IsPartialOrderBooleanMat, IsEquivalenceRelationBooleanMat,
-#etc
 
 #############################################################################
 ## Declarations specifically for Boolean mats
@@ -63,3 +54,22 @@ DeclareAttribute("IsColTrimBooleanMat", IsBooleanMat);
 DeclareAttribute("IsTrimBooleanMat", IsBooleanMat);
 
 DeclareGlobalFunction("OnBlists");
+
+DeclareAttribute("SetBooleanMat", IsBooleanMat);
+DeclareAttribute("BooleanMatSet", IsSSortedList and IsHomogeneousList);
+DeclareAttribute("CanonicalBooleanMat", IsBooleanMat);
+DeclareOperation("CanonicalBooleanMat", [IsPermGroup, IsBooleanMat]);
+DeclareOperation("CanonicalBooleanMat", 
+                 [IsPermGroup, IsPermGroup, IsBooleanMat]);
+DeclareOperation("CanonicalBooleanMatNC", 
+                 [IsPermGroup, IsPermGroup, IsBooleanMat]);
+
+#TODO implement these!
+
+DeclareProperty("IsSymmetricBooleanMat", IsBooleanMat);
+DeclareProperty("IsAntiSymmetricBooleanMat", IsBooleanMat);
+DeclareProperty("IsTransitiveBooleanMat", IsBooleanMat);
+DeclareProperty("IsReflexiveBooleanMat", IsBooleanMat);
+
+#TODO synonyms for IsPartialOrderBooleanMat, IsEquivalenceRelationBooleanMat,
+#etc
