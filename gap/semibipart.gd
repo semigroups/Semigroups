@@ -8,9 +8,9 @@
 #############################################################################
 ##
 
-DeclareSynonym("IsBipartitionSemigroup", 
+DeclareSynonym("IsBipartitionSemigroup",
                IsSemigroup and IsBipartitionCollection);
-DeclareSynonym("IsBipartitionMonoid", 
+DeclareSynonym("IsBipartitionMonoid",
                IsMonoid and IsBipartitionCollection);
 
 InstallTrueMethod(IsFinite, IsBipartitionSemigroup);
@@ -26,13 +26,7 @@ DeclareProperty("IsBlockBijectionSemigroup", IsSemigroup);
 DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
 DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
 
-#JDM why are these declarations necessary? FIXME
-DeclareProperty("IsBlockBijectionSemigroup", IsSemigroupIdeal);
-DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroupIdeal);
-DeclareProperty("IsPermBipartitionGroup", IsSemigroupIdeal);
-
-DeclareSynonymAttr("IsBlockBijectionMonoid", IsBlockBijectionSemigroup and
-IsMonoid);
+DeclareSynonymAttr("IsBlockBijectionMonoid",
+                   IsBlockBijectionSemigroup and IsMonoid);
 DeclareSynonymAttr("IsPartialPermBipartitionMonoid",
-IsPartialPermBipartitionSemigroup and IsMonoid);
-
+                   IsPartialPermBipartitionSemigroup and IsMonoid);

@@ -82,7 +82,7 @@ InstallMethod(ActionDegree, "for a transformation collection",
 
 InstallMethod(ActionDegree, "for a partial perm collection",
 [IsPartialPermCollection], x -> Maximum(DegreeOfPartialPermCollection(x),
-CodegreeOfPartialPermCollection(x)));
+                                        CodegreeOfPartialPermCollection(x)));
 
 InstallMethod(ActionDegree, "for a bipartition collection",
 [IsBipartitionCollection], DegreeOfBipartitionCollection);
@@ -106,7 +106,7 @@ InstallMethod(ActionDegree, "for a transformation semigroup",
 
 InstallMethod(ActionDegree, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x -> Maximum(DegreeOfPartialPermSemigroup(x),
-CodegreeOfPartialPermSemigroup(x)));
+                                       CodegreeOfPartialPermSemigroup(x)));
 
 InstallMethod(ActionDegree, "for a partial perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], DegreeOfPartialPermSemigroup);
@@ -117,9 +117,10 @@ InstallMethod(ActionDegree, "for a bipartition semigroup",
 InstallMethod(ActionDegree, "for a Rees 0-matrix subsemigroup with generators",
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
 function(R)
+  local parent;
   if ForAny(GeneratorsOfSemigroup(R), x -> x![1] <> 0) then
-    return NrMovedPoints(UnderlyingSemigroup(
-      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))))) + 1;
+    parent := ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)));
+    return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
   else
     return 0;
   fi;
@@ -167,11 +168,12 @@ end);
 InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(f, n)
+  local parent;
   if f![1] = 0 then
     return 0;
   else
-    return NrMovedPoints(UnderlyingSemigroup(
-      ReesMatrixSemigroupOfFamily(FamilyObj(f)))) + 1;
+    parent := ReesMatrixSemigroupOfFamily(FamilyObj(f));
+    return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
   fi;
 end);
 
@@ -179,11 +181,12 @@ InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
   return function(x)
+    local parent;
     if x![1] = 0 then
       return 0;
     else
-      return NrMovedPoints(UnderlyingSemigroup(
-       ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))))) + 1;
+      parent := ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)));
+      return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
     fi;
   end;
 end);
@@ -384,12 +387,12 @@ InstallMethod(LambdaRank, "for a bipartition semigroup",
 InstallMethod(LambdaRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
 function(x)
+  local parent;
   if x = 0 then
     return 0;
   else
-    return
-     NrMovedPoints(UnderlyingSemigroup(
-      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))))) + 1;
+    parent := ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)));
+    return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
   fi;
 end);
 
@@ -411,16 +414,7 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x -> RankOfBlocks);
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R ->
-function(x)
-  if x = 0 then
-    return 0;
-  else
-    return
-     NrMovedPoints(UnderlyingSemigroup(
-      ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))))) + 1;
-  fi;
-end);
+[IsReesZeroMatrixSubsemigroup], R -> LambdaRank(R));
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right
 # like the inverse of f on Y.
@@ -445,7 +439,10 @@ function(k, x)
   fi;
   i := First([1 .. Length(x![4][x![3]])], i -> x![4][x![3]][i] <> 0);
   return Objectify(FamilyObj(x)!.type,
-   [i, (x![4][k][x![1]] * x![2] * x![4][x![3]][i]) ^ -1, k, x![4]]);
+                   [i,
+                    (x![4][k][x![1]] * x![2] * x![4][x![3]][i]) ^ -1,
+                    k,
+                    x![4]]);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
@@ -471,7 +468,10 @@ function(k, x)
   fi;
   i := First([1 .. Length(x![4])], i -> x![4][i][x![1]] <> 0);
   return Objectify(FamilyObj(x)!.type,
-    [k, (x![4][i][x![1]] * x![2] * x![4][x![3]][k]) ^ -1, i, x![4]]);
+                   [k,
+                    (x![4][i][x![1]] * x![2] * x![4][x![3]][k]) ^ -1,
+                    i,
+                    x![4]]);
 end);
 
 InstallMethod(RhoInverse, "for a bipartition semigroup",
@@ -542,11 +542,12 @@ InstallMethod(IdempotentTester, "for a bipartition semigroup",
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
 function(j, i)
+  local parent;
   if i = 0 and j = 0 then
     return true;
   fi;
-  return Matrix(ReesMatrixSemigroupOfFamily(
-   ElementsFamily(FamilyObj(R))))[j][i] <> 0;
+  parent := ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)));
+  return Matrix(parent)[j][i] <> 0;
 end);
 
 # the function used to create an idempotent with the specified lambda and rho
@@ -570,7 +571,7 @@ function(j, i)
   fi;
   mat := Matrix(ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))));
   return Objectify(TypeReesMatrixSemigroupElements(R),
-     [i, mat[j][i] ^ -1, j, mat]);
+                   [i, mat[j][i] ^ -1, j, mat]);
 end);
 
 # the action of elements of the stabiliser of a lambda-value on any element of
@@ -663,7 +664,7 @@ end);
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionBipartition,
 function(x, data)
- return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
+  return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
 end);
 
 InstallGlobalFunction(SEMIGROUPS_HashFunctionRZMSE,

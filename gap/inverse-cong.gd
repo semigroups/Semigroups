@@ -13,21 +13,18 @@
 
 # Inverse Congruences By Kernel and Trace
 DeclareCategory("IsInverseSemigroupCongruenceByKernelTrace",
-        IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+                IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTrace");
 DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTraceNC");
 
 DeclareAttribute("TraceOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("AsInverseSemigroupCongruenceByKernelTrace",
-        IsSemigroupCongruence);
+                 IsSemigroupCongruence);
 
 DeclareGlobalFunction("SEMIGROUPS_InverseCongFromPairs");
 
 # Congruence Classes
 DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
-        IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
-DeclareOperation("InverseSemigroupCongruenceClass",
-        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement]);
-DeclareOperation("InverseSemigroupCongruenceClassNC",
-        [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement]);
+                IsEquivalenceClass and IsAttributeStoringRep and
+                IsAssociativeElement);

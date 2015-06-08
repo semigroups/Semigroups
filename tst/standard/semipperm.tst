@@ -40,23 +40,18 @@ true
 gap> ForAll(S, x -> x in enum);
 true
 
-#T# SemiPPerm3Test: NumberSubsetOfEqualSize
+#T# SemiPPermTest3: NumberSubsetOfEqualSize
 gap> ForAll([1..10], m -> List(Combinations([1 .. 10], m), x ->
 > NumberSubsetOfEqualSize(x, 10)) = [1 .. Binomial(10, m)]);
 true
 
-#T# SmallerDegreeTest4: SmallerDegreePartialPermRepresentation Issue 1:
-# Example where the degree being returned was greater than the original degree
-gap> f1 := PartialPerm([ 2, 1, 4, 5, 3 ]);;
-gap> f2 := PartialPerm([ 2, 1 ]);;
-gap> f := InverseSemigroup(f1, f2);;
-gap> F := SmallerDegreePartialPermRepresentation(f);;
-gap> f = Image(F); # SmallerDegreePartialPermRepresentation returns the original
+#T# SemiPPermTest4: RepresentativeOfMinimalIdeal
+gap> x := PartialPerm([], []);;
+gap> S := Semigroup(x);
+<trivial partial perm group on 0 pts with 0 generators>
+gap> RepresentativeOfMinimalIdeal(S) = x;
+gap> x in S;
 true
-gap> NrMovedPoints(f);
-5
-gap> Size(f);
-8
 
 #T# SmallerDegreeTest5: SmallerDegreePartialPermRepresentation Issue 2:
 # Example where the degree being returned was greater than the original degree
@@ -143,7 +138,157 @@ gap> V := InverseSemigroup(H1, H2, h);
 <inverse partial perm monoid on 122 pts with 240 generators>
 gap> iso := SmallerDegreePartialPermRepresentation(V);;
 gap> ActionDegree(Range(iso)) <= 12; # Genuine minimum degree of V is 7.
+
+# S = 0-simple semigroup of order 2
+gap> s := Semigroup(empty_map, PartialPerm([1],[1]));
+<commutative partial perm monoid on 1 pts with 1 generator>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
 true
+gap> empty_map in s;
+true
+
+# empty_map is a generator 
+gap> s := Semigroup(PartialPerm([1, 2, 3], [1, 3, 4]), empty_map); 
+<partial perm semigroup on 3 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Length(DomainOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([2], [1]));
+<commutative partial perm semigroup on 1 pts with 1 generator>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Length(DomainOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([2], [2]), PartialPerm([2], [3]));
+<partial perm semigroup on 1 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Length(DomainOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([2], [4]), PartialPerm([2], [3]));
+<partial perm semigroup on 1 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Length(ImageOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([2], [2]), PartialPerm([3], [2]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Length(ImageOfPartialPermCollection) of size 1
+gap> s := Semigroup(PartialPerm([4], [2]), PartialPerm([3], [2]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Construction of graph reveals that empty_map in S
+gap> s := Semigroup(PartialPerm([2, 0, 0, 4, 0]),
+> PartialPerm([3, 0, 0, 0, 5]));
+<partial perm semigroup on 3 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Rank 1 generator is not idempotent
+gap> s := Semigroup(PartialPerm([3],[2]), PartialPerm([2],[1]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Rank 1 generator is not idempotent
+gap> s := Semigroup(PartialPerm([2],[1]), PartialPerm([3],[2]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+# Analysis of graph reveals that empty_map in S (but not construction)
+gap> s := Semigroup(PartialPerm([3, 2, 0]), PartialPerm([2, 3, 0]));
+<partial perm semigroup on 2 pts with 2 generators>
+gap> RepresentativeOfMinimalIdeal(s) = empty_map;
+true
+gap> empty_map in s;
+true
+
+### Semigroups not containing the empty partial perm
+
+# Semigroup with multiplicative zero = empty_map
+gap> s := Semigroup(
+> PartialPerm(
+>   [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 17],
+>   [5, 7, 1, 3, 6, 9, 8, 15, 2, 18, 13, 20, 17, 4]),
+> PartialPerm(
+>   [1, 2, 3, 4, 5, 6, 7, 9, 12, 13, 17, 18, 19, 20 ],
+>   [9, 2, 5, 12, 4, 11, 17, 8, 14, 13, 1, 18, 3, 16]),
+> PartialPerm(
+>   [1, 2, 3, 4, 5, 6, 8, 10, 11, 13, 14, 15, 20],
+>   [14, 3, 12, 4, 18, 15, 5, 16, 8, 13, 10, 9, 20])
+> );
+<partial perm semigroup on 19 pts with 3 generators>
+gap> RepresentativeOfMinimalIdeal(s);
+<identity partial perm on [ 13 ]>
+gap> last in s;
+true
+gap> empty_map in s;
+false
+
+# Trivial partial perm semigroup: GAP knows that it is simple at creation
+gap> s := Semigroup(PartialPerm([2], [2]));
+<trivial partial perm group on 1 pts with 0 generators>
+gap> HasIsSimpleSemigroup(s);
+true
+gap> RepresentativeOfMinimalIdeal(s);
+<identity partial perm on [ 2 ]>
+gap> last in s;
+true
+gap> empty_map in s;
+false
+
+# Trivial partial perm semigroup: GAP does not know that it is simple
+gap> s := Semigroup(PartialPerm([2], [2]), PartialPerm([2], [2]));
+<commutative partial perm monoid on 1 pts with 1 generator>
+gap> HasIsSimpleSemigroup(s);
+false
+gap> RepresentativeOfMinimalIdeal(s);
+<identity partial perm on [ 2 ]>
+gap> last in s;
+true
+gap> empty_map in s;
+false
+
+# Group as partial perm semigroup
+gap> s := Semigroup(PartialPerm([2, 3], [3, 2]));
+<commutative partial perm semigroup on 2 pts with 1 generator>
+gap> HasIsGroupAsSemigroup(s);
+false
+gap> RepresentativeOfMinimalIdeal(s);
+(2,3)
+gap> HasIsGroupAsSemigroup(s);
+true
+gap> IsGroupAsSemigroup(s);
+true
+gap> RepresentativeOfMinimalIdeal(s) in s;
+true
+gap> empty_map in s;
+false
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
@@ -157,7 +302,6 @@ gap> Unbind(B);
 gap> Unbind(F);
 gap> Unbind(J);
 gap> Unbind(L);
-gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(rho);
 gap> Unbind(V);
@@ -169,6 +313,8 @@ gap> Unbind(H1);
 gap> Unbind(iso);
 gap> Unbind(y);
 gap> Unbind(x);
+gap> Unbind(s);
+gap> Unbind(empty_map);
 
 #E#
 gap> STOP_TEST( "Semigroups package: semipperm.tst");

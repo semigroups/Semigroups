@@ -219,9 +219,10 @@ gap> Size(I);
 gap> NrDClasses(I);
 4
 gap> GreensDClasses(I);
-[ {Transformation( [ 3, 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 2, 2, 4 ] )}
-    , {Transformation( [ 4, 5, 2, 4, 4 ] )}, 
-  {Transformation( [ 2, 2, 2, 2, 2 ] )} ]
+[ <Green's D-class: Transformation( [ 3, 4, 1, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 4, 2, 2, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 4, 5, 2, 4, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 2, 2, 2, 2 ] )> ]
 
 #T# IdealsTest3
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), 
@@ -255,13 +256,13 @@ gap> s := Semigroup(gens);
 gap> I := SemigroupIdeal(s, [gens[1]^2, gens[2]]);
 <non-regular partial perm semigroup ideal on 10 pts with 2 generators>
 gap> R := GreensRClassOfElement(I, gens[1]^2);
-{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+<Green's R-class: [1,3,9][4,7][10,8](2)(6)>
 gap> DClassOfRClass(R);
-{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+<Green's D-class: [1,3,9][4,7][10,8](2)(6)>
 gap> L := GreensLClassOfElement(I, gens[1]^2);
-{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+<Green's L-class: [1,3,9][4,7][10,8](2)(6)>
 gap> DClassOfLClass(L);
-{PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 3, 2, 9, 7, 6, 8 ] )}
+<Green's D-class: [1,3,9][4,7][10,8](2)(6)>
 
 #T# IdealsTest6: \in for an inverse op semigroup ideal
 gap> S:=InverseSemigroup(
@@ -300,7 +301,7 @@ function( x, y ) ... end
 gap> Length(MaximalDClasses(I)); 
 265
 gap> MaximalDClasses(J);
-[ {Transformation( [ 1, 5, 3, 5, 5, 5 ] )} ]
+[ <Green's D-class: Transformation( [ 1, 5, 3, 5, 5, 5 ] )> ]
 gap> StructureDescriptionSchutzenbergerGroups(I);
 [ "1", "C2", "S3" ]
 gap> StructureDescriptionSchutzenbergerGroups(J);
@@ -345,9 +346,9 @@ gap> MinimalIdeal(J);
 gap> last=last2;
 true
 gap> MinimalDClass(I);
-{Transformation( [ 5, 5, 5, 5, 5, 5 ] )}
+<Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )>
 gap> MinimalDClass(J);
-{Transformation( [ 5, 5, 5, 5, 5, 5 ] )}
+<Green's D-class: Transformation( [ 5, 5, 5, 5, 5, 5 ] )>
 
 #T# IdealsTest8: attributes
 gap> S:=InverseSemigroup(
@@ -364,7 +365,7 @@ gap> S:=InverseSemigroup(
 gap> K:=SemigroupIdeal(S, S.1*S.2^2*S.8);
 <inverse partial perm semigroup ideal on 10 pts with 1 generator>
 gap> MaximalDClasses(K);
-[ {PartialPerm( [ 3, 6, 9 ], [ 3, 6, 9 ] )} ]
+[ <Green's D-class: <identity partial perm on [ 3, 6, 9 ]>> ]
 gap> StructureDescriptionMaximalSubgroups(K);
 [ "1", "C2", "S3" ]
 gap> StructureDescriptionSchutzenbergerGroups(K);
@@ -388,7 +389,7 @@ fail
 gap> MinimalIdeal(K);
 <partial perm group on 10 pts with 1 generator>
 gap> MinimalDClass(K);
-{PartialPerm( [  ], [  ] )}
+<Green's D-class: <empty partial perm>>
 gap> I:=MinimalIdeal(K);
 <partial perm group on 10 pts with 1 generator>
 gap> IsomorphismPermGroup(I);
@@ -407,7 +408,7 @@ gap> Length(MaximalDClasses(L));
 gap> L=S;
 true
 gap> MaximalDClasses(L);
-[ {IdentityTransformation} ]
+[ <Green's D-class: IdentityTransformation> ]
 gap> StructureDescriptionSchutzenbergerGroups(L);
 [ "1", "C2", "C4", "C5", "S3", "S4" ]
 gap> StructureDescriptionMaximalSubgroups(L);
@@ -433,9 +434,9 @@ gap> MinimalIdeal(J);
 gap> MinimalIdeal(L);
 <simple transformation semigroup ideal on 8 pts with 1 generator>
 gap> MinimalDClass(L);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )}
+<Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> MinimalDClass(S);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )}
+<Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 
 #T# IdealsTest10
 gap> R:=Semigroup( [
@@ -497,11 +498,11 @@ fail
 gap> MinimalIdeal(M);
 <simple bipartition semigroup ideal on 7 pts with 1 generator>
 gap> MinimalDClass(M);
-{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], 
- [ -6 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, 6, 7 ], [ -1 ], 
+  [ -2, -4, -7 ], [ -3, -5 ], [ -6 ]>>
 gap> MinimalDClass(R);
-{Bipartition( [ [ 1, 2, 3, 4, 5, 6, 7 ], [ -1, -2, -3, -4, -5, -7 ], 
- [ -6 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, 6, 7 ], 
+  [ -1, -2, -3, -4, -5, -7 ], [ -6 ]>>
 
 #T# IdealsTest11: greens.gi for ideals
 gap> S:=Semigroup([ Transformation( [ 1, 2, 6, 6, 5, 5 ] ), 
@@ -590,39 +591,41 @@ gap> ideals:=[A,B,C,I,J,K,L];;
 
 #T# IdealsTest12: GreensXClasses
 gap> GreensDClasses(I);
-[ {Transformation( [ 4, 5, 2, 1, 6, 5 ] )}, 
-  {Transformation( [ 5, 2, 6, 2, 1, 4 ] )}, 
-  {Transformation( [ 3, 4, 6, 3, 2, 1 ] )}, 
-  {Transformation( [ 1, 6, 5, 4, 5, 6 ] )}, 
-  {Transformation( [ 2, 2, 3, 2, 2, 1 ] )}, 
-  {Transformation( [ 2, 2, 2, 2, 6, 2 ] )}, 
-  {Transformation( [ 5, 5, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 2, 6, 5, 6, 4, 1 ] )}, 
-  {Transformation( [ 6, 5, 2, 5, 1, 4 ] )}, 
-  {Transformation( [ 5, 2, 6, 2, 4, 1 ] )}, 
-  {Transformation( [ 2, 6, 5, 6, 1, 4 ] )}, 
-  {Transformation( [ 6, 5, 2, 5, 4, 1 ] )}, 
-  {Transformation( [ 4, 6, 3, 6, 1, 2 ] )}, 
-  {Transformation( [ 6, 3, 4, 3, 2, 1 ] )}, 
-  {Transformation( [ 3, 4, 6, 4, 1, 2 ] )}, 
-  {Transformation( [ 4, 6, 3, 6, 2, 1 ] )}, 
-  {Transformation( [ 6, 3, 4, 3, 1, 2 ] )}, 
-  {Transformation( [ 3, 4, 6, 4, 2, 1 ] )}, {Transformation( [ 2, 4, 1, 2 ] )}
-    , {Transformation( [ 4, 1, 2, 1, 6, 5 ] )}, 
-  {Transformation( [ 1, 2, 4, 2 ] )}, {Transformation( [ 2, 4, 1, 4, 6, 5 ] )}
-    , {Transformation( [ 4, 1, 2, 1 ] )}, 
-  {Transformation( [ 1, 2, 4, 2, 6, 5 ] )}, 
-  {Transformation( [ 2, 4, 1, 4 ] )} ]
+[ <Green's D-class: Transformation( [ 4, 5, 2, 1, 6, 5 ] )>, 
+  <Green's D-class: Transformation( [ 5, 2, 6, 2, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 3, 4, 6, 3, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 1, 6, 5, 4, 5, 6 ] )>, 
+  <Green's D-class: Transformation( [ 2, 2, 3, 2, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 2, 2, 2, 2, 6, 2 ] )>, 
+  <Green's D-class: Transformation( [ 5, 5, 5, 5, 5, 5 ] )>, 
+  <Green's D-class: Transformation( [ 2, 6, 5, 6, 4, 1 ] )>, 
+  <Green's D-class: Transformation( [ 6, 5, 2, 5, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 5, 2, 6, 2, 4, 1 ] )>, 
+  <Green's D-class: Transformation( [ 2, 6, 5, 6, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 6, 5, 2, 5, 4, 1 ] )>, 
+  <Green's D-class: Transformation( [ 4, 6, 3, 6, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 6, 3, 4, 3, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 3, 4, 6, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 6, 3, 6, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 6, 3, 4, 3, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 3, 4, 6, 4, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 1, 2, 1, 6, 5 ] )>, 
+  <Green's D-class: Transformation( [ 1, 2, 4, 2 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 1, 4, 6, 5 ] )>, 
+  <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 1, 2, 4, 2, 6, 5 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 1, 4 ] )> ]
 gap> Number(GreensDClasses(I), IsRegularClass);
 4
 gap> I:=SemigroupIdeal(S, gensI);;
 gap> NrRegularDClasses(I);
 4
 gap> GreensDClasses(J);
-[ {Transformation( [ 1, 2, 6, 6, 5, 5 ] )}, 
-  {Transformation( [ 1, 2, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 6, 5, 5, 6, 5, 5 ] )}, 
-  {Transformation( [ 6, 6, 6, 6, 6, 6 ] )} ]
+[ <Green's D-class: Transformation( [ 1, 2, 6, 6, 5, 5 ] )>, 
+  <Green's D-class: Transformation( [ 1, 2, 5, 5, 5, 5 ] )>, 
+  <Green's D-class: Transformation( [ 6, 5, 5, 6, 5, 5 ] )>, 
+  <Green's D-class: Transformation( [ 6, 6, 6, 6, 6, 6 ] )> ]
 gap> Number(GreensDClasses(J), IsRegularClass);
 4
 gap> J:=SemigroupIdeal(S, gensJ);;
@@ -640,16 +643,16 @@ gap> Size(GreensHClasses(I));
 gap> Size(GreensLClasses(I));
 75
 gap> GreensLClasses(I){[51..60]};
-[ {Transformation( [ 3, 3, 3, 3, 5, 3 ] )}, 
-  {Transformation( [ 5, 5, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 6, 6, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 1, 1, 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 2, 2, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 3, 3, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 4, 4, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 2, 6, 5, 6, 4, 1 ] )}, 
-  {Transformation( [ 6, 5, 2, 5, 1, 4 ] )}, 
-  {Transformation( [ 5, 2, 6, 2, 4, 1 ] )} ]
+[ <Green's L-class: Transformation( [ 3, 3, 3, 3, 5, 3 ] )>, 
+  <Green's L-class: Transformation( [ 5, 5, 5, 5, 5, 5 ] )>, 
+  <Green's L-class: Transformation( [ 6, 6, 6, 6, 6, 6 ] )>, 
+  <Green's L-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )>, 
+  <Green's L-class: Transformation( [ 2, 2, 2, 2, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 3, 3, 3, 3, 3, 3 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 4, 4, 4, 4 ] )>, 
+  <Green's L-class: Transformation( [ 2, 6, 5, 6, 4, 1 ] )>, 
+  <Green's L-class: Transformation( [ 6, 5, 2, 5, 1, 4 ] )>, 
+  <Green's L-class: Transformation( [ 5, 2, 6, 2, 4, 1 ] )> ]
 gap> Size(GreensRClasses(I));
 156
 gap> Size(GreensHClasses(J));
@@ -659,22 +662,19 @@ gap> Size(GreensLClasses(J));
 gap> Size(GreensRClasses(J));
 135
 gap> GreensRClasses(J){[97..103]};
-[ {Transformation( [ 1, 5, 1, 5, 5, 2 ] )}, 
-  {Transformation( [ 5, 1, 5, 1, 5, 2 ] )}, 
-  {Transformation( [ 5, 2, 1, 1, 1, 2 ] )}, 
-  {Transformation( [ 1, 2, 1, 5, 5, 1 ] )}, 
-  {Transformation( [ 1, 5, 2, 5, 5, 1 ] )}, 
-  {Transformation( [ 5, 2, 5, 5, 2, 1 ] )}, 
-  {Transformation( [ 5, 2, 1, 2, 1, 5 ] )} ]
+[ <Green's R-class: Transformation( [ 1, 5, 1, 5, 5, 2 ] )>, 
+  <Green's R-class: Transformation( [ 5, 1, 5, 1, 5, 2 ] )>, 
+  <Green's R-class: Transformation( [ 5, 2, 1, 1, 1, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 2, 1, 5, 5, 1 ] )>, 
+  <Green's R-class: Transformation( [ 1, 5, 2, 5, 5, 1 ] )>, 
+  <Green's R-class: Transformation( [ 5, 2, 5, 5, 2, 1 ] )>, 
+  <Green's R-class: Transformation( [ 5, 2, 1, 2, 1, 5 ] )> ]
 gap> Size(GreensHClasses(K));
 1555
 gap> GreensHClasses(K){[1337..1342]};
-[ {PartialPerm( [ 1, 2, 3, 4 ], [ 3, 6, 5, 2 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 4 ], [ 5, 6, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 4 ], [ 2, 6, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 4 ], [ 5, 6, 3, 2 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 4 ], [ 2, 6, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 4 ], [ 3, 6, 2, 5 ] )} ]
+[ <Green's H-class: [1,3,5][4,2,6]>, <Green's H-class: [1,5][4,3,2,6]>, 
+  <Green's H-class: [1,2,6][4,5](3)>, <Green's H-class: [1,5][4,2,6](3)>, 
+  <Green's H-class: [1,2,6][4,3,5]>, <Green's H-class: [1,3,2,6][4,5]> ]
 gap> Size(GreensLClasses(K));
 917
 gap> Size(GreensRClasses(K));
@@ -701,21 +701,21 @@ gap> LClassReps(L){[10..20]};
 
 #T# IdealsTest14: GreensXClassOfElement
 gap> GreensDClassOfElement(I, Transformation( [ 2, 2, 6, 2, 5, 5 ] ));
-{Transformation( [ 3, 3, 2, 3, 3, 1 ] )}
+<Green's D-class: Transformation( [ 3, 3, 2, 3, 3, 1 ] )>
 gap> GreensDClassOfElement(J, Transformation( [ 6, 6, 4, 2, 4, 2 ] ));
-{Transformation( [ 2, 1, 5, 5, 5, 5 ] )}
+<Green's D-class: Transformation( [ 2, 1, 5, 5, 5, 5 ] )>
 gap> GreensDClassOfElement(K, PartialPerm( [ 1, 4, 5, 6 ], [ 6, 2, 1, 3 ] ));
-{PartialPerm( [ 1, 4, 5, 6 ], [ 6, 2, 1, 3 ] )}
+<Green's D-class: [4,2][5,1,6,3]>
 gap> GreensHClassOfElement(L, Bipartition( [ [ 1, 3, 4, 6, -3 ], 
 >   [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], [ -5 ], [ -6 ] ] ));
-{Bipartition( [ [ 1, 3, 4, 6, -3 ], [ 2, 5, 7 ], [ -1 ], [ -2, -4, -7 ], 
- [ -5 ], [ -6 ] ] )}
+<Green's H-class: <bipartition: [ 1, 3, 4, 6, -3 ], [ 2, 5, 7 ], [ -1 ], 
+  [ -2, -4, -7 ], [ -5 ], [ -6 ]>>
 gap> GreensLClassOfElement(A, Transformation( [ 6, 3, 4, 4, 3, 2 ] ));
-{Transformation( [ 6, 3, 4, 4, 3, 2 ] )}
+<Green's L-class: Transformation( [ 6, 3, 4, 4, 3, 2 ] )>
 gap> GreensRClassOfElement(B, Transformation( [ 3, 4, 6, 6, 4, 2 ] ));
-{Transformation( [ 3, 4, 6, 6, 4, 2 ] )}
+<Green's R-class: Transformation( [ 3, 4, 6, 6, 4, 2 ] )>
 gap> GreensHClassOfElement(C, Transformation( [ 2, 2, 5, 2, 2, 1 ] ));
-{Transformation( [ 2, 2, 5, 2, 2, 1 ] )}
+<Green's H-class: Transformation( [ 2, 2, 5, 2, 2, 1 ] )>
 
 #T# IdealsTest15: NrXClasses (Recreate objects)
 gap> I:=SemigroupIdeal(S, gensI);;

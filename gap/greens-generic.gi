@@ -14,7 +14,7 @@
 #############################################################################
 ## This file contains methods for Green's classes etc for arbitrary finite
 ## semigroups.
-## 
+##
 ## It is organized as follows:
 ##
 ##   1. Helper functions for the creation of Green's classes, and lambda-rho
@@ -23,7 +23,7 @@
 ##   2. Technical Green's stuff (types, representative, etc)
 ##
 ##   3. Green's relations
-## 
+##
 ##   4. Individual Green's classes, and equivalence classes of Green's
 ##      relations (constructors, size, membership)
 ##
@@ -63,7 +63,8 @@ function(rel, rep, type)
 
   pos := Position(GenericSemigroupData(Source(rel)), rep);
   if pos = fail then
-    Error("usage: the element in the 2nd argument does not belong to the ",
+    Error("Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,\n",
+          "the element in the 2nd argument does not belong to the ",
           "semigroup,");
     return;
   fi;
@@ -155,8 +156,8 @@ end);
 BindGlobal("SEMIGROUPS_XClassIndex",
 function(C)
   local pos;
-  if not IsBound(C!.index) then 
-    # in case of classes created using EquivalenceClassOfElementNC 
+  if not IsBound(C!.index) then
+    # in case of classes created using EquivalenceClassOfElementNC
     pos := Position(GenericSemigroupData(Parent(C)), Representative(C));
     C!.index := EquivalenceClassRelation(C)!.data.id[pos];
   fi;
@@ -177,7 +178,8 @@ InstallMethod(AsSSortedList, "for a Green's class",
 InstallMethod(Size, "for a generic semigroup Green's class",
 [IsGreensClass],
 function(C)
-  return Length(EquivalenceClassRelation(C)!.data.comps[SEMIGROUPS_XClassIndex(C)]);
+  return Length(EquivalenceClassRelation(C)!.
+                data.comps[SEMIGROUPS_XClassIndex(C)]);
 end);
 
 InstallMethod(\in,
@@ -186,7 +188,8 @@ InstallMethod(\in,
 function(x, C)
   local pos;
   pos := Position(GenericSemigroupData(Parent(C)), x);
-  return pos <> fail and EquivalenceClassRelation(C)!.data.id[pos] = SEMIGROUPS_XClassIndex(C);
+  return pos <> fail
+    and EquivalenceClassRelation(C)!.data.id[pos] = SEMIGROUPS_XClassIndex(C);
 end);
 
 #JDM: is this necessary? I.e. is there a similar method in the library?
@@ -209,9 +212,9 @@ InstallMethod(\<, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
   if   (IsGreensRClass(x) and IsGreensRClass(y))
-    or (IsGreensLClass(x) and IsGreensLClass(y))
-    or (IsGreensDClass(x) and IsGreensDClass(y))
-    or (IsGreensHClass(x) and IsGreensHClass(y)) then
+      or (IsGreensLClass(x) and IsGreensLClass(y))
+      or (IsGreensDClass(x) and IsGreensDClass(y))
+      or (IsGreensHClass(x) and IsGreensHClass(y)) then
     return Parent(x) = Parent(y)
            and Representative(x) < Representative(y)
            and (not Representative(x) in y);
@@ -243,29 +246,33 @@ end);
 InstallMethod(DClassType, "for a generic semigroup",
 [IsSemigroup],
 function(S)
-  return NewType( FamilyObj(S), IsEquivalenceClass and
-          IsEquivalenceClassDefaultRep and IsGreensDClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensDClass);
 end);
 
 InstallMethod(HClassType, "for a generic semigroup",
 [IsSemigroup],
 function(S)
- return NewType( FamilyObj(S), IsEquivalenceClass and
-  IsEquivalenceClassDefaultRep and IsGreensHClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensHClass);
 end);
 
 InstallMethod(LClassType, "for a generic semigroup",
 [IsSemigroup],
 function(S)
-  return NewType( FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensLClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensLClass);
 end);
 
 InstallMethod(RClassType, "for a generic semigroup",
 [IsSemigroup],
 function(S)
-  return NewType( FamilyObj(S), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensRClass);
+  return NewType(FamilyObj(S), IsEquivalenceClass
+                               and IsEquivalenceClassDefaultRep
+                               and IsGreensRClass);
 end);
 
 #############################################################################
@@ -277,7 +284,7 @@ end);
 InstallMethod(GreensRRelation, "for a generic semigroup",
 [IsSemigroup],
 function(S)
-  local fam, rel, data;
+  local fam, rel;
 
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
@@ -307,10 +314,10 @@ end);
 InstallMethod(GreensLRelation, "for a generic semigroup",
 [IsSemigroup],
 function(S)
-  local fam, rel, data;
+  local fam, rel;
 
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
-          ElementsFamily(FamilyObj(S)));
+                               ElementsFamily(FamilyObj(S)));
 
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
@@ -325,7 +332,6 @@ function(S)
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
   if not IsActingSemigroup(S) then
-    data := Enumerate(GenericSemigroupData(S));
     rel!.data := SEMIGROUPS_GABOW_SCC(LeftCayleyGraphSemigroup(S));
   fi;
   return rel;
@@ -348,9 +354,9 @@ function(S)
 
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
-                             and IsEquivalenceRelationDefaultRep
-                             and IsGreensDRelation),
-                           rec());
+                           and IsEquivalenceRelationDefaultRep
+                           and IsGreensDRelation),
+                   rec());
   SetSource(rel, S);
   SetRange(rel, S);
 
@@ -386,7 +392,8 @@ function(S)
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
   if not IsActingSemigroup(S) then
-    rel!.data:=FIND_HCLASSES(GreensRRelation(S)!.data, GreensLRelation(S)!.data);
+    rel!.data := FIND_HCLASSES(GreensRRelation(S)!.data,
+                               GreensLRelation(S)!.data);
   fi;
   return rel;
 end);
@@ -395,13 +402,21 @@ end);
 ## 4. Individual classes . . .
 #############################################################################
 
+InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
+InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
+InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
+InstallMethod(LClass, "for an H-class", [IsGreensHClass], LClassOfHClass);
+InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
+
 InstallMethod(Enumerator, "for a generic semigroup Green's class",
 [IsGreensClass],
 function(C)
-  local data, rel, pos;
+  local data, rel;
   data := Enumerate(GenericSemigroupData(Parent(C)));
   rel := EquivalenceClassRelation(C);
-  return ELEMENTS_SEMIGROUP(data, infinity){rel!.data.comps[SEMIGROUPS_XClassIndex(C)]};
+  # gaplint: ignore 2
+  return ELEMENTS_SEMIGROUP(data, infinity){
+    rel!.data.comps[SEMIGROUPS_XClassIndex(C)]};
 end);
 
 InstallMethod(EquivalenceClassOfElement,
@@ -503,35 +518,35 @@ InstallMethod(GreensJClassOfElementNC,
 # Green's class of a Green's class (coarser from finer)
 
 InstallMethod(DClassOfRClass, "for an R-class of a semigroup",
-[IsGreensRClass], 
+[IsGreensRClass],
 function(R)
   return EquivalenceClassOfElement(GreensDRelation(Parent(R)),
                                    Representative(R));
 end);
 
 InstallMethod(DClassOfLClass, "for an L-class of a semigroup",
-[IsGreensLClass], 
+[IsGreensLClass],
 function(L)
   return EquivalenceClassOfElement(GreensDRelation(Parent(L)),
                                    Representative(L));
 end);
 
 InstallMethod(DClassOfHClass, "for an H-class of a semigroup",
-[IsGreensHClass], 
+[IsGreensHClass],
 function(H)
   return EquivalenceClassOfElement(GreensDRelation(Parent(H)),
                                    Representative(H));
 end);
 
 InstallMethod(RClassOfHClass, "for an H-class of a semigroup",
-[IsGreensHClass], 
+[IsGreensHClass],
 function(H)
   return EquivalenceClassOfElement(GreensRRelation(Parent(H)),
                                    Representative(H));
 end);
 
 InstallMethod(LClassOfHClass, "for an H-class of a semigroup",
-[IsGreensHClass], 
+[IsGreensHClass],
 function(H)
   return EquivalenceClassOfElement(GreensLRelation(Parent(H)),
                                    Representative(H));
@@ -656,7 +671,8 @@ function(C)
     return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation,
                                             GreensHClassOfElement);
   fi;
-  Error("usage: the argument should be a Green's R-, L-, or D-class,");
+  Error("Semigroups: GreensHClasses (for a generic semigroup Green's class):"
+        " usage,\nthe argument should be a Green's R-, L-, or D-class,");
   return;
 end);
 
@@ -685,12 +701,12 @@ InstallMethod(HClassReps, "for a Green's class (Semigroups)",
 
 ## Partial order of D-classes
 
-InstallMethod(PartialOrderOfDClasses, "for a generic semigroup", 
+InstallMethod(PartialOrderOfDClasses, "for a generic semigroup",
 [IsSemigroup and IsFinite],
 function(S)
   local comps, id, right_id, left_id, right_comps, left_comps, right, left,
    genstoapply, out, seen, i, j, k, l;
-  
+
   comps := GreensDRelation(S)!.data.comps;
   id := GreensDRelation(S)!.data.id;
   right_id := GreensRRelation(S)!.data.id;
@@ -699,10 +715,10 @@ function(S)
   left_comps := GreensLRelation(S)!.data.comps;
   right := RightCayleyGraphSemigroup(S);
   left := LeftCayleyGraphSemigroup(S);
-  
+
   genstoapply := [1 .. Length(right[1])];
   out := [];
-  
+
   for i in [1 .. Length(comps)] do # loop over D-classes
     out[i] := [];
     seen := BlistList([1 .. Maximum(left_id)], []);
@@ -710,7 +726,7 @@ function(S)
       if not seen[left_id[j]] then
         seen[left_id[j]] := true;
         for k in left_comps[left_id[j]] do
-          for l in genstoapply do 
+          for l in genstoapply do
             AddSet(out[i], id[right[k][l]]);
           od;
         od;
@@ -721,7 +737,7 @@ function(S)
       if not seen[right_id[j]] then
         seen[right_id[j]] := true;
         for k in right_comps[right_id[j]] do
-          for l in genstoapply do 
+          for l in genstoapply do
             AddSet(out[i], id[left[k][l]]);
           od;
         od;
@@ -742,14 +758,14 @@ InstallMethod(NrIdempotents, "for a Green's class",
 [IsGreensClass], C -> Length(Idempotents(C)));
 
 InstallMethod(Idempotents, "for a Green's class",
-[IsGreensClass], 
+[IsGreensClass],
 function(C)
-  local data, rel, pos, positions, idempotents, x;
+  local data, rel, positions, idempotents, x;
 
   data := Enumerate(GenericSemigroupData(Parent(C)));
   rel := EquivalenceClassRelation(C);
-  
-  if IsBound(data!.idempotents) then 
+
+  if IsBound(data!.idempotents) then
     positions := Intersection(rel!.data.comps[SEMIGROUPS_XClassIndex(C)],
                               data!.idempotents);
     return ELEMENTS_SEMIGROUP(data, infinity){positions};
@@ -757,10 +773,10 @@ function(C)
 
   idempotents := [];
 
-  for x in C do 
-    if IsIdempotent(x) then 
+  for x in C do
+    if IsIdempotent(x) then
       Add(idempotents, x);
-      if IsGreensHClass(C) then 
+      if IsGreensHClass(C) then
         break;
       fi;
     fi;
@@ -801,25 +817,25 @@ InstallMethod(ViewString, "for a Green's class",
 [IsGreensClass],
 function(C)
   local str;
-  
+
   str := "\><";
   Append(str, "\>Green's\< ");
 
-  if IsGreensDClass(C) then 
+  if IsGreensDClass(C) then
     Append(str, "D");
-  elif IsGreensRClass(C) then 
+  elif IsGreensRClass(C) then
     Append(str, "R");
-  elif IsGreensLClass(C) then 
+  elif IsGreensLClass(C) then
     Append(str, "L");
-  elif IsGreensHClass(C) then 
+  elif IsGreensHClass(C) then
     Append(str, "H");
-  elif IsGreensJClass(C) then 
+  elif IsGreensJClass(C) then
     Append(str, "J");
   fi;
   Append(str, "-class: ");
   Append(str, ViewString(Representative(C)));
   Append(str, ">\<");
-  
+
   return str;
 end);
 
@@ -827,40 +843,40 @@ InstallMethod(ViewString, "for a Green's relation",
 [IsGreensRelation], 2, # to beat the method for congruences
 function(rel)
   local str;
-  
+
   str := "\><";
   Append(str, "\>Green's\< ");
 
-  if IsGreensDRelation(rel) then 
+  if IsGreensDRelation(rel) then
     Append(str, "D");
-  elif IsGreensRRelation(rel) then 
+  elif IsGreensRRelation(rel) then
     Append(str, "R");
-  elif IsGreensLRelation(rel) then 
+  elif IsGreensLRelation(rel) then
     Append(str, "L");
-  elif IsGreensHRelation(rel) then 
+  elif IsGreensHRelation(rel) then
     Append(str, "H");
-  elif IsGreensJRelation(rel) then 
+  elif IsGreensJRelation(rel) then
     Append(str, "J");
   fi;
   Append(str, "-relation of ");
   Append(str, ViewString(Source(rel)));
   Append(str, ">\<");
-  
+
   return str;
 end);
 
 # TODO: remove/improve the library method for congruences, so that this is
 # obsolete.
 
-InstallMethod(ViewObj, "for a Green's relation", 
+InstallMethod(ViewObj, "for a Green's relation",
 [IsGreensRelation], 2, # to beat the method for congruences
-function(rel) 
+function(rel)
   Print(ViewString(rel));
   return;
 end);
 
 InstallMethod(PrintObj, "for a Green's class",
-[IsGreensClass], 
+[IsGreensClass],
 function(C)
   Print(PrintString(C));
   return;
@@ -877,48 +893,48 @@ InstallMethod(PrintString, "for a Green's class",
 [IsGreensClass],
 function(C)
   local str;
-  
+
   str := "\>\>\>Greens";
-  if IsGreensDClass(C) then 
+  if IsGreensDClass(C) then
     Append(str, "D");
-  elif IsGreensRClass(C) then 
+  elif IsGreensRClass(C) then
     Append(str, "R");
-  elif IsGreensLClass(C) then 
+  elif IsGreensLClass(C) then
     Append(str, "L");
-  elif IsGreensHClass(C) then 
+  elif IsGreensHClass(C) then
     Append(str, "H");
-  elif IsGreensJClass(C) then 
+  elif IsGreensJClass(C) then
     Append(str, "J");
   fi;
-  Append(str, "ClassOfElement\<(\n\>");
+  Append(str, "ClassOfElement\<(\>");
   Append(str, PrintString(Parent(C)));
   Append(str, ",\< \>");
   Append(str, PrintString(Representative(C)));
   Append(str, "\<)\<\<");
-  
+
   return str;
 end);
 
 InstallMethod(PrintString, "for a Green's relation",
-[IsGreensRelation], 2, 
+[IsGreensRelation], 2,
 function(rel)
   local str;
-  
+
   str := "\>\>\>Greens";
-  if IsGreensDRelation(rel) then 
+  if IsGreensDRelation(rel) then
     Append(str, "D");
-  elif IsGreensRRelation(rel) then 
+  elif IsGreensRRelation(rel) then
     Append(str, "R");
-  elif IsGreensLRelation(rel) then 
+  elif IsGreensLRelation(rel) then
     Append(str, "L");
-  elif IsGreensHRelation(rel) then 
+  elif IsGreensHRelation(rel) then
     Append(str, "H");
-  elif IsGreensJRelation(rel) then 
+  elif IsGreensJRelation(rel) then
     Append(str, "J");
   fi;
   Append(str, "Relation\<(\>\n");
   Append(str, PrintString(Source(rel)));
   Append(str, "\<)\<\<");
-  
+
   return str;
 end);

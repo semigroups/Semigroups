@@ -171,7 +171,7 @@ gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or IsLTrivial(d);
 gap> d;
-{Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )}
+<Green's D-class: Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )>
 gap> IsLTrivial(d);
 true
 gap> IsRTrivial(d);
@@ -647,6 +647,7 @@ gap> IsEUnitaryInverseSemigroup(s);
 false
 
 #T# PropertiesTest53
+
 #gap> gens := [ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 #>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 #>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -756,6 +757,7 @@ gap> Size(t);
 105
 
 #T# PropertiesTest54
+
 #gap> gens := [ [ [ 2 ], [ 1 ], [ 4 ], [ 2 ], [ 3, 4 ] ], 
 #>  [ [ 2, 3 ], [ 1, 2, 3, 4 ], [ 1 ], [ 1, 2, 4 ], [ 5 ] ], 
 #>  [ [ 3 ], [ 1, 4 ], [ 1, 2, 3 ], [ 1, 3, 4 ], [ 2, 4, 5 ] ] ];;

@@ -149,7 +149,7 @@ function(coll)
   local gens, nrgens, deg, out, redund, i, x;
 
   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll))
-       or (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
+      or (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
 
@@ -417,7 +417,7 @@ function(S)
 end);
 
 InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
-x -> GreensDClassOfElementNC(x, RepresentativeOfMinimalIdeal(x)));
+S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 
 #############################################################################
 ## 2. Methods for attributes where there are known better methods for acting
@@ -502,19 +502,6 @@ end);
 
 InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite], S -> Semigroup(Idempotents(S)));
-
-# same method for ideals
-
-InstallMethod(RepresentativeOfMinimalIdeal, "for a finite semigroup",
-[IsSemigroup and IsFinite],
-function(S)
-  local data, comps;
-  data := Enumerate(GenericSemigroupData(S));
-  comps := GreensRRelation(S)!.data.comps;
-  return ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]];
-  # the first component (i.e. the inner most) of the strongly connected
-  # components of the right Cayley graph corresponds the minimal ideal.
-end);
 
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
@@ -616,6 +603,48 @@ function(S)
     fi;
   od;
   return fail;
+end);
+
+# same method for inverse/ideals
+
+InstallMethod(RepresentativeOfMinimalIdeal, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local data, comps;
+  if IsSemigroupIdeal(S) and
+      (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
+       or not HasGeneratorsOfSemigroup(S)) then
+    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
+  fi;
+
+  # This catches known trivial semigroups
+  # WW: The idea is to quickly get at an arbitrary element of the semigroup
+  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+    return Representative(S);
+  fi;
+
+  data := Enumerate(GenericSemigroupData(S));
+  comps := GreensRRelation(S)!.data.comps;
+  return ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]];
+  # the first component (i.e. the inner most) of the strongly connected
+  # components of the right Cayley graph corresponds the minimal ideal.
+end);
+
+# different method for ideals
+
+InstallMethod(IsomorphismTransformationSemigroup,
+"for a matrix semigroup with generators",
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, F, T;
+  n := Length(GeneratorsOfSemigroup(S)[1][1]);
+  F := FieldOfMatrixList(GeneratorsOfSemigroup(S));
+  T := Semigroup(List(GeneratorsOfSemigroup(S),
+                      x -> TransformationOp(x, Elements(F ^ n), OnRight)));
+  return MappingByFunction(S, T,
+                           x -> TransformationOp(x,
+                                                 Elements(F ^ Size(F)),
+                                                 OnRight));
 end);
 
 # fall back method, same method for ideals

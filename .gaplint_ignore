@@ -3,3 +3,6 @@ SEMIGROUPS_
 OneMutable
 NrBlocks
 NrLeftBlocks
+MonoidByGenerators
+SemigroupByGenerators
+InverseOp

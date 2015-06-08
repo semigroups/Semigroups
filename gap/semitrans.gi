@@ -11,7 +11,6 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
-
 # different method required (but not yet given!!) for ideals
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
@@ -42,23 +41,22 @@ function(R)
   scc := OrbSCC(o)[m];
   base := DuplicateFreeList(ImageListOfTransformation(rep, n));
   S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  out := [IteratorByIterator(
-    IteratorSortedConjugateStabChain(S, ()), p -> rep * p,
-    [IsIteratorSorted])];
+  out := [IteratorByIterator(IteratorSortedConjugateStabChain(S, ()),
+                             p -> rep * p, [IsIteratorSorted])];
 
   for i in [2 .. Length(scc)] do
     x := rep * EvaluateWord(o!.gens,
-     TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+                            TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     image := ImageListOfTransformation(x, n);
     basei := DuplicateFreeList(image);
     iter := IteratorSortedConjugateStabChain(S,
-     MappingPermListList(base, basei));
+                                             MappingPermListList(base, basei));
     out[i] := IteratorByIterator(iter,
-      function(iter, p)
-        return iter!.rep * p;
-      end,
-      [IsIteratorSorted], ReturnTrue,
-      rec(rep := Transformation(image)));
+                                 function(iter, p)
+                                   return iter!.rep * p;
+                                 end,
+                                 [IsIteratorSorted], ReturnTrue,
+                                 rec(rep := Transformation(image)));
   od;
   return CallFuncList(IteratorSortedOp, out);
 end);
@@ -158,14 +156,12 @@ end);
 
 #
 
-InstallMethod(SmallestElementRClass, "for an R-class",
-[IsGreensRClass],
+BindGlobal("SEMIGROUPS_SmallestElementRClass",
 function(R)
   return SEMIGROUPS_ElementRClass(R, false);
 end);
 
-InstallMethod(LargestElementRClass, "for an R-class",
-[IsGreensRClass],
+BindGlobal("SEMIGROUPS_LargestElementRClass",
 function(R)
   return SEMIGROUPS_ElementRClass(R, true);
 end);
@@ -183,7 +179,7 @@ function(S)
     return ConstantTransformation(n, 1);
   fi;
 
-  return Minimum(List(RClasses(S), SmallestElementRClass));
+  return Minimum(List(RClasses(S), SEMIGROUPS_SmallestElementRClass));
 end);
 
 InstallMethod(LargestElementSemigroup, "for a transformation semigroup",
@@ -197,7 +193,7 @@ function(S)
     return ConstantTransformation(n, n);
   fi;
 
-  return Maximum(List(RClasses(S), LargestElementRClass));
+  return Maximum(List(RClasses(S), SEMIGROUPS_LargestElementRClass));
 end);
 
 # different method required (but not yet given!! JDM) for ideals
@@ -252,14 +248,14 @@ InstallMethod(IsTransitive,
 function(coll, set)
   local n, nrgens, graph, lookup, j, i, x;
 
-  if not (IsSSortedList(set) and IsHomogeneousList(set) and IsPosInt(set[1]))
-   then
+  if not (IsSSortedList(set) and IsHomogeneousList(set)
+          and IsPosInt(set[1])) then
     Error("Semigroups: IsTransitive: usage,\n",
           "the second argument <set> must be a set of positive ",
           "integers");
     return;
   fi;
-  
+
   n := Length(set);
   nrgens := Length(coll);
   graph := EmptyPlist(n);
@@ -289,7 +285,7 @@ InstallMethod(Size, "for a monogenic transformation semigroup",
 function(S)
   local ind;
   # FIXME this must be wrong what if <S> is monogenic but is defined by more
-  # than one generator? 
+  # than one generator?
   ind := IndexPeriodOfTransformation(GeneratorsOfSemigroup(S)[1]);
   if ind[1] > 0 then
     return Sum(ind) - 1;
@@ -428,15 +424,15 @@ end);
 #
 
 InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
-[IsTransformationSemigroup], RankFilter(IsActingSemigroup), 
+[IsTransformationSemigroup], RankFilter(IsActingSemigroup),
 # to beat the default method for acting semigroups
 function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
 
   if IsSemigroupIdeal(S) and
-   (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
-   or not HasGeneratorsOfSemigroup(S)) then
+      (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
+       or not HasGeneratorsOfSemigroup(S)) then
     return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
   fi;
 
@@ -609,36 +605,37 @@ end);
 #
 
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
+[IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
 
 #
 
-ViewStringForGroupOfTransformations@:=function(s)
-local str, nrgens;
-  str:="\><";
+BindGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations",
+function(s)
+  local str, nrgens;
+  str := "\><";
   if HasIsTrivial(s) and IsTrivial(s) then
     Append(str, "\>trivial\< ");
   fi;
 
   Append(str, "\>transformation\< \>group\<");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) 
-   and Size(s)<2^64 then
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
+      and Size(s) < 2 ^ 64 then
     Append(str, " \>of size \>");
     Append(str, String(Size(s)));
     Append(str, ",\<\<");
   fi;
 
-  nrgens:=Length(Generators(s));
-  if DegreeOfTransformationSemigroup(s)>0 then  
+  nrgens := Length(Generators(s));
+  if DegreeOfTransformationSemigroup(s) > 0 then
     Append(str, " \>on \>");
     Append(str, ViewString(DegreeOfTransformationSemigroup(s)));
     Append(str, "\< pts");
   fi;
-  if nrgens>0 then 
+  if nrgens > 0 then
     Append(str, " with\> ");
     Append(str, ViewString(nrgens));
     Append(str, "\< generator");
-    if nrgens>1 or nrgens=0 then
+    if nrgens > 1 or nrgens = 0 then
       Append(str, "s\<");
     else
       Append(str, "\<");
@@ -647,24 +644,25 @@ local str, nrgens;
   Append(str, ">\<");
 
   return str;
-end;
-  
+end);
+
 InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroupAsSemigroup],
-ViewStringForGroupOfTransformations@);
+SEMIGROUPS_ViewStringForGroupOfTransformations);
 
 InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroup],
-ViewStringForGroupOfTransformations@);
+SEMIGROUPS_ViewStringForGroupOfTransformations);
 
-Unbind(ViewStringForGroupOfTransformations@);
+MakeReadWriteGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations");
+Unbind(SEMIGROUPS_ViewStringForGroupOfTransformations);
 
 #
 
 InstallMethod(ViewString,
 "for a transformation semigroup ideal with ideal generators",
 [IsTransformationSemigroup and IsSemigroupIdeal and
-HasGeneratorsOfSemigroupIdeal],
+ HasGeneratorsOfSemigroupIdeal],
 function(I)
   local str, nrgens;
 
@@ -688,7 +686,7 @@ function(I)
   if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
     Append(str, "\>inverse\< ");
   elif HasIsRegularSemigroup(I)
-   and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+      and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
     if IsRegularSemigroup(I) then
       Append(str, "\>regular\< ");
     else
@@ -736,8 +734,8 @@ function(S)
   # true=its a rep, false=not seen it, fail=its not a rep
   next := 1;
   opts := rec(lookingfor := function(o, x)
-    return reps[x] = true or reps[x] = fail;
-  end);
+                              return reps[x] = true or reps[x] = fail;
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -781,8 +779,8 @@ function(S)
   next := 1;
   nr := 0;
   opts := rec(lookingfor := function(o, x)
-    return IsPosInt(comp[x]);
-  end);
+                              return IsPosInt(comp[x]);
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -831,8 +829,8 @@ function(S)
   nr := 0;
   cycles := [];
   opts := rec(lookingfor := function(o, x)
-    return IsPosInt(comp[x]);
-  end);
+                              return IsPosInt(comp[x]);
+                            end);
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -880,15 +878,13 @@ function(filter, n)
     zero := Transformation(List([1 .. 2 * n + 1], x -> 1));
     gens := EmptyPlist(n - 1);
     for i in [1 .. n - 1] do
-      gens[i] := Transformation(
-                  Concatenation([1 .. (2 * i) - 1] * 0 + 1,
-                                [2 * i + 1],
-                                [2 * i + 1 .. 2 * n - 1] * 0 + 1));
+      gens[i] := Transformation(Concatenation([1 .. (2 * i) - 1] * 0 + 1,
+                                              [2 * i + 1],
+                                              [2 * i + 1 .. 2 * n - 1]
+                                              * 0 + 1));
     od;
   fi;
   out := Semigroup(gens);
   SetMultiplicativeZero(out, zero);
   return out;
 end);
-
-#EOF

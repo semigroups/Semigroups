@@ -97,7 +97,7 @@ function(L)
   if not IsGreensClassNC(L) then
     # go from the lambda-value in scc 1 to the lambda value of the rep of <l>
     p := LambdaConjugator(Parent(L))(RightOne(LambdaOrbRep(o, m)),
-          Representative(L));
+                                     Representative(L));
     return LambdaOrbSchutzGp(o, m) ^ p;
   else
     return LambdaOrbSchutzGp(o, m);
@@ -215,7 +215,7 @@ L -> Size(SchutzenbergerGroup(L)) * Length(LambdaOrbSCC(L)));
 
 InstallMethod(\in, "for inverse op D-class",
 [IsAssociativeElement,
-IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+ IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(x, D)
   local S, rep, m, o, scc, l, schutz;
 
@@ -223,9 +223,9 @@ function(x, D)
   rep := Representative(D);
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(S) and
-        ActionDegree(x) <> ActionDegree(rep))
-    or ActionRank(S)(x) <> ActionRank(S)(rep) then
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S) and
+          ActionDegree(x) <> ActionDegree(rep))
+      or ActionRank(S)(x) <> ActionRank(S)(rep) then
     return false;
   fi;
 
@@ -264,7 +264,7 @@ end);
 InstallMethod(\in,
 "for associative element and inverse op L-class of acting semigroup.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensLClass and
-IsActingSemigroupGreensClass],
+ IsActingSemigroupGreensClass],
 function(x, L)
   local S, rep, o, m, scc, l, schutz;
 
@@ -272,10 +272,10 @@ function(x, L)
   rep := Representative(L);
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
-    or ActionRank(S)(x) <> ActionRank(S)(rep)
-    or (IsActingSemigroupWithFixedDegreeMultiplication(S) and
-        ActionDegree(x) <> ActionDegree(rep))
-    or LambdaFunc(S)(x) <> LambdaFunc(S)(rep) then
+      or ActionRank(S)(x) <> ActionRank(S)(rep)
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S) and
+          ActionDegree(x) <> ActionDegree(rep))
+      or LambdaFunc(S)(x) <> LambdaFunc(S)(rep) then
     return false;
   fi;
 
@@ -626,7 +626,7 @@ InstallMethod(EnumeratorOfRClasses, "for an inverse op acting semigroup",
 function(S)
 
   Enumerate(LambdaOrb(S));
-
+  # gaplint: ignore 36
   return EnumeratorByFunctions(S, rec(
 
     parent := S,

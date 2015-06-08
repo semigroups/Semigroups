@@ -7,6 +7,7 @@
 ##
 ###############################################################################
 
+# gaplint: ignore 7
 DeclareUserPreference(rec(
   name := "FreeInverseSemigroupElementDisplay",
   description := ["options for the display of free inverse semigroup elements"],

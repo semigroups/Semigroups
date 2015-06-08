@@ -96,7 +96,7 @@ function(o, limit)
       if gradingfunc <> false then
         grade := gradingfunc(o, yy);
         if onlygrades <> false and
-          not(onlygrades(grade, onlygradesdata)) then
+            not(onlygrades(grade, onlygradesdata)) then
           pos := false;
         fi;
       fi;
@@ -298,7 +298,7 @@ function(o)
   fi;
 
   scc := Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
-     Set));
+                  Set));
   r := Length(scc);
 
   o!.scc := scc;
@@ -484,7 +484,7 @@ function(o, i)
     while l < len_k and m < len do
       l := l + 1;
       if IsBound(graph[k][l]) and not seen[graph[k][l]]
-       and lookup[graph[k][l]] = i then
+          and lookup[graph[k][l]] = i then
         m := m + 1;
         oo[m] := graph[k][l];
         seen[graph[k][l]] := true;
@@ -549,5 +549,3 @@ function(o, i, j)
   od;
   return Reversed(word);
 end);
-
-#EOF

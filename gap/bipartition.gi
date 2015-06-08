@@ -760,6 +760,12 @@ BindGlobal("SEMIGROUPS_TransBlocksLookup",
 function(f)
   local n, k, blocks, out, i;
 
+  if not IsBipartition(f) then
+    Error("Semigroups: SEMIGROUPS_TransBlocksLookup: usage,\n",
+          "the argument must be a bipartition,");
+    return;
+  fi;
+
   if IsBound(f!.lookup) then
     return f!.lookup;
   fi;

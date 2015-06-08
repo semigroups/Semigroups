@@ -971,6 +971,73 @@ gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 gap> NrCongruenceClasses(cong);
 169
 
+#T# TestInstall65: Issue 126:
+gap> mat := [
+> [ (), 0, 0, 0, 0 ],
+> [ 0, (3,4), 0, 0, 0 ],
+> [ 0, 0, (), 0, 0 ],
+> [ 0, 0, 0, (1,2), 0 ],
+> [ 0, 0, 0, 0, (1,2)(3,4) ] ];;
+gap> R := ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), mat);;
+gap> gens := [
+> MultiplicativeZero(R),
+> RMSElement(R, 4, (), 4),
+> RMSElement(R, 4, (1,2)(3,4), 4),
+> RMSElement(R, 5, (1,2)(3,4), 5),
+> RMSElement(R, 5, (1,2), 5),
+> RMSElement(R, 4, (1,2), 4),
+> RMSElement(R, 1, (1,2), 1),
+> RMSElement(R, 1, (3,4), 1),
+> RMSElement(R, 2, (3,4), 2),
+> RMSElement(R, 2, (1,2), 2),
+> RMSElement(R, 1, (1,2), 1),
+> RMSElement(R, 3, (), 3),
+> RMSElement(R, 3, (1,2), 3),
+> RMSElement(R, 1, (1,2), 1) ];;
+gap> U := Semigroup(gens);;
+gap> Filtered(R, x -> x in U);;
+gap> x := RMSElement(R, 1, (), 2);;
+gap> x in U;
+false
+gap> IsInverseSemigroup(U);
+true
+gap> x in U;
+false
+
+#T# TestInstall63: Issue 127:
+# Bug in Enumerate for an acting semigroup ideal that knows it is regular at its
+# point of creation. 
+gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)], 
+>                     [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
+>                     [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2)], 
+>                     [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0]],
+>                    [[Z(2^2), Z(2)^0, Z(2^2), Z(2)^0], 
+>                     [Z(2^2)^2, Z(2^2), Z(2^2)^2, Z(2^2)],
+>                     [Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2^2)^2],
+>                     [Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2^2)^2]],
+>                    [[0*Z(2), Z(2^2)^2, 0*Z(2), Z(2)^0], 
+>                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0],
+>                     [Z(2^2), Z(2)^0, 0*Z(2), 0*Z(2)],
+>                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
+<semigroup with 3 generators>
+gap> T := AsTransformationSemigroup(S);
+<transformation monoid on 256 pts with 2 generators>
+gap> Size(T);
+21
+gap> I := SemigroupIdeal(T, Idempotents(T));
+<regular transformation semigroup ideal on 256 pts with 8 generators>
+gap> Size(I);
+21
+
+#T# TestInstall64: Bug fixed by changeset 949553d
+gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup on 2 pts with 2 generators>
+gap> Size(s);
+5
+gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+of size 5, on 2 pts with 2 generators>>
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);

@@ -43,11 +43,11 @@ function(o, limit, lookfunc)
     return IsClosed(o) or Length(o) >= limit;
   end;
   if IsLambdaOrb(o) then
-    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc := newlookfunc,
-     lambdalookfunc := lookfunc));
+    Enumerate(SemigroupData(o!.parent), infinity,
+              rec(lookfunc := newlookfunc, lambdalookfunc := lookfunc));
   elif IsRhoOrb(o) then
-    Enumerate(SemigroupData(o!.parent), infinity, rec(lookfunc := newlookfunc,
-     rholookfunc := lookfunc));
+    Enumerate(SemigroupData(o!.parent), infinity,
+              rec(lookfunc := newlookfunc, rholookfunc := lookfunc));
   fi;
 
   return o;
@@ -97,7 +97,7 @@ end);
 InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
 function(o, i)
-local nr;
+  local nr;
 
   nr := 1;
   while i > Length(o!.orbits[nr]) do
@@ -222,12 +222,12 @@ function(I)
   # ComponentOfIndex(o, Position(o, LambdaFunc(M)(gens[orbtogen[i]])))=i
   # and <orbtogen[ComponentOfIndex(Position(o, LambdaFunc(I)(gens[i])))]=i>
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
-  
-  htopts:=ShallowCopy(LambdaOrbOpts(I)); 
-  htopts.treehashsize:=SEMIGROUPS_OptionsRec(I).hashlen.M;
-  record.ht:=HTCreate(LambdaFunc(I)(Representative(I)), htopts);
-  
-  fam:=CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
+
+  htopts := ShallowCopy(LambdaOrbOpts(I));
+  htopts.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
+  record.ht := HTCreate(LambdaFunc(I)(Representative(I)), htopts);
+
+  fam := CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
 
   return Objectify(NewType(fam, IsIdealOrb and IsLambdaOrb), record);
 end);
@@ -261,11 +261,11 @@ function(I)
   # <ComponentOfIndex(o, Position(o, RhoFunc(I)(gens[orbtogen[i]])))=i>
   # and <orbtogen[ComponentOfIndex(Position(o, RhoFunc(I)(gens[i])))]=i>
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
-  htopts:=ShallowCopy(RhoOrbOpts(I)); 
-  htopts.treehashsize:=SEMIGROUPS_OptionsRec(I).hashlen.M;
-  record.ht:=HTCreate(RhoFunc(I)(Representative(I)), htopts);
-  
-  fam:=CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
+  htopts := ShallowCopy(RhoOrbOpts(I));
+  htopts.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
+  record.ht := HTCreate(RhoFunc(I)(Representative(I)), htopts);
+
+  fam := CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
   return Objectify(NewType(fam, IsIdealOrb and IsRhoOrb), record);
 end);
 
@@ -274,7 +274,7 @@ end);
 # acting on the right by the generators (and their inverses) of the
 # supersemigroup. Hence we require a different case here.
 
-InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal", 
+InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal",
 [IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local record, gens, lambdafunc, o, ht, nr, nrgens, lambda, InstallPointInOrb,
@@ -295,8 +295,9 @@ function(I)
   gens := GeneratorsOfSemigroupIdeal(I);
   lambdafunc := LambdaFunc(I);
 
-  o := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), LambdaOrbSeed(I),
-   LambdaAct(I), record);
+  o := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
+           LambdaOrbSeed(I),
+           LambdaAct(I), record);
 
   # install the lambda values of the generators
   ht := o!.ht;
@@ -330,9 +331,10 @@ function(I)
     fi;
   od;
 
-  o!.pos := 2; #don't apply the generators of the supersemigroup of <I> to the
-               #dummy point at the start of the orbit (otherwise we just get the
-               #lambda orbit of the supersemigroup
+  o!.pos := 2;
+  # don't apply the generators of the supersemigroup of <I> to the dummy point
+  # at the start of the orbit (otherwise we just get the lambda orbit of the
+  # supersemigroup
 
   SetFilterObj(o, IsLambdaOrb and IsInverseOrb and IsIdealOrb);
   return o;
@@ -377,8 +379,10 @@ function(o, pt, x, pos, gen, ind, lookfunc)
     record.onlygradesdata := fail;
   fi;
 
-  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), pt, LambdaAct(I),
-   record);
+  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
+             pt,
+             LambdaAct(I),
+             record);
   Enumerate(new);
 
   ht := o!.ht;
@@ -490,8 +494,10 @@ function(o, pt, x, pos, gen, ind, lookfunc)
     record.onlygradesdata := fail;
   fi;
 
-  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)), pt, RhoAct(I),
-         record);
+  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
+             pt,
+             RhoAct(I),
+             record);
   Enumerate(new);
 
   ht := o!.ht;
@@ -715,4 +721,3 @@ function(o, i)
 
   return out;
 end);
-

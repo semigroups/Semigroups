@@ -1,6 +1,7 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+* replace `Permuted(gens, Random(SymmetricGroup...)` by `Shuffle`
 * Boolean matrix stuff (`CanonicalRep` and things from semigroups-dev)
 * try to find the full PBR monoid when n = 1, 2. 
 * `AsBipartitionSemigroup`, `AsPBRSemigroup`

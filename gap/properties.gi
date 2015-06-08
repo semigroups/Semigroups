@@ -28,6 +28,56 @@
 # IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
 # IsRightUnipotent, IsSemigroupWithClosedIdempotents, .
 
+#
+
+#InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
+#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
+#  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
+#
+#  Info(InfoWarning, 1, "this will sometimes return a false positive.");
+#
+#  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
+#    Info(InfoSemigroups, 2, "semigroup is regular");
+#    return true;
+#  fi;
+#
+#  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
+#  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
+#  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
+#  reg:=[]; i:=0;
+#
+#  repeat
+#    repeat #JDM this should become an method for IteratorOfRStarClasses
+#           # and IsAbundantRClass...
+#      data:=NextIterator(iter);
+#    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter);
+#    if not IsDoneIterator(iter) then
+#      HTAdd(ht_o, data{[1,2,4,5]}, true);
+#
+#      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
+#      val:=HTValue(ht, ker);
+#
+#      if val=fail then #new kernel
+#        i:=i+1; HTAdd(ht, ker, i);
+#        val:=i; reg[val]:=false;
+#      fi;
+#
+#      if reg[val]=false then #old kernel
+#        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
+#        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
+#      fi;
+#    fi;
+#  until IsDoneIterator(iter);
+#
+#  return ForAll(reg, x-> x);
+#end);
+
+#InstallMethod(IsAdequateSemigroup,
+#"for acting semigroup with generators",
+#[IsActingSemigroup and HasGeneratorsOfSemigroup],
+#s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
+
 # same method for ideals
 
 InstallMethod(IsBand, "for a semigroup",
@@ -58,8 +108,8 @@ function(S)
   elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "inverse semigroup");
     return true;
-  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) and
-      (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
+  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S))
+      and (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
     Info(InfoSemigroups, 2, "regular but non-inverse semigroup");
     return false;
   fi;
@@ -68,8 +118,8 @@ function(S)
 
   for D in iter do
     if IsRegularDClass(D)
-        and (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
-             or NrRClasses(D) <> NrLClasses(D)) then
+         (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
+          or NrRClasses(D) <> NrLClasses(D)) then
       return false;
     fi;
   od;
@@ -244,10 +294,12 @@ function(S)
 
   for f in GeneratorsOfSemigroup(S) do
     o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
-    pos := LookForInOrb(o, function(o, x)
-                             return LambdaRank(S)(LambdaAct(S)(x, f))
-                                    <> LambdaRank(S)(x);
-                           end, 1);
+    pos := LookForInOrb(o,
+                        function(o, x)
+                          return LambdaRank(S)(LambdaAct(S)(x, f))
+                                  <> LambdaRank(S)(x);
+                        end,
+                        1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
 
@@ -278,7 +330,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
-[IsInverseSemigroup], IsCliffordSemigroup);
+[IsInverseSemigroup], sCliffordSemigroup);
 
 # Notes: this test required to avoid conflict with Smallsemi,
 # DeclareSynonymAttr causes problems.
@@ -331,7 +383,7 @@ end);
 InstallMethod(IsFactorisableSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if IsInverseSemigroup(S) then
+  if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) then
     return IsFactorisableSemigroup(AsPartialPermSemigroup(S));
   fi;
   return false;
@@ -451,8 +503,8 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if ForAny(GeneratorsOfSemigroup(S), x ->
-            ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
+  if ForAny(GeneratorsOfSemigroup(S),
+            x -> ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfTransformationSemigroup(S), x -> Length(x) = 1);
@@ -464,8 +516,8 @@ end);
 InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if ForAny(GeneratorsOfSemigroup(S), x ->
-            ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
+  if ForAny(GeneratorsOfSemigroup(S),
+            x -> ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
     return false;
   else
     return ForAll(CyclesOfPartialPermSemigroup(S), x -> Length(x) = 1);
@@ -624,6 +676,18 @@ function(S)
            "the numbers of lambda and rho values are not equal");
       return false;
     fi;
+  fi;
+
+  lambda := LambdaOrb(S);
+  Enumerate(lambda);
+  rho := RhoOrb(S);
+  Enumerate(rho, Length(lambda));
+  # TODO shouldn't the below be Length(rho) = Length(lambda)?
+  # and we should check that rho is closed.
+  if not (IsClosed(rho) and Length(rho) >= Length(lambda)) then
+    Info(InfoSemigroups, 2,
+         "the numbers of lambda and rho values are not equal");
+    return false;
   fi;
 
   if HasGreensDClasses(S) then
@@ -1328,8 +1392,8 @@ function(S)
 
   for m in [2 .. Length(scc)] do
     dom := Union(Orbits(perm_g, o[scc[m][1]], OnPoints));
-    if not IsSubgroup(Action(perm_g, dom), Action(LambdaOrbSchutzGp(o, m),
-                      o[scc[m][1]])) then
+    if not IsSubgroup(Action(perm_g, dom),
+                      Action(LambdaOrbSchutzGp(o, m), o[scc[m][1]])) then
       return false;
     elif Length(scc[m]) > 1 then
       rho := rhofunc(EvaluateWord(gens,

@@ -46,7 +46,7 @@ if not IsBound(MappingPermListList_C) then
     local src_tab, dst_tab, d, out, next, i;
 
     if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
-       Error("Semigroups: MappingPermListList_C: usage\n",
+       Error("Semigroups: MappingPermListList_C: usage,\n",
              "the arguments must be lists of equal length,");
        return;
     fi;

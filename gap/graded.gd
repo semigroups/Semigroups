@@ -24,4 +24,3 @@ DeclareGlobalFunction("IteratorOfGradedLambdaOrbs");
 DeclareAttribute("GradedRhoOrbs", IsActingSemigroup, "mutable");
 DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
 DeclareProperty("IsGradedRhoOrbs", IsOrbit);
-
