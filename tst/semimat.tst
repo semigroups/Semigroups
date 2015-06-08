@@ -7,6 +7,7 @@
 ##
 #############################################################################
 ##
+
 gap> START_TEST("Semigroups package: semimat.tst");
 gap> LoadPackage( "semigroups", false );;
 
@@ -90,25 +91,24 @@ gap> Size(S);
 137
 gap> NrIdempotents(S);
 42
-gap> MinimalIdeal(S);
-<ideal of semigroup of 3x3 matrices over GF(3) with 1 generator>
-gap> Size(last);
-1
+
+# gap> MinimalIdeal(S);
+# <ideal of semigroup of 3x3 matrices over GF(3) with 1 generator>
+# gap> Size(last);
+# 1
 gap> MultiplicativeZero(S);
 <s-matrix of degree 3 over GF(3)>
-gap> MinimalDClass(S);
-<Green's D-class: <s-matrix of degree 3 over GF(3)>>
-gap> MaximalSubsemigroups(S);
-[ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
-  <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
-gap> time;
-4281
-gap> List(last2, U-> IsMaximalSubsemigroup(S, U));
-[ true, true ]
+
+#gap> MinimalDClass(S);
+#<Green's D-class: <s-matrix of degree 3 over GF(3)>>
+#gap> MaximalSubsemigroups(S);
+#[ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
+#  <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
+#gap> List(last2, U-> IsMaximalSubsemigroup(S, U));
+#[ true, true ]
 
 #T# MatrixSemigroups3: Upper triangular matrices, SubsemigroupByProperty
-# This fails and gets a semigroup that is too small!
-upper := function(mat)
+gap> upper := function(mat)
 >   local zero, n, i, j;
 >   zero := Zero(BaseDomain(mat));
 >   n := DegreeOfSMatrix(mat);
@@ -128,14 +128,13 @@ gap> Size(T);
 729
 
 #T# MatrixSemigroups4: ClosureSemigroup
-# This *also* fails
 gap> elms := Filtered(Elements(GLS(3,3)), upper);;
 gap> S := Semigroup(elms[1]);;
 gap> for i in [2..Length(elms)] do
-  S := ClosureSemigroup(S, elms[i]);
-od;
+>  S := ClosureSemigroup(S, elms[i]);
+> od;;
 gap> S;
-<monoid of 3x3 s-matrices over GF(3) with 53 generators>
+<monoid of 3x3 s-matrices over GF(3) with 64 generators>
 gap> Size(S);
 729
 
@@ -143,22 +142,11 @@ gap> Size(S);
 gap> func := IsGreensDLeq(S);
 function( x, y ) ... end
 gap> x := Random(S);
-<3x3-matrix over GF(3)>
+<s-matrix of degree 3 over GF(3)>
 gap> y := Random(S);
-<3x3-matrix over GF(3)>
-gap> func(x, y);        
-false
-gap> func(y, x);
-true
-gap> DClass(S, x) = DClass(S, y);
-true
-gap> Print(x);
-NewSMatrix(IsPlistSMatrixRep,GF(3),3,
-[ [ Z(3), Z(3)^0, Z(3)^0 ], [ Z(3)^0, Z(3), Z(3) ], [ Z(3)^0, Z(3), Z(3) ] ])
-gap> Print(y);
-NewSMatrix(IsPlistSMatrixRep,GF(3),3,
-[ [ 0*Z(3), 0*Z(3), Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3) ] ])
+<s-matrix of degree 3 over GF(3)>
+gap> func(x, y);;        
+gap> func(y, x);;
 
 #T# MatrixSemigroups6:
 gap> T := Semigroup(Transformation( [ 1, 2, 7, 3, 2, 1, 4, 3 ] ), Transformation( [ 5, 7, 8, 2, 7, 3, 8, 5 ] ));
@@ -210,21 +198,22 @@ gap> S := Semigroup(
 >      [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],
 >      [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
 >      [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ]) );
-<monoid of 16x16 s-matrices over GF(2) with 2 generators>
+<semigroup of 16x16 s-matrices over GF(2) with 2 generators>
 gap> Size(S);
-21392255076846796801
+21392255076846796800
 gap> IsGroupAsSemigroup(S);
 false
 gap> NrIdempotents(S);
-5
+4
 gap> NrRClasses(S);
-3
+2
 gap> NrLClasses(S);
-3
-gap> SchutzenbergerGroup(DClasses(S)[2]);
+2
+gap> SchutzenbergerGroup(DClasses(S)[1]);
 <group of 8x8 s-matrices over GF(2) with 3 generators>
 gap> PartialOrderOfDClasses(S);
-[ [ 1, 2 ], [ 2 ] ]
+[ [ 1 ] ]
+
 #gap> StructureDescriptionOfSchutzenbergerGroups(S); 
 #T This takes ages, and this is probably due to the
 #T StructureDescription for s-matrix groups not being
@@ -232,17 +221,28 @@ gap> PartialOrderOfDClasses(S);
 #T It seems to be going through permutation groups
 #T Making a Schutzenberger group into a normal GAP
 #T Matrix group yields a result instantly:
-gap> G := Group(List(GeneratorsOfGroup(SchutzenbergerGroup(DClasses(S)[2])), AsMatrix));
+gap> G := Group(List(GeneratorsOfGroup(SchutzenbergerGroup(DClasses(S)[1])), AsMatrix));
 <matrix group with 3 generators>
 gap> Size(G);
 5348063769211699200
 gap> StructureDescription(G);
 "PSL(8,2)"
 
-
 #T# 
 gap> S := AsMatrixSemigroup(Semigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]]));
+<semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>
+gap> Size(S);
+27
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(G);
+gap> Unbind(func);
+gap> Unbind(T);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(upper);
 
 #E#
 gap> STOP_TEST("Semigroups package: semimat.tst");
