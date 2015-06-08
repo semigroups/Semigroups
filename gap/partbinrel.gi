@@ -56,18 +56,6 @@ function(x)
   return true;
 end);
 
-InstallMethod(AsBooleanMat, "for a partitioned binary relation",
-[IsPartitionedBinaryRelation],
-function(x)
-  local n, y, i;
-  n := x![1];
-  y := EmptyPlist(2 * n);
-
-  for i in [2 ..  2 * n + 1] do 
-    Add(y, BlistList([1 .. 2 * n], x![i]));
-  od;
-  return BooleanMat(y);
-end);
 
 InstallMethod(AsPartitionedBinaryRelation, "for an associative element", 
 [IsAssociativeElement], x -> AsPartitionedBinaryRelation(AsBipartition(x)));
