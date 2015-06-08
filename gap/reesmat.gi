@@ -318,75 +318,27 @@ InstallMethod(IsInverseSemigroup,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U, mat, G, seen_col, mat_elts, seen_row_i, i, j;
+  local U, G;
 
   if not IsReesZeroMatrixSemigroup(R) then
     TryNextMethod();
   fi;
 
   U := UnderlyingSemigroup(R);
-  mat := Matrix(R);
-
-  if IsGroup(U) or HasIsGroupAsSemigroup(U) and IsGroupAsSemigroup(U) then
-    G := U;
-  else
-    if HasIsInverseSemigroup(U) and not IsInverseSemigroup(U) then
-      return false;
-    fi;
-
-    if HasIsRegularSemigroup(U) and not IsRegularSemigroup(U) then
-      return false;
-    fi;
-
-    if HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)) then
-      return false;
-    fi;
-
-    if HasGroupOfUnits(U) and GroupOfUnits(U) = fail then
-      return false;
-    fi;
-  fi;
-
-  # Check that the matrix is square
-  if Length(Columns(R)) <> Length(Rows(R)) then
+  
+  if (HasIsInverseSemigroup(U) and not IsInverseSemigroup(U)) 
+      or (HasIsRegularSemigroup(U) and not IsRegularSemigroup(U))
+      or (HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)))
+      or (HasGroupOfUnits(U) and GroupOfUnits(U) = fail)) 
+      or Length(Columns(R)) <> Length(Rows(R)) 
+      or Length(MatrixEntries(R)) <> Length(Rows(R)) then 
     return false;
   fi;
 
-  # Check that each row and column of mat contains exactly one non-zero entry
-  # Also collect the non-zero entries of mat
-  seen_col := BlistList([1 .. Length(mat[1])], []);
-  mat_elts := [];
-  for i in Columns(R) do
-    seen_row_i := false;
-    for j in Rows(R) do
-      if mat[i][j] <> 0 then
-        if seen_row_i or seen_col[j] then
-          return false;
-        fi;
-        seen_row_i := true;
-        seen_col[j] := true;
-        AddSet(mat_elts, mat[i][j]);
-      fi;
-    od;
-    if not seen_row_i then
-      return false;
-    fi;
-  od;
+  G := GroupOfUnits(U);
 
-  # Get the group of units
-  if not IsBound(G) then
-    G := GroupOfUnits(U);
-    if G = fail then
-      return false;
-    fi;
-  fi;
-
-  # Get that mat is over G^0
-  if ForAny(mat_elts, x -> not x in G) then
-    return false;
-  fi;
-
-  return IsInverseSemigroup(U);
+  return G <> fail and ForAny(MatrixEntries(R), x -> x <> 0 and not x in G) 
+         and IsInverseSemigroup(U) and IsRegularSemigroup(R);
 end);
 
 InstallMethod(Idempotents,

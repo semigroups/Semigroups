@@ -18,7 +18,7 @@ BindGlobal("SEMIGROUPS_NormalizerOptsRec",
 function(S, opts)
 
   # don't check the component `random' since this is only called inside
-  # (Non)SEMIGROUPS_DeterministicNormalizer...
+  # (SEMIGROUPS_(Non)DeterministicNormalizer...
 
   if not IsBound(opts.lambdastab) then
     opts.lambdastab := true;
