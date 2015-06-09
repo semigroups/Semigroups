@@ -10,5 +10,6 @@
 ##
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistSMatrices");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistListSRowBasis");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistSVectors");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForFFECollColl");
