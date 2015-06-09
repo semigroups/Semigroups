@@ -23,6 +23,20 @@ function(x, data)
   return res;
 end);
 
+InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistListSRowBasis,
+function(x, data)
+  local i,res;
+  if Rank(x) = 0 then
+    return 1;
+  fi;
+  res := 0;
+  for i in [1 .. Rank(x)] do
+    res := (res * 1001 + ORB_HashFunctionForPlainFlatList(AsPlist(x!.rows[i]), data))
+           mod data + 1;
+  od;
+  return res;
+end);
+
 InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistSVectors,
 function(x, data)
   local i,res;
@@ -70,5 +84,12 @@ InstallMethod( ChooseHashFunction, "for plist s-matrices",
 [IsPlistSMatrixRep, IsInt],
 function(m, hashlen)
   return rec( func := SEMIGROUPS_HashFunctionForPlistSMatrices,
+              data := hashlen );
+end);
+
+InstallMethod( ChooseHashFunction, "for plist s-rowbasis",
+[IsPlistListSRowBasisRep, IsInt],
+function(b, hashlen)
+  return rec( func := SEMIGROUPS_HashFunctionForPlistListSRowBasis,
               data := hashlen );
 end);
