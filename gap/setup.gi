@@ -380,7 +380,8 @@ InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 function(s)
     local deg;
     deg := DegreeOfMatrixSemigroup(s) + 1;
-    return NullMat(deg, deg, BaseDomain(s));
+    return NewSRowBasis(IsPlistListSRowBasisRep, BaseDomain(s),
+                        NullMat(deg, deg, BaseDomain(s)));
 end);
 
 # the seed or dummy start point for RhoOrb
@@ -490,7 +491,7 @@ end);
 
 #T Why are there row spaces and matrices passed in here?
 InstallMethod(LambdaRank, "for a matrix semigroup",
-[IsMatrixSemigroup], x -> Length);
+[IsMatrixSemigroup], x -> Rank);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> function(x)

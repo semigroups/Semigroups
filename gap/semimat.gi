@@ -141,12 +141,12 @@ function(s, vsp, m)
   local basis, nvsp, i, n, deg;
 
   # This takes care of the token element
-  if Length(vsp) > DegreeOfSMatrix(m) then
+  if Rank(vsp) > DegreeOfSMatrix(m) then
     return RowSpaceBasis(m);
-  elif vsp = [] then
-    return [];
+  elif Rank(vsp) = 0 then
+    return vsp;
   else
-    nvsp := SEMIGROUPS_MutableCopyMat(vsp * m!.mat);
+    nvsp := SEMIGROUPS_MutableCopyMat(vsp!.rows * m!.mat);
   fi;
   TriangulizeMat(nvsp);
 
@@ -157,7 +157,7 @@ function(s, vsp, m)
     fi;
   od;
 
-  return nvsp;
+  return NewSRowBasis(IsPlistListSRowBasisRep, BaseDomain(vsp), nvsp);
 end);
 
 InstallGlobalFunction(SMatrixLocalRightInverse,
@@ -165,16 +165,16 @@ function(S, V, mat)
   local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
 
   n := DegreeOfSMatrix(mat);
-  k := Length(V);
+  k := Rank(V);
 
   if n = 0 or k = 0 then
     Error("nullspace");
   fi;
 
-  W := SEMIGROUPS_MutableCopyMat( V * mat );
+  W := SEMIGROUPS_MutableCopyMat( V!.rows * mat );
 
   for i in [1 .. k] do
-    Append(W[i], V[i]);
+    Append(W[i], V!.rows[i]);
   od;
   se := SemiEchelonMat(W);
   # If the matrix does not act injectively on V,
@@ -319,11 +319,11 @@ InstallGlobalFunction(SMatrixIdempotentCreator,
 function(S, x, y)
   local m, inv;
     
-  if IsZero(x) then
+  if Rank(x) = 0 then
     return NewZeroSMatrix(ConstructingFilter(Representative(S)),
                           BaseDomain(S), DegreeOfMatrixSemigroup(S)); 
   else
-    m := AsSMatrix(Representative(S), TransposedMat(y) * x);
+    m := AsSMatrix(Representative(S), TransposedMat(y!.rows) * x!.rows);
     inv := SMatrixLocalRightInverse(S, x, m);
     if inv = fail then 
       return fail;

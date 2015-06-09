@@ -91,21 +91,19 @@ gap> Size(S);
 137
 gap> NrIdempotents(S);
 42
-
-# gap> MinimalIdeal(S);
-# <ideal of semigroup of 3x3 matrices over GF(3) with 1 generator>
-# gap> Size(last);
-# 1
+gap> MinimalIdeal(S);
+<ideal of semigroup of 3x3 matrices over GF(3) with 1 generator>
+gap> Size(last);
+1
 gap> MultiplicativeZero(S);
 <s-matrix of degree 3 over GF(3)>
-
-#gap> MinimalDClass(S);
-#<Green's D-class: <s-matrix of degree 3 over GF(3)>>
-#gap> MaximalSubsemigroups(S);
-#[ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
-#  <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
-#gap> List(last2, U-> IsMaximalSubsemigroup(S, U));
-#[ true, true ]
+gap> MinimalDClass(S);
+<Green's D-class: <s-matrix of degree 3 over GF(3)>>
+gap> M := MaximalSubsemigroups(S);
+[ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
+  <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
+gap> List(M, U-> IsMaximalSubsemigroup(S, U));
+[ true, true ]
 
 #T# MatrixSemigroups3: Upper triangular matrices, SubsemigroupByProperty
 gap> upper := function(mat)

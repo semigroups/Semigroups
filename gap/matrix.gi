@@ -128,6 +128,20 @@ function(v)
   return Length(v!.rows);
 end);
 
+InstallMethod(\=, "for an s-rowbasis",
+[IsPlistListSRowBasisRep, IsPlistListSRowBasisRep], 
+function(x, y)
+  return BaseDomain(x) = BaseDomain(y) and x!.rows = y!.rows;
+end);
+
+InstallMethod(\<, "for an s-rowbasis",
+[IsPlistListSRowBasisRep, IsPlistListSRowBasisRep], 
+function(x, y)
+  return Rank(x) < Rank(y) 
+    or (Rank(x) = Rank(y) 
+        and (x!.rows < y!.rows)); 
+end);
+
 InstallMethod(ViewObj, "for a plist s-rowbasis",
 [IsPlistListSRowBasisRep],
 function(v)
