@@ -114,7 +114,7 @@ function(filter, basedomain, l)
      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
-  b := rec( rows := l);
+  b := rec( rows := l );
   Objectify( PlistListSRowBasisType, b );
 
   SetBaseDomain(b, basedomain); 
@@ -483,16 +483,17 @@ function(m)
   SetInverse(m, inv);
 end);
 
-##############################################################################
-###
-##F  RandomSMatrix( <m>, <n> [, <R>] ) . . . . . . . .  make a random matrix
-###
-###  'RandomSMatrix' returns a random semigroups matrix object
-###  in IsSMatrixPlistRep with <m> rows and <n> columns with elements taken 
-###  from the ring <R>, which defaults to 'Integers'.
-###
-##W  This returns a matrix in IsSPlistMatrixRep
-##T  this function should take either a filter or a sample matrix
+#############################################################################
+##
+#F  RandomSMatrix( <m>, <n> [, <R>] ) . . . . . . . .  make a random matrix
+##
+##  'RandomSMatrix' returns a random semigroups matrix object
+##  in IsSMatrixPlistRep with <m> rows and <n> columns with elements taken 
+##  from the ring <R>, which defaults to 'Integers'.
+##
+#W  This returns a matrix in IsSPlistMatrixRep
+#T  this function should take either a filter or a sample matrix
+##
 InstallGlobalFunction( RandomSMatrix, function ( arg )
   local   mat, m, n, R, rks, i, row, k;
 
@@ -710,7 +711,6 @@ function(m)
     return AsSMatrix(m, TransposedMat(m!.mat));
   fi;
 end);
-
 
 InstallGlobalFunction(SEMIGROUPS_MutableCopyMat,
 function(m)

@@ -44,7 +44,7 @@ DeclareCategory("IsSRowBasis", IsObject);
 DeclareCategoryCollections("IsSRowBasis");
 DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
 
-DeclareOperation("Rank", [IsSRowBasis]);
+# DeclareOperation("Rank", [IsSRowBasis]);
 DeclareAttribute("BaseDomain", IsSRowBasis);
 
 # Our Matrix objects
