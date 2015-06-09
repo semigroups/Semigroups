@@ -39,6 +39,14 @@ DeclareConstructor("NewZeroSVector", [IsSVector, IsRing, IsInt]);
 DeclareAttribute("DegreeOfSVector", IsSVector);
 DeclareAttribute("BaseDomain", IsSVector);
 
+# mpf: 
+DeclareCategory("IsSRowBasis", IsObject);
+DeclareCategoryCollections("IsSRowBasis");
+DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
+
+DeclareOperation("Rank", [IsSRowBasis]);
+DeclareAttribute("BaseDomain", IsSRowBasis);
+
 # Our Matrix objects
 DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and 
                              IsAssociativeElement);
@@ -75,16 +83,6 @@ DeclareOperation("ConstructingFilter", [IsSMatrix]);
 
 # We need to wrap vector collections to circumvent problems
 # with zero spaces.
-#DeclareCategory("IsSRowBasis", IsSVectorCollection);
-#DeclareCategory("NewSRowBasis", [IsSRowBasis, IsRing, IsSVectorCollection]);
-
-#DeclareAttribute("Rank", IsSRowBasis);
-#DeclareRepresentation("IsPlistSVectorRep",
-#  IsSVector and IsComponentObjectRep and IsAttributeStoringRep, ["vec"]);
-#BindGlobal("PlistSVectorFamily", NewFamily("PlistSVectorFamily",
-#  IsSVector, CanEasilyCompareElements));
-#BindGlobal("PlistSVectorType", NewType(PlistSVectorFamily,
-#  IsSVector and IsPlistSVectorRep ));
 
 #
 # Here come two concrete implementations of SVectors and SMatrices
@@ -109,6 +107,13 @@ BindGlobal("PlistSVectorFamily", NewFamily("PlistSVectorFamily",
   IsSVector, CanEasilyCompareElements));
 BindGlobal("PlistSVectorType", NewType(PlistSVectorFamily,
   IsSVector and IsPlistSVectorRep ));
+
+DeclareRepresentation("IsPlistListSRowBasisRep",
+  IsSRowBasis and IsComponentObjectRep and IsAttributeStoringRep, ["rows"]);
+BindGlobal("PlistListSRowBasisFamily", NewFamily("PlistListSRowBasisFamily",
+  IsSRowBasis, CanEasilyCompareElements));
+BindGlobal("PlistListSRowBasisType", NewType(PlistListSRowBasisFamily,
+  IsSRowBasis and IsPlistListSRowBasisRep ));
 
 DeclareRepresentation("IsPlistSMatrixRep",
   IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep, ["mat"]);

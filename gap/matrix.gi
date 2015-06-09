@@ -98,7 +98,86 @@ function( v )
   return st;
 end);
 
-############################################################################
+#############################################################################
+##
+## SRowBasis
+##
+#############################################################################
+#
+InstallMethod(NewSRowBasis, "for IsPlistListSRowBasisRep, a ring, and a list",
+[IsPlistListSRowBasisRep, IsRing, IsList],
+function(filter, basedomain, l)
+  local b,i,e,filter2;
+  
+  filter2 := filter and IsSRowBasis;
+  if HasCanEasilyCompareElements(Representative(basedomain))
+     and CanEasilyCompareElements(Representative(basedomain)) then
+    filter2 := filter2 and CanEasilyCompareElements;
+  fi;
+  b := rec( rows := l);
+  Objectify( PlistListSRowBasisType, b );
+
+  SetBaseDomain(b, basedomain); 
+
+  return b;
+end);
+
+InstallMethod(Rank, "for a plist s-rowbasis",
+[IsPlistListSRowBasisRep],
+function(v)
+  return Length(v!.rows);
+end);
+
+InstallMethod(ViewObj, "for a plist s-rowbasis",
+[IsPlistListSRowBasisRep],
+function(v)
+  Print("<s-rowbasis of rank ");
+  Print(Length(v!.rows),
+         " over ", BaseDomain(v),">");
+end);
+
+InstallMethod(ViewString, "for a plist s-rowbasis",
+[IsPlistListSRowBasisRep],
+function(v)
+  return STRINGIFY("<s-rowbasis of rank ",
+                   Rank(v),
+                   " over ",
+                   BaseDomain(v)); 
+end);
+
+InstallMethod(PrintObj, "for a plist s-rowbasis",
+[IsPlistListSRowBasisRep],
+function(v)
+  Print("NewSRowBasis(IsPlistListSRowBasisRep, ",
+        BaseDomain(v), ", ",
+        v!.rows, ")");
+end);
+
+InstallMethod(Display, "for a plist s-rowbasis",
+[IsPlistListSRowBasisRep],
+function(v)
+  local i;
+  Print("<s-rowbasis of rank ",
+        Rank(v), "\n");
+  Print(v!.rows);
+  Print(">\n");
+end);
+
+InstallMethod(PrintString, "for a plist s-rowbasis",
+[IsPlistListSRowBasisRep],
+function(v)
+  local st;
+  st := "NewSRowBasis(IsPlistListSRowBasisRep,";
+  Append(st,String(BaseDomain(v)));
+  Append(st,",");
+  Append(st,String(Rank(v)));
+  Append(st,",");
+  Append(st,String(v!.rows));
+  Append(st,")");
+  return st;
+end);
+
+#############################################################################
 ## Creating a matrix
 #############################################################################
 #
