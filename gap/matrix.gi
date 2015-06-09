@@ -297,7 +297,8 @@ function(m)
   return STRINGIFY("<s-matrix of degree ",
                    DegreeOfSMatrix(m),
                    " over ",
-                   BaseDomain(m)); 
+                   BaseDomain(m),
+                   ">"); 
 end);
 
 InstallMethod(PrintObj, "for a plist s-matrix",
