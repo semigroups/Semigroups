@@ -229,13 +229,13 @@ end);
 InstallMethod(ActionRank, "for a matrix object and integer",
 [IsSMatrix, IsInt],
 function(x, i)
-  return Length(RowSpaceBasis(x));
+  return Rank(RowSpaceBasis(x));
 end);
 
 InstallMethod(ActionRank, "for a matrix semigroup",
 [IsMatrixSemigroup],
 function(S)
-  return x -> Length(RowSpaceBasis(x));
+  return x -> Rank(RowSpaceBasis(x));
 end);
 
 # the minimum possible rank of an element

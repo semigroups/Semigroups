@@ -40,7 +40,7 @@ DeclareAttribute("DegreeOfSVector", IsSVector);
 DeclareAttribute("BaseDomain", IsSVector);
 
 # mpf: 
-DeclareCategory("IsSRowBasis", IsObject);
+DeclareCategory("IsSRowBasis", IsCollection);
 DeclareCategoryCollections("IsSRowBasis");
 DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
 
@@ -79,7 +79,6 @@ DeclareOperation("AsMatrix", [IsMatrixObj]);
 DeclareOperation("AsSMatrix", [IsSMatrix, IsMatrix]);
 DeclareOperation("AsSMatrix", [IsMatrix]);
 DeclareOperation("ConstructingFilter", [IsSMatrix]);
-
 
 # We need to wrap vector collections to circumvent problems
 # with zero spaces.

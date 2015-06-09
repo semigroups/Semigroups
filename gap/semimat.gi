@@ -267,7 +267,7 @@ function(S, x, m)
   fi;
   n := DegreeOfSMatrix(m);
   k := RowRank(x);
-  rsp := ShallowCopy(m!.mat * RowSpaceBasis(x));
+  rsp := ShallowCopy(m!.mat * RowSpaceBasis(x)!.rows);
 
   zv := [1 .. n] * Zero(BaseDomain(x)); 
   for i in [1 .. n - k] do
@@ -283,7 +283,7 @@ function(S, x, y)
   local res, zero, xse, h, p, yse, q, i;
 
   if IsZero(x) then
-    res := NewZeroSMatrix(ConstructingFilter(x), BaseDomain(x), Length(RowSpaceBasis(x)));
+    res := NewZeroSMatrix(ConstructingFilter(x), BaseDomain(x), Rank(RowSpaceBasis(x)));
   else
     xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
     h := Filtered(xse.heads, x -> x <> 0);

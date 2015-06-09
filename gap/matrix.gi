@@ -234,7 +234,8 @@ function(filter, basedomain, deg)
   local m;
   m := NewSMatrix(filter, basedomain, deg,
                   IdentityMat(deg, basedomain));
-  SetRowSpaceBasis(m, []);
+  SetRowSpaceBasis(m, NewSRowBasis(IsPlistListSRowBasisRep,
+                                   basedomain, []));
   SetRowRank(m, 0);
   SetRowSpaceTransformation(m, m);
   SetRowSpaceTransformationInv(m, m);
@@ -475,8 +476,9 @@ function(m)
  
   ConvertToVectorRep(bas);
   MakeImmutable(bas);
+  bas := NewSRowBasis(IsPlistListSRowBasisRep, bd, bas);
   SetRowSpaceBasis(m, bas);
-  SetRowRank(m, Length(bas));
+  SetRowRank(m, Rank(bas));
   SetRowSpaceTransformation(m, tr); 
   SetRowSpaceTransformationInv(m, tri);
   SetSemigroupInverse(m, sinv);
