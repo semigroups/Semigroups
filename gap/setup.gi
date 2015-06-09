@@ -380,7 +380,7 @@ InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 function(s)
     local deg;
     deg := DegreeOfMatrixSemigroup(s) + 1;
-    return NewSRowBasis(IsPlistListSRowBasisRep, BaseDomain(s),
+    return NewSRowBasis(IsPlistSRowBasisRep, BaseDomain(s),
                         NullMat(deg, deg, BaseDomain(s)));
 end);
 

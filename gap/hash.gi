@@ -23,7 +23,7 @@ function(x, data)
   return res;
 end);
 
-InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistListSRowBasis,
+InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistSRowBasis,
 function(x, data)
   local i,res;
   if Rank(x) = 0 then
@@ -88,8 +88,8 @@ function(m, hashlen)
 end);
 
 InstallMethod( ChooseHashFunction, "for plist s-rowbasis",
-[IsPlistListSRowBasisRep, IsInt],
+[IsPlistSRowBasisRep, IsInt],
 function(b, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionForPlistListSRowBasis,
+  return rec( func := SEMIGROUPS_HashFunctionForPlistSRowBasis,
               data := hashlen );
 end);

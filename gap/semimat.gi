@@ -157,7 +157,7 @@ function(s, vsp, m)
     fi;
   od;
 
-  return NewSRowBasis(IsPlistListSRowBasisRep, BaseDomain(vsp), nvsp);
+  return NewSRowBasis(IsPlistSRowBasisRep, BaseDomain(vsp), nvsp);
 end);
 
 InstallGlobalFunction(SMatrixLocalRightInverse,

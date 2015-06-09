@@ -107,12 +107,12 @@ BindGlobal("PlistSVectorFamily", NewFamily("PlistSVectorFamily",
 BindGlobal("PlistSVectorType", NewType(PlistSVectorFamily,
   IsSVector and IsPlistSVectorRep ));
 
-DeclareRepresentation("IsPlistListSRowBasisRep",
+DeclareRepresentation("IsPlistSRowBasisRep",
   IsSRowBasis and IsComponentObjectRep and IsAttributeStoringRep, ["rows"]);
-BindGlobal("PlistListSRowBasisFamily", NewFamily("PlistListSRowBasisFamily",
+BindGlobal("PlistSRowBasisFamily", NewFamily("PlistSRowBasisFamily",
   IsSRowBasis, CanEasilyCompareElements));
-BindGlobal("PlistListSRowBasisType", NewType(PlistListSRowBasisFamily,
-  IsSRowBasis and IsPlistListSRowBasisRep ));
+BindGlobal("PlistSRowBasisType", NewType(PlistSRowBasisFamily,
+  IsSRowBasis and IsPlistSRowBasisRep ));
 
 DeclareRepresentation("IsPlistSMatrixRep",
   IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep, ["mat"]);

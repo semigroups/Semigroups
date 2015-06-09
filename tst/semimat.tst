@@ -241,6 +241,7 @@ gap> Unbind(T);
 gap> Unbind(x);
 gap> Unbind(y);
 gap> Unbind(upper);
+gap> Unbind(M);
 
 #E#
 gap> STOP_TEST("Semigroups package: semimat.tst");

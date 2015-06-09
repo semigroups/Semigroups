@@ -104,8 +104,8 @@ end);
 ##
 #############################################################################
 #
-InstallMethod(NewSRowBasis, "for IsPlistListSRowBasisRep, a ring, and a list",
-[IsPlistListSRowBasisRep, IsRing, IsList],
+InstallMethod(NewSRowBasis, "for IsPlistSRowBasisRep, a ring, and a list",
+[IsPlistSRowBasisRep, IsRing, IsList],
 function(filter, basedomain, l)
   local b,i,e,filter2;
   
@@ -115,7 +115,7 @@ function(filter, basedomain, l)
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
   b := rec( rows := l );
-  Objectify( PlistListSRowBasisType, b );
+  Objectify( PlistSRowBasisType, b );
 
   SetBaseDomain(b, basedomain); 
 
@@ -123,19 +123,19 @@ function(filter, basedomain, l)
 end);
 
 InstallMethod(Rank, "for a plist s-rowbasis",
-[IsPlistListSRowBasisRep],
+[IsPlistSRowBasisRep],
 function(v)
   return Length(v!.rows);
 end);
 
 InstallMethod(\=, "for an s-rowbasis",
-[IsPlistListSRowBasisRep, IsPlistListSRowBasisRep], 
+[IsPlistSRowBasisRep, IsPlistSRowBasisRep], 
 function(x, y)
   return BaseDomain(x) = BaseDomain(y) and x!.rows = y!.rows;
 end);
 
 InstallMethod(\<, "for an s-rowbasis",
-[IsPlistListSRowBasisRep, IsPlistListSRowBasisRep], 
+[IsPlistSRowBasisRep, IsPlistSRowBasisRep], 
 function(x, y)
   return Rank(x) < Rank(y) 
     or (Rank(x) = Rank(y) 
@@ -143,7 +143,7 @@ function(x, y)
 end);
 
 InstallMethod(ViewObj, "for a plist s-rowbasis",
-[IsPlistListSRowBasisRep],
+[IsPlistSRowBasisRep],
 function(v)
   Print("<s-rowbasis of rank ");
   Print(Length(v!.rows),
@@ -151,7 +151,7 @@ function(v)
 end);
 
 InstallMethod(ViewString, "for a plist s-rowbasis",
-[IsPlistListSRowBasisRep],
+[IsPlistSRowBasisRep],
 function(v)
   return STRINGIFY("<s-rowbasis of rank ",
                    Rank(v),
@@ -160,15 +160,15 @@ function(v)
 end);
 
 InstallMethod(PrintObj, "for a plist s-rowbasis",
-[IsPlistListSRowBasisRep],
+[IsPlistSRowBasisRep],
 function(v)
-  Print("NewSRowBasis(IsPlistListSRowBasisRep, ",
+  Print("NewSRowBasis(IsPlistSRowBasisRep, ",
         BaseDomain(v), ", ",
         v!.rows, ")");
 end);
 
 InstallMethod(Display, "for a plist s-rowbasis",
-[IsPlistListSRowBasisRep],
+[IsPlistSRowBasisRep],
 function(v)
   local i;
   Print("<s-rowbasis of rank ",
@@ -178,10 +178,10 @@ function(v)
 end);
 
 InstallMethod(PrintString, "for a plist s-rowbasis",
-[IsPlistListSRowBasisRep],
+[IsPlistSRowBasisRep],
 function(v)
   local st;
-  st := "NewSRowBasis(IsPlistListSRowBasisRep,";
+  st := "NewSRowBasis(IsPlistSRowBasisRep,";
   Append(st,String(BaseDomain(v)));
   Append(st,",");
   Append(st,String(Rank(v)));
@@ -248,7 +248,7 @@ function(filter, basedomain, deg)
   local m;
   m := NewSMatrix(filter, basedomain, deg,
                   IdentityMat(deg, basedomain));
-  SetRowSpaceBasis(m, NewSRowBasis(IsPlistListSRowBasisRep,
+  SetRowSpaceBasis(m, NewSRowBasis(IsPlistSRowBasisRep,
                                    basedomain, []));
   SetRowRank(m, 0);
   SetRowSpaceTransformation(m, m);
@@ -491,7 +491,7 @@ function(m)
  
   ConvertToVectorRep(bas);
   MakeImmutable(bas);
-  bas := NewSRowBasis(IsPlistListSRowBasisRep, bd, bas);
+  bas := NewSRowBasis(IsPlistSRowBasisRep, bd, bas);
   SetRowSpaceBasis(m, bas);
   SetRowRank(m, Rank(bas));
   SetRowSpaceTransformation(m, tr); 
