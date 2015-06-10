@@ -36,6 +36,7 @@ DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
+DeclareProperty("IsSemigroupWithZeroAdjoined", IsSemigroup);
 
 InstallTrueMethod(IsActingSemigroupWithInverseOp,
                   IsInverseSemigroup and IsRegularStarSemigroup and
@@ -72,3 +73,4 @@ InstallTrueMethod(IsTrivial,
                   IsLeftZeroSemigroup and IsRightZeroSemigroup);
 InstallTrueMethod(IsBand, IsRectangularBand);
 InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
+InstallTrueMethod(IsSemigroupWithZeroAdjoined, IsSemigroup and IsZeroGroup);
