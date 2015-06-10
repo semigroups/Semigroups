@@ -386,6 +386,7 @@ InstallMethod(FullMatrixSemigroup, "for pos int and pos int",
 function(d, q)
   local S;
   S := SEMIGROUPS_MatrixSemigroupConstructor(GL, [d, q], "general linear", "GLS");
+  SetSize(S, q^(d*d));
   #SetIsGeneralLinearSemigroup(S, true);
   #SetIsRegularSemigroup(S, true);
   return S;
