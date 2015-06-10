@@ -56,7 +56,8 @@ InstallMethod(ViewString, "for a semigroup ideal with generators",
 [IsMagmaIdeal and IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(S)
   return Concatenation("<semigroup ideal with ",
-   String(Length(GeneratorsOfMagmaIdeal(S))), " generators>");
+                       String(Length(GeneratorsOfMagmaIdeal(S))),
+                       " generators>");
 end);
 
 #
@@ -69,9 +70,9 @@ function(S, n)
   n := Int(n);
   if n = fail or Length(S) < n then
     Error("Semigroups: \.: usage,\n",
-    "the second argument <n> should be a positive integer\n",
-     "not greater than the number of generators of the semigroup <S> in\n",
-     "the first argument,");
+          "the second argument <n> should be a positive integer\n",
+          "not greater than the number of generators of the semigroup <S>",
+          "in\nthe first argument,");
     return;
   fi;
   return S[n];
@@ -117,7 +118,7 @@ end);
 
 InstallMethod(\=, "for a semigroup with generators and a semigroup ideal",
 [IsSemigroup and HasGeneratorsOfSemigroup,
-IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+ IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(S, I)
   return I = S;
 end);
@@ -149,17 +150,17 @@ function(arg)
     return;
   fi;
 
-  # special case for matrices, because they may look like lists
-  if Length(arg) = 2 and IsMatrix(arg[2])  then
+  if Length(arg) = 2 and IsMatrix(arg[2]) then
+    # special case for matrices, because they may look like lists
     return SemigroupIdealByGenerators(arg[1], [arg[2]]);
 
-  # list of generators
   elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
+    # list of generators
     return SemigroupIdealByGenerators(arg[1], arg[2]);
 
-  # generators and collections of generators
   elif IsAssociativeElement(arg[2])
-   or IsAssociativeElementCollection(arg[2]) then
+      or IsAssociativeElementCollection(arg[2]) then
+    # generators and collections of generators
     out := [];
     for i in [2 .. Length(arg)] do
       if IsAssociativeElement(arg[i]) then
@@ -174,8 +175,8 @@ function(arg)
         else
           Append(out, AsList(arg[1]));
         fi;
-      #so that we can pass the options record in the Semigroups package
       elif i = Length(arg) and IsRecord(arg[i]) then
+        #so that we can pass the options record in the Semigroups package
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
         Error("Semigroups: SemigroupIdeal: usage,\n",
@@ -186,8 +187,8 @@ function(arg)
       fi;
     od;
     return SemigroupIdealByGenerators(arg[1], out);
-  # no argument given, error
   else
+    # no argument given, error
     Error("Semigroups: SemigroupIdeal: usage,\n",
           "the second argument must be a ",
           "combination of generators,\nlists of generators, or semigroups,");
@@ -201,7 +202,7 @@ InstallMethod(SemigroupIdealByGenerators,
 "for an associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection],
 function(S, gens)
-  return SemigroupIdealByGenerators(S, gens, S!.opts);
+  return SemigroupIdealByGenerators(S, gens, SEMIGROUPS_OptionsRec(S));
 end);
 
 #
@@ -217,7 +218,7 @@ function(S, gens, opts)
     return;
   fi;
 
-  opts := SemigroupOptions(opts);
+  opts := SEMIGROUPS_ProcessOptionsRec(opts);
   gens := AsList(gens);
 
   filts := IsMagmaIdeal and IsAttributeStoringRep;
@@ -409,8 +410,8 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
 function(I)
   local x, y;
 
-  if HasParent(I) and HasIsCommutativeSemigroup(Parent(I)) and
-   IsCommutativeSemigroup(Parent(I)) then
+  if HasParent(I) and HasIsCommutativeSemigroup(Parent(I))
+      and IsCommutativeSemigroup(Parent(I)) then
     return true;
   fi;
 
@@ -506,5 +507,3 @@ function(I)
   Enumerate(data);
   return List(data!.dorbit, Representative);
 end);
-
-#EOF

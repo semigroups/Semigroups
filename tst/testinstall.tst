@@ -974,6 +974,39 @@ gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 gap> NrCongruenceClasses(cong);
 169
 
+#T# TestInstall65: Issue 126:
+gap> mat := [
+> [ (), 0, 0, 0, 0 ],
+> [ 0, (3,4), 0, 0, 0 ],
+> [ 0, 0, (), 0, 0 ],
+> [ 0, 0, 0, (1,2), 0 ],
+> [ 0, 0, 0, 0, (1,2)(3,4) ] ];;
+gap> R := ReesZeroMatrixSemigroup(Group([ (1,2), (3,4) ]), mat);;
+gap> gens := [
+> MultiplicativeZero(R),
+> RMSElement(R, 4, (), 4),
+> RMSElement(R, 4, (1,2)(3,4), 4),
+> RMSElement(R, 5, (1,2)(3,4), 5),
+> RMSElement(R, 5, (1,2), 5),
+> RMSElement(R, 4, (1,2), 4),
+> RMSElement(R, 1, (1,2), 1),
+> RMSElement(R, 1, (3,4), 1),
+> RMSElement(R, 2, (3,4), 2),
+> RMSElement(R, 2, (1,2), 2),
+> RMSElement(R, 1, (1,2), 1),
+> RMSElement(R, 3, (), 3),
+> RMSElement(R, 3, (1,2), 3),
+> RMSElement(R, 1, (1,2), 1) ];;
+gap> U := Semigroup(gens);;
+gap> Filtered(R, x -> x in U);;
+gap> x := RMSElement(R, 1, (), 2);;
+gap> x in U;
+false
+gap> IsInverseSemigroup(U);
+true
+gap> x in U;
+false
+
 #T# TestInstall63: Issue 127:
 # Bug in Enumerate for an acting semigroup ideal that knows it is regular at its
 # point of creation. 

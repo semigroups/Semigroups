@@ -11,11 +11,11 @@
 DeclareOperation("EvaluateWord", [IsBipartitionCollection, IsList]);
 DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
 DeclareOperation("EvaluateWord",
-[IsReesZeroMatrixSemigroupElementCollection, IsList]);
+                 [IsReesZeroMatrixSemigroupElementCollection, IsList]);
 DeclareOperation("TraceSchreierTreeOfSCCForward",
-[IsOrbit, IsPosInt, IsPosInt]);
+                 [IsOrbit, IsPosInt, IsPosInt]);
 DeclareOperation("TraceSchreierTreeOfSCCBack",
-[IsOrbit, IsPosInt, IsPosInt]);
+                 [IsOrbit, IsPosInt, IsPosInt]);
 DeclareGlobalFunction("EnumeratePosition");
 DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OrbSCC");
@@ -24,4 +24,3 @@ DeclareGlobalFunction("OrbSCCLookup");
 DeclareGlobalFunction("OrbSCCTruthTable");
 DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("SchreierTreeOfSCC");
-

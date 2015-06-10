@@ -99,7 +99,7 @@ function(n, m)
   end;
 
   return IteratorByIterator(IteratorList([1 .. NrArrangements([1 .. n], m)]),
-   convert);
+                            convert);
 end);
 
 #technical...
@@ -159,7 +159,7 @@ function(o, func, start)
 
   record.ShallowCopy := iter -> rec(pos := 1);
 
- return IteratorByNextIterator(record);
+  return IteratorByNextIterator(record);
 end);
 
 # NextIterator in <opts> must return fail if the iterator is finished.
@@ -175,8 +175,8 @@ function(record)
           "and `ShallowCopy',");
     return;
   elif IsRecord(record) and (IsBound(record.last_called_by_is_done)
-                         or IsBound(record.next_value)
-                         or IsBound(record.IsDoneIterator)) then
+                             or IsBound(record.next_value)
+                             or IsBound(record.IsDoneIterator)) then
     Error("Semigroups: IteratorByNextIterator: usage,\n",
           "the arg <record> must be a record with no components named\n",
           "`last_called_by_is_done', `next_value', or `IsDoneIterator',");
@@ -185,27 +185,27 @@ function(record)
 
   iter := rec(last_called_by_is_done := false,
 
-    next_value := fail,
+              next_value := fail,
 
-    IsDoneIterator := function(iter)
-      if iter!.last_called_by_is_done then
-        return iter!.next_value = fail;
-      fi;
-      iter!.last_called_by_is_done := true;
-      iter!.next_value := record!.NextIterator(iter);
-      if iter!.next_value = fail then
-        return true;
-      fi;
-      return false;
-    end,
+              IsDoneIterator := function(iter)
+                if iter!.last_called_by_is_done then
+                  return iter!.next_value = fail;
+                fi;
+                iter!.last_called_by_is_done := true;
+                iter!.next_value := record!.NextIterator(iter);
+                if iter!.next_value = fail then
+                  return true;
+                fi;
+                return false;
+              end,
 
-    NextIterator := function(iter)
-      if not iter!.last_called_by_is_done then
-        IsDoneIterator(iter);
-      fi;
-      iter!.last_called_by_is_done := false;
-      return iter!.next_value;
-    end);
+              NextIterator := function(iter)
+                if not iter!.last_called_by_is_done then
+                  IsDoneIterator(iter);
+                fi;
+                iter!.last_called_by_is_done := false;
+                return iter!.next_value;
+              end);
 
   for comp in RecNames(record) do
     if comp <> "NextIterator" then
@@ -411,7 +411,7 @@ function(s)
     SetIsIteratorOfSemigroup(iter, true);
   else
     iter := IteratorByIterOfIters(rec(parent := s), IteratorOfRClasses(s),
-            IdFunc, [IsIteratorOfSemigroup]);
+                                  IdFunc, [IsIteratorOfSemigroup]);
   fi;
   SetParent(iter, s);
   return iter;
@@ -432,7 +432,8 @@ function(d)
   fi;
 
   return IteratorByIterOfIters(rec(parent := Parent(d)),
-  Iterator(GreensRClasses(d)), IdFunc, [IsIteratorOfDClassElements]);
+                               Iterator(GreensRClasses(d)), IdFunc,
+                               [IsIteratorOfDClassElements]);
 end);
 
 # different method for inverse
@@ -449,15 +450,20 @@ function(d)
     return iter;
   fi;
 
+  # gaplint: ignore 3
   baseiter := IteratorOfCartesianProduct(OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)],
-   SchutzenbergerGroup(d), OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)]);
+                SchutzenbergerGroup(d),
+                OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)]);
 
   convert := function(x)
 
-    return StabilizerAction(Parent(d))(
-     RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), x[1])[1]
-      * Representative(d), x[2])
-     * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
+    return StabilizerAction(Parent(d))(RhoOrbMult(RhoOrb(d),
+                                                  RhoOrbSCCIndex(d),
+                                                  x[1])[1]
+                                       * Representative(d), x[2])
+                                       * LambdaOrbMult(LambdaOrb(d),
+                                                       LambdaOrbSCCIndex(d),
+                                                       x[3])[1];
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfDClassElements]);
@@ -483,8 +489,12 @@ function(d)
 
   convert := function(x)
     return StabilizerAction(Parent(d))(LambdaOrbMult(LambdaOrb(d),
-     LambdaOrbSCCIndex(d), x[1])[2] * Representative(d), x[2])
-     * LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
+                                                     LambdaOrbSCCIndex(d),
+                                                     x[1])[2]
+                                       * Representative(d), x[2])
+                                       * LambdaOrbMult(LambdaOrb(d),
+                                                       LambdaOrbSCCIndex(d),
+                                                       x[3])[1];
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfDClassElements]);
@@ -505,8 +515,9 @@ function(h)
   fi;
 
   s := Parent(h);
-  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x ->
-   StabilizerAction(s)(Representative(h), x), [IsIteratorOfHClassElements]);
+  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)),
+                            x -> StabilizerAction(s)(Representative(h), x),
+                            [IsIteratorOfHClassElements]);
 end);
 
 # same method for regular, different method for inverse
@@ -524,12 +535,13 @@ function(l)
   fi;
 
   baseiter := IteratorOfCartesianProduct(OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)],
-   Enumerator(SchutzenbergerGroup(l)));
+                                         Enumerator(SchutzenbergerGroup(l)));
 
   convert := function(x)
-    return StabilizerAction(Parent(l))(
-     RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), x[1])[1]
-     * Representative(l), x[2]);
+    return StabilizerAction(Parent(l))(RhoOrbMult(RhoOrb(l),
+                                                  RhoOrbSCCIndex(l),
+                                                  x[1])[1]
+                                       * Representative(l), x[2]);
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
@@ -550,15 +562,13 @@ function(r)
     SetIsIteratorOfRClassElements(iter, true);
     return iter;
   fi;
-
-  baseiter := IteratorOfCartesianProduct(
-    Enumerator(SchutzenbergerGroup(r)),
-     OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]);
+  # gaplint: ignore 2
+  baseiter := IteratorOfCartesianProduct(Enumerator(SchutzenbergerGroup(r)),
+                OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]);
 
   convert := function(x)
-    return StabilizerAction(Parent(r))(Representative(r),
-     x[1]) * LambdaOrbMult(LambdaOrb(r),
-      LambdaOrbSCCIndex(r), x[2])[1];
+    return StabilizerAction(Parent(r))(Representative(r), x[1])
+           * LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), x[2])[1];
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);
@@ -581,7 +591,7 @@ function(s)
   fi;
 
   return IteratorByIterOfIters(rec(parent := s), IteratorOfDClasses(s),
-  GreensHClasses, [IsIteratorOfHClasses]);
+                               GreensHClasses, [IsIteratorOfHClasses]);
 end);
 
 # different method for regular/inverse
@@ -598,7 +608,7 @@ function(S)
   fi;
 
   return IteratorByIterOfIters(rec(parent := S), IteratorOfDClasses(S),
-    GreensLClasses, [IsIteratorOfLClasses]);
+                               GreensLClasses, [IsIteratorOfLClasses]);
 end);
 
 #FIXME move this!
@@ -608,24 +618,23 @@ InstallMethod(IteratorOfRClassData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
 
-  return IteratorByNextIterator(rec(
+  return IteratorByNextIterator(rec(i := 1,
 
-    i := 1,
+                                    NextIterator := function(iter)
+                                      local data;
 
-    NextIterator := function(iter)
-      local data;
+                                      iter!.i := iter!.i + 1;
 
-      iter!.i := iter!.i + 1;
+                                      data := Enumerate(SemigroupData(s),
+                                                        iter!.i, ReturnFalse);
 
-      data := Enumerate(SemigroupData(s), iter!.i, ReturnFalse);
+                                      if iter!.i > Length(data!.orbit) then
+                                        return fail;
+                                      fi;
+                                      return data[iter!.i];
+                                    end,
 
-      if iter!.i > Length(data!.orbit) then
-        return fail;
-      fi;
-      return data[iter!.i];
-    end,
-
-    ShallowCopy := iter -> rec(i := 1)));
+                                    ShallowCopy := iter -> rec(i := 1)));
 end);
 
 # no method required for inverse/regular
@@ -633,12 +642,11 @@ end);
 #FIXME move this!
 InstallMethod(Iterator, "for a full transformation semigroup",
 [IsTransformationSemigroup and IsFullTransformationSemigroup and
-HasGeneratorsOfSemigroup],
+ HasGeneratorsOfSemigroup],
 function(s)
   local iter;
-
+  # gaplint: ignore 15
   iter := IteratorByFunctions(rec(
-
     parent := s,
 
     tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(s)],
@@ -659,7 +667,7 @@ end);
 #FIXME move this!
 InstallMethod(Iterator, "for a symmetric inverse semigroup",
 [IsPartialPermSemigroup and IsSymmetricInverseSemigroup
-and HasGeneratorsOfSemigroup],
+ and HasGeneratorsOfSemigroup],
 function(s)
   local deg, record, iter;
 
@@ -689,9 +697,10 @@ function(s)
   end;
 
   record.ShallowCopy := iter -> rec(parent := s,
-    iter_doms := IteratorOfCombinations([1 .. deg]),
-    dom := fail,
-    iter_imgs := fail);
+                                    iter_doms := IteratorOfCombinations([1 ..
+                                                                         deg]),
+                                    dom := fail,
+                                    iter_imgs := fail);
 
   iter := IteratorByNextIterator(record);
 
@@ -716,8 +725,9 @@ end);
 
 InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
-s -> IteratorByIterator(IteratorOfDClasses(s), Representative,
-[IsIteratorOfDClassReps]));
+s -> IteratorByIterator(IteratorOfDClasses(s),
+                        Representative,
+                        [IsIteratorOfDClassReps]));
 
 #JDM could be a different method for regular/inverse using IteratorOfHClassData
 #(not yet written), see inverse_old.gi in semigroups-dev
@@ -725,24 +735,27 @@ s -> IteratorByIterator(IteratorOfDClasses(s), Representative,
 
 InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 [IsActingSemigroup],
-s -> IteratorByIterator(IteratorOfHClasses(s), Representative,
-[IsIteratorOfHClassReps]));
+s -> IteratorByIterator(IteratorOfHClasses(s),
+                        Representative,
+                        [IsIteratorOfHClassReps]));
 
 # different method for regular/inverse
 #FIXME move this!
 
 InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
 [IsActingSemigroup],
-s -> IteratorByIterator(IteratorOfLClasses(s), Representative,
-[IsIteratorOfLClassReps]));
+s -> IteratorByIterator(IteratorOfLClasses(s),
+                        Representative,
+                        [IsIteratorOfLClassReps]));
 
 # same method for inverse/regular.
 #FIXME move this!
 
 InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 [IsActingSemigroup],
-s -> IteratorByIterator(IteratorOfRClassData(s), x -> x[4],
-[IsIteratorOfRClassReps]));
+s -> IteratorByIterator(IteratorOfRClassData(s),
+                        x -> x[4],
+                        [IsIteratorOfRClassReps]));
 
 # for regular acting semigroups...
 #FIXME move this!
@@ -784,7 +797,7 @@ function(s)
     end;
 
     record.ShallowCopy := iter -> rec(m := fail,
-      graded := IteratorOfGradedLambdaOrbs(s));
+                                      graded := IteratorOfGradedLambdaOrbs(s));
     return IteratorByNextIterator(record);
   else
     o := LambdaOrb(s);
@@ -875,8 +888,9 @@ function(s)
   if HasDClassReps(s) then
     return IteratorList(DClassReps(s));
   fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x -> x[6],
-   [IsIteratorOfDClassReps]);
+  return IteratorByIterator(IteratorOfDClassData(s),
+                            x -> x[6],
+                            [IsIteratorOfDClassReps]);
 end);
 
 # different method for inverse
@@ -884,8 +898,9 @@ end);
 
 InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-s -> IteratorByIterator(IteratorOfLClassData(s), x -> x[4],
-[IsIteratorOfLClassReps]));
+s -> IteratorByIterator(IteratorOfLClassData(s),
+                        x -> x[4],
+                        [IsIteratorOfLClassReps]));
 
 #for inverse acting semigroups...
 #FIXME move this!
@@ -925,7 +940,7 @@ function(s)
     end;
 
     record.ShallowCopy := iter -> rec(m := fail,
-      graded := IteratorOfGradedLambdaOrbs(s));
+                                      graded := IteratorOfGradedLambdaOrbs(s));
     return IteratorByNextIterator(record);
   else
     o := LambdaOrb(s);
@@ -973,8 +988,9 @@ function(s)
       rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
 
       # rectify the lambda value of <rep>
-      rep := rep * LambdaOrbMult(o, lookup[i],
-              Position(o, LambdaFunc(s)(rep)))[2];
+      rep := rep * LambdaOrbMult(o,
+                                 lookup[i],
+                                 Position(o, LambdaFunc(s)(rep)))[2];
 
       return [s, lookup[i], o, rep, false];
     end;
@@ -990,8 +1006,9 @@ end);
 
 InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
-s -> IteratorByIterator(IteratorOfRClassData(s), x -> Inverse(x[4]),
-[IsIteratorOfLClassReps]));
+s -> IteratorByIterator(IteratorOfRClassData(s),
+                        x -> Inverse(x[4]),
+                        [IsIteratorOfLClassReps]));
 
 #
 #FIXME move this!
@@ -999,22 +1016,22 @@ s -> IteratorByIterator(IteratorOfRClassData(s), x -> Inverse(x[4]),
 InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local iter, baseiter, convert;
+  local iter, m, baseiter, convert;
 
   if HasAsSSortedList(l) then
     iter := IteratorList(AsSSortedList(l));
     SetIsIteratorOfLClassElements(iter, true);
     return iter;
   fi;
-
-  baseiter := IteratorOfCartesianProduct(
-    OrbSCC(LambdaOrb(l))[LambdaOrbSCCIndex(l)],
-    Enumerator(SchutzenbergerGroup(l)));
+  m := LambdaOrbSCCIndex(l);
+  baseiter := IteratorOfCartesianProduct(OrbSCC(LambdaOrb(l))[m],
+                                         Enumerator(SchutzenbergerGroup(l)));
 
   convert := function(x)
-    return StabilizerAction(Parent(l))(
-     LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), x[1])[2]
-      * Representative(l), x[2]);
+    return StabilizerAction(Parent(l))(LambdaOrbMult(LambdaOrb(l),
+                                                     LambdaOrbSCCIndex(l),
+                                                     x[1])[2]
+                                       * Representative(l), x[2]);
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
@@ -1136,5 +1153,3 @@ InstallMethod(ViewString, [IsIteratorOfSemigroup],
 function(iter)
   return Concatenation("<iterator of ", ViewString(iter!.parent), ">");
 end);
-
-#EOF

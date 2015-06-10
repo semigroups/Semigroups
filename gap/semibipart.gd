@@ -8,10 +8,10 @@
 #############################################################################
 ##
 
-DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
-IsBipartitionCollection);
-DeclareSynonym("IsBipartitionMonoid", IsMonoid and
-IsBipartitionCollection);
+DeclareSynonym("IsBipartitionSemigroup",
+               IsSemigroup and IsBipartitionCollection);
+DeclareSynonym("IsBipartitionMonoid",
+               IsMonoid and IsBipartitionCollection);
 
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
@@ -24,13 +24,7 @@ DeclareProperty("IsBlockBijectionSemigroup", IsSemigroup);
 DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
 DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
 
-#JDM why are these declarations necessary?
-DeclareProperty("IsBlockBijectionSemigroup", IsSemigroupIdeal);
-DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroupIdeal);
-DeclareProperty("IsPermBipartitionGroup", IsSemigroupIdeal);
-
-DeclareSynonymAttr("IsBlockBijectionMonoid", IsBlockBijectionSemigroup and
-IsMonoid);
+DeclareSynonymAttr("IsBlockBijectionMonoid",
+                   IsBlockBijectionSemigroup and IsMonoid);
 DeclareSynonymAttr("IsPartialPermBipartitionMonoid",
-IsPartialPermBipartitionSemigroup and IsMonoid);
-
+                   IsPartialPermBipartitionSemigroup and IsMonoid);

@@ -47,7 +47,7 @@ function(I)
     if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
       Append(str, "\>inverse\< ");
     elif HasIsRegularSemigroup(I)
-     and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+        and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
       if IsRegularSemigroup(I) then
         Append(str, "\>regular\< ");
       else
@@ -80,8 +80,8 @@ end);
 InstallImmediateMethod(IsBlockBijectionSemigroup, IsSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
-  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
-   IsBlockBijection);
+  return IsBipartitionSemigroup(S)
+         and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
 
 #
@@ -89,8 +89,8 @@ end);
 InstallImmediateMethod(IsPartialPermBipartitionSemigroup, IsSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
-  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
-  IsPartialPermBipartition);
+  return IsBipartitionSemigroup(S)
+         and ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
 end);
 
 #
@@ -98,8 +98,8 @@ end);
 InstallImmediateMethod(IsPermBipartitionGroup, IsSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
-  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
-  IsPermBipartition);
+  return IsBipartitionSemigroup(S)
+         and ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
 end);
 
 #
@@ -111,7 +111,7 @@ function(S)
     return true;
   fi;
   return IsBipartitionSemigroup(S)
-   and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+         and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
 
 #
@@ -122,8 +122,8 @@ function(S)
   if IsPartialPermBipartitionSemigroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
-  IsPartialPermBipartition);
+  return IsBipartitionSemigroup(S)
+         and ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
 end);
 
 #
@@ -134,8 +134,8 @@ function(S)
   if IsPermBipartitionGroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return IsBipartitionSemigroup(S) and ForAll(GeneratorsOfSemigroup(S),
-   IsPermBipartition);
+  return IsBipartitionSemigroup(S)
+         and ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
 end);
 
 #
@@ -204,13 +204,15 @@ function(S)
     return Position(en, x);
   end;
 
-  gens := List(en, x ->
-               AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),
-               Length(en) + 1));
-
+  gens := List(en,
+               x -> AsBipartition(TransformationOp(x,
+                                                   [1 .. Length(en) + 1],
+                                                   act),
+                                  Length(en) + 1));
+  # gaplint: ignore 4
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
    x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),
-   Length(en) + 1),
+                      Length(en) + 1),
    x -> en[(Length(en) + 1) ^ AsTransformation(x)]);
 end);
 
@@ -229,9 +231,9 @@ function(S)
   for i in [1 .. Length(source)] do
     range[i] := AsBipartition(source[i], n);
   od;
-
+  # gaplint: ignore 2
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range),
-   x -> AsBipartition(x, n), AsTransformation);
+           x -> AsBipartition(x, n), AsTransformation);
 end);
 
 # the converse of the previous method
@@ -254,8 +256,9 @@ function(S)
     range[i] := AsTransformation(source[i]);
   od;
 
+  # gaplint: ignore 2
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range),
-   AsTransformation, x -> AsBipartition(x, n));
+           AsTransformation, x -> AsBipartition(x, n));
 end);
 
 #
@@ -267,7 +270,7 @@ function(S)
   local n, source, range, i;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
-       CodegreeOfPartialPermSemigroup(S));
+               CodegreeOfPartialPermSemigroup(S));
   source := GeneratorsOfSemigroup(S);
   range := EmptyPlist(Length(source));
 
@@ -275,6 +278,7 @@ function(S)
     range[i] := AsBipartition(source[i], n);
   od;
 
+  # gaplint: ignore 2
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range),
    x -> AsBipartition(x, n), AsPartialPerm);
 end);
@@ -299,8 +303,9 @@ function(S)
     range[i] := AsPartialPerm(source[i]);
   od;
 
+  # gaplint: ignore 2
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range),
-   AsPartialPerm, x -> AsBipartition(x, n));
+           AsPartialPerm, x -> AsBipartition(x, n));
 end);
 
 #
@@ -308,12 +313,12 @@ end);
 InstallMethod(IsomorphismBipartitionSemigroup,
 "for a partial perm inverse semigroup with generators",
 [IsPartialPermSemigroup and IsInverseSemigroup and
-HasGeneratorsOfInverseSemigroup],
+ HasGeneratorsOfInverseSemigroup],
 function(S)
   local n, source, range, i;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
-       CodegreeOfPartialPermSemigroup(S));
+               CodegreeOfPartialPermSemigroup(S));
   source := GeneratorsOfInverseSemigroup(S);
   range := EmptyPlist(Length(source));
 
@@ -321,8 +326,10 @@ function(S)
     range[i] := AsBipartition(source[i], n);
   od;
 
-  return MagmaIsomorphismByFunctionsNC(S, InverseSemigroup(range),
-   x -> AsBipartition(x, n), AsPartialPerm);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       InverseSemigroup(range),
+                                       x -> AsBipartition(x, n),
+                                       AsPartialPerm);
 end);
 
 # the converse of the last method
@@ -330,7 +337,7 @@ end);
 InstallMethod(IsomorphismPartialPermSemigroup,
 "for a bipartition inverse semigroup with generators",
 [IsBipartitionSemigroup and IsInverseSemigroup and
-HasGeneratorsOfInverseSemigroup],
+ HasGeneratorsOfInverseSemigroup],
 function(S)
   local n, source, range, i;
 
@@ -346,8 +353,10 @@ function(S)
     range[i] := AsPartialPerm(source[i]);
   od;
 
-  return MagmaIsomorphismByFunctionsNC(S, InverseSemigroup(range),
-   AsPartialPerm, x -> AsBipartition(x, n));
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       InverseSemigroup(range),
+                                       AsPartialPerm,
+                                       x -> AsBipartition(x, n));
 end);
 
 #
@@ -366,8 +375,10 @@ function(S)
     range[i] := AsBipartition(source[i], n);
   od;
 
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range),
-   x -> AsBipartition(x, n), AsPermutation);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Semigroup(range),
+                                       x -> AsBipartition(x, n),
+                                       AsPermutation);
 end);
 
 # the converse of the previous method
@@ -387,8 +398,10 @@ function(S)
     range[i] := AsPermutation(source[i]);
   od;
 
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range),
-   AsPermutation, x -> AsBipartition(x, n));
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Semigroup(range),
+                                       AsPermutation,
+                                       x -> AsBipartition(x, n));
 end);
 
 InstallMethod(IsomorphismPermGroup,
@@ -404,8 +417,10 @@ function(S)
   iso := IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));
   inv := InverseGeneralMapping(iso);
 
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
-    x -> x ^ iso, x -> x ^ inv);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso),
+                                       x -> x ^ iso,
+                                       x -> x ^ inv);
 end);
 
 # this is one way, i.e. no converse method
@@ -413,7 +428,7 @@ end);
 InstallMethod(IsomorphismBlockBijectionSemigroup,
 "for an inverse partial perm semigroup with generators",
 [IsPartialPermSemigroup and IsInverseSemigroup and
-HasGeneratorsOfInverseSemigroup],
+ HasGeneratorsOfInverseSemigroup],
 function(S)
   local n, source, range, i, inv;
 
@@ -451,8 +466,10 @@ function(S)
     return PartialPerm(out);
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S, InverseSemigroup(range),
-   x -> AsBlockBijection(x, n), inv);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       InverseSemigroup(range), x ->
+                                       AsBlockBijection(x, n),
+                                       inv);
 end);
 
 # this is one way, i.e. no converse method
@@ -464,7 +481,7 @@ function(S)
   local n, source, range, i, inv;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
-       CodegreeOfPartialPermSemigroup(S)) + 1;
+               CodegreeOfPartialPermSemigroup(S)) + 1;
   source := GeneratorsOfSemigroup(S);
   range := EmptyPlist(Length(source));
 
@@ -498,8 +515,10 @@ function(S)
     return PartialPerm(out);
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range),
-   x -> AsBlockBijection(x, n), inv);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Semigroup(range),
+                                       x -> AsBlockBijection(x, n),
+                                       inv);
 end);
 
 # JDM could have a method for
@@ -625,7 +644,7 @@ function(s)
     if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
       Append(str, "\>inverse\< ");
     elif HasIsRegularSemigroup(s)
-     and not (HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s)) then
+        and not (HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s)) then
       if IsRegularSemigroup(s) then
         Append(str, "\>regular\< ");
       else
@@ -653,7 +672,7 @@ function(s)
   fi;
 
   if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-    and Size(s) < 2 ^ 64 then
+      and Size(s) < 2 ^ 64 then
     Append(str, "\>of size\> ");
     Append(str, String(Size(s)));
     Append(str, ",\<\< ");
@@ -725,5 +744,3 @@ function(filter, n)
   SetMultiplicativeZero(out, zero);
   return out;
 end);
-
-#EOF

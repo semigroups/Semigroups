@@ -998,6 +998,18 @@ gap> Idempotents(T);
 [ 0, (2,PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 4, 3 ] ),1), 
   (3,PartialPerm( [ 1, 2, 3, 4 ], [ 4, 1, 3, 2 ] ),2) ]
 
+#T# ReesMatTest106: Test for Issue #128
+gap> S := SymmetricInverseMonoid(5);;
+gap> G := GroupOfUnits(S);;
+gap> id := Identity(S);;
+gap> R := ReesZeroMatrixSemigroup(S, [[id, 0], [0, id]]);;
+gap> T := ReesZeroMatrixSubsemigroup(R, [1 .. 2], G, [1 .. 2]);
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 480 generators>
+gap> IsReesZeroMatrixSemigroup(T);
+true
+gap> UnderlyingSemigroup(T);
+<partial perm group of size 120, on 5 pts with 73 generators>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(f1);
 gap> Unbind(f2);
