@@ -30,8 +30,8 @@ gap>
 
    <Example><![CDATA[
 gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
->                          Z(4) * [[0,0,0],[0,0,1],[0,1,0]]], GF(4), 3);
-<semigroup of 3x3 matrices over GF(2^2) with 2 generators>
+>                          Z(4) * [[0,0,0],[0,0,1],[0,1,0]]], GF(4));
+<semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>
 gap>
   ]]></Example>
   Note that for this usage the generators have to be given as a list as
