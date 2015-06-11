@@ -70,12 +70,11 @@ InstallOtherMethod(IsomorphismMatrixSemigroup,
 "for a semigroup of matrices and a constructing filter",
 [IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl, IsObject],
 function(S, filter)
-  local gens, dom, deg, iso, T;
+  local gens, dom, deg, iso;
   dom := DefaultFieldOfMatrix(Representative(S));
   deg := Length(Representative(S));
   iso := x -> NewSMatrix(filter, dom, deg, x);
   gens := List(GeneratorsOfSemigroup(S), iso);
-  T := Semigroup(gens);
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), iso, AsMatrix);
 end);
 
@@ -92,6 +91,13 @@ InstallMethod(IsomorphismMatrixSemigroup,
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
     return IsomorphismMatrixSemigroup(S, GF(2));
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup,
+"for a s-matrix semigroup",
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return MagmaIsomorphismByFunctionsNC(S, S, x->x, x->x);
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
