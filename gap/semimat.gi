@@ -30,6 +30,33 @@ function(coll)
   return ForAll(coll, x -> x^(-1) <> fail);
 end);
 
+#T can we fold this into SemigroupByGenerators maybe?
+InstallGlobalFunction(MatrixSemigroup,
+function(arg)
+  local gens, ring, d;
+
+  if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then
+    gens := arg;
+  elif Length(arg) = 2 and IsField(arg[2]) then
+    gens := arg[1];
+    ring := arg[2];
+  else
+    Error("Usage: MatrixSemigroup either takes a list",
+          "of matrices, or a list of matrices and a ring",
+          "as arguments");
+  fi;
+  
+  
+  if not IsBound(ring) then
+     ring := DefaultFieldOfMatrix(Product(gens));
+  fi;
+ 
+  d := Length(gens[1]);
+
+  gens := List(gens, x->NewSMatrix(IsPlistSMatrixRep, ring, d, x));
+  return Semigroup(gens);
+end);
+
 #T Why?
 InstallMethod(OneMutable, "for an s-matrix collection",
 [IsSMatrixCollection],

@@ -19,7 +19,7 @@
     <Example><![CDATA[
 gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]);
-<semigroup of 3x3 matrices over GF(2^2) with 2 generators>
+<semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>
 gap>
     ]]></Example>
     <M>S</M> is now a semigroup object for all intents and purposes of
@@ -56,7 +56,7 @@ gap>
 <#GAPDoc Label="AsMatrixSemigroup">
 <ManSection>
   <Attr Name="AsMatrixSemigroup" Arg="S[, F]"/>
-  <Returns>An isomorphism to a matrix semigroup.</Returns>
+  <Returns>The range of an isomorphism to a matrix semigroup.</Returns>
   <Description>
   <Example><![CDATA[
   ]]></Example>
