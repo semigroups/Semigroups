@@ -15,7 +15,7 @@
 * add `_report` for all methods that call `enumerate` in semigroups.h
 * `DClass(TransformationSemigroup, BooleanMat)` sometimes seg faults or returns an answers which it shouldn't!
 * reporting in semigroups.h (toggle_report and _report)
-* fix the relations methods
+* fix the relations methods in the cpp code.
 * `[ Transformation( [ 3, 3, 3, 3, 3 ] ), Transformation( [ 4, 4, 4, 4, 4 ] ),
   Transformation( [ 1, 3, 1, 5, 1 ] ), Transformation( [ 1, 1, 2, 1, 4 ] ),
   Transformation( [ 1, 1, 5, 1, 3 ] ), Transformation( [ 1, 4, 1, 2, 1 ] ) ]`
