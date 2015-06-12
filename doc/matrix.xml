@@ -7,3 +7,32 @@
 ##
 #############################################################################
 
+<#GAPDoc Label="IsSMatrix">
+  <ManSection>
+    <Filt Name="IsSMatrix" Arg="obj" Type="Category">
+      <Returns><K>true</K> or <K>false</K>.</Returns>
+      <Description>
+        This category contains &Semigroups; matrix object wrapper. The
+        introduction of this filter was necessary to get around &GAP;
+        limitations with regards to matrices and associative objects.
+
+        Do not rely on the behaviour of this object type as it might be
+        changed in the future or be completely removed from the package.
+      </Description>
+    </ManSection>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NewSMatrix">
+<ManSection>
+  <Oper Name="NewSMatrix" Arg="filt, F, n, rows"/>
+  <Oper Name="NewSMatrix" Arg="filt, F, n, mat"/>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NewIdentitySMatrix">
+<ManSection>
+  <Oper Name="NewIdentitySMatrix" Arg="filt, F, n"/>
+  <Oper Name="NewZeroSMatrix" Arg="filt, F, n"/>
+</ManSection>
+<#/GAPDoc>
