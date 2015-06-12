@@ -274,8 +274,10 @@ gap> RandomBipartitionSemigroup(5,5);
       for the generators. For any generator the rank is chosen uniformly randomly
       from the list of permissible ranks.
       This allows for more interesting random matrix semigroups and
-      monoids. Without this option, the random monoids and semigroups are 
-      just the full matrix monoid over the base ring.
+      monoids.
+      Without the <A>ranks</A> argument there is a very high probability that
+      the semigroups returned by this function are full matrix monoids over
+      the base ring.
       <Example><![CDATA[
 gap> RandomMatrixSemigroup(GF(25),5,5);
 <semigroup of 5x5 s-matrices over GF(5^2) with 5 generators>
