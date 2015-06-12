@@ -227,6 +227,23 @@ function(x)
   return nr + 1;   # to be in [1 .. 2 ^ (n ^ 2)]
 end);
 
+InstallMethod(BooleanMatNumber,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+  x := List([1 .. n], x -> BlistList([1 .. n], []));
+  nr := nr - 1;   # to be in [0 .. 2 ^ (n ^ 2) - 1]
+    for j in [n, n - 1 .. 1] do
+      q := nr mod 2;
+      if q = 0 then
+        x[i][j] := false;
+      else
+        x[i][j] := true;
+      fi;
+      nr := (nr - q) / 2;
+    od;
+  return BooleanMatNC(x);
+end);
+
 InstallGlobalFunction(NumberBlist,
 function(blist)
   local n, nr, i;
@@ -276,12 +293,12 @@ function(x, n)
     return;
   fi;
 
-  y := EmptyPlist(2 * n);
+  y := EmptyPlist(n);
   for i in [2 ..  2 * x![1] + 1] do 
-    Add(y, BlistList([1 .. 2 * n], x![i]));
+    Add(y, BlistList([1 .. n], x![i]));
   od;
   for i in [2 * x![1] + 1 .. n] do 
-    Add(y, BlistList([1 .. 2 * n], []));
+    Add(y, BlistList([1 .. n], []));
   od;
   return BooleanMat(y);
 end);
