@@ -56,7 +56,9 @@ gap>
 gap> T := Semigroup(Transformation([2,2,3]), Transformation([3,1,3]));
 <transformation semigroup on 3 pts with 2 generators>
 gap> iso := IsomorphismMatrixSemigroup(T);
-MappingByFunction( <transformation semigroup on 3 pts with 2 generators>, <semigroup of 3x3 s-matrices over GF(2) with 2 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <transformation semigroup on 3 pts with 2 generators>,
+> <semigroup of 3x3 s-matrices over GF(2) with 2 generators>,
+> function( x ) ... end, function( x ) ... end )
 gap> Size(Range(iso));
 5
   ]]></Example>

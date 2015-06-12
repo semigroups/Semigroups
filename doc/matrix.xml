@@ -9,7 +9,7 @@
 
 <#GAPDoc Label="IsSMatrix">
   <ManSection>
-    <Filt Name="IsSMatrix" Arg="obj" Type="Category">
+    <Filt Name="IsSMatrix" Arg="obj" Type="category"/>
       <Returns><K>true</K> or <K>false</K>.</Returns>
       <Description>
         This category contains &Semigroups; matrix object wrapper. The
@@ -19,7 +19,6 @@
         Do not rely on the behaviour of this object type as it might be
         changed in the future or be completely removed from the package.
       </Description>
-    </ManSection>
   </ManSection>
 <#/GAPDoc>
 
@@ -40,54 +39,20 @@
 <#GAPDoc Label="RowSpaceBasis">
 <ManSection>
   <Attr Name="RowSpaceBasis" Arg="m" Label="for an s-matrix"/>
-  <Returns>A basis for the row space of <A>m</A>.</Returns>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="RowSpaceTransformation">
-<ManSection>
   <Attr Name="RowSpaceTransformation" Arg="m" Label="for an s-matrix"/>
-  <Returns>
-    A matrix <M>q</M> in <M>GL(n,F)</M> such that <M>qm</M> is
-    <C>RowSpaceBasis(m)</C>
-  </Returns>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="RowSpaceTransformationInv">
-<ManSection>
   <Attr Name="RowSpaceTransformationInv" Arg="m" Label="for an s-matrix"/>
-  <Returns>
-    The inverse of <C>RowSpaceTransformation(m)</C>.
-  </Returns>
+  <Returns>A basis for the row space of <A>m</A>.</Returns>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="ColSpaceBasis">
 <ManSection>
   <Attr Name="ColSpaceBasis" Arg="m" Label="for an s-matrix"/>
-  <Returns>A basis for the column space of <A>m</A>.</Returns>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="ColSpaceTransformation">
-<ManSection>
   <Attr Name="ColSpaceTransformation" Arg="m" Label="for an s-matrix"/>
-  <Returns>
-    A matrix <M>q</M> in <M>GL(n,F)</M> such that <M>mq</M> is
-    <C>ColSpaceBasis(m)</C>.
-  </Returns>
-<Returns>A basis for the row space of <A>m</A>.</Returns>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="ColSpaceTransformationInv">
-<ManSection>
   <Attr Name="ColSpaceTransformationInv" Arg="m" Label="for an s-matrix"/>
-  <Returns>The inverse of <C>ColSpaceTransformation(m)</C>.</Returns>
+  <Description>A basis for the column space of <A>m</A>.</Description>
 </ManSection>
 <#/GAPDoc>
-
 
 <#GAPDoc Label="RightInverse">
 <ManSection>
@@ -181,6 +146,4 @@
   </Returns>
 </ManSection>
 <#/GAPDoc>
-
-
 
