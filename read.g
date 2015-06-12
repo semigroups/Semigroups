@@ -91,7 +91,7 @@ fi;
 
 ReadPackage("semigroups/gap/grpperm.gi");
 
-ReadPackage("semigroups/gap/partbinrel.gi");
+ReadPackage("semigroups/gap/pbr.gi");
 
 ReadPackage("semigroups/gap/matrix-semiring.gi");
 ReadPackage("semigroups/gap/matrix-max-plus.gi");

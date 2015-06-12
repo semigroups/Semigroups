@@ -230,9 +230,13 @@ end);
 InstallMethod(BooleanMatNumber,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
-  x := List([1 .. n], x -> BlistList([1 .. n], []));
-  nr := nr - 1;   # to be in [0 .. 2 ^ (n ^ 2) - 1]
-    for j in [n, n - 1 .. 1] do
+function(nr, deg)
+  local x, q, i, j;
+
+  x := List([1 .. deg], x -> BlistList([1 .. deg], []));
+  nr := nr - 1;   # to be in [0 .. 2 ^ (deg ^ 2) - 1]
+  for i in [deg, deg - 1 .. 1] do
+    for j in [deg, deg - 1 .. 1] do
       q := nr mod 2;
       if q = 0 then
         x[i][j] := false;
@@ -241,6 +245,7 @@ InstallMethod(BooleanMatNumber,
       fi;
       nr := (nr - q) / 2;
     od;
+  od;
   return BooleanMatNC(x);
 end);
 

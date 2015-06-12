@@ -11,9 +11,8 @@
 # This file contains an intitial implementation of partitioned binary
 # relations (PBRs) as defined in:
 # 
-# MARTIN, Paul; MAZORCHUK, Volodymyr.
-# Partitioned Binary Relations. MATHEMATICA SCANDINAVICA, v113, n1, p. 30-52, 
-# http://arxiv.org/abs/1102.0862
+# Paul Martin and Volodymyr Mazorchuk, Partitioned Binary Relations, 
+# Mathematica Scandinavica, v113, n1, p. 30-52, http://arxiv.org/abs/1102.0862
 
 # Internally a PBR is stored as the adjacency list of digraph with 
 # vertices [1 .. 2 * n] for some n. More precisely if <x> is a PBR, then:
@@ -27,6 +26,18 @@
 # TODO UniversalPBR, EmptyPBR, the embeddings from the paper, 
 # IsBipartitionPBR, IsTransformationPBR, IsPartialPermPBR,
 # IsDualTransformationPBR, etc
+
+InstallMethod(NumberPBR, "for a pbr",
+[IsPartitionedBinaryRelation],
+function(x)
+  return NumberBooleanMat(AsBooleanMat(x));
+end);
+
+InstallMethod(PBRNumber, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(nr, deg)
+  return AsPBR(BooleanMatNumber(nr, 2 * deg));
+end);
 
 InstallMethod(IsEmptyPBR, "for a partition binary relation",
 [IsPartitionedBinaryRelation],
@@ -56,6 +67,7 @@ function(x)
   return true;
 end);
 
+#TODO the 2 arg version of these functions
 
 InstallMethod(AsPartitionedBinaryRelation, "for an associative element", 
 [IsAssociativeElement], x -> AsPartitionedBinaryRelation(AsBipartition(x)));
@@ -82,6 +94,23 @@ function(x)
 
   return CallFuncList(PartitionedBinaryRelation, out);
 end);
+
+InstallMethod(AsPartitionedBinaryRelation, "for a boolean matrix",
+[IsBooleanMat], 
+function(x)
+  local deg, succ;
+
+  deg := DimensionOfMatrixOverSemiring(x);
+  if not IsEvenInt(deg) then 
+    Error();
+    return;
+  fi;
+  succ := Successors(x);
+  return PartitionedBinaryRelation(succ{[1 .. deg / 2]}, 
+                                   succ{[deg / 2 + 1 .. deg]});
+end);
+
+
 
 # TODO use RandomDigraph here! 
 # TODO make a method that takes a float between 0 and 1 as the probability of

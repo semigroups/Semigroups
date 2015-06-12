@@ -7,15 +7,12 @@
 ##
 #############################################################################
 
-## Partitioned Binary Relations
-## Binary relations on 2n points with a different multiplication
-## as described in: MARTIN, Paul; MAZORCHUK, Volodymyr.
-## Partitioned Binary Relations. MATHEMATICA SCANDINAVICA,v113, n1, p. 30-52, 
-## http://arxiv.org/abs/1102.0862
-## 
-## This is the most general diagram semigroup containing all other types,
-## therefore it can be used for testing the specialized implementations,
-## thus the efficiency is not the first priority here.
+# This file contains a declarations for partitioned binary relations (PBRs) as
+# defined in:
+# 
+# MARTIN, Paul; MAZORCHUK, Volodymyr.
+# Partitioned Binary Relations. MATHEMATICA SCANDINAVICA, v113, n1, p. 30-52, 
+# http://arxiv.org/abs/1102.0862
 
 DeclareCategory("IsPartitionedBinaryRelation", 
                 IsMultiplicativeElementWithInverse and
@@ -41,6 +38,8 @@ DeclareGlobalFunction("PartitionedBinaryRelation");
 DeclareGlobalFunction("ExtRepOfPBR");
 DeclareOperation("RandomPartitionedBinaryRelation", [IsPosInt]);
 DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement]);
+DeclareOperation("NumberPBR", [IsPartitionedBinaryRelation]);
+DeclareOperation("PBRNumber", [IsPosInt, IsPosInt]);
 
 DeclareProperty("IsEmptyPBR", IsPartitionedBinaryRelation);
 DeclareProperty("IsUniversalPBR", IsPartitionedBinaryRelation);
@@ -48,3 +47,4 @@ DeclareProperty("IsUniversalPBR", IsPartitionedBinaryRelation);
 DeclareSynonym("PBR", PartitionedBinaryRelation);
 DeclareSynonym("AsPBR", AsPartitionedBinaryRelation);
 DeclareSynonym("RandomPBR", RandomPartitionedBinaryRelation);
+

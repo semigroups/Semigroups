@@ -35,7 +35,7 @@ ReadPackage("semigroups/gap/ideals-generic.gd");
 ReadPackage("semigroups/gap/semigroups.gd");
 ReadPackage("semigroups/gap/semigroups-acting.gd");
 
-ReadPackage("semigroups/gap/partbinrel.gd");
+ReadPackage("semigroups/gap/pbr.gd");
 
 ReadPackage("semigroups/gap/matrix-semiring.gd");
 ReadPackage("semigroups/gap/matrix-max-plus.gd");
