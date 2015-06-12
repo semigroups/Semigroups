@@ -45,12 +45,12 @@ function(arg)
           "of matrices, or a list of matrices and a ring",
           "as arguments");
   fi;
-  
-  
+
+
   if not IsBound(ring) then
      ring := DefaultFieldOfMatrix(Product(gens));
   fi;
- 
+
   d := Length(gens[1]);
 
   gens := List(gens, x->NewSMatrix(IsPlistSMatrixRep, ring, d, x));
@@ -112,10 +112,10 @@ function(S, R)
                          basis{ImageListOfTransformation(x, n)});
   gens := List(GeneratorsOfSemigroup(S), iso);
 
-  return MagmaIsomorphismByFunctionsNC(S, 
+  return MagmaIsomorphismByFunctionsNC(S,
                                        Semigroup(gens),
                                        iso,
-                                       x -> 
+                                       x ->
                                          Transformation(List(x, PositionNonZero)));
 end);
 
@@ -220,7 +220,7 @@ function(S, V, mat)
   for i in [1 .. Length(se.vectors)] do
     W[i] := ShallowCopy(se.vectors[i]);
   od;
-  
+
   zv := [1..2*n] * Zero(BaseDomain(mat));
   for i in [1..n-Length(W)] do
     Add(W, ShallowCopy(zv));
@@ -237,7 +237,7 @@ function(S, V, mat)
     fi;
   od;
   TriangulizeMat(W);
- 
+
   return AsSMatrix(mat, W{[1 .. n]}{[n + 1 .. 2 * n]});
 end);
 
@@ -286,7 +286,7 @@ function(S, x, y)
   if res^(-1) = fail then
     Error("Schutz element not invertible");
   fi;
- 
+
   fi;
   return res;
 end);
@@ -295,14 +295,14 @@ end);
 InstallGlobalFunction(SMatrixStabilizerAction,
 function(S, x, m)
   local rsp, g, coeff, i, n, k, zv;
-  if IsZero(x) then 
+  if IsZero(x) then
     return x;
   fi;
   n := DegreeOfSMatrix(m);
   k := RowRank(x);
   rsp := ShallowCopy(m!.mat * RowSpaceBasis(x)!.rows);
 
-  zv := [1 .. n] * Zero(BaseDomain(x)); 
+  zv := [1 .. n] * Zero(BaseDomain(x));
   for i in [1 .. n - k] do
     Add(rsp, ShallowCopy(zv));
   od;
@@ -351,14 +351,14 @@ end);
 InstallGlobalFunction(SMatrixIdempotentCreator,
 function(S, x, y)
   local m, inv;
-    
+
   if Rank(x) = 0 then
     return NewZeroSMatrix(ConstructingFilter(Representative(S)),
-                          BaseDomain(S), DegreeOfMatrixSemigroup(S)); 
+                          BaseDomain(S), DegreeOfMatrixSemigroup(S));
   else
     m := AsSMatrix(Representative(S), TransposedMat(y!.rows) * x!.rows);
     inv := SMatrixLocalRightInverse(S, x, m);
-    if inv = fail then 
+    if inv = fail then
       return fail;
     else
       return m * inv;
@@ -444,17 +444,17 @@ function(S)
   Print(deg, "x", deg);
   Print(" s-matrices over ", BaseDomain(gens[1]));
   Print(" with ", Length(gens), " generator");
-  
+
   if Length(gens) > 1 then
     Print("s");
   fi;
   Print(">");
 end);
 
-InstallMethod(IsGeneratorsOfSemigroup, "for an s-matrix collection", 
-[IsSMatrixCollection], 
-function(coll) 
-  if ForAny(coll, x -> DegreeOfSMatrix(x) <> DegreeOfSMatrix(coll[1]) 
+InstallMethod(IsGeneratorsOfSemigroup, "for an s-matrix collection",
+[IsSMatrixCollection],
+function(coll)
+  if ForAny(coll, x -> DegreeOfSMatrix(x) <> DegreeOfSMatrix(coll[1])
                        or BaseDomain(x) <> BaseDomain(coll[1])) then
     return false;
   fi;
