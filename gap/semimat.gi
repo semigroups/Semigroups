@@ -97,7 +97,7 @@ InstallMethod(IsomorphismMatrixSemigroup,
 "for a s-matrix semigroup",
 [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return MagmaIsomorphismByFunctionsNC(S, S, x->x, x->x);
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
