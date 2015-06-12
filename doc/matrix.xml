@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  matrix.xml
-#Y  Copyright (C) 2014           
+#Y  Copyright (C) 2014-2015           
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -36,3 +36,151 @@
   <Oper Name="NewZeroSMatrix" Arg="filt, F, n"/>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="RowSpaceBasis">
+<ManSection>
+  <Attr Name="RowSpaceBasis" Arg="m" Label="for an s-matrix"/>
+  <Returns>A basis for the row space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RowSpaceTransformation">
+<ManSection>
+  <Attr Name="RowSpaceTransformation" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    A matrix <M>q</M> in <M>GL(n,F)</M> such that <M>qm</M> is
+    <C>RowSpaceBasis(m)</C>
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RowSpaceTransformationInv">
+<ManSection>
+  <Attr Name="RowSpaceTransformationInv" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    The inverse of <C>RowSpaceTransformation(m)</C>.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ColSpaceBasis">
+<ManSection>
+  <Attr Name="ColSpaceBasis" Arg="m" Label="for an s-matrix"/>
+  <Returns>A basis for the column space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ColSpaceTransformation">
+<ManSection>
+  <Attr Name="ColSpaceTransformation" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    A matrix <M>q</M> in <M>GL(n,F)</M> such that <M>mq</M> is
+    <C>ColSpaceBasis(m)</C>.
+  </Returns>
+<Returns>A basis for the row space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ColSpaceTransformationInv">
+<ManSection>
+  <Attr Name="ColSpaceTransformationInv" Arg="m" Label="for an s-matrix"/>
+  <Returns>The inverse of <C>ColSpaceTransformation(m)</C>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="RightInverse">
+<ManSection>
+  <Attr Name="RightInverse" Arg="m" Label="for an s-matrix"/>
+  <Returns>A right inverse of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LeftInverse">
+<ManSection>
+  <Attr Name="LeftInverse" Arg="m" Label="for an s-matrix"/>
+  <Returns>A left inverse of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupInvertible">
+<ManSection>
+  <Attr Name="SemigroupInvertible" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    <C>true</C> if <A>m</A> has a semigroup inverse, <C>false</C> if not.
+    Note that this is <E>not</E> equivalent to the matrix being invertible.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupInverse">
+<ManSection>
+  <Attr Name="SemigroupInverse" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    A semigroup inverse of <A>m</A> if it exists, and <C>fail</C> otherwise.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DegreeOfSMatrix">
+<ManSection>
+  <Attr Name="DegreeOfSMatrix" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    Number of rows and columns of the matrix <A>m</A>.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RowRank">
+<ManSection>
+  <Attr Name="RowRank" Arg="m" Label="for an s-matrix"/>
+  <Returns>Length of a basis of the row space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ColRank">
+<ManSection>
+  <Attr Name="ColRank" Arg="m" Label="for an s-matrix"/>
+  <Returns>Length of a basis of the column space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BaseDomain">
+<ManSection>
+  <Attr Name="BaseDomain" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    The domain in which entries of <A>m</A> lie.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TransposedMatImmutable">
+<ManSection>
+  <Attr Name="TransposedMatImmutable" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    The transpose of <A>m</A>.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsMatrix">
+<ManSection>
+  <Oper Name="AsMatrix" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    A matrix.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ConstructingFilter">
+<ManSection>
+  <Oper Name="ConstructingFilter" Arg="m" Label="for an s-matrix"/>
+  <Returns>
+    Return the filter that was passed to <Ref Oper="NewSMatrix"/> when creating
+    the matrix <A>m</A>.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+
+
