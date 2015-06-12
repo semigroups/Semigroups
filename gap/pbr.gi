@@ -27,6 +27,42 @@
 # IsBipartitionPBR, IsTransformationPBR, IsPartialPermPBR,
 # IsDualTransformationPBR, etc
 
+# TODO 2 arg version of this
+
+InstallMethod(AsTransformation, "for a pbr",
+[IsPartitionedBinaryRelation], 
+function(x)
+  if not IsTransformationPBR(x) then 
+    Error();
+    return;
+  fi;
+  return AsTransformation(AsBipartition(x));
+end);
+
+InstallMethod(IsBipartitionPBR, "for a pbr",
+[IsPartitionedBinaryRelation], 
+function(x)
+  return IsEquivalenceBooleanMat(AsBooleanMat(x));
+end);
+
+InstallMethod(IsTransformationPBR, "for a pbr",
+[IsPartitionedBinaryRelation], 
+function(x)
+  return IsBipartitionPBR(x) and IsTransBipartition(AsBipartition(x));
+end);
+
+InstallMethod(IsPartialPermPBR, "for a pbr",
+[IsPartitionedBinaryRelation], 
+function(x)
+  return IsBipartitionPBR(x) and IsPartialPermBipartition(AsBipartition(x));
+end);
+
+InstallMethod(IsDualTransformationPBR, "for a pbr",
+[IsPartitionedBinaryRelation], 
+function(x)
+  return IsBipartitionPBR(x) and IsDualTransBipartition(AsBipartition(x));
+end);
+
 InstallMethod(NumberPBR, "for a pbr",
 [IsPartitionedBinaryRelation],
 function(x)
@@ -67,17 +103,28 @@ function(x)
   return true;
 end);
 
-#TODO the 2 arg version of these functions
+#FIXME: this should probably be more specific, 1 method for transformations, 1
+# for partial perms, etc
 
 InstallMethod(AsPartitionedBinaryRelation, "for an associative element", 
 [IsAssociativeElement], x -> AsPartitionedBinaryRelation(AsBipartition(x)));
 
-InstallMethod(AsPartitionedBinaryRelation, "for a bipartition", 
-[IsBipartition],
-function(x)
-  local n, blocks, out, i, block;
+InstallMethod(AsPartitionedBinaryRelation, 
+"for an associative element and pos int", 
+[IsAssociativeElement, IsPosInt], 
+function(x, n)
+  return AsPartitionedBinaryRelation(AsBipartition(x, n));
+end);
 
-  n := DegreeOfBipartition(x); 
+InstallMethod(AsPartitionedBinaryRelation, "for a bipartition", 
+[IsBipartition], x -> AsPartitionedBinaryRelation(x, DegreeOfBipartition(x)));
+
+InstallMethod(AsPartitionedBinaryRelation, "for a bipartition and pos int", 
+[IsBipartition, IsPosInt],
+function(x, n)
+  local deg, blocks, out, i, block;
+
+  deg := DegreeOfBipartition(x);
   blocks := ExtRepOfBipartition(x);
   out := [[], []];
   
@@ -90,6 +137,10 @@ function(x)
         out[1][i] := ShallowCopy(block);
       fi;
     od;
+  od;
+  for i in [deg + 1 .. n] do 
+    Add(out[1], []);
+    Add(out[2], []);
   od;
 
   return CallFuncList(PartitionedBinaryRelation, out);
@@ -109,8 +160,6 @@ function(x)
   return PartitionedBinaryRelation(succ{[1 .. deg / 2]}, 
                                    succ{[deg / 2 + 1 .. deg]});
 end);
-
-
 
 # TODO use RandomDigraph here! 
 # TODO make a method that takes a float between 0 and 1 as the probability of
@@ -321,7 +370,7 @@ function(x, y)
   local n, i;
 
   n := x![1];
-  for i in [1 .. 2 * n] do 
+  for i in [1 .. 2 * n + 1] do 
     if x![i] <> y![i] then 
       return false;
     fi;
@@ -335,7 +384,7 @@ function(x, y)
   local n, i;
 
   n := x![1];
-  for i in [1 .. 2 * n] do
+  for i in [1 .. 2 * n + 1] do
     if x![i] < y![i] then
       return true;
     elif x![i] > y![i] then
@@ -345,7 +394,7 @@ function(x, y)
   return false;
 end);
 
-InstallMethod(One, "for a partitioned binary relation",
+InstallMethod(OneMutable, "for a partitioned binary relation",
 [IsPartitionedBinaryRelation],
 function(x)
   local n, out, i;
@@ -359,9 +408,6 @@ function(x)
   return Objectify(PartitionedBinaryRelationType, out);
 end);
 
-#
-#
-##fully calculated elements
 #PartitionedBinaryRelationMonoid := function(n)
 #  local binrels;
 #  binrels := List(Tuples(Combinations([1..n]),n),

@@ -28,8 +28,8 @@ BindGlobal("PartitionedBinaryRelationFamily",
                      CanEasilySortElements));
 
 BindGlobal("PartitionedBinaryRelationType",
-        NewType(PartitionedBinaryRelationFamily,
-                IsPartitionedBinaryRelation and IsPositionalObjectRep));
+           NewType(PartitionedBinaryRelationFamily,
+                   IsPartitionedBinaryRelation and IsPositionalObjectRep));
 
 DeclareAttribute("DegreeOfPartitionedBinaryRelation",
                  IsPartitionedBinaryRelation);
@@ -37,14 +37,18 @@ DeclareSynonymAttr("DegreeOfPBR", DegreeOfPartitionedBinaryRelation);
 DeclareGlobalFunction("PartitionedBinaryRelation");
 DeclareGlobalFunction("ExtRepOfPBR");
 DeclareOperation("RandomPartitionedBinaryRelation", [IsPosInt]);
+DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement, IsPosInt]);
 DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement]);
 DeclareOperation("NumberPBR", [IsPartitionedBinaryRelation]);
 DeclareOperation("PBRNumber", [IsPosInt, IsPosInt]);
 
 DeclareProperty("IsEmptyPBR", IsPartitionedBinaryRelation);
 DeclareProperty("IsUniversalPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsBipartitionPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsTransformationPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsPartialPermPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsDualTransformationPBR", IsPartitionedBinaryRelation);
 
 DeclareSynonym("PBR", PartitionedBinaryRelation);
 DeclareSynonym("AsPBR", AsPartitionedBinaryRelation);
 DeclareSynonym("RandomPBR", RandomPartitionedBinaryRelation);
-

@@ -687,6 +687,24 @@ function(f, n)
   return out;
 end);
 
+InstallMethod(AsBipartition, "for a pbr and pos int",
+[IsPartitionedBinaryRelation, IsPosInt],
+function(x, deg)
+  Error("not yet implemented");
+end);
+
+#
+
+InstallMethod(AsBipartition, "for a pbr",
+[IsPartitionedBinaryRelation],
+function(x)
+  if not IsBipartitionPBR(x) then 
+    Error();
+    return;
+  fi;
+  return Bipartition(Union(ExtRepOfPBR(x)));
+end);
+  
 #
 
 InstallMethod(AsBlockBijection, "for a partial perm",
