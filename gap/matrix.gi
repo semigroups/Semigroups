@@ -30,7 +30,7 @@ function(filter, basedomain, rl, l)
   MakeImmutable(v!.vec);
 
   SetDegreeOfSVector(v, rl);
-  SetBaseDomain(v, basedomain); 
+  SetBaseDomain(v, basedomain);
 
   return v;
 end);
@@ -62,7 +62,7 @@ function(v)
   return STRINGIFY("<s-vector of degree ",
                    DegreeOfSVector(v),
                    " over ",
-                   BaseDomain(v)); 
+                   BaseDomain(v));
 end);
 
 InstallMethod(PrintObj, "for a plist s-vector",
@@ -108,7 +108,7 @@ InstallMethod(NewSRowBasis, "for IsPlistSRowBasisRep, a ring, and a list",
 [IsPlistSRowBasisRep, IsRing, IsList],
 function(filter, basedomain, l)
   local b,i,e,filter2;
-  
+
   filter2 := filter and IsSRowBasis;
   if HasCanEasilyCompareElements(Representative(basedomain))
      and CanEasilyCompareElements(Representative(basedomain)) then
@@ -117,7 +117,7 @@ function(filter, basedomain, l)
   b := rec( rows := l );
   Objectify( PlistSRowBasisType, b );
 
-  SetBaseDomain(b, basedomain); 
+  SetBaseDomain(b, basedomain);
 
   return b;
 end);
@@ -129,17 +129,17 @@ function(v)
 end);
 
 InstallMethod(\=, "for an s-rowbasis",
-[IsPlistSRowBasisRep, IsPlistSRowBasisRep], 
+[IsPlistSRowBasisRep, IsPlistSRowBasisRep],
 function(x, y)
   return BaseDomain(x) = BaseDomain(y) and x!.rows = y!.rows;
 end);
 
 InstallMethod(\<, "for an s-rowbasis",
-[IsPlistSRowBasisRep, IsPlistSRowBasisRep], 
+[IsPlistSRowBasisRep, IsPlistSRowBasisRep],
 function(x, y)
-  return Rank(x) < Rank(y) 
-    or (Rank(x) = Rank(y) 
-        and (x!.rows < y!.rows)); 
+  return Rank(x) < Rank(y)
+    or (Rank(x) = Rank(y)
+        and (x!.rows < y!.rows));
 end);
 
 InstallMethod(ViewObj, "for a plist s-rowbasis",
@@ -156,7 +156,7 @@ function(v)
   return STRINGIFY("<s-rowbasis of rank ",
                    Rank(v),
                    " over ",
-                   BaseDomain(v)); 
+                   BaseDomain(v));
 end);
 
 InstallMethod(PrintObj, "for a plist s-rowbasis",
@@ -205,8 +205,8 @@ InstallMethod(NewSMatrix, "for IsPlistSMatrixRep, a ring, an int, and a list",
 [IsPlistSMatrixRep, IsRing, IsInt, IsList],
 function(filter, basedomain, rl, l)
   local m,i,e,filter2;
-  
-  if not Length(l) = rl then 
+
+  if not Length(l) = rl then
     Error("Semigroups: NewSMatrix: usage,\n",
           "the arguments are wrong!");
     return;
@@ -221,12 +221,12 @@ function(filter, basedomain, rl, l)
   Objectify( PlistSMatrixType, m );
 
   SetDegreeOfSMatrix(m, rl);
-  SetBaseDomain(m, basedomain); 
+  SetBaseDomain(m, basedomain);
 
   return m;
 end);
 
-InstallMethod(NewSMatrix, 
+InstallMethod(NewSMatrix,
 "for IsPlistSMatrixRep, a ring, an int, and IsPlistMatrixRep",
 [IsPlistSMatrixRep, IsRing, IsInt, IsPlistMatrixRep],
 function(filter, basedomain, rl, mat)
@@ -298,7 +298,7 @@ function(m)
                    DegreeOfSMatrix(m),
                    " over ",
                    BaseDomain(m),
-                   ">"); 
+                   ">");
 end);
 
 InstallMethod(PrintObj, "for a plist s-matrix",
@@ -361,7 +361,7 @@ function(m)
 end);
 
 #T Should this go in a helper function, it also works
-#T similarly to the thing done below. 
+#T similarly to the thing done below.
 InstallMethod(RightInverse, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
 function(m)
@@ -399,13 +399,13 @@ function(m)
 end);
 
 #T Trying to use "Inverse" in the semigroup sense
-#T here leads to problems with other operations, 
+#T here leads to problems with other operations,
 #T so we have to be very careful
 InstallMethod(InverseOp, "for a plist s-matrix",
 [IsSMatrix and IsPlistSMatrixRep],
 function(m)
   local x;
-  
+
   if DegreeOfSMatrix(m) = 0 then
     return m;
   else
@@ -413,7 +413,7 @@ function(m)
 
     if x = fail then
       return fail;
-    else 
+    else
       return AsSMatrix(m,x);
     fi;
   fi;
@@ -434,7 +434,7 @@ function(m)
   deg := DegreeOfSMatrix(m);
   bd := BaseDomain(m);
   if IsZero(m) then
-    bas := []; 
+    bas := [];
     tr := NewIdentitySMatrix(IsPlistSMatrixRep, bd, deg);
     tri := tr;
     if deg = 0 then
@@ -465,7 +465,7 @@ function(m)
     # Check whether this matrix has a semigroup inverse, i.e.
     # a matrix t such that t * m * t = t and m * t * m = m.
     # If it does this matrix is the transformation we computed
-    # otherwise we set fail 
+    # otherwise we set fail
     tm := TransposedMat(bas);
     sinv := true;
     for i in [1..deg] do
@@ -488,13 +488,13 @@ function(m)
     tr := rsp{[1 .. deg]}{[deg + 1 .. 2 * deg]};
     tri := tr^(-1);
   fi;
- 
+
   ConvertToVectorRep(bas);
   MakeImmutable(bas);
   bas := NewSRowBasis(IsPlistSRowBasisRep, bd, bas);
   SetRowSpaceBasis(m, bas);
   SetRowRank(m, Rank(bas));
-  SetRowSpaceTransformation(m, tr); 
+  SetRowSpaceTransformation(m, tr);
   SetRowSpaceTransformationInv(m, tri);
   SetSemigroupInverse(m, sinv);
   SetInverse(m, inv);
@@ -505,7 +505,7 @@ end);
 #F  RandomSMatrix( <m>, <n> [, <R>] ) . . . . . . . .  make a random matrix
 ##
 ##  'RandomSMatrix' returns a random semigroups matrix object
-##  in IsSMatrixPlistRep with <m> rows and <n> columns with elements taken 
+##  in IsSMatrixPlistRep with <m> rows and <n> columns with elements taken
 ##  from the ring <R>, which defaults to 'Integers'.
 ##
 #W  This returns a matrix in IsSPlistMatrixRep
@@ -561,7 +561,7 @@ function(R, n, ranks)
     # Extend it to n x n
     zv := [1..n-rk] * z;
     for j in [1..rk] do
-      Append(mat[j], zv); 
+      Append(mat[j], zv);
     od;
     zv := [1..n] * z;
     for j in [1..n-rk] do
@@ -571,7 +571,7 @@ function(R, n, ranks)
     #T Is Permuting rows/columns enough?
     conj := Random(GL(n, R)); # PermutationMat(Random(Sym(n)), n, R);
     return NewSMatrix(IsPlistSMatrixRep, R, n, mat ^ conj);
-  fi; 
+  fi;
 end);
 
 InstallGlobalFunction(RandomListOfMatricesWithRanks,
@@ -586,7 +586,7 @@ function(R,m,n,ranks)
   return List([1..m], x->RandomSquareSMatrixWithRanks(R,n,ranks));
 end);
 
-#T This will break transparency wrt representations, so we should 
+#T This will break transparency wrt representations, so we should
 #T really not be doing this and instead use a sample object
 #T or we should be using NewIdentitySMatrix
 InstallMethod(IdentitySMatrix, "for a finite field and zero",
@@ -596,37 +596,37 @@ function(R, n)
 end);
 
 InstallMethod(IdentitySMatrix, "for a finite field and pos int",
-[IsField and IsFinite, IsPosInt], 
+[IsField and IsFinite, IsPosInt],
 function(R, n)
   return NewIdentitySMatrix(IsPlistSMatrixRep, R, n);
 end);
 
 InstallMethod(IdentitySMatrix, "for an s-matrix and zero",
-[IsSMatrix, IsZeroCyc], 
+[IsSMatrix, IsZeroCyc],
 function(smat, n)
   return NewIdentitySMatrix(ConstructingFilter(smat), BaseDomain(smat),
                     n);
 end);
 
 InstallMethod(IdentitySMatrix, "for an s-matrix and pos int",
-[IsSMatrix, IsPosInt], 
+[IsSMatrix, IsPosInt],
 function(smat, n)
   return NewIdentitySMatrix(ConstructingFilter(smat), BaseDomain(smat),
                     n);
 end);
 
-#InstallMethod(InverseOp, "for an s-matrix", 
-#[IsSMatrix], 
+#InstallMethod(InverseOp, "for an s-matrix",
+#[IsSMatrix],
 #function(smat)
 #  local mat;
 #  mat := Inverse(smat!.mat);
-#  if mat = fail then 
+#  if mat = fail then
 #    return fail;
 #  fi;
 #  return AsSMatrix(smat, mat);
 #end);
 
-InstallMethod(AsSMatrix, "for an s-matrix and a matrix", 
+InstallMethod(AsSMatrix, "for an s-matrix and a matrix",
 [IsSMatrix, IsMatrix],
 function(smat, mat)
   return NewSMatrix(ConstructingFilter(smat), BaseDomain(smat),
@@ -669,29 +669,29 @@ InstallMethod(IsZero, "for an s-matrix",
 x -> IsZero(x!.mat));
 
 InstallMethod(OneMutable, "for an s-matrix",
-[IsSMatrix], 
+[IsSMatrix],
 x -> IdentitySMatrix(x, DegreeOfSMatrix(x)));
 
 InstallMethod(\=, "for an s-matrix",
-[IsSMatrix, IsSMatrix], 
+[IsSMatrix, IsSMatrix],
 function(x, y)
   return BaseDomain(x) = BaseDomain(y) and x!.mat = y!.mat;
 end);
 
 InstallMethod(\<, "for an s-matrix",
-[IsSMatrix, IsSMatrix], 
+[IsSMatrix, IsSMatrix],
 function(x, y)
-  return DegreeOfSMatrix(x) < DegreeOfSMatrix(y) 
-    or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y) 
-        and BaseDomain(x) < BaseDomain(y)) 
-    or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y) 
+  return DegreeOfSMatrix(x) < DegreeOfSMatrix(y)
+    or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y)
+        and BaseDomain(x) < BaseDomain(y))
+    or (DegreeOfSMatrix(x) = DegreeOfSMatrix(y)
         and BaseDomain(x) = BaseDomain(y) and x!.mat < y!.mat);
 end);
 
-InstallMethod(\*, "for s-matrices", [IsSMatrix, IsSMatrix], 
+InstallMethod(\*, "for s-matrices", [IsSMatrix, IsSMatrix],
 function(x, y)
-  if DegreeOfSMatrix(x) <> DegreeOfSMatrix(y) 
-      or BaseDomain(x) <> BaseDomain(y) then 
+  if DegreeOfSMatrix(x) <> DegreeOfSMatrix(y)
+      or BaseDomain(x) <> BaseDomain(y) then
     Error("\* for s-matrices degree or domain mismatch");
     return;
   fi;
