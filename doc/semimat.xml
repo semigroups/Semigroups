@@ -15,7 +15,7 @@
   <Description>
     This is the kitchen-sink matrix semigroup creation function. It is designed
     to make it easy to create matrix semigroups without having to go through creating
-    matrix objects first. 
+    matrix objects first.
     <Example><![CDATA[
 gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]);
@@ -46,6 +46,12 @@ gap>
   <Attr Name="IsomorphismMatrixSemigroup" Arg="S[, F]"/>
   <Returns>An isomorphism to a matrix semigroup.</Returns>
   <Description>
+    This attribute contains an isomorphism from the semigroup <A>S</A>
+    to a matrix semigroup. Currently this is done by taking a standard basis
+    of a vector space suitable dimension and acting on this basis over the field
+    <A>F</A> if <A>F</A> is given, and over <M>GF(2)</M> if <A>F</A> is not given.
+    This will
+    not give an optimal matrix semigroup representation of <A>S</A>.
   <Example><![CDATA[
 gap> T := Semigroup(Transformation([2,2,3]), Transformation([3,1,3]));
 <transformation semigroup on 3 pts with 2 generators>
@@ -58,6 +64,7 @@ gap> Size(Range(iso));
 </ManSection>
 <#/GAPDoc>
 
+<!--
 <#GAPDoc Label="AsMatrixSemigroup">
 <ManSection>
   <Attr Name="AsMatrixSemigroup" Arg="S[, F]"/>
@@ -74,17 +81,16 @@ gap> Size(S);
   </Description>
 </ManSection>
 <#/GAPDoc>
+-->
 
 <#GAPDoc Label="IsMatrixSemigroupGreensClass">
   <ManSection>
     <Prop Name="IsMatrixSemigroupGreensClass" Arg="class"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the 
+      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
       property <C>IsMatrixSemigroupGreensClass</C> if and only if <C>S</C>
-      is a semigroup of matrices. 
-    </Description> 
+      is a semigroup of matrices.
+    </Description>
   </ManSection>
 <#/GAPDoc>
-
-
