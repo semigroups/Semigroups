@@ -424,32 +424,21 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 ##    semigroups.
 #############################################################################
 
-# FIXME the performance of this really sucks, better form the transitive
-# reflexive closure of the partial order, then define this function
-
 InstallMethod(IsGreensDLeq, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local partial, data, comp_index;
-
-  partial := PartialOrderOfDClasses(S);
+  local digraph, data, id;
+  
+  digraph := Digraph(PartialOrderOfDClasses(S));
+  digraph := DigraphReflexiveTransitiveClosure(digraph);
   data := GenericSemigroupData(S);
-
-  comp_index := function(x, y)
-    if y in partial[x] then
-      return true;
-    elif Length(partial[x]) = 1 and partial[partial[x][1]] = partial[x] then
-      return false;
-    fi;
-    return ForAny(partial[x], z -> z <> x and comp_index(z, y));
-  end;
-
+  id := GreensDRelation(S)!.data.id;
   return function(x, y)
     local i, j;
-    i := Position(data, x);
-    j := Position(data, y);
-    return comp_index(GreensDRelation(S)!.data.id[i],
-                      GreensDRelation(S)!.data.id[j]);
+    i := id[Position(data, x)];
+    j := id[Position(data, y)];
+    # TODO should be a better way of checking the below
+    return j in OutNeighboursOfVertex(digraph, i);
   end;
 end);
 

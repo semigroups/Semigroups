@@ -2,7 +2,6 @@
 ###There are more TODOs in the source files this list is not exhaustive###
 
 * try to find the full PBR monoid when n = 1, 2. 
-* `AsBipartitionSemigroup`, `AsPBRSemigroup`
 * tests for pbrs 
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
 * finish partitioned binary relation stuff (more tests and C++)
@@ -24,6 +23,7 @@
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 #DONE
+* `AsBipartitionSemigroup`, `AsPBRSemigroup`
 * Boolean matrix stuff (`CanonicalRep` and things from semigroups-dev)
 * replace `Permuted(gens, Random(SymmetricGroup...)` by `Shuffle`
 * `TransposedMat` methods for matrix over semiring variants (so far only done boolean matrices and a generic method)
