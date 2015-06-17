@@ -125,6 +125,7 @@ bool inline IsCCSemigroup (Obj data) {
 *******************************************************************************/
 
 Obj inline Representative (Obj data) {
+  // TODO more asserts 
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
   return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);

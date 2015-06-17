@@ -9,8 +9,6 @@
 #include "interface.h"
 #include "types.h"
 
-#include "semigroups++/semigroups.h"
-
 #include <assert.h>
 
 #define BATCH_SIZE 8192
@@ -66,11 +64,18 @@ class Interface : public InterfaceBase {
     Interface () = delete;
 
     // constructor
-    Interface (Obj data, Converter<T>* converter) : _converter(converter) {
+
+    // in the case that we are taking the closure of the semigroup of
+    // <old_data> with some new generators, these new generators are stored in
+    // the <gens> component of <data>. I.e. the meaning of the <gens> component
+    // of the <data> is different if we are taking the closure than if we are
+    // not. 
+    Interface (Obj data, Converter<T>* converter, SemigroupBase* old) 
+      : _converter(converter) {
       assert(IsbPRec(data, RNamName("gens")));
       assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
       
-      Obj gens =  ElmPRec(data, RNamName("gens"));
+      Obj gens = ElmPRec(data, RNamName("gens"));
 
       if (IsbPRec(data, RNamName("report"))) {
         assert(ElmPRec(data, RNamName("report")) == True || 
@@ -82,21 +87,32 @@ class Interface : public InterfaceBase {
 
       std::vector<T*> gens_c;
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
-
       PLAIN_LIST(gens);
       for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
         gens_c.push_back(converter->convert(ELM_PLIST(gens, i), deg_c));
       }
-      
-      _semigroup = new Semigroup<T>(gens_c, deg_c);
+        
+      if (old == nullptr) {
+        _semigroup = new Semigroup<T>(gens_c, deg_c);
+      } else {
+        auto S = static_cast<Semigroup<T>*>(old);
+        _semigroup = closure_semigroup<T>(S, gens_c, deg_c);
+        for (size_t i = 0; i < _semigroup->nrgens(); i++) {
+          AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
+        }
+      }
     }
-
+    
     // destructor
     ~Interface() {
       delete _converter;
       delete _semigroup;
     };
-   
+    
+    Semigroup<T>* semigroup () {
+      return _semigroup;
+    }
+
     // TODO replace the methods from HERE . . .
 
     // enumerate the C++ semigroup
@@ -302,77 +318,77 @@ class Interface : public InterfaceBase {
  * Instantiate Interface for the particular type of semigroup passed from GAP
 *******************************************************************************/
 
-InterfaceBase* InterfaceFromData (Obj data) {
+InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old) {
   if (IsbPRec(data, RNamName("Interface_CC"))) {
     return CLASS_OBJ<InterfaceBase>(ElmPRec(data, RNamName("Interface_CC")));
   }
-  
+
   InterfaceBase* interface;
 
   switch (TypeSemigroup(data)) {
     case TRANS2:{
       auto tc2 = new TransConverter<u_int16_t>();
-      interface = new Interface<Transformation<u_int16_t> >(data, tc2);
+      interface = new Interface<Transformation<u_int16_t> >(data, tc2, old);
       break;
     }
     case TRANS4:{
       auto tc4 = new TransConverter<u_int32_t>();
-      interface = new Interface<Transformation<u_int32_t> >(data, tc4);
+      interface = new Interface<Transformation<u_int32_t> >(data, tc4, old);
       break;
     }
     case PPERM2:{
       auto pc2 = new PPermConverter<u_int16_t>();
-      interface = new Interface<PartialPerm<u_int16_t> >(data, pc2);
+      interface = new Interface<PartialPerm<u_int16_t> >(data, pc2, old);
       break;
     }
     case PPERM4:{
       auto pc4 = new PPermConverter<u_int32_t>();
-      interface = new Interface<PartialPerm<u_int32_t> >(data, pc4);
+      interface = new Interface<PartialPerm<u_int32_t> >(data, pc4, old);
       break;
     }
     case BIPART: {
       auto bc = new BipartConverter();
-      interface = new Interface<Bipartition>(data, bc);
+      interface = new Interface<Bipartition>(data, bc, old);
       break;
     }
     case BOOL_MAT:{ 
       auto bmc = new BoolMatConverter();
-      interface = new Interface<BooleanMat>(data, bmc);
+      interface = new Interface<BooleanMat>(data, bmc, old);
       break;
     }
     case MAX_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 
                                                   MaxPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case MIN_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new MinPlusSemiring(), 
                                                   infinity, 
                                                   MinPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case TROP_MAX_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(Threshold(data)), 
                                                   Ninfinity, 
                                                   TropicalMaxPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case TROP_MIN_PLUS_MAT:{
       auto mosc = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(Threshold(data)), 
                                                   infinity, 
                                                   TropicalMinPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case PROJ_MAX_PLUS_MAT:{
       auto pmpmc = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
                                                         Ninfinity, 
                                                         ProjectiveMaxPlusMatrixType);
-      interface = new Interface<ProjectiveMaxPlusMatrix>(data, pmpmc);
+      interface = new Interface<ProjectiveMaxPlusMatrix>(data, pmpmc, old);
       break;
 
     }
@@ -381,17 +397,17 @@ InterfaceBase* InterfaceFromData (Obj data) {
                                                                       Period(data)), 
                                                   INTOBJ_INT(0), 
                                                   NaturalMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc);
+      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case MAT_OVER_PF:{
       auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(SizeOfFF(data)));
-      interface = new Interface<MatrixOverSemiring>(data, mopfc);
+      interface = new Interface<MatrixOverSemiring>(data, mopfc, old);
       break;
     }
     case PBR:{
       auto pbrc = new PBRConverter();
-      interface = new Interface<PartitionedBinaryRelation>(data, pbrc);
+      interface = new Interface<PartitionedBinaryRelation>(data, pbrc, old);
       break;
     }
     default: {
@@ -415,10 +431,12 @@ Obj SIMPLE_SIZE(Obj self, Obj data) {
   std::cout << "don't call this function with non-CC semigroups\n";
   return 0;
 }
-
+//FIXME redo everything else here like RIGHT_CAYLEY_GRAPH!!
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
-  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("right"))) { 
-    InterfaceFromData(data)->right_cayley_graph(data);
+  if (IsCCSemigroup(data)) {
+    if (! IsbPRec(data, RNamName("right"))) { 
+      InterfaceFromData(data)->right_cayley_graph(data);
+    }
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
@@ -427,6 +445,7 @@ Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
 
 Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
+    //TODO free _left 
     InterfaceFromData(data)->left_cayley_graph(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
@@ -436,6 +455,7 @@ Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
   if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
+    //TODO free _suffix and _first
     InterfaceFromData(data)->relations(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
@@ -465,6 +485,7 @@ Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
   if (IsCCSemigroup(data)) { 
     InterfaceFromData(data)->word(data, pos);
   } else {
+
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
   }
   return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
@@ -522,4 +543,14 @@ Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
   size_t pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   size_t nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   return (pos > nr ? True : False);
+}
+
+//new_data.gens is the generators to add to the generators of old_data
+
+Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data) {
+  if (TypeSemigroup(old_data) == UNKNOWN) { 
+    ErrorQuit("not yet implemented!!", 0L, 0L);
+  }
+  InterfaceFromData(new_data, InterfaceFromData(old_data)->semigroup());
+  return new_data;
 }

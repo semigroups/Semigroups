@@ -1,6 +1,7 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+* closure semigroup GAP kernel version 
 * try to find the full PBR monoid when n = 1, 2. 
 * tests for pbrs 
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)

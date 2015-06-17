@@ -14,6 +14,8 @@
 
 #include "src/compiled.h"
 
+#include "semigroups++/semigroups.h"
+
 extern "C" {
   Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
 }
@@ -24,27 +26,28 @@ extern "C" {
 
 class InterfaceBase {
   public:
-    virtual        ~InterfaceBase () {};
-    virtual void   enumerate (Obj limit) = 0;
-    virtual bool   is_done () = 0;
-    virtual void   find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
-    virtual size_t size () = 0;
-    virtual size_t simple_size () = 0;
-    virtual size_t current_size () = 0;
-    virtual size_t nrrules () = 0;
-    virtual void   right_cayley_graph (Obj data) = 0;
-    virtual void   left_cayley_graph (Obj data) = 0;
-    virtual void   elements (Obj data, Obj limit) = 0;
-    virtual Obj    position (Obj data, Obj x) = 0;
-    virtual void   word (Obj data, Obj pos) = 0;
-    virtual void   relations (Obj data) = 0;
+    virtual                ~InterfaceBase () {};
+    virtual void           enumerate (Obj limit) = 0;
+    virtual bool           is_done () = 0;
+    virtual void           find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
+    virtual size_t         size () = 0;
+    virtual size_t         simple_size () = 0;
+    virtual size_t         current_size () = 0;
+    virtual size_t         nrrules () = 0;
+    virtual void           right_cayley_graph (Obj data) = 0;
+    virtual void           left_cayley_graph (Obj data) = 0;
+    virtual void           elements (Obj data, Obj limit) = 0;
+    virtual Obj            position (Obj data, Obj x) = 0;
+    virtual void           word (Obj data, Obj pos) = 0;
+    virtual void           relations (Obj data) = 0;
+    virtual SemigroupBase* semigroup () = 0;
 };
 
 /*******************************************************************************
  * Instantiate an Interface from a generic semigroup data
 *******************************************************************************/
 
-InterfaceBase* InterfaceFromData (Obj data);
+InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old = nullptr);
 
 /*******************************************************************************
  * GAP level functions
@@ -73,5 +76,7 @@ Obj NR_RULES_SEMIGROUP (Obj self, Obj data);
 Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x);
 
 Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data);
+
+Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data);
 
 #endif
