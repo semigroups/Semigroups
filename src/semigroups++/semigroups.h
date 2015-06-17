@@ -135,13 +135,13 @@ class Semigroup : public SemigroupBase {
     // semigroup.
     // FIXME in the case everything in <gens> belongs to <old> we unnecessarily
     // initialize our data members here
-    Semigroup (Semigroup<T>* old, const std::vector<T*>& coll, size_t deg) :
+    Semigroup (Semigroup<T>* old, const std::vector<T*>& coll, size_t deg, bool report) :
         _degree     (deg), 
         _elements   (new std::vector<T*>()),
         _final      (),
         _first      (),
-        _found_one  (false), //FIXME old->found_one()
-        _gens       (old->_gens),
+        _found_one  (false),
+        _gens       (old->_gens), // FIXME what if the degree changed? 
         _genslookup (old->_genslookup),
         _lenindex   (), 
         _map        (), 
@@ -169,18 +169,21 @@ class Semigroup : public SemigroupBase {
       }
 
       _lenindex.push_back(0);
-      _id = old->_id; //TODO does this exist?
+      _id = static_cast<T*>(old->_id->copy()); //FIXME what if the degree changes?
       
       // add the old generators to new _elements
       for (size_t i = 0; i < old->_lenindex.at(1); i++) {
         T* x = old->_elements->at(i);
+        
+        is_one(*x);
         _elements->push_back(static_cast<T*>(x->copy()));
-        _first.push_back(old->_first.at(i));
-        _final.push_back(old->_final.at(i));
         _map.insert(std::make_pair(*_elements->back(), _nr));
         _prefix.push_back(_nr);
         _suffix.push_back(_nr);
         _nr++;
+        
+        _first.push_back(old->_first.at(i));
+        _final.push_back(old->_final.at(i));
         new_old.push_back(i);
         old_new.at(i) = i;
       }
@@ -188,20 +191,22 @@ class Semigroup : public SemigroupBase {
       // add the new generators <coll> to _elements
       for (size_t i = old->nrgens(); i < _nrgens; i++) {
         T* x = _gens.at(i);
-        // TODO is_one?
+        
+        is_one(*x);
         _elements->push_back(static_cast<T*>(x->copy()));
-        _first.push_back(i);
-        _final.push_back(i);
-        _genslookup.push_back(_nr);
         _map.insert(std::make_pair(*_elements->back(), _nr));
         _prefix.push_back(_nr);
         _suffix.push_back(_nr);
+        _genslookup.push_back(_nr);
         _nr++;
+        
+        _first.push_back(i);
+        _final.push_back(i);
         new_old.push_back(-1);
       }
       expand();
 
-      bool stop = (old_new.at(old->_pos - 1) != (size_t) -1 && _pos >= old_new.at(old->_pos - 1));
+      bool stop = (_pos > old_new.at(old->_pos - 1));
       T x(_degree, _gens.at(0)); 
       // pass in sample object to, for example, pass on the semiring for
       // MatrixOverSemiring
@@ -217,8 +222,9 @@ class Semigroup : public SemigroupBase {
               size_t k = old->_right->get(new_old.at(_pos), j);
               if (old_new.at(k) == (size_t) -1) { // it's new!
                 _elements->push_back(static_cast<T*>(old->_elements->at(k)->copy()));
-                _first.push_back(old->_first.at(k));
-                _final.push_back(old->_final.at(k));
+                is_one(*_elements->back());
+                _first.push_back(_first.at(_pos));
+                _final.push_back(j);
                 _map.insert(std::make_pair(*_elements->back(), _nr));
                 _prefix.push_back(_pos);
                 _reduced.set(_pos, j, true);
@@ -230,10 +236,15 @@ class Semigroup : public SemigroupBase {
                 }
                 new_old.push_back(k);
                 old_new.at(k) = _nr;
+                if (_nr == 723) {
+                  std::cout << "here 1\n";
+                }
                 _nr++;
               } else {
                 _right->set(_pos, j, old_new.at(k));
-                _nrrules++;
+                if (_reduced.get(s, j)) {
+                  _nrrules++;
+                }
               }
             } else { 
               // _elements.at(_pos) is not in old
@@ -277,6 +288,9 @@ class Semigroup : public SemigroupBase {
                   } else {
                     new_old.push_back(-1);
                   }
+                  if (_nr == 723) {
+                    std::cout << "here 2\n";
+                  }
                   _nr++;
                 }
               }
@@ -289,7 +303,7 @@ class Semigroup : public SemigroupBase {
                 _right->set(_pos, j, _genslookup.at(b));
               } else if (r >= _lenindex.at(1)) {
                 _right->set(_pos, j, _right->get(_left->get(_prefix.at(r), b),
-                      _final.at(r)));
+                                                 _final.at(r)));
               } else { 
                 _right->set(_pos, j, _right->get(_genslookup.at(b), _final.at(r)));
               } 
@@ -323,13 +337,23 @@ class Semigroup : public SemigroupBase {
                 } else {
                   new_old.push_back(-1);
                 }
+                if (_nr == 723) {
+                  std::cout << "here 3\n";
+                }
                 _nr++;
               }
             } 
           }
           _pos++;
-          stop = (old_new.at(old->_pos - 1) != (size_t) -1 && _pos >= old_new.at(old->_pos - 1));
+          stop = (_pos > old_new.at(old->_pos - 1));
         } // finished words of length <wordlen> + 1
+        
+        if (report) {
+          std::cout << "found " << _nr << " elements, ";
+          std::cout << _nrrules << " rules, ";
+          std::cout << "max word length " << max_word_length() << std::endl;
+
+        }
 
         if (_pos > _nr || _pos == _lenindex.at(_wordlen + 1)) {
           if (_wordlen == 0) {
@@ -350,12 +374,10 @@ class Semigroup : public SemigroupBase {
           }
           _wordlen++;
           expand();
+          if (report) {
+            std::cout << "found all words of length " << _wordlen << std::endl;
+          }
         }
-        /*if (report) {
-          std::cout << "found " << _nr << " elements, ";
-          std::cout << _nrrules << " rules, ";
-          std::cout << "max word length " << _wordlen + 1 << ", so far" << std::endl;
-        }*/
       }
       x.delete_data();
     }
@@ -370,6 +392,14 @@ class Semigroup : public SemigroupBase {
       delete _elements;
       _id->delete_data();
       delete _id;
+    }
+
+    size_t max_word_length () {
+      if (_nr > _lenindex.back()) { 
+        return _lenindex.size();
+      } else {
+        return _lenindex.size() - 1;
+      }
     }
 
     size_t degree () {
@@ -602,7 +632,7 @@ class Semigroup : public SemigroupBase {
                 _right->set(_pos, j, _genslookup.at(b));
               } else if (r >= _lenindex.at(1)) {
                 _right->set(_pos, j, _right->get(_left->get(_prefix.at(r), b),
-                                               _final.at(r)));
+                                                 _final.at(r)));
               } else { // TODO it would be nice to get rid of this case somehow
                 _right->set(_pos, j, _right->get(_genslookup.at(b), _final.at(r)));
               } 
@@ -706,7 +736,10 @@ class Semigroup : public SemigroupBase {
 
 
 template <typename T>
-Semigroup<T>* closure_semigroup (Semigroup<T>* old,  const std::vector<T*>& gens, size_t deg) {
+Semigroup<T>* closure_semigroup (Semigroup<T>* old,  
+                                 const std::vector<T*>& gens, 
+                                 size_t deg, 
+                                 bool report) {
 
   std::vector<T*> irr_gens;
 
@@ -721,7 +754,7 @@ Semigroup<T>* closure_semigroup (Semigroup<T>* old,  const std::vector<T*>& gens
   if (irr_gens.size() == 0) {
     return new Semigroup<T>(*old);
   } else {
-    return new Semigroup<T>(old, irr_gens, deg);
+    return new Semigroup<T>(old, irr_gens, deg, report);
   }
 }
 

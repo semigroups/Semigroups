@@ -96,7 +96,7 @@ class Interface : public InterfaceBase {
         _semigroup = new Semigroup<T>(gens_c, deg_c);
       } else {
         auto S = static_cast<Semigroup<T>*>(old);
-        _semigroup = closure_semigroup<T>(S, gens_c, deg_c);
+        _semigroup = closure_semigroup<T>(S, gens_c, deg_c, true);
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
         }
