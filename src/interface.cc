@@ -548,6 +548,7 @@ Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
 //new_data.gens is the generators to add to the generators of old_data
 
 Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data) {
+  std::cout << "CLOSURE_SEMIGROUP\n";
   if (TypeSemigroup(old_data) == UNKNOWN) { 
     ErrorQuit("not yet implemented!!", 0L, 0L);
   }

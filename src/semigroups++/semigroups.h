@@ -48,14 +48,14 @@ class Semigroup : public SemigroupBase {
     
     Semigroup (const Semigroup& copy) 
       : _degree(copy._degree),
-        _elements(copy._elements),
+        _elements(),
         _final(copy._final),
         _first(copy._first),
         _found_one(copy._found_one),
-        _gens(copy._gens),
-        _genslookup(copy._genslookup),  
-        _id(copy._id), 
-        _left(copy._left),
+        _gens(),
+        _genslookup(copy._genslookup),
+        _id(static_cast<T*>(copy._id->copy())),
+        _left(new RecVec<size_t>(*copy._left)),
         _lenindex(copy._lenindex),
         _map(copy._map),         
         _nr(copy._nr),
@@ -65,10 +65,17 @@ class Semigroup : public SemigroupBase {
         _pos_one(copy._pos_one),
         _prefix(copy._prefix),
         _reduced(copy._reduced),
-        _right(copy._right),
+        _right(new RecVec<size_t>(*copy._right)),
         _suffix(copy._suffix),
         _wordlen(copy._wordlen)
-    { }
+    { 
+      for (size_t i = 0; i < _nrgens; i++) {
+        _elements->push_back(static_cast<T*>(copy._gens.at(i)->copy()));
+      }
+      for (size_t i = 0; i < copy._elements->size(); i++) {
+        _elements->push_back(static_cast<T*>(copy._elements->at(i)->copy()));
+      }
+    }
 
     Semigroup (std::vector<T*> gens, size_t degree) : 
       _degree     (degree),

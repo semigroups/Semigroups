@@ -695,10 +695,10 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
-  rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr,
-  graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1,
-  orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos,
+  local data, T, t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup,
+  old_lookup, rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb,
+  new_nr, old_nr, graph, old_graph, reps, lambdarhoht, rholookup, repslookup,
+  orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos,
   new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens,
   nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new,
   htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old,
@@ -709,7 +709,42 @@ function(s, coll, opts)
          " semigroup,");
     return s;
   elif not IsActingSemigroup(s) then
-    return Semigroup(s, coll, opts);
+    # FIXME! clean this up!! Separate method for acting and generic!!!
+    if IsTransformationSemigroup(s) then 
+      # or IsPartialPermSemigroup(S) 
+      # or IsBipartitionSemigroup(S)
+      # or IsBooleanMatSemigroup(S) 
+      # or IsPartitionedBinaryRelationSemigroup(S) 
+      # or (IsMatrixOverSemiringSemigroup(S) 
+      #     and ((not IsMatrixOverPrimeFieldSemigroup(S)) 
+      #           or IsPrimeField(BaseField(Representative(S))))) then
+      data := rec();
+      data.gens := ShallowCopy(coll);
+      data.nr := 0;
+      data.pos := 0;
+      # the degree is the length of the std::vector required to hold the object
+      if IsTransformationSemigroup(s) then
+        data.degree := Maximum(DegreeOfTransformationSemigroup(s),
+        DegreeOfTransformationCollection(coll));
+        #elif IsPartialPermSemigroup(S) then
+        #  data.degree := DegreeOfPartialPermSemigroup(S);
+        #elif IsMatrixOverSemiringSemigroup(S) then 
+        #  data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
+        #elif IsBipartitionSemigroup(S) then 
+        #  data.degree := 2 * DegreeOfBipartitionSemigroup(S);
+        #elif IsPartitionedBinaryRelationSemigroup(S) then 
+        #  data.degree := 2 * DegreeOfPartitionedBinaryRelationSemigroup(S);
+      fi;
+      data.report := SEMIGROUPS_OptionsRec(s).report;
+      data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(s))];
+      data := Objectify(NewType(FamilyObj(s), IsGenericSemigroupData and IsMutable
+              and IsAttributeStoringRep), data);
+      CLOSURE_SEMIGROUP(GenericSemigroupData(s), data);
+      T := Semigroup(data!.gens);
+      SetGenericSemigroupData(T, data);
+      return T;
+    fi;
+    Error("not yet implemented");
   fi;
 
   # init the semigroup or monoid

@@ -194,44 +194,7 @@ fail
 gap> GroupOfUnits(s);
 <trivial transformation group>
 
-#T# ClosureTest7
-gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
->   Transformation( [ 4, 2, 1, 5, 5 ] ),
->   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
-gap> s:=Monoid(gens[1], gens[2]);
-<transformation monoid on 5 pts with 2 generators>
-gap> s:=ClosureSemigroup(s, gens[3]);
-<transformation monoid on 5 pts with 3 generators>
-gap> Size(s);
-732
-gap> IsRegularSemigroup(s);
-true
-gap> MultiplicativeZero(s);
-fail
-gap> GroupOfUnits(s);
-<trivial transformation group>
-
 #T# ClosureTest8
-gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
-> Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 1, 1, 3 ] ),
-> Transformation( [ 3, 3, 4, 1 ] ) ];;
-gap> s:=Monoid(gens[3]);
-<commutative transformation monoid on 4 pts with 1 generator>
-gap> for i in [1..Length(gens)] do
-> s:=ClosureSemigroup(s, gens[i]); Size(s);
-> od;
-gap> s;
-<transformation monoid of size 62, on 4 pts with 4 generators>
-gap> Size(s);
-62
-gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
-10
-15
-6
-20
-
-#T# ClosureTest9
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
