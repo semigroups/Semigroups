@@ -694,7 +694,7 @@ end);
 # coll should consist of elements not in s
 
 InstallGlobalFunction(ClosureSemigroupNC,
-function(s, coll, opts)
+function(S, coll, opts)
   local data, T, t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup,
   old_lookup, rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb,
   new_nr, old_nr, graph, old_graph, reps, lambdarhoht, rholookup, repslookup,
@@ -707,67 +707,51 @@ function(s, coll, opts)
   if coll = [] then
     Info(InfoSemigroups, 2, "every element in the collection belong to the ",
          " semigroup,");
-    return s;
-  elif not IsActingSemigroup(s) then
-    # FIXME! clean this up!! Separate method for acting and generic!!!
-    if IsTransformationSemigroup(s) then 
-      # or IsPartialPermSemigroup(S) 
-      # or IsBipartitionSemigroup(S)
-      # or IsBooleanMatSemigroup(S) 
-      # or IsPartitionedBinaryRelationSemigroup(S) 
-      # or (IsMatrixOverSemiringSemigroup(S) 
-      #     and ((not IsMatrixOverPrimeFieldSemigroup(S)) 
-      #           or IsPrimeField(BaseField(Representative(S))))) then
+    return S;
+  # separate methods for acting, IsCCSemigroup, non-cpp semigroups
+  elif not IsActingSemigroup(S) then 
+    if SEMIGROUPS_IsCCSemigroup(S) then 
       data := rec();
       data.gens := ShallowCopy(coll);
       data.nr := 0;
       data.pos := 0;
       # the degree is the length of the std::vector required to hold the object
-      if IsTransformationSemigroup(s) then
-        data.degree := Maximum(DegreeOfTransformationSemigroup(s),
-        DegreeOfTransformationCollection(coll));
-        #elif IsPartialPermSemigroup(S) then
-        #  data.degree := DegreeOfPartialPermSemigroup(S);
-        #elif IsMatrixOverSemiringSemigroup(S) then 
-        #  data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
-        #elif IsBipartitionSemigroup(S) then 
-        #  data.degree := 2 * DegreeOfBipartitionSemigroup(S);
-        #elif IsPartitionedBinaryRelationSemigroup(S) then 
-        #  data.degree := 2 * DegreeOfPartitionedBinaryRelationSemigroup(S);
-      fi;
-      data.report := SEMIGROUPS_OptionsRec(s).report;
-      data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(s))];
-      data := Objectify(NewType(FamilyObj(s), IsGenericSemigroupData and IsMutable
-              and IsAttributeStoringRep), data);
-      CLOSURE_SEMIGROUP(GenericSemigroupData(s), data);
+      data.degree := SEMIGROUPS_DegreeOfSemigroup(S, coll);
+      data.report := SEMIGROUPS_OptionsRec(S).report;
+      data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
+                                              and IsAttributeStoringRep), data);
+      CLOSURE_SEMIGROUP(GenericSemigroupData(S), data);
       T := Semigroup(data!.gens);
       SetGenericSemigroupData(T, data);
+      data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
       return T;
+    else
+      Error("not yet implemented"); #TODO implement it!!
+      return;
     fi;
-    Error("not yet implemented");
   fi;
 
   # init the semigroup or monoid
-  if IsMonoid(s) and One(coll) = One(s) then
+  if IsMonoid(S) and One(coll) = One(S) then
     # it can be that these One's differ, and hence we shouldn't call Monoid
     # here
-    t := Monoid(s, coll, opts);
+    t := Monoid(S, coll, opts);
   else
-    t := Semigroup(s, coll, opts);
+    t := Semigroup(S, coll, opts);
   fi;
 
   # if nothing is known about s, then return t
-  if not HasLambdaOrb(s) or IsSemigroupIdeal(s) then
+  if not HasLambdaOrb(S) or IsSemigroupIdeal(S) then
     return t;
   fi;
 
   # set up lambda orb for t
-  old_o := LambdaOrb(s);
+  old_o := LambdaOrb(S);
   o := StructuralCopy(old_o);
-  rho_o := StructuralCopy(RhoOrb(s));
+  rho_o := StructuralCopy(RhoOrb(S));
 
-  if IsTransformationSemigroup(s) then
-    old_deg := DegreeOfTransformationSemigroup(s);
+  if IsTransformationSemigroup(S) then
+    old_deg := DegreeOfTransformationSemigroup(S);
     if old_deg < DegreeOfTransformationSemigroup(t) then
       SEMIGROUPS_ChangeDegree(o, old_deg, t);
       SEMIGROUPS_ChangeDegree(rho_o, old_deg, t);
@@ -796,7 +780,7 @@ function(s, coll, opts)
 
   SetLambdaOrb(t, o);
 
-  if not HasSemigroupData(s) or SemigroupData(s)!.pos = 0 then
+  if not HasSemigroupData(S) or SemigroupData(S)!.pos = 0 then
     return t;
   fi;
 
@@ -832,7 +816,7 @@ function(s, coll, opts)
 
   # get new and old R-rep orbit data
   new_data := SemigroupData(t);
-  old_data := SemigroupData(s);
+  old_data := SemigroupData(S);
   max_rank := MaximumList(List(coll, x -> ActionRank(t)(x)));
 
   ht := new_data!.ht;

@@ -17,6 +17,50 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
+InstallMethod(SEMIGROUPS_IsCCSemigroup, "for a semigroup",
+[IsSemigroup], 
+function(S) 
+  return IsTransformationSemigroup(S)
+           or IsPartialPermSemigroup(S) 
+           or IsBipartitionSemigroup(S)
+           or IsBooleanMatSemigroup(S) 
+           or IsPartitionedBinaryRelationSemigroup(S) 
+           or IsMatrixOverSemiringSemigroup(S);
+end);
+
+InstallGlobalFunction(SEMIGROUPS_DegreeOfSemigroup,
+function(arg) 
+  local S, coll;
+
+  S := arg[1];
+  if Length(arg) = 1 then 
+    coll := [Representative(S)];
+  elif Length(arg) = 2 then 
+    coll := arg[2];
+  else
+    Error();
+    return;
+  fi;
+
+  if IsTransformationSemigroup(S) then
+    return Maximum(DegreeOfTransformationSemigroup(S),
+                   DegreeOfTransformationCollection(coll));
+  elif IsPartialPermSemigroup(S) then
+    return Maximum(DegreeOfPartialPermSemigroup(S), 
+                   DegreeOfPartialPermCollection(coll), 
+                   CodegreeOfPartialPermCollection(coll));
+  elif IsMatrixOverSemiringSemigroup(S) then 
+    return DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
+  elif IsBipartitionSemigroup(S) then 
+    return 2 * DegreeOfBipartitionSemigroup(S);
+  elif IsPartitionedBinaryRelationSemigroup(S) then 
+    return 2 * DegreeOfPartitionedBinaryRelationSemigroup(S);
+  else
+    Error();
+    return;
+  fi;
+end);
+
 # different method for ideals
 
 InstallMethod(Enumerator, "for a generic semigroup with generators",
@@ -201,32 +245,13 @@ InstallMethod(GenericSemigroupData, "for a semigroup",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
-  # this is required for the C++ version
-  # TODO declare a filter IsCPPSemigroup or similar for this.
-  if IsTransformationSemigroup(S) 
-      or IsPartialPermSemigroup(S) 
-      or IsBipartitionSemigroup(S)
-      or IsBooleanMatSemigroup(S) 
-      or IsPartitionedBinaryRelationSemigroup(S) 
-      or (IsMatrixOverSemiringSemigroup(S) 
-          and ((not IsMatrixOverPrimeFieldSemigroup(S)) 
-                or IsPrimeField(BaseField(Representative(S))))) then
+  if SEMIGROUPS_IsCCSemigroup(S) then 
     data := rec();
     data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr := 0;
     data.pos := 0;
     # the degree is the length of the std::vector required to hold the object
-    if IsTransformationSemigroup(S) then
-      data.degree := DegreeOfTransformationSemigroup(S);
-    elif IsPartialPermSemigroup(S) then
-      data.degree := DegreeOfPartialPermSemigroup(S);
-    elif IsMatrixOverSemiringSemigroup(S) then 
-      data.degree := DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
-    elif IsBipartitionSemigroup(S) then 
-      data.degree := 2 * DegreeOfBipartitionSemigroup(S);
-    elif IsPartitionedBinaryRelationSemigroup(S) then 
-      data.degree := 2 * DegreeOfPartitionedBinaryRelationSemigroup(S);
-    fi;
+    data.degree := SEMIGROUPS_DegreeOfSemigroup(S);
     data.report := SEMIGROUPS_OptionsRec(S).report;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable

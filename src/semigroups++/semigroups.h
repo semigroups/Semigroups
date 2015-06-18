@@ -48,7 +48,7 @@ class Semigroup : public SemigroupBase {
     
     Semigroup (const Semigroup& copy) 
       : _degree(copy._degree),
-        _elements(),
+        _elements(new std::vector<T*>()),
         _final(copy._final),
         _first(copy._first),
         _found_one(copy._found_one),
@@ -69,8 +69,9 @@ class Semigroup : public SemigroupBase {
         _suffix(copy._suffix),
         _wordlen(copy._wordlen)
     { 
+      std::cout << "copying C++ semigroup object!!!\n";
       for (size_t i = 0; i < _nrgens; i++) {
-        _elements->push_back(static_cast<T*>(copy._gens.at(i)->copy()));
+        _gens.push_back(static_cast<T*>(copy._gens.at(i)->copy()));
       }
       for (size_t i = 0; i < copy._elements->size(); i++) {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->copy()));
@@ -147,7 +148,7 @@ class Semigroup : public SemigroupBase {
         _map        (), 
         _nr         (0), 
         _nrgens     (old->nrgens() + coll.size()),
-        _nrrules    (0), 
+        _nrrules    (old->nrgens() - old->_lenindex.at(1)), 
         _pos        (0), 
         _pos_one    (0), 
         _prefix     (), 
@@ -236,13 +237,10 @@ class Semigroup : public SemigroupBase {
                 }
                 new_old.push_back(k);
                 old_new.at(k) = _nr;
-                if (_nr == 723) {
-                  std::cout << "here 1\n";
-                }
                 _nr++;
               } else {
                 _right->set(_pos, j, old_new.at(k));
-                if (_reduced.get(s, j)) {
+                if (_wordlen == 0 || _reduced.get(s, j)) {
                   _nrrules++;
                 }
               }
@@ -287,9 +285,6 @@ class Semigroup : public SemigroupBase {
                     old_new.at(it->second) = _nr;
                   } else {
                     new_old.push_back(-1);
-                  }
-                  if (_nr == 723) {
-                    std::cout << "here 2\n";
                   }
                   _nr++;
                 }
@@ -336,9 +331,6 @@ class Semigroup : public SemigroupBase {
                   old_new.at(it->second) = _nr;
                 } else {
                   new_old.push_back(-1);
-                }
-                if (_nr == 723) {
-                  std::cout << "here 3\n";
                 }
                 _nr++;
               }
@@ -513,7 +505,9 @@ class Semigroup : public SemigroupBase {
     std::vector<Relation>* relations () {
       enumerate(-1);
       std::vector<Relation>* relations = new std::vector<Relation>();
-      size_t nr = _nrrules;
+      int nr = (int) _nrrules;
+      
+      size_t tmp = 0;
 
       for (size_t i = 1; i < _gens.size(); i++) {
         if (_genslookup.at(i) <= _genslookup.at(i - 1)) {
@@ -521,7 +515,9 @@ class Semigroup : public SemigroupBase {
           relations->push_back(make_relation(i, _genslookup.at(i)));
         }
       }
-
+      std::cout << "nr of relations = " << relations->size() - tmp << "\n";
+      tmp = relations->size();
+      
       size_t i;
       for (i = 0; i < _lenindex.at(1); i++) {
         for (size_t j = 0; j < _reduced.nrcols(); j++) {
@@ -531,7 +527,9 @@ class Semigroup : public SemigroupBase {
           }
         }
       }
-
+      std::cout << "nr of relations = " << relations->size() - tmp << "\n";
+      tmp = relations->size();
+      
       for (; i < _reduced.nrrows(); i++) {
         for (size_t j = 0; j < _reduced.nrcols(); j++) {
           if (_reduced.get(_suffix.at(i), j) && !_reduced.get(i, j)) {
@@ -540,6 +538,8 @@ class Semigroup : public SemigroupBase {
           }
         }
       }
+      std::cout << "nr of relations = " << relations->size() - tmp << "\n";
+      
       std::cout << "_nrrules = " << _nrrules << "\n";
       assert(nr == 0);
       return relations;
@@ -737,24 +737,24 @@ class Semigroup : public SemigroupBase {
 
 template <typename T>
 Semigroup<T>* closure_semigroup (Semigroup<T>* old,  
-                                 const std::vector<T*>& gens, 
+                                 const std::vector<T*>& coll, 
                                  size_t deg, 
                                  bool report) {
 
-  std::vector<T*> irr_gens;
+  std::vector<T*> irr_coll;
 
-  // check if which of <gens> belong to <old>
-  for (size_t i = 0; i < gens.size(); i++) {
-    if (! old->test_membership(gens.at(i))) { 
-      //FIXME we should just check if gens.at(i) belongs to the so far enumerated semigroup
-      irr_gens.push_back(gens.at(i));
+  // check if which of <coll> belong to <old>
+  for (size_t i = 0; i < coll.size(); i++) {
+    if (! old->test_membership(coll.at(i))) { 
+      //FIXME we should just check if coll.at(i) belongs to the so far enumerated semigroup
+      irr_coll.push_back(coll.at(i));
     }
   }
 
-  if (irr_gens.size() == 0) {
+  if (irr_coll.size() == 0) {
     return new Semigroup<T>(*old);
   } else {
-    return new Semigroup<T>(old, irr_gens, deg, report);
+    return new Semigroup<T>(old, irr_coll, deg, report);
   }
 }
 

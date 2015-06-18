@@ -83,6 +83,7 @@ DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
+
 # undoc
 
 DeclareProperty("IsBinaryRelationSemigroup", IsSemigroup);

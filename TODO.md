@@ -1,6 +1,31 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+This works ok:
+
+    gap> S := AsPartialPermSemigroup(AlternatingGroup(8));  
+    <inverse partial perm semigroup on 8 pts with 2 generators>
+    gap> I := SemigroupIdeal(SymmetricInverseSemigroup(8), PartialPerm([1..7]));
+    <inverse partial perm semigroup ideal on 8 pts with 1 generator>
+    gap> GeneratorsOfSemigroup(I);
+    [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7 ]>, (1,2,3,4,5,6,7),
+    [5,2,7,4,1,6,3,8], [7,6,5,4,3,2,1,8], [3,6,1,4,7,2,5,8], [8,7,6,5,4,3,2,1],
+    [8,4](1,5)(2,6)(3,7), [6,4,2,8](1,7,5,3), [2,3,4,5,6,7,8](1),
+    (1,2)(3)(4)(5)(6)(7), [8,3,6,1,4,7,2,5], [8,1,2,3,4,5,6,7],
+    [8,5,2,7,4,1,6,3], [1,2,3,4,5,6,7,8], [4,8](1,5)(2,6)(3,7),
+    [8,2,4,6](1,3,5,7), [8,7,6,5,4,3,2](1) ]
+    gap> S := Semigroup(S, I);
+    <partial perm semigroup on 8 pts with 19 generators>
+    gap> Size(S);
+    1421569
+ 
+But this:
+
+    gap> S := Semigroup(AsPartialPermSemigroup(AlternatingGroup(8)),
+    > SemigroupIdeal(SymmetricInverseMonoid(8), PartialPerm([1..7])));
+    
+just runs forever.
+
 * closure semigroup GAP kernel version 
 * try to find the full PBR monoid when n = 1, 2. 
 * tests for pbrs 
