@@ -95,8 +95,10 @@ class Interface : public InterfaceBase {
       if (old == nullptr) {
         _semigroup = new Semigroup<T>(gens_c, deg_c);
       } else {
-        auto S = static_cast<Semigroup<T>*>(old);
-        _semigroup = closure_semigroup<T>(S, gens_c, deg_c, true);
+        std::cout << "HERE!\n";
+        Semigroup<T>* S = static_cast<Semigroup<T>*>(old); 
+        _semigroup = new Semigroup<T>(*S, gens_c.size()); //FIXME what if duplicate gens
+        _semigroup->closure(S, gens_c, deg_c, true);
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
         }

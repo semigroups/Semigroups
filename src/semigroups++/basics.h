@@ -24,15 +24,16 @@ class RecVec {
           this->expand(nrrows);
         }
         
-        RecVec (const RecVec& copy) : _vec(copy._vec),
-                                      _nrcols(copy._nrcols), 
-                                      _nrrows(copy._nrrows) {}
+        RecVec (const RecVec& copy) 
+          : _vec(copy._vec),
+            _nrcols(copy._nrcols), 
+            _nrrows(copy._nrrows) {}
 
         RecVec& operator= (RecVec const& copy) = delete;
         
         ~RecVec() {}
         
-        T inline get (size_t i, size_t j) {
+        T inline get (size_t i, size_t j) const {
           assert(i < _nrrows && j  < _nrcols);
           return _vec.at(i * _nrcols + j); 
         }
@@ -42,18 +43,18 @@ class RecVec {
           _vec.at(i * _nrcols + j) = val; 
         }
 
-        void inline expand (size_t nr = 1) {
+        void inline expand (size_t nr = 1) { // expand rows
           _nrrows += nr;
           for (size_t i = 0; i < _nrcols * nr; i++) {
             _vec.push_back(0);
           }
         }
-
+          
         size_t size () {
           return _vec.size();
         }
 
-        std::vector<T> vector () {
+        std::vector<T> vector () const {
           return _vec;
         }
         
@@ -61,10 +62,22 @@ class RecVec {
           return _nrrows;
         }
         
+        void set_nrrows (size_t nr) {
+          _nrrows = nr;
+        }
+        
         size_t nrcols () {
           return _nrcols;
         }
+        
+        void push_back(T val) {
+          _vec.push_back(val);
+        }
 
+        void reserve (size_t capacity) {
+          _vec.reserve(capacity);
+        }
+        
       private:
 
         std::vector<T> _vec;

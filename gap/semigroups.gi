@@ -642,7 +642,7 @@ function(S, coll, opts)
   opts.small := false;
 
   return ClosureSemigroupNC(S,
-                            Filtered(coll, x -> not x in S),
+                            Filtered(coll, x -> not x in S), # FIXME don't do this
                             SEMIGROUPS_ProcessOptionsRec(opts));
 end);
 
