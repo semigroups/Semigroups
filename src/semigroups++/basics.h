@@ -46,7 +46,7 @@ class RecVec {
         void inline expand (size_t nr = 1) { // expand rows
           _nrrows += nr;
           for (size_t i = 0; i < _nrcols * nr; i++) {
-            _vec.push_back(-1);
+            _vec.push_back(0);
           }
         }
           

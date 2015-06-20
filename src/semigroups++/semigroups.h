@@ -93,8 +93,8 @@ class Semigroup : public SemigroupBase {
         }
         for (size_t j = 0; j < nr_new_gens; j++) {
           _reduced.push_back(false);
-          _right->push_back(-1);
-          _left->push_back(-1);
+          _right->push_back(0);
+          _left->push_back(0);
         }
       }
       _left->set_nrrows(_nr);
@@ -412,9 +412,6 @@ class Semigroup : public SemigroupBase {
         size_t old_nr_elements = _nr;
         while (_pos < _lenindex.at(_wordlen + 1) && !stop) {
           size_t i = _index.at(_pos);
-          if (i == 55) {
-            std::cout << "here 1!\n";
-          }
           size_t b = _first.at(i);
           size_t s = _suffix.at(i);
           for (size_t j = 0; j < _nrgens; j++) {
