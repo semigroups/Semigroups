@@ -721,7 +721,7 @@ function(S, coll, opts)
       data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                               and IsAttributeStoringRep), data);
       CLOSURE_SEMIGROUP(GenericSemigroupData(S), data);
-      T := Semigroup(data!.gens);
+      T := Semigroup(data!.gens, opts);
       SetGenericSemigroupData(T, data);
       data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
       return T;

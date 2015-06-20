@@ -253,7 +253,8 @@ gap> S := InverseSemigroup(
 >  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 2, 3, 4, 5, 6, 7, 1, 8 ] ),
 >  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 1, 2, 3, 4, 5, 7, 8, 6 ] ),
 >  PartialPerm( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 6, 7, 1, 2, 3, 4 ] ),
->  PartialPerm( [ 1, 2, 3, 4, 5, 6, 8 ], [ 2, 3, 4, 5, 6, 7, 1 ] ) );;
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6, 8 ], [ 2, 3, 4, 5, 6, 7, 1 ] ), 
+>  rec(generic := true));;
 gap> Size(S);
 1421569
 gap> T := ClosureSemigroup(S, AsPartialPerm((1,2), 8));
@@ -261,7 +262,7 @@ gap> T := ClosureSemigroup(S, AsPartialPerm((1,2), 8));
 gap> Size(T);
 1441729
 gap> GenericSemigroupData(T);
-<closed semigroup data with 1441729 elements,
+<closed semigroup data with 1441729 elements, 
 1241401 relations, max word length 17>
 
 #T# ClosureSemigroup: testing for generic algorithm performance, 2/?
@@ -283,13 +284,11 @@ gap> for i in [1 .. 10] do
 gap> Size(S);
 65536
 gap> GenericSemigroupData(S);
-<closed semigroup data with 65536 elements, 45409 relations, max word length
+<closed semigroup data with 65536 elements, 45409 relations, max word length 
 15>
 
 # TODO check in a smaller example that the
 # presentation is correct
-
-
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(i);
 gap> Unbind(s);

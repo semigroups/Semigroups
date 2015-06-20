@@ -574,14 +574,13 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
   comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, n);
   SET_LEN_PLIST(comps, 0);
   
-  sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
-  lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
-
   hindex = 0;
   rindex = 0;
   init = 0;
   
   for(i=1;i<=n;i++){
+    sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
+    lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
     j = sorted[i];
     k = INT_INTOBJ(ELM_PLIST(rightid, j));
     if(k > rindex){

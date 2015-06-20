@@ -328,9 +328,6 @@ class Semigroup : public SemigroupBase {
       return relations;
     }
    
-    void enumerate (size_t limit) {
-      enumerate(limit, false);
-    }
     
     size_t simple_size () {
       T x(_degree, _gens.at(0)); 
@@ -353,6 +350,10 @@ class Semigroup : public SemigroupBase {
       }
       x.delete_data();
       return _nr;
+    }
+    
+    void enumerate (size_t limit) {
+      enumerate(limit, false);
     }
 
     void enumerate (size_t limit, bool report) {
@@ -510,6 +511,8 @@ class Semigroup : public SemigroupBase {
       _nrgens = _nrgens + irr_coll.size();
       _lenindex.push_back(0);
       _index.reserve(old->_nr);
+      // the number of duplicate generators in <old>
+      _nrrules = old->nrgens() - old->_lenindex.at(1); 
       size_t nr_old_left = old->_nr;
 
       std::vector<bool> old_new; // have we seen _elements->at(i) yet in new?
@@ -550,9 +553,8 @@ class Semigroup : public SemigroupBase {
       // pass in sample object to, for example, pass on the semiring for
       // MatrixOverSemiring
 
-      // process up to old->_index.at(old->_pos -1) 
-      // i.e. multiply up to the last position in <old> which was multiplied
-      // by all of the old generators in <old>, by all of the old and new generators
+      // Multiply all elements by all generators (old and new) until we have
+      // all of the elements of <old> in our new data structure. 
       while (nr_old_left > 0) {
         old_nr_elements = _nr;
         while (_pos < _lenindex.at(_wordlen + 1) && nr_old_left > 0) {
@@ -578,7 +580,9 @@ class Semigroup : public SemigroupBase {
                 _index.push_back(k);
                 old_new.at(k) = true;
                 nr_old_left--;
-              } 
+              } else if (s == (size_t) -1 || _reduced.get(s, j)) {
+                _nrrules++;
+              }
             }
             for (size_t j = old->nrgens(); j < nrgens(); j++) {
               closure_update(i, j, b, s, x, old, old_new, nr_old_left);

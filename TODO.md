@@ -26,13 +26,12 @@ But this:
     
 just runs forever.
 
-* fix `nrrules`
 * change of degree in closure in C++
 * test `ClosureSemigroup` for more than one new generator
 * `SEMIGROUPS_AddGenerators`
 * closure of generic inverse semigroups
 * closure semigroup GAP kernel version (just use `Semigroup`)
-* try to find the full PBR monoid when n = 1, 2. 
+
 * tests for pbrs 
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
 * finish partitioned binary relation stuff (more tests and C++)
@@ -54,6 +53,8 @@ just runs forever.
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 #DONE
+* try to find the full PBR monoid when n = 1, 2. 
+* fix `nrrules`
 * `AsBipartitionSemigroup`, `AsPBRSemigroup`
 * Boolean matrix stuff (`CanonicalRep` and things from semigroups-dev)
 * replace `Permuted(gens, Random(SymmetricGroup...)` by `Shuffle`
