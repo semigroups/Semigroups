@@ -20,8 +20,7 @@ gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 >  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
 >  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
 >  Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
-gap> s:=Monoid(gens[1]);; Size(s);
-5
+gap> s:=Monoid(gens[1]);; Size(s);;
 gap> for i in [2..4] do 
 > s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
@@ -237,8 +236,7 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
 >  Transformation( [ 4, 1, 2, 1 ] ) ];;
-gap> s:=Monoid(gens[1]);             
-<commutative transformation monoid on 4 pts with 1 generator>
+gap> s:=Monoid(gens[1]);;
 gap> for i in [1..Length(gens)] do
 > s:=ClosureSemigroup(s, gens[i]);
 > od;
@@ -260,7 +258,7 @@ gap> Size(S);
 1421569
 gap> T := ClosureSemigroup(S, AsPartialPerm((1,2), 8));
 <partial perm semigroup on 8 pts with 7 generators>
-gap Size(T);
+gap> Size(T);
 1441729
 gap> GenericSemigroupData(T);
 <closed semigroup data with 1441729 elements,
