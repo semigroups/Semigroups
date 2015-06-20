@@ -55,9 +55,9 @@ class Semigroup : public SemigroupBase {
         _gens(),
         _genslookup(copy._genslookup),
         _id(static_cast<T*>(copy._id->copy())),
-        _index(copy._index),
+        _index(),
         _left(new RecVec<size_t>(copy._nrgens + nr_new_gens)),
-        _lenindex(copy._lenindex),
+        _lenindex(),
         _map(),
         _nr(copy._nr),
         _nrgens(copy._nrgens),
@@ -74,6 +74,8 @@ class Semigroup : public SemigroupBase {
       for (size_t i = 0; i < _nrgens; i++) {
         _gens.push_back(static_cast<T*>(copy._gens.at(i)->copy()));
       }
+      _elements->reserve(copy._nr);
+      _map.reserve(copy._nr);
       for (size_t i = 0; i < copy._elements->size(); i++) {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->copy()));
         _map.insert(std::make_pair(*_elements->back(), i));
@@ -140,14 +142,15 @@ class Semigroup : public SemigroupBase {
           _genslookup.at(i) = it->second; //TODO push_back here instead
           _nrrules++;
         } else {
-          is_one(*x);
+          is_one(*x, _nr);
           _elements->push_back(static_cast<T*>(x->copy()));
           _first.push_back(i);
           _final.push_back(i);
           _genslookup.at(i) = _nr;
           _map.insert(std::make_pair(*_elements->back(), _nr));
-          _prefix.push_back(_nr);
-          _suffix.push_back(_nr);
+          _prefix.push_back(-1);
+          _suffix.push_back(-1);
+          _index.push_back(_nr);
           _nr++;
         }
       }
@@ -174,12 +177,12 @@ class Semigroup : public SemigroupBase {
         return _lenindex.size() - 1;
       }
     }
-
+    
     size_t degree () {
       return _degree;
     }
    
-    size_t nrgens () {
+    size_t nrgens () const {
       return _gens.size();
     }
     
@@ -246,7 +249,7 @@ class Semigroup : public SemigroupBase {
       return _left;
     }
     
-    Word* trace (size_t pos) { // trace the spanning tree
+    Word* trace (size_t pos) { // trace the spanning tree, where <pos> is an index
       // caching the words seems to be slower ....
       /*if (_words.empty()) {
         _words.reserve(_elements.size());
@@ -272,17 +275,18 @@ class Semigroup : public SemigroupBase {
       return word1;*/
 
       Word* word = new Word();
-      while (pos >= _lenindex.at(1)) {
+      pos = _index.at(pos);
+      while (pos != (size_t) -1) {
         word->push_back(_first.at(pos));
         pos = _suffix.at(pos);
       }
-      word->push_back(_genslookup.at(pos));
       return word;
     }
     
     // TODO make this next_relation with gets handed in std::vector reference
     // and which just puts the [element-index, generators, element-index] into
     // the std::vector.
+    // FIXME this is probably broken in the new setup with the index 
     std::vector<Relation>* relations () {
       enumerate(-1);
       std::vector<Relation>* relations = new std::vector<Relation>();
@@ -368,21 +372,24 @@ class Semigroup : public SemigroupBase {
       if (_pos < _lenindex.at(1)) {
         while (_pos < _lenindex.at(1)) { 
           for (size_t j = 0; j < _nrgens; j++) {
-            x.redefine(_elements->at(_pos), _gens.at(j)); 
+            //assert(_nr == _index.size());
+            size_t i = _index.at(_pos);
+            x.redefine(_elements->at(i), _gens.at(j)); 
             auto it = _map.find(x); 
 
             if (it != _map.end()) {
-              _right->set(_pos, j, it->second);
+              _right->set(i, j, it->second);
               _nrrules++;
             } else {
-              is_one(x);
+              is_one(x, _nr);
               _elements->push_back(static_cast<T*>(x.copy()));
-              _first.push_back(_first.at(_pos));
+              _first.push_back(_first.at(i));
               _final.push_back(j);
+              _index.push_back(_nr);
               _map.insert(std::make_pair(*_elements->back(), _nr));
-              _prefix.push_back(_pos);
-              _reduced.set(_pos, j, true);
-              _right->set(_pos, j, _nr);
+              _prefix.push_back(i);
+              _reduced.set(i, j, true);
+              _right->set(i, j, _nr);
               _suffix.push_back(_genslookup.at(j));
               _nr++;
             }
@@ -390,9 +397,9 @@ class Semigroup : public SemigroupBase {
           _pos++;
         }
         for (size_t i = 0; i < _pos; i++) { 
-          size_t b = _final.at(i); 
+          size_t b = _final.at(_index.at(i)); 
           for (size_t j = 0; j < _nrgens; j++) { 
-            _left->set(i, j, _right->get(_genslookup.at(j), b));
+            _left->set(_index.at(i), j, _right->get(_genslookup.at(j), b));
           }
         }
         _wordlen++;
@@ -404,36 +411,39 @@ class Semigroup : public SemigroupBase {
 
       while (_pos < _nr && !stop) {
         while (_pos < _lenindex.at(_wordlen + 1) && !stop) {
-          size_t b = _first.at(_pos);
-          size_t s = _suffix.at(_pos); 
+          size_t i = _index.at(_pos);
+          size_t b = _first.at(i);
+          size_t s = _suffix.at(i); 
           for (size_t j = 0; j < _nrgens; j++) {
+            //assert(_nr == _index.size());
             if (!_reduced.get(s, j)) {
               size_t r = _right->get(s, j);
               if (_found_one && r == _pos_one) {
-                _right->set(_pos, j, _genslookup.at(b));
-              } else if (r >= _lenindex.at(1)) {
-                _right->set(_pos, j, _right->get(_left->get(_prefix.at(r), b),
-                                                 _final.at(r)));
-              } else { // TODO it would be nice to get rid of this case somehow
-                _right->set(_pos, j, _right->get(_genslookup.at(b), _final.at(r)));
+                _right->set(i, j, _genslookup.at(b));
+              } else if (_suffix.at(r) != (size_t) -1) {
+                _right->set(i, j, _right->get(_left->get(_prefix.at(r), b),
+                                              _final.at(r)));
+              } else { 
+                _right->set(i, j, _right->get(_genslookup.at(b), _final.at(r)));
               } 
             } else {
-              x.redefine(_elements->at(_pos), _gens.at(j)); 
+              x.redefine(_elements->at(i), _gens.at(j)); 
               auto it = _map.find(x); 
 
               if (it != _map.end()) {
-                _right->set(_pos, j, it->second);
+                _right->set(i, j, it->second);
                 _nrrules++;
               } else {
-                is_one(x);
+                is_one(x, _nr);
                 _elements->push_back(static_cast<T*>(x.copy()));
                 _first.push_back(b);
                 _final.push_back(j);
                 _map.insert(std::make_pair(*_elements->back(), _nr));
-                _prefix.push_back(_pos);
-                _reduced.set(_pos, j, true);
-                _right->set(_pos, j, _nr);
+                _prefix.push_back(i);
+                _reduced.set(i, j, true);
+                _right->set(i, j, _nr);
                 _suffix.push_back(_right->get(s, j));
+                _index.push_back(_nr);
                 _nr++;
                 stop = (_nr >= limit);
               }
@@ -443,10 +453,10 @@ class Semigroup : public SemigroupBase {
         } // finished words of length <wordlen> + 1
         if (_pos > _nr || _pos == _lenindex.at(_wordlen + 1)) {
           for (size_t i = _lenindex.at(_wordlen); i < _pos; i++) { 
-            size_t p = _prefix.at(i);
-            size_t b = _final.at(i); 
+            size_t p = _prefix.at(_index.at(i));
+            size_t b = _final.at(_index.at(i)); 
             for (size_t j = 0; j < _nrgens; j++) { 
-              _left->set(i, j, _right->get(_left->get(p, j), b));
+              _left->set(_index.at(i), j, _right->get(_left->get(p, j), b));
             }
           }
           _wordlen++;
@@ -466,12 +476,14 @@ class Semigroup : public SemigroupBase {
 
     // construct the semigroup generated by old and coll, where this is an
     // unmodified copy of old.
-    void closure (Semigroup<T>*           old,
+    void closure (const Semigroup<T>*     old,
                   const std::vector<T*>&  coll, 
                   size_t                  deg, 
                   bool                    report) {
 
       assert(old != this); // TODO check that old and this are equal (but not the same!!)
+      assert(_index.empty());
+      assert(_lenindex.empty());
 
       std::vector<T*> irr_coll;
 
@@ -494,12 +506,11 @@ class Semigroup : public SemigroupBase {
       _pos = 0;
       _wordlen = 0;
       _nrgens = _nrgens + irr_coll.size();
-      _lenindex.clear();
       _lenindex.push_back(0);
-      _index.clear();
       _index.reserve(old->_nr);
+      size_t nr_old_left = old->_nr;
 
-      std::vector<bool> old_new;
+      std::vector<bool> old_new; // have we seen _elements->at(i) yet in new?
       old_new.reserve(old->_nr);
       for (size_t i = 0; i < old->_nr; i++) {
         old_new.push_back(false);
@@ -507,29 +518,29 @@ class Semigroup : public SemigroupBase {
       
       // add the old generators to new _index
       for (size_t i = 0; i < old->_lenindex.at(1); i++) {
-        is_one(*_gens.at(i));
-        //_index.push_back(old->_index.at(i));
-        _index.push_back(i);
-        old_new.at(i) = true;
+        _index.push_back(old->_index.at(i));
+        is_one(*_gens.at(i), _index.at(i));
+        old_new.at(old->_index.at(i)) = true;
+        nr_old_left--;
       }
       // add the new generators to new _gens, elements, and _index
       for (size_t i = 0; i < irr_coll.size(); i++) {
-        is_one(*irr_coll.at(i));
-        _first.push_back(_gens.size());
-        _final.push_back(_gens.size());
+        is_one(*irr_coll.at(i), _nr);
+        _first.push_back(_gens.size() + i);
+        _final.push_back(_gens.size() + i);
         _gens.push_back(irr_coll.at(i));
         _elements->push_back(irr_coll.at(i));
         _map.insert(std::make_pair(*irr_coll.at(i), _nr));
         _index.push_back(_nr);
-        _prefix.push_back(_nr);
-        _suffix.push_back(_nr);
+        _prefix.push_back(-1);
+        _suffix.push_back(-1);
         _genslookup.push_back(_nr);
         _nr++;
       }
       closure_expand(irr_coll.size()); // expand left/right/reduced by the number of
                                        // newly added elements
       
-      bool stop = false;
+      size_t old_nr;
       T x(_degree, _gens.at(0)); 
       // pass in sample object to, for example, pass on the semiring for
       // MatrixOverSemiring
@@ -537,10 +548,9 @@ class Semigroup : public SemigroupBase {
       // process up to old->_index.at(old->_pos -1) 
       // i.e. multiply up to the last position in <old> which was multiplied
       // by all of the old generators in <old>, by all of the old and new generators
-      size_t old_nr;
-      while (!stop) {
+      while (nr_old_left > 0) {
         old_nr = _nr;
-        while (_pos < _lenindex.at(_wordlen + 1) && !stop) {
+        while (_pos < _lenindex.at(_wordlen + 1) && nr_old_left > 0) {
           size_t i = _index.at(_pos); // position in _elements
           size_t b = _first.at(i);
           size_t s = _suffix.at(i); 
@@ -549,7 +559,7 @@ class Semigroup : public SemigroupBase {
             for (size_t j = 0; j < old->nrgens(); j++) {
               size_t k = old->_right->get(i, j);
               if (!old_new.at(k)) { // it's new!
-                is_one(*_elements->at(k));
+                is_one(*_elements->at(k), k);
                 _first.at(k) = _first.at(i);
                 _final.at(k) = j;
                 _prefix.at(k) = i;
@@ -560,23 +570,21 @@ class Semigroup : public SemigroupBase {
                 }
                 _index.push_back(k);
                 old_new.at(k) = true;
+                nr_old_left--;
               } 
             }
             for (size_t j = old->nrgens(); j < nrgens(); j++) {
-              closure_update(i, j, b, s, x, old, old_new);
+              closure_update(i, j, b, s, x, old, old_new, nr_old_left);
             }
             
           } else {
             // _elements.at(i) is not in old
             for (size_t j = 0; j < nrgens(); j++) {
-              closure_update(i, j, b, s, x, old, old_new);
+              closure_update(i, j, b, s, x, old, old_new, nr_old_left);
             }
           }
           _pos++;
-          //stop = (_index.at(_pos - 1) == old->_index.at(old->_pos - 1));
-          stop = (_index.at(_pos - 1) == old->_pos - 1);
         } // finished words of length <wordlen> + 1
-        
 
         if (report) {
           std::cout << "found " << _nr << " elements, ";
@@ -610,6 +618,14 @@ class Semigroup : public SemigroupBase {
         }
       }
       x.delete_data();
+      /*std::vector<size_t> tmp;
+      for (size_t i = 0; i < old_new.size(); i++) {
+        if (!old_new.at(i)) {
+          tmp.push_back(i);
+        }
+      }
+      assert(tmp.size() == 0);
+      assert(_nr == _index.size());*/
     }
       
   private:
@@ -627,13 +643,16 @@ class Semigroup : public SemigroupBase {
       _right->expand(_nr - _pos);
     }
     
-    void closure_update (size_t i, size_t j, size_t b, size_t s, T& x, const Semigroup<T>* old, 
-                         std::vector<bool>& old_new) {
+    void inline closure_update (size_t i, size_t j, size_t b, size_t s, 
+                                T& x, 
+                                const Semigroup<T>* old, 
+                                std::vector<bool>& old_new, 
+                                size_t& nr_old_left) {
       if (_wordlen != 0 && !_reduced.get(s, j)) {
         size_t r = _right->get(s, j);
         if (_found_one && r == _pos_one) {
           _right->set(i, j, _genslookup.at(b));
-        } else if (r >= _lenindex.at(1)) {
+        } else if (_suffix.at(r) != (size_t) -1) {
           _right->set(i, j, _right->get(_left->get(_prefix.at(r), b),
                                         _final.at(r)));
         } else { 
@@ -643,7 +662,7 @@ class Semigroup : public SemigroupBase {
         x.redefine(_elements->at(i), _gens.at(j)); 
         auto it = _map.find(x); 
         if (it == _map.end()) { //it's new!
-          is_one(x);
+          is_one(x, _nr);
           _elements->push_back(static_cast<T*>(x.copy()));
           _first.push_back(b);
           _final.push_back(j);
@@ -660,19 +679,20 @@ class Semigroup : public SemigroupBase {
           _nr++;
         } else if (it->second < old->_nr && !old_new.at(it->second)) {
           // we didn't process it yet!
-          is_one(x);
+          is_one(x, it->second);
           _first.at(it->second) = b;
           _final.at(it->second) = j;
           _prefix.at(it->second) = i;
           _reduced.set(i, j, true);
           _right->set(i, j, it->second);
           if (_wordlen == 0) { 
-            _suffix.push_back(_genslookup.at(j));
+            _suffix.at(it->second) = _genslookup.at(j);
           } else {
-            _suffix.push_back(_right->get(s, j));
+            _suffix.at(it->second) = _right->get(s, j);
           }
           _index.push_back(it->second);
           old_new.at(it->second) = true;
+          nr_old_left--;
         } else { // it->second >= old->_nr || old_new.at(it->second)
           // it's old
           _right->set(i, j, it->second);
@@ -688,9 +708,9 @@ class Semigroup : public SemigroupBase {
       return std::make_pair(lhs, rhs);
     }
 
-    void inline is_one (T& x) {
+    void inline is_one (T& x, size_t element_nr) {
       if (!_found_one && x == (*_id)) {
-        _pos_one = _nr;
+        _pos_one = element_nr;
         _found_one = true;
       }
     }
@@ -722,13 +742,5 @@ class Semigroup : public SemigroupBase {
     size_t                               _wordlen;
     //std::vector<std::vector<size_t> >    _words;
 };
-
-// TODO move to interface.cc
-
-/*Semigroup<T>* closure_semigroup (Semigroup<T>* old, const std::vector<T*>& coll) {
-  Semigroup<T>* S(new Semigroup<T>(*old));
-  S.closure(coll);
-  return S;
-}*/
 
 #endif
