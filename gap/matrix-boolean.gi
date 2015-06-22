@@ -476,28 +476,30 @@ function(G, H, x)
   return CanonicalBooleanMatNC(G, H, x);
 end);
 
-InstallMethod(CanonicalBooleanMatNC,
-"for perm group, perm group, and boolean mat",
-[IsPermGroup, IsPermGroup, IsBooleanMat],
-function(G, H, x)
-  local n, V, phi, act, map;
-  n := Length(x![1]);
-  V := DirectProduct(G, H);
-  phi := Projection(V, 2);
-
-  act := function(pt, p)
-    local q, r, nr;
-    pt := pt - 1;
-    q := QuoInt(pt, 2 ^ n); #row
-    r := pt - q * 2 ^ n; # number blist of the row
-    # permute columns
-    nr := NumberBlist(Permuted(BlistNumber(r + 1, n), p));
-    return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n; # and then the row
-  end;
-
-   map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
-   return BooleanMatSet(SmallestImageSet(Image(map), SetBooleanMat(x)));
-end);
+if IsGrapeLoaded then 
+  InstallMethod(CanonicalBooleanMatNC,
+  "for perm group, perm group, and boolean mat",
+  [IsPermGroup, IsPermGroup, IsBooleanMat],
+  function(G, H, x)
+    local n, V, phi, act, map;
+    n := Length(x![1]);
+    V := DirectProduct(G, H);
+    phi := Projection(V, 2);
+  
+    act := function(pt, p)
+      local q, r, nr;
+      pt := pt - 1;
+      q := QuoInt(pt, 2 ^ n); #row
+      r := pt - q * 2 ^ n; # number blist of the row
+      # permute columns
+      nr := NumberBlist(Permuted(BlistNumber(r + 1, n), p));
+      return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n; # and then the row
+    end;
+  
+     map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
+     return BooleanMatSet(SmallestImageSet(Image(map), SetBooleanMat(x)));
+  end);
+fi; 
 
 InstallMethod(IsSymmetricBooleanMat, "for a boolean matrix",
 [IsBooleanMat],
