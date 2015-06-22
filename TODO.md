@@ -29,8 +29,10 @@ just runs forever.
 * change of degree in closure in C++
 * test `ClosureSemigroup` for more than one new generator
 * `SEMIGROUPS_AddGenerators`
+* `relations` method
 * closure of generic inverse semigroups
 * closure semigroup GAP kernel version (just use `Semigroup`)
+
 
 * tests for pbrs 
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
