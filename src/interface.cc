@@ -131,10 +131,9 @@ class Interface : public InterfaceBase {
       return _semigroup->size(_report);
     }
    
-    //TODO comment this out!
-    size_t simple_size () {
+    /*size_t simple_size () {
       return _semigroup->simple_size();
-    }
+    }*/
     
     size_t current_size () {
       return _semigroup->current_size();
@@ -229,55 +228,113 @@ class Interface : public InterfaceBase {
       }
     }
     
-    // get the word from the C++ semigroup, store it in data
-    void word (Obj data, Obj pos) {
-      size_t pos_c = INT_INTOBJ(pos);
-      _semigroup->enumerate(pos_c - 1, _report);
-      if (! IsbPRec(data, RNamName("words"))) {
-        Obj words = NEW_PLIST(T_PLIST, pos_c);
-        SET_LEN_PLIST(words, pos_c);
-        SET_ELM_PLIST(words, pos_c, ConvertFromVec(_semigroup->trace(pos_c - 1)));
-        CHANGED_BAG(words);
-        AssPRec(data, RNamName("words"), words);
-      } else {
-        Obj words = ElmPRec(data, RNamName("words"));
-        if (pos_c > (size_t) LEN_PLIST(words) || ELM_PLIST(words, pos_c) == 0){
-          AssPlist(words, pos_c, ConvertFromVec(_semigroup->trace(pos_c - 1)));
-        }
-      }
-      CHANGED_BAG(data);
-    }
-
     Obj position (Obj data, Obj x) {
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
       size_t pos = _semigroup->position(_converter->convert(x, deg_c));
       return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
     }
+    
+    // get the word from the C++ semigroup, store it in data
+    Obj word (Obj data, Obj pos) {
+      size_t pos_c = INT_INTOBJ(pos);
+      Obj words; 
+      if (! IsbPRec(data, RNamName("words"))) {
+        words = NEW_PLIST(T_PLIST, pos_c);
+        SET_LEN_PLIST(words, pos_c);
+        SET_ELM_PLIST(words, pos_c, ConvertFromVec(_semigroup->factorisation(pos_c - 1)));
+        CHANGED_BAG(words);
+        AssPRec(data, RNamName("words"), words);
+      } else {
+        words = ElmPRec(data, RNamName("words"));
+        if (pos_c > (size_t) LEN_PLIST(words) || ELM_PLIST(words, pos_c) == 0) {
+          //avoid retracing the Schreier tree if possible
+          size_t prefix = _semigroup->prefix(pos_c - 1) + 1;
+          size_t suffix = _semigroup->suffix(pos_c - 1) + 1;
+          if (prefix != 0 && prefix <= (size_t) LEN_PLIST(words) 
+              && ELM_PLIST(words, prefix) != 0) {
+            Obj old_word = ELM_PLIST(words, prefix);
+            Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+            memcpy((void *)((char *)(ADDR_OBJ(new_word)) + sizeof(Obj)), 
+                   (void *)((char *)(ADDR_OBJ(old_word)) + sizeof(Obj)), 
+                   (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
+            SET_ELM_PLIST(new_word, LEN_PLIST(old_word) + 1, 
+                          INTOBJ_INT(_semigroup->final_letter(pos_c - 1) + 1));
+            SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
+            AssPlist(words, pos_c, new_word);
+
+          /* else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words) 
+                     && ELM_PLIST(words, suffix) != 0) {
+            Obj old_word = ELM_PLIST(words, suffix);
+            new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+            memcpy((void *)((char *)(ADDR_OBJ(new_word)) + 2 * sizeof(Obj)), 
+                   (void *)((char *)(ADDR_OBJ(old_word)) + sizeof(Obj)), 
+                   (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
+            SET_ELM_PLIST(new_word, 1,
+                          INTOBJ_INT(_semigroup->first_letter(pos_c - 1) + 1));
+            SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);*/
+          } else {
+            AssPlist(words, pos_c, ConvertFromVec(_semigroup->factorisation(pos_c - 1)));
+          }
+        }
+      }
+      CHANGED_BAG(data);
+      assert(IsbPRec(data, RNamName("words")));
+      assert(IS_PLIST(ElmPRec(data, RNamName("words"))));
+      assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(data, RNamName("words"))));
+      return ELM_PLIST(ElmPRec(data, RNamName("words")), pos_c);
+    }
 
     // get the relations of the C++ semigroup, store them in data
-    // FIXME improve this, it repeatedly traces the schreier tree
     void relations (Obj data) {
-      auto relations = _semigroup->relations();
-      Obj out = NEW_PLIST(T_PLIST, relations->size());
-      SET_LEN_PLIST(out, relations->size());
-      for (size_t i = 0; i < relations->size(); i++) {
-        Obj next = NEW_PLIST(T_PLIST, 2);
-        SET_LEN_PLIST(next, 2);
-        SET_ELM_PLIST(next, 1, ConvertFromVec(relations->at(i).first));
-        CHANGED_BAG(next);
-        SET_ELM_PLIST(next, 2, ConvertFromVec(relations->at(i).second));
-        CHANGED_BAG(next);
-        SET_ELM_PLIST(out, i + 1, next);
-        CHANGED_BAG(out);
+      if (! IsbPRec(data, RNamName("rules"))) {
+        _semigroup->enumerate(-1);
+        Obj rules = NEW_PLIST(T_PLIST, _semigroup->nrrules());
+        SET_LEN_PLIST(rules, _semigroup->nrrules());
+        size_t nr = 0;
+
+        std::vector<size_t> relation;
+        _semigroup->next_relation(relation);
+
+        while (relation.size() == 2) {
+          Obj next = NEW_PLIST(T_PLIST, 2);
+          SET_LEN_PLIST(next, 2);
+          for (size_t i = 0; i < 1; i++) {
+            Obj w = NEW_PLIST(T_PLIST_CYC, 1);
+            SET_LEN_PLIST(w, 1);
+            SET_ELM_PLIST(w, 1, INTOBJ_INT(relation.at(i) + 1));
+            SET_ELM_PLIST(next, i + 1, w);
+            CHANGED_BAG(next);
+          }
+          nr++;
+          SET_ELM_PLIST(rules, nr, next);
+          CHANGED_BAG(rules);
+          _semigroup->next_relation(relation);
+        }
+        
+        while (!relation.empty()) {
+
+          Obj old_word = word(data, INTOBJ_INT(relation.at(0) + 1));
+          Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+          memcpy((void *)((char *)(ADDR_OBJ(new_word)) + sizeof(Obj)), 
+                 (void *)((char *)(ADDR_OBJ(old_word)) + sizeof(Obj)), 
+                 (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
+          SET_ELM_PLIST(new_word, LEN_PLIST(old_word) + 1, INTOBJ_INT(relation.at(1) + 1));
+          SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
+
+          Obj next = NEW_PLIST(T_PLIST, 2);
+          SET_LEN_PLIST(next, 2);
+          SET_ELM_PLIST(next, 1, new_word);
+          CHANGED_BAG(next);
+          SET_ELM_PLIST(next, 2, word(data, INTOBJ_INT(relation.at(2) + 1)));
+          CHANGED_BAG(next);
+          nr++; 
+          SET_ELM_PLIST(rules, nr, next);
+          CHANGED_BAG(rules);
+          _semigroup->next_relation(relation);
+        } 
+        AssPRec(data, RNamName("rules"), rules);
+        CHANGED_BAG(data);
       }
-      AssPRec(data, RNamName("rules"), out);
-      CHANGED_BAG(data);
-      //FIXME check that this doesn't leak memory
-      /*for (auto pair: relations) {
-        delete pair.first;
-        delete pair.second;
-      }*/
-      delete relations;
     }
     
   private:
@@ -426,13 +483,14 @@ InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old) {
 
 Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
 
-Obj SIMPLE_SIZE(Obj self, Obj data) {
+/*Obj SIMPLE_SIZE(Obj self, Obj data) {
   if (IsCCSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->simple_size());
   }
   std::cout << "don't call this function with non-CC semigroups\n";
   return 0;
-}
+}*/
+
 //FIXME redo everything else here like RIGHT_CAYLEY_GRAPH!!
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCCSemigroup(data)) {
@@ -485,12 +543,11 @@ Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit) {
 
 Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
   if (IsCCSemigroup(data)) { 
-    InterfaceFromData(data)->word(data, pos);
+    return InterfaceFromData(data)->word(data, pos);
   } else {
-
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
+    return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
   }
-  return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
 }
 
 Obj FIND_SEMIGROUP (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {

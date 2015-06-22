@@ -10,10 +10,10 @@
 // 1) bit flipping for reduced?
 // 2) remove RecVecs
 // 3) free stuff at the end
-// 4) cache in trace
 // 5) next_relation 
 // 6) the other functionality of Semigroupe.
 // 7) rename degree to element_size or something
+// 8) make sure relation_pos/gen are set everywhere
 
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
@@ -46,6 +46,63 @@ class Semigroup : public SemigroupBase {
     
     Semigroup& operator= (Semigroup const& copy) = delete;
 
+    // constructors
+    Semigroup (std::vector<T*> gens, size_t degree) : 
+      _degree        (degree),
+      _duplicate_gens(),
+      _elements      (new std::vector<T*>()),
+      _final         (),
+      _first         (),    
+      _found_one     (false),
+      _gens          (gens), 
+      _genslookup    (),
+      _index         (),
+      _left          (new RecVec<size_t>(gens.size())),
+      _lenindex      (), 
+      _map           (), 
+      _nr            (0), 
+      _nrgens        (gens.size()),
+      _nrrules       (0), 
+      _pos           (0), 
+      _pos_one       (0), 
+      _prefix        (), 
+      _reduced       (RecVec<bool>(gens.size())),
+      _relation_pos  (-1),
+      _relation_gen  (0),
+      _right         (new RecVec<size_t>(gens.size())),
+      _suffix        (), 
+      _wordlen       (0) // (length of the current word) - 1
+    { 
+      assert(_nrgens != 0);
+      
+      _lenindex.push_back(0);
+      _id = static_cast<T*>(_gens.at(0)->identity());
+
+      // add the generators 
+      for (size_t i = 0; i < _nrgens; i++) {
+        T* x = _gens.at(i);
+        auto it = _map.find(*x);
+        if (it != _map.end()) { // duplicate generator
+          _genslookup.push_back(it->second);
+          _nrrules++;
+          _duplicate_gens.push_back(std::make_pair(i, it->second));
+        } else {
+          is_one(*x, _nr);
+          _elements->push_back(static_cast<T*>(x->copy()));
+          _first.push_back(i);
+          _final.push_back(i);
+          _genslookup.push_back(_nr);
+          _map.insert(std::make_pair(*_elements->back(), _nr));
+          _prefix.push_back(-1);
+          _suffix.push_back(-1);
+          _index.push_back(_nr);
+          _nr++;
+        }
+      }
+      expand(_nr);
+      _lenindex.push_back(_index.size()); 
+    }
+    
     // FIXME this should return a proper copy, not inclusing nr_new_gens! 
     // WARNING: only use this for closure!!
     Semigroup (const Semigroup& copy, size_t nr_new_gens = 0) 
@@ -103,58 +160,7 @@ class Semigroup : public SemigroupBase {
       std::cout << "finished copying C++ semigroup object!!!\n";
     }
 
-    Semigroup (std::vector<T*> gens, size_t degree) : 
-      _degree     (degree),
-      _elements   (new std::vector<T*>()),
-      _final      (),
-      _first      (),    
-      _found_one  (false),
-      _gens       (gens), 
-      _genslookup (),
-      _index      (),
-      _left       (new RecVec<size_t>(gens.size())),
-      _lenindex   (), 
-      _map        (), 
-      _nr         (0), 
-      _nrgens     (gens.size()),
-      _nrrules    (0), 
-      _pos        (0), 
-      _pos_one    (0), 
-      _prefix     (), 
-      _reduced    (RecVec<bool>(gens.size())),
-      _right      (new RecVec<size_t>(gens.size())),
-      _suffix     (), 
-      _wordlen    (0) // (length of the current word) - 1
-    { 
-      assert(_nrgens != 0);
-      
-      _lenindex.push_back(0);
-      _id = static_cast<T*>(_gens.at(0)->identity());
-
-      // add the generators 
-      for (size_t i = 0; i < _nrgens; i++) {
-        T* x = _gens.at(i);
-        auto it = _map.find(*x);
-        if (it != _map.end()) { // duplicate generator
-          _genslookup.push_back(it->second);
-          _nrrules++;
-        } else {
-          is_one(*x, _nr);
-          _elements->push_back(static_cast<T*>(x->copy()));
-          _first.push_back(i);
-          _final.push_back(i);
-          _genslookup.push_back(_nr);
-          _map.insert(std::make_pair(*_elements->back(), _nr));
-          _prefix.push_back(-1);
-          _suffix.push_back(-1);
-          _index.push_back(_nr);
-          _nr++;
-        }
-      }
-      expand(_nr);
-      _lenindex.push_back(_index.size()); 
-    }
-
+    // destructor
     ~Semigroup () {
       // FIXME duplicate generators are not deleted?
       delete _left;
@@ -168,6 +174,7 @@ class Semigroup : public SemigroupBase {
       delete _id;
     }
 
+    // short methods
     size_t max_word_length () {
       if (_nr > _lenindex.back()) { 
         return _lenindex.size();
@@ -246,112 +253,105 @@ class Semigroup : public SemigroupBase {
       enumerate(-1);
       return _left;
     }
-    
-    Word* trace (size_t pos) { // trace the spanning tree, where <pos> is an index
-      // caching the words seems to be slower ....
-      /*if (_words.empty()) {
-        _words.reserve(_elements.size());
-        for (size_t i = 0; i < _elements.size(); i++) {
-          _words.push_back(std::vector<size_t>());
-        }
-        for (size_t i = 0; i < _genslookup.size(); i++) {
-          if (_words.at(_genslookup.at(i)).empty()) {
-            _words.at(_genslookup.at(i)).push_back(i);
-          }
-        }
-      }
 
-      std::vector<size_t> word2;
-      while (_words.at(pos).empty()) {
-        word2.push_back(this->schreiergen(pos));
-        pos = this->schreierpos(pos);
-      }
-      //word.push_back(_genslookup.at(pos));
-      std::reverse(word2.begin(), word2.end());
-      std::vector<size_t> word1(_words.at(pos));
-      word1.insert(word1.end(), word2.begin(), word2.end());
-      return word1;*/
+    size_t prefix (size_t element_nr) {
+      return _prefix.at(element_nr);
+    }
+    
+    size_t suffix (size_t element_nr) {
+      return _suffix.at(element_nr);
+    }
+    
+    size_t first_letter (size_t element_nr) {
+      return _first.at(element_nr);
+    }
+
+    size_t final_letter (size_t element_nr) {
+      return _final.at(element_nr);
+    }
+    
+    Word* factorisation (size_t pos) { 
+      // factorisation of _elements.at(pos)
 
       Word* word = new Word();
-      pos = _index.at(pos);
-      while (pos != (size_t) -1) {
-        word->push_back(_first.at(pos));
-        pos = _suffix.at(pos);
+      if (pos > _nr && !is_done()) {
+        enumerate(pos);
+      }
+      
+      if (pos < _nr) {
+        while (pos != (size_t) -1) {
+          word->push_back(_first.at(pos));
+          pos = _suffix.at(pos);
+        }
       }
       return word;
     }
     
-    // TODO make this next_relation with gets handed in std::vector reference
-    // and which just puts the [element-index, generators, element-index] into
-    // the std::vector.
-    // FIXME this is probably broken in the new setup with the index 
-    std::vector<Relation>* relations () {
-      enumerate(-1);
-      std::vector<Relation>* relations = new std::vector<Relation>();
-      int nr = (int) _nrrules;
-      
-      size_t tmp = 0;
+    void reset_next_relation () {
+      _relation_pos = -1;
+      _relation_gen = 0;
+    }
 
-      for (size_t i = 1; i < _gens.size(); i++) {
-        if (_genslookup.at(i) <= _genslookup.at(i - 1)) {
-          nr--;
-          relations->push_back(make_relation(i, _genslookup.at(i)));
-        }
+    // Modifies <relation> in place so that 
+    //
+    // _elements(relation.at(0)) * _gens(relation.at(1) =
+    // _elements(relation.at(2))
+    //
+    // <relation> is empty if there are no more relations, and it has length 2
+    // in the special case of duplicate generators.
+    
+    void next_relation (std::vector<size_t>& relation) {
+      if (!is_done()) {
+        enumerate(-1);
       }
-      std::cout << "nr of relations = " << relations->size() - tmp << "\n";
-      tmp = relations->size();
       
-      size_t i;
-      for (i = 0; i < _lenindex.at(1); i++) {
-        for (size_t j = 0; j < _reduced.nrcols(); j++) {
-          if (!_reduced.get(i, j)) {
-            nr--;
-            relations->push_back(make_relation(i, j));
+      relation.clear();
+      
+      if (_relation_pos == _nr) { //no more relations
+        return;
+      }
+    
+      if (_relation_pos != (size_t) -1) {
+        while (_relation_pos < _nr) {
+          while (_relation_gen < _nrgens) {
+            if (!_reduced.get(_index.at(_relation_pos), _relation_gen) 
+                && (_relation_pos < _lenindex.at(1) || 
+                    _reduced.get(_suffix.at(_index.at(_relation_pos)),
+                                            _relation_gen))) {
+              relation.push_back(_index.at(_relation_pos));
+              relation.push_back(_relation_gen);
+              relation.push_back(_right->get(_index.at(_relation_pos), _relation_gen));
+              break;
+            }
+            _relation_gen++;
+          }
+          if (relation.empty()) {
+            _relation_gen = 0;
+            _relation_pos++;
+          } else {
+            break;
           }
         }
-      }
-      std::cout << "nr of relations = " << relations->size() - tmp << "\n";
-      tmp = relations->size();
-      
-      for (; i < _reduced.nrrows(); i++) {
-        for (size_t j = 0; j < _reduced.nrcols(); j++) {
-          if (_reduced.get(_suffix.at(i), j) && !_reduced.get(i, j)) {
-            nr--;
-            relations->push_back(make_relation(i, j));
-          }
+        if (_relation_gen == _nrgens) {
+          _relation_gen = 0;
+          _relation_pos++;
+        } else {
+          _relation_gen++;
+        }
+      } else {
+        //duplicate generators
+        if (_relation_gen < _duplicate_gens.size()) {
+          relation.push_back(_duplicate_gens.at(_relation_gen).first);
+          relation.push_back(_duplicate_gens.at(_relation_gen).second);
+          _relation_gen++;
+        } else {
+          _relation_gen = 0;
+          _relation_pos++;
+          next_relation(relation);
         }
       }
-      std::cout << "nr of relations = " << relations->size() - tmp << "\n";
-      
-      std::cout << "_nrrules = " << _nrrules << "\n";
-      assert(nr == 0);
-      return relations;
     }
    
-    
-    size_t simple_size () {
-      T x(_degree, _gens.at(0)); 
-      size_t report = 0;
-      while (_pos < _nr) {
-        for (size_t j = 0; j < _nrgens; j++) {
-          x.redefine(_elements->at(_pos), _gens.at(j)); 
-          auto it = _map.find(x); 
-          if (it == _map.end()) {
-            _elements->push_back(static_cast<T*>(x.copy()));
-            _map.insert(std::make_pair(*_elements->back(), _nr));
-            _nr++;
-          }
-        }
-        _pos++;
-        if (_nr > report + 10000) {
-          report = _nr;
-          std::cout << "found " << _nr << " elements so far\n";
-        }
-      }
-      x.delete_data();
-      return _nr;
-    }
-    
     void enumerate (size_t limit) {
       enumerate(limit, false);
     }
@@ -581,6 +581,8 @@ class Semigroup : public SemigroupBase {
                 old_new.at(k) = true;
                 nr_old_left--;
               } else if (s == (size_t) -1 || _reduced.get(s, j)) {
+                // TODO remove this clause or make it available in DEBUG mode
+                // only
                 _nrrules++;
               }
             }
@@ -699,13 +701,6 @@ class Semigroup : public SemigroupBase {
       }
     }
 
-    Relation inline make_relation (size_t i, size_t j) {
-      Word* lhs = this->trace(i);
-      lhs->push_back(j);
-      Word* rhs= this->trace(_right->get(i, j));
-      return std::make_pair(lhs, rhs);
-    }
-
     void inline is_one (T& x, size_t element_nr) {
       if (!_found_one && x == (*_id)) {
         _pos_one = element_nr;
@@ -716,28 +711,31 @@ class Semigroup : public SemigroupBase {
 
     // TODO make as much as possible here a pointer so that they can be freed
     // when they aren't required anymore
-    size_t                               _degree;
-    std::vector<T*>*                     _elements;
-    std::vector<size_t>                  _final;
-    std::vector<size_t>                  _first;
-    bool                                 _found_one;
-    std::vector<T*>                      _gens;
-    std::vector<size_t>                  _genslookup;  
-    T*                                   _id; 
-    std::vector<size_t>                  _index;
-    RecVec<size_t>*                      _left;
-    std::vector<size_t>                  _lenindex;
-    std::unordered_map<const T, size_t>  _map;         
-    size_t                               _nr;
-    size_t                               _nrgens;
-    size_t                               _nrrules;
-    size_t                               _pos;
-    size_t                               _pos_one;
-    std::vector<size_t>                  _prefix;
-    RecVec<bool>                         _reduced;
-    RecVec<size_t>*                      _right;
-    std::vector<size_t>                  _suffix;
-    size_t                               _wordlen;
+    size_t                                  _degree;
+    std::vector<std::pair<size_t, size_t> > _duplicate_gens;
+    std::vector<T*>*                        _elements;
+    std::vector<size_t>                     _final;
+    std::vector<size_t>                     _first;
+    bool                                    _found_one;
+    std::vector<T*>                         _gens;
+    std::vector<size_t>                     _genslookup;  
+    T*                                      _id; 
+    std::vector<size_t>                     _index;
+    RecVec<size_t>*                         _left;
+    std::vector<size_t>                     _lenindex;
+    std::unordered_map<const T, size_t>     _map;         
+    size_t                                  _nr;
+    size_t                                  _nrgens;
+    size_t                                  _nrrules;
+    size_t                                  _pos;
+    size_t                                  _pos_one;
+    std::vector<size_t>                     _prefix;
+    RecVec<bool>                            _reduced;
+    size_t                                  _relation_pos;
+    size_t                                  _relation_gen;
+    RecVec<size_t>*                         _right;
+    std::vector<size_t>                     _suffix;
+    size_t                                  _wordlen;
 };
 
 #endif
