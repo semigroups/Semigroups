@@ -40,6 +40,7 @@ class InterfaceBase {
     virtual Obj            position (Obj data, Obj x) = 0;
     virtual Obj            word (Obj data, Obj pos) = 0;
     virtual void           relations (Obj data) = 0;
+    virtual size_t         max_word_length () = 0;
     virtual SemigroupBase* semigroup () = 0;
 };
 
@@ -78,5 +79,7 @@ Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x);
 Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data);
 
 Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data);
+
+Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj old_data);
 
 #endif

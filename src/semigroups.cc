@@ -673,6 +673,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "data, x"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", IS_CLOSED_SEMIGROUP, 1, 
                           "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", MAX_WORD_LEN_SEMIGROUP, 1, 
+                          "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 

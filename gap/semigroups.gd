@@ -57,8 +57,8 @@ DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsAssociativeElement, IsRecord]);
 DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsAssociativeElement]);
-
-DeclareGlobalFunction("ClosureSemigroupNC");
+DeclareOperation("ClosureSemigroupNC", 
+                 [IsSemigroup, IsListOrCollection, IsRecord]);
 
 DeclareAttribute("Generators", IsSemigroup);
 

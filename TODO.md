@@ -29,11 +29,11 @@ just runs forever.
 * change of degree in closure in C++
 * test `ClosureSemigroup` for more than one new generator
 * `SEMIGROUPS_AddGenerators`
-* `relations` method
 * closure of generic inverse semigroups
 * closure semigroup GAP kernel version (just use `Semigroup`)
 
 
+* improve `EvaluateWord`
 * tests for pbrs 
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
 * finish partitioned binary relation stuff (more tests and C++)
@@ -55,6 +55,7 @@ just runs forever.
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 #DONE
+* `relations` method
 * try to find the full PBR monoid when n = 1, 2. 
 * fix `nrrules`
 * `AsBipartitionSemigroup`, `AsPBRSemigroup`

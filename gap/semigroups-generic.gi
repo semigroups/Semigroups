@@ -195,8 +195,7 @@ function(data)
 
   Print("semigroup data with ", LENGTH_SEMIGROUP(data), " elements, ");
   Print(NR_RULES_SEMIGROUP(data), " relations, ");
-  Print("max word length ",
-        Length(WORD_SEMIGROUP(data, LENGTH_SEMIGROUP(data))), ">");
+  Print("max word length ", MAX_WORD_LEN_SEMIGROUP(data), ">");
   return;
 end);
 

@@ -10,6 +10,328 @@
 
 ## Methods for some standard things for acting semigroups.
 
+InstallMethod(ClosureSemigroupNC, 
+"for an acting semigroup, associative element coll, and record",
+[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
+function(S, coll, opts)
+  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
+  rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr,
+  graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1,
+  orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos,
+  new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens,
+  nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new,
+  htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old,
+  n, j;
+
+  # init the semigroup or monoid
+  if IsMonoid(S) and One(coll) = One(S) then
+    # it can be that these One's differ, and hence we shouldn't call Monoid
+    # here
+    t := Monoid(S, coll, opts);
+  else
+    t := Semigroup(S, coll, opts);
+  fi;
+
+  # if nothing is known about s, then return t
+  if not HasLambdaOrb(S) or IsSemigroupIdeal(S) then
+    return t;
+  fi;
+
+  # set up lambda orb for t
+  old_o := LambdaOrb(S);
+  o := StructuralCopy(old_o);
+  rho_o := StructuralCopy(RhoOrb(S));
+
+  if IsTransformationSemigroup(S) then
+    old_deg := DegreeOfTransformationSemigroup(S);
+    if old_deg < DegreeOfTransformationSemigroup(t) then
+      SEMIGROUPS_ChangeDegree(o, old_deg, t);
+      SEMIGROUPS_ChangeDegree(rho_o, old_deg, t);
+    fi;
+  fi;
+
+  AddGeneratorsToOrbit(o, coll);
+
+  # unbind everything related to strongly connected components, since
+  # even if the orbit length doesn't change the strongly connected components
+  # might
+  Unbind(o!.scc);
+  Unbind(o!.trees);
+  Unbind(o!.scc_lookup);
+  Unbind(o!.mults);
+  Unbind(o!.schutz);
+  Unbind(o!.reverse);
+  Unbind(o!.rev);
+  Unbind(o!.truth);
+  Unbind(o!.schutzstab);
+  Unbind(o!.exhaust);
+  Unbind(o!.factors);
+
+  o!.parent := t;
+  o!.scc_reps := [FakeOne(GeneratorsOfSemigroup(t))];
+
+  SetLambdaOrb(t, o);
+
+  if not HasSemigroupData(S) or SemigroupData(S)!.pos = 0 then
+    return t;
+  fi;
+
+  oht := o!.ht;
+  scc := OrbSCC(o);
+  old_scc := OrbSCC(old_o);
+  lookup := o!.scc_lookup;
+
+  old_lookup := old_o!.scc_lookup;
+
+  # we don't do AddGeneratorsToOrbit of rho_o here because this is handled by
+  # Enumerate(SemigroupData.. later
+  rho_ht := rho_o!.ht;
+
+  # unbind everything related to strongly connected components, since
+  # even if the orbit length doesn't change the strongly connected components
+  # might
+  Unbind(rho_o!.scc);
+  Unbind(rho_o!.trees);
+  Unbind(rho_o!.scc_lookup);
+  Unbind(rho_o!.mults);
+  Unbind(rho_o!.schutz);
+  Unbind(rho_o!.reverse);
+  Unbind(rho_o!.rev);
+  Unbind(rho_o!.truth);
+  Unbind(rho_o!.schutzstab);
+
+  rho_o!.parent := t;
+  rho_o!.scc_reps := [FakeOne(GeneratorsOfSemigroup(t))];
+  Append(rho_o!.gens, coll);
+  ResetFilterObj(rho_o, IsClosed);
+  SetRhoOrb(t, rho_o);
+
+  # get new and old R-rep orbit data
+  new_data := SemigroupData(t);
+  old_data := SemigroupData(S);
+  max_rank := MaximumList(List(coll, x -> ActionRank(t)(x)));
+
+  ht := new_data!.ht;
+  # so far found R-reps
+
+  new_orb := new_data!.orbit;
+  old_orb := old_data!.orbit;
+  # the so far found R-reps data
+
+  new_nr := Length(new_orb);
+  old_nr := Length(old_orb);
+  # points in orb in position at most i have descendants
+
+  graph := new_data!.graph;
+  old_graph := old_data!.graph;
+  graph[1] := ShallowCopy(old_graph[1]);
+  # orbit graph of orbit of R-classes under left mult
+
+  reps := new_data!.reps;
+  # reps grouped by equal lambda and rho value
+  # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
+
+  lambdarhoht := new_data!.lambdarhoht;
+  rholookup := new_data!.rholookup;
+
+  repslookup := new_data!.repslookup;
+  # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
+
+  orblookup1 := new_data!.orblookup1;
+  # orblookup1[i] position in reps containing orb[i][4] (the R-rep)
+
+  orblookup2 := new_data!.orblookup2;
+  # orblookup2[i] position in reps[orblookup1[i]]
+  # containing orb[i][4] (the R-rep)
+
+  repslens := new_data!.repslens;
+  # Length(reps[i])=repslens[i]
+
+  lenreps := new_data!.lenreps;
+  # lenreps=Length(reps)
+
+  # schreier
+  new_schreierpos := new_data!.schreierpos;
+  old_schreierpos := old_data!.schreierpos;
+  new_schreiergen := new_data!.schreiergen;
+  old_schreiergen := old_data!.schreiergen;
+  new_schreiermult := new_data!.schreiermult;
+  old_schreiermult := old_data!.schreiermult;
+
+  # generators
+  gens := new_data!.gens;
+  nr_new_gens := Length(gens);
+  nr_old_gens := Length(old_data!.gens);
+
+  # lambda/rho
+  lambda := LambdaFunc(t);
+  lambdaact := LambdaAct(t);
+  lambdaperm := LambdaPerm(t);
+  rho := RhoFunc(t);
+
+  # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
+  # i.e. position of old R-rep in new_orb
+  # JDM: this is mainly used to update the orbit graph of the R-rep orbit, but
+  # I think this could also be done during the main loop below.
+
+  old_to_new := EmptyPlist(old_nr);
+  old_to_new[1] := 1;
+
+  # initialise <reps>, <repslookup>, <repslens>, <lenreps>...
+  for i in [2 .. Length(scc)] do
+    reps[i] := [];
+    repslookup[i] := [];
+    repslens[i] := [];
+    lenreps[i] := 0;
+  od;
+
+  if IsBoundGlobal("ORBC") then
+    htadd := HTAdd_TreeHash_C;
+    htvalue := HTValue_TreeHash_C;
+  else
+    htadd := HTAdd;
+    htvalue := HTValue;
+  fi;
+
+  i := 1;
+
+  # install old R-class reps in new_orb
+  while new_nr <= old_nr and i < old_nr do
+    i := i + 1;
+
+    x := old_orb[i][4];
+
+    pos := old_schreiermult[i]; #lambda-index for x
+    m := lookup[pos];
+    rank := ActionRank(t)(x);
+
+    if rank > max_rank or scc[m][1] = old_scc[old_lookup[pos]][1] then
+      # in either case x is an old R-rep and so has rectified lambda value.
+    elif pos = old_scc[old_lookup[pos]][1] then
+      x := x * LambdaOrbMult(o, m, pos)[2];
+    else
+      # x has rectified lambda value but pos refers to the unrectified value
+      x := x * LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
+       * LambdaOrbMult(o, m, pos)[2];
+    fi;
+
+    rhox := rho(x);
+    l := htvalue(rho_ht, rhox);
+    #l<>fail since we have copied the old rho values
+
+    if not IsBound(lambdarhoht[l]) then
+      # old rho-value, but new lambda-rho-combination
+
+      new_nr := new_nr + 1;
+      lenreps[m] := lenreps[m] + 1;
+      ind := lenreps[m];
+      lambdarhoht[l] := [];
+      lambdarhoht[l][m] := ind;
+
+      reps[m][ind] := [x];
+      repslookup[m][ind] := [new_nr];
+      repslens[m][ind] := 1;
+
+      orblookup1[new_nr] := ind;
+      orblookup2[new_nr] := 1;
+
+      pt := [t, m, o, x, false, new_nr];
+    elif not IsBound(lambdarhoht[l][m]) then
+      # old rho-value, but new lambda-rho-combination
+
+      new_nr := new_nr + 1;
+      lenreps[m] := lenreps[m] + 1;
+      ind := lenreps[m];
+      lambdarhoht[l][m] := ind;
+
+      reps[m][ind] := [x];
+      repslookup[m][ind] := [new_nr];
+      repslens[m][ind] := 1;
+
+      orblookup1[new_nr] := ind;
+      orblookup2[new_nr] := 1;
+
+      pt := [t, m, o, x, false, new_nr];
+    else
+      # old rho value, and maybe we already have a rep of y's R-class...
+      ind := lambdarhoht[l][m];
+      pt := [t, m, o, x, false, new_nr + 1];
+      if not rank > max_rank then
+        # this is maybe a new R-reps and so tests are required...
+
+        #check membership in Schutzenberger group via stabiliser chain
+        schutz := LambdaOrbStabChain(o, m);
+
+        if schutz = true then
+          # the Schutzenberger group is the symmetric group
+          old_to_new[i] := repslookup[m][ind][1];
+          continue;
+        else
+          if schutz = false then
+            # the Schutzenberger group is trivial
+            data_val := htvalue(ht, x);
+            if data_val <> fail then
+              old_to_new[i] := data_val;
+              continue;
+            fi;
+          else
+            # the Schutzenberger group is neither trivial nor symmetric group
+            old := false;
+            for n in [1 .. repslens[m][ind]] do
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))
+                  = () then
+                old := true;
+                old_to_new[i] := repslookup[m][ind][n];
+                break;
+              fi;
+            od;
+            if old then
+              continue;
+            fi;
+          fi;
+        fi;
+      fi;
+      # if rank>max_rank, then <y> is an old R-rep and hence a new one too
+      new_nr := new_nr + 1;
+      repslens[m][ind] := repslens[m][ind] + 1;
+      reps[m][ind][repslens[m][ind]] := x;
+      repslookup[m][ind][repslens[m][ind]] := new_nr;
+      orblookup1[new_nr] := ind;
+      orblookup2[new_nr] := repslens[m][ind];
+    fi;
+    rholookup[new_nr] := l;
+    new_orb[new_nr] := pt;
+    graph[new_nr] := ShallowCopy(old_graph[i]);
+    new_schreierpos[new_nr] := old_to_new[old_schreierpos[i]];
+    # orb[nr] is obtained from orb[i]
+    new_schreiergen[new_nr] := old_schreiergen[i];
+    # by multiplying by gens[j]
+    new_schreiermult[new_nr] := pos;  # and ends up in position <pos> of
+                                    # its lambda orb
+    htadd(ht, x, new_nr);
+    old_to_new[i] := new_nr;
+  od;
+
+  # process the orbit graph
+  for i in [1 .. new_nr] do
+    for j in [1 .. Length(graph[i])] do
+      graph[i][j] := old_to_new[graph[i][j]];
+    od;
+  od;
+
+  # apply new generators to old R-reps
+  new_data!.genstoapply := [nr_old_gens + 1 .. nr_new_gens];
+  new_data!.pos := 0;
+  new_data!.stopper := old_to_new[old_data!.pos];
+  new_data!.init := true;
+  Enumerate(new_data, infinity, ReturnFalse);
+
+  new_data!.pos := old_to_new[old_data!.pos];
+  new_data!.stopper := false;
+  new_data!.genstoapply := [1 .. nr_new_gens];
+
+  return t;
+end);
 # different method for inverse/regular, same for ideals
 
 InstallMethod(Random, "for an acting semigroup",

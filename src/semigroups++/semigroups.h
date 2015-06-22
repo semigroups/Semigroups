@@ -9,8 +9,6 @@
 //
 // 1) bit flipping for reduced?
 // 2) remove RecVecs
-// 3) free stuff at the end
-// 5) next_relation 
 // 6) the other functionality of Semigroupe.
 // 7) rename degree to element_size or something
 // 8) make sure relation_pos/gen are set everywhere
@@ -176,7 +174,9 @@ class Semigroup : public SemigroupBase {
 
     // short methods
     size_t max_word_length () {
-      if (_nr > _lenindex.back()) { 
+      if (is_done()) {
+        return _lenindex.size() - 2;
+      } else if (_nr > _lenindex.back()) { 
         return _lenindex.size();
       } else {
         return _lenindex.size() - 1;
@@ -505,10 +505,8 @@ class Semigroup : public SemigroupBase {
       _id = static_cast<T*>(_gens.at(0)->identity());
       _found_one = false; // TODO if degree doesn't change then don't reset old
       _pos_one = 0;       // TODO if degree doesn't change then don't reset old
-
       _pos = 0;
       _wordlen = 0;
-      _nrgens = _nrgens + irr_coll.size();
       _lenindex.push_back(0);
       _index.reserve(old->_nr);
       // the number of duplicate generators in <old>
@@ -528,22 +526,29 @@ class Semigroup : public SemigroupBase {
         old_new.at(old->_index.at(i)) = true;
         nr_old_left--;
       }
+
       // add the new generators to new _gens, elements, and _index
       for (size_t i = 0; i < irr_coll.size(); i++) {
-        _first.push_back(_gens.size());
-        _final.push_back(_gens.size());
+        auto it = _map.find(*irr_coll.at(i));
+        if (it == _map.end()) { 
+          _first.push_back(_gens.size());
+          _final.push_back(_gens.size());
 
-        _gens.push_back(irr_coll.at(i));
-        _elements->push_back(irr_coll.at(i));
-        _genslookup.push_back(_nr);
-        _index.push_back(_nr);
+          _gens.push_back(irr_coll.at(i));
+          _elements->push_back(irr_coll.at(i));
+          _genslookup.push_back(_nr);
+          _index.push_back(_nr);
 
-        is_one(*irr_coll.at(i), _nr);
-        _map.insert(std::make_pair(*irr_coll.at(i), _nr));
-        _prefix.push_back(-1);
-        _suffix.push_back(-1);
-        _nr++;
+          is_one(*irr_coll.at(i), _nr);
+          _map.insert(std::make_pair(*irr_coll.at(i), _nr));
+          _prefix.push_back(-1);
+          _suffix.push_back(-1);
+          _nr++;
+        } // ignore duplicate generators!
       }
+      
+      _nrgens = _gens.size(); // TODO maybe remove _nrgens?
+
       // expand left/right/reduced by the number of newly added elements
       expand(irr_coll.size()); 
       _lenindex.push_back(_index.size()); 
