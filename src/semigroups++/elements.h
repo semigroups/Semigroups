@@ -69,7 +69,7 @@ class Element {
       return _data->size();
     }
 
-    virtual Element* copy () const {
+    virtual Element* copy (size_t increase_deg_by = 0) const {
       return new Element(*_data);
     }
 
@@ -77,6 +77,14 @@ class Element {
       if (_data != nullptr) {
         delete _data;
       }
+    }
+
+    void push_back (T val) {
+      _data->push_back(val);
+    }
+
+    std::vector<T>* data () const {
+      return _data;
     }
 
   protected:
@@ -105,7 +113,7 @@ class Transformation : public Element<T> {
         this->set(i, y->at(x->at(i)));
       }
     }
-
+    
     // the identity of this
     Element<T>* identity () {
       std::vector<T> image;
@@ -115,6 +123,16 @@ class Transformation : public Element<T> {
       }
       return new Transformation(image);
     }
+  
+    Element<T>* copy (size_t increase_deg_by = 0) const {
+      Element<T>* out = new Element<T>(*this->data());
+      size_t deg = out->degree();
+      for (size_t i = deg; i < deg + increase_deg_by; i++) {
+        out->push_back(i);
+      }
+      return out;
+    }
+
 };
 
 // hash function for unordered_map
@@ -162,6 +180,15 @@ class PartialPerm : public Element<T> {
         image.push_back(i + 1);
       }
       return new PartialPerm(image);
+    }
+    
+    Element<T>* copy (size_t increase_deg_by = 0) const {
+      Element<T>* out = new Element<T>(*this->data());
+      size_t deg = out->degree();
+      for (size_t i = deg; i < deg + increase_deg_by; i++) {
+        out->push_back(0);
+      }
+      return out;
     }
 };
 
@@ -222,6 +249,7 @@ class BooleanMat: public Element<bool> {
       }
       return new BooleanMat(mat);
     }
+
 };
 
 // hash function for unordered_map
@@ -367,7 +395,7 @@ class MatrixOverSemiring: public Element<long> {
       : Element<long>(data),
         _semiring(semiring) {}
   
-    Element* copy () const {
+    Element* copy (size_t increase_degree_by = 0) const {
       return new MatrixOverSemiring(*_data, _semiring);
     }
 

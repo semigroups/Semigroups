@@ -17,19 +17,32 @@ template <typename T>
 class RecVec {
         
       public:
+
+        RecVec () {
+          //std::cout << "RecVec: default constructor!\n";
+        };
         
-        RecVec(size_t nrcols, size_t nrrows=0) : _vec(), 
-                                                 _nrcols(nrcols),
-                                                 _nrrows(0){
+        RecVec (size_t nrcols, size_t nrrows = 0) : _vec(), 
+                                                    _nrcols(nrcols),
+                                                    _nrrows(0){
           this->expand(nrrows);
         }
         
         RecVec (const RecVec& copy) 
           : _vec(copy._vec),
             _nrcols(copy._nrcols), 
-            _nrrows(copy._nrrows) {}
+            _nrrows(copy._nrrows) {
+            //  std::cout << "RecVec: copy constructor!\n";
+            
+            }
 
-        RecVec& operator= (RecVec const& copy) = delete;
+        RecVec& operator= (RecVec const& copy) {
+            //std::cout << "RecVec: assignment operator!\n";
+            _vec = copy._vec;
+            _nrcols = copy._nrcols;
+            _nrrows = copy._nrrows;
+            return *this;
+        }
         
         ~RecVec() {}
         
@@ -62,20 +75,28 @@ class RecVec {
           return _nrrows;
         }
         
-        void set_nrrows (size_t nr) {
-          _nrrows = nr;
-        }
-        
         size_t nrcols () {
           return _nrcols;
         }
         
-        void push_back(T val) {
-          _vec.push_back(val);
+        void add_cols (const RecVec<T>& copy, size_t nr) {
+          assert(&copy != this);
+          _vec.clear();
+          _vec.reserve((_nrcols + nr) * _nrrows);
+          for (size_t i = 0; i < _nrrows; i++) {
+            for (size_t j = 0; j < _nrcols; j++) {
+              _vec.push_back(copy.get(i, j));
+            }
+            for (size_t j = 0; j < nr; j++) {
+              _vec.push_back(0);
+            }
+          }
+          _nrcols += nr;
         }
-
-        void reserve (size_t capacity) {
-          _vec.reserve(capacity);
+          
+        void add_cols (size_t nr) {
+          RecVec<T> copy(*this);
+          add_cols(copy, nr);
         }
         
       private:

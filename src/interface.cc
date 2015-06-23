@@ -68,7 +68,7 @@ class Interface : public InterfaceBase {
     // constructor
 
     // in the case that we are taking the closure of the semigroup of
-    // <old_data> with some new generators, these new generators are stored in
+    // <old> with some new generators, these new generators are stored in
     // the <gens> component of <data>. I.e. the meaning of the <gens> component
     // of the <data> is different if we are taking the closure than if we are
     // not. 
@@ -97,9 +97,7 @@ class Interface : public InterfaceBase {
       if (old == nullptr) {
         _semigroup = new Semigroup<T>(gens_c, deg_c);
       } else {
-        Semigroup<T>* S = static_cast<Semigroup<T>*>(old); 
-        _semigroup = new Semigroup<T>(*S, gens_c.size()); //FIXME what if duplicate gens
-        _semigroup->closure(S, gens_c, deg_c, false);
+        _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c); 
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
         }
@@ -610,7 +608,7 @@ Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
 
 Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data) {
   if (TypeSemigroup(old_data) == UNKNOWN) { 
-    ErrorQuit("not yet implemented!!", 0L, 0L);
+    ErrorQuit("CLOSURE_SEMIGROUP: this shouldn't happen!", 0L, 0L);
   }
   InterfaceFromData(new_data, InterfaceFromData(old_data)->semigroup());
   return new_data;
