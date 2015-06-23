@@ -35,13 +35,14 @@ ReadPackage("semigroups/gap/ideals-generic.gd");
 ReadPackage("semigroups/gap/semigroups.gd");
 ReadPackage("semigroups/gap/semigroups-acting.gd");
 
+ReadPackage("semigroups/gap/pbr.gd");
+
 ReadPackage("semigroups/gap/matrix-semiring.gd");
 ReadPackage("semigroups/gap/matrix-max-plus.gd");
 ReadPackage("semigroups/gap/matrix-boolean.gd");
 ReadPackage("semigroups/gap/matrix-prime-field.gd");
 
 ReadPackage("semigroups/gap/bipartition.gd");
-ReadPackage("semigroups/gap/partbinrel.gd");
 ReadPackage("semigroups/gap/blocks.gd");
 
 ReadPackage("semigroups/gap/semigroups-matrix-semiring.gd");
@@ -50,6 +51,7 @@ ReadPackage("semigroups/gap/semigroups-matrix-boolean.gd");
 ReadPackage("semigroups/gap/semigroups-matrix-prime-field.gd");
 
 ReadPackage("semigroups/gap/semibipart.gd");
+ReadPackage("semigroups/gap/semipbr.gd");
 ReadPackage("semigroups/gap/semitrans.gd");
 ReadPackage("semigroups/gap/semipperm.gd");
 

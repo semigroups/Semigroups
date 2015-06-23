@@ -28,3 +28,8 @@ DeclareOperation("Enumerate", [IsGenericSemigroupData, IsCyclotomic]);
 DeclareOperation("Enumerate", [IsGenericSemigroupData,
                                IsCyclotomic,
                                IsFunction]);
+
+DeclareProperty("SEMIGROUPS_IsCCSemigroup", IsSemigroup);
+DeclareGlobalFunction("SEMIGROUPS_DegreeOfSemigroup");
+
+# TODO immediate methods for IsCppSemigroup?

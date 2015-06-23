@@ -925,10 +925,8 @@ InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    # gaplint: ignore 3
-    Error(
-    "Semigroups: SingularFactorisableDualSymmetricInverseSemigroup: usage\n",
-    "the argument must be greater than 1");
+    Error("Semigroups: SingularFactorisableDualSymmetricInverseSemigroup:",
+          " usage,\nthe argument must be greater than 1");
     return;
   fi;
 

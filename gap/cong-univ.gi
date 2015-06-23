@@ -11,9 +11,6 @@
 ## semigroup, that is the relation SxS on a semigroup S.
 ##
 
-DeclareCategory("IsUniversalSemigroupCongruenceClass",
-  IsEquivalenceClass and IsAttributeStoringRep and IsAssociativeElement);
-
 #
 
 InstallMethod(UniversalSemigroupCongruence,
@@ -21,9 +18,8 @@ InstallMethod(UniversalSemigroupCongruence,
 [IsSemigroup],
 function(s)
   local fam, cong;
-  fam := GeneralMappingsFamily(
-                 ElementsFamily(FamilyObj(s)),
-                 ElementsFamily(FamilyObj(s)));
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
+                               ElementsFamily(FamilyObj(s)));
   cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
   SetSource(cong, s);
   SetRange(cong, s);
@@ -257,11 +253,11 @@ function(cong)
       if x = z then
         return [[z, NextIterator(it)]];
       else
-        return [[x,z]];
+        return [[x, z]];
       fi;
     else
       # Link zero to a representative of each maximal D-class
-      return List(MaximalDClasses(s), cl-> [z, Representative(cl)]);
+      return List(MaximalDClasses(s), cl -> [z, Representative(cl)]);
     fi;
   else
     # Use the minimal ideal
@@ -288,5 +284,3 @@ function(cong)
     return pairs;
   fi;
 end);
-
-#

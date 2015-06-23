@@ -32,22 +32,13 @@ DeclareGlobalFunction("BooleanMatNC");
 
 DeclareOperation("RandomBooleanMat", [IsPosInt]);
 
-#TODO implement these!
-
-DeclareProperty("IsSymmetricBooleanMat", IsBooleanMat);
-DeclareProperty("IsAntiSymmetricBooleanMat", IsBooleanMat);
-DeclareProperty("IsTransitiveBooleanMat", IsBooleanMat);
-DeclareProperty("IsReflexiveBooleanMat", IsBooleanMat);
-
-#TODO synonyms for IsPartialOrderBooleanMat, IsEquivalenceRelationBooleanMat,
-#etc
 
 #############################################################################
 ## Declarations specifically for Boolean mats
 #############################################################################
 
-DeclareOperation("AsBooleanMat", [IsPerm, IsPosInt]);
-DeclareOperation("AsBooleanMat", [IsTransformation, IsPosInt]);
+DeclareOperation("AsBooleanMat", [IsAssociativeElement, IsPosInt]);
+DeclareOperation("AsBooleanMat", [IsAssociativeElement]);
 
 DeclareOperation("NumberBooleanMat", [IsBooleanMat]);
 DeclareOperation("BooleanMatNumber", [IsPosInt, IsPosInt]);
@@ -63,3 +54,21 @@ DeclareAttribute("IsColTrimBooleanMat", IsBooleanMat);
 DeclareAttribute("IsTrimBooleanMat", IsBooleanMat);
 
 DeclareGlobalFunction("OnBlists");
+
+DeclareAttribute("SetBooleanMat", IsBooleanMat);
+DeclareAttribute("BooleanMatSet", IsSSortedList and IsHomogeneousList);
+DeclareAttribute("CanonicalBooleanMat", IsBooleanMat);
+DeclareOperation("CanonicalBooleanMat", [IsPermGroup, IsBooleanMat]);
+DeclareOperation("CanonicalBooleanMat", 
+                 [IsPermGroup, IsPermGroup, IsBooleanMat]);
+DeclareOperation("CanonicalBooleanMatNC", 
+                 [IsPermGroup, IsPermGroup, IsBooleanMat]);
+
+DeclareProperty("IsSymmetricBooleanMat", IsBooleanMat);
+DeclareProperty("IsAntiSymmetricBooleanMat", IsBooleanMat);
+DeclareProperty("IsTransitiveBooleanMat", IsBooleanMat);
+DeclareProperty("IsReflexiveBooleanMat", IsBooleanMat);
+DeclareSynonymAttr("IsPartialOrderBooleanMat", IsAntiSymmetricBooleanMat and
+                   IsTransitiveBooleanMat and IsReflexiveBooleanMat);
+DeclareSynonymAttr("IsEquivalenceBooleanMat", IsSymmetricBooleanMat and
+                   IsTransitiveBooleanMat and IsReflexiveBooleanMat);

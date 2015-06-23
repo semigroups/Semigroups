@@ -12,11 +12,11 @@ DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("CyclesOfPartialPerm", IsPartialPerm);
 DeclareAttribute("CyclesOfPartialPermSemigroup",
-IsPartialPermSemigroup);
+                 IsPartialPermSemigroup);
 DeclareAttribute("ComponentRepsOfPartialPermSemigroup",
-IsPartialPermSemigroup);
+                 IsPartialPermSemigroup);
 DeclareAttribute("ComponentsOfPartialPermSemigroup",
-IsPartialPermSemigroup);
+                 IsPartialPermSemigroup);
 
 DeclareOperation("AsPartialPermSemigroup", [IsSemigroup]);
 DeclareAttribute("SmallerDegreePartialPermRepresentation",

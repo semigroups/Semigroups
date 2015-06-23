@@ -61,6 +61,7 @@ inline Class* CLASS_OBJ(Obj o) {
 #define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
 #define IS_NAT_MAT(x)            (CALL_1ARGS(IsNaturalMatrix, x) == True)
 #define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
+#define IS_PBR(x)                (CALL_1ARGS(IsPartitionedBinaryRelation, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
@@ -89,6 +90,8 @@ extern Obj IsNaturalMatrix;
 extern Obj NaturalMatrixType;
 extern Obj IsMatrixOverPrimeField;
 extern Obj AsMatrixOverPrimeFieldNC;
+extern Obj IsPartitionedBinaryRelation;
+extern Obj PartitionedBinaryRelationType;
 
 /*******************************************************************************
  * What type of semigroup do we have?
@@ -108,7 +111,8 @@ enum SemigroupType {
   TROP_MIN_PLUS_MAT,
   PROJ_MAX_PLUS_MAT,
   NAT_MAT,
-  MAT_OVER_PF
+  MAT_OVER_PF, 
+  PBR
 };
 
 extern SemigroupType TypeSemigroup (Obj data);
@@ -122,6 +126,7 @@ bool inline IsCCSemigroup (Obj data) {
 *******************************************************************************/
 
 Obj inline Representative (Obj data) {
+  // TODO more asserts 
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
   return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);

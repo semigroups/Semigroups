@@ -6,16 +6,13 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-##
-## Partitioned Binary Relations
-## Binary relations on 2n points with a different multiplication
-## as described in: MARTIN, Paul; MAZORCHUK, Volodymyr.
-## Partitioned Binary Relations. MATHEMATICA SCANDINAVICA,v113, n1, p. 30-52, 
-## http://arxiv.org/abs/1102.0862
-## 
-## This is the most general diagram semigroup containing all other types,
-## therefore it can be used for testing the specialized implementations,
-## thus the efficiency is not the first priority here.
+
+# This file contains a declarations for partitioned binary relations (PBRs) as
+# defined in:
+# 
+# MARTIN, Paul; MAZORCHUK, Volodymyr.
+# Partitioned Binary Relations. MATHEMATICA SCANDINAVICA, v113, n1, p. 30-52, 
+# http://arxiv.org/abs/1102.0862
 
 DeclareCategory("IsPartitionedBinaryRelation", 
                 IsMultiplicativeElementWithInverse and
@@ -31,16 +28,26 @@ BindGlobal("PartitionedBinaryRelationFamily",
                      CanEasilySortElements));
 
 BindGlobal("PartitionedBinaryRelationType",
-        NewType(PartitionedBinaryRelationFamily,
-                IsPartitionedBinaryRelation and IsPositionalObjectRep));
+           NewType(PartitionedBinaryRelationFamily,
+                   IsPartitionedBinaryRelation and IsPositionalObjectRep));
 
 DeclareAttribute("DegreeOfPartitionedBinaryRelation",
                  IsPartitionedBinaryRelation);
+DeclareSynonymAttr("DegreeOfPBR", DegreeOfPartitionedBinaryRelation);
 DeclareGlobalFunction("PartitionedBinaryRelation");
 DeclareGlobalFunction("ExtRepOfPBR");
 DeclareOperation("RandomPartitionedBinaryRelation", [IsPosInt]);
+DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement, IsPosInt]);
 DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement]);
-DeclareOperation("AsBooleanMat", [IsPartitionedBinaryRelation]);
+DeclareOperation("NumberPBR", [IsPartitionedBinaryRelation]);
+DeclareOperation("PBRNumber", [IsPosInt, IsPosInt]);
+
+DeclareProperty("IsEmptyPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsUniversalPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsBipartitionPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsTransformationPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsPartialPermPBR", IsPartitionedBinaryRelation);
+DeclareProperty("IsDualTransformationPBR", IsPartitionedBinaryRelation);
 
 DeclareSynonym("PBR", PartitionedBinaryRelation);
 DeclareSynonym("AsPBR", AsPartitionedBinaryRelation);

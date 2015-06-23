@@ -28,7 +28,7 @@ gap> Size(s);
 597369
 gap> f:=Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] );;
 gap> l:=LClassNC(s, f);
-{Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )}
+<Green's L-class: Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )>
 gap> RhoOrbStabChain(l);
 true
 gap> Size(l);
@@ -41,7 +41,7 @@ Sym( [ 1, 3, 5, 7, 8 ] )
 gap> ForAll(l, x-> x in l);
 true
 gap> d:=DClass(s, f);
-{Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )}
+<Green's D-class: Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )>
 gap> iter:=Iterator(d);
 <iterator of D-class>
 gap> for i in iter do od;
@@ -57,11 +57,11 @@ gap> s:=Semigroup(gens);
 <partial perm semigroup on 12 pts with 6 generators>
 gap> f:=PartialPermNC([ 3, 4, 5, 11 ], [ 4, 1, 2, 5 ]);;
 gap> l:=LClassNC(s, f);
-{PartialPerm( [ 3, 4, 5, 11 ], [ 4, 1, 2, 5 ] )}
+<Green's L-class: [3,4,1][11,5,2]>
 gap> l:=LClass(s, f);
-{PartialPerm( [ 3, 4, 5, 11 ], [ 4, 1, 2, 5 ] )}
+<Green's L-class: [3,4,1][11,5,2]>
 gap> d:=DClass(s, f);
-{PartialPerm( [ 3, 4, 5, 11 ], [ 4, 1, 2, 5 ] )}
+<Green's D-class: [3,4,1][11,5,2]>
 gap> Size(l);
 1
 gap> Number(d, x-> x in l);
@@ -71,9 +71,9 @@ gap> Number(s, x-> x in l);
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 12 pts with 6 generators>
 gap> l:=LClass(s, f);
-{PartialPerm( [ 3, 4, 5, 11 ], [ 4, 1, 2, 5 ] )}
+<Green's L-class: [3,4,1][11,5,2]>
 gap> d:=DClass(s, f);
-{PartialPerm( [ 3, 4, 5, 11 ], [ 4, 1, 2, 5 ] )}
+<Green's D-class: [3,4,1][11,5,2]>
 gap> Number(d, x-> x in l);
 1
 gap> Number(s, x-> x in l);
@@ -86,7 +86,7 @@ gap> iter:=IteratorOfLClasses(s);
 <iterator of L-classes>
 gap> repeat l:=NextIterator(iter); until Size(l)>1;
 gap> l;
-{PartialPerm( [ 4 ], [ 3 ] )}
+<Green's L-class: [4,3]>
 gap> Size(l);
 11
 gap> Elements(l);
@@ -97,9 +97,9 @@ true
 gap> ForAll(last2, x-> x in l);
 true
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 3, 4, 5, 11 ], [ 4, 1, 2, 5 ] )}
+<Green's D-class: [3,4,1][11,5,2]>
 gap> d:=DClassNC(s, Representative(l));
-{PartialPerm( [ 4 ], [ 3 ] )}
+<Green's D-class: [4,3]>
 gap> ForAll(l, x-> x in d);
 true
 gap> Number(d, x-> x in l);
@@ -116,7 +116,7 @@ gap> s:=Semigroup(gens);
 <transformation semigroup on 8 pts with 4 generators>
 gap> f:=Transformation( [ 5, 2, 7, 2, 7, 2, 5, 8 ] );;
 gap> l:=LClassNC(s, f);
-{Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )}
+<Green's L-class: Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )>
 gap> enum:=Enumerator(l);
 <enumerator of L-class>
 gap> enum[1];
@@ -147,78 +147,78 @@ gap> f:=Transformation( [ 7, 2, 4, 2, 2, 1, 7, 6 ] );;
 gap> Position(enum, f);
 fail
 gap> GreensHClasses(l);
-[ {Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )}, 
-  {Transformation( [ 2, 8, 7, 5, 5, 7, 2, 2 ] )}, 
-  {Transformation( [ 7, 7, 5, 2, 7, 2, 7 ] )}, 
-  {Transformation( [ 8, 8, 7, 5, 5, 7, 2, 8 ] )}, 
-  {Transformation( [ 8, 2, 7, 2, 2, 5, 8, 7 ] )}, 
-  {Transformation( [ 7, 8, 5, 7, 7, 7, 7, 2 ] )}, 
-  {Transformation( [ 5, 7, 7, 7, 7, 2, 5 ] )}, 
-  {Transformation( [ 7, 5, 2, 8, 5, 7, 7, 8 ] )}, 
-  {Transformation( [ 7, 2, 5, 8, 5, 8, 7, 8 ] )}, 
-  {Transformation( [ 2, 7, 7, 8, 8, 2, 2, 5 ] )}, 
-  {Transformation( [ 7, 2, 8, 2, 2, 5, 7, 7 ] )}, 
-  {Transformation( [ 8, 2, 5, 7, 7, 7, 8, 7 ] )}, 
-  {Transformation( [ 7, 8, 7, 5, 5, 7, 7, 2 ] )}, 
-  {Transformation( [ 7, 7, 5, 7, 7, 2, 7 ] )}, 
-  {Transformation( [ 5, 8, 2, 7, 7, 5, 5, 7 ] )}, 
-  {Transformation( [ 2, 5, 7, 5, 5, 7, 2 ] )}, 
-  {Transformation( [ 2, 8, 5, 7, 7, 5, 2, 8 ] )}, 
-  {Transformation( [ 7, 5, 7, 2, 2, 8, 7, 2 ] )}, 
-  {Transformation( [ 7, 8, 2, 7, 8, 2, 7, 5 ] )}, 
-  {Transformation( [ 2, 7, 8, 7, 7, 2, 2, 5 ] )}, 
-  {Transformation( [ 2, 7, 5, 8, 8, 7, 2, 7 ] )}, 
-  {Transformation( [ 8, 2, 7, 7, 7, 5, 8, 7 ] )}, 
-  {Transformation( [ 8, 7, 2, 5, 5, 7, 8, 5 ] )}, 
-  {Transformation( [ 2, 7, 5, 8, 7, 5, 2, 7 ] )}, 
-  {Transformation( [ 5, 8, 7, 2, 2, 5, 5, 7 ] )}, 
-  {Transformation( [ 8, 8, 5, 2, 2, 7, 8, 5 ] )}, 
-  {Transformation( [ 5, 2, 7, 7, 7, 2, 5 ] )}, 
-  {Transformation( [ 7, 2, 7, 5, 2, 8, 7, 2 ] )}, 
-  {Transformation( [ 7, 7, 5, 2, 2, 8, 7, 7 ] )}, 
-  {Transformation( [ 5, 8, 2, 7, 8, 7, 5, 7 ] )}, 
-  {Transformation( [ 2, 7, 7, 8, 8, 7, 2, 5 ] )}, 
-  {Transformation( [ 7, 5, 2, 8, 8, 5, 7, 7 ] )}, 
-  {Transformation( [ 2, 5, 8, 7, 5, 7, 2, 5 ] )}, 
-  {Transformation( [ 8, 7, 7, 5, 5, 2, 8, 5 ] )}, 
-  {Transformation( [ 7, 2, 5, 8, 2, 5, 7, 7 ] )}, 
-  {Transformation( [ 8, 5, 5, 8, 8, 2, 8, 7 ] )}, 
-  {Transformation( [ 5, 2, 8, 8, 2, 7, 5, 5 ] )}, 
-  {Transformation( [ 5, 2, 7, 7, 2, 8, 5, 7 ] )}, 
-  {Transformation( [ 8, 7, 2, 5, 5, 8, 8, 7 ] )}, 
-  {Transformation( [ 2, 8, 5, 8, 8, 7, 2, 7 ] )}, 
-  {Transformation( [ 7, 5, 7, 2, 2, 8, 7, 7 ] )}, 
-  {Transformation( [ 7, 8, 2, 7, 8, 7, 7, 5 ] )}, 
-  {Transformation( [ 2, 8, 7, 5, 8, 5, 2, 7 ] )}, 
-  {Transformation( [ 5, 5, 8, 2, 2, 5, 5, 7 ] )}, 
-  {Transformation( [ 8, 5, 2, 5, 5, 7, 8, 5 ] )}, 
-  {Transformation( [ 7, 5, 7, 8, 8, 5, 7, 2 ] )}, 
-  {Transformation( [ 7, 5, 8, 7, 5, 2, 7, 5 ] )}, 
-  {Transformation( [ 5, 7, 5, 8, 8, 8, 5, 2 ] )}, 
-  {Transformation( [ 5, 8, 8, 5, 8, 2, 5, 7 ] )}, 
-  {Transformation( [ 7, 7, 2, 8, 8, 5, 7, 8 ] )}, 
-  {Transformation( [ 2, 5, 8, 7, 5, 8, 2, 7 ] )}, 
-  {Transformation( [ 7, 2, 7, 5, 2, 8, 7, 7 ] )}, 
-  {Transformation( [ 5, 7, 8, 5, 5, 2, 5, 5 ] )}, 
-  {Transformation( [ 8, 2, 5, 5, 2, 5, 8, 7 ] )}, 
-  {Transformation( [ 5, 2, 7, 7, 7, 8, 5, 5 ] )}, 
-  {Transformation( [ 7, 8, 7, 5, 8, 5, 7, 2 ] )}, 
-  {Transformation( [ 7, 2, 5, 5, 5, 8, 7, 8 ] )}, 
-  {Transformation( [ 7, 8, 2, 7, 7, 8, 7, 5 ] )}, 
-  {Transformation( [ 2, 8, 7, 7, 8, 5, 2, 8 ] )}, 
-  {Transformation( [ 7, 5, 8, 5, 5, 5, 7, 2 ] )}, 
-  {Transformation( [ 8, 5, 5, 7, 5, 2, 8, 5 ] )}, 
-  {Transformation( [ 8, 2, 7, 7, 7, 8, 8, 5 ] )}, 
-  {Transformation( [ 7, 8, 7, 8, 8, 5, 7, 2 ] )}, 
-  {Transformation( [ 8, 5, 2, 7, 7, 7, 8, 8 ] )}, 
-  {Transformation( [ 2, 7, 7, 8, 7, 8, 2, 5 ] )}, 
-  {Transformation( [ 5, 2, 8, 7, 7, 5, 5, 5 ] )}, 
-  {Transformation( [ 2, 5, 7, 8, 8, 7, 2, 8 ] )}, 
-  {Transformation( [ 8, 7, 5, 2, 7, 5, 8, 5 ] )}, 
-  {Transformation( [ 5, 8, 7, 2, 2, 8, 5, 7 ] )}, 
-  {Transformation( [ 8, 7, 7, 5, 5, 2, 8, 8 ] )}, 
-  {Transformation( [ 7, 2, 5, 8, 2, 8, 7, 7 ] )}, 
-  {Transformation( [ 7, 5, 8, 7, 5, 2, 7, 8 ] )} ]
+[ <Green's H-class: Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 8, 7, 5, 5, 7, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 5, 2, 7, 2, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 7, 5, 5, 7, 2, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 2, 7, 2, 2, 5, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 8, 5, 7, 7, 7, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 5, 7, 7, 7, 7, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 2, 8, 5, 7, 7, 8 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 5, 8, 5, 8, 7, 8 ] )>, 
+  <Green's H-class: Transformation( [ 2, 7, 7, 8, 8, 2, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 8, 2, 2, 5, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 2, 5, 7, 7, 7, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 8, 7, 5, 5, 7, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 5, 7, 7, 2, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 8, 2, 7, 7, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 7, 5, 5, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 8, 5, 7, 7, 5, 2, 8 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 7, 2, 2, 8, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 7, 8, 2, 7, 8, 2, 7, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 7, 8, 7, 7, 2, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 7, 5, 8, 8, 7, 2, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 2, 7, 7, 7, 5, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 7, 2, 5, 5, 7, 8, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 7, 5, 8, 7, 5, 2, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 8, 7, 2, 2, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 5, 2, 2, 7, 8, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 2, 7, 7, 7, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 7, 5, 2, 8, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 5, 2, 2, 8, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 8, 2, 7, 8, 7, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 2, 7, 7, 8, 8, 7, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 2, 8, 8, 5, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 8, 7, 5, 7, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 8, 7, 7, 5, 5, 2, 8, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 5, 8, 2, 5, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 5, 5, 8, 8, 2, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 2, 8, 8, 2, 7, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 2, 7, 7, 2, 8, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 7, 2, 5, 5, 8, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 2, 8, 5, 8, 8, 7, 2, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 7, 2, 2, 8, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 8, 2, 7, 8, 7, 7, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 8, 7, 5, 8, 5, 2, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 5, 8, 2, 2, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 5, 2, 5, 5, 7, 8, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 7, 8, 8, 5, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 8, 7, 5, 2, 7, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 7, 5, 8, 8, 8, 5, 2 ] )>, 
+  <Green's H-class: Transformation( [ 5, 8, 8, 5, 8, 2, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 2, 8, 8, 5, 7, 8 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 8, 7, 5, 8, 2, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 7, 5, 2, 8, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 7, 8, 5, 5, 2, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 8, 2, 5, 5, 2, 5, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 2, 7, 7, 7, 8, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 8, 7, 5, 8, 5, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 5, 5, 5, 8, 7, 8 ] )>, 
+  <Green's H-class: Transformation( [ 7, 8, 2, 7, 7, 8, 7, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 8, 7, 7, 8, 5, 2, 8 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 8, 5, 5, 5, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 8, 5, 5, 7, 5, 2, 8, 5 ] )>, 
+  <Green's H-class: Transformation( [ 8, 2, 7, 7, 7, 8, 8, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 8, 7, 8, 8, 5, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 8, 5, 2, 7, 7, 7, 8, 8 ] )>, 
+  <Green's H-class: Transformation( [ 2, 7, 7, 8, 7, 8, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 2, 8, 7, 7, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 7, 8, 8, 7, 2, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 7, 5, 2, 7, 5, 8, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 8, 7, 2, 2, 8, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 8, 7, 7, 5, 5, 2, 8, 8 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 5, 8, 2, 8, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 8, 7, 5, 2, 7, 8 ] )> ]
 gap> Length(last);
 72
 
@@ -235,7 +235,7 @@ gap> Size(s);
 4857
 gap> f:=PartialPerm([ 6, 9 ], [ 12, 6 ]);;
 gap> l:=LClass(s, f);
-{PartialPerm( [ 1, 9 ], [ 6, 12 ] )}
+<Green's L-class: [1,6][9,12]>
 gap> NrHClasses(l);
 66
 gap> Size(l);
@@ -245,7 +245,7 @@ Group([ (6,12) ])
 gap> o:=RhoOrb(l);
 <closed orbit, 147 points with Schreier tree with log>
 gap> d:=DClassOfLClass(l);
-{PartialPerm( [ 1, 9 ], [ 6, 12 ] )}
+<Green's D-class: [1,6][9,12]>
 gap> Size(d);
 66
 gap> NrLClasses(d);
@@ -257,41 +257,39 @@ Group(())
 gap> Length(RhoOrbSCC(l));
 33
 gap> HClasses(l);
-[ {PartialPerm( [ 1, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 7 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 4, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 4 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 7 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 4, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 7, 8 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 3, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 2, 8 ], [ 6, 12 ] )}, {PartialPerm( [ 3, 4 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 4 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 12, 6 ] )}, {PartialPerm( [ 9, 12 ], [ 12, 6 ] )},
-  {PartialPerm( [ 2, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 7 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 7, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 8 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 5, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 8, 9 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 12, 6 ] )}, {PartialPerm( [ 3, 11 ], [ 12, 6 ] )},
-  {PartialPerm( [ 6, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 5, 11 ], [ 12, 6 ] )},
-  {PartialPerm( [ 6, 8 ], [ 6, 12 ] )}, {PartialPerm( [ 4, 6 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 4, 12 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 12 ], [ 12, 6 ] )}
-    , {PartialPerm( [ 4, 11 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 7, 12 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 5 ], [ 12, 6 ] )},
-  {PartialPerm( [ 1, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 7 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 4, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 4 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 7 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 4, 8 ], [ 6, 12 ] )}, {PartialPerm( [ 7, 8 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 3, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 2, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 3, 4 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 4 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 6, 12 ] )}, {PartialPerm( [ 9, 12 ], [ 6, 12 ] )},
-  {PartialPerm( [ 2, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 4, 7 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 7, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 8 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 5, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 8, 9 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 6, 12 ] )}, {PartialPerm( [ 3, 11 ], [ 6, 12 ] )},
-  {PartialPerm( [ 6, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 5, 11 ], [ 6, 12 ] )},
-  {PartialPerm( [ 6, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 6 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 4, 12 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 12 ], [ 6, 12 ] )}
-    , {PartialPerm( [ 4, 11 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 7, 12 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 5 ], [ 6, 12 ] )} 
- ]
+[ <Green's H-class: [1,6][9,12]>, <Green's H-class: [2,6][7,12]>, 
+  <Green's H-class: [4,6][9,12]>, <Green's H-class: [1,12][4,6]>, 
+  <Green's H-class: [1,6][3,12]>, <Green's H-class: [1,12][7,6]>, 
+  <Green's H-class: [4,12][8,6]>, <Green's H-class: [7,6][8,12]>, 
+  <Green's H-class: [3,12][9,6]>, <Green's H-class: [1,12][2,6]>, 
+  <Green's H-class: [2,6][8,12]>, <Green's H-class: [3,6][4,12]>, 
+  <Green's H-class: [2,12][3,6]>, <Green's H-class: [2,12][4,6]>, 
+  <Green's H-class: [1,12][5,6]>, <Green's H-class: [9,12,6]>, 
+  <Green's H-class: [2,12][9,6]>, <Green's H-class: [4,12][7,6]>, 
+  <Green's H-class: [7,12][9,6]>, <Green's H-class: [1,6][8,12]>, 
+  <Green's H-class: [5,12][9,6]>, <Green's H-class: [8,12][9,6]>, 
+  <Green's H-class: [4,12][5,6]>, <Green's H-class: [3,12][11,6]>, 
+  <Green's H-class: [9,6,12]>, <Green's H-class: [5,12][11,6]>, 
+  <Green's H-class: [8,12](6)>, <Green's H-class: [4,12](6)>, 
+  <Green's H-class: [4,12,6]>, <Green's H-class: [2,12,6]>, 
+  <Green's H-class: [4,12][11,6]>, <Green's H-class: [7,6](12)>, 
+  <Green's H-class: [2,12][5,6]>, <Green's H-class: [1,12][9,6]>, 
+  <Green's H-class: [2,12][7,6]>, <Green's H-class: [4,12][9,6]>, 
+  <Green's H-class: [1,6][4,12]>, <Green's H-class: [1,12][3,6]>, 
+  <Green's H-class: [1,6][7,12]>, <Green's H-class: [4,6][8,12]>, 
+  <Green's H-class: [7,12][8,6]>, <Green's H-class: [3,6][9,12]>, 
+  <Green's H-class: [1,6][2,12]>, <Green's H-class: [2,12][8,6]>, 
+  <Green's H-class: [3,12][4,6]>, <Green's H-class: [2,6][3,12]>, 
+  <Green's H-class: [2,6][4,12]>, <Green's H-class: [1,6][5,12]>, 
+  <Green's H-class: [9,6](12)>, <Green's H-class: [2,6][9,12]>, 
+  <Green's H-class: [4,6][7,12]>, <Green's H-class: [7,6][9,12]>, 
+  <Green's H-class: [1,12][8,6]>, <Green's H-class: [5,6][9,12]>, 
+  <Green's H-class: [8,6][9,12]>, <Green's H-class: [4,6][5,12]>, 
+  <Green's H-class: [3,6][11,12]>, <Green's H-class: [9,12](6)>, 
+  <Green's H-class: [5,6][11,12]>, <Green's H-class: [8,6,12]>, 
+  <Green's H-class: [4,6,12]>, <Green's H-class: [4,6](12)>, 
+  <Green's H-class: [2,6](12)>, <Green's H-class: [4,6][11,12]>, 
+  <Green's H-class: [7,12,6]>, <Green's H-class: [2,6][5,12]> ]
 gap> IsDuplicateFreeList(last);
 true
 gap> IsRegularClass(l);
@@ -302,7 +300,7 @@ true
 gap> ForAll(H, x-> Representative(x) in d);
 true
 gap> d;
-{PartialPerm( [ 1, 9 ], [ 6, 12 ] )}
+<Green's D-class: [1,6][9,12]>
 gap> Representative(l) in d;
 true
 gap> First(H, x-> not Representative(x) in d);
@@ -413,9 +411,9 @@ gap> f:=PartialPermNC([ 6, 9 ], [ 12, 6 ]);
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 12 pts with 6 generators>
 gap> l:=LClass(s, f);
-{PartialPerm( [ 6, 9 ], [ 12, 6 ] )}
+<Green's L-class: [9,6,12]>
 gap> d:=DClassOfLClass(l);
-{PartialPerm( [ 6, 9 ], [ 12, 6 ] )}
+<Green's D-class: [9,6,12]>
 gap> ForAll(l, x-> x in d);
 true
 gap> NrHClasses(l);
@@ -445,12 +443,12 @@ gap> Size(s);
 95540
 gap> f:=Transformation( [ 2, 2, 7, 7, 7, 1, 2, 7 ] );;
 gap> l:=LClassNC(s, f);
-{Transformation( [ 2, 2, 7, 7, 7, 1, 2, 7 ] )}
+<Green's L-class: Transformation( [ 2, 2, 7, 7, 7, 1, 2, 7 ] )>
 gap> g:=Transformation( [ 2, 2, 7, 7, 7, 1, 2, 1 ] );;
 gap> Size(l);
 936
 gap> h:=GreensHClassOfElement(l, g);
-{Transformation( [ 2, 2, 7, 7, 7, 1, 2, 1 ] )}
+<Green's H-class: Transformation( [ 2, 2, 7, 7, 7, 1, 2, 1 ] )>
 gap> Size(h);
 1
 gap> SchutzenbergerGroup(l);
@@ -484,7 +482,7 @@ gap> s:=Semigroup(gens);
 gap> 
 gap> f:=PartialPerm([]);;
 gap> l:=LClass(s, f);
-{PartialPerm( [  ], [  ] )}
+<Green's L-class: <empty partial perm>>
 gap> Size(s);
 55279
 gap> NrIdempotents(s);
@@ -500,9 +498,9 @@ gap> NrHClasses(s);
 gap> IsRegularSemigroup(s);
 false
 gap> l:=LClass(s, f);
-{PartialPerm( [  ], [  ] )}
+<Green's L-class: <empty partial perm>>
 gap> h:=HClassNC(l, f);
-{PartialPerm( [  ], [  ] )}
+<Green's H-class: <empty partial perm>>
 gap> Size(h);
 1
 gap> ForAll(h, x-> x in l);
@@ -513,9 +511,9 @@ gap> IsGreensClassNC(h);
 true
 gap> f:=PartialPermNC([ 2, 8, 9 ], [ 8, 10, 5 ]);;
 gap> l:=LClass(s, f);
-{PartialPerm( [ 4, 7, 8 ], [ 8, 10, 5 ] )}
+<Green's L-class: [4,8,5][7,10]>
 gap> h:=HClassNC(l, f);
-{PartialPerm( [ 2, 8, 9 ], [ 8, 10, 5 ] )}
+<Green's H-class: [2,8,10][9,5]>
 gap> ForAll(h, x-> x in s);
 true
 gap> ForAll(h, x-> x in l);
@@ -534,21 +532,21 @@ gap> f:=Transformation( [ 5, 4, 7, 2, 2, 2, 2, 5 ] );;
 gap> f in s;
 true
 gap> l:=LClass(s, f);
-{Transformation( [ 5, 4, 7, 2, 2, 2, 2, 5 ] )}
+<Green's L-class: Transformation( [ 5, 4, 7, 2, 2, 2, 2, 5 ] )>
 gap> IsGreensClassNC(l);
 false
 gap> Size(l);
 1
 gap> f:=Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] );;
 gap> l:=LClass(s, f);
-{Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )}
+<Green's L-class: Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )>
 gap> Size(l);
 1
 gap> iter:=IteratorOfLClasses(s);
 <iterator of L-classes>
 gap> repeat l:=NextIterator(iter); until Size(l)>1;
 gap> l;
-{Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )}
+<Green's L-class: Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )>
 gap> Size(l);
 1494
 gap> Idempotents(l);
@@ -651,7 +649,7 @@ true
 gap> s:=Monoid(gens);
 <transformation monoid on 8 pts with 4 generators>
 gap> l:=LClass(s, f);
-{Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )}
+<Green's L-class: Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )>
 gap> IsRegularClass(l);
 false
 gap> Size(l);
@@ -659,7 +657,7 @@ gap> Size(l);
 gap> f:= Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] );
 Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )
 gap> l:=LClass(s, f);
-{Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )}
+<Green's L-class: Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )>
 gap> IsRegularClass(l);
 true
 
@@ -689,7 +687,7 @@ gap> Size(s);
 62
 gap> f:=PartialPerm([ 2, 3 ], [ 2, 4 ]);;
 gap> l:=LClassNC(s, f);
-{PartialPerm( [ 2, 3 ], [ 2, 4 ] )}
+<Green's L-class: [3,4](2)>
 gap> HClassReps(l);
 [ [3,4](2), [1,2,4], [3,2,4], [1,4](2) ]
 gap> IsRegularClass(l);
@@ -697,7 +695,7 @@ false
 gap> NrHClasses(l);
 4
 gap> l:=LClass(s, f);
-{PartialPerm( [ 1, 2 ], [ 4, 2 ] )}
+<Green's L-class: [1,4](2)>
 gap> HClassReps(l);
 [ [1,4](2), [3,4](2), [1,2,4], [3,2,4] ]
 gap> IsRegularClass(l);
@@ -705,7 +703,7 @@ false
 gap> ForAll(HClassReps(l), x-> x in l);
 true
 gap> d:=DClassOfLClass(l);
-{PartialPerm( [ 1, 2 ], [ 4, 2 ] )}
+<Green's D-class: [1,4](2)>
 gap> Size(d);
 4
 gap> Size(l);
@@ -742,11 +740,11 @@ gap> gens:=[ Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] ),
 >   Transformation( [ 7, 7, 5, 4, 5, 3, 2 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> l:=LClasses(s)[1154];
-{Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )}
+<Green's L-class: Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )>
 gap> IsRegularClass(l);
 false
 gap> d:=DClassOfLClass(l);
-{Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )}
+<Green's D-class: Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )>
 gap> Size(l);
 1
 gap> Size(d);
@@ -758,14 +756,14 @@ gap> NrLClasses(d);
 gap> NrRClasses(d);
 1
 gap> l:=LClasses(s)[523];
-{Transformation( [ 5, 5, 5, 1, 7, 3, 6 ] )}
+<Green's L-class: Transformation( [ 5, 5, 5, 1, 7, 3, 6 ] )>
 gap> Size(l);
 1
 gap> iter:=IteratorOfLClasses(s);
 <iterator of L-classes>
 gap> repeat l:=NextIterator(iter); until Size(l)>1;
 gap> l;
-{Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )}
+<Green's L-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
 gap> Size(l);
 1872
 gap> NrHClasses(d);
@@ -782,7 +780,7 @@ true
 gap> Size(l);
 1872
 gap> d:=DClassOfLClass(l);
-{Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )}
+<Green's D-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
 gap> Size(d);
 59904
 gap> ForAll(l, x-> x in d);
@@ -792,7 +790,7 @@ gap> Number(d, x-> x in l);
 gap> SchutzenbergerGroup(d);
 Group([ (1,6), (1,2), (1,5,6,2) ])
 gap> d;
-{Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )}
+<Green's D-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
 
 #T# MiscTest8
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 7, 3, 4 ] ),
@@ -821,7 +819,7 @@ gap> IsRegularSemigroup(s);
 false
 gap> f:=PartialPerm([ 3, 4, 7 ], [ 4, 7, 8 ]);;
 gap> d:=DClass(s, f);
-{PartialPerm( [ 1, 3, 6 ], [ 7, 4, 8 ] )}
+<Green's D-class: [1,7][3,4][6,8]>
 gap> Size(d);
 282
 gap> NrRClasses(d);
@@ -869,7 +867,7 @@ gap> OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
 gap> Position(DClasses(s), d);
 18
 gap> d:=DClasses(s)[18];
-{PartialPerm( [ 1, 3, 6 ], [ 7, 4, 8 ] )}
+<Green's D-class: [1,7][3,4][6,8]>
 gap> OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
 [ 33, 35, 144, 146, 147, 148, 151, 152, 340, 341, 342, 343, 344, 345, 346, 
   353, 355, 356, 357, 358, 503, 519, 539, 540, 544, 553, 560, 561, 568, 571, 
@@ -917,7 +915,7 @@ true
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 8 pts with 10 generators>
 gap> d:=DClasses(s)[18];
-{PartialPerm( [ 1, 3, 6 ], [ 7, 4, 8 ] )}
+<Green's D-class: [1,7][3,4][6,8]>
 gap> enum:=Enumerator(d);
 <enumerator of D-class>
 gap> ForAll(enum, x-> enum[Position(enum, x)]=x);
@@ -970,9 +968,9 @@ gap> gens:=[ PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
 gap> s:=Semigroup(gens);;
 gap> f:=PartialPerm([ 2, 4 ], [ 6, 5 ]);;
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 2, 4 ], [ 6, 5 ] )}
+<Green's D-class: [2,6][4,5]>
 gap> GreensHClasses(d);
-[ {PartialPerm( [ 2, 4 ], [ 6, 5 ] )} ]
+[ <Green's H-class: [2,6][4,5]> ]
 gap> Size(d);
 1
 
@@ -1005,18 +1003,17 @@ gap> s:=Semigroup(gens);;
 gap> f:=PartialPerm([ 12, 27, 37, 40, 46, 50, 51, 53 ],
 > [ 98, 3, 84, 99, 100, 21, 70, 89 ]);;
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 12, 27, 37, 40, 46, 50, 51, 53 ], 
- [ 98, 3, 84, 99, 100, 21, 70, 89 ] )}
+<Green's D-class: [12,98][27,3][37,84][40,99][46,100][50,21][51,70][53,89]>
 gap> Size(d);
 1
 gap> GreensHClasses(d);
-[ {PartialPerm( [ 12, 27, 37, 40, 46, 50, 51, 53 ], 
-     [ 98, 3, 84, 99, 100, 21, 70, 89 ] )} ]
+[ <Green's H-class: [12,98][27,3][37,84][40,99][46,100][50,21][51,70][53,89]> 
+ ]
 gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> repeat d:=NextIterator(iter); until Size(d)>1;
 gap> d;
-{PartialPerm( [ 8, 57 ], [ 63, 87 ] )}
+<Green's D-class: [8,63][57,87]>
 gap> Size(d);
 2036
 gap> IsRegularDClass(d);
@@ -1025,7 +1022,7 @@ gap> GreensHClasses(d);;
 gap> NrHClasses(d);
 2036
 gap> GreensLClasses(d);
-[ {PartialPerm( [ 8, 57 ], [ 63, 87 ] )} ]
+[ <Green's L-class: [8,63][57,87]> ]
 
 #T# MiscTest11
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
@@ -1034,17 +1031,21 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ];;
 gap> s:=Monoid(gens);;
 gap> List(GreensDClasses(s), LClasses);
-[ [ {IdentityTransformation} ], 
-  [ {Transformation( [ 1, 3, 4, 1 ] )}, {Transformation( [ 4, 1, 3, 4 ] )}, 
-      {Transformation( [ 3, 4, 1, 3 ] )} ], 
-  [ {Transformation( [ 2, 4, 1, 2 ] )} ], 
-  [ {Transformation( [ 3, 1, 1, 3 ] )}, {Transformation( [ 1, 4, 4, 1 ] )}, 
-      {Transformation( [ 2, 1, 1, 2 ] )}, {Transformation( [ 2, 4, 4, 2 ] )}, 
-      {Transformation( [ 4, 3, 3, 4 ] )} ], 
-  [ {Transformation( [ 3, 3, 4, 1 ] )} ], 
-  [ {Transformation( [ 1, 1, 1, 1 ] )}, {Transformation( [ 2, 2, 2, 2 ] )}, 
-      {Transformation( [ 3, 3, 3, 3 ] )}, {Transformation( [ 4, 4, 4, 4 ] )} 
-     ] ]
+[ [ <Green's L-class: IdentityTransformation> ], 
+  [ <Green's L-class: Transformation( [ 1, 3, 4, 1 ] )>, 
+      <Green's L-class: Transformation( [ 4, 1, 3, 4 ] )>, 
+      <Green's L-class: Transformation( [ 3, 4, 1, 3 ] )> ], 
+  [ <Green's L-class: Transformation( [ 2, 4, 1, 2 ] )> ], 
+  [ <Green's L-class: Transformation( [ 3, 1, 1, 3 ] )>, 
+      <Green's L-class: Transformation( [ 1, 4, 4, 1 ] )>, 
+      <Green's L-class: Transformation( [ 2, 1, 1, 2 ] )>, 
+      <Green's L-class: Transformation( [ 2, 4, 4, 2 ] )>, 
+      <Green's L-class: Transformation( [ 4, 3, 3, 4 ] )> ], 
+  [ <Green's L-class: Transformation( [ 3, 3, 4, 1 ] )> ], 
+  [ <Green's L-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+      <Green's L-class: Transformation( [ 2, 2, 2, 2 ] )>, 
+      <Green's L-class: Transformation( [ 3, 3, 3, 3 ] )>, 
+      <Green's L-class: Transformation( [ 4, 4, 4, 4 ] )> ] ]
 gap> List(Concatenation(last), Size);
 [ 1, 1, 1, 1, 1, 10, 10, 10, 10, 10, 3, 1, 1, 1, 1 ]
 gap> Sum(last);
@@ -1052,14 +1053,21 @@ gap> Sum(last);
 gap> Size(s);
 62
 gap> l:=Concatenation(List(GreensDClasses(s), LClasses));
-[ {IdentityTransformation}, {Transformation( [ 1, 3, 4, 1 ] )}, 
-  {Transformation( [ 4, 1, 3, 4 ] )}, {Transformation( [ 3, 4, 1, 3 ] )}, 
-  {Transformation( [ 2, 4, 1, 2 ] )}, {Transformation( [ 3, 1, 1, 3 ] )}, 
-  {Transformation( [ 1, 4, 4, 1 ] )}, {Transformation( [ 2, 1, 1, 2 ] )}, 
-  {Transformation( [ 2, 4, 4, 2 ] )}, {Transformation( [ 4, 3, 3, 4 ] )}, 
-  {Transformation( [ 3, 3, 4, 1 ] )}, {Transformation( [ 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 4, 4, 4, 4 ] )} ]
+[ <Green's L-class: IdentityTransformation>, 
+  <Green's L-class: Transformation( [ 1, 3, 4, 1 ] )>, 
+  <Green's L-class: Transformation( [ 4, 1, 3, 4 ] )>, 
+  <Green's L-class: Transformation( [ 3, 4, 1, 3 ] )>, 
+  <Green's L-class: Transformation( [ 2, 4, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 3, 1, 1, 3 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 4, 1 ] )>, 
+  <Green's L-class: Transformation( [ 2, 1, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 2, 4, 4, 2 ] )>, 
+  <Green's L-class: Transformation( [ 4, 3, 3, 4 ] )>, 
+  <Green's L-class: Transformation( [ 3, 3, 4, 1 ] )>, 
+  <Green's L-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's L-class: Transformation( [ 2, 2, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 3, 3, 3, 3 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 4, 4 ] )> ]
 gap> List(last, Elements);
 [ [ IdentityTransformation ], [ Transformation( [ 1, 3, 4, 1 ] ) ], 
   [ Transformation( [ 4, 1, 3, 4 ] ) ], [ Transformation( [ 3, 4, 1, 3 ] ) ], 
@@ -1150,880 +1158,536 @@ gap> Size(s);
 gap> NrDClasses(s);
 176
 gap> List(DClasses(s), RClasses);
-[ [ {PartialPerm( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] )} ], 
-  [ {PartialPerm( [ 3 ], [ 5 ] )}, {PartialPerm( [ 5 ], [ 5 ] )}, 
-      {PartialPerm( [ 1 ], [ 5 ] )}, {PartialPerm( [ 7 ], [ 5 ] )}, 
-      {PartialPerm( [ 6 ], [ 5 ] )}, {PartialPerm( [ 4 ], [ 5 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 5, 3 ] )}, {PartialPerm( [ 1, 2 ], [ 3, 5 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 5, 3 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 5, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 5, 1, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 1, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 6, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 1, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 1, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 5, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 5 ], [ 1, 7, 6, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 3 ], [ 3, 5 ] )}, {PartialPerm( [ 1, 5 ], [ 5, 3 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 5, 3 ] )}, {PartialPerm( [ 1, 6 ], [ 5, 3 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 5, 3 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 5, 3 ] )}, {PartialPerm( [ 4, 5 ], [ 3, 5 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 3, 5 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 5, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 7, 2, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 7 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 2, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 7, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 5, 7, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 5, 7 ], [ 7, 2, 5, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 5, 1, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5 ], [ 3, 5, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 6 ], [ 1, 4, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 4, 5 ], [ 4, 3, 7, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 5, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 5, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 3, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 3, 5, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 5, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 1, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 5 ], [ 1, 2, 5, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 6, 7 ], [ 3, 4, 6, 5, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 5, 7 ], [ 4, 2, 6, 3, 1 ] )} ], 
-  [ {PartialPerm( [  ], [  ] )} ], [ {PartialPerm( [ 2 ], [ 5 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 6, 5 ] )}, {PartialPerm( [ 1, 2 ], [ 5, 6 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 6, 5 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 6, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 6, 7, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 7, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 5, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 5, 7, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 7, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 6, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 1, 6, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 5, 7 ], [ 6, 7, 1, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 2, 7 ] )}, {PartialPerm( [ 1, 2 ], [ 7, 2 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 2, 7 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 2, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 5, 3, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 3, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 7, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 7, 3, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 3, 7 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 5, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 5, 2, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 2, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 5, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 6, 7 ], [ 7, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 5, 2, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 2, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 7, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 5, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 5, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 7, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 7, 5, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 5, 7 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 1, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 5, 3, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 3, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 5, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 5, 3, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 4, 5 ], [ 4, 5, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 3 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 5 ], [ 4, 1 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 6 ], [ 4, 1 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 4, 1 ] )}, {PartialPerm( [ 4, 5 ], [ 1, 4 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 1, 4 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}
-        , {PartialPerm( [ 1, 5 ], [ 1, 4 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 6 ], [ 1, 4 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 1, 4 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 1, 4 ] )}, {PartialPerm( [ 4, 5 ], [ 4, 1 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 4, 1 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 1, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 3, 7 ], [ 4, 7, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5, 7 ], [ 3, 7, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 5, 2, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 2, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 5, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 1, 5, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 5, 7 ], [ 5, 2, 1, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 1, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5 ], [ 4, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 6 ], [ 3, 6, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 4, 5 ], [ 6, 4, 5, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 3, 1, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 1, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 4, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 4, 1, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 1, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 3, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 5 ], [ 3, 2, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 6, 7 ], [ 4, 6, 1, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 5, 7 ], [ 6, 2, 4, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 3 ], [ 5, 6 ] )}, {PartialPerm( [ 1, 5 ], [ 6, 5 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 6, 5 ] )}, {PartialPerm( [ 1, 6 ], [ 6, 5 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 6, 5 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 6, 5 ] )}, {PartialPerm( [ 4, 5 ], [ 5, 6 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 5, 6 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 6, 5 ] )}, {PartialPerm( [ 1, 3 ], [ 6, 5 ] )}
-        , {PartialPerm( [ 1, 5 ], [ 5, 6 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 5, 6 ] )}, {PartialPerm( [ 1, 6 ], [ 5, 6 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 5, 6 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 5, 6 ] )}, {PartialPerm( [ 4, 5 ], [ 6, 5 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 6, 5 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 5, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 7, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 7 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 7, 6 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 7, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 5, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 5, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 6, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 5, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 5, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 7, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 7, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 5, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 5, 7, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 7, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 1, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 6, 7 ], [ 6, 5, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 7, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 7, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 6, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 7, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 7, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 2 ], [ 2 ] )} ], [ {PartialPerm( [ 6, 7 ], [ 3, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 5, 7, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 4, 1 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 4, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 7 ], [ 4, 5, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 4, 1 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 1, 4 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 1, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 6 ], [ 4, 7, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 3 ], [ 4, 7 ] )}, {PartialPerm( [ 1, 5 ], [ 7, 4 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 7, 4 ] )}, {PartialPerm( [ 1, 6 ], [ 7, 4 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 7, 4 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 7, 4 ] )}, {PartialPerm( [ 4, 5 ], [ 4, 7 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 4, 7 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 7, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 7, 4 ] )}
-        , {PartialPerm( [ 1, 5 ], [ 4, 7 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 4, 7 ] )}, {PartialPerm( [ 1, 6 ], [ 4, 7 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 4, 7 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 4, 7 ] )}, {PartialPerm( [ 4, 5 ], [ 7, 4 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 7, 4 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 4, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 5 ], [ 4, 3, 1, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 6, 7 ], [ 7, 1, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 7, 3, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 4, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 4, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 5, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 5, 4, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 4, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 1, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 2, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 1, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 6, 7 ], [ 5, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 3, 1, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 1, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 5, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 5, 1, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 1, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 4, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 4, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 6, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 4, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 4, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 1, 4, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 4, 5 ], [ 6, 1, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 3 ], [ 3, 6 ] )}, {PartialPerm( [ 1, 5 ], [ 6, 3 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 6, 3 ] )}, {PartialPerm( [ 1, 6 ], [ 6, 3 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 6, 3 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 6, 3 ] )}, {PartialPerm( [ 4, 5 ], [ 3, 6 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 3, 6 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 6, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 6, 3 ] )}
-        , {PartialPerm( [ 1, 5 ], [ 3, 6 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 3, 6 ] )}, {PartialPerm( [ 1, 6 ], [ 3, 6 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 3, 6 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 3, 6 ] )}, {PartialPerm( [ 4, 5 ], [ 6, 3 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 6, 3 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 3, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 3, 7 ], [ 6, 5, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5, 7 ], [ 4, 5, 6, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 2, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 6, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 2, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 2, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 3, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 5, 7 ], [ 1, 2, 3, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 3, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 6, 3 ] )}, {PartialPerm( [ 1, 2 ], [ 3, 6 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 6, 3 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 6, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 4, 5 ], [ 6, 1, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 3, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 6, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 3, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 6, 7 ], [ 6, 3, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 2, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 6, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 2, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 5, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 5 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 5, 6 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 5, 6 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 5, 6 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 6, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 1, 6, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 5, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 7, 5, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 5, 7 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 3, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 3, 5, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 5, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 7, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 3, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5 ], [ 4, 1, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 4, 5 ], [ 7, 1, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 3, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 3, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 7, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 7, 3, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 3, 7 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 1, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 4, 1, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 5, 7 ], [ 1, 3, 4, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 4, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 7, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 4, 7 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 7, 4 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 7, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 4, 7 ] )}, {PartialPerm( [ 1, 2 ], [ 7, 4 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 4, 7 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 4, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 4, 2 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 2, 4 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 2, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 1, 5, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 4, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 4 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 4, 6 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 4, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 7 ], [ 6, 1, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 3, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 3 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 3, 6 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 3, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 6 ], [ 6, 5, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3, 5 ], [ 6, 4, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 6, 7 ], [ 5, 3, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 5, 4, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 3, 6, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 6, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 6, 1, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 1, 6, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 6, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 6, 3, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 2, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 6, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 2, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 6, 7 ], [ 1, 6, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 3, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 1, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 6, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 4, 6 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 6, 4 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 6, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 7 ], [ 6, 1, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 4, 6, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 3 ], [ 4, 6 ] )}, {PartialPerm( [ 1, 5 ], [ 6, 4 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 6, 4 ] )}, {PartialPerm( [ 1, 6 ], [ 6, 4 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 6, 4 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 6, 4 ] )}, {PartialPerm( [ 4, 5 ], [ 4, 6 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 4, 6 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 6, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 6, 4 ] )}
-        , {PartialPerm( [ 1, 5 ], [ 4, 6 ] )}, 
-      {PartialPerm( [ 1, 7 ], [ 4, 6 ] )}, {PartialPerm( [ 1, 6 ], [ 4, 6 ] )}
-        , {PartialPerm( [ 3, 4 ], [ 4, 6 ] )}, 
-      {PartialPerm( [ 5, 7 ], [ 4, 6 ] )}, {PartialPerm( [ 4, 5 ], [ 6, 4 ] )}
-        , {PartialPerm( [ 3, 7 ], [ 6, 4 ] )}, 
-      {PartialPerm( [ 3, 5 ], [ 4, 6 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 4, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 5 ], [ 2, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 2 ] )}, 
-      {PartialPerm( [ 2, 7 ], [ 2, 6 ] )}, 
-      {PartialPerm( [ 2, 3 ], [ 2, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 6, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 5, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 1, 4, 5 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 1, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 7 ], [ 7, 1, 4 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 4, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 4, 7, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 7, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 1, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 1, 7, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 7, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 7, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 3, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 7, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 7, 3, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 7 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 7 ] )} ], 
-  [ {PartialPerm( [ 1, 6, 7 ], [ 1, 7, 4 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 4, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 5, 1, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 1, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 4, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 4, 1, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 1, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 1, 5, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5 ], [ 6, 3, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 4, 5 ], [ 5, 3, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 3, 4, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 5, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 5, 4, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 4, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 6, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 5, 7 ], [ 3, 4, 6, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 6, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 3, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 1, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5 ], [ 6, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 6, 4, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 4, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 3, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 3, 4, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 4, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 6, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 6, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 5, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5 ], [ 7, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 7, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 4, 1, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 1, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 4, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 3, 6, 1 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 3, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 7 ], [ 5, 3, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 6, 5, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 5, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 3, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 3, 5, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 5, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 5, 6, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 6, 4, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 4, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 5, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 5, 4, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 4, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 6, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 6, 7 ], [ 3, 5, 6 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 6, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 3, 6 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 6, 3, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 6, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 3, 6 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 3, 1, 6 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 4, 6, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 6, 4 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 6, 1, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 1, 6, 4 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 4, 6, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 6, 4, 1 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 4, 6, 1 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 3, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 6, 5 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 4, 7, 1 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 7, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 1, 4, 7 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 7, 4, 1 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 7, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 7, 4, 1 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 1, 4, 7 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 4, 1, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 4, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 5 ], [ 5, 6, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 3, 4 ], [ 6, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 3, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 6, 3 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 4, 6 ] )} ], 
-  [ {PartialPerm( [ 6, 7 ], [ 6, 4 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 4, 7 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 7, 4 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 7 ], [ 6, 5, 3 ] )} ], 
-  [ {PartialPerm( [ 1, 2, 3 ], [ 3, 6, 5 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 5, 6, 3 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 6, 5, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 3 ], [ 5, 6, 3 ] )}, 
-      {PartialPerm( [ 1, 2, 5 ], [ 3, 6, 5 ] )}, 
-      {PartialPerm( [ 2, 5, 7 ], [ 6, 3, 5 ] )} ], 
-  [ {PartialPerm( [ 2, 4 ], [ 4, 6 ] )} ], 
-  [ {PartialPerm( [ 2, 6 ], [ 6, 4 ] )} ] ]
+[ [ <Green's R-class: [2,7][3,1,5][4,6]> ], 
+  [ <Green's R-class: [1,5,3,7](2)> ], 
+  [ <Green's R-class: [2,3,4][6,7,5](1)> ], 
+  [ <Green's R-class: [7,5,1,3,4,6](2)> ], 
+  [ <Green's R-class: [3,5]>, 
+      <Green's R-class: <identity partial perm on [ 5 ]>>, 
+      <Green's R-class: [1,5]>, <Green's R-class: [7,5]>, 
+      <Green's R-class: [6,5]>, <Green's R-class: [4,5]> ], 
+  [ <Green's R-class: [2,5,3]>, <Green's R-class: [1,3][2,5]>, 
+      <Green's R-class: [2,5][7,3]>, <Green's R-class: [2,5](3)> ], 
+  [ <Green's R-class: [2,1,5][3,6]>, <Green's R-class: [2,1,6](5)>, 
+      <Green's R-class: [2,1][7,5,6]>, <Green's R-class: [2,1,6][3,5]>, 
+      <Green's R-class: [2,1,5,6]>, <Green's R-class: [2,1][7,6](5)> ], 
+  [ <Green's R-class: [2,7][3,6](1)(5)> ], 
+  [ <Green's R-class: [1,3,5]>, <Green's R-class: [1,5,3]>, 
+      <Green's R-class: [1,5][7,3]>, <Green's R-class: [1,5][6,3]>, 
+      <Green's R-class: [4,3,5]>, <Green's R-class: [7,3](5)>, 
+      <Green's R-class: [4,3](5)>, <Green's R-class: [7,5](3)>, 
+      <Green's R-class: (3,5)> ], 
+  [ <Green's R-class: [1,7](2)(3)>, <Green's R-class: [1,3][5,7](2)>, 
+      <Green's R-class: [5,3](2)(7)>, <Green's R-class: [1,3,7](2)>, 
+      <Green's R-class: [1,7][5,3](2)>, <Green's R-class: [5,7,3](2)> ], 
+  [ <Green's R-class: [1,5][2,7,3]> ], [ <Green's R-class: [1,7,3](2)(5)> ], 
+  [ <Green's R-class: [2,5][3,1][4,7]> ], [ <Green's R-class: [2,3,5,4]> ], 
+  [ <Green's R-class: [2,4][6,5](1)> ], [ <Green's R-class: [2,3][5,1,4,7]> ],
+  [ <Green's R-class: [2,5](1)(3)>, <Green's R-class: [2,5,1,3]>, 
+      <Green's R-class: [2,5,3][7,1]>, <Green's R-class: [2,5](1,3)>, 
+      <Green's R-class: [2,5,3](1)>, <Green's R-class: [2,5,1][7,3]> ], 
+  [ <Green's R-class: [3,5,4](1)(2)> ], 
+  [ <Green's R-class: [2,4][7,1,3,6,5]> ], 
+  [ <Green's R-class: [5,3,6][7,1,4](2)> ], 
+  [ <Green's R-class: <empty partial perm>> ], [ <Green's R-class: [2,5]> ], 
+  [ <Green's R-class: [2,6](5)>, <Green's R-class: [1,5][2,6]>, 
+      <Green's R-class: [2,6][7,5]>, <Green's R-class: [2,6][3,5]> ], 
+  [ <Green's R-class: [1,6][2,7][3,5]>, <Green's R-class: [1,5,6][2,7]>, 
+      <Green's R-class: [2,7,6](5)>, <Green's R-class: [1,5][2,7][3,6]>, 
+      <Green's R-class: [1,6][2,7](5)>, <Green's R-class: [2,7,5,6]> ], 
+  [ <Green's R-class: [2,6][7,5](1)> ], [ <Green's R-class: [2,7,5,1,6]> ], 
+  [ <Green's R-class: [5,7](2)>, <Green's R-class: [1,7](2)>, 
+      <Green's R-class: <identity partial perm on [ 2, 7 ]>>, 
+      <Green's R-class: [3,7](2)> ], 
+  [ <Green's R-class: [1,5][2,3,7]>, <Green's R-class: [1,7][2,3](5)>, 
+      <Green's R-class: [2,3](5,7)>, <Green's R-class: [1,7][2,3,5]>, 
+      <Green's R-class: [1,5,7][2,3]>, <Green's R-class: [2,3](5)(7)> ], 
+  [ <Green's R-class: [1,5](2)(3)>, <Green's R-class: [1,3](2)(5)>, 
+      <Green's R-class: [7,5,3](2)>, <Green's R-class: [1,3,5](2)>, 
+      <Green's R-class: [1,5,3](2)>, <Green's R-class: [7,3](2)(5)> ], 
+  [ <Green's R-class: [1,7,5][6,3]> ], 
+  [ <Green's R-class: [1,5][3,7](2)>, <Green's R-class: [1,7](2)(5)>, 
+      <Green's R-class: (2)(5,7)> ], 
+  [ <Green's R-class: [2,5][3,7](1)>, <Green's R-class: [2,5,1,7]>, 
+      <Green's R-class: [2,5,7,1]>, <Green's R-class: [2,5][3,1,7]>, 
+      <Green's R-class: [2,5,7](1)>, <Green's R-class: [2,5,1](7)> ], 
+  [ <Green's R-class: [1,5][2,3,4]>, <Green's R-class: [1,4][2,3](5)>, 
+      <Green's R-class: [2,3][7,5,4]>, <Green's R-class: [1,4][2,3,5]>, 
+      <Green's R-class: [1,5,4][2,3]>, <Green's R-class: [2,3][7,4](5)> ], 
+  [ <Green's R-class: [1,5][2,3][7,4]> ], [ <Green's R-class: [2,4,5,1]> ], 
+  [ <Green's R-class: [3,4](1)>, <Green's R-class: [5,1,4]>, 
+      <Green's R-class: [7,1,4]>, <Green's R-class: [6,1,4]>, 
+      <Green's R-class: [3,4,1]>, <Green's R-class: [5,4][7,1]>, 
+      <Green's R-class: [5,4,1]>, <Green's R-class: [3,1][7,4]>, 
+      <Green's R-class: [3,4][5,1]>, <Green's R-class: [3,1,4]>, 
+      <Green's R-class: [5,4](1)>, <Green's R-class: [7,4](1)>, 
+      <Green's R-class: [6,4](1)>, <Green's R-class: [3,1](4)>, 
+      <Green's R-class: [5,1][7,4]>, <Green's R-class: [5,1](4)>, 
+      <Green's R-class: [3,4][7,1]>, <Green's R-class: [3,1][5,4]> ], 
+  [ <Green's R-class: [3,7,1,4]> ], [ <Green's R-class: [2,3,7,1][5,4]> ], 
+  [ <Green's R-class: [1,5][3,4](2)>, <Green's R-class: [1,4](2)(5)>, 
+      <Green's R-class: [7,5,4](2)>, <Green's R-class: [1,4][3,5](2)>, 
+      <Green's R-class: [1,5,4](2)>, <Green's R-class: [7,4](2)(5)> ], 
+  [ <Green's R-class: [2,5][7,4](1)> ], [ <Green's R-class: [7,4](1,5)(2)> ], 
+  [ <Green's R-class: [2,1][4,5](3)> ], [ <Green's R-class: [2,4][3,1][5,6]> ]
+    , [ <Green's R-class: [2,6,1,3]> ], [ <Green's R-class: [1,6][2,4,5,3]> ],
+  [ <Green's R-class: [2,1,3,4]>, <Green's R-class: [2,1,4][5,3]>, 
+      <Green's R-class: [2,1][5,4][7,3]>, <Green's R-class: [2,1,4](3)>, 
+      <Green's R-class: [2,1,3][5,4]>, <Green's R-class: [2,1][5,3][7,4]> ], 
+  [ <Green's R-class: [5,6](1,3)(2)> ], [ <Green's R-class: [2,6,1,4][7,3]> ],
+  [ <Green's R-class: [1,6][5,4][7,3](2)> ], 
+  [ <Green's R-class: [1,5][3,6]>, <Green's R-class: [1,6](5)>, 
+      <Green's R-class: [1,6][7,5]>, <Green's R-class: [1,6,5]>, 
+      <Green's R-class: [3,6][4,5]>, <Green's R-class: [7,5,6]>, 
+      <Green's R-class: [4,5,6]>, <Green's R-class: [3,5][7,6]>, 
+      <Green's R-class: [3,6](5)>, <Green's R-class: [1,6][3,5]>, 
+      <Green's R-class: [1,5,6]>, <Green's R-class: [1,5][7,6]>, 
+      <Green's R-class: [1,5](6)>, <Green's R-class: [3,5][4,6]>, 
+      <Green's R-class: [7,6](5)>, <Green's R-class: [4,6](5)>, 
+      <Green's R-class: [3,6][7,5]>, <Green's R-class: [3,5,6]> ], 
+  [ <Green's R-class: [2,7][5,6]>, <Green's R-class: [1,6][2,7]>, 
+      <Green's R-class: [2,7,6]>, <Green's R-class: [2,7][3,6]> ], 
+  [ <Green's R-class: [2,5][3,6](1)>, <Green's R-class: [2,5,1,6]>, 
+      <Green's R-class: [2,5,6][7,1]>, <Green's R-class: [2,5][3,1,6]>, 
+      <Green's R-class: [2,5,6](1)>, <Green's R-class: [2,5,1][7,6]> ], 
+  [ <Green's R-class: [2,7][3,5](1)>, <Green's R-class: [2,7](1,5)>, 
+      <Green's R-class: [2,7,1](5)>, <Green's R-class: [2,7][3,1,5]>, 
+      <Green's R-class: [2,7](1)(5)>, <Green's R-class: [2,7,5,1]> ], 
+  [ <Green's R-class: [7,1,6,5]> ], 
+  [ <Green's R-class: [2,7][3,6](1)>, <Green's R-class: [2,7][5,1,6]>, 
+      <Green's R-class: [2,7,1][5,6]>, <Green's R-class: [2,7][3,1,6]>, 
+      <Green's R-class: [2,7][5,6](1)>, <Green's R-class: [2,7,6][5,1]> ], 
+  [ <Green's R-class: <identity partial perm on [ 2 ]>> ], 
+  [ <Green's R-class: [6,3][7,5]> ], [ <Green's R-class: [2,5][4,3,7]> ], 
+  [ <Green's R-class: [2,4][5,1]>, <Green's R-class: [2,4](1)>, 
+      <Green's R-class: [2,4][7,1]>, <Green's R-class: [2,4][3,1]> ], 
+  [ <Green's R-class: [2,4][3,5][7,1]> ], 
+  [ <Green's R-class: [2,1][5,4]>, <Green's R-class: [2,1,4]>, 
+      <Green's R-class: [2,1][7,4]>, <Green's R-class: [2,1][3,4]> ], 
+  [ <Green's R-class: [2,7][6,1,4]> ], 
+  [ <Green's R-class: [1,4][3,7]>, <Green's R-class: [1,7][5,4]>, 
+      <Green's R-class: [1,7,4]>, <Green's R-class: [1,7][6,4]>, 
+      <Green's R-class: [3,7](4)>, <Green's R-class: [5,7,4]>, 
+      <Green's R-class: [5,7](4)>, <Green's R-class: [3,4](7)>, 
+      <Green's R-class: [3,7][5,4]>, <Green's R-class: [1,7][3,4]>, 
+      <Green's R-class: [1,4][5,7]>, <Green's R-class: [1,4](7)>, 
+      <Green's R-class: [1,4][6,7]>, <Green's R-class: [3,4,7]>, 
+      <Green's R-class: [5,4](7)>, <Green's R-class: [5,4,7]>, 
+      <Green's R-class: [3,7,4]>, <Green's R-class: [3,4][5,7]> ], 
+  [ <Green's R-class: [2,3,1,4][5,7]> ], [ <Green's R-class: [2,7,4][6,1]> ], 
+  [ <Green's R-class: [1,7,4][2,3]> ], 
+  [ <Green's R-class: [2,4][3,5](1)>, <Green's R-class: [2,4](1,5)>, 
+      <Green's R-class: [2,4][7,1](5)>, <Green's R-class: [2,4][3,1,5]>, 
+      <Green's R-class: [2,4](1)(5)>, <Green's R-class: [2,4][7,5,1]> ], 
+  [ <Green's R-class: [3,4](1)(2)>, <Green's R-class: [5,1,4](2)>, 
+      <Green's R-class: [5,4][7,1](2)>, <Green's R-class: [3,1,4](2)>, 
+      <Green's R-class: [5,4](1)(2)>, <Green's R-class: [5,1][7,4](2)> ], 
+  [ <Green's R-class: [6,4][7,1,5]> ], 
+  [ <Green's R-class: [2,1,3,5]>, <Green's R-class: [2,1,5,3]>, 
+      <Green's R-class: [2,1][7,3](5)>, <Green's R-class: [2,1,5](3)>, 
+      <Green's R-class: [2,1,3](5)>, <Green's R-class: [2,1][7,5,3]> ], 
+  [ <Green's R-class: [2,4][3,6](1)>, <Green's R-class: [2,4][5,1,6]>, 
+      <Green's R-class: [2,4][5,6][7,1]>, <Green's R-class: [2,4][3,1,6]>, 
+      <Green's R-class: [2,4][5,6](1)>, <Green's R-class: [2,4][5,1][7,6]> ], 
+  [ <Green's R-class: [2,4][7,6](1)> ], [ <Green's R-class: [2,6][4,1][5,3]> ]
+    , 
+  [ <Green's R-class: [1,3,6]>, <Green's R-class: [1,6][5,3]>, 
+      <Green's R-class: [1,6][7,3]>, <Green's R-class: [1,6,3]>, 
+      <Green's R-class: [4,3,6]>, <Green's R-class: [5,6][7,3]>, 
+      <Green's R-class: [4,3][5,6]>, <Green's R-class: [7,6](3)>, 
+      <Green's R-class: [5,3,6]>, <Green's R-class: [1,6](3)>, 
+      <Green's R-class: [1,3][5,6]>, <Green's R-class: [1,3][7,6]>, 
+      <Green's R-class: [1,3](6)>, <Green's R-class: [4,6](3)>, 
+      <Green's R-class: [5,3][7,6]>, <Green's R-class: [4,6][5,3]>, 
+      <Green's R-class: [7,3,6]>, <Green's R-class: [5,6](3)> ], 
+  [ <Green's R-class: [1,6][7,3,5]> ], [ <Green's R-class: [2,4][7,3,5,6]> ], 
+  [ <Green's R-class: [3,6](1)(2)>, <Green's R-class: [5,1,6](2)>, 
+      <Green's R-class: [5,6][7,1](2)>, <Green's R-class: [3,1,6](2)>, 
+      <Green's R-class: [5,6](1)(2)>, <Green's R-class: [5,1][7,6](2)> ], 
+  [ <Green's R-class: [2,1,3][7,6]> ], [ <Green's R-class: [5,3][7,6](1)(2)> ]
+    , [ <Green's R-class: [2,3,4,1]> ], 
+  [ <Green's R-class: [2,6][5,3]>, <Green's R-class: [1,3][2,6]>, 
+      <Green's R-class: [2,6][7,3]>, <Green's R-class: [2,6](3)> ], 
+  [ <Green's R-class: [2,6][5,4,1]> ], 
+  [ <Green's R-class: [1,4][2,3,6]>, <Green's R-class: [1,6][2,3][5,4]>, 
+      <Green's R-class: [2,3][5,6][7,4]>, <Green's R-class: [1,6][2,3,4]>, 
+      <Green's R-class: [1,4][2,3][5,6]>, <Green's R-class: [2,3][5,4][7,6]> ]
+    , [ <Green's R-class: [1,4](2)(3)>, <Green's R-class: [1,3][5,4](2)>, 
+      <Green's R-class: [5,3][7,4](2)>, <Green's R-class: [1,3,4](2)>, 
+      <Green's R-class: [1,4][5,3](2)>, <Green's R-class: [5,4][7,3](2)> ], 
+  [ <Green's R-class: [1,6,3][7,4]> ], 
+  [ <Green's R-class: [1,4][3,6](2)>, <Green's R-class: [1,6][5,4](2)>, 
+      <Green's R-class: [5,6][7,4](2)>, <Green's R-class: [1,6][3,4](2)>, 
+      <Green's R-class: [1,4][5,6](2)>, <Green's R-class: [5,4][7,6](2)> ], 
+  [ <Green's R-class: [2,5,6]>, <Green's R-class: [1,6][2,5]>, 
+      <Green's R-class: [2,5][7,6]>, <Green's R-class: [2,5][3,6]> ], 
+  [ <Green's R-class: [7,6,5]> ], [ <Green's R-class: [7,5](6)> ], 
+  [ <Green's R-class: [2,1][3,6][4,5]> ], [ <Green's R-class: [2,5][4,3]> ], 
+  [ <Green's R-class: [1,7][2,5](3)>, <Green's R-class: [1,3][2,5,7]>, 
+      <Green's R-class: [2,5,3](7)>, <Green's R-class: [1,3,7][2,5]>, 
+      <Green's R-class: [1,7][2,5,3]>, <Green's R-class: [2,5,7,3]> ], 
+  [ <Green's R-class: [2,3][6,5]> ], [ <Green's R-class: [2,4][3,1](5)> ], 
+  [ <Green's R-class: [2,7][5,4,1]> ], 
+  [ <Green's R-class: [2,3,7](1)>, <Green's R-class: [2,3][5,1,7]>, 
+      <Green's R-class: [2,3][5,7,1]>, <Green's R-class: [2,3,1,7]>, 
+      <Green's R-class: [2,3][5,7](1)>, <Green's R-class: [2,3][5,1](7)> ], 
+  [ <Green's R-class: [2,1,4](7)> ], [ <Green's R-class: [2,3][5,4](1)(7)> ], 
+  [ <Green's R-class: [2,4,1]> ], 
+  [ <Green's R-class: [2,7][5,4]>, <Green's R-class: [1,4][2,7]>, 
+      <Green's R-class: [2,7,4]>, <Green's R-class: [2,7][3,4]> ], 
+  [ <Green's R-class: [2,4][5,7]>, <Green's R-class: [1,7][2,4]>, 
+      <Green's R-class: [2,4](7)>, <Green's R-class: [2,4][3,7]> ], 
+  [ <Green's R-class: [5,4](2)>, <Green's R-class: [1,4](2)>, 
+      <Green's R-class: [7,4](2)>, <Green's R-class: [3,4](2)> ], 
+  [ <Green's R-class: [2,1][3,5](4)> ], 
+  [ <Green's R-class: [2,4][5,6]>, <Green's R-class: [1,6][2,4]>, 
+      <Green's R-class: [2,4][7,6]>, <Green's R-class: [2,4][3,6]> ], 
+  [ <Green's R-class: [2,6][7,3,1]> ], 
+  [ <Green's R-class: [2,3][5,6]>, <Green's R-class: [1,6][2,3]>, 
+      <Green's R-class: [2,3][7,6]>, <Green's R-class: [2,3,6]> ], 
+  [ <Green's R-class: [1,6,3][2,5]> ], [ <Green's R-class: [1,6][2,4](3)(5)> ]
+    , [ <Green's R-class: [2,5][7,6,3]> ], 
+  [ <Green's R-class: [1,5][2,4][7,6]> ], 
+  [ <Green's R-class: [2,6](1,3)>, <Green's R-class: [2,6][5,3](1)>, 
+      <Green's R-class: [2,6][5,1][7,3]>, <Green's R-class: [2,6](1)(3)>, 
+      <Green's R-class: [2,6][5,1,3]>, <Green's R-class: [2,6][5,3][7,1]> ], 
+  [ <Green's R-class: [1,3,6](2)>, <Green's R-class: [1,6][5,3](2)>, 
+      <Green's R-class: [5,6][7,3](2)>, <Green's R-class: [1,6](2)(3)>, 
+      <Green's R-class: [1,3][5,6](2)>, <Green's R-class: [5,3][7,6](2)> ], 
+  [ <Green's R-class: [7,3](1)(6)> ], 
+  [ <Green's R-class: [2,3,1,4]>, <Green's R-class: [2,3][5,4](1)>, 
+      <Green's R-class: [2,3][5,1][7,4]>, <Green's R-class: [2,3,4](1)>, 
+      <Green's R-class: [2,3][5,1,4]>, <Green's R-class: [2,3][5,4][7,1]> ], 
+  [ <Green's R-class: [2,6][5,4]>, <Green's R-class: [1,4][2,6]>, 
+      <Green's R-class: [2,6][7,4]>, <Green's R-class: [2,6][3,4]> ], 
+  [ <Green's R-class: [2,6][3,1][7,4]> ], [ <Green's R-class: [2,4,3,6]> ], 
+  [ <Green's R-class: [1,4][3,6]>, <Green's R-class: [1,6][5,4]>, 
+      <Green's R-class: [1,6][7,4]>, <Green's R-class: [1,6,4]>, 
+      <Green's R-class: [3,6](4)>, <Green's R-class: [5,6][7,4]>, 
+      <Green's R-class: [5,6](4)>, <Green's R-class: [3,4][7,6]>, 
+      <Green's R-class: [3,6][5,4]>, <Green's R-class: [1,6][3,4]>, 
+      <Green's R-class: [1,4][5,6]>, <Green's R-class: [1,4][7,6]>, 
+      <Green's R-class: [1,4](6)>, <Green's R-class: [3,4,6]>, 
+      <Green's R-class: [5,4][7,6]>, <Green's R-class: [5,4,6]>, 
+      <Green's R-class: [3,6][7,4]>, <Green's R-class: [3,4][5,6]> ], 
+  [ <Green's R-class: [7,6,4]> ], 
+  [ <Green's R-class: [5,6](2)>, <Green's R-class: [1,6](2)>, 
+      <Green's R-class: [7,6](2)>, <Green's R-class: [3,6](2)> ], 
+  [ <Green's R-class: [2,6][4,5]> ], [ <Green's R-class: [2,5][4,6]> ], 
+  [ <Green's R-class: [2,4][7,5](1)> ], [ <Green's R-class: [6,1][7,4]> ], 
+  [ <Green's R-class: [2,7,4][3,1]> ], [ <Green's R-class: [6,4](7)> ], 
+  [ <Green's R-class: [2,7][3,1,4]>, <Green's R-class: [2,7][5,4](1)>, 
+      <Green's R-class: [2,7,4][5,1]>, <Green's R-class: [2,7][3,4](1)>, 
+      <Green's R-class: [2,7][5,1,4]>, <Green's R-class: [2,7,1][5,4]> ], 
+  [ <Green's R-class: [1,4][2,3,7]>, <Green's R-class: [1,7][2,3][5,4]>, 
+      <Green's R-class: [2,3][5,7,4]>, <Green's R-class: [1,7][2,3,4]>, 
+      <Green's R-class: [1,4][2,3][5,7]>, <Green's R-class: [2,3][5,4](7)> ], 
+  [ <Green's R-class: [6,7,4](1)> ], [ <Green's R-class: [6,4][7,1]> ], 
+  [ <Green's R-class: [2,1,5][3,4]>, <Green's R-class: [2,1,4](5)>, 
+      <Green's R-class: [2,1][7,5,4]>, <Green's R-class: [2,1,4][3,5]>, 
+      <Green's R-class: [2,1,5,4]>, <Green's R-class: [2,1][7,4](5)> ], 
+  [ <Green's R-class: [2,6][5,1](3)> ], [ <Green's R-class: [2,5,6][4,3]> ], 
+  [ <Green's R-class: [1,3,5][2,4]>, <Green's R-class: [1,5,3][2,4]>, 
+      <Green's R-class: [2,4][7,3](5)>, <Green's R-class: [1,5][2,4](3)>, 
+      <Green's R-class: [1,3][2,4](5)>, <Green's R-class: [2,4][7,5,3]> ], 
+  [ <Green's R-class: [1,6][2,3][7,5]> ], 
+  [ <Green's R-class: [1,3][2,4][7,5,6]> ], [ <Green's R-class: [2,6][4,3]> ],
+  [ <Green's R-class: [2,3,1][4,6]> ], [ <Green's R-class: [2,1][6,4]> ], 
+  [ <Green's R-class: [2,6][3,4][5,1]> ], 
+  [ <Green's R-class: [1,6][2,4](3)>, <Green's R-class: [1,3][2,4][5,6]>, 
+      <Green's R-class: [2,4][5,3][7,6]>, <Green's R-class: [1,3,6][2,4]>, 
+      <Green's R-class: [1,6][2,4][5,3]>, <Green's R-class: [2,4][5,6][7,3]> ]
+    , [ <Green's R-class: [2,6](4)> ], [ <Green's R-class: [2,5](6)> ], 
+  [ <Green's R-class: [2,7][3,4][5,1]> ], [ <Green's R-class: [2,7](4)> ], 
+  [ <Green's R-class: [2,4,7][3,1]> ], [ <Green's R-class: [2,1](4)> ], 
+  [ <Green's R-class: [2,4][6,1]> ], [ <Green's R-class: [2,6][7,1,3]> ], 
+  [ <Green's R-class: [7,6,3]> ], [ <Green's R-class: [2,5][7,6](3)> ], 
+  [ <Green's R-class: [1,6][2,5](3)>, <Green's R-class: [1,3][2,5,6]>, 
+      <Green's R-class: [2,5,3][7,6]>, <Green's R-class: [1,3,6][2,5]>, 
+      <Green's R-class: [1,6][2,5,3]>, <Green's R-class: [2,5,6][7,3]> ], 
+  [ <Green's R-class: [1,6][2,4][3,5]>, <Green's R-class: [1,5,6][2,4]>, 
+      <Green's R-class: [2,4][7,6](5)>, <Green's R-class: [1,5][2,4][3,6]>, 
+      <Green's R-class: [1,6][2,4](5)>, <Green's R-class: [2,4][7,5,6]> ], 
+  [ <Green's R-class: [1,3][7,6,5]> ], [ <Green's R-class: [7,3](6)> ], 
+  [ <Green's R-class: [2,3,6](1)>, <Green's R-class: [2,3][5,1,6]>, 
+      <Green's R-class: [2,3][5,6][7,1]>, <Green's R-class: [2,3,1,6]>, 
+      <Green's R-class: [2,3][5,6](1)>, <Green's R-class: [2,3][5,1][7,6]> ], 
+  [ <Green's R-class: [2,6][3,1,4]>, <Green's R-class: [2,6][5,4](1)>, 
+      <Green's R-class: [2,6][5,1][7,4]>, <Green's R-class: [2,6][3,4](1)>, 
+      <Green's R-class: [2,6][5,1,4]>, <Green's R-class: [2,6][5,4][7,1]> ], 
+  [ <Green's R-class: [2,6][7,1,4]> ], [ <Green's R-class: [2,3](6)> ], 
+  [ <Green's R-class: [2,6,5]> ], [ <Green's R-class: [2,7,1,4]> ], 
+  [ <Green's R-class: [6,7,4]> ], 
+  [ <Green's R-class: [2,4][3,7](1)>, <Green's R-class: [2,4][5,1,7]>, 
+      <Green's R-class: [2,4][5,7,1]>, <Green's R-class: [2,4][3,1,7]>, 
+      <Green's R-class: [2,4][5,7](1)>, <Green's R-class: [2,4][5,1](7)> ], 
+  [ <Green's R-class: [2,4][6,7]> ], [ <Green's R-class: [2,5,3,6]> ], 
+  [ <Green's R-class: [2,6][4,5](3)> ], [ <Green's R-class: [2,3][4,6]> ], 
+  [ <Green's R-class: [2,6,3]> ], [ <Green's R-class: [2,4](6)> ], 
+  [ <Green's R-class: [7,4](6)> ], [ <Green's R-class: [2,4,7]> ], 
+  [ <Green's R-class: [2,7][6,4]> ], [ <Green's R-class: [1,6][2,5][7,3]> ], 
+  [ <Green's R-class: [1,3,5][2,6]>, <Green's R-class: [1,5,3][2,6]>, 
+      <Green's R-class: [2,6][7,3](5)>, <Green's R-class: [1,5][2,6](3)>, 
+      <Green's R-class: [1,3][2,6](5)>, <Green's R-class: [2,6][7,5,3]> ], 
+  [ <Green's R-class: [2,4,6]> ], [ <Green's R-class: [2,6,4]> ] ]
 gap> ForAll(Union(List(Union(last), Elements)), x-> x in s);
 true
 gap> Union(List(last2, Elements));
-[ {PartialPerm( [  ], [  ] )}, {PartialPerm( [ 1 ], [ 5 ] )}, 
-  {PartialPerm( [ 2 ], [ 2 ] )}, {PartialPerm( [ 2 ], [ 5 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 3, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 2 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 4, 7 ] )}, {PartialPerm( [ 1, 2 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 6, 2 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 3 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 6, 4 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 6, 7 ] )}, {PartialPerm( [ 1, 2 ], [ 7, 2 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 7, 4 ] )}, {PartialPerm( [ 3 ], [ 5 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 1, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 4 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 2, 6 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 7 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 3, 6 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 4, 6 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 5, 3 ] )}, {PartialPerm( [ 2, 3 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 6, 3 ] )}, {PartialPerm( [ 2, 3 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 6, 5 ] )}, {PartialPerm( [ 2, 3 ], [ 7, 4 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 7, 6 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 3, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 4, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 5, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 6, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 6, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 7, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 7, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 7, 6 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 3, 5 ] )}, {PartialPerm( [ 1, 3 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 2, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 5, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 6, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 3, 6, 5 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 1, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 2, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 3, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 6, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 4, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 1, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 1, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 2, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 3, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 4, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 6, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 5, 7, 6 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 6, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 2, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 4, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 6, 7, 5 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 7, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 7, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 7, 3, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 7, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 7, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 7, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 7, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 7, 5, 3 ] )}, {PartialPerm( [ 4 ], [ 5 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 1, 4 ] )}, {PartialPerm( [ 3, 4 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, {PartialPerm( [ 3, 4 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 4, 7 ] )}, {PartialPerm( [ 3, 4 ], [ 5, 3 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 5, 6 ] )}, {PartialPerm( [ 3, 4 ], [ 6, 3 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 6, 4 ] )}, {PartialPerm( [ 3, 4 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 7, 4 ] )}, {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 1, 3, 5 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 1, 5, 4 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 1, 6, 5 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 3, 1, 6 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 3, 4, 1 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 4, 1 ] )}, {PartialPerm( [ 2, 4 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 4, 1, 7 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 4, 6, 3 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 5, 3 ] )}, {PartialPerm( [ 2, 4 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 5, 1, 7 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 5, 7, 3 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 6, 3 ] )}, {PartialPerm( [ 2, 4 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 2, 3, 4 ], [ 6, 3, 5 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 7, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] )}, 
-  {PartialPerm( [ 5 ], [ 5 ] )}, {PartialPerm( [ 4, 5 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 3, 5 ] )}, {PartialPerm( [ 4, 5 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 4, 1 ] )}, {PartialPerm( [ 4, 5 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 4, 7 ] )}, {PartialPerm( [ 4, 5 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 6, 3 ] )}, {PartialPerm( [ 4, 5 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 6, 5 ] )}, {PartialPerm( [ 4, 5 ], [ 7, 4 ] )}, 
-  {PartialPerm( [ 3, 5 ], [ 1, 4 ] )}, {PartialPerm( [ 3, 5 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 3, 5 ], [ 4, 1 ] )}, {PartialPerm( [ 3, 5 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 3, 5 ], [ 4, 7 ] )}, {PartialPerm( [ 3, 5 ], [ 5, 3 ] )}, 
-  {PartialPerm( [ 3, 5 ], [ 5, 6 ] )}, {PartialPerm( [ 3, 5 ], [ 6, 3 ] )}, 
-  {PartialPerm( [ 3, 5 ], [ 6, 4 ] )}, {PartialPerm( [ 3, 5 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 3, 5 ], [ 7, 4 ] )}, {PartialPerm( [ 2, 5 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 5 ], [ 2, 6 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 2, 7 ] )}, {PartialPerm( [ 2, 5 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 2, 3, 5 ], [ 3, 5, 4 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 4, 1 ] )}, {PartialPerm( [ 2, 5 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 2, 4, 5 ], [ 4, 5, 1 ] )}, 
-  {PartialPerm( [ 2, 3, 5 ], [ 4, 1, 5 ] )}, 
-  {PartialPerm( [ 2, 3, 5 ], [ 4, 1, 6 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 5, 3 ] )}, {PartialPerm( [ 2, 5 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 2, 4, 5 ], [ 5, 3, 6 ] )}, 
-  {PartialPerm( [ 2, 3, 5 ], [ 5, 6, 3 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 6, 3 ] )}, {PartialPerm( [ 2, 5 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 2, 4, 5 ], [ 6, 1, 3 ] )}, 
-  {PartialPerm( [ 2, 4, 5 ], [ 6, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 3, 5 ], [ 6, 3, 1 ] )}, 
-  {PartialPerm( [ 2, 3, 5 ], [ 6, 4, 1 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 7, 4 ] )}, {PartialPerm( [ 2, 5 ], [ 7, 6 ] )}, 
-  {PartialPerm( [ 2, 4, 5 ], [ 7, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 3, 5 ], [ 7, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 2, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 5 ], [ 1, 2, 5, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 3, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 4, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 5, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 6, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 6, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 7, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 7, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 1, 7, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 5 ], [ 1, 7, 6, 5 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 2, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 5 ], [ 3, 2, 1, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 5, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 6, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 3, 6, 5 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 5 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 1, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 2, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 3, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 4, 5 ], [ 4, 3, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 5 ], [ 4, 3, 1, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 6, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 4, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 5, 3 ] )}, {PartialPerm( [ 1, 5 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 1, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 1, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 3, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 6, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 5, 7, 6 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 6, 3 ] )}, {PartialPerm( [ 1, 5 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 2, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 3, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 4, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 4, 5 ], [ 6, 4, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 5 ], [ 6, 4, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 6, 7, 5 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 7, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 2, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 3, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5 ], [ 7, 5, 3 ] )}, {PartialPerm( [ 6 ], [ 5 ] )}, 
-  {PartialPerm( [ 2, 6 ], [ 1, 4 ] )}, {PartialPerm( [ 2, 6 ], [ 3, 5 ] )}, 
-  {PartialPerm( [ 2, 6 ], [ 3, 6 ] )}, {PartialPerm( [ 2, 6 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 2, 6 ], [ 4, 6 ] )}, {PartialPerm( [ 2, 6 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 2, 6 ], [ 5, 6 ] )}, {PartialPerm( [ 2, 6 ], [ 6, 3 ] )}, 
-  {PartialPerm( [ 2, 6 ], [ 6, 4 ] )}, {PartialPerm( [ 2, 6 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 2, 6 ], [ 7, 4 ] )}, {PartialPerm( [ 1, 6 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 6 ], [ 1, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 6 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 6 ], [ 3, 6, 1 ] )}, 
-  {PartialPerm( [ 1, 6 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 6 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 1, 6 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 6 ], [ 4, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 6 ], [ 5, 3 ] )}, {PartialPerm( [ 1, 6 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 1, 6 ], [ 6, 3 ] )}, {PartialPerm( [ 1, 6 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 1, 6 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 6 ], [ 6, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 6 ], [ 7, 4 ] )}, {PartialPerm( [ 7 ], [ 5 ] )}, 
-  {PartialPerm( [ 6, 7 ], [ 1, 4 ] )}, {PartialPerm( [ 6, 7 ], [ 3, 5 ] )}, 
-  {PartialPerm( [ 6, 7 ], [ 3, 6 ] )}, {PartialPerm( [ 6, 7 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 6, 7 ], [ 4, 6 ] )}, {PartialPerm( [ 6, 7 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 6, 7 ], [ 5, 6 ] )}, {PartialPerm( [ 6, 7 ], [ 6, 3 ] )}, 
-  {PartialPerm( [ 6, 7 ], [ 6, 4 ] )}, {PartialPerm( [ 6, 7 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 6, 7 ], [ 7, 4 ] )}, {PartialPerm( [ 5, 7 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 5, 7 ], [ 3, 6 ] )}, {PartialPerm( [ 5, 7 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 5, 7 ], [ 4, 6 ] )}, {PartialPerm( [ 5, 7 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 5, 7 ], [ 5, 3 ] )}, {PartialPerm( [ 5, 7 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 5, 7 ], [ 6, 3 ] )}, {PartialPerm( [ 5, 7 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 5, 7 ], [ 6, 5 ] )}, {PartialPerm( [ 5, 7 ], [ 7, 4 ] )}, 
-  {PartialPerm( [ 3, 7 ], [ 1, 4 ] )}, {PartialPerm( [ 3, 7 ], [ 3, 5 ] )}, 
-  {PartialPerm( [ 3, 7 ], [ 3, 6 ] )}, {PartialPerm( [ 3, 7 ], [ 4, 1 ] )}, 
-  {PartialPerm( [ 3, 7 ], [ 4, 6 ] )}, {PartialPerm( [ 3, 7 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 3, 7 ], [ 5, 6 ] )}, {PartialPerm( [ 3, 7 ], [ 6, 3 ] )}, 
-  {PartialPerm( [ 3, 7 ], [ 6, 4 ] )}, {PartialPerm( [ 3, 7 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 3, 7 ], [ 7, 4 ] )}, {PartialPerm( [ 2, 7 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 3, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 3, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 4, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 4, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 5, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 5, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 5, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 1, 6, 5 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 7 ], [ 2, 6 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 2, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 1, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 3, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 4, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 5, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 5, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 6, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 6, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 6, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 7, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 2, 7, 5 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 1, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 1, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 4, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 5, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 5, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 6, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 6, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 7, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 7, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 3, 7, 5 ] )}, 
-  {PartialPerm( [ 2, 3, 5, 7 ], [ 3, 7, 4, 1 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 4, 1 ] )}, {PartialPerm( [ 2, 7 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 1, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 1, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 1, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 3, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 3, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 5, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 5, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 5, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 6, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 6, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 6, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 4, 7, 1 ] )}, 
-  {PartialPerm( [ 2, 3, 7 ], [ 4, 5, 1 ] )}, 
-  {PartialPerm( [ 2, 3, 5, 7 ], [ 4, 5, 6, 3 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 5, 3 ] )}, {PartialPerm( [ 2, 7 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 2, 6, 7 ], [ 5, 3, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 1, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 1, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 1, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 3, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 3, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 3, 7 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 6, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 6, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 7, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 5, 7, 3 ] )}, 
-  {PartialPerm( [ 2, 3, 7 ], [ 5, 3, 6 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 6, 3 ] )}, {PartialPerm( [ 2, 7 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 6, 1, 3 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 6, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 6, 3, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 6, 3, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 6, 4, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 6, 5, 3 ] )}, 
-  {PartialPerm( [ 2, 3, 7 ], [ 6, 1, 3 ] )}, 
-  {PartialPerm( [ 2, 3, 7 ], [ 6, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 7 ], [ 7, 4 ] )}, {PartialPerm( [ 2, 7 ], [ 7, 6 ] )}, 
-  {PartialPerm( [ 2, 6, 7 ], [ 7, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 1, 4 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 1, 5 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 1, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 4, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 5, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 5, 6 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 6, 1 ] )}, 
-  {PartialPerm( [ 2, 5, 7 ], [ 7, 6, 5 ] )}, 
-  {PartialPerm( [ 2, 3, 7 ], [ 7, 1, 4 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 1, 4 ] )}, 
-  {PartialPerm( [ 1, 6, 7 ], [ 1, 6, 3 ] )}, 
-  {PartialPerm( [ 1, 6, 7 ], [ 1, 7, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 5, 7 ], [ 1, 2, 3, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 5, 7 ], [ 1, 3, 4, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 1, 4, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 1, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 1, 5, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 1, 6, 5 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 3, 6 ] )}, 
-  {PartialPerm( [ 1, 6, 7 ], [ 3, 5, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 3, 1, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5, 7 ], [ 3, 4, 6, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 6, 7 ], [ 3, 4, 6, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 3, 6, 1 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 7 ], [ 4, 6 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 4, 7 ] )}, 
-  {PartialPerm( [ 1, 3, 7 ], [ 4, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 4, 1, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 3, 5, 7 ], [ 4, 2, 6, 3, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 4, 6, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 6, 7 ], [ 4, 6, 1, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 4, 7, 1 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 5, 3 ] )}, {PartialPerm( [ 1, 7 ], [ 5, 6 ] )}, 
-  {PartialPerm( [ 1, 6, 7 ], [ 5, 4, 1 ] )}, 
-  {PartialPerm( [ 1, 2, 5, 7 ], [ 5, 2, 1, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 5, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 5, 4, 6 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 5, 7, 3 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 6, 3 ] )}, {PartialPerm( [ 1, 7 ], [ 6, 4 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 6, 5 ] )}, 
-  {PartialPerm( [ 1, 6, 7 ], [ 6, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 6, 7 ], [ 6, 5, 1 ] )}, 
-  {PartialPerm( [ 1, 3, 7 ], [ 6, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5, 7 ], [ 6, 2, 4, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 6, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 6, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 5, 7 ], [ 6, 7, 1, 5 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 7, 4 ] )}, 
-  {PartialPerm( [ 1, 6, 7 ], [ 7, 3, 5 ] )}, 
-  {PartialPerm( [ 1, 2, 5, 7 ], [ 7, 2, 5, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 7 ], [ 7, 3, 4 ] )} ]
+[ <Green's R-class: <empty partial perm>>, <Green's R-class: [1,5]>, 
+  <Green's R-class: <identity partial perm on [ 2 ]>>, 
+  <Green's R-class: [2,5]>, <Green's R-class: [2,4](1)>, 
+  <Green's R-class: [1,3][2,5]>, <Green's R-class: [1,3][2,6]>, 
+  <Green's R-class: [2,1,4]>, <Green's R-class: [1,4](2)>, 
+  <Green's R-class: [1,4][2,6]>, <Green's R-class: [1,4][2,7]>, 
+  <Green's R-class: [1,5][2,6]>, <Green's R-class: [1,6](2)>, 
+  <Green's R-class: [1,6][2,3]>, <Green's R-class: [1,6][2,4]>, 
+  <Green's R-class: [1,6][2,5]>, <Green's R-class: [1,6][2,7]>, 
+  <Green's R-class: [1,7](2)>, <Green's R-class: [1,7][2,4]>, 
+  <Green's R-class: [3,5]>, <Green's R-class: [2,1][3,4]>, 
+  <Green's R-class: [3,4](2)>, <Green's R-class: [3,6](2)>, 
+  <Green's R-class: [3,7](2)>, <Green's R-class: [2,3,6]>, 
+  <Green's R-class: [2,4][3,1]>, <Green's R-class: [2,4][3,6]>, 
+  <Green's R-class: [2,4][3,7]>, <Green's R-class: [2,5](3)>, 
+  <Green's R-class: [2,5][3,6]>, <Green's R-class: [2,6](3)>, 
+  <Green's R-class: [2,6][3,4]>, <Green's R-class: [2,6][3,5]>, 
+  <Green's R-class: [2,7][3,4]>, <Green's R-class: [2,7][3,6]>, 
+  <Green's R-class: [3,4](1)>, <Green's R-class: [3,4](1)(2)>, 
+  <Green's R-class: [3,6](1)(2)>, <Green's R-class: [2,3,4](1)>, 
+  <Green's R-class: [2,3,6](1)>, <Green's R-class: [2,3,7](1)>, 
+  <Green's R-class: [2,4][3,5](1)>, <Green's R-class: [2,4][3,6](1)>, 
+  <Green's R-class: [2,4][3,7](1)>, <Green's R-class: [2,5](1)(3)>, 
+  <Green's R-class: [2,5][3,6](1)>, <Green's R-class: [2,5][3,7](1)>, 
+  <Green's R-class: [2,6](1)(3)>, <Green's R-class: [2,6][3,4](1)>, 
+  <Green's R-class: [2,7][3,4](1)>, <Green's R-class: [2,7][3,5](1)>, 
+  <Green's R-class: [2,7][3,6](1)>, <Green's R-class: [1,3,5]>, 
+  <Green's R-class: [1,3,6]>, <Green's R-class: [2,1,3,4]>, 
+  <Green's R-class: [2,1,3,5]>, <Green's R-class: [1,3,4](2)>, 
+  <Green's R-class: [1,3,5](2)>, <Green's R-class: [1,3,6](2)>, 
+  <Green's R-class: [1,3,7](2)>, <Green's R-class: [1,3,5][2,4]>, 
+  <Green's R-class: [1,3,6][2,4]>, <Green's R-class: [2,5](1,3)>, 
+  <Green's R-class: [1,3,6][2,5]>, <Green's R-class: [1,3,7][2,5]>, 
+  <Green's R-class: [2,6](1,3)>, <Green's R-class: [1,3,5][2,6]>, 
+  <Green's R-class: [3,1,4]>, <Green's R-class: [1,4][3,6]>, 
+  <Green's R-class: [1,4][3,7]>, <Green's R-class: [2,1,4](3)>, 
+  <Green's R-class: [2,1,4][3,5]>, <Green's R-class: [3,1,4](2)>, 
+  <Green's R-class: [1,4](2)(3)>, <Green's R-class: [1,4][3,5](2)>, 
+  <Green's R-class: [1,4][3,6](2)>, <Green's R-class: [2,3,1,4]>, 
+  <Green's R-class: [1,4][2,3,5]>, <Green's R-class: [1,4][2,3,6]>, 
+  <Green's R-class: [1,4][2,3,7]>, <Green's R-class: [2,6][3,1,4]>, 
+  <Green's R-class: [2,7][3,1,4]>, <Green's R-class: [1,5][3,6]>, 
+  <Green's R-class: [2,1,5](3)>, <Green's R-class: [2,1,5][3,4]>, 
+  <Green's R-class: [2,1,5][3,6]>, <Green's R-class: [1,5](2)(3)>, 
+  <Green's R-class: [1,5][3,4](2)>, <Green's R-class: [1,5][3,7](2)>, 
+  <Green's R-class: [1,5][2,3,4]>, <Green's R-class: [1,5][2,3,7]>, 
+  <Green's R-class: [2,4][3,1,5]>, <Green's R-class: [1,5][2,4](3)>, 
+  <Green's R-class: [1,5][2,4][3,6]>, <Green's R-class: [1,5][2,6](3)>, 
+  <Green's R-class: [2,7][3,1,5]>, <Green's R-class: [1,5][2,7][3,6]>, 
+  <Green's R-class: [1,6](3)>, <Green's R-class: [1,6][3,4]>, 
+  <Green's R-class: [1,6][3,5]>, <Green's R-class: [2,1,6][3,5]>, 
+  <Green's R-class: [3,1,6](2)>, <Green's R-class: [1,6](2)(3)>, 
+  <Green's R-class: [1,6][3,4](2)>, <Green's R-class: [2,3,1,6]>, 
+  <Green's R-class: [1,6][2,3,4]>, <Green's R-class: [2,4][3,1,6]>, 
+  <Green's R-class: [1,6][2,4](3)>, <Green's R-class: [1,6][2,4][3,5]>, 
+  <Green's R-class: [2,5][3,1,6]>, <Green's R-class: [1,6][2,5](3)>, 
+  <Green's R-class: [2,7][3,1,6]>, <Green's R-class: [1,6][2,7][3,5]>, 
+  <Green's R-class: [1,7][3,4]>, <Green's R-class: [1,7](2)(3)>, 
+  <Green's R-class: [2,3,1,7]>, <Green's R-class: [1,7][2,3,4]>, 
+  <Green's R-class: [1,7][2,3,5]>, <Green's R-class: [2,4][3,1,7]>, 
+  <Green's R-class: [2,5][3,1,7]>, <Green's R-class: [1,7][2,5](3)>, 
+  <Green's R-class: [4,5]>, <Green's R-class: [3,1](4)>, 
+  <Green's R-class: [4,6](3)>, <Green's R-class: [3,4,1]>, 
+  <Green's R-class: [3,4,6]>, <Green's R-class: [3,4,7]>, 
+  <Green's R-class: [4,3,5]>, <Green's R-class: [3,5][4,6]>, 
+  <Green's R-class: [4,3,6]>, <Green's R-class: [3,6](4)>, 
+  <Green's R-class: [3,6][4,5]>, <Green's R-class: [3,7](4)>, 
+  <Green's R-class: [2,1](4)>, <Green's R-class: [2,1][4,5](3)>, 
+  <Green's R-class: [2,1][3,5](4)>, <Green's R-class: [2,1][3,6][4,5]>, 
+  <Green's R-class: [2,3][4,6]>, <Green's R-class: [2,3,1][4,6]>, 
+  <Green's R-class: [2,3,4,1]>, <Green's R-class: [2,4,1]>, 
+  <Green's R-class: [2,4,6]>, <Green's R-class: [2,4,7]>, 
+  <Green's R-class: [2,4,7][3,1]>, <Green's R-class: [2,4,3,6]>, 
+  <Green's R-class: [2,5][4,3]>, <Green's R-class: [2,5][4,6]>, 
+  <Green's R-class: [2,5][3,1][4,7]>, <Green's R-class: [2,5][4,3,7]>, 
+  <Green's R-class: [2,6][4,3]>, <Green's R-class: [2,6](4)>, 
+  <Green's R-class: [2,6][4,5]>, <Green's R-class: [2,6][4,5](3)>, 
+  <Green's R-class: [2,7](4)>, <Green's R-class: [2,7][3,1,5][4,6]>, 
+  <Green's R-class: <identity partial perm on [ 5 ]>>, 
+  <Green's R-class: [5,4,1]>, <Green's R-class: [4,3](5)>, 
+  <Green's R-class: [4,3][5,6]>, <Green's R-class: [5,1](4)>, 
+  <Green's R-class: [5,6](4)>, <Green's R-class: [5,7](4)>, 
+  <Green's R-class: [4,5,6]>, <Green's R-class: [4,6][5,3]>, 
+  <Green's R-class: [5,4,6]>, <Green's R-class: [4,6](5)>, 
+  <Green's R-class: [5,4,7]>, <Green's R-class: [3,1][5,4]>, 
+  <Green's R-class: [5,6](3)>, <Green's R-class: [3,4][5,1]>, 
+  <Green's R-class: [3,4][5,6]>, <Green's R-class: [3,4][5,7]>, 
+  <Green's R-class: (3,5)>, <Green's R-class: [3,5,6]>, 
+  <Green's R-class: [5,3,6]>, <Green's R-class: [3,6][5,4]>, 
+  <Green's R-class: [3,6](5)>, <Green's R-class: [3,7][5,4]>, 
+  <Green's R-class: [2,1][5,4]>, <Green's R-class: [5,4](2)>, 
+  <Green's R-class: [5,6](2)>, <Green's R-class: [5,7](2)>, 
+  <Green's R-class: [2,3][5,6]>, <Green's R-class: [2,3,5,4]>, 
+  <Green's R-class: [2,4][5,1]>, <Green's R-class: [2,4][5,6]>, 
+  <Green's R-class: [2,4][5,7]>, <Green's R-class: [2,4,5,1]>, 
+  <Green's R-class: [2,4][3,1](5)>, <Green's R-class: [2,4][3,1][5,6]>, 
+  <Green's R-class: [2,5,3]>, <Green's R-class: [2,5,6]>, 
+  <Green's R-class: [2,5,6][4,3]>, <Green's R-class: [2,5,3,6]>, 
+  <Green's R-class: [2,6][5,3]>, <Green's R-class: [2,6][5,4]>, 
+  <Green's R-class: [2,6](5)>, <Green's R-class: [2,6][4,1][5,3]>, 
+  <Green's R-class: [2,6][5,4,1]>, <Green's R-class: [2,6][5,1](3)>, 
+  <Green's R-class: [2,6][3,4][5,1]>, <Green's R-class: [2,7][5,4]>, 
+  <Green's R-class: [2,7][5,6]>, <Green's R-class: [2,7][5,4,1]>, 
+  <Green's R-class: [2,7][3,4][5,1]>, <Green's R-class: [5,4](1)>, 
+  <Green's R-class: [5,4](1)(2)>, <Green's R-class: [5,6](1)(2)>, 
+  <Green's R-class: [3,5,4](1)(2)>, <Green's R-class: [2,3][5,4](1)>, 
+  <Green's R-class: [2,3][5,6](1)>, <Green's R-class: [2,3][5,7](1)>, 
+  <Green's R-class: [2,4](1)(5)>, <Green's R-class: [2,4][5,6](1)>, 
+  <Green's R-class: [2,4][5,7](1)>, <Green's R-class: [2,5,3](1)>, 
+  <Green's R-class: [2,5,6](1)>, <Green's R-class: [2,5,7](1)>, 
+  <Green's R-class: [2,6][5,3](1)>, <Green's R-class: [2,6][5,4](1)>, 
+  <Green's R-class: [2,7][5,4](1)>, <Green's R-class: [2,7](1)(5)>, 
+  <Green's R-class: [2,7][5,6](1)>, <Green's R-class: [2,7][3,6](1)(5)>, 
+  <Green's R-class: [1,3][5,6]>, <Green's R-class: [2,1,3][5,4]>, 
+  <Green's R-class: [2,1,3](5)>, <Green's R-class: [1,3][5,4](2)>, 
+  <Green's R-class: [1,3](2)(5)>, <Green's R-class: [1,3][5,6](2)>, 
+  <Green's R-class: [1,3][5,7](2)>, <Green's R-class: [5,6](1,3)(2)>, 
+  <Green's R-class: [1,3][2,4](5)>, <Green's R-class: [1,3][2,4][5,6]>, 
+  <Green's R-class: [2,5,1,3]>, <Green's R-class: [1,3][2,5,6]>, 
+  <Green's R-class: [1,3][2,5,7]>, <Green's R-class: [2,6][5,1,3]>, 
+  <Green's R-class: [1,3][2,6](5)>, <Green's R-class: [5,1,4]>, 
+  <Green's R-class: [1,4][5,6]>, <Green's R-class: [1,4][5,7]>, 
+  <Green's R-class: [2,1,4][5,3]>, <Green's R-class: [2,1,4](5)>, 
+  <Green's R-class: [5,1,4](2)>, <Green's R-class: [1,4][5,3](2)>, 
+  <Green's R-class: [1,4](2)(5)>, <Green's R-class: [1,4][5,6](2)>, 
+  <Green's R-class: [2,3][5,1,4]>, <Green's R-class: [1,4][2,3](5)>, 
+  <Green's R-class: [1,4][2,3][5,6]>, <Green's R-class: [1,4][2,3][5,7]>, 
+  <Green's R-class: [2,3][5,1,4,7]>, <Green's R-class: [2,3,1,4][5,7]>, 
+  <Green's R-class: [2,6][5,1,4]>, <Green's R-class: [2,7][5,1,4]>, 
+  <Green's R-class: [1,5,3]>, <Green's R-class: [1,5,6]>, 
+  <Green's R-class: [2,1,5,3]>, <Green's R-class: [2,1,5,4]>, 
+  <Green's R-class: [2,1,5,6]>, <Green's R-class: [1,5,3](2)>, 
+  <Green's R-class: [1,5,4](2)>, <Green's R-class: [1,5,3,7](2)>, 
+  <Green's R-class: [1,5,4][2,3]>, <Green's R-class: [1,5,7][2,3]>, 
+  <Green's R-class: [2,4](1,5)>, <Green's R-class: [1,5,3][2,4]>, 
+  <Green's R-class: [1,5,6][2,4]>, <Green's R-class: [1,5,3][2,6]>, 
+  <Green's R-class: [2,7](1,5)>, <Green's R-class: [1,5,6][2,7]>, 
+  <Green's R-class: [1,6][5,3]>, <Green's R-class: [1,6][5,4]>, 
+  <Green's R-class: [1,6](5)>, <Green's R-class: [2,1,6](5)>, 
+  <Green's R-class: [5,1,6](2)>, <Green's R-class: [1,6][5,3](2)>, 
+  <Green's R-class: [1,6][5,4](2)>, <Green's R-class: [2,3][5,1,6]>, 
+  <Green's R-class: [1,6][2,3][5,4]>, <Green's R-class: [2,4][5,1,6]>, 
+  <Green's R-class: [1,6][2,4][5,3]>, <Green's R-class: [1,6][2,4](5)>, 
+  <Green's R-class: [1,6][2,4,5,3]>, <Green's R-class: [1,6][2,4](3)(5)>, 
+  <Green's R-class: [2,5,1,6]>, <Green's R-class: [1,6][2,5,3]>, 
+  <Green's R-class: [2,7][5,1,6]>, <Green's R-class: [1,6][2,7](5)>, 
+  <Green's R-class: [1,7][5,4]>, <Green's R-class: [1,7][5,3](2)>, 
+  <Green's R-class: [1,7](2)(5)>, <Green's R-class: [2,3][5,1,7]>, 
+  <Green's R-class: [1,7][2,3][5,4]>, <Green's R-class: [1,7][2,3](5)>, 
+  <Green's R-class: [2,4][5,1,7]>, <Green's R-class: [2,5,1,7]>, 
+  <Green's R-class: [1,7][2,5,3]>, <Green's R-class: [6,5]>, 
+  <Green's R-class: [2,1][6,4]>, <Green's R-class: [2,3][6,5]>, 
+  <Green's R-class: [2,3](6)>, <Green's R-class: [2,4][6,1]>, 
+  <Green's R-class: [2,4](6)>, <Green's R-class: [2,4][6,7]>, 
+  <Green's R-class: [2,5](6)>, <Green's R-class: [2,6,3]>, 
+  <Green's R-class: [2,6,4]>, <Green's R-class: [2,6,5]>, 
+  <Green's R-class: [2,7][6,4]>, <Green's R-class: [6,4](1)>, 
+  <Green's R-class: [2,4][6,5](1)>, <Green's R-class: [1,3](6)>, 
+  <Green's R-class: [2,6,1,3]>, <Green's R-class: [6,1,4]>, 
+  <Green's R-class: [1,4](6)>, <Green's R-class: [1,4][6,7]>, 
+  <Green's R-class: [2,7][6,1,4]>, <Green's R-class: [1,5][6,3]>, 
+  <Green's R-class: [1,5](6)>, <Green's R-class: [1,6,3]>, 
+  <Green's R-class: [1,6,4]>, <Green's R-class: [1,6,5]>, 
+  <Green's R-class: [1,6,3][2,5]>, <Green's R-class: [1,7][6,4]>, 
+  <Green's R-class: [7,5]>, <Green's R-class: [6,1][7,4]>, 
+  <Green's R-class: [6,3][7,5]>, <Green's R-class: [7,6,3]>, 
+  <Green's R-class: [6,4][7,1]>, <Green's R-class: [7,6,4]>, 
+  <Green's R-class: [6,4](7)>, <Green's R-class: [7,6,5]>, 
+  <Green's R-class: [7,3](6)>, <Green's R-class: [7,4](6)>, 
+  <Green's R-class: [7,5](6)>, <Green's R-class: [6,7,4]>, 
+  <Green's R-class: [5,1][7,4]>, <Green's R-class: [5,3][7,6]>, 
+  <Green's R-class: [5,4][7,1]>, <Green's R-class: [5,4][7,6]>, 
+  <Green's R-class: [5,4](7)>, <Green's R-class: [7,3](5)>, 
+  <Green's R-class: [7,6](5)>, <Green's R-class: [5,6][7,3]>, 
+  <Green's R-class: [5,6][7,4]>, <Green's R-class: [7,5,6]>, 
+  <Green's R-class: [5,7,4]>, <Green's R-class: [3,1][7,4]>, 
+  <Green's R-class: [7,5](3)>, <Green's R-class: [7,6](3)>, 
+  <Green's R-class: [3,4][7,1]>, <Green's R-class: [3,4][7,6]>, 
+  <Green's R-class: [3,4](7)>, <Green's R-class: [3,5][7,6]>, 
+  <Green's R-class: [7,3,6]>, <Green's R-class: [3,6][7,4]>, 
+  <Green's R-class: [3,6][7,5]>, <Green's R-class: [3,7,4]>, 
+  <Green's R-class: [2,1][7,4]>, <Green's R-class: [2,1][5,3][7,4]>, 
+  <Green's R-class: [2,1][7,5,3]>, <Green's R-class: [2,1][5,4][7,3]>, 
+  <Green's R-class: [2,1][7,5,4]>, <Green's R-class: [2,1][7,3](5)>, 
+  <Green's R-class: [2,1][7,4](5)>, <Green's R-class: [2,1][7,6](5)>, 
+  <Green's R-class: [2,1][7,5,6]>, <Green's R-class: [7,4](2)>, 
+  <Green's R-class: [7,6](2)>, 
+  <Green's R-class: <identity partial perm on [ 2, 7 ]>>, 
+  <Green's R-class: [5,1][7,4](2)>, <Green's R-class: [5,1][7,6](2)>, 
+  <Green's R-class: [5,3][7,4](2)>, <Green's R-class: [7,5,3](2)>, 
+  <Green's R-class: [5,3][7,6](2)>, <Green's R-class: [5,3](2)(7)>, 
+  <Green's R-class: [5,4][7,1](2)>, <Green's R-class: [5,4][7,3](2)>, 
+  <Green's R-class: [7,5,4](2)>, <Green's R-class: [5,4][7,6](2)>, 
+  <Green's R-class: [7,3](2)(5)>, <Green's R-class: [7,4](2)(5)>, 
+  <Green's R-class: [5,6][7,1](2)>, <Green's R-class: [5,6][7,3](2)>, 
+  <Green's R-class: [5,6][7,4](2)>, <Green's R-class: [5,7,3](2)>, 
+  <Green's R-class: (2)(5,7)>, <Green's R-class: [2,3][7,6]>, 
+  <Green's R-class: [2,3][5,1][7,4]>, <Green's R-class: [2,3][5,1][7,6]>, 
+  <Green's R-class: [2,3][5,1](7)>, <Green's R-class: [2,3][5,4][7,1]>, 
+  <Green's R-class: [2,3][7,5,4]>, <Green's R-class: [2,3][5,4][7,6]>, 
+  <Green's R-class: [2,3][5,4](7)>, <Green's R-class: [2,3][7,4](5)>, 
+  <Green's R-class: [2,3](5)(7)>, <Green's R-class: [2,3][5,6][7,1]>, 
+  <Green's R-class: [2,3][5,6][7,4]>, <Green's R-class: [2,3][5,7,1]>, 
+  <Green's R-class: [2,3][5,7,4]>, <Green's R-class: [2,3](5,7)>, 
+  <Green's R-class: [2,3,7,1][5,4]>, <Green's R-class: [2,4][7,1]>, 
+  <Green's R-class: [2,4][7,6]>, <Green's R-class: [2,4](7)>, 
+  <Green's R-class: [2,4][7,5,1]>, <Green's R-class: [2,4][5,1][7,6]>, 
+  <Green's R-class: [2,4][5,1](7)>, <Green's R-class: [2,4][7,5,3]>, 
+  <Green's R-class: [2,4][5,3][7,6]>, <Green's R-class: [2,4][7,1](5)>, 
+  <Green's R-class: [2,4][7,3](5)>, <Green's R-class: [2,4][7,6](5)>, 
+  <Green's R-class: [2,4][5,6][7,1]>, <Green's R-class: [2,4][5,6][7,3]>, 
+  <Green's R-class: [2,4][7,5,6]>, <Green's R-class: [2,4][5,7,1]>, 
+  <Green's R-class: [2,4][3,5][7,1]>, <Green's R-class: [2,4][7,3,5,6]>, 
+  <Green's R-class: [2,5][7,3]>, <Green's R-class: [2,5][7,6]>, 
+  <Green's R-class: [2,5][7,6,3]>, <Green's R-class: [2,5,1][7,3]>, 
+  <Green's R-class: [2,5,1][7,6]>, <Green's R-class: [2,5,1](7)>, 
+  <Green's R-class: [2,5,3][7,1]>, <Green's R-class: [2,5,3][7,6]>, 
+  <Green's R-class: [2,5,3](7)>, <Green's R-class: [2,5,6][7,1]>, 
+  <Green's R-class: [2,5,6][7,3]>, <Green's R-class: [2,5,7,1]>, 
+  <Green's R-class: [2,5,7,3]>, <Green's R-class: [2,5][7,6](3)>, 
+  <Green's R-class: [2,6][7,3]>, <Green's R-class: [2,6][7,4]>, 
+  <Green's R-class: [2,6][7,5]>, <Green's R-class: [2,6][5,1][7,3]>, 
+  <Green's R-class: [2,6][5,1][7,4]>, <Green's R-class: [2,6][5,3][7,1]>, 
+  <Green's R-class: [2,6][7,5,3]>, <Green's R-class: [2,6][5,4][7,1]>, 
+  <Green's R-class: [2,6][7,3](5)>, <Green's R-class: [2,6][7,3,1]>, 
+  <Green's R-class: [2,6][3,1][7,4]>, <Green's R-class: [2,7,4]>, 
+  <Green's R-class: [2,7,6]>, <Green's R-class: [2,7,4][6,1]>, 
+  <Green's R-class: [2,7,4][5,1]>, <Green's R-class: [2,7,5,1]>, 
+  <Green's R-class: [2,7,6][5,1]>, <Green's R-class: [2,7,1][5,4]>, 
+  <Green's R-class: [2,7,1](5)>, <Green's R-class: [2,7,6](5)>, 
+  <Green's R-class: [2,7,1][5,6]>, <Green's R-class: [2,7,5,6]>, 
+  <Green's R-class: [2,7,4][3,1]>, <Green's R-class: [7,4](1)>, 
+  <Green's R-class: [7,3](1)(6)>, <Green's R-class: [6,7,4](1)>, 
+  <Green's R-class: [5,3][7,6](1)(2)>, <Green's R-class: [2,3][5,4](1)(7)>, 
+  <Green's R-class: [2,3,4][6,7,5](1)>, <Green's R-class: [2,4][7,5](1)>, 
+  <Green's R-class: [2,4][7,6](1)>, <Green's R-class: [2,5][7,4](1)>, 
+  <Green's R-class: [2,6][7,5](1)>, <Green's R-class: [1,3][7,6]>, 
+  <Green's R-class: [1,3][7,6,5]>, <Green's R-class: [2,1,3][7,6]>, 
+  <Green's R-class: [7,5,1,3,4,6](2)>, <Green's R-class: [1,3][2,4][7,5,6]>, 
+  <Green's R-class: [2,4][7,1,3,6,5]>, <Green's R-class: [2,6][7,1,3]>, 
+  <Green's R-class: [7,1,4]>, <Green's R-class: [1,4][7,6]>, 
+  <Green's R-class: [1,4](7)>, <Green's R-class: [3,7,1,4]>, 
+  <Green's R-class: [2,1,4](7)>, <Green's R-class: [5,3,6][7,1,4](2)>, 
+  <Green's R-class: [2,6][7,1,4]>, <Green's R-class: [2,6,1,4][7,3]>, 
+  <Green's R-class: [2,7,1,4]>, <Green's R-class: [1,5][7,3]>, 
+  <Green's R-class: [1,5][7,6]>, <Green's R-class: [6,4][7,1,5]>, 
+  <Green's R-class: [7,4](1,5)(2)>, <Green's R-class: [1,5][2,3][7,4]>, 
+  <Green's R-class: [1,5][2,4][7,6]>, <Green's R-class: [1,5][2,7,3]>, 
+  <Green's R-class: [1,6][7,3]>, <Green's R-class: [1,6][7,4]>, 
+  <Green's R-class: [1,6][7,5]>, <Green's R-class: [1,6,3][7,4]>, 
+  <Green's R-class: [7,1,6,5]>, <Green's R-class: [1,6][7,3,5]>, 
+  <Green's R-class: [1,6][5,4][7,3](2)>, <Green's R-class: [1,6][2,3][7,5]>, 
+  <Green's R-class: [1,6][2,5][7,3]>, <Green's R-class: [2,7,5,1,6]>, 
+  <Green's R-class: [1,7,4]>, <Green's R-class: [1,7,5][6,3]>, 
+  <Green's R-class: [1,7,3](2)(5)>, <Green's R-class: [1,7,4][2,3]> ]
 gap> Union(List(last, Elements));
 [ <empty partial perm>, <identity partial perm on [ 1 ]>, [1,3], [1,4], 
   [1,5], [1,6], [1,7], [2,1], <identity partial perm on [ 2 ]>, [2,3], [2,4], 
@@ -2203,9 +1867,9 @@ gap> IsRegularSemigroup(s);
 false
 gap> f:=Transformation( [ 4, 2, 4, 3 ] );;
 gap> d:=First(DClasses(s), x-> f in x);
-{Transformation( [ 1, 4, 1, 2 ] )}
+<Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>
 gap> h:=HClass(d, f);
-{Transformation( [ 4, 2, 4, 3 ] )}
+<Green's H-class: Transformation( [ 4, 2, 4, 3 ] )>
 gap> Size(h);
 6
 gap> IsGroupHClass(h);
@@ -2227,9 +1891,9 @@ gap> Size(s);
 201
 gap> f:=PartialPerm([ 1 .. 5 ], [ 4, 3, 6, 5, 1 ]);;
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 1, 2, 3, 4, 5 ], [ 4, 3, 6, 5, 1 ] )}
+<Green's D-class: [2,3,6](1,4,5)>
 gap> h:=HClassNC(d, f);
-{PartialPerm( [ 1, 2, 3, 4, 5 ], [ 4, 3, 6, 5, 1 ] )}
+<Green's H-class: [2,3,6](1,4,5)>
 gap> Size(h);
 1
 gap> Size(d);
@@ -2274,7 +1938,7 @@ gap> gens:=
 gap> s:=Semigroup(gens);;
 gap> f:=PartialPerm([ 2, 63 ], [ 28, 89 ]);;
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 2, 63 ], [ 28, 89 ] )}
+<Green's D-class: [2,28][63,89]>
 gap> Size(d);
 4752
 gap> RhoOrb(d);
@@ -2291,9 +1955,9 @@ gap> f:=PartialPerm([ 4, 29 ], [ 28, 89 ]);;
 gap> f in d;
 true
 gap> h:=HClass(d, f);
-{PartialPerm( [ 4, 29 ], [ 28, 89 ] )}
+<Green's H-class: [4,28][29,89]>
 gap> hh:=HClassNC(d, f);
-{PartialPerm( [ 4, 29 ], [ 28, 89 ] )}
+<Green's H-class: [4,28][29,89]>
 gap> hh=h;
 true
 gap> Size(h);
@@ -2336,17 +2000,25 @@ gap> NrDClasses(s);
 gap> NrLClasses(s);
 21
 gap> List(reps, x-> DClass(s, x));
-[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
-  {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
-  {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 2, 4 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 4, 4, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 2, 4, 2, 4 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )} ]
+[ <Green's D-class: IdentityTransformation>, 
+  <Green's D-class: Transformation( [ 1, 3, 2, 3 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 4, 2, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )> ]
 gap> d:=DClass(s, Transformation( [ 1, 2, 4, 4 ] ));
-{Transformation( [ 1, 4, 1, 2 ] )}
+<Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>
 gap> f:=Transformation( [ 1, 2, 4, 4 ] );
 Transformation( [ 1, 2, 4, 4 ] )
 gap> o:=LambdaOrb(s);
@@ -2356,15 +2028,23 @@ true
 gap>    o:=RhoOrb(s);
 <closed orbit, 12 points with Schreier tree with log>
 gap> List(reps, x-> DClass(s, x));
-[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
-  {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
-  {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 2, 4 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 4, 4, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 2, 4, 2, 4 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )} ]
+[ <Green's D-class: IdentityTransformation>, 
+  <Green's D-class: Transformation( [ 1, 3, 2, 3 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 4, 2, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )> ]
 gap> Union(List(last, x-> LClass(x,Representative(x))));
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 3, 2 ] ), 
@@ -2384,27 +2064,43 @@ gap> Union(List(last, x-> LClass(x,Representative(x))));
 gap> Length(last);
 30
 gap> D:=List(reps, x-> DClass(s, x));
-[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
-  {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
-  {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 2, 4 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 4, 4, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 2, 4, 2, 4 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )} ]
+[ <Green's D-class: IdentityTransformation>, 
+  <Green's D-class: Transformation( [ 1, 3, 2, 3 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 4, 2, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 1, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 4, 2, 4 ] )> ]
 gap> Length(Set(D));
 9
 gap> List(D, x-> LClass(x, Representative(x)));
-[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
-  {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
-  {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 2, 4 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 4, 4, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )}, {Transformation( [ 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 2, 4, 2, 4 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )} ]
+[ <Green's L-class: IdentityTransformation>, 
+  <Green's L-class: Transformation( [ 1, 3, 2, 3 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 4, 1, 2, 1 ] )>, 
+  <Green's L-class: Transformation( [ 4, 2, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 2, 4 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's L-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's L-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's L-class: Transformation( [ 2, 4, 2, 4 ] )> ]
 gap> Union(last);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 3, 2 ] ), 
@@ -2424,11 +2120,15 @@ gap> Union(last);
 gap> Set(last2)=Set(LClasses(s));
 false
 gap> L:=Set(last3);
-[ {Transformation( [ 1, 1, 1, 1 ] )}, {IdentityTransformation}, 
-  {Transformation( [ 1, 3, 2, 3 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
-  {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 2, 4 ] )}, 
-  {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 4, 1, 2, 1 ] )}, 
-  {Transformation( [ 4, 4, 2, 2 ] )} ]
+[ <Green's L-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's L-class: IdentityTransformation>, 
+  <Green's L-class: Transformation( [ 1, 3, 2, 3 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 1, 4 ] )>, 
+  <Green's L-class: Transformation( [ 1, 4, 2, 4 ] )>, 
+  <Green's L-class: Transformation( [ 2, 4, 2, 4 ] )>, 
+  <Green's L-class: Transformation( [ 4, 1, 2, 1 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 2, 2 ] )> ]
 
 #T# MiscTest17
 gap> gens:=
@@ -2470,10 +2170,9 @@ gap> f:=
 > [ 23, 52, 39, 62, 11, 47, 94, 34, 70, 50, 73, 89, 2, 86, 14, 81, 74, 83, 77, 
 >   92, 48, 26, 13, 98, 84, 60, 33 ] );;
 gap> d:=DClass(s, f);
-{PartialPerm( [ 5, 7, 11, 12, 14, 24, 25, 26, 27, 29, 31, 32, 34, 35, 41, 42, 
-    44, 47, 48, 49, 50, 53, 62, 69, 70, 86, 92 ], 
- [ 23, 52, 39, 62, 11, 47, 94, 34, 70, 50, 73, 89, 2, 86, 14, 81, 74, 83, 77, 
-    92, 48, 26, 13, 98, 84, 60, 33 ] )}
+<Green's D-class: [5,23][7,52][12,62,13][24,47,83][25,94][27,70,84]
+ [29,50,48,77][31,73][32,89][35,86,60][41,14,11,39][42,81][44,74][49,92,33]
+ [53,26,34,2][69,98]>
 gap> Size(d);
 1
 gap> RhoOrb(d);
@@ -2482,21 +2181,21 @@ gap> LambdaOrb(d);
 <closed orbit, 35494 points with Schreier tree with log>
 gap> f:=PartialPerm([ 5, 7, 56, 83, 92 ], [ 30, 52, 16, 21, 29 ]);;
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 5, 7, 56, 83, 92 ], [ 30, 52, 16, 21, 29 ] )}
+<Green's D-class: [5,30][7,52][56,16][83,21][92,29]>
 gap> Size(d);
 1
 gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> repeat d:=NextIterator(iter); until Size(d)>1;
 gap> d;
-{PartialPerm( [ 74, 84 ], [ 26, 6 ] )}
+<Green's D-class: [74,26][84,6]>
 gap> Size(d);
 6793298
 gap> f:=PartialPerm([ 1, 88 ], [ 78, 48 ]);;
 gap> f in d;
 true
 gap> r:=RClass(d, f);
-{PartialPerm( [ 1, 88 ], [ 26, 6 ] )}
+<Green's R-class: [1,26][88,6]>
 gap> ForAll(r, x-> x in d);
 true
 gap> Size(r);
@@ -2515,12 +2214,12 @@ gap> ForAll(r, x-> x in r);
 true
 gap> repeat d:=NextIterator(iter); until Size(d)>1;
 gap> d;
-{PartialPerm( [ 41, 50 ], [ 26, 6 ] )}
+<Green's D-class: [41,26][50,6]>
 gap> Size(d);
 3686
 gap> f:=PartialPerm([ 41, 50 ], [ 17, 32 ]);;
 gap> r:=RClassNC(d, f);
-{PartialPerm( [ 41, 50 ], [ 6, 26 ] )}
+<Green's R-class: [41,6][50,26]>
 gap> Size(r);
 3686
 gap> ForAll(r, x-> x in d);
@@ -2528,13 +2227,13 @@ true
 gap> d=r;
 true
 gap> rr:=RClass(s, f);
-{PartialPerm( [ 41, 50 ], [ 6, 26 ] )}
+<Green's R-class: [41,6][50,26]>
 gap> rr=r;
 true
 gap> r=rr;
 true
 gap> d;
-{PartialPerm( [ 41, 50 ], [ 26, 6 ] )}
+<Green's D-class: [41,26][50,6]>
 gap> GroupHClass(d);
 fail
 gap>   
@@ -2554,13 +2253,13 @@ gap> s:=Semigroup(gens);
 <transformation semigroup on 10 pts with 10 generators>
 gap> f:=Transformation( [ 6, 6, 6, 6, 6, 10, 6, 6, 6, 6 ] );;
 gap> d:=DClassNC(s, f);
-{Transformation( [ 6, 6, 6, 6, 6, 10, 6, 6, 6, 6 ] )}
+<Green's D-class: Transformation( [ 6, 6, 6, 6, 6, 10, 6, 6, 6, 6 ] )>
 gap> Size(d);
 31680
 gap> IsRegularDClass(d);
 true
 gap> GroupHClass(d);
-{Transformation( [ 10, 10, 10, 10, 10, 6, 10, 10, 10, 10 ] )}
+<Green's H-class: Transformation( [ 10, 10, 10, 10, 10, 6, 10, 10, 10, 10 ] )>
 
 #T# MiscTest19
 gap> gens:=[ PartialPermNC( [ 1, 3, 4, 6, 10 ], [ 3, 4, 1, 6, 10 ] ),
@@ -2574,21 +2273,21 @@ gap> Size(s);
 gap> NrDClasses(s);
 251
 gap> d:=DClasses(s)[251];
-{PartialPerm( [ 2, 4 ], [ 2, 7 ] )}
+<Green's D-class: [4,7](2)>
 gap> Size(d);
 1
 gap> First(DClasses(s), IsRegularDClass);
-{PartialPerm( [ 1, 3, 4, 6, 10 ], [ 3, 4, 1, 6, 10 ] )}
+<Green's D-class: (1,3,4)(6)(10)>
 gap> d:=last;
-{PartialPerm( [ 1, 3, 4, 6, 10 ], [ 3, 4, 1, 6, 10 ] )}
+<Green's D-class: (1,3,4)(6)(10)>
 gap> Size(d);
 3
 gap> GroupHClass(d);
-{PartialPerm( [ 1, 3, 4, 6, 10 ], [ 1, 3, 4, 6, 10 ] )}
+<Green's H-class: <identity partial perm on [ 1, 3, 4, 6, 10 ]>>
 gap> Size(last);
 3
 gap> h:=last2;
-{PartialPerm( [ 1, 3, 4, 6, 10 ], [ 1, 3, 4, 6, 10 ] )}
+<Green's H-class: <identity partial perm on [ 1, 3, 4, 6, 10 ]>>
 gap> h=d;
 true
 gap> Elements(h);
@@ -2696,13 +2395,13 @@ gap> s:=Semigroup(gens);;
 gap> Size(s);
 489
 gap> First(DClasses(s), IsRegularDClass);
-{PartialPerm( [  ], [  ] )}
+<Green's D-class: <empty partial perm>>
 gap> NrRegularDClasses(s);
 5
 gap> PositionsProperty(DClasses(s), IsRegularDClass);
 [ 25, 26, 33, 36, 64 ]
 gap> d:=DClasses(s)[26];
-{PartialPerm( [ 3 ], [ 8 ] )}
+<Green's D-class: [3,8]>
 gap> NrLClasses(d);
 8
 gap> NrRClasses(d);
@@ -2717,7 +2416,7 @@ gap> Idempotents(d);
 gap> ForAll(last, x-> x in d);
 true
 gap> dd:=DClassNC(s, PartialPermNC([ 8 ], [ 9 ]));
-{PartialPerm( [ 8 ], [ 9 ] )}
+<Green's D-class: [8,9]>
 gap> dd=d;
 true
 gap> Size(dd);
@@ -2760,7 +2459,7 @@ gap> NrRClasses(s);
 639
 gap> f:=PartialPerm([ 3, 9 ], [ 5, 4 ]);;
 gap> d:=DClass(s, f);
-{PartialPerm( [ 4, 7 ], [ 6, 7 ] )}
+<Green's D-class: [4,6](7)>
 gap> Position(LambdaOrb(d), ImageSetOfPartialPerm(Representative(d)));
 7
 gap> OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)];
@@ -2778,11 +2477,11 @@ gap> Number(Idempotents(s), x-> x in d);
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> d:=DClass(s, f);
-{PartialPerm( [ 3, 9 ], [ 7, 6 ] )}
+<Green's D-class: [3,7][9,6]>
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's D-class: [3,5][9,4]>
 gap> NrIdempotents(d);
 45
 gap> Number(Idempotents(s), x-> x in d);
@@ -2790,43 +2489,43 @@ gap> Number(Idempotents(s), x-> x in d);
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> l:=LClass(s, f);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's L-class: [3,5][9,4]>
 gap> d:=DClassOfLClass(l);
-{PartialPerm( [ 3, 9 ], [ 7, 6 ] )}
+<Green's D-class: [3,7][9,6]>
 gap> NrIdempotents(d);
 45
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> l:=LClass(s, f);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's L-class: [3,5][9,4]>
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> l:=LClassNC(s, f);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's L-class: [3,5][9,4]>
 gap> d:=DClassOfLClass(l);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's D-class: [3,5][9,4]>
 gap> NrIdempotents(d);
 45
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> r:=RClass(s, f);
-{PartialPerm( [ 3, 9 ], [ 7, 6 ] )}
+<Green's R-class: [3,7][9,6]>
 gap> d:=DClassOfRClass(r);
-{PartialPerm( [ 3, 9 ], [ 7, 6 ] )}
+<Green's D-class: [3,7][9,6]>
 gap> NrIdempotents(d);
 45
 gap> s:=Semigroup(gens);
 <partial perm semigroup on 10 pts with 3 generators>
 gap> r:=RClassNC(s, f);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's R-class: [3,5][9,4]>
 gap> d:=DClassOfRClass(r);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's D-class: [3,5][9,4]>
 gap> NrIdempotents(d);
 45
 gap> r:=RClassNC(s, f);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's R-class: [3,5][9,4]>
 gap> d:=DClassOfRClass(r);
-{PartialPerm( [ 3, 9 ], [ 5, 4 ] )}
+<Green's D-class: [3,5][9,4]>
 gap> NrIdempotents(d);
 45
 gap> IsGreensClassNC(d);
@@ -2852,11 +2551,11 @@ gap> NrDClasses(s);
 gap> IsRegularSemigroup(s);
 true
 gap> d:=DClasses(s)[2];
-{Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] )}
+<Green's D-class: Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] )>
 gap> NrHClasses(d);
 1
 gap> GroupHClass(d);
-{Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )}
+<Green's H-class: Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )>
 gap> last=d;
 true
 gap> Size(d);
@@ -2892,25 +2591,25 @@ gap> gens:=
 gap> s:=Semigroup(gens);;
 gap> f:=PartialPerm([ 4, 7, 11 ], [ 2, 9, 6 ]);;
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 4, 7, 11 ], [ 2, 9, 6 ] )}
+<Green's D-class: [4,2][7,9][11,6]>
 gap> NrHClasses(s);
 125
 gap> d:=DClass(s, f);
-{PartialPerm( [ 4, 7, 11 ], [ 2, 9, 6 ] )}
+<Green's D-class: [4,2][7,9][11,6]>
 gap> NrHClasses(s);
 125
 gap> NrHClasses(d);
 1
 gap> d:=DClassNC(s, f);
-{PartialPerm( [ 4, 7, 11 ], [ 2, 9, 6 ] )}
+<Green's D-class: [4,2][7,9][11,6]>
 gap> NrHClasses(d);
 1
 gap> d:=DClass(LClass(s, f));
-{PartialPerm( [ 4, 7, 11 ], [ 2, 9, 6 ] )}
+<Green's D-class: [4,2][7,9][11,6]>
 gap> NrHClasses(d);
 1
 gap> d:=DClass(RClass(s, f));
-{PartialPerm( [ 4, 7, 11 ], [ 2, 9, 6 ] )}
+<Green's D-class: [4,2][7,9][11,6]>
 gap> NrHClasses(d);
 1
 gap> NrRegularDClasses(s);
@@ -2923,7 +2622,7 @@ gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or Size(d)>1000;
 gap> d;
-{PartialPerm( [ 1, 5 ], [ 6, 4 ] )}
+<Green's D-class: [1,6][5,4]>
 gap> Size(d);
 1
 gap> List(DClasses(s), Size);
@@ -2933,7 +2632,7 @@ gap> List(DClasses(s), Size);
 gap> Position(last, 9);
 17
 gap> d:=DClasses(s)[17];
-{PartialPerm( [ 2, 9 ], [ 4, 7 ] )}
+<Green's D-class: [2,4][9,7]>
 gap> Size(d);
 9
 gap> IsRegularDClass(d);
@@ -2941,13 +2640,13 @@ true
 gap> RClassReps(d);
 [ [2,4][9,7], [1,4][3,7], <identity partial perm on [ 4, 7 ]> ]
 gap> d:=DClassNC(s, Representative(d));
-{PartialPerm( [ 2, 9 ], [ 4, 7 ] )}
+<Green's D-class: [2,4][9,7]>
 gap> RClassReps(d);
 [ [2,4][9,7], <identity partial perm on [ 4, 7 ]>, [1,4][3,7] ]
 gap> s:=Semigroup(Generators(s));
 <partial perm semigroup on 11 pts with 2 generators>
 gap> d:=DClass(HClass(s, Representative(d)));
-{PartialPerm( [ 2, 9 ], [ 4, 7 ] )}
+<Green's D-class: [2,4][9,7]>
 gap> RClassReps(d);
 [ [2,4][9,7], <identity partial perm on [ 4, 7 ]>, [1,4][3,7] ]
 gap> Size(d);
@@ -2972,20 +2671,20 @@ gap> s:=Monoid(gens);;
 gap> 
 gap> f:=Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] );;
 gap> d:=DClass(HClass(s, f));
-{Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] )}
+<Green's D-class: Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] )>
 gap> Size(d);
 120
 gap> HClassReps(d);
 [ Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] ) ]
 gap> h:=GroupHClass(d);
-{IdentityTransformation}
+<Green's H-class: IdentityTransformation>
 gap> h=d;
 true
 gap> Size(s);
 491558
 gap> f:=Transformation( [ 6, 6, 3, 6, 4, 6, 6, 6, 6, 4 ] );;
 gap> d:=DClass(HClass(s, f));
-{Transformation( [ 9, 3, 9, 4, 3, 9, 4, 9, 4, 9 ] )}
+<Green's D-class: Transformation( [ 9, 3, 9, 4, 3, 9, 4, 9, 4, 9 ] )>
 gap> Size(d);
 121500
 gap> NrHClasses(d);
@@ -2995,7 +2694,7 @@ gap> Length(HClassReps(d));
 gap> ForAll(HClassReps(d), x-> x in d);
 true
 gap> d:=DClass(RClass(s, f));
-{Transformation( [ 9, 3, 9, 4, 3, 9, 4, 9, 4, 9 ] )}
+<Green's D-class: Transformation( [ 9, 3, 9, 4, 3, 9, 4, 9, 4, 9 ] )>
 gap> Size(d);
 121500
 gap> ForAll(d, x-> x in d);
@@ -3017,8 +2716,8 @@ gap> s := Semigroup(gens);;
 gap> f:=Transformation( [ 1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13, 15, 15,
 > 17, 17, 18 ] );;
 gap> r:=RClassNC(s, f);
-{Transformation( [ 1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13, 15, 15, 17,
-  17 ] )}
+<Green's R-class: Transformation( [ 1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13,
+  15, 15, 17, 17 ] )>
 gap> Size(r);
 1
 gap> SchutzenbergerGroup(r);
@@ -3026,7 +2725,8 @@ Group(())
 gap> f:=Transformation( [ 1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11, 12, 13, 15,
 > 15, 16, 17, 18 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11, 12, 13, 15, 15 ] )}
+<Green's R-class: Transformation( [ 1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11,
+   12, 13, 15, 15 ] )>
 gap> Size(r);
 1
 gap> SchutzenbergerGroup(r);
@@ -3040,7 +2740,7 @@ gap> gens:=[ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 9, 10, 10, 3, 10, 9, 9, 9, 9, 9 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 9, 5, 5, 2, 5, 9, 9, 9, 9, 9 ] )}
+<Green's R-class: Transformation( [ 9, 5, 5, 2, 5, 9, 9, 9, 9, 9 ] )>
 gap> Size(r);
 546
 gap> SchutzenbergerGroup(r);
@@ -3049,14 +2749,14 @@ gap> ForAll(r, x-> x in r);
 true
 gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )}
+<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
 gap> Size(r);
 86
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
-{Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )}
+<Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
 gap> Size(r);
 1992
 gap> SchutzenbergerGroup(r);
@@ -3072,89 +2772,89 @@ true
 gap> NrHClasses(r);
 83
 gap> GreensHClasses(r);
-[ {Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )}, 
-  {Transformation( [ 8, 2, 4, 3, 2, 4, 8, 8, 8, 4 ] )}, 
-  {Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 5, 9, 8, 2, 9, 8, 5, 5, 5, 8 ] )}, 
-  {Transformation( [ 8, 4, 7, 10, 4, 7, 8, 8, 8, 7 ] )}, 
-  {Transformation( [ 3, 2, 7, 1, 2, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 1, 5, 4, 3, 5, 4, 1, 1, 1, 4 ] )}, 
-  {Transformation( [ 1, 5, 3, 6, 5, 3, 1, 1, 1, 3 ] )}, 
-  {Transformation( [ 2, 3, 10, 1, 3, 10, 2, 2, 2, 10 ] )}, 
-  {Transformation( [ 10, 9, 4, 3, 9, 4, 10, 10, 10, 4 ] )}, 
-  {Transformation( [ 3, 4, 2, 5, 4, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )}, 
-  {Transformation( [ 1, 2, 8, 4, 2, 8, 1, 1, 1, 8 ] )}, 
-  {Transformation( [ 9, 1, 2, 5, 1, 2, 9, 9, 9, 2 ] )}, 
-  {Transformation( [ 1, 4, 8, 7, 4, 8, 1, 1, 1, 8 ] )}, 
-  {Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )}, 
-  {Transformation( [ 3, 5, 7, 1, 5, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )}, 
-  {Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )}, 
-  {Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )}, 
-  {Transformation( [ 4, 3, 9, 1, 3, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 5, 8, 4, 2, 8, 4, 5, 5, 5, 4 ] )}, 
-  {Transformation( [ 10, 5, 9, 3, 5, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 7, 10, 4, 9, 10, 4, 7, 7, 7, 4 ] )}, 
-  {Transformation( [ 5, 4, 1, 2, 4, 1, 5, 5, 5, 1 ] )}, 
-  {Transformation( [ 10, 1, 9, 5, 1, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 1, 7, 3, 10, 7, 3, 1, 1, 1, 3 ] )}, 
-  {Transformation( [ 10, 1, 9, 3, 1, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 3, 1, 2, 9, 1, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )}, 
-  {Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 1, 4, 9, 7, 4, 9, 1, 1, 1, 9 ] )}, 
-  {Transformation( [ 1, 5, 3, 10, 5, 3, 1, 1, 1, 3 ] )}, 
-  {Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 9, 3, 6, 5, 3, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 4, 10, 7, 1, 10, 7, 4, 4, 4, 7 ] )}, 
-  {Transformation( [ 5, 1, 7, 2, 1, 7, 5, 5, 5, 7 ] )}, 
-  {Transformation( [ 7, 2, 4, 3, 2, 4, 7, 7, 7, 4 ] )}, 
-  {Transformation( [ 7, 5, 2, 3, 5, 2, 7, 7, 7, 2 ] )}, 
-  {Transformation( [ 9, 5, 6, 4, 5, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )}, 
-  {Transformation( [ 4, 10, 9, 1, 10, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 10, 3, 1, 8, 3, 1, 10, 10, 10, 1 ] )}, 
-  {Transformation( [ 7, 10, 1, 9, 10, 1, 7, 7, 7, 1 ] )}, 
-  {Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )}, 
-  {Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )}, 
-  {Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )}, 
-  {Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )}, 
-  {Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )}, 
-  {Transformation( [ 10, 6, 5, 3, 6, 5, 10, 10, 10, 5 ] )}, 
-  {Transformation( [ 10, 1, 4, 3, 1, 4, 10, 10, 10, 4 ] )}, 
-  {Transformation( [ 7, 1, 5, 8, 1, 5, 7, 7, 7, 5 ] )}, 
-  {Transformation( [ 5, 10, 4, 2, 10, 4, 5, 5, 5, 4 ] )}, 
-  {Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )}, 
-  {Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )}, 
-  {Transformation( [ 2, 5, 8, 7, 5, 8, 2, 2, 2, 8 ] )}, 
-  {Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )}, 
-  {Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )}, 
-  {Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )}, 
-  {Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )}, 
-  {Transformation( [ 5, 9, 6, 2, 9, 6, 5, 5, 5, 6 ] )}, 
-  {Transformation( [ 10, 2, 5, 3, 2, 5, 10, 10, 10, 5 ] )}, 
-  {Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )}, 
-  {Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )}, 
-  {Transformation( [ 7, 1, 2, 8, 1, 2, 7, 7, 7, 2 ] )}, 
-  {Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )}, 
-  {Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 3, 10, 6, 4, 10, 6, 3, 3, 3, 6 ] )}, 
-  {Transformation( [ 4, 1, 9, 6, 1, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 4, 3, 9, 6, 3, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )}, 
-  {Transformation( [ 3, 10, 9, 7, 10, 9, 3, 3, 3, 9 ] )}, 
-  {Transformation( [ 7, 3, 4, 9, 3, 4, 7, 7, 7, 4 ] )}, 
-  {Transformation( [ 1, 2, 10, 4, 2, 10, 1, 1, 1, 10 ] )}, 
-  {Transformation( [ 3, 10, 8, 4, 10, 8, 3, 3, 3, 8 ] )}, 
-  {Transformation( [ 1, 5, 10, 4, 5, 10, 1, 1, 1, 10 ] )}, 
-  {Transformation( [ 3, 4, 8, 7, 4, 8, 3, 3, 3, 8 ] )}, 
-  {Transformation( [ 3, 5, 2, 9, 5, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 2, 1, 5, 6, 1, 5, 2, 2, 2, 5 ] )}, 
-  {Transformation( [ 1, 5, 6, 4, 5, 6, 1, 1, 1, 6 ] )} ]
+[ <Green's H-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 2, 4, 3, 2, 4, 8, 8, 8, 4 ] )>, 
+  <Green's H-class: Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 5, 9, 8, 2, 9, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 4, 7, 10, 4, 7, 8, 8, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 3, 2, 7, 1, 2, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 4, 3, 5, 4, 1, 1, 1, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 3, 6, 5, 3, 1, 1, 1, 3 ] )>, 
+  <Green's H-class: Transformation( [ 2, 3, 10, 1, 3, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 10, 9, 4, 3, 9, 4, 10, 10, 10, 4 ] )>, 
+  <Green's H-class: Transformation( [ 3, 4, 2, 5, 4, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 8, 4, 2, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 2, 5, 1, 2, 9, 9, 9, 2 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 8, 7, 4, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )>, 
+  <Green's H-class: Transformation( [ 3, 5, 7, 1, 5, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )>, 
+  <Green's H-class: Transformation( [ 4, 3, 9, 1, 3, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 5, 8, 4, 2, 8, 4, 5, 5, 5, 4 ] )>, 
+  <Green's H-class: Transformation( [ 10, 5, 9, 3, 5, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 7, 10, 4, 9, 10, 4, 7, 7, 7, 4 ] )>, 
+  <Green's H-class: Transformation( [ 5, 4, 1, 2, 4, 1, 5, 5, 5, 1 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 9, 5, 1, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 1, 7, 3, 10, 7, 3, 1, 1, 1, 3 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 9, 3, 1, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 2, 9, 1, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 9, 7, 4, 9, 1, 1, 1, 9 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 3, 10, 5, 3, 1, 1, 1, 3 ] )>, 
+  <Green's H-class: Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 9, 3, 6, 5, 3, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 4, 10, 7, 1, 10, 7, 4, 4, 4, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 7, 2, 1, 7, 5, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 4, 3, 2, 4, 7, 7, 7, 4 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 2, 3, 5, 2, 7, 7, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 6, 4, 5, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )>, 
+  <Green's H-class: Transformation( [ 4, 10, 9, 1, 10, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 10, 3, 1, 8, 3, 1, 10, 10, 10, 1 ] )>, 
+  <Green's H-class: Transformation( [ 7, 10, 1, 9, 10, 1, 7, 7, 7, 1 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )>, 
+  <Green's H-class: Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 10, 6, 5, 3, 6, 5, 10, 10, 10, 5 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 4, 3, 1, 4, 10, 10, 10, 4 ] )>, 
+  <Green's H-class: Transformation( [ 7, 1, 5, 8, 1, 5, 7, 7, 7, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 10, 4, 2, 10, 4, 5, 5, 5, 4 ] )>, 
+  <Green's H-class: Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )>, 
+  <Green's H-class: Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 8, 7, 5, 8, 2, 2, 2, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )>, 
+  <Green's H-class: Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )>, 
+  <Green's H-class: Transformation( [ 5, 9, 6, 2, 9, 6, 5, 5, 5, 6 ] )>, 
+  <Green's H-class: Transformation( [ 10, 2, 5, 3, 2, 5, 10, 10, 10, 5 ] )>, 
+  <Green's H-class: Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )>, 
+  <Green's H-class: Transformation( [ 7, 1, 2, 8, 1, 2, 7, 7, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 6, 4, 10, 6, 3, 3, 3, 6 ] )>, 
+  <Green's H-class: Transformation( [ 4, 1, 9, 6, 1, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 4, 3, 9, 6, 3, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 9, 7, 10, 9, 3, 3, 3, 9 ] )>, 
+  <Green's H-class: Transformation( [ 7, 3, 4, 9, 3, 4, 7, 7, 7, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 10, 4, 2, 10, 1, 1, 1, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 8, 4, 10, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 10, 4, 5, 10, 1, 1, 1, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 4, 8, 7, 4, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 3, 5, 2, 9, 5, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 1, 5, 6, 1, 5, 2, 2, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 6, 4, 5, 6, 1, 1, 1, 6 ] )> ]
 gap> List(last, x-> Representative(x) in s);
 [ true, true, true, true, true, true, true, true, true, true, true, true, 
   true, true, true, true, true, true, true, true, true, true, true, true, 
@@ -3167,61 +2867,61 @@ gap> ForAll(last2, x-> Representative(x) in r);
 true
 gap> Semigroup(gens);;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )}
+<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
 gap> f:=Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )}
+<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
 gap> Size(r);
 86
 gap> NrHClasses(r);
 43
 gap> s:=Semigroup(gens);;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )}
+<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
 gap> GreensHClasses(r);
-[ {Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 8, 8, 2, 8, 2, 8, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 9, 9, 10, 9, 10, 9, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 10, 10, 4, 10, 4, 10, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 8, 8, 4, 8, 4, 8, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 3, 3, 10, 3, 10, 3, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 1, 1, 3, 1, 3, 1, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 9, 9, 2, 9, 2, 9, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 8, 8, 3, 8, 3, 8, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 4, 4, 3, 4, 3, 4, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 3, 3, 6, 3, 6, 3, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 7, 7, 8, 7, 8, 7, 8, 8, 8, 8 ] )}, 
-  {Transformation( [ 8, 8, 1, 8, 1, 8, 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 2, 2, 10, 2, 10, 2, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 1, 1, 5, 1, 5, 1, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 8, 8, 5, 8, 5, 8, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 2, 2, 5, 2, 5, 2, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 7, 7, 10, 7, 10, 7, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 9, 9, 8, 9, 8, 9, 8, 8, 8, 8 ] )}, 
-  {Transformation( [ 6, 6, 10, 6, 10, 6, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 8, 8, 10, 8, 10, 8, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 1, 1, 4, 1, 4, 1, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 4, 4, 5, 4, 5, 4, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 5, 5, 3, 5, 3, 5, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 6, 6, 5, 6, 5, 6, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 1, 1, 2, 1, 2, 1, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 2, 4, 2, 4, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 9, 9, 3, 9, 3, 9, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 7, 7, 4, 7, 4, 7, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 1, 1, 6, 1, 6, 1, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 7, 7, 3, 7, 3, 7, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 4, 4, 6, 4, 6, 4, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 2, 2, 3, 2, 3, 2, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 9, 9, 6, 9, 6, 9, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 1, 1, 10, 1, 10, 1, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 7, 7, 1, 7, 1, 7, 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 9, 9, 7, 9, 7, 9, 7, 7, 7, 7 ] )}, 
-  {Transformation( [ 2, 2, 6, 2, 6, 2, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 5, 5, 10, 5, 10, 5, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 7, 7, 5, 7, 5, 7, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 9, 9, 4, 9, 4, 9, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 7, 7, 2, 7, 2, 7, 2, 2, 2, 2 ] )} ]
+[ <Green's H-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 2, 8, 2, 8, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 10, 9, 10, 9, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 10, 10, 4, 10, 4, 10, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 4, 8, 4, 8, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 3, 3, 10, 3, 10, 3, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 1, 1, 3, 1, 3, 1, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 2, 9, 2, 9, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 3, 8, 3, 8, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 3, 4, 3, 4, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 3, 3, 6, 3, 6, 3, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 8, 7, 8, 7, 8, 8, 8, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 1, 8, 1, 8, 1, 1, 1, 1 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 10, 2, 10, 2, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 1, 1, 5, 1, 5, 1, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 5, 8, 5, 8, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 5, 2, 5, 2, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 10, 7, 10, 7, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 9, 9, 8, 9, 8, 9, 8, 8, 8, 8 ] )>, 
+  <Green's H-class: Transformation( [ 6, 6, 10, 6, 10, 6, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 8, 8, 10, 8, 10, 8, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 1, 1, 4, 1, 4, 1, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 5, 4, 5, 4, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 5, 3, 5, 3, 5, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 6, 6, 5, 6, 5, 6, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 2, 1, 2, 1, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 2, 4, 2, 4, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 3, 9, 3, 9, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 4, 7, 4, 7, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 6, 1, 6, 1, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 3, 7, 3, 7, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 6, 4, 6, 4, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 3, 2, 3, 2, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 6, 9, 6, 9, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 10, 1, 10, 1, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 7, 7, 1, 7, 1, 7, 1, 1, 1, 1 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 7, 9, 7, 9, 7, 7, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 6, 2, 6, 2, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 5, 5, 10, 5, 10, 5, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 7, 7, 5, 7, 5, 7, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 4, 9, 4, 9, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 2, 7, 2, 7, 2, 2, 2, 2 ] )> ]
 gap> Length(last);
 43
 gap> ForAll(last2, x-> Representative(x) in r);
@@ -3239,19 +2939,19 @@ gap> Elements(h)=Elements(hh);
 true
 gap> f:=Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] )}
+<Green's R-class: Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] )>
 gap> Size(r);
 1
 gap> f:=Transformation( [ 10, 10, 3, 10, 10, 10, 10, 10, 6, 10 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 5, 5, 2, 5, 5, 5, 5, 5, 9, 5 ] )}
+<Green's R-class: Transformation( [ 5, 5, 2, 5, 5, 5, 5, 5, 9, 5 ] )>
 gap> Size(r);
 546
 gap> f:=Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] );;
 gap> f in r;
 true
 gap> h:=HClass(r, f);
-{Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] )}
+<Green's H-class: Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] )>
 gap> f in h;
 true
 gap> ForAll(h, x-> x in r);
@@ -3278,25 +2978,25 @@ gap> Size(s);
 1422787
 gap> f:=PartialPermNC([ 1, 4, 7, 9, 10 ], [ 5, 10, 9, 8, 7 ]);;
 gap> r:=GreensRClassOfElementNC(s, f);
-{PartialPerm( [ 1, 4, 7, 9, 10 ], [ 5, 10, 9, 8, 7 ] )}
+<Green's R-class: [1,5][4,10,7,9,8]>
 gap> Size(r);
 4
 gap> f in r;
 true
 gap> f:=PartialPermNC([ 1, 7, 8, 9 ], [ 10, 9, 6, 5 ]);;
 gap> r:=GreensRClassOfElementNC(s, f);
-{PartialPerm( [ 1, 7, 8, 9 ], [ 10, 9, 6, 5 ] )}
+<Green's R-class: [1,10][7,9,5][8,6]>
 gap> Size(r);
 4
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
-{PartialPerm( [ 1, 3, 9, 10 ], [ 4, 5, 3, 7 ] )}
+<Green's R-class: [1,4][9,3,5][10,7]>
 gap> Size(r);
 3792
 gap> r:=RClassNC(s, Representative(r));
-{PartialPerm( [ 1, 3, 9, 10 ], [ 4, 5, 3, 7 ] )}
+<Green's R-class: [1,4][9,3,5][10,7]>
 gap> h:=HClassNC(r, Random(r));;
 gap> Size(h);
 24
@@ -3324,18 +3024,18 @@ gap> gens:=[ Transformation( [ 1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1,
 >       1, 24, 1, 1, 1, 1, 6 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> First(DClasses(s), IsRegularDClass);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
- 1, 1, 1, 1, 1, 1 ] )}
+<Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> NrDClasses(s);
 31
 gap> PositionsProperty(DClasses(s), IsRegularDClass);
 [ 6, 7 ]
 gap> d:=DClasses(s)[7];
-{Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 1,
- 1, 1, 1, 1, 1, 1 ] )}
+<Green's D-class: Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> r:=RClassNC(s, Representative(d));
-{Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 1,
- 1, 1, 1, 1, 1, 1 ] )}
+<Green's R-class: Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> Size(r);
 20
 gap> ForAll(Idempotents(r), x-> x in s);
@@ -3364,7 +3064,7 @@ gap> f:=Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] );;
 gap> Size(s);
 998
 gap> r:=RClass(s, f);
-{Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )}
+<Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
 gap> IsRegularClass(r);
 true
 gap> Idempotents(r);
@@ -3392,7 +3092,7 @@ true
 gap> Transformation( [ 4, 4, 3, 8, 1, 3, 3, 5 ] ) in r;
 true
 gap> r;
-{Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )}
+<Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
 gap> NrIdempotents(r);
 1
 
@@ -3408,7 +3108,7 @@ gap> Size(s);
 9954
 gap> f:=PartialPerm([ 2, 3, 6 ], [ 1, 4, 8 ]);;
 gap> r:=RClass(s, f);
-{PartialPerm( [ 2, 3, 6 ], [ 1, 4, 8 ] )}
+<Green's R-class: [2,1][3,4][6,8]>
 gap> NrIdempotents(r);
 0
 gap> Sum(List(RClasses(s), NrIdempotents));
@@ -3436,11 +3136,11 @@ gap> Size(s);
 1888
 gap> f:=Transformation( [ 2, 4, 6, 6, 5, 6 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 2, 4, 6, 6, 5, 6 ] )}
+<Green's R-class: Transformation( [ 2, 4, 6, 6, 5, 6 ] )>
 gap> h:=HClassNC(s, f);
-{Transformation( [ 2, 4, 6, 6, 5, 6 ] )}
+<Green's H-class: Transformation( [ 2, 4, 6, 6, 5, 6 ] )>
 gap> hh:=HClass(r, f);
-{Transformation( [ 2, 4, 6, 6, 5, 6 ] )}
+<Green's H-class: Transformation( [ 2, 4, 6, 6, 5, 6 ] )>
 gap> hh=h;
 true
 gap> ForAll(h, x-> x in r);
@@ -3486,19 +3186,19 @@ gap> Size(s);
 6741
 gap> f:=PartialPermNC( [ 1, 3, 5, 6 ], [ 6, 2, 5, 1 ]);;
 gap> r:=RClassNC(s, f);
-{PartialPerm( [ 1, 3, 5, 6 ], [ 6, 2, 5, 1 ] )}
+<Green's R-class: [3,2](1,6)(5)>
 gap> HClassReps(r);
 [ [3,2](1,6)(5) ]
 gap> ForAll(last, x-> x in r);
 true
 gap> r:=RClass(s, f);
-{PartialPerm( [ 1, 3, 5, 6 ], [ 6, 2, 5, 1 ] )}
+<Green's R-class: [3,2](1,6)(5)>
 gap> HClassReps(r);
 [ [3,2](1,6)(5) ]
 gap> h:=HClass(s, last[1]);
-{PartialPerm( [ 1, 3, 5, 6 ], [ 6, 2, 5, 1 ] )}
+<Green's H-class: [3,2](1,6)(5)>
 gap> r:=RClassOfHClass(h);
-{PartialPerm( [ 1, 3, 5, 6 ], [ 6, 2, 5, 1 ] )}
+<Green's R-class: [3,2](1,6)(5)>
 gap> HClassReps(r);
 [ [3,2](1,6)(5) ]
 gap> iter:=IteratorOfRClasses(s);
@@ -3507,7 +3207,7 @@ gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
 gap> r;
-{PartialPerm( [ 1, 2, 3 ], [ 2, 3, 4 ] )}
+<Green's R-class: [1,2,3,4]>
 gap> Size(r);
 114
 gap> HClassReps(r);
@@ -3518,7 +3218,7 @@ gap> HClassReps(r);
 gap> Size(DClass(r));
 2166
 gap> d:=DClass(r);
-{PartialPerm( [ 1, 2, 3 ], [ 2, 3, 4 ] )}
+<Green's D-class: [1,2,3,4]>
 gap> ForAll(r, x-> x in d);
 true
 gap> Number(d, x-> x in r);
@@ -3560,9 +3260,9 @@ gap> IsRegularSemigroup(s);
 false
 gap> f:=Transformation( [ 3, 2, 3, 4, 3, 5 ] );;
 gap> r:=RClassNC(s, f);
-{Transformation( [ 3, 2, 3, 4, 3, 5 ] )}
+<Green's R-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
 gap> d:=DClassOfRClass(r);
-{Transformation( [ 3, 2, 3, 4, 3, 5 ] )}
+<Green's D-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
 gap> Size(d);
 792
 gap> IsRegularDClass(d);
@@ -3582,16 +3282,16 @@ gap> enum:=EnumeratorOfRClasses(s);
 <enumerator of R-classes of <non-regular transformation monoid of size 7008, 
  on 6 pts with 18 generators>>
 gap> enum[1];
-{Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
+<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> s:=Semigroup(gens);
 <transformation monoid on 6 pts with 18 generators>
 gap> enum:=EnumeratorOfRClasses(s);
 <enumerator of R-classes of <transformation monoid on 6 pts with 18 generators
   >>
 gap> enum[1];
-{Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
+<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> enum[2];
-{Transformation( [ 5, 3, 3, 2, 4, 1 ] )}
+<Green's R-class: Transformation( [ 5, 3, 3, 2, 4, 1 ] )>
 gap> Position(enum, enum[10]);
 10
 gap> ForAll(enum, x-> enum[Position(enum, x)]=x);
@@ -3626,7 +3326,7 @@ gap> Size(s);
 12612
 gap> f:=PartialPermNC([ 1, 4, 6 ], [ 2, 3, 6 ]);;
 gap> r:=RClass(s, f);
-{PartialPerm( [ 1, 4, 6 ], [ 3, 2, 5 ] )}
+<Green's R-class: [1,3][4,2][6,5]>
 gap> Size(r);
 120
 gap> NrHClasses(r);
@@ -3646,15 +3346,15 @@ gap> gens:=[ Transformation( [ 8, 7, 6, 5, 4, 3, 2, 1 ] ),
 gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] );;
 gap> h:=HClass(s, f);
-{Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )}
+<Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
 gap> ForAll(h, x-> x in h);
 true
 gap> h:=HClassNC(s, f);
-{Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )}
+<Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
 gap> Enumerator(h);
 <enumerator of H-class>
 gap> h:=HClassNC(s, f);
-{Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )}
+<Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
 gap> SchutzenbergerGroup(h);
 Group([ (4,6) ])
 
@@ -3666,7 +3366,7 @@ gap> Factorial(7);
 gap> f:=One(s);
 IdentityTransformation
 gap> h:=HClassNC(s, f);
-{IdentityTransformation}
+<Green's H-class: IdentityTransformation>
 gap> enum:=Enumerator(h);
 <enumerator of H-class>
 gap> ForAll(enum, x-> x in h);
@@ -3681,7 +3381,7 @@ gap> Idempotents(h);
 [ IdentityTransformation ]
 gap> f:=Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] );;
 gap> h:=HClassNC(s, f);
-{Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] )}
+<Green's H-class: Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] )>
 gap> Idempotents(h);
 [ Transformation( [ 1, 2, 3, 4, 5, 6, 6 ] ) ]
 gap> IsGroupHClass(h);
@@ -3719,11 +3419,11 @@ gap> Size(s);
 7960
 gap> f:=PartialPermNC([ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ]);;
 gap> h:=HClass(s, f);
-{PartialPerm( [ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ] )}
+<Green's H-class: [1,5,6,4][2,3]>
 gap> d:=DClass(s,f);
-{PartialPerm( [ 1, 2, 3, 4 ], [ 6, 3, 5, 4 ] )}
+<Green's D-class: [1,6][2,3,5](4)>
 gap> h:=HClass(s, f);
-{PartialPerm( [ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ] )}
+<Green's H-class: [1,5,6,4][2,3]>
 gap> IsGroupHClass(h);
 false
 gap> Size(h);
@@ -3732,7 +3432,7 @@ gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
-{PartialPerm( [ 1, 2, 3 ], [ 1, 5, 2 ] )}
+<Green's H-class: [3,2,5](1)>
 gap> Size(h);
 6
 gap> enum:=Enumerator(h);
@@ -3742,38 +3442,38 @@ true
 gap> ForAll(enum, x-> enum[Position(enum, x)]=x);
 true
 gap> d:=DClass(s,Representative(h));
-{PartialPerm( [ 1, 2, 3 ], [ 1, 5, 2 ] )}
+<Green's D-class: [3,2,5](1)>
 gap> f:=Representative(h);
 [3,2,5](1)
 gap> h:=HClass(d, f);
-{PartialPerm( [ 1, 2, 3 ], [ 1, 5, 2 ] )}
+<Green's H-class: [3,2,5](1)>
 gap> h=HClass(s, f);
 true
 gap> Idempotents(h);
 [  ]
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
-{PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}
+<Green's H-class: [2,3,1,6]>
 gap> Size(h);
 6
 gap> f:=Representative(h);
 [2,3,1,6]
 gap> r:=RClassNC(d, f);
-{PartialPerm( [ 1, 2, 3 ], [ 1, 5, 2 ] )}
+<Green's R-class: [3,2,5](1)>
 gap> h:=HClass(r, f);
-{PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}
+<Green's H-class: [2,3,1,6]>
 gap> h=HClass(s, f);
 true
 gap> Elements(h)=Elements(HClass(s, f));
 true
 gap> l:=LClass(s, f);
-{PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}
+<Green's L-class: [2,3,1,6]>
 gap> h:=HClass(l, f);
-{PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}
+<Green's H-class: [2,3,1,6]>
 gap> Elements(h)=Elements(HClass(s, f));
 true
 gap> h:=HClass(l, f);
-{PartialPerm( [ 1, 2, 3 ], [ 6, 3, 1 ] )}
+<Green's H-class: [2,3,1,6]>
 
 #T# MiscTest39
 gap> gens:=[ Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] ),
@@ -3786,29 +3486,29 @@ gap> gens:=[ Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] ),
 >   Transformation( [ 5, 6, 6, 5, 4, 4, 5 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> First(HClasses(s), IsRegularClass);
-{Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )}
+<Green's H-class: Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )>
 gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )}
+<Green's H-class: Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )>
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )}
+<Green's H-class: Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )>
 gap> IsGroupHClass(h);
 true
 gap> IsomorphismPermGroup(h);
-MappingByFunction( {Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )}, Group([ (3,6)
-(4,5) ]), function( x ) ... end, function( x ) ... end )
+MappingByFunction( <Green's H-class: Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )
+  >, Group([ (3,6)(4,5) ]), function( x ) ... end, function( x ) ... end )
 gap> SchutzenbergerGroup(h);
 Group([ (3,6)(4,5) ])
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 1, 2, 2, 1, 7, 6, 7 ] )}
+<Green's H-class: Transformation( [ 1, 2, 2, 1, 7, 6, 7 ] )>
 gap> IsGroupHClass(h);
 true
 gap> h:=GroupHClass(DClass(h));
-{Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}
+<Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
 gap> IsGroupHClass(h);
 true
 gap> iso:=IsomorphismPermGroup(h);; inv:=InverseGeneralMapping(iso);;
@@ -3820,19 +3520,19 @@ gap> One(h);
 IdentityTransformation
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 4, 3, 2, 1, 2, 2, 3 ] )}
+<Green's H-class: Transformation( [ 4, 3, 2, 1, 2, 2, 3 ] )>
 gap> IsGroupHClass(h);
 true
 gap> h:=GroupHClass(DClass(h));
-{Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}
+<Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
 gap> IsGroupHClass(h);
 true
 gap> iso:=IsomorphismPermGroup(h); inv:=InverseGeneralMapping(iso);
-MappingByFunction( {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}, Group([ (3,6)
-(4,5) ]), function( x ) ... end, function( x ) ... end )
+MappingByFunction( <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
+  >, Group([ (3,6)(4,5) ]), function( x ) ... end, function( x ) ... end )
 MappingByFunction( Group([ (3,6)
-(4,5) ]), {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
- }, function( x ) ... end, function( x ) ... end )
+(4,5) ]), <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
+ , function( x ) ... end, function( x ) ... end )
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
 
@@ -3865,27 +3565,28 @@ gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> IsGroupHClass(h);
 true
 gap> h:=GroupHClass(DClass(h));
-{PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> iso:=IsomorphismPermGroup(h); inv:=InverseGeneralMapping(iso);
-MappingByFunction( {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}, Group([ (1,2),
- (2,3) ]), function( x ) ... end, function( x ) ... end )
-MappingByFunction( Group([ (1,2), (2,3) ]), {PartialPerm(
- [ 1, 2, 3 ], [ 1, 2, 3 ] )}, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
+ , Group([ (1,2), (2,3) ]), function( x ) ... end, function( x ) ... end )
+MappingByFunction( Group([ (1,2), (2,
+3) ]), <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
+ , function( x ) ... end, function( x ) ... end )
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));
-{PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> Idempotents(h);
 [ <identity partial perm on [ 1, 2, 3 ]> ]
 gap> h:=GroupHClass(DClass(h));
-{PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> One(h);
 <identity partial perm on [ 1, 2, 3 ]>
 gap> s:=Semigroup(Generators(s));;
@@ -3895,15 +3596,15 @@ gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
-{PartialPerm( [ 1, 2, 3 ], [ 3, 6, 4 ] )}
+<Green's H-class: [1,3,4][2,6]>
 gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));
-{PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> s:=Semigroup(Generators(s));;
 gap> f:=PartialPerm([]);;
 gap> h:=HClass(s, f);
-{PartialPerm( [  ], [  ] )}
+<Green's H-class: <empty partial perm>>
 gap> One(h);
 <empty partial perm>
 gap> IsGroupHClass(h);
@@ -3912,7 +3613,7 @@ gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
-{PartialPerm( [ 1, 2, 3 ], [ 1, 5, 3 ] )}
+<Green's H-class: [2,5](1)(3)>
 gap> IsGroupHClass(h);
 false
 
@@ -3944,14 +3645,14 @@ gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
-{Transformation( [ 2, 1, 8, 7, 6, 5, 4, 3 ] )}
+<Green's H-class: Transformation( [ 2, 1, 8, 7, 6, 5, 4, 3 ] )>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
-{Transformation( [ 8, 6, 7, 5, 5, 3, 6, 4 ] )}
+<Green's H-class: Transformation( [ 8, 6, 7, 5, 5, 3, 6, 4 ] )>
 gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));
-{Transformation( [ 1, 2, 3, 4, 4, 6, 2 ] )}
+<Green's H-class: Transformation( [ 1, 2, 3, 4, 4, 6, 2 ] )>
 gap> One(h);
 IdentityTransformation
 gap> IsGroupHClass(h);
@@ -4006,60 +3707,60 @@ gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until Size(h)>24;
 gap> h;
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ] )}
+<Green's H-class: [2,4](1,3)(5,6)>
 gap> Size(h);
 120
 gap> l:=LClassOfHClass(h);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ] )}
+<Green's L-class: [2,4](1,3)(5,6)>
 gap> SchutzenbergerGroup(l);
 Group([ (3,6,5,4), (1,5,6,4,3), (1,4,5)(3,6) ])
 gap> ForAll(h, x-> x in l);
 true
 gap> h:=GroupHClass(DClass(h));
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> l:=LClassOfHClass(h);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's L-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> StructureDescription(SchutzenbergerGroup(l));
 "S5"
 gap> f:=PartialPermNC([ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ]);;
 gap> h:=HClass(s, f);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ] )}
+<Green's H-class: [2,4](1,3)(5,6)>
 gap> SchutzenbergerGroup(h);
 Group([ (1,3,5), (1,5)(3,4,6) ])
 gap> h:=GroupHClass(DClass(h));
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> SchutzenbergerGroup(h);
 Group([ (1,6,3), (1,2,5)(3,6) ])
 gap> l:=LClassOfHClass(h);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's L-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> IsGreensClassNC(l);
 false
 gap> Size(SchutzenbergerGroup(l));
 120
 gap> h:=GroupHClass(DClass(h));
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> h:=HClass(s, f);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ] )}
+<Green's H-class: [2,4](1,3)(5,6)>
 gap> IsGreensClassNC(h);
 false
 gap> d:=DClass(h);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ] )}
+<Green's D-class: [2,4](1,3)(5,6)>
 gap> IsGreensClassNC(d);
 false
 gap> h:=GroupHClass(d);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> IsGreensClassNC(h);
 false
 gap> h:=HClass(s, f);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ] )}
+<Green's H-class: [2,4](1,3)(5,6)>
 gap> d:=DClass(h);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ] )}
+<Green's D-class: [2,4](1,3)(5,6)>
 gap> h:=GroupHClass(d);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> IsGreensClassNC(h);
 false
 gap> l:=LClassOfHClass(h);
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's L-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> IsGreensClassNC(l);
 false
 gap> MovedPoints(SchutzenbergerGroup(l));
@@ -4072,22 +3773,22 @@ gap> Size(h);
 120
 gap> f:=PartialPerm([ 1, 2, 3, 6, 8 ], [ 2, 7, 6, 8, 5 ]);;
 gap> h:=HClass(s, f);
-{PartialPerm( [ 1, 2, 3, 6, 8 ], [ 2, 7, 6, 8, 5 ] )}
+<Green's H-class: [1,2,7][3,6,8,5]>
 gap> IsGroupHClass(h);
 false
 gap> f:=PartialPerm([ 2, 6, 7, 8 ], [ 3, 5, 7, 6 ]);;
 gap> h:=HClassNC(s, f);
-{PartialPerm( [ 2, 6, 7, 8 ], [ 3, 5, 7, 6 ] )}
+<Green's H-class: [2,3][8,6,5](7)>
 gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));
 fail
 gap> h:=HClassNC(s, f);
-{PartialPerm( [ 2, 6, 7, 8 ], [ 3, 5, 7, 6 ] )}
+<Green's H-class: [2,3][8,6,5](7)>
 gap> IsRegularClass(h);
 false
 gap> d:=DClass(h);
-{PartialPerm( [ 2, 6, 7, 8 ], [ 3, 5, 7, 6 ] )}
+<Green's D-class: [2,3][8,6,5](7)>
 gap> IsRegularDClass(d);
 false
 
@@ -4103,23 +3804,23 @@ gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 4, 4, 1, 2, 1, 2 ] );;
 gap> h:=HClassNC(s, f);
-{Transformation( [ 4, 4, 1, 2, 1, 2 ] )}
+<Green's H-class: Transformation( [ 4, 4, 1, 2, 1, 2 ] )>
 gap> IsRegularClass(h);
 false
 gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));
-{Transformation( [ 2, 2, 3, 6, 3, 6 ] )}
+<Green's H-class: Transformation( [ 2, 2, 3, 6, 3, 6 ] )>
 gap> Size(h);
 6
 gap> r:=RClassOfHClass(h);
-{Transformation( [ 1, 1, 2, 4, 2, 4 ] )}
+<Green's R-class: Transformation( [ 1, 1, 2, 4, 2, 4 ] )>
 gap> ForAll(h, x-> x in r);
 true
 gap> Number(r, x-> x in h);
 6
 gap> l;
-{PartialPerm( [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 5, 6 ] )}
+<Green's L-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
 gap> RhoOrbStabChain(l);
 true
 gap> g:=SchutzenbergerGroup(l);
@@ -4142,8 +3843,8 @@ gap> s := Semigroup(K18g);;
 gap> f:=Transformation( [ 1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13, 15, 15,
 > 17, 17, 18 ] );;
 gap> r:=RClassNC(s, f);
-{Transformation( [ 1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13, 15, 15, 17,
-  17 ] )}
+<Green's R-class: Transformation( [ 1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13,
+  15, 15, 17, 17 ] )>
 gap> Size(r);
 1
 gap> SchutzenbergerGroup(r);
@@ -4151,7 +3852,8 @@ Group(())
 gap> f:=Transformation( [ 1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11, 12, 13, 15,
 > 15, 16, 17, 18 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11, 12, 13, 15, 15 ] )}
+<Green's R-class: Transformation( [ 1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11,
+   12, 13, 15, 15 ] )>
 gap> Size(r);
 1
 gap> SchutzenbergerGroup(r);
@@ -4165,7 +3867,7 @@ gap> gens:=[ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 9, 10, 10, 3, 10, 9, 9, 9, 9, 9 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 9, 5, 5, 2, 5, 9, 9, 9, 9, 9 ] )}
+<Green's R-class: Transformation( [ 9, 5, 5, 2, 5, 9, 9, 9, 9, 9 ] )>
 gap> Size(r);
 546
 gap> SchutzenbergerGroup(r);
@@ -4174,14 +3876,14 @@ gap> ForAll(r, x-> x in r);
 true
 gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )}
+<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
 gap> Size(r);
 86
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
-{Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )}
+<Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
 gap> Size(r);
 1992
 gap> SchutzenbergerGroup(r);
@@ -4197,89 +3899,89 @@ true
 gap> NrHClasses(r);
 83
 gap> GreensHClasses(r);
-[ {Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )}, 
-  {Transformation( [ 8, 2, 4, 3, 2, 4, 8, 8, 8, 4 ] )}, 
-  {Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 5, 9, 8, 2, 9, 8, 5, 5, 5, 8 ] )}, 
-  {Transformation( [ 8, 4, 7, 10, 4, 7, 8, 8, 8, 7 ] )}, 
-  {Transformation( [ 3, 2, 7, 1, 2, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 1, 5, 4, 3, 5, 4, 1, 1, 1, 4 ] )}, 
-  {Transformation( [ 1, 5, 3, 6, 5, 3, 1, 1, 1, 3 ] )}, 
-  {Transformation( [ 2, 3, 10, 1, 3, 10, 2, 2, 2, 10 ] )}, 
-  {Transformation( [ 10, 9, 4, 3, 9, 4, 10, 10, 10, 4 ] )}, 
-  {Transformation( [ 3, 4, 2, 5, 4, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )}, 
-  {Transformation( [ 1, 2, 8, 4, 2, 8, 1, 1, 1, 8 ] )}, 
-  {Transformation( [ 9, 1, 2, 5, 1, 2, 9, 9, 9, 2 ] )}, 
-  {Transformation( [ 1, 4, 8, 7, 4, 8, 1, 1, 1, 8 ] )}, 
-  {Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )}, 
-  {Transformation( [ 3, 5, 7, 1, 5, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )}, 
-  {Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )}, 
-  {Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )}, 
-  {Transformation( [ 4, 3, 9, 1, 3, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 5, 8, 4, 2, 8, 4, 5, 5, 5, 4 ] )}, 
-  {Transformation( [ 10, 5, 9, 3, 5, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 7, 10, 4, 9, 10, 4, 7, 7, 7, 4 ] )}, 
-  {Transformation( [ 5, 4, 1, 2, 4, 1, 5, 5, 5, 1 ] )}, 
-  {Transformation( [ 10, 1, 9, 5, 1, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 1, 7, 3, 10, 7, 3, 1, 1, 1, 3 ] )}, 
-  {Transformation( [ 10, 1, 9, 3, 1, 9, 10, 10, 10, 9 ] )}, 
-  {Transformation( [ 3, 1, 2, 9, 1, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )}, 
-  {Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 1, 4, 9, 7, 4, 9, 1, 1, 1, 9 ] )}, 
-  {Transformation( [ 1, 5, 3, 10, 5, 3, 1, 1, 1, 3 ] )}, 
-  {Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 9, 3, 6, 5, 3, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 4, 10, 7, 1, 10, 7, 4, 4, 4, 7 ] )}, 
-  {Transformation( [ 5, 1, 7, 2, 1, 7, 5, 5, 5, 7 ] )}, 
-  {Transformation( [ 7, 2, 4, 3, 2, 4, 7, 7, 7, 4 ] )}, 
-  {Transformation( [ 7, 5, 2, 3, 5, 2, 7, 7, 7, 2 ] )}, 
-  {Transformation( [ 9, 5, 6, 4, 5, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )}, 
-  {Transformation( [ 4, 10, 9, 1, 10, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 10, 3, 1, 8, 3, 1, 10, 10, 10, 1 ] )}, 
-  {Transformation( [ 7, 10, 1, 9, 10, 1, 7, 7, 7, 1 ] )}, 
-  {Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )}, 
-  {Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )}, 
-  {Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )}, 
-  {Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )}, 
-  {Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )}, 
-  {Transformation( [ 10, 6, 5, 3, 6, 5, 10, 10, 10, 5 ] )}, 
-  {Transformation( [ 10, 1, 4, 3, 1, 4, 10, 10, 10, 4 ] )}, 
-  {Transformation( [ 7, 1, 5, 8, 1, 5, 7, 7, 7, 5 ] )}, 
-  {Transformation( [ 5, 10, 4, 2, 10, 4, 5, 5, 5, 4 ] )}, 
-  {Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )}, 
-  {Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )}, 
-  {Transformation( [ 2, 5, 8, 7, 5, 8, 2, 2, 2, 8 ] )}, 
-  {Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )}, 
-  {Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )}, 
-  {Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )}, 
-  {Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )}, 
-  {Transformation( [ 5, 9, 6, 2, 9, 6, 5, 5, 5, 6 ] )}, 
-  {Transformation( [ 10, 2, 5, 3, 2, 5, 10, 10, 10, 5 ] )}, 
-  {Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )}, 
-  {Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )}, 
-  {Transformation( [ 7, 1, 2, 8, 1, 2, 7, 7, 7, 2 ] )}, 
-  {Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )}, 
-  {Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )}, 
-  {Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )}, 
-  {Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 3, 10, 6, 4, 10, 6, 3, 3, 3, 6 ] )}, 
-  {Transformation( [ 4, 1, 9, 6, 1, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 4, 3, 9, 6, 3, 9, 4, 4, 4, 9 ] )}, 
-  {Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )}, 
-  {Transformation( [ 3, 10, 9, 7, 10, 9, 3, 3, 3, 9 ] )}, 
-  {Transformation( [ 7, 3, 4, 9, 3, 4, 7, 7, 7, 4 ] )}, 
-  {Transformation( [ 1, 2, 10, 4, 2, 10, 1, 1, 1, 10 ] )}, 
-  {Transformation( [ 3, 10, 8, 4, 10, 8, 3, 3, 3, 8 ] )}, 
-  {Transformation( [ 1, 5, 10, 4, 5, 10, 1, 1, 1, 10 ] )}, 
-  {Transformation( [ 3, 4, 8, 7, 4, 8, 3, 3, 3, 8 ] )}, 
-  {Transformation( [ 3, 5, 2, 9, 5, 2, 3, 3, 3, 2 ] )}, 
-  {Transformation( [ 2, 1, 5, 6, 1, 5, 2, 2, 2, 5 ] )}, 
-  {Transformation( [ 1, 5, 6, 4, 5, 6, 1, 1, 1, 6 ] )} ]
+[ <Green's H-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 2, 4, 3, 2, 4, 8, 8, 8, 4 ] )>, 
+  <Green's H-class: Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 5, 9, 8, 2, 9, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 4, 7, 10, 4, 7, 8, 8, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 3, 2, 7, 1, 2, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 4, 3, 5, 4, 1, 1, 1, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 3, 6, 5, 3, 1, 1, 1, 3 ] )>, 
+  <Green's H-class: Transformation( [ 2, 3, 10, 1, 3, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 10, 9, 4, 3, 9, 4, 10, 10, 10, 4 ] )>, 
+  <Green's H-class: Transformation( [ 3, 4, 2, 5, 4, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 8, 4, 2, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 2, 5, 1, 2, 9, 9, 9, 2 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 8, 7, 4, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )>, 
+  <Green's H-class: Transformation( [ 3, 5, 7, 1, 5, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )>, 
+  <Green's H-class: Transformation( [ 4, 3, 9, 1, 3, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 5, 8, 4, 2, 8, 4, 5, 5, 5, 4 ] )>, 
+  <Green's H-class: Transformation( [ 10, 5, 9, 3, 5, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 7, 10, 4, 9, 10, 4, 7, 7, 7, 4 ] )>, 
+  <Green's H-class: Transformation( [ 5, 4, 1, 2, 4, 1, 5, 5, 5, 1 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 9, 5, 1, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 1, 7, 3, 10, 7, 3, 1, 1, 1, 3 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 9, 3, 1, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 2, 9, 1, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 9, 7, 4, 9, 1, 1, 1, 9 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 3, 10, 5, 3, 1, 1, 1, 3 ] )>, 
+  <Green's H-class: Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 9, 3, 6, 5, 3, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 4, 10, 7, 1, 10, 7, 4, 4, 4, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 7, 2, 1, 7, 5, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 7, 2, 4, 3, 2, 4, 7, 7, 7, 4 ] )>, 
+  <Green's H-class: Transformation( [ 7, 5, 2, 3, 5, 2, 7, 7, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 6, 4, 5, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )>, 
+  <Green's H-class: Transformation( [ 4, 10, 9, 1, 10, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 10, 3, 1, 8, 3, 1, 10, 10, 10, 1 ] )>, 
+  <Green's H-class: Transformation( [ 7, 10, 1, 9, 10, 1, 7, 7, 7, 1 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )>, 
+  <Green's H-class: Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 10, 6, 5, 3, 6, 5, 10, 10, 10, 5 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 4, 3, 1, 4, 10, 10, 10, 4 ] )>, 
+  <Green's H-class: Transformation( [ 7, 1, 5, 8, 1, 5, 7, 7, 7, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 10, 4, 2, 10, 4, 5, 5, 5, 4 ] )>, 
+  <Green's H-class: Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )>, 
+  <Green's H-class: Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 8, 7, 5, 8, 2, 2, 2, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )>, 
+  <Green's H-class: Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )>, 
+  <Green's H-class: Transformation( [ 5, 9, 6, 2, 9, 6, 5, 5, 5, 6 ] )>, 
+  <Green's H-class: Transformation( [ 10, 2, 5, 3, 2, 5, 10, 10, 10, 5 ] )>, 
+  <Green's H-class: Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )>, 
+  <Green's H-class: Transformation( [ 7, 1, 2, 8, 1, 2, 7, 7, 7, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 6, 4, 10, 6, 3, 3, 3, 6 ] )>, 
+  <Green's H-class: Transformation( [ 4, 1, 9, 6, 1, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 4, 3, 9, 6, 3, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 9, 7, 10, 9, 3, 3, 3, 9 ] )>, 
+  <Green's H-class: Transformation( [ 7, 3, 4, 9, 3, 4, 7, 7, 7, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 10, 4, 2, 10, 1, 1, 1, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 8, 4, 10, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 10, 4, 5, 10, 1, 1, 1, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 4, 8, 7, 4, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 3, 5, 2, 9, 5, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 1, 5, 6, 1, 5, 2, 2, 2, 5 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 6, 4, 5, 6, 1, 1, 1, 6 ] )> ]
 gap> List(last, x-> Representative(x) in s);
 [ true, true, true, true, true, true, true, true, true, true, true, true, 
   true, true, true, true, true, true, true, true, true, true, true, true, 
@@ -4292,61 +3994,61 @@ gap> ForAll(last2, x-> Representative(x) in r);
 true
 gap> Semigroup(gens);;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )}
+<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
 gap> f:=Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )}
+<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
 gap> Size(r);
 86
 gap> NrHClasses(r);
 43
 gap> s:=Semigroup(gens);;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )}
+<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
 gap> GreensHClasses(r);
-[ {Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 8, 8, 2, 8, 2, 8, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 9, 9, 10, 9, 10, 9, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 10, 10, 4, 10, 4, 10, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 8, 8, 4, 8, 4, 8, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 3, 3, 10, 3, 10, 3, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 1, 1, 3, 1, 3, 1, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 9, 9, 2, 9, 2, 9, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 8, 8, 3, 8, 3, 8, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 4, 4, 3, 4, 3, 4, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 3, 3, 6, 3, 6, 3, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 7, 7, 8, 7, 8, 7, 8, 8, 8, 8 ] )}, 
-  {Transformation( [ 8, 8, 1, 8, 1, 8, 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 2, 2, 10, 2, 10, 2, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 1, 1, 5, 1, 5, 1, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 8, 8, 5, 8, 5, 8, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 2, 2, 5, 2, 5, 2, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 7, 7, 10, 7, 10, 7, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 9, 9, 8, 9, 8, 9, 8, 8, 8, 8 ] )}, 
-  {Transformation( [ 6, 6, 10, 6, 10, 6, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 8, 8, 10, 8, 10, 8, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 1, 1, 4, 1, 4, 1, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 4, 4, 5, 4, 5, 4, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 5, 5, 3, 5, 3, 5, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 6, 6, 5, 6, 5, 6, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 1, 1, 2, 1, 2, 1, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 2, 4, 2, 4, 2, 2, 2, 2 ] )}, 
-  {Transformation( [ 9, 9, 3, 9, 3, 9, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 7, 7, 4, 7, 4, 7, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 1, 1, 6, 1, 6, 1, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 7, 7, 3, 7, 3, 7, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 4, 4, 6, 4, 6, 4, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 2, 2, 3, 2, 3, 2, 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 9, 9, 6, 9, 6, 9, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 1, 1, 10, 1, 10, 1, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 7, 7, 1, 7, 1, 7, 1, 1, 1, 1 ] )}, 
-  {Transformation( [ 9, 9, 7, 9, 7, 9, 7, 7, 7, 7 ] )}, 
-  {Transformation( [ 2, 2, 6, 2, 6, 2, 6, 6, 6, 6 ] )}, 
-  {Transformation( [ 5, 5, 10, 5, 10, 5, 10, 10, 10, 10 ] )}, 
-  {Transformation( [ 7, 7, 5, 7, 5, 7, 5, 5, 5, 5 ] )}, 
-  {Transformation( [ 9, 9, 4, 9, 4, 9, 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 7, 7, 2, 7, 2, 7, 2, 2, 2, 2 ] )} ]
+[ <Green's H-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 2, 8, 2, 8, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 10, 9, 10, 9, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 10, 10, 4, 10, 4, 10, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 4, 8, 4, 8, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 3, 3, 10, 3, 10, 3, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 1, 1, 3, 1, 3, 1, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 2, 9, 2, 9, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 3, 8, 3, 8, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 3, 4, 3, 4, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 3, 3, 6, 3, 6, 3, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 8, 7, 8, 7, 8, 8, 8, 8 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 1, 8, 1, 8, 1, 1, 1, 1 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 10, 2, 10, 2, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 1, 1, 5, 1, 5, 1, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 8, 8, 5, 8, 5, 8, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 5, 2, 5, 2, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 10, 7, 10, 7, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 9, 9, 8, 9, 8, 9, 8, 8, 8, 8 ] )>, 
+  <Green's H-class: Transformation( [ 6, 6, 10, 6, 10, 6, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 8, 8, 10, 8, 10, 8, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 1, 1, 4, 1, 4, 1, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 5, 4, 5, 4, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 5, 5, 3, 5, 3, 5, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 6, 6, 5, 6, 5, 6, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 2, 1, 2, 1, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 2, 4, 2, 4, 2, 2, 2, 2 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 3, 9, 3, 9, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 4, 7, 4, 7, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 6, 1, 6, 1, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 3, 7, 3, 7, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 4, 4, 6, 4, 6, 4, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 3, 2, 3, 2, 3, 3, 3, 3 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 6, 9, 6, 9, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 10, 1, 10, 1, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 7, 7, 1, 7, 1, 7, 1, 1, 1, 1 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 7, 9, 7, 9, 7, 7, 7, 7 ] )>, 
+  <Green's H-class: Transformation( [ 2, 2, 6, 2, 6, 2, 6, 6, 6, 6 ] )>, 
+  <Green's H-class: Transformation( [ 5, 5, 10, 5, 10, 5, 10, 10, 10, 10 ] )>,
+  <Green's H-class: Transformation( [ 7, 7, 5, 7, 5, 7, 5, 5, 5, 5 ] )>, 
+  <Green's H-class: Transformation( [ 9, 9, 4, 9, 4, 9, 4, 4, 4, 4 ] )>, 
+  <Green's H-class: Transformation( [ 7, 7, 2, 7, 2, 7, 2, 2, 2, 2 ] )> ]
 gap> Length(last);
 43
 gap> ForAll(last2, x-> Representative(x) in r);
@@ -4357,7 +4059,7 @@ gap> h:=HClass(s, Transformation( [ 4, 4, 9, 4, 9, 4, 9, 9, 9, 9 ] ));;
 gap> f:=Representative(h);
 Transformation( [ 4, 4, 9, 4, 9, 4, 9, 9, 9, 9 ] )
 gap> hh:=HClass(r, f);
-{Transformation( [ 4, 4, 9, 4, 9, 4, 9, 9, 9, 9 ] )}
+<Green's H-class: Transformation( [ 4, 4, 9, 4, 9, 4, 9, 9, 9, 9 ] )>
 gap> hh=h;
 true
 gap> h=hh;
@@ -4366,19 +4068,19 @@ gap> Elements(h)=Elements(hh);
 true
 gap> f:=Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] )}
+<Green's R-class: Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] )>
 gap> Size(r);
 1
 gap> f:=Transformation( [ 10, 10, 3, 10, 10, 10, 10, 10, 6, 10 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 5, 5, 2, 5, 5, 5, 5, 5, 9, 5 ] )}
+<Green's R-class: Transformation( [ 5, 5, 2, 5, 5, 5, 5, 5, 9, 5 ] )>
 gap> Size(r);
 546
 gap> f:=Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] );;
 gap> f in r;
 true
 gap> h:=HClass(r, f);
-{Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] )}
+<Green's H-class: Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] )>
 gap> f in h;
 true
 gap> ForAll(h, x-> x in r);
@@ -4405,25 +4107,25 @@ gap> Size(s);
 1422787
 gap> f:=PartialPerm([ 1, 4, 7, 9, 10 ], [ 5, 10, 9, 8, 7 ]);;
 gap> r:=GreensRClassOfElementNC(s, f);
-{PartialPerm( [ 1, 4, 7, 9, 10 ], [ 5, 10, 9, 8, 7 ] )}
+<Green's R-class: [1,5][4,10,7,9,8]>
 gap> Size(r);
 4
 gap> f in r;
 true
 gap> f:=PartialPerm([ 1, 7, 8, 9 ], [ 10, 9, 6, 5 ]);;
 gap> r:=GreensRClassOfElementNC(s, f);
-{PartialPerm( [ 1, 7, 8, 9 ], [ 10, 9, 6, 5 ] )}
+<Green's R-class: [1,10][7,9,5][8,6]>
 gap> Size(r);
 4
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
-{PartialPerm( [ 1, 3, 9, 10 ], [ 4, 5, 3, 7 ] )}
+<Green's R-class: [1,4][9,3,5][10,7]>
 gap> Size(r);
 3792
 gap> r:=RClassNC(s, Representative(r));
-{PartialPerm( [ 1, 3, 9, 10 ], [ 4, 5, 3, 7 ] )}
+<Green's R-class: [1,4][9,3,5][10,7]>
 gap> h:=HClassNC(r, PartialPermNC([ 1, 3, 9, 10 ], [ 10, 9, 8, 1 ]));;
 gap> Size(h);
 24
@@ -4451,18 +4153,18 @@ gap> gens:=[ Transformation( [ 1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1,
 >       1, 24, 1, 1, 1, 1, 6 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> First(DClasses(s), IsRegularDClass);
-{Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
- 1, 1, 1, 1, 1, 1 ] )}
+<Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> NrDClasses(s);
 31
 gap> PositionsProperty(DClasses(s), IsRegularDClass);
 [ 6, 7 ]
 gap> d:=DClasses(s)[7];
-{Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 1,
- 1, 1, 1, 1, 1, 1 ] )}
+<Green's D-class: Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> r:=RClassNC(s, Representative(d));
-{Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 1,
- 1, 1, 1, 1, 1, 1 ] )}
+<Green's R-class: Transformation( [ 1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> Size(r);
 20
 gap> ForAll(Idempotents(r), x-> x in s);
@@ -4491,7 +4193,7 @@ gap> f:=Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] );;
 gap> Size(s);
 998
 gap> r:=RClass(s, f);
-{Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )}
+<Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
 gap> IsRegularClass(r);
 true
 gap> Idempotents(r);
@@ -4519,7 +4221,7 @@ true
 gap> Transformation( [ 4, 4, 3, 8, 1, 3, 3, 5 ] ) in r;
 true
 gap> r;
-{Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )}
+<Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
 gap> NrIdempotents(r);
 1
 
@@ -4536,7 +4238,7 @@ gap> Size(s);
 9954
 gap> f:=PartialPerm([ 2, 3, 6 ], [ 1, 4, 8 ]);;
 gap> r:=RClass(s, f);
-{PartialPerm( [ 2, 3, 6 ], [ 1, 4, 8 ] )}
+<Green's R-class: [2,1][3,4][6,8]>
 gap> NrIdempotents(r);
 0
 gap> List(RClasses(s), NrIdempotents);;
@@ -4545,7 +4247,7 @@ gap> Sum(last);
 gap> NrIdempotents(s);
 53
 gap> r:=RClassOfHClass(h);
-{PartialPerm( [ 1, 3, 9, 10 ], [ 4, 5, 3, 7 ] )}
+<Green's R-class: [1,4][9,3,5][10,7]>
 gap> HClassReps(r);
 [ [1,4][9,3,5][10,7], [1,8][3,2][9,5][10,4], [1,3,10,5][9,4], [1,6][9,10,3,7],
   [1,4][9,3,2](10), [1,9,2][3,5][10,4], [1,3,7][9,4][10,2], 
@@ -4594,7 +4296,7 @@ gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
 gap> r;
-{PartialPerm( [ 1, 2, 5 ], [ 5, 1, 2 ] )}
+<Green's R-class: (1,5,2)>
 gap> Size(r);
 120
 gap> HClassReps(r);
@@ -4605,11 +4307,11 @@ gap> HClassReps(r);
 gap> ForAll(last, x-> x in r);
 true
 gap> r;
-{PartialPerm( [ 1, 2, 5 ], [ 5, 1, 2 ] )}
+<Green's R-class: (1,5,2)>
 gap> Size(DClass(r));
 2400
 gap> d:=DClass(r);
-{PartialPerm( [ 1, 2, 6 ], [ 1, 5, 2 ] )}
+<Green's D-class: [6,2,5](1)>
 gap> ForAll(r, x-> x in d);
 true
 gap> Number(d, x-> x in r);
@@ -4650,9 +4352,9 @@ gap> IsRegularSemigroup(s);
 false
 gap> f:=Transformation( [ 3, 2, 3, 4, 3, 5 ] );;
 gap> r:=RClassNC(s, f);
-{Transformation( [ 3, 2, 3, 4, 3, 5 ] )}
+<Green's R-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
 gap> d:=DClassOfRClass(r);
-{Transformation( [ 3, 2, 3, 4, 3, 5 ] )}
+<Green's D-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
 gap> Size(d);
 792
 gap> IsRegularDClass(d);
@@ -4868,15 +4570,15 @@ gap> enum:=EnumeratorOfRClasses(s);
 <enumerator of R-classes of <non-regular transformation monoid of size 7008, 
  on 6 pts with 18 generators>>
 gap> enum[1];
-{Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
+<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> s:=Semigroup(gens);;
 gap> enum:=EnumeratorOfRClasses(s);
 <enumerator of R-classes of <transformation monoid on 6 pts with 18 generators
   >>
 gap> enum[1];
-{Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
+<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> enum[2];
-{Transformation( [ 5, 3, 3, 2, 4, 1 ] )}
+<Green's R-class: Transformation( [ 5, 3, 3, 2, 4, 1 ] )>
 gap> Position(enum, enum[10]);
 10
 gap> ForAll(enum, x-> enum[Position(enum, x)]=x);
@@ -4912,7 +4614,7 @@ gap> Size(s);
 12612
 gap> f:=PartialPerm([ 1, 4, 6 ], [ 2, 3, 6 ]);;
 gap> r:=RClass(s, f);
-{PartialPerm( [ 1, 4, 6 ], [ 3, 2, 5 ] )}
+<Green's R-class: [1,3][4,2][6,5]>
 gap> Size(r);
 120
 gap> NrHClasses(r);

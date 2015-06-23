@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-BindGlobal("SEMIGROUPS_DefaultOptionsRec", 
+BindGlobal("SEMIGROUPS_DefaultOptionsRec",
   rec(small   := false,
       hashlen := rec(S := 251, M := 6257, L := 25013),
       regular := false,
@@ -17,29 +17,30 @@ BindGlobal("SEMIGROUPS_DefaultOptionsRec",
 
 MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 
-BindGlobal("SEMIGROUPS_ProcessOptionsRec", 
+BindGlobal("SEMIGROUPS_ProcessOptionsRec",
 function(opts)
   local n, x;
- 
-  for x in RecNames(SEMIGROUPS_DefaultOptionsRec) do 
-    if not IsBound(opts.(x)) then 
-      opts.(x):=SEMIGROUPS_DefaultOptionsRec.(x);
+
+  for x in RecNames(SEMIGROUPS_DefaultOptionsRec) do
+    if not IsBound(opts.(x)) then
+      opts.(x) := SEMIGROUPS_DefaultOptionsRec.(x);
     fi;
   od;
 
   if IsBound(opts.hashlen) and IsPosInt(opts.hashlen) then
     n := opts.hashlen;
     opts.hashlen := rec(S := NextPrimeInt(Int(n / 100)),
-     M := NextPrimeInt(Int(n / 4)), L := NextPrimeInt(n));
+                        M := NextPrimeInt(Int(n / 4)),
+                        L := NextPrimeInt(n));
   fi;
 
   return opts;
 end);
 
-BindGlobal("SEMIGROUPS_OptionsRec", 
+BindGlobal("SEMIGROUPS_OptionsRec",
 function(S)
-  if not IsBound(S!.opts) then 
-    Info(InfoWarning, 1, 
+  if not IsBound(S!.opts) then
+    Info(InfoWarning, 1,
          "Semigroups: SEMIGROUPS_OptionsRec: using default options!");
     return SEMIGROUPS_DefaultOptionsRec;
   fi;

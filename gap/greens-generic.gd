@@ -21,10 +21,10 @@ DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
 
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
-DeclareOperation("GreensDClassOfElementNC", 
+DeclareOperation("GreensDClassOfElementNC",
                  [IsSemigroup, IsAssociativeElement]);
-DeclareOperation("GreensJClassOfElementNC", 
-                 [IsSemigroup, IsAssociativeElement]); 
+DeclareOperation("GreensJClassOfElementNC",
+                 [IsSemigroup, IsAssociativeElement]);
 
 DeclareAttribute("RegularDClasses", IsSemigroup);
 DeclareAttribute("NrRegularDClasses", IsSemigroup);
@@ -75,16 +75,9 @@ DeclareSynonym("RClassNC", GreensRClassOfElementNC);
 DeclareSynonym("HClassNC", GreensHClassOfElementNC);
 
 DeclareOperation("DClass", [IsGreensClass]);
+DeclareOperation("DClassNC", [IsGreensClass]);
 DeclareOperation("LClass", [IsGreensHClass]);
 DeclareOperation("RClass", [IsGreensHClass]);
-
-InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
-InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
-InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
-InstallMethod(LClass, "for an H-class", [IsGreensHClass], LClassOfHClass);
-InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
-
-DeclareOperation("DClassNC", [IsGreensClass]);
 
 DeclareSynonymAttr("DClasses", GreensDClasses);
 DeclareSynonymAttr("HClasses", GreensHClasses);
@@ -92,3 +85,4 @@ DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 
+DeclareOperation("OneMutable", [IsGreensHClass]);

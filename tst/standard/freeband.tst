@@ -40,7 +40,7 @@ gap> S := FreeBand(5);
 gap> x := S.3*S.2*S.1;
 x3x2x1
 gap> D := GreensDClassOfElement(S, x);
-{x3x2x1}
+<Green's D-class: x3x2x1>
 gap> iter := Iterator(D);
 <iterator>
 gap> NextIterator(iter);

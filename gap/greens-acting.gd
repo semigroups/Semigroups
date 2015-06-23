@@ -42,22 +42,22 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 DeclareCategory("IsInverseOpClass", IsGreensClass);
 
 DeclareOperation("GreensDClassOfElementNC",
-[IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
 DeclareOperation("GreensLClassOfElementNC",
-[IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
 DeclareOperation("GreensRClassOfElementNC",
-[IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
 DeclareOperation("GreensHClassOfElementNC",
-[IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
 
 DeclareOperation("GreensDClassOfElementNC",
-[IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsAssociativeElement, IsBool]);
 DeclareOperation("GreensLClassOfElementNC",
-[IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsAssociativeElement, IsBool]);
 DeclareOperation("GreensRClassOfElementNC",
-[IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsAssociativeElement, IsBool]);
 DeclareOperation("GreensHClassOfElementNC",
-[IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsAssociativeElement, IsBool]);
 
 # the following is required in green-acting and greens-inverse.
 DeclareGlobalFunction("SEMIGROUPS_InverseRectifyRho");

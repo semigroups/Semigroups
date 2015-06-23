@@ -574,14 +574,13 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
   comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, n);
   SET_LEN_PLIST(comps, 0);
   
-  sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
-  lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
-
   hindex = 0;
   rindex = 0;
   init = 0;
   
   for(i=1;i<=n;i++){
+    sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
+    lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
     j = sorted[i];
     k = INT_INTOBJ(ELM_PLIST(rightid, j));
     if(k > rindex){
@@ -736,6 +735,8 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SIMPLE_SIZE, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SIZE_SEMIGROUP, 1, 
                           "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", CLOSURE_SEMIGROUP, 2, 
+                          "old_data, new_data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", LENGTH_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", NR_RULES_SEMIGROUP, 1, 
@@ -816,6 +817,10 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
     ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
+    
+    ImportGVarFromLibrary( "IsPartitionedBinaryRelation", &IsPartitionedBinaryRelation);
+    ImportGVarFromLibrary( "PartitionedBinaryRelationType",
+                           &PartitionedBinaryRelationType );
 
     /* return success                                                      */
     return 0;

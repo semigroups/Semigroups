@@ -28,6 +28,7 @@ function(cong)
                 x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
+  
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
                                          treehashsize := hashlen));
   data := rec(cong := cong,
@@ -330,7 +331,8 @@ function(class1, class2)
     return;
   fi;
   return CongruenceClassOfElement(EquivalenceClassRelation(class1),
-                 Representative(class1) * Representative(class2));
+                                  Representative(class1) *
+                                  Representative(class2));
 end);
 
 #
@@ -394,7 +396,7 @@ function(class)
 
   # cong has not yet been enumerated: make functions
   record := rec();
-  
+
   record.ElementNumber := function(enum, pos)
     local lookfunc, result, table, classno, i;
     if pos <= enum!.len then
@@ -419,17 +421,13 @@ function(class)
       # cong has AsLookupTable
       table := AsLookupTable(enum!.cong);
       classno := table[enum!.rep];
-      for i in [1..Size(Range(enum!.cong))] do
+      for i in [1 .. Size(Range(enum!.cong))] do
         if table[i] = classno and not enum!.found[i] then
           enum!.found[i] := true;
           enum!.len := enum!.len + 1;
           enum!.list[enum!.len] := i;
         fi;
       od;
-      #TODO: erase these 3 lines
-      if enum!.len <> Size(class) then
-        Error("This should never happen!"); return;
-      fi;
       SetSize(class, enum!.len);
       SetAsList(class, enum!.list);
     fi;
@@ -460,15 +458,16 @@ function(class)
       return fail;
     fi;
   end;
-  
+
   enum := EnumeratorByFunctions(class, record);
   enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
   enum!.elms := AsSSortedList(Range(enum!.cong));
-  enum!.rep := Position(enum!.elms, Representative(UnderlyingCollection(enum)));
+  enum!.rep := Position(enum!.elms,
+                        Representative(UnderlyingCollection(enum)));
   enum!.list := [enum!.rep];
   enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
   enum!.len := 1;
-  
+
   return enum;
 end);
 

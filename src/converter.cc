@@ -174,3 +174,51 @@ Obj MatrixOverPrimeFieldConverter::unconvert (MatrixOverSemiring* x) {
   }
   return CALL_2ARGS(AsMatrixOverPrimeFieldNC, INTOBJ_INT(_field->size()), plist);
 }
+
+/*******************************************************************************
+ * Partitioned binary relations (PBRs)
+*******************************************************************************/
+
+// TODO add some more asserts here
+
+PartitionedBinaryRelation* PBRConverter::convert (Obj o, size_t n) {
+  assert(IS_PBR(o));
+  assert(n / 2 == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
+
+  std::vector<std::vector<u_int32_t> > pbr;
+  pbr.reserve(n);
+
+  for (u_int32_t i = 0; i < n; i++) {
+    Obj adj = ELM_PLIST(o, i + 2);
+    std::vector<u_int32_t> next;
+    for (u_int32_t j = 1; j <= LEN_PLIST(adj); j++) {
+      next.push_back(INT_INTOBJ(ELM_PLIST(adj, j)) - 1);
+      // assumes that adj is duplicate-free
+    }
+    std::sort(next.begin(), next.end());
+    pbr.push_back(next);
+  }
+  return new PartitionedBinaryRelation(pbr);
+}
+
+Obj PBRConverter::unconvert (PartitionedBinaryRelation* x) {
+  Obj plist = NEW_PLIST(T_PLIST_TAB, x->degree() + 1);
+  SET_LEN_PLIST(plist, x->degree() + 1);
+  SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree() / 2));
+  for (u_int32_t i = 0; i < x->degree(); i++) {
+    size_t m = x->at(i).size();
+    Obj adj;
+    if (m == 0) {
+      adj = NEW_PLIST(T_PLIST_EMPTY, 0);
+    } else {
+      adj = NEW_PLIST(T_PLIST_CYC, m);
+      for (size_t j = 0; j < x->at(i).size(); j++) { 
+        SET_ELM_PLIST(adj, j + 1, INTOBJ_INT(x->at(i).at(j) + 1));
+      }
+    }
+    SET_LEN_PLIST(adj, m);
+    SET_ELM_PLIST(plist, i + 2, adj);
+    CHANGED_BAG(plist);
+  }
+  return CALL_2ARGS(Objectify, PartitionedBinaryRelationType, plist);
+}

@@ -57,12 +57,12 @@ function(arg)
       return;
     fi;
     if ((HasIsSimpleSemigroup(s) or IsActingSemigroup(s)) and
-      IsSimpleSemigroup(s)) or
+        IsSimpleSemigroup(s)) or
        ((HasIsZeroSimpleSemigroup(s) or IsActingSemigroup(s)) and
-       IsZeroSimpleSemigroup(s)) then
+        IsZeroSimpleSemigroup(s)) then
       return SEMIGROUPS_SimpleCongFromPairs(s, pairs);
-    elif (HasIsInverseSemigroup(s) or IsActingSemigroup(s)) and
-      IsInverseSemigroup(s) then
+    elif (HasIsInverseSemigroup(s) or IsActingSemigroup(s))
+        and IsInverseSemigroup(s) then
       return SEMIGROUPS_InverseCongFromPairs(s, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(s, pairs);

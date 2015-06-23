@@ -406,22 +406,16 @@ function(S)
   fi;
 
   Info(InfoSemigroups, 2, "the unique idempotent in the R-class of the first",
-       " maximum rank");
+                          " maximum rank");
   Info(InfoSemigroups, 2, " generator is not the identity");
   return fail;
 end);
 
-# same method for inverse/ideals
-
-InstallMethod(RepresentativeOfMinimalIdeal, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(RepresentativeOfMinimalIdeal,
+"for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local rank, o, pos, min, len, m, i;
-
-  if IsSemigroupIdeal(S)
-      and HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S)) then
-    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  fi;
 
   rank := LambdaRank(S);
   o := LambdaOrb(S);

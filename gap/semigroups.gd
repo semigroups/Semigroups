@@ -13,7 +13,7 @@
 # semigroup
 InstallTrueMethod(IsSemigroup, IsInverseSemigroup);
 
-DeclareCategory("IsSemigroupWithInverseOp", 
+DeclareCategory("IsSemigroupWithInverseOp",
                 IsInverseSemigroup);
 
 DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
@@ -21,47 +21,44 @@ DeclareCategoryCollections("IsAssociativeElementWithStar");
 DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
 DeclareAttribute("Star", IsAssociativeElementWithStar);
 
-DeclareSynonym("IsStarSemigroup", IsSemigroup and
-IsAssociativeElementWithStarCollection);
-DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and
-IsAssociativeElementWithStarCollection);
+DeclareSynonym("IsStarSemigroup",
+               IsSemigroup and IsAssociativeElementWithStarCollection);
+DeclareSynonym("IsRegularStarSemigroup",
+               IsRegularSemigroup and IsAssociativeElementWithStarCollection);
 
 DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 
 DeclareOperation("SemigroupByGenerators",
-[IsAssociativeElementCollection, IsRecord]);
-
+                 [IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("MonoidByGenerators",
-[IsAssociativeElementCollection, IsRecord]);
-
+                 [IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("InverseMonoidByGenerators",
-[IsAssociativeElementCollection and
-IsAssociativeElementCollection, IsRecord]);
-
+                 [IsAssociativeElementCollection and
+                  IsMultiplicativeElementWithOneCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGenerators",
-[IsAssociativeElementCollection, IsRecord]);
+                 [IsAssociativeElementCollection, IsRecord]);
 
-DeclareOperation("ClosureInverseSemigroup", [IsSemigroupWithInverseOp,
-IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
-DeclareOperation("ClosureInverseSemigroup", 
-[IsSemigroupWithInverseOp, IsAssociativeElement]);
+                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
+                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection,
+                  IsRecord]);
+DeclareOperation("ClosureInverseSemigroup",
+                 [IsSemigroupWithInverseOp, IsAssociativeElement]);
+DeclareOperation("ClosureInverseSemigroup",
+                 [IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
-DeclareOperation("ClosureSemigroup", 
-[IsSemigroup, IsAssociativeElementCollection, IsRecord]);
-DeclareOperation("ClosureSemigroup", 
-[IsSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureSemigroup",
-[IsSemigroup, IsAssociativeElement, IsRecord]);
+                 [IsSemigroup, IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureSemigroup",
-[IsSemigroup, IsAssociativeElement]);
-DeclareGlobalFunction("ClosureSemigroupNC");
+                 [IsSemigroup, IsAssociativeElementCollection]);
+DeclareOperation("ClosureSemigroup",
+                 [IsSemigroup, IsAssociativeElement, IsRecord]);
+DeclareOperation("ClosureSemigroup",
+                 [IsSemigroup, IsAssociativeElement]);
 
-DeclareGlobalFunction("ChangeDegreeOfTransformationSemigroupOrb");
+DeclareGlobalFunction("ClosureSemigroupNC");
 
 DeclareAttribute("Generators", IsSemigroup);
 
@@ -79,13 +76,13 @@ DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
-DeclareOperation("SubsemigroupByProperty", 
-[IsSemigroup, IsFunction, IsPosInt]);
+DeclareOperation("SubsemigroupByProperty",
+                 [IsSemigroup, IsFunction, IsPosInt]);
 
 DeclareOperation("InverseSubsemigroupByProperty",
-[IsSemigroup, IsFunction]);
-DeclareOperation("InverseSubsemigroupByProperty", 
-[IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
+                 [IsSemigroup, IsFunction]);
+DeclareOperation("InverseSubsemigroupByProperty",
+                 [IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
 
 # undoc
 

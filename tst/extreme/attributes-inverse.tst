@@ -37,36 +37,23 @@ gap> J := SemigroupIdeal(B,
 >    [ 6, -6 ] ]),
 >  Bipartition([ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ]));
 <inverse bipartition semigroup ideal on 7 pts with 2 generators>
-gap> JoinIrreducibleDClasses(S)
-> = [GreensDClassOfElement(S, PartialPerm([2], [2]))];
-true
-gap> JoinIrreducibleDClasses(I)
-> = [GreensDClassOfElement(I, PartialPerm([2], [2]))];
-true
-gap> x1 := Bipartition(
-> [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], [ -3 ],
-> [ -4 ], [ -5 ], [ -6 ], [ -7 ] ] );;
-gap> D := JoinIrreducibleDClasses(A);;
-gap> Length(D);
-1
-gap> DClass(A, x1) in D;
-true
-gap> x1 := Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], [3, -3]]);;
-gap> x2 := Bipartition([[1, -1], [2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7]]);;
-gap> D := JoinIrreducibleDClasses(B);;
-gap> Length(D);
-2
-gap> DClass(B, x1) in D;
-true
-gap> DClass(B, x2) in D;
-true
-gap> x1 := Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], [3, -3]]);;
-gap> x2 := Bipartition([[1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7], [6, -6]]);;
-gap> D := JoinIrreducibleDClasses(J);;
-gap> DClass(J, x1) in D;
-true
-gap> DClass(J, x2) in D;
-true
+gap> JoinIrreducibleDClasses(S);
+[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
+gap> JoinIrreducibleDClasses(I);
+[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
+gap> JoinIrreducibleDClasses(A);
+[ <Green's D-class: <bipartition: [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], 
+      [ 6 ], [ 7 ], [ -1 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>> ]
+gap> JoinIrreducibleDClasses(B);
+[ <Green's D-class: <block bijection: 
+      [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>>, 
+  <Green's D-class: <block bijection: [ 1, -1 ], 
+      [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ]>> ]
+gap> JoinIrreducibleDClasses(J);
+[ <Green's D-class: <block bijection: 
+      [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>>, 
+  <Green's D-class: <block bijection: 
+      [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], [ 6, -6 ]>> ]
 
 #T# AttributesInverseTest2: IsJoinIrreducible
 gap> S := InverseSemigroup([
@@ -539,8 +526,6 @@ gap> h1 := GroupHClass(d);
 gap> m1 := ShallowCopy(SameMinorantsSubgroup(h1));;
 gap> Sort(m1);
 gap> m1;
-[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]>, 
-  (1)(2)(3,4,5)(6)(7)(8,9,10), (1)(2)(3,5,4)(6)(7)(8,10,9) ]
 gap> d := DClass(S, PartialPerm([1, 2, 6, 7], [1, 2, 6, 7]));;
 gap> h2 := GroupHClass(d);
 <Green's H-class: <identity partial perm on [ 1, 2, 6, 7 ]>>

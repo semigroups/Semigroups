@@ -77,7 +77,7 @@ function(arg)
       for str in omit do
         if PositionSublist(stringfile, str) <> fail then
           Print("not testing ", filename, ", it contains a test involving ",
-          str, ", which will not work . . .\n\n");
+                str, ", which will not work . . .\n\n");
           test := false;
           break;
         fi;
@@ -118,7 +118,8 @@ function()
   record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
   record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);
   record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
-  record.SEMIGROUPS_DefaultOptionsRec := ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
+  record.SEMIGROUPS_DefaultOptionsRec :=
+    ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
 
   record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
   record.TransformationDisplayLimit
@@ -127,8 +128,8 @@ function()
   record.NotationForTransformations :=
    UserPreference("NotationForTransformations");
 
-  record.FreeInverseSemigroupElementDisplay := UserPreference("semigroups",
-    "FreeInverseSemigroupElementDisplay");
+  record.FreeInverseSemigroupElementDisplay :=
+    UserPreference("semigroups", "FreeInverseSemigroupElementDisplay");
 
   SetInfoLevel(InfoWarning, 0);
   SetInfoLevel(InfoSemigroups, 0);
@@ -139,7 +140,7 @@ function()
   SetUserPreference("NotationForPartialPerms", "component");
   SetUserPreference("NotationForTransformations", "input");
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
-   "minimal");
+                    "minimal");
 
   # timing
   record.timeofday := IO_gettimeofday();
@@ -167,19 +168,20 @@ function(file)
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoPackageLoading);
   UnbindGlobal("SEMIGROUPS_DefaultOptionsRec");
-  BindGlobal("SEMIGROUPS_DefaultOptionsRec", record.SEMIGROUPS_DefaultOptionsRec);
+  BindGlobal("SEMIGROUPS_DefaultOptionsRec",
+             record.SEMIGROUPS_DefaultOptionsRec);
   MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 
   SetUserPreference("PartialPermDisplayLimit",
-   record.PartialPermDisplayLimit);
+                    record.PartialPermDisplayLimit);
   SetUserPreference("TransformationDisplayLimit",
-   record.TransformationDisplayLimit);
+                    record.TransformationDisplayLimit);
   SetUserPreference("NotationForPartialPerms",
-   record.NotationForPartialPerms);
+                    record.NotationForPartialPerms);
   SetUserPreference("NotationForTransformations",
-   record.NotationForTransformations);
+                    record.NotationForTransformations);
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
-   record.FreeInverseSemigroupElementDisplay);
+                    record.FreeInverseSemigroupElementDisplay);
 
   # timing
   timeofday := IO_gettimeofday();
@@ -193,7 +195,8 @@ function(file)
 
   if not IsBound(GAPInfo.TestData.START_TIME)  then
       Error("Semigroups: SemigroupsStopTest:\n",
-      "`STOP_TEST' command without `START_TEST' command for `", file, "'");
+            "`STOP_TEST' command without `START_TEST' command for `", file,
+            "'");
       return;
   fi;
   Print(GAPInfo.TestData.START_NAME, "\n");
@@ -220,9 +223,10 @@ end);
 
 InstallGlobalFunction(SemigroupsMakeDoc,
 function()
-  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
-   InstallationPath, "/doc"), "main.xml", SemigroupsDocXMLFiles, "semigroups",
-   "MathJax", "../../..");
+  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+                              "/doc"),
+                "main.xml", SemigroupsDocXMLFiles, "semigroups", "MathJax",
+                "../../..");
   return;
 end);
 
@@ -257,7 +261,7 @@ function()
       for str in omit do
         if PositionSublist(stringfile, str) <> fail then
           Print("not testing ", filename, ", it contains a test involving ",
-          str, ", which will not work . . .\n\n");
+                str, ", which will not work . . .\n\n");
           test := false;
           break;
         fi;
@@ -277,18 +281,18 @@ end);
 InstallGlobalFunction(SemigroupsTestInstall,
 function()
   local generic;
-  
+
   generic := SEMIGROUPS_DefaultOptionsRec.generic;
-  
+
   Print("SEMIGROUPS_DefaultOptionsRec.generic := false;\n");
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
-   "testinstall.tst"));
-  
+                "testinstall.tst"));
+
   Print("SEMIGROUPS_DefaultOptionsRec.generic := true;\n");
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
-   "testinstall.tst"));
+                "testinstall.tst"));
 
   SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return;
@@ -298,9 +302,8 @@ end);
 
 InstallGlobalFunction(SemigroupsManualExamples,
 function()
-return
-  ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
-  "main.xml", SemigroupsDocXMLFiles, "Single");
+  return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
+                         "main.xml", SemigroupsDocXMLFiles, "Single");
 end);
 
 # if <arg> is some strings, then any example containing any of these strings is
@@ -325,5 +328,3 @@ function()
   SemigroupsStopTest("");
   return;
 end);
-
-#EOF

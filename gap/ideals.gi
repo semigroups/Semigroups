@@ -17,11 +17,11 @@ InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
 
 # this is here for generic semigroup ideals
 
-InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal", 
+InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)
 
-  if HasSupersemigroupOfIdeal(Parent(I)) then 
+  if HasSupersemigroupOfIdeal(Parent(I)) then
     return SupersemigroupOfIdeal(Parent(I));
   else
     return Parent(I);
@@ -40,10 +40,10 @@ end);
 
 #
 
-InstallMethod(PrintString, 
-"for a semigroup ideal with ideal generators", 
+InstallMethod(PrintString,
+"for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I) 
+function(I)
   local str;
 
   str := "\>\>SemigroupIdeal(\< \>";
@@ -74,7 +74,8 @@ InstallMethod(ViewString, "for a semigroup ideal with generators",
 [IsMagmaIdeal and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(S)
   return Concatenation("<semigroup ideal with ",
-   String(Length(GeneratorsOfMagmaIdeal(S))), " generators>");
+                       String(Length(GeneratorsOfMagmaIdeal(S))),
+                       " generators>");
 end);
 
 #
@@ -87,9 +88,9 @@ function(S, n)
   n := Int(n);
   if n = fail or Length(S) < n then
     Error("Semigroups: \.: usage,\n",
-    "the second argument <n> should be a positive integer\n",
-     "not greater than the number of generators of the semigroup <S> in\n",
-     "the first argument,");
+          "the second argument <n> should be a positive integer\n",
+          "not greater than the number of generators of the semigroup <S>",
+          "in\nthe first argument,");
     return;
   fi;
   return S[n];
@@ -97,8 +98,8 @@ end);
 
 #
 
-InstallMethod(\=, "for semigroup ideals", 
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, 
+InstallMethod(\=, "for semigroup ideals",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal,
  IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I, J)
 
@@ -114,8 +115,8 @@ end);
 
 #
 
-InstallMethod(\=, "for a semigroup ideal and semigroup with generators", 
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, 
+InstallMethod(\=, "for a semigroup ideal and semigroup with generators",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal,
  IsSemigroup and HasGeneratorsOfSemigroup],
 function(I, S)
   if ForAll(GeneratorsOfSemigroup(S), x -> x in I) then
@@ -133,16 +134,16 @@ end);
 
 #
 
-InstallMethod(\=, "for a semigroup with generators and a semigroup ideal", 
-[IsSemigroup and HasGeneratorsOfSemigroup, 
-IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 
+InstallMethod(\=, "for a semigroup with generators and a semigroup ideal",
+[IsSemigroup and HasGeneratorsOfSemigroup,
+ IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(S, I)
   return I = S;
 end);
 
 #
 
-InstallMethod(Representative, "for a semigroup ideal", 
+InstallMethod(Representative, "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   return Representative(GeneratorsOfMagmaIdeal(I));
@@ -167,17 +168,17 @@ function(arg)
     return;
   fi;
 
-  # special case for matrices, because they may look like lists
-  if Length(arg) = 2 and IsMatrix(arg[2])  then
+  if Length(arg) = 2 and IsMatrix(arg[2]) then
+    # special case for matrices, because they may look like lists
     return SemigroupIdealByGenerators(arg[1], [arg[2]]);
 
-  # list of generators
   elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
+    # list of generators
     return SemigroupIdealByGenerators(arg[1], arg[2]);
 
-  # generators and collections of generators
   elif IsAssociativeElement(arg[2])
-   or IsAssociativeElementCollection(arg[2]) then
+      or IsAssociativeElementCollection(arg[2]) then
+    # generators and collections of generators
     out := [];
     for i in [2 .. Length(arg)] do
       if IsAssociativeElement(arg[i]) then
@@ -192,22 +193,22 @@ function(arg)
         else
           Append(out, AsList(arg[1]));
         fi;
-      #so that we can pass the options record in the Semigroups package
       elif i = Length(arg) and IsRecord(arg[i]) then
+        #so that we can pass the options record in the Semigroups package
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
         Error("Semigroups: SemigroupIdeal: usage,\n",
-              "the second argument must be a",
+              "the second argument must be a ",
               "combination of generators,\n lists of generators, ",
               "or semigroups,");
         return;
       fi;
     od;
     return SemigroupIdealByGenerators(arg[1], out);
-  # no argument given, error
   else
+    # no argument given, error
     Error("Semigroups: SemigroupIdeal: usage,\n",
-          "the second argument must be a",
+          "the second argument must be a ",
           "combination of generators,\nlists of generators, or semigroups,");
     return;
   fi;
@@ -215,20 +216,19 @@ end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators, 
+InstallMethod(SemigroupIdealByGenerators,
 "for a semigroup, associative element collection",
-[IsSemigroup, IsAssociativeElementCollection], 
+[IsSemigroup, IsAssociativeElementCollection],
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, SEMIGROUPS_OptionsRec(S));
 end);
 
 #
 
-InstallMethod(SemigroupIdealByGenerators, 
+InstallMethod(SemigroupIdealByGenerators,
 "for semigroup, associative element collection, and record",
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
-  local filts, I;
   if not ForAll(gens, x -> x in S) then
     Error("Semigroups: SemigroupIdealByGenerators: usage,\n",
           "the second argument <gens> do not all belong to the semigroup,");
@@ -237,24 +237,25 @@ function(S, gens, opts)
   return SemigroupIdealByGeneratorsNC(S, gens, opts);
 end);
 
-InstallMethod(SemigroupIdealByGeneratorsNC, 
+InstallMethod(SemigroupIdealByGeneratorsNC,
 "for semigroup, associative element collection, and record",
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
 
+  opts := SEMIGROUPS_ProcessOptionsRec(opts);
   gens := AsList(gens);
-  
+
   filts := IsMagmaIdeal and IsAttributeStoringRep;
-  
-  if not opts.generic and (IsActingSemigroup(S) 
-    or IsGeneratorsOfActingSemigroup(gens)) then 
-    filts:=filts and IsActingSemigroup;
+
+  if not opts.generic
+      and (IsActingSemigroup(S) or IsGeneratorsOfActingSemigroup(gens)) then
+    filts := filts and IsActingSemigroup;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-  
-  if IsSemigroupWithInverseOp(S) then 
+
+  if IsSemigroupWithInverseOp(S) then
     SetFilterObj(I, IsSemigroupWithInverseOp);
   fi;
 
@@ -285,10 +286,10 @@ function(S, gens, opts)
 
   if opts.generic then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
-  elif IsActingSemigroup(I) and not (HasIsRegularSemigroup(I) and
-      IsRegularSemigroup(I)) then
-    # this is done so that the ideal knows it is regular or non-regular from the
-    # point of creation...
+  elif IsActingSemigroup(I)
+      and not (HasIsRegularSemigroup(I) and IsRegularSemigroup(I)) then
+    # this is done so that the ideal knows it is regular or non-regular from
+    # the point of creation...
     Enumerate(SemigroupIdealData(I), infinity, ReturnFalse);
   fi;
 
@@ -350,7 +351,8 @@ end);
 
 #
 
-InstallMethod(MinimalIdealGeneratingSet, "for a semigroup ideal with generators",
+InstallMethod(MinimalIdealGeneratingSet,
+"for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local max, out;
@@ -370,7 +372,7 @@ end);
 # JDM: is there a better method? Certainly for regular acting ideals
 # there is
 
-InstallMethod(InversesOfSemigroupElementNC, 
+InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup ideal and associative element",
 [IsSemigroupIdeal, IsAssociativeElement],
 function(I, x)
@@ -444,8 +446,8 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
 function(I)
   local x, y;
 
-  if HasParent(I) and HasIsCommutativeSemigroup(Parent(I)) and
-   IsCommutativeSemigroup(Parent(I)) then
+  if HasParent(I) and HasIsCommutativeSemigroup(Parent(I))
+      and IsCommutativeSemigroup(Parent(I)) then
     return true;
   fi;
 

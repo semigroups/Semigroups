@@ -14,7 +14,7 @@
 InstallMethod(IsReesCongruence,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-1,
+1, #FIXME why is this here?
 function(cong)
   local s, classes, sizes, pos, class, ideal;
   # This function is adapted from code in the library
@@ -52,7 +52,7 @@ end);
 InstallMethod(ReesCongruenceOfSemigroupIdeal,
 "for a semigroup ideal",
 [IsSemigroupIdeal],
-1,
+1, #FIXME why is this here?
 function(i)
   local s, fam, type, cong;
   s := Parent(i);
@@ -277,13 +277,14 @@ end);
 
 #
 
-InstallMethod(Size,
-"for a Rees congruence class",
+InstallMethod(Size, "for a Rees congruence class",
 [IsReesCongruenceClass],
 function(class)
+  local rel;
+
   if class!.is_ideal_class then
-    return Size(SemigroupIdealOfReesCongruence(
-                   EquivalenceClassRelation(class)));
+    rel := EquivalenceClassRelation(class);
+    return Size(SemigroupIdealOfReesCongruence(rel));
   fi;
   return 1;
 end);
@@ -327,5 +328,7 @@ end);
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for a Rees congruence",
 [IsReesCongruence],
-cong -> GeneratingPairsOfSemigroupCongruence(
-        AsSemigroupCongruenceByGeneratingPairs(cong)));
+function(cong)
+  cong := AsSemigroupCongruenceByGeneratingPairs(cong);
+  return GeneratingPairsOfSemigroupCongruence(cong);
+end);

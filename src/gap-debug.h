@@ -29,6 +29,10 @@ bool IS_PLIST_F (Obj x) {
   return IS_PLIST(x);
 }
 
+Int LEN_PLIST_F (Obj x) {
+  return LEN_PLIST(x);
+}
+
 bool IS_LIST_F (Obj x) {
   return IS_LIST(x);
 }
