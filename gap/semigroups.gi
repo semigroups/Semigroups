@@ -169,8 +169,8 @@ function(gens, opts)
       fi;
     else
       Sort(gens, IsGreensDLeq(Semigroup(gens)));
-      if IsOne(gens[1]) and IsBound(gens[2])
-          and gens[1] in Semigroup(gens[2]) then
+      if IsMultiplicativeElementWithOneCollection(gens) and IsOne(gens[1]) and
+          IsBound(gens[2]) and gens[1] in Semigroup(gens[2]) then
         Remove(gens, 1);
       fi;
     fi;

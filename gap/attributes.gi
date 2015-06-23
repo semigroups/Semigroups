@@ -425,10 +425,14 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 #############################################################################
 
 InstallMethod(IsGreensDLeq, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+[IsSemigroup],
 function(S)
   local digraph, data, id;
-  
+ 
+  if not IsFinite(S) then 
+    Error("semigroup is not finite!!");
+  fi;
+
   digraph := Digraph(PartialOrderOfDClasses(S));
   digraph := DigraphReflexiveTransitiveClosure(digraph);
   data := GenericSemigroupData(S);
