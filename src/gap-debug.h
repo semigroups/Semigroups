@@ -57,6 +57,22 @@ size_t INT_INTOBJ_F (Obj int_obj) {
   return INT_INTOBJ(int_obj);
 }
 
+Obj INTOBJ_INT_F (UInt i) {
+  return INTOBJ_INT(i);
+}
+
+bool IsbPRec_F (Obj rec, UInt rnam) {
+  return IsbPRec(rec, rnam);
+}
+
+bool IS_PREC_REP_F (Obj o) {
+  return IS_PREC_REP(o);
+}
+
+size_t LEN_PREC_F (Obj o) {
+  return LEN_PREC(o);
+}
+
 Obj CALL_1ARGS_F (Obj func, Obj arg1) {
   return CALL_1ARGS(func, arg1);
 }

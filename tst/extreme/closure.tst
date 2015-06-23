@@ -287,11 +287,142 @@ gap> GenericSemigroupData(S);
 <closed semigroup data with 65536 elements, 45409 relations, max word length 
 15>
 
+#T# Adding redundand generators in ClosureSemigroups 
+gap> gens := [ Transformation( [ 10, 10, 6, 9, 3, 6, 6, 8, 3, 4 ] ),
+>   Transformation( [ 10, 10, 6, 9, 3, 6, 6, 8, 3, 4 ] ),
+>   Transformation( [ 6, 8, 8, 4, 7, 1, 2, 9, 9, 3 ] ),
+>   Transformation( [ 6, 8, 8, 4, 7, 1, 2, 9, 9, 3 ] ),
+>   Transformation( [ 9, 9, 1, 3, 4, 10, 5, 6, 3, 3 ] ),
+>   Transformation( [ 9, 9, 1, 3, 4, 10, 5, 6, 3, 3 ] ), 
+>   Transformation( [ 7, 1, 2, 9, 3, 10, 3, 2, 5, 6 ] )  ];;
+gap> S := Semigroup(gens{[1,2]});;
+gap> for i in [2 .. 7] do
+> S := ClosureSemigroup(S, gens[i]);
+> Size(S);
+> od;
+gap> Size(S);
+3063073
+gap> S := Semigroup(gens{[1,2]});; Size(S);
+5
+gap> S := ClosureSemigroup(S, gens{[3,4]});; Size(S);
+5662
+gap> S := ClosureSemigroup(S, gens{[5,6]});; Size(S);
+111926
+gap> S := ClosureSemigroup(S, gens{[7]});; Size(S);
+3063073
+
+#T# 
+gap> gens := [
+>   PartialPerm([2, 3, 4, 5, 6, 7, 1]),
+>   PartialPerm([2, 1, 0, 4, 0, 6, 0]),
+>   PartialPerm([1, 0, 0, 4, 5, 6, 0]),
+>   PartialPerm([7, 6, 2, 1, 0, 0, 0]),
+>   PartialPerm([7, 2, 3, 1, 0, 4, 0]),
+>   PartialPerm([6, 0, 1, 0, 0, 4, 7]),
+>   PartialPerm([7, 2, 3, 1, 0, 4, 0]),
+>   PartialPerm([4, 0, 3, 0, 6, 2, 0]),
+>   PartialPerm([4, 2, 3, 0, 0, 1, 0]),
+>   PartialPerm([1, 5, 2, 0, 6, 0, 0]),
+>   PartialPerm([1, 2, 0, 3, 0, 5, 0]),
+>   PartialPerm([2, 6, 0, 5, 0, 0, 4]),
+>   PartialPerm([2, 7, 3, 0, 4, 0, 0]),
+>   PartialPerm([7, 3, 4, 0, 0, 2, 0]),
+>   PartialPerm([2, 5, 3, 0, 0, 0, 4]) ];;
+gap> S := Semigroup(gens[1]);;
+gap> a := [];;
+gap> for i in [1 .. Length(gens)] do
+> S := ClosureSemigroup(S, gens[i]);
+> Add(a, Size(S));
+> od;
+gap> a;
+[ 7, 498, 743, 3977, 11229, 11817, 11817, 11915, 13679, 13826, 14414, 15002, 
+  15198, 16766, 17354 ]
+
+#T# testing generic closure semigroup for bipartitions 
+gap> gens := [ Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ],
+>   [ 5, -2, -4, -6 ] ] ),
+> Bipartition( [ [ 1, -1 ], [ 2, 5, 6, -2 ], [ 3, -4 ], [ 4, -3, -6 ],
+>   [ -5 ] ] ),
+> Bipartition( [ [ 1, 5 ], [ 2, -4 ], [ 3, 6, -1 ], [ 4, -5 ], [ -2 ],
+>   [ -3, -6 ] ] ),
+> Bipartition( [ [ 1, 2, 3, -1, -5, -6 ], [ 4, 5, -2 ], [ 6, -3, -4 ] ] ),
+> Bipartition( [ [ 1, 2, 3, -2 ], [ 4, -1 ], [ 5 ], [ 6, -6 ], [ -3, -4 ],
+>   [ -5] ] ),
+> Bipartition( [ [ 1, 6, -2, -4, -6 ], [ 2, 3, 4, -1, -3 ], [ 5, -5 ] ] ),
+> Bipartition( [ [ 1, 2, 3, -6 ], [ 4, 6, -3 ], [ 5 ], [ -1, -2 ],
+>   [ -4, -5 ] ]),
+> Bipartition( [ [ 1, 2, 4, -6 ], [ 3, 5, 6, -1 ], [ -2, -3, -4, -5 ] ] ),
+> Bipartition( [ [ 1, 2, 6, -1, -4, -5, -6 ], [ 3, 4, -2, -3 ], [ 5 ] ] ),
+> Bipartition( [ [ 1, 5, 6, -5 ], [ 2, 3, 4 ], [ -1 ], [ -2, -3, -4 ],
+>   [ -6 ] ] ) ];;
+gap> a := [];; S := Semigroup(gens{[1 .. 4]});; Size(S);
+2328
+gap> for i in [1 .. Length(gens) / 2] do
+> S := ClosureSemigroup(S, [gens[2*i - 1], gens[2*i]]);
+> Add(a, Size(S));
+> od;
+gap> a;
+[ 2328, 2328, 4257, 5274, 5555 ]
+gap> a:= [];; S := Semigroup(gens{[1 .. 4]});; Size(S);;
+gap> for i in [1 .. Length(gens) ] do
+> S := ClosureSemigroup(S, gens[i]);
+> Add(a, Size(S));
+> od;
+gap> a;
+[ 2328, 2328, 2328, 2328, 3841, 4257, 4358, 5274, 5468, 5555 ]
+
+#T# ClosureSemigroup for boolean matrices
+gap> gens := [
+> BooleanMat([[false, true, false, false], [true, false, false, false],
+>   [false, false, false, true], [true, true, false, true]]),
+> BooleanMat([[true, true, true, true], [true, false, false, true],
+>   [true, false, false, true], [true, true, false, true]]),
+> BooleanMat([[true, true, true, false], [false, false, true, true],
+>   [true, false, true, false], [false, false, true, true]]),
+> BooleanMat([[true, true, false, false], [true, true, false, false],
+>   [false, true, false, false], [false, false, true, false]]),
+> BooleanMat([[true, false, false, true], [false, false, false, false],
+>   [false, false, true, true], [true, false, true, false]]),
+> BooleanMat([[false, true, true, true], [false, true, true, true],
+>   [true, false, false, false], [true, true, false, false]]),
+> BooleanMat([[false, false, true, true], [true, false, true, true],
+>   [true, true, true, false], [false, true, false, true]]),
+> BooleanMat([[false, false, true, false], [false, true, false, false],
+>   [true, false, false, false], [true, true, false, true]]),
+> BooleanMat([[false, false, true, false], [false, true, false, false],
+>   [false, true, false, false], [false, true, false, true]]),
+> BooleanMat([[false, false, false, true], [false, true, true, true],
+>   [true, true, true, false], [false, true, true, false]]),
+> BooleanMat([[false, false, false, true], [false, false, false, true],
+>   [false, false, true, false], [true, false, false, false]]),
+> BooleanMat([[true, false, false, true], [false, true, true, false],
+>   [true, false, true, true], [false, false, false, true]]),
+> BooleanMat([[false, false, true, true], [true, false, true, true],
+>   [true, true, false, false], [false, true, true, false]]),
+> BooleanMat([[true, true, false, false], [false, true, true, true],
+>   [true, true, true, false], [false, true, false, true]]),
+> BooleanMat([[false, false, false, true], [true, true, true, true],
+>   [false, false, true, true], [false, true, false, true]]),
+> BooleanMat([[true, true, true, true], [false, true, false, true],
+>   [false, false, true, true], [false, false, false, true]]),
+> BooleanMat([[false, true, true, false], [true, false, true, false],
+>   [true, false, false, true], [false, false, false, true]])
+> ];;
+gap> a := [];;S := Semigroup(gens{[1 .. 10]});; Size(S);;
+gap> for i in [10 .. Length(gens) ] do;
+> S := ClosureSemigroup(S, gens[i]);
+> Add(a, Size(S));
+> od;
+gap> a;
+[ 2346, 3316, 3593, 3767, 4000, 4191, 4290, 4747 ]
+
 # TODO check in a smaller example that the
 # presentation is correct
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(i);
 gap> Unbind(s);
+gap> Unbind(S);
+gap> Unbind(a);
 gap> Unbind(gens);
 gap> Unbind(t);
 

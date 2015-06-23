@@ -7,7 +7,7 @@
 
 // TODO 
 // 1) improve relations probably don't make the relations in semigroups.h and then transfer them 
-// over here, just create them here using trace from semigroups.h and the
+// over here, just create them here using factorisation from semigroups.h and the
 // memmove method from ENUMERATE_SEMIGROUP in this file
 //
 // 2) set data!.pos and data!.nr so that the filter IsClosedData gets set at
@@ -732,7 +732,7 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", WORD_SEMIGROUP, 2, 
                           "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SIMPLE_SIZE, 1, "data"),
+    //GVAR_FUNC_TABLE_ENTRY("interface.cc", SIMPLE_SIZE, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SIZE_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", CLOSURE_SEMIGROUP, 2, 
