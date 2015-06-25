@@ -23,7 +23,7 @@
 
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
-  local s, pairs;
+  local s, pairs, cong;
   if not Length(arg) >= 2 then
     Error("Semigroups: SemigroupCongruence: usage,\n",
           "at least 2 arguments are required,");
@@ -61,6 +61,11 @@ function(arg)
        ((HasIsZeroSimpleSemigroup(s) or IsActingSemigroup(s)) and
         IsZeroSimpleSemigroup(s)) then
       return SEMIGROUPS_SimpleCongFromPairs(s, pairs);
+    elif (HasIsSemilatticeAsSemigroup(s) or IsActingSemigroup(s))
+        and IsSemilatticeAsSemigroup(s) then
+      cong := SemigroupCongruenceByGeneratingPairs(s, pairs);
+      SetIsSemilatticeCongruence(cong, true);
+      return cong;
     elif (HasIsInverseSemigroup(s) or IsActingSemigroup(s))
         and IsInverseSemigroup(s) then
       return SEMIGROUPS_InverseCongFromPairs(s, pairs);
