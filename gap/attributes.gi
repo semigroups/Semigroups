@@ -151,6 +151,8 @@ function(coll)
   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll))
       or (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
+  elif not IsMutable(coll) then 
+    coll := ShallowCopy(coll); 
   fi;
 
   if Size(coll) = 1 then

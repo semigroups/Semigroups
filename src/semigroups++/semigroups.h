@@ -163,8 +163,8 @@ class Semigroup : public SemigroupBase {
         _lenindex.push_back(0);
         _index.reserve(copy._nr);
         _nrrules = copy._duplicate_gens.size();
-        _left->add_cols(*copy._left, new_gens.size());
-        _right->add_cols(*copy._right, new_gens.size());
+        _left = new RecVec<size_t>(*copy._left, new_gens.size());
+        _right = new RecVec<size_t>(*copy._right, new_gens.size());
         _reduced = RecVec<bool>(_nrgens + coll.size(), _nr);
         
         // add the distinct old generators to new _index
@@ -507,7 +507,8 @@ class Semigroup : public SemigroupBase {
     
     void add_generators (const std::unordered_set <T*>&  coll, 
                          bool                            report) {
-      
+      std::cout << "semigroups++: add_generators";
+
       if (coll.empty()) {
         return;
       }
@@ -581,7 +582,7 @@ class Semigroup : public SemigroupBase {
           size_t i = _index.at(_pos); // position in _elements
           size_t b = _first.at(i);
           size_t s = _suffix.at(i); 
-          if (i < old_nr) {
+          if (i < old_nr) { // FIXME this is wrong should be i < old_pos
             // _elements.at(i) is in old semigroup
             for (size_t j = 0; j < old_nrgens; j++) {
               size_t k = _right->get(i, j);
@@ -656,10 +657,9 @@ class Semigroup : public SemigroupBase {
   private:
 
     void inline expand (size_t nr) {
-      // words of length _wordlen + 1 start at position _index.size()
-      _left->expand(nr);
-      _reduced.expand(nr);
-      _right->expand(nr);
+      _left->add_rows(nr);
+      _reduced.add_rows(nr);
+      _right->add_rows(nr);
     }
     
     void inline closure_update (size_t i, 
