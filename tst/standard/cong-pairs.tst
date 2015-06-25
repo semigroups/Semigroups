@@ -198,4 +198,4 @@ gap> Unbind(u);
 gap> Unbind(v);
 
 #E#
-gap> STOP_TEST( "Semigroups package: cong-simple.tst");
+gap> STOP_TEST( "Semigroups package: cong-pairs.tst");
