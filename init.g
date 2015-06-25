@@ -91,6 +91,7 @@ ReadPackage("semigroups/gap/cong-univ.gd");
 ReadPackage("semigroups/gap/cong-inverse.gd");
 ReadPackage("semigroups/gap/cong-simple.gd");
 ReadPackage("semigroups/gap/cong-rees.gd");
+ReadPackage("semigroups/gap/cong-semilattice.gd");
 ReadPackage("semigroups/gap/congruences.gd");
 
 ReadPackage("semigroups/gap/semigroups-generic.gd");

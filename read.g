@@ -160,6 +160,7 @@ ReadPackage("semigroups/gap/cong-univ.gi");
 ReadPackage("semigroups/gap/cong-inverse.gi");
 ReadPackage("semigroups/gap/cong-simple.gi");
 ReadPackage("semigroups/gap/cong-rees.gi");
+ReadPackage("semigroups/gap/cong-semilattice.gi");
 ReadPackage("semigroups/gap/congruences.gi");
 
 ReadPackage("semigroups/gap/semigroups-generic.gi");
