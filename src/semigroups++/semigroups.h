@@ -732,8 +732,6 @@ class Semigroup : public SemigroupBase {
       }
     }
 
-    // TODO make as much as possible here a pointer so that they can be freed
-    // when they aren't required anymore
     size_t                                  _degree;
     std::vector<std::pair<size_t, size_t> > _duplicate_gens;
     std::vector<T*>*                        _elements;
