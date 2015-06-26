@@ -142,7 +142,6 @@ class Semigroup : public SemigroupBase {
 
       if (new_gens.empty()) {// straight copy
         _found_one = copy._found_one;
-        _id = static_cast<T*>(copy._id->copy());
         _index = copy._index;
         _lenindex = copy._lenindex;
         _nrrules = copy._nrrules;
@@ -176,13 +175,15 @@ class Semigroup : public SemigroupBase {
       for (size_t i = 0; i < copy.nrgens(); i++) {
         _gens.push_back(static_cast<T*>(copy._gens.at(i)->copy(deg_plus)));
       }
+      
+      _id = static_cast<T*>(copy._id->copy(deg_plus));
+      
       for (size_t i = 0; i < copy._elements->size(); i++) {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->copy(deg_plus)));
         is_one(*_elements->back(), i);
         _map.insert(std::make_pair(*_elements->back(), i));
       }
 
-      _id = static_cast<T*>(copy._id->copy(deg_plus));
       
       add_generators(new_gens, false);
     }
@@ -507,7 +508,9 @@ class Semigroup : public SemigroupBase {
     
     void add_generators (const std::unordered_set <T*>&  coll, 
                          bool                            report) {
-      std::cout << "semigroups++: add_generators";
+      if (report) {
+        std::cout << "semigroups++: add_generators";
+      }
 
       if (coll.empty()) {
         return;
