@@ -252,6 +252,7 @@ function(S)
     # the degree is the length of the std::vector required to hold the object
     data.degree := SEMIGROUPS_DegreeOfSemigroup(S);
     data.report := SEMIGROUPS_OptionsRec(S).report;
+    data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);
@@ -274,6 +275,7 @@ function(S)
               suffix := [],
               words := []);
 
+  data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
   hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
   data.gens := ShallowCopy(GeneratorsOfSemigroup(S));

@@ -708,6 +708,7 @@ function(S, coll, opts)
     # the degree is the length of the std::vector required to hold the object
     data.degree := SEMIGROUPS_DegreeOfSemigroup(S, coll);
     data.report := SEMIGROUPS_OptionsRec(S).report;
+    data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
     data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                             and IsAttributeStoringRep), data);
     CLOSURE_SEMIGROUP(GenericSemigroupData(S), data);

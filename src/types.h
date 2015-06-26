@@ -124,11 +124,27 @@ bool inline IsCCSemigroup (Obj data) {
  * Get a representative of the semigroup from the data
 *******************************************************************************/
 
+//TODO put these in a separate file
+
 Obj inline Representative (Obj data) {
   // TODO more asserts 
   assert(IsbPRec(data, RNamName("gens")));
   assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
   return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
+}
+
+size_t inline BatchSize (Obj data) {
+  assert(IsbPRec(data, RNamName("batch_size")));
+  assert(IS_INTOBJ(ElmPRec(data, RNamName("batch_size"))));
+  return INT_INTOBJ(ElmPRec(data, RNamName("batch_size")));
+}
+
+bool inline Report (Obj data) {
+  if (IsbPRec(data, RNamName("report"))) {
+    assert(ElmPRec(data, RNamName("report")) == True || ElmPRec(data, RNamName("report")) == False);
+    return (ElmPRec(data, RNamName("report")) == True ? true : false);
+  }
+  return false;
 }
 
 #endif

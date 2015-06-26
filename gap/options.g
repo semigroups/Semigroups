@@ -9,13 +9,12 @@
 ##
 
 BindGlobal("SEMIGROUPS_DefaultOptionsRec",
-  rec(small   := false,
-      hashlen := rec(S := 251, M := 6257, L := 25013),
-      regular := false,
-      generic := true,
-      report  := true));
-
-#TODO add batch_size
+  rec(small      := false,
+      hashlen    := rec(S := 251, M := 6257, L := 25013),
+      regular    := false,
+      generic    := true,
+      report     := true,
+      batch_size := 8192));
 
 MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 

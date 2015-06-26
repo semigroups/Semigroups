@@ -6,9 +6,6 @@
  */
 
 // TODO 
-// 1) improve relations probably don't make the relations in semigroups.h and then transfer them 
-// over here, just create them here using factorisation from semigroups.h and the
-// memmove method from ENUMERATE_SEMIGROUP in this file
 //
 // 2) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
@@ -52,7 +49,7 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
         intval, stop, one;
 
   if (IsCCSemigroup(data)) {
-    InterfaceFromData(data)->enumerate(limit);
+    InterfaceFromData(data)->enumerate(data, limit);
     return data;
   }
 
@@ -70,11 +67,11 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BATCH_SIZE));
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BatchSize(data)));
 
-//#ifdef DEBUG
-  std::cout << "GAP kernel version\n";
-//#endif
+  if (Report(data)) {
+    std::cout << "GAP kernel version\n";
+  }
   
   #ifdef DEBUG
     Pr("here 1\n", 0L, 0L);

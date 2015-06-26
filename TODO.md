@@ -26,13 +26,9 @@ But this:
     
 just runs forever.
 
-* change of degree in closure in C++
-* test `ClosureSemigroup` for more than one new generator
+
 * `SEMIGROUPS_AddGenerators`
 * closure of generic inverse semigroups
-* closure semigroup GAP kernel version (just use `Semigroup`)
-
-
 * improve `EvaluateWord`
 * tests for pbrs 
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
@@ -43,10 +39,10 @@ just runs forever.
 * gmp problems?
 * use namespace in the C++ code
 * clean up the memory usage in semigroups.h, interface.cc
-* add `_report` for all methods that call `enumerate` in semigroups.h
+
 * `DClass(TransformationSemigroup, BooleanMat)` sometimes seg faults or returns an answers which it shouldn't!
-* reporting in semigroups.h (toggle_report and _report)
-* fix the relations methods in the cpp code.
+
+
 * `[ Transformation( [ 3, 3, 3, 3, 3 ] ), Transformation( [ 4, 4, 4, 4, 4 ] ),
   Transformation( [ 1, 3, 1, 5, 1 ] ), Transformation( [ 1, 1, 2, 1, 4 ] ),
   Transformation( [ 1, 1, 5, 1, 3 ] ), Transformation( [ 1, 4, 1, 2, 1 ] ) ]`
@@ -55,6 +51,12 @@ just runs forever.
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 #DONE
+* closure semigroup GAP kernel version (just use `Semigroup`)
+* fix the relations methods in the cpp code.
+* reporting in semigroups.h (toggle_report and _report)
+* add `_report` for all methods that call `enumerate` in semigroups.h
+* change of degree in closure in C++
+* test `ClosureSemigroup` for more than one new generator
 * `relations` method
 * try to find the full PBR monoid when n = 1, 2. 
 * fix `nrrules`

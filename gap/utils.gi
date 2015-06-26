@@ -114,33 +114,41 @@ function()
 
   record := SemigroupsTestRec;
 
-  # handle info levels etc
+  # store current info levels
   record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
   record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);
   record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
-  record.SEMIGROUPS_DefaultOptionsRec :=
-    ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
 
+  # store current user preferences
   record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
   record.TransformationDisplayLimit
    := UserPreference("TransformationDisplayLimit");
   record.NotationForPartialPerms := UserPreference("NotationForPartialPerms");
   record.NotationForTransformations :=
    UserPreference("NotationForTransformations");
-
   record.FreeInverseSemigroupElementDisplay :=
     UserPreference("semigroups", "FreeInverseSemigroupElementDisplay");
+  
+  # store current default options 
+  record.SEMIGROUPS_DefaultOptionsRec :=
+    ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
 
+
+  # set info levels
   SetInfoLevel(InfoWarning, 0);
   SetInfoLevel(InfoSemigroups, 0);
   SetInfoLevel(InfoPackageLoading, 0);
 
+  # set user preferences
   SetUserPreference("PartialPermDisplayLimit", 100);
   SetUserPreference("TransformationDisplayLimit", 100);
   SetUserPreference("NotationForPartialPerms", "component");
   SetUserPreference("NotationForTransformations", "input");
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
                     "minimal");
+
+  # set default options
+  SEMIGROUPS_DefaultOptionsRec.report := false;
 
   # timing
   record.timeofday := IO_gettimeofday();
@@ -160,18 +168,14 @@ InstallGlobalFunction(SemigroupsStopTest,
 function(file)
   local timeofday, record, elapsed, str;
 
-  # handle info levels
-
   record := SemigroupsTestRec;
-
+  
+  # restore info levels
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoPackageLoading);
-  UnbindGlobal("SEMIGROUPS_DefaultOptionsRec");
-  BindGlobal("SEMIGROUPS_DefaultOptionsRec",
-             record.SEMIGROUPS_DefaultOptionsRec);
-  MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 
+  # restore user preferences
   SetUserPreference("PartialPermDisplayLimit",
                     record.PartialPermDisplayLimit);
   SetUserPreference("TransformationDisplayLimit",
@@ -182,6 +186,12 @@ function(file)
                     record.NotationForTransformations);
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
                     record.FreeInverseSemigroupElementDisplay);
+  
+  # restore default options
+  UnbindGlobal("SEMIGROUPS_DefaultOptionsRec");
+  BindGlobal("SEMIGROUPS_DefaultOptionsRec",
+             record.SEMIGROUPS_DefaultOptionsRec);
+  MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
 
   # timing
   timeofday := IO_gettimeofday();
@@ -284,12 +294,12 @@ function()
 
   generic := SEMIGROUPS_DefaultOptionsRec.generic;
 
-  Print("SEMIGROUPS_DefaultOptionsRec.generic := false;\n");
+  Print("Testing with acting semigroup methods enabled . . .\n");
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
                 "testinstall.tst"));
 
-  Print("SEMIGROUPS_DefaultOptionsRec.generic := true;\n");
+  Print("Testing with acting semigroup methods disabled . . .\n");
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
                 "testinstall.tst"));

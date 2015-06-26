@@ -19,10 +19,6 @@
 //#define NDEBUG
 //#define DEBUG
 
-#ifndef BATCH_SIZE
-#define BATCH_SIZE 8192
-#endif
-
 #include "basics.h"
 #include "elements.h"
 
@@ -44,8 +40,16 @@ class Semigroup : public SemigroupBase {
     
     Semigroup& operator= (Semigroup const& copy) = delete;
 
-    // constructors
+    /*******************************************************************************
+     * Constructors . . .
+    *******************************************************************************/
+    
+    /*******************************************************************************
+     * Construct from generators . . .
+    *******************************************************************************/
+
     Semigroup (std::vector<T*> gens, size_t degree) : 
+      _batch_size    (8192),
       _degree        (degree),
       _duplicate_gens(),
       _elements      (new std::vector<T*>()),
@@ -101,29 +105,34 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(_index.size()); 
     }
 
+    /*******************************************************************************
+     * Construct from semigroup and additional generators . . .
+    *******************************************************************************/
+
     // TODO split into 2 methods! 
     Semigroup (const Semigroup& copy, const std::vector<T*>& coll = std::vector<T*>())
       // initialize as if <coll> is not empty . . .
-      : _degree(copy._degree), // copy for comparison in add_generators
+      : _batch_size    (8192),
+        _degree        (copy._degree),    // copy for comparison in add_generators
         _duplicate_gens(copy._duplicate_gens), 
-        _elements(new std::vector<T*>()),
-        _final(copy._final), // copy for assignment to specific positions in add_generators
-        _first(copy._first), // copy for assignment to specific positions in add_generators
-        _found_one(copy._found_one), // copy in case degree doesn't change in add_generators
-        _genslookup(copy._genslookup),
-        _index(),
-        _lenindex(),
-        _map(),
-        _nr(copy._nr),
-        _nrgens(copy._nrgens),
-        _nrrules(0),
-        _pos(copy._pos),
-        _pos_one(copy._pos_one), // copy in case degree doesn't change in add_generators
-        _prefix(copy._prefix),   // copy for assignment to specific positions in add_generators
-        _relation_pos(-1),
-        _relation_gen(0),
-        _suffix(copy._suffix),   // copy for assignment to specific positions in add_generators
-        _wordlen(0) 
+        _elements      (new std::vector<T*>()),
+        _final         (copy._final),     // copy for assignment to specific positions in add_generators
+        _first         (copy._first),     // copy for assignment to specific positions in add_generators
+        _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
+        _genslookup    (copy._genslookup),
+        _index         (),
+        _lenindex      (),
+        _map           (),
+        _nr            (copy._nr),
+        _nrgens        (copy._nrgens),
+        _nrrules       (0),
+        _pos           (copy._pos),
+        _pos_one       (copy._pos_one),   // copy in case degree doesn't change in add_generators
+        _prefix        (copy._prefix),    // copy for assignment to specific positions in add_generators
+        _relation_pos  (-1),
+        _relation_gen  (0),
+        _suffix        (copy._suffix),    // copy for assignment to specific positions in add_generators
+        _wordlen       (0) 
     {
       _elements->reserve(copy._nr);
       _map.reserve(copy._nr);
@@ -186,7 +195,10 @@ class Semigroup : public SemigroupBase {
       add_generators(new_gens, false);
     }
 
-    // destructor
+    /*******************************************************************************
+     * Destructor . . .
+    *******************************************************************************/
+    
     ~Semigroup () {
       // FIXME duplicate generators are not deleted?
       delete _left;
@@ -199,9 +211,16 @@ class Semigroup : public SemigroupBase {
       _id->delete_data();
       delete _id;
     }
+    
+    /*******************************************************************************
+     * Const methods . . .
+    *******************************************************************************/
+    
+    /*******************************************************************************
+     * max_word_length: get the maximum length of a current word!
+    *******************************************************************************/
 
-    // short methods
-    size_t max_word_length () {
+    size_t max_word_length () const {
       if (is_done()) {
         return _lenindex.size() - 2;
       } else if (_nr > _lenindex.back()) { 
@@ -211,41 +230,107 @@ class Semigroup : public SemigroupBase {
       }
     }
     
+    /*******************************************************************************
+     * degree: get the degree of the elements in the semigroup
+    *******************************************************************************/
+    
     size_t degree () const {
       return _degree;
     }
+    
+    /*******************************************************************************
+     * nrgens: get the number of generators of the semigroup
+    *******************************************************************************/
    
     size_t nrgens () const {
       return _gens.size();
     }
     
-    std::vector<T*> gens () {
+    /*******************************************************************************
+     * gens: get the generators of the semigroup
+    *******************************************************************************/
+    
+    std::vector<T*> gens () const {
       return _gens;
     }
     
-    bool is_done () {
+    /*******************************************************************************
+     * is_done: returns true if the semigroup is fully enumerated and false if not
+    *******************************************************************************/
+    
+    bool is_done () const {
       return (_pos >= _nr);
     }
     
-    bool is_begun () {
+    /*******************************************************************************
+     * is_begun: returns true if no elements (other than the generators) have
+     * been enumerated
+    *******************************************************************************/
+    
+    bool is_begun () const {
       assert(_lenindex.size() > 1);
       return (_pos >= _lenindex.at(1));
     }
+    
+    /*******************************************************************************
+     * current_size: the number of elements enumerated so far
+    *******************************************************************************/
 
-    size_t current_size () {
+    size_t current_size () const {
       return _elements->size();
     }
     
+    size_t current_nrrules () const {
+      return _nrrules;
+    }
+    
+    size_t prefix (size_t element_nr) const {
+      return _prefix.at(element_nr);
+    }
+    
+    size_t suffix (size_t element_nr) const {
+      return _suffix.at(element_nr);
+    }
+    
+    size_t first_letter (size_t element_nr) const {
+      return _first.at(element_nr);
+    }
+
+    size_t final_letter (size_t element_nr) const {
+      return _final.at(element_nr);
+    }
+    
+    size_t batch_size () const {
+      return _batch_size;
+    }
+
+    /*******************************************************************************
+     * Non-const methods . . .  
+    *******************************************************************************/
+
+    size_t nrrules (bool report) {
+      enumerate(-1, report);
+      return _nrrules;
+    }
+
+    void set_batch_size (size_t batch_size) {
+      _batch_size = batch_size;
+    }
+
     size_t size (bool report) {
       enumerate(-1, report);
       return _elements->size();
     }
-   
-    size_t test_membership (T* x) {
+    
+    /*******************************************************************************
+     * test_membership: check if the element x belongs to the semigroup
+    *******************************************************************************/
+
+    size_t test_membership (T* x, bool report) {
       return (position(x) != (size_t) -1);
     }
 
-    size_t position (T* x) {
+    size_t position (T* x, bool report) {
       if (x->degree() != _degree) {
         return -1;
       }
@@ -258,52 +343,32 @@ class Semigroup : public SemigroupBase {
         if (is_done()) {
           return -1;
         }
-        enumerate(_nr + 1); 
-        // the _nr means we enumerate BATCH_SIZE more elements
+        enumerate(_nr + 1, report); 
+        // the _nr means we enumerate _batch_size more elements
       }
     }
 
-    std::vector<T*>* elements (size_t limit) {
-      enumerate(limit);
+    std::vector<T*>* elements (size_t limit, bool report) {
+      enumerate(limit, report);
       return _elements;
     }
     
-    size_t nrrules () {
-      return _nrrules;
-    }
-    
-    RecVec<size_t>* right_cayley_graph () {
-      enumerate(-1);
+    RecVec<size_t>* right_cayley_graph (bool report) {
+      enumerate(-1, report);
       return _right;
     }
     
-    RecVec<size_t>* left_cayley_graph () {
-      enumerate(-1);
+    RecVec<size_t>* left_cayley_graph (bool report) {
+      enumerate(-1, report);
       return _left;
     }
-
-    size_t prefix (size_t element_nr) {
-      return _prefix.at(element_nr);
-    }
     
-    size_t suffix (size_t element_nr) {
-      return _suffix.at(element_nr);
-    }
-    
-    size_t first_letter (size_t element_nr) {
-      return _first.at(element_nr);
-    }
-
-    size_t final_letter (size_t element_nr) {
-      return _final.at(element_nr);
-    }
-    
-    Word* factorisation (size_t pos) { 
+    Word* factorisation (size_t pos, bool report) { 
       // factorisation of _elements.at(pos)
 
       Word* word = new Word();
       if (pos > _nr && !is_done()) {
-        enumerate(pos);
+        enumerate(pos, report);
       }
       
       if (pos < _nr) {
@@ -328,9 +393,9 @@ class Semigroup : public SemigroupBase {
     // <relation> is empty if there are no more relations, and it has length 2
     // in the special case of duplicate generators.
     
-    void next_relation (std::vector<size_t>& relation) {
+    void next_relation (std::vector<size_t>& relation, bool report) {
       if (!is_done()) {
-        enumerate(-1);
+        enumerate(-1, report);
       }
       
       relation.clear();
@@ -375,21 +440,23 @@ class Semigroup : public SemigroupBase {
         } else {
           _relation_gen = 0;
           _relation_pos++;
-          next_relation(relation);
+          next_relation(relation, report);
         }
       }
     }
    
-    void enumerate (size_t limit) {
-      enumerate(limit, false);
-    }
+    //void enumerate (size_t limit) {
+    //  enumerate(limit, false);
+    //}
 
     void enumerate (size_t limit, bool report) {
       if (_pos >= _nr || limit <= _nr) return;
-      limit = std::max(limit, _nr + BATCH_SIZE);
+      limit = std::max(limit, _nr + _batch_size);
       
-      std::cout << "C++ version\n";
-      std::cout << "limit = " << limit << "\n";
+      if (report) {
+        std::cout << "semigroups++: enumerate" << std::endl;
+        std::cout << "limit = " << limit << std::endl;
+      }
       
       T x(_degree, _gens.at(0)); 
       // pass in sample object to, for example, pass on the semiring for
@@ -759,6 +826,7 @@ class Semigroup : public SemigroupBase {
     RecVec<size_t>*                         _right;
     std::vector<size_t>                     _suffix;
     size_t                                  _wordlen;
+    size_t                                  _batch_size;
 };
 
 #endif
