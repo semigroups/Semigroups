@@ -46,7 +46,10 @@ class Element {
     ~Element () {}
 
     bool operator == (const Element<T> & that) const {
-      assert(this->degree() == that.degree());
+      if (this->degree() != that.degree()) {
+        return false;
+      }
+
       for (size_t i = 0; i < this->degree(); i++) {
         if ((*_data)[i] != (*that._data)[i]) {
           return false;
@@ -69,7 +72,8 @@ class Element {
       return _data->size();
     }
 
-    virtual Element* copy (size_t increase_deg_by = 0) const {
+    virtual Element<T>* copy (size_t increase_deg_by = 0) const {
+      assert(increase_deg_by == 0);
       return new Element(*_data);
     }
 
@@ -124,7 +128,8 @@ class Transformation : public Element<T> {
       return new Transformation(image);
     }
   
-    Element<T>* copy (size_t increase_deg_by = 0) const {
+    Element<T>* copy (size_t increase_deg_by = 0) const override {
+        
       Element<T>* out = new Element<T>(*this->data());
       size_t deg = out->degree();
       for (size_t i = deg; i < deg + increase_deg_by; i++) {
@@ -182,7 +187,7 @@ class PartialPerm : public Element<T> {
       return new PartialPerm(image);
     }
     
-    Element<T>* copy (size_t increase_deg_by = 0) const {
+    Element<T>* copy (size_t increase_deg_by = 0) const override {
       Element<T>* out = new Element<T>(*this->data());
       size_t deg = out->degree();
       for (size_t i = deg; i < deg + increase_deg_by; i++) {

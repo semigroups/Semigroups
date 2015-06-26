@@ -179,11 +179,10 @@ class Semigroup : public SemigroupBase {
       _id = static_cast<T*>(copy._id->copy(deg_plus));
       
       for (size_t i = 0; i < copy._elements->size(); i++) {
-        _elements->push_back(static_cast<T*>(copy._elements->at(i)->copy(deg_plus)));
+        _elements->push_back(static_cast<T*>(copy._elements->at(i)->T::copy(deg_plus)));
         is_one(*_elements->back(), i);
         _map.insert(std::make_pair(*_elements->back(), i));
       }
-
       
       add_generators(new_gens, false);
     }
