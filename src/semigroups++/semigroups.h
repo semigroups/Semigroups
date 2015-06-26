@@ -117,7 +117,7 @@ class Semigroup : public SemigroupBase {
         _nr(copy._nr),
         _nrgens(copy._nrgens),
         _nrrules(0),
-        _pos(0),
+        _pos(copy._pos),
         _pos_one(copy._pos_one), // copy in case degree doesn't change in add_generators
         _prefix(copy._prefix),   // copy for assignment to specific positions in add_generators
         _relation_pos(-1),
@@ -146,7 +146,6 @@ class Semigroup : public SemigroupBase {
         _lenindex = copy._lenindex;
         _nrrules = copy._nrrules;
         _left = new RecVec<size_t>(*copy._left);
-        _pos = copy._pos;
         _pos_one = copy._pos_one;
         _reduced = copy._reduced;
         _relation_gen = copy._relation_gen;
@@ -516,10 +515,13 @@ class Semigroup : public SemigroupBase {
       }
 
       assert(degree() == (*coll.begin())->degree());
-
+                
       size_t old_nrgens  = _nrgens; 
+      size_t old_pos     = _pos;
       size_t old_nr      = _nr;
       size_t nr_old_left = _nr;
+      
+      _pos = 0;
       
       std::vector<bool> old_new; // have we seen _elements->at(i) yet in new?
       old_new.reserve(old_nr);
@@ -584,8 +586,8 @@ class Semigroup : public SemigroupBase {
           size_t i = _index.at(_pos); // position in _elements
           size_t b = _first.at(i);
           size_t s = _suffix.at(i); 
-          if (i < old_nr) { // FIXME this is wrong should be i < old_pos
-            // _elements.at(i) is in old semigroup
+          if (i < old_pos) { 
+            // _elements.at(i) is in old semigroup, and its descendants are known
             for (size_t j = 0; j < old_nrgens; j++) {
               size_t k = _right->get(i, j);
               if (!old_new.at(k)) { // it's new!
