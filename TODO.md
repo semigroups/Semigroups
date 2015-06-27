@@ -26,6 +26,7 @@ But this:
     
 just runs forever.
 
+* remove RecVecs
 * split the "closure" constructor for a semigroup into 2 methods
 * faster idempotent c++ code (trace and check idempotent at the same time)
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate

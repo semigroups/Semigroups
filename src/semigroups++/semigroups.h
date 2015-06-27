@@ -11,7 +11,6 @@
 // 2) remove RecVecs
 // 6) the other functionality of Semigroupe.
 // 7) rename degree to element_size or something
-// 8) make sure relation_pos/gen are set everywhere
 
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
@@ -549,7 +548,6 @@ class Semigroup : public SemigroupBase {
         expand(_nr - nr_shorter_elements);
 
         if (_pos > _nr || _pos == _lenindex.at(_wordlen + 1)) {
-          //TODO move this (except last 2 lines) out 
           for (size_t i = _lenindex.at(_wordlen); i < _pos; i++) { 
             size_t p = _prefix.at(_index.at(i));
             size_t b = _final.at(_index.at(i)); 
