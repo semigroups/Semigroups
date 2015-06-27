@@ -150,7 +150,7 @@ InstallMethod(SemigroupByGenerators,
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local n, i, S, filts, pos, x;
-
+  
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
   gens := AsList(gens);
 
@@ -169,8 +169,8 @@ function(gens, opts)
       fi;
     else
       Sort(gens, IsGreensDLeq(Semigroup(gens)));
-      if IsMultiplicativeElementWithOneCollection(gens) and IsOne(gens[1]) and
-          IsBound(gens[2]) and gens[1] in Semigroup(gens[2]) then
+      if IsMultiplicativeElementWithOneCollection(gens) and IsOne(gens[1]) 
+          and gens[1] in Semigroup(gens[2]) then
         Remove(gens, 1);
       fi;
     fi;
@@ -183,16 +183,14 @@ function(gens, opts)
     if InfoLevel(InfoSemigroups) > 1 then
       n := Length(gens);
       for i in [2 .. n] do
-        if not gens[i] in S then
-          S := ClosureSemigroupNC(S, [gens[i]], opts);
-        fi;
+        S := SEMIGROUPS_AddGenerators(S, [gens[i]], opts);
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far\r");
       od;
       Print("\n");
     else
       for x in gens do
-        S := ClosureSemigroup(S, x, opts);
+        S := SEMIGROUPS_AddGenerators(S, [x], opts);
       od;
     fi;
     return S;
@@ -731,7 +729,7 @@ function(S, coll, opts)
 end);
 
 InstallGlobalFunction(SEMIGROUPS_AddGenerators, 
-function(S, coll)
+function(S, coll, opts)
   local data;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
@@ -751,7 +749,7 @@ function(S, coll)
 
   data := GenericSemigroupData(S);
   ADD_GENERATORS_SEMIGROUP(data, coll);
-  S := Semigroup(data!.gens);
+  S := Semigroup(data!.gens, opts);
   SetGenericSemigroupData(S, data);
   return S;
 end);

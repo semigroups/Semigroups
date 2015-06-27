@@ -26,8 +26,9 @@ But this:
     
 just runs forever.
 
-
-* `SEMIGROUPS_AddGenerators` will only work for collection of generators of same degree.
+* split the "closure" constructor for a semigroup into 2 methods
+* faster idempotent c++ code (trace and check idempotent at the same time)
+* replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * closure of generic inverse semigroups
 * improve `EvaluateWord`
 * tests for pbrs 
@@ -35,7 +36,8 @@ just runs forever.
 * finish partitioned binary relation stuff (more tests and C++)
 * check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
-* remove C++11
+* check for memleaks
+* remove C++11?
 * gmp problems?
 * use namespace in the C++ code
 * clean up the memory usage in semigroups.h, interface.cc
@@ -51,6 +53,7 @@ just runs forever.
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 #DONE
+* `SEMIGROUPS_AddGenerators` will only work for collection of generators of same degree.
 * closure semigroup GAP kernel version (just use `Semigroup`)
 * fix the relations methods in the cpp code.
 * reporting in semigroups.h (toggle_report and _report)
@@ -68,6 +71,7 @@ just runs forever.
 
 #DO LATER
 * non-prime finite fields
+* a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 #Gaplint - Notes#
 
