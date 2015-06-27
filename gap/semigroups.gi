@@ -647,6 +647,7 @@ function(S, coll, opts)
 end);
 
 #recreate the lambda/rho orb using the higher degree!
+# TODO move this!
 BindGlobal("SEMIGROUPS_ChangeDegree", # for a transformation semigroup
 function(o, old_deg, t)
   local deg, extra, ht, max, i, orb;
@@ -726,6 +727,32 @@ InstallMethod(ClosureSemigroupNC,
 "for a semigroup, empty collection, and record",
 [IsSemigroup, IsListOrCollection and IsEmpty, IsRecord],
 function(S, coll, opts)
+  return S;
+end);
+
+InstallGlobalFunction(SEMIGROUPS_AddGenerators, 
+function(S, coll)
+  local data;
+
+  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
+    Error("SEMIGROUPS_AddGenerators: usage,\n",
+          "the arguments do not belong to the same family,");
+    return;
+  fi;
+
+  if IsActingSemigroup(S)
+      or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
+          <> DegreeOfTransformationCollection(coll)) 
+      or (IsPartialPermSemigroup(S) and DegreeOfPartialPermSemigroup(S) <> 
+          DegreeOfPartialPermCollection(S)) 
+      or not SEMIGROUPS_IsCCSemigroup(S) then 
+    return ClosureSemigroup(S, coll);
+  fi;
+
+  data := GenericSemigroupData(S);
+  ADD_GENERATORS_SEMIGROUP(data, coll);
+  S := Semigroup(data!.gens);
+  SetGenericSemigroupData(S, data);
   return S;
 end);
 

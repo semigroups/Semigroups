@@ -214,18 +214,17 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 20
 
 #T# ClosureTest10
-gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+gap> gens := [ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 2, 4, 1, 1 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ) ];;
-gap> s:=Monoid(gens[1]);             
-<commutative transformation monoid on 4 pts with 1 generator>
-gap> for i in [1..Length(gens)] do
-> s:=ClosureSemigroup(s, gens[i]);
+gap> S := Monoid(gens[1]);;
+gap> for x in gens do
+> S := ClosureSemigroup(S, x);
 > od;
-gap> Size(s);
+gap> Size(S);
 115
-gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
+gap> NrRClasses(S); NrLClasses(S); NrDClasses(S); NrIdempotents(S);
 12
 20
 6

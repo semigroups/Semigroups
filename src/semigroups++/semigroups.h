@@ -168,8 +168,8 @@ class Semigroup : public SemigroupBase {
           _pos_one = 0;
         } 
         _lenindex.push_back(0);
+        _lenindex.push_back(copy._lenindex.at(1));
         _index.reserve(copy._nr);
-        _nrrules = copy._duplicate_gens.size();
         _left = new RecVec<size_t>(*copy._left, new_gens.size());
         _right = new RecVec<size_t>(*copy._right, new_gens.size());
         _reduced = RecVec<bool>(_nrgens + coll.size(), _nr);
@@ -563,7 +563,13 @@ class Semigroup : public SemigroupBase {
         if (report) {
           std::cout << "found " << _nr << " elements, ";
           std::cout << _nrrules << " rules, ";
-          std::cout << "max word length " << _wordlen + 1 << ", so far" << std::endl;
+          std::cout << "max word length " << max_word_length();
+          if (!is_done()) {
+            std::cout << ", so far" << std::endl;
+          } else {
+            std::cout << ", finished!" << std::endl;
+          }
+
         }
       }
       x.delete_data();
@@ -574,21 +580,20 @@ class Semigroup : public SemigroupBase {
     void add_generators (const std::unordered_set <T*>&  coll, 
                          bool                            report) {
       if (report) {
-        std::cout << "semigroups++: add_generators";
+        std::cout << "semigroups++: add_generators" << std::endl;
       }
 
       if (coll.empty()) {
         return;
       }
 
-      assert(degree() == (*coll.begin())->degree());
-                
+      assert(degree() == (*coll.begin())->degree()); 
+      
+      // get some parameters from the old semigroup
       size_t old_nrgens  = _nrgens; 
       size_t old_pos     = _pos;
       size_t old_nr      = _nr;
       size_t nr_old_left = _nr;
-      
-      _pos = 0;
       
       std::vector<bool> old_new; // have we seen _elements->at(i) yet in new?
       old_new.reserve(old_nr);
@@ -600,6 +605,11 @@ class Semigroup : public SemigroupBase {
         nr_old_left--;
       }
 
+      // reset the data structure 1/2
+      _nrrules = _duplicate_gens.size();
+      _pos = 0;
+      _index.erase(_index.begin() + _lenindex.at(1), _index.end());
+      
       // add the new generators to new _gens, elements, and _index
       for (T* x: coll) {
         if (_map.find(*x) == _map.end()) {
@@ -618,27 +628,27 @@ class Semigroup : public SemigroupBase {
           _nr++;
         }
       }
+      
+      // reset the data structure 2/2
       _nrgens = _gens.size();
-
-      // make room for new generators if necessary
+      _lenindex.clear();
+      _lenindex.push_back(0);
+      _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
+      _wordlen = 0;
+      
+      // add columns for new generators if necessary
       if (_reduced.nrcols() != _nrgens) {
         _reduced = RecVec<bool>(_nrgens, _nr);
       }
       if (_right->nrcols() != _nrgens) {
-        // tmp_right = RecVec<size_t>(_right, nrcols)
-        // delete _right
-        _right->add_cols(coll.size());
+        _right = add_cols(_right, coll.size());
       }
       if (_left->nrcols() != _nrgens) {
-        _left->add_cols(coll.size());
+        _left = add_cols(_left, coll.size());
       }
       
-      // expand left/right/reduced by the number of newly added elements
+      // add rows in left/right/reduced for newly added generators
       expand(_nrgens - old_nrgens);
-      _lenindex.clear();
-      _lenindex.push_back(0);
-      _lenindex.push_back(_index.size()); 
-      _wordlen = 0;
 
       size_t nr_shorter_elements;
       T x(_degree, _gens.at(0)); 
@@ -726,6 +736,12 @@ class Semigroup : public SemigroupBase {
     }
       
   private:
+    
+    RecVec<size_t>* add_cols (RecVec<size_t>* rv1, size_t nr) {
+        RecVec<size_t>* rv2 = new RecVec<size_t>(*rv1, nr);
+        delete rv1;
+        return rv2;
+    }
 
     void inline expand (size_t nr) {
       _left->add_rows(nr);
@@ -801,6 +817,7 @@ class Semigroup : public SemigroupBase {
       }
     }
 
+    size_t                                  _batch_size;
     size_t                                  _degree;
     std::vector<std::pair<size_t, size_t> > _duplicate_gens;
     std::vector<T*>*                        _elements;
@@ -826,7 +843,6 @@ class Semigroup : public SemigroupBase {
     RecVec<size_t>*                         _right;
     std::vector<size_t>                     _suffix;
     size_t                                  _wordlen;
-    size_t                                  _batch_size;
 };
 
 #endif

@@ -41,6 +41,7 @@ class InterfaceBase {
     virtual Obj            position (Obj data, Obj x) = 0;
     virtual Obj            word (Obj data, Obj pos) = 0;
     virtual void           relations (Obj data) = 0;
+    virtual void           add_generators (Obj data, Obj coll) = 0;
     //virtual size_t         simple_size () = 0;
 };
 
@@ -79,6 +80,8 @@ Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x);
 Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data);
 
 Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data);
+
+Obj ADD_GENERATORS_SEMIGROUP (Obj self, Obj data, Obj coll);
 
 Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj old_data);
 

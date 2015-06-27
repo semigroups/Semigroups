@@ -27,7 +27,7 @@ But this:
 just runs forever.
 
 
-* `SEMIGROUPS_AddGenerators`
+* `SEMIGROUPS_AddGenerators` will only work for collection of generators of same degree.
 * closure of generic inverse semigroups
 * improve `EvaluateWord`
 * tests for pbrs 

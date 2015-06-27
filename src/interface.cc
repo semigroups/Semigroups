@@ -106,7 +106,6 @@ class Interface : public InterfaceBase {
       return _semigroup;
     }
 
-
     bool is_done () const {
       return _semigroup->is_done();
     }
@@ -121,6 +120,21 @@ class Interface : public InterfaceBase {
     
     size_t current_max_word_length () const {
       return _semigroup->max_word_length();
+    }
+
+    void add_generators(Obj data, Obj coll) {
+      assert(IS_PLIST(coll));
+      assert(LEN_PLIST(coll) > 0);
+      std::unordered_set<T*> coll_cc;
+      for(size_t i = 1; i <= (size_t) LEN_PLIST(coll); i++) {
+        coll_cc.insert(_converter->convert(ELM_PLIST(coll, i), _semigroup->degree()));
+      }
+      _semigroup->add_generators(coll_cc, Report(data));
+      Obj gens = ElmPRec(data, RNamName("gens")); // TODO make this safe
+      for(size_t i = 0; i < _semigroup->nrgens(); i++) {
+        AssPlist(gens, i + 1, _converter->unconvert(_semigroup->gens().at(i)));
+      }
+      //TODO unbind things in data!!
     }
 
     void enumerate (Obj data, Obj limit) {
@@ -601,6 +615,14 @@ Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data) {
   }
   InterfaceFromData(new_data, InterfaceFromData(old_data)->semigroup());
   return new_data;
+}
+
+Obj ADD_GENERATORS_SEMIGROUP (Obj self, Obj data, Obj coll) {
+  if (TypeSemigroup(data) == UNKNOWN) { 
+    ErrorQuit("ADD_GENERATORS_SEMIGROUP: this shouldn't happen!", 0L, 0L);
+  }
+  InterfaceFromData(data)->add_generators(data, coll);
+  return data;
 }
 
 Obj MAX_WORD_LEN_SEMIGROUP(Obj self, Obj data) {

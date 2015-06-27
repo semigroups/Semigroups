@@ -59,6 +59,7 @@ DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsAssociativeElement]);
 DeclareOperation("ClosureSemigroupNC", 
                  [IsSemigroup, IsListOrCollection, IsRecord]);
+DeclareGlobalFunction("SEMIGROUPS_AddGenerators");
 
 DeclareAttribute("Generators", IsSemigroup);
 
@@ -83,6 +84,7 @@ DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
+
 
 # undoc
 

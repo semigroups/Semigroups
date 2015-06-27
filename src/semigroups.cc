@@ -662,6 +662,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", CLOSURE_SEMIGROUP, 2, 
                           "old_data, new_data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", ADD_GENERATORS_SEMIGROUP, 2, 
+                          "data, coll"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", LENGTH_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", NR_RULES_SEMIGROUP, 1, 
