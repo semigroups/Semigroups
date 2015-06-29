@@ -513,13 +513,13 @@ true]]></Example>
     <Oper Name="RectangularBand" Arg="m, n"/>
     <Returns>
       A Rees matrix semigroup
-      isomorphic to an <A>m</A> by <A>n</A> rectangular band.
+      which is an <A>m</A> by <A>n</A> rectangular band.
     </Returns>
       <Description>
         If <A>m</A> and <A>n</A> are positive integers,
         then this function returns a Rees matrix semigroup with <A>m</A>
         rows and <A>n</A> columns over the trivial group.
-        Such a Rees matrix semigroup is isomorphic to an <A>m</A> by <A>n</A>
+        Such a Rees matrix semigroup is an <A>m</A> by <A>n</A>
         rectangular band. <P/>
 
         See <Ref Prop="IsRectangularBand"/> for more information.
