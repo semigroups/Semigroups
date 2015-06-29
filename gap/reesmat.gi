@@ -140,6 +140,19 @@ function(filter, n)
   return ReesZeroMatrixSemigroup(Group(()), mat);
 end);
 
+InstallMethod(RectangularBandCons,
+"for a filter and a positive integer and positive integer",
+[IsReesMatrixSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, n)
+  local id, mat;
+
+  id := ();
+  mat := List([1 .. n], x -> List([1 .. m], y -> id));
+  return ReesMatrixSemigroup(Group(id), mat);
+end);
+
+#
+
 InstallMethod(IsInverseSemigroup,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
