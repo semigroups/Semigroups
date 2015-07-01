@@ -335,15 +335,14 @@ class Semigroup : public SemigroupBase {
      * _elements->at(j) by tracing the Cayley graph. Assumes i, j are less than _nr.
     *******************************************************************************/
     
-    size_t product_by_reduction (size_t i, size_t j) const {
+    size_t product_by_reduction (size_t i, size_t j) {
       assert(i < _nr && j < _nr);
-
       if (length(i) <= length(j)) {
-        while (i != (size_t) -1) {
-          j = _left->get(j, _final.at(i));
-          i = _prefix.at(i);
-        }
-        return j;
+          while (i != (size_t) -1) {
+            j = _left->get(j, _final.at(i));
+            i = _prefix.at(i);
+          }
+          return j;
       } else {
         while (j != (size_t) -1) {
           i = _right->get(i, _first.at(j));
@@ -371,9 +370,23 @@ class Semigroup : public SemigroupBase {
       if (_nr_idempotents == 0) {
         enumerate(-1, report);
         
-        for (size_t i = 0; i < _nr; i++) {
-          if (product_by_reduction(i, i) == i) {
-            _nr_idempotents++;
+        size_t sum_word_lengths = 0;
+        for (size_t i = 1; i < _lenindex.size(); i++) {
+          sum_word_lengths += i * (_lenindex.at(i) - _lenindex.at(i - 1));
+        }
+          
+        if (_nr * _tmp_product.complexity() < sum_word_lengths) {
+          for (size_t i = 0; i < _nr; i++) {
+            _tmp_product.redefine(_elements->at(i), _elements->at(i));
+            if (_tmp_product == *_elements->at(i)) {
+              _nr_idempotents++;
+            }
+          }
+        } else {
+          for (size_t i = 0; i < _nr; i++) {
+            if (product_by_reduction(i, i) == i) {
+              _nr_idempotents++;
+            }
           }
         }
       }

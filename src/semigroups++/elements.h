@@ -138,6 +138,9 @@ class Transformation : public Element<T> {
       return out;
     }
 
+    size_t complexity () const {
+      return this->degree();
+    }
 };
 
 // hash function for unordered_map
@@ -194,6 +197,10 @@ class PartialPerm : public Element<T> {
         out->push_back(0);
       }
       return out;
+    }
+
+    size_t complexity () const {
+      return this->degree();
     }
 };
 
@@ -255,6 +262,9 @@ class BooleanMat: public Element<bool> {
       return new BooleanMat(mat);
     }
 
+    size_t complexity () const {
+      return pow(this->degree(), 3);
+    }
 };
 
 // hash function for unordered_map
@@ -345,6 +355,10 @@ class Bipartition : public Element<u_int32_t> {
         image.push_back(i);
       }
       return new Bipartition(image);
+    }
+    
+    size_t complexity () const {
+      return pow(this->degree(), 2);
     }
 
   private:
@@ -440,6 +454,10 @@ class MatrixOverSemiring: public Element<long> {
   
     Semiring* semiring () {
       return _semiring;
+    }
+    
+    size_t complexity () const {
+      return pow(this->degree(), 3);
     }
 
   private: 
@@ -581,6 +599,10 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
         adj.at(i + n).push_back(i);
       }
       return new PartitionedBinaryRelation(adj);
+    }
+    
+    size_t complexity () const {
+      return pow((2 * this->degree()), 3);
     }
 
   private:
