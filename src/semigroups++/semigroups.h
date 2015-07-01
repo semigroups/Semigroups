@@ -186,7 +186,7 @@ class Semigroup : public SemigroupBase {
         // add the distinct old generators to new _index
         for (size_t i = 0; i < copy._lenindex.at(1); i++) {
           _index.push_back(copy._index.at(i));
-          _index.push_back(1);
+          _length.push_back(1);
         }
       }
 
