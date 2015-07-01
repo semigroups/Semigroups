@@ -35,6 +35,7 @@ class InterfaceBase {
     virtual void           find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
     virtual void           enumerate (Obj data, Obj limit) = 0;
     virtual size_t         size (Obj data) = 0;
+    virtual size_t         nr_idempotents (Obj data) = 0;
     virtual void           right_cayley_graph (Obj data) = 0;
     virtual void           left_cayley_graph (Obj data) = 0;
     virtual void           elements (Obj data, Obj limit) = 0;
@@ -84,5 +85,7 @@ Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data);
 Obj ADD_GENERATORS_SEMIGROUP (Obj self, Obj data, Obj coll);
 
 Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj old_data);
+
+Obj NR_IDEMPOTENTS_SEMIGROUP (Obj self, Obj data);
 
 #endif

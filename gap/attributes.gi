@@ -31,6 +31,15 @@
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
+InstallMethod(NrIdempotents, "for a semigroup",
+[IsSemigroup], 
+function(S)
+  if SEMIGROUPS_IsCCSemigroup(S) then 
+    return NR_IDEMPOTENTS_SEMIGROUP(GenericSemigroupData(S));
+  fi;
+  return Length(Idempotents(S));
+end);
+
 InstallMethod(GroupOfUnits, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)

@@ -129,7 +129,11 @@ class Interface : public InterfaceBase {
     size_t current_max_word_length () const {
       return _semigroup->max_word_length();
     }
-
+    
+    size_t nr_idempotents (Obj data) {
+      return _semigroup->nr_idempotents(Report(data));
+    }
+   
     void add_generators(Obj data, Obj coll) {
       assert(IS_PLIST(coll));
       assert(LEN_PLIST(coll) > 0);
@@ -649,7 +653,7 @@ Obj ADD_GENERATORS_SEMIGROUP (Obj self, Obj data, Obj coll) {
   return data;
 }
 
-Obj MAX_WORD_LEN_SEMIGROUP(Obj self, Obj data) {
+Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj data) {
   if (TypeSemigroup(data) != UNKNOWN) { 
     return INTOBJ_INT(InterfaceFromData(data)->current_max_word_length());
   } else {
@@ -662,3 +666,10 @@ Obj MAX_WORD_LEN_SEMIGROUP(Obj self, Obj data) {
   }
 }
 
+Obj NR_IDEMPOTENTS_SEMIGROUP (Obj self, Obj data) {
+  if (TypeSemigroup(data) != UNKNOWN) { 
+    return INTOBJ_INT(InterfaceFromData(data)->nr_idempotents(data));
+  } else {
+    
+  }
+}

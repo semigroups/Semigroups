@@ -760,8 +760,6 @@ end);
 ## 6. Idempotents . . .
 #############################################################################
 
-InstallMethod(NrIdempotents, "for a semigroup",
-[IsSemigroup], S -> Length(Idempotents(S)));
 
 InstallMethod(NrIdempotents, "for a Green's class",
 [IsGreensClass], C -> Length(Idempotents(C)));
