@@ -302,7 +302,7 @@ end);
 
 InstallMethod(\=,
 "for two congruence classes",
-[IsCongruenceClass and IsFinite, IsCongruenceClass and IsFinite],
+[IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
   return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
     and [Representative(class1), Representative(class2)]
