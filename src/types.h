@@ -60,7 +60,7 @@ inline Class* CLASS_OBJ(Obj o) {
 #define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
 #define IS_NAT_MAT(x)            (CALL_1ARGS(IsNaturalMatrix, x) == True)
 #define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
-#define IS_PBR(x)                (CALL_1ARGS(IsPartitionedBinaryRelation, x) == True)
+#define IS_PBR(x)                (CALL_1ARGS(IsPBR, x) == True)
 
 /*******************************************************************************
  * Imported types from the library
@@ -89,8 +89,8 @@ extern Obj IsNaturalMatrix;
 extern Obj NaturalMatrixType;
 extern Obj IsMatrixOverPrimeField;
 extern Obj AsMatrixOverPrimeFieldNC;
-extern Obj IsPartitionedBinaryRelation;
-extern Obj PartitionedBinaryRelationType;
+extern Obj IsPBR;
+extern Obj PBRType;
 
 /*******************************************************************************
  * What type of semigroup do we have?
@@ -111,7 +111,7 @@ enum SemigroupType {
   PROJ_MAX_PLUS_MAT,
   NAT_MAT,
   MAT_OVER_PF, 
-  PBR
+  PBR_TYPE
 };
 
 extern SemigroupType TypeSemigroup (Obj data);

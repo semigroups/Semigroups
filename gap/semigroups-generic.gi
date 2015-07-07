@@ -24,7 +24,7 @@ function(S)
            or IsPartialPermSemigroup(S) 
            or IsBipartitionSemigroup(S)
            or IsBooleanMatSemigroup(S) 
-           or IsPartitionedBinaryRelationSemigroup(S) 
+           or IsPBRSemigroup(S) 
            or IsMatrixOverSemiringSemigroup(S);
 end);
 
@@ -53,8 +53,8 @@ function(arg)
     return DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
   elif IsBipartitionSemigroup(S) then 
     return 2 * DegreeOfBipartitionSemigroup(S);
-  elif IsPartitionedBinaryRelationSemigroup(S) then 
-    return 2 * DegreeOfPartitionedBinaryRelationSemigroup(S);
+  elif IsPBRSemigroup(S) then 
+    return 2 * DegreeOfPBRSemigroup(S);
   else
     Error();
     return;

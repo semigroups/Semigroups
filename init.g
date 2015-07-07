@@ -28,6 +28,8 @@ ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/io.gd");
 ReadPackage("semigroups/gap/options.g");
 
+ReadPackage("semigroups/gap/star.gd");
+
 ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/acting.gd");
 ReadPackage("semigroups/gap/ideals-acting.gd");

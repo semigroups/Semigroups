@@ -14,41 +14,36 @@
 # Partitioned Binary Relations. MATHEMATICA SCANDINAVICA, v113, n1, p. 30-52, 
 # http://arxiv.org/abs/1102.0862
 
-DeclareCategory("IsPartitionedBinaryRelation", 
+DeclareCategory("IsPBR", 
                 IsMultiplicativeElementWithInverse and
                 IsAssociativeElementWithStar);
                 
-DeclareCategoryCollections("IsPartitionedBinaryRelation");
-DeclareCategoryCollections("IsPartitionedBinaryRelationCollection");
+DeclareCategoryCollections("IsPBR");
+DeclareCategoryCollections("IsPBRCollection");
 
-BindGlobal("PartitionedBinaryRelationFamily",
-           NewFamily("PartitionedBinaryRelationFamily",
-                     IsPartitionedBinaryRelation,
+BindGlobal("PBRFamily",
+           NewFamily("PBRFamily",
+                     IsPBR,
                      CanEasilySortElements,
                      CanEasilySortElements));
 
-BindGlobal("PartitionedBinaryRelationType",
-           NewType(PartitionedBinaryRelationFamily,
-                   IsPartitionedBinaryRelation and IsPositionalObjectRep));
+BindGlobal("PBRType",
+           NewType(PBRFamily,
+                   IsPBR and IsPositionalObjectRep));
 
-DeclareAttribute("DegreeOfPartitionedBinaryRelation",
-                 IsPartitionedBinaryRelation);
-DeclareSynonymAttr("DegreeOfPBR", DegreeOfPartitionedBinaryRelation);
-DeclareGlobalFunction("PartitionedBinaryRelation");
+DeclareAttribute("DegreeOfPBR",
+                 IsPBR);
+DeclareGlobalFunction("PBR");
 DeclareGlobalFunction("ExtRepOfPBR");
-DeclareOperation("RandomPartitionedBinaryRelation", [IsPosInt]);
-DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement, IsPosInt]);
-DeclareOperation("AsPartitionedBinaryRelation", [IsAssociativeElement]);
-DeclareOperation("NumberPBR", [IsPartitionedBinaryRelation]);
+DeclareOperation("RandomPBR", [IsPosInt]);
+DeclareOperation("AsPBR", [IsAssociativeElement, IsPosInt]);
+DeclareOperation("AsPBR", [IsAssociativeElement]);
+DeclareOperation("NumberPBR", [IsPBR]);
 DeclareOperation("PBRNumber", [IsPosInt, IsPosInt]);
 
-DeclareProperty("IsEmptyPBR", IsPartitionedBinaryRelation);
-DeclareProperty("IsUniversalPBR", IsPartitionedBinaryRelation);
-DeclareProperty("IsBipartitionPBR", IsPartitionedBinaryRelation);
-DeclareProperty("IsTransformationPBR", IsPartitionedBinaryRelation);
-DeclareProperty("IsPartialPermPBR", IsPartitionedBinaryRelation);
-DeclareProperty("IsDualTransformationPBR", IsPartitionedBinaryRelation);
-
-DeclareSynonym("PBR", PartitionedBinaryRelation);
-DeclareSynonym("AsPBR", AsPartitionedBinaryRelation);
-DeclareSynonym("RandomPBR", RandomPartitionedBinaryRelation);
+DeclareProperty("IsEmptyPBR", IsPBR);
+DeclareProperty("IsUniversalPBR", IsPBR);
+DeclareProperty("IsBipartitionPBR", IsPBR);
+DeclareProperty("IsTransformationPBR", IsPBR);
+DeclareProperty("IsPartialPermPBR", IsPBR);
+DeclareProperty("IsDualTransformationPBR", IsPBR);

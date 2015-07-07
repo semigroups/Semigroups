@@ -530,11 +530,11 @@ namespace std {
 
 // partitioned binary relations
 
-class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
+class PBR: public Element<std::vector<u_int32_t> > {
   
   public:
   
-    PartitionedBinaryRelation (u_int32_t degree, 
+    PBR (u_int32_t degree, 
          Element<std::vector<u_int32_t> >* sample = nullptr) 
       : Element<std::vector<u_int32_t> >() {
         _data = new std::vector<std::vector<u_int32_t> >();
@@ -544,7 +544,7 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
         }
       }
     
-    PartitionedBinaryRelation (std::vector<std::vector<u_int32_t> >
+    PBR (std::vector<std::vector<u_int32_t> >
                                const& data)
       : Element<std::vector<u_int32_t> >(data) { }
     
@@ -598,7 +598,7 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
         adj.at(i).push_back(i + n);
         adj.at(i + n).push_back(i);
       }
-      return new PartitionedBinaryRelation(adj);
+      return new PBR(adj);
     }
     
     size_t complexity () const {
@@ -662,8 +662,8 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
 
 namespace std {
   template <>
-    struct hash<const PartitionedBinaryRelation> {
-    size_t operator() (const PartitionedBinaryRelation& x) const {
+    struct hash<const PBR> {
+    size_t operator() (const PBR& x) const {
       size_t seed = 0;
       size_t pow = 101;
       for (size_t i = 0; i < x.degree(); i++) {

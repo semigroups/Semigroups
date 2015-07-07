@@ -495,9 +495,9 @@ InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old) {
       interface = new Interface<MatrixOverSemiring>(data, mopfc, old);
       break;
     }
-    case PBR:{
+    case PBR_TYPE:{
       auto pbrc = new PBRConverter();
-      interface = new Interface<PartitionedBinaryRelation>(data, pbrc, old);
+      interface = new Interface<PBR>(data, pbrc, old);
       break;
     }
     default: {

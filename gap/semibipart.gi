@@ -11,6 +11,23 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to bipartition semigroups.
 
+InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
+[IsBipartitionSemigroup], S -> "\>bipartition\< ");
+
+InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
+[IsBipartitionSemigroup], 
+function(S)
+  local str;
+  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) then
+    str := "";
+  else 
+    str := "of ";
+  fi;
+  return Concatenation(str, "degree \>", 
+                       ViewString(DegreeOfBipartitionSemigroup(S)),
+                       "\<\< ");
+end);
+
 # same method for ideals
 
 InstallMethod(GroupOfUnits, "for a bipartition semigroup",
@@ -41,45 +58,6 @@ end);
 
 InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
 S-> Range(IsomorphismBlockBijectionSemigroup(S)));
-
-#
-
-InstallMethod(ViewString, "for a group of bipartitions",
-[IsBipartitionSemigroup and IsGroupAsSemigroup],
-function(s)
-  local str, nrgens;
-  if IsGroup(s) then 
-    TryNextMethod();
-  fi;
-  str:="\><";
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  fi;
-
-  Append(str, "\>bipartition\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
-  fi;
-
-  nrgens:=Length(Generators(s));
-  
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens>1 or nrgens=0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
 
 #
 
@@ -248,6 +226,12 @@ function(S)
 
   Perform(out, ShrinkAllocationPlist);
   return out;
+end);
+
+InstallMethod(AsBipartitionSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return Range(IsomorphismBipartitionSemigroup(S));
 end);
 
 # this is just a composition of IsomorphismTransformationSemigroup and the
@@ -681,80 +665,6 @@ InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
 
 #
 
-InstallMethod(ViewString, "for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], 8, # to trump IsGroup
-function(s)
-  local str, nrgens;
-
-  str := "\><";
-
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  else
-    if HasIsCommutative(s) and IsCommutative(s) then
-      Append(str, "\>commutative\< ");
-    fi;
-  fi;
-  if not IsGroup(s) then
-    if (HasIsTrivial(s) and IsTrivial(s)) or IsGroup(s) then
-    elif HasIsZeroSimpleSemigroup(s) and IsZeroSimpleSemigroup(s) then
-      Append(str, "\>0-simple\< ");
-    elif HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s) then
-      Append(str, "\>simple\< ");
-    fi;
-
-    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
-      Append(str, "\>inverse\< ");
-    elif HasIsRegularSemigroup(s)
-        and not (HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s)) then
-      if IsRegularSemigroup(s) then
-        Append(str, "\>regular\< ");
-      else
-        Append(str, "\>non-regular\< ");
-      fi;
-    fi;
-  fi;
-
-  Append(str, "\>bipartition\< ");
-
-  if HasIsMonoid(s) and IsMonoid(s) then
-    Append(str, "monoid ");
-    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
-      nrgens := Length(GeneratorsOfInverseMonoid(s));
-    else
-      nrgens := Length(GeneratorsOfMonoid(s));
-    fi;
-  else
-    Append(str, "semigroup ");
-    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
-      nrgens := Length(GeneratorsOfInverseSemigroup(s));
-    else
-      nrgens := Length(GeneratorsOfSemigroup(s));
-    fi;
-  fi;
-
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-      and Size(s) < 2 ^ 64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
-  fi;
-
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
 
 #
 

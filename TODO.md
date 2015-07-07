@@ -1,26 +1,32 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
-* new ideals stuff!
-* remove RecVecs
+
+
+
+
+* tests for pbrs 
+
+
+* finish partitioned binary relation stuff (more tests and C++)
+* check that nothing is missing in semigroup-matrix-*
+* add tests for all Semigroupe manual example things
+
 * split the "closure" constructor for a semigroup into 2 methods
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * closure of generic inverse semigroups
 * improve `EvaluateWord`
-* tests for pbrs 
-* semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
-* finish partitioned binary relation stuff (more tests and C++)
-* check that nothing is missing in semigroup-matrix-*
-* add tests for all Semigroupe manual example things
+* remove RecVecs
 * check for memleaks
 * remove C++11?
 * gmp problems?
 * use namespace in the C++ code
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
-* a GAP kernel version of the C++ code !
-
+* a new GAP kernel version of the C++ code !
+* new ideals stuff!
 
 #DONE
+* semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
 * `[ Transformation( [ 3, 3, 3, 3, 3 ] ), Transformation( [ 4, 4, 4, 4, 4 ] ),
   Transformation( [ 1, 3, 1, 5, 1 ] ), Transformation( [ 1, 1, 2, 1, 4 ] ),
   Transformation( [ 1, 1, 5, 1, 3 ] ), Transformation( [ 1, 4, 1, 2, 1 ] ) ]`

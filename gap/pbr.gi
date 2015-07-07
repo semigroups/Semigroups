@@ -30,7 +30,7 @@
 # TODO 2 arg version of this
 
 InstallMethod(AsTransformation, "for a pbr",
-[IsPartitionedBinaryRelation], 
+[IsPBR], 
 function(x)
   if not IsTransformationPBR(x) then 
     Error();
@@ -40,31 +40,31 @@ function(x)
 end);
 
 InstallMethod(IsBipartitionPBR, "for a pbr",
-[IsPartitionedBinaryRelation], 
+[IsPBR], 
 function(x)
   return IsEquivalenceBooleanMat(AsBooleanMat(x));
 end);
 
 InstallMethod(IsTransformationPBR, "for a pbr",
-[IsPartitionedBinaryRelation], 
+[IsPBR], 
 function(x)
   return IsBipartitionPBR(x) and IsTransBipartition(AsBipartition(x));
 end);
 
 InstallMethod(IsPartialPermPBR, "for a pbr",
-[IsPartitionedBinaryRelation], 
+[IsPBR], 
 function(x)
   return IsBipartitionPBR(x) and IsPartialPermBipartition(AsBipartition(x));
 end);
 
 InstallMethod(IsDualTransformationPBR, "for a pbr",
-[IsPartitionedBinaryRelation], 
+[IsPBR], 
 function(x)
   return IsBipartitionPBR(x) and IsDualTransBipartition(AsBipartition(x));
 end);
 
 InstallMethod(NumberPBR, "for a pbr",
-[IsPartitionedBinaryRelation],
+[IsPBR],
 function(x)
   return NumberBooleanMat(AsBooleanMat(x));
 end);
@@ -76,7 +76,7 @@ function(nr, deg)
 end);
 
 InstallMethod(IsEmptyPBR, "for a partition binary relation",
-[IsPartitionedBinaryRelation],
+[IsPBR],
 function(x)
   local n, i;
 
@@ -90,7 +90,7 @@ function(x)
 end);
 
 InstallMethod(IsUniversalPBR, "for a partition binary relation",
-[IsPartitionedBinaryRelation],
+[IsPBR],
 function(x)
   local n, i;
 
@@ -106,20 +106,20 @@ end);
 #FIXME: this should probably be more specific, 1 method for transformations, 1
 # for partial perms, etc
 
-InstallMethod(AsPartitionedBinaryRelation, "for an associative element", 
-[IsAssociativeElement], x -> AsPartitionedBinaryRelation(AsBipartition(x)));
+InstallMethod(AsPBR, "for an associative element", 
+[IsAssociativeElement], x -> AsPBR(AsBipartition(x)));
 
-InstallMethod(AsPartitionedBinaryRelation, 
+InstallMethod(AsPBR, 
 "for an associative element and pos int", 
 [IsAssociativeElement, IsPosInt], 
 function(x, n)
-  return AsPartitionedBinaryRelation(AsBipartition(x, n));
+  return AsPBR(AsBipartition(x, n));
 end);
 
-InstallMethod(AsPartitionedBinaryRelation, "for a bipartition", 
-[IsBipartition], x -> AsPartitionedBinaryRelation(x, DegreeOfBipartition(x)));
+InstallMethod(AsPBR, "for a bipartition", 
+[IsBipartition], x -> AsPBR(x, DegreeOfBipartition(x)));
 
-InstallMethod(AsPartitionedBinaryRelation, "for a bipartition and pos int", 
+InstallMethod(AsPBR, "for a bipartition and pos int", 
 [IsBipartition, IsPosInt],
 function(x, n)
   local deg, blocks, out, i, block;
@@ -143,10 +143,10 @@ function(x, n)
     Add(out[2], []);
   od;
 
-  return CallFuncList(PartitionedBinaryRelation, out);
+  return CallFuncList(PBR, out);
 end);
 
-InstallMethod(AsPartitionedBinaryRelation, "for a boolean matrix",
+InstallMethod(AsPBR, "for a boolean matrix",
 [IsBooleanMat], 
 function(x)
   local deg, succ;
@@ -157,7 +157,7 @@ function(x)
     return;
   fi;
   succ := Successors(x);
-  return PartitionedBinaryRelation(succ{[1 .. deg / 2]}, 
+  return PBR(succ{[1 .. deg / 2]}, 
                                    succ{[deg / 2 + 1 .. deg]});
 end);
 
@@ -165,7 +165,7 @@ end);
 # TODO make a method that takes a float between 0 and 1 as the probability of
 # an edge existing.
 
-InstallMethod(RandomPartitionedBinaryRelation, "for a pos int", [IsPosInt],
+InstallMethod(RandomPBR, "for a pos int", [IsPosInt],
 function(n)
   local p, adj, k, i, j;
 
@@ -185,13 +185,13 @@ function(n)
       fi;
     od;
   od;
-  return Objectify(PartitionedBinaryRelationType, adj);
+  return Objectify(PBRType, adj);
 end);
 
 #TODO add checks that the argument makes sense, really the below should be an
 #     NC method, and we should add a new method with checks/.
 
-InstallGlobalFunction(PartitionedBinaryRelation,
+InstallGlobalFunction(PBR,
 function(arg)
   local left_adj, right_adj, n, i, j;
 
@@ -214,17 +214,17 @@ function(arg)
     od;
   od;
   arg := Concatenation([Length(arg[1])], Concatenation(arg));
-  return Objectify(PartitionedBinaryRelationType, arg);
+  return Objectify(PBRType, arg);
 end);
 
-InstallMethod(DegreeOfPartitionedBinaryRelation, "for a partitioned binary relation", 
-[IsPartitionedBinaryRelation], pbr -> pbr![1]);
+InstallMethod(DegreeOfPBR, "for a partitioned binary relation", 
+[IsPBR], pbr -> pbr![1]);
 
 # can't we use some sort of Floyd-Warshall Algorithm here, the current method
 # involves searching in the same part of the graph repeatedly??
 
 InstallMethod(\*, "for partitioned binary relations",
-[IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
+[IsPBR, IsPBR],
 function(x, y)
   local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, i;
 
@@ -280,14 +280,14 @@ function(x, y)
     y_dfs(i, out[i + 1]);
   od;
 
-  return Objectify(PartitionedBinaryRelationType, out);
+  return Objectify(PBRType, out);
 end);
 
 InstallGlobalFunction(ExtRepOfPBR, 
 function(x)
   local n, out, i, j, k;
   
-  if not IsPartitionedBinaryRelation(x) then 
+  if not IsPBR(x) then 
     Error();
     return;
   fi;
@@ -311,7 +311,7 @@ function(x)
 end);
 
 InstallMethod(ViewString, "for a partitioned binary relation",
-[IsPartitionedBinaryRelation], 
+[IsPBR], 
 function(x)
   local str, n, ext, i;
 
@@ -325,7 +325,7 @@ function(x)
 
   str := "\>\>\>\>\><pbr:";
 
-  n := DegreeOfPartitionedBinaryRelation(x);
+  n := DegreeOfPBR(x);
   ext := ExtRepOfPBR(x);
   
   Append(str, "\>");
@@ -347,7 +347,7 @@ function(x)
 end);
 
 InstallMethod(PrintString, "for a partitioned binary relation",
-[IsPartitionedBinaryRelation], 
+[IsPBR], 
 function(x)
   local str, ext;
 
@@ -365,7 +365,7 @@ function(x)
 end);
 
 InstallMethod(\=, "for partitioned binary relations",
-[IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
+[IsPBR, IsPBR],
 function(x, y)
   local n, i;
 
@@ -379,7 +379,7 @@ function(x, y)
 end);
 
 InstallMethod(\<, "for partitioned binary relations",
-[IsPartitionedBinaryRelation, IsPartitionedBinaryRelation],
+[IsPBR, IsPBR],
 function(x, y)
   local n, i;
 
@@ -395,7 +395,7 @@ function(x, y)
 end);
 
 InstallMethod(OneMutable, "for a partitioned binary relation",
-[IsPartitionedBinaryRelation],
+[IsPBR],
 function(x)
   local n, out, i;
 
@@ -405,13 +405,13 @@ function(x)
     out[i + 1] := [i + n];
     out[i + n + 1] := [i];
   od;
-  return Objectify(PartitionedBinaryRelationType, out);
+  return Objectify(PBRType, out);
 end);
 
-#PartitionedBinaryRelationMonoid := function(n)
+#PBRMonoid := function(n)
 #  local binrels;
 #  binrels := List(Tuples(Combinations([1..n]),n),
 #                  x -> BinaryRelationOnPoints(x));
 #  return Semigroup(List(Tuples(binrels,4),
-#                 x-> PartitionedBinaryRelation(x[1],x[2],x[3],x[4])));
+#                 x-> PBR(x[1],x[2],x[3],x[4])));
 #end;

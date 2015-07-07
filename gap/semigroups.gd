@@ -8,26 +8,17 @@
 #############################################################################
 ##
 
+DeclareOperation("SEMIGROUPS_ViewStringPrefix", [IsSemigroup]);
+DeclareOperation("SEMIGROUPS_ViewStringSuffix", [IsSemigroup]);
+
 # This is required since IsInverseSemigroup is a property of semigroups and so
 # objectifying something using IsInverseSemigroup does not result in a
 # semigroup
+
 InstallTrueMethod(IsSemigroup, IsInverseSemigroup);
 
 DeclareCategory("IsSemigroupWithInverseOp",
                 IsInverseSemigroup);
-
-DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
-DeclareCategoryCollections("IsAssociativeElementWithStar");
-DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
-DeclareAttribute("Star", IsAssociativeElementWithStar);
-
-DeclareSynonym("IsStarSemigroup",
-               IsSemigroup and IsAssociativeElementWithStarCollection);
-DeclareSynonym("IsRegularStarSemigroup",
-               IsRegularSemigroup and IsAssociativeElementWithStarCollection);
-
-DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
-
 DeclareOperation("SemigroupByGenerators",
                  [IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("MonoidByGenerators",
@@ -62,6 +53,8 @@ DeclareOperation("ClosureSemigroupNC",
 DeclareGlobalFunction("SEMIGROUPS_AddGenerators");
 
 DeclareAttribute("Generators", IsSemigroup);
+
+DeclareGlobalFunction("RandomSemigroup");
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);

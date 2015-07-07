@@ -688,7 +688,7 @@ function(f, n)
 end);
 
 InstallMethod(AsBipartition, "for a pbr and pos int",
-[IsPartitionedBinaryRelation, IsPosInt],
+[IsPBR, IsPosInt],
 function(x, deg)
   Error("not yet implemented");
 end);
@@ -696,7 +696,7 @@ end);
 #
 
 InstallMethod(AsBipartition, "for a pbr",
-[IsPartitionedBinaryRelation],
+[IsPBR],
 function(x)
   if not IsBipartitionPBR(x) then 
     Error();

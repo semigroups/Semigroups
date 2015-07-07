@@ -249,12 +249,12 @@ class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
  * Partitioned binary relations (PBRs)
 *******************************************************************************/
 
-class PBRConverter : public Converter<PartitionedBinaryRelation> {
+class PBRConverter : public Converter<PBR> {
 
   public:
 
-    PartitionedBinaryRelation* convert (Obj o, size_t n);
+    PBR* convert (Obj o, size_t n);
 
-    Obj unconvert (PartitionedBinaryRelation* x);
+    Obj unconvert (PBR* x);
 
 };

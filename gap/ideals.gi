@@ -31,6 +31,104 @@ end);
 
 #
 
+BindGlobal("_ViewStringForSemigroupsIdeals",
+function(I)
+  local str, suffix, nrgens;
+
+  str := "\><";
+
+  if HasIsTrivial(I) and IsTrivial(I) then
+    Append(str, "\>trivial\< ");
+  else
+    if HasIsCommutative(I) and IsCommutative(I) then
+      Append(str, "\>commutative\< ");
+    fi;
+  fi;
+
+  if not IsGroup(I) then
+    if HasIsTrivial(I) and IsTrivial(I) then
+      # do nothing
+    elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
+      Append(str, "\>0-simple\< ");
+    elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
+      Append(str, "\>simple\< ");
+    fi;
+
+    if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
+      Append(str, "\>inverse\< ");
+    elif HasIsRegularSemigroup(I)
+        and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+      if IsRegularSemigroup(I) then
+        Append(str, "\>regular\< ");
+      else
+        Append(str, "\>non-regular\< ");
+      fi;
+    fi;
+  fi;
+
+  Append(str, SEMIGROUPS_ViewStringPrefix(I));
+
+  if HasIsMonoid(I) and IsMonoid(I) then
+    Append(str, "\>monoid\< ");
+  else
+    Append(str, "\>semigroup\< ");
+  fi;
+  Append(str, "\>ideal\< ");
+
+
+  if HasIsTrivial(I) and not IsTrivial(I) and HasSize(I) then
+    Append(str, "\>of size\> ");
+    Append(str, ViewString(Size(I)));
+    Append(str, ",\<\< ");
+  fi;
+
+  suffix := SEMIGROUPS_ViewStringSuffix(I);
+  if suffix <> "" 
+      and not (HasIsTrivial(I) and not IsTrivial(I) and HasSize(I)) then
+    suffix := Concatenation("of ", suffix);
+  fi;
+  Append(str, suffix); 
+
+  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
+  
+  Append(str, "with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens > 1 or nrgens = 0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
+end);
+
+InstallMethod(ViewString,
+"for a semigroup ideal with ideal generators",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+_ViewStringForSemigroupsIdeals);
+
+InstallMethod(ViewString,
+"for a semigroup ideal with ideal generators",
+[IsPartialPermSemigroup and IsInverseSemigroup and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+_ViewStringForSemigroupsIdeals);
+
+InstallMethod(ViewString,
+"for a semigroup ideal with ideal generators",
+[IsPartialPermMonoid and IsInverseMonoid and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+_ViewStringForSemigroupsIdeals);
+
+#
+
+MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
+Unbind(_ViewStringForSemigroupsIdeals);
+
+#
+
 InstallMethod(PrintObj,
 "for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],

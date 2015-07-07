@@ -11,6 +11,17 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
+InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a partial perm semigroup",
+[IsPartialPermSemigroup], S -> "\>partial perm\< ");
+
+InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a partial perm semigroup",
+[IsPartialPermSemigroup], 
+function(S)
+  return Concatenation("rank \>", 
+                       ViewString(RankOfPartialPermSemigroup(S)),
+                       "\<\< ");
+end);
+
 # this should really be in the library
 
 InstallImmediateMethod(GeneratorsOfSemigroup,
@@ -304,44 +315,6 @@ end);
 InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
 
-#
-
-InstallMethod(ViewString, "for a group of partial perms",
-[IsPartialPermSemigroup and IsGroupAsSemigroup],
-function(S)
-  local str, nrgens;
-
-  str := "\><";
-  if HasIsTrivial(S) and IsTrivial(S) then
-    Append(str, "\>trivial\< ");
-  fi;
-
-  Append(str, "\>partial perm\< \>group\< ");
-  if HasIsTrivial(S) and not IsTrivial(S)
-      and HasSize(S) and Size(S) < 2 ^ 64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(S)));
-    Append(str, ",\<\< ");
-  fi;
-
-  nrgens := Length(Generators(S));
-
-  Append(str, "\>on \>");
-  Append(str, ViewString(RankOfPartialPermSemigroup(S)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
-
 # the following method is required to beat the method for
 # IsPartialPermCollection in the library.
 
@@ -392,63 +365,10 @@ end);
 
 #
 
-InstallMethod(DisplayString, "for a partial perm semigroup with generators",
+InstallMethod(DisplayString, "for a partial perm semigroup ideal with generators",
 [IsPartialPermSemigroup and IsSemigroupIdeal and
  HasGeneratorsOfSemigroupIdeal],
 ViewString);
-
-#
-
-InstallMethod(ViewString, "for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal],
-function(I)
-  local str, nrgens;
-
-  str := "<";
-
-  if HasIsTrivial(I) and IsTrivial(I) then
-    Append(str, "trivial ");
-  else
-    if HasIsCommutative(I) and IsCommutative(I) then
-      Append(str, "commutative ");
-    fi;
-  fi;
-
-  if HasIsTrivial(I) and IsTrivial(I) then
-  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
-    Append(str, "0-simple ");
-  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
-    Append(str, "simple ");
-  fi;
-
-  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
-    Append(str, "inverse ");
-  elif HasIsRegularSemigroup(I)
-      and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
-    if IsRegularSemigroup(I) then
-      Append(str, "\>regular\< ");
-    else
-      Append(str, "\>non-regular\< ");
-    fi;
-  fi;
-
-  Append(str, "partial perm semigroup ideal ");
-  Append(str, "\<\>on ");
-  Append(str, String(RankOfPartialPermSemigroup(I)));
-  Append(str, " pts\<\> with ");
-
-  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
-  Append(str, String(nrgens));
-  Append(str, " generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s");
-  fi;
-  Append(str, ">");
-
-  return str;
-end);
 
 #
 

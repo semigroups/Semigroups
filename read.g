@@ -89,6 +89,7 @@ if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
   Add(SemigroupsOmitFromTestManualExamples, "Partition");
 fi;
 
+ReadPackage("semigroups/gap/star.gi");
 ReadPackage("semigroups/gap/grpperm.gi");
 
 ReadPackage("semigroups/gap/pbr.gi");

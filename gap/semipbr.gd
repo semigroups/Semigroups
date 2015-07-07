@@ -9,12 +9,13 @@
 
 # This file contains declarations for semigroups of PBRs.
 
-DeclareSynonym("IsPartitionedBinaryRelationSemigroup", 
-               IsSemigroup and IsPartitionedBinaryRelationCollection);
+
 DeclareSynonym("IsPBRSemigroup", 
-               IsPartitionedBinaryRelationSemigroup);
-InstallTrueMethod(IsFinite, IsPartitionedBinaryRelationSemigroup);
-DeclareAttribute("DegreeOfPartitionedBinaryRelationSemigroup",
-                 IsPartitionedBinaryRelationSemigroup);
+               IsSemigroup and IsPBRCollection);
+
+InstallTrueMethod(IsFinite, IsPBRSemigroup);
+DeclareAttribute("DegreeOfPBRSemigroup",
+                 IsPBRSemigroup);
+
 DeclareAttribute("IsomorphismPBRSemigroup", IsSemigroup);
 DeclareAttribute("AsPBRSemigroup", IsSemigroup);

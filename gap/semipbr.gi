@@ -9,11 +9,22 @@
 
 # This file contains methods for semigroups of PBRs.
 
-InstallMethod(DegreeOfPartitionedBinaryRelationSemigroup, 
-"for a PBR semigroup",
-[IsPartitionedBinaryRelationSemigroup],
+InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a pbr semigroup",
+[IsPBRSemigroup], S -> "\>pbr\< ");
+
+InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a pbr semigroup",
+[IsPBRSemigroup], 
 function(S)
-  return DegreeOfPartitionedBinaryRelation(Representative(S));
+  return Concatenation("degree \>", 
+                       ViewString(DegreeOfPBRSemigroup(S)),
+                       "\<\< ");
+end);
+
+InstallMethod(DegreeOfPBRSemigroup, 
+"for a PBR semigroup",
+[IsPBRSemigroup],
+function(S)
+  return DegreeOfPBR(Representative(S));
 end);
 
 InstallMethod(AsPBRSemigroup, "for a semigroup", [IsSemigroup],

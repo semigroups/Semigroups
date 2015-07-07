@@ -11,6 +11,154 @@
 # This file contains methods for finite semigroups which do not depend on
 # whether they are acting or not, i.e. they should work for all semigroups.
 
+# fall back methods
+
+InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
+[IsSemigroup], S -> "");
+
+InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
+[IsSemigroup], S -> "");
+
+# ViewString
+
+InstallMethod(ViewString, "for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup], 
+function(S)
+  local str, nrgens, suffix;
+
+  str := "\><";
+
+  if HasIsTrivial(S) and IsTrivial(S) then
+    Append(str, "\>trivial\< ");
+  else
+    if HasIsCommutative(S) and IsCommutative(S) then
+      Append(str, "\>commutative\< ");
+    fi;
+  fi;
+  
+  if not IsGroup(S) then
+    if HasIsTrivial(S) and IsTrivial(S) then
+      # do nothing
+    elif HasIsZeroSimpleSemigroup(S) and IsZeroSimpleSemigroup(S) then
+      Append(str, "\>0-simple\< ");
+    elif HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+      Append(str, "\>simple\< ");
+    fi;
+
+    if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
+      Append(str, "\>inverse\< ");
+    elif HasIsRegularSemigroup(S)
+        and not (HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S)) then
+      if IsRegularSemigroup(S) then
+        Append(str, "\>regular\< ");
+      else
+        Append(str, "\>non-regular\< ");
+      fi;
+    fi;
+  fi;
+
+  Append(str, SEMIGROUPS_ViewStringPrefix(S));
+
+  if HasIsMonoid(S) and IsMonoid(S) then
+    Append(str, "monoid ");
+    if HasGeneratorsOfInverseMonoid(S) then
+      nrgens := Length(GeneratorsOfInverseMonoid(S));
+    else
+      nrgens := Length(GeneratorsOfMonoid(S));
+    fi;
+  else
+    Append(str, "semigroup ");
+    if HasGeneratorsOfInverseSemigroup(S) then
+      nrgens := Length(GeneratorsOfInverseSemigroup(S));
+    else
+      nrgens := Length(GeneratorsOfSemigroup(S));
+    fi;
+  fi;
+
+  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) then
+    Append(str, "\>of size\> ");
+    Append(str, ViewString(Size(S)));
+    Append(str, ",\<\< ");
+  fi;
+
+  suffix := SEMIGROUPS_ViewStringSuffix(S);
+  if suffix <> "" 
+      and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
+    suffix := Concatenation("of ", suffix);
+  fi;
+  Append(str, suffix); 
+
+  Append(str, "with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens > 1 or nrgens = 0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+
+  Append(str, ">\<");
+
+  return str;
+end);
+
+#
+
+BindGlobal("_ViewStringForSemigroupsGroups",
+function(S)
+  local str, suffix;
+
+  str := "\><";
+
+  if HasIsTrivial(S) and IsTrivial(S) then
+    Append(str, "\>trivial\< ");
+  fi;
+  Append(str, SEMIGROUPS_ViewStringPrefix(S));
+  Append(str, "\>group\< ");
+  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) then
+    Append(str, "\>of size\> ");
+    Append(str, ViewString(Size(S)));
+    Append(str, ",\<\< ");
+  fi;
+  
+  suffix := SEMIGROUPS_ViewStringSuffix(S);
+  if suffix <> "" 
+      and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
+    suffix := Concatenation("of ", suffix);
+  fi;
+  Append(str, suffix); 
+  Append(str, "with\> ");
+  Append(str, ViewString(Length(Generators(S))));
+  Append(str, "\< generator");
+
+  if Length(Generators(S)) > 1 or Length(Generators(S)) = 0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  
+  Append(str, ">\<");
+
+  return str;
+end);
+
+InstallMethod(ViewString, "for a group as semigroup",
+[IsGroupAsSemigroup], _ViewStringForSemigroupsGroups);
+
+InstallMethod(ViewString, "for a group consisting of semigroups elements",
+[IsGroup], _ViewStringForSemigroupsGroups);
+
+InstallMethod(ViewString, "for a partial perm group",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup 
+and IsSimpleSemigroup and IsInverseSemigroup], 1, # to beat the lib method 
+_ViewStringForSemigroupsGroups);
+
+MakeReadWriteGlobal("_ViewStringForSemigroupsGroups");
+Unbind(_ViewStringForSemigroupsGroups);
+
+# Generators
+
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
@@ -21,15 +169,6 @@ function(S)
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
 end);
 
-# star
-
-InstallMethod(Star, "for an associative element with star",
-[IsAssociativeElementWithStar],
-function(elm)
-  elm := StarOp(elm);
-  MakeImmutable(elm);
-  return elm;
-end);
 
 # basic things
 
@@ -50,84 +189,6 @@ function(S)
   fi;
 
   return GeneratorsOfSemigroup(S);
-end);
-
-#
-
-InstallMethod(ViewString, "for a group of bipartitions",
-[IsBipartitionSemigroup and IsGroupAsSemigroup],
-function(s)
-  local str, nrgens;
-  if IsGroup(s) then
-    TryNextMethod();
-  fi;
-  str := "\><";
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  fi;
-
-  Append(str, "\>bipartition\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-      and Size(s) < 2 ^ 64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
-  fi;
-
-  nrgens := Length(Generators(s));
-
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
-
-#
-
-InstallMethod(ViewString, "for a group of partial perms",
-[IsPartialPermSemigroup and IsGroupAsSemigroup],
-function(s)
-  local str, nrgens;
-
-  str := "\><";
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  fi;
-
-  Append(str, "\>partial perm\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s)
-      and HasSize(s) and Size(s) < 2 ^ 64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
-  fi;
-
-  nrgens := Length(Generators(s));
-
-  Append(str, "\>on \>");
-  Append(str, ViewString(RankOfPartialPermSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
 end);
 
 # creating semigroups, monoids, inverse semigroups, etc
@@ -947,4 +1008,30 @@ InstallMethod(RandomBipartitionMonoid,
 [IsPosInt, IsPosInt],
 function(m, n)
   return Monoid(Set(List([1 .. m], x -> RandomBipartition(n))));
+end);
+
+InstallGlobalFunction(RandomSemigroup, 
+function(arg)
+  local filt, nrgens, param1, random_element;
+  
+  #TODO more checks
+  if not Length(arg) >= 1 and Length(arg) <= 4 then 
+    Error();
+    return;
+  elif not IsFilter(arg[1]) then
+    Error();
+    return;
+  else 
+    filt := arg[1];
+  fi;
+
+  nrgens := arg[2];
+  param1 := arg[3];
+
+  if arg[1] = IsPBRSemigroup then 
+    random_element := RandomPBR;
+    #TODO more types
+  fi;
+
+  return Semigroup(Set(List([1 .. nrgens], x -> random_element(param1))));
 end);
