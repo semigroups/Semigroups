@@ -1038,15 +1038,6 @@ gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
 of size 5, on 2 pts with 2 generators>>
 
-#T# TestInstall65: previously the second arg here (an ideal) would have been
-#                  added using AsList to the set of generators of S. 
-#gap> S := Semigroup(AsPartialPermSemigroup(AlternatingGroup(8)),
-#>    SemigroupIdeal(SymmetricInverseMonoid(8), PartialPerm([1..7])), 
-#>    rec(generic := false));
-#<partial perm semigroup on 8 pts with 19 generators>
-#gap> Size(S);
-#1421569
-
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
