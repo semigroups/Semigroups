@@ -440,7 +440,8 @@ end);
 InstallMethod(DotDClasses, "for a semigroup and record",
 [IsSemigroup, IsRecord],
 function(S, opts)
-  local es, elts, str, i, gp, h, pos, color, rel, j, k, di, dk, x, d, l;
+  local es, elts, str, i, R, SortHClassesInLClass, gp, color, pos, h, shortest,
+  rel, j, k, di, dk, x, d, l;
 
   # process the options
   if not IsBound(opts.maximal) then
@@ -450,7 +451,7 @@ function(S, opts)
     opts.number := true;
   fi;
   if not IsBound(opts.highlight) then
-    opts.highlight := false; #JDM means highligh H-classes
+    opts.highlight := false; #JDM means highlight H-classes
   else
     for x in opts.highlight do
       if not IsBound(x.HighlightGroupHClassColor) then
@@ -477,6 +478,13 @@ function(S, opts)
   i := 0;
 
   for d in DClasses(S) do
+    R := RClasses(d);
+    SortHClassesInLClass := function(list)
+      local p;
+      p := PermList(List(list, H -> Position(R, RClass(S, Representative(H)))));
+      return Permuted(list, p);
+    end;
+
     i := i + 1;
     Append(str, String(i));
     Append(str, " [shape=box style=invisible ");
@@ -512,7 +520,7 @@ function(S, opts)
                                     color, "\"></TD>"));
         od;
       else
-        h := HClasses(l);
+        h := SortHClassesInLClass(HClasses(l));
         for x in h do
           if IsGroupHClass(x) then
             color := "gray";
@@ -553,9 +561,16 @@ function(S, opts)
     od;
     Append(str, "</TABLE>>];\n");
   od;
-
-  rel := PartialOrderOfDClasses(S);
-  rel := List([1 .. Length(rel)], x -> Filtered(rel[x], y -> not x = y));
+  # TODO make PartialOrderOfDClasses return a digraph
+  shortest := DigraphShortestDistances(Digraph(PartialOrderOfDClasses(S)));
+  rel := List([1 .. NrDClasses(S)], x -> []);
+  for i in [1 .. NrDClasses(S)] do 
+    for j in [1 .. NrDClasses(S)] do 
+      if shortest[i][j] = 1 and i <> j then 
+        Add(rel[i], j);
+      fi;
+    od;
+  od;
 
   for i in [1 .. Length(rel)] do
     j := Difference(rel[i], Union(rel{rel[i]}));
