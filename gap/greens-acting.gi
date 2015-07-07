@@ -1414,8 +1414,8 @@ end);
 
 # different method for regular/inverse, same for ideals
 
-InstallMethod(NrDClasses, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(NrDClasses, "for an acting semigroup",
+[IsActingSemigroup],
 S -> Length(OrbSCC(SemigroupData(S))) - 1);
 
 # different method for regular/inverse, same for ideals

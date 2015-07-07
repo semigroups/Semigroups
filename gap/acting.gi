@@ -63,8 +63,9 @@ InstallMethod(\in,
 [IsAssociativeElement, IsActingSemigroup],
 function(x, S)
   local data, ht, lambda, lambdao, l, m, rhoranker, rho, rank, rhoo,
-  lambdarhoht, rholookup, rhoranks, LookAhead, new, lookfunc, schutz, ind, reps,
-  repslens, max, lambdaperm, n, found, i, lookahead_last, lookahead_fail;
+  lambdarhoht, rholookup, rhoranks, lookahead_last, lookahead_fail, nrgens,
+  LookAhead, new, lookfunc, schutz, ind, reps, repslens, max, lambdaperm, n,
+  found, i;
 
   if (IsActingSemigroupWithFixedDegreeMultiplication(S)
       and ActionDegree(x) <> ActionDegree(S))
@@ -133,10 +134,14 @@ function(x, S)
   rhoranks := data!.rhoranks;
   lookahead_last := 64;
   lookahead_fail := false;
+  nrgens := Length(data!.gens);
 
   LookAhead := function()
     local i, start;
     start := Maximum(data!.pos, 1);
+    if start < nrgens then 
+      return true;
+    fi;
     for i in [start .. Length(data!.orbit)] do
       if not IsBound(rhoranks[rholookup[i]]) then 
         rhoranks[rholookup[i]] := rhoranker(rhoo[rholookup[i]]);
@@ -147,8 +152,8 @@ function(x, S)
       fi;
     od;
     lookahead_last := Length(data!.orbit) + 64;
-    return Length(data!.orbit) = 1; # this means that we cannot obtain any further elements with
-                                    # high enough rank to every find x 
+    return Length(data!.orbit) = 1; 
+    # we can't obtain any further elements with high enough rank
   end;
 
   new := false;
@@ -204,9 +209,9 @@ function(x, S)
 
   schutz := LambdaOrbStabChain(lambdao, m);
   ind := lambdarhoht[l][m];
-  # the index of the list of reps with same lambda-rho value as f.
+  # the index of the list of reps with same lambda-rho value as x.
 
-  # if the Schutzenberger group is the symmetric group, then f in s!
+  # if the Schutzenberger group is the symmetric group, then x in S!
   if schutz = true then
     return true;
   fi;

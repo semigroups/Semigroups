@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  ideals.tst
+#W  extreme/ideals.tst
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                       Julius Jonusas 
 ##                                                       Wilfred Wilson
@@ -9,7 +9,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: ideals.tst");
+gap> START_TEST("Semigroups package: extreme/ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -346,7 +346,7 @@ gap> MinimalIdeal(J);
 gap> last=last2;
 true
 gap> MinimalDClass(I);
-<Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )>
+<Green's D-class: Transformation( [ 5, 5, 5, 5, 5, 5 ] )>
 gap> MinimalDClass(J);
 <Green's D-class: Transformation( [ 5, 5, 5, 5, 5, 5 ] )>
 
@@ -439,7 +439,7 @@ gap> MinimalDClass(S);
 <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 
 #T# IdealsTest10
-gap> R:=Semigroup( [
+gap> R := Semigroup( [
 > Bipartition( [ [ 1, 2, 3, 5, -3 ], [ 4, 6, 7, -5 ], [ -1 ], [ -2, -4, -7 ],
 >   [ -6 ] ] ),
 > Bipartition( [ [ 1, 2, 6, -5 ], [ 3 ], [ 4, 5, -2 ], [ 7, -1, -3, -4, -7 ],
@@ -898,4 +898,4 @@ gap> Unbind(x);
 gap> Unbind(idems);
 
 #E# 
-gap> STOP_TEST( "Semigroups package: ideals.tst");
+gap> STOP_TEST( "Semigroups package: extreme/ideals.tst");
