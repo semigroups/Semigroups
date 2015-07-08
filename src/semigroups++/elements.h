@@ -351,8 +351,10 @@ class Bipartition : public Element<u_int32_t> {
     Element<u_int32_t>* identity () {
       std::vector<u_int32_t> image;
       image.reserve(this->degree());
-      for (u_int32_t i = 0; i < this->degree(); i++) {
-        image.push_back(i);
+      for (size_t j = 0; j < 2; j++) {
+        for (u_int32_t i = 0; i < this->degree() / 2; i++) {
+          image.push_back(i);
+        }
       }
       return new Bipartition(image);
     }
