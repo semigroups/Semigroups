@@ -1,6 +1,8 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+* ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
+
 * get rid of `Data` roll semigroups-generic into semigroups.gi
 
 
@@ -10,7 +12,7 @@
 
 * tests for pbrs
 
-
+* improve compilation time
 * finish partitioned binary relation stuff (more tests and C++)
 * check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
