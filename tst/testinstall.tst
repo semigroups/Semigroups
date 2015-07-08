@@ -21,7 +21,7 @@ gap> IsMonoid(S);
 false
 gap> iso := IsomorphismTransformationMonoid(S);;
 gap> Range(iso);
-<commutative transformation monoid on 4 pts with 1 generator>
+<commutative transformation monoid of degree 4 with 1 generator>
 gap> RespectsMultiplication(iso);
 true
 gap> ForAll(S, x -> (x ^ iso) ^ InverseGeneralMapping(iso) = x);
@@ -29,7 +29,7 @@ true
 
 #T# TestInstall4
 gap> S := Semigroup(Transformation([1, 1, 1]), Transformation([3, 1, 2]));
-<transformation semigroup on 3 pts with 2 generators>
+<transformation semigroup of degree 3 with 2 generators>
 gap> IsSimpleSemigroup(S);
 false
 
@@ -68,7 +68,7 @@ gap> x := Transformation([1, 1, 3, 1]);;
 gap> x in S;
 true
 gap> T := Semigroup(gens{[1 .. 3]});
-<transformation semigroup on 4 pts with 3 generators>
+<transformation semigroup of degree 4 with 3 generators>
 gap> ForAll(T, x -> x in S);
 true
 gap> Size(T);
@@ -152,9 +152,9 @@ gap> gens := [Transformation([1, 2, 3, 5, 4, 6, 7, 8]),
 >             Transformation([1, 2, 3, 4, 1, 6, 7, 8]),
 >             Transformation([8, 8, 3, 4, 5, 7, 6, 1])];;
 gap> s := Monoid(gens);
-<transformation monoid on 8 pts with 6 generators>
+<transformation monoid of degree 8 with 6 generators>
 gap> t := ClosureSemigroup(s, [Transformation([4, 4, 3, 1, 5, 6, 3, 8])]);
-<transformation monoid on 8 pts with 6 generators>
+<transformation monoid of degree 8 with 6 generators>
 gap> Size(t) = Size(Semigroup(Generators(t)));
 true
 
@@ -239,13 +239,13 @@ Group([ (5,9), (1,7) ])
 gap> G := Group([(5, 9), (1, 7)]);;
 gap> IsomorphismTransformationSemigroup(G);;
 gap> S := Range(last);
-<transformation semigroup on 4 pts with 2 generators>
+<transformation semigroup of degree 4 with 2 generators>
 gap> IsGroupAsSemigroup(S);
 true
 gap> Generators(S);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> T := Range(IsomorphismTransformationMonoid(G));
-<transformation monoid on 4 pts with 2 generators>
+<transformation monoid of degree 4 with 2 generators>
 gap> Generators(T);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> H := Range(IsomorphismPermGroup(T));
@@ -311,7 +311,7 @@ true
 gap> ForAll(S, x -> x in S);
 true
 gap> T := InverseSemigroup(Generators(S){[1 .. 3]});
-<inverse partial perm semigroup on 4 pts with 3 generators>
+<inverse partial perm semigroup of rank 4 with 3 generators>
 gap> ForAll(T, x -> x in S);
 true
 gap> Size(T);
@@ -417,7 +417,7 @@ true
 gap> S := FullTransformationSemigroup(3);;
 gap> x := Transformation([4, 3, 1, 2]);;
 gap> ClosureSemigroup(S, x);
-<transformation monoid on 4 pts with 4 generators>
+<transformation monoid of degree 4 with 4 generators>
 
 #T# TestInstall27: Issue 36 in the new numbering...
 gap> S := Semigroup(IdentityTransformation);
@@ -478,7 +478,7 @@ gap> S := Semigroup([Transformation([1, 2, 4, 6, 1, 6]),
 > Transformation([4, 1, 3, 6, 1, 5]),
 > Transformation([4, 1, 4, 2, 4, 2]),
 > Transformation([6, 6, 4, 6, 1, 1])]);
-<transformation semigroup on 6 pts with 6 generators>
+<transformation semigroup of degree 6 with 6 generators>
 gap> T := Semigroup([Transformation([1, 5, 3, 4, 5]),
 > Transformation([6, 4, 3, 5, 4, 1]),
 > Transformation([1, 2, 4, 6, 1, 6]),
@@ -491,7 +491,7 @@ gap> T := Semigroup([Transformation([1, 5, 3, 4, 5]),
 > Transformation([6, 1, 6, 6, 4, 6]),
 > Transformation([5, 6, 6, 6, 6, 1]),
 > Transformation([4, 4, 5, 4, 3, 3])]);
-<transformation semigroup on 6 pts with 12 generators>
+<transformation semigroup of degree 6 with 12 generators>
 gap> IsMaximalSubsemigroup(S, T);
 true
 gap> T := Semigroup(T, rec(small := true));;
@@ -650,13 +650,13 @@ gap> Size(S);
 #T# TestInstall39: Issue 56
 # (Monoid/InverseMonoid removes One inappropriately sometimes)
 gap> M := InverseMonoid(PartialPerm([1, 2]), PartialPerm([1]));
-<commutative inverse partial perm monoid on 2 pts with 1 generator>
+<commutative inverse partial perm monoid of rank 2 with 1 generator>
 gap> One(M) in M;
 true
 gap> AsSet(M);
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
 gap> M := InverseMonoid(PartialPerm([1, 2]), PartialPerm([1]));
-<commutative inverse partial perm monoid on 2 pts with 1 generator>
+<commutative inverse partial perm monoid of rank 2 with 1 generator>
 gap> AsSet(M);
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
 
@@ -694,7 +694,7 @@ gap> IsMonoid(B);
 true
 gap> iso := IsomorphismTransformationSemigroup(B);;
 gap> T := Range(iso);
-<transformation monoid on 6 pts with 3 generators>
+<transformation monoid of degree 6 with 3 generators>
 gap> Size(T);
 16
 gap> IsMonoid(T);
@@ -967,7 +967,8 @@ gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 <regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal of degree 4 with
- 1 generator> over <full transformation semigroup on 4 pts>>
+ 1 generator> over <regular transformation monoid of size 256, degree 4 with
+ 3 generators>>
 gap> NrCongruenceClasses(cong);
 169
 
@@ -1021,7 +1022,7 @@ gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
 >                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
 <semigroup with 3 generators>
 gap> T := AsTransformationSemigroup(S);
-<transformation semigroup on 22 pts with 3 generators>
+<transformation semigroup of degree 22 with 3 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));;
@@ -1031,12 +1032,12 @@ gap> Size(I);
 #T# TestInstall64: Bug fixed by changeset 949553d FIXME what was this bug? Add
 # a brief explanation
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
-<inverse partial perm semigroup on 2 pts with 2 generators>
+<inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
 5
 gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
-of size 5, on 2 pts with 2 generators>>
+ of size 5, rank 2 with 2 generators>>
 
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!

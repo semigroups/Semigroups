@@ -186,8 +186,7 @@ InstallMethod(ViewObj, [IsGenericSemigroupData],
 function(data)
   Print("<");
 
-  if IsClosedData(data) or IS_CLOSED_SEMIGROUP(data) then
-    SetFilterObj(data, IsClosedData);
+  if IS_CLOSED_SEMIGROUP(data) then
     Print("closed ");
   else
     Print("open ");
@@ -345,10 +344,5 @@ InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
 function(data, limit, lookfunc)
   data := ENUMERATE_SEMIGROUP(data, limit, lookfunc,
                               lookfunc <> ReturnFalse);
-
-  if IS_CLOSED_SEMIGROUP(data) then
-    SetFilterObj(data, IsClosedData);
-  fi;
-
   return data;
 end);

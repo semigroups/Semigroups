@@ -21,9 +21,7 @@ InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
 
 # ViewString
 
-InstallMethod(ViewString, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 4, 
-# to beat the method for IsMonoid and HasGeneratorsOfMonoid
+BindGlobal("_ViewStringForSemigroups",
 function(S)
   local str, nrgens, suffix;
 
@@ -103,6 +101,23 @@ function(S)
 
   return str;
 end);
+
+InstallMethod(ViewString, "for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup], 7, _ViewStringForSemigroups);
+
+InstallMethod(ViewString, "for a monoid with generators",
+[IsMonoid and HasGeneratorsOfMonoid], 7, _ViewStringForSemigroups);
+
+InstallMethod(ViewString, "for an inverse semigroup with generators",
+[IsInverseSemigroup and HasGeneratorsOfInverseSemigroup], 7,
+_ViewStringForSemigroups);
+
+InstallMethod(ViewString, "for an inverse monoid with generators",
+[IsInverseMonoid and HasGeneratorsOfInverseMonoid], 7,
+_ViewStringForSemigroups);
+
+MakeReadWriteGlobal("_ViewStringForSemigroups");
+Unbind(_ViewStringForSemigroups);
 
 #
 

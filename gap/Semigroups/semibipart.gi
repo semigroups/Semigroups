@@ -512,6 +512,10 @@ end);
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
+  if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then 
+    TryNextMethod();
+  fi;
+    
   return ForAll(coll, IsBlockBijection)
    or ForAll(coll, IsPartialPermBipartition);
 end);
@@ -521,13 +525,13 @@ end);
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse bipartition semigroup with generators",
 [IsBipartitionSemigroup and IsInverseSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local gens, pos, f;
+function(S)
+  local gens, pos, x;
 
-  gens := ShallowCopy(GeneratorsOfSemigroup(s));
-  for f in gens do
-    pos := Position(gens, f ^ -1);
-    if pos <> fail and f <> f ^ -1 then
+  gens := ShallowCopy(GeneratorsOfSemigroup(S));
+  for x in gens do
+    pos := Position(gens, x ^ -1);
+    if pos <> fail and x <> x ^ -1 then
       Remove(gens, pos);
     fi;
   od;
