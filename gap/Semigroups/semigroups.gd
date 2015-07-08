@@ -8,12 +8,18 @@
 #############################################################################
 ##
 
+# This file contains operations for creating semigroups, subsemigroups, and
+# closures. 
+
+# These two operations are used to produce the view strings for a semigroup. 
+# TODO example
+
 DeclareOperation("SEMIGROUPS_ViewStringPrefix", [IsSemigroup]);
 DeclareOperation("SEMIGROUPS_ViewStringSuffix", [IsSemigroup]);
 
-# This is required since IsInverseSemigroup is a property of semigroups and so
-# objectifying something using IsInverseSemigroup does not result in a
-# semigroup
+# The following true method is required since IsInverseSemigroup is a property
+# of semigroups and so objectifying something using IsInverseSemigroup does not
+# result in a semigroup.
 
 InstallTrueMethod(IsSemigroup, IsInverseSemigroup);
 
@@ -52,23 +58,12 @@ DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 DeclareGlobalFunction("SEMIGROUPS_AddGenerators");
 
+#TODO move this to attributes!
 DeclareAttribute("Generators", IsSemigroup);
 
+#TODO move this to examples!
 DeclareGlobalFunction("RandomSemigroup");
 DeclareGlobalFunction("RandomMonoid");
-
-DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
-DeclareOperation("RandomBlockGroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("RandomPartialPermSemigroup", RandomBlockGroup);
-DeclareOperation("RandomPartialPermMonoid", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty",
@@ -79,8 +74,5 @@ DeclareOperation("InverseSubsemigroupByProperty",
 DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
 
-
-# undoc
-
-DeclareProperty("IsBinaryRelationSemigroup", IsSemigroup);
+# undocumented
 DeclareGlobalFunction("RegularSemigroup");

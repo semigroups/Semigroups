@@ -666,7 +666,7 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Size, "for an acting semigroup with inversion",
+InstallMethod(Size, "for an acting semigroup with inverse",
 [IsActingSemigroup and IsSemigroupWithInverseOp], 10,
 function(s)
   local o, scc, r, nr, m;

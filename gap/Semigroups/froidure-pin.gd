@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-#W  semigroups-generic.gd
+#W  froidure-pin.gd
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -21,6 +21,12 @@
 # around.
 
 DeclareCategory("IsGenericSemigroupData", IsList);
+
+DeclareProperty("SEMIGROUPS_IsCCSemigroup", IsSemigroup);
+# TODO immediate methods for IsCppSemigroup?
+DeclareGlobalFunction("SEMIGROUPS_DegreeOfSemigroup");
+
+# TODO remove everything from here down
 DeclareAttribute("GenericSemigroupData", IsSemigroup, "mutable");
 
 DeclareOperation("Enumerate", [IsGenericSemigroupData]);
@@ -28,8 +34,3 @@ DeclareOperation("Enumerate", [IsGenericSemigroupData, IsCyclotomic]);
 DeclareOperation("Enumerate", [IsGenericSemigroupData,
                                IsCyclotomic,
                                IsFunction]);
-
-DeclareProperty("SEMIGROUPS_IsCCSemigroup", IsSemigroup);
-DeclareGlobalFunction("SEMIGROUPS_DegreeOfSemigroup");
-
-# TODO immediate methods for IsCppSemigroup?

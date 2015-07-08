@@ -917,69 +917,6 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
-#
-
-InstallMethod(RandomPartialPermMonoid,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return Monoid(Set(List([1 .. m], x -> RandomPartialPerm(n))));
-end);
-
-#
-
-InstallMethod(RandomInverseMonoid,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return InverseMonoid(Set(List([1 .. m], x -> RandomPartialPerm(n))));
-end);
-
-#
-
-InstallMethod(RandomInverseSemigroup,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return InverseSemigroup(Set(List([1 .. m], x -> RandomPartialPerm(n))));
-end);
-
-#
-
-InstallMethod(RandomTransformationSemigroup,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return Semigroup(Set(List([1 .. m], x -> RandomTransformation(n))));
-end);
-
-#
-
-InstallMethod(RandomTransformationMonoid,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return Monoid(Set(List([1 .. m], x -> RandomTransformation(n))));
-end);
-
-#
-
-InstallMethod(RandomBipartitionSemigroup,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return Semigroup(Set(List([1 .. m], x -> RandomBipartition(n))));
-end);
-
-#
-
-InstallMethod(RandomBipartitionMonoid,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return Monoid(Set(List([1 .. m], x -> RandomBipartition(n))));
-end);
-
 BindGlobal("SEMIGROUPS_Types", 
            [IsPBRSemigroup, IsBipartitionSemigroup, IsTransformationSemigroup,
             IsPartialPermSemigroup, IsBooleanMatSemigroup,
@@ -1093,3 +1030,5 @@ InstallGlobalFunction(RandomMonoid,
 function(arg)
   return SEMIGROUPS_RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
 end);
+
+#TODO RandomInverseMonoid, RandomInverseSemigroup

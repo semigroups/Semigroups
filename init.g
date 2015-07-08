@@ -8,92 +8,82 @@
 #############################################################################
 ##
 
-if not IsBound(ORBC) then 
+if not IsBound(ORBC) then
   BindGlobal("HTAdd_TreeHash_C", fail);
   BindGlobal("HTValue_TreeHash_C", fail);
 else # only do this if ORBC is available
-
-  _PATH_SO:=Filename(DirectoriesPackagePrograms("semigroups"), "semigroups.so");
+  _PATH_SO := Filename(DirectoriesPackagePrograms("semigroups"),
+                       "semigroups.so");
   if _PATH_SO <> fail then
     LoadDynamicModule(_PATH_SO);
   fi;
   Unbind(_PATH_SO);
-
 fi;
 
-ReadPackage("semigroups/gap/grpperm.gd");
-ReadPackage("semigroups/gap/fpsemi.gd");
-
-ReadPackage("semigroups/gap/utils.gd");
-ReadPackage("semigroups/gap/io.gd");
 ReadPackage("semigroups/gap/options.g");
 
-ReadPackage("semigroups/gap/star.gd");
+ReadPackage("semigroups/gap/Elements/star.gd");
+ReadPackage("semigroups/gap/Elements/pbr.gd");
+ReadPackage("semigroups/gap/Elements/bipartition.gd");
+ReadPackage("semigroups/gap/Elements/blocks.gd");
+ReadPackage("semigroups/gap/Elements/semiringmat.gd");
+ReadPackage("semigroups/gap/Elements/maxplusmat.gd");
+ReadPackage("semigroups/gap/Elements/boolmat.gd");
+ReadPackage("semigroups/gap/Elements/pfmat.gd");
 
-ReadPackage("semigroups/gap/setup.gd");
-ReadPackage("semigroups/gap/acting.gd");
-ReadPackage("semigroups/gap/ideals-acting.gd");
-ReadPackage("semigroups/gap/ideals-generic.gd");
-ReadPackage("semigroups/gap/semigroups.gd");
-ReadPackage("semigroups/gap/semigroups-acting.gd");
+ReadPackage("semigroups/gap/Semigroups/semigroups.gd");
+ReadPackage("semigroups/gap/Semigroups/froidure-pin.gd");
+ReadPackage("semigroups/gap/Semigroups/grpperm.gd");
+ReadPackage("semigroups/gap/Semigroups/reesmat.gd");
+ReadPackage("semigroups/gap/Semigroups/semibipart.gd");
+ReadPackage("semigroups/gap/Semigroups/semipperm.gd");
+ReadPackage("semigroups/gap/Semigroups/semitrans.gd");
+ReadPackage("semigroups/gap/Semigroups/semipbr.gd");
+ReadPackage("semigroups/gap/Semigroups/semimaxplus.gd");
+ReadPackage("semigroups/gap/Semigroups/semiringmat.gd");
+ReadPackage("semigroups/gap/Semigroups/semiboolmat.gd");
+ReadPackage("semigroups/gap/Semigroups/semipfmat.gd");
+ReadPackage("semigroups/gap/Semigroups/examples.gd");
 
-ReadPackage("semigroups/gap/pbr.gd");
+ReadPackage("semigroups/gap/Acting/setup.gd");
+ReadPackage("semigroups/gap/Acting/acting.gd");
+ReadPackage("semigroups/gap/Acting/lambda-rho.gd");
+ReadPackage("semigroups/gap/Acting/graded.gd");
+ReadPackage("semigroups/gap/Acting/orbits.gd");
 
-ReadPackage("semigroups/gap/matrix-semiring.gd");
-ReadPackage("semigroups/gap/matrix-max-plus.gd");
-ReadPackage("semigroups/gap/matrix-boolean.gd");
-ReadPackage("semigroups/gap/matrix-prime-field.gd");
+ReadPackage("semigroups/gap/Ideals/ideals.gd");
+ReadPackage("semigroups/gap/Ideals/ideals-acting.gd");
+ReadPackage("semigroups/gap/Ideals/ideals-lambda-rho.gd");
 
-ReadPackage("semigroups/gap/bipartition.gd");
-ReadPackage("semigroups/gap/blocks.gd");
+ReadPackage("semigroups/gap/Tools/display.gd");
+ReadPackage("semigroups/gap/Tools/enums.gd");
+ReadPackage("semigroups/gap/Tools/io.gd");
+ReadPackage("semigroups/gap/Tools/iterators.gd");
+ReadPackage("semigroups/gap/Tools/utils.gd");
 
-ReadPackage("semigroups/gap/semigroups-matrix-semiring.gd");
-ReadPackage("semigroups/gap/semigroups-matrix-max-plus.gd");
-ReadPackage("semigroups/gap/semigroups-matrix-boolean.gd");
-ReadPackage("semigroups/gap/semigroups-matrix-prime-field.gd");
+ReadPackage("semigroups/gap/Greens/greens-generic.gd");
+ReadPackage("semigroups/gap/Greens/greens-acting.gd");
 
-ReadPackage("semigroups/gap/semibipart.gd");
-ReadPackage("semigroups/gap/semipbr.gd");
-ReadPackage("semigroups/gap/semitrans.gd");
-ReadPackage("semigroups/gap/semipperm.gd");
+ReadPackage("semigroups/gap/Attributes/attributes.gd");
+ReadPackage("semigroups/gap/Attributes/attributes-acting.gd");
+ReadPackage("semigroups/gap/Attributes/attributes-inverse.gd");
+ReadPackage("semigroups/gap/Attributes/factor.gd");
+ReadPackage("semigroups/gap/Attributes/isomorph.gd");
+ReadPackage("semigroups/gap/Attributes/maximal.gd");
+ReadPackage("semigroups/gap/Attributes/normalizer.gd");
+ReadPackage("semigroups/gap/Attributes/properties.gd");
+ReadPackage("semigroups/gap/Attributes/reesmat-iso.gd");
 
-ReadPackage("semigroups/gap/greens-generic.gd");
-ReadPackage("semigroups/gap/greens-acting.gd");
-ReadPackage("semigroups/gap/lambda-rho.gd");
-ReadPackage("semigroups/gap/ideals-lambda-rho.gd");
-ReadPackage("semigroups/gap/orbits.gd");
-ReadPackage("semigroups/gap/graded.gd");
-ReadPackage("semigroups/gap/enums.gd");
-ReadPackage("semigroups/gap/iterators.gd");
-ReadPackage("semigroups/gap/properties.gd");
-ReadPackage("semigroups/gap/attributes.gd");
-ReadPackage("semigroups/gap/attributes-acting.gd");
-ReadPackage("semigroups/gap/attributes-inverse.gd");
-ReadPackage("semigroups/gap/factor.gd");
-ReadPackage("semigroups/gap/examples.gd");
+ReadPackage("semigroups/gap/Congruences/pairs-cong.gd");
+ReadPackage("semigroups/gap/Congruences/reesmat-cong.gd");
+ReadPackage("semigroups/gap/Congruences/univ-cong.gd");
+ReadPackage("semigroups/gap/Congruences/inverse-cong.gd");
+ReadPackage("semigroups/gap/Congruences/simple-cong.gd");
+ReadPackage("semigroups/gap/Congruences/rees-cong.gd");
+ReadPackage("semigroups/gap/Congruences/quotients.gd");
 
-ReadPackage("semigroups/gap/ideals.gd");
-
-ReadPackage("semigroups/gap/freeinverse.gd");
-ReadPackage("semigroups/gap/freeband.gd");
-
-ReadPackage("semigroups/gap/display.gd");
-
-ReadPackage("semigroups/gap/isomorph.gd");
-ReadPackage("semigroups/gap/reesmat.gd");
-ReadPackage("semigroups/gap/reesmat-iso.gd");
-ReadPackage("semigroups/gap/maximal.gd");
-ReadPackage("semigroups/gap/normalizer.gd");
-
-ReadPackage("semigroups/gap/quotients.gd");
-
-ReadPackage("semigroups/gap/pairs-cong.gd");
-ReadPackage("semigroups/gap/reesmat-cong.gd");
-ReadPackage("semigroups/gap/univ-cong.gd");
-ReadPackage("semigroups/gap/inverse-cong.gd");
-ReadPackage("semigroups/gap/simple-cong.gd");
-ReadPackage("semigroups/gap/rees-cong.gd");
-
-ReadPackage("semigroups/gap/semigroups-generic.gd");
+ReadPackage("semigroups/gap/Fp/fpsemi.gd");
+ReadPackage("semigroups/gap/Fp/freeinverse.gd");
+ReadPackage("semigroups/gap/Fp/freeband.gd");
 
 DeclareInfoClass("InfoSemigroups");
