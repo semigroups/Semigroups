@@ -705,7 +705,7 @@ function(S)
 
   if HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
     return false;
-  elif IsLeftZeroSemigroup(S) then
+  elif HasIsLeftZeroSemigroup(S) and IsLeftZeroSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a left zero semigroup");
     return true;
   elif HasNrLClasses(S) then

@@ -574,8 +574,16 @@ end);
 
 #
 
-InstallMethod(NaturalLeqInverseSemigroup, "for two partial perms",
-[IsPartialPerm, IsPartialPerm], NaturalLeqPartialPerm);
+InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",
+[IsPartialPermSemigroup], 
+function(S)
+  if not IsInverseSemigroup(S) then 
+    Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+          "the argument is not an inverse semigroup,");
+    return;
+  fi;
+  return NaturalLeqPartialPerm;
+end);
 
 #
 

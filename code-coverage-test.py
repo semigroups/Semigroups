@@ -13,7 +13,7 @@ print 'using temporary directory: ' + DIR
 
 COMMANDS = '''echo "ProfileLineByLine(\\"''' + DIR + '''/profile.gz\\", \\"w\\", false);;
 LoadPackage(\\"semigroups\\", false);;
-Test(\\"''' + ARGS.file[0] + '''\\");;
+SEMIGROUPS_Test(\\"''' + ARGS.file[0] + '''\\");;
 UnprofileLineByLine();;
 LoadPackage(\\"profiling\\", false);;
 filesdir := \\"/Users/jdm/gap/pkg/semigroups/gap/\\";;

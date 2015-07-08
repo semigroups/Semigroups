@@ -103,16 +103,19 @@ end);
 
 #
 
-InstallMethod(NaturalLeqInverseSemigroup, "for two bipartitions",
-[IsBipartition, IsBipartition],
-function(f, g)
-  if IsBlockBijection(f) and IsBlockBijection(g) then
-    return NaturalLeqBlockBijection(f, g);
-  elif IsPartialPermBipartition(f) and IsPartialPermBipartition(g) then
-    return NaturalLeqPartialPermBipartition(f, g);
+InstallMethod(NaturalLeqInverseSemigroup, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+function(S)
+  if IsInverseSemigroup(S) then 
+    if IsBlockBijectionSemigroup(S) then
+      return NaturalLeqBlockBijection;
+    elif IsPartialPermBipartitionSemigroup(S) then 
+      return NaturalLeqPartialPermBipartition;
+    fi;
+    TryNextMethod(); # should be the default method for a non-inverse op semigroup
   fi;
   Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-        "the bipartitions should be block bijections or partial perms,");
+        "the argument is not an inverse semigroup,");
   return;
 end);
 

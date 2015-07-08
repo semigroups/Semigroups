@@ -33,5 +33,4 @@ DeclareOperation("RightCosetsOfInverseSemigroup",
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
 DeclareAttribute("VagnerPrestonRepresentation", IsSemigroupWithInverseOp);
-DeclareOperation("NaturalLeqInverseSemigroup",
-                 [IsAssociativeElement, IsAssociativeElement]);
+DeclareAttribute("NaturalLeqInverseSemigroup", IsSemigroup);

@@ -90,7 +90,6 @@ ReadPackage("semigroups/gap/Elements/boolmat.gi");
 ReadPackage("semigroups/gap/Elements/pfmat.gi");
 
 ReadPackage("semigroups/gap/Semigroups/semigroups.gi");
-ReadPackage("semigroups/gap/Semigroups/froidure-pin.gi");
 ReadPackage("semigroups/gap/Semigroups/grpperm.gi");
 ReadPackage("semigroups/gap/Semigroups/reesmat.gi");
 ReadPackage("semigroups/gap/Semigroups/semibipart.gi");
@@ -103,12 +102,13 @@ ReadPackage("semigroups/gap/Semigroups/semiboolmat.gi");
 ReadPackage("semigroups/gap/Semigroups/semipfmat.gi");
 ReadPackage("semigroups/gap/Semigroups/examples.gi");
 
-ReadPackage("semigroups/gap/Acting/setup.gi");
-ReadPackage("semigroups/gap/Acting/acting.gi");
-ReadPackage("semigroups/gap/Acting/lambda-rho.gi");
-ReadPackage("semigroups/gap/Acting/graded.gi");
-ReadPackage("semigroups/gap/Acting/orbits.gi");
-ReadPackage("semigroups/gap/Acting/semigroups-acting.gi");
+ReadPackage("semigroups/gap/Main/froidure-pin.gi");
+ReadPackage("semigroups/gap/Main/setup.gi");
+ReadPackage("semigroups/gap/Main/acting.gi");
+ReadPackage("semigroups/gap/Main/lambda-rho.gi");
+ReadPackage("semigroups/gap/Main/graded.gi");
+ReadPackage("semigroups/gap/Main/orbits.gi");
+ReadPackage("semigroups/gap/Main/semigroups-acting.gi");
 
 ReadPackage("semigroups/gap/Ideals/ideals.gi");
 ReadPackage("semigroups/gap/Ideals/ideals-acting.gi");

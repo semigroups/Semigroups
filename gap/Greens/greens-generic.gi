@@ -402,7 +402,7 @@ end);
 ## 4. Individual classes . . .
 #############################################################################
 
-InstallMethod(OneMutable, "for an H-class",
+InstallMethod(OneImmutable, "for an H-class",
 [IsGreensHClass],
 function(H)
   if not IsGroupHClass(H) then 

@@ -85,4 +85,4 @@ DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 
-DeclareOperation("OneMutable", [IsGreensHClass]);
+DeclareAttribute("OneImmutable", IsGreensHClass);

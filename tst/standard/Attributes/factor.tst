@@ -123,20 +123,19 @@ gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
 true
 
 #T# FactorTest12: Factorization for a known regular semigroup
-gap> s:=OrderEndomorphisms(7);;
-gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
-> Factorization(s,f))=f);
+gap> S := OrderEndomorphisms(7);;
+gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S),
+>                                Factorization(S, x)) = x);
 true
 
 #T# FactorTest13: Factorization regularity is learned after creation
-gap> s:=SingularTransformationSemigroup(5);
-<regular transformation semigroup ideal on 5 pts with 1 generator>
-gap> s:=Semigroup(GeneratorsOfSemigroup(s));
-<transformation semigroup on 5 pts with 16 generators>
-gap> IsRegularSemigroup(s);
+gap> S := SingularTransformationSemigroup(5);
+<regular transformation semigroup ideal of degree 5 with 1 generator>
+gap> S := Semigroup(GeneratorsOfSemigroup(S));;
+gap> IsRegularSemigroup(S);
 true
-gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s), 
-> Factorization(s,f))=f);
+gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S), 
+>                                Factorization(S, x)) = x);
 true
 
 #T# SEMIGROUPS_UnbindVariables

@@ -32,9 +32,9 @@
 #############################################################################
 
 InstallMethod(NrIdempotents, "for a semigroup",
-[IsSemigroup], 
+[IsSemigroup],
 function(S)
-  if SEMIGROUPS_IsCCSemigroup(S) then 
+  if SEMIGROUPS_IsCCSemigroup(S) then
     return NR_IDEMPOTENTS_SEMIGROUP(GenericSemigroupData(S));
   fi;
   return Length(Idempotents(S));
@@ -160,8 +160,8 @@ function(coll)
   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll))
       or (HasIsSemigroupIdeal(coll) and IsSemigroupIdeal(coll)) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
-  elif not IsMutable(coll) then 
-    coll := ShallowCopy(coll); 
+  elif not IsMutable(coll) then
+    coll := ShallowCopy(coll);
   fi;
 
   if Size(coll) = 1 then
@@ -439,9 +439,11 @@ InstallMethod(IsGreensDLeq, "for a finite semigroup",
 [IsSemigroup],
 function(S)
   local digraph, data, id;
- 
-  if not IsFinite(S) then 
-    Error("semigroup is not finite!!");
+
+  if not IsFinite(S) then
+    Error("Semigroups: IsGreensDLeq: usage,\n",
+          "the argument must be a finite semigroup,");
+    return;
   fi;
 
   digraph := Digraph(PartialOrderOfDClasses(S));
@@ -507,8 +509,10 @@ end);
 InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite semigroup",
 [IsSemigroup and IsFinite], S -> Semigroup(Idempotents(S)));
 
-InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite inverse semigroup",
-[IsSemigroupWithInverseOp and IsFinite], S -> InverseSemigroup(Idempotents(S)));
+InstallMethod(IdempotentGeneratedSubsemigroup,
+"for a finite inverse semigroup",
+[IsSemigroupWithInverseOp and IsFinite],
+S -> InverseSemigroup(Idempotents(S)));
 
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],

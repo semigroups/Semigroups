@@ -1,6 +1,8 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+
+* unify ideals-lambda-rho, lambda-rho and graded.
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
 
 * get rid of `Data` roll semigroups-generic into semigroups.gi

@@ -195,20 +195,18 @@ function(x, I)
   return Position(Enumerator(I), x)<>fail;
 end);
 
-#JDM: this should be better, more like the method in ideals-acting.gi
+#TODO this should be better, more like the method in ideals-acting.gi
 
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local U, enum, x;
   
-  U:=Semigroup(GeneratorsOfSemigroupIdeal(I));
-  enum:=Enumerator(I);
+  U := Semigroup(GeneratorsOfSemigroupIdeal(I));
+  enum := Enumerator(I);
 
   for x in enum do
-    if not x in U then
-      U:=Semigroup(U, x);
-    fi;
+    U := ClosureSemigroup(U, x);
   od;
 
   return GeneratorsOfSemigroup(U);

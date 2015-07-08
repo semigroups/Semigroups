@@ -11,6 +11,24 @@
 #############################################################################
 ##
 
+# fall back method
+
+InstallMethod(NaturalLeqInverseSemigroup, "for a semigroup",
+[IsSemigroup], 
+function(S)
+  if not IsInverseSemigroup(S) then 
+    Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+          "the argument is not an inverse semigroup,");
+    return;
+  fi;
+  return 
+    function(x, y) 
+      local z;
+      z := InversesOfSemigroupElement(S, x)[1];
+      return x * z = y * z;
+    end;
+end);
+
 # same method for ideals
 
 InstallMethod(CharacterTableOfInverseSemigroup,
@@ -152,7 +170,7 @@ InstallMethod(IsJoinIrreducible,
 "for acting semigroup with inverse op and an associative element",
 [IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
-  local y, elts, rank, i, k, singleline, sup, j;
+  local y, elts, rank, i, k, singleline, leq, sup, j;
 
   if not x in S then
     Error("Semigroups: IsJoinIrreducible: usage,\n",
@@ -173,10 +191,11 @@ function(S, x)
   i := Position(elts, y);
   k := 0;
   singleline := true;
+  leq := NaturalLeqInverseSemigroup(S);
 
   # Find an element smaller than y, k
   for j in [i - 1, i - 2 .. 1] do
-    if NaturalLeqInverseSemigroup(elts[j], elts[i]) then
+    if leq(elts[j], elts[i]) then
       k := j;
       break;
     fi;
@@ -189,8 +208,7 @@ function(S, x)
 
   # Look for other elements smaller than y which are not smaller than k
   for j in [1 .. (k - 1)] do
-    if NaturalLeqInverseSemigroup(elts[j], elts[i]) and not
-        NaturalLeqInverseSemigroup(elts[j], elts[k]) then
+    if leq(elts[j], elts[i]) and not leq(elts[j], elts[k]) then
       singleline := false;
       break;
     fi;
@@ -205,7 +223,7 @@ function(S, x)
   sup := SupremumIdempotentsNC(Minorants(S, y), x);
 
   return y <> sup
-   and ForAny(HClass(S, y), x -> NaturalLeqInverseSemigroup(sup, x)
+   and ForAny(HClass(S, y), x -> leq(sup, x)
                                  and x <> y);
 end);
 
@@ -245,18 +263,19 @@ InstallMethod(IsMajorantlyClosedNC,
 "for a semigroup with inverse op and associative element collection",
 [IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
-  local i, iter, t, u;
+  local i, leq, iter, t, u;
 
   if Size(S) = Size(T) then
     return true;
   fi;
 
   i := 0;
+  leq := NaturalLeqInverseSemigroup(S);
   for t in T do
     iter := Iterator(S);
     for u in iter do
       i := i + 1;
-      if NaturalLeqInverseSemigroup(t, u) and not u in T then
+      if leq(t, u) and not u in T then
         return false;
       fi;
     od;
@@ -270,8 +289,8 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local D, elts, out, seen_zero, rep, i, k, minorants, singleline, h, mov, d,
-  j, p;
+  local D, elts, out, seen_zero, rep, i, leq, k, minorants, singleline, h, mov,
+        d, j, p;
 
   D := GreensDClasses(S);
   elts := Set(Idempotents(S));
@@ -287,8 +306,8 @@ function(S)
     fi;
 
     i := Position(elts, rep);
-    k := First([i - 1, i - 2 .. 1],
-               j -> NaturalLeqInverseSemigroup(elts[j], rep));
+    leq := NaturalLeqInverseSemigroup(S);
+    k := First([i - 1, i - 2 .. 1], j -> leq(elts[j], rep));
 
     if k = fail then # d is the minimal non-trivial D-class
                      # WW what do I mean by 'non-trivial' here?
@@ -306,8 +325,8 @@ function(S)
     fi;
 
     for j in [1 .. k - 1] do
-      if NaturalLeqInverseSemigroup(elts[j], rep) then
-        if singleline and not NaturalLeqInverseSemigroup(elts[j], elts[k]) then
+      if leq(elts[j], rep) then
+        if singleline and not leq(elts[j], elts[k]) then
           # rep is the lub of {elts[j], elts[k]}, not quite
           singleline := false;
           if IsTrivial(h) then
@@ -395,7 +414,7 @@ InstallMethod(MajorantClosureNC,
 [IsSemigroupWithInverseOp,
  IsAssociativeElementCollection],
 function(S, T)
-  local elts, n, out, ht, k, val, t, i;
+  local elts, n, out, ht, k, leq, val, t, i;
 
   elts := Elements(S);
   n := Length(elts);
@@ -408,10 +427,10 @@ function(S, T)
     Add(out, t);
     k := k + 1;
   od;
-
+  leq := NaturalLeqInverseSemigroup(S);
   for t in out do
     for i in [1 .. n] do
-      if NaturalLeqInverseSemigroup(t, elts[i]) then
+      if leq(t, elts[i]) then
         val := HTValue(ht, elts[i]);
         if val = fail then
           k := k + 1;
@@ -435,7 +454,7 @@ InstallMethod(Minorants,
 "for a semigroup with inverse op and associative element collections",
 [IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, f)
-  local elts, i, out, rank, j, k;
+  local elts, i, out, rank, j, leq, k;
 
   if not f in S then
     Error("Semigroups: Minorants: usage,\n",
@@ -472,8 +491,9 @@ function(S, f)
 
   i := Position(elts, f);
   j := 0;
+  leq := NaturalLeqInverseSemigroup(S);
   for k in [1 .. i - 1] do
-    if NaturalLeqInverseSemigroup(elts[k], f) and f <> elts[k] then
+    if leq(elts[k], f) and f <> elts[k] then
       j := j + 1;
       out[j] := elts[k];
     fi;
@@ -549,7 +569,7 @@ InstallMethod(SameMinorantsSubgroup,
 "for a group H-class of a semigroup with inverse op",
 [IsGroupHClass],
 function(h)
-  local S, e, F, out, x;
+  local S, e, F, out, x, leq;
 
   S := Parent(h);
 
@@ -564,9 +584,9 @@ function(h)
   e := Representative(h);
   F := Minorants(S, e);
   out := [];
-
+  leq := NaturalLeqInverseSemigroup(S);
   for x in h do
-    if x = e or ForAll(F, f -> NaturalLeqInverseSemigroup(f, x)) then
+    if x = e or ForAll(F, f -> leq(f, x)) then
       Add(out, x);
     fi;
   od;
