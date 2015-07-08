@@ -17,13 +17,7 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
 [IsBipartitionSemigroup], 
 function(S)
-  local str;
-  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) then
-    str := "";
-  else 
-    str := "of ";
-  fi;
-  return Concatenation(str, "degree \>", 
+  return Concatenation("degree \>", 
                        ViewString(DegreeOfBipartitionSemigroup(S)),
                        "\<\< ");
 end);
@@ -58,63 +52,6 @@ end);
 
 InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
 S-> Range(IsomorphismBlockBijectionSemigroup(S)));
-
-#
-
-InstallMethod(ViewString,
-"for a bipartition semigroup ideal with ideal generators",
-[IsBipartitionSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal],
-function(I)
-  local str, nrgens;
-
-  str := "\><";
-
-  if HasIsTrivial(I) and IsTrivial(I) then
-    Append(str, "\>trivial\< ");
-  else
-    if HasIsCommutative(I) and IsCommutative(I) then
-      Append(str, "\>commutative\< ");
-    fi;
-  fi;
-  if not IsGroup(I) then
-    if (HasIsTrivial(I) and IsTrivial(I)) or IsGroup(I) then
-    elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
-      Append(str, "\>0-simple\< ");
-    elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
-      Append(str, "\>simple\< ");
-    fi;
-
-    if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
-      Append(str, "\>inverse\< ");
-    elif HasIsRegularSemigroup(I)
-        and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
-      if IsRegularSemigroup(I) then
-        Append(str, "\>regular\< ");
-      else
-        Append(str, "\>non-regular\< ");
-      fi;
-    fi;
-  fi;
-
-  Append(str, "\>bipartition\< \>semigroup\< \>ideal\< ");
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfBipartitionSemigroup(I)));
-  Append(str, "\< pts with\> ");
-
-  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
 
 #
 

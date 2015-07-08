@@ -26,6 +26,12 @@ DeclareSynonym("IsTropicalMaxPlusMatrixSemigroup",
 DeclareSynonym("IsTropicalMinPlusMatrixSemigroup",
                IsTropicalMatrixSemigroup and IsMinPlusMatrixCollection);
 
+DeclareSynonym("IsProjectiveMaxPlusMatrixSemigroup",
+               IsSemigroup and IsProjectiveMaxPlusMatrixCollection);
+
+DeclareSynonym("IsNaturalMatrixSemigroup",
+               IsSemigroup and IsNaturalMatrixCollection);
+
 DeclareOperation("RandomMaxPlusMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomMinPlusMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTropicalMaxPlusMatrixSemigroup",

@@ -133,7 +133,6 @@ DeclareOperation("RandomProjectiveMaxPlusMatrix", [IsPosInt]);
 ## 6. Natural number matrices
 #############################################################################
 
-
 DeclareCategory("IsNaturalMatrix", IsTropicalMatrix);
 DeclareCategoryCollections("IsNaturalMatrix");
 DeclareCategoryCollections("IsNaturalMatrixCollection");

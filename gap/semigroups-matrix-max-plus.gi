@@ -11,6 +11,8 @@
 # This file contains implementations for semigroups of max-plus, min-plus,
 # tropical max-plus, and tropical min-plus matrices.
 
+# TODO get rid of all of these!
+
 InstallMethod(RandomMaxPlusMatrixSemigroup, "for a pos ints",
 [IsPosInt, IsPosInt],
 function(nrgens, dim)

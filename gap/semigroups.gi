@@ -22,7 +22,8 @@ InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
 # ViewString
 
 InstallMethod(ViewString, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 
+[IsSemigroup and HasGeneratorsOfSemigroup], 4, 
+# to beat the method for IsMonoid and HasGeneratorsOfMonoid
 function(S)
   local str, nrgens, suffix;
 
@@ -918,37 +919,6 @@ end);
 
 #
 
-InstallMethod(RandomMatrixSemigroup,
-"for a ring, positive integer and positive integer",
-[IsRing, IsPosInt, IsPosInt],
-function(R, m, n)
-  return Semigroup(List([1 .. m], x -> RandomMat(n, n, R)));
-end);
-
-#
-
-InstallMethod(RandomBinaryRelationSemigroup,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  local s;
-
-  s := Semigroup(List([1 .. m], x -> RandomBinaryRelationOnPoints(n)));
-  SetIsBinaryRelationSemigroup(s, true);
-  return s;
-end);
-
-#
-
-InstallMethod(RandomBlockGroup,
-"for positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  return Semigroup(Set(List([1 .. m], x -> RandomPartialPerm(n))));
-end);
-
-#
-
 InstallMethod(RandomPartialPermMonoid,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
@@ -1010,28 +980,116 @@ function(m, n)
   return Monoid(Set(List([1 .. m], x -> RandomBipartition(n))));
 end);
 
+BindGlobal("SEMIGROUPS_Types", 
+           [IsPBRSemigroup, IsBipartitionSemigroup, IsTransformationSemigroup,
+            IsPartialPermSemigroup, IsBooleanMatSemigroup,
+            IsMaxPlusMatrixSemigroup, IsMinPlusMatrixSemigroup,
+            IsTropicalMaxPlusMatrixSemigroup, IsTropicalMinPlusMatrixSemigroup,
+            IsProjectiveMaxPlusMatrixSemigroup, IsNaturalMatrixSemigroup,
+            IsMatrixOverPrimeFieldSemigroup]);
+
+BindGlobal("SEMIGROUPS_RandomElementCons", 
+function(filt)
+  
+  if not filt in SEMIGROUPS_Types then 
+    Error();
+    return;
+  fi;
+
+  if filt = IsTransformationSemigroup then 
+    return [RandomTransformation, 1];
+  elif filt = IsPartialPermSemigroup then 
+    return [RandomPartialPerm, 1];
+  elif filt = IsBipartitionSemigroup then 
+    return [RandomBipartition, 1];
+  elif filt = IsBooleanMatSemigroup then 
+    return [RandomBooleanMat, 1];
+  elif filt = IsPBRSemigroup then 
+    return [RandomPBR, 1];
+  elif filt = IsMaxPlusMatrixSemigroup then  
+    return [RandomMaxPlusMatrix, 1];
+  elif filt = IsMinPlusMatrixSemigroup then  
+    return [RandomMinPlusMatrix, 1];
+  elif filt = IsTropicalMaxPlusMatrixSemigroup then  
+    return [RandomTropicalMaxPlusMatrix, 2];
+  elif filt = IsTropicalMinPlusMatrixSemigroup then  
+    return [RandomTropicalMinPlusMatrix, 2];
+  elif filt = IsProjectiveMaxPlusMatrixSemigroup then  
+    return [RandomProjectiveMaxPlusMatrix, 1];
+  elif filt = IsNaturalMatrixSemigroup then  
+    return [RandomNaturalMatrix, 3];
+  elif filt = IsMatrixOverPrimeFieldSemigroup then  
+    return [RandomMatrixOverPrimeField, 3];
+  fi;
+end);
+
+BindGlobal("SEMIGROUPS_RandomSemigroupOrMonoid", 
+function(SemigroupOrMonoid, string, args)
+  local filt, cons, nrgens, params, i;
+
+  if Length(args) > 0 then 
+    filt := args[1];
+  else 
+    filt := Random(SEMIGROUPS_Types);
+  fi;
+
+  if Length(args) > 1 then
+    nrgens := args[2];
+  else 
+    nrgens := Random([1 .. 12]);
+  fi;
+
+  if Length(args) > 2 then 
+    params := args{[3 .. Length(args)]};
+  else 
+    params := [];
+  fi;
+  
+  if not IsFilter(filt) or not filt in SEMIGROUPS_Types then 
+    Error("Semigroups: ", string, ": usage,\n", 
+          "the first argument must be a filter,");
+    return;
+  fi;
+  
+  if not IsPosInt(nrgens) then 
+    Error("Semigroups: ", string, ": usage,\n", 
+          "the second argument must be a positive integer,");
+    return;
+  fi;
+  
+  cons := SEMIGROUPS_RandomElementCons(filt);
+  
+  if Length(params) < cons[2] then 
+    for i in [Length(params) + 1 .. cons[2]] do 
+      Add(params, Random([1 .. 12]));
+    od;
+  fi;
+
+  if not IsHomogeneousList(params) or not IsPosInt(params[1]) then
+    Error("Semigroups: ", string, ": usage,\n", 
+          "the third to last arguments must be positive integers,");
+    return;
+  elif Length(params) > cons[2] then 
+    Error("Semigroups: ", string, ": usage,\n", 
+          "there should be ", cons[2], " arguments,");
+    return;
+  fi;
+    
+  
+  if filt = IsMatrixOverPrimeFieldSemigroup and not IsPrimeInt(params[2]) then 
+    params[2] := NextPrimeInt(params[2]);
+  fi;
+
+  return SemigroupOrMonoid(Set(List([1 .. nrgens], 
+                                    x -> CallFuncList(cons[1], params))));
+end);
+
 InstallGlobalFunction(RandomSemigroup, 
 function(arg)
-  local filt, nrgens, param1, random_element;
-  
-  #TODO more checks
-  if not Length(arg) >= 1 and Length(arg) <= 4 then 
-    Error();
-    return;
-  elif not IsFilter(arg[1]) then
-    Error();
-    return;
-  else 
-    filt := arg[1];
-  fi;
+  return SEMIGROUPS_RandomSemigroupOrMonoid(Semigroup, "RandomSemigroup", arg);
+end);
 
-  nrgens := arg[2];
-  param1 := arg[3];
-
-  if arg[1] = IsPBRSemigroup then 
-    random_element := RandomPBR;
-    #TODO more types
-  fi;
-
-  return Semigroup(Set(List([1 .. nrgens], x -> random_element(param1))));
+InstallGlobalFunction(RandomMonoid, 
+function(arg)
+  return SEMIGROUPS_RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
 end);

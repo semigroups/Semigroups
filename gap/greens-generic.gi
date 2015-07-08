@@ -710,7 +710,7 @@ InstallMethod(HClassReps, "for a Green's class (Semigroups)",
 
 ## Partial order of D-classes
 
-InstallMethod(PartialOrderOfDClasses, "for a generic semigroup",
+InstallMethod(PartialOrderOfDClasses, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
   local comps, id, right_id, left_id, right_comps, left_comps, right, left,

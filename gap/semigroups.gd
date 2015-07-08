@@ -55,6 +55,7 @@ DeclareGlobalFunction("SEMIGROUPS_AddGenerators");
 DeclareAttribute("Generators", IsSemigroup);
 
 DeclareGlobalFunction("RandomSemigroup");
+DeclareGlobalFunction("RandomMonoid");
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);

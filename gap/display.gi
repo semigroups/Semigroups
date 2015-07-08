@@ -517,7 +517,7 @@ function(S, opts)
             fi;
           fi;
           Append(str, Concatenation("<TD CELLPADDING=\"10\" BGCOLOR=\"",
-                                    color, "\"></TD>"));
+                                    color, "\"><font color=\"white\">*</font></TD>"));
         od;
       else
         h := SortHClassesInLClass(HClasses(l));

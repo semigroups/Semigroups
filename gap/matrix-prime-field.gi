@@ -67,7 +67,8 @@ function(n, field)
   local xy, i, j;
   
   if not IsPrimeField(field) then 
-    Error();
+    Error("Semigroups: RandomMatrixOverPrimeField: usage,\n",
+          "the second argument must be a prime field,");
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));
