@@ -55,14 +55,14 @@ ReadPackage("semigroups/gap/Ideals/ideals.gd");
 ReadPackage("semigroups/gap/Ideals/ideals-acting.gd");
 ReadPackage("semigroups/gap/Ideals/ideals-lambda-rho.gd");
 
-ReadPackage("semigroups/gap/Tools/display.gd");
-ReadPackage("semigroups/gap/Tools/enums.gd");
-ReadPackage("semigroups/gap/Tools/io.gd");
-ReadPackage("semigroups/gap/Tools/iterators.gd");
-ReadPackage("semigroups/gap/Tools/utils.gd");
-
 ReadPackage("semigroups/gap/Greens/greens-generic.gd");
 ReadPackage("semigroups/gap/Greens/greens-acting.gd");
+
+ReadPackage("semigroups/gap/Tools/display.gd");
+ReadPackage("semigroups/gap/Tools/io.gd");
+ReadPackage("semigroups/gap/Tools/utils.gd");
+ReadPackage("semigroups/gap/Tools/enums.gd");
+ReadPackage("semigroups/gap/Tools/iterators.gd");
 
 ReadPackage("semigroups/gap/Attributes/attributes.gd");
 ReadPackage("semigroups/gap/Attributes/attributes-acting.gd");

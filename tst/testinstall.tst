@@ -35,7 +35,7 @@ false
 
 #T# TestInstall5
 gap> S := SingularTransformationSemigroup(6);
-<regular transformation semigroup ideal on 6 pts with 1 generator>
+<regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> Size(S);
 45936
 
@@ -421,7 +421,7 @@ gap> ClosureSemigroup(S, x);
 
 #T# TestInstall27: Issue 36 in the new numbering...
 gap> S := Semigroup(IdentityTransformation);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 gap> SmallGeneratingSet(S);
 [  ]
 
@@ -572,7 +572,7 @@ gap> for i in [1 .. 6] do
 # of the arguments is a monoid).
 # This only works in GAP 4.7.5 or higher hence the CompareVersionNumbers
 gap> S := Semigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));
-<trivial partial perm group on 5 pts with 0 generators>
+<trivial partial perm group of rank 5 with 0 generators>
 gap> T := Monoid(S, PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]));;
 gap> Length(GeneratorsOfMonoid(T)) = 2
 > or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
@@ -779,7 +779,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 >   G := Semigroup(IdentityTransformation);
 > fi;
 gap> G;
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 
 #T# TestInstall48: Issue 101
 # (incorrect method for AsPartialPerm for a perm and zero)
@@ -789,7 +789,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 >   G := Semigroup(PartialPerm([]));
 > fi;
 gap> G;
-<trivial partial perm group on 0 pts with 0 generators>
+<trivial partial perm group of rank 0 with 0 generators>
 
 #T# TestInstall49: Issue 103
 # (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup but
@@ -916,16 +916,16 @@ gap> S := InverseMonoid(DualSymmetricInverseMonoid(6), rec(generic := false));;
 gap> x := Bipartition([[1, 2, -3], [3, -1, -2], [4, -4],
 > [5, -5], [6, -6]]);;
 gap> I := SemigroupIdeal(S, x);
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> JoinIrreducibleDClasses(I);
 [ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], 
       [ 6, -6 ]>> ]
 gap> I;
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> S := InverseMonoid(DualSymmetricInverseMonoid(3));;
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
 gap> I := SemigroupIdeal(S, x);
-<inverse bipartition semigroup ideal on 3 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 3 with 1 generator>
 gap> JoinIrreducibleDClasses(I);
 [ <Green's D-class: <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ]>> ]
 
@@ -964,10 +964,10 @@ true
 # Bug in NrCongruenceClasses for Rees congruences
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 > [Transformation([1, 2, 2, 2])]);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
+<Rees congruence of <regular transformation semigroup ideal of degree 4 with
+ 1 generator> over <full transformation semigroup on 4 pts>>
 gap> NrCongruenceClasses(cong);
 169
 

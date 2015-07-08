@@ -115,16 +115,17 @@ ReadPackage("semigroups/gap/Ideals/ideals-acting.gi");
 ReadPackage("semigroups/gap/Ideals/ideals-lambda-rho.gi");
 ReadPackage("semigroups/gap/Ideals/ideals-generic.gi");
 
-ReadPackage("semigroups/gap/Tools/display.gi");
-ReadPackage("semigroups/gap/Tools/enums.gi");
-ReadPackage("semigroups/gap/Tools/io.gi");
-ReadPackage("semigroups/gap/Tools/iterators.gi");
-ReadPackage("semigroups/gap/Tools/utils.gi");
 
 ReadPackage("semigroups/gap/Greens/greens-generic.gi");
 ReadPackage("semigroups/gap/Greens/greens-acting.gi");
 ReadPackage("semigroups/gap/Greens/greens-regular.gi");
 ReadPackage("semigroups/gap/Greens/greens-inverse.gi");
+
+ReadPackage("semigroups/gap/Tools/display.gi");
+ReadPackage("semigroups/gap/Tools/io.gi");
+ReadPackage("semigroups/gap/Tools/utils.gi");
+ReadPackage("semigroups/gap/Tools/enums.gi");
+ReadPackage("semigroups/gap/Tools/iterators.gi");
 
 ReadPackage("semigroups/gap/Attributes/attributes.gi");
 ReadPackage("semigroups/gap/Attributes/attributes-acting.gi");
