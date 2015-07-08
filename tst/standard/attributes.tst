@@ -20,7 +20,7 @@ gap> t := Transformation([1]);;
 # Trivial full transformation monoid T_1
 # Previously this crashed: see issue #121 on Bitbucket
 gap> s := Semigroup(t); # with displaying the semigroup
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -39,7 +39,7 @@ true
 # Trivial transformation monoid with different rep.
 gap> t := Transformation([2, 2, 3, 3]);;
 gap> s := Semigroup(t); # with displaying the semigroup
-<commutative transformation semigroup on 4 pts with 1 generator>
+<commutative transformation semigroup of degree 4 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -62,7 +62,7 @@ false
 
 # Other transformation semigroups
 gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
-<transformation monoid on 10 pts with 3 generators>
+<transformation monoid of degree 10 with 3 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -73,7 +73,7 @@ gap> s := Semigroup([
 > Transformation([2, 3, 4, 1]),
 > Transformation([2, 1, 3, 4]),
 > Transformation([3, 1, 1, 3])]);
-<transformation semigroup on 4 pts with 3 generators>
+<transformation semigroup of degree 4 with 3 generators>
 gap> t := Transformation([1, 1, 1, 1]);;
 gap> I := SemigroupIdeal(s, t);;
 gap> HasMultiplicativeZero(s);
@@ -105,7 +105,7 @@ true
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := SymmetricInverseMonoid(1);
-<symmetric inverse semigroup on 1 pts>
+<commutative inverse partial perm monoid of rank 1 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -137,7 +137,7 @@ true
 gap> s := InverseSemigroup([
 > PartialPerm([1, 2, 3], [3, 4, 1]),
 > PartialPerm([1, 2, 3, 4, 5], [3, 5, 1, 2, 4])]);
-<inverse partial perm semigroup on 5 pts with 2 generators>
+<inverse partial perm semigroup of rank 5 with 2 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -172,19 +172,19 @@ true
 #T# AttributesTest3:
 # MultiplicativeZero for a bipartition semigroup/ideal
 gap> s := PartitionMonoid(1);
-<commutative bipartition monoid on 1 pts with 1 generator>
+<commutative bipartition monoid of degree 1 with 1 generator>
 gap> MultiplicativeZero(s);
 <bipartition: [ 1 ], [ -1 ]>
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := PartitionMonoid(2);
-<regular bipartition monoid on 2 pts with 3 generators>
+<regular bipartition monoid of degree 2 with 3 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
 gap> s := PartitionMonoid(3);
-<regular bipartition monoid on 3 pts with 4 generators>
+<regular bipartition monoid of degree 3 with 4 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -192,7 +192,7 @@ false
 gap> s := Semigroup([
 > Bipartition([[1, 2, 3, 4, 5, -2], [-1], [-3], [-4], [-5]]),
 > Bipartition([[1, 3, 5, -1], [2, 4, -2], [-3], [-4], [-5]])]);
-<bipartition semigroup on 5 pts with 2 generators>
+<bipartition semigroup of degree 5 with 2 generators>
 gap> MultiplicativeZero(s);
 <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1 ], [ -3 ], [ -4 ], [ -5 ]>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -202,7 +202,7 @@ true
 gap> s := PartitionMonoid(3);;
 gap> t := Bipartition([[1, -2], [2], [3, -3], [-1]]);;
 gap> I := SemigroupIdeal(s, t);
-<regular bipartition semigroup ideal on 3 pts with 1 generator>
+<regular bipartition semigroup ideal of degree 3 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I);
@@ -244,13 +244,13 @@ true
 #T# AttributesTest4:
 # MultiplicativeZero for a block bijection inverse semigroup/ideal
 gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(1));
-<commutative inverse bipartition monoid on 2 pts with 1 generator>
+<commutative inverse bipartition monoid of degree 2 with 1 generator>
 gap> MultiplicativeZero(s);
 <block bijection: [ 1, 2, -1, -2 ]>
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(4));
-<inverse bipartition monoid on 5 pts with 3 generators>
+<inverse bipartition monoid of degree 5 with 3 generators>
 gap> MultiplicativeZero(s);
 <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -259,7 +259,7 @@ gap> s := InverseSemigroup([
 > Bipartition([[1, -3], [2, -4], [3, -1], [4, 5, 6, -2, -5, -6]]),
 > Bipartition([[1, -3], [2, -5], [3, -1], [4, -2], [5, -4],
 > [6, -6]])]);
-<inverse bipartition semigroup on 6 pts with 2 generators>
+<inverse bipartition semigroup of degree 6 with 2 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -271,11 +271,11 @@ gap> s := InverseSemigroup([
 >  [5, -3]]),
 > Bipartition([[1, -5], [2, -4], [3, -3], [4, -2], [5, -1],
 >  [6, -6]])]);
-<inverse bipartition semigroup on 6 pts with 2 generators>
+<inverse bipartition semigroup of degree 6 with 2 generators>
 gap> t := Bipartition(
 > [[1, -1], [2, -2], [3, -3], [4, 6, -4, -6], [5, -5]]);;
 gap> I := SemigroupIdeal(s, t);
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I);
@@ -297,7 +297,7 @@ false
 #T# AttributesTest5:
 # MultiplicativeZero where MinimalDClass is known
 gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
-<transformation monoid on 10 pts with 3 generators>
+<transformation monoid of degree 10 with 3 generators>
 gap> MinimalDClass(s);;
 gap> HasSize(last);
 false
@@ -317,7 +317,7 @@ gap> gens := [
 > Transformation([3, 11, 14, 4, 11, 13, 13, 5, 3, 11, 14, 14, 10, 15, 12]),
 > Transformation([5, 13, 11, 4, 9, 13, 8, 1, 2, 12, 6, 12, 11, 8, 1])];;
 gap> s := Semigroup(gens);
-<transformation semigroup on 15 pts with 3 generators>
+<transformation semigroup of degree 15 with 3 generators>
 gap> HasMinimalDClass(s);
 false
 gap> MultiplicativeZero(s);
@@ -343,23 +343,23 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([4, 1, 2, 2, 1]), 
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpMonoid(S);
-MappingByFunction( <transformation monoid on 5 pts with 5 generators>
- , <fp monoid on the generators [ m1, m2, m3, m4, m5 
- ]>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <transformation monoid of degree 5 with 5 generators>
+, <fp monoid on the generators [ m1, m2, m3, m4, m5 
+]>, function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(map);
 MappingByFunction( <fp monoid on the generators [ m1, m2, m3, m4, m5 ]>, 
-<transformation monoid on 5 pts with 5 generators>
- , function( x ) ... end, function( x ) ... end )
+<transformation monoid of degree 5 with 5 generators>
+, function( x ) ... end, function( x ) ... end )
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 gap> map := IsomorphismFpSemigroup(S);
-MappingByFunction( <transformation monoid on 5 pts with 5 generators>
- , <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
- ]>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <transformation monoid of degree 5 with 5 generators>
+, <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
+]>, function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(map);
 MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
- ]>, <transformation monoid on 5 pts with 5 generators>
- , function( x ) ... end, function( x ) ... end )
+ ]>, <transformation monoid of degree 5 with 5 generators>
+, function( x ) ... end, function( x ) ... end )
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 
@@ -416,7 +416,7 @@ gap> S := Range(iso);;
 gap> S := Semigroup(IrredundantGeneratingSubset(SmallGeneratingSet(S)));;
 
 #T# attributes: IrredundantGeneratingSubset: for a semigroup
-gap> S := RandomBooleanMatMonoid(10, 3);;
+gap> S := RandomMonoid(IsBooleanMatSemigroup, 10, 3);;
 gap> T := Semigroup(IrredundantGeneratingSubset(S));;
 gap> S = T;
 true
@@ -427,7 +427,7 @@ gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
 #T# attributes: IrredundantGeneratingSubset: for a set with one element
 gap> S := Monoid( [ Transformation( [ 1, 1 ] ), Transformation( [ 2, 1 ] ),
 >  Transformation( [ 2, 2 ] ) ], rec(generic := false) );
-<transformation monoid on 2 pts with 3 generators>
+<transformation monoid of degree 2 with 3 generators>
 gap> SetInfoLevel(InfoSemigroups, 3);
 gap> IrredundantGeneratingSubset(S);;
 at 	1 of 	4 with 	0 redundant, 	0 non-redundant
@@ -548,7 +548,7 @@ gap> SmallInverseSemigroupGeneratingSet(S);;
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for 0 generators
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
-<trivial partial perm group on 3 pts with 0 generators>
+<trivial partial perm group of rank 3 with 0 generators>
 gap> SmallInverseMonoidGeneratingSet(S);
 [  ]
 
@@ -636,7 +636,7 @@ gap> SmallGeneratingSet(S);
 
 #T# attributes: SmallGeneratingSet: for a group
 gap> S := Group(IdentityTransformation);
-<transformation group with 1 generator>
+<transformation group of degree 0 with 1 generator>
 gap> SmallGeneratingSet(S);
 [ IdentityTransformation ]
 
@@ -679,7 +679,7 @@ gap> StructureDescription(S);
 
 #T# attributes: StructureDescription for a group as semigroup 2/3
 gap> S := Semigroup(Transformation([2,1,1]));
-<commutative transformation semigroup on 3 pts with 1 generator>
+<commutative transformation semigroup of degree 3 with 1 generator>
 gap> IsGroupAsSemigroup(S);
 true
 gap> StructureDescription(S);
@@ -691,7 +691,7 @@ gap> StructureDescription(S);
 "S3"
 
 #T# attributes: IsGreensDLeq
-gap> S := RegularBooleanMatSemigroup(3);;
+gap> S := RegularBooleanMatMonoid(3);;
 gap> foo := IsGreensDLeq(S);
 function( x, y ) ... end
 gap> x := BooleanMat([[1, 0, 1], [1, 1, 0], [1, 0, 1]]);;
@@ -712,18 +712,18 @@ gap> foo(y, z);
 true
 
 #T# attributes: MaximalDClasses
-gap> S := RegularBooleanMatSemigroup(3);
-<semigroup of 3x3 boolean matrices with 4 generators>
+gap> S := RegularBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 4 generators>
 gap> MaximalDClasses(S);
 [ <Green's D-class: <3x3 boolean matrix>> ]
 
 #T# attributes: StructureDescriptionMaximalSubgroups
-gap> S := RegularBooleanMatSemigroup(3);;
+gap> S := RegularBooleanMatMonoid(3);;
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S3" ]
 
 #T# attributes: IdempotentGeneratedSubsemigroup
-gap> S := RegularBooleanMatSemigroup(3);;
+gap> S := RegularBooleanMatMonoid(3);;
 gap> IdempotentGeneratedSubsemigroup(S);
 <monoid of 3x3 boolean matrices with 122 generators>
 
@@ -769,29 +769,29 @@ gap> Display(MultiplicativeNeutralElement(S));
 1 0 0
 0 1 0
 1 0 0
-gap> S := RegularBooleanMatSemigroup(2);
-<semigroup of 2x2 boolean matrices with 4 generators>
+gap> S := RegularBooleanMatMonoid(2);
+<monoid of 2x2 boolean matrices with 4 generators>
 gap> MultiplicativeNeutralElement(S);
 <2x2 boolean matrix>
 
 #T# attributes: IsomorphismPermGroup
-gap> S := RegularBooleanMatSemigroup(2);
-<semigroup of 2x2 boolean matrices with 4 generators>
+gap> S := RegularBooleanMatMonoid(2);
+<monoid of 2x2 boolean matrices with 4 generators>
 gap> IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 gap> S := Semigroup( [ BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
 >  BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]) ] );;
 gap> IsomorphismPermGroup(S);
-MappingByFunction( <simple semigroup of 3x3 boolean matrices with 2 generators
->, Group([ (1,3)(2,4)(5,6), (1,4,5)
+MappingByFunction( <group of 3x3 boolean matrices with 2 generators>
+, Group([ (1,3)(2,4)(5,6), (1,4,5)
 (2,3,6) ]), function( x ) ... end, function( x ) ... end )
 
 #T# attributes: GroupOfUnits, for a finite semigroup 1/2
-gap> S := RegularBooleanMatSemigroup(3);
-<semigroup of 3x3 boolean matrices with 4 generators>
+gap> S := RegularBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 4 generators>
 gap> GroupOfUnits(S);
-<simple monoid of 3x3 boolean matrices with 2 generators>
+<group of 3x3 boolean matrices with 2 generators>
 gap> StructureDescription(last);
 "S3"
 

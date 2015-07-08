@@ -32,7 +32,6 @@ DeclareGlobalFunction("BooleanMatNC");
 
 DeclareOperation("RandomBooleanMat", [IsPosInt]);
 
-
 #############################################################################
 ## Declarations specifically for Boolean mats
 #############################################################################

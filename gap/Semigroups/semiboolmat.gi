@@ -10,18 +10,6 @@
 
 # This file contains methods for semigroups of boolean matrices.
 
-InstallMethod(RandomBooleanMatSemigroup, "for a pos ints",
-[IsPosInt, IsPosInt],
-function(nrgens, dim)
-  return Semigroup(Set([1 .. nrgens], x -> RandomBooleanMat(dim)));
-end);
-
-InstallMethod(RandomBooleanMatMonoid, "for a pos ints",
-[IsPosInt, IsPosInt],
-function(nrgens, dim)
-  return Monoid(Set([1 .. nrgens], x -> RandomBooleanMat(dim)));
-end);
-
 InstallMethod(IsomorphismTransformationSemigroup,
 "for a boolean matrix semigroup generators",
 [IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],

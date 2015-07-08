@@ -17,6 +17,13 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
+#############################################################################
+# 1. Internal methods
+#############################################################################
+
+# SEMIGROUPS_IsCCSemigroup: returns <true> if the argument is a semigroup to
+# which we can apply the C++ code.  
+
 InstallMethod(SEMIGROUPS_IsCCSemigroup, "for a semigroup",
 [IsSemigroup], 
 function(S) 
@@ -27,6 +34,9 @@ function(S)
            or IsPBRSemigroup(S) 
            or IsMatrixOverSemiringSemigroup(S);
 end);
+
+# SEMIGROUPS_DegreeOfSemigroup: returns the size of the container required in
+# the C++ code by elements of the semigroup.
 
 InstallGlobalFunction(SEMIGROUPS_DegreeOfSemigroup,
 function(arg) 
@@ -60,6 +70,8 @@ function(arg)
     return;
   fi;
 end);
+
+#############################################################################
 
 # different method for ideals
 
@@ -117,7 +129,6 @@ function(x, S)
 end);
 
 # different method for ideals
-# TODO: use the same technique as used by Semigroupe
 
 InstallMethod(Idempotents, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
@@ -172,7 +183,7 @@ end);
 InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData],
 LENGTH_SEMIGROUP);
 
-#
+# FIXME remove this?
 
 InstallMethod(ELM_LIST, "for generic semigroup data, and pos int",
 [IsGenericSemigroupData, IsPosInt],

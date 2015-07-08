@@ -56,7 +56,7 @@ gap> MaximalDClasses(S);
 
 #T# attributes-acting: MaximalDClasses for regular semigroup
 gap> S := FullTransformationMonoid(3);
-<full transformation semigroup on 3 pts>
+<regular transformation monoid of size 27, degree 3 with 3 generators>
 gap> MaximalDClasses(S);
 [ <Green's D-class: IdentityTransformation> ]
 
@@ -70,13 +70,13 @@ gap> StructureDescriptionSchutzenbergerGroups(S);
 gap> S := Semigroup( [ PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ),
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 2, 4, 1, 5 ] ) ] );;
 gap> IdempotentGeneratedSubsemigroup(S);
-<commutative partial perm monoid on 1 pts with 1 generator>
+<commutative partial perm monoid of rank 1 with 1 generator>
 
 #T# attributes-acting: IdempotentGeneratedSubsemigroup, for an inverse semigroup
 gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 4, 3 ] ),
 > PartialPerm( [ 1, 2, 5 ], [ 1, 2, 4 ] ) ] );;
 gap> IdempotentGeneratedSubsemigroup(S);
-<inverse partial perm semigroup on 5 pts with 5 generators>
+<inverse partial perm semigroup of rank 5 with 5 generators>
 
 #T# attributes-acting: InjectionPrincipalFactor 1/6
 gap> D := GreensDClassOfElement(
@@ -205,7 +205,7 @@ gap> InversesOfSemigroupElementNC(S, x);
 
 #T# attributes-acting: MultiplicativeNeutralElement, 1/4
 gap> S := Semigroup(Transformation([2, 3, 1]));
-<commutative transformation semigroup on 3 pts with 1 generator>
+<commutative transformation semigroup of degree 3 with 1 generator>
 gap> MultiplicativeNeutralElement(S);
 IdentityTransformation
 
@@ -222,7 +222,7 @@ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 ] )
 
 #T# attributes-acting: MultiplicativeNeutralElement, 4/4
 gap> S := Semigroup(Transformation([1, 1, 3]), Transformation([2, 2, 3]));
-<transformation semigroup on 2 pts with 2 generators>
+<transformation semigroup of degree 2 with 2 generators>
 gap> MultiplicativeNeutralElement(S);
 fail
 

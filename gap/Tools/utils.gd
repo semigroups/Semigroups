@@ -17,6 +17,6 @@ DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestManualExamples");
 DeclareGlobalFunction("SemigroupsManualExamples");
 
-DeclareGlobalFunction("SEMIGROUPS_TEST");
+DeclareGlobalFunction("SEMIGROUPS_Test");
 
 BindGlobal("SemigroupsOmitFromTestManualExamples", []);

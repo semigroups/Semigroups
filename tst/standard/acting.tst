@@ -122,7 +122,7 @@ false
 
 #T# acting: \in, too small rank
 gap> S := AsTransformationSemigroup(RectangularBand(3, 3));
-<transformation semigroup on 10 pts with 9 generators>
+<transformation semigroup of degree 10 with 9 generators>
 gap> MinimalIdeal(S);;
 gap> x := ConstantTransformation(10, 10);
 Transformation( [ 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ] )

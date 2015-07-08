@@ -290,12 +290,12 @@ end);
 
 InstallGlobalFunction(SemigroupsTestInstall,
 function()
-   SEMIGROUPS_TEST("testinstall.tst");
+   SEMIGROUPS_Test("testinstall.tst");
 end);
 
 #
 
-InstallGlobalFunction(SEMIGROUPS_TEST,
+InstallGlobalFunction(SEMIGROUPS_Test,
 function(file)
   local generic;
 
@@ -305,6 +305,8 @@ function(file)
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
                 file));
+
+  Print("\n");
 
   Print("Testing with acting semigroup methods disabled . . .\n");
   SEMIGROUPS_DefaultOptionsRec.generic := true;

@@ -556,7 +556,9 @@ function(h)
   # FIXME IsInverseOpClass should work for non-acting semigroup too
   #       and then this could then become a filter for the method
   if not IsSemigroupWithInverseOp(S) then
-    TryNextMethod();
+    Error("Semigroups: SameMinorantsSubgroup: usage,\n",
+          "the parent semigroup of the group H-class <h> must be inverse,");
+    return;
   fi;
 
   e := Representative(h);

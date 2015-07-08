@@ -84,10 +84,10 @@ ReadPackage("semigroups/gap/Elements/star.gi");
 ReadPackage("semigroups/gap/Elements/pbr.gi");
 ReadPackage("semigroups/gap/Elements/bipartition.gi");
 ReadPackage("semigroups/gap/Elements/blocks.gi");
-ReadPackage("semigroups/gap/Elements/matrix-semiring.gi");
-ReadPackage("semigroups/gap/Elements/matrix-max-plus.gi");
-ReadPackage("semigroups/gap/Elements/matrix-boolean.gi");
-ReadPackage("semigroups/gap/Elements/matrix-prime-field.gi");
+ReadPackage("semigroups/gap/Elements/semiringmat.gi");
+ReadPackage("semigroups/gap/Elements/maxplusmat.gi");
+ReadPackage("semigroups/gap/Elements/boolmat.gi");
+ReadPackage("semigroups/gap/Elements/pfmat.gi");
 
 ReadPackage("semigroups/gap/Semigroups/semigroups.gi");
 ReadPackage("semigroups/gap/Semigroups/froidure-pin.gi");

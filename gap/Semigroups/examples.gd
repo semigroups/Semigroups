@@ -42,7 +42,7 @@ DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
                SingularTransformationSemigroup);
 
-DeclareOperation("RegularBooleanMatSemigroup", [IsPosInt]);
+DeclareOperation("RegularBooleanMatMonoid", [IsPosInt]);
 
 DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
 DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);

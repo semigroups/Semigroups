@@ -301,30 +301,13 @@ end);
 
 #
 
-InstallMethod(RegularBinaryRelationSemigroup, "for a positive integer",
-[IsPosInt],
-function(n)
-  local gens, s;
-
-  gens := [Concatenation(List([2 .. n], x -> [x]), [[1]]),
-           Concatenation([[2], [1]], List([3 .. n], x -> [x])),
-           Concatenation(List([1 .. n - 1], x -> [x]), [[1, n]]),
-           Concatenation(List([1 .. n - 1], x -> [x]), [[]])] ;
-
-  s := Semigroup(List(gens, BinaryRelationByListOfImagesNC));
-  #SetIsBinaryRelationCollection(s, true);
-  return s;
-end);
-
-#
-
-InstallMethod(RegularBooleanMatSemigroup, "for a pos int",
+InstallMethod(RegularBooleanMatMonoid, "for a pos int",
 [IsPosInt],
 function(n)
   local gens, i, j;
 
   if n = 1 then 
-    return Semigroup(BooleanMatNC([[true]]), BooleanMatNC([[false]]));
+    return Monoid(BooleanMatNC([[true]]), BooleanMatNC([[false]]));
   fi;
 
   gens := [];
@@ -348,9 +331,10 @@ function(n)
   
   gens[1] := AsBooleanMat((1, 2), n);
 
-  return Semigroup(gens);
+  return Monoid(gens);
 end);
 
+#FIXME add a function for FullBooleanMatMonoid
 # Generators for B_3:
 #
 #Semigroup( [ BooleanMatNC([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
