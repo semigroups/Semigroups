@@ -711,6 +711,11 @@ false
 gap> foo(y, z);
 true
 
+#T# attributes: IsGreensDLeq, error
+gap> IsGreensDLeq(FreeSemigroup(2));
+Error, Semigroups: IsGreensDLeq: usage,
+the argument must be a finite semigroup,
+
 #T# attributes: MaximalDClasses
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
@@ -801,6 +806,23 @@ gap> S := Semigroup(
 > BooleanMat([[1, 1, 0, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 0]]));;
 gap> GroupOfUnits(S);
 fail
+
+#T# attributes: NrIdempotents, C++ 1/1
+gap> S := RegularBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 4 generators>
+gap> NrIdempotents(S);
+123
+
+#T# attributes: NrIdempotents, non-C++ 1/1
+gap> S := FreeBand(2);;
+gap> NrIdempotents(S);
+6
+
+#T# attributes: RepresentativeOfMinimalIdeal, simple, 1/1
+gap> S := MinimalIdeal(FreeBand(2));
+<simple semigroup ideal with 1 generator>
+gap> RepresentativeOfMinimalIdeal(S);
+x1x2
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);

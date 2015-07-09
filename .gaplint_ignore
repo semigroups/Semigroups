@@ -6,3 +6,4 @@ NrLeftBlocks
 MonoidByGenerators
 SemigroupByGenerators
 InverseOp
+TraceSchreierTreeForward

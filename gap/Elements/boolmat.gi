@@ -283,8 +283,7 @@ function(nr, n)
 end);
 
 InstallMethod(AsBooleanMat, "for a partitioned binary relation",
-[IsPBR],
-x -> AsBooleanMat(x, 2 * DegreeOfPBR(x)));
+[IsPBR], x -> AsBooleanMat(x, 2 * DegreeOfPBR(x)));
 
 InstallMethod(AsBooleanMat, "for a partitioned binary relation and pos int",
 [IsPBR, IsPosInt],

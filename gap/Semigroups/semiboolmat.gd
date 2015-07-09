@@ -12,5 +12,8 @@
 
 DeclareSynonym("IsBooleanMatSemigroup", 
                IsSemigroup and IsBooleanMatCollection);
+
 InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 
+DeclareAttribute("AsBooleanMatSemigroup", IsSemigroup);
+DeclareAttribute("IsomorphismBooleanMatSemigroup", IsSemigroup);

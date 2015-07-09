@@ -1,6 +1,8 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+* fix the bug in the c++ code relating to the changeset tagged `bug-in-c-code`
+
 * a non-inverse-op version of 
   * `IsJoinIrreducible`
   * `IsMajorantlyClosed`

@@ -10,6 +10,36 @@
 
 # This file contains methods for semigroups of boolean matrices.
 
+InstallMethod(IsomorphismBooleanMatSemigroup, 
+"for a transformation semigroup", [IsTransformationSemigroup], 
+function(S)
+  local n, T;
+  n := DegreeOfTransformationSemigroup(S);
+  T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
+  return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
+end);
+
+InstallMethod(IsomorphismBooleanMatSemigroup, 
+"for a semigroup", [IsSemigroup], 
+function(S)
+  local iso1, inv1, iso2, inv2;
+
+  iso1 := IsomorphismTransformationSemigroup(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismBooleanMatSemigroup(Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MappingByFunction(S, Range(iso2), 
+                           x -> (x ^ iso1) ^ iso2, 
+                           x -> (x ^ inv2) ^ inv1);
+end);
+
+InstallMethod(AsBooleanMatSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return Range(IsomorphismBooleanMatSemigroup(S));
+end);
+
 InstallMethod(IsomorphismTransformationSemigroup,
 "for a boolean matrix semigroup generators",
 [IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
