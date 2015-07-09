@@ -275,7 +275,7 @@ function(dclass)
   return IteratorByNextIterator(record);
 end);
 
-# A free band iteratror has component: content, dclass_iter.
+# A free band iterator has component: content, dclass_iter.
 
 InstallMethod(Iterator, "for a free band",
 [IsFreeBandCategory],
@@ -351,6 +351,7 @@ function(S, x)
   SetRepresentative(D, x);
   SetEquivalenceClassRelation(D, GreensDRelation(S));
   # TODO Add a new method for GreensDRelations. JJ
+  # JDM what does this comment mean?
   return D;
 end);
 

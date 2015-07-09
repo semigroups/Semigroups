@@ -363,7 +363,7 @@ function(S)
   if HasIsFinite(S) and IsFinite(S) then
     SetIsFiniteSemigroupGreensRelation(rel, true);
   fi;
-  if not IsActingSemigroup(S) then
+  if not IsActingSemigroup(S) and not IsFreeBand(S) then #FIXME this is a hack!
     rel!.data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRRelation(S)!.data,
                                                     GreensLRelation(S)!.data);
   fi;
