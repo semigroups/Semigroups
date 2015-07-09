@@ -46,4 +46,5 @@ DeclareProperty("IsUniversalPBR", IsPBR);
 DeclareProperty("IsBipartitionPBR", IsPBR);
 DeclareProperty("IsTransformationPBR", IsPBR);
 DeclareProperty("IsPartialPermPBR", IsPBR);
+DeclareProperty("IsBlockBijectionPBR", IsPBR);
 DeclareProperty("IsDualTransformationPBR", IsPBR);

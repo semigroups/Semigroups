@@ -1,13 +1,13 @@
 #%T##########################################################################
 ##
-#W  attributes-acting.tst
+#W  standard/attributes/attributes-acting.tst
 #Y  Copyright (C) 2015                                  James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: attributes-acting.tst");
+gap> START_TEST("Semigroups package: standard/attributes/attributes-acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -259,4 +259,4 @@ gap> RepresentativeOfMinimalIdeal(I);
 <bipartition: [ 1, 2, 4, 5, -1 ], [ 3, -3 ], [ -2 ], [ -4 ], [ -5 ]>
 
 #E#
-gap> STOP_TEST("Semigroups package: attributes-acting.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/attributes-acting.tst");

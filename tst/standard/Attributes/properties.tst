@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/Attributes/properties.tst
+#W  standard/attributes/properties.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/Attributes/properties.tst");
+gap> START_TEST("Semigroups package: standard/attributes/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -16,4 +16,4 @@ gap> SemigroupsStartTest();
 #T# SEMIGROUPS_UnbindVariables
 
 #E#
-gap> STOP_TEST( "Semigroups package: standard/Attributes/properties.tst");
+gap> STOP_TEST( "Semigroups package: standard/attributes/properties.tst");

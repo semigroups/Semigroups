@@ -64,6 +64,8 @@ DeclareAttribute("Generators", IsSemigroup);
 #TODO move this to examples!
 DeclareGlobalFunction("RandomSemigroup");
 DeclareGlobalFunction("RandomMonoid");
+DeclareGlobalFunction("RandomInverseSemigroup");
+DeclareGlobalFunction("RandomInverseMonoid");
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty",

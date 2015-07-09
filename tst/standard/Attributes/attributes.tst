@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  attributes.tst
+#W  standard/attributes/attributes.tst
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: attributes.tst");
+gap> START_TEST("Semigroups package: standard/attributes/attributes.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -809,4 +809,4 @@ gap> Unbind(I);
 gap> Unbind(gens);
 
 #E#
-gap> STOP_TEST("Semigroups package: attributes.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/attributes.tst");

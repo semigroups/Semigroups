@@ -10,29 +10,36 @@
 
 # This file contains an intitial implementation of partitioned binary
 # relations (PBRs) as defined in:
-# 
-# Paul Martin and Volodymyr Mazorchuk, Partitioned Binary Relations, 
+#
+# Paul Martin and Volodymyr Mazorchuk, Partitioned Binary Relations,
 # Mathematica Scandinavica, v113, n1, p. 30-52, http://arxiv.org/abs/1102.0862
 
-# Internally a PBR is stored as the adjacency list of digraph with 
+# Internally a PBR is stored as the adjacency list of digraph with
 # vertices [1 .. 2 * n] for some n. More precisely if <x> is a PBR, then:
-# 
+#
 #   * <x![1]> is equal to <n>
-#   
-#   * <x![i + 1]> is the vertices adjacent to <i> 
-# 
+#
+#   * <x![i + 1]> is the vertices adjacent to <i>
+#
 # The number <n> is the *degree* of <x>.
 
-# TODO UniversalPBR, EmptyPBR, the embeddings from the paper, 
-# IsBipartitionPBR, IsTransformationPBR, IsPartialPermPBR,
+# TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
+# IsBipartitionPBR, IsTransformationPBR, 
 # IsDualTransformationPBR, etc
+
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
+[IsPBRCollection],
+function(coll)
+  return ForAll(coll, IsBipartitionPBR)
+         and IsGeneratorsOfInverseSemigroup(List(coll, AsBipartition)); 
+end);
 
 # TODO 2 arg version of this
 
 InstallMethod(AsTransformation, "for a pbr",
-[IsPBR], 
+[IsPBR],
 function(x)
-  if not IsTransformationPBR(x) then 
+  if not IsTransformationPBR(x) then
     Error();
     return;
   fi;
@@ -40,25 +47,31 @@ function(x)
 end);
 
 InstallMethod(IsBipartitionPBR, "for a pbr",
-[IsPBR], 
+[IsPBR],
 function(x)
   return IsEquivalenceBooleanMat(AsBooleanMat(x));
 end);
 
 InstallMethod(IsTransformationPBR, "for a pbr",
-[IsPBR], 
+[IsPBR],
 function(x)
   return IsBipartitionPBR(x) and IsTransBipartition(AsBipartition(x));
 end);
 
+InstallMethod(IsBlockBijectionPBR, "for a pbr",
+[IsPBR],
+function(x)
+  return IsBipartitionPBR(x) and IsBlockBijection(AsBipartition(x));
+end);
+
 InstallMethod(IsPartialPermPBR, "for a pbr",
-[IsPBR], 
+[IsPBR],
 function(x)
   return IsBipartitionPBR(x) and IsPartialPermBipartition(AsBipartition(x));
 end);
 
 InstallMethod(IsDualTransformationPBR, "for a pbr",
-[IsPBR], 
+[IsPBR],
 function(x)
   return IsBipartitionPBR(x) and IsDualTransBipartition(AsBipartition(x));
 end);
@@ -82,7 +95,7 @@ function(x)
 
   n := x![1];
   for i in [2 .. 2 * n + 1] do
-    if Length(x![i]) > 0 then 
+    if Length(x![i]) > 0 then
       return false;
     fi;
   od;
@@ -106,20 +119,20 @@ end);
 #FIXME: this should probably be more specific, 1 method for transformations, 1
 # for partial perms, etc
 
-InstallMethod(AsPBR, "for an associative element", 
+InstallMethod(AsPBR, "for an associative element",
 [IsAssociativeElement], x -> AsPBR(AsBipartition(x)));
 
-InstallMethod(AsPBR, 
-"for an associative element and pos int", 
-[IsAssociativeElement, IsPosInt], 
+InstallMethod(AsPBR,
+"for an associative element and pos int",
+[IsAssociativeElement, IsPosInt],
 function(x, n)
   return AsPBR(AsBipartition(x, n));
 end);
 
-InstallMethod(AsPBR, "for a bipartition", 
+InstallMethod(AsPBR, "for a bipartition",
 [IsBipartition], x -> AsPBR(x, DegreeOfBipartition(x)));
 
-InstallMethod(AsPBR, "for a bipartition and pos int", 
+InstallMethod(AsPBR, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
 function(x, n)
   local deg, blocks, out, i, block;
@@ -127,18 +140,18 @@ function(x, n)
   deg := DegreeOfBipartition(x);
   blocks := ExtRepOfBipartition(x);
   out := [[], []];
-  
-  for block in blocks do 
-    for i in block do 
-      if i < 0 then 
+
+  for block in blocks do
+    for i in block do
+      if i < 0 then
         i := -i;
         out[2][i] := ShallowCopy(block);
-      else 
+      else
         out[1][i] := ShallowCopy(block);
       fi;
     od;
   od;
-  for i in [deg + 1 .. n] do 
+  for i in [deg + 1 .. n] do
     Add(out[1], []);
     Add(out[2], []);
   od;
@@ -147,21 +160,21 @@ function(x, n)
 end);
 
 InstallMethod(AsPBR, "for a boolean matrix",
-[IsBooleanMat], 
+[IsBooleanMat],
 function(x)
   local deg, succ;
 
   deg := DimensionOfMatrixOverSemiring(x);
-  if not IsEvenInt(deg) then 
+  if not IsEvenInt(deg) then
     Error();
     return;
   fi;
   succ := Successors(x);
-  return PBR(succ{[1 .. deg / 2]}, 
+  return PBR(succ{[1 .. deg / 2]},
                                    succ{[deg / 2 + 1 .. deg]});
 end);
 
-# TODO use RandomDigraph here! 
+# TODO use RandomDigraph here!
 # TODO make a method that takes a float between 0 and 1 as the probability of
 # an edge existing.
 
@@ -169,9 +182,9 @@ InstallMethod(RandomPBR, "for a pos int", [IsPosInt],
 function(n)
   local p, adj, k, i, j;
 
-  # probability of an edge  
+  # probability of an edge
   p := Random([0..9999]);
-  
+
   adj := [n];
   for i in [2 .. 2 * n + 1] do
     Add(adj, []);
@@ -198,7 +211,7 @@ function(arg)
   arg := ShallowCopy(arg);
   left_adj := arg[1];  # things adjacent to positives
   right_adj := arg[2]; # things adjacent to negatives
-  
+
   n := Length(left_adj);
 
   for i in [1 .. n] do
@@ -217,7 +230,7 @@ function(arg)
   return Objectify(PBRType, arg);
 end);
 
-InstallMethod(DegreeOfPBR, "for a partitioned binary relation", 
+InstallMethod(DegreeOfPBR, "for a partitioned binary relation",
 [IsPBR], pbr -> pbr![1]);
 
 # can't we use some sort of Floyd-Warshall Algorithm here, the current method
@@ -229,7 +242,7 @@ function(x, y)
   local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, i;
 
   n := x![1];
-  
+
   out := Concatenation([n], List([1 ..  2 * n], x -> []));
 
   x_seen := BlistList([1 .. 2 * n], []);
@@ -238,12 +251,12 @@ function(x, y)
 
   x_dfs := function(i, adj) # starting in x
     local j;
-    if x_seen[i] then 
+    if x_seen[i] then
       return;
     fi;
     x_seen[i] := true;
-    for j in x![i + 1] do 
-      if j <= n then 
+    for j in x![i + 1] do
+      if j <= n then
         AddSet(adj, j);
       else # j > n
         y_dfs(j - n, adj);
@@ -251,15 +264,15 @@ function(x, y)
     od;
     return;
   end;
-  
+
   y_dfs := function(i, adj) # starting in y
     local j;
-    if y_seen[i] then 
+    if y_seen[i] then
       return;
     fi;
     y_seen[i] := true;
-    for j in y![i + 1] do 
-      if j > n then 
+    for j in y![i + 1] do
+      if j > n then
         AddSet(adj, j);
       else # j <= n
         x_dfs(j + n, adj);
@@ -283,22 +296,22 @@ function(x, y)
   return Objectify(PBRType, out);
 end);
 
-InstallGlobalFunction(ExtRepOfPBR, 
+InstallGlobalFunction(ExtRepOfPBR,
 function(x)
   local n, out, i, j, k;
-  
-  if not IsPBR(x) then 
+
+  if not IsPBR(x) then
     Error();
     return;
   fi;
-  
+
   n := x![1];
   out := [[], []];
-  for i in [0, 1] do 
-    for j in [1 + n * i .. n + n * i] do 
+  for i in [0, 1] do
+    for j in [1 + n * i .. n + n * i] do
       Add(out[i + 1], []);
-      for k in x![j + 1] do 
-        if k > n then 
+      for k in x![j + 1] do
+        if k > n then
           AddSet(out[i + 1][j - n * i], - (k - n));
         else
           AddSet(out[i + 1][j- n * i], k);
@@ -311,15 +324,15 @@ function(x)
 end);
 
 InstallMethod(ViewString, "for a partitioned binary relation",
-[IsPBR], 
+[IsPBR],
 function(x)
   local str, n, ext, i;
 
-  if IsUniversalPBR(x) then 
+  if IsUniversalPBR(x) then
     return Concatenation("\><universal pbr on ", PrintString(x![1]),
                          " points>\<");
-  elif IsEmptyPBR(x) then 
-    return Concatenation("\><empty pbr on ", PrintString(x![1]), 
+  elif IsEmptyPBR(x) then
+    return Concatenation("\><empty pbr on ", PrintString(x![1]),
                          " points>\<");
   fi;
 
@@ -327,17 +340,17 @@ function(x)
 
   n := DegreeOfPBR(x);
   ext := ExtRepOfPBR(x);
-  
+
   Append(str, "\>");
   Append(str, PRINT_STRINGIFY("[\>", ext[1][1]));
-  for i in [2 .. n] do 
+  for i in [2 .. n] do
     Append(str, ",\< \>");
     Append(str, PrintString(ext[1][i]));
   od;
   Append(str, "\<],\<");
   Append(str, " \>");
   Append(str, PRINT_STRINGIFY("[\>", ext[2][1]));
-  for i in [2 .. n] do 
+  for i in [2 .. n] do
     Append(str, ",\< \>");
     Append(str, PrintString(ext[2][i]));
   od;
@@ -347,7 +360,7 @@ function(x)
 end);
 
 InstallMethod(PrintString, "for a partitioned binary relation",
-[IsPBR], 
+[IsPBR],
 function(x)
   local str, ext;
 
@@ -370,8 +383,8 @@ function(x, y)
   local n, i;
 
   n := x![1];
-  for i in [1 .. 2 * n + 1] do 
-    if x![i] <> y![i] then 
+  for i in [1 .. 2 * n + 1] do
+    if x![i] <> y![i] then
       return false;
     fi;
   od;
@@ -401,7 +414,7 @@ function(x)
 
   n := x![1];
   out := [n];
-  for i in [1 .. n] do 
+  for i in [1 .. n] do
     out[i + 1] := [i + n];
     out[i + n + 1] := [i];
   od;

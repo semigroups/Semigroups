@@ -147,6 +147,7 @@
     <#Include Label="IsJoinIrreducible">
     <#Include Label="IsMajorantlyClosed">
     <#Include Label="IsMonogenicInverseSemigroup">
+    <#Include Label="NaturalLeqInverseSemigroup">
     <#Include Label="JoinIrreducibleDClasses">
     <#Include Label="MajorantClosure">
     <#Include Label="Minorants">

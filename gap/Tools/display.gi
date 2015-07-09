@@ -440,8 +440,8 @@ end);
 InstallMethod(DotDClasses, "for a semigroup and record",
 [IsSemigroup, IsRecord],
 function(S, opts)
-  local es, elts, str, i, R, SortHClassesInLClass, gp, color, pos, h, shortest,
-  rel, j, k, di, dk, x, d, l;
+  local es, elts, str, i, R, SortHClassesInLClass, gp, color, pos, h, longest,
+        rel, ii, di, j, dk, k, x, d, l;
 
   # process the options
   if not IsBound(opts.maximal) then
@@ -562,22 +562,20 @@ function(S, opts)
     Append(str, "</TABLE>>];\n");
   od;
   # TODO make PartialOrderOfDClasses return a digraph
-  shortest := DigraphShortestDistances(Digraph(PartialOrderOfDClasses(S)));
+  longest := DigraphLongestDistances(Digraph(PartialOrderOfDClasses(S)));
   rel := List([1 .. NrDClasses(S)], x -> []);
   for i in [1 .. NrDClasses(S)] do 
     for j in [1 .. NrDClasses(S)] do 
-      if shortest[i][j] = 1 and i <> j then 
+      if longest[i][j] = 1 then 
         Add(rel[i], j);
       fi;
     od;
   od;
 
   for i in [1 .. Length(rel)] do
-    j := Difference(rel[i], Union(rel{rel[i]}));
-    i := String(i);
-    for k in j do
-      k := String(k);
-      Append(str, Concatenation(i, " -> ", k, "\n"));
+    ii := String(i);
+    for k in rel[i] do
+      Append(str, Concatenation(ii, " -> ", String(k), "\n"));
     od;
   od;
 

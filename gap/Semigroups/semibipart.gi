@@ -136,7 +136,6 @@ function(S)
     od;
   od;
 
-  Perform(out, ShrinkAllocationPlist);
   return out;
 end);
 
@@ -513,7 +512,7 @@ InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
   if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then 
-    TryNextMethod();
+    TryNextMethod(); # FIXME why is this necessary?
   fi;
     
   return ForAll(coll, IsBlockBijection)

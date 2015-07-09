@@ -34,7 +34,7 @@ function(S)
       Append(str, "\>commutative\< ");
     fi;
   fi;
-  
+
   if not IsGroup(S) then
     if HasIsTrivial(S) and IsTrivial(S) then
       # do nothing
@@ -81,11 +81,11 @@ function(S)
   fi;
 
   suffix := SEMIGROUPS_ViewStringSuffix(S);
-  if suffix <> "" 
+  if suffix <> ""
       and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
     suffix := Concatenation("of ", suffix);
   fi;
-  Append(str, suffix); 
+  Append(str, suffix);
 
   Append(str, "with\> ");
   Append(str, ViewString(nrgens));
@@ -137,13 +137,13 @@ function(S)
     Append(str, ViewString(Size(S)));
     Append(str, ",\<\< ");
   fi;
-  
+
   suffix := SEMIGROUPS_ViewStringSuffix(S);
-  if suffix <> "" 
+  if suffix <> ""
       and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
     suffix := Concatenation("of ", suffix);
   fi;
-  Append(str, suffix); 
+  Append(str, suffix);
   Append(str, "with\> ");
   Append(str, ViewString(Length(Generators(S))));
   Append(str, "\< generator");
@@ -153,7 +153,7 @@ function(S)
   else
     Append(str, "\<");
   fi;
-  
+
   Append(str, ">\<");
 
   return str;
@@ -166,8 +166,8 @@ InstallMethod(ViewString, "for a group consisting of semigroups elements",
 [IsGroup], _ViewStringForSemigroupsGroups);
 
 InstallMethod(ViewString, "for a partial perm group",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup 
-and IsSimpleSemigroup and IsInverseSemigroup], 1, # to beat the lib method 
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup
+and IsSimpleSemigroup and IsInverseSemigroup], 1, # to beat the lib method
 _ViewStringForSemigroupsGroups);
 
 MakeReadWriteGlobal("_ViewStringForSemigroupsGroups");
@@ -227,7 +227,7 @@ InstallMethod(SemigroupByGenerators,
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local n, i, S, filts, pos, x;
-  
+
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
   gens := AsList(gens);
 
@@ -246,7 +246,7 @@ function(gens, opts)
       fi;
     else
       Sort(gens, IsGreensDLeq(Semigroup(gens)));
-      if IsMultiplicativeElementWithOneCollection(gens) and IsOne(gens[1]) 
+      if IsMultiplicativeElementWithOneCollection(gens) and IsOne(gens[1])
           and gens[1] in Semigroup(gens[2]) then
         Remove(gens, 1);
       fi;
@@ -767,16 +767,16 @@ function(o, old_deg, t)
   return o;
 end);
 
-# this is the fallback method, coll should consist of elements not in 
+# this is the fallback method, coll should consist of elements not in
 # the semigroup
 
-InstallMethod(ClosureSemigroupNC, 
+InstallMethod(ClosureSemigroupNC,
 "for a semigroup, associative element collection, and record",
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, coll, opts)
   local data, T;
 
-  if SEMIGROUPS_IsCCSemigroup(S) then 
+  if SEMIGROUPS_IsCCSemigroup(S) then
     data := rec();
     data.gens := ShallowCopy(coll);
     data.nr := 0;
@@ -792,20 +792,20 @@ function(S, coll, opts)
     SetGenericSemigroupData(T, data);
     data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
     return T;
-  else 
+  else
     Info(InfoWarning, 1, "using default method for ClosureSemigroupNC");
     return Semigroup(S, coll, opts);
   fi;
 end);
 
-InstallMethod(ClosureSemigroupNC, 
+InstallMethod(ClosureSemigroupNC,
 "for a semigroup, empty collection, and record",
 [IsSemigroup, IsListOrCollection and IsEmpty, IsRecord],
 function(S, coll, opts)
   return S;
 end);
 
-InstallGlobalFunction(SEMIGROUPS_AddGenerators, 
+InstallGlobalFunction(SEMIGROUPS_AddGenerators,
 function(S, coll, opts)
   local data;
 
@@ -817,10 +817,10 @@ function(S, coll, opts)
 
   if IsActingSemigroup(S)
       or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
-          <> DegreeOfTransformationCollection(coll)) 
-      or (IsPartialPermSemigroup(S) and DegreeOfPartialPermSemigroup(S) <> 
-          DegreeOfPartialPermCollection(S)) 
-      or not SEMIGROUPS_IsCCSemigroup(S) then 
+          <> DegreeOfTransformationCollection(coll))
+      or (IsPartialPermSemigroup(S) and DegreeOfPartialPermSemigroup(S) <>
+          DegreeOfPartialPermCollection(S))
+      or not SEMIGROUPS_IsCCSemigroup(S) then
     return ClosureSemigroup(S, coll);
   fi;
 
@@ -932,118 +932,144 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
-BindGlobal("SEMIGROUPS_Types", 
+BindGlobal("SEMIGROUPS_Types",
            [IsPBRSemigroup, IsBipartitionSemigroup, IsTransformationSemigroup,
             IsPartialPermSemigroup, IsBooleanMatSemigroup,
             IsMaxPlusMatrixSemigroup, IsMinPlusMatrixSemigroup,
             IsTropicalMaxPlusMatrixSemigroup, IsTropicalMinPlusMatrixSemigroup,
             IsProjectiveMaxPlusMatrixSemigroup, IsNaturalMatrixSemigroup,
-            IsMatrixOverPrimeFieldSemigroup]);
+            IsMatrixOverPrimeFieldSemigroup, IsBlockBijectionSemigroup]);
 
-BindGlobal("SEMIGROUPS_RandomElementCons", 
+BindGlobal("SEMIGROUPS_RandomElementCons",
 function(filt)
-  
-  if not filt in SEMIGROUPS_Types then 
+
+  if not filt in SEMIGROUPS_Types then
     Error();
     return;
   fi;
 
-  if filt = IsTransformationSemigroup then 
-    return [RandomTransformation, 1];
-  elif filt = IsPartialPermSemigroup then 
-    return [RandomPartialPerm, 1];
-  elif filt = IsBipartitionSemigroup then 
-    return [RandomBipartition, 1];
-  elif filt = IsBooleanMatSemigroup then 
-    return [RandomBooleanMat, 1];
-  elif filt = IsPBRSemigroup then 
-    return [RandomPBR, 1];
-  elif filt = IsMaxPlusMatrixSemigroup then  
-    return [RandomMaxPlusMatrix, 1];
-  elif filt = IsMinPlusMatrixSemigroup then  
-    return [RandomMinPlusMatrix, 1];
-  elif filt = IsTropicalMaxPlusMatrixSemigroup then  
-    return [RandomTropicalMaxPlusMatrix, 2];
-  elif filt = IsTropicalMinPlusMatrixSemigroup then  
-    return [RandomTropicalMinPlusMatrix, 2];
-  elif filt = IsProjectiveMaxPlusMatrixSemigroup then  
-    return [RandomProjectiveMaxPlusMatrix, 1];
-  elif filt = IsNaturalMatrixSemigroup then  
-    return [RandomNaturalMatrix, 3];
-  elif filt = IsMatrixOverPrimeFieldSemigroup then  
-    return [RandomMatrixOverPrimeField, 3];
+  if filt = IsTransformationSemigroup then
+    return [RandomTransformation, 1, AsTransformationSemigroup];
+  elif filt = IsPartialPermSemigroup then
+    return [RandomPartialPerm, 1, AsPartialPermSemigroup];
+  elif filt = IsBipartitionSemigroup then
+    return [RandomBipartition, 1, AsBipartitionSemigroup];
+  elif filt = IsBlockBijectionSemigroup then
+    return [RandomBlockBijection, 1, AsBlockBijectionSemigroup];
+  elif filt = IsBooleanMatSemigroup then
+    return [RandomBooleanMat, 1, AsBooleanMatSemigroup];
+  elif filt = IsPBRSemigroup then
+    return [RandomPBR, 1, AsPBRSemigroup];
+  elif filt = IsMaxPlusMatrixSemigroup then
+    return [RandomMaxPlusMatrix, 1, IdFunc];
+    #TODO how to define a canonical embedding from T_n to here?
+  elif filt = IsMinPlusMatrixSemigroup then
+    return [RandomMinPlusMatrix, 1, IdFunc];
+    #TODO how to define a canonical embedding from T_n to here?
+  elif filt = IsTropicalMaxPlusMatrixSemigroup then
+    return [RandomTropicalMaxPlusMatrix, 2, IdFunc];
+    #TODO how to define a canonical embedding from T_n to here?
+  elif filt = IsTropicalMinPlusMatrixSemigroup then
+    return [RandomTropicalMinPlusMatrix, 2, IdFunc];
+    #TODO how to define a canonical embedding from T_n to here?
+  elif filt = IsProjectiveMaxPlusMatrixSemigroup then
+    return [RandomProjectiveMaxPlusMatrix, 1, IdFunc];
+    #TODO how to define a canonical embedding from T_n to here?
+  elif filt = IsNaturalMatrixSemigroup then
+    return [RandomNaturalMatrix, 3, IdFunc];
+    #TODO how to define a canonical embedding from T_n to here?
+  elif filt = IsMatrixOverPrimeFieldSemigroup then
+    return [RandomMatrixOverPrimeField, 3, IdFunc];
+    #TODO define the canonical embedding from T_n to here!
   fi;
 end);
 
-BindGlobal("SEMIGROUPS_RandomSemigroupOrMonoid", 
+BindGlobal("SEMIGROUPS_RandomSemigroupOrMonoid",
 function(SemigroupOrMonoid, string, args)
-  local filt, cons, nrgens, params, i;
+  local filt, nrgens, params, cons, i;
 
-  if Length(args) > 0 then 
+  if Length(args) > 0 then
     filt := args[1];
-  else 
+  else
     filt := Random(SEMIGROUPS_Types);
   fi;
 
   if Length(args) > 1 then
     nrgens := args[2];
-  else 
+  else
     nrgens := Random([1 .. 12]);
   fi;
 
-  if Length(args) > 2 then 
+  if Length(args) > 2 then
     params := args{[3 .. Length(args)]};
-  else 
+  else
     params := [];
   fi;
-  
-  if not IsFilter(filt) or not filt in SEMIGROUPS_Types then 
-    Error("Semigroups: ", string, ": usage,\n", 
+
+  if not IsFilter(filt) or not filt in SEMIGROUPS_Types then
+    Error("Semigroups: ", string, ": usage,\n",
           "the first argument must be a filter,");
     return;
   fi;
-  
-  if not IsPosInt(nrgens) then 
-    Error("Semigroups: ", string, ": usage,\n", 
+
+  if not IsPosInt(nrgens) then
+    Error("Semigroups: ", string, ": usage,\n",
           "the second argument must be a positive integer,");
     return;
   fi;
-  
+
   cons := SEMIGROUPS_RandomElementCons(filt);
-  
-  if Length(params) < cons[2] then 
-    for i in [Length(params) + 1 .. cons[2]] do 
+
+  if Length(params) < cons[2] then
+    for i in [Length(params) + 1 .. cons[2]] do
       Add(params, Random([1 .. 12]));
     od;
   fi;
 
   if not IsHomogeneousList(params) or not IsPosInt(params[1]) then
-    Error("Semigroups: ", string, ": usage,\n", 
+    Error("Semigroups: ", string, ": usage,\n",
           "the third to last arguments must be positive integers,");
     return;
-  elif Length(params) > cons[2] then 
-    Error("Semigroups: ", string, ": usage,\n", 
+  elif Length(params) > cons[2] then
+    Error("Semigroups: ", string, ": usage,\n",
           "there should be ", cons[2], " arguments,");
     return;
   fi;
-    
-  
-  if filt = IsMatrixOverPrimeFieldSemigroup and not IsPrimeInt(params[2]) then 
+
+  if filt = IsMatrixOverPrimeFieldSemigroup and not IsPrimeInt(params[2]) then
     params[2] := NextPrimeInt(params[2]);
   fi;
 
-  return SemigroupOrMonoid(Set(List([1 .. nrgens], 
-                                    x -> CallFuncList(cons[1], params))));
+  if SemigroupOrMonoid = InverseSemigroup
+      or SemigroupOrMonoid = InverseMonoid
+      and not (filt in [IsBlockBijectionSemigroup, IsPartialPermSemigroup]) then
+    return cons[3](SemigroupOrMonoid(Set([1 .. nrgens], x ->
+                                         RandomPartialPerm(Maximum(params[1] - 1, 1)))));
+  else
+    return SemigroupOrMonoid(Set([1 .. nrgens], x -> CallFuncList(cons[1], params)));
+  fi;
 end);
 
-InstallGlobalFunction(RandomSemigroup, 
+InstallGlobalFunction(RandomSemigroup,
 function(arg)
   return SEMIGROUPS_RandomSemigroupOrMonoid(Semigroup, "RandomSemigroup", arg);
 end);
 
-InstallGlobalFunction(RandomMonoid, 
+InstallGlobalFunction(RandomMonoid,
 function(arg)
   return SEMIGROUPS_RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
 end);
 
-#TODO RandomInverseMonoid, RandomInverseSemigroup
+InstallGlobalFunction(RandomInverseSemigroup,
+function(arg)
+  return SEMIGROUPS_RandomSemigroupOrMonoid(InverseSemigroup,
+                                            "RandomInverseSemigroup",
+                                            arg);
+end);
+
+InstallGlobalFunction(RandomInverseMonoid,
+function(arg)
+  return SEMIGROUPS_RandomSemigroupOrMonoid(InverseMonoid,
+                                            "RandomInverseMonoid",
+                                            arg);
+end);

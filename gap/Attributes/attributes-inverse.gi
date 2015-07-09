@@ -13,16 +13,61 @@
 
 # fall back method
 
-InstallMethod(NaturalLeqInverseSemigroup, "for a semigroup",
-[IsSemigroup], 
+InstallMethod(NaturalPartialOrder, "for a semigroup",
+[IsSemigroup],
 function(S)
-  if not IsInverseSemigroup(S) then 
+  local elts, p, func, out, i, j;
+
+  if not IsFinite(S) then
+    Error("Semigroups: NaturalPartialOrder: usage,\n",
+          "the argument is not a finite semigroup,");
+    return;
+  fi;
+
+  if not IsInverseSemigroup(S) then
+    Error("Semigroups: NaturalPartialOrder: usage,\n",
+          "the argument is not an inverse semigroup,");
+    return;
+  fi;
+
+  Info(InfoWarning, 2, "NaturalPartialOrder: this method ",
+                       "fully enumerates its argument!");
+
+  elts := ShallowCopy(Elements(S));
+  p    := Sortex(elts, IsGreensDLeq(S)) ^ -1;
+  func := NaturalLeqInverseSemigroup(S);
+  out  := List([1 .. Size(S)], x -> []);
+
+  for i in [1 .. Size(S)] do
+    for j in [i + 1 .. Size(S)] do
+      if func(elts[j], elts[i]) then
+        AddSet(out[i ^ p], j ^ p);
+      fi;
+    od;
+  od;
+  return out;
+end);
+
+# fall back method
+
+InstallMethod(NaturalLeqInverseSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+
+  if not IsFinite(S) then
+    Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+          "the argument is not a finite semigroup,");
+    return;
+  fi;
+
+  if not IsInverseSemigroup(S) then
     Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
           "the argument is not an inverse semigroup,");
     return;
   fi;
-  return 
-    function(x, y) 
+
+  return
+    function(x, y)
       local z;
       z := InversesOfSemigroupElement(S, x)[1];
       return x * z = y * z;
@@ -134,6 +179,40 @@ end);
 
 # same method for ideals
 
+InstallMethod(PrimitiveIdempotents, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local T, dist, i, out, j;
+
+  if not IsFinite(S) then
+    Error("Semigroups: PrimitiveIdempotents: usage,\n",
+          "the argument is not a finite semigroup,");
+    return;
+  fi;
+
+  if not IsInverseSemigroup(S) then
+    Error("Semigroups: PrimitiveIdempotents: usage,\n",
+          "the argument is not an inverse semigroup,");
+    return;
+  fi;
+
+  if MultiplicativeZero(S) = fail then 
+    return Idempotents(MinimalIdeal(S));
+  fi;
+  
+  T := IdempotentGeneratedSubsemigroup(S);
+  dist := DigraphLongestDistances(Digraph(NaturalPartialOrder(T)));
+  i := Position(Elements(T), MultiplicativeZero(S));
+  out := [];
+
+  for j in [1 .. Size(T)] do 
+    if dist[j][i] = 1 then 
+      Add(out, Elements(T)[j]);
+    fi;
+  od;
+  return out;
+end);
+
 InstallMethod(PrimitiveIdempotents, "for acting semigroup with inverse op",
 [IsSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
@@ -165,16 +244,17 @@ function(s)
 end);
 
 # same method for ideals
+# TODO a non-inverse-op version of this
 
 InstallMethod(IsJoinIrreducible,
-"for acting semigroup with inverse op and an associative element",
+"for semigroup with inverse op and an associative element",
 [IsSemigroupWithInverseOp, IsAssociativeElement],
 function(S, x)
-  local y, elts, rank, i, k, singleline, leq, sup, j;
+  local elts, leq, y, i, k, j, sup;
 
   if not x in S then
     Error("Semigroups: IsJoinIrreducible: usage,\n",
-          "the second argument <x> must be an element of the first,");
+          "the second argument <x> is not an element of the first,");
     return;
   fi;
 
@@ -182,60 +262,44 @@ function(S, x)
     return false;
   fi;
 
-  y := LeftOne(x);
   elts := ShallowCopy(Idempotents(S));
-
-  rank := ActionRank(S);
-  SortBy(elts, rank);
-
-  i := Position(elts, y);
-  k := 0;
-  singleline := true;
+  SortBy(elts, ActionRank(S));
   leq := NaturalLeqInverseSemigroup(S);
 
+  y := LeftOne(x);
+  i := Position(elts, y);
+
   # Find an element smaller than y, k
-  for j in [i - 1, i - 2 .. 1] do
-    if leq(elts[j], elts[i]) then
-      k := j;
-      break;
-    fi;
-  od;
+  k := First([i - 1, i - 2 .. 1], j -> leq(elts[j], elts[i]));
 
   # If there is no smaller element k: true
-  if k = 0 then
+  if k = fail then
     return true;
   fi;
 
   # Look for other elements smaller than y which are not smaller than k
-  for j in [1 .. (k - 1)] do
-    if leq(elts[j], elts[i]) and not leq(elts[j], elts[k]) then
-      singleline := false;
-      break;
-    fi;
-  od;
+  j := First([1 .. k - 1], j -> leq(elts[j], elts[i]) and not leq(elts[j], elts[k]));
 
-  if singleline then
+  if j = fail then
     return true;
-  elif Size(GreensHClassOfElementNC(S, y)) = 1 then
+  elif Size(HClassNC(S, y)) = 1 then
     return false;
   fi;
 
   sup := SupremumIdempotentsNC(Minorants(S, y), x);
 
-  return y <> sup
-   and ForAny(HClass(S, y), x -> leq(sup, x)
-                                 and x <> y);
+  return y <> sup and ForAny(HClassNC(S, y), x -> leq(sup, x) and x <> y);
 end);
 
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for a semigroup with inverse op and acting semigroup",
+"for semigroups with inverse op",
 [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: IsMajorantlyClosed: usage,\n",
-          "the second argument must be a subsemigroup of the first,");
+          "the second argument is not a subsemigroup of the first,");
     return;
   else
     return IsMajorantlyClosedNC(S, Elements(T));
@@ -369,7 +433,7 @@ end);
 # same method for ideals
 
 InstallMethod(JoinIrreducibleDClasses,
-"for acting semigroup with inverse op",
+"for semigroup with inverse op",
 [IsSemigroupWithInverseOp],
 function(S)
   return Filtered(GreensDClasses(S),
@@ -379,12 +443,12 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure,
-"for acting semigroup with inverse op and acting semigroup",
-[IsSemigroupWithInverseOp and IsActingSemigroup, IsActingSemigroup],
+"for semigroup with inverse op and semigroup",
+[IsSemigroupWithInverseOp, IsSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: MajorantClosure: usage,\n",
-          "the second argument must be a subset of the first,");
+          "the second argument is not a subset of the first,");
     return;
   else
     return MajorantClosureNC(S, Elements(T));
@@ -400,7 +464,7 @@ InstallMethod(MajorantClosure,
 function(S, T)
   if not IsSubset(S, T) then
     Error("Semigroups: MajorantClosure: usage,\n",
-          "the second argument must be a subset of the first,");
+          "the second argument is not a subset of the first,");
     return;
   else
     return MajorantClosureNC(S, T);
@@ -447,8 +511,6 @@ function(S, T)
 end);
 
 # same method for ideals
-
-#C method? JDM
 
 InstallMethod(Minorants,
 "for a semigroup with inverse op and associative element collections",
@@ -533,31 +595,20 @@ function(S, T)
   for s in RClass(S, min) do
 
     # Check if Ts is a duplicate coset
-    dupe := false;
-    for rep in [1 .. Length(usedreps)] do
-      if s * usedreps[rep] ^ -1 in elts then
-        dupe := true;
-        break;
-      fi;
-    od;
+    if not ForAny(usedreps, x-> s * x ^ -1 in elts) then 
+      Add(usedreps, s);
 
-    if dupe then
-      continue;
+      coset := [];
+      for t in elts do
+        Add(coset, t * s);
+      od;
+      coset := Set(coset);
+
+      # Generate the majorant closure of Ts to create the coset
+
+      coset := MajorantClosureNC(S, coset);
+      Add(out, coset);
     fi;
-
-    Add(usedreps, s);
-
-    coset := [];
-    for t in elts do
-      Add(coset, t * s);
-    od;
-    coset := Set(coset);
-
-    # Generate the majorant closure of Ts to create the coset
-
-    coset := MajorantClosureNC(S, coset);
-    Add(out, coset);
-
   od;
 
   return out;
@@ -593,37 +644,29 @@ function(h)
   return out;
 end);
 
-#TODO review and generalise this...
+# JDM: what does this function do? 
 
 InstallGlobalFunction(SupremumIdempotentsNC,
-function(coll, type)
+function(coll, x)
   local dom, i, part, rep, reps, out, todo, inter;
 
-  if IsPartialPerm(type) then
+  if IsPartialPermCollection(coll) or IsPartialPerm(x) then
 
     if IsList(coll) and IsEmpty(coll) then
       return PartialPerm([]);
-    elif not IsPartialPermCollection(coll) then
-      Error("Semigroups: SupremumIdempotentsNC: usage,\n",
-            "the argument must be a collection of partial perms,");
-      return;
     fi;
     dom := DomainOfPartialPermCollection(coll);
     return PartialPerm(dom, dom);
 
-  elif IsBipartition(type) and IsBlockBijection(type) then
+  elif IsBipartitionCollection(coll) or IsBlockBijection(x) then
 
     if IsList(coll) and IsEmpty(coll) then
-      return Bipartition(Concatenation([1 .. DegreeOfBipartition(type)],
-                                       - [1 .. DegreeOfBipartition(type)]));
-    elif not IsBipartitionCollection(coll) then
-      Error("Semigroups: SupremumIdempotentsNC: usage,\n",
-            "the argument must be a collection of block bijections,");
-      return;
+      return Bipartition(Concatenation([1 .. DegreeOfBipartition(x)],
+                                       -[1 .. DegreeOfBipartition(x)]));
     fi;
 
     reps := List(coll, ExtRepOfBipartition);
-    todo := [1 .. DegreeOfBipartition(type)];
+    todo := [1 .. DegreeOfBipartition(x)];
     out := [];
     for i in todo do
       inter := [];
@@ -640,16 +683,13 @@ function(coll, type)
       todo := Difference(todo, inter);
     od;
     return Bipartition(out);
-
-  elif IsBipartition(type) and IsPartialPermBipartition(type) then
-    #FIXME shouldn't there be a check here like above?
-    i := DegreeOfBipartitionCollection(coll);
-    return AsBipartition(SupremumIdempotentsNC(
-                           List(coll, AsPartialPerm), PartialPerm([])),
-                         i);
+  
+  elif IsBipartitionCollection(coll) or IsPartialPermBipartition(x) then
+    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm), PartialPerm([])), 
+                         DegreeOfBipartitionCollection(coll));
   else
     Error("Semigroups: SupremumIdempotentsNC: usage,\n",
-          "the argument must be a collection of partial perms, block ",
+          "the argument is not a collection of partial perms, block ",
           "bijections,\n", "or partial perm bipartitions,");
     return;
   fi;

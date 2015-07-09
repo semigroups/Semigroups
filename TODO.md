@@ -1,6 +1,16 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
+* a non-inverse-op version of 
+  * `IsJoinIrreducible`
+  * `IsMajorantlyClosed`
+  * `JoinIrreducibleDClasses`
+  * `MajorantClosure`
+  * `Minorants`
+  * `RightCosetsOfInverseSemigroup`
+  * `SameMinorantsSubgroup`
+  * `VagnerPrestonRepresentation`
+  
 
 * unify ideals-lambda-rho, lambda-rho and graded.
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 

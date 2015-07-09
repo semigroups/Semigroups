@@ -7,6 +7,9 @@
 ##
 ###############################################################################
 
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a free band element coll", 
+[IsFreeBandElementCollection], ReturnFalse);
+
 InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 #
@@ -332,23 +335,23 @@ end);
 
 InstallMethod(GreensDClassOfElement, "for a free band an element",
 [IsFreeBandCategory, IsFreeBandElement],
-function(s, x)
-  local type, d;
+function(S, x)
+  local type, D;
 
-  if not x in s then
+  if not x in S then
     Error("Semigroups: GreensDClassOfElement: usage,\n",
           "the element does not belong to the semigroup,");
     return;
   fi;
 
-  type := NewType(FamilyObj(s), IsEquivalenceClass and
+  type := NewType(FamilyObj(S), IsEquivalenceClass and
                   IsEquivalenceClassDefaultRep and IsGreensDClass);
-  d := Objectify(type, rec());
-  SetParent(d, s);
-  SetRepresentative(d, x);
-  # SetEquivalenceClassRelation(d, GreensDRelation(s));
+  D := Objectify(type, rec());
+  SetParent(D, S);
+  SetRepresentative(D, x);
+  SetEquivalenceClassRelation(D, GreensDRelation(S));
   # TODO Add a new method for GreensDRelations. JJ
-  return d;
+  return D;
 end);
 
 #

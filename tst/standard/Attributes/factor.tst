@@ -1,6 +1,6 @@
 #%T##########################################################################
 ##
-#W  factor.tst
+#W  standard/attributes/factor.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,7 +9,7 @@
 ##
 
 #
-gap> START_TEST("Semigroups package: factor.tst");
+gap> START_TEST("Semigroups package: standard/attributes/factor.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -143,4 +143,4 @@ gap> Unbind(s);
 gap> Unbind(gens);
 
 #E#
-gap> STOP_TEST("Semigroups package: factor.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/factor.tst");

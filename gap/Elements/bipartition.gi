@@ -702,7 +702,8 @@ InstallMethod(AsBipartition, "for a pbr",
 [IsPBR],
 function(x)
   if not IsBipartitionPBR(x) then 
-    Error();
+    Error("Semigroups: AsBipartition (for a pbr): usage,\n", 
+          "the argument does not satisfy 'IsBipartitionPBR',");
     return;
   fi;
   return Bipartition(Union(ExtRepOfPBR(x)));
@@ -1072,6 +1073,43 @@ function(n)
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, nrblocks);
+
+  return out;
+end);
+
+InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
+function(n)
+  local out, nrblocks, j, free, i;
+
+  out := EmptyPlist(2 * n);
+  out[1] := 1;
+  nrblocks := 1;
+
+  for i in [2 .. n] do
+    j := Random([1 .. nrblocks + 1]);
+    if j = nrblocks + 1 then
+      nrblocks := nrblocks + 1;
+    fi;
+    out[i] := j;
+  od;
+  
+  free := [n + 1 .. 2 * n];
+  for i in [1 .. nrblocks] do
+    j := Random(free);
+    out[j] := i;
+    RemoveSet(free, j);
+  od;
+
+  for i in free do 
+    out[i] := Random([1 .. nrblocks]);
+  od;
+
+  out := Objectify(BipartitionType, rec(blocks := out));
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrblocks);
+  SetNrBlocks(out, nrblocks);
+  SetNrRightBlocks(out, nrblocks);
 
   return out;
 end);

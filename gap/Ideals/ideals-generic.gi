@@ -217,24 +217,25 @@ end);
 InstallMethod(Idempotents, "for a semigroup ideal with generators", 
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local enum, elts, indices, idempotents, nr, i;
+  local elts, enum, indices, idempotents, nr, i;
 
-  elts:=GenericSemigroupData(SupersemigroupOfIdeal(I))!.elts;
-  enum:=Enumerator(I);
+  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(SupersemigroupOfIdeal(I)),
+                             infinity);
+  enum := Enumerator(I);
   if not IsBound(enum!.idempotents) then 
     SEMIGROUPS_EnumerateIdeal(enum, infinity, ReturnFalse);
-    indices:=enum!.indices;
-    idempotents:=EmptyPlist(Length(indices));
+    indices := enum!.indices;
+    idempotents := EmptyPlist(Length(indices));
     nr:=0;
 
     for i in indices do 
-      if elts[i]*elts[i]=elts[i] then 
-        nr:=nr+1;
-        idempotents[nr]:=i;
+      if elts[i] * elts[i] = elts[i] then 
+        nr := nr + 1;
+        idempotents[nr] := i;
       fi;
     od;
     
-    enum!.idempotents:=idempotents;
+    enum!.idempotents := idempotents;
     ShrinkAllocationPlist(idempotents);
   fi;
 
