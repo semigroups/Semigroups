@@ -888,6 +888,17 @@ gap> Set(RightCosetsOfInverseSemigroup(S, W));
 #T# attributes-inverse: SupremumIdempotents, 1/1
 gap> SupremumIdempotentsNC([], PartialPerm([]));
 <empty partial perm>
+gap> SupremumIdempotentsNC([], Bipartition([[1], [-1]]));
+<bipartition: [ 1 ], [ -1 ]>
+gap> SupremumIdempotentsNC([], RandomBipartition(1));
+<block bijection: [ 1, -1 ]>
+gap> SupremumIdempotentsNC(Idempotents(DualSymmetricInverseMonoid(3)),
+> RandomBlockBijection(3));
+<block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]>
+gap> SupremumIdempotentsNC(Transformation([1,1]), 1);
+Error, Semigroups: SupremumIdempotentsNC: usage,
+the argument is not a collection of partial perms, block bijections,
+or partial perm bipartitions,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

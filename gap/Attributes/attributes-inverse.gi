@@ -644,13 +644,13 @@ function(h)
   return out;
 end);
 
-# JDM: what does this function do? 
+#
 
 InstallGlobalFunction(SupremumIdempotentsNC,
 function(coll, x)
   local dom, i, part, rep, reps, out, todo, inter;
 
-  if IsPartialPermCollection(coll) or IsPartialPerm(x) then
+  if IsPartialPerm(x) then
 
     if IsList(coll) and IsEmpty(coll) then
       return PartialPerm([]);
@@ -658,11 +658,11 @@ function(coll, x)
     dom := DomainOfPartialPermCollection(coll);
     return PartialPerm(dom, dom);
 
-  elif IsBipartitionCollection(coll) or IsBlockBijection(x) then
+  elif IsBipartition(x) and IsBlockBijection(x) then
 
     if IsList(coll) and IsEmpty(coll) then
-      return Bipartition(Concatenation([1 .. DegreeOfBipartition(x)],
-                                       -[1 .. DegreeOfBipartition(x)]));
+      return Bipartition([Concatenation([1 .. DegreeOfBipartition(x)],
+                                       - [1 .. DegreeOfBipartition(x)])]);
     fi;
 
     reps := List(coll, ExtRepOfBipartition);
@@ -683,10 +683,11 @@ function(coll, x)
       todo := Difference(todo, inter);
     od;
     return Bipartition(out);
-  
-  elif IsBipartitionCollection(coll) or IsPartialPermBipartition(x) then
-    return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm), PartialPerm([])), 
-                         DegreeOfBipartitionCollection(coll));
+
+  elif IsBipartition(x) and IsPartialPermBipartition(x) then
+    i := DegreeOfBipartition(x);
+    return AsBipartition(SupremumIdempotentsNC(
+                         List(coll, AsPartialPerm), PartialPerm([])), i);
   else
     Error("Semigroups: SupremumIdempotentsNC: usage,\n",
           "the argument is not a collection of partial perms, block ",
