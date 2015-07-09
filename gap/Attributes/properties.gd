@@ -63,6 +63,7 @@ InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
 InstallTrueMethod(IsLTrivial, IsDTrivial);
 InstallTrueMethod(IsRectangularBand,
                   IsHTrivial and IsCompletelySimpleSemigroup);
+InstallTrueMethod(IsRegularSemigroup, IsBand);
 InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
 InstallTrueMethod(IsRTrivial, IsDTrivial);

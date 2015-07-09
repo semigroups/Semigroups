@@ -196,17 +196,17 @@ function(S)
     return;
   fi;
 
-  if MultiplicativeZero(S) = fail then 
+  if MultiplicativeZero(S) = fail then
     return Idempotents(MinimalIdeal(S));
   fi;
-  
+
   T := IdempotentGeneratedSubsemigroup(S);
   dist := DigraphLongestDistances(Digraph(NaturalPartialOrder(T)));
   i := Position(Elements(T), MultiplicativeZero(S));
   out := [];
 
-  for j in [1 .. Size(T)] do 
-    if dist[j][i] = 1 then 
+  for j in [1 .. Size(T)] do
+    if dist[j][i] = 1 then
       Add(out, Elements(T)[j]);
     fi;
   od;
@@ -278,7 +278,8 @@ function(S, x)
   fi;
 
   # Look for other elements smaller than y which are not smaller than k
-  j := First([1 .. k - 1], j -> leq(elts[j], elts[i]) and not leq(elts[j], elts[k]));
+  j := First([1 .. k - 1], j -> leq(elts[j], elts[i])
+                                and not leq(elts[j], elts[k]));
 
   if j = fail then
     return true;
@@ -572,7 +573,7 @@ InstallMethod(RightCosetsOfInverseSemigroup,
 [IsSemigroupWithInverseOp,
  IsSemigroupWithInverseOp],
 function(S, T)
-  local elts, min, usedreps, out, dupe, coset, s, rep, t;
+  local elts, min, usedreps, out, coset, s, t;
 
   if not IsSubsemigroup(S, T) then
     Error("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
@@ -595,7 +596,7 @@ function(S, T)
   for s in RClass(S, min) do
 
     # Check if Ts is a duplicate coset
-    if not ForAny(usedreps, x-> s * x ^ -1 in elts) then 
+    if not ForAny(usedreps, x -> s * x ^ -1 in elts) then
       Add(usedreps, s);
 
       coset := [];

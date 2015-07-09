@@ -7,6 +7,8 @@
 ##
 ###############################################################################
 
+# TODO: this is not really finished.
+
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a free band element coll", 
 [IsFreeBandElementCollection], ReturnFalse);
 
@@ -92,7 +94,7 @@ function(arg)
   StoreInfoFreeMagma(F, names, IsFreeBandElement);
 
   S := Objectify(NewType(FamilyObj(gens),
-                         IsFreeBandCategory and IsSemigroup and
+                         IsFreeBandCategory and
                          IsAttributeStoringRep),
                  rec());
   SetGeneratorsOfMagma(S, gens);
@@ -106,7 +108,7 @@ end);
 InstallMethod(IsFreeBand, "for a semigroup",
 [IsSemigroup],
 function(s)
-  local used, occured, gens, max_d, g;
+  local used, occurred, gens, max_d, g;
 
   if not IsBand(s) then
     return false;
@@ -115,14 +117,14 @@ function(s)
   if IsFreeBandSubsemigroup(s) then
     gens := Generators(s);
     used := BlistList([1 .. Length(gens[1]!.cont)], []);
-    occured := BlistList([1 .. Length(gens[1]!.cont)], []);
+    occurred := BlistList([1 .. Length(gens[1]!.cont)], []);
     for g in gens do
       used := IntersectionBlist(used, g!.cont);
       if g!.tuple[2] = 0 then
-        occured[g!.tuple[1]] := true;
+        occurred[g!.tuple[1]] := true;
       fi;
     od;
-    if used = occured then
+    if used = occurred then
       return true;
     fi;
   fi;
@@ -349,7 +351,7 @@ function(S, x)
   D := Objectify(type, rec());
   SetParent(D, S);
   SetRepresentative(D, x);
-  SetEquivalenceClassRelation(D, GreensDRelation(S));
+  #SetEquivalenceClassRelation(D, GreensDRelation(S));
   # TODO Add a new method for GreensDRelations. JJ
   # JDM what does this comment mean?
   return D;

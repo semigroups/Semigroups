@@ -9,7 +9,7 @@
 
 DeclareCategory("IsFreeBandElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeBandElement");
-DeclareCategory("IsFreeBandCategory", IsSemigroup);
+DeclareCategory("IsFreeBandCategory", IsSemigroup and IsBand);
 DeclareProperty("IsFreeBand", IsSemigroup);
 DeclareSynonym("IsFreeBandSubsemigroup",
                IsSemigroup and IsFreeBandElementCollection);
