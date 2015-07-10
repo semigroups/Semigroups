@@ -657,7 +657,7 @@ Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj data) {
   if (TypeSemigroup(data) != UNKNOWN) { 
     return INTOBJ_INT(InterfaceFromData(data)->current_max_word_length());
   } else {
-    if (IsbPRec(data, RNam_words) && LEN_PLIST(ElmPRec(data, RNam_words) > 0)) {
+    if (IsbPRec(data, RNam_words) && LEN_PLIST(ElmPRec(data, RNam_words)) > 0) {
       Obj words = ElmPRec(data, RNam_words);
       return INTOBJ_INT(LEN_PLIST(ELM_PLIST(words, LEN_PLIST(words))));
     } else {
