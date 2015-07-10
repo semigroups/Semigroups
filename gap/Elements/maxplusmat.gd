@@ -134,6 +134,7 @@ DeclareOperation("RandomProjectiveMaxPlusMatrix", [IsPosInt]);
 #############################################################################
 
 DeclareCategory("IsNaturalMatrix", IsTropicalMatrix);
+#FIXME is this correct? NaturalMatrix is a subcategory of tropical matrices?
 DeclareCategoryCollections("IsNaturalMatrix");
 DeclareCategoryCollections("IsNaturalMatrixCollection");
 

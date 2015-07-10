@@ -14,15 +14,19 @@
 ##
 ## It is organized as follows:
 ##
-##   1. Max-plus
+##   1. Max-plus matrices 
 ##
-##   2. Min-plus
+##   2. Min-plus matrices  
 ##
-##   3. Tropical max-plus
+##   2. Tropical matrices
+##
+##   4. Tropical max-plus matrices
 ## 
-##   4. Tropical min-plus
+##   5. Tropical min-plus matrices
 ##
-##   5. Projective max-plus matrices
+##   6. Projective max-plus matrices
+##
+##   7. Natural number matrices
 ##
 #############################################################################
 

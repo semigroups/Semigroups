@@ -158,19 +158,21 @@ function(x)
     Remove(str, Length(str));
   od;
   Append(str, "\<\<]");
-  if IsTropicalMatrix(x) then 
-    Append(str, ", \>");
-    Append(str, String(ThresholdTropicalMatrix(x)));
-    Append(str, "\<");
-  elif IsNaturalMatrix(x) then 
+
+  if IsNaturalMatrix(x) then 
     Append(str, "\>");
     Append(str, String(ThresholdNaturalMatrix(x)));
     Append(str, "\<");
     Append(str, ", \>");
     Append(str, String(PeriodNaturalMatrix(x)));
     Append(str, "\<");
+  elif IsTropicalMatrix(x) then 
+    Append(str, ", \>");
+    Append(str, String(ThresholdTropicalMatrix(x)));
+    Append(str, "\<");
   fi;
   Append(str, "\<)\<");
+  
   return str;
 end);
 
