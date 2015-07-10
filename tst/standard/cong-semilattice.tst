@@ -91,9 +91,36 @@ true
 gap> BlockCoincidenceTable(cong);
 [ 1, 2, 3, 4, 5, 1 ]
 
+#T# CongSemilatticeTest3: Congruence classes
+gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
+>                             PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] ), 
+>                             PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] ),
+>                             PartialPerm( [ 2, 4 ], [ 2, 4 ] ),
+>                             PartialPerm( [ 2, 3 ], [ 2, 3 ] ), 
+>                             PartialPerm( [ 3, 4 ], [ 3, 4 ] ) ] );;
+gap> IsSemilatticeAsSemigroup(e);
+true
+gap> pairs := [
+>   [ PartialPerm( [ 2, 3 ], [ 2, 3 ] ), PartialPerm( [ 2, 4 ], [ 2, 4 ] ) ], 
+>   [ PartialPerm( [  ], [  ] ), PartialPerm( [ 2 ], [ 2 ] ) ], 
+>   [ PartialPerm( [ 3, 4 ], [ 3, 4 ] ), PartialPerm( [ 1, 4 ], [ 1, 4 ] ) ] ];;
+gap> cong := SemigroupCongruence(e, pairs);;
+gap> IsSemilatticeCongruence(cong);
+true
+gap> BlockCoincidenceTable(cong);
+[ 1, 1, 2 ]
+gap> x := PartialPerm([4],[4]);;
+gap> class := CongruenceClassOfElement(cong, x);;
+gap> x in class;
+true
+gap> PartialPerm([3,4],[3,4]) in class;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(e);
+gap> Unbind(x);
+gap> Unbind(class);
 gap> Unbind(pairs);
 gap> Unbind(cong);
 

@@ -20,8 +20,7 @@ function(cong)
   tab := UF_NEW(nr);
   
   # Find the meet of each pair
-  meets := List(pairs, pair-> pair[1] * pair[2]);
-  cong!.meets := meets;
+  meets := MeetsOfGeneratingPairs(cong);
   
   # Search for collisions
   for i in [1..nr] do
@@ -57,12 +56,40 @@ end);
 
 #
 
+InstallMethod(MeetsOfGeneratingPairs,
+"for a semilattice congruence",
+[IsSemilatticeCongruence],
+cong -> List(GeneratingPairsOfSemigroupCongruence(cong),
+             pair -> pair[1] * pair[2]));
+
+#
+
+InstallGlobalFunction(SEMIGROUPS_SemilatticeCongClassNoOfElm,
+function(cong, elm)
+  # Returns an int describing which congruence class elm is in
+  local genpairs, meets, pairno;
+  genpairs := GeneratingPairsOfSemigroupCongruence(cong);
+  meets := MeetsOfGeneratingPairs(cong);
+  for pairno in [1..Length(genpairs)] do
+    # Is elm "hit" by this genpair?
+    if elm*meets[pairno] = meets[pairno] and
+       (elm*genpairs[pairno][1] = elm or
+        elm*genpairs[pairno][2] = elm) then
+      return BlockCoincidenceTable(cong)[pairno];
+    fi;
+  od;
+  # elm is in a singleton class
+  return 0;
+end);
+
+#
+
 InstallMethod(\in,
 "for an associative element collection and a semilattice congruence",
 [IsAssociativeElementCollection, IsSemilatticeCongruence],
 1,
 function(pair, cong)
-  local s, genpairs, blocktable, meets, nrblocks, hitblocks, pairno, blockno, i;
+  local s, c1;
   # Input checks
   if not Size(pair) = 2 then
     Error("Semigroups: \in: usage,\n",
@@ -76,38 +103,66 @@ function(pair, cong)
           "of the second\narg <cong>,");
     return;
   fi;
-  
-  # Is the pair reflexive?
+
+  # Try reflexivity
   if pair[1] = pair[2] then
     return true;
-  fi;
-  
-  # Find which blocks hit each element
-  genpairs := GeneratingPairsOfSemigroupCongruence(cong);
-  blocktable := BlockCoincidenceTable(cong);
-  meets := cong!.meets;
-  nrblocks := Maximum(blocktable);
-  hitblocks := [ BlistList([1..nrblocks], []), BlistList([1..nrblocks], []) ];
-  for pairno in [1..Length(genpairs)] do
-    blockno := blocktable[pairno];
-    for i in [1,2] do
-      # Do we already know that pair[i] hits this block?
-      if hitblocks[i][blockno] then
-        continue;
-      else
-        # Is pair[i] "hit" by this genpair?
-        if pair[i]*meets[pairno] = meets[pairno] and
-           (pair[i]*genpairs[pairno][1] = pair[i] or
-            pair[i]*genpairs[pairno][2] = pair[i]) then
-          hitblocks[i][blockno] := true;
-        fi;
-      fi;
-    od;
-    # Are pair[1] and pair[2] both in this block?
-    if hitblocks[1][blockno] and hitblocks[2][blockno] then
-      return true;
+  else
+    # Use the class numbers
+    c1 := SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, pair[1]);
+    if c1 = 0 then
+      return false; # singleton
+    else
+      return c1 = SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, pair[2]);
     fi;
-  od;
-  # If we haven't found a shared block yet, then the elements do not meet
-  return false;
+  fi;
 end);
+
+#
+
+InstallMethod(EquivalenceClassOfElement,
+"for a semilattice congruence and an associative element",
+[IsSemilatticeCongruence, IsAssociativeElement],
+1,
+function(cong, elm)
+  # Check the arguments
+  if not elm in Range(cong) then
+    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
+          "the second arg <elm> must be ",
+          "in the semigroup of first arg <cong>");
+    return;
+  fi;
+  return EquivalenceClassOfElementNC(cong, elm);
+end);
+
+#
+
+InstallMethod(EquivalenceClassOfElementNC,
+"for a semilattice congruence and an associative element",
+[IsSemilatticeCongruence, IsAssociativeElement],
+1,
+function(cong, elm)
+  local fam, class;
+  fam := CollectionsFamily(FamilyObj(elm));
+  class := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
+                   rec(classNo := SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, elm)));
+  SetParentAttr(class, cong);
+  SetEquivalenceClassRelation(class, cong);
+  SetRepresentative(class, elm);
+  return class;
+end);
+
+#
+
+InstallMethod(\in,
+"for an associative element and a semilattice congruence class",
+[IsAssociativeElement, IsSemilatticeCongruenceClass],
+function(elm, class)
+  local s, cong;
+  cong := ParentAttr(class);
+  s := Range(cong);
+  return(elm in s and
+         SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, elm) = class!.classNo);
+end);
+
+#
