@@ -682,24 +682,6 @@ gap> o!.log;
 gap> AddGeneratorsToOrbit(o, [gens[2]]);
 <closed orbit, 12 points with log>
 
-#T# TestInstall41: Issue 72
-# (problem with IsomorphismTransformationSemigroup when applied to a
-# binary relation monoid)
-gap> B := Monoid(BinaryRelationOnPoints([[2], [1, 2], [1, 3]]),
->                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]),
->                BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]]));;
-gap> Size(B);
-16
-gap> IsMonoid(B);
-true
-gap> iso := IsomorphismTransformationSemigroup(B);;
-gap> T := Range(iso);
-<transformation monoid of degree 6 with 3 generators>
-gap> Size(T);
-16
-gap> IsMonoid(T);
-true
-
 #T# TestInstall42: Issue 82 (couldn't take quotients by ideals!)
 gap> S := Monoid(
 >  Transformation([3, 3, 3, 3]), Transformation([2, 4, 2, 4]),

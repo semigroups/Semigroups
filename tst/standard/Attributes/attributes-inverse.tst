@@ -8,7 +8,6 @@
 #############################################################################
 ##
 ## TODO improve code coverage in JoinIrreducibleDClasses 
-
 gap> START_TEST("Semigroups package: standard/attributes/attributes-inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -50,7 +49,7 @@ gap> h := HClass(S, One(S));
 <Green's H-class: IdentityTransformation>
 gap> SameMinorantsSubgroup(h);
 Error, Semigroups: SameMinorantsSubgroup: usage,
-the parent semigroup of the group H-class <h> must be inverse,
+the parent semigroup of the group H-class <H> must be inverse,
 
 #T# attributes-inverse: Minorants, error
 gap> S := SymmetricInverseMonoid(3);;
