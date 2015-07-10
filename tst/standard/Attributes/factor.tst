@@ -138,6 +138,44 @@ gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S),
 >                                Factorization(S, x)) = x);
 true
 
+#T# factor: Factorization, error, 1/5
+gap> S := Semigroup( [ Transformation( [ 1, 3, 4, 1 ] ), 
+> Transformation( [ 3, 1, 1, 3 ] )], rec(generic := false));;
+gap> x := PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] );;
+gap> Factorization(S, x);
+Error, Semigroups: Factorization: usage,
+the second argument <x> is not an element of the first argument <S>,
+
+#T# factor: Factorization, error, 2/5
+gap> S := Semigroup( [ Transformation( [ 1, 3, 4, 1 ] ), 
+> Transformation( [ 3, 1, 1, 3 ] )]);;
+gap> x := PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] );;
+gap> MinimalFactorization(S, x);
+Error, Semigroups: MinimalFactorization:
+the second argument <x> is not an element of the first argument <S>,
+
+#T# factor: Factorization, error, 3/5
+gap> S := DualSymmetricInverseMonoid(3);;
+gap> S := InverseSemigroup(S, rec(generic := false));;
+gap> x := PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] );;
+gap> Factorization(S, x);
+Error, Semigroups: Factorization: usage,
+the second argument <x> is not an element of the first argument <S>,
+
+#T# factor: Factorization, error, 4/5
+gap> S := Semigroup(OrderEndomorphisms(3), rec(generic := false, regular := true));;
+gap> x := PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] );;
+gap> Factorization(S, x);
+Error, Semigroups: Factorization: usage,
+the second argument <x> is not an element of the first argument <S>,
+
+#T# factor: Factorization, error, 5/5
+gap> S := Semigroup(OrderEndomorphisms(3), rec(generic := false));;
+gap> o := LambdaOrb(S);;
+gap> Factorization(o, 2, (1,2));
+Error, Semigroups: Factorization: usage,
+the third arg <perm> does not belong to the Schutzenberger group,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(gens);

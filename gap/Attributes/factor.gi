@@ -8,12 +8,10 @@
 #############################################################################
 ##
 
-# this file contains methods relating to factorising elements of a semigroup
+# This file contains methods relating to factorising elements of a semigroup
 # over its generators.
 
 # same method for ideals
-# this is declared in the library, but there is no method for semigroups in the
-# library.
 
 # this works for infinite semigroups if x is really in there.
 
@@ -34,8 +32,11 @@ end);
 
 # same method for ideals
 
+# this is declared in the library, but there is no method for semigroups in the
+# library.
+
 InstallMethod(Factorization,
-"for a finite semigroup and associative element",
+"for a semigroup and associative element",
 [IsSemigroup, IsAssociativeElement],
 function(S, x)
   return MinimalFactorization(S, x);
@@ -43,6 +44,8 @@ end);
 
 # factorisation of Schutzenberger group element, the same method works for
 # ideals
+
+# TODO update this to use MinimalFactorization on the Schutzenberger group!
 
 InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
@@ -173,7 +176,8 @@ function(s, f)
 
   if not f in s then
     ErrorMayQuit("Semigroups: Factorization: usage,\n",
-                 "the second arg <f> is not an element of the first arg <S>,");
+                 "the second argument <x> is not an element ",
+                 "of the first argument <S>,");
   fi;
 
   o := LambdaOrb(s);
@@ -221,7 +225,8 @@ function(s, f)
 
   if not f in s then
     ErrorMayQuit("Semigroups: Factorization: usage,\n",
-                 "the second arg <f> is not an element of the first arg <S>,");
+                 "the second argument <x> is not an element ",
+                 "of the first argument <S>,");
   fi;
 
   o := LambdaOrb(s);
@@ -276,7 +281,8 @@ function(s, f)
 
   if not f in s then
     ErrorMayQuit("Semigroups: Factorization: usage,\n",
-                 "the second arg <f> is not an element of the first arg <S>,");
+                 "the second argument <x> is not an element ",
+                 "of the first argument <S>,");
   fi;
 
   o := RhoOrb(s);

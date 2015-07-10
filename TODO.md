@@ -1,7 +1,8 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
-
-* trello
+ 
+* reporting in the generic Froidure-Pin method
+* update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
 * fix the bug in the c++ code relating to the changeset tagged `bug-in-c-code`
 * unify ideals-lambda-rho, lambda-rho and graded.
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
