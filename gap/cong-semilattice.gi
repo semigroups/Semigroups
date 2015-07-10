@@ -168,16 +168,33 @@ end);
 #
 
 InstallMethod(\=,
-"for an associative element and a semilattice congruence class",
+"for two semilattice congruence classes",
 [IsSemilatticeCongruenceClass, IsSemilatticeCongruenceClass],
-function(class1, class2)
-  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+function(c1, c2)
+  if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
     return false;
   fi;
-  if class1!.classNo = 0 then
-    return Representative(class1) = Representative(class2);
+  if c1!.classNo = 0 then
+    return Representative(c1) = Representative(c2);
   else
-    return class1!.classNo = class2!.classNo;
+    return c1!.classNo = c2!.classNo;
+  fi;
+end);
+
+#
+
+InstallMethod(\*,
+"for two semilattice congruence classes",
+[IsSemilatticeCongruenceClass, IsSemilatticeCongruenceClass],
+function(c1, c2)
+  if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
+    Error("Semigroups: \*: usage,\n",
+          "the args <c1> and <c2> must be classes of the same congruence,");
+  elif c1 = c2 then
+    return c1;
+  else
+    return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
+                   Representative(c1) * Representative(c2));
   fi;
 end);
 

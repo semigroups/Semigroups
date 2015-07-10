@@ -130,6 +130,10 @@ true
 gap> c2 := CongruenceClassOfElement(cong, PartialPerm([1,2,3],[1,2,3]));;
 gap> c1 = c2;
 false
+gap> c1 * c2 = c1;
+true
+gap> c2 * c2 = c2;
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
