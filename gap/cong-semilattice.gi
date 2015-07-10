@@ -159,10 +159,26 @@ InstallMethod(\in,
 [IsAssociativeElement, IsSemilatticeCongruenceClass],
 function(elm, class)
   local s, cong;
-  cong := ParentAttr(class);
+  cong := EquivalenceClassRelation(class);
   s := Range(cong);
   return(elm in s and
          SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, elm) = class!.classNo);
+end);
+
+#
+
+InstallMethod(\=,
+"for an associative element and a semilattice congruence class",
+[IsSemilatticeCongruenceClass, IsSemilatticeCongruenceClass],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    return false;
+  fi;
+  if class1!.classNo = 0 then
+    return Representative(class1) = Representative(class2);
+  else
+    return class1!.classNo = class2!.classNo;
+  fi;
 end);
 
 #

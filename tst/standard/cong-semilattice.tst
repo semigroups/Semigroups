@@ -110,17 +110,33 @@ true
 gap> BlockCoincidenceTable(cong);
 [ 1, 1, 2 ]
 gap> x := PartialPerm([4],[4]);;
-gap> class := CongruenceClassOfElement(cong, x);;
-gap> x in class;
+gap> c1 := CongruenceClassOfElement(cong, x);;
+gap> x in c1;
 true
-gap> PartialPerm([3,4],[3,4]) in class;
+gap> PartialPerm([3,4],[3,4]) in c1;
 true
+gap> PartialPerm([1,3],[1,3]) in c1;
+false
+gap> c1 := CongruenceClassOfElement(cong, PartialPerm([],[]));;
+gap> c2 := CongruenceClassOfElement(cong, PartialPerm([2,3],[2,3]));;
+gap> c1 = c2;
+true
+gap> c2 := CongruenceClassOfElement(cong, PartialPerm([1],[1]));;
+gap> c1 = c2;
+false
+gap> c1 := CongruenceClassOfElement(cong, PartialPerm([1],[1]));;
+gap> c1 = c2;
+true
+gap> c2 := CongruenceClassOfElement(cong, PartialPerm([1,2,3],[1,2,3]));;
+gap> c1 = c2;
+false
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(e);
 gap> Unbind(x);
-gap> Unbind(class);
+gap> Unbind(c1);
+gap> Unbind(c2);
 gap> Unbind(pairs);
 gap> Unbind(cong);
 
