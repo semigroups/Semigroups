@@ -11,7 +11,7 @@ ARGS = PARSER.parse_args()
 DIR = tempfile.gettempdir()
 print 'using temporary directory: ' + DIR
 
-COMMANDS = '''echo "ProfileLineByLine(\\"''' + DIR + '''/profile.gz\\", \\"w\\", false);;
+COMMANDS = '''echo "ProfileLineByLine(\\"''' + DIR + '''/profile.gz\\");;
 LoadPackage(\\"semigroups\\", false);;
 SEMIGROUPS_Test(\\"''' + ARGS.file[0] + '''\\");;
 UnprofileLineByLine();;
