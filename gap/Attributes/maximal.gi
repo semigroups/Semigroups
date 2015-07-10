@@ -37,23 +37,20 @@ function(R, H)
   G := UnderlyingSemigroup(R);
 
   if not IsGroup(G) then
-    Error("Semigroups: MaximalSubsemigroups: usage,\n",
-          "the first argument <R> must be a Rees matrix semigroup whose",
-          " underlying\n",
-          "semigroup is a group,");
-    return fail;
+    ErrorMayQuit("Semigroups: MaximalSubsemigroups: usage,\n",
+                 "the first argument <R> must be a Rees matrix semigroup ",
+                 "whose underlying\nsemigroup is a group,");
   elif not IsSubgroup(G, H) then
-    Error("Semigroups: MaximalSubsemigroups: usage,\n",
-          "the second argument <H> must be a subgroup of the underlying\n",
-          "group of the Rees matrix semigroup in the first argument, ",
-          "<R>,");
-    return fail;
+    ErrorMayQuit("Semigroups: MaximalSubsemigroups: usage,\n",
+                 "the second argument <H> must be a subgroup of the ",
+                 "underlying\n",
+                 "group of the Rees matrix semigroup in the first argument, ",
+                 "<R>,");
   elif not H in MaximalSubgroups(G) then
-    Error("Semigroups: MaximalSubsemigroups: usage,\n",
-          "the second argument <H> must be a maximal subgroup of the ",
-          "underlying\ngroup of the Rees matrix semigroup in the first ",
-          "argument, <R>,");
-    return fail;
+    ErrorMayQuit("Semigroups: MaximalSubsemigroups: usage,\n",
+                 "the second argument <H> must be a maximal subgroup of the ",
+                 "underlying\ngroup of the Rees matrix semigroup in the",
+                 " first ", "argument, <R>,");
   fi;
 
   mat := Matrix(R);
@@ -203,31 +200,30 @@ else
 
     # Check that matrix is regular (i.e. no zero-rows or zero-columns)
     if not IsRegularSemigroup(R) then
-      Error("Semigroups: MaximalSubsemigroups:\n",
-            "the first argument <R> must be a regular Rees 0-matrix ",
-            "semigroup,");
-      return;
+      ErrorMayQuit("Semigroups: MaximalSubsemigroups:\n",
+                   "the first argument <R> must be a regular Rees 0-matrix ",
+                   "semigroup,");
     fi;
 
     G := UnderlyingSemigroup(R);
 
     if not IsGroup(G) then
-      Error("Semigroups: MaximalSubsemigroups: usage,\n",
-            "the first argument <R> must be a Rees 0-matrix semigroup whose\n",
-            "underlying semigroup is a group,");
-      return fail;
+      ErrorMayQuit("Semigroups: MaximalSubsemigroups: usage,\n",
+                   "the first argument <R> must be a Rees 0-matrix semigroup",
+                   "whose\n",
+                   "underlying semigroup is a group,");
     elif not IsSubgroup(G, H) then
-      Error("Semigroups: MaximalSubsemigroups: usage,\n",
-            "the second argument <H> must be a subgroup of the underlying\n",
-            "group of the Rees 0-matrix semigroup in the first argument",
-            ", <R>,");
-      return fail;
+      ErrorMayQuit("Semigroups: MaximalSubsemigroups: usage,\n",
+                   "the second argument <H> must be a subgroup of the",
+                   "underlying\n",
+                   "group of the Rees 0-matrix semigroup in the first ",
+                   "argument", ", <R>,");
     elif not H in MaximalSubgroups(G) then
-      Error("Semigroups: MaximalSubsemigroups: usage,\n",
-            "the second argument <H> must be a maximal subgroup of the ",
-            "underlying\ngroup of the Rees 0-matrix semigroup in the first ",
-            "argument, <R>,");
-      return fail;
+      ErrorMayQuit("Semigroups: MaximalSubsemigroups: usage,\n",
+                   "the second argument <H> must be a maximal subgroup",
+                   "of the ",
+                   "underlying\ngroup of the Rees 0-matrix semigroup in the",
+                   "first ", "argument, <R>,");
     fi;
 
     mat   := Matrix(R);
@@ -381,13 +377,12 @@ else
         # take an isomorphism to a Rees 0-matrix semigroup, find its maximal
         # subsemigroups, then pull those back, (should specify some methods for
         # the pulling back part)
-        Error("Semigroups: MaximalSubsemigroups:\n",
-              "not yet implemented for a 0-simple Rees 0-matrix semigroup ",
-              "whose\nunderlying semigroup is not a group,");
-        return;
+        ErrorMayQuit("Semigroups: MaximalSubsemigroups:\n",
+                     "not yet implemented for a 0-simple Rees 0-matrix",
+                     "semigroup ",
+                     "whose\nunderlying semigroup is not a group,");
       else
         TryNextMethod();
-        return;
       fi;
     fi;
 

@@ -1,6 +1,7 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
  
+* `TrivialSemigroup` function
 * reporting in the generic Froidure-Pin method
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
 * fix the bug in the c++ code relating to the changeset tagged `bug-in-c-code`
