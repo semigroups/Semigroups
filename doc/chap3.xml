@@ -16,6 +16,7 @@
 
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
+    <#Include Label="MinimalFactorization">
   </Section>
 
   <Section><Heading>Creating Green's classes</Heading>

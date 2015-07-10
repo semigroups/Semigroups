@@ -145,9 +145,8 @@ function(d)
   f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
-    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
-          "the argument <d> must be a regular D-class,");
-    return;
+    ErrorMayQuit("Semigroups: InjectionPrincipalFactor: usage,\n",
+                 "the argument <d> must be a regular D-class,");
   fi;
 
   g := GroupHClass(d);

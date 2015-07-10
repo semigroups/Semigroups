@@ -297,9 +297,8 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 [IsMultiplicativeElementCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    Error("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
-          "the argument must satisfy IsGeneratorsOfInverseSemigroup");
-    return;
+    ErrorMayQuit("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
+                 "the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) < 2 then
     return coll;
@@ -321,9 +320,8 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    Error("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
-          "the argument must satisfy IsGeneratorsOfInverseSemigroup");
-    return;
+    ErrorMayQuit("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
+                 "the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) = 1 then
     if coll[1] = One(coll) then
@@ -441,9 +439,8 @@ function(S)
   local digraph, data, id;
 
   if not IsFinite(S) then
-    Error("Semigroups: IsGreensDLeq: usage,\n",
-          "the argument must be a finite semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: IsGreensDLeq: usage,\n",
+                 "the argument must be a finite semigroup,");
   fi;
 
   digraph := Digraph(PartialOrderOfDClasses(S));
@@ -520,9 +517,8 @@ function(D)
   local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
 
   if not IsRegularDClass(D) then
-    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
-          "the argument <D> must be a regular D-class,");
-    return;
+    ErrorMayQuit("Semigroups: InjectionPrincipalFactor: usage,\n",
+                 "the argument <D> must be a regular D-class,");
   fi;
 
   map := IsomorphismPermGroup(GroupHClass(D));
@@ -665,10 +661,9 @@ function(S)
   local en, act, gens;
 
   if not IsGroupAsSemigroup(S)  then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument must be a semigroup satisfying ",
-          "IsGroupAsSemigroup,");
-    return;
+    ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
+                 "the argument must be a semigroup satisfying ",
+                 "IsGroupAsSemigroup,");
   fi;
 
   en := EnumeratorSorted(S);
