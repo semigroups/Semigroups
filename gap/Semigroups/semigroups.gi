@@ -979,7 +979,7 @@ function(filt)
     return [RandomNaturalMatrix, 3, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
   elif filt = IsMatrixOverPrimeFieldSemigroup then
-    return [RandomMatrixOverPrimeField, 3, IdFunc];
+    return [RandomMatrixOverPrimeField, 2, IdFunc];
     #TODO define the canonical embedding from T_n to here!
   fi;
 end);
@@ -1036,8 +1036,15 @@ function(SemigroupOrMonoid, string, args)
     return;
   fi;
 
-  if filt = IsMatrixOverPrimeFieldSemigroup and not IsPrimeInt(params[2]) then
-    params[2] := NextPrimeInt(params[2]);
+  if filt = IsMatrixOverPrimeFieldSemigroup then
+    if IsPosInt(params[2]) then 
+      if not IsPrimeInt(params[2]) then 
+        params[2] := NextPrimeInt(params[2]);
+      fi;
+      params[2] := GF(params[2], 1);
+    elif not IsPrimeField(params[2]) then 
+      params[2] := GF(NextPrimeInt(Random([1 .. 12])), 1);
+    fi;
   fi;
 
   if SemigroupOrMonoid = InverseSemigroup
