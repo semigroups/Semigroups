@@ -28,56 +28,6 @@
 # IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
 # IsRightUnipotent, IsSemigroupWithClosedIdempotents, .
 
-#
-
-#InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
-#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-#function(s)
-#  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
-#
-#  Info(InfoWarning, 1, "this will sometimes return a false positive.");
-#
-#  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
-#    Info(InfoSemigroups, 2, "semigroup is regular");
-#    return true;
-#  fi;
-#
-#  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
-#  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
-#  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
-#  reg:=[]; i:=0;
-#
-#  repeat
-#    repeat #JDM this should become an method for IteratorOfRStarClasses
-#           # and IsAbundantRClass...
-#      data:=NextIterator(iter);
-#    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter);
-#    if not IsDoneIterator(iter) then
-#      HTAdd(ht_o, data{[1,2,4,5]}, true);
-#
-#      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
-#      val:=HTValue(ht, ker);
-#
-#      if val=fail then #new kernel
-#        i:=i+1; HTAdd(ht, ker, i);
-#        val:=i; reg[val]:=false;
-#      fi;
-#
-#      if reg[val]=false then #old kernel
-#        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
-#        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
-#      fi;
-#    fi;
-#  until IsDoneIterator(iter);
-#
-#  return ForAll(reg, x-> x);
-#end);
-
-#InstallMethod(IsAdequateSemigroup,
-#"for acting semigroup with generators",
-#[IsActingSemigroup and HasGeneratorsOfSemigroup],
-#s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
-
 # same method for ideals
 
 InstallMethod(IsBand, "for a semigroup",
@@ -85,9 +35,8 @@ InstallMethod(IsBand, "for a semigroup",
 function(S)
   if HasParent(S) and HasIsBand(Parent(S)) and IsBand(Parent(S)) then
     return true;
-  else
-    return IsCompletelyRegularSemigroup(S) and IsHTrivial(S);
   fi;
+  return IsCompletelyRegularSemigroup(S) and IsHTrivial(S);
 end);
 
 # same method for ideals
@@ -100,13 +49,10 @@ IsSemilatticeAsSemigroup);
 InstallMethod(IsBlockGroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local iter, D;
+  local D;
 
   if HasParent(S) and HasIsBlockGroup(Parent(S))
       and IsBlockGroup(Parent(S)) then
-    return true;
-  elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
-    Info(InfoSemigroups, 2, "inverse semigroup");
     return true;
   elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S))
       and (HasIsInverseSemigroup(S) and not IsInverseSemigroup(S)) then
@@ -114,19 +60,15 @@ function(S)
     return false;
   fi;
 
-  iter := IteratorOfDClasses(S);
-
-  for D in iter do
-    if IsRegularDClass(D)
-         (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
-          or NrRClasses(D) <> NrLClasses(D)) then
+  for D in DClasses(S) do
+    if IsRegularDClass(D) 
+        and (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
+             or NrRClasses(D) <> NrLClasses(D)) then
       return false;
     fi;
   od;
   return true;
 end);
-
-#
 
 # same method for ideals
 
@@ -144,7 +86,7 @@ InstallMethod(IsBrandtSemigroup, "for an inverse semigroup",
 InstallMethod(IsCongruenceFreeSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local t, p, rowsDiff;
+  local rowsDiff, T, P;
 
   rowsDiff := function(p)
     local i, j;
@@ -163,23 +105,24 @@ function(S)
   fi;
 
   if MultiplicativeZero(S) <> fail then
-    # CASE 1: s has zero
+    # CASE 1: S has zero
     if IsZeroSimpleSemigroup(S) then
-      # Find an isomorphic RMS
-      t := Range(IsomorphismReesMatrixSemigroup(S));
-      if IsTrivial(UnderlyingSemigroup(t)) then
+      # Find an isomorphic RZMS
+      T := Range(IsomorphismReesZeroMatrixSemigroup(S));
+      if IsTrivial(UnderlyingSemigroup(T)) then
         # Check that no two rows or columns are identical
-        p := Matrix(t);
-        if rowsDiff(p) and rowsDiff(TransposedMat(p)) then
+        P := Matrix(T);
+        if rowsDiff(P) and rowsDiff(TransposedMat(P)) then
           return true;
         fi;
       fi;
     fi;
     return false;
-  else
-    # CASE 2: s has no zero
-    return IsGroup(S) and IsSimpleGroup(S);
   fi;
+
+  # CASE 2: S has no zero
+  return (IsGroup(S) and IsSimpleGroup(S)) 
+    or (IsGroupAsSemigroup(S) and IsSimpleGroup(Range(IsomorphismPermGroup(S))));
 end);
 
 # same method for regular ideals, or non-regular without a generating set
@@ -190,9 +133,8 @@ function(S)
   if HasParent(S) and HasIsCliffordSemigroup(Parent(S))
       and IsCliffordSemigroup(Parent(S)) then
     return true;
-  else
-    return IsRegularSemigroup(S) and NrHClasses(S) = NrDClasses(S);
   fi;
+  return IsRegularSemigroup(S) and NrHClasses(S) = NrDClasses(S);
 end);
 
 # same method for non-regular ideals
@@ -209,7 +151,8 @@ function(S)
   elif HasIsInverseSemigroup(S) and not IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not inverse");
     return false;
-  elif not IsCompletelyRegularSemigroup(S) then
+  elif HasIsCompletelyRegularSemigroup(S) 
+      and not IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
   elif IsGroupAsSemigroup(S) then
@@ -879,7 +822,7 @@ x -> not IsMonoid(x) and MultiplicativeNeutralElement(x) <> fail);
 # same method for ideals
 
 InstallMethod(IsOrthodoxSemigroup, "for a semigroup",
-[IsSemigroup],
+[IsSemigroup], 1, # to beat the Smallsemi method
 function(S)
   local e, m, i, j;
 
@@ -1499,6 +1442,12 @@ function(S)
   D := NextIterator(iter);
   return IsDoneIterator(iter) and IsRegularDClass(D);
 end);
+
+# same method for ideals
+
+InstallMethod(IsZeroSimpleSemigroup, "for a semigroup",
+[IsSemigroup], 1, # to beat the library method
+S -> MultiplicativeZero(S) <> fail and NrDClasses(S) = 2 and IsRegularSemigroup(S));
 
 # same method for ideals
 
