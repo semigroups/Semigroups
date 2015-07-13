@@ -31,7 +31,6 @@ function(R, H)
 
   if not IsReesMatrixSemigroup(R) then
     TryNextMethod();
-    return;
   fi;
 
   G := UnderlyingSemigroup(R);
@@ -99,24 +98,8 @@ InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup",
 function(R)
   local G, out, mat, I, J, basicgens, i, j, H, tot;
 
-  if not IsReesMatrixSemigroup(R) then
+  if not IsReesMatrixSemigroup(R) or not IsGroup(UnderlyingSemigroup(R)) then
     TryNextMethod();
-    return;
-  fi;
-
-  G := UnderlyingSemigroup(R);
-
-  if not IsGroup(G) then
-    if IsSimpleSemigroup(R) then
-      TryNextMethod();
-      # Take an isomorphism to a Rees matrix semigroup, find its maximal
-      # subsemigroups, then pull those back (should specify some methods for
-      # the pulling back part)
-      return;
-    else
-      TryNextMethod();
-      return;
-    fi;
   fi;
 
   out := [];
@@ -139,6 +122,7 @@ function(R)
   for j in [Length(I) + 1 .. Length(J)] do
     Add(basicgens, RMSElement(R, 1, (mat[j][1] ^ -1), j));
   od;
+  G := UnderlyingSemigroup(R);
   for H in MaximalSubgroups(G) do
     out := Concatenation(out,
                          MaximalSubsemigroupsNC(R, H, basicgens, mat[1][1]));
@@ -195,7 +179,6 @@ else
 
     if not IsReesZeroMatrixSemigroup(R) then
       TryNextMethod();
-      return;
     fi;
 
     # Check that matrix is regular (i.e. no zero-rows or zero-columns)
@@ -358,22 +341,17 @@ else
     seen_zero, basicgens, pos, new, i, j, JJ, solo, U, II, len, names,
     rectangles, gens, H, r, k;
 
-    if not IsReesZeroMatrixSemigroup(R) then
+    if not IsReesZeroMatrixSemigroup(R) or not IsRegularSemigroup(R) then
       TryNextMethod();
-      return;
-    fi;
-
-    # Check that matrix is regular
-    # If the underlying semigroup is a group, this means: no zero rows or cols
-    if not IsRegularSemigroup(R) then
-      TryNextMethod();
-      return;
     fi;
 
     G := UnderlyingSemigroup(R);
 
     if not IsGroup(G) then
       if IsZeroSimpleSemigroup(R) then
+        # FIXME shouldn't this be the same as MaximalSubsemigroups for RMS
+        # above? JDM
+        
         # take an isomorphism to a Rees 0-matrix semigroup, find its maximal
         # subsemigroups, then pull those back, (should specify some methods for
         # the pulling back part)
