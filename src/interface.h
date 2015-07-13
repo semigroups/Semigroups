@@ -27,20 +27,23 @@ extern "C" {
 class InterfaceBase {
   public:
     virtual                ~InterfaceBase () {};
-    virtual void           enumerate (Obj limit) = 0;
-    virtual bool           is_done () = 0;
+    virtual SemigroupBase* semigroup () const = 0;
+    virtual size_t         current_size () const = 0;
+    virtual size_t         current_nrrules () const = 0;
+    virtual size_t         current_max_word_length () const = 0;
+    virtual bool           is_done () const = 0;
     virtual void           find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
-    virtual size_t         size () = 0;
-    //virtual size_t         simple_size () = 0;
-    virtual size_t         current_size () = 0;
-    virtual size_t         nrrules () = 0;
+    virtual void           enumerate (Obj data, Obj limit) = 0;
+    virtual size_t         size (Obj data) = 0;
+    virtual size_t         nr_idempotents (Obj data) = 0;
     virtual void           right_cayley_graph (Obj data) = 0;
     virtual void           left_cayley_graph (Obj data) = 0;
     virtual void           elements (Obj data, Obj limit) = 0;
     virtual Obj            position (Obj data, Obj x) = 0;
     virtual Obj            word (Obj data, Obj pos) = 0;
     virtual void           relations (Obj data) = 0;
-    virtual SemigroupBase* semigroup () = 0;
+    virtual void           add_generators (Obj data, Obj coll) = 0;
+    //virtual size_t         simple_size () = 0;
 };
 
 /*******************************************************************************
@@ -78,5 +81,11 @@ Obj POSITION_SEMIGROUP (Obj self, Obj data, Obj x);
 Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data);
 
 Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data);
+
+Obj ADD_GENERATORS_SEMIGROUP (Obj self, Obj data, Obj coll);
+
+Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj old_data);
+
+Obj NR_IDEMPOTENTS_SEMIGROUP (Obj self, Obj data);
 
 #endif

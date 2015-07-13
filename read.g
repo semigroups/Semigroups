@@ -1,41 +1,42 @@
 #############################################################################
 ##
 #W  read.g
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-# deal with GRAPE being loaded or not, compiled or not
 BindGlobal("IsGrapeLoaded", IsPackageMarkedForLoading("grape", "4.5"));
 BindGlobal("IsGrapeCompiled",
-ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail);
+           ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")
+           <> fail);
 
 if not IsGrapeLoaded then
-  Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
+  Add(SEMIGROUPS_OmitFromTests, "SmallestMultiplicationTable");
   BindGlobal("GrapeIsNotLoadedString",
-  Concatenation("the GRAPE package is not loaded and",
-                " so this function does not work"));
+             Concatenation("the GRAPE package is not loaded and",
+                           " so this function does not work"));
 fi;
 
 if not IsGrapeCompiled then
-  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
-  Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
-  Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
-  Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
-  Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
-  Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
+  Add(SEMIGROUPS_OmitFromTests, "MaximalSubsemigroups");
+  Add(SEMIGROUPS_OmitFromTests, "MunnSemigroup");
+  Add(SEMIGROUPS_OmitFromTests, "IsIsomorphicSemigroup");
+  Add(SEMIGROUPS_OmitFromTests, "IsomorphismSemigroups");
+  Add(SEMIGROUPS_OmitFromTests, "RZMSInducedFunction");
+  Add(SEMIGROUPS_OmitFromTests, "RZMStoRZMSInducedFunction");
   BindGlobal("GrapeIsNotCompiledString",
-    Concatenation("the nauty/dreadnaut binaries for the GRAPE package are",
-                  " not loaded\n#I  and so this function does not work"));
+             Concatenation("the nauty/dreadnaut binaries for the GRAPE ",
+                           "package are not loaded\n#I  and so this function ",
+                           "does not work"));
 fi;
 
-#
-
 if TestPackageAvailability("genss") = fail then
-  Add(SemigroupsOmitFromTestManualExamples, "Normalizer");
+  Add(SEMIGROUPS_OmitFromTests, "Normalizer");
+  Add(SEMIGROUPS_OmitFromTests,
+      "SEMIGROUPS_NonDeterministicNormalizer");
 fi;
 
 # Issue 5 for Orb:
@@ -81,85 +82,70 @@ if not IsBound(MappingPermListList_C) then
   end);
 fi;
 
-# skip examples including partitions if we're in version less than 2.0
+ReadPackage("semigroups/gap/elements/star.gi");
+ReadPackage("semigroups/gap/elements/pbr.gi");
+ReadPackage("semigroups/gap/elements/bipartition.gi");
+ReadPackage("semigroups/gap/elements/blocks.gi");
+ReadPackage("semigroups/gap/elements/semiringmat.gi");
+ReadPackage("semigroups/gap/elements/maxplusmat.gi");
+ReadPackage("semigroups/gap/elements/boolmat.gi");
+ReadPackage("semigroups/gap/elements/pfmat.gi");
 
-if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
-    then
-  Add(SemigroupsOmitFromTestManualExamples, "partition");
-  Add(SemigroupsOmitFromTestManualExamples, "Partition");
-fi;
+ReadPackage("semigroups/gap/semigroups/semigroups.gi");
+ReadPackage("semigroups/gap/semigroups/grpperm.gi");
+ReadPackage("semigroups/gap/semigroups/reesmat.gi");
+ReadPackage("semigroups/gap/semigroups/semibipart.gi");
+ReadPackage("semigroups/gap/semigroups/semipperm.gi");
+ReadPackage("semigroups/gap/semigroups/semitrans.gi");
+ReadPackage("semigroups/gap/semigroups/semipbr.gi");
+ReadPackage("semigroups/gap/semigroups/semimaxplus.gi");
+ReadPackage("semigroups/gap/semigroups/semiringmat.gi");
+ReadPackage("semigroups/gap/semigroups/semiboolmat.gi");
+ReadPackage("semigroups/gap/semigroups/semipfmat.gi");
+ReadPackage("semigroups/gap/semigroups/examples.gi");
 
-ReadPackage("semigroups/gap/grpperm.gi");
+ReadPackage("semigroups/gap/main/froidure-pin.gi");
+ReadPackage("semigroups/gap/main/setup.gi");
+ReadPackage("semigroups/gap/main/acting.gi");
+ReadPackage("semigroups/gap/main/lambda-rho.gi");
+ReadPackage("semigroups/gap/main/graded.gi");
+ReadPackage("semigroups/gap/main/orbits.gi");
+ReadPackage("semigroups/gap/main/semigroups-acting.gi");
 
-ReadPackage("semigroups/gap/pbr.gi");
+ReadPackage("semigroups/gap/ideals/ideals.gi");
+ReadPackage("semigroups/gap/ideals/ideals-acting.gi");
+ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gi");
+ReadPackage("semigroups/gap/ideals/ideals-generic.gi");
 
-ReadPackage("semigroups/gap/matrix-semiring.gi");
-ReadPackage("semigroups/gap/matrix-max-plus.gi");
-ReadPackage("semigroups/gap/matrix-boolean.gi");
-ReadPackage("semigroups/gap/matrix-prime-field.gi");
+ReadPackage("semigroups/gap/greens/greens-generic.gi");
+ReadPackage("semigroups/gap/greens/greens-acting.gi");
+ReadPackage("semigroups/gap/greens/greens-regular.gi");
+ReadPackage("semigroups/gap/greens/greens-inverse.gi");
 
-ReadPackage("semigroups/gap/blocks.gi");
-ReadPackage("semigroups/gap/bipartition.gi");
+ReadPackage("semigroups/gap/tools/display.gi");
+ReadPackage("semigroups/gap/tools/io.gi");
+ReadPackage("semigroups/gap/tools/utils.gi");
+ReadPackage("semigroups/gap/tools/enums.gi");
+ReadPackage("semigroups/gap/tools/iterators.gi");
 
-ReadPackage("semigroups/gap/semigroups-matrix-semiring.gi");
-ReadPackage("semigroups/gap/semigroups-matrix-max-plus.gi");
-ReadPackage("semigroups/gap/semigroups-matrix-boolean.gi");
-ReadPackage("semigroups/gap/semigroups-prime-fields.gi");
+ReadPackage("semigroups/gap/attributes/attributes.gi");
+ReadPackage("semigroups/gap/attributes/attributes-acting.gi");
+ReadPackage("semigroups/gap/attributes/attributes-inverse.gi");
+ReadPackage("semigroups/gap/attributes/factor.gi");
+ReadPackage("semigroups/gap/attributes/isomorph.gi");
+ReadPackage("semigroups/gap/attributes/maximal.gi");
+ReadPackage("semigroups/gap/attributes/normalizer.gi");
+ReadPackage("semigroups/gap/attributes/properties.gi");
+ReadPackage("semigroups/gap/attributes/reesmat-iso.gi");
 
-ReadPackage("semigroups/gap/semibipart.gi");
-ReadPackage("semigroups/gap/semipbr.gi");
-ReadPackage("semigroups/gap/semitrans.gi");
-ReadPackage("semigroups/gap/semipperm.gi");
+ReadPackage("semigroups/gap/congruences/pairs-cong.gi");
+ReadPackage("semigroups/gap/congruences/reesmat-cong.gi");
+ReadPackage("semigroups/gap/congruences/univ-cong.gi");
+ReadPackage("semigroups/gap/congruences/inverse-cong.gi");
+ReadPackage("semigroups/gap/congruences/simple-cong.gi");
+ReadPackage("semigroups/gap/congruences/rees-cong.gi");
+ReadPackage("semigroups/gap/congruences/quotients.gi");
 
-ReadPackage("semigroups/gap/setup.gi");
-ReadPackage("semigroups/gap/lambda-rho.gi");
-ReadPackage("semigroups/gap/ideals-lambda-rho.gi");
-ReadPackage("semigroups/gap/acting.gi");
-ReadPackage("semigroups/gap/ideals-acting.gi");
-ReadPackage("semigroups/gap/graded.gi");
-ReadPackage("semigroups/gap/semigroups.gi");
-ReadPackage("semigroups/gap/semigroups-acting.gi");
-ReadPackage("semigroups/gap/greens-generic.gi");
-ReadPackage("semigroups/gap/greens-acting.gi");
-ReadPackage("semigroups/gap/ideals-greens.gi");
-ReadPackage("semigroups/gap/factor.gi");
-ReadPackage("semigroups/gap/greens-regular.gi");
-ReadPackage("semigroups/gap/greens-inverse.gi");
-ReadPackage("semigroups/gap/enums.gi");
-ReadPackage("semigroups/gap/iterators.gi");
-ReadPackage("semigroups/gap/properties.gi");
-ReadPackage("semigroups/gap/attributes.gi");
-ReadPackage("semigroups/gap/attributes-acting.gi");
-ReadPackage("semigroups/gap/attributes-generic.gi");
-ReadPackage("semigroups/gap/attributes-inverse.gi");
-ReadPackage("semigroups/gap/examples.gi");
-ReadPackage("semigroups/gap/orbits.gi");
-
-ReadPackage("semigroups/gap/ideals.gi");
-
-ReadPackage("semigroups/gap/freeinverse.gi");
-ReadPackage("semigroups/gap/freeband.gi");
-
-ReadPackage("semigroups/gap/utils.gi");
-ReadPackage("semigroups/gap/io.gi");
-
-ReadPackage("semigroups/gap/display.gi");
-
-ReadPackage("semigroups/gap/fpsemi.gi");
-ReadPackage("semigroups/gap/isomorph.gi");
-ReadPackage("semigroups/gap/reesmat.gi");
-ReadPackage("semigroups/gap/reesmat-iso.gi");
-ReadPackage("semigroups/gap/maximal.gi");
-ReadPackage("semigroups/gap/normalizer.gi");
-
-ReadPackage("semigroups/gap/quotients.gi");
-
-ReadPackage("semigroups/gap/pairs-cong.gi");
-ReadPackage("semigroups/gap/reesmat-cong.gi");
-ReadPackage("semigroups/gap/univ-cong.gi");
-ReadPackage("semigroups/gap/inverse-cong.gi");
-ReadPackage("semigroups/gap/simple-cong.gi");
-ReadPackage("semigroups/gap/rees-cong.gi");
-
-ReadPackage("semigroups/gap/semigroups-generic.gi");
-ReadPackage("semigroups/gap/ideals-generic.gi");
+ReadPackage("semigroups/gap/fp/fpsemi.gi");
+ReadPackage("semigroups/gap/fp/freeinverse.gi");
+ReadPackage("semigroups/gap/fp/freeband.gi");

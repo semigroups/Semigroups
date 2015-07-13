@@ -16,6 +16,7 @@
 
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
+    <#Include Label="MinimalFactorization">
   </Section>
 
   <Section><Heading>Creating Green's classes</Heading>
@@ -147,6 +148,7 @@
     <#Include Label="IsJoinIrreducible">
     <#Include Label="IsMajorantlyClosed">
     <#Include Label="IsMonogenicInverseSemigroup">
+    <#Include Label="NaturalLeqInverseSemigroup">
     <#Include Label="JoinIrreducibleDClasses">
     <#Include Label="MajorantClosure">
     <#Include Label="Minorants">

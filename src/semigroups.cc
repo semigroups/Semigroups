@@ -6,9 +6,6 @@
  */
 
 // TODO 
-// 1) improve relations probably don't make the relations in semigroups.h and then transfer them 
-// over here, just create them here using factorisation from semigroups.h and the
-// memmove method from ENUMERATE_SEMIGROUP in this file
 //
 // 2) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
@@ -52,7 +49,7 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
         intval, stop, one;
 
   if (IsCCSemigroup(data)) {
-    InterfaceFromData(data)->enumerate(limit);
+    InterfaceFromData(data)->enumerate(data, limit);
     return data;
   }
 
@@ -70,11 +67,11 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BATCH_SIZE));
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BatchSize(data)));
 
-//#ifdef DEBUG
-  std::cout << "GAP kernel version\n";
-//#endif
+  if (Report(data)) {
+    std::cout << "GAP kernel version\n";
+  }
   
   #ifdef DEBUG
     Pr("here 1\n", 0L, 0L);
@@ -663,8 +660,12 @@ static StructGVarFunc GVarFuncs [] = {
     //GVAR_FUNC_TABLE_ENTRY("interface.cc", SIMPLE_SIZE, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SIZE_SEMIGROUP, 1, 
                           "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", NR_IDEMPOTENTS_SEMIGROUP, 1, 
+                          "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", CLOSURE_SEMIGROUP, 2, 
                           "old_data, new_data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", ADD_GENERATORS_SEMIGROUP, 2, 
+                          "data, coll"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", LENGTH_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", NR_RULES_SEMIGROUP, 1, 
@@ -672,6 +673,8 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.cc", POSITION_SEMIGROUP, 2, 
                           "data, x"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", IS_CLOSED_SEMIGROUP, 1, 
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", MAX_WORD_LEN_SEMIGROUP, 1, 
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
@@ -730,9 +733,8 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
     ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
     
-    ImportGVarFromLibrary( "IsPartitionedBinaryRelation", &IsPartitionedBinaryRelation);
-    ImportGVarFromLibrary( "PartitionedBinaryRelationType",
-                           &PartitionedBinaryRelationType );
+    ImportGVarFromLibrary( "IsPBR", &IsPBR);
+    ImportGVarFromLibrary( "PBRType", &PBRType );
 
     /* return success                                                      */
     return 0;

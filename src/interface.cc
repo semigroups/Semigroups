@@ -11,7 +11,15 @@
 
 #include <assert.h>
 
-#define BATCH_SIZE 8192
+/*******************************************************************************
+ * Record names TODO init these in a function
+*******************************************************************************/
+
+static Int RNam_elts  = RNamName("elts");
+static Int RNam_left  = RNamName("left");
+static Int RNam_right = RNamName("right");
+static Int RNam_rules = RNamName("rules");
+static Int RNam_words = RNamName("words");
 
 /*******************************************************************************
  * Temporary stuff goes here!
@@ -66,7 +74,7 @@ class Interface : public InterfaceBase {
     // constructor
 
     // in the case that we are taking the closure of the semigroup of
-    // <old_data> with some new generators, these new generators are stored in
+    // <old> with some new generators, these new generators are stored in
     // the <gens> component of <data>. I.e. the meaning of the <gens> component
     // of the <data> is different if we are taking the closure than if we are
     // not. 
@@ -76,14 +84,6 @@ class Interface : public InterfaceBase {
       assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
       
       Obj gens = ElmPRec(data, RNamName("gens"));
-
-      if (IsbPRec(data, RNamName("report"))) {
-        assert(ElmPRec(data, RNamName("report")) == True || 
-            ElmPRec(data, RNamName("report")) == False);
-        _report = (ElmPRec(data, RNamName("report")) == True ? true : false);
-      } else {
-        _report = false;
-      }
 
       std::vector<T*> gens_c;
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
@@ -95,14 +95,12 @@ class Interface : public InterfaceBase {
       if (old == nullptr) {
         _semigroup = new Semigroup<T>(gens_c, deg_c);
       } else {
-        std::cout << "HERE!\n";
-        Semigroup<T>* S = static_cast<Semigroup<T>*>(old); 
-        _semigroup = new Semigroup<T>(*S, gens_c.size()); //FIXME what if duplicate gens
-        _semigroup->closure(S, gens_c, deg_c, false);
+        _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c); 
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
         }
       }
+      _semigroup->set_batch_size(BatchSize(data));
     }
     
     // destructor
@@ -110,73 +108,102 @@ class Interface : public InterfaceBase {
       delete _converter;
       delete _semigroup;
     };
-    
-    Semigroup<T>* semigroup () {
+   
+
+    Semigroup<T>* semigroup () const {
       return _semigroup;
     }
 
-    // TODO replace the methods from HERE . . .
-
-    // enumerate the C++ semigroup
-    void enumerate (Obj limit) {
-      _semigroup->enumerate(INT_INTOBJ(limit), _report);
+    bool is_done () const {
+      return _semigroup->is_done();
     }
     
-    bool is_done () {
-      return _semigroup->is_done();
+    size_t current_size () const {
+      return _semigroup->current_size();
+    }
+    
+    size_t current_nrrules () const {
+      return _semigroup->current_nrrules();
+    }
+    
+    size_t current_max_word_length () const {
+      return _semigroup->max_word_length();
+    }
+    
+    size_t nr_idempotents (Obj data) {
+      return _semigroup->nr_idempotents(Report(data));
+    }
+   
+    void add_generators(Obj data, Obj coll) {
+      assert(IS_PLIST(coll));
+      assert(LEN_PLIST(coll) > 0);
+      std::unordered_set<T*> coll_cc;
+      for(size_t i = 1; i <= (size_t) LEN_PLIST(coll); i++) {
+        coll_cc.insert(_converter->convert(ELM_PLIST(coll, i), _semigroup->degree()));
+      }
+      _semigroup->add_generators(coll_cc, Report(data));
+      Obj gens = ElmPRec(data, RNamName("gens")); // TODO make this safe
+      for(size_t i = 0; i < _semigroup->nrgens(); i++) {
+        AssPlist(gens, i + 1, _converter->unconvert(_semigroup->gens().at(i)));
+      }
+      //unbind things in data
+      if (IsbPRec(data, RNam_elts)) {
+        UnbPRec(data, RNam_elts);
+      }
+      if (IsbPRec(data, RNam_left)) {
+        UnbPRec(data, RNam_left);
+      }
+      if (IsbPRec(data, RNam_right)) {
+        UnbPRec(data, RNam_right);
+      }
+      if (IsbPRec(data, RNam_rules)) {
+        UnbPRec(data, RNam_rules);
+      }
+      if (IsbPRec(data, RNam_words)) {
+        UnbPRec(data, RNam_words);
+      }
+    }
+
+    void enumerate (Obj data, Obj limit) {
+      _semigroup->enumerate(INT_INTOBJ(limit), Report(data));
     }
 
     // get the size of the C++ semigroup
-    size_t size () {
-      return _semigroup->size(_report);
+    size_t size (Obj data) {
+      return _semigroup->size(Report(data));
     }
    
     /*size_t simple_size () {
       return _semigroup->simple_size();
     }*/
-    
-    size_t current_size () {
-      return _semigroup->current_size();
-    }
-    
-    size_t nrrules () {
-      return _semigroup->nrrules();
-    }
-    // . . . to HERE with calls to semigroup()->nrrules()
 
     // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
-      _semigroup->enumerate(-1, _report);
-      AssPRec(data, RNamName("right"), 
-              ConvertFromRecVec(_semigroup->right_cayley_graph()));
+      AssPRec(data, RNam_right, 
+              ConvertFromRecVec(_semigroup->right_cayley_graph(Report(data))));
       CHANGED_BAG(data);
-      // TODO do something like this
-      //delete _semigroup->right_cayley_graph();
     }
 
     // get the left Cayley graph from C++ semgroup, store it in data
     void left_cayley_graph (Obj data) {
-      _semigroup->enumerate(-1, _report);
-      AssPRec(data, RNamName("left"), 
-              ConvertFromRecVec(_semigroup->left_cayley_graph()));
+      AssPRec(data, RNam_left, 
+              ConvertFromRecVec(_semigroup->left_cayley_graph(Report(data))));
       CHANGED_BAG(data);
-      // TODO do something like this
-      //delete _semigroup->left_cayley_graph();
     }
     
     // get the elements of the C++ semigroup, store them in data
     void elements (Obj data, size_t limit) {
-      std::vector<T*>* elements = _semigroup->elements(limit);
-      if (! IsbPRec(data, RNamName("elts"))) {
+      std::vector<T*>* elements = _semigroup->elements(limit, Report(data));
+      if (! IsbPRec(data, RNam_elts)) {
         Obj out = NEW_PLIST(T_PLIST, elements->size());
         SET_LEN_PLIST(out, elements->size());
         for (size_t i = 0; i < elements->size(); i++) {
           SET_ELM_PLIST(out, i + 1, _converter->unconvert(elements->at(i)));
           CHANGED_BAG(out);
         }
-        AssPRec(data, RNamName("elts"), out);
+        AssPRec(data, RNam_elts, out);
       } else {
-        Obj out = ElmPRec(data, RNamName("elts"));
+        Obj out = ElmPRec(data, RNam_elts);
         for (size_t i = LEN_PLIST(out); i < elements->size(); i++) {
           AssPlist(out, i + 1, _converter->unconvert(elements->at(i)));
         }
@@ -201,12 +228,12 @@ class Interface : public InterfaceBase {
       if (pos < _semigroup->current_size()) {
         limit = _semigroup->current_size();
       } else {
-        limit = pos + BATCH_SIZE; 
+        limit = pos + _semigroup->batch_size(); 
       }
 
       elements(data, limit); // get the elements out of _semigroup into "elts"
       
-      size_t nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))),
+      size_t nr = std::min(LEN_PLIST(ElmPRec(data, RNam_elts)),
                            INT_INTOBJ(end));
       bool found = false;
 
@@ -219,10 +246,10 @@ class Interface : public InterfaceBase {
           }
         }
         if (!found) {
-          limit += BATCH_SIZE;
+          limit += _semigroup->batch_size();
           elements(data, limit); 
           // get the elements out of _semigroup into "elts"
-          nr = std::min(LEN_PLIST(ElmPRec(data, RNamName("elts"))),
+          nr = std::min(LEN_PLIST(ElmPRec(data, RNam_elts)),
                         INT_INTOBJ(end));
         }
       }
@@ -230,22 +257,27 @@ class Interface : public InterfaceBase {
     
     Obj position (Obj data, Obj x) {
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
-      size_t pos = _semigroup->position(_converter->convert(x, deg_c));
+      size_t pos = _semigroup->position(_converter->convert(x, deg_c), Report(data));
       return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
     }
-    
-    // get the word from the C++ semigroup, store it in data
+   
     Obj word (Obj data, Obj pos) {
+      return word(data, pos, Report(data));
+    }
+
+    // get the word from the C++ semigroup, store it in data
+    Obj word (Obj data, Obj pos, bool report) {
       size_t pos_c = INT_INTOBJ(pos);
       Obj words; 
-      if (! IsbPRec(data, RNamName("words"))) {
+      if (! IsbPRec(data, RNam_words)) {
         words = NEW_PLIST(T_PLIST, pos_c);
         SET_LEN_PLIST(words, pos_c);
-        SET_ELM_PLIST(words, pos_c, ConvertFromVec(_semigroup->factorisation(pos_c - 1)));
+        SET_ELM_PLIST(words, pos_c,
+                      ConvertFromVec(_semigroup->factorisation(pos_c - 1, report)));
         CHANGED_BAG(words);
-        AssPRec(data, RNamName("words"), words);
+        AssPRec(data, RNam_words, words);
       } else {
-        words = ElmPRec(data, RNamName("words"));
+        words = ElmPRec(data, RNam_words);
         if (pos_c > (size_t) LEN_PLIST(words) || ELM_PLIST(words, pos_c) == 0) {
           //avoid retracing the Schreier tree if possible
           size_t prefix = _semigroup->prefix(pos_c - 1) + 1;
@@ -261,39 +293,39 @@ class Interface : public InterfaceBase {
                           INTOBJ_INT(_semigroup->final_letter(pos_c - 1) + 1));
             SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
             AssPlist(words, pos_c, new_word);
-
-          /* else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words) 
+          } else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words) 
                      && ELM_PLIST(words, suffix) != 0) {
             Obj old_word = ELM_PLIST(words, suffix);
-            new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+            Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
             memcpy((void *)((char *)(ADDR_OBJ(new_word)) + 2 * sizeof(Obj)), 
                    (void *)((char *)(ADDR_OBJ(old_word)) + sizeof(Obj)), 
                    (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
             SET_ELM_PLIST(new_word, 1,
                           INTOBJ_INT(_semigroup->first_letter(pos_c - 1) + 1));
-            SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);*/
+            SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
+            AssPlist(words, pos_c, new_word);
           } else {
-            AssPlist(words, pos_c, ConvertFromVec(_semigroup->factorisation(pos_c - 1)));
+            AssPlist(words, pos_c, ConvertFromVec(_semigroup->factorisation(pos_c - 1, report)));
           }
         }
       }
       CHANGED_BAG(data);
-      assert(IsbPRec(data, RNamName("words")));
-      assert(IS_PLIST(ElmPRec(data, RNamName("words"))));
-      assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(data, RNamName("words"))));
-      return ELM_PLIST(ElmPRec(data, RNamName("words")), pos_c);
+      assert(IsbPRec(data, RNam_words));
+      assert(IS_PLIST(ElmPRec(data, RNam_words)));
+      assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(data, RNam_words)));
+      return ELM_PLIST(ElmPRec(data, RNam_words), pos_c);
     }
 
     // get the relations of the C++ semigroup, store them in data
     void relations (Obj data) {
-      if (! IsbPRec(data, RNamName("rules"))) {
-        _semigroup->enumerate(-1);
-        Obj rules = NEW_PLIST(T_PLIST, _semigroup->nrrules());
-        SET_LEN_PLIST(rules, _semigroup->nrrules());
+      if (! IsbPRec(data, RNam_rules)) {
+        bool report = Report(data);
+        Obj rules = NEW_PLIST(T_PLIST, _semigroup->nrrules(report));
+        SET_LEN_PLIST(rules, _semigroup->nrrules(report));
         size_t nr = 0;
 
         std::vector<size_t> relation;
-        _semigroup->next_relation(relation);
+        _semigroup->next_relation(relation, report);
 
         while (relation.size() == 2) {
           Obj next = NEW_PLIST(T_PLIST, 2);
@@ -308,12 +340,12 @@ class Interface : public InterfaceBase {
           nr++;
           SET_ELM_PLIST(rules, nr, next);
           CHANGED_BAG(rules);
-          _semigroup->next_relation(relation);
+          _semigroup->next_relation(relation, report);
         }
         
         while (!relation.empty()) {
 
-          Obj old_word = word(data, INTOBJ_INT(relation.at(0) + 1));
+          Obj old_word = word(data, INTOBJ_INT(relation.at(0) + 1), report);
           Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
           memcpy((void *)((char *)(ADDR_OBJ(new_word)) + sizeof(Obj)), 
                  (void *)((char *)(ADDR_OBJ(old_word)) + sizeof(Obj)), 
@@ -325,14 +357,14 @@ class Interface : public InterfaceBase {
           SET_LEN_PLIST(next, 2);
           SET_ELM_PLIST(next, 1, new_word);
           CHANGED_BAG(next);
-          SET_ELM_PLIST(next, 2, word(data, INTOBJ_INT(relation.at(2) + 1)));
+          SET_ELM_PLIST(next, 2, word(data, INTOBJ_INT(relation.at(2) + 1), report));
           CHANGED_BAG(next);
           nr++; 
           SET_ELM_PLIST(rules, nr, next);
           CHANGED_BAG(rules);
-          _semigroup->next_relation(relation);
+          _semigroup->next_relation(relation, report);
         } 
-        AssPRec(data, RNamName("rules"), rules);
+        AssPRec(data, RNam_rules, rules);
         CHANGED_BAG(data);
       }
     }
@@ -370,7 +402,6 @@ class Interface : public InterfaceBase {
 
     Semigroup<T>* _semigroup;
     Converter<T>* _converter;
-    bool          _report;
 };
 
 /*******************************************************************************
@@ -464,9 +495,9 @@ InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old) {
       interface = new Interface<MatrixOverSemiring>(data, mopfc, old);
       break;
     }
-    case PBR:{
+    case PBR_TYPE:{
       auto pbrc = new PBRConverter();
-      interface = new Interface<PartitionedBinaryRelation>(data, pbrc, old);
+      interface = new Interface<PBR>(data, pbrc, old);
       break;
     }
     default: {
@@ -494,42 +525,42 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
 //FIXME redo everything else here like RIGHT_CAYLEY_GRAPH!!
 Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCCSemigroup(data)) {
-    if (! IsbPRec(data, RNamName("right"))) { 
+    if (! IsbPRec(data, RNam_right)) { 
       InterfaceFromData(data)->right_cayley_graph(data);
     }
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  return ElmPRec(data, RNamName("right"));
+  return ElmPRec(data, RNam_right);
 }
 
 Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
-  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("left"))) { 
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNam_left)) { 
     //TODO free _left 
     InterfaceFromData(data)->left_cayley_graph(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  return ElmPRec(data, RNamName("left"));
+  return ElmPRec(data, RNam_left);
 }
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
-  if (IsCCSemigroup(data) && ! IsbPRec(data, RNamName("rules"))) { 
+  if (IsCCSemigroup(data) && ! IsbPRec(data, RNam_rules)) { 
     //TODO free _suffix and _first
     InterfaceFromData(data)->relations(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  return ElmPRec(data, RNamName("rules"));
+  return ElmPRec(data, RNam_rules);
 }
 
 Obj SIZE_SEMIGROUP (Obj self, Obj data) {
   if (IsCCSemigroup(data)) { 
-    return INTOBJ_INT(InterfaceFromData(data)->size());
+    return INTOBJ_INT(InterfaceFromData(data)->size(data));
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
   }
-  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
 }
 
 Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit) {
@@ -538,7 +569,7 @@ Obj ELEMENTS_SEMIGROUP (Obj self, Obj data, Obj limit) {
   } else {
     ENUMERATE_SEMIGROUP(self, data, limit, 0, False);
   }
-  return ElmPRec(data, RNamName("elts"));
+  return ElmPRec(data, RNam_elts);
 }
 
 Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
@@ -546,7 +577,7 @@ Obj WORD_SEMIGROUP (Obj self, Obj data, Obj pos) {
     return InterfaceFromData(data)->word(data, pos);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(pos), 0, False);
-    return ELM_PLIST(ElmPRec(data, RNamName("words")), INT_INTOBJ(pos));
+    return ELM_PLIST(ElmPRec(data, RNam_words), INT_INTOBJ(pos));
   }
 }
 
@@ -563,12 +594,12 @@ Obj LENGTH_SEMIGROUP (Obj self, Obj data) {
   if (IsCCSemigroup(data)) { 
     return INTOBJ_INT(InterfaceFromData(data)->current_size());
   }
-  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNamName("elts"))));
+  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
 }
 
 Obj NR_RULES_SEMIGROUP (Obj self, Obj data) {
   if (IsCCSemigroup(data)) { 
-    return INTOBJ_INT(InterfaceFromData(data)->nrrules());
+    return INTOBJ_INT(InterfaceFromData(data)->current_nrrules());
   }
   return INTOBJ_INT(ElmPRec(data, RNamName("nrrules")));
 }
@@ -607,10 +638,38 @@ Obj IS_CLOSED_SEMIGROUP (Obj self, Obj data) {
 //new_data.gens is the generators to add to the generators of old_data
 
 Obj CLOSURE_SEMIGROUP (Obj self, Obj old_data, Obj new_data) {
-  std::cout << "CLOSURE_SEMIGROUP\n";
   if (TypeSemigroup(old_data) == UNKNOWN) { 
-    ErrorQuit("not yet implemented!!", 0L, 0L);
+    ErrorQuit("CLOSURE_SEMIGROUP: this shouldn't happen!", 0L, 0L);
   }
   InterfaceFromData(new_data, InterfaceFromData(old_data)->semigroup());
   return new_data;
+}
+
+Obj ADD_GENERATORS_SEMIGROUP (Obj self, Obj data, Obj coll) {
+  if (TypeSemigroup(data) == UNKNOWN) { 
+    ErrorQuit("ADD_GENERATORS_SEMIGROUP: this shouldn't happen!", 0L, 0L);
+  }
+  InterfaceFromData(data)->add_generators(data, coll);
+  return data;
+}
+
+Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj data) {
+  if (TypeSemigroup(data) != UNKNOWN) { 
+    return INTOBJ_INT(InterfaceFromData(data)->current_max_word_length());
+  } else {
+    if (IsbPRec(data, RNam_words) && LEN_PLIST(ElmPRec(data, RNam_words)) > 0) {
+      Obj words = ElmPRec(data, RNam_words);
+      return INTOBJ_INT(LEN_PLIST(ELM_PLIST(words, LEN_PLIST(words))));
+    } else {
+      return INTOBJ_INT(1);
+    }
+  }
+}
+
+Obj NR_IDEMPOTENTS_SEMIGROUP (Obj self, Obj data) {
+  if (TypeSemigroup(data) != UNKNOWN) { 
+    return INTOBJ_INT(InterfaceFromData(data)->nr_idempotents(data));
+  } else {
+    
+  }
 }

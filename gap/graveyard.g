@@ -1,3 +1,53 @@
+#
+
+#InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
+#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
+#  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
+#
+#  Info(InfoWarning, 1, "this will sometimes return a false positive.");
+#
+#  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
+#    Info(InfoSemigroups, 2, "semigroup is regular");
+#    return true;
+#  fi;
+#
+#  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
+#  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
+#  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
+#  reg:=[]; i:=0;
+#
+#  repeat
+#    repeat #JDM this should become an method for IteratorOfRStarClasses
+#           # and IsAbundantRClass...
+#      data:=NextIterator(iter);
+#    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter);
+#    if not IsDoneIterator(iter) then
+#      HTAdd(ht_o, data{[1,2,4,5]}, true);
+#
+#      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
+#      val:=HTValue(ht, ker);
+#
+#      if val=fail then #new kernel
+#        i:=i+1; HTAdd(ht, ker, i);
+#        val:=i; reg[val]:=false;
+#      fi;
+#
+#      if reg[val]=false then #old kernel
+#        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
+#        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
+#      fi;
+#    fi;
+#  until IsDoneIterator(iter);
+#
+#  return ForAll(reg, x-> x);
+#end);
+
+#InstallMethod(IsAdequateSemigroup,
+#"for acting semigroup with generators",
+#[IsActingSemigroup and HasGeneratorsOfSemigroup],
+#s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
+
 # Here lies some dead code, may it rest in peace
 
 #InstallMethod(JoinOfBlocks, "for blocks",

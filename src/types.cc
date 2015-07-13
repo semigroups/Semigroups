@@ -31,8 +31,8 @@ Obj IsNaturalMatrix;
 Obj NaturalMatrixType;
 Obj IsMatrixOverPrimeField;
 Obj AsMatrixOverPrimeFieldNC;
-Obj IsPartitionedBinaryRelation;
-Obj PartitionedBinaryRelationType;
+Obj IsPBR;
+Obj PBRType;
 
 SemigroupType TypeSemigroup (Obj data) {
   Obj x = Representative(data);
@@ -64,7 +64,7 @@ SemigroupType TypeSemigroup (Obj data) {
         // TODO handle non-prime fields too!
         return MAT_OVER_PF;
       } else if (IS_PBR(x)) {
-        return PBR;
+        return PBR_TYPE;
       }
       return UNKNOWN;
     case T_COMOBJ:
