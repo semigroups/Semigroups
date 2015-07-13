@@ -27,10 +27,9 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true.
 
-BindGlobal("SEMIGROUPS_InjectionPrincipalFactor", 
+BindGlobal("SEMIGROUPS_InjectionPrincipalFactor",
 function(D, constructor)
   local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
-
 
   map := IsomorphismPermGroup(GroupHClass(D));
   inv := InverseGeneralMapping(map);
@@ -107,7 +106,7 @@ end);
 InstallMethod(NrIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
 
@@ -121,8 +120,8 @@ InstallMethod(GroupOfUnits, "for a semigroup",
 [IsSemigroup],
 function(S)
   local H, map, U;
-  
-  if not IsFinite(S) then 
+
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
 
@@ -153,8 +152,8 @@ InstallMethod(IsomorphismFpMonoid, "for a monoid",
 [IsMonoid], 3,
 function(S)
   local F, A, lookup, pos, data, rules, rels, convert, Q, B, rule;
-  
-  if not IsFinite(S) then 
+
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
 
@@ -198,11 +197,11 @@ end);
 # same method for ideals
 
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
-[IsSemigroup], 3, 
+[IsSemigroup], 3,
 function(S)
   local rules, F, A, rels, Q, B;
 
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
 
@@ -224,9 +223,9 @@ end);
 # same method for ideals
 
 InstallMethod(RightCayleyGraphSemigroup, "for a semigroup",
-[IsSemigroup], 3, 
+[IsSemigroup], 3,
 function(S)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
@@ -237,7 +236,7 @@ end);
 InstallMethod(LeftCayleyGraphSemigroup, "for a semigroup",
 [IsSemigroup], 3,
 function(S)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
@@ -246,9 +245,9 @@ end);
 # same method for ideals
 
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
-[IsGreensDClass], 
+[IsGreensDClass],
 function(D)
-  if NrIdempotents(D) <> NrHClasses(D) then 
+  if NrIdempotents(D) <> NrHClasses(D) then
     ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                  "the D-class is not a subsemigroup,");
   fi;
@@ -319,22 +318,22 @@ end);
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
   local D, iso, inv;
-    
-  if not IsFinite(S) then 
+
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
 
   if not IsSimpleSemigroup(S) then
-    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n", 
+    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                  "the argument must be a simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups? 
+    # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
-  
+
   D := GreensDClasses(S)[1];
   iso := IsomorphismReesMatrixSemigroup(D);
   inv := InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso), 
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
                                        x -> x ^ iso, x -> x ^ inv);
 end);
 
@@ -342,23 +341,23 @@ InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, iso, inv;
-  
-  if not IsFinite(S) then 
+
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
-    
+
   if not IsZeroSimpleSemigroup(S) then
-    ErrorMayQuit("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n", 
+    ErrorMayQuit("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
                  "the argument must be a 0-simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups? 
+    # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
-  
-  D := First(GreensDClasses(S), 
-             x -> not IsMultiplicativeZero(S, Representative(x)));;
+
+  D := First(GreensDClasses(S),
+             x -> not IsMultiplicativeZero(S, Representative(x)));
   iso := SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
   inv := InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso), 
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
                                        x -> x ^ iso, x -> x ^ inv);
 end);
 
@@ -368,7 +367,7 @@ InstallMethod(MinimalIdeal, "for a semigroup",
 [IsSemigroup],
 function(S)
   local I;
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   I := SemigroupIdealByGeneratorsNC(S, [RepresentativeOfMinimalIdeal(S)],
@@ -530,8 +529,8 @@ InstallMethod(MultiplicativeZero, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, rep, gens;
-  
-  if not IsFinite(S) then 
+
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
 
@@ -579,7 +578,7 @@ function(S)
   local digraph, data, id;
 
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
 
   digraph := Digraph(PartialOrderOfDClasses(S));
@@ -603,7 +602,7 @@ function(S)
   local gens, partial, data, id, pos, i, out, classes, x;
 
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
 
   gens    := GeneratorsOfSemigroup(S);
@@ -635,9 +634,9 @@ InstallMethod(StructureDescriptionMaximalSubgroups,
 "for a semigroup", [IsSemigroup],
 function(S)
   local out, D;
-  
+
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
 
   out := [];
@@ -651,10 +650,10 @@ end);
 #
 
 InstallMethod(IdempotentGeneratedSubsemigroup, "for a semigroup",
-[IsSemigroup], 
+[IsSemigroup],
 function(S)
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
   return Semigroup(Idempotents(S));
 end);
@@ -664,7 +663,7 @@ InstallMethod(IdempotentGeneratedSubsemigroup,
 [IsSemigroupWithInverseOp],
 function(S)
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
   return InverseSemigroup(Idempotents(S));
 end);
@@ -687,27 +686,27 @@ InstallMethod(MultiplicativeNeutralElement,
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local D, e;
-  
+
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
 
   if IsMultiplicativeElementWithOneCollection(S) and One(S) in S then
     return One(S);
   fi;
 
-  if Length(MaximalDClasses(S)) > 1 then 
+  if Length(MaximalDClasses(S)) > 1 then
     return fail;
   fi;
 
   D := MaximalDClasses(S)[1];
-  
+
   if not NrHClasses(D) = 1 or not IsRegularDClass(D) then
     return fail;
   fi;
-  
+
   e := Idempotents(D)[1];
-    
+
   if ForAll(GeneratorsOfSemigroup(S), x -> e * x = x and x * e = x) then
     return e;
   fi;
@@ -720,11 +719,11 @@ InstallMethod(RepresentativeOfMinimalIdeal, "for a semigroup",
 [IsSemigroup],
 function(S)
   local data, comps;
-  
+
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
-  
+
   if IsSemigroupIdeal(S) and
       (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
        or not HasGeneratorsOfSemigroup(S)) then
@@ -749,9 +748,9 @@ end);
 InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
 function(S)
   local en, act, gens;
-  
+
   if not IsFinite(S) then
-    TryNextMethod(); 
+    TryNextMethod();
   fi;
 
   if not IsGroupAsSemigroup(S)  then

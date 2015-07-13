@@ -55,13 +55,11 @@ function(S)
   if not IsFinite(S) then
     ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
                  "the argument is not a finite semigroup,");
-    return;
   fi;
 
   if not IsInverseSemigroup(S) then
     ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
                  "the argument is not an inverse semigroup,");
-    return;
   fi;
 
   return
@@ -185,13 +183,11 @@ function(S)
   if not IsFinite(S) then
     ErrorMayQuit("Semigroups: PrimitiveIdempotents: usage,\n",
                  "the argument is not a finite semigroup,");
-    return;
   fi;
 
   if not IsInverseSemigroup(S) then
     ErrorMayQuit("Semigroups: PrimitiveIdempotents: usage,\n",
                  "the argument is not an inverse semigroup,");
-    return;
   fi;
 
   if MultiplicativeZero(S) = fail then
@@ -253,7 +249,6 @@ function(S, x)
   if not x in S then
     ErrorMayQuit("Semigroups: IsJoinIrreducible: usage,\n",
                  "the second argument <x> is not an element of the first,");
-    return;
   fi;
 
   if IsMultiplicativeZero(S, x) then
