@@ -30,8 +30,8 @@ function(R, H)
   local G, basicgens, i, j, I, J, mat;
 
   if not IsReesMatrixSemigroup(R) then
-    Error("Semigroups: MaximalSubsemigroups: usage,\n",
-          "the first argument <R> must be a Rees matrix semigroup,");
+    ErrorMayQuit("Semigroups: MaximalSubsemigroups: usage,\n",
+                 "the first argument <R> must be a Rees matrix semigroup,");
     return fail;
   fi;
 

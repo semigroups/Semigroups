@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  maximal.tst (extreme)
+#W  extreme/maximal.tst
 #Y  Copyright (C) 2012-15                                  Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: maximal.tst");
+gap> START_TEST("Semigroups package: extreme/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
 #  
@@ -661,4 +661,4 @@ gap> Unbind(t3);
 gap> Unbind(t1);
 
 #E#
-gap> STOP_TEST("Semigroups package: maximal.tst");
+gap> STOP_TEST("Semigroups package: extreme/maximal.tst");
