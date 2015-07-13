@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  maximal.tst
+#W  maximal.tst (extreme)
 #Y  Copyright (C) 2012-15                                  Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
