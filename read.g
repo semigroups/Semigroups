@@ -14,19 +14,19 @@ BindGlobal("IsGrapeCompiled",
            <> fail);
 
 if not IsGrapeLoaded then
-  Add(SemigroupsOmitFromTestManualExamples, "SmallestMultiplicationTable");
+  Add(SEMIGROUPS_OmitFromTests, "SmallestMultiplicationTable");
   BindGlobal("GrapeIsNotLoadedString",
              Concatenation("the GRAPE package is not loaded and",
                            " so this function does not work"));
 fi;
 
 if not IsGrapeCompiled then
-  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
-  Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
-  Add(SemigroupsOmitFromTestManualExamples, "IsIsomorphicSemigroup");
-  Add(SemigroupsOmitFromTestManualExamples, "IsomorphismSemigroups");
-  Add(SemigroupsOmitFromTestManualExamples, "RZMSInducedFunction");
-  Add(SemigroupsOmitFromTestManualExamples, "RZMStoRZMSInducedFunction");
+  Add(SEMIGROUPS_OmitFromTests, "MaximalSubsemigroups");
+  Add(SEMIGROUPS_OmitFromTests, "MunnSemigroup");
+  Add(SEMIGROUPS_OmitFromTests, "IsIsomorphicSemigroup");
+  Add(SEMIGROUPS_OmitFromTests, "IsomorphismSemigroups");
+  Add(SEMIGROUPS_OmitFromTests, "RZMSInducedFunction");
+  Add(SEMIGROUPS_OmitFromTests, "RZMStoRZMSInducedFunction");
   BindGlobal("GrapeIsNotCompiledString",
              Concatenation("the nauty/dreadnaut binaries for the GRAPE ",
                            "package are not loaded\n#I  and so this function ",
@@ -34,7 +34,9 @@ if not IsGrapeCompiled then
 fi;
 
 if TestPackageAvailability("genss") = fail then
-  Add(SemigroupsOmitFromTestManualExamples, "Normalizer");
+  Add(SEMIGROUPS_OmitFromTests, "Normalizer");
+  Add(SEMIGROUPS_OmitFromTests,
+      "SEMIGROUPS_NonDeterministicNormalizer");
 fi;
 
 # Issue 5 for Orb:
@@ -114,7 +116,6 @@ ReadPackage("semigroups/gap/ideals/ideals.gi");
 ReadPackage("semigroups/gap/ideals/ideals-acting.gi");
 ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gi");
 ReadPackage("semigroups/gap/ideals/ideals-generic.gi");
-
 
 ReadPackage("semigroups/gap/greens/greens-generic.gi");
 ReadPackage("semigroups/gap/greens/greens-acting.gi");

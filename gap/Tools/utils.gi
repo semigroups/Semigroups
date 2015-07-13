@@ -58,7 +58,7 @@ function(arg)
   tst := DirectoryContents(dir_str);
   dir := Directory(dir_str);
 
-  omit := SemigroupsOmitFromTestManualExamples;
+  omit := SEMIGROUPS_OmitFromTests;
 
   if Length(omit) > 0 then
     Print("not testing files containing the strings");
@@ -117,6 +117,8 @@ function()
   # store current info levels
   record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
   record.InfoLevelInfoSemigroups := InfoLevel(InfoSemigroups);
+  record.InfoLevelInfoOrb := InfoLevel(InfoOrb);
+  record.InfoLevelInfoGenSS := InfoLevel(InfoGenSS);
   record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
 
   # store current user preferences
@@ -137,6 +139,8 @@ function()
   # set info levels
   SetInfoLevel(InfoWarning, 0);
   SetInfoLevel(InfoSemigroups, 0);
+  SetInfoLevel(InfoOrb, 0);
+  SetInfoLevel(InfoGenSS, 0);
   SetInfoLevel(InfoPackageLoading, 0);
 
   # set user preferences
@@ -173,6 +177,8 @@ function(file)
   # restore info levels
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
+  SetInfoLevel(InfoOrb, record.InfoLevelInfoOrb);
+  SetInfoLevel(InfoOrb, record.InfoLevelInfoGenSS);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoPackageLoading);
 
   # restore user preferences
@@ -252,7 +258,7 @@ function()
   tst := DirectoryContents(dir_str);
   dir := Directory(dir_str);
 
-  omit := SemigroupsOmitFromTestManualExamples;
+  omit := SEMIGROUPS_OmitFromTests;
 
   if Length(omit) > 0 then
     Print("not testing files containing the strings");
@@ -333,7 +339,7 @@ function()
   local ex, omit, str;
 
   ex := SemigroupsManualExamples();
-  omit := SemigroupsOmitFromTestManualExamples;
+  omit := SEMIGROUPS_OmitFromTests;
   if Length(omit) > 0 then
     Print("# not testing examples containing the strings");
     for str in omit do

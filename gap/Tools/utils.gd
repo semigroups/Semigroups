@@ -19,4 +19,4 @@ DeclareGlobalFunction("SemigroupsManualExamples");
 
 DeclareGlobalFunction("SEMIGROUPS_Test");
 
-BindGlobal("SemigroupsOmitFromTestManualExamples", []);
+BindGlobal("SEMIGROUPS_OmitFromTests", []);
