@@ -17,6 +17,7 @@ DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
+DeclareAttribute("IsomorphismReesZeroMatrixSemigroup", IsSemigroup);
 DeclareAttribute("RepresentativeOfMinimalIdeal", IsSemigroup);
 DeclareSynonymAttr("RepresentativeOfMinimalDClass",
                    RepresentativeOfMinimalIdeal);
@@ -26,11 +27,11 @@ DeclareAttribute("MultiplicativeZero", IsSemigroup);
 
 DeclareAttribute("SmallSemigroupGeneratingSet",
                  IsAssociativeElementCollection);
-DeclareAttribute("SmallSemigroupGeneratingSet", IsSemigroup and IsFinite);
+DeclareAttribute("SmallSemigroupGeneratingSet", IsSemigroup);
 DeclareAttribute("SmallMonoidGeneratingSet",
                  IsAssociativeElementCollection and
                  IsMultiplicativeElementWithOneCollection);
-DeclareAttribute("SmallMonoidGeneratingSet", IsMonoid and IsFinite);
+DeclareAttribute("SmallMonoidGeneratingSet", IsMonoid);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet",
                  IsMultiplicativeElementCollection);
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
@@ -40,7 +41,7 @@ DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
 DeclareAttribute("StructureDescriptionMaximalSubgroups",
-                 IsSemigroup and IsFinite);
+                 IsSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsSemigroup);

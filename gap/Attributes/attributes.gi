@@ -27,6 +27,79 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true.
 
+BindGlobal("SEMIGROUPS_InjectionPrincipalFactor", 
+function(D, constructor)
+  local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
+
+
+  map := IsomorphismPermGroup(GroupHClass(D));
+  inv := InverseGeneralMapping(map);
+
+  G := Range(map);
+  mat := [];
+
+  rep := Representative(GroupHClass(D));
+  R := HClassReps(LClass(D, rep));
+  L := HClassReps(RClass(D, rep));
+
+  for i in [1 .. Length(L)] do
+    mat[i] := [];
+    for j in [1 .. Length(R)] do
+      x := L[i] * R[j];
+      if x in D then
+        mat[i][j] := x ^ map;
+      else
+        mat[i][j] := 0;
+      fi;
+    od;
+  od;
+
+  RR := EmptyPlist(Length(R));
+  LL := EmptyPlist(Length(L));
+
+  for j in [1 .. Length(R)] do
+    for i in [1 .. Length(L)] do
+      if mat[i][j] <> 0 then
+        RR[j] := ((mat[i][j] ^ -1) ^ inv) * L[i];
+        break;
+      fi;
+    od;
+  od;
+
+  for i in [1 .. Length(L)] do
+    for j in [1 .. Length(R)] do
+      if mat[i][j] <> 0 then
+        LL[i] := R[j] * (mat[i][j] ^ -1) ^ inv;
+        break;
+      fi;
+    od;
+  od;
+
+  rms := constructor(G, mat);
+
+  iso := function(x)
+    i := PositionProperty(R, y -> y in RClass(D, x));
+    j := PositionProperty(L, y -> y in LClass(D, x));
+
+    if i = fail or j = fail then
+      return fail;
+    fi;
+    return Objectify(TypeReesMatrixSemigroupElements(rms),
+                     [i, (rep * RR[i] * x * LL[j]) ^ map, j, mat]);
+  end;
+
+  hom := MappingByFunction(D, rms, iso,
+                           function(x)
+                             if x![1] = 0 then
+                               return fail;
+                             fi;
+                             return R[x![1]] * (x![2] ^ inv) * L[x![3]];
+                           end);
+  SetIsInjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
+end);
+
 #############################################################################
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
@@ -34,16 +107,24 @@
 InstallMethod(NrIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
+
   if SEMIGROUPS_IsCCSemigroup(S) then
     return NR_IDEMPOTENTS_SEMIGROUP(GenericSemigroupData(S));
   fi;
   return Length(Idempotents(S));
 end);
 
-InstallMethod(GroupOfUnits, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(GroupOfUnits, "for a semigroup",
+[IsSemigroup],
 function(S)
   local H, map, U;
+  
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
@@ -68,10 +149,14 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismFpMonoid, "for a finite monoid",
-[IsMonoid and IsFinite],
+InstallMethod(IsomorphismFpMonoid, "for a monoid",
+[IsMonoid], 3,
 function(S)
   local F, A, lookup, pos, data, rules, rels, convert, Q, B, rule;
+  
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
 
   F := FreeMonoid(Length(GeneratorsOfMonoid(S)));
   A := GeneratorsOfMonoid(F);
@@ -112,10 +197,14 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismFpSemigroup, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
+[IsSemigroup], 3, 
 function(S)
   local rules, F, A, rels, Q, B;
+
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
 
   rules := RELATIONS_SEMIGROUP(GenericSemigroupData(S));
 
@@ -134,20 +223,37 @@ end);
 
 # same method for ideals
 
-InstallMethod(RightCayleyGraphSemigroup, "for a finite semigroup",
-[IsSemigroup and IsFinite],
-S -> RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S)));
+InstallMethod(RightCayleyGraphSemigroup, "for a semigroup",
+[IsSemigroup], 3, 
+function(S)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
+  return RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
+end);
 
 # same method for ideals
 
-InstallMethod(LeftCayleyGraphSemigroup, "for a finite semigroup",
-[IsSemigroup and IsFinite],
-S -> LEFT_CAYLEY_GRAPH(GenericSemigroupData(S)));
+InstallMethod(LeftCayleyGraphSemigroup, "for a semigroup",
+[IsSemigroup], 3,
+function(S)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
+  return LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
+end);
 
 # same method for ideals
 
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
-[IsGreensDClass], InjectionPrincipalFactor);
+[IsGreensDClass], 
+function(D)
+  if NrIdempotents(D) <> NrHClasses(D) then 
+    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+                 "the D-class is not a subsemigroup,");
+  fi;
+  return SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
+end);
 
 # same method for ideal
 
@@ -210,31 +316,61 @@ end);
 
 #
 
-InstallMethod(IsomorphismReesMatrixSemigroup,
-"for a finite simple or 0-simple semigroup", [IsFinite and IsSemigroup],
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
   local D, iso, inv;
-  if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then
-    TryNextMethod(); #TODO is there another method?
+    
+  if not IsFinite(S) then 
+    TryNextMethod();
   fi;
+
+  if not IsSimpleSemigroup(S) then
+    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n", 
+                 "the argument must be a simple semigroup,");
+    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # semigroups into Rees (0-)matrix semigroups over non-groups? 
+  fi;
+  
   D := GreensDClasses(S)[1];
-  if IsZeroSimpleSemigroup(S)
-      and IsMultiplicativeZero(S, Representative(D)) then
-    D := GreensDClasses(S)[2];
-  fi;
   iso := IsomorphismReesMatrixSemigroup(D);
   inv := InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso),
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso), 
+                                       x -> x ^ iso, x -> x ^ inv);
+end);
+
+InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local D, iso, inv;
+  
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
+    
+  if not IsZeroSimpleSemigroup(S) then
+    ErrorMayQuit("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n", 
+                 "the argument must be a 0-simple semigroup,");
+    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # semigroups into Rees (0-)matrix semigroups over non-groups? 
+  fi;
+  
+  D := First(GreensDClasses(S), 
+             x -> not IsMultiplicativeZero(S, Representative(x)));;
+  iso := SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+  inv := InverseGeneralMapping(iso);
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso), 
                                        x -> x ^ iso, x -> x ^ inv);
 end);
 
 # same method for ideals
 
-InstallMethod(MinimalIdeal, "for a finite semigroup",
-[IsFinite and IsSemigroup],
+InstallMethod(MinimalIdeal, "for a semigroup",
+[IsSemigroup],
 function(S)
   local I;
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   I := SemigroupIdealByGeneratorsNC(S, [RepresentativeOfMinimalIdeal(S)],
                                     SEMIGROUPS_OptionsRec(S));
   SetIsSimpleSemigroup(I, true);
@@ -394,6 +530,10 @@ InstallMethod(MultiplicativeZero, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, rep, gens;
+  
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
 
   if IsSemigroupIdeal(S)
       and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then
@@ -439,8 +579,7 @@ function(S)
   local digraph, data, id;
 
   if not IsFinite(S) then
-    ErrorMayQuit("Semigroups: IsGreensDLeq: usage,\n",
-                 "the argument must be a finite semigroup,");
+    TryNextMethod(); 
   fi;
 
   digraph := Digraph(PartialOrderOfDClasses(S));
@@ -458,10 +597,14 @@ end);
 
 #
 
-InstallMethod(MaximalDClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(MaximalDClasses, "for a semigroup",
+[IsSemigroup],
 function(S)
   local gens, partial, data, id, pos, i, out, classes, x;
+
+  if not IsFinite(S) then
+    TryNextMethod(); 
+  fi;
 
   gens    := GeneratorsOfSemigroup(S);
   partial := PartialOrderOfDClasses(S);
@@ -489,9 +632,13 @@ end);
 # same method for ideals
 
 InstallMethod(StructureDescriptionMaximalSubgroups,
-"for a finite semigroup", [IsSemigroup and IsFinite],
+"for a semigroup", [IsSemigroup],
 function(S)
   local out, D;
+  
+  if not IsFinite(S) then
+    TryNextMethod(); 
+  fi;
 
   out := [];
   for D in RegularDClasses(S) do
@@ -503,121 +650,81 @@ end);
 
 #
 
-InstallMethod(IdempotentGeneratedSubsemigroup, "for a finite semigroup",
-[IsSemigroup and IsFinite], S -> Semigroup(Idempotents(S)));
+InstallMethod(IdempotentGeneratedSubsemigroup, "for a semigroup",
+[IsSemigroup], 
+function(S)
+  if not IsFinite(S) then
+    TryNextMethod(); 
+  fi;
+  return Semigroup(Idempotents(S));
+end);
 
 InstallMethod(IdempotentGeneratedSubsemigroup,
-"for a finite inverse semigroup",
-[IsSemigroupWithInverseOp and IsFinite],
-S -> InverseSemigroup(Idempotents(S)));
+"for an inverse op semigroup",
+[IsSemigroupWithInverseOp],
+function(S)
+  if not IsFinite(S) then
+    TryNextMethod(); 
+  fi;
+  return InverseSemigroup(Idempotents(S));
+end);
 
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)
-  local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
-
   if not IsRegularDClass(D) then
     ErrorMayQuit("Semigroups: InjectionPrincipalFactor: usage,\n",
                  "the argument <D> must be a regular D-class,");
   fi;
-
-  map := IsomorphismPermGroup(GroupHClass(D));
-  inv := InverseGeneralMapping(map);
-
-  G := Range(map);
-  mat := [];
-
-  rep := Representative(GroupHClass(D));
-  R := HClassReps(LClass(D, rep));
-  L := HClassReps(RClass(D, rep));
-
-  for i in [1 .. Length(L)] do
-    mat[i] := [];
-    for j in [1 .. Length(R)] do
-      x := L[i] * R[j];
-      if x in D then
-        mat[i][j] := x ^ map;
-      else
-        mat[i][j] := 0;
-      fi;
-    od;
-  od;
-
-  RR := EmptyPlist(Length(R));
-  LL := EmptyPlist(Length(L));
-
-  for j in [1 .. Length(R)] do
-    for i in [1 .. Length(L)] do
-      if mat[i][j] <> 0 then
-        RR[j] := ((mat[i][j] ^ -1) ^ inv) * L[i];
-        break;
-      fi;
-    od;
-  od;
-
-  for i in [1 .. Length(L)] do
-    for j in [1 .. Length(R)] do
-      if mat[i][j] <> 0 then
-        LL[i] := R[j] * (mat[i][j] ^ -1) ^ inv;
-        break;
-      fi;
-    od;
-  od;
-
-  if NrIdempotents(D) = NrHClasses(D) then
-    rms := ReesMatrixSemigroup(G, mat);
-  else
-    rms := ReesZeroMatrixSemigroup(G, mat);
+  if NrHClasses(D) = NrIdempotents(D) then
+    return SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
   fi;
-
-  iso := function(x)
-    i := PositionProperty(R, y -> y in RClass(D, x));
-    j := PositionProperty(L, y -> y in LClass(D, x));
-
-    if i = fail or j = fail then
-      return fail;
-    fi;
-    return Objectify(TypeReesMatrixSemigroupElements(rms),
-                     [i, (rep * RR[i] * x * LL[j]) ^ map, j, mat]);
-  end;
-
-  hom := MappingByFunction(D, rms, iso,
-                           function(x)
-                             if x![1] = 0 then
-                               return fail;
-                             fi;
-                             return R[x![1]] * (x![2] ^ inv) * L[x![3]];
-                           end);
-  SetIsInjective(hom, true);
-  SetIsTotal(hom, true);
-  return hom;
+  return SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
 end);
 
 InstallMethod(MultiplicativeNeutralElement,
-"for a finite semigroup with generators",
-[IsSemigroup and IsFinite and HasGeneratorsOfSemigroup],
+"for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local gens, e;
+  local D, e;
+  
+  if not IsFinite(S) then
+    TryNextMethod(); 
+  fi;
 
   if IsMultiplicativeElementWithOneCollection(S) and One(S) in S then
     return One(S);
   fi;
 
-  gens := GeneratorsOfSemigroup(S);
-  for e in S do
-    if ForAll(gens, x -> e * x = x and x * e = x) then
-      return e;
-    fi;
-  od;
+  if Length(MaximalDClasses(S)) > 1 then 
+    return fail;
+  fi;
+
+  D := MaximalDClasses(S)[1];
+  
+  if not NrHClasses(D) = 1 or not IsRegularDClass(D) then
+    return fail;
+  fi;
+  
+  e := Idempotents(D)[1];
+    
+  if ForAll(GeneratorsOfSemigroup(S), x -> e * x = x and x * e = x) then
+    return e;
+  fi;
   return fail;
 end);
 
 # same method for inverse/ideals
 
-InstallMethod(RepresentativeOfMinimalIdeal, "for a finite semigroup",
-[IsSemigroup and IsFinite],
+InstallMethod(RepresentativeOfMinimalIdeal, "for a semigroup",
+[IsSemigroup],
 function(S)
   local data, comps;
+  
+  if not IsFinite(S) then
+    TryNextMethod(); 
+  fi;
+  
   if IsSemigroupIdeal(S) and
       (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
        or not HasGeneratorsOfSemigroup(S)) then
@@ -637,28 +744,15 @@ function(S)
   # components of the right Cayley graph corresponds the minimal ideal.
 end);
 
-# different method for ideals
-
-#InstallMethod(IsomorphismTransformationSemigroup,
-#"for a matrix semigroup with generators",
-#[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
-#function(S)
-#  local n, F, T;
-#  n := Length(GeneratorsOfSemigroup(S)[1][1]);
-#  F := FieldOfMatrixList(GeneratorsOfSemigroup(S));
-# T := Semigroup(List(GeneratorsOfSemigroup(S),
-#                      x -> TransformationOp(x, Elements(F ^ n), OnRight)));
-#  return MappingByFunction(S, T,
-#                           x -> TransformationOp(x,
-#                                                 Elements(F ^ Size(F)),
-#                                                 OnRight));
-#end);
-
 # fall back method, same method for ideals
 
 InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
 function(S)
   local en, act, gens;
+  
+  if not IsFinite(S) then
+    TryNextMethod(); 
+  fi;
 
   if not IsGroupAsSemigroup(S)  then
     ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",

@@ -363,6 +363,16 @@ MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 
+#T# attributes: IsomorphismFpMonoid, infinite
+gap> IsomorphismFpMonoid(FreeMonoid(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsomorphismFpMonoid' on 1 arguments
+
+#T# attributes: IsomorphismFpSemigroup, infinite
+gap> IsomorphismFpSemigroup(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsomorphismFpSemigroup' on 1 arguments
+
 #T# attributes: RightCayleyGraphSemigroup
 gap> S := Semigroup(PartialPerm([1, 2, 3], [1, 3, 4]),
 >                   PartialPerm([1, 2, 3], [2, 5, 3]),
@@ -372,6 +382,11 @@ gap> S := Semigroup(PartialPerm([1, 2, 3], [1, 3, 4]),
 gap> RightCayleyGraphSemigroup(S);;
 gap> Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(last)) = NrRClasses(S);
 true
+
+#T# attributes: RightCayleyGraphSemigroup, infinite
+gap> RightCayleyGraphSemigroup(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
 
 #T# attributes: LeftCayleyGraphSemigroup
 gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
@@ -393,6 +408,12 @@ gap> LeftCayleyGraphSemigroup(S);;
 gap> Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(last)) = NrLClasses(S);
 true
 
+#T# attributes: RightCayleyGraphSemigroup, infinite
+gap> LeftCayleyGraphSemigroup(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+s
+
 #T# attributes: IsomorphismReesMatrixSemigroup
 gap> D := GreensDClassOfElement(Semigroup(
 > Bipartition([[1, 2, 3, -3], [4, -4, -5], [5, -1], [-2]]),
@@ -401,11 +422,33 @@ gap> D := GreensDClassOfElement(Semigroup(
 > Bipartition([[1], [2], [3, 5, -1, -2], [4, -3], [-4, -5]]),
 > Bipartition([[1], [2], [3], [4, -1, -4], [5], [-2, -3], [-5]])), 
 > Bipartition([[1], [2], [3], [4, -1, -4], [5], [-2, -3], [-5]]));;
-gap> IsomorphismReesMatrixSemigroup(D);
+gap> InjectionPrincipalFactor(D);
 MappingByFunction( <Green's D-class: <bipartition: [ 1 ], [ 2 ], [ 3 ], 
   [ 4, -1, -4 ], [ 5 ], [ -2, -3 ], [ -5 ]>>, 
 <Rees 0-matrix semigroup 12x15 over Group(())>
  , function( x ) ... end, function( x ) ... end )
+
+#T# attributes: IsomorphismReesMatrixSemigroup, error, 1/1
+gap> D := DClass(FullTransformationMonoid(3), Transformation([1, 2, 1]));;
+gap> IsomorphismReesMatrixSemigroup(D);
+Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
+the D-class is not a subsemigroup,
+
+#T# attributes: IsomorphismReesMatrixSemigroup, infinite
+gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `IsGroupAsSemigroup' on 1 arguments
+
+#T# attributes: IsomorphismReesZeroMatrixSemigroup, infinite
+gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsomorphismReesZeroMatrixSemigroup' on \
+1 arguments
+
+#T# attributes: IsomorphismReesZeroMatrixSemigroup, error, 1/1
+gap> IsomorphismReesZeroMatrixSemigroup(RegularBooleanMatMonoid(2));
+Error, Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,
+the argument must be a 0-simple semigroup,
 
 #T# attributes: IrredundantGeneratingSubset, for a collection of elements
 gap> G := CyclicGroup(3);;
@@ -451,21 +494,20 @@ gap> IsomorphismReesMatrixSemigroup(S);;
 gap> S := Semigroup( [ Transformation( [ 1, 1, 5, 1, 3, 1, 9, 1, 7, 5 ] ),
 >   Transformation( [ 1, 1, 2, 1, 4, 1, 6, 1, 8, 2 ] ),
 >   Transformation( [ 1, 5, 1, 3, 1, 9, 1, 7, 1, 7 ] ) ] );;
-gap> IsomorphismReesMatrixSemigroup(S);;
+gap> IsomorphismReesZeroMatrixSemigroup(S);;
 
 #T# attributes: IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
 gap> S := Semigroup( [ Transformation( [ 1, 1, 5, 1, 3, 1, 9, 1, 7, 5 ] ),
 >   Transformation( [ 1, 1, 2, 1, 4, 1, 6, 1, 8, 2 ] ),
 >   Transformation( [ 1, 5, 1, 3, 1, 9, 1, 7, 1, 7 ] ) ] );;
 gap> S := Semigroup(MultiplicativeZero(S), S);;
-gap> IsomorphismReesMatrixSemigroup(S);;
+gap> IsomorphismReesZeroMatrixSemigroup(S);;
 
 #T# attributes: IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
 gap> S := Semigroup(Transformation( [ 2, 1 ] ), Transformation( [ 2, 2 ] ));;
 gap> IsomorphismReesMatrixSemigroup(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 4th choice method found for `IsomorphismReesMatrixSemigroup' on 1 ar\
-guments
+Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
+the argument must be a simple semigroup,
 
 #T# attributes: PrincipalFactor: for a D-class
 gap> D := GreensDClassOfElement(
@@ -713,8 +755,8 @@ true
 
 #T# attributes: IsGreensDLeq, error
 gap> IsGreensDLeq(FreeSemigroup(2));
-Error, Semigroups: IsGreensDLeq: usage,
-the argument must be a finite semigroup,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsGreensDLeq' on 1 arguments
 
 #T# attributes: MaximalDClasses
 gap> S := RegularBooleanMatMonoid(3);
@@ -807,6 +849,11 @@ gap> S := Semigroup(
 gap> GroupOfUnits(S);
 fail
 
+#T# attributes: GroupOfUnits, infinite 1/1
+gap> GroupOfUnits(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `GroupOfUnits' on 1 arguments
+
 #T# attributes: NrIdempotents, C++ 1/1
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
@@ -818,11 +865,119 @@ gap> S := FreeBand(2);;
 gap> NrIdempotents(S);
 6
 
+#T# attributes: NrIdempotents, infinite 1/1
+gap> NrIdempotents(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `NrIdempotents' on 1 arguments
+
 #T# attributes: RepresentativeOfMinimalIdeal, simple, 1/1
 gap> S := MinimalIdeal(FreeBand(2));
 <simple semigroup ideal with 1 generator>
 gap> RepresentativeOfMinimalIdeal(S);
 x1x2
+
+#T# attributes: MinimalIdeal, infinite, 1/1
+gap> MinimalIdeal(FreeMonoid(3));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `MinimalIdeal' on 1 arguments
+
+#T# attributes: IdempotentGeneratedSubsemigroup, inverse op 1/1
+gap> S := DualSymmetricInverseMonoid(2);;
+gap> IdempotentGeneratedSubsemigroup(S);
+<commutative inverse bipartition monoid of degree 2 with 1 generator>
+
+#T# attributes: MultiplicativeZero, infinite 1/1
+#gap> MultiplicativeZero(FreeMonoid(2)); 
+#FIXME this causes an infinite loop in the GAP library code
+
+#T# attributes: MaximalDClasses, infinite 1/1
+gap> MaximalDClasses(FreeMonoid(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `MaximalDClasses' on 1 arguments
+
+#T# attributes: StructureDescriptionMaximalSubgroups, infinite 1/1
+gap> StructureDescriptionMaximalSubgroups(FreeMonoid(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `StructureDescriptionMaximalSubgroups' o\
+n 1 arguments
+
+#T# attributes: IdempotentGeneratedSubsemigroup, infinite 1/1
+gap> IdempotentGeneratedSubsemigroup(FreeMonoid(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
+rguments
+
+#T# attributes: IdempotentGeneratedSubsemigroup, infinite, inverse-op 1/1
+gap> IdempotentGeneratedSubsemigroup(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
+rguments
+
+#T# attributes: MultiplicativeNeutralElement, infinite 1/1
+gap> MultiplicativeNeutralElement(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `MultiplicativeNeutralElement' on 1 argu\
+ments
+
+#T# attributes: MultiplicativeNeutralElement, One 1/1
+gap> S := Semigroup(Transformation([1,3,2]));
+<commutative transformation semigroup of degree 3 with 1 generator>
+gap> MultiplicativeNeutralElement(S);
+IdentityTransformation
+
+#T# attributes: MultiplicativeNeutralElement, One 1/2
+gap> S := Semigroup(Transformation([3,1,3]));
+<commutative transformation semigroup of degree 3 with 1 generator>
+gap> MultiplicativeNeutralElement(S);
+fail
+
+#T# attributes: MultiplicativeNeutralElement, One 2/2
+gap> S := Semigroup(
+> [ BooleanMat([[true, false, false], [true, false, true], [true, true, true]]),
+>  BooleanMat([[true, false, false], [true, true, true], [true, true, false]]),
+>  BooleanMat([[false, true, false], [false, true, true], [true, true, true]]),
+>  BooleanMat([[true, true, false], [true, true, true], [true, false, false]]),
+>  BooleanMat([[false, true, false], [true, true, false], [true, true, true]]),
+>  BooleanMat([[false, false, true], [true, false, true], [true, true, true]]),
+>  BooleanMat([[true, true, false], [true, false, false], [true, true, true]]),
+>  BooleanMat([[false, false, true], [false, true, true], [true, true, true]]),
+>  BooleanMat([[true, true, true], [true, false, false], [true, true, false]]),
+>  BooleanMat([[true, true, true], [true, true, false], [true, false, false]]),
+>  BooleanMat([[true, false, false], [true, true, false], [false, false, false]]) ] );;
+gap> MultiplicativeNeutralElement(S);
+fail
+
+#T# attributes: RepresentativeOfMinimalIdeal, infinite 1/1
+gap> RepresentativeOfMinimalIdeal(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `RepresentativeOfMinimalIdeal' on 1 argu\
+ments
+
+#T# attributes: RepresentativeOfMinimalIdeal, simple 1/1
+gap> S := Semigroup(AsBooleanMat((1,2)));
+<commutative semigroup of 2x2 boolean matrices with 1 generator>
+gap> IsSimpleSemigroup(S);
+true
+gap> RepresentativeOfMinimalIdeal(S);
+<2x2 boolean matrix>
+
+#T# attributes: IsomorphismPermGroup, infinite 1/1
+gap> IsomorphismPermGroup(FreeMonoid(3));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
+
+#T# attribute: IsomorphismReesZeroMatrixSemigroup, bug 1/1
+gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
+<commutative partial perm monoid of rank 1 with 1 generator>
+gap> IsomorphismReesMatrixSemigroup(S);
+Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
+the argument must be a simple semigroup,
+gap> IsomorphismReesZeroMatrixSemigroup(S);
+MappingByFunction( <commutative 0-simple partial perm monoid of rank 1 with
+ 1 generator>, <Rees 0-matrix semigroup 1x1 over Group(())>
+, function( x ) ... end, function( x ) ... end )
+gap> Size(Range(last));
+2
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
