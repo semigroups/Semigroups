@@ -912,9 +912,9 @@ else
                 if V <> S then
                   if k = 1 then
                     Add(out, V);
-                    Info(InfoSemigroups, 2, "found maximal subsemigroup ",
-                         "arising from removing all of XX, ",
-                         "and keeping all of A");
+                    Info(InfoSemigroups,
+                         1 + 1, "found maximal subsemigroup arising from ",
+                         "removing all of XX, and keeping all of A");
                   elif ForAll(XX, x -> not x in V)
                     and not ForAny(out, W -> IsSubsemigroup(W, V)) then
                     Add(out, V);
