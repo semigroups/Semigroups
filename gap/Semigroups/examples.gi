@@ -1043,3 +1043,40 @@ function(m, n)
 
   return R;
 end);
+
+InstallGlobalFunction(TrivialSemigroup,
+function(arg)
+  local filt, deg, out;
+
+  if Length(arg) = 0 then 
+    return Semigroup(IdentityTransformation);
+  else 
+    filt := arg[1];
+  fi;
+
+  if Length(arg) > 1 then 
+    deg := arg[2];
+  else 
+    deg := 0;
+  fi;
+  
+  if not IsFilter(filt) then 
+    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
+                 "the first argument must be a filter,");
+  fi;
+
+  if not IsPosInt(deg) then 
+    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
+                 "the 2nd argument must be a positive integer,");
+  fi;
+
+  if filt = IsTransformationSemigroup then 
+    return Semigroup(IdentityTransformation);
+  elif filt = IsPartialPermSemigroup then 
+    return Semigroup(PartialPerm(List([1 .. deg], i -> i)));
+  elif filt = IsBipartitionSemigroup then 
+    out := List([1 .. deg], i -> i);
+    return Semigroup(BipartitionByIntRep(Concatenation(out, out)));
+  else # TODO finish this off. . . 
+  fi;
+end);

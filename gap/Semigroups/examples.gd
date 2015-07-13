@@ -47,6 +47,7 @@ DeclareOperation("RegularBooleanMatMonoid", [IsPosInt]);
 DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
 DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RectangularBand", [IsPosInt, IsPosInt]);
+DeclareGlobalFunction("TrivialSemigroup");
 
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);
