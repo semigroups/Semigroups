@@ -351,7 +351,7 @@ else
       if IsZeroSimpleSemigroup(R) then
         # FIXME shouldn't this be the same as MaximalSubsemigroups for RMS
         # above? JDM
-        
+
         # take an isomorphism to a Rees 0-matrix semigroup, find its maximal
         # subsemigroups, then pull those back, (should specify some methods for
         # the pulling back part)
