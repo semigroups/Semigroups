@@ -116,7 +116,7 @@ else
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
    HasGeneratorsOfSemigroup],
   function(S, T)
-    if S = T then 
+    if S = T then
       return true;
     elif Size(S) <> Size(T) or NrRClasses(S) <> NrRClasses(T) or
         NrDClasses(S) <> NrDClasses(T) or NrLClasses(S) <> NrLClasses(T) or
