@@ -19,7 +19,14 @@ InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a matrix over prime fiel
 [IsMatrixOverPrimeField], x -> "MatrixOverPrimeFieldNC");
 
 InstallGlobalFunction(MatrixOverPrimeFieldNC,
-x -> Objectify(MatrixOverPrimeFieldType, x));
+function(arg)
+  local mat;
+  mat := arg[1];
+  if Length(arg) = 2 then 
+    mat[Length(mat) + 1] := Size(arg[2]);
+  fi;
+  return Objectify(MatrixOverPrimeFieldType, mat);
+end);
 
 InstallMethod(BaseField, "for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> GF(x![DimensionOfMatrixOverSemiring(x) + 1]));
@@ -67,8 +74,8 @@ function(n, field)
   local xy, i, j;
   
   if not IsPrimeField(field) then 
-    Error("Semigroups: RandomMatrixOverPrimeField: usage,\n",
-          "the second argument must be a prime field,");
+    ErrorMayQuit("Semigroups: RandomMatrixOverPrimeField: usage,\n",
+                 "the second argument must be a prime field,");
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));

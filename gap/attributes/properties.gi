@@ -61,7 +61,7 @@ function(S)
   fi;
 
   for D in DClasses(S) do
-    if IsRegularDClass(D) 
+    if IsRegularDClass(D)
         and (ForAny(RClasses(D), x -> NrIdempotents(x) > 1)
              or NrRClasses(D) <> NrLClasses(D)) then
       return false;
@@ -121,8 +121,9 @@ function(S)
   fi;
 
   # CASE 2: S has no zero
-  return (IsGroup(S) and IsSimpleGroup(S)) 
-    or (IsGroupAsSemigroup(S) and IsSimpleGroup(Range(IsomorphismPermGroup(S))));
+  return (IsGroup(S) and IsSimpleGroup(S))
+    or (IsGroupAsSemigroup(S)
+        and IsSimpleGroup(Range(IsomorphismPermGroup(S))));
 end);
 
 # same method for regular ideals, or non-regular without a generating set
@@ -151,7 +152,7 @@ function(S)
   elif HasIsInverseSemigroup(S) and not IsInverseSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not inverse");
     return false;
-  elif HasIsCompletelyRegularSemigroup(S) 
+  elif HasIsCompletelyRegularSemigroup(S)
       and not IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
@@ -195,15 +196,10 @@ InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 function(S)
   local gens, n, i, j;
 
-  if HasParent(S) and HasIsCommutativeSemigroup(Parent(S))
-      and IsCommutativeSemigroup(Parent(S)) then
-    return true;
-  fi;
-
   gens := GeneratorsOfSemigroup(S);
   n := Length(gens);
 
-  for i in [1 .. n] do
+  for i in [1 .. n - 1] do
     for j in [i + 1 .. n] do
       if not gens[i] * gens[j] = gens[j] * gens[i] then
         Info(InfoSemigroups, 2, "generators ", i, " and ", j,
@@ -293,12 +289,13 @@ InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup],
 S -> IsEUnitaryInverseSemigroup(AsPartialPermSemigroup(S)));
 
-#different method for ideals
+#different method for ideals TODO or same?
 
-InstallMethod(IsFactorisableSemigroup, "for an inverse op semigroup",
-[IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+InstallMethod(IsFactorisableInverseMonoid,
+"for an inverse semigroup with generators",
+[IsInverseSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local G, iso, enum, f;
+  local G, iso, enum, func, x;
 
   G := GroupOfUnits(S);
 
@@ -310,26 +307,16 @@ function(S)
 
   iso := InverseGeneralMapping(IsomorphismPermGroup(G));
   enum := Enumerator(Source(iso));
+  func := NaturalLeqInverseSemigroup(S);
 
-  for f in Generators(S) do
-    if not f in G then
-      if not ForAny(enum, g -> NaturalLeqInverseSemigroup(f, g ^ iso)) then
+  for x in Generators(S) do
+    if not x in G then
+      if not ForAny(enum, y -> func(x, y ^ iso)) then
         return false;
       fi;
     fi;
   od;
   return true;
-end);
-
-# same method for ideals
-
-InstallMethod(IsFactorisableSemigroup, "for a semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  if IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S)) then
-    return IsFactorisableSemigroup(AsPartialPermSemigroup(S));
-  fi;
-  return false;
 end);
 
 # same method for ideals
@@ -385,7 +372,7 @@ InstallMethod(IsHTrivial, "for a Green's D-class",
 InstallMethod(IsLTrivial, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local iter, d;
+  local iter, D;
 
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
@@ -393,11 +380,8 @@ function(S)
 
   iter := IteratorOfDClasses(S);
 
-  for d in iter do
-    if not IsTrivial(SchutzenbergerGroup(d)) then
-      return false;
-    fi;
-    if Length(RhoOrbSCC(d)) <> 1 then
+  for D in iter do
+    if not IsTrivial(SchutzenbergerGroup(D)) or Length(RhoOrbSCC(D)) <> 1 then
       return false;
     fi;
   od;
@@ -424,7 +408,7 @@ InstallMethod(IsLTrivial, "for a Green's D-class",
 InstallMethod(IsLTrivial, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsRTrivial(Parent(S)) and IsRTrivial(Parent(S)) then
+  if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
   fi;
 
@@ -449,9 +433,8 @@ function(S)
   if ForAny(GeneratorsOfSemigroup(S),
             x -> ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
     return false;
-  else
-    return ForAll(CyclesOfTransformationSemigroup(S), x -> Length(x) = 1);
   fi;
+  return ForAll(CyclesOfTransformationSemigroup(S), x -> Length(x) = 1);
 end);
 
 # different method for ideals
@@ -462,9 +445,8 @@ function(S)
   if ForAny(GeneratorsOfSemigroup(S),
             x -> ForAny(CyclesOfPartialPerm(x), y -> Length(y) > 1)) then
     return false;
-  else
-    return ForAll(CyclesOfPartialPermSemigroup(S), x -> Length(x) = 1);
   fi;
+  return ForAll(CyclesOfPartialPermSemigroup(S), x -> Length(x) = 1);
 end);
 
 # same method for non-inverse ideals
@@ -480,8 +462,8 @@ function(S)
 
   if IsClosedData(SemigroupData(S)) and IsClosed(RhoOrb(S)) then
     for x in GreensDClasses(S) do
-      if (not IsTrivial(SchutzenbergerGroup(x))) or Length(LambdaOrbSCC(x)) > 1
-       then
+      if (not IsTrivial(SchutzenbergerGroup(x)))
+          or Length(LambdaOrbSCC(x)) > 1 then
         return false;
       fi;
     od;
@@ -1292,38 +1274,37 @@ function(S)
 end);
 
 # same method for ideals
-# TODO generic method for this
 
-InstallMethod(IsUnitRegularSemigroup, "for an acting semigroup",
+InstallMethod(IsUnitRegularMonoid, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local g, perm_g, o, scc, graded, tester, gens, rhofunc, dom, rho, m, j;
+  local G, H, o, scc, graded, tester, gens, rhofunc, dom, rho, rep, m, j;
 
   if not IsRegularSemigroup(S) then
     return false;
   fi;
 
-  g := GroupOfUnits(S);
+  G := GroupOfUnits(S);
 
-  if g = fail then
+  if G = fail then
     return false;
-  elif IsTrivial(g) then #JDM is this any better than the below?
+  elif IsTrivial(G) then
     return IsBand(S);
-  elif IsSemigroupIdeal(S) then
-    return IsUnitRegularSemigroup(SupersemigroupOfIdeal(S));
+  elif not IsRegularSemigroup(S) then
+    return false;
   fi;
 
-  perm_g := Range(IsomorphismPermGroup(g));
-  o := LambdaOrb(S);
-  scc := OrbSCC(o);
-  graded := GradedLambdaOrbs(g);
-  tester := IdempotentTester(S);
-  gens := o!.gens;
+  H       := Range(IsomorphismPermGroup(G));
+  o       := LambdaOrb(S);
+  scc     := OrbSCC(o);
+  graded  := GradedLambdaOrbs(G);
+  tester  := IdempotentTester(S);
+  gens    := o!.gens;
   rhofunc := RhoFunc(S);
 
   for m in [2 .. Length(scc)] do
-    dom := Union(Orbits(perm_g, o[scc[m][1]], OnPoints));
-    if not IsSubgroup(Action(perm_g, dom),
+    dom := Union(Orbits(H, o[scc[m][1]], OnPoints));
+    if not IsSubgroup(Action(H, dom),
                       Action(LambdaOrbSchutzGp(o, m), o[scc[m][1]])) then
       return false;
     elif Length(scc[m]) > 1 then
@@ -1331,12 +1312,40 @@ function(S)
                                   TraceSchreierTreeForward(o, scc[m][1])));
       for j in scc[m] do
         if not o[j] in graded then
-          if not ForAny(GradedLambdaOrb(g, o[j], true), x -> tester(x, rho))
-           then
+          rep := EvaluateWord(gens, TraceSchreierTreeForward(o, j));
+          if not ForAny(GradedLambdaOrb(G, rep, true), x -> tester(x, rho))
+              then
             return false;
           fi;
         fi;
       od;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(IsUnitRegularMonoid, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local G, x;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  G := GroupOfUnits(S);
+
+  if G = fail then
+    return false;
+  elif IsTrivial(G) then
+    return IsBand(S);
+  elif not IsRegularSemigroup(S) then
+    return false;
+  fi;
+
+  for x in S do
+    if ForAll(G, y -> x * y * x <> x) then
+      return false;
     fi;
   od;
   return true;
@@ -1447,7 +1456,10 @@ end);
 
 InstallMethod(IsZeroSimpleSemigroup, "for a semigroup",
 [IsSemigroup], 1, # to beat the library method
-S -> MultiplicativeZero(S) <> fail and NrDClasses(S) = 2 and IsRegularSemigroup(S));
+function(S)
+  return MultiplicativeZero(S) <> fail and NrDClasses(S) = 2 and
+         IsRegularSemigroup(S);
+end);
 
 # same method for ideals
 

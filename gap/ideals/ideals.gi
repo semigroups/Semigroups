@@ -577,12 +577,12 @@ end);
 
 #
 
-InstallMethod(IsFactorisableSemigroup, "for an inverse semigroup ideal",
+InstallMethod(IsFactorisableInverseMonoid, "for an inverse semigroup ideal",
 [IsSemigroupIdeal and IsInverseSemigroup],
 function(I)
 
   if I = SupersemigroupOfIdeal(I) then
-    return IsFactorisableSemigroup(SupersemigroupOfIdeal(I));
+    return IsFactorisableInverseMonoid(SupersemigroupOfIdeal(I));
   fi;
   return false;
 end);

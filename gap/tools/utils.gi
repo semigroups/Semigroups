@@ -246,7 +246,7 @@ function()
   return;
 end);
 
-#
+# TODO redo this
 
 InstallGlobalFunction(SemigroupsTestAll,
 function()
@@ -291,36 +291,168 @@ function()
   od;
   return;
 end);
+#
+
+BindGlobal("SEMIGROUPS_PF", 
+function(pass)
+  if pass then 
+    return "\033[1;32mPASSED!\033[0m\n";
+  else
+    return "\033[1;31mFAILED!\033[0m\n";
+  fi;
+end);
+
+InstallGlobalFunction(SemigroupsTestStandard,
+function(arg)
+  local ignore_fails, file_ext, is_testable, tst_dir, contents, subdirs, str,
+  subdir, filename;
+  
+  Print("\n");
+  
+  if Length(arg) = 0 then
+    ignore_fails := false;
+  else
+    ignore_fails := true;
+  fi;
+
+  if not SemigroupsTestInstall(rec(silent := false)) and not ignore_fails then 
+    return false;
+  fi;
+
+  file_ext := function(str)
+    local split;
+    split := SplitString(str, ".");
+    if Length(split) > 1 then 
+      return split[Length(split)];
+    else 
+      return "";
+    fi;
+  end;
+  
+  is_testable := function(dir, file) 
+    local stringfile, str; 
+    file := Concatenation(dir, "/", file);
+    stringfile := StringFile(file);
+    for str in SEMIGROUPS_OmitFromTests do
+      if PositionSublist(stringfile, str) <> fail then
+        Print("not testing ", file, ", it contains a test involving ",
+              str, ", which will not work . . .\n\n");
+        return false;
+      fi;
+    od;
+    return true;
+  end;
+
+  if Length(SEMIGROUPS_OmitFromTests) > 0 then
+    Print("not testing files containing the strings");
+    for str in SEMIGROUPS_OmitFromTests do
+      PRINT_STRINGIFY(", \"", str, "\"");
+    od;
+    PRINT_STRINGIFY(" . . .\n\n");
+  fi;
+
+
+  tst_dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath, 
+                            "/tst/standard");
+  contents := DirectoryContents(tst_dir);
+  subdirs := [];
+   
+  for str in contents do 
+    if str <> ".." and str <> "." and str = "attributes" then 
+      str := Concatenation(tst_dir, "/", str);
+      if IsDirectoryPath(str) then 
+        Add(subdirs, str);
+      fi;
+    fi;
+  od;
+  
+  for subdir in subdirs do 
+    contents := DirectoryContents(Directory(subdir));
+    for filename in contents do
+      if file_ext(filename) = "tst" and is_testable(subdir, filename) then 
+        if not SEMIGROUPS_Test(Filename(Directory(subdir), filename), rec(silent := false)) 
+            and not ignore_fails then 
+          return false;
+        fi; 
+      fi;
+    od;
+  od;
+  return true;
+end);
 
 #
 
 InstallGlobalFunction(SemigroupsTestInstall,
-function()
-   SEMIGROUPS_Test("testinstall.tst");
+function(arg)
+  local opts;
+
+  if Length(arg) = 0 then 
+    opts := rec();
+  else
+    opts := arg[1];
+  fi;
+  #TODO check args
+  return SEMIGROUPS_Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
+                          "testinstall.tst"), opts);
 end);
 
 #
 
 InstallGlobalFunction(SEMIGROUPS_Test,
-function(file)
-  local generic;
+function(arg)
+  local file, opts, generic, split, print_file, width, enabled, disabled;
+
+  if Length(arg) = 0 then 
+    ErrorMayQuit();
+  fi;
+
+  file := arg[1];
+
+  if Length(arg) = 1 then 
+    opts := rec();
+  else 
+    opts := arg[2];
+  fi;
+
+  # TODO process opts
+  if not IsBound(opts.silent) then 
+    opts.silent := true;
+  fi;
 
   generic := SEMIGROUPS_DefaultOptionsRec.generic;
+  split := SplitString(file, "/");
+  print_file := JoinStringsWithSeparator(split{[Length(split) - 2 .. Length(split)]}, "/");
+  
+  width := SizeScreen()[1] - 3;
+  if not opts.silent then 
+    Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
+  fi;
+  Print(PRINT_STRINGIFY("testing ", print_file, " acting methods enabled . . ."), "\n");
+  if not opts.silent then 
+    Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
+  fi;
 
-  Print("Testing with acting semigroup methods enabled . . .\n");
   SEMIGROUPS_DefaultOptionsRec.generic := false;
-  Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
-                file));
+  enabled := Test(file);
+  if not opts.silent then 
+    Print("\n", SEMIGROUPS_PF(enabled), "\n");
+    Print(Concatenation(ListWithIdenticalEntries(width, "#")));
+  fi;
+  Print("\n");
+  Print(PRINT_STRINGIFY("testing ", print_file, " acting methods disabled . . ."), "\n");
 
+  if not opts.silent then 
+    Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
+  fi;
+  SEMIGROUPS_DefaultOptionsRec.generic := true;
+  disabled := Test(file);
+  if not opts.silent then 
+    Print("\n", SEMIGROUPS_PF(disabled));
+  fi;
   Print("\n");
 
-  Print("Testing with acting semigroup methods disabled . . .\n");
-  SEMIGROUPS_DefaultOptionsRec.generic := true;
-  Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
-                file));
-
   SEMIGROUPS_DefaultOptionsRec.generic := generic;
-  return;
+  return enabled and disabled;
 end);
 
 #

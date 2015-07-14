@@ -13,7 +13,7 @@ print 'using temporary directory: ' + DIR
 
 COMMANDS = '''echo "CoverageLineByLine(\\"''' + DIR + '''/profile.gz\\");;
 LoadPackage(\\"semigroups\\", false);;
-SEMIGROUPS_Test(\\"''' + ARGS.file[0] + '''\\");;
+SEMIGROUPS_Test(\\"''' + ARGS.file[0] + '''\\", rec(silent := true));;
 UnprofileLineByLine();;
 LoadPackage(\\"profiling\\", false);;
 filesdir := \\"/Users/jdm/gap/pkg/semigroups/gap/\\";;

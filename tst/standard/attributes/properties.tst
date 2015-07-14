@@ -218,7 +218,7 @@ gap> R := ReesZeroMatrixSemigroup( Group( [ () ] ),
 gap> IsCongruenceFreeSemigroup(R);
 false
 
-#T# properties: IsCliffordSemigroup, ideal, 1/?
+#T# properties: IsCliffordSemigroup, ideal, 1/6
 gap> I := SemigroupIdeal( Semigroup(
 >    [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 2, 1, 4, 3 ] ), Tran\
 > sformation( [ 3, 2, 1, 3 ] ), Transformation( [ 3, 3, 1 ] ), Transformation( [\
@@ -226,7 +226,7 @@ gap> I := SemigroupIdeal( Semigroup(
 gap> IsCliffordSemigroup(I);
 false
 
-#T# properties: IsCliffordSemigroup, parent, 2/?
+#T# properties: IsCliffordSemigroup, parent, 2/6
 gap> S := IdempotentGeneratedSubsemigroup(SymmetricInverseMonoid(3));;
 gap> IsCliffordSemigroup(S);
 true
@@ -240,30 +240,243 @@ gap> GeneratorsOfSemigroup(I);;
 gap> IsCliffordSemigroup(I);
 true
 
-#T# properties: IsCliffordSemigroup, non-inverse, 3/?
+#T# properties: IsCliffordSemigroup, non-inverse, 3/6
 gap> S := ZeroSemigroup(2);;
 gap> IsInverseSemigroup(S);
 false
 gap> IsCliffordSemigroup(S);
 false
 
-#T# properties: IsCliffordSemigroup, non-completely regular, 4/?
+#T# properties: IsCliffordSemigroup, non-completely regular, 4/6
 gap> S := ZeroSemigroup(2);;
 gap> IsCompletelyRegularSemigroup(S);
 false
 gap> IsCliffordSemigroup(S);
 false
 
-#T# properties: IsCliffordSemigroup, group, 5/?
+#T# properties: IsCliffordSemigroup, group, 5/6
 gap> S := AsPartialPermSemigroup(Group((1,2,3)));
 <commutative inverse partial perm semigroup of rank 3 with 1 generator>
 gap> IsCliffordSemigroup(S);
 true
 
-#T# properties: IsCliffordSemigroup, non-regular, 6/?
+#T# properties: IsCliffordSemigroup, non-regular, 6/6
 gap> S := ZeroSemigroup(2);;
 gap> IsCliffordSemigroup(S);
 false
+
+#T# properties: IsCommutativeSemigroup, 1/2
+gap> S := Semigroup( [ Transformation( [ 1, 1, 3, 5, 4 ] ),
+>  Transformation( [ 1, 2, 1, 5, 4 ] ) ] );;
+gap> IsCommutativeSemigroup(S);
+true
+
+#T# properties: IsCommutativeSemigroup, 2/2
+gap> S := JonesMonoid(3);
+<regular bipartition monoid of degree 3 with 2 generators>
+gap> IsCommutativeSemigroup(S);
+false
+
+#T# properties: IsCompletelyRegularSemigroup, 1/2
+gap> S := Monoid(
+> BooleanMat([[false, true, false], [true, false, false], [false, false, true]]),
+> BooleanMat([[false, true, false], [false, false, true], [true, false, false]]));
+<monoid of 3x3 boolean matrices with 2 generators>
+gap> IsCompletelyRegularSemigroup(S);
+true
+gap> I := SemigroupIdeal(S, S.1);;
+gap> IsCompletelyRegularSemigroup(I);
+true
+
+#T# properties: IsCompletelyRegularSemigroup, 2/2
+gap> S := Semigroup(GroupOfUnits(FullTransformationMonoid(3)));
+<transformation monoid of degree 3 with 2 generators>
+gap> IsCompletelyRegularSemigroup(S);
+true
+gap> I := SemigroupIdeal(S, S.1);;
+gap> GeneratorsOfSemigroup(I);;
+gap> IsCompletelyRegularSemigroup(I);
+true
+
+#T# properties: IsCompletelySimpleSemigroup, 1/1
+gap> S := Semigroup(MaxPlusMatrixNC([[0, -4], [-4, -1]]),
+>                   MaxPlusMatrixNC([[0, -3], [-3, -1]]));
+<semigroup of 2x2 max-plus matrices with 2 generators>
+gap> IsCompletelySimpleSemigroup(S);
+false
+
+#T# properties: IsEUnitaryInverseSemigroup, non-inverse op, 1/2
+gap> S := Semigroup( [ Transformation( [ 5, 7, 1, 6, 8, 8, 8, 8 ] ),
+>  Transformation( [ 1, 3, 4, 8, 8, 7, 5, 8 ] ),
+>  Transformation( [ 3, 8, 8, 8, 1, 4, 2, 8 ] ),
+>  Transformation( [ 1, 8, 2, 3, 7, 8, 6, 8 ] ) ] );
+<transformation semigroup of degree 8 with 4 generators>
+gap> IsEUnitaryInverseSemigroup(S);
+false
+
+#T# properties: IsEUnitaryInverseSemigroup, inverse op, 2/2
+gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2, 3 ], [ 1, 3, 5 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 7, 5, 2, 6, 4 ] ) ] );
+<inverse partial perm semigroup of rank 7 with 2 generators>
+gap> IsEUnitaryInverseSemigroup(S);
+false
+
+#T# properties: IsFactorisableInverseMonoid, 1/2
+gap> S := DualSymmetricInverseMonoid(3);
+<inverse bipartition monoid of degree 3 with 3 generators>
+gap> IsFactorisableInverseMonoid(S);
+false
+gap> T := InverseSemigroup(FactorisableDualSymmetricInverseSemigroup(3));
+<inverse bipartition monoid of degree 3 with 3 generators>
+gap> IsFactorisableInverseMonoid(T);
+true
+
+#T# properties: IsFactorisableInverseMonoid, 2/2
+gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) ] );;
+gap> IsFactorisableInverseMonoid(S);
+false
+gap> S := InverseMonoid(S);;
+gap> IsFactorisableInverseMonoid(S);
+false
+
+#T# properties: IsXTrivial, non-acting, 1/6
+gap> S := Semigroup( [ TropicalMaxPlusMatrixNC([[-infinity, -infinity], [4,
+> 0]], 8), TropicalMaxPlusMatrixNC([[3, 1], [-infinity, 0]], 8) ] );
+<semigroup of 2x2 tropical max-plus matrices with 2 generators>
+gap> IsHTrivial(S);
+true
+gap> IsLTrivial(S);
+false
+gap> IsRTrivial(S);
+true
+gap> I := SemigroupIdeal(S, TropicalMaxPlusMatrixNC([[8, 8], [7, 5]], 8));
+<semigroup ideal of 2x2 tropical max-plus matrices with 1 generator>
+gap> IsHTrivial(I);
+true
+gap> IsLTrivial(I);
+false
+gap> IsRTrivial(I);
+true
+
+#T# properties: IsXTrivial, trans, 2/6
+gap> S := Semigroup( [ Transformation( [ 4, 1, 3, 5, 5, 1 ] ),
+> Transformation( [ 6, 1, 6, 3, 2, 4 ] ) ] );
+<transformation semigroup of degree 6 with 2 generators>
+gap> IsHTrivial(S);
+false
+gap> IsLTrivial(S);
+false
+gap> IsRTrivial(S);
+false
+
+#T# properties: IsXTrivial, pperm, 3/6
+gap> S := Semigroup( [ PartialPerm( [ 1, 2, 3, 6, 7, 8, 9 ], [ 10, 5, 9, 6, 3, 8, 4 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 7, 8, 10 ], [ 1, 4, 2, 5, 6, 11, 7 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 5, 7, 10 ], [ 2, 8, 4, 7, 5, 3, 6 ] ),
+>  PartialPerm( [ 1, 2, 4, 5, 7, 9, 11 ], [ 7, 10, 1, 11, 9, 4, 2 ] ),
+>  PartialPerm( [ 1, 2, 4, 7, 8, 9, 11 ], [ 10, 7, 8, 5, 9, 1, 3 ] ) ] );
+<partial perm semigroup on 11 pts with 5 generators>
+gap> IsHTrivial(S);
+false
+gap> IsLTrivial(S);
+false
+gap> IsRTrivial(S);
+false
+
+#T# properties: IsXTrivial, acting, true 4/6
+gap> S := InverseSemigroup(
+> [ Bipartition( [ [ 1, 4, 5, -1, -4, -5 ], [ 2, -2 ], [ 3, -3 ] ] ),
+>   Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, -3, -4, -5 ] ] ),
+>   Bipartition( [ [ 1, -1 ], [ 2, 3, 5, -2, -3, -5 ], [ 4, -4 ] ] ),
+>   Bipartition( [ [ 1, 2, 4, 5, -1, -2, -4, -5 ], [ 3, -3 ] ] ),
+>   Bipartition( [ [ 1, 2, 3, 5, -1, -2, -3, -5 ], [ 4, -4 ] ] ) ] );
+<inverse bipartition semigroup of degree 5 with 5 generators>
+gap> IsHTrivial(S);
+true
+gap> IsLTrivial(S);
+true
+gap> IsRTrivial(S);
+true
+gap> I := SemigroupIdeal(S, S.1);
+<inverse bipartition semigroup ideal of degree 5 with 1 generator>
+gap> IsHTrivial(I);
+true
+gap> IsLTrivial(I);
+true
+gap> IsRTrivial(I);
+true
+gap> S := Semigroup(S);;
+gap> IsHTrivial(S);
+true
+gap> IsLTrivial(S);
+true
+gap> IsRTrivial(S);
+true
+gap> I := SemigroupIdeal(S, S.1);;
+gap> IsHTrivial(I);
+true
+gap> IsLTrivial(I);
+true
+gap> IsRTrivial(I);
+true
+
+#T# properties: IsXTrivial, acting, false, 5/6
+gap> S := Semigroup(
+>  Bipartition( [ [ 1, 2, 3, 4, 5, -6 ], [ 6, -1, -2, -3, -4, -5 ] ] ),
+>  Bipartition( [ [ 1, 2, 6, -1, -5, -6 ], [ 3, 5, -2, -3 ], [ 4, -4 ] ] ) );
+<bipartition semigroup of degree 6 with 2 generators>
+gap> IsHTrivial(S);
+false
+gap> IsLTrivial(S);
+false
+gap> IsRTrivial(S);
+false
+
+#T# properties: IsXTrivial, D-class, 6/6
+gap> S := Semigroup(
+> [ MatrixOverPrimeFieldNC([[0*Z(5), Z(5)^3], [Z(5)^2, Z(5)^0]], GF(5)),
+>   MatrixOverPrimeFieldNC([[Z(5)^0, Z(5)], [Z(5), Z(5)^3]], GF(5)),
+>   MatrixOverPrimeFieldNC([[Z(5)^0, Z(5)^3], [0*Z(5), 0*Z(5)]], GF(5)),
+>   MatrixOverPrimeFieldNC([[Z(5), Z(5)^0], [0*Z(5), Z(5)^3]], GF(5)),
+>   MatrixOverPrimeFieldNC([[Z(5), Z(5)^0], [Z(5)^0, Z(5)]], GF(5)),
+>   MatrixOverPrimeFieldNC([[Z(5)^2, 0*Z(5)], [Z(5), 0*Z(5)]], GF(5)),
+>   MatrixOverPrimeFieldNC([[Z(5)^2, Z(5)], [0*Z(5), 0*Z(5)]], GF(5)) ] );;
+gap> D := GreensDClassOfElement(S, 
+> MatrixOverPrimeFieldNC([[Z(5)^3, Z(5)^2], [Z(5)^3, Z(5)]], GF(5)));
+<Green's D-class: <2x2 prime field matrix>>
+gap> IsHTrivial(D);
+false
+gap> IsLTrivial(D);
+false
+gap> IsRTrivial(D);
+false
+
+#T# properties: IsLTrivial, rho, 1/1
+gap> S := FullTransformationMonoid(3);
+<regular transformation monoid of size 27, degree 3 with 3 generators>
+gap> IsLTrivial(S);
+false
+gap> S := Semigroup(S); 
+<transformation monoid of degree 3 with 3 generators>
+gap> Size(S);
+27
+gap> IsLTrivial(S);
+false
+gap> IsRTrivial(S);
+false
+
+#T# properties: IsRTrivial, trans, 1/1
+gap> S := Semigroup(Transformation([1,2,2,2]));
+<commutative transformation semigroup of degree 4 with 1 generator>
+gap> IsRTrivial(S);
+true
+
+#T# properties: IsRTrivial, pperm, 1/1
+gap> S := Semigroup(PartialPerm( [ 1, 2 ], [ 1, 2 ] ));
+<trivial partial perm group of rank 2 with 0 generators>
+gap> IsRTrivial(S);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 

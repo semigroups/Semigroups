@@ -119,7 +119,7 @@ end);
 InstallMethod(GroupOfUnits, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local H, map, U;
+  local H, map, U, iso;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -135,14 +135,13 @@ function(S)
   U := Monoid(List(GeneratorsOfGroup(Range(map)),
                    x -> x ^ InverseGeneralMapping(map)));
 
-  map := MappingByFunction(U,
+  iso := MappingByFunction(U,
                            Range(map),
-                           map,
-                           InverseGeneralMapping(map));
-
-  SetIsomorphismPermGroup(U, map);
+                           x -> x ^ map,
+                           x -> x ^ InverseGeneralMapping(map));
+  SetIsomorphismPermGroup(U, iso);
   SetIsGroupAsSemigroup(U, true);
-  UseIsomorphismRelation(U, Range(map));
+  UseIsomorphismRelation(U, Range(iso));
   return U;
 end);
 

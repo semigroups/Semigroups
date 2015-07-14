@@ -8,6 +8,24 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="IsUnitRegularMonoid">
+  <ManSection>
+    <Prop Name="IsUnitRegularMonoid" Arg="S"/>
+    <Returns><K>true</K> if the semigroup <A>S</A> is unit regular
+          and <K>false</K> if it is not.
+    </Returns>
+    <Description>
+      A monoid is <E>unit regular</E> if and only if for every <C>>x</C> in
+      <A>S</A> there exists an element <C>y</C> in the group of units of
+      <A>S</A> such that <C>x*y*x=x</C>.
+      
+      <Example><![CDATA[
+gap> IsUnitRegularMonoid(FullTransformationMonoid(3));
+true]]></Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <!-- JDM improve --> 
 <#GAPDoc Label="IsAbundantSemigroup">
   <ManSection>
@@ -378,9 +396,9 @@ gap> StructureDescription(U);
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsFactorisableSemigroup">
+<#GAPDoc Label="IsFactorisableInverseMonoid">
 <ManSection>
-  <Prop Name="IsFactorisableSemigroup" Arg="S"/>
+  <Prop Name="IsFactorisableInverseMonoid" Arg="S"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     An inverse monoid is <E>factorisable</E> if every element is the product
@@ -392,13 +410,13 @@ gap> StructureDescription(U);
     <Example><![CDATA[
 gap> S := InverseSemigroup( PartialPerm( [ 1, 2, 4 ], [ 3, 1, 4 ] ),
 > PartialPerm( [ 1, 2, 3, 5 ], [ 4, 1, 5, 2 ] ) );;
-gap> IsFactorisableSemigroup(S);
+gap> IsFactorisableInverseMonoid(S);
 false
-gap> IsFactorisableSemigroup(SymmetricInverseSemigroup(5)); 
+gap> IsFactorisableInverseMonoid(SymmetricInverseSemigroup(5)); 
 true
-gap> IsFactorisableSemigroup(DualSymmetricInverseMonoid(5));
+gap> IsFactorisableInverseMonoid(DualSymmetricInverseMonoid(5));
 false
-gap> IsFactorisableSemigroup(FactorisableDualSymmetricInverseSemigroup(5));
+gap> IsFactorisableInverseMonoid(FactorisableDualSymmetricInverseSemigroup(5));
 true]]></Example>
   </Description>
 </ManSection>

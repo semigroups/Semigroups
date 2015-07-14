@@ -972,10 +972,7 @@ gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
 gap> IsomorphismReesMatrixSemigroup(S);
 Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
 the argument must be a simple semigroup,
-gap> IsomorphismReesZeroMatrixSemigroup(S);
-MappingByFunction( <commutative 0-simple partial perm monoid of rank 1 with
- 1 generator>, <Rees 0-matrix semigroup 1x1 over Group(())>
-, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismReesZeroMatrixSemigroup(S);;
 gap> Size(Range(last));
 2
 

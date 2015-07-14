@@ -12,8 +12,8 @@
 # semigroups. There are not very many specialised methods for acting semigroups
 # and so we only have a single file.
 
-DeclareProperty("IsAbundantSemigroup", IsSemigroup);
-DeclareProperty("IsAdequateSemigroup", IsSemigroup);
+#DeclareProperty("IsAbundantSemigroup", IsSemigroup);
+#DeclareProperty("IsAdequateSemigroup", IsSemigroup);
 DeclareProperty("IsBlockGroup", IsSemigroup);
 DeclareProperty("IsRTrivial", IsSemigroup);
 DeclareProperty("IsRTrivial", IsGreensDClass);
@@ -25,7 +25,7 @@ DeclareProperty("IsHTrivial", IsGreensDClass);
 DeclareSynonymAttr("IsDTrivial", IsRTrivial and IsLTrivial);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
-DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
+DeclareProperty("IsFactorisableInverseMonoid", IsSemigroup);
 DeclareProperty("IsLeftSimple", IsSemigroup);
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
 DeclareOperation("IsRegularSemigroupElementNC",
@@ -33,7 +33,7 @@ DeclareOperation("IsRegularSemigroupElementNC",
                                IsAssociativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
-DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
+DeclareProperty("IsUnitRegularMonoid", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
@@ -47,8 +47,8 @@ InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
                                             IsPartialPermBipartitionSemigroup);
 
-InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
-InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
+#InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
+#InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
 InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);

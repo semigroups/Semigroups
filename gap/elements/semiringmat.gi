@@ -161,14 +161,18 @@ function(x)
 
   if IsNaturalMatrix(x) then 
     Append(str, "\>");
-    Append(str, String(ThresholdNaturalMatrix(x)));
+    Append(str, PrintString(ThresholdNaturalMatrix(x)));
     Append(str, "\<");
     Append(str, ", \>");
-    Append(str, String(PeriodNaturalMatrix(x)));
+    Append(str, PrintString(PeriodNaturalMatrix(x)));
     Append(str, "\<");
   elif IsTropicalMatrix(x) then 
     Append(str, ", \>");
-    Append(str, String(ThresholdTropicalMatrix(x)));
+    Append(str, PrintString(ThresholdTropicalMatrix(x)));
+    Append(str, "\<");
+  elif IsMatrixOverPrimeField(x) then 
+    Append(str, ", \>");
+    Append(str, String(BaseField(x)));
     Append(str, "\<");
   fi;
   Append(str, "\<)\<");

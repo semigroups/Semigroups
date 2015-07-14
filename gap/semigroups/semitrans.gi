@@ -594,20 +594,19 @@ end);
 InstallMethod(GroupOfUnits, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local H, G, deg, U;
+  local H, map, G, U;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
   H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
-  G := Range(IsomorphismPermGroup(H));
-  deg := DegreeOfTransformationSemigroup(S);
+  map := InverseGeneralMapping(IsomorphismPermGroup(H));
+  G := Source(map);
+  U := Monoid(List(GeneratorsOfGroup(G), x -> x ^ map));
 
-  U := Monoid(List(GeneratorsOfGroup(G), x -> AsTransformation(x, deg)));
-
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
-                                               x -> AsTransformation(x, deg)));
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage, 
+                                               x -> x ^ map));
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
