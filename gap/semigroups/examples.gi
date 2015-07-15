@@ -1044,39 +1044,130 @@ function(m, n)
   return R;
 end);
 
+BindGlobal("SEMIGROUPS_AsXSemigroup",
+function(filt)
+  if filt = IsBipartitionSemigroup then 
+    return AsBipartitionSemigroup;
+  elif filt = IsTransformationSemigroup then 
+    return AsTransformationSemigroup;
+  elif filt = IsPartialPermSemigroup then 
+    return AsPartialPermSemigroup;
+  elif filt = IsPBRSemigroup then 
+    return AsPBRSemigroup;
+  elif filt = IsBooleanMatSemigroup then 
+    return AsBooleanMatSemigroup;
+  fi;
+  return fail;
+end);
+
+BindGlobal("SEMIGROUPS_InstallConstructors", 
+function(func, exclude)
+  local type, cons;
+  cons := EvalString(Concatenation(NameFunction(func), "Cons"));
+  for type in SEMIGROUPS_Types do 
+    if not type in exclude then 
+      InstallMethod(cons, 
+      [type, IsPosInt],
+      function(filt, n)
+        if SEMIGROUPS_AsXSemigroup(filt) <> fail then 
+          return SEMIGROUPS_AsXSemigroup(filt)(func(IsTransformationSemigroup, n));
+        fi;
+        return fail;
+      end);
+    fi;
+  od;
+end);
+
 InstallGlobalFunction(TrivialSemigroup,
 function(arg)
-  local filt, deg, out;
 
-  if Length(arg) = 0 then 
+  if Length(arg) > 1 and IsOperation(arg[1]) and IsPosInt(arg[2]) then 
+    return TrivialSemigroupCons(arg[1], arg[2]);
+  elif Length(arg) = 1 and IsPosInt(arg[1]) then 
+    return TrivialSemigroupCons(IsTransformationSemigroup, arg[1]);
+  elif Length(arg) = 1 and IsOperation(arg[1]) then 
+    return TrivialSemigroupCons(arg[1], 0);
+  fi;
+  ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
+               "the arguments must be a positive integer or ",
+               "a filter and a positive integer,");
+end);
+
+InstallMethod(TrivialSemigroupCons, 
+[IsTransformationSemigroup, IsPosInt],
+function(filt, deg)
+  if deg = 0 then 
     return Semigroup(IdentityTransformation);
   else 
-    filt := arg[1];
-  fi;
-
-  if Length(arg) > 1 then 
-    deg := arg[2];
-  else 
-    deg := 0;
-  fi;
-  
-  if not IsFilter(filt) then 
-    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
-                 "the first argument must be a filter,");
-  fi;
-
-  if not IsPosInt(deg) then 
-    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
-                 "the 2nd argument must be a positive integer,");
-  fi;
-
-  if filt = IsTransformationSemigroup then 
-    return Semigroup(IdentityTransformation);
-  elif filt = IsPartialPermSemigroup then 
-    return Semigroup(PartialPerm(List([1 .. deg], i -> i)));
-  elif filt = IsBipartitionSemigroup then 
-    out := List([1 .. deg], i -> i);
-    return Semigroup(BipartitionByIntRep(Concatenation(out, out)));
-  else # TODO finish this off. . . 
+    return Semigroup(ConstantTransformation(deg, 1));
   fi;
 end);
+
+InstallMethod(TrivialSemigroupCons, 
+[IsPartialPermSemigroup, IsPosInt],
+function(filt, n)
+  return Semigroup(PartialPerm([1 .. n]));
+end);
+
+SEMIGROUPS_InstallConstructors(TrivialSemigroup,
+                               [IsPartialPermSemigroup,
+                                IsTransformationSemigroup]);
+
+InstallGlobalFunction(LeftZeroSemigroup,
+function(arg)
+
+  if Length(arg) > 1 and IsOperation(arg[1]) and IsPosInt(arg[2]) then 
+    return LeftZeroSemigroupCons(arg[1], arg[2]);
+  elif Length(arg) = 1 and IsPosInt(arg[1]) then 
+    return LeftZeroSemigroupCons(IsTransformationSemigroup, arg[1]);
+  fi;
+  ErrorMayQuit("Semigroups: LeftZeroSemigroup: usage,\n",
+               "the arguments must be a positive integer or ",
+               "a filter and a positive integer,");
+end);
+
+InstallMethod(LeftZeroSemigroupCons, 
+[IsTransformationSemigroup, IsPosInt],
+function(filt, n)
+  local proto, gens, i;
+  
+  proto := [1 .. n];
+  gens := [];
+  for i in [1 .. n] do 
+    gens[i] := Transformation(Concatenation(proto, [i]));
+  od;
+  return Semigroup(gens);
+end);
+
+SEMIGROUPS_InstallConstructors(LeftZeroSemigroup,
+                               [IsPartialPermSemigroup,
+                                IsTransformationSemigroup]);
+
+InstallGlobalFunction(RightZeroSemigroup,
+function(arg)
+
+  if Length(arg) > 1 and IsOperation(arg[1]) and IsPosInt(arg[2]) then 
+    return RightZeroSemigroupCons(arg[1], arg[2]);
+  elif Length(arg) = 1 and IsPosInt(arg[1]) then 
+    return RightZeroSemigroupCons(IsTransformationSemigroup, arg[1]);
+  fi;
+  ErrorMayQuit("Semigroups: RightZeroSemigroup: usage,\n",
+               "the arguments must be a positive integer or ",
+               "a filter and a positive integer,");
+end);
+
+InstallMethod(RightZeroSemigroupCons, 
+[IsTransformationSemigroup, IsPosInt],
+function(filt, n)
+  local gens, i;
+  
+  gens := [];
+  for i in [1 .. n] do 
+    gens[i] := ConstantTransformation(n, i);
+  od;
+  return Semigroup(gens);
+end);
+
+SEMIGROUPS_InstallConstructors(RightZeroSemigroup,
+                               [IsPartialPermSemigroup,
+                                IsTransformationSemigroup]);
