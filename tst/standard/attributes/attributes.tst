@@ -437,7 +437,7 @@ the D-class is not a subsemigroup,
 #T# attributes: IsomorphismReesMatrixSemigroup, infinite
 gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `IsGroupAsSemigroup' on 1 arguments
+Error, no 3rd choice method found for `IsGroupAsSemigroup' on 1 arguments
 
 #T# attributes: IsomorphismReesZeroMatrixSemigroup, infinite
 gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));

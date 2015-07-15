@@ -160,9 +160,9 @@ function(S)
 end);
 
 InstallMethod(ViewString, "for a group as semigroup",
-[IsGroupAsSemigroup], _ViewStringForSemigroupsGroups);
+[IsGroupAsSemigroup], 1, _ViewStringForSemigroupsGroups);
 
-InstallMethod(ViewString, "for a group consisting of semigroups elements",
+InstallMethod(ViewString, "for a group consisting of semigroup elements",
 [IsGroup], _ViewStringForSemigroupsGroups);
 
 InstallMethod(ViewString, "for a partial perm group",

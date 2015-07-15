@@ -590,8 +590,8 @@ end);
 # this is here so that for regular ideals this method has higher rank than the
 # method for IsSemigroup.
 
-InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
-[IsSemigroupIdeal], S -> NrRClasses(S) = 1 and NrLClasses(S) = 1);
+#InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
+#[IsSemigroupIdeal], S -> NrRClasses(S) = 1 and NrLClasses(S) = 1);
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],

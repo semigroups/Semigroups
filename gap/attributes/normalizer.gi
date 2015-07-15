@@ -240,7 +240,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
     else
       U := G;
     fi;
-    
+
     if Size(U) > 1 and opts.rhostab then
       o := RhoOrb(S);
       Enumerate(o, infinity);

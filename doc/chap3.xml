@@ -114,6 +114,7 @@
     <#Include Label="IsSemilatticeAsSemigroup">
     <#Include Label="IsSimpleSemigroup">
     <#Include Label="IsSynchronizingSemigroup">
+    <#Include Label="IsUnitRegularMonoid">
     <#Include Label="IsZeroGroup">
     <#Include Label="IsZeroRectangularBand">
     <#Include Label="IsZeroSemigroup">
@@ -144,7 +145,7 @@
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsBrandtSemigroup">
     <#Include Label="IsEUnitaryInverseSemigroup">
-    <#Include Label="IsFactorisableSemigroup">
+    <#Include Label="IsFactorisableInverseMonoid">
     <#Include Label="IsJoinIrreducible">
     <#Include Label="IsMajorantlyClosed">
     <#Include Label="IsMonogenicInverseSemigroup">
