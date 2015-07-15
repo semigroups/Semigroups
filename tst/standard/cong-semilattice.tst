@@ -134,6 +134,8 @@ gap> c1 * c2 = c1;
 true
 gap> c2 * c2 = c2;
 true
+gap> NonTrivialCongruenceClasses(cong);
+[ {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, {PartialPerm( [ 3, 4 ], [ 3, 4 ] )} ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);

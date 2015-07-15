@@ -199,3 +199,33 @@ function(c1, c2)
 end);
 
 #
+
+InstallMethod(NonTrivialEquivalenceClasses,
+"for a semilattice congruence",
+[IsSemilatticeCongruence],
+function(cong)
+  local s, nrclasses, fam, list, i;
+  s := Range(cong);
+  nrclasses := Maximum(BlockCoincidenceTable(cong));
+  fam := CollectionsFamily(FamilyObj(GeneratorsOfSemigroup(s)[1]));
+  list := EmptyPlist(nrclasses);
+  for i in [1..nrclasses] do
+    list[i] := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
+                       rec(classNo := i));
+    SetParentAttr(list[i], cong);
+    SetEquivalenceClassRelation(list[i], cong);
+  od;
+  return list;
+end);
+
+#
+
+InstallMethod(Representative,
+"for a semilattice congruence class",
+[IsSemilatticeCongruenceClass],
+function(class)
+  local cong, pairs;
+  cong := EquivalenceClassRelation(class);
+  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  return pairs[Position(BlockCoincidenceTable(cong), class!.classNo)][1];
+end);

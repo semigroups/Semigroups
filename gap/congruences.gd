@@ -24,6 +24,8 @@
 DeclareGlobalFunction("SemigroupCongruence");
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
 
+DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
+DeclareSynonym("NonTrivialCongruenceClasses", NonTrivialEquivalenceClasses);
 DeclareSynonym("CongruenceClasses", EquivalenceClasses);
 DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
 DeclareOperation("\*", [IsEquivalenceClass, IsList]);
