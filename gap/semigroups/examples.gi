@@ -1061,13 +1061,13 @@ function(filt)
 end);
 
 BindGlobal("SEMIGROUPS_InstallConstructors", 
-function(func, exclude)
+function(func, exclude, param)
   local type, cons;
   cons := EvalString(Concatenation(NameFunction(func), "Cons"));
   for type in SEMIGROUPS_Types do 
     if not type in exclude then 
       InstallMethod(cons, 
-      [type, IsPosInt],
+      [type, param],
       function(filt, n)
         if SEMIGROUPS_AsXSemigroup(filt) <> fail then 
           return SEMIGROUPS_AsXSemigroup(filt)(func(IsTransformationSemigroup, n));
@@ -1080,13 +1080,16 @@ end);
 
 InstallGlobalFunction(TrivialSemigroup,
 function(arg)
-
-  if Length(arg) > 1 and IsOperation(arg[1]) and IsPosInt(arg[2]) then 
-    return TrivialSemigroupCons(arg[1], arg[2]);
+  
+  if Length(arg) = 0 then 
+    return TrivialSemigroup(IsTransformationSemigroup, 0);
   elif Length(arg) = 1 and IsPosInt(arg[1]) then 
     return TrivialSemigroupCons(IsTransformationSemigroup, arg[1]);
   elif Length(arg) = 1 and IsOperation(arg[1]) then 
     return TrivialSemigroupCons(arg[1], 0);
+  elif Length(arg) = 2 and IsOperation(arg[1]) and IsInt(arg[2]) 
+      and arg[2] >= 0 then 
+    return TrivialSemigroupCons(arg[1], arg[2]);
   fi;
   ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
                "the arguments must be a positive integer or ",
@@ -1094,7 +1097,7 @@ function(arg)
 end);
 
 InstallMethod(TrivialSemigroupCons, 
-[IsTransformationSemigroup, IsPosInt],
+[IsTransformationSemigroup, IsInt],
 function(filt, deg)
   if deg = 0 then 
     return Semigroup(IdentityTransformation);
@@ -1104,14 +1107,15 @@ function(filt, deg)
 end);
 
 InstallMethod(TrivialSemigroupCons, 
-[IsPartialPermSemigroup, IsPosInt],
+[IsPartialPermSemigroup, IsInt],
 function(filt, n)
   return Semigroup(PartialPerm([1 .. n]));
 end);
 
 SEMIGROUPS_InstallConstructors(TrivialSemigroup,
                                [IsPartialPermSemigroup,
-                                IsTransformationSemigroup]);
+                                IsTransformationSemigroup], 
+                               IsInt);
 
 InstallGlobalFunction(LeftZeroSemigroup,
 function(arg)
@@ -1141,7 +1145,8 @@ end);
 
 SEMIGROUPS_InstallConstructors(LeftZeroSemigroup,
                                [IsPartialPermSemigroup,
-                                IsTransformationSemigroup]);
+                                IsTransformationSemigroup],
+                               IsPosInt);
 
 InstallGlobalFunction(RightZeroSemigroup,
 function(arg)
@@ -1170,4 +1175,5 @@ end);
 
 SEMIGROUPS_InstallConstructors(RightZeroSemigroup,
                                [IsPartialPermSemigroup,
-                                IsTransformationSemigroup]);
+                                IsTransformationSemigroup], 
+                               IsPosInt);
