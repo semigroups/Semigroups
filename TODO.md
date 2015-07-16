@@ -1,22 +1,20 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
- 
-* `TrivialSemigroup` function
+* Add `IsFinite` check to start of appropriate methods and add tests
+* `ViewString` for full transformation monoid, and symmetric inverse monoid
 * reporting in the generic Froidure-Pin method
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
 * fix the bug in the c++ code relating to the changeset tagged `bug-in-c-code`
 * unify ideals-lambda-rho, lambda-rho and graded.
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
-* get rid of `Data` roll semigroups-generic into semigroups.gi
+* get rid of `*Data` roll semigroups-generic into semigroups.gi
 * tests for pbrs
 * improve compilation time
-* finish partitioned binary relation stuff (more tests and C++)
 * check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
 * split the "closure" constructor for a semigroup into 2 methods
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * closure of generic inverse semigroups
-* improve `EvaluateWord`
 * remove RecVecs
 * check for memleaks
 * remove C++11?
@@ -27,6 +25,8 @@
 * new ideals stuff!
 
 #DONE
+* finish partitioned binary relation stuff (more tests and C++)
+* `TrivialSemigroup` function
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
 * `[ Transformation( [ 3, 3, 3, 3, 3 ] ), Transformation( [ 4, 4, 4, 4, 4 ] ),
   Transformation( [ 1, 3, 1, 5, 1 ] ), Transformation( [ 1, 1, 2, 1, 4 ] ),
@@ -52,6 +52,7 @@
 * make 2.6 branch with new style Green's class printing in tests.
 
 #DO LATER
+* improve `EvaluateWord`
 * non-prime finite fields
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 

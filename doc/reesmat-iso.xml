@@ -1,0 +1,23 @@
+#############################################################################
+##
+#W  reesmat-iso.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsUnitRegularMonoid">
+  <ManSection>
+    <Prop Name="IsUnitRegularMonoid" Arg="S"/>
+    <Returns>
+    </Returns>
+    <Description>
+      
+      <Example><![CDATA[
+gap> IsUnitRegularMonoid(FullTransformationMonoid(3));
+true]]></Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>

@@ -8,15 +8,9 @@
 #############################################################################
 ##
 
-DeclareOperation("IsomorphismSemigroups", [IsSemigroup, IsSemigroup]);
-
-DeclareGlobalFunction("RMSInducedFunction");
-DeclareGlobalFunction("RZMSInducedFunction");
-DeclareGlobalFunction("RZMStoRZMSInducedFunction");
-
-DeclareCategory("IsRMSIsoByTriple", IsGeneralMapping and IsSPGeneralMapping and
-                                    IsTotal and IsSingleValued and IsInjective
-                                    and IsSurjective and
+DeclareCategory("IsRMSIsoByTriple", IsGeneralMapping and IsSPGeneralMapping
+                                    and IsTotal and IsSingleValued and
+                                    IsInjective and IsSurjective and
                                     IsAttributeStoringRep);
 DeclareCategory("IsRZMSIsoByTriple", IsGeneralMapping and IsSPGeneralMapping
                                      and IsTotal and IsSingleValued and
@@ -29,7 +23,4 @@ DeclareGlobalFunction("RZMSIsoByTriple");
 DeclareOperation("ELM_LIST", [IsRMSIsoByTriple, IsPosInt]);
 DeclareOperation("ELM_LIST", [IsRZMSIsoByTriple, IsPosInt]);
 
-DeclareProperty("IsAutomorphismGroupOfRMS", IsAutomorphismGroup);
-DeclareProperty("IsAutomorphismGroupOfRZMS", IsAutomorphismGroup);
-
-DeclareGlobalFunction("HashFunctionMatrixOfRMS");
+DeclareProperty("IsAutomorphismGroupOfRMSOrRZMS", IsGroup);

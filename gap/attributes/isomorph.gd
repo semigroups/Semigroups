@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareOperation("IsomorphismSemigroups", [IsSemigroup, IsSemigroup]);
 DeclareAttribute("SmallestMultiplicationTable", IsSemigroup);
 DeclareOperation("IsIsomorphicSemigroup",
                  [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and

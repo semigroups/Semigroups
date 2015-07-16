@@ -11,6 +11,12 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
+InstallGlobalFunction(RMSElementNC, 
+function(R, i, g, j)
+  return Objectify(TypeReesMatrixSemigroupElements(R), 
+                   [i, g, j, Matrix(R)]);
+end);
+
 InstallImmediateMethod(IsFinite, IsReesZeroMatrixSubsemigroup, 0,
 function(R)
   if ElementsFamily(FamilyObj(R))!.IsFinite then
