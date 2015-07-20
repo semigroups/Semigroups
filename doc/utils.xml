@@ -8,21 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="SemigroupsDir">
-  <ManSection>
-    <Func Name="SemigroupsDir" Arg=""/>
-    <Returns>A string.</Returns>    
-    <Description>
-      This function returns the absolute path to the &Semigroups; package
-      directory as a string. The same result can be obtained typing:
-
-      <Log>PackageInfo("semigroups")[1]!.InstallationPath;</Log>
-
-      at the &GAP; prompt. 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="SemigroupsMakeDoc">
   <ManSection>
     <Func Name="SemigroupsMakeDoc" Arg=""/>
@@ -34,50 +19,35 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SemigroupsOptionsRec">
+<#GAPDoc Label="SEMIGROUPS_DefaultOptionsRec">
   <ManSection>    
-     <Var Name="SemigroupsOptionsRec"/>    
+     <Var Name="SEMIGROUPS_DefaultOptionsRec"/>    
      <Description>
        This global variable is a record whose components contain the default
-       values of certain options for transformation semigroups created after
-       &Semigroups; has been loaded. A description of these options is given
-       above in Section <Ref Sect="opts"/>. <P/>
+       values of certain options for semigroups.  A description of these
+       options is given above in Section <Ref Sect="opts"/>. <P/>
 
-       The value of <C>SemigroupsOptionsRec</C> is defined in the file
-       <C>semigroups/gap/options.g</C> as: 
+       The value of <C>SEMIGROUPS_DefaultOptionsRec</C> is defined in the file
+       <C>semigroups/gap/options.g</C> as: TODO update this!!
        <Log>rec( exhaustive := true, hashlen := rec( L := 25013, M := 6257, S :=
          251 ), regular := false, small := false )</Log>
      </Description> 
    </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SemigroupsTestAll">
+<#GAPDoc Label="SemigroupsTestStandard">
   <ManSection>
-    <Func Name="SemigroupsTestAll" Arg=""/>
-    <Returns>Nothing.</Returns> 
+    <Func Name="SemigroupsTestStandard" Arg=""/>
+    <Returns><K>true</K> or <K>false</K>.</Returns> 
     <Description>
-      This function should be called with no argument to comprehensively
-      test that &Semigroups; is working correctly. These tests
-      should take no more than a few minutes to complete. 
-      To quickly test that &Semigroups; is installed correctly
-      use <Ref Func="SemigroupsTestInstall"/>. 
+      This function should be called with no argument to comprehensively test
+      that &Semigroups; is working correctly. These tests should take no more
+      than a few minutes to complete.  To quickly test that &Semigroups; is
+      installed correctly use <Ref Func="SemigroupsTestInstall"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SemigroupsTestManualExamples">
-  <ManSection>
-    <Func Name="SemigroupsTestManualExamples" Arg=""/>
-    <Returns>Nothing.</Returns> 
-    <Description>
-      This function should be called with no argument to test the examples in
-      the &Semigroups; manual. These tests should take no more than a few
-      minutes to complete.  To more comprehensively test that &Semigroups; is
-      installed correctly use <Ref Func="SemigroupsTestAll"/>. See also <Ref
-      Func="SemigroupsTestInstall"/>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
 
 <#GAPDoc Label="SemigroupsTestInstall">
   <ManSection>
@@ -86,9 +56,9 @@
     <Description>
       This function should be called with no argument to test your installation
       of &Semigroups; is working correctly. These tests should take no more
-      than a fraction of a second to complete.  To more comprehensively test
+      than a few seconds to complete.  To more comprehensively test
       that &Semigroups; is installed correctly use 
-      <Ref Func="SemigroupsTestAll"/>. 
+      <Ref Func="SemigroupsTestStandard"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -206,6 +176,32 @@ t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="SemigroupsTestManualExamples">
+  <ManSection>
+    <Func Name="SemigroupsTestManualExamples" Arg=""/>
+    <Returns>Nothing.</Returns> 
+    <Description>
+      This function should be called with no argument to test the examples in
+      the &Semigroups; manual. These tests should take no more than a few
+      minutes to complete.  To more comprehensively test that &Semigroups; is
+      installed correctly use <Ref Func="SemigroupsTestStandard"/>. See also <Ref
+      Func="SemigroupsTestInstall"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
+<#GAPDoc Label="SemigroupsDir">
+  <ManSection>
+    <Func Name="SemigroupsDir" Arg=""/>
+    <Returns>A string.</Returns>    
+    <Description>
+      This function returns the absolute path to the &Semigroups; package
+      directory as a string. The same result can be obtained typing:
 
-#EOF
+      <Log>PackageInfo("semigroups")[1]!.InstallationPath;</Log>
+
+      at the &GAP; prompt. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+

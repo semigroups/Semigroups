@@ -1,0 +1,53 @@
+<Chapter Label="Attributes of inverse semigroups">
+  <Heading>
+    Attributes of inverse semigroups
+  </Heading>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  In this chapter we describe the attributes which are specific
+  to inverse semigroups that can be determined using &Semigroups;.<P/> 
+
+  The functions 
+  <List>
+    <Item><Ref Oper="IsJoinIrreducible"/></Item>
+    <Item><Ref Oper="IsMajorantlyClosed"/></Item>
+    <Item><Ref Attr="JoinIrreducibleDClasses"/></Item>
+    <Item><Ref Oper="MajorantClosure"/></Item> 
+    <Item><Ref Oper="Minorants"/></Item>
+    <Item><Ref Oper="RightCosetsOfInverseSemigroup"/></Item>
+    <Item><Ref Attr="SmallerDegreePartialPermRepresentation"/></Item>
+    <Item><Ref Attr="VagnerPrestonRepresentation"/></Item>
+  </List>
+  were written by Wilf Wilson and Robert Hancock. <P/>
+
+  The function <Ref Oper="CharacterTableOfInverseSemigroup"/> was written by
+  Jhevon Smith and Ben Steinberg.
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    
+    <Heading>
+      Attributes of inverse semigroups
+    </Heading>
+    
+    <#Include Label="NaturalLeqInverseSemigroup">
+    <#Include Label="JoinIrreducibleDClasses">
+    <#Include Label="MajorantClosure">
+    <#Include Label="Minorants">
+    <#Include Label="PrimitiveIdempotents">
+    <#Include Label="RightCosetsOfInverseSemigroup">
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="SmallerDegreePartialPermRepresentation">
+    <#Include Label="VagnerPrestonRepresentation">
+    <#Include Label="CharacterTableOfInverseSemigroup">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+</Chapter>

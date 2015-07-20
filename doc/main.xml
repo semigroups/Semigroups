@@ -5,7 +5,9 @@
    <!ENTITY Grape "<Alt Not='Text'><URL
    Text='Grape'>http://www.maths.qmul.ac.uk/~leonard/grape/</URL></Alt><Alt
    Only='Text'><Package>Grape</Package></Alt>">
-     <!ENTITY Monoid "<Package>Monoid</Package>">
+     <!ENTITY Digraphs "<Alt Not='Text'><URL
+     Text='Digraphs'>http://www-history.mcs.st-and.ac.uk/~jamesm/digraphs.php</URL></Alt><Alt
+     Only='Text'><Package>Digraphs</Package></Alt>">
      <!ENTITY Orb "<Alt Not='Text'><URL Text='Orb'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 </URL></Alt><Alt Only='Text'><Package>Orb</Package></Alt>">
@@ -46,15 +48,24 @@
 <TableOfContents/>
 
 <Body>
-  <#Include SYSTEM="chap1.xml">
-  <#Include SYSTEM "chap2.xml">  <!-- creating semigroups and monoid -->
-  <#Include SYSTEM "chap8.xml">  <!-- ideals -->
-  <#Include SYSTEM "chap3.xml">  <!-- structure -->
-  <#Include SYSTEM "chap4.xml">  <!-- bipartitions and blocks --> 
-  <#Include SYSTEM "chap5.xml">  <!-- free inverse semigroups -->
-  <#Include SYSTEM "chap7.xml">  <!-- congruences -->
-  <#Include SYSTEM "chap9.xml">  <!-- homomorphisms -->
-  <#Include SYSTEM "chap6.xml">  <!-- orbits --> 
+  <#Include SYSTEM="z-chap01.xml">  <!-- intro -->
+  <#Include SYSTEM="z-chap02.xml">  <!-- installation instructions -->
+  <#Include SYSTEM "z-chap03.xml">  <!-- bipartitions and blocks --> 
+  <#Include SYSTEM "z-chap04.xml">  <!-- partitioned binary relation -->
+  <#Include SYSTEM "z-chap05.xml">  <!-- matrices over semirings -->
+  <#Include SYSTEM "z-chap06.xml">  <!-- creating semigroups and monoids -->
+  <#Include SYSTEM "z-chap07.xml">  <!-- ideals -->
+  <#Include SYSTEM "z-chap08.xml">  <!-- standard examples -->
+  <#Include SYSTEM "z-chap09.xml">  <!-- free inverse semigroups -->
+  <#Include SYSTEM "z-chap10.xml">  <!-- free bands-->
+  <#Include SYSTEM "z-chap11.xml">  <!-- Green's relations -->
+  <#Include SYSTEM "z-chap12.xml">  <!-- attributes of semigroups -->
+  <#Include SYSTEM "z-chap13.xml">  <!-- attributes of inverse semigroups -->
+  <#Include SYSTEM "z-chap14.xml">  <!-- properties of semigroups and inverse semigroups -->
+  <#Include SYSTEM "z-chap15.xml">  <!-- homomorphisms -->
+  <#Include SYSTEM "z-chap16.xml">  <!-- congruences -->
+  <#Include SYSTEM "z-chap17.xml">  <!-- orbits -->
+  <#Include SYSTEM "z-chap18.xml">  <!-- extending the package -->
 </Body>
 
 <Bibliography Databases="semigroups" />

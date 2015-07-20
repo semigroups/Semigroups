@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: standard/attributes/isomorph.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 # isomorph: SmallestMultiplicationTable, 1/2
 gap> S := DualSymmetricInverseMonoid(2);

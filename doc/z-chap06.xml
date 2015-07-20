@@ -1,11 +1,36 @@
+<Chapter Label="Creating semigroups and monoids">
+  <Heading>
+    Creating semigroups and monoids
+  </Heading> 
 
-<Chapter Label="create"><Heading>Creating semigroups and monoids</Heading> 
   In this chapter we describe the various ways that semigroups and monoids can
   be created in &Semigroups;, the options that are available at the time of
-  creation, and describe some standard examples of semigroup available in the
-  package. <P/>
+  creation. 
   
- <Section><Heading>Random semigroups</Heading> 
+  <Section Label="Acting semigroups"><!--TODO: move this-->
+    <Heading>Acting semigroups</Heading>
+    It is harder for &Semigroups; to compute Green's &L;- and &H;-classes of a
+    transformation semigroup and the methods used to compute with Green's &R;-
+    and &D;-classes are the most efficient in &Semigroups;.  Thus, if you are
+    computing with a transformation semigroup, wherever possible, it is advisable
+    to use the commands relating to Green's &R;- or &D;-classes rather than
+    those relating to Green's &L;-  or &H;-classes. No such difficulties are
+    present when computing with semigroups of partial permutations,
+    bipartitions, or subsemigroups of a regular Rees 0-matrix semigroup over a
+    group.<P/>
+
+    The methods in &Semigroups; allow the computation of individual Green's
+    classes without computing the entire data structure of the underlying
+    semigroup; see <Ref Oper="GreensRClassOfElementNC"/>.  It is also possible
+    to compute the &R;-classes, the number of elements and test membership
+    in a semigroup without computing all the elements; see, for example, <Ref
+      Oper="GreensRClasses"/>, <Ref Attr="RClassReps"/>, <Ref
+      Func="IteratorOfRClassReps"/>, <Ref Func="IteratorOfRClasses"/>, or <Ref
+      Func="NrRClasses"/>.  This may be useful if you want to study a very large
+    semigroup where computing all the elements of the semigroup is not feasible.<P/>
+  </Section>
+
+  <Section><Heading>Random semigroups</Heading> 
     <#Include Label="RandomInverseMonoid"> 
     <#Include Label="RandomTransformationMonoid"> 
     <#Include Label="RandomPartialPermMonoid"> 
@@ -20,7 +45,8 @@
     <#Include Label="InverseSubsemigroupByProperty">
   </Section> 
   
-  <Section Label="opts"><Heading>Options when creating semigroups</Heading>
+  <Section Label="Options when creating semigroups">
+    <Heading>Options when creating semigroups</Heading>
     When using any of the functions:
     <List>
       <Item><Ref Func="InverseSemigroup"  BookName="ref"/>,</Item>
@@ -125,66 +151,44 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
 &lt;commutative transformation semigroup on 4 pts with 1 generator></Example>
 
       The default values of the options described above are stored in a global
-      variable named <Ref Var="SemigroupsOptionsRec"/>. If you want to change
-      the default values of these options for a single &GAP; session, then you
-      can simply redefine the value in &GAP;. For example, to change the option
-      <C>small</C> from the default value of <A>false</A> use:
+      variable named <Ref Var="SEMIGROUPS_DefaultOptionsRec"/>. If you want to
+      change the default values of these options for a single &GAP; session,
+      then you can simply redefine the value in &GAP;. For example, to change
+      the option <C>small</C> from the default value of <A>false</A> use:
 
-    <Log>gap> SemigroupsOptionsRec.small:=true;
+    <Log>gap> SEMIGROUPS_DefautlOptionsRec.small := true;
 true</Log>
 
     If you want to change the default values of the options stored in <Ref
-      Var="SemigroupsOptionsRec"/> for all &GAP; sessions, then you can
+      Var="SEMIGROUPS_DefaultOptionsRec"/> for all &GAP; sessions, then you can
     edit these values in the file <C>semigroups/gap/options.g</C>. <P/>
 
-
-    <#Include Label="SemigroupsOptionsRec">
+    <#Include Label="SEMIGROUPS_DefaultOptionsRec">
 
    </Section>
     
-  <Section><Heading>Changing the representation of a semigroup</Heading>
-    In addition, to the library functions
-    <List>
-      <Item><Ref Oper="IsomorphismReesMatrixSemigroup" BookName="ref"/>,</Item>
-      <Item><Ref Oper="AntiIsomorphismTransformationSemigroup" BookName="ref"/>,
-      </Item>
-      <Item><Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>,
-      </Item>
-      <Item><Ref Oper="IsomorphismPartialPermSemigroup" BookName="ref"/>,</Item>
-    </List>
-      there are several methods for changing the representation of a semigroup
-      in &Semigroups;. There are also methods for the operations given above for
-      the types of semigroups defined in &Semigroups; which are not mentioned in
-      the reference manual. 
-      <#Include Label="AsTransformationSemigroup">
-      <#Include Label="IsomorphismPermGroup">
-      <#Include Label="IsomorphismBipartitionSemigroup">
-      <#Include Label="IsomorphismBlockBijectionSemigroup">
-      <#Include Label="IsomorphismReesZeroMatrixSemigroup">
+   <Section Label="Changing the representation of a semigroup">
+     <Heading>Changing the representation of a semigroup</Heading>
+     In addition, to the library functions
+     <List>
+       <Item><Ref Oper="IsomorphismReesMatrixSemigroup" BookName="ref"/>,</Item>
+       <Item><Ref Oper="AntiIsomorphismTransformationSemigroup" BookName="ref"/>,
+       </Item>
+       <Item><Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>,
+       </Item>
+       <Item><Ref Oper="IsomorphismPartialPermSemigroup" BookName="ref"/>,</Item>
+     </List>
+     there are several methods for changing the representation of a semigroup
+     in &Semigroups;. There are also methods for the operations given above for
+     the types of semigroups defined in &Semigroups; which are not mentioned in
+     the reference manual. 
+     <#Include Label="AsTransformationSemigroup">
+     <#Include Label="IsomorphismPermGroup">
+     <#Include Label="IsomorphismBipartitionSemigroup">
+     <#Include Label="IsomorphismBlockBijectionSemigroup">
+     <#Include Label="IsomorphismReesZeroMatrixSemigroup">
   </Section>
   
-  <Section Label="Examples"><Heading>Standard examples</Heading>
-    In this section, we describe the operations in &Semigroups; that can be
-    used to creating semigroups belonging to several standard classes of
-    example. See Chapter <Ref Chap="bipartition"/> for more information about
-    semigroups of bipartitions. 
-    <#Include Label="EndomorphismsPartition"> 
-    <#Include Label="PartitionMonoid"> 
-    <#Include Label="BrauerMonoid"> 
-    <#Include Label="JonesMonoid"> 
-    <#Include Label="FactorisableDualSymmetricInverseSemigroup">
-    <#Include Label="DualSymmetricInverseSemigroup">
-    <#Include Label="PartialTransformationSemigroup"> 
-    <#Include Label="FullMatrixSemigroup">
-    <#Include Label="IsFullMatrixSemigroup">
-    <#Include Label="MunnSemigroup">
-    <#Include Label="OPOIPOPI">
-    <#Include Label="SingularTransformationSemigroup">
-    <#Include Label="RegularBinaryRelationSemigroup">
-    <#Include Label="MonogenicSemigroup">
-    <#Include Label="RectangularBand">
-    <#Include Label="ZeroSemigroup">
-  </Section>
 
 </Chapter>
 

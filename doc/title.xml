@@ -1,6 +1,5 @@
 <TitlePage>
   <Title>&Semigroups;</Title>
-  <Subtitle>Method for semigroups</Subtitle>
   <Version>Version &VERSION;</Version>
 
   <Author>J. D. Mitchell
@@ -18,38 +17,39 @@
   <Author>Michael Torpey</Author>
   <Author>Wilf Wilson</Author>
 
-  <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell.<P/>
+  <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell et al.<P/>
     &Semigroups; is free software; you can redistribute it and/or modify it
     under the terms of the <URL Text="GNU General Public License">
     http://www.fsf.org/licenses/gpl.html</URL> as published by the Free Software
-    Foundation; either version 2 of the License, or (at your option) any later
+    Foundation; either version 3 of the License, or (at your option) any later
     version.
   </Copyright>
 
   <Abstract>
     The &Semigroups; package is a &GAP; package containing methods for
-    semigroups, monoids, and inverse semigroups, principally of
-    transformations, partial permutations, bipartitions, subsemigroups of
-    regular Rees 0-matrix semigroups, and the free inverse semigroup. 
+    semigroups, monoids, and inverse semigroups. The methods in &Semigroups;
+    can be applied to any semigroup created in &GAP;. There are particularly
+    efficient methods for semigroups or ideals consisting of transformations,
+    partial permutations, bipartitions, partitioned binary relations
+    subsemigroups of regular Rees 0-matrix semigroups, and matrices of various
+    semirings including boolean or tropical matrices. 
     <P/>
     
-    &Semigroups; contains more efficient methods than those available in the
-    &GAP; library (and in many cases more efficient than any other software) for
-    creating semigroups, monoids, and inverse semigroup, calculating their
-    Green's structure, ideals, size, elements, group of units, small generating
-    sets, testing membership, finding the inverses of a regular element,
-    factorizing elements over the generators, and many more. It is also possible
-    to test if a semigroup satisfies a particular property, such as if it is
-    regular, simple, inverse, completely regular, and a variety of further
-    properties.
+    &Semigroups; contains efficient methods for creating semigroups, monoids,
+    and inverse semigroup, calculating their Green's structure, ideals, size,
+    elements, group of units, small generating sets, testing membership,
+    finding the inverses of a regular element, factorizing elements over the
+    generators, and more. It is possible to test if a semigroup satisfies a
+    particular property, such as if it is regular, simple, inverse, completely
+    regular, and a variety of further properties. 
     <P/>
     
-    There are methods for finding congruences of certain types of semigroups,
+    There are methods for finding presentations for a semigroup, congruences,
     the normalizer of a semigroup in a permutation group, the maximal
     subsemigroups of a finite semigroup, and smaller degree partial permutation
     representations and the character tables of inverse semigroups. There are
     functions for producing pictures of the Green's structure of a semigroup,
-    and for drawing bipartitions. 
+    and for drawing graphical representations of certain types of elements. 
   </Abstract>
 
   <Acknowledgements>
@@ -76,8 +76,8 @@
     Jhevon Smith and Ben Steinberg contributed the function 
     <Ref Attr="CharacterTableOfInverseSemigroup"/>.<P/>
 
-    Michael Torpey contributed the part of the package relating to congruences
-    of Rees (0-)matrix semigroups.<P/>
+    Michael Torpey contributed the part of the package relating to congruences.
+    <P/>
 
     Wilf Wilson contributed to the part of the package relating maximal
     subsemigroups and smaller degree partial permutation representations of
@@ -85,8 +85,8 @@
     their contribution to the development of the algorithms for maximal
     subsemigroups and smaller degree partial permutation representations.<P/>
 
-    We would also like to acknowledge the support of the Centre of Algebra at
-    the University of Lisbon, and of EPSRC grant number GR/S/56085/01.    
+    We would also like to acknowledge the support of EPSRC grant number
+    GR/S/56085/01.    
   </Acknowledgements>
 
 </TitlePage>

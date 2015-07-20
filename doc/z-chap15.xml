@@ -1,4 +1,7 @@
-<Chapter Label="Homomorphisms"><Heading>Homomorphisms</Heading> 
+<Chapter Label="Semigroup homomorphisms">
+  <Heading>
+    Semigroup homomorphisms
+  </Heading> 
 
   In this chapter we describe the various ways to define a homomorphism from a
   semigroup to another semigroup. <P/>
