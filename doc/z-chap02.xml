@@ -111,7 +111,7 @@ make]]></Listing>
     <!--********************************************************************-->
 
     <Subsection Label="The Grape package">
-      <Heading>The &Grape; package</Heading>
+      <Heading>The Grape package</Heading>
       
       The &Grape; package must be available for the operation 
       <Ref Oper="SmallestMultiplicationTable"/> to work, and it must be fully
@@ -139,7 +139,7 @@ make]]></Listing>
     <!--********************************************************************-->
 
     <Subsection Label="genss">
-      <Heading>The &genss; package</Heading>
+      <Heading>The genss package</Heading>
 
       The &genss; package is used in a non-deterministic version of the
       operation

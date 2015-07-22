@@ -25,7 +25,8 @@
      <Description>
        This global variable is a record whose components contain the default
        values of certain options for semigroups.  A description of these
-       options is given above in Section <Ref Sect="opts"/>. <P/>
+       options is given above in Section <Ref Sect="Options when creating semigroups"/>.
+       <P/>
 
        The value of <C>SEMIGROUPS_DefaultOptionsRec</C> is defined in the file
        <C>semigroups/gap/options.g</C> as: TODO update this!!

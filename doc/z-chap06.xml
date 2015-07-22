@@ -69,11 +69,13 @@
     <A>S</A> is an ideal of such a semigroup.
   
     <List>
-      <Mark><C>exhaustive</C></Mark>
+      <Mark><C>generic</C></Mark>
       <Item> 
-        this component should be <K>true</K> or <K>false</K>. Roughly speaking,
+        this component should be <K>true</K> or <K>false</K>. 
+        
+        Roughly speaking,
         there are two types of methods in the &Semigroups; package: exhaustive
-        and non-exhaustive; see Section <Ref Sect="sect-exhaust-non-exhaust"/>.
+        and non-exhaustive; see Section <Ref Sect="Introduction"/>.
         In order for a semigroup to use the non-exhaustive methods in
         &Semigroups; it must satisfy <C>IsNonExhaustiveSemigroup</C>.  By
         default any semigroup or monoid of transformations, partial

@@ -1,24 +1,31 @@
-  <Chapter Label="semigroups">
-  <Heading>The &Semigroups; package</Heading>
+<Chapter Label="The Semigroups package">
+  <Heading>
+    The &Semigroups; package
+  </Heading>
   <Index Key="Semigroups">&Semigroups; package overview</Index>	
-    
-  <Section><Heading>Introduction</Heading>
+
+  <Section Label="Introduction">
+    <Heading>
+      Introduction
+    </Heading>
+
     This is the manual for the &Semigroups; package for &GAP; version &VERSION;.
     &Semigroups; &VERSION; is a distant descendant of the  
     <URL Text="Monoid package for GAP 3">
       http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
     Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.<P/>
-  
+
     &Semigroups; &VERSION; contains efficient methods for creating semigroups,
     monoids, inverse semigroups and their ideals, calculating their Green's
     structure, size, elements, group of units, minimal ideal, and testing
     membership, finding the inverses of a regular element, and factorizing
     elements over the generators, and much more; see Chapters <Ref
-      Chap="create"/>, <Ref Chap="Ideals"/>, and  <Ref Chap="green"/>. There
+      Chap = "Creating semigroups and monoids"/>, <Ref Chap = "Ideals"/>, and  
+    <Ref Chap = "Green's relations"/>. There
     are methods for testing if semigroups satisfy  particular
     properties, such as if they are regular, simple, inverse, completely regular,
-    and a variety of further properties; see Chapter <Ref Chap="green"/>.<P/>
-    
+    and a variety of further properties; see Chapter <Ref Chap="Green's relations"/>.<P/>
+
     There are methods for finding: congruences of semigroups, the normalizer of
     a semigroup in a permutation group (as given in <Cite
       Key="Araujo2010aa"/>), the maximal subsemigroups of a finite semigroup
@@ -28,12 +35,12 @@
     of the Green's structure of a semigroup, and for drawing graphical
     representations of the elements of certain semigroups; see Chapter <Ref
       Sect="The Grape package"/>. <P/>
-    
+
     Many standard examples of semigroups and classes of semigroups are provided;
-    see Section <Ref Sect="Examples"/>.  &Semigroups; also provides functions
-    to read and write collections of transformations, partial permutations, and
-    bipartitions to a file; see <Ref Func="ReadGenerators"/> and <Ref
-      Func="WriteGenerators"/>.<P/>
+    see Section <Ref Sect="Standard examples"/>.  &Semigroups; also provides
+    functions to read and write collections of transformations, partial
+    permutations, and bipartitions to a file; see <Ref Func="ReadGenerators"/>
+    and <Ref Func="WriteGenerators"/>.<P/>
 
     There are functions in &Semigroups; to define and manipulate free
     inverse semigroups and free bands; this part of the package was written
@@ -132,12 +139,12 @@
       BookName="ref"/> or <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
 
     This manual is organised as follows:
-    
+
 
     If you find a bug or an issue with the package, then report this using the
     <URL Text="issue
       tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL>.
-   
+
   </Section>
 
 </Chapter>

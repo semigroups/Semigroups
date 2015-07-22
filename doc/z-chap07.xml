@@ -4,9 +4,11 @@
   </Heading> 
 
   In this chapter we describe the various ways that an ideal of a semigroup
-  can be created and manipulated in &Semigroups;.<P/>
+  can be created and manipulated in &Semigroups;.
+  <P/>
 
-  We write <E>ideal</E> to mean two-sided ideal everywhere in this chapter.<P/>
+  We write <E>ideal</E> to mean two-sided ideal everywhere in this chapter.
+  <P/>
 
   The methods in the &Semigroups; package apply to any ideal of a semigroup
   that is created using the function <Ref Func="SemigroupIdeal"/> or
@@ -21,14 +23,24 @@
   We plan to improve the functionality of &Semigroups; for non-regular ideals
   in the future. 
 
-  <Section><Heading>Creating ideals</Heading> 
-    <#Include Label="SemigroupIdeal"> 
+  <Section Label = "Creating ideals">
+    <Heading>
+      Creating ideals
+    </Heading> 
+
+    <#Include Label="SemigroupIdeal">
+    
   </Section>
   
-  <Section><Heading>Attributes of ideals</Heading> 
+  <Section Label = "Attributes of ideals">
+    <Heading>
+      Attributes of ideals
+    </Heading> 
+
     <#Include Label="GeneratorsOfSemigroupIdeal">
     <#Include Label="MinimalIdealGeneratingSet">
     <#Include Label="SupersemigroupOfIdeal"> 
+
   </Section>
 
 </Chapter>

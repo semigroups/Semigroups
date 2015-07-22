@@ -1,10 +1,12 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
+* `IsRectangularGroup`
+* `CatalanMonoid`
 * Add `IsFinite` check to start of appropriate methods and add tests
 * `ViewString` for full transformation monoid, and symmetric inverse monoid
 * reporting in the generic Froidure-Pin method
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
-* fix the bug in the c++ code relating to the changeset tagged `bug-in-c-code`
+* fix the bug in the c++ code `add_generators` relating to the changeset tagged `bug-in-c-code`
 * unify ideals-lambda-rho, lambda-rho and graded.
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
 * get rid of `*Data` roll semigroups-generic into semigroups.gi

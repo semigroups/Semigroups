@@ -4,15 +4,105 @@
   </Heading> 
 
   In this chapter we describe the various ways to define a homomorphism from a
-  semigroup to another semigroup. <P/>
+  semigroup to another semigroup.
+  <P/>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
-  Support for homomorphisms in &Semigroups; is currently rather limited but
-  there are plans to improve this in the future. 
+  <Section>
+    <Heading>
+      Isomorphisms of arbitrary semigroups
+    </Heading> 
 
-  <Section><Heading>Isomorphisms</Heading> 
     <#Include Label="IsIsomorphicSemigroup"> 
     <#Include Label="SmallestMultiplicationTable"> 
     <#Include Label="IsomorphismSemigroups"> 
+
   </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section>
+    <Heading>
+      Isomorphisms of Rees (0-)matrix semigroups
+    </Heading> 
+
+    PREAMBLE
+
+    <!--********************************************************************-->
+    
+    <Subsection 
+      Label="Operators for isomorphisms of Rees (0-)matrix semigroup by triples">
+
+      <Heading>
+        Operators for isomorphisms of Rees (0-)matrix semigroup by triples
+      </Heading>
+
+      <List>
+        
+        <Mark><C><A>map</A>[<A>i</A>]</C></Mark>
+        <Item>
+          <Index Key="ELM_LIST"><C>ELM_LIST</C> (for Rees (0-)matrix semigroup
+            isomorphisms by triples)
+          </Index>
+          <C><A>map</A>[i]</C> returns the <A>i</A>th component of the Rees
+          (0-)matrix semigroup isomorphism by triple <A>map</A> when <C><A>i</A> = 1,
+            2, 3</C>; see <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>. 
+        </Item>
+
+        <Mark><C><A>map1</A> * <A>map2</A></C></Mark>
+        <Item>
+          <Index Key="*"><C>*</C> 
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns the composition of <A>map2</A> and <A>map1</A>;
+          see <Ref Oper = "CompositionMapping2" Label = "for IsRMSIsoByTriple"/>.
+        </Item>
+
+        <Mark><C><A>map1</A> &lt; <A>map2</A></C></Mark>
+        <Item>
+          <Index Key="&lt;"><C>&lt;</C>
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns <K>true</K> if <A>map1</A> is lexicographically less than
+          <A>map2</A>.
+        </Item>
+
+        <Mark><C><A>map1</A> = <A>map2</A></C></Mark>
+        <Item>
+          <Index Key="="><C>=</C>
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns <K>true</K> if the Rees (0-)matrix semigroup
+          isomorphisms by triple <A>map1</A> and <A>map2</A> have equal source and
+          range, and are equal as functions, and <K>false</K> otherwise. <P/>
+          
+          It is possible for <A>map1</A> and <A>map2</A> to be equal but to
+          have distinct components. 
+        </Item>
+        
+        <Mark><C><A>pt</A> ^ <A>map</A></C></Mark>
+        <Item>
+          <Index Key="^"><C>^</C>
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns the image of the element <A>pt</A> of the source of
+          <A>map</A> under the isomorphism <A>map</A>; see 
+          <Ref Oper = "ImagesElm" Label = "for IsRMSIsoByTriple"/>.
+        </Item>
+        
+      </List> 
+  
+    </Subsection>
+
+    <!--********************************************************************-->
+
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
 </Chapter>
 
