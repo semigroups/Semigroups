@@ -46,7 +46,10 @@ class Element {
     ~Element () {}
 
     bool operator == (const Element<T> & that) const {
-      assert(this->degree() == that.degree());
+      if (this->degree() != that.degree()) {
+        return false;
+      }
+
       for (size_t i = 0; i < this->degree(); i++) {
         if ((*_data)[i] != (*that._data)[i]) {
           return false;
@@ -69,7 +72,8 @@ class Element {
       return _data->size();
     }
 
-    virtual Element* copy () const {
+    virtual Element<T>* copy (size_t increase_deg_by = 0) const {
+      assert(increase_deg_by == 0);
       return new Element(*_data);
     }
 
@@ -77,6 +81,14 @@ class Element {
       if (_data != nullptr) {
         delete _data;
       }
+    }
+
+    void push_back (T val) {
+      _data->push_back(val);
+    }
+
+    std::vector<T>* data () const {
+      return _data;
     }
 
   protected:
@@ -105,7 +117,7 @@ class Transformation : public Element<T> {
         this->set(i, y->at(x->at(i)));
       }
     }
-
+    
     // the identity of this
     Element<T>* identity () {
       std::vector<T> image;
@@ -114,6 +126,20 @@ class Transformation : public Element<T> {
         image.push_back(i);
       }
       return new Transformation(image);
+    }
+  
+    Element<T>* copy (size_t increase_deg_by = 0) const override {
+        
+      Element<T>* out = new Element<T>(*this->data());
+      size_t deg = out->degree();
+      for (size_t i = deg; i < deg + increase_deg_by; i++) {
+        out->push_back(i);
+      }
+      return out;
+    }
+
+    size_t complexity () const {
+      return this->degree();
     }
 };
 
@@ -162,6 +188,19 @@ class PartialPerm : public Element<T> {
         image.push_back(i + 1);
       }
       return new PartialPerm(image);
+    }
+    
+    Element<T>* copy (size_t increase_deg_by = 0) const override {
+      Element<T>* out = new Element<T>(*this->data());
+      size_t deg = out->degree();
+      for (size_t i = deg; i < deg + increase_deg_by; i++) {
+        out->push_back(0);
+      }
+      return out;
+    }
+
+    size_t complexity () const {
+      return this->degree();
     }
 };
 
@@ -221,6 +260,10 @@ class BooleanMat: public Element<bool> {
         mat.at(i * dim + i) =  true;
       }
       return new BooleanMat(mat);
+    }
+
+    size_t complexity () const {
+      return pow(this->degree(), 3);
     }
 };
 
@@ -308,10 +351,16 @@ class Bipartition : public Element<u_int32_t> {
     Element<u_int32_t>* identity () {
       std::vector<u_int32_t> image;
       image.reserve(this->degree());
-      for (u_int32_t i = 0; i < this->degree(); i++) {
-        image.push_back(i);
+      for (size_t j = 0; j < 2; j++) {
+        for (u_int32_t i = 0; i < this->degree() / 2; i++) {
+          image.push_back(i);
+        }
       }
       return new Bipartition(image);
+    }
+    
+    size_t complexity () const {
+      return pow(this->degree(), 2);
     }
 
   private:
@@ -367,7 +416,7 @@ class MatrixOverSemiring: public Element<long> {
       : Element<long>(data),
         _semiring(semiring) {}
   
-    Element* copy () const {
+    Element* copy (size_t increase_degree_by = 0) const {
       return new MatrixOverSemiring(*_data, _semiring);
     }
 
@@ -407,6 +456,10 @@ class MatrixOverSemiring: public Element<long> {
   
     Semiring* semiring () {
       return _semiring;
+    }
+    
+    size_t complexity () const {
+      return pow(this->degree(), 3);
     }
 
   private: 
@@ -479,11 +532,11 @@ namespace std {
 
 // partitioned binary relations
 
-class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
+class PBR: public Element<std::vector<u_int32_t> > {
   
   public:
   
-    PartitionedBinaryRelation (u_int32_t degree, 
+    PBR (u_int32_t degree, 
          Element<std::vector<u_int32_t> >* sample = nullptr) 
       : Element<std::vector<u_int32_t> >() {
         _data = new std::vector<std::vector<u_int32_t> >();
@@ -493,7 +546,7 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
         }
       }
     
-    PartitionedBinaryRelation (std::vector<std::vector<u_int32_t> >
+    PBR (std::vector<std::vector<u_int32_t> >
                                const& data)
       : Element<std::vector<u_int32_t> >(data) { }
     
@@ -547,7 +600,11 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
         adj.at(i).push_back(i + n);
         adj.at(i + n).push_back(i);
       }
-      return new PartitionedBinaryRelation(adj);
+      return new PBR(adj);
+    }
+    
+    size_t complexity () const {
+      return pow((2 * this->degree()), 3);
     }
 
   private:
@@ -607,8 +664,8 @@ class PartitionedBinaryRelation: public Element<std::vector<u_int32_t> > {
 
 namespace std {
   template <>
-    struct hash<const PartitionedBinaryRelation> {
-    size_t operator() (const PartitionedBinaryRelation& x) const {
+    struct hash<const PBR> {
+    size_t operator() (const PBR& x) const {
       size_t seed = 0;
       size_t pow = 101;
       for (size_t i = 0; i < x.degree(); i++) {

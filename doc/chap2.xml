@@ -160,6 +160,7 @@ true</Log>
       <#Include Label="IsomorphismPermGroup">
       <#Include Label="IsomorphismBipartitionSemigroup">
       <#Include Label="IsomorphismBlockBijectionSemigroup">
+      <#Include Label="IsomorphismReesZeroMatrixSemigroup">
   </Section>
   
   <Section Label="Examples"><Heading>Standard examples</Heading>

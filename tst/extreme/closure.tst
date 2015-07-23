@@ -16,23 +16,23 @@ gap> LoadPackage("semigroups", false);;
 gap> SemigroupsStartTest();
 
 #T# ClosureTest1
-gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
+gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
 >  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
 >  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
 >  Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
-gap> s:=Monoid(gens[1]);; Size(s);;
-gap> for i in [2..4] do 
-> s:=ClosureSemigroup(s, gens[i]); Size(s);
+gap> S := Monoid(gens[1]);; Size(S);;
+gap> for i in [2 .. 4] do 
+> S := ClosureSemigroup(S, gens[i]); Size(S);
 > od;
-gap> Size(s);
+gap> Size(S);
 233606
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 4397
-gap> NrLClasses(s);
+gap> NrLClasses(S);
 16915
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 662
-gap> GroupOfUnits(s);
+gap> GroupOfUnits(S);
 <trivial transformation group>
 
 #T# ClosureTest2
@@ -214,18 +214,17 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 20
 
 #T# ClosureTest10
-gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+gap> gens := [ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 2, 4, 1, 1 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ) ];;
-gap> s:=Monoid(gens[1]);             
-<commutative transformation monoid on 4 pts with 1 generator>
-gap> for i in [1..Length(gens)] do
-> s:=ClosureSemigroup(s, gens[i]);
+gap> S := Monoid(gens[1]);;
+gap> for x in gens do
+> S := ClosureSemigroup(S, x);
 > od;
-gap> Size(s);
+gap> Size(S);
 115
-gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
+gap> NrRClasses(S); NrLClasses(S); NrDClasses(S); NrIdempotents(S);
 12
 20
 6

@@ -525,7 +525,7 @@ true]]></Example>
 <#GAPDoc Label="InjectionPrincipalFactor">
 <ManSection>
   <Attr Name="InjectionPrincipalFactor" Arg="D"/>
-  <Attr Name="IsomorphismReesMatrixSemigroup" Arg="D"/>
+  <Attr Name="IsomorphismReesMatrixSemigroup" Arg="D" Label="for a D-class"/>
   <Returns>A injective mapping.</Returns>
   <Description> 
     If the &D;-class <A>D</A> is a subsemigroup of a semigroup <C>S</C>, then the
@@ -546,7 +546,7 @@ true]]></Example>
       <A>D</A> and <C>0</C> if it does not. <P/>
     </Alt>
     <C>InjectionPrincipalFactor</C> returns an injective function
-    from the &D;-class <A>D</A> to a Rees matrix semigroup, which
+    from the &D;-class <A>D</A> to a Rees (0-)matrix semigroup, which
     contains the principal factor of <A>D</A> as a subsemigroup. <P/>
 
     If <A>D</A> is a subsemigroup of its parent semigroup, then the
@@ -559,7 +559,8 @@ true]]></Example>
     <C>InjectionPrincipalFactor</C> is an injective function from <A>D</A> to a
     Rees 0-matrix semigroup isomorphic to the principal factor of <A>D</A>; see 
     <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. In this case,
-    <C>IsomorphismReesMatrixSemigroup</C> returns an error.<P/>
+    <C>IsomorphismReesMatrixSemigroup</C> and
+    <C>IsomorphismReesZeroMatrixSemigroup</C> returns an error.<P/>
 
     See also <Ref Attr="PrincipalFactor"/>.
     
@@ -592,6 +593,35 @@ true]]></Example>
     MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], 
       [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over 
       Group([ (1,2) ])>, function( f ) ... end, function( x ) ... end )]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismReesZeroMatrixSemigroup">
+<ManSection>
+  <Attr Name="IsomorphismReesMatrixSemigroup" Arg="S" Label="for a semigroup"/>
+  <Attr Name="IsomorphismReesZeroMatrixSemigroup" Arg="S"/>
+  <Returns>An isomorphism.</Returns>
+  <Description> 
+    If the semigroup <A>S</A> is finite and simple, then
+    <C>IsomorphismReesMatrixSemigroup</C> returns an isomorphism to a Rees
+    matrix semigroup.  If <A>S</A> is finite and 0-simple, then
+    <C>IsomorphismReesZeroMatrixSemigroup</C> returns an isomorphism to a Rees
+    0-matrix semigroup.<P/>
+
+    See also <Ref Attr="InjectionPrincipalFactor"/>.
+    
+    <Example><![CDATA[
+gap> S := Semigroup(PartialPerm([1]));
+gap> IsomorphismReesMatrixSemigroup(S);
+MappingByFunction( <trivial partial perm group of rank 1 with 0 generators>,
+<Rees matrix semigroup 1x1 over Group(())>
+, function( x ) ... end, function( x ) ... end )
+gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
+gap> IsomorphismReesZeroMatrixSemigroup(S);
+MappingByFunction( <commutative 0-simple partial perm monoid of rank 1 with 1 generator
+>, <Rees 0-matrix semigroup 1x1 over Group(())>
+, function( x ) ... end, function( x ) ... end )]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

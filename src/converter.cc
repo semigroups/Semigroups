@@ -181,7 +181,7 @@ Obj MatrixOverPrimeFieldConverter::unconvert (MatrixOverSemiring* x) {
 
 // TODO add some more asserts here
 
-PartitionedBinaryRelation* PBRConverter::convert (Obj o, size_t n) {
+PBR* PBRConverter::convert (Obj o, size_t n) {
   assert(IS_PBR(o));
   assert(n / 2 == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
 
@@ -198,10 +198,10 @@ PartitionedBinaryRelation* PBRConverter::convert (Obj o, size_t n) {
     std::sort(next.begin(), next.end());
     pbr.push_back(next);
   }
-  return new PartitionedBinaryRelation(pbr);
+  return new PBR(pbr);
 }
 
-Obj PBRConverter::unconvert (PartitionedBinaryRelation* x) {
+Obj PBRConverter::unconvert (PBR* x) {
   Obj plist = NEW_PLIST(T_PLIST_TAB, x->degree() + 1);
   SET_LEN_PLIST(plist, x->degree() + 1);
   SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree() / 2));
@@ -220,5 +220,5 @@ Obj PBRConverter::unconvert (PartitionedBinaryRelation* x) {
     SET_ELM_PLIST(plist, i + 2, adj);
     CHANGED_BAG(plist);
   }
-  return CALL_2ARGS(Objectify, PartitionedBinaryRelationType, plist);
+  return CALL_2ARGS(Objectify, PBRType, plist);
 }
