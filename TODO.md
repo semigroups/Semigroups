@@ -2,14 +2,8 @@
 ###There are more TODOs in the source files this list is not exhaustive###
 
 
-**BUG**:
 
-    gap> RegularBooleanMatMonoid(1);
-    <commutative monoid of 1x1 boolean matrices with 1 generator>
-    gap> Size(last);
-    Assertion failed: (IS_BLIST_REP(ELM_PLIST(o, 1))), function convert, file src/converter.cc, line 48.
-    Abort trap: 6
-
+* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
 * Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
@@ -40,6 +34,14 @@
 * new ideals stuff!
 
 #DONE
+**BUG**:
+
+    gap> RegularBooleanMatMonoid(1);
+    <commutative monoid of 1x1 boolean matrices with 1 generator>
+    gap> Size(last);
+    Assertion failed: (IS_BLIST_REP(ELM_PLIST(o, 1))), function convert, file src/converter.cc, line 48.
+    Abort trap: 6
+    
 * finish partitioned binary relation stuff (more tests and C++)
 * `TrivialSemigroup` function
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
