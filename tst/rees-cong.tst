@@ -180,8 +180,8 @@ gap> i := SemigroupIdeal(s, Transformation( [ 1, 1, 1, 3, 1 ] ));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> class := CongruenceClassOfElement(cong, Transformation([3,3,3,3,3]));;
 gap> enum := Enumerator(class);
-<enumerator of <non-regular transformation semigroup ideal on 5 pts with 1 gene
-rator>>
+<enumerator of <non-regular transformation semigroup ideal 
+ on 5 pts with 1 generator>>
 gap> Size(enum);
 5
 gap> class := CongruenceClassOfElement(cong, Transformation([2,2,2,1,2]));;
