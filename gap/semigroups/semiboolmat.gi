@@ -63,7 +63,11 @@ function(S)
            x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
 end);
 
-GossipMonoid := function(n)
+# examples
+
+InstallMethod(GossipMonoid, "for a positive integer",
+[IsPosInt], 
+function(n)
   local gens, x, i, j;
   
   gens := [];
@@ -77,4 +81,85 @@ GossipMonoid := function(n)
   od;
 
   return Monoid(gens);
-end;
+end);
+
+InstallMethod(ReflexiveBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+end);
+
+InstallMethod(FullBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens;
+  
+  gens := [RegularBooleanMatMonoid(1),
+           RegularBooleanMatMonoid(2),
+
+           [BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+            BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
+            BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+            BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 0]]),
+            BooleanMat([[1, 1, 0], [1, 0, 1], [0, 1, 1]])],
+
+           [BooleanMat([[1, 1, 1, 0], [1, 0, 0, 1],
+                        [0, 1, 0, 1], [0, 0, 1, 1]]),
+            BooleanMat([[1, 1, 0, 0], [1, 0, 1, 0],
+                        [0, 1, 1, 0], [0, 0, 0, 1]]),
+            BooleanMat([[1, 1, 0, 0], [1, 0, 1, 0],
+                        [0, 1, 0, 1], [0, 0, 1, 1]]),
+            BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0],
+                        [0, 0, 1, 0], [1, 0, 0, 1]]),
+            BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0],
+                        [0, 0, 1, 0], [0, 0, 0, 0]]),
+            BooleanMat([[0, 1, 0, 0], [1, 0, 0, 0],
+                        [0, 0, 1, 0], [0, 0, 0, 1]]),
+            BooleanMat([[0, 1, 0, 0], [0, 0, 1, 0],
+                        [0, 0, 0, 1], [1, 0, 0, 0]])],
+
+           [BooleanMat([[0, 1, 0, 0, 0],
+                        [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
+                        [0, 0, 0, 0, 1], [1, 0, 0, 0, 0]]),
+           BooleanMat([[0, 1, 0, 0, 0],
+                       [1, 0, 0, 0, 0], [0, 0, 1, 0, 0],
+                       [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]) ,
+           BooleanMat([[1, 0, 0, 0, 0],
+                       [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
+                       [0, 0, 0, 1, 0], [1, 0, 0, 0, 1]]),
+           BooleanMat([[1, 1, 0, 0, 0],
+                       [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
+                       [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
+           BooleanMat([[1, 1, 0, 0, 0],
+                       [1, 0, 1, 0, 0], [0, 1, 1, 0, 0],
+                       [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]),
+           BooleanMat([[1, 1, 1, 0, 0],
+                       [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
+                       [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
+           BooleanMat([[1, 1, 0, 0, 0],
+                       [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
+                       [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
+           BooleanMat([[1, 1, 1, 1, 0],
+                       [1, 0, 0, 0, 1], [0, 1, 0, 0, 1],
+                       [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
+           BooleanMat([[1, 0, 0, 0, 0],
+                       [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
+                       [0, 0, 0, 1, 0], [0, 0, 0, 0, 0]]),
+           BooleanMat([[1, 1, 1, 0, 0],
+                       [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
+                       [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
+           BooleanMat([[1, 1, 1, 0, 0],
+                       [1, 0, 0, 1, 0], [1, 0, 0, 0, 1],
+                       [0, 1, 0, 1, 0], [0, 0, 1, 0, 1]]),
+           BooleanMat([[1, 1, 1, 0, 0],
+                       [1, 0, 0, 1, 1], [0, 1, 0, 1, 0],
+                       [0, 1, 0, 0, 1], [0, 0, 1, 1, 0]]),
+           BooleanMat([[1, 1, 1, 0, 0],
+                       [1, 1, 0, 1, 0], [1, 0, 0, 0, 1],
+                       [0, 1, 0, 0, 1], [0, 0, 1, 1, 1]])]];
+  if n > 6 then 
+    ErrorMayQuit();
+  fi;
+  return Monoid(gens[n]);
+end);
+
+

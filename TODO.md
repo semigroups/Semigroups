@@ -1,6 +1,19 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
-* `IsRectangularGroup`
+
+
+**BUG**:
+
+    gap> RegularBooleanMatMonoid(1);
+    <commutative monoid of 1x1 boolean matrices with 1 generator>
+    gap> Size(last);
+    Assertion failed: (IS_BLIST_REP(ELM_PLIST(o, 1))), function convert, file src/converter.cc, line 48.
+    Abort trap: 6
+
+* `HallMatrixMonoid`
+* `ReflexiveBooleanMatrixMonoid`
+* Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
+* `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
 * `CatalanMonoid`
 * Add `IsFinite` check to start of appropriate methods and add tests
 * `ViewString` for full transformation monoid, and symmetric inverse monoid
