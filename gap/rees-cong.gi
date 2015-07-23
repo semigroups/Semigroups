@@ -332,3 +332,21 @@ function(cong)
   cong := AsSemigroupCongruenceByGeneratingPairs(cong);
   return GeneratingPairsOfSemigroupCongruence(cong);
 end);
+
+#
+
+InstallMethod(OneImmutable,
+"for a congruence class",
+[IsCongruenceClass],
+function(class)
+  local cong, one;
+  cong := EquivalenceClassRelation(class);
+  one := One(Range(cong));
+  if one <> fail then
+    return EquivalenceClassOfElementNC(cong, One(Range(cong)));
+  else
+    return fail;
+  fi;
+end);
+
+#

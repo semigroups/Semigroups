@@ -40,3 +40,11 @@ InstallMethod(\/, "for a semigroup and an ideal",
 function(S, I)
   return S / ReesCongruenceOfSemigroupIdeal(I);
 end);
+
+InstallMethod(Size, "for a quotient semigroup",
+[IsQuotientSemigroup and IsFinite],
+function(q)
+  local cong;
+  cong := QuotientSemigroupCongruence(q);
+  return NrCongruenceClasses(cong);
+end);
