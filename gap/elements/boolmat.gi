@@ -25,7 +25,7 @@ InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a boolean matrix",
 
 InstallGlobalFunction(BooleanMatNC,
 function(x)
-  MakeImmutable(x)
+  MakeImmutable(x);
   return Objectify(BooleanMatType, x);
 end);
 
