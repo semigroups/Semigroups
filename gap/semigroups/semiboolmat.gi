@@ -63,7 +63,42 @@ function(S)
            x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
 end);
 
-# examples
+#############################################################################
+## ?. Standard examples
+#############################################################################
+
+InstallMethod(RegularBooleanMatMonoid, "for a pos int",
+[IsPosInt],
+function(n)
+  local gens, i, j;
+
+  if n = 1 then 
+    return Monoid(BooleanMat([[true]]), BooleanMat([[false]]));
+  fi;
+
+  gens := [];
+
+  gens[2] := List([1 .. n], x -> BlistList([1 .. n], []));
+  for j in [1 .. n - 1] do
+    gens[2][j][j + 1] := true;
+  od;
+  gens[2][n][1] := true;
+
+  for i in [3, 4] do
+    gens[i] := List([1 .. n], x -> BlistList([1 .. n], []));
+    for j in [1 .. n - 1] do
+      gens[i][j][j] := true;
+    od;
+  od;
+  gens[3][n][1] := true;
+  gens[3][n][n] := true;
+
+  Apply(gens, BooleanMat);
+  
+  gens[1] := AsBooleanMat((1, 2), n);
+
+  return Monoid(gens);
+end);
 
 InstallMethod(GossipMonoid, "for a positive integer",
 [IsPosInt], 
@@ -76,7 +111,7 @@ function(n)
       x := List([1 .. n], k -> BlistList([1 .. n], [k]));
       x[i][j] := true;
       x[j][i] := true;
-      Add(gens, BooleanMatNC(x));
+      Add(gens, BooleanMat(x));
     od;
   od;
 
@@ -86,6 +121,61 @@ end);
 InstallMethod(ReflexiveBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
+if n = 3 then 
+  return 
+  Semigroup(BooleanMat([[1, 1, 0], [0, 1, 1], [1, 0, 1]]),
+  BooleanMat([[1, 1, 0], [0, 1, 0], [0, 0, 1]]),
+  BooleanMat([[1, 0, 1], [1, 1, 0], [0, 1, 1]]),
+  BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
+  BooleanMat([[1, 0, 0], [1, 1, 0], [0, 0, 1]]),
+  BooleanMat([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
+  BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+  BooleanMat([[1, 0, 0], [0, 1, 0], [0, 1, 1]]),
+  BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
+elif n = 4 then 
+  return 
+  Semigroup(
+  BooleanMat([[1, 1, 1, 0], [0, 1, 0, 1], [0, 0, 1, 1], [1, 0, 0, 1]]),
+  BooleanMat([[1, 1, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 0, 1, 1], [1, 1, 0, 0], [0, 1, 1, 0], [0, 1, 0, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 1, 1], [1, 0, 1, 0], [1, 0, 0, 1]]),
+  BooleanMat([[1, 0, 1, 0], [1, 1, 0, 1], [0, 1, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 0, 1, 0], [0, 1, 0, 1], [0, 1, 1, 0], [1, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 1], [1, 1, 1, 0], [0, 0, 1, 1], [0, 1, 0, 1]]),
+  BooleanMat([[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0], [0, 1, 0, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 1], [0, 1, 0, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1], [1, 0, 0, 1]]),
+  BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 1], [1, 0, 0, 1]]),
+  BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 0, 1, 1], [0, 1, 0, 1]]),
+  BooleanMat([[1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 1, 1], [1, 1, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1], [0, 1, 0, 1]]),
+  BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 1], [1, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [1, 0, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [1, 0, 1, 0], [0, 1, 1, 1]]),
+  BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [1, 0, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [1, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 0, 1, 0], [0, 1, 0, 1]]),
+  BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 1], [0, 0, 0, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 1, 1]]),
+  BooleanMat([[1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 1, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [1, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [1, 0, 1, 0], [0, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 1]]),
+  BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]) );
+fi;
+
 end);
 
 InstallMethod(FullBooleanMatMonoid, "for a positive integer",
@@ -94,6 +184,7 @@ function(n)
   local gens;
   
   gens := [RegularBooleanMatMonoid(1),
+
            RegularBooleanMatMonoid(2),
 
            [BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),

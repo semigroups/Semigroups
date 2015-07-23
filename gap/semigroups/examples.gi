@@ -301,59 +301,6 @@ end);
 
 #
 
-InstallMethod(RegularBooleanMatMonoid, "for a pos int",
-[IsPosInt],
-function(n)
-  local gens, i, j;
-
-  if n = 1 then 
-    return Monoid(BooleanMatNC([[true]]), BooleanMatNC([[false]]));
-  fi;
-
-  gens := [];
-
-  gens[2] := List([1 .. n], x -> BlistList([1 .. n], []));
-  for j in [1 .. n - 1] do
-    gens[2][j][j + 1] := true;
-  od;
-  gens[2][n][1] := true;
-
-  for i in [3, 4] do
-    gens[i] := List([1 .. n], x -> BlistList([1 .. n], []));
-    for j in [1 .. n - 1] do
-      gens[i][j][j] := true;
-    od;
-  od;
-  gens[3][n][1] := true;
-  gens[3][n][n] := true;
-
-  Apply(gens, BooleanMatNC);
-  
-  gens[1] := AsBooleanMat((1, 2), n);
-
-  return Monoid(gens);
-end);
-
-#FIXME add a function for FullBooleanMatMonoid
-# Generators for B_3:
-#
-#Semigroup( [ BooleanMatNC([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
-#  BooleanMatNC([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
-#  BooleanMatNC([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
-#  BooleanMatNC([[1, 0, 0], [0, 1, 0], [0, 0, 0]]),
-#  BooleanMatNC([[1, 1, 0], [1, 0, 1], [0, 1, 1]]) ] )
-# 
-# Generators for B_4:
-# [ BooleanMatNC([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]]),
-#  BooleanMatNC([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-#  BooleanMatNC([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 0]]),
-#  BooleanMatNC([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 1]]),
-#  BooleanMatNC([[1, 1, 0, 0], [1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 1]]),
-#  BooleanMatNC([[1, 1, 0, 0], [1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 0, 1]]),
-#  BooleanMatNC([[1, 1, 1, 0], [1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1]]) ]
-
-#
-
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",
 [IsPosInt, IsPosInt],
 function(d, q)
