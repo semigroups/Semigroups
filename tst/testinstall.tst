@@ -1041,6 +1041,13 @@ gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
 of size 5, on 2 pts with 2 generators>>
 
+#T# TestInstall65: Issue #131
+gap> S := FullTransformationSemigroup(3);;
+gap> I := SemigroupIdeal(FullTransformationSemigroup(3), Transformation([1,1,2]));;
+gap> T := S/I;;
+gap> One(T);
+{IdentityTransformation}
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
@@ -1069,6 +1076,7 @@ gap> Unbind(d);
 gap> Unbind(g);
 gap> Unbind(f);
 gap> Unbind(i);
+gap> Unbind(I);
 gap> Unbind(h);
 gap> Unbind(gens);
 gap> Unbind(o);
