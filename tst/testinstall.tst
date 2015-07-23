@@ -1048,6 +1048,11 @@ gap> T := S/I;;
 gap> One(T);
 {IdentityTransformation}
 
+#T# TestInstall66: Second bug in Issue #131
+gap> I := SemigroupIdeal(FullTransformationSemigroup(3), Transformation([1,1,1]));;
+gap> hom:=HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
+gap> map:=IsomorphismTransformationSemigroup(Range(quotienthom));;
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
@@ -1063,6 +1068,7 @@ gap> Unbind(tuples);
 gap> Unbind(u);
 gap> Unbind(B);
 gap> Unbind(mat);
+gap> Unbind(map);
 gap> Unbind(G);
 gap> Unbind(F);
 gap> Unbind(I);

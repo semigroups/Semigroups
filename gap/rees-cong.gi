@@ -350,3 +350,15 @@ function(class)
 end);
 
 #
+
+InstallMethod(Enumerator,
+"for a Rees congruence class",
+[IsReesCongruenceClass],
+function(class)
+  local cong;
+  if class!.is_ideal_class then
+    cong := EquivalenceClassRelation(class);
+    return Enumerator(SemigroupIdealOfReesCongruence(cong));
+  fi;
+  return AsList(class);
+end);
