@@ -562,11 +562,12 @@ function(S, opts)
     Append(str, "</TABLE>>];\n");
   od;
   # TODO make PartialOrderOfDClasses return a digraph
-  longest := DigraphLongestDistances(Digraph(PartialOrderOfDClasses(S)));
+  longest := DigraphLongestDistances(
+               DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S))));
   rel := List([1 .. NrDClasses(S)], x -> []);
-  for i in [1 .. NrDClasses(S)] do 
-    for j in [1 .. NrDClasses(S)] do 
-      if longest[i][j] = 1 then 
+  for i in [1 .. NrDClasses(S)] do
+    for j in [1 .. NrDClasses(S)] do
+      if longest[i][j] = 1 then
         Add(rel[i], j);
       fi;
     od;
