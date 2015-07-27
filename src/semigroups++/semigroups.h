@@ -32,8 +32,10 @@ class SemigroupBase { };
 template <typename T>
 class Semigroup : public SemigroupBase {
   
-  typedef std::vector<size_t> Word;
-  typedef std::pair<Word*, Word*> Relation;
+  typedef std::vector<size_t>               Word;
+  typedef std::pair<Word*, Word*>           Relation;
+  typedef std::vector<std::vector<size_t> > CayleyGraph;
+  typedef std::vector<std::vector<bool> >   Flags;
 
   public:
     
@@ -539,7 +541,6 @@ class Semigroup : public SemigroupBase {
         std::cout << "limit = " << limit << std::endl;
       }
       
-      //T x(_degree, _gens.at(0)); 
       // pass in sample object to, for example, pass on the semiring for
       // MatrixOverSemiring
 

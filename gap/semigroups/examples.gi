@@ -1013,11 +1013,11 @@ function(func, exclude, param)
   cons := EvalString(Concatenation(NameFunction(func), "Cons"));
   for type in SEMIGROUPS_Types do 
     if not type in exclude then 
-      InstallMethod(cons, 
-      [type, param],
+      InstallMethod(cons, [type, param],
       function(filt, n)
         if SEMIGROUPS_AsXSemigroup(filt) <> fail then 
-          return SEMIGROUPS_AsXSemigroup(filt)(func(IsTransformationSemigroup, n));
+          return SEMIGROUPS_AsXSemigroup(filt)(func(IsTransformationSemigroup,
+                                                    n));
         fi;
         return fail;
       end);

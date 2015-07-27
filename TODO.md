@@ -1,8 +1,8 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
 
-
-
+* remove RecVecs
+* `ReadGenerators` and `WriteGenerators` for new types
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
@@ -24,7 +24,7 @@
 * split the "closure" constructor for a semigroup into 2 methods
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * closure of generic inverse semigroups
-* remove RecVecs
+
 * check for memleaks
 * remove C++11?
 * gmp problems?
