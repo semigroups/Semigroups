@@ -373,14 +373,14 @@ class Interface : public InterfaceBase {
   private:
     
     // helper function to convert a CayleyGraph to a GAP plist of GAP plists.
-    Obj ConvertFromCayleyGraph (std::vector<std::vector<size_t> >* v) {
-      assert(v->size() != 0);
-      Obj out = NEW_PLIST(T_PLIST, v->size());
-      SET_LEN_PLIST(out, v->size());
+    Obj ConvertFromCayleyGraph (CayleyGraph const& v) {
+      assert(v.size() != 0);
+      Obj out = NEW_PLIST(T_PLIST, v.size());
+      SET_LEN_PLIST(out, v.size());
 
-      for (size_t i = 0; i < v->size(); i++) {
+      for (size_t i = 0; i < v.size(); i++) {
         //TODO use ConvertFromVec here
-        std::vector<size_t> w = v->at(i);
+        std::vector<size_t> w = v.at(i);
         Obj next = NEW_PLIST(T_PLIST_CYC, w.size());
         SET_LEN_PLIST(next, w.size());
         for (size_t j = 0; j < w.size(); j++) {
