@@ -129,7 +129,7 @@ class Semigroup : public SemigroupBase {
         _genslookup    (copy._genslookup),
         _id            (static_cast<T*>(copy._id->copy())),
         _index         (copy._index),
-        _left          (copy._left),
+        _left          (nullptr),
         _lenindex      (copy._lenindex),
         _length        (copy._length),  
         _nr            (copy._nr),
@@ -142,7 +142,7 @@ class Semigroup : public SemigroupBase {
         _reduced       (copy._reduced),
         _relation_pos  (copy._relation_pos),
         _relation_gen  (copy._relation_gen),
-        _right         (copy._right),
+        _right         (new CayleyGraph(copy._right)),
         _suffix        (copy._suffix),
         _wordlen       (copy._wordlen) 
     {
@@ -158,6 +158,10 @@ class Semigroup : public SemigroupBase {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->copy()));
         _map.insert(std::make_pair(*_elements->back(), i));
       }
+
+      _left    = copy._left;
+      _reduced = copy._reduced;
+      _right   = copy._right;
     }
     
     /*******************************************************************************
@@ -174,7 +178,7 @@ class Semigroup : public SemigroupBase {
         _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
         _genslookup    (copy._genslookup),
         _index         (),
-        _left          (copy._left),
+        _left          (new CayleyGraph(copy._left)),
         _lenindex      (),
         _length        (copy._length),    // copy for assignment to specific positions in add_generators
         _map           (),
@@ -188,7 +192,7 @@ class Semigroup : public SemigroupBase {
         _reduced       (copy._reduced),
         _relation_pos  (-1),
         _relation_gen  (0),
-        _right         (copy._right),
+        _right         (new CayleyGraph(copy._right)),
         _suffix        (copy._suffix),    // copy for assignment to specific positions in add_generators
         _wordlen       (0) 
     {
@@ -782,8 +786,6 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
       
       size_t nr_shorter_elements;
-      // pass in sample object to, for example, pass on the semiring for
-      // MatrixOverSemiring
 
       // Multiply all elements by all generators (old and new) until we have
       // all of the elements of <old> in our new data structure. 
@@ -843,7 +845,7 @@ class Semigroup : public SemigroupBase {
             size_t b = _final.at(_index.at(i)); 
             for (size_t j = 0; j < _nrgens; j++) { 
               _left->at(_index.at(i)).push_back(_right->AT(_genslookup.at(j), b));
-            }
+            }//FIXME lots of these allocations are unnecessary
           }
         } else {
           for (size_t i = _lenindex.at(_wordlen); i < _pos; i++) { 
@@ -851,7 +853,7 @@ class Semigroup : public SemigroupBase {
             size_t b = _final.at(_index.at(i)); 
             for (size_t j = 0; j < _nrgens; j++) { 
               _left->at(_index.at(i)).push_back(_right->AT(_left->AT(p, j), b));
-            }
+            }//FIXME lots of these allocations are unnecessary
           }
         }
         if (_pos == _lenindex.at(_wordlen + 1)) {
