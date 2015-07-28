@@ -2,6 +2,7 @@
 ###There are more TODOs in the source files this list is not exhaustive###
 
 * remove RecVecs
+* a `small_generating_set` method using the Cayley graph
 * `ReadGenerators` and `WriteGenerators` for new types
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value
 * `HallMatrixMonoid`
