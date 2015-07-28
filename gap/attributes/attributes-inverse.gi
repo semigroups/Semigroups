@@ -178,7 +178,7 @@ end);
 InstallMethod(PrimitiveIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local T, dist, i, out, j;
+  local T, i, gr, prims;
 
   if not IsFinite(S) then
     ErrorMayQuit("Semigroups: PrimitiveIdempotents: usage,\n",
@@ -195,16 +195,10 @@ function(S)
   fi;
 
   T := IdempotentGeneratedSubsemigroup(S);
-  dist := DigraphLongestDistances(Digraph(NaturalPartialOrder(T)));
   i := Position(Elements(T), MultiplicativeZero(S));
-  out := [];
-
-  for j in [1 .. Size(T)] do
-    if dist[j][i] = 1 then
-      Add(out, Elements(T)[j]);
-    fi;
-  od;
-  return out;
+  gr := DigraphSkeleton(Digraph(NaturalPartialOrder(T)));
+  prims := InNeighboursOfVertex(gr, i);
+  return Elements(T){prims};
 end);
 
 InstallMethod(PrimitiveIdempotents, "for acting semigroup with inverse op",
