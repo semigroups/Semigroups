@@ -222,7 +222,6 @@ class Semigroup : public SemigroupBase {
       // add the distinct old generators to new _index
       for (size_t i = 0; i < copy._lenindex.at(1); i++) {
         _index.push_back(copy._index.at(i));
-        _length.push_back(1);
       }
 
       for (size_t i = 0; i < copy.nrgens(); i++) {
@@ -237,7 +236,7 @@ class Semigroup : public SemigroupBase {
         is_one(*_elements->back(), i);
         _map.insert(std::make_pair(*_elements->back(), i));
         _reduced.push_back(std::vector<bool>());
-        _reduced.back().reserve(copy.nrgens() + coll.size());
+        _reduced.back().reserve(copy.nrgens());
       }
       
       add_generators(new_gens, report);
@@ -755,6 +754,10 @@ class Semigroup : public SemigroupBase {
       _index.erase(_index.begin() + _lenindex.at(1), _index.end());
       _wordlen = 0;
       
+      for (std::vector<bool> v: _reduced) {
+        v.clear();
+      }
+      
       // add the new generators to new _gens, elements, and _index
       for (T* x: coll) {
         if (_map.find(*x) == _map.end()) {
@@ -783,12 +786,13 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(0);
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
       
-      size_t nr_shorter_elements;
-
+      for (std::vector<bool> v: _reduced) {
+        v.reserve(_nrgens);
+      }
+      
       // Multiply all elements by all generators (old and new) until we have
       // all of the elements of <old> in our new data structure. 
       while (nr_old_left > 0) {
-        nr_shorter_elements = _nr;
         while (_pos < _lenindex.at(_wordlen + 1) && nr_old_left > 0) {
           size_t i = _index.at(_pos); // position in _elements
           size_t b = _first.at(i);
@@ -801,7 +805,7 @@ class Semigroup : public SemigroupBase {
                 is_one(*_elements->at(k), k);
                 _first.at(k) = _first.at(i);
                 _final.at(k) = j;
-                _length.at(k) = _wordlen + 1;
+                _length.at(k) = _wordlen + 2;
                 _prefix.at(k) = i;
                 _reduced.at(i).push_back(true);
                 if (_wordlen == 0) {
@@ -912,7 +916,7 @@ class Semigroup : public SemigroupBase {
           _elements->push_back(static_cast<T*>(_tmp_product->copy()));
           _first.push_back(b);
           _final.push_back(j);
-          _length.push_back(_wordlen + 1);
+          _length.push_back(_wordlen + 2);
           _map.insert(std::make_pair(*_elements->back(), _nr));
           _prefix.push_back(i);
           _reduced.at(i).push_back(true);
@@ -930,7 +934,7 @@ class Semigroup : public SemigroupBase {
           is_one(*_tmp_product, it->second);
           _first.at(it->second) = b;
           _final.at(it->second) = j;
-          _length.at(it->second) = _wordlen + 1;
+          _length.at(it->second) = _wordlen + 2;
           _prefix.at(it->second) = i;
           _reduced.at(i).push_back(true);
           _right.at(i).push_back(it->second);
