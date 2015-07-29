@@ -142,10 +142,11 @@ InstallMethod(EquivalenceClassOfElementNC,
 [IsSemilatticeCongruence, IsAssociativeElement],
 1,
 function(cong, elm)
-  local fam, class;
+  local fam, classNo, class;
   fam := CollectionsFamily(FamilyObj(elm));
+  classNo := SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, elm);
   class := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
-                   rec(classNo := SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, elm)));
+                   rec(classNo := classNo));
   SetParentAttr(class, cong);
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
@@ -228,4 +229,82 @@ function(class)
   cong := EquivalenceClassRelation(class);
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   return pairs[Position(BlockCoincidenceTable(cong), class!.classNo)][1];
+end);
+
+#
+
+InstallGlobalFunction(SemilatticeElementsBetween,
+function(s, bottom, top)
+  if not (bottom in s and top in s) then
+    Error("Semigroups: SemilatticeElementsBetween: usage,\n",
+          "<bottom> and <top> must be elements of <s>,");
+    return;
+  elif not bottom * top = bottom then
+    Error("Semigroups: SemilatticeElementsBetween: usage,\n",
+          "<bottom> * <top> must be equal to <bottom>,");
+    return;
+  fi;
+  return SemilatticeElementsBetweenNC(s, bottom, top);
+end);
+
+#
+
+InstallGlobalFunction(SemilatticeElementsBetweenNC,
+function(s, bottom, top)
+  local gens, list, g, x, i, j;
+  # Start by getting all the elements top*gen which lie in the range
+  gens := GeneratorsOfSemigroup(s);
+  list := Set([]);
+  for g in gens do
+    x := top * g;
+    if x * bottom = bottom then
+      AddSet(list, x);
+    fi;
+  od;
+
+  # Now find all combinations of these class generators
+  for i in [1..Length(list)] do # for each generator
+    for j in [i+1..Length(list)] do # for each elm discovered so far
+      x := list[i] * list[j];
+      if not x in list then
+        Add(list, x);
+      fi;
+    od;
+  od;
+
+  return list;
+end);
+
+#
+
+InstallMethod(AsList,
+"for a semilattice congruence class",
+[IsSemilatticeCongruenceClass],
+function(class)
+  local cong, s, tab, blocks, pairs, meets, list, i;
+  if class!.classNo = 0 then
+    return [Representative(class)];
+  fi;
+  cong := EquivalenceClassRelation(class);
+  s := Range(cong);
+  tab := BlockCoincidenceTable(cong);
+  blocks := Positions(tab, class!.classNo);
+  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  meets := MeetsOfGeneratingPairs(cong);
+  list := [];
+  for i in blocks do
+    UniteSet(list, SemilatticeElementsBetweenNC(s, meets[i], pairs[i][1]));
+    UniteSet(list, SemilatticeElementsBetweenNC(s, meets[i], pairs[i][2]));
+  od;
+  return list;
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for a semilattice congruence class",
+[IsSemilatticeCongruenceClass],
+function(class)
+  # PLACEHOLDER FUNCTION
+  return AsList(class);
 end);

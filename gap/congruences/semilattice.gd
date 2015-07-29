@@ -22,3 +22,6 @@ DeclareCategory("SEMIGROUPS_SemilatticeCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
 DeclareGlobalFunction("SEMIGROUPS_SemilatticeCongClassNoOfElm");
+
+DeclareGlobalFunction("SemilatticeElementsBetween");
+DeclareGlobalFunction("SemilatticeElementsBetweenNC");

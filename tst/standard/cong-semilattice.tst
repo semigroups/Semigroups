@@ -136,6 +136,48 @@ gap> c2 * c2 = c2;
 true
 gap> NonTrivialCongruenceClasses(cong);
 [ {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, {PartialPerm( [ 3, 4 ], [ 3, 4 ] )} ]
+gap> c1 := CongruenceClassOfElement(cong, PartialPerm([1,3,4],[1,3,4]));;
+gap> Enumerator(c1);
+[ <identity partial perm on [ 1, 3, 4 ]> ]
+gap> AsList(c1);
+[ <identity partial perm on [ 1, 3, 4 ]> ]
+gap> c3 := CongruenceClassOfElement(cong, PartialPerm([],[]));;
+gap> AsList(c3);
+[ <empty partial perm>, <identity partial perm on [ 2 ]>, 
+  <identity partial perm on [ 2, 3 ]>, <identity partial perm on [ 2, 4 ]> ]
+
+#T# CongSemilatticeTest4: ElementsBetween
+gap> s := InverseSemigroup( [
+>   PartialPerm( [1,2,3,4,5,6,7,8], [10,7,2,5,6,9,3,8] ),
+>   PartialPerm( [1,2,3,4,6,7,9], [1,6,2,8,5,9,7] ),
+>   PartialPerm( [1,2,3,4,9], [3,5,10,4,6] ),
+>   PartialPerm( [1,2,3,5,6,7,8,9], [7,4,1,6,9,5,2,3] ),
+>   PartialPerm( [1,2,4,5,8,9], [9,5,4,8,6,1] ),
+>   PartialPerm( [1,3,4,5,8,9], [10,6,7,9,4,1] ),
+>   PartialPerm( [1,2,3,8,10], [1,2,7,9,4] ),
+>   PartialPerm( [1,2,3,5,6,10], [4,3,6,2,1,10] ),
+>   PartialPerm( [1,2,3,4,5,7,8,10], [5,2,8,4,1,10,3,7] ),
+>   PartialPerm( [1,2,3,4,6,7,8,9,10], [8,10,3,7,1,5,9,2,6] ) ] );;
+gap> e := IdempotentGeneratedSubsemigroup(s);;
+gap> IsSemilatticeAsSemigroup(e);
+true
+gap> hi := PartialPerm( [ 3, 5, 8, 9, 10 ], [ 3, 5, 8, 9, 10 ] );;
+gap> lo := PartialPerm( [ 5, 9 ], [ 5, 9 ] );;
+gap> x := PartialPerm( [ 1, 2, 4, 5, 8 ], [ 1, 2, 4, 5, 8 ] );;
+gap> SemilatticeElementsBetween(e, x, lo);
+Error, Semigroups: SemilatticeElementsBetween: usage,
+<bottom> * <top> must be equal to <bottom>,
+gap> SemilatticeElementsBetween(e, lo, 42);
+Error, Semigroups: SemilatticeElementsBetween: usage,
+<bottom> and <top> must be elements of <s>,
+gap> SemilatticeElementsBetween(e, lo, hi);
+[ <identity partial perm on [ 5, 9 ]>, <identity partial perm on [ 5, 8, 9 ]>,
+  <identity partial perm on [ 3, 5, 9 ]>, 
+  <identity partial perm on [ 3, 5, 8, 9 ]>, 
+  <identity partial perm on [ 5, 9, 10 ]>, 
+  <identity partial perm on [ 5, 8, 9, 10 ]>, 
+  <identity partial perm on [ 3, 5, 9, 10 ]>, 
+  <identity partial perm on [ 3, 5, 8, 9, 10 ]> ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
@@ -145,6 +187,8 @@ gap> Unbind(c1);
 gap> Unbind(c2);
 gap> Unbind(pairs);
 gap> Unbind(cong);
+gap> Unbind(lo);
+gap> Unbind(hi);
 
 #E#
 gap> STOP_TEST( "Semigroups package: cong-semilattice.tst");
