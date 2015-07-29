@@ -141,8 +141,8 @@ gap> Enumerator(c1);
 [ <identity partial perm on [ 1, 3, 4 ]> ]
 gap> AsList(c1);
 [ <identity partial perm on [ 1, 3, 4 ]> ]
-gap> c3 := CongruenceClassOfElement(cong, PartialPerm([],[]));;
-gap> AsList(c3);
+gap> c2 := CongruenceClassOfElement(cong, PartialPerm([],[]));;
+gap> AsList(c2);
 [ <empty partial perm>, <identity partial perm on [ 2 ]>, 
   <identity partial perm on [ 2, 3 ]>, <identity partial perm on [ 2, 4 ]> ]
 
