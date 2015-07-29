@@ -343,10 +343,9 @@ function(class)
   cong := EquivalenceClassRelation(class);
   one := One(Range(cong));
   if one <> fail then
-    return EquivalenceClassOfElementNC(cong, One(Range(cong)));
-  else
-    return fail;
+    return EquivalenceClassOfElementNC(cong, one);
   fi;
+  return fail;
 end);
 
 #
