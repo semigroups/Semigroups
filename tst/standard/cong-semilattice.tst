@@ -145,6 +145,24 @@ gap> c2 := CongruenceClassOfElement(cong, PartialPerm([],[]));;
 gap> AsList(c2);
 [ <empty partial perm>, <identity partial perm on [ 2 ]>, 
   <identity partial perm on [ 2, 3 ]>, <identity partial perm on [ 2, 4 ]> ]
+gap> c1 := CongruenceClassOfElement(cong, PartialPerm([],[]));;
+gap> enum := Enumerator(c1);;
+gap> enum[1];
+<empty partial perm>
+gap> enum[2];
+<identity partial perm on [ 2 ]>
+gap> enum[2];
+<identity partial perm on [ 2 ]>
+gap> enum[3];
+<identity partial perm on [ 2, 3 ]>
+gap> enum[4];
+<identity partial perm on [ 2, 4 ]>
+gap> enum[5];
+fail
+gap> Size(enum);
+4
+gap> Size(c1);
+4
 
 #T# CongSemilatticeTest4: ElementsBetween
 gap> s := InverseSemigroup( [

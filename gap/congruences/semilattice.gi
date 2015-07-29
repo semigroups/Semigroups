@@ -305,6 +305,84 @@ InstallMethod(Enumerator,
 "for a semilattice congruence class",
 [IsSemilatticeCongruenceClass],
 function(class)
-  # PLACEHOLDER FUNCTION
-  return AsList(class);
+  local s, record, enum, blocks, pairs, meets, i, b, cong;
+  # If we already have the elements, use them
+  if HasAsList(class) or class!.classNo = 0 then
+    return AsList(class);
+  fi;
+
+  # cong has not yet been enumerated: make functions
+  cong := EquivalenceClassRelation(class);
+  s := Range(cong);
+  record := rec();
+
+  record.ElementNumber := function(enum, pos)
+    local range, newelms, x;
+    if pos <= enum!.len then
+      return enum!.list[pos];
+    fi;
+    while (pos > enum!.len) do
+      range := enum!.ranges[enum!.nextRange];
+      newelms := SemilatticeElementsBetweenNC(s, range[1], range[2]);
+      for x in newelms do
+        if not x in enum!.list then
+          enum!.len := enum!.len + 1;
+          enum!.list[enum!.len] := x;
+        fi;
+      od;
+      enum!.nextRange := enum!.nextRange + 1;
+      if enum!.nextRange > Length(enum!.ranges) then
+        SetAsList(class, enum!.list);
+        SetSize(class, enum!.len);
+        SetEnumerator(class, enum!.list);
+        break;
+      fi;
+    od;
+    # If the list is long enough, return the element.
+    if pos <= enum!.len then
+      return enum!.list[pos];
+    fi;
+    return fail;
+  end;
+
+  record.NumberElement := function(enum, elm)
+    local pos;
+    if elm in class then
+      # elm is in the class
+      pos := Position(enum!.list, elm); #TODO: use hash table
+      if pos <> fail then
+        # elm already has a position
+        return pos;
+      else
+        # put elm in the next available position
+        enum!.len := enum!.len + 1;
+        enum!.list[enum!.len] := elm;
+        return enum!.len;
+      fi;
+    else
+      # elm is not in the class
+      return fail;
+    fi;
+  end;
+
+  enum := EnumeratorByFunctions(class, record);
+  enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
+  enum!.rep := Representative(class);
+  enum!.list := [enum!.rep];
+  enum!.len := 1;
+  
+  # Store all the ranges which might contain elements in this class
+  blocks := Positions(BlockCoincidenceTable(enum!.cong), class!.classNo);
+  pairs := GeneratingPairsOfSemigroupCongruence(enum!.cong);
+  meets := MeetsOfGeneratingPairs(cong);
+  enum!.ranges := EmptyPlist(Length(blocks)*2);
+  i := 0;
+  for b in blocks do
+    enum!.ranges[i+1] := [meets[b], pairs[b][1]];
+    enum!.ranges[i+2] := [meets[b], pairs[b][2]];
+    i := i + 2;
+  od;
+  enum!.nextRange := 1;
+
+  return enum;
 end);
