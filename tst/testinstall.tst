@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# TestInstall3
 gap> S := Semigroup(Transformation([2, 3, 4, 1, 1, 1]));;
@@ -282,7 +282,8 @@ gap> InversesOfSemigroupElement(S, x);
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 8, 3, 12, 2 ] ) ]
 
 #T# TestInstall16
-gap> file := Concatenation(SemigroupsDir(), "/tst/testinstall-data.gz");;
+gap> file := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+> "/tst/testinstall-data.gz");;
 gap>  ReadGenerators(file, 1376);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 

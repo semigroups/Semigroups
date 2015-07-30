@@ -23,7 +23,7 @@
 
       If present, the optional second argument <A>opts</A> should be a record
       containing the values of the options for the semigroup being created, as
-      described in Section <Ref Sect="opts"/>.<P/> 
+      described in Section <Ref Sect="Options when creating semigroups"/>.<P/> 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -105,7 +105,7 @@ gap> GeneratorsOfSemigroup(S);
 
       If present, the optional third argument <A>opts</A> should be a record
       containing the values of the options for the semigroup being created as
-      described in Section <Ref Sect="opts"/>.<P/>
+      described in Section <Ref Sect="Options when creating semigroups"/>.<P/>
       <Example><![CDATA[
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
 >  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
@@ -131,11 +131,14 @@ gap> Size(S);
       after first removing duplicates and elements in <A>coll</A>
       that are already in <A>S</A>. In most cases, the new semigroup knows at
       least as much information about its structure as was already known about
-      that of <A>S</A>. <P/>
+      that of <A>S</A>.
+      <P/>
 
       If present, the optional third argument <A>opts</A> should be a record
       containing the values of the options for the inverse semigroup being
-      created; these options are described in Section <Ref Sect="opts"/>. <P/>
+      created; these options are described in Section 
+      <Ref Sect="Options when creating semigroups"/>.
+      <P/>
 
       <Example><![CDATA[
 gap> S:=InverseMonoid(

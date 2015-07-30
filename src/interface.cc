@@ -20,6 +20,7 @@ static Int RNam_left  = RNamName("left");
 static Int RNam_right = RNamName("right");
 static Int RNam_rules = RNamName("rules");
 static Int RNam_words = RNamName("words");
+static Int RNam_gens = RNamName("gens");
 
 /*******************************************************************************
  * Temporary stuff goes here!
@@ -67,23 +68,24 @@ long inline SizeOfFF (Obj data) {
 
 template<typename T>
 class Interface : public InterfaceBase {
+
   public: 
 
     Interface () = delete;
 
     // constructor
 
-    // in the case that we are taking the closure of the semigroup of
+    // FIXME in the case that we are taking the closure of the semigroup of
     // <old> with some new generators, these new generators are stored in
     // the <gens> component of <data>. I.e. the meaning of the <gens> component
     // of the <data> is different if we are taking the closure than if we are
     // not. 
     Interface (Obj data, Converter<T>* converter, SemigroupBase* old) 
       : _converter(converter) {
-      assert(IsbPRec(data, RNamName("gens")));
-      assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+      assert(IsbPRec(data, RNam_gens));
+      assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
       
-      Obj gens = ElmPRec(data, RNamName("gens"));
+      Obj gens = ElmPRec(data, RNam_gens);
 
       std::vector<T*> gens_c;
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
@@ -95,7 +97,7 @@ class Interface : public InterfaceBase {
       if (old == nullptr) {
         _semigroup = new Semigroup<T>(gens_c, deg_c);
       } else {
-        _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c); 
+        _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c, Report(data)); 
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
         }
@@ -108,7 +110,6 @@ class Interface : public InterfaceBase {
       delete _converter;
       delete _semigroup;
     };
-   
 
     Semigroup<T>* semigroup () const {
       return _semigroup;
@@ -180,14 +181,14 @@ class Interface : public InterfaceBase {
     // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
       AssPRec(data, RNam_right, 
-              ConvertFromRecVec(_semigroup->right_cayley_graph(Report(data))));
+              ConvertFromCayleyGraph(_semigroup->right_cayley_graph(Report(data))));
       CHANGED_BAG(data);
     }
 
     // get the left Cayley graph from C++ semgroup, store it in data
     void left_cayley_graph (Obj data) {
       AssPRec(data, RNam_left, 
-              ConvertFromRecVec(_semigroup->left_cayley_graph(Report(data))));
+              ConvertFromCayleyGraph(_semigroup->left_cayley_graph(Report(data))));
       CHANGED_BAG(data);
     }
     
@@ -371,16 +372,19 @@ class Interface : public InterfaceBase {
     
   private:
     
-    // helper function to convert a RecVec to a GAP plist of GAP plists.
-    Obj ConvertFromRecVec (RecVec<size_t>* rv) {
-      Obj out = NEW_PLIST(T_PLIST, rv->nrrows());
-      SET_LEN_PLIST(out, rv->nrrows());
+    // helper function to convert a CayleyGraph to a GAP plist of GAP plists.
+    Obj ConvertFromCayleyGraph (CayleyGraph const& v) {
+      assert(v.size() != 0);
+      Obj out = NEW_PLIST(T_PLIST, v.size());
+      SET_LEN_PLIST(out, v.size());
 
-      for (size_t i = 0; i < rv->nrrows(); i++) {
-        Obj next = NEW_PLIST(T_PLIST_CYC, rv->nrcols());
-        SET_LEN_PLIST(next, rv->nrcols());
-        for (size_t j = 0; j < rv->nrcols(); j++) {
-          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(rv->get(i, j) + 1));
+      for (size_t i = 0; i < v.size(); i++) {
+        //TODO use ConvertFromVec here
+        std::vector<size_t> w = v.at(i);
+        Obj next = NEW_PLIST(T_PLIST_CYC, w.size());
+        SET_LEN_PLIST(next, w.size());
+        for (size_t j = 0; j < w.size(); j++) {
+          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(w.at(j) + 1));
         }
         SET_ELM_PLIST(out, i + 1, next);
         CHANGED_BAG(out);

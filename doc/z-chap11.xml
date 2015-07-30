@@ -1,0 +1,126 @@
+<Chapter Label="Green's relations">
+  <Heading>
+    Green's relations
+  </Heading>
+
+  In this chapter we describe the functions in &Semigroups; for 
+  computing Green's classes and related properties of semigroups. 
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Creating Green's classes and representatives
+    </Heading>
+    
+    In this section, we describe the methods in the &Semigroups; package for
+    creating Green's classes. 
+    <P/>
+
+    <#Include Label="XClassOfYClass">
+    <#Include Label="GreensXClassOfElement">
+    <#Include Label="GreensXClassOfElementNC">
+    <#Include Label="GreensXClasses">
+    <#Include Label="XClassReps">
+    <#Include Label="MinimalDClass">
+    <#Include Label="MaximalDClasses">
+    <#Include Label="NrRegularDClasses">
+    <#Include Label="NrXClasses">
+    <#Include Label="PartialOrderOfDClasses">
+    <#Include Label="IsGreensDLeq">
+
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section>
+
+    <Heading>
+      Iterators and enumerators of classes and representatives
+    </Heading>
+    
+    In this section, we describe the methods in the &Semigroups; package for
+    incrementally determining Green's classes or their representatives. 
+    <P/>
+
+    <#Include Label="IteratorOfXClassReps"> 
+    <#Include Label="IteratorOfXClasses"> 
+
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    
+    <Heading>
+      Properties of Green's classes
+    </Heading>
+    
+    In this section, we describe the properties and operators of Green's
+    classes that are available in the &Semigroups; package
+    <P/>
+    
+    <#Include Label="\&lt;">
+    <#Include Label="IsRegularClass">
+    <#Include Label="IsGreensClassNC">
+    <#Include Label="IsTransformationSemigroupGreensClass">
+    <#Include Label="IsBipartitionSemigroupGreensClass">
+    <#Include Label="IsPartialPermSemigroupGreensClass">
+
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section>
+    
+    <Heading>
+      Attributes of Green's classes
+    </Heading>
+
+    In this section, we describe the attributes of Green's classes that are
+    available in the &Semigroups; package
+    <P/>
+
+    <#Include Label="GroupHClass">
+    <#Include Label="SchutzenbergerGroup">
+    <#Include Label="StructureDescriptionSchutzenbergerGroups">
+    <#Include Label="StructureDescriptionMaximalSubgroups">
+    <#Include Label="MultiplicativeNeutralElement">
+    <#Include Label="StructureDescription">
+    <#Include Label="InjectionPrincipalFactor">
+    <#Include Label="PrincipalFactor">
+    
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section>
+
+    <Heading>
+      Visualising the Green's structure
+    </Heading>
+
+    In this section, we describe some functions for creating pictures of various
+    structural properties of a semigroup.
+    <P/>
+    
+    Several of the functions described in this section return a string, which
+    can be written to a file using the function <Ref Func="FileString"
+      BookName="GAPDoc"/> or viewed using <Ref Func="Splash"/>.
+
+    <#Include Label="Splash"/>
+    <#Include Label="DotDClasses"/>
+    <#Include Label="DotSemilatticeOfIdempotents"/>
+
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+</Chapter>

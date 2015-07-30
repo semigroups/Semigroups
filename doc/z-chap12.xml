@@ -1,0 +1,171 @@
+<Chapter Label="Attributes and operations for semigroups">
+
+  <Heading>
+    Attributes and operations for semigroups
+  </Heading>
+
+  In this chapter we decribe the methods that are available in &Semigroups; for
+  determining the attributes of a semigroup, and the operations which can be
+  applied to a semigroup.
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    
+    <Heading>
+      Random elements of a semigroup
+    </Heading>
+    
+    <#Include Label="Random">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    
+    <Heading>
+      Expressing semigroup elements as words in generators
+    </Heading>
+
+    It is possible to express an element of a semigroup as a word in the
+    generators of that semigroup. This section describes how to accomplish this
+    in &Semigroups;. <P/>
+    
+    <#Include Label="EvaluateWord">
+    <#Include Label="Factorization">
+    <#Include Label="MinimalFactorization">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Generating sets
+    </Heading>
+    
+    <#Include Label="Generators">
+    <#Include Label="SmallGeneratingSet"> 
+    <#Include Label="IrredundantGeneratingSubset">
+  
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Minimal ideals and multiplicative zeros
+    </Heading>
+
+    In this section we describe the attributes of a semigroup that can be found
+    using the &Semigroups; package. 
+    <P/>
+    
+    <#Include Label="MinimalIdeal">
+    <#Include Label="RepresentativeOfMinimalIdeal">
+    <#Include Label="MultiplicativeZero">
+
+  </Section> 
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Group of units and identity elements
+    </Heading>
+  
+    <#Include Label="GroupOfUnits">
+    <!--TODO add man entry for MultiplicativeNeutralElement-->
+
+  </Section> 
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section>
+
+    <Heading>
+      Idempotents
+    </Heading>
+
+    <#Include Label="Idempotents">
+    <#Include Label="NrIdempotents">
+    <#Include Label="IdempotentGeneratedSubsemigroup">
+
+  </Section>  
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section>
+
+    <Heading>
+      Maximal subsemigroups
+    </Heading>
+
+    <#Include Label="MaximalSubsemigroups">
+    <#Include Label="MaximalSubsemigroups2">
+    <#Include Label="IsMaximalSubsemigroup">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      The normalizer of a semigroup
+    </Heading>
+
+    <#Include Label="Normalizer">
+  
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section>
+
+    <Heading>
+      Attributes of transformation semigroups
+    </Heading>
+
+    <#Include Label="ComponentRepsOfTransformationSemigroup">
+    <#Include Label="ComponentsOfTransformationSemigroup">
+    <#Include Label="CyclesOfTransformationSemigroup">
+    <#Include Label="IsTransitive">
+    <#Include Label="SmallestElementSemigroup">
+    <#Include Label="GeneratorsSmallest">
+  
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+    
+  <Section>
+
+    <Heading>
+      Attributes of partial perm semigroups
+    </Heading>
+
+    <#Include Label="ComponentRepsOfPartialPermSemigroup">
+    <#Include Label="ComponentsOfPartialPermSemigroup">
+    <#Include Label="CyclesOfPartialPerm">
+    <#Include Label="CyclesOfPartialPermSemigroup">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+</Chapter>
+

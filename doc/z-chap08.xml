@@ -1,0 +1,88 @@
+<Chapter Label="Standard examples">
+  <Heading>
+    Standard examples
+  </Heading> 
+
+  In this Chapter we describe some standard examples of semigroups which are
+  available in the &Semigroups; package.
+  <P/>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Standard constructions">
+    <Heading>
+      Standard constructions
+    </Heading>
+    <#Include Label="MonogenicSemigroup">
+    <#Include Label="RectangularBand">
+    <#Include Label="ZeroSemigroup">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Transformation semigroups">
+    <Heading>
+      Transformation semigroups
+    </Heading>
+
+    In this section, we describe the operations in &Semigroups; that can be
+    used to creating semigroups belonging to several standard classes of
+    example. See Chapter <Ref Chap="bipartition"/> for more information about
+    semigroups of bipartitions. 
+    <#Include Label="EndomorphismsPartition"> 
+    <#Include Label="PartialTransformationSemigroup"> 
+    <#Include Label="MunnSemigroup">
+    <#Include Label="OPOIPOPI">
+    <!-- split this to separate transformation and partial perm semigroups-->
+    <#Include Label="SingularTransformationSemigroup">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section Label="Semigroups of partial permutations">
+    <Heading>
+      Semigroups of partial permutations
+    </Heading>
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section Label="Semigroups of bipartitions">
+    <Heading>
+      Semigroups of bipartitions
+    </Heading>
+    <#Include Label="PartitionMonoid"> 
+    <#Include Label="BrauerMonoid"> 
+    <#Include Label="JonesMonoid"> 
+    <#Include Label="FactorisableDualSymmetricInverseSemigroup">
+    <#Include Label="DualSymmetricInverseSemigroup">
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section Label="Semigroups of boolean matrices">
+    <Heading>
+      Semigroups of boolean matrices
+    </Heading>
+    <#Include Label="RegularBinaryRelationSemigroup">
+    
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  
+  <Section Label="Matrix semigroups">
+    <Heading>
+      Matrix semigroups
+    </Heading>
+    <#Include Label="FullMatrixSemigroup">
+    <#Include Label="IsFullMatrixSemigroup">
+    
+  </Section>
+
+</Chapter>

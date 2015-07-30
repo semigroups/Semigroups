@@ -24,7 +24,10 @@ InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a boolean matrix",
 [IsBooleanMat], x -> "BooleanMat");
 
 InstallGlobalFunction(BooleanMatNC,
-x -> Objectify(BooleanMatType, x));
+function(x)
+  MakeImmutable(x);
+  return Objectify(BooleanMatType, x);
+end);
 
 InstallGlobalFunction(BooleanMat,
 function(mat)
@@ -130,6 +133,28 @@ end);
 #############################################################################
 ## Methods for Boolean matrices
 #############################################################################
+
+InstallMethod(\in, "for a boolean mat and boolean mat",
+[IsBooleanMat, IsBooleanMat],
+function(x, y)
+  local n, i, j;
+  
+  n := Length(x![1]);
+
+  if n <> Length(y![1]) then 
+    ErrorMayQuit();
+  fi;
+
+  for i in [1 .. n] do 
+    for j in [1 .. n] do
+      if x![i][j] and not y![i][j] then 
+        return false;
+      fi;
+    od;
+  od;
+
+  return true;
+end);
 
 InstallGlobalFunction(OnBlists,
 function(blist1, x)

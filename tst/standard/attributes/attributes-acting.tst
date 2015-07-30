@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/attributes/attributes-acting.tst")
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 gap> SEMIGROUPS_DefaultOptionsRec.generic := false;;
 
 # attributes-acting: IsMultiplicativeZero

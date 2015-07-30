@@ -1,10 +1,20 @@
 #TODO#
 ###There are more TODOs in the source files this list is not exhaustive###
+
+* remove RecVecs
+* a `small_generating_set` method using the Cayley graph
+* `ReadGenerators` and `WriteGenerators` for new types
+* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value
+* `HallMatrixMonoid`
+* `ReflexiveBooleanMatrixMonoid`
+* Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
+* `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
+* `CatalanMonoid`
 * Add `IsFinite` check to start of appropriate methods and add tests
 * `ViewString` for full transformation monoid, and symmetric inverse monoid
 * reporting in the generic Froidure-Pin method
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
-* fix the bug in the c++ code relating to the changeset tagged `bug-in-c-code`
+* fix the bug in the c++ code `add_generators` relating to the changeset tagged `bug-in-c-code`
 * unify ideals-lambda-rho, lambda-rho and graded.
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
 * get rid of `*Data` roll semigroups-generic into semigroups.gi
@@ -15,7 +25,7 @@
 * split the "closure" constructor for a semigroup into 2 methods
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * closure of generic inverse semigroups
-* remove RecVecs
+
 * check for memleaks
 * remove C++11?
 * gmp problems?
@@ -25,6 +35,14 @@
 * new ideals stuff!
 
 #DONE
+**BUG**:
+
+    gap> RegularBooleanMatMonoid(1);
+    <commutative monoid of 1x1 boolean matrices with 1 generator>
+    gap> Size(last);
+    Assertion failed: (IS_BLIST_REP(ELM_PLIST(o, 1))), function convert, file src/converter.cc, line 48.
+    Abort trap: 6
+    
 * finish partitioned binary relation stuff (more tests and C++)
 * `TrivialSemigroup` function
 * semigroups of pbrs (`ViewString`, `IsPBRSemigroup`, etc)
