@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/attributes/reesmat-iso.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #
 gap> R := ReesZeroMatrixSemigroup( Group( [ (2,8), (2,8,6) ] ),

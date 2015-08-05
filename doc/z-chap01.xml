@@ -1,0 +1,150 @@
+<Chapter Label="The Semigroups package">
+  <Heading>
+    The &Semigroups; package
+  </Heading>
+  <Index Key="Semigroups">&Semigroups; package overview</Index>	
+
+  <Section Label="Introduction">
+    <Heading>
+      Introduction
+    </Heading>
+
+    This is the manual for the &Semigroups; package for &GAP; version &VERSION;.
+    &Semigroups; &VERSION; is a distant descendant of the  
+    <URL Text="Monoid package for GAP 3">
+      http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
+    Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.<P/>
+
+    &Semigroups; &VERSION; contains efficient methods for creating semigroups,
+    monoids, inverse semigroups and their ideals, calculating their Green's
+    structure, size, elements, group of units, minimal ideal, and testing
+    membership, finding the inverses of a regular element, and factorizing
+    elements over the generators, and much more; see Chapters <Ref
+      Chap = "Creating semigroups and monoids"/>, <Ref Chap = "Ideals"/>, and  
+    <Ref Chap = "Green's relations"/>. There
+    are methods for testing if semigroups satisfy  particular
+    properties, such as if they are regular, simple, inverse, completely regular,
+    and a variety of further properties; see Chapter <Ref Chap="Green's relations"/>.<P/>
+
+    There are methods for finding: congruences of semigroups, the normalizer of
+    a semigroup in a permutation group (as given in <Cite
+      Key="Araujo2010aa"/>), the maximal subsemigroups of a finite semigroup
+    (based on  <Cite Key="Graham1968aa"/>), smaller degree partial permutation
+    representations (based on <Cite Key="Schein1992aa"/>) and the character
+    table of an inverse semigroup.  There are functions for producing pictures
+    of the Green's structure of a semigroup, and for drawing graphical
+    representations of the elements of certain semigroups; see Chapter <Ref
+      Sect="The Grape package"/>. <P/>
+
+    Many standard examples of semigroups and classes of semigroups are provided;
+    see Section <Ref Sect="Standard examples"/>.  &Semigroups; also provides
+    functions to read and write collections of transformations, partial
+    permutations, and bipartitions to a file; see <Ref Func="ReadGenerators"/>
+    and <Ref Func="WriteGenerators"/>.<P/>
+
+    There are functions in &Semigroups; to define and manipulate free
+    inverse semigroups and free bands; this part of the package was written
+    by Julius Jonu&#353;as; see Chapters <Ref Chap="Free inverse semigroups"/>
+    and <Ref Chap="Free bands"/>.
+    <P/>
+
+    There are three fundamental types of algorithms in the &Semigroups; package,
+    those for semigroups of:
+    <Enum> 
+      <Item>
+        transformations, partial permutations, bipartitions, and subsemigroups
+        of regular Rees 0-matrix semigroups over groups. When applied to
+        semigroups with large
+        subgroups these are the most efficient methods in the &Semigroups;
+        package. For example, the complexity of computing, say, the size of a
+        transformation semigroup that happens to be a group, is the same as the
+        complexity of the Schreier-Sims Algorithm (polynomial in the number of
+        points acted on by the transformations) for a permutation group. <P/>
+
+        The algorithms of this type are described in <Cite
+          Key="Mitchell2015aa"/>. In theory, these algorithms can be applied to
+        compute any subsemigroup of a regular semigroup.  For details of how to
+        extend &Semigroups; see <Ref Chap="Extending the package"/>.  
+        We refer to semigroups to which the algorithms in <Cite
+          Key="Mitchell2015aa"/> can be applied as <E>acting semigroups</E>.
+        See Section <Ref Sect="Acting Semigroups"/> for further details.
+      </Item>
+
+      <Item>
+        partitioned binary relations as defined in <Cite Key="Mazorchuk20????"/>, and 
+        matrices over the following semirings:
+        <List>
+          <Item> 
+            the <E>Boolean semiring</E> <M>\{0,1\}</M> where <M>0 + 0 = 0</M>,
+            <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, and <M>1\cdot 0 = 0 \cdot 0 = 0
+              \cdot 1 = 0</M>
+          </Item>
+          <Item> 
+            fields of prime order;
+          </Item>
+          <Item> 
+            the <E>max-plus semiring</E> of natural numbers and negative
+            infinity <M>\mathbb{N}\cup \{-\infty\}</M> with operations max and
+            plus;
+          </Item>
+          <Item> 
+            the <E>min-plus semiring</E> of natural numbers and
+            infinity <M>\mathbb{N}\cup \{\infty\}</M> with operations min and
+            plus;
+          </Item>
+          <Item> 
+            the <E>tropical max-plus semiring</E> <M>\{-\infty, 0, 1,
+              \ldots, t\}</M> for some threshold <M>t</M> with operations max
+            and plus;
+          </Item>
+          <Item> 
+            the <E>tropical min-plus semiring</E> <M>\{0, 1,
+              \ldots, t, \infty\}</M> for some threshold <M>t</M> with
+            operations min and plus;
+          </Item>
+          <Item> 
+            the tropical min-plus semiring <M>\mathbb{N}_{t,p} = \{0, 1,
+              \ldots, t, t + 1, \ldots, t + p - 1\}</M> for some threshold <M>t</M> 
+            and period <M>p</M> under addition and mutliplication modulo the congruence 
+            <M>t = t + p</M>.
+          </Item>
+        </List>
+        A version of the Froidure-Pin Algorithm <Cite Key="Froidure1997aa"/>
+        (written in C++) is used to compute semigroups of these types. The
+        implementation in &Semigroups; performs at least as well as the C
+        programme <Cite Key="Pin2009aa"/> by Jean-Eric Pin. This algorithm out
+        performs the algorithms for acting semigroups when applied to
+        semigroups with small (trivial) subgroups, and is also used for
+        semigroups to which the algorithms described in <Cite
+          Key="Mitchell2015aa"/> do not apply. It is possible to specify which
+        methods should be applied to a given semigroup; see Section
+        <Ref Sect="Options when creating semigroups"/>.
+      </Item>
+
+      <Item>
+        any other semigroup in &GAP;. A version of the Froidure-Pin Algorithm
+        <Cite Key="Froidure1997aa"/> (written in &GAP; kernel code) is used to
+        compute semigroups of this type. Mostly due to the way that &GAP;
+        handles memory, this implementation is approximately 4 times slower
+        than the C++ implementation when applied to semigroups of the types
+        given in <E>2.</E> However, this implementation has the advantage that
+        it can be applied to any semigroup defined in &GAP;.
+      </Item>
+    </Enum>
+
+    <B>Minor note of caution</B>: &Semigroups; contains different methods for some
+    &GAP; library functions, and so you might notice that &GAP; behaves
+    differently when &Semigroups; is loaded.  For more details about semigroups
+    in &GAP; or Green's relations in particular, see <Ref Sect="Semigroups"
+      BookName="ref"/> or <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
+
+    This manual is organised as follows:
+
+
+    If you find a bug or an issue with the package, then report this using the
+    <URL Text="issue
+      tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL>.
+
+  </Section>
+
+</Chapter>

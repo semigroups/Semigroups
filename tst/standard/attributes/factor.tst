@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: standard/attributes/factor.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# FactorTest1: Factorization for a transformation semigroup 1
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),

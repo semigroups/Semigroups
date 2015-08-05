@@ -118,11 +118,17 @@
   </Alt>
   In this way, the partition monoid is a <E>regular *-semigroup</E>.
 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section><Heading>The family and categories of bipartitions</Heading>
     <#Include Label="IsBipartition">
     <#Include Label="IsBipartitionCollection">
     <#Include Label="BipartitionFamily">
   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
   
   <Section Label="creating-bipartitions">
     <Heading>Creating bipartitions</Heading>
@@ -136,6 +142,9 @@
     <#Include Label="StarOp">
     <#Include Label="RandomBipartition">
   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
   <Section Label="changing-rep-bipartitions">
     <Heading>Changing the representation of a bipartition</Heading>
@@ -157,6 +166,9 @@
     <#Include Label="AsPermutation"/>
   </Section>
  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section Label="operators-bipartitions">
   <Heading>Operators for bipartitions</Heading>
     <List>
@@ -188,6 +200,9 @@
    <#Include Label="OnRightBlocksBipartitionByPerm">
  </Section>    
 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section Label="attributes-bipartitions">
   <Heading>Attributes for bipartitons</Heading>
     In this section we describe various attributes that a bipartition can
@@ -208,10 +223,13 @@
     <#Include Label="IsUniformBlockBijection">
   </Section> 
 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section Label="section-blocks">
     <Heading>Creating blocks and their attributes</Heading>
     As described above the left and right blocks of a bipartition characterise
-    Green's &R;- and &L;-relation on the partition monoid; see 
+    Green's &R;- and &L;-relation of the partition monoid; see 
     <Ref Attr="LeftBlocks"/> and <Ref Attr="RightBlocks"/>. 
     The left or right blocks of a bipartition are &GAP; objects in their own
     right.
@@ -239,6 +257,9 @@
     <#Include Label="InverseLeftBlocks">
   </Section>
 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section><Heading>Visualising blocks and bipartitions</Heading>
     There are some functions in &Semigroups; for creating &LaTeX; pictures of
     bipartitions and blocks. Descriptions of these methods can be found in this
@@ -253,11 +274,19 @@
 
   </Section>
 
-  <Section><Heading>Semigroups of bipartitions</Heading>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>
+      Semigroups of bipartitions
+    </Heading>
+    
     Semigroups and monoids of bipartitions
     can be created in the usual way in &GAP; using the functions 
     <Ref Func="Semigroup" BookName="ref"/> and 
-    <Ref Func="Monoid" BookName="ref"/>. <P/>
+    <Ref Func="Monoid" BookName="ref"/>. 
+    <P/>
     
     It is possible to create inverse semigroups and monoids of bipartitions 
     using <Ref Func="InverseSemigroup" BookName="ref"/> and <Ref
@@ -272,5 +301,8 @@
     <#Include Label="DegreeOfBipartitionSemigroup">
 
   </Section>
-</Chapter>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
+</Chapter>

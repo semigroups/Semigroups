@@ -8,16 +8,15 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("SemigroupsDir");
-DeclareGlobalFunction("SemigroupsStartTest");
-DeclareGlobalFunction("SemigroupsStopTest");
 DeclareGlobalFunction("SemigroupsMakeDoc");
-DeclareGlobalFunction("SemigroupsTestAll");
 DeclareGlobalFunction("SemigroupsTestInstall");
-DeclareGlobalFunction("SemigroupsTestManualExamples");
-DeclareGlobalFunction("SemigroupsManualExamples");
-
-DeclareGlobalFunction("SEMIGROUPS_Test");
 DeclareGlobalFunction("SemigroupsTestStandard");
+
+DeclareGlobalFunction("SEMIGROUPS_StartTest");
+DeclareGlobalFunction("SEMIGROUPS_StopTest");
+DeclareGlobalFunction("SEMIGROUPS_TestAll");
+DeclareGlobalFunction("SEMIGROUPS_TestManualExamples");
+DeclareGlobalFunction("SEMIGROUPS_ManualExamples");
+DeclareGlobalFunction("SEMIGROUPS_Test");
 
 BindGlobal("SEMIGROUPS_OmitFromTests", []);

@@ -8,10 +8,15 @@
 #############################################################################
 ##
 
+# FIXME 
+# 1) \< and \= are incompatible, it could be that map1 < map2 and map1 = map2
+#    
+
 # TODO
 #
 # 1) SEMIGROUPS_HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
 #    their own type)
+
 
 #############################################################################
 ## This file contains functions for isomorphisms and automorphisms of Rees
@@ -32,7 +37,7 @@
 ##   3. Methods for automorphism group of RMS and RZMS (ViewObj,
 ##      IdentityMapping etc)
 ##
-##   4. Methods for automorphism groups
+##   4. Isomorphisms
 ##
 ##   5. RMS/RZMSIsoByTriple (equality, <, ImagesRepresentative)
 ##
@@ -500,8 +505,8 @@ else
           g, map;
 
     G := UnderlyingSemigroup(R);
-    if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
-            and IsZeroSimpleSemigroup(R)) then
+    if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
+            and IsSimpleSemigroup(R)) then
       TryNextMethod(); #TODO write such a method
     fi;
 
@@ -584,7 +589,7 @@ else
       for g in T do
         map := SEMIGROUPS_RMSInducedFunction(R, x, y, g);
         if map <> fail then
-          AddSet(A, map);
+          AddSet(A, RMSIsoByTriple(R, R, [x, y, map]));
           return true;
         fi;
       od;
@@ -692,7 +697,7 @@ function(R)
 end);
 
 #############################################################################
-# 4. Methods for automorphism groups
+# 4. Isomorphisms
 #############################################################################
 
 InstallMethod(IsomorphismSemigroups, "for Rees matrix semigroups",
@@ -884,9 +889,14 @@ InstallMethod(\=, "for objects in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(x, y)
 
+  if Source(x) <> Source(y) or Range(x) <> Range(y) then 
+    return false;
+  fi;
+
   if x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
     return true;
   fi;
+
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
          = OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);

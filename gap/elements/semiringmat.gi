@@ -146,7 +146,16 @@ function(x)
   for i in [1 .. n] do
     Append(str, "\>\>[");
     for j in [1 .. n] do
-      Append(str, String(x![i][j]));
+      if IsBooleanMat(x) then 
+        if x![i][j] then 
+          Append(str, String(1));
+        else 
+          Append(str, String(0));
+        fi;
+      else 
+        Append(str, String(x![i][j]));
+      fi;
+
       Append(str, ", ");
     od;
     Remove(str, Length(str));
