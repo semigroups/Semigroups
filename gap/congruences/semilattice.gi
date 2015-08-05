@@ -325,9 +325,10 @@ function(class)
       range := enum!.ranges[enum!.nextRange];
       newelms := SemilatticeElementsBetweenNC(s, range[1], range[2]);
       for x in newelms do
-        if not x in enum!.list then
+        if HTValue(enum!.ht, x) = fail then
           enum!.len := enum!.len + 1;
           enum!.list[enum!.len] := x;
+          HTAdd(enum!.ht, x, enum!.len);
         fi;
       od;
       enum!.nextRange := enum!.nextRange + 1;
@@ -349,7 +350,7 @@ function(class)
     local pos;
     if elm in class then
       # elm is in the class
-      pos := Position(enum!.list, elm); #TODO: use hash table
+      pos := HTValue(enum!.ht, elm);
       if pos <> fail then
         # elm already has a position
         return pos;
@@ -357,6 +358,7 @@ function(class)
         # put elm in the next available position
         enum!.len := enum!.len + 1;
         enum!.list[enum!.len] := elm;
+        HTAdd(enum!.ht, elm, enum!.len);
         return enum!.len;
       fi;
     else
@@ -370,6 +372,8 @@ function(class)
   enum!.rep := Representative(class);
   enum!.list := [enum!.rep];
   enum!.len := 1;
+  enum!.ht := HTCreate(enum!.rep);
+  HTAdd(enum!.ht, enum!.rep, 1);
   
   # Store all the ranges which might contain elements in this class
   blocks := Positions(BlockCoincidenceTable(enum!.cong), class!.classNo);
