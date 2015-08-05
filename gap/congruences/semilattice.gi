@@ -281,9 +281,14 @@ InstallMethod(AsList,
 "for a semilattice congruence class",
 [IsSemilatticeCongruenceClass],
 function(class)
-  local cong, s, tab, blocks, pairs, meets, list, i;
+  local cong, s, tab, blocks, pairs, meets, list, i, enum;
   if class!.classNo = 0 then
     return [Representative(class)];
+  fi;
+  if HasEnumerator(class) then
+    enum := Enumerator(class);
+    enum!.ElementNumber(enum, infinity);
+    return enum!.list;
   fi;
   cong := EquivalenceClassRelation(class);
   s := Range(cong);
@@ -334,7 +339,7 @@ function(class)
       enum!.nextRange := enum!.nextRange + 1;
       if enum!.nextRange > Length(enum!.ranges) then
         SetAsList(class, enum!.list);
-        SetSize(class, enum!.len);
+        SetLength(class, enum!.len);
         SetEnumerator(class, enum!.list);
         break;
       fi;
@@ -365,6 +370,12 @@ function(class)
       # elm is not in the class
       return fail;
     fi;
+  end;
+
+  record.Length := function(enum)
+    # Finish enumerating
+    enum!.ElementNumber(enum, infinity);
+    return enum!.len;
   end;
 
   enum := EnumeratorByFunctions(class, record);
