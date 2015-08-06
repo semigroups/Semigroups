@@ -436,3 +436,19 @@ function(cong)
   od;
   return classes;
 end);
+
+#
+
+InstallMethod(ImagesElm,
+"for a semilattice congruence and an associative element",
+[IsSemilatticeCongruence, IsAssociativeElement],
+function(cong, elm)
+  # Check the arguments
+  if not elm in Range(cong) then
+    Error("Semigroups: ImagesElm: usage,\n",
+          "the second arg <elm> must be in",
+          "the semigroup of the first arg <cong>");
+    return;
+  fi;
+  return AsList(EquivalenceClassOfElementNC(cong, elm));
+end);
