@@ -401,3 +401,14 @@ function(class)
 
   return enum;
 end);
+
+#
+
+InstallMethod(NrCongruenceClasses,
+"for a semilattice congruence",
+[IsSemilatticeCongruence],
+function(cong)
+  local classes;
+  classes := NonTrivialEquivalenceClasses(cong);
+  return Size(Range(cong)) - Sum(classes, Size) + Size(classes);
+end);
