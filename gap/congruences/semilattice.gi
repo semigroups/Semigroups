@@ -412,3 +412,27 @@ function(cong)
   classes := NonTrivialEquivalenceClasses(cong);
   return Size(Range(cong)) - Sum(classes, Size) + Size(classes);
 end);
+
+#
+
+InstallMethod(EquivalenceClasses,
+"for a semilattice congruence",
+[IsSemilatticeCongruence],
+function(cong)
+  local s, classes, fam, i, x;
+  s := Range(cong);
+  classes := ShallowCopy(NonTrivialEquivalenceClasses(cong));
+  fam := CollectionsFamily(FamilyObj(Representative(s)));
+  i := Length(classes);
+  for x in s do
+    if SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, x) = 0 then
+      i := i + 1;
+      classes[i] := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
+                              rec(classNo := 0));
+      SetParentAttr(classes[i], cong);
+      SetEquivalenceClassRelation(classes[i], cong);
+      SetRepresentative(classes[i], x);
+    fi;
+  od;
+  return classes;
+end);
