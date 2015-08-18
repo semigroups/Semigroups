@@ -667,9 +667,8 @@ Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj data) {
 }
 
 Obj NR_IDEMPOTENTS_SEMIGROUP (Obj self, Obj data) {
-  if (TypeSemigroup(data) != UNKNOWN) { 
-    return INTOBJ_INT(InterfaceFromData(data)->nr_idempotents(data));
-  } else {
-    return Fail;    
+  if (TypeSemigroup(data) == UNKNOWN) { 
+    ErrorQuit("NR_IDEMPOTENTS_SEMIGROUP: this shouldn't happen!", 0L, 0L);
   }
+  return INTOBJ_INT(InterfaceFromData(data)->nr_idempotents(data));
 }
