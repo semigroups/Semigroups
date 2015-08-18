@@ -1,9 +1,10 @@
-#TODO#
+#TODO GAP#
 ###There are more TODOs in the source files this list is not exhaustive###
 
 * remove RecVecs
+* a `small_generating_set` method using the Cayley graph
 * `ReadGenerators` and `WriteGenerators` for new types
-* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value
+* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
 * Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
@@ -21,7 +22,7 @@
 * improve compilation time
 * check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
-* split the "closure" constructor for a semigroup into 2 methods
+
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * closure of generic inverse semigroups
 
@@ -34,6 +35,7 @@
 * new ideals stuff!
 
 #DONE
+* split the "closure" constructor for a semigroup into 2 methods
 **BUG**:
 
     gap> RegularBooleanMatMonoid(1);

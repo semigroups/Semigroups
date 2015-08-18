@@ -561,22 +561,10 @@ function(S, opts)
     od;
     Append(str, "</TABLE>>];\n");
   od;
-  # TODO make PartialOrderOfDClasses return a digraph
-  if NrDClasses(S) < 215 then # DigraphLongestDistances has complexity n ^ 3!! 
-    longest := DigraphLongestDistances(Digraph(PartialOrderOfDClasses(S)));
-    rel := List([1 .. NrDClasses(S)], x -> []);
-    for i in [1 .. NrDClasses(S)] do 
-      for j in [1 .. NrDClasses(S)] do 
-        if longest[i][j] = 1 then 
-          Add(rel[i], j);
-        fi;
-      od;
-    od;
-  else
-    rel := PartialOrderOfDClasses(S);
-    # TODO do the same thing as before
-  fi;
 
+  # TODO make PartialOrderOfDClasses return a digraph
+  rel := OutNeighbours(DigraphTransitiveReduction(Digraph(PartialOrderOfDClasses(S))));
+  
   for i in [1 .. Length(rel)] do
     ii := String(i);
     for k in rel[i] do
