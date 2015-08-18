@@ -32,6 +32,7 @@ class InterfaceBase {
     virtual size_t         current_nrrules () const = 0;
     virtual size_t         current_max_word_length () const = 0;
     virtual bool           is_done () const = 0;
+    virtual size_t         length (Obj pos) const = 0;
     virtual void           find (Obj data, Obj lookfunc, Obj start, Obj end) = 0;
     virtual void           enumerate (Obj data, Obj limit) = 0;
     virtual size_t         size (Obj data) = 0;
@@ -87,5 +88,7 @@ Obj ADD_GENERATORS_SEMIGROUP (Obj self, Obj data, Obj coll);
 Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj old_data);
 
 Obj NR_IDEMPOTENTS_SEMIGROUP (Obj self, Obj data);
+
+Obj LENGTH_ELEMENT_SEMIGROUP (Obj self, Obj data, Obj pos);
 
 #endif

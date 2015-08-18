@@ -14,6 +14,20 @@
 #include <assert.h>
 
 /*******************************************************************************
+ * Record names TODO init these in a function
+*******************************************************************************/
+
+static Int RNam_elts         = RNamName("elts");
+static Int RNam_left         = RNamName("left");
+static Int RNam_right        = RNamName("right");
+static Int RNam_rules        = RNamName("rules");
+static Int RNam_words        = RNamName("words");
+static Int RNam_gens         = RNamName("gens");
+static Int RNam_batch_size   = RNamName("batch_size");
+static Int RNam_report       = RNamName("report");
+static Int RNam_Interface_CC = RNamName("Interface_CC");
+
+/*******************************************************************************
  * GAP TNUM for wrapping C++ semigroup
 *******************************************************************************/
 
@@ -128,21 +142,21 @@ bool inline IsCCSemigroup (Obj data) {
 
 Obj inline Representative (Obj data) {
   // TODO more asserts 
-  assert(IsbPRec(data, RNamName("gens")));
-  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-  return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
+  assert(IsbPRec(data, RNam_gens));
+  assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
+  return ELM_PLIST(ElmPRec(data, RNam_gens), 1);
 }
 
 size_t inline BatchSize (Obj data) {
-  assert(IsbPRec(data, RNamName("batch_size")));
-  assert(IS_INTOBJ(ElmPRec(data, RNamName("batch_size"))));
-  return INT_INTOBJ(ElmPRec(data, RNamName("batch_size")));
+  assert(IsbPRec(data, RNam_batch_size));
+  assert(IS_INTOBJ(ElmPRec(data, RNam_batch_size)));
+  return INT_INTOBJ(ElmPRec(data, RNam_batch_size));
 }
 
 bool inline Report (Obj data) {
-  if (IsbPRec(data, RNamName("report"))) {
-    assert(ElmPRec(data, RNamName("report")) == True || ElmPRec(data, RNamName("report")) == False);
-    return (ElmPRec(data, RNamName("report")) == True ? true : false);
+  if (IsbPRec(data, RNam_report)) {
+    assert(ElmPRec(data, RNam_report) == True || ElmPRec(data, RNam_report) == False);
+    return (ElmPRec(data, RNam_report) == True ? true : false);
   }
   return false;
 }

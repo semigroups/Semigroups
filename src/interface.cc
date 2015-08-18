@@ -12,16 +12,6 @@
 #include <assert.h>
 
 /*******************************************************************************
- * Record names TODO init these in a function
-*******************************************************************************/
-
-static Int RNam_elts  = RNamName("elts");
-static Int RNam_left  = RNamName("left");
-static Int RNam_right = RNamName("right");
-static Int RNam_rules = RNamName("rules");
-static Int RNam_words = RNamName("words");
-
-/*******************************************************************************
  * Temporary stuff goes here!
 *******************************************************************************/
 
@@ -80,10 +70,10 @@ class Interface : public InterfaceBase {
     // not. 
     Interface (Obj data, Converter<T>* converter, SemigroupBase* old) 
       : _converter(converter) {
-      assert(IsbPRec(data, RNamName("gens")));
-      assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
+      assert(IsbPRec(data, RNam_gens));
+      assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
       
-      Obj gens = ElmPRec(data, RNamName("gens"));
+      Obj gens = ElmPRec(data, RNam_gens);
 
       std::vector<T*> gens_c;
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
@@ -130,6 +120,10 @@ class Interface : public InterfaceBase {
       return _semigroup->max_word_length();
     }
     
+    size_t length (Obj pos) const {
+      return _semigroup->length(INT_INTOBJ(pos) - 1);
+    }
+    
     size_t nr_idempotents (Obj data) {
       return _semigroup->nr_idempotents(Report(data));
     }
@@ -142,10 +136,11 @@ class Interface : public InterfaceBase {
         coll_cc.insert(_converter->convert(ELM_PLIST(coll, i), _semigroup->degree()));
       }
       _semigroup->add_generators(coll_cc, Report(data));
-      Obj gens = ElmPRec(data, RNamName("gens")); // TODO make this safe
+      Obj gens = ElmPRec(data, RNam_gens); // TODO make this safe
       for(size_t i = 0; i < _semigroup->nrgens(); i++) {
         AssPlist(gens, i + 1, _converter->unconvert(_semigroup->gens().at(i)));
       }
+
       //unbind things in data
       if (IsbPRec(data, RNam_elts)) {
         UnbPRec(data, RNam_elts);
@@ -409,8 +404,8 @@ class Interface : public InterfaceBase {
 *******************************************************************************/
 
 InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old) {
-  if (IsbPRec(data, RNamName("Interface_CC"))) {
-    return CLASS_OBJ<InterfaceBase>(ElmPRec(data, RNamName("Interface_CC")));
+  if (IsbPRec(data, RNam_Interface_CC)) {
+    return CLASS_OBJ<InterfaceBase>(ElmPRec(data, RNam_Interface_CC));
   }
 
   InterfaceBase* interface;
@@ -663,6 +658,14 @@ Obj MAX_WORD_LEN_SEMIGROUP (Obj self, Obj data) {
     } else {
       return INTOBJ_INT(1);
     }
+  }
+}
+
+Obj LENGTH_ELEMENT_SEMIGROUP (Obj self, Obj data, Obj pos) {
+  if (TypeSemigroup(data) != UNKNOWN) { 
+    return INTOBJ_INT(InterfaceFromData(data)->length(pos));
+  } else {
+    //TODO
   }
 }
 

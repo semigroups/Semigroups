@@ -682,6 +682,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "scc1, scc2"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_HCLASSES, 2, 
                           "left, right"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", LENGTH_ELEMENT_SEMIGROUP, 2, 
+                          "data, pos"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
