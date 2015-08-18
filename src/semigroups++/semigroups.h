@@ -8,7 +8,6 @@
 // TODO
 //
 // 1) bit flipping for reduced?
-// 2) remove RecVecs
 // 6) the other functionality of Semigroupe.
 // 7) rename degree to element_size or something
 
@@ -562,7 +561,7 @@ class Semigroup : public SemigroupBase {
               _first.push_back(_first.at(i));
               _final.push_back(j);
               _index.push_back(_nr);
-              _length.push_back(_wordlen + 1);
+              _length.push_back(2);
               _map.insert(std::make_pair(*_elements->back(), _nr));
               _prefix.push_back(i);
               _reduced.set(i, j, true);
@@ -616,7 +615,7 @@ class Semigroup : public SemigroupBase {
                 _elements->push_back(static_cast<T*>(_tmp_product.copy()));
                 _first.push_back(b);
                 _final.push_back(j);
-                _length.push_back(_wordlen + 1);
+                _length.push_back(_wordlen + 2);
                 _map.insert(std::make_pair(*_elements->back(), _nr));
                 _prefix.push_back(i);
                 _reduced.set(i, j, true);
