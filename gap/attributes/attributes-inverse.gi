@@ -196,7 +196,7 @@ function(S)
 
   T := IdempotentGeneratedSubsemigroup(S);
   i := Position(Elements(T), MultiplicativeZero(S));
-  gr := DigraphTransitiveReduction(Digraph(NaturalPartialOrder(T)));
+  gr := DigraphReflexiveTransitiveReduction(Digraph(NaturalPartialOrder(T)));
   prims := InNeighboursOfVertex(gr, i);
   return Elements(T){prims};
 end);

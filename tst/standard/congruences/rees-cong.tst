@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: rees-cong.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# ReesCongTest1
 # Test whether a congruence is Rees and find its ideal
@@ -173,4 +173,4 @@ Error, Semigroups: JoinSemigroupCongruences: usage,
 the args <c1> and <c2> must be congruences of the same semigroup,
 
 #E#
-gap> STOP_TEST( "Semigroups package: rees-cong.tst");
+gap> STOP_TEST("Semigroups package: rees-cong.tst");

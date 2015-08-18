@@ -563,6 +563,36 @@ function(S)
   return fail;
 end);
 
+InstallMethod(LengthOfLongestDClassChain, "for a finite semigroup",
+[IsSemigroup],
+function(S)
+  local gr, nbs, po, minimal_dclass;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
+  nbs := OutNeighbours(gr);
+  po := Digraph(InNeighbours(gr));
+  minimal_dclass := First(DigraphVertices(po), x -> IsEmpty(nbs[x]));
+
+  SetMinimalDClass(S, GreensDClasses(S)[minimal_dclass]);
+  SetRepresentativeOfMinimalIdeal(S, Representative(
+                                     GreensDClasses(S)[minimal_dclass]));
+
+  return DigraphLongestDistanceFromVertex(po, minimal_dclass);
+end);
+
+InstallMethod(NilpotencyDegree, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  if not IsNilpotentSemigroup(S) then
+    return fail;
+  fi;
+  return LengthOfLongestDClassChain(S) + 1;
+end);
+
 InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
 S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 

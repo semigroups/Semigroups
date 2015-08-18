@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: simple-cong.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# SimpleCongTest1: Create a simple semigroup
 gap> s := Semigroup( [Transformation( [ 2, 1, 1, 2, 1 ] ), 
@@ -115,4 +115,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST( "Semigroups package: simple-cong.tst");
+gap> STOP_TEST("Semigroups package: simple-cong.tst");

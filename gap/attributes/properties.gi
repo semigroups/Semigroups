@@ -1419,3 +1419,17 @@ end);
 InstallMethod(IsZeroSimpleSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup],
 S -> MultiplicativeZero(S) <> fail and NrDClasses(S) = 2);
+
+#
+
+InstallMethod(IsNilpotentSemigroup, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  if HasNrIdempotents(S) and NrIdempotents(S) <> 1 then
+    return false;
+  fi;
+  if MultiplicativeZero(S) = fail then
+    return false;
+  fi;
+  return NrIdempotents(S) = 1;
+end);

@@ -37,6 +37,7 @@ DeclareProperty("IsUnitRegularMonoid", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
+DeclareProperty("IsNilpotentSemigroup", IsSemigroup and IsFinite);
 
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
                                             IsRegularStarSemigroup);
@@ -59,6 +60,7 @@ InstallTrueMethod(IsLeftSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsLeftZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsRightZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsZeroSemigroup, IsSemigroup and IsTrivial);
+InstallTrueMethod(IsNilpotentSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
 InstallTrueMethod(IsLTrivial, IsDTrivial);
 InstallTrueMethod(IsRectangularBand,

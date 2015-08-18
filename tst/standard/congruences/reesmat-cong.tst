@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: reesmat-cong.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 # All ReesZeroMatrixSemigroup functions tested with a small example
 #T# ReesMatCongTest1: Create a Rees 0-matrix semigroup
@@ -152,4 +152,4 @@ gap> Unbind(class3);
 gap> Unbind(mat);
 
 #E#
-gap> STOP_TEST( "Semigroups package: reesmat-cong.tst");
+gap> STOP_TEST("Semigroups package: reesmat-cong.tst");

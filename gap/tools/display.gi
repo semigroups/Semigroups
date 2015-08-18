@@ -563,8 +563,8 @@ function(S, opts)
   od;
 
   # TODO make PartialOrderOfDClasses return a digraph
-  rel := OutNeighbours(DigraphTransitiveReduction(Digraph(PartialOrderOfDClasses(S))));
-  
+  rel := OutNeighbours(DigraphReflexiveTransitiveReduction(
+                       Digraph(PartialOrderOfDClasses(S))));
   for i in [1 .. Length(rel)] do
     ii := String(i);
     for k in rel[i] do

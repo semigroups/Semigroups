@@ -10,7 +10,7 @@ gap> START_TEST("Semigroups package: freeband.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# FreeBandTest1: Creating free bands (with default generators) and basic
 # methods
@@ -37,7 +37,7 @@ gap> Size(S);
 #T# FreeBandTest2: Free band D-class iterator
 gap> S := FreeBand(5);
 <free band on the generators [ x1, x2, x3, x4, x5 ]>
-gap> x := S.3*S.2*S.1;
+gap> x := S.3 * S.2 * S.1;
 x3x2x1
 gap> D := GreensDClassOfElement(S, x);
 <Green's D-class: x3x2x1>
@@ -102,7 +102,7 @@ false
 
 #T# FreeBandTest6: Free band full iterator
 gap> S := FreeBand(3);;
-gap> list := [  ];;
+gap> list := [];;
 gap> iter := Iterator(S);;
 gap> next := NextIterator(iter);;
 gap> while next <> fail do
@@ -129,7 +129,7 @@ gap> x * y * y = z;
 false
 gap> x * x = x;
 true
-gap> x*y*x*y*z*x*y*z = x*y*z;
+gap> x * y * x * y * z * x * y * z = x * y * z;
 true
 
 #T# FreeBandTest8: IsFreeBandCategory
@@ -153,13 +153,13 @@ gap> Product(List([1, 5, 5, 6, 7, 2, 3, 2, 3], x -> gens[x]));
 x1x5x6x7x2x3
 gap> Product(List([1, 1, 1, 1, 2, 1, 1, 2], x -> gens[x]));
 x1x2
-gap> Product(List([5, 2, 4, 5, 1,7, 7, 6, 2, 1], x -> gens[x]));
+gap> Product(List([5, 2, 4, 5, 1, 7, 7, 6, 2, 1], x -> gens[x]));
 x5x2x4x2x4x5x1x2x4x5x1x7x2x4x5x1x7x6x4x5x1x7x6x2x5x1x7x6x2x7x6x2x1
 
 #T# FreeBandTest10: Issue #112
 gap> iter := Iterator(FreeBand(4, "b"));;
 gap> x := NextIterator(iter);;
-gap> for i in [1..10000] do NextIterator(iter); od;
+gap> for i in [1 .. 10000] do NextIterator(iter); od;
 gap> y := NextIterator(iter);
 b3b4b1b3b4b3b2b1b4b2b4b3b2b3b4
 gap> T := Semigroup(x, y);;
@@ -195,7 +195,7 @@ gap> gens := Generators(FreeBand(3));
 [ x1, x2, x3 ]
 gap> IsFreeBand(Semigroup(gens));
 true
-gap> IsFreeBand(Semigroup(gens{[1,2]}));
+gap> IsFreeBand(Semigroup(gens{[1, 2]}));
 true
 gap> IsFreeBand(Semigroup(gens[1] * gens[2]));
 true
