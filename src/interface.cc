@@ -670,6 +670,6 @@ Obj NR_IDEMPOTENTS_SEMIGROUP (Obj self, Obj data) {
   if (TypeSemigroup(data) != UNKNOWN) { 
     return INTOBJ_INT(InterfaceFromData(data)->nr_idempotents(data));
   } else {
-    
+    return Fail;    
   }
 }
