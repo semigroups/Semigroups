@@ -169,14 +169,9 @@ class Semigroup : public SemigroupBase {
         _degree        (copy._degree),    // copy for comparison in add_generators
         _duplicate_gens(copy._duplicate_gens), 
         _elements      (new std::vector<T*>()),
-        _final         (copy._final),     // copy for assignment to specific positions in add_generators
-                                          // FIXME get rid of this and all
-                                          // others like it here!
-        _first         (copy._first),     // copy for assignment to specific positions in add_generators
         _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
         _genslookup    (copy._genslookup),
         _left          (new CayleyGraph(copy._nrgens + coll.size(), copy._nr)),
-        _length        (copy._length),    // copy for assignment to specific positions in add_generators
         _multiplied    (copy._multiplied),
         _nr            (copy._nr),
         _nrgens        (copy._nrgens),
@@ -184,10 +179,8 @@ class Semigroup : public SemigroupBase {
         _nrrules       (0),
         _pos           (copy._pos),
         _pos_one       (copy._pos_one),   // copy in case degree doesn't change in add_generators
-        _prefix        (copy._prefix),    // copy for assignment to specific positions in add_generators
         _relation_pos  (-1),
         _relation_gen  (0),
-        _suffix        (copy._suffix),    // copy for assignment to specific positions in add_generators
         _wordlen       (0) 
     {
       assert(!coll.empty());
@@ -233,8 +226,13 @@ class Semigroup : public SemigroupBase {
       
       for (size_t i = 0; i < copy._elements->size(); i++) {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->T::copy(deg_plus)));
-        is_one(_elements->back(), i);
+        _final.push_back(0);  // these are required for assignment to specific positions
+        _first.push_back(0);  // in add_generators
+        _length.push_back(0);
+        _prefix.push_back(0);
+        _suffix.push_back(0);
         _map.insert(std::make_pair(*_elements->back(), i));
+        is_one(_elements->back(), i);
       }
       
       add_generators(new_gens, report);
