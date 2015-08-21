@@ -241,6 +241,9 @@ class Semigroup : public SemigroupBase {
     *******************************************************************************/
     
     ~Semigroup () {
+      _tmp_product->delete_data();
+      delete _tmp_product;
+
       // FIXME duplicate generators are not deleted?
       delete _left;
       delete _right;
@@ -322,30 +325,54 @@ class Semigroup : public SemigroupBase {
     size_t current_size () const {
       return _elements->size();
     }
+
+    /*******************************************************************************
+     * current_nrrules:
+    *******************************************************************************/
     
     size_t current_nrrules () const {
       return _nrrules;
     }
+
+    /*******************************************************************************
+     * prefix:
+    *******************************************************************************/
     
     size_t prefix (size_t element_nr) const {
       assert(element_nr < _nr);
       return _prefix.at(element_nr);
     }
+
+    /*******************************************************************************
+     * suffix:
+    *******************************************************************************/
     
     size_t suffix (size_t element_nr) const {
       assert(element_nr < _nr);
       return _suffix.at(element_nr);
     }
     
+    /*******************************************************************************
+     * first_letter:
+    *******************************************************************************/
+    
     size_t first_letter (size_t element_nr) const {
       assert(element_nr < _nr);
       return _first.at(element_nr);
     }
+    
+    /*******************************************************************************
+     * final_letter:
+    *******************************************************************************/
 
     size_t final_letter (size_t element_nr) const {
       assert(element_nr < _nr);
       return _final.at(element_nr);
     }
+    
+    /*******************************************************************************
+     * batch_size:
+    *******************************************************************************/
     
     size_t batch_size () const {
       return _batch_size;
@@ -477,6 +504,8 @@ class Semigroup : public SemigroupBase {
       enumerate(-1, report);
       return _left;
     }
+
+    //TODO change this to receive an argument by reference.  
     
     Word* factorisation (size_t pos, bool report) { 
       // factorisation of _elements.at(pos)
@@ -569,9 +598,6 @@ class Semigroup : public SemigroupBase {
         std::cout << "limit = " << limit << std::endl;
       }
       
-      // pass in sample object to, for example, pass on the semiring for
-      // MatrixOverSemiring
-
       //multiply the generators by every generator
       if (_pos < _lenindex.at(1)) {
         size_t nr_shorter_elements = _nr;
