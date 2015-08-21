@@ -28,12 +28,13 @@
 
 class SemigroupBase { };
 
+typedef RecVec<size_t> CayleyGraph;
+
 template <typename T>
 class Semigroup : public SemigroupBase {
   
   typedef std::vector<size_t>     Word;
   typedef std::pair<Word*, Word*> Relation;
-  typedef RecVec<size_t>          CayleyGraph;
   typedef RecVec<bool>            Flags;
 
   public:
@@ -61,7 +62,7 @@ class Semigroup : public SemigroupBase {
       _gens          (gens), 
       _genslookup    (),
       _index         (),
-      _left          (new CayleyGraph(gens.size())),
+      _left          (gens.size()),
       _length        (),
       _lenindex      (), 
       _map           (), 
@@ -76,7 +77,7 @@ class Semigroup : public SemigroupBase {
       _reduced       (Flags(gens.size())),
       _relation_pos  (-1),
       _relation_gen  (0),
-      _right         (new CayleyGraph(gens.size())),
+      _right         (gens.size()),
       _suffix        (), 
       _wordlen       (0) // (length of the current word) - 1
     { 
@@ -128,7 +129,7 @@ class Semigroup : public SemigroupBase {
         _genslookup    (copy._genslookup),
         _id            (static_cast<T*>(copy._id->copy())),
         _index         (copy._index),
-        _left          (new CayleyGraph(copy._left)),
+        _left          (copy._left),
         _lenindex      (copy._lenindex),
         _length        (copy._length),  
         _multiplied    (copy._multiplied),
@@ -142,7 +143,7 @@ class Semigroup : public SemigroupBase {
         _reduced       (copy._reduced),
         _relation_pos  (copy._relation_pos),
         _relation_gen  (copy._relation_gen),
-        _right         (new CayleyGraph(copy._right)),
+        _right         (copy._right),
         _suffix        (copy._suffix),
         _wordlen       (copy._wordlen) 
     {
@@ -171,7 +172,7 @@ class Semigroup : public SemigroupBase {
         _elements      (new std::vector<T*>()),
         _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
         _genslookup    (copy._genslookup),
-        _left          (new CayleyGraph(copy._nrgens + coll.size(), copy._nr)),
+        _left          (copy._nrgens + coll.size(), copy._nr),
         _multiplied    (copy._multiplied),
         _nr            (copy._nr),
         _nrgens        (copy._nrgens),
@@ -210,7 +211,7 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(0);
       _lenindex.push_back(copy._lenindex.at(1));
       _index.reserve(copy._nr);
-      _right = new RecVec<size_t>(*copy._right, new_gens.size());
+      CayleyGraph _right(copy._right, new_gens.size());
       
       // add the distinct old generators to new _index
       for (size_t i = 0; i < copy._lenindex.at(1); i++) {
@@ -247,8 +248,6 @@ class Semigroup : public SemigroupBase {
       delete _tmp_product;
 
       // FIXME duplicate generators are not deleted?
-      delete _left;
-      delete _right;
       for (T* x: *_elements) {
         x->delete_data();
         delete x;
@@ -398,13 +397,13 @@ class Semigroup : public SemigroupBase {
       assert(i < _nr && j < _nr);
       if (length(i) <= length(j)) {
           while (i != (size_t) -1) {
-            j = _left->get(j, _final.at(i));
+            j = _left.get(j, _final.at(i));
             i = _prefix.at(i);
           }
           return j;
       } else {
         while (j != (size_t) -1) {
-          i = _right->get(i, _first.at(j));
+          i = _right.get(i, _first.at(j));
           j = _suffix.at(j);
         }
         return i;
@@ -497,12 +496,12 @@ class Semigroup : public SemigroupBase {
       return _elements;
     }
     
-    RecVec<size_t>* right_cayley_graph (bool report) {
+    RecVec<size_t> right_cayley_graph (bool report) {
       enumerate(-1, report);
       return _right;
     }
     
-    RecVec<size_t>* left_cayley_graph (bool report) {
+    RecVec<size_t> left_cayley_graph (bool report) {
       enumerate(-1, report);
       return _left;
     }
@@ -559,7 +558,7 @@ class Semigroup : public SemigroupBase {
                                             _relation_gen))) {
               relation.push_back(_index.at(_relation_pos));
               relation.push_back(_relation_gen);
-              relation.push_back(_right->get(_index.at(_relation_pos), _relation_gen));
+              relation.push_back(_right.get(_index.at(_relation_pos), _relation_gen));
               break;
             }
             _relation_gen++;
@@ -611,7 +610,7 @@ class Semigroup : public SemigroupBase {
             auto it = _map.find(*_tmp_product); 
 
             if (it != _map.end()) {
-              _right->set(i, j, it->second);
+              _right.set(i, j, it->second);
               _nrrules++;
             } else {
               is_one(_tmp_product, _nr);
@@ -624,7 +623,7 @@ class Semigroup : public SemigroupBase {
               _multiplied.push_back(false);
               _prefix.push_back(i);
               _reduced.set(i, j, true);
-              _right->set(i, j, _nr);
+              _right.set(i, j, _nr);
               _suffix.push_back(_genslookup.at(j));
               _nr++;
             }
@@ -634,7 +633,7 @@ class Semigroup : public SemigroupBase {
         for (size_t i = 0; i < _pos; i++) { 
           size_t b = _final.at(_index.at(i)); 
           for (size_t j = 0; j < _nrgens; j++) { 
-            _left->set(_index.at(i), j, _right->get(_genslookup.at(j), b));
+            _left.set(_index.at(i), j, _right.get(_genslookup.at(j), b));
           }
         }
         _wordlen++;
@@ -654,21 +653,21 @@ class Semigroup : public SemigroupBase {
           _multiplied.at(i) = true;
           for (size_t j = 0; j < _nrgens; j++) {
             if (!_reduced.get(s, j)) {
-              size_t r = _right->get(s, j);
+              size_t r = _right.get(s, j);
               if (_found_one && r == _pos_one) {
-                _right->set(i, j, _genslookup.at(b));
+                _right.set(i, j, _genslookup.at(b));
               } else if (_prefix.at(r) != (size_t) -1) { // r is not a generator
-                _right->set(i, j, _right->get(_left->get(_prefix.at(r), b),
+                _right.set(i, j, _right.get(_left.get(_prefix.at(r), b),
                                               _final.at(r)));
               } else { 
-                _right->set(i, j, _right->get(_genslookup.at(b), _final.at(r)));
+                _right.set(i, j, _right.get(_genslookup.at(b), _final.at(r)));
               } 
             } else {
               _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
               auto it = _map.find(*_tmp_product); 
 
               if (it != _map.end()) {
-                _right->set(i, j, it->second);
+                _right.set(i, j, it->second);
                 _nrrules++;
               } else {
                 is_one(_tmp_product, _nr);
@@ -680,8 +679,8 @@ class Semigroup : public SemigroupBase {
                 _multiplied.push_back(false);
                 _prefix.push_back(i);
                 _reduced.set(i, j, true);
-                _right->set(i, j, _nr);
-                _suffix.push_back(_right->get(s, j));
+                _right.set(i, j, _nr);
+                _suffix.push_back(_right.get(s, j));
                 _index.push_back(_nr);
                 _nr++;
                 stop = (_nr >= limit);
@@ -697,7 +696,7 @@ class Semigroup : public SemigroupBase {
             size_t p = _prefix.at(_index.at(i));
             size_t b = _final.at(_index.at(i)); 
             for (size_t j = 0; j < _nrgens; j++) { 
-              _left->set(_index.at(i), j, _right->get(_left->get(p, j), b));
+              _left.set(_index.at(i), j, _right.get(_left.get(p, j), b));
             }
           }
           _wordlen++;
@@ -783,14 +782,14 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
       
       // add columns for new generators if necessary
-      _reduced = Flags(_nrgens, _nr); 
+      Flags _reduced(_nrgens, _nr); 
       //TODO should probably use existing _reduced if it has enough space
       
-      if (_right->nrcols() != _nrgens) {
+      if (_right.nrcols() != _nrgens) {
         _right = add_cols(_right, coll.size());
       }
-      if (_left->nrcols() < _nrgens) {
-        _left = new CayleyGraph(_nrgens, _nr);
+      if (_left.nrcols() < _nrgens) {
+        CayleyGraph _left(_nrgens, _nr);
         //TODO should probably use existing _left if it has enough space
       }
       
@@ -811,7 +810,7 @@ class Semigroup : public SemigroupBase {
             nr_old_left--;
             // _elements.at(i) is in old semigroup, and its descendants are known
             for (size_t j = 0; j < old_nrgens; j++) {
-              size_t k = _right->get(i, j);
+              size_t k = _right.get(i, j);
               if (!old_new.at(k)) { // it's new!
                 is_one(_elements->at(k), k);
                 _first.at(k) = _first.at(i);
@@ -822,7 +821,7 @@ class Semigroup : public SemigroupBase {
                 if (_wordlen == 0) {
                   _suffix.at(k) = _genslookup.at(j);
                 } else {
-                  _suffix.at(k) = _right->get(s, j);
+                  _suffix.at(k) = _right.get(s, j);
                 }
                 _index.push_back(k);
                 old_new.at(k) = true;
@@ -852,7 +851,7 @@ class Semigroup : public SemigroupBase {
             for (size_t i = 0; i < _pos; i++) { 
               size_t b = _final.at(_index.at(i)); 
               for (size_t j = 0; j < _nrgens; j++) { 
-                _left->set(_index.at(i), j, _right->get(_genslookup.at(j), b));
+                _left.set(_index.at(i), j, _right.get(_genslookup.at(j), b));
               }
             }
           } else {
@@ -860,7 +859,7 @@ class Semigroup : public SemigroupBase {
               size_t p = _prefix.at(_index.at(i));
               size_t b = _final.at(_index.at(i)); 
               for (size_t j = 0; j < _nrgens; j++) { 
-                _left->set(_index.at(i), j, _right->get(_left->get(p, j), b));
+                _left.set(_index.at(i), j, _right.get(_left.get(p, j), b));
               }
             }
           }
@@ -882,16 +881,15 @@ class Semigroup : public SemigroupBase {
       
   private:
     
-    RecVec<size_t>* add_cols (RecVec<size_t>* rv1, size_t nr) {
-        RecVec<size_t>* rv2 = new RecVec<size_t>(*rv1, nr);
-        delete rv1;
+    RecVec<size_t> add_cols (RecVec<size_t> const& rv1, size_t nr) {
+        RecVec<size_t> rv2(rv1, nr);
         return rv2;
     }
 
     void inline expand (size_t nr) {
-      _left->add_rows(nr);
+      _left.add_rows(nr);
       _reduced.add_rows(nr);
-      _right->add_rows(nr);
+      _right.add_rows(nr);
     }
     
     void inline closure_update (size_t i, 
@@ -901,14 +899,14 @@ class Semigroup : public SemigroupBase {
                                 std::vector<bool>& old_new, 
                                 size_t old_nr) {
       if (_wordlen != 0 && !_reduced.get(s, j)) {
-        size_t r = _right->get(s, j);
+        size_t r = _right.get(s, j);
         if (_found_one && r == _pos_one) {
-          _right->set(i, j, _genslookup.at(b));
+          _right.set(i, j, _genslookup.at(b));
         } else if (_prefix.at(r) != (size_t) -1) {
-          _right->set(i, j, _right->get(_left->get(_prefix.at(r), b),
+          _right.set(i, j, _right.get(_left.get(_prefix.at(r), b),
                                         _final.at(r)));
         } else { 
-          _right->set(i, j, _right->get(_genslookup.at(b), _final.at(r)));
+          _right.set(i, j, _right.get(_genslookup.at(b), _final.at(r)));
         } 
       } else {
         _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
@@ -923,11 +921,11 @@ class Semigroup : public SemigroupBase {
           _multiplied.push_back(false);
           _prefix.push_back(i);
           _reduced.set(i, j, true);
-          _right->set(i, j, _nr);
+          _right.set(i, j, _nr);
           if (_wordlen == 0) { 
             _suffix.push_back(_genslookup.at(j));
           } else {
-            _suffix.push_back(_right->get(s, j));
+            _suffix.push_back(_right.get(s, j));
           }
           _index.push_back(_nr);
           _nr++;
@@ -939,17 +937,17 @@ class Semigroup : public SemigroupBase {
           _length.at(it->second) = _wordlen + 2;
           _prefix.at(it->second) = i;
           _reduced.set(i, j, true);
-          _right->set(i, j, it->second);
+          _right.set(i, j, it->second);
           if (_wordlen == 0) { 
             _suffix.at(it->second) = _genslookup.at(j);
           } else {
-            _suffix.at(it->second) = _right->get(s, j);
+            _suffix.at(it->second) = _right.get(s, j);
           }
           _index.push_back(it->second);
           old_new.at(it->second) = true;
         } else { // it->second >= old->_nr || old_new.at(it->second)
           // it's old
-          _right->set(i, j, it->second);
+          _right.set(i, j, it->second);
           _nrrules++;
         }
       }
@@ -973,7 +971,7 @@ class Semigroup : public SemigroupBase {
     std::vector<size_t>                     _genslookup;  
     T*                                      _id; 
     std::vector<size_t>                     _index;
-    CayleyGraph*                            _left;
+    CayleyGraph                             _left;
     std::vector<size_t>                     _length;
     std::vector<size_t>                     _lenindex;
     std::unordered_map<const T, size_t>     _map; 
@@ -988,7 +986,7 @@ class Semigroup : public SemigroupBase {
     Flags                                   _reduced;
     size_t                                  _relation_pos;
     size_t                                  _relation_gen;
-    CayleyGraph*                            _right;
+    CayleyGraph                             _right;
     std::vector<size_t>                     _suffix;
     T*                                      _tmp_product;
     size_t                                  _wordlen;

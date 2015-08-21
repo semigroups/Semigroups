@@ -175,14 +175,14 @@ class Interface : public InterfaceBase {
     // get the right Cayley graph from C++ semgroup, store it in data
     void right_cayley_graph (Obj data) {
       AssPRec(data, RNam_right, 
-              ConvertFromRecVec(_semigroup->right_cayley_graph(Report(data))));
+              ConvertFromCayleyGraph(_semigroup->right_cayley_graph(Report(data))));
       CHANGED_BAG(data);
     }
 
     // get the left Cayley graph from C++ semgroup, store it in data
     void left_cayley_graph (Obj data) {
       AssPRec(data, RNam_left, 
-              ConvertFromRecVec(_semigroup->left_cayley_graph(Report(data))));
+              ConvertFromCayleyGraph(_semigroup->left_cayley_graph(Report(data))));
       CHANGED_BAG(data);
     }
     
@@ -366,16 +366,18 @@ class Interface : public InterfaceBase {
     
   private:
     
-    // helper function to convert a RecVec to a GAP plist of GAP plists.
-    Obj ConvertFromRecVec (RecVec<size_t>* rv) {
-      Obj out = NEW_PLIST(T_PLIST, rv->nrrows());
-      SET_LEN_PLIST(out, rv->nrrows());
+    // helper function to convert a CayleyGraph to a GAP plist of GAP plists.
+    Obj ConvertFromCayleyGraph (CayleyGraph const& graph) {
+      assert(graph.size() != 0);
+      Obj out = NEW_PLIST(T_PLIST, graph.nrrows());
+      SET_LEN_PLIST(out, graph.nrrows());
 
-      for (size_t i = 0; i < rv->nrrows(); i++) {
-        Obj next = NEW_PLIST(T_PLIST_CYC, rv->nrcols());
-        SET_LEN_PLIST(next, rv->nrcols());
-        for (size_t j = 0; j < rv->nrcols(); j++) {
-          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(rv->get(i, j) + 1));
+      for (size_t i = 0; i < graph.nrrows(); i++) {
+        Obj next = NEW_PLIST(T_PLIST_CYC, graph.nrcols());
+        SET_LEN_PLIST(next, graph.nrcols());
+        //for (size_t j = 0; j < graph.nrcols(); j++) { //TODO reinstate this
+        for (size_t j = 0; j < _semigroup->nrgens(); j++) { 
+          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(graph.get(i, j) + 1));
         }
         SET_ELM_PLIST(out, i + 1, next);
         CHANGED_BAG(out);
