@@ -147,7 +147,7 @@ gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ],
 gap> AsTransformationSemigroup(S);
 <transformation semigroup on 12 pts with 2 generators>
 gap> AsMatrixSemigroup(S);
-<semigroup of 12x12 matrices over GF(2) with 2 generators>]]></Example>
+<semigroup of 12x12 s-matrices over GF(2) with 2 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

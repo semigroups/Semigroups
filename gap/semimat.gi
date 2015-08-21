@@ -376,17 +376,17 @@ function(S)
     deg := DegreeOfSMatrix(gens[1]);
     res := "<monoid of ";
     Append(res, Concatenation(String(deg), "x", String(deg)));
-    Append(res, " s-matrices over ");
+    Append(res, " s-matrices\<\> over ");
     Append(res, String(BaseDomain(S)));
-    Append(res, Concatenation(" with ", Length(gens), " generator"));
+    Append(res, Concatenation("\<\> with ", Length(gens), " generator"));
   else
     gens := GeneratorsOfSemigroup(S);
     deg := DegreeOfSMatrix(gens[1]);
     res := "<semigroup of ";
     Append(res, Concatenation(String(deg), "x", String(deg)));
-    Append(res, " s-matrices over ");
+    Append(res, " s-matrices\<\> over ");
     Append(res, String(BaseDomain(S)));
-    Append(res, Concatenation(" with ", Length(gens), " generator"));
+    Append(res, Concatenation("\<\> with ", Length(gens), " generator"));
   fi;
   if Length(gens) > 1 then
     Append(res, "s");
@@ -405,15 +405,15 @@ function(S)
     deg := DegreeOfSMatrix(gens[1]);
     Print("<monoid of ");
     Print(deg, "x", deg);
-    Print(" s-matrices over ", BaseDomain(S));
-    Print(" with ", Length(gens), " generator");
+    Print(" s-matrices\<\> over ", BaseDomain(S));
+    Print("\<\> with ", Length(gens), " generator");
   else
     gens := GeneratorsOfSemigroup(S);
     deg := DegreeOfSMatrix(gens[1]);
     Print("<semigroup of ");
     Print(deg, "x", deg);
-    Print(" s-matrices over ", BaseDomain(S));
-    Print(" with ", Length(gens), " generator");
+    Print(" s-matrices\<\> over ", BaseDomain(S));
+    Print("\<\> with ", Length(gens), " generator");
   fi;
   if Length(gens) > 1 then
     Print("s");
