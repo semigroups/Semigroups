@@ -63,3 +63,95 @@ size_t simple_size () {
       assert(nr == 0);
       return relations;
     }*/
+
+/*    // TODO split into 2 methods! 
+    Semigroup (const Semigroup& copy, const std::vector<T*>& coll = std::vector<T*>())
+      // initialize as if <coll> is not empty . . .
+      : _batch_size    (8192),
+        _degree        (copy._degree),    // copy for comparison in add_generators
+        _duplicate_gens(copy._duplicate_gens), 
+        _elements      (new std::vector<T*>()),
+        _final         (copy._final),     // copy for assignment to specific positions in add_generators
+        _first         (copy._first),     // copy for assignment to specific positions in add_generators
+        _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
+        _genslookup    (copy._genslookup),
+        _index         (),
+        _lenindex      (),
+        _length        (copy._length),    // copy for assignment to specific positions in add_generators
+        _map           (),
+        _nr            (copy._nr),
+        _nrgens        (copy._nrgens),
+        _nr_idempotents(0),
+        _nrrules       (0),
+        _pos           (copy._pos),
+        _pos_one       (copy._pos_one),   // copy in case degree doesn't change in add_generators
+        _prefix        (copy._prefix),    // copy for assignment to specific positions in add_generators
+        _relation_pos  (-1),
+        _relation_gen  (0),
+        _suffix        (copy._suffix),    // copy for assignment to specific positions in add_generators
+        _tmp_product   (new T(copy.degree(), copy.gens().at(0))), // this is assigned for clean copy
+        _wordlen       (0) 
+    {
+      _elements->reserve(copy._nr);
+      _map.reserve(copy._nr);
+      
+      std::unordered_set<T*> new_gens;
+
+      // check which of <coll> belong to <copy>
+      for (T* x: coll) {
+        if (copy._map.find(*x) == copy._map.end()) { 
+          new_gens.insert(x);
+        }
+      }
+
+      assert(new_gens.empty() || (*new_gens.begin())->degree() >= copy.degree());
+      size_t deg_plus = (new_gens.empty() ? 0 : (*new_gens.begin())->degree() - copy.degree());
+
+      if (new_gens.empty()) {// straight copy
+        _found_one = copy._found_one;
+        _index = copy._index;
+        _lenindex = copy._lenindex;
+        _nr_idempotents = copy._nr_idempotents;
+        _nrrules = copy._nrrules;
+        _left = new RecVec<size_t>(*copy._left);
+        _pos_one = copy._pos_one;
+        _reduced = copy._reduced;
+        _relation_gen = copy._relation_gen;
+        _relation_pos = copy._relation_pos;
+        _right = new RecVec<size_t>(*copy._right);
+        _wordlen = copy._wordlen;
+      } else {
+        if (deg_plus != 0) { 
+          _degree = copy.degree() + deg_plus;
+          _found_one = false;
+          _pos_one = 0;
+        } 
+        _lenindex.push_back(0);
+        _lenindex.push_back(copy._lenindex.at(1));
+        _index.reserve(copy._nr);
+        _left = new RecVec<size_t>(*copy._left, new_gens.size());
+        _right = new RecVec<size_t>(*copy._right, new_gens.size());
+        _reduced = RecVec<bool>(_nrgens + coll.size(), _nr);
+        
+        // add the distinct old generators to new _index
+        for (size_t i = 0; i < copy._lenindex.at(1); i++) {
+          _index.push_back(copy._index.at(i));
+          _length.push_back(1);
+        }
+      }
+
+      for (size_t i = 0; i < copy.nrgens(); i++) {
+        _gens.push_back(static_cast<T*>(copy._gens.at(i)->copy(deg_plus)));
+      }
+      
+      _id = static_cast<T*>(copy._id->copy(deg_plus));
+      _tmp_product = new T(_degree, _gens.at(0));
+      
+      for (size_t i = 0; i < copy._elements->size(); i++) {
+        _elements->push_back(static_cast<T*>(copy._elements->at(i)->T::copy(deg_plus)));
+        is_one(_elements->back(), i);
+        _map.insert(std::make_pair(*_elements->back(), i));
+      }
+      
+      add_generators(new_gens, false);
+    }*/

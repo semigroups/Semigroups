@@ -85,7 +85,7 @@ class Interface : public InterfaceBase {
       if (old == nullptr) {
         _semigroup = new Semigroup<T>(gens_c, deg_c);
       } else {
-        _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c); 
+        _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c, Report(data)); 
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
         }

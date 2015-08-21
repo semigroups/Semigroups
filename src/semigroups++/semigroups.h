@@ -31,10 +31,10 @@ class SemigroupBase { };
 template <typename T>
 class Semigroup : public SemigroupBase {
   
-  typedef std::vector<size_t>               Word;
-  typedef std::pair<Word*, Word*>           Relation;
-  typedef std::vector<std::vector<size_t> > CayleyGraph;
-  typedef std::vector<std::vector<bool> >   Flags;
+  typedef std::vector<size_t>     Word;
+  typedef std::pair<Word*, Word*> Relation;
+  typedef RecVec<size_t>          CayleyGraph;
+  typedef RecVec<bool>            Flags;
 
   public:
     
@@ -61,7 +61,7 @@ class Semigroup : public SemigroupBase {
       _gens          (gens), 
       _genslookup    (),
       _index         (),
-      _left          (new RecVec<size_t>(gens.size())),
+      _left          (new CayleyGraph(gens.size())),
       _length        (),
       _lenindex      (), 
       _map           (), 
@@ -72,16 +72,16 @@ class Semigroup : public SemigroupBase {
       _pos           (0), 
       _pos_one       (0), 
       _prefix        (), 
-      _reduced       (RecVec<bool>(gens.size())),
+      _reduced       (Flags(gens.size())),
       _relation_pos  (-1),
       _relation_gen  (0),
-      _right         (new RecVec<size_t>(gens.size())),
+      _right         (new CayleyGraph(gens.size())),
       _suffix        (), 
-      _tmp_product   (degree, gens.at(0)),
       _wordlen       (0) // (length of the current word) - 1
     { 
       assert(_nrgens != 0);
       
+      _tmp_product = new T(degree, gens.at(0));
       _lenindex.push_back(0);
       _id = static_cast<T*>(_gens.at(0)->identity());
 
@@ -94,7 +94,7 @@ class Semigroup : public SemigroupBase {
           _nrrules++;
           _duplicate_gens.push_back(std::make_pair(i, it->second));
         } else {
-          is_one(*x, _nr);
+          is_one(x, _nr);
           _elements->push_back(static_cast<T*>(x->copy()));
           _first.push_back(i);
           _final.push_back(i);
@@ -110,26 +110,70 @@ class Semigroup : public SemigroupBase {
       expand(_nr);
       _lenindex.push_back(_index.size()); 
     }
+    
+    /*******************************************************************************
+     * Copy . . .
+    *******************************************************************************/
 
+    Semigroup (const Semigroup& copy)
+      : _batch_size    (copy._batch_size),
+        _degree        (copy._degree),    
+        _duplicate_gens(copy._duplicate_gens), 
+        _elements      (new std::vector<T*>()),
+        _final         (copy._final),    
+        _first         (copy._first),   
+        _found_one     (copy._found_one),
+        _genslookup    (copy._genslookup),
+        _id            (static_cast<T*>(copy._id->copy())),
+        _index         (copy._index),
+        _left          (new CayleyGraph(copy._left)),
+        _lenindex      (copy._lenindex),
+        _length        (copy._length),  
+        _nr            (copy._nr),
+        _nrgens        (copy._nrgens),
+        _nr_idempotents(copy._nr_idempotents),
+        _nrrules       (copy._nrrules),
+        _pos           (copy._pos),
+        _pos_one       (copy._pos_one),
+        _prefix        (copy._prefix), 
+        _reduced       (copy._reduced),
+        _relation_pos  (copy._relation_pos),
+        _relation_gen  (copy._relation_gen),
+        _right         (new CayleyGraph(copy._right)),
+        _suffix        (copy._suffix),
+        _wordlen       (copy._wordlen) 
+    {
+      _elements->reserve(_nr);
+      _map.reserve(_nr);
+      _tmp_product = new T(copy.degree(), copy.gens().at(0));
+
+      for (size_t i = 0; i < _nrgens; i++) {
+        _gens.push_back(static_cast<T*>(copy._gens.at(i)->copy()));
+      }
+      
+      for (size_t i = 0; i < copy._elements->size(); i++) {
+        _elements->push_back(static_cast<T*>(copy._elements->at(i)->copy()));
+        _map.insert(std::make_pair(*_elements->back(), i));
+      }
+    }
+ 
     /*******************************************************************************
      * Construct from semigroup and additional generators . . .
     *******************************************************************************/
 
-    // TODO split into 2 methods! 
-    Semigroup (const Semigroup& copy, const std::vector<T*>& coll = std::vector<T*>())
-      // initialize as if <coll> is not empty . . .
-      : _batch_size    (8192),
+    Semigroup (const Semigroup& copy, const std::vector<T*>& coll, bool report)
+      : _batch_size    (copy._batch_size),
         _degree        (copy._degree),    // copy for comparison in add_generators
         _duplicate_gens(copy._duplicate_gens), 
         _elements      (new std::vector<T*>()),
         _final         (copy._final),     // copy for assignment to specific positions in add_generators
+                                          // FIXME get rid of this and all
+                                          // others like it here!
         _first         (copy._first),     // copy for assignment to specific positions in add_generators
         _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
         _genslookup    (copy._genslookup),
-        _index         (),
-        _lenindex      (),
+        _left          (new CayleyGraph(copy._nrgens + coll.size(), copy._nr)),
         _length        (copy._length),    // copy for assignment to specific positions in add_generators
-        _map           (),
         _nr            (copy._nr),
         _nrgens        (copy._nrgens),
         _nr_idempotents(0),
@@ -139,56 +183,41 @@ class Semigroup : public SemigroupBase {
         _prefix        (copy._prefix),    // copy for assignment to specific positions in add_generators
         _relation_pos  (-1),
         _relation_gen  (0),
+        _right         (new CayleyGraph(*copy._right)),
         _suffix        (copy._suffix),    // copy for assignment to specific positions in add_generators
-        _tmp_product   (copy.degree(), copy.gens().at(0)), // this is assigned for clean copy
         _wordlen       (0) 
     {
+      assert(!coll.empty());
+
       _elements->reserve(copy._nr);
       _map.reserve(copy._nr);
       
       std::unordered_set<T*> new_gens;
 
-      // check which of <coll> belong to <copy>
+      // remove duplicate generators
       for (T* x: coll) {
-        if (copy._map.find(*x) == copy._map.end()) { 
-          new_gens.insert(x);
-        }
+        assert(x->degree() == coll.at(0)->degree());
+        new_gens.insert(x);
       }
+      
+      assert(!new_gens.empty());
+      assert((*new_gens.begin())->degree() >= copy.degree());
 
-      assert(new_gens.empty() || (*new_gens.begin())->degree() >= copy.degree());
-      size_t deg_plus = (new_gens.empty() ? 0 : (*new_gens.begin())->degree() - copy.degree());
+      size_t deg_plus = (*new_gens.begin())->degree() - copy.degree();
 
-      if (new_gens.empty()) {// straight copy
-        _found_one = copy._found_one;
-        _index = copy._index;
-        _lenindex = copy._lenindex;
-        _nr_idempotents = copy._nr_idempotents;
-        _nrrules = copy._nrrules;
-        _left = new RecVec<size_t>(*copy._left);
-        _pos_one = copy._pos_one;
-        _reduced = copy._reduced;
-        _relation_gen = copy._relation_gen;
-        _relation_pos = copy._relation_pos;
-        _right = new RecVec<size_t>(*copy._right);
-        _wordlen = copy._wordlen;
-      } else {
-        if (deg_plus != 0) { 
-          _degree = copy.degree() + deg_plus;
-          _found_one = false;
-          _pos_one = 0;
-        } 
-        _lenindex.push_back(0);
-        _lenindex.push_back(copy._lenindex.at(1));
-        _index.reserve(copy._nr);
-        _left = new RecVec<size_t>(*copy._left, new_gens.size());
-        _right = new RecVec<size_t>(*copy._right, new_gens.size());
-        _reduced = RecVec<bool>(_nrgens + coll.size(), _nr);
-        
-        // add the distinct old generators to new _index
-        for (size_t i = 0; i < copy._lenindex.at(1); i++) {
-          _index.push_back(copy._index.at(i));
-          _length.push_back(1);
-        }
+      if (deg_plus != 0) { 
+        _degree += deg_plus;
+        _found_one = false;
+        _pos_one = 0;
+      } 
+      
+      _lenindex.push_back(0);
+      _lenindex.push_back(copy._lenindex.at(1));
+      _index.reserve(copy._nr);
+      
+      // add the distinct old generators to new _index
+      for (size_t i = 0; i < copy._lenindex.at(1); i++) {
+        _index.push_back(copy._index.at(i));
       }
 
       for (size_t i = 0; i < copy.nrgens(); i++) {
@@ -196,15 +225,15 @@ class Semigroup : public SemigroupBase {
       }
       
       _id = static_cast<T*>(copy._id->copy(deg_plus));
-      _tmp_product = T(_degree, _gens.at(0));
+      _tmp_product = new T(_degree, _gens.at(0));
       
       for (size_t i = 0; i < copy._elements->size(); i++) {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->T::copy(deg_plus)));
-        is_one(*_elements->back(), i);
+        is_one(_elements->back(), i);
         _map.insert(std::make_pair(*_elements->back(), i));
       }
       
-      add_generators(new_gens, false);
+      add_generators(new_gens, report);
     }
 
     /*******************************************************************************
@@ -376,10 +405,10 @@ class Semigroup : public SemigroupBase {
           sum_word_lengths += i * (_lenindex.at(i) - _lenindex.at(i - 1));
         }
           
-        if (_nr * _tmp_product.complexity() < sum_word_lengths) {
+        if (_nr * _tmp_product->complexity() < sum_word_lengths) {
           for (size_t i = 0; i < _nr; i++) {
-            _tmp_product.redefine(_elements->at(i), _elements->at(i));
-            if (_tmp_product == *_elements->at(i)) {
+            _tmp_product->redefine(_elements->at(i), _elements->at(i));
+            if (*_tmp_product == *_elements->at(i)) {
               _nr_idempotents++;
             }
           }
@@ -549,15 +578,15 @@ class Semigroup : public SemigroupBase {
         while (_pos < _lenindex.at(1)) { 
           size_t i = _index.at(_pos);
           for (size_t j = 0; j < _nrgens; j++) {
-            _tmp_product.redefine(_elements->at(i), _gens.at(j)); 
-            auto it = _map.find(_tmp_product); 
+            _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
+            auto it = _map.find(*_tmp_product); 
 
             if (it != _map.end()) {
               _right->set(i, j, it->second);
               _nrrules++;
             } else {
               is_one(_tmp_product, _nr);
-              _elements->push_back(static_cast<T*>(_tmp_product.copy()));
+              _elements->push_back(static_cast<T*>(_tmp_product->copy()));
               _first.push_back(_first.at(i));
               _final.push_back(j);
               _index.push_back(_nr);
@@ -604,15 +633,15 @@ class Semigroup : public SemigroupBase {
                 _right->set(i, j, _right->get(_genslookup.at(b), _final.at(r)));
               } 
             } else {
-              _tmp_product.redefine(_elements->at(i), _gens.at(j)); 
-              auto it = _map.find(_tmp_product); 
+              _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
+              auto it = _map.find(*_tmp_product); 
 
               if (it != _map.end()) {
                 _right->set(i, j, it->second);
                 _nrrules++;
               } else {
                 is_one(_tmp_product, _nr);
-                _elements->push_back(static_cast<T*>(_tmp_product.copy()));
+                _elements->push_back(static_cast<T*>(_tmp_product->copy()));
                 _first.push_back(b);
                 _final.push_back(j);
                 _length.push_back(_wordlen + 2);
@@ -703,7 +732,7 @@ class Semigroup : public SemigroupBase {
           _genslookup.push_back(_nr);
           _index.push_back(_nr);
 
-          is_one(*x, _nr);
+          is_one(x, _nr);
           _map.insert(std::make_pair(*x, _nr));
           _prefix.push_back(-1);
           _suffix.push_back(-1);
@@ -751,7 +780,7 @@ class Semigroup : public SemigroupBase {
             for (size_t j = 0; j < old_nrgens; j++) {
               size_t k = _right->get(i, j);
               if (!old_new.at(k)) { // it's new!
-                is_one(*_elements->at(k), k);
+                is_one(_elements->at(k), k);
                 _first.at(k) = _first.at(i);
                 _final.at(k) = j;
                 _length.at(k) = _wordlen + 1;
@@ -851,11 +880,11 @@ class Semigroup : public SemigroupBase {
           _right->set(i, j, _right->get(_genslookup.at(b), _final.at(r)));
         } 
       } else {
-        _tmp_product.redefine(_elements->at(i), _gens.at(j)); 
-        auto it = _map.find(_tmp_product); 
+        _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
+        auto it = _map.find(*_tmp_product); 
         if (it == _map.end()) { //it's new!
           is_one(_tmp_product, _nr);
-          _elements->push_back(static_cast<T*>(_tmp_product.copy()));
+          _elements->push_back(static_cast<T*>(_tmp_product->copy()));
           _first.push_back(b);
           _final.push_back(j);
           _length.push_back(_wordlen + 1);
@@ -895,8 +924,8 @@ class Semigroup : public SemigroupBase {
       }
     }
 
-    void inline is_one (T& x, size_t element_nr) {
-      if (!_found_one && x == (*_id)) {
+    void inline is_one (T* x, size_t element_nr) {
+      if (!_found_one && *x == *_id) {
         _pos_one = element_nr;
         _found_one = true;
       }
@@ -913,7 +942,7 @@ class Semigroup : public SemigroupBase {
     std::vector<size_t>                     _genslookup;  
     T*                                      _id; 
     std::vector<size_t>                     _index;
-    RecVec<size_t>*                         _left;
+    CayleyGraph*                            _left;
     std::vector<size_t>                     _length;
     std::vector<size_t>                     _lenindex;
     std::unordered_map<const T, size_t>     _map;         
@@ -924,12 +953,12 @@ class Semigroup : public SemigroupBase {
     size_t                                  _pos;
     size_t                                  _pos_one;
     std::vector<size_t>                     _prefix;
-    RecVec<bool>                            _reduced;
+    Flags                                   _reduced;
     size_t                                  _relation_pos;
     size_t                                  _relation_gen;
-    RecVec<size_t>*                         _right;
+    CayleyGraph*                            _right;
     std::vector<size_t>                     _suffix;
-    T                                       _tmp_product;
+    T*                                      _tmp_product;
     size_t                                  _wordlen;
 };
 
