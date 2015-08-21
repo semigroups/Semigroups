@@ -211,7 +211,7 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(0);
       _lenindex.push_back(copy._lenindex.at(1));
       _index.reserve(copy._nr);
-      CayleyGraph _right(copy._right, new_gens.size());
+      _right = CayleyGraph(copy._right, new_gens.size());
       
       // add the distinct old generators to new _index
       for (size_t i = 0; i < copy._lenindex.at(1); i++) {
@@ -782,14 +782,14 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
       
       // add columns for new generators if necessary
-      Flags _reduced(_nrgens, _nr); 
+      _reduced = Flags(_nrgens, _nr); 
       //TODO should probably use existing _reduced if it has enough space
       
       if (_right.nrcols() != _nrgens) {
         _right = add_cols(_right, coll.size());
       }
       if (_left.nrcols() < _nrgens) {
-        CayleyGraph _left(_nrgens, _nr);
+        _left = CayleyGraph(_nrgens, _nr);
         //TODO should probably use existing _left if it has enough space
       }
       

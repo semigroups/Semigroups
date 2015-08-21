@@ -32,17 +32,8 @@ class RecVec {
           : _vec(copy._vec),
             _nrcols(copy._nrcols), 
             _nrrows(copy._nrrows) {
-            //  std::cout << "RecVec: copy constructor!\n";
             
             }
-
-        RecVec& operator= (RecVec const& copy) {
-            //std::cout << "RecVec: assignment operator!\n";
-            _vec = copy._vec;
-            _nrcols = copy._nrcols;
-            _nrrows = copy._nrrows;
-            return *this;
-        }
 
         RecVec (const RecVec& copy, size_t add_cols) 
           : _vec(), _nrcols(add_cols + copy.nrcols()), _nrrows(copy.nrrows())
@@ -53,7 +44,7 @@ class RecVec {
               _vec.push_back(copy.get(i, j));
             }
             for (size_t j = 0; j < add_cols; j++) {
-              _vec.push_back(0);
+              _vec.push_back(static_cast<T>(0));
             }
           }
         }
