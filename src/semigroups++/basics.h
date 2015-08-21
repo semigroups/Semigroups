@@ -59,7 +59,7 @@ class RecVec {
         }
         
         ~RecVec() {}
-        
+       
         T inline get (size_t i, size_t j) const {
           assert(i < _nrrows && j  < _nrcols);
           return _vec.at(i * _nrcols + j); 
@@ -85,7 +85,7 @@ class RecVec {
         void inline add_rows (size_t nr = 1) { // add rows
           _nrrows += nr;
           for (size_t i = 0; i < _nrcols * nr; i++) {
-            _vec.push_back(0);
+            _vec.push_back(static_cast<T>(0));
           }
         }
         
