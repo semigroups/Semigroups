@@ -109,10 +109,10 @@ class RecVec {
             return;
           }
 
-          size_t old_nr_cols= _nr_used_cols + _nr_unused_cols;
+          size_t old_nr_cols = _nr_used_cols + _nr_unused_cols;
           size_t new_nr_cols = std::max(5 * old_nr_cols / 4 + 4, nr);
           
-          _vec.reserve(new_nr_cols * _nr_rows);
+          _vec.resize(new_nr_cols * _nr_rows, static_cast<T>(0));
 
           typename std::vector<T>::iterator old_it(_vec.begin() + (old_nr_cols * _nr_rows) - old_nr_cols);
           typename std::vector<T>::iterator new_it(_vec.begin() + (new_nr_cols * _nr_rows) - new_nr_cols);
@@ -122,8 +122,8 @@ class RecVec {
             old_it -= old_nr_cols;
             new_it -= new_nr_cols;
           }
-          _nr_unused_cols = new_nr_cols - _nr_used_cols;
           _nr_used_cols += nr;
+          _nr_unused_cols = new_nr_cols - _nr_used_cols;
         }
 
         /***********************************************************************
@@ -131,6 +131,7 @@ class RecVec {
         ***********************************************************************/
         
         void inline set (size_t i, size_t j, T val) {
+          //assert(((_nr_used_cols + _nr_unused_cols) * _nr_rows) == _vec.size());
           assert(i < _nr_rows && j < _nr_used_cols);
           _vec[i * (_nr_used_cols + _nr_unused_cols) + j] = val; 
         }
@@ -140,7 +141,8 @@ class RecVec {
         ***********************************************************************/
         
         T inline get (size_t i, size_t j) const {
-          assert(i < _nr_rows && j  < _nr_used_cols);
+          //assert(((_nr_used_cols + _nr_unused_cols) * _nr_rows) == _vec.size());
+          assert(i < _nr_rows && j < _nr_used_cols);
           return _vec[i * (_nr_used_cols + _nr_unused_cols) + j]; 
         }
         

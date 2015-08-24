@@ -879,11 +879,6 @@ class Semigroup : public SemigroupBase {
       
   private:
     
-    RecVec<size_t> add_cols (RecVec<size_t> const& rv1, size_t nr) {
-        RecVec<size_t> rv2(rv1, nr);
-        return rv2;
-    }
-
     void inline expand (size_t nr) {
       _left.add_rows(nr);
       _reduced.add_rows(nr);
