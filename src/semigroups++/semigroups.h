@@ -737,27 +737,26 @@ class Semigroup : public SemigroupBase {
       size_t old_nrgens  = _nrgens; 
       size_t old_nr      = _nr;
       size_t nr_old_left = _pos;
-     
-      // set up for transferring from old to new
+      
+      bool there_are_new_gens = false;
       std::vector<bool> old_new; // have we seen _elements->at(i) yet in new?
-      old_new.reserve(old_nr);
-      for (size_t i = 0; i < old_nr; i++) {
-        old_new.push_back(false);
-      }
-      for (size_t i = 0; i < _genslookup.size(); i++) {
-        old_new.at(_genslookup.at(i)) = true;
-      }
 
-      // reset the data structure 1/2
-      _index.erase(_index.begin() + _lenindex.at(1), _index.end());
-      
-      _nrrules = _duplicate_gens.size();
-      _pos     = 0;
-      _wordlen = 0;
-      
       // add the new generators to new _gens, _elements, and _index
       for (T* x: coll) {
         if (_map.find(*x) == _map.end()) {
+          if (!there_are_new_gens) {
+            
+            // erase the old index
+            _index.erase(_index.begin() + _lenindex.at(1), _index.end());
+            
+            // set up old_new
+            old_new.resize(old_nr, false);
+            for (size_t i = 0; i < _genslookup.size(); i++) {
+              old_new.at(_genslookup.at(i)) = true;
+            }
+            there_are_new_gens = true;
+          }
+
           _first.push_back(_gens.size());
           _final.push_back(_gens.size());
 
@@ -776,15 +775,21 @@ class Semigroup : public SemigroupBase {
           _nr++;
         }
       }
-      //TODO if we don't add any new generators, we should return here
       
-      // reset the data structure 2/2
+      if (!there_are_new_gens) { // everything in coll was already in the semigroup
+        return;
+      }
+      
+      // reset the data structure
+      _nrrules = _duplicate_gens.size();
+      _pos     = 0;
+      _wordlen = 0;
       _nrgens = _gens.size();
       _lenindex.clear();
       _lenindex.push_back(0);
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
      
-      if (_reduced.cols_capacity() >= _nrgens) { // when we are copying and finding closure
+      if (_reduced.cols_capacity() >= _nrgens) { 
         _reduced.clear();           // reset all flags to false, leaves nr_rows unchanged at _nr
         _reduced.add_cols(_nrgens); // set nr_cols to be correct value
         _reduced.add_rows(_nrgens - old_nrgens);
@@ -802,8 +807,9 @@ class Semigroup : public SemigroupBase {
 
       size_t nr_shorter_elements;
 
-      // Repeat until we have multiplied all of the elements of <old> up to the
-      // old value of _pos by all of the (new and old) generators. 
+      // repeat until we have multiplied all of the elements of <old> up to the
+      // old value of _pos by all of the (new and old) generators
+
       while (nr_old_left > 0) {
         nr_shorter_elements = _nr;
         while (_pos < _lenindex.at(_wordlen + 1) && nr_old_left > 0) {
