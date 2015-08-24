@@ -103,7 +103,6 @@ class Semigroup : public SemigroupBase {
           _genslookup.push_back(_nr);
           _length.push_back(1);
           _map.insert(std::make_pair(*_elements->back(), _nr));
-          _multiplied.push_back(false);
           _prefix.push_back(-1);
           _suffix.push_back(-1);
           _index.push_back(_nr);
@@ -620,7 +619,6 @@ class Semigroup : public SemigroupBase {
               _index.push_back(_nr);
               _length.push_back(2);
               _map.insert(std::make_pair(*_elements->back(), _nr));
-              _multiplied.push_back(false);
               _prefix.push_back(i);
               _reduced.set(i, j, true);
               _right.set(i, j, _nr);
@@ -676,7 +674,6 @@ class Semigroup : public SemigroupBase {
                 _final.push_back(j);
                 _length.push_back(_wordlen + 2);
                 _map.insert(std::make_pair(*_elements->back(), _nr));
-                _multiplied.push_back(false);
                 _prefix.push_back(i);
                 _reduced.set(i, j, true);
                 _right.set(i, j, _nr);
@@ -883,6 +880,7 @@ class Semigroup : public SemigroupBase {
       _left.add_rows(nr);
       _reduced.add_rows(nr);
       _right.add_rows(nr);
+      _multiplied.resize(_multiplied.size() + nr, false);
     }
     
     void inline closure_update (size_t i, 
