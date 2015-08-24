@@ -147,6 +147,22 @@ class RecVec {
         }
         
         /***********************************************************************
+         * clear: set all values to static_cast<T>(0), set number of used cols
+         * to 0, does not reset the number of rows!!!
+        ***********************************************************************/
+        
+        void inline clear () {
+          size_t nr_cols = _nr_used_cols + _nr_unused_cols;
+          T val = static_cast<T>(0);
+          for (size_t i = 0; i < _nr_rows; i++) {
+            for (size_t j = 0; j < _nr_used_cols; j++) {
+              _vec[i * nr_cols + j] = val;
+            }
+          }
+          _nr_used_cols = 0;
+        }
+        
+        /***********************************************************************
          * size: the total amount of used space
         ***********************************************************************/
          
@@ -168,6 +184,14 @@ class RecVec {
 
         size_t nr_cols () const {
           return _nr_used_cols;
+        }
+        
+        /***********************************************************************
+         * cols_capacity: the total number of columns available!
+        ***********************************************************************/
+
+        size_t cols_capacity () const {
+          return _nr_used_cols + _nr_unused_cols;
         }
         
       private:

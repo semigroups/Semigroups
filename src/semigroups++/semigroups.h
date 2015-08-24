@@ -187,6 +187,14 @@ class Semigroup : public SemigroupBase {
 
       _elements->reserve(copy._nr);
       _map.reserve(copy._nr);
+
+      // the following are required for assignment to specific positions in
+      // add_generators
+      _final.resize(copy._nr, 0);  
+      _first.resize(copy._nr, 0); 
+      _length.resize(copy._nr, 0);
+      _prefix.resize(copy._nr, 0);
+      _suffix.resize(copy._nr, 0);
       
       std::unordered_set<T*> new_gens;
 
@@ -210,7 +218,10 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(0);
       _lenindex.push_back(copy._lenindex.at(1));
       _index.reserve(copy._nr);
-      _right = CayleyGraph(copy._right, new_gens.size());
+      
+      _left    = CayleyGraph(copy._left, new_gens.size());
+      _right   = CayleyGraph(copy._right, new_gens.size());
+      _reduced = Flags(new_gens.size(), copy._nr);
       
       // add the distinct old generators to new _index
       for (size_t i = 0; i < copy._lenindex.at(1); i++) {
@@ -226,11 +237,6 @@ class Semigroup : public SemigroupBase {
       
       for (size_t i = 0; i < copy._elements->size(); i++) {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->T::copy(deg_plus)));
-        _final.push_back(0);  // these are required for assignment to specific positions
-        _first.push_back(0);  // in add_generators
-        _length.push_back(0);
-        _prefix.push_back(0);
-        _suffix.push_back(0);
         _map.insert(std::make_pair(*_elements->back(), i));
         is_one(_elements->back(), i);
       }
@@ -777,24 +783,27 @@ class Semigroup : public SemigroupBase {
       _lenindex.clear();
       _lenindex.push_back(0);
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
-      
-      // add columns for new generators if necessary
-      _reduced = Flags(_nrgens, _nr); 
-      //TODO should probably use existing _reduced if it has enough space
-      
-      _right.add_cols(_nrgens - _right.nr_cols());
-      if (_left.nr_cols() < _nrgens) {
-        _left = CayleyGraph(_nrgens, _nr);
-        //TODO should probably use existing _left if it has enough space
+     
+      if (_reduced.cols_capacity() >= _nrgens) { // when we are copying and finding closure
+        _reduced.clear();           // reset all flags to false, leaves nr_rows unchanged at _nr
+        _reduced.add_cols(_nrgens); // set nr_cols to be correct value
+        _reduced.add_rows(_nrgens - old_nrgens);
+      } else {
+        _reduced = Flags(_nrgens, _nr + _nrgens - old_nrgens); 
       }
       
-      // add rows in left/right/reduced for newly added generators
-      expand(_nrgens - old_nrgens);
+      // add columns for new generators
+      _left.add_cols(_nrgens - _left.nr_cols());
+      _right.add_cols(_nrgens - _right.nr_cols());
+      
+      // add rows in for newly added generators
+      _left.add_rows(_nrgens - old_nrgens);
+      _right.add_rows(_nrgens - old_nrgens);
 
       size_t nr_shorter_elements;
 
-      // Repeat until we have multiplied all of the elements of <old> by all
-      // of the (new and old) generators. 
+      // Repeat until we have multiplied all of the elements of <old> up to the
+      // old value of _pos by all of the (new and old) generators. 
       while (nr_old_left > 0) {
         nr_shorter_elements = _nr;
         while (_pos < _lenindex.at(_wordlen + 1) && nr_old_left > 0) {
