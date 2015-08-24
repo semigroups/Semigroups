@@ -785,10 +785,8 @@ class Semigroup : public SemigroupBase {
       _reduced = Flags(_nrgens, _nr); 
       //TODO should probably use existing _reduced if it has enough space
       
-      if (_right.nrcols() != _nrgens) {
-        _right = add_cols(_right, coll.size());
-      }
-      if (_left.nrcols() < _nrgens) {
+      _right.add_cols(_nrgens - _right.nr_cols());
+      if (_left.nr_cols() < _nrgens) {
         _left = CayleyGraph(_nrgens, _nr);
         //TODO should probably use existing _left if it has enough space
       }

@@ -369,13 +369,13 @@ class Interface : public InterfaceBase {
     // helper function to convert a CayleyGraph to a GAP plist of GAP plists.
     Obj ConvertFromCayleyGraph (CayleyGraph const& graph) {
       assert(graph.size() != 0);
-      Obj out = NEW_PLIST(T_PLIST, graph.nrrows());
-      SET_LEN_PLIST(out, graph.nrrows());
+      Obj out = NEW_PLIST(T_PLIST, graph.nr_rows());
+      SET_LEN_PLIST(out, graph.nr_rows());
 
-      for (size_t i = 0; i < graph.nrrows(); i++) {
-        Obj next = NEW_PLIST(T_PLIST_CYC, graph.nrcols());
-        SET_LEN_PLIST(next, graph.nrcols());
-        //for (size_t j = 0; j < graph.nrcols(); j++) { //TODO reinstate this
+      for (size_t i = 0; i < graph.nr_rows(); i++) {
+        Obj next = NEW_PLIST(T_PLIST_CYC, graph.nr_cols());
+        SET_LEN_PLIST(next, graph.nr_cols());
+        //for (size_t j = 0; j < graph.nr_cols(); j++) { //TODO reinstate this
         for (size_t j = 0; j < _semigroup->nrgens(); j++) { 
           SET_ELM_PLIST(next, j + 1, INTOBJ_INT(graph.get(i, j) + 1));
         }
@@ -533,7 +533,6 @@ Obj RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
 
 Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
   if (IsCCSemigroup(data) && ! IsbPRec(data, RNam_left)) { 
-    //TODO free _left 
     InterfaceFromData(data)->left_cayley_graph(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
@@ -543,7 +542,6 @@ Obj LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 
 Obj RELATIONS_SEMIGROUP (Obj self, Obj data) {
   if (IsCCSemigroup(data) && ! IsbPRec(data, RNam_rules)) { 
-    //TODO free _suffix and _first
     InterfaceFromData(data)->relations(data);
   } else {
     ENUMERATE_SEMIGROUP(self, data, INTOBJ_INT(-1), 0, False);
