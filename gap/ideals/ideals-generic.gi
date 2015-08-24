@@ -202,13 +202,11 @@ InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 function(I)
   local U, enum, x;
   
-  U:=Semigroup(GeneratorsOfSemigroupIdeal(I));
-  enum:=Enumerator(I);
+  U := Semigroup(GeneratorsOfSemigroupIdeal(I));
+  enum := Enumerator(I);
 
   for x in enum do
-    if not x in U then
-      U:=Semigroup(U, x);
-    fi;
+    U := ClosureSemigroup(U, x);
   od;
 
   return GeneratorsOfSemigroup(U);

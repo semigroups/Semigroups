@@ -7,9 +7,8 @@
 
 // TODO
 //
-// 1) bit flipping for reduced?
-// 6) the other functionality of Semigroupe.
-// 7) rename degree to element_size or something
+// 1) the other functionality of Semigroupe.
+// 2) remove templates as far as possible.
 
 #ifndef SEMIGROUPS_H
 #define SEMIGROUPS_H
@@ -229,10 +228,10 @@ class Semigroup : public SemigroupBase {
       }
 
       for (size_t i = 0; i < copy.nrgens(); i++) {
-        _gens.push_back(static_cast<T*>(copy._gens.at(i)->copy(deg_plus)));
+        _gens.push_back(static_cast<T*>(copy._gens.at(i)->T::copy(deg_plus)));
       }
       
-      _id = static_cast<T*>(copy._id->copy(deg_plus));
+      _id = static_cast<T*>(copy._id->T::copy(deg_plus));
       _tmp_product = new T(_degree, _gens.at(0));
       
       for (size_t i = 0; i < copy._elements->size(); i++) {

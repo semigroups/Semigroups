@@ -73,7 +73,10 @@ class Element {
     }
 
     virtual Element<T>* copy (size_t increase_deg_by = 0) const {
-      assert(increase_deg_by == 0);
+      assert(increase_deg_by == 0); 
+      // this assert is here since any specialization of Element where the
+      // degree can be changed (i.e. where increase_deg_by != 0) must have its
+      // own method for copy, and must use it!
       return new Element(*_data);
     }
 
