@@ -57,6 +57,7 @@ function(arg)
                    DegreeOfTransformationCollection(coll));
   elif IsPartialPermSemigroup(S) then
     return Maximum(DegreeOfPartialPermSemigroup(S), 
+                   CodegreeOfPartialPermSemigroup(S),
                    DegreeOfPartialPermCollection(coll), 
                    CodegreeOfPartialPermCollection(coll));
   elif IsMatrixOverSemiringSemigroup(S) then 
