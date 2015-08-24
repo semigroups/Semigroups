@@ -350,7 +350,7 @@ function(gens, opts)
       n := Length(gens);
       for i in [2 .. n] do
         if not gens[i] in S then
-          S := ClosureSemigroupNC(S, [gens[i]], opts);
+          S := SEMIGROUPS_AddGenerators(S, [gens[i]], opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far");
@@ -358,7 +358,9 @@ function(gens, opts)
       Print("\n");
     else
       for x in gens do
-        S := ClosureSemigroup(S, x, opts);
+        if not x in S then 
+          S := SEMIGROUPS_AddGenerators(S, [x], opts);
+        fi;
       od;
     fi;
     return S;
@@ -818,10 +820,13 @@ function(S, coll, opts)
   if IsActingSemigroup(S)
       or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
           <> DegreeOfTransformationCollection(coll))
-      or (IsPartialPermSemigroup(S) and DegreeOfPartialPermSemigroup(S) <>
-          DegreeOfPartialPermCollection(S))
+      or (IsPartialPermSemigroup(S) and 
+          (DegreeOfPartialPermSemigroup(S) <> DegreeOfPartialPermCollection(coll)
+           or CodegreeOfPartialPermSemigroup(S) <> CodegreeOfPartialPermCollection(coll)))
+##FIXME the above should really be less than, since this should work if the
+#degree of the semigroup is larger than the degree of the collection!
       or not SEMIGROUPS_IsCCSemigroup(S) then
-    return ClosureSemigroup(S, coll);
+    return ClosureSemigroup(S, coll, opts);
   fi;
 
   data := GenericSemigroupData(S);
@@ -855,8 +860,8 @@ function(S, func, limit)
 
   while Size(T) < limit and not IsDoneIterator(iter) do
     f := NextIterator(iter);
-    if func(f) then
-      T := ClosureSemigroup(T, f);
+    if func(f) and not f in T then
+      T := SEMIGROUPS_AddGenerators(T, [f], SEMIGROUPS_OptionsRec(T));
     fi;
   od;
   SetParent(T, S);

@@ -117,7 +117,7 @@ function(S)
 
   for x in iter do
     if not x in T then
-      T := ClosureSemigroup(T, x);
+      T := SEMIGROUPS_AddGenerators(T, [x], SEMIGROUPS_OptionsRec(T));
       if T = S then
         break;
       fi;

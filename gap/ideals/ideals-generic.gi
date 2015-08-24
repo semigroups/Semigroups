@@ -207,8 +207,9 @@ function(I)
   enum := Enumerator(I);
 
   for x in enum do
-    #U := ClosureSemigroup(U, x);
-    U := SEMIGROUPS_AddGenerators(U, [x], opts);
+    if not x in U then # excluding this check makes this run much much slower!!
+      U := SEMIGROUPS_AddGenerators(U, [x], opts);
+    fi;
   od;
 
   return GeneratorsOfSemigroup(U);

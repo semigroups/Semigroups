@@ -87,7 +87,7 @@ class Interface : public InterfaceBase {
       } else {
         _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c, Report(data)); 
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
-          AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens().at(i)));
+          AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens()->at(i)));
         }
       }
       _semigroup->set_batch_size(BatchSize(data));
@@ -138,7 +138,7 @@ class Interface : public InterfaceBase {
       _semigroup->add_generators(coll_cc, Report(data));
       Obj gens = ElmPRec(data, RNam_gens); // TODO make this safe
       for(size_t i = 0; i < _semigroup->nrgens(); i++) {
-        AssPlist(gens, i + 1, _converter->unconvert(_semigroup->gens().at(i)));
+        AssPlist(gens, i + 1, _converter->unconvert(_semigroup->gens()->at(i)));
       }
 
       //unbind things in data

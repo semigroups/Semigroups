@@ -170,7 +170,7 @@ class Semigroup : public SemigroupBase {
         _elements      (new std::vector<T*>()),
         _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
         _genslookup    (copy._genslookup),
-        _left          (copy._nrgens + coll.size(), copy._nr),
+        _left          (copy._left),
         _multiplied    (copy._multiplied),
         _nr            (copy._nr),
         _nrgens        (copy._nrgens),
@@ -180,6 +180,8 @@ class Semigroup : public SemigroupBase {
         _pos_one       (copy._pos_one),   // copy in case degree doesn't change in add_generators
         _relation_pos  (-1),
         _relation_gen  (0),
+        _reduced       (copy._reduced),
+        _right         (copy._right),
         _wordlen       (0) 
     {
       assert(!coll.empty());
@@ -203,7 +205,6 @@ class Semigroup : public SemigroupBase {
         new_gens.insert(x);
       }
       
-      assert(!new_gens.empty());
       assert((*new_gens.begin())->degree() >= copy.degree());
 
       size_t deg_plus = (*new_gens.begin())->degree() - copy.degree();
@@ -218,13 +219,18 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(copy._lenindex.at(1));
       _index.reserve(copy._nr);
       
-      _left    = CayleyGraph(copy._left, new_gens.size());
+      /*_left    = CayleyGraph(copy._left, new_gens.size());
       _right   = CayleyGraph(copy._right, new_gens.size());
-      _reduced = Flags(new_gens.size(), copy._nr);
+      _reduced = Flags(new_gens.size(), copy._nr);*/
       
       // add the distinct old generators to new _index
       for (size_t i = 0; i < copy._lenindex.at(1); i++) {
         _index.push_back(copy._index.at(i));
+        _final.at(_index.at(i)) = i;
+        _first.at(_index.at(i)) = i;
+        _prefix.at(_index.at(i)) = -1;
+        _suffix.at(_index.at(i)) = -1;
+        _length.at(_index.at(i)) = 1;
       }
 
       for (size_t i = 0; i < copy.nrgens(); i++) {
@@ -301,8 +307,8 @@ class Semigroup : public SemigroupBase {
      * gens: get the generators of the semigroup
     *******************************************************************************/
     
-    std::vector<T*> gens () const {
-      return _gens;
+    const std::vector<T*>* gens () const {
+      return &_gens;
     }
     
     /*******************************************************************************
@@ -793,7 +799,7 @@ class Semigroup : public SemigroupBase {
         _reduced.add_cols(_nrgens); // set nr_cols to be correct value
         _reduced.add_rows(_nrgens - old_nrgens);
       } else {
-        _reduced = Flags(_nrgens, _nr + _nrgens - old_nrgens); 
+        _reduced = Flags(_nrgens, _reduced.nr_rows() + _nrgens - old_nrgens); 
       }
       
       // add columns for new generators
@@ -859,7 +865,7 @@ class Semigroup : public SemigroupBase {
           if (_wordlen == 0) {
             for (size_t i = 0; i < _pos; i++) { 
               size_t b = _final.at(_index.at(i)); 
-              for (size_t j = 0; j < _nrgens; j++) { 
+              for (size_t j = 0; j < _nrgens; j++) { // TODO reuse old info here!
                 _left.set(_index.at(i), j, _right.get(_genslookup.at(j), b));
               }
             }
@@ -867,7 +873,7 @@ class Semigroup : public SemigroupBase {
             for (size_t i = _lenindex.at(_wordlen); i < _pos; i++) { 
               size_t p = _prefix.at(_index.at(i));
               size_t b = _final.at(_index.at(i)); 
-              for (size_t j = 0; j < _nrgens; j++) { 
+              for (size_t j = 0; j < _nrgens; j++) {// TODO reuse old info here!
                 _left.set(_index.at(i), j, _right.get(_left.get(p, j), b));
               }
             }
