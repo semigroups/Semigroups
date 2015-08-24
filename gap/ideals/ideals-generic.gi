@@ -200,13 +200,15 @@ end);
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local U, enum, x;
+  local U, opts, enum, x;
   
   U := Semigroup(GeneratorsOfSemigroupIdeal(I));
+  opts := SEMIGROUPS_OptionsRec(U);
   enum := Enumerator(I);
 
   for x in enum do
-    U := ClosureSemigroup(U, x);
+    #U := ClosureSemigroup(U, x);
+    U := SEMIGROUPS_AddGenerators(U, [x], opts);
   od;
 
   return GeneratorsOfSemigroup(U);
