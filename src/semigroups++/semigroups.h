@@ -924,7 +924,6 @@ class Semigroup : public SemigroupBase {
           _final.push_back(j);
           _length.push_back(_wordlen + 2);
           _map.insert(std::make_pair(*_elements->back(), _nr));
-          _multiplied.push_back(false);
           _prefix.push_back(i);
           _reduced.set(i, j, true);
           _right.set(i, j, _nr);
