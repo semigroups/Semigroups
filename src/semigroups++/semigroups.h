@@ -27,13 +27,12 @@
 
 class SemigroupBase { };
 
-typedef RecVec<size_t> CayleyGraph;
+typedef RecVec<size_t>       CayleyGraph;
+typedef std::vector<size_t>  Word;
 
 template <typename T>
 class Semigroup : public SemigroupBase {
   
-  typedef std::vector<size_t>     Word;
-  typedef std::pair<Word*, Word*> Relation;
   typedef RecVec<bool>            Flags;
 
   public:
@@ -568,12 +567,10 @@ class Semigroup : public SemigroupBase {
     }
 
     /*******************************************************************************
-     * 
+     * factorization: returns the minimum word equal to _elements.at(pos). 
     *******************************************************************************/
-    //TODO change this to receive an argument by reference.  
     
     Word* factorisation (size_t pos, bool report) { 
-      // factorisation of _elements.at(pos)
 
       Word* word = new Word();
       if (pos > _nr && !is_done()) {

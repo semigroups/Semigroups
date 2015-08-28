@@ -272,7 +272,7 @@ class Interface : public InterfaceBase {
         words = NEW_PLIST(T_PLIST, pos_c);
         SET_LEN_PLIST(words, pos_c);
         SET_ELM_PLIST(words, pos_c,
-                      ConvertFromVec(_semigroup->factorisation(pos_c - 1, report)));
+                      ConvertFromWord(_semigroup->factorisation(pos_c - 1, report)));
         CHANGED_BAG(words);
         AssPRec(data, RNam_words, words);
       } else {
@@ -304,7 +304,7 @@ class Interface : public InterfaceBase {
             SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
             AssPlist(words, pos_c, new_word);
           } else {
-            AssPlist(words, pos_c, ConvertFromVec(_semigroup->factorisation(pos_c - 1, report)));
+            AssPlist(words, pos_c, ConvertFromWord(_semigroup->factorisation(pos_c - 1, report)));
           }
         }
       }
@@ -390,7 +390,7 @@ class Interface : public InterfaceBase {
     }
     
     // helper function to convert a vector to a plist of GAP integers
-    Obj ConvertFromVec (std::vector<size_t>* vec) {
+    Obj ConvertFromWord (Word* vec) {
       Obj out = NEW_PLIST(T_PLIST_CYC, vec->size());
       SET_LEN_PLIST(out, vec->size());
 
