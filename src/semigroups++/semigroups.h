@@ -430,10 +430,22 @@ class Semigroup : public SemigroupBase {
         return i;
       }
     }
+    
+    /*******************************************************************************
+     * fast_product: take the product of _elements->at(i) and
+     * _elements->at(j) by tracing the Cayley graph or actually multiplying,
+     * whichever is faster. Assumes i, j are less than _nr.
+    *******************************************************************************/
 
-    // TODO write a fast_product method which figures out if
-    // product_by_reduction or redefinition is faster (by using a complexity()
-    // method for Elements.
+    size_t fast_product (size_t i, size_t j) const {
+      assert(i < _nr && j < _nr);
+      if (length(i) < 2 * _tmp_product->complexity() || length(j) < 2 * _tmp_product->complexity()) {
+        return product_by_reduction(i, j);
+      } else { 
+        _tmp_product->redefine(_elements->at(i), _elements->at(j));
+        return _map.find(*_tmp_product)->second;
+      }
+    }
 
     /*******************************************************************************
     ********************************************************************************
@@ -1092,5 +1104,4 @@ class Semigroup : public SemigroupBase {
     size_t                                  _wordlen;
 };
 
-//TODO make _right, _left, _gens, (and anything else that is passed out) pointers (again)
 #endif
