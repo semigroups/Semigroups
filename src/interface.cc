@@ -367,17 +367,17 @@ class Interface : public InterfaceBase {
   private:
     
     // helper function to convert a CayleyGraph to a GAP plist of GAP plists.
-    Obj ConvertFromCayleyGraph (CayleyGraph const& graph) {
-      assert(graph.size() != 0);
-      Obj out = NEW_PLIST(T_PLIST, graph.nr_rows());
-      SET_LEN_PLIST(out, graph.nr_rows());
+    Obj ConvertFromCayleyGraph (CayleyGraph* graph) {
+      assert(graph->size() != 0);
+      Obj out = NEW_PLIST(T_PLIST, graph->nr_rows());
+      SET_LEN_PLIST(out, graph->nr_rows());
 
-      for (size_t i = 0; i < graph.nr_rows(); i++) {
-        Obj next = NEW_PLIST(T_PLIST_CYC, graph.nr_cols());
-        SET_LEN_PLIST(next, graph.nr_cols());
-        //for (size_t j = 0; j < graph.nr_cols(); j++) { //TODO reinstate this
+      for (size_t i = 0; i < graph->nr_rows(); i++) {
+        Obj next = NEW_PLIST(T_PLIST_CYC, graph->nr_cols());
+        SET_LEN_PLIST(next, graph->nr_cols());
+        //for (size_t j = 0; j < graph->nr_cols(); j++) { //TODO reinstate this
         for (size_t j = 0; j < _semigroup->nrgens(); j++) { 
-          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(graph.get(i, j) + 1));
+          SET_ELM_PLIST(next, j + 1, INTOBJ_INT(graph->get(i, j) + 1));
         }
         SET_ELM_PLIST(out, i + 1, next);
         CHANGED_BAG(out);

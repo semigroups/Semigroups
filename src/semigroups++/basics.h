@@ -45,7 +45,20 @@ class RecVec {
             _nr_unused_cols (copy._nr_unused_cols), 
             _nr_rows        (copy._nr_rows) 
         { 
-          //  std::cout << "RecVec: copy constructor!\n";
+          //std::cout << "RecVec: copy constructor!\n";
+        }
+        
+        /***********************************************************************
+         * constructor from pointer
+        ***********************************************************************/
+        
+        RecVec (RecVec* copy) 
+          : _vec            (copy->_vec),
+            _nr_used_cols   (copy->_nr_used_cols), 
+            _nr_unused_cols (copy->_nr_unused_cols), 
+            _nr_rows        (copy->_nr_rows) 
+        { 
+          //std::cout << "RecVec: copy constructor!\n";
         }
         
         /***********************************************************************
