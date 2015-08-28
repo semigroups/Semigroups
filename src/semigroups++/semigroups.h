@@ -795,6 +795,7 @@ class Semigroup : public SemigroupBase {
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
      
       if (_reduced.cols_capacity() >= _nrgens) { 
+        //FIXME not sure this is ever really used.
         _reduced.clear();           // reset all flags to false, leaves nr_rows unchanged at _nr
         _reduced.add_cols(_nrgens); // set nr_cols to be correct value
         _reduced.add_rows(_nrgens - old_nrgens);

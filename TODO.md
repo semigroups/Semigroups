@@ -1,31 +1,24 @@
 #TODO GAP#
 ###There are more TODOs in the source files this list is not exhaustive###
 
-* remove RecVecs
+* make C++ code sensitive to ctrl-c interuption.
 * a `small_generating_set` method using the Cayley graph
 * `ReadGenerators` and `WriteGenerators` for new types
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
-* Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
 * `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
 * `CatalanMonoid`
 * Add `IsFinite` check to start of appropriate methods and add tests
 * `ViewString` for full transformation monoid, and symmetric inverse monoid
 * reporting in the generic Froidure-Pin method
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
-* fix the bug in the c++ code `add_generators` relating to the changeset tagged `bug-in-c-code`
-* unify ideals-lambda-rho, lambda-rho and graded.
-* ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
 * get rid of `*Data` roll semigroups-generic into semigroups.gi
 * tests for pbrs
-* improve compilation time
+* improve compilation time by removing unnecessary templates
 * check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
-
-* replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * closure of generic inverse semigroups
-
 * check for memleaks
 * remove C++11?
 * gmp problems?
@@ -34,7 +27,17 @@
 * a new GAP kernel version of the C++ code !
 * new ideals stuff!
 
+#DO LATER
+* Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
+* unify ideals-lambda-rho, lambda-rho and graded.
+* improve `EvaluateWord`
+* non-prime finite fields
+* a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
+
 #DONE
+* replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
+* ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
+* fix the bug in the c++ code `add_generators` relating to the changeset tagged `bug-in-c-code`
 * split the "closure" constructor for a semigroup into 2 methods
 **BUG**:
 
@@ -70,10 +73,7 @@
 * `TransposedMat` methods for matrix over semiring variants (so far only done boolean matrices and a generic method)
 * make 2.6 branch with new style Green's class printing in tests.
 
-#DO LATER
-* improve `EvaluateWord`
-* non-prime finite fields
-* a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
+
 
 #Gaplint - Notes#
 
