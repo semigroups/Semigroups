@@ -38,7 +38,7 @@ class Semigroup : public SemigroupBase {
 
   public:
     
-    Semigroup& operator= (Semigroup const& copy) = delete;
+    Semigroup& operator= (Semigroup const&) = delete;
 
     /*******************************************************************************
     ********************************************************************************
@@ -50,7 +50,7 @@ class Semigroup : public SemigroupBase {
      * Construct from generators . . .
     *******************************************************************************/
 
-    Semigroup (std::vector<T*> gens, size_t degree) : 
+    Semigroup (std::vector<T*>* gens, size_t degree) : 
       _batch_size    (8192),
       _degree        (degree),
       _duplicate_gens(),
@@ -58,37 +58,42 @@ class Semigroup : public SemigroupBase {
       _final         (),
       _first         (),    
       _found_one     (false),
-      _gens          (gens), 
+      _gens          (new std::vector<T*>()), 
       _genslookup    (),
       _index         (),
-      _left          (new CayleyGraph(gens.size())),
+      _left          (new CayleyGraph(gens->size())),
       _length        (),
       _lenindex      (), 
       _map           (), 
       _multiplied    (), 
       _nr            (0), 
-      _nrgens        (gens.size()),
+      _nrgens        (gens->size()),
       _nr_idempotents(0),
       _nrrules       (0), 
       _pos           (0), 
       _pos_one       (0), 
       _prefix        (), 
-      _reduced       (gens.size()),
+      _reduced       (gens->size()),
       _relation_pos  (-1),
       _relation_gen  (0),
-      _right         (new CayleyGraph(gens.size())),
+      _right         (new CayleyGraph(gens->size())),
       _suffix        (), 
       _wordlen       (0) // (length of the current word) - 1
     { 
       assert(_nrgens != 0);
       
-      _tmp_product = new T(degree, gens.at(0));
+      for (T* x: *gens) {
+        _gens->push_back(static_cast<T*>(x->copy()));
+      }
+      
+      _tmp_product = new T(degree, gens->at(0));
       _lenindex.push_back(0);
-      _id = static_cast<T*>(_gens.at(0)->identity());
+      _id = static_cast<T*>(_gens->at(0)->identity());
+      
 
       // add the generators 
       for (size_t i = 0; i < _nrgens; i++) {
-        T* x = _gens.at(i);
+        T* x = _gens->at(i);
         auto it = _map.find(*x);
         if (it != _map.end()) { // duplicate generator
           _genslookup.push_back(it->second);
@@ -149,8 +154,8 @@ class Semigroup : public SemigroupBase {
       _map.reserve(_nr);
       _tmp_product = new T(copy.degree(), copy.gens().at(0));
 
-      for (size_t i = 0; i < _nrgens; i++) {
-        _gens.push_back(static_cast<T*>(copy._gens.at(i)->copy()));
+      for (T* x: *_gens) {
+        _gens->push_back(static_cast<T*>(x->copy()));
       }
       
       for (size_t i = 0; i < copy._elements->size(); i++) {
@@ -163,12 +168,13 @@ class Semigroup : public SemigroupBase {
      * Construct from semigroup and additional generators . . .
     *******************************************************************************/
 
-    Semigroup (const Semigroup& copy, const std::vector<T*>& coll, bool report)
+    Semigroup (const Semigroup& copy, std::vector<T*>* coll, bool report)
       : _batch_size    (copy._batch_size),
         _degree        (copy._degree),    // copy for comparison in add_generators
         _duplicate_gens(copy._duplicate_gens), 
         _elements      (new std::vector<T*>()),
         _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
+        _gens          (new std::vector<T*>()),
         _genslookup    (copy._genslookup),
         _left          (new CayleyGraph(copy._left)),
         _multiplied    (copy._multiplied),
@@ -184,7 +190,7 @@ class Semigroup : public SemigroupBase {
         _right         (new CayleyGraph(copy._right)),
         _wordlen       (0) 
     {
-      assert(!coll.empty());
+      assert(!coll->empty());
 
       _elements->reserve(copy._nr);
       _map.reserve(copy._nr);
@@ -200,9 +206,11 @@ class Semigroup : public SemigroupBase {
       std::unordered_set<T*> new_gens;
 
       // remove duplicate generators
-      for (T* x: coll) {
-        assert(x->degree() == coll.at(0)->degree());
-        new_gens.insert(x);
+      for (T* x: *coll) {
+        assert(x->degree() == coll->at(0)->degree());
+        new_gens.insert(static_cast<T*>(x->T::copy())); 
+        // copy here so that after add_generators, the semigroup is responsible
+        // for the destruction of gens. 
       }
       
       assert((*new_gens.begin())->degree() >= copy.degree());
@@ -230,11 +238,11 @@ class Semigroup : public SemigroupBase {
       }
 
       for (size_t i = 0; i < copy.nrgens(); i++) {
-        _gens.push_back(static_cast<T*>(copy._gens.at(i)->T::copy(deg_plus)));
+        _gens->push_back(static_cast<T*>(copy._gens->at(i)->T::copy(deg_plus)));
       }
       
       _id = static_cast<T*>(copy._id->T::copy(deg_plus));
-      _tmp_product = new T(_degree, _gens.at(0));
+      _tmp_product = new T(_degree, _gens->at(0));
       
       for (size_t i = 0; i < copy._elements->size(); i++) {
         _elements->push_back(static_cast<T*>(copy._elements->at(i)->T::copy(deg_plus)));
@@ -252,9 +260,15 @@ class Semigroup : public SemigroupBase {
     ~Semigroup () {
       _tmp_product->delete_data();
       delete _tmp_product;
+
       delete _left;
       delete _right;
-      // FIXME duplicate generators are not deleted?
+
+      for (auto x: _duplicate_gens) {
+        _gens->at(x.first)->delete_data();
+      }
+      delete _gens;
+
       for (T* x: *_elements) {
         x->delete_data();
         delete x;
@@ -297,15 +311,15 @@ class Semigroup : public SemigroupBase {
     *******************************************************************************/
    
     size_t nrgens () const {
-      return _gens.size();
+      return _gens->size();
     }
     
     /*******************************************************************************
      * gens: get the generators of the semigroup
     *******************************************************************************/
     
-    const std::vector<T*>* gens () const {
-      return &_gens;
+    std::vector<T*>* gens () const {
+      return _gens;
     }
     
     /*******************************************************************************
@@ -655,7 +669,7 @@ class Semigroup : public SemigroupBase {
           size_t i = _index.at(_pos);
           _multiplied.at(i) = true;
           for (size_t j = 0; j < _nrgens; j++) {
-            _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
+            _tmp_product->redefine(_elements->at(i), _gens->at(j)); 
             auto it = _map.find(*_tmp_product); 
 
             if (it != _map.end()) {
@@ -711,7 +725,7 @@ class Semigroup : public SemigroupBase {
                 _right->set(i, j, _right->get(_genslookup.at(b), _final.at(r)));
               } 
             } else {
-              _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
+              _tmp_product->redefine(_elements->at(i), _gens->at(j)); 
               auto it = _map.find(*_tmp_product); 
 
               if (it != _map.end()) {
@@ -772,7 +786,9 @@ class Semigroup : public SemigroupBase {
      *
      * The semigroup is returned in a state where all of the old elements which
      * had been multiplied by all the old generators, have now been multiplied
-     * by the new generators. 
+     * by the new generators. This means that the new semigroup might contain
+     * many more elements than the old one did (whether either was finished
+     * enumerating or not).  
     *******************************************************************************/
     
     void add_generators (const std::unordered_set <T*>& coll, 
@@ -811,10 +827,10 @@ class Semigroup : public SemigroupBase {
             there_are_new_gens = true;
           }
 
-          _first.push_back(_gens.size());
-          _final.push_back(_gens.size());
+          _first.push_back(_gens->size());
+          _final.push_back(_gens->size());
 
-          _gens.push_back(x);
+          _gens->push_back(x);
           _elements->push_back(x);
           _genslookup.push_back(_nr);
           _index.push_back(_nr);
@@ -838,7 +854,7 @@ class Semigroup : public SemigroupBase {
       _nrrules = _duplicate_gens.size();
       _pos     = 0;
       _wordlen = 0;
-      _nrgens = _gens.size();
+      _nrgens = _gens->size();
       _lenindex.clear();
       _lenindex.push_back(0);
       _lenindex.push_back(_nrgens - _duplicate_gens.size()); 
@@ -995,7 +1011,7 @@ class Semigroup : public SemigroupBase {
           _right->set(i, j, _right->get(_genslookup.at(b), _final.at(r)));
         } 
       } else {
-        _tmp_product->redefine(_elements->at(i), _gens.at(j)); 
+        _tmp_product->redefine(_elements->at(i), _gens->at(j)); 
         auto it = _map.find(*_tmp_product); 
         if (it == _map.end()) { //it's new!
           is_one(_tmp_product, _nr);
@@ -1051,7 +1067,7 @@ class Semigroup : public SemigroupBase {
     std::vector<size_t>                     _final;
     std::vector<size_t>                     _first;
     bool                                    _found_one;
-    std::vector<T*>                         _gens;
+    std::vector<T*>*                        _gens;
     std::vector<size_t>                     _genslookup;  
     T*                                      _id; 
     std::vector<size_t>                     _index;

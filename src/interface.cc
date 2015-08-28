@@ -75,12 +75,13 @@ class Interface : public InterfaceBase {
       
       Obj gens = ElmPRec(data, RNam_gens);
 
-      std::vector<T*> gens_c;
+      std::vector<T*>* gens_c(new std::vector<T*>());
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
       PLAIN_LIST(gens);
       for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
-        gens_c.push_back(converter->convert(ELM_PLIST(gens, i), deg_c));
+        gens_c->push_back(converter->convert(ELM_PLIST(gens, i), deg_c));
       }
+      // full deletion of things in gens_c is responsibility of the semigroup 
         
       if (old == nullptr) {
         _semigroup = new Semigroup<T>(gens_c, deg_c);
@@ -90,6 +91,10 @@ class Interface : public InterfaceBase {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens()->at(i)));
         }
       }
+      for (T* x: *gens_c) {
+        x->delete_data();
+      }
+      delete gens_c;
       _semigroup->set_batch_size(BatchSize(data));
     }
     
@@ -98,7 +103,6 @@ class Interface : public InterfaceBase {
       delete _converter;
       delete _semigroup;
     };
-   
 
     Semigroup<T>* semigroup () const {
       return _semigroup;
