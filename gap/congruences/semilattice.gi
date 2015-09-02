@@ -452,3 +452,24 @@ function(cong, elm)
   fi;
   return AsList(EquivalenceClassOfElementNC(cong, elm));
 end);
+
+#
+
+InstallMethod(MeetOfSemigroupCongruences,
+"for two semilattice congruences",
+[IsSemilatticeCongruence, IsSemilatticeCongruence],
+function(cong1, cong2)
+  s := Range(cong1);
+  if s <> Range(cong2) then
+    Error("Semigroups: MeetOfSemigroupCongruences: usage,\n",
+          "args <cong1> and <cong2> must be over the same semigroup");
+    return;
+  fi;
+  pairs1 := GeneratingPairsOfSemigroupCongruence(cong1);
+  pairs2 := GeneratingPairsOfSemigroupCongruence(cong2);
+  meets1 := MeetsOfGeneratingPairs(cong1);
+  meets2 := MeetsOfGeneratingPairs(cong2);
+  for p1 in pairs1 do
+    for p2 in pairs2 do
+      
+end);
