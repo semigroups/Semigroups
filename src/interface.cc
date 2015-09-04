@@ -55,7 +55,6 @@ long inline SizeOfFF (Obj data) {
  * Class for containing a C++ semigroup and accessing its methods
 *******************************************************************************/
 
-template<typename T>
 class Interface : public InterfaceBase {
   public: 
 
@@ -68,14 +67,14 @@ class Interface : public InterfaceBase {
     // the <gens> component of <data>. I.e. the meaning of the <gens> component
     // of the <data> is different if we are taking the closure than if we are
     // not. 
-    Interface (Obj data, Converter<T>* converter, SemigroupBase* old) 
+    Interface (Obj data, Converter* converter, SemigroupBase* old) 
       : _converter(converter) {
       assert(IsbPRec(data, RNam_gens));
       assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
       
       Obj gens = ElmPRec(data, RNam_gens);
 
-      std::vector<T*>* gens_c(new std::vector<T*>());
+      std::vector<Element*>* gens_c(new std::vector<Element*>());
       size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
       PLAIN_LIST(gens);
       for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
@@ -84,15 +83,15 @@ class Interface : public InterfaceBase {
       // full deletion of things in gens_c is responsibility of the semigroup 
         
       if (old == nullptr) {
-        _semigroup = new Semigroup<T>(gens_c, deg_c);
+        _semigroup = new Semigroup(gens_c, deg_c);
       } else {
-        _semigroup = new Semigroup<T>(*static_cast<Semigroup<T>*>(old), gens_c, Report(data)); 
+        _semigroup = new Semigroup(*static_cast<Semigroup*>(old), gens_c, Report(data)); 
         for (size_t i = 0; i < _semigroup->nrgens(); i++) {
           AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens()->at(i)));
         }
       }
-      for (T* x: *gens_c) {
-        x->delete_data();
+      for (Element* x: *gens_c) {
+        x->really_delete();
       }
       delete gens_c;
       _semigroup->set_batch_size(BatchSize(data));
@@ -104,7 +103,7 @@ class Interface : public InterfaceBase {
       delete _semigroup;
     };
 
-    Semigroup<T>* semigroup () const {
+    Semigroup* semigroup () const {
       return _semigroup;
     }
 
@@ -135,7 +134,7 @@ class Interface : public InterfaceBase {
     void add_generators(Obj data, Obj coll) {
       assert(IS_PLIST(coll));
       assert(LEN_PLIST(coll) > 0);
-      std::unordered_set<T*> coll_cc;
+      std::unordered_set<Element*> coll_cc;
       for(size_t i = 1; i <= (size_t) LEN_PLIST(coll); i++) {
         coll_cc.insert(_converter->convert(ELM_PLIST(coll, i), _semigroup->degree()));
       }
@@ -192,7 +191,7 @@ class Interface : public InterfaceBase {
     
     // get the elements of the C++ semigroup, store them in data
     void elements (Obj data, size_t limit) {
-      std::vector<T*>* elements = _semigroup->elements(limit, Report(data));
+      std::vector<Element*>* elements = _semigroup->elements(limit, Report(data));
       if (! IsbPRec(data, RNam_elts)) {
         Obj out = NEW_PLIST(T_PLIST, elements->size());
         SET_LEN_PLIST(out, elements->size());
@@ -401,8 +400,8 @@ class Interface : public InterfaceBase {
       return out;
     }
 
-    Semigroup<T>* _semigroup;
-    Converter<T>* _converter;
+    Semigroup* _semigroup;
+    Converter* _converter;
 };
 
 /*******************************************************************************
@@ -419,15 +418,15 @@ InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old) {
   switch (TypeSemigroup(data)) {
     case TRANS2:{
       auto tc2 = new TransConverter<u_int16_t>();
-      interface = new Interface<Transformation<u_int16_t> >(data, tc2, old);
+      interface = new Interface(data, tc2, old);
       break;
     }
     case TRANS4:{
       auto tc4 = new TransConverter<u_int32_t>();
-      interface = new Interface<Transformation<u_int32_t> >(data, tc4, old);
+      interface = new Interface(data, tc4, old);
       break;
     }
-    case PPERM2:{
+    /*case PPERM2:{
       auto pc2 = new PPermConverter<u_int16_t>();
       interface = new Interface<PartialPerm<u_int16_t> >(data, pc2, old);
       break;
@@ -500,7 +499,7 @@ InterfaceBase* InterfaceFromData (Obj data, SemigroupBase* old) {
       auto pbrc = new PBRConverter();
       interface = new Interface<PBR>(data, pbrc, old);
       break;
-    }
+    }*/
     default: {
       assert(false);
     }

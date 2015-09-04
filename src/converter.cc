@@ -11,7 +11,7 @@
 /*******************************************************************************
  * Bipartitions
 *******************************************************************************/
-
+/*
 Bipartition* BipartConverter::convert (Obj o, size_t n) {
   assert(IS_BIPART(o));
   assert(IsbPRec(o, RNamName("blocks")));
@@ -36,13 +36,13 @@ Obj BipartConverter::unconvert (Bipartition* x) {
   }
   o = CALL_1ARGS(BipartitionByIntRepNC, o);
   return o;
-}
+}*/
 
 /*******************************************************************************
  * Boolean matrices
 *******************************************************************************/
 
-BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
+/*BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
   assert(IS_BOOL_MAT(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
@@ -83,13 +83,13 @@ Obj BoolMatConverter::unconvert (BooleanMat* x) {
     CHANGED_BAG(o);
   }
   return CALL_2ARGS(Objectify, BooleanMatType, o);
-}
+}*/
 
 /*******************************************************************************
  * Matrices over semirings 
 *******************************************************************************/
 
-MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
+/*MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_SEMI_RING(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
@@ -133,13 +133,13 @@ Obj MatrixOverSemiringConverter::unconvert (MatrixOverSemiring* x) {
     CHANGED_BAG(plist);
   }
   return CALL_2ARGS(Objectify, _gap_type, plist);
-}
+}*/
 
 /*******************************************************************************
  * Matrices over prime field
 *******************************************************************************/
 
-MatrixOverSemiring* MatrixOverPrimeFieldConverter::convert (Obj o, size_t n) {
+/*MatrixOverSemiring* MatrixOverPrimeFieldConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_PF(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
@@ -173,7 +173,7 @@ Obj MatrixOverPrimeFieldConverter::unconvert (MatrixOverSemiring* x) {
     CHANGED_BAG(plist);
   }
   return CALL_2ARGS(AsMatrixOverPrimeFieldNC, INTOBJ_INT(_field->size()), plist);
-}
+}*/
 
 /*******************************************************************************
  * Partitioned binary relations (PBRs)
@@ -181,7 +181,7 @@ Obj MatrixOverPrimeFieldConverter::unconvert (MatrixOverSemiring* x) {
 
 // TODO add some more asserts here
 
-PBR* PBRConverter::convert (Obj o, size_t n) {
+/*PBR* PBRConverter::convert (Obj o, size_t n) {
   assert(IS_PBR(o));
   assert(n / 2 == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
 
@@ -221,4 +221,4 @@ Obj PBRConverter::unconvert (PBR* x) {
     CHANGED_BAG(plist);
   }
   return CALL_2ARGS(Objectify, PBRType, plist);
-}
+}*/

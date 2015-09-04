@@ -14,12 +14,11 @@
  * Abstract base class
 *******************************************************************************/
 
-template <typename T>
 class Converter {
   public:
     virtual ~Converter () {};
-    virtual T* convert (Obj, size_t) = 0;
-    virtual Obj unconvert (T*) = 0;
+    virtual Element* convert (Obj, size_t) = 0;
+    virtual Obj unconvert (Element*) = 0;
 };
 
 /*******************************************************************************
@@ -27,7 +26,7 @@ class Converter {
 *******************************************************************************/
 
 template <typename T>
-class TransConverter : public Converter<Transformation<T> > {
+class TransConverter : public Converter {
   
   public: 
 
@@ -35,23 +34,26 @@ class TransConverter : public Converter<Transformation<T> > {
       assert(IS_TRANS(o));
       //assert(DEG_TRANS(o) <= n);
 
-      auto x = new Transformation<T>(n);
+      auto x = new std::vector<T>();
+      x->reserve(DEG_TRANS(o));
+      
       T* pto = ADDR_TRANS(o);
       T i;
       for (i = 0; i < DEG_TRANS(o); i++) {
-        x->set(i, pto[i]);
+        x->push_back(pto[i]);
       }
       for (; i < n; i++) {
-        x->set(i, i);
+        x->push_back(i);
       }
-      return x;
+      return new Transformation<T>(x);
     }
 
-    Obj unconvert (Transformation<T>* x) {
+    Obj unconvert (Element* x) {
+      auto xx = static_cast<Transformation<T>*>(x);
       Obj o = NEW_TRANS(x->degree());
       T* pto = ADDR_TRANS(o);
-      for (T i = 0; i < x->degree(); i++) {
-        pto[i] = x->at(i);
+      for (T i = 0; i < xx->degree(); i++) {
+        pto[i] = (*xx)[i];
       }
       return o;
     }
@@ -76,7 +78,7 @@ class TransConverter : public Converter<Transformation<T> > {
  * Partial perms
 *******************************************************************************/
 
-template <typename T>
+/*template <typename T>
 class PPermConverter : public Converter<PartialPerm<T> > {
 
   public: 
@@ -140,39 +142,39 @@ class PPermConverter : public Converter<PartialPerm<T> > {
     inline T* ADDR_PPERM (Obj x) {
       return ((T*)((Obj*)(ADDR_OBJ(x))+2)+1);
     }
-};
+};*/
 
 /*******************************************************************************
  * Bipartitions
 *******************************************************************************/
 
-class BipartConverter : public Converter<Bipartition> {
+/*class BipartConverter : public Converter<Bipartition> {
 
   public: 
 
     Bipartition* convert (Obj o, size_t n);
 
     Obj unconvert (Bipartition* x);
-};
+};*/
 
 /*******************************************************************************
  * Boolean matrices
 *******************************************************************************/
 
-class BoolMatConverter : public Converter<BooleanMat> {
+/*class BoolMatConverter : public Converter<BooleanMat> {
 
   public: 
 
     BooleanMat* convert (Obj o, size_t n);
 
     Obj unconvert (BooleanMat* x);
-};
+};*/
 
 /*******************************************************************************
  * Matrices over semirings 
 *******************************************************************************/
 
-class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
+/*class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
 
   public:
 
@@ -196,13 +198,13 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
     Semiring* _semiring;
     Obj       _gap_zero;
     Obj       _gap_type;
-};
+};*/
 
 /*******************************************************************************
  * Projective max-plus matrices
 *******************************************************************************/
 
-class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatrix>, 
+/*class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatrix>, 
                                          public MatrixOverSemiringConverter {
 
   public:
@@ -219,13 +221,13 @@ class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatri
     Obj unconvert (ProjectiveMaxPlusMatrix* x) {
       return MatrixOverSemiringConverter::unconvert(x);
     }
-};
+};*/
 
 /*******************************************************************************
  * Matrices over prime field
 *******************************************************************************/
 
-class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
+/*class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
 
   public:
 
@@ -243,13 +245,13 @@ class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
   protected: 
     
     PrimeField* _field;
-};
+};*/
 
 /*******************************************************************************
  * Partitioned binary relations (PBRs)
 *******************************************************************************/
 
-class PBRConverter : public Converter<PBR> {
+/*class PBRConverter : public Converter<PBR> {
 
   public:
 
@@ -257,4 +259,4 @@ class PBRConverter : public Converter<PBR> {
 
     Obj unconvert (PBR* x);
 
-};
+};*/

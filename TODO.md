@@ -1,40 +1,45 @@
-#TODO GAP#
-###There are more TODOs in the source files this list is not exhaustive###
+#TODO
+##There are more TODOs in the source files this list is not exhaustive##
 
-* make C++ code sensitive to ctrl-c interuption.
+###TODO C++
+
 * a `small_generating_set` method using the Cayley graph
-* `ReadGenerators` and `WriteGenerators` for new types
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
+* check for memleaks
+* remove C++11?
+* gmp problems?
+* use namespace in the C++ code
+* improve compilation time by removing unnecessary templates
+
+###GAP kernel
+* reporting in the generic Froidure-Pin method
+* a new GAP kernel version of the C++ code !
+* `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
+
+###GAP
+
+* `ReadGenerators` and `WriteGenerators` for new types
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
 * `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
 * `CatalanMonoid`
 * Add `IsFinite` check to start of appropriate methods and add tests
 * `ViewString` for full transformation monoid, and symmetric inverse monoid
-* reporting in the generic Froidure-Pin method
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
 * get rid of `*Data` roll semigroups-generic into semigroups.gi
 * tests for pbrs
-* improve compilation time by removing unnecessary templates
 * check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
 * closure of generic inverse semigroups
-* check for memleaks
-* remove C++11?
-* gmp problems?
-* use namespace in the C++ code
-* `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
-* a new GAP kernel version of the C++ code !
-* new ideals stuff!
 
-#DO LATER
+##DO LATER
 * Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
 * unify ideals-lambda-rho, lambda-rho and graded.
 * improve `EvaluateWord`
 * non-prime finite fields
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
-#DONE
+##DONE
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
 * fix the bug in the c++ code `add_generators` relating to the changeset tagged `bug-in-c-code`

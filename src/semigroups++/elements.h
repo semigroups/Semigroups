@@ -19,148 +19,114 @@
 #include <unordered_set>
 
 using namespace semiring;
+using namespace std;
 
-// template for the base class for elements of a semigroup
+// base class for elements of a semigroup
 
-template <typename T>
 class Element {
 
-  public:
-    
-    Element () {} // just for PBRs
+  public: 
+    virtual ~Element () {}
+    virtual bool     operator == (const Element& that)              const {};
+    virtual size_t   degree        ()                               const = 0;
+    virtual size_t   complexity    ()                               const = 0;
+    virtual Element* identity      ()                               const = 0;
+    virtual Element* really_copy   (size_t = 0)                     const = 0;
+    virtual void     redefine      (Element const*, Element const*)       = 0;
+    virtual void     really_delete ()                                     = 0;
+};
 
-    Element (size_t degree) {
-      _data = new std::vector<T>();
-      _data->reserve(degree);
-      for (size_t i = 0; i < degree; i++) {
-        _data->push_back(0);
-      }
-    }
-
-    Element (std::vector<T> const& data) {
-      _data = new std::vector<T>(data);
-    }
-
-    Element (const Element& copy) : _data(copy._data) {}
-
-    ~Element () {}
-
-    bool operator == (const Element<T> & that) const {
-      if (this->degree() != that.degree()) {
-        return false;
-      }
-
-      for (size_t i = 0; i < this->degree(); i++) {
-        if ((*_data)[i] != (*that._data)[i]) {
-          return false;
-        }
-      }
-      return true;
-    };
-
-    inline T at (size_t pos) const {
-      return (*_data)[pos];
-    }
-
-    inline void set (size_t pos, T val) {
-      if (_data->size() > 0) {
-        (*_data)[pos] = val;
-      }
-    }
-
-    size_t degree () const {
-      return _data->size();
-    }
-
-    virtual Element<T>* copy (size_t increase_deg_by = 0) const {
-      assert(increase_deg_by == 0); 
-      // this assert is here since any specialization of Element where the
-      // degree can be changed (i.e. where increase_deg_by != 0) must have its
-      // own method for copy, and must use it!
-      return new Element(*_data);
-    }
-
-    void delete_data () {
-      if (_data != nullptr) {
-        delete _data;
-      }
-    }
-
-    void push_back (T val) {
-      _data->push_back(val);
-    }
-
-    std::vector<T>* data () const {
-      return _data;
-    }
-
-  protected:
-
-    std::vector<T>* _data;
+class myequal {
+public:
+   size_t operator()(const Element* x, const Element* y) const{
+     std::cout << "checking equality\n";
+      return *x == *y;
+   }
 };
 
 // template for transformations
 
 template <typename T>
-class Transformation : public Element<T> {
+class Transformation : public Element {
 
   public:
-
-    Transformation (T degree, Element<T>* sample = nullptr) 
-      : Element<T>(degree) {}
-
-    Transformation (std::vector<T> data) : Element<T>(data) {}
-
-    // multiply x and y into this
-    void redefine (Element<T> const* x, Element<T> const* y) {
-      assert(x->degree() == y->degree());
-      assert(x->degree() == this->degree());
-
-      for (T i = 0; i < this->degree(); i++) {
-        this->set(i, y->at(x->at(i)));
-      }
-    }
     
-    // the identity of this
-    Element<T>* identity () {
-      std::vector<T> image;
-      image.reserve(this->degree());
-      for (T i = 0; i < this->degree(); i++) {
-        image.push_back(i);
-      }
-      return new Transformation(image);
+    Transformation (std::vector<T>* image) : _image(image) {}
+    
+    T operator [] (size_t pos) const {
+      return _image->at(pos);
     }
-  
-    Element<T>* copy (size_t increase_deg_by = 0) const override {
-        
-      Element<T>* out = new Element<T>(*this->data());
-      size_t deg = out->degree();
-      for (size_t i = deg; i < deg + increase_deg_by; i++) {
-        out->push_back(i);
-      }
-      return out;
+
+    bool operator == (const Transformation& that) const {
+      return *(that._image) == *(this->_image);
+    }
+
+    size_t degree () const {
+      return _image->size();
     }
 
     size_t complexity () const {
-      return this->degree();
+      return _image->size();
     }
+    
+    // the identity of this
+    Element* identity () const {
+      auto image = new std::vector<T>();
+      image->reserve(this->degree());
+      for (T i = 0; i < this->degree(); i++) {
+        image->push_back(i);
+      }
+      return new Transformation<T>(image);
+    }
+    
+    Element* really_copy (size_t increase_deg_by = 0) const override {
+      auto out = new std::vector<T>(*_image);
+      for (size_t i = 0; i < increase_deg_by; i++) {
+        out->push_back(i);
+      }
+      return new Transformation<T>(out);
+    }
+
+    // multiply x and y into this
+    void redefine (Element const* x, Element const* y) {
+      assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
+      //TODO check no copying here!
+      //TODO check this is efficient enough
+      auto xx = *static_cast<Transformation<T> const*>(x);
+      auto yy = *static_cast<Transformation<T> const*>(y);
+
+      for (T i = 0; i < this->degree(); i++) {
+        _image->at(i) = yy[xx[i]];
+      }
+    }
+
+    void really_delete () {
+      delete _image;
+    }
+
+  private:
+
+    std::vector<T>* _image;
 };
 
 // hash function for unordered_map
 namespace std {
   template <typename T>
-    struct hash<const Transformation<T> > {
-    size_t operator() (const Transformation<T>& x) const {
+    struct hash<const Transformation<T>* > {
+    size_t operator() (const Transformation<T>* x) const {
+      std::cout << "hashing!!\n";
       size_t seed = 0;
-      T deg = x.degree();
+      T deg = x->degree();
       for (T i = 0; i < deg; i++) {
-        seed = ((seed * deg) + x.at(i));
+        seed = ((seed * deg) + *x[i]);
       }
       return seed;
     }
   };
 }
 
+/*
 // template for partial perms
 
 template <typename T>
@@ -679,6 +645,6 @@ namespace std {
       return seed;
     }
   };
-}
+}*/
 
 #endif
