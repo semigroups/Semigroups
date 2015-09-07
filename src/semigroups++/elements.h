@@ -21,28 +21,42 @@
 using namespace semiring;
 using namespace std;
 
-// base class for elements of a semigroup
+// abstract base class for elements of a semigroup
 
 class Element {
 
   public: 
     virtual ~Element () {}
-    virtual bool     operator == (const Element& that)              const {};
-    virtual size_t   degree        ()                               const = 0;
+    bool     operator == (const Element& that) const {
+      return this->equals(&that);
+    };
     virtual size_t   complexity    ()                               const = 0;
+    virtual size_t   degree        ()                               const = 0;
+    virtual bool     equals        (const Element*)                 const = 0;
+    virtual size_t   hash_value    ()                               const = 0;
     virtual Element* identity      ()                               const = 0;
     virtual Element* really_copy   (size_t = 0)                     const = 0;
-    virtual void     redefine      (Element const*, Element const*)       = 0;
     virtual void     really_delete ()                                     = 0;
+    virtual void     redefine      (Element const*, Element const*)       = 0;
 };
 
 class myequal {
 public:
    size_t operator()(const Element* x, const Element* y) const{
-     std::cout << "checking equality\n";
-      return *x == *y;
+     //std::cout << "checking equality\n";
+     return x->equals(y);
    }
 };
+
+namespace std {
+  template<>
+    struct hash<const Element* > {
+    size_t operator() (const Element* x) const {
+      //std::cout << "hashing!!\n";
+      return x->hash_value();
+    }
+  };
+}
 
 // template for transformations
 
@@ -57,16 +71,25 @@ class Transformation : public Element {
       return _image->at(pos);
     }
 
-    bool operator == (const Transformation& that) const {
-      return *(that._image) == *(this->_image);
+    size_t complexity () const {
+      return _image->size();
     }
 
     size_t degree () const {
       return _image->size();
     }
-
-    size_t complexity () const {
-      return _image->size();
+    
+    bool equals (const Element* that) const {
+      return *(static_cast<const Transformation<T>*>(that)->_image) == *(this->_image);
+    }
+    
+    size_t hash_value () const {
+      size_t seed = 0;
+      T deg = this->degree();
+      for (T i = 0; i < deg; i++) {
+        seed = ((seed * deg) + this->_image->at(i));
+      }
+      return seed;
     }
     
     // the identity of this
@@ -78,7 +101,7 @@ class Transformation : public Element {
       }
       return new Transformation<T>(image);
     }
-    
+
     Element* really_copy (size_t increase_deg_by = 0) const override {
       auto out = new std::vector<T>(*_image);
       for (size_t i = 0; i < increase_deg_by; i++) {
@@ -87,12 +110,14 @@ class Transformation : public Element {
       return new Transformation<T>(out);
     }
 
+    void really_delete () {
+      delete _image;
+    }
+
     // multiply x and y into this
     void redefine (Element const* x, Element const* y) {
       assert(x->degree() == y->degree());
       assert(x->degree() == this->degree());
-      //TODO check no copying here!
-      //TODO check this is efficient enough
       auto xx = *static_cast<Transformation<T> const*>(x);
       auto yy = *static_cast<Transformation<T> const*>(y);
 
@@ -100,31 +125,12 @@ class Transformation : public Element {
         _image->at(i) = yy[xx[i]];
       }
     }
-
-    void really_delete () {
-      delete _image;
-    }
+    
 
   private:
 
     std::vector<T>* _image;
 };
-
-// hash function for unordered_map
-namespace std {
-  template <typename T>
-    struct hash<const Transformation<T>* > {
-    size_t operator() (const Transformation<T>* x) const {
-      std::cout << "hashing!!\n";
-      size_t seed = 0;
-      T deg = x->degree();
-      for (T i = 0; i < deg; i++) {
-        seed = ((seed * deg) + *x[i]);
-      }
-      return seed;
-    }
-  };
-}
 
 /*
 // template for partial perms
