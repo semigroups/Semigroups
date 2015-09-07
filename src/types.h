@@ -14,30 +14,17 @@
 #include <assert.h>
 
 /*******************************************************************************
- * Record names TODO init these in a function
-*******************************************************************************/
-
-static Int RNam_elts         = RNamName("elts");
-static Int RNam_left         = RNamName("left");
-static Int RNam_right        = RNamName("right");
-static Int RNam_rules        = RNamName("rules");
-static Int RNam_words        = RNamName("words");
-static Int RNam_gens         = RNamName("gens");
-static Int RNam_batch_size   = RNamName("batch_size");
-static Int RNam_report       = RNamName("report");
-static Int RNam_Interface_CC = RNamName("Interface_CC");
-
-/*******************************************************************************
  * GAP TNUM for wrapping C++ semigroup
 *******************************************************************************/
 
 #ifndef T_SEMI
-#define T_SEMI T_SPARE2
+#define T_SEMI T_SPARE2 //TODO use Register_TNUM when it's available
 #endif
 
 enum SemigroupsBagType {
-  INTERFACE = 0,
-  UF_DATA   = 1
+  UF_DATA   = 0,
+  SEMIGROUP = 1,
+  CONVERTER = 2
 };
 
 template <typename Class>
@@ -56,7 +43,8 @@ inline Class* CLASS_OBJ(Obj o) {
 }
 
 #define IS_T_SEMI(o)        (TNUM_OBJ(o) == T_SEMI)
-#define IS_INTERFACE_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == INTERFACE)
+#define IS_CONVERTER_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == CONVERTER)
+#define IS_SEMIGROUP_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
 #define IS_UF_DATA_BAG(o)   (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
 
 /*******************************************************************************
@@ -105,60 +93,5 @@ extern Obj IsMatrixOverPrimeField;
 extern Obj AsMatrixOverPrimeFieldNC;
 extern Obj IsPBR;
 extern Obj PBRType;
-
-/*******************************************************************************
- * What type of semigroup do we have?
-*******************************************************************************/
-
-enum SemigroupType {
-  UNKNOWN,
-  TRANS2, 
-  TRANS4, 
-  PPERM2, 
-  PPERM4, 
-  BOOL_MAT, 
-  BIPART,
-  MAX_PLUS_MAT,
-  MIN_PLUS_MAT,
-  TROP_MAX_PLUS_MAT,
-  TROP_MIN_PLUS_MAT,
-  PROJ_MAX_PLUS_MAT,
-  NAT_MAT,
-  MAT_OVER_PF, 
-  PBR_TYPE
-};
-
-extern SemigroupType TypeSemigroup (Obj data);
-
-bool inline IsCCSemigroup (Obj data) {
-  return TypeSemigroup(data) != UNKNOWN;
-}
-
-/*******************************************************************************
- * Get a representative of the semigroup from the data
-*******************************************************************************/
-
-//TODO put these in a separate file
-
-Obj inline Representative (Obj data) {
-  // TODO more asserts 
-  assert(IsbPRec(data, RNam_gens));
-  assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
-  return ELM_PLIST(ElmPRec(data, RNam_gens), 1);
-}
-
-size_t inline BatchSize (Obj data) {
-  assert(IsbPRec(data, RNam_batch_size));
-  assert(IS_INTOBJ(ElmPRec(data, RNam_batch_size)));
-  return INT_INTOBJ(ElmPRec(data, RNam_batch_size));
-}
-
-bool inline Report (Obj data) {
-  if (IsbPRec(data, RNam_report)) {
-    assert(ElmPRec(data, RNam_report) == True || ElmPRec(data, RNam_report) == False);
-    return (ElmPRec(data, RNam_report) == True ? true : false);
-  }
-  return false;
-}
 
 #endif

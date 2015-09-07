@@ -5,6 +5,9 @@
  *
  */
 
+#ifndef SEMIGROUPS_GAP_CONVERTER_H
+#define SEMIGROUPS_GAP_CONVERTER_H 1
+
 #include "src/compiled.h"          /* GAP headers                */
 #include "pperm.h"
 
@@ -260,3 +263,4 @@ class PPermConverter : public Converter<PartialPerm<T> > {
     Obj unconvert (PBR* x);
 
 };*/
+#endif

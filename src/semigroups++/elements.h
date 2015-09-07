@@ -43,7 +43,6 @@ class Element {
 class myequal {
 public:
    size_t operator()(const Element* x, const Element* y) const{
-     //std::cout << "checking equality\n";
      return x->equals(y);
    }
 };
@@ -52,7 +51,6 @@ namespace std {
   template<>
     struct hash<const Element* > {
     size_t operator() (const Element* x) const {
-      //std::cout << "hashing!!\n";
       return x->hash_value();
     }
   };
@@ -64,9 +62,9 @@ template <typename T>
 class Transformation : public Element {
 
   public:
-    
+   
     Transformation (std::vector<T>* image) : _image(image) {}
-    
+   
     T operator [] (size_t pos) const {
       return _image->at(pos);
     }
@@ -125,7 +123,6 @@ class Transformation : public Element {
         _image->at(i) = yy[xx[i]];
       }
     }
-    
 
   private:
 

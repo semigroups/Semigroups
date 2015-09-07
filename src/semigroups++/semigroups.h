@@ -6,7 +6,7 @@
  */
 
 // TODO
-//
+// 0) move the methods to the cc file
 // 1) the other functionality of Semigroupe.
 // 2) remove templates as far as possible.
 
@@ -25,12 +25,10 @@
 #include <assert.h>
 #include <iostream>
 
-class SemigroupBase { };
-
 typedef RecVec<size_t>       CayleyGraph;
 typedef std::vector<size_t>  Word;
 
-class Semigroup : public SemigroupBase {
+class Semigroup {
   
   typedef RecVec<bool>            Flags;
 
@@ -1058,36 +1056,39 @@ class Semigroup : public SemigroupBase {
   **********************************************************************************
   *********************************************************************************/
 
-    size_t                                  _batch_size;
-    size_t                                  _degree;
-    std::vector<std::pair<size_t, size_t> > _duplicate_gens;
-    std::vector<Element*>*                        _elements;
-    std::vector<size_t>                     _final;
-    std::vector<size_t>                     _first;
-    bool                                    _found_one;
-    std::vector<Element*>*                        _gens;
-    std::vector<size_t>                     _genslookup;  
-    Element*                                      _id; 
-    std::vector<size_t>                     _index;
-    CayleyGraph*                            _left;
-    std::vector<size_t>                     _length;
-    std::vector<size_t>                     _lenindex;
-    std::unordered_map<const Element*, size_t, hash<const Element*>, myequal>     _map; 
-    std::vector<bool>                       _multiplied;
-    size_t                                  _nr;
-    size_t                                  _nrgens;
-    size_t                                  _nr_idempotents;
-    size_t                                  _nrrules;
-    size_t                                  _pos;
-    size_t                                  _pos_one;
-    std::vector<size_t>                     _prefix;
-    Flags                                   _reduced;
-    size_t                                  _relation_pos;
-    size_t                                  _relation_gen;
-    CayleyGraph*                            _right;
-    std::vector<size_t>                     _suffix;
-    Element*                                _tmp_product;
-    size_t                                  _wordlen;
+    size_t                                   _batch_size;
+    size_t                                   _degree;
+    std::vector<std::pair<size_t, size_t> >  _duplicate_gens;
+    std::vector<Element*>*                   _elements;
+    std::vector<size_t>                      _final;
+    std::vector<size_t>                      _first;
+    bool                                     _found_one;
+    std::vector<Element*>*                   _gens;
+    std::vector<size_t>                      _genslookup;  
+    Element*                                 _id; 
+    std::vector<size_t>                      _index;
+    CayleyGraph*                             _left;
+    std::vector<size_t>                      _length;
+    std::vector<size_t>                      _lenindex;
+    std::unordered_map<const Element*, 
+                       size_t, 
+                       hash<const Element*>, 
+                       myequal>              _map; 
+    std::vector<bool>                        _multiplied;
+    size_t                                   _nr;
+    size_t                                   _nrgens;
+    size_t                                   _nr_idempotents;
+    size_t                                   _nrrules;
+    size_t                                   _pos;
+    size_t                                   _pos_one;
+    std::vector<size_t>                      _prefix;
+    Flags                                    _reduced;
+    size_t                                   _relation_pos;
+    size_t                                   _relation_gen;
+    CayleyGraph*                             _right;
+    std::vector<size_t>                      _suffix;
+    Element*                                 _tmp_product;
+    size_t                                   _wordlen;
 };
 
 #endif
