@@ -68,8 +68,4 @@ void        data_delete         (Obj);
 Semigroup*  data_semigroup      (Obj);
 Converter*  data_converter      (Obj);
 
-/*bool  IsCCSemigroup (Obj data) {
-  return TypeSemigroup(data) != UNKNOWN;
-}*/
-
 #endif 

@@ -5,7 +5,21 @@
  *
  */
 
+/*******************************************************************************
+ * Headers
+*******************************************************************************/
+
+#include <assert.h>
+
+#include "src/compiled.h"
+
+#include "converter.h"
+#include "data.h"
 #include "interface.h"
+#include "types.h"
+
+#include "semigroups++/semigroups.h"
+
 
 /*******************************************************************************
  * Class for containing a C++ semigroup and accessing its methods
@@ -171,7 +185,8 @@ Obj SEMIGROUP_RELATIONS (Obj self, Obj data) {
 
 Obj SEMIGROUP_SIZE (Obj self, Obj data) {
   if (data_type(data) != UNKNOWN) {
-      return INTOBJ_INT(data_semigroup(data)->size(data_report(data)));
+    bool report = data_report(data);
+    return INTOBJ_INT(data_semigroup(data)->size(report));
   } else {
     enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
   }

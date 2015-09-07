@@ -9,87 +9,13 @@
 
 /*******************************************************************************
 ********************************************************************************
- * Get the value of a GAP object out of the data
-********************************************************************************
-*******************************************************************************/
-
-long inline data_data_threshold (Obj data) {
-  Obj x = data_rep(data);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_TROP_MAT(x)||IS_NAT_MAT(x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
-
-  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
-}
-
-long inline data_data_period (Obj data) {
-  Obj x = data_rep(data);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_NAT_MAT(x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
-
-  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
-}
-
-long inline data_size_ff (Obj data) {
-  Obj x = data_rep(data);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_MAT_OVER_PF(x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
-  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
-}
-
-Obj inline data_rep (Obj data) {
-  // TODO more asserts 
-  assert(IsbPRec(data, RNam_gens));
-  assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
-  return ELM_PLIST(ElmPRec(data, RNam_gens), 1);
-}
-
-size_t inline data_batch_size (Obj data) {
-  assert(IsbPRec(data, RNam_batch_size));
-  assert(IS_INTOBJ(ElmPRec(data, RNam_batch_size)));
-  return INT_INTOBJ(ElmPRec(data, RNam_batch_size));
-}
-
-bool inline data_report (Obj data) {
-  if (IsbPRec(data, RNam_report)) {
-    assert(ElmPRec(data, RNam_report) == True || ElmPRec(data, RNam_report) == False);
-    return (ElmPRec(data, RNam_report) == True ? true : false);
-  }
-  return false;
-}
-
-size_t data_degree (Obj data) {
-  //TODO add asserts 
-  return INT_INTOBJ(ElmPRec(data, RNamName("degree")));
-}
-
-/*******************************************************************************
-********************************************************************************
  * Get the value of a C++ object out of the data
 ********************************************************************************
 *******************************************************************************/
 
-Semigroup* data_semigroup (Obj data) {
-  if (!IsbPRec(data, RNam_semigroup)) {
-    data_init(data);
-  }
-  return CLASS_OBJ<Semigroup>(ElmPRec(data, RNam_semigroup));
-}
-
-Converter* data_converter (Obj data) {
-  if (!IsbPRec(data, RNam_converter)) {
-    data_init(data);
-  }
-  return CLASS_OBJ<Converter>(ElmPRec(data, RNam_converter));
-}
+/*******************************************************************************
+* data_type: 
+*******************************************************************************/
 
 DataType data_type (Obj data) {
   Obj x = data_rep(data);
@@ -133,6 +59,10 @@ DataType data_type (Obj data) {
       return UNKNOWN;
   }
 }
+
+/*******************************************************************************
+* data_init: 
+*******************************************************************************/
 
 void data_init (Obj data) {
   assert(!IsbPRec(data, RNam_semigroup) && !IsbPRec(data, RNam_converter));
@@ -251,6 +181,32 @@ void data_init (Obj data) {
   delete gens;
 }
 
+/*******************************************************************************
+* data_semigroup: 
+*******************************************************************************/
+
+Semigroup* data_semigroup (Obj data) {
+  if (!IsbPRec(data, RNam_semigroup)) {
+    data_init(data);
+  }
+  return CLASS_OBJ<Semigroup>(ElmPRec(data, RNam_semigroup));
+}
+
+/*******************************************************************************
+* data_converter:
+*******************************************************************************/
+
+Converter* data_converter (Obj data) {
+  if (!IsbPRec(data, RNam_converter)) {
+    data_init(data);
+  }
+  return CLASS_OBJ<Converter>(ElmPRec(data, RNam_converter));
+}
+
+/*******************************************************************************
+* data_delete
+*******************************************************************************/
+
 void data_delete (Obj data) {
   if (IsbPRec(data, RNam_semigroup)) {
     delete data_semigroup(data);
@@ -259,3 +215,96 @@ void data_delete (Obj data) {
     delete data_converter(data);
   }
 }
+
+/*******************************************************************************
+********************************************************************************
+ * Get the value of a GAP object out of the data
+********************************************************************************
+*******************************************************************************/
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+
+long data_data_threshold (Obj data) {
+  Obj x = data_rep(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_TROP_MAT(x)||IS_NAT_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+
+long data_data_period (Obj data) {
+  Obj x = data_rep(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_NAT_MAT(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
+
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+
+long data_size_ff (Obj data) {
+  Obj x = data_rep(data);
+  assert(TNUM_OBJ(x) == T_POSOBJ);
+  assert(IS_MAT_OVER_PF(x));
+  assert(ELM_PLIST(x, 1) != 0);
+  assert(IS_PLIST(ELM_PLIST(x, 1)));
+  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+
+Obj data_rep (Obj data) {
+  // TODO more asserts 
+  assert(IsbPRec(data, RNam_gens));
+  assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
+  return ELM_PLIST(ElmPRec(data, RNam_gens), 1);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+
+size_t data_batch_size (Obj data) {
+  assert(IsbPRec(data, RNam_batch_size));
+  assert(IS_INTOBJ(ElmPRec(data, RNam_batch_size)));
+  return INT_INTOBJ(ElmPRec(data, RNam_batch_size));
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+
+bool data_report (Obj data) {
+  if (IsbPRec(data, RNam_report)) {
+    assert(ElmPRec(data, RNam_report) == True || ElmPRec(data, RNam_report) == False);
+    return (ElmPRec(data, RNam_report) == True ? true : false);
+  }
+  return false;
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+
+size_t data_degree (Obj data) {
+  //TODO add asserts 
+  return INT_INTOBJ(ElmPRec(data, RNamName("degree")));
+}
+

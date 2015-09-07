@@ -111,7 +111,7 @@ function(S)
   fi;
 
   if SEMIGROUPS_IsCCSemigroup(S) then
-    return NR_IDEMPOTENTS_SEMIGROUP(GenericSemigroupData(S));
+    return SEMIGROUP_NR_IDEMPOTENTS(GenericSemigroupData(S));
   fi;
   return Length(Idempotents(S));
 end);
@@ -163,7 +163,7 @@ function(S)
   pos := Position(lookup, fail);
 
   data := GenericSemigroupData(S);
-  rules := RELATIONS_SEMIGROUP(data);
+  rules := SEMIGROUP_RELATIONS(data);
   rels := [];
 
   convert := function(word)
@@ -204,7 +204,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  rules := RELATIONS_SEMIGROUP(GenericSemigroupData(S));
+  rules := SEMIGROUP_RELATIONS(GenericSemigroupData(S));
 
   F := FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A := GeneratorsOfSemigroup(F);
@@ -227,7 +227,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
+  return SEMIGROUP_RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
 end);
 
 # same method for ideals
@@ -238,7 +238,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
+  return SEMIGROUP_LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
 end);
 
 # same method for ideals

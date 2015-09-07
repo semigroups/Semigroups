@@ -206,7 +206,7 @@ function(data)
 
   Print("semigroup data with ", SEMIGROUP_CURRENT_SIZE(data), " elements, ");
   Print(SEMIGROUP_CURRENT_NR_RULES(data), " relations, ");
-  Print("max word length ", MAX_WORD_LEN_SEMIGROUP(data), ">");
+  Print("max word length ", SEMIGROUP_CURRENT_MAX_WORD_LENGTH(data), ">");
   return;
 end);
 
@@ -354,7 +354,6 @@ end);
 InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
 [IsGenericSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  data := ENUMERATE_SEMIGROUP(data, limit, lookfunc,
-                              lookfunc <> ReturnFalse);
+  data := SEMIGROUP_ENUMERATE(data, limit, lookfunc, lookfunc <> ReturnFalse);
   return data;
 end);
