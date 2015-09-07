@@ -92,15 +92,15 @@ function(S)
     local data;
     data := GenericSemigroupData(S);
     if not IsBound(data!.elts) or not IsBound(data!.elts[nr]) then
-      ELEMENTS_SEMIGROUP(data, nr);
+      SEMIGROUP_ELEMENTS(data, nr);
     fi;
     return data!.elts[nr];
   end;
 
   # FIXME this should be Size(S) hack around RZMS
-  enum.Length := enum -> SIZE_SEMIGROUP(GenericSemigroupData(S));
+  enum.Length := enum -> SEMIGROUP_SIZE(GenericSemigroupData(S));
 
-  enum.AsList := enum -> ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  enum.AsList := enum -> SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
 
   enum.Membership := function(enum, elt)
     return Position(GenericSemigroupData(S), elt) <> fail;
@@ -108,7 +108,7 @@ function(S)
 
   # FIXME this should be Size(S) hack around RZMS
   enum.IsBound\[\] := function(enum, nr)
-    return nr <= SIZE_SEMIGROUP(GenericSemigroupData(S));
+    return nr <= SEMIGROUP_SIZE(GenericSemigroupData(S));
   end;
 
   return EnumeratorByFunctions(S, enum);
@@ -118,7 +118,7 @@ end);
 
 InstallMethod(Size, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
-S -> SIZE_SEMIGROUP(GenericSemigroupData(S)));
+S -> SEMIGROUP_SIZE(GenericSemigroupData(S)));
 
 # different method for ideals
 
@@ -139,7 +139,7 @@ function(S)
   data := Enumerate(GenericSemigroupData(S));
 
   if not IsBound(data!.idempotents) then
-    elts := ELEMENTS_SEMIGROUP(data, infinity);
+    elts := SEMIGROUP_ELEMENTS(data, infinity);
     idempotents := EmptyPlist(Length(elts));
     nr := 0;
 
@@ -154,7 +154,7 @@ function(S)
     ShrinkAllocationPlist(idempotents);
   fi;
 
-  return ELEMENTS_SEMIGROUP(data, infinity){data!.idempotents};
+  return SEMIGROUP_ELEMENTS(data, infinity){data!.idempotents};
 end);
 
 #
@@ -176,13 +176,13 @@ function(data, x, n)
     return fail;
   fi;
 
-  return POSITION_SEMIGROUP(data, x);
+  return SEMIGROUP_POSITION(data, x);
 end);
 
 #
 
 InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData],
-LENGTH_SEMIGROUP);
+SEMIGROUP_CURRENT_SIZE);
 
 # FIXME remove this?
 
@@ -198,14 +198,14 @@ InstallMethod(ViewObj, [IsGenericSemigroupData],
 function(data)
   Print("<");
 
-  if IS_CLOSED_SEMIGROUP(data) then
+  if SEMIGROUP_IS_DONE(data) then
     Print("closed ");
   else
     Print("open ");
   fi;
 
-  Print("semigroup data with ", LENGTH_SEMIGROUP(data), " elements, ");
-  Print(NR_RULES_SEMIGROUP(data), " relations, ");
+  Print("semigroup data with ", SEMIGROUP_CURRENT_SIZE(data), " elements, ");
+  Print(SEMIGROUP_CURRENT_NR_RULES(data), " relations, ");
   Print("max word length ", MAX_WORD_LEN_SEMIGROUP(data), ">");
   return;
 end);

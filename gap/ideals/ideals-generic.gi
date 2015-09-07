@@ -167,7 +167,7 @@ function(I)
     if not IsBound(enum!.indices[nr]) then 
       SEMIGROUPS_EnumerateIdeal(enum, nr, ReturnFalse);
     fi;
-    return ELEMENTS_SEMIGROUP(data, enum!.indices[nr])[enum!.indices[nr]];
+    return SEMIGROUP_ELEMENTS(data, enum!.indices[nr])[enum!.indices[nr]];
   end;
 
   record.IsBound\[\]:=function(enum, nr)
@@ -222,7 +222,7 @@ InstallMethod(Idempotents, "for a semigroup ideal with generators",
 function(I)
   local elts, enum, indices, idempotents, nr, i;
 
-  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(SupersemigroupOfIdeal(I)),
+  elts := SEMIGROUP_ELEMENTS(GenericSemigroupData(SupersemigroupOfIdeal(I)),
                              infinity);
   enum := Enumerator(I);
   if not IsBound(enum!.idempotents) then 

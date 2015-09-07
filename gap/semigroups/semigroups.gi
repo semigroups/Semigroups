@@ -789,7 +789,7 @@ function(S, coll, opts)
     data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
     data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                             and IsAttributeStoringRep), data);
-    CLOSURE_SEMIGROUP(GenericSemigroupData(S), data);
+    SEMIGROUP_CLOSURE(GenericSemigroupData(S), data);
     T := Semigroup(data!.gens, opts);
     SetGenericSemigroupData(T, data);
     data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
@@ -830,7 +830,7 @@ function(S, coll, opts)
   fi;
 
   data := GenericSemigroupData(S);
-  ADD_GENERATORS_SEMIGROUP(data, coll);
+  SEMIGROUP_ADD_GENERATORS(data, coll);
   S := Semigroup(data!.gens, opts);
   SetGenericSemigroupData(S, data);
   return S;

@@ -767,7 +767,7 @@ function(S)
 
   data := Enumerate(GenericSemigroupData(S));
   comps := GreensRRelation(S)!.data.comps;
-  return ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]];
+  return SEMIGROUP_ELEMENTS(data, infinity)[comps[1][1]];
   # the first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal.
 end);

@@ -280,10 +280,10 @@ class Semigroup {
     *******************************************************************************/
     
     /*******************************************************************************
-     * max_word_length: get the maximum length of a current word!
+     * current_max_word_length: get the maximum length of a current word!
     *******************************************************************************/
 
-    size_t max_word_length () const {
+    size_t current_max_word_length () const {
       if (is_done()) {
         return _lenindex.size() - 2;
       } else if (_nr > _lenindex.back()) { 
@@ -771,7 +771,7 @@ class Semigroup {
         if (report) {
           std::cout << "found " << _nr << " elements, ";
           std::cout << _nrrules << " rules, ";
-          std::cout << "max word length " << max_word_length();
+          std::cout << "max word length " << current_max_word_length();
           if (!is_done()) {
             std::cout << ", so far" << std::endl;
           } else {
@@ -946,7 +946,7 @@ class Semigroup {
         if (report) {
           std::cout << "found " << _index.size() << " elements, ";
           std::cout << _nrrules << " rules, ";
-          std::cout << "max word length " << max_word_length();
+          std::cout << "max word length " << current_max_word_length();
           if (!is_done()) {
             std::cout << ", so far" << std::endl;
           } else {

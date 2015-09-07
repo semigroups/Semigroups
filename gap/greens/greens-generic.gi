@@ -85,7 +85,7 @@ function(S, GreensXRelation, GreensXClassOfElement)
   local comps, elts, out, C, i;
 
   comps := GreensXRelation(S)!.data.comps;
-  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  elts := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
   out := EmptyPlist(Length(comps));
 
   for i in [1 .. Length(comps)] do
@@ -101,7 +101,7 @@ function(S, GreensXRelation)
   local comps, elts, out, i;
 
   comps := GreensXRelation(S)!.data.comps;
-  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  elts := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
   out := EmptyPlist(Length(comps));
   for i in [1 .. Length(comps)] do
     out[i] := elts[comps[i][1]];
@@ -117,7 +117,7 @@ function(C, GreensXRelation, GreensXClassOfElement)
   comp := EquivalenceClassRelation(C)!.data.comps[C!.index];
   id := GreensXRelation(Parent(C))!.data.id;
   seen := BlistList([1 .. Maximum(id)], []);
-  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  elts := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
   out := EmptyPlist(Length(comp));
 
   for i in comp do
@@ -140,7 +140,7 @@ function(C, GreensXRelation)
   comp := EquivalenceClassRelation(C)!.data.comps[C!.index];
   id := GreensXRelation(Parent(C))!.data.id;
   seen := BlistList([1 .. Maximum(id)], []);
-  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  elts := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
   out := EmptyPlist(Length(comp));
 
   for i in comp do
@@ -424,7 +424,7 @@ function(C)
   data := Enumerate(GenericSemigroupData(Parent(C)));
   rel := EquivalenceClassRelation(C);
   # gaplint: ignore 2
-  return ELEMENTS_SEMIGROUP(data, infinity){
+  return SEMIGROUP_ELEMENTS(data, infinity){
     rel!.data.comps[SEMIGROUPS_XClassIndex(C)]};
 end);
 
@@ -775,7 +775,7 @@ function(C)
   if IsBound(data!.idempotents) then
     positions := Intersection(rel!.data.comps[SEMIGROUPS_XClassIndex(C)],
                               data!.idempotents);
-    return ELEMENTS_SEMIGROUP(data, infinity){positions};
+    return SEMIGROUP_ELEMENTS(data, infinity){positions};
   fi;
 
   idempotents := [];

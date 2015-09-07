@@ -330,7 +330,7 @@ function(cong)
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);
-  ids := ELEMENTS_SEMIGROUP(GenericSemigroupData(idsmgp), infinity);
+  ids := SEMIGROUP_ELEMENTS(GenericSemigroupData(idsmgp), infinity);
   pos := 0;
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
 
