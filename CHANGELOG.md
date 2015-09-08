@@ -303,7 +303,7 @@ Other file formats are also supported;
 
 * the function `DotSemilatticeOfIdempotents` that produces a string
 containing a dot document of the semilattice of idempotents of an
-inverse semigroup grouped by $$$\mathscr{D}$$$-class;
+inverse semigroup grouped by \\(\mathscr{D}\\)-class;
 
 * the operation `NaturalLeqInverseSemigroup`, which is an umbrella
 operation for `NaturalLeqPartialPerm`, and other such functions. 
