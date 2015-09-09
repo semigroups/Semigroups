@@ -3,7 +3,7 @@
 
 ###TODO C++
 
-* a `small_generating_set` method using the Cayley graph
+
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 * check for memleaks
 * remove C++11?
@@ -33,6 +33,7 @@
 * closure of generic inverse semigroups
 
 ##DO LATER
+* a `small_generating_set` method using the Cayley graph
 * Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
 * unify ideals-lambda-rho, lambda-rho and graded.
 * improve `EvaluateWord`
