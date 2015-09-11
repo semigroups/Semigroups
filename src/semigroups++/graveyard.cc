@@ -11,32 +11,6 @@
     // not. 
     Interface (Obj data, Converter* converter, SemigroupBase* old) 
       : _converter(converter) {
-      assert(IsbPRec(data, RNam_gens));
-      assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
-      
-      Obj gens = ElmPRec(data, RNam_gens);
-
-      std::vector<Element*>* gens_c(new std::vector<Element*>());
-      size_t deg_c = INT_INTOBJ(ElmPRec(data, RNamName("degree")));
-      PLAIN_LIST(gens);
-      for(size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
-        gens_c->push_back(converter->convert(ELM_PLIST(gens, i), deg_c));
-      }
-      // full deletion of things in gens_c is responsibility of the semigroup 
-        
-      if (old == nullptr) {
-        _semigroup = new Semigroup(gens_c, deg_c);
-      } else {
-        _semigroup = new Semigroup(*static_cast<Semigroup*>(old), gens_c, data_report(data)); 
-        for (size_t i = 0; i < _semigroup->nrgens(); i++) {
-          AssPlist(gens, i + 1, converter->unconvert(_semigroup->gens()->at(i)));
-        }
-      }
-      for (Element* x: *gens_c) {
-        x->really_delete();
-      }
-      delete gens_c;
-      _semigroup->set_batch_size(BatchSize(data));
     }*/
 
 /*// method for Semigroup class

@@ -7,6 +7,8 @@
 
 #include "data.h"
 
+//TODO  data_is_valid
+
 /*******************************************************************************
 ********************************************************************************
  * Get the value of a C++ object out of the data
@@ -65,7 +67,19 @@ DataType data_type (Obj data) {
 *******************************************************************************/
 
 void data_init (Obj data) {
-  assert(!IsbPRec(data, RNam_semigroup) && !IsbPRec(data, RNam_converter));
+  data_init_converter(data);
+  data_init_semigroup(data);
+}
+
+/*******************************************************************************
+* data_init_converter: 
+*******************************************************************************/
+
+void data_init_converter (Obj data) {
+  
+  if (IsbPRec(data, RNam_converter)) {
+    return;
+  }
 
   Converter* converter;
   switch (data_type(data)) {
@@ -78,77 +92,65 @@ void data_init (Obj data) {
       break;
     }
     /*case PPERM2:{
-      auto pc2 = new PPermConverter<u_int16_t>();
-      interface = new Interface<PartialPerm<u_int16_t> >(data, pc2, old);
+      converter = new PPermConverter<u_int16_t>();
       break;
     }
     case PPERM4:{
-      auto pc4 = new PPermConverter<u_int32_t>();
-      interface = new Interface<PartialPerm<u_int32_t> >(data, pc4, old);
+      converter = new PPermConverter<u_int32_t>();
       break;
     }
     case BIPART: {
-      auto bc = new BipartConverter();
-      interface = new Interface<Bipartition>(data, bc, old);
+      converter = new BipartConverter();
       break;
     }
     case BOOL_MAT:{ 
-      auto bmc = new BoolMatConverter();
-      interface = new Interface<BooleanMat>(data, bmc, old);
+      converter = new BoolMatConverter();
       break;
     }
     case MAX_PLUS_MAT:{
-      auto mosc = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
+      converter = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 
                                                   MaxPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case MIN_PLUS_MAT:{
-      auto mosc = new MatrixOverSemiringConverter(new MinPlusSemiring(), 
+      converter = new MatrixOverSemiringConverter(new MinPlusSemiring(), 
                                                   infinity, 
                                                   MinPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case TROP_MAX_PLUS_MAT:{
-      auto mosc = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(data_threshold(data)), 
+      converter = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(data_threshold(data)), 
                                                   Ninfinity, 
                                                   TropicalMaxPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case TROP_MIN_PLUS_MAT:{
-      auto mosc = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(data_threshold(data)), 
+      converter = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(data_threshold(data)), 
                                                   infinity, 
                                                   TropicalMinPlusMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case PROJ_MAX_PLUS_MAT:{
-      auto pmpmc = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
+      converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
                                                         Ninfinity, 
                                                         ProjectiveMaxPlusMatrixType);
-      interface = new Interface<ProjectiveMaxPlusMatrix>(data, pmpmc, old);
       break;
 
     }
     case NAT_MAT:{
-      auto mosc = new MatrixOverSemiringConverter(new NaturalSemiring(data_threshold(data),
+      converter = new MatrixOverSemiringConverter(new NaturalSemiring(data_threshold(data),
                                                                       data_period(data)), 
                                                   INTOBJ_INT(0), 
                                                   NaturalMatrixType);
-      interface = new Interface<MatrixOverSemiring>(data, mosc, old);
       break;
     }
     case MAT_OVER_PF:{
-      auto mopfc = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)));
-      interface = new Interface<MatrixOverSemiring>(data, mopfc, old);
+      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)));
       break;
     }
     case PBR_TYPE:{
-      auto pbrc = new PBRConverter();
-      interface = new Interface<PBR>(data, pbrc, old);
+      converter = new PBRConverter();
       break;
     }*/
     default: {
@@ -156,6 +158,32 @@ void data_init (Obj data) {
     }
   }
 
+  AssPRec(data, RNam_converter, NewSemigroupsBag(converter, CONVERTER));
+}
+
+/*******************************************************************************
+* data_init_semigroup: the default value for <semigroup> is nullptr, which is
+* set in the header file. 
+*******************************************************************************/
+
+void data_init_semigroup (Obj data, Semigroup* semigroup) {
+
+  if (semigroup != nullptr) {
+    if (IsbPRec(data, RNam_semigroup)) {
+      assert(false);
+    }
+    semigroup->set_batch_size(data_batch_size(data));
+    AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP));
+    return;
+  }
+
+  if (IsbPRec(data, RNam_semigroup)) {
+    return;
+  }
+  
+  data_init_converter(data);
+  Converter* converter = data_converter(data);
+  
   assert(IsbPRec(data, RNam_gens));
   assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
   
@@ -169,10 +197,9 @@ void data_init (Obj data) {
     gens->push_back(converter->convert(ELM_PLIST(gens_gap, i), degree));
   }
     
-  Semigroup* semigroup = new Semigroup(gens, degree);
+  semigroup = new Semigroup(gens, degree);
   semigroup->set_batch_size(data_batch_size(data));
 
-  AssPRec(data, RNam_converter, NewSemigroupsBag(converter, CONVERTER));
   AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP));
   
   for (Element* x: *gens) {

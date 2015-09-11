@@ -29,6 +29,45 @@
  ******************************************************************************/
 
 /*******************************************************************************
+ * ConvertElements:
+ ******************************************************************************/
+
+std::vector<Element*>* ConvertElements (Converter* converter, 
+                                        Obj        elements, 
+                                        size_t     degree    ) {
+  assert(IS_LIST(elements));
+  
+  auto out = new std::vector<Element*>();
+
+  for (size_t i = 0; i < (size_t) LEN_LIST(elements); i++) {
+    out->push_back(converter->convert(ELM_LIST(elements, i + 1), degree));
+  }
+  return out;
+}
+
+/*******************************************************************************
+ * UnconvertElements: 
+ ******************************************************************************/
+
+Obj UnconvertElements (Converter* converter, std::vector<Element*>* elements) {
+  
+  if (elements->empty()) {
+    Obj out = NEW_PLIST(T_PLIST_EMPTY, 0);
+    SET_LEN_PLIST(out, 0);
+    return out;
+  }
+
+  Obj out = NEW_PLIST(T_PLIST, elements->size());
+  SET_LEN_PLIST(out, elements->size());
+
+  for (size_t i = 0; i < elements->size(); i++) {
+    SET_ELM_PLIST(out, i + 1, converter->unconvert(elements->at(i)));
+  }
+  CHANGED_BAG(out);
+  return out;
+}
+
+/*******************************************************************************
  * ConvertFromCayleyGraph: helper function to convert a CayleyGraph to a GAP
  * plist of GAP plists
  ******************************************************************************/
@@ -116,16 +155,39 @@ Obj SEMIGROUP_ADD_GENERATORS (Obj self, Obj data, Obj coll_gap) {
 
 /*******************************************************************************
  * SEMIGROUP_CLOSURE:
- //new_data.gens is the generators to add to the generators of old_data
  ******************************************************************************/
 
-/*Obj SEMIGROUP_CLOSURE (Obj self, Obj old_data, Obj new_data) {
-  if (data_type(data) == UNKNOWN) {
-    ErrorQuit("SEMIGROUP_CLOSURE: this shouldn't happen!", 0L, 0L);
+Obj SEMIGROUP_CLOSURE (Obj self, Obj old_data, Obj coll_gap, Obj degree) {
+
+  assert(IS_LIST(coll_gap) && LEN_LIST(coll_gap) > 0);
+  assert(data_type(old_data) != UNKNOWN);
+  
+  Semigroup* old_semigroup = data_semigroup(old_data);
+  Converter* converter = data_converter(old_data);
+
+  std::vector<Element*>* coll(ConvertElements(converter, coll_gap, data_degree(old_data)));
+  
+  Semigroup* new_semigroup(new Semigroup(*old_semigroup, coll, data_report(old_data)));
+  new_semigroup->set_batch_size(data_batch_size(old_data));
+
+  for (Element* x: *coll) {
+    x->really_delete();
   }
-  InterfaceFromData(new_data, InterfaceFromData(old_data)->semigroup());
+  delete coll;
+  
+  Obj new_data = NEW_PREC(6);
+  
+
+  AssPRec(new_data, RNam_gens,       UnconvertElements(converter, 
+                                                       new_semigroup->gens()));
+  AssPRec(new_data, RNam_degree,     INTOBJ_INT(new_semigroup->degree()));
+  AssPRec(new_data, RNam_report,     ElmPRec(old_data, RNam_report));
+  AssPRec(new_data, RNam_batch_size, ElmPRec(old_data, RNam_batch_size));
+  
+  data_init_semigroup(new_data, new_semigroup);
+
   return new_data;
-}*/
+}
 
 /*******************************************************************************
  * SEMIGROUP_CURRENT_MAX_WORD_LENGTH:
@@ -182,7 +244,6 @@ Obj SEMIGROUP_ELEMENTS (Obj self, Obj data, Obj limit) {
       SET_LEN_PLIST(out, elements->size());
       for (size_t i = 0; i < elements->size(); i++) {
         SET_ELM_PLIST(out, i + 1, converter->unconvert(elements->at(i)));
-        CHANGED_BAG(out);
       }
       AssPRec(data, RNam_elts, out);
     } else {

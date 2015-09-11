@@ -779,17 +779,11 @@ function(S, coll, opts)
   local data, T;
 
   if SEMIGROUPS_IsCCSemigroup(S) then
-    data := rec();
-    data.gens := ShallowCopy(coll);
-    data.nr := 0;
-    data.pos := 0;
-    # the degree is the length of the std::vector required to hold the object
-    data.degree := SEMIGROUPS_DegreeOfSemigroup(S, coll);
-    data.report := SEMIGROUPS_OptionsRec(S).report;
-    data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
+    data := SEMIGROUP_CLOSURE(GenericSemigroupData(S), 
+                              ShallowCopy(coll), 
+                              SEMIGROUPS_DegreeOfSemigroup(S, coll));
     data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                             and IsAttributeStoringRep), data);
-    SEMIGROUP_CLOSURE(GenericSemigroupData(S), data);
     T := Semigroup(data!.gens, opts);
     SetGenericSemigroupData(T, data);
     data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];

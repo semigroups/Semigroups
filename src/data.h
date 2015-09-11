@@ -18,17 +18,18 @@
 #include "semigroups++/semigroups.h"
 
 /*******************************************************************************
- * Record names TODO init these in a function
+ * Record names //TODO init these in a function
 *******************************************************************************/
 
+static Int RNam_batch_size   = RNamName("batch_size");
+static Int RNam_degree       = RNamName("degree");
 static Int RNam_elts         = RNamName("elts");
+static Int RNam_gens         = RNamName("gens");
 static Int RNam_left         = RNamName("left");
+static Int RNam_report       = RNamName("report");
 static Int RNam_right        = RNamName("right");
 static Int RNam_rules        = RNamName("rules");
 static Int RNam_words        = RNamName("words");
-static Int RNam_gens         = RNamName("gens");
-static Int RNam_batch_size   = RNamName("batch_size");
-static Int RNam_report       = RNamName("report");
 
 static Int RNam_semigroup    = RNamName("_SEMIGROUPS_semigroup");
 static Int RNam_converter    = RNamName("_SEMIGROUPS_converter");
@@ -64,6 +65,9 @@ bool        data_report         (Obj);
 size_t      data_degree         (Obj);
 DataType    data_type           (Obj);
 void        data_init           (Obj);
+void        data_init_semigroup (Obj data, 
+                                 Semigroup* semigroup = nullptr);
+void        data_init_converter (Obj);
 void        data_delete         (Obj);
 Semigroup*  data_semigroup      (Obj);
 Converter*  data_converter      (Obj);

@@ -17,6 +17,7 @@
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 ###GAP
+* remove `genstoapply` from the the generic semigroup data
 
 * `ReadGenerators` and `WriteGenerators` for new types
 * `HallMatrixMonoid`

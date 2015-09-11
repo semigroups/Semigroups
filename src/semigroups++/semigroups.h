@@ -161,7 +161,7 @@ class Semigroup {
     /*******************************************************************************
      * Construct from semigroup and additional generators . . .
     *******************************************************************************/
-
+    // TODO change to Semigroup*
     Semigroup (const Semigroup& copy, std::vector<Element*>* coll, bool report)
       : _batch_size    (copy._batch_size),
         _degree        (copy._degree),    // copy for comparison in add_generators
