@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: cong-semilattice.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# CongSemilatticeTest1: 
 gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
@@ -157,8 +157,6 @@ gap> enum[3];
 <identity partial perm on [ 2, 3 ]>
 gap> enum[4];
 <identity partial perm on [ 2, 4 ]>
-gap> enum[5];
-fail
 gap> Size(enum);
 4
 gap> Size(c1);
@@ -210,12 +208,36 @@ gap> SemilatticeElementsBetween(e, lo, hi);
   <identity partial perm on [ 3, 5, 9, 10 ]>, 
   <identity partial perm on [ 3, 5, 8, 9, 10 ]> ]
 
+#T# MeetSemigroupCongruences
+gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
+>                             PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] ),
+>                             PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] ),
+>                             PartialPerm( [ 2, 4 ], [ 2, 4 ] ),
+>                             PartialPerm( [ 2, 3 ], [ 2, 3 ] ),
+>                             PartialPerm( [ 3, 4 ], [ 3, 4 ] ) ] );;
+gap> IsSemilatticeAsSemigroup(e);;
+gap> p1 := [[PartialPermNC([1,2,4],[1,2,4]), PartialPermNC([1,2,3],[1,2,3])]];;
+gap> p2 := [[PartialPermNC([4],[4]), PartialPermNC([1,2,3],[1,2,3])]];;
+gap> c1 := SemigroupCongruence(e, p1);;
+gap> c2 := SemigroupCongruence(e, p2);;
+gap> cc := MeetSemigroupCongruences(c1,c2);
+<semigroup congruence over <inverse partial perm semigroup of rank 4 with
+ 6 generators> with 1 generating pairs>
+gap> NonTrivialCongruenceClasses(cc);
+[ {PartialPerm( [ 1, 2 ], [ 1, 2 ] )} ]
+gap> Elements(last[1]);
+[ <identity partial perm on [ 1, 2 ]>, <identity partial perm on [ 1, 2, 3 ]> 
+ ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(e);
 gap> Unbind(x);
+gap> Unbind(p1);
+gap> Unbind(p2);
 gap> Unbind(c1);
 gap> Unbind(c2);
+gap> Unbind(cc);
 gap> Unbind(pairs);
 gap> Unbind(cong);
 gap> Unbind(lo);
