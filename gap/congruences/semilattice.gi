@@ -455,21 +455,44 @@ end);
 
 #
 
-InstallMethod(MeetOfSemigroupCongruences,
+InstallMethod(MeetSemigroupCongruences,
 "for two semilattice congruences",
 [IsSemilatticeCongruence, IsSemilatticeCongruence],
 function(cong1, cong2)
+  local s, outpairs, gens, pairs1, pairs2, meets1, meets2, i1, i2, max, p, min, 
+        gen, newmin;
   s := Range(cong1);
   if s <> Range(cong2) then
     Error("Semigroups: MeetOfSemigroupCongruences: usage,\n",
           "args <cong1> and <cong2> must be over the same semigroup");
     return;
   fi;
+  outpairs := [];
+  gens := GeneratorsOfSemigroup(s);
   pairs1 := GeneratingPairsOfSemigroupCongruence(cong1);
   pairs2 := GeneratingPairsOfSemigroupCongruence(cong2);
   meets1 := MeetsOfGeneratingPairs(cong1);
   meets2 := MeetsOfGeneratingPairs(cong2);
-  for p1 in pairs1 do
-    for p2 in pairs2 do
-      
+  for i1 in [1 .. Length(pairs1)] do
+    for i2 in [1 .. Length(pairs2)] do
+      # Maxima xs, xt, ys, yt
+      max := [pairs1[i1][1] * pairs2[i2][1],
+              pairs1[i1][1] * pairs2[i2][2],
+              pairs1[i1][2] * pairs2[i2][1],
+              pairs1[i1][2] * pairs2[i2][2]];
+      # Calculate the minimum of each range
+      for p in max do
+        min := p;
+        for gen in gens do
+          newmin := min * gen;
+          if meets1[i1] * newmin = meets1[i1]
+             and meets2[i2] * newmin = meets2[i2] then
+            min := newmin;
+          fi;
+        od;
+        Add(outpairs, [min, p]);
+      od;
+    od;
+  od;
+  return SemigroupCongruence(s, outpairs);
 end);
