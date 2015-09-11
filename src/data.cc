@@ -91,14 +91,14 @@ void data_init_converter (Obj data) {
       converter = new TransConverter<u_int32_t>();
       break;
     }
-    /*case PPERM2:{
+    case PPERM2:{
       converter = new PPermConverter<u_int16_t>();
       break;
     }
     case PPERM4:{
       converter = new PPermConverter<u_int32_t>();
       break;
-    }
+    }/*
     case BIPART: {
       converter = new BipartConverter();
       break;

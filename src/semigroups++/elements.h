@@ -27,9 +27,11 @@ class Element {
 
   public: 
     virtual ~Element () {}
+
     bool     operator == (const Element& that) const {
       return this->equals(&that);
     };
+
     virtual size_t   complexity    ()                               const = 0;
     virtual size_t   degree        ()                               const = 0;
     virtual bool     equals        (const Element*)                 const = 0;
@@ -65,7 +67,7 @@ class Transformation : public Element {
    
     Transformation (std::vector<T>* image) : _image(image) {}
    
-    T operator [] (size_t pos) const {
+    inline T operator [] (size_t pos) const {
       return _image->at(pos);
     }
 
@@ -129,68 +131,81 @@ class Transformation : public Element {
     std::vector<T>* _image;
 };
 
-/*
 // template for partial perms
 
 template <typename T>
-class PartialPerm : public Element<T> {
+class PartialPerm : public Element {
 
   public:
 
-    PartialPerm (T degree, Element<T>* sample = nullptr) 
-      : Element<T>(degree) {}
-
-    PartialPerm (std::vector<T> data) : Element<T>(data) {}
-
-    // multiply x and y into this
-    void redefine (Element<T> const* x, Element<T> const* y) {
-      assert(x->degree() == y->degree());
-      assert(x->degree() == this->degree());
-
-      for (T i = 0; i < this->degree(); i++) {
-        this->set(i, (x->at(i) == 0 ? 0 : y->at(x->at(i) - 1)));
-      }
-    }
-
-    // the identity on [1 .. degree], FIXME is this right? 
-    Element<T>* identity () {
-      std::vector<T> image;
-      image.reserve(this->degree());
-      for (T i = 0; i < this->degree(); i++) {
-        image.push_back(i + 1);
-      }
-      return new PartialPerm(image);
-    }
+    PartialPerm (std::vector<T>* image) : _image(image) {}
     
-    Element<T>* copy (size_t increase_deg_by = 0) const override {
-      Element<T>* out = new Element<T>(*this->data());
-      size_t deg = out->degree();
-      for (size_t i = deg; i < deg + increase_deg_by; i++) {
-        out->push_back(0);
-      }
-      return out;
+    inline T operator [] (size_t pos) const {
+      return _image->at(pos);
     }
 
     size_t complexity () const {
-      return this->degree();
+      return _image->size();
     }
-};
+    
+    size_t degree () const {
+      return _image->size();
+    }
 
-// hash function for unordered_map
-namespace std {
-  template <typename T>
-    struct hash<const PartialPerm<T> > {
-    size_t operator() (const PartialPerm<T>& x) const {
+    bool equals (const Element* that) const {
+      return *(static_cast<const PartialPerm<T>*>(that)->_image) == *(this->_image);
+    }
+    
+    size_t hash_value () const {
       size_t seed = 0;
-      T deg = x.degree();
+      T deg = this->degree();
       for (T i = 0; i < deg; i++) {
-        seed = ((seed * deg) + x.at(i));
+        seed = ((seed * deg) + this->_image->at(i));
       }
       return seed;
     }
-  };
-}
+    
+    // the identity of this
+    Element* identity () const {
+      auto image = new std::vector<T>();
+      image->reserve(this->degree());
+      for (T i = 0; i < this->degree(); i++) {
+        image->push_back(i);
+      }
+      return new PartialPerm<T>(image);
+    }
 
+    Element* really_copy (size_t increase_deg_by = 0) const override {
+      auto out = new std::vector<T>(*_image);
+      for (size_t i = 0; i < increase_deg_by; i++) {
+        out->push_back(i);
+      }
+      return new PartialPerm<T>(out);
+    }
+    
+    void really_delete () {
+      delete _image;
+    }
+
+    // multiply x and y into this
+    void redefine (Element const* x, Element const* y) {
+      assert(x->degree() == y->degree());
+      assert(x->degree() == this->degree());
+      auto xx = *static_cast<PartialPerm<T> const*>(x);
+      auto yy = *static_cast<PartialPerm<T> const*>(y);
+
+      for (T i = 0; i < this->degree(); i++) {
+        _image->at(i) = (xx[i] == UNDEFINED ? UNDEFINED : yy[xx[i]]);
+      }
+    }
+
+  private:
+
+    std::vector<T>* _image;
+    T               UNDEFINED = (T) -1;
+};
+
+/*
 class BooleanMat: public Element<bool> {
 
   public:
