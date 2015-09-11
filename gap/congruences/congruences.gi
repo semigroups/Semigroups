@@ -56,6 +56,8 @@ function(arg)
             "each pair should contain elements from the semigroup <s>,");
       return;
     fi;
+    # Remove any reflexive pairs
+    pairs := Filtered(pairs, p -> p[1] <> p[2]);
     if ((HasIsSimpleSemigroup(s) or IsActingSemigroup(s)) and
         IsSimpleSemigroup(s)) or
        ((HasIsZeroSimpleSemigroup(s) or IsActingSemigroup(s)) and
