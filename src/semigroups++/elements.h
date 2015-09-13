@@ -214,7 +214,7 @@ class BooleanMat: public Element {
 
   public:
 
-    BooleanMat             (std::vector<bool>*);
+    BooleanMat             (std::vector<bool>* matrix) : _matrix(matrix) {}
     bool     at            (size_t pos)                     const;
 
     size_t   complexity    ()                               const;
@@ -239,7 +239,7 @@ class Bipartition : public Element {
 
   public:
 
-    Bipartition            (std::vector<u_int32_t>*);
+    Bipartition            (std::vector<u_int32_t>* blocks) : _blocks(blocks) {}
     u_int32_t block        (size_t pos)                     const;
 
     size_t   complexity    ()                               const;
@@ -259,92 +259,38 @@ class Bipartition : public Element {
     std::vector<u_int32_t>* _blocks;
 };
 
-/*
-class MatrixOverSemiring: public Element<long> {
+class MatrixOverSemiring: public Element {
 
   public:
 
-    MatrixOverSemiring (size_t degree, Semiring* semiring) 
-      : Element<long>(degree), 
-        _semiring(semiring) {}
+    MatrixOverSemiring     (std::vector<long>* matrix, 
+                            Semiring*          semiring) :
+                           _matrix(matrix),
+                           _semiring(semiring) {}
 
-    MatrixOverSemiring (size_t degree, Element* sample) 
-      : Element<long>(degree), 
-        _semiring(static_cast<MatrixOverSemiring*>(sample)->semiring()) {}
+    long      at            (size_t pos)                     const;
+    Semiring* semiring      ()                               const;
 
-    MatrixOverSemiring (std::vector<long> const& data, Semiring* semiring) 
-      : Element<long>(data),
-        _semiring(semiring) {}
-  
-    Element* copy (size_t increase_degree_by = 0) const {
-      return new MatrixOverSemiring(*_data, _semiring);
-    }
-
-    void redefine (Element<long> const* x,
-                   Element<long> const* y) {
-      assert(x->degree() == y->degree());
-      assert(x->degree() == this->degree());
-      size_t deg = sqrt(this->degree());
-
-      for (size_t i = 0; i < deg; i++) {
-        for (size_t j = 0; j < deg; j++) {
-          long v = _semiring->zero();
-          for (size_t k = 0; k < deg; k++) {
-            v = _semiring->plus(v, _semiring->prod(x->at(i * deg + k), 
-                                                   y->at(k * deg + j)));
-          }
-          this->set(i * deg + j, v);
-        }
-      }
-      after(); // post process this
-    }
-
-    // the identity
-    Element<long>* identity () {
-      std::vector<long> mat;
-      mat.reserve(this->degree());
-
-      for (size_t i = 0; i < this->degree(); i++) {
-        mat.push_back(_semiring->zero());
-      }
-      size_t n = sqrt(this->degree());
-      for (size_t i = 0; i < n; i++) {
-        mat.at(i * n + i) =  _semiring->one();
-      }
-      return new MatrixOverSemiring(mat, _semiring);
-    }
-  
-    Semiring* semiring () {
-      return _semiring;
-    }
-    
-    size_t complexity () const {
-      return pow(this->degree(), 3);
-    }
+    size_t    complexity    ()                               const;
+    size_t    degree        ()                               const;
+    bool      equals        (const Element*)                 const;
+    size_t    hash_value    ()                               const;
+    Element*  identity      ()                               const;
+    Element*  really_copy   (size_t = 0)                     const;
+    void      really_delete ()                                    ;
+    void      redefine      (Element const*, Element const*)      ;
 
   private: 
 
     // a function applied after redefinition 
     virtual void after () {}
 
-    Semiring* _semiring;
+    std::vector<long>* _matrix;
+    Semiring*          _semiring;
+    
 }; 
 
-// hash function for unordered_map
-namespace std {
-  template <>
-    struct hash<const MatrixOverSemiring> {
-    size_t operator() (const MatrixOverSemiring& x) const {
-      size_t seed = 0;
-      for (size_t i = 0; i < x.degree(); i++) {
-        seed = ((seed << 4) + x.at(i));
-      }
-      return seed;
-    }
-  };
-}
-
-class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
+/*class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
 
   public:
 

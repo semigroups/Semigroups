@@ -106,7 +106,7 @@ void data_init_converter (Obj data) {
     case BIPART: {
       converter = new BipartConverter();
       break;
-    }/*
+    }
     case MAX_PLUS_MAT:{
       converter = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 
@@ -130,7 +130,7 @@ void data_init_converter (Obj data) {
                                                   infinity, 
                                                   TropicalMinPlusMatrixType);
       break;
-    }
+    }/*
     case PROJ_MAX_PLUS_MAT:{
       converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
                                                         Ninfinity, 

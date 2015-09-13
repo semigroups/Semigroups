@@ -188,7 +188,7 @@ class BipartConverter : public Converter {
  * Matrices over semirings 
 *******************************************************************************/
 
-/*class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
+class MatrixOverSemiringConverter : public Converter {
 
   public:
 
@@ -212,7 +212,7 @@ class BipartConverter : public Converter {
     Semiring* _semiring;
     Obj       _gap_zero;
     Obj       _gap_type;
-};*/
+};
 
 /*******************************************************************************
  * Projective max-plus matrices

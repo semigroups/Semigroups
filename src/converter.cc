@@ -94,8 +94,8 @@ Obj BipartConverter::unconvert (Element* x) {
 /*******************************************************************************
  * Matrices over semirings 
 *******************************************************************************/
-
-/*MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
+// here!! JDM 09/2015
+MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_SEMI_RING(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
@@ -139,7 +139,7 @@ Obj MatrixOverSemiringConverter::unconvert (MatrixOverSemiring* x) {
     CHANGED_BAG(plist);
   }
   return CALL_2ARGS(Objectify, _gap_type, plist);
-}*/
+}
 
 /*******************************************************************************
  * Matrices over prime field

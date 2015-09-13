@@ -13,8 +13,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-BooleanMat::BooleanMat (std::vector<bool>* matrix) : _matrix(matrix) {}
-
 bool BooleanMat::at (size_t pos) const {
   return _matrix->at(pos);
 }
@@ -88,8 +86,6 @@ void BooleanMat::redefine (Element const* x,
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-Bipartition::Bipartition (std::vector<u_int32_t>* blocks) : _blocks(blocks) {}
-
 u_int32_t Bipartition::block (size_t pos) const {
   return _blocks->at(pos);
 }
@@ -135,6 +131,7 @@ Element* Bipartition::really_copy (size_t increase_deg_by) const {
 void Bipartition::really_delete () {
   delete _blocks;
 }
+
 // multiply x and y into this
 void Bipartition::redefine (Element const* x, Element const* y) {
   assert(x->degree() == y->degree());
@@ -213,4 +210,83 @@ u_int32_t Bipartition::nrblocks () const {
     }
   }
   return nr + 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Matrices over semirings
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+long MatrixOverSemiring::at (size_t pos) const {
+  return _matrix->at(pos);
+}
+
+Semiring* MatrixOverSemiring::semiring () const {
+  return _semiring;
+}
+
+size_t MatrixOverSemiring::complexity () const {
+  return pow(this->degree(), 3);
+}
+
+size_t MatrixOverSemiring::degree () const {
+  return sqrt(_matrix->size());
+}
+
+bool MatrixOverSemiring::equals (const Element* that) const {
+  return *(static_cast<const MatrixOverSemiring*>(that)->_matrix) == *(this->_matrix);
+}
+
+size_t MatrixOverSemiring::hash_value () const {
+  size_t seed = 0;
+  for (size_t i = 0; i < _matrix->size(); i++) {
+    seed = ((seed << 4) + _matrix->at(i));
+  }
+  return seed;
+}
+
+// the identity
+Element* MatrixOverSemiring::identity () const {
+  std::vector<long>* matrix(new std::vector<long>());
+  matrix->resize(_matrix->size(), _semiring->zero());
+
+  size_t n = this->degree();
+  for (size_t i = 0; i < n; i++) {
+    matrix->at(i * n + i) = _semiring->one();
+  }
+  return new MatrixOverSemiring(matrix, _semiring);
+}
+
+Element* MatrixOverSemiring::really_copy (size_t increase_degree_by) const {
+  assert(increase_degree_by == 0);
+  std::vector<long>* matrix(new std::vector<long>(*_matrix));
+  return new MatrixOverSemiring(matrix, _semiring);
+}
+
+void MatrixOverSemiring::really_delete () {
+  delete _matrix;
+}
+
+void MatrixOverSemiring::redefine (Element const* x,
+                                   Element const* y) {
+
+  MatrixOverSemiring const* xx(static_cast<MatrixOverSemiring const*>(x));
+  MatrixOverSemiring const* yy(static_cast<MatrixOverSemiring const*>(y));
+
+  assert(xx->degree() == yy->degree());
+  assert(xx->degree() == this->degree());
+  size_t deg = sqrt(this->degree());
+
+  for (size_t i = 0; i < deg; i++) {
+    for (size_t j = 0; j < deg; j++) {
+      long v = _semiring->zero();
+      for (size_t k = 0; k < deg; k++) {
+        v = _semiring->plus(v, _semiring->prod(xx->at(i * deg + k), 
+                                               yy->at(k * deg + j)));
+      }
+      _matrix->at(i * deg + j) = v;
+    }
+  }
+  after(); // post process this
 }
