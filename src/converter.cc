@@ -61,33 +61,35 @@ Obj BoolMatConverter::unconvert (Element* x) {
 /*******************************************************************************
  * Bipartitions
 *******************************************************************************/
-/*
+
 Bipartition* BipartConverter::convert (Obj o, size_t n) {
   assert(IS_BIPART(o));
   assert(IsbPRec(o, RNamName("blocks")));
 
-  Obj blocks = ElmPRec(o, RNamName("blocks"));
-  PLAIN_LIST(blocks);
+  Obj blocks_gap = ElmPRec(o, RNamName("blocks"));
 
-  assert((size_t) LEN_PLIST(blocks) == n);
+  assert((size_t) LEN_LIST(blocks_gap) == n);
 
-  auto x = new Bipartition(n);
-  for (u_int32_t i = 0; i < n; i++) {
-    x->set(i, INT_INTOBJ(ELM_PLIST(blocks, i + 1)) - 1);
+  std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>());
+  blocks->reserve(n);
+
+  for (size_t i = 0; i < n; i++) {
+    blocks->push_back(INT_INTOBJ(ELM_LIST(blocks_gap, i + 1)) - 1);
   }
-  return x;
+  return new Bipartition(blocks);
 }
 
-Obj BipartConverter::unconvert (Bipartition* x) {
-  Obj o = NEW_PLIST(T_PLIST_CYC, x->degree());
-  SET_LEN_PLIST(o, x->degree());
-  for (u_int32_t i = 0; i < x->degree(); i++) {
-    SET_ELM_PLIST(o, i + 1, INTOBJ_INT(x->at(i) + 1));
+Obj BipartConverter::unconvert (Element* x) {
+  Bipartition* xx(static_cast<Bipartition*>(x));
+  
+  Obj o = NEW_PLIST(T_PLIST_CYC, 2 * xx->degree());
+  SET_LEN_PLIST(o, 2 * xx->degree());
+  for (size_t i = 0; i < 2 * xx->degree(); i++) {
+    SET_ELM_PLIST(o, i + 1, INTOBJ_INT(xx->block(i) + 1));
   }
   o = CALL_1ARGS(BipartitionByIntRepNC, o);
   return o;
-}*/
-
+}
 
 /*******************************************************************************
  * Matrices over semirings 

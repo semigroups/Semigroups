@@ -103,10 +103,10 @@ void data_init_converter (Obj data) {
       converter = new BoolMatConverter();
       break;
     }
-    /*case BIPART: {
+    case BIPART: {
       converter = new BipartConverter();
       break;
-    }
+    }/*
     case MAX_PLUS_MAT:{
       converter = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
                                                   Ninfinity, 

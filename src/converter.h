@@ -176,14 +176,13 @@ class BoolMatConverter : public Converter {
  * Bipartitions
 *******************************************************************************/
 
-/*class BipartConverter : public Converter<Bipartition> {
+class BipartConverter : public Converter {
 
   public: 
 
-    Bipartition* convert (Obj o, size_t n);
-
-    Obj unconvert (Bipartition* x);
-};*/
+    Bipartition* convert   (Obj o, size_t n);
+    Obj          unconvert (Element* x);
+};
 
 /*******************************************************************************
  * Matrices over semirings 

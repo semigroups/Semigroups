@@ -1,5 +1,17 @@
+/*******************************************************************************
+ * Semigroups++
+ *
+ * This file contains classes for creating elements of a semigroup.
+ *
+ *******************************************************************************/
 
 #include "elements.h"
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// BooleanMat
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 BooleanMat::BooleanMat (std::vector<bool>* matrix) : _matrix(matrix) {}
 
@@ -70,3 +82,135 @@ void BooleanMat::redefine (Element const* x,
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Bipartition
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+Bipartition::Bipartition (std::vector<u_int32_t>* blocks) : _blocks(blocks) {}
+
+u_int32_t Bipartition::block (size_t pos) const {
+  return _blocks->at(pos);
+}
+
+size_t Bipartition::complexity () const {
+  return pow(_blocks->size(), 2);
+}
+
+size_t Bipartition::degree () const {
+  return _blocks->size() / 2;
+}
+
+bool Bipartition::equals (const Element* that) const {
+  return *(static_cast<const Bipartition*>(that)->_blocks) == *(this->_blocks);
+}
+
+size_t Bipartition::hash_value () const {
+  size_t seed = 0;
+  for (size_t i = 0; i < _blocks->size(); i++) {
+    seed = ((seed * _blocks->size()) + _blocks->at(i));
+  }
+  return seed;
+}
+
+// the identity of this
+Element* Bipartition::identity () const {
+  std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>());
+  blocks->reserve(this->_blocks->size());
+  for (size_t j = 0; j < 2; j++) {
+    for (u_int32_t i = 0; i < this->degree(); i++) {
+      blocks->push_back(i);
+    }
+  }
+  return new Bipartition(blocks);
+}
+
+Element* Bipartition::really_copy (size_t increase_deg_by) const {
+  assert(increase_deg_by == 0);
+  std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>(*_blocks));
+  return new Bipartition(blocks);
+}
+
+void Bipartition::really_delete () {
+  delete _blocks;
+}
+// multiply x and y into this
+void Bipartition::redefine (Element const* x, Element const* y) {
+  assert(x->degree() == y->degree());
+  assert(x->degree() == this->degree());
+  u_int32_t n = this->degree();
+
+  Bipartition const* xx = static_cast<Bipartition const*>(x);
+  Bipartition const* yy = static_cast<Bipartition const*>(y);
+
+  std::vector<u_int32_t>* xblocks(xx->_blocks);
+  std::vector<u_int32_t>* yblocks(yy->_blocks);
+
+  u_int32_t nrx(xx->nrblocks());
+  u_int32_t nry(yy->nrblocks());
+
+  std::vector<u_int32_t> fuse;
+  std::vector<u_int32_t> lookup;
+  fuse.reserve(nrx + nry);
+  lookup.reserve(nrx + nry);
+
+  // maybe this should be pointer to local data, may slow down hashing
+  // but speed up redefinition?
+  for (size_t i = 0; i < nrx + nry; i++) {
+    fuse.push_back(i);
+    lookup.push_back(-1);
+  }
+
+  for (size_t i = 0; i < n; i++) {
+    u_int32_t j = fuseit(fuse, xblocks->at(i + n));
+    u_int32_t k = fuseit(fuse, yblocks->at(i) + nrx);
+    if (j != k) {
+      if (j < k) {
+        fuse.at(k) = j;
+      } else {
+        fuse.at(j) = k;
+      }
+    }
+  }
+
+  u_int32_t next = 0;
+
+  for (size_t i = 0; i < n; i++) {
+    u_int32_t j = fuseit(fuse, xblocks->at(i));
+    if (lookup.at(j) == (u_int32_t) -1) {
+      lookup.at(j) = next;
+      next++;
+    }
+    this->_blocks->at(i) = lookup.at(j);
+  }
+
+  for (size_t i = n; i < 2 * n; i++) {
+    u_int32_t j = fuseit(fuse, yblocks->at(i) + nrx);
+    if (lookup.at(j) == (u_int32_t) -1) {
+      lookup.at(j) = next;
+      next++;
+    }
+    this->_blocks->at(i) = lookup.at(j);
+  }
+}
+
+inline u_int32_t Bipartition::fuseit (std::vector<u_int32_t> const& fuse, 
+                                      u_int32_t pos                      ) {
+  while (fuse.at(pos) < pos) {
+    pos = fuse.at(pos);
+  }
+  return pos;
+}
+
+// nr blocks
+
+u_int32_t Bipartition::nrblocks () const {
+  size_t nr = 0;
+  for (size_t i = 0; i < _blocks->size(); i++) {
+    if (_blocks->at(i) > nr) {
+      nr = _blocks->at(i);
+    }
+  }
+  return nr + 1;
+}

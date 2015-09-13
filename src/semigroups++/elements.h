@@ -60,6 +60,9 @@ namespace std {
 
 // template for transformations
 
+//TODO make a PartialTransformation class which holds the common parts of
+//Transformation and PartialPerm.
+
 template <typename T>
 class Transformation : public Element {
 
@@ -211,8 +214,33 @@ class BooleanMat: public Element {
 
   public:
 
-    BooleanMat (std::vector<bool>*);
+    BooleanMat             (std::vector<bool>*);
     bool     at            (size_t pos)                     const;
+
+    size_t   complexity    ()                               const;
+    size_t   degree        ()                               const;
+    bool     equals        (const Element*)                 const;
+    size_t   hash_value    ()                               const;
+    Element* identity      ()                               const;
+    Element* really_copy   (size_t = 0)                     const;
+    void     really_delete ();
+    void     redefine      (Element const*, Element const*);
+  
+  private:
+    
+
+    std::vector<bool>* _matrix;
+
+};
+
+// bipartitions
+
+class Bipartition : public Element {
+
+  public:
+
+    Bipartition            (std::vector<u_int32_t>*);
+    u_int32_t block        (size_t pos)                     const;
 
     size_t   complexity    ()                               const;
     size_t   degree        ()                               const;
@@ -225,129 +253,13 @@ class BooleanMat: public Element {
   
   private:
 
-    std::vector<bool>* _matrix;
+    u_int32_t fuseit   (std::vector<u_int32_t>const&, u_int32_t);
+    u_int32_t nrblocks () const;
 
+    std::vector<u_int32_t>* _blocks;
 };
 
 /*
-// bipartitions
-
-class Bipartition : public Element<u_int32_t> {
-
-  public:
-    
-    Bipartition (u_int32_t degree, 
-                 Element<u_int32_t>* sample = nullptr) 
-      : Element<u_int32_t>(degree) {}
-
-    Bipartition (std::vector<u_int32_t> data) 
-      : Element<u_int32_t>(data) {}
-
-    // multiply x and y into this
-    void redefine (Element<u_int32_t> const* x, Element<u_int32_t> const* y) {
-      assert(x->degree() == y->degree());
-      assert(x->degree() == this->degree());
-      u_int32_t n = this->degree() / 2;
-      u_int32_t nrx = static_cast<const Bipartition*>(x)->nrblocks();
-      u_int32_t nry = static_cast<const Bipartition*>(y)->nrblocks();
-
-      std::vector<u_int32_t> fuse;
-      std::vector<u_int32_t> lookup;
-      fuse.reserve(nrx + nry);
-      lookup.reserve(nrx + nry);
-
-      // TODO maybe this should be pointer to local data, may slow down hashing
-      // but speed up redefinition?
-      for (size_t i = 0; i < nrx + nry; i++) {
-        fuse.push_back(i);
-        lookup.push_back(-1);
-      }
-
-      for (size_t i = 0; i < n; i++) {
-        u_int32_t xx = fuseit(fuse, x->at(i + n));
-        u_int32_t yy = fuseit(fuse, y->at(i) + nrx);
-        if (xx != yy) {
-          if (xx < yy) {
-            fuse.at(yy) = xx;
-          } else {
-            fuse.at(xx) = yy;
-          }
-        }
-      }
-
-      u_int32_t next = 0;
-
-      for (size_t i = 0; i < n; i++) {
-        u_int32_t xx = fuseit(fuse, x->at(i));
-        if (lookup.at(xx) == (u_int32_t) -1) {
-          lookup.at(xx) = next;
-          next++;
-        }
-        this->set(i, lookup.at(xx));
-      }
-      for (size_t i = n; i < 2 * n; i++) {
-        u_int32_t xx = fuseit(fuse, y->at(i) + nrx);
-        if (lookup.at(xx) == (u_int32_t) -1) {
-          lookup.at(xx) = next;
-          next++;
-        }
-        this->set(i, lookup.at(xx));
-      }
-    }
-
-    // the identity of this
-    Element<u_int32_t>* identity () {
-      std::vector<u_int32_t> image;
-      image.reserve(this->degree());
-      for (size_t j = 0; j < 2; j++) {
-        for (u_int32_t i = 0; i < this->degree() / 2; i++) {
-          image.push_back(i);
-        }
-      }
-      return new Bipartition(image);
-    }
-    
-    size_t complexity () const {
-      return pow(this->degree(), 2);
-    }
-
-  private:
-
-    u_int32_t fuseit (std::vector<u_int32_t> const& fuse, u_int32_t pos) {
-      while (fuse.at(pos) < pos) {
-        pos = fuse.at(pos);
-      }
-      return pos;
-    }
-
-    // nr blocks
-    u_int32_t nrblocks () const {
-      size_t nr = 0;
-      for (size_t i = 0; i < this->degree(); i++) {
-        if (this->at(i) > nr) {
-          nr = this->at(i);
-        }
-      }
-      return nr + 1;
-    }
-};
-
-// hash function for unordered_map
-// TODO improve this!
-namespace std {
-  template <>
-    struct hash<const Bipartition> {
-    size_t operator() (const Bipartition& x) const {
-      size_t seed = 0;
-      u_int32_t deg = x.degree();
-      for (u_int32_t i = 0; i < deg; i++) {
-        seed = ((seed * deg) + x.at(i));
-      }
-      return seed;
-    }
-  };
-}
-
 class MatrixOverSemiring: public Element<long> {
 
   public:
