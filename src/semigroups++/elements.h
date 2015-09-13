@@ -205,70 +205,31 @@ class PartialPerm : public Element {
     T               UNDEFINED = (T) -1;
 };
 
-/*
-class BooleanMat: public Element<bool> {
+// boolean matrices
+
+class BooleanMat: public Element {
 
   public:
 
-    BooleanMat (size_t degree, Element<bool>* sample = nullptr) 
-      : Element<bool>(degree) {}
+    BooleanMat (std::vector<bool>*);
+    bool     at            (size_t pos)                     const;
 
-    BooleanMat (std::vector<bool> const& data) : Element<bool> (data) {}
+    size_t   complexity    ()                               const;
+    size_t   degree        ()                               const;
+    bool     equals        (const Element*)                 const;
+    size_t   hash_value    ()                               const;
+    Element* identity      ()                               const;
+    Element* really_copy   (size_t = 0)                     const;
+    void     really_delete ()                                    ;
+    void     redefine      (Element const*, Element const*)      ;
+  
+  private:
 
-    // multiply x and y into this
-    void redefine (Element<bool> const* x,
-                   Element<bool> const* y) {
-      assert(x->degree() == y->degree());
-      assert(x->degree() == this->degree());
-      size_t deg = sqrt(this->degree());
+    std::vector<bool>* _matrix;
 
-      for (size_t i = 0; i < deg; i++) {
-        for (size_t j = 0; j < deg; j++) {
-          size_t k;
-          for (k = 0; k < deg; k++) {
-            if (x->at(i * deg + k) && y->at(k * deg + j)) {
-              break;
-            }
-          }
-          this->set(i * deg + j, k < deg);
-        }
-      }
-    }
-
-    // the identity of this
-    Element<bool>* identity () {
-      std::vector<bool> mat;
-      mat.reserve(this->degree());
-      for (size_t i = 0; i < this->degree(); i++) {
-        mat.push_back(false);
-      }
-      size_t dim = sqrt(this->degree());
-      for (size_t i = 0; i < dim; i++) {
-        mat.at(i * dim + i) =  true;
-      }
-      return new BooleanMat(mat);
-    }
-
-    size_t complexity () const {
-      return pow(this->degree(), 3);
-    }
 };
 
-// hash function for unordered_map
-namespace std {
-  template <>
-    struct hash<const BooleanMat> {
-    size_t operator() (const BooleanMat& x) const {
-      size_t seed = 0;
-      size_t deg = x.degree();
-      for (size_t i = 0; i < deg; i++) {
-        seed = ((seed << 1) + x.at(i));
-      }
-      return seed;
-    }
-  };
-}
-
+/*
 // bipartitions
 
 class Bipartition : public Element<u_int32_t> {

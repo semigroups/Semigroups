@@ -9,6 +9,56 @@
 #include "types.h"
 
 /*******************************************************************************
+ * Boolean matrices
+*******************************************************************************/
+
+BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
+  assert(IS_BOOL_MAT(o));
+  assert(LEN_PLIST(o) > 0);
+  assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
+  assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
+
+  std::vector<bool>* x(new std::vector<bool>());
+  x->resize(n, false);
+
+  n = LEN_BLIST(ELM_PLIST(o, 1));
+
+  for (size_t i = 0; i < n; i++) {
+    Obj row = ELM_PLIST(o, i + 1);
+    assert(IS_BLIST_REP(row));
+    for (size_t j = 0; j < n; j++) {
+      if (ELM_BLIST(row, j + 1) == True) {
+        x->at(i * n + j) = true;
+      }
+    }
+  }
+  return new BooleanMat(x);
+}
+
+Obj BoolMatConverter::unconvert (Element* x) {
+  size_t n = x->degree();
+  BooleanMat* xx(static_cast<BooleanMat*>(x));
+
+  Obj o = NEW_PLIST(T_PLIST, n);
+  SET_LEN_PLIST(o, n);
+
+  for (size_t i = 0; i < n; i++) {
+    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
+    SET_LEN_BLIST(blist, n);
+    for (size_t j = 0; j < n; j++) {
+      if (xx->at(i * n + j)) {
+        SET_ELM_BLIST(blist, j + 1, True);
+      } else {
+        SET_ELM_BLIST(blist, j + 1, False);
+      }
+    }
+    SET_ELM_PLIST(o, i + 1, blist);
+    CHANGED_BAG(o);
+  }
+  return CALL_2ARGS(Objectify, BooleanMatType, o);
+}
+
+/*******************************************************************************
  * Bipartitions
 *******************************************************************************/
 /*
@@ -38,52 +88,6 @@ Obj BipartConverter::unconvert (Bipartition* x) {
   return o;
 }*/
 
-/*******************************************************************************
- * Boolean matrices
-*******************************************************************************/
-
-/*BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
-  assert(IS_BOOL_MAT(o));
-  assert(LEN_PLIST(o) > 0);
-  assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
-  assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
-
-  auto x = new BooleanMat(n);
-  n = LEN_BLIST(ELM_PLIST(o, 1));
-  for (size_t i = 0; i < n; i++) {
-    Obj row = ELM_PLIST(o, i + 1);
-    assert(IS_BLIST_REP(row));
-    for (size_t j = 0; j < n; j++) {
-      if (ELM_BLIST(row, j + 1) == True) {
-        x->set(i * n + j, true);
-      } else {
-        x->set(i * n + j, false);
-      }
-    }
-  }
-  return x;
-}
-
-Obj BoolMatConverter::unconvert (BooleanMat* x) {
-  size_t n = sqrt(x->degree());
-  Obj o = NEW_PLIST(T_PLIST, n);
-  SET_LEN_PLIST(o, n);
-
-  for (size_t i = 0; i < n; i++) {
-    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
-    SET_LEN_BLIST(blist, n);
-    for (size_t j = 0; j < n; j++) {
-      if (x->at(i * n + j)) {
-        SET_ELM_BLIST(blist, j + 1, True);
-      } else {
-        SET_ELM_BLIST(blist, j + 1, False);
-      }
-    }
-    SET_ELM_PLIST(o, i + 1, blist);
-    CHANGED_BAG(o);
-  }
-  return CALL_2ARGS(Objectify, BooleanMatType, o);
-}*/
 
 /*******************************************************************************
  * Matrices over semirings 

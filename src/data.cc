@@ -98,13 +98,13 @@ void data_init_converter (Obj data) {
     case PPERM4:{
       converter = new PPermConverter<u_int32_t>();
       break;
-    }/*
-    case BIPART: {
-      converter = new BipartConverter();
-      break;
     }
     case BOOL_MAT:{ 
       converter = new BoolMatConverter();
+      break;
+    }
+    /*case BIPART: {
+      converter = new BipartConverter();
       break;
     }
     case MAX_PLUS_MAT:{

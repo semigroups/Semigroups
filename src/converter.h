@@ -161,6 +161,18 @@ class PPermConverter : public Converter {
 };
 
 /*******************************************************************************
+ * Boolean matrices
+*******************************************************************************/
+
+class BoolMatConverter : public Converter {
+
+  public: 
+
+    BooleanMat* convert   (Obj o, size_t n);
+    Obj         unconvert (Element* x  );
+};
+
+/*******************************************************************************
  * Bipartitions
 *******************************************************************************/
 
@@ -171,19 +183,6 @@ class PPermConverter : public Converter {
     Bipartition* convert (Obj o, size_t n);
 
     Obj unconvert (Bipartition* x);
-};*/
-
-/*******************************************************************************
- * Boolean matrices
-*******************************************************************************/
-
-/*class BoolMatConverter : public Converter<BooleanMat> {
-
-  public: 
-
-    BooleanMat* convert (Obj o, size_t n);
-
-    Obj unconvert (BooleanMat* x);
 };*/
 
 /*******************************************************************************
