@@ -163,26 +163,26 @@ class Semigroup {
     *******************************************************************************/
     // TODO change to Semigroup*
     Semigroup (const Semigroup& copy, std::vector<Element*>* coll, bool report)
-      : _batch_size    (copy._batch_size),
-        _degree        (copy._degree),    // copy for comparison in add_generators
-        _duplicate_gens(copy._duplicate_gens), 
-        _elements      (new std::vector<Element*>()),
-        _found_one     (copy._found_one), // copy in case degree doesn't change in add_generators
-        _gens          (new std::vector<Element*>()),
-        _genslookup    (copy._genslookup),
-        _left          (new CayleyGraph(copy._left)),
-        _multiplied    (copy._multiplied),
-        _nr            (copy._nr),
-        _nrgens        (copy._nrgens),
-        _nr_idempotents(0),
-        _nrrules       (0),
-        _pos           (copy._pos),
-        _pos_one       (copy._pos_one),   // copy in case degree doesn't change in add_generators
-        _relation_pos  (-1),
-        _relation_gen  (0),
-        _reduced       (copy._reduced),
-        _right         (new CayleyGraph(copy._right)),
-        _wordlen       (0) 
+      : _batch_size     (copy._batch_size),
+        _degree         (copy._degree),    // copy for comparison in add_generators
+        _duplicate_gens (copy._duplicate_gens), 
+        _elements       (new std::vector<Element*>()),
+        _found_one      (copy._found_one), // copy in case degree doesn't change in add_generators
+        _gens           (new std::vector<Element*>()),
+        _genslookup     (copy._genslookup),
+        _left           (new CayleyGraph(copy._left)),
+        _multiplied     (copy._multiplied),
+        _nr             (copy._nr),
+        _nrgens         (copy._nrgens),
+        _nr_idempotents (0),
+        _nrrules        (0),
+        _pos            (copy._pos),
+        _pos_one        (copy._pos_one),   // copy in case degree doesn't change in add_generators
+        _relation_pos   (-1),
+        _relation_gen   (0),
+        _reduced        (copy._reduced),
+        _right          (new CayleyGraph(copy._right)),
+        _wordlen        (0) 
     {
       assert(!coll->empty());
 

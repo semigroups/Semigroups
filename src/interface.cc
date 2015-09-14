@@ -163,9 +163,9 @@ Obj SEMIGROUP_CLOSURE (Obj self, Obj old_data, Obj coll_gap, Obj degree) {
   assert(data_type(old_data) != UNKNOWN);
   
   Semigroup* old_semigroup = data_semigroup(old_data);
-  Converter* converter = data_converter(old_data);
+  Converter* converter     = data_converter(old_data);
 
-  std::vector<Element*>* coll(ConvertElements(converter, coll_gap, data_degree(old_data)));
+  std::vector<Element*>* coll(ConvertElements(converter, coll_gap, INT_INTOBJ(degree)));
   
   Semigroup* new_semigroup(new Semigroup(*old_semigroup, coll, data_report(old_data)));
   new_semigroup->set_batch_size(data_batch_size(old_data));
@@ -429,10 +429,10 @@ Obj SEMIGROUP_LENGTH_ELEMENT (Obj self, Obj data, Obj pos) {
  ******************************************************************************/
 
 Obj SEMIGROUP_NR_IDEMPOTENTS (Obj self, Obj data) {
-  if (data_type(data) != UNKNOWN) {
+  if (data_type(data) == UNKNOWN) {
     ErrorQuit("SEMIGROUP_NR_IDEMPOTENTS: this shouldn't happen!", 0L, 0L);
   }
-  return INTOBJ_INT(data_semigroup(data)->nr_idempotents(data));
+  return INTOBJ_INT(data_semigroup(data)->nr_idempotents(data_report(data)));
 }
 
 /*******************************************************************************

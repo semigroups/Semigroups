@@ -35,14 +35,14 @@ class TransConverter : public Converter {
 
     Transformation<T>* convert (Obj o, size_t n) {
       assert(IS_TRANS(o));
-      //assert(DEG_TRANS(o) <= n);
 
-      auto x = new std::vector<T>();
-      x->reserve(DEG_TRANS(o));
+      T      i;
+      T*     pto    = ADDR_TRANS(o);
+      size_t degree = std::min((size_t) DEG_TRANS(o), n);
+      auto   x      = new std::vector<T>();
+      x->reserve(std::max(degree, n));
       
-      T* pto = ADDR_TRANS(o);
-      T i;
-      for (i = 0; i < DEG_TRANS(o); i++) {
+      for (i = 0; i < degree; i++) {
         x->push_back(pto[i]);
       }
       for (; i < n; i++) {
@@ -53,7 +53,7 @@ class TransConverter : public Converter {
 
     Obj unconvert (Element* x) {
       auto xx = static_cast<Transformation<T>*>(x);
-      Obj o = NEW_TRANS(x->degree());
+      Obj o = NEW_TRANS(xx->degree());
       T* pto = ADDR_TRANS(o);
       for (T i = 0; i < xx->degree(); i++) {
         pto[i] = (*xx)[i];

@@ -12,6 +12,7 @@
 * improve compilation time by removing unnecessary templates
 
 ###GAP kernel
+* use `ConvertElements` and `UnconvertElements`
 * reporting in the generic Froidure-Pin method
 * a new GAP kernel version of the C++ code !
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
