@@ -205,7 +205,7 @@ class MatrixOverSemiringConverter : public Converter {
 
     MatrixOverSemiring* convert (Obj o, size_t n);
 
-    virtual Obj unconvert (MatrixOverSemiring* x);
+    virtual Obj unconvert (Element* x);
 
   protected: 
     

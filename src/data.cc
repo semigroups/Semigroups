@@ -253,7 +253,7 @@ void data_delete (Obj data) {
 * 
 *******************************************************************************/
 
-long data_data_threshold (Obj data) {
+long data_threshold (Obj data) {
   Obj x = data_rep(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
   assert(IS_TROP_MAT(x)||IS_NAT_MAT(x));
@@ -268,7 +268,7 @@ long data_data_threshold (Obj data) {
 * 
 *******************************************************************************/
 
-long data_data_period (Obj data) {
+long data_period (Obj data) {
   Obj x = data_rep(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
   assert(IS_NAT_MAT(x));

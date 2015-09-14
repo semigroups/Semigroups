@@ -94,31 +94,33 @@ Obj BipartConverter::unconvert (Element* x) {
 /*******************************************************************************
  * Matrices over semirings 
 *******************************************************************************/
-// here!! JDM 09/2015
+
 MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_SEMI_RING(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
   assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
+  
+  std::vector<long>* matrix(new std::vector<long>());
 
-  auto x = new MatrixOverSemiring(n, _semiring);
   n = LEN_PLIST(ELM_PLIST(o, 1));
   for (size_t i = 0; i < n; i++) {
     Obj row = ELM_PLIST(o, i + 1);
     for (size_t j = 0; j < n; j++) {
       Obj entry = ELM_PLIST(row, j + 1);
       if (EQ(_gap_zero, entry)) {
-        x->set(i * n + j, _semiring->zero());
+        matrix->push_back(_semiring->zero());
       } else {
-        x->set(i * n + j, INT_INTOBJ(entry));
+        matrix->push_back(INT_INTOBJ(entry));
       }
     }
   }
-  return x;
+  return new MatrixOverSemiring(matrix, _semiring);
 }
 
-Obj MatrixOverSemiringConverter::unconvert (MatrixOverSemiring* x) {
-  size_t n = sqrt(x->degree());
+Obj MatrixOverSemiringConverter::unconvert (Element* x) {
+  MatrixOverSemiring* xx(static_cast<MatrixOverSemiring*>(x));
+  size_t n = xx->degree();
   Obj plist = NEW_PLIST(T_PLIST, n + 2);
   SET_LEN_PLIST(plist, n + 2);
   SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
@@ -128,7 +130,7 @@ Obj MatrixOverSemiringConverter::unconvert (MatrixOverSemiring* x) {
     Obj row = NEW_PLIST(T_PLIST_CYC, n);
     SET_LEN_PLIST(row, n);
     for (size_t j = 0; j < n; j++) {
-      long entry = x->at(i * n + j);
+      long entry = xx->at(i * n + j);
       if (entry == _semiring->zero()) {
         SET_ELM_PLIST(row, j + 1, _gap_zero);
       } else {

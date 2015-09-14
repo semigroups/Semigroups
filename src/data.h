@@ -56,8 +56,8 @@ enum DataType {
   PBR_TYPE
 };
 
-long        data_data_threshold (Obj);
-long        data_data_period    (Obj);
+long        data_threshold      (Obj);
+long        data_period         (Obj);
 long        data_size_ff        (Obj);
 Obj         data_rep            (Obj);
 size_t      data_batch_size     (Obj);

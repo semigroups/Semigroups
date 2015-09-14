@@ -276,7 +276,7 @@ void MatrixOverSemiring::redefine (Element const* x,
 
   assert(xx->degree() == yy->degree());
   assert(xx->degree() == this->degree());
-  size_t deg = sqrt(this->degree());
+  size_t deg = this->degree();
 
   for (size_t i = 0; i < deg; i++) {
     for (size_t j = 0; j < deg; j++) {
