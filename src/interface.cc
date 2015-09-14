@@ -442,7 +442,7 @@ Obj SEMIGROUP_NR_IDEMPOTENTS (Obj self, Obj data) {
 Obj SEMIGROUP_POSITION (Obj self, Obj data, Obj x) {
 
   if (data_type(data) != UNKNOWN) {
-    size_t deg = data_degree(data);
+    size_t     deg       = data_degree(data);
     Semigroup* semigroup = data_semigroup(data);
     Converter* converter = data_converter(data);
     size_t pos = semigroup->position(converter->convert(x, deg), data_report(data));

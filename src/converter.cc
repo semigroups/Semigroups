@@ -99,11 +99,11 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_SEMI_RING(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
-  assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
+  assert(n == (size_t) LEN_PLIST(ELM_PLIST(o, 1)));
   
   std::vector<long>* matrix(new std::vector<long>());
+  matrix->reserve(n);
 
-  n = LEN_PLIST(ELM_PLIST(o, 1));
   for (size_t i = 0; i < n; i++) {
     Obj row = ELM_PLIST(o, i + 1);
     for (size_t j = 0; j < n; j++) {

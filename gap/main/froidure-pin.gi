@@ -61,7 +61,7 @@ function(arg)
                    DegreeOfPartialPermCollection(coll), 
                    CodegreeOfPartialPermCollection(coll));
   elif IsMatrixOverSemiringSemigroup(S) then 
-    return DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
+    return DimensionOfMatrixOverSemiring(Representative(S));
   elif IsBipartitionSemigroup(S) then 
     return 2 * DegreeOfBipartitionSemigroup(S);
   elif IsPBRSemigroup(S) then 
