@@ -68,12 +68,12 @@ Bipartition* BipartConverter::convert (Obj o, size_t n) {
 
   Obj blocks_gap = ElmPRec(o, RNamName("blocks"));
 
-  assert((size_t) LEN_LIST(blocks_gap) == n);
+  assert((size_t) LEN_LIST(blocks_gap) == 2 * n);
 
   std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>());
-  blocks->reserve(n);
+  blocks->reserve(2 * n);
 
-  for (size_t i = 0; i < n; i++) {
+  for (size_t i = 0; i < 2 * n; i++) {
     blocks->push_back(INT_INTOBJ(ELM_LIST(blocks_gap, i + 1)) - 1);
   }
   return new Bipartition(blocks);

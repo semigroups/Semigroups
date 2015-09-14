@@ -63,7 +63,7 @@ function(arg)
   elif IsMatrixOverSemiringSemigroup(S) then 
     return DimensionOfMatrixOverSemiring(Representative(S));
   elif IsBipartitionSemigroup(S) then 
-    return 2 * DegreeOfBipartitionSemigroup(S);
+    return DegreeOfBipartitionSemigroup(S);
   elif IsPBRSemigroup(S) then 
     return 2 * DegreeOfPBRSemigroup(S);
   else

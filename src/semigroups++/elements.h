@@ -180,7 +180,7 @@ class PartialPerm : public Element {
 
     Element* really_copy (size_t increase_deg_by = 0) const override {
       auto out = new std::vector<T>(*_image);
-      for (size_t i = 0; i < increase_deg_by; i++) {
+      for (size_t i = _image->size(); i < _image->size() + increase_deg_by; i++) {
         out->push_back(i);
       }
       return new PartialPerm<T>(out);

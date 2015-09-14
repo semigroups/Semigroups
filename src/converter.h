@@ -89,7 +89,7 @@ class PPermConverter : public Converter {
     PartialPerm<T>* convert (Obj o, size_t n) {
       assert(IS_PPERM(o));
 
-      auto x = new std::vector<T>();
+      auto x   = new std::vector<T>();
       T*   pto = ADDR_PPERM(o);
       T    i;
 
