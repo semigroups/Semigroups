@@ -11,8 +11,8 @@
 
 # TODO special cases for 0 dimensional s-matrices
 
-InstallMethod(IsomorphismPermGroup, "for an s-matrix group",
-[IsSMatrixGroup], 
+InstallMethod(IsomorphismPermGroup, "for an matrix over finite field group",
+[IsMatrixOverFiniteFieldGroup], 
 function(G)
   local iso1, iso2;
 
@@ -28,8 +28,8 @@ end);
 # TODO ViewString
 
 InstallMethod(ViewObj,
-"for a s-matrix group with generators",
-[IsSMatrixGroup],
+"for a matrix over finite field group with generators",
+[IsMatrixOverFiniteFieldGroup],
 function(G)
   local gens, deg;
 
@@ -40,7 +40,7 @@ function(G)
   else 
     TryNextMethod(); #FIXME ok?
   fi;
-  deg := DegreeOfSMatrix(gens[1]);
+  deg := DegreeOfMatrixOverFiniteField(gens[1]);
   Print("<group of ");
   Print(deg, "x", deg);
   Print(" s-matrices over ", BaseDomain(G));
@@ -51,22 +51,22 @@ function(G)
   Print(">");
 end);
 
-InstallMethod(IsGeneratorsOfMagmaWithInverses, "for an s-matrix collection", 
-[IsSMatrixCollection], 
+InstallMethod(IsGeneratorsOfMagmaWithInverses, "for an matrix over finite field collection", 
+[IsMatrixOverFiniteFieldCollection], 
 function(coll)
   return ForAll(coll, x -> Inverse(x) <> fail);
 end);
 
 InstallMethod(GeneratorsOfGroup,  
-"for an s-matrix group with semigroup generators",
-[IsSMatrixGroup and HasGeneratorsOfSemigroup], GeneratorsOfSemigroup);
+"for an matrix over finite field group with semigroup generators",
+[IsMatrixOverFiniteFieldGroup and HasGeneratorsOfSemigroup], GeneratorsOfSemigroup);
 
 InstallMethod(GeneratorsOfSemigroup, 
-"for an s-matrix group with group generators",
-[IsSMatrixGroup and HasGeneratorsOfGroup], GeneratorsOfGroup);
+"for an matrix over finite field group with group generators",
+[IsMatrixOverFiniteFieldGroup and HasGeneratorsOfGroup], GeneratorsOfGroup);
 
-InstallMethod(IsomorphismMatrixGroup, "for an s-matrix group",
-[IsSMatrixGroup], 
+InstallMethod(IsomorphismMatrixGroup, "for an matrix over finite field group",
+[IsMatrixOverFiniteFieldGroup], 
 function(G)
   local H, gens;
 
@@ -81,7 +81,7 @@ function(G)
   fi;
   return GroupHomomorphismByFunction(G, Group(List(gens, AsMatrix)), 
     AsMatrix, 
-    g -> AsSMatrix(Representative(G), g));
+    g -> AsMatrixOverFiniteField(Representative(G), g));
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group",
@@ -98,7 +98,7 @@ function(G, R)
   if Length(gens) = 0 then 
     Error("not yet implemented");
   fi;
-  iso := g -> NewSMatrix(IsPlistSMatrixRep, R, 
+  iso := g -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R, 
                          DimensionOfMatrixGroup(G), g);
   return GroupHomomorphismByFunction(G, 
                                      Group(List(gens, iso)), 
@@ -106,54 +106,54 @@ function(G, R)
                                      AsMatrix);
 end);
 
-InstallMethod(AsMatrixGroup, "for an s-matrix group", 
-[IsSMatrixGroup], G -> Range(IsomorphismMatrixGroup(G)));
+InstallMethod(AsMatrixGroup, "for an matrix over finite field group", 
+[IsMatrixOverFiniteFieldGroup], G -> Range(IsomorphismMatrixGroup(G)));
 
-InstallMethod(Size, "for an s-matrix group",
-[IsSMatrixGroup and HasGeneratorsOfSemigroup],
+InstallMethod(Size, "for an matrix over finite field group",
+[IsMatrixOverFiniteFieldGroup and HasGeneratorsOfSemigroup],
 S -> Size(Range(IsomorphismMatrixGroup(S))));
 
-InstallMethod(Size, "for an s-matrix group",
-[IsSMatrixGroup and HasGeneratorsOfGroup],
+InstallMethod(Size, "for an matrix over finite field group",
+[IsMatrixOverFiniteFieldGroup and HasGeneratorsOfGroup],
 S -> Size(Range(IsomorphismMatrixGroup(S))));
 
-InstallMethod(\in, "for an s-matrix and s-matrix group",
-[IsSMatrix, IsSMatrixGroup],
+InstallMethod(\in, "for an matrix over finite field and matrix over finite field group",
+[IsMatrixOverFiniteField, IsMatrixOverFiniteFieldGroup],
 function(x, G)
   if BaseDomain(G) <> BaseDomain(x) 
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) then 
+      or DegreeOfMatrixSemigroup(G) <> DegreeOfMatrixOverFiniteField(x) then 
     return false;
-  elif DegreeOfMatrixSemigroup(G) = 0 and DegreeOfSMatrix(x) = 0 then
+  elif DegreeOfMatrixSemigroup(G) = 0 and DegreeOfMatrixOverFiniteField(x) = 0 then
     return true;
   else
     return AsMatrix(x) in AsMatrixGroup(G);
   fi;
 end);
 
-InstallMethod(\^, "for an s-matrix group and s-matrix",
-[IsSMatrixGroup, IsSMatrix],
+InstallMethod(\^, "for an matrix over finite field group and matrix over finite field",
+[IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x) 
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) then
+      or DegreeOfMatrixSemigroup(G) <> DegreeOfMatrixOverFiniteField(x) then
 #      or Inverse(x) = fail then 
-    Error("Semigroups: ^ (for s-matrix group and s-matrix): usage\n",
+    Error("Semigroups: ^ (for matrix over finite field group and matrix over finite field): usage\n",
           " the args must have the same base domain, degree, and\n",
           " the second arg must be invertible");
     return;
-  elif IsOne(x) or DegreeOfSMatrix(x) = 0 then 
+  elif IsOne(x) or DegreeOfMatrixOverFiniteField(x) = 0 then 
     return G;
   else
     return Range(IsomorphismMatrixSemigroup(AsMatrixGroup(G) ^ AsMatrix(x)));
   fi;
 end);
 
-InstallMethod(ClosureGroup, "for an s-matrix group and s-matrix",
-[IsSMatrixGroup, IsSMatrix],
+InstallMethod(ClosureGroup, "for an matrix over finite field group and matrix over finite field",
+[IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x) 
   if BaseDomain(G) <> BaseDomain(x) 
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrix(x) 
+      or DegreeOfMatrixSemigroup(G) <> DegreeOfMatrixOverFiniteField(x) 
       or Inverse(x) = fail then 
-    Error("Semigroups: ClosureGroup (for s-matrix group and s-matrix): usage\n",
+    Error("Semigroups: ClosureGroup (for matrix over finite field group and matrix over finite field): usage\n",
           " the args must have the same base domain, degree, and\n",
           " the second arg must be invertible");
     return;
@@ -161,13 +161,13 @@ function(G, x)
   return ClosureGroup(G, [x]);
 end);
 
-InstallMethod(ClosureGroup, "for an s-matrix group and collection",
-[IsSMatrixGroup, IsSMatrixCollection],
+InstallMethod(ClosureGroup, "for an matrix over finite field group and collection",
+[IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteFieldCollection],
 function(G, coll) 
   if BaseDomain(G) <> BaseDomain(coll) 
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfSMatrixCollection(coll) 
+      or DegreeOfMatrixSemigroup(G) <> DegreeOfMatrixOverFiniteFieldCollection(coll) 
       or ForAny(coll, x-> Inverse(x) = fail) then 
-    Error("Semigroups: ClosureGroup (for s-matrix group and s-matrix): usage\n",
+    Error("Semigroups: ClosureGroup (for matrix over finite field group and matrix over finite field): usage\n",
           " the args must have the same base domain, degree, and\n",
           " every matrix in the second arg must be invertible");
     return;

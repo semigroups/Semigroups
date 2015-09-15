@@ -48,8 +48,8 @@ function(coll)
 end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
-"for an s-matrix collection",
-[IsSMatrixCollection], IsGeneratorsOfSemigroup);
+"for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection], IsGeneratorsOfSemigroup);
 
 # IsActingSemigroupWithInverseOp
 
@@ -83,8 +83,8 @@ function(x)
   fi;
 end);
 
-InstallMethod(ActionDegree, "for an s-matrix object",
-[IsSMatrix], DegreeOfSMatrix);
+InstallMethod(ActionDegree, "for an matrix over finite field object",
+[IsMatrixOverFiniteField], DegreeOfMatrixOverFiniteField);
 
 #
 
@@ -118,10 +118,10 @@ function(coll)
 end);
 
 InstallMethod(ActionDegree, "for a matrix object collection",
-[IsHomogeneousList and IsSMatrixCollection],
+[IsHomogeneousList and IsMatrixOverFiniteFieldCollection],
 function(coll)
   if Length(coll) > 0 then
-    return DegreeOfSMatrix(coll[1]);
+    return DegreeOfMatrixOverFiniteField(coll[1]);
   else
     Error("Semigroups: what is the ActionDegree of an empty collection?");
   fi;
@@ -154,7 +154,7 @@ function(R)
   fi;
 end);
 
-InstallMethod(ActionDegree, "for an s-matrix semigroup",
+InstallMethod(ActionDegree, "for an matrix over finite field semigroup",
 [IsMatrixSemigroup],
 function(S)
     return ActionDegree(Representative(S));
@@ -227,7 +227,7 @@ function(R)
 end);
 
 InstallMethod(ActionRank, "for a matrix object and integer",
-[IsSMatrix, IsInt],
+[IsMatrixOverFiniteField, IsInt],
 function(x, i)
   return Rank(RowSpaceBasis(x));
 end);
@@ -319,7 +319,7 @@ end);
 InstallMethod(LambdaAct, "for a matrix semigroup",
 [IsMatrixSemigroup],
 s -> function(vsp, mat)
-  return SMatrixRowSpaceRightAction(s, vsp, mat);
+  return MatrixOverFiniteFieldRowSpaceRightAction(s, vsp, mat);
 end);
 
 InstallMethod(RhoAct, "for a transformation semigroup",
@@ -549,7 +549,7 @@ end);
 InstallMethod(LambdaInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-  return SMatrixLocalRightInverse(s, rsp, mat);
+  return MatrixOverFiniteFieldLocalRightInverse(s, rsp, mat);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
@@ -588,7 +588,7 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 InstallMethod(RhoInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)
-  return TransposedSMat(SMatrixLocalRightInverse(s,
+  return TransposedSMat(MatrixOverFiniteFieldLocalRightInverse(s,
                           rsp, TransposedSMat(mat)));
 end);
 
@@ -714,13 +714,13 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return IdentitySMatrix(Representative(S), r);
+  return IdentityMatrixOverFiniteField(Representative(S), r);
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
 [IsMatrixSemigroup], S ->
 function(r)
-  return IdentitySMatrix(Representative(S), r);
+  return IdentityMatrixOverFiniteField(Representative(S), r);
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
@@ -748,7 +748,7 @@ end);
 InstallMethod(LambdaPerm, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(x,y)
-  return SMatrixSchutzGrpElement(s,x,y);
+  return MatrixOverFiniteFieldSchutzGrpElement(s,x,y);
 end);
 
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that
@@ -776,7 +776,7 @@ end);
 InstallMethod(LambdaConjugator, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(x, y)
-    return SMatrixLambdaConjugator(s,x,y);
+    return MatrixOverFiniteFieldLambdaConjugator(s,x,y);
 end);
 
 # the function used to test if there is an idempotent with the specified
@@ -810,7 +810,7 @@ end);
 
 InstallMethod(IdempotentTester, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> function(x, y)
-    return SMatrixIdempotentTester(S, x, y);
+    return MatrixOverFiniteFieldIdempotentTester(S, x, y);
 end);
 
 # the function used to create an idempotent with the specified lambda and rho
@@ -839,7 +839,7 @@ end);
 
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> function(x, y)
-    return SMatrixIdempotentCreator(S, x, y);
+    return MatrixOverFiniteFieldIdempotentCreator(S, x, y);
 end);
 
 # the action of elements of the stabiliser of a lambda-value on any element of
@@ -869,7 +869,7 @@ end);
 
 InstallMethod(StabilizerAction, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> function(x,y)
-  return SMatrixStabilizerAction(S,x,y);
+  return MatrixOverFiniteFieldStabilizerAction(S,x,y);
 end);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only

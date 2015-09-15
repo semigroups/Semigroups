@@ -349,8 +349,8 @@ function(func, args, view, print)
   gens := GeneratorsOfGroup(CallFuncList(func, args));
   x := OneMutable(gens[1]);
   x[d][d] := Z(q) * 0;
-  gens := List(gens, x -> NewSMatrix(IsPlistSMatrixRep, GF(q), d, x));
-  Add(gens, AsSMatrix(gens[1], x));
+  gens := List(gens, x -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(q), d, x));
+  Add(gens, AsMatrixOverFiniteField(gens[1], x));
   S := Monoid(gens);
   SetSEMIGROUPS_MatrixSemigroupViewString(S, view);
   SetSEMIGROUPS_MatrixSemigroupPrintString(S, print);
@@ -373,7 +373,7 @@ function(S)
   Print("<");
   Print(SEMIGROUPS_MatrixSemigroupViewString(S));
   Print(" monoid ");
-  n := DegreeOfSMatrix(Representative(S));
+  n := DegreeOfMatrixOverFiniteField(Representative(S));
   Print(n, "x", n, " over ", BaseDomain(S));
   Print(">");
 end);

@@ -28,16 +28,16 @@
 ############################################################################
 
 # Our Vector objects
-DeclareCategory("IsSVector", IsAdditiveElementWithInverse);
-DeclareCategoryCollections("IsSVector");
-DeclareCategoryCollections("IsSVectorCollection");
+DeclareCategory("IsVectorOverFiniteField", IsAdditiveElementWithInverse);
+DeclareCategoryCollections("IsVectorOverFiniteField");
+DeclareCategoryCollections("IsVectorOverFiniteFieldCollection");
 
-DeclareConstructor("NewSVector", [IsSVector, IsRing, IsInt, IsList]);
-DeclareConstructor("NewSVector", [IsSVector, IsRing, IsInt, IsPlistVectorRep]);
-DeclareConstructor("NewZeroSVector", [IsSVector, IsRing, IsInt]);
+DeclareConstructor("NewVectorOverFiniteField", [IsVectorOverFiniteField, IsRing, IsInt, IsList]);
+DeclareConstructor("NewVectorOverFiniteField", [IsVectorOverFiniteField, IsRing, IsInt, IsPlistVectorRep]);
+DeclareConstructor("NewZeroVectorOverFiniteField", [IsVectorOverFiniteField, IsRing, IsInt]);
 
-DeclareAttribute("DegreeOfSVector", IsSVector);
-DeclareAttribute("BaseDomain", IsSVector);
+DeclareAttribute("DegreeOfVectorOverFiniteField", IsVectorOverFiniteField);
+DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
 
 # mpf: 
 DeclareCategory("IsSRowBasis", IsCollection);
@@ -48,43 +48,43 @@ DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
 DeclareAttribute("BaseDomain", IsSRowBasis);
 
 # Our Matrix objects
-DeclareCategory("IsSMatrix", IsMultiplicativeElementWithInverse and 
+DeclareCategory("IsMatrixOverFiniteField", IsMultiplicativeElementWithInverse and 
                              IsAssociativeElement);
-DeclareCategoryCollections("IsSMatrix");
-DeclareCategoryCollections("IsSMatrixCollection");
+DeclareCategoryCollections("IsMatrixOverFiniteField");
+DeclareCategoryCollections("IsMatrixOverFiniteFieldCollection");
 
-DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsList]);
-DeclareConstructor("NewSMatrix", [IsSMatrix, IsRing, IsInt, IsPlistMatrixRep]);
-DeclareConstructor("NewIdentitySMatrix", [IsSMatrix, IsRing, IsInt]);
-DeclareConstructor("NewZeroSMatrix", [IsSMatrix, IsRing, IsInt]);
+DeclareConstructor("NewMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt, IsList]);
+DeclareConstructor("NewMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt, IsPlistMatrixRep]);
+DeclareConstructor("NewIdentityMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt]);
+DeclareConstructor("NewZeroMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt]);
 
 # These bases are in normal form
-DeclareAttribute("RowSpaceBasis", IsSMatrix);
-DeclareAttribute("RowSpaceTransformation", IsSMatrix);
-DeclareAttribute("RowSpaceTransformationInv", IsSMatrix);
-DeclareAttribute("ColSpaceBasis", IsSMatrix);
-DeclareAttribute("ColSpaceTransformation", IsSMatrix);
-DeclareAttribute("ColSpaceTransformationInv", IsSMatrix);
-DeclareAttribute("RightInverse", IsSMatrix);
-DeclareAttribute("LeftInverse", IsSMatrix);
-DeclareAttribute("SemigroupInvertable", IsSMatrix);
-DeclareAttribute("SemigroupInverse", IsSMatrix);
-DeclareAttribute("DegreeOfSMatrix", IsSMatrix);
-DeclareAttribute("RowRank", IsSMatrix);
-DeclareAttribute("ColRank", IsSMatrix);
-DeclareAttribute("BaseDomain", IsSMatrix);
-DeclareAttribute("TransposedMatImmutable", IsSMatrix);
-DeclareOperation("AsMatrix", [IsSMatrix]);
+DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
+DeclareAttribute("RowSpaceTransformation", IsMatrixOverFiniteField);
+DeclareAttribute("RowSpaceTransformationInv", IsMatrixOverFiniteField);
+DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
+DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
+DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
+DeclareAttribute("RightInverse", IsMatrixOverFiniteField);
+DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
+DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
+DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
+DeclareAttribute("DegreeOfMatrixOverFiniteField", IsMatrixOverFiniteField);
+DeclareAttribute("RowRank", IsMatrixOverFiniteField);
+DeclareAttribute("ColRank", IsMatrixOverFiniteField);
+DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
+DeclareAttribute("TransposedMatImmutable", IsMatrixOverFiniteField);
+DeclareOperation("AsMatrix", [IsMatrixOverFiniteField]);
 DeclareOperation("AsMatrix", [IsMatrixObj]);
-DeclareOperation("AsSMatrix", [IsSMatrix, IsMatrix]);
-DeclareOperation("AsSMatrix", [IsMatrix]);
-DeclareOperation("ConstructingFilter", [IsSMatrix]);
+DeclareOperation("AsMatrixOverFiniteField", [IsMatrixOverFiniteField, IsMatrix]);
+DeclareOperation("AsMatrixOverFiniteField", [IsMatrix]);
+DeclareOperation("ConstructingFilter", [IsMatrixOverFiniteField]);
 
 # We need to wrap vector collections to circumvent problems
 # with zero spaces.
 
 #
-# Here come two concrete implementations of SVectors and SMatrices
+# Here come two concrete implementations of VectorOverFiniteFields and MatricesOverFiniteField
 #
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
 # We also need operations for acting on Row/Column spaces.
@@ -100,12 +100,12 @@ DeclareOperation("ConstructingFilter", [IsSMatrix]);
 # ColumnSpaceBasis as Attributes?
 
 # Vectors and matrices stored as GAP Plists
-DeclareRepresentation("IsPlistSVectorRep",
-  IsSVector and IsComponentObjectRep and IsAttributeStoringRep, ["vec"]);
-BindGlobal("PlistSVectorFamily", NewFamily("PlistSVectorFamily",
-  IsSVector, CanEasilyCompareElements));
-BindGlobal("PlistSVectorType", NewType(PlistSVectorFamily,
-  IsSVector and IsPlistSVectorRep ));
+DeclareRepresentation("IsPlistVectorOverFiniteFieldRep",
+  IsVectorOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, ["vec"]);
+BindGlobal("PlistVectorOverFiniteFieldFamily", NewFamily("PlistVectorOverFiniteFieldFamily",
+  IsVectorOverFiniteField, CanEasilyCompareElements));
+BindGlobal("PlistVectorOverFiniteFieldType", NewType(PlistVectorOverFiniteFieldFamily,
+  IsVectorOverFiniteField and IsPlistVectorOverFiniteFieldRep ));
 
 DeclareRepresentation("IsPlistSRowBasisRep",
   IsSRowBasis and IsComponentObjectRep and IsAttributeStoringRep, ["rows"]);
@@ -114,44 +114,44 @@ BindGlobal("PlistSRowBasisFamily", NewFamily("PlistSRowBasisFamily",
 BindGlobal("PlistSRowBasisType", NewType(PlistSRowBasisFamily,
   IsSRowBasis and IsPlistSRowBasisRep ));
 
-DeclareRepresentation("IsPlistSMatrixRep",
-  IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep, ["mat"]);
-BindGlobal("PlistSMatrixFamily", NewFamily("PlistSMatrixFamily",
-  IsSMatrix, CanEasilyCompareElements));
-BindGlobal("PlistSMatrixType", NewType(PlistSMatrixFamily,
-  IsSMatrix and IsPlistSMatrixRep ));
+DeclareRepresentation("IsPlistMatrixOverFiniteFieldRep",
+  IsMatrixOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, ["mat"]);
+BindGlobal("PlistMatrixOverFiniteFieldFamily", NewFamily("PlistMatrixOverFiniteFieldFamily",
+  IsMatrixOverFiniteField, CanEasilyCompareElements));
+BindGlobal("PlistMatrixOverFiniteFieldType", NewType(PlistMatrixOverFiniteFieldFamily,
+  IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep ));
 
 # Vectors and matrices from the CVEC package
-DeclareRepresentation("IsCVECSVectorRep",
-  IsSVector and IsComponentObjectRep and IsAttributeStoringRep, []);
-BindGlobal("CVECSVectorFamily", NewFamily("CVECSVectorFamily",
-  IsSVector, CanEasilyCompareElements));
-BindGlobal("CVECSVectorType", NewType(CVECSVectorFamily,
-  IsSVector and IsCVECSVectorRep));
+DeclareRepresentation("IsCVECVectorOverFiniteFieldRep",
+  IsVectorOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, []);
+BindGlobal("CVECVectorOverFiniteFieldFamily", NewFamily("CVECVectorOverFiniteFieldFamily",
+  IsVectorOverFiniteField, CanEasilyCompareElements));
+BindGlobal("CVECVectorOverFiniteFieldType", NewType(CVECVectorOverFiniteFieldFamily,
+  IsVectorOverFiniteField and IsCVECVectorOverFiniteFieldRep));
 
-DeclareRepresentation("IsCVECSMatrixRep",
-  IsSMatrix and IsComponentObjectRep and IsAttributeStoringRep, []);
-BindGlobal("CVECSMatrixFamily", NewFamily("CVECSMatrixFamily",
-  IsSMatrix, CanEasilyCompareElements));
-BindGlobal("CVECSMatrixType", NewType(CVECSMatrixFamily,
-  IsSMatrix and IsCVECSMatrixRep));
+DeclareRepresentation("IsCVECMatrixOverFiniteFieldRep",
+  IsMatrixOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, []);
+BindGlobal("CVECMatrixOverFiniteFieldFamily", NewFamily("CVECMatrixOverFiniteFieldFamily",
+  IsMatrixOverFiniteField, CanEasilyCompareElements));
+BindGlobal("CVECMatrixOverFiniteFieldType", NewType(CVECMatrixOverFiniteFieldFamily,
+  IsMatrixOverFiniteField and IsCVECMatrixOverFiniteFieldRep));
 
-DeclareGlobalFunction( "RandomSMatrix" );
+DeclareGlobalFunction( "RandomMatrixOverFiniteField" );
 
-DeclareProperty("IsZero", IsSMatrix);
+DeclareProperty("IsZero", IsMatrixOverFiniteField);
 
-DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsPosInt]);
-DeclareOperation("IdentitySMatrix", [IsField and IsFinite, IsZeroCyc]);
-DeclareOperation("IdentitySMatrix", [IsSMatrix, IsPosInt]);
-DeclareOperation("IdentitySMatrix", [IsSMatrix, IsZeroCyc]);
-DeclareOperation("TransposedSMat", [IsSMatrix]);
-DeclareAttribute("DegreeOfSMatrixCollection", IsSMatrixCollection);
-DeclareAttribute("BaseDomain", IsSMatrixCollection);
+DeclareOperation("IdentityMatrixOverFiniteField", [IsField and IsFinite, IsPosInt]);
+DeclareOperation("IdentityMatrixOverFiniteField", [IsField and IsFinite, IsZeroCyc]);
+DeclareOperation("IdentityMatrixOverFiniteField", [IsMatrixOverFiniteField, IsPosInt]);
+DeclareOperation("IdentityMatrixOverFiniteField", [IsMatrixOverFiniteField, IsZeroCyc]);
+DeclareOperation("TransposedSMat", [IsMatrixOverFiniteField]);
+DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection", IsMatrixOverFiniteFieldCollection);
+DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
 
 ## Helper functions
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 DeclareGlobalFunction("RandomListOfMatricesWithRanks");
-DeclareGlobalFunction("RandomSquareSMatrixWithRanks");
+DeclareGlobalFunction("RandomSquareMatrixOverFiniteFieldWithRanks");
 
 ## We need a mutable copy of matrices sometimes to do calculations
 DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");

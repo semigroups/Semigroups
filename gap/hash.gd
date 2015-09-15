@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistSMatrices");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistMatricesOverFiniteField");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistSRowBasis");
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistSVectors");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistVectorOverFiniteFields");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForFFECollColl");

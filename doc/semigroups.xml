@@ -118,11 +118,11 @@ gap> S;
 gap> Size(S);
 233606
 gap> gens:=
-> [ NewSMatrix(IsPlistSMatrixRep,GF(25),2,
+> [ NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,
 >    [ [ Z(5^2), Z(5^2)^13 ], [ 0*Z(5), Z(5^2)^14 ] ]), 
->  NewSMatrix(IsPlistSMatrixRep,GF(25),2,
+>  NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,
 >    [ [ Z(5^2)^21, Z(5)^0 ], [ Z(5)^0, 0*Z(5) ] ]), 
->  NewSMatrix(IsPlistSMatrixRep,GF(25),2,
+>  NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,
 >    [ [ Z(5^2)^23, Z(5^2)^5 ], [ Z(5^2)^20, Z(5^2)^20 ] ]) ];;
 gap> S := Semigroup(gens[1]);
 <semigroup of 2x2 s-matrices over GF(5^2) with 1 generator>

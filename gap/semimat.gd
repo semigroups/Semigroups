@@ -12,9 +12,9 @@
 # This file contains 
 
 #FIXME move to matrix.gd
-DeclareOperation("OneMutable", [IsSMatrixCollection]);
+DeclareOperation("OneMutable", [IsMatrixOverFiniteFieldCollection]);
 
-DeclareSynonym("IsMatrixSemigroup", IsSMatrixCollection and IsSemigroup);
+DeclareSynonym("IsMatrixSemigroup", IsMatrixOverFiniteFieldCollection and IsSemigroup);
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
 DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
 InstallTrueMethod(CanComputeSize, IsMatrixSemigroup and IsFinite);
@@ -25,16 +25,16 @@ DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 
 # Right action of a matrix over a field on a row space
-DeclareGlobalFunction("SMatrixRowSpaceRightAction");
+DeclareGlobalFunction("MatrixOverFiniteFieldRowSpaceRightAction");
 # Given two H-related matrices x and y, computes the element
 # of the schutzenberger group of the matrices' H-class
 # that maps im x to im y. Returns an invertible matrix
-DeclareGlobalFunction("SMatrixSchutzGrpElement");
-DeclareGlobalFunction("SMatrixStabilizerAction");
-DeclareGlobalFunction("SMatrixLambdaConjugator");
-DeclareGlobalFunction("SMatrixIdempotentTester");
-DeclareGlobalFunction("SMatrixIdempotentCreator");
-DeclareGlobalFunction("SMatrixLocalRightInverse");
+DeclareGlobalFunction("MatrixOverFiniteFieldSchutzGrpElement");
+DeclareGlobalFunction("MatrixOverFiniteFieldStabilizerAction");
+DeclareGlobalFunction("MatrixOverFiniteFieldLambdaConjugator");
+DeclareGlobalFunction("MatrixOverFiniteFieldIdempotentTester");
+DeclareGlobalFunction("MatrixOverFiniteFieldIdempotentCreator");
+DeclareGlobalFunction("MatrixOverFiniteFieldLocalRightInverse");
 
 # Constructor for matrix semigroups, we want the flexibility
 # to pass a list of generators, a field and a list of generators

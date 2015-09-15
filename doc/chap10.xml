@@ -12,7 +12,7 @@
   More general matrix semigroups are planned, but not implemented yet.
 
   For technical reasons, the matrix semigroup functions in &Semigroups; rely
-  on a custom wrapper for matrices <Ref Filt="IsSMatrix"/>.
+  on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.
   We take every precaution to hide this fact from the user of &Semigroups;.
  
 <Section Label = "sect:Matrix semigroups">
@@ -24,9 +24,10 @@
 
   We provide a couple of convenience functions to streamline the process.
   <#Include Label="MatrixSemigroup"/>
-  <#Include Label="IsomorphismMatrixSemigroup"/>
-  <#Include Label="AsMatrixSemigroup"/>
-  <#Include Label="IsMatrixSemigroupGreensClass"/>
+  <Ref Attr="IsomorphismMatrixSemigroup"/>
+  <Ref Attr="AsMatrixSemigroup" Label="for a semigroup"/>
+  <Ref Oper="AsMatrixSemigroup" Label="for a semigroup and a ring"/>
+  <Ref Prop="IsMatrixSemigroupGreensClass"/>
   
 </Section>
 
@@ -37,18 +38,17 @@
   object for matrices. In the following these objects are documented.
   
 
-  <#Include Label="IsSMatrix"/>
-  <#Include Label="NewSMatrix"/>
-  <#Include Label="NewIdentitySMatrix"/>
+  <#Include Label="IsMatrixOverFiniteField"/>
+  <#Include Label="NewMatrixOverFiniteField"/>
+  <#Include Label="NewIdentityMatrixOverFiniteField"/>
   <#Include Label="RowSpaceBasis"/>
   <#Include Label="RowRank"/>
   <#Include Label="ColSpaceBasis"/>
-  <#Include Label="RowRank"/>
   <#Include Label="RightInverse"/>
   <#Include Label="LeftInverse"/>
   <#Include Label="SemigroupInvertible"/>
   <#Include Label="SemigroupInverse"/>
-  <#Include Label="DegreeOfSMatrix"/>
+  <#Include Label="DegreeOfMatrixOverFiniteField"/>
   <#Include Label="BaseDomain"/>
   <#Include Label="TransposedMatImmutable"/>
   <#Include Label="AsMatrix"/>

@@ -13,19 +13,19 @@ InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixSemigroup], S -> BaseDomain(Representative(S)));
 
 InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> DegreeOfSMatrix(Representative(S)));
+[IsMatrixSemigroup], S -> DegreeOfMatrixOverFiniteField(Representative(S)));
 
-InstallMethod(DegreeOfSMatrixCollection, "for a matrix semigroup",
+InstallMethod(DegreeOfMatrixOverFiniteFieldCollection, "for a matrix semigroup",
 [IsMatrixSemigroup], DegreeOfMatrixSemigroup);
 
 InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], C -> IsMatrixSemigroup(Parent(C)));
 
-InstallTrueMethod(IsGeneratorsOfSemigroup, IsSMatrixCollection);
+InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverFiniteFieldCollection);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
-"for an s-matrix collection",
-[IsSMatrixCollection],
+"for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection],
 function(coll)
   return ForAll(coll, x -> x^(-1) <> fail);
 end);
@@ -53,16 +53,16 @@ function(arg)
 
   d := Length(gens[1]);
 
-  gens := List(gens, x->NewSMatrix(IsPlistSMatrixRep, ring, d, x));
+  gens := List(gens, x->NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, ring, d, x));
   return Semigroup(gens);
 end);
 
 #T Why?
-InstallMethod(OneMutable, "for an s-matrix collection",
-[IsSMatrixCollection],
+InstallMethod(OneMutable, "for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection],
 coll -> One(Representative(coll)));
 
-#T is it inconsistent to have the filter first for NewSMatrix
+#T is it inconsistent to have the filter first for NewMatrixOverFiniteField
 #T but last for isomorphism?
 #T Why does it not seem to be possible to do the same as for
 #T constructors? IsObject seems a bit out there
@@ -73,17 +73,17 @@ function(S, filter)
   local gens, dom, deg, iso;
   dom := DefaultFieldOfMatrix(Representative(S));
   deg := Length(Representative(S));
-  iso := x -> NewSMatrix(filter, dom, deg, x);
+  iso := x -> NewMatrixOverFiniteField(filter, dom, deg, x);
   gens := List(GeneratorsOfSemigroup(S), iso);
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), iso, AsMatrix);
 end);
 
-# This chooses as default representation to be IsPlistSMatrixRep
+# This chooses as default representation to be IsPlistMatrixOverFiniteFieldRep
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a semigroup of matrices",
 [IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
 function(S)
-  return IsomorphismMatrixSemigroup(S, IsPlistSMatrixRep);
+  return IsomorphismMatrixSemigroup(S, IsPlistMatrixOverFiniteFieldRep);
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
@@ -94,7 +94,7 @@ function(S)
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
-"for a s-matrix semigroup",
+"for a matrix over finite field semigroup",
 [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
@@ -108,7 +108,7 @@ function(S, R)
 
   n := DegreeOfTransformationSemigroup(S);
   basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
-  iso := x -> NewSMatrix(IsPlistSMatrixRep, R, n,
+  iso := x -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R, n,
                          basis{ImageListOfTransformation(x, n)});
   gens := List(GeneratorsOfSemigroup(S), iso);
 
@@ -160,8 +160,8 @@ end);
 ##
 #############################################################################
 
-InstallOtherMethod(FakeOne, "for an s-matrix collection",
-[IsSMatrixCollection],
+InstallOtherMethod(FakeOne, "for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection],
 function(coll)
   if IsGeneratorsOfActingSemigroup(coll) then
     return One(Representative(coll));
@@ -169,12 +169,12 @@ function(coll)
   return fail;
 end);
 
-InstallGlobalFunction(SMatrixRowSpaceRightAction,
+InstallGlobalFunction(MatrixOverFiniteFieldRowSpaceRightAction,
 function(s, vsp, m)
   local basis, nvsp, i, n, deg;
 
   # This takes care of the token element
-  if Rank(vsp) > DegreeOfSMatrix(m) then
+  if Rank(vsp) > DegreeOfMatrixOverFiniteField(m) then
     return RowSpaceBasis(m);
   elif Rank(vsp) = 0 then
     return vsp;
@@ -193,11 +193,11 @@ function(s, vsp, m)
   return NewSRowBasis(IsPlistSRowBasisRep, BaseDomain(vsp), nvsp);
 end);
 
-InstallGlobalFunction(SMatrixLocalRightInverse,
+InstallGlobalFunction(MatrixOverFiniteFieldLocalRightInverse,
 function(S, V, mat)
   local W, im, se, Vdims, mdims, n, k, i, j, u, zv, nonheads;
 
-  n := DegreeOfSMatrix(mat);
+  n := DegreeOfMatrixOverFiniteField(mat);
   k := Rank(V);
 
   if n = 0 or k = 0 then
@@ -238,25 +238,25 @@ function(S, V, mat)
   od;
   TriangulizeMat(W);
 
-  return AsSMatrix(mat, W{[1 .. n]}{[n + 1 .. 2 * n]});
+  return AsMatrixOverFiniteField(mat, W{[1 .. n]}{[n + 1 .. 2 * n]});
 end);
 
 #T returns an invertible matrix
 #T make pretty and efficient (in that order)
 #T In particular the setup for the matrix should be much more
 #T efficient.
-InstallGlobalFunction(SMatrixSchutzGrpElement,
+InstallGlobalFunction(MatrixOverFiniteFieldSchutzGrpElement,
 function(S, x, y)
   local deg, n, eqs, sch, res, idx, row, col,
         check1, check2;
 
 #  check1 := SEMIGROUPS_MutableCopyMat(x!.mat);
 #  check2 := SEMIGROUPS_MutableCopyMat(y!.mat);
-  deg := DegreeOfSMatrix(x);
+  deg := DegreeOfMatrixOverFiniteField(x);
   n := RowRank(x);
 
   if n = 0 then
-    return NewIdentitySMatrix(ConstructingFilter(x), BaseDomain(x),
+    return NewIdentityMatrixOverFiniteField(ConstructingFilter(x), BaseDomain(x),
                               n);
     Error();
     res := x;
@@ -280,7 +280,7 @@ function(S, x, y)
         col := col + 1;
       fi;
     od;
-    res := NewSMatrix(ConstructingFilter(x), BaseDomain(x),
+    res := NewMatrixOverFiniteField(ConstructingFilter(x), BaseDomain(x),
                       n, eqs{[1 .. n]}{idx + deg});
 
   if res^(-1) = fail then
@@ -292,13 +292,13 @@ function(S, x, y)
 end);
 
 ## StabilizerAction
-InstallGlobalFunction(SMatrixStabilizerAction,
+InstallGlobalFunction(MatrixOverFiniteFieldStabilizerAction,
 function(S, x, m)
   local rsp, g, coeff, i, n, k, zv;
   if IsZero(x) then
     return x;
   fi;
-  n := DegreeOfSMatrix(m);
+  n := DegreeOfMatrixOverFiniteField(m);
   k := RowRank(x);
   rsp := ShallowCopy(m!.mat * RowSpaceBasis(x)!.rows);
 
@@ -307,26 +307,26 @@ function(S, x, m)
     Add(rsp, ShallowCopy(zv));
   od;
 
-  return AsSMatrix(x,RowSpaceTransformationInv(x) * rsp);
+  return AsMatrixOverFiniteField(x,RowSpaceTransformationInv(x) * rsp);
 end);
 
 # This should be doable in a much more efficient way
-InstallGlobalFunction(SMatrixLambdaConjugator,
+InstallGlobalFunction(MatrixOverFiniteFieldLambdaConjugator,
 function(S, x, y)
   local res, zero, xse, h, p, yse, q, i;
 
   if IsZero(x) then
-    res := NewZeroSMatrix(ConstructingFilter(x), BaseDomain(x), Rank(RowSpaceBasis(x)));
+    res := NewZeroMatrixOverFiniteField(ConstructingFilter(x), BaseDomain(x), Rank(RowSpaceBasis(x)));
   else
     xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
     h := Filtered(xse.heads, x -> x <> 0);
-    p := NewSMatrix(ConstructingFilter(x), BaseDomain(x), Length(h),
+    p := NewMatrixOverFiniteField(ConstructingFilter(x), BaseDomain(x), Length(h),
                     One(BaseDomain(x)) * PermutationMat(SortingPerm(h),
                                              Length(h), BaseDomain(x)));
 
     yse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(y!.mat));
     h := Filtered(yse.heads, x -> x <> 0);
-    q := NewSMatrix(ConstructingFilter(y), BaseDomain(y), Length(h),
+    q := NewMatrixOverFiniteField(ConstructingFilter(y), BaseDomain(y), Length(h),
                     One(BaseDomain(y)) * PermutationMat(SortingPerm(h),
                                            Length(h), BaseDomain(y)));
 
@@ -340,24 +340,24 @@ end);
 #T the method below is already pretty efficient
 
 # TODO: remove redundant S as an argument here.
-InstallGlobalFunction(SMatrixIdempotentTester,
+InstallGlobalFunction(MatrixOverFiniteFieldIdempotentTester,
 function(S, x, y)
-    return SMatrixIdempotentCreator(S,x,y) <> fail;
+    return MatrixOverFiniteFieldIdempotentCreator(S,x,y) <> fail;
 end);
 
 # Attempt to construct an idempotent m with RowSpace(m) = x
 # ColumnSpace(m) = y
 
-InstallGlobalFunction(SMatrixIdempotentCreator,
+InstallGlobalFunction(MatrixOverFiniteFieldIdempotentCreator,
 function(S, x, y)
   local m, inv;
 
   if Rank(x) = 0 then
-    return NewZeroSMatrix(ConstructingFilter(Representative(S)),
+    return NewZeroMatrixOverFiniteField(ConstructingFilter(Representative(S)),
                           BaseDomain(S), DegreeOfMatrixSemigroup(S));
   else
-    m := AsSMatrix(Representative(S), TransposedMat(y!.rows) * x!.rows);
-    inv := SMatrixLocalRightInverse(S, x, m);
+    m := AsMatrixOverFiniteField(Representative(S), TransposedMat(y!.rows) * x!.rows);
+    inv := MatrixOverFiniteFieldLocalRightInverse(S, x, m);
     if inv = fail then
       return fail;
     else
@@ -367,13 +367,13 @@ function(S, x, y)
 end);
 
 InstallMethod(ViewString,
-"for an s-matrix semigroup with generators",
+"for an matrix over finite field semigroup with generators",
 [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
 function(S)
   local gens, deg, res;
   if HasIsMonoid(S) and IsMonoid(S) then
     gens := GeneratorsOfMonoid(S);
-    deg := DegreeOfSMatrix(gens[1]);
+    deg := DegreeOfMatrixOverFiniteField(gens[1]);
     res := "<monoid of ";
     Append(res, Concatenation(String(deg), "x", String(deg)));
     Append(res, " s-matrices\<\> over ");
@@ -381,7 +381,7 @@ function(S)
     Append(res, Concatenation("\<\> with ", Length(gens), " generator"));
   else
     gens := GeneratorsOfSemigroup(S);
-    deg := DegreeOfSMatrix(gens[1]);
+    deg := DegreeOfMatrixOverFiniteField(gens[1]);
     res := "<semigroup of ";
     Append(res, Concatenation(String(deg), "x", String(deg)));
     Append(res, " s-matrices\<\> over ");
@@ -396,20 +396,20 @@ function(S)
 end);
 
 InstallMethod(ViewObj,
-"for an s-matrix semigroup with generators",
+"for an matrix over finite field semigroup with generators",
 [ IsMatrixSemigroup and HasGeneratorsOfSemigroup ],
 function(S)
   local gens, deg;
   if HasIsMonoid(S) and IsMonoid(S) then
     gens := GeneratorsOfMonoid(S);
-    deg := DegreeOfSMatrix(gens[1]);
+    deg := DegreeOfMatrixOverFiniteField(gens[1]);
     Print("<monoid of ");
     Print(deg, "x", deg);
     Print(" s-matrices\<\> over ", BaseDomain(S));
     Print("\<\> with ", Length(gens), " generator");
   else
     gens := GeneratorsOfSemigroup(S);
-    deg := DegreeOfSMatrix(gens[1]);
+    deg := DegreeOfMatrixOverFiniteField(gens[1]);
     Print("<semigroup of ");
     Print(deg, "x", deg);
     Print(" s-matrices\<\> over ", BaseDomain(S));
@@ -439,7 +439,7 @@ InstallMethod(ViewObj,
 function(S)
   local deg, gens;
   gens := GeneratorsOfSemigroupIdeal(S);
-  deg := DegreeOfSMatrix(gens[1]);
+  deg := DegreeOfMatrixOverFiniteField(gens[1]);
   Print("<ideal of semigroup of ");
   Print(deg, "x", deg);
   Print(" s-matrices over ", BaseDomain(gens[1]));
@@ -451,10 +451,10 @@ function(S)
   Print(">");
 end);
 
-InstallMethod(IsGeneratorsOfSemigroup, "for an s-matrix collection",
-[IsSMatrixCollection],
+InstallMethod(IsGeneratorsOfSemigroup, "for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection],
 function(coll)
-  if ForAny(coll, x -> DegreeOfSMatrix(x) <> DegreeOfSMatrix(coll[1])
+  if ForAny(coll, x -> DegreeOfMatrixOverFiniteField(x) <> DegreeOfMatrixOverFiniteField(coll[1])
                        or BaseDomain(x) <> BaseDomain(coll[1])) then
     return false;
   fi;

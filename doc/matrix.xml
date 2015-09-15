@@ -7,9 +7,9 @@
 ##
 #############################################################################
 
-<#GAPDoc Label="IsSMatrix">
+<#GAPDoc Label="IsMatrixOverFiniteField">
   <ManSection>
-    <Filt Name="IsSMatrix" Arg="obj" Type="category"/>
+    <Filt Name="IsMatrixOverFiniteField" Arg="obj" Type="category"/>
       <Returns><K>true</K> or <K>false</K>.</Returns>
       <Description>
         This category contains &Semigroups; matrix object wrapper. The
@@ -22,55 +22,56 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="NewSMatrix">
+<#GAPDoc Label="NewMatrixOverFiniteField">
 <ManSection>
-  <Oper Name="NewSMatrix" Arg="filt, F, n, rows"/>
-  <Oper Name="NewSMatrix" Arg="filt, F, n, mat"/>
+  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, rows"/>
+<!--  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, mat"/>
+-->
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="NewIdentitySMatrix">
+<#GAPDoc Label="NewIdentityMatrixOverFiniteField">
 <ManSection>
-  <Oper Name="NewIdentitySMatrix" Arg="filt, F, n"/>
-  <Oper Name="NewZeroSMatrix" Arg="filt, F, n"/>
+  <Oper Name="NewIdentityMatrixOverFiniteField" Arg="filt, F, n"/>
+  <Oper Name="NewZeroMatrixOverFiniteField" Arg="filt, F, n"/>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="RowSpaceBasis">
 <ManSection>
-  <Attr Name="RowSpaceBasis" Arg="m" Label="for an s-matrix"/>
-  <Attr Name="RowSpaceTransformation" Arg="m" Label="for an s-matrix"/>
-  <Attr Name="RowSpaceTransformationInv" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="RowSpaceBasis" Arg="m" Label="for an matrix over finite field"/>
+  <Attr Name="RowSpaceTransformation" Arg="m" Label="for an matrix over finite field"/>
+  <Attr Name="RowSpaceTransformationInv" Arg="m" Label="for an matrix over finite field"/>
   <Returns>A basis for the row space of <A>m</A>.</Returns>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="ColSpaceBasis">
 <ManSection>
-  <Attr Name="ColSpaceBasis" Arg="m" Label="for an s-matrix"/>
-  <Attr Name="ColSpaceTransformation" Arg="m" Label="for an s-matrix"/>
-  <Attr Name="ColSpaceTransformationInv" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="ColSpaceBasis" Arg="m" Label="for an matrix over finite field"/>
+  <Attr Name="ColSpaceTransformation" Arg="m" Label="for an matrix over finite field"/>
+  <Attr Name="ColSpaceTransformationInv" Arg="m" Label="for an matrix over finite field"/>
   <Description>A basis for the column space of <A>m</A>.</Description>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="RightInverse">
 <ManSection>
-  <Attr Name="RightInverse" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="RightInverse" Arg="m" Label="for an matrix over finite field"/>
   <Returns>A right inverse of <A>m</A>.</Returns>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="LeftInverse">
 <ManSection>
-  <Attr Name="LeftInverse" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="LeftInverse" Arg="m" Label="for an matrix over finite field"/>
   <Returns>A left inverse of <A>m</A>.</Returns>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="SemigroupInvertible">
 <ManSection>
-  <Attr Name="SemigroupInvertible" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="SemigroupInvertible" Arg="m" Label="for an matrix over finite field"/>
   <Returns>
     <C>true</C> if <A>m</A> has a semigroup inverse, <C>false</C> if not.
     Note that this is <E>not</E> equivalent to the matrix being invertible.
@@ -80,16 +81,16 @@
 
 <#GAPDoc Label="SemigroupInverse">
 <ManSection>
-  <Attr Name="SemigroupInverse" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="SemigroupInverse" Arg="m" Label="for an matrix over finite field"/>
   <Returns>
     A semigroup inverse of <A>m</A> if it exists, and <C>fail</C> otherwise.
   </Returns>
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="DegreeOfSMatrix">
+<#GAPDoc Label="DegreeOfMatrixOverFiniteField">
 <ManSection>
-  <Attr Name="DegreeOfSMatrix" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="DegreeOfMatrixOverFiniteField" Arg="m" Label="for an matrix over finite field"/>
   <Returns>
     Number of rows and columns of the matrix <A>m</A>.
   </Returns>
@@ -98,21 +99,21 @@
 
 <#GAPDoc Label="RowRank">
 <ManSection>
-  <Attr Name="RowRank" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="RowRank" Arg="m" Label="for an matrix over finite field"/>
   <Returns>Length of a basis of the row space of <A>m</A>.</Returns>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="ColRank">
 <ManSection>
-  <Attr Name="ColRank" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="ColRank" Arg="m" Label="for an matrix over finite field"/>
   <Returns>Length of a basis of the column space of <A>m</A>.</Returns>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="BaseDomain">
 <ManSection>
-  <Attr Name="BaseDomain" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="BaseDomain" Arg="m" Label="for an matrix over finite field"/>
   <Returns>
     The domain in which entries of <A>m</A> lie.
   </Returns>
@@ -121,7 +122,7 @@
 
 <#GAPDoc Label="TransposedMatImmutable">
 <ManSection>
-  <Attr Name="TransposedMatImmutable" Arg="m" Label="for an s-matrix"/>
+  <Attr Name="TransposedMatImmutable" Arg="m" Label="for an matrix over finite field"/>
   <Returns>
     The transpose of <A>m</A>.
   </Returns>
@@ -130,7 +131,7 @@
 
 <#GAPDoc Label="AsMatrix">
 <ManSection>
-  <Oper Name="AsMatrix" Arg="m" Label="for an s-matrix"/>
+  <Oper Name="AsMatrix" Arg="m" Label="for an matrix over finite field"/>
   <Returns>
     A matrix.
   </Returns>
@@ -139,9 +140,9 @@
 
 <#GAPDoc Label="ConstructingFilter">
 <ManSection>
-  <Oper Name="ConstructingFilter" Arg="m" Label="for an s-matrix"/>
+  <Oper Name="ConstructingFilter" Arg="m" Label="for an matrix over finite field"/>
   <Returns>
-    Return the filter that was passed to <Ref Oper="NewSMatrix"/> when creating
+    Return the filter that was passed to <Ref Oper="NewMatrixOverFiniteField"/> when creating
     the matrix <A>m</A>.
   </Returns>
 </ManSection>

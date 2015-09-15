@@ -63,7 +63,7 @@ gap> Size(Range(iso));
 <!--
 <#GAPDoc Label="AsMatrixSemigroup">
 <ManSection>
-  <Attr Name="AsMatrixSemigroup" Arg="S[, F]"/>
+  <Attr Name="AsMatrixSemigroup" Arg="S[, F]" Label="for a semigroup and a ring"/>
   <Returns>The range of an isomorphism to a matrix semigroup.</Returns>
   <Description>
   <Example><![CDATA[

@@ -254,7 +254,7 @@ function(s)
   return u;
 end);
 
-InstallMethod(GroupOfUnits, "for an s-matrix semigroup",
+InstallMethod(GroupOfUnits, "for an matrix over finite field semigroup",
 [IsMatrixSemigroup],
 function(s)
   local r, g, e, u;

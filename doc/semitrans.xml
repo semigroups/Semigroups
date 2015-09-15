@@ -121,7 +121,7 @@ true]]></Example>
   <Oper Name="AsPartialPermSemigroup" Arg="S"/>
   <Oper Name="AsBipartitionSemigroup" Arg="S"/>
   <Oper Name="AsBlockBijectionSemigroup" Arg="S"/>
-  <Oper Name="AsMatrixSemigroup" Arg="S"/>
+  <Oper Name="AsMatrixSemigroup" Arg="S" Label="for a semigroup"/>
   <Returns>A semigroup.</Returns>
   <Description>
     <C>AsTransformationSemigroup(<A>S</A>)</C> is just shorthand for 

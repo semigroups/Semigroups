@@ -13,8 +13,8 @@
 # S-matrices. These essentially just delegate to the library methods via an
 # isomorphism.
 
-DeclareSynonym("IsSMatrixGroup", IsGroup and IsMatrixSemigroup);
-DeclareAttribute("IsomorphismMatrixGroup", IsSMatrixGroup);
-DeclareAttribute("AsMatrixGroup", IsSMatrixGroup);
-DeclareAttribute("AsSMatrixGroup", IsMatrixGroup);
-DeclareOperation("\^", [IsSMatrixGroup, IsSMatrix]);
+DeclareSynonym("IsMatrixOverFiniteFieldGroup", IsGroup and IsMatrixSemigroup);
+DeclareAttribute("IsomorphismMatrixGroup", IsMatrixOverFiniteFieldGroup);
+DeclareAttribute("AsMatrixGroup", IsMatrixOverFiniteFieldGroup);
+DeclareAttribute("AsMatrixOverFiniteFieldGroup", IsMatrixGroup);
+DeclareOperation("\^", [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField]);

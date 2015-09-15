@@ -9,14 +9,14 @@
 #############################################################################
 ##
 
-InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistSMatrices,
+InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistMatricesOverFiniteField,
 function(x, data)
   local i,res;
-  if DegreeOfSMatrix(x) = 0 then
+  if DegreeOfMatrixOverFiniteField(x) = 0 then
     return 1;
   fi;
   res := 0;
-  for i in [1 .. DegreeOfSMatrix(x)] do
+  for i in [1 .. DegreeOfMatrixOverFiniteField(x)] do
     res := (res * 1001 + ORB_HashFunctionForPlainFlatList(AsPlist(x!.mat[i]), data))
            mod data + 1;
   od;
@@ -37,7 +37,7 @@ function(x, data)
   return res;
 end);
 
-InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistSVectors,
+InstallGlobalFunction( SEMIGROUPS_HashFunctionForPlistVectorOverFiniteFields,
 function(x, data)
   local i,res;
   if Length(x) = 0 then
@@ -66,14 +66,14 @@ function(x, data)
 end);
 
 
-InstallMethod( ChooseHashFunction, "for collections of plist s-vectors",
-[IsSVectorCollection, IsInt],
+InstallMethod( ChooseHashFunction, "for collections of plist vector over finite fields",
+[IsVectorOverFiniteFieldCollection, IsInt],
 function(m, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionForPlistSVectors,
+  return rec( func := SEMIGROUPS_HashFunctionForPlistVectorOverFiniteFields,
               data := hashlen );
 end);
 
-InstallMethod( ChooseHashFunction, "for collections of ffeplist s-vectors",
+InstallMethod( ChooseHashFunction, "for collections of ffeplist vector over finite fields",
 [IsFFECollColl, IsInt],
 function(m, hashlen)
   return rec( func := SEMIGROUPS_HashFunctionForFFECollColl,
@@ -81,9 +81,9 @@ function(m, hashlen)
 end);
 
 InstallMethod( ChooseHashFunction, "for plist s-matrices",
-[IsPlistSMatrixRep, IsInt],
+[IsPlistMatrixOverFiniteFieldRep, IsInt],
 function(m, hashlen)
-  return rec( func := SEMIGROUPS_HashFunctionForPlistSMatrices,
+  return rec( func := SEMIGROUPS_HashFunctionForPlistMatricesOverFiniteField,
               data := hashlen );
 end);
 

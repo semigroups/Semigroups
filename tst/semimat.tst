@@ -15,7 +15,7 @@ gap> LoadPackage( "semigroups", false );;
 gap> SemigroupsStartTest();
 
 #T# MatrixSemigroupTest1: Create and Size
-gap> M := NewSMatrix(IsPlistSMatrixRep, GF(2), 16,
+gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2), 16,
 > [[ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
 > [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],
 > [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],
@@ -54,13 +54,13 @@ true
 
 #T# MatrixSemigroupTest2: Create and Size
 gap> S := Semigroup(
-> [ NewSMatrix(IsPlistSMatrixRep,GF(3),5,
+> [ NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(3),5,
 > [ [ Z(3), Z(3), Z(3)^0, Z(3), Z(3)^0 ],
 >   [ 0*Z(3), 0*Z(3), Z(3), 0*Z(3), Z(3)^0 ],
 >   [ Z(3), Z(3), Z(3)^0, 0*Z(3), Z(3) ],
 >   [ Z(3)^0, Z(3)^0, Z(3), Z(3), 0*Z(3) ],
 >   [ Z(3), Z(3)^0, Z(3), Z(3)^0, 0*Z(3) ] ]),
-> NewSMatrix(IsPlistSMatrixRep,GF(3),5,
+> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(3),5,
 > [ [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3), Z(3) ],
 >   [ Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ],
 >   [ Z(3), Z(3), Z(3)^0, Z(3), Z(3) ],
@@ -79,11 +79,11 @@ gap> PartialOrderOfDClasses(S);
 
 #T# MatrixSemigroupTest3: Create, Size, MinimalIdeal
 gap> S := Semigroup(
-> [ NewSMatrix(IsPlistSMatrixRep,GF(3),3,
+> [ NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(3),3,
 >    [ [ Z(3), Z(3), Z(3)^0 ],
 >      [ 0*Z(3), Z(3), Z(3) ], 
 >      [ Z(3), 0*Z(3), Z(3)^0 ] ]),
->   NewSMatrix(IsPlistSMatrixRep,GF(3),3,
+>   NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(3),3,
 >    [ [ Z(3), Z(3), 0*Z(3) ],
 >      [ Z(3)^0, Z(3)^0, 0*Z(3) ], 
 >      [ Z(3)^0, Z(3)^0, 0*Z(3) ] ]) ]);;
@@ -96,9 +96,9 @@ gap> MinimalIdeal(S);
 gap> Size(last);
 1
 gap> MultiplicativeZero(S);
-<s-matrix of degree 3 over GF(3)>
+<matrix over finite field of degree 3 over GF(3)>
 gap> MinimalDClass(S);
-<Green's D-class: <s-matrix of degree 3 over GF(3)>>
+<Green's D-class: <matrix over finite field of degree 3 over GF(3)>>
 gap> M := MaximalSubsemigroups(S);
 [ <semigroup of 3x3 s-matrices over GF(3) with 4 generators>, 
   <semigroup of 3x3 s-matrices over GF(3) with 2 generators> ]
@@ -109,7 +109,7 @@ gap> List(M, U-> IsMaximalSubsemigroup(S, U));
 gap> upper := function(mat)
 >   local zero, n, i, j;
 >   zero := Zero(BaseDomain(mat));
->   n := DegreeOfSMatrix(mat);
+>   n := DegreeOfMatrixOverFiniteField(mat);
 >   for i in [2 .. n] do 
 >     for j in [1 .. i - 1] do 
 >       if mat!.mat[i][j] <> zero then 
@@ -140,9 +140,9 @@ gap> Size(S);
 gap> func := IsGreensDLeq(S);
 function( x, y ) ... end
 gap> x := Random(S);
-<s-matrix of degree 3 over GF(3)>
+<matrix over finite field of degree 3 over GF(3)>
 gap> y := Random(S);
-<s-matrix of degree 3 over GF(3)>
+<matrix over finite field of degree 3 over GF(3)>
 gap> func(x, y);;        
 gap> func(y, x);;
 
@@ -162,7 +162,7 @@ true
 
 #T# MatrixSemigroups7:
 gap> S := Semigroup( 
-> NewSMatrix(IsPlistSMatrixRep, GF(2), 16, 
+> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2), 16, 
 >    [ [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
 >      [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],
 >      [ Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
@@ -179,7 +179,7 @@ gap> S := Semigroup(
 >      [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2) ],
 >      [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ], 
 >      [ Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ] ]),
-> NewSMatrix(IsPlistSMatrixRep, GF(2), 16, 
+> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2), 16, 
 >    [ [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],
 >      [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],
 >      [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], 
@@ -214,7 +214,7 @@ gap> PartialOrderOfDClasses(S);
 
 #gap> StructureDescriptionOfSchutzenbergerGroups(S); 
 #T This takes ages, and this is probably due to the
-#T StructureDescription for s-matrix groups not being
+#T StructureDescription for matrix over finite field groups not being
 #T very efficient.
 #T It seems to be going through permutation groups
 #T Making a Schutzenberger group into a normal GAP
