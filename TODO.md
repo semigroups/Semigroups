@@ -3,14 +3,18 @@
 
 ###TODO C++
 
-* remove `auto`, use `override`: done in elements.h
-* "documentation" and comments.
+* remove `auto`, use `override`: done in:
+    * `element.h`
+* whitespace: done in:
+    * `element.h`
+* "documentation" and comments: 
+
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
+
 * check for memleaks
 * remove C++11?
 * gmp problems?
 * use namespace in the C++ code
-* improve compilation time by removing unnecessary templates
 
 ###GAP kernel
 * use `ConvertElements` and `UnconvertElements`
@@ -44,6 +48,7 @@
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* improve compilation time by removing unnecessary templates
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
 * fix the bug in the c++ code `add_generators` relating to the changeset tagged `bug-in-c-code`
