@@ -185,12 +185,13 @@ u_int32_t Bipartition::nrblocks () const {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-long MatrixOverSemiring::at (size_t pos) const {
-  return _matrix->at(pos);
-}
-
 Semiring* MatrixOverSemiring::semiring () const {
   return _semiring;
+}
+
+void MatrixOverSemiring::set_semiring (Semiring* semiring) {
+  assert(_semiring == nullptr);
+ _semiring = semiring;
 }
 
 size_t MatrixOverSemiring::complexity () const {
@@ -198,17 +199,13 @@ size_t MatrixOverSemiring::complexity () const {
 }
 
 size_t MatrixOverSemiring::degree () const {
-  return sqrt(_matrix->size());
-}
-
-bool MatrixOverSemiring::equals (const Element* that) const {
-  return *(static_cast<const MatrixOverSemiring*>(that)->_matrix) == *(this->_matrix);
+  return sqrt(_vector->size());
 }
 
 size_t MatrixOverSemiring::hash_value () const {
   size_t seed = 0;
-  for (size_t i = 0; i < _matrix->size(); i++) {
-    seed = ((seed << 4) + _matrix->at(i));
+  for (size_t i = 0; i < _vector->size(); i++) {
+    seed = ((seed << 4) + _vector->at(i));
   }
   return seed;
 }
@@ -216,7 +213,7 @@ size_t MatrixOverSemiring::hash_value () const {
 // the identity
 Element* MatrixOverSemiring::identity () const {
   std::vector<long>* matrix(new std::vector<long>());
-  matrix->resize(_matrix->size(), _semiring->zero());
+  matrix->resize(_vector->size(), _semiring->zero());
 
   size_t n = this->degree();
   for (size_t i = 0; i < n; i++) {
@@ -226,13 +223,11 @@ Element* MatrixOverSemiring::identity () const {
 }
 
 Element* MatrixOverSemiring::really_copy (size_t increase_degree_by) const {
-  assert(increase_degree_by == 0);
-  std::vector<long>* matrix(new std::vector<long>(*_matrix));
-  return new MatrixOverSemiring(matrix, _semiring);
-}
-
-void MatrixOverSemiring::really_delete () {
-  delete _matrix;
+  MatrixOverSemiring*
+    copy(static_cast<MatrixOverSemiring*>(
+          ElementWithVectorData::really_copy(increase_degree_by)));
+  copy->set_semiring(_semiring);
+  return copy;
 }
 
 void MatrixOverSemiring::redefine (Element const* x,
@@ -252,7 +247,7 @@ void MatrixOverSemiring::redefine (Element const* x,
         v = _semiring->plus(v, _semiring->prod(xx->at(i * deg + k), 
                                                yy->at(k * deg + j)));
       }
-      _matrix->at(i * deg + j) = v;
+      _vector->at(i * deg + j) = v;
     }
   }
   after(); // post process this
@@ -267,19 +262,19 @@ void MatrixOverSemiring::redefine (Element const* x,
 size_t ProjectiveMaxPlusMatrix::hash_value () const {
 
   size_t seed = 0;
-  for (size_t i = 0; i < _matrix->size(); i++) {
-    seed = ((seed << 4) + _matrix->at(i));
+  for (size_t i = 0; i < _vector->size(); i++) {
+    seed = ((seed << 4) + _vector->at(i));
   }
   return seed;
 }
 
 void ProjectiveMaxPlusMatrix::after () {
-  long   norm = *std::max_element(_matrix->begin(), _matrix->end());
+  long   norm = *std::max_element(_vector->begin(), _vector->end());
   size_t deg  = pow(this->degree(), 2);
 
   for (size_t i = 0; i < deg; i++) {
-    if (_matrix->at(i) != LONG_MIN) {
-      _matrix->at(i) -= norm;
+    if (_vector->at(i) != LONG_MIN) {
+      _vector->at(i) -= norm;
     }
   }
 }

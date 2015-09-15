@@ -68,7 +68,7 @@ namespace std {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-template <typename S, typename T> 
+template <typename S, class T> 
 class ElementWithVectorData : public Element {
 
   public: 
@@ -88,6 +88,7 @@ class ElementWithVectorData : public Element {
         == *(this->_vector);
     }
 
+    // this must be overridden if increase_deg_by != 0
     virtual Element* really_copy (size_t increase_deg_by) const {
       assert(increase_deg_by == 0);
       std::vector<S>* vector(new std::vector<S>(*_vector));
@@ -257,11 +258,11 @@ class Bipartition : public ElementWithVectorData<u_int32_t, Bipartition> {
       
     u_int32_t block        (size_t pos)                     const;
 
-    size_t   complexity    ()                               const;
-    size_t   degree        ()                               const;
-    size_t   hash_value    ()                               const;
-    Element* identity      ()                               const;
-    void     redefine      (Element const*, Element const*)      ;
+    size_t   complexity ()                               const;
+    size_t   degree     ()                               const;
+    size_t   hash_value ()                               const;
+    Element* identity   ()                               const;
+    void     redefine   (Element const*, Element const*)      ;
   
   private:
 
@@ -275,32 +276,27 @@ class Bipartition : public ElementWithVectorData<u_int32_t, Bipartition> {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-class MatrixOverSemiring: public Element {
+class MatrixOverSemiring :
+  public ElementWithVectorData<long, MatrixOverSemiring> {
 
   public:
+    
+    MatrixOverSemiring (std::vector<long>* matrix, 
+                        Semiring*          semiring = nullptr) :
 
-    MatrixOverSemiring     (std::vector<long>* matrix, 
-                            Semiring*          semiring) :
-                           _matrix(matrix),
-                           _semiring(semiring) {}
+                       ElementWithVectorData<long, 
+                                             MatrixOverSemiring>(matrix), 
+                       _semiring(semiring) {}
 
-             long      at            (size_t pos)                     const;
-             Semiring* semiring      ()                               const;
+             Semiring* semiring     ()                               const;
+             void      set_semiring (Semiring* semiring);
 
-             size_t    complexity    ()                               const;
-             size_t    degree        ()                               const;
-             bool      equals        (const Element*)                 const;
-    virtual  size_t    hash_value    ()                               const;
-             Element*  identity      ()                               const;
-             Element*  really_copy   (size_t = 0)                     const;
-             void      really_delete ();
-             void      redefine      (Element const*, 
-                                      Element const*);
-
-  protected:
-
-    std::vector<long>* _matrix;
-
+             size_t    complexity   ()                               const;
+             size_t    degree       ()                               const;
+    virtual  size_t    hash_value   ()                               const;
+             Element*  identity     ()                               const;
+             Element*  really_copy  (size_t increase_deg_by)         const;
+             void      redefine     (Element const*, Element const*);
   private: 
 
     // a function applied after redefinition 
