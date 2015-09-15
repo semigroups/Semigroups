@@ -203,9 +203,8 @@ class MatrixOverSemiringConverter : public Converter {
         _gap_zero(gap_zero),
         _gap_type(gap_type) {}
 
-    MatrixOverSemiring* convert (Obj o, size_t n);
-
-    virtual Obj unconvert (Element* x);
+    virtual MatrixOverSemiring* convert   (Obj      o, size_t n);
+    virtual Obj                 unconvert (Element* x          );
 
   protected: 
     
@@ -218,8 +217,7 @@ class MatrixOverSemiringConverter : public Converter {
  * Projective max-plus matrices
 *******************************************************************************/
 
-/*class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatrix>, 
-                                         public MatrixOverSemiringConverter {
+class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
 
   public:
     ProjectiveMaxPlusMatrixConverter(Semiring* semiring, 
@@ -229,13 +227,14 @@ class MatrixOverSemiringConverter : public Converter {
 
     ProjectiveMaxPlusMatrix* convert (Obj o, size_t n) {
       return
-        static_cast<ProjectiveMaxPlusMatrix*>(MatrixOverSemiringConverter::convert(o, n));
+        static_cast<ProjectiveMaxPlusMatrix*>(
+            MatrixOverSemiringConverter::convert(o, n));
     }
 
-    Obj unconvert (ProjectiveMaxPlusMatrix* x) {
+    Obj unconvert (Element* x) {
       return MatrixOverSemiringConverter::unconvert(x);
     }
-};*/
+};
 
 /*******************************************************************************
  * Matrices over prime field

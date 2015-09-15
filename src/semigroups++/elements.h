@@ -268,75 +268,51 @@ class MatrixOverSemiring: public Element {
                            _matrix(matrix),
                            _semiring(semiring) {}
 
-    long      at            (size_t pos)                     const;
-    Semiring* semiring      ()                               const;
+             long      at            (size_t pos)                     const;
+             Semiring* semiring      ()                               const;
 
-    size_t    complexity    ()                               const;
-    size_t    degree        ()                               const;
-    bool      equals        (const Element*)                 const;
-    size_t    hash_value    ()                               const;
-    Element*  identity      ()                               const;
-    Element*  really_copy   (size_t = 0)                     const;
-    void      really_delete ()                                    ;
-    void      redefine      (Element const*, Element const*)      ;
+             size_t    complexity    ()                               const;
+             size_t    degree        ()                               const;
+             bool      equals        (const Element*)                 const;
+    virtual  size_t    hash_value    ()                               const;
+             Element*  identity      ()                               const;
+             Element*  really_copy   (size_t = 0)                     const;
+             void      really_delete ();
+             void      redefine      (Element const*, 
+                                      Element const*);
+
+  protected:
+
+    std::vector<long>* _matrix;
 
   private: 
 
     // a function applied after redefinition 
     virtual void after () {}
 
-    std::vector<long>* _matrix;
     Semiring*          _semiring;
     
 }; 
 
-/*class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
+class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
 
   public:
 
-    ProjectiveMaxPlusMatrix (size_t degree, Semiring* semiring) 
-      : MatrixOverSemiring(degree, semiring) {}
+    ProjectiveMaxPlusMatrix(std::vector<long>* matrix, 
+                            Semiring*          semiring) :
+      MatrixOverSemiring(matrix, semiring) {};
     
-    ProjectiveMaxPlusMatrix (size_t degree, Element* sample) 
-      : MatrixOverSemiring(degree, sample) {}
+    size_t    hash_value    ()                               const;
+  
+  private: 
 
-  private:
+    // a function applied after redefinition 
+    void after ();
 
-    void after () {
-      long norm = LONG_MIN;
-      size_t deg = sqrt(this->degree());
-
-      for (size_t i = 0; i < deg; i++) {
-        for (size_t j = 0; j < deg; j++) {
-          if ((long) this->at(i * deg + j) > norm)  {
-            norm = this->at(i * deg + j);
-          }
-        }
-      }
-      for (size_t i = 0; i < deg; i++) {
-        for (size_t j = 0; j < deg; j++) {
-          if (this->at(i * deg + j) != LONG_MIN) {
-            this->set(i * deg + j, this->at(i * deg + j) - norm);
-          }
-        }
-      }
-    }
 };
 
-namespace std {
-  template <>
-    struct hash<const ProjectiveMaxPlusMatrix> {
-    size_t operator() (const ProjectiveMaxPlusMatrix& x) const {
-      size_t seed = 0;
-      for (size_t i = 0; i < x.degree(); i++) {
-        seed = ((seed << 4) + x.at(i));
-      }
-      return seed;
-    }
-  };
-}
 
-// partitioned binary relations
+/*// partitioned binary relations
 
 class PBR: public Element<std::vector<u_int32_t> > {
   

@@ -130,14 +130,14 @@ void data_init_converter (Obj data) {
                                                   infinity, 
                                                   TropicalMinPlusMatrixType);
       break;
-    }/*
+    }
     case PROJ_MAX_PLUS_MAT:{
       converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
                                                         Ninfinity, 
                                                         ProjectiveMaxPlusMatrixType);
       break;
 
-    }
+    }/*
     case NAT_MAT:{
       converter = new MatrixOverSemiringConverter(new NaturalSemiring(data_threshold(data),
                                                                       data_period(data)), 

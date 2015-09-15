@@ -290,3 +290,29 @@ void MatrixOverSemiring::redefine (Element const* x,
   }
   after(); // post process this
 }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Projective max-plus matrices
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+size_t ProjectiveMaxPlusMatrix::hash_value () const {
+
+  size_t seed = 0;
+  for (size_t i = 0; i < _matrix->size(); i++) {
+    seed = ((seed << 4) + _matrix->at(i));
+  }
+  return seed;
+}
+
+void ProjectiveMaxPlusMatrix::after () {
+  long   norm = *std::max_element(_matrix->begin(), _matrix->end());
+  size_t deg  = pow(this->degree(), 2);
+
+  for (size_t i = 0; i < deg; i++) {
+    if (_matrix->at(i) != LONG_MIN) {
+      _matrix->at(i) -= norm;
+    }
+  }
+}
