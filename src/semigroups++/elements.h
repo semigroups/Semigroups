@@ -252,7 +252,6 @@ class BooleanMat: public ElementWithVectorData<bool, BooleanMat> {
     size_t   hash_value ()                               const override;
     Element* identity   ()                               const override;
     void     redefine   (Element const*, Element const*)       override;
-  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -303,12 +302,12 @@ class MatrixOverSemiring :
              Semiring* semiring     ()                               const;
              void      set_semiring (Semiring* semiring);
 
-             size_t    complexity   ()                               const override;
-             size_t    degree       ()                               const override;
-    virtual  size_t    hash_value   ()                               const override;
-             Element*  identity     ()                               const override;
-             Element*  really_copy  (size_t increase_deg_by)         const override;
-             void      redefine     (Element const*, Element const*);
+             size_t   complexity  ()                               const override;
+             size_t   degree      ()                               const override;
+    virtual  size_t   hash_value  ()                               const override;
+             Element* identity    ()                               const override;
+             Element* really_copy (size_t increase_deg_by)         const override;
+             void     redefine    (Element const*, Element const*);
 
   private: 
 
@@ -316,7 +315,6 @@ class MatrixOverSemiring :
     virtual void after () {}
 
     Semiring* _semiring;
-    
 }; 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -339,7 +337,6 @@ class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
 
     // a function applied after redefinition 
     void after () override;
-
 };
 
 ////////////////////////////////////////////////////////////////////////////////
