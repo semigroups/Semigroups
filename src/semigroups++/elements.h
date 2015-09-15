@@ -62,6 +62,12 @@ namespace std {
   };
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Abstract base class for elements using a vector to store the data.
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 template <typename T, typename Constructor> 
 class ElementWithVectorData : public Element {
 
@@ -70,7 +76,7 @@ class ElementWithVectorData : public Element {
     ElementWithVectorData (std::vector<T>* vector) : _vector(vector) {}
 
     inline T operator [] (size_t pos) const {
-      return _vector->at(pos);
+      return _vector[pos];
     }
     
     inline T at (size_t pos) const {
@@ -103,8 +109,41 @@ class ElementWithVectorData : public Element {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-//TODO make a PartialTransformation class which holds the common parts of
-//Transformation and PartialPerm.
+template <typename T>
+class PartialTransformation : 
+  public ElementWithVectorData<T, PartialTransformation<T> > {
+
+  public:
+    
+    PartialTransformation (std::vector<T>* vector) : 
+      ElementWithVectorData<T, PartialTransformation<T> >(vector) {}
+    
+    size_t complexity () const {
+      return this->_vector->size();
+    }
+
+    size_t degree () const {
+      return this->_vector->size();
+    }
+
+    size_t hash_value () const {
+      size_t seed = 0;
+      T deg = this->degree();
+      for (T i = 0; i < deg; i++) {
+        seed = ((seed * deg) + this->_vector->at(i));
+      }
+      return seed;
+    }
+    
+    Element* identity () const {
+      auto vector = new std::vector<T>();
+      vector->reserve(this->degree());
+      for (T i = 0; i < this->degree(); i++) {
+        vector->push_back(i);
+      }
+      return new PartialTransformation<T>(vector);
+    }
+};
 
 template <typename T>
 class Transformation : public Element {

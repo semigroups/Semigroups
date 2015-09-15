@@ -449,18 +449,3 @@ void PBR::y_dfs (u_int32_t          n,
     }
   }
 }
-
-/*    PBR (u_int32_t degree, 
-      Element<std::vector<u_int32_t> >* sample = nullptr) 
-      : Element<std::vector<u_int32_t> >() {
-      _data = new std::vector<std::vector<u_int32_t> >();
-      _data->reserve(degree);
-      for (size_t i = 0; i < degree; i++) {
-      _data->push_back(std::vector<u_int32_t>());
-      }
-      }
-
-      PBR (std::vector<std::vector<u_int32_t> >
-      const& data)
-      : Element<std::vector<u_int32_t> >(data) { }*/
-
