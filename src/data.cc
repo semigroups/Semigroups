@@ -149,10 +149,10 @@ void data_init_converter (Obj data) {
       converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)));
       break;
     }
-    /*case PBR_TYPE:{
+    case PBR_TYPE:{
       converter = new PBRConverter();
       break;
-    }*/
+    }
     default: {
       assert(false);
     }

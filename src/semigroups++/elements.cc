@@ -316,3 +316,146 @@ void ProjectiveMaxPlusMatrix::after () {
     }
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Partitioned binary relations (PBRs)
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+size_t PBR::complexity () const {
+  return pow((2 * this->degree()), 3);
+}
+
+size_t PBR::degree () const {
+  return _vector->size() / 2;
+}
+
+size_t PBR::hash_value () const {
+  size_t seed = 0;
+  size_t pow = 101;
+  for (size_t i = 0; i < this->degree(); i++) {
+    for (size_t j = 0; j < this->at(i).size(); j++) { 
+      seed = (seed * pow) + this->at(i).at(j);
+    }
+  }
+  return seed;
+}
+
+Element* PBR::identity () const {
+  std::vector<std::vector<u_int32_t> >* adj(new std::vector<std::vector<u_int32_t> >());
+  size_t n = this->degree();
+  adj->reserve(2 * n);
+  for (u_int32_t i = 0; i < 2 * n; i++) {
+    adj->push_back(std::vector<u_int32_t>());
+  }
+  for (u_int32_t i = 0; i < n; i++) {
+    adj->at(i).push_back(i + n);
+    adj->at(i + n).push_back(i);
+  }
+  return new PBR(adj);
+}
+
+//FIXME this allocates lots of memory on every call, maybe better to keep
+//the data in the class and overwrite it.
+//FIXME also we repeatedly search in the same part of the graph, and so
+//there is probably a lot of repeated work in the dfs.
+void PBR::redefine (Element const* x, 
+                    Element const* y ) {
+  assert(x->degree() == y->degree());
+  assert(x->degree() == this->degree());
+  u_int32_t n = this->degree();
+
+  for (size_t i = 0; i < 2 * n; i++) {
+    (*_vector)[i].clear();
+  }
+
+  std::vector<bool> x_seen;
+  std::vector<bool> y_seen;
+  x_seen.resize(2 * n, false);
+  y_seen.resize(2 * n, false);
+
+  for (size_t i = 0; i < 2 * n; i++) {
+    x_dfs(n, i, i, x_seen, y_seen, x, y);
+    for (size_t j = 0; j < 2 * n; j++) {
+      x_seen.at(j) = false;
+      y_seen.at(j) = false;
+    }
+  }
+
+  for (size_t i = n; i < 2 * n; i++) {
+    y_dfs(n, i, i, x_seen, y_seen, x, y);
+    for (size_t j = 0; j < 2 * n; j++) {
+      x_seen.at(j) = false;
+      y_seen.at(j) = false;
+    }
+  }
+}
+    
+    
+// add vertex2 to the adjacency of vertex1
+void PBR::add_adjacency (size_t vertex1, size_t vertex2) {
+  auto it = std::lower_bound(_vector->at(vertex1).begin(),
+      _vector->at(vertex1).end(), 
+      vertex2);
+  if (it == _vector->at(vertex1).end()) {
+    _vector->at(vertex1).push_back(vertex2);
+  } else if ((*it) != vertex2) {
+    _vector->at(vertex1).insert(it, vertex2);
+  }
+}
+
+void PBR::x_dfs (u_int32_t          n,
+                 u_int32_t          i, 
+                 u_int32_t          v,         // the vertex we're currently doing
+                 std::vector<bool>& x_seen,
+                 std::vector<bool>& y_seen,
+                 Element const*     x, 
+                 Element const*     y      ) {
+
+  if (!x_seen.at(i)) {
+    x_seen.at(i) = true;
+    for (auto j: _vector->at(i)) {
+      if (j < n) {
+        add_adjacency(v, j);
+      } else {
+        y_dfs(n, j - n, v, x_seen, y_seen, x, y);
+      }
+    }
+  }
+}
+
+void PBR::y_dfs (u_int32_t          n,
+                 u_int32_t          i, 
+                 u_int32_t          v,         // the vertex we're currently doing
+                 std::vector<bool>& x_seen,
+                 std::vector<bool>& y_seen,
+                 Element const*     x, 
+                 Element const*     y      ) {
+
+  if (!y_seen.at(i)) {
+    y_seen.at(i) = true;
+    for (auto j: _vector->at(i)) {
+      if (j >= n) {
+        add_adjacency(v, j);
+      } else {
+        x_dfs(n, j + n, v, x_seen, y_seen, x, y);
+      }
+    }
+  }
+}
+
+/*    PBR (u_int32_t degree, 
+      Element<std::vector<u_int32_t> >* sample = nullptr) 
+      : Element<std::vector<u_int32_t> >() {
+      _data = new std::vector<std::vector<u_int32_t> >();
+      _data->reserve(degree);
+      for (size_t i = 0; i < degree; i++) {
+      _data->push_back(std::vector<u_int32_t>());
+      }
+      }
+
+      PBR (std::vector<std::vector<u_int32_t> >
+      const& data)
+      : Element<std::vector<u_int32_t> >(data) { }*/
+

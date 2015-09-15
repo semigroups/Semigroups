@@ -21,7 +21,11 @@
 using namespace semiring;
 using namespace std;
 
-// abstract base class for elements of a semigroup
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Abstract base class for elements of a semigroup
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 class Element {
 
@@ -58,7 +62,46 @@ namespace std {
   };
 }
 
-// template for transformations
+template <typename T, typename Constructor> 
+class ElementWithVectorData : public Element {
+
+  public: 
+    
+    ElementWithVectorData (std::vector<T>* vector) : _vector(vector) {}
+
+    inline T operator [] (size_t pos) const {
+      return _vector->at(pos);
+    }
+    
+    inline T at (size_t pos) const {
+      return _vector->at(pos);
+    }
+    
+    bool equals (const Element* that) const {
+      return *(static_cast<const Constructor*>(that)->_vector) 
+        == *(this->_vector);
+    }
+
+    virtual Element* really_copy (size_t increase_deg_by) const {
+      assert(increase_deg_by == 0);
+      std::vector<T>* vector(new std::vector<T>(*_vector));
+      return new Constructor(vector);
+    }
+
+    virtual void really_delete () {
+      delete _vector;
+    };
+
+  protected:
+
+    std::vector<T>* _vector;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Template for transformations
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 //TODO make a PartialTransformation class which holds the common parts of
 //Transformation and PartialPerm.
@@ -134,7 +177,11 @@ class Transformation : public Element {
     std::vector<T>* _image;
 };
 
-// template for partial perms
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Template for partial perms
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 class PartialPerm : public Element {
@@ -208,7 +255,11 @@ class PartialPerm : public Element {
     T               UNDEFINED = (T) -1;
 };
 
-// boolean matrices
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Boolean matrices
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 class BooleanMat: public Element {
 
@@ -233,7 +284,11 @@ class BooleanMat: public Element {
 
 };
 
-// bipartitions
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Bipartitions
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 class Bipartition : public Element {
 
@@ -258,6 +313,12 @@ class Bipartition : public Element {
 
     std::vector<u_int32_t>* _blocks;
 };
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Matrices over semirings
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 class MatrixOverSemiring: public Element {
 
@@ -294,6 +355,12 @@ class MatrixOverSemiring: public Element {
     
 }; 
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Projective max-plus matrices
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
 
   public:
@@ -311,153 +378,44 @@ class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
 
 };
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Partitioned binary relations
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-/*// partitioned binary relations
+class PBR: public ElementWithVectorData<std::vector<u_int32_t>, PBR> {
 
-class PBR: public Element<std::vector<u_int32_t> > {
-  
-  public:
-  
-    PBR (u_int32_t degree, 
-         Element<std::vector<u_int32_t> >* sample = nullptr) 
-      : Element<std::vector<u_int32_t> >() {
-        _data = new std::vector<std::vector<u_int32_t> >();
-        _data->reserve(degree);
-        for (size_t i = 0; i < degree; i++) {
-          _data->push_back(std::vector<u_int32_t>());
-        }
-      }
+  public: 
     
-    PBR (std::vector<std::vector<u_int32_t> >
-                               const& data)
-      : Element<std::vector<u_int32_t> >(data) { }
-    
-    //FIXME this allocates lots of memory on every call, maybe better to keep
-    //the data in the class and overwrite it.
-    //FIXME also we repeatedly search in the same part of the graph, and so
-    //there is probably a lot of repeated work in the dfs.
-    void redefine (Element<std::vector<u_int32_t> > const* x, 
-                   Element<std::vector<u_int32_t> > const* y) {
-      assert(x->degree() == y->degree());
-      assert(x->degree() == this->degree());
-      u_int32_t n = this->degree() / 2;
-      
-      for (size_t i = 0; i < 2 * n; i++) {
-        (*_data)[i].clear();
-      }
+    PBR (std::vector<std::vector<u_int32_t> >* vector) : 
+      ElementWithVectorData<std::vector<u_int32_t>, PBR>(vector) {}
 
-      std::vector<bool> x_seen;
-      std::vector<bool> y_seen;
-      
-      for (size_t i = 0; i < 2 * n; i++) {
-        x_seen.push_back(false);
-        y_seen.push_back(false);
-      }
-      
-      for (size_t i = 0; i < n; i++) {
-        x_dfs(n, i, i, x_seen, y_seen, x, y);
-        for (size_t j = 0; j < 2 * n; j++) {
-          x_seen.at(j) = false;
-          y_seen.at(j) = false;
-        }
-      }
-      
-      for (size_t i = n; i < 2 * n; i++) {
-        y_dfs(n, i, i, x_seen, y_seen, x, y);
-        for (size_t j = 0; j < 2 * n; j++) {
-          x_seen.at(j) = false;
-          y_seen.at(j) = false;
-        }
-      }
-    }
-    
-    Element<std::vector<u_int32_t> >* identity () {
-      std::vector<std::vector<u_int32_t> > adj;
-      size_t n = this->degree() / 2;
-      adj.reserve(2 * n);
-      for (u_int32_t i = 0; i < 2 * n; i++) {
-        adj.push_back(std::vector<u_int32_t>());
-      }
-      for (u_int32_t i = 0; i < n; i++) {
-        adj.at(i).push_back(i + n);
-        adj.at(i + n).push_back(i);
-      }
-      return new PBR(adj);
-    }
-    
-    size_t complexity () const {
-      return pow((2 * this->degree()), 3);
-    }
+    size_t   complexity    ()                               const;
+    size_t   degree        ()                               const;
+    size_t   hash_value    ()                               const;
+    Element* identity      ()                               const;
+    void     redefine      (Element const*, Element const*)      ;
 
   private:
-
-    // add vertex2 to the adjacency of vertex1
-    void add_adjacency (size_t vertex1, size_t vertex2) {
-      auto it = std::lower_bound(_data->at(vertex1).begin(),
-                                 _data->at(vertex1).end(), 
-                                 vertex2);
-      if (it == _data->at(vertex1).end()) {
-        _data->at(vertex1).push_back(vertex2);
-      } else if ((*it) != vertex2) {
-        _data->at(vertex1).insert(it, vertex2);
-      }
-    }
-
-    void x_dfs (u_int32_t n,
-                u_int32_t i, 
-                u_int32_t v,  // the vertex we're currently doing
+    
+    void add_adjacency (size_t vertex1, size_t vertex2);
+    
+    void x_dfs (u_int32_t          n,
+                u_int32_t          i, 
+                u_int32_t          v,        // the vertex we're currently doing
                 std::vector<bool>& x_seen,
                 std::vector<bool>& y_seen,
-                Element<std::vector<u_int32_t> > const* x, 
-                Element<std::vector<u_int32_t> > const* y) {
-
-      if (!x_seen.at(i)) {
-        x_seen.at(i) = true;
-        for (auto j: x->at(i)) {
-          if (j < n) {
-            add_adjacency(v, j);
-          } else {
-            y_dfs(n, j - n, v, x_seen, y_seen, x, y);
-          }
-        }
-      }
-    }
-
-    void y_dfs (u_int32_t n,
-                u_int32_t i, 
-                u_int32_t v, 
+                Element const*     x, 
+                Element const*     y      );
+    
+    void y_dfs (u_int32_t          n,
+                u_int32_t          i, 
+                u_int32_t          v,        // the vertex we're currently doing
                 std::vector<bool>& x_seen,
                 std::vector<bool>& y_seen,
-                Element<std::vector<u_int32_t> > const* x, 
-                Element<std::vector<u_int32_t> > const* y) {
-
-      if (!y_seen.at(i)) {
-        y_seen.at(i) = true;
-        for (auto j: y->at(i)) {
-          if (j >= n) {
-            add_adjacency(v, j);
-          } else {
-            x_dfs(n, j + n, v, x_seen, y_seen, x, y);
-          }
-        }
-      }
-    }
+                Element const*     x, 
+                Element const*     y      );
 };
-
-namespace std {
-  template <>
-    struct hash<const PBR> {
-    size_t operator() (const PBR& x) const {
-      size_t seed = 0;
-      size_t pow = 101;
-      for (size_t i = 0; i < x.degree(); i++) {
-        for (size_t j = 0; j < x.at(i).size(); j++) { 
-          seed = (seed * pow) + x.at(i).at(j);
-        }
-      }
-      return seed;
-    }
-  };
-}*/
 
 #endif

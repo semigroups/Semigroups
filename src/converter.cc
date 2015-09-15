@@ -201,14 +201,14 @@ Obj MatrixOverPrimeFieldConverter::unconvert (Element* xx) {
 
 // TODO add some more asserts here
 
-/*PBR* PBRConverter::convert (Obj o, size_t n) {
+PBR* PBRConverter::convert (Obj o, size_t n) {
   assert(IS_PBR(o));
-  assert(n / 2 == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
+  assert(n == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
 
-  std::vector<std::vector<u_int32_t> > pbr;
-  pbr.reserve(n);
+  std::vector<std::vector<u_int32_t> >* pbr(new std::vector<std::vector<u_int32_t> >());
+  pbr->reserve(n);
 
-  for (u_int32_t i = 0; i < n; i++) {
+  for (u_int32_t i = 0; i < 2 * n; i++) {
     Obj adj = ELM_PLIST(o, i + 2);
     std::vector<u_int32_t> next;
     for (u_int32_t j = 1; j <= LEN_PLIST(adj); j++) {
@@ -216,16 +216,17 @@ Obj MatrixOverPrimeFieldConverter::unconvert (Element* xx) {
       // assumes that adj is duplicate-free
     }
     std::sort(next.begin(), next.end());
-    pbr.push_back(next);
+    pbr->push_back(next);
   }
   return new PBR(pbr);
 }
 
-Obj PBRConverter::unconvert (PBR* x) {
-  Obj plist = NEW_PLIST(T_PLIST_TAB, x->degree() + 1);
-  SET_LEN_PLIST(plist, x->degree() + 1);
-  SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree() / 2));
-  for (u_int32_t i = 0; i < x->degree(); i++) {
+Obj PBRConverter::unconvert (Element* xx) {
+  PBR* x(static_cast<PBR*>(xx));
+  Obj plist = NEW_PLIST(T_PLIST_TAB, 2 * x->degree() + 1);
+  SET_LEN_PLIST(plist, 2 * x->degree() + 1);
+  SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree()));
+  for (u_int32_t i = 0; i < 2 * x->degree(); i++) {
     size_t m = x->at(i).size();
     Obj adj;
     if (m == 0) {
@@ -241,4 +242,4 @@ Obj PBRConverter::unconvert (PBR* x) {
     CHANGED_BAG(plist);
   }
   return CALL_2ARGS(Objectify, PBRType, plist);
-}*/
+}

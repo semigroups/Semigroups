@@ -65,7 +65,7 @@ function(arg)
   elif IsBipartitionSemigroup(S) then 
     return DegreeOfBipartitionSemigroup(S);
   elif IsPBRSemigroup(S) then 
-    return 2 * DegreeOfPBRSemigroup(S);
+    return DegreeOfPBRSemigroup(S);
   else
     Error();
     return;
