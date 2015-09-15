@@ -220,6 +220,7 @@ class MatrixOverSemiringConverter : public Converter {
 class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
 
   public:
+
     ProjectiveMaxPlusMatrixConverter(Semiring* semiring, 
                                      Obj       gap_zero, 
                                      Obj       gap_type)
@@ -240,25 +241,17 @@ class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
  * Matrices over prime field
 *******************************************************************************/
 
-/*class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
+class MatrixOverPrimeFieldConverter : public MatrixOverSemiringConverter {
 
   public:
 
-    ~MatrixOverPrimeFieldConverter () {
-      delete _field;
-    }
+    MatrixOverPrimeFieldConverter(PrimeField* field)
+      : MatrixOverSemiringConverter(field, 0, 0) {}
 
-    MatrixOverPrimeFieldConverter (PrimeField* field) 
-      : _field(field) {}
+    MatrixOverSemiring* convert   (Obj      o, size_t n);
+    Obj                 unconvert (Element* x          );
 
-    MatrixOverSemiring* convert (Obj o, size_t n);
-
-    Obj unconvert (MatrixOverSemiring* x);
-
-  protected: 
-    
-    PrimeField* _field;
-};*/
+};
 
 /*******************************************************************************
  * Partitioned binary relations (PBRs)

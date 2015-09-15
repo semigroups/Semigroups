@@ -131,13 +131,6 @@ void data_init_converter (Obj data) {
                                                   TropicalMinPlusMatrixType);
       break;
     }
-    case PROJ_MAX_PLUS_MAT:{
-      converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
-                                                        Ninfinity, 
-                                                        ProjectiveMaxPlusMatrixType);
-      break;
-
-    }/*
     case NAT_MAT:{
       converter = new MatrixOverSemiringConverter(new NaturalSemiring(data_threshold(data),
                                                                       data_period(data)), 
@@ -145,11 +138,18 @@ void data_init_converter (Obj data) {
                                                   NaturalMatrixType);
       break;
     }
+    case PROJ_MAX_PLUS_MAT:{
+      converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
+                                                        Ninfinity, 
+                                                        ProjectiveMaxPlusMatrixType);
+      break;
+
+    }
     case MAT_OVER_PF:{
       converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)));
       break;
     }
-    case PBR_TYPE:{
+    /*case PBR_TYPE:{
       converter = new PBRConverter();
       break;
     }*/

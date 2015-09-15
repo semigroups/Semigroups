@@ -1,16 +1,18 @@
-/*
+/*******************************************************************************
  * Semigroups GAP package
  *
  * This file contains converters from GAP to C++ elements and back.
  *
- */
+*******************************************************************************/
 
 #include "converter.h"
 #include "types.h"
 
-/*******************************************************************************
- * Boolean matrices
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Boolean matrices
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
   assert(IS_BOOL_MAT(o));
@@ -58,9 +60,11 @@ Obj BoolMatConverter::unconvert (Element* x) {
   return CALL_2ARGS(Objectify, BooleanMatType, o);
 }
 
-/*******************************************************************************
- * Bipartitions
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Bipartitions
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 Bipartition* BipartConverter::convert (Obj o, size_t n) {
   assert(IS_BIPART(o));
@@ -91,9 +95,11 @@ Obj BipartConverter::unconvert (Element* x) {
   return o;
 }
 
-/*******************************************************************************
- * Matrices over semirings 
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Matrices over semirings
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_SEMI_RING(o));
@@ -143,30 +149,34 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
   return CALL_2ARGS(Objectify, _gap_type, plist);
 }
 
-/*******************************************************************************
- * Matrices over prime field
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Matrices over prime fields
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-/*MatrixOverSemiring* MatrixOverPrimeFieldConverter::convert (Obj o, size_t n) {
+MatrixOverSemiring* MatrixOverPrimeFieldConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_PF(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
-  assert(sqrt(n) == LEN_PLIST(ELM_PLIST(o, 1)));
+  assert(n == (size_t) LEN_PLIST(ELM_PLIST(o, 1)));
 
-  auto x = new MatrixOverSemiring(n, _field);
-  n = LEN_PLIST(ELM_PLIST(o, 1));
-  for (size_t i = 0; i < n; i++) {
-    Obj row = ELM_PLIST(o, i + 1);
-    for (size_t j = 0; j < n; j++) {
-      FFV entry = VAL_FFE(ELM_PLIST(row, j + 1));
-      x->set(i * n + j, entry);
+  std::vector<long>* matrix(new std::vector<long>());
+  matrix->reserve(n);
+
+  for (size_t i = 1; i <= n; i++) {
+    Obj row = ELM_PLIST(o, i);
+    for (size_t j = 1; j <= n; j++) {
+      matrix->push_back(VAL_FFE(ELM_PLIST(row, j)));
     }
   }
-  return x;
+  return new MatrixOverSemiring(matrix, _semiring);
 }
 
-Obj MatrixOverPrimeFieldConverter::unconvert (MatrixOverSemiring* x) {
-  size_t n = sqrt(x->degree());
+Obj MatrixOverPrimeFieldConverter::unconvert (Element* xx) {
+  MatrixOverSemiring* x(static_cast<MatrixOverSemiring*>(xx));
+
+  size_t n = x->degree();
   Obj plist = NEW_PLIST(T_PLIST, n);
   SET_LEN_PLIST(plist, n);
 
@@ -174,18 +184,20 @@ Obj MatrixOverPrimeFieldConverter::unconvert (MatrixOverSemiring* x) {
     Obj row = NEW_PLIST(T_PLIST_CYC, n);
     SET_LEN_PLIST(row, n);
     for (size_t j = 0; j < n; j++) {
-      long entry = x->at(i * n + j);
       SET_ELM_PLIST(row, j + 1, INTOBJ_INT(x->at(i * n + j)));
     }
     SET_ELM_PLIST(plist, i + 1, row);
     CHANGED_BAG(plist);
   }
-  return CALL_2ARGS(AsMatrixOverPrimeFieldNC, INTOBJ_INT(_field->size()), plist);
-}*/
+  PrimeField* field(static_cast<PrimeField*>(_semiring));
+  return CALL_2ARGS(AsMatrixOverPrimeFieldNC, INTOBJ_INT(field->size()), plist);
+}
 
-/*******************************************************************************
- * Partitioned binary relations (PBRs)
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Partitioned binary relations (PBRs)
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // TODO add some more asserts here
 
