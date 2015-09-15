@@ -68,30 +68,30 @@ namespace std {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-template <typename T, typename Constructor> 
+template <typename S, typename T> 
 class ElementWithVectorData : public Element {
 
   public: 
     
-    ElementWithVectorData (std::vector<T>* vector) : _vector(vector) {}
+    ElementWithVectorData (std::vector<S>* vector) : _vector(vector) {}
 
-    inline T operator [] (size_t pos) const {
-      return _vector[pos];
+    inline S operator [] (size_t pos) const {
+      return _vector->at(pos);
     }
     
-    inline T at (size_t pos) const {
+    inline S at (size_t pos) const {
       return _vector->at(pos);
     }
     
     bool equals (const Element* that) const {
-      return *(static_cast<const Constructor*>(that)->_vector) 
+      return *(static_cast<const T*>(that)->_vector) 
         == *(this->_vector);
     }
 
     virtual Element* really_copy (size_t increase_deg_by) const {
       assert(increase_deg_by == 0);
-      std::vector<T>* vector(new std::vector<T>(*_vector));
-      return new Constructor(vector);
+      std::vector<S>* vector(new std::vector<S>(*_vector));
+      return new T(vector);
     }
 
     virtual void really_delete () {
@@ -100,7 +100,49 @@ class ElementWithVectorData : public Element {
 
   protected:
 
-    std::vector<T>* _vector;
+    std::vector<S>* _vector;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Template for partial transformations
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+template <typename S, typename T>
+class PartialTransformation : 
+  public ElementWithVectorData<S, T> {
+
+  public:
+    
+    PartialTransformation (std::vector<S>* vector) : 
+      ElementWithVectorData<S, T>(vector) {}
+    
+    size_t complexity () const {
+      return this->_vector->size();
+    }
+
+    size_t degree () const {
+      return this->_vector->size();
+    }
+
+    size_t hash_value () const {
+      size_t seed = 0;
+      size_t deg = this->degree();
+      for (size_t i = 0; i < deg; i++) {
+        seed = ((seed * deg) + this->_vector->at(i));
+      }
+      return seed;
+    }
+    
+    Element* identity () const {
+      auto vector = new std::vector<S>();
+      vector->reserve(this->degree());
+      for (size_t i = 0; i < this->degree(); i++) {
+        vector->push_back(i);
+      }
+      return new T(vector);
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -110,93 +152,21 @@ class ElementWithVectorData : public Element {
 ////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-class PartialTransformation : 
-  public ElementWithVectorData<T, PartialTransformation<T> > {
+class Transformation : 
+  public PartialTransformation<T, Transformation<T> > {
 
   public:
+
+    Transformation (std::vector<T>* vector) : 
+      PartialTransformation<T, Transformation<T> >(vector) {}
     
-    PartialTransformation (std::vector<T>* vector) : 
-      ElementWithVectorData<T, PartialTransformation<T> >(vector) {}
-    
-    size_t complexity () const {
-      return this->_vector->size();
-    }
-
-    size_t degree () const {
-      return this->_vector->size();
-    }
-
-    size_t hash_value () const {
-      size_t seed = 0;
-      T deg = this->degree();
-      for (T i = 0; i < deg; i++) {
-        seed = ((seed * deg) + this->_vector->at(i));
-      }
-      return seed;
-    }
-    
-    Element* identity () const {
-      auto vector = new std::vector<T>();
-      vector->reserve(this->degree());
-      for (T i = 0; i < this->degree(); i++) {
-        vector->push_back(i);
-      }
-      return new PartialTransformation<T>(vector);
-    }
-};
-
-template <typename T>
-class Transformation : public Element {
-
-  public:
-   
-    Transformation (std::vector<T>* image) : _image(image) {}
-   
-    inline T operator [] (size_t pos) const {
-      return _image->at(pos);
-    }
-
-    size_t complexity () const {
-      return _image->size();
-    }
-
-    size_t degree () const {
-      return _image->size();
-    }
-    
-    bool equals (const Element* that) const {
-      return *(static_cast<const Transformation<T>*>(that)->_image) == *(this->_image);
-    }
-    
-    size_t hash_value () const {
-      size_t seed = 0;
-      T deg = this->degree();
-      for (T i = 0; i < deg; i++) {
-        seed = ((seed * deg) + this->_image->at(i));
-      }
-      return seed;
-    }
-    
-    // the identity of this
-    Element* identity () const {
-      auto image = new std::vector<T>();
-      image->reserve(this->degree());
-      for (T i = 0; i < this->degree(); i++) {
-        image->push_back(i);
-      }
-      return new Transformation<T>(image);
-    }
-
     Element* really_copy (size_t increase_deg_by = 0) const override {
-      auto out = new std::vector<T>(*_image);
-      for (size_t i = _image->size(); i < _image->size() + increase_deg_by; i++) {
+      auto   out = new std::vector<T>(*this->_vector);
+      size_t n   = this->_vector->size();
+      for (size_t i = n; i < n + increase_deg_by; i++) {
         out->push_back(i);
       }
       return new Transformation<T>(out);
-    }
-
-    void really_delete () {
-      delete _image;
     }
 
     // multiply x and y into this
@@ -207,13 +177,9 @@ class Transformation : public Element {
       auto yy = *static_cast<Transformation<T> const*>(y);
 
       for (T i = 0; i < this->degree(); i++) {
-        _image->at(i) = yy[xx[i]];
+        this->_vector->at(i) = yy[xx[i]];
       }
     }
-
-  private:
-
-    std::vector<T>* _image;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -223,57 +189,19 @@ class Transformation : public Element {
 ////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-class PartialPerm : public Element {
+class PartialPerm : public PartialTransformation<T, PartialPerm<T> > {
 
   public:
 
-    PartialPerm (std::vector<T>* image) : _image(image) {}
-    
-    inline T operator [] (size_t pos) const {
-      return _image->at(pos);
-    }
-
-    size_t complexity () const {
-      return _image->size();
-    }
-    
-    size_t degree () const {
-      return _image->size();
-    }
-
-    bool equals (const Element* that) const {
-      return *(static_cast<const PartialPerm<T>*>(that)->_image) == *(this->_image);
-    }
-    
-    size_t hash_value () const {
-      size_t seed = 0;
-      T deg = this->degree();
-      for (T i = 0; i < deg; i++) {
-        seed = ((seed * deg) + this->_image->at(i));
-      }
-      return seed;
-    }
-    
-    // the identity of this
-    Element* identity () const {
-      auto image = new std::vector<T>();
-      image->reserve(this->degree());
-      for (T i = 0; i < this->degree(); i++) {
-        image->push_back(i);
-      }
-      return new PartialPerm<T>(image);
-    }
+    PartialPerm (std::vector<T>* vector) : 
+      PartialTransformation<T, PartialPerm<T> >(vector) {}
 
     Element* really_copy (size_t increase_deg_by = 0) const override {
-      auto out = new std::vector<T>(*_image);
+      std::vector<T>* vector(new std::vector<T>(*this->_vector));
       for (size_t i = 0; i < increase_deg_by; i++) {
-        out->push_back(UNDEFINED);
+        vector->push_back(UNDEFINED);
       }
-      return new PartialPerm<T>(out);
-    }
-    
-    void really_delete () {
-      delete _image;
+      return new PartialPerm<T>(vector);
     }
 
     // multiply x and y into this
@@ -284,13 +212,12 @@ class PartialPerm : public Element {
       auto yy = *static_cast<PartialPerm<T> const*>(y);
 
       for (T i = 0; i < this->degree(); i++) {
-        _image->at(i) = (xx[i] == UNDEFINED ? UNDEFINED : yy[xx[i]]);
+        this->_vector->at(i) = (xx[i] == UNDEFINED ? UNDEFINED : yy[xx[i]]);
       }
     }
 
   private:
 
-    std::vector<T>* _image;
     T               UNDEFINED = (T) -1;
 };
 
@@ -300,27 +227,19 @@ class PartialPerm : public Element {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-class BooleanMat: public Element {
+class BooleanMat: public ElementWithVectorData<bool, BooleanMat> {
 
   public:
 
-    BooleanMat             (std::vector<bool>* matrix) : _matrix(matrix) {}
-    bool     at            (size_t pos)                     const;
-
+    BooleanMat             (std::vector<bool>* matrix) : 
+      ElementWithVectorData<bool, BooleanMat>(matrix) {}
+    
     size_t   complexity    ()                               const;
     size_t   degree        ()                               const;
-    bool     equals        (const Element*)                 const;
     size_t   hash_value    ()                               const;
     Element* identity      ()                               const;
-    Element* really_copy   (size_t = 0)                     const;
-    void     really_delete ();
     void     redefine      (Element const*, Element const*);
   
-  private:
-    
-
-    std::vector<bool>* _matrix;
-
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -329,28 +248,25 @@ class BooleanMat: public Element {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-class Bipartition : public Element {
+class Bipartition : public ElementWithVectorData<u_int32_t, Bipartition> {
 
   public:
 
-    Bipartition            (std::vector<u_int32_t>* blocks) : _blocks(blocks) {}
+    Bipartition            (std::vector<u_int32_t>* blocks) : 
+      ElementWithVectorData<u_int32_t, Bipartition> (blocks) {}
+      
     u_int32_t block        (size_t pos)                     const;
 
     size_t   complexity    ()                               const;
     size_t   degree        ()                               const;
-    bool     equals        (const Element*)                 const;
     size_t   hash_value    ()                               const;
     Element* identity      ()                               const;
-    Element* really_copy   (size_t = 0)                     const;
-    void     really_delete ()                                    ;
     void     redefine      (Element const*, Element const*)      ;
   
   private:
 
     u_int32_t fuseit   (std::vector<u_int32_t>const&, u_int32_t);
     u_int32_t nrblocks () const;
-
-    std::vector<u_int32_t>* _blocks;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

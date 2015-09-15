@@ -3,7 +3,8 @@
 
 ###TODO C++
 
-
+* remove `auto`, use `override`
+* "documentation" and comments.
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 * check for memleaks
 * remove C++11?

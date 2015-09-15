@@ -13,48 +13,29 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool BooleanMat::at (size_t pos) const {
-  return _matrix->at(pos);
-}
-
 size_t BooleanMat::complexity () const {
   return pow(this->degree(), 3);
 }
 
 size_t BooleanMat::degree () const {
-  return sqrt(_matrix->size());
-}
-
-bool BooleanMat::equals (const Element* that) const {
-  return *(static_cast<const BooleanMat*>(that)->_matrix) == *(this->_matrix);
+  return sqrt(_vector->size());
 }
 
 size_t BooleanMat::hash_value () const {
   size_t seed = 0;
-  for (size_t i = 0; i < _matrix->size(); i++) {
-    seed = ((seed << 1) + _matrix->at(i));
+  for (size_t i = 0; i < _vector->size(); i++) {
+    seed = ((seed << 1) + _vector->at(i));
   }
   return seed;
 }
 
-// the identity of this
 Element* BooleanMat::identity () const {
   std::vector<bool>* matrix(new std::vector<bool>());
-  matrix->resize(_matrix->size(), false);
+  matrix->resize(_vector->size(), false);
   for (size_t i = 0; i < this->degree(); i++) {
     matrix->at(i * this->degree() + i) =  true;
   }
   return new BooleanMat(matrix);
-}
-
-Element* BooleanMat::really_copy (size_t increase_deg_by) const {
-  assert(increase_deg_by == 0);
-  std::vector<bool>* matrix(new std::vector<bool>(*_matrix));
-  return new BooleanMat(matrix);
-}
-
-void BooleanMat::really_delete () {
-  delete _matrix;
 }
 
 // multiply x and y into this
@@ -65,8 +46,8 @@ void BooleanMat::redefine (Element const* x,
   
   size_t k;
   size_t dim = this->degree();
-  std::vector<bool>* xx(static_cast<BooleanMat const*>(x)->_matrix);
-  std::vector<bool>* yy(static_cast<BooleanMat const*>(y)->_matrix);
+  std::vector<bool>* xx(static_cast<BooleanMat const*>(x)->_vector);
+  std::vector<bool>* yy(static_cast<BooleanMat const*>(y)->_vector);
 
   for (size_t i = 0; i < dim; i++) {
     for (size_t j = 0; j < dim; j++) {
@@ -75,7 +56,7 @@ void BooleanMat::redefine (Element const* x,
           break;
         }
       }
-      _matrix->at(i * dim + j) =  (k < dim);
+      _vector->at(i * dim + j) =  (k < dim);
     }
   }
 }
@@ -87,25 +68,21 @@ void BooleanMat::redefine (Element const* x,
 ////////////////////////////////////////////////////////////////////////////////
 
 u_int32_t Bipartition::block (size_t pos) const {
-  return _blocks->at(pos);
+  return _vector->at(pos);
 }
 
 size_t Bipartition::complexity () const {
-  return pow(_blocks->size(), 2);
+  return pow(_vector->size(), 2);
 }
 
 size_t Bipartition::degree () const {
-  return _blocks->size() / 2;
-}
-
-bool Bipartition::equals (const Element* that) const {
-  return *(static_cast<const Bipartition*>(that)->_blocks) == *(this->_blocks);
+  return _vector->size() / 2;
 }
 
 size_t Bipartition::hash_value () const {
   size_t seed = 0;
-  for (size_t i = 0; i < _blocks->size(); i++) {
-    seed = ((seed * _blocks->size()) + _blocks->at(i));
+  for (size_t i = 0; i < _vector->size(); i++) {
+    seed = ((seed * _vector->size()) + _vector->at(i));
   }
   return seed;
 }
@@ -113,23 +90,13 @@ size_t Bipartition::hash_value () const {
 // the identity of this
 Element* Bipartition::identity () const {
   std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>());
-  blocks->reserve(this->_blocks->size());
+  blocks->reserve(this->_vector->size());
   for (size_t j = 0; j < 2; j++) {
     for (u_int32_t i = 0; i < this->degree(); i++) {
       blocks->push_back(i);
     }
   }
   return new Bipartition(blocks);
-}
-
-Element* Bipartition::really_copy (size_t increase_deg_by) const {
-  assert(increase_deg_by == 0);
-  std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>(*_blocks));
-  return new Bipartition(blocks);
-}
-
-void Bipartition::really_delete () {
-  delete _blocks;
 }
 
 // multiply x and y into this
@@ -141,8 +108,8 @@ void Bipartition::redefine (Element const* x, Element const* y) {
   Bipartition const* xx = static_cast<Bipartition const*>(x);
   Bipartition const* yy = static_cast<Bipartition const*>(y);
 
-  std::vector<u_int32_t>* xblocks(xx->_blocks);
-  std::vector<u_int32_t>* yblocks(yy->_blocks);
+  std::vector<u_int32_t>* xblocks(xx->_vector);
+  std::vector<u_int32_t>* yblocks(yy->_vector);
 
   u_int32_t nrx(xx->nrblocks());
   u_int32_t nry(yy->nrblocks());
@@ -179,7 +146,7 @@ void Bipartition::redefine (Element const* x, Element const* y) {
       lookup.at(j) = next;
       next++;
     }
-    this->_blocks->at(i) = lookup.at(j);
+    this->_vector->at(i) = lookup.at(j);
   }
 
   for (size_t i = n; i < 2 * n; i++) {
@@ -188,7 +155,7 @@ void Bipartition::redefine (Element const* x, Element const* y) {
       lookup.at(j) = next;
       next++;
     }
-    this->_blocks->at(i) = lookup.at(j);
+    this->_vector->at(i) = lookup.at(j);
   }
 }
 
@@ -204,9 +171,9 @@ inline u_int32_t Bipartition::fuseit (std::vector<u_int32_t> const& fuse,
 
 u_int32_t Bipartition::nrblocks () const {
   size_t nr = 0;
-  for (size_t i = 0; i < _blocks->size(); i++) {
-    if (_blocks->at(i) > nr) {
-      nr = _blocks->at(i);
+  for (size_t i = 0; i < _vector->size(); i++) {
+    if (_vector->at(i) > nr) {
+      nr = _vector->at(i);
     }
   }
   return nr + 1;
