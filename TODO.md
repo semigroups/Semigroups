@@ -3,7 +3,7 @@
 
 ###TODO C++
 
-* remove `auto`, use `override`
+* remove `auto`, use `override`: done in elements.h
 * "documentation" and comments.
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 * check for memleaks

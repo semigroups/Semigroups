@@ -1,13 +1,19 @@
-/*
+/*******************************************************************************
  * Semigroups++
  *
  * This file contains classes for creating elements of a semigroup.
  *
- */
+ *******************************************************************************/
 
 #ifndef SEMIGROUPS_ELEMENTS_H
 #define SEMIGROUPS_ELEMENTS_H
 //#define NDEBUG
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Header includes . . .
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 #include "semiring.h"
 
@@ -17,6 +23,12 @@
 #include <math.h>
 #include <vector>
 #include <unordered_set>
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Namespaces
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 using namespace semiring;
 using namespace std;
@@ -83,19 +95,19 @@ class ElementWithVectorData : public Element {
       return _vector->at(pos);
     }
     
-    bool equals (const Element* that) const {
+    bool equals (const Element* that) const override {
       return *(static_cast<const T*>(that)->_vector) 
         == *(this->_vector);
     }
 
     // this must be overridden if increase_deg_by != 0
-    virtual Element* really_copy (size_t increase_deg_by) const {
+    virtual Element* really_copy (size_t increase_deg_by) const override {
       assert(increase_deg_by == 0);
       std::vector<S>* vector(new std::vector<S>(*_vector));
       return new T(vector);
     }
 
-    virtual void really_delete () {
+    virtual void really_delete () override {
       delete _vector;
     };
 
@@ -119,15 +131,15 @@ class PartialTransformation :
     PartialTransformation (std::vector<S>* vector) : 
       ElementWithVectorData<S, T>(vector) {}
     
-    size_t complexity () const {
+    size_t complexity () const override {
       return this->_vector->size();
     }
 
-    size_t degree () const {
+    size_t degree () const override {
       return this->_vector->size();
     }
 
-    size_t hash_value () const {
+    size_t hash_value () const override {
       size_t seed = 0;
       size_t deg = this->degree();
       for (size_t i = 0; i < deg; i++) {
@@ -136,8 +148,8 @@ class PartialTransformation :
       return seed;
     }
     
-    Element* identity () const {
-      auto vector = new std::vector<S>();
+    Element* identity () const override {
+      std::vector<S>* vector(new std::vector<S>());
       vector->reserve(this->degree());
       for (size_t i = 0; i < this->degree(); i++) {
         vector->push_back(i);
@@ -162,7 +174,7 @@ class Transformation :
       PartialTransformation<T, Transformation<T> >(vector) {}
     
     Element* really_copy (size_t increase_deg_by = 0) const override {
-      auto   out = new std::vector<T>(*this->_vector);
+      std::vector<T>* out(new std::vector<T>(*this->_vector));
       size_t n   = this->_vector->size();
       for (size_t i = n; i < n + increase_deg_by; i++) {
         out->push_back(i);
@@ -171,11 +183,11 @@ class Transformation :
     }
 
     // multiply x and y into this
-    void redefine (Element const* x, Element const* y) {
+    void redefine (Element const* x, Element const* y) override {
       assert(x->degree() == y->degree());
       assert(x->degree() == this->degree());
-      auto xx = *static_cast<Transformation<T> const*>(x);
-      auto yy = *static_cast<Transformation<T> const*>(y);
+      Transformation<T> xx(*static_cast<Transformation<T> const*>(x));
+      Transformation<T> yy(*static_cast<Transformation<T> const*>(y));
 
       for (T i = 0; i < this->degree(); i++) {
         this->_vector->at(i) = yy[xx[i]];
@@ -206,11 +218,11 @@ class PartialPerm : public PartialTransformation<T, PartialPerm<T> > {
     }
 
     // multiply x and y into this
-    void redefine (Element const* x, Element const* y) {
+    void redefine (Element const* x, Element const* y) override {
       assert(x->degree() == y->degree());
       assert(x->degree() == this->degree());
-      auto xx = *static_cast<PartialPerm<T> const*>(x);
-      auto yy = *static_cast<PartialPerm<T> const*>(y);
+      PartialPerm<T> xx(*static_cast<PartialPerm<T> const*>(x));
+      PartialPerm<T> yy(*static_cast<PartialPerm<T> const*>(y));
 
       for (T i = 0; i < this->degree(); i++) {
         this->_vector->at(i) = (xx[i] == UNDEFINED ? UNDEFINED : yy[xx[i]]);
@@ -219,7 +231,7 @@ class PartialPerm : public PartialTransformation<T, PartialPerm<T> > {
 
   private:
 
-    T               UNDEFINED = (T) -1;
+    T UNDEFINED = (T) -1;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -235,11 +247,11 @@ class BooleanMat: public ElementWithVectorData<bool, BooleanMat> {
     BooleanMat             (std::vector<bool>* matrix) : 
       ElementWithVectorData<bool, BooleanMat>(matrix) {}
     
-    size_t   complexity    ()                               const;
-    size_t   degree        ()                               const;
-    size_t   hash_value    ()                               const;
-    Element* identity      ()                               const;
-    void     redefine      (Element const*, Element const*);
+    size_t   complexity ()                               const override;
+    size_t   degree     ()                               const override;
+    size_t   hash_value ()                               const override;
+    Element* identity   ()                               const override;
+    void     redefine   (Element const*, Element const*)       override;
   
 };
 
@@ -258,11 +270,11 @@ class Bipartition : public ElementWithVectorData<u_int32_t, Bipartition> {
       
     u_int32_t block        (size_t pos)                     const;
 
-    size_t   complexity ()                               const;
-    size_t   degree     ()                               const;
-    size_t   hash_value ()                               const;
-    Element* identity   ()                               const;
-    void     redefine   (Element const*, Element const*)      ;
+    size_t   complexity ()                               const override;
+    size_t   degree     ()                               const override;
+    size_t   hash_value ()                               const override;
+    Element* identity   ()                               const override;
+    void     redefine   (Element const*, Element const*)       override;
   
   private:
 
@@ -291,18 +303,19 @@ class MatrixOverSemiring :
              Semiring* semiring     ()                               const;
              void      set_semiring (Semiring* semiring);
 
-             size_t    complexity   ()                               const;
-             size_t    degree       ()                               const;
-    virtual  size_t    hash_value   ()                               const;
-             Element*  identity     ()                               const;
-             Element*  really_copy  (size_t increase_deg_by)         const;
+             size_t    complexity   ()                               const override;
+             size_t    degree       ()                               const override;
+    virtual  size_t    hash_value   ()                               const override;
+             Element*  identity     ()                               const override;
+             Element*  really_copy  (size_t increase_deg_by)         const override;
              void      redefine     (Element const*, Element const*);
+
   private: 
 
     // a function applied after redefinition 
     virtual void after () {}
 
-    Semiring*          _semiring;
+    Semiring* _semiring;
     
 }; 
 
@@ -320,12 +333,12 @@ class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
                             Semiring*          semiring) :
       MatrixOverSemiring(matrix, semiring) {};
     
-    size_t    hash_value    ()                               const;
+    size_t hash_value () const override;
   
   private: 
 
     // a function applied after redefinition 
-    void after ();
+    void after () override;
 
 };
 
@@ -342,11 +355,11 @@ class PBR: public ElementWithVectorData<std::vector<u_int32_t>, PBR> {
     PBR (std::vector<std::vector<u_int32_t> >* vector) : 
       ElementWithVectorData<std::vector<u_int32_t>, PBR>(vector) {}
 
-    size_t   complexity    ()                               const;
-    size_t   degree        ()                               const;
-    size_t   hash_value    ()                               const;
-    Element* identity      ()                               const;
-    void     redefine      (Element const*, Element const*)      ;
+    size_t   complexity ()                               const override;
+    size_t   degree     ()                               const override;
+    size_t   hash_value ()                               const override;
+    Element* identity   ()                               const override;
+    void     redefine   (Element const*, Element const*)       override;
 
   private:
     
