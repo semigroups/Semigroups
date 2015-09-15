@@ -18,12 +18,10 @@ BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
   assert(IS_BOOL_MAT(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
-  assert(sqrt(n) == LEN_BLIST(ELM_PLIST(o, 1)));
+  assert(n == (size_t) LEN_BLIST(ELM_PLIST(o, 1)));
 
   std::vector<bool>* x(new std::vector<bool>());
-  x->resize(n, false);
-
-  n = LEN_BLIST(ELM_PLIST(o, 1));
+  x->resize(n * n, false);
 
   for (size_t i = 0; i < n; i++) {
     Obj row = ELM_PLIST(o, i + 1);

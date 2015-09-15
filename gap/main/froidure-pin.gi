@@ -256,15 +256,16 @@ function(S)
   local data, hashlen, nrgens, nr, val, i;
 
   if SEMIGROUPS_IsCCSemigroup(S) then 
-    data := rec();
-    data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
-    data.nr := 0;
-    data.pos := 0;
-    # the degree is the length of the std::vector required to hold the object
-    data.degree := SEMIGROUPS_DegreeOfSemigroup(S);
-    data.report := SEMIGROUPS_OptionsRec(S).report;
-    data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
+    
+    data             := rec();
+    data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
+    data.nr          := 0;
+    data.pos         := 0;
+    data.degree      := SEMIGROUPS_DegreeOfSemigroup(S);
+    data.report      := SEMIGROUPS_OptionsRec(S).report;
+    data.batch_size  := SEMIGROUPS_OptionsRec(S).batch_size;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
+    
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);
   fi;

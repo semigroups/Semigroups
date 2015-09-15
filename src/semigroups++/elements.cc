@@ -343,7 +343,8 @@ size_t PBR::hash_value () const {
 }
 
 Element* PBR::identity () const {
-  std::vector<std::vector<u_int32_t> >* adj(new std::vector<std::vector<u_int32_t> >());
+  std::vector<std::vector<u_int32_t> >* 
+    adj(new std::vector<std::vector<u_int32_t> >());
   size_t n = this->degree();
   adj->reserve(2 * n);
   for (u_int32_t i = 0; i < 2 * n; i++) {
@@ -359,11 +360,16 @@ Element* PBR::identity () const {
 //FIXME this allocates lots of memory on every call, maybe better to keep
 //the data in the class and overwrite it.
 //FIXME also we repeatedly search in the same part of the graph, and so
-//there is probably a lot of repeated work in the dfs.
-void PBR::redefine (Element const* x, 
-                    Element const* y ) {
-  assert(x->degree() == y->degree());
-  assert(x->degree() == this->degree());
+//there is probably a lot of repeated work in the dfs. Better use some version
+//of Floyd-Warshall
+void PBR::redefine (Element const* xx, 
+                    Element const* yy ) {
+  assert(xx->degree() == yy->degree());
+  assert(xx->degree() == this->degree());
+
+  PBR const* x(static_cast<PBR const*>(xx));
+  PBR const* y(static_cast<PBR const*>(yy));
+   
   u_int32_t n = this->degree();
 
   for (size_t i = 0; i < 2 * n; i++) {
@@ -375,7 +381,7 @@ void PBR::redefine (Element const* x,
   x_seen.resize(2 * n, false);
   y_seen.resize(2 * n, false);
 
-  for (size_t i = 0; i < 2 * n; i++) {
+  for (size_t i = 0; i < n; i++) {
     x_dfs(n, i, i, x_seen, y_seen, x, y);
     for (size_t j = 0; j < 2 * n; j++) {
       x_seen.at(j) = false;
@@ -391,13 +397,12 @@ void PBR::redefine (Element const* x,
     }
   }
 }
-    
-    
+
 // add vertex2 to the adjacency of vertex1
 void PBR::add_adjacency (size_t vertex1, size_t vertex2) {
   auto it = std::lower_bound(_vector->at(vertex1).begin(),
-      _vector->at(vertex1).end(), 
-      vertex2);
+                             _vector->at(vertex1).end(), 
+                             vertex2);
   if (it == _vector->at(vertex1).end()) {
     _vector->at(vertex1).push_back(vertex2);
   } else if ((*it) != vertex2) {
@@ -410,12 +415,12 @@ void PBR::x_dfs (u_int32_t          n,
                  u_int32_t          v,         // the vertex we're currently doing
                  std::vector<bool>& x_seen,
                  std::vector<bool>& y_seen,
-                 Element const*     x, 
-                 Element const*     y      ) {
-
+                 PBR const*         x, 
+                 PBR const*         y      ) {
+  
   if (!x_seen.at(i)) {
     x_seen.at(i) = true;
-    for (auto j: _vector->at(i)) {
+    for (auto j: x->at(i)) {
       if (j < n) {
         add_adjacency(v, j);
       } else {
@@ -430,12 +435,12 @@ void PBR::y_dfs (u_int32_t          n,
                  u_int32_t          v,         // the vertex we're currently doing
                  std::vector<bool>& x_seen,
                  std::vector<bool>& y_seen,
-                 Element const*     x, 
-                 Element const*     y      ) {
+                 PBR const*         x, 
+                 PBR const*         y      ) {
 
   if (!y_seen.at(i)) {
     y_seen.at(i) = true;
-    for (auto j: _vector->at(i)) {
+    for (auto j: y->at(i)) {
       if (j >= n) {
         add_adjacency(v, j);
       } else {

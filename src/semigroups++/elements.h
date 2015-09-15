@@ -227,8 +227,8 @@ class PartialPerm : public Element {
 
     Element* really_copy (size_t increase_deg_by = 0) const override {
       auto out = new std::vector<T>(*_image);
-      for (size_t i = _image->size(); i < _image->size() + increase_deg_by; i++) {
-        out->push_back(i);
+      for (size_t i = 0; i < increase_deg_by; i++) {
+        out->push_back(UNDEFINED);
       }
       return new PartialPerm<T>(out);
     }
@@ -406,16 +406,16 @@ class PBR: public ElementWithVectorData<std::vector<u_int32_t>, PBR> {
                 u_int32_t          v,        // the vertex we're currently doing
                 std::vector<bool>& x_seen,
                 std::vector<bool>& y_seen,
-                Element const*     x, 
-                Element const*     y      );
+                PBR const*         x, 
+                PBR const*         y      );
     
     void y_dfs (u_int32_t          n,
                 u_int32_t          i, 
                 u_int32_t          v,        // the vertex we're currently doing
                 std::vector<bool>& x_seen,
                 std::vector<bool>& y_seen,
-                Element const*     x, 
-                Element const*     y      );
+                PBR const*         x, 
+                PBR const*         y      );
 };
 
 #endif
