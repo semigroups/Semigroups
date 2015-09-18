@@ -96,47 +96,6 @@ extern Obj IsPBR;
 extern Obj PBRType;
 
 /*******************************************************************************
- * What type of semigroup do we have?
-*******************************************************************************/
-
-enum SemigroupType {
-  UNKNOWN,
-  TRANS2, 
-  TRANS4, 
-  PPERM2, 
-  PPERM4, 
-  BOOL_MAT, 
-  BIPART,
-  MAX_PLUS_MAT,
-  MIN_PLUS_MAT,
-  TROP_MAX_PLUS_MAT,
-  TROP_MIN_PLUS_MAT,
-  PROJ_MAX_PLUS_MAT,
-  NAT_MAT,
-  MAT_OVER_PF, 
-  PBR_TYPE
-};
-
-extern SemigroupType TypeSemigroup (Obj data);
-
-bool inline IsCCSemigroup (Obj data) {
-  return TypeSemigroup(data) != UNKNOWN;
-}
-
-/*******************************************************************************
- * Get a representative of the semigroup from the data
-*******************************************************************************/
-
-//TODO put these in a separate file
-
-Obj inline Representative (Obj data) {
-  // TODO more asserts 
-  assert(IsbPRec(data, RNamName("gens")));
-  assert(LEN_LIST(ElmPRec(data, RNamName("gens"))) > 0);
-  return ELM_PLIST(ElmPRec(data, RNamName("gens")), 1);
-}
-
-/*******************************************************************************
  * Union-find data structure
 *******************************************************************************/
 typedef std::vector<size_t>   table_t;
@@ -244,19 +203,5 @@ private:
   blocks_t* _blocks;
   bool      _haschanged;
 };
-
-size_t inline BatchSize (Obj data) {
-  assert(IsbPRec(data, RNamName("batch_size")));
-  assert(IS_INTOBJ(ElmPRec(data, RNamName("batch_size"))));
-  return INT_INTOBJ(ElmPRec(data, RNamName("batch_size")));
-}
-
-bool inline Report (Obj data) {
-  if (IsbPRec(data, RNamName("report"))) {
-    assert(ElmPRec(data, RNamName("report")) == True || ElmPRec(data, RNamName("report")) == False);
-    return (ElmPRec(data, RNamName("report")) == True ? true : false);
-  }
-  return false;
-}
 
 #endif
