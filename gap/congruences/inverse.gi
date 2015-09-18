@@ -68,6 +68,7 @@ function(s, kernel, traceBlocks)
       od;
     od;
   od;
+  #TODO: Change this to NC
   return InverseSemigroupCongruenceByKernelTrace(s, kernel, traceBlocks);
 end);
 
@@ -344,6 +345,8 @@ NormalClosureInverseSemigroup := function(S, K, coll)
   return K;
 end;
 
+#
+
 InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
@@ -488,7 +491,7 @@ function(cong)
   nrk := Length(kernelgenstoapply);
   traceUF := UF_NEW(Length(ids));
   kernel := IdempotentGeneratedSubsemigroup(s);
-  Elements(kernel); 
+  Elements(kernel);
 
   timing := rec();
   # Keep applying the method until no new info is found
@@ -516,7 +519,8 @@ function(cong)
   traceBlocks := List(Compacted(UF_BLOCKS(traceUF)),
                       b-> List(b, i-> ids[i]));
 
-  return InverseSemigroupCongruenceByKernelTraceNC(s, kernel, traceBlocks);
+  #TODO: Change this to NC
+  return InverseSemigroupCongruenceByKernelTrace(s, kernel, traceBlocks);
 end);
 
 #
