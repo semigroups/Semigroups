@@ -367,7 +367,7 @@ function(cong)
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);
-  ids := ELEMENTS_SEMIGROUP(GenericSemigroupData(idsmgp), infinity);
+  ids := SEMIGROUP_ELEMENTS(GenericSemigroupData(idsmgp), infinity);
   ht_e := HTCreate(ids[1]);
   for i in [1 .. Length(ids)] do 
     HTAdd(ht_e, ids[i], i);
