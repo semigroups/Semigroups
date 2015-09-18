@@ -31,6 +31,15 @@ gap> cong := SemigroupCongruence(e, pairs);;
 gap> IsSemilatticeCongruence(cong);
 true
 
+# Bad usage
+gap> [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] in cong;
+Error, Semigroups: \in: usage,
+the first arg <pair> must be a list of length 2,
+gap> [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ), PartialPerm( [ 1, 5 ], [ 1, 5 ] ) ] in cong;
+Error, Semigroups: \in: usage,
+elements of the first arg <pair> must be in range of the second
+arg <cong>,
+
 # Reflexivity
 gap> [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] in cong;
 true
@@ -107,8 +116,13 @@ gap> pairs := [
 gap> cong := SemigroupCongruence(e, pairs);;
 gap> IsSemilatticeCongruence(cong);
 true
+gap> CongruenceClassOfElement(cong, PartialPerm( [ 1, 5 ], [ 1, 5 ] ));
+Error, Semigroups: EquivalenceClassOfElement: usage,
+the second arg <elm> must be in the semigroup of first arg <cong>,
 gap> BlockCoincidenceTable(cong);
 [ 1, 1, 2 ]
+gap> NrCongruenceClasses(cong);
+9
 gap> x := PartialPerm([4],[4]);;
 gap> c1 := CongruenceClassOfElement(cong, x);;
 gap> x in c1;
@@ -130,12 +144,26 @@ true
 gap> c2 := CongruenceClassOfElement(cong, PartialPerm([1,2,3],[1,2,3]));;
 gap> c1 = c2;
 false
+gap> cong2 := SemigroupCongruence(e, []);;
+gap> cong = cong2;
+false
+gap> c3 := CongruenceClassOfElement(cong2, PartialPerm([1,2,3],[1,2,3]));;
+gap> c2 = c3;
+false
+gap> c2 * c3;
+Error, Semigroups: \*: usage,
+the args <c1> and <c2> must be classes of the same congruence,
 gap> c1 * c2 = c1;
 true
 gap> c2 * c2 = c2;
 true
 gap> NonTrivialCongruenceClasses(cong);
 [ {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, {PartialPerm( [ 3, 4 ], [ 3, 4 ] )} ]
+gap> NonTrivialCongruenceClasses(cong2);
+[  ]
+gap> ImagesElm(cong, PartialPerm([8,9],[8,9]));
+Error, Semigroups: ImagesElm: usage,
+the second arg <elm> must be in the semigroup of the first arg <cong>,
 gap> c1 := CongruenceClassOfElement(cong, PartialPerm([1,3,4],[1,3,4]));;
 gap> Enumerator(c1);
 [ <identity partial perm on [ 1, 3, 4 ]> ]
@@ -151,12 +179,16 @@ gap> enum[1];
 <empty partial perm>
 gap> enum[2];
 <identity partial perm on [ 2 ]>
-gap> enum[2];
+gap> x := enum[2];
 <identity partial perm on [ 2 ]>
 gap> enum[3];
 <identity partial perm on [ 2, 3 ]>
-gap> enum[4];
-<identity partial perm on [ 2, 4 ]>
+gap> Position(enum, x);
+2
+gap> Position(enum, PartialPerm([2,4],[2,4]));
+4
+gap> Position(enum, 42);
+fail
 gap> Size(enum);
 4
 gap> Size(c1);
@@ -174,6 +206,13 @@ true
 gap> AsList(c1);
 [ <empty partial perm>, <identity partial perm on [ 2, 3 ]>, 
   <identity partial perm on [ 2 ]>, <identity partial perm on [ 2, 4 ]> ]
+gap> CongruenceClasses(cong);
+[ {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, 
+  {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
+  {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}, 
+  {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
+  {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, {PartialPerm( [ 3 ], [ 3 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1 ], [ 1 ] )} ]
 
 #T# CongSemilatticeTest4: ElementsBetween
 gap> s := InverseSemigroup( [
@@ -207,6 +246,32 @@ gap> SemilatticeElementsBetween(e, lo, hi);
   <identity partial perm on [ 5, 8, 9, 10 ]>, 
   <identity partial perm on [ 3, 5, 9, 10 ]>, 
   <identity partial perm on [ 3, 5, 8, 9, 10 ]> ]
+gap> hi := PartialPerm( [ 3, 5, 8, 9, 10 ], [ 3, 5, 8, 9, 10 ] );;
+gap> lo := PartialPerm( [  ], [  ] );;
+gap> SemilatticeElementsBetween(e, lo, hi);
+[ <identity partial perm on [ 5, 8 ]>, <identity partial perm on [ 3, 5, 8 ]>,
+  <identity partial perm on [ 8, 9 ]>, <identity partial perm on [ 5, 9 ]>, 
+  <identity partial perm on [ 5, 8, 9 ]>, 
+  <identity partial perm on [ 3, 8, 9 ]>, 
+  <identity partial perm on [ 3, 5, 9 ]>, 
+  <identity partial perm on [ 3, 5, 8, 9 ]>, 
+  <identity partial perm on [ 9, 10 ]>, <identity partial perm on [ 8, 10 ]>, 
+  <identity partial perm on [ 8, 9, 10 ]>, <identity partial perm on [ 5, 10 ]
+    >, <identity partial perm on [ 5, 9, 10 ]>, 
+  <identity partial perm on [ 5, 8, 10 ]>, 
+  <identity partial perm on [ 5, 8, 9, 10 ]>, 
+  <identity partial perm on [ 3, 10 ]>, <identity partial perm on [ 3, 9, 10 ]
+    >, <identity partial perm on [ 3, 8, 10 ]>, 
+  <identity partial perm on [ 3, 8, 9, 10 ]>, 
+  <identity partial perm on [ 3, 5, 10 ]>, 
+  <identity partial perm on [ 3, 5, 9, 10 ]>, 
+  <identity partial perm on [ 3, 5, 8, 10 ]>, 
+  <identity partial perm on [ 3, 5, 8, 9, 10 ]>, 
+  <identity partial perm on [ 8 ]>, <identity partial perm on [ 5 ]>, 
+  <empty partial perm>, <identity partial perm on [ 3, 8 ]>, 
+  <identity partial perm on [ 3, 5 ]>, <identity partial perm on [ 3 ]>, 
+  <identity partial perm on [ 9 ]>, <identity partial perm on [ 3, 9 ]>, 
+  <identity partial perm on [ 10 ]> ]
 
 #T# MeetSemigroupCongruences
 gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
@@ -228,6 +293,15 @@ gap> NonTrivialCongruenceClasses(cc);
 gap> Elements(last[1]);
 [ <identity partial perm on [ 1, 2 ]>, <identity partial perm on [ 1, 2, 3 ]> 
  ]
+gap> f := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
+>                             PartialPerm( [ 2, 4 ], [ 2, 4 ] ),
+>                             PartialPerm( [ 3, 4 ], [ 3, 4 ] ) ] );;
+gap> IsSemilatticeAsSemigroup(f);;
+gap> p2 := [[PartialPermNC([1,3,4],[1,3,4]), PartialPermNC([3,4],[3,4])]];;
+gap> c2 := SemigroupCongruence(f, p2);;
+gap> MeetSemigroupCongruences(c1, c2);
+Error, Semigroups: MeetOfSemigroupCongruences: usage,
+args <cong1> and <cong2> must be over the same semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
