@@ -92,16 +92,14 @@ function(pair, cong)
   local s, c1;
   # Input checks
   if not Size(pair) = 2 then
-    Error("Semigroups: \in: usage,\n",
-          "the first arg <pair> must be a list of length 2,");
-    return;
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
+                 "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not (pair[1] in s and pair[2] in s) then
-    Error("Semigroups: \in: usage,\n",
-          "elements of the first arg <pair> must be in range",
-          "of the second\narg <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
+                 "elements of the first arg <pair> must be in range ",
+                 "of the second\narg <cong>,");
   fi;
 
   # Try reflexivity
@@ -127,10 +125,9 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check the arguments
   if not elm in Range(cong) then
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "the second arg <elm> must be ",
-          "in the semigroup of first arg <cong>");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "the second arg <elm> must be ",
+                 "in the semigroup of first arg <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -189,13 +186,13 @@ InstallMethod(\*,
 [IsSemilatticeCongruenceClass, IsSemilatticeCongruenceClass],
 function(c1, c2)
   if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
-    Error("Semigroups: \*: usage,\n",
-          "the args <c1> and <c2> must be classes of the same congruence,");
+    ErrorMayQuit("Semigroups: \\*: usage,\n",
+                 "the args <c1> and <c2> must be classes of the same congruence,");
   elif c1 = c2 then
     return c1;
   else
     return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
-                   Representative(c1) * Representative(c2));
+                                       Representative(c1) * Representative(c2));
   fi;
 end);
 
@@ -240,13 +237,11 @@ end);
 InstallGlobalFunction(SemilatticeElementsBetween,
 function(s, bottom, top)
   if not (bottom in s and top in s) then
-    Error("Semigroups: SemilatticeElementsBetween: usage,\n",
-          "<bottom> and <top> must be elements of <s>,");
-    return;
+    ErrorMayQuit("Semigroups: SemilatticeElementsBetween: usage,\n",
+                 "<bottom> and <top> must be elements of <s>,");
   elif not bottom * top = bottom then
-    Error("Semigroups: SemilatticeElementsBetween: usage,\n",
-          "<bottom> * <top> must be equal to <bottom>,");
-    return;
+    ErrorMayQuit("Semigroups: SemilatticeElementsBetween: usage,\n",
+                 "<bottom> * <top> must be equal to <bottom>,");
   fi;
   return SemilatticeElementsBetweenNC(s, bottom, top);
 end);
@@ -449,10 +444,9 @@ InstallMethod(ImagesElm,
 function(cong, elm)
   # Check the arguments
   if not elm in Range(cong) then
-    Error("Semigroups: ImagesElm: usage,\n",
-          "the second arg <elm> must be in",
-          "the semigroup of the first arg <cong>");
-    return;
+    ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
+                 "the second arg <elm> must be in ",
+                 "the semigroup of the first arg <cong>,");
   fi;
   return AsList(EquivalenceClassOfElementNC(cong, elm));
 end);
@@ -467,9 +461,8 @@ function(cong1, cong2)
         gen, newmin;
   s := Range(cong1);
   if s <> Range(cong2) then
-    Error("Semigroups: MeetOfSemigroupCongruences: usage,\n",
-          "args <cong1> and <cong2> must be over the same semigroup");
-    return;
+    ErrorMayQuit("Semigroups: MeetOfSemigroupCongruences: usage,\n",
+                 "args <cong1> and <cong2> must be over the same semigroup,");
   fi;
   outpairs := [];
   gens := GeneratorsOfSemigroup(s);
