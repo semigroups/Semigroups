@@ -112,6 +112,7 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
       Exec (Concatenation(viewer, " ", dir, file, ".", filetype,
                           " 2>/dev/null 1>/dev/null &"));
     fi;
+    Sleep(1);
     return;
   end);
 fi;

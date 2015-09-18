@@ -41,17 +41,14 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // assumes the length of data!.elts is at most 2^28
 // TODO move this into the previous section, and put the actual function in another function
 
-Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
+Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
   Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix, 
         reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
         empty, oldword, x;
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
 
-  if (IsCCSemigroup(data)) {
-    InterfaceFromData(data)->enumerate(data, limit);
-    return data;
-  }
+  assert(data_type(data) == UNKNOWN); 
 
   // TODO if looking check that something in elts doesn't already satisfy the
   // lookfunc 
@@ -67,9 +64,9 @@ Obj ENUMERATE_SEMIGROUP (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + BatchSize(data)));
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + data_batch_size(data)));
 
-  if (Report(data)) {
+  if (data_report(data)) {
     std::cout << "GAP kernel version\n";
   }
   
@@ -715,39 +712,40 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("boolean.cc", IS_COL_TRIM_BOOLEAN_MAT, 1, 
                           "x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", ENUMERATE_SEMIGROUP, 4, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ENUMERATE, 4, 
                           "data, limit, lookfunc, looking"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_SEMIGROUP, 4, 
-                          "data, lookfunc, start, end"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", RIGHT_CAYLEY_GRAPH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RIGHT_CAYLEY_GRAPH, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", LEFT_CAYLEY_GRAPH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LEFT_CAYLEY_GRAPH, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", ELEMENTS_SEMIGROUP, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ELEMENTS, 2, 
                           "data, limit"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", RELATIONS_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", WORD_SEMIGROUP, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_FACTORIZATION, 2, 
                           "data, pos"),
-    //GVAR_FUNC_TABLE_ENTRY("interface.cc", SIMPLE_SIZE, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SIZE_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_SIZE, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", NR_IDEMPOTENTS_SEMIGROUP, 1, 
-                          "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", CLOSURE_SEMIGROUP, 2, 
-                          "old_data, new_data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", ADD_GENERATORS_SEMIGROUP, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_NR_IDEMPOTENTS, 1, 
+                            "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CLOSURE, 3, 
+                          "old_data, coll, degree"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ADD_GENERATORS, 2, 
                           "data, coll"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", LENGTH_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_SIZE, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", NR_RULES_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_NR_RULES, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", POSITION_SEMIGROUP, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION, 2, 
                           "data, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", IS_CLOSED_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_IS_DONE, 1, 
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", MAX_WORD_LEN_SEMIGROUP, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_MAX_WORD_LENGTH, 1, 
                           "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_FIND, 4, 
+                          "data, lookfunc, start, end"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LENGTH_ELEMENT, 2, 
+                          "data, pos"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUPS_GABOW_SCC, 1, 
                           "digraph"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 

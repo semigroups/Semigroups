@@ -1,17 +1,17 @@
 #############################################################################
 ##
-#W  cong-inverse.tst
+#W  congruences/inverse.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: cong-inverse.tst");
+gap> START_TEST("Semigroups package: congruences/inverse.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# InverseCongTest1: Create an inverse semigroup
 gap> s := InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 5 ], [ 2, 7, 3, 4 ] ),
@@ -101,4 +101,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E# 
-gap> STOP_TEST( "Semigroups package: cong-inverse.tst");
+gap> STOP_TEST( "Semigroups package: congruences/inverse.tst");

@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: semigroups-matrix-max-plus.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 # semigroups-matrix-max-plus: C++ code working, for max-plus matrix semigroup
 gap> S := Semigroup(MaxPlusMatrixNC([[0, -4], [-4, -1]]),
@@ -58,4 +58,4 @@ gap> MultiplicativeZero(S);
 fail
 
 #E# 
-gap> STOP_TEST( "Semigroups package: semigroups-matrix-max-plus.tst");
+gap> STOP_TEST("Semigroups package: semigroups-matrix-max-plus.tst");

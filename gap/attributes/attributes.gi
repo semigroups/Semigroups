@@ -111,7 +111,7 @@ function(S)
   fi;
 
   if SEMIGROUPS_IsCCSemigroup(S) then
-    return NR_IDEMPOTENTS_SEMIGROUP(GenericSemigroupData(S));
+    return SEMIGROUP_NR_IDEMPOTENTS(GenericSemigroupData(S));
   fi;
   return Length(Idempotents(S));
 end);
@@ -163,7 +163,7 @@ function(S)
   pos := Position(lookup, fail);
 
   data := GenericSemigroupData(S);
-  rules := RELATIONS_SEMIGROUP(data);
+  rules := SEMIGROUP_RELATIONS(data);
   rels := [];
 
   convert := function(word)
@@ -204,7 +204,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  rules := RELATIONS_SEMIGROUP(GenericSemigroupData(S));
+  rules := SEMIGROUP_RELATIONS(GenericSemigroupData(S));
 
   F := FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A := GeneratorsOfSemigroup(F);
@@ -227,7 +227,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
+  return SEMIGROUP_RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
 end);
 
 # same method for ideals
@@ -238,7 +238,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
+  return SEMIGROUP_LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
 end);
 
 # same method for ideals
@@ -563,6 +563,36 @@ function(S)
   return fail;
 end);
 
+InstallMethod(LengthOfLongestDClassChain, "for a finite semigroup",
+[IsSemigroup],
+function(S)
+  local gr, nbs, po, minimal_dclass;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
+  nbs := OutNeighbours(gr);
+  po := Digraph(InNeighbours(gr));
+  minimal_dclass := First(DigraphVertices(po), x -> IsEmpty(nbs[x]));
+
+  SetMinimalDClass(S, GreensDClasses(S)[minimal_dclass]);
+  SetRepresentativeOfMinimalIdeal(S, Representative(
+                                     GreensDClasses(S)[minimal_dclass]));
+
+  return DigraphLongestDistanceFromVertex(po, minimal_dclass);
+end);
+
+InstallMethod(NilpotencyDegree, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  if not IsNilpotentSemigroup(S) then
+    return fail;
+  fi;
+  return LengthOfLongestDClassChain(S) + 1;
+end);
+
 InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
 S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 
@@ -737,7 +767,7 @@ function(S)
 
   data := Enumerate(GenericSemigroupData(S));
   comps := GreensRRelation(S)!.data.comps;
-  return ELEMENTS_SEMIGROUP(data, infinity)[comps[1][1]];
+  return SEMIGROUP_ELEMENTS(data, infinity)[comps[1][1]];
   # the first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal.
 end);

@@ -71,11 +71,10 @@ function()
    UserPreference("NotationForTransformations");
   record.FreeInverseSemigroupElementDisplay :=
     UserPreference("semigroups", "FreeInverseSemigroupElementDisplay");
-  
-  # store current default options 
+
+  # store current default options
   record.SEMIGROUPS_DefaultOptionsRec :=
     ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
-
 
   # set info levels
   SetInfoLevel(InfoWarning, 0);
@@ -114,7 +113,7 @@ function(file)
   local timeofday, record, elapsed, str;
 
   record := SEMIGROUPS_TestRec;
-  
+
   # restore info levels
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
@@ -133,7 +132,7 @@ function(file)
                     record.NotationForTransformations);
   SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
                     record.FreeInverseSemigroupElementDisplay);
-  
+
   # restore default options
   UnbindGlobal("SEMIGROUPS_DefaultOptionsRec");
   BindGlobal("SEMIGROUPS_DefaultOptionsRec",
@@ -168,7 +167,6 @@ function(file)
   MakeReadWriteGlobal("STOP_TEST");
   return;
 end);
-
 
 # TODO redo this
 
@@ -217,9 +215,9 @@ function()
 end);
 #
 
-BindGlobal("SEMIGROUPS_PF", 
+BindGlobal("SEMIGROUPS_PF",
 function(pass)
-  if pass then 
+  if pass then
     return "\033[1;32mPASSED!\033[0m\n";
   else
     return "\033[1;31mFAILED!\033[0m\n";
@@ -230,30 +228,30 @@ InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
   local opts, file_ext, is_testable, tst_dir, contents, subdirs, str, farm,
         nr_tests, out, subdir, filename;
-  
-  if Length(arg) = 1 and IsRecord(arg[1]) then 
+
+  if Length(arg) = 1 and IsRecord(arg[1]) then
     opts := arg[1];
-    if not IsBound(opts.parallel) or not IsBool(opts.parallel) then 
+    if not IsBound(opts.parallel) or not IsBool(opts.parallel) then
       opts.parallel := false;
     fi;
-  else 
+  else
     opts := rec(parallel := false);
   fi;
 
   Print("\n");
-  
+
   file_ext := function(str)
     local split;
     split := SplitString(str, ".");
-    if Length(split) > 1 then 
+    if Length(split) > 1 then
       return split[Length(split)];
-    else 
+    else
       return "";
     fi;
   end;
-  
-  is_testable := function(dir, file) 
-    local stringfile, str; 
+
+  is_testable := function(dir, file)
+    local stringfile, str;
     file := Concatenation(dir, "/", file);
     stringfile := StringFile(file);
     for str in SEMIGROUPS_OmitFromTests do
@@ -274,47 +272,49 @@ function(arg)
     PRINT_STRINGIFY(" . . .\n\n");
   fi;
 
-  tst_dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath, 
+  tst_dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
                             "/tst/standard");
   contents := DirectoryContents(tst_dir);
   subdirs := [];
-   
-  for str in contents do 
-    if str <> ".." and str <> "." and str = "attributes" then 
+
+  for str in contents do
+    # TODO remove: <<< and str = "attributes" >>> from below
+    if str <> ".." and str <> "." and str = "attributes" then
       str := Concatenation(tst_dir, "/", str);
-      if IsDirectoryPath(str) then 
+      if IsDirectoryPath(str) then
         Add(subdirs, str);
       fi;
     fi;
   od;
-  
+
   SemigroupsTestInstall(rec(silent := false));
-  if opts.parallel then  
-    farm := ParWorkerFarmByFork(SEMIGROUPS_Test, 
+  if opts.parallel then
+    farm := ParWorkerFarmByFork(SEMIGROUPS_Test,
                                 rec(NumberJobs := 3));
     nr_tests := 0;
-  else 
+  else
     out := true;
   fi;
 
-  for subdir in subdirs do 
+  for subdir in subdirs do
     contents := DirectoryContents(Directory(subdir));
     for filename in contents do
-      if file_ext(filename) = "tst" and is_testable(subdir, filename) then 
-        if opts.parallel then 
+      if file_ext(filename) = "tst" and is_testable(subdir, filename) then
+        if opts.parallel then
           nr_tests := nr_tests + 1;
-          Submit(farm, [Filename(Directory(subdir), filename), rec(silent := false)]);
-        else 
+          Submit(farm, [Filename(Directory(subdir), filename),
+                        rec(silent := false)]);
+        else
           if not SEMIGROUPS_Test(Filename(Directory(subdir), filename),
-                                 rec(silent := false)) then 
+                                 rec(silent := false)) then
             out := false;
           fi;
         fi;
       fi;
     od;
   od;
-  
-  if opts.parallel then 
+
+  if opts.parallel then
     while Length(farm!.outqueue) < nr_tests do
       DoQueues(farm, false);
     od;
@@ -322,7 +322,7 @@ function(arg)
     out := Pickup(farm);
     Kill(farm);
   fi;
-  
+
   return out;
 end);
 
@@ -332,14 +332,16 @@ InstallGlobalFunction(SemigroupsTestInstall,
 function(arg)
   local opts;
 
-  if Length(arg) = 0 then 
+  if Length(arg) = 0 then
     opts := rec();
   else
     opts := arg[1];
   fi;
   #TODO check args
-  return SEMIGROUPS_Test(Filename(DirectoriesPackageLibrary("semigroups", "tst"),
-                          "testinstall.tst"), opts);
+  return SEMIGROUPS_Test(Filename(DirectoriesPackageLibrary("semigroups",
+                                                            "tst"),
+                                  "testinstall.tst"),
+                         opts);
 end);
 
 #
@@ -348,51 +350,54 @@ InstallGlobalFunction(SEMIGROUPS_Test,
 function(arg)
   local file, opts, generic, split, print_file, width, enabled, disabled;
 
-  if Length(arg) = 0 then 
+  if Length(arg) = 0 then
     ErrorMayQuit();
   fi;
 
   file := arg[1];
 
-  if Length(arg) = 1 then 
+  if Length(arg) = 1 then
     opts := rec();
-  else 
+  else
     opts := arg[2];
   fi;
 
   # TODO process opts
-  if not IsBound(opts.silent) then 
+  if not IsBound(opts.silent) then
     opts.silent := true;
   fi;
 
   generic := SEMIGROUPS_DefaultOptionsRec.generic;
   split := SplitString(file, "/");
-  print_file := JoinStringsWithSeparator(split{[Length(split) - 2 .. Length(split)]}, "/");
-  
+  print_file := JoinStringsWithSeparator(
+                  split{[Length(split) - 2 .. Length(split)]}, "/");
+
   width := SizeScreen()[1] - 3;
-  if not opts.silent then 
+  if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
-  Print(PRINT_STRINGIFY("testing ", print_file, " acting methods enabled . . ."), "\n");
-  if not opts.silent then 
+  Print(PRINT_STRINGIFY("testing ", print_file,
+                        " acting methods enabled . . ."), "\n");
+  if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
 
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   enabled := Test(file);
-  if not opts.silent then 
+  if not opts.silent then
     Print("\n", SEMIGROUPS_PF(enabled), "\n");
     Print(Concatenation(ListWithIdenticalEntries(width, "#")));
   fi;
   Print("\n");
-  Print(PRINT_STRINGIFY("testing ", print_file, " acting methods disabled . . ."), "\n");
+  Print(PRINT_STRINGIFY("testing ", print_file,
+                        " acting methods disabled . . ."), "\n");
 
-  if not opts.silent then 
+  if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   disabled := Test(file);
-  if not opts.silent then 
+  if not opts.silent then
     Print("\n", SEMIGROUPS_PF(disabled));
   fi;
   Print("\n");

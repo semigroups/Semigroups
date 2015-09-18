@@ -167,7 +167,7 @@ function(I)
     if not IsBound(enum!.indices[nr]) then 
       SEMIGROUPS_EnumerateIdeal(enum, nr, ReturnFalse);
     fi;
-    return ELEMENTS_SEMIGROUP(data, enum!.indices[nr])[enum!.indices[nr]];
+    return SEMIGROUP_ELEMENTS(data, enum!.indices[nr])[enum!.indices[nr]];
   end;
 
   record.IsBound\[\]:=function(enum, nr)
@@ -200,14 +200,15 @@ end);
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local U, enum, x;
+  local U, opts, enum, x;
   
-  U:=Semigroup(GeneratorsOfSemigroupIdeal(I));
-  enum:=Enumerator(I);
+  U := Semigroup(GeneratorsOfSemigroupIdeal(I));
+  opts := SEMIGROUPS_OptionsRec(U);
+  enum := Enumerator(I);
 
   for x in enum do
-    if not x in U then
-      U:=Semigroup(U, x);
+    if not x in U then # excluding this check makes this run much much slower!!
+      U := SEMIGROUPS_AddGenerators(U, [x], opts);
     fi;
   od;
 
@@ -221,7 +222,7 @@ InstallMethod(Idempotents, "for a semigroup ideal with generators",
 function(I)
   local elts, enum, indices, idempotents, nr, i;
 
-  elts := ELEMENTS_SEMIGROUP(GenericSemigroupData(SupersemigroupOfIdeal(I)),
+  elts := SEMIGROUP_ELEMENTS(GenericSemigroupData(SupersemigroupOfIdeal(I)),
                              infinity);
   enum := Enumerator(I);
   if not IsBound(enum!.idempotents) then 

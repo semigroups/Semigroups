@@ -11,6 +11,8 @@
 #define SEMIGROUPS_GAP_H 1
 
 #include "gap-debug.h"
+
+#include "data.h"
 #include "interface.h"
 #include "types.h"
 
@@ -31,12 +33,13 @@ extern "C" {
 *******************************************************************************/
 
 void SemigroupsBagFreeFunc(Obj o) { 
-  if (IS_INTERFACE_BAG(o)) {
-    delete CLASS_OBJ<InterfaceBase>(o);
+  if (IS_CONVERTER_BAG(o)) {
+    delete CLASS_OBJ<Converter>(o);
+  } else if (IS_SEMIGROUP_BAG(o)) {
+    delete CLASS_OBJ<Semigroup>(o);
   }
-  //} else {
-    //delete CLASS_OBJ<UFData>(o);
-  //}
 }
+
+Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
 
 #endif

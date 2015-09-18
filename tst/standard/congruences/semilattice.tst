@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  cong-semilattice.tst
+#W  congruences/semilattice.tst
 #Y  Copyright (C) 2015                                         Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: cong-semilattice.tst");
+gap> START_TEST("Semigroups package: congruences/semilattice.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -318,4 +318,4 @@ gap> Unbind(lo);
 gap> Unbind(hi);
 
 #E#
-gap> STOP_TEST( "Semigroups package: cong-semilattice.tst");
+gap> STOP_TEST( "Semigroups package: congruences/semilattice.tst");

@@ -11,9 +11,9 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
-InstallGlobalFunction(RMSElementNC, 
+InstallGlobalFunction(RMSElementNC,
 function(R, i, g, j)
-  return Objectify(TypeReesMatrixSemigroupElements(R), 
+  return Objectify(TypeReesMatrixSemigroupElements(R),
                    [i, g, j, Matrix(R)]);
 end);
 
@@ -324,25 +324,47 @@ InstallMethod(IsInverseSemigroup,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U, G;
+  local U, mat, seen_col, mat_elts, seen_row_i, G, i, j;
 
   if not IsReesZeroMatrixSemigroup(R) then
     TryNextMethod();
   fi;
 
   U := UnderlyingSemigroup(R);
-  
-  if (HasIsInverseSemigroup(U) and not IsInverseSemigroup(U)) 
+
+  if (HasIsInverseSemigroup(U) and not IsInverseSemigroup(U))
       or (HasIsRegularSemigroup(U) and not IsRegularSemigroup(U))
       or (HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)))
-      or Length(Columns(R)) <> Length(Rows(R)) 
-      or Length(MatrixEntries(R)) <> Length(Rows(R)) then 
+      or (HasGroupOfUnits(U) and GroupOfUnits(U) = fail)
+      or Length(Columns(R)) <> Length(Rows(R)) then
     return false;
   fi;
 
+  # Check each row and column of mat contains *exactly* one non-zero entry
+  mat := Matrix(R);
+  seen_col := BlistList([1 .. Length(mat[1])], []);
+  mat_elts := [];
+  for i in Columns(R) do
+    seen_row_i := false;
+    for j in Rows(R) do
+      if mat[i][j] <> 0 then
+        if seen_row_i or seen_col[j] then
+          return false;
+        fi;
+        seen_row_i := true;
+        seen_col[j] := true;
+        AddSet(mat_elts, mat[i][j]);
+      fi;
+    od;
+    if not seen_row_i then
+      return false;
+    fi;
+  od;
+
   G := GroupOfUnits(U);
-  return G <> fail and ForAny(MatrixEntries(R), x -> x <> 0 and not x in G) 
-         and IsInverseSemigroup(U) and IsRegularSemigroup(R);
+  return G <> fail
+      and ForAll(mat_elts, x -> x in G)
+      and IsInverseSemigroup(U);
 end);
 
 InstallMethod(Idempotents,

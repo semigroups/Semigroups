@@ -1,17 +1,17 @@
 ###########################################################################
 ##
-#W  cong-reesmat.tst
+#W  congruences/reesmat.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: cong-reesmat.tst");
+gap> START_TEST("Semigroups package: congruences/reesmat.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 # All ReesZeroMatrixSemigroup functions tested with a small example
 #T# ReesMatCongTest1: Create a Rees 0-matrix semigroup
@@ -152,4 +152,4 @@ gap> Unbind(class3);
 gap> Unbind(mat);
 
 #E#
-gap> STOP_TEST( "Semigroups package: cong-reesmat.tst");
+gap> STOP_TEST( "Semigroups package: congruences/reesmat.tst");

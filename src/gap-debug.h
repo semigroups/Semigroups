@@ -81,4 +81,8 @@ Obj CALL_2ARGS_F (Obj func, Obj arg1, Obj arg2) {
   return CALL_2ARGS(func, arg1, arg2);
 }
 
+size_t DEG_TRANS_F (Obj t) {
+  return DEG_TRANS(t);
+}
+
 #endif

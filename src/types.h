@@ -19,12 +19,13 @@
 *******************************************************************************/
 
 #ifndef T_SEMI
-#define T_SEMI T_SPARE2
+#define T_SEMI T_SPARE2 //TODO use Register_TNUM when it's available
 #endif
 
 enum SemigroupsBagType {
-  INTERFACE = 0,
-  UF_DATA   = 1
+  UF_DATA   = 0,
+  SEMIGROUP = 1,
+  CONVERTER = 2
 };
 
 template <typename Class>
@@ -43,7 +44,8 @@ inline Class* CLASS_OBJ(Obj o) {
 }
 
 #define IS_T_SEMI(o)        (TNUM_OBJ(o) == T_SEMI)
-#define IS_INTERFACE_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == INTERFACE)
+#define IS_CONVERTER_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == CONVERTER)
+#define IS_SEMIGROUP_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
 #define IS_UF_DATA_BAG(o)   (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
 
 /*******************************************************************************

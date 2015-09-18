@@ -10,18 +10,18 @@ gap> START_TEST("Semigroups package: examples.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# ExamplesTest1
-gap> gens:=[Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
-> Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
-> Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
-> Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
-> Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
-> Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
-> Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
-> Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
+> Transformation([3, 5, 7, 2, 5, 6, 3, 8]),
+> Transformation([4, 1, 8, 3, 5, 7, 3, 5]),
+> Transformation([4, 3, 4, 5, 6, 4, 1, 2]),
+> Transformation([5, 4, 8, 8, 5, 6, 1, 5]),
+> Transformation([6, 7, 4, 1, 4, 1, 6, 2]),
+> Transformation([7, 1, 2, 2, 2, 7, 4, 5]),
+> Transformation([8, 8, 5, 1, 7, 5, 2, 8])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 597369
 gap> NrRClasses(s);
@@ -42,7 +42,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 8
 gap> IsBlockGroup(s);
@@ -91,11 +93,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest2
-gap> gens:=[Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
-> Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
-> Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
-> Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
+> Transformation([3, 5, 7, 2, 5, 6, 3, 8]),
+> Transformation([6, 7, 4, 1, 4, 1, 6, 2]),
+> Transformation([8, 8, 5, 1, 7, 5, 2, 8])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 95540
 gap> NrRClasses(s);
@@ -116,7 +118,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 8
 gap> IsBlockGroup(s);
@@ -165,11 +169,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest3 
-gap> gens:=[Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
-> Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
-> Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
-> Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
+> Transformation([3, 8, 1, 4, 5, 6, 7, 1]),
+> Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
+> Transformation([7, 1, 7, 4, 2, 5, 6, 3])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 233605
 gap> NrRClasses(s);
@@ -190,7 +194,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 8
 gap> IsBlockGroup(s);
@@ -239,17 +245,17 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest4 
-gap> gens:=[Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] ),
-> Transformation( [ 1, 7, 5, 4, 3, 5, 7 ] ),
-> Transformation( [ 2, 7, 7, 2, 4, 1, 1 ] ),
-> Transformation( [ 3, 2, 2, 4, 1, 7, 6 ] ),
-> Transformation( [ 3, 3, 5, 1, 7, 1, 6 ] ),
-> Transformation( [ 3, 3, 6, 1, 7, 5, 2 ] ),
-> Transformation( [ 3, 4, 6, 5, 4, 4, 7 ] ),
-> Transformation( [ 5, 2, 4, 5, 1, 4, 5 ] ),
-> Transformation( [ 5, 5, 2, 2, 6, 7, 2 ] ),
-> Transformation( [ 7, 7, 5, 4, 5, 3, 2 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 5, 6, 2, 5, 2, 1]),
+> Transformation([1, 7, 5, 4, 3, 5, 7]),
+> Transformation([2, 7, 7, 2, 4, 1, 1]),
+> Transformation([3, 2, 2, 4, 1, 7, 6]),
+> Transformation([3, 3, 5, 1, 7, 1, 6]),
+> Transformation([3, 3, 6, 1, 7, 5, 2]),
+> Transformation([3, 4, 6, 5, 4, 4, 7]),
+> Transformation([5, 2, 4, 5, 1, 4, 5]),
+> Transformation([5, 5, 2, 2, 6, 7, 2]),
+> Transformation([7, 7, 5, 4, 5, 3, 2])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 97310
 gap> NrRClasses(s);
@@ -270,7 +276,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 7
 gap> IsBlockGroup(s);
@@ -319,10 +327,10 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest5 
-gap> gens:=[Transformation( [ 3, 4, 1, 2, 1 ] ),
-> Transformation( [ 4, 2, 1, 5, 5 ] ),
-> Transformation( [ 4, 2, 2, 2, 4 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([3, 4, 1, 2, 1]),
+> Transformation([4, 2, 1, 5, 5]),
+> Transformation([4, 2, 2, 2, 4])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 731
 gap> NrRClasses(s);
@@ -343,7 +351,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 5
 gap> IsBlockGroup(s);
@@ -392,11 +402,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest6 
-gap> gens:=[Transformation( [ 1, 3, 4, 1 ] ),
-> Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 1, 1, 3 ] ),
-> Transformation( [ 3, 3, 4, 1 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 3, 4, 1]),
+> Transformation([2, 4, 1, 2]),
+> Transformation([3, 1, 1, 3]),
+> Transformation([3, 3, 4, 1])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 61
 gap> NrRClasses(s);
@@ -417,7 +427,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 4
 gap> IsBlockGroup(s);
@@ -466,11 +478,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest7 
-gap> gens:=[Transformation( [ 1, 3, 2, 3 ] ),
-> Transformation( [ 1, 4, 1, 2 ] ),
-> Transformation( [ 2, 4, 1, 1 ] ),
-> Transformation( [ 3, 4, 2, 2 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 3, 2, 3]),
+> Transformation([1, 4, 1, 2]),
+> Transformation([2, 4, 1, 1]),
+> Transformation([3, 4, 2, 2])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 114
 gap> NrRClasses(s);
@@ -491,7 +503,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 4
 gap> IsBlockGroup(s);
@@ -540,11 +554,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest8 
-gap> gens:=[Transformation( [ 1, 3, 2, 3 ] ),
-> Transformation( [ 1, 4, 1, 2 ] ),
-> Transformation( [ 3, 4, 2, 2 ] ),
-> Transformation( [ 4, 1, 2, 1 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 3, 2, 3]),
+> Transformation([1, 4, 1, 2]),
+> Transformation([3, 4, 2, 2]),
+> Transformation([4, 1, 2, 1])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 68
 gap> NrRClasses(s);
@@ -565,7 +579,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 4
 gap> IsBlockGroup(s);
@@ -614,9 +630,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest9
-gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
-> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]),
+> Transformation([2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 20167
 gap> NrRClasses(s);
@@ -637,7 +653,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 20160
 gap> IsBlockGroup(s);
@@ -686,11 +704,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest10
-gap> gens:=[Transformation( [ 2, 1, 4, 5, 3, 7, 8, 9, 10, 6 ] ),
-> Transformation( [ 1, 2, 4, 3, 5, 6, 7, 8, 9, 10 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6, 10, 9, 8, 7 ] ),
-> Transformation( [ 9, 1, 4, 3, 6, 9, 3, 4, 3, 9 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 1, 4, 5, 3, 7, 8, 9, 10, 6]),
+> Transformation([1, 2, 4, 3, 5, 6, 7, 8, 9, 10]),
+> Transformation([1, 2, 3, 4, 5, 6, 10, 9, 8, 7]),
+> Transformation([9, 1, 4, 3, 6, 9, 3, 4, 3, 9])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 491558
 gap> NrRClasses(s);
@@ -711,7 +729,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 8
 gap> IsBlockGroup(s);
@@ -760,9 +780,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest11
-gap> gens:=[Transformation( [ 13, 10, 9, 5, 1, 5, 13, 13, 8, 2, 7, 2, 6 ] ),
-> Transformation( [ 6, 11, 12, 10, 4, 10, 13, 5, 8, 5, 11, 6, 9 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([13, 10, 9, 5, 1, 5, 13, 13, 8, 2, 7, 2, 6]),
+> Transformation([6, 11, 12, 10, 4, 10, 13, 5, 8, 5, 11, 6, 9])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 208650
 gap> NrRClasses(s);
@@ -783,7 +803,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 11
 gap> IsBlockGroup(s);
@@ -832,10 +854,10 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest12
-gap> gens:=[Transformation( [ 12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2 ] ),
-> Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ),
-> Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2]),
+> Transformation([5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10]),
+> Transformation([6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 945560
 gap> NrRClasses(s);
@@ -856,7 +878,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 10
 gap> IsBlockGroup(s);
@@ -905,10 +929,10 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest13
-gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
-> Transformation( [ 5, 4, 1, 2, 3, 7, 6, 5, 4, 1 ] ),
-> Transformation( [ 2, 1, 4, 3, 2, 1, 4, 4, 3, 3 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),
+> Transformation([5, 4, 1, 2, 3, 7, 6, 5, 4, 1]),
+> Transformation([2, 1, 4, 3, 2, 1, 4, 4, 3, 3])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 188315
 gap> NrRClasses(s);
@@ -929,7 +953,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 5
 gap> IsBlockGroup(s);
@@ -978,9 +1004,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest14
-gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
-> Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([8, 7, 5, 3, 1, 3, 8, 8]),
+> Transformation([5, 1, 4, 1, 4, 4, 7, 8])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 56
 gap> NrRClasses(s);
@@ -1001,7 +1027,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 1
 gap> IsBlockGroup(s);
@@ -1050,9 +1078,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest15 
-gap> gens:=[Transformation( [ 5, 4, 4, 2, 1 ] ),
-> Transformation( [ 2, 5, 5, 4, 1 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([5, 4, 4, 2, 1]),
+> Transformation([2, 5, 5, 4, 1])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 12
 gap> NrRClasses(s);
@@ -1073,7 +1101,9 @@ gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 2 ] )
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 12
 gap> IsBlockGroup(s);
@@ -1122,9 +1152,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest16 
-gap> gens:=[Transformation( [ 1, 2, 1, 3, 3 ] ),
-> Transformation( [ 2, 2, 3, 5, 5 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 2, 1, 3, 3]),
+> Transformation([2, 2, 3, 5, 5])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 8
 gap> NrRClasses(s);
@@ -1145,7 +1175,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 1
 gap> IsBlockGroup(s);
@@ -1194,9 +1226,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest17 
-gap> gens:=[Transformation( [ 3, 1, 2, 3, 2, 3, 2, 3 ] ),
-> Transformation( [ 2, 5, 8, 5, 2, 5, 7, 8 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([3, 1, 2, 3, 2, 3, 2, 3]),
+> Transformation([2, 5, 8, 5, 2, 5, 7, 8])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 38
 gap> NrRClasses(s);
@@ -1217,7 +1249,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 36
 gap> IsBlockGroup(s);
@@ -1266,9 +1300,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest18
-gap> gens:=[Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] ),
-> Transformation( [ 5, 1, 7, 8, 7, 5, 8, 1 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([3, 3, 2, 6, 2, 4, 4, 6]),
+> Transformation([5, 1, 7, 8, 7, 5, 8, 1])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 96
 gap> NrRClasses(s);
@@ -1289,7 +1323,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 96
 gap> IsBlockGroup(s);
@@ -1338,9 +1374,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest19 
-gap> gens:=[Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
-> Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([10, 8, 7, 4, 1, 4, 10, 10, 7, 2]),
+> Transformation([5, 2, 5, 5, 9, 10, 8, 3, 8, 10])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 30176
 gap> NrRClasses(s);
@@ -1361,7 +1397,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 8
 gap> IsBlockGroup(s);
@@ -1410,9 +1448,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest20
-gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
-> Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),
+> Transformation([2, 3, 4, 5, 6, 8, 7, 1, 2, 2])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 10080
 gap> NrRClasses(s);
@@ -1433,7 +1471,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 10080
 gap> IsBlockGroup(s);
@@ -1482,9 +1522,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest21
-gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
-> Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),
+> Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 121804
 gap> NrRClasses(s);
@@ -1505,7 +1545,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 8
 gap> IsBlockGroup(s);
@@ -1554,9 +1596,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest22
-gap> gens:=[Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8 ] ),
-> Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 4, 6, 2, 5, 3, 7, 8]),
+> Transformation([6, 3, 2, 7, 5, 1, 8, 8])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 131
 gap> NrRClasses(s);
@@ -1577,7 +1619,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 1
 gap> IsBlockGroup(s);
@@ -1626,9 +1670,9 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest23
-gap> gens:=[Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
-> Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([5, 6, 7, 3, 1, 4, 2, 8]),
+> Transformation([3, 6, 8, 5, 7, 4, 2, 8])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 52300
 gap> NrRClasses(s);
@@ -1649,7 +1693,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 1
 gap> IsBlockGroup(s);
@@ -1698,10 +1744,10 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest24 
-gap> gens:=[Transformation( [ 1, 2, 4, 5, 6, 3, 7, 8 ] ),
-> Transformation( [ 3, 3, 4, 5, 6, 2, 7, 8 ] ),
-> Transformation( [ 1, 2, 5, 3, 6, 8, 4, 4 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 2, 4, 5, 6, 3, 7, 8]),
+> Transformation([3, 3, 4, 5, 6, 2, 7, 8]),
+> Transformation([1, 2, 5, 3, 6, 8, 4, 4])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 864
 gap> NrRClasses(s);
@@ -1722,7 +1768,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 720
 gap> IsBlockGroup(s);
@@ -1771,17 +1819,17 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest25
-gap> gens:=[Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
-> 4, 4, 4, 4, 4 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-> 4 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 4, 4, 4, 4, 4, 4, 4, 4, 
-> 4, 4 ] ),
-> Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 12, 13, 14, 15, 16, 17, 
-> 18, 19, 20, 21 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-> 18, 19, 20, 21 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4, 4, 4, 4, 4]),
+> Transformation([1, 2, 3, 4, 5, 6, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4]),
+> Transformation([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4, 4]),
+> Transformation([1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 12, 13, 14, 15, 16, 17,
+> 18, 19, 20, 21]),
+> Transformation([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+> 18, 19, 20, 21])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 5
 gap> NrRClasses(s);
@@ -1803,7 +1851,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 1
 gap> IsBlockGroup(s);
@@ -1852,25 +1902,25 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest26
-gap> gens:=[Transformation( [ 2, 1, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-> 4, 4, 4, 4, 4 ] ),
-> Transformation( [ 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-> 1 ] ),
-> Transformation( [ 1, 2, 3, 4, 6, 5, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
-> 4 ] ),
-> Transformation( [ 1, 2, 3, 4, 6, 7, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
-> 4 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 8, 10, 11, 4, 4, 4, 4, 4, 4, 4, 4, 
-> 4, 4 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 10, 4, 4, 4, 4, 4, 4, 4, 4, 
-> 4, 4 ] ),
-> Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 13, 12, 14, 15, 16, 17, 
-> 18, 19, 20, 21 ] ),
-> Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 13, 14, 15, 16, 12, 17, 
-> 18, 19, 20, 21 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18,
-> 19, 20, 21, 17 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 1, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4, 4, 4, 4, 4]),
+> Transformation([2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+> 1]),
+> Transformation([1, 2, 3, 4, 6, 5, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4]),
+> Transformation([1, 2, 3, 4, 6, 7, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4]),
+> Transformation([1, 2, 3, 4, 5, 6, 7, 9, 8, 10, 11, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4, 4]),
+> Transformation([1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 10, 4, 4, 4, 4, 4, 4, 4, 4,
+> 4, 4]),
+> Transformation([1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 13, 12, 14, 15, 16, 17,
+> 18, 19, 20, 21]),
+> Transformation([1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 13, 14, 15, 16, 12, 17,
+> 18, 19, 20, 21]),
+> Transformation([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18,
+> 19, 20, 21, 17])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 639
 gap> NrRClasses(s);
@@ -1891,7 +1941,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 24
 gap> IsBlockGroup(s);
@@ -1940,11 +1992,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest27
-gap> gens:=[Transformation( [ 2, 1, 1, 2, 1 ] ),
-> Transformation( [ 3, 4, 3, 4, 4 ] ),
-> Transformation( [ 3, 4, 3, 4, 3 ] ),
-> Transformation( [ 4, 3, 3, 4, 4 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 1, 1, 2, 1]),
+> Transformation([3, 4, 3, 4, 4]),
+> Transformation([3, 4, 3, 4, 3]),
+> Transformation([4, 3, 3, 4, 4])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 16
 gap> NrRClasses(s);
@@ -1965,7 +2017,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 16
 gap> IsBlockGroup(s);
@@ -2014,14 +2068,14 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest28
-gap> gens:=[Transformation( [ 4, 4, 4, 1, 1, 6, 7, 8, 9, 10, 11, 1 ] ),
-> Transformation( [ 6, 6, 6, 7, 7, 1, 4, 8, 9, 10, 11, 7 ] ),
-> Transformation( [ 8, 8, 8, 9, 9, 10, 11, 1, 4, 6, 7, 9 ] ),
-> Transformation( [ 2, 2, 2, 4, 4, 6, 7, 8, 9, 10, 11, 4 ] ),
-> Transformation( [ 1, 1, 1, 5, 5, 6, 7, 8, 9, 10, 11, 5 ] ),
-> Transformation( [ 1, 1, 4, 4, 4, 6, 7, 8, 9, 10, 11, 1 ] ),
-> Transformation( [ 1, 1, 7, 4, 4, 6, 7, 8, 9, 10, 11, 6 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([4, 4, 4, 1, 1, 6, 7, 8, 9, 10, 11, 1]),
+> Transformation([6, 6, 6, 7, 7, 1, 4, 8, 9, 10, 11, 7]),
+> Transformation([8, 8, 8, 9, 9, 10, 11, 1, 4, 6, 7, 9]),
+> Transformation([2, 2, 2, 4, 4, 6, 7, 8, 9, 10, 11, 4]),
+> Transformation([1, 1, 1, 5, 5, 6, 7, 8, 9, 10, 11, 5]),
+> Transformation([1, 1, 4, 4, 4, 6, 7, 8, 9, 10, 11, 1]),
+> Transformation([1, 1, 7, 4, 4, 6, 7, 8, 9, 10, 11, 6])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 1152
 gap> NrRClasses(s);
@@ -2042,7 +2096,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 1152
 gap> IsBlockGroup(s);
@@ -2091,11 +2147,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest29
-gap> gens:=[Transformation( [ 1, 2, 2, 1, 2 ] ),
-> Transformation( [ 3, 4, 3, 4, 4 ] ),
-> Transformation( [ 3, 4, 3, 4, 3 ] ),
-> Transformation( [ 4, 3, 3, 4, 4 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([1, 2, 2, 1, 2]),
+> Transformation([3, 4, 3, 4, 4]),
+> Transformation([3, 4, 3, 4, 3]),
+> Transformation([4, 3, 3, 4, 4])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 16
 gap> NrRClasses(s);
@@ -2116,7 +2172,9 @@ gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
 fail
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 16
 gap> IsBlockGroup(s);
@@ -2165,15 +2223,15 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest30
-gap> gens:=[Transformation( [ 2, 6, 1, 7, 5, 3, 4 ] ),
-> Transformation( [ 5, 3, 7, 2, 1, 6, 4 ] ),
-> Transformation( [ 2, 5, 5, 3, 4, 2, 3 ] ),
-> Transformation( [ 1, 5, 1, 6, 1, 5, 6 ] ),
-> Transformation( [ 6, 2, 2, 2, 5, 1, 2 ] ),
-> Transformation( [ 7, 5, 4, 4, 4, 5, 5 ] ),
-> Transformation( [ 5, 1, 6, 1, 1, 5, 1 ] ),
-> Transformation( [ 3, 5, 2, 3, 2, 2, 3 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([2, 6, 1, 7, 5, 3, 4]),
+> Transformation([5, 3, 7, 2, 1, 6, 4]),
+> Transformation([2, 5, 5, 3, 4, 2, 3]),
+> Transformation([1, 5, 1, 6, 1, 5, 6]),
+> Transformation([6, 2, 2, 2, 5, 1, 2]),
+> Transformation([7, 5, 4, 4, 4, 5, 5]),
+> Transformation([5, 1, 6, 1, 1, 5, 1]),
+> Transformation([3, 5, 2, 3, 2, 2, 3])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 21343
 gap> NrRClasses(s);
@@ -2194,7 +2252,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 7
 gap> IsBlockGroup(s);
@@ -2243,11 +2303,11 @@ gap> IsZeroSemigroup(s);
 false
 
 #T# ExamplesTest31
-gap> gens:=[Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
-> Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2 ] ),
-> Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] ),
-> Transformation( [ 4, 4, 8, 4, 4, 2, 4, 4, 5 ] )];;
-gap> s:=Semigroup(gens);;
+gap> gens := [Transformation([3, 6, 9, 1, 4, 7, 2, 5, 8]),
+> Transformation([3, 6, 9, 7, 1, 4, 5, 8, 2]),
+> Transformation([8, 2, 5, 5, 4, 5, 5, 2, 8]),
+> Transformation([4, 4, 8, 4, 4, 2, 4, 4, 5])];;
+gap> s := Semigroup(gens);;
 gap> Size(s);
 82953
 gap> NrRClasses(s);
@@ -2268,7 +2328,9 @@ gap> MultiplicativeNeutralElement(s);
 IdentityTransformation
 gap> One(s);
 IdentityTransformation
-gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
+gap> if GroupOfUnits(s) <> fail then
+>   StructureDescription(GroupOfUnits(s));
+> fi;;
 gap> Size(MinimalIdeal(s));
 9
 gap> IsBlockGroup(s);
@@ -2338,7 +2400,7 @@ this function takes at most two arguments,
 
 # IsTransformationSemigroup
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 1));
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 gap> IsZeroSemigroup(s);
 true
 gap> Size(s);
@@ -2346,7 +2408,7 @@ gap> Size(s);
 gap> Elements(s);
 [ IdentityTransformation ]
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 2));
-<commutative transformation semigroup on 3 pts with 1 generator>
+<commutative transformation semigroup of degree 3 with 1 generator>
 gap> IsZeroSemigroup(s);
 true
 gap> Size(s);
@@ -2354,7 +2416,7 @@ gap> Size(s);
 gap> Elements(s);
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 3, 1 ] ) ]
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 10));
-<transformation semigroup on 19 pts with 9 generators>
+<transformation semigroup of degree 19 with 9 generators>
 gap> IsZeroSemigroup(s);
 true
 gap> Size(s);
@@ -2402,13 +2464,13 @@ gap> Size(s);
 
 # IsBipartitionSemigroup and IsBlockBijectionSemigroup
 gap> s := ZeroSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition monoid on 1 pts with 0 generators>
+<trivial bipartition group of degree 1 with 0 generators>
 gap> s := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition monoid on 1 pts with 0 generators>
+<trivial bipartition group of degree 1 with 0 generators>
 gap> last = last2;
 true
 gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 2));
-<commutative bipartition semigroup on 2 pts with 1 generator>
+<commutative bipartition semigroup of degree 2 with 1 generator>
 gap> IsBlockBijectionSemigroup(s);
 false
 gap> IsZeroSemigroup(s);
@@ -2416,7 +2478,7 @@ true
 gap> Size(s);
 2
 gap> s := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 2));
-<commutative bipartition semigroup on 3 pts with 1 generator>
+<commutative bipartition semigroup of degree 3 with 1 generator>
 gap> IsBlockBijectionSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2424,7 +2486,7 @@ true
 gap> Size(s);
 2
 gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 20));
-<bipartition semigroup on 38 pts with 19 generators>
+<bipartition semigroup of degree 38 with 19 generators>
 gap> IsBlockBijectionSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2432,7 +2494,7 @@ true
 gap> Size(s);
 20
 gap> s := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 20));
-<bipartition semigroup on 38 pts with 19 generators>
+<bipartition semigroup of degree 38 with 19 generators>
 gap> IsBlockBijectionSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2442,7 +2504,7 @@ gap> Size(s);
 
 # Zero semigroup of order 1
 gap> s := ZeroSemigroup(1);
-<trivial partial perm group on 0 pts with 0 generators>
+<trivial partial perm group of rank 0 with 0 generators>
 gap> GeneratorsOfSemigroup(s);
 [ <empty partial perm> ]
 gap> HasAsList(s);
@@ -2624,7 +2686,7 @@ Error, no 1st choice method found for `MonogenicSemigroup' on 2 arguments
 
 # Trivial monogenic semigroup
 gap> s := MonogenicSemigroup(1, 1);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2677,8 +2739,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(2, 1)
 gap> s := MonogenicSemigroup(2, 1);
-<commutative non-regular transformation semigroup of size 2, 
- on 3 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 2, degree 3 with
+ 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2731,8 +2793,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(3, 1)
 gap> s := MonogenicSemigroup(3, 1);
-<commutative non-regular transformation semigroup of size 3, 
- on 4 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 3, degree 4 with
+ 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2785,7 +2847,7 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(1, 2)
 gap> s := MonogenicSemigroup(1, 2);
-<transformation group of size 2, on 2 pts with 1 generator>
+<transformation group of size 2, degree 2 with 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2811,7 +2873,7 @@ gap> GeneratorsOfSemigroup(s);
 
 # Not created by MonogenicSemigroup
 gap> s := Semigroup(s);
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> HasSize(s);
 false
 gap> HasIsMonogenicSemigroup(s);
@@ -2839,8 +2901,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(5, 10)
 gap> s := MonogenicSemigroup(5, 10);
-<commutative non-regular transformation semigroup of size 14, 
- on 15 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 14, degree 15 with
+ 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2866,7 +2928,7 @@ gap> GeneratorsOfSemigroup(s);
 
 # Not created by MonogenicSemigroup
 gap> s := Semigroup(s);
-<commutative transformation semigroup on 15 pts with 1 generator>
+<commutative transformation semigroup of degree 15 with 1 generator>
 gap> HasSize(s);
 false
 gap> HasIsMonogenicSemigroup(s);
@@ -2938,7 +3000,7 @@ true
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3010,7 +3072,7 @@ false
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup on 11 pts with 10 generators>
+<transformation semigroup of degree 11 with 10 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3082,7 +3144,7 @@ true
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup on 9 pts with 8 generators>
+<transformation semigroup of degree 9 with 8 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3154,7 +3216,7 @@ false
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup on 85 pts with 84 generators>
+<transformation semigroup of degree 85 with 84 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);

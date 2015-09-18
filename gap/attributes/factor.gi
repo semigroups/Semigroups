@@ -27,7 +27,7 @@ function(S, x)
   fi;
   data := GenericSemigroupData(S);
   pos := Position(data, x);
-  return WORD_SEMIGROUP(data, pos);
+  return SEMIGROUP_FACTORIZATION(data, pos);
 end);
 
 # same method for ideals

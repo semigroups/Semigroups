@@ -1,17 +1,17 @@
 #############################################################################
 ##
-#W  cong-univ.tst
+#W  congruences/univ.tst
 #Y  Copyright (C) 2015                                      Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: cong-univ.tst");
+gap> START_TEST("Semigroups package: congruences/univ.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# CongUnivTest1: No zero, non-simple
 gap> s := Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 7, 5 ] ),
@@ -78,4 +78,4 @@ gap> Unbind(pairs);
 gap> Unbind(cong);
 
 #E#
-gap> STOP_TEST( "Semigroups package: cong-simple.tst");
+gap> STOP_TEST( "Semigroups package: congruences/simple.tst");

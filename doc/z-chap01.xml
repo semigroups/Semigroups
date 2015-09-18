@@ -24,7 +24,8 @@
     <Ref Chap = "Green's relations"/>. There
     are methods for testing if semigroups satisfy  particular
     properties, such as if they are regular, simple, inverse, completely regular,
-    and a variety of further properties; see Chapter <Ref Chap="Green's relations"/>.<P/>
+    and a variety of further properties; see Chapter <Ref Chap="Green's
+      relations"/>.<P/>
 
     There are methods for finding: congruences of semigroups, the normalizer of
     a semigroup in a permutation group (as given in <Cite

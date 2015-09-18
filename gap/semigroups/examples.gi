@@ -957,6 +957,13 @@ function(m, r)
     SetIsZeroSemigroup(out, false);
   fi;
 
+  if r = 1 then
+    SetIsNilpotentSemigroup(out, true);
+    SetNilpotencyDegree(out, m);
+  else
+    SetIsNilpotentSemigroup(out, false);
+  fi;
+
   return out;
 end);
 

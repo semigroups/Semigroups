@@ -46,3 +46,5 @@ configure
 .libs/*
 src/.deps/*
 src/.libs/*
+.dirstamp
+src/semigroups++/.deps

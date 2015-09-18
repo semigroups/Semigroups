@@ -8,11 +8,11 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: matrix-boolean.tst");
+gap> START_TEST("Semigroups package: standard/elements/matrix-boolean.tst");
 gap> LoadPackage("semigroups", false);;
 
 #T#
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# matrix-boolean: BooleanMat, error 1/6
 gap> BooleanMat([[true, false, 1], [0, 1, 0], [false, true, false]]);
@@ -25,7 +25,7 @@ gap> BooleanMat([[1, 0, 1], [0, 1, 0], [0, 1, 0]]);
 <3x3 boolean matrix>
 
 #T# matrix-boolean: BooleanMat, for blists in blist_rep, 3/6
-gap> BooleanMat([[true, false, true], [false, true, false], 
+gap> BooleanMat([[true, false, true], [false, true, false],
 > [false, true, false]]);
 <3x3 boolean matrix>
 
@@ -43,4 +43,4 @@ Error, Semigroups: BooleanMat:
 the entries of each list must not exceed 4,
 
 #E# 
-gap> STOP_TEST( "Semigroups package: matrix-boolean.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/matrix-boolean.tst");

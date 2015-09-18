@@ -15,9 +15,9 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> "\>partial perm\< ");
 
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a partial perm semigroup",
-[IsPartialPermSemigroup], 
+[IsPartialPermSemigroup],
 function(S)
-  return Concatenation("rank \>", 
+  return Concatenation("rank \>",
                        ViewString(RankOfPartialPermSemigroup(S)),
                        "\<\< ");
 end);
@@ -365,7 +365,8 @@ end);
 
 #
 
-InstallMethod(DisplayString, "for a partial perm semigroup ideal with generators",
+InstallMethod(DisplayString,
+"for a partial perm semigroup ideal with generators",
 [IsPartialPermSemigroup and IsSemigroupIdeal and
  HasGeneratorsOfSemigroupIdeal],
 ViewString);
@@ -575,9 +576,9 @@ end);
 #
 
 InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",
-[IsPartialPermSemigroup], 
+[IsPartialPermSemigroup],
 function(S)
-  if not IsInverseSemigroup(S) then 
+  if not IsInverseSemigroup(S) then
     Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
           "the argument is not an inverse semigroup,");
     return;
@@ -634,7 +635,7 @@ function(S)
 
     schutz := SchutzenbergerGroup(d);
     sup := SupremumIdempotentsNC(Minorants(S, e), e);
-    trivialse := not ForAny(He, x -> NaturalLeqInverseSemigroup(sup, x)
+    trivialse := not ForAny(He, x -> NaturalLeqInverseSemigroup(S)(sup, x)
                                      and x <> e);
 
     psi := ActionHomomorphism(schutz,

@@ -5,53 +5,58 @@
  *
  */
 
+#ifndef SEMIGROUPS_GAP_CONVERTER_H
+#define SEMIGROUPS_GAP_CONVERTER_H 1
+
 #include "src/compiled.h"          /* GAP headers                */
 #include "pperm.h"
 
 #include "semigroups++/elements.h"
 
-/*******************************************************************************
- * Abstract base class
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Abstract base class
+////////////////////////////////////////////////////////////////////////////////
 
-template <typename T>
 class Converter {
   public:
     virtual ~Converter () {};
-    virtual T* convert (Obj, size_t) = 0;
-    virtual Obj unconvert (T*) = 0;
+    virtual Element* convert   (Obj, size_t) = 0;
+    virtual Obj      unconvert (Element*)    = 0;
 };
 
-/*******************************************************************************
- * Transformations
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Transformations
+////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-class TransConverter : public Converter<Transformation<T> > {
+class TransConverter : public Converter {
   
   public: 
 
     Transformation<T>* convert (Obj o, size_t n) {
       assert(IS_TRANS(o));
-      //assert(DEG_TRANS(o) <= n);
 
-      auto x = new Transformation<T>(n);
-      T* pto = ADDR_TRANS(o);
-      T i;
-      for (i = 0; i < DEG_TRANS(o); i++) {
-        x->set(i, pto[i]);
+      T      i;
+      T*     pto    = ADDR_TRANS(o);
+      size_t degree = std::min((size_t) DEG_TRANS(o), n);
+      auto   x      = new std::vector<T>();
+      x->reserve(std::max(degree, n));
+      
+      for (i = 0; i < degree; i++) {
+        x->push_back(pto[i]);
       }
       for (; i < n; i++) {
-        x->set(i, i);
+        x->push_back(i);
       }
-      return x;
+      return new Transformation<T>(x);
     }
 
-    Obj unconvert (Transformation<T>* x) {
-      Obj o = NEW_TRANS(x->degree());
+    Obj unconvert (Element* x) {
+      auto xx = static_cast<Transformation<T>*>(x);
+      Obj o = NEW_TRANS(xx->degree());
       T* pto = ADDR_TRANS(o);
-      for (T i = 0; i < x->degree(); i++) {
-        pto[i] = x->at(i);
+      for (T i = 0; i < xx->degree(); i++) {
+        pto[i] = (*xx)[i];
       }
       return o;
     }
@@ -72,46 +77,57 @@ class TransConverter : public Converter<Transformation<T> > {
     }
 };
 
-/*******************************************************************************
- * Partial perms
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Partial perms
+////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-class PPermConverter : public Converter<PartialPerm<T> > {
+class PPermConverter : public Converter {
 
   public: 
 
     PartialPerm<T>* convert (Obj o, size_t n) {
       assert(IS_PPERM(o));
 
-      auto x = new PartialPerm<T>(n);
-      T* pto = ADDR_PPERM(o);
-      T i;
+      auto x   = new std::vector<T>();
+      T*   pto = ADDR_PPERM(o);
+      T    i;
+
       for (i = 0; i < DEG_PPERM(o); i++) {
-        x->set(i, pto[i]);
+        if (pto[i] == 0) {
+          x->push_back(UNDEFINED);
+        } else {
+          x->push_back(pto[i] - 1);
+        }
       }
       for (; i < n; i++) {
-        x->set(i, 0);
+        x->push_back(UNDEFINED);
       }
-      return x;
+      return new PartialPerm<T>(x);
     }
 
     // similar to FuncDensePartialPermNC in gap/src/pperm.c
-    Obj unconvert (PartialPerm<T>* x) {
-      T deg = x->degree(); 
+    Obj unconvert (Element* x) {
+      auto xx  = static_cast<PartialPerm<T>*>(x);
+      T    deg = xx->degree(); 
 
       //remove trailing 0s
-      while (deg > 0 && x->at(deg - 1) == 0) {
+      while (deg > 0 && (*xx)[deg - 1] == UNDEFINED) {
         deg--;
       }
 
-      Obj o = NEW_PPERM(deg);
-      T* pto = ADDR_PPERM(o);
-      T codeg = 0;
+      Obj o     = NEW_PPERM(deg);
+      T*  pto   = ADDR_PPERM(o);
+      T   codeg = 0;
+
       for (T i = 0; i < deg; i++) {
-        pto[i] = x->at(i);
-        if (pto[i] > codeg) {
-          codeg = pto[i];
+        if ((*xx)[i] == UNDEFINED) {
+          pto[i] = 0;
+        } else {
+          pto[i] = (*xx)[i] + 1;
+          if (pto[i] > codeg) {
+            codeg = pto[i];
+          }
         }
       }
       set_codeg(o, deg, codeg);
@@ -140,39 +156,39 @@ class PPermConverter : public Converter<PartialPerm<T> > {
     inline T* ADDR_PPERM (Obj x) {
       return ((T*)((Obj*)(ADDR_OBJ(x))+2)+1);
     }
+
+    T UNDEFINED = (T) -1;
 };
 
-/*******************************************************************************
- * Bipartitions
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Boolean matrices
+////////////////////////////////////////////////////////////////////////////////
 
-class BipartConverter : public Converter<Bipartition> {
+class BoolMatConverter : public Converter {
 
   public: 
 
-    Bipartition* convert (Obj o, size_t n);
-
-    Obj unconvert (Bipartition* x);
+    BooleanMat* convert   (Obj o, size_t n);
+    Obj         unconvert (Element* x  );
 };
 
-/*******************************************************************************
- * Boolean matrices
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Bipartitions
+////////////////////////////////////////////////////////////////////////////////
 
-class BoolMatConverter : public Converter<BooleanMat> {
+class BipartConverter : public Converter {
 
   public: 
 
-    BooleanMat* convert (Obj o, size_t n);
-
-    Obj unconvert (BooleanMat* x);
+    Bipartition* convert   (Obj o, size_t n);
+    Obj          unconvert (Element* x);
 };
 
-/*******************************************************************************
- * Matrices over semirings 
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Matrices over semirings 
+////////////////////////////////////////////////////////////////////////////////
 
-class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
+class MatrixOverSemiringConverter : public Converter {
 
   public:
 
@@ -187,9 +203,8 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
         _gap_zero(gap_zero),
         _gap_type(gap_type) {}
 
-    MatrixOverSemiring* convert (Obj o, size_t n);
-
-    virtual Obj unconvert (MatrixOverSemiring* x);
+    virtual MatrixOverSemiring* convert   (Obj      o, size_t n);
+    virtual Obj                 unconvert (Element* x          );
 
   protected: 
     
@@ -198,14 +213,14 @@ class MatrixOverSemiringConverter : public Converter<MatrixOverSemiring> {
     Obj       _gap_type;
 };
 
-/*******************************************************************************
- * Projective max-plus matrices
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Projective max-plus matrices
+////////////////////////////////////////////////////////////////////////////////
 
-class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatrix>, 
-                                         public MatrixOverSemiringConverter {
+class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
 
   public:
+
     ProjectiveMaxPlusMatrixConverter(Semiring* semiring, 
                                      Obj       gap_zero, 
                                      Obj       gap_type)
@@ -213,48 +228,42 @@ class ProjectiveMaxPlusMatrixConverter : public Converter<ProjectiveMaxPlusMatri
 
     ProjectiveMaxPlusMatrix* convert (Obj o, size_t n) {
       return
-        static_cast<ProjectiveMaxPlusMatrix*>(MatrixOverSemiringConverter::convert(o, n));
+        static_cast<ProjectiveMaxPlusMatrix*>(
+            MatrixOverSemiringConverter::convert(o, n));
     }
 
-    Obj unconvert (ProjectiveMaxPlusMatrix* x) {
+    Obj unconvert (Element* x) {
       return MatrixOverSemiringConverter::unconvert(x);
     }
 };
 
-/*******************************************************************************
- * Matrices over prime field
-*******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// Matrices over prime field
+////////////////////////////////////////////////////////////////////////////////
 
-class MatrixOverPrimeFieldConverter : public Converter<MatrixOverSemiring> {
-
-  public:
-
-    ~MatrixOverPrimeFieldConverter () {
-      delete _field;
-    }
-
-    MatrixOverPrimeFieldConverter (PrimeField* field) 
-      : _field(field) {}
-
-    MatrixOverSemiring* convert (Obj o, size_t n);
-
-    Obj unconvert (MatrixOverSemiring* x);
-
-  protected: 
-    
-    PrimeField* _field;
-};
-
-/*******************************************************************************
- * Partitioned binary relations (PBRs)
-*******************************************************************************/
-
-class PBRConverter : public Converter<PBR> {
+class MatrixOverPrimeFieldConverter : public MatrixOverSemiringConverter {
 
   public:
 
-    PBR* convert (Obj o, size_t n);
+    MatrixOverPrimeFieldConverter(PrimeField* field)
+      : MatrixOverSemiringConverter(field, 0, 0) {}
 
-    Obj unconvert (PBR* x);
+    MatrixOverSemiring* convert   (Obj      o, size_t n);
+    Obj                 unconvert (Element* x          );
 
 };
+
+////////////////////////////////////////////////////////////////////////////////
+// Partitioned binary relations (PBRs)
+////////////////////////////////////////////////////////////////////////////////
+
+class PBRConverter : public Converter {
+
+  public:
+
+    PBR* convert   (Obj      o, size_t n);
+    Obj  unconvert (Element* x          );
+
+};
+
+#endif

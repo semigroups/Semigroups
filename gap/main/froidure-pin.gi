@@ -57,14 +57,15 @@ function(arg)
                    DegreeOfTransformationCollection(coll));
   elif IsPartialPermSemigroup(S) then
     return Maximum(DegreeOfPartialPermSemigroup(S), 
+                   CodegreeOfPartialPermSemigroup(S),
                    DegreeOfPartialPermCollection(coll), 
                    CodegreeOfPartialPermCollection(coll));
   elif IsMatrixOverSemiringSemigroup(S) then 
-    return DimensionOfMatrixOverSemiring(Representative(S)) ^ 2;
+    return DimensionOfMatrixOverSemiring(Representative(S));
   elif IsBipartitionSemigroup(S) then 
-    return 2 * DegreeOfBipartitionSemigroup(S);
+    return DegreeOfBipartitionSemigroup(S);
   elif IsPBRSemigroup(S) then 
-    return 2 * DegreeOfPBRSemigroup(S);
+    return DegreeOfPBRSemigroup(S);
   else
     Error();
     return;
@@ -91,15 +92,15 @@ function(S)
     local data;
     data := GenericSemigroupData(S);
     if not IsBound(data!.elts) or not IsBound(data!.elts[nr]) then
-      ELEMENTS_SEMIGROUP(data, nr);
+      SEMIGROUP_ELEMENTS(data, nr);
     fi;
     return data!.elts[nr];
   end;
 
   # FIXME this should be Size(S) hack around RZMS
-  enum.Length := enum -> SIZE_SEMIGROUP(GenericSemigroupData(S));
+  enum.Length := enum -> SEMIGROUP_SIZE(GenericSemigroupData(S));
 
-  enum.AsList := enum -> ELEMENTS_SEMIGROUP(GenericSemigroupData(S), infinity);
+  enum.AsList := enum -> SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
 
   enum.Membership := function(enum, elt)
     return Position(GenericSemigroupData(S), elt) <> fail;
@@ -107,7 +108,7 @@ function(S)
 
   # FIXME this should be Size(S) hack around RZMS
   enum.IsBound\[\] := function(enum, nr)
-    return nr <= SIZE_SEMIGROUP(GenericSemigroupData(S));
+    return nr <= SEMIGROUP_SIZE(GenericSemigroupData(S));
   end;
 
   return EnumeratorByFunctions(S, enum);
@@ -117,7 +118,7 @@ end);
 
 InstallMethod(Size, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
-S -> SIZE_SEMIGROUP(GenericSemigroupData(S)));
+S -> SEMIGROUP_SIZE(GenericSemigroupData(S)));
 
 # different method for ideals
 
@@ -138,7 +139,7 @@ function(S)
   data := Enumerate(GenericSemigroupData(S));
 
   if not IsBound(data!.idempotents) then
-    elts := ELEMENTS_SEMIGROUP(data, infinity);
+    elts := SEMIGROUP_ELEMENTS(data, infinity);
     idempotents := EmptyPlist(Length(elts));
     nr := 0;
 
@@ -153,7 +154,7 @@ function(S)
     ShrinkAllocationPlist(idempotents);
   fi;
 
-  return ELEMENTS_SEMIGROUP(data, infinity){data!.idempotents};
+  return SEMIGROUP_ELEMENTS(data, infinity){data!.idempotents};
 end);
 
 #
@@ -175,13 +176,13 @@ function(data, x, n)
     return fail;
   fi;
 
-  return POSITION_SEMIGROUP(data, x);
+  return SEMIGROUP_POSITION(data, x);
 end);
 
 #
 
 InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData],
-LENGTH_SEMIGROUP);
+SEMIGROUP_CURRENT_SIZE);
 
 # FIXME remove this?
 
@@ -197,15 +198,15 @@ InstallMethod(ViewObj, [IsGenericSemigroupData],
 function(data)
   Print("<");
 
-  if IS_CLOSED_SEMIGROUP(data) then
+  if SEMIGROUP_IS_DONE(data) then
     Print("closed ");
   else
     Print("open ");
   fi;
 
-  Print("semigroup data with ", LENGTH_SEMIGROUP(data), " elements, ");
-  Print(NR_RULES_SEMIGROUP(data), " relations, ");
-  Print("max word length ", MAX_WORD_LEN_SEMIGROUP(data), ">");
+  Print("semigroup data with ", SEMIGROUP_CURRENT_SIZE(data), " elements, ");
+  Print(SEMIGROUP_CURRENT_NR_RULES(data), " relations, ");
+  Print("max word length ", SEMIGROUP_CURRENT_MAX_WORD_LENGTH(data), ">");
   return;
 end);
 
@@ -255,15 +256,16 @@ function(S)
   local data, hashlen, nrgens, nr, val, i;
 
   if SEMIGROUPS_IsCCSemigroup(S) then 
-    data := rec();
-    data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
-    data.nr := 0;
-    data.pos := 0;
-    # the degree is the length of the std::vector required to hold the object
-    data.degree := SEMIGROUPS_DegreeOfSemigroup(S);
-    data.report := SEMIGROUPS_OptionsRec(S).report;
-    data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
+    
+    data             := rec();
+    data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
+    data.nr          := 0;
+    data.pos         := 0;
+    data.degree      := SEMIGROUPS_DegreeOfSemigroup(S);
+    data.report      := SEMIGROUPS_OptionsRec(S).report;
+    data.batch_size  := SEMIGROUPS_OptionsRec(S).batch_size;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
+    
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);
   fi;
@@ -353,7 +355,6 @@ end);
 InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
 [IsGenericSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  data := ENUMERATE_SEMIGROUP(data, limit, lookfunc,
-                              lookfunc <> ReturnFalse);
+  data := SEMIGROUP_ENUMERATE(data, limit, lookfunc, lookfunc <> ReturnFalse);
   return data;
 end);

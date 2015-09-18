@@ -350,7 +350,7 @@ function(gens, opts)
       n := Length(gens);
       for i in [2 .. n] do
         if not gens[i] in S then
-          S := ClosureSemigroupNC(S, [gens[i]], opts);
+          S := SEMIGROUPS_AddGenerators(S, [gens[i]], opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far");
@@ -358,7 +358,9 @@ function(gens, opts)
       Print("\n");
     else
       for x in gens do
-        S := ClosureSemigroup(S, x, opts);
+        if not x in S then 
+          S := SEMIGROUPS_AddGenerators(S, [x], opts);
+        fi;
       od;
     fi;
     return S;
@@ -777,17 +779,11 @@ function(S, coll, opts)
   local data, T;
 
   if SEMIGROUPS_IsCCSemigroup(S) then
-    data := rec();
-    data.gens := ShallowCopy(coll);
-    data.nr := 0;
-    data.pos := 0;
-    # the degree is the length of the std::vector required to hold the object
-    data.degree := SEMIGROUPS_DegreeOfSemigroup(S, coll);
-    data.report := SEMIGROUPS_OptionsRec(S).report;
-    data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
+    data := SEMIGROUP_CLOSURE(GenericSemigroupData(S), 
+                              ShallowCopy(coll), 
+                              SEMIGROUPS_DegreeOfSemigroup(S, coll));
     data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                             and IsAttributeStoringRep), data);
-    CLOSURE_SEMIGROUP(GenericSemigroupData(S), data);
     T := Semigroup(data!.gens, opts);
     SetGenericSemigroupData(T, data);
     data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
@@ -818,14 +814,17 @@ function(S, coll, opts)
   if IsActingSemigroup(S)
       or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
           <> DegreeOfTransformationCollection(coll))
-      or (IsPartialPermSemigroup(S) and DegreeOfPartialPermSemigroup(S) <>
-          DegreeOfPartialPermCollection(S))
+      or (IsPartialPermSemigroup(S) and 
+          (DegreeOfPartialPermSemigroup(S) <> DegreeOfPartialPermCollection(coll)
+           or CodegreeOfPartialPermSemigroup(S) <> CodegreeOfPartialPermCollection(coll)))
+##FIXME the above should really be less than, since this should work if the
+#degree of the semigroup is larger than the degree of the collection!
       or not SEMIGROUPS_IsCCSemigroup(S) then
-    return ClosureSemigroup(S, coll);
+    return ClosureSemigroup(S, coll, opts);
   fi;
 
   data := GenericSemigroupData(S);
-  ADD_GENERATORS_SEMIGROUP(data, coll);
+  SEMIGROUP_ADD_GENERATORS(data, coll);
   S := Semigroup(data!.gens, opts);
   SetGenericSemigroupData(S, data);
   return S;
@@ -855,8 +854,8 @@ function(S, func, limit)
 
   while Size(T) < limit and not IsDoneIterator(iter) do
     f := NextIterator(iter);
-    if func(f) then
-      T := ClosureSemigroup(T, f);
+    if func(f) and not f in T then
+      T := SEMIGROUPS_AddGenerators(T, [f], SEMIGROUPS_OptionsRec(T));
     fi;
   od;
   SetParent(T, S);
