@@ -153,13 +153,26 @@ function(filter, n)
   local mat;
 
   if n = 1 then
-    Error("Semigroups: ZeroSemigroupCons: usage:\n",
-          "there is no Rees 0-matrix semigroup of order 1,");
+    Error("Semigroups: ZeroSemigroupCons: usage,\n",
+          "there is no Rees 0-matrix semigroup with only 1 element,");
     return;
   fi;
   mat := [[1 .. n - 1] * 0];
   return ReesZeroMatrixSemigroup(Group(()), mat);
 end);
+
+InstallMethod(RectangularBandCons,
+"for a filter and a positive integer and positive integer",
+[IsReesMatrixSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, n)
+  local id, mat;
+
+  id := ();
+  mat := List([1 .. n], x -> List([1 .. m], y -> id));
+  return ReesMatrixSemigroup(Group(id), mat);
+end);
+
+#
 
 InstallMethod(IsInverseSemigroup,
 "for a Rees 0-matrix subsemigroup",

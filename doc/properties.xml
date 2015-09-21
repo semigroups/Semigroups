@@ -998,4 +998,36 @@ false]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsSemigroupWithAdjoinedZero">
+  <ManSection>
+    <Prop Name="IsSemigroupWithAdjoinedZero" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.  </Returns>
+    <Description> 
+      <C>IsSemigroupWithAdjoinedZero</C> returns <K>true</K> if the semigroup
+      <A>S</A> can be expressed as the disjoint union of subsemigroups
+      <M><A>S</A> \setminus \{ 0 \}</M> and <M>\{ 0 \}</M> (where <M>0</M> is
+      the <Ref Attr="MultiplicativeZero"/> of <A>S</A>). <P/>
+
+      If this is not the case, then either <A>S</A> lacks a multiplicative
+      zero, or the set <M><A>S</A> \setminus \{ 0 \}</M> is not a subsemigroup
+      of <A>S</A>, and so <C>IsSemigroupWithAdjoinedZero</C> returns
+      <K>false</K>.
+
+      <Example><![CDATA[
+gap> S := Semigroup( [
+> Transformation( [ 2, 3, 4, 5, 1, 6 ] ),
+> Transformation( [ 2, 1, 3, 4, 5, 6 ] ),
+> Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ] );
+<transformation semigroup on 6 pts with 3 generators>
+gap> IsZeroGroup(S);
+true
+gap> IsSemigroupWithAdjoinedZero(S);
+true
+gap> S := FullTransformationMonoid(4);;
+gap> IsSemigroupWithAdjoinedZero(S);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 #EOF

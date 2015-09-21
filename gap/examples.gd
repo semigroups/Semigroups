@@ -41,8 +41,9 @@ DeclareSynonym("SingularTransformationMonoid",
                SingularTransformationSemigroup);
 
 DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
-DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RectangularBand", [IsPosInt, IsPosInt]);
+DeclareConstructor("RectangularBandCons", [IsSemigroup, IsPosInt, IsPosInt]);
+DeclareConstructor("MonogenicSemigroupCons",
+                   [IsSemigroup, IsPosInt, IsPosInt]);
 
 # Matrix semigroups . . .
 

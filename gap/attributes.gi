@@ -1107,3 +1107,35 @@ function(s)
   fi;
   return Sum(ind);
 end);
+
+InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  local zero, gens, T;
+
+  if HasIsSemigroupWithAdjoinedZero(S)
+      and not IsSemigroupWithAdjoinedZero(S) then
+    return fail;
+  fi;
+
+  zero := MultiplicativeZero(S);
+  if zero = fail then
+    return fail;
+  fi;
+
+  gens := GeneratorsOfSemigroup(S);
+  if Length(gens) = 1 then
+    return fail;
+  fi;
+  if not zero in gens then
+    return fail;
+  fi;
+
+  T := Semigroup(Difference(gens, [zero]));
+
+  if zero in T then
+    return fail;
+  fi;
+  return T;
+end);

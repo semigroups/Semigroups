@@ -1516,3 +1516,8 @@ function(S)
   fi;
   return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
 end);
+
+InstallMethod(IsSemigroupWithAdjoinedZero,
+"for a semigroup",
+[IsSemigroup],
+x -> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(x) <> fail);

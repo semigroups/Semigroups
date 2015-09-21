@@ -89,6 +89,7 @@
     <#Include Label="Normalizer">
     <#Include Label="SmallestElementSemigroup">
     <#Include Label="GeneratorsSmallest">
+    <#Include Label="UnderlyingSemigroupOfSemigroupWithAdjoinedZero">
   </Section>
 
   <Section><Heading>Further properties of semigroups</Heading>
@@ -111,6 +112,7 @@
     <#Include Label="IsRegularSemigroup">
     <#Include Label="IsRightZeroSemigroup">
     <#Include Label="IsRTrivial">
+    <#Include Label="IsSemigroupWithAdjoinedZero">
     <#Include Label="IsSemilatticeAsSemigroup">
     <#Include Label="IsSimpleSemigroup">
     <#Include Label="IsSynchronizingSemigroup">
