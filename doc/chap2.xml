@@ -158,7 +158,6 @@ true</Log>
       the types of semigroups defined in &Semigroups; which are not mentioned in
       the reference manual. 
       <#Include Label="AsTransformationSemigroup">
-      <#Include Label="AsMatrixSemigroup">
       <#Include Label="IsomorphismPermGroup">
       <#Include Label="IsomorphismBipartitionSemigroup">
       <#Include Label="IsomorphismBlockBijectionSemigroup">

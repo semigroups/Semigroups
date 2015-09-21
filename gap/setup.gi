@@ -578,7 +578,6 @@ end);
 InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> InverseLeftBlocks);
 
-# FIXME is this right? JDM
 InstallMethod(RhoInverse, "for a matrix semigroup",
 [IsMatrixSemigroup], s ->
 function(rsp, mat)

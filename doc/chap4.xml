@@ -247,7 +247,8 @@
     <#Include Label="InverseLeftBlocks">
   </Section>
 
-  <Section><Heading>Visualising blocks and bipartitions</Heading>
+  <Section Label="Section-Visualising-Bipartition">
+    <Heading>Visualising blocks and bipartitions</Heading>
     There are some functions in &Semigroups; for creating &LaTeX; pictures of
     bipartitions and blocks. Descriptions of these methods can be found in this
     section. <P/>

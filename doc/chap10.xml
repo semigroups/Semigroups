@@ -15,28 +15,11 @@
   on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.
   We take every precaution to hide this fact from the user of &Semigroups;.
  
-<Section Label = "sect:Matrix semigroups">
-  <Heading>Creating matrix semigroups</Heading>
-
-  Random matrix semigroups can be created by using the functions <Ref Func="RandomMatrixSemigroup"/>
-  or <Ref Func="RandomMatrixMonoid"/>. While this is convenient for testing and playing around,
-  creating semigroups from matrices can be a bit more work.
-
-  We provide a couple of convenience functions to streamline the process.
-  <#Include Label="MatrixSemigroup"/>
-  <Ref Attr="IsomorphismMatrixSemigroup"/>
-  <Ref Attr="AsMatrixSemigroup" Label="for a semigroup"/>
-  <Ref Oper="AsMatrixSemigroup" Label="for a semigroup and a ring"/>
-  <Ref Prop="IsMatrixSemigroupGreensClass"/>
-  
-</Section>
-
 <Section Label="sect:Semigroups matrix objects">
-  <Heading>Semigroup matrix objects</Heading>
+  <Heading>Matrices in &Semigroups;</Heading>
 
   The matrix functions in the &Semigroups; package use a wrapper
   object for matrices. In the following these objects are documented.
-  
 
   <#Include Label="IsMatrixOverFiniteField"/>
   <#Include Label="NewMatrixOverFiniteField"/>
@@ -54,6 +37,22 @@
   <#Include Label="AsMatrix"/>
   <#Include Label="ConstructingFilter"/>
 
+</Section>
+
+<Section Label = "sect:Matrix semigroups">
+  <Heading>Creating matrix semigroups</Heading>
+
+  Random matrix semigroups can be created by using the functions <Ref
+    Func="RandomMatrixSemigroup"/> or <Ref Func="RandomMatrixMonoid"/>. While
+  this is convenient for testing and playing around, creating semigroups from
+  matrices can be a bit more work.
+
+  We provide a couple of convenience functions to streamline the process.
+  <#Include Label="MatrixSemigroup"/>
+  <Ref Attr="IsomorphismMatrixSemigroup"/>
+  <Ref Oper="AsMatrixSemigroup"/>
+  <Ref Prop="IsMatrixSemigroupGreensClass"/>
+  
 </Section>
 
 <Section Label = "sect:Semigroups matrix groups">

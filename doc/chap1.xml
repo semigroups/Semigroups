@@ -4,19 +4,19 @@
     
   <Section><Heading>Introduction</Heading>
     This is the manual for the &Semigroups; package version &VERSION;.
-    &Semigroups; &VERSION; is a descendant of the  
+    &Semigroups; &VERSION; is a distant descendant of the  
     <URL Text="Monoid package for GAP 3">
       http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
     Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc; and
     the Monoid package for GAP 4 by J. D. Mitchell.<P/>
   
-    Many of the operations, methods, properties, and functions described in this
-    manual only apply to semigroups of transformations, partial permutations,
-    bipartitions, and subsemigroups of regular Rees 0-matrix semigroups over
-    groups. For the sake of brevity, we have opted to say <B>semigroup</B>
-    rather than <B>semigroup of transformations, partial permutations,
-    bipartitions, and subsemigroups of regular Rees 0-matrix semigroups over
-    groups</B>.<P/>
+    Many of the operations, methods, properties, and functions described in
+    this manual only apply to semigroups of transformations, partial
+    permutations, bipartitions, subsemigroups of regular Rees 0-matrix
+    semigroups over groups, semigroups of matrices over finite fields, free
+    inverse semigroups, and free bands. For the sake of brevity, we have opted
+    to say <B>semigroup</B> to describe the aforementioned classes of semigroups.
+    <P/>
 
     &Semigroups; &VERSION; contains more efficient methods than those available
     in the &GAP; library (and in many cases more efficient than any other
@@ -29,17 +29,19 @@
     such as if it is regular, simple, inverse, completely regular, and a variety
     of further properties; see Chapter <Ref Chap="green"/>. The theory
     behind the main algorithms in &Semigroups; will be described in a
-    forthcoming article. <P/>
+    forthcoming article.
+    <P/>
 
     It is harder for &Semigroups; to compute Green's &L;- and &H;-classes of a
-    transformation semigroup and the methods used to compute with Green's &R;-
+    transformation semigroup. The methods used to compute with Green's &R;-
     and &D;-classes are the most efficient in &Semigroups;.  Thus, if you are
     computing with a transformation semigroup, wherever possible, it is advisable
     to use the commands relating to Green's &R;- or &D;-classes rather than
     those relating to Green's &L;-  or &H;-classes. No such difficulties are
     present when computing with semigroups of partial permutations,
-    bipartitions, or subsemigroups of a regular Rees 0-matrix semigroup over a
-    group.<P/>
+    bipartitions, subsemigroups of a regular Rees 0-matrix semigroup over a
+    group, or semigroups of matrices over a finite field.
+    <P/>
     
     The methods in &Semigroups; allow the computation of individual Green's
     classes without computing the entire data structure of the underlying
@@ -49,7 +51,8 @@
       Oper="GreensRClasses"/>, <Ref Attr="RClassReps"/>, <Ref
       Func="IteratorOfRClassReps"/>, <Ref Func="IteratorOfRClasses"/>, or <Ref
       Func="NrRClasses"/>.  This may be useful if you want to study a very large
-    semigroup where computing all the elements of the semigroup is not feasible.<P/>
+    semigroup where computing all the elements of the semigroup is not feasible.
+    <P/>
 
     There are methods for finding: congruences of certain types of semigroups
     (based on Section 3.5 in <Cite Key="howie"/>), the normalizer of a semigroup
@@ -58,38 +61,51 @@
     smaller degree partial permutation representations (based on <Cite
       Key="Schein1992aa"/>) and the character table of an inverse semigroup.
     There are functions for producing pictures of the Green's structure of a
-    semigroup, and for drawing bipartitions. <P/>
+    semigroup, and for drawing bipartitions; see Sections
+    <Ref Sect="Section-Visualising-Semigroup"/> 
+    and <Ref Sect="Section-Visualising-Bipartition"/>.
+    <P/>
 
     Several standard examples of semigroups are provided see Section <Ref
       Sect="Examples"/>.  &Semigroups; also provides functions to read and write
     collections of transformations, partial permutations, and bipartitions to a
     file; see <Ref Func="ReadGenerators"/> and <Ref
-      Func="WriteGenerators"/>.<P/>
+      Func="WriteGenerators"/>.
+    <P/>
 
     Details of how to create and manipulate semigroups of bipartitions can be
-    found in Chapter <Ref Chap="bipartition"/>.<P/>
+    found in Chapter <Ref Chap="bipartition"/>.
+    <P/>
+    
+    Details of how to create and manipulate semigroups of matrices over a
+    finite field can be found in Chapter <Ref Chap="Matrix semigroups"/>.
+    <P/>
 
     There are also functions in &Semigroups; to define and manipulate free
     inverse semigroups and their elements; this part of the package was written
     by Julius Jonu&#353;as; see Chapter <Ref Chap="Free inverse semigroups"/>
-    and Section 5.10 in <Cite Key="howie"/> for more details.<P/>
+    and Section 5.10 in <Cite Key="howie"/> for more details.
+    <P/>
     
     &Semigroups; contains functions synonymous to some of those defined in the
     &GAP; library but, for the sake of convenience, they have abbreviated
     names; further details can be found at the appropriate points in the
-    later chapters of this manual. <P/>
+    later chapters of this manual.
+    <P/>
     
     &Semigroups; contains different methods for some &GAP; library functions,
     and so you might notice that &GAP; behaves differently when &Semigroups; is
     loaded.  For more details about semigroups in &GAP; or Green's relations in
     particular, see <Ref Sect="Semigroups" BookName="ref"/> or 
-    <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
+    <Ref Sect="Green's Relations" BookName="ref"/>.
+    <P/>
 
     The &Semigroups; package is written &GAP; code and requires the &Orb; and
     &IO; packages. The &Orb; package is used to efficiently compute components
     of actions, which underpin many of the features of &Semigroups;. The &IO;
     package is used to read and write transformations, partial permutations, and
-    bipartitions to a file. <P/>
+    bipartitions to a file.
+    <P/>
 
     The &Grape; package must be loaded for the operation <Ref
       Oper="SmallestMultiplicationTable"/> to work, and it must be 
@@ -114,7 +130,8 @@
     
     Some further details about semigroups in &GAP; and Green's relations in
     particular, can be found in <Ref Sect="Semigroups" BookName="ref"/> and 
-    <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
+    <Ref Sect="Green's Relations" BookName="ref"/>.
+    <P/>
 
     If you find a bug or an issue with the package, then report this using the
     <URL Text="issue tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL>.

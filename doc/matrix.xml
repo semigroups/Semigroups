@@ -14,24 +14,40 @@
       <Description>
         This category contains &Semigroups; matrix object wrapper. The
         introduction of this filter was necessary to get around &GAP;
-        limitations with regards to matrices and associative objects.
+        limitations with regards to matrices and associative objects.<P/>
 
-        Do not rely on the behaviour of this object type as it might be
-        changed in the future or be completely removed from the package.
+        The behaviour of this object type might be changed or removed
+        completely from the package in the future.
+
+        <Example><![CDATA[
+gap> x := Z(4) * [[1,0], [0,2]];
+[ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
+gap> IsMatrixOverFiniteField(x);
+false
+gap> 
+]]></Example>
+<!--FIXME example of something that is an IsMatrixOverFiniteField-->
       </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="NewMatrixOverFiniteField">
 <ManSection>
-  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, rows" Label="for a filter, a field, an integer, and a list of rows"/>
-  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, mat" Label="for a filter, a field, an integer, and a matrix"/>
+  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, rows" 
+    Label="for a filter, a field, an integer, and a list of rows"/>
+  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, mat" 
+    Label="for a filter, a field, an integer, and a matrix"/>
   <Returns>a new matrix object.</Returns>
   <Description>
-	Creates a new <A>n</A>-by-<A>n</A> matrix over the finite field
-    <A>F</A> with constructing filter <A>filt</A>.
-    The matrix itself is given either by a list <A>rows</A> of rows, or
-    by a matrix <A>mat</A>.
+    Creates a new <A>n</A>-by-<A>n</A> matrix over the finite field <A>F</A>
+    with constructing filter <A>filt</A>.
+
+    <!--FIXME what's the difference between the two things in the next sentence?-->
+    The matrix itself is given either by a list <A>rows</A> of rows, or by a
+    matrix <A>mat</A>.
+    <!--FIXME please enumerate the possible values for the argument filt-->
+    <!--FIXME examples please!-->
+    <!--FIXME examples of why the argument n is necessary!-->
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -43,6 +59,8 @@
   <Description>
     Creates a new <A>n</A>-by-<A>n</A> zero or identity matrix with entries
     in the finite field <A>F</A>.
+    <!--FIXME examples please!-->
+    <!--FIXME examples of why the argument n is necessary!-->
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -53,6 +71,8 @@
   <Attr Name="RowSpaceTransformation" Arg="m" Label="for a matrix over finite field"/>
   <Attr Name="RowSpaceTransformationInv" Arg="m" Label="for a matrix over finite field"/>
   <Returns>A basis for the row space of <A>m</A>.</Returns>
+    <!--FIXME description please!-->
+    <!--FIXME examples please!-->
 </ManSection>
 <#/GAPDoc>
 
@@ -61,21 +81,20 @@
   <Attr Name="ColSpaceBasis" Arg="m" Label="for a matrix over finite field"/>
   <Attr Name="ColSpaceTransformation" Arg="m" Label="for a matrix over finite field"/>
   <Attr Name="ColSpaceTransformationInv" Arg="m" Label="for a matrix over finite field"/>
+  <Returns><!--FIXME: fill this in-->.</Returns>
   <Description>A basis for the column space of <A>m</A>.</Description>
+    <!--FIXME description please!-->
+    <!--FIXME examples please!-->
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="RightInverse">
 <ManSection>
   <Attr Name="RightInverse" Arg="m" Label="for a matrix over finite field"/>
-  <Returns>A right inverse of <A>m</A>.</Returns>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="LeftInverse">
-<ManSection>
   <Attr Name="LeftInverse" Arg="m" Label="for a matrix over finite field"/>
-  <Returns>A left inverse of <A>m</A>.</Returns>
+  <Returns>A matrix over a finite field.</Returns>
+    <!--FIXME description please!-->
+    <!--FIXME examples please!-->
 </ManSection>
 <#/GAPDoc>
 
