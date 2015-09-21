@@ -34,7 +34,7 @@ gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2), 16,
 > [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ]
 > ]);;
 gap> S := Semigroup(M);
-<semigroup of 16x16 s-matrices over GF(2) with 1 generator>
+<semigroup of 16x16 matrices over GF(2) with 1 generator>
 gap> Size(S);
 7161
 gap> NrDClasses(S);
@@ -73,7 +73,7 @@ gap> NrIdempotents(S);
 gap> PartialOrderOfDClasses(S);
 [ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5 ] ]
 gap> S := Semigroup(GeneratorsOfSemigroup(S));
-<semigroup of 5x5 s-matrices over GF(3) with 2 generators>
+<semigroup of 5x5 matrices over GF(3) with 2 generators>
 gap> PartialOrderOfDClasses(S);
 [ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5 ] ]
 
@@ -92,7 +92,7 @@ gap> Size(S);
 gap> NrIdempotents(S);
 42
 gap> MinimalIdeal(S);
-<ideal of semigroup of 3x3 s-matrices over GF(3) with 1 generator>
+<ideal of semigroup of 3x3 matrices over GF(3) with 1 generator>
 gap> Size(last);
 1
 gap> MultiplicativeZero(S);
@@ -100,8 +100,8 @@ gap> MultiplicativeZero(S);
 gap> MinimalDClass(S);
 <Green's D-class: <matrix over finite field of degree 3 over GF(3)>>
 gap> M := MaximalSubsemigroups(S);
-[ <semigroup of 3x3 s-matrices over GF(3) with 4 generators>, 
-  <semigroup of 3x3 s-matrices over GF(3) with 2 generators> ]
+[ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
+  <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
 gap> List(M, U-> IsMaximalSubsemigroup(S, U));
 [ true, true ]
 
@@ -121,7 +121,7 @@ gap> upper := function(mat)
 > end;;
 gap> S := GeneralLinearSemigroup(3,3);;
 gap> T := SubsemigroupByProperty(S, upper);
-<monoid of 3x3 s-matrices over GF(3) with 12 generators>
+<monoid of 3x3 matrices over GF(3) with 12 generators>
 gap> Size(T);
 729
 
@@ -132,7 +132,7 @@ gap> for i in [2..Length(elms)] do
 >  S := ClosureSemigroup(S, elms[i]);
 > od;;
 gap> S;
-<monoid of 3x3 s-matrices over GF(3) with 64 generators>
+<monoid of 3x3 matrices over GF(3) with 64 generators>
 gap> Size(S);
 729
 
@@ -152,7 +152,7 @@ gap> T := Semigroup(Transformation( [ 1, 2, 7, 3, 2, 1, 4, 3 ] ), Transformation
 gap> Size(T);
 416
 gap> S := AsMatrixSemigroup(T);
-<semigroup of 8x8 s-matrices over GF(2) with 2 generators>
+<semigroup of 8x8 matrices over GF(2) with 2 generators>
 gap> Size(S);
 416
 gap> Size(S) = Size(T);
@@ -196,7 +196,7 @@ gap> S := Semigroup(
 >      [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],
 >      [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
 >      [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ]) );
-<semigroup of 16x16 s-matrices over GF(2) with 2 generators>
+<semigroup of 16x16 matrices over GF(2) with 2 generators>
 gap> Size(S);
 21392255076846796800
 gap> IsGroupAsSemigroup(S);
@@ -208,7 +208,7 @@ gap> NrRClasses(S);
 gap> NrLClasses(S);
 2
 gap> SchutzenbergerGroup(DClasses(S)[1]);
-<group of 8x8 s-matrices over GF(2) with 3 generators>
+<group of 8x8 matrices over GF(2) with 3 generators>
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ] ]
 
@@ -229,7 +229,7 @@ gap> StructureDescription(G);
 #T# 
 gap> S := AsMatrixSemigroup(Semigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]]));
-<semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>
+<semigroup of 3x3 matrices over GF(2^2) with 2 generators>
 gap> Size(S);
 27
 
