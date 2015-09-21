@@ -254,7 +254,8 @@ function(filter, basedomain, deg)
   SetRowRank(m, 0);
   SetRowSpaceTransformation(m, m);
   SetRowSpaceTransformationInv(m, m);
-  SetSemigroupInverse(m, m);
+# FIXME:
+#  SetSemigroupInverse(m, m);
   return m;
 end);
 
@@ -507,7 +508,8 @@ function(m)
   SetRowRank(m, Rank(bas));
   SetRowSpaceTransformation(m, tr);
   SetRowSpaceTransformationInv(m, tri);
-  SetSemigroupInverse(m, sinv);
+# FIXME
+#  SetSemigroupInverse(m, sinv);
   SetInverse(m, inv);
 end);
 
