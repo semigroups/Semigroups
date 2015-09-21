@@ -148,7 +148,7 @@ InstallMethod(StructureDescription, "for a Green's H-class",
 function(H)
   if not IsGroupHClass(H) then
     return fail;
- fi;
+  fi;
   return StructureDescription(Range(IsomorphismPermGroup(H)));
 end);
 
@@ -158,30 +158,30 @@ InstallMethod(ViewString, "for a Green's class",
 [IsGreensClass],
 function(C)
   local str;
-  
+
   str := "\><";
   Append(str, "\>Green's\< ");
 
-  if IsGreensDClass(C) then 
+  if IsGreensDClass(C) then
     Append(str, "D");
-  elif IsGreensRClass(C) then 
+  elif IsGreensRClass(C) then
     Append(str, "R");
-  elif IsGreensLClass(C) then 
+  elif IsGreensLClass(C) then
     Append(str, "L");
-  elif IsGreensHClass(C) then 
+  elif IsGreensHClass(C) then
     Append(str, "H");
-  elif IsGreensJClass(C) then 
+  elif IsGreensJClass(C) then
     Append(str, "J");
   fi;
   Append(str, "-class: ");
   Append(str, ViewString(Representative(C)));
   Append(str, ">\<");
-  
+
   return str;
 end);
 
 InstallMethod(PrintObj, "for a Green's class",
-[IsGreensClass], 
+[IsGreensClass],
 function(C)
   Print(PrintString(C));
   return;
@@ -191,17 +191,17 @@ InstallMethod(PrintString, "for a Green's class",
 [IsGreensClass],
 function(C)
   local str;
-  
+
   str := "\>\>\>Greens";
-  if IsGreensDClass(C) then 
+  if IsGreensDClass(C) then
     Append(str, "D");
-  elif IsGreensRClass(C) then 
+  elif IsGreensRClass(C) then
     Append(str, "L");
-  elif IsGreensLClass(C) then 
+  elif IsGreensLClass(C) then
     Append(str, "L");
-  elif IsGreensHClass(C) then 
+  elif IsGreensHClass(C) then
     Append(str, "H");
-  elif IsGreensJClass(C) then 
+  elif IsGreensJClass(C) then
     Append(str, "J");
   fi;
   Append(str, "ClassOfElement\<(\>");
@@ -209,6 +209,6 @@ function(C)
   Append(str, ",\< \>");
   Append(str, PrintString(Representative(C)));
   Append(str, "\<)\<\<");
-  
+
   return str;
 end);

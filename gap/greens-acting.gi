@@ -339,7 +339,7 @@ function(L)
   S := Parent(L);
   o := LambdaOrb(D);
   m := LambdaOrbSCCIndex(D);
-  
+
   if IsRegularClass(L) or Length(RhoCosets(D)) = 1 then
     #maybe <L> is regular and doesn't know it!
     return [LambdaIdentity(S)(LambdaRank(S)(o[OrbSCC(o)[m][1]]))];
@@ -1533,14 +1533,15 @@ function(H)
           "the H-class is not a group,");
     return;
   fi;
-  
-  if IsMatrixSemigroupGreensClass(H) then 
+
+  if IsMatrixSemigroupGreensClass(H) then
     iso := IsomorphismPermGroup(SchutzenbergerGroup(H));
     inv := InverseGeneralMapping(iso);
     # gaplint: ignore 3
     return MappingByFunction(H, Range(iso),
      x -> LambdaPerm(Parent(H))(Representative(H), x) ^ iso,
-     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x ^ inv));
+     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
+                                      x ^ inv));
   else
     # gaplint: ignore 3
     return MappingByFunction(H, SchutzenbergerGroup(H),
@@ -1974,8 +1975,9 @@ function(x, value, scc, o, onright)
   fi;
 
   # is x the group of units...
-  if IsActingSemigroupWithFixedDegreeMultiplication(S) and
-    ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+  if IsActingSemigroupWithFixedDegreeMultiplication(S)
+      and ActionRank(S)(Representative(x))
+      = ActionDegree(Representative(x)) then
     return true;
   fi;
 

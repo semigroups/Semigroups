@@ -56,7 +56,7 @@ function(o, m, elt)
   bound := Size(LambdaOrbSchutzGp(o, m));
   nrgens := 0;
   stop := false;
-  
+
   one := LambdaIdentity(s)(ActionDegree(s));
 
   for k in scc do
