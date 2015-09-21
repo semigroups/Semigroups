@@ -1052,7 +1052,7 @@ gap> One(T);
 #T# TestInstall66: Second bug in Issue #131
 gap> I := SemigroupIdeal(FullTransformationSemigroup(3), Transformation([1,1,1]));;
 gap> hom:=HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
-gap> map:=IsomorphismTransformationSemigroup(Range(quotienthom));;
+gap> map:=IsomorphismTransformationSemigroup(Range(hom));;
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);

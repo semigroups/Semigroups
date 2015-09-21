@@ -362,14 +362,18 @@ end);
 
 #
 
-InstallMethod(PrintString, "for a classical matrix semigroup",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
-S -> SEMIGROUPS_MatrixSemigroupPrintString(S));
+InstallMethod(PrintString, 
+"for a matrix semigroup with print string attribute",
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup
+ and HasSEMIGROUPS_MatrixSemigroupPrintString],
+SEMIGROUPS_MatrixSemigroupPrintString);
 
 #TODO ViewString
 
-InstallMethod(ViewObj, "for a classical matrix semigroup",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(ViewObj, 
+"for a matrix semigroup with view string attribute",
+[IsMatrixSemigroup and HasGeneratorsOfSemigroup
+ and HasSEMIGROUPS_MatrixSemigroupViewString],
 function(S)
   local n;
   Print("<");
