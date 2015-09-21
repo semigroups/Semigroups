@@ -81,8 +81,8 @@ end);
 InstallMethod(Display, "for a plist vector over finite field",
 [IsPlistVectorOverFiniteFieldRep],
 function(v)
-  Print("<vector over finite field of degree ",
-        DegreeOfVectorOverFiniteField(v), "\n");
+  Print("<vector over ", BaseDomain(v),
+        " of degree ", DegreeOfVectorOverFiniteField(v), "\n");
   Print(v!.vec);
   Print(">\n");
 end);
@@ -292,18 +292,15 @@ InstallMethod(ConstructingFilter, "for a cvec matrix over finite field",
 InstallMethod(ViewObj, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  Print("<matrix over finite field of degree ");
-  Print(DegreeOfMatrixOverFiniteField(m), " over ", BaseDomain(m), ">");
+  Print("<matrix over ", BaseDomain(m), " of degree ");
+  Print(DegreeOfMatrixOverFiniteField(m), ">");
 end);
 
 InstallMethod(ViewString, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  return STRINGIFY("<matrix over finite field of degree ",
-                   DegreeOfMatrixOverFiniteField(m),
-                   " over ",
-                   BaseDomain(m),
-                   ">");
+  return STRINGIFY("<matrix over ", BaseDomain(m), " of degree ",
+                   DegreeOfMatrixOverFiniteField(m), ">");
 end);
 
 InstallMethod(PrintObj, "for a plist matrix over finite field",
@@ -317,7 +314,7 @@ end);
 InstallMethod(Display, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  Print("<matrix over finite field of degree ",
+  Print("<matrix over ", BaseDomain(m), " of degree ",
         DegreeOfMatrixOverFiniteField(m), "\n");
   Print(m!.mat);
   Print(">\n");

@@ -25,7 +25,7 @@ gap> x := Z(4) * [[1,0], [0,2]];
 gap> IsMatrixOverFiniteField(x);
 false
 gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);
-<matrix over finite field of degree 2 over GF(2^2)>
+<matrix over GF(2^2) of degree 2>
 gap> IsMatrixOverFiniteField(y);
 true
 ]]></Example>
@@ -49,10 +49,9 @@ true
         <Example><![CDATA[
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2,
 > Z(4)*[[1,0],[0,1]]);
-<matrix over finite field of degree 2 over GF(2^2)>
+<matrix over GF(2^2) of degree 2>
 gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, []);
-<matrix over finite field of degree 0 over GF(2^2)>
-gap>
+<matrix over GF(2^2) of degree 0>
 ]]></Example>
   </Description>
 </ManSection>
@@ -67,10 +66,9 @@ gap>
     in the finite field <A>F</A>.
         <Example><![CDATA[
 gap> x := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2);
-<matrix over finite field of degree 2 over GF(2^2)>
+<matrix over GF(2^2) of degree 2>
 gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2);
-<matrix over finite field of degree 2 over GF(2^2)>
-gap>
+<matrix over GF(2^2) of degree 2>
 ]]></Example>
   </Description>
 </ManSection>
@@ -90,12 +88,12 @@ gap>
         <Example><![CDATA[
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
 > Z(4)^0*[[1,1,0], [0,1,1], [1,1,1]] );
-<matrix over finite field of degree 2 over GF(2^2)>
+<matrix over GF(2^2) of degree 3>
 gap> RowSpaceBasis(x);
 <rowbasis of rank 3 over GF(2^2)>
 gap> RowSpaceTransformation(x);
-[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]
-gap>
+[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ],
+  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]
 ]]></Example>
   </Description>
 </ManSection>
@@ -111,14 +109,14 @@ gap>
   of the matrix <A>m</A> respectively.
         <Example><![CDATA[
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
-Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
-<matrix over finite field of degree 2 over GF(2^2)>
+> Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(2^2) of degree 3>
 gap> LeftInverse(x);
-<matrix over finite field of degree 3 over GF(2^2)>
+<matrix over GF(2^2) of degree 3>
 gap> Display(LeftInverse(x) * x);
-<matrix over finite field of degree 3
-[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]>
-gap>
+<matrix over GF(2^2) of degree 3
+[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0 ],
+  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]>
 ]]></Example>
   </Description>
 </ManSection>
@@ -181,12 +179,10 @@ gap>
     <Example><![CDATA[
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
 > Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
-<matrix over finite field of degree 2 over GF(2^2)>
+<matrix over GF(2^2) of degree 3>
 gap> ConstructingFilter(x);
 <Representation "IsPlistMatrixOverFiniteFieldRep">
-gap>
 ]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
-
