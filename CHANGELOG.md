@@ -4,6 +4,20 @@
 #### Copyright (C) 2011-15 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.6
+
+###New Features in Version 2.6
+
+* The functions `RectangularBand`, `MonogenicSemigroup`, and `ZeroSemigroup`
+now have an optional first argument to specify the category of the result;
+the functions `LeftZeroSemigroup` and `RightZeroSemigroup` are introduced
+in a similar sense.
+[[Wilf Wilson](http://wilf.me)]
+
+* The new property `IsSemigroupWithAdjoinedZero` and attribute
+`UnderlyingSemigroupOfSemigroupWithAdjoinedZero` are introduced.
+[[Wilf Wilson](http://wilf.me)]
+
 ## Version 2.5 (released 01/06/15)
 
 This is a minor release including several bugfixes, lots of minor improvements in the documentation, some improvements in performance, and some new features.
@@ -11,12 +25,12 @@ This is a minor release including several bugfixes, lots of minor improvements i
 ###New Features in Version 2.5
 
 * Semigroups of partial permutations now have a polynomial time
-(quadratic in the degree) algorithm for computing the minimal ideal
+(quadratic in the degree) algorithm for computing the minimal ideal.
 [[Wilf Wilson](http://wilf.me)]
 
 * A more efficient `IsInverseSemigroup` method for Rees 0-matrix semigroups
 is introduced, along with new methods for `Idempotents` and
-`NrIdempotents` for inverse Rees 0-matrix semigroups
+`NrIdempotents` for inverse Rees 0-matrix semigroups.
 [[Wilf Wilson](http://wilf.me)]
 
 * The documentation for congruences has been improved and new tests have
