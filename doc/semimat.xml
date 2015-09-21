@@ -97,10 +97,10 @@ gap> Size(Range(iso));
       <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
 
       <Example><![CDATA[
-gap> S:=RandomTransformationSemigroup(4,4);;
+gap> S := RandomTransformationSemigroup(4, 4);;
 gap> IsFullMatrixSemigroup(S);
 false
-gap> S:=GeneralLinearSemigroup(3,3);
+gap> S := GeneralLinearSemigroup(3, 3);
 <full matrix semigroup 3x3 over GF(3)>
 gap> IsFullMatrixSemigroup(S);
 true]]></Example>

@@ -209,14 +209,13 @@ gap> Size(last);
       are synonyms for each other. They both return the full matrix semigroup,
       or if you prefer the general linear semigroup, of <A>d</A> by <A>d</A>
       matrices with entries over the field with <A>q</A> elements.  This
-      semigroup has <C>q^(d^2)</C> elements.
+      semigroup has <C><A>q</A> ^ (<A>d</A> ^ 2)</C> elements.
       <P/>
 
       <Example><![CDATA[
-gap> S:=FullMatrixSemigroup(3,4);
+gap> S := FullMatrixSemigroup(3, 4);
 <general linear monoid 3x3 over GF(2^2)>
-gap> T:=Range(IsomorphismTransformationSemigroup(S));;
-gap> Size(T);
+gap> Size(S);
 262144]]></Example>
     </Description>
   </ManSection>
