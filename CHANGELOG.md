@@ -6,7 +6,7 @@
 
 ## Version 2.6 (released 22/09/15)
 
-This release includes some bugfixes and some new features.
+This release includes some bugfixes, some minor new features, and one major new feature (efficient methods for semigroups of matrices over a finite field).
 
 ###New Features in Version 2.6
 
