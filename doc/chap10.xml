@@ -15,28 +15,6 @@
   on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.
   We take every precaution to hide this fact from the user of &Semigroups;.
  
-<Section Label="sect:Semigroups matrix objects">
-  <Heading>Matrices in &Semigroups;</Heading>
-
-  The matrix functions in the &Semigroups; package use a wrapper
-  object for matrices. In the following these objects are documented.
-
-  <#Include Label="IsMatrixOverFiniteField"/>
-  <#Include Label="NewMatrixOverFiniteField"/>
-  <#Include Label="NewIdentityMatrixOverFiniteField"/>
-  <#Include Label="RowSpaceBasis"/>
-  <#Include Label="RowRank"/>
-  <#Include Label="RightInverse"/>
-  <#Include Label="SemigroupInvertible"/>
-  <#Include Label="SemigroupInverse"/>
-  <#Include Label="DegreeOfMatrixOverFiniteField"/>
-  <#Include Label="BaseDomain"/>
-  <#Include Label="TransposedMatImmutable"/>
-  <#Include Label="AsMatrix"/>
-  <#Include Label="ConstructingFilter"/>
-
-</Section>
-
 <Section Label = "sect:Matrix semigroups">
   <Heading>Creating matrix semigroups</Heading>
 
@@ -51,6 +29,26 @@
   <Ref Oper="AsMatrixSemigroup"/>
   <Ref Prop="IsMatrixSemigroupGreensClass"/>
   
+</Section>
+
+<Section Label="sect:Semigroups matrix objects">
+  <Heading>Matrices in &Semigroups;</Heading>
+
+  The matrix functions in the &Semigroups; package use a wrapper
+  object for matrices. In the following these objects are documented.
+
+  <#Include Label="IsMatrixOverFiniteField"/>
+  <#Include Label="NewMatrixOverFiniteField"/>
+  <#Include Label="NewIdentityMatrixOverFiniteField"/>
+  <#Include Label="RowSpaceBasis"/>
+  <#Include Label="RowRank"/>
+  <#Include Label="RightInverse"/>
+  <#Include Label="DegreeOfMatrixOverFiniteField"/>
+  <#Include Label="BaseDomain"/>
+  <#Include Label="TransposedMatImmutable"/>
+  <#Include Label="AsMatrix"/>
+  <#Include Label="ConstructingFilter"/>
+
 </Section>
 
 <Section Label = "sect:Semigroups matrix groups">

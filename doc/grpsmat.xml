@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="MatrixGroupOperation">
 <ManSection>
-  <Oper Name="\^" Arg="G, mat" Label=""/>
+  <Oper Name="\^" Arg="G, mat" Label="for an matrix over finite field group and matrix over finite field"/>
   <Returns>A matrix group over a finite field</Returns>
   <Description>
     Conjugates the matrix group <A>G</A> inside the group <M>GL_n(F)</M> by

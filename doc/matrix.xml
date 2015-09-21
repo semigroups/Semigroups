@@ -47,7 +47,8 @@ true
 	Currently the only possible value for <A>filt</A> is
     <C>IsPlistMatrixOverFiniteFieldRep</C>.
         <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, Z(4)*[[1,0],[0,1]]);
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2,
+> Z(4)*[[1,0],[0,1]]);
 <matrix over finite field of degree 2 over GF(2^2)>
 gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, [[]]);
 <matrix over finite field of degree 0 over GF(2^2)>
@@ -87,7 +88,8 @@ gap>
   <C>m * RowSpaceTransformation(m) = RowSpaceBasis(m)</C>.
   <C>RowSpaceTransformationInv(m)</C> is the inverse of <C>RowSpaceTransformation(m)</C>.
         <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3, Z(4)^0*[[1,1,0], [0,1,1], [1,1,1]] );
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,1,1], [1,1,1]] );
 <matrix over finite field of degree 2 over GF(2^2)>
 gap> RowSpaceBasis(x);
 <rowbasis of rank 3 over GF(2^2)>
@@ -108,7 +110,8 @@ gap>
   These attributes contain a semigroup left-inverse, and a semigroup right-inverse
   of the matrix <A>m</A> respectively.
         <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3, Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
 <matrix over finite field of degree 2 over GF(2^2)>
 gap> LeftInverse(x);
 <matrix over finite field of degree 3 over GF(2^2)>
@@ -176,7 +179,8 @@ gap>
     <Ref Oper="NewMatrixOverFiniteField" Label="for a filter, a field, an integer, and a matrix"/>
     when creating the matrix <A>m</A>. This is used to create new objects that lie in the same filter. 
     <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3, Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
 <matrix over finite field of degree 2 over GF(2^2)>
 gap> ConstructingFilter(x);
 <Representation "IsPlistMatrixOverFiniteFieldRep">
