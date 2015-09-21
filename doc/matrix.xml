@@ -50,7 +50,7 @@ true
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2,
 > Z(4)*[[1,0],[0,1]]);
 <matrix over finite field of degree 2 over GF(2^2)>
-gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, [[]]);
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, []);
 <matrix over finite field of degree 0 over GF(2^2)>
 gap>
 ]]></Example>
