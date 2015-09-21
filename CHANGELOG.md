@@ -6,7 +6,12 @@
 
 ## Version 2.6 (released 22/09/15)
 
+This release includes some bugfixes and some new features.
+
 ###New Features in Version 2.6
+
+* extensive new features for computing with semigroups, monoids, and ideals, of matrices with entries in a finite field. 
+See Chapter 7 of the manual for more details. [[Markus Pfeiffer](http://morphism.de/~markusp/)]
 
 * The functions `RectangularBand`, `MonogenicSemigroup`, and `ZeroSemigroup`
 now have an optional first argument to specify the category of the result;
