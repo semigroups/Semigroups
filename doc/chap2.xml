@@ -185,6 +185,7 @@ true</Log>
     <#Include Label="MonogenicSemigroup">
     <#Include Label="RectangularBand">
     <#Include Label="ZeroSemigroup">
+    <#Include Label="LeftZeroSemigroup">
   </Section>
 
 </Chapter>

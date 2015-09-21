@@ -1087,31 +1087,32 @@ function(arg)
   local filter, n, out;
 
   if Length(arg) = 1  then
+    # this is the default type; debatable what this should be
     filter := IsPartialPermSemigroup;
     n := arg[1];
   elif Length(arg) = 2 then
     filter := arg[1];
     if not IsFilter(filter) then
-      Error("Semigroups: ZeroSemigroup: usage:\n",
+      Error("Semigroups: ZeroSemigroup: usage,\n",
             "the optional first argument <filter> must be a filter,");
       return;
     fi;
     n := arg[2];
   else
-    Error("Semigroups: ZeroSemigroup: usage:\n",
+    Error("Semigroups: ZeroSemigroup: usage,\n",
           "this function takes at most two arguments,");
     return;
   fi;
 
   if not IsPosInt(n) then
-    Error("Semigroups: ZeroSemigroup: usage:\n",
+    Error("Semigroups: ZeroSemigroup: usage,\n",
           "the argument <n> must be a positive integer,");
     return;
   fi;
 
   if n = 1 and "IsReesZeroMatrixSemigroup" in NamesFilter(filter) then
-    Error("Semigroups: ZeroSemigroup: usage:\n",
-          "there is no Rees 0-matrix semigroup of order 1,");
+    Error("Semigroups: ZeroSemigroup: usage,\n",
+          "there is no Rees 0-matrix semigroup with only 1 element,");
     return;
   fi;
 
@@ -1134,22 +1135,39 @@ function(arg)
   return out;
 end);
 
-# Creates a monogenic transformation semigroup with index m and period r
+# Creates a monogenic semigroup with index m and period r
 
-InstallMethod(MonogenicSemigroup,
-"for a positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, r)
-  local t, out;
+BindGlobal("MonogenicSemigroup",
+function(arg)
+  local filter, m, r, out;
 
-  t := [1 .. r] + 1;
-  t[r] := 1;
-
-  if not m = 1 then # m = 1 specifies a cyclic group
-    Append(t, [1 .. m] + r - 1);
+  if Length(arg) = 2  then
+    # this is the default type; debatable what this should be
+    filter := IsTransformationSemigroup;
+    m := arg[1];
+    r := arg[2];
+  elif Length(arg) = 3 then
+    filter := arg[1];
+    if not IsFilter(filter) then
+      Error("Semigroups: MonogenicSemigroup: usage,\n",
+            "the optional first argument <filter> must be a filter,");
+      return;
+    fi;
+    m := arg[2];
+    r := arg[3];
+  else
+    Error("Semigroups: MonogenicSemigroup: usage,\n",
+          "this function takes either two or three arguments,");
+    return;
   fi;
 
-  out := Semigroup(Transformation(t));
+  if not IsPosInt(m) or not IsPosInt(r) then
+    Error("Semigroups: MonogenicSemigroup: usage,\n",
+          "the arguments <m> and <r> must be positive integers,");
+    return;
+  fi;
+
+  out := MonogenicSemigroupCons(filter, m, r);
   SetSize(out, m + r - 1);
   SetIsMonogenicSemigroup(out, true);
 
@@ -1169,33 +1187,123 @@ function(m, r)
   return out;
 end);
 
-# Creates an m x n RMS over the trivial group
+# Creates an m x n rectangular band
 
-InstallMethod(RectangularBand,
-"for a positive integer and positive integer",
-[IsPosInt, IsPosInt],
-function(m, n)
-  local id, mat, R;
+BindGlobal("RectangularBand",
+function(arg)
+  local filter, m, n, out;
 
-  id := ();
-  mat := List([1 .. n], x -> List([1 .. m], y -> id));
-  R := ReesMatrixSemigroup(Group(id), mat);
+  if Length(arg) = 2  then
+    # this is the default type; debatable what this should be
+    filter := IsReesMatrixSemigroup;
+    m := arg[1];
+    n := arg[2];
+  elif Length(arg) = 3 then
+    filter := arg[1];
+    if not IsFilter(filter) then
+      Error("Semigroups: RectangularBand: usage,\n",
+            "the optional first argument <filter> must be a filter,");
+      return;
+    fi;
+    m := arg[2];
+    n := arg[3];
+  else
+    Error("Semigroups: RectangularBand: usage,\n",
+          "this function takes either two or three arguments,");
+    return;
+  fi;
 
-  SetSize(R, m * n);
-  SetIsRectangularBand(R, true);
+  if not IsPosInt(m) or not IsPosInt(n) then
+    Error("Semigroups: RectangularBand: usage,\n",
+          "the arguments <m> and <n> must be positive integers,");
+    return;
+  fi;
+
+  out := RectangularBandCons(filter, m, n);
+  SetSize(out, m * n);
+  SetIsRectangularBand(out, true);
+
   if not (m = 1 and n = 1) then
-    SetIsZeroSemigroup(R, false);
+    SetIsGroupAsSemigroup(out, false);
+    SetIsZeroSemigroup(out, false);
+    SetIsTrivial(out, false);
     if m = 1 then
-      SetIsRightZeroSemigroup(R, true);
+      SetIsRightZeroSemigroup(out, true);
     else
-      SetIsRightZeroSemigroup(R, false);
+      SetIsRightZeroSemigroup(out, false);
     fi;
     if n = 1 then
-      SetIsLeftZeroSemigroup(R, true);
+      SetIsLeftZeroSemigroup(out, true);
     else
-      SetIsLeftZeroSemigroup(R, false);
+      SetIsLeftZeroSemigroup(out, false);
     fi;
   fi;
 
-  return R;
+  return out;
+end);
+
+# Returns the n x 1 rectangular band
+
+BindGlobal("LeftZeroSemigroup",
+function(arg)
+  local filter, n;
+
+  if Length(arg) = 1  then
+    # this is the default type; debatable what this should be
+    filter := IsTransformationSemigroup;
+    n := arg[1];
+  elif Length(arg) = 2 then
+    filter := arg[1];
+    if not IsFilter(filter) then
+      Error("Semigroups: LeftZeroSemigroup: usage,\n",
+            "the optional first argument <filter> must be a filter,");
+      return;
+    fi;
+    n := arg[2];
+  else
+    Error("Semigroups: LeftZeroSemigroup: usage,\n",
+          "this function takes at most two arguments,");
+    return;
+  fi;
+
+  if not IsPosInt(n) then
+    Error("Semigroups: LeftZeroSemigroup: usage,\n",
+          "the argument <n> must be positive a integer,");
+    return;
+  fi;
+
+  return RectangularBand(filter, n, 1);
+end);
+
+# Returns the 1 x n rectangular band
+
+BindGlobal("RightZeroSemigroup",
+function(arg)
+  local filter, n;
+
+  if Length(arg) = 1  then
+    # this is the default type; debatable what this should be
+    filter := IsTransformationSemigroup;
+    n := arg[1];
+  elif Length(arg) = 2 then
+    filter := arg[1];
+    if not IsFilter(filter) then
+      Error("Semigroups: RightZeroSemigroup: usage,\n",
+            "the optional first argument <filter> must be a filter,");
+      return;
+    fi;
+    n := arg[2];
+  else
+    Error("Semigroups: RightZeroSemigroup: usage,\n",
+          "this function takes at most two arguments,");
+    return;
+  fi;
+
+  if not IsPosInt(n) then
+    Error("Semigroups: RightZeroSemigroup: usage,\n",
+          "the argument <n> must be positive a integer,");
+    return;
+  fi;
+
+  return RectangularBand(filter, 1, n);
 end);
