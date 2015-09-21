@@ -763,7 +763,7 @@ function(filter, m, r)
   local out, offset, i;
 
   if m = 1 and r = 1 then
-    return Semigroup(Bipartition([1, -1]));
+    return Semigroup(Bipartition([[1, -1]]));
   fi;
 
   out := [];

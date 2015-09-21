@@ -132,8 +132,8 @@ function(filter, n)
   local mat;
 
   if n = 1 then
-    Error("Semigroups: ZeroSemigroupCons: usage:\n",
-          "there is no Rees 0-matrix semigroup of order 1,");
+    Error("Semigroups: ZeroSemigroupCons: usage,\n",
+          "there is no Rees 0-matrix semigroup with only 1 element,");
     return;
   fi;
   mat := [[1 .. n - 1] * 0];

@@ -901,25 +901,25 @@ function(arg)
   elif Length(arg) = 2 then
     filter := arg[1];
     if not IsFilter(filter) then
-      Error("Semigroups: ZeroSemigroup: usage:\n",
+      Error("Semigroups: ZeroSemigroup: usage,\n",
             "the optional first argument <filter> must be a filter,");
       return;
     fi;
     n := arg[2];
   else
-    Error("Semigroups: ZeroSemigroup: usage:\n",
+    Error("Semigroups: ZeroSemigroup: usage,\n",
           "this function takes at most two arguments,");
     return;
   fi;
 
   if not IsPosInt(n) then
-    Error("Semigroups: ZeroSemigroup: usage:\n",
+    Error("Semigroups: ZeroSemigroup: usage,\n",
           "the argument <n> must be a positive integer,");
     return;
   fi;
 
   if n = 1 and "IsReesZeroMatrixSemigroup" in NamesFilter(filter) then
-    Error("Semigroups: ZeroSemigroup: usage:\n",
+    Error("Semigroups: ZeroSemigroup: usage,\n",
           "there is no Rees 0-matrix semigroup with only 1 element,");
     return;
   fi;
@@ -957,20 +957,20 @@ function(arg)
   elif Length(arg) = 3 then
     filter := arg[1];
     if not IsFilter(filter) then
-      Error("Semigroups: MonogenicSemigroup: usage:\n",
+      Error("Semigroups: MonogenicSemigroup: usage,\n",
             "the optional first argument <filter> must be a filter,");
       return;
     fi;
     m := arg[2];
     r := arg[3];
   else
-    Error("Semigroups: MonogenicSemigroup: usage:\n",
+    Error("Semigroups: MonogenicSemigroup: usage,\n",
           "this function takes either two or three arguments,");
     return;
   fi;
 
   if not IsPosInt(m) or not IsPosInt(r) then
-    Error("Semigroups: MonogenicSemigroup: usage:\n",
+    Error("Semigroups: MonogenicSemigroup: usage,\n",
           "the arguments <m> and <r> must be positive integers,");
     return;
   fi;
@@ -1009,20 +1009,20 @@ function(arg)
   elif Length(arg) = 3 then
     filter := arg[1];
     if not IsFilter(filter) then
-      Error("Semigroups: RectangularBand: usage:\n",
+      Error("Semigroups: RectangularBand: usage,\n",
             "the optional first argument <filter> must be a filter,");
       return;
     fi;
     m := arg[2];
     n := arg[3];
   else
-    Error("Semigroups: RectangularBand: usage:\n",
+    Error("Semigroups: RectangularBand: usage,\n",
           "this function takes either two or three arguments,");
     return;
   fi;
 
   if not IsPosInt(m) or not IsPosInt(n) then
-    Error("Semigroups: RectangularBand: usage:\n",
+    Error("Semigroups: RectangularBand: usage,\n",
           "the arguments <m> and <n> must be positive integers,");
     return;
   fi;
@@ -1063,19 +1063,19 @@ function(arg)
   elif Length(arg) = 2 then
     filter := arg[1];
     if not IsFilter(filter) then
-      Error("Semigroups: LeftZeroSemigroup: usage:\n",
+      Error("Semigroups: LeftZeroSemigroup: usage,\n",
             "the optional first argument <filter> must be a filter,");
       return;
     fi;
     n := arg[2];
   else
-    Error("Semigroups: LeftZeroSemigroup: usage:\n",
+    Error("Semigroups: LeftZeroSemigroup: usage,\n",
           "this function takes at most two arguments,");
     return;
   fi;
 
   if not IsPosInt(n) then
-    Error("Semigroups: LeftZeroSemigroup: usage:\n",
+    Error("Semigroups: LeftZeroSemigroup: usage,\n",
           "the argument <n> must be positive a integer,");
     return;
   fi;
@@ -1096,19 +1096,19 @@ function(arg)
   elif Length(arg) = 2 then
     filter := arg[1];
     if not IsFilter(filter) then
-      Error("Semigroups: RightZeroSemigroup: usage:\n",
+      Error("Semigroups: RightZeroSemigroup: usage,\n",
             "the optional first argument <filter> must be a filter,");
       return;
     fi;
     n := arg[2];
   else
-    Error("Semigroups: RightZeroSemigroup: usage:\n",
+    Error("Semigroups: RightZeroSemigroup: usage,\n",
           "this function takes at most two arguments,");
     return;
   fi;
 
   if not IsPosInt(n) then
-    Error("Semigroups: RightZeroSemigroup: usage:\n",
+    Error("Semigroups: RightZeroSemigroup: usage,\n",
           "the argument <n> must be positive a integer,");
     return;
   fi;
