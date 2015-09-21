@@ -15,25 +15,26 @@
   <Description>
     This is a helper function to create matrix semigroups from &GAP; matrices.
     The argument <A>list</A> is a homogeneous list of &GAP; matrices over a
-    finite field, and the optional argument <A>F</A> is a finite field.
+    finite field, and the optional argument <A>F</A> is a finite field.<P/>
 
-    The specification of the field <A>F</A> is can be necessary to prevent
+    The specification of the field <A>F</A> can be necessary to prevent
     &GAP; from trying to find a smaller common field for the entries in
     <A>list</A>.
     <Example><![CDATA[
 gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                         Z(4) * [[0,0,0], [0,0,1], [0,1,0]]);
 <semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
-    <M>S</M> is now a semigroup object for all intents and purposes of
-    &Semigroups;.
-   To help <Ref Func="MatrixSemigroup"/> along with creating the semigroup
-   you can give it optional arguments to specify the field that the matrices
-   are supposed to have entries in and the dimension of the matrix.
+
+  The object <C>S</C> is now a semigroup for all intents and purposes of
+  &Semigroups;.  To help <Ref Func="MatrixSemigroup"/> with creating the
+  semigroup you can give it optional arguments to specify the field that the
+  matrices are supposed to have entries in and the dimension of the matrix.
 
    <Example><![CDATA[
 gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                          Z(4) * [[0,0,0], [0,0,1], [0,1,0]]], GF(4));
-<semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>]]></Example>
+<semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
+
   Note that for this usage the generators have to be given as a list as
   the first argument to <Ref Func="MatrixSemigroup"/>.
   </Description>
