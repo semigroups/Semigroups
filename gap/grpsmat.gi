@@ -98,7 +98,7 @@ function(G, R)
   local gens, iso;
   gens := GeneratorsOfGroup(G);
   if Length(gens) = 0 then
-    Error("Semigroups: IsomorphismMatrixSemigroup: usage,\n"
+    Error("Semigroups: IsomorphismMatrixSemigroup: usage,\n",
           "the group must have at least one generator,");
     return;
   fi;
