@@ -63,13 +63,8 @@
   matrix groups, the &Semigroups; package implements matrix groups
   that delegate to the &GAP; library.
 
-  <#Include Label="GroupOperation"/>
-  <#Include Label=""/>
-  <#Include Label=""/>
-  <#Include Label=""/>
-  <#Include Label=""/>
-  <#Include Label=""/>
-  
+  <#Include Label="MatrixGroupOperation"/>
+
 </Section>
 
 </Chapter>
