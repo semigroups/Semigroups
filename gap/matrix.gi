@@ -125,19 +125,19 @@ function(filter, basedomain, l)
   return b;
 end);
 
-InstallMethod(Rank, "for a plist s-rowbasis",
+InstallMethod(Rank, "for a plist rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
   return Length(v!.rows);
 end);
 
-InstallMethod(\=, "for an s-rowbasis",
+InstallMethod(\=, "for an rowbasis",
 [IsPlistSRowBasisRep, IsPlistSRowBasisRep],
 function(x, y)
   return BaseDomain(x) = BaseDomain(y) and x!.rows = y!.rows;
 end);
 
-InstallMethod(\<, "for an s-rowbasis",
+InstallMethod(\<, "for an rowbasis",
 [IsPlistSRowBasisRep, IsPlistSRowBasisRep],
 function(x, y)
   return Rank(x) < Rank(y)
@@ -145,35 +145,35 @@ function(x, y)
         and (x!.rows < y!.rows));
 end);
 
-InstallMethod(ViewObj, "for a plist s-rowbasis",
+InstallMethod(ViewObj, "for a plist rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
-  Print("<s-rowbasis of rank ");
+  Print("<rowbasis of rank ");
   Print(Length(v!.rows), " over ", BaseDomain(v), ">");
 end);
 
-InstallMethod(ViewString, "for a plist s-rowbasis",
+InstallMethod(ViewString, "for a plist rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
-  return STRINGIFY("<s-rowbasis of rank ", Rank(v), " over ", BaseDomain(v));
+  return STRINGIFY("<rowbasis of rank ", Rank(v), " over ", BaseDomain(v));
 end);
 
-InstallMethod(PrintObj, "for a plist s-rowbasis",
+InstallMethod(PrintObj, "for a plist rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
   Print("NewSRowBasis(IsPlistSRowBasisRep, ", BaseDomain(v), ", ", v!.rows,
         ")");
 end);
 
-InstallMethod(Display, "for a plist s-rowbasis",
+InstallMethod(Display, "for a plist rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
-  Print("<s-rowbasis of rank ", Rank(v), "\n");
+  Print("<rowbasis of rank ", Rank(v), "\n");
   Print(v!.rows);
   Print(">\n");
 end);
 
-InstallMethod(PrintString, "for a plist s-rowbasis",
+InstallMethod(PrintString, "for a plist rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
   local st;
@@ -425,7 +425,7 @@ function(m)
 end);
 
 ############################################################################
-## Helper functions to deal with s-matrices.
+## Helper functions to deal with matrices.
 #############################################################################
 
 InstallGlobalFunction(ComputeRowSpaceAndTransformation,
@@ -671,7 +671,7 @@ function(coll)
   deg := DegreeOfMatrixOverFiniteField(coll[1]);
   if not ForAll(coll, x -> DegreeOfMatrixOverFiniteField(x) = deg) then
     Error("Semigroups: DegreeOfMatrixOverFiniteFieldCollection: usage,\n",
-          "the argument <coll> must be a collection of s-matrices of ",
+          "the argument <coll> must be a collection of matrices of ",
           "equal degree,");
     return;
   fi;
@@ -718,7 +718,7 @@ function(x, y)
         and BaseDomain(x) = BaseDomain(y) and x!.mat < y!.mat);
 end);
 
-InstallMethod(\*, "for s-matrices",
+InstallMethod(\*, "for matrices over finite field",
 [IsMatrixOverFiniteField, IsMatrixOverFiniteField],
 function(x, y)
   if DegreeOfMatrixOverFiniteField(x) <> DegreeOfMatrixOverFiniteField(y)

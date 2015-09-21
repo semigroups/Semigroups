@@ -10,16 +10,20 @@
 
 <#GAPDoc Label="MatrixSemigroup">
 <ManSection>
-  <Func Name="MatrixSemigroup" Arg=""/>
+  <Func Name="MatrixSemigroup" Arg="list [, F]"/>
   <Returns>A matrix semigroup.</Returns>
   <Description>
-    This is the kitchen-sink matrix semigroup creation function. It is designed
-    to make it easy to create matrix semigroups without having to go through
-    creating matrix objects first.
+    This is a helper function to create matrix semigroups from &GAP; matrices.
+    The argument <A>list</A> is a homogeneous list of &GAP; matrices over a
+    finite field, and the optional argument <A>F</A> is a finite field.
+
+    The specification of the field <A>F</A> is can be necessary to prevent
+    &GAP; from trying to find a smaller common field for the entries in
+    <A>list</A>.
     <Example><![CDATA[
 gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
->                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]);
-<semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>]]></Example>
+>                         Z(4) * [[0,0,0], [0,0,1], [0,1,0]]);
+<semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
     <M>S</M> is now a semigroup object for all intents and purposes of
     &Semigroups;.
    To help <Ref Func="MatrixSemigroup"/> along with creating the semigroup
@@ -32,6 +36,17 @@ gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 <semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>]]></Example>
   Note that for this usage the generators have to be given as a list as
   the first argument to <Ref Func="MatrixSemigroup"/>.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc>
+<ManSection>
+  <Attr Name="DegreeOfMatrixSemigroup" Arg="S"/>
+  <Returns>An integer</Returns>
+  <Description>
+    This attribute is the number of rows or columns of any matrix
+    in <A>S</A>.
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -67,6 +82,28 @@ gap> Size(Range(iso));
       A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
       property <C>IsMatrixSemigroupGreensClass</C> if and only if <C>S</C>
       is a semigroup of matrices.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFullMatrixSemigroup">
+  <ManSection>
+    <Prop Name="IsFullMatrixSemigroup" Arg="S"/>      
+    <Prop Name="IsGeneralLinearSemigroup" Arg="S"/>      
+    <Description>
+      <C>IsFullMatrixSemigroup</C> and <C>IsGeneralLinearSemigroup</C> return
+      <K>true</K> if the semigroup <C>S</C> was created using either of the
+      commands <Ref Oper="FullMatrixSemigroup"/> or 
+      <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
+
+      <Example><![CDATA[
+gap> S:=RandomTransformationSemigroup(4,4);;
+gap> IsFullMatrixSemigroup(S);
+false
+gap> S:=GeneralLinearSemigroup(3,3);
+<full matrix semigroup 3x3 over GF(3)>
+gap> IsFullMatrixSemigroup(S);
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

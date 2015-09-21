@@ -393,7 +393,7 @@ function(S)
     deg := DegreeOfMatrixOverFiniteField(gens[1]);
     res := "<monoid of ";
     Append(res, Concatenation(String(deg), "x", String(deg)));
-    Append(res, " s-matrices\<\> over ");
+    Append(res, " matrices\<\> over ");
     Append(res, String(BaseDomain(S)));
     Append(res, Concatenation("\<\> with ", Length(gens), " generator"));
   else
@@ -401,7 +401,7 @@ function(S)
     deg := DegreeOfMatrixOverFiniteField(gens[1]);
     res := "<semigroup of ";
     Append(res, Concatenation(String(deg), "x", String(deg)));
-    Append(res, " s-matrices\<\> over ");
+    Append(res, " matrices\<\> over ");
     Append(res, String(BaseDomain(S)));
     Append(res, Concatenation("\<\> with ", Length(gens), " generator"));
   fi;
@@ -422,14 +422,14 @@ function(S)
     deg := DegreeOfMatrixOverFiniteField(gens[1]);
     Print("<monoid of ");
     Print(deg, "x", deg);
-    Print(" s-matrices\<\> over ", BaseDomain(S));
+    Print(" matrices\<\> over ", BaseDomain(S));
     Print("\<\> with ", Length(gens), " generator");
   else
     gens := GeneratorsOfSemigroup(S);
     deg := DegreeOfMatrixOverFiniteField(gens[1]);
     Print("<semigroup of ");
     Print(deg, "x", deg);
-    Print(" s-matrices\<\> over ", BaseDomain(S));
+    Print(" matrices\<\> over ", BaseDomain(S));
     Print("\<\> with ", Length(gens), " generator");
   fi;
   if Length(gens) > 1 then
@@ -453,7 +453,7 @@ function(S)
   deg := DegreeOfMatrixOverFiniteField(gens[1]);
   Print("<ideal of semigroup of ");
   Print(deg, "x", deg);
-  Print(" s-matrices over ", BaseDomain(gens[1]));
+  Print(" matrices over ", BaseDomain(gens[1]));
   Print(" with ", Length(gens), " generator");
 
   if Length(gens) > 1 then

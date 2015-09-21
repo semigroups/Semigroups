@@ -252,28 +252,6 @@ gap> Size(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsFullMatrixSemigroup">
-  <ManSection>
-    <Prop Name="IsFullMatrixSemigroup" Arg="S"/>      
-    <Prop Name="IsGeneralLinearSemigroup" Arg="S"/>      
-    <Description>
-      <C>IsFullMatrixSemigroup</C> and <C>IsGeneralLinearSemigroup</C> return
-      <K>true</K> if the semigroup <C>S</C> was created using either of the
-      commands <Ref Oper="FullMatrixSemigroup"/> or 
-      <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
-
-      <Example><![CDATA[
-gap> S:=RandomTransformationSemigroup(4,4);;
-gap> IsFullMatrixSemigroup(S);
-false
-gap> S:=GeneralLinearSemigroup(3,3);
-<full matrix semigroup 3x3 over GF(3)>
-gap> IsFullMatrixSemigroup(S);
-true]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="MunnSemigroup">
     <ManSection>
       <Oper Name="MunnSemigroup" Arg="S"/>
