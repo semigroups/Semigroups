@@ -37,7 +37,8 @@ function(arg)
 
   if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then
     gens := arg;
-  elif Length(arg) = 2 and IsField(arg[2]) then
+  elif Length(arg) = 2 and IsField(arg[2]) and
+    IsFFECollCollColl(arg[1]) then
     gens := arg[1];
     ring := arg[2];
   else

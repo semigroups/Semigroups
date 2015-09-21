@@ -31,9 +31,9 @@ gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
   matrices are supposed to have entries in and the dimension of the matrix.
 
    <Example><![CDATA[
-gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
->                          Z(4) * [[0,0,0], [0,0,1], [0,1,0]]], GF(4));
-<semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
+gap> S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],
+>                          Z(3) * [[0,0,0], [0,0,1], [0,1,0]]], GF(9));
+<semigroup of 3x3 matrices over GF(3^2) with 2 generators>]]></Example>
 
   Note that for this usage the generators have to be given as a list as
   the first argument to <Ref Func="MatrixSemigroup"/>.
