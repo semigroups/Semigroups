@@ -111,20 +111,14 @@ function(coll)
 end);
 
 InstallMethod(ActionDegree, "for a matrix object collection",
-[IsHomogeneousList and IsFFECollCollColl],
-function(coll)
-  Error("obsolete?");
-  return RowLength(coll[1]);
-end);
-
-InstallMethod(ActionDegree, "for a matrix object collection",
 [IsHomogeneousList and IsMatrixOverFiniteFieldCollection],
 function(coll)
-  if Length(coll) > 0 then
-    return DegreeOfMatrixOverFiniteField(coll[1]);
-  else
-    Error("Semigroups: what is the ActionDegree of an empty collection?");
+  if Length(coll) = 0 then
+    Error("Semigroups: ActionDegree: usage,\n",
+          "the argument <coll> must be non-empty");
+    return;
   fi;
+  return DegreeOfMatrixOverFiniteField(coll[1]);
 end);
 
 #
@@ -746,9 +740,9 @@ function(x, y)
 end);
 
 InstallMethod(LambdaPerm, "for a matrix semigroup",
-[IsMatrixSemigroup], s ->
-function(x,y)
-  return MatrixOverFiniteFieldSchutzGrpElement(s,x,y);
+[IsMatrixSemigroup], S ->
+function(x, y)
+  return MatrixOverFiniteFieldSchutzGrpElement(S, x, y);
 end);
 
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that
@@ -774,9 +768,9 @@ function(f, g)
 end);
 
 InstallMethod(LambdaConjugator, "for a matrix semigroup",
-[IsMatrixSemigroup], s ->
+[IsMatrixSemigroup], S ->
 function(x, y)
-    return MatrixOverFiniteFieldLambdaConjugator(s,x,y);
+    return MatrixOverFiniteFieldLambdaConjugator(S, x, y);
 end);
 
 # the function used to test if there is an idempotent with the specified
@@ -868,8 +862,9 @@ function(x, p)
 end);
 
 InstallMethod(StabilizerAction, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> function(x,y)
-  return MatrixOverFiniteFieldStabilizerAction(S,x,y);
+[IsMatrixSemigroup], S ->
+function(x, y)
+  return MatrixOverFiniteFieldStabilizerAction(S, x, y);
 end);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
@@ -890,13 +885,8 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup],
 ReturnFalse);
 
-#
-#InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
-#"for a matrix semigroup", [IsMatrixSemigroup], ReturnTrue);
-# wat?
 InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
-IsMatrixSemigroup);
-
+                  IsMatrixSemigroup);
 
 InstallMethod(SchutzGpMembership, "for a transformation semigroup",
 [IsTransformationSemigroup],

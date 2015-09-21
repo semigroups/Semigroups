@@ -229,7 +229,7 @@ function(o, m)
   fi;
 
   g := Group(one);
-  
+
   stop := false;
 
   for k in scc do
@@ -408,7 +408,7 @@ function(o, m)
   return o!.mults;
 end);
 
-# 
+#
 
 InstallGlobalFunction(RhoOrbSchutzGp,
 function(o, m)
@@ -430,7 +430,7 @@ function(o, m)
   bound := RhoBound(S)(rank);
   one := RhoIdentity(S)(rank);
   G := Group(one);
-  
+
   if bound = 1 or rank = 0 then
     o!.schutz[m] := G;
     o!.schutzstab[m] := false;
@@ -446,12 +446,12 @@ function(o, m)
   mults := RhoOrbMults(o, m);
 
   stop := false;
-  
+
   for i in scc do
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
-        G := ClosureGroup(G, lambdaperm(rep, 
-                                        mults[orbitgraph[i][j]][2] * gens[j] * 
+        G := ClosureGroup(G, lambdaperm(rep,
+                                        mults[orbitgraph[i][j]][2] * gens[j] *
                                         mults[i][1] * rep));
         if Size(G) >= bound then
           stop := true;

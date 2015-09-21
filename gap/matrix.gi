@@ -9,24 +9,25 @@
 #############################################################################
 ##
 
-InstallMethod(NewVectorOverFiniteField, "for IsPlistVectorOverFiniteFieldRep, a ring, an int, and a list",
+InstallMethod(NewVectorOverFiniteField,
+"for IsPlistVectorOverFiniteFieldRep, a ring, an int, and a list",
 [IsPlistVectorOverFiniteFieldRep, IsRing, IsInt, IsList],
 function(filter, basedomain, rl, l)
-  local v,i,e,filter2;
+  local v, filter2;
 
   if not Length(l) = rl then
     Error("Semigroups: NewVectorOverFiniteField: usage,\n",
-          "the arguments are wrong!");
+          "the arguments are wrong,");
     return;
   fi;
 
   filter2 := filter and IsVectorOverFiniteField;
   if HasCanEasilyCompareElements(Representative(basedomain))
-     and CanEasilyCompareElements(Representative(basedomain)) then
+      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
-  v := rec( vec := StructuralCopy(l) );
-  Objectify( PlistVectorOverFiniteFieldType, v );
+  v := rec(vec := StructuralCopy(l));
+  Objectify(PlistVectorOverFiniteFieldType, v);
   MakeImmutable(v!.vec);
 
   SetDegreeOfVectorOverFiniteField(v, rl);
@@ -36,16 +37,19 @@ function(filter, basedomain, rl, l)
 end);
 
 #T Establish the usefulness of this method
-#InstallMethod(NewVectorOverFiniteField, "for IsPlistVectorOverFiniteFieldRep, a ring, an int, and a plist vector",
+#InstallMethod(NewVectorOverFiniteField, "for IsPlistVectorOverFiniteFieldRep,
+#a ring, an int, and a plist vector",
 #[IsPlistVectorOverFiniteFieldRep, IsRing, IsInt, IsPlistVectorRep],
 #function(filter, basedomain, rl, l)
 #  return NewVectorOverFiniteField(filter, basedomain, rl, AsVector(l));
 #end);
 
-InstallMethod(NewZeroVectorOverFiniteField, "for IsPlistVectorOverFiniteFieldRep, a ring, and an int",
+InstallMethod(NewZeroVectorOverFiniteField,
+"for IsPlistVectorOverFiniteFieldRep, a ring, and an int",
 [IsPlistVectorOverFiniteFieldRep, IsRing, IsInt],
 function(filter, basedomain, rl)
-  return NewVectorOverFiniteField(filter, basedomain, rl, [1..rl] * Zero(basedomain));
+  return NewVectorOverFiniteField(filter, basedomain, rl,
+                                  [1 .. rl] * Zero(basedomain));
 end);
 
 InstallMethod(ViewObj, "for a plist vector over finite field",
@@ -53,7 +57,7 @@ InstallMethod(ViewObj, "for a plist vector over finite field",
 function(v)
   Print("<vector over finite field of degree ");
   Print(DegreeOfVectorOverFiniteField(v),
-         " over ", BaseDomain(v),">");
+        " over ", BaseDomain(v), ">");
 end);
 
 InstallMethod(ViewString, "for a plist vector over finite field",
@@ -77,7 +81,6 @@ end);
 InstallMethod(Display, "for a plist vector over finite field",
 [IsPlistVectorOverFiniteFieldRep],
 function(v)
-  local i;
   Print("<vector over finite field of degree ",
         DegreeOfVectorOverFiniteField(v), "\n");
   Print(v!.vec);
@@ -86,15 +89,15 @@ end);
 
 InstallMethod(PrintString, "for a plist vector over finite field",
 [IsPlistVectorOverFiniteFieldRep],
-function( v )
+function(v)
   local st;
   st := "NewMatrixOverFiniteField(IsPlistVectorOverFiniteFieldRep,";
-  Append(st,String(BaseDomain(v)));
-  Append(st,",");
-  Append(st,String(DegreeOfVectorOverFiniteField(v)));
-  Append(st,",");
-  Append(st,String(v!.vec));
-  Append(st,")");
+  Append(st, String(BaseDomain(v)));
+  Append(st, ",");
+  Append(st, String(DegreeOfVectorOverFiniteField(v)));
+  Append(st, ",");
+  Append(st, String(v!.vec));
+  Append(st, ")");
   return st;
 end);
 
@@ -107,15 +110,15 @@ end);
 InstallMethod(NewSRowBasis, "for IsPlistSRowBasisRep, a ring, and a list",
 [IsPlistSRowBasisRep, IsRing, IsList],
 function(filter, basedomain, l)
-  local b,i,e,filter2;
+  local b, filter2;
 
   filter2 := filter and IsSRowBasis;
   if HasCanEasilyCompareElements(Representative(basedomain))
-     and CanEasilyCompareElements(Representative(basedomain)) then
+      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
-  b := rec( rows := l );
-  Objectify( PlistSRowBasisType, b );
+  b := rec(rows := l);
+  Objectify(PlistSRowBasisType, b);
 
   SetBaseDomain(b, basedomain);
 
@@ -146,33 +149,26 @@ InstallMethod(ViewObj, "for a plist s-rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
   Print("<s-rowbasis of rank ");
-  Print(Length(v!.rows),
-         " over ", BaseDomain(v),">");
+  Print(Length(v!.rows), " over ", BaseDomain(v), ">");
 end);
 
 InstallMethod(ViewString, "for a plist s-rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
-  return STRINGIFY("<s-rowbasis of rank ",
-                   Rank(v),
-                   " over ",
-                   BaseDomain(v));
+  return STRINGIFY("<s-rowbasis of rank ", Rank(v), " over ", BaseDomain(v));
 end);
 
 InstallMethod(PrintObj, "for a plist s-rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
-  Print("NewSRowBasis(IsPlistSRowBasisRep, ",
-        BaseDomain(v), ", ",
-        v!.rows, ")");
+  Print("NewSRowBasis(IsPlistSRowBasisRep, ", BaseDomain(v), ", ", v!.rows,
+        ")");
 end);
 
 InstallMethod(Display, "for a plist s-rowbasis",
 [IsPlistSRowBasisRep],
 function(v)
-  local i;
-  Print("<s-rowbasis of rank ",
-        Rank(v), "\n");
+  Print("<s-rowbasis of rank ", Rank(v), "\n");
   Print(v!.rows);
   Print(">\n");
 end);
@@ -182,12 +178,12 @@ InstallMethod(PrintString, "for a plist s-rowbasis",
 function(v)
   local st;
   st := "NewSRowBasis(IsPlistSRowBasisRep,";
-  Append(st,String(BaseDomain(v)));
-  Append(st,",");
-  Append(st,String(Rank(v)));
-  Append(st,",");
-  Append(st,String(v!.rows));
-  Append(st,")");
+  Append(st, String(BaseDomain(v)));
+  Append(st, ",");
+  Append(st, String(Rank(v)));
+  Append(st, ",");
+  Append(st, String(v!.rows));
+  Append(st, ")");
   return st;
 end);
 
@@ -201,10 +197,11 @@ end);
 # prevent us and users from creating stupid matrix objects.
 
 #T Check correct format and correctness of entries
-InstallMethod(NewMatrixOverFiniteField, "for IsPlistMatrixOverFiniteFieldRep, a ring, an int, and a list",
+InstallMethod(NewMatrixOverFiniteField,
+"for IsPlistMatrixOverFiniteFieldRep, a ring, an int, and a list",
 [IsPlistMatrixOverFiniteFieldRep, IsRing, IsInt, IsList],
 function(filter, basedomain, rl, l)
-  local m,i,e,filter2;
+  local m, filter2;
 
   if not Length(l) = rl then
     Error("Semigroups: NewMatrixOverFiniteField: usage,\n",
@@ -214,11 +211,11 @@ function(filter, basedomain, rl, l)
 
   filter2 := filter and IsMatrixOverFiniteField;
   if HasCanEasilyCompareElements(Representative(basedomain))
-     and CanEasilyCompareElements(Representative(basedomain)) then
+      and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
-  m := rec( mat := ImmutableMatrix(basedomain, l));
-  Objectify( PlistMatrixOverFiniteFieldType, m );
+  m := rec(mat := ImmutableMatrix(basedomain, l));
+  Objectify(PlistMatrixOverFiniteFieldType, m);
 
   SetDegreeOfMatrixOverFiniteField(m, rl);
   SetBaseDomain(m, basedomain);
@@ -237,8 +234,10 @@ InstallMethod(NewIdentityMatrixOverFiniteField,
 "for IsPlistMatrixOverFiniteFieldRep, a ring, and an int",
 [IsPlistMatrixOverFiniteFieldRep, IsRing, IsPosInt],
 function(filter, basedomain, deg)
-  return NewMatrixOverFiniteField(filter, basedomain, deg,
-                    IdentityMat(deg, basedomain));
+  return NewMatrixOverFiniteField(filter,
+                                  basedomain,
+                                  deg,
+                                  IdentityMat(deg, basedomain));
 end);
 
 InstallMethod(NewIdentityMatrixOverFiniteField,
@@ -246,8 +245,10 @@ InstallMethod(NewIdentityMatrixOverFiniteField,
 [IsPlistMatrixOverFiniteFieldRep, IsRing, IsZeroCyc],
 function(filter, basedomain, deg)
   local m;
-  m := NewMatrixOverFiniteField(filter, basedomain, deg,
-                  IdentityMat(deg, basedomain));
+  m := NewMatrixOverFiniteField(filter,
+                                basedomain,
+                                deg,
+                                IdentityMat(deg, basedomain));
   SetRowSpaceBasis(m, NewSRowBasis(IsPlistSRowBasisRep,
                                    basedomain, []));
   SetRowRank(m, 0);
@@ -261,23 +262,27 @@ InstallMethod(NewZeroMatrixOverFiniteField,
 "for IsPlistMatrixOverFiniteFieldRep, a ring, and zero",
 [IsPlistMatrixOverFiniteFieldRep, IsRing, IsZeroCyc],
 function(filter, basedomain, deg)
-  return NewMatrixOverFiniteField(filter, basedomain, deg,
-                    IdentityMat(deg, basedomain));
+  return NewMatrixOverFiniteField(filter,
+                                  basedomain,
+                                  deg,
+                                  IdentityMat(deg, basedomain));
 end);
 
 InstallMethod(NewZeroMatrixOverFiniteField,
 "for IsPlistMatrixOverFiniteFieldRep, a ring, and an int",
 [IsPlistMatrixOverFiniteFieldRep, IsRing, IsPosInt],
 function(filter, basedomain, deg)
-  return NewMatrixOverFiniteField(filter, basedomain, deg,
-                    NullMat(deg, deg, basedomain));
+  return NewMatrixOverFiniteField(filter,
+                                  basedomain,
+                                  deg,
+                                  NullMat(deg, deg, basedomain));
 end);
 
 InstallMethod(ConstructingFilter, "for a plist matrix over finite field",
-[IsPlistMatrixOverFiniteFieldRep], m->IsPlistMatrixOverFiniteFieldRep);
+[IsPlistMatrixOverFiniteFieldRep], m -> IsPlistMatrixOverFiniteFieldRep);
 
 InstallMethod(ConstructingFilter, "for a cvec matrix over finite field",
-[IsCVECMatrixOverFiniteFieldRep], m->IsCVECMatrixOverFiniteFieldRep);
+[IsCVECMatrixOverFiniteFieldRep], m -> IsCVECMatrixOverFiniteFieldRep);
 
 ############################################################################
 ## Printing and viewing methods:
@@ -287,8 +292,7 @@ InstallMethod(ViewObj, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
   Print("<matrix over finite field of degree ");
-  Print(DegreeOfMatrixOverFiniteField(m),
-         " over ", BaseDomain(m),">");
+  Print(DegreeOfMatrixOverFiniteField(m), " over ", BaseDomain(m), ">");
 end);
 
 InstallMethod(ViewString, "for a plist matrix over finite field",
@@ -304,30 +308,31 @@ end);
 InstallMethod(PrintObj, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  Print("NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, ",BaseDomain(m),", ",
-    DegreeOfMatrixOverFiniteField(m), ", ", m!.mat, ")");
+  Print("NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, ",
+        BaseDomain(m), ", ", DegreeOfMatrixOverFiniteField(m), ", ", m!.mat,
+        ")");
 end);
 
 InstallMethod(Display, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  local i;
-  Print("<matrix over finite field of degree ", DegreeOfMatrixOverFiniteField(m), "\n");
+  Print("<matrix over finite field of degree ",
+        DegreeOfMatrixOverFiniteField(m), "\n");
   Print(m!.mat);
   Print(">\n");
 end);
 
 InstallMethod(PrintString, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
-function( m )
+function(m)
   local st;
   st := "NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,";
-  Append(st,String(BaseDomain(m)));
-  Append(st,",");
-  Append(st,String(DegreeOfMatrixOverFiniteField(m)));
-  Append(st,",");
-  Append(st,String(m!.mat));
-  Append(st,")");
+  Append(st, String(BaseDomain(m)));
+  Append(st, ",");
+  Append(st, String(DegreeOfMatrixOverFiniteField(m)));
+  Append(st, ",");
+  Append(st, String(m!.mat));
+  Append(st, ")");
   return st;
 end);
 
@@ -341,7 +346,7 @@ function(m)
 end);
 
 InstallMethod(AsMatrix, "for a matrix obj plist matrix rep",
-[IsPlistMatrixRep], x-> List(x![ROWSPOS], List));
+[IsPlistMatrixRep], x -> List(x![ROWSPOS], List));
 
 InstallMethod(AsMatrix, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep], x -> x!.mat);
@@ -365,13 +370,13 @@ end);
 InstallMethod(RightInverse, "for a plist matrix over finite field",
 [IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  local deg, rsp, zv, se, u, i, j, k;
+  local deg, u, rsp, zv, se, i;
 
   deg := DegreeOfMatrixOverFiniteField(m);
   u := One(BaseDomain(m));
 
   rsp := SEMIGROUPS_MutableCopyMat(m!.mat);
-  zv := [1..deg] * Zero(BaseDomain(m));
+  zv := [1 .. deg] * Zero(BaseDomain(m));
   for i in [1 .. deg] do
     Append(rsp[i], zv);
     rsp[i][deg + i] := u;
@@ -389,7 +394,7 @@ function(m)
   od;
   TriangulizeMat(rsp);
 
-  return AsMatrixOverFiniteField(m, rsp{[1..deg]}{[deg + 1 .. 2 * deg]});
+  return AsMatrixOverFiniteField(m, rsp{[1 .. deg]}{[deg + 1 .. 2 * deg]});
 end);
 
 InstallMethod(LeftInverse, "for a plist matrix over finite field",
@@ -409,12 +414,12 @@ function(m)
   if DegreeOfMatrixOverFiniteField(m) = 0 then
     return m;
   else
-    x := m!.mat^(-1);
+    x := m!.mat ^ (-1);
 
     if x = fail then
       return fail;
     else
-      return AsMatrixOverFiniteField(m,x);
+      return AsMatrixOverFiniteField(m, x);
     fi;
   fi;
 end);
@@ -422,20 +427,26 @@ end);
 ############################################################################
 ## Helper functions to deal with s-matrices.
 #############################################################################
+
 InstallGlobalFunction(ComputeRowSpaceAndTransformation,
 function(m)
-  local deg, rsp, i, j, zv, bas, heads, tm, inv, sinv, tr, tri, bd;
+  local deg, bd, bas, tr, tri, inv, sinv, rsp, zv, heads, tm, i;
 
   if not IsPlistMatrixOverFiniteFieldRep(m) then
-    Error("semigroups: Matrix not in the correct representation");
+    Error("Semigroups: ComputeRowSpaceAndTransformation: usage,\n",
+          "the argument must belong to `IsPlistMatrixOverFiniteFieldRep`,");
+    return;
   fi;
+
   Info(InfoMatrixSemigroups, 2, "ComputeRowSpaceAndTransformation called");
 
   deg := DegreeOfMatrixOverFiniteField(m);
   bd := BaseDomain(m);
   if IsZero(m) then
     bas := [];
-    tr := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, bd, deg);
+    tr := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                           bd,
+                                           deg);
     tri := tr;
     if deg = 0 then
        inv := tr;
@@ -446,7 +457,7 @@ function(m)
     fi;
   else
     rsp := SEMIGROUPS_MutableCopyMat(m!.mat);
-    zv := [1..deg] * Zero(bd);
+    zv := [1 .. deg] * Zero(bd);
     for i in [1 .. deg] do
       Append(rsp[i], ShallowCopy(zv));
       rsp[i][deg + i] := One(bd);
@@ -454,7 +465,7 @@ function(m)
     TriangulizeMat(rsp);
 
     heads := [];
-    bas := rsp{ [1..deg] }{ [1..deg] };
+    bas := rsp{[1 .. deg]}{[1 .. deg]};
     for i in [deg, deg - 1 .. 1] do
       if IsZero(bas[i]) then
         Remove(bas, i);
@@ -468,7 +479,7 @@ function(m)
     # otherwise we set fail
     tm := TransposedMat(bas);
     sinv := true;
-    for i in [1..deg] do
+    for i in [1 .. deg] do
       if not IsBound(heads[i]) then
         if not IsZero(tm[i]) then
           sinv := fail;
@@ -486,7 +497,7 @@ function(m)
        inv := fail;
     fi;
     tr := rsp{[1 .. deg]}{[deg + 1 .. 2 * deg]};
-    tri := tr^(-1);
+    tri := tr ^ (-1);
   fi;
 
   ConvertToVectorRep(bas);
@@ -502,17 +513,18 @@ end);
 
 #############################################################################
 ##
-#F  RandomMatrixOverFiniteField( <m>, <n> [, <R>] ) . . . . . . . .  make a random matrix
+#F  RandomMatrixOverFiniteField( <m>, <n> [, <R>] ) . .  make a random matrix
 ##
 ##  'RandomMatrixOverFiniteField' returns a random semigroups matrix object
-##  in IsMatrixOverFiniteFieldPlistRep with <m> rows and <n> columns with elements taken
-##  from the ring <R>, which defaults to 'Integers'.
+##  in IsMatrixOverFiniteFieldPlistRep with <m> rows and <n> columns with
+##  elements taken from the ring <R>, which defaults to 'Integers'.
 ##
 #W  This returns a matrix in IsSPlistMatrixRep
 #T  this function should take either a filter or a sample matrix
 ##
-InstallGlobalFunction( RandomMatrixOverFiniteField, function ( arg )
-  local   mat, m, n, R, rks, i, row, k;
+InstallGlobalFunction(RandomMatrixOverFiniteField,
+function (arg)
+  local m, n, R, mat, row, i, k;
 
   # check the arguments and get the list of elements
   if Length(arg) = 2  then
@@ -524,8 +536,10 @@ InstallGlobalFunction( RandomMatrixOverFiniteField, function ( arg )
     n := arg[2];
     R := arg[3];
   else
-    Error("Semigroups: RandomMatrixObj: usage\n",
-      "RandomMat( <m>, <n> [, <F>] )");
+    # FIXME make this error message more meaningful
+    Error("Semigroups: RandomMatrixOverFiniteField: usage,\n",
+           "RandomMat( <m>, <n> [, <F>] ),");
+    return;
   fi;
 
   # now construct the random matrix
@@ -533,21 +547,23 @@ InstallGlobalFunction( RandomMatrixOverFiniteField, function ( arg )
   for i  in [1 .. m]  do
     row := [];
     for k  in [1 .. n]  do
-      row[k] := Random( R );
+      row[k] := Random(R);
     od;
     mat[i] := row;
   od;
 
-  return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R, n, One(R) * mat);
+  return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                  R, n, One(R) * mat);
 end);
 
 InstallGlobalFunction(RandomSquareMatrixOverFiniteFieldWithRanks,
 function(R, n, ranks)
-  local i, j, k, rk, z, zv, mat, conj, gens;
+  local gens, z, rk, mat, zv, conj, j;
 
-  if ForAny(ranks, x -> (x<0) or (x>n)) then
-    Error("Semigroups: RandomSquareMatrixOverFiniteFieldWithRank usage: the list of ranks ",
-          "has to consist of numbers >0 and <n.");
+  if ForAny(ranks, x -> (x < 0) or (x > n)) then
+    Error("Semigroups: RandomSquareMatrixOverFiniteFieldWithRanks: usage,\n",
+          "the list of ranks has to consist of numbers > 0 and < n,");
+    return;
   fi;
 
   gens := [];
@@ -559,60 +575,71 @@ function(R, n, ranks)
   else
     mat := SEMIGROUPS_MutableCopyMat(Random(GL(rk, R)));
     # Extend it to n x n
-    zv := [1..n-rk] * z;
-    for j in [1..rk] do
+    zv := [1 .. n - rk] * z;
+    for j in [1 .. rk] do
       Append(mat[j], zv);
     od;
-    zv := [1..n] * z;
-    for j in [1..n-rk] do
+    zv := [1 .. n] * z;
+    for j in [1 .. n - rk] do
       Add(mat, zv);
     od;
     # Swirl around
     #T Is Permuting rows/columns enough?
     conj := Random(GL(n, R)); # PermutationMat(Random(Sym(n)), n, R);
-    return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R, n, mat ^ conj);
+    return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                    R, n, mat ^ conj);
   fi;
 end);
 
 InstallGlobalFunction(RandomListOfMatricesWithRanks,
-function(R,m,n,ranks)
-  local i, j, k, rk, z, zv, mat, conj, gens;
+function(R, m, n, ranks)
 
-  if ForAny(ranks, x -> (x<0) or (x>n)) then
-    Error("Semigroups: RandomListOfMatricesWithRank usage: the list of ranks ",
-          "has to consist of numbers >0 and <n.");
+  if ForAny(ranks, x -> (x < 0) or (x > n)) then
+    Error("Semigroups: RandomListOfMatricesWithRanks: usage,\n",
+          "the list of ranks (4th argument) must consist of ",
+          "numbers > 0 and < n,");
+    return;
   fi;
 
-  return List([1..m], x->RandomSquareMatrixOverFiniteFieldWithRanks(R,n,ranks));
+  return List([1 .. m],
+              x -> RandomSquareMatrixOverFiniteFieldWithRanks(R, n, ranks));
 end);
 
 #T This will break transparency wrt representations, so we should
 #T really not be doing this and instead use a sample object
 #T or we should be using NewIdentityMatrixOverFiniteField
 InstallMethod(IdentityMatrixOverFiniteField, "for a finite field and zero",
-[IsField and IsFinite, IsZeroCyc ],
+[IsField and IsFinite, IsZeroCyc],
 function(R, n)
-  return NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R, n);
+  return NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                          R,
+                                          n);
 end);
 
 InstallMethod(IdentityMatrixOverFiniteField, "for a finite field and pos int",
 [IsField and IsFinite, IsPosInt],
 function(R, n)
-  return NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R, n);
+  return NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                          R,
+                                          n);
 end);
 
-InstallMethod(IdentityMatrixOverFiniteField, "for an matrix over finite field and zero",
+InstallMethod(IdentityMatrixOverFiniteField,
+"for an matrix over finite field and zero",
 [IsMatrixOverFiniteField, IsZeroCyc],
 function(smat, n)
-  return NewIdentityMatrixOverFiniteField(ConstructingFilter(smat), BaseDomain(smat),
-                    n);
+  return NewIdentityMatrixOverFiniteField(ConstructingFilter(smat),
+                                          BaseDomain(smat),
+                                          n);
 end);
 
-InstallMethod(IdentityMatrixOverFiniteField, "for an matrix over finite field and pos int",
+InstallMethod(IdentityMatrixOverFiniteField,
+"for an matrix over finite field and pos int",
 [IsMatrixOverFiniteField, IsPosInt],
 function(smat, n)
-  return NewIdentityMatrixOverFiniteField(ConstructingFilter(smat), BaseDomain(smat),
-                    n);
+  return NewIdentityMatrixOverFiniteField(ConstructingFilter(smat),
+                                          BaseDomain(smat),
+                                          n);
 end);
 
 #InstallMethod(InverseOp, "for an matrix over finite field",
@@ -626,14 +653,17 @@ end);
 #  return AsMatrixOverFiniteField(smat, mat);
 #end);
 
-InstallMethod(AsMatrixOverFiniteField, "for an matrix over finite field and a matrix",
+InstallMethod(AsMatrixOverFiniteField,
+"for an matrix over finite field and a matrix",
 [IsMatrixOverFiniteField, IsMatrix],
 function(smat, mat)
-  return NewMatrixOverFiniteField(ConstructingFilter(smat), BaseDomain(smat),
-                    Length(mat), mat);
+  return NewMatrixOverFiniteField(ConstructingFilter(smat),
+                                  BaseDomain(smat),
+                                  Length(mat), mat);
 end);
 
-InstallMethod(DegreeOfMatrixOverFiniteFieldCollection, "for an matrix over finite field collection",
+InstallMethod(DegreeOfMatrixOverFiniteFieldCollection,
+"for an matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
   local deg;
@@ -655,9 +685,9 @@ function(coll)
   local base;
   base := BaseDomain(coll[1]);
   if not ForAll(coll, x -> BaseDomain(x) = base) then
-    Error("Semigroups: DegreeOfMatrixOverFiniteFieldCollection: usage,\n",
-          "the argument <coll> must be a collection of s-matrices of ",
-          "with the same base domain,");
+    Error("Semigroups: BaseDomain: usage,\n",
+          "the argument <coll> must be a collection of matrices over ",
+          "the same finite field,");
     return;
   fi;
 
@@ -688,11 +718,13 @@ function(x, y)
         and BaseDomain(x) = BaseDomain(y) and x!.mat < y!.mat);
 end);
 
-InstallMethod(\*, "for s-matrices", [IsMatrixOverFiniteField, IsMatrixOverFiniteField],
+InstallMethod(\*, "for s-matrices",
+[IsMatrixOverFiniteField, IsMatrixOverFiniteField],
 function(x, y)
   if DegreeOfMatrixOverFiniteField(x) <> DegreeOfMatrixOverFiniteField(y)
       or BaseDomain(x) <> BaseDomain(y) then
-    Error("\* for s-matrices degree or domain mismatch");
+    Error("Semigroups: \* (for matrices over a finite field): usage,\n",
+          "the degree or domain of the arguments do not match,");
     return;
   fi;
 
@@ -703,7 +735,7 @@ end);
 #T At least check lengths
 InstallOtherMethod(\*, "for an empty list and an matrix over finite field",
 [IsList and IsEmpty, IsMatrixOverFiniteField],
-function(l,m)
+function(l, m)
   return l;
 end);
 
@@ -742,7 +774,7 @@ end);
 
 InstallGlobalFunction(SEMIGROUPS_CheckReallyZero,
 function(m)
-  local r,e;
+  local r, e;
   for r in m!.mat do
     for e in r do
       if not IsZero(e) then

@@ -10,12 +10,12 @@
 
 <#GAPDoc Label="MatrixSemigroup">
 <ManSection>
-  <Attr Name="MatrixSemigroup" Arg=""/>
+  <Func Name="MatrixSemigroup" Arg=""/>
   <Returns>A matrix semigroup.</Returns>
   <Description>
     This is the kitchen-sink matrix semigroup creation function. It is designed
-    to make it easy to create matrix semigroups without having to go through creating
-    matrix objects first.
+    to make it easy to create matrix semigroups without having to go through
+    creating matrix objects first.
     <Example><![CDATA[
 gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 >                         Z(4) * [[0,0,0],[0,0,1],[0,1,0]]);
@@ -28,7 +28,7 @@ gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 
    <Example><![CDATA[
 gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
->                          Z(4) * [[0,0,0],[0,0,1],[0,1,0]]], GF(4));
+>                          Z(4) * [[0,0,0], [0,0,1], [0,1,0]]], GF(4));
 <semigroup of 3x3 s-matrices over GF(2^2) with 2 generators>]]></Example>
   Note that for this usage the generators have to be given as a list as
   the first argument to <Ref Func="MatrixSemigroup"/>.
@@ -38,7 +38,7 @@ gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
 
 <#GAPDoc Label="IsomorphismMatrixSemigroup">
 <ManSection>
-  <Attr Name="IsomorphismMatrixSemigroup" Arg="S[, F]"/>
+  <Oper Name="IsomorphismMatrixSemigroup" Arg="S[, F]"/>
   <Returns>An isomorphism to a matrix semigroup.</Returns>
   <Description>
     This attribute contains an isomorphism from the semigroup <A>S</A>
@@ -60,10 +60,9 @@ gap> Size(Range(iso));
 </ManSection>
 <#/GAPDoc>
 
-<!--
 <#GAPDoc Label="AsMatrixSemigroup">
 <ManSection>
-  <Attr Name="AsMatrixSemigroup" Arg="S[, F]" Label="for a semigroup and a ring"/>
+  <Oper Name="AsMatrixSemigroup" Arg="S[, F]" Label="for a semigroup and a ring"/>
   <Returns>The range of an isomorphism to a matrix semigroup.</Returns>
   <Description>
   <Example><![CDATA[
@@ -77,7 +76,6 @@ gap> Size(S);
   </Description>
 </ManSection>
 <#/GAPDoc>
--->
 
 <#GAPDoc Label="IsMatrixSemigroupGreensClass">
   <ManSection>

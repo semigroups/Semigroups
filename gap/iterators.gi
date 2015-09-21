@@ -234,8 +234,8 @@ function(record, baseiter, convert, filts)
   local iter, filt;
 
   if not IsRecord(record) or IsBound(record.baseiter)
-    or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator)
-    or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then
+      or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator)
+      or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then
     Error("Semigroups: IteratorByIterOfIters: usage,\n",
           "the first arg <record> must be a record with no components",
           "named:\n",

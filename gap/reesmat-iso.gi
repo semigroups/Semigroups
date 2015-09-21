@@ -641,8 +641,8 @@ InstallMethod(\=, "for objects in `IsRMSIsoByTriple'", IsIdenticalObj,
 function(triple1, triple2)
 
   if triple1!.triple[1] = triple2!.triple[1]
-    and triple1!.triple[2] = triple2!.triple[2]
-    and triple1!.triple[3] = triple2!.triple[3] then
+      and triple1!.triple[2] = triple2!.triple[2]
+      and triple1!.triple[3] = triple2!.triple[3] then
     return true;
   fi;
   return OnTuples(GeneratorsOfSemigroup(Source(triple1)), triple1)
@@ -656,8 +656,8 @@ InstallMethod(\=, "for objects in `IsRZMSIsoByTriple'", IsIdenticalObj,
 function(triple1, triple2)
 
   if triple1!.triple[1] = triple2!.triple[1]
-    and triple1!.triple[2] = triple2!.triple[2]
-    and triple1!.triple[3] = triple2!.triple[3] then
+      and triple1!.triple[2] = triple2!.triple[2]
+      and triple1!.triple[3] = triple2!.triple[3] then
     return true;
   fi;
   return OnTuples(GeneratorsOfSemigroup(Source(triple1)), triple1)
