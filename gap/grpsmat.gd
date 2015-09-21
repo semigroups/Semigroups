@@ -10,8 +10,8 @@
 ##
 
 # This file contains everything required to create and manipulate groups of
-# S-matrices. These essentially just delegate to the library methods via an
-# isomorphism.
+# matrices over finite fields. These essentially just delegate to the
+# library methods via an isomorphism.
 
 DeclareSynonym("IsMatrixOverFiniteFieldGroup", IsGroup and IsMatrixSemigroup);
 DeclareAttribute("IsomorphismMatrixGroup", IsMatrixOverFiniteFieldGroup);

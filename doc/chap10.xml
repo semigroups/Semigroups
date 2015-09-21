@@ -56,4 +56,20 @@
 
 </Section>
 
+<Section Label = "sect:Semigroups matrix groups">
+  <Heading>Semigroups matrix groups</Heading>
+  
+  For interfacing the semigroups code with &GAP;s library code for
+  matrix groups, the &Semigroups; package implements matrix groups
+  that delegate to the &GAP; library.
+
+  <#Include Label="GroupOperation"/>
+  <#Include Label=""/>
+  <#Include Label=""/>
+  <#Include Label=""/>
+  <#Include Label=""/>
+  <#Include Label=""/>
+  
+</Section>
+
 </Chapter>
