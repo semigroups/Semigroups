@@ -54,6 +54,7 @@
     <#Include Label="IsTransformationSemigroupGreensClass">
     <#Include Label="IsBipartitionSemigroupGreensClass">
     <#Include Label="IsPartialPermSemigroupGreensClass">
+    <#Include Label="IsMatrixSemigroupGreensClass">
     <#Include Label="StructureDescription">
     <#Include Label="IsGreensDLeq">
   </Section>

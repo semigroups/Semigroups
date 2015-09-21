@@ -192,7 +192,7 @@ function(S)
   return Maximum(List(RClasses(S), SEMIGROUPS_LargestElementRClass));
 end);
 
-# different method required (but not yet given!! JDM) for ideals
+# different method required (but not yet given!! JDM FIXME) for ideals
 
 InstallMethod(IsTransitive,
 "for a transformation semigroup with generators",

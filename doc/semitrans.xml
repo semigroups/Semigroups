@@ -121,6 +121,7 @@ true]]></Example>
   <Oper Name="AsPartialPermSemigroup" Arg="S"/>
   <Oper Name="AsBipartitionSemigroup" Arg="S"/>
   <Oper Name="AsBlockBijectionSemigroup" Arg="S"/>
+  <Oper Name="AsMatrixSemigroup" Arg="S" Label="for a semigroup"/>
   <Returns>A semigroup.</Returns>
   <Description>
     <C>AsTransformationSemigroup(<A>S</A>)</C> is just shorthand for 
@@ -133,6 +134,7 @@ true]]></Example>
       <Item> <C>AsPartialPermSemigroup</C>;</Item>
       <Item> <C>AsBipartitionSemigroup</C>;</Item>
       <Item> <C>AsBlockBijectionSemigroup</C>;</Item>
+      <Item> <C>AsMatrixSemigroup</C>;</Item>
     </List>
     are analogous to <C>AsTransformationSemigroup</C>.
 
@@ -143,7 +145,9 @@ gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ],
 > [ -2, -3 ], [ -5 ] ] ) ] );
 <bipartition semigroup on 6 pts with 2 generators>
 gap> AsTransformationSemigroup(S);
-<transformation semigroup on 12 pts with 2 generators>]]></Example>
+<transformation semigroup on 12 pts with 2 generators>
+gap> AsMatrixSemigroup(S);
+<semigroup of 12x12 s-matrices over GF(2) with 2 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

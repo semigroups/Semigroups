@@ -24,7 +24,7 @@ gap> S := FreeBand(3, "b");
 gap> x := Generators(S)[1] * Generators(S)[2];
 b1b2
 gap> D := GreensDClassOfElement(S, x);
-{b1b2}
+<Green's D-class: b1b2>
 gap> IsGreensDClass(D);
 true]]></Example>
     </Description>

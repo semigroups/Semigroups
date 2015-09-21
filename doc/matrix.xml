@@ -1,0 +1,165 @@
+#############################################################################
+##
+#W  matrix.xml
+#Y  Copyright (C) 2014-2015           
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+
+<#GAPDoc Label="IsMatrixOverFiniteField">
+  <ManSection>
+    <Filt Name="IsMatrixOverFiniteField" Arg="obj" Type="category"/>
+      <Returns><K>true</K> or <K>false</K>.</Returns>
+      <Description>
+        This category contains &Semigroups; matrix object wrapper. The
+        introduction of this filter was necessary to get around &GAP;
+        limitations with regards to matrices and associative objects.
+
+        Do not rely on the behaviour of this object type as it might be
+        changed in the future or be completely removed from the package.
+      </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NewMatrixOverFiniteField">
+<ManSection>
+  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, rows" Label="for a filter, a field, an integer, and a list of rows"/>
+  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, mat" Label="for a filter, a field, an integer, and a matrix"/>
+  <Returns>a new matrix object.</Returns>
+  <Description>
+	Creates a new <A>n</A>-by-<A>n</A> matrix over the finite field
+    <A>F</A> with constructing filter <A>filt</A>.
+    The matrix itself is given either by a list <A>rows</A> of rows, or
+    by a matrix <A>mat</A>.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NewIdentityMatrixOverFiniteField">
+<ManSection>
+  <Oper Name="NewIdentityMatrixOverFiniteField" Arg="filt, F, n"/>
+  <Oper Name="NewZeroMatrixOverFiniteField" Arg="filt, F, n"/>
+  <Description>
+    Creates a new <A>n</A>-by-<A>n</A> zero or identity matrix with entries
+    in the finite field <A>F</A>.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RowSpaceBasis">
+<ManSection>
+  <Attr Name="RowSpaceBasis" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="RowSpaceTransformation" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="RowSpaceTransformationInv" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>A basis for the row space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ColSpaceBasis">
+<ManSection>
+  <Attr Name="ColSpaceBasis" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="ColSpaceTransformation" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="ColSpaceTransformationInv" Arg="m" Label="for a matrix over finite field"/>
+  <Description>A basis for the column space of <A>m</A>.</Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RightInverse">
+<ManSection>
+  <Attr Name="RightInverse" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>A right inverse of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LeftInverse">
+<ManSection>
+  <Attr Name="LeftInverse" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>A left inverse of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupInvertible">
+<ManSection>
+  <Attr Name="SemigroupInvertible" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    <C>true</C> if <A>m</A> has a semigroup inverse, <C>false</C> if not.
+    Note that this is <E>not</E> equivalent to the matrix being invertible.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupInverse">
+<ManSection>
+  <Attr Name="SemigroupInverse" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    A semigroup inverse of <A>m</A> if it exists, and <C>fail</C> otherwise.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DegreeOfMatrixOverFiniteField">
+<ManSection>
+  <Attr Name="DegreeOfMatrixOverFiniteField" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    Number of rows and columns of the matrix <A>m</A>.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RowRank">
+<ManSection>
+  <Attr Name="RowRank" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>Length of a basis of the row space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ColRank">
+<ManSection>
+  <Attr Name="ColRank" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>Length of a basis of the column space of <A>m</A>.</Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BaseDomain">
+<ManSection>
+  <Attr Name="BaseDomain" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    The domain in which entries of <A>m</A> lie.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TransposedMatImmutable">
+<ManSection>
+  <Attr Name="TransposedMatImmutable" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    The transpose of <A>m</A>.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsMatrix">
+<ManSection>
+  <Oper Name="AsMatrix" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    A matrix.
+  </Returns>
+  <Description>
+    Turns a matrix over a finite field into a GAP matrix.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ConstructingFilter">
+<ManSection>
+  <Oper Name="ConstructingFilter" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    Return the filter that was passed to 
+   <!-- <Ref Oper="NewMatrixOverFiniteField" Label="for a filter, a field, an integer, and a list of rows"/> or -->
+    <Ref Oper="NewMatrixOverFiniteField" Label="for a filter, a field, an integer, and a matrix"/>
+    when creating the matrix <A>m</A>.
+  </Returns>
+</ManSection>
+<#/GAPDoc>
+

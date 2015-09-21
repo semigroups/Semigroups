@@ -256,7 +256,7 @@ function(x, D)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
+  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
 
 #
@@ -299,7 +299,7 @@ function(x, L)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
+  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
 
 #############################################################################

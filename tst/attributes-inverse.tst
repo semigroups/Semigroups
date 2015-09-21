@@ -38,20 +38,22 @@ gap> J := SemigroupIdeal(B,
 >  Bipartition([ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ]));
 <inverse bipartition semigroup ideal on 7 pts with 2 generators>
 gap> JoinIrreducibleDClasses(S);
-[ {PartialPerm( [ 2 ], [ 2 ] )} ]
+[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
 gap> JoinIrreducibleDClasses(I);
-[ {PartialPerm( [ 2 ], [ 2 ] )} ]
+[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
 gap> JoinIrreducibleDClasses(A);
-[ {Bipartition( [ [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], 
-     [ -1 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ] ] )} ]
+[ <Green's D-class: <bipartition: [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], 
+      [ 6 ], [ 7 ], [ -1 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>> ]
 gap> JoinIrreducibleDClasses(B);
-[ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
-    , {Bipartition( [ [ 1, -1 ], [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ] 
-      ] )} ]
+[ <Green's D-class: <block bijection: 
+      [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>>, 
+  <Green's D-class: <block bijection: [ 1, -1 ], 
+      [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ]>> ]
 gap> JoinIrreducibleDClasses(J);
-[ {Bipartition( [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] )}
-    , {Bipartition( [ [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], 
-     [ 6, -6 ] ] )} ]
+[ <Green's D-class: <block bijection: 
+      [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>>, 
+  <Green's D-class: <block bijection: 
+      [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], [ 6, -6 ]>> ]
 
 #T# AttributesInverseTest2: IsJoinIrreducible
 gap> S := InverseSemigroup([
@@ -481,18 +483,18 @@ gap> J := SemigroupIdeal(B,
 >  Bipartition([ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ],
 >    [ 3, -3 ] ]));;
 gap> h := GroupHClass(DClasses(S)[4]);
-{PartialPerm( [ 1, 4, 6 ], [ 1, 4, 6 ] )}
+<Green's H-class: <identity partial perm on [ 1, 4, 6 ]>>
 gap> SameMinorantsSubgroup(h);
 [ <identity partial perm on [ 1, 4, 6 ]> ]
 gap> h := GroupHClass(DClasses(A)[4]);
-{Bipartition( [ [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
- [ -2 ], [ -3 ], [ -5 ], [ -7 ] ] )}
+<Green's H-class: <bipartition: [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], 
+  [ 6, -6 ], [ 7 ], [ -2 ], [ -3 ], [ -5 ], [ -7 ]>>
 gap> SameMinorantsSubgroup(h);
 [ <bipartition: [ 1, -1 ], [ 2 ], [ 3 ], [ 4, -4 ], [ 5 ], [ 6, -6 ], [ 7 ], 
      [ -2 ], [ -3 ], [ -5 ], [ -7 ]> ]
 gap> h := GroupHClass(DClasses(B)[6]);
-{Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ] 
-  ] )}
+<Green's H-class: <block bijection: [ 1, -1 ], [ 2, -2 ], 
+  [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ]>>
 gap> SameMinorantsSubgroup(h);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], 
      [ 3, 4, 5, 6, 7, -3, -4, -5, -6, -7 ]> ]
@@ -508,13 +510,13 @@ gap> g := PartialPermNC([ 2, 1, 0, 0, 0, 7, 6 ]);;
 gap> S := InverseSemigroup(f, g);;
 gap> T := SemigroupIdeal(S, PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ));;
 gap> h1 := GroupHClass(DClasses(S)[1]);
-{PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
- [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+ >>
 gap> m1 := SameMinorantsSubgroup(h1);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]>, 
   (1)(2)(3,4,5)(6)(7)(8,9,10), (1)(2)(3,5,4)(6)(7)(8,10,9) ]
 gap> h2 := GroupHClass(DClasses(S)[2]);
-{PartialPerm( [ 1, 2, 6, 7 ], [ 1, 2, 6, 7 ] )}
+<Green's H-class: <identity partial perm on [ 1, 2, 6, 7 ]>>
 gap> m2 := SameMinorantsSubgroup(h2);
 [ <identity partial perm on [ 1, 2, 6, 7 ]>, (1,2)(6,7) ]
 gap> h1 := GroupHClass(DClasses(T)[1]);;
