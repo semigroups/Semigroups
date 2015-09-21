@@ -44,18 +44,18 @@ DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
 DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RectangularBand", [IsPosInt, IsPosInt]);
 
-
 # Matrix semigroups . . .
 
-DeclareProperty("IsClassicalMatrixSemigroup", IsMatrixSemigroup);
-DeclareOperation("SEMIGROUPS_MatrixSemigroupConstructor", [IsFunction, IsList, IsString, IsString]);
+DeclareOperation("SEMIGROUPS_MatrixSemigroupConstructor",
+                 [IsFunction, IsList, IsString, IsString]);
 DeclareOperation("SEMIGROUPS_MatrixGroupConstructor", [IsFunction]);
-DeclareAttribute("SEMIGROUPS_MatrixSemigroupViewString", IsClassicalMatrixSemigroup);
-DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString", IsClassicalMatrixSemigroup);
+DeclareAttribute("SEMIGROUPS_MatrixSemigroupViewString",
+                 IsMatrixSemigroup);
+DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString",
+                 IsMatrixSemigroup);
 
-# SuzukiSemigroup? ReeSemigroup? 
+# SuzukiSemigroup? ReeSemigroup?
 
-DeclareOperation("ProjectiveOmegaSemigroup", [IsInt, IsPosInt, IsPosInt]); 
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("GLS", GeneralLinearSemigroup);
 DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);
@@ -63,32 +63,33 @@ DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);
 DeclareOperation("SpecialLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("SLS", SpecialLinearSemigroup);
 
-DeclareOperation("GeneralUnitarySemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("GUS", GeneralUnitarySemigroup);
-
-DeclareOperation("SpecialUnitarySemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("SUS", SpecialUnitarySemigroup);
-
-DeclareOperation("SymplecticSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("SpS", SymplecticSemigroup);
-
-DeclareOperation("GeneralOrthogonalSemigroup", [IsInt, IsPosInt, IsPosInt]);
-DeclareOperation("GeneralOrthogonalSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("GOS", GeneralOrthogonalSemigroup);
-
-DeclareOperation("SpecialOrthogonalSemigroup", [IsInt, IsPosInt, IsPosInt]);
-DeclareOperation("SpecialOrthogonalSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("SOS", SpecialOrthogonalSemigroup);
-
-DeclareOperation("OmegaSemigroup", [IsInt, IsPosInt, IsPosInt]);
-DeclareOperation("OmegaSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("OmegaS", OmegaSemigroup);
-
-DeclareOperation("GeneralSemilinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("GammaLS", GeneralSemilinearSemigroup);
-
-DeclareOperation("SpecialSemilinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("SigmaLS", SpecialSemilinearSemigroup);
+#DeclareOperation("ProjectiveOmegaSemigroup", [IsInt, IsPosInt, IsPosInt]);
+#DeclareOperation("GeneralUnitarySemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("GUS", GeneralUnitarySemigroup);
+#
+#DeclareOperation("SpecialUnitarySemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("SUS", SpecialUnitarySemigroup);
+#
+#DeclareOperation("SymplecticSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("SpS", SymplecticSemigroup);
+#
+#DeclareOperation("GeneralOrthogonalSemigroup", [IsInt, IsPosInt, IsPosInt]);
+#DeclareOperation("GeneralOrthogonalSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("GOS", GeneralOrthogonalSemigroup);
+#
+#DeclareOperation("SpecialOrthogonalSemigroup", [IsInt, IsPosInt, IsPosInt]);
+#DeclareOperation("SpecialOrthogonalSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("SOS", SpecialOrthogonalSemigroup);
+#
+#DeclareOperation("OmegaSemigroup", [IsInt, IsPosInt, IsPosInt]);
+#DeclareOperation("OmegaSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("OmegaS", OmegaSemigroup);
+#
+#DeclareOperation("GeneralSemilinearSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("GammaLS", GeneralSemilinearSemigroup);
+#
+#DeclareOperation("SpecialSemilinearSemigroup", [IsPosInt, IsPosInt]);
+#DeclareSynonym("SigmaLS", SpecialSemilinearSemigroup);
 
 #DeclareOperation("ProjectiveGeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 #DeclareSynonym("PGLS", ProjectiveGeneralLinearSemigroup);

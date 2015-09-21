@@ -177,7 +177,8 @@ true</Log>
     <#Include Label="FactorisableDualSymmetricInverseSemigroup">
     <#Include Label="DualSymmetricInverseSemigroup">
     <#Include Label="PartialTransformationSemigroup"> 
-    <#Include Label="ClassicalSemigroups">
+    <#Include Label="GeneralLinearSemigroup">
+    <#Include Label="SpecialLinearSemigroup">
     <#Include Label="MunnSemigroup">
     <#Include Label="OPOIPOPI">
     <#Include Label="SingularTransformationSemigroup">
