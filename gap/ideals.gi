@@ -158,15 +158,15 @@ function(arg)
     # list of generators
     return SemigroupIdealByGenerators(arg[1], arg[2]);
 
-  # generators and collections of generators
-  elif (IsMultiplicativeElement(arg[2]) 
+  elif (IsMultiplicativeElement(arg[2])
         and IsGeneratorsOfSemigroup([arg[2]]))
-      or (IsMultiplicativeElementCollection(arg[2]) 
-          and IsGeneratorsOfSemigroup(arg[2])) 
-      or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then 
+      or (IsMultiplicativeElementCollection(arg[2])
+          and IsGeneratorsOfSemigroup(arg[2]))
+      or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then
+    # generators and collections of generators
     out := [];
     for i in [2 .. Length(arg)] do
-      #so that we can pass the options record in the Semigroups package 
+      #so that we can pass the options record in the Semigroups package
       if i = Length(arg) and IsRecord(arg[i]) then
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       elif IsMultiplicativeElement(arg[i]) and
@@ -177,7 +177,7 @@ function(arg)
           Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
         elif HasGeneratorsOfSemigroup(arg[i]) then
           Append(out, GeneratorsOfSemigroup(arg[i]));
-        elif IsList(arg[i]) then 
+        elif IsList(arg[i]) then
           Append(out, arg[i]);
         else
           Append(out, AsList(arg[i]));
@@ -230,8 +230,8 @@ function(S, gens, opts)
   if opts.acting then
     filts := filts and IsActingSemigroup;
   fi;
-  
-  if IsMatrixSemigroup(S) then 
+
+  if IsMatrixSemigroup(S) then
     filts := filts and IsMatrixSemigroup;
   fi;
 

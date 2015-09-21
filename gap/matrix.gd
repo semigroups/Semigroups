@@ -32,14 +32,17 @@ DeclareCategory("IsVectorOverFiniteField", IsAdditiveElementWithInverse);
 DeclareCategoryCollections("IsVectorOverFiniteField");
 DeclareCategoryCollections("IsVectorOverFiniteFieldCollection");
 
-DeclareConstructor("NewVectorOverFiniteField", [IsVectorOverFiniteField, IsRing, IsInt, IsList]);
-DeclareConstructor("NewVectorOverFiniteField", [IsVectorOverFiniteField, IsRing, IsInt, IsPlistVectorRep]);
-DeclareConstructor("NewZeroVectorOverFiniteField", [IsVectorOverFiniteField, IsRing, IsInt]);
+DeclareConstructor("NewVectorOverFiniteField",
+                   [IsVectorOverFiniteField, IsRing, IsInt, IsList]);
+DeclareConstructor("NewVectorOverFiniteField",
+                   [IsVectorOverFiniteField, IsRing, IsInt, IsPlistVectorRep]);
+DeclareConstructor("NewZeroVectorOverFiniteField",
+                   [IsVectorOverFiniteField, IsRing, IsInt]);
 
 DeclareAttribute("DegreeOfVectorOverFiniteField", IsVectorOverFiniteField);
 DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
 
-# mpf: 
+# mpf:
 DeclareCategory("IsSRowBasis", IsCollection);
 DeclareCategoryCollections("IsSRowBasis");
 DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
@@ -48,15 +51,20 @@ DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
 DeclareAttribute("BaseDomain", IsSRowBasis);
 
 # Our Matrix objects
-DeclareCategory("IsMatrixOverFiniteField", IsMultiplicativeElementWithInverse and 
-                             IsAssociativeElement);
+DeclareCategory("IsMatrixOverFiniteField",
+                IsMultiplicativeElementWithInverse
+                and IsAssociativeElement);
 DeclareCategoryCollections("IsMatrixOverFiniteField");
 DeclareCategoryCollections("IsMatrixOverFiniteFieldCollection");
 
-DeclareConstructor("NewMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt, IsList]);
-DeclareConstructor("NewMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt, IsPlistMatrixRep]);
-DeclareConstructor("NewIdentityMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt]);
-DeclareConstructor("NewZeroMatrixOverFiniteField", [IsMatrixOverFiniteField, IsRing, IsInt]);
+DeclareConstructor("NewMatrixOverFiniteField",
+                   [IsMatrixOverFiniteField, IsRing, IsInt, IsList]);
+DeclareConstructor("NewMatrixOverFiniteField",
+                   [IsMatrixOverFiniteField, IsRing, IsInt, IsPlistMatrixRep]);
+DeclareConstructor("NewIdentityMatrixOverFiniteField",
+                   [IsMatrixOverFiniteField, IsRing, IsInt]);
+DeclareConstructor("NewZeroMatrixOverFiniteField",
+                   [IsMatrixOverFiniteField, IsRing, IsInt]);
 
 # These bases are in normal form
 DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
@@ -76,15 +84,16 @@ DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
 DeclareAttribute("TransposedMatImmutable", IsMatrixOverFiniteField);
 DeclareOperation("AsMatrix", [IsMatrixOverFiniteField]);
 DeclareOperation("AsMatrix", [IsMatrixObj]);
-DeclareOperation("AsMatrixOverFiniteField", [IsMatrixOverFiniteField, IsMatrix]);
+DeclareOperation("AsMatrixOverFiniteField",
+                 [IsMatrixOverFiniteField, IsMatrix]);
 DeclareOperation("AsMatrixOverFiniteField", [IsMatrix]);
 DeclareOperation("ConstructingFilter", [IsMatrixOverFiniteField]);
 
 # We need to wrap vector collections to circumvent problems
 # with zero spaces.
 
-#
-# Here come two concrete implementations of VectorOverFiniteFields and MatricesOverFiniteField
+# Here come two concrete implementations of VectorOverFiniteFields and
+# MatricesOverFiniteField
 #
 # We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
 # We also need operations for acting on Row/Column spaces.
@@ -101,51 +110,74 @@ DeclareOperation("ConstructingFilter", [IsMatrixOverFiniteField]);
 
 # Vectors and matrices stored as GAP Plists
 DeclareRepresentation("IsPlistVectorOverFiniteFieldRep",
-  IsVectorOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, ["vec"]);
-BindGlobal("PlistVectorOverFiniteFieldFamily", NewFamily("PlistVectorOverFiniteFieldFamily",
-  IsVectorOverFiniteField, CanEasilyCompareElements));
-BindGlobal("PlistVectorOverFiniteFieldType", NewType(PlistVectorOverFiniteFieldFamily,
-  IsVectorOverFiniteField and IsPlistVectorOverFiniteFieldRep ));
+                      IsVectorOverFiniteField and IsComponentObjectRep
+                      and IsAttributeStoringRep, ["vec"]);
+BindGlobal("PlistVectorOverFiniteFieldFamily",
+           NewFamily("PlistVectorOverFiniteFieldFamily",
+                     IsVectorOverFiniteField, CanEasilyCompareElements));
+BindGlobal("PlistVectorOverFiniteFieldType",
+           NewType(PlistVectorOverFiniteFieldFamily,
+                   IsVectorOverFiniteField and
+                   IsPlistVectorOverFiniteFieldRep));
 
 DeclareRepresentation("IsPlistSRowBasisRep",
-  IsSRowBasis and IsComponentObjectRep and IsAttributeStoringRep, ["rows"]);
-BindGlobal("PlistSRowBasisFamily", NewFamily("PlistSRowBasisFamily",
-  IsSRowBasis, CanEasilyCompareElements));
-BindGlobal("PlistSRowBasisType", NewType(PlistSRowBasisFamily,
-  IsSRowBasis and IsPlistSRowBasisRep ));
+                      IsSRowBasis and IsComponentObjectRep and
+                      IsAttributeStoringRep, ["rows"]);
+BindGlobal("PlistSRowBasisFamily",
+           NewFamily("PlistSRowBasisFamily", IsSRowBasis,
+                     CanEasilyCompareElements));
+BindGlobal("PlistSRowBasisType",
+           NewType(PlistSRowBasisFamily, IsSRowBasis and IsPlistSRowBasisRep));
 
 DeclareRepresentation("IsPlistMatrixOverFiniteFieldRep",
-  IsMatrixOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, ["mat"]);
-BindGlobal("PlistMatrixOverFiniteFieldFamily", NewFamily("PlistMatrixOverFiniteFieldFamily",
-  IsMatrixOverFiniteField, CanEasilyCompareElements));
-BindGlobal("PlistMatrixOverFiniteFieldType", NewType(PlistMatrixOverFiniteFieldFamily,
-  IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep ));
+                      IsMatrixOverFiniteField and IsComponentObjectRep and
+                      IsAttributeStoringRep, ["mat"]);
+BindGlobal("PlistMatrixOverFiniteFieldFamily",
+           NewFamily("PlistMatrixOverFiniteFieldFamily",
+                     IsMatrixOverFiniteField, CanEasilyCompareElements));
+BindGlobal("PlistMatrixOverFiniteFieldType",
+           NewType(PlistMatrixOverFiniteFieldFamily,
+                   IsMatrixOverFiniteField and
+                   IsPlistMatrixOverFiniteFieldRep));
 
 # Vectors and matrices from the CVEC package
 DeclareRepresentation("IsCVECVectorOverFiniteFieldRep",
-  IsVectorOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, []);
-BindGlobal("CVECVectorOverFiniteFieldFamily", NewFamily("CVECVectorOverFiniteFieldFamily",
-  IsVectorOverFiniteField, CanEasilyCompareElements));
-BindGlobal("CVECVectorOverFiniteFieldType", NewType(CVECVectorOverFiniteFieldFamily,
-  IsVectorOverFiniteField and IsCVECVectorOverFiniteFieldRep));
+                      IsVectorOverFiniteField and IsComponentObjectRep and
+                      IsAttributeStoringRep, []);
+BindGlobal("CVECVectorOverFiniteFieldFamily",
+           NewFamily("CVECVectorOverFiniteFieldFamily",
+           IsVectorOverFiniteField, CanEasilyCompareElements));
+BindGlobal("CVECVectorOverFiniteFieldType",
+           NewType(CVECVectorOverFiniteFieldFamily,
+                   IsVectorOverFiniteField and
+                   IsCVECVectorOverFiniteFieldRep));
 
 DeclareRepresentation("IsCVECMatrixOverFiniteFieldRep",
-  IsMatrixOverFiniteField and IsComponentObjectRep and IsAttributeStoringRep, []);
-BindGlobal("CVECMatrixOverFiniteFieldFamily", NewFamily("CVECMatrixOverFiniteFieldFamily",
-  IsMatrixOverFiniteField, CanEasilyCompareElements));
-BindGlobal("CVECMatrixOverFiniteFieldType", NewType(CVECMatrixOverFiniteFieldFamily,
-  IsMatrixOverFiniteField and IsCVECMatrixOverFiniteFieldRep));
+                      IsMatrixOverFiniteField and IsComponentObjectRep and
+                      IsAttributeStoringRep, []);
+BindGlobal("CVECMatrixOverFiniteFieldFamily",
+           NewFamily("CVECMatrixOverFiniteFieldFamily",
+                     IsMatrixOverFiniteField, CanEasilyCompareElements));
+BindGlobal("CVECMatrixOverFiniteFieldType",
+           NewType(CVECMatrixOverFiniteFieldFamily,
+                   IsMatrixOverFiniteField and
+                   IsCVECMatrixOverFiniteFieldRep));
 
-DeclareGlobalFunction( "RandomMatrixOverFiniteField" );
+DeclareGlobalFunction("RandomMatrixOverFiniteField");
 
 DeclareProperty("IsZero", IsMatrixOverFiniteField);
 
-DeclareOperation("IdentityMatrixOverFiniteField", [IsField and IsFinite, IsPosInt]);
-DeclareOperation("IdentityMatrixOverFiniteField", [IsField and IsFinite, IsZeroCyc]);
-DeclareOperation("IdentityMatrixOverFiniteField", [IsMatrixOverFiniteField, IsPosInt]);
-DeclareOperation("IdentityMatrixOverFiniteField", [IsMatrixOverFiniteField, IsZeroCyc]);
+DeclareOperation("IdentityMatrixOverFiniteField",
+                 [IsField and IsFinite, IsPosInt]);
+DeclareOperation("IdentityMatrixOverFiniteField",
+                 [IsField and IsFinite, IsZeroCyc]);
+DeclareOperation("IdentityMatrixOverFiniteField",
+                 [IsMatrixOverFiniteField, IsPosInt]);
+DeclareOperation("IdentityMatrixOverFiniteField",
+                 [IsMatrixOverFiniteField, IsZeroCyc]);
 DeclareOperation("TransposedSMat", [IsMatrixOverFiniteField]);
-DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection", IsMatrixOverFiniteFieldCollection);
+DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection",
+                 IsMatrixOverFiniteFieldCollection);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
 
 ## Helper functions
@@ -155,8 +187,7 @@ DeclareGlobalFunction("RandomSquareMatrixOverFiniteFieldWithRanks");
 
 ## We need a mutable copy of matrices sometimes to do calculations
 DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");
-## IsZero is an attribute that is stored, and hence we have 
-## this function for debugging purposes that checks whether a 
+## IsZero is an attribute that is stored, and hence we have
+## this function for debugging purposes that checks whether a
 ## matrix is actually zero by inspecting all entries
 DeclareGlobalFunction("SEMIGROUPS_CheckReallyZero");
-;
