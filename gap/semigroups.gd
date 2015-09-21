@@ -40,15 +40,15 @@ DeclareOperation("InverseMonoidByGenerators", [IsCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGenerators", [IsCollection]);
 DeclareOperation("InverseSemigroupByGenerators", [IsCollection, IsRecord]);
 
-DeclareOperation("ClosureInverseSemigroup", 
+DeclareOperation("ClosureInverseSemigroup",
                  [IsActingSemigroupWithInverseOp, IsCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
                  [IsActingSemigroupWithInverseOp, IsCollection]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsActingSemigroupWithInverseOp, 
+                 [IsActingSemigroupWithInverseOp,
                   IsMultiplicativeElement, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsActingSemigroupWithInverseOp, 
+                 [IsActingSemigroupWithInverseOp,
                   IsMultiplicativeElement]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 

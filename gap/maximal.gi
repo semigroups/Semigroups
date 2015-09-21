@@ -41,19 +41,19 @@ function(R, H)
           "the first argument <R> must be a Rees matrix semigroup whose",
           " underlying\n",
           "semigroup is a group,");
-    return fail;
+    return;
   elif not IsSubgroup(G, H) then
     Error("Semigroups: MaximalSubsemigroups: usage,\n",
           "the second argument <H> must be a subgroup of the underlying\n",
           "group of the Rees matrix semigroup in the first argument, ",
           "<R>,");
-    return fail;
+    return;
   elif not H in MaximalSubgroups(G) then
     Error("Semigroups: MaximalSubsemigroups: usage,\n",
           "the second argument <H> must be a maximal subgroup of the ",
           "underlying\ngroup of the Rees matrix semigroup in the first ",
           "argument, <R>,");
-    return fail;
+    return;
   fi;
 
   mat := Matrix(R);
@@ -215,19 +215,19 @@ else
       Error("Semigroups: MaximalSubsemigroups: usage,\n",
             "the first argument <R> must be a Rees 0-matrix semigroup whose\n",
             "underlying semigroup is a group,");
-      return fail;
+      return;
     elif not IsSubgroup(G, H) then
       Error("Semigroups: MaximalSubsemigroups: usage,\n",
             "the second argument <H> must be a subgroup of the underlying\n",
             "group of the Rees 0-matrix semigroup in the first argument",
             ", <R>,");
-      return fail;
+      return;
     elif not H in MaximalSubgroups(G) then
       Error("Semigroups: MaximalSubsemigroups: usage,\n",
             "the second argument <H> must be a maximal subgroup of the ",
             "underlying\ngroup of the Rees 0-matrix semigroup in the first ",
             "argument, <R>,");
-      return fail;
+      return;
     fi;
 
     mat   := Matrix(R);
@@ -387,7 +387,6 @@ else
         return;
       else
         TryNextMethod();
-        return;
       fi;
     fi;
 
@@ -1056,7 +1055,7 @@ else
     maxT := List(MaximalSubsemigroups(T), GeneratorsOfSemigroup);
     maxS := [];
     for U in maxT do
-     Add(maxS, Semigroup(OnTuples(U, inv)));
+      Add(maxS, Semigroup(OnTuples(U, inv)));
     od;
     return maxS;
   end);
