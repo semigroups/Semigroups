@@ -24,7 +24,7 @@ gap> x := Z(4) * [[1,0], [0,2]];
 [ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
 gap> IsMatrixOverFiniteField(x);
 false
-gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(9), 2, x);
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);
 <matrix over GF(2^2) of degree 2>
 gap> IsMatrixOverFiniteField(y);
 true
