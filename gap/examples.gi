@@ -812,18 +812,9 @@ end);
 
 InstallMethod(PartialBrauerMonoid, "for a positive integer", [IsPosInt],
 function(n)
-  local gens;
-
-  if n = 1 then
-    return Semigroup(BipartitionNC([[1, -1]]));
-  fi;
-
-  gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2]],
-                                        List([3 .. n],
-                                             x -> [x, -x]), [[-1, -2]])));
-  Add(gens, AsBipartition(PartialPermNC([2 .. n], [2 .. n]), n));
-  return Monoid(gens, rec(regular := true));
+  return Semigroup(BrauerMonoid(n),
+                   AsBipartitionSemigroup(SymmetricInverseMonoid(n)),
+                                          rec(regular := true));
 end);
 
 #
@@ -854,6 +845,25 @@ function(n)
     gens[i] := BipartitionByIntRep(next);
   od;
   return Monoid(gens, rec(regular := true));
+end);
+
+# TODO: document this!
+
+InstallMethod(MotzkinMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  return RegularSemigroup(JonesMonoid(n), AsBipartitionSemigroup(POI(n)));
+end);
+
+# TODO: document this!
+
+InstallMethod(PartialJonesMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  # gaplint: ignore 2
+  return RegularSemigroup(JonesMonoid(n),
+                  AsBipartitionSemigroup(Semigroup(Idempotents(POI(n)))));
+
 end);
 
 # TODO: document this!

@@ -8,7 +8,9 @@
 #############################################################################
 ##
 
+DeclareOperation("MotzkinMonoid", [IsPosInt]);
 DeclareOperation("JonesMonoid", [IsPosInt]);
+DeclareOperation("PartialJonesMonoid", [IsPosInt]);
 DeclareOperation("SingularJonesMonoid", [IsPosInt]);
 DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
 
