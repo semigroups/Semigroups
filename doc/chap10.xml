@@ -26,7 +26,6 @@
   <#Include Label="NewIdentityMatrixOverFiniteField"/>
   <#Include Label="RowSpaceBasis"/>
   <#Include Label="RowRank"/>
-  <#Include Label="ColSpaceBasis"/>
   <#Include Label="RightInverse"/>
   <#Include Label="SemigroupInvertible"/>
   <#Include Label="SemigroupInverse"/>

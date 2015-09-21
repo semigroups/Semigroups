@@ -70,13 +70,15 @@ DeclareConstructor("NewZeroMatrixOverFiniteField",
 DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformation", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformationInv", IsMatrixOverFiniteField);
-DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
-DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
-DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
+#T FIXME: Implement
+#DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
+#DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
+#DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
 DeclareAttribute("RightInverse", IsMatrixOverFiniteField);
 DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
-DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
-DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
+#T FIXME: Implement
+#DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
+#DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 DeclareAttribute("DegreeOfMatrixOverFiniteField", IsMatrixOverFiniteField);
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
 DeclareAttribute("ColRank", IsMatrixOverFiniteField);
