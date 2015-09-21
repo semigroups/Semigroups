@@ -423,6 +423,7 @@ function(coll)
   if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then
     Error("Semigroups: IrredundantGeneratingSubset: usage,\n",
           "<coll> must be a generators of an acting semigroup,");
+    return;
   fi;
 
   if (IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll)) or

@@ -92,6 +92,7 @@ function(n, m)
   elif m > n then
     Error("Semigroups: IteratorOfArrangements: usage,\n",
           "the second arg <m> must be no greater than the first arg <n>,");
+    return;
   fi;
 
   convert := function(iter, x)
