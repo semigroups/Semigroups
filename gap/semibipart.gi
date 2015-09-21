@@ -751,7 +751,7 @@ InstallMethod(MonogenicSemigroupCons,
 "for a filter and two positive integers",
 [IsBipartitionSemigroup and IsFinite, IsPosInt, IsPosInt],
 function(filter, m, r)
-  return ZeroSemigroupCons(IsBlockBijectionSemigroup, m, r);
+  return MonogenicSemigroupCons(IsBlockBijectionSemigroup, m, r);
 end);
 
 #
