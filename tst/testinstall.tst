@@ -1025,11 +1025,11 @@ gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
 >                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
 <semigroup with 3 generators>
 gap> T := AsTransformationSemigroup(S);
-<transformation monoid on 256 pts with 2 generators>
+<transformation semigroup on 22 pts with 3 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));
-<regular transformation semigroup ideal on 256 pts with 8 generators>
+<regular transformation semigroup ideal on 22 pts with 8 generators>
 gap> Size(I);
 21
 
