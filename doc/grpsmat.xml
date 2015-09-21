@@ -1,0 +1,49 @@
+#############################################################################
+##
+#W  grpsmat.xml
+#Y  Copyright (C) 2015                                    Markus Pfeiffer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="MatrixGroupOperation">
+<ManSection>
+  <Oper Name="\^" Arg="G, mat" Label=""/>
+  <Returns>A matrix over a finite field</Returns>
+  <Description>
+
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismMatrixGroup">
+<ManSection>
+  <Attr Name="IsomorphismMatrixGroup" Arg="mat"/>
+  <Returns><K>true</K> or <K>false</K></Returns>
+  <Description>
+
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsMatrixGroup">
+<ManSection>
+  <Attr Name="AsMatrixGroup" Arg="G"/>
+  <Returns><K>true</K> or <K>false</K></Returns>
+  <Description>
+
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsMatrixOverFiniteFieldGroup">
+<ManSection>
+  <Attr Name="AsMatrixOverFiniteFieldGroup" Arg="G"/>
+  <Returns><K>true</K> or <K>false</K></Returns>
+  <Description>
+
+  </Description>
+</ManSection>
+<#/GAPDoc>
