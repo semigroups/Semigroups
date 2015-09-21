@@ -1071,14 +1071,14 @@ function(s)
   return Sum(ind);
 end);
 
-InstallMethod(UnderlyingSemigroupOfSemigroupWithZeroAdjoined,
+InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,
 "for a semigroup",
 [IsSemigroup],
 function(S)
   local zero, gens, T;
 
-  if HasIsSemigroupWithZeroAdjoined(S)
-      and not IsSemigroupWithZeroAdjoined(S) then
+  if HasIsSemigroupWithAdjoinedZero(S)
+      and not IsSemigroupWithAdjoinedZero(S) then
     return fail;
   fi;
 

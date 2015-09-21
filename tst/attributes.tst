@@ -341,6 +341,32 @@ gap> Size(MinimalDClass(s));
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
 
+#T# AttributesTest6:
+# UnderlyingSemigroupOfSemigroupWithAdjoinedZero
+gap> S := FullTransformationMonoid(10);;
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := FullTransformationMonoid(4);;
+gap> SetIsSemigroupWithAdjoinedZero(S, false);
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := SymmetricInverseMonoid(5);;
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := MonogenicSemigroup(4, 1);
+<commutative non-regular transformation semigroup of size 4, 
+ on 5 pts with 1 generator>
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := Semigroup(Elements(S));
+<transformation semigroup on 5 pts with 4 generators>
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := Semigroup([PartialPerm([]), PartialPerm([1])]);
+<commutative partial perm monoid on 1 pts with 1 generator>
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+<trivial partial perm group on 1 pts with 0 generators>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);

@@ -51,5 +51,5 @@ DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
-DeclareAttribute("UnderlyingSemigroupOfSemigroupWithZeroAdjoined",
+DeclareAttribute("UnderlyingSemigroupOfSemigroupWithAdjoinedZero",
                  IsSemigroup);
