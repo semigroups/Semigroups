@@ -159,7 +159,8 @@
     <#Include Label="CharacterTableOfInverseSemigroup">
   </Section>
 
-  <Section><Heading>Visualising the structure of a semigroup</Heading>
+  <Section Label = "Section-Visualising-Semigroup">
+    <Heading>Visualising the structure of a semigroup</Heading>
     In this section, we describe some functions for creating pictures of various
     structures related to a semigroup of transformations, partial permutations,
     or bipartitions; or a subsemigroup of a Rees 0-matrix semigroup.<P/>

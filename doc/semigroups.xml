@@ -269,14 +269,15 @@ gap> RandomBipartitionSemigroup(5,5);
     <Returns>A matrix semigroup or monoid.</Returns>
     <Description>
       Returns a random semigroup or monoid of <A>n</A>-by-<A>n</A> matrices
-      over the ring <A>R</A> with <A>m</A> generators. If the fourth argument
-      <A>ranks</A> is passed it is expected to be a list of permissible ranks
-      for the generators. For any generator the rank is chosen uniformly
-      randomly from the list of permissible ranks.  This allows for more
-      interesting random matrix semigroups and monoids.  Without the
-      <A>ranks</A> argument there is a very high probability that the
-      semigroups returned by this function are full matrix monoids over the
-      base ring.
+      over the ring <A>R</A> with <A>m</A> generators. <P/>
+      
+      The optional fourth argument <A>ranks</A> is expected to be a list of
+      permissible ranks for the generators. 
+      For any generator the rank is chosen uniformly randomly from the list of
+      permissible ranks.  This allows for creating more interesting random
+      matrix semigroups and monoids.  Without the <A>ranks</A> argument there
+      is a very high probability that the semigroups returned by this function
+      are full matrix monoids over the base ring.
       <Example><![CDATA[
 gap> RandomMatrixSemigroup(GF(25),5,5);
 <semigroup of 5x5 s-matrices over GF(5^2) with 5 generators>
