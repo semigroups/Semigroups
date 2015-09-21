@@ -11,19 +11,20 @@
 <#GAPDoc Label="MatrixGroupOperation">
 <ManSection>
   <Oper Name="\^" Arg="G, mat" Label=""/>
-  <Returns>A matrix over a finite field</Returns>
+  <Returns>A matrix group over a finite field</Returns>
   <Description>
-
+    Conjugates the matrix group <A>G</A> inside the group <M>GL_n(F)</M> by
+    the matrix <A>mat</A>.
   </Description>
 </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsomorphismMatrixGroup">
 <ManSection>
-  <Attr Name="IsomorphismMatrixGroup" Arg="mat"/>
-  <Returns><K>true</K> or <K>false</K></Returns>
+  <Attr Name="IsomorphismMatrixGroup" Arg="G"/>
+  <Returns>An isomorphism.</Returns>
   <Description>
-
+    Returns an isomorphism from <A>G</A> into a &GAP; group.
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -31,9 +32,9 @@
 <#GAPDoc Label="AsMatrixGroup">
 <ManSection>
   <Attr Name="AsMatrixGroup" Arg="G"/>
-  <Returns><K>true</K> or <K>false</K></Returns>
+  <Returns>A &GAP; group.</Returns>
   <Description>
-
+    Returns the image of an isomorphism returned by <Ref Label="IsomorphismMatrixGroup"/>.
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -41,9 +42,9 @@
 <#GAPDoc Label="AsMatrixOverFiniteFieldGroup">
 <ManSection>
   <Attr Name="AsMatrixOverFiniteFieldGroup" Arg="G"/>
-  <Returns><K>true</K> or <K>false</K></Returns>
+  <Returns>A matrix group.</Returns>
   <Description>
-
+    Returns a matrix group isomorphic to the &GAP; group <A>G</A>.
   </Description>
 </ManSection>
 <#/GAPDoc>
