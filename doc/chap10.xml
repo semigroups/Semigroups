@@ -28,7 +28,6 @@
   <#Include Label="RowRank"/>
   <#Include Label="ColSpaceBasis"/>
   <#Include Label="RightInverse"/>
-  <#Include Label="LeftInverse"/>
   <#Include Label="SemigroupInvertible"/>
   <#Include Label="SemigroupInverse"/>
   <#Include Label="DegreeOfMatrixOverFiniteField"/>
@@ -42,10 +41,10 @@
 <Section Label = "sect:Matrix semigroups">
   <Heading>Creating matrix semigroups</Heading>
 
-  Random matrix semigroups can be created by using the functions <Ref
-    Func="RandomMatrixSemigroup"/> or <Ref Func="RandomMatrixMonoid"/>. While
-  this is convenient for testing and playing around, creating semigroups from
-  matrices can be a bit more work.
+  Random matrix semigroups can be created by using the functions
+  <Ref Func="RandomMatrixSemigroup"/> or <Ref Func="RandomMatrixMonoid"/>.
+  While this is convenient for testing and playing around, creating
+  semigroups from matrices can be a bit more work.
 
   We provide a couple of convenience functions to streamline the process.
   <#Include Label="MatrixSemigroup"/>
@@ -63,7 +62,9 @@
   that delegate to the &GAP; library.
 
   <#Include Label="MatrixGroupOperation"/>
-
+  <#Include Label="IsomorphismMatrixGroup"/>
+  <#Include Label="AsMatrixGroup"/>
+  <#Include Label="AsMatrixOverFiniteFieldGroup"/>
 </Section>
 
 </Chapter>
