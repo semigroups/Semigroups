@@ -24,9 +24,11 @@ gap> x := Z(4) * [[1,0], [0,2]];
 [ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
 gap> IsMatrixOverFiniteField(x);
 false
-gap> 
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);
+<matrix over finite field of degree 2 over GF(2^2)>
+gap> IsMatrixOverFiniteField(y);
+true
 ]]></Example>
-<!--FIXME example of something that is an IsMatrixOverFiniteField-->
       </Description>
   </ManSection>
 <#/GAPDoc>
@@ -165,7 +167,7 @@ gap>
     A matrix.
   </Returns>
   <Description>
-    Turns a matrix over a finite field into a GAP matrix.
+    Turns a matrix over a finite field into a &GAP; matrix.
   </Description>
 </ManSection>
 <#/GAPDoc>
