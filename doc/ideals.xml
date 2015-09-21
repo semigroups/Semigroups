@@ -126,24 +126,24 @@ gap> I:=SemigroupIdeal(S, I, Idempotents(S));
       to compute anything about <C>I</C> other than its size and membership. 
       
       <Example><![CDATA[
-gap> S:=FullTransformationSemigroup(8);
+gap> S := FullTransformationSemigroup(8);
 <full transformation semigroup on 8 pts>
-gap> x:=Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] );;
-gap> D:=DClassNC(S, x);
-{Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] )}
-gap> R:=PrincipalFactor(D);
+gap> x := Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] );;
+gap> D := DClassNC(S, x);
+<Green's D-class: Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] )>
+gap> R := PrincipalFactor(D);
 <Rees 0-matrix semigroup 1050x56 over Group([ (3,4), (2,8,7,4,3) ])>
-gap> S:=Semigroup(List([1..10], x-> Random(R)));
+gap> S := Semigroup(List([1..10], x-> Random(R)));
 <subsemigroup of 1050x56 Rees 0-matrix semigroup with 10 generators>
-gap> I:=SemigroupIdeal(S, MultiplicativeZero(S));
+gap> I := SemigroupIdeal(S, MultiplicativeZero(S));
 <regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> SupersemigroupOfIdeal(I);
 <subsemigroup of 1050x56 Rees 0-matrix semigroup with 10 generators>
-gap> J:=SemigroupIdeal(I, Representative(MinimalDClass(S)));
+gap> J := SemigroupIdeal(I, Representative(MinimalDClass(S)));
 <regular Rees 0-matrix semigroup ideal with 1 generator>
-gap> Parent(J)=I;
+gap> Parent(J) = I;
 true
-gap> SupersemigroupOfIdeal(J)=I;
+gap> SupersemigroupOfIdeal(J) = I;
 false]]></Example>
     </Description>
   </ManSection>

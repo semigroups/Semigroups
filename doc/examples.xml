@@ -198,28 +198,56 @@ gap> Size(last);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="FullMatrixSemigroup">
+<#GAPDoc Label="GeneralLinearSemigroup">
    <ManSection>
     <Oper Name="FullMatrixSemigroup" Arg="d, q"/>
     <Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
+    <Oper Name="GLS" Arg="d, q"/>
     <Returns>A matrix semigroup.</Returns>
     <Description>
-      <C>FullMatrixSemigroup</C> and <C>GeneralLinearSemigroup</C> are synonyms
-      for each other. They both return the full matrix semigroup, or if you
-      prefer the general linear semigroup, of <A>d</A> by <A>d</A> matrices
-      with entries over the field with <A>q</A> elements.  This semigroup has
-      <C>q^(d^2)</C> elements. <P/>
-
-      <B>Please note:</B> there are currently no special methods for computing
-      with matrix semigroups in &Semigroups; and so it might be advisable to use
-      <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
+      <C>FullMatrixSemigroup</C>, <C>GeneralLinearSemigroup</C>, and <C>GLS</C>
+      are synonyms for each other. They both return the full matrix semigroup,
+      or if you prefer the general linear semigroup, of <A>d</A> by <A>d</A>
+      matrices with entries over the field with <A>q</A> elements.  This
+      semigroup has <C>q^(d^2)</C> elements.
+      <P/>
 
       <Example><![CDATA[
 gap> S:=FullMatrixSemigroup(3,4);
-<full matrix semigroup 3x3 over GF(2^2)>
+<general linear monoid 3x3 over GF(2^2)>
 gap> T:=Range(IsomorphismTransformationSemigroup(S));;
 gap> Size(T);
 262144]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SpecialLinearSemigroup">
+<ManSection>
+  <!--<Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
+  <Oper Name="GeneralUnitarySemigroup" Arg="d, q"/>
+  <Oper Name="SpecialUnitarySemigroup" Arg="d, q"/>
+  <Oper Name="SymplecticSemigroup" Arg="d, q"/>
+  <Oper Name="GeneralOrthogonalSemigroup" Arg="d, q"/>
+  <Oper Name="SpecialOrthogonalSemigroup" Arg="d, q"/>
+  <Oper Name="OmegaSemigroupSemigroup" Arg="d, q"/>
+  <Oper Name="ProjectiveOmegaSemigroup" Arg="d, q"/>
+  <Oper Name="SpecialSemilinearSemigroup" Arg="d, q"/>
+  <Oper Name="GeneralSemilinearSemigroup" Arg="d, q"/>-->
+  <Oper Name="SpecialLinearSemigroup" Arg="d, q"/>
+  <Oper Name="SLS" Arg="d, q"/>
+  <Returns>A matrix semigroup.</Returns>
+    <Description>
+      <C>SpecialLinearSemigroup</C> and <C>SLS</C> are synonyms
+      for each other. They both return the special linear semigroup of <A>d</A>
+      by <A>d</A> matrices with entries over the field with <A>q</A> elements.
+      <P/><!--FIXME this is not very descriptive-->
+
+      <Example><![CDATA[
+gap> S := SLS(3,4);
+<special linear monoid 3x3 over GF(2^2)>
+gap> Size(S);
+141184]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

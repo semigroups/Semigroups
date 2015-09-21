@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="Factorization">
 <ManSection> 
-  <Meth Name="Factorization" Arg="S, f"/>
+  <Oper Name="Factorization" Arg="S, f"/>
     <Returns>A word in the generators.</Returns>
     <Description> 
     <List>

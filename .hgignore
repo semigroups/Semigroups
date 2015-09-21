@@ -1,4 +1,6 @@
 syntax: glob
+.hgcheck/*
+tags
 *.orig
 *.DS_Store
 *.swp

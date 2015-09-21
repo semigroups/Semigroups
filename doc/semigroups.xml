@@ -116,7 +116,26 @@ gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
 gap> S;
 <transformation monoid on 8 pts with 4 generators>
 gap> Size(S);
-233606]]></Example>
+233606
+gap> gens:=
+> [ NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,
+>    [ [ Z(5^2), Z(5^2)^13 ], [ 0*Z(5), Z(5^2)^14 ] ]), 
+>  NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,
+>    [ [ Z(5^2)^21, Z(5)^0 ], [ Z(5)^0, 0*Z(5) ] ]), 
+>  NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,
+>    [ [ Z(5^2)^23, Z(5^2)^5 ], [ Z(5^2)^20, Z(5^2)^20 ] ]) ];;
+gap> S := Semigroup(gens[1]);
+<semigroup of 2x2 s-matrices over GF(5^2) with 1 generator>
+gap> Size(S);
+24
+gap> S := ClosureSemigroup(S, gens[2]);
+<semigroup of 2x2 s-matrices over GF(5^2) with 2 generators>
+gap> Size(S);
+124800
+gap> S := ClosureSemigroup(S, gens[3]);
+<semigroup of 2x2 s-matrices over GF(5^2) with 3 generators>
+gap> Size(S);
+374400]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -239,6 +258,32 @@ gap> RandomBipartitionMonoid(5,5);
 <bipartition monoid on 5 pts with 5 generators>
 gap> RandomBipartitionSemigroup(5,5);
 <bipartition semigroup on 5 pts with 5 generators>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomMatrixMonoid">
+  <ManSection>
+    <Func Name="RandomMatrixSemigroup" Arg="R, m, n, [,ranks]"/>
+    <Func Name="RandomMatrixMonoid" Arg="R, m, n, [,ranks]"/>
+    <Returns>A matrix semigroup or monoid.</Returns>
+    <Description>
+      Returns a random semigroup or monoid of <A>n</A>-by-<A>n</A> matrices
+      over the ring <A>R</A> with <A>m</A> generators. If the fourth argument
+      <A>ranks</A> is passed it is expected to be a list of permissible ranks
+      for the generators. For any generator the rank is chosen uniformly randomly
+      from the list of permissible ranks.
+      This allows for more interesting random matrix semigroups and
+      monoids.
+      Without the <A>ranks</A> argument there is a very high probability that
+      the semigroups returned by this function are full matrix monoids over
+      the base ring.
+      <Example><![CDATA[
+gap> RandomMatrixSemigroup(GF(25),5,5);
+<semigroup of 5x5 s-matrices over GF(5^2) with 5 generators>
+gap> RandomMatrixSemigroup(GF(4),2,5,[1,2]);
+<semigroup of 5x5 s-matrices over GF(2^2) with 2 generators>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

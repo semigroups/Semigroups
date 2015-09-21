@@ -216,7 +216,7 @@ function(x, S)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
+  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
 
 # same method for inverse ideals
@@ -310,7 +310,7 @@ function(f, s)
     # the D-class rep corresponding to lambda_o and scc.
     rep := LambdaOrbMult(LambdaOrb(s), m, rho_l)[1] * rep;
   fi;
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, f)) = ();
+  return SchutzGpMembership(s)(schutz, LambdaPerm(s)(rep, f));
 end);
 
 #############################################################################

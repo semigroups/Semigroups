@@ -18,7 +18,7 @@ gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ),
 > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
 gap> r:=GreensRClassOfElement(s,
 > Generators(s)[1]*Generators(s)[2]*Generators(s)[1]);
-{Transformation( [ 5, 2, 1, 4, 3, 3 ] )}
+<Green's R-class: Transformation( [ 5, 2, 1, 4, 3, 3 ] )>
 gap> Transformation( [ 4, 1, 6, 5, 2, 2 ] ) in r;
 true
 gap> Representative(r);
@@ -73,11 +73,11 @@ gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> NextIterator(iter);;
 gap> NextIterator(iter);
-{Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )}
+<Green's R-class: Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )>
 gap> f in SemigroupData(s);
 false
 gap> NextIterator(iter);
-{Transformation( [ 5, 1, 4, 1, 4, 4 ] )}
+<Green's R-class: Transformation( [ 5, 1, 4, 1, 4, 4 ] )>
 gap> f in SemigroupData(s);
 true
 

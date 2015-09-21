@@ -61,8 +61,8 @@ InstallMethod(\in,
 [IsAssociativeElement, IsActingSemigroup],
 function(f, s)
   local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup,
-  lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens,
-  found, n, i;
+  lookfunc, new, schutz, ind, reps, repslens, max, membership, lambdaperm,
+  oldrepslens, found, n, i;
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
       or (IsActingSemigroupWithFixedDegreeMultiplication(s)
@@ -176,12 +176,14 @@ function(f, s)
   reps := data!.reps;
   repslens := data!.repslens;
 
-  max := Factorial(LambdaRank(s)(lambda)) /
+  max := LambdaBound(s)(LambdaRank(s)(lambda)) /
           Size(LambdaOrbSchutzGp(lambdao, m));
 
   if repslens[m][ind] = max then
     return true;
   fi;
+
+  membership := SchutzGpMembership(s);
 
   # if schutz is false, then f has to be an R-rep which it is not...
   if schutz <> false then
@@ -189,7 +191,7 @@ function(f, s)
     # check if f already corresponds to an element of reps[m][ind]
     lambdaperm := LambdaPerm(s);
     for n in [1 .. repslens[m][ind]] do
-      if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], f)) = () then
+      if membership(schutz, lambdaperm(reps[m][ind][n], f)) then
         return true;
       fi;
     od;
@@ -230,8 +232,7 @@ function(f, s)
             return true;
           fi;
           for i in [n + 1 .. repslens[m][ind]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[m][ind][i], f)) = ()
-                then
+            if membership(schutz, lambdaperm(reps[m][ind][i], f)) then
               return true;
             fi;
           od;
@@ -316,10 +317,10 @@ function(data, limit, lookfunc)
   local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht,
   repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos,
   schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact,
-  lambdaperm, o, oht, scc, lookup, rho, rho_o, rho_orb, rho_nr, rho_ht,
-  rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth,
-  rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, pt,
-  ind, schutz, data_val, old, j, n;
+  lambdaperm, o, oht, scc, lookup, membership, rho, rho_o, rho_orb, rho_nr,
+  rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos,
+  rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m,
+  rhox, l, ind, pt, schutz, data_val, old, j, n;
 
   if lookfunc <> ReturnFalse then
     looking := true;
@@ -386,6 +387,8 @@ function(data, limit, lookfunc)
   oht := o!.ht;
   scc := OrbSCC(o);
   lookup := o!.scc_lookup;
+
+  membership := SchutzGpMembership(s);
 
   #rho
   rho := RhoFunc(s);
@@ -553,8 +556,7 @@ function(data, limit, lookfunc)
             # the Schutzenberger group is neither trivial nor symmetric group
             old := false;
             for n in [1 .. repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = ()
-                  then
+              if membership(schutz, lambdaperm(reps[m][ind][n], x)) then
                 old := true;
                 graph[i][j] := repslookup[m][ind][n];
                 rho_orbitgraph[rholookup[i]][j] := l;
@@ -571,7 +573,6 @@ function(data, limit, lookfunc)
           repslookup[m][ind][repslens[m][ind]] := nr;
           orblookup1[nr] := ind;
           orblookup2[nr] := repslens[m][ind];
-
           # update rho orbit graph and rholookup
           rho_orbitgraph[rholookup[i]][j] := l;
         fi;
@@ -649,7 +650,7 @@ InstallMethod(Position, "for semigroup data and an associative element",
 [IsSemigroupData, IsAssociativeElement, IsZeroCyc],
 function(data, x, n)
   local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
-  lambdaperm;
+  membership, lambdaperm;
 
   s := data!.parent;
   o := LambdaOrb(s);
@@ -695,10 +696,11 @@ function(data, x, n)
 
   reps := data!.reps[m][ind];
   repslens := data!.repslens[m][ind];
-
+  membership := SchutzGpMembership(s);
   lambdaperm := LambdaPerm(s);
+
   for n in [1 .. repslens] do
-    if SiftedPermutation(schutz, lambdaperm(reps[n], x)) = () then
+    if membership(schutz, lambdaperm(reps[n], x)) then
       return repslookup[n];
     fi;
   od;

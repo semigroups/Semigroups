@@ -95,6 +95,11 @@ ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/semipperm.gi");
 
+ReadPackage("semigroups/gap/hash.gi");
+ReadPackage("semigroups/gap/matrix.gi");
+ReadPackage("semigroups/gap/semimat.gi");
+ReadPackage("semigroups/gap/grpsmat.gi");
+
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/lambda-rho.gi");
 ReadPackage("semigroups/gap/ideals-lambda-rho.gi");
@@ -122,6 +127,7 @@ ReadPackage("semigroups/gap/ideals.gi");
 
 ReadPackage("semigroups/gap/freeinverse.gi");
 ReadPackage("semigroups/gap/freeband.gi");
+
 
 ReadPackage("semigroups/gap/utils.gi");
 ReadPackage("semigroups/gap/io.gi");

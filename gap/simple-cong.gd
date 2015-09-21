@@ -26,5 +26,7 @@ DeclareCategory("SEMIGROUPS_CongClassSimple",
 
 DeclareGlobalFunction("SEMIGROUPS_SimpleClassFromRMSclass");
 
+# These will be moved into congruences.gd
 DeclareGlobalFunction("SemigroupCongruence");
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("OneImmutable", IsCongruenceClass);
