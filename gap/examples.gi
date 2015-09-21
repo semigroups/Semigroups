@@ -362,7 +362,7 @@ end);
 
 #
 
-InstallMethod(PrintString, 
+InstallMethod(PrintString,
 "for a matrix semigroup with print string attribute",
 [IsMatrixSemigroup and HasGeneratorsOfSemigroup
  and HasSEMIGROUPS_MatrixSemigroupPrintString],
@@ -370,7 +370,7 @@ SEMIGROUPS_MatrixSemigroupPrintString);
 
 #TODO ViewString
 
-InstallMethod(ViewObj, 
+InstallMethod(ViewObj,
 "for a matrix semigroup with view string attribute",
 [IsMatrixSemigroup and HasGeneratorsOfSemigroup
  and HasSEMIGROUPS_MatrixSemigroupViewString],
