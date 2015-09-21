@@ -84,14 +84,14 @@ function(m, hashlen)
              data := hashlen);
 end);
 
-InstallMethod(ChooseHashFunction, "for plist s-matrices",
+InstallMethod(ChooseHashFunction, "for plist matrices over finite fields",
 [IsPlistMatrixOverFiniteFieldRep, IsInt],
 function(m, hashlen)
   return rec(func := SEMIGROUPS_HashFunctionForPlistMatricesOverFiniteField,
              data := hashlen);
 end);
 
-InstallMethod(ChooseHashFunction, "for plist s-rowbasis",
+InstallMethod(ChooseHashFunction, "for plist rowbasis over finite fields",
 [IsPlistSRowBasisRep, IsInt],
 function(b, hashlen)
   return rec(func := SEMIGROUPS_HashFunctionForPlistSRowBasis,

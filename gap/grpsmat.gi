@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-# TODO special cases for 0 dimensional s-matrices
+# TODO special cases for 0 dimensional matrices over finite fields
 
 InstallMethod(IsomorphismPermGroup, "for an matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup],
@@ -43,7 +43,7 @@ function(G)
   deg := DegreeOfMatrixOverFiniteField(gens[1]);
   Print("<group of ");
   Print(deg, "x", deg);
-  Print(" s-matrices over ", BaseDomain(G));
+  Print(" matrices over ", BaseDomain(G));
   Print(" with ", Length(gens), " generator");
   if Length(gens) > 1 then
     Print("s");
