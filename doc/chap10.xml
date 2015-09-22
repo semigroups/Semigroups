@@ -39,6 +39,7 @@
   object for matrices. In the following these objects are documented.
 
   <#Include Label="IsMatrixOverFiniteField"/>
+  <#Include Label="IsMatrixOverFiniteFieldCollection"/>
   <#Include Label="NewMatrixOverFiniteField"/>
   <#Include Label="NewIdentityMatrixOverFiniteField"/>
   <#Include Label="RowSpaceBasis"/>
@@ -59,6 +60,7 @@
   matrix groups, the &Semigroups; package implements matrix groups
   that delegate to the &GAP; library.
 
+  <#Include Label="IsMatrixSemigroup"/>
   <#Include Label="MatrixGroupOperation"/>
   <#Include Label="IsomorphismMatrixGroup"/>
   <#Include Label="AsMatrixGroup"/>

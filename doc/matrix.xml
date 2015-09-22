@@ -7,9 +7,22 @@
 ##
 #############################################################################
 
+<#GAPDoc Label="IsMatrixOverFiniteFieldCollection">
+  <ManSection>
+    <Filt Name="IsMatrixOverFiniteFieldCollection" Arg="obj" Type="Category"/>
+      <Returns><K>true</K> or <K>false</K>.</Returns>
+      <Description>
+        Every collection of matrices in the category 
+        <Ref Filt="IsMatrixOverFiniteField"/> belongs to the category
+        <C>IsMatrixOverFiniteFieldCollection</C>. For example, matrix semigroup
+        belong to <C>IsMatrixOverFiniteFieldCollection</C>.
+      </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsMatrixOverFiniteField">
   <ManSection>
-    <Filt Name="IsMatrixOverFiniteField" Arg="obj" Type="category"/>
+    <Filt Name="IsMatrixOverFiniteField" Arg="obj" Type="Category"/>
       <Returns><K>true</K> or <K>false</K>.</Returns>
       <Description>
         This category contains &Semigroups; matrix object wrapper. The

@@ -8,6 +8,29 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="IsMatrixSemigroup">
+<ManSection>
+  <Prop Name="IsMatrixSemigroup" Arg="S"/>
+  <Prop Name="IsMatrixMonoid" Arg="S"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    A <E>matrix semigroup</E> is simply a semigroup consisting of
+    matrices over a finite field. An object in &GAP; is a matrix semigroup if
+    it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and 
+    <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
+
+    A <E>matrix monoid</E> is simply a monoid consisting of
+    matrices over a finite field. An object in &GAP; is a matrix monoid if
+    it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and 
+    <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
+
+    Note that it is possible for a bipartition semigroup to have a
+    multiplicative neutral element (i.e. an identity element) but not to
+    satisfy <C>IsBipartitionMonoid</C>. For example, 
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="MatrixSemigroup">
 <ManSection>
   <Func Name="MatrixSemigroup" Arg="list [, F]"/>
@@ -40,7 +63,7 @@ gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
   <Returns>An integer</Returns>
   <Description>
     This attribute is the number of rows or columns of any matrix
-    in <A>S</A>.
+    in the matrix semigroup <A>S</A>.
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -75,7 +98,7 @@ gap> Size(Range(iso));
     <Description>
       A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
       property <C>IsMatrixSemigroupGreensClass</C> if and only if <C>S</C>
-      is a semigroup of matrices.
+      is belongs to the category <C>IsMatrixSemigroup</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>
