@@ -27,8 +27,8 @@ gap> S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],
 gap> S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],
 >                          Z(3) * [[0,0,0], [0,0,1], [0,1,0]]]);
 <semigroup of 3x3 matrices over GF(3) with 2 generators>
-gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
->                         Z(4) * [[0,0,0], [0,0,1], [0,1,0]]);
+gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
+>                          Z(4) * [[0,0,0], [0,0,1], [0,1,0]]]);
 <semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
   </Description>
 </ManSection>
