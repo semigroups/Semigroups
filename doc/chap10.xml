@@ -13,7 +13,7 @@
 
   For technical reasons, the matrix semigroup functions in &Semigroups; rely
   on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.
-  We take every precaution to hide this fact from the user of &Semigroups;.
+  We take precautions to hide this fact from the user of &Semigroups;.
  
 <Section Label = "sect:Matrix semigroups">
   <Heading>Creating matrix semigroups</Heading>
@@ -24,11 +24,12 @@
   semigroups from matrices can be a bit more work.
 
   We provide a couple of convenience functions to streamline the process.
+
   <#Include Label="MatrixSemigroup"/>
-  <Ref Attr="IsomorphismMatrixSemigroup"/>
-  <Ref Oper="AsMatrixSemigroup"/>
-  <Ref Prop="IsMatrixSemigroupGreensClass"/>
-  
+
+  In addition to the above, <Ref Attr="IsomorphismMatrixSemigroup"/> and
+  <Ref Oper="AsMatrixSemigroup"/> can be used to create a matrix semigroup
+  isomorphic to an already known semigroup.
 </Section>
 
 <Section Label="sect:Semigroups matrix objects">
@@ -52,7 +53,7 @@
 </Section>
 
 <Section Label = "sect:Semigroups matrix groups">
-  <Heading>Semigroups matrix groups</Heading>
+  <Heading>Matrix groups in &Semigroups;</Heading>
   
   For interfacing the semigroups code with &GAP;s library code for
   matrix groups, the &Semigroups; package implements matrix groups
