@@ -17,11 +17,11 @@ gap> SemigroupsStartTest();;
 #T# MatrixTest1: Create
 gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2), 4,
 > Z(2) * [[1,0,1,0],[0,1,0,1],[0,1,0,0],[0,0,0,1]]);
-<matrix over finite field of degree 4 over GF(2)>
+<matrix over GF(2) of degree 4>
 
 #T# MatrixTest2: EvalPrintString
 gap> EvalString(PrintString(M));
-<matrix over finite field of degree 4 over GF(2)>
+<matrix over GF(2) of degree 4>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
