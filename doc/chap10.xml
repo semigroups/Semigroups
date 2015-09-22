@@ -25,6 +25,7 @@
 
   We provide a couple of convenience functions to streamline the process.
 
+  <#Include Label="IsMatrixSemigroup"/>
   <#Include Label="MatrixSemigroup"/>
 
   In addition to the above, <Ref Attr="IsomorphismMatrixSemigroup"/> and
@@ -60,7 +61,7 @@
   matrix groups, the &Semigroups; package implements matrix groups
   that delegate to the &GAP; library.
 
-  <#Include Label="IsMatrixSemigroup"/>
+  <#Include Label="IsMatrixOverFiniteFieldGroup"/>
   <#Include Label="MatrixGroupOperation"/>
   <#Include Label="IsomorphismMatrixGroup"/>
   <#Include Label="AsMatrixGroup"/>

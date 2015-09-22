@@ -24,9 +24,9 @@
     it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and 
     <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
 
-    Note that it is possible for a bipartition semigroup to have a
+    Note that it is possible for a matrix semigroup to have a
     multiplicative neutral element (i.e. an identity element) but not to
-    satisfy <C>IsBipartitionMonoid</C>. For example, 
+    satisfy <C>IsMatrixMonoid</C>.
   </Description>
 </ManSection>
 <#/GAPDoc>
