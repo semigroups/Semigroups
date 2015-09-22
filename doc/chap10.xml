@@ -18,17 +18,16 @@
   <Example><![CDATA[
 gap> x := Z(4) * [[1,0], [0,2]];
 [ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
-gap> IsMatrix(x)
+gap> IsMatrix(x);
 true
 gap> IsMatrixOverFiniteField(x);
 false
-gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x));
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);
 <matrix over GF(2^2) of degree 2>
 gap> IsMatrix(y);
 false
 gap> IsMatrixOverFiniteField(y);
-true]]>
-  </Example>
+true]]></Example>
    
   In the following we will refer to matrices in <Ref Filt="IsMatrix" BookName="ref"/>
   by <E>GAP library matrices</E> and to matrices in
