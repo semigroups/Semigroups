@@ -37,7 +37,8 @@ function(arg)
 
   if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then
     gens := arg;
-  elif Length(arg) = 2 and IsField(arg[2]) then
+  elif Length(arg) = 2 and IsField(arg[2]) and
+    IsFFECollCollColl(arg[1]) then
     gens := arg[1];
     ring := arg[2];
   else
@@ -60,11 +61,6 @@ function(arg)
                                              x));
   return Semigroup(gens);
 end);
-
-#T Why?
-InstallMethod(OneMutable, "for an matrix over finite field collection",
-[IsMatrixOverFiniteFieldCollection],
-coll -> One(Representative(coll)));
 
 #T is it inconsistent to have the filter first for NewMatrixOverFiniteField
 #T but last for isomorphism?
@@ -192,7 +188,7 @@ function(s, vsp, m)
     fi;
   od;
 
-  return NewSRowBasis(IsPlistSRowBasisRep, BaseDomain(vsp), nvsp);
+  return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, BaseDomain(vsp), nvsp);
 end);
 
 InstallGlobalFunction(MatrixOverFiniteFieldLocalRightInverse,

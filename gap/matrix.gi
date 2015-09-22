@@ -81,8 +81,8 @@ end);
 InstallMethod(Display, "for a plist vector over finite field",
 [IsPlistVectorOverFiniteFieldRep],
 function(v)
-  Print("<vector over finite field of degree ",
-        DegreeOfVectorOverFiniteField(v), "\n");
+  Print("<vector over ", BaseDomain(v),
+        " of degree ", DegreeOfVectorOverFiniteField(v), "\n");
   Print(v!.vec);
   Print(">\n");
 end);
@@ -103,22 +103,22 @@ end);
 
 #############################################################################
 ##
-## SRowBasis
+## RowBasisOverFiniteField
 ##
 #############################################################################
 #
-InstallMethod(NewSRowBasis, "for IsPlistSRowBasisRep, a ring, and a list",
-[IsPlistSRowBasisRep, IsRing, IsList],
+InstallMethod(NewRowBasisOverFiniteField, "for IsPlistRowBasisOverFiniteFieldRep, a ring, and a list",
+[IsPlistRowBasisOverFiniteFieldRep, IsRing, IsList],
 function(filter, basedomain, l)
   local b, filter2;
 
-  filter2 := filter and IsSRowBasis;
+  filter2 := filter and IsRowBasisOverFiniteField;
   if HasCanEasilyCompareElements(Representative(basedomain))
       and CanEasilyCompareElements(Representative(basedomain)) then
     filter2 := filter2 and CanEasilyCompareElements;
   fi;
   b := rec(rows := l);
-  Objectify(PlistSRowBasisType, b);
+  Objectify(PlistRowBasisOverFiniteFieldType, b);
 
   SetBaseDomain(b, basedomain);
 
@@ -126,19 +126,19 @@ function(filter, basedomain, l)
 end);
 
 InstallMethod(Rank, "for a plist rowbasis",
-[IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep],
 function(v)
   return Length(v!.rows);
 end);
 
 InstallMethod(\=, "for an rowbasis",
-[IsPlistSRowBasisRep, IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep, IsPlistRowBasisOverFiniteFieldRep],
 function(x, y)
   return BaseDomain(x) = BaseDomain(y) and x!.rows = y!.rows;
 end);
 
 InstallMethod(\<, "for an rowbasis",
-[IsPlistSRowBasisRep, IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep, IsPlistRowBasisOverFiniteFieldRep],
 function(x, y)
   return Rank(x) < Rank(y)
     or (Rank(x) = Rank(y)
@@ -146,27 +146,27 @@ function(x, y)
 end);
 
 InstallMethod(ViewObj, "for a plist rowbasis",
-[IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep],
 function(v)
   Print("<rowbasis of rank ");
   Print(Length(v!.rows), " over ", BaseDomain(v), ">");
 end);
 
 InstallMethod(ViewString, "for a plist rowbasis",
-[IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep],
 function(v)
   return STRINGIFY("<rowbasis of rank ", Rank(v), " over ", BaseDomain(v));
 end);
 
 InstallMethod(PrintObj, "for a plist rowbasis",
-[IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep],
 function(v)
-  Print("NewSRowBasis(IsPlistSRowBasisRep, ", BaseDomain(v), ", ", v!.rows,
+  Print("NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, ", BaseDomain(v), ", ", v!.rows,
         ")");
 end);
 
 InstallMethod(Display, "for a plist rowbasis",
-[IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep],
 function(v)
   Print("<rowbasis of rank ", Rank(v), "\n");
   Print(v!.rows);
@@ -174,10 +174,10 @@ function(v)
 end);
 
 InstallMethod(PrintString, "for a plist rowbasis",
-[IsPlistSRowBasisRep],
+[IsPlistRowBasisOverFiniteFieldRep],
 function(v)
   local st;
-  st := "NewSRowBasis(IsPlistSRowBasisRep,";
+  st := "NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,";
   Append(st, String(BaseDomain(v)));
   Append(st, ",");
   Append(st, String(Rank(v)));
@@ -249,12 +249,13 @@ function(filter, basedomain, deg)
                                 basedomain,
                                 deg,
                                 IdentityMat(deg, basedomain));
-  SetRowSpaceBasis(m, NewSRowBasis(IsPlistSRowBasisRep,
+  SetRowSpaceBasis(m, NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,
                                    basedomain, []));
   SetRowRank(m, 0);
   SetRowSpaceTransformation(m, m);
   SetRowSpaceTransformationInv(m, m);
-  SetSemigroupInverse(m, m);
+# FIXME:
+#  SetSemigroupInverse(m, m);
   return m;
 end);
 
@@ -291,18 +292,15 @@ InstallMethod(ConstructingFilter, "for a cvec matrix over finite field",
 InstallMethod(ViewObj, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  Print("<matrix over finite field of degree ");
-  Print(DegreeOfMatrixOverFiniteField(m), " over ", BaseDomain(m), ">");
+  Print("<matrix over ", BaseDomain(m), " of degree ");
+  Print(DegreeOfMatrixOverFiniteField(m), ">");
 end);
 
 InstallMethod(ViewString, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  return STRINGIFY("<matrix over finite field of degree ",
-                   DegreeOfMatrixOverFiniteField(m),
-                   " over ",
-                   BaseDomain(m),
-                   ">");
+  return STRINGIFY("<matrix over ", BaseDomain(m), " of degree ",
+                   DegreeOfMatrixOverFiniteField(m), ">");
 end);
 
 InstallMethod(PrintObj, "for a plist matrix over finite field",
@@ -316,7 +314,7 @@ end);
 InstallMethod(Display, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  Print("<matrix over finite field of degree ",
+  Print("<matrix over ", BaseDomain(m), " of degree ",
         DegreeOfMatrixOverFiniteField(m), "\n");
   Print(m!.mat);
   Print(">\n");
@@ -502,12 +500,13 @@ function(m)
 
   ConvertToVectorRep(bas);
   MakeImmutable(bas);
-  bas := NewSRowBasis(IsPlistSRowBasisRep, bd, bas);
+  bas := NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, bd, bas);
   SetRowSpaceBasis(m, bas);
   SetRowRank(m, Rank(bas));
   SetRowSpaceTransformation(m, tr);
   SetRowSpaceTransformationInv(m, tri);
-  SetSemigroupInverse(m, sinv);
+# FIXME
+#  SetSemigroupInverse(m, sinv);
   SetInverse(m, inv);
 end);
 
@@ -661,6 +660,10 @@ function(smat, mat)
                                   BaseDomain(smat),
                                   Length(mat), mat);
 end);
+
+InstallMethod(OneMutable, "for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection],
+coll -> One(Representative(coll)));
 
 InstallMethod(DegreeOfMatrixOverFiniteFieldCollection,
 "for an matrix over finite field collection",

@@ -43,12 +43,12 @@ DeclareAttribute("DegreeOfVectorOverFiniteField", IsVectorOverFiniteField);
 DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
 
 # mpf:
-DeclareCategory("IsSRowBasis", IsCollection);
-DeclareCategoryCollections("IsSRowBasis");
-DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
+DeclareCategory("IsRowBasisOverFiniteField", IsCollection);
+DeclareCategoryCollections("IsRowBasisOverFiniteField");
+DeclareConstructor("NewRowBasisOverFiniteField", [IsRowBasisOverFiniteField, IsRing, IsList]);
 
-# DeclareOperation("Rank", [IsSRowBasis]);
-DeclareAttribute("BaseDomain", IsSRowBasis);
+# DeclareOperation("Rank", [IsRowBasisOverFiniteField]);
+DeclareAttribute("BaseDomain", IsRowBasisOverFiniteField);
 
 # Our Matrix objects
 DeclareCategory("IsMatrixOverFiniteField",
@@ -70,13 +70,15 @@ DeclareConstructor("NewZeroMatrixOverFiniteField",
 DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformation", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformationInv", IsMatrixOverFiniteField);
-DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
-DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
-DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
+#T FIXME: Implement
+#DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
+#DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
+#DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
 DeclareAttribute("RightInverse", IsMatrixOverFiniteField);
 DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
-DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
-DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
+#T FIXME: Implement
+#DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
+#DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 DeclareAttribute("DegreeOfMatrixOverFiniteField", IsMatrixOverFiniteField);
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
 DeclareAttribute("ColRank", IsMatrixOverFiniteField);
@@ -120,14 +122,14 @@ BindGlobal("PlistVectorOverFiniteFieldType",
                    IsVectorOverFiniteField and
                    IsPlistVectorOverFiniteFieldRep));
 
-DeclareRepresentation("IsPlistSRowBasisRep",
-                      IsSRowBasis and IsComponentObjectRep and
+DeclareRepresentation("IsPlistRowBasisOverFiniteFieldRep",
+                      IsRowBasisOverFiniteField and IsComponentObjectRep and
                       IsAttributeStoringRep, ["rows"]);
-BindGlobal("PlistSRowBasisFamily",
-           NewFamily("PlistSRowBasisFamily", IsSRowBasis,
+BindGlobal("PlistRowBasisOverFiniteFieldFamily",
+           NewFamily("PlistRowBasisOverFiniteFieldFamily", IsRowBasisOverFiniteField,
                      CanEasilyCompareElements));
-BindGlobal("PlistSRowBasisType",
-           NewType(PlistSRowBasisFamily, IsSRowBasis and IsPlistSRowBasisRep));
+BindGlobal("PlistRowBasisOverFiniteFieldType",
+           NewType(PlistRowBasisOverFiniteFieldFamily, IsRowBasisOverFiniteField and IsPlistRowBasisOverFiniteFieldRep));
 
 DeclareRepresentation("IsPlistMatrixOverFiniteFieldRep",
                       IsMatrixOverFiniteField and IsComponentObjectRep and
@@ -179,6 +181,7 @@ DeclareOperation("TransposedSMat", [IsMatrixOverFiniteField]);
 DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection",
                  IsMatrixOverFiniteFieldCollection);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
+DeclareOperation("OneMutable", [IsMatrixOverFiniteFieldCollection]);
 
 ## Helper functions
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
@@ -191,3 +194,5 @@ DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");
 ## this function for debugging purposes that checks whether a
 ## matrix is actually zero by inspecting all entries
 DeclareGlobalFunction("SEMIGROUPS_CheckReallyZero");
+
+

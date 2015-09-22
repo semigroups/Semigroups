@@ -10,11 +10,21 @@
 
 <#GAPDoc Label="MatrixGroupOperation">
 <ManSection>
-  <Oper Name="\^" Arg="G, mat" Label=""/>
+  <Oper Name="\^" Arg="G, mat" Label="for an matrix over finite field group and matrix over finite field"/>
   <Returns>A matrix group over a finite field</Returns>
   <Description>
     Conjugates the matrix group <A>G</A> inside the group <M>GL_n(F)</M> by
     the matrix <A>mat</A>.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,1,0], [1,1,1]] );;
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,0,0], [1,0,1], [1,1,1]] );;
+gap> G := Group(x);
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+gap> G ^ y;
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -25,6 +35,19 @@
   <Returns>An isomorphism.</Returns>
   <Description>
     Returns an isomorphism from <A>G</A> into a &GAP; group.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,1,0], [1,1,1]] );;
+gap> G := Group(x);;
+gap> iso := IsomorphismMatrixGroup(G);;
+gap> Source(iso); Range(iso);
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+Group(
+[
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ],
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])
+
+ ]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -35,16 +58,16 @@
   <Returns>A &GAP; group.</Returns>
   <Description>
     Returns the image of an isomorphism returned by <Ref Label="IsomorphismMatrixGroup"/>.
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="AsMatrixOverFiniteFieldGroup">
-<ManSection>
-  <Attr Name="AsMatrixOverFiniteFieldGroup" Arg="G"/>
-  <Returns>A matrix group.</Returns>
-  <Description>
-    Returns a matrix group isomorphic to the &GAP; group <A>G</A>.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,1,0], [1,1,1]] );;
+gap> G := Group(x);;
+gap> AsMatrixGroup(G);
+Group(
+[ 
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])
+ ]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

@@ -96,9 +96,9 @@ gap> MinimalIdeal(S);
 gap> Size(last);
 1
 gap> MultiplicativeZero(S);
-<matrix over finite field of degree 3 over GF(3)>
+<matrix over GF(3) of degree 3>
 gap> MinimalDClass(S);
-<Green's D-class: <matrix over finite field of degree 3 over GF(3)>>
+<Green's D-class: <matrix over GF(3) of degree 3>>
 gap> M := MaximalSubsemigroups(S);
 [ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
   <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
@@ -140,9 +140,9 @@ gap> Size(S);
 gap> func := IsGreensDLeq(S);
 function( x, y ) ... end
 gap> x := Random(S);
-<matrix over finite field of degree 3 over GF(3)>
+<matrix over GF(3) of degree 3>
 gap> y := Random(S);
-<matrix over finite field of degree 3 over GF(3)>
+<matrix over GF(3) of degree 3>
 gap> func(x, y);;        
 gap> func(y, x);;
 
@@ -212,10 +212,11 @@ gap> SchutzenbergerGroup(DClasses(S)[1]);
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ] ]
 
+#FIXME 
 #gap> StructureDescriptionOfSchutzenbergerGroups(S); 
 #T This takes ages, and this is probably due to the
-#T StructureDescription for matrix over finite field groups not being
-#T very efficient.
+#T StructureDescription for matrix over finite field
+#T groups not being very efficient.
 #T It seems to be going through permutation groups
 #T Making a Schutzenberger group into a normal GAP
 #T Matrix group yields a result instantly:

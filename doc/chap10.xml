@@ -13,8 +13,25 @@
 
   For technical reasons, the matrix semigroup functions in &Semigroups; rely
   on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.
-  We take every precaution to hide this fact from the user of &Semigroups;.
+  We take precautions to hide this fact from the user of &Semigroups;.
  
+<Section Label = "sect:Matrix semigroups">
+  <Heading>Creating matrix semigroups</Heading>
+
+  Random matrix semigroups can be created by using the functions
+  <Ref Func="RandomMatrixSemigroup"/> or <Ref Func="RandomMatrixMonoid"/>.
+  While this is convenient for testing and playing around, creating
+  semigroups from matrices can be a bit more work.
+
+  We provide a couple of convenience functions to streamline the process.
+
+  <#Include Label="MatrixSemigroup"/>
+
+  In addition to the above, <Ref Attr="IsomorphismMatrixSemigroup"/> and
+  <Ref Oper="AsMatrixSemigroup"/> can be used to create a matrix semigroup
+  isomorphic to an already known semigroup.
+</Section>
+
 <Section Label="sect:Semigroups matrix objects">
   <Heading>Matrices in &Semigroups;</Heading>
 
@@ -26,10 +43,7 @@
   <#Include Label="NewIdentityMatrixOverFiniteField"/>
   <#Include Label="RowSpaceBasis"/>
   <#Include Label="RowRank"/>
-  <#Include Label="ColSpaceBasis"/>
   <#Include Label="RightInverse"/>
-  <#Include Label="SemigroupInvertible"/>
-  <#Include Label="SemigroupInverse"/>
   <#Include Label="DegreeOfMatrixOverFiniteField"/>
   <#Include Label="BaseDomain"/>
   <#Include Label="TransposedMatImmutable"/>
@@ -38,24 +52,8 @@
 
 </Section>
 
-<Section Label = "sect:Matrix semigroups">
-  <Heading>Creating matrix semigroups</Heading>
-
-  Random matrix semigroups can be created by using the functions
-  <Ref Func="RandomMatrixSemigroup"/> or <Ref Func="RandomMatrixMonoid"/>.
-  While this is convenient for testing and playing around, creating
-  semigroups from matrices can be a bit more work.
-
-  We provide a couple of convenience functions to streamline the process.
-  <#Include Label="MatrixSemigroup"/>
-  <Ref Attr="IsomorphismMatrixSemigroup"/>
-  <Ref Oper="AsMatrixSemigroup"/>
-  <Ref Prop="IsMatrixSemigroupGreensClass"/>
-  
-</Section>
-
 <Section Label = "sect:Semigroups matrix groups">
-  <Heading>Semigroups matrix groups</Heading>
+  <Heading>Matrix groups in &Semigroups;</Heading>
   
   For interfacing the semigroups code with &GAP;s library code for
   matrix groups, the &Semigroups; package implements matrix groups
@@ -64,7 +62,6 @@
   <#Include Label="MatrixGroupOperation"/>
   <#Include Label="IsomorphismMatrixGroup"/>
   <#Include Label="AsMatrixGroup"/>
-  <#Include Label="AsMatrixOverFiniteFieldGroup"/>
 </Section>
 
 </Chapter>

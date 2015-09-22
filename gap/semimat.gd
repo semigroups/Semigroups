@@ -9,11 +9,6 @@
 #############################################################################
 ##
 
-# This file contains
-
-#FIXME move to matrix.gd
-DeclareOperation("OneMutable", [IsMatrixOverFiniteFieldCollection]);
-
 DeclareSynonym("IsMatrixSemigroup",
                IsMatrixOverFiniteFieldCollection and IsSemigroup);
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
