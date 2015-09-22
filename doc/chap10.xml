@@ -12,7 +12,7 @@
   More general matrix semigroups are planned, but not implemented yet.<P/>
 
   &GAP; provides a way to define matrices which are in the
-  filter <Ref Filt="IsMatrix"/>.
+  filter <Ref Filt="IsMatrix" BookName="ref"/>.
   For technical reasons, the matrix semigroup functions in &Semigroups; rely
   on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.<P/>
   <Example><![CDATA[
