@@ -193,7 +193,7 @@ function(s, vsp, m)
     fi;
   od;
 
-  return NewSRowBasis(IsPlistSRowBasisRep, BaseDomain(vsp), nvsp);
+  return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, BaseDomain(vsp), nvsp);
 end);
 
 InstallGlobalFunction(MatrixOverFiniteFieldLocalRightInverse,

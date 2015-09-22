@@ -24,7 +24,7 @@ function(x, data)
   return res;
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionForPlistSRowBasis,
+InstallGlobalFunction(SEMIGROUPS_HashFunctionForPlistRowBasisOverFiniteField,
 function(x, data)
   local i, res;
   if Rank(x) = 0 then
@@ -92,8 +92,8 @@ function(m, hashlen)
 end);
 
 InstallMethod(ChooseHashFunction, "for plist rowbasis over finite fields",
-[IsPlistSRowBasisRep, IsInt],
+[IsPlistRowBasisOverFiniteFieldRep, IsInt],
 function(b, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionForPlistSRowBasis,
+  return rec(func := SEMIGROUPS_HashFunctionForPlistRowBasisOverFiniteField,
              data := hashlen);
 end);

@@ -43,12 +43,12 @@ DeclareAttribute("DegreeOfVectorOverFiniteField", IsVectorOverFiniteField);
 DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
 
 # mpf:
-DeclareCategory("IsSRowBasis", IsCollection);
-DeclareCategoryCollections("IsSRowBasis");
-DeclareConstructor("NewSRowBasis", [IsSRowBasis, IsRing, IsList]);
+DeclareCategory("IsRowBasisOverFiniteField", IsCollection);
+DeclareCategoryCollections("IsRowBasisOverFiniteField");
+DeclareConstructor("NewRowBasisOverFiniteField", [IsRowBasisOverFiniteField, IsRing, IsList]);
 
-# DeclareOperation("Rank", [IsSRowBasis]);
-DeclareAttribute("BaseDomain", IsSRowBasis);
+# DeclareOperation("Rank", [IsRowBasisOverFiniteField]);
+DeclareAttribute("BaseDomain", IsRowBasisOverFiniteField);
 
 # Our Matrix objects
 DeclareCategory("IsMatrixOverFiniteField",
@@ -122,14 +122,14 @@ BindGlobal("PlistVectorOverFiniteFieldType",
                    IsVectorOverFiniteField and
                    IsPlistVectorOverFiniteFieldRep));
 
-DeclareRepresentation("IsPlistSRowBasisRep",
-                      IsSRowBasis and IsComponentObjectRep and
+DeclareRepresentation("IsPlistRowBasisOverFiniteFieldRep",
+                      IsRowBasisOverFiniteField and IsComponentObjectRep and
                       IsAttributeStoringRep, ["rows"]);
-BindGlobal("PlistSRowBasisFamily",
-           NewFamily("PlistSRowBasisFamily", IsSRowBasis,
+BindGlobal("PlistRowBasisOverFiniteFieldFamily",
+           NewFamily("PlistRowBasisOverFiniteFieldFamily", IsRowBasisOverFiniteField,
                      CanEasilyCompareElements));
-BindGlobal("PlistSRowBasisType",
-           NewType(PlistSRowBasisFamily, IsSRowBasis and IsPlistSRowBasisRep));
+BindGlobal("PlistRowBasisOverFiniteFieldType",
+           NewType(PlistRowBasisOverFiniteFieldFamily, IsRowBasisOverFiniteField and IsPlistRowBasisOverFiniteFieldRep));
 
 DeclareRepresentation("IsPlistMatrixOverFiniteFieldRep",
                       IsMatrixOverFiniteField and IsComponentObjectRep and
