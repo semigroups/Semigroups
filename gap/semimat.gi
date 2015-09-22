@@ -35,8 +35,9 @@ InstallGlobalFunction(MatrixSemigroup,
 function(arg)
   local gens, ring, d;
 
-  if IsHomogeneousList(arg) and IsFFECollCollColl(arg) then
-    gens := arg;
+  if Length(arg) = 1 and IsHomogeneousList(arg[1]) 
+      and IsFFECollCollColl(arg[1]) then
+    gens := arg[1];
   elif Length(arg) = 2 and IsField(arg[2]) and
     IsFFECollCollColl(arg[1]) then
     gens := arg[1];

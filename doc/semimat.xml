@@ -20,23 +20,16 @@
     The specification of the field <A>F</A> can be necessary to prevent
     &GAP; from trying to find a smaller common field for the entries in
     <A>list</A>.
-    <Example><![CDATA[
-gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
->                         Z(4) * [[0,0,0], [0,0,1], [0,1,0]]);
-<semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
-
-  The object <C>S</C> is now a semigroup for all intents and purposes of
-  &Semigroups;.  To help <Ref Func="MatrixSemigroup"/> with creating the
-  semigroup you can give it optional arguments to specify the field that the
-  matrices are supposed to have entries in and the dimension of the matrix.
-
    <Example><![CDATA[
 gap> S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],
 >                          Z(3) * [[0,0,0], [0,0,1], [0,1,0]]], GF(9));
-<semigroup of 3x3 matrices over GF(3^2) with 2 generators>]]></Example>
-
-  Note that for this usage the generators have to be given as a list as
-  the first argument to <Ref Func="MatrixSemigroup"/>.
+<semigroup of 3x3 matrices over GF(3^2) with 2 generators>
+gap> S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],
+>                          Z(3) * [[0,0,0], [0,0,1], [0,1,0]]]);
+<semigroup of 3x3 matrices over GF(3) with 2 generators>
+gap> S := MatrixSemigroup(Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
+>                         Z(4) * [[0,0,0], [0,0,1], [0,1,0]]);
+<semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
