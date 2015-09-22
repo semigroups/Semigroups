@@ -62,11 +62,6 @@ function(arg)
   return Semigroup(gens);
 end);
 
-#T Why?
-InstallMethod(OneMutable, "for an matrix over finite field collection",
-[IsMatrixOverFiniteFieldCollection],
-coll -> One(Representative(coll)));
-
 #T is it inconsistent to have the filter first for NewMatrixOverFiniteField
 #T but last for isomorphism?
 #T Why does it not seem to be possible to do the same as for

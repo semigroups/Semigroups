@@ -181,6 +181,7 @@ DeclareOperation("TransposedSMat", [IsMatrixOverFiniteField]);
 DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection",
                  IsMatrixOverFiniteFieldCollection);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
+DeclareOperation("OneMutable", [IsMatrixOverFiniteFieldCollection]);
 
 ## Helper functions
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
@@ -193,3 +194,5 @@ DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");
 ## this function for debugging purposes that checks whether a
 ## matrix is actually zero by inspecting all entries
 DeclareGlobalFunction("SEMIGROUPS_CheckReallyZero");
+
+

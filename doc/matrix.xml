@@ -132,14 +132,10 @@ gap> Display(LeftInverse(x) * x);
   </Returns>
         <Example><![CDATA[
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
-> Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
-<matrix over GF(2^2) of degree 3>
-gap> LeftInverse(x);
-<matrix over GF(2^2) of degree 3>
-gap> Display(LeftInverse(x) * x);
-<matrix over GF(2^2) of degree 3
-[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0 ],
-  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]>
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> DegreeOfMatrixOverFiniteField(x);
+3
 ]]></Example>
 
 </ManSection>

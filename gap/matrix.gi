@@ -661,6 +661,10 @@ function(smat, mat)
                                   Length(mat), mat);
 end);
 
+InstallMethod(OneMutable, "for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection],
+coll -> One(Representative(coll)));
+
 InstallMethod(DegreeOfMatrixOverFiniteFieldCollection,
 "for an matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
