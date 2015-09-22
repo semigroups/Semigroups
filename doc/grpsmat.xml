@@ -47,6 +47,7 @@ false]]></Example>
     matrices over <C>GF(q)</C> and <A>mat</A> is a <C>d</C> by <C>d</C> matrix
     over <C>GF(q)</C>, then <C><A>G</A> ^ <A>mat</A></C> returns the conjugate
     of <A>G</A> by <A>mat</A> inside <C>GL(d, q)</C>.
+
     <Example><![CDATA[
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
 > Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;
