@@ -56,7 +56,7 @@ true]]>
 </Section>
 
 <Section Label="sect:Semigroups matrix objects">
-  <Heading>Matrices in &Semigroups;</Heading>
+  <Heading>Matrices in the &Semigroups; package</Heading>
 
   The matrix functions in the &Semigroups; package use a wrapper
   object for matrices. In the following these objects are documented.
@@ -77,7 +77,7 @@ true]]>
 </Section>
 
 <Section Label = "sect:Semigroups matrix groups">
-  <Heading>Matrix groups in &Semigroups;</Heading>
+  <Heading>Matrix groups in the &Semigroups; package</Heading>
   
   For interfacing the semigroups code with &GAP;s library code for
   matrix groups, the &Semigroups; package implements matrix groups
