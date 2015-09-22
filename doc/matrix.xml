@@ -65,9 +65,11 @@ gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, []
     Creates a new <A>n</A>-by-<A>n</A> zero or identity matrix with entries
     in the finite field <A>F</A>.
         <Example><![CDATA[
-gap> x := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2);
+gap> x := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+>                                          GF(4), 2);
 <matrix over GF(2^2) of degree 2>
-gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2);
+gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+>                                      GF(4), 2);
 <matrix over GF(2^2) of degree 2>
 ]]></Example>
   </Description>
@@ -128,6 +130,18 @@ gap> Display(LeftInverse(x) * x);
   <Returns>
     Number of rows and columns of the matrix <A>m</A>.
   </Returns>
+        <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(2^2) of degree 3>
+gap> LeftInverse(x);
+<matrix over GF(2^2) of degree 3>
+gap> Display(LeftInverse(x) * x);
+<matrix over GF(2^2) of degree 3
+[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0 ],
+  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]>
+]]></Example>
+
 </ManSection>
 <#/GAPDoc>
 
