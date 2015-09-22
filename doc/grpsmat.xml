@@ -20,7 +20,6 @@ gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
 > Z(4)^0*[[1,1,0], [0,1,0], [1,1,1]] );;
 gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
 > Z(4)^0*[[1,0,0], [1,0,1], [1,1,1]] );;
-<matrix over GF(2^2) of degree 3>
 gap> G := Group(x);
 <group of 3x3 matrices over GF(2^2) with 1 generator>
 gap> G ^ y;
@@ -40,11 +39,14 @@ gap> G ^ y;
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
 > Z(4)^0*[[1,1,0], [0,1,0], [1,1,1]] );;
 gap> G := Group(x);;
-gap> IsomorphismMatrixGroup(G);
-MappingByFunction( <group of 3x3 matrices over GF(2^2) with 1 generator>, Group(
-[ [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
-      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] 
- ]), <Operation "AsMatrix">, function( g ) ... end )
+gap> iso := IsomorphismMatrixGroup(G);;
+gap> Source(iso); Range(iso);
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+Group(
+[
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ],
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])
+
  ]]></Example>
   </Description>
 </ManSection>
