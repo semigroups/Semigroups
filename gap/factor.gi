@@ -15,7 +15,8 @@ InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
 function(o, m, elt)
   local pos, word, factors, out, s, gens, scc, lookup, orbitgraph, genstoapply,
-  lambdaperm, rep, bound, nrgens, uword, u, vword, v, f, ex, stop, i, k, l;
+  lambdaperm, rep, bound, nrgens, uword, u, vword, v, f, ex, stop, i, k, l,
+  one;
 
   if IsBound(o!.factors) then
     if IsBound(o!.factors[m]) then
@@ -56,6 +57,8 @@ function(o, m, elt)
   nrgens := 0;
   stop := false;
 
+  one := LambdaIdentity(s)(ActionDegree(s));
+
   for k in scc do
     uword := TraceSchreierTreeOfSCCForward(o, m, k);
     u := EvaluateWord(o, uword);
@@ -67,7 +70,7 @@ function(o, m, elt)
         if not IsBound(ex) then
           nrgens := nrgens + 1;
           factors[nrgens] := Concatenation(uword, [l], vword);
-          ex := Orb([f], (), PROD, rec(hashlen := 2 * bound,
+          ex := Orb([f], one, PROD, rec(hashlen := 2 * bound,
                                        schreier := true,
                                        log := true));
           Enumerate(ex);

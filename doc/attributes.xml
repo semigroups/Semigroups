@@ -18,10 +18,10 @@
       a group isomorphic to the group &H;-class <A>class</A>. If <A>class</A> is
       not a group &H;-class, then <K>fail</K> is returned. 
       <Example><![CDATA[
-gap> S:=Semigroup( 
+gap> S := Semigroup( 
 > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 9 ], [ 1, 9, 4, 3, 5, 2, 10, 7 ] ), 
 > PartialPerm( [ 1, 2, 4, 7, 8, 9 ], [ 6, 2, 4, 9, 1, 3 ] ) );;
-gap> H:=HClass(S, 
+gap> H := HClass(S, 
 > PartialPerm( [ 1, 2, 3, 4, 7, 9 ], [ 1, 7, 3, 4, 9, 2 ] ));;
 gap> StructureDescription(H);
 "C6"]]></Example>
@@ -41,11 +41,11 @@ gap> StructureDescription(H);
     of Green's &D;-classes of a semigroup. 
 
   <Example><![CDATA[
-gap> S:=Semigroup( [ Transformation( [ 1, 3, 4, 1, 3 ] ), 
+gap> S := Semigroup( [ Transformation( [ 1, 3, 4, 1, 3 ] ), 
 >  Transformation( [ 2, 4, 1, 5, 5 ] ), 
 >  Transformation( [ 2, 5, 3, 5, 3 ] ), 
 >  Transformation( [ 5, 5, 1, 1, 3 ] ) ] );;
-gap> reps:=ShallowCopy(DClassReps(S));
+gap> reps := ShallowCopy(DClassReps(S));
 [ Transformation( [ 1, 3, 4, 1, 3 ] ), 
   Transformation( [ 2, 4, 1, 5, 5 ] ), 
   Transformation( [ 1, 4, 1, 1, 4 ] ), 
@@ -58,7 +58,7 @@ gap> reps;
   Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 gap> IsGreensLessThanOrEqual(DClass(S, reps[2]), DClass(S, reps[1]));
 true
-gap> S:=DualSymmetricInverseMonoid(4);;
+gap> S := DualSymmetricInverseMonoid(4);;
 gap> IsGreensDLeq(S)(S.1, S.3);                      
 true
 gap> IsGreensDLeq(S)(S.3, S.1);
@@ -81,11 +81,11 @@ false]]></Example>
       <Ref Attr="StructureDescription" BookName="ref"/> when it is applied to
       the maximal subgroups of the semigroup <A>S</A>. 
     <Example><![CDATA[
-gap> S:=DualSymmetricInverseSemigroup(6);
+gap> S := DualSymmetricInverseSemigroup(6);
 <inverse bipartition monoid on 6 pts with 3 generators>
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S3", "S4", "S5", "S6" ]
-gap> S:=Semigroup( PartialPerm( [ 1, 3, 4, 5, 8 ], [ 8, 3, 9, 4, 5 ] ), 
+gap> S := Semigroup( PartialPerm( [ 1, 3, 4, 5, 8 ], [ 8, 3, 9, 4, 5 ] ), 
 >  PartialPerm( [ 1, 2, 3, 4, 8 ], [ 10, 4, 1, 9, 6 ] ), 
 >  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 1, 6, 7, 5, 3, 2, 10 ] ), 
 >  PartialPerm( [ 1, 2, 3, 4, 6, 8, 10 ], [ 4, 9, 10, 3, 1, 5, 2 ] ) );;
@@ -106,7 +106,7 @@ gap> StructureDescriptionMaximalSubgroups(S);
       applied to the Schutzenberger groups of the &R;-classes of the semigroup
       <A>S</A>.
       <Example><![CDATA[
-gap> S:=Semigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 5, 4 ] ), 
+gap> S := Semigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 5, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3 ], [ 4, 1, 2 ] ), 
 >  PartialPerm( [ 1, 2, 3 ], [ 5, 2, 3 ] ), 
 >  PartialPerm( [ 1, 2, 4, 5 ], [ 2, 1, 4, 3 ] ), 
@@ -117,7 +117,7 @@ gap> S:=Semigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 5, 4 ] ),
 >  PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] ) );;
 gap> StructureDescriptionSchutzenbergerGroups(S);            
 [ "1", "C2", "S3" ]
-gap> S:=Monoid( 
+gap> S := Monoid( 
 > Bipartition([[ 1, 2, 5, -1, -2 ], [ 3, 4, -3, -5 ], [ -4 ]]), 
 > Bipartition([[ 1, 2, -2 ], [ 3, -1 ], [ 4 ], [ 5 ], [ -3, -4 ], [ -5 ]]),
 > Bipartition([[ 1 ], [ 2, 3, -5 ], [ 4, -3 ], [ 5, -2 ], [ -1, -4 ]]));
@@ -147,14 +147,14 @@ gap> StructureDescriptionSchutzenbergerGroups(S);
       <Ref Attr="MinimalIdeal"/> and
       <Ref Attr="RepresentativeOfMinimalIdeal"/>.
       <Example><![CDATA[
-gap> D:=MinimalDClass(JonesMonoid(8));
-{Bipartition( [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ], [ -1, -2 ], 
- [ -3, -4 ], [ -5, -6 ], [ -7, -8 ] ] )}
-gap> S:=InverseSemigroup( 
+gap> D := MinimalDClass(JonesMonoid(8));
+<Green's D-class: <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], 
+  [ 7, 8 ], [ -1, -2 ], [ -3, -4 ], [ -5, -6 ], [ -7, -8 ]>>
+gap> S := InverseSemigroup( 
 > PartialPerm( [ 1, 2, 3, 5, 7, 8, 9 ], [ 2, 6, 9, 1, 5, 3, 8 ] ), 
 > PartialPerm( [ 1, 3, 4, 5, 7, 8, 9 ], [ 9, 4, 10, 5, 6, 7, 1 ] ) );;
 gap> MinimalDClass(S);
-{PartialPerm( [  ], [  ] )}]]></Example>
+<Green's D-class: <empty partial perm>>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -173,18 +173,19 @@ gap> MinimalDClass(S);
       
       <Example><![CDATA[
 gap> MaximalDClasses(BrauerMonoid(8));
-[ {Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
-     [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ] ] )} ]
+[ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ], 
+      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], 
+      [ 8, -8 ]>> ]
 gap> MaximalDClasses(FullTransformationMonoid(5));
-[ {IdentityTransformation} ]
-gap> S:=Semigroup( 
+[ <Green's D-class: IdentityTransformation> ]
+gap> S := Semigroup( 
 > PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] ), 
 > PartialPerm( [ 1, 2, 3, 6, 8 ], [ 2, 6, 7, 1, 5 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 8 ], [ 4, 3, 2, 7, 6, 5 ] ), 
 > PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] ) );;
 gap> MaximalDClasses(S);
-[ {PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] )} ]]]></Example>
+[ <Green's D-class: [2,8](1,3)(4)(5)(6)(7)>, 
+  <Green's D-class: [8,3](1,7,6,5,2)(4)> ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -199,7 +200,7 @@ gap> MaximalDClasses(S);
     &D;-class of semigroup; see
     <Ref Oper="InjectionPrincipalFactor"/> for more details. 
     <Example><![CDATA[
-gap> S:=Semigroup([ PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
+gap> S := Semigroup([ PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ), 
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 2, 4, 1, 5 ] ), 
 >  PartialPerm( [ 1, 3, 5 ], [ 5, 1, 3 ] ) ] );;
@@ -207,13 +208,14 @@ gap> PrincipalFactor(MinimalDClass(S));
 <Rees matrix semigroup 1x1 over Group(())>
 gap> MultiplicativeZero(S);
 <empty partial perm>
-gap> S:=Semigroup(
+gap> S := Semigroup(
 > Bipartition( [ [ 1, 2, 3, 4, 5, -1, -3 ], [ -2, -5 ], [ -4 ] ] ), 
 > Bipartition( [ [ 1, -5 ], [ 2, 3, 4, 5, -1, -3 ], [ -2, -4 ] ] ), 
 > Bipartition( [ [ 1, 5, -4 ], [ 2, 4, -1, -5 ], [ 3, -2, -3 ] ] ) );;
-gap> d:=MinimalDClass(S);    
-{Bipartition( [ [ 1, 2, 3, 4, 5, -1, -3 ], [ -2, -5 ], [ -4 ] ] )}
-gap> PrincipalFactor(d);
+gap> D := MinimalDClass(S);    
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], 
+  [ -2, -5 ], [ -4 ]>>
+gap> PrincipalFactor(D);
 <Rees matrix semigroup 1x5 over Group(())>]]></Example>
   </Description>
 </ManSection>
@@ -256,7 +258,7 @@ gap> PrincipalFactor(d);
     minimal.
 
       <Log><![CDATA[
-gap> S:=Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ), 
+gap> S := Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ), 
 > Transformation( [ 1, 5, 4, 3, 2 ] ),
 > Transformation( [ 2, 1, 4, 2, 2 ] ), 
 > Transformation( [ 2, 4, 4, 2, 1 ] ),
@@ -270,21 +272,21 @@ gap> SmallGeneratingSet(S);
 [ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), 
   Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), 
   Transformation( [ 4, 4, 3, 3, 5 ] ) ]
-gap> S:=RandomInverseMonoid(10000,10);;
+gap> S := RandomInverseMonoid(10000,10);;
 gap> SmallGeneratingSet(S);
 [ [ 1 .. 10 ] -> [ 3, 2, 4, 5, 6, 1, 7, 10, 9, 8 ], 
   [ 1 .. 10 ] -> [ 5, 10, 8, 9, 3, 2, 4, 7, 6, 1 ], 
   [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ] -> [ 1, 6, 4, 8, 2, 10, 7, 3, 9 ] ]
-gap> M:=MathieuGroup(24);;
-gap> mat:=List([1..1000], x-> Random(G));;
+gap> M := MathieuGroup(24);;
+gap> mat := List([1..1000], x-> Random(G));;
 gap> Append(mat, [1..1000]*0);
-gap> mat:=List([1..138], x-> List([1..57], x-> Random(mat)));;
-gap> R:=ReesZeroMatrixSemigroup(G, mat);;
-gap> U:=Semigroup(List([1..200], x-> Random(R)));
+gap> mat := List([1..138], x-> List([1..57], x-> Random(mat)));;
+gap> R := ReesZeroMatrixSemigroup(G, mat);;
+gap> U := Semigroup(List([1..200], x-> Random(R)));
 <subsemigroup of 57x138 Rees 0-matrix semigroup with 100 generators>
 gap> Length(SmallGeneratingSet(U));
 84
-gap> S:=RandomBipartitionSemigroup(100,4);
+gap> S := RandomBipartitionSemigroup(100,4);
 <bipartition semigroup on 4 pts with 96 generators>
 gap> Length(SmallGeneratingSet(S));       
 13]]></Log>
@@ -303,26 +305,26 @@ gap> Length(SmallGeneratingSet(S));
       <A>S</A> if it exists and <K>fail</K> if it does not. 
       See also <Ref Attr="MultiplicativeZero" BookName="ref"/>.
       <Example><![CDATA[
-gap> S:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
+gap> S := Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
 > Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-gap> S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+gap> S := Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
 > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
 > Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
 > Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
 gap> MultiplicativeZero(S);
 fail
-gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
+gap> S := InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
 > PartialPerm( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
 > PartialPerm( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
 gap> MultiplicativeZero(S);
 <empty partial perm>
-gap> S:=PartitionMonoid(6); 
+gap> S := PartitionMonoid(6); 
 <regular bipartition monoid on 6 pts with 4 generators>
 gap> MultiplicativeZero(S);
 fail
-gap> S:=DualSymmetricInverseMonoid(6);
+gap> S := DualSymmetricInverseMonoid(6);
 <inverse bipartition monoid on 6 pts with 3 generators>
 gap> MultiplicativeZero(S);
 <block bijection: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]>]]>
@@ -349,7 +351,7 @@ gap> MultiplicativeZero(S);
     <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
     <Ref Attr="MinimalDClass"/>.
     <Example><![CDATA[
-gap> S:=Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
+gap> S := Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
 > Transformation( [ 8, 2, 3, 8, 4, 1, 3, 4, 9, 7 ] ));;
 gap> MinimalIdeal(S);
 <simple transformation semigroup ideal on 10 pts with 1 generator>
@@ -359,9 +361,9 @@ gap> Elements(MinimalIdeal(S));
   Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
   Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
   Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
-gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
-gap> D:=DClass(S, f);
-{Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] )}
+gap> x := Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
+gap> D := DClass(S, x);
+<Green's D-class: Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] )>
 gap> ForAll(GreensDClasses(S), x-> IsGreensLessThanOrEqual(D, x));
 true
 gap> MinimalIdeal(POI(10));
@@ -413,7 +415,7 @@ gap> S := Semigroup([ Transformation( [ 5, 1, 6, 2, 2, 4 ] ),
 gap> RepresentativeOfMinimalDClass(S);
 Transformation( [ 1, 2, 2, 5, 5, 1 ] )
 gap> MinimalDClass(S);
-{Transformation( [ 1, 2, 2, 5, 5, 1 ] )}]]></Example>
+<Green's D-class: Transformation( [ 1, 2, 2, 5, 5, 1 ] )>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -431,7 +433,7 @@ gap> MinimalDClass(S);
     then an error is given.
 
 <Example><![CDATA[
-gap> S:=Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
+gap> S := Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
 > Transformation( [ 3, 3, 8, 2, 5, 6, 4, 4 ] ) );;
 gap> IsGroupAsSemigroup(S);
 true
@@ -441,22 +443,22 @@ MappingByFunction( <transformation group on 8 pts with 2 generators>
 4) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
-gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
+gap> S := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <inverse partial perm semigroup on 4 pts with 2 generators>
 gap> IsomorphismPermGroup(S);
 MappingByFunction( <partial perm group on 4 pts with 2 generators>
  , Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
-gap> G:=GroupOfUnits(PartitionMonoid(4));
+gap> G := GroupOfUnits(PartitionMonoid(4));
 <bipartition group on 4 pts with 2 generators>
 gap> StructureDescription(G);
 "S4"
-gap> iso:=IsomorphismPermGroup(G);  
+gap> iso := IsomorphismPermGroup(G);  
 MappingByFunction( <bipartition group on 4 pts with 2 generators>
  , S4, <Attribute "AsPermutation">, function( x ) ... end )
 gap> RespectsMultiplication(iso);
 true
-gap> inv:=InverseGeneralMapping(iso);;
+gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(G, x-> (x^iso)^inv=x);
 true
 gap> ForAll(G, x-> ForAll(G, y-> (x*y)^iso=x^iso*y^iso));
@@ -486,7 +488,7 @@ true]]></Example>
       <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
 
       <Example><![CDATA[
-gap> S:=Semigroup(Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+gap> S := Semigroup(Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
 >   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
@@ -495,17 +497,17 @@ gap> Size(S);
 5304
 gap> StructureDescription(GroupOfUnits(S));
 "C2 x S4"
-gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
+gap> S := InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
 > [ 2, 4, 5, 3, 6, 7, 10, 9, 8, 1 ] ),
 > PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ], 
 > [ 8, 2, 3, 1, 4, 5, 10, 6, 9 ] ) );;
 gap> StructureDescription(GroupOfUnits(S));
 "C8"
-gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
+gap> S := InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
 > PartialPerm( [ 1, 2, 3, 5 ], [ 3, 1, 5, 2 ] ) );;
 gap> GroupOfUnits(S);
 fail
-gap> S:=Semigroup( Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
+gap> S := Semigroup( Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
 > Bipartition( [ [ 1, -1 ], [ 2, 3, -2, -3 ] ] ), 
 > Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] ), 
 > Bipartition( [ [ 1 ], [ 2, 3, -2 ], [ -1, -3 ] ] ) );;
@@ -526,7 +528,7 @@ gap> StructureDescription(GroupOfUnits(S));
       
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example><![CDATA[
-gap> S:=Semigroup( [ Transformation( [ 1, 1 ] ), 
+gap> S := Semigroup( [ Transformation( [ 1, 1 ] ), 
 >  Transformation( [ 2, 1 ] ), 
 > Transformation( [ 1, 2, 2 ] ), 
 >  Transformation( [ 1, 2, 3, 4, 5, 1 ] ), 
@@ -539,11 +541,11 @@ gap> S:=Semigroup( [ Transformation( [ 1, 1 ] ),
 >  Transformation( [ 7, 7, 7, 4, 5, 6, 1 ] ) ] );;
 gap> IdempotentGeneratedSubsemigroup(S);
 <transformation monoid on 8 pts with 18 generators>
-gap> S:=SymmetricInverseSemigroup(5);
+gap> S := SymmetricInverseSemigroup(5);
 <symmetric inverse semigroup on 5 pts>
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse partial perm monoid on 5 pts with 5 generators>
-gap> S:=DualSymmetricInverseSemigroup(5); 
+gap> S := DualSymmetricInverseSemigroup(5); 
 <inverse bipartition monoid on 5 pts with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse bipartition monoid on 5 pts with 10 generators>
@@ -595,33 +597,34 @@ true]]></Example>
     See also <Ref Attr="PrincipalFactor"/>.
     
     <Example><![CDATA[
-gap> S:=InverseSemigroup(
-> PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
-> PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
-> [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
-gap> f:=PartialPerm([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
-gap> d:=GreensDClassOfElement(S, f);
-{PartialPerm( [ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ] )}
-gap> InjectionPrincipalFactor(d);;
-gap> rms:=Range(last);
-<Rees 0-matrix semigroup 3x3 over Group(())>
-gap> MatrixOfReesZeroMatrixSemigroup(rms);
-[ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
-gap> Size(rms);
-10
-gap> Size(d);
-9
-gap> S:=Semigroup(
-> Bipartition( [ [ 1, 2, 3, -3, -5 ], [ 4 ], [ 5, -2 ], [ -1, -4 ] ] ), 
-> Bipartition( [ [ 1, 3, 5 ], [ 2, 4, -3 ], [ -1, -2, -4, -5 ] ] ), 
-> Bipartition( [ [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ], [ -3 ] ] ), 
-> Bipartition( [ [ 1, 5, -1, -2, -3 ], [ 2, 4, -4 ], [ 3, -5 ] ] ) );;
-gap> D:=DClasses(S)[3];
-{Bipartition( [ [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ], [ -3 ] ] )}
-gap> inj:=InjectionPrincipalFactor(D);
-MappingByFunction( {Bipartition( [ [ 1, 5, -2, -4 ], 
- [ 2, 3, 4, -1, -5 ], [ -3 ] ] )}, <Rees matrix semigroup 1x1 over 
-  Group([ (1,2) ])>, function( f ) ... end, function( x ) ... end )]]></Example>
+    gap> S := InverseSemigroup(
+    > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
+    > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
+    > [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+    gap> x := PartialPerm([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
+    gap> d := GreensDClassOfElement(S, x);
+    <Green's D-class: <identity partial perm on [ 1, 2, 5, 6, 7, 9 ]>>
+    gap> InjectionPrincipalFactor(d);;
+    gap> rms := Range(last);
+    <Rees 0-matrix semigroup 3x3 over Group(())>
+    gap> MatrixOfReesZeroMatrixSemigroup(rms);
+    [ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
+    gap> Size(rms);
+    10
+    gap> Size(d);
+    9
+    gap> S := Semigroup(
+    > Bipartition( [ [ 1, 2, 3, -3, -5 ], [ 4 ], [ 5, -2 ], [ -1, -4 ] ] ), 
+    > Bipartition( [ [ 1, 3, 5 ], [ 2, 4, -3 ], [ -1, -2, -4, -5 ] ] ), 
+    > Bipartition( [ [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ], [ -3 ] ] ), 
+    > Bipartition( [ [ 1, 5, -1, -2, -3 ], [ 2, 4, -4 ], [ 3, -5 ] ] ) );;
+    gap> D := DClasses(S)[3];
+    <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ]
+       , [ -3 ]>>
+    gap> inj := InjectionPrincipalFactor(D);
+    MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], 
+      [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over 
+      Group([ (1,2) ])>, function( f ) ... end, function( x ) ... end )]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -638,7 +641,7 @@ MappingByFunction( {Bipartition( [ [ 1, 5, -2, -4 ],
       <C>U</C> is generated by the other elements of <C>U</C>.<P/> 
 
       <Log><![CDATA[
-gap> S:=Semigroup( Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
+gap> S := Semigroup( Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
 > Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
 > Transformation( [ 4, 6, 3, 4, 2, 5 ] ),
 > Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
@@ -653,7 +656,7 @@ gap> IrredundantGeneratingSubset(S);
   Transformation( [ 5, 1, 4, 6, 2, 3 ] ), 
   Transformation( [ 5, 4, 6, 3, 1, 3 ] ), 
   Transformation( [ 6, 5, 1, 3, 3, 4 ] ) ]
-gap> S:=RandomInverseMonoid(1000,10);
+gap> S := RandomInverseMonoid(1000,10);
 <inverse partial perm monoid on 10 pts with 1000 generators>
 gap> SmallGeneratingSet(S);
 [ [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ], 
@@ -664,7 +667,7 @@ gap> IrredundantGeneratingSubset(last);
 [ [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ], 
   [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
   [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ] ]
-gap> S:=RandomBipartitionSemigroup(1000,4);
+gap> S := RandomBipartitionSemigroup(1000,4);
 <bipartition semigroup on 4 pts with 749 generators>
 gap> SmallGeneratingSet(S);
 [ <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]>, 
@@ -695,5 +698,47 @@ gap> IrredundantGeneratingSubset(last);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="UnderlyingSemigroupOfSemigroupWithAdjoinedZero">
+  <ManSection>
+    <Attr Name="UnderlyingSemigroupOfSemigroupWithAdjoinedZero" Arg="S"/>
+    <Returns>
+      A semigroup, or <K>fail</K>.
+    </Returns>
+    <Description>
+      If <A>S</A> is a semigroup for which the property <Ref
+        Prop="IsSemigroupWithAdjoinedZero"/> is true, (i.e. <A>S</A> has a
+      <Ref Attr="MultiplicativeZero"/> and the set <M><A>S</A> \setminus \{ 0
+        \}</M> is a subsemigroup of <A>S</A>), then this method returns the
+      semigroup <M><A>S</A> \setminus \{ 0 \}</M>. <P/>
+
+      Otherwise, if <A>S</A> is a semigroup for which the property <Ref
+        Prop="IsSemigroupWithAdjoinedZero"/> is <K>false</K>, then this method
+      returns <K>fail</K>.
+
+      <Example><![CDATA[
+gap> S := Semigroup( [
+> Transformation( [ 2, 3, 4, 5, 1, 6 ] ),
+> Transformation( [ 2, 1, 3, 4, 5, 6 ] ),
+> Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ] );
+<transformation semigroup on 6 pts with 3 generators>
+gap> MultiplicativeZero(S);
+Transformation( [ 6, 6, 6, 6, 6, 6 ] )
+gap> G := UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+<transformation semigroup on 5 pts with 2 generators>
+gap> IsGroupAsSemigroup(G);
+true
+gap> IsZeroGroup(S);
+true
+gap> S := SymmetricInverseMonoid(6);;
+gap> MultiplicativeZero(S);
+<empty partial perm>
+gap> G := UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail]]>
+</Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 
 #EOF

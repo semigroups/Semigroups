@@ -1,0 +1,91 @@
+<Chapter Label="Matrix semigroups">
+  <Heading>Matrix semigroups</Heading>
+
+  This chapter describes the functions in &Semigroups; for dealing with
+  matrix semigroups. This part of the manual and the functions described
+  herein were written by Markus Pfeiffer.<P/>
+
+  A <E>matrix semigroup</E> for the purposes of this document is a subsemigroup
+  of the full monoid of <M>n \times n</M> matrices over a <E>finite field</E>
+  <M>\mathbb{F}</M>.<P/>
+
+  More general matrix semigroups are planned, but not implemented yet.<P/>
+
+  &GAP; provides a way to define matrices which are in the
+  filter <Ref Filt="IsMatrix" BookName="ref"/>.
+  For technical reasons, the matrix semigroup functions in &Semigroups; rely
+  on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.<P/>
+  <Example><![CDATA[
+gap> x := Z(4) * [[1,0], [0,2]];
+[ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
+gap> IsMatrix(x);
+true
+gap> IsMatrixOverFiniteField(x);
+false
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);
+<matrix over GF(2^2) of degree 2>
+gap> IsMatrix(y);
+false
+gap> IsMatrixOverFiniteField(y);
+true]]></Example>
+   
+  In the following we will refer to matrices in <Ref Filt="IsMatrix" BookName="ref"/>
+  by <E>GAP library matrices</E> and to matrices in
+  <Ref Filt="IsMatrixOverFiniteField"/> by <E>matrices over finite fields</E>.
+  
+  We take precautions to hide this fact from the user of &Semigroups; and
+  also provide conversion functions between the two representations.
+ 
+<Section Label = "sect:Matrix semigroups">
+  <Heading>Creating matrix semigroups</Heading>
+
+  Random matrix semigroups can be created by using the functions
+  <Ref Func="RandomMatrixSemigroup"/> or <Ref Func="RandomMatrixMonoid"/>.
+  While this is convenient for testing and playing around, creating
+  semigroups from matrices can be a bit more work.
+
+  We provide a couple of convenience functions to streamline the process.
+
+  <#Include Label="IsMatrixSemigroup"/>
+  <#Include Label="MatrixSemigroup"/>
+
+  In addition to the above, <Ref Attr="IsomorphismMatrixSemigroup"/> and
+  <Ref Oper="AsMatrixSemigroup"/> can be used to create a matrix semigroup
+  isomorphic to an already known semigroup.
+</Section>
+
+<Section Label="sect:Semigroups matrix objects">
+  <Heading>Matrices in the &Semigroups; package</Heading>
+
+  The matrix functions in the &Semigroups; package use a wrapper
+  object for matrices. In the following these objects are documented.
+
+  <#Include Label="IsMatrixOverFiniteField"/>
+  <#Include Label="IsMatrixOverFiniteFieldCollection"/>
+  <#Include Label="NewMatrixOverFiniteField"/>
+  <#Include Label="NewIdentityMatrixOverFiniteField"/>
+  <#Include Label="RowSpaceBasis"/>
+  <#Include Label="RowRank"/>
+  <#Include Label="RightInverse"/>
+  <#Include Label="DegreeOfMatrixOverFiniteField"/>
+  <#Include Label="BaseDomain"/>
+  <#Include Label="TransposedMatImmutable"/>
+  <#Include Label="AsMatrix"/>
+  <#Include Label="ConstructingFilter"/>
+
+</Section>
+
+<Section Label = "sect:Semigroups matrix groups">
+  <Heading>Matrix groups in the &Semigroups; package</Heading>
+  
+  For interfacing the semigroups code with &GAP;s library code for
+  matrix groups, the &Semigroups; package implements matrix groups
+  that delegate to the &GAP; library.
+
+  <#Include Label="IsMatrixOverFiniteFieldGroup"/>
+  <#Include Label="MatrixGroupOperation"/>
+  <#Include Label="IsomorphismMatrixGroup"/>
+  <#Include Label="AsMatrixGroup"/>
+</Section>
+
+</Chapter>

@@ -26,5 +26,5 @@ DeclareGlobalFunction("SEMIGROUPS_InverseCongFromPairs");
 
 # Congruence Classes
 DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
-                IsEquivalenceClass and IsAttributeStoringRep and
+                IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);

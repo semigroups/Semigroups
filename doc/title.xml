@@ -1,6 +1,5 @@
 <TitlePage>
   <Title>&Semigroups;</Title>
-  <Subtitle>Method for semigroups</Subtitle>
   <Version>Version &VERSION;</Version>
 
   <Author>J. D. Mitchell
@@ -18,11 +17,11 @@
   <Author>Michael Torpey</Author>
   <Author>Wilf Wilson</Author>
 
-  <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell.<P/>
+  <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell et al.<P/>
     &Semigroups; is free software; you can redistribute it and/or modify it
     under the terms of the <URL Text="GNU General Public License">
     http://www.fsf.org/licenses/gpl.html</URL> as published by the Free Software
-    Foundation; either version 2 of the License, or (at your option) any later
+    Foundation; either version 3 of the License, or (at your option) any later
     version.
   </Copyright>
 
@@ -30,18 +29,19 @@
     The &Semigroups; package is a &GAP; package containing methods for
     semigroups, monoids, and inverse semigroups, principally of
     transformations, partial permutations, bipartitions, subsemigroups of
-    regular Rees 0-matrix semigroups, and the free inverse semigroup. 
+    regular Rees 0-matrix semigroups, free inverse semigroups, free bands, and
+    semigroups of matrices over finite fields. 
     <P/>
     
     &Semigroups; contains more efficient methods than those available in the
-    &GAP; library (and in many cases more efficient than any other software) for
-    creating semigroups, monoids, and inverse semigroup, calculating their
+    &GAP; library (and in many cases more efficient than any other software)
+    for creating semigroups, monoids, and inverse semigroup, calculating their
     Green's structure, ideals, size, elements, group of units, small generating
     sets, testing membership, finding the inverses of a regular element,
-    factorizing elements over the generators, and many more. It is also possible
-    to test if a semigroup satisfies a particular property, such as if it is
-    regular, simple, inverse, completely regular, and a variety of further
-    properties.
+    factorizing elements over the generators, and many more. It is also
+    possible to test if a semigroup satisfies a particular property, such as if
+    it is regular, simple, inverse, completely regular, and a variety of
+    further properties.
     <P/>
     
     There are methods for finding congruences of certain types of semigroups,
@@ -57,33 +57,45 @@
     Neubueser, M. R. Quick, E. F. Robertson, and N. Ruskuc for their help and
     suggestions.  Special thanks go to J. Araujo for his mathematical
     suggestions and to M. Neunhoeffer for his invaluable help in improving the
-    efficiency of the package. <P/>
+    efficiency of the package. 
+    <P/>
 
     Manuel Delgado and Attila Egri-Nagy contributed to the functions
-    <Ref Func="Splash"/> and <Ref Oper="DotDClasses"/>.<P/>
+    <Ref Func="Splash"/> and <Ref Oper="DotDClasses"/>.
+    <P/>
       
     James East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of
     the package relating to bipartitions. I would like to thank the University
     of Western Sydney for their support of the development of this part of the
-    package. <P/>
+    package.
+    <P/>
     
     Julius Jonu&#353;as contributed the part of the package relating to free
-    inverse semigroups, and contributed to the code for ideals.<P/>
+    inverse semigroups, and contributed to the code for ideals.
+    <P/>
     
     Yann Peresse and Yanhui Wang contributed to the function <Ref
-      Oper="MunnSemigroup"/>.<P/>
+      Oper="MunnSemigroup"/>.
+    <P/>
 
     Jhevon Smith and Ben Steinberg contributed the function 
-    <Ref Attr="CharacterTableOfInverseSemigroup"/>.<P/>
+    <Ref Attr="CharacterTableOfInverseSemigroup"/>.
+    <P/>
 
     Michael Torpey contributed the part of the package relating to congruences
-    of Rees (0-)matrix semigroups.<P/>
+    of Rees (0-)matrix semigroups.
+    <P/>
 
     Wilf Wilson contributed to the part of the package relating maximal
     subsemigroups and smaller degree partial permutation representations of
     inverse semigroups. We are also grateful to C. Donoven and R. Hancock for
     their contribution to the development of the algorithms for maximal
-    subsemigroups and smaller degree partial permutation representations.<P/>
+    subsemigroups and smaller degree partial permutation representations.
+    <P/>
+
+    Markus Pfeiffer contributed the majority of the code relating to
+    semigroups of matrices over finite fields.
+    <P/>
 
     We would also like to acknowledge the support of the Centre of Algebra at
     the University of Lisbon, and of EPSRC grant number GR/S/56085/01.    

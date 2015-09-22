@@ -336,15 +336,16 @@ function(L)
   local D, S, rep, m, o, pos, x, conj;
 
   D := DClassOfLClass(L);
-  if IsRegularClass(L) or Length(RhoCosets(D)) = 1 then
-    #maybe <L> is regular and doesn't know it!
-    return [()];
-  fi;
-
   S := Parent(L);
-  rep := Representative(L);
   o := LambdaOrb(D);
   m := LambdaOrbSCCIndex(D);
+
+  if IsRegularClass(L) or Length(RhoCosets(D)) = 1 then
+    #maybe <L> is regular and doesn't know it!
+    return [LambdaIdentity(S)(LambdaRank(S)(o[OrbSCC(o)[m][1]]))];
+  fi;
+
+  rep := Representative(L);
   pos := Position(o, LambdaFunc(S)(rep));
 
   if pos = OrbSCC(o)[m][1] then
@@ -377,7 +378,12 @@ function(L)
       NrMovedPoints(G) = ActionRank(Parent(L))(Representative(L)) then
     return true;
   fi;
-  return StabChainImmutable(G);
+
+  if IsPermGroup(G) then
+    return StabChainImmutable(G);
+  else # if IsMatrixGroup(g)
+    return G;
+  fi;
 end);
 
 #
@@ -423,7 +429,12 @@ function(D)
   p := LambdaConjugator(Parent(D))(RhoOrbRep(o, m), Representative(D));
   rho_schutz := rho_schutz ^ p;
 
-  SetRhoOrbStabChain(D, StabChainImmutable(rho_schutz));
+  # FIXME should make the following case distinction unnecessary
+  if IsPermGroup(rho_schutz) then
+    SetRhoOrbStabChain(D, StabChainImmutable(rho_schutz));
+  else # if IsMatrixGroup(g)
+    SetRhoOrbStabChain(D, rho_schutz);
+  fi;
 
   if lambda_stab = false then
     SetRhoCosets(D, Enumerator(rho_schutz));
@@ -966,7 +977,7 @@ H -> Size(SchutzenbergerGroup(H)));
 InstallMethod(\in, "for associative element and D-class of acting semigroup",
 [IsAssociativeElement, IsGreensDClass and IsActingSemigroupGreensClass],
 function(x, D)
-  local S, rep, m, o, scc, l, schutz, cosets, p;
+  local S, rep, o, m, scc, l, schutz, cosets, membership, one, p;
 
   S := Parent(D);
   rep := Representative(D);
@@ -1006,16 +1017,18 @@ function(x, D)
 
   cosets := LambdaCosets(D);
   x := LambdaPerm(S)(rep, x);
+  membership := SchutzGpMembership(S);
+  one := LambdaIdentity(S)(ActionRank(S)(rep));
 
   if schutz <> false then
     for p in cosets do
-      if SiftedPermutation(schutz, x / p) = () then
+      if membership(schutz, x / p) then
         return true;
       fi;
     od;
   else
     for p in cosets do
-      if x / p = () then
+      if x / p = one then
         return true;
       fi;
     od;
@@ -1062,7 +1075,7 @@ function(x, L)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
+  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
 
 # same method for regular/inverse/ideals
@@ -1103,7 +1116,7 @@ function(x, R)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
+  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
 
 # same method for regular/inverse/ideals
@@ -1513,32 +1526,44 @@ end);
 InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
+  local iso, inv;
 
   if not IsGroupHClass(H) then
     Error("Semigroups: IsomorphismPermGroup: usage,\n",
           "the H-class is not a group,");
     return;
   fi;
-  # gaplint: ignore 3
-  return MappingByFunction(H, SchutzenbergerGroup(H),
-   x -> LambdaPerm(Parent(H))(Representative(H), x),
-   x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
+
+  if IsMatrixSemigroupGreensClass(H) then
+    iso := IsomorphismPermGroup(SchutzenbergerGroup(H));
+    inv := InverseGeneralMapping(iso);
+    # gaplint: ignore 3
+    return MappingByFunction(H, Range(iso),
+     x -> LambdaPerm(Parent(H))(Representative(H), x) ^ iso,
+     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
+                                      x ^ inv));
+  else
+    # gaplint: ignore 3
+    return MappingByFunction(H, SchutzenbergerGroup(H),
+     x -> LambdaPerm(Parent(H))(Representative(H), x),
+     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
+  fi;
 end);
 
 # different method for regular/inverse/ideals
 
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
-function(s)
+function(S)
   local d, n, out, data, gens, graph, lambdarhoht, datalookup, reps, repslens,
   ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup,
-  schutz, mults, f, l, m, val, j, i, x, k;
+  schutz, mults, f, l, m, val, j, i, k, x;
 
-  d := GreensDClasses(s);
+  d := GreensDClasses(S);
   n := Length(d);
   out := List([1 .. n], x -> []);
 
-  data := SemigroupData(s);
+  data := SemigroupData(S);
   gens := data!.gens;
   graph := data!.graph;
   lambdarhoht := data!.lambdarhoht;
@@ -1548,12 +1573,12 @@ function(s)
   ht := data!.ht;
   repslookup := data!.repslookup;
 
-  lambdafunc := LambdaFunc(s);
-  rhofunc := RhoFunc(s);
-  lambdaperm := LambdaPerm(s);
+  lambdafunc := LambdaFunc(S);
+  rhofunc := RhoFunc(S);
+  lambdaperm := LambdaPerm(S);
 
-  o := LambdaOrb(s);
-  orho := RhoOrb(s);
+  o := LambdaOrb(S);
+  orho := RhoOrb(S);
   scc := OrbSCC(o);
   lookup := OrbSCCLookup(o);
   schutz := o!.schutzstab;
@@ -1590,8 +1615,8 @@ function(s)
             j := 0;
             repeat
               n := n + 1;
-              if SiftedPermutation(schutz[m],
-                                   lambdaperm(reps[m][val][n], f)) = () then
+              if SchutzGpMembership(S)(schutz[m],
+                                       lambdaperm(reps[m][val][n], f)) then
                 j := repslookup[m][val][n];
               fi;
             until j <> 0;
@@ -1950,8 +1975,9 @@ function(x, value, scc, o, onright)
   fi;
 
   # is x the group of units...
-  if IsActingSemigroupWithFixedDegreeMultiplication(S) and
-    ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+  if IsActingSemigroupWithFixedDegreeMultiplication(S)
+      and ActionRank(S)(Representative(x))
+      = ActionDegree(Representative(x)) then
     return true;
   fi;
 

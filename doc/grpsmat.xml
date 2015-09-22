@@ -1,0 +1,108 @@
+#############################################################################
+##
+#W  grpsmat.xml
+#Y  Copyright (C) 2015                                    Markus Pfeiffer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsMatrixOverFiniteFieldGroup">
+<ManSection>
+  <Prop Name="IsMatrixOverFiniteFieldGroup" Arg="G"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    A <E>matrix group</E> is simply a group of invertible matrices over a
+    finite field. An object in &Semigroups; is a matrix group if
+    it satisfies <Ref Prop="IsGroup" BookName="ref"/> and 
+    <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);
+<matrix over GF(2^2) of degree 3>
+gap> G := Group(x);
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+gap> IsMatrixOverFiniteFieldGroup(G);
+true
+gap> G := Group(Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);
+Group([ <an immutable 3x3 matrix over GF2> ])
+gap> IsGroup(G);
+true
+gap> IsMatrixOverFiniteFieldGroup(G);
+false]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MatrixGroupOperation">
+<ManSection>
+  <Oper Name="\^" Arg="G, mat" 
+    Label="for an matrix over finite field group and matrix over finite field"/>
+  <Returns>A matrix group over a finite field.</Returns>
+  <Description>
+    The arguments  of this operation, <A>G</A> and <A>mat</A>,  must be
+    categories <Ref Filt = "IsMatrixOverFiniteFieldGroup"/> and <Ref Filt =
+      "IsMatrixOverFiniteField"/>. If <A>G</A> consists of <C>d</C> by <C>d</C>
+    matrices over <C>GF(q)</C> and <A>mat</A> is a <C>d</C> by <C>d</C> matrix
+    over <C>GF(q)</C>, then <C><A>G</A> ^ <A>mat</A></C> returns the conjugate
+    of <A>G</A> by <A>mat</A> inside <C>GL(d, q)</C>.
+
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4) ^ 0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]] );;
+gap> G := Group(x);
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+gap> G ^ y;
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismMatrixGroup">
+<ManSection>
+  <Attr Name="IsomorphismMatrixGroup" Arg="G"/>
+  <Returns>An isomorphism.</Returns>
+  <Description>
+    If <A>G</A> belongs to the category <Ref Prop =
+      "IsMatrixOverFiniteFieldGroup"/>, then <C>IsomorphismMatrixGroup</C> 
+    returns an isomorphism from <A>G</A> into a group consisting of &GAP;
+    library matrices.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;
+gap> G := Group(x);;
+gap> iso := IsomorphismMatrixGroup(G);;
+gap> Source(iso); Range(iso);
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+Group(
+[ 
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsMatrixGroup">
+<ManSection>
+  <Attr Name="AsMatrixGroup" Arg="G"/>
+  <Returns>A group of &GAP; library matrices over a finite field.</Returns>
+  <Description>
+    Returns the image of the isomorphism returned by <Ref
+      Label="IsomorphismMatrixGroup"/>.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;
+gap> G := Group(x);
+<group of 3x3 matrices over GF(2^2) with 1 generator>
+gap> AsMatrixGroup(G);
+Group(
+[ 
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

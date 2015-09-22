@@ -378,7 +378,7 @@ function(s, n, colBlocks, rowBlocks)
         for u in [1 .. Size(mat)] do
           for v in [u + 1 .. Size(mat)] do
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-             in n then
+                in n then
               return false;
             fi;
           od;
@@ -398,7 +398,7 @@ function(s, n, colBlocks, rowBlocks)
         for i in [1 .. Size(mat[1])] do
           for j in [i + 1 .. Size(mat[1])] do
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-            in n then
+                in n then
               return false;
             fi;
           od;
@@ -451,7 +451,7 @@ function(s, n, colBlocks, rowBlocks)
               continue;
             fi;
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-             in n then
+                in n then
               return false;
             fi;
           od;
@@ -481,11 +481,11 @@ function(s, n, colBlocks, rowBlocks)
             continue;
           fi;
           for j in [i + 1 .. Size(mat[1])] do
-          if mat[u][j] = 0 then
-          continue;
-          fi;
+            if mat[u][j] = 0 then
+              continue;
+            fi;
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-            in n then
+                in n then
               return false;
             fi;
           od;
@@ -1651,13 +1651,13 @@ function(cong)
 
     # Does this relate any non-zero elements to zero?
     if pair[1] = MultiplicativeZero(s)
-       or pair[2] = MultiplicativeZero(s)
-       or ForAny([1 .. Size(mat)],
-                 u -> (mat[u][pair[1][1]] = 0)
-                 <>   (mat[u][pair[2][1]] = 0))
-       or ForAny([1 .. Size(mat[1])],
-                 i -> (mat[pair[1][3]][i] = 0)
-                 <>   (mat[pair[2][3]][i] = 0)) then
+         or pair[2] = MultiplicativeZero(s)
+         or ForAny([1 .. Size(mat)],
+                   u -> (mat[u][pair[1][1]] = 0)
+                   <>   (mat[u][pair[2][1]] = 0))
+         or ForAny([1 .. Size(mat[1])],
+                   i -> (mat[pair[1][3]][i] = 0)
+                   <>   (mat[pair[2][3]][i] = 0)) then
       return UniversalSemigroupCongruence(s);
     fi;
 

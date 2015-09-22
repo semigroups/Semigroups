@@ -171,7 +171,7 @@ gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or IsLTrivial(d);
 gap> d;
-{Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )}
+<Green's D-class: Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )>
 gap> IsLTrivial(d);
 true
 gap> IsRTrivial(d);
@@ -896,6 +896,22 @@ false
 gap> I := SemigroupIdeal(s, MultiplicativeZero(s));
 <Rees 0-matrix semigroup ideal with 1 generator>
 gap> IsZeroSemigroup(I);
+true
+
+#T# PropertiesTest58: IsSemigroupWithAdjoinedZero
+gap> S := SymmetricInverseMonoid(10);;
+gap> IsSemigroupWithAdjoinedZero(S);
+false
+gap> S := FullTransformationMonoid(12);;
+gap> IsSemigroupWithAdjoinedZero(S);
+false
+gap> S := ReesMatrixSemigroup(SymmetricGroup(4), [[(1,3,2), (4,2)]]);
+<Rees matrix semigroup 2x1 over Sym( [ 1 .. 4 ] )>
+gap> IsSemigroupWithAdjoinedZero(S);
+false
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(4), [[(1,3,2), (4,2)]]);
+<Rees 0-matrix semigroup 2x1 over Sym( [ 1 .. 4 ] )>
+gap> IsSemigroupWithAdjoinedZero(S);
 true
 
 #T# SEMIGROUPS_UnbindVariables

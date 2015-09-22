@@ -8,9 +8,6 @@
 #############################################################################
 ##
 
-DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
-DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
-
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
 DeclareProperty("IsBlockGroup", IsSemigroup);
@@ -36,6 +33,7 @@ DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
+DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 
 InstallTrueMethod(IsActingSemigroupWithInverseOp,
                   IsInverseSemigroup and IsRegularStarSemigroup and
@@ -72,3 +70,4 @@ InstallTrueMethod(IsTrivial,
                   IsLeftZeroSemigroup and IsRightZeroSemigroup);
 InstallTrueMethod(IsBand, IsRectangularBand);
 InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
+InstallTrueMethod(IsSemigroupWithAdjoinedZero, IsSemigroup and IsZeroGroup);

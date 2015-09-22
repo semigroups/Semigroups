@@ -2318,22 +2318,22 @@ false
 
 #T# ExamplesTest32: ZeroSemigroup
 gap> s := ZeroSemigroup(0);
-Error, Semigroups: ZeroSemigroup: usage:
+Error, Semigroups: ZeroSemigroup: usage,
 the argument <n> must be a positive integer,
 gap> s := ZeroSemigroup(IsPartialPermSemigroup, 0);
-Error, Semigroups: ZeroSemigroup: usage:
+Error, Semigroups: ZeroSemigroup: usage,
 the argument <n> must be a positive integer,
 gap> s := ZeroSemigroup(0, 1);
-Error, Semigroups: ZeroSemigroup: usage:
+Error, Semigroups: ZeroSemigroup: usage,
 the optional first argument <filter> must be a filter,
 gap> s := ZeroSemigroup(0, 0);
-Error, Semigroups: ZeroSemigroup: usage:
+Error, Semigroups: ZeroSemigroup: usage,
 the optional first argument <filter> must be a filter,
 gap> s := ZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `ZeroSemigroupCons' on 2 arguments
 gap> s := ZeroSemigroup(IsPartialPermSemigroup, 2, true);
-Error, Semigroups: ZeroSemigroup: usage:
+Error, Semigroups: ZeroSemigroup: usage,
 this function takes at most two arguments,
 
 # IsTransformationSemigroup
@@ -2376,11 +2376,11 @@ gap> Elements(s);
 
 # IsReesZeroMatrixSemigroup
 gap> s := ZeroSemigroup(IsReesZeroMatrixSemigroup, 1);
-Error, Semigroups: ZeroSemigroup: usage:
-there is no Rees 0-matrix semigroup of order 1,
+Error, Semigroups: ZeroSemigroup: usage,
+there is no Rees 0-matrix semigroup with only 1 element,
 gap> s := ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 1);
-Error, Semigroups: ZeroSemigroupCons: usage:
-there is no Rees 0-matrix semigroup of order 1,
+Error, Semigroups: ZeroSemigroupCons: usage,
+there is no Rees 0-matrix semigroup with only 1 element,
 gap> s := Semigroup(ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 2));;
 gap> IsReesZeroMatrixSemigroup(s);
 true
@@ -2616,11 +2616,25 @@ false
 
 #T# ExamplesTest33: MonogenicSemigroup
 gap> s := MonogenicSemigroup(0, 1);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `MonogenicSemigroup' on 2 arguments
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments <m> and <r> must be positive integers,
 gap> s := MonogenicSemigroup(1, 0);
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments <m> and <r> must be positive integers,
+gap> s := MonogenicSemigroup(1, 1, 1);
+Error, Semigroups: MonogenicSemigroup: usage,
+the optional first argument <filter> must be a filter,
+gap> s := MonogenicSemigroup(IsPermGroup, 1, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `MonogenicSemigroup' on 2 arguments
+Error, no 1st choice method found for `MonogenicSemigroupCons' on 3 arguments
+gap> s := MonogenicSemigroup(IsTransformationSemigroup, 1, 1);
+<trivial transformation group>
+gap> s := MonogenicSemigroup(1, 1, 1, 1);
+Error, Semigroups: MonogenicSemigroup: usage,
+this function takes either two or three arguments,
+gap> s := MonogenicSemigroup(1);
+Error, Semigroups: MonogenicSemigroup: usage,
+this function takes either two or three arguments,
 
 # Trivial monogenic semigroup
 gap> s := MonogenicSemigroup(1, 1);
@@ -2892,13 +2906,70 @@ gap> GeneratorsOfSemigroup(s);
 gap> IndexPeriodOfTransformation(last[1]);
 [ 5, 10 ]
 
+# Other categories of semigroup
+
+# partial perm
+gap> s := MonogenicSemigroup(IsPartialPermSemigroup, 1, 1);
+<trivial partial perm group on 0 pts with 0 generators>
+gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
+> AsTransformationSemigroup(s))[1]);
+[ 1, 1 ]
+gap> s := MonogenicSemigroup(IsPartialPermSemigroup, 2, 1);
+<commutative partial perm semigroup of size 2, on 1 pts with 1 generator>
+gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
+> AsTransformationSemigroup(s))[1]);
+[ 2, 1 ]
+gap> s := MonogenicSemigroup(IsPartialPermSemigroup, 2, 2);
+<commutative partial perm semigroup of size 3, on 3 pts with 1 generator>
+gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
+> AsTransformationSemigroup(s))[1]);
+[ 2, 2 ]
+
+# bipartition and block bijection
+gap> s := MonogenicSemigroup(IsBipartitionSemigroup, 1, 1);
+<trivial bipartition monoid on 1 pts with 0 generators>
+gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
+> AsTransformationSemigroup(s))[1]);
+[ 1, 1 ]
+gap> s := MonogenicSemigroup(IsBlockBijectionSemigroup, 2, 1);
+<commutative non-regular bipartition semigroup of size 2, 
+ on 3 pts with 1 generator>
+gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
+> AsTransformationSemigroup(s))[1]);
+[ 2, 1 ]
+gap> s := MonogenicSemigroup(IsBlockBijectionSemigroup, 2, 2);
+<commutative non-regular bipartition semigroup of size 3, 
+ on 5 pts with 1 generator>
+gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
+> AsTransformationSemigroup(s))[1]);
+[ 2, 2 ]
+gap> s := MonogenicSemigroup(IsBlockBijectionSemigroup, 5, 6);
+<commutative non-regular bipartition semigroup of size 10, 
+ on 12 pts with 1 generator>
+gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
+> AsTransformationSemigroup(s))[1]);
+[ 5, 6 ]
+
 #T# ExamplesTest34: RectangularBand
 gap> s := RectangularBand(0, 1);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RectangularBand' on 2 arguments
+Error, Semigroups: RectangularBand: usage,
+the arguments <m> and <n> must be positive integers,
 gap> s := RectangularBand(1, 0);
+Error, Semigroups: RectangularBand: usage,
+the arguments <m> and <n> must be positive integers,
+gap> s := RectangularBand(1);
+Error, Semigroups: RectangularBand: usage,
+this function takes either two or three arguments,
+gap> s := RectangularBand(1, 1, 1, 1);
+Error, Semigroups: RectangularBand: usage,
+this function takes either two or three arguments,
+gap> s := RectangularBand(1, 1, 1);
+Error, Semigroups: RectangularBand: usage,
+the optional first argument <filter> must be a filter,
+gap> s := RectangularBand(IsPermGroup, 1, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RectangularBand' on 2 arguments
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+gap> s := RectangularBand(IsReesMatrixSemigroup, 1, 1);;
 
 # Trivial rectangular band
 gap> s := RectangularBand(1, 1);
@@ -3187,6 +3258,104 @@ gap> IsLeftZeroSemigroup(s);
 false
 gap> IsRightZeroSemigroup(s);
 false
+
+# Other categories of semigroup
+
+# transformation semigroup
+gap> s := RectangularBand(IsTransformationSemigroup, 1, 1);
+<trivial transformation group>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [1, 1];
+true
+gap> s := RectangularBand(IsTransformationSemigroup, 10, 10);
+<transformation semigroup of size 100, on 101 pts with 10 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [10, 10];
+true
+gap> s := RectangularBand(IsTransformationSemigroup, 1, 12);
+<transformation semigroup of size 12, on 12 pts with 12 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [1, 12];
+true
+gap> s := RectangularBand(IsTransformationSemigroup, 10, 20);
+<transformation semigroup of size 200, on 201 pts with 20 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [10, 20];
+true
+gap> s := RectangularBand(IsTransformationSemigroup, 20, 10);
+<transformation semigroup of size 200, on 201 pts with 20 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [20, 10];
+true
+
+# bipartition
+gap> s := RectangularBand(IsBipartitionSemigroup, 1, 1);
+<trivial bipartition group on 1 pts with 1 generator>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [1, 1];
+true
+gap> s := RectangularBand(IsBipartitionSemigroup, 10, 10);
+<bipartition semigroup of size 100, on 4 pts with 10 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [10, 10];
+true
+gap> s := RectangularBand(IsBipartitionSemigroup, 1, 12);
+<bipartition semigroup of size 12, on 4 pts with 12 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [1, 12];
+true
+gap> s := RectangularBand(IsBipartitionSemigroup, 10, 20);
+<bipartition semigroup of size 200, on 5 pts with 20 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [10, 20];
+true
+gap> s := RectangularBand(IsBipartitionSemigroup, 20, 10);
+<bipartition semigroup of size 200, on 5 pts with 20 generators>
+gap> IsHTrivial(s) and IsSimpleSemigroup(s);
+true
+gap> [NrRClasses(s), NrLClasses(s)] = [20, 10];
+true
+
+#T# ExamplesTest35: LeftZeroSemigroup
+gap> s := LeftZeroSemigroup(0);
+Error, Semigroups: LeftZeroSemigroup: usage,
+the argument <n> must be positive a integer,
+gap> s := LeftZeroSemigroup(1, 1);
+Error, Semigroups: LeftZeroSemigroup: usage,
+the optional first argument <filter> must be a filter,
+gap> s := LeftZeroSemigroup(IsPermGroup, 1);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+gap> s := LeftZeroSemigroup(IsTransformationSemigroup, 1);
+<trivial transformation group>
+gap> s := LeftZeroSemigroup(1, 1, 1);
+Error, Semigroups: LeftZeroSemigroup: usage,
+this function takes at most two arguments,
+
+#T# ExamplesTest36: RightZeroSemigroup
+gap> s := RightZeroSemigroup(0);
+Error, Semigroups: RightZeroSemigroup: usage,
+the argument <n> must be positive a integer,
+gap> s := RightZeroSemigroup(1, 1);
+Error, Semigroups: RightZeroSemigroup: usage,
+the optional first argument <filter> must be a filter,
+gap> s := RightZeroSemigroup(IsPermGroup, 1);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+gap> s := RightZeroSemigroup(IsTransformationSemigroup, 1);
+<trivial transformation group>
+gap> s := RightZeroSemigroup(1, 1, 1);
+Error, Semigroups: RightZeroSemigroup: usage,
+this function takes at most two arguments,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);

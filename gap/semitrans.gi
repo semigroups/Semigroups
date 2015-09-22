@@ -192,7 +192,7 @@ function(S)
   return Maximum(List(RClasses(S), SEMIGROUPS_LargestElementRClass));
 end);
 
-# different method required (but not yet given!! JDM) for ideals
+# different method required (but not yet given!! JDM FIXME) for ideals
 
 InstallMethod(IsTransitive,
 "for a transformation semigroup with generators",
@@ -719,4 +719,64 @@ function(filter, n)
   out := Semigroup(gens);
   SetMultiplicativeZero(out, zero);
   return out;
+end);
+
+#
+
+InstallMethod(MonogenicSemigroupCons,
+"for a filter and a positive integer and positive integer",
+[IsTransformationSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, r)
+  local t;
+
+  t := [1 .. r] + 1;
+  t[r] := 1;
+
+  if not m = 1 then # m = 1 specifies a cyclic group
+    Append(t, [1 .. m] + r - 1);
+  fi;
+
+  return Semigroup(Transformation(t));
+end);
+
+#
+
+InstallMethod(RectangularBandCons,
+"for a filter and a positive integer and positive integer",
+[IsTransformationSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, n)
+  local max, min, out, basic, im, i, j;
+
+  max := Maximum(m, n);
+  min := Minimum(m, n);
+  out := EmptyPlist(max);
+
+  basic := EmptyPlist(m * n + 1);
+  for i in [0 .. m - 1] do
+    for j in [1 .. n] do
+      basic[n * i + j] := n * i + 1;
+    od;
+  od;
+
+  if m = 1 then
+    for i in [0 .. n - 1] do
+      Add(out, Transformation(basic + i));
+    od;
+    return Semigroup(out);
+  fi;
+
+  for i in [0 .. min - 1] do
+    im := Concatenation(basic + i, [i * (n + 1) + 1]);
+    Add(out, Transformation(im));
+  od;
+
+  for i in [min .. m - 1] do
+    Add(out, Transformation(Concatenation(basic, [i * n + 1])));
+  od;
+
+  for i in [min .. n - 1] do
+    Add(out, Transformation(Concatenation(basic + i, [i + 1])));
+  od;
+
+  return Semigroup(out);
 end);

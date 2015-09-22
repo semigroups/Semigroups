@@ -1,4 +1,6 @@
 syntax: glob
+.hgcheck/*
+tags
 *.orig
 *.DS_Store
 *.swp
@@ -104,3 +106,8 @@ src/.libs/semigroups_la-boolean.o
 src/.libs/semigroups_la-converter.o
 src/.libs/semigroups_la-interface.o
 src/.libs/semigroups_la-types.o
+*.lo
+src/.deps
+src/semigroups++/.deps
+*.o
+.dirstamp

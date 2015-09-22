@@ -1,0 +1,248 @@
+#############################################################################
+##
+#W  matrix.xml
+#Y  Copyright (C) 2014-2015           
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+
+<#GAPDoc Label="IsMatrixOverFiniteFieldCollection">
+  <ManSection>
+    <Filt Name="IsMatrixOverFiniteFieldCollection" Arg="obj" Type="Category"/>
+      <Returns><K>true</K> or <K>false</K>.</Returns>
+      <Description>
+        Every collection of matrices in the category 
+        <Ref Filt="IsMatrixOverFiniteField"/> belongs to the category
+        <C>IsMatrixOverFiniteFieldCollection</C>. For example, matrix semigroup
+        belong to <C>IsMatrixOverFiniteFieldCollection</C>.
+      </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsMatrixOverFiniteField">
+  <ManSection>
+    <Filt Name="IsMatrixOverFiniteField" Arg="obj" Type="Category"/>
+      <Returns><K>true</K> or <K>false</K>.</Returns>
+      <Description>
+        This category contains &Semigroups; matrix object wrapper. The
+        introduction of this filter was necessary to get around &GAP;
+        limitations with regards to matrices and associative objects.<P/>
+
+        The behaviour of this object type might be changed or removed
+        completely from the package in the future.
+
+        <Example><![CDATA[
+gap> x := Z(4) * [[1,0], [0,2]];
+[ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
+gap> IsMatrixOverFiniteField(x);
+false
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);
+<matrix over GF(2^2) of degree 2>
+gap> IsMatrixOverFiniteField(y);
+true
+]]></Example>
+      </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NewMatrixOverFiniteField">
+<ManSection>
+  <Oper Name="NewMatrixOverFiniteField" Arg="filt, F, n, rows" 
+    Label="for a filter, a field, an integer, and a list"/>
+  <Returns>a new matrix object.</Returns>
+  <Description>
+    Creates a new <A>n</A>-by-<A>n</A> matrix over the finite field <A>F</A>
+    with constructing filter <A>filt</A>.
+
+    The matrix itself is given by a list <A>rows</A> of rows.
+
+	Currently the only possible value for <A>filt</A> is
+    <C>IsPlistMatrixOverFiniteFieldRep</C>.
+        <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2,
+> Z(4)*[[1,0],[0,1]]);
+<matrix over GF(2^2) of degree 2>
+gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, []);
+<matrix over GF(2^2) of degree 0>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NewIdentityMatrixOverFiniteField">
+<ManSection>
+  <Oper Name="NewIdentityMatrixOverFiniteField" Arg="filt, F, n"/>
+  <Oper Name="NewZeroMatrixOverFiniteField" Arg="filt, F, n"/>
+  <Description>
+    Creates a new <A>n</A>-by-<A>n</A> zero or identity matrix with entries
+    in the finite field <A>F</A>.
+        <Example><![CDATA[
+gap> x := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+>                                          GF(4), 2);
+<matrix over GF(2^2) of degree 2>
+gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+>                                      GF(4), 2);
+<matrix over GF(2^2) of degree 2>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RowSpaceBasis">
+<ManSection>
+  <Attr Name="RowSpaceBasis" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="RowSpaceTransformation" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="RowSpaceTransformationInv" Arg="m" Label="for a matrix over finite field"/>
+  <Description>
+  To compute the value of any of the above attributes, a
+  canonical basis for the row space of <A>m</A> is computed
+  along with an invertible matrix <C>RowSpaceTransformation</C> such that
+  <C>m * RowSpaceTransformation(m) = RowSpaceBasis(m)</C>.
+  <C>RowSpaceTransformationInv(m)</C> is the inverse of <C>RowSpaceTransformation(m)</C>.
+        <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,1,1], [1,1,1]] );
+<matrix over GF(2^2) of degree 3>
+gap> RowSpaceBasis(x);
+<rowbasis of rank 3 over GF(2^2)>
+gap> RowSpaceTransformation(x);
+[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
+  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RightInverse">
+<ManSection>
+  <Attr Name="RightInverse" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="LeftInverse" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>A matrix over a finite field.</Returns>
+  <Description>
+  These attributes contain a semigroup left-inverse, and a semigroup right-inverse
+  of the matrix <A>m</A> respectively.
+        <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(2^2) of degree 3>
+gap> LeftInverse(x);
+<matrix over GF(2^2) of degree 3>
+gap> Display(LeftInverse(x) * x);
+<matrix over GF(2^2) of degree 3
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DegreeOfMatrixOverFiniteField">
+<ManSection>
+  <Attr Name="DegreeOfMatrixOverFiniteField" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    Number of rows and columns of the matrix <A>m</A>.
+  </Returns>
+  <Description>
+        <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> DegreeOfMatrixOverFiniteField(x);
+3
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RowRank">
+<ManSection>
+  <Attr Name="RowRank" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>Length of a basis of the row space of <A>m</A>.</Returns>
+  <Description>
+        <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> RowRank(x);
+2
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BaseDomain">
+<ManSection>
+  <Attr Name="BaseDomain" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    The domain in which entries of <A>m</A> lie.
+  </Returns>
+  <Description>
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> BaseDomain(x);
+GF(5)
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TransposedMatImmutable">
+<ManSection>
+  <Attr Name="TransposedMatImmutable" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    An immutable matrix.
+  </Returns>
+  <Description>
+    This attribute contains an immutable copy of <A>m</A>. Note that matrices are
+    immutable per default.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> TransposedMatImmutable(x);
+<matrix over GF(5) of degree 3>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsMatrix">
+<ManSection>
+  <Oper Name="AsMatrix" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>
+    A matrix.
+  </Returns>
+  <Description>
+    Turns a matrix over a finite field into a &GAP; matrix.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> AsMatrix(x);
+[ [ Z(5)^0, Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ Z(5)^0, Z(5)^0, Z(5)^0 ] ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ConstructingFilter">
+<ManSection>
+  <Oper Name="ConstructingFilter" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>A filter</Returns>
+  <Description>
+    Return the filter that was passed to 
+    <Ref Oper="NewMatrixOverFiniteField" Label="for a filter, a field, an integer, and a list"/>
+    when creating the matrix <A>m</A>. This is used to create new objects that lie in the same filter. 
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
+> Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(2^2) of degree 3>
+gap> ConstructingFilter(x);
+<Representation "IsPlistMatrixOverFiniteFieldRep">
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

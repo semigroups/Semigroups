@@ -332,3 +332,32 @@ function(cong)
   cong := AsSemigroupCongruenceByGeneratingPairs(cong);
   return GeneratingPairsOfSemigroupCongruence(cong);
 end);
+
+#
+
+InstallMethod(OneImmutable,
+"for a congruence class",
+[IsCongruenceClass],
+function(class)
+  local cong, one;
+  cong := EquivalenceClassRelation(class);
+  one := One(Range(cong));
+  if one <> fail then
+    return EquivalenceClassOfElementNC(cong, one);
+  fi;
+  return fail;
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for a Rees congruence class",
+[IsReesCongruenceClass],
+function(class)
+  local cong;
+  if class!.is_ideal_class then
+    cong := EquivalenceClassRelation(class);
+    return Enumerator(SemigroupIdealOfReesCongruence(cong));
+  fi;
+  return AsList(class);
+end);

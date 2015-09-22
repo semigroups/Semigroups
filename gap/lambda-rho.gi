@@ -194,7 +194,7 @@ end);
 InstallGlobalFunction(LambdaOrbSchutzGp,
 function(o, m)
   local s, gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, rank,
-   bound, g, stop, forward, f, k, l;
+  one, bound, g, stop, forward, f, k, l;
 
   if IsBound(o!.schutz) then
     if IsBound(o!.schutz[m]) then
@@ -214,14 +214,22 @@ function(o, m)
   lambdaperm := LambdaPerm(s);
   rep := LambdaOrbRep(o, m);
   rank := LambdaRank(s)(o[scc[1]]);
+  one := LambdaIdentity(s)(rank);
+  bound := LambdaBound(s)(rank);
 
-  if rank < 100 then
-    bound := Factorial(rank);
-  else
-    bound := infinity;
+  if rank = 0 then
+    # The group is the symmetric group
+    # if rank = 0
+    # mpf: Is this the correct fix? if we put false
+    #      here, PartialOrderOfDClasses fails because
+    #      mults are not defined
+    o!.schutzstab[m] := true;
+    o!.schutz[m] := Group(one);
+    return o!.schutz[m];
   fi;
 
-  g := Group(());
+  g := Group(one);
+
   stop := false;
 
   for k in scc do
@@ -231,10 +239,11 @@ function(o, m)
         f := lambdaperm(rep, rep * forward * gens[l]
                              * LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g := ClosureGroup(g, f);
-        if Size(g) >= bound then
-          stop := true;
-          break;
-        fi;
+      fi;
+
+      if Size(g) >= bound then
+        stop := true;
+        break;
       fi;
     od;
     if stop then
@@ -248,8 +257,10 @@ function(o, m)
     o!.schutzstab[m] := true;
   elif Size(g) = 1 then
     o!.schutzstab[m] := false;
-  else
+  elif IsPermGroup(g) then
     o!.schutzstab[m] := StabChainImmutable(g);
+  else # if IsMatrixGroup(g)
+    o!.schutzstab[m] := g;
   fi;
 
   return g;
@@ -397,12 +408,12 @@ function(o, m)
   return o!.mults;
 end);
 
-# JDM could use IsRegular here to speed up?
+#
 
 InstallGlobalFunction(RhoOrbSchutzGp,
 function(o, m)
-  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, i,
-  bound, rho_rank, j;
+  local S, rank, bound, one, G, gens, nrgens, scc, lookup, orbitgraph,
+   lambdaperm, rep, mults, stop, i, j;
 
   if IsBound(o!.schutz) then
     if IsBound(o!.schutz[m]) then
@@ -413,52 +424,55 @@ function(o, m)
     o!.schutzstab := EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  g := Group(());
+  S := o!.parent;
+  scc := OrbSCC(o)[m];
+  rank := RhoRank(S)(o[scc[1]]);
+  bound := RhoBound(S)(rank);
+  one := RhoIdentity(S)(rank);
+  G := Group(one);
 
-  s := o!.parent;
+  if bound = 1 or rank = 0 then
+    o!.schutz[m] := G;
+    o!.schutzstab[m] := false;
+    return G;
+  fi;
+
   gens := o!.gens;
   nrgens := Length(gens);
-  scc := OrbSCC(o)[m];
   lookup := o!.scc_lookup;
   orbitgraph := OrbitGraph(o);
-  lambdaperm := LambdaPerm(s);
+  lambdaperm := LambdaPerm(S);
   rep := RhoOrbRep(o, m);
   mults := RhoOrbMults(o, m);
 
-  i := RhoRank(s)(o[scc[1]]);
-
-  if i < 1000 then
-    bound := Factorial(i);
-  else
-    bound := infinity;
-  fi;
+  stop := false;
 
   for i in scc do
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
-        g := ClosureGroup(g, lambdaperm(rep,
+        G := ClosureGroup(G, lambdaperm(rep,
                                         mults[orbitgraph[i][j]][2] * gens[j] *
                                         mults[i][1] * rep));
-        if Size(g) >= bound then
+        if Size(G) >= bound then
+          stop := true;
           break;
         fi;
       fi;
     od;
-    if Size(g) >= bound then
-      break;
+    if stop then
+        break;
     fi;
   od;
+  o!.schutz[m] := G;
 
-  o!.schutz[m] := g;
-  rho_rank := RhoRank(s)(o[scc[1]]);
-
-  if rho_rank < 1000 and Size(g) = Factorial(rho_rank) then
+  if stop then
     o!.schutzstab[m] := true;
-  elif Size(g) = 1 then
+  elif Size(G) = 1 then
     o!.schutzstab[m] := false;
-  else
-    o!.schutzstab[m] := StabChainImmutable(g);
+  elif IsPermGroup(G) then
+    o!.schutzstab[m] := StabChainImmutable(G);
+  else # if IsMatrixGroup(g)
+    o!.schutzstab[m] := G;
   fi;
-
-  return g;
+  return G;
 end);

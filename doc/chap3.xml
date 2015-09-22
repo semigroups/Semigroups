@@ -54,6 +54,7 @@
     <#Include Label="IsTransformationSemigroupGreensClass">
     <#Include Label="IsBipartitionSemigroupGreensClass">
     <#Include Label="IsPartialPermSemigroupGreensClass">
+    <#Include Label="IsMatrixSemigroupGreensClass">
     <#Include Label="StructureDescription">
     <#Include Label="IsGreensDLeq">
   </Section>
@@ -88,6 +89,7 @@
     <#Include Label="Normalizer">
     <#Include Label="SmallestElementSemigroup">
     <#Include Label="GeneratorsSmallest">
+    <#Include Label="UnderlyingSemigroupOfSemigroupWithAdjoinedZero">
   </Section>
 
   <Section><Heading>Further properties of semigroups</Heading>
@@ -110,6 +112,7 @@
     <#Include Label="IsRegularSemigroup">
     <#Include Label="IsRightZeroSemigroup">
     <#Include Label="IsRTrivial">
+    <#Include Label="IsSemigroupWithAdjoinedZero">
     <#Include Label="IsSemilatticeAsSemigroup">
     <#Include Label="IsSimpleSemigroup">
     <#Include Label="IsSynchronizingSemigroup">
@@ -158,7 +161,8 @@
     <#Include Label="CharacterTableOfInverseSemigroup">
   </Section>
 
-  <Section><Heading>Visualising the structure of a semigroup</Heading>
+  <Section Label = "Section-Visualising-Semigroup">
+    <Heading>Visualising the structure of a semigroup</Heading>
     In this section, we describe some functions for creating pictures of various
     structures related to a semigroup of transformations, partial permutations,
     or bipartitions; or a subsemigroup of a Rees 0-matrix semigroup.<P/>

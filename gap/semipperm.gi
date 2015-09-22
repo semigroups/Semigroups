@@ -578,6 +578,32 @@ end);
 
 #
 
+InstallMethod(MonogenicSemigroupCons,
+"for a filter and two positive integers",
+[IsPartialPermSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, r)
+  local cyclic_group, nilpotent_offset, nilpotent, im;
+
+  if m = 1 and r = 1 then
+    return Semigroup(PartialPerm([], []));
+  fi;
+
+  if r = 1 then
+    cyclic_group := [];
+    nilpotent_offset := 0;
+  else
+    cyclic_group := [1 .. r] + 1;
+    cyclic_group[r] := 1;
+    nilpotent_offset := r;
+  fi;
+  nilpotent := [1 .. m - 1] + nilpotent_offset;
+  im := Concatenation(cyclic_group, [0], nilpotent);
+
+  return Semigroup(PartialPerm(im));
+end);
+
+#
+
 InstallMethod(RepresentativeOfMinimalIdealNC,
 "for a partial perm semigroup",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],

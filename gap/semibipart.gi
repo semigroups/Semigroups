@@ -744,3 +744,81 @@ function(filter, n)
   SetMultiplicativeZero(out, zero);
   return out;
 end);
+
+#
+
+InstallMethod(MonogenicSemigroupCons,
+"for a filter and two positive integers",
+[IsBipartitionSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, r)
+  return MonogenicSemigroupCons(IsBlockBijectionSemigroup, m, r);
+end);
+
+#
+
+InstallMethod(MonogenicSemigroupCons,
+"for a filter and two positive integers",
+[IsBlockBijectionSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, r)
+  local out, offset, i;
+
+  if m = 1 and r = 1 then
+    return Semigroup(Bipartition([[1, -1]]));
+  fi;
+
+  out := [];
+  if r = 1 then
+    offset := 1;
+  else
+    for i in [1 .. r - 1] do
+      Add(out, [i, -i - 1]);
+    od;
+    Add(out, [r, -1]);
+    offset := r + 1;
+  fi;
+
+  if not m = 1 then
+    Add(out, [offset, -offset, offset + 1, -(offset + m)]);
+    for i in [offset + 2 .. offset + m] do
+      Add(out, [i, -i + 1]);
+    od;
+  fi;
+
+  return Semigroup(Bipartition(out));
+end);
+
+#
+
+InstallMethod(RectangularBandCons,
+"for a filter and two positive integers",
+[IsBipartitionSemigroup and IsFinite, IsPosInt, IsPosInt],
+function(filter, m, n)
+  local max, min, out, nrpoints, partitions, neg, i;
+
+  max := Maximum(m, n);
+  min := Minimum(m, n);
+  out := EmptyPlist(max);
+
+  # Find a small degree of partition monoid in which to embed rectangular band
+  nrpoints := 1;
+  while NrPartitionsSet([1 .. nrpoints]) < max do
+    nrpoints := nrpoints + 1;
+  od;
+
+  partitions := PartitionsSet([1 .. nrpoints]);
+
+  for i in [1 .. min] do
+    Add(out, Bipartition(Concatenation(partitions[i], -1 * partitions[i])));
+  od;
+
+  neg := -1 * partitions[1];
+  for i in [min + 1 .. m] do
+    Add(out, Bipartition(Concatenation(partitions[i], neg)));
+  od;
+
+  for i in [min + 1 .. n] do
+    Add(out, Bipartition(Concatenation(partitions[1], -1 * partitions[i])));
+  od;
+
+  return Semigroup(out);
+end);

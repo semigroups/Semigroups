@@ -17,6 +17,7 @@
     <#Include Label="RandomPartialPermMonoid"> 
     <#Include Label="RandomBinaryRelationMonoid"> 
     <#Include Label="RandomBipartitionMonoid"> 
+    <#Include Label="RandomMatrixMonoid">
   </Section> 
 
   <Section><Heading>New semigroups from old</Heading> 
@@ -160,6 +161,7 @@ true</Log>
       <#Include Label="IsomorphismPermGroup">
       <#Include Label="IsomorphismBipartitionSemigroup">
       <#Include Label="IsomorphismBlockBijectionSemigroup">
+      <#Include Label="IsomorphismMatrixSemigroup">
   </Section>
   
   <Section Label="Examples"><Heading>Standard examples</Heading>
@@ -174,8 +176,8 @@ true</Log>
     <#Include Label="FactorisableDualSymmetricInverseSemigroup">
     <#Include Label="DualSymmetricInverseSemigroup">
     <#Include Label="PartialTransformationSemigroup"> 
-    <#Include Label="FullMatrixSemigroup">
-    <#Include Label="IsFullMatrixSemigroup">
+    <#Include Label="GeneralLinearSemigroup">
+    <#Include Label="SpecialLinearSemigroup">
     <#Include Label="MunnSemigroup">
     <#Include Label="OPOIPOPI">
     <#Include Label="SingularTransformationSemigroup">
@@ -183,6 +185,7 @@ true</Log>
     <#Include Label="MonogenicSemigroup">
     <#Include Label="RectangularBand">
     <#Include Label="ZeroSemigroup">
+    <#Include Label="LeftZeroSemigroup">
   </Section>
 
 </Chapter>
