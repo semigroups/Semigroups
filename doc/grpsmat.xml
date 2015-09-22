@@ -43,11 +43,9 @@ gap> iso := IsomorphismMatrixGroup(G);;
 gap> Source(iso); Range(iso);
 <group of 3x3 matrices over GF(2^2) with 1 generator>
 Group(
-[
-  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ],
-      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])
-
- ]]></Example>
+[ 
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -66,8 +64,7 @@ gap> AsMatrixGroup(G);
 Group(
 [ 
   [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
-      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])
- ]]></Example>
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

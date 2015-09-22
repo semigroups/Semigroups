@@ -94,9 +94,8 @@ gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
 gap> RowSpaceBasis(x);
 <rowbasis of rank 3 over GF(2^2)>
 gap> RowSpaceTransformation(x);
-[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ],
-  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]
-]]></Example>
+[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
+  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -117,8 +116,8 @@ gap> LeftInverse(x);
 <matrix over GF(2^2) of degree 3>
 gap> Display(LeftInverse(x) * x);
 <matrix over GF(2^2) of degree 3
-[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0 ],
-  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ]>
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]>
 ]]></Example>
   </Description>
 </ManSection>
