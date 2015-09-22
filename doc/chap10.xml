@@ -18,7 +18,7 @@
   <Example><![CDATA[
 gap> x := Z(4) * [[1,0], [0,2]];
 [ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
-gap> IsMatrix(x);
+gap> IsMatrix(x)
 true
 gap> IsMatrixOverFiniteField(x);
 false
@@ -31,8 +31,8 @@ true]]>
   </Example>
    
   In the following we will refer to matrices in <Ref Filt="IsMatrix" BookName="ref"/>
-  by <B>GAP library matrices</B> and to matrices in
-  <Ref Filt="IsMatrixOverFiniteField"/> by <B>matrices over finite fields</B>.
+  by <E>GAP library matrices</E> and to matrices in
+  <Ref Filt="IsMatrixOverFiniteField"/> by <E>matrices over finite fields</E>.
   
   We take precautions to hide this fact from the user of &Semigroups; and
   also provide conversion functions between the two representations.
