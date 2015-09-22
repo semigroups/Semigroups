@@ -374,7 +374,8 @@ InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 function(s)
     local deg;
     deg := DegreeOfMatrixSemigroup(s) + 1;
-    return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, BaseDomain(s),
+    return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,
+                                      BaseDomain(s),
                                       NullMat(deg, deg, BaseDomain(s)));
 end);
 

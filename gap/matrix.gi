@@ -107,7 +107,8 @@ end);
 ##
 #############################################################################
 #
-InstallMethod(NewRowBasisOverFiniteField, "for IsPlistRowBasisOverFiniteFieldRep, a ring, and a list",
+InstallMethod(NewRowBasisOverFiniteField,
+"for IsPlistRowBasisOverFiniteFieldRep, a ring, and a list",
 [IsPlistRowBasisOverFiniteFieldRep, IsRing, IsList],
 function(filter, basedomain, l)
   local b, filter2;
@@ -161,8 +162,8 @@ end);
 InstallMethod(PrintObj, "for a plist rowbasis",
 [IsPlistRowBasisOverFiniteFieldRep],
 function(v)
-  Print("NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, ", BaseDomain(v), ", ", v!.rows,
-        ")");
+  Print("NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, ",
+        BaseDomain(v), ", ", v!.rows, ")");
 end);
 
 InstallMethod(Display, "for a plist rowbasis",
@@ -249,13 +250,14 @@ function(filter, basedomain, deg)
                                 basedomain,
                                 deg,
                                 IdentityMat(deg, basedomain));
-  SetRowSpaceBasis(m, NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,
-                                   basedomain, []));
+  # gaplint: ignore 2
+  SetRowSpaceBasis(m, NewRowBasisOverFiniteField(
+    IsPlistRowBasisOverFiniteFieldRep, basedomain, []));
   SetRowRank(m, 0);
   SetRowSpaceTransformation(m, m);
   SetRowSpaceTransformationInv(m, m);
-# FIXME:
-#  SetSemigroupInverse(m, m);
+  # FIXME:
+  #  SetSemigroupInverse(m, m);
   return m;
 end);
 
@@ -505,8 +507,8 @@ function(m)
   SetRowRank(m, Rank(bas));
   SetRowSpaceTransformation(m, tr);
   SetRowSpaceTransformationInv(m, tri);
-# FIXME
-#  SetSemigroupInverse(m, sinv);
+  # FIXME
+  #  SetSemigroupInverse(m, sinv);
   SetInverse(m, inv);
 end);
 

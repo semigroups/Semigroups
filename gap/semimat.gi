@@ -35,7 +35,7 @@ InstallGlobalFunction(MatrixSemigroup,
 function(arg)
   local gens, ring, d;
 
-  if Length(arg) = 1 and IsHomogeneousList(arg[1]) 
+  if Length(arg) = 1 and IsHomogeneousList(arg[1])
       and IsFFECollCollColl(arg[1]) then
     gens := arg[1];
   elif Length(arg) = 2 and IsField(arg[2]) and
@@ -189,7 +189,8 @@ function(s, vsp, m)
     fi;
   od;
 
-  return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, BaseDomain(vsp), nvsp);
+  return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,
+                                    BaseDomain(vsp), nvsp);
 end);
 
 InstallGlobalFunction(MatrixOverFiniteFieldLocalRightInverse,
