@@ -62,7 +62,6 @@
   <#Include Label="MatrixGroupOperation"/>
   <#Include Label="IsomorphismMatrixGroup"/>
   <#Include Label="AsMatrixGroup"/>
-  <#Include Label="AsMatrixOverFiniteFieldGroup"/>
 </Section>
 
 </Chapter>

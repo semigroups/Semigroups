@@ -130,6 +130,7 @@ gap> Display(LeftInverse(x) * x);
   <Returns>
     Number of rows and columns of the matrix <A>m</A>.
   </Returns>
+  <Description>
         <Example><![CDATA[
 gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
 > Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
@@ -137,7 +138,7 @@ gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
 gap> DegreeOfMatrixOverFiniteField(x);
 3
 ]]></Example>
-
+  </Description>
 </ManSection>
 <#/GAPDoc>
 
@@ -145,6 +146,15 @@ gap> DegreeOfMatrixOverFiniteField(x);
 <ManSection>
   <Attr Name="RowRank" Arg="m" Label="for a matrix over finite field"/>
   <Returns>Length of a basis of the row space of <A>m</A>.</Returns>
+  <Description>
+        <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> RowRank(x);
+2
+]]></Example>
+  </Description>
 </ManSection>
 <#/GAPDoc>
 
@@ -154,6 +164,15 @@ gap> DegreeOfMatrixOverFiniteField(x);
   <Returns>
     The domain in which entries of <A>m</A> lie.
   </Returns>
+  <Description>
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> BaseDomain(x);
+GF(5)
+]]></Example>
+  </Description>
 </ManSection>
 <#/GAPDoc>
 
@@ -161,8 +180,19 @@ gap> DegreeOfMatrixOverFiniteField(x);
 <ManSection>
   <Attr Name="TransposedMatImmutable" Arg="m" Label="for a matrix over finite field"/>
   <Returns>
-    The transpose of <A>m</A>.
+    An immutable matrix.
   </Returns>
+  <Description>
+    This attribute contains an immutable copy of <A>m</A>. Note that matrices are
+    immutable per default.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> TransposedMatImmutable(x);
+<matrix over GF(5) of degree 3>
+]]></Example>
+  </Description>
 </ManSection>
 <#/GAPDoc>
 
@@ -174,6 +204,14 @@ gap> DegreeOfMatrixOverFiniteField(x);
   </Returns>
   <Description>
     Turns a matrix over a finite field into a &GAP; matrix.
+    <Example><![CDATA[
+gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,
+> Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );
+<matrix over GF(5) of degree 3>
+gap> AsMatrix(x);
+[ [ Z(5)^0, Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ Z(5)^0, Z(5)^0, Z(5)^0 ] ]
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
