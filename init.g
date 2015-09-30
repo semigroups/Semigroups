@@ -75,12 +75,12 @@ ReadPackage("semigroups/gap/attributes/normalizer.gd");
 ReadPackage("semigroups/gap/attributes/properties.gd");
 ReadPackage("semigroups/gap/attributes/reesmat-iso.gd");
 
-ReadPackage("semigroups/gap/congruences/pairs-cong.gd");
-ReadPackage("semigroups/gap/congruences/reesmat-cong.gd");
-ReadPackage("semigroups/gap/congruences/univ-cong.gd");
-ReadPackage("semigroups/gap/congruences/inverse-cong.gd");
-ReadPackage("semigroups/gap/congruences/simple-cong.gd");
-ReadPackage("semigroups/gap/congruences/rees-cong.gd");
+ReadPackage("semigroups/gap/congruences/pairs.gd");
+ReadPackage("semigroups/gap/congruences/reesmat.gd");
+ReadPackage("semigroups/gap/congruences/univ.gd");
+ReadPackage("semigroups/gap/congruences/inverse.gd");
+ReadPackage("semigroups/gap/congruences/simple.gd");
+ReadPackage("semigroups/gap/congruences/rees.gd");
 ReadPackage("semigroups/gap/congruences/quotients.gd");
 
 ReadPackage("semigroups/gap/fp/fpsemi.gd");
