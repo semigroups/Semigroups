@@ -151,7 +151,8 @@ function(data, lookfunc)
 
   if IsRightSemigroupCongruence(cong) then
     right := RightCayleyGraphSemigroup(s);
-  elif IsLeftSemigroupCongruence(cong) then
+  fi;
+  if IsLeftSemigroupCongruence(cong) then
     left := LeftCayleyGraphSemigroup(s);
   fi;
 
