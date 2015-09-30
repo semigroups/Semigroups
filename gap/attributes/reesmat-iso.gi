@@ -248,7 +248,7 @@ if IsGrapeLoaded then
 
     if not Length(groupelts) = Length(components) then
       ErrorMayQuit("Semigroups: SEMIGROUPS_RZMStoRZMSInducedFunction: ",
-                   "usage,\nthe 3rd arg must be a list of length ",
+                   "usage,\nthe 5th argument must be a list of length ",
                    Length(components), ",");
     fi;
 
@@ -502,7 +502,7 @@ else
   function(R)
     local G, m, n, aut_graph, aut_group, stab_aut_graph,
           hom, stab_aut_group, V, A, gens1, gens2, U, T, tester,
-          g, map;
+          g, map, gens;
 
     G := UnderlyingSemigroup(R);
     if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
@@ -518,8 +518,12 @@ else
     SEMIGROUPS_Info(2, false, "finding automorphisms of the graph . . . ");
 
     if n = 1 and m = 1 then
-      A := Group(List(GeneratorsOfGroup(AutomorphismGroup(G)),
-                        x -> RMSIsoByTriple(R, R, [(), x, [One(G), One(G)]])));
+      gens := GeneratorsOfGroup(AutomorphismGroup(G));
+      if IsEmpty(gens) then 
+        gens := [IdentityMapping(G)];
+      fi;
+      A := Group(List(gens, x -> RMSIsoByTriple(R, R, 
+                                                [(), x, [One(G), One(G)]])));
       SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
       SetIsFinite(A, true);
       return A;
@@ -761,8 +765,8 @@ else
   InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
   [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
   function(R1, R2)
-    local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso,
-    map, l, tup;
+    local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, tuples,
+          map, l, tup;
 
     G1 := UnderlyingSemigroup(R1);
     G2 := UnderlyingSemigroup(R2);
@@ -804,15 +808,19 @@ else
       if g = fail then
         return fail;
       fi;
-      graphiso := List(AutGroupGraph(graph1, [[1 .. m], [m + 1 .. n + m]]),
-                       x -> x * g);
+    else 
+      g := ();
     fi;
+    graphiso := List(AutGroupGraph(graph1, [[1 .. m], [m + 1 .. n + m]]),
+                     x -> x * g);
 
+    tuples := EnumeratorOfCartesianProduct(List([1 .. Length(ConnectedComponents(graph1))], 
+                                           x -> G2));
     #find an induced function, if there is one
     for l in graphiso do
       for g in groupiso do
-        for tup in Elements(G2) do
-          map := SEMIGROUPS_RZMStoRZMSInducedFunction(R1, R2, l, g, [tup]);
+        for tup in tuples do #FIXME it should be possible to cut this down
+          map := SEMIGROUPS_RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
           if not map = false then
             return RZMSIsoByTriple(R1, R2, [l, g, map]);
           fi;
@@ -876,9 +884,14 @@ InstallMethod(\=, "for objects in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(x, y)
 
+  if Source(x) <> Source(y) or Range(x) <> Range(y) then 
+    return false;
+  fi;
+
   if x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
     return true;
   fi;
+
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
        = OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
