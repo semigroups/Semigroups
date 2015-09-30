@@ -165,10 +165,10 @@ true]]></Example>
     <Prop Name="IsBrandtSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsBrandtSemigroup</C> return <K>true</K> if the semigroup <A>S</A> is 
-      a 0-simple inverse semigroup, and <K>false</K> if it is not. See also
-      <Ref Prop="IsZeroSimpleSemigroup"/> and <Ref Prop="IsInverseSemigroup"
-        BookName="ref" />.
+      <C>IsBrandtSemigroup</C> return <K>true</K> if the semigroup <A>S</A> is
+      a finite 0-simple inverse semigroup, and <K>false</K> if it is not. See
+      also <Ref Prop="IsZeroSimpleSemigroup"/> and <Ref
+        Prop="IsInverseSemigroup" BookName="ref" />.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation( [ 2, 8, 8, 8, 8, 8, 8, 8 ] ),
 > Transformation( [ 5, 8, 8, 8, 8, 8, 8, 8 ] ),

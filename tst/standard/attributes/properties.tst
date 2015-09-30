@@ -169,7 +169,13 @@ gap> S := Semigroup(
 gap> IsBlockGroup(S);
 true
 
-#T# properties: IsBrandtSemigroup, 1/1
+#T# properties: IsBlockGroup, for an infinite semigroup, 5/?
+gap> S := FreeSemigroup(1);;
+gap> IsBlockGroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsBlockGroup' on 1 arguments
+
+#T# properties: IsBrandtSemigroup, 1
 gap> S := Semigroup([Transformation([2, 1, 5, 5, 5]),
 > Transformation([4, 5, 3, 1, 5])]);
 <transformation semigroup of degree 5 with 2 generators>
@@ -180,45 +186,55 @@ gap> x := Transformation([5, 5, 5, 4, 5]);;
 gap> I := SemigroupIdeal(S, x);;
 gap> IsBrandtSemigroup(I);
 true
+gap> S := FreeSemigroup(1);;
+gap> IsBrandtSemigroup(S);
+false
 
 #T# properties: IsZeroSimpleSemigroup, bug, 1/1
 gap> IsZeroSimpleSemigroup(ZeroSemigroup(2));
 false
 
-#T# properties: IsCongruenceFreeSemigroup, trivial, 1/6
+#T# properties: IsCongruenceFreeSemigroup, trivial, 1
 gap> IsCongruenceFreeSemigroup(TrivialSemigroup());
 true
 
-#T# properties: IsCongruenceFreeSemigroup, group, 2/6
+#T# properties: IsCongruenceFreeSemigroup, group, 2
 gap> S := AsTransformationSemigroup(AlternatingGroup(5));
 <transformation semigroup of size 60, degree 5 with 2 generators>
 gap> IsCongruenceFreeSemigroup(S);
 true
 
-#T# properties: IsCongruenceFreeSemigroup, group, 3/6
+#T# properties: IsCongruenceFreeSemigroup, group, 3
 gap> IsCongruenceFreeSemigroup(AlternatingGroup(5));
 true
 
-#T# properties: IsCongruenceFreeSemigroup, 4/6
+#T# properties: IsCongruenceFreeSemigroup, 4
 gap> S := FullTransformationMonoid(3);;
 gap> D := PrincipalFactor(DClass(S, S.3));
 <Rees 0-matrix semigroup 3x3 over Group([ (1,2) ])>
 gap> IsCongruenceFreeSemigroup(D);
 false
 
-#T# properties: IsCongruenceFreeSemigroup, 5/6
+#T# properties: IsCongruenceFreeSemigroup, 5
 gap> R := ReesZeroMatrixSemigroup(Group([()]),
 > [[(), (), 0], [(), 0, ()], [0, (), ()]]);;
 gap> IsCongruenceFreeSemigroup(R);
 true
 
-#T# properties: IsCongruenceFreeSemigroup, 6/6
+#T# properties: IsCongruenceFreeSemigroup, 6
 gap> R := ReesZeroMatrixSemigroup(Group([()]),
 > [[(), (), 0], [(), (), 0], [0, (), ()]]);;
 gap> IsCongruenceFreeSemigroup(R);
 false
 
-#T# properties: IsCliffordSemigroup, ideal, 1/6
+#T# properties: IsCongruenceFreeSemigroup, 7
+gap> S := FreeSemigroup(1);;
+gap> IsCongruenceFreeSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsCongruenceFreeSemigroup' on 1 argumen\
+ts
+
+#T# properties: IsCliffordSemigroup, ideal, 1
 gap> I := SemigroupIdeal(Semigroup(
 >    [Transformation([1, 4, 3, 2]), Transformation([2, 1, 4, 3]), Tran\
 > sformation([3, 2, 1, 3]), Transformation([3, 3, 1]), Transformation([\
@@ -226,7 +242,7 @@ gap> I := SemigroupIdeal(Semigroup(
 gap> IsCliffordSemigroup(I);
 false
 
-#T# properties: IsCliffordSemigroup, parent, 2/6
+#T# properties: IsCliffordSemigroup, parent, 2
 gap> S := IdempotentGeneratedSubsemigroup(SymmetricInverseMonoid(3));;
 gap> IsCliffordSemigroup(S);
 true
@@ -240,44 +256,69 @@ gap> GeneratorsOfSemigroup(I);;
 gap> IsCliffordSemigroup(I);
 true
 
-#T# properties: IsCliffordSemigroup, non-inverse, 3/6
+# doesn't know it is inverse
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
+gap> S := Range(IsomorphismBooleanMatSemigroup(S));;
+gap> IsCliffordSemigroup(S);
+true
+gap> I := SemigroupIdeal(S, Random(S));;
+gap> IsCliffordSemigroup(I);
+true
+gap> I := SemigroupIdeal(S, Random(S));;
+gap> GeneratorsOfSemigroup(I);;
+gap> IsCliffordSemigroup(I);
+true
+
+#T# properties: IsCliffordSemigroup, non-inverse, 3
 gap> S := ZeroSemigroup(2);;
 gap> IsInverseSemigroup(S);
 false
 gap> IsCliffordSemigroup(S);
 false
 
-#T# properties: IsCliffordSemigroup, non-completely regular, 4/6
+#T# properties: IsCliffordSemigroup, non-completely regular, 4
 gap> S := ZeroSemigroup(2);;
 gap> IsCompletelyRegularSemigroup(S);
 false
 gap> IsCliffordSemigroup(S);
 false
 
-#T# properties: IsCliffordSemigroup, group, 5/6
+#T# properties: IsCliffordSemigroup, group, 5
 gap> S := AsPartialPermSemigroup(Group((1, 2, 3)));
 <commutative inverse partial perm semigroup of rank 3 with 1 generator>
 gap> IsCliffordSemigroup(S);
 true
 
-#T# properties: IsCliffordSemigroup, non-regular, 6/6
+#T# properties: IsCliffordSemigroup, non-regular, 6
 gap> S := ZeroSemigroup(2);;
 gap> IsCliffordSemigroup(S);
 false
 
-#T# properties: IsCommutativeSemigroup, 1/2
+#T# properties: IsCliffordSemigroup, infinite, 6
+gap> S := FreeSemigroup(2);;
+gap> IsCliffordSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `IsCliffordSemigroup' on 1 arguments
+
+#T# properties: IsCommutativeSemigroup, 1
 gap> S := Semigroup([Transformation([1, 1, 3, 5, 4]),
 >  Transformation([1, 2, 1, 5, 4])]);;
 gap> IsCommutativeSemigroup(S);
 true
 
-#T# properties: IsCommutativeSemigroup, 2/2
+#T# properties: IsCommutativeSemigroup, 2
 gap> S := JonesMonoid(3);
 <regular bipartition monoid of degree 3 with 2 generators>
 gap> IsCommutativeSemigroup(S);
 false
 
-#T# properties: IsCompletelyRegularSemigroup, 1/2
+#T# properties: IsCommutativeSemigroup, 3
+gap> S := FreeSemigroup(3);;
+gap> IsCommutativeSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsCommutativeSemigroup' on 1 arguments
+
+#T# properties: IsCompletelyRegularSemigroup, 1
 gap> S := Monoid(
 > BooleanMat([[false, true, false],
 >             [true, false, false],
@@ -292,7 +333,7 @@ gap> I := SemigroupIdeal(S, S.1);;
 gap> IsCompletelyRegularSemigroup(I);
 true
 
-#T# properties: IsCompletelyRegularSemigroup, 2/2
+#T# properties: IsCompletelyRegularSemigroup, 2
 gap> S := Semigroup(GroupOfUnits(FullTransformationMonoid(3)));
 <transformation monoid of degree 3 with 2 generators>
 gap> IsCompletelyRegularSemigroup(S);
@@ -302,12 +343,29 @@ gap> GeneratorsOfSemigroup(I);;
 gap> IsCompletelyRegularSemigroup(I);
 true
 
-#T# properties: IsCompletelySimpleSemigroup, 1/1
+#T# properties: IsCompletelyRegularSemigroup, 3
+gap> S := Range(IsomorphismBooleanMatSemigroup(MonogenicSemigroup(3, 2)));;
+gap> IsRegularSemigroup(S);
+false
+gap> IsCompletelyRegularSemigroup(S);
+false
+gap> S := FreeSemigroup(1);;
+gap> IsCompletelyRegularSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsCompletelyRegularSemigroup' on 1 argu\
+ments
+
+#T# properties: IsCompletelySimpleSemigroup, 1
 gap> S := Semigroup(MaxPlusMatrixNC([[0, -4], [-4, -1]]),
 >                   MaxPlusMatrixNC([[0, -3], [-3, -1]]));
 <semigroup of 2x2 max-plus matrices with 2 generators>
 gap> IsCompletelySimpleSemigroup(S);
 false
+gap> S := FreeSemigroup(2);;
+gap> IsCompletelySimpleSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsCompletelySimpleSemigroup' on 1 argum\
+ents
 
 #T# properties: IsEUnitaryInverseSemigroup, non-inverse op, 1/2
 gap> S := Semigroup([Transformation([5, 7, 1, 6, 8, 8, 8, 8]),
