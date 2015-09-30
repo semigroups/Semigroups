@@ -18,21 +18,21 @@ function(cong)
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   nr := Length(pairs);
   tab := UF_NEW(nr);
-  
+
   # Find the meet of each pair
   meets := MeetsOfGeneratingPairs(cong);
-  
+
   # Search for collisions
-  for i in [1..nr] do
-    for j in [i+1..nr] do
+  for i in [1 .. nr] do
+    for j in [i + 1 .. nr] do
       critpoints := [pairs[i][1] * pairs[j][1],
                      pairs[i][1] * pairs[j][2],
                      pairs[i][2] * pairs[j][1],
                      pairs[i][1] * pairs[j][2]];
       for pt in critpoints do
-        if (meets[i]*pt = meets[i]) and
-           (meets[j]*pt = meets[j]) then
-          UF_UNION(tab, [i,j]);
+        if (meets[i] * pt = meets[i]) and
+            (meets[j] * pt = meets[j]) then
+          UF_UNION(tab, [i, j]);
           break;
         fi;
       od;
@@ -43,7 +43,7 @@ function(cong)
   UF_FLATTEN(tab);
   tab := UF_TABLE(tab);
   next := 1;
-  for i in [1..Length(tab)] do
+  for i in [1 .. Length(tab)] do
     if tab[i] = i then
       tab[i] := next;
       next := next + 1;
@@ -62,19 +62,19 @@ InstallMethod(MeetsOfGeneratingPairs,
 cong -> List(GeneratingPairsOfSemigroupCongruence(cong),
              pair -> pair[1] * pair[2]));
 
-#
+# Returns an int describing which congruence class elm is in
 
 InstallGlobalFunction(SEMIGROUPS_SemilatticeCongClassNoOfElm,
 function(cong, elm)
-  # Returns an int describing which congruence class elm is in
   local genpairs, meets, pairno;
+
   genpairs := GeneratingPairsOfSemigroupCongruence(cong);
   meets := MeetsOfGeneratingPairs(cong);
-  for pairno in [1..Length(genpairs)] do
+  for pairno in [1 .. Length(genpairs)] do
     # Is elm "hit" by this genpair?
-    if elm*meets[pairno] = meets[pairno] and
-       (elm*genpairs[pairno][1] = elm or
-        elm*genpairs[pairno][2] = elm) then
+    if elm * meets[pairno] = meets[pairno] and
+        (elm * genpairs[pairno][1] = elm or
+         elm * genpairs[pairno][2] = elm) then
       return BlockCoincidenceTable(cong)[pairno];
     fi;
   od;
@@ -92,12 +92,12 @@ function(pair, cong)
   local s, c1;
   # Input checks
   if not Size(pair) = 2 then
-    ErrorMayQuit("Semigroups: \\in: usage,\n",
+    ErrorMayQuit("Semigroups: \in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not (pair[1] in s and pair[2] in s) then
-    ErrorMayQuit("Semigroups: \\in: usage,\n",
+    ErrorMayQuit("Semigroups: \in: usage,\n",
                  "elements of the first arg <pair> must be in range ",
                  "of the second\narg <cong>,");
   fi;
@@ -143,7 +143,7 @@ function(cong, elm)
   fam := CollectionsFamily(FamilyObj(elm));
   classNo := SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, elm);
   class := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
-                   rec(classNo := classNo));
+                     rec(classNo := classNo));
   SetParentAttr(class, cong);
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
@@ -187,7 +187,8 @@ InstallMethod(\*,
 function(c1, c2)
   if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
     ErrorMayQuit("Semigroups: \\*: usage,\n",
-                 "the args <c1> and <c2> must be classes of the same congruence,");
+                 "the args <c1> and <c2> must be classes of the same ",
+                 "congruence,");
   elif c1 = c2 then
     return c1;
   else
@@ -211,7 +212,7 @@ function(cong)
   nrclasses := Maximum(tab);
   fam := CollectionsFamily(FamilyObj(GeneratorsOfSemigroup(s)[1]));
   list := EmptyPlist(nrclasses);
-  for i in [1..nrclasses] do
+  for i in [1 .. nrclasses] do
     list[i] := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
                          rec(classNo := i));
     SetParentAttr(list[i], cong);
@@ -262,8 +263,8 @@ function(s, bottom, top)
   od;
 
   # Now find all combinations of these class generators
-  for i in [1..Length(list)] do # for each generator
-    for j in [i+1..Length(list)] do # for each elm discovered so far
+  for i in [1 .. Length(list)] do # for each generator
+    for j in [i + 1 .. Length(list)] do # for each elm discovered so far
       x := list[i] * list[j];
       if not x in list then
         Add(list, x);
@@ -384,16 +385,16 @@ function(class)
   enum!.len := 1;
   enum!.ht := HTCreate(enum!.rep);
   HTAdd(enum!.ht, enum!.rep, 1);
-  
+
   # Store all the ranges which might contain elements in this class
   blocks := Positions(BlockCoincidenceTable(enum!.cong), class!.classNo);
   pairs := GeneratingPairsOfSemigroupCongruence(enum!.cong);
   meets := MeetsOfGeneratingPairs(cong);
-  enum!.ranges := EmptyPlist(Length(blocks)*2);
+  enum!.ranges := EmptyPlist(Length(blocks) * 2);
   i := 0;
   for b in blocks do
-    enum!.ranges[i+1] := [meets[b], pairs[b][1]];
-    enum!.ranges[i+2] := [meets[b], pairs[b][2]];
+    enum!.ranges[i + 1] := [meets[b], pairs[b][1]];
+    enum!.ranges[i + 2] := [meets[b], pairs[b][2]];
     i := i + 2;
   od;
   enum!.nextRange := 1;
@@ -457,11 +458,11 @@ InstallMethod(MeetSemigroupCongruences,
 "for two semilattice congruences",
 [IsSemilatticeCongruence, IsSemilatticeCongruence],
 function(cong1, cong2)
-  local s, outpairs, gens, pairs1, pairs2, meets1, meets2, i1, i2, max, p, min, 
+  local s, outpairs, gens, pairs1, pairs2, meets1, meets2, i1, i2, max, p, min,
         gen, newmin;
   s := Range(cong1);
   if s <> Range(cong2) then
-    ErrorMayQuit("Semigroups: MeetOfSemigroupCongruences: usage,\n",
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
                  "args <cong1> and <cong2> must be over the same semigroup,");
   fi;
   outpairs := [];
@@ -483,7 +484,7 @@ function(cong1, cong2)
         for gen in gens do
           newmin := min * gen;
           if meets1[i1] * newmin = meets1[i1]
-             and meets2[i2] * newmin = meets2[i2] then
+              and meets2[i2] * newmin = meets2[i2] then
             min := newmin;
           fi;
         od;

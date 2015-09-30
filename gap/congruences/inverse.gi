@@ -20,26 +20,25 @@ function(s, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
   # Check that the kernel is an inverse subsemigroup
   if not IsInverseSubsemigroup(s, kernel) then
-    Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
-          "the second arg <kernel> must be an inverse subsemigroup of the\n",
-          "first arg <S>,");
-    return;
+    ErrorMayQuit("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
+                 "usage,\n",
+                 "the second arg <kernel> must be an inverse subsemigroup of ",
+                 "the\nfirst arg <S>,");
   fi;
   # CHECK KERNEL IS NORMAL:
   # (1) Must contain all the idempotents of s
   if NrIdempotents(kernel) <> NrIdempotents(s) then
-    Error("Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,\n",
-          "the second arg <kernel> must contain all the idempotents of the\n",
-          "first arg <S>,");
-    return;
+    ErrorMayQuit("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
+                 "usage,\n",
+                 "the second arg <kernel> must contain all the idempotents of ",
+                 "the\nfirst arg <S>,");
   fi;
   # (2) Must be self-conjugate
   for a in kernel do
     for x in GeneratorsOfSemigroup(s) do
       if not a ^ x in kernel then
-        Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:",
-              " usage,\nthe second arg <kernel> must be self-conjugate,");
-        return;
+        ErrorMayQuit("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
+                     "usage,\nthe second arg <kernel> must be self-conjugate,");
       fi;
     od;
   od;
@@ -51,17 +50,17 @@ function(s, kernel, traceBlocks)
         if a in kernel then
           # Condition (C2): aa' related to a'a
           if not a * a ^ -1 in traceClass then
-            Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
-                  "not a valid congruence pair 1,");
-            return;
+            ErrorMayQuit("Semigroups: InverseSemigroupCongruenceByKernelTrace:",
+                         "\n",
+                         "not a valid congruence pair 1,");
           fi;
         else
           # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
           for e in traceClass do
             if a * e in kernel then
-              Error("Semigroups: InverseSemigroupCongruenceByKernelTrace:\n",
-                    "not a valid congruence pair 2,");
-              return;
+              ErrorMayQuit("Semigroups: ",
+                           "InverseSemigroupCongruenceByKernelTrace:\n",
+                           "not a valid congruence pair 2,");
             fi;
           od;
         fi;
@@ -132,10 +131,9 @@ function(cong, elm)
   local s, images, e, b;
   s := Range(cong);
   if not elm in s then
-    Error("Semigroups: ImagesElm: usage,\n",
-          "the first arg <cong> is not defined over the semigroup of the",
-          "second\nargument <elm>,");
-    return;
+    ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
+                 "the first arg <cong> is not defined over the semigroup of ",
+                 "the second\nargument <elm>,");
   fi;
   images := [];
   # Consider all idempotents trace-related to (a^-1 a)
@@ -157,16 +155,14 @@ InstallMethod(\in,
 function(pair, cong)
   local s;
   if Size(pair) <> 2 then
-    Error("Semigroups: \in: usage,\n",
-          "the first arg <pair> must be a list of length 2,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not (pair[1] in s and pair[2] in s) then
-    Error("Semigroups: \in: usage,\n",
-          "the entries of the first arg <pair> must belong to the semigroup",
-          " of <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the entries of the first arg <pair> must belong to the ",
+                 "semigroup of <cong>,");
   fi;
   # Is (a^-1 a, b^-1 b) in the trace?
   if pair[1] ^ -1 * pair[1] in
@@ -186,10 +182,9 @@ InstallMethod(EquivalenceClassOfElement,
 [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "the second arg <elm> must be in the semigroup of the first arg",
-          " <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "the second arg <elm> must be in the semigroup of the first ",
+                 "arg <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -240,9 +235,8 @@ InstallMethod(\*,
  IsInverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
-    Error("Semigroups: \*: usage,\n",
-          "the arguments must be classes of the same congruence,");
-    return;
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "the arguments must be classes of the same congruence,");
   fi;
   return EquivalenceClassOfElementNC(Parent(c1), c1!.rep * c2!.rep);
 end);
@@ -274,9 +268,8 @@ function(cong)
   local s, elms, trace, i, class, congClass, j;
   s := Range(cong);
   if not IsInverseSemigroup(s) then
-    Error("Semigroups: TraceOfSemigroupCongruence: usage,\n",
-          "the argument <cong> must be over an inverse semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: TraceOfSemigroupCongruence: usage,\n",
+                 "the argument <cong> must be over an inverse semigroup,");
   fi;
   elms := ShallowCopy(Idempotents(s));
   trace := [];
@@ -306,23 +299,23 @@ function(cong)
   local s, gens;
   s := Range(cong);
   if not IsInverseSemigroup(s) then
-    Error("Semigroups: KernelOfSemigroupCongruence: usage,\n",
-          "the first arg <cong> must be over an inverse semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: KernelOfSemigroupCongruence: usage,\n",
+                 "the first arg <cong> must be over an inverse semigroup,");
   fi;
   gens := Union(List(Idempotents(s),
                      e -> EquivalenceClassOfElementNC(cong, e)));
   return InverseSemigroup(gens, rec(small := true));
 end);
 
-# assumes K is normal in the beginning!!!! 
+# assumes K is normal in the beginning!!!!
 
-NormalClosureInverseSemigroup := function(S, K, coll)
+InstallGlobalFunction(SEMIGROUPS_NormalClosureInverseSemigroup,
+function(S, K, coll)
   local T, opts, x;
-  
+
   T := ClosureInverseSemigroup(K, coll);
 
-  while K <> T do 
+  while K <> T do
     K := T;
     opts := rec();
     opts.gradingfunc := function(o, x)
@@ -330,20 +323,20 @@ NormalClosureInverseSemigroup := function(S, K, coll)
                         end;
 
     opts.onlygrades := function(x, data)
-                        return x = false;
+                         return x = false;
                        end;
 
     opts.onlygradesdata := fail;
 
-    for x in K do 
-      T := ClosureInverseSemigroup(T, 
+    for x in K do
+      T := ClosureInverseSemigroup(T,
                                    AsList(Orb(GeneratorsOfSemigroup(S), x, POW,
-                                   opts)));
+                                              opts)));
     od;
   od;
 
   return K;
-end;
+end);
 
 #
 
@@ -351,25 +344,24 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local s, idsmgp, ids, ht_e, i, StartTiming, StopTiming, pos, hashlen, ht, 
-        treehashsize, right, left, genstoapply, enumerate_trace, 
-        enforce_conditions, compute_kernel, genpairs, pairstoapply, 
-        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup, 
-        oldKernel, traceBlocks;
+  local s, idsmgp, ids, ht_e, StartTiming, StopTiming, pos, hashlen, ht, right,
+    left, genstoapply, enumerate_trace, enforce_conditions, compute_kernel,
+    genpairs, pairstoapply, kernelgenstoapply, nr, nrk, traceUF, kernel, timing,
+    oldLookup, oldKernel, traceBlocks, i;
 
   # Check that the argument makes sense
   s := Range(cong);
   if not IsInverseSemigroup(s) then
-    Error("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,\n",
-          "the argument <cong> must be over an inverse semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: ",
+                 "usage,\n",
+                 "the argument <cong> must be over an inverse semigroup,");
   fi;
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(s);
   ids := SEMIGROUP_ELEMENTS(GenericSemigroupData(idsmgp), infinity);
   ht_e := HTCreate(ids[1]);
-  for i in [1 .. Length(ids)] do 
+  for i in [1 .. Length(ids)] do
     HTAdd(ht_e, ids[i], i);
   od;
 
@@ -384,12 +376,12 @@ function(cong)
                + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
     Print("elapsed time: ", String(elapsed), "ms\n");
   end;
-  
+
   pos := 0;
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
 
-  ht := HTCreate( [ids[1],ids[1]], rec(forflatplainlists := true,
-              treehashsize := hashlen ) );
+  ht := HTCreate([ids[1], ids[1]], rec(forflatplainlists := true,
+                                       treehashsize := hashlen));
 
   right := RightCayleyGraphSemigroup(idsmgp);
   left := LeftCayleyGraphSemigroup(idsmgp);
@@ -406,8 +398,8 @@ function(cong)
           UF_UNION(traceUF, x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(s) do
-            y := [HTValue(ht_e, a^-1 * ids[x[1]] * a),
-                  HTValue(ht_e, a^-1 * ids[x[2]] * a)];
+            y := [HTValue(ht_e, a ^ -1 * ids[x[1]] * a),
+                  HTValue(ht_e, a ^ -1 * ids[x[2]] * a)];
             if y[1] <> y[2] and HTValue(ht, y) = fail then
               HTAdd(ht, y, true);
               nr := nr + 1;
@@ -456,7 +448,7 @@ function(cong)
         f := HTValue(ht_e, RightOne(a));
         if traceTable[e] <> traceTable[f] then
           nr := nr + 1;
-          pairstoapply[nr] := [e,f];
+          pairstoapply[nr] := [e, f];
           #UF_UNION(traceUF, [e,f]);
         fi;
       else
@@ -474,8 +466,9 @@ function(cong)
   # STEPS (3)+(4)
   compute_kernel := function()
     # Take the normal closure inverse semigroup containing the new elements
-    if kernelgenstoapply <> [] then 
-      kernel := NormalClosureInverseSemigroup(s, kernel, kernelgenstoapply);
+    if kernelgenstoapply <> [] then
+      kernel := SEMIGROUPS_NormalClosureInverseSemigroup(s, kernel,
+                                                         kernelgenstoapply);
       Elements(kernel);
       kernelgenstoapply := [];
       nrk := 0;
@@ -485,8 +478,8 @@ function(cong)
   # Retrieve the initial information
   genpairs := GeneratingPairsOfSemigroupCongruence(cong);
   pairstoapply := List(genpairs, x -> [HTValue(ht_e, RightOne(x[1])),
-                                       HTValue(ht_e, RightOne(x[2]))] );
-  kernelgenstoapply := Set(genpairs, x -> x[1] * x[2]^-1);
+                                       HTValue(ht_e, RightOne(x[2]))]);
+  kernelgenstoapply := Set(genpairs, x -> x[1] * x[2] ^ -1);
   nr := Length(pairstoapply);
   nrk := Length(kernelgenstoapply);
   traceUF := UF_NEW(Length(ids));
@@ -510,14 +503,14 @@ function(cong)
     Print("enumerate_trace: ");
     enumerate_trace();
     StopTiming(timing);
-    Info(InfoSemigroups, 1, "lookup: ", oldLookup=UF_TABLE(traceUF));
-    Info(InfoSemigroups, 1, "kernel: ", oldKernel=kernel);
+    Info(InfoSemigroups, 1, "lookup: ", oldLookup = UF_TABLE(traceUF));
+    Info(InfoSemigroups, 1, "kernel: ", oldKernel = kernel);
     Info(InfoSemigroups, 1, "nrk = 0: ", nrk = 0);
   until (oldLookup = UF_TABLE(traceUF)) and (nrk = 0);
 
   # Convert traceLookup to traceBlocks
   traceBlocks := List(Compacted(UF_BLOCKS(traceUF)),
-                      b-> List(b, i-> ids[i]));
+                      b -> List(b, i -> ids[i]));
 
   #TODO: Change this to NC
   return InverseSemigroupCongruenceByKernelTrace(s, kernel, traceBlocks);

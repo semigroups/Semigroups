@@ -12,15 +12,9 @@
 ## MSc thesis "Computing with Semigroup Congruences", chapter 2
 ##
 
-DeclareCategory("IsSemigroupCongruenceData", IsRecord);
-DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
-
-#
-
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, hashlen, ht, treehashsize, data, pairstoapply, pos, 
-        found, has_changed;
+  local s, elms, pairs, hashlen, ht, data;
 
   s := Range(cong);
   elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(s), infinity);
@@ -28,7 +22,7 @@ function(cong)
                 x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
-  
+
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
                                          treehashsize := hashlen));
   data := rec(cong := cong,
@@ -36,10 +30,11 @@ function(cong)
               pos := 0,
               ht := ht,
               elms := elms,
-              found := false,  
+              found := false,
               ufdata := UF_NEW(Size(s)));
-  cong!.data := Objectify(
-                 NewType(FamilyObj(cong), IsSemigroupCongruenceData), data);
+  cong!.data := Objectify(NewType(FamilyObj(cong),
+                                  IsSemigroupCongruenceData),
+                          data);
   return;
 end);
 
@@ -53,11 +48,7 @@ for Filter in [IsSemigroupCongruence,
                IsLeftSemigroupCongruence,
                IsRightSemigroupCongruence] do
 
-#
-  
 DeclareOperation("Enumerate", [Filter, IsFunction]);
-
-#
 
 InstallImmediateMethod(IsFinite,
 "for a semigroup congruence",
@@ -76,25 +67,23 @@ InstallMethod(\in,
 "for dense list and semigroup congruence",
 [IsDenseList, Filter and HasGeneratingPairsOfMagmaCongruence],
 function(pair, cong)
-  local s, elms, p1, p2, table, find, lookfunc;
+  local s, elms, p1, p2, table, lookfunc;
+
   # Input checks
   if not Size(pair) = 2 then
-    Error("Semigroups: \in: usage,\n",
-          "the first arg <pair> must be a list of length 2,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not (pair[1] in s and pair[2] in s) then
-    Error("Semigroups: \in: usage,\n",
-          "elements of the first arg <pair> must be in range",
-          "of the second\narg <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "elements of the first arg <pair> must be in range",
+                 "of the second\narg <cong>,");
   fi;
   if not (HasIsFinite(s) and IsFinite(s)) then
-    Error("Semigroups: \in: usage,\n",
-          "this function currently only works if <cong> is a congruence of a ",
-          "semigroup\nwhich is known to be finite,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "this function currently only works if <cong> is a ",
+                 "congruence of a semigroup\nwhich is known to be finite,");
   fi;
 
   elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(s), infinity);
@@ -122,9 +111,8 @@ InstallMethod(AsLookupTable,
 [Filter],
 function(cong)
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-    Error("Semigroups: AsLookupTable: usage,\n",
-          "<cong> must be a congruence of a finite semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: AsLookupTable: usage,\n",
+                 "<cong> must be a congruence of a finite semigroup,");
   fi;
   Enumerate(cong, ReturnFalse);
   return AsLookupTable(cong);
@@ -151,12 +139,12 @@ InstallMethod(Enumerate,
 "for semigroup congruence data and a function",
 [IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, s, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr, 
+  local cong, s, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
         found, x, j, y, next, newtable, ii;
 
   cong := data!.cong;
   s := Range(cong);
-  
+
   ufdata := data!.ufdata;
   pairstoapply := data!.pairstoapply;
   ht := data!.ht;
@@ -256,12 +244,11 @@ InstallMethod(EquivalenceClasses,
 [Filter],
 function(cong)
   local classes, next, tab, elms, i;
-  
+
   if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-    Error("Semigroups: EquivalenceClasses: usage,\n",
-          "this function currently only works if <cong> is a congruence of a ",
-          "semigroup\nwhich is known to be finite,");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClasses: usage,\n",
+                 "this function currently only works if <cong> is a ",
+                 "congruence of a semigroup\nwhich is known to be finite,");
   fi;
   classes := [];
   next := 1;
@@ -326,9 +313,8 @@ InstallMethod(\*,
 [IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
   if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    Error("Semigroups: \*: usage,\n",
-          "the args must be classes of the same congruence,");
-    return;
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "the args must be classes of the same congruence,");
   fi;
   return CongruenceClassOfElement(EquivalenceClassRelation(class1),
                                   Representative(class1) *
@@ -366,10 +352,9 @@ function(cong)
   local s;
   s := Range(cong);
   if not (HasIsFinite(s) and IsFinite(s)) then
-    Error("Semigroups: NrCongruenceClasses: usage,\n",
-          "this function currently only works if <cong> is a congruence of a ",
-          "semigroup\nwhich is known to be finite,");
-    return;
+    ErrorMayQuit("Semigroups: NrCongruenceClasses: usage,\n",
+                 "this function currently only works if <cong> is a ",
+                 "congruence of a semigroup\nwhich is known to be finite,");
   fi;
   return Maximum(AsLookupTable(cong));
 end);
@@ -406,7 +391,7 @@ function(class)
       local classno, i;
       classno := UF_FIND(data!.ufdata, enum!.rep);
       if classno = UF_FIND(data!.ufdata, lastpair[1]) then
-        for i in [1..UF_SIZE(data!.ufdata)] do
+        for i in [1 .. UF_SIZE(data!.ufdata)] do
           if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
             enum!.found[i] := true;
             enum!.len := enum!.len + 1;

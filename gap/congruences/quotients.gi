@@ -8,8 +8,8 @@
 #############################################################################
 ##
 
-InstallMethod(OneImmutable, "for a quotient semigroup", 
-[IsQuotientSemigroup], 
+InstallMethod(OneImmutable, "for a quotient semigroup",
+[IsQuotientSemigroup],
 function(S)
   return One(QuotientSemigroupPreimage(S)) ^ QuotientSemigroupHomomorphism(S);
 end);

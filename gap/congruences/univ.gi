@@ -82,9 +82,8 @@ InstallMethod(ImagesElm,
 [IsUniversalSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    Error("Semigroups: ImagesElm: usage,\n",
-          "the second argument <elm> must be in <cong>'s semigroup");
-    return;
+    ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
+                 "the second argument <elm> must be in <cong>'s semigroup");
   fi;
   return Elements(Range(cong));
 end);
@@ -169,10 +168,9 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check that the arguments make sense
   if not elm in Range(cong) then
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "the second argument <elm> must be ",
-          "in the semigroup of 1st argument <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "the second argument <elm> must be ",
+                 "in the semigroup of 1st argument <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -208,9 +206,8 @@ InstallMethod(\*,
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
   if ParentAttr(c1) <> ParentAttr(c2) then
-    Error("Semigroups: \*: usage,\n",
-          "the args <c1> and <c2> must be over the same congruence");
-    return;
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "the args <c1> and <c2> must be over the same congruence");
   fi;
   return c1;
 end);

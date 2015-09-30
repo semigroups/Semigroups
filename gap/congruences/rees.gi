@@ -119,16 +119,14 @@ function(pair, cong)
   local s, i;
   # Check for validity
   if Size(pair) <> 2 then
-    Error("Semigroups: \in: usage,\n",
-          "the first arg <pair> must be a list of length 2,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
-    Error("Semigroups: \in: usage,\n",
-          "the elements of 1st arg <pair> ",
-          "must be in the range of 2nd arg <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the elements of 1st arg <pair> ",
+                 "must be in the range of 2nd arg <cong>,");
   fi;
   i := SemigroupIdealOfReesCongruence(cong);
   return (pair[1] = pair[2]) or (pair[1] in i and pair[2] in i);
@@ -141,9 +139,8 @@ InstallMethod(ImagesElm,
 [IsReesCongruence, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    Error("Semigroups: ImagesElm: usage,\n",
-          "the args <cong> and <elm> must refer to the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
+                 "the args <cong> and <elm> must refer to the same semigroup,");
   fi;
   if elm in SemigroupIdealOfReesCongruence(cong) then
     return Elements(SemigroupIdealOfReesCongruence(cong));
@@ -160,9 +157,9 @@ InstallMethod(JoinSemigroupCongruences,
 function(c1, c2)
   local gens1, gens2, i;
   if Range(c1) <> Range(c2) then
-    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
-          "the args <c1> and <c2> must be congruences of the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "the args <c1> and <c2> must be congruences of the same ",
+                 "semigroup,");
   fi;
   gens1 := GeneratorsOfSemigroupIdeal(SemigroupIdealOfReesCongruence(c1));
   gens2 := GeneratorsOfSemigroupIdeal(SemigroupIdealOfReesCongruence(c2));
@@ -208,10 +205,9 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check that the args make sense
   if not elm in Range(cong) then
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "the second arg <elm> must be ",
-          "in the semigroup of first arg <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "the second arg <elm> must be ",
+                 "in the semigroup of first arg <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -261,9 +257,9 @@ InstallMethod(\*,
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
-    Error("Semigroups: \*: usage,\n",
-          "the args <c1> and <c2> must be classes of the same congruence,");
-    return;
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "the args <c1> and <c2> must be classes of the same ",
+                 "congruence,");
   fi;
   if c1!.is_ideal_class then
     return c1;

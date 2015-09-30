@@ -25,14 +25,12 @@ InstallGlobalFunction(SemigroupCongruence,
 function(arg)
   local s, pairs, cong;
   if not Length(arg) >= 2 then
-    Error("Semigroups: SemigroupCongruence: usage,\n",
-          "at least 2 arguments are required,");
-    return;
+    ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+                 "at least 2 arguments are required,");
   fi;
   if not IsSemigroup(arg[1]) then
-    Error("Semigroups: SemigroupCongruence: usage,\n",
-          "1st argument <s> must be a semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+                 "1st argument <s> must be a semigroup,");
   fi;
   s := arg[1];
 
@@ -47,14 +45,12 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      Error("Semigroups: SemigroupCongruence: usage,\n",
-            "<pairs> should be a list of lists of size 2,");
-      return;
+      ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+                   "<pairs> should be a list of lists of size 2,");
     fi;
     if not ForAll(pairs, p -> p[1] in s and p[2] in s) then
-      Error("Semigroups: SemigroupCongruence: usage,\n",
-            "each pair should contain elements from the semigroup <s>,");
-      return;
+      ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+                   "each pair should contain elements from the semigroup <s>,");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
@@ -80,10 +76,9 @@ function(arg)
     if Range(IsomorphismReesMatrixSemigroup(s)) = Range(arg[2]) then
       return SEMIGROUPS_SimpleCongFromRMSCong(s, arg[2]);
     else
-      Error("Semigroups: SemigroupCongruence: usage,\n",
-            "<cong> should be over a Rees (0-)matrix semigroup ",
-            "isomorphic to <s>");
-      return;
+      ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+                   "<cong> should be over a Rees (0-)matrix semigroup ",
+                   "isomorphic to <s>");
     fi;
   elif IsSemigroupIdeal(arg[2]) and Parent(arg[2]) = s then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
@@ -148,5 +143,3 @@ InstallMethod(\*,
 function(list, class)
   return List(list, x -> x * class);
 end);
-
-#

@@ -13,3 +13,5 @@
 ##
 
 DeclareGlobalFunction("SEMIGROUPS_SetupCongData");
+DeclareCategory("IsSemigroupCongruenceData", IsRecord);
+DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);

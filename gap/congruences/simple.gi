@@ -140,9 +140,8 @@ InstallMethod(JoinMagmaCongruences,
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) then
-    Error("Semigroups: JoinMagmaCongruences: usage,\n",
-          "<cong1> and <cong2> must be over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: JoinMagmaCongruences: usage,\n",
+                 "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), join);
@@ -156,9 +155,8 @@ InstallMethod(MeetMagmaCongruences,
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) then
-    Error("Semigroups: MeetMagmaCongruences: usage,\n",
-          "<cong1> and <cong2> must be over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: MeetMagmaCongruences: usage,\n",
+                 "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), meet);
@@ -211,9 +209,8 @@ function(cong, elm)
   if elm in Range(cong) then
     return EquivalenceClassOfElementNC(cong, elm);
   else
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "<elm> must be an element of the range of <cong>");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "<elm> must be an element of the range of <cong>");
   fi;
 end);
 

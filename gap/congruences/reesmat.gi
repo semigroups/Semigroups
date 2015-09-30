@@ -23,39 +23,33 @@ function(s, n, colBlocks, rowBlocks)
 
   # Basic checks
   if not IsNormal(g, n) then
-    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-          "the second arg <n> must be a normal subgroup,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+                 "the second arg <n> must be a normal subgroup,");
   fi;
   if not ForAll(colBlocks, IsList) then
-    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-          "the third arg <colBlocks> must be a list of lists,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+                 "the third arg <colBlocks> must be a list of lists,");
   fi;
   if not ForAll(rowBlocks, IsList) then
-    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-          "the fourth arg <rowBlocks> must be a list of lists,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+                 "the fourth arg <rowBlocks> must be a list of lists,");
   fi;
   if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
-    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-          "the third arg <colBlocks> must be a partition ",
-          "of the columns of the matrix of <s>,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+                 "the third arg <colBlocks> must be a partition ",
+                 "of the columns of the matrix of <s>,");
   fi;
   if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
-    Error("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-          "the fourth arg <rowBlocks> must be a partition ",
-          "of the rows of the matrix of <s>,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
+                 "the fourth arg <rowBlocks> must be a partition ",
+                 "of the rows of the matrix of <s>,");
   fi;
 
   if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
     return RMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
   else
-    Error("Semigroups: RMSCongruenceByLinkedTriple:\n",
-          "invalid triple,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple:\n",
+                 "invalid triple,");
   fi;
 end);
 
@@ -69,45 +63,39 @@ function(s, n, colBlocks, rowBlocks)
 
   # Basic checks
   if not (IsGroup(g) and IsGroup(n)) then
-    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-          "the first arg <s> must be a Rees 0-matrix semigroup over a group,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+                 "the first arg <s> must be a Rees 0-matrix semigroup over ",
+                 "a group,");
   fi;
 
   if not IsNormal(g, n) then
-    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-          "the second arg <n> must be a normal subgroup,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+                 "the second arg <n> must be a normal subgroup,");
   fi;
   if not ForAll(colBlocks, IsList) then
-    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-          "the third arg <colBlocks> must be a list of lists,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+                 "the third arg <colBlocks> must be a list of lists,");
   fi;
   if not ForAll(rowBlocks, IsList) then
-    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-          "the fourth arg <rowBlocks> must be a list of lists,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+                 "the fourth arg <rowBlocks> must be a list of lists,");
   fi;
   if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
-    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-          "the third arg <colBlocks> must be a partition ",
-          "of the columns of the matrix of <s>,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+                 "the third arg <colBlocks> must be a partition ",
+                 "of the columns of the matrix of <s>,");
   fi;
   if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
-    Error("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-          "the fourth arg <rowBlocks> must be a partition ",
-          "of the rows of the matrix of <s>,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
+                 "the fourth arg <rowBlocks> must be a partition ",
+                 "of the rows of the matrix of <s>,");
   fi;
 
   if IsLinkedTriple(s, n, colBlocks, rowBlocks) then
     return RZMSCongruenceByLinkedTripleNC(s, n, colBlocks, rowBlocks);
   else
-    Error("Semigroups: RZMSCongruenceByLinkedTriple:\n",
-          "invalid triple,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple:\n",
+                 "invalid triple,");
   fi;
 end);
 
@@ -363,9 +351,9 @@ function(s, n, colBlocks, rowBlocks)
   local mat, block, bi, bj, i, j, u, v, bu, bv;
   # Check the semigroup is valid
   if not (IsFinite(s) and IsSimpleSemigroup(s)) then
-    Error("Semigroups: IsLinkedTriple: usage,\n",
-          "first arg <s> must be a finite simple Rees matrix semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: IsLinkedTriple: usage,\n",
+                 "first arg <s> must be a finite simple Rees matrix ",
+                 "semigroup,");
   fi;
   mat := Matrix(s);
   # Check axiom (L2) from Howie p.86, then call NC function
@@ -380,7 +368,7 @@ function(s, n, colBlocks, rowBlocks)
         for u in [1 .. Size(mat)] do
           for v in [u + 1 .. Size(mat)] do
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-             in n then
+                in n then
               return false;
             fi;
           od;
@@ -400,7 +388,7 @@ function(s, n, colBlocks, rowBlocks)
         for i in [1 .. Size(mat[1])] do
           for j in [i + 1 .. Size(mat[1])] do
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-            in n then
+                in n then
               return false;
             fi;
           od;
@@ -421,10 +409,9 @@ function(s, n, colBlocks, rowBlocks)
   local mat, block, i, j, u, v, bi, bj, bu, bv;
   # Check the semigroup is valid
   if not (IsFinite(s) and IsZeroSimpleSemigroup(s)) then
-    Error("Semigroups: IsLinkedTriple: usage,\n",
-          "the first arg <s> must be a finite 0-simple Rees 0-matrix ",
-          "semigroup");
-    return;
+    ErrorMayQuit("Semigroups: IsLinkedTriple: usage,\n",
+                 "the first arg <s> must be a finite 0-simple Rees 0-matrix ",
+                 "semigroup");
   fi;
   mat := Matrix(s);
   # Check axioms (L1) and (L2) from Howie p.86, then call NC function
@@ -453,7 +440,7 @@ function(s, n, colBlocks, rowBlocks)
               continue;
             fi;
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-             in n then
+                in n then
               return false;
             fi;
           od;
@@ -483,11 +470,11 @@ function(s, n, colBlocks, rowBlocks)
             continue;
           fi;
           for j in [i + 1 .. Size(mat[1])] do
-          if mat[u][j] = 0 then
-          continue;
-          fi;
+            if mat[u][j] = 0 then
+              continue;
+            fi;
             if not (mat[u][i] * mat[v][i] ^ -1 * mat[v][j] * mat[u][j] ^ -1)
-            in n then
+                in n then
               return false;
             fi;
           od;
@@ -559,16 +546,14 @@ function(pair, cong)
 
   # Check for validity
   if Size(pair) <> 2 then
-    Error("Semigroups: \in: usage,\n",
-          "the first arg <pair> must be a list of length 2,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
-    Error("Semigroups: \in: usage,\n",
-          "the elements of the first arg <pair> ",
-          "must be in the range of the second arg <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the elements of the first arg <pair> ",
+                 "must be in the range of the second arg <cong>,");
   fi;
 
   # Read the elements as (i,a,u) and (j,b,v)
@@ -601,16 +586,14 @@ function(pair, cong)
 
   # Check for validity
   if Size(pair) <> 2 then
-    Error("Semigroups: \in: usage,\n",
-          "the first arg <pair> must be a list of length 2,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not ForAll(pair, x -> x in s) then
-    Error("Semigroups: \in: usage,\n",
-          "the elements of the first arg <pair> ",
-          "must be in the range of the second arg <cong>,");
-    return;
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the elements of the first arg <pair> ",
+                 "must be in the range of the second arg <cong>,");
   fi;
 
   # Handling the case when one or more of the pair are zero
@@ -656,9 +639,9 @@ function(cong, elm)
   s := Range(cong);
   mat := Matrix(s);
   if not elm in s then
-    Error("Semigroups: ImagesElm: usage,\n",
-          "the args <cong> and <elm> must refer to the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
+                 "the args <cong> and <elm> must refer to the same ",
+                 "semigroup,");
   fi;
   # List of all elements congruent to elm under cong
   images := [];
@@ -690,9 +673,9 @@ function(cong, elm)
   s := Range(cong);
   mat := Matrix(s);
   if not elm in s then
-    Error("Semigroups: ImagesElm: usage,\n",
-          "the args <cong> and <elm> must refer to the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
+                 "the args <cong> and <elm> must refer to the same ",
+                 "semigroup,");
   fi;
   # Special case for 0
   if elm = MultiplicativeZero(s) then
@@ -828,9 +811,8 @@ InstallMethod(JoinSemigroupCongruences,
 function(c1, c2)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
   if Range(c1) <> Range(c2) then
-    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
-          "congruences must be defined over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
   fi;
   # n is the product of the normal subgroups
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
@@ -876,9 +858,8 @@ InstallMethod(JoinSemigroupCongruences,
 function(c1, c2)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
   if Range(c1) <> Range(c2) then
-    Error("Semigroups: JoinSemigroupCongruences: usage,\n",
-          "the args must be defined over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "the args must be defined over the same semigroup,");
   fi;
   # n is the product of the normal subgroups
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
@@ -924,9 +905,8 @@ InstallMethod(MeetSemigroupCongruences,
 function(c1, c2)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
-    Error("Semigroups: MeetSemigroupCongruences: usage,\n",
-          "the args must be defined over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+                 "the args must be defined over the same semigroup,");
   fi;
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
@@ -969,9 +949,8 @@ InstallMethod(MeetSemigroupCongruences,
 function(c1, c2)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
-    Error("Semigroups: MeetSemigroupCongruences: usage,\n",
-          "the args must be defined over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+                 "the args must be defined over the same semigroup,");
   fi;
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
@@ -1016,20 +995,17 @@ function(cong, nCoset, colClass, rowClass)
   local g;
   g := UnderlyingSemigroup(Range(cong));
   if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
-    Error("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
-          "the second arg <nCoset> must be a right coset of ", cong!.n,
-          " inside ", g, ",");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
+                 "the second arg <nCoset> must be a right coset of ", cong!.n,
+                 " inside ", g, ",");
   fi;
   if not colClass in [1 .. Size(cong!.colBlocks)] then
-    Error("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
-          "the third arg <colClass> is out of range,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
+                 "the third arg <colClass> is out of range,");
   fi;
   if not rowClass in [1 .. Size(cong!.rowBlocks)] then
-    Error("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
-          "the fourth arg <rowClass> is out of range,");
-    return;
+    ErrorMayQuit("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
+                 "the fourth arg <rowClass> is out of range,");
   fi;
   return RMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
 end);
@@ -1044,20 +1020,17 @@ function(cong, nCoset, colClass, rowClass)
   local g;
   g := UnderlyingSemigroup(Range(cong));
   if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
-    Error("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
-          "the second arg <nCoset> must be a right coset of ", cong!.n,
-          " inside ", g, ",");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
+                 "the second arg <nCoset> must be a right coset of ", cong!.n,
+                 " inside ", g, ",");
   fi;
   if not colClass in [1 .. Size(cong!.colBlocks)] then
-    Error("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
-          "the third arg <colClass> is out of range,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
+                 "the third arg <colClass> is out of range,");
   fi;
   if not rowClass in [1 .. Size(cong!.rowBlocks)] then
-    Error("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
-          "the fourth arg <rowClass> is out of range,");
-    return;
+    ErrorMayQuit("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
+                 "the fourth arg <rowClass> is out of range,");
   fi;
   return RZMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
 end);
@@ -1106,10 +1079,9 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check that the args make sense
   if not elm in Range(cong) then
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "the second arg <elm> must be in the semigroup of ",
-          "first arg <cong>");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "the second arg <elm> must be in the semigroup of ",
+                 "first arg <cong>");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -1122,10 +1094,9 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check that the args make sense
   if not elm in Range(cong) then
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "the second arg <elm> must be ",
-          "in the semigroup of first arg <cong>");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "the second arg <elm> must be ",
+                 "in the semigroup of first arg <cong>");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -1223,9 +1194,9 @@ InstallMethod(\*,
 function(c1, c2)
   local elm;
   if not Parent(c1) = Parent(c2) then
-    Error("Semigroups: \*: usage,\n",
-          "the args <c1> and <c2> must be classes of the same congruence,");
-    return;
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "the args <c1> and <c2> must be classes of the same ",
+                 "congruence,");
   fi;
   elm := Representative(c1) * Representative(c2);
   return(EquivalenceClassOfElementNC(Parent(c1), elm));
@@ -1239,9 +1210,8 @@ InstallMethod(\*,
 function(c1, c2)
   local elm;
   if not Parent(c1) = Parent(c2) then
-    Error("Semigroups: \*: usage,\n",
-          "<c1> and <c2> must be classes of the same congruence,");
-    return;
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "<c1> and <c2> must be classes of the same congruence,");
   fi;
   elm := Representative(c1) * Representative(c2);
   return(EquivalenceClassOfElementNC(Parent(c1), elm));
@@ -1635,13 +1605,13 @@ function(cong)
 
     # Does this relate any non-zero elements to zero?
     if pair[1] = MultiplicativeZero(s)
-       or pair[2] = MultiplicativeZero(s)
-       or ForAny([1 .. Size(mat)],
-                 u -> (mat[u][pair[1][1]] = 0)
-                 <>   (mat[u][pair[2][1]] = 0))
-       or ForAny([1 .. Size(mat[1])],
-                 i -> (mat[pair[1][3]][i] = 0)
-                 <>   (mat[pair[2][3]][i] = 0)) then
+        or pair[2] = MultiplicativeZero(s)
+        or ForAny([1 .. Size(mat)],
+                  u -> (mat[u][pair[1][1]] = 0)
+                  <>   (mat[u][pair[2][1]] = 0))
+        or ForAny([1 .. Size(mat[1])],
+                  i -> (mat[pair[1][3]][i] = 0)
+                  <>   (mat[pair[2][3]][i] = 0)) then
       return UniversalSemigroupCongruence(s);
     fi;
 
