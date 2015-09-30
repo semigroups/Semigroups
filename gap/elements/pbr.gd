@@ -9,15 +9,15 @@
 
 # This file contains a declarations for partitioned binary relations (PBRs) as
 # defined in:
-# 
+#
 # MARTIN, Paul; MAZORCHUK, Volodymyr.
-# Partitioned Binary Relations. MATHEMATICA SCANDINAVICA, v113, n1, p. 30-52, 
+# Partitioned Binary Relations. MATHEMATICA SCANDINAVICA, v113, n1, p. 30-52,
 # http://arxiv.org/abs/1102.0862
 
-DeclareCategory("IsPBR", 
+DeclareCategory("IsPBR",
                 IsMultiplicativeElementWithInverse and
                 IsAssociativeElementWithStar);
-                
+
 DeclareCategoryCollections("IsPBR");
 DeclareCategoryCollections("IsPBRCollection");
 

@@ -10,18 +10,18 @@
 
 #############################################################################
 ## This file contains declarations for max-plus, min-plus, tropical max-plus,
-## tropical min-plus matrices, projective. 
+## tropical min-plus matrices, projective.
 ##
 ## It is organized as follows:
 ##
-##   1. Max-plus matrices 
+##   1. Max-plus matrices
 ##
-##   2. Min-plus matrices  
+##   2. Min-plus matrices
 ##
 ##   2. Tropical matrices
 ##
 ##   4. Tropical max-plus matrices
-## 
+##
 ##   5. Tropical min-plus matrices
 ##
 ##   6. Projective max-plus matrices
@@ -312,7 +312,7 @@ function(x, y)
         val := Maximum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
       od;
       xy[i][j] := val;
-      if val > norm then 
+      if val > norm then
         norm := val;
       fi;
     od;
@@ -320,7 +320,7 @@ function(x, y)
 
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if xy[i][j] <> -infinity then 
+      if xy[i][j] <> -infinity then
         xy[i][j] := xy[i][j] - norm;
       fi;
     od;
@@ -333,8 +333,8 @@ InstallMethod(OneImmutable, "for a projective max-plus matrix",
 x -> ProjectiveMaxPlusMatrixNC(SEMIGROUPS_IdentityMat(x, -infinity, 0)));
 
 InstallMethod(RandomProjectiveMaxPlusMatrix, "for a pos int",
-[IsPosInt], 
-dim -> SEMIGROUPS_RandomMatrixOverSemiring(dim, 
+[IsPosInt],
+dim -> SEMIGROUPS_RandomMatrixOverSemiring(dim,
                                            -infinity,
                                            ProjectiveMaxPlusMatrixNC));
 
@@ -359,7 +359,7 @@ function(x, threshold, period)
     for j in [1 .. n] do
       x[i][j] := AbsInt(x[i][j]);
       if x[i][j] > threshold then
-        x[i][j] := threshold + (x[i][j] - threshold) mod period; 
+        x[i][j] := threshold + (x[i][j] - threshold) mod period;
       fi;
     od;
   od;
@@ -377,28 +377,34 @@ InstallMethod(TypePrintStringOfMatrixOverSemiring,
 
 InstallGlobalFunction(NaturalMatrixNC,
 function(x, threshold, period)
-  return Objectify(NaturalMatrixType, 
+  return Objectify(NaturalMatrixType,
                    SEMIGROUPS_NaturalizeMat(x, threshold, period));
+end);
+
+InstallGlobalFunction(NaturalMatrix,
+#TODO: Check parameters
+function(x, threshold, period)
+  return NaturalMatrixNC(List(x, ShallowCopy), threshold, period);
 end);
 
 InstallMethod(\*, "for natural number matrices",
 [IsNaturalMatrix, IsNaturalMatrix],
 function(x, y)
   local n, period, threshold, xy, i, j, k;
-  
+
   n := DimensionOfMatrixOverSemiring(x);
   period := PeriodNaturalMatrix(x);
   threshold := ThresholdNaturalMatrix(x);
   # TODO should really check that x and y are matrices over the same semiring!!
   xy := List([1 .. n], x -> EmptyPlist(n));
 
-  for i in [1 .. n] do 
-    for j in [1 .. n] do 
+  for i in [1 .. n] do
+    for j in [1 .. n] do
       xy[i][j] := 0;
-      for k in [1 .. n] do 
+      for k in [1 .. n] do
         xy[i][j] := xy[i][j] + x![i][k] * y![k][j];
       od;
-      if xy[i][j] > threshold then    
+      if xy[i][j] > threshold then
         xy[i][j] := threshold + (xy[i][j] - threshold) mod period;
       fi;
     od;
@@ -409,14 +415,17 @@ end);
 InstallMethod(OneImmutable, "for a natural number matrix",
 [IsNaturalMatrix],
 x -> NaturalMatrixNC(SEMIGROUPS_IdentityMat(x, 0, 1),
-                     ThresholdNaturalMatrix(x), 
+                     ThresholdNaturalMatrix(x),
                      PeriodNaturalMatrix(x)));
 
-InstallMethod(RandomNaturalMatrix, "for dimension, threshold, period (pos ints)",
-[IsPosInt, IsPosInt, IsPosInt], 
+InstallMethod(RandomNaturalMatrix,
+"for dimension, threshold, period (pos ints)",
+[IsPosInt, IsPosInt, IsPosInt],
 function(dim, threshold, period)
 
-  return SEMIGROUPS_RandomMatrixOverSemiring(dim, 
+  return SEMIGROUPS_RandomMatrixOverSemiring(dim,
                                              false,
-                                             x -> NaturalMatrixNC(x, threshold, period));
+                                             x -> NaturalMatrixNC(x,
+                                                                  threshold,
+                                                                  period));
 end);

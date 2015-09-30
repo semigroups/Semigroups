@@ -36,10 +36,9 @@ function(mat)
   if (not IsHomogeneousList(mat))
       or IsEmpty(mat)
       or not ForAll(mat, IsHomogeneousList) then
-    Error("Semigroups: BooleanMat: usage,\n",
-          "the argmuent must be a non-empty homogeneous list ",
-          "of homogeneous lists,\n");
-    return;
+    ErrorMayQuit("Semigroups: BooleanMat: usage,\n",
+                 "the argmuent must be a non-empty homogeneous list ",
+                 "of homogeneous lists,\n");
   elif IsRectangularTable(mat) then #0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then
       # 0s and 1s
@@ -71,9 +70,8 @@ function(mat)
   x := EmptyPlist(n);
   for i in [1 .. n] do
     if not ForAll(mat[i], x -> IsPosInt(x) and x <= n) then
-      Error("Semigroups: BooleanMat:\n",
-            "the entries of each list must not exceed ", n, ",");
-      return;
+      ErrorMayQuit("Semigroups: BooleanMat:\n",
+                   "the entries of each list must not exceed ", n, ",");
     fi;
     Add(x, BlistList([1 .. n], mat[i]));
   od;
@@ -138,16 +136,18 @@ InstallMethod(\in, "for a boolean mat and boolean mat",
 [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local n, i, j;
-  
+
   n := Length(x![1]);
 
-  if n <> Length(y![1]) then 
-    ErrorMayQuit();
+  if n <> Length(y![1]) then
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the arguments <x> and <y> must be boolean matrix of equal ",
+                 "size,");
   fi;
 
-  for i in [1 .. n] do 
+  for i in [1 .. n] do
     for j in [1 .. n] do
-      if x![i][j] and not y![i][j] then 
+      if x![i][j] and not y![i][j] then
         return false;
       fi;
     od;
@@ -291,7 +291,7 @@ end);
 
 InstallGlobalFunction(BlistNumber,
 function(nr, n)
-  local x, q, i, j;
+  local x, q, i;
 
   x := BlistList([1 .. n], []);
   nr := nr - 1;   # to be in [0 .. 2 ^ n - 1]
@@ -316,49 +316,47 @@ function(x, n)
   local y, i;
 
   if n < 2 * x![1] then
-    Error("Semigroups: AsBooleanMat: usage,\n",
-          "the pbr in the first argument is defined on more than ",
-          String(n), " points,");
-    return;
+    ErrorMayQuit("Semigroups: AsBooleanMat: usage,\n",
+                 "the pbr in the first argument is defined on more than ",
+                 String(n), " points,");
   fi;
 
   y := EmptyPlist(n);
-  for i in [2 ..  2 * x![1] + 1] do 
+  for i in [2 ..  2 * x![1] + 1] do
     Add(y, BlistList([1 .. n], x![i]));
   od;
-  for i in [2 * x![1] + 1 .. n] do 
+  for i in [2 * x![1] + 1 .. n] do
     Add(y, BlistList([1 .. n], []));
   od;
   return BooleanMat(y);
 end);
 
-InstallMethod(AsBooleanMat, "for a bipartition", 
+InstallMethod(AsBooleanMat, "for a bipartition",
 [IsBipartition], x -> AsBooleanMat(x, DegreeOfBipartition(x)));
 
-InstallMethod(AsBooleanMat, "for a bipartition and pos int", 
+InstallMethod(AsBooleanMat, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
 function(x, n)
   local deg, blocks, out, i, block;
 
   deg := DegreeOfBipartition(x);
   if 2 * n < deg then
-    Error("Semigroups: AsBooleanMat: usage,\n",
-          "the bipartition in the first argument must have degree ",
-          "at least ", String(2 * n), ",");
-    return;
+    ErrorMayQuit("Semigroups: AsBooleanMat: usage,\n",
+                 "the bipartition in the first argument must have degree ",
+                 "at least ", String(2 * n), ",");
   fi;
 
   blocks := ShallowCopy(ExtRepOfBipartition(x));
   out := EmptyPlist(2 * n);
-  
+
   for block in blocks do
     block := ShallowCopy(block);
-    for i in [1 .. Length(block)] do 
-      if block[i] < 0 then 
+    for i in [1 .. Length(block)] do
+      if block[i] < 0 then
         block[i] := -block[i] + deg;
       fi;
     od;
-    for i in block do 
+    for i in block do
       out[i] := BlistList([1 .. 2 * n], block);
     od;
   od;
@@ -366,7 +364,7 @@ function(x, n)
   return BooleanMat(out);
 end);
 
-InstallMethod(AsBooleanMat, "for a transformation", 
+InstallMethod(AsBooleanMat, "for a transformation",
 [IsTransformation], x -> AsBooleanMat(x, DegreeOfTransformation(x)));
 
 InstallMethod(AsBooleanMat, "for a transformation and pos int",
@@ -374,10 +372,9 @@ InstallMethod(AsBooleanMat, "for a transformation and pos int",
 function(x, n)
   local out, i;
   if ForAny([1 .. n], i -> i ^ x > n) then
-    Error("Semigroups: AsBooleanMat: usage,\n",
-          "the transformation in the first argument must map ",
-          "[1 .. ", String(n), "] to itself,");
-    return;
+    ErrorMayQuit("Semigroups: AsBooleanMat: usage,\n",
+                 "the transformation in the first argument must map ",
+                 "[1 .. ", String(n), "] to itself,");
   fi;
 
   out := List([1 .. n], x -> BlistList([1 .. n], []));
@@ -387,17 +384,17 @@ function(x, n)
   return BooleanMatNC(out);
 end);
 
-InstallMethod(AsBooleanMat, "for a perm", 
+InstallMethod(AsBooleanMat, "for a perm",
 [IsPerm], x -> AsBooleanMat(AsTransformation(x)));
 
-InstallMethod(AsBooleanMat, "for a perm", 
-[IsPerm, IsPosInt], 
+InstallMethod(AsBooleanMat, "for a perm",
+[IsPerm, IsPosInt],
 function(x, n)
   return AsBooleanMat(AsTransformation(x), n);
 end);
 
-InstallMethod(AsBooleanMat, "for a partial perm", 
-[IsPartialPerm], 
+InstallMethod(AsBooleanMat, "for a partial perm",
+[IsPartialPerm],
 x -> AsBooleanMat(x, Maximum(DegreeOfPartialPerm(x),
                              CodegreeOfPartialPerm(x))));
 
@@ -405,18 +402,17 @@ InstallMethod(AsBooleanMat, "for a transformation and pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
   local out, j, i;
-  
+
   if ForAny([1 .. n], i -> i ^ x > n) then
-    Error("Semigroups: AsBooleanMat: usage,\n",
-          "the partial perm in the first argument must map ",
-          "[1 .. ", String(n), "] into itself,");
-    return;
+    ErrorMayQuit("Semigroups: AsBooleanMat: usage,\n",
+                 "the partial perm in the first argument must map ",
+                 "[1 .. ", String(n), "] into itself,");
   fi;
 
   out := List([1 .. n], x -> BlistList([1 .. n], []));
   for i in [1 .. n] do
     j := i ^ x;
-    if j <> 0 then 
+    if j <> 0 then
       out[i][j] := true;
     fi;
   od;
@@ -492,15 +488,14 @@ function(G, H, x)
   local n;
   n := Length(x![1]);
   if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then
-    Error("Semigroups: CanonicalBooleanMat: usage,\n",
-          "the largest moved point of the first argument must not",
-          " exceed the dimension of the Boolean matrix,");
-    return;
+    ErrorMayQuit("Semigroups: CanonicalBooleanMat: usage,\n",
+                 "the largest moved point of the first argument must not",
+                 " exceed the dimension of the Boolean matrix,");
   fi;
   return CanonicalBooleanMatNC(G, H, x);
 end);
 
-if IsGrapeLoaded then 
+if IsGrapeLoaded then
   InstallMethod(CanonicalBooleanMatNC,
   "for perm group, perm group, and boolean mat",
   [IsPermGroup, IsPermGroup, IsBooleanMat],
@@ -509,7 +504,7 @@ if IsGrapeLoaded then
     n := Length(x![1]);
     V := DirectProduct(G, H);
     phi := Projection(V, 2);
-  
+
     act := function(pt, p)
       local q, r, nr;
       pt := pt - 1;
@@ -519,11 +514,11 @@ if IsGrapeLoaded then
       nr := NumberBlist(Permuted(BlistNumber(r + 1, n), p));
       return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n; # and then the row
     end;
-  
+
      map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
      return BooleanMatSet(SmallestImageSet(Image(map), SetBooleanMat(x)));
   end);
-fi; 
+fi;
 
 InstallMethod(IsSymmetricBooleanMat, "for a boolean matrix",
 [IsBooleanMat],

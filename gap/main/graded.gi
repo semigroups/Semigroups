@@ -70,9 +70,8 @@ function(arg)
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    Error("Semigroups: GradedLambdaOrb: usage,\n",
-          "there must be at least 3 arguments,");
-    return;
+    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+                 "there must be at least 3 arguments,");
   fi;
 
   S := arg[1];
@@ -84,17 +83,14 @@ function(arg)
   fi;
 
   if not IsActingSemigroup(S) then
-    Error("Semigroups: GradedLambdaOrb: usage,\n",
-          "the first argument <S> must be an acting semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+                 "the first argument <S> must be an acting semigroup,");
   elif not IsAssociativeElement(x) then
-    Error("Semigroups: GradedLambdaOrb: usage,\n",
-          "the second argument <x> must be an associative element,");
-    return;
+    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+                 "the second argument <x> must be an associative element,");
   elif not IsBool(global) then
-    Error("Semigroups: GradedLambdaOrb: usage,\n",
-          "the third argument <global> must be a boolean,");
-    return;
+    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+                 "the third argument <global> must be a boolean,");
   fi;
 
   lambda := LambdaFunc(S)(x);
@@ -181,9 +177,8 @@ function(arg)
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    Error("Semigroups: GradedRhoOrb: usage,\n",
-          "there must be at least 3 arguments,");
-    return;
+    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+                 "there must be at least 3 arguments,");
   fi;
 
   S := arg[1];
@@ -195,17 +190,14 @@ function(arg)
   fi;
 
   if not IsActingSemigroup(S) then
-    Error("Semigroups: GradedRhoOrb: usage,\n",
-          "the first argument <S> must be an acting semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+                 "the first argument <S> must be an acting semigroup,");
   elif not IsAssociativeElement(x) then
-    Error("Semigroups: GradedRhoOrb: usage,\n",
-          "the second argument <f> must be an associative element,");
-    return;
+    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+                 "the second argument <f> must be an associative element,");
   elif not IsBool(global) then
-    Error("Semigroups: GradedRhoOrb: usage,\n",
-          "the third argument <opt> must be a boolean,");
-    return;
+    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+                 "the third argument <opt> must be a boolean,");
   fi;
 
   rho := RhoFunc(S)(x);
@@ -289,7 +281,7 @@ function(S)
   fam := CollectionsFamily(FamilyObj(LambdaFunc(S)(Representative(S))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs),
                    rec(orbits := List([1 .. ActionDegree(S) + 1], x -> []),
-                       lens := [1 .. ActionDegree(S) + 1] * 0, 
+                       lens := [1 .. ActionDegree(S) + 1] * 0,
                        parent := S));
 end);
 
@@ -300,7 +292,7 @@ InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 function(S)
   return Objectify(NewType(FamilyObj(S), IsGradedRhoOrbs),
                    rec(orbits := List([1 .. ActionDegree(S) + 1], x -> []),
-                       lens := [1 .. ActionDegree(S) + 1] * 0, 
+                       lens := [1 .. ActionDegree(S) + 1] * 0,
                        parent := S));
 end);
 

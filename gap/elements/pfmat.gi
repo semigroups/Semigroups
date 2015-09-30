@@ -10,19 +10,21 @@
 
 # This file contains an implementation of matrices over prime fields.
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a matrix over prime field",
+InstallMethod(TypeViewStringOfMatrixOverSemiring,
+"for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> "prime field");
 
 #TODO make it non-NC
 
-InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a matrix over prime field",
+InstallMethod(TypePrintStringOfMatrixOverSemiring,
+"for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> "MatrixOverPrimeFieldNC");
 
 InstallGlobalFunction(MatrixOverPrimeFieldNC,
 function(arg)
   local mat;
   mat := arg[1];
-  if Length(arg) = 2 then 
+  if Length(arg) = 2 then
     mat[Length(mat) + 1] := Size(arg[2]);
   fi;
   return Objectify(MatrixOverPrimeFieldType, mat);
@@ -31,7 +33,7 @@ end);
 InstallMethod(BaseField, "for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> GF(x![DimensionOfMatrixOverSemiring(x) + 1]));
 
-InstallMethod(\*, "for matrices over a prime field", 
+InstallMethod(\*, "for matrices over a prime field",
 [IsMatrixOverPrimeField, IsMatrixOverPrimeField],
 function(x, y)
   local n, xy, i, j, k;
@@ -68,12 +70,12 @@ end);
 InstallMethod(OneMutable, "for a matrix over a prime field",
 [IsMatrixOverPrimeField], OneImmutable);
 
-InstallMethod(RandomMatrixOverPrimeField, "for a pos int and a prime field", 
+InstallMethod(RandomMatrixOverPrimeField, "for a pos int and a prime field",
 [IsPosInt, IsFinite and IsField],
 function(n, field)
   local xy, i, j;
-  
-  if not IsPrimeField(field) then 
+
+  if not IsPrimeField(field) then
     ErrorMayQuit("Semigroups: RandomMatrixOverPrimeField: usage,\n",
                  "the second argument must be a prime field,");
   fi;
@@ -88,7 +90,7 @@ function(n, field)
   return MatrixOverPrimeFieldNC(xy);
 end);
 
-InstallMethod(RandomMatrixOverPrimeField, "for pos int, prime int, pos int", 
+InstallMethod(RandomMatrixOverPrimeField, "for pos int, prime int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
 function(n, p, d)
   return RandomMatrixOverPrimeField(n, GF(p, d));
@@ -103,30 +105,29 @@ end);
 # special methods
 
 InstallMethod(AsMatrix, "for a matrix over prime field",
-[IsMatrixOverPrimeField], 
+[IsMatrixOverPrimeField],
 function(x)
   return List([1 .. DimensionOfMatrixOverSemiring(x)], i -> x![i]);
 end);
 
-InstallMethod(AsMatrixOverPrimeField, 
+InstallMethod(AsMatrixOverPrimeField,
 "for a prime field and matrix with entries in a prime field",
-[IsFinite and IsField, IsMatrix and IsFFECollColl], 
+[IsFinite and IsField, IsMatrix and IsFFECollColl],
 function(field, x)
   local n, i, j;
-  
-  if not IsPrimeField(field) then 
-    Error();
-    return;
+
+  if not IsPrimeField(field) then
+    ErrorMayQuit("Semigroups: AsMatrixOverPrimeField: usage,\n",
+                 "the first argument <field> must be a prime field,");
   fi;
 
   n := Length(x);
 
   for i in [1 .. n] do
-    for j in [1 .. n] do 
+    for j in [1 .. n] do
       if not x[i][j] in field then
-        Error("Semigroups: AsMatrixOverPrimeField: usage,\n", 
-              "the entry ", x[i][j], " does not belong to ", field, ",");
-        return;
+        ErrorMayQuit("Semigroups: AsMatrixOverPrimeField: usage,\n",
+                     "the entry ", x[i][j], " does not belong to ", field, ",");
       fi;
     od;
   od;
@@ -138,32 +139,30 @@ function(field, x)
   return MatrixOverPrimeFieldNC(x);
 end);
 
-InstallMethod(AsMatrixOverPrimeField, 
+InstallMethod(AsMatrixOverPrimeField,
 "for a pos int and matrix with entries in prime field",
-[IsPosInt, IsMatrix and IsFFECollColl], 
+[IsPosInt, IsMatrix and IsFFECollColl],
 function(p, x)
-  if not IsPrimeInt(p) then 
-    Error();
-    return;
+  if not IsPrimeInt(p) then
+    ErrorMayQuit("Semigroups: AsMatrixOverPrimeField: usage,\n",
+                 "the first argument <p> must be a prime,");
   fi;
 
   return MatrixOverPrimeField(GF(p), x);
 end);
 
-InstallMethod(AsMatrixOverPrimeField, 
+InstallMethod(AsMatrixOverPrimeField,
 "for a prime power int and matrix of integers",
 [IsPosInt, IsMatrix and IsCyclotomicCollColl],
 function(p, x)
-  local n, i, j;
-  
-  if not IsPrimeInt(p) then 
-    Error();
-    return;
+  if not IsPrimeInt(p) then
+    ErrorMayQuit("Semigroups: AsMatrixOverPrimeField: usage,\n",
+                 "the first argument <p> must be a prime,");
   fi;
   return AsMatrixOverPrimeFieldNC(p, x);
 end);
 
-InstallMethod(AsMatrixOverPrimeFieldNC, 
+InstallMethod(AsMatrixOverPrimeFieldNC,
 "for a prime power int and matrix of integers",
 [IsPosInt, IsObject],
 function(p, x)

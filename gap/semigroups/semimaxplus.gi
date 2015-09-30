@@ -40,27 +40,27 @@ end);
 InstallMethod(RandomTropicalMaxPlusMatrixSemigroup, "for a pos ints",
 [IsPosInt, IsPosInt, IsPosInt],
 function(nrgens, dim, threshold)
-  return Semigroup(Set([1 .. nrgens], 
+  return Semigroup(Set([1 .. nrgens],
                    x -> RandomTropicalMaxPlusMatrix(dim, threshold)));
 end);
 
 InstallMethod(RandomTropicalMaxPlusMatrixMonoid, "for a pos ints",
 [IsPosInt, IsPosInt, IsPosInt],
 function(nrgens, dim, threshold)
-  return Monoid(Set([1 .. nrgens], 
+  return Monoid(Set([1 .. nrgens],
                 x -> RandomTropicalMaxPlusMatrix(dim, threshold)));
 end);
 
 InstallMethod(RandomTropicalMinPlusMatrixSemigroup, "for a pos ints",
 [IsPosInt, IsPosInt, IsPosInt],
 function(nrgens, dim, threshold)
-  return Semigroup(Set([1 .. nrgens], 
+  return Semigroup(Set([1 .. nrgens],
                    x -> RandomTropicalMinPlusMatrix(dim, threshold)));
 end);
 
 InstallMethod(RandomTropicalMinPlusMatrixMonoid, "for a pos ints",
 [IsPosInt, IsPosInt, IsPosInt],
 function(nrgens, dim, threshold)
-  return Monoid(Set([1 .. nrgens], 
+  return Monoid(Set([1 .. nrgens],
                 x -> RandomTropicalMinPlusMatrix(dim, threshold)));
 end);

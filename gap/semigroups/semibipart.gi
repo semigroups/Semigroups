@@ -15,9 +15,9 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> "\>bipartition\< ");
 
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
-[IsBipartitionSemigroup], 
+[IsBipartitionSemigroup],
 function(S)
-  return Concatenation("degree \>", 
+  return Concatenation("degree \>",
                        ViewString(DegreeOfBipartitionSemigroup(S)),
                        "\<\< ");
 end);
@@ -51,7 +51,7 @@ end);
 #
 
 InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
-S-> Range(IsomorphismBlockBijectionSemigroup(S)));
+S -> Range(IsomorphismBlockBijectionSemigroup(S)));
 
 #
 
@@ -511,10 +511,10 @@ end);
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
-  if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then 
+  if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then
     TryNextMethod(); # FIXME why is this necessary?
   fi;
-    
+
   return ForAll(coll, IsBlockBijection)
    or ForAll(coll, IsPartialPermBipartition);
 end);
@@ -602,9 +602,6 @@ end);
 
 InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsBipartitionSemigroup(Parent(x)));
-
-#
-
 
 #
 

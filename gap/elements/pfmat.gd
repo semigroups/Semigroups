@@ -24,20 +24,20 @@ BindGlobal("MatrixOverPrimeFieldType",
 DeclareGlobalFunction("MatrixOverPrimeField");
 DeclareGlobalFunction("MatrixOverPrimeFieldNC");
 
-DeclareOperation("RandomMatrixOverPrimeField", 
+DeclareOperation("RandomMatrixOverPrimeField",
                  [IsPosInt, IsField and IsFinite]);
-DeclareOperation("RandomMatrixOverPrimeField", 
+DeclareOperation("RandomMatrixOverPrimeField",
                  [IsPosInt, IsPosInt, IsPosInt]);
 
 DeclareOperation("AsMatrix", [IsMatrixOverPrimeField]);
 
-DeclareOperation("AsMatrixOverPrimeField", 
+DeclareOperation("AsMatrixOverPrimeField",
                  [IsFinite and IsField, IsMatrix and IsFFECollColl]);
-DeclareOperation("AsMatrixOverPrimeField", 
+DeclareOperation("AsMatrixOverPrimeField",
                  [IsPosInt, IsMatrix and IsFFECollColl]);
-DeclareOperation("AsMatrixOverPrimeField", 
+DeclareOperation("AsMatrixOverPrimeField",
                  [IsPosInt, IsMatrix and IsCyclotomicCollColl]);
-DeclareOperation("AsMatrixOverPrimeFieldNC", 
+DeclareOperation("AsMatrixOverPrimeFieldNC",
                  [IsPosInt, IsObject]);
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForMatrixOverNonPrimeField");

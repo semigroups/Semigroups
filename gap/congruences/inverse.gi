@@ -309,8 +309,7 @@ end);
 
 # assumes K is normal in the beginning!!!!
 
-InstallGlobalFunction(SEMIGROUPS_NormalClosureInverseSemigroup,
-function(S, K, coll)
+NormalClosureInverseSemigroup := function(S, K, coll)
   local T, opts, x;
 
   T := ClosureInverseSemigroup(K, coll);
@@ -336,7 +335,7 @@ function(S, K, coll)
   od;
 
   return K;
-end);
+end;
 
 #
 
@@ -467,8 +466,8 @@ function(cong)
   compute_kernel := function()
     # Take the normal closure inverse semigroup containing the new elements
     if kernelgenstoapply <> [] then
-      kernel := SEMIGROUPS_NormalClosureInverseSemigroup(s, kernel,
-                                                         kernelgenstoapply);
+      kernel := NormalClosureInverseSemigroup(s, kernel,
+                                              kernelgenstoapply);
       Elements(kernel);
       kernelgenstoapply := [];
       nrk := 0;

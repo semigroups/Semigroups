@@ -9,6 +9,8 @@
     * `element.h`
 * "documentation" and comments: 
 
+* optimize
+
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 
 * check for memleaks

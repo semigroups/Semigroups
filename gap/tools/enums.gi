@@ -20,35 +20,31 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the first argument <obj> must be a domain or a collections",
-          "family,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+                 "the first argument <obj> must be a domain or a collections",
+                 "family,");
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
-    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the second argument <baseenum> must be an enumerator or a list,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+                 "the second argument <baseenum> must be an enumerator or a ",
+                 "list,");
   elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
-    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the third and fourth arguments <convert_out> and <convert_in>\n",
-          "must be functions,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+                 "the third and fourth arguments <convert_out> and ",
+                 "<convert_in>\nmust be functions,");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the fifth argument <filts> must be a list of filters,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+                 "the fifth argument <filts> must be a list of filters,");
   elif not (IsRecord(record) and IsMutable(record))
       or IsBound(record.baseenum)
       or IsBound(record.convert_out)
       or IsBound(record.convert_in)
       or IsBound(record.NumberElement)
       or IsBound(record.ElementNumber) then
-    Error("Semigroups: EnumeratorByEnumerator: usage,\n",
-          "the sixth argument <record> must be a mutable record",
-          "with no components\n",
-          "named:\n`baseenum', `convert_out', `convert_in',",
-          "`ElementNumber',\n or `NumberElement',");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+                 "the sixth argument <record> must be a mutable record",
+                 "with no components\n",
+                 "named:\n`baseenum', `convert_out', `convert_in',",
+                 "`ElementNumber',\n or `NumberElement',");
   fi;
 
   record.baseenum := baseenum;
@@ -109,29 +105,26 @@ function(obj, record, baseenum, convert, filts)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-          "the first argument <obj> must be a domain or a collections ",
-          "family,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+                 "the first argument <obj> must be a domain or a collections ",
+                 "family,");
   elif not IsRecord(record)
       or IsBound(record.ElementNumber)
       or IsBound(record.NumberElement)
       or IsBound(record.baseenum)
       or IsBound(record.enumofenums) then
-    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-          "the second argument  <record> must be a record",
-          "with no components named:\n",
-          "`NumberElement', `ElementNumber', `baseenum', or `enumofenums',");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+                 "the second argument  <record> must be a record",
+                 "with no components named:\n",
+                 "`NumberElement', `ElementNumber', `baseenum', or ",
+                 "`enumofenums',");
     # TODO add check for third arg
   elif not IsFunction(convert) then
-    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-           "the fourth argument <convert> must be a function,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+                 "the fourth argument <convert> must be a function,");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    Error("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-          "the fifth argument <filts> must be a list of filters,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+                 "the fifth argument <filts> must be a list of filters,");
   fi;
 
   record.baseenum := baseenum;
@@ -724,18 +717,15 @@ function(m, n)
   local convert_out, convert_in, fam;
 
   if not IsPosInt(n) then
-    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
-          "the second argument <n> must be a positive integer,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorOfArrangements: usage,\n",
+                 "the second argument <n> must be a positive integer,");
   elif not (IsInt(m) and m >= 0) then
-    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
-          "the first argument <m> must be a non-negative integer,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorOfArrangements: usage,\n",
+                 "the first argument <m> must be a non-negative integer,");
   elif m > n then
-    Error("Semigroups: EnumeratorOfArrangements: usage,\n",
-          "the first argument <m> must be no greater than the\n",
-          "second argument <n>,");
-    return;
+    ErrorMayQuit("Semigroups: EnumeratorOfArrangements: usage,\n",
+                 "the first argument <m> must be no greater than the\n",
+                 "second argument <n>,");
   fi;
 
   convert_out := function(enum, x)

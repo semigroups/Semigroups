@@ -72,30 +72,26 @@ function(arg)
     name := arg[1];
     line_nr := arg[2];
   else
-    Error("Semigroups: ReadGenerators: usage,\n",
-          "there should be at most 2 arguments,");
-    return;
+    ErrorMayQuit("Semigroups: ReadGenerators: usage,\n",
+                 "there should be at most 2 arguments,");
   fi;
 
   if IsString(name) then
     file := IO_CompressedFile(name, "r");
     if file = fail then
-      Error("Semigroups: ReadGenerators:\n",
-            "could not open the file ", file, ",");
-      return;
+      ErrorMayQuit("Semigroups: ReadGenerators:\n",
+                   "could not open the file ", file, ",");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    Error("Semigroups: ReadGenerators: usage,\n",
-          "the first argument must be a string or a file,");
-    return;
+    ErrorMayQuit("Semigroups: ReadGenerators: usage,\n",
+                 "the first argument must be a string or a file,");
   fi;
 
   if not (IsInt(line_nr) and line_nr >= 0) then
-    Error("Semigroups: ReadGenerators: usage,\n",
-          "the second argument must be a positive integer,");
-    return;
+    ErrorMayQuit("Semigroups: ReadGenerators: usage,\n",
+                 "the second argument must be a positive integer,");
   fi;
 
   if line_nr <> 0 then
@@ -109,9 +105,8 @@ function(arg)
       IO_Close(file);
     fi;
     if line = "" then
-      Error("Semigroups: ReadGenerators:\n",
-            "the file only has ", i - 1, " lines,");
-      return;
+      ErrorMayQuit("Semigroups: ReadGenerators:\n",
+                   "the file only has ", i - 1, " lines,");
     else
       return ReadGeneratorsLine(Chomp(line));
     fi;
@@ -173,15 +168,13 @@ function(arg)
     coll := arg[2];
     mode := arg[3];
   else
-    Error("Semigroups: WriteGenerators: usage,\n",
-          "there should be 2 or 3 arguments,");
-    return;
+    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
+                 "there should be 2 or 3 arguments,");
   fi;
 
   if not (mode = "a" or mode = "w") then
-    Error("Semigroups: WriteGenerators: usage,\n",
-          "the third argument must be \"a\" or \"w\",");
-    return;
+    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
+                 "the third argument must be \"a\" or \"w\",");
   fi;
 
   if IsTransformationCollection(coll)
@@ -191,25 +184,22 @@ function(arg)
   elif not (IsTransformationCollColl(coll)
             or IsPartialPermCollColl(coll)
             or IsBipartitionCollColl(coll)) then
-    Error("Semigroups: WriteGenerators: usage,\n",
-          "the second arg must be a transformation, partial perm,\n",
-          "or bipartition collection, or coll coll,");
-    return;
+    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
+                 "the second arg must be a transformation, partial perm,\n",
+                 "or bipartition collection, or coll coll,");
   fi;
 
   if IsString(name) then
     file := IO_CompressedFile(name, mode);
     if file = fail then
-      Error("Semigroups: WriteGenerators:\n",
-            "couldn't open the file ", name, ",");
-      return;
+      ErrorMayQuit("Semigroups: WriteGenerators:\n",
+                   "couldn't open the file ", name, ",");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    Error("Semigroups: WriteGenerators: usage,\n",
-          "the first argument must be a string or a file,");
-    return;
+    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
+                 "the first argument must be a string or a file,");
   fi;
 
   for i in [1 .. Length(coll)] do

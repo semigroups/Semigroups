@@ -11,7 +11,7 @@
 # This file contains an implementation of boolean matrices.
 
 #############################################################################
-## Specializations of declarations for MatrixOverSemiring 
+## Specializations of declarations for MatrixOverSemiring
 #############################################################################
 
 DeclareCategory("IsBooleanMat", IsMatrixOverSemiring);
@@ -58,9 +58,9 @@ DeclareAttribute("SetBooleanMat", IsBooleanMat);
 DeclareAttribute("BooleanMatSet", IsSSortedList and IsHomogeneousList);
 DeclareAttribute("CanonicalBooleanMat", IsBooleanMat);
 DeclareOperation("CanonicalBooleanMat", [IsPermGroup, IsBooleanMat]);
-DeclareOperation("CanonicalBooleanMat", 
+DeclareOperation("CanonicalBooleanMat",
                  [IsPermGroup, IsPermGroup, IsBooleanMat]);
-DeclareOperation("CanonicalBooleanMatNC", 
+DeclareOperation("CanonicalBooleanMatNC",
                  [IsPermGroup, IsPermGroup, IsBooleanMat]);
 
 DeclareProperty("IsSymmetricBooleanMat", IsBooleanMat);
@@ -76,4 +76,3 @@ DeclareSynonymAttr("IsPartialOrderBooleanMat", IsAntiSymmetricBooleanMat and
                    IsTransitiveBooleanMat and IsReflexiveBooleanMat);
 DeclareSynonymAttr("IsEquivalenceBooleanMat", IsSymmetricBooleanMat and
                    IsTransitiveBooleanMat and IsReflexiveBooleanMat);
-

@@ -17,6 +17,6 @@ function(S)
   local n;
   n := String(DimensionOfMatrixOverSemiring(Representative(S)));
   return Concatenation(n, "x", n, " ",
-         TypeViewStringOfMatrixOverSemiring(Representative(S)),
-         " matrices ");
+                       TypeViewStringOfMatrixOverSemiring(Representative(S)),
+                       " matrices ");
 end);

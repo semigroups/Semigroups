@@ -22,16 +22,16 @@
 #############################################################################
 
 # SEMIGROUPS_IsCCSemigroup: returns <true> if the argument is a semigroup to
-# which we can apply the C++ code.  
+# which we can apply the C++ code.
 
 InstallMethod(SEMIGROUPS_IsCCSemigroup, "for a semigroup",
-[IsSemigroup], 
-function(S) 
+[IsSemigroup],
+function(S)
   return IsTransformationSemigroup(S)
-           or IsPartialPermSemigroup(S) 
+           or IsPartialPermSemigroup(S)
            or IsBipartitionSemigroup(S)
-           or IsBooleanMatSemigroup(S) 
-           or IsPBRSemigroup(S) 
+           or IsBooleanMatSemigroup(S)
+           or IsPBRSemigroup(S)
            or IsMatrixOverSemiringSemigroup(S);
 end);
 
@@ -39,36 +39,36 @@ end);
 # the C++ code by elements of the semigroup.
 
 InstallGlobalFunction(SEMIGROUPS_DegreeOfSemigroup,
-function(arg) 
+function(arg)
   local S, coll;
 
   S := arg[1];
-  if Length(arg) = 1 then 
+  if Length(arg) = 1 then
     coll := [Representative(S)];
-  elif Length(arg) = 2 then 
+  elif Length(arg) = 2 then
     coll := arg[2];
   else
-    Error();
-    return;
+    ErrorMayQuit("Semigroups: SEMIGROUPS_DegreeOfSemigroup:\n",
+                 "unknown error,");
   fi;
 
   if IsTransformationSemigroup(S) then
     return Maximum(DegreeOfTransformationSemigroup(S),
                    DegreeOfTransformationCollection(coll));
   elif IsPartialPermSemigroup(S) then
-    return Maximum(DegreeOfPartialPermSemigroup(S), 
+    return Maximum(DegreeOfPartialPermSemigroup(S),
                    CodegreeOfPartialPermSemigroup(S),
-                   DegreeOfPartialPermCollection(coll), 
+                   DegreeOfPartialPermCollection(coll),
                    CodegreeOfPartialPermCollection(coll));
-  elif IsMatrixOverSemiringSemigroup(S) then 
+  elif IsMatrixOverSemiringSemigroup(S) then
     return DimensionOfMatrixOverSemiring(Representative(S));
-  elif IsBipartitionSemigroup(S) then 
+  elif IsBipartitionSemigroup(S) then
     return DegreeOfBipartitionSemigroup(S);
-  elif IsPBRSemigroup(S) then 
+  elif IsPBRSemigroup(S) then
     return DegreeOfPBRSemigroup(S);
   else
-    Error();
-    return;
+    ErrorMayQuit("Semigroups: SEMIGROUPS_DegreeOfSemigroup:\n",
+                 "unknown error,");
   fi;
 end);
 
@@ -77,7 +77,7 @@ end);
 # different method for ideals
 
 InstallMethod(Enumerator, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 2, 
+[IsSemigroup and HasGeneratorsOfSemigroup], 2,
 # to beat the generic method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
@@ -163,16 +163,16 @@ InstallMethod(Position,
 "for generic semigroup data, an associative element, zero cyc",
 [IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc],
 function(data, x, n)
-  if FamilyObj(x) <> ElementsFamily(FamilyObj(data)) then 
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(data)) then
     return fail;
   fi;
-  
-  if (IsTransformation(x) 
+
+  if (IsTransformation(x)
       and DegreeOfTransformation(x) >
       DegreeOfTransformationCollection(data!.gens))
-      or (IsPartialPerm(x) 
+      or (IsPartialPerm(x)
           and DegreeOfPartialPerm(x) >
-          DegreeOfPartialPermCollection(data!.gens)) then 
+          DegreeOfPartialPermCollection(data!.gens)) then
     return fail;
   fi;
 
@@ -255,8 +255,8 @@ InstallMethod(GenericSemigroupData, "for a semigroup",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
-  if SEMIGROUPS_IsCCSemigroup(S) then 
-    
+  if SEMIGROUPS_IsCCSemigroup(S) then
+
     data             := rec();
     data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr          := 0;
@@ -265,7 +265,7 @@ function(S)
     data.report      := SEMIGROUPS_OptionsRec(S).report;
     data.batch_size  := SEMIGROUPS_OptionsRec(S).batch_size;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
-    
+
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);
   fi;

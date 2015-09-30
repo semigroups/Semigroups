@@ -10,8 +10,8 @@
 
 # This file contains methods for semigroups of boolean matrices.
 
-InstallMethod(IsomorphismBooleanMatSemigroup, 
-"for a transformation semigroup", [IsTransformationSemigroup], 
+InstallMethod(IsomorphismBooleanMatSemigroup,
+"for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
   local n, T;
   n := DegreeOfTransformationSemigroup(S);
@@ -19,8 +19,8 @@ function(S)
   return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
 end);
 
-InstallMethod(IsomorphismBooleanMatSemigroup, 
-"for a semigroup", [IsSemigroup], 
+InstallMethod(IsomorphismBooleanMatSemigroup,
+"for a semigroup", [IsSemigroup],
 function(S)
   local iso1, inv1, iso2, inv2;
 
@@ -29,8 +29,8 @@ function(S)
   iso2 := IsomorphismBooleanMatSemigroup(Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MappingByFunction(S, Range(iso2), 
-                           x -> (x ^ iso1) ^ iso2, 
+  return MappingByFunction(S, Range(iso2),
+                           x -> (x ^ iso1) ^ iso2,
                            x -> (x ^ inv2) ^ inv1);
 end);
 
@@ -50,7 +50,7 @@ function(S)
   pts := EmptyPlist(2 ^ n);
 
   for i in [1 .. n] do
-    o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlists)); 
+    o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlists));
     pts := Union(pts, AsList(o));
   od;
   ShrinkAllocationPlist(pts);
@@ -72,7 +72,7 @@ InstallMethod(RegularBooleanMatMonoid, "for a pos int",
 function(n)
   local gens, i, j;
 
-  if n = 1 then 
+  if n = 1 then
     return Monoid(BooleanMat([[true]]), BooleanMat([[false]]));
   fi;
 
@@ -94,17 +94,17 @@ function(n)
   gens[3][n][n] := true;
 
   Apply(gens, BooleanMat);
-  
+
   gens[1] := AsBooleanMat((1, 2), n);
 
   return Monoid(gens);
 end);
 
 InstallMethod(GossipMonoid, "for a positive integer",
-[IsPosInt], 
+[IsPosInt],
 function(n)
   local gens, x, i, j;
-  
+
   gens := [];
   for i in [1 .. n - 1] do
     for j in [i + 1 .. n] do
@@ -121,59 +121,97 @@ end);
 InstallMethod(ReflexiveBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
-  if n = 3 then 
-    return 
+  if n = 3 then
+    return
     Semigroup(BooleanMat([[1, 1, 0], [0, 1, 1], [1, 0, 1]]),
-    BooleanMat([[1, 1, 0], [0, 1, 0], [0, 0, 1]]),
-    BooleanMat([[1, 0, 1], [1, 1, 0], [0, 1, 1]]),
-    BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
-    BooleanMat([[1, 0, 0], [1, 1, 0], [0, 0, 1]]),
-    BooleanMat([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
-    BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
-    BooleanMat([[1, 0, 0], [0, 1, 0], [0, 1, 1]]),
-    BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
-  elif n = 4 then 
-    return 
-    Semigroup(
-    BooleanMat([[1, 1, 1, 0], [0, 1, 0, 1], [0, 0, 1, 1], [1, 0, 0, 1]]),
-    BooleanMat([[1, 1, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 0, 1, 1], [1, 1, 0, 0], [0, 1, 1, 0], [0, 1, 0, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 1, 1], [1, 0, 1, 0], [1, 0, 0, 1]]),
-    BooleanMat([[1, 0, 1, 0], [1, 1, 0, 1], [0, 1, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 0, 1, 0], [0, 1, 0, 1], [0, 1, 1, 0], [1, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 1], [1, 1, 1, 0], [0, 0, 1, 1], [0, 1, 0, 1]]),
-    BooleanMat([[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0], [0, 1, 0, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 1], [0, 1, 0, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1], [1, 0, 0, 1]]),
-    BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 1], [1, 0, 0, 1]]),
-    BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 0, 1, 1], [0, 1, 0, 1]]),
-    BooleanMat([[1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 1, 1], [1, 1, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1], [0, 1, 0, 1]]),
-    BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 1], [1, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [1, 0, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [1, 0, 1, 0], [0, 1, 1, 1]]),
-    BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [1, 0, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [1, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 0, 1, 0], [0, 1, 0, 1]]),
-    BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 1], [0, 0, 0, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 1, 1]]),
-    BooleanMat([[1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 1, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [1, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [1, 0, 1, 0], [0, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 1]]),
-    BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]) );
+              BooleanMat([[1, 1, 0], [0, 1, 0], [0, 0, 1]]),
+              BooleanMat([[1, 0, 1], [1, 1, 0], [0, 1, 1]]),
+              BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
+              BooleanMat([[1, 0, 0], [1, 1, 0], [0, 0, 1]]),
+              BooleanMat([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
+              BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+              BooleanMat([[1, 0, 0], [0, 1, 0], [0, 1, 1]]),
+              BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
+  elif n = 4 then
+    return
+    Semigroup(BooleanMat([[1, 1, 1, 0], [0, 1, 0, 1], [0, 0, 1, 1],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 1, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 0, 1, 1], [1, 1, 0, 0], [0, 1, 1, 0],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 1], [1, 0, 1, 0],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 1], [0, 1, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 0, 1, 0], [0, 1, 0, 1], [0, 1, 1, 0],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 1], [1, 1, 1, 0], [0, 0, 1, 1],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 1],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 1],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 0, 1, 1],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 1, 1],
+                          [1, 1, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 1],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 1, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [1, 0, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0],
+                          [1, 0, 1, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [1, 0, 1, 0],
+                          [0, 1, 1, 1]]),
+              BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [1, 0, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 1],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 0, 1, 1]]),
+              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 1, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [1, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [1, 0, 1, 0],
+                          [0, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [1, 0, 0, 1]]),
+              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, 0, 0, 1]]));
   fi;
 
   return fail;
@@ -190,13 +228,13 @@ InstallMethod(FullBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens;
-  
+
   gens := [RegularBooleanMatMonoid(1),
 
            RegularBooleanMatMonoid(2),
 
            [BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
-            BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
+            BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
             BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
             BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 0]]),
             BooleanMat([[1, 1, 0], [1, 0, 1], [0, 1, 1]])],
@@ -219,46 +257,45 @@ function(n)
            [BooleanMat([[0, 1, 0, 0, 0],
                         [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
                         [0, 0, 0, 0, 1], [1, 0, 0, 0, 0]]),
-           BooleanMat([[0, 1, 0, 0, 0],
-                       [1, 0, 0, 0, 0], [0, 0, 1, 0, 0],
-                       [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]) ,
-           BooleanMat([[1, 0, 0, 0, 0],
-                       [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
-                       [0, 0, 0, 1, 0], [1, 0, 0, 0, 1]]),
-           BooleanMat([[1, 1, 0, 0, 0],
-                       [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
-                       [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
-           BooleanMat([[1, 1, 0, 0, 0],
-                       [1, 0, 1, 0, 0], [0, 1, 1, 0, 0],
-                       [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]),
-           BooleanMat([[1, 1, 1, 0, 0],
-                       [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
-                       [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
-           BooleanMat([[1, 1, 0, 0, 0],
-                       [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
-                       [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
-           BooleanMat([[1, 1, 1, 1, 0],
-                       [1, 0, 0, 0, 1], [0, 1, 0, 0, 1],
-                       [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
-           BooleanMat([[1, 0, 0, 0, 0],
-                       [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
-                       [0, 0, 0, 1, 0], [0, 0, 0, 0, 0]]),
-           BooleanMat([[1, 1, 1, 0, 0],
-                       [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
-                       [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
-           BooleanMat([[1, 1, 1, 0, 0],
-                       [1, 0, 0, 1, 0], [1, 0, 0, 0, 1],
-                       [0, 1, 0, 1, 0], [0, 0, 1, 0, 1]]),
-           BooleanMat([[1, 1, 1, 0, 0],
-                       [1, 0, 0, 1, 1], [0, 1, 0, 1, 0],
-                       [0, 1, 0, 0, 1], [0, 0, 1, 1, 0]]),
-           BooleanMat([[1, 1, 1, 0, 0],
-                       [1, 1, 0, 1, 0], [1, 0, 0, 0, 1],
-                       [0, 1, 0, 0, 1], [0, 0, 1, 1, 1]])]];
-  if n > 6 then 
-    ErrorMayQuit();
+            BooleanMat([[0, 1, 0, 0, 0],
+                        [1, 0, 0, 0, 0], [0, 0, 1, 0, 0],
+                        [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]),
+            BooleanMat([[1, 0, 0, 0, 0],
+                        [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
+                        [0, 0, 0, 1, 0], [1, 0, 0, 0, 1]]),
+            BooleanMat([[1, 1, 0, 0, 0],
+                        [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
+                        [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
+            BooleanMat([[1, 1, 0, 0, 0],
+                        [1, 0, 1, 0, 0], [0, 1, 1, 0, 0],
+                        [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]),
+            BooleanMat([[1, 1, 1, 0, 0],
+                        [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
+                        [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
+            BooleanMat([[1, 1, 0, 0, 0],
+                        [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
+                        [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
+            BooleanMat([[1, 1, 1, 1, 0],
+                        [1, 0, 0, 0, 1], [0, 1, 0, 0, 1],
+                        [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
+            BooleanMat([[1, 0, 0, 0, 0],
+                        [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
+                        [0, 0, 0, 1, 0], [0, 0, 0, 0, 0]]),
+            BooleanMat([[1, 1, 1, 0, 0],
+                        [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
+                        [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
+            BooleanMat([[1, 1, 1, 0, 0],
+                        [1, 0, 0, 1, 0], [1, 0, 0, 0, 1],
+                        [0, 1, 0, 1, 0], [0, 0, 1, 0, 1]]),
+            BooleanMat([[1, 1, 1, 0, 0],
+                        [1, 0, 0, 1, 1], [0, 1, 0, 1, 0],
+                        [0, 1, 0, 0, 1], [0, 0, 1, 1, 0]]),
+            BooleanMat([[1, 1, 1, 0, 0],
+                        [1, 1, 0, 1, 0], [1, 0, 0, 0, 1],
+                        [0, 1, 0, 0, 1], [0, 0, 1, 1, 1]])]];
+  if n > 6 then
+    ErrorMayQuit("Semigroups: FullBooleanMatMonoid: usage,\n",
+                 "the argument <n> must be at most 6,");
   fi;
   return Monoid(gens[n]);
 end);
-
-

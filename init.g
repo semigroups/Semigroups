@@ -12,6 +12,7 @@ if not IsBound(ORBC) then
   BindGlobal("HTAdd_TreeHash_C", fail);
   BindGlobal("HTValue_TreeHash_C", fail);
 else # only do this if ORBC is available
+# FIXME WTF: only load our kernel module when orb is available!!!
   _PATH_SO := Filename(DirectoriesPackagePrograms("semigroups"),
                        "semigroups.so");
   if _PATH_SO <> fail then

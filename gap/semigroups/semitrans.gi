@@ -15,9 +15,9 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> "\>transformation\< ");
 
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a transformation semigroup",
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup],
 function(S)
-  return Concatenation("degree \>", 
+  return Concatenation("degree \>",
                        ViewString(DegreeOfTransformationSemigroup(S)),
                        "\<\< ");
 end);
@@ -262,10 +262,9 @@ function(coll, set)
 
   if not (IsSSortedList(set) and IsHomogeneousList(set)
           and IsPosInt(set[1])) then
-    Error("Semigroups: IsTransitive: usage,\n",
-          "the second argument <set> must be a set of positive ",
-          "integers");
-    return;
+    ErrorMayQuit("Semigroups: IsTransitive: usage,\n",
+                 "the second argument <set> must be a set of positive ",
+                 "integers");
   fi;
 
   n := Length(set);
@@ -536,9 +535,9 @@ function(s)
   fi;
 
   if MultiplicativeNeutralElement(s) = fail then
-    Error("Semigroups: IsomorphismTransformationMonoid: usage,\n",
-          "the argument <s> must have a multiplicative neutral element,");
-    return;
+    ErrorMayQuit("Semigroups: IsomorphismTransformationMonoid: usage,\n",
+                 "the argument <s> must have a multiplicative neutral element",
+                 ",");
   fi;
 
   id := MultiplicativeNeutralElement(s);
@@ -577,10 +576,9 @@ InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s) then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <s> must be a transformation semigroup ",
-          "satisfying IsGroupAsSemigroup,");
-    return;
+    ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
+                 "the argument <s> must be a transformation semigroup ",
+                 "satisfying IsGroupAsSemigroup,");
   fi;
   # gaplint: ignore 4
   return MagmaIsomorphismByFunctionsNC(s,
@@ -605,7 +603,7 @@ function(S)
   G := Source(map);
   U := Monoid(List(GeneratorsOfGroup(G), x -> x ^ map));
 
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage, 
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
                                                x -> x ^ map));
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
@@ -619,7 +617,6 @@ InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
 
 #
-
 
 #
 

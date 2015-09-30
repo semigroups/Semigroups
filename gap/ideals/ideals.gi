@@ -75,7 +75,6 @@ function(I)
   fi;
   Append(str, "\>ideal\< ");
 
-
   if HasIsTrivial(I) and not IsTrivial(I) and HasSize(I) then
     Append(str, "\>of size\> ");
     Append(str, ViewString(Size(I)));
@@ -83,14 +82,14 @@ function(I)
   fi;
 
   suffix := SEMIGROUPS_ViewStringSuffix(I);
-  if suffix <> "" 
+  if suffix <> ""
       and not (HasIsTrivial(I) and not IsTrivial(I) and HasSize(I)) then
     suffix := Concatenation("of ", suffix);
   fi;
-  Append(str, suffix); 
+  Append(str, suffix);
 
   nrgens := Length(GeneratorsOfSemigroupIdeal(I));
-  
+
   Append(str, "with\> ");
   Append(str, ViewString(nrgens));
   Append(str, "\< generator");
@@ -107,7 +106,8 @@ end);
 
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+1, #to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 InstallMethod(ViewString,
@@ -185,11 +185,10 @@ function(S, n)
   n := NameRNam(n);
   n := Int(n);
   if n = fail or Length(S) < n then
-    Error("Semigroups: \.: usage,\n",
-          "the second argument <n> should be a positive integer\n",
-          "not greater than the number of generators of the semigroup <S>",
-          "in\nthe first argument,");
-    return;
+    ErrorMayQuit("Semigroups: \.: usage,\n",
+                 "the second argument <n> should be a positive integer\n",
+                 "not greater than the number of generators of the semigroup ",
+                 "<S> in\nthe first argument,");
   fi;
   return S[n];
 end);
@@ -254,16 +253,14 @@ function(arg)
   local out, i;
 
   if not IsSemigroup(arg[1]) then
-    Error("Semigroups: SemigroupIdeal: usage,\n",
-          "the first argument must be a semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+                 "the first argument must be a semigroup,");
   fi;
 
   if Length(arg) = 1 then
-    Error("Semigroups: SemigroupIdeal: usage,\n",
-          "there must be a second argument, which specifies\n",
-          "the generators of the ideal,");
-    return;
+    ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+                 "there must be a second argument, which specifies\n",
+                 "the generators of the ideal,");
   fi;
 
   if Length(arg) = 2 and IsMatrix(arg[2]) then
@@ -295,20 +292,18 @@ function(arg)
         #so that we can pass the options record in the Semigroups package
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
-        Error("Semigroups: SemigroupIdeal: usage,\n",
-              "the second argument must be a ",
-              "combination of generators,\n lists of generators, ",
-              "or semigroups,");
-        return;
+        ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+                     "the second argument must be a ",
+                     "combination of generators,\n lists of generators, ",
+                     "or semigroups,");
       fi;
     od;
     return SemigroupIdealByGenerators(arg[1], out);
   else
     # no argument given, error
-    Error("Semigroups: SemigroupIdeal: usage,\n",
-          "the second argument must be a ",
-          "combination of generators,\nlists of generators, or semigroups,");
-    return;
+    ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+                 "the second argument must be a combination ",
+                 "of generators,\nlists of generators, or semigroups,");
   fi;
 end);
 
@@ -328,9 +323,9 @@ InstallMethod(SemigroupIdealByGenerators,
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
   if not ForAll(gens, x -> x in S) then
-    Error("Semigroups: SemigroupIdealByGenerators: usage,\n",
-          "the second argument <gens> do not all belong to the semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: SemigroupIdealByGenerators: usage,\n",
+                 "the second argument <gens> do not all belong to the ",
+                 "semigroup,");
   fi;
   return SemigroupIdealByGeneratorsNC(S, gens, opts);
 end);

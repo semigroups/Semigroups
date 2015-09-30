@@ -10,7 +10,7 @@
 
 ## Methods for some standard things for acting semigroups.
 
-InstallMethod(ClosureSemigroupNC, 
+InstallMethod(ClosureSemigroupNC,
 "for an acting semigroup, associative element coll, and record",
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, coll, opts)

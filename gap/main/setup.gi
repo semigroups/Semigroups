@@ -604,19 +604,19 @@ end);
 # equal degrees.
 
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
-"for a transformation semigroup", 
+"for a transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup], ReturnFalse);
 
-InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 IsBipartitionSemigroup and IsActingSemigroup);
 
-InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
-"for an acting partial perm semigroup", 
+InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
+"for an acting partial perm semigroup",
 [IsPartialPermSemigroup and IsActingSemigroup], ReturnFalse);
 
 #this is not really relevant here.
-InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
-"for an acting Rees 0-matrix subsemigroup", 
+InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
+"for an acting Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup and IsActingSemigroup], ReturnFalse);
 
 # One or a fake one for those types of object without one.
@@ -639,9 +639,9 @@ InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(x, hashlen)
   local R, under, func;
- 
+
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
-  if IsMultiplicativeZero(R, x) then 
+  if IsMultiplicativeZero(R, x) then
     x := Representative(UnderlyingSemigroup(R));
     under := ChooseHashFunction(x, hashlen).func;
   else

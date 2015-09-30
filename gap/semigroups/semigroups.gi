@@ -167,7 +167,8 @@ InstallMethod(ViewString, "for a group consisting of semigroup elements",
 
 InstallMethod(ViewString, "for a partial perm group",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup
-and IsSimpleSemigroup and IsInverseSemigroup], 1, # to beat the lib method
+ and IsSimpleSemigroup and IsInverseSemigroup],
+1, # to beat the lib method
 _ViewStringForSemigroupsGroups);
 
 MakeReadWriteGlobal("_ViewStringForSemigroupsGroups");
@@ -184,7 +185,6 @@ function(S)
   fi;
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
 end);
-
 
 # basic things
 
@@ -358,7 +358,7 @@ function(gens, opts)
       Print("\n");
     else
       for x in gens do
-        if not x in S then 
+        if not x in S then
           S := SEMIGROUPS_AddGenerators(S, [x], opts);
         fi;
       od;
@@ -421,9 +421,9 @@ function(gens, opts)
   local n, S, filts, one, pos, x;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    Error("Semigroups: InverseMonoidByGenerators: usage,\n",
-          "the first argument must satisfy `IsGeneratorsOfInverseSemigroup',");
-    return;
+    ErrorMayQuit("Semigroups: InverseMonoidByGenerators: usage,\n",
+                 "the first argument must satisfy ",
+                 "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
@@ -482,9 +482,9 @@ function(gens, opts)
   local n, S, filts, pos, x;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    Error("Semigroups: InverseSemigroupByGenerators: usage,\n",
-          "the first argument must satisfy `IsGeneratorsOfInverseSemigroup',");
-    return;
+    ErrorMayQuit("Semigroups: InverseSemigroupByGenerators: usage,\n",
+                 "the first argument must satisfy ",
+                 "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
@@ -575,16 +575,15 @@ function(S, coll, opts)
   fi;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    Error("Semigroups: ClosureInverseSemigroup: usage,\n",
-          "the semigroup and collection of elements are not of the same ",
-          "type,");
-    return;
+    ErrorMayQuit("Semigroups: ClosureInverseSemigroup: usage,\n",
+                 "the semigroup and collection of elements are not of the ",
+                 "same type,");
   fi;
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    Error("Semigroups: ClosureInverseSemigroup: usage,\n",
-          "the first argument must satisfy `IsGeneratorsOfInverseSemigroup',");
-    return;
+    ErrorMayQuit("Semigroups: ClosureInverseSemigroup: usage,\n",
+                 "the first argument must satisfy ",
+                 "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   if IsSemigroup(coll) then
@@ -698,18 +697,16 @@ function(S, coll, opts)
   fi;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    Error("Semigroups: ClosureSemigroup: usage,\n",
-          "the semigroup and collection of elements are not of the same ",
-          "type,");
-    return;
+    ErrorMayQuit("Semigroups: ClosureSemigroup: usage,\n",
+                 "the semigroup and collection of elements are not of the ",
+                 "same type,");
   fi;
 
   if IsActingSemigroup(S)
       and IsActingSemigroupWithFixedDegreeMultiplication(S)
       and ActionDegree(S) <> ActionDegree(Representative(coll)) then
-    Error("Semigroups: ClosureSemigroup: usage,\n",
-          "the degree of the semigroup and collection must be equal,");
-    return;
+    ErrorMayQuit("Semigroups: ClosureSemigroup: usage,\n",
+                 "the degree of the semigroup and collection must be equal,");
   fi;
 
   if IsSemigroup(coll) then
@@ -719,7 +716,8 @@ function(S, coll, opts)
   opts.small := false;
 
   return ClosureSemigroupNC(S,
-                            Filtered(coll, x -> not x in S), # FIXME don't do this
+                            Filtered(coll, x -> not x in S), # FIXME don't do
+                                                             #       this
                             SEMIGROUPS_ProcessOptionsRec(opts));
 end);
 
@@ -779,8 +777,8 @@ function(S, coll, opts)
   local data, T;
 
   if SEMIGROUPS_IsCCSemigroup(S) then
-    data := SEMIGROUP_CLOSURE(GenericSemigroupData(S), 
-                              ShallowCopy(coll), 
+    data := SEMIGROUP_CLOSURE(GenericSemigroupData(S),
+                              ShallowCopy(coll),
                               SEMIGROUPS_DegreeOfSemigroup(S, coll));
     data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                             and IsAttributeStoringRep), data);
@@ -806,19 +804,21 @@ function(S, coll, opts)
   local data;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    Error("SEMIGROUPS_AddGenerators: usage,\n",
-          "the arguments do not belong to the same family,");
-    return;
+    ErrorMayQuit("Semigroups: SEMIGROUPS_AddGenerators: usage,\n",
+                 "the arguments do not belong to the same family,");
   fi;
 
   if IsActingSemigroup(S)
       or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
           <> DegreeOfTransformationCollection(coll))
-      or (IsPartialPermSemigroup(S) and 
-          (DegreeOfPartialPermSemigroup(S) <> DegreeOfPartialPermCollection(coll)
-           or CodegreeOfPartialPermSemigroup(S) <> CodegreeOfPartialPermCollection(coll)))
-##FIXME the above should really be less than, since this should work if the
-#degree of the semigroup is larger than the degree of the collection!
+      or (IsPartialPermSemigroup(S) and
+          (DegreeOfPartialPermSemigroup(S) <>
+           DegreeOfPartialPermCollection(coll)
+           or CodegreeOfPartialPermSemigroup(S) <>
+           CodegreeOfPartialPermCollection(coll)))
+           ## FIXME the above should really be less than, since this should
+           # work if the degree of the semigroup is larger than the degree of
+           # the collection!
       or not SEMIGROUPS_IsCCSemigroup(S) then
     return ClosureSemigroup(S, coll, opts);
   fi;
@@ -943,8 +943,7 @@ BindGlobal("SEMIGROUPS_RandomElementCons",
 function(filt)
 
   if not filt in SEMIGROUPS_Types then
-    Error();
-    return;
+    ErrorMayQuit("Semigroups: SEMIGROUPS_RandomElementCons: usage,\n");
   fi;
 
   if filt = IsTransformationSemigroup then
@@ -1006,15 +1005,13 @@ function(SemigroupOrMonoid, string, args)
   fi;
 
   if not IsFilter(filt) or not filt in SEMIGROUPS_Types then
-    Error("Semigroups: ", string, ": usage,\n",
-          "the first argument must be a filter,");
-    return;
+    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
+                 "the first argument must be a filter,");
   fi;
 
   if not IsPosInt(nrgens) then
-    Error("Semigroups: ", string, ": usage,\n",
-          "the second argument must be a positive integer,");
-    return;
+    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
+                 "the second argument must be a positive integer,");
   fi;
 
   cons := SEMIGROUPS_RandomElementCons(filt);
@@ -1026,22 +1023,20 @@ function(SemigroupOrMonoid, string, args)
   fi;
 
   if not IsHomogeneousList(params) or not IsPosInt(params[1]) then
-    Error("Semigroups: ", string, ": usage,\n",
-          "the third to last arguments must be positive integers,");
-    return;
+    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
+                 "the third to last arguments must be positive integers,");
   elif Length(params) > cons[2] then
-    Error("Semigroups: ", string, ": usage,\n",
-          "there should be ", cons[2], " arguments,");
-    return;
+    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
+                 "there should be ", cons[2], " arguments,");
   fi;
 
   if filt = IsMatrixOverPrimeFieldSemigroup then
-    if IsPosInt(params[2]) then 
-      if not IsPrimeInt(params[2]) then 
+    if IsPosInt(params[2]) then
+      if not IsPrimeInt(params[2]) then
         params[2] := NextPrimeInt(params[2]);
       fi;
       params[2] := GF(params[2], 1);
-    elif not IsPrimeField(params[2]) then 
+    elif not IsPrimeField(params[2]) then
       params[2] := GF(NextPrimeInt(Random([1 .. 12])), 1);
     fi;
   fi;
@@ -1049,10 +1044,11 @@ function(SemigroupOrMonoid, string, args)
   if SemigroupOrMonoid = InverseSemigroup
       or SemigroupOrMonoid = InverseMonoid
       and not (filt in [IsBlockBijectionSemigroup, IsPartialPermSemigroup]) then
-    return cons[3](SemigroupOrMonoid(Set([1 .. nrgens], x ->
-                                         RandomPartialPerm(Maximum(params[1] - 1, 1)))));
+    return cons[3](SemigroupOrMonoid(Set([1 .. nrgens],
+                     x -> RandomPartialPerm(Maximum(params[1] - 1, 1)))));
   else
-    return SemigroupOrMonoid(Set([1 .. nrgens], x -> CallFuncList(cons[1], params)));
+    return SemigroupOrMonoid(Set([1 .. nrgens],
+                                 x -> CallFuncList(cons[1], params)));
   fi;
 end);
 

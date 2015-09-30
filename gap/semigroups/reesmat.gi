@@ -66,10 +66,9 @@ function(S)
   local rep;
 
   if not IsGroupAsSemigroup(S)  then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
-          "semigroup satisfying IsGroupAsSemigroup,");
-    return;
+    ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
+                 "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
+                 "semigroup satisfying IsGroupAsSemigroup,");
   fi;
 
   rep := Representative(S);
@@ -132,16 +131,14 @@ function(S, mat)
   local fam, R, type, x;
 
   if not ForAll(mat, x -> IsDenseList(x) and Length(x) = Length(mat[1])) then
-    Error("Semigroups: ReesZeroMatrixSemigroup: usage,\n",
-          "<mat> must be a list of dense lists of equal length,");
-    return;
+    ErrorMayQuit("Semigroups: ReesZeroMatrixSemigroup: usage,\n",
+                 "<mat> must be a list of dense lists of equal length,");
   fi;
 
   for x in mat do
     if ForAny(x, s -> not (s = 0 or s in S)) then
-      Error("Semigroups: ReesZeroMatrixSemigroup: usage,\n",
-            "the entries of <mat> must be 0 or belong to <S>,");
-      return;
+      ErrorMayQuit("Semigroups: ReesZeroMatrixSemigroup: usage,\n",
+                   "the entries of <mat> must be 0 or belong to <S>,");
     fi;
   od;
 
@@ -312,9 +309,8 @@ function(filter, n)
   local mat;
 
   if n = 1 then
-    Error("Semigroups: ZeroSemigroupCons: usage:\n",
-          "there is no Rees 0-matrix semigroup of order 1,");
-    return;
+    ErrorMayQuit("Semigroups: ZeroSemigroupCons: usage:\n",
+                 "there is no Rees 0-matrix semigroup of order 1,");
   fi;
   mat := [[1 .. n - 1] * 0];
   return ReesZeroMatrixSemigroup(Group(()), mat);

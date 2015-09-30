@@ -364,7 +364,8 @@ end);
 # same method for inverse ideals
 
 InstallMethod(RClassReps, "for an acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp], S -> List(LClassReps(S), x -> Inverse(x)));
+[IsActingSemigroup and IsSemigroupWithInverseOp],
+S -> List(LClassReps(S), x -> Inverse(x)));
 
 # same method for inverse ideals
 
@@ -410,9 +411,8 @@ function(C)
   elif IsGreensDClass(C) then
     setter := SetDClassOfHClass;
   else
-    Error("Semigroups: GreensHClasses: usage,\n",
-          "an L-, R-, or D-class,");
-    return;
+    ErrorMayQuit("Semigroups: GreensHClasses: usage,\n",
+                 "an L-, R-, or D-class,");
   fi;
 
   for i in [1 .. Length(reps)] do
@@ -530,9 +530,8 @@ function(S, n)
   local o, creator, out, rank, nr, i;
 
   if n < 0 then
-    Error("Semigroups: Idempotents: usage,\n",
-          "the second argument <n> must be a non-negative integer,");
-    return;
+    ErrorMayQuit("Semigroups: Idempotents: usage,\n",
+                 "the second argument <n> must be a non-negative integer,");
   fi;
 
   if HasIdempotents(S) then

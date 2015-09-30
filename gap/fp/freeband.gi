@@ -9,7 +9,7 @@
 
 # TODO: this is not really finished.
 
-InstallMethod(IsGeneratorsOfInverseSemigroup, "for a free band element coll", 
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a free band element coll",
 [IsFreeBandElementCollection], ReturnFalse);
 
 InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
@@ -70,9 +70,8 @@ function(arg)
       and ForAll(arg[1], IsString) then
     names := arg[1];
   else
-    Error("Semigroups: FreeBand: usage,\n",
-          "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
-    return;
+    ErrorMayQuit("Semigroups: FreeBand: usage,\n",
+                 "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
   fi;
 
   MakeImmutable(names);
@@ -341,9 +340,8 @@ function(S, x)
   local type, D;
 
   if not x in S then
-    Error("Semigroups: GreensDClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: GreensDClassOfElement: usage,\n",
+                 "the element does not belong to the semigroup,");
   fi;
 
   type := NewType(FamilyObj(S), IsEquivalenceClass and

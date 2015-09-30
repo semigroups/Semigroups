@@ -22,16 +22,14 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     local opt, path, dir, tdir, file, viewer, type, filetype;
 
     if not IsString(arg[1]) then
-      Error("Semigroups: Splash: usage,\n",
-            "the first argument must be a string,");
-      return;
+      ErrorMayQuit("Semigroups: Splash: usage,\n",
+                   "the first argument must be a string,");
     fi;
 
     if IsBound(arg[2]) then
       if not IsRecord(arg[2]) then
-        Error("Semigroups: Splash: usage,\n",
-              "the second argument must be a record,");
-        return;
+        ErrorMayQuit("Semigroups: Splash: usage,\n",
+                     "the second argument must be a record,");
       else
         opt := arg[2];
       fi;
@@ -85,9 +83,8 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     elif arg[1]{[1 .. 5]} = "//dot" then
       type := "dot";
     else
-      Error("Semigroups: Splash: usage,\n",
-            "the option <type> must be \"dot\" or \"latex\",");
-      return;
+      ErrorMayQuit("Semigroups: Splash: usage,\n",
+                   "the option <type> must be \"dot\" or \"latex\",");
     fi;
 
     # output type
@@ -236,10 +233,9 @@ function(blocks, labels, edges)
       elif labels = "bottom" then
         x := "2.2";
       else
-        Error("Semigroups: TikzStringForBlocks: usage,\n",
-              "the second argument <labels> must be \"bottom\",",
-              "\"top\", or \"none\",");
-        return;
+        ErrorMayQuit("Semigroups: TikzStringForBlocks: usage,\n",
+                     "the second argument <labels> must be \"bottom\",",
+                     "\"top\", or \"none\",");
       fi;
       Append(str, "  \\draw(");
       Append(str, x);
@@ -270,9 +266,9 @@ function(blocks, labels, edges)
       y := i -> ViewString(Float(1.5 - (1 / (2 * n))
                            * (block[i] - block[i - 1])));
     else
-      Error("Semigroups: TikzStringForBlocks: usage,\n",
-            "the third argument <edges> should be \"top\" or \"bottom\",");
-      return;
+      ErrorMayQuit("Semigroups: TikzStringForBlocks: usage,\n",
+                   "the third argument <edges> should be \"top\" or ",
+                   "\"bottom\",");
     fi;
 
     for i in [2 .. Length(block)] do
@@ -441,8 +437,8 @@ end);
 InstallMethod(DotDClasses, "for a semigroup and record",
 [IsSemigroup, IsRecord],
 function(S, opts)
-  local es, elts, str, i, R, SortHClassesInLClass, gp, color, pos, h, longest,
-        rel, ii, di, j, dk, k, x, d, l;
+  local es, elts, str, i, R, SortHClassesInLClass, gp, color, pos, h, rel, ii,
+        di, j, dk, k, x, d, l;
 
   # process the options
   if not IsBound(opts.maximal) then
@@ -518,7 +514,8 @@ function(S, opts)
             fi;
           fi;
           Append(str, Concatenation("<TD CELLPADDING=\"10\" BGCOLOR=\"",
-                                    color, "\"><font color=\"white\">*</font></TD>"));
+                                    color,
+                                    "\"><font color=\"white\">*</font></TD>"));
         od;
       else
         h := SortHClassesInLClass(HClasses(l));

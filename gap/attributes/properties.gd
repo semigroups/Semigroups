@@ -37,7 +37,9 @@ DeclareProperty("IsUnitRegularMonoid", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
-DeclareProperty("IsNilpotentSemigroup", IsSemigroup and IsFinite);
+if not IsBound(IsNilpotentSemigroup) then
+  DeclareProperty("IsNilpotentSemigroup", IsSemigroup);
+fi;
 
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
                                             IsRegularStarSemigroup);
