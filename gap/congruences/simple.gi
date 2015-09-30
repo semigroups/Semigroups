@@ -28,7 +28,11 @@ function(s, pairs)
             SemigroupCongruenceByGeneratingPairs(s, pairs));
   else
     # Otherwise, create a SIMPLECONG
-    iso := IsomorphismReesMatrixSemigroup(s);
+    if IsSimpleSemigroup(s) then
+      iso := IsomorphismReesMatrixSemigroup(s);
+    else
+      iso := IsomorphismReesZeroMatrixSemigroup(s);
+    fi;
     r := Range(iso);
     rmspairs := List(pairs, p -> [p[1] ^ iso, p[2] ^ iso]);
     pcong := SemigroupCongruenceByGeneratingPairs(r, rmspairs);
