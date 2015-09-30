@@ -381,6 +381,12 @@ function(x, threshold, period)
                    SEMIGROUPS_NaturalizeMat(x, threshold, period));
 end);
 
+InstallGlobalFunction(NaturalMatrix,
+#TODO: Check parameters
+function(x, threshold, period)
+  return NaturalMatrixNC(List(x, ShallowCopy), threshold, period);
+end);
+
 InstallMethod(\*, "for natural number matrices",
 [IsNaturalMatrix, IsNaturalMatrix],
 function(x, y)
