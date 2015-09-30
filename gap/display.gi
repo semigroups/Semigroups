@@ -300,14 +300,16 @@ function(blocks, labels, edges)
 end);
 
 #
+# opts
+# 
 
 InstallGlobalFunction(TikzStringForBipartition,
 function(arg)
-  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i,
-  k;
+  local fill, draw, labels, f, opts, colors, str, ext, n, block, up, down, min, j, i, k;
 
   fill := i -> "  \\fill(";
   draw := i -> "  \\draw(";
+  labels := true; #draw label nodes by default
 
   f := arg[1];
   if IsBound(arg[2]) then
@@ -319,12 +321,19 @@ function(arg)
       fill := i -> Concatenation("  \\fill[", colors[i], "](");
       draw := i -> Concatenation("  \\draw[", colors[i], "](");
     fi;
+    if IsBound(opts.labels) then
+      labels := opts.labels;
+    fi;
   fi;
 
   str := "\\begin{tikzpicture}\n";
   ext := ExtRepOfBipartition(f);
   n := DegreeOfBipartition(f);
 
+  # draw background
+  #Append(str,Concatenation("\\draw [fill=black!10,black!10] (.5,0) rectangle (",
+  #                         String(n),".5,2);\n"));
+  
   # draw the lines
   for j in [1 .. Length(ext)] do
     block := ext[j];
@@ -339,22 +348,26 @@ function(arg)
         Append(str, fill(j));
         Append(str, ViewString(i));
         Append(str, ",2)circle(.125);\n");
-        Append(str, draw(j));
-        Append(str, ViewString(i - 0.05));
-        Append(str, ", 2.2) node [above] {{ $");
-        Append(str, ViewString(i));
-        Append(str, "$}};");
-        Append(str, "\n");
+        if labels then
+          Append(str, draw(j));
+          Append(str, ViewString(i - 0.05));
+          Append(str, ", 2.2) node [above] {{ $");
+          Append(str, ViewString(i));
+          Append(str, "$}};");
+          Append(str, "\n");
+        fi;
       else
         Append(str, fill(j));
         Append(str, ViewString(- i));
         Append(str, ",0)circle(.125);\n");
-        Append(str, draw(j));
-        Append(str, ViewString(- i));
-        Append(str, ", -0.2) node [below] {{ $-");
-        Append(str, ViewString(- i));
-        Append(str, "$}};");
-        Append(str, "\n");
+        if labels then
+          Append(str, draw(j));
+          Append(str, ViewString(- i));
+          Append(str, ", -0.2) node [below] {{ $-");
+          Append(str, ViewString(- i));
+          Append(str, "$}};");
+          Append(str, "\n");
+        fi;
       fi;
     od;
 
