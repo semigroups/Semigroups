@@ -13,14 +13,14 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a pbr semigroup",
 [IsPBRSemigroup], S -> "\>pbr\< ");
 
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a pbr semigroup",
-[IsPBRSemigroup], 
+[IsPBRSemigroup],
 function(S)
-  return Concatenation("degree \>", 
+  return Concatenation("degree \>",
                        ViewString(DegreeOfPBRSemigroup(S)),
                        "\<\< ");
 end);
 
-InstallMethod(DegreeOfPBRSemigroup, 
+InstallMethod(DegreeOfPBRSemigroup,
 "for a PBR semigroup",
 [IsPBRSemigroup],
 function(S)
@@ -40,7 +40,7 @@ function(S)
   local map;
   map := IsomorphismTransformationSemigroup(S);
   return CompositionMapping(IsomorphismPBRSemigroup(Range(map)), map);
-end); 
+end);
 
 InstallMethod(IsomorphismPBRSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],

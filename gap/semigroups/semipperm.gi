@@ -262,10 +262,9 @@ InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <s> must be a partial perm semigroup ",
-          "satisfying IsGroupAsSemigroup,");
-    return;
+    ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
+                 "the argument <s> must be a partial perm semigroup ",
+                 "satisfying IsGroupAsSemigroup,");
   fi;
 
   # gaplint: ignore 3
@@ -579,9 +578,8 @@ InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
   if not IsInverseSemigroup(S) then
-    Error("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-          "the argument is not an inverse semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+                 "the argument is not an inverse semigroup,");
   fi;
   return NaturalLeqPartialPerm;
 end);

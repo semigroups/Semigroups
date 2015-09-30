@@ -638,9 +638,8 @@ InstallMethod(GreensDClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(S, x)
   if not x in S then
-    Error("Semigroups: GreensDClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: GreensDClassOfElement: usage,\n",
+                 "the element does not belong to the semigroup,");
   fi;
   return GreensDClassOfElementNC(S, x, false);
 end);
@@ -674,9 +673,8 @@ InstallMethod(GreensLClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(S, x)
   if not x in S then
-    Error("Semigroups: GreensLClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: GreensLClassOfElement: usage,\n",
+                 "the element does not belong to the semigroup,");
   fi;
   return GreensLClassOfElementNC(S, x, false);
 end);
@@ -709,9 +707,8 @@ InstallMethod(GreensLClassOfElement,
 [IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(D, x)
   if not x in D then
-    Error("Semigroups: GreensLClassOfElement: usage,\n",
-          "the element does not belong to the D-class,");
-    return;
+    ErrorMayQuit("Semigroups: GreensLClassOfElement: usage,\n",
+                 "the element does not belong to the D-class,");
   fi;
   return GreensLClassOfElementNC(D, x, IsGreensClassNC(D));
 end);
@@ -752,9 +749,8 @@ InstallMethod(GreensRClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(S, x)
   if not x in S then
-    Error("Semigroups: GreensRClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: GreensRClassOfElement: usage,\n",
+                 "the element does not belong to the semigroup,");
   fi;
   return GreensRClassOfElementNC(S, x, false);
 end);
@@ -787,9 +783,8 @@ InstallMethod(GreensRClassOfElement,
 [IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(D, x)
   if not x in D then
-    Error("Semigroups: GreensRClassOfElement: usage,\n",
-          "the element does not belong to the D-class,");
-    return;
+    ErrorMayQuit("Semigroups: GreensRClassOfElement: usage,\n",
+                 "the element does not belong to the D-class,");
   fi;
   return GreensRClassOfElementNC(D, x, IsGreensClassNC(D));
 end);
@@ -823,9 +818,8 @@ InstallMethod(GreensHClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(S, x)
   if not x in S then
-    Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: GreensHClassOfElement: usage,\n",
+                 "the element does not belong to the semigroup,");
   fi;
   return GreensHClassOfElementNC(S, x, false);
 end);
@@ -857,9 +851,8 @@ InstallMethod(GreensHClassOfElement, "for a D/H-class and element",
 [IsActingSemigroupGreensClass and IsGreensClass, IsAssociativeElement],
 function(C, x)
   if not x in C then
-    Error("Semigroups: GreensHClassOfElement: usage,\n",
-          "the element does not belong to the D-class,");
-    return;
+    ErrorMayQuit("Semigroups: GreensHClassOfElement: usage,\n",
+                 "the element does not belong to the D-class,");
   fi;
   return GreensHClassOfElementNC(C, x, IsGreensClassNC(C));
 end);
@@ -1499,9 +1492,8 @@ InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 function(H)
 
   if not IsGroupHClass(H) then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the H-class is not a group,");
-    return;
+    ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
+                 "the H-class is not a group,");
   fi;
   # gaplint: ignore 3
   return MappingByFunction(H, SchutzenbergerGroup(H),
@@ -1647,9 +1639,8 @@ function(S, n)
    rank, rep, rho, j, i, k;
 
   if n < 0 then
-    Error("Semigroups: Idempotents: usage,\n",
-          "the second argument <n> must be a non-negative integer,");
-    return;
+    ErrorMayQuit("Semigroups: Idempotents: usage,\n",
+                 "the second argument <n> must be a non-negative integer,");
   fi;
 
   if HasIdempotents(S) or not IsRegularSemigroup(S) then
@@ -1935,7 +1926,7 @@ function(x, value, scc, o, onright)
 
   # is x the group of units...
   if IsActingSemigroupWithFixedDegreeMultiplication(S) and
-    ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+      ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
     return true;
   fi;
 

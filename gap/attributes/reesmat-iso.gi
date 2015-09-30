@@ -8,15 +8,14 @@
 #############################################################################
 ##
 
-# FIXME 
+# FIXME
 # 1) \< and \= are incompatible, it could be that map1 < map2 and map1 = map2
-#    
+#
 
 # TODO
 #
 # 1) SEMIGROUPS_HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
 #    their own type)
-
 
 #############################################################################
 ## This file contains functions for isomorphisms and automorphisms of Rees
@@ -519,10 +518,10 @@ else
 
     if n = 1 and m = 1 then
       gens := GeneratorsOfGroup(AutomorphismGroup(G));
-      if IsEmpty(gens) then 
+      if IsEmpty(gens) then
         gens := [IdentityMapping(G)];
       fi;
-      A := Group(List(gens, x -> RMSIsoByTriple(R, R, 
+      A := Group(List(gens, x -> RMSIsoByTriple(R, R,
                                                 [(), x, [One(G), One(G)]])));
       SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
       SetIsFinite(A, true);
@@ -808,14 +807,14 @@ else
       if g = fail then
         return fail;
       fi;
-    else 
+    else
       g := ();
     fi;
     graphiso := List(AutGroupGraph(graph1, [[1 .. m], [m + 1 .. n + m]]),
                      x -> x * g);
 
-    tuples := EnumeratorOfCartesianProduct(List([1 .. Length(ConnectedComponents(graph1))], 
-                                           x -> G2));
+    tuples := EnumeratorOfCartesianProduct(
+                List([1 .. Length(ConnectedComponents(graph1))], x -> G2));
     #find an induced function, if there is one
     for l in graphiso do
       for g in groupiso do
@@ -884,7 +883,7 @@ InstallMethod(\=, "for objects in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(x, y)
 
-  if Source(x) <> Source(y) or Range(x) <> Range(y) then 
+  if Source(x) <> Source(y) or Range(x) <> Range(y) then
     return false;
   fi;
 
@@ -902,7 +901,7 @@ InstallMethod(\=, "for objects in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(x, y)
 
-  if Source(x) <> Source(y) or Range(x) <> Range(y) then 
+  if Source(x) <> Source(y) or Range(x) <> Range(y) then
     return false;
   fi;
 

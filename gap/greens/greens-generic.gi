@@ -63,10 +63,9 @@ function(rel, rep, type)
 
   pos := Position(GenericSemigroupData(Source(rel)), rep);
   if pos = fail then
-    Error("Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,\n",
-          "the element in the 2nd argument does not belong to the ",
-          "semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,\n",
+                 "the element in the 2nd argument does not belong to the ",
+                 "semigroup,");
   fi;
 
   out := rec();
@@ -405,7 +404,7 @@ end);
 InstallMethod(OneImmutable, "for an H-class",
 [IsGreensHClass],
 function(H)
-  if not IsGroupHClass(H) then 
+  if not IsGroupHClass(H) then
     return fail;
   fi;
   return Idempotents(H)[1];
@@ -680,9 +679,9 @@ function(C)
     return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation,
                                             GreensHClassOfElement);
   fi;
-  Error("Semigroups: GreensHClasses (for a generic semigroup Green's class):",
-        " usage,\nthe argument should be a Green's R-, L-, or D-class,");
-  return;
+  ErrorMayQuit("Semigroups: GreensHClasses ",
+               "(for a generic semigroup Green's class): usage,\n",
+               "the argument should be a Green's R-, L-, or D-class,");
 end);
 
 ## Representatives
@@ -759,7 +758,6 @@ end);
 #############################################################################
 ## 6. Idempotents . . .
 #############################################################################
-
 
 InstallMethod(NrIdempotents, "for a Green's class",
 [IsGreensClass], C -> Length(Idempotents(C)));

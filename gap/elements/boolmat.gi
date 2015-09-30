@@ -140,7 +140,9 @@ function(x, y)
   n := Length(x![1]);
 
   if n <> Length(y![1]) then
-    ErrorMayQuit();
+    ErrorMayQuit("Semigroups: \in: usage,\n",
+                 "the arguments <x> and <y> must be boolean matrix of equal ",
+                 "size,");
   fi;
 
   for i in [1 .. n] do

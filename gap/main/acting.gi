@@ -54,7 +54,6 @@ function(S)
   return data;
 end);
 
-
 # different method for regular ideals, regular/inverse semigroups, same method
 # for non-regular ideals
 
@@ -129,7 +128,7 @@ function(x, S)
   l := Position(rhoo, rho);
   lambdarhoht := data!.lambdarhoht;
   rholookup := data!.rholookup;
-  
+
   # for the lookahead
   rhoranks := data!.rhoranks;
   lookahead_last := 64;
@@ -139,20 +138,20 @@ function(x, S)
   LookAhead := function()
     local i, start;
     start := Maximum(data!.pos, 1);
-    if start < nrgens then 
+    if start < nrgens then
       return true;
     fi;
     for i in [start .. Length(data!.orbit)] do
-      if not IsBound(rhoranks[rholookup[i]]) then 
+      if not IsBound(rhoranks[rholookup[i]]) then
         rhoranks[rholookup[i]] := rhoranker(rhoo[rholookup[i]]);
       fi;
-      if rhoranks[rholookup[i]] >= rank then 
+      if rhoranks[rholookup[i]] >= rank then
         lookahead_last := i + 64;
         return true;
       fi;
     od;
     lookahead_last := Length(data!.orbit) + 64;
-    return Length(data!.orbit) = 1; 
+    return Length(data!.orbit) = 1;
     # we can't obtain any further elements with high enough rank
   end;
 
@@ -163,9 +162,9 @@ function(x, S)
     if IsClosed(rhoo) or not LookAhead() then
       return false;
     fi;
-    
+
     lookfunc := function(data, x)
-      if data!.pos > lookahead_last and not LookAhead() then 
+      if data!.pos > lookahead_last and not LookAhead() then
         lookahead_fail := true;
         return true;
       fi;
@@ -189,11 +188,11 @@ function(x, S)
     if IsClosedData(data) or not LookAhead() then
       return false;
     fi;
-    
+
     lookahead_fail := false;
 
     lookfunc := function(data, x)
-      if data!.pos > lookahead_last and not LookAhead() then 
+      if data!.pos > lookahead_last and not LookAhead() then
         lookahead_fail := true;
         return true;
       fi;
@@ -201,7 +200,7 @@ function(x, S)
     end;
 
     data := Enumerate(data, infinity, lookfunc);
-    
+
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
       return false;
     fi;
@@ -249,7 +248,7 @@ function(x, S)
     n := repslens[m][ind];
     lookahead_fail := false;
     lookfunc := function(data, x)
-      if data!.pos > lookahead_last and not LookAhead() then 
+      if data!.pos > lookahead_last and not LookAhead() then
         lookahead_fail := true;
         return true;
       fi;
@@ -260,7 +259,7 @@ function(x, S)
         # look for more R-reps with same lambda-rho value
         data := Enumerate(data, infinity, lookfunc);
         found := data!.found;
-        if lookahead_fail = true then 
+        if lookahead_fail = true then
           found := false;
         elif found <> false then
           if repslens[m][ind] = max or x = data[found][4] then
@@ -273,7 +272,7 @@ function(x, S)
         # look for more R-reps with same lambda-rho value
         data := Enumerate(data, infinity, lookfunc);
         found := data!.found;
-        if lookahead_fail = true then 
+        if lookahead_fail = true then
           found := false;
         elif found <> false then
           if repslens[m][ind] = max then
@@ -759,9 +758,8 @@ InstallMethod(PositionOfFound, "for semigroup data",
 [IsSemigroupData],
 function(data)
   if not(data!.looking) then
-    Error("Semigroups: PositionOfFound: usage,\n",
-          "not looking for anything,");
-    return;
+    ErrorMayQuit("Semigroups: PositionOfFound: usage,\n",
+                 "not looking for anything,");
   fi;
   return data!.found;
 end);
@@ -773,9 +771,8 @@ function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
 
   if not IsSemigroupData(data) then
-    Error("Semigroups: SizeOfSemigroupData: usage,\n",
-          "the arg <data> must be semigroup data,");
-    return;
+    ErrorMayQuit("Semigroups: SizeOfSemigroupData: usage,\n",
+                 "the arg <data> must be semigroup data,");
   fi;
 
   if not data!.init then

@@ -24,14 +24,14 @@
 # The number <n> is the *degree* of <x>.
 
 # TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
-# IsBipartitionPBR, IsTransformationPBR, 
+# IsBipartitionPBR, IsTransformationPBR,
 # IsDualTransformationPBR, etc
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
 [IsPBRCollection],
 function(coll)
   return ForAll(coll, IsBipartitionPBR)
-         and IsGeneratorsOfInverseSemigroup(List(coll, AsBipartition)); 
+         and IsGeneratorsOfInverseSemigroup(List(coll, AsBipartition));
 end);
 
 # TODO 2 arg version of this
@@ -40,8 +40,8 @@ InstallMethod(AsTransformation, "for a pbr",
 [IsPBR],
 function(x)
   if not IsTransformationPBR(x) then
-    Error();
-    return;
+    ErrorMayQuit("Semigroups: AsTransformation: usage,\n",
+                 "the argument <x> must be a transformation PBR,");
   fi;
   return AsTransformation(AsBipartition(x));
 end);
@@ -166,8 +166,8 @@ function(x)
 
   deg := DimensionOfMatrixOverSemiring(x);
   if not IsEvenInt(deg) then
-    Error();
-    return;
+    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
+                 "the matrix <x> must be of even dimension,");
   fi;
   succ := Successors(x);
   return PBR(succ{[1 .. deg / 2]},
@@ -183,7 +183,7 @@ function(n)
   local p, adj, k, i, j;
 
   # probability of an edge
-  p := Random([0..9999]);
+  p := Random([0 .. 9999]);
 
   adj := [n];
   for i in [2 .. 2 * n + 1] do
@@ -301,8 +301,8 @@ function(x)
   local n, out, i, j, k;
 
   if not IsPBR(x) then
-    Error();
-    return;
+    ErrorMayQuit("Semigroups: ExtRepOfPBR: usage,\n",
+                 "the argument <x> must be a PBR,");
   fi;
 
   n := x![1];
@@ -312,9 +312,9 @@ function(x)
       Add(out[i + 1], []);
       for k in x![j + 1] do
         if k > n then
-          AddSet(out[i + 1][j - n * i], - (k - n));
+          AddSet(out[i + 1][j - n * i], -(k - n));
         else
-          AddSet(out[i + 1][j- n * i], k);
+          AddSet(out[i + 1][j - n * i], k);
         fi;
       od;
     od;
@@ -407,6 +407,14 @@ function(x, y)
   return false;
 end);
 
+#PBRMonoid := function(n)
+#  local binrels;
+#  binrels := List(Tuples(Combinations([1..n]),n),
+#                  x -> BinaryRelationOnPoints(x));
+#  return Semigroup(List(Tuples(binrels,4),
+#                 x-> PBR(x[1],x[2],x[3],x[4])));
+#end;
+
 InstallMethod(OneMutable, "for a partitioned binary relation",
 [IsPBR],
 function(x)
@@ -420,11 +428,3 @@ function(x)
   od;
   return Objectify(PBRType, out);
 end);
-
-#PBRMonoid := function(n)
-#  local binrels;
-#  binrels := List(Tuples(Combinations([1..n]),n),
-#                  x -> BinaryRelationOnPoints(x));
-#  return Semigroup(List(Tuples(binrels,4),
-#                 x-> PBR(x[1],x[2],x[3],x[4])));
-#end;

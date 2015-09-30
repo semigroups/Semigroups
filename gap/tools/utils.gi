@@ -150,10 +150,10 @@ function(file)
   Append(str, "ms\n");
 
   if not IsBound(GAPInfo.TestData.START_TIME)  then
-      Error("Semigroups: SEMIGROUPS_StopTest:\n",
-            "`STOP_TEST' command without `START_TEST' command for `", file,
-            "'");
-      return;
+      ErrorMayQuit("Semigroups: SEMIGROUPS_StopTest:\n",
+                   "`STOP_TEST' command without `START_TEST' command for `",
+                   file,
+                   "'");
   fi;
   Print(GAPInfo.TestData.START_NAME, "\n");
 
@@ -351,7 +351,8 @@ function(arg)
   local file, opts, generic, split, print_file, width, enabled, disabled;
 
   if Length(arg) = 0 then
-    ErrorMayQuit();
+    ErrorMayQuit("Semigroups: SEMIGROUPS_Test: usage,\n",
+                 "no arguments have been supplied,");
   fi;
 
   file := arg[1];
@@ -369,8 +370,9 @@ function(arg)
 
   generic := SEMIGROUPS_DefaultOptionsRec.generic;
   split := SplitString(file, "/");
-  print_file := JoinStringsWithSeparator(
-                  split{[Length(split) - 2 .. Length(split)]}, "/");
+  print_file := JoinStringsWithSeparator(split{
+                                         [Length(split) - 2 .. Length(split)]},
+                                         "/");
 
   width := SizeScreen()[1] - 3;
   if not opts.silent then

@@ -117,7 +117,8 @@ function(field, x)
   local n, i, j;
 
   if not IsPrimeField(field) then
-    ErrorMayQuit();
+    ErrorMayQuit("Semigroups: AsMatrixOverPrimeField: usage,\n",
+                 "the first argument <field> must be a prime field,");
   fi;
 
   n := Length(x);
@@ -143,7 +144,8 @@ InstallMethod(AsMatrixOverPrimeField,
 [IsPosInt, IsMatrix and IsFFECollColl],
 function(p, x)
   if not IsPrimeInt(p) then
-    ErrorMayQuit();
+    ErrorMayQuit("Semigroups: AsMatrixOverPrimeField: usage,\n",
+                 "the first argument <p> must be a prime,");
   fi;
 
   return MatrixOverPrimeField(GF(p), x);
@@ -154,7 +156,8 @@ InstallMethod(AsMatrixOverPrimeField,
 [IsPosInt, IsMatrix and IsCyclotomicCollColl],
 function(p, x)
   if not IsPrimeInt(p) then
-    ErrorMayQuit();
+    ErrorMayQuit("Semigroups: AsMatrixOverPrimeField: usage,\n",
+                 "the first argument <p> must be a prime,");
   fi;
   return AsMatrixOverPrimeFieldNC(p, x);
 end);
