@@ -1,0 +1,294 @@
+#############################################################################
+##
+#W  boolmat.xml
+#Y  Copyright (C) 2015                                  James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsBooleanMat">
+  <ManSection>
+    <Filt Name="IsBooleanMat" Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      Every boolean matrix in &Semigroups; is a member of the category
+      <C>IsBooleanMat</C>, which is a subcategory of <Ref
+        Filt="IsMatrixOverSemiring"/>.
+      <P/>
+
+      Every boolean matrix in &Semigroups; is a square matrix.
+      <P/>
+
+      Basic operations for Boolean matrices are:
+      <List>
+        <Item>
+          <Ref Oper = "NumberBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Attr = "Successors"/>
+        </Item>
+        <Item>
+          <Ref Oper = "IsRowTrimBooleanMat"/>,
+          <Ref Oper = "IsColTrimBooleanMat"/>,
+          and
+          <Ref Oper = "IsTrimBooleanMat"/>,
+        </Item>
+        <Item>
+          <Ref Oper = "CanonicalBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsSymmetricBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsAntiSymmetricBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsTransitiveBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsReflexiveBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsTotalBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsOntoBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsPartialOrderBooleanMat"/>
+        </Item>
+        <Item>
+          <Ref Prop = "IsEquivalenceBooleanMat"/>
+        </Item>
+      </List>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsBooleanMatCollection">
+  <ManSection>
+    <Filt Name="IsBooleanMatCollection" Arg="obj" Type="Category"/>
+    <Filt Name="IsBooleanMatCollColl" Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+       Every collection of matrices over the same semiring belongs to the
+       category <C>IsBooleanMatCollection</C>. For example, semigroups
+       of boolean matrices belong to <C>IsBooleanMatCollection</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BooleanMatFamily">
+  <ManSection>
+    <Var Name="BooleanMatFamily"/>
+    <Var Name="BooleanMatType"/>
+    <Description>
+      The family of all boolean matrices is <C>BooleanMatFamily</C> and the type
+      of every boolean matrix is <C>BooleanMatType</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BooleanMat">
+  <ManSection>
+    <Func Name="BooleanMat" Arg="arg"/>
+    <Description>
+      <C>BooleanMat</C> returns the boolean matrix <C>mat</C> defined by its
+      argument. The argument can be any of the following:
+      <List>
+        
+        <Mark>a matrix with entries <C>0</C> and/or <C>1</C></Mark>
+        <Item>
+          the argument <A>arg</A> is list of <C>n</C> lists of length <C>n</C>
+          consisting of the values <C>0</C> and <C>1</C>;
+        </Item>
+
+        <Mark>a matrix with entries <K>true</K> and/or <K>false</K></Mark>
+        <Item>
+          the argument <A>arg</A> is list of <C>n</C> lists of length <C>n</C>
+          consisting of the values <K>true</K> and <K>false</K>;
+        </Item>
+        
+        <Mark>successors</Mark>
+        <Item>
+          the argument <A>arg</A> is list of <C>n</C> sublists of consisting of
+          positive integers not greater than <C>n</C>. In this case, the entry
+          <C>j</C> in the sublist in position <C>i</C> of <A>arg</A> indicates
+          that the entry in position <C>(i, j)</C> of the created boolean matrix is
+          <K>true</K>.
+        </Item>
+
+      </List> 
+      <C>BooleanMat</C> returns an error if the argument is not one of the
+      above types. 
+      <Example><![CDATA[
+gap> x := BooleanMat([[true, false], [true, true]]);
+<2x2 boolean matrix>
+gap> y := BooleanMat([[1, 0], [1, 1]]);
+<2x2 boolean matrix>
+gap> z := BooleanMat([[1], [1,2]]);
+<2x2 boolean matrix>
+gap> x = y;
+true
+gap> y = z;
+true
+gap> Display(x);
+1 0
+1 1]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomBooleanMat">
+  <ManSection>
+    <Oper Name="RandomBooleanMat" Arg="n"/>
+    <Description>
+      If <A>n</A> is a positive integer, then <C>RandomBooleanMat</C> returns
+      an <C>n</C> by <C>n</C> boolean matrix chosen with uniform probability
+      among all <C>n</C>-dimensional boolean matrices.
+
+      <Log><![CDATA[
+gap> x := RandomBooleanMat(10);
+gap> Display(x);
+1 0 0 1 0 1 1 0 1 0
+1 1 0 0 0 1 1 1 1 0
+0 0 0 0 0 1 0 1 1 0
+0 1 0 1 0 0 0 0 0 0
+0 1 1 1 1 1 0 1 1 0
+1 0 0 1 0 1 0 0 0 1
+0 0 0 1 1 0 0 0 1 1
+1 1 0 0 1 1 0 0 1 1
+1 0 0 1 0 0 1 0 1 0
+1 0 1 0 1 0 0 0 1 1]]></Log>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
+<#GAPDoc Label="ContainmentBooleanMats">
+  <ManSection>
+    <Oper Name="\in" Arg="mat1, mat2"/>
+    <Description>
+      If <A>mat1</A> and <A>mat2</A> are boolean matrices, then <C><A>mat1</A>
+        in <A>mat2</A></C> returns <K>true</K> if the binary relation defined
+      by <A>mat1</A> is a subset of that defined by <A>mat2</A>.
+
+      <Example><![CDATA[
+gap> x := BooleanMat([[1, 0, 0, 1], [0, 0, 0, 0], 
+>                     [1, 0, 1, 1], [0, 1, 1, 1]]);;
+gap> y := BooleanMat([[1, 0, 1, 0], [1, 1, 1, 0], 
+>                     [0, 1, 1, 0], [1, 1, 1, 1]]);;
+gap> x in y;
+false
+gap> y in y;
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OnBlist">
+  <ManSection>
+    <Oper Name="OnBlist" Arg="blist, mat"/>
+    <Description>
+      If <A>blist</A> is a boolean list of length <C>n</C> and <A>mat</A> is
+      boolean matrices of dimension <C>n</C>, then <C>OnBlist</C> returns the
+      product of <A>blist</A> (thought of as a row vector over the boolean
+      semiring) and <A>mat</A>. 
+        
+      <Example><![CDATA[
+gap> mat := BooleanMat([[1, 0, 0, 1], 
+>                       [0, 0, 0, 0],                        
+>                       [1, 0, 1, 1], 
+>                       [0, 1, 1, 1]]);;
+gap> blist := BlistList([1 .. 4], [1,2]);
+[ true, true, false, false ]
+gap> OnBlists(blist, mat);
+[ true, false, false, true ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Successors">
+  <ManSection>
+    <Attr Name="Successors" Arg="mat"/>
+    <Description>
+      A row of a boolean matrix of dimension <C>n</C> can be thought of 
+      of as the characteristic function of a subset <C>S</C> of <C>[1 .. n]</C>, i.e.
+      <C>i in S</C> if and only if the <C>i</C>th component of the row equals <M>1</M>.
+      We refer to the subset <C>S</C> as the <B>successors</B> of the row.
+      <P/>
+
+      If <A>mat</A> is a boolean matrix, then <C>Successors</C> returns the 
+      list of successors of the rows of <A>mat</A>.
+      
+      <Example><![CDATA[
+gap> mat := BooleanMat([[1, 0, 1, 1], 
+>                       [1, 0, 0, 0], 
+>                       [0, 0, 1, 0], 
+>                       [1, 1, 0, 0]]);;
+gap> Successors(mat);
+[ [ 1, 3, 4 ], [ 1 ], [ 3 ], [ 1, 2 ] ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsRowTrimBooleanMat">
+  <ManSection>
+    <Prop Name="IsRowTrimBooleanMat" Arg="mat"/>
+    <Prop Name="IsColTrimBooleanMat" Arg="mat"/>
+    <Prop Name="IsTrimBooleanMat"    Arg="mat"/>
+    <Description>
+      A row or column of a boolean matrix of dimension <C>n</C> can be thought of 
+      of as the characteristic function of a subset <C>S</C> of <C>[1 ..
+        n]</C>, i.e.  <C>i in S</C> if and only if the <C>i</C>th component of
+      the row or column equals <M>1</M>. <P/>  
+      
+      A boolean matrix is <B>row trim</B> if no subset induced by a
+      row of <A>mat</A> is contained in the subset induced by any other row of
+      <A>mat</A>. <B>Column trim</B> is defined analogously. A boolean matrix
+      is <B>trim</B> if it is both row and column trim.
+      
+      <Example><![CDATA[
+gap> mat := BooleanMat([[0, 1, 1, 0], 
+>                       [1, 0, 1, 1], 
+>                       [1, 1, 0, 1], 
+>                       [0, 1, 0, 1]]);;
+gap> IsTrimBooleanMat(mat);
+true
+gap> mat := BooleanMat([[0, 1, 1, 0], 
+>                       [0, 0, 1, 0], 
+>                       [1, 0, 0, 1], 
+>                       [1, 0, 1, 0]]);;
+gap> IsRowTrimBooleanMat(mat);
+false
+gap> IsColTrimBooleanMat(mat);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NumberBooleanMat">
+  <ManSection>
+    <Oper Name="NumberBooleanMat" Arg="mat"/>
+    <Oper Name="BooleanMatNumber" Arg="m, n"/>
+    <Description>
+      
+      <Example><![CDATA[
+gap> mat := BooleanMat([[0, 1, 1, 0], 
+>                       [1, 0, 1, 1], 
+>                       [1, 1, 0, 1], 
+>                       [0, 1, 0, 1]]);;
+gap> IsTrimBooleanMat(mat);
+true
+gap> mat := BooleanMat([[0, 1, 1, 0], 
+>                       [0, 0, 1, 0], 
+>                       [1, 0, 0, 1], 
+>                       [1, 0, 1, 0]]);;
+gap> IsRowTrimBooleanMat(mat);
+false
+gap> IsColTrimBooleanMat(mat);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

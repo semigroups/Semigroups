@@ -1,0 +1,66 @@
+#############################################################################
+##
+#W  semiringmat.xml
+#Y  Copyright (C) 2015                                  James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsMatrixOverSemiring">
+  <ManSection>
+    <Filt Name="IsMatrixOverSemiring" Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      Every matrix over a semiring in &Semigroups; is a member of the category
+      <C>IsMatrixOverSemiring</C>, which is a subcategory of 
+      <Ref Filt="IsMultiplicativeElementWithOne" BookName="ref"/>, 
+      <Ref Filt="IsAssociativeElement" BookName="ref"/>, and
+      <C>IsPositionalObjectRep</C>; see 
+      <Ref Sect="Representation" BookName="ref"/>.
+      <P/>
+
+      Every matrix over a semiring in &Semigroups; is a square matrix.
+      <P/>
+
+      Basic operations for matrices over semirings are:
+      <Ref Attr="DimensionOfMatrixOverSemiring"/> and
+      <Ref Attr="TransposedMat" BookName = "ref"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsMatrixOverSemiringCollection">
+  <ManSection>
+    <Filt Name="IsMatrixOverSemiringCollection" Arg="obj" Type="Category"/>
+    <Filt Name="IsMatrixOverSemiringCollColl" Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+       Every collection of matrices over the same semiring belongs to the
+       category <C>IsMatrixOverSemiringCollection</C>. For example, semigroups
+       of matrices over a semiring belong to
+       <C>IsMatrixOverSemiringCollection</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DimensionOfMatrixOverSemiring">
+  <ManSection>
+    <Attr Name="DimensionOfMatrixOverSemiring" Arg="mat"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      If <A>mat</A> is a matrix over a semiring (i.e. belongs to the category
+      <Ref Filt="IsMatrixOverSemiring"/>), then <A>mat</A> is a square <C>n</C>
+      by <C>n</C> matrix. 
+      <C>DimensionOfMatrixOverSemiring</C> returns the dimension <C>n</C> of
+      <A>mat</A>.
+      <Example><![CDATA[
+gap> x := BooleanMat([[1, 0, 0, 1], [0, 1, 1, 0], 
+>                     [1, 0, 1, 1], [0, 0, 0, 1]]);
+<4x4 boolean matrix>
+gap> DimensionOfMatrixOverSemiring(x);
+4]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
