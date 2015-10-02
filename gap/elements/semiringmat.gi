@@ -112,7 +112,7 @@ function(x)
   Append(str, "x");
   Append(str, String(DimensionOfMatrixOverSemiring(x)));
   Append(str, " ");
-  Append(str, TypeViewStringOfMatrixOverSemiring(x));
+  Append(str, SEMIGROUPS_TypeViewStringOfMatrixOverSemiring(x));
   Append(str, " matrix>");
   return str;
 end);
@@ -141,7 +141,9 @@ function(x)
   local n, str, i, j;
 
   n := DimensionOfMatrixOverSemiring(x);
-  str := Concatenation("\>", TypePrintStringOfMatrixOverSemiring(x), "(\>[");
+  str := Concatenation("\>",
+                       SEMIGROUPS_TypePrintStringOfMatrixOverSemiring(x),
+                       "(\>[");
 
   for i in [1 .. n] do
     Append(str, "\>\>[");

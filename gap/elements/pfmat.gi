@@ -10,16 +10,16 @@
 
 # This file contains an implementation of matrices over prime fields.
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> "prime field");
 
-#TODO make it non-NC
 
-InstallMethod(TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
 "for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> "MatrixOverPrimeFieldNC");
 
+#TODO make it non-NC
 InstallGlobalFunction(MatrixOverPrimeFieldNC,
 function(arg)
   local mat;

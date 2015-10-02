@@ -17,10 +17,12 @@
 ## Specializations of methods for MatrixOverSemiring
 #############################################################################
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a boolean matrix",
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring, 
+"for a boolean matrix",
 [IsBooleanMat], x -> "boolean");
 
-InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a boolean matrix",
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring, 
+"for a boolean matrix",
 [IsBooleanMat], x -> "BooleanMat");
 
 InstallGlobalFunction(BooleanMatNC,

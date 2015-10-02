@@ -53,27 +53,27 @@
     those for semigroups of:
     <Enum> 
       <Item>
-        transformations, partial permutations, bipartitions, and subsemigroups
-        of regular Rees 0-matrix semigroups over groups. When applied to
-        semigroups with large
-        subgroups these are the most efficient methods in the &Semigroups;
-        package. For example, the complexity of computing, say, the size of a
-        transformation semigroup that happens to be a group, is the same as the
-        complexity of the Schreier-Sims Algorithm (polynomial in the number of
-        points acted on by the transformations) for a permutation group. <P/>
+        transformations, partial permutations, bipartitions, subsemigroups
+        of regular Rees 0-matrix semigroups over groups, and matrices over a
+        finite field. When applied to semigroups with large subgroups these are
+        the most efficient methods in the &Semigroups; package. For example,
+        the complexity of computing, say, the size of a transformation
+        semigroup that happens to be a group, is the same as the complexity of
+        the Schreier-Sims Algorithm (polynomial in the number of points acted
+        on by the transformations) for a permutation group. <P/>
 
         The algorithms of this type are described in <Cite
           Key="Mitchell2015aa"/>. In theory, these algorithms can be applied to
         compute any subsemigroup of a regular semigroup.  For details of how to
-        extend &Semigroups; see <Ref Chap="Extending the package"/>.  
-        We refer to semigroups to which the algorithms in <Cite
-          Key="Mitchell2015aa"/> can be applied as <E>acting semigroups</E>.
-        See Section <Ref Sect="Acting Semigroups"/> for further details.
+        extend &Semigroups; see <Ref Chap="Extending the package"/>.  We refer
+        to semigroups to which the algorithms in <Cite Key="Mitchell2015aa"/>
+        can be applied as <E>acting semigroups</E>.  See Section <Ref
+          Sect="Acting Semigroups"/> for further details.
       </Item>
 
       <Item>
-        partitioned binary relations as defined in <Cite Key="Mazorchuk20????"/>, and 
-        matrices over the following semirings:
+        partitioned binary relations as defined in <Cite
+          Key="Mazorchuk20????"/>, and matrices over the following semirings:
         <List>
           <Item> 
             the <E>Boolean semiring</E> <M>\{0,1\}</M> where <M>0 + 0 = 0</M>,
@@ -81,7 +81,7 @@
               \cdot 1 = 0</M>
           </Item>
           <Item> 
-            fields of prime order;
+            finite fields;
           </Item>
           <Item> 
             the <E>max-plus semiring</E> of natural numbers and negative
@@ -104,10 +104,13 @@
             operations min and plus;
           </Item>
           <Item> 
-            the tropical min-plus semiring <M>\mathbb{N}_{t,p} = \{0, 1,
-              \ldots, t, t + 1, \ldots, t + p - 1\}</M> for some threshold <M>t</M> 
-            and period <M>p</M> under addition and mutliplication modulo the congruence 
-            <M>t = t + p</M>.
+            the <E>projective max-plus semiring</E> ... TODO
+          </Item>
+          <Item> 
+            the semiring <M>\mathbb{N}_{t,p} = \{0, 1,
+              \ldots, t, t + 1, \ldots, t + p - 1\}</M> for some threshold
+            <M>t</M> and period <M>p</M> under addition and mutliplication
+            modulo the congruence <M>t = t + p</M>.
           </Item>
         </List>
         A version of the Froidure-Pin Algorithm <Cite Key="Froidure1997aa"/>
@@ -139,7 +142,7 @@
     in &GAP; or Green's relations in particular, see <Ref Sect="Semigroups"
       BookName="ref"/> or <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
 
-    This manual is organised as follows:
+    This manual is organised as follows: TODO
 
 
     If you find a bug or an issue with the package, then report this using the

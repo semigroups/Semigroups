@@ -813,6 +813,7 @@ else
     graphiso := List(AutGroupGraph(graph1, [[1 .. m], [m + 1 .. n + m]]),
                      x -> x * g);
 
+    # gaplint: ignore 2
     tuples := EnumeratorOfCartesianProduct(
                 List([1 .. Length(ConnectedComponents(graph1))], x -> G2));
     #find an induced function, if there is one
