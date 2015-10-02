@@ -196,7 +196,10 @@ InstallMethod(\=, "for matrices over a semiring",
 function(x, y)
   local n, i;
 
-  n := DimensionOfMatrixOverSemiring(x);
+  n := Length(x![1]);
+  if Length(y![1]) <> n then
+    return false;
+  fi;
 
   for i in [1 .. n] do
     if x![i] <> y![i] then
@@ -211,7 +214,12 @@ InstallMethod(\<, "for matrices over a semiring",
 function(x, y)
   local n, i;
 
-  n := DimensionOfMatrixOverSemiring(x);
+  n := Length(x![1]);
+  if n < Length(y![1]) then
+    return true;
+  elif n > Length(y![1]) then
+    return false;
+  fi;
 
   for i in [1 .. n] do
     if x![i] < y![i] then

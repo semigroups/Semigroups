@@ -99,8 +99,58 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
+  <Section Label="Operators for matrices over semirings">
+    <Heading>Operators for matrices over semirings</Heading>
+    <List>
+      <Mark><C><A>mat1</A> * <A>mat2</A></C></Mark>
+      <Item>
+        <Index Key="*"><C>*</C> (for matrices over a semiring)</Index>
+        returns the product of the matrices <A>mat1</A> and <A>mat2</A>
+        of equal dimension using the usual matrix multiplication with the
+        operations <C>+</C> and <C>*</C> from the underlying semiring. 
+      </Item>
+      <Mark><C><A>mat1</A> &lt; <A>mat2</A></C></Mark>
+      <Item>
+        <Index Key="&lt;"><C>&lt;</C> (for matrices over a semiring)</Index>
+        returns <K>true</K> if when considered as a list of rows, the matrix
+        <A>mat1</A> is short-lex less than the matrix <A>mat2</A>, and
+        <K>false</K> if this is not the case. This means that a matrix of lower
+        dimension is less than a matrix of higher dimension.
+      </Item>
+      <Mark><C><A>mat1</A> = <A>mat2</A></C></Mark>
+      <Item>
+        <Index Key="="><C>=</C> (for matrices over a semiring)</Index>
+        returns <K>true</K> if the matrix <A>mat1</A> equals the
+        matrix <A>mat2</A> (i.e. the entries are equal and the underlying
+        semirings are equal) and returns <K>false</K> if it does not.
+      </Item>
+    </List> 
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section Label="Boolean matrices">
-  <Heading>Boolean matrices</Heading>
+    <Heading>
+      Boolean matrices
+    </Heading>
+
+    <#Include Label="IsBooleanMat">
+    <#Include Label="BooleanMatFamily">
+    <#Include Label="IsBooleanMatCollection">
+
+    <#Include Label="BooleanMat">
+    <#Include Label="RandomBooleanMat">
+   
+    <#Include Label="ContainmentBooleanMats">
+    <#Include Label="OnBlist">
+    <#Include Label="Successors">
+
+    <#Include Label="IsRowTrimBooleanMat">
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+    
 
 
   </Section>

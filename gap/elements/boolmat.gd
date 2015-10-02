@@ -48,11 +48,11 @@ DeclareGlobalFunction("SEMIGROUPS_HashFunctionBooleanMat");
 DeclareAttribute("Successors", IsBooleanMat);
 DeclareGlobalFunction("BooleanMatBySuccessorsNC");
 
-DeclareAttribute("IsRowTrimBooleanMat", IsBooleanMat);
-DeclareAttribute("IsColTrimBooleanMat", IsBooleanMat);
-DeclareAttribute("IsTrimBooleanMat", IsBooleanMat);
+DeclareProperty("IsRowTrimBooleanMat", IsBooleanMat);
+DeclareProperty("IsColTrimBooleanMat", IsBooleanMat);
+DeclareProperty("IsTrimBooleanMat", IsBooleanMat);
 
-DeclareGlobalFunction("OnBlists");
+DeclareGlobalFunction("OnBlist");
 
 DeclareAttribute("SetBooleanMat", IsBooleanMat);
 DeclareAttribute("BooleanMatSet", IsSSortedList and IsHomogeneousList);
@@ -68,7 +68,6 @@ DeclareProperty("IsAntiSymmetricBooleanMat", IsBooleanMat);
 DeclareProperty("IsTransitiveBooleanMat", IsBooleanMat);
 DeclareProperty("IsReflexiveBooleanMat", IsBooleanMat);
 
-# TODO implement these
 DeclareProperty("IsTotalBooleanMat", IsBooleanMat);
 DeclareProperty("IsOntoBooleanMat", IsBooleanMat);
 
