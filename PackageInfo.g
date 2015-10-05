@@ -153,7 +153,8 @@ Persons := [
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
                        " Scotland"] ),
     Place         := "St Andrews",
-    Institution   := "University of St Andrews"
+    Institution   := "University of St Andrews",
+    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/"
   ),
   
   rec( 
@@ -197,10 +198,10 @@ Dependencies := rec(
   GAP := ">=4.7.6",
   NeededOtherPackages := [["orb", ">=4.7.3"], 
                           ["io", ">=4.4.4"], 
-                          ["digraphs", ">=0.2"]],
+                          ["digraphs", ">=0.2"],
+                          ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], 
-                             ["grape", ">=4.5"],
-                             ["genss", ">=1.5"]],
+                             ["grape", ">=4.5"]],
   ExternalConditions := []),
 
   BannerString := Concatenation(
