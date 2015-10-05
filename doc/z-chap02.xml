@@ -32,6 +32,11 @@
         loaded. 
       </Item>
 
+      <Item>
+        ensure that the &genss; package version &GENSSVERS; or higher is
+        available.
+      </Item>
+
       <Item>  
         <B>This step is optional:</B> certain functions in &Semigroups; require
         the &Grape; package to be available and fully compiled; see Section 
@@ -43,14 +48,6 @@
         will not work. 
       </Item>
 
-      <Item> 
-        <B>This step is optional:</B> the non-deterministic version of the
-        function <Ref Oper="Normalizer" Label="for a perm group, semigroup, record"/>
-        requires the &genss; package. If you want to use this function, then
-        please ensure that the &genss; package version &GENSSVERS; or higher is
-        available. 
-      </Item>
-      
       <Item> 
         download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
         <URL Text="the Semigroups package webpage">http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php</URL>.
@@ -143,15 +140,9 @@ make]]></Listing>
 
       The &genss; package is used in a non-deterministic version of the
       operation
-      <Ref Oper="Normalizer" Label="for a perm group, semigroup, record"/> but
-      nowhere else in &Semigroups;. If &genss; is not available, then
-      &Semigroups; can be used as normal with the exception that the
-      non-deterministic version of the operation 
-      <Ref Oper="Normalizer" Label="for a perm group, semigroup, record"/> will
-      not be available. The non-deterministic version generally has better
-      performance than the deterministic version; see 
-      <Ref Oper="Normalizer" Label="for a perm group, semigroup, record"/> for
-      more details. 
+      <Ref Oper="Normalizer" Label="for a perm group, semigroup, record"/> and
+      in calculating the stabiliser of a Rees 0-matrix semigroup's matrix.  It
+      must be installed for &Semigroups; to load.
     </Subsection>
   </Section>
   

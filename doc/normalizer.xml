@@ -43,15 +43,12 @@
       <List>
         <Mark>random</Mark>
         <Item>
-          If this option has the value <K>true</K> and the &genss; package is
-          loaded, then the non-deterministic algorithms in &genss; are used in 
-          <C>Normalizer</C>. So, there is some chance that <C>Normalizer</C>
-          will return an incorrect result in this case, but these methods can
-          also be much faster than the deterministic algorithms which are used
-          if this option is <K>false</K>.  <P/>
+          If this option has the value <K>true</K>, then the non-deterministic
+          algorithms in &genss; are used in <C>Normalizer</C>. So, there is some
+          chance that <C>Normalizer</C> will return an incorrect result in this
+          case, but these methods can also be much faster than the deterministic
+          algorithms which are used if this option is <K>false</K>.  <P/>
 
-          If &genss; is not loaded, then this option is ignored. <P/> 
-          
           The default value for this option is <K>false</K>.
         </Item>
           
