@@ -2,4 +2,158 @@
   <Heading>
     Matrices over semirings
   </Heading>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  In this chapter we describe the functionality in &Semigroups; for creating
+  matrices over semirings.  <B>Only square matrices are currently
+    supported.</B> We use the term <B>matrix</B> to mean <B>square matrix</B>
+  everywhere in this manual.
+  <P/>
+  
+  For reference, matrices over the following semirings
+  are currently supported:
+  <List>
+    <Mark>the Boolean semiring</Mark>
+    <Item> 
+      the set <M>\{0,1\}</M> where <M>0 + 0 = 0</M>,
+      <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, and <M>1\cdot 0 = 0 \cdot 0 = 0
+        \cdot 1 = 0</M>
+    </Item>
+
+    <Mark>the max-plus semiring</Mark>
+    <Item> 
+      the set of natural numbers and negative
+      infinity <M>\mathbb{N}\cup \{-\infty\}</M> with operations max and
+      plus;
+    </Item>
+
+    <Mark>the min-plus semiring</Mark>
+    <Item> 
+      the set of natural numbers and
+      infinity <M>\mathbb{N}\cup \{\infty\}</M> with operations min and
+      plus;
+    </Item>
+
+    <Mark>tropical max-plus semirings</Mark>
+    <Item> 
+      the set <M>\{-\infty, 0, 1,
+        \ldots, t\}</M> for some threshold <M>t</M> with operations max
+      and plus;
+    </Item>
+
+    <Mark>tropical min-plus semirings</Mark>
+    <Item> 
+      the set <M>\{0, 1,
+        \ldots, t, \infty\}</M> for some threshold <M>t</M> with
+      operations min and plus;
+    </Item>
+
+    <Mark>the projective max-plus semiring</Mark>
+    <Item>
+      TODO
+    </Item>
+
+    <Mark>the semiring <M>\mathbb{N}_{t,p}</M></Mark>
+    <Item> 
+      the semiring <M>\mathbb{N}_{t,p} = \{0, 1,
+        \ldots, t, t + 1, \ldots, t + p - 1\}</M> for some threshold <M>t</M> 
+      and period <M>p</M> under addition and mutliplication modulo the congruence 
+      <M>t = t + p</M>;
+    </Item>
+
+    <Mark>the integers</Mark>
+    <Item>
+      the usual ring of integers;
+    </Item>
+
+    <Mark>finite fields</Mark>
+    <Item>
+      the finite fields <C>GF(q^d)</C> for prime <C>q</C>.
+    </Item>
+  </List>
+
+
+  With the exception of matrices of finite fields, semigroups of matrices in
+  &Semigroups; are of the second type described in Section <Ref
+    Sect="Introduction"/>.  In other words, a version of the Froidure-Pin
+  Algorithm <Cite Key="Froidure1997aa"/> is used to compute semigroups of
+  these types, i.e it is possible that all of the elements of such a semigroup
+  are enumerated and stored in the memory of your computer.  
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Matrices over semirings">
+    <Heading>The category <C>IsMatrixOverSemiring</C></Heading>
+   In this section we describe the attributes and operations which apply to
+   every matrix over a semiring.
+   
+    <#Include Label="IsMatrixOverSemiring">
+    <#Include Label="IsMatrixOverSemiringCollection">
+    <#Include Label="DimensionOfMatrixOverSemiring">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Operators for matrices over semirings">
+    <Heading>Operators for matrices over semirings</Heading>
+    <List>
+      <Mark><C><A>mat1</A> * <A>mat2</A></C></Mark>
+      <Item>
+        <Index Key="*"><C>*</C> (for matrices over a semiring)</Index>
+        returns the product of the matrices <A>mat1</A> and <A>mat2</A>
+        of equal dimension using the usual matrix multiplication with the
+        operations <C>+</C> and <C>*</C> from the underlying semiring. 
+      </Item>
+      <Mark><C><A>mat1</A> &lt; <A>mat2</A></C></Mark>
+      <Item>
+        <Index Key="&lt;"><C>&lt;</C> (for matrices over a semiring)</Index>
+        returns <K>true</K> if when considered as a list of rows, the matrix
+        <A>mat1</A> is short-lex less than the matrix <A>mat2</A>, and
+        <K>false</K> if this is not the case. This means that a matrix of lower
+        dimension is less than a matrix of higher dimension.
+      </Item>
+      <Mark><C><A>mat1</A> = <A>mat2</A></C></Mark>
+      <Item>
+        <Index Key="="><C>=</C> (for matrices over a semiring)</Index>
+        returns <K>true</K> if the matrix <A>mat1</A> equals the
+        matrix <A>mat2</A> (i.e. the entries are equal and the underlying
+        semirings are equal) and returns <K>false</K> if it does not.
+      </Item>
+    </List> 
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Boolean matrices">
+    <Heading>
+      Boolean matrices
+    </Heading>
+
+    <#Include Label="IsBooleanMat">
+    <#Include Label="BooleanMatFamily">
+    <#Include Label="IsBooleanMatCollection">
+
+    <#Include Label="BooleanMat">
+    <#Include Label="RandomBooleanMat">
+   
+    <#Include Label="ContainmentBooleanMats">
+    <#Include Label="OnBlist">
+    <#Include Label="Successors">
+
+    <#Include Label="IsRowTrimBooleanMat">
+    <#Include Label="NumberBooleanMat">
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+    
+
+
+  </Section>
+
 </Chapter>

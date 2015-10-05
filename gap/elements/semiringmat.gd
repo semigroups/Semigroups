@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  semiring-matrix.gd
+#W  semiringmat.gd
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -26,7 +26,8 @@ DeclareOperation("SEMIGROUPS_RandomMatrixOverSemiring",
                  [IsPosInt, IsObject, IsObject]);
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionMatrixOverSemiring");
 
-DeclareAttribute("TypeViewStringOfMatrixOverSemiring", IsMatrixOverSemiring);
-DeclareAttribute("TypePrintStringOfMatrixOverSemiring", IsMatrixOverSemiring);
-
+DeclareAttribute("SEMIGROUPS_TypeViewStringOfMatrixOverSemiring",
+                 IsMatrixOverSemiring);
+DeclareAttribute("SEMIGROUPS_TypePrintStringOfMatrixOverSemiring",
+                 IsMatrixOverSemiring);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);

@@ -18,7 +18,7 @@
 ##
 ##   2. Min-plus matrices
 ##
-##   2. Tropical matrices
+##   3. Tropical matrices
 ##
 ##   4. Tropical max-plus matrices
 ##
@@ -55,11 +55,11 @@ end);
 ## 1. Max-plus matrices
 #############################################################################
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a max-plus matrix",
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring, "for a max-plus matrix",
 [IsMaxPlusMatrix], x -> "max-plus");
 
 # TODO change it to non-NC version
-InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a max-plus matrix",
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring, "for a max-plus matrix",
 [IsMaxPlusMatrix], x -> "MaxPlusMatrixNC");
 
 InstallGlobalFunction(MaxPlusMatrixNC,
@@ -98,11 +98,11 @@ n -> SEMIGROUPS_RandomMatrixOverSemiring(n, -infinity, MaxPlusMatrixNC));
 ## 2. Min-plus matrices
 #############################################################################
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a min-plus matrix",
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring, "for a min-plus matrix",
 [IsMinPlusMatrix], x -> "min-plus");
 
 # TODO change it to non-NC version
-InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a min-plus matrix",
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring, "for a min-plus matrix",
 [IsMinPlusMatrix], x -> "MinPlusMatrixNC");
 
 InstallGlobalFunction(MinPlusMatrixNC, x -> Objectify(MinPlusMatrixType, x));
@@ -168,12 +168,12 @@ end);
 ## 4. Tropical max-plus matrices
 #############################################################################
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a tropical max-plus matrix",
 [IsTropicalMaxPlusMatrix], x -> "tropical max-plus");
 
 # TODO change it to non-NC version
-InstallMethod(TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
 "for a tropical max-plus matrix",
 [IsTropicalMaxPlusMatrix], x -> "TropicalMaxPlusMatrixNC");
 
@@ -226,12 +226,12 @@ end);
 ## 5. Tropical min-plus matrices
 #############################################################################
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a tropical min-plus matrix",
 [IsTropicalMinPlusMatrix], x -> "tropical min-plus");
 
 # TODO change it to non-NC version
-InstallMethod(TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
 "for a tropical min-plus matrix",
 [IsTropicalMinPlusMatrix], x -> "TropicalMinPlusMatrixNC");
 
@@ -284,12 +284,12 @@ end);
 ## 6. Projective max-plus matrices
 #############################################################################
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a projective max-plus matrix",
 [IsProjectiveMaxPlusMatrix], x -> "projective max-plus");
 
 # TODO change it to non-NC version
-InstallMethod(TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
 "for a projective max-plus matrix",
 [IsProjectiveMaxPlusMatrix], x -> "ProjectiveMaxPlusMatrixNC");
 
@@ -366,12 +366,12 @@ function(x, threshold, period)
   return x;
 end);
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a natural number matrix",
 [IsNaturalMatrix], x -> "natural");
 
 # TODO change it to non-NC version
-InstallMethod(TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
 "for a natural number matrix",
 [IsNaturalMatrix], x -> "NaturalMatrixNC");
 

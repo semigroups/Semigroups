@@ -17,10 +17,12 @@
 ## Specializations of methods for MatrixOverSemiring
 #############################################################################
 
-InstallMethod(TypeViewStringOfMatrixOverSemiring, "for a boolean matrix",
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
+"for a boolean matrix",
 [IsBooleanMat], x -> "boolean");
 
-InstallMethod(TypePrintStringOfMatrixOverSemiring, "for a boolean matrix",
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+"for a boolean matrix",
 [IsBooleanMat], x -> "BooleanMat");
 
 InstallGlobalFunction(BooleanMatNC,
@@ -82,7 +84,11 @@ InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local n, xy, i, j, k;
 
-  n := DimensionOfMatrixOverSemiring(x);
+  n := Length(x![1]);
+  if Length(y![1]) <> n then
+    ErrorMayQuit("Semigroups: \* (for boolean matrices):\n",
+                 "the matrices must have equal dimension,");
+  fi;
   xy := List([1 .. n], x -> BlistList([1 .. n], []));
 
   for i in [1 .. n] do
@@ -156,7 +162,7 @@ function(x, y)
   return true;
 end);
 
-InstallGlobalFunction(OnBlists,
+InstallGlobalFunction(OnBlist,
 function(blist1, x)
   local n, blist2, i, j;
 
@@ -179,16 +185,17 @@ function(x)
   return List([1 .. n], i -> ListBlist([1 .. n], x![i]));
 end);
 
-InstallGlobalFunction(BooleanMatBySuccessorsNC,
-function(x)
-  local n, y, i;
-  n := Length(x);
-  y := EmptyPlist(n);
-  for i in [1 .. n] do
-    y[i] := BlistList([1 .. n], x[i]);
-  od;
-  return Objectify(BooleanMatType, y);
-end);
+# JDM deprecated
+#InstallGlobalFunction(BooleanMatBySuccessorsNC,
+#function(x)
+#  local n, y, i;
+#  n := Length(x);
+#  y := EmptyPlist(n);
+#  for i in [1 .. n] do
+#    y[i] := BlistList([1 .. n], x[i]);
+#  od;
+#  return Objectify(BooleanMatType, y);
+#end);
 
 InstallMethod(IsRowTrimBooleanMat, "for a boolean matrix",
 [IsBooleanMat],
@@ -578,4 +585,23 @@ function(x)
     od;
   od;
   return true;
+end);
+
+InstallMethod(IsTotalBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, i;
+  n := Length(x![1]);
+  for i in [1 .. n] do
+    if SizeBlist(x![i]) = 0 then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(IsTotalBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  return IsTotalBooleanMat(TransposedMat(x));
 end);

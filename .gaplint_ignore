@@ -8,3 +8,4 @@ SemigroupByGenerators
 InverseOp
 TraceSchreierTreeForward
 ELM_LIST
+TransposedMat

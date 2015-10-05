@@ -16,7 +16,8 @@ InstallMethod(SEMIGROUPS_ViewStringSuffix,
 function(S)
   local n;
   n := String(DimensionOfMatrixOverSemiring(Representative(S)));
+  # gaplint: ignore 3
   return Concatenation(n, "x", n, " ",
-                       TypeViewStringOfMatrixOverSemiring(Representative(S)),
+    SEMIGROUPS_TypeViewStringOfMatrixOverSemiring(Representative(S)),
                        " matrices ");
 end);

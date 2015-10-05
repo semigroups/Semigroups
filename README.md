@@ -3,7 +3,9 @@
 
 #### Copyright (C) 2011-15 James D. Mitchell et al.
 #### Licensing information is available in the LICENSE file.   
-  
+
+[![Build Status](https://drone.io/bitbucket.org/james-d-mitchell/semigroups/status.png)](https://drone.io/bitbucket.org/james-d-mitchell/semigroups/latest) 
+
 ## Getting Semigroups
 
 To get the latest version of the package download the archive file
