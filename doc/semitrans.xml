@@ -137,13 +137,14 @@ true]]></Example>
     are analogous to <C>AsTransformationSemigroup</C>.
 
     <Example><![CDATA[
-gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], 
-> [ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), 
-> Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], 
-> [ -2, -3 ], [ -5 ] ] ) ] );
-<bipartition semigroup on 6 pts with 2 generators>
+gap> S := Semigroup(
+> Bipartition([[1, 2], [3, 6, -2], [4, 5, -3, -4], 
+>              [-1, -6], [-5]]), 
+> Bipartition([[1, -4], [2, 3, 4, 5], [6], [-1, -6], 
+>              [-2, -3], [-5]]));
+<bipartition semigroup of degree 6 with 2 generators>
 gap> AsTransformationSemigroup(S);
-<transformation semigroup on 12 pts with 2 generators>]]></Example>
+<transformation semigroup of degree 12 with 2 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

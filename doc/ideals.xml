@@ -27,7 +27,8 @@ gap> S:=Monoid(
 > Bipartition( [ [ 1, 2, 3, -2 ], [ 4 ], [ -1, -4 ], [ -3 ] ] ), 
 > Bipartition( [ [ 1, 4, -2, -4 ], [ 2, -1, -3 ], [ 3 ] ] ) );;
 gap> I:=SemigroupIdeal(S, S);
-<non-regular bipartition semigroup ideal on 4 pts with 3 generators>
+<non-regular bipartition semigroup ideal of degree 4 with 3 generators
+>
 gap> MinimalIdealGeneratingSet(I);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ]> ]]]></Example>
     </Description>
@@ -55,14 +56,14 @@ gap> MinimalIdealGeneratingSet(I);
       costly. 
 
       <Example><![CDATA[
-gap> S:=Semigroup(
+gap> S := Semigroup(
 > Bipartition( [ [ 1, 2, 3, 4, -1 ], [ -2, -4 ], [ -3 ] ] ), 
 > Bipartition( [ [ 1, 2, 3, -3 ], [ 4 ], [ -1 ], [ -2, -4 ] ] ), 
 > Bipartition( [ [ 1, 3, -2 ], [ 2, 4 ], [ -1, -3, -4 ] ] ), 
 > Bipartition( [ [ 1 ], [ 2, 3, 4 ], [ -1, -3, -4 ], [ -2 ] ] ), 
 > Bipartition( [ [ 1 ], [ 2, 4, -2 ], [ 3, -4 ], [ -1 ], [ -3 ] ] ) );;
-gap> I:=SemigroupIdeal(S, S.1*S.2*S.5);
-<regular bipartition semigroup ideal on 4 pts with 1 generator>
+gap> I := SemigroupIdeal(S, S.1 * S.2 * S.5);
+<regular bipartition semigroup ideal of degree 4 with 1 generator>
 gap> GeneratorsOfSemigroupIdeal(I);
 [ <bipartition: [ 1, 2, 3, 4, -4 ], [ -1 ], [ -2 ], [ -3 ]> ]
 gap> I=Semigroup(GeneratorsOfSemigroupIdeal(I));
@@ -86,14 +87,14 @@ false]]></Example>
       function is <A>S</A>.
     
       <Example><![CDATA[
-gap> S:=SymmetricInverseMonoid(10);
+gap> S := SymmetricInverseMonoid(10);
 <symmetric inverse semigroup on 10 pts>
-gap> I:=SemigroupIdeal(S, PartialPerm([1,2]));
-<inverse partial perm semigroup ideal on 10 pts with 1 generator>
+gap> I := SemigroupIdeal(S, PartialPerm([1,2]));
+<inverse partial perm semigroup ideal of rank 10 with 1 generator>
 gap> Size(I);
 4151
-gap> I:=SemigroupIdeal(S, I, Idempotents(S));
-<inverse partial perm semigroup ideal on 10 pts with 1025 generators>]]></Example>
+gap> I := SemigroupIdeal(S, I, Idempotents(S));
+<inverse partial perm semigroup ideal of rank 10 with 1025 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

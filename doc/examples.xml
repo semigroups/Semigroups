@@ -30,10 +30,9 @@
 
       <Example><![CDATA[
 gap> S:=EndomorphismsPartition([3,3,3]);
-<transformation semigroup on 9 pts with 4 generators>
+<transformation semigroup of degree 9 with 4 generators>
 gap> Size(S);
-531441
-]]></Example>
+531441]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -56,10 +55,10 @@ gap> Size(S);
       units), when <A>n</A> is at least 2.  
 
       <Example><![CDATA[
-gap> S:=JonesMonoid(4);
-<regular bipartition monoid on 4 pts with 3 generators>
+gap> S := JonesMonoid(4);
+<regular bipartition monoid of degree 4 with 3 generators>
 gap> SingularJonesMonoid(8);
-<regular bipartition semigroup ideal on 8 pts with 1 generator>]]></Example>
+<regular bipartition semigroup ideal of degree 8 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -80,14 +79,14 @@ gap> SingularJonesMonoid(8);
       units), when <A>n</A> is at least 2. 
 
       <Example><![CDATA[
-gap> S:=BrauerMonoid(4);
-<regular bipartition monoid on 4 pts with 3 generators>
+gap> S := BrauerMonoid(4);
+<regular bipartition monoid of degree 4 with 3 generators>
 gap> IsSubsemigroup(S, JonesMonoid(4));
 true
 gap> Size(S);
 105
 gap> SingularBrauerMonoid(8);
-<regular bipartition semigroup ideal on 8 pts with 1 generator>]]></Example>
+<regular bipartition semigroup ideal of degree 8 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -109,19 +108,18 @@ gap> SingularBrauerMonoid(8);
 
       See <Ref Prop="IsUniformBlockBijection"/>.
       <Example><![CDATA[
-gap> S:=DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid on 4 pts with 3 generators>
-gap> IsFactorisableSemigroup(S);
+gap> S := DualSymmetricInverseMonoid(4);
+<inverse bipartition monoid of degree 4 with 3 generators>
+gap> IsFactorisableInverseMonoid(S);
 false
-gap> S:=FactorisableDualSymmetricInverseSemigroup(4);
-<inverse bipartition monoid on 4 pts with 3 generators>
-gap> IsFactorisableSemigroup(S);
+gap> S := FactorisableDualSymmetricInverseSemigroup(4);
+<inverse bipartition monoid of degree 4 with 3 generators>
+gap> IsFactorisableInverseMonoid(S);
 true
-gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
-<inverse bipartition monoid on 5 pts with 3 generators>
-gap> IsFactorisableSemigroup(S);
-true
-]]></Example>
+gap> S := Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+<inverse bipartition monoid of degree 5 with 3 generators>
+gap> IsFactorisableInverseMonoid(S);
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -146,11 +144,10 @@ true
       <Example><![CDATA[
 gap> Number(PartitionMonoid(3), IsBlockBijection);
 25
-gap> S:=DualSymmetricInverseSemigroup(3);
-<inverse bipartition monoid on 3 pts with 3 generators>
+gap> S := DualSymmetricInverseSemigroup(3);
+<inverse bipartition monoid of degree 3 with 3 generators>
 gap> Size(S);
-25
-]]></Example>
+25]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -170,11 +167,10 @@ gap> Size(S);
       (i.e. those not in the group of units). <P/>
 
       <Example><![CDATA[
-gap> S:=PartitionMonoid(5);
-<regular bipartition monoid on 5 pts with 4 generators>
+gap> S := PartitionMonoid(5);
+<regular bipartition monoid of degree 5 with 4 generators>
 gap> Size(S);
-115975
-]]></Example>
+115975]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -191,7 +187,7 @@ gap> Size(S);
       <!--JDM add generators-->
       <Example><![CDATA[
 gap> PartialTransformationSemigroup(8); 
-<regular transformation monoid on 9 pts with 4 generators>
+<regular transformation monoid of degree 9 with 4 generators>
 gap> Size(last);
 43046721]]></Example>
     </Description>
@@ -208,16 +204,12 @@ gap> Size(last);
       for each other. They both return the full matrix semigroup, or if you
       prefer the general linear semigroup, of <A>d</A> by <A>d</A> matrices
       with entries over the field with <A>q</A> elements.  This semigroup has
-      <C>q^(d^2)</C> elements. <P/>
-
-      <B>Please note:</B> there are currently no special methods for computing
-      with matrix semigroups in &Semigroups; and so it might be advisable to use
-      <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
-
+      <C>q ^ (d ^ 2)</C> elements. <P/>
+      <!--FIXME this example is currently super slow-->
       <Example><![CDATA[
-gap> S:=FullMatrixSemigroup(3,4);
+gap> S := FullMatrixSemigroup(3, 4);
 <full matrix semigroup 3x3 over GF(2^2)>
-gap> T:=Range(IsomorphismTransformationSemigroup(S));;
+gap> T := Range(IsomorphismTransformationSemigroup(S));;
 gap> Size(T);
 262144]]></Example>
     </Description>
@@ -235,7 +227,7 @@ gap> Size(T);
       <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
 
       <Example><![CDATA[
-gap> S:=RandomTransformationSemigroup(4,4);;
+gap> S := RandomSemigroup(IsTransformationSemigroup, 4, 4);;
 gap> IsFullMatrixSemigroup(S);
 false
 gap> S:=GeneralLinearSemigroup(3,3);
@@ -262,12 +254,15 @@ true]]></Example>
         or higher must be available and compiled for this function to work.
 
         <Example><![CDATA[
-gap> S:=InverseSemigroup(
-> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
-> PartialPerm( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );
-<inverse partial perm semigroup on 10 pts with 2 generators>
-gap> T:=InverseSemigroup(Idempotents(S), rec(small:=true));;
-gap> M:=MunnSemigroup(T);;
+gap> S := InverseSemigroup(
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], 
+>              [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
+> PartialPerm( [ 1, 2, 7, 9 ], 
+>              [ 5, 6, 4, 3 ] ) );
+<inverse partial perm semigroup of rank 10 with 2 generators>
+gap> T := InverseSemigroup(Idempotents(S), rec(small:=true));;
+gap> M := MunnSemigroup(T);
+<inverse partial perm semigroup of rank 60 with 188 generators>
 gap> NrIdempotents(M);
 60
 gap> NrIdempotents(S);
@@ -362,25 +357,25 @@ gap> NrIdempotents(S);
   </Item>
 </List>
       <Example><![CDATA[
-gap> S:=POPI(10);                                            
-<inverse partial perm monoid on 10 pts with 2 generators>
+gap> S := POPI(10);                                            
+<inverse partial perm monoid of rank 10 with 2 generators>
 gap> Size(S);
 923781
-gap> 1+5*Binomial(20, 10);
+gap> 1 + 5 * Binomial(20, 10);
 923781
-gap> S:=POI(10);
-<inverse partial perm monoid on 10 pts with 10 generators>
+gap> S := POI(10);
+<inverse partial perm monoid of rank 10 with 10 generators>
 gap> Size(S);
 184756
 gap> Binomial(20,10);
 184756
 gap> IsSubsemigroup(POPI(10), POI(10));
 true
-gap> S:=OrderEndomorphisms(5);
-<regular transformation monoid on 5 pts with 5 generators>
+gap> S := OrderEndomorphisms(5);
+<regular transformation monoid of degree 5 with 5 generators>
 gap> IsIdempotentGenerated(S);
 true
-gap> Size(S)=Binomial(2*5-1, 5-1);
+gap> Size(S) = Binomial(2 * 5 - 1, 5 - 1);
 true]]></Example>
     </Description>
   </ManSection>
@@ -398,8 +393,8 @@ true]]></Example>
         <A>n</A> and rank <C><A>n</A>-1</C> and has <M>n^n-n!</M> elements. 
 
         <Example><![CDATA[
-gap> S:=SingularTransformationSemigroup(5);
-<regular transformation semigroup ideal on 5 pts with 1 generator>
+gap> S := SingularTransformationSemigroup(5);
+<regular transformation semigroup ideal of degree 5 with 1 generator>
 gap> Size(S);
 3005]]></Example>
       </Description>
@@ -467,12 +462,12 @@ gap> Size(S);
 
         <Example><![CDATA[
 gap> S := MonogenicSemigroup(5, 3);
-<commutative non-regular transformation semigroup of size 7, 
- on 8 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 7, degree 8
+  with 1 generator>
 gap> IsMonogenicSemigroup(S);
 true
 gap> I := MinimalIdeal(S);
-<transformation group on 8 pts with 1 generator>
+<transformation group of degree 8 with 1 generator>
 gap> StructureDescription(I);
 "C3"]]></Example>
     </Description>
@@ -532,7 +527,7 @@ true
 gap> IsCompletelySimpleSemigroup(S) and IsHTrivial(S);
 true
 gap> T := AsTransformationSemigroup(S);
-<transformation semigroup on 33 pts with 8 generators>
+<transformation semigroup of degree 33 with 8 generators>
 gap> IsRectangularBand(T);
 true]]></Example>
     </Description>

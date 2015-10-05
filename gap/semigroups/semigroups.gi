@@ -25,7 +25,7 @@ BindGlobal("_ViewStringForSemigroups",
 function(S)
   local str, nrgens, suffix;
 
-  str := "\><";
+  str := "\>\><";
 
   if HasIsTrivial(S) and IsTrivial(S) then
     Append(str, "\>trivial\< ");
@@ -97,7 +97,7 @@ function(S)
     Append(str, "\<");
   fi;
 
-  Append(str, ">\<");
+  Append(str, ">\<\<");
 
   return str;
 end);

@@ -107,14 +107,14 @@ gap> GeneratorsOfSemigroup(S);
       containing the values of the options for the semigroup being created as
       described in Section <Ref Sect="Options when creating semigroups"/>.<P/>
       <Example><![CDATA[
-gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
->  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
->  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
->  Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
-gap> S:=Monoid(gens[1]);;
-gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
+gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
+>              Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
+>              Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
+>              Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
+gap> S := Monoid(gens[1]);;
+gap> for i in [2..4] do S := ClosureSemigroup(S, gens[i]); od;
 gap> S;
-<transformation monoid on 8 pts with 4 generators>
+<transformation monoid of degree 8 with 4 generators>
 gap> Size(S);
 233606]]></Example>
     </Description>
@@ -141,21 +141,19 @@ gap> Size(S);
       <P/>
 
       <Example><![CDATA[
-gap> S:=InverseMonoid(
+gap> S := InverseMonoid(
 > PartialPerm( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 9, 10, 6, 3, 8, 4 ] ),
 > PartialPerm( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) );;
-gap> f:=PartialPerm(
+gap> x := PartialPerm(
 > [ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],
 > [ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;
-gap> S:=ClosureInverseSemigroup(S, f);
-<inverse partial perm semigroup on 19 pts with 4 generators>
+gap> S := ClosureInverseSemigroup(S, x);
+<inverse partial perm semigroup of rank 19 with 4 generators>
 gap> Size(S);
 9744
-gap> T:=Idempotents(SymmetricInverseSemigroup(10));;
-gap> S:=ClosureInverseSemigroup(S, T);
-<inverse partial perm semigroup on 19 pts with 854 generators>
-gap> S:=InverseSemigroup(SmallGeneratingSet(S));
-<inverse partial perm semigroup on 19 pts with 14 generators>]]></Example>
+gap> T := Idempotents(SymmetricInverseSemigroup(10));;
+gap> S := ClosureInverseSemigroup(S, T);
+<inverse partial perm semigroup of rank 19 with 14 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -168,12 +166,12 @@ gap> S:=InverseSemigroup(SmallGeneratingSet(S));
     <Description>
       Returns  a  random  inverse  monoid  or semigroup of partial
       permutations with degree at most <A>n</A>  with <A>m</A> generators.
-      <Example><![CDATA[
-gap> S:=RandomInverseSemigroup(10,10);                                
-<inverse partial perm semigroup on 10 pts with 10 generators>
-gap> S:=RandomInverseMonoid(10,10);   
-<inverse partial perm monoid on 10 pts with 10 generators>
-]]></Example>
+      <Log><![CDATA[
+gap> S := RandomInverseSemigroup(IsPartialPermSemigroup, 
+>                                10, 10);
+<inverse partial perm semigroup on 10 pts with 9 generators>
+gap> S := RandomInverseMonoid(IsTransformationSemigroup, 10, 10);   
+<transformation monoid of degree 10 with 20 generators>]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -304,15 +302,18 @@ gap> Size(S);
     integer, then once the subsemigroup has at least <A>limit</A> elements the
     computation stops.
     <Example><![CDATA[
-gap> func:=function(f) return 1^f<>1 and
-> ForAll([1..DegreeOfTransformation(f)], y-> y=1 or y^f=y); end;
-function( f ) ... end
-gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(3), func);
-<transformation semigroup of size 2, on 3 pts with 2 generators>
-gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(4), func);
-<transformation semigroup of size 3, on 4 pts with 3 generators>
-gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(5), func);
-<transformation semigroup of size 4, on 5 pts with 4 generators>]]></Example>
+gap> func:=function(x)
+>      local n;
+>      n := DegreeOfTransformation(x);
+>      return 1 ^ x <> 1 and ForAll([1 .. n], y -> y = 1 or y ^ x= y); 
+>    end;
+function( x ) ... end
+gap> T := SubsemigroupByProperty(FullTransformationSemigroup(3), func);
+<transformation semigroup of size 2, degree 3 with 2 generators>
+gap> T := SubsemigroupByProperty(FullTransformationSemigroup(4), func);
+<transformation semigroup of size 3, degree 4 with 3 generators>
+gap> T := SubsemigroupByProperty(FullTransformationSemigroup(5), func);
+<transformation semigroup of size 4, degree 5 with 4 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
