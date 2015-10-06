@@ -186,10 +186,10 @@ gap> Size(S);
       <A>n</A> points. This monoid has <C>(<A>n</A>+1)^<A>n</A></C> elements.
       <!--JDM add generators-->
       <Example><![CDATA[
-gap> PartialTransformationSemigroup(8); 
-<regular transformation monoid of degree 9 with 4 generators>
+gap> PartialTransformationSemigroup(6); 
+<regular transformation monoid of degree 7 with 4 generators>
 gap> Size(last);
-43046721]]></Example>
+117649]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -206,12 +206,12 @@ gap> Size(last);
       with entries over the field with <A>q</A> elements.  This semigroup has
       <C>q ^ (d ^ 2)</C> elements. <P/>
       <!--FIXME this example is currently super slow-->
-      <Example><![CDATA[
+      <Log><![CDATA[
 gap> S := FullMatrixSemigroup(3, 4);
 <full matrix semigroup 3x3 over GF(2^2)>
 gap> T := Range(IsomorphismTransformationSemigroup(S));;
 gap> Size(T);
-262144]]></Example>
+262144]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>

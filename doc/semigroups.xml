@@ -151,7 +151,9 @@ gap> S := ClosureInverseSemigroup(S, x);
 <inverse partial perm semigroup of rank 19 with 4 generators>
 gap> Size(S);
 9744
-gap> T := Idempotents(SymmetricInverseSemigroup(10));;
+gap> U := SymmetricInverseSemigroup(10);;
+gap> U := InverseSemigroup(U, rec(generic := false));;
+gap> T := Idempotents(U);;
 gap> S := ClosureInverseSemigroup(S, T);
 <inverse partial perm semigroup of rank 19 with 14 generators>]]></Example>
     </Description>

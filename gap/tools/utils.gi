@@ -381,7 +381,7 @@ function(arg)
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
   Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods ENABLED] . . ."), "\n");
+                        " [non-generic methods \033[44mENABLED\033[0m] . . ."), "\n");
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
@@ -394,7 +394,7 @@ function(arg)
   fi;
   Print("\n");
   Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods DISABLED] . . ."), "\n");
+                        " [non-generic methods \033[44mDISABLED\033[0m] . . ."), "\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
@@ -422,7 +422,7 @@ end);
 
 InstallGlobalFunction(SEMIGROUPS_TestManualExamples,
 function(arg)
-  local ex, omit, str;
+  local ex, omit, width, str;
 
   ex := SEMIGROUPS_ManualExamples();
   if Length(arg) = 1 then
@@ -449,6 +449,26 @@ function(arg)
     od;
     Print(" . . .\n");
   fi;
+
+  width := SizeScreen()[1] - 3;
+
+  #SEMIGROUPS_DefaultOptionsRec.generic := false;
+  #Print("\n");
+  #Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
+  #Print("Testing manual examples [non-generic methods ",
+  #      "\033[1;44mENABLED\033[0m] . . .\n");
+  #Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
+  #SEMIGROUPS_StartTest();
+  #RunExamples(ex);
+  #SEMIGROUPS_StopTest("");
+
+  SEMIGROUPS_DefaultOptionsRec.generic := true;
+  GASMAN("collect");
+  Print("\n");
+  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
+  Print("Testing manual examples [non-generic methods ",
+        "\033[1;44mDISABLED\033[0m] . . .\n");
+  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
   RunExamples(ex);
   SEMIGROUPS_StopTest("");
