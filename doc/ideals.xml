@@ -23,12 +23,12 @@
       costly. 
 
       <Example><![CDATA[
-gap> S:=Monoid( 
+gap> S := Monoid( 
 > Bipartition( [ [ 1, 2, 3, -2 ], [ 4 ], [ -1, -4 ], [ -3 ] ] ), 
 > Bipartition( [ [ 1, 4, -2, -4 ], [ 2, -1, -3 ], [ 3 ] ] ) );;
-gap> I:=SemigroupIdeal(S, S);
+gap> I := SemigroupIdeal(S, S);
 <non-regular bipartition semigroup ideal of degree 4 with 3 generators
->
+ >
 gap> MinimalIdealGeneratingSet(I);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ]> ]]]></Example>
     </Description>
@@ -88,7 +88,7 @@ false]]></Example>
     
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(10);
-<symmetric inverse semigroup on 10 pts>
+<symmetric inverse monoid of degree 10>
 gap> I := SemigroupIdeal(S, PartialPerm([1,2]));
 <inverse partial perm semigroup ideal of rank 10 with 1 generator>
 gap> Size(I);
@@ -129,7 +129,7 @@ gap> I := SemigroupIdeal(S, I, Idempotents(S));
       
       <Example><![CDATA[
 gap> S := FullTransformationSemigroup(8);
-<full transformation semigroup on 8 pts>
+<full transformation monoid of degree 8>
 gap> x := Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] );;
 gap> D := DClassNC(S, x);
 <Green's D-class: Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] )>

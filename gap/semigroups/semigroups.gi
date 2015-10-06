@@ -59,14 +59,14 @@ function(S)
   Append(str, SEMIGROUPS_ViewStringPrefix(S));
 
   if HasIsMonoid(S) and IsMonoid(S) then
-    Append(str, "monoid ");
+    Append(str, "\>monoid\< ");
     if HasGeneratorsOfInverseMonoid(S) then
       nrgens := Length(GeneratorsOfInverseMonoid(S));
     else
       nrgens := Length(GeneratorsOfMonoid(S));
     fi;
   else
-    Append(str, "semigroup ");
+    Append(str, "\>semigroup\< ");
     if HasGeneratorsOfInverseSemigroup(S) then
       nrgens := Length(GeneratorsOfInverseSemigroup(S));
     else
@@ -83,13 +83,13 @@ function(S)
   suffix := SEMIGROUPS_ViewStringSuffix(S);
   if suffix <> ""
       and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
-    suffix := Concatenation("of ", suffix);
+    suffix := Concatenation("\>of\< ", suffix);
   fi;
   Append(str, suffix);
 
-  Append(str, "with\> ");
+  Append(str, "\>with\< \>");
   Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
+  Append(str, "\< \>generator");
 
   if nrgens > 1 or nrgens = 0 then
     Append(str, "s\<");
@@ -103,10 +103,10 @@ function(S)
 end);
 
 InstallMethod(ViewString, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 7, _ViewStringForSemigroups);
+[IsSemigroup and HasGeneratorsOfSemigroup], 8, _ViewStringForSemigroups);
 
 InstallMethod(ViewString, "for a monoid with generators",
-[IsMonoid and HasGeneratorsOfMonoid], 7, _ViewStringForSemigroups);
+[IsMonoid and HasGeneratorsOfMonoid], 8, _ViewStringForSemigroups);
 
 InstallMethod(ViewString, "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfInverseSemigroup], 7,
@@ -160,7 +160,7 @@ function(S)
 end);
 
 InstallMethod(ViewString, "for a group as semigroup",
-[IsGroupAsSemigroup], 1, _ViewStringForSemigroupsGroups);
+[IsGroupAsSemigroup], 2, _ViewStringForSemigroupsGroups);
 
 InstallMethod(ViewString, "for a group consisting of semigroup elements",
 [IsGroup], _ViewStringForSemigroupsGroups);

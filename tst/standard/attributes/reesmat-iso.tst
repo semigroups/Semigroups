@@ -101,8 +101,7 @@ gap> Size(last);
 
 #T# AutomorphismGroup: for a RZMS over not a group
 gap> S := ReesZeroMatrixSemigroup(FullTransformationMonoid(2), [[IdentityTransformation]]);
-<Rees 0-matrix semigroup 1x1 over <regular transformation monoid 
-  of size 4, degree 2 with 2 generators>>
+<Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 2>>
 gap> AutomorphismGroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `AutomorphismGroup' on 1 arguments
@@ -124,8 +123,7 @@ gap> AutomorphismGroup(R);
 
 #T# AutomorphismGroup: for a RMS over not a group
 gap> R := ReesMatrixSemigroup(SymmetricInverseMonoid(2), [[PartialPerm([1])]]);
-<Rees matrix semigroup 1x1 over <inverse partial perm monoid of rank 2 with
-  2 generators>>
+<Rees matrix semigroup 1x1 over <symmetric inverse monoid of degree 2>>
 gap> AutomorphismGroup(R);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `AutomorphismGroup' on 1 arguments

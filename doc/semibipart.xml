@@ -99,11 +99,9 @@ gap> S := InverseSemigroup(
 > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
 >              [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
 gap> IsomorphismBipartitionSemigroup(S);
-MappingByFunction( <inverse partial perm semigroup of rank 10 with
- 2 generators>, <inverse bipartition semigroup of degree 10 with
- 2 generators>, function( x ) ... end, <Operation "AsPartialPerm"> )
-gap> ForAll(Generators(Range(last)), IsPartialPermBipartition);
-true]]></Example>
+MappingByFunction( <inverse partial perm semigroup of rank 10 with 2 
+ generators>, <inverse bipartition semigroup of degree 10 with 2 
+ generators>, function( x ) ... end, <Operation "AsPartialPerm"> )]]></Example>
     </Description> 
   </ManSection> 
 <#/GAPDoc>
@@ -122,19 +120,19 @@ true]]></Example>
       See <Ref Oper="AsBlockBijection"/> for more details. 
 <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(4);                                    
-<symmetric inverse semigroup on 4 pts>
+<symmetric inverse monoid of degree 4>
 gap> IsomorphismBlockBijectionSemigroup(S);
-MappingByFunction( <symmetric inverse semigroup on 4 pts>, 
-<inverse bipartition monoid on 5 pts with 3 generators>
+MappingByFunction( <symmetric inverse monoid of degree 4>, 
+<inverse bipartition monoid of degree 5 with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> Size(Range(last));
 209
 gap> S := Semigroup( PartialPerm( [ 1, 2 ], [ 3, 1 ] ), 
-> PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) );;
+>                    PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) );;
 gap> IsomorphismBlockBijectionSemigroup(S);
-MappingByFunction( <partial perm semigroup on 3 pts
- with 2 generators>, <bipartition semigroup of degree 5 with
- 2 generators>, function( x ) ... end, function( x ) ... end )]]></Example>
+MappingByFunction( <partial perm semigroup of rank 3 with 2 
+ generators>, <bipartition semigroup of degree 5 with 2 generators>
+ , function( x ) ... end, function( x ) ... end )]]></Example>
     </Description> 
   </ManSection> 
 <#/GAPDoc>

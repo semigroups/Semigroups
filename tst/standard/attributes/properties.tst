@@ -519,7 +519,7 @@ false
 
 #T# properties: IsLTrivial, rho, 1/1
 gap> S := FullTransformationMonoid(3);
-<regular transformation monoid of size 27, degree 3 with 3 generators>
+<full transformation monoid of degree 3>
 gap> IsLTrivial(S);
 false
 gap> S := Semigroup(S);
@@ -822,7 +822,7 @@ true
 
 #T# properties: IsRectangularBand, 2/5
 gap> S := FullTransformationMonoid(3);
-<regular transformation monoid of size 27, degree 3 with 3 generators>
+<full transformation monoid of degree 3>
 gap> IsRectangularBand(S);
 false
 

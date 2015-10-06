@@ -15,7 +15,7 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a pbr semigroup",
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a pbr semigroup",
 [IsPBRSemigroup],
 function(S)
-  return Concatenation("degree \>",
+  return Concatenation("\>degree \>",
                        ViewString(DegreeOfPBRSemigroup(S)),
                        "\<\< ");
 end);

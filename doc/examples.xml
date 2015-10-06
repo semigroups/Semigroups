@@ -462,8 +462,8 @@ gap> Size(S);
 
         <Example><![CDATA[
 gap> S := MonogenicSemigroup(5, 3);
-<commutative non-regular transformation semigroup of size 7, degree 8
-  with 1 generator>
+<commutative non-regular transformation semigroup of size 7, degree 8 
+ with 1 generator>
 gap> IsMonogenicSemigroup(S);
 true
 gap> I := MinimalIdeal(S);
@@ -490,7 +490,8 @@ gap> StructureDescription(I);
 
         <Example><![CDATA[
 gap> S := ZeroSemigroup(15);
-<partial perm semigroup of size 15, on 14 pts with 14 generators>
+<non-regular partial perm semigroup of size 15, rank 14 with 14 
+ generators>
 gap> Size(S);
 15
 gap> z := MultiplicativeZero(S);

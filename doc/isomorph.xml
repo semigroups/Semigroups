@@ -89,16 +89,16 @@ true]]></Example>
       <A>R</A> is a Rees 0-matrix semigroup.  
 
       <Example><![CDATA[
-gap> S:=PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
+gap> S := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
 <Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
-gap> T:=PrincipalFactor(DClasses(PartitionMonoid(5))[2]);
+gap> T := PrincipalFactor(DClasses(PartitionMonoid(5))[2]);
 <Rees 0-matrix semigroup 15x15 over Group([ (2,3,4,5), (4,5) ])>
 gap> IsomorphismSemigroups(S, T);
 fail
-gap> I:=SemigroupIdeal(FullTransformationMonoid(5), 
-> Transformation([1,1,2,3,4]));
-<regular transformation semigroup ideal on 5 pts with 1 generator>
-gap> T:=PrincipalFactor(DClass(I, I.1));
+gap> I := SemigroupIdeal(FullTransformationMonoid(5), 
+>                        Transformation([1, 1, 2, 3, 4]));
+<regular transformation semigroup ideal of degree 5 with 1 generator>
+gap> T := PrincipalFactor(DClass(I, I.1));
 <Rees 0-matrix semigroup 10x5 over Group([ (2,3,4,5), (2,5) ])>
 gap> IsomorphismSemigroups(S, T);
 (( 2, 4, 3, 7, 9,10, 6, 5)

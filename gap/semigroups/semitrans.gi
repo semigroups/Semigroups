@@ -17,7 +17,7 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a transformation semigroup",
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  return Concatenation("degree \>",
+  return Concatenation("\>degree \>",
                        ViewString(DegreeOfTransformationSemigroup(S)),
                        "\<\< ");
 end);

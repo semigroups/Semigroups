@@ -17,7 +17,7 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
-  return Concatenation("degree \>",
+  return Concatenation("\>degree \>",
                        ViewString(DegreeOfBipartitionSemigroup(S)),
                        "\<\< ");
 end);

@@ -66,7 +66,7 @@ gap> MaximalSubsemigroups(U);
 gap> U := BrauerMonoid(2);
 <regular bipartition monoid of degree 2 with 2 generators>
 gap> R := ReesMatrixSemigroup(U, [[One(U)]]);
-<Rees matrix semigroup 1x1 over <regular bipartition monoid of degree 2 with
+<Rees matrix semigroup 1x1 over <regular bipartition monoid of degree 2 with 
   2 generators>>
 gap> MaximalSubsemigroups(R, Group(()));
 Error, Semigroups: MaximalSubsemigroups: usage,
@@ -155,8 +155,7 @@ the first argument <R> must be a regular Rees 0-matrix semigroup,
 #T# maximal: MaximalSubsemigroups, for RZMS and group, error 3/5
 gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(2),
 > [[Transformation([1, 2])]]);
-<Rees 0-matrix semigroup 1x1 over <regular transformation monoid 
-  of size 4, degree 2 with 2 generators>>
+<Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 2>>
 gap> MaximalSubsemigroups(R, Group(()));
 Error, Semigroups: MaximalSubsemigroups: usage,
 the first argument <R> must be a Rees 0-matrix semigroup whose
@@ -206,8 +205,7 @@ gap> MaximalSubsemigroups(R, Group(()));
 #T# maximal: MaximalSubsemigroups, for RZMS, 1/6
 gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(2),
 > [[Transformation([1, 2])]]);
-<Rees 0-matrix semigroup 1x1 over <regular transformation monoid 
-  of size 4, degree 2 with 2 generators>>
+<Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 2>>
 gap> MaximalSubsemigroups(R);
 [ <subsemigroup of 1x1 Rees 0-matrix semigroup with 4 generators>, 
   <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>, 

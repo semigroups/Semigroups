@@ -380,8 +380,8 @@ function(arg)
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
-  Print(PRINT_STRINGIFY("testing ", print_file,
-                        " acting methods enabled . . ."), "\n");
+  Print(PRINT_STRINGIFY("Testing ", print_file,
+                        " [non-generic methods ENABLED] . . ."), "\n");
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
@@ -393,8 +393,8 @@ function(arg)
     Print(Concatenation(ListWithIdenticalEntries(width, "#")));
   fi;
   Print("\n");
-  Print(PRINT_STRINGIFY("testing ", print_file,
-                        " acting methods disabled . . ."), "\n");
+  Print(PRINT_STRINGIFY("Testing ", print_file,
+                        " [non-generic methods DISABLED] . . ."), "\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
@@ -418,14 +418,28 @@ function()
                          "main.xml", SEMIGROUPS_DocXMLFiles, "Single");
 end);
 
-# if <arg> is some strings, then any example containing any of these strings is
-# omitted from the test...
+#
 
 InstallGlobalFunction(SEMIGROUPS_TestManualExamples,
-function()
+function(arg)
   local ex, omit, str;
 
   ex := SEMIGROUPS_ManualExamples();
+  if Length(arg) = 1 then
+    if IsPosInt(arg[1]) and arg[1] <= Length(ex) then
+      ex := [ex[arg[1]]];
+    elif IsHomogeneousList(arg[1])
+        and ForAll(arg[1], x -> IsPosInt(x) and x <= Length(ex)) then
+      ex := ex{arg};
+    else
+      ErrorMayQuit("Semigroups: SEMIGROUPS_TestManualExamples: usage,\n",
+                   "the argument must be a pos int or list of pos ints,");
+    fi;
+  elif Length(arg) > 1 then
+    ErrorMayQuit("Semigroups: SEMIGROUPS_TestManualExamples: usage,\n",
+                 "there should be 0 or 1 argument,");
+  fi;
+
   omit := SEMIGROUPS_OmitFromTests;
   if Length(omit) > 0 then
     Print("# not testing examples containing the strings");

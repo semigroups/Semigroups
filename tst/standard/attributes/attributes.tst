@@ -105,7 +105,7 @@ true
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := SymmetricInverseMonoid(1);
-<commutative inverse partial perm monoid of rank 1 with 1 generator>
+<symmetric inverse monoid of degree 1>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -344,22 +344,22 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpMonoid(S);
 MappingByFunction( <transformation monoid of degree 5 with 5 generators>
-, <fp monoid on the generators [ m1, m2, m3, m4, m5 
-]>, function( x ) ... end, function( x ) ... end )
+ , <fp monoid on the generators [ m1, m2, m3, m4, m5 
+ ]>, function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(map);
 MappingByFunction( <fp monoid on the generators [ m1, m2, m3, m4, m5 ]>, 
 <transformation monoid of degree 5 with 5 generators>
-, function( x ) ... end, function( x ) ... end )
+ , function( x ) ... end, function( x ) ... end )
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 gap> map := IsomorphismFpSemigroup(S);
 MappingByFunction( <transformation monoid of degree 5 with 5 generators>
-, <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
-]>, function( x ) ... end, function( x ) ... end )
+ , <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
+ ]>, function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(map);
 MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
  ]>, <transformation monoid of degree 5 with 5 generators>
-, function( x ) ... end, function( x ) ... end )
+ , function( x ) ... end, function( x ) ... end )
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 
@@ -1025,7 +1025,7 @@ nts
 
 #T# attribute: LengthOfLongestDClassChain, 2/4
 gap> S := MonogenicSemigroup(8, 5);
-<commutative non-regular transformation semigroup of size 12, degree 13 with
+<commutative non-regular transformation semigroup of size 12, degree 13 with 
  1 generator>
 gap> LengthOfLongestDClassChain(S);
 7

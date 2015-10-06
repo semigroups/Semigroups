@@ -950,8 +950,7 @@ gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 <regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal of degree 4 with
- 1 generator> over <regular transformation monoid of size 256, degree 4 with
- 3 generators>>
+  1 generator> over <full transformation monoid of degree 4>>
 gap> NrCongruenceClasses(cong);
 169
 
