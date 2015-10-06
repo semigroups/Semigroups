@@ -24,7 +24,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(GroupOfUnits, "for a bipartition semigroup",
+InstallMethod(GroupOfUnits, "for an acting bipartition semigroup",
 [IsBipartitionSemigroup and IsActingSemigroup],
 function(S)
   local R, G, deg, U;

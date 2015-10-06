@@ -423,7 +423,7 @@ gap> StructureDescription(G);
 "S4"
 gap> iso := IsomorphismPermGroup(G);  
 MappingByFunction( <bipartition group of degree 4 with 2 generators>
-, S4, <Attribute "AsPermutation">, function( x ) ... end )
+, S4, function( x ) ... end, function( x ) ... end )
 gap> RespectsMultiplication(iso);
 true
 gap> inv := InverseGeneralMapping(iso);;

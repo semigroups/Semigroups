@@ -422,7 +422,7 @@ end);
 
 InstallGlobalFunction(SEMIGROUPS_TestManualExamples,
 function(arg)
-  local ex, omit, width, str;
+  local ex, omit, width, generic, str;
 
   ex := SEMIGROUPS_ManualExamples();
   if Length(arg) = 1 then
@@ -451,16 +451,17 @@ function(arg)
   fi;
 
   width := SizeScreen()[1] - 3;
+  generic := SEMIGROUPS_DefaultOptionsRec.generic;
 
-  #SEMIGROUPS_DefaultOptionsRec.generic := false;
-  #Print("\n");
-  #Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  #Print("Testing manual examples [non-generic methods ",
-  #      "\033[1;44mENABLED\033[0m] . . .\n");
-  #Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  #SEMIGROUPS_StartTest();
-  #RunExamples(ex);
-  #SEMIGROUPS_StopTest("");
+  SEMIGROUPS_DefaultOptionsRec.generic := false;
+  Print("\n");
+  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
+  Print("Testing manual examples [non-generic methods ",
+        "\033[1;44mENABLED\033[0m] . . .\n");
+  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
+  SEMIGROUPS_StartTest();
+  RunExamples(ex);
+  SEMIGROUPS_StopTest("");
 
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   GASMAN("collect");
@@ -472,5 +473,7 @@ function(arg)
   SEMIGROUPS_StartTest();
   RunExamples(ex);
   SEMIGROUPS_StopTest("");
+
+  SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return;
 end);
