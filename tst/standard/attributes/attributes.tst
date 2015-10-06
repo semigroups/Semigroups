@@ -121,7 +121,7 @@ true
 
 # For a non-trivial partial perm semigroup
 gap> s := Semigroup([PartialPerm([2], [1])]); # contains <empty pperm>
-<commutative partial perm semigroup on 1 pts with 1 generator>
+<commutative partial perm semigroup of rank 1 with 1 generator>
 gap> MultiplicativeZero(s);
 <empty partial perm>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -129,7 +129,7 @@ true
 gap> s := Semigroup([
 > PartialPerm([1, 2, 3], [1, 4, 2]),
 > PartialPerm([1, 4], [1, 3])]); # does not contain <empty pperm>
-<partial perm semigroup on 4 pts with 2 generators>
+<partial perm semigroup of rank 4 with 2 generators>
 gap> MultiplicativeZero(s);
 <identity partial perm on [ 1 ]>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -148,7 +148,7 @@ gap> s := Semigroup([
 > PartialPerm([1, 2, 3, 4], [2, 3, 4, 1]),
 > PartialPerm([1, 2, 3, 4], [2, 1, 3, 4]),
 > PartialPerm([1, 3], [2, 3])]);
-<partial perm semigroup on 4 pts with 3 generators>
+<partial perm semigroup of rank 4 with 3 generators>
 gap> t := PartialPerm([], []);;
 gap> I := SemigroupIdeal(s, t);;
 gap> HasMultiplicativeZero(s);
@@ -990,7 +990,7 @@ gap> S := Semigroup([
 >  PartialPerm([2, 4], [4, 5]), PartialPerm([2, 3, 4], [4, 5, 3]),
 >  PartialPerm([1, 2, 4], [3, 1, 5]), PartialPerm([1, 2, 4], [4, 1, 5]),
 >  PartialPerm([1, 2, 3, 4], [4, 1, 5, 3])]);
-<partial perm semigroup on 4 pts with 15 generators>
+<partial perm semigroup of rank 4 with 15 generators>
 gap> NilpotencyDegree(S);
 5
 
@@ -1040,7 +1040,7 @@ gap> S := Semigroup([
 >  PartialPerm([2, 4], [4, 5]), PartialPerm([2, 3, 4], [4, 5, 3]),
 >  PartialPerm([1, 2, 4], [3, 1, 5]), PartialPerm([1, 2, 4], [4, 1, 5]),
 >  PartialPerm([1, 2, 3, 4], [4, 1, 5, 3])]);
-<partial perm semigroup on 4 pts with 15 generators>
+<partial perm semigroup of rank 4 with 15 generators>
 gap> NilpotencyDegree(S);
 5
 
