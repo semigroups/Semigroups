@@ -3,6 +3,7 @@
 
 ###TODO C++
 
+* multiplicative zero
 * remove `auto`, use `override`: done in:
     * `element.h`
 * whitespace: done in:
@@ -19,6 +20,7 @@
 * use namespace in the C++ code
 
 ###GAP kernel
+* objectify bipartitions etc in c code (i.e. don't call CALL_1ARGS)
 * register TNUM: [https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c](https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c)
 * use `ConvertElements` and `UnconvertElements`
 * reporting in the generic Froidure-Pin method
@@ -26,6 +28,10 @@
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 ###GAP
+* change `IdempotentGeneratedSubsemigroup` for generic semigroups to find a small generating set
+* Move the new view string methods into the library.
+* Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing
+* `Idempotents(S, 1)` for non-acting semigroups
 * remove `genstoapply` from the the generic semigroup data
 
 * `ReadGenerators` and `WriteGenerators` for new types

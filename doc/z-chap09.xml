@@ -84,14 +84,18 @@
     </List>
 
     <Example><![CDATA[
-      gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
-      gap> S:=FreeInverseSemigroup(2);
-      <free inverse semigroup on the generators [ x1, x2 ]>
-        gap> S.1 * S.2;
-        x1*x2
-        gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "canonical");
-        gap> S.1 * S.2;
-        x1x2x2^-1x1^-1x1x2]]></Example>
+gap> SetUserPreference("semigroups", 
+>                      "FreeInverseSemigroupElementDisplay",
+>                      "minimal");
+gap> S := FreeInverseSemigroup(2);
+<free inverse semigroup on the generators [ x1, x2 ]>
+gap> S.1 * S.2;
+x1*x2
+gap> SetUserPreference("semigroups", 
+>                      "FreeInverseSemigroupElementDisplay", 
+>                      "canonical");
+gap> S.1 * S.2;
+x1x2x2^-1x1^-1x1x2]]></Example>
     </Section>
 
     <Section>

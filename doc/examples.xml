@@ -116,7 +116,8 @@ gap> S := FactorisableDualSymmetricInverseSemigroup(4);
 <inverse bipartition monoid of degree 4 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 true
-gap> S := Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+gap> S := SymmetricInverseMonoid(5);;
+gap> S := Range(IsomorphismBipartitionSemigroup(S));
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 true]]></Example>
