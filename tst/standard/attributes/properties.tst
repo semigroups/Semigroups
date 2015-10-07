@@ -190,8 +190,26 @@ gap> S := FreeSemigroup(1);;
 gap> IsBrandtSemigroup(S);
 false
 
-#T# properties: IsZeroSimpleSemigroup, bug, 1/1
+#T# properties: IsZeroSimpleSemigroup, bug, 1
 gap> IsZeroSimpleSemigroup(ZeroSemigroup(2));
+false
+
+#T# properties: IsZeroSimpleSemigroup, inverse, 2
+gap> S := DualSymmetricInverseMonoid(3);
+<inverse bipartition monoid of degree 3 with 3 generators>
+gap> IsZeroSimpleSemigroup(S);
+false
+
+#T# properties: IsZeroSimpleSemigroup, inverse, 3
+gap> S := InverseSemigroup([
+>   PartialPerm([1]),
+>   PartialPerm([])]);
+<commutative inverse partial perm monoid of rank 1 with 1 generator>
+gap> IsZeroSimpleSemigroup(S);
+true
+
+#T# properties: IsZeroSimpleSemigroup, infinite, 4
+gap> IsZeroSimpleSemigroup(FreeSemigroup(5));
 false
 
 #T# properties: IsCongruenceFreeSemigroup, trivial, 1
@@ -1202,6 +1220,9 @@ gap> I := SemigroupIdeal(T, T.1);
 <inverse transformation semigroup ideal of degree 6 with 1 generator>
 gap> IsSemilattice(I);
 true
+gap> IsSemilattice(FreeInverseSemigroup(1));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsCommutativeSemigroup' on 1 arguments
 
 #T# properties: IsSimpleSemigroup, 1/?
 gap> S := AsTransformationSemigroup(RegularBooleanMatMonoid(3));
@@ -1237,13 +1258,29 @@ gap> I := SemigroupIdeal(S, S.1);;
 gap> IsSimpleSemigroup(I);
 false
 
-#T# properties: IsTrivial, 1/1
+#T# properties: IsTrivial, 1
 gap> S := TrivialSemigroup();
 <trivial transformation group of degree 0 with 0 generators>
 gap> Size(S);
 1
 gap> IsTrivial(S);
 true
+
+#T# properties: IsTrivial, 2
+gap> S := FreeSemigroup(1);;
+gap> x := GeneratorsOfSemigroup(S);;
+gap> S := S / [[x[1] * x[1], x[1]]];
+<fp semigroup on the generators [ s1 ]>
+gap> IsTrivial(S);
+true
+
+#T# properties: IsTrivial, 3
+gap> S := FreeSemigroup(1);;
+gap> x := GeneratorsOfSemigroup(S);;
+gap> S := S / [[x[1], x[1]]];
+<fp semigroup on the generators [ s1 ]>
+gap> IsTrivial(S);
+false
 
 #T# properties: IsUnitRegularMonoid, 1/7
 gap> IsUnitRegularMonoid(FullTransformationMonoid(3));
@@ -1286,19 +1323,19 @@ true
 gap> IsUnitRegularMonoid(S);
 false
 
-#T# properties: IsZeroGroup, 1/4
+#T# properties: IsZeroGroup, 1
 gap> IsZeroGroup(JonesMonoid(3));
 false
 
-#T# properties: IsZeroGroup, 2/4
+#T# properties: IsZeroGroup, 2
 gap> IsZeroGroup(ZeroSemigroup(2));
 false
 
-#T# properties: IsZeroGroup, 3/4
+#T# properties: IsZeroGroup, 3
 gap> IsZeroGroup(SymmetricInverseMonoid(3));
 false
 
-#T# properties: IsZeroGroup, 4/4
+#T# properties: IsZeroGroup, 4
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
 <commutative partial perm monoid of rank 1 with 1 generator>
 gap> IsZeroGroup(S);
@@ -1307,7 +1344,12 @@ gap> I := SemigroupIdeal(S, PartialPerm([]));;
 gap> IsZeroGroup(I);
 false
 
-#T# properties: IsZeroRectangularBand, 1/4
+#T# properties: IsZeroGroup, 5
+gap> IsZeroGroup(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsZeroGroup' on 1 arguments
+
+#T# properties: IsZeroRectangularBand, 1
 gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), ()], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 gap> IsZeroRectangularBand(S);
@@ -1316,21 +1358,26 @@ gap> I := SemigroupIdeal(S, MultiplicativeZero(S));;
 gap> IsZeroRectangularBand(I);
 false
 
-#T# properties: IsZeroRectangularBand, 2/4
+#T# properties: IsZeroRectangularBand, 2
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), ()], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> IsZeroRectangularBand(S);
 false
 
-#T# properties: IsZeroRectangularBand, 3/4
+#T# properties: IsZeroRectangularBand, 3
 gap> IsZeroRectangularBand(FullTransformationMonoid(2));
 false
 
-#T# properties: IsZeroRectangularBand, 4/4
+#T# properties: IsZeroRectangularBand, 4
 gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), ()], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 
-#T# properties: IsZeroSemigroup, 1/3
+#T# properties: IsZeroRectangularBand, 5
+gap> IsZeroRectangularBand(FreeSemigroup(20));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsZeroRectangularBand' on 1 arguments
+
+#T# properties: IsZeroSemigroup, 1
 gap> S := Semigroup(ZeroSemigroup(3));
 <partial perm semigroup of rank 2 with 2 generators>
 gap> IsZeroSemigroup(S);
@@ -1339,31 +1386,22 @@ gap> T := SemigroupIdeal(S, S.1);;
 gap> IsZeroSemigroup(T);
 true
 
-#T# properties: IsZeroSemigroup, 2/3
+#T# properties: IsZeroSemigroup, 2
 gap> S := Semigroup(BrauerMonoid(3));
 <bipartition monoid of degree 3 with 3 generators>
 gap> IsZeroSemigroup(S);
 false
 
-#T# properties: IsZeroSemigroup, 3/3
+#T# properties: IsZeroSemigroup, 3
 gap> S := Semigroup(DualSymmetricInverseMonoid(3));
 <bipartition monoid of degree 3 with 3 generators>
 gap> IsZeroSemigroup(S);
 false
 
-#T# properties: IsZeroSimpleSemigroup, inverse 1/2
-gap> S := DualSymmetricInverseMonoid(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
-gap> IsZeroSimpleSemigroup(S);
-false
-
-#T# properties: IsZeroSimpleSemigroup, inverse 2/2
-gap> S := InverseSemigroup([
->   PartialPerm([1]),
->   PartialPerm([])]);
-<commutative inverse partial perm monoid of rank 1 with 1 generator>
-gap> IsZeroSimpleSemigroup(S);
-true
+#T# properties: IsZeroSemigroup, 3
+gap> IsZeroSemigroup(FreeSemigroup(3));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsZeroSemigroup' on 1 arguments
 
 #T# properties: IsNilpotentSemigroup, 1
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);

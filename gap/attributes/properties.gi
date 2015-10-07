@@ -881,8 +881,8 @@ function(S)
   local e, m, i, j;
 
   if not IsFinite(S) then
-    # WW we can not test the follow line, since the error message we ultimately
-    # get depends on whether or not Smallsemi is loaded
+    # WW we can not test the following line, since the error message we
+    # eventually get depends on whether or not Smallsemi is loaded
     TryNextMethod();
   elif not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -1330,7 +1330,7 @@ function(S)
     return false;
   fi;
   gens := GeneratorsOfSemigroup(S);
-  return ForAll(gens, x -> gens[1] = x) and IsIdempotent(gens[1]);
+  return IsIdempotent(gens[1]) and ForAll(gens, x -> gens[1] = x);
 end);
 
 # same method for ideals
@@ -1461,7 +1461,7 @@ end);
 
 InstallMethod(IsZeroSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
-  local z, gens, m, i, j;
+  local z, gens, i, j;
 
   if HasParent(S) and HasIsZeroSemigroup(Parent(S))
       and IsZeroSemigroup(Parent(S)) then
@@ -1478,9 +1478,8 @@ function(S)
   fi;
 
   gens := GeneratorsOfSemigroup(S);
-  m := Length(gens);
-  for i in [1 .. m] do
-    for j in [1 .. m] do
+  for i in [1 .. Length(gens)] do
+    for j in [1 .. Length(gens)] do
       if not gens[i] * gens[j] = z then
         Info(InfoSemigroups, 2, "the product of generators ", i, " and ", j,
              " is not the multiplicative zero \n", z);
@@ -1554,4 +1553,16 @@ function(S)
     return false;
   fi;
   return NrIdempotents(S) = 1;
+end);
+
+# WW the following lets us get higher code coverage
+
+InstallMethod(IsFinite, "for a finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  if IsEmpty(RelationsOfFpSemigroup(S)) or
+      ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
+    return false;
+  fi;
+  TryNextMethod();
 end);

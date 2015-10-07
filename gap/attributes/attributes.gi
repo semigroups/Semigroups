@@ -563,6 +563,9 @@ function(S)
   return fail;
 end);
 
+InstallMethod(MultiplicativeZero, "for a free semigroup",
+[IsFreeSemigroup], ReturnFail);
+
 InstallMethod(LengthOfLongestDClassChain, "for a finite semigroup",
 [IsSemigroup],
 function(S)
