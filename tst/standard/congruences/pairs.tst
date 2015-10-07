@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  pairs-cong.tst
+#W  congruences/pairs.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##                                                          Wilfred Wilson
 ##
@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: pairs-cong.tst");
+gap> START_TEST("Semigroups package: congruences/pairs.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -27,8 +27,8 @@ gap> gens := [
 >  [ Transformation( [ 3, 3, 3, 6, 3, 3 ] ),
 >    Transformation( [ 1, 6, 6, 6, 6, 1 ] ) ] ];;
 gap> cong := SemigroupCongruence( s, gens );
-<semigroup congruence over <transformation semigroup 
- on 6 pts with 6 generators> with 2 generating pairs>
+<semigroup congruence over <transformation semigroup of degree 6 with 6 
+ generators> with 2 generating pairs>
 gap> gens[2] in cong;
 true
 gap> x := Transformation( [ 6, 5, 4, 4, 4, 6 ] );;
@@ -62,9 +62,9 @@ gap> y in classx;
 true
 gap> x in classz;
 false
-gap> classx = classes[1];
+gap> classx = classes[4];
 true
-gap> classz = classes[133];
+gap> classz = classes[2];
 true
 gap> z * y in classz * classy;
 true
@@ -120,10 +120,11 @@ gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ) ];;
 gap> s := Semigroup(Transformation([ 1 ]));;
 gap> t := Monoid(gens);;
 gap> u := UniversalSemigroupCongruence(s);
-<universal semigroup congruence over <trivial transformation group>>
+<universal semigroup congruence over <trivial transformation group of 
+ degree 0 with 0 generators>>
 gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);
-<semigroup congruence over <commutative transformation monoid 
- on 10 pts with 1 generator> with 1 generating pairs>
+<semigroup congruence over <commutative transformation monoid of degree 10 
+ with 1 generator> with 0 generating pairs>
 gap> NrCongruenceClasses(v);
 6
 gap> Size(t);
@@ -132,13 +133,13 @@ gap> u = v;
 false
 gap> u := UniversalSemigroupCongruence(t);
 <universal semigroup congruence over <commutative transformation monoid 
- of size 6, on 10 pts with 1 generator>>
+ of size 6, degree 10 with 1 generator>>
 gap> u = v;
 false
 gap> gens := List(t, x -> [ gens[1], x ]);;
 gap> v := SemigroupCongruence(t, gens);
 <semigroup congruence over <commutative transformation monoid of size 6, 
- on 10 pts with 1 generator> with 6 generating pairs>
+ degree 10 with 1 generator> with 5 generating pairs>
 gap> u = v;
 true
 gap> NrCongruenceClasses(u);
@@ -149,14 +150,14 @@ gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ) ];;
 gap> s := Semigroup(gens);;
 gap> gens := List(s, x -> [ gens[1], x ]);;
 gap> u := SemigroupCongruence(s, gens); # universal congruence
-<semigroup congruence over <commutative transformation semigroup 
- on 10 pts with 1 generator> with 5 generating pairs>
+<semigroup congruence over <commutative transformation semigroup of degree 10 
+ with 1 generator> with 4 generating pairs>
 gap> u = UniversalSemigroupCongruence(s);
 true
 gap> v := SemigroupCongruence(s, [gens[1], gens[1]]); # trivial congruence
 <semigroup congruence over <commutative transformation semigroup of size 5, 
- on 10 pts with 1 generator> with 2 generating pairs>
-gap> classes := CongruenceClasses(v);
+ degree 10 with 1 generator> with 0 generating pairs>
+gap> classes := Set(CongruenceClasses(v));
 [ {Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )}, 
   {Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )}, 
   {Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )}, 
@@ -198,4 +199,4 @@ gap> Unbind(u);
 gap> Unbind(v);
 
 #E#
-gap> STOP_TEST("Semigroups package: simple-cong.tst");
+gap> STOP_TEST("Semigroups package: congruences/pairs.tst");

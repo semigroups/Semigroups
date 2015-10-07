@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-#W  rees-cong.tst
+#W  congruences/rees.tst
 #Y  Copyright (C) 2015                                      Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: rees-cong.tst");
+gap> START_TEST("Semigroups package: congruences/rees.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -49,14 +49,13 @@ gap> s := Semigroup( [ Transformation( [ 2, 4, 3, 5, 5 ] ),
 >                 Transformation( [ 3, 1, 4, 2, 4 ] ), 
 >                 Transformation( [ 3, 4, 2, 3, 4 ] ),
 >                 Transformation( [ 4, 1, 5, 1, 2 ] ) ] );
-<transformation semigroup on 5 pts with 5 generators>
+<transformation semigroup of degree 5 with 5 generators>
 gap> i := SemigroupIdeal(s, [ Transformation( [ 3, 1, 1, 4, 4 ] ),
 >                             Transformation( [ 1, 4, 1, 4, 1 ] ) ] );
-<regular transformation semigroup ideal on 5 pts with 2 generators>
+<regular transformation semigroup ideal of degree 5 with 2 generators>
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);
-<Rees congruence of <regular transformation semigroup ideal 
- on 5 pts with 2 generators> over <transformation semigroup 
- on 5 pts with 5 generators>>
+<Rees congruence of <regular transformation semigroup ideal of degree 5 with
+  2 generators> over <transformation semigroup of degree 5 with 5 generators>>
 gap> NrCongruenceClasses(cong);
 19
 gap> cc := CongruenceClasses(cong);;
@@ -82,8 +81,8 @@ gap> i := SemigroupIdeal( s, Transformation( [ 5, 2, 1, 5, 2 ] ),
 >                            Transformation( [ 5, 2, 1, 5, 2 ] ) );;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <transformation semigroup of size 61, 
- on 5 pts with 3 generators> with 1 generating pairs>
+<semigroup congruence over <transformation semigroup of size 61, degree 5 
+ with 3 generators> with 1 generating pairs>
 gap> NrCongruenceClasses(ccong);
 12
 gap> IsReesCongruence(ccong);
@@ -173,4 +172,4 @@ Error, Semigroups: JoinSemigroupCongruences: usage,
 the args <c1> and <c2> must be congruences of the same semigroup,
 
 #E#
-gap> STOP_TEST("Semigroups package: rees-cong.tst");
+gap> STOP_TEST( "Semigroups package: congruences/rees.tst");

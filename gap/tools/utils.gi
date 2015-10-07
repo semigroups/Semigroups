@@ -394,7 +394,8 @@ function(arg)
   fi;
   Print("\n");
   Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods \033[44mDISABLED\033[0m] . . ."), "\n");
+                        " [non-generic methods \033[44mDISABLED\033[0m] . . ."),
+        "\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");

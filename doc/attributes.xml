@@ -521,7 +521,7 @@ gap> S := DualSymmetricInverseSemigroup(5);
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse bipartition monoid of degree 5 with 10 generators>
-gap> IsSemilatticeAsSemigroup(last);
+gap> IsSemilattice(last);
 true]]></Example>
     </Description>
   </ManSection>

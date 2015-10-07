@@ -532,7 +532,7 @@ gap> s:=Monoid(gens);;
 gap> IsInverseSemigroup(s);
 false
 gap> t:=Semigroup(Idempotents(s));;
-gap> IsSemilatticeAsSemigroup(t);
+gap> IsSemilattice(t);
 false
 gap> IsBand(t);
 true
@@ -546,7 +546,7 @@ gap> gens := [Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation([2,3,4,5,6,8,7,1,2,2])];;
 gap> s:=Monoid(gens);;
 gap> s:=Semigroup(Idempotents(Monoid(gens)));;
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsBand(s);
 true
@@ -559,7 +559,7 @@ gap> gens := [ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 gap> s:=Semigroup(Idempotents(Monoid(gens)));;
 gap> Size(s);
 94
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 true
 
 #T# PropertiesTest47

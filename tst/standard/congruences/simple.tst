@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  simple-cong.tst
+#W  congruences/simple.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: simple-cong.tst");
+gap> START_TEST("Semigroups package: congruences/simple.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -30,8 +30,8 @@ gap> cong := SemigroupCongruence(s,
 >     Transformation( [ 2, 1, 2, 1, 2 ] ) ], 
 >   [ Transformation( [ 2, 1, 1, 2, 2 ] ),
 >     Transformation( [ 1, 2, 2, 1, 2 ] ) ] ] );
-<semigroup congruence over <simple transformation semigroup 
- on 5 pts with 4 generators> with linked triple (2,2,2)>
+<semigroup congruence over <simple transformation semigroup of degree 5 with 
+ 4 generators> with linked triple (2,2,2)>
 gap> cong = congs[33];
 true
 gap> cong = congs[11];
@@ -92,13 +92,20 @@ gap> q := s / congs[13];;
 # Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(congs[4]);;
 gap> cong := SemigroupCongruence(s, pairs);
-<semigroup congruence over <simple transformation semigroup 
- on 5 pts with 4 generators> with linked triple (1,2,2)>
+<semigroup congruence over <simple transformation semigroup of degree 5 with 
+ 4 generators> with linked triple (1,2,2)>
 gap> congs[4] = cong;
 true
 gap> ForAll(congs, cong ->
 > cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
 true
+
+#T# SimpleCongTest9: The universal congruence
+gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup of rank 2 with 2 generators>
+gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+ of rank 2 with 2 generators>>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
@@ -115,4 +122,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST("Semigroups package: simple-cong.tst");
+gap> STOP_TEST( "Semigroups package: congruences/simple.tst");
