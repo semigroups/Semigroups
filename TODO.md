@@ -19,6 +19,7 @@
 * use namespace in the C++ code
 
 ###GAP kernel
+* register TNUM: [https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c](https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c)
 * use `ConvertElements` and `UnconvertElements`
 * reporting in the generic Froidure-Pin method
 * a new GAP kernel version of the C++ code !
