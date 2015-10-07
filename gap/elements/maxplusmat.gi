@@ -55,11 +55,13 @@ end);
 ## 1. Max-plus matrices
 #############################################################################
 
-InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring, "for a max-plus matrix",
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
+"for a max-plus matrix",
 [IsMaxPlusMatrix], x -> "max-plus");
 
 # TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring, "for a max-plus matrix",
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+"for a max-plus matrix",
 [IsMaxPlusMatrix], x -> "MaxPlusMatrixNC");
 
 InstallGlobalFunction(MaxPlusMatrixNC,
@@ -98,11 +100,13 @@ n -> SEMIGROUPS_RandomMatrixOverSemiring(n, -infinity, MaxPlusMatrixNC));
 ## 2. Min-plus matrices
 #############################################################################
 
-InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring, "for a min-plus matrix",
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
+"for a min-plus matrix",
 [IsMinPlusMatrix], x -> "min-plus");
 
 # TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring, "for a min-plus matrix",
+InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+"for a min-plus matrix",
 [IsMinPlusMatrix], x -> "MinPlusMatrixNC");
 
 InstallGlobalFunction(MinPlusMatrixNC, x -> Objectify(MinPlusMatrixType, x));

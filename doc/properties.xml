@@ -427,9 +427,9 @@ true]]></Example>
     <Prop Name="IsGroupAsSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      If the semigroup <A>S</A> is actually a group, then
-      <C>IsGroupAsSemigroup</C> returns <K>true</K>.  If it is not a group,
-      then <K>false</K> is returned.
+      <C>IsGroupAsSemigroup</C> returns <K>true</K> if and only if the
+      semigroup <A>S</A> is mathematically a group but does belong to the
+      category of groups <Ref Prop="IsGroup" BookName="ref"/> in &GAP;.
       <Example><![CDATA[
 gap> gens := [ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
 >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
@@ -644,10 +644,10 @@ true]]></Example>
     <Description>
       <C>IsMonoidAsSemigroup</C> returns <K>true</K> if and only if the
       semigroup <A>S</A> is mathematically a monoid but does belong to the
-      category of monoids <Ref Prop="IsMonoid" BookName="ref"/> in &GAP; This is
-      possible if the <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>
-      of <A>S</A> is not equal to the <Ref Attr="One" BookName="ref"/> of any
-      element in <A>S</A>. <P/>
+      category of monoids <Ref Prop="IsMonoid" BookName="ref"/> in &GAP;. This
+      is possible if the <Ref Attr="MultiplicativeNeutralElement"
+        BookName="ref"/> of <A>S</A> is not equal to the <Ref Attr="One"
+        BookName="ref"/> of any element in <A>S</A>. <P/>
 
       A semigroup satisfying <C>IsMonoidAsSemigroup</C> does not possess the
       attributes of a monoid (such as, <Ref Attr="GeneratorsOfMonoid"
