@@ -22,6 +22,8 @@
 ##
 
 DeclareGlobalFunction("SemigroupCongruence");
+DeclareGlobalFunction("LeftSemigroupCongruence");
+DeclareGlobalFunction("RightSemigroupCongruence");
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
 
 DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);

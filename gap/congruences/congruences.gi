@@ -96,6 +96,88 @@ end);
 
 #
 
+InstallGlobalFunction(LeftSemigroupCongruence,
+function(arg)
+  local s, pairs, cong;
+  if not Length(arg) >= 2 then
+    ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+                 "at least 2 arguments are required,");
+  fi;
+  if not IsSemigroup(arg[1]) then
+    ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+                 "1st argument <s> must be a semigroup,");
+  fi;
+  s := arg[1];
+
+  if IsHomogeneousList(arg[2]) then
+    # We should have a list of generating pairs
+    if Length(arg) = 2 then
+      pairs := arg[2];
+      if not IsEmpty(pairs) and not IsList(pairs[1]) then
+        pairs := [pairs];
+      fi;
+    elif Length(arg) > 2 then
+      pairs := arg{[2 .. Length(arg)]};
+    fi;
+    if not ForAll(pairs, p -> Size(p) = 2) then
+      ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+                   "<pairs> should be a list of lists of size 2,");
+    fi;
+    if not ForAll(pairs, p -> p[1] in s and p[2] in s) then
+      ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+                   "each pair should contain elements from the semigroup <s>,");
+    fi;
+    # Remove any reflexive pairs
+    pairs := Filtered(pairs, p -> p[1] <> p[2]);
+    return LeftSemigroupCongruenceByGeneratingPairs(s, pairs);
+  else
+    TryNextMethod();
+  fi;
+end);
+
+#
+
+InstallGlobalFunction(RightSemigroupCongruence,
+function(arg)
+  local s, pairs, cong;
+  if not Length(arg) >= 2 then
+    ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+                 "at least 2 arguments are required,");
+  fi;
+  if not IsSemigroup(arg[1]) then
+    ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+                 "1st argument <s> must be a semigroup,");
+  fi;
+  s := arg[1];
+
+  if IsHomogeneousList(arg[2]) then
+    # We should have a list of generating pairs
+    if Length(arg) = 2 then
+      pairs := arg[2];
+      if not IsEmpty(pairs) and not IsList(pairs[1]) then
+        pairs := [pairs];
+      fi;
+    elif Length(arg) > 2 then
+      pairs := arg{[2 .. Length(arg)]};
+    fi;
+    if not ForAll(pairs, p -> Size(p) = 2) then
+      ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+                   "<pairs> should be a list of lists of size 2,");
+    fi;
+    if not ForAll(pairs, p -> p[1] in s and p[2] in s) then
+      ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+                   "each pair should contain elements from the semigroup <s>,");
+    fi;
+    # Remove any reflexive pairs
+    pairs := Filtered(pairs, p -> p[1] <> p[2]);
+    return RightSemigroupCongruenceByGeneratingPairs(s, pairs);
+  else
+    TryNextMethod();
+  fi;
+end);
+
+#
+
 InstallMethod(ViewObj,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
