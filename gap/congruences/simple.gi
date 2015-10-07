@@ -9,79 +9,9 @@
 ##
 ## This file contains methods for congruences on finite (0-)simple semigroups,
 ## using isomorphisms to Rees (0-)matrix semigroups and methods in
-## reesmat-cong.gd/gi.  These functions are not intended for direct use by an
-## end-user.  Also included is a smart, user-friendly function for constructing
-## a semigroup congruence.
+## congruences/reesmat.gd/gi.  These functions are not intended for direct
+## use by an end-user.
 ##
-
-InstallGlobalFunction(SemigroupCongruence,
-function(arg)
-  local s, pairs;
-  if not Length(arg) >= 2 then
-    Error("Semigroups: SemigroupCongruence: usage,\n",
-          "at least 2 arguments are required,");
-    return;
-  fi;
-  if not IsSemigroup(arg[1]) then
-    Error("Semigroups: SemigroupCongruence: usage,\n",
-          "1st argument <s> must be a semigroup,");
-    return;
-  fi;
-  s := arg[1];
-
-  if IsHomogeneousList(arg[2]) then
-    # We should have a list of generating pairs
-    if Length(arg) = 2 then
-      pairs := arg[2];
-      if not IsEmpty(pairs) and not IsList(pairs[1]) then
-        pairs := [pairs];
-      fi;
-    elif Length(arg) > 2 then
-      pairs := arg{[2 .. Length(arg)]};
-    fi;
-    if not ForAll(pairs, p -> Size(p) = 2) then
-      Error("Semigroups: SemigroupCongruence: usage,\n",
-            "<pairs> should be a list of lists of size 2,");
-      return;
-    fi;
-    if not ForAll(pairs, p -> p[1] in s and p[2] in s) then
-      Error("Semigroups: SemigroupCongruence: usage,\n",
-            "each pair should contain elements from the semigroup <s>,");
-      return;
-    fi;
-    if IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s) then
-      return SEMIGROUPS_SimpleCongFromPairs(s, pairs);
-    elif IsInverseSemigroup(s) then
-      return SEMIGROUPS_InverseCongFromPairs(s, pairs);
-    else
-      return SemigroupCongruenceByGeneratingPairs(s, pairs);
-    fi;
-  elif (IsRMSCongruenceByLinkedTriple(arg[2]) and IsSimpleSemigroup(s)) or
-    (IsRZMSCongruenceByLinkedTriple(arg[2]) and IsZeroSimpleSemigroup(s)) then
-    # We should have a congruence of an isomorphic RMS/RZMS
-    if Range(IsomorphismReesMatrixSemigroup(s)) = Range(arg[2]) then
-      return SEMIGROUPS_SimpleCongFromRMSCong(s, arg[2]);
-    else
-      Error("Semigroups: SemigroupCongruence: usage,\n",
-            "<cong> should be over a Rees (0-)matrix semigroup ",
-            "isomorphic to <s>");
-      return;
-    fi;
-  elif IsSemigroupIdeal(arg[2]) and Parent(arg[2]) = s then
-    return ReesCongruenceOfSemigroupIdeal(arg[2]);
-  elif Length(arg) = 3 and
-    IsInverseSemigroup(arg[2]) and
-    IsDenseList(arg[3]) and
-    IsInverseSemigroup(s) then
-    # We should have the kernel and trace of a congruence on an inverse
-    # semigroup
-    return InverseSemigroupCongruenceByKernelTrace(s, arg[2], arg[3]);
-  else
-    TryNextMethod();
-  fi;
-end);
-
-#
 
 InstallGlobalFunction(SEMIGROUPS_SimpleCongFromPairs,
 function(s, pairs)
@@ -214,9 +144,8 @@ InstallMethod(JoinMagmaCongruences,
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) then
-    Error("Semigroups: JoinMagmaCongruences: usage,\n",
-          "<cong1> and <cong2> must be over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: JoinMagmaCongruences: usage,\n",
+                 "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), join);
@@ -230,9 +159,8 @@ InstallMethod(MeetMagmaCongruences,
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) then
-    Error("Semigroups: MeetMagmaCongruences: usage,\n",
-          "<cong1> and <cong2> must be over the same semigroup,");
-    return;
+    ErrorMayQuit("Semigroups: MeetMagmaCongruences: usage,\n",
+                 "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), meet);
@@ -285,9 +213,8 @@ function(cong, elm)
   if elm in Range(cong) then
     return EquivalenceClassOfElementNC(cong, elm);
   else
-    Error("Semigroups: EquivalenceClassOfElement: usage,\n",
-          "<elm> must be an element of the range of <cong>");
-    return;
+    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                 "<elm> must be an element of the range of <cong>");
   fi;
 end);
 

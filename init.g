@@ -82,6 +82,7 @@ ReadPackage("semigroups/gap/congruences/inverse.gd");
 ReadPackage("semigroups/gap/congruences/simple.gd");
 ReadPackage("semigroups/gap/congruences/rees.gd");
 ReadPackage("semigroups/gap/congruences/quotients.gd");
+ReadPackage("semigroups/gap/congruences/congruences.gd");
 
 ReadPackage("semigroups/gap/fp/fpsemi.gd");
 ReadPackage("semigroups/gap/fp/freeinverse.gd");

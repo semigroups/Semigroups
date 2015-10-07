@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-#W  rees-cong.tst
+#W  congruences/rees.tst
 #Y  Copyright (C) 2015                                      Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: rees-cong.tst");
+gap> START_TEST("Semigroups package: congruences/rees.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -173,4 +173,4 @@ Error, Semigroups: JoinSemigroupCongruences: usage,
 the args <c1> and <c2> must be congruences of the same semigroup,
 
 #E#
-gap> STOP_TEST("Semigroups package: rees-cong.tst");
+gap> STOP_TEST( "Semigroups package: congruences/rees.tst");

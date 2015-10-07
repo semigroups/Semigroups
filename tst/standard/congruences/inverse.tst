@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  inverse-cong.tst
+#W  congruences/inverse.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: inverse-cong.tst");
+gap> START_TEST("Semigroups package: congruences/inverse.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -78,6 +78,15 @@ true
 gap> [y,z] in ccong;
 false
 
+#T# InverseCongTest7: Universal congruence
+gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup on 2 pts with 2 generators>
+gap> Size(s);
+5
+gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup\
+ on 2 pts with 2 generators>>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
 gap> Unbind(classy);
@@ -92,4 +101,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E# 
-gap> STOP_TEST("Semigroups package: inverse-cong.tst");
+gap> STOP_TEST("Semigroups package: congruences/inverse.tst");

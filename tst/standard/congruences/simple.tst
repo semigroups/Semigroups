@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  simple-cong.tst
+#W  congruences/simple.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: simple-cong.tst");
+gap> START_TEST("Semigroups package: congruences/simple.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -100,6 +100,13 @@ gap> ForAll(congs, cong ->
 > cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
 true
 
+#T# SimpleCongTest9: The universal congruence
+gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
+<inverse partial perm semigroup on 2 pts with 2 generators>
+gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
+<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+on 2 pts with 2 generators>>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
 gap> Unbind(classy);
@@ -115,4 +122,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST("Semigroups package: simple-cong.tst");
+gap> STOP_TEST( "Semigroups package: congruences/simple.tst");
