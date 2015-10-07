@@ -306,6 +306,9 @@ end);
 InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse op semigroup",
 [IsSemigroupWithInverseOp],
 function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
   return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
 end);
 
@@ -446,6 +449,8 @@ InstallMethod(IsLTrivial, "for a semigroup",
 function(S)
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
+    elif not IsFinite(S) then
+    TryNextMethod();
   fi;
 
   return NrLClasses(S) = Size(S);
@@ -538,7 +543,7 @@ function(S)
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
-  return NrRClasses(S) = 1 and NrLClasses(S) = 1;
+  return not IsGroup(S) and NrRClasses(S) = 1 and NrLClasses(S) = 1;
 end);
 
 # same method for non-regular ideals
@@ -551,6 +556,10 @@ function(S)
   if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
       and IsGroupAsSemigroup(Parent(S)) then
     return true;
+  fi;
+
+  if IsGroup(S) then
+    return false;
   fi;
 
   gens := GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
@@ -695,7 +704,10 @@ end);
 # same method for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+function(S)
+  return IsGroup(S) or IsGroupAsSemigroup(S);
+end);
 
 # different method for ideals without generators
 
@@ -754,6 +766,10 @@ InstallMethod(IsMonogenicSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   local I, gens, y, i;
+
+  if HasGeneratorsOfSemigroup(S) and Length(GeneratorsOfSemigroup(S)) = 1 then
+    return true;
+  fi;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -820,6 +836,10 @@ function(S)
     fi;
   fi;
 
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
   I := MinimalIdeal(S);
 
   if not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -849,10 +869,6 @@ end);
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
   return not IsMonoid(S) and MultiplicativeNeutralElement(S) <> fail;
 end);
 
@@ -1163,7 +1179,10 @@ end);
 # same method for ideals
 
 InstallMethod(IsRightSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+function(S)
+  return IsGroup(S) or IsGroupAsSemigroup(S);
+end);
 
 # different method for ideals
 

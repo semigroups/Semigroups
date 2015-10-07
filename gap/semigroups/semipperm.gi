@@ -769,7 +769,7 @@ function(S)
   deg := Maximum(domain);
   codeg := Maximum(range);
 
-  if min_rank = rank and domain = range then
+  if not IsGroup(S) and min_rank = rank and domain = range then
     SetIsGroupAsSemigroup(S, true);
     return gens[1];
   fi;

@@ -471,7 +471,7 @@ function(S)
     fi;
   od;
 
-  if min_rank = n then
+  if not IsGroup(S) and min_rank = n then
     SetIsGroupAsSemigroup(S, true);
     return gens[1];
   fi;

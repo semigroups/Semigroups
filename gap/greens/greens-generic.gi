@@ -629,6 +629,9 @@ InstallMethod(RegularDClasses, "for a semigroup",
 InstallMethod(GreensLClasses, "for a generic semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
   return SEMIGROUPS_GreensXClasses(S, GreensLRelation, GreensLClassOfElement);
 end);
 
@@ -637,6 +640,9 @@ end);
 InstallMethod(GreensRClasses, "for a generic semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
   return SEMIGROUPS_GreensXClasses(S, GreensRRelation, GreensRClassOfElement);
 end);
 
@@ -645,6 +651,9 @@ end);
 InstallMethod(GreensHClasses, "for a generic semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
   return SEMIGROUPS_GreensXClasses(S, GreensHRelation, GreensHClassOfElement);
 end);
 
@@ -653,6 +662,9 @@ end);
 InstallMethod(GreensDClasses, "for a generic semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
   return SEMIGROUPS_GreensXClasses(S, GreensDRelation, GreensDClassOfElement);
 end);
 
