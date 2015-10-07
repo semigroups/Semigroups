@@ -9,9 +9,8 @@
 ##
 ## This file contains methods for congruences on finite (0-)simple semigroups,
 ## using isomorphisms to Rees (0-)matrix semigroups and methods in
-## reesmat-cong.gd/gi.  These functions are not intended for direct use by an
-## end-user.  Also included is a smart, user-friendly function for constructing
-## a semigroup congruence.
+## congruences/reesmat.gd/gi.  These functions are not intended for direct
+## use by an end-user.
 ##
 
 DeclareCategory("SEMIGROUPS_CongSimple",
@@ -25,6 +24,3 @@ DeclareCategory("SEMIGROUPS_CongClassSimple",
                 IsAssociativeElement);
 
 DeclareGlobalFunction("SEMIGROUPS_SimpleClassFromRMSclass");
-
-DeclareGlobalFunction("SemigroupCongruence");
-DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);

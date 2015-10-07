@@ -8,14 +8,10 @@
 #############################################################################
 ##
 ## This file contains functions for any finite semigroup congruence with
-## generating pairs, using a union-find method.
+## generating pairs, using a union-find method.  See Howie 1.5 and see MT's
+## MSc thesis "Computing with Semigroup Congruences", chapter 2
 ##
 
 DeclareGlobalFunction("SEMIGROUPS_SetupCongData");
-DeclareAttribute("AsLookupTable", IsSemigroupCongruence);
-DeclareGlobalFunction("SEMIGROUPS_UF_Find");
-DeclareGlobalFunction("SEMIGROUPS_UF_Union");
-
 DeclareCategory("IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("Enumerate", [IsSemigroupCongruenceData, IsFunction]);
-DeclareOperation("Enumerate", [IsSemigroupCongruence, IsFunction]);

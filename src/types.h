@@ -12,6 +12,7 @@
 #include "src/compiled.h"          /* GAP headers                */
 
 #include <assert.h>
+#include <vector>
 
 /*******************************************************************************
  * GAP TNUM for wrapping C++ semigroup
@@ -93,5 +94,114 @@ extern Obj IsMatrixOverPrimeField;
 extern Obj AsMatrixOverPrimeFieldNC;
 extern Obj IsPBR;
 extern Obj PBRType;
+
+/*******************************************************************************
+ * Union-find data structure
+*******************************************************************************/
+typedef std::vector<size_t>   table_t;
+typedef std::vector<table_t*> blocks_t;
+
+class UFData {
+public:
+  // Remove things that might cause copying
+  UFData (const UFData& copy) = delete;
+  UFData& operator= (UFData const& copy) = delete;
+
+  // Constructor
+  UFData (size_t size) : _size(size),
+                         _haschanged(false),
+                         _table(new table_t()),
+                         _blocks(nullptr) {
+    _table->reserve(size);
+    for (size_t i=0; i<size; i++) {
+      _table->push_back(i);
+    }
+  }
+
+  // Destructor
+  ~UFData () {
+    delete _table;
+    if (_blocks != nullptr) {
+      for (size_t i=0; i<_blocks->size(); i++) {
+        delete _blocks->at(i);
+      }
+      delete _blocks;
+    }
+  }
+
+  // Getters
+  size_t   get_size () { return _size; }
+  table_t  *get_table () { return _table; }
+
+  // get_blocks
+  blocks_t *get_blocks () {
+    table_t *block;
+    // Is _blocks "bound" yet?
+    if (_blocks == nullptr) {
+      _blocks = new blocks_t();
+      _blocks->reserve(_size);
+      for (size_t i=0; i<_size; i++) {
+        block = new table_t(1, i);
+        _blocks->push_back(block);
+      }
+    }
+    // Do we need to update the blocks?
+    if (_haschanged) {
+      size_t ii;
+      for (size_t i=0; i<_size; i++) {
+        if (_blocks->at(i) != nullptr) {
+          ii = find(i);
+          if (ii != i) {
+            // Combine the two blocks
+            _blocks->at(ii)->reserve(_blocks->at(ii)->size()
+                                     + _blocks->at(i)->size());
+            _blocks->at(ii)->insert(_blocks->at(ii)->end(),
+                                    _blocks->at(i)->begin(),
+                                    _blocks->at(i)->end());
+            delete _blocks->at(i);
+            _blocks->at(i) = nullptr;
+          }
+        }
+      }
+      _haschanged = false;
+    }
+    return _blocks;
+  }
+
+  // find
+  size_t find (size_t i) {
+    size_t ii;
+    do {
+      ii = i;
+      i = _table->at(ii);
+    } while (ii != i);
+    return i;
+  }
+
+  // union
+  void unite (size_t i, size_t j) {
+    size_t ii, jj;
+    ii = find(i);
+    jj = find(j);
+    if (ii < jj) {
+      _table->at(jj) = ii;
+    } else {
+      _table->at(ii) = jj;
+    }
+    _haschanged = true;
+  }
+
+  // flatten
+  void flatten() {
+    for (size_t i=0; i<_size; i++) {
+      _table->at(i) = find(i);
+    }
+  }
+private:
+  size_t    _size;
+  table_t*  _table;
+  blocks_t* _blocks;
+  bool      _haschanged;
+};
 
 #endif
