@@ -377,8 +377,7 @@ gap> GreensRClasses(D);
       Oper="RClassOfHClass"/>.
 
       <Example><![CDATA[
-gap> S := Semigroup(RandomSemigroup(IsTransformationSemigroup, 2, 1000), 
->                   rec(generic := false));;
+gap> S := RandomSemigroup(IsTransformationSemigroup, 2, 1000);;
 gap> x := [ 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 1 ];;
 gap> x := EvaluateWord(Generators(S), x);;                            
 gap> R := GreensRClassOfElementNC(S, x);;
@@ -387,12 +386,12 @@ gap> Size(R);
 gap> L := GreensLClassOfElementNC(S, x);;
 gap> Size(L);
 1
-gap> x := PartialPerm([ 1, 2, 3, 4, 7, 8, 9 ],
->                     [ 2, 3, 4, 5, 6, 8, 10 ]);;
-gap> L := LClass(POI(10), x);
-<Green's L-class: [1,2,3,4,5][7,6][9,10](8)>
+gap> x := PartialPerm([ 1, 2, 3, 4, 7, 8, 9, 10 ],
+> [ 2, 3, 4, 5, 6, 8, 10, 11 ]);;
+gap> L := LClass(POI(13), x);
+<Green's L-class: [1,2,3,4,5,6,8,11][7,10]>
 gap> Size(L);
-120]]></Example>
+1287]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
