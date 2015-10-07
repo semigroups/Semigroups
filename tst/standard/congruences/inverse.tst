@@ -23,8 +23,8 @@ gap> s := InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 5 ], [ 2, 7, 3, 4 ] ),
 >  PartialPerm( [ 1, 2, 3, 6 ], [ 7, 3, 4, 2 ] ) ] );;
 gap> cong := SemigroupCongruence(s,
 >  [ PartialPerm( [ 4 ], [ 7 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] );
-<semigroup congruence over <inverse partial perm semigroup of size 4165, 
-on 7 pts with 7 generators> with congruence pair (106,57)>
+<semigroup congruence over <inverse partial perm semigroup of rank 7 with 7 
+ generators> with congruence pair (106,57)>
 
 #T# InverseCongTest3: Try some methods
 gap> x := PartialPerm( [ 4 ], [ 5 ] );;
@@ -69,8 +69,8 @@ gap> ccong := SemigroupCongruence(s, pairs);;
 gap> ccong = cong;
 true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <inverse partial perm semigroup of size 4165, 
-on 7 pts with 7 generators> with 1 generating pairs>
+<semigroup congruence over <inverse partial perm semigroup of rank 7 with 7 
+ generators> with 1 generating pairs>
 gap> [x,y] in ccong;
 false
 gap> [x,z] in ccong;
@@ -80,12 +80,12 @@ false
 
 #T# InverseCongTest7: Universal congruence
 gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
-<inverse partial perm semigroup on 2 pts with 2 generators>
+<inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(s);
 5
 gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
-<universal semigroup congruence over <0-simple inverse partial perm semigroup\
- on 2 pts with 2 generators>>
+<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+ of size 5, rank 2 with 2 generators>>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);

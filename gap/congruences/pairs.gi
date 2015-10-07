@@ -331,7 +331,7 @@ for cong_filter@ in [[IsSemigroupCongruence,
   [cong_filter@[1], IsAssociativeElement],
   function(cong, elm)
     local elms, lookup, classNo;
-    elms := AsSSortedList(Range(cong));
+    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(cong)), infinity);
     lookup := AsLookupTable(cong);
     classNo := lookup[Position(elms, elm)];
     return elms{Positions(lookup, classNo)};

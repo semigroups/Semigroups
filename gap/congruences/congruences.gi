@@ -54,7 +54,9 @@ function(arg)
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
-    if IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s) then
+    if not IsFinite(s) then
+      return SemigroupCongruenceByGeneratingPairs(s, pairs);
+    elif IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s) then
       return SEMIGROUPS_SimpleCongFromPairs(s, pairs);
     elif IsInverseSemigroup(s) then
       return SEMIGROUPS_InverseCongFromPairs(s, pairs);
