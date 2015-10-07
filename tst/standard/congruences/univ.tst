@@ -17,8 +17,8 @@ gap> SEMIGROUPS_StartTest();
 gap> s := Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 7, 5 ] ),
 >                      Transformation( [ 5, 7, 1, 6, 1, 7, 6 ] ) ] );;
 gap> uni := UniversalSemigroupCongruence(s);
-<universal semigroup congruence over <transformation semigroup 
- on 7 pts with 2 generators>>
+<universal semigroup congruence over <transformation semigroup of degree 7 
+ with 2 generators>>
 gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> cong := SemigroupCongruence(s, pairs);;
 gap> NrCongruenceClasses(cong);
