@@ -464,7 +464,13 @@ InstallMethod(ViewObj,
 [Filter],
 1,
 function(cong)
-  Print("<semigroup congruence over ");
+  Print("<");
+  if not IsLeftSemigroupCongruence(cong) then
+    Print("right");
+  elif not IsRightSemigroupCongruence(cong) then
+    Print("left");
+  fi;
+  Print("semigroup congruence over ");
   ViewObj(Range(cong));
   if HasGeneratingPairsOfMagmaCongruence(cong) then
     Print(" with ", Size(GeneratingPairsOfSemigroupCongruence(cong)),
@@ -477,16 +483,21 @@ end);
 
 InstallMethod(PrintObj,
 "for a semigroup congruence",
-[Filter],
+[Filter and HasGeneratingPairsOfMagmaCongruence],
 1,
 function(cong)
+  if not IsLeftSemigroupCongruence(cong) then
+    Print("Right");
+  elif not IsRightSemigroupCongruence(cong) then
+    Print("Left");
+  fi;
   Print("SemigroupCongruence( ");
   PrintObj(Range(cong));
   Print(", ");
   if HasGeneratingPairsOfMagmaCongruence(cong) then
     Print(GeneratingPairsOfSemigroupCongruence(cong));
   fi;
-  Print(")");
+  Print(" )");
 end);
 
 #
