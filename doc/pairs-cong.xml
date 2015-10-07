@@ -28,7 +28,7 @@ gap> S := Monoid( [ Transformation( [ 1, 2, 2 ] ),
 gap> cong := SemigroupCongruence(S, [Transformation([1, 2, 1]), 
 >                                    Transformation([2, 1, 2])]);;
 gap> AsLookupTable(cong);
-[ 1, 2, 3, 4, 5, 6, 3, 2, 1, 6, 5, 1 ]]]></Example>
+[ 1, 2, 3, 4, 5, 6, 2, 3, 6, 4, 5, 6 ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
