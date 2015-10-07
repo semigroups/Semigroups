@@ -36,7 +36,7 @@
     <#Include Label="IsRegularSemigroup">
     <#Include Label="IsRightZeroSemigroup">
     <#Include Label="IsRTrivial">
-    <#Include Label="IsSemilatticeAsSemigroup">
+    <#Include Label="IsSemilattice">
     <#Include Label="IsSimpleSemigroup">
     <#Include Label="IsSynchronizingSemigroup">
     <#Include Label="IsUnitRegularMonoid">

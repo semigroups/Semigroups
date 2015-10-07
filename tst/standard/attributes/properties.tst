@@ -860,7 +860,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `MultiplicativeNeutralElement' on 1 argu\
 ments
 
-#T# properties: IsOrthodoxSemigroup, 1/3
+#T# properties: IsOrthodoxSemigroup, 1
 gap> gens := [Transformation([1, 1, 1, 4, 5, 4]),
 >  Transformation([1, 2, 3, 1, 1, 2]),
 >  Transformation([1, 2, 3, 1, 1, 3]),
@@ -870,7 +870,7 @@ gap> S := Semigroup(gens);
 gap> IsOrthodoxSemigroup(S);
 true
 
-#T# properties: IsOrthodoxSemigroup, 1/3
+#T# properties: IsOrthodoxSemigroup, 2
 gap> S := Semigroup(
 >   PBR(
 >       [[-5, -4, -3, -2, -1, 1, 2, 4, 5], [-3, -1, 2, 6], [-6, -4, -3, -2, \
@@ -914,26 +914,26 @@ gap> S := Semigroup(
 gap> IsOrthodoxSemigroup(S);
 false
 
-#T# properties: IsOrthodoxSemigroup, 3/3
+#T# properties: IsOrthodoxSemigroup, 3
 gap> IsOrthodoxSemigroup(FullTransformationMonoid(3));
 false
 
-#T# properties: IsRectangularBand, 1/5
+#T# properties: IsRectangularBand, 1
 gap> S := Semigroup(RectangularBand(4, 4));
 <subsemigroup of 4x4 Rees matrix semigroup with 16 generators>
 gap> IsRectangularBand(S);
 true
 
-#T# properties: IsRectangularBand, 2/5
+#T# properties: IsRectangularBand, 2
 gap> S := FullTransformationMonoid(3);;
 gap> IsRectangularBand(S);
 false
 
-#T# properties: IsRectangularBand, 3/5
+#T# properties: IsRectangularBand, 3
 gap> IsRectangularBand(FreeBand(2));
 false
 
-#T# properties: IsRectangularBand, 4/5
+#T# properties: IsRectangularBand, 4
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]),
 > [[(), (), (), (), ()], [(), (), (), (), ()], [(), (), (), (), ()],
 >  [(), (), (), (), ()], [(), (), (), (), ()]]);;
@@ -942,12 +942,17 @@ false
 gap> IsRectangularBand(S);
 false
 
-#T# properties: IsRectangularBand, 5/5
+#T# properties: IsRectangularBand, 5
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]),
 > [[(), (), (), (), ()], [(), (), (), (), ()], [(), (), (), (), ()],
 >  [(), (), (), (), ()], [(), (), (), (), ()]]);;
 gap> IsRectangularBand(S);
 false
+
+#T# properties: IsRectangularBand, 5
+gap> IsRectangularBand(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsRectangularBand' on 1 arguments
 
 #T# properties: IsRegularSemigroup, 1/7
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]),
@@ -1100,7 +1105,7 @@ true
 gap> IsRegularSemigroupElementNC(S, Bipartition([[1, -1], [2, 3, -2, -3]]));
 true
 
-#T# properties: IsRightSimple, non-regular, 1/5
+#T# properties: IsRightSimple, non-regular, 1
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> IsRegularSemigroup(S);
@@ -1108,7 +1113,7 @@ false
 gap> IsRightSimple(S);
 false
 
-#T# properties: IsRightSimple, right zero, 2/5
+#T# properties: IsRightSimple, right zero, 2
 gap> S := TrivialSemigroup();
 <trivial transformation group of degree 0 with 0 generators>
 gap> IsRightZeroSemigroup(S);
@@ -1116,7 +1121,7 @@ true
 gap> IsRightSimple(S);
 true
 
-#T# properties: IsRightSimple, known L-classes, 3/5
+#T# properties: IsRightSimple, known L-classes, 3
 gap> S := Monoid([MatrixOverPrimeFieldNC([[0 * Z(11)]], GF(11)),
 >  MatrixOverPrimeFieldNC([[Z(11)]], GF(11)),
 >  MatrixOverPrimeFieldNC([[Z(11) ^ 4]], GF(11)),
@@ -1129,19 +1134,24 @@ gap> NrRClasses(S);
 gap> IsRightSimple(S);
 false
 
-#T# properties: IsRightSimple, acting, 4/5
+#T# properties: IsRightSimple, acting, 4
 gap> S := JonesMonoid(3);
 <regular bipartition monoid of degree 3 with 2 generators>
 gap> IsRightSimple(S);
 false
 
-#T# properties: IsRightSimple, non-acting, 5/5
+#T# properties: IsRightSimple, non-acting, 5
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> IsRightSimple(S);
 false
 
-#T# properties: IsRightZeroSemigroup, 1/2
+#T# properties: IsRightSimple, infinite, 6
+gap> IsRightSimple(FreeSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsRightSimple' on 1 arguments
+
+#T# properties: IsRightZeroSemigroup, 1
 gap> S := RightZeroSemigroup(4);;
 gap> IsRightZeroSemigroup(S);
 true
@@ -1149,13 +1159,18 @@ gap> I := SemigroupIdeal(S, S.1);;
 gap> IsRightZeroSemigroup(I);
 true
 
-#T# properties: IsRightZeroSemigroup, 2/2
+#T# properties: IsRightZeroSemigroup, 2
 gap> S := AsTransformationSemigroup(RectangularBand(2, 2));
 <transformation semigroup of degree 5 with 4 generators>
 gap> IsRightZeroSemigroup(S);
 false
 
-#T# properties: IsSemilatticeAsSemigroup, 1/?
+#T# properties: IsRightZeroSemigroup, 3
+gap> IsRightZeroSemigroup(FreeSemigroup(10));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsRightZeroSemigroup' on 1 arguments
+
+#T# properties: IsSemilattice, 1/?
 gap> T := Monoid([Transformation([6, 2, 3, 4, 6, 6]),
 >   Transformation([1, 6, 6, 4, 5, 6]),
 >   Transformation([1, 2, 6, 4, 6, 6]),
@@ -1165,27 +1180,27 @@ gap> T := Monoid([Transformation([6, 2, 3, 4, 6, 6]),
 >   Transformation([6, 2, 3, 6, 6, 6]),
 >   Transformation([6, 6, 3, 6, 5, 6])]);
 <transformation monoid of degree 6 with 8 generators>
-gap> IsSemilatticeAsSemigroup(T);
+gap> IsSemilattice(T);
 true
 gap> I := SemigroupIdeal(T, T.1);
 <inverse transformation semigroup ideal of degree 6 with 1 generator>
-gap> IsSemilatticeAsSemigroup(I);
+gap> IsSemilattice(I);
 true
 gap> T := Semigroup(T);
 <transformation monoid of degree 6 with 8 generators>
 gap> IsInverseSemigroup(T);
 true
-gap> IsSemilatticeAsSemigroup(T);
+gap> IsSemilattice(T);
 true
 gap> I := SemigroupIdeal(T, T.1);
 <inverse transformation semigroup ideal of degree 6 with 1 generator>
-gap> IsSemilatticeAsSemigroup(I);
+gap> IsSemilattice(I);
 true
 gap> T := Semigroup(T);;
 gap> IsInverseSemigroup(T);;
 gap> I := SemigroupIdeal(T, T.1);
 <inverse transformation semigroup ideal of degree 6 with 1 generator>
-gap> IsSemilatticeAsSemigroup(I);
+gap> IsSemilattice(I);
 true
 
 #T# properties: IsSimpleSemigroup, 1/?
@@ -1350,31 +1365,31 @@ gap> S := InverseSemigroup([
 gap> IsZeroSimpleSemigroup(S);
 true
 
-#T# properties: IsNilpotentSemigroup, 1/7
+#T# properties: IsNilpotentSemigroup, 1
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> IsNilpotentSemigroup(S);
 false
 
-#T# properties: IsNilpotentSemigroup, 2/7
+#T# properties: IsNilpotentSemigroup, 2
 gap> S := ReesMatrixSemigroup(Group(()), [[()]]);
 <Rees matrix semigroup 1x1 over Group(())>
 gap> IsNilpotentSemigroup(S);
 true
 
-#T# properties: IsNilpotentSemigroup, 3/7
+#T# properties: IsNilpotentSemigroup, 3
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[0]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> IsNilpotentSemigroup(S);
 true
 
-#T# properties: IsNilpotentSemigroup, 4/7
+#T# properties: IsNilpotentSemigroup, 4
 gap> S := Semigroup(Transformation([1, 1, 2, 3, 4]));
 <commutative transformation semigroup of degree 5 with 1 generator>
 gap> IsNilpotentSemigroup(S);
 true
 
-#T# properties: IsNilpotentSemigroup, 5/7
+#T# properties: IsNilpotentSemigroup, 5
 gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),
 >  PartialPerm([1, 2, 3, 5], [4, 1, 3, 5])]);
@@ -1382,7 +1397,7 @@ gap> S := Semigroup([
 gap> IsNilpotentSemigroup(S);
 false
 
-#T# properties: IsNilpotentSemigroup, 6/7
+#T# properties: IsNilpotentSemigroup, 6
 gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),
 >  PartialPerm([1, 2, 3, 5], [4, 1, 3, 5])]);
@@ -1392,7 +1407,7 @@ gap> NrIdempotents(S);
 gap> IsNilpotentSemigroup(S);
 false
 
-#T# properties: IsNilpotentSemigroup, 7/7
+#T# properties: IsNilpotentSemigroup, 7
 gap> S := Semigroup([
 >  PartialPerm([2], [1]), PartialPerm([1, 2], [3, 1]),
 >  PartialPerm([1, 2], [4, 1]), PartialPerm([1, 2], [5, 1]),
@@ -1405,6 +1420,15 @@ gap> S := Semigroup([
 <partial perm semigroup of rank 4 with 15 generators>
 gap> IsNilpotentSemigroup(S);
 true
+
+#T# properties: IsNilpotentSemigroup, 8
+gap> S := FreeSemigroup(1);;
+gap> IsNilpotentSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsNilpotentSemigroup' on 1 arguments
+gap> S := Semigroup(Transformation([2, 1]));;
+gap> IsNilpotentSemigroup(S);
+false
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
