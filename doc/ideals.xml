@@ -26,9 +26,7 @@
 gap> S := Monoid( 
 > Bipartition( [ [ 1, 2, 3, -2 ], [ 4 ], [ -1, -4 ], [ -3 ] ] ), 
 > Bipartition( [ [ 1, 4, -2, -4 ], [ 2, -1, -3 ], [ 3 ] ] ) );;
-gap> I := SemigroupIdeal(S, S);
-<non-regular bipartition semigroup ideal of degree 4 with 3 generators
- >
+gap> I := SemigroupIdeal(S, S);;
 gap> MinimalIdealGeneratingSet(I);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ]> ]]]></Example>
     </Description>
@@ -62,8 +60,7 @@ gap> S := Semigroup(
 > Bipartition( [ [ 1, 3, -2 ], [ 2, 4 ], [ -1, -3, -4 ] ] ), 
 > Bipartition( [ [ 1 ], [ 2, 3, 4 ], [ -1, -3, -4 ], [ -2 ] ] ), 
 > Bipartition( [ [ 1 ], [ 2, 4, -2 ], [ 3, -4 ], [ -1 ], [ -3 ] ] ) );;
-gap> I := SemigroupIdeal(S, S.1 * S.2 * S.5);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+gap> I := SemigroupIdeal(S, S.1 * S.2 * S.5);;
 gap> GeneratorsOfSemigroupIdeal(I);
 [ <bipartition: [ 1, 2, 3, 4, -4 ], [ -1 ], [ -2 ], [ -3 ]> ]
 gap> I=Semigroup(GeneratorsOfSemigroupIdeal(I));
@@ -87,9 +84,8 @@ false]]></Example>
       function is <A>S</A>.
     
       <Example><![CDATA[
-gap> S := InverseSemigroup(SymmetricInverseMonoid(10), 
-> rec(generic := false));
-<inverse partial perm monoid of rank 10 with 3 generators>
+gap> S := SymmetricInverseMonoid(10);
+<symmetric inverse monoid of degree 10>
 gap> I := SemigroupIdeal(S, PartialPerm([1,2]));
 <inverse partial perm semigroup ideal of rank 10 with 1 generator>
 gap> Size(I);
@@ -129,19 +125,19 @@ gap> I := SemigroupIdeal(S, I, Idempotents(S));
       to compute anything about <C>I</C> other than its size and membership. 
       
       <Example><![CDATA[
-gap> S := FullTransformationSemigroup(6);
-<full transformation monoid of degree 6>
-gap> x := Transformation( [ 2, 6, 6, 2, 6, 1 ] );;
+gap> S := FullTransformationSemigroup(8);
+<full transformation monoid of degree 8>
+gap> x := Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] );;
 gap> D := DClassNC(S, x);
-<Green's D-class: Transformation( [ 2, 6, 6, 2, 6, 1 ] )>
+<Green's D-class: Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] )>
 gap> R := PrincipalFactor(D);
-<Rees 0-matrix semigroup 90x20 over Group([ (1,2), (1,6) ])>
+<Rees 0-matrix semigroup 1050x56 over Group([ (3,4), (2,8,7,4,3) ])>
 gap> S := Semigroup(List([1..10], x-> Random(R)));
-<subsemigroup of 90x20 Rees 0-matrix semigroup with 10 generators>
+<subsemigroup of 1050x56 Rees 0-matrix semigroup with 10 generators>
 gap> I := SemigroupIdeal(S, MultiplicativeZero(S));
 <regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> SupersemigroupOfIdeal(I);
-<subsemigroup of 90x20 Rees 0-matrix semigroup with 10 generators>
+<subsemigroup of 1050x56 Rees 0-matrix semigroup with 10 generators>
 gap> J := SemigroupIdeal(I, Representative(MinimalDClass(S)));
 <regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> Parent(J) = I;

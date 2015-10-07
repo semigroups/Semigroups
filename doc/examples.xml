@@ -116,7 +116,8 @@ gap> S := FactorisableDualSymmetricInverseSemigroup(4);
 <inverse bipartition monoid of degree 4 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 true
-gap> S := Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+gap> S := SymmetricInverseMonoid(5);;
+gap> S := Range(IsomorphismBipartitionSemigroup(S));
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 true]]></Example>
@@ -186,10 +187,10 @@ gap> Size(S);
       <A>n</A> points. This monoid has <C>(<A>n</A>+1)^<A>n</A></C> elements.
       <!--JDM add generators-->
       <Example><![CDATA[
-gap> PartialTransformationSemigroup(6); 
-<regular transformation monoid of degree 7 with 4 generators>
+gap> PartialTransformationSemigroup(8); 
+<regular transformation monoid of degree 9 with 4 generators>
 gap> Size(last);
-117649]]></Example>
+43046721]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

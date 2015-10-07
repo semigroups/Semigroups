@@ -244,6 +244,7 @@ Obj SEMIGROUP_ELEMENTS (Obj self, Obj data, Obj limit) {
       SET_LEN_PLIST(out, elements->size());
       for (size_t i = 0; i < elements->size(); i++) {
         SET_ELM_PLIST(out, i + 1, converter->unconvert(elements->at(i)));
+        CHANGED_BAG(out);
       }
       AssPRec(data, RNam_elts, out);
     } else {
