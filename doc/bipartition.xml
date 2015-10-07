@@ -336,17 +336,18 @@ false]]></Example>
       
       See <Ref Oper="IsTransBipartition"/>. 
       <Example><![CDATA[
-gap> f:=Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], 
+gap> x := Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], 
 > [ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], 
 > [ -8 ], [ -9 ]]);;
-gap> AsTransformation(f);
+gap> AsTransformation(x);
 Transformation( [ 3, 2, 7, 12, 7, 6, 6, 5, 11, 7, 10, 10 ] )
-gap> IsTransBipartition(f);
+gap> IsTransBipartition(x);
 true
-gap> f:=Bipartition([[ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], 
+gap> x := Bipartition([[ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], 
 > [ 9, -4, -6, -9 ], [ -3, -5 ], [ -7, -8 ], [ -10 ]]);;
 gap> AsTransformation(f);
-fail]]></Example>
+Error, Semigroups: AsTransformation (for a bipartition):
+the argument does not define a transformation,]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -389,18 +390,19 @@ true]]></Example>
 
       See <Ref Oper="IsPartialPermBipartition"/>. 
       <Example><![CDATA[
-gap> f:=Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3, -10 ], [ 4, -5 ], 
+gap> x := Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3, -10 ], [ 4, -5 ], 
 > [ 5, -9 ], [ 6 ], [ 7 ], [ 8, -6 ], [ 9, -3 ], [ 10, -8 ], 
 > [ -1 ], [ -7 ] ] );;
-gap> IsPartialPermBipartition(f);
+gap> IsPartialPermBipartition(x);
 true
-gap> AsPartialPerm(f);
+gap> AsPartialPerm(x);
 [1,4,5,9,3,10,8,6](2)
-gap> f:=Bipartition([[ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]]);;
-gap> IsPartialPermBipartition(f);
+gap> x := Bipartition([[ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]]);;
+gap> IsPartialPermBipartition(x);
 false
-gap> AsPartialPerm(f);
-fail]]></Example>
+gap> AsPartialPerm(x);
+Error, Semigroups: AsPartialPerm (for a bipartition):
+the argument does not define a partial perm,]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -415,27 +417,31 @@ fail]]></Example>
       <A>f</A>, this function returns a block bijection corresponding to
       <A>f</A>. This block bijection has the same non-singleton classes as
       <C>g:=AsBipartition(<A>f</A>, <A>n</A>)</C> and one additional class which is
-      the union the singleton classes of <C>g</C>.<P/> 
+      the union the singleton classes of <C>g</C>.
+      <P/> 
 
       If the optional second argument <A>n</A> is not present, then the maximum
       of the degree and codegree of <A>f</A> plus 1 is used by default. If the
       second argument <A>n</A> is not greater than this maximum, then
-      <K>fail</K> is returned.  <P/>
+      <K>fail</K> is returned.
+      <P/>
 
       This is the value at <A>f</A> of the embedding of the symmetric inverse
       monoid into the dual symmetric inverse monoid given in the
       FitzGerald-Leech Theorem <Cite Key="Fitzgerald1998aa"/>. 
 
 <Example><![CDATA[
-gap> f:=PartialPerm( [ 1, 2, 3, 6, 7, 10 ], [ 9, 5, 6, 1, 7, 8 ] ) ;  
+gap> x := PartialPerm( [ 1, 2, 3, 6, 7, 10 ], [ 9, 5, 6, 1, 7, 8 ] ) ;  
 [2,5][3,6,1,9][10,8](7)
-gap> AsBipartition(f, 11);
+gap> AsBipartition(x, 11);
 <bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], 
  [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
  [ -3 ], [ -4 ], [ -10 ], [ -11 ]>
-gap> AsBlockBijection(f, 10);
-fail
-gap> AsBlockBijection(f, 11);
+gap> AsBlockBijection(x, 10);
+Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
+the 2nd argument must be at least the maximum of the degree and
+codegree of the 1st argument,
+gap> AsBlockBijection(x, 11);
 <block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
  [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 
  [ 10, -8 ]>]]></Example>
@@ -748,27 +754,28 @@ gap> RankOfBipartition(f);
 
 <#GAPDoc Label="DegreeOfBipartition">
   <ManSection>
-    <Attr Name="DegreeOfBipartition" Arg="f"/>
-    <Attr Name="DegreeOfBipartitionCollection" Arg="f"/>
+    <Attr Name="DegreeOfBipartition" Arg="x"/>
+    <Attr Name="DegreeOfBipartitionCollection" Arg="x"/>
     <Returns>A positive integer.</Returns>
     <Description>
-The degree of a bipartition is, roughly speaking, the number of points where it
-is defined. More precisely, if <A>f</A> is a bipartition defined on <C>2*n</C>
-points, then the degree of <A>f</A> is <C>n</C>. <P/>
+      The degree of a bipartition is, roughly speaking, the number of points
+      where it is defined. More precisely, if <A>x</A> is a bipartition defined
+      on <C>2 * n</C> points, then the degree of <A>x</A> is <C>n</C>. <P/>
 
-The degree of a collection <A>coll</A> of bipartitions of equal degree is just
-the degree of any (and every) bipartition in <A>coll</A>. The degree of collection of bipartitions of unequal degrees is not defined. 
+      The degree of a collection <A>coll</A> of bipartitions of equal degree is
+      just the degree of any (and every) bipartition in <A>coll</A>. The degree
+      of collection of bipartitions of unequal degrees is not defined. 
 
 <Example><![CDATA[
-gap> f:=Bipartition( [ [ 1, 7, -3, -8 ], [ 2, 6 ], [ 3 ], [ 4, -7, -9 ], 
+gap> x := Bipartition( [ [ 1, 7, -3, -8 ], [ 2, 6 ], [ 3 ], [ 4, -7, -9 ], 
 > [ 5, 9, -2 ], [ 8, -1, -4, -6 ], [ -5 ] ] );;
-gap> DegreeOfBipartition(f);
+gap> DegreeOfBipartition(x);
 9
-gap> s:=BrauerMonoid(5);
-<regular bipartition monoid on 5 pts with 3 generators>
-gap> IsBipartitionCollection(s);
+gap> S := BrauerMonoid(5);
+<regular bipartition monoid of degree 5 with 3 generators>
+gap> IsBipartitionCollection(S);
 true
-gap> DegreeOfBipartitionCollection(s);
+gap> DegreeOfBipartitionCollection(S);
 5]]></Example>
     </Description>
   </ManSection>

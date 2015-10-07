@@ -56,7 +56,7 @@ gap> MaximalDClasses(S);
 
 #T# attributes-acting: MaximalDClasses for regular semigroup
 gap> S := FullTransformationMonoid(3);
-<regular transformation monoid of size 27, degree 3 with 3 generators>
+<full transformation monoid of degree 3>
 gap> MaximalDClasses(S);
 [ <Green's D-class: IdentityTransformation> ]
 

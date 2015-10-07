@@ -31,11 +31,11 @@ gap> pair1 := [ Transformation( [ 3, 4, 3, 4, 3 ] ),
 gap> pair2 := [ Transformation( [ 4, 3, 4, 3, 4 ] ),
 >               Transformation( [ 3, 4, 3, 4, 3 ] ) ];;
 gap> SemigroupCongruence(S, [pair1, pair2]);
-<semigroup congruence over <simple transformation semigroup 
- on 5 pts with 4 generators> with linked triple (2,4,1)>
+<semigroup congruence over <simple transformation semigroup of 
+ degree 5 with 4 generators> with linked triple (2,4,1)>
 gap> SemigroupCongruence(S, pair1, pair2);
-<semigroup congruence over <simple transformation semigroup 
- on 5 pts with 4 generators> with linked triple (2,4,1)>]]></Example>
+<semigroup congruence over <simple transformation semigroup of 
+ degree 5 with 4 generators> with linked triple (2,4,1)>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

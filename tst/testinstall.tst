@@ -283,7 +283,7 @@ gap> InversesOfSemigroupElement(S, x);
 
 #T# TestInstall16
 gap> file := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-> "/tst/testinstall-data.gz");;
+> "/tst/test-data.gz");;
 gap>  ReadGenerators(file, 1376);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 
@@ -950,8 +950,7 @@ gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 <regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal of degree 4 with
- 1 generator> over <regular transformation monoid of size 256, degree 4 with
- 3 generators>>
+  1 generator> over <full transformation monoid of degree 4>>
 gap> NrCongruenceClasses(cong);
 169
 

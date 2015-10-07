@@ -20,21 +20,21 @@
       <A>S</A>.
       <Example><![CDATA[
 gap> S:=Semigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 5, 4 ] ), 
->  PartialPerm( [ 1, 2, 3 ], [ 4, 1, 2 ] ), 
->  PartialPerm( [ 1, 2, 3 ], [ 5, 2, 3 ] ), 
->  PartialPerm( [ 1, 2, 4, 5 ], [ 2, 1, 4, 3 ] ), 
->  PartialPerm( [ 1, 2, 5 ], [ 2, 3, 5 ] ), 
->  PartialPerm( [ 1, 2, 3, 5 ], [ 2, 3, 5, 4 ] ), 
->  PartialPerm( [ 1, 2, 3, 5 ], [ 4, 2, 5, 1 ] ), 
->  PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 4, 3 ] ), 
->  PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] ) );;
+>                  PartialPerm( [ 1, 2, 3 ], [ 4, 1, 2 ] ), 
+>                  PartialPerm( [ 1, 2, 3 ], [ 5, 2, 3 ] ), 
+>                  PartialPerm( [ 1, 2, 4, 5 ], [ 2, 1, 4, 3 ] ), 
+>                  PartialPerm( [ 1, 2, 5 ], [ 2, 3, 5 ] ), 
+>                  PartialPerm( [ 1, 2, 3, 5 ], [ 2, 3, 5, 4 ] ), 
+>                  PartialPerm( [ 1, 2, 3, 5 ], [ 4, 2, 5, 1 ] ), 
+>                  PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 4, 3 ] ), 
+>                  PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] ) );;
 gap> StructureDescriptionSchutzenbergerGroups(S);            
 [ "1", "C2", "S3" ]
 gap> S:=Monoid( 
 > Bipartition([[ 1, 2, 5, -1, -2 ], [ 3, 4, -3, -5 ], [ -4 ]]), 
 > Bipartition([[ 1, 2, -2 ], [ 3, -1 ], [ 4 ], [ 5 ], [ -3, -4 ], [ -5 ]]),
 > Bipartition([[ 1 ], [ 2, 3, -5 ], [ 4, -3 ], [ 5, -2 ], [ -1, -4 ]]));
-<bipartition monoid on 5 pts with 3 generators>
+<bipartition monoid of degree 5 with 3 generators>
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "1", "C2" ]]]></Example>
     </Description>

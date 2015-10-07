@@ -439,7 +439,7 @@ gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 4, 5, 7, 10], [2, 8, 4, 7, 5, 3, 6]),
 >  PartialPerm([1, 2, 4, 5, 7, 9, 11], [7, 10, 1, 11, 9, 4, 2]),
 >  PartialPerm([1, 2, 4, 7, 8, 9, 11], [10, 7, 8, 5, 9, 1, 3])]);
-<partial perm semigroup on 11 pts with 5 generators>
+<partial perm semigroup of rank 11 with 5 generators>
 gap> IsHTrivial(S);
 false
 gap> IsLTrivial(S);
@@ -519,7 +519,7 @@ false
 
 #T# properties: IsLTrivial, rho, 1/1
 gap> S := FullTransformationMonoid(3);
-<regular transformation monoid of size 27, degree 3 with 3 generators>
+<full transformation monoid of degree 3>
 gap> IsLTrivial(S);
 false
 gap> S := Semigroup(S);
@@ -596,14 +596,14 @@ true
 #T# properties: IsIdempotentGenerated, 3/4
 gap> S := Semigroup([PartialPerm([1, 2, 4, 5], [2, 5, 3, 6]),
 >  PartialPerm([1, 2, 4, 5], [5, 1, 3, 4])]);
-<partial perm semigroup on 4 pts with 2 generators>
+<partial perm semigroup of rank 4 with 2 generators>
 gap> IsIdempotentGenerated(S);
 false
 
 #T# properties: IsIdempotentGenerated, 4/4
 gap> S := Semigroup([PartialPerm([1, 2, 4, 5], [1, 2, 4, 5]),
 >  PartialPerm([1, 2, 4, 5], [5, 1, 3, 4])]);
-<partial perm semigroup on 4 pts with 2 generators>
+<partial perm semigroup of rank 4 with 2 generators>
 gap> IsIdempotentGenerated(S);
 false
 
@@ -822,7 +822,7 @@ true
 
 #T# properties: IsRectangularBand, 2/5
 gap> S := FullTransformationMonoid(3);
-<regular transformation monoid of size 27, degree 3 with 3 generators>
+<full transformation monoid of degree 3>
 gap> IsRectangularBand(S);
 false
 
@@ -1214,7 +1214,7 @@ gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), ()], [(), ()]]);
 
 #T# properties: IsZeroSemigroup, 1/3
 gap> S := Semigroup(ZeroSemigroup(3));
-<partial perm semigroup on 2 pts with 2 generators>
+<partial perm semigroup of rank 2 with 2 generators>
 gap> IsZeroSemigroup(S);
 true
 gap> T := SemigroupIdeal(S, S.1);;
@@ -1275,7 +1275,7 @@ true
 gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),
 >  PartialPerm([1, 2, 3, 5], [4, 1, 3, 5])]);
-<partial perm semigroup on 5 pts with 2 generators>
+<partial perm semigroup of rank 5 with 2 generators>
 gap> IsNilpotentSemigroup(S);
 false
 
@@ -1283,7 +1283,7 @@ false
 gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),
 >  PartialPerm([1, 2, 3, 5], [4, 1, 3, 5])]);
-<partial perm semigroup on 5 pts with 2 generators>
+<partial perm semigroup of rank 5 with 2 generators>
 gap> NrIdempotents(S);
 3
 gap> IsNilpotentSemigroup(S);
@@ -1299,7 +1299,7 @@ gap> S := Semigroup([
 >  PartialPerm([2, 4], [4, 5]), PartialPerm([2, 3, 4], [4, 5, 3]),
 >  PartialPerm([1, 2, 4], [3, 1, 5]), PartialPerm([1, 2, 4], [4, 1, 5]),
 >  PartialPerm([1, 2, 3, 4], [4, 1, 5, 3])]);
-<partial perm semigroup on 4 pts with 15 generators>
+<partial perm semigroup of rank 4 with 15 generators>
 gap> IsNilpotentSemigroup(S);
 true
 

@@ -17,14 +17,14 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
-  return Concatenation("degree \>",
+  return Concatenation("\>degree \>",
                        ViewString(DegreeOfBipartitionSemigroup(S)),
                        "\<\< ");
 end);
 
 # same method for ideals
 
-InstallMethod(GroupOfUnits, "for a bipartition semigroup",
+InstallMethod(GroupOfUnits, "for an acting bipartition semigroup",
 [IsBipartitionSemigroup and IsActingSemigroup],
 function(S)
   local R, G, deg, U;

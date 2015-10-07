@@ -15,9 +15,9 @@ InstallMethod(SEMIGROUPS_ViewStringSuffix,
 [IsMatrixOverSemiringSemigroup],
 function(S)
   local n;
-  n := String(DimensionOfMatrixOverSemiring(Representative(S)));
+  n := ViewString(DimensionOfMatrixOverSemiring(Representative(S)));
   # gaplint: ignore 3
-  return Concatenation(n, "x", n, " ",
+  return Concatenation("\>\>", n, "x", n, "\< \>",
     SEMIGROUPS_TypeViewStringOfMatrixOverSemiring(Representative(S)),
-                       " matrices ");
+                       "\< matrices\< ");
 end);

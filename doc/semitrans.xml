@@ -32,7 +32,7 @@
 gap> S := Monoid( 
 > Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ] ), 
 > Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) );
-<transformation monoid on 4 pts with 4 generators>
+<transformation monoid of degree 4 with 4 generators>
 gap> GeneratorsSmallest(S);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), 
   Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ), 
@@ -43,8 +43,7 @@ gap> GeneratorsSmallest(S);
   IdentityTransformation, Transformation( [ 1, 3, 1, 1 ] ), 
   Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 1, 1, 2 ] ), 
   Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 4, 1, 2 ] ), 
-  Transformation( [ 3, 3, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ]
-]]></Example>
+  Transformation( [ 3, 3, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ]]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -67,14 +66,13 @@ gap> GeneratorsSmallest(S);
 
     <Example><![CDATA[
 gap> S := Monoid( 
-> [ Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ), 
->   Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] ) ] );
-<transformation monoid on 11 pts with 2 generators>
+> Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ), 
+> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] ));
+<transformation monoid of degree 11 with 2 generators>
 gap> SmallestElementSemigroup(S);
 IdentityTransformation
 gap> LargestElementSemigroup(S);
-Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )
-]]></Example>
+Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -104,9 +102,9 @@ gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ],
 > [ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), 
 > Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], 
 > [ -2, -3 ], [ -5 ] ] ) ] );
-<bipartition semigroup on 6 pts with 2 generators>
+<bipartition semigroup of degree 6 with 2 generators>
 gap> AsTransformationSemigroup(S);
-<transformation semigroup on 12 pts with 2 generators>
+<transformation semigroup of degree 12 with 2 generators>
 gap> IsTransitive(last);
 false
 gap> IsTransitive(AsSemigroup(Group((1,2,3))));
@@ -137,13 +135,14 @@ true]]></Example>
     are analogous to <C>AsTransformationSemigroup</C>.
 
     <Example><![CDATA[
-gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], 
-> [ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), 
-> Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], 
-> [ -2, -3 ], [ -5 ] ] ) ] );
-<bipartition semigroup on 6 pts with 2 generators>
+gap> S := Semigroup(
+> Bipartition([[1, 2], [3, 6, -2], [4, 5, -3, -4], 
+>              [-1, -6], [-5]]), 
+> Bipartition([[1, -4], [2, 3, 4, 5], [6], [-1, -6], 
+>              [-2, -3], [-5]]));
+<bipartition semigroup of degree 6 with 2 generators>
 gap> AsTransformationSemigroup(S);
-<transformation semigroup on 12 pts with 2 generators>]]></Example>
+<transformation semigroup of degree 12 with 2 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -236,17 +235,17 @@ gap> CyclesOfTransformationSemigroup(S);
 
 
 
-            <Example><![CDATA[
+      <Example><![CDATA[
 gap> S:=Semigroup( Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 
->  Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
+>                  Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
 gap> IsSynchronizingSemigroup(S, 10);
 true
 gap> S:=Semigroup( Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ), 
->  Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
+>                  Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
 gap> IsSynchronizingSemigroup(S, 10);
 false
 gap> Representative(MinimalIdeal(S));
-Transformation( [ 7, 8, 8, 8, 8, 8, 8, 7, 8, 8 ] )]]></Example>
+Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

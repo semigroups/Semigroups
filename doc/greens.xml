@@ -152,7 +152,7 @@ gap> S := InverseSemigroup(
 > PartialPerm([ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ]), 
 > PartialPerm([ 1, 2, 3, 4, 6, 7, 8, 10 ],
 > [ 3, 8, 1, 9, 4, 10, 5, 6 ]));
-<inverse partial perm semigroup on 10 pts with 2 generators>
+<inverse partial perm semigroup of rank 10 with 2 generators>
 gap> x := S.1;
 [3,7][8,1,2,6,9][10,5]
 gap> H := HClass(S, x);
@@ -377,7 +377,8 @@ gap> GreensRClasses(D);
       Oper="RClassOfHClass"/>.
 
       <Example><![CDATA[
-gap> S := RandomTransformationSemigroup(2,1000);;
+gap> S := Semigroup(RandomSemigroup(IsTransformationSemigroup, 2, 1000), 
+>                   rec(generic := false));;
 gap> x := [ 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 1 ];;
 gap> x := EvaluateWord(Generators(S), x);;                            
 gap> R := GreensRClassOfElementNC(S, x);;
@@ -386,12 +387,12 @@ gap> Size(R);
 gap> L := GreensLClassOfElementNC(S, x);;
 gap> Size(L);
 1
-gap> x := PartialPerm([ 1, 2, 3, 4, 7, 8, 9, 10 ],
-> [ 2, 3, 4, 5, 6, 8, 10, 11 ]);;
-gap> L := LClass(POI(13), x);
-<Green's L-class: [1,2,3,4,5,6,8,11][7,10]>
+gap> x := PartialPerm([ 1, 2, 3, 4, 7, 8, 9 ],
+>                     [ 2, 3, 4, 5, 6, 8, 10 ]);;
+gap> L := LClass(POI(10), x);
+<Green's L-class: [1,2,3,4,5][7,6][9,10](8)>
 gap> Size(L);
-1287]]></Example>
+120]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -617,13 +618,13 @@ gap> Idempotents(S, 0);
 
       <Example><![CDATA[
 gap> S := Monoid(Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
-> Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] ));;
+>                Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] ));;
 gap> f := Transformation( [ 1, 1, 10, 8, 8, 8, 1, 1, 10, 8 ] );;
 gap> R := RClass(S, f);;
 gap> IsRegularClass(R);
 true
-gap> S := Monoid(Transformation([2,3,4,5,1,8,7,6,2,7]), 
-> Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] ));;
+gap> S := Monoid(Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ), 
+>                Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] ));;
 gap> f := Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] );;
 gap> R := RClass(S, f);;
 gap> IsRegularClass(R);
@@ -631,7 +632,8 @@ false
 gap> NrIdempotents(R);
 0
 gap> S := Semigroup(Transformation( [ 2, 1, 3, 1 ] ), 
-> Transformation( [ 3, 1, 2, 1 ] ), Transformation( [ 4, 2, 3, 3 ] ));;
+>                   Transformation( [ 3, 1, 2, 1 ] ), 
+>                   Transformation( [ 4, 2, 3, 3 ] ));;
 gap> f := Transformation( [ 4, 2, 3, 3 ] );;
 gap> L := GreensLClassOfElement(S, f);;
 gap> IsRegularClass(L);
@@ -648,8 +650,8 @@ gap> IsRegularClass(RClass(S, g));
 true
 gap> IsRegularDClass(DClass(S, g));
 true
-gap> DClass(S, g)=RClass(S, g);
-true]]></Example>
+gap> DClass(S, g) = RClass(S, g);
+false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -672,11 +674,10 @@ true]]></Example>
   Attr="GreensRClasses"/>, and <Ref Oper="IteratorOfRClasses"/>.<P/>
 
   <Example><![CDATA[
-gap> gens := [ Transformation( [ 3, 2, 1, 5, 4 ] ), 
-> Transformation( [ 5, 4, 3, 2, 1 ] ), 
+gap> S := Semigroup(
+> Transformation( [ 3, 2, 1, 5, 4 ] ), Transformation( [ 5, 4, 3, 2, 1 ] ), 
 > Transformation( [ 5, 4, 3, 2, 1 ] ), Transformation( [ 5, 5, 4, 5, 1 ] ), 
-> Transformation( [ 4, 5, 4, 3, 3 ] ) ];;
-gap> S := Semigroup(gens);;
+> Transformation( [ 4, 5, 4, 3, 3 ] ) );;
 gap> iter := IteratorOfRClassReps(S);
 <iterator of R-class reps>
 gap> NextIterator(iter);
@@ -685,9 +686,10 @@ gap> NextIterator(iter);
 Transformation( [ 5, 5, 4, 5, 1 ] )
 gap> iter;
 <iterator of R-class reps>
-gap> file := Concatenation(SemigroupsDir(), "/tst/test.gz");;
+gap> file := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+> "/tst/test-data.gz");;
 gap> S := InverseSemigroup(ReadGenerators(file, 1377));
-<inverse partial perm semigroup on 983 pts with 2 generators>
+<inverse partial perm semigroup of rank 983 with 2 generators>
 gap> NrMovedPoints(S);
 983
 gap> iter := IteratorOfLClassReps(S);
@@ -844,12 +846,14 @@ gap> D := DClass(S, x);
 gap> NrRClasses(D);
 87
 gap> S := SymmetricInverseSemigroup(10);;
+gap> SetFilterObj(S, IsActingSemigroup);
 gap> NrDClasses(S); NrRClasses(S); NrHClasses(S); NrLClasses(S);
 11
 1024
 184756
 1024
 gap> S := POPI(10);;
+gap> SetFilterObj(S, IsActingSemigroup);
 gap> NrDClasses(S);
 11
 gap> NrRClasses(S);

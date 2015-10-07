@@ -114,7 +114,7 @@ gap> PrimitiveIdempotents(S);
 [ <identity partial perm on [ 4 ]>, <identity partial perm on [ 1 ]>, 
   <identity partial perm on [ 2 ]>, <identity partial perm on [ 3 ]> ]
 gap> S := DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid on 4 pts with 3 generators>
+<inverse bipartition monoid of degree 4 with 3 generators>
 gap> PrimitiveIdempotents(S);
 [ <block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]>, 
   <block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]>, 
@@ -146,14 +146,15 @@ gap> PrimitiveIdempotents(S);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> x := PartialPerm([1,2,3]);
 <identity partial perm on [ 1, 2, 3 ]>
 gap> IsJoinIrreducible(S, x);
 false
-gap> T := InverseSemigroup(PartialPerm([1,2,4,3]), PartialPerm([1]),
-> PartialPerm([0,2]));
-<inverse partial perm semigroup on 4 pts with 3 generators>
+gap> T := InverseSemigroup(PartialPerm([1, 2, 4, 3]), 
+>                          PartialPerm([1]),
+>                          PartialPerm([0, 2]));
+<inverse partial perm semigroup of rank 4 with 3 generators>
 gap> y := PartialPerm([1,2,3,4]);
 <identity partial perm on [ 1, 2, 3, 4 ]>
 gap> IsJoinIrreducible(T, y);
@@ -167,7 +168,7 @@ gap> B := InverseSemigroup([
 >    [ 4, -1 ], [ 5, 7, -3, -7 ], [ 6, -5 ] ] ),
 >  Bipartition( [ [ 1, -5 ], [ 2, -1 ], [ 3, -6 ], 
 >    [ 4, 5, 7, -2, -4, -7 ], [ 6, -3 ] ] )]);
-<inverse bipartition semigroup on 7 pts with 4 generators>
+<inverse bipartition semigroup of degree 7 with 4 generators>
 gap> x := Bipartition( [ [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], 
 > [ 4, -1 ] ] );
 <block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], 
@@ -200,7 +201,7 @@ false]]></Example>
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(2);
-<symmetric inverse semigroup on 2 pts>
+<symmetric inverse monoid of degree 2>
 gap> T := [Elements(S)[2]];
 [ <identity partial perm on [ 1 ]> ]
 gap> IsMajorantlyClosed(S,T);
@@ -211,7 +212,7 @@ gap> U := [Elements(S)[2],Elements(S)[6]];
 gap> IsMajorantlyClosed(S,U);
 true
 gap> D := DualSymmetricInverseSemigroup(3);
-<inverse bipartition monoid on 3 pts with 3 generators>
+<inverse bipartition monoid of degree 3 with 3 generators>
 gap> x := Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] );;
 gap> IsMajorantlyClosed(D, [x]);
 true
@@ -238,19 +239,19 @@ false
     elements in the &D;-class are join irreducible.  
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> JoinIrreducibleDClasses(S);
 [ <Green's D-class: <identity partial perm on [ 1 ]>> ]
 gap> T := InverseSemigroup( 
 > PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 4, 3 ] ), 
 > PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 2 ] ) );
-<inverse partial perm semigroup on 4 pts with 3 generators>
+<inverse partial perm semigroup of rank 4 with 3 generators>
 gap> JoinIrreducibleDClasses(T);
 [ <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>, 
   <Green's D-class: <identity partial perm on [ 1 ]>>, 
   <Green's D-class: <identity partial perm on [ 2 ]>> ]
 gap> D := DualSymmetricInverseSemigroup(3);
-<inverse bipartition monoid on 3 pts with 3 generators>
+<inverse bipartition monoid of degree 3 with 3 generators>
 gap> JoinIrreducibleDClasses(D);
 [ <Green's D-class: <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ]>> ]]]></Example>
   </Description>
@@ -276,7 +277,7 @@ gap> JoinIrreducibleDClasses(D);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(4);
-<symmetric inverse semigroup on 4 pts>
+<symmetric inverse monoid of degree 4>
 gap> T := [PartialPerm([1,0,3,0])];
 [ <identity partial perm on [ 1, 3 ]> ]
 gap> U := MajorantClosure(S,T);
@@ -325,19 +326,18 @@ true
   </Description>
 </ManSection>
 <Example><![CDATA[
-gap> s := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
-gap> f := Elements(s)[13];
+gap> S := SymmetricInverseSemigroup(3);
+<symmetric inverse monoid of degree 3>
+gap> x := Elements(S)[13];
 [1,3](2)
-gap> Minorants(s,f);
+gap> Minorants(S, x);
 [ <empty partial perm>, [1,3], <identity partial perm on [ 2 ]> ]
-gap> f := PartialPerm([3,2,4,0]);
+gap> x := PartialPerm([3,2,4,0]);
 [1,3,4](2)
-gap> S := InverseSemigroup(f);
-<inverse partial perm semigroup on 4 pts with 1 generator>
-gap> Minorants(S,f);
-[ <identity partial perm on [ 2 ]>, [1,3](2), [3,4](2) ]
-]]></Example>
+gap> S := InverseSemigroup(x);
+<inverse partial perm semigroup of rank 4 with 1 generator>
+gap> Minorants(S, x);
+[ <identity partial perm on [ 2 ]>, [1,3](2), [3,4](2) ]]]></Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="RightCosetsOfInverseSemigroup">
@@ -360,12 +360,12 @@ gap> Minorants(S,f);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
-gap> T := InverseSemigroup(MajorantClosure(S,[PartialPerm([1])]));
-<inverse partial perm monoid on 3 pts with 6 generators>
+<symmetric inverse monoid of degree 3>
+gap> T := InverseSemigroup(MajorantClosure(S, [PartialPerm([1])]));
+<inverse partial perm monoid of rank 3 with 6 generators>
 gap> IsMajorantlyClosed(S,T);
 true
-gap> RC := RightCosetsOfInverseSemigroup(S,T);
+gap> RC := RightCosetsOfInverseSemigroup(S, T);
 [ [ <identity partial perm on [ 1 ]>, 
       <identity partial perm on [ 1, 2 ]>, [2,3](1), [3,2](1), 
       <identity partial perm on [ 1, 3 ]>, 
@@ -395,7 +395,7 @@ gap> RC := RightCosetsOfInverseSemigroup(S,T);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> H := GroupHClass(GreensDClasses(S)[1]);
 <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> Elements(H);
@@ -406,7 +406,7 @@ gap> SameMinorantsSubgroup(H);
 gap> T := InverseSemigroup( 
 > PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 4, 3 ] ), 
 > PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 2 ] ) );
-<inverse partial perm semigroup on 4 pts with 3 generators>
+<inverse partial perm semigroup of rank 4 with 3 generators>
 gap> Elements(T);
 [ <empty partial perm>, <identity partial perm on [ 1 ]>, 
   <identity partial perm on [ 2 ]>, 
@@ -416,8 +416,7 @@ gap> x := GroupHClass(GreensDClasses(T)[1]);
 gap> Elements(x);
 [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ]
 gap> SameMinorantsSubgroup(x);
-[ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ]
-]]></Example>
+[ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ]]]></Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="SmallerDegreePartialPermRepresentation">
@@ -439,27 +438,27 @@ gap> SameMinorantsSubgroup(x);
 </ManSection>
 <Example><![CDATA[
 gap> S := InverseSemigroup(PartialPerm([2,1,4,3,6,5,8,7]));
-<commutative inverse partial perm semigroup on 8 pts with 1 generator>
+<commutative inverse partial perm semigroup of rank 8 with 1 
+ generator>
 gap> Elements(S);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, 
   (1,2)(3,4)(5,6)(7,8) ]
 gap> T := SmallerDegreePartialPermRepresentation(S);
-MappingByFunction( <partial perm group of size 2, 
- on 8 pts with 1 generator>
- , <commutative inverse partial perm semigroup on 2 pts
- with 1 generator>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <partial perm group of size 2, rank 8 with
+  1 generator>, <commutative inverse partial perm semigroup of rank 2 
+with 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> R := Range(T);
-<commutative inverse partial perm semigroup on 2 pts with 1 generator>
+<commutative inverse partial perm semigroup of rank 2 with 1 
+ generator>
 gap> Elements(R);
 [ <identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S := DualSymmetricInverseMonoid(5);;
 gap> T := Range(IsomorphismPartialPermSemigroup(S));
-<inverse partial perm monoid on 6721 pts with 3 generators>
+<inverse partial perm monoid of rank 6721 with 3 generators>
 gap> SmallerDegreePartialPermRepresentation(T);
-MappingByFunction( <inverse partial perm monoid on 6721 pts
- with 3 generators>, <inverse partial perm semigroup on 30 pts
- with 3 generators>, function( x ) ... end, function( x ) ... end )
-]]></Example>
+MappingByFunction( <inverse partial perm monoid of rank 6721 with 3 
+ generators>, <inverse partial perm semigroup of rank 30 with 3 
+ generators>, function( x ) ... end, function( x ) ... end )]]></Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="VagnerPrestonRepresentation">
@@ -489,33 +488,33 @@ MappingByFunction( <inverse partial perm monoid on 6721 pts
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(2);
-<symmetric inverse semigroup on 2 pts>
+<symmetric inverse monoid of degree 2>
 gap> Size(S);
 7
 gap> iso := VagnerPrestonRepresentation(S);
-MappingByFunction( <symmetric inverse semigroup on 2 pts>, <inverse pa\
-rtial perm monoid on 7 pts
- with 2 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <symmetric inverse monoid of degree 2>, 
+<inverse partial perm monoid of rank 7 with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> RespectsMultiplication(iso);
 true
 gap> inv := InverseGeneralMapping(iso);;
-gap> ForAll(S, x-> (x^iso)^inv=x);
+gap> ForAll(S, x-> (x ^ iso) ^ inv = x);
 true
-gap> V := InverseSemigroup([
+gap> V := InverseSemigroup(
 > Bipartition( [ [ 1, -4 ], [ 2, -1 ], [ 3, -5 ], 
-> [ 4 ], [ 5 ], [ -2 ], [ -3 ] ] ),
+>                [ 4 ], [ 5 ], [ -2 ], [ -3 ] ] ),
 > Bipartition( [ [ 1, -5 ], [ 2, -1 ], [ 3, -3 ], 
-> [ 4 ], [ 5 ], [ -2 ], [ -4 ] ] ),
+>                [ 4 ], [ 5 ], [ -2 ], [ -4 ] ] ),
 > Bipartition( [ [ 1, -2 ], [ 2, -4 ], [ 3, -5 ], 
-> [ 4, -1 ], [ 5, -3 ] ] ) ]);
-<inverse bipartition semigroup on 5 pts with 3 generators>
+>                [ 4, -1 ], [ 5, -3 ] ] ));
+<inverse bipartition semigroup of degree 5 with 3 generators>
 gap> IsInverseSemigroup(V);
 true
 gap> VagnerPrestonRepresentation(V);
 MappingByFunction( <inverse bipartition semigroup of size 394, 
- on 5 pts with 3 generators>, <inverse partial perm semigroup 
-on 394 pts
- with 5 generators>, function( x ) ... end, function( x ) ... end )]]></Example>
+ degree 5 with 3 generators>, <inverse partial perm semigroup of 
+ rank 394 with 5 generators>
+ , function( x ) ... end, function( x ) ... end )]]></Example>
 <#/GAPDoc>
 
 #EOF

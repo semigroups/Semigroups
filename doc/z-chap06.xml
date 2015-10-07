@@ -30,14 +30,6 @@
     semigroup where computing all the elements of the semigroup is not feasible.<P/>
   </Section>
 
-  <Section><Heading>Random semigroups</Heading> 
-    <#Include Label="RandomInverseMonoid"> 
-    <#Include Label="RandomTransformationMonoid"> 
-    <#Include Label="RandomPartialPermMonoid"> 
-    <#Include Label="RandomBinaryRelationMonoid"> 
-    <#Include Label="RandomBipartitionMonoid"> 
-  </Section> 
-
   <Section><Heading>New semigroups from old</Heading> 
     <#Include Label="ClosureInverseSemigroup">
     <#Include Label="ClosureSemigroup">
@@ -147,10 +139,10 @@
     </Item> 
 </List>
 
-    <Example>
-gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), 
-> rec(hashlen:=100003, small:=false));
-&lt;commutative transformation semigroup on 4 pts with 1 generator></Example>
+    <Example><![CDATA[
+gap> S := Semigroup(Transformation( [ 1, 2, 3, 3 ] ), 
+>                   rec(hashlen := 100003, small := false));
+<commutative transformation semigroup of degree 4 with 1 generator>]]></Example>
 
       The default values of the options described above are stored in a global
       variable named <Ref Var="SEMIGROUPS_DefaultOptionsRec"/>. If you want to

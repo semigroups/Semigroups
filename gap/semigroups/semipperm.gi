@@ -17,7 +17,7 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a partial perm semigroup",
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
-  return Concatenation("rank \>",
+  return Concatenation("\>rank \>",
                        ViewString(RankOfPartialPermSemigroup(S)),
                        "\<\< ");
 end);

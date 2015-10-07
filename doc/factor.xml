@@ -45,7 +45,7 @@
     <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
 <Example><![CDATA[
 gap> gens := [ Transformation( [ 2, 2, 9, 7, 4, 9, 5, 5, 4, 8 ] ), 
-> Transformation( [ 4, 10, 5, 6, 4, 1, 2, 7, 1, 2 ] ) ];;
+>              Transformation( [ 4, 10, 5, 6, 4, 1, 2, 7, 1, 2 ] ) ];;
 gap> S := Semigroup(gens);;
 gap> x := Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] );;
 gap> word := Factorization(S, x);
@@ -53,10 +53,10 @@ gap> word := Factorization(S, x);
 gap> EvaluateWord(gens, word);
 Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )
 gap> S := SymmetricInverseMonoid(8);
-<symmetric inverse semigroup on 8 pts>
+<symmetric inverse monoid of degree 8>
 gap> x := PartialPerm( [ 1, 2, 3, 4, 5, 8 ], [ 7, 1, 4, 3, 2, 6 ] );
 [5,2,1,7][8,6](3,4)
-gap> word := Factorization(S, f);
+gap> word := Factorization(S, x);
 [ -2, -2, -2, -2, -2, -2, -2, 2, 2, 4, 4, 2, 3, 2, 3, -2, -2, -2, 2, 
   3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 3, 2, 3, 2, 3, -2, -2, 
   -2, 3, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 3, 
@@ -105,7 +105,7 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), word);
 gap> S := Semigroup(Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]), 
 >                   Transformation([4, 10, 5, 6, 4, 1, 2, 7, 1, 2]));
 <transformation semigroup of degree 10 with 2 generators>
-gap> Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] );
+gap> x := Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] );
 Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] )
 gap> Factorization(S, x);
 [ 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1 ]

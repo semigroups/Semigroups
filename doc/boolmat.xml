@@ -203,7 +203,7 @@ gap> mat := BooleanMat([[1, 0, 0, 1],
 >                       [0, 1, 1, 1]]);;
 gap> blist := BlistList([1 .. 4], [1,2]);
 [ true, true, false, false ]
-gap> OnBlists(blist, mat);
+gap> OnBlist(blist, mat);
 [ true, false, false, true ]]]></Example>
     </Description>
   </ManSection>
@@ -253,7 +253,7 @@ gap> Successors(mat);
 gap> mat := BooleanMat([[0, 1, 1, 0], 
 >                       [1, 0, 1, 1], 
 >                       [1, 1, 0, 1], 
->                       [0, 1, 0, 1]]);;
+>                       [0, 1, 1, 1]]);;
 gap> IsTrimBooleanMat(mat);
 true
 gap> mat := BooleanMat([[0, 1, 1, 0], 
@@ -279,16 +279,12 @@ gap> mat := BooleanMat([[0, 1, 1, 0],
 >                       [1, 0, 1, 1], 
 >                       [1, 1, 0, 1], 
 >                       [0, 1, 0, 1]]);;
-gap> IsTrimBooleanMat(mat);
-true
+gap> 
 gap> mat := BooleanMat([[0, 1, 1, 0], 
 >                       [0, 0, 1, 0], 
 >                       [1, 0, 0, 1], 
 >                       [1, 0, 1, 0]]);;
-gap> IsRowTrimBooleanMat(mat);
-false
-gap> IsColTrimBooleanMat(mat);
-false]]></Example>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
