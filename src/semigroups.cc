@@ -622,10 +622,6 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
  * Union-Find content (should go in its own file eventually)
 *******************************************************************************/
 
-Obj RETURN_FIVE (Obj self, Obj x) {
-  return INTOBJ_INT(5);
-}
-
 Obj UF_NEW (Obj self, Obj size) {
   return NewSemigroupsBag(new UFData(INT_INTOBJ(size)), UF_DATA);
 }
@@ -766,8 +762,6 @@ static StructGVarFunc GVarFuncs [] = {
                           "ufdata"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_BLOCKS, 1,
                           "ufdata"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", RETURN_FIVE, 1,
-                          "x"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 

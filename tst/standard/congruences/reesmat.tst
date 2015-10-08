@@ -152,4 +152,4 @@ gap> Unbind(class3);
 gap> Unbind(mat);
 
 #E#
-gap> STOP_TEST( "Semigroups package: congruences/reesmat.tst");
+gap> STOP_TEST("Semigroups package: congruences/reesmat.tst");

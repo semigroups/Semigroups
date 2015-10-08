@@ -563,6 +563,9 @@ function(S)
   return fail;
 end);
 
+InstallMethod(MultiplicativeZero, "for a free semigroup",
+[IsFreeSemigroup], ReturnFail);
+
 InstallMethod(LengthOfLongestDClassChain, "for a finite semigroup",
 [IsSemigroup],
 function(S)
@@ -684,7 +687,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return Semigroup(Idempotents(S));
+  return Semigroup(Idempotents(S), rec(small := true));
 end);
 
 InstallMethod(IdempotentGeneratedSubsemigroup,
@@ -694,7 +697,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return InverseSemigroup(Idempotents(S));
+  return InverseSemigroup(Idempotents(S), rec(small := true));
 end);
 
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",

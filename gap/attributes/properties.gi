@@ -42,7 +42,7 @@ end);
 # same method for ideals, works for finite and infinite
 
 InstallMethod(IsBand, "for an inverse semigroup", [IsInverseSemigroup],
-IsSemilatticeAsSemigroup);
+IsSemilattice);
 
 # same method for ideals
 
@@ -306,6 +306,9 @@ end);
 InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse op semigroup",
 [IsSemigroupWithInverseOp],
 function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
   return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
 end);
 
@@ -335,7 +338,7 @@ function(S)
   if G = fail then
     return false;
   elif IsTrivial(G) then
-    return IsSemilatticeAsSemigroup(S);
+    return IsSemilattice(S);
   fi;
 
   iso := InverseGeneralMapping(IsomorphismPermGroup(G));
@@ -446,6 +449,8 @@ InstallMethod(IsLTrivial, "for a semigroup",
 function(S)
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
+    elif not IsFinite(S) then
+    TryNextMethod();
   fi;
 
   return NrLClasses(S) = Size(S);
@@ -538,7 +543,7 @@ function(S)
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
-  return NrRClasses(S) = 1 and NrLClasses(S) = 1;
+  return not IsGroup(S) and NrRClasses(S) = 1 and NrLClasses(S) = 1;
 end);
 
 # same method for non-regular ideals
@@ -551,6 +556,10 @@ function(S)
   if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
       and IsGroupAsSemigroup(Parent(S)) then
     return true;
+  fi;
+
+  if IsGroup(S) then
+    return false;
   fi;
 
   gens := GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
@@ -613,7 +622,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
-[IsInverseSemigroup], IsSemilatticeAsSemigroup);
+[IsInverseSemigroup], IsSemilattice);
 
 # same method for ideals
 
@@ -695,7 +704,10 @@ end);
 # same method for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+function(S)
+  return IsGroup(S) or IsGroupAsSemigroup(S);
+end);
 
 # different method for ideals without generators
 
@@ -754,6 +766,10 @@ InstallMethod(IsMonogenicSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   local I, gens, y, i;
+
+  if HasGeneratorsOfSemigroup(S) and Length(GeneratorsOfSemigroup(S)) = 1 then
+    return true;
+  fi;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -820,6 +836,10 @@ function(S)
     fi;
   fi;
 
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
   I := MinimalIdeal(S);
 
   if not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -849,10 +869,6 @@ end);
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
   return not IsMonoid(S) and MultiplicativeNeutralElement(S) <> fail;
 end);
 
@@ -865,6 +881,8 @@ function(S)
   local e, m, i, j;
 
   if not IsFinite(S) then
+    # WW we can not test the following line, since the error message we
+    # eventually get depends on whether or not Smallsemi is loaded
     TryNextMethod();
   elif not IsRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -1163,7 +1181,10 @@ end);
 # same method for ideals
 
 InstallMethod(IsRightSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+function(S)
+  return IsGroup(S) or IsGroupAsSemigroup(S);
+end);
 
 # different method for ideals
 
@@ -1209,14 +1230,14 @@ IsIdempotentGenerated);
 
 # same method for ideals
 
-InstallMethod(IsSemilatticeAsSemigroup, "for a semigroup", [IsSemigroup],
+InstallMethod(IsSemilattice, "for a semigroup", [IsSemigroup],
 function(S)
   return IsCommutativeSemigroup(S) and IsInverseSemigroup(S) and IsBand(S);
 end);
 
 # not applicable to ideals
 
-InstallMethod(IsSemilatticeAsSemigroup,
+InstallMethod(IsSemilattice,
 "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup],
 function(S)
@@ -1228,11 +1249,11 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsSemilatticeAsSemigroup, "for an inverse semigroup",
+InstallMethod(IsSemilattice, "for an inverse semigroup",
 [IsInverseSemigroup],
 function(S)
-  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S))
-      and IsSemilatticeAsSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
     return true;
   elif not IsFinite(S) then
     TryNextMethod();
@@ -1309,7 +1330,7 @@ function(S)
     return false;
   fi;
   gens := GeneratorsOfSemigroup(S);
-  return ForAll(gens, x -> gens[1] = x) and IsIdempotent(gens[1]);
+  return IsIdempotent(gens[1]) and ForAll(gens, x -> gens[1] = x);
 end);
 
 # same method for ideals
@@ -1440,7 +1461,7 @@ end);
 
 InstallMethod(IsZeroSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
-  local z, gens, m, i, j;
+  local z, gens, i, j;
 
   if HasParent(S) and HasIsZeroSemigroup(Parent(S))
       and IsZeroSemigroup(Parent(S)) then
@@ -1457,9 +1478,8 @@ function(S)
   fi;
 
   gens := GeneratorsOfSemigroup(S);
-  m := Length(gens);
-  for i in [1 .. m] do
-    for j in [1 .. m] do
+  for i in [1 .. Length(gens)] do
+    for j in [1 .. Length(gens)] do
       if not gens[i] * gens[j] = z then
         Info(InfoSemigroups, 2, "the product of generators ", i, " and ", j,
              " is not the multiplicative zero \n", z);
@@ -1533,4 +1553,16 @@ function(S)
     return false;
   fi;
   return NrIdempotents(S) = 1;
+end);
+
+# WW the following lets us get higher code coverage
+
+InstallMethod(IsFinite, "for a finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  if IsEmpty(RelationsOfFpSemigroup(S)) or
+      ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
+    return false;
+  fi;
+  TryNextMethod();
 end);

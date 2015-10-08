@@ -244,6 +244,7 @@ Obj SEMIGROUP_ELEMENTS (Obj self, Obj data, Obj limit) {
       SET_LEN_PLIST(out, elements->size());
       for (size_t i = 0; i < elements->size(); i++) {
         SET_ELM_PLIST(out, i + 1, converter->unconvert(elements->at(i)));
+        CHANGED_BAG(out);
       }
       AssPRec(data, RNam_elts, out);
     } else {
@@ -445,7 +446,8 @@ Obj SEMIGROUP_POSITION (Obj self, Obj data, Obj x) {
     size_t     deg       = data_degree(data);
     Semigroup* semigroup = data_semigroup(data);
     Converter* converter = data_converter(data);
-    size_t pos = semigroup->position(converter->convert(x, deg), data_report(data));
+    size_t pos = semigroup->position(converter->convert(x, deg), 
+                                     data_report(data));
     return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
   }
 

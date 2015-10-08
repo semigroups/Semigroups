@@ -49,28 +49,24 @@ gap> s := Semigroup( [ Transformation( [ 2, 4, 3, 5, 5 ] ),
 >                 Transformation( [ 3, 1, 4, 2, 4 ] ), 
 >                 Transformation( [ 3, 4, 2, 3, 4 ] ),
 >                 Transformation( [ 4, 1, 5, 1, 2 ] ) ] );
-<transformation semigroup on 5 pts with 5 generators>
+<transformation semigroup of degree 5 with 5 generators>
 gap> i := SemigroupIdeal(s, [ Transformation( [ 3, 1, 1, 4, 4 ] ),
->                             Transformation( [ 1, 4, 1, 4, 1 ] ) ] );
-<regular transformation semigroup ideal on 5 pts with 2 generators>
-gap> cong := ReesCongruenceOfSemigroupIdeal(i);
-<Rees congruence of <regular transformation semigroup ideal 
- on 5 pts with 2 generators> over <transformation semigroup 
- on 5 pts with 5 generators>>
+>                             Transformation( [ 1, 4, 1, 4, 1 ] ) ] );;
+gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> NrCongruenceClasses(cong);
 19
-gap> cc := CongruenceClasses(cong);;
+gap> cc := Set(CongruenceClasses(cong));;
 gap> Size(cc);
 19
 gap> List(cc, Size);
 [ 1095, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> cc[1] * cc[1];
 {Transformation( [ 3, 1, 1, 4, 4 ] )}
-gap> cc[2] * cc[1];
+gap> cc[7] * cc[1];
 {Transformation( [ 3, 1, 1, 4, 4 ] )}
-gap> cc[4] * cc[6];
+gap> cc[2] * cc[5];
 {Transformation( [ 2, 4, 1, 3, 1 ] )}
-gap> cc[3] * cc[2] = cc[8];
+gap> cc[9] * cc[7] = cc[11];
 true
 
 #T# ReesCongTest3
@@ -82,8 +78,8 @@ gap> i := SemigroupIdeal( s, Transformation( [ 5, 2, 1, 5, 2 ] ),
 >                            Transformation( [ 5, 2, 1, 5, 2 ] ) );;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <transformation semigroup of size 61, 
- on 5 pts with 3 generators> with 1 generating pairs>
+<semigroup congruence over <transformation semigroup of size 61, degree 5 
+ with 3 generators> with 1 generating pairs>
 gap> NrCongruenceClasses(ccong);
 12
 gap> IsReesCongruence(ccong);

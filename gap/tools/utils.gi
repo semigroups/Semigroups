@@ -280,8 +280,8 @@ function(arg)
   subdirs := [];
 
   for str in contents do
-    # TODO remove: <<< and str = "attributes" >>> from below
-    if str <> ".." and str <> "." and str = "attributes" then
+    # TODO remove: <<< and str in ["attributes", "congruences"] >>> from below
+    if str <> ".." and str <> "." and str in ["attributes", "congruences"] then
       str := Concatenation(tst_dir, "/", str);
       if IsDirectoryPath(str) then
         Add(subdirs, str);
@@ -394,7 +394,8 @@ function(arg)
   fi;
   Print("\n");
   Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods \033[44mDISABLED\033[0m] . . ."), "\n");
+                        " [non-generic methods \033[44mDISABLED\033[0m] . . ."),
+        "\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
@@ -418,11 +419,89 @@ function()
                          "main.xml", SEMIGROUPS_DocXMLFiles, "Single");
 end);
 
+BindGlobal("SEMIGROUPS_RunExamples",
+function(exlists, excluded)
+  local oldscr, l, sp, bad, s, start_time, test, end_time, elapsed, pex, new,
+   inp, j, ex, i, attedStrin;
+
+  #opts := rec(
+  #    showDiffs := true,
+  #    changeSources := false,
+  #    width := 72,
+  #    EQ := EQ,
+  #    checkWidth := false );
+
+  oldscr := SizeScreen(  );
+  SizeScreen( [ 72, oldscr[2] ] );
+  for j  in [ 1 .. Length( exlists ) ]  do
+    if j in excluded then
+      Print( "\033[1;44m# Skipping list ", j, " . . .\033[0m\n" );
+    else
+      l := exlists[j];
+      Print( "\033[1;100m# Running list ", j, " . . .\033[0m" );
+      START_TEST( "" );
+      for ex  in l  do
+        sp := SplitString( ex[1], "\n", "" );
+        bad := Filtered( [ 1 .. Length( sp ) ], function ( i )
+          return Length( sp[i] ) > 72;
+        end );
+        s := InputTextString( ex[1] );
+
+        start_time := IO_gettimeofday();
+        test := Test( s, rec( ignoreComments := false,
+                              width := 72,
+                              EQ := EQ,
+                              reportDiff := Ignore ) );
+        end_time := IO_gettimeofday();
+        CloseStream( s );
+        elapsed := (end_time.tv_sec - start_time.tv_sec) * 1000
+                   + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+        pex := TEST.lastTestData;
+
+        Print("\033[1;100m  elapsed time: ", String(elapsed), "ms\033[0m\n");
+
+        if Length( bad ) > 0  then
+          Print( "\033[1;31m# WARNING: Overlong lines ", bad, " in ",
+          ex[2]{[ 1 .. 3 ]}, "\033[0m\n" );
+        fi;
+
+        if test = false  then
+          for i  in [ 1 .. Length( pex[1] ) ]  do
+            if EQ( pex[2][i], pex[4][i] ) <> true then
+              Print( "\033[1;31m########> Diff in ", ex[2]{[ 1 .. 3 ]},
+              "\n# Input is:\n" );
+              PrintFormattedString( pex[1][i] );
+              Print( "# Expected output:\n" );
+              PrintFormattedString( pex[2][i] );
+              Print( "# But found:\n" );
+              PrintFormattedString( pex[4][i] );
+              Print( "########\033[0m\n" );
+            fi;
+          od;
+        fi;
+
+        if test = false  then#FIXME is this needed?
+          new := "";
+          for i  in [ 1 .. Length( pex[1] ) ]  do
+            inp := Concatenation( "gap> ",
+               JoinStringsWithSeparator(
+               SplitString( pex[1][i], "\n", "" ), "\n> " ), "\n" );
+               Append( new, inp );
+               Append( new, pex[4][i] );
+          od;
+          ex[2][4] := new;
+        fi;
+      od;
+    fi;
+  od;
+  SizeScreen( oldscr );
+  return;
+end);
 #
 
 InstallGlobalFunction(SEMIGROUPS_TestManualExamples,
 function(arg)
-  local ex, omit, width, generic, str;
+  local ex, omit, width, generic, exclude, str;
 
   ex := SEMIGROUPS_ManualExamples();
   if Length(arg) = 1 then
@@ -460,8 +539,15 @@ function(arg)
         "\033[1;44mENABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
-  RunExamples(ex);
+  SEMIGROUPS_RunExamples(ex);
   SEMIGROUPS_StopTest("");
+
+  # TODO add extreme/standard tests for those examples below where it makes
+  # sense.
+  exclude := [48, 58, 61, 66, 87, 88, 89, 91, 93, 94, 96, 97, 100, 101, 102,
+              103, 108, 109, 110, 113, 114, 115, 119, 126, 127, 133, 137, 139,
+              141, 194, 195, 196];
+  # 103 takes ages, 114 should be in an extreme test
 
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   GASMAN("collect");
@@ -471,9 +557,13 @@ function(arg)
         "\033[1;44mDISABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
-  RunExamples(ex);
+
+  SEMIGROUPS_RunExamples(ex, exclude);
   SEMIGROUPS_StopTest("");
+  #TODO make SEMIGROUPS_StopTest accept no args, or 1 arg
 
   SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return;
 end);
+
+

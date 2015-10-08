@@ -11,6 +11,15 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
+InstallMethod(Idempotents, "for a partial perm semigroup and pos int",
+[IsPartialPermSemigroup, IsInt],
+function(S, rank)
+  local deg;
+  deg := DegreeOfPartialPermSemigroup(S);
+  return Filtered(Idempotents(S),
+                              x -> RankOfPartialPerm(x) = rank);
+end);
+
 InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> "\>partial perm\< ");
 
@@ -288,21 +297,25 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
-  local H, G, deg, U;
+  local H, map, inv, G, deg, U;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
   H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
-  G := Range(IsomorphismPermGroup(H));
+  map := IsomorphismPermGroup(H);
+  inv := InverseGeneralMapping(map);
+  G := Range(map);
+
   deg := Maximum(DegreeOfPartialPermSemigroup(S),
                  CodegreeOfPartialPermSemigroup(S));
 
-  U := Monoid(List(GeneratorsOfGroup(G), x -> AsPartialPerm(x, deg)));
+  U := Monoid(List(GeneratorsOfGroup(G), x -> x ^ inv));
 
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
-                                               x -> AsPartialPerm(x, deg)));
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G,
+                                               x -> x ^ map,
+                                               x -> x ^ inv));
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
@@ -769,7 +782,7 @@ function(S)
   deg := Maximum(domain);
   codeg := Maximum(range);
 
-  if min_rank = rank and domain = range then
+  if not IsGroup(S) and min_rank = rank and domain = range then
     SetIsGroupAsSemigroup(S, true);
     return gens[1];
   fi;

@@ -821,7 +821,7 @@ else
       for g in groupiso do
         for tup in tuples do #FIXME it should be possible to cut this down
           map := SEMIGROUPS_RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
-          if not map = false then
+          if map <> fail then
             return RZMSIsoByTriple(R1, R2, [l, g, map]);
           fi;
         od;

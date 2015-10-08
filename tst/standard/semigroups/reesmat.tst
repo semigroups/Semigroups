@@ -533,7 +533,7 @@ gap> List(U, IsRegularSemigroup);
 gap> IsRegularSemigroup(V);
 false
 gap> UU := IdempotentGeneratedSubsemigroup(R);;
-gap> IsSemilatticeAsSemigroup(UU);
+gap> IsSemilattice(UU);
 false
 gap> IsSimpleSemigroup(V);
 false

@@ -81,7 +81,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -157,7 +157,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -233,7 +233,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -315,7 +315,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -390,7 +390,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -466,7 +466,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -542,7 +542,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -618,7 +618,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -692,7 +692,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -768,7 +768,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -842,7 +842,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -917,7 +917,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -992,7 +992,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1066,7 +1066,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1140,7 +1140,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -1214,7 +1214,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1288,7 +1288,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1362,7 +1362,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -1436,7 +1436,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1510,7 +1510,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -1584,7 +1584,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1658,7 +1658,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1732,7 +1732,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1807,7 +1807,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1890,7 +1890,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 true
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 true
 gap> IsSimpleSemigroup(s);
 false
@@ -1980,7 +1980,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -2056,7 +2056,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 true
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -2135,7 +2135,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -2211,7 +2211,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 true
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -2291,7 +2291,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -2367,7 +2367,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false

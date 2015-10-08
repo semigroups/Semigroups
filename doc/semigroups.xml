@@ -151,40 +151,9 @@ gap> S := ClosureInverseSemigroup(S, x);
 <inverse partial perm semigroup of rank 19 with 4 generators>
 gap> Size(S);
 9744
-gap> U := SymmetricInverseSemigroup(10);;
-gap> U := InverseSemigroup(U, rec(generic := false));;
-gap> T := Idempotents(U);;
-gap> ClosureInverseSemigroup(S, T) = 
-> InverseSemigroup(
-> PartialPerm( [ 1, 2, 3, 5, 6, 7, 8 ], 
->              [ 5, 9, 10, 6, 3, 8, 4 ] ),
-> PartialPerm( [ 1, 2, 4, 7, 8, 9 ], 
->              [ 10, 7, 8, 5, 9, 1 ] ),
-> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
->              [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ),
-> PartialPerm( [ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],
->              [ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ] ),
->  PartialPerm( [ 1, 2, 4, 5, 6, 7, 8, 9, 10 ], 
->               [ 1, 2, 4, 5, 6, 7, 8, 9, 10 ] ),
->  PartialPerm( [ 1, 2, 3, 4, 5, 6, 8, 9, 10 ], 
->               [ 1, 2, 3, 4, 5, 6, 8, 9, 10 ] ),
->  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
->               [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ),
->  PartialPerm( [ 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
->               [ 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ),
->  PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 9, 10 ], 
->               [ 1, 2, 3, 4, 6, 7, 8, 9, 10 ] ),
->  PartialPerm( [ 1, 2, 3, 4, 5, 7, 8, 9, 10 ], 
->               [ 1, 2, 3, 4, 5, 7, 8, 9, 10 ] ),
->  PartialPerm( [ 1, 2, 3, 5, 6, 7, 8, 9, 10 ], 
->               [ 1, 2, 3, 5, 6, 7, 8, 9, 10 ] ),
->  PartialPerm( [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ], 
->               [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ] ),
->  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 9, 10 ], 
->               [ 1, 2, 3, 4, 5, 6, 7, 9, 10 ] ),
->  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ], 
->               [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ] ) );
-true]]></Example>
+gap> T := Idempotents(SymmetricInverseSemigroup(10));;
+gap> S := ClosureInverseSemigroup(S, T);
+<inverse partial perm semigroup of rank 19 with 14 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
