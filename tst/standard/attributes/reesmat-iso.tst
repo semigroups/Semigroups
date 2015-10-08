@@ -226,6 +226,14 @@ gap> S := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ (), 0 ], [(), ()] ] );;
 gap> IsomorphismSemigroups(R, S);
 fail
 
+#T# IsomorphismSemigroups: fail (no map found)
+gap> mat1 := [[(), ()], [(), ()]];;
+gap> mat2 := [[(), ()], [(), (1,2)]];;
+gap> R1 := ReesZeroMatrixSemigroup(Group((1,2)), mat1);;
+gap> R2 := ReesZeroMatrixSemigroup(Group((1,2)), mat2);;
+gap> IsomorphismSemigroups(R1, R2);
+fail
+
 #T# IsomorphismSemigroups: non-trivial isomorphism 1/2
 gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ (), 0 ], [ 0, ()] ] );;
 gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ 0, () ], [(1,2), 0] ] );;
