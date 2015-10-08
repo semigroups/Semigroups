@@ -427,7 +427,7 @@ gap> Size(L);
       <Ref Func="NrDClasses"/>.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
-> Transformation( [ 4, 3, 1, 2 ] ));;
+>                   Transformation( [ 4, 3, 1, 2 ] ));;
 gap> DClassReps(S);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
   Transformation( [ 4, 4, 4, 4 ] ) ]
@@ -558,7 +558,7 @@ gap> S := Semigroup(Transformation( [ 2, 3, 4, 1 ] ),
 >                   Transformation( [ 3, 3, 1, 1 ] ));;
 gap> Idempotents(S, 1);
 [  ]
-gap> Idempotents(S, 2);
+gap> AsSet(Idempotents(S, 2));
 [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
   Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> AsSet(Idempotents(S));

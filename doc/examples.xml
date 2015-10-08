@@ -468,7 +468,10 @@ gap> S := MonogenicSemigroup(5, 3);
 gap> IsMonogenicSemigroup(S);
 true
 gap> I := MinimalIdeal(S);
-<transformation group of degree 8 with 1 generator>
+<commutative simple transformation semigroup ideal of degree 8 with
+  1 generator>
+gap> IsGroupAsSemigroup(I);
+true
 gap> StructureDescription(I);
 "C3"]]></Example>
     </Description>

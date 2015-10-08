@@ -532,20 +532,21 @@ function(arg)
   width := SizeScreen()[1] - 3;
   generic := SEMIGROUPS_DefaultOptionsRec.generic;
 
-  #SEMIGROUPS_DefaultOptionsRec.generic := false;
-  #Print("\n");
-  #Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  #Print("Testing manual examples [non-generic methods ",
-  #      "\033[1;44mENABLED\033[0m] . . .\n");
-  #Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  #SEMIGROUPS_StartTest();
-  #RunExamples(ex);
-  #SEMIGROUPS_StopTest("");
+  SEMIGROUPS_DefaultOptionsRec.generic := false;
+  Print("\n");
+  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
+  Print("Testing manual examples [non-generic methods ",
+        "\033[1;44mENABLED\033[0m] . . .\n");
+  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
+  SEMIGROUPS_StartTest();
+  SEMIGROUPS_RunExamples(ex);
+  SEMIGROUPS_StopTest("");
 
   # TODO add extreme/standard tests for those examples below where it makes
   # sense.
-  exclude := [48, 58, 61, 66, 87, 88, 91, 93, 94, 96, 97, 100, 101, 102, 103,
-              108, 109, 110, 113, 114, 115, 119, 126, 127, 133, 137, 139, 141];
+  exclude := [48, 58, 61, 66, 87, 88, 89, 91, 93, 94, 96, 97, 100, 101, 102,
+              103, 108, 109, 110, 113, 114, 115, 119, 126, 127, 133, 137, 139,
+              141, 194, 195, 196];
   # 103 takes ages, 114 should be in an extreme test
 
   SEMIGROUPS_DefaultOptionsRec.generic := true;

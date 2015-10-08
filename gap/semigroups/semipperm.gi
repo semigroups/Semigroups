@@ -11,6 +11,15 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
+InstallMethod(Idempotents, "for a partial perm semigroup and pos int",
+[IsPartialPermSemigroup, IsInt],
+function(S, rank)
+  local deg;
+  deg := DegreeOfPartialPermSemigroup(S);
+  return Filtered(Idempotents(S),
+                              x -> RankOfPartialPerm(x) = rank);
+end);
+
 InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> "\>partial perm\< ");
 

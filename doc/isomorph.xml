@@ -29,7 +29,7 @@
       loaded for this function to work. 
 
       <Example><![CDATA[
-gap> S:=Semigroup(
+gap> S := Semigroup(
 > Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
 > Bipartition( [ [ 1, 2, 3, -1 ], [ -2 ], [ -3 ] ] ), 
 > Bipartition( [ [ 1, 2, 3 ], [ -1 ], [ -2, -3 ] ] ), 
@@ -89,22 +89,32 @@ true]]></Example>
       <A>R</A> is a Rees 0-matrix semigroup.  
 
       <Example><![CDATA[
-gap> S := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
-<Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
-gap> T := PrincipalFactor(DClasses(PartitionMonoid(5))[2]);
-<Rees 0-matrix semigroup 15x15 over Group([ (2,3,4,5), (4,5) ])>
+gap> D := DClass(FullTransformationMonoid(5), 
+>                Transformation( [ 1, 2, 3, 4, 1 ] ));;
+gap> S := PrincipalFactor(D);;
+gap> StructureDescription(UnderlyingSemigroup(S));
+"S4"
+gap> S;
+<Rees 0-matrix semigroup 10x5 over S4>
+gap> D := DClass(PartitionMonoid(5), 
+>                Bipartition( [ [ 1 ], [ 2, -2 ], [ 3, -3 ], 
+>                               [ 4, -4 ], [ 5, -5 ], [ -1 ] ] ));;
+gap> T := PrincipalFactor(D);;
+gap> StructureDescription(UnderlyingSemigroup(T));
+"S4"
+gap> T;
+<Rees 0-matrix semigroup 15x15 over S4>
 gap> IsomorphismSemigroups(S, T);
 fail
 gap> I := SemigroupIdeal(FullTransformationMonoid(5), 
->                        Transformation([1, 1, 2, 3, 4]));
-<regular transformation semigroup ideal of degree 5 with 1 generator>
-gap> T := PrincipalFactor(DClass(I, I.1));
-<Rees 0-matrix semigroup 10x5 over Group([ (2,3,4,5), (2,5) ])>
-gap> IsomorphismSemigroups(S, T);
-(( 2, 4, 3, 7, 9,10, 6, 5)
-(11,13,14,15), GroupHomomorphismByImages( Group( [ (1,2,3,4), (1,2) 
- ] ), Group( [ (2,3,4,5), (2,5) ] ), [ (1,2,3,4), (1,2) ], 
-[ (2,4,5,3), (2,4) ] ), fail)]]></Example>
+>                        Transformation([1, 1, 2, 3, 4]));;
+gap> T := PrincipalFactor(DClass(I, I.1));;
+gap> StructureDescription(UnderlyingSemigroup(T));
+"S4"
+gap> T;
+<Rees 0-matrix semigroup 10x5 over S4>
+gap> IsomorphismSemigroups(S, T) <> fail;
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

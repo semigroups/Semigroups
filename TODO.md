@@ -20,6 +20,7 @@
 * use namespace in the C++ code
 
 ###GAP kernel
+* SEMIGROUP_IDEMPOTENTS
 * objectify bipartitions etc in c code (i.e. don't call CALL_1ARGS)
 * register TNUM: [https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c](https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c)
 * use `ConvertElements` and `UnconvertElements`

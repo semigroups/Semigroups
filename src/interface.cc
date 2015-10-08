@@ -446,7 +446,8 @@ Obj SEMIGROUP_POSITION (Obj self, Obj data, Obj x) {
     size_t     deg       = data_degree(data);
     Semigroup* semigroup = data_semigroup(data);
     Converter* converter = data_converter(data);
-    size_t pos = semigroup->position(converter->convert(x, deg), data_report(data));
+    size_t pos = semigroup->position(converter->convert(x, deg), 
+                                     data_report(data));
     return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
   }
 

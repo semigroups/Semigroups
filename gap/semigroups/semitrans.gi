@@ -11,6 +11,17 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+# FIXME can probably do better than this
+
+InstallMethod(Idempotents, "for a transformation semigroup and pos int",
+[IsTransformationSemigroup, IsPosInt],
+function(S, rank)
+  local deg;
+  deg := DegreeOfTransformationSemigroup(S);
+  return Filtered(Idempotents(S),
+                              x -> RankOfTransformation(x, deg) = rank);
+end);
+
 InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> "\>transformation\< ");
 
