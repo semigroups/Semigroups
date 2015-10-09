@@ -51,25 +51,22 @@ gap> s := Semigroup( [ Transformation( [ 2, 4, 3, 5, 5 ] ),
 >                 Transformation( [ 4, 1, 5, 1, 2 ] ) ] );
 <transformation semigroup of degree 5 with 5 generators>
 gap> i := SemigroupIdeal(s, [ Transformation( [ 3, 1, 1, 4, 4 ] ),
->                             Transformation( [ 1, 4, 1, 4, 1 ] ) ] );
-<regular transformation semigroup ideal of degree 5 with 2 generators>
-gap> cong := ReesCongruenceOfSemigroupIdeal(i);
-<Rees congruence of <regular transformation semigroup ideal of degree 5 with
-  2 generators> over <transformation semigroup of degree 5 with 5 generators>>
+>                             Transformation( [ 1, 4, 1, 4, 1 ] ) ] );;
+gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> NrCongruenceClasses(cong);
 19
-gap> cc := CongruenceClasses(cong);;
+gap> cc := Set(CongruenceClasses(cong));;
 gap> Size(cc);
 19
 gap> List(cc, Size);
 [ 1095, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> cc[1] * cc[1];
 {Transformation( [ 3, 1, 1, 4, 4 ] )}
-gap> cc[2] * cc[1];
+gap> cc[7] * cc[1];
 {Transformation( [ 3, 1, 1, 4, 4 ] )}
-gap> cc[4] * cc[6];
+gap> cc[2] * cc[5];
 {Transformation( [ 2, 4, 1, 3, 1 ] )}
-gap> cc[3] * cc[2] = cc[8];
+gap> cc[9] * cc[7] = cc[11];
 true
 
 #T# ReesCongTest3

@@ -14,22 +14,19 @@ gap> LoadPackage( "semigroups", false );;
 gap> SEMIGROUPS_StartTest();
 
 #T# InverseCongTest1: Create an inverse semigroup
-gap> s := InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 5 ], [ 2, 7, 3, 4 ] ),
->  PartialPerm( [ 1, 3, 4, 5 ], [ 7, 2, 4, 6 ] ), 
->  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 3, 4, 6, 1 ] ),
->  PartialPerm( [ 1, 2, 4, 6 ], [ 2, 4, 3, 7 ] ),
->  PartialPerm( [ 1, 2, 4, 6 ], [ 3, 1, 7, 2 ] ), 
->  PartialPerm( [ 1, 2, 5, 6 ], [ 5, 1, 6, 3 ] ),
->  PartialPerm( [ 1, 2, 3, 6 ], [ 7, 3, 4, 2 ] ) ] );;
+gap>  s := InverseSemigroup( [ PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ),
+>  PartialPerm( [ 1, 2, 4 ], [ 3, 1, 5 ] ), 
+>  PartialPerm( [ 1, 2, 5 ], [ 5, 1, 3 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 3, 4, 2 ] ) ] );;
 gap> cong := SemigroupCongruence(s,
->  [ PartialPerm( [ 4 ], [ 7 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] );
-<semigroup congruence over <inverse partial perm semigroup of rank 7 with 7 
- generators> with congruence pair (106,57)>
+>  [ PartialPerm( [ 4 ], [ 4 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] );
+<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
+ generators> with congruence pair (41,16)>
 
-#T# InverseCongTest3: Try some methods
-gap> x := PartialPerm( [ 4 ], [ 5 ] );;
-gap> y := PartialPerm( [ 1, 2, 5 ], [ 5, 1, 6 ] );;
-gap> z := PartialPerm( [ 6 ], [ 1 ] );;
+# Try some methods
+gap> x := PartialPerm( [ 1 ], [ 2 ] );;
+gap> y := PartialPerm( [ 2, 5 ], [ 2, 1 ] );;
+gap> z := PartialPerm( [ 5 ], [ 5 ] );;
 gap> [x,y] in cong;
 false
 gap> [x,z] in cong;
@@ -37,9 +34,9 @@ true
 gap> [y,z] in cong;
 false
 
-#T# InverseCongTest4: Congruence classes
+# Congruence classes
 gap> classx := CongruenceClassOfElement(cong, x);
-{PartialPerm( [ 4 ], [ 5 ] )}
+{PartialPerm( [ 1 ], [ 2 ] )}
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);;
 gap> classx = classy;
@@ -57,19 +54,18 @@ true
 gap> y * x in classy * classx;
 true
 gap> Size(classx);
-50
+26
 
-#T# InverseCongTest5: Quotients
+# Quotients
 gap> q := s / cong;;
 
-#T# InverseCongTest6:
 # Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(cong);;
 gap> ccong := SemigroupCongruence(s, pairs);;
 gap> ccong = cong;
 true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <inverse partial perm semigroup of rank 7 with 7 
+<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
  generators> with 1 generating pairs>
 gap> [x,y] in ccong;
 false
@@ -78,7 +74,7 @@ true
 gap> [y,z] in ccong;
 false
 
-#T# InverseCongTest7: Universal congruence
+#T# InverseCongTest2: Universal congruence
 gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(s);
