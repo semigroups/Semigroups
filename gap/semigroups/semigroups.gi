@@ -160,10 +160,16 @@ function(S)
 end);
 
 InstallMethod(ViewString, "for a group as semigroup",
-[IsGroupAsSemigroup], 2, _ViewStringForSemigroupsGroups);
+[IsGroupAsSemigroup], SUM_FLAGS, _ViewStringForSemigroupsGroups);
 
 InstallMethod(ViewString, "for a group consisting of semigroup elements",
 [IsGroup], _ViewStringForSemigroupsGroups);
+
+InstallMethod(ViewString, "for a group of transformations",
+[IsGroup and IsTransformationSemigroup], _ViewStringForSemigroupsGroups);
+
+InstallMethod(ViewString, "for a group of partial perms",
+[IsGroup and IsPartialPermSemigroup], _ViewStringForSemigroupsGroups);
 
 InstallMethod(ViewString, "for a partial perm group",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup

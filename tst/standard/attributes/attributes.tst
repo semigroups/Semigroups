@@ -1002,7 +1002,7 @@ fail
 
 #T# attribute: NilpotencyDegree, 3/4
 gap> S := FullTransformationMonoid(1);
-<trivial transformation group of degree 0 with 0 generators>
+<full transformation monoid of degree 0>
 gap> NilpotencyDegree(S);
 1
 
