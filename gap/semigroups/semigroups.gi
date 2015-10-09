@@ -13,10 +13,10 @@
 
 # fall back methods
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
+InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a semigroup",
 [IsSemigroup], S -> "");
 
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
+InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a semigroup",
 [IsSemigroup], S -> "");
 
 # ViewString
@@ -103,17 +103,17 @@ function(S)
 end);
 
 InstallMethod(ViewString, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 8, _ViewStringForSemigroups);
+[IsSemigroup and HasGeneratorsOfSemigroup], 20, _ViewStringForSemigroups);
 
 InstallMethod(ViewString, "for a monoid with generators",
-[IsMonoid and HasGeneratorsOfMonoid], 8, _ViewStringForSemigroups);
+[IsMonoid and HasGeneratorsOfMonoid], 20, _ViewStringForSemigroups);
 
 InstallMethod(ViewString, "for an inverse semigroup with generators",
-[IsInverseSemigroup and HasGeneratorsOfInverseSemigroup], 10,
+[IsInverseSemigroup and HasGeneratorsOfInverseSemigroup], 20,
 _ViewStringForSemigroups);
 
 InstallMethod(ViewString, "for an inverse monoid with generators",
-[IsInverseMonoid and HasGeneratorsOfInverseMonoid], 10,
+[IsInverseMonoid and HasGeneratorsOfInverseMonoid], 20,
 _ViewStringForSemigroups);
 
 MakeReadWriteGlobal("_ViewStringForSemigroups");

@@ -637,10 +637,8 @@ MappingByFunction( <trivial partial perm group of rank 1 with
 , function( x ) ... end, function( x ) ... end )
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
 <commutative partial perm monoid of rank 1 with 1 generator>
-gap> IsomorphismReesZeroMatrixSemigroup(S);
-MappingByFunction( <commutative 0-simple partial perm monoid of 
- rank 1 with 1 generator>, <Rees 0-matrix semigroup 1x1 over 
-  Group(())>, function( x ) ... end, function( x ) ... end )]]></Example>
+gap> Range(IsomorphismReesZeroMatrixSemigroup(S));
+<Rees 0-matrix semigroup 1x1 over Group(())>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
