@@ -380,8 +380,8 @@ function(arg)
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
-  Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods \033[44mENABLED\033[0m] . . ."), "\n");
+  Print("Testing ", print_file,
+        " [acting methods \033[44mENABLED\033[0m] . . .", "\n");
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
@@ -393,9 +393,8 @@ function(arg)
     Print(Concatenation(ListWithIdenticalEntries(width, "#")));
   fi;
   Print("\n");
-  Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods \033[44mDISABLED\033[0m] . . ."),
-        "\n");
+  Print("Testing ", print_file,
+        " [acting methods \033[44mDISABLED\033[0m] . . .", "\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
@@ -528,7 +527,7 @@ function(arg)
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples [non-generic methods ",
+  Print("Testing manual examples [acting methods ",
         "\033[1;44mENABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
@@ -546,7 +545,7 @@ function(arg)
   GASMAN("collect");
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples [non-generic methods ",
+  Print("Testing manual examples [acting methods ",
         "\033[1;44mDISABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();

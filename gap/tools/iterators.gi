@@ -273,7 +273,7 @@ function(record, baseiter, convert, filts)
 
   #
   record.ShallowCopy := iter -> rec(baseiter := baseiter,
-                                    iterorfiters := fail);
+                                    iterofiters := fail);
 
   iter := IteratorByFunctions(record);
 
@@ -394,17 +394,16 @@ end);
 
 InstallMethod(Iterator, "for an acting semigroup",
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
-function(s)
+function(S)
   local iter;
 
-  if HasAsSSortedList(s) then
-    iter := IteratorList(AsSSortedList(s));
-    SetIsIteratorOfSemigroup(iter, true);
+  if HasAsSSortedList(S) then
+    iter := IteratorList(AsSSortedList(S));
   else
-    iter := IteratorByIterOfIters(rec(parent := s), IteratorOfRClasses(s),
-                                  IdFunc, [IsIteratorOfSemigroup]);
+    iter := IteratorByIterOfIters(rec(parent := S), IteratorOfRClasses(S),
+                                  IdFunc, []);
   fi;
-  SetParent(iter, s);
+  SetParent(iter, S);
   return iter;
 end);
 
@@ -418,13 +417,12 @@ function(d)
 
   if HasAsSSortedList(d) then
     iter := IteratorList(AsSSortedList(d));
-    SetIsIteratorOfDClassElements(iter, true);
     return iter;
   fi;
 
   return IteratorByIterOfIters(rec(parent := Parent(d)),
                                Iterator(GreensRClasses(d)), IdFunc,
-                               [IsIteratorOfDClassElements]);
+                               []);
 end);
 
 # different method for inverse
@@ -437,7 +435,6 @@ function(d)
 
   if HasAsSSortedList(d) then
     iter := IteratorList(AsSSortedList(d));
-    SetIsIteratorOfDClassElements(iter, true);
     return iter;
   fi;
 
@@ -457,7 +454,14 @@ function(d)
                                                        x[3])[1];
   end;
 
-  return IteratorByIterator(baseiter, convert, [IsIteratorOfDClassElements]);
+  return IteratorByIterator(baseiter,
+                            convert,
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                              Print("<iterator of D-class>");
+                              return;
+                            end));
 end);
 
 #JDM again this method is redundant if we introduce RhoOrb for inverse
@@ -471,7 +475,6 @@ function(d)
 
   if HasAsSSortedList(d) then
     iter := IteratorList(AsSSortedList(d));
-    SetIsIteratorOfDClassElements(iter, true);
     return iter;
   fi;
 
@@ -488,7 +491,14 @@ function(d)
                                                        x[3])[1];
   end;
 
-  return IteratorByIterator(baseiter, convert, [IsIteratorOfDClassElements]);
+  return IteratorByIterator(baseiter,
+                            convert,
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                              Print("<iterator of D-class>");
+                              return;
+                            end));
 end);
 
 # same method for regular/inverse
@@ -501,14 +511,18 @@ function(h)
 
   if HasAsSSortedList(h) then
     iter := IteratorList(AsSSortedList(h));
-    SetIsIteratorOfDClassElements(iter, true);
     return iter;
   fi;
 
   s := Parent(h);
   return IteratorByIterator(Iterator(SchutzenbergerGroup(h)),
                             x -> StabilizerAction(s)(Representative(h), x),
-                            [IsIteratorOfHClassElements]);
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                              Print("<iterator of H-class>");
+                              return;
+                            end));
 end);
 
 # same method for regular, different method for inverse
@@ -521,7 +535,6 @@ function(l)
 
   if HasAsSSortedList(l) then
     iter := IteratorList(AsSSortedList(l));
-    SetIsIteratorOfLClassElements(iter, true);
     return iter;
   fi;
 
@@ -535,7 +548,14 @@ function(l)
                                        * Representative(l), x[2]);
   end;
 
-  return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
+  return IteratorByIterator(baseiter,
+                            convert,
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                              Print("<iterator of L-class>");
+                              return;
+                            end));
 end);
 
 # Notes: this method makes Iterator of a semigroup much better!!
@@ -550,7 +570,6 @@ function(r)
 
   if HasAsSSortedList(r) then
     iter := IteratorList(AsSSortedList(r));
-    SetIsIteratorOfRClassElements(iter, true);
     return iter;
   fi;
   # gaplint: ignore 2
@@ -562,7 +581,14 @@ function(r)
            * LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), x[2])[1];
   end;
 
-  return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);
+  return IteratorByIterator(baseiter,
+                            convert,
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                              Print("<iterator of R-class>");
+                              return;
+                            end));
 end);
 
 # JDM could use IteratorOfRClasses here instead, not sure which is better...
@@ -577,12 +603,11 @@ function(s)
 
   if HasGreensHClasses(s) then
     iter := IteratorList(GreensHClasses(s));
-    SetIsIteratorOfHClasses(iter, true);
     return iter;
   fi;
 
   return IteratorByIterOfIters(rec(parent := s), IteratorOfDClasses(s),
-                               GreensHClasses, [IsIteratorOfHClasses]);
+                               GreensHClasses, []);
 end);
 
 # different method for regular/inverse
@@ -595,12 +620,11 @@ function(S)
 
   if HasGreensLClasses(S) then
     iter := IteratorList(GreensLClasses(S));
-    SetIsIteratorOfLClasses(iter, true);
     return iter;
   fi;
 
   return IteratorByIterOfIters(rec(parent := S), IteratorOfDClasses(S),
-                               GreensLClasses, [IsIteratorOfLClasses]);
+                               GreensLClasses, []);
 end);
 
 #FIXME move this!
@@ -651,8 +675,12 @@ function(S)
     ShallowCopy := iter ->
       rec(parent := S,
           tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(S)],
-                                   DegreeOfTransformationSemigroup(S)))));
-  SetIsIteratorOfSemigroup(iter, true);
+                                   DegreeOfTransformationSemigroup(S))),
+
+    PrintObj := function(iter)
+                  Print("<iterator of semigroup>");
+                  return;
+                end));
   return iter;
 end);
 
@@ -694,9 +722,12 @@ function(s)
                                     dom := fail,
                                     iter_imgs := fail);
 
-  iter := IteratorByNextIterator(record);
+  record.PrintObj := function(iter)
+                       Print("<iterator of semigroup>");
+                       return;
+                     end;
 
-  SetIsIteratorOfSemigroup(iter, true);
+  iter := IteratorByNextIterator(record);
   return iter;
 end);
 
@@ -708,8 +739,8 @@ end);
 
 InstallMethod(Iterator, "for a trivial acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
-function(s)
-  return TrivialIterator(GeneratorsOfSemigroup(s)[1]);
+function(S)
+  return TrivialIterator(GeneratorsOfSemigroup(S)[1]);
 end);
 
 # different method for regular/inverse
@@ -718,7 +749,12 @@ end);
 InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 S -> IteratorByIterator(IteratorOfDClasses(S), Representative,
-                        [IsIteratorOfDClassReps]));
+                        [],
+                        ReturnTrue,
+                        rec(PrintObj := function(iter)
+                          Print("<iterator of D-class reps>");
+                          return;
+                        end)));
 
 #JDM could be a different method for regular/inverse using IteratorOfHClassData
 #(not yet written), see inverse_old.gi in semigroups-dev
@@ -728,7 +764,12 @@ InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 S -> IteratorByIterator(IteratorOfHClasses(S),
                         Representative,
-                        [IsIteratorOfHClassReps]));
+                        [],
+                        ReturnTrue,
+                        rec(PrintObj := function(iter)
+                          Print("<iterator of H-class reps>");
+                          return;
+                        end)));
 
 # different method for regular/inverse
 #FIXME move this!
@@ -737,7 +778,12 @@ InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 S -> IteratorByIterator(IteratorOfLClasses(S),
                         Representative,
-                        [IsIteratorOfLClassReps]));
+                        [],
+                        ReturnTrue,
+                        rec(PrintObj := function(iter)
+                          Print("<iterator of L-class reps>");
+                          return;
+                        end)));
 
 # same method for inverse/regular.
 #FIXME move this!
@@ -746,7 +792,12 @@ InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 S -> IteratorByIterator(IteratorOfRClassData(S),
                         x -> x[4],
-                        [IsIteratorOfRClassReps]));
+                        [],
+                        ReturnTrue,
+                        rec(PrintObj := function(iter)
+                          Print("<iterator of R-class reps>");
+                          return;
+                        end)));
 
 # for regular acting semigroups...
 #FIXME move this!
@@ -881,7 +932,12 @@ function(s)
   fi;
   return IteratorByIterator(IteratorOfDClassData(s),
                             x -> x[6],
-                            [IsIteratorOfDClassReps]);
+                        [],
+                        ReturnTrue,
+                        rec(PrintObj := function(iter)
+                          Print("<iterator of D-class reps>");
+                          return;
+                        end));
 end);
 
 # different method for inverse
@@ -891,7 +947,12 @@ InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 S -> IteratorByIterator(IteratorOfLClassData(S),
                         x -> x[4],
-                        [IsIteratorOfLClassReps]));
+                        [],
+                        ReturnTrue,
+                        rec(PrintObj := function(iter)
+                          Print("<iterator of L-class reps>");
+                          return;
+                        end)));
 
 #for inverse acting semigroups...
 #FIXME move this!
@@ -996,141 +1057,152 @@ InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 [IsSemigroupWithInverseOp and IsActingSemigroup],
 S -> IteratorByIterator(IteratorOfRClassData(S),
                         x -> Inverse(x[4]),
-                        [IsIteratorOfLClassReps]));
+                        [],
+                        ReturnTrue,
+                        rec(PrintObj := function(iter)
+                          Print("<iterator of L-class reps>");
+                          return;
+                        end)));
 
 #FIXME move this!
 
 InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
+function(L)
   local iter, m, baseiter, convert;
 
-  if HasAsSSortedList(l) then
-    iter := IteratorList(AsSSortedList(l));
-    SetIsIteratorOfLClassElements(iter, true);
+  if HasAsSSortedList(L) then
+    iter := IteratorList(AsSSortedList(L));
     return iter;
   fi;
-  m := LambdaOrbSCCIndex(l);
-  baseiter := IteratorOfCartesianProduct(OrbSCC(LambdaOrb(l))[m],
-                                         Enumerator(SchutzenbergerGroup(l)));
+  m := LambdaOrbSCCIndex(L);
+  baseiter := IteratorOfCartesianProduct(OrbSCC(LambdaOrb(L))[m],
+                                         Enumerator(SchutzenbergerGroup(L)));
 
   convert := function(x)
-    return StabilizerAction(Parent(l))(LambdaOrbMult(LambdaOrb(l),
-                                                     LambdaOrbSCCIndex(l),
+    return StabilizerAction(Parent(L))(LambdaOrbMult(LambdaOrb(L),
+                                                     LambdaOrbSCCIndex(L),
                                                      x[1])[2]
-                                       * Representative(l), x[2]);
+                                       * Representative(L), x[2]);
   end;
 
-  return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
+  return IteratorByIterator(baseiter,
+                            convert,
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                                  Print("<iterator of L-class>");
+                                  return;
+                                end));
 end);
 
 #
 #FIXME move this!
 # Printing...
 
-InstallMethod(PrintObj, [IsIteratorOfDClassElements],
-function(iter)
-  Print("<iterator of D-class>");
-  return;
-end);
-
+#InstallMethod(PrintObj, [IsIteratorOfDClassElements],
+#function(iter)
+#  Print("<iterator of D-class>");
+#  return;
+#end);
 #
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfHClassElements],
-function(iter)
-  Print("<iterator of H-class>");
-  return;
-end);
-
+##
+##FIXME move this!
 #
-
-#FIXME move this!
-InstallMethod(PrintObj, [IsIteratorOfLClassElements],
-function(iter)
-  Print("<iterator of L-class>");
-  return;
-end);
-
+#InstallMethod(PrintObj, [IsIteratorOfHClassElements],
+#function(iter)
+#  Print("<iterator of H-class>");
+#  return;
+#end);
 #
-
-#FIXME move this!
-InstallMethod(PrintObj, [IsIteratorOfRClassElements],
-function(iter)
-  Print("<iterator of R-class>");
-  return;
-end);
-
+##
 #
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfDClassReps],
-function(iter)
-  Print("<iterator of D-class reps>");
-  return;
-end);
-
+##FIXME move this!
+#InstallMethod(PrintObj, [IsIteratorOfLClassElements],
+#function(iter)
+#  Print("<iterator of L-class>");
+#  return;
+#end);
 #
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfHClassReps],
-function(iter)
-  Print("<iterator of H-class reps>");
-  return;
-end);
-
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfLClassReps],
-function(iter)
-  Print("<iterator of L-class reps>");
-  return;
-end);
-
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfRClassReps],
-function(iter)
-  Print("<iterator of R-class reps>");
-  return;
-end);
-
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfDClasses],
-function(iter)
-  Print("<iterator of D-classes>");
-  return;
-end);
-
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfHClasses],
-function(iter)
-  Print("<iterator of H-classes>");
-  return;
-end);
-
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfLClasses],
-function(iter)
-  Print("<iterator of L-classes>");
-  return;
-end);
-
-#FIXME move this!
-
-InstallMethod(PrintObj, [IsIteratorOfRClasses],
-function(iter)
-  Print("<iterator of R-classes>");
-  return;
-end);
-
+##
 #
-#FIXME move this!
-
-InstallMethod(ViewString, [IsIteratorOfSemigroup],
-function(iter)
-  return Concatenation("<iterator of ", ViewString(iter!.parent), ">");
-end);
+##FIXME move this!
+#InstallMethod(PrintObj, [IsIteratorOfRClassElements],
+#function(iter)
+#  Print("<iterator of R-class>");
+#  return;
+#end);
+#
+##
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfDClassReps],
+#function(iter)
+#  Print("<iterator of D-class reps>");
+#  return;
+#end);
+#
+##
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfHClassReps],
+#function(iter)
+#  Print("<iterator of H-class reps>");
+#  return;
+#end);
+#
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfLClassReps],
+#function(iter)
+#  Print("<iterator of L-class reps>");
+#  return;
+#end);
+#
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfRClassReps],
+#function(iter)
+#  Print("<iterator of R-class reps>");
+#  return;
+#end);
+#
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfDClasses],
+#function(iter)
+#  Print("<iterator of D-classes>");
+#  return;
+#end);
+#
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfHClasses],
+#function(iter)
+#  Print("<iterator of H-classes>");
+#  return;
+#end);
+#
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfLClasses],
+#function(iter)
+#  Print("<iterator of L-classes>");
+#  return;
+#end);
+#
+##FIXME move this!
+#
+#InstallMethod(PrintObj, [IsIteratorOfRClasses],
+#function(iter)
+#  Print("<iterator of R-classes>");
+#  return;
+#end);
+#
+##
+##FIXME move this!
+#
+#InstallMethod(ViewString, [IsIteratorOfSemigroup],
+#function(iter)
+#  return Concatenation("<iterator of ", ViewString(iter!.parent), ">");
+#end);

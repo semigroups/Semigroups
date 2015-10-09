@@ -2056,7 +2056,6 @@ function(S)
 
   if HasGreensRClasses(S) then
     iter := IteratorList(GreensRClasses(S));
-    SetIsIteratorOfRClasses(iter, true);
     return iter;
   fi;
 
@@ -2070,7 +2069,12 @@ function(S)
   end;
   return IteratorByIterator(IteratorOfRClassData(S),
                             convert,
-                            [IsIteratorOfRClasses]);
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                                  Print("<iterator of R-classes>");
+                                  return;
+                                end));
 end);
 
 #TODO this should be improved at some point
@@ -2084,7 +2088,6 @@ function(S)
 
   if IsClosedData(SemigroupData(S)) then
     iter := IteratorList(GreensDClasses(S));
-    SetIsIteratorOfDClasses(iter, true);
     return iter;
   fi;
   # gaplint: ignore 20
@@ -2105,9 +2108,12 @@ function(S)
       Add(iter!.classes, D);
       return D;
     end,
-    [IsIteratorOfDClasses],
+    [],
     function(iter, x)         #isnew FIXME ugh!!
       return x = fail or ForAll(iter!.classes, D -> not x[4] in D);
      end,
-    rec(classes := []));      #iter
+    rec(classes := [], PrintObj := function(iter)
+                                     Print("<iterator of D-classes>");
+                                     return;
+                                   end));
 end);

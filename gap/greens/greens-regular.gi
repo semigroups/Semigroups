@@ -261,8 +261,7 @@ end);
 # same method for inverse semigroups, same for ideals
 
 InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-NrDClasses);
+[IsActingSemigroup and IsRegularSemigroup], NrDClasses);
 
 #############################################################################
 ## 6. Iterators and enumerators . . .
@@ -280,7 +279,12 @@ function(S)
 
   return IteratorByIterator(IteratorOfLClassReps(S),
                             x -> GreensLClassOfElementNC(S, x),
-                            [IsIteratorOfLClasses]);
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                              Print("<iterator of L-classes>");
+                              return;
+                            end));
 end);
 
 # same method for inverse
@@ -293,7 +297,12 @@ function(S)
   fi;
   return IteratorByIterator(IteratorOfDClassReps(S),
                             x -> GreensDClassOfElementNC(S, x),
-                            [IsIteratorOfDClasses]);
+                            [],
+                            ReturnTrue,
+                            rec(PrintObj := function(iter)
+                              Print("<iterator of D-classes>");
+                              return;
+                            end));
 end);
 
 # different method for inverse
