@@ -424,13 +424,6 @@ function(exlists, excluded)
   local oldscr, l, sp, bad, s, start_time, test, end_time, elapsed, pex, new,
    inp, j, ex, i, attedStrin;
 
-  #opts := rec(
-  #    showDiffs := true,
-  #    changeSources := false,
-  #    width := 72,
-  #    EQ := EQ,
-  #    checkWidth := false );
-
   oldscr := SizeScreen(  );
   SizeScreen( [ 72, oldscr[2] ] );
   for j  in [ 1 .. Length( exlists ) ]  do
@@ -440,7 +433,7 @@ function(exlists, excluded)
       l := exlists[j];
       Print( "\033[1;100m# Running list ", j, " . . .\033[0m" );
       START_TEST( "" );
-      for ex  in l  do
+      for ex in l do
         sp := SplitString( ex[1], "\n", "" );
         bad := Filtered( [ 1 .. Length( sp ) ], function ( i )
           return Length( sp[i] ) > 72;
@@ -539,7 +532,7 @@ function(arg)
         "\033[1;44mENABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
-  SEMIGROUPS_RunExamples(ex);
+  SEMIGROUPS_RunExamples(ex, []);
   SEMIGROUPS_StopTest("");
 
   # TODO add extreme/standard tests for those examples below where it makes
