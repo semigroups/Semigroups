@@ -90,10 +90,15 @@ gap> S := DualSymmetricInverseSemigroup(6);
 <inverse bipartition monoid of degree 6 with 3 generators>
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S3", "S4", "S5", "S6" ]
-gap> S := Semigroup( PartialPerm( [ 1, 3, 4, 5, 8 ], [ 8, 3, 9, 4, 5 ] ), 
->  PartialPerm( [ 1, 2, 3, 4, 8 ], [ 10, 4, 1, 9, 6 ] ), 
->  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 1, 6, 7, 5, 3, 2, 10 ] ), 
->  PartialPerm( [ 1, 2, 3, 4, 6, 8, 10 ], [ 4, 9, 10, 3, 1, 5, 2 ] ) );;
+gap> S := Semigroup( 
+>  PartialPerm([1, 3, 4, 5, 8], 
+>              [8, 3, 9, 4, 5]), 
+>  PartialPerm([1, 2, 3, 4, 8], 
+>              [10, 4, 1, 9, 6]), 
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], 
+>              [4, 1, 6, 7, 5, 3, 2, 10]), 
+>  PartialPerm([1, 2, 3, 4, 6, 8, 10], 
+>              [4, 9, 10, 3, 1, 5, 2]));;
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "C3", "C4" ]]]></Example>
     </Description>
@@ -287,9 +292,10 @@ gap> S := Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >                   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
 gap> MultiplicativeZero(S);
 fail
-gap> S := InverseSemigroup(PartialPerm( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
->                          PartialPerm( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
->                          PartialPerm( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
+gap> S := InverseSemigroup(
+> PartialPerm( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
+> PartialPerm( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
+> PartialPerm( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
 gap> MultiplicativeZero(S);
 <empty partial perm>
 gap> S := PartitionMonoid(6);
@@ -459,26 +465,30 @@ true]]></Example>
       <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
->   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
->   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
->   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
->   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) );;
+gap> S := Semigroup(
+> Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+> Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
+> Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
+> Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
+> Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) );;
 gap> Size(S);
 5304
 gap> StructureDescription(GroupOfUnits(S));
 "C2 x S4"
-gap> S := InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
-> [ 2, 4, 5, 3, 6, 7, 10, 9, 8, 1 ] ),
+gap> S := InverseSemigroup( 
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
+>              [ 2, 4, 5, 3, 6, 7, 10, 9, 8, 1 ] ),
 > PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ], 
-> [ 8, 2, 3, 1, 4, 5, 10, 6, 9 ] ) );;
+>              [ 8, 2, 3, 1, 4, 5, 10, 6, 9 ] ) );;
 gap> StructureDescription(GroupOfUnits(S));
 "C8"
-gap> S := InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
+gap> S := InverseSemigroup(
+> PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
 > PartialPerm( [ 1, 2, 3, 5 ], [ 3, 1, 5, 2 ] ) );;
 gap> GroupOfUnits(S);
 fail
-gap> S := Semigroup( Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
+gap> S := Semigroup( 
+> Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
 > Bipartition( [ [ 1, -1 ], [ 2, 3, -2, -3 ] ] ), 
 > Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] ), 
 > Bipartition( [ [ 1 ], [ 2, 3, -2 ], [ -1, -3 ] ] ) );;

@@ -2070,7 +2070,7 @@ function(S)
   return IteratorByIterator(IteratorOfRClassData(S),
                             convert,
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                                   Print("<iterator of R-classes>");
                                   return;

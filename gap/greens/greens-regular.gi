@@ -280,7 +280,7 @@ function(S)
   return IteratorByIterator(IteratorOfLClassReps(S),
                             x -> GreensLClassOfElementNC(S, x),
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                               Print("<iterator of L-classes>");
                               return;
@@ -298,7 +298,7 @@ function(S)
   return IteratorByIterator(IteratorOfDClassReps(S),
                             x -> GreensDClassOfElementNC(S, x),
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                               Print("<iterator of D-classes>");
                               return;

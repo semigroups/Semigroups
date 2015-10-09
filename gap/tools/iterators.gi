@@ -303,7 +303,7 @@ function(arg)
     arg[3] := [];
   fi;
 
-  if IsBound(arg[4]) then
+  if IsBound(arg[4]) and IsFunction(arg[4]) then
     if NumberArgumentsFunction(arg[4]) = 1 then
       isnew := function(iter, x)
         return arg[4](x);
@@ -325,7 +325,7 @@ function(arg)
   iter.ShallowCopy := iter -> rec(baseiter := ShallowCopy(arg[1]));
 
   # get NextIterator
-  if Length(arg) = 3 then
+  if not IsBound(isnew) then
     iter.IsDoneIterator := iter -> IsDoneIterator(iter!.baseiter);
     iter.NextIterator := function(iter)
       local x;
@@ -457,7 +457,7 @@ function(d)
   return IteratorByIterator(baseiter,
                             convert,
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                               Print("<iterator of D-class>");
                               return;
@@ -494,7 +494,7 @@ function(d)
   return IteratorByIterator(baseiter,
                             convert,
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                               Print("<iterator of D-class>");
                               return;
@@ -518,7 +518,7 @@ function(h)
   return IteratorByIterator(Iterator(SchutzenbergerGroup(h)),
                             x -> StabilizerAction(s)(Representative(h), x),
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                               Print("<iterator of H-class>");
                               return;
@@ -551,7 +551,7 @@ function(l)
   return IteratorByIterator(baseiter,
                             convert,
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                               Print("<iterator of L-class>");
                               return;
@@ -584,7 +584,7 @@ function(r)
   return IteratorByIterator(baseiter,
                             convert,
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                               Print("<iterator of R-class>");
                               return;
@@ -750,7 +750,7 @@ InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 S -> IteratorByIterator(IteratorOfDClasses(S), Representative,
                         [],
-                        ReturnTrue,
+                        fail,
                         rec(PrintObj := function(iter)
                           Print("<iterator of D-class reps>");
                           return;
@@ -765,7 +765,7 @@ InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 S -> IteratorByIterator(IteratorOfHClasses(S),
                         Representative,
                         [],
-                        ReturnTrue,
+                        fail,
                         rec(PrintObj := function(iter)
                           Print("<iterator of H-class reps>");
                           return;
@@ -779,7 +779,7 @@ InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
 S -> IteratorByIterator(IteratorOfLClasses(S),
                         Representative,
                         [],
-                        ReturnTrue,
+                        fail,
                         rec(PrintObj := function(iter)
                           Print("<iterator of L-class reps>");
                           return;
@@ -793,7 +793,7 @@ InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 S -> IteratorByIterator(IteratorOfRClassData(S),
                         x -> x[4],
                         [],
-                        ReturnTrue,
+                        fail,
                         rec(PrintObj := function(iter)
                           Print("<iterator of R-class reps>");
                           return;
@@ -933,7 +933,7 @@ function(s)
   return IteratorByIterator(IteratorOfDClassData(s),
                             x -> x[6],
                         [],
-                        ReturnTrue,
+                        fail,
                         rec(PrintObj := function(iter)
                           Print("<iterator of D-class reps>");
                           return;
@@ -948,7 +948,7 @@ InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
 S -> IteratorByIterator(IteratorOfLClassData(S),
                         x -> x[4],
                         [],
-                        ReturnTrue,
+                        fail,
                         rec(PrintObj := function(iter)
                           Print("<iterator of L-class reps>");
                           return;
@@ -1058,7 +1058,7 @@ InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 S -> IteratorByIterator(IteratorOfRClassData(S),
                         x -> Inverse(x[4]),
                         [],
-                        ReturnTrue,
+                        fail,
                         rec(PrintObj := function(iter)
                           Print("<iterator of L-class reps>");
                           return;
@@ -1089,7 +1089,7 @@ function(L)
   return IteratorByIterator(baseiter,
                             convert,
                             [],
-                            ReturnTrue,
+                            fail,
                             rec(PrintObj := function(iter)
                                   Print("<iterator of L-class>");
                                   return;

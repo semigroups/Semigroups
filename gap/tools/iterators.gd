@@ -32,21 +32,5 @@ DeclareOperation("IteratorOfDClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfLClassData", [IsSemigroup]);
 
-#DeclareProperty("IsIteratorOfRClassReps", IsIterator);
-#DeclareProperty("IsIteratorOfLClassReps", IsIterator);
-#DeclareProperty("IsIteratorOfDClassReps", IsIterator);
-#DeclareProperty("IsIteratorOfHClassReps", IsIterator);
-#
-#DeclareProperty("IsIteratorOfRClasses", IsIterator);
-#DeclareProperty("IsIteratorOfLClasses", IsIterator);
-#DeclareProperty("IsIteratorOfDClasses", IsIterator);
-#DeclareProperty("IsIteratorOfHClasses", IsIterator);
-#
-#DeclareProperty("IsIteratorOfSemigroup", IsIterator);
-#DeclareProperty("IsIteratorOfRClassElements", IsIterator);
-#DeclareProperty("IsIteratorOfLClassElements", IsIterator);
-#DeclareProperty("IsIteratorOfDClassElements", IsIterator);
-#DeclareProperty("IsIteratorOfHClassElements", IsIterator);
-
 DeclareFilter("IsIteratorSorted", IsIterator);
 DeclareGlobalFunction("IteratorSortedOp");
