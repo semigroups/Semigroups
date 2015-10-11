@@ -33,7 +33,7 @@ namespace semiring {
 
     public: 
 
-      PrimeField (long n) : _n(n), Semiring() {}
+      PrimeField (long n) : Semiring(), _n(n) {}
 
       long one () {
         return 1;
@@ -193,9 +193,10 @@ namespace semiring {
     public: 
 
       NaturalSemiring (long threshold, long period) 
-        : _threshold(threshold), 
-          _period(period),
-          Semiring() {}
+        : Semiring(),
+          _threshold(threshold), 
+          _period(period)
+         {}
 
       long one () {
         return 1;
