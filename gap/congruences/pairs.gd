@@ -14,8 +14,6 @@
 
 DeclareGlobalFunction("SEMIGROUPS_SetupCongData");
 DeclareCategory("SEMIGROUPS_IsSemigroupCongruenceData", IsRecord);
-DeclareOperation("Enumerate",
+DeclareOperation("SEMIGROUPS_Enumerate", [IsEquivalenceRelation, IsFunction]);
+DeclareOperation("SEMIGROUPS_Enumerate",
                  [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction]);
-
-DeclareOperation("Enumerate", [IsLeftSemigroupCongruence, IsFunction]);
-DeclareOperation("Enumerate", [IsRightSemigroupCongruence, IsFunction]);
