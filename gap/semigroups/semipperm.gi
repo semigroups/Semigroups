@@ -81,7 +81,7 @@ function(S)
                 end,
 
                 PrintObj := function(enum)
-                  Print("<enumerator of symmetric inverse monoid on ", n," pts>");
+                  Print("<enumerator of ", ViewString(S), ">");
                 end);
 
   return EnumeratorByFunctions(S, record);

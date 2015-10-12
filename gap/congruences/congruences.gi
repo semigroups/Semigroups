@@ -69,7 +69,8 @@ function(arg)
       return SemigroupCongruenceByGeneratingPairs(s, pairs);
     fi;
   elif (IsRMSCongruenceByLinkedTriple(arg[2]) and IsSimpleSemigroup(s)) or
-    (IsRZMSCongruenceByLinkedTriple(arg[2]) and IsZeroSimpleSemigroup(s)) then
+       (IsRZMSCongruenceByLinkedTriple(arg[2]) and IsZeroSimpleSemigroup(s))
+       then
     # We should have a congruence of an isomorphic RMS/RZMS
     if Range(IsomorphismReesMatrixSemigroup(s)) = Range(arg[2]) then
       return SEMIGROUPS_SimpleCongFromRMSCong(s, arg[2]);
@@ -80,10 +81,10 @@ function(arg)
     fi;
   elif IsSemigroupIdeal(arg[2]) and Parent(arg[2]) = s then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
-  elif Length(arg) = 3 and
-    IsInverseSemigroup(arg[2]) and
-    IsDenseList(arg[3]) and
-    IsInverseSemigroup(s) then
+  elif Length(arg) = 3
+      and IsInverseSemigroup(arg[2])
+      and IsDenseList(arg[3])
+      and IsInverseSemigroup(s) then
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
     return InverseSemigroupCongruenceByKernelTrace(s, arg[2], arg[3]);
@@ -96,7 +97,7 @@ end);
 
 InstallGlobalFunction(LeftSemigroupCongruence,
 function(arg)
-  local s, pairs, cong;
+  local s, pairs;
   if not Length(arg) >= 2 then
     ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
                  "at least 2 arguments are required,");
@@ -137,7 +138,7 @@ end);
 
 InstallGlobalFunction(RightSemigroupCongruence,
 function(arg)
-  local s, pairs, cong;
+  local s, pairs;
   if not Length(arg) >= 2 then
     ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
                  "at least 2 arguments are required,");

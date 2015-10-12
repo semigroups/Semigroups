@@ -21,17 +21,16 @@ function(s, kernel, traceBlocks)
   # Check that the kernel is an inverse subsemigroup
   if not IsInverseSubsemigroup(s, kernel) then
     ErrorMayQuit("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
-                 "usage,\n",
-                 "the second arg <kernel> must be an inverse subsemigroup of ",
-                 "the\nfirst arg <S>,");
+                 "usage,\nthe second arg <kernel> must be an inverse ",
+                 "subsemigroup of the\nfirst arg <S>,");
   fi;
   # CHECK KERNEL IS NORMAL:
   # (1) Must contain all the idempotents of s
   if NrIdempotents(kernel) <> NrIdempotents(s) then
     ErrorMayQuit("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
                  "usage,\n",
-                 "the second arg <kernel> must contain all the idempotents of ",
-                 "the\nfirst arg <S>,");
+                 "the second arg <kernel> must contain all the\n",
+                 "idempotents of the first arg <S>,");
   fi;
   # (2) Must be self-conjugate
   for a in kernel do
@@ -50,8 +49,8 @@ function(s, kernel, traceBlocks)
         if a in kernel then
           # Condition (C2): aa' related to a'a
           if not a * a ^ -1 in traceClass then
-            ErrorMayQuit("Semigroups: InverseSemigroupCongruenceByKernelTrace:",
-                         "\n",
+            ErrorMayQuit("Semigroups: ",
+                         "InverseSemigroupCongruenceByKernelTrace:\n",
                          "not a valid congruence pair 1,");
           fi;
         else
@@ -343,10 +342,11 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local s, idsmgp, ids, ht_e, StartTiming, StopTiming, pos, hashlen, ht, right,
-    left, genstoapply, enumerate_trace, enforce_conditions, compute_kernel,
-    genpairs, pairstoapply, kernelgenstoapply, nr, nrk, traceUF, kernel, timing,
-    oldLookup, oldKernel, traceBlocks, i;
+  local s, idsmgp, ids, ht_e, i, StartTiming, StopTiming, pos, hashlen, ht, 
+        treehashsize, right, left, genstoapply, enumerate_trace, 
+        enforce_conditions, compute_kernel, genpairs, pairstoapply, 
+        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup, 
+        oldKernel, traceBlocks;
 
   # Check that the argument makes sense
   s := Range(cong);

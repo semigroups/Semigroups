@@ -380,8 +380,8 @@ function(arg)
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
-  Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods \033[44mENABLED\033[0m] . . ."), "\n");
+  Print("Testing ", print_file,
+        " [acting methods \033[44mENABLED\033[0m] . . .", "\n");
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
@@ -393,9 +393,8 @@ function(arg)
     Print(Concatenation(ListWithIdenticalEntries(width, "#")));
   fi;
   Print("\n");
-  Print(PRINT_STRINGIFY("Testing ", print_file,
-                        " [non-generic methods \033[44mDISABLED\033[0m] . . ."),
-        "\n");
+  Print("Testing ", print_file,
+        " [acting methods \033[44mDISABLED\033[0m] . . .", "\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
@@ -424,13 +423,6 @@ function(exlists, excluded)
   local oldscr, l, sp, bad, s, start_time, test, end_time, elapsed, pex, new,
    inp, j, ex, i, attedStrin;
 
-  #opts := rec(
-  #    showDiffs := true,
-  #    changeSources := false,
-  #    width := 72,
-  #    EQ := EQ,
-  #    checkWidth := false );
-
   oldscr := SizeScreen(  );
   SizeScreen( [ 72, oldscr[2] ] );
   for j  in [ 1 .. Length( exlists ) ]  do
@@ -440,7 +432,7 @@ function(exlists, excluded)
       l := exlists[j];
       Print( "\033[1;100m# Running list ", j, " . . .\033[0m" );
       START_TEST( "" );
-      for ex  in l  do
+      for ex in l do
         sp := SplitString( ex[1], "\n", "" );
         bad := Filtered( [ 1 .. Length( sp ) ], function ( i )
           return Length( sp[i] ) > 72;
@@ -503,6 +495,13 @@ InstallGlobalFunction(SEMIGROUPS_TestManualExamples,
 function(arg)
   local ex, omit, width, generic, exclude, str;
 
+  # TODO add extreme/standard tests for those examples below where it makes
+  # sense.
+  exclude := [48, 58, 61, 66, 87, 88, 89, 91, 93, 94, 96, 97, 100, 101, 102,
+              103, 108, 109, 110, 113, 114, 115, 119, 126, 127, 133, 137, 139,
+              141, 194, 195, 196];
+  # 103 takes ages, 114 should be in an extreme test
+
   ex := SEMIGROUPS_ManualExamples();
   if Length(arg) = 1 then
     if IsPosInt(arg[1]) and arg[1] <= Length(ex) then
@@ -535,25 +534,19 @@ function(arg)
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples [non-generic methods ",
+  Print("Testing manual examples [acting methods ",
         "\033[1;44mENABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
-  SEMIGROUPS_RunExamples(ex);
+  SEMIGROUPS_RunExamples(ex, []);
   SEMIGROUPS_StopTest("");
 
-  # TODO add extreme/standard tests for those examples below where it makes
-  # sense.
-  exclude := [48, 58, 61, 66, 87, 88, 89, 91, 93, 94, 96, 97, 100, 101, 102,
-              103, 108, 109, 110, 113, 114, 115, 119, 126, 127, 133, 137, 139,
-              141, 194, 195, 196];
-  # 103 takes ages, 114 should be in an extreme test
 
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   GASMAN("collect");
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples [non-generic methods ",
+  Print("Testing manual examples [acting methods ",
         "\033[1;44mDISABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
