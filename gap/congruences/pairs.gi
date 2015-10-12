@@ -33,7 +33,7 @@ function(cong)
               found := false,
               ufdata := UF_NEW(Size(s)));
   cong!.data := Objectify(NewType(FamilyObj(cong),
-                                  IsSemigroupCongruenceData),
+                                  SEMIGROUPS_IsSemigroupCongruenceData),
                           data);
   return;
 end);
@@ -47,10 +47,6 @@ for cong_filter@ in [[IsSemigroupCongruence,
                       "left semigroup congruence"],
                      [IsRightSemigroupCongruence,
                       "right semigroup congruence"]] do
-
-  DeclareOperation("Enumerate", [cong_filter@[1], IsFunction]);
-
-  #
 
   InstallImmediateMethod(IsFinite,
   Concatenation("for a ", cong_filter@[2]),
@@ -139,7 +135,7 @@ for cong_filter@ in [[IsSemigroupCongruence,
 
   InstallMethod(Enumerate,
   "for semigroup congruence data and a function",
-  [IsSemigroupCongruenceData, IsFunction],
+  [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
   function(data, lookfunc)
     local cong, s, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
           found, x, j, y, next, newtable, ii;
