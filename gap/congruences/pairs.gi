@@ -33,7 +33,7 @@ function(cong)
               found := false,
               ufdata := UF_NEW(Size(s)));
   cong!.data := Objectify(NewType(FamilyObj(cong),
-                                  IsSemigroupCongruenceData),
+                                  SEMIGROUPS_IsSemigroupCongruenceData),
                           data);
   return;
 end);
@@ -47,10 +47,6 @@ for cong_filter@ in [[IsSemigroupCongruence,
                       "left semigroup congruence"],
                      [IsRightSemigroupCongruence,
                       "right semigroup congruence"]] do
-
-  DeclareOperation("Enumerate", [cong_filter@[1], IsFunction]);
-
-  #
 
   InstallImmediateMethod(IsFinite,
   Concatenation("for a ", cong_filter@[2]),
@@ -102,7 +98,7 @@ for cong_filter@ in [[IsSemigroupCongruence,
         return UF_FIND(data!.ufdata, p1)
                = UF_FIND(data!.ufdata, p2);
       end;
-      return Enumerate(cong, lookfunc)!.found;
+      return SEMIGROUPS_Enumerate(cong, lookfunc)!.found;
     fi;
   end);
 
@@ -116,13 +112,13 @@ for cong_filter@ in [[IsSemigroupCongruence,
       ErrorMayQuit("Semigroups: AsLookupTable: usage,\n",
                    "<cong> must be a congruence of a finite semigroup,");
     fi;
-    Enumerate(cong, ReturnFalse);
+    SEMIGROUPS_Enumerate(cong, ReturnFalse);
     return AsLookupTable(cong);
   end);
 
   #
 
-  InstallMethod(Enumerate,
+  InstallMethod(SEMIGROUPS_Enumerate,
   Concatenation("for a ", cong_filter@[2], " and a function"),
   [cong_filter@[1], IsFunction],
   function(cong, lookfunc)
@@ -132,14 +128,14 @@ for cong_filter@ in [[IsSemigroupCongruence,
     if not IsBound(cong!.data) then
       SEMIGROUPS_SetupCongData(cong);
     fi;
-    return Enumerate(cong!.data, lookfunc);
+    return SEMIGROUPS_Enumerate(cong!.data, lookfunc);
   end);
 
   #
 
-  InstallMethod(Enumerate,
+  InstallMethod(SEMIGROUPS_Enumerate,
   "for semigroup congruence data and a function",
-  [IsSemigroupCongruenceData, IsFunction],
+  [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
   function(data, lookfunc)
     local cong, s, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
           found, x, j, y, next, newtable, ii;
@@ -404,7 +400,7 @@ for cong_filter@ in [[IsSemigroupCongruence,
         fi;
         return enum!.len >= pos;
       end;
-      result := Enumerate(enum!.cong, lookfunc);
+      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
       if result = fail then
         # cong has AsLookupTable
         table := AsLookupTable(enum!.cong);

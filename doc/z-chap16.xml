@@ -35,6 +35,8 @@
   <Section><Heading>Creating congruences</Heading>
 
   <#Include Label="SemigroupCongruence">
+  <#Include Label="LeftSemigroupCongruence">
+  <#Include Label="RightSemigroupCongruence">
 
   </Section>
   <Section><Heading>Congruence classes</Heading>
