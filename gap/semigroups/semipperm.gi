@@ -625,62 +625,37 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, enum, i, sup,
-  trivialse, psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, r, h,
-  nrcosets, j, reps, lambdaorb, gen, offset, rep, box, subbox, T, d, k, m;
+  local oldgens, newgens, D, e, h, lambdaorb, He, schutz, sigmainv, enum,
+  sup, trivialse, orbits, cosets, stabpp, psi, rho, rhoinv, stab, nrcosets, j,
+  reps, gen, offset, rep, box, subbox, T, d, k, i, m;
 
   oldgens := Generators(S);
   newgens := List(oldgens, x -> []);
   D := JoinIrreducibleDClasses(S);
 
   for d in D do
-    e := Representative(d);
+    e := RightOne(Representative(d));
 
     # Generate representatives for all the H-Classes in the R-Class of He
-    if IsActingSemigroup(S) then
-      r := GreensRClassOfElementNC(d, e);
-    else
-      r := RClass(d, e);
-    fi;
-    h := HClassReps(r);
-    lambdaorb := Set(h, ImageSetOfPartialPerm);
-
-    # I think we want e to be the lexicographically least idempotent in D
-    #e := PartialPermNC(lambdaorb[1], lambdaorb[1]);
-
-    # He is a group H-Class in our join-irreducible D-Class
-    # Sigma: isomorphism to a perm group (unfortunately necessary)
-    # Psi: homom from Schutzenberger Group corresponding to He, to a perm
-    #      group
-    # Rho: isomorphism to a smaller degree perm group
+    h := HClassReps(GreensRClassOfElement(d, e));
+    lambdaorb := List(h, ImageSetOfPartialPerm);
 
     He := GreensHClassOfElementNC(S, e);
-    if IsActingSemigroup(S) then
-      He := GroupHClass(d);
-      schutz := SchutzenbergerGroup(He);
-      sigmainv := InverseGeneralMapping(IsomorphismPermGroup(He));
-    else
-      schutz := Group(());
-      enum := Enumerator(He);
-      i := 1;
-      while IsBound(enum[i]) do
-        schutz := ClosureGroup(schutz, AsPermutation(enum[i]));
-        i := i + 1;
-      od;
-      sigmainv := x -> AsPartialPerm(x, DomainOfPartialPerm(e));
-    fi;
-
     sup := SupremumIdempotentsNC(Minorants(S, e), e);
     trivialse := not ForAny(He, x -> NaturalLeqInverseSemigroup(S)(sup, x)
                                      and x <> e);
 
-    psi := ActionHomomorphism(schutz,
-                              Difference(DomainOfPartialPerm(e),
-                                         DomainOfPartialPerm(sup)));
-    psiinv := InverseGeneralMapping(psi);
-
-    rho := SmallerDegreePermutationRepresentation(Image(psi));
-    rhoinv := InverseGeneralMapping(rho);
+    if IsActingSemigroup(S) then
+      schutz := SchutzenbergerGroup(He);
+      sigmainv := x -> x ^ InverseGeneralMapping(IsomorphismPermGroup(He));
+    else
+      schutz := Group(());
+      enum := Enumerator(He);
+      for k in enum do
+        schutz := ClosureGroup(schutz, AsPermutation(k));
+      od;
+      sigmainv := x -> AsPartialPerm(x, DomainOfPartialPerm(e));
+    fi;
 
     ##  Se is the subgroup of He whose elements have the same minorants as e
     if trivialse then
@@ -688,26 +663,27 @@ function(S)
       cosets := [e];
       stabpp := He;
     else
+      psi := ActionHomomorphism(schutz,
+                                Difference(DomainOfPartialPerm(e),
+                                           DomainOfPartialPerm(sup)));
+      rho := SmallerDegreePermutationRepresentation(Image(psi));
+      rhoinv := InverseGeneralMapping(rho);
       orbits := Orbits(Image(rho));
     fi;
 
     for i in orbits do
       if not trivialse then
-        stab := ImagesSet(psiinv,
+        stab := ImagesSet(InverseGeneralMapping(psi),
                           ImagesSet(rhoinv, Stabilizer(Image(rho), i[1])));
         cosets := RightTransversal(schutz, stab);
-        if IsGeneralMapping(sigmainv) then
-          stabpp := ImagesSet(sigmainv, stab);
-        else
-          stabpp := Set(stab, sigmainv);
-        fi;
+        stabpp := Set(stab, sigmainv);
       fi;
 
       # Generate representatives for ALL the cosets the generator will act on
       # Divide every H-Class in the R-Class into 'cosets' like stab in He
       nrcosets := Size(h) * Length(cosets);
       j := 0;
-      reps := [];
+      reps := EmptyPlist(nrcosets);
       for k in [1 .. Size(h)] do
         for m in [1 .. Length(cosets)] do
           j := j + 1;
@@ -717,7 +693,6 @@ function(S)
 
       # Loop over old generators of S to calculate its action on the cosets
       for j in [1 .. Length(oldgens)] do
-
         gen := oldgens[j];
         offset := Length(newgens[j]);
 
@@ -725,7 +700,7 @@ function(S)
         for k in [1 .. nrcosets] do
           rep := reps[k] * gen;
           # Will the new generator will be defined at this point?
-          if not rep * rep ^ (- 1) in stabpp then
+          if not rep * rep ^ (-1) in stabpp then
             Add(newgens[j], 0);
           else
             box := Position(lambdaorb, ImageSetOfPartialPerm(rep));
