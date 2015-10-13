@@ -43,7 +43,7 @@
 
     <#Include Label="CongruenceClassOfElement">
     <#Include Label="CongruenceClasses">
-    <#Include Label="NrCongruenceClasses">
+    <#Include Label="NrEquivalenceClasses">
     <#Include Label="CongruencesOfSemigroup">
     <#Include Label="AsLookupTable">
 
