@@ -11,8 +11,10 @@
 #include <algorithm>
 #include <limits.h>
 
+// Namespace for containing everything related to the Semiring.
+
 namespace semiring {
-   
+
   // Abstract base class.
   // A *semiring* is a ...
 
@@ -52,11 +54,21 @@ namespace semiring {
       // semiring.
       // @return the product of x and y in the semiring.
       virtual long prod (long x, long y) const = 0;
-
+      
+      // Threshold of the semiring.
+      //  
+      // Method for finding the threshold of a semiring. The default value is
+      // -1 (undefined).
+      // @return -1
       virtual long threshold () const {
         return -1;
       }
 
+      // Period of the semiring.
+      //  
+      // Method for finding the period of a semiring. The default value is
+      // -1 (undefined).
+      // @return -1
       virtual long period () const {
         return -1;
       }
