@@ -48,3 +48,4 @@ src/.deps/*
 src/.libs/*
 .dirstamp
 src/semigroups++/.deps
+src/semigroups++/html

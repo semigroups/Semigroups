@@ -98,6 +98,7 @@ extern Obj PBRType;
 /*******************************************************************************
  * Union-find data structure
 *******************************************************************************/
+
 typedef std::vector<size_t>   table_t;
 typedef std::vector<table_t*> blocks_t;
 
@@ -109,9 +110,9 @@ public:
 
   // Constructor
   UFData (size_t size) : _size(size),
-                         _haschanged(false),
                          _table(new table_t()),
-                         _blocks(nullptr) {
+                         _blocks(nullptr),
+                         _haschanged(false) {
     _table->reserve(size);
     for (size_t i=0; i<size; i++) {
       _table->push_back(i);

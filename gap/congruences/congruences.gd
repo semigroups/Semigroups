@@ -34,7 +34,7 @@ DeclareOperation("\*", [IsEquivalenceClass, IsList]);
 DeclareOperation("\*", [IsList, IsEquivalenceClass]);
 
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-        [IsSemigroupCongruence]);
+                 [IsSemigroupCongruence]);
 DeclareAttribute("AsLookupTable", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
 DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);
