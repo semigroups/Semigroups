@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  normalizer.tst
+#W  extreme/normalizer.tst
 #Y  Copyright (C) 2014-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -10,11 +10,11 @@
 
 # takes approx. 6.9s
 
-gap> START_TEST("Semigroups package: normalizer.tst");
+gap> START_TEST("Semigroups package: extreme/normalizer.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 # NormalizerTest3
 #gap> S:=Semigroup(
@@ -185,4 +185,4 @@ gap> Unbind(G);
 gap> Unbind(lambdastab);
 
 #E#
-gap> STOP_TEST( "Semigroups package: normalizer.tst");
+gap> STOP_TEST("Semigroups package: extreme/normalizer.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  semipperm.tst
+#W  standard/semigroups/semipperm.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: semipperm.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semipperm.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -319,4 +319,4 @@ gap> Unbind(s);
 gap> Unbind(empty_map);
 
 #E#
-gap> STOP_TEST("Semigroups package: semipperm.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semipperm.tst");

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  monoid_pkg.tst
+#W  extreme/monoid_pkg.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -8,11 +8,11 @@
 #############################################################################
 ##
 ## a concatenation of relevant tests from the monoid/tst. 
-gap> START_TEST("Semigroups package: monoid_pkg.tst");
+gap> START_TEST("Semigroups package: extreme/monoid_pkg.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# MonoidPkgTest2
 gap> g:=CyclicGroup(3);;
@@ -1574,4 +1574,4 @@ gap> Unbind(cs3);
 gap> Unbind(cs2);
 
 #E#
-gap> STOP_TEST( "Semigroups package: monoid_pkg.tst");
+gap> STOP_TEST("Semigroups package: extreme/monoid_pkg.tst");

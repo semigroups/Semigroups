@@ -1,21 +1,19 @@
 #############################################################################
 ##
-#W  semigroups-matrix-max-plus.tst
+#W  standard/semigroups/semimaxplus.tst
 #Y  Copyright (C) 2015                                  James D. Mitchell
 ##                                                       
-##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
-gap> START_TEST("Semigroups package: semigroups-matrix-max-plus.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semimaxplus.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS_StartTest();
 
-# semigroups-matrix-max-plus: C++ code working, for max-plus matrix semigroup
+# semimaxplus: C++ code working, for max-plus matrix semigroup
 gap> S := Semigroup(MaxPlusMatrixNC([[0, -4], [-4, -1]]),
 >                   MaxPlusMatrixNC([[0, -3], [-3, -1]]));
 <semigroup of 2x2 max-plus matrices with 2 generators>
@@ -34,7 +32,7 @@ gap> NrIdempotents(S);
 gap> MultiplicativeZero(S);
 fail
 
-# semigroups-matrix-max-plus: C++ code working, for natural matrix semigroup
+# semimaxplus: C++ code working, for natural matrix semigroup
 gap> S := Monoid(NaturalMatrixNC([[0, 1, 0], [1, 1, 0], [0, 1, 0]], 1, 2),
 >                NaturalMatrixNC([[1, 0, 0], [1, 0, 1], [1, 0, 0]], 1, 2));
 <monoid of 3x3 natural matrices with 2 generators>
@@ -58,4 +56,4 @@ gap> MultiplicativeZero(S);
 fail
 
 #E# 
-gap> STOP_TEST("Semigroups package: semigroups-matrix-max-plus.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semimaxplus.tst");

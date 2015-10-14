@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  greens.tst
+#W  standard/greens/greens-acting.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -10,7 +10,7 @@
 
 # ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"greens.tst"));
 # takes approx. 1 minute to run currently!
-gap> START_TEST("Semigroups package: greens-acting.tst");
+gap> START_TEST("Semigroups package: standard/greens/greens-acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -1879,4 +1879,4 @@ gap> Unbind(t);
 gap> Unbind(x);
 
 #E# 
-gap> STOP_TEST("Semigroups package: greens-acting.tst");
+gap> STOP_TEST("Semigroups package: standard/greens/greens-acting.tst");

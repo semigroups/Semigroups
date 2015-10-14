@@ -1,17 +1,17 @@
 #############################################################################
 ##
-#W  properties.tst
+#W  extreme/properties.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: properties.tst");
+gap> START_TEST("Semigroups package: extreme/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# PropertiesTest3
 gap> semis:=
@@ -916,4 +916,4 @@ gap> Unbind(iso);
 gap> Unbind(t);
 
 #E#
-gap> STOP_TEST( "Semigroups package: properties.tst");
+gap> STOP_TEST("Semigroups package: extreme/properties.tst");

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  semigroups.tst
+#W  standard/semigroups/semigroups.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -11,7 +11,7 @@
 #
 # ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),
 # > "semigroups.tst")); 
-gap> START_TEST("Semigroups package: semigroups.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semigroups.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -177,10 +177,7 @@ gap> iso := IsomorphismPartialPermSemigroup(g);
 MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)
 (2,6)(3,7)(5,8) ]), <inverse partial perm semigroup of rank 8 with
  3 generators>, function( p ) ... end, function( f ) ... end )
-gap> inv := InverseGeneralMapping(iso);
-MappingByFunction( <inverse partial perm semigroup of rank 8 with 3 generators
->, Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)
-(5,8) ]), function( f ) ... end, function( p ) ... end )
+gap> inv := InverseGeneralMapping(iso);;
 gap> f := (1, 5)(2, 3)(4, 8)(6, 7);;
 gap> f ^ iso;
 (1,5)(2,3)(4,8)(6,7)
@@ -252,4 +249,4 @@ gap> Unbind(u);
 
 #E#
 gap> Unbind(s);; Unbind(S);; Unbind(gens);;
-gap> STOP_TEST("Semigroups package: semigroups.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semigroups.tst");

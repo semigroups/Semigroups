@@ -1,17 +1,17 @@
 ###########################################################################
 ##
-#W  misc.tst
+#W  extreme/misc.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: misc.tst"); 
+gap> START_TEST("Semigroups package: extreme/misc.tst"); 
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# MiscTest0
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
@@ -4666,5 +4666,4 @@ gap> Unbind(lambda_stab);
 gap> Unbind(K18g);
 
 #E#
-gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(l); Unbind(iter);
-gap> STOP_TEST( "Semigroups package: misc.tst");
+gap> STOP_TEST("Semigroups package: extreme/misc.tst");

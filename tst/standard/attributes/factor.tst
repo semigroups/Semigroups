@@ -1,4 +1,4 @@
-#%T##########################################################################
+#############################################################################
 ##
 #W  standard/attributes/factor.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
@@ -7,8 +7,6 @@
 ##
 #############################################################################
 ##
-
-#
 gap> START_TEST("Semigroups package: standard/attributes/factor.tst");
 gap> LoadPackage("semigroups", false);;
 

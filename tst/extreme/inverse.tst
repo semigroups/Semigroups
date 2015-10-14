@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  inverse.tst
+#W  extreme/inverse.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: congruences/inverse.tst");
-gap> LoadPackage( "semigroups", false );;
+gap> START_TEST("Semigroups package: extreme/inverse.tst");
+gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS_StartTest();
@@ -101,4 +101,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E# 
-gap> STOP_TEST("Semigroups package: congruences/inverse.tst");
+gap> STOP_TEST("Semigroups package: extreme/inverse.tst");
