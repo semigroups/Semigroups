@@ -117,7 +117,7 @@ true]]></Example>
 <#GAPDoc Label="IsInverseSemigroupCongruenceClassByKernelTrace">
   <ManSection>
     <Filt Name="IsInverseSemigroupCongruenceClassByKernelTrace" Arg="obj" Type="Category"/>
-    <Returns><K>true<\K> or <K>false<\K>.</Returns>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This category contains any congruence class which belongs to a congruence
       which is represented internally by its kernel and trace.  See <Ref

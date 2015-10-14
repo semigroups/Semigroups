@@ -43,6 +43,7 @@
 
     <#Include Label="CongruenceClassOfElement">
     <#Include Label="CongruenceClasses">
+    <#Include Label="NonTrivialEquivalenceClasses">
     <#Include Label="NrEquivalenceClasses">
     <#Include Label="CongruencesOfSemigroup">
     <#Include Label="AsLookupTable">
@@ -55,7 +56,7 @@
     This section describes the implementation of congruences of simple and 0-simple
     semigroups in the &Semigroups; package, and the functions associated with
     them.  This code and this part of the manual were written by Michael Torpey.
-    Most of the theorems used in this chapter are from Section 3.5 of 
+    Most of the theorems used in this chapter are from Section 3.5 of
     <Cite Key="howie"/>.<P/>
 
     By the Rees Theorem, any 0-simple semigroup <M>S</M> is isomorphic to a
@@ -74,9 +75,9 @@
       zeroes.
     </Alt><P/>
 
-    The congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with 
+    The congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with
     the <E>linked triple</E>, which is a triple of the form <C>[N,S,T]</C> where:
-    
+
     <List>
       <Item>
 	<C>N</C> is a normal subgroup of the underlying group <C>G</C>,
@@ -88,9 +89,9 @@
         <C>T</C> is an equivalence relation on the rows of <C>P</C>,
       </Item>
     </List>
-    
+
     satisfying the following conditions:
-    
+
     <List>
       <Item>
         a pair of <C>S</C>-related columns must contain zeroes in
@@ -102,14 +103,14 @@
       </Item>
       <Item>
         if <C>i</C> and <C>j</C> are <C>S</C>-related, <C>k</C> and
-        <C>l</C> are <C>T</C>-related and the matrix entries 
-        <M>p_{k, i}, p_{k, j}, p_{l, i}, p_{l, j} \neq 0</M>, then 
-        <M>q_{k, l, i, j} \in N</M>, where 
+        <C>l</C> are <C>T</C>-related and the matrix entries
+        <M>p_{k, i}, p_{k, j}, p_{l, i}, p_{l, j} \neq 0</M>, then
+        <M>q_{k, l, i, j} \in N</M>, where
         <Display>q_{k, l, i, j} = p_{k, i}
         p_{l, i}^{-1} p_{l, j} p_{k, j}^{-1}.</Display>
       </Item>
     </List>
-    
+
     By Theorem 3.5.9 in <Cite Key="howie"/>, for any finite 0-simple Rees
     0-matrix semigroup, there is a bijection between its non-universal
     congruences and its linked triples.  In this way, we can internally
@@ -127,7 +128,7 @@
 
     An analogous condition exists for finite simple Rees matrix semigroups
     without zero.<P/>
-    
+
     <#Include Label="IsRZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceByLinkedTriple">
     <#Include Label="RZMSCongruenceClassByLinkedTriple">
@@ -137,6 +138,77 @@
     <#Include Label="AsRZMSCongruenceByLinkedTriple">
     <#Include Label="MeetSemigroupCongruences">
     <#Include Label="JoinSemigroupCongruences">
+  </Section>
+
+  <Section>
+    <Heading>Congruences on inverse semigroups</Heading>
+
+    This section describes the implementation of congruences of inverse
+    semigroups in the &Semigroups; package, and the functions associated with
+    them.  This code and this part of the manual were written by Michael Torpey.
+    Most of the theorems used in this chapter are from Section 5.3 of
+    <Cite Key="howie"/>.<P/>
+
+    The congruences of an inverse semigroup are in 1-1 correspondence with
+    its <E>congruence pairs</E>.  A congruence pair is a pair <C>(N, t)</C> such
+    that:
+
+    <List>
+      <Item>
+	<C>N</C> is a normal subsemigroup of <C>S</C> -- that is, a
+	self-conjugate subsemigroup which contains all the idempotents of
+	<C>S</C>,
+      </Item>
+      <Item>
+        <C>t</C> is a normal congruence on <C>E</C>, the subsemigroup of all
+        idempotents in <C>S</C> -- that is, a congruence on <C>E</C> such that
+        if <M>(e,f)</M> is a pair in <C>t</C>, then the pair
+        <M>(a^{-1} e a, a^{-1} f a)</M> is also in <C>t</C>,
+      </Item>
+    </List>
+
+    satisfying the following conditions:
+
+    <List>
+      <Item>
+        If <M>ae \in N</M> and <M>(e, a^{-1} a) \in t</M>, then <M>a \in N</M>,
+      </Item>
+      <Item>
+        If <M>a \in N</M>, then <M>(aa^{-1} , a^{-1} a) \in t</M>.
+      </Item>
+    </List>
+
+    By Theorem 5.3.3 in <Cite Key="howie"/>, for any inverse semigroup, there is
+    a bijection between its congruences and its congruence pairs.  In this way,
+    we can internally represent any congruence of such a semigroup by storing
+    its associated congruence pair instead of a set of generating pairs, and
+    thus perform many calculations on it more efficiently.<P/>
+
+    If we have a congruence <C>C</C> with congruence pair <C>(N, t)</C>, it
+    turns out that <C>N</C> is its <E>kernel</E> (that is, the set of all
+    elements congruent to an idempotent) and that <C>t</C> is its <E>trace</E>
+    (that is, the restriction of <C>C</C> to the idempotents).  Hence, we refer
+    to a congruence stored in this format as a "congruence by kernel and
+    trace".<P/>
+
+    <#Include Label="IsInverseSemigroupCongruenceByKernelTrace">
+    <#Include Label="InverseSemigroupCongruenceByKernelTrace">
+    <#Include Label="AsInverseSemigroupCongruenceByKernelTrace">
+    <#Include Label="KernelOfSemigroupCongruence">
+    <#Include Label="TraceOfSemigroupCongruence">
+    <#Include Label="IsInverseSemigroupCongruenceClassByKernelTrace">
+  </Section>
+
+  <Section>
+    <Heading>Rees congruences</Heading>
+
+    A Rees congruence is defined by a semigroup ideal.  It is a congruence on a
+    semigroup <C>S</C> which has one congruence class equal to a semigroup ideal
+    <C>I</C> of <C>S</C>, and every other congruence class being a
+    singleton. <P/>
+
+    <#Include Label="SemigroupIdealOfReesCongruence">
+    <#Include Label="IsReesCongruenceClass">
   </Section>
 
   <Section>
@@ -157,6 +229,7 @@
     congruence class of the universal congruence.<P/>
 
     <#Include Label="IsUniversalSemigroupCongruence">
+    <#Include Label="IsUniversalSemigroupCongruenceClass">
     <#Include Label="UniversalSemigroupCongruence">
   </Section>
 </Chapter>
