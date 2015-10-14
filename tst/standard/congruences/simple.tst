@@ -1,23 +1,23 @@
 #############################################################################
 ##
-#W  congruences/simple.tst
+#W  standard/congruences/simple.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: congruences/simple.tst");
-gap> LoadPackage( "semigroups", false );;
+gap> START_TEST("Semigroups package: standard/congruences/simple.tst");
+gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS_StartTest();
 
 #T# SimpleCongTest1: Create a simple semigroup
-gap> s := Semigroup( [Transformation( [ 2, 1, 1, 2, 1 ] ), 
->                     Transformation( [ 3, 4, 3, 4, 4 ] ),
->                     Transformation( [ 3, 4, 3, 4, 3 ] ), 
->                     Transformation( [ 4, 3, 3, 4, 4 ] ) ] );;
+gap> s := Semigroup([Transformation([2, 1, 1, 2, 1]),
+>                     Transformation([3, 4, 3, 4, 4]),
+>                     Transformation([3, 4, 3, 4, 3]),
+>                     Transformation([4, 3, 3, 4, 4])]);;
 
 #T# SimpleCongTest2: Find all congruences of a simple semigroup
 gap> congs := CongruencesOfSemigroup(s);;
@@ -26,10 +26,10 @@ gap> Size(congs);
 
 #T# SimpleCongTest3: Construct a congruence by generating pairs
 gap> cong := SemigroupCongruence(s,
-> [ [ Transformation( [ 1, 2, 1, 2, 2 ] ),
->     Transformation( [ 2, 1, 2, 1, 2 ] ) ], 
->   [ Transformation( [ 2, 1, 1, 2, 2 ] ),
->     Transformation( [ 1, 2, 2, 1, 2 ] ) ] ] );
+> [[Transformation([1, 2, 1, 2, 2]),
+>     Transformation([2, 1, 2, 1, 2])],
+>   [Transformation([2, 1, 1, 2, 2]),
+>     Transformation([1, 2, 2, 1, 2])]]);
 <semigroup congruence over <simple transformation semigroup of degree 5 with 
  4 generators> with linked triple (2,2,2)>
 gap> cong = congs[33];
@@ -38,12 +38,12 @@ gap> cong = congs[11];
 false
 
 #T# SimpleCongTest4: Testing membership in a congruence
-gap> x := Transformation( [ 1, 2, 2, 1, 1 ] );;
-gap> y := Transformation( [ 1, 2, 2, 1, 2 ] );;
-gap> z := Transformation( [ 2, 1, 2, 1, 1 ] );;
-gap> [x,y] in cong;
+gap> x := Transformation([1, 2, 2, 1, 1]);;
+gap> y := Transformation([1, 2, 2, 1, 2]);;
+gap> z := Transformation([2, 1, 2, 1, 1]);;
+gap> [x, y] in cong;
 true
-gap> [x,z] in cong;
+gap> [x, z] in cong;
 false
 
 #T# SimpleCongTest5: Congruence classes
@@ -76,13 +76,13 @@ gap> Size(classx);
 4
 
 #T# SimpleCongTest6: Join and meet congruences
-gap> JoinSemigroupCongruences(congs[6],congs[11]) = congs[12];
+gap> JoinSemigroupCongruences(congs[6], congs[11]) = congs[12];
 true
-gap> JoinSemigroupCongruences(congs[18],congs[11]) = congs[22];
+gap> JoinSemigroupCongruences(congs[18], congs[11]) = congs[22];
 true
-gap> MeetSemigroupCongruences(congs[15],congs[1]) = congs[1];
+gap> MeetSemigroupCongruences(congs[15], congs[1]) = congs[1];
 true
-gap> MeetSemigroupCongruences(congs[34],congs[34]) = congs[34];
+gap> MeetSemigroupCongruences(congs[34], congs[34]) = congs[34];
 true
 
 #T# SimpleCongTest7: Quotients
@@ -122,4 +122,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST( "Semigroups package: congruences/simple.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/simple.tst");
