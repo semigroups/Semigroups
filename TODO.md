@@ -3,21 +3,22 @@
 
 ###TODO C++
 
+* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 * multiplicative zero
+
 * remove `auto`, use `override`: done in:
     * `element.h`
 * whitespace: done in:
     * `element.h`
-* "documentation" and comments: 
+* documentation and comments: 
 
+* use namespace in the C++ code
 * optimize
 
-* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 
 * check for memleaks
-* remove C++11?
 * gmp problems?
-* use namespace in the C++ code
+
 
 ###GAP kernel
 * SEMIGROUP_IDEMPOTENTS

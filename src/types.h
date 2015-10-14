@@ -69,7 +69,6 @@ inline Class* CLASS_OBJ(Obj o) {
  * Imported types from the library
 *******************************************************************************/
 
-extern Obj Objectify;
 extern Obj infinity;
 extern Obj Ninfinity;
 extern Obj IsBipartition;

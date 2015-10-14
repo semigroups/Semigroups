@@ -46,7 +46,7 @@ Obj BoolMatConverter::unconvert (Element* x) {
     Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
     SET_LEN_BLIST(blist, n);
     for (size_t j = 0; j < n; j++) {
-      if (xx->at(i * n + j)) {
+      if ((*xx)[i * n + j]) {
         SET_ELM_BLIST(blist, j + 1, True);
       } else {
         SET_ELM_BLIST(blist, j + 1, False);
@@ -55,7 +55,11 @@ Obj BoolMatConverter::unconvert (Element* x) {
     SET_ELM_PLIST(o, i + 1, blist);
     CHANGED_BAG(o);
   }
-  return CALL_2ARGS(Objectify, BooleanMatType, o);
+  
+  TYPE_POSOBJ(o) = BooleanMatType;
+  RetypeBag(o, T_POSOBJ);
+  CHANGED_BAG(o);
+  return o;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -89,6 +93,7 @@ Obj BipartConverter::unconvert (Element* x) {
   for (size_t i = 0; i < 2 * xx->degree(); i++) {
     SET_ELM_PLIST(o, i + 1, INTOBJ_INT(xx->block(i) + 1));
   }
+
   o = CALL_1ARGS(BipartitionByIntRepNC, o);
   return o;
 }
@@ -144,7 +149,11 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
     SET_ELM_PLIST(plist, i + 1, row);
     CHANGED_BAG(plist);
   }
-  return CALL_2ARGS(Objectify, _gap_type, plist);
+  TYPE_POSOBJ(plist) = _gap_type;
+  RetypeBag(plist, T_POSOBJ);
+  CHANGED_BAG(plist);
+  return plist;
+  //return CALL_2ARGS(Objectify, _gap_type, plist);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -239,5 +248,9 @@ Obj PBRConverter::unconvert (Element* xx) {
     SET_ELM_PLIST(plist, i + 2, adj);
     CHANGED_BAG(plist);
   }
-  return CALL_2ARGS(Objectify, PBRType, plist);
+  TYPE_POSOBJ(plist) = PBRType;
+  RetypeBag(plist, T_POSOBJ);
+  CHANGED_BAG(plist);
+  return plist;
+  //return CALL_2ARGS(Objectify, PBRType, plist);
 }
