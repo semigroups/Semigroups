@@ -42,7 +42,9 @@ function(S)
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
                                                x -> AsBipartition(x, deg)));
 
-  SetIsGroupAsSemigroup(U, true);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
   UseIsomorphismRelation(U, G);
 
   return U;

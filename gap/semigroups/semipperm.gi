@@ -316,7 +316,10 @@ function(S)
   SetIsomorphismPermGroup(U, MappingByFunction(U, G,
                                                x -> x ^ map,
                                                x -> x ^ inv));
-  SetIsGroupAsSemigroup(U, true);
+
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
   UseIsomorphismRelation(U, G);
 
   return U;
