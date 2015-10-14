@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  semitrans.tst
+#W  standard/semigroups/semitrans.tst
 #Y  Copyright (C) 2015                                     Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: semitrans.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semitrans.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -109,4 +109,4 @@ gap> Unbind(s);
 gap> Unbind(n);
 
 #E#
-gap> STOP_TEST("Semigroups package: semitrans.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semitrans.tst");

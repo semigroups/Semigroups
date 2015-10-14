@@ -1,19 +1,20 @@
 #############################################################################
 ##
-##  freeband.tst
+##  standard/fp/freeband.tst
 #Y  Copyright (C) 2013-15                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-gap> START_TEST("Semigroups package: freeband.tst");
+##
+gap> START_TEST("Semigroups package: standard/fp/freeband.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS_StartTest();
 
-#T# FreeBandTest1: Creating free bands (with default generators) and basic
-# methods
+#T# FreeBandTest1: Creating free bands and basic methods
+# (with default generators)
 gap> FreeBand(["a", "b", "c"]);
 <free band on the generators [ a, b, c ]>
 gap> FreeBand(3, "abc");
@@ -223,4 +224,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST("Semigroups package: freeband.tst");
+gap> STOP_TEST("Semigroups package: standard/fp/freeband.tst");

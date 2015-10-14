@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  closure.tst
+#W  extreme/closure.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,11 +9,11 @@
 ##
 
 # ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"closure.tst"));
-gap> START_TEST("Semigroups package: closure.tst");
+gap> START_TEST("Semigroups package: extreme/closure.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# ClosureTest1
 gap> gens := [ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
@@ -415,8 +415,7 @@ gap> for i in [10 .. Length(gens) ] do;
 gap> a;
 [ 2346, 3316, 3593, 3767, 4000, 4191, 4290, 4747 ]
 
-# TODO check in a smaller example that the
-# presentation is correct
+# TODO check in a smaller example that the presentation is correct
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(i);
 gap> Unbind(s);
@@ -426,4 +425,4 @@ gap> Unbind(gens);
 gap> Unbind(t);
 
 #E# 
-gap> STOP_TEST( "Semigroups package: closure.tst");
+gap> STOP_TEST("Semigroups package: extreme/closure.tst");

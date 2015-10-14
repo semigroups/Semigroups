@@ -616,7 +616,10 @@ function(S)
 
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
                                                x -> x ^ map));
-  SetIsGroupAsSemigroup(U, true);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
+
   UseIsomorphismRelation(U, G);
 
   return U;
@@ -626,8 +629,6 @@ end);
 
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
-
-#
 
 #
 

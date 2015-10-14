@@ -1,19 +1,20 @@
 ###########################################################################
 ##
-##  freeinverse.tst 
+##  standard/fp/freeinverse.tst 
 #Y  Copyright (C) 2011-15                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-gap> START_TEST("Semigroups package: freeinverse.tst");
+##
+gap> START_TEST("Semigroups package: standard/fp/freeinverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS_StartTest();
 
-#T# FreeInverseTest1: Creating free inverse semigroups (with default 
-# generators) and basic methods
+#T# FreeInverseTest1: Creating free inverse semigroups and basic methods
+# (with default generators)
 gap> FreeInverseSemigroup(\<);
 Error, Semigroups: FreeInverseSemigroup: usage,
 FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
@@ -42,8 +43,8 @@ true
 gap> x * x ^ -1 = y * y ^ -1;
 false
 
-#T# FreeInverseTest2: Creating free inverse semigroups (with named
-# generators) and basic methods
+#T# FreeInverseTest2: Creating free inverse semigroups and basic methods
+# (with named generators)
 gap> S := FreeInverseSemigroup("a", "b", "c");
 <free inverse semigroup on the generators [ a, b, c ]>
 gap> Size(S);
@@ -74,7 +75,7 @@ gap> IsFreeInverseSemigroup(SymmetricGroup(3));
 Error, Semigroups: IsFreeInverseSemigroup:
 cannot determine the answer
 
-#T# FreeInverseTest4: Iterator for free inverse semigroups
+#T# FreeInverseTest4: Iterator, for a free inverse semigroup
 gap> iter := Iterator(FreeInverseSemigroup(["a", "b"]));
 <iterator>
 gap> for i in [1 .. 10] do
@@ -96,4 +97,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST("Semigroups package: freeinverse.tst");
+gap> STOP_TEST("Semigroups package: standard/fp/freeinverse.tst");

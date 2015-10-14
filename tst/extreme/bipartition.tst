@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  bipartition.tst
+#W  extreme/bipartition.tst
 #Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
@@ -8,11 +8,11 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: bipartition.tst");
+gap> START_TEST("Semigroups package: extreme/bipartition.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# BipartitionTest1: IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
 gap> S:=DualSymmetricInverseMonoid(4);                                
@@ -2943,4 +2943,4 @@ gap> Unbind(iso);
 gap> Unbind(x);
 
 #E# 
-gap> STOP_TEST( "Semigroups package: bipartition.tst");
+gap> STOP_TEST("Semigroups package: extreme/bipartition.tst");

@@ -1,24 +1,24 @@
 ###########################################################################
 ##
-#W  congruences/reesmat.tst
+#W  standard/congruences/reesmat.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: congruences/reesmat.tst");
-gap> LoadPackage( "semigroups", false );;
+gap> START_TEST("Semigroups package: standard/congruences/reesmat.tst");
+gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS_StartTest();
 
 # All ReesZeroMatrixSemigroup functions tested with a small example
 #T# ReesMatCongTest1: Create a Rees 0-matrix semigroup
-gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
-gap> mat := [ [ 0, 0, (1,4,5), 0, 0, (1,4,3,5) ],
-> [ 0, (), 0, 0, (3,5), 0 ],
-> [ (), 0, 0, (3,5), 0, 0 ] ];;
+gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
+gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
+> [0, (), 0, 0, (3, 5), 0],
+> [(), 0, 0, (3, 5), 0, 0]];;
 gap> s := ReesZeroMatrixSemigroup(g, mat);;
 
 #T# ReesMatCongTest2: Find all its congruences
@@ -27,9 +27,9 @@ gap> Size(congs);
 33
 
 #T# ReesMatCongTest3: Construct a congruence manually
-gap> n := Group([(1,4)(3,5),(1,5)(3,4)]);;
-gap> colBlocks := [ [ 1 ], [ 4 ], [ 2, 5 ], [ 3, 6 ] ];;
-gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
+gap> n := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
+gap> colBlocks := [[1], [4], [2, 5], [3, 6]];;
+gap> rowBlocks := [[1], [2], [3]];;
 gap> cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
  (1,5,3,4) ])> with linked triple (2^2,4,3)>
@@ -39,15 +39,15 @@ gap> cong = congs[13];
 true
 
 #T# ReesMatCongTest4: Testing membership
-gap> x := ReesZeroMatrixSemigroupElement(s, 3, (4,5), 1);;
-gap> y := ReesZeroMatrixSemigroupElement(s, 3, (1,5,3,4), 1);;
-gap> z := ReesZeroMatrixSemigroupElement(s, 1, (1,3,5), 2);;
-gap> [x,y] in cong;
+gap> x := ReesZeroMatrixSemigroupElement(s, 3, (4, 5), 1);;
+gap> y := ReesZeroMatrixSemigroupElement(s, 3, (1, 5, 3, 4), 1);;
+gap> z := ReesZeroMatrixSemigroupElement(s, 1, (1, 3, 5), 2);;
+gap> [x, y] in cong;
 true
-gap> [x,z] in cong;
+gap> [x, z] in cong;
 false
-gap> y := ReesZeroMatrixSemigroupElement(s, 6, (1,3,5), 1);;
-gap> [x,y] in cong;
+gap> y := ReesZeroMatrixSemigroupElement(s, 6, (1, 3, 5), 1);;
+gap> [x, y] in cong;
 true
 
 #T# ReesMatCongTest5: Equivalence classes
@@ -68,7 +68,7 @@ gap> x in class3;
 false
 gap> class1 = classes[38];
 true
-gap> nCoset := RightCoset(congs[13]!.n, (1,5));;
+gap> nCoset := RightCoset(congs[13]!.n, (1, 5));;
 gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], nCoset, 3, 2);;
 gap> class = classes[44];
 true
@@ -109,12 +109,12 @@ true
 gap> uni := UniversalSemigroupCongruence(s);
 <universal semigroup congruence over <Rees 0-matrix semigroup 6x3 over 
   Group([ (1,4,5), (1,5,3,4) ])>>
-gap> [x,z] in uni;
+gap> [x, z] in uni;
 true
-gap> Length(EquivalenceClasses(uni)) = 1 
-> and (Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1,(1,4,5),3)
+gap> Length(EquivalenceClasses(uni)) = 1 and
+>   (Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1, (1, 4, 5), 3)
 > or Representative(EquivalenceClasses(uni)[1]) =
->   RMSElement(s, 1,(),1)); # the first is after 4.7.7 the latter before
+>   RMSElement(s, 1, (), 1)); # the first is after 4.7.7 the latter before
 true
 gap> eq := EquivalenceClassOfElement(uni, y);
 {(6,(1,3,5),1)}
@@ -152,4 +152,4 @@ gap> Unbind(class3);
 gap> Unbind(mat);
 
 #E#
-gap> STOP_TEST("Semigroups package: congruences/reesmat.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/reesmat.tst");

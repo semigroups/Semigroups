@@ -64,10 +64,11 @@ gap> Size(G);
 
 #T# RZMSInducedFunction with lots of connected component
 gap> I := SemigroupIdeal(
-> InverseMonoid(
->  [ PartialPermNC( [ 1, 2, 3, 4, 5 ], [ 2, 3, 4, 5, 1 ] ), PartialPermNC( [ 1,\
-> 2, 3, 4, 5 ], [ 2, 1, 3, 4, 5 ] ), PartialPermNC( [ 2, 3, 4, 5 ], [ 1, 2, 3, \
-> 4 ] ) ] ), [ PartialPermNC( [ 1 ], [ 1 ] ) ] );;
+>  InverseMonoid([
+>    PartialPermNC([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),
+>    PartialPermNC([1, 2, 3, 4, 5], [2, 1, 3, 4, 5]),
+>    PartialPermNC([2, 3, 4, 5], [1, 2, 3, 4])]),
+>  [PartialPermNC([1], [1])]);;
 gap> R := Range(IsomorphismReesZeroMatrixSemigroup(I));
 <Rees 0-matrix semigroup 5x5 over Group(())>
 gap> AutomorphismGroup(R);
@@ -82,8 +83,8 @@ gap> AutomorphismGroup(RectangularBand(4, 3));
 5 generators>
 
 #T# RZMSInducedFunction with one connected component
-gap> R := ReesZeroMatrixSemigroup( Group( [ () ] ),
-> [ [ (), (), (), () ], [ (), (), (), () ], [ (), (), (), () ] ] );
+gap> R := ReesZeroMatrixSemigroup(Group([()]),
+> [[(), (), (), ()], [(), (), (), ()], [(), (), (), ()]]);
 <Rees 0-matrix semigroup 4x3 over Group(())>
 gap> AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 4x3 over Group(())> with 
@@ -92,7 +93,8 @@ gap> Size(last);
 144
 
 #T# AutomorphismGroup: for a RZMS with trivial automorphism group of graph
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2,3), (1,2) ] ), [ [ (1,3), (1,2) ], [ 0, (2,3)] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
+>                                 [[(1, 3), (1, 2)], [0, (2, 3)]]);;
 gap> AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,3), (1,
 2) ])> with 6 generators>
@@ -100,7 +102,8 @@ gap> Size(last);
 6
 
 #T# AutomorphismGroup: for a RZMS over not a group
-gap> S := ReesZeroMatrixSemigroup(FullTransformationMonoid(2), [[IdentityTransformation]]);
+gap> S := ReesZeroMatrixSemigroup(FullTransformationMonoid(2),
+>                                 [[IdentityTransformation]]);
 <Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 2>>
 gap> AutomorphismGroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -114,7 +117,7 @@ gap> func := function(n, i)
 >   return out;
 > end;
 function( n, i ) ... end
-gap> mat := List([1..33], i -> func(33, i));;
+gap> mat := List([1 .. 33], i -> func(33, i));;
 gap> R := ReesZeroMatrixSemigroup(Group(()), mat);
 <Rees 0-matrix semigroup 33x33 over Group(())>
 gap> AutomorphismGroup(R);
@@ -157,7 +160,7 @@ gap> AutomorphismGroup(RectangularBand(33, 33));
 65 generators>
 
 #T# IdentityMapping: for an RMS
-gap> R := ReesMatrixSemigroup(Group( [ () ] ), [ [ () ] ]);
+gap> R := ReesMatrixSemigroup(Group([()]), [[()]]);
 <Rees matrix semigroup 1x1 over Group(())>
 gap> IdentityMapping(R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
@@ -177,80 +180,82 @@ gap> IsomorphismSemigroups(R, R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), (), (), () ])
 
 #T# IsomorphismSemigroups: from RMS to RMS
-gap> S := ReesMatrixSemigroup( Group( [ (1,2) ] ), [ [ (), () ], [ (), (1,2) ] ] );
+gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[(), ()], [(), (1, 2)]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
-gap> R := ReesMatrixSemigroup( Group( [ (1,2) ] ), [ [ (), (1,2) ], [ (), () ] ] );
+gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [(), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> IsomorphismSemigroups(R, S);
 ((), GroupHomomorphismByImages( Group( [ (1,2) ] ), Group( [ (1,2) ] ), 
 [ (1,2) ], [ (1,2) ] ), [ (), (), (), () ])
 
 #T# IsomorphismSemigroups: from RZMS to RZMS
-gap> S := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ (), () ], [ (), 0 ] ] );
+gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), ()], [(), 0]]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
-gap> R := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ (), 0 ], [ (), () ] ] );
+gap> R := ReesZeroMatrixSemigroup(Group([()]), [[(), 0], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 gap> IsomorphismSemigroups(R, S);
 ((3,4), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
 [  ] ), [ (), (), (), () ])
 
 #T# IsomorphismSemigroups: fail (non-regular RZMS)
-gap> R := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ 0, 0 ], [ (), () ] ] );
+gap> R := ReesZeroMatrixSemigroup(Group([()]), [[0, 0], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ (), () ], [ (), (1,2) ] ] );
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), ()], [(), (1, 2)]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> IsomorphismSemigroups(R, S);
 Error, Semigroups: IsomorphismSemigroups: usage,
 the arguments must be regular Rees 0-matrix semigroups over groups,
 
 #T# IsomorphismSemigroups: fail (different dimensions)
-gap> R := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ (), () ] ] );;
-gap> S := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ () ], [ () ] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([()]), [[(), ()]]);;
+gap> S := ReesZeroMatrixSemigroup(Group([()]), [[()], [()]]);;
 gap> IsomorphismSemigroups(R, S);
 fail
 
 #T# IsomorphismSemigroups: from RZMS to itself
-gap> R := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ (), () ] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([()]), [[(), ()]]);;
 gap> IsomorphismSemigroups(R, R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), (), () ])
 
 #T# IsomorphismSemigroups: fail (non-isomorphic groups)
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2,3,4) ] ), [ [ (), () ] ] );;
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2), (3,4) ] ), [ [ (), () ] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]), [[(), ()]]);;
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2), (3, 4)]), [[(), ()]]);;
 gap> IsomorphismSemigroups(R, S);
 fail
 
 #T# IsomorphismSemigroups: fail (non-isomorphic graphs)
-gap> R := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ (), () ], [(), ()] ] );;
-gap> S := ReesZeroMatrixSemigroup( Group( [ () ] ), [ [ (), 0 ], [(), ()] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([()]), [[(), ()], [(), ()]]);;
+gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), 0], [(), ()]]);;
 gap> IsomorphismSemigroups(R, S);
 fail
 
 #T# IsomorphismSemigroups: fail (no map found)
 gap> mat1 := [[(), ()], [(), ()]];;
-gap> mat2 := [[(), ()], [(), (1,2)]];;
-gap> R1 := ReesZeroMatrixSemigroup(Group((1,2)), mat1);;
-gap> R2 := ReesZeroMatrixSemigroup(Group((1,2)), mat2);;
+gap> mat2 := [[(), ()], [(), (1, 2)]];;
+gap> R1 := ReesZeroMatrixSemigroup(Group((1, 2)), mat1);;
+gap> R2 := ReesZeroMatrixSemigroup(Group((1, 2)), mat2);;
 gap> IsomorphismSemigroups(R1, R2);
 fail
 
 #T# IsomorphismSemigroups: non-trivial isomorphism 1/2
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ (), 0 ], [ 0, ()] ] );;
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ 0, () ], [(1,2), 0] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), 0], [0, ()]]);;
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[0, ()], [(1, 2), 0]]);;
 gap> IsomorphismSemigroups(R, S);
 ((3,4), GroupHomomorphismByImages( Group( [ (1,2) ] ), Group( [ (1,2) ] ), 
 [ (1,2) ], [ (1,2) ] ), [ (), (), (1,2), () ])
 
 #T# IsomorphismSemigroups: non-trivial isomorphism 2/2
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2,3), (1,2) ] ), [ [ 0, (1,2,3) ], [(1,3,2), ()] ] );;
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2,3), (1,2) ] ), [ [ (1,3), (1,2) ], [ 0, (2,3)] ] );;
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
+>                                 [[0, (1, 2, 3)], [(1, 3, 2), ()]]);;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
+>                                 [[(1, 3), (1, 2)], [0, (2, 3)]]);;
 gap> IsomorphismSemigroups(R, S);
 ((3,4), GroupHomomorphismByImages( Group( [ (1,2,3), (1,2) ] ), Group( 
 [ (1,2,3), (1,2) ] ), [ (1,2,3), (1,2) ], [ (1,2,3), (1,2) ] ), 
 [ (), (1,2,3), (2,3), (1,2) ])
 
 #T# SEMIGROUPS_RZMStoRZMSInducedFunction: error, 1/1
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ (), 0 ], [ 0, ()] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), 0], [0, ()]]);;
 gap> SEMIGROUPS_RZMStoRZMSInducedFunction(R, R, fail, fail, [1]);
 Error, Semigroups: SEMIGROUPS_RZMStoRZMSInducedFunction: usage,
 the 5th argument must be a list of length 2,
@@ -306,8 +311,8 @@ gap> G.1 ^ -1;
 IdentityMapping( <Rees matrix semigroup 2x2 over Group(())> )
 
 #T# \=: RZMS and RZMS elements 1/2
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), [ [ (1,2,3), 0
-> ], [ 0, (1,2,3)] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
+> [[(1, 2, 3), 0], [0, (1, 2, 3)]]);;
 gap> G := AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,
 3) ])> with 3 generators>
@@ -323,22 +328,21 @@ gap> IsOne(G.1);
 false
 gap> IsOne(One(G.1 * G.2));
 true
-gap> Print(G.1); true
+gap> Print(G.1); true;
 RZMSIsoByTriple ( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
 [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ), ReesZeroMatrixSemigroup( Group( 
 [ (1,2,3) ] ), [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] 
  ] ), (), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (1,2,3), (), (1,2,3) 
- ] )Syntax error: ; expected in stream line 2
-^
+ ] )true
 
 #T# \=: RZMS and RZMS elements 2/2
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), [ [ (1,2,3), 0
-> ], [ 0, (1,2,3)] ] );;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
+> [[(1, 2, 3), 0], [0, (1, 2, 3)]]);;
 gap> G := AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,
 3) ])> with 3 generators>
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2,3), (1,2) ] ), [ [ 0, (1,2,3)
-> ], [(1,3,2), ()] ] );;
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
+> [[0, (1, 2, 3)], [(1, 3, 2), ()]]);;
 gap> H := AutomorphismGroup(S);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,3), (1,
 2) ])> with 6 generators>

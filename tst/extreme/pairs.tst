@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  pairs.tst
+#W  extreme/pairs.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##                                                          Wilfred Wilson
 ##
@@ -8,8 +8,8 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: congruences/pairs.tst");
-gap> LoadPackage( "semigroups", false );;
+gap> START_TEST("Semigroups package: extreme/pairs.tst");
+gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS_StartTest();
@@ -199,4 +199,4 @@ gap> Unbind(u);
 gap> Unbind(v);
 
 #E#
-gap> STOP_TEST("Semigroups package: congruences/pairs.tst");
+gap> STOP_TEST("Semigroups package: extreme/pairs.tst");

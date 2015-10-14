@@ -1,17 +1,17 @@
-#%T##########################################################################
+#############################################################################
 ##
-#W  attributes-inverse.tst
+#W  extreme/attributes-inverse.tst
 #Y  Copyright (C) 2012-15                                  Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 #
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: attributes-inverse.tst");
+gap> START_TEST("Semigroups package: extreme/attributes-inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 # 
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# AttributesInverseTest1: JoinIrreducibleDClasses
 gap> S := InverseSemigroup([
@@ -717,4 +717,4 @@ gap> Unbind(inv);
 gap> Unbind(VPR);
 
 #E#
-gap> STOP_TEST("Semigroups package: attributes-inverse.tst");
+gap> STOP_TEST("Semigroups package: extreme/attributes-inverse.tst");

@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: extreme/ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# IdealsTest1
 gap> gens:=[ Transformation( [ 2, 6, 1, 7, 5, 3, 4 ] ), 
@@ -898,4 +898,4 @@ gap> Unbind(x);
 gap> Unbind(idems);
 
 #E# 
-gap> STOP_TEST( "Semigroups package: extreme/ideals.tst");
+gap> STOP_TEST("Semigroups package: extreme/ideals.tst");

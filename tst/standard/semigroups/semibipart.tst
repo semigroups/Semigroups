@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  bipartition.tst
+#W  standard/semigroups/semibipart.tst
 #Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: bipartition.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semibipart.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -2823,4 +2823,4 @@ gap> Unbind(iso);
 gap> Unbind(x);
 
 #E# 
-gap> STOP_TEST("Semigroups package: bipartition.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semibipart.tst");
