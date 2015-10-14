@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  univ-cong.xml
+#W  univ.xml
 #Y  Copyright (C) 2015                                      Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -29,6 +29,26 @@
 gap> S := Semigroup([ Transformation([ 3, 2, 3 ]) ]);;
 gap> U := UniversalSemigroupCongruence(S);;
 gap> IsUniversalSemigroupCongruence(U);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsUniversalSemigroupCongruenceClass">
+  <ManSection>
+    <Filt Name="IsUniversalSemigroupCongruenceClass" Arg="obj" Type="category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      This category describes a class of the universal semigroup congruence (see
+      <Ref Filt="IsUniversalSemigroupCongruence"/>).  A universal semigroup
+      congruence by definition has precisely one congruence class, which
+      contains all of the elements of the semigroup in question.
+
+      <Example><![CDATA[
+gap> S := Semigroup([ Transformation([ 3, 2, 3 ]) ]);;
+gap> U := UniversalSemigroupCongruence(S);;
+gap> classes := CongruenceClasses(U);;
+gap> IsUniversalSemigroupCongruenceClass(classes[1]);
 true]]></Example>
     </Description>
   </ManSection>

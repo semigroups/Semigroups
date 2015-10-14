@@ -1,0 +1,56 @@
+#############################################################################
+##
+#W  rees.xml
+#Y  Copyright (C) 2015                                      Michael Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="SemigroupIdealOfReesCongruence">
+  <ManSection>
+    <Attr Name="SemigroupIdealOfReesCongruence" Arg="cong"/>
+    <Returns>A semigroup ideal.</Returns>
+    <Description>
+      If <A>cong</A> is a rees congruence (see <Ref Filt="IsReesCongruence"/>)
+      then this attribute returns the two-sided ideal that was used to define
+      it, i.e.~the ideal of elements in the only non-trivial congruence class of
+      <A>cong</A>.
+
+      <Example><![CDATA[
+gap> s := Semigroup([Transformation([2,3,4,3,1,1]),
+>                    Transformation([6,4,4,4,6,1])]);;
+gap> i := SemigroupIdeal(s, Transformation([4,4,4,4,4,2]),
+>                           Transformation([3,3,3,3,3,2]));;
+gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
+gap> SemigroupIdealOfReesCongruence(cong);
+<non-regular transformation semigroup ideal of degree 6 with 2 generators>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsReesCongruenceClass">
+  <ManSection>
+    <Filt Name="IsReesCongruenceClass" Arg="obj" Type="category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      This category describes a congruence class of a Rees congruence.  A
+      congruence class of a Rees congruence either contains all the elements of
+      an ideal, or is a singleton (see <Ref Filt="IsReesCongruence"/>). <P/>
+
+      An object of this type may be used in the same way as any other object in
+      the category <Ref Prop="IsCongruenceClass" BookName="ref"/>.
+
+      <Example><![CDATA[
+gap> s := Semigroup([Transformation([2,3,4,3,1,1]),
+>                    Transformation([6,4,4,4,6,1])]);;
+gap> i := SemigroupIdeal(s, Transformation([4,4,4,4,4,2]),
+>                           Transformation([3,3,3,3,3,2]));;
+gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
+gap> classes := CongruenceClasses(cong);;
+gap> IsReesCongruenceClass(classes[1]);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

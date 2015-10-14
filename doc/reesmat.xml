@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  reesmat-cong.xml
+#W  reesmat.xml
 #Y  Copyright (C) 2015                                      Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -37,6 +37,39 @@ gap> colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;
 gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
 gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
 gap> IsRZMSCongruenceByLinkedTriple(cong);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsRZMSCongruenceClassByLinkedTriple">
+  <ManSection>
+    <Filt Name="IsRMSCongruenceClassByLinkedTriple" Arg="obj" Type="category"/>
+    <Filt Name="IsRZMSCongruenceClassByLinkedTriple" Arg="obj" Type="category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      These categories contain the congruence classes of a semigroup congruence
+      of the categories <Ref Filt="IsRMSCongruenceByLinkedTriple"/> and <Ref
+      Filt="IsRZMSCongruenceByLinkedTriple"/> respectively. <P/>
+
+      An object of one of these types may be used in the same way as any other
+      object in the category <Ref Prop="IsCongruenceClass" BookName="ref"/>, but
+      the class is represented internally by information related to the
+      congruence's <E>linked triple</E>, and certain functions may take
+      advantage of this information to reduce computation times. <P/>
+
+      <Example><![CDATA[
+gap> G := Group( [ (1,4,5), (1,5,3,4) ] );;
+gap> mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],
+>             [  0, (),       0,     0, (3,5),         0 ],
+>             [ (),  0,       0, (3,5),     0,         0 ] ];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> N := Group([ (1,4)(3,5), (1,5)(3,4) ]);;
+gap> colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;
+gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
+gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
+gap> classes := CongruenceClasses(cong);;
+gap> IsRZMSCongruenceClassByLinkedTriple(classes[1]);
 true]]></Example>
     </Description>
   </ManSection>
