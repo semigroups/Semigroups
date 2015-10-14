@@ -280,8 +280,9 @@ function(arg)
   subdirs := [];
 
   for str in contents do
-    # TODO remove: <<< and str in ["attributes", "congruences"] >>> from below
-    if str <> ".." and str <> "." and str in ["attributes", "congruences"] then
+    # TODO remove: <<< and str in ["attributes", etc ...] >>> from below
+    if str <> ".." and str <> "."
+        and str in ["attributes", "congruences", "fp"] then
       str := Concatenation(tst_dir, "/", str);
       if IsDirectoryPath(str) then
         Add(subdirs, str);

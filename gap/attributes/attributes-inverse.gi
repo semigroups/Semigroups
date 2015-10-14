@@ -219,16 +219,17 @@ function(s)
       fi;
     od;
     return Idempotents(s, min);
-  else
-    for m in [2 .. Length(scc)] do
-      l := rank(o[scc[m][1]]);
-      if l < min then
-        min2 := min;
-        min := l;
-      fi;
-    od;
-    return Idempotents(s, min2);
   fi;
+
+  # s has a multiplicative zero
+  for m in [2 .. Length(scc)] do
+    l := rank(o[scc[m][1]]);
+    if l < min then
+      min2 := min;
+      min := l;
+    fi;
+  od;
+  return Idempotents(s, min2);
 end);
 
 # same method for ideals
@@ -288,9 +289,8 @@ function(S, T)
   if not IsSubsemigroup(S, T) then
     ErrorMayQuit("Semigroups: IsMajorantlyClosed: usage,\n",
                  "the second argument is not a subsemigroup of the first,");
-  else
-    return IsMajorantlyClosedNC(S, Elements(T));
   fi;
+  return IsMajorantlyClosedNC(S, Elements(T));
 end);
 
 # same method for ideals
@@ -302,9 +302,8 @@ function(S, T)
   if not IsSubset(S, T) then
     ErrorMayQuit("Semigroups: IsMajorantlyClosed: usage,\n",
                  "the second argument should be a subset of the first,");
-  else
-    return IsMajorantlyClosedNC(S, T);
   fi;
+  return IsMajorantlyClosedNC(S, T);
 end);
 
 # same method for ideals
@@ -402,7 +401,7 @@ function(S)
       continue;
     fi;
 
-    for p in h do # used to be SchutzenbergerGroup(d)
+    for p in h do
       mov := MovedPoints(p);
       if not IsEmpty(mov) and ForAll(mov, x -> not x in minorants) then
         # rep * p <> rep and rep, rep * p > lub(minorants) and rep || rep * p
@@ -435,9 +434,8 @@ function(S, T)
   if not IsSubsemigroup(S, T) then
     ErrorMayQuit("Semigroups: MajorantClosure: usage,\n",
                  "the second argument is not a subset of the first,");
-  else
-    return MajorantClosureNC(S, Elements(T));
   fi;
+  return MajorantClosureNC(S, Elements(T));
 end);
 
 # same method for ideals
@@ -450,9 +448,8 @@ function(S, T)
   if not IsSubset(S, T) then
     ErrorMayQuit("Semigroups: MajorantClosure: usage,\n",
                  "the second argument is not a subset of the first,");
-  else
-    return MajorantClosureNC(S, T);
   fi;
+  return MajorantClosureNC(S, T);
 end);
 
 # same method for ideals
@@ -669,11 +666,10 @@ function(coll, x)
     i := DegreeOfBipartition(x);
     return AsBipartition(SupremumIdempotentsNC(
                          List(coll, AsPartialPerm), PartialPerm([])), i);
-  else
-    ErrorMayQuit("Semigroups: SupremumIdempotentsNC: usage,\n",
-                 "the argument is not a collection of partial perms, block ",
-                 "bijections,\n", "or partial perm bipartitions,");
   fi;
+  ErrorMayQuit("Semigroups: SupremumIdempotentsNC: usage,\n",
+               "the argument is not a collection of partial perms, block ",
+               "bijections,\n", "or partial perm bipartitions,");
 end);
 
 # same method for ideals
