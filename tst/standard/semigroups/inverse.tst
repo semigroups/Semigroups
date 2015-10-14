@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  inverse.tst
+#W  standard/semigroups/inverse.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: inverse.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 # 
@@ -1058,4 +1058,4 @@ gap> Unbind(L);
 gap> Unbind(D);
 
 #E# 
-gap> STOP_TEST("Semigroups package: inverse.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/inverse.tst");

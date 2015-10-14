@@ -1,37 +1,37 @@
 #############################################################################
 ##
-#W  congruences/inverse.tst
+#W  standard/congruences/inverse.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: congruences/inverse.tst");
-gap> LoadPackage( "semigroups", false );;
+gap> START_TEST("Semigroups package: standard/congruences/inverse.tst");
+gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS_StartTest();
 
 #T# InverseCongTest1: Create an inverse semigroup
-gap>  s := InverseSemigroup( [ PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ),
->  PartialPerm( [ 1, 2, 4 ], [ 3, 1, 5 ] ), 
->  PartialPerm( [ 1, 2, 5 ], [ 5, 1, 3 ] ),
->  PartialPerm( [ 1, 2, 3 ], [ 3, 4, 2 ] ) ] );;
+gap>  s := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
+>  PartialPerm([1, 2, 4], [3, 1, 5]),
+>  PartialPerm([1, 2, 5], [5, 1, 3]),
+>  PartialPerm([1, 2, 3], [3, 4, 2])]);;
 gap> cong := SemigroupCongruence(s,
->  [ PartialPerm( [ 4 ], [ 4 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] );
+>  [PartialPerm([4], [4]), PartialPerm([2], [1])]);
 <semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
  generators> with congruence pair (41,16)>
 
 # Try some methods
-gap> x := PartialPerm( [ 1 ], [ 2 ] );;
-gap> y := PartialPerm( [ 2, 5 ], [ 2, 1 ] );;
-gap> z := PartialPerm( [ 5 ], [ 5 ] );;
-gap> [x,y] in cong;
+gap> x := PartialPerm([1], [2]);;
+gap> y := PartialPerm([2, 5], [2, 1]);;
+gap> z := PartialPerm([5], [5]);;
+gap> [x, y] in cong;
 false
-gap> [x,z] in cong;
+gap> [x, z] in cong;
 true
-gap> [y,z] in cong;
+gap> [y, z] in cong;
 false
 
 # Congruence classes
@@ -67,11 +67,11 @@ true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
 <semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
  generators> with 1 generating pairs>
-gap> [x,y] in ccong;
+gap> [x, y] in ccong;
 false
-gap> [x,z] in ccong;
+gap> [x, z] in ccong;
 true
-gap> [y,z] in ccong;
+gap> [y, z] in ccong;
 false
 
 #T# InverseCongTest2: Universal congruence
@@ -97,4 +97,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E# 
-gap> STOP_TEST("Semigroups package: congruences/inverse.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/inverse.tst");

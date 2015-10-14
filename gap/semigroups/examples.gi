@@ -936,7 +936,9 @@ function(m, r)
   SetIsMonogenicSemigroup(out, true);
 
   if m = 1 then
-    SetIsGroupAsSemigroup(out, true);
+    if not IsGroup(out) then
+      SetIsGroupAsSemigroup(out, true);
+    fi;
   else
     SetIsGroupAsSemigroup(out, false);
     SetIsRegularSemigroup(out, false);

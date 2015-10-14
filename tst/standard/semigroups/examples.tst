@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  examples.tst
+#W  standard/semigroups/examples.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-gap> START_TEST("Semigroups package: examples.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/examples.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -2464,9 +2464,9 @@ gap> Size(s);
 
 # IsBipartitionSemigroup and IsBlockBijectionSemigroup
 gap> s := ZeroSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition group of degree 1 with 0 generators>
+<trivial bipartition monoid of degree 1 with 0 generators>
 gap> s := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition group of degree 1 with 0 generators>
+<trivial bipartition monoid of degree 1 with 0 generators>
 gap> last = last2;
 true
 gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 2));
@@ -2523,14 +2523,17 @@ gap> HasIsRegularSemigroup(s);
 true
 gap> IsRegularSemigroup(s);
 true
+gap> IsGroup(s);
+true
 gap> HasIsGroupAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
-true
+false
 
 # Zero semigroup of order 2
 gap> s := ZeroSemigroup(2);
-<commutative partial perm semigroup of size 2, on 1 pts with 1 generator>
+<commutative non-regular partial perm semigroup of size 2, rank 1 with 1 
+ generator>
 gap> HasIsZeroSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2606,7 +2609,7 @@ false
 
 # Zero semigroup of order 50
 gap> s := ZeroSemigroup(50);
-<partial perm semigroup of size 50, on 49 pts with 49 generators>
+<non-regular partial perm semigroup of size 50, rank 49 with 49 generators>
 gap> HasIsZeroSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2701,8 +2704,10 @@ gap> Size(s);
 1
 gap> IsMonogenicSemigroup(s);
 true
-gap> IsGroupAsSemigroup(s);
+gap> IsGroup(s);
 true
+gap> IsGroupAsSemigroup(s);
+false
 gap> IsRegularSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2726,8 +2731,10 @@ gap> Size(s);
 1
 gap> IsMonogenicSemigroup(s);
 true
-gap> IsGroupAsSemigroup(s);
+gap> IsGroup(s);
 true
+gap> IsGroupAsSemigroup(s);
+false
 gap> IsRegularSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2739,8 +2746,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(2, 1)
 gap> s := MonogenicSemigroup(2, 1);
-<commutative non-regular transformation semigroup of size 2, degree 3 with
- 1 generator>
+<commutative non-regular transformation semigroup of size 2, degree 3 with 1 
+ generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2793,8 +2800,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(3, 1)
 gap> s := MonogenicSemigroup(3, 1);
-<commutative non-regular transformation semigroup of size 3, degree 4 with
- 1 generator>
+<commutative non-regular transformation semigroup of size 3, degree 4 with 1 
+ generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2901,7 +2908,7 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(5, 10)
 gap> s := MonogenicSemigroup(5, 10);
-<commutative non-regular transformation semigroup of size 14, degree 15 with
+<commutative non-regular transformation semigroup of size 14, degree 15 with 
  1 generator>
 gap> HasSize(s);
 true
@@ -3255,4 +3262,4 @@ gap> Unbind(s);
 gap> Unbind(gens);
 
 #E# 
-gap> STOP_TEST("Semigroups package: examples.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/examples.tst");

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  transform.tst
+#W  extreme/transform.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -11,11 +11,11 @@
 # ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),
 # > "transform.tst"));
 # around 2.3s.
-gap> START_TEST("Semigroups Package: transform.tst");
+gap> START_TEST("Semigroups Package: extreme/transform.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS_StartTest();
 
 #T# TransformTest1
 gap> gens := [ Transformation( [ 2, 3, 2, 4, 3 ] ), 
@@ -315,4 +315,4 @@ gap> Unbind(t);
 gap> Unbind(x);
 
 #E#
-gap> STOP_TEST( "Semigroups package: transform.tst");
+gap> STOP_TEST("Semigroups package: extreme/transform.tst");

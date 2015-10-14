@@ -101,7 +101,9 @@ function(S)
 
   U := Semigroup(List(GeneratorsOfGroup(G), x -> RMSElement(S, i, x, j)));
 
-  SetIsGroupAsSemigroup(U, true);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
   UseIsomorphismRelation(U, G);
 
   return U;
