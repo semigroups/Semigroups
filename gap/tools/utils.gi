@@ -282,8 +282,9 @@ function(arg)
   subdirs := [];
 
   for str in contents do
-    # TODO remove: <<< and str in ["attributes", "congruences"] >>> from below
-    if str <> ".." and str <> "." and str in ["attributes", "congruences"] then
+    # TODO remove: <<< and str in ["attributes", etc ...] >>> from below
+    if str <> ".." and str <> "."
+        and str in ["attributes", "congruences", "fp"] then
       str := Concatenation(tst_dir, "/", str);
       if IsDirectoryPath(str) then
         Add(subdirs, str);
@@ -548,13 +549,13 @@ function(arg)
   GASMAN("collect");
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples [acting methods ",
+  Print("NOT testing manual examples [acting methods ",
         "\033[1;44mDISABLED\033[0m] . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  SEMIGROUPS_StartTest();
+  # SEMIGROUPS_StartTest();
 
-  SEMIGROUPS_RunExamples(ex, exclude);
-  SEMIGROUPS_StopTest("");
+  # SEMIGROUPS_RunExamples(ex, exclude);
+  # SEMIGROUPS_StopTest("");
   #TODO make SEMIGROUPS_StopTest accept no args, or 1 arg
 
   SEMIGROUPS_DefaultOptionsRec.generic := generic;
