@@ -22,7 +22,7 @@
 
 ###GAP kernel
 * SEMIGROUP_IDEMPOTENTS
-* objectify bipartitions etc in c code (i.e. don't call CALL_1ARGS)
+
 * register TNUM: [https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c](https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c)
 * use `ConvertElements` and `UnconvertElements`
 * reporting in the generic Froidure-Pin method
@@ -51,6 +51,7 @@
 * closure of generic inverse semigroups
 
 ##DO LATER
+* objectify bipartitions etc in c code (i.e. don't call CALL_1ARGS)
 * a `small_generating_set` method using the Cayley graph
 * Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
 * unify ideals-lambda-rho, lambda-rho and graded.
