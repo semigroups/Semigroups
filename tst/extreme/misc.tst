@@ -129,7 +129,7 @@ gap> Position(enum, enum[1]);
 1
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> Length(enum);
 1728
@@ -312,7 +312,7 @@ gap> rep := Representative(d);
 gap> s := Parent(d);
 <partial perm semigroup of size 4857, on 12 pts with 6 generators>
 gap> ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
-> or RankOfPartialPerm(f)< > RankOfPartialPerm(rep);
+> or RankOfPartialPerm(f) <> RankOfPartialPerm(rep);
 false
 gap> g := f;
 [9,6,12]
@@ -341,9 +341,9 @@ gap>   m := LambdaOrbSCCIndex(d); o := LambdaOrb(d); scc := OrbSCC(o);
   [ 180 ], [ 181 ], [ 182 ], [ 183 ], [ 184 ] ]
 gap> l := Position(o, LambdaFunc(s)(g));
 65
-gap>  l = fail or OrbSCCLookup(o)[l]< > m ;
+gap>  l = fail or OrbSCCLookup(o)[l] <> m ;
 false
-gap>  l< > scc[m][1];
+gap>  l <> scc[m][1];
 false
 gap>   m := RhoOrbSCCIndex(d); o := RhoOrb(d); scc := OrbSCC(o);
 12
@@ -363,15 +363,14 @@ gap>   m := RhoOrbSCCIndex(d); o := RhoOrb(d); scc := OrbSCC(o);
   [ 107 ], [ 109 ], [ 110 ], [ 114 ], [ 116 ], [ 117 ], [ 118 ], [ 126 ], 
   [ 127 ], [ 130 ], [ 131 ], [ 136 ], [ 137 ], [ 139 ], [ 140 ], [ 141 ], 
   [ 142 ], [ 146 ] ]
-gap> 
-gap>   l := Position(o, RhoFunc(s)(g));
+gap> l := Position(o, RhoFunc(s)(g));
 123
-gap>  l = fail or OrbSCCLookup(o)[l]< > m;
+gap> l = fail or OrbSCCLookup(o)[l] <> m;
 false
 gap> g := RhoOrbMult(o, m, l)[2] * g;;
 gap>  schutz := RhoOrbStabChain(d);
 <stabilizer chain record, Base [ 6 ], Orbit length 2, Size: 2>
-gap> l< > scc[m][1];
+gap> l <> scc[m][1];
 true
 gap> cosets := LambdaCosets(d);
 <enumerator of perm group>
@@ -379,7 +378,7 @@ gap> LambdaOrbStabChain(LambdaOrb(d), LambdaOrbSCCIndex(d));
 false
 gap> g := LambdaPerm(s)(rep, g);
 ()
-gap> schutz< > false;
+gap> schutz <> false;
 true
 gap> o := LambdaOrb(d); m := LambdaOrbSCCIndex(d);
 <closed orbit, 184 points with Schreier tree with log>
@@ -479,7 +478,6 @@ gap> gens := [PartialPermNC([1, 2, 4, 5, 9], [3, 6, 2, 10, 5]),
 >  PartialPermNC([1, 4, 6, 7, 9, 10], [8, 7, 2, 3, 4, 1])];;
 gap> s := Semigroup(gens);
 <partial perm semigroup on 10 pts with 6 generators>
-gap> 
 gap> f := PartialPerm([]);;
 gap> l := LClass(s, f);
 <Green's L-class: <empty partial perm>>
@@ -920,7 +918,7 @@ gap> enum := Enumerator(d);
 <enumerator of D-class>
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> enum[1];
 [1,7][3,4][6,8]
@@ -990,7 +988,7 @@ gap> gens :=
 >   31, 7, 90, 30, 46, 68, 36, 11, 100, 17, 87, 72, 14, 29, 9, 61, 91, 32, 43,
 >   64, 60, 41, 26, 40, 8, 23, 63, 38, 57, 12, 59, 83, 92, 96, 18, 3, 65, 2,
 >   37, 21, 49, 16, 75, 24, 27, 1, 48, 6, 35, 79, 82, 51, 39, 25, 77, 62, 22
-> ]),
+>]),
 >  PartialPermNC([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
 >   18, 19, 20, 21, 23, 24, 26, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
 >   40, 42, 44, 48, 51, 52, 53, 55, 56, 57, 58, 60, 63, 64, 65, 66, 67, 71, 73,
@@ -1926,7 +1924,7 @@ gap> gens :=
 >   98, 55, 39, 92, 62, 21, 34, 57, 44, 14, 53, 64, 59, 84, 12, 87, 78, 83, 30,
 >   32, 68, 73, 2, 86, 23, 48, 47, 79, 93, 15, 76, 97, 77, 11, 33, 100, 91, 67,
 >   18, 16, 99, 60, 74, 17, 95, 49, 4, 66, 41, 69, 94, 31, 29, 5, 63, 58, 72
-> ]),
+>]),
 >  PartialPermNC([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 17, 20, 21,
 >   22, 23, 24, 26, 28, 29, 30, 32, 34, 35, 37, 39, 40, 42, 43, 44, 45, 46, 47,
 >   48, 49, 51, 53, 54, 55, 56, 58, 59, 60, 61, 63, 64, 65, 66, 67, 68, 72, 74,
@@ -1934,7 +1932,7 @@ gap> gens :=
 >   76, 20, 52, 22, 35, 75, 98, 78, 40, 46, 28, 6, 55, 90, 16, 12, 65, 26, 66,
 >   36, 25, 61, 83, 38, 41, 93, 2, 39, 87, 85, 17, 92, 97, 43, 30, 5, 13, 94,
 >   44, 80, 54, 99, 81, 31, 7, 68, 11, 100, 72, 14, 9, 91, 32, 64, 60, 8, 23
-> ])];;
+>])];;
 gap> s := Semigroup(gens);;
 gap> f := PartialPerm([2, 63], [28, 89]);;
 gap> d := DClassNC(s, f);
@@ -2236,7 +2234,6 @@ gap> d;
 <Green's D-class: [41,26][50,6]>
 gap> GroupHClass(d);
 fail
-gap>   
 
 #T# MiscTest18
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
@@ -2543,7 +2540,6 @@ true
 gap> gens := [Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]),
 > Transformation([2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7])];;
 gap> s := Monoid(gens);;
-gap> 
 gap> NrRegularDClasses(s);
 3
 gap> NrDClasses(s);
@@ -2620,7 +2616,9 @@ gap> RClassReps(d);
 [ [4,2][7,9][11,6] ]
 gap> iter := IteratorOfDClasses(s);
 <iterator of D-classes>
-gap> repeat d := NextIterator(iter); until IsDoneIterator(iter) or Size(d) > 1000;
+gap> repeat
+>   d := NextIterator(iter);
+> until IsDoneIterator(iter) or Size(d) > 1000;
 gap> d;
 <Green's D-class: [1,6][5,4]>
 gap> Size(d);
@@ -2668,7 +2666,6 @@ gap> gens := [Transformation([2, 1, 4, 5, 3, 7, 8, 9, 10, 6]),
 > Transformation([1, 2, 3, 4, 5, 6, 10, 9, 8, 7]),
 > Transformation([9, 1, 4, 3, 6, 9, 3, 4, 3, 9])];;
 gap> s := Monoid(gens);;
-gap> 
 gap> f := Transformation([2, 1, 3, 5, 4, 10, 9, 8, 7, 6]);;
 gap> d := DClass(HClass(s, f));
 <Green's D-class: Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] )>
@@ -2705,16 +2702,24 @@ gap> ForAll(Idempotents(d), x -> x in d);
 true
 
 #T# MiscTest27: R-class
-gap> gens := [Transformation([2, 2, 3, 5, 5, 6, 7, 8, 14, 16, 16, 17, 18, 14, 16, 16, 17, 18]),
-> Transformation([1, 3, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]),
-> Transformation([1, 2, 4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 15, 16, 17, 18]),
-> Transformation([1, 2, 3, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 17, 18]),
-> Transformation([1, 2, 3, 4, 5, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 18]),
-> Transformation([1, 2, 3, 4, 5, 6, 8, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 2]),
-> Transformation([1, 2, 9, 10, 11, 12, 13, 1, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18])];;
+gap> gens := [
+> Transformation([2, 2, 3, 5, 5, 6, 7, 8, 14, 16, 16, 17, 18, 14, 16, 16, 17,
+>                 18]),
+> Transformation([1, 3, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+>                 18]),
+> Transformation([1, 2, 4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 15, 16, 17,
+>                 18]),
+> Transformation([1, 2, 3, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 17,
+>                 18]),
+> Transformation([1, 2, 3, 4, 5, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18,
+>                 18]),
+> Transformation([1, 2, 3, 4, 5, 6, 8, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+>                 2]),
+> Transformation([1, 2, 9, 10, 11, 12, 13, 1, 9, 10, 11, 12, 13, 14, 15, 16,
+>                 17, 18])];;
 gap> s := Semigroup(gens);;
 gap> f := Transformation([1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13, 15, 15,
-> 17, 17, 18]);;
+>                         17, 17, 18]);;
 gap> r := RClassNC(s, f);
 <Green's R-class: Transformation( [ 1, 2, 4, 4, 6, 6, 7, 8, 9, 10, 11, 12, 13,
   15, 15, 17, 17 ] )>
@@ -2723,7 +2728,7 @@ gap> Size(r);
 gap> SchutzenbergerGroup(r);
 Group(())
 gap> f := Transformation([1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11, 12, 13, 15,
-> 15, 16, 17, 18]);;
+>                         15, 16, 17, 18]);;
 gap> r := RClass(s, f);
 <Green's R-class: Transformation( [ 1, 2, 10, 10, 11, 12, 13, 1, 9, 10, 11,
    12, 13, 15, 15 ] )>
@@ -2733,10 +2738,11 @@ gap> SchutzenbergerGroup(r);
 Group(())
 
 #T# MiscTest28
-gap> gens := [Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),
->   Transformation([9, 1, 2, 8, 1, 5, 9, 9, 9, 5]),
->   Transformation([9, 3, 1, 5, 10, 3, 4, 6, 10, 2]),
->   Transformation([10, 7, 3, 7, 1, 9, 8, 8, 4, 10])];;
+gap> gens := [
+> Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),
+> Transformation([9, 1, 2, 8, 1, 5, 9, 9, 9, 5]),
+> Transformation([9, 3, 1, 5, 10, 3, 4, 6, 10, 2]),
+> Transformation([10, 7, 3, 7, 1, 9, 8, 8, 4, 10])];;
 gap> s := Semigroup(gens);;
 gap> f := Transformation([9, 10, 10, 3, 10, 9, 9, 9, 9, 9]);;
 gap> r := RClass(s, f);
@@ -2767,7 +2773,7 @@ gap> ForAll(enum, x -> x in r);
 true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> NrHClasses(r);
 83
@@ -3082,7 +3088,7 @@ gap> IsDoneIterator(iter);
 true
 gap> iter := Iterator(r);
 <iterator of R-class>
-gap> for i in [1..23] do NextIterator(iter); od;
+gap> for i in [1 .. 23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false
 gap> NextIterator(iter);
@@ -3116,7 +3122,7 @@ gap> Sum(List(RClasses(s), NrIdempotents));
 gap> NrIdempotents(s);
 53
 gap> gens := [Transformation([1, 2, 4, 3, 6, 5]),
-> Transformation([1, 2, 3, 4,   5, 6]),
+> Transformation([1, 2, 3, 4, 5, 6]),
 >    Transformation([6, 4, 3, 2, 5, 3]),
 > Transformation([5, 3, 4, 2, 2, 1]),
 >    Transformation([2, 4, 6, 4, 5, 3]),
@@ -3296,7 +3302,7 @@ gap> Position(enum, enum[10]);
 10
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> NrHClasses(r);
 6
@@ -3375,7 +3381,7 @@ gap> ForAll(enum, x -> x in s);
 true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> Idempotents(h);
 [ IdentityTransformation ]
@@ -3437,7 +3443,7 @@ gap> Size(h);
 6
 gap> enum := Enumerator(h);
 <enumerator of H-class>
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
@@ -3658,7 +3664,7 @@ IdentityTransformation
 gap> IsGroupHClass(h);
 true
 gap> KnownPropertiesOfObject(h) =
-> ["IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC" ] or
+> ["IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC"] or
 > KnownPropertiesOfObject(h) =
 > ["IsFinite", "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsGroupHClass",
 >   "IsGreensClassNC"];
@@ -3901,7 +3907,7 @@ gap> ForAll(enum, x -> x in r);
 true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> NrHClasses(r);
 83
@@ -4218,7 +4224,7 @@ gap> IsDoneIterator(iter);
 true
 gap> iter := Iterator(r);
 <iterator of R-class>
-gap> for i in [1..23] do NextIterator(iter); od;
+gap> for i in [1 .. 23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false
 gap> NextIterator(iter);
@@ -4590,7 +4596,7 @@ gap> Position(enum, enum[10]);
 10
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
-gap> ForAll([1..Length(enum)], x -> Position(enum, enum[x]) = x);
+gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> NrHClasses(r);
 6
