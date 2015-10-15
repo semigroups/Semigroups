@@ -470,17 +470,15 @@ install_pairs_methods_with_filter@ := function(cong_filter)
 
   InstallMethod(ViewObj,
   Concatenation("for a ", cong_filter[2]),
-  [cong_filter[1]],
-  1,
+  [cong_filter[1] and HasGeneratingPairsOfMagmaCongruence],
+#  1, # override the library function
   function(cong)
     Print("<");
     Print(cong_filter[2]);
     Print(" over ");
     ViewObj(Range(cong));
-    if HasGeneratingPairsOfMagmaCongruence(cong) then
-      Print(" with ", Size(GeneratingPairsOfSemigroupCongruence(cong)),
-            " generating pairs");
-    fi;
+    Print(" with ", Size(GeneratingPairsOfSemigroupCongruence(cong)),
+          " generating pairs");
     Print(">");
   end);
 
@@ -491,10 +489,10 @@ install_pairs_methods_with_filter@ := function(cong_filter)
   [cong_filter[1] and HasGeneratingPairsOfMagmaCongruence],
   1,
   function(cong)
-    if not IsLeftSemigroupCongruence(cong) then
-      Print("Right");
-    elif not IsRightSemigroupCongruence(cong) then
+    if cong_filter[1] = IsLeftSemigroupCongruence then
       Print("Left");
+    elif cong_filter[1] = IsRightSemigroupCongruence then
+      Print("Right");
     fi;
     Print("SemigroupCongruence( ");
     PrintObj(Range(cong));
