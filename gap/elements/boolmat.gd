@@ -54,8 +54,7 @@ DeclareProperty("IsTrimBooleanMat", IsBooleanMat);
 
 DeclareGlobalFunction("OnBlist");
 
-DeclareAttribute("SetBooleanMat", IsBooleanMat);
-DeclareAttribute("BooleanMatSet", IsSSortedList and IsHomogeneousList);
+DeclareAttribute("SEMIGROUPS_SetBooleanMat", IsBooleanMat);
 DeclareAttribute("CanonicalBooleanMat", IsBooleanMat);
 DeclareOperation("CanonicalBooleanMat", [IsPermGroup, IsBooleanMat]);
 DeclareOperation("CanonicalBooleanMat",

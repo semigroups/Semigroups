@@ -140,14 +140,24 @@
     <#Include Label="IsBooleanMatCollection">
 
     <#Include Label="BooleanMat">
+    <#Include Label="AsBooleanMat">
     <#Include Label="RandomBooleanMat">
    
     <#Include Label="ContainmentBooleanMats">
     <#Include Label="OnBlist">
     <#Include Label="Successors">
+    <#Include Label="NumberBooleanMat">
+    <#Include Label="NumberBlist">
+    <#Include Label="CanonicalBooleanMat">
 
     <#Include Label="IsRowTrimBooleanMat">
-    <#Include Label="NumberBooleanMat">
+    <#Include Label="IsSymmetricBooleanMat">
+    <#Include Label="IsReflexiveBooleanMat">
+    <#Include Label="IsTransitiveBooleanMat">
+    <#Include Label="IsAntiSymmetricBooleanMat">
+    <#Include Label="IsTotalBooleanMat">
+    <#Include Label="IsPartialOrderBooleanMat">
+    <#Include Label="IsEquivalenceBooleanMat">
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->

@@ -160,9 +160,9 @@ x5x2x4x2x4x5x1x2x4x5x1x7x2x4x5x1x7x6x4x5x1x7x6x2x5x1x7x6x2x7x6x2x1
 #T# FreeBandTest10: Issue #112
 gap> iter := Iterator(FreeBand(4, "b"));;
 gap> x := NextIterator(iter);;
-gap> for i in [1 .. 10000] do NextIterator(iter); od;
+gap> for i in [1 .. 1000] do NextIterator(iter); od;
 gap> y := NextIterator(iter);
-b3b4b1b3b4b3b2b1b4b2b4b3b2b3b4
+b2b4b1b4b1b2b3b1b4b3b4b2b4b3b4
 gap> T := Semigroup(x, y);;
 gap> IsFreeBandSubsemigroup(T);
 true

@@ -284,7 +284,7 @@ function(arg)
   for str in contents do
     # TODO remove: <<< and str in ["attributes", etc ...] >>> from below
     if str <> ".." and str <> "."
-        and str in ["attributes", "congruences", "fp"] then
+        and str in ["attributes", "congruences", "elements", "fp"] then
       str := Concatenation(tst_dir, "/", str);
       if IsDirectoryPath(str) then
         Add(subdirs, str);
@@ -383,8 +383,8 @@ function(arg)
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
-  Print("Testing ", print_file,
-        " [acting methods \033[44mENABLED\033[0m] . . .", "\n");
+  Print("Testing file: ", print_file,
+        "\nwith acting methods \033[32mENABLED\033[0m . . .\n");
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
@@ -396,8 +396,8 @@ function(arg)
     Print(Concatenation(ListWithIdenticalEntries(width, "#")));
   fi;
   Print("\n");
-  Print("Testing ", print_file,
-        " [acting methods \033[44mDISABLED\033[0m] . . .", "\n");
+  Print("Testing file: ", print_file,
+        "\nwith acting methods \033[31mDISABLED\033[0m . . .\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
@@ -537,8 +537,9 @@ function(arg)
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples [acting methods ",
-        "\033[1;44mENABLED\033[0m] . . .\n");
+  Print("Testing manual examples",
+        " with acting methods \033[32mENABLED\033[0m",
+        " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
   SEMIGROUPS_RunExamples(ex, []);
@@ -548,8 +549,9 @@ function(arg)
   GASMAN("collect");
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("NOT testing manual examples [acting methods ",
-        "\033[1;44mDISABLED\033[0m] . . .\n");
+  Print("Testing manual examples",
+        " with acting methods \033[31mDISABLED\033[0m",
+        " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   # SEMIGROUPS_StartTest();
 
