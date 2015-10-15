@@ -14,7 +14,6 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> "prime field");
 
-
 InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
 "for a matrix over prime field",
 [IsMatrixOverPrimeField], x -> "MatrixOverPrimeFieldNC");
