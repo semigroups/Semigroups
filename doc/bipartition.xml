@@ -482,11 +482,11 @@ gap> AsBlockBijection(x, 11);
       <M>(i)f^{-1}\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.<P/>
       
       If the positive integer <A>n</A> is not specified, then the
-      internal degree of <A>f</A> is used as the value for <A>n</A>.
+      degree of <A>f</A> is used as the value for <A>n</A>.
     </Item> 
     <Mark>partial permutations</Mark>
     <Item>
-      If <A>f</A> is a partial permutation <A>f</A> and <A>n</A> is a
+      If <A>f</A> is a partial permutation and <A>n</A> is a
       positive integer, then <C>AsBipartition</C> returns the bipartition 
       with classes <C>[i, i^<A>f</A>]</C> for <C>i</C> in <C>[1..<A>n</A>]</C>. 
       Thus the degree of the returned bipartition is the maximum of <A>n</A>

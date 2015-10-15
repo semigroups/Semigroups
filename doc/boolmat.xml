@@ -94,6 +94,7 @@
 <#GAPDoc Label="BooleanMat">
   <ManSection>
     <Func Name="BooleanMat" Arg="arg"/>
+    <Returns>A boolean matrix.</Returns>
     <Description>
       <C>BooleanMat</C> returns the boolean matrix <C>mat</C> defined by its
       argument. The argument can be any of the following:
@@ -144,6 +145,7 @@ gap> Display(x);
 <#GAPDoc Label="RandomBooleanMat">
   <ManSection>
     <Oper Name="RandomBooleanMat" Arg="n"/>
+    <Returns>A boolean matrix.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then <C>RandomBooleanMat</C> returns
       an <C>n</C> by <C>n</C> boolean matrix chosen with uniform probability
@@ -169,6 +171,7 @@ gap> Display(x);
 <#GAPDoc Label="ContainmentBooleanMats">
   <ManSection>
     <Oper Name="\in" Arg="mat1, mat2"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       If <A>mat1</A> and <A>mat2</A> are boolean matrices, then <C><A>mat1</A>
         in <A>mat2</A></C> returns <K>true</K> if the binary relation defined
@@ -190,6 +193,7 @@ true]]></Example>
 <#GAPDoc Label="OnBlist">
   <ManSection>
     <Oper Name="OnBlist" Arg="blist, mat"/>
+    <Returns>A boolean list.</Returns>
     <Description>
       If <A>blist</A> is a boolean list of length <C>n</C> and <A>mat</A> is
       boolean matrices of dimension <C>n</C>, then <C>OnBlist</C> returns the
@@ -212,11 +216,13 @@ gap> OnBlist(blist, mat);
 <#GAPDoc Label="Successors">
   <ManSection>
     <Attr Name="Successors" Arg="mat"/>
+    <Returns>A list of lists of positive integers.</Returns>
     <Description>
-      A row of a boolean matrix of dimension <C>n</C> can be thought of 
-      of as the characteristic function of a subset <C>S</C> of <C>[1 .. n]</C>, i.e.
-      <C>i in S</C> if and only if the <C>i</C>th component of the row equals <M>1</M>.
-      We refer to the subset <C>S</C> as the <B>successors</B> of the row.
+      A row of a boolean matrix of dimension <C>n</C> can be thought of of as
+      the characteristic function of a subset <C>S</C> of <C>[1 .. n]</C>, i.e.
+      <C>i in S</C> if and only if the <C>i</C>th component of the row equals
+      <M>1</M>.  We refer to the subset <C>S</C> as the <B>successors</B> of
+      the row.
       <P/>
 
       If <A>mat</A> is a boolean matrix, then <C>Successors</C> returns the 
@@ -238,11 +244,12 @@ gap> Successors(mat);
     <Prop Name="IsRowTrimBooleanMat" Arg="mat"/>
     <Prop Name="IsColTrimBooleanMat" Arg="mat"/>
     <Prop Name="IsTrimBooleanMat"    Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A row or column of a boolean matrix of dimension <C>n</C> can be thought of 
       of as the characteristic function of a subset <C>S</C> of <C>[1 ..
         n]</C>, i.e.  <C>i in S</C> if and only if the <C>i</C>th component of
-      the row or column equals <M>1</M>. <P/>  
+      the row or column equals <C>1</C>. <P/>  
       
       A boolean matrix is <B>row trim</B> if no subset induced by a
       row of <A>mat</A> is contained in the subset induced by any other row of
@@ -270,21 +277,477 @@ false]]></Example>
 
 <#GAPDoc Label="NumberBooleanMat">
   <ManSection>
-    <Oper Name="NumberBooleanMat" Arg="mat"/>
     <Oper Name="BooleanMatNumber" Arg="m, n"/>
+    <Oper Name="NumberBooleanMat" Arg="mat"/>
+    <Returns>A boolean matrix, or a positive integer.</Returns>
     <Description>
+      These functions implement a bijection from the set of all boolean
+      matrices of dimension <A>n</A> and the numbers <C>[1 .. 2 ^
+        <A>n</A>]</C>.
+      <P/>
+
+      More precisely, if <A>m</A> and <A>n</A> are positive integers such that
+      <A>m</A> is at most <C>2 ^ <A>n</A></C>, then <C>BooleanMatNumber</C>
+      returns the <A>m</A>th <A>n</A> by <A>n</A> boolean matrix. 
+      <P/>
+
+      If <A>mat</A> is an <A>n</A> by <A>n</A> boolean matrix, then
+      <C>NumberBooleanMat</C> returns the number in  <C>[1 .. 2 ^ <A>n</A>]</C>
+      that corresponds to <A>mat</A>.
       
       <Example><![CDATA[
 gap> mat := BooleanMat([[0, 1, 1, 0], 
 >                       [1, 0, 1, 1], 
 >                       [1, 1, 0, 1], 
 >                       [0, 1, 0, 1]]);;
-gap> 
-gap> mat := BooleanMat([[0, 1, 1, 0], 
->                       [0, 0, 1, 0], 
->                       [1, 0, 0, 1], 
->                       [1, 0, 1, 0]]);;
-]]></Example>
+gap> NumberBooleanMat(mat);
+27606
+gap> Display(BooleanMatNumber(27606, 4));
+0 1 1 0
+1 0 1 1
+1 1 0 1
+0 1 0 1]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="NumberBlist">
+  <ManSection>
+    <Oper Name="BlistNumber" Arg="m, n"/>
+    <Oper Name="NumberBlist" Arg="blist"/>
+    <Returns>A boolean list, or a positive integer.</Returns>
+    <Description>
+      These functions implement a bijection from the set of all boolean
+      lists of length <A>n</A> and the numbers <C>[1 .. 2 ^ <A>n</A>]</C>.
+      <P/>
+
+      More precisely, if <A>m</A> and <A>n</A> are positive integers such that
+      <A>m</A> is at most <C>2 ^ <A>n</A></C>, then <C>BlistNumber</C>
+      returns the <A>m</A>th boolean list of length <A>n</A>.
+      <P/>
+
+      If <A>blist</A> is a boolean list of length <A>n</A>, then
+      <C>NumberBlist</C> returns the number in  <C>[1 .. 2 ^ <A>n</A>]</C>
+      that corresponds to <A>blist</A>.
+      
+      <Example><![CDATA[
+gap> blist := BlistList([1..10], []);
+[ false, false, false, false, false, false, false, false, false, 
+  false ]
+gap> NumberBlist(blist);
+1
+gap> blist := BlistList([1..10], [10]);
+[ false, false, false, false, false, false, false, false, false, true 
+ ]
+gap> NumberBlist(blist);
+2
+gap> BlistNumber(1, 10);
+[ false, false, false, false, false, false, false, false, false, 
+  false ]
+gap> BlistNumber(2, 10);
+[ false, false, false, false, false, false, false, false, false, true 
+ ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsBooleanMat">
+  <ManSection>
+    <Oper Name="AsBooleanMat" Arg="x[, n]"/>
+    <Returns>A boolean matrix.</Returns>
+    <Description>
+      <C>AsBooleanMat</C> returns the pbr, bipartition, permutation,
+      transformation, or partial permutation <A>x</A>, as a boolean matrix of
+      dimension <A>n</A>.<P/>
+  
+      There are several possible arguments for <C>AsBooleanMat</C>:
+      <List>
+        <Mark>permutations</Mark>
+        <Item>
+          If <A>x</A> is a permutation and <A>n</A> is a positive integer, then
+          <C>AsBooleanMat(<A>x</A>, <A>n</A>)</C> returns the boolean matrix
+          <C>mat</C> of dimension <A>n</A> such that <C>mat[i][j] = true</C> if
+          and only if <C>j = i ^ x</C>. <P/>
+
+          If no positive integer <A>n</A> is specified, then the largest moved
+          point of <A>x</A> is used as the value for <A>n</A>; see <Ref
+            Func="LargestMovedPoint" Label="for a permutation"
+            BookName="ref"/>.
+        </Item>
+
+        <Mark>transformations</Mark>      
+        <Item>
+          If <A>x</A> is a transformation and <A>n</A> is a positive integer
+          such that <A>x</A> is a transformation of <C>[1 .. <A>n</A>]</C>, then
+          <C>AsTransformation</C> returns the boolean matrix 
+          <C>mat</C> of dimension <A>n</A> such that <C>mat[i][j] = true</C> if
+          and only if <C>j = i ^ x</C>. <P/>
+          
+          If the positive integer <A>n</A> is not specified, then the
+          degree of <A>f</A> is used as the value for <A>n</A>.
+        </Item> 
+
+        <Mark>partial permutations</Mark>
+        <Item>
+          If <A>x</A> is a partial permutation and <A>n</A> is a positive
+          integer such that <C>i ^ <A>x</A> &lt;= n</C> for all <C>i</C> in 
+          <C>[1 .. <A>n</A>]</C>, then <C>AsBooleanMat</C> returns the boolean
+          matrix <C>mat</C> of dimension <A>n</A> such that <C>mat[i][j] =
+            true</C> if and only if <C>j = i ^ x</C>. 
+          <P/>
+
+          If the optional argument <A>n</A> is not present, then the default
+          value of the maximum of degree and the codegree of <A>x</A> 
+          is used.
+        </Item>
+
+        <Mark>bipartitions</Mark>
+        <Item>
+          If <A>x</A> is a bipartition and <A>n</A> is any non-negative
+          integer, then <C>AsBooleanMat</C> returns the boolean matrix
+          <C>mat</C> of dimension <A>n</A> such that <C>mat[i][j] = true</C> if
+          and only if <C>i</C> and <C>j</C> belong to the same block of
+          <A>x</A>. 
+          <P/>
+
+          If the optional argument <A>n</A> is not present, then twice the
+          degree of <A>x</A> is used by default. 
+        </Item>
+        
+        <Mark>pbr</Mark>
+        <Item>
+          If <A>x</A> is a pbr and <A>n</A> is any non-negative
+          integer, then <C>AsBooleanMat</C> returns the boolean matrix
+          <C>mat</C> of dimension <A>n</A> such that <C>mat[i][j] = true</C> if
+          and only if <C>i</C> and <C>j</C> are related in <A>x</A>. 
+          <P/>
+
+          If the optional argument <A>n</A> is not present, then twice the
+          degree of <A>x</A> is used by default. 
+        </Item>
+      </List>
+
+  <Example><![CDATA[
+gap> Display(AsBooleanMat((1,2), 5));
+0 1 0 0 0
+1 0 0 0 0
+0 0 1 0 0
+0 0 0 1 0
+0 0 0 0 1
+gap> Display(AsBooleanMat((1,2)));
+0 1
+1 0
+gap> x := Transformation( [ 1, 3, 4, 1, 3 ] );;
+gap> Display(AsBooleanMat(x));
+1 0 0 0 0
+0 0 1 0 0
+0 0 0 1 0
+1 0 0 0 0
+0 0 1 0 0
+gap> Display(AsBooleanMat(x, 4));
+1 0 0 0
+0 0 1 0
+0 0 0 1
+1 0 0 0
+gap> x := PartialPerm( [ 1, 2, 3, 6, 8, 10 ], 
+>                      [ 2, 6, 7, 9, 1, 5 ] );
+[3,7][8,1,2,6,9][10,5]
+gap> Display(AsBooleanMat(x));
+0 1 0 0 0 0 0 0 0 0
+0 0 0 0 0 1 0 0 0 0
+0 0 0 0 0 0 1 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 1 0
+0 0 0 0 0 0 0 0 0 0
+1 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 1 0 0 0 0 0
+gap> x := Bipartition( [ [ 1, 4, -2, -3 ], 
+>                        [ 2, 3, 5, -5 ], [ -1, -4 ] ] );
+<bipartition: [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ]>
+gap> y := AsBooleanMat(x);
+<10x10 boolean matrix>
+gap> Display(y);
+1 0 0 1 0 0 1 1 0 0
+0 1 1 0 1 0 0 0 0 1
+0 1 1 0 1 0 0 0 0 1
+1 0 0 1 0 0 1 1 0 0
+0 1 1 0 1 0 0 0 0 1
+0 0 0 0 0 1 0 0 1 0
+1 0 0 1 0 0 1 1 0 0
+1 0 0 1 0 0 1 1 0 0
+0 0 0 0 0 1 0 0 1 0
+0 1 1 0 1 0 0 0 0 1
+gap> IsEquivalenceBooleanMat(y);
+true
+gap> AsBooleanMat(x, 1);
+<1x1 boolean matrix>
+gap> Display(AsBooleanMat(x, 1));
+1
+gap> Display(AsBooleanMat(x, 2));
+1 0
+0 1
+gap> Display(AsBooleanMat(x, 3));
+1 0 0
+0 1 1
+0 1 1
+gap> Display(AsBooleanMat(x, 11));
+1 0 0 1 0 0 1 1 0 0 0
+0 1 1 0 1 0 0 0 0 1 0
+0 1 1 0 1 0 0 0 0 1 0
+1 0 0 1 0 0 1 1 0 0 0
+0 1 1 0 1 0 0 0 0 1 0
+0 0 0 0 0 1 0 0 1 0 0
+1 0 0 1 0 0 1 1 0 0 0
+1 0 0 1 0 0 1 1 0 0 0
+0 0 0 0 0 1 0 0 1 0 0
+0 1 1 0 1 0 0 0 0 1 0
+0 0 0 0 0 0 0 0 0 0 0]]></Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CanonicalBooleanMat">
+  <ManSection>
+    <Oper Name="CanonicalBooleanMat" Arg="G, H, mat" 
+      Label = "for a perm group, perm group and boolean matrix"/>
+    <Oper Name="CanonicalBooleanMat" Arg="G, mat" 
+      Label = "for a perm group and boolean matrix"/>
+    <Oper Name="CanonicalBooleanMat" Arg="mat"/>
+    <Returns>A boolean matrix.</Returns>
+    <Description>
+      This operation returns a fixed representative of the orbit of the boolean
+      matrix <A>mat</A> under the action of the permutation group <A>G</A> on
+      its rows and the permutation group <A>H</A> on its columns.
+      <P/>
+
+      In its second form, when only a single permutation group <A>G</A> is
+      specified, <A>G</A> acts on both the rows and columns of <A>mat</A>. 
+      <P/>
+
+      In its third form, when only a boolean matrix is specified,
+      <C>CanonicalBooleanMat</C> returns a fixed representative of the orbit of
+      <A>mat</A> under the action of the symmetric group on <C>[1 .. n]</C>
+      where <C>n</C> is the dimension of <A>mat</A>.<P/>
+
+      <B>Note that:</B> this operation only works if the &Grape; package is
+      available. 
+      
+      <Example><![CDATA[
+gap> mat := BooleanMat([[1, 1, 1, 0, 0, 0], 
+>                       [0, 0, 0, 1, 0, 1], 
+>                       [1, 0, 0, 1, 0, 1],
+>                       [0, 0, 0, 0, 0, 0], 
+>                       [0, 1, 1, 1, 1, 1], 
+>                       [0, 1, 1, 0, 1, 0]]);
+<6x6 boolean matrix>
+gap> CanonicalBooleanMat(mat);
+<6x6 boolean matrix>
+gap> Display(CanonicalBooleanMat(mat));
+0 0 0 0 0 0
+0 0 0 0 1 1
+0 0 0 1 1 1
+0 1 1 1 0 0
+1 1 1 0 0 0
+1 1 1 0 1 1
+gap> Display(CanonicalBooleanMat(Group((1,3)), mat));
+0 1 1 0 0 1
+0 0 1 0 0 1
+1 1 0 1 0 0
+0 0 0 0 0 0
+1 0 1 1 1 1
+1 0 0 1 1 0
+gap> Display(CanonicalBooleanMat(Group((1,3)), Group(()), mat));
+1 1 1 0 0 0
+0 0 0 1 0 1
+0 1 0 1 0 1
+0 0 0 0 0 0
+1 0 1 1 1 1
+1 0 1 0 1 0]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSymmetricBooleanMat">
+  <ManSection>
+    <Prop Name="IsSymmetricBooleanMat" Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is <B>symmetric</B> if it is symmetric about the main
+      diagonal, i.e. <C><A>mat</A>[i][j] = <A>mat</A>[j][i]</C> for all <C>i,
+        j</C> in the range <C>[1 .. n]</C> where <C>n</C> is the dimension of
+      <A>mat</A>. 
+    
+  <Example><![CDATA[
+gap> mat := BooleanMat([[0, 1, 1, 0], 
+>                       [1, 0, 1, 1], 
+>                       [1, 1, 0, 1], 
+>                       [0, 1, 0, 1]]);
+<4x4 boolean matrix>
+gap> IsSymmetricBooleanMat(mat);
+false
+gap> mat := BooleanMat([[0, 1, 1, 0], 
+>                       [1, 0, 1, 1], 
+>                       [1, 1, 0, 1], 
+>                       [0, 1, 1, 1]]);
+<4x4 boolean matrix>
+gap> IsSymmetricBooleanMat(mat);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsReflexiveBooleanMat">
+  <ManSection>
+    <Prop Name="IsReflexiveBooleanMat" Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is <B>reflexive</B> if every entry in the main diagonal
+      is <K>true</K>, i.e. <C><A>mat</A>[i][i] = true</C> for all <C>i</C> in
+      the range <C>[1 .. n]</C> where <C>n</C> is the dimension of
+      <A>mat</A>. 
+    
+  <Example><![CDATA[
+gap> mat := BooleanMat([[1, 0, 0, 0], 
+>                       [1, 1, 0, 0], 
+>                       [0, 1, 0, 1], 
+>                       [1, 1, 1, 1]]);
+<4x4 boolean matrix>
+gap> IsReflexiveBooleanMat(mat);
+false
+gap> mat := BooleanMat([[1, 1, 1, 0], 
+>                       [1, 1, 1, 1], 
+>                       [1, 1, 1, 1], 
+>                       [0, 1, 1, 1]]);
+<4x4 boolean matrix>
+gap> IsReflexiveBooleanMat(mat);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsTransitiveBooleanMat">
+  <ManSection>
+    <Prop Name="IsTransitiveBooleanMat" Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is <B>transitive</B> whenever
+      <C><A>mat</A>[i][j] = true</C> and 
+      <C><A>mat</A>[j][k] = true</C> if and only if 
+      <C><A>mat</A>[i][k] = true</C>.
+    
+      <Example><![CDATA[
+gap> x := BooleanMat([[1, 0, 0, 1], 
+>                     [1, 0, 1, 1], 
+>                     [1, 1, 1, 0], 
+>                     [0, 1, 1, 0]]);
+<4x4 boolean matrix>
+gap> IsTransitiveBooleanMat(x);
+false
+gap> x := BooleanMat([[1, 1, 1, 1], 
+>                     [1, 1, 1, 1], 
+>                     [1, 1, 1, 1], 
+>                     [1, 1, 1, 1]]);
+<4x4 boolean matrix>
+gap> IsTransitiveBooleanMat(x);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsAntiSymmetricBooleanMat">
+  <ManSection>
+    <Prop Name="IsAntiSymmetricBooleanMat" Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is <B>anti-symmetric</B> whenever
+      <C><A>mat</A>[i][j] = true</C> and 
+      <C><A>mat</A>[j][i] = true</C> if and only if
+      <C>i = j</C>. 
+      
+      <Example><![CDATA[
+gap> x := BooleanMat([[1, 0, 0, 1], 
+>                     [1, 0, 1, 1], 
+>                     [1, 1, 1, 0], 
+>                     [0, 1, 1, 0]]);
+<4x4 boolean matrix>
+gap> IsAntiSymmetricBooleanMat(x);
+false
+gap> x := BooleanMat([[1, 0, 0, 1], 
+>                     [1, 0, 1, 0], 
+>                     [1, 0, 1, 0], 
+>                     [0, 1, 1, 0]]);
+<4x4 boolean matrix>
+gap> IsAntiSymmetricBooleanMat(x);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsTotalBooleanMat">
+  <ManSection>
+    <Prop Name="IsTotalBooleanMat" Arg="mat"/>
+    <Prop Name="IsOntoBooleanMat" Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is <B>total</B> if there is at least one entry in every
+      row is <K>true</K>. Similarly, a boolean matrix is <B>onto</B> if at
+      least one entry in every column is <K>true</K>. 
+      
+      <Example><![CDATA[
+gap> x := BooleanMat([[1, 0, 0, 1], 
+>                     [1, 0, 1, 1], 
+>                     [1, 1, 1, 0], 
+>                     [0, 1, 1, 0]]);
+<4x4 boolean matrix>
+gap> IsTotalBooleanMat(x);
+true
+gap> IsOntoBooleanMat(x);
+true
+gap> x := BooleanMat([[1, 0, 0, 1], 
+>                     [1, 0, 1, 0], 
+>                     [0, 0, 0, 0], 
+>                     [0, 1, 1, 0]]);
+<4x4 boolean matrix>
+gap> IsTotalBooleanMat(x);
+false
+gap> IsOntoBooleanMat(x);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsPartialOrderBooleanMat">
+  <ManSection>
+    <Prop Name="IsPartialOrderBooleanMat" Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is a <B>partial order</B> if it is reflexive,
+      transitive, and anti-symmetric. 
+
+      <Example><![CDATA[
+gap> Number(FullBooleanMatMonoid(3), IsPartialOrderBooleanMat);
+19]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsEquivalenceBooleanMat">
+  <ManSection>
+    <Prop Name="IsEquivalenceBooleanMat" Arg="mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is an <B>equivalence</B> if it is reflexive,
+      transitive, and symmetric. 
+
+      <Example><![CDATA[
+gap> Number(FullBooleanMatMonoid(3), IsEquivalenceBooleanMat);
+5
+gap> Bell(3);
+5]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+

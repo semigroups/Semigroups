@@ -8,7 +8,7 @@
 #############################################################################
 ##
 gap> START_TEST(Concatenation("Semigroups package: ",
-                              "standard/attributes/attributes-acting.tst"));
+>                             "standard/attributes/attributes-acting.tst"));
 gap> LoadPackage("semigroups", false);;
 
 #
