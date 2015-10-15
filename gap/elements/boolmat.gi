@@ -381,7 +381,6 @@ function(x, n)
   return AsBooleanMat(AsTransformation(x), n);
 end);
 
-
 InstallMethod(AsBooleanMat, "for a partial perm",
 [IsPartialPerm],
 x -> AsBooleanMat(x, Maximum(DegreeOfPartialPerm(x),
