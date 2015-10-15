@@ -40,7 +40,7 @@ function(mat)
       or not ForAll(mat, IsHomogeneousList) then
     ErrorMayQuit("Semigroups: BooleanMat: usage,\n",
                  "the argmuent must be a non-empty homogeneous list ",
-                 "of homogeneous lists,\n");
+                 "of homogeneous lists,");
   elif IsRectangularTable(mat) then #0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then
       # 0s and 1s
@@ -322,12 +322,6 @@ InstallMethod(AsBooleanMat, "for a partitioned binary relation and pos int",
 function(x, n)
   local y, i;
 
-  if n < 2 * x![1] then
-    ErrorMayQuit("Semigroups: AsBooleanMat: usage,\n",
-                 "the pbr in the first argument is defined on more than ",
-                 String(n), " points,");
-  fi;
-
   y := EmptyPlist(n);
   for i in [2 ..  2 * x![1] + 1] do
     Add(y, BlistList([1 .. n], x![i]));
@@ -335,11 +329,12 @@ function(x, n)
   for i in [2 * x![1] + 1 .. n] do
     Add(y, BlistList([1 .. n], []));
   od;
+
   return BooleanMat(y);
 end);
 
 InstallMethod(AsBooleanMat, "for a bipartition",
-[IsBipartition], x -> AsBooleanMat(x, DegreeOfBipartition(x)));
+[IsBipartition], x -> AsBooleanMat(x, 2 * DegreeOfBipartition(x)));
 
 InstallMethod(AsBooleanMat, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
@@ -347,14 +342,8 @@ function(x, n)
   local deg, blocks, out, i, block;
 
   deg := DegreeOfBipartition(x);
-  if 2 * n < deg then
-    ErrorMayQuit("Semigroups: AsBooleanMat: usage,\n",
-                 "the bipartition in the first argument must have degree ",
-                 "at least ", String(2 * n), ",");
-  fi;
-
   blocks := ShallowCopy(ExtRepOfBipartition(x));
-  out := EmptyPlist(2 * n);
+  out := EmptyPlist(n);
 
   for block in blocks do
     block := ShallowCopy(block);
@@ -364,8 +353,12 @@ function(x, n)
       fi;
     od;
     for i in block do
-      out[i] := BlistList([1 .. 2 * n], block);
+      out[i] := BlistList([1 .. n], block);
     od;
+  od;
+
+  for i in [Length(out) + 1 .. n] do
+    out[i] := BlistList([1 .. n], []);
   od;
 
   return BooleanMat(out);
@@ -400,11 +393,14 @@ function(x, n)
   return AsBooleanMat(AsTransformation(x), n);
 end);
 
+
 InstallMethod(AsBooleanMat, "for a partial perm",
 [IsPartialPerm],
 x -> AsBooleanMat(x, Maximum(DegreeOfPartialPerm(x),
                              CodegreeOfPartialPerm(x))));
 
+#TODO this could be more elaborate, i.e. it could take a set, then just take
+# the restriction of <x> to that set as a Boolean matrix
 InstallMethod(AsBooleanMat, "for a transformation and pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
@@ -425,6 +421,8 @@ function(x, n)
   od;
   return BooleanMatNC(out);
 end);
+
+# TODO AsBooleanMat for a BooleanMat
 
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],
@@ -451,7 +449,7 @@ function(x, data)
   return h + 1;
 end);
 
-InstallMethod(SetBooleanMat, "for a boolean matrix",
+InstallMethod(SEMIGROUPS_SetBooleanMat, "for a boolean matrix",
 [IsBooleanMat],
 function(x)
   local n, out, i;
@@ -463,8 +461,7 @@ function(x)
   return out;
 end);
 
-InstallMethod(BooleanMatSet, "for a homogeneous set",
-[IsHomogeneousList and IsSSortedList],
+BindGlobal("SEMIGROUPS_BooleanMatSet",
 function(set)
   local n, x, i;
   n := Length(set);
@@ -515,15 +512,16 @@ if IsGrapeLoaded then
     act := function(pt, p)
       local q, r, nr;
       pt := pt - 1;
-      q := QuoInt(pt, 2 ^ n); #row
-      r := pt - q * 2 ^ n; # number blist of the row
-      # permute columns
+      q := QuoInt(pt, 2 ^ n); # row
+      r := pt - q * 2 ^ n;    # number blist of the row
+                              # permute columns
       nr := NumberBlist(Permuted(BlistNumber(r + 1, n), p));
       return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n; # and then the row
     end;
 
      map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
-     return BooleanMatSet(SmallestImageSet(Image(map), SetBooleanMat(x)));
+     return SEMIGROUPS_BooleanMatSet(SmallestImageSet(Image(map),
+                                     SEMIGROUPS_SetBooleanMat(x)));
   end);
 fi;
 
@@ -600,7 +598,7 @@ function(x)
   return true;
 end);
 
-InstallMethod(IsTotalBooleanMat, "for a boolean matrix",
+InstallMethod(IsOntoBooleanMat, "for a boolean matrix",
 [IsBooleanMat],
 function(x)
   return IsTotalBooleanMat(TransposedMat(x));
