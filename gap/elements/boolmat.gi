@@ -185,18 +185,6 @@ function(x)
   return List([1 .. n], i -> ListBlist([1 .. n], x![i]));
 end);
 
-# JDM deprecated
-#InstallGlobalFunction(BooleanMatBySuccessorsNC,
-#function(x)
-#  local n, y, i;
-#  n := Length(x);
-#  y := EmptyPlist(n);
-#  for i in [1 .. n] do
-#    y[i] := BlistList([1 .. n], x[i]);
-#  od;
-#  return Objectify(BooleanMatType, y);
-#end);
-
 InstallMethod(IsRowTrimBooleanMat, "for a boolean matrix",
 [IsBooleanMat],
 function(x)
@@ -483,7 +471,7 @@ end);
 InstallMethod(CanonicalBooleanMat, "for perm group and boolean mat",
 [IsPermGroup, IsBooleanMat],
 function(G, x)
-  return CanonicalBooleanMatNC(G, G, x);
+  return CanonicalBooleanMat(G, G, x);
 end);
 
 InstallMethod(CanonicalBooleanMat, "for perm group and boolean mat",
@@ -494,7 +482,7 @@ function(G, H, x)
   if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then
     ErrorMayQuit("Semigroups: CanonicalBooleanMat: usage,\n",
                  "the largest moved point of the first argument must not",
-                 " exceed the dimension of the Boolean matrix,");
+                 " exceed the dimension\nof the Boolean matrix,");
   fi;
   return CanonicalBooleanMatNC(G, H, x);
 end);
