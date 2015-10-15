@@ -91,9 +91,9 @@ true
 #T# BipartitionTest8: check BlocksIdempotentTester, first a few little examples
 gap> l := BlocksByIntRepNC([3, 1, 2, 3, 3, 0, 0, 0]);;
 gap> r := BlocksByIntRepNC([2, 1, 2, 2, 2, 0, 0]);;
-gap> BlocksIdempotentTester(l, r);
+gap> SEMIGROUPS_BlocksIdempotentTester(l, r);
 true
-gap> e := BlocksIdempotentCreator(l, r);
+gap> e := SEMIGROUPS_BlocksIdempotentCreator(l, r);
 <bipartition: [ 1 ], [ 2, 3, 4 ], [ -1 ], [ -2 ], [ -3, -4 ]>
 gap> IsIdempotent(e);
 true
@@ -521,7 +521,7 @@ gap> D := DClass(H);
 gap> DD := DClass(HH);
 <Green's D-class: 
  <bipartition: [ 1, 2, 5, 6, 7, 8, 9, 10, 11, 12, -1, -10, -12, -13 ], 
-  [ 3, 4, 13 ], [ -2, -9 ], [ -3, -7, -8 ], [ -4 ], [ -5 ], [ -6, -11 ]>
+  [ 3, 4, 13 ], [ -2, -9 ], [ -3, -7, -8 ], [ -4 ], [ -5 ], [ -6, -11 ]>>
 gap> DD < D;
 false
 gap> D < DD;
@@ -543,105 +543,150 @@ gap> f := S.1 * S.2 * S.3;
 gap> f := S.1 * S.2;
 <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
 gap> H := HClass(S, f);
-{Bipartition([[1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ] ] )}
+<Green's H-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
+  >
 gap> LClass(H);
-{Bipartition([[1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ] ] )}
+<Green's L-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
+  >
 gap> RClass(H);
-{Bipartition([[1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ] ] )}
+<Green's R-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
+  >
 gap> DClass(RClass(H));
-{Bipartition([[1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
+  >
 gap> DClass(LClass(H));
-{Bipartition([[1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
+  >
 gap> DClass(H);
-{Bipartition([[1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
+  >
 gap> f := Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]);
 <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
 gap> H := HClassNC(S, f);
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> LClass(H);
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> RClass(H);
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's R-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> DClass(RClass(H));
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> DClass(LClass(H));
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> DClass(H);
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> DClasses(S);
-[ {Bipartition([[1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, -2, -3, -4 ], [ 5 ], [ -1, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, -3, -5 ], [ 4, -1 ], [ 5, -2, -4 ] ] )}, 
-  {Bipartition([[1, 5, -1, -3 ], [ 2, 3 ], [ 4, -2 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4, -3 ], [ 2 ], [ 3 ], [ 5, -1, -2, -5 ], [ -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, -1, -2, -5 ], [ 4, 5, -3 ], [ -4 ] ] )} ]
+[ <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], 
+      [ -3 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 2, 3, 4, -2, -3, -4 ], [ 5 ], 
+      [ -1, -5 ]>>, 
+  <Green's D-class: <block bijection: [ 1, 2, 3, -3, -5 ], [ 4, -1 ], 
+      [ 5, -2, -4 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 5, -1, -3 ], [ 2, 3 ], [ 4, -2 ], 
+      [ -4, -5 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 4, -3 ], [ 2 ], [ 3 ], 
+      [ 5, -1, -2, -5 ], [ -4 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 2, 3, -1, -2, -5 ], [ 4, 5, -3 ], 
+      [ -4 ]>> ]
 gap> H := HClassNC(S, f);
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> RClasses(DClass(H));
-[ {Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, -2 ], [ 5 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4, 5, -2 ], [ 2, 3 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4, 5, -2 ], [ 2 ], [ 3 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 5, -2 ], [ 2, 3 ], [ 4 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4 ], [ 2 ], [ 3 ], [ 5, -2 ], [ -1, -3 ], 
-     [ -4, -5 ] ] )}, {Bipartition([[1, 2, 3, -2 ], [ 4, 5 ], [ -1, -3 ], 
-     [ -4, -5 ] ] )} ]
+[ <Green's R-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's R-class: <bipartition: [ 1, 2, 3, 4, -2 ], [ 5 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's R-class: <bipartition: [ 1, 4, 5, -2 ], [ 2, 3 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's R-class: <bipartition: [ 1, 4, 5, -2 ], [ 2 ], [ 3 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's R-class: <bipartition: [ 1, 5, -2 ], [ 2, 3 ], [ 4 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's R-class: <bipartition: [ 1, 4 ], [ 2 ], [ 3 ], [ 5, -2 ], 
+      [ -1, -3 ], [ -4, -5 ]>>, 
+  <Green's R-class: <bipartition: [ 1, 2, 3, -2 ], [ 4, 5 ], [ -1, -3 ], 
+      [ -4, -5 ]>> ]
 gap> LClasses(DClass(H));
-[ {Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -5 ], [ -3 ], [ -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -2, -3, -4, -5 ], [ -1 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -3 ], [ -2 ], [ -4, -5 ] ] )} ]
+[ <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>,
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>>,
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>>,
+  <Green's L-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>>,
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>>,
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -5 ], [ -3 ], 
+      [ -4 ]>>, 
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4, -5 ], [ -1 ]>>,
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], [ -2 ], 
+      [ -4, -5 ]>> ]
 gap> HClasses(LClass(H));
-[ {Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, -2 ], [ 5 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4, 5, -2 ], [ 2, 3 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4, 5, -2 ], [ 2 ], [ 3 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 5, -2 ], [ 2, 3 ], [ 4 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4 ], [ 2 ], [ 3 ], [ 5, -2 ], [ -1, -3 ], 
-     [ -4, -5 ] ] )}, {Bipartition([[1, 2, 3, -2 ], [ 4, 5 ], [ -1, -3 ], 
-     [ -4, -5 ] ] )} ]
+[ <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, -2 ], [ 5 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 4, 5, -2 ], [ 2, 3 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 4, 5, -2 ], [ 2 ], [ 3 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 5, -2 ], [ 2, 3 ], [ 4 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 4 ], [ 2 ], [ 3 ], [ 5, -2 ], 
+      [ -1, -3 ], [ -4, -5 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 2, 3, -2 ], [ 4, 5 ], [ -1, -3 ], 
+      [ -4, -5 ]>> ]
 gap> HClasses(RClass(H));
-[ {Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -2, -5 ], [ -3 ], [ -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -2, -3, -4, -5 ], [ -1 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, 5, -1, -3 ], [ -2 ], [ -4, -5 ] ] )} ]
+[ <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
+      [ -4, -5 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>,
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>>,
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>>,
+  <Green's H-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>>,
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>>,
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -5 ], [ -3 ], 
+      [ -4 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4, -5 ], [ -1 ]>>,
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], [ -2 ], 
+      [ -4, -5 ]>> ]
 gap> JClasses(S);
-[ {Bipartition([[1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ] ] )}, 
-  {Bipartition([[1, 2, 3, 4, -2, -3, -4 ], [ 5 ], [ -1, -5 ] ] )}, 
-  {Bipartition([[1, 2, 3, -3, -5 ], [ 4, -1 ], [ 5, -2, -4 ] ] )}, 
-  {Bipartition([[1, 5, -1, -3 ], [ 2, 3 ], [ 4, -2 ], [ -4, -5 ] ] )}, 
-  {Bipartition([[1, 4, -3 ], [ 2 ], [ 3 ], [ 5, -1, -2, -5 ], [ -4 ] ] )}, 
-  {Bipartition([[1, 2, 3, -1, -2, -5 ], [ 4, 5, -3 ], [ -4 ] ] )} ]
+[ <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], 
+      [ -3 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 2, 3, 4, -2, -3, -4 ], [ 5 ], 
+      [ -1, -5 ]>>, 
+  <Green's D-class: <block bijection: [ 1, 2, 3, -3, -5 ], [ 4, -1 ], 
+      [ 5, -2, -4 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 5, -1, -3 ], [ 2, 3 ], [ 4, -2 ], 
+      [ -4, -5 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 4, -3 ], [ 2 ], [ 3 ], 
+      [ 5, -1, -2, -5 ], [ -4 ]>>, 
+  <Green's D-class: <bipartition: [ 1, 2, 3, -1, -2, -5 ], [ 4, 5, -3 ], 
+      [ -4 ]>> ]
 gap> S := Semigroup(S);
 <bipartition semigroup of degree 5 with 5 generators>
 gap> D := DClassNC(S, f);
-{Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
 gap> D := [D];
-[ {Bipartition([[1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ] ] )} ]
+[ <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
+      [ -4, -5 ]>> ]
 gap> D[2] := DClass(S, f);
-{Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> D[3] := DClass(RClass(S, f));
-{Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> D[4] := DClass(RClass(S, f));
-{Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> D[5] := DClass(LClass(S, f));
-{Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> D[6] := DClass(HClass(S, f));
-{Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> D[7] := DClass(LClass(HClass(S, f)));
-{Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> D[8] := DClass(RClass(HClass(S, f)));
-{Bipartition([[1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ] ] )}
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> ForAll(Combinations([1 .. 8], 2), x -> D[x[1]] = D[x[2]]);
 true
 gap> List(D, IsGreensClassNC);

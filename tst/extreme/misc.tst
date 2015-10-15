@@ -43,7 +43,7 @@ true
 gap> d := DClass(s, f);
 <Green's D-class: Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )>
 gap> iter := Iterator(d);
-<iterator of D-class>
+<iterator>
 gap> for i in iter do od;
 
 #T# MiscTest1
@@ -83,7 +83,7 @@ Group(())
 gap> ForAll(l, x -> x in l);
 true
 gap> iter := IteratorOfLClasses(s);
-<iterator of L-classes>
+<iterator>
 gap> repeat l := NextIterator(iter); until Size(l) > 1;
 gap> l;
 <Green's L-class: [4,3]>
@@ -310,7 +310,7 @@ true
 gap> rep := Representative(d);
 [1,6][9,12]
 gap> s := Parent(d);
-<partial perm semigroup of size 4857, of rank 12 with 6 generators>
+<partial perm semigroup of size 4857, rank 12 with 6 generators>
 gap> ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
 > or RankOfPartialPerm(f) <> RankOfPartialPerm(rep);
 false
@@ -541,7 +541,7 @@ gap> l := LClass(s, f);
 gap> Size(l);
 1
 gap> iter := IteratorOfLClasses(s);
-<iterator of L-classes>
+<iterator>
 gap> repeat l := NextIterator(iter); until Size(l) > 1;
 gap> l;
 <Green's L-class: Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )>
@@ -758,7 +758,7 @@ gap> l := LClasses(s)[523];
 gap> Size(l);
 1
 gap> iter := IteratorOfLClasses(s);
-<iterator of L-classes>
+<iterator>
 gap> repeat l := NextIterator(iter); until Size(l) > 1;
 gap> l;
 <Green's L-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
@@ -987,8 +987,7 @@ gap> gens :=
 >   81, 82, 84, 85, 86, 87, 89, 92, 94, 95], [5, 13, 94, 44, 80, 54, 99, 81,
 >   31, 7, 90, 30, 46, 68, 36, 11, 100, 17, 87, 72, 14, 29, 9, 61, 91, 32, 43,
 >   64, 60, 41, 26, 40, 8, 23, 63, 38, 57, 12, 59, 83, 92, 96, 18, 3, 65, 2,
->   37, 21, 49, 16, 75, 24, 27, 1, 48, 6, 35, 79, 82, 51, 39, 25, 77, 62, 22
->]),
+>   37, 21, 49, 16, 75, 24, 27, 1, 48, 6, 35, 79, 82, 51, 39, 25, 77, 62, 22]),
 >  PartialPermNC([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
 >   18, 19, 20, 21, 23, 24, 26, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
 >   40, 42, 44, 48, 51, 52, 53, 55, 56, 57, 58, 60, 63, 64, 65, 66, 67, 71, 73,
@@ -1923,16 +1922,15 @@ gap> gens :=
 >   75, 80, 86, 87, 88, 90, 91, 94, 95, 97], [89, 85, 8, 56, 42, 10, 61, 25,
 >   98, 55, 39, 92, 62, 21, 34, 57, 44, 14, 53, 64, 59, 84, 12, 87, 78, 83, 30,
 >   32, 68, 73, 2, 86, 23, 48, 47, 79, 93, 15, 76, 97, 77, 11, 33, 100, 91, 67,
->   18, 16, 99, 60, 74, 17, 95, 49, 4, 66, 41, 69, 94, 31, 29, 5, 63, 58, 72
->]),
+>   18, 16, 99, 60, 74, 17, 95, 49, 4, 66, 41, 69, 94, 31, 29, 5, 63, 58, 72]),
 >  PartialPermNC([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 17, 20, 21,
 >   22, 23, 24, 26, 28, 29, 30, 32, 34, 35, 37, 39, 40, 42, 43, 44, 45, 46, 47,
 >   48, 49, 51, 53, 54, 55, 56, 58, 59, 60, 61, 63, 64, 65, 66, 67, 68, 72, 74,
 >   75, 79, 80, 82, 87, 88, 91, 92, 99, 100], [89, 67, 34, 15, 57, 29, 4, 62,
 >   76, 20, 52, 22, 35, 75, 98, 78, 40, 46, 28, 6, 55, 90, 16, 12, 65, 26, 66,
 >   36, 25, 61, 83, 38, 41, 93, 2, 39, 87, 85, 17, 92, 97, 43, 30, 5, 13, 94,
->   44, 80, 54, 99, 81, 31, 7, 68, 11, 100, 72, 14, 9, 91, 32, 64, 60, 8, 23
->])];;
+>   44, 80, 54, 99, 81, 31, 7, 68, 11, 100, 72, 14, 9, 91, 32, 64, 60, 8,
+>   23])];;
 gap> s := Semigroup(gens);;
 gap> f := PartialPerm([2, 63], [28, 89]);;
 gap> d := DClassNC(s, f);
@@ -2615,7 +2613,7 @@ gap> NrDClasses(s);
 gap> RClassReps(d);
 [ [4,2][7,9][11,6] ]
 gap> iter := IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> repeat
 >   d := NextIterator(iter);
 > until IsDoneIterator(iter) or Size(d) > 1000;
@@ -3286,14 +3284,14 @@ gap> NrHClasses(r);
 6
 gap> enum := EnumeratorOfRClasses(s);
 <enumerator of R-classes of <non-regular transformation monoid of size 7008, 
- of degree 6 with 18 generators>>
+ degree 6 with 18 generators>>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> s := Semigroup(gens);
 <transformation monoid of degree 6 with 18 generators>
 gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <transformation monoid of degree 6 with 18 generators
-  >>
+<enumerator of R-classes of <transformation monoid of degree 6 with 18 
+ generators>>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> enum[2];
@@ -3366,7 +3364,7 @@ Group([ (4,6) ])
 
 #T# MiscTest37
 gap> s := FullTransformationSemigroup(7);
-<full transformation semigroup of degree 7>
+<full transformation monoid of degree 7>
 gap> Factorial(7);
 5040
 gap> f := One(s);
@@ -3435,7 +3433,7 @@ false
 gap> Size(h);
 1
 gap> iter := IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h := NextIterator(iter); until Size(h) > 1;
 gap> h;
 <Green's H-class: [3,2,5](1)>
@@ -3494,7 +3492,7 @@ gap> s := Semigroup(gens);;
 gap> First(HClasses(s), IsRegularClass);
 <Green's H-class: Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )>
 gap> iter := IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h := NextIterator(iter); until IsRegularClass(h);
 gap> h;
 <Green's H-class: Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )>
@@ -3523,7 +3521,9 @@ true
 gap> First(h, x -> (x ^ iso) ^ inv <> x);
 fail
 gap> One(h);
-IdentityTransformation
+Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
+gap> ForAll(h, x -> One(h) * x = x and x * One(h) = x);
+true
 gap> repeat h := NextIterator(iter); until IsRegularClass(h);
 gap> h;
 <Green's H-class: Transformation( [ 4, 3, 2, 1, 2, 2, 3 ] )>
@@ -3568,7 +3568,7 @@ gap> s := Semigroup(gens);;
 gap> Size(s);
 3941
 gap> iter := IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h := NextIterator(iter); until IsRegularClass(h);
 gap> h;
 <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
@@ -3597,7 +3597,7 @@ gap> One(h);
 <identity partial perm on [ 1, 2, 3 ]>
 gap> s := Semigroup(Generators(s));;
 gap> iter := IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h := NextIterator(iter); until Size(h) > 1;
 gap> repeat h := NextIterator(iter); until Size(h) > 1;
 gap> repeat h := NextIterator(iter); until Size(h) > 1;
@@ -3616,7 +3616,7 @@ gap> One(h);
 gap> IsGroupHClass(h);
 true
 gap> iter := IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h := NextIterator(iter); until Size(h) > 1;
 gap> h;
 <Green's H-class: [2,5](1)(3)>
@@ -3648,7 +3648,7 @@ gap> s := Semigroup(gens);;
 gap> Size(s);
 15488
 gap> iter := IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h := NextIterator(iter); until Size(h) > 1;
 gap> h;
 <Green's H-class: Transformation( [ 2, 1, 8, 7, 6, 5, 4, 3 ] )>
@@ -3660,7 +3660,7 @@ false
 gap> h := GroupHClass(DClass(h));
 <Green's H-class: Transformation( [ 1, 2, 3, 4, 4, 6, 2 ] )>
 gap> One(h);
-IdentityTransformation
+Transformation( [ 1, 2, 3, 4, 4, 6, 2 ] )
 gap> IsGroupHClass(h);
 true
 gap> KnownPropertiesOfObject(h) =
@@ -3671,8 +3671,10 @@ gap> KnownPropertiesOfObject(h) =
 true
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 
-  "DClassOfHClass", "LambdaOrb", "RhoOrb", "LambdaOrbSCCIndex", 
+  "Idempotents", "DClassOfHClass", "LambdaOrb", "RhoOrb", "LambdaOrbSCCIndex",
   "RhoOrbSCCIndex" ]
+gap> ForAll(h, x -> One(h) * x = x and x * One(h) = x);
+true
 gap> iso := IsomorphismPermGroup(h);; inv := InverseGeneralMapping(iso);;
 gap> ForAll(h, x -> (x ^ iso) ^ inv = x);
 true
@@ -3710,7 +3712,7 @@ gap> s := Semigroup(gens);;
 gap> NrRClasses(s);
 38666
 gap> iter := IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h := NextIterator(iter); until Size(h) > 24;
 gap> h;
 <Green's H-class: [2,4](1,3)(5,6)>
@@ -4306,7 +4308,7 @@ gap> HClassReps(r);
   [3,1,5][9,7][10,8], [1,2][3,10,4][9,8], [1,10,6][3,8][9,5], 
   [1,2][3,6](9,10), [3,9,2][10,1,7] ]
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r) > 1;
 gap> r;
 <Green's R-class: (1,5,2)>
@@ -4581,13 +4583,13 @@ gap> NrHClasses(r);
 6
 gap> enum := EnumeratorOfRClasses(s);
 <enumerator of R-classes of <non-regular transformation monoid of size 7008, 
- of degree 6 with 18 generators>>
+ degree 6 with 18 generators>>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> s := Semigroup(gens);;
 gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <transformation monoid of degree 6 with 18 generators
-  >>
+<enumerator of R-classes of <transformation monoid of degree 6 with 18 
+ generators>>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> enum[2];
