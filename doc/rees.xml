@@ -19,13 +19,16 @@
       <A>cong</A>.
 
       <Example><![CDATA[
-gap> s := Semigroup([Transformation([2,3,4,3,1,1]),
->                    Transformation([6,4,4,4,6,1])]);;
-gap> i := SemigroupIdeal(s, Transformation([4,4,4,4,4,2]),
->                           Transformation([3,3,3,3,3,2]));;
+gap> s := Semigroup([
+> Transformation([ 2, 3, 4, 3, 1, 1 ]),
+> Transformation([ 6, 4, 4, 4, 6, 1 ])]);;
+gap> i := SemigroupIdeal(s,
+> Transformation([ 4, 4, 4, 4, 4, 2 ]),
+> Transformation([ 3, 3, 3, 3, 3, 2 ]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> SemigroupIdealOfReesCongruence(cong);
-<non-regular transformation semigroup ideal of degree 6 with 2 generators>]]></Example>
+<non-regular transformation semigroup ideal of degree 6 with
+  2 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -43,10 +46,12 @@ gap> SemigroupIdealOfReesCongruence(cong);
       the category <Ref Prop="IsCongruenceClass" BookName="ref"/>.
 
       <Example><![CDATA[
-gap> s := Semigroup([Transformation([2,3,4,3,1,1]),
->                    Transformation([6,4,4,4,6,1])]);;
-gap> i := SemigroupIdeal(s, Transformation([4,4,4,4,4,2]),
->                           Transformation([3,3,3,3,3,2]));;
+gap> s := Semigroup([
+> Transformation([ 2, 3, 4, 3, 1, 1 ]),
+> Transformation([ 6, 4, 4, 4, 6, 1 ])]);;
+gap> i := SemigroupIdeal(s,
+> Transformation([ 4, 4, 4, 4, 4, 2 ]),
+> Transformation([ 3, 3, 3, 3, 3, 2 ]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> classes := CongruenceClasses(cong);;
 gap> IsReesCongruenceClass(classes[1]);

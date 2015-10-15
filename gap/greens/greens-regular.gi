@@ -281,10 +281,11 @@ function(S)
                             x -> GreensLClassOfElementNC(S, x),
                             [],
                             fail,
-                            rec(PrintObj := function(iter)
-                              Print("<iterator of L-classes>");
-                              return;
-                            end));
+                            rec(PrintObj :=
+                                function(iter)
+                                  Print("<iterator of L-classes>");
+                                  return;
+                                end));
 end);
 
 # same method for inverse

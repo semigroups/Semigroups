@@ -424,72 +424,72 @@ end);
 BindGlobal("SEMIGROUPS_RunExamples",
 function(exlists, excluded)
   local oldscr, l, sp, bad, s, start_time, test, end_time, elapsed, pex, new,
-   inp, j, ex, i, attedStrin;
+   inp, j, ex, i;
 
-  oldscr := SizeScreen(  );
-  SizeScreen( [ 72, oldscr[2] ] );
-  for j  in [ 1 .. Length( exlists ) ]  do
+  oldscr := SizeScreen();
+  SizeScreen([72, oldscr[2]]);
+  for j in [1 .. Length(exlists)] do
     if j in excluded then
-      Print( "\033[1;44m# Skipping list ", j, " . . .\033[0m\n" );
+      Print("\033[1;44m# Skipping list ", j, " . . .\033[0m\n");
     else
       l := exlists[j];
-      Print( "\033[1;100m# Running list ", j, " . . .\033[0m" );
-      START_TEST( "" );
+      Print("\033[1;100m# Running list ", j, " . . .\033[0m");
+      START_TEST("");
       for ex in l do
-        sp := SplitString( ex[1], "\n", "" );
-        bad := Filtered( [ 1 .. Length( sp ) ], function ( i )
-          return Length( sp[i] ) > 72;
-        end );
-        s := InputTextString( ex[1] );
+        sp := SplitString(ex[1], "\n", "");
+        bad := Filtered([1 .. Length(sp)], function(i)
+          return Length(sp[i]) > 72;
+        end);
+        s := InputTextString(ex[1]);
 
         start_time := IO_gettimeofday();
-        test := Test( s, rec( ignoreComments := false,
-                              width := 72,
-                              EQ := EQ,
-                              reportDiff := Ignore ) );
+        test := Test(s, rec(ignoreComments := false,
+                            width := 72,
+                            EQ := EQ,
+                            reportDiff := Ignore));
         end_time := IO_gettimeofday();
-        CloseStream( s );
+        CloseStream(s);
         elapsed := (end_time.tv_sec - start_time.tv_sec) * 1000
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
         pex := TEST.lastTestData;
 
         Print("\033[1;100m  elapsed time: ", String(elapsed), "ms\033[0m\n");
 
-        if Length( bad ) > 0  then
-          Print( "\033[1;31m# WARNING: Overlong lines ", bad, " in ",
-          ex[2]{[ 1 .. 3 ]}, "\033[0m\n" );
+        if Length(bad) > 0  then
+          Print("\033[1;31m# WARNING: Overlong lines ", bad, " in ",
+          ex[2]{[1 .. 3]}, "\033[0m\n");
         fi;
 
         if test = false  then
-          for i  in [ 1 .. Length( pex[1] ) ]  do
-            if EQ( pex[2][i], pex[4][i] ) <> true then
-              Print( "\033[1;31m########> Diff in ", ex[2]{[ 1 .. 3 ]},
-              "\n# Input is:\n" );
-              PrintFormattedString( pex[1][i] );
-              Print( "# Expected output:\n" );
-              PrintFormattedString( pex[2][i] );
-              Print( "# But found:\n" );
-              PrintFormattedString( pex[4][i] );
-              Print( "########\033[0m\n" );
+          for i in [1 .. Length(pex[1])]  do
+            if EQ(pex[2][i], pex[4][i]) <> true then
+              Print("\033[1;31m########> Diff in ", ex[2]{[1 .. 3]},
+              "\n# Input is:\n");
+              PrintFormattedString(pex[1][i]);
+              Print("# Expected output:\n");
+              PrintFormattedString(pex[2][i]);
+              Print("# But found:\n");
+              PrintFormattedString(pex[4][i]);
+              Print("########\033[0m\n");
             fi;
           od;
         fi;
 
         if test = false  then#FIXME is this needed?
           new := "";
-          for i  in [ 1 .. Length( pex[1] ) ]  do
-            inp := Concatenation( "gap> ",
+          for i in [1 .. Length(pex[1])]  do
+            inp := Concatenation("gap> ",
                JoinStringsWithSeparator(
-               SplitString( pex[1][i], "\n", "" ), "\n> " ), "\n" );
-               Append( new, inp );
-               Append( new, pex[4][i] );
+               SplitString(pex[1][i], "\n", ""), "\n> "), "\n");
+               Append(new, inp);
+               Append(new, pex[4][i]);
           od;
           ex[2][4] := new;
         fi;
       od;
     fi;
   od;
-  SizeScreen( oldscr );
+  SizeScreen(oldscr);
   return;
 end);
 #
@@ -544,7 +544,6 @@ function(arg)
   SEMIGROUPS_RunExamples(ex, []);
   SEMIGROUPS_StopTest("");
 
-
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   GASMAN("collect");
   Print("\n");
@@ -561,5 +560,3 @@ function(arg)
   SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return;
 end);
-
-

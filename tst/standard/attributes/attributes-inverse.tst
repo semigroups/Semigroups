@@ -7,7 +7,8 @@
 #
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/attributes/attributes-inverse.tst");
+gap> START_TEST(Concatenation("Semigroups package: ",
+                              "standard/attributes/attributes-inverse.tst"));
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -939,4 +940,5 @@ gap> Unbind(h);
 gap> Unbind(f);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/attributes/attributes-inverse.tst");
+gap> STOP_TEST(Concatenation("Semigroups package: ",
+                             "standard/attributes/attributes-inverse.tst"));
