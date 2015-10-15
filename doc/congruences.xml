@@ -63,9 +63,11 @@ gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
 gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
 >              Transformation( [ 3, 4, 3, 4, 3 ] )];;
 gap> LeftSemigroupCongruence(S, [pair1, pair2]);
-<LeftSemigroupCongruence with 2 generating pairs>
+<left semigroup congruence over <transformation semigroup of degree 5 
+ with 4 generators> with 2 generating pairs>
 gap> LeftSemigroupCongruence(S, pair1, pair2);
-<LeftSemigroupCongruence with 2 generating pairs>]]></Example>
+<left semigroup congruence over <transformation semigroup of degree 5 
+ with 4 generators> with 2 generating pairs>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -93,9 +95,11 @@ gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
 gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
 >              Transformation( [ 3, 4, 3, 4, 3 ] )];;
 gap> RightSemigroupCongruence(S, [pair1, pair2]);
-<RightSemigroupCongruence with 2 generating pairs>
+<right semigroup congruence over <transformation semigroup of 
+ degree 5 with 4 generators> with 2 generating pairs>
 gap> RightSemigroupCongruence(S, pair1, pair2);
-<RightSemigroupCongruence with 2 generating pairs>]]></Example>
+<right semigroup congruence over <transformation semigroup of 
+ degree 5 with 4 generators> with 2 generating pairs>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
