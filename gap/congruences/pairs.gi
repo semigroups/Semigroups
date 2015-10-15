@@ -258,6 +258,23 @@ install_pairs_methods_with_filter@ := function(cong_filter)
 
   #
 
+  InstallMethod(NonTrivialEquivalenceClasses,
+  Concatenation("for a ", cong_filter[2]),
+  [cong_filter[1]],
+  function(cong)
+    local classes;
+
+    if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
+      ErrorMayQuit("Semigroups: NonTrivialEquivalenceClasses: usage,\n",
+                   "this function currently only works if <cong> is a ",
+                   "congruence of a semigroup\nwhich is known to be finite,");
+    fi;
+    classes := EquivalenceClasses(cong);
+    return Filtered(classes, c -> Size(c) > 1);
+  end);
+
+  #
+
   InstallMethod(\in,
   "for an associative element and a finite congruence class",
   [IsAssociativeElement, IsCongruenceClass and IsFinite],
@@ -454,7 +471,7 @@ install_pairs_methods_with_filter@ := function(cong_filter)
   InstallMethod(ViewObj,
   Concatenation("for a ", cong_filter[2]),
   [cong_filter[1]],
-  10000,
+  1,
   function(cong)
     Print("<");
     Print(cong_filter[2]);
