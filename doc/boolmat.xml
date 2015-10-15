@@ -192,7 +192,7 @@ true]]></Example>
 
 <#GAPDoc Label="OnBlist">
   <ManSection>
-    <Oper Name="OnBlist" Arg="blist, mat"/>
+    <Func Name="OnBlist" Arg="blist, mat"/>
     <Returns>A boolean list.</Returns>
     <Description>
       If <A>blist</A> is a boolean list of length <C>n</C> and <A>mat</A> is
@@ -313,8 +313,8 @@ gap> Display(BooleanMatNumber(27606, 4));
 
 <#GAPDoc Label="NumberBlist">
   <ManSection>
-    <Oper Name="BlistNumber" Arg="m, n"/>
-    <Oper Name="NumberBlist" Arg="blist"/>
+    <Func Name="BlistNumber" Arg="m, n"/>
+    <Func Name="NumberBlist" Arg="blist"/>
     <Returns>A boolean list, or a positive integer.</Returns>
     <Description>
       These functions implement a bijection from the set of all boolean
