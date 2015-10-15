@@ -823,7 +823,7 @@ gap> s := Semigroup(t);
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> I := SemigroupIdeal(s, t ^ 2);
 <commutative regular transformation semigroup ideal of degree 3 with
- 1 generator>
+  1 generator>
 gap> HasIsZeroSemigroup(s);
 false
 gap> IsZeroSemigroup(I); # parent does not know it is zero
@@ -848,7 +848,7 @@ gap> IsZeroSemigroup(s);
 false
 gap> I := SemigroupIdeal(s, Transformation([1, 2]));
 <commutative regular transformation semigroup ideal of degree 2 with
- 1 generator>
+  1 generator>
 gap> IsZeroSemigroup(I); # parent knows that it is not zero
 false
 

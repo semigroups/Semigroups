@@ -23,7 +23,7 @@ gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
 >   Transformation([7, 1, 2, 2, 2, 7, 4, 5]),
 >   Transformation([8, 8, 5, 1, 7, 5, 2, 8])];;
 gap> s := Semigroup(gens);
-<transformation semigroup on 8 pts with 8 generators>
+<transformation semigroup of degree 8 with 8 generators>
 gap> Size(s);
 597369
 gap> f := Transformation([8, 1, 5, 5, 8, 3, 7, 8]);;
@@ -54,7 +54,7 @@ gap> gens := [PartialPermNC([1, 2, 3, 5, 7, 10], [12, 3, 1, 11, 9, 5]),
 >  PartialPermNC([1, 2, 3, 5, 7, 8, 9], [5, 4, 8, 11, 6, 12, 1]),
 >  PartialPermNC([1, 2, 4, 6, 8, 9, 10], [8, 5, 2, 12, 4, 7, 11])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 12 pts with 6 generators>
+<partial perm semigroup of rank 12 with 6 generators>
 gap> f := PartialPermNC([3, 4, 5, 11], [4, 1, 2, 5]);;
 gap> l := LClassNC(s, f);
 <Green's L-class: [3,4,1][11,5,2]>
@@ -69,7 +69,7 @@ gap> Number(d, x -> x in l);
 gap> Number(s, x -> x in l);
 1
 gap> s := Semigroup(gens);
-<partial perm semigroup on 12 pts with 6 generators>
+<partial perm semigroup of rank 12 with 6 generators>
 gap> l := LClass(s, f);
 <Green's L-class: [3,4,1][11,5,2]>
 gap> d := DClass(s, f);
@@ -113,7 +113,7 @@ gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
 >   Transformation([6, 7, 4, 1, 4, 1, 6, 2]),
 >   Transformation([8, 8, 5, 1, 7, 5, 2, 8])];;
 gap> s := Semigroup(gens);
-<transformation semigroup on 8 pts with 4 generators>
+<transformation semigroup of degree 8 with 4 generators>
 gap> f := Transformation([5, 2, 7, 2, 7, 2, 5, 8]);;
 gap> l := LClassNC(s, f);
 <Green's L-class: Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )>
@@ -230,7 +230,7 @@ gap> gens := [PartialPermNC([1, 2, 3, 5, 7, 10], [12, 3, 1, 11, 9, 5]),
 >  PartialPermNC([1, 2, 3, 5, 7, 8, 9], [5, 4, 8, 11, 6, 12, 1]),
 >  PartialPermNC([1, 2, 4, 6, 8, 9, 10], [8, 5, 2, 12, 4, 7, 11])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 12 pts with 6 generators>
+<partial perm semigroup of rank 12 with 6 generators>
 gap> Size(s);
 4857
 gap> f := PartialPerm([6, 9], [12, 6]);;
@@ -310,7 +310,7 @@ true
 gap> rep := Representative(d);
 [1,6][9,12]
 gap> s := Parent(d);
-<partial perm semigroup of size 4857, on 12 pts with 6 generators>
+<partial perm semigroup of size 4857, of rank 12 with 6 generators>
 gap> ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
 > or RankOfPartialPerm(f) <> RankOfPartialPerm(rep);
 false
@@ -408,7 +408,7 @@ Group([ (6,12) ])
 gap> f := PartialPermNC([6, 9], [12, 6]);
 [9,6,12]
 gap> s := Semigroup(gens);
-<partial perm semigroup on 12 pts with 6 generators>
+<partial perm semigroup of rank 12 with 6 generators>
 gap> l := LClass(s, f);
 <Green's L-class: [9,6,12]>
 gap> d := DClassOfLClass(l);
@@ -437,7 +437,7 @@ gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
 >   Transformation([6, 7, 4, 1, 4, 1, 6, 2]),
 >   Transformation([8, 8, 5, 1, 7, 5, 2, 8])];;
 gap> s := Semigroup(gens);
-<transformation semigroup on 8 pts with 4 generators>
+<transformation semigroup of degree 8 with 4 generators>
 gap> Size(s);
 95540
 gap> f := Transformation([2, 2, 7, 7, 7, 1, 2, 7]);;
@@ -477,7 +477,7 @@ gap> gens := [PartialPermNC([1, 2, 4, 5, 9], [3, 6, 2, 10, 5]),
 >  PartialPermNC([2, 3, 5, 6, 10], [4, 1, 9, 2, 5]),
 >  PartialPermNC([1, 4, 6, 7, 9, 10], [8, 7, 2, 3, 4, 1])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 6 generators>
+<partial perm semigroup of rank 10 with 6 generators>
 gap> f := PartialPerm([]);;
 gap> l := LClass(s, f);
 <Green's L-class: <empty partial perm>>
@@ -525,7 +525,7 @@ gap> gens := [Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >   Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
 >   Transformation([7, 1, 7, 4, 2, 5, 6, 3])];;
 gap> s := Monoid(gens);
-<transformation monoid on 8 pts with 4 generators>
+<transformation monoid of degree 8 with 4 generators>
 gap> f := Transformation([5, 4, 7, 2, 2, 2, 2, 5]);;
 gap> f in s;
 true
@@ -645,7 +645,7 @@ true
 gap> IsRegularClass(l);
 true
 gap> s := Monoid(gens);
-<transformation monoid on 8 pts with 4 generators>
+<transformation monoid of degree 8 with 4 generators>
 gap> l := LClass(s, f);
 <Green's L-class: Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )>
 gap> IsRegularClass(l);
@@ -665,7 +665,7 @@ gap> gens := [PartialPermNC([1, 2, 3], [1, 4, 3]),
 >  PartialPermNC([1, 2, 3], [4, 2, 1]),
 >  PartialPermNC([1, 2, 4], [1, 4, 3])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 4 pts with 4 generators>
+<partial perm semigroup of rank 4 with 4 generators>
 gap> List(LClasses(s), IsRegularClass);
 [ false, false, false, false, true, true, false, false, false, false, true, 
   true, false, false, false, true, true, true, true, true ]
@@ -802,7 +802,7 @@ gap> gens := [PartialPermNC([1, 2, 3, 5], [5, 7, 3, 4]),
 >  PartialPermNC([1, 2, 3, 4, 6, 7], [1, 5, 2, 6, 7, 4]),
 >  PartialPermNC([1, 2, 3, 4, 5, 6, 8], [7, 5, 2, 8, 4, 1, 3])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 8 pts with 10 generators>
+<partial perm semigroup of rank 8 with 10 generators>
 gap> Size(s);
 72713
 gap> NrRClasses(s);
@@ -911,7 +911,7 @@ gap> Size(d);
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
 gap> s := Semigroup(gens);
-<partial perm semigroup on 8 pts with 10 generators>
+<partial perm semigroup of rank 8 with 10 generators>
 gap> d := DClasses(s)[18];
 <Green's D-class: [1,7][3,4][6,8]>
 gap> enum := Enumerator(d);
@@ -2161,7 +2161,7 @@ gap> gens :=
 >   70, 29, 58, 88, 43, 37, 10, 92, 65, 22, 76, 38, 74, 34, 4, 94, 82, 67, 60,
 >   2, 23, 59, 80, 11, 40, 98, 51, 28])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 97 pts with 4 generators>
+<partial perm semigroup of rank 97 with 4 generators>
 gap> f :=
 > PartialPermNC([5, 7, 11, 12, 14, 24, 25, 26, 27, 29, 31, 32, 34, 35, 41,
 >   42, 44, 47, 48, 49, 50, 53, 62, 69, 70, 86, 92],
@@ -2247,7 +2247,7 @@ gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
 >   Transformation([7, 10, 10, 1, 7, 9, 10, 4, 2, 10]),
 >   Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9])];;
 gap> s := Semigroup(gens);
-<transformation semigroup on 10 pts with 10 generators>
+<transformation semigroup of degree 10 with 10 generators>
 gap> f := Transformation([6, 6, 6, 6, 6, 10, 6, 6, 6, 6]);;
 gap> d := DClassNC(s, f);
 <Green's D-class: Transformation( [ 6, 6, 6, 6, 6, 10, 6, 6, 6, 6 ] )>
@@ -2264,7 +2264,7 @@ gap> gens := [PartialPermNC([1, 3, 4, 6, 10], [3, 4, 1, 6, 10]),
 > PartialPermNC([1, 2, 3, 4, 6, 10], [1, 8, 2, 3, 4, 9]),
 > PartialPermNC([1, 2, 3, 4, 8, 9, 10], [5, 8, 9, 7, 2, 6, 10])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 9 pts with 4 generators>
+<partial perm semigroup of rank 9 with 4 generators>
 gap> Size(s);
 789
 gap> NrDClasses(s);
@@ -2472,11 +2472,11 @@ gap> NrIdempotents(d);
 gap> Number(Idempotents(s), x -> x in d);
 45
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> d := DClass(s, f);
 <Green's D-class: [3,7][9,6]>
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> d := DClassNC(s, f);
 <Green's D-class: [3,5][9,4]>
 gap> NrIdempotents(d);
@@ -2484,7 +2484,7 @@ gap> NrIdempotents(d);
 gap> Number(Idempotents(s), x -> x in d);
 45
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> l := LClass(s, f);
 <Green's L-class: [3,5][9,4]>
 gap> d := DClassOfLClass(l);
@@ -2492,11 +2492,11 @@ gap> d := DClassOfLClass(l);
 gap> NrIdempotents(d);
 45
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> l := LClass(s, f);
 <Green's L-class: [3,5][9,4]>
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> l := LClassNC(s, f);
 <Green's L-class: [3,5][9,4]>
 gap> d := DClassOfLClass(l);
@@ -2504,7 +2504,7 @@ gap> d := DClassOfLClass(l);
 gap> NrIdempotents(d);
 45
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> r := RClass(s, f);
 <Green's R-class: [3,7][9,6]>
 gap> d := DClassOfRClass(r);
@@ -2512,7 +2512,7 @@ gap> d := DClassOfRClass(r);
 gap> NrIdempotents(d);
 45
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> r := RClassNC(s, f);
 <Green's R-class: [3,5][9,4]>
 gap> d := DClassOfRClass(r);
@@ -2565,7 +2565,7 @@ gap> gens :=
 >  PartialPermNC([1, 2, 4, 5, 6, 8, 9, 10, 11],
 > [2, 8, 1, 10, 11, 4, 7, 6, 9])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 12 pts with 2 generators>
+<partial perm semigroup of rank 12 with 2 generators>
 gap> Size(s);
 251
 gap> d := DClass(s, PartialPerm([5, 12], [6, 9]));;
@@ -2642,7 +2642,7 @@ gap> d := DClassNC(s, Representative(d));
 gap> RClassReps(d);
 [ [2,4][9,7], <identity partial perm on [ 4, 7 ]>, [1,4][3,7] ]
 gap> s := Semigroup(Generators(s));
-<partial perm semigroup on 11 pts with 2 generators>
+<partial perm semigroup of rank 11 with 2 generators>
 gap> d := DClass(HClass(s, Representative(d)));
 <Green's D-class: [2,4][9,7]>
 gap> RClassReps(d);
@@ -3065,7 +3065,7 @@ gap> gens := [Transformation([1, 2, 3, 5, 4, 6, 7, 8]),
 >   Transformation([1, 2, 3, 4, 1, 6, 7, 8]),
 >   Transformation([8, 8, 3, 4, 5, 7, 6, 1])];;
 gap> s := Monoid(gens);
-<transformation monoid on 8 pts with 6 generators>
+<transformation monoid of degree 8 with 6 generators>
 gap> f := Transformation([4, 4, 3, 8, 5, 3, 3, 1]);;
 gap> Size(s);
 998
@@ -3257,7 +3257,7 @@ gap> gens := [Transformation([6, 4, 3, 2, 5, 1]),
 >   Transformation([6, 4, 3, 2, 3, 1]),
 >   Transformation([6, 4, 3, 2, 2, 1])];;
 gap> s := Semigroup(gens);
-<transformation monoid on 6 pts with 18 generators>
+<transformation monoid of degree 6 with 18 generators>
 gap> Size(s);
 7008
 gap> NrRClasses(s);
@@ -3286,13 +3286,13 @@ gap> NrHClasses(r);
 6
 gap> enum := EnumeratorOfRClasses(s);
 <enumerator of R-classes of <non-regular transformation monoid of size 7008, 
- on 6 pts with 18 generators>>
+ of degree 6 with 18 generators>>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> s := Semigroup(gens);
-<transformation monoid on 6 pts with 18 generators>
+<transformation monoid of degree 6 with 18 generators>
 gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <transformation monoid on 6 pts with 18 generators
+<enumerator of R-classes of <transformation monoid of degree 6 with 18 generators
   >>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
@@ -3366,7 +3366,7 @@ Group([ (4,6) ])
 
 #T# MiscTest37
 gap> s := FullTransformationSemigroup(7);
-<full transformation semigroup on 7 pts>
+<full transformation semigroup of degree 7>
 gap> Factorial(7);
 5040
 gap> f := One(s);
@@ -4201,7 +4201,7 @@ gap> gens := [Transformation([1, 2, 3, 5, 4, 6, 7, 8]),
 >   Transformation([1, 2, 3, 4, 1, 6, 7, 8]),
 >   Transformation([8, 8, 3, 4, 5, 7, 6, 1])];;
 gap> s := Monoid(gens);
-<transformation monoid on 8 pts with 6 generators>
+<transformation monoid of degree 8 with 6 generators>
 gap> f := Transformation([4, 4, 3, 8, 5, 3, 3, 1]);;
 gap> Size(s);
 998
@@ -4581,12 +4581,12 @@ gap> NrHClasses(r);
 6
 gap> enum := EnumeratorOfRClasses(s);
 <enumerator of R-classes of <non-regular transformation monoid of size 7008, 
- on 6 pts with 18 generators>>
+ of degree 6 with 18 generators>>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
 gap> s := Semigroup(gens);;
 gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <transformation monoid on 6 pts with 18 generators
+<enumerator of R-classes of <transformation monoid of degree 6 with 18 generators
   >>
 gap> enum[1];
 <Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>

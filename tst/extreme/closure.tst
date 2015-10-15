@@ -33,7 +33,7 @@ gap> NrLClasses(S);
 gap> NrDClasses(S);
 662
 gap> GroupOfUnits(S);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 
 #T# ClosureTest2
 gap> gens :=
@@ -81,7 +81,7 @@ gap> for i in [2 .. Length(gens)] do
 > s := ClosureSemigroup(s, gens[i]);
 > od;
 gap> s;
-<transformation semigroup on 126 pts with 6 generators>
+<transformation semigroup of degree 126 with 6 generators>
 gap> Size(s);
 15853
 gap> Size(Semigroup(Generators(s)));
@@ -89,7 +89,7 @@ gap> Size(Semigroup(Generators(s)));
 gap> NrRClasses(s);
 355
 gap> t := Semigroup(gens);
-<transformation semigroup on 126 pts with 6 generators>
+<transformation semigroup of degree 126 with 6 generators>
 gap> NrRClasses(t);
 355
 gap> NrLClasses(s);
@@ -104,7 +104,7 @@ gap> for i in [2 .. Length(gens)] do
 > s := ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation semigroup of size 15853, on 126 pts with 6 generators>
+<transformation semigroup of size 15853, degree 126 with 6 generators>
 gap> Size(s);
 15853
 gap> Size(Semigroup(Generators(s)));
@@ -112,7 +112,7 @@ gap> Size(Semigroup(Generators(s)));
 gap> NrRClasses(s);
 355
 gap> t := Semigroup(gens);
-<transformation semigroup on 126 pts with 6 generators>
+<transformation semigroup of degree 126 with 6 generators>
 gap> NrRClasses(t);
 355
 gap> NrLClasses(s);
@@ -137,7 +137,7 @@ gap> for i in [2 .. Length(gens)] do
 > s := ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation semigroup of size 6996, on 11 pts with 11 generators>
+<transformation semigroup of size 6996, degree 11 with 11 generators>
 gap> Size(s);
 6996
 gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
@@ -146,7 +146,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 46
 423
 gap> t := Semigroup(gens);
-<transformation semigroup on 11 pts with 11 generators>
+<transformation semigroup of degree 11 with 11 generators>
 gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 512
 392
@@ -160,7 +160,7 @@ gap> for i in [2 .. Length(gens)] do
 > s := ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation semigroup of size 6996, on 11 pts with 11 generators>
+<transformation semigroup of size 6996, degree 11 with 11 generators>
 gap> Size(s);
 6996
 gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
@@ -169,7 +169,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 46
 423
 gap> t := Semigroup(gens);
-<transformation semigroup on 11 pts with 11 generators>
+<transformation semigroup of degree 11 with 11 generators>
 gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 512
 392
@@ -181,9 +181,9 @@ gap> gens := [Transformation([3, 4, 1, 2, 1]),
 >   Transformation([4, 2, 1, 5, 5]),
 >   Transformation([4, 2, 2, 2, 4])];;
 gap> s := Monoid(gens[1], gens[2]);
-<transformation monoid on 5 pts with 2 generators>
+<transformation monoid of degree 5 with 2 generators>
 gap> s := ClosureSemigroup(s, gens[3]);
-<transformation monoid on 5 pts with 3 generators>
+<transformation monoid of degree 5 with 3 generators>
 gap> Size(s);
 732
 gap> IsRegularSemigroup(s);
@@ -191,7 +191,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 
 #T# ClosureTest8
 gap> gens := [Transformation([1, 3, 4, 1]),
@@ -199,12 +199,12 @@ gap> gens := [Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3]),
 > Transformation([3, 3, 4, 1])];;
 gap> s := Monoid(gens[3]);
-<commutative transformation monoid on 4 pts with 1 generator>
+<commutative transformation monoid of degree 4 with 1 generator>
 gap> for i in [1 .. Length(gens)] do
 > s := ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation monoid of size 62, on 4 pts with 4 generators>
+<transformation monoid of size 62, degree 4 with 4 generators>
 gap> Size(s);
 62
 gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
@@ -257,7 +257,7 @@ gap> S := InverseSemigroup(
 gap> Size(S);
 1421569
 gap> T := ClosureSemigroup(S, AsPartialPerm((1, 2), 8));
-<partial perm semigroup on 8 pts with 7 generators>
+<partial perm semigroup of rank 8 with 7 generators>
 gap> Size(T);
 1441729
 gap> GenericSemigroupData(T);

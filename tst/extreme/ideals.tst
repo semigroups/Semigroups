@@ -31,7 +31,7 @@ gap> R := RClass(I, x);;
 gap> x in R;
 true
 gap> I := MinimalIdeal(I);
-<simple transformation semigroup ideal on 7 pts with 1 generator>
+<simple transformation semigroup ideal of degree 7 with 1 generator>
 gap> IsRegularSemigroup(I);
 true
 gap> Idempotents(I, 0);
@@ -51,7 +51,7 @@ gap> Idempotents(I, 2);
 gap> x in R;
 true
 gap> I := MinimalIdeal(I);
-<simple transformation semigroup ideal on 7 pts with 1 generator>
+<simple transformation semigroup ideal of degree 7 with 1 generator>
 gap> IsRegularSemigroup(I);;
 gap> Idempotents(I, 0);
 [  ]
@@ -77,15 +77,15 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 5]),
 >   Transformation([5, 1, 6, 1, 6, 3]),
 >   Transformation([5, 2, 5, 3, 5, 3]),
 >   Transformation([6, 4, 5, 5, 1, 6])]);
-<transformation semigroup on 6 pts with 10 generators>
+<transformation semigroup of degree 6 with 10 generators>
 gap> I := SemigroupIdeal(S, Representative(DClasses(S)[3]));
-<non-regular transformation semigroup ideal on 6 pts with 1 generator>
+<non-regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> S := JonesMonoid(6);
-<regular bipartition monoid on 6 pts with 5 generators>
+<regular bipartition monoid of degree 6 with 5 generators>
 gap> a := Bipartition([[1, -1], [2, 3], [4, -2], [5, -5], [6, -6],
 > [-3, -4]]);;
 gap> I := SemigroupIdeal(S, a);
-<regular bipartition semigroup ideal on 6 pts with 1 generator>
+<regular bipartition semigroup ideal of degree 6 with 1 generator>
 gap> a := Bipartition([[1, 4], [2, 3], [5, 6], [-1, -2],
 > [-3, -6], [-4, -5]]);;
 gap> InversesOfSemigroupElement(I, a);
@@ -201,7 +201,7 @@ gap> InversesOfSemigroupElement(I, a);
 gap> S := SymmetricInverseMonoid(8);;
 gap> x := PartialPerm([1]);;
 gap> I := SemigroupIdeal(S, x);
-<inverse partial perm semigroup ideal on 8 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 8 with 1 generator>
 gap> IsZeroSimpleSemigroup(I);
 true
 
@@ -211,7 +211,7 @@ gap> gens := [Transformation([3, 4, 1, 2, 1]),
 >   Transformation([4, 2, 2, 2, 4])];;
 gap> s := Semigroup(gens);;
 gap> I := SemigroupIdeal(s, gens);
-<regular transformation semigroup ideal on 5 pts with 3 generators>
+<regular transformation semigroup ideal of degree 5 with 3 generators>
 gap> data := SemigroupData(I);
 <closed semigroup ideal data with 26 reps, 23 lambda-values, 26 rho-values>
 gap> Size(I);
@@ -231,7 +231,7 @@ gap> gens := [Transformation([1, 3, 4, 1]),
 > Transformation([3, 3, 4, 1])];;
 gap> s := Semigroup(gens);;
 gap> I := SemigroupIdeal(s, gens{[1, 2]});
-<non-regular transformation semigroup ideal on 4 pts with 2 generators>
+<non-regular transformation semigroup ideal of degree 4 with 2 generators>
 gap> o := LambdaOrb(I);
 <closed ideal lambda orbit with 11 points in 2 components>
 
@@ -242,7 +242,7 @@ gap> gens := [Transformation([1, 3, 2, 3]),
 >  Transformation([3, 4, 2, 2])];;
 gap> s := Semigroup(gens);;
 gap> I := SemigroupIdeal(s, [gens[2] * gens[1], gens[3] ^ 3]);
-<non-regular transformation semigroup ideal on 4 pts with 2 generators>
+<non-regular transformation semigroup ideal of degree 4 with 2 generators>
 gap> o := RhoOrb(I);
 <closed ideal rho orbit with 10 points in 2 components>
 
@@ -252,9 +252,9 @@ gap> gens := [
 > PartialPerm([1, 2, 7, 9], [5, 6, 4, 3]),
 > PartialPerm([1, 2, 6, 7, 8], [5, 1, 6, 2, 3])];;
 gap> s := Semigroup(gens);
-<partial perm semigroup on 10 pts with 3 generators>
+<partial perm semigroup of rank 10 with 3 generators>
 gap> I := SemigroupIdeal(s, [gens[1] ^ 2, gens[2]]);
-<non-regular partial perm semigroup ideal on 10 pts with 2 generators>
+<non-regular partial perm semigroup ideal of rank 10 with 2 generators>
 gap> R := GreensRClassOfElement(I, gens[1] ^ 2);
 <Green's R-class: [1,3,9][4,7][10,8](2)(6)>
 gap> DClassOfRClass(R);
@@ -341,9 +341,9 @@ fail
 gap> MultiplicativeZero(J);
 fail
 gap> MinimalIdeal(I);
-<simple transformation semigroup ideal on 6 pts with 1 generator>
+<simple transformation semigroup ideal of degree 6 with 1 generator>
 gap> MinimalIdeal(J);
-<simple transformation semigroup ideal on 6 pts with 1 generator>
+<simple transformation semigroup ideal of degree 6 with 1 generator>
 gap> last = last2;
 true
 gap> MinimalDClass(I);
@@ -364,7 +364,7 @@ gap> S := InverseSemigroup(
 >  PartialPerm([1, 2, 4, 5, 8, 10], [6, 2, 7, 8, 10, 4]),
 >  PartialPerm([1, 2, 3, 4, 5, 8, 10], [7, 1, 4, 3, 2, 6, 5]));;
 gap> K := SemigroupIdeal(S, S.1 * S.2 ^ 2 * S.8);
-<inverse partial perm semigroup ideal on 10 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 10 with 1 generator>
 gap> MaximalDClasses(K);
 [ <Green's D-class: <identity partial perm on [ 3, 6, 9 ]>> ]
 gap> StructureDescriptionMaximalSubgroups(K);
@@ -388,14 +388,14 @@ gap> MultiplicativeZero(K);
 gap> MultiplicativeNeutralElement(K);
 fail
 gap> MinimalIdeal(K);
-<partial perm group on 10 pts with 1 generator>
+<partial perm group of rank 10 with 1 generator>
 gap> MinimalDClass(K);
 <Green's D-class: <empty partial perm>>
 gap> I := MinimalIdeal(K);
-<partial perm group on 10 pts with 1 generator>
+<partial perm group of rank 10 with 1 generator>
 gap> IsomorphismPermGroup(I);
-MappingByFunction( <trivial partial perm group on 10 pts with 1 generator>
- , Group(()), <Attribute "AsPermutation">, function( x ) ... end )
+MappingByFunction( <trivial partial perm group of rank 10 with 1 generator>
+, Group(()), <Attribute "AsPermutation">, function( x ) ... end )
 
 #T# IdealsTest9: attributes.gi
 gap> S := Monoid(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
@@ -403,7 +403,7 @@ gap> S := Monoid(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >   Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
 >   Transformation([7, 1, 7, 4, 2, 5, 6, 3]));;
 gap> L := SemigroupIdeal(S, GeneratorsOfSemigroup(S));
-<non-regular transformation semigroup ideal on 8 pts with 5 generators>
+<non-regular transformation semigroup ideal of degree 8 with 5 generators>
 gap> Length(MaximalDClasses(L));
 1
 gap> L = S;
@@ -415,7 +415,7 @@ gap> StructureDescriptionSchutzenbergerGroups(L);
 gap> StructureDescriptionMaximalSubgroups(L);
 [ "1", "C2", "C4", "C5", "S3", "S4" ]
 gap> GroupOfUnits(L);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 gap> IdempotentGeneratedSubsemigroup(L);;
 gap> x := Transformation([1, 4, 4, 5, 5, 3, 3, 1]);;
 gap> InversesOfSemigroupElement(L, x);
@@ -427,13 +427,13 @@ IdentityTransformation
 gap> MultiplicativeZero(L);
 fail
 gap> MinimalIdeal(L);
-<simple transformation semigroup ideal on 8 pts with 1 generator>
+<simple transformation semigroup ideal of degree 8 with 1 generator>
 gap> L := SemigroupIdeal(S, GeneratorsOfSemigroup(S));
-<non-regular transformation semigroup ideal on 8 pts with 5 generators>
+<non-regular transformation semigroup ideal of degree 8 with 5 generators>
 gap> MinimalIdeal(J);
-<simple transformation semigroup ideal on 6 pts with 1 generator>
+<simple transformation semigroup of size 6, degree 6 with 6 generators>
 gap> MinimalIdeal(L);
-<simple transformation semigroup ideal on 8 pts with 1 generator>
+<simple transformation semigroup ideal of degree 8 with 1 generator>
 gap> MinimalDClass(L);
 <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> MinimalDClass(S);
@@ -469,7 +469,7 @@ gap> gens := [
 > Bipartition([[1, -3, -4], [2], [3, 7, -1, -7], [4, 5, -6],
 >   [6, -5], [-2]])];;
 gap> M := SemigroupIdeal(R, gens);
-<non-regular bipartition semigroup ideal on 7 pts with 4 generators>
+<non-regular bipartition semigroup ideal of degree 7 with 4 generators>
 gap> Length(MaximalDClasses(M));
 10
 gap> Length(GeneratorsOfSemigroup(M));
@@ -495,7 +495,7 @@ fail
 gap> MultiplicativeZero(M);
 fail
 gap> MinimalIdeal(M);
-<simple bipartition semigroup ideal on 7 pts with 1 generator>
+<simple bipartition semigroup ideal of degree 7 with 1 generator>
 gap> MinimalDClass(M);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, 6, 7 ], [ -1 ], 
   [ -2, -4, -7 ], [ -3, -5 ], [ -6 ]>>
@@ -512,15 +512,15 @@ gap> S := Semigroup([Transformation([1, 2, 6, 6, 5, 5]),
 >   Transformation([4, 6, 4, 2, 5, 2]),
 >   Transformation([5, 3, 2, 1, 2, 1]),
 >   Transformation([6, 5, 2, 4, 4, 1])]);
-<transformation semigroup on 6 pts with 8 generators>
+<transformation semigroup of degree 6 with 8 generators>
 gap> gensI := [Transformation([4, 5, 2, 1, 6, 5]),
 >   Transformation([5, 2, 6, 2, 1, 4]),
 >   Transformation([3, 4, 6, 3, 2, 1])];;
 gap> gensJ := [Transformation([1, 2, 6, 6, 5, 5])];;
 gap> I := SemigroupIdeal(S, gensI);
-<non-regular transformation semigroup ideal on 6 pts with 3 generators>
+<non-regular transformation semigroup ideal of degree 6 with 3 generators>
 gap> J := SemigroupIdeal(S, gensJ);
-<regular transformation semigroup ideal on 6 pts with 1 generator>
+<regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> T := Semigroup([PartialPerm([1, 2, 3, 4, 5], [1, 2, 6, 4, 5]),
 >   PartialPerm([2, 3, 4, 5, 6], [2, 1, 6, 4, 5]),
 >   PartialPerm([1, 2, 3, 4, 5], [3, 5, 4, 6, 2]),
@@ -530,14 +530,14 @@ gap> T := Semigroup([PartialPerm([1, 2, 3, 4, 5], [1, 2, 6, 4, 5]),
 >   PartialPerm([2, 4, 5, 6], [4, 6, 3, 2]),
 >   PartialPerm([2, 3, 4, 5], [6, 3, 4, 5]),
 >   PartialPerm([2, 3, 4, 6], [5, 3, 2, 4])]);
-<partial perm semigroup on 6 pts with 9 generators>
+<partial perm semigroup of rank 6 with 9 generators>
 gap> gensK := [
 >   PartialPerm([2, 5, 6], [6, 4, 5]),
 >   PartialPerm([1, 2, 4, 6], [2, 3, 6, 1]),
 >   PartialPerm([1, 2, 3, 5], [4, 5, 1, 2]),
 >   PartialPerm([1, 2, 5, 6], [5, 2, 6, 1])];;
 gap> K := SemigroupIdeal(T, gensK);
-<non-regular partial perm semigroup ideal on 6 pts with 4 generators>
+<non-regular partial perm semigroup ideal of rank 6 with 4 generators>
 gap> R := Semigroup([Bipartition([[1, 2, 3, 5, -3], [4, 6, 7, -5], [-1],
 > [-2, -4, -7], [-6]]),
 >  Bipartition([[1, 2, 6, -5], [3], [4, 5, -2], [7, -1, -3, -4, -7],
@@ -557,7 +557,7 @@ gap> R := Semigroup([Bipartition([[1, 2, 3, 5, -3], [4, 6, 7, -5], [-1],
 >  [-3]]),
 > Bipartition([[1, -3, -4], [2], [3, 7, -1, -7], [4, 5, -6], [6, -5],
 >  [-2]])]);
-<bipartition semigroup on 7 pts with 10 generators>
+<bipartition semigroup of degree 7 with 10 generators>
 gap> gensL :=
 > [Bipartition([[1, 2, 3, 5, -3], [4, 6, 7, -5], [-1], [-2, -4, -7],
 >               [-6]]),
@@ -567,7 +567,7 @@ gap> gensL :=
 >               [-6]]),
 >  Bipartition([[1, -3, -4], [2], [3, 7, -1, -7], [4, 5, -6], [6, -5], [-2]])];;
 gap> L := SemigroupIdeal(R, gensL);
-<non-regular bipartition semigroup ideal on 7 pts with 4 generators>
+<non-regular bipartition semigroup ideal of degree 7 with 4 generators>
 gap> U := Semigroup([Transformation([1, 3, 2, 2, 4, 5]),
 >   Transformation([1, 5, 6, 6, 2, 5]),
 >   Transformation([1, 6, 4, 6, 3, 1]),
@@ -578,13 +578,13 @@ gap> U := Semigroup([Transformation([1, 3, 2, 2, 4, 5]),
 >   Transformation([4, 4, 6, 3, 5, 6]),
 >   Transformation([5, 3, 3, 6, 2, 4]),
 >   Transformation([6, 4, 4, 6, 3, 2])]);
-<transformation semigroup on 6 pts with 10 generators>
+<transformation semigroup of degree 6 with 10 generators>
 gap> A := SemigroupIdeal(U, Transformation([5, 3, 3, 6, 2, 4]));
-<non-regular transformation semigroup ideal on 6 pts with 1 generator>
+<non-regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> B := SemigroupIdeal(U, Transformation([6, 4, 4, 6, 3, 2]));
-<non-regular transformation semigroup ideal on 6 pts with 1 generator>
+<non-regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> C := SemigroupIdeal(U, Transformation([3, 3, 1, 5, 1, 1]));
-<regular transformation semigroup ideal on 6 pts with 1 generator>
+<regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> ideals := [A, B, C, I, J, K, L];;
 
 #T# IdealsTest12: GreensXClasses
@@ -836,9 +836,9 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 5], [5, 2, 7, 3]),
 >  PartialPerm([1, 2, 3, 6, 7], [1, 3, 4, 7, 5]),
 >  PartialPerm([1, 2, 3, 4, 5, 7], [3, 2, 4, 6, 1, 5])]);
-<inverse partial perm semigroup on 7 pts with 5 generators>
+<inverse partial perm semigroup of rank 7 with 5 generators>
 gap> I := SemigroupIdeal(S, PartialPerm([1, 3, 4, 5, 7], [1, 3, 4, 5, 7]));
-<inverse partial perm semigroup ideal on 7 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 7 with 1 generator>
 gap> GeneratorsOfSemigroup(I);;
 
 #T# IdealsTest22
@@ -848,7 +848,7 @@ gap> GeneratorsOfSemigroup(I);;
 gap> S := FullTransformationMonoid(6);;
 gap> x := Transformation([6, 5, 1, 5, 1, 2]);;
 gap> I := SemigroupIdeal(S, x);
-<regular transformation semigroup ideal on 6 pts with 1 generator>
+<regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> x := Transformation([2, 2, 4, 4, 2, 2]);;
 gap> x in I;
 true
@@ -865,8 +865,8 @@ gap> S := FullTransformationSemigroup(6);;
 gap> S := Semigroup(GroupOfUnits(S));;
 gap> I := SemigroupIdeal(S, S);;
 gap> IsomorphismPermGroup(I);
-MappingByFunction( <transformation group of size 720, 
- on 6 pts with 3 generators>, Group([ (), (1,2,3,4,5,6), (1,
+MappingByFunction( <transformation group of size 720, degree 6 with
+  3 generators>, Group([ (), (1,2,3,4,5,6), (1,
 2) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
 
 #T# SEMIGROUPS_UnbindVariables
