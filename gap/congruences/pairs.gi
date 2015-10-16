@@ -72,7 +72,7 @@ install_pairs_methods_with_filter@ := function(cong_filter)
 
   InstallMethod(\in,
   Concatenation("for dense list and ", cong_filter[2]),
-  [IsDenseList, cong_filter[1] and HasGeneratingPairsOfMagmaCongruence],
+  [IsDenseList, cong_filter[1] and cong_filter[4]],
   function(pair, cong)
     local s, elms, p1, p2, table, lookfunc;
 
@@ -374,7 +374,7 @@ install_pairs_methods_with_filter@ := function(cong_filter)
 
   InstallMethod(NrCongruenceClasses,
   Concatenation("for a ", cong_filter[2], " with generating pairs"),
-  [cong_filter[1] and HasGeneratingPairsOfMagmaCongruence],
+  [cong_filter[1] and cong_filter[4]],
   function(cong)
     local s;
     s := Range(cong);
