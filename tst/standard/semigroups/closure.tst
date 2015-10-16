@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  closure.tst
+#W  standard/semigroups/closure.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,7 +9,7 @@
 ##
 
 # ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"closure.tst"));
-gap> START_TEST("Semigroups package: closure.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/closure.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -256,4 +256,4 @@ gap> Unbind(gens);
 gap> Unbind(t);
 
 #E# 
-gap> STOP_TEST("Semigroups package: closure.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/closure.tst");

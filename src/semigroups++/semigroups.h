@@ -70,8 +70,8 @@ class Semigroup {
       _pos_one       (0), 
       _prefix        (), 
       _reduced       (gens->size()),
-      _relation_pos  (-1),
       _relation_gen  (0),
+      _relation_pos  (-1),
       _right         (new CayleyGraph(gens->size())),
       _suffix        (), 
       _wordlen       (0) // (length of the current word) - 1
@@ -127,8 +127,8 @@ class Semigroup {
         _id            (copy._id->really_copy()),
         _index         (copy._index),
         _left          (copy._left),
-        _lenindex      (copy._lenindex),
         _length        (copy._length),  
+        _lenindex      (copy._lenindex),
         _multiplied    (copy._multiplied),
         _nr            (copy._nr),
         _nrgens        (copy._nrgens),
@@ -138,8 +138,8 @@ class Semigroup {
         _pos_one       (copy._pos_one),
         _prefix        (copy._prefix), 
         _reduced       (copy._reduced),
-        _relation_pos  (copy._relation_pos),
         _relation_gen  (copy._relation_gen),
+        _relation_pos  (copy._relation_pos),
         _right         (copy._right),
         _suffix        (copy._suffix),
         _wordlen       (copy._wordlen) 
@@ -178,9 +178,9 @@ class Semigroup {
         _nrrules        (0),
         _pos            (copy._pos),
         _pos_one        (copy._pos_one),   // copy in case degree doesn't change in add_generators
-        _relation_pos   (-1),
-        _relation_gen   (0),
         _reduced        (copy._reduced),
+        _relation_gen   (0),
+        _relation_pos   (-1),
         _right          (new CayleyGraph(copy._right)),
         _wordlen        (0) 
     {
@@ -1083,8 +1083,8 @@ class Semigroup {
     size_t                                   _pos_one;
     std::vector<size_t>                      _prefix;
     Flags                                    _reduced;
-    size_t                                   _relation_pos;
     size_t                                   _relation_gen;
+    size_t                                   _relation_pos;
     CayleyGraph*                             _right;
     std::vector<size_t>                      _suffix;
     Element*                                 _tmp_product;

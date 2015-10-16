@@ -777,8 +777,6 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
     
-    ImportGVarFromLibrary( "Objectify", &Objectify);
-
     ImportGVarFromLibrary( "infinity", &infinity);
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
 

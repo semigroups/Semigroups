@@ -1,19 +1,20 @@
 #############################################################################
 ##
-##  freeband.tst
+##  standard/fp/freeband.tst
 #Y  Copyright (C) 2013-15                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-gap> START_TEST("Semigroups package: freeband.tst");
+##
+gap> START_TEST("Semigroups package: standard/fp/freeband.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS_StartTest();
 
-#T# FreeBandTest1: Creating free bands (with default generators) and basic
-# methods
+#T# FreeBandTest1: Creating free bands and basic methods
+# (with default generators)
 gap> FreeBand(["a", "b", "c"]);
 <free band on the generators [ a, b, c ]>
 gap> FreeBand(3, "abc");
@@ -159,9 +160,9 @@ x5x2x4x2x4x5x1x2x4x5x1x7x2x4x5x1x7x6x4x5x1x7x6x2x5x1x7x6x2x7x6x2x1
 #T# FreeBandTest10: Issue #112
 gap> iter := Iterator(FreeBand(4, "b"));;
 gap> x := NextIterator(iter);;
-gap> for i in [1 .. 10000] do NextIterator(iter); od;
+gap> for i in [1 .. 1000] do NextIterator(iter); od;
 gap> y := NextIterator(iter);
-b3b4b1b3b4b3b2b1b4b2b4b3b2b3b4
+b2b4b1b4b1b2b3b1b4b3b4b2b4b3b4
 gap> T := Semigroup(x, y);;
 gap> IsFreeBandSubsemigroup(T);
 true
@@ -223,4 +224,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST("Semigroups package: freeband.tst");
+gap> STOP_TEST("Semigroups package: standard/fp/freeband.tst");

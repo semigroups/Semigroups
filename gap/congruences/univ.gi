@@ -28,6 +28,13 @@ end);
 
 #
 
+InstallMethod(AsLookupTable,
+"for a universal semigroup congruence",
+[IsUniversalSemigroupCongruence],
+function(cong)
+  return ListWithIdenticalEntries(Size(Range(cong)), 1);
+end);
+
 InstallMethod(ViewObj,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],

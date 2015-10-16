@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  reesmat.tst
+#W  standard/semigroups/reesmat.tst
 #Y  Copyright (C) 2011-15                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: reesmat.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/reesmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -1086,4 +1086,4 @@ gap> Unbind(zero);
 gap> Unbind(idems);
 
 #E#
-gap> STOP_TEST("Semigroups package: reesmat.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/reesmat.tst");

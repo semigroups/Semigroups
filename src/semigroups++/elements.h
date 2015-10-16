@@ -88,7 +88,7 @@ class ElementWithVectorData : public Element {
     ElementWithVectorData (std::vector<S>* vector) : _vector(vector) {}
 
     inline S operator [] (size_t pos) const {
-      return _vector->at(pos);
+      return (*_vector)[pos];
     }
     
     inline S at (size_t pos) const {

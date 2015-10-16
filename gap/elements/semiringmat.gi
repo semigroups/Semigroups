@@ -37,7 +37,27 @@ function(x)
       y[n + 2] := x![n + 2];
     fi;
   fi;
-  return Objectify(TypeObj(x), y);
+
+  # This is necessary because TypeObj(x) can contain information about
+  # properties satisfied (or not) by x.
+
+  if IsBooleanMat(x) then
+    return BooleanMatNC(y);
+  elif IsMaxPlusMatrix(x) then
+    return MaxPlusMatrixNC(y);
+  elif IsMinPlusMatrix(x) then
+    return MinPlusMatrixNC(y);
+  elif IsTropicalMaxPlusMatrix(x) then
+    return TropicalMaxPlusMatrixNC(y);
+  elif IsTropicalMinPlusMatrix(x) then
+    return TropicalMinPlusMatrixNC(y);
+  elif IsNaturalMatrix(x) then
+    return NaturalMatrixNC(y);
+  elif IsProjectiveMaxPlusMatrix(x) then
+    return ProjectiveMaxPlusMatrixNC(y);
+  fi;
+
+  ErrorMayQuit("this shouldn't happen!");
 end);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,

@@ -14,18 +14,34 @@
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, hashlen, ht, data;
+  local s, elms, pairs, hashlen, ht, data, genpairs, right_compat, left_compat;
 
   s := Range(cong);
   elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(s), infinity);
-  pairs := List(GeneratingPairsOfSemigroupCongruence(cong),
-                x -> [Position(elms, x[1]), Position(elms, x[2])]);
 
+  # Is this a left, right, or 2-sided congruence?
+  if HasGeneratingPairsOfMagmaCongruence(cong) then
+    genpairs := GeneratingPairsOfSemigroupCongruence(cong);
+    left_compat := true;
+    right_compat := true;
+  elif HasGeneratingPairsOfLeftMagmaCongruence(cong) then
+    genpairs := GeneratingPairsOfLeftSemigroupCongruence(cong);
+    left_compat := true;
+    right_compat := false;
+  elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
+    genpairs := GeneratingPairsOfRightSemigroupCongruence(cong);
+    left_compat := false;
+    right_compat := true;
+  fi;
+
+  pairs := List(genpairs, x -> [Position(elms, x[1]), Position(elms, x[2])]);
   hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
 
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
                                          treehashsize := hashlen));
   data := rec(cong := cong,
+              left_compat := left_compat,
+              right_compat := right_compat,
               pairstoapply := pairs,
               pos := 0,
               ht := ht,
@@ -35,22 +51,15 @@ function(cong)
   cong!.data := Objectify(NewType(FamilyObj(cong),
                                   SEMIGROUPS_IsSemigroupCongruenceData),
                           data);
-  return;
 end);
 
 #
 
 # Install the following methods for three different filters
-for cong_filter@ in [[IsSemigroupCongruence,
-                      "semigroup congruence"],
-                     [IsLeftSemigroupCongruence,
-                      "left semigroup congruence"],
-                     [IsRightSemigroupCongruence,
-                      "right semigroup congruence"]] do
-
+install_pairs_methods_with_filter@ := function(cong_filter)
   InstallImmediateMethod(IsFinite,
-  Concatenation("for a ", cong_filter@[2]),
-  cong_filter@[1] and HasRange,
+  Concatenation("for a ", cong_filter[2]),
+  cong_filter[1] and HasRange,
   0,
   function(cong)
     if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
@@ -62,8 +71,8 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(\in,
-  Concatenation("for dense list and ", cong_filter@[2]),
-  [IsDenseList, cong_filter@[1] and HasGeneratingPairsOfMagmaCongruence],
+  Concatenation("for dense list and ", cong_filter[2]),
+  [IsDenseList, cong_filter[1] and HasGeneratingPairsOfMagmaCongruence],
   function(pair, cong)
     local s, elms, p1, p2, table, lookfunc;
 
@@ -105,8 +114,8 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(AsLookupTable,
-  Concatenation("for a ", cong_filter@[2]),
-  [cong_filter@[1]],
+  Concatenation("for a ", cong_filter[2]),
+  [cong_filter[1]],
   function(cong)
     if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
       ErrorMayQuit("Semigroups: AsLookupTable: usage,\n",
@@ -119,8 +128,8 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(SEMIGROUPS_Enumerate,
-  Concatenation("for a ", cong_filter@[2], " and a function"),
-  [cong_filter@[1], IsFunction],
+  Concatenation("for a ", cong_filter[2], " and a function"),
+  [cong_filter[1], IsFunction],
   function(cong, lookfunc)
     if HasAsLookupTable(cong) then
       return fail;
@@ -138,7 +147,7 @@ for cong_filter@ in [[IsSemigroupCongruence,
   [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
   function(data, lookfunc)
     local cong, s, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
-          found, x, j, y, next, newtable, ii;
+          found, x, j, y, next, newtable, ii, left_compat, right_compat;
 
     cong := data!.cong;
     s := Range(cong);
@@ -146,15 +155,17 @@ for cong_filter@ in [[IsSemigroupCongruence,
     ufdata := data!.ufdata;
     pairstoapply := data!.pairstoapply;
     ht := data!.ht;
+    left_compat := data!.left_compat;
+    right_compat := data!.right_compat;
 
-    if IsRightSemigroupCongruence(cong) then
-      right := RightCayleyGraphSemigroup(s);
-    fi;
-    if IsLeftSemigroupCongruence(cong) then
+    if left_compat then
       left := LeftCayleyGraphSemigroup(s);
     fi;
+    if right_compat then
+      right := RightCayleyGraphSemigroup(s);
+    fi;
 
-    genstoapply := [1 .. Size(right[1])];
+    genstoapply := [1 .. Size(GeneratorsOfSemigroup(s))];
     i := data!.pos;
     nr := Size(pairstoapply);
     found := false;
@@ -178,7 +189,7 @@ for cong_filter@ in [[IsSemigroupCongruence,
       i := i + 1;
       x := pairstoapply[i];
       # Add the pair's left-multiples
-      if IsLeftSemigroupCongruence(cong) then
+      if left_compat then
         for j in genstoapply do
           y := [left[x[1]][j], left[x[2]][j]];
           if y[1] <> y[2] and HTValue(ht, y) = fail then
@@ -193,7 +204,7 @@ for cong_filter@ in [[IsSemigroupCongruence,
         od;
       fi;
 
-      if IsRightSemigroupCongruence(cong) then
+      if right_compat then
         # Add the pair's right-multiples
         for j in genstoapply do
           y := [right[x[1]][j], right[x[2]][j]];
@@ -239,8 +250,8 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(EquivalenceClasses,
-  Concatenation("for a ", cong_filter@[2]),
-  [cong_filter@[1]],
+  Concatenation("for a ", cong_filter[2]),
+  [cong_filter[1]],
   function(cong)
     local classes, next, tab, elms, i;
 
@@ -260,6 +271,23 @@ for cong_filter@ in [[IsSemigroupCongruence,
       fi;
     od;
     return classes;
+  end);
+
+  #
+
+  InstallMethod(NonTrivialEquivalenceClasses,
+  Concatenation("for a ", cong_filter[2]),
+  [cong_filter[1]],
+  function(cong)
+    local classes;
+
+    if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
+      ErrorMayQuit("Semigroups: NonTrivialEquivalenceClasses: usage,\n",
+                   "this function currently only works if <cong> is a ",
+                   "congruence of a semigroup\nwhich is known to be finite,");
+    fi;
+    classes := EquivalenceClasses(cong);
+    return Filtered(classes, c -> Size(c) > 1);
   end);
 
   #
@@ -298,8 +326,8 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(\=,
-  Concatenation("for two finite ", cong_filter@[2], "s"),
-  [cong_filter@[1] and IsFinite, cong_filter@[1] and IsFinite],
+  Concatenation("for two finite ", cong_filter[2], "s"),
+  [cong_filter[1] and IsFinite, cong_filter[1] and IsFinite],
   function(cong1, cong2)
     return Range(cong1) = Range(cong2) and
            AsLookupTable(cong1) = AsLookupTable(cong2);
@@ -323,8 +351,8 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(ImagesElm,
-  Concatenation("for a ", cong_filter@[2], " and an associative element"),
-  [cong_filter@[1], IsAssociativeElement],
+  Concatenation("for a ", cong_filter[2], " and an associative element"),
+  [cong_filter[1], IsAssociativeElement],
   function(cong, elm)
     local elms, lookup, classNo;
     elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(cong)), infinity);
@@ -345,8 +373,8 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(NrCongruenceClasses,
-  Concatenation("for a ", cong_filter@[2], " with generating pairs"),
-  [cong_filter@[1] and HasGeneratingPairsOfMagmaCongruence],
+  Concatenation("for a ", cong_filter[2], " with generating pairs"),
+  [cong_filter[1] and HasGeneratingPairsOfMagmaCongruence],
   function(cong)
     local s;
     s := Range(cong);
@@ -458,43 +486,53 @@ for cong_filter@ in [[IsSemigroupCongruence,
   #
 
   InstallMethod(ViewObj,
-  Concatenation("for a ", cong_filter@[2]),
-  [cong_filter@[1]],
-  1,
+  Concatenation("for a ", cong_filter[2]),
+  [cong_filter[1] and cong_filter[4]],
   function(cong)
     Print("<");
-    Print(cong_filter@[2]);
+    Print(cong_filter[2]);
     Print(" over ");
     ViewObj(Range(cong));
-    if HasGeneratingPairsOfMagmaCongruence(cong) then
-      Print(" with ", Size(GeneratingPairsOfSemigroupCongruence(cong)),
-            " generating pairs");
-    fi;
+    Print(" with ", Size(cong_filter[3](cong)),
+          " generating pairs");
     Print(">");
   end);
 
   #
 
   InstallMethod(PrintObj,
-  Concatenation("for a ", cong_filter@[2]),
-  [cong_filter@[1] and HasGeneratingPairsOfMagmaCongruence],
-  1,
+  Concatenation("for a ", cong_filter[2]),
+  [cong_filter[1] and cong_filter[4]],
   function(cong)
-    if not IsLeftSemigroupCongruence(cong) then
-      Print("Right");
-    elif not IsRightSemigroupCongruence(cong) then
+    if cong_filter[1] = IsLeftSemigroupCongruence then
       Print("Left");
+    elif cong_filter[1] = IsRightSemigroupCongruence then
+      Print("Right");
     fi;
     Print("SemigroupCongruence( ");
     PrintObj(Range(cong));
     Print(", ");
-    if HasGeneratingPairsOfMagmaCongruence(cong) then
-      Print(GeneratingPairsOfSemigroupCongruence(cong));
-    fi;
+    Print(cong_filter[3](cong));
     Print(" )");
   end);
 
+end;
+
+for cong_filter@ in [[IsSemigroupCongruence,
+                      "semigroup congruence",
+                      GeneratingPairsOfSemigroupCongruence,
+                      HasGeneratingPairsOfMagmaCongruence],
+                     [IsLeftSemigroupCongruence,
+                      "left semigroup congruence",
+                      GeneratingPairsOfLeftSemigroupCongruence,
+                      HasGeneratingPairsOfLeftMagmaCongruence],
+                     [IsRightSemigroupCongruence,
+                      "right semigroup congruence",
+                      GeneratingPairsOfRightSemigroupCongruence,
+                      HasGeneratingPairsOfRightMagmaCongruence]] do
+  install_pairs_methods_with_filter@(cong_filter@);
 od;
 
 # Finished installing methods for all three filters
 Unbind(cong_filter@);
+Unbind(install_pairs_methods_with_filter@);

@@ -8,7 +8,6 @@
 
 #include "types.h"
 
-Obj Objectify;
 Obj infinity;
 Obj Ninfinity;
 Obj IsBipartition;

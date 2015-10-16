@@ -316,7 +316,10 @@ function(S)
   SetIsomorphismPermGroup(U, MappingByFunction(U, G,
                                                x -> x ^ map,
                                                x -> x ^ inv));
-  SetIsGroupAsSemigroup(U, true);
+
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
   UseIsomorphismRelation(U, G);
 
   return U;
@@ -625,80 +628,74 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, sup, trivialse,
-  psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, h, nrcosets, j, reps,
-  lookup, gen, offset, rep, box, subbox, T, d, i, k, m;
+  local oldgens, newgens, D, e, h, lambdaorb, He, schutz, sigmainv, enum,
+  sup, trivialse, orbits, cosets, stabpp, psi, rho, rhoinv, stab, nrcosets, j,
+  reps, gen, offset, rep, box, subbox, T, d, k, i, m;
 
   oldgens := Generators(S);
   newgens := List(oldgens, x -> []);
   D := JoinIrreducibleDClasses(S);
 
   for d in D do
-    e := Representative(d);
-    # He is a group H-Class in our join-irreducible D-Class ##
-    # Sigma: isomorphism to a perm group (unfortunately necessary)
-    # Psi: homom from Schutzenberger Group corresponding to He, to a perm
-    #      group
-    # Rho: isomorphism to a smaller degree perm group
-    He := GroupHClass(d);
-    sigma := IsomorphismPermGroup(He);
-    sigmainv := InverseGeneralMapping(sigma);
+    e := RightOne(Representative(d));
 
-    schutz := SchutzenbergerGroup(d);
+    # Generate representatives for all the H-Classes in the R-Class of He
+    h := HClassReps(GreensRClassOfElement(d, e));
+    lambdaorb := List(h, ImageSetOfPartialPerm);
+
+    He := GreensHClassOfElementNC(S, e);
     sup := SupremumIdempotentsNC(Minorants(S, e), e);
     trivialse := not ForAny(He, x -> NaturalLeqInverseSemigroup(S)(sup, x)
                                      and x <> e);
 
-    psi := ActionHomomorphism(schutz,
-                              Difference(DomainOfPartialPerm(e),
-                                         DomainOfPartialPerm(sup)));
-    psiinv := InverseGeneralMapping(psi);
-
-    rho := SmallerDegreePermutationRepresentation(Image(psi));
-    rhoinv := InverseGeneralMapping(rho);
+    if IsActingSemigroup(S) then
+      schutz := SchutzenbergerGroup(He);
+      sigmainv := x -> x ^ InverseGeneralMapping(IsomorphismPermGroup(He));
+    else
+      schutz := Group(());
+      enum := Enumerator(He);
+      for k in enum do
+        schutz := ClosureGroup(schutz, AsPermutation(k));
+      od;
+      sigmainv := x -> AsPartialPerm(x, DomainOfPartialPerm(e));
+    fi;
 
     ##  Se is the subgroup of He whose elements have the same minorants as e
     if trivialse then
       orbits := [[ActionDegree(He) + 1]];
       cosets := [e];
-      #stab:=schutz;
       stabpp := He;
     else
+      psi := ActionHomomorphism(schutz,
+                                Difference(DomainOfPartialPerm(e),
+                                           DomainOfPartialPerm(sup)));
+      rho := SmallerDegreePermutationRepresentation(Image(psi));
+      rhoinv := InverseGeneralMapping(rho);
       orbits := Orbits(Image(rho));
     fi;
 
     for i in orbits do
-
       if not trivialse then
-        stab := ImagesSet(psiinv,
+        stab := ImagesSet(InverseGeneralMapping(psi),
                           ImagesSet(rhoinv, Stabilizer(Image(rho), i[1])));
         cosets := RightTransversal(schutz, stab);
-        stabpp := ImagesSet(sigmainv, stab);
+        stabpp := Set(stab, sigmainv);
       fi;
 
-      # Generate representatives for all the H-Classes in the R-Class of He
-      h := HClassReps(RClassNC(d, e));
+      # Generate representatives for ALL the cosets the generator will act on
+      # Divide every H-Class in the R-Class into 'cosets' like stab in He
       nrcosets := Size(h) * Length(cosets);
-
-      # Generate representatives for ALL the cosets the generator will act
-      # on
-      # Divide every H-Class in the R-Class into 'cosets' like stab in
-      # He
       j := 0;
-      reps := [];
-      lookup := EmptyPlist(Length(LambdaOrb(d)));
+      reps := EmptyPlist(nrcosets);
       for k in [1 .. Size(h)] do
-        lookup[Position(LambdaOrb(d), ImageSetOfPartialPerm(h[k]))] := k;
         for m in [1 .. Length(cosets)] do
           j := j + 1;
           reps[j] := cosets[m] * h[k];
         od;
       od;
-      ShrinkAllocationPlist(lookup);
 
       # Loop over old generators of S to calculate its action on the cosets
       for j in [1 .. Length(oldgens)] do
-
         gen := oldgens[j];
         offset := Length(newgens[j]);
 
@@ -706,16 +703,16 @@ function(S)
         for k in [1 .. nrcosets] do
           rep := reps[k] * gen;
           # Will the new generator will be defined at this point?
-          if not rep * rep ^ (- 1) in stabpp then
+          if not rep * rep ^ (-1) in stabpp then
             Add(newgens[j], 0);
           else
-            box := lookup[Position(LambdaOrb(d), ImageSetOfPartialPerm(rep))];
+            box := Position(lambdaorb, ImageSetOfPartialPerm(rep));
             if trivialse then
               subbox := 1;
             else
-              ## Below, could be ^sigma instead of AsPermutation
+              # instead of AsPermutation we could do ^ sigma
               subbox := PositionCanonical(cosets,
-                                          AsPermutation(rep * h[box] ^ (- 1)));
+                                          AsPermutation(rep * h[box] ^ -1));
             fi;
             Add(newgens[j], (box - 1) * Length(cosets) + subbox + offset);
           fi;
@@ -731,12 +728,12 @@ function(S)
       or (NrMovedPoints(T) = NrMovedPoints(S)
           and ActionDegree(T) >= ActionDegree(S)) then
     return IdentityMapping(S);
-  else
-    # gaplint: ignore 3
-    return MagmaIsomorphismByFunctionsNC(S, T,
-      x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x)),
-      x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x)));
   fi;
+
+  # gaplint: ignore 3
+  return MagmaIsomorphismByFunctionsNC(S, T,
+    x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x)),
+    x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x)));
 end);
 
 InstallMethod(RepresentativeOfMinimalIdeal,
@@ -782,8 +779,10 @@ function(S)
   deg := Maximum(domain);
   codeg := Maximum(range);
 
-  if not IsGroup(S) and min_rank = rank and domain = range then
-    SetIsGroupAsSemigroup(S, true);
+  if min_rank = rank and domain = range then
+    if not IsGroup(S) then
+      SetIsGroupAsSemigroup(S, true);
+    fi;
     return gens[1];
   fi;
 

@@ -1,4 +1,4 @@
-#%T##########################################################################
+#############################################################################
 ##
 #W  standard/attributes/attributes-inverse.tst
 #Y  Copyright (C) 2015                                   Wilfred A. Wilson
@@ -7,8 +7,8 @@
 #
 #############################################################################
 ##
-## TODO improve code coverage in JoinIrreducibleDClasses
-gap> START_TEST("Semigroups package: standard/attributes/attributes-inverse.tst");
+gap> START_TEST(Concatenation("Semigroups package: ",
+>                             "standard/attributes/attributes-inverse.tst"));
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -50,7 +50,7 @@ gap> SameMinorantsSubgroup(h);
 Error, Semigroups: SameMinorantsSubgroup: usage,
 the parent semigroup of the group H-class <H> must be inverse,
 
-#T# attributes-inverse: Minorants, error
+#T# attributes-inverse: Minorants, error, 1
 gap> S := SymmetricInverseMonoid(3);;
 gap> f := PartialPerm([1, 2, 3, 4]);;
 gap> Minorants(S, f);
@@ -69,6 +69,15 @@ gap> Minorants(S, f);
   <identity partial perm on [ 3 ]>, <identity partial perm on [ 2, 3 ]>, 
   <identity partial perm on [ 1, 3 ]> ]
 gap> f := PartialPerm([1, 3, 2]);;
+
+#T# attributes-inverse: Minorants, not idempotent, 2
+gap> S := Semigroup([
+> PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]),
+> PartialPerm([1, 2, 3], [2, 3, 1])]);;
+gap> IsInverseSemigroup(S);
+true
+gap> Minorants(S, GeneratorsOfSemigroup(S)[2]);
+[  ]
 
 #T# attributes-inverse: character tables of inverse acting semigroups
 # Some random examples to test consistency of old code with new
@@ -728,16 +737,41 @@ the second argument should be a subset of the first,
 gap> IsMajorantlyClosed(S, [One(S)]);
 true
 
-#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 1/2
+#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 1
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 > PartialPerm([1, 3, 5], [5, 1, 3])]);;
 gap> JoinIrreducibleDClasses(S)[1] = DClass(S, PartialPerm([3], [3]));
 true
 
-#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 1/2
+#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 2
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 > PartialPerm([1, 3, 5], [5, 1, 3])]);;
 gap> JoinIrreducibleDClasses(S)[1] = DClass(S, PartialPerm([3], [3]));
+true
+
+#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 3
+gap> S := Semigroup(
+> [PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]),
+>  PartialPerm([1, 2, 3], [2, 3, 1])]);;
+gap> IsInverseSemigroup(S);
+true
+gap> JoinIrreducibleDClasses(S) = DClasses(S);
+true
+gap> ForAll(DClassReps(S), x -> IsJoinIrreducible(S, x));
+true
+
+#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 4
+gap> S := Semigroup([
+> PartialPerm([1, 2, 3, 4, 5, 7, 6]),
+> PartialPerm([2, 1]),
+> PartialPerm([4, 5], [5, 4])]);;
+gap> D := JoinIrreducibleDClasses(S);;
+gap> reps := Filtered(DClassReps(S), x -> x <> MultiplicativeZero(S));;
+gap> Length(D) = Length(reps);
+true
+gap> Length(D);
+3
+gap> ForAll(reps, x -> ForAny(D, d -> x in d));
 true
 
 #T# attributes-inverse: JoinIrreducibleDClasses, inverse op, 1/?
@@ -906,4 +940,5 @@ gap> Unbind(h);
 gap> Unbind(f);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/attributes/attributes-inverse.tst");
+gap> STOP_TEST(Concatenation("Semigroups package: ",
+>                            "standard/attributes/attributes-inverse.tst"));
