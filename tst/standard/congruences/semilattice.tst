@@ -20,7 +20,7 @@ gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
 >                             PartialPerm( [ 2, 4 ], [ 2, 4 ] ),
 >                             PartialPerm( [ 2, 3 ], [ 2, 3 ] ), 
 >                             PartialPerm( [ 3, 4 ], [ 3, 4 ] ) ] );;
-gap> IsSemilatticeAsSemigroup(e);
+gap> IsSemilattice(e);
 true
 gap> pairs := [
 >    [PartialPermNC([],[]), PartialPermNC([2,3],[2,3])],
@@ -77,7 +77,7 @@ gap> s := InverseSemigroup( [
 >   PartialPerm( [1,2,3,4,5,7,8,10], [5,2,8,4,1,10,3,7] ),
 >   PartialPerm( [1,2,3,4,6,7,8,9,10], [8,10,3,7,1,5,9,2,6] ) ] );;
 gap> e := IdempotentGeneratedSubsemigroup(s);;
-gap> IsSemilatticeAsSemigroup(e);
+gap> IsSemilattice(e);
 true
 gap> pairs := [
 >   [PartialPerm([2,4,5,6,7],[2,4,5,6,7]), PartialPerm([2,3,9],[2,3,9])],
@@ -107,7 +107,7 @@ gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
 >                             PartialPerm( [ 2, 4 ], [ 2, 4 ] ),
 >                             PartialPerm( [ 2, 3 ], [ 2, 3 ] ), 
 >                             PartialPerm( [ 3, 4 ], [ 3, 4 ] ) ] );;
-gap> IsSemilatticeAsSemigroup(e);
+gap> IsSemilattice(e);
 true
 gap> pairs := [
 >   [ PartialPerm( [ 2, 3 ], [ 2, 3 ] ), PartialPerm( [ 2, 4 ], [ 2, 4 ] ) ], 
@@ -227,7 +227,7 @@ gap> s := InverseSemigroup( [
 >   PartialPerm( [1,2,3,4,5,7,8,10], [5,2,8,4,1,10,3,7] ),
 >   PartialPerm( [1,2,3,4,6,7,8,9,10], [8,10,3,7,1,5,9,2,6] ) ] );;
 gap> e := IdempotentGeneratedSubsemigroup(s);;
-gap> IsSemilatticeAsSemigroup(e);
+gap> IsSemilattice(e);
 true
 gap> hi := PartialPerm( [ 3, 5, 8, 9, 10 ], [ 3, 5, 8, 9, 10 ] );;
 gap> lo := PartialPerm( [ 5, 9 ], [ 5, 9 ] );;
@@ -280,14 +280,14 @@ gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
 >                             PartialPerm( [ 2, 4 ], [ 2, 4 ] ),
 >                             PartialPerm( [ 2, 3 ], [ 2, 3 ] ),
 >                             PartialPerm( [ 3, 4 ], [ 3, 4 ] ) ] );;
-gap> IsSemilatticeAsSemigroup(e);;
+gap> IsSemilattice(e);;
 gap> p1 := [[PartialPermNC([1,2,4],[1,2,4]), PartialPermNC([1,2,3],[1,2,3])]];;
 gap> p2 := [[PartialPermNC([4],[4]), PartialPermNC([1,2,3],[1,2,3])]];;
 gap> c1 := SemigroupCongruence(e, p1);;
 gap> c2 := SemigroupCongruence(e, p2);;
 gap> cc := MeetSemigroupCongruences(c1,c2);
-<semigroup congruence over <inverse partial perm semigroup of rank 4 with
- 6 generators> with 1 generating pairs>
+<semigroup congruence over <inverse partial perm semigroup of rank 4 with 6 
+ generators> with 1 generating pairs>
 gap> NonTrivialCongruenceClasses(cc);
 [ {PartialPerm( [ 1, 2 ], [ 1, 2 ] )} ]
 gap> Elements(last[1]);
@@ -296,11 +296,11 @@ gap> Elements(last[1]);
 gap> f := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
 >                             PartialPerm( [ 2, 4 ], [ 2, 4 ] ),
 >                             PartialPerm( [ 3, 4 ], [ 3, 4 ] ) ] );;
-gap> IsSemilatticeAsSemigroup(f);;
+gap> IsSemilattice(f);;
 gap> p2 := [[PartialPermNC([1,3,4],[1,3,4]), PartialPermNC([3,4],[3,4])]];;
 gap> c2 := SemigroupCongruence(f, p2);;
 gap> MeetSemigroupCongruences(c1, c2);
-Error, Semigroups: MeetOfSemigroupCongruences: usage,
+Error, Semigroups: MeetSemigroupCongruences: usage,
 args <cong1> and <cong2> must be over the same semigroup,
 
 #T# SEMIGROUPS_UnbindVariables

@@ -92,12 +92,12 @@ function(pair, cong)
   local s, c1;
   # Input checks
   if not Size(pair) = 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   s := Range(cong);
   if not (pair[1] in s and pair[2] in s) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "elements of the first arg <pair> must be in range ",
                  "of the second\narg <cong>,");
   fi;

@@ -58,8 +58,8 @@ function(arg)
       return SemigroupCongruenceByGeneratingPairs(s, pairs);
     elif IsSimpleSemigroup(s) or IsZeroSimpleSemigroup(s) then
       return SEMIGROUPS_SimpleCongFromPairs(s, pairs);
-    elif (HasIsSemilatticeAsSemigroup(s) or IsActingSemigroup(s))
-        and IsSemilatticeAsSemigroup(s) then
+    elif (HasIsSemilattice(s) or IsActingSemigroup(s))
+        and IsSemilattice(s) then
       cong := SemigroupCongruenceByGeneratingPairs(s, pairs);
       SetIsSemilatticeCongruence(cong, true);
       return cong;
