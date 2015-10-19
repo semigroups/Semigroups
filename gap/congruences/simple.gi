@@ -14,24 +14,24 @@
 ##
 
 InstallGlobalFunction(SEMIGROUPS_SimpleCongFromPairs,
-function(s, pairs)
+function(S, pairs)
   local iso, r, rmspairs, pcong, rmscong, cong;
 
   # If s is a RMS/RZMS, then just create the linked triple congruence
-  if IsReesMatrixSemigroup(s) then
+  if IsReesMatrixSemigroup(S) then
     # gaplint: ignore 2
     cong := AsRMSCongruenceByLinkedTriple(
-            SemigroupCongruenceByGeneratingPairs(s, pairs));
-  elif IsReesZeroMatrixSemigroup(s) then
+            SemigroupCongruenceByGeneratingPairs(S, pairs));
+  elif IsReesZeroMatrixSemigroup(S) then
     # gaplint: ignore 2
     cong := AsRZMSCongruenceByLinkedTriple(
-            SemigroupCongruenceByGeneratingPairs(s, pairs));
+            SemigroupCongruenceByGeneratingPairs(S, pairs));
   else
     # Otherwise, create a SIMPLECONG
-    if IsSimpleSemigroup(s) then
-      iso := IsomorphismReesMatrixSemigroup(s);
+    if IsSimpleSemigroup(S) then
+      iso := IsomorphismReesMatrixSemigroup(S);
     else
-      iso := IsomorphismReesZeroMatrixSemigroup(s);
+      iso := IsomorphismReesZeroMatrixSemigroup(S);
     fi;
     r := Range(iso);
     rmspairs := List(pairs, p -> [p[1] ^ iso, p[2] ^ iso]);
@@ -43,9 +43,9 @@ function(s, pairs)
     fi;
     # Special case for the universal congruence
     if IsUniversalSemigroupCongruence(rmscong) then
-      cong := UniversalSemigroupCongruence(s);
+      cong := UniversalSemigroupCongruence(S);
     else
-      cong := SEMIGROUPS_SimpleCongFromRMSCong(s, rmscong);
+      cong := SEMIGROUPS_SimpleCongFromRMSCong(S, rmscong);
     fi;
   fi;
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
@@ -55,19 +55,19 @@ end);
 #
 
 InstallGlobalFunction(SEMIGROUPS_SimpleCongFromRMSCong,
-function(s, rmscong)
+function(S, rmscong)
   local iso, r, fam, cong;
   # Find the isomorphism from s to r
-  iso := IsomorphismReesMatrixSemigroup(s);
+  iso := IsomorphismReesMatrixSemigroup(S);
   r := Range(rmscong);
 
   # Construct the object
-  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
-                               ElementsFamily(FamilyObj(s)));
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
   cong := Objectify(NewType(fam, SEMIGROUPS_CongSimple),
                     rec(rmscong := rmscong, iso := iso));
-  SetSource(cong, s);
-  SetRange(cong, s);
+  SetSource(cong, S);
+  SetRange(cong, S);
   return cong;
 end);
 
@@ -106,22 +106,22 @@ end);
 InstallMethod(CongruencesOfSemigroup,
 "for a (0-)simple or simple semigroup",
 [IsSemigroup],
-function(s)
+function(S)
   local R, congs, i;
-  if not (IsFinite(s) and (IsSimpleSemigroup(s)
-                           or IsZeroSimpleSemigroup(s))) then
+  if not (IsFinite(S) and (IsSimpleSemigroup(S)
+                           or IsZeroSimpleSemigroup(S))) then
     TryNextMethod();
   fi;
-  if IsReesMatrixSemigroup(s) or IsReesZeroMatrixSemigroup(s) then
-    return CongruencesOfSemigroup(s);
+  if IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S) then
+    return CongruencesOfSemigroup(S);
   fi;
-  R := Range(IsomorphismReesMatrixSemigroup(s));
+  R := Range(IsomorphismReesMatrixSemigroup(S));
   congs := ShallowCopy(CongruencesOfSemigroup(R));
   for i in [1 .. Length(congs)] do
     if IsUniversalSemigroupCongruence(congs[i]) then
-      congs[i] := UniversalSemigroupCongruence(s);
+      congs[i] := UniversalSemigroupCongruence(S);
     else
-      congs[i] := SEMIGROUPS_SimpleCongFromRMSCong(s, congs[i]);
+      congs[i] := SEMIGROUPS_SimpleCongFromRMSCong(S, congs[i]);
     fi;
   od;
   return congs;
@@ -172,13 +172,13 @@ InstallMethod(\in,
 "for an associative element collection and a (0-)simple semigroup congruence",
 [IsAssociativeElementCollection, SEMIGROUPS_CongSimple],
 function(pair, cong)
-  local s;
+  local S;
   # Check for validity
   if Size(pair) <> 2 then
     return false;
   fi;
-  s := Range(cong);
-  if not ForAll(pair, x -> x in s) then
+  S := Range(cong);
+  if not ForAll(pair, x -> x in S) then
     return false;
   fi;
   return [pair[1] ^ cong!.iso, pair[2] ^ cong!.iso] in cong!.rmscong;

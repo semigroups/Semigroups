@@ -2,6 +2,7 @@
 ##
 ##  standard/fp/freeband.tst
 #Y  Copyright (C) 2013-15                                   Julius Jonusas
+##                                                       Wilfred A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -34,12 +35,22 @@ gap> S := FreeBand(4);
 <free band on the generators [ x1, x2, x3, x4 ]>
 gap> Size(S);
 332380
+gap> FreeBand(1, 2);
+Error, Semigroups: FreeBand: usage,
+FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),
+gap> FreeBand(1, 2, 3);
+Error, Semigroups: FreeBand: usage,
+FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),
 
 #T# FreeBandTest2: Free band D-class iterator
 gap> S := FreeBand(5);
 <free band on the generators [ x1, x2, x3, x4, x5 ]>
 gap> x := S.3 * S.2 * S.1;
 x3x2x1
+gap> T := FreeBand(4, "t");;
+gap> D := GreensDClassOfElement(S, T.3 * T.2);
+Error, Semigroups: GreensDClassOfElement: usage,
+the element does not belong to the semigroup,
 gap> D := GreensDClassOfElement(S, x);
 <Green's D-class: x3x2x1>
 gap> iter := Iterator(D);

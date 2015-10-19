@@ -25,14 +25,14 @@
     <Mark>the max-plus semiring</Mark>
     <Item> 
       the set of natural numbers and negative
-      infinity <M>\mathbb{N}\cup \{-\infty\}</M> with operations max and
+      infinity <M>\mathbb{Z}\cup \{-\infty\}</M> with operations max and
       plus;
     </Item>
 
     <Mark>the min-plus semiring</Mark>
     <Item> 
       the set of natural numbers and
-      infinity <M>\mathbb{N}\cup \{\infty\}</M> with operations min and
+      infinity <M>\mathbb{Z}\cup \{\infty\}</M> with operations min and
       plus;
     </Item>
 
@@ -52,7 +52,7 @@
 
     <Mark>the projective max-plus semiring</Mark>
     <Item>
-      TODO
+      the projective max-plus semiring; 
     </Item>
 
     <Mark>the semiring <M>\mathbb{N}_{t,p}</M></Mark>

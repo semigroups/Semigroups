@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  matrix-max-plus.gi
+#W  maxplusmat.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -26,7 +26,9 @@
 ##
 ##   6. Projective max-plus matrices
 ##
-##   7. Natural number matrices
+##   7. NTP matrices
+##
+##   8. Integer matrices
 ##
 #############################################################################
 
@@ -43,12 +45,30 @@ end);
 BindGlobal("SEMIGROUPS_IdentityMat",
 function(x, zero, one)
   local n, id, i;
-  n := DimensionOfMatrixOverSemiring(x);
+  n := Length(x![1]);
   id := List([1 .. n], x -> [1 .. n] * zero);
   for i in [1 .. n] do
     id[i][i] := one;
   od;
   return id;
+end);
+
+BindGlobal("SEMIGROUPS_RandomIntegerMatrix",
+function(n, source)
+  local out, i, j;
+
+  out := List([1 .. n], x -> EmptyPlist(n));
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      out[i][j] := Random(Integers);
+      if out[i][j] = 0 and source <> false then
+        out[i][j] := source;
+      elif out[i][j] < 0 then
+        out[i][j] := out[i][j] + 1;
+      fi;
+    od;
+  od;
+  return out;
 end);
 
 #############################################################################
@@ -59,19 +79,24 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a max-plus matrix",
 [IsMaxPlusMatrix], x -> "max-plus");
 
-# TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
 "for a max-plus matrix",
-[IsMaxPlusMatrix], x -> "MaxPlusMatrixNC");
+[IsMaxPlusMatrix], x -> IsMaxPlusMatrix);
 
-InstallGlobalFunction(MaxPlusMatrixNC,
-x -> Objectify(MaxPlusMatrixType, x));
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsMaxPlusMatrix",
+[IsMaxPlusMatrix], x -> MaxPlusMatrixType);
+
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsMaxPlusMatrix", [IsMaxPlusMatrix],
+function(filter)
+  return x -> IsInt(x) or x = -infinity;
+end);
 
 InstallMethod(\*, "for max-plus matrices", [IsMaxPlusMatrix, IsMaxPlusMatrix],
 function(x, y)
   local n, xy, val, i, j, k;
 
-  n := DimensionOfMatrixOverSemiring(x);
+  n := Length(x![1]);
   xy := List([1 .. n], x -> EmptyPlist(n));
 
   for i in [1 .. n] do
@@ -83,18 +108,19 @@ function(x, y)
       xy[i][j] := val;
     od;
   od;
-  return MaxPlusMatrixNC(xy);
+  return MatrixNC(x, xy);
 end);
 
 InstallMethod(OneImmutable, "for a max-plus matrix",
 [IsMaxPlusMatrix],
-x -> MaxPlusMatrixNC(SEMIGROUPS_IdentityMat(x, -infinity, 0)));
+x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, -infinity, 0)));
 
-InstallMethod(OneMutable, "for a max-plus matrix",
-[IsMaxPlusMatrix], OneImmutable);
-
-InstallMethod(RandomMaxPlusMatrix, "for a pos int", [IsPosInt],
-n -> SEMIGROUPS_RandomMatrixOverSemiring(n, -infinity, MaxPlusMatrixNC));
+InstallMethod(RandomMatrixCons, "for IsMaxPlusMatrix and pos int",
+[IsMaxPlusMatrix, IsPosInt],
+function(filter, n)
+  return MatrixNC(filter,
+                  SEMIGROUPS_RandomIntegerMatrix(n, -infinity));
+end);
 
 #############################################################################
 ## 2. Min-plus matrices
@@ -104,18 +130,24 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a min-plus matrix",
 [IsMinPlusMatrix], x -> "min-plus");
 
-# TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
 "for a min-plus matrix",
-[IsMinPlusMatrix], x -> "MinPlusMatrixNC");
+[IsMinPlusMatrix], x -> IsMinPlusMatrix);
 
-InstallGlobalFunction(MinPlusMatrixNC, x -> Objectify(MinPlusMatrixType, x));
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsMinPlusMatrix",
+[IsMinPlusMatrix], x -> MinPlusMatrixType);
+
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsMinPlusMatrix", [IsMinPlusMatrix],
+function(filter)
+  return x -> IsInt(x) or x = infinity;
+end);
 
 InstallMethod(\*, "for min-plus matrices", [IsMinPlusMatrix, IsMinPlusMatrix],
 function(x, y)
   local n, xy, val, i, j, k;
 
-  n := DimensionOfMatrixOverSemiring(x);
+  n := Length(x![1]);
   xy := List([1 .. n], x -> EmptyPlist(n));
 
   for i in [1 .. n] do
@@ -127,27 +159,28 @@ function(x, y)
       xy[i][j] := val;
     od;
   od;
-  return MinPlusMatrixNC(xy);
+  return MatrixNC(x, xy);
 end);
 
-InstallMethod(OneImmutable, "for a max-plus matrix",
-[IsMaxPlusMatrix],
-x -> MaxPlusMatrixNC(SEMIGROUPS_IdentityMat(x, infinity, 0)));
+InstallMethod(OneImmutable, "for a min-plus matrix",
+[IsMinPlusMatrix],
+x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, infinity, 0)));
 
-InstallMethod(OneMutable, "for a min-plus matrix",
-[IsMinPlusMatrix], OneImmutable);
-
-InstallMethod(RandomMinPlusMatrix, "for a pos int", [IsPosInt],
-n -> SEMIGROUPS_RandomMatrixOverSemiring(n, infinity, MinPlusMatrixNC));
+InstallMethod(RandomMatrixCons, "for IsMinPlusMatrix and pos int",
+[IsMinPlusMatrix, IsPosInt],
+function(filter, n)
+  return MatrixNC(filter,
+                  SEMIGROUPS_RandomIntegerMatrix(n, infinity));
+end);
 
 #############################################################################
 ## 3. Tropical matrices
 #############################################################################
 
 InstallMethod(ThresholdTropicalMatrix, "for a tropical matrix",
-[IsTropicalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 1]);
+[IsTropicalMatrix], x -> x![Length(x![1]) + 1]);
 
-BindGlobal("SEMIGROUPS_TropicalizeMat",
+InstallGlobalFunction(SEMIGROUPS_TropicalizeMat,
 function(mat, threshold)
   local n, i, j;
 
@@ -176,15 +209,19 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a tropical max-plus matrix",
 [IsTropicalMaxPlusMatrix], x -> "tropical max-plus");
 
-# TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
 "for a tropical max-plus matrix",
-[IsTropicalMaxPlusMatrix], x -> "TropicalMaxPlusMatrixNC");
+[IsTropicalMaxPlusMatrix], x -> IsTropicalMaxPlusMatrix);
 
-InstallGlobalFunction(TropicalMaxPlusMatrixNC,
-function(mat, threshold)
-  return Objectify(TropicalMaxPlusMatrixType,
-                   SEMIGROUPS_TropicalizeMat(mat, threshold));
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
+"for IsTropicalMaxPlusMatrix",
+[IsTropicalMaxPlusMatrix], x -> TropicalMaxPlusMatrixType);
+
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsTropicalMaxPlusMatrix and pos int",
+[IsTropicalMaxPlusMatrix, IsPosInt],
+function(filter, threshold)
+  return x -> (IsInt(x) and x >= 0 and x <= threshold) or x = -infinity;
 end);
 
 InstallMethod(\*, "for tropical max-plus matrices",
@@ -207,23 +244,21 @@ function(x, y)
       xy[i][j] := val;
     od;
   od;
-  return TropicalMaxPlusMatrixNC(xy, ThresholdTropicalMatrix(x));
+  return MatrixNC(x, xy);
 end);
 
-InstallMethod(OneImmutable, "for a max-plus matrix",
+InstallMethod(OneImmutable, "for a tropical max-plus matrix",
 [IsTropicalMaxPlusMatrix],
-x -> TropicalMaxPlusMatrixNC(SEMIGROUPS_IdentityMat(x, -infinity, 0),
-                             ThresholdTropicalMatrix(x)));
+x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, -infinity, 0)));
 
-InstallMethod(OneMutable, "for a tropical max-plus matrix",
-[IsTropicalMaxPlusMatrix], OneImmutable);
-
-InstallMethod(RandomTropicalMaxPlusMatrix, "for a pos ints",
-[IsPosInt, IsPosInt],
-function(dim, threshold)
-  # gaplint: ignore 2
-  return SEMIGROUPS_RandomMatrixOverSemiring(
-    dim, -infinity, x -> TropicalMaxPlusMatrixNC(x, threshold));
+InstallMethod(RandomMatrixCons,
+"for IsTropicalMaxPlusMatrix, pos int, pos int",
+[IsTropicalMaxPlusMatrix, IsPosInt, IsPosInt],
+function(filter, dim, threshold)
+  local mat;
+  mat := SEMIGROUPS_RandomIntegerMatrix(dim, -infinity);
+  SEMIGROUPS_TropicalizeMat(mat, threshold);
+  return MatrixNC(filter, mat);
 end);
 
 #############################################################################
@@ -234,15 +269,19 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a tropical min-plus matrix",
 [IsTropicalMinPlusMatrix], x -> "tropical min-plus");
 
-# TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
 "for a tropical min-plus matrix",
-[IsTropicalMinPlusMatrix], x -> "TropicalMinPlusMatrixNC");
+[IsTropicalMinPlusMatrix], x -> IsTropicalMinPlusMatrix);
 
-InstallGlobalFunction(TropicalMinPlusMatrixNC,
-function(mat, threshold)
-  return Objectify(TropicalMinPlusMatrixType,
-                   SEMIGROUPS_TropicalizeMat(mat, threshold));
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
+"for IsTropicalMinPlusMatrix",
+[IsTropicalMinPlusMatrix], x -> TropicalMinPlusMatrixType);
+
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsTropicalMinPlusMatrix and pos int",
+[IsTropicalMinPlusMatrix, IsPosInt],
+function(filter, threshold)
+  return x -> (IsInt(x) and x >= 0 and x <= threshold) or x = infinity;
 end);
 
 InstallMethod(\*, "for tropical min-plus matrices",
@@ -265,23 +304,21 @@ function(x, y)
       xy[i][j] := val;
     od;
   od;
-  return TropicalMinPlusMatrixNC(xy, ThresholdTropicalMatrix(x));
+  return MatrixNC(x, xy);
 end);
 
-InstallMethod(OneImmutable, "for tropical min-plus matrix",
+InstallMethod(OneImmutable, "for a tropical min-plus matrix",
 [IsTropicalMinPlusMatrix],
-x -> TropicalMinPlusMatrixNC(SEMIGROUPS_IdentityMat(x, infinity, 0),
-                             ThresholdTropicalMatrix(x)));
+x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, infinity, 0)));
 
-InstallMethod(OneMutable, "for a tropical min-plus matrix",
-[IsTropicalMinPlusMatrix], OneImmutable);
-
-InstallMethod(RandomTropicalMinPlusMatrix, "for pos ints",
-[IsPosInt, IsPosInt],
-function(dim, threshold)
-  # gaplint: ignore 2
-  return SEMIGROUPS_RandomMatrixOverSemiring(
-    dim, infinity, x -> TropicalMinPlusMatrixNC(x, threshold));
+InstallMethod(RandomMatrixCons,
+"for IsTropicalMinPlusMatrix, pos int, pos int",
+[IsTropicalMinPlusMatrix, IsPosInt, IsPosInt],
+function(filter, dim, threshold)
+  local mat;
+  mat := SEMIGROUPS_RandomIntegerMatrix(dim, -infinity);
+  SEMIGROUPS_TropicalizeMat(mat, threshold);
+  return MatrixNC(filter, mat);
 end);
 
 #############################################################################
@@ -292,13 +329,20 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a projective max-plus matrix",
 [IsProjectiveMaxPlusMatrix], x -> "projective max-plus");
 
-# TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
 "for a projective max-plus matrix",
-[IsProjectiveMaxPlusMatrix], x -> "ProjectiveMaxPlusMatrixNC");
+[IsProjectiveMaxPlusMatrix], x -> IsProjectiveMaxPlusMatrix);
 
-InstallGlobalFunction(ProjectiveMaxPlusMatrixNC,
-x -> Objectify(ProjectiveMaxPlusMatrixType, x));
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
+"for IsProjectiveMaxPlusMatrix",
+[IsProjectiveMaxPlusMatrix], x -> ProjectiveMaxPlusMatrixType);
+
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsProjectiveMaxPlusMatrix",
+[IsProjectiveMaxPlusMatrix],
+function(filter)
+  return x -> IsInt(x) or x = -infinity;
+end);
 
 InstallMethod(\*, "for projective max-plus matrices",
 [IsProjectiveMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
@@ -329,30 +373,31 @@ function(x, y)
       fi;
     od;
   od;
-  return ProjectiveMaxPlusMatrixNC(xy);
+  return MatrixNC(x, xy);
 end);
 
 InstallMethod(OneImmutable, "for a projective max-plus matrix",
 [IsProjectiveMaxPlusMatrix],
-x -> ProjectiveMaxPlusMatrixNC(SEMIGROUPS_IdentityMat(x, -infinity, 0)));
+x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, -infinity, 0)));
 
-InstallMethod(RandomProjectiveMaxPlusMatrix, "for a pos int",
-[IsPosInt],
-dim -> SEMIGROUPS_RandomMatrixOverSemiring(dim,
-                                           -infinity,
-                                           ProjectiveMaxPlusMatrixNC));
+InstallMethod(RandomMatrixCons, "for IsProjectiveMaxPlusMatrix and pos int",
+[IsProjectiveMaxPlusMatrix, IsPosInt],
+function(filter, n)
+  return MatrixNC(filter,
+                  SEMIGROUPS_RandomIntegerMatrix(n, -infinity));
+end);
 
 #############################################################################
 ## 7. Natural number matrices
 #############################################################################
 
-InstallMethod(ThresholdNaturalMatrix, "for a natural matrix",
-[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 1]);
+InstallMethod(ThresholdNTPMatrix, "for a natural matrix",
+[IsNTPMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 1]);
 
-InstallMethod(PeriodNaturalMatrix, "for a natural matrix",
-[IsNaturalMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
+InstallMethod(PeriodNTPMatrix, "for a natural matrix",
+[IsNTPMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
 
-BindGlobal("SEMIGROUPS_NaturalizeMat",
+InstallGlobalFunction(SEMIGROUPS_NaturalizeMat,
 function(x, threshold, period)
   local n, i, j;
 
@@ -372,34 +417,33 @@ end);
 
 InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a natural number matrix",
-[IsNaturalMatrix], x -> "natural");
+[IsNTPMatrix], x -> "ntp");
 
-# TODO change it to non-NC version
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
-"for a natural number matrix",
-[IsNaturalMatrix], x -> "NaturalMatrixNC");
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
+"for a ntp matrix",
+[IsNTPMatrix], x -> IsNTPMatrix);
 
-InstallGlobalFunction(NaturalMatrixNC,
-function(x, threshold, period)
-  return Objectify(NaturalMatrixType,
-                   SEMIGROUPS_NaturalizeMat(x, threshold, period));
-end);
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsNTPMatrix",
+[IsNTPMatrix], x -> NTPMatrixType);
 
-InstallGlobalFunction(NaturalMatrix,
-#TODO: Check parameters
-function(x, threshold, period)
-  return NaturalMatrixNC(List(x, ShallowCopy), threshold, period);
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsNTPMatrix, pos int, pos int", [IsNTPMatrix, IsPosInt, IsPosInt],
+function(filter, threshold, period)
+  return x -> (IsInt(x) and x >= 0 and x <= threshold + period - 1);
 end);
 
 InstallMethod(\*, "for natural number matrices",
-[IsNaturalMatrix, IsNaturalMatrix],
+[IsNTPMatrix, IsNTPMatrix],
 function(x, y)
   local n, period, threshold, xy, i, j, k;
 
   n := DimensionOfMatrixOverSemiring(x);
-  period := PeriodNaturalMatrix(x);
-  threshold := ThresholdNaturalMatrix(x);
-  # TODO should really check that x and y are matrices over the same semiring!!
+  period := PeriodNTPMatrix(x);
+  threshold := ThresholdNTPMatrix(x);
+  if period <> PeriodNTPMatrix(y) or threshold <> ThresholdNTPMatrix(y) then
+    ErrorMayQuit("Semigroups: \* (for ntp matrices): usage,\n",
+                 "the arguments must be matrices over the same semiring,");
+  fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
 
   for i in [1 .. n] do
@@ -413,23 +457,74 @@ function(x, y)
       fi;
     od;
   od;
-  return NaturalMatrixNC(xy, threshold, period);
+  return MatrixNC(x, xy);
 end);
 
-InstallMethod(OneImmutable, "for a natural number matrix",
-[IsNaturalMatrix],
-x -> NaturalMatrixNC(SEMIGROUPS_IdentityMat(x, 0, 1),
-                     ThresholdNaturalMatrix(x),
-                     PeriodNaturalMatrix(x)));
+InstallMethod(OneImmutable, "for a ntp matrix",
+[IsNTPMatrix],
+x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, 0, 1)));
 
-InstallMethod(RandomNaturalMatrix,
-"for dimension, threshold, period (pos ints)",
-[IsPosInt, IsPosInt, IsPosInt],
-function(dim, threshold, period)
+InstallMethod(RandomMatrixCons, "for IsNTPMatrix, pos int, pos int, pos int",
+[IsNTPMatrix, IsPosInt, IsPosInt, IsPosInt],
+function(filter, dim, threshold, period)
+  local mat;
+  mat := SEMIGROUPS_RandomIntegerMatrix(dim, false);
+  mat := SEMIGROUPS_NaturalizeMat(mat, threshold, period);
+  return MatrixNC(filter, mat);
+end);
 
-  return SEMIGROUPS_RandomMatrixOverSemiring(dim,
-                                             false,
-                                             x -> NaturalMatrixNC(x,
-                                                                  threshold,
-                                                                  period));
+#############################################################################
+## 8. Integer matrices
+#############################################################################
+
+InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
+"for an integer matrix",
+[IsIntegerMatrix], x -> "integer");
+
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
+"for an integer matrix",
+[IsIntegerMatrix], x -> IsIntegerMatrix);
+
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsIntegerMatrix",
+[IsIntegerMatrix], x -> IntegerMatrixType);
+
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsIntegerMatrix", [IsNTPMatrix],
+function(filter)
+  return IsInt;
+end);
+
+InstallMethod(\*, "for natural number matrices",
+[IsIntegerMatrix, IsIntegerMatrix],
+function(x, y)
+  local n, xy, i, j, k;
+
+  n := Length(x![1]);
+  xy := List([1 .. n], x -> EmptyPlist(n));
+
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      xy[i][j] := 0;
+      for k in [1 .. n] do
+        xy[i][j] := xy[i][j] + x![i][k] * y![k][j];
+      od;
+    od;
+  od;
+  return MatrixNC(x, xy);
+end);
+
+InstallMethod(OneImmutable, "for an integer matrix",
+[IsIntegerMatrix],
+x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, 0, 1)));
+
+InstallMethod(RandomMatrixCons, "for IsIntegerMatrix and pos int",
+[IsIntegerMatrix, IsPosInt],
+function(filter, dim)
+  return MatrixNC(filter, SEMIGROUPS_RandomIntegerMatrix(dim, false));
+end);
+
+InstallMethod(RandomMatrixOp, "for Integers and pos int",
+[IsIntegers, IsPosInt],
+function(semiring, n)
+  return RandomMatrix(IsIntegerMatrix, n);
 end);

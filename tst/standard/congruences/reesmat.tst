@@ -19,10 +19,10 @@ gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
 gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
 > [0, (), 0, 0, (3, 5), 0],
 > [(), 0, 0, (3, 5), 0, 0]];;
-gap> s := ReesZeroMatrixSemigroup(g, mat);;
+gap> S := ReesZeroMatrixSemigroup(g, mat);;
 
 #T# ReesMatCongTest2: Find all its congruences
-gap> congs := CongruencesOfSemigroup(s);;
+gap> congs := CongruencesOfSemigroup(S);;
 gap> Size(congs);
 33
 
@@ -30,7 +30,7 @@ gap> Size(congs);
 gap> n := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [4], [2, 5], [3, 6]];;
 gap> rowBlocks := [[1], [2], [3]];;
-gap> cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);
+gap> cong := RZMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
  (1,5,3,4) ])> with linked triple (2^2,4,3)>
 gap> cong = congs[12];
@@ -39,14 +39,14 @@ gap> cong = congs[13];
 true
 
 #T# ReesMatCongTest4: Testing membership
-gap> x := ReesZeroMatrixSemigroupElement(s, 3, (4, 5), 1);;
-gap> y := ReesZeroMatrixSemigroupElement(s, 3, (1, 5, 3, 4), 1);;
-gap> z := ReesZeroMatrixSemigroupElement(s, 1, (1, 3, 5), 2);;
+gap> x := ReesZeroMatrixSemigroupElement(S, 3, (4, 5), 1);;
+gap> y := ReesZeroMatrixSemigroupElement(S, 3, (1, 5, 3, 4), 1);;
+gap> z := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 5), 2);;
 gap> [x, y] in cong;
 true
 gap> [x, z] in cong;
 false
-gap> y := ReesZeroMatrixSemigroupElement(s, 6, (1, 3, 5), 1);;
+gap> y := ReesZeroMatrixSemigroupElement(S, 6, (1, 3, 5), 1);;
 gap> [x, y] in cong;
 true
 
@@ -94,7 +94,7 @@ gap> MeetSemigroupCongruences(congs[12], congs[31]);
  (1,5,3,4) ])> with linked triple (2^2,6,3)>
 
 #T# ReesMatCongTest7: Quotients
-gap> q := s / congs[13];;
+gap> q := S / congs[13];;
 gap> Size(q);
 73
 
@@ -106,15 +106,15 @@ gap> congs[2] = ccong;
 true
 
 #T# ReesMatCongTest9: Universal semigroup congruences
-gap> uni := UniversalSemigroupCongruence(s);
+gap> uni := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <Rees 0-matrix semigroup 6x3 over 
   Group([ (1,4,5), (1,5,3,4) ])>>
 gap> [x, z] in uni;
 true
 gap> Length(EquivalenceClasses(uni)) = 1 and
->   (Representative(EquivalenceClasses(uni)[1]) = RMSElement(s, 1, (1, 4, 5), 3)
+>   (Representative(EquivalenceClasses(uni)[1]) = RMSElement(S, 1, (1, 4, 5), 3)
 > or Representative(EquivalenceClasses(uni)[1]) =
->   RMSElement(s, 1, (), 1)); # the first is after 4.7.7 the latter before
+>   RMSElement(S, 1, (), 1)); # the first is after 4.7.7 the latter before
 true
 gap> eq := EquivalenceClassOfElement(uni, y);
 {(6,(1,3,5),1)}
@@ -125,7 +125,7 @@ gap> cong := AsSemigroupCongruenceByGeneratingPairs(uni);;
 gap> cong := AsRZMSCongruenceByLinkedTriple(cong);;
 gap> cong = uni;
 true
-gap> Size(s / uni);
+gap> Size(S / uni);
 1
 
 #T# SEMIGROUPS_UnbindVariables
@@ -139,7 +139,7 @@ gap> Unbind(ccong);
 gap> Unbind(n);
 gap> Unbind(q);
 gap> Unbind(class);
-gap> Unbind(s);
+gap> Unbind(S);
 gap> Unbind(classes);
 gap> Unbind(uni);
 gap> Unbind(class1);

@@ -16,13 +16,13 @@
 InstallMethod(UniversalSemigroupCongruence,
 "for a semigroup",
 [IsSemigroup],
-function(s)
+function(S)
   local fam, cong;
-  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(s)),
-                               ElementsFamily(FamilyObj(s)));
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
   cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
-  SetSource(cong, s);
-  SetRange(cong, s);
+  SetSource(cong, S);
+  SetRange(cong, S);
   return cong;
 end);
 
@@ -243,15 +243,15 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
 function(cong)
-  local s, it, z, x, m, r, n, colBlocks, rowBlocks, rmscong, pairs, d;
-  s := Range(cong);
-  if Size(s) = 1 then
+  local S, it, z, x, m, r, n, colBlocks, rowBlocks, rmscong, pairs, d;
+  S := Range(cong);
+  if Size(S) = 1 then
     return [];
   fi;
-  it := Iterator(s);
-  z := MultiplicativeZero(s);
+  it := Iterator(S);
+  z := MultiplicativeZero(S);
   if z <> fail then
-    if IsZeroSimpleSemigroup(s) then
+    if IsZeroSimpleSemigroup(S) then
       # Just link zero to any non-zero element
       x := NextIterator(it);
       if x = z then
@@ -261,11 +261,11 @@ function(cong)
       fi;
     else
       # Link zero to a representative of each maximal D-class
-      return List(MaximalDClasses(s), cl -> [z, Representative(cl)]);
+      return List(MaximalDClasses(S), cl -> [z, Representative(cl)]);
     fi;
   else
     # Use the minimal ideal
-    m := MinimalIdeal(s);
+    m := MinimalIdeal(S);
 
     # Use the linked triple
     r := Range(IsomorphismReesMatrixSemigroup(m));
@@ -276,12 +276,12 @@ function(cong)
     cong := SEMIGROUPS_SimpleCongFromRMSCong(m, rmscong);
     pairs := ShallowCopy(GeneratingPairsOfSemigroupCongruence(cong));
 
-    if IsSimpleSemigroup(s) then
+    if IsSimpleSemigroup(S) then
       # m = s, so we are done
     else
       # We must relate each maximal D-class to the minimal ideal
       z := GeneratorsOfSemigroupIdeal(m)[1];
-      for d in MaximalDClasses(s) do
+      for d in MaximalDClasses(S) do
         Add(pairs, [z, Representative(d)]);
       od;
     fi;

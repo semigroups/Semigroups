@@ -22,6 +22,14 @@ FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
 gap> FreeInverseSemigroup([]);
 Error, Semigroups: FreeInverseSemigroup: usage,
 the number of generators of a free inverse semigroup must be non-zero,
+gap> FreeInverseSemigroup(1, 2);
+Error, Semigroups: FreeInverseSemigroup: usage,
+FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
+]),
+gap> FreeInverseSemigroup(1, 2, 3);
+Error, Semigroups: FreeInverseSemigroup: usage,
+FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
+]),
 gap> FreeInverseSemigroup(20, "r");
 <free inverse semigroup with 20 generators>
 gap> S := FreeInverseSemigroup(3);
@@ -74,6 +82,8 @@ true
 gap> IsFreeInverseSemigroup(SymmetricGroup(3));
 Error, Semigroups: IsFreeInverseSemigroup:
 cannot determine the answer
+gap> IsFreeInverseSemigroup(MonogenicSemigroup(3, 2));
+false
 
 #T# FreeInverseTest4: Iterator, for a free inverse semigroup
 gap> iter := Iterator(FreeInverseSemigroup(["a", "b"]));
@@ -85,6 +95,20 @@ gap> NextIterator(iter);
 a*b
 gap> IsDoneIterator(iter);
 false
+
+#T# FreeInverseTest5: CanonicalForm
+gap> S := FreeInverseSemigroup(3);
+<free inverse semigroup on the generators [ x1, x2, x3 ]>
+gap> CanonicalForm(S.1);
+"x1"
+gap> CanonicalForm(S.1 * (S.1 ^ -1));
+"x1x1^-1"
+gap> CanonicalForm(S.1 * (S.1 ^ -1) * S.1 * (S.1 ^ -1));
+"x1x1^-1"
+gap> CanonicalForm((S.1 ^ -1) * S.1);                   
+"x1^-1x1"
+gap> CanonicalForm((S.1 ^ -1) * S.1 * (S.1 ^ -1) * S.1);                   
+"x1^-1x1"
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(i);
