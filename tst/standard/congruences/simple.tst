@@ -14,22 +14,22 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS_StartTest();
 
 #T# SimpleCongTest1: Create a simple semigroup
-gap> s := Semigroup([Transformation([2, 1, 1, 2, 1]),
->                     Transformation([3, 4, 3, 4, 4]),
->                     Transformation([3, 4, 3, 4, 3]),
->                     Transformation([4, 3, 3, 4, 4])]);;
+gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
+>                    Transformation([3, 4, 3, 4, 4]),
+>                    Transformation([3, 4, 3, 4, 3]),
+>                    Transformation([4, 3, 3, 4, 4])]);;
 
 #T# SimpleCongTest2: Find all congruences of a simple semigroup
-gap> congs := CongruencesOfSemigroup(s);;
+gap> congs := CongruencesOfSemigroup(S);;
 gap> Size(congs);
 34
 
 #T# SimpleCongTest3: Construct a congruence by generating pairs
-gap> cong := SemigroupCongruence(s,
+gap> cong := SemigroupCongruence(S,
 > [[Transformation([1, 2, 1, 2, 2]),
->     Transformation([2, 1, 2, 1, 2])],
->   [Transformation([2, 1, 1, 2, 2]),
->     Transformation([1, 2, 2, 1, 2])]]);
+>   Transformation([2, 1, 2, 1, 2])],
+>  [Transformation([2, 1, 1, 2, 2]),
+>   Transformation([1, 2, 2, 1, 2])]]);
 <semigroup congruence over <simple transformation semigroup of degree 5 with 
  4 generators> with linked triple (2,2,2)>
 gap> cong = congs[33];
@@ -86,18 +86,18 @@ gap> MeetSemigroupCongruences(congs[34], congs[34]) = congs[34];
 true
 
 #T# SimpleCongTest7: Quotients
-gap> q := s / congs[13];;
+gap> q := S / congs[13];;
 
 #T# SimpleCongTest8
 # Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(congs[4]);;
-gap> cong := SemigroupCongruence(s, pairs);
+gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <simple transformation semigroup of degree 5 with 
  4 generators> with linked triple (1,2,2)>
 gap> congs[4] = cong;
 true
 gap> ForAll(congs, cong ->
-> cong = SemigroupCongruence(s, GeneratingPairsOfSemigroupCongruence(cong)));
+> cong = SemigroupCongruence(S, GeneratingPairsOfSemigroupCongruence(cong)));
 true
 
 #T# SimpleCongTest9: The universal congruence
@@ -112,7 +112,7 @@ gap> Unbind(pairs);
 gap> Unbind(classy);
 gap> Unbind(congs);
 gap> Unbind(q);
-gap> Unbind(s);
+gap> Unbind(S);
 gap> Unbind(classes);
 gap> Unbind(classz);
 gap> Unbind(classx);

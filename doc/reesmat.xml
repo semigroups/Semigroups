@@ -143,11 +143,11 @@ gap> g := Group( [ (1,4,5), (1,5,3,4) ] );;
 gap> mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],
 >             [  0, (),       0,     0, (3,5),         0 ],
 >             [ (),  0,       0, (3,5),     0,         0 ] ];;
-gap> s := ReesZeroMatrixSemigroup(g, mat);;
+gap> S := ReesZeroMatrixSemigroup(g, mat);;
 gap> n := Group([ (1,4)(3,5), (1,5)(3,4) ]);;
 gap> colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;
 gap> rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;
-gap> cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);;
+gap> cong := RZMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);;
 gap> class := RZMSCongruenceClassByLinkedTriple(cong, 
 > RightCoset(n,(1,5)),2,3);
 {(2,(3,4),3)}]]></Example>

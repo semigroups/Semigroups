@@ -17,13 +17,13 @@ gap> SEMIGROUPS_StartTest();
 #T# PairsCongTest1: TODO (should complete quickly)
 
 #T# PairsCongTest2: Checking robustness against infinite semigroups
-gap> s := FreeSemigroup(1);
+gap> S := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
-gap> x := GeneratorsOfSemigroup(s)[1];
+gap> x := GeneratorsOfSemigroup(S)[1];
 s1
 gap> gens := [x ^ 2, x ^ 4];
 [ s1^2, s1^4 ]
-gap> cong := SemigroupCongruence(s, gens);
+gap> cong := SemigroupCongruence(S, gens);
 <semigroup congruence over <free semigroup on the generators [ s1 ]> with 
 1 generating pairs>
 gap> gens in cong;
@@ -44,27 +44,27 @@ which is known to be finite,
 
 #T# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
-gap> s := Semigroup(Transformation([1]));;
-gap> t := Monoid(gens);;
-gap> u := UniversalSemigroupCongruence(s);
+gap> S := Semigroup(Transformation([1]));;
+gap> T := Monoid(gens);;
+gap> u := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <trivial transformation group of 
  degree 0 with 0 generators>>
-gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);
+gap> v := SemigroupCongruence(T, [gens[1], gens[1]]);
 <semigroup congruence over <commutative transformation monoid of degree 10 
  with 1 generator> with 0 generating pairs>
 gap> NrCongruenceClasses(v);
 6
-gap> Size(t);
+gap> Size(T);
 6
 gap> u = v;
 false
-gap> u := UniversalSemigroupCongruence(t);
+gap> u := UniversalSemigroupCongruence(T);
 <universal semigroup congruence over <commutative transformation monoid 
  of size 6, degree 10 with 1 generator>>
 gap> u = v;
 false
-gap> gens := List(t, x -> [gens[1], x]);;
-gap> v := SemigroupCongruence(t, gens);
+gap> gens := List(T, x -> [gens[1], x]);;
+gap> v := SemigroupCongruence(T, gens);
 <semigroup congruence over <commutative transformation monoid of size 6, 
  degree 10 with 1 generator> with 5 generating pairs>
 gap> u = v;
@@ -74,14 +74,14 @@ gap> NrCongruenceClasses(u);
 
 #T# PairsCongTest4: \* for two semigroups congruence classes
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
-gap> s := Semigroup(gens);;
-gap> gens := List(s, x -> [gens[1], x]);;
-gap> u := SemigroupCongruence(s, gens); # universal congruence
+gap> S := Semigroup(gens);;
+gap> gens := List(S, x -> [gens[1], x]);;
+gap> u := SemigroupCongruence(S, gens); # universal congruence
 <semigroup congruence over <commutative transformation semigroup of degree 10 
  with 1 generator> with 4 generating pairs>
-gap> u = UniversalSemigroupCongruence(s);
+gap> u = UniversalSemigroupCongruence(S);
 true
-gap> v := SemigroupCongruence(s, [gens[1], gens[1]]); # trivial congruence
+gap> v := SemigroupCongruence(S, [gens[1], gens[1]]); # trivial congruence
 <semigroup congruence over <commutative transformation semigroup of size 5, 
  degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(CongruenceClasses(v));
@@ -112,7 +112,7 @@ gap> Unbind(classy);
 gap> Unbind(gens);
 gap> Unbind(q);
 gap> Unbind(P);
-gap> Unbind(s);
+gap> Unbind(S);
 gap> Unbind(classes);
 gap> Unbind(classz);
 gap> Unbind(classx);
@@ -121,7 +121,7 @@ gap> Unbind(y);
 gap> Unbind(x);
 gap> Unbind(R);
 gap> Unbind(z);
-gap> Unbind(t);
+gap> Unbind(T);
 gap> Unbind(u);
 gap> Unbind(v);
 

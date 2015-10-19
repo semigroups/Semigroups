@@ -14,10 +14,10 @@
 
 InstallGlobalFunction(SEMIGROUPS_SetupCongData,
 function(cong)
-  local s, elms, pairs, hashlen, ht, data, genpairs, right_compat, left_compat;
+  local S, elms, pairs, hashlen, ht, data, genpairs, right_compat, left_compat;
 
-  s := Range(cong);
-  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(s), infinity);
+  S := Range(cong);
+  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
 
   # Is this a left, right, or 2-sided congruence?
   if HasGeneratingPairsOfMagmaCongruence(cong) then
@@ -35,7 +35,7 @@ function(cong)
   fi;
 
   pairs := List(genpairs, x -> [Position(elms, x[1]), Position(elms, x[2])]);
-  hashlen := SEMIGROUPS_OptionsRec(s).hashlen.L;
+  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
   ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
                                          treehashsize := hashlen));
@@ -47,7 +47,7 @@ function(cong)
               ht := ht,
               elms := elms,
               found := false,
-              ufdata := UF_NEW(Size(s)));
+              ufdata := UF_NEW(Size(S)));
   cong!.data := Objectify(NewType(FamilyObj(cong),
                                   SEMIGROUPS_IsSemigroupCongruenceData),
                           data);
@@ -74,26 +74,26 @@ install_pairs_methods_with_filter@ := function(cong_type)
   Concatenation("for dense list and ", cong_type.string),
   [IsDenseList, cong_type.filter and cong_type.haspairs],
   function(pair, cong)
-    local s, elms, p1, p2, table, lookfunc;
+    local S, elms, p1, p2, table, lookfunc;
 
     # Input checks
     if not Size(pair) = 2 then
       ErrorMayQuit("Semigroups: \in: usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
-    s := Range(cong);
-    if not (pair[1] in s and pair[2] in s) then
+    S := Range(cong);
+    if not (pair[1] in S and pair[2] in S) then
       ErrorMayQuit("Semigroups: \in: usage,\n",
                    "elements of the first arg <pair> must be in range",
                    "of the second\narg <cong>,");
     fi;
-    if not (HasIsFinite(s) and IsFinite(s)) then
+    if not (HasIsFinite(S) and IsFinite(S)) then
       ErrorMayQuit("Semigroups: \in: usage,\n",
                    "this function currently only works if <cong> is a ",
                    "congruence of a semigroup\nwhich is known to be finite,");
     fi;
 
-    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(s), infinity);
+    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
     p1 := Position(elms, pair[1]);
     p2 := Position(elms, pair[2]);
 
@@ -146,11 +146,11 @@ install_pairs_methods_with_filter@ := function(cong_type)
   "for semigroup congruence data and a function",
   [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
   function(data, lookfunc)
-    local cong, s, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
+    local cong, S, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
           found, x, j, y, next, newtable, ii, left_compat, right_compat;
 
     cong := data!.cong;
-    s := Range(cong);
+    S := Range(cong);
 
     ufdata := data!.ufdata;
     pairstoapply := data!.pairstoapply;
@@ -159,13 +159,13 @@ install_pairs_methods_with_filter@ := function(cong_type)
     right_compat := data!.right_compat;
 
     if left_compat then
-      left := LeftCayleyGraphSemigroup(s);
+      left := LeftCayleyGraphSemigroup(S);
     fi;
     if right_compat then
-      right := RightCayleyGraphSemigroup(s);
+      right := RightCayleyGraphSemigroup(S);
     fi;
 
-    genstoapply := [1 .. Size(GeneratorsOfSemigroup(s))];
+    genstoapply := [1 .. Size(GeneratorsOfSemigroup(S))];
     i := data!.pos;
     nr := Size(pairstoapply);
     found := false;
@@ -376,9 +376,9 @@ install_pairs_methods_with_filter@ := function(cong_type)
   Concatenation("for a ", cong_type.string, " with generating pairs"),
   [cong_type.filter and cong_type.haspairs],
   function(cong)
-    local s;
-    s := Range(cong);
-    if not (HasIsFinite(s) and IsFinite(s)) then
+    local S;
+    S := Range(cong);
+    if not (HasIsFinite(S) and IsFinite(S)) then
       ErrorMayQuit("Semigroups: NrCongruenceClasses: usage,\n",
                    "this function currently only works if <cong> is a ",
                    "congruence of a semigroup\nwhich is known to be finite,");
@@ -392,12 +392,12 @@ install_pairs_methods_with_filter@ := function(cong_type)
   "for a congruence class",
   [IsCongruenceClass],
   function(class)
-    local cong, s, record, enum;
+    local cong, S, record, enum;
 
     cong := EquivalenceClassRelation(class);
-    s := Range(cong);
+    S := Range(cong);
 
-    if not (HasIsFinite(s) and IsFinite(s)) then
+    if not (HasIsFinite(S) and IsFinite(S)) then
       TryNextMethod();
     fi;
 

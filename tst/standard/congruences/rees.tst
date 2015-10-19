@@ -15,11 +15,11 @@ gap> SEMIGROUPS_StartTest();
 
 #T# ReesCongTest1
 # Test whether a congruence is Rees and find its ideal
-gap> s := Semigroup([Transformation([2, 3, 4, 3, 1, 1]),
+gap> S := Semigroup([Transformation([2, 3, 4, 3, 1, 1]),
 >                    Transformation([6, 4, 4, 4, 6, 1])]);;
-gap> i := SemigroupIdeal(s, Transformation([4, 4, 4, 4, 4, 2]),
+gap> I := SemigroupIdeal(S, Transformation([4, 4, 4, 4, 4, 2]),
 >                           Transformation([3, 3, 3, 3, 3, 2]));;
-gap> cong := SemigroupCongruence(s,
+gap> cong := SemigroupCongruence(S,
 >  [[Transformation([4, 4, 4, 4, 4, 2]), Transformation([4, 4, 4, 4, 4, 4])],
 >   [Transformation([3, 3, 3, 3, 3, 2]), Transformation([4, 4, 4, 4, 4, 4])],
 >   [Transformation([4, 3, 3, 3, 4, 3]), Transformation([4, 4, 4, 4, 4, 4])],
@@ -27,32 +27,32 @@ gap> cong := SemigroupCongruence(s,
 >   [Transformation([4, 4, 4, 4, 4, 3]), Transformation([3, 3, 3, 3, 3, 3])]]);;
 gap> IsReesCongruence(cong);
 true
-gap> SemigroupIdealOfReesCongruence(cong) = i;
+gap> SemigroupIdealOfReesCongruence(cong) = I;
 true
-gap> cong := SemigroupCongruence(s, []);;
+gap> cong := SemigroupCongruence(S, []);;
 gap> IsReesCongruence(cong);
 false
-gap> s := Semigroup([PartialPerm([1, 2, 3], [1, 2, 3]),
+gap> S := Semigroup([PartialPerm([1, 2, 3], [1, 2, 3]),
 >                    PartialPerm([1, 2, 3, 4], [2, 4, 3, 5])]);;
-gap> cong := SemigroupCongruence(s, []);;
+gap> cong := SemigroupCongruence(S, []);;
 gap> IsReesCongruence(cong);
 true
-gap> cong := SemigroupCongruence(s, [PartialPerm([1, 2, 3], [2, 4, 3]),
+gap> cong := SemigroupCongruence(S, [PartialPerm([1, 2, 3], [2, 4, 3]),
 >                                    PartialPerm([1, 2, 3, 4], [2, 4, 3, 5])]);;
 gap> IsReesCongruence(cong);
 false
 
 #T# ReesCongTest2
 # Create a congruence, calculate its congruence classes and try some operations
-gap> s := Semigroup([Transformation([2, 4, 3, 5, 5]),
->                 Transformation([3, 1, 1, 4, 4]),
->                 Transformation([3, 1, 4, 2, 4]),
->                 Transformation([3, 4, 2, 3, 4]),
->                 Transformation([4, 1, 5, 1, 2])]);
+gap> S := Semigroup([Transformation([2, 4, 3, 5, 5]),
+>                    Transformation([3, 1, 1, 4, 4]),
+>                    Transformation([3, 1, 4, 2, 4]),
+>                    Transformation([3, 4, 2, 3, 4]),
+>                    Transformation([4, 1, 5, 1, 2])]);
 <transformation semigroup of degree 5 with 5 generators>
-gap> i := SemigroupIdeal(s, [Transformation([3, 1, 1, 4, 4]),
->                             Transformation([1, 4, 1, 4, 1])]);;
-gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
+gap> I := SemigroupIdeal(S, [Transformation([3, 1, 1, 4, 4]),
+>                            Transformation([1, 4, 1, 4, 1])]);;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> NrCongruenceClasses(cong);
 19
 gap> cc := Set(CongruenceClasses(cong));;
@@ -71,12 +71,12 @@ true
 
 #T# ReesCongTest3
 # Convert a congruence to generating pairs
-gap> s := Semigroup([Transformation([1, 3, 2, 4, 3]),
+gap> S := Semigroup([Transformation([1, 3, 2, 4, 3]),
 >                      Transformation([1, 3, 5, 5, 3]),
 >                      Transformation([5, 1, 2, 5, 5])]);;
-gap> i := SemigroupIdeal(s, Transformation([5, 2, 1, 5, 2]),
+gap> I := SemigroupIdeal(S, Transformation([5, 2, 1, 5, 2]),
 >                            Transformation([5, 2, 1, 5, 2]));;
-gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
 <semigroup congruence over <transformation semigroup of size 61, degree 5 
  with 3 generators> with 1 generating pairs>
@@ -84,22 +84,22 @@ gap> NrCongruenceClasses(ccong);
 12
 gap> IsReesCongruence(ccong);
 true
-gap> SemigroupIdealOfReesCongruence(ccong) = i;
+gap> SemigroupIdealOfReesCongruence(ccong) = I;
 true
 
 #T# ReesCongTest4
 # Test the \in function
-gap> s := Semigroup([Transformation([2, 4, 3, 5, 5]),
->                 Transformation([3, 1, 1, 4, 4]),
->                 Transformation([3, 1, 4, 2, 4]),
->                 Transformation([3, 4, 2, 3, 4]),
->                 Transformation([4, 1, 5, 1, 2])]);;
-gap> i := SemigroupIdeal(s, [Transformation([3, 1, 1, 4, 4]),
->                             Transformation([1, 4, 1, 4, 1])]);;
-gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
-gap> x := Transformation([3, 4, 2, 4]);;      # not in i
-gap> y := Transformation([1, 5, 5, 5, 4]);;   # in i
-gap> z := Transformation([5, 5, 1, 1, 3]);;   # not even in s
+gap> S := Semigroup([Transformation([2, 4, 3, 5, 5]),
+>                    Transformation([3, 1, 1, 4, 4]),
+>                    Transformation([3, 1, 4, 2, 4]),
+>                    Transformation([3, 4, 2, 3, 4]),
+>                    Transformation([4, 1, 5, 1, 2])]);;
+gap> I := SemigroupIdeal(S, [Transformation([3, 1, 1, 4, 4]),
+>                            Transformation([1, 4, 1, 4, 1])]);;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
+gap> x := Transformation([3, 4, 2, 4]);;      # not in I
+gap> y := Transformation([1, 5, 5, 5, 4]);;   # in I
+gap> z := Transformation([5, 5, 1, 1, 3]);;   # not even in S
 gap> [x, y] in cong;
 false
 gap> [x, x] in cong;
@@ -116,9 +116,9 @@ true
 gap> [x, x] in cong;
 true
 gap> im := ImagesElm(cong, t);;
-gap> Size(im) = Size(i);
+gap> Size(im) = Size(I);
 true
-gap> ForAll(im, x -> x in i);
+gap> ForAll(im, x -> x in I);
 true
 gap> im := ImagesElm(cong, x);;
 gap> Size(im);
@@ -149,21 +149,21 @@ true
 
 #T# ReesCongTest5
 # Join some congruences together
-gap> s := Semigroup([Transformation([1, 1, 3, 1, 3]),
+gap> S := Semigroup([Transformation([1, 1, 3, 1, 3]),
 >                      Transformation([2, 1, 2, 2, 2]),
 >                      Transformation([3, 1, 3, 2, 4])]);;
-gap> i := SemigroupIdeal(s, Transformation([1, 1, 1, 3, 1]));;
-gap> j := SemigroupIdeal(s, Transformation([3, 3, 3, 3, 1]));;
-gap> ci := ReesCongruenceOfSemigroupIdeal(i);;
-gap> cj := ReesCongruenceOfSemigroupIdeal(j);;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]));;
+gap> J := SemigroupIdeal(S, Transformation([3, 3, 3, 3, 1]));;
+gap> ci := ReesCongruenceOfSemigroupIdeal(I);;
+gap> cj := ReesCongruenceOfSemigroupIdeal(J);;
 gap> cc := JoinSemigroupCongruences(ci, cj);;
 gap> NrCongruenceClasses(ci); NrCongruenceClasses(cj); NrCongruenceClasses(cc);
 16
 17
 15
-gap> k := SemigroupIdeal(FullTransformationMonoid(5),
+gap> K := SemigroupIdeal(FullTransformationMonoid(5),
 >                         Transformation([3, 2, 5, 4, 2]));;
-gap> ck := ReesCongruenceOfSemigroupIdeal(k);;
+gap> ck := ReesCongruenceOfSemigroupIdeal(K);;
 gap> JoinSemigroupCongruences(ci, ck);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 the args <c1> and <c2> must be congruences of the same semigroup,
