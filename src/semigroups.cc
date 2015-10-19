@@ -805,11 +805,14 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
     ImportGVarFromLibrary( "ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
     
-    ImportGVarFromLibrary( "IsNaturalMatrix", &IsNaturalMatrix );
-    ImportGVarFromLibrary( "NaturalMatrixType", &NaturalMatrixType );
+    ImportGVarFromLibrary( "IsNTPMatrix", &IsNTPMatrix );
+    ImportGVarFromLibrary( "NTPMatrixType", &NTPMatrixType );
+    
+    ImportGVarFromLibrary( "IsIntegerMatrix", &IsIntegerMatrix );
+    ImportGVarFromLibrary( "IntegerMatrixType", &IntegerMatrixType );
 
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
-    ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
+    ImportGVarFromLibrary( "MatrixOverPrimeFieldType", &MatrixOverPrimeFieldType );
     
     ImportGVarFromLibrary( "IsPBR", &IsPBR);
     ImportGVarFromLibrary( "PBRType", &PBRType );

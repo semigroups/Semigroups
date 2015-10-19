@@ -55,7 +55,8 @@ enum DataType {
   TROP_MAX_PLUS_MAT,
   TROP_MIN_PLUS_MAT,
   PROJ_MAX_PLUS_MAT,
-  NAT_MAT,
+  NTP_MAT,
+  INT_MAT,
   MAT_OVER_PF, 
   PBR_TYPE
 };

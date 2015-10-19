@@ -52,6 +52,8 @@ inline Class* CLASS_OBJ(Obj o) {
  * Macros for checking types of objects
 *******************************************************************************/
 
+//FIXME remove CALL_1ARGS here
+
 #define IS_BOOL_MAT(x)           (CALL_1ARGS(IsBooleanMat, x) == True)
 #define IS_BIPART(x)             (CALL_1ARGS(IsBipartition, x) == True)
 #define IS_MAT_OVER_SEMI_RING(x) (CALL_1ARGS(IsMatrixOverSemiring, x) == True)
@@ -61,7 +63,8 @@ inline Class* CLASS_OBJ(Obj o) {
 #define IS_TROP_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True)
 #define IS_TROP_MIN_PLUS_MAT(x)  (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True)
 #define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
-#define IS_NAT_MAT(x)            (CALL_1ARGS(IsNaturalMatrix, x) == True)
+#define IS_NTP_MAT(x)            (CALL_1ARGS(IsNTPMatrix, x) == True)
+#define IS_INT_MAT(x)            (CALL_1ARGS(IsIntegerMatrix, x) == True)
 #define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
 #define IS_PBR(x)                (CALL_1ARGS(IsPBR, x) == True)
 
@@ -87,10 +90,12 @@ extern Obj IsTropicalMaxPlusMatrix;
 extern Obj TropicalMaxPlusMatrixType;
 extern Obj IsProjectiveMaxPlusMatrix;
 extern Obj ProjectiveMaxPlusMatrixType;
-extern Obj IsNaturalMatrix;
-extern Obj NaturalMatrixType;
+extern Obj IsNTPMatrix;
+extern Obj NTPMatrixType;
+extern Obj IsIntegerMatrix;
+extern Obj IntegerMatrixType;
 extern Obj IsMatrixOverPrimeField;
-extern Obj AsMatrixOverPrimeFieldNC;
+extern Obj MatrixOverPrimeFieldType;
 extern Obj IsPBR;
 extern Obj PBRType;
 

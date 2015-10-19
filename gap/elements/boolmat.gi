@@ -21,15 +21,13 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a boolean matrix",
 [IsBooleanMat], x -> "boolean");
 
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
 "for a boolean matrix",
-[IsBooleanMat], x -> "BooleanMat");
+[IsBooleanMat], x -> IsBooleanMat);
 
-InstallGlobalFunction(BooleanMatNC,
-function(x)
-  MakeImmutable(x);
-  return Objectify(BooleanMatType, x);
-end);
+InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
+"for IsBooleanMat",
+[IsBooleanMat], x -> BooleanMatType);
 
 InstallGlobalFunction(BooleanMat,
 function(mat)
@@ -55,7 +53,7 @@ function(mat)
         od;
         Add(x, blist);
       od;
-      return BooleanMatNC(x);
+      return MatrixNC(BooleanMatType, x);
     elif ForAll(mat, row -> ForAll(row, x -> x = true or x = false)) then
       # blists
       x := ShallowCopy(mat);
@@ -64,7 +62,7 @@ function(mat)
           ConvertToBlistRep(row);
         fi;
       od;
-      return BooleanMatNC(x);
+      return MatrixNC(BooleanMatType, x);
     fi;
   fi;
   # successors
@@ -77,7 +75,7 @@ function(mat)
     fi;
     Add(x, BlistList([1 .. n], mat[i]));
   od;
-  return BooleanMatNC(x);
+  return MatrixNC(BooleanMatType, x);
 end);
 
 InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
@@ -101,7 +99,7 @@ function(x, y)
       od;
     od;
   od;
-  return BooleanMatNC(xy);
+  return MatrixNC(x, xy);
 end);
 
 InstallMethod(OneImmutable, "for a boolean mat",
@@ -114,14 +112,12 @@ function(x)
   for i in [1 .. n] do
     id[i][i] := true;
   od;
-  return BooleanMatNC(id);
+  return MatrixNC(x, id);
 end);
 
-InstallMethod(OneMutable, "for a boolean mat",
-[IsBooleanMat], OneImmutable);
-
-InstallMethod(RandomBooleanMat, "for a pos int", [IsPosInt],
-function(n)
+InstallMethod(RandomMatrixCons, "for boolean matrices and a pos int",
+[IsBooleanMat, IsPosInt],
+function(filter, n)
   local x, i, j;
 
   x := List([1 .. n], x -> BlistList([1 .. n], []));
@@ -131,11 +127,11 @@ function(n)
     od;
   od;
   Perform(x, ConvertToBlistRep);
-  return BooleanMatNC(x);
+  return MatrixNC(BooleanMatType, x);
 end);
 
 #############################################################################
-## Methods for Boolean matrices
+## Special methods for Boolean matrices
 #############################################################################
 
 InstallMethod(\in, "for a boolean mat and boolean mat",
@@ -266,7 +262,7 @@ function(nr, deg)
       nr := (nr - q) / 2;
     od;
   od;
-  return BooleanMatNC(x);
+  return MatrixNC(BooleanMatType, x);
 end);
 
 InstallGlobalFunction(NumberBlist,
@@ -369,7 +365,7 @@ function(x, n)
   for i in [1 .. n] do
     out[i][i ^ x] := true;
   od;
-  return BooleanMatNC(out);
+  return MatrixNC(BooleanMatType, out);
 end);
 
 InstallMethod(AsBooleanMat, "for a perm",
@@ -406,7 +402,7 @@ function(x, n)
       out[i][j] := true;
     fi;
   od;
-  return BooleanMatNC(out);
+  return MatrixNC(BooleanMatType, out);
 end);
 
 # TODO AsBooleanMat for a BooleanMat
@@ -456,7 +452,7 @@ function(set)
   for i in [1 .. n] do
     x[i] := BlistNumber(set[i] - (i - 1) * 2 ^ n, n);
   od;
-  return BooleanMatNC(x);
+  return MatrixNC(BooleanMatType, x);
 end);
 
 InstallMethod(CanonicalBooleanMat, "for boolean mat",
