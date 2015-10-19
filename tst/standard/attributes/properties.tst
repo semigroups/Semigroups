@@ -112,53 +112,53 @@ false
 
 #T# properties: IsBlockGroup, 4/?
 gap> S := Semigroup(
->  TropicalMaxPlusMatrixNC([[0, 1, 1, 2, 0, 3, 0, -infinity],
+>  Matrix(IsTropicalMaxPlusMatrix, [[0, 1, 1, 2, 0, 3, 0, -infinity],
 >      [5, 1, 1, 2, -infinity, -infinity, 0, 2],
 >      [0, 3, -infinity, 1, -infinity, -infinity, 2, 1],
 >      [-infinity, -infinity, -infinity, 0, -infinity, 3, 1, 1],
 >      [1, 2, 1, 2, 1, 1, 2, 1], [1, 2, 5, 2, -infinity, 2, 2, 1],
 >      [1, 0, -infinity, 2, -infinity, 0, 0, 2],
 >      [2, -infinity, 5, 2, 4, 1, 3, 3]], 6),
->  TropicalMaxPlusMatrixNC([[1, 3, 0, 4, -infinity, 2, 1, -infinity],
+>  Matrix(IsTropicalMaxPlusMatrix, [[1, 3, 0, 4, -infinity, 2, 1, -infinity],
 >      [2, 5, 2, 5, -infinity, 0, 1, -infinity],
 >      [2, -infinity, -infinity, 1, 3, 2, 2, 1],
 >      [1, 4, 1, 3, -infinity, 1, 1, 3],
 >      [3, 0, 1, 1, 1, 2, -infinity, -infinity],
 >      [1, 1, -infinity, 1, 2, 0, 1, 2], [3, 0, 1, 1, 1, 1, 1, 2],
 >      [0, -infinity, 0, 3, 1, 1, 2, 1]], 6),
->  TropicalMaxPlusMatrixNC([[1, 4, -infinity, 2, 1, 3, 2, 1],
+>  Matrix(IsTropicalMaxPlusMatrix, [[1, 4, -infinity, 2, 1, 3, 2, 1],
 >      [-infinity, 1, 2, 0, 1, 1, 2, 1],
 >      [1, 2, 0, -infinity, 0, 1, -infinity, -infinity],
 >      [-infinity, 3, 1, -infinity, 2, 0, 2, 1],
 >      [1, -infinity, 2, 2, -infinity, 5, 2, 0],
 >      [-infinity, 0, -infinity, 0, -infinity, 1, 1, -infinity],
 >      [-infinity, 1, 0, 1, 3, 2, 1, 1], [3, 2, -infinity, 0, 2, 2, 2, 1]], 6),
->  TropicalMaxPlusMatrixNC([[2, 3, 3, 0, -infinity, 1, 1, 2],
+>  Matrix(IsTropicalMaxPlusMatrix, [[2, 3, 3, 0, -infinity, 1, 1, 2],
 >      [-infinity, 2, 0, -infinity, -infinity, 0, -infinity, -infinity],
 >      [3, 0, 4, -infinity, -infinity, -infinity, -infinity, 6],
 >      [1, 0, 0, -infinity, 0, 2, 1, 3], [2, 3, 5, 2, 3, 0, -infinity, 0],
 >      [0, -infinity, 2, -infinity, 0, 1, 2, -infinity],
 >      [0, 0, 1, 0, -infinity, 2, 2, 4], [0, 3, 1, -infinity, 3, 1, 1, 1]], 6),
->  TropicalMaxPlusMatrixNC([[3, -infinity, -infinity, 1, 3, 1, 2, 1],
+>  Matrix(IsTropicalMaxPlusMatrix, [[3, -infinity, -infinity, 1, 3, 1, 2, 1],
 >      [4, 1, 1, 2, -infinity, 3, 1, 5], [2, 3, 1, 2, 3, 2, 1, 1],
 >      [2, 2, -infinity, 3, 3, 3, 1, 0], [-infinity, 2, 1, 1, 2, 1, 1, 0],
 >      [2, 1, -infinity, 2, 2, 1, 1, -infinity],
 >      [1, 3, 2, 0, -infinity, 2, 4, 1],
 >      [1, 2, -infinity, 1, -infinity, -infinity, -infinity, -infinity]], 6),
->  TropicalMaxPlusMatrixNC([[3, 0, 1, 1, 0, 0, 2, 3],
+>  Matrix(IsTropicalMaxPlusMatrix, [[3, 0, 1, 1, 0, 0, 2, 3],
 >      [4, 1, 0, 0, 3, 1, 2, 2], [2, -infinity, 0, 2, -infinity, 1, 2, 3],
 >      [3, 0, 2, 1, -infinity, -infinity, 3, -infinity],
 >      [2, 0, -infinity, 1, -infinity, 3, -infinity, -infinity],
 >      [3, 1, 2, 2, 1, -infinity, 1, 0], [2, 3, -infinity, 1, 3, 1, 2, 0],
 >      [2, 2, 1, 0, 3, 1, 1, 1]], 6),
->  TropicalMaxPlusMatrixNC([[3, 0, 2, -infinity, 0, 2, 0, -infinity],
+>  Matrix(IsTropicalMaxPlusMatrix, [[3, 0, 2, -infinity, 0, 2, 0, -infinity],
 >      [2, 4, 0, 1, -infinity, 1, 2, 1],
 >      [-infinity, 3, 0, 3, -infinity, 3, -infinity, 2],
 >      [4, -infinity, 2, -infinity, -infinity, 1, 1, 3],
 >      [-infinity, 3, 0, 6, 2, 0, 0, 1], [-infinity, 2, 2, 1, 2, 0, 0, 0],
 >      [5, 3, 2, 0, -infinity, 0, 5, 1],
 >      [-infinity, 1, 4, 4, 2, -infinity, 4, 3]], 6),
->  TropicalMaxPlusMatrixNC([[3, 3, 1, 0, 2, 4, 1, -infinity],
+>  Matrix(IsTropicalMaxPlusMatrix, [[3, 3, 1, 0, 2, 4, 1, -infinity],
 >      [3, 0, 0, 0, 0, 5, -infinity, 2],
 >      [-infinity, -infinity, 1, 4, 4, 4, 1, 2], [0, 1, 1, 0, 1, 2, 0, 0],
 >      [3, 0, 1, 5, -infinity, 0, 1, 2],
@@ -374,8 +374,8 @@ Error, no 3rd choice method found for `IsCompletelyRegularSemigroup' on 1 argu\
 ments
 
 #T# properties: IsCompletelySimpleSemigroup, 1
-gap> S := Semigroup(MaxPlusMatrixNC([[0, -4], [-4, -1]]),
->                   MaxPlusMatrixNC([[0, -3], [-3, -1]]));
+gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, -4], [-4, -1]]),
+>                   Matrix(IsMaxPlusMatrix, [[0, -3], [-3, -1]]));
 <semigroup of 2x2 max-plus matrices with 2 generators>
 gap> IsCompletelySimpleSemigroup(S);
 false
@@ -419,8 +419,8 @@ gap> IsFactorisableInverseMonoid(T);
 true
 
 #T# properties: IsFactorisableInverseMonoid, 2
-gap> S := InverseSemigroup([PartialPerm([1, 2], [3, 1]),
->  PartialPerm([1, 2, 3], [1, 3, 4])]);;
+gap> S := InverseSemigroup(PartialPerm([1, 2], [3, 1]),
+>                          PartialPerm([1, 2, 3], [1, 3, 4]));;
 gap> IsFactorisableInverseMonoid(S);
 false
 gap> S := InverseMonoid(S);;
@@ -435,8 +435,10 @@ Error, no 3rd choice method found for `IsFactorisableInverseMonoid' on 1 argum\
 ents
 
 #T# properties: IsXTrivial, non-acting, 1
-gap> S := Semigroup([TropicalMaxPlusMatrixNC([[-infinity, -infinity], [4,
-> 0]], 8), TropicalMaxPlusMatrixNC([[3, 1], [-infinity, 0]], 8)]);
+gap> S := Semigroup(
+> Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity], 
+>                                  [4, 0]], 8), 
+> Matrix(IsTropicalMaxPlusMatrix, [[3, 1], [-infinity, 0]], 8));
 <semigroup of 2x2 tropical max-plus matrices with 2 generators>
 gap> IsHTrivial(S);
 true
@@ -444,7 +446,8 @@ gap> IsLTrivial(S);
 false
 gap> IsRTrivial(S);
 true
-gap> I := SemigroupIdeal(S, TropicalMaxPlusMatrixNC([[8, 8], [7, 5]], 8));
+gap> I := SemigroupIdeal(S, 
+> Matrix(IsTropicalMaxPlusMatrix, [[8, 8], [7, 5]], 8));
 <semigroup ideal of 2x2 tropical max-plus matrices with 1 generator>
 gap> IsHTrivial(I);
 true
@@ -546,18 +549,16 @@ false
 
 #T# properties: IsXTrivial, D-class, 6
 gap> S := Semigroup(
-> [MatrixOverPrimeFieldNC([[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]],
->     GF(5)),
->   MatrixOverPrimeFieldNC([[Z(5) ^ 0, Z(5)], [Z(5), Z(5) ^ 3]], GF(5)),
->   MatrixOverPrimeFieldNC([[Z(5) ^ 0, Z(5) ^ 3], [0 * Z(5), 0 * Z(5)]],
->     GF(5)),
->   MatrixOverPrimeFieldNC([[Z(5), Z(5) ^ 0], [0 * Z(5), Z(5) ^ 3]], GF(5)),
->   MatrixOverPrimeFieldNC([[Z(5), Z(5) ^ 0], [Z(5) ^ 0, Z(5)]], GF(5)),
->   MatrixOverPrimeFieldNC([[Z(5) ^ 2, 0 * Z(5)], [Z(5), 0 * Z(5)]], GF(5)),
->   MatrixOverPrimeFieldNC([[Z(5) ^ 2, Z(5)], [0 * Z(5), 0 * Z(5)]], GF(5))]);;
+> [Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]),
+>  Matrix(GF(5), [[Z(5) ^ 0, Z(5)], [Z(5), Z(5) ^ 3]]),
+>  Matrix(GF(5), [[Z(5) ^ 0, Z(5) ^ 3], [0 * Z(5), 0 * Z(5)]]),
+>  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [0 * Z(5), Z(5) ^ 3]]),
+>  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [Z(5) ^ 0, Z(5)]]),
+>  Matrix(GF(5), [[Z(5) ^ 2, 0 * Z(5)], [Z(5), 0 * Z(5)]]),
+>  Matrix(GF(5), [[Z(5) ^ 2, Z(5)], [0 * Z(5), 0 * Z(5)]])]);;
 gap> D := GreensDClassOfElement(S,
-> MatrixOverPrimeFieldNC([[Z(5) ^ 3, Z(5) ^ 2], [Z(5) ^ 3, Z(5)]], GF(5)));
-<Green's D-class: <2x2 prime field matrix>>
+> Matrix(GF(5), [[Z(5) ^ 3, Z(5) ^ 2], [Z(5) ^ 3, Z(5)]]));
+<Green's D-class: Matrix(GF(5), [[Z(5)^3, Z(5)^2], [Z(5)^3, Z(5)]])>
 gap> IsHTrivial(D);
 false
 gap> IsLTrivial(D);
@@ -739,12 +740,12 @@ gap> IsLeftSimple(S);
 true
 
 #T# properties: IsLeftSimple, known L-classes, 3
-gap> S := Monoid([MatrixOverPrimeFieldNC([[0 * Z(11)]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11)]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 4]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 5]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 8]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 9]], GF(11))]);
+gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
+>  Matrix(GF(11), [[Z(11)]]),
+>  Matrix(GF(11), [[Z(11) ^ 4]]),
+>  Matrix(GF(11), [[Z(11) ^ 5]]),
+>  Matrix(GF(11), [[Z(11) ^ 8]]),
+>  Matrix(GF(11), [[Z(11) ^ 9]])]);
 <monoid of 1x1 prime field matrices with 6 generators>
 gap> NrLClasses(S);
 2
@@ -1140,12 +1141,12 @@ gap> IsRightSimple(S);
 true
 
 #T# properties: IsRightSimple, known L-classes, 3
-gap> S := Monoid([MatrixOverPrimeFieldNC([[0 * Z(11)]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11)]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 4]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 5]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 8]], GF(11)),
->  MatrixOverPrimeFieldNC([[Z(11) ^ 9]], GF(11))]);
+gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
+>  Matrix(GF(11), [[Z(11)]]),
+>  Matrix(GF(11), [[Z(11) ^ 4]]),
+>  Matrix(GF(11), [[Z(11) ^ 5]]),
+>  Matrix(GF(11), [[Z(11) ^ 8]]),
+>  Matrix(GF(11), [[Z(11) ^ 9]])]);
 <monoid of 1x1 prime field matrices with 6 generators>
 gap> NrRClasses(S);
 2

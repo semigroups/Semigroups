@@ -586,7 +586,8 @@ gap> NaturalPartialOrder(AsTransformationSemigroup(S));
 
 #T# attributes-inverse: NaturalPartialOrder (for a semigroup), error, 1/2
 gap> S := Semigroup(
-> [TropicalMinPlusMatrixNC([[infinity, 0, infinity, 1, 1, infinity, 3, 2, 3],
+> [Matrix(IsTropicalMinPlusMatrix, 
+>     [[infinity, 0, infinity, 1, 1, infinity, 3, 2, 3],
 >      [3, 1, 1, infinity, 1, 1, 1, 1, 1], [0, 3, 0, 1, 1, 3, 0, infinity, 1],
 >      [0, 0, 1, infinity, infinity, 3, 3, 2, 1], [1, 1, 0, 3, 0, 3, 0, 0, 3],
 >      [0, 2, 3, 1, 0, 0, infinity, 3, infinity],

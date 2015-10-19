@@ -942,15 +942,38 @@ BindGlobal("SEMIGROUPS_Types",
             IsPartialPermSemigroup, IsBooleanMatSemigroup,
             IsMaxPlusMatrixSemigroup, IsMinPlusMatrixSemigroup,
             IsTropicalMaxPlusMatrixSemigroup, IsTropicalMinPlusMatrixSemigroup,
-            IsProjectiveMaxPlusMatrixSemigroup, IsNaturalMatrixSemigroup,
-            IsMatrixOverPrimeFieldSemigroup, IsBlockBijectionSemigroup]);
+            IsProjectiveMaxPlusMatrixSemigroup, IsNTPMatrixSemigroup,
+            IsMatrixOverPrimeFieldSemigroup, IsBlockBijectionSemigroup,
+            IsIntegerMatrixSemigroup]);
 
 BindGlobal("SEMIGROUPS_RandomElementCons",
 function(filt)
+  local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
+  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix, RandomMatrixOverPrimeField;
 
   if not filt in SEMIGROUPS_Types then
     ErrorMayQuit("Semigroups: SEMIGROUPS_RandomElementCons: usage,\n");
   fi;
+
+  RandomTropicalMaxPlusMatrix := function(dim, threshold)
+    return RandomMatrix(IsTropicalMaxPlusMatrix, dim, threshold);
+  end;
+
+  RandomTropicalMinPlusMatrix := function(dim, threshold)
+    return RandomMatrix(IsTropicalMinPlusMatrix, dim, threshold);
+  end;
+
+  RandomProjectiveMaxPlusMatrix := function(dim, threshold)
+    return RandomMatrix(IsProjectiveMaxPlusMatrix, dim, threshold);
+  end;
+
+  RandomNTPMatrix := function(dim, threshold, period)
+    return RandomMatrix(IsNTPMatrix, dim, threshold, period);
+  end;
+
+  RandomMatrixOverPrimeField := function(dim, field)
+    return RandomMatrix(field, dim);
+  end;
 
   if filt = IsTransformationSemigroup then
     return [RandomTransformation, 1, AsTransformationSemigroup];
@@ -961,14 +984,14 @@ function(filt)
   elif filt = IsBlockBijectionSemigroup then
     return [RandomBlockBijection, 1, AsBlockBijectionSemigroup];
   elif filt = IsBooleanMatSemigroup then
-    return [RandomBooleanMat, 1, AsBooleanMatSemigroup];
+    return [x -> RandomMatrix(IsBooleanMat, x), 1, AsBooleanMatSemigroup];
   elif filt = IsPBRSemigroup then
     return [RandomPBR, 1, AsPBRSemigroup];
   elif filt = IsMaxPlusMatrixSemigroup then
-    return [RandomMaxPlusMatrix, 1, IdFunc];
+    return [x -> RandomMatrix(IsMaxPlusMatrix, x), 1, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
   elif filt = IsMinPlusMatrixSemigroup then
-    return [RandomMinPlusMatrix, 1, IdFunc];
+    return [x -> RandomMatrix(IsMinPlusMatrix, x), 1, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
   elif filt = IsTropicalMaxPlusMatrixSemigroup then
     return [RandomTropicalMaxPlusMatrix, 2, IdFunc];
@@ -977,13 +1000,16 @@ function(filt)
     return [RandomTropicalMinPlusMatrix, 2, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
   elif filt = IsProjectiveMaxPlusMatrixSemigroup then
-    return [RandomProjectiveMaxPlusMatrix, 1, IdFunc];
+    return [RandomProjectiveMaxPlusMatrix, 2, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsNaturalMatrixSemigroup then
-    return [RandomNaturalMatrix, 3, IdFunc];
+  elif filt = IsNTPMatrixSemigroup then
+    return [RandomNTPMatrix, 3, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
   elif filt = IsMatrixOverPrimeFieldSemigroup then
     return [RandomMatrixOverPrimeField, 2, IdFunc];
+    #TODO define the canonical embedding from T_n to here!
+  elif filt = IsIntegerMatrixSemigroup then
+    return [x -> RandomMatrix(IsIntegerMatrix, x), 1, IdFunc];
     #TODO define the canonical embedding from T_n to here!
   fi;
 end);

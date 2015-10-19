@@ -533,7 +533,8 @@ gap> SmallSemigroupGeneratingSet([
 #T# attributes: SmallSemigroupGeneratingSet: for a collection with 1 elements
 gap> SmallSemigroupGeneratingSet([BooleanMat([[0, 1, 0, 0], [0, 1, 1, 0], [0,
 > 1, 0, 0], [1, 0, 1, 1]])]);
-[ <4x4 boolean matrix> ]
+[ Matrix(IsBooleanMat, [[0, 1, 0, 0], [0, 1, 1, 0], [0, 1, 0, 0], 
+      [1, 0, 1, 1]]) ]
 
 #T# attributes: SmallSemigroupGeneratingSet: for a semigroup
 gap> S := Semigroup([PartialPerm([1, 2], [3, 2]),
@@ -659,7 +660,7 @@ Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage,
 the argument must satisfy IsGeneratorsOfInverseSemigroup
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
-gap> SmallInverseMonoidGeneratingSet([RandomBooleanMat(10)]);
+gap> SmallInverseMonoidGeneratingSet([RandomMatrix(IsBooleanMat, 10)]);
 Error, Semigroups: SmallInverseMonoidGeneratingSet: usage,
 the argument must satisfy IsGeneratorsOfInverseSemigroup
 
@@ -675,7 +676,7 @@ gap> S := SemigroupIdeal(Semigroup(
 >     BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 0]])),
 >     BooleanMat([[1, 0, 0], [0, 0, 0], [1, 1, 0]]));;
 gap> SmallGeneratingSet(S);
-[ <3x3 boolean matrix> ]
+[ Matrix(IsBooleanMat, [[1, 0, 0], [0, 0, 0], [1, 1, 0]]) ]
 
 #T# attributes: SmallGeneratingSet: for a group
 gap> S := Group(IdentityTransformation);
@@ -745,7 +746,7 @@ true
 gap> foo(y, x);
 false
 gap> z := RepresentativeOfMinimalIdeal(S);
-<3x3 boolean matrix>
+Matrix(IsBooleanMat, [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
 gap> foo(x, z);
 true
 gap> foo(z, x);
@@ -764,7 +765,7 @@ Error, no 3rd choice method found for `IsGreensDLeq' on 1 arguments
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> MaximalDClasses(S);
-[ <Green's D-class: <3x3 boolean matrix>> ]
+[ <Green's D-class: Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])> ]
 
 #T# attributes: StructureDescriptionMaximalSubgroups
 gap> S := RegularBooleanMatMonoid(3);;
@@ -791,9 +792,9 @@ gap> S := Monoid([BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
 >   BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 0]])]);;
 gap> D := DClass(S, BooleanMat([[1, 0, 1], [1, 1, 1], [1, 0, 1]]));;
 gap> map := InjectionPrincipalFactor(D);
-MappingByFunction( <Green's D-class: <3x3 boolean matrix>>, 
-<Rees 0-matrix semigroup 12x12 over Group(())>
- , function( x ) ... end, function( x ) ... end )
+MappingByFunction( <Green's D-class: Matrix(IsBooleanMat, 
+  [[1, 0, 1], [1, 1, 1], [1, 0, 1]])>, <Rees 0-matrix semigroup 12x12 over 
+  Group(())>, function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(map);;
 gap> ForAll(D, x -> (x ^ map) ^ inv = x);
 true
@@ -803,7 +804,7 @@ gap> x := BooleanMat([[0, 0, 0], [1, 1, 0], [0, 0, 0]]);;
 gap> x ^ map;
 fail
 gap> D := First(DClasses(S), x -> not IsRegularClass(x));
-<Green's D-class: <3x3 boolean matrix>>
+<Green's D-class: Matrix(IsBooleanMat, [[1, 0, 1], [1, 1, 0], [0, 0, 1]])>
 gap> InjectionPrincipalFactor(D);
 Error, Semigroups: InjectionPrincipalFactor: usage,
 the argument <D> must be a regular D-class,
@@ -821,7 +822,7 @@ gap> Display(MultiplicativeNeutralElement(S));
 gap> S := RegularBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 4 generators>
 gap> MultiplicativeNeutralElement(S);
-<2x2 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0], [0, 1]])
 
 #T# attributes: IsomorphismPermGroup
 gap> S := RegularBooleanMatMonoid(2);
@@ -963,7 +964,7 @@ gap> S := Semigroup(AsBooleanMat((1, 2)));
 gap> IsSimpleSemigroup(S);
 true
 gap> RepresentativeOfMinimalIdeal(S);
-<2x2 boolean matrix>
+Matrix(IsBooleanMat, [[0, 1], [1, 0]])
 
 #T# attributes: IsomorphismPermGroup, infinite 1/1
 gap> IsomorphismPermGroup(FreeMonoid(3));

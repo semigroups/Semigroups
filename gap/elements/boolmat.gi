@@ -21,9 +21,9 @@ InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a boolean matrix",
 [IsBooleanMat], x -> "boolean");
 
-InstallMethod(SEMIGROUPS_TypePrintStringOfMatrixOverSemiring,
+InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
 "for a boolean matrix",
-[IsBooleanMat], x -> "BooleanMat");
+[IsBooleanMat], x -> IsBooleanMat);
 
 InstallGlobalFunction(BooleanMatNC,
 function(x)
@@ -120,8 +120,9 @@ end);
 InstallMethod(OneMutable, "for a boolean mat",
 [IsBooleanMat], OneImmutable);
 
-InstallMethod(RandomBooleanMat, "for a pos int", [IsPosInt],
-function(n)
+InstallMethod(RandomMatrixCons, "for boolean matrices and a pos int",
+[IsBooleanMat, IsPosInt],
+function(filter, n)
   local x, i, j;
 
   x := List([1 .. n], x -> BlistList([1 .. n], []));

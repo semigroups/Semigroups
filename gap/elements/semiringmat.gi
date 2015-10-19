@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  semiring-matrix.gi
+#W  semiringmat.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -17,13 +17,199 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+InstallMethod(MatrixNC, "for a type and homogeneous list",
+[IsType, IsList],
+function(type, mat)
+  MakeImmutable(mat);
+  return Objectify(type, mat);
+end);
+
+InstallMethod(MatrixNC, "for a filter and homogeneous list",
+[IsOperation and IsFunction, IsList],
+function(filter, mat)
+  return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat);
+end);
+
+InstallMethod(MatrixNC, "for a filter, homogeneous list, function",
+[IsOperation and IsFunction, IsList, IsFunction],
+function(filter, mat, preproc)
+  return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter),
+                  preproc(mat));
+end);
+
+InstallMethod(MatrixNC, "for a matrix over semiring and homogeneous list",
+[IsMatrixOverSemiring, IsList and IsMutable],
+function(sample, mat)
+  local n, filter;
+
+  # transfer whatever comes after the rows of the matrix, i.e. threshold,
+  # period etc.
+  n := Length(sample![1]) + 1;
+  while IsBound(sample![n]) do
+    mat[n] := sample![n];
+    n := n + 1;
+  od;
+
+  # Cannot use TypeObj(sample) since it can contain information about
+  # properties satisfied (or not) by x.
+  filter := SEMIGROUPS_FilterOfMatrixOverSemiring(sample);
+  return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat);
+end);
+
+InstallMethod(Matrix,
+"for a filter, homogeneous list, pos int, and pos int",
+[IsOperation and IsFunction, IsHomogeneousList, IsPosInt, IsPosInt],
+function(filter, mat, threshold, period)
+  local checker, row;
+
+  if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
+    ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                 "the 1st argument must be a square table,");
+  fi;
+
+  if filter <> IsNTPMatrix then
+    ErrorMayQuit("Semigroups: Matrix:\n",
+                 "cannot create a matrix from the given ",
+                 "arguments,");
+  fi;
+
+  checker := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter,
+                                                           threshold,
+                                                           period);
+  for row in mat do
+    if not ForAll(row, checker) then
+      ErrorMayQuit("Semigroups: Matrix: usage,\n",
+      "the entries in the 2nd argument do not define a matrix ",
+      "of type ", NameFunction(filter), ",");
+    fi;
+  od;
+
+  return MatrixNC(filter,
+                  List(mat, ShallowCopy),
+                  x -> SEMIGROUPS_NaturalizeMat(x, threshold, period));
+end);
+
+InstallMethod(Matrix,
+"for a filter, homogeneous list, and pos int",
+[IsOperation and IsFunction, IsHomogeneousList, IsPosInt],
+function(filter, mat, threshold)
+  local checker, row;
+
+  if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
+    ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                 "the 1st argument must be a square table,");
+  fi;
+
+  if filter <> IsTropicalMaxPlusMatrix
+      and filter <> IsTropicalMinPlusMatrix then
+    ErrorMayQuit("Semigroups: Matrix:\n",
+                 "cannot create a matrix from the given ",
+                 "arguments,");
+  fi;
+
+  checker := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter,
+                                                           threshold);
+  for row in mat do
+    if not ForAll(row, checker) then
+      ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                   "the entries in the 2nd argument do not define a matrix ",
+                   "of type ", NameFunction(filter), ",");
+    fi;
+  od;
+
+  return MatrixNC(filter,
+                  List(mat, ShallowCopy),
+                  x -> SEMIGROUPS_TropicalizeMat(x, threshold));
+end);
+
+InstallMethod(Matrix, "for a filter and homogeneous list",
+[IsFunction and IsOperation, IsHomogeneousList],
+function(filter, mat)
+  local checker, row;
+
+  if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
+    ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                 "the 1st argument must be a square table,");
+  fi;
+
+  if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
+                    IsProjectiveMaxPlusMatrix] then
+    ErrorMayQuit("Semigroups: Matrix:\n",
+                 "cannot create a matrix from the given ",
+                 "arguments,");
+  fi;
+
+  for row in mat do
+    if not ForAll(row, SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter)) then
+      ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                   "the entries in the 2nd argument do not define a matrix ",
+                   "of type ", NameFunction(filter), ",");
+    fi;
+  od;
+
+  return MatrixNC(filter, List(mat, ShallowCopy));
+end);
+
+InstallMethod(Matrix, "for a semiring and homogeneous list",
+[IsSemiring, IsHomogeneousList],
+function(semiring, mat)
+  local row;
+
+  if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
+    ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                 "the 1st argument must be a square table,");
+  fi;
+
+  if not IsPrimeField(semiring) then
+    ErrorMayQuit("Semigroups: Matrix:\n",
+                 "cannot create a matrix from the given ",
+                 "arguments,");
+  fi;
+
+  for row in mat do
+    if not ForAll(row, x -> IsFFE(x) and x in semiring) then
+      ErrorMayQuit("Semigroups: Matrix:\n",
+                   "cannot create a matrix from the given ",
+                   "arguments,");
+    fi;
+  od;
+  mat := List(mat, ShallowCopy);
+  Add(mat, Size(semiring));
+  return MatrixNC(MatrixOverPrimeFieldType, mat);
+end);
+
+InstallGlobalFunction(RandomMatrix,
+function(arg)
+  if Length(arg) >= 2 and IsOperation(arg[1]) and IsFunction(arg[1])
+      and IsPosInt(arg[2]) then
+    if Length(arg) = 2 then
+      return RandomMatrixCons(arg[1], arg[2]);
+    elif Length(arg) >= 3 and IsPosInt(arg[3]) then
+      if Length(arg) = 3 then
+        return RandomMatrixCons(arg[1], arg[2], arg[3]);
+      elif Length(arg) = 4 and IsPosInt(arg[4]) then
+        return RandomMatrixCons(arg[1], arg[2], arg[3], arg[4]);
+      fi;
+    fi;
+  elif Length(arg) = 2 and IsSemiring(arg[1]) and IsPosInt(arg[2]) then
+    return RandomMatrixCons(arg[1], arg[2]);
+  elif Length(arg) = 2 and IsPosInt(arg[1]) and IsPrimeInt(arg[1])
+    and IsPosInt(arg[2]) then
+    return RandomMatrixCons(GF(arg[1]), arg[2]);
+  fi;
+
+  ErrorMayQuit("Semigroups: RandomMatrix: usage,\n",
+               "the arguments must be: filter, pos int[, pos int[,",
+               " pos int]],");
+end);
+
 InstallMethod(TransposedMat, "for a matrix over semiring",
 [IsMatrixOverSemiring],
 function(x)
   local n, y, i, j;
 
   n := Length(x![1]);
-  y := EmptyPlist(2 * n);
+  y := EmptyPlist(n + 2);
   for i in [1 .. n] do
     y[i] := [];
     for j in [1 .. n] do
@@ -31,34 +217,11 @@ function(x)
     od;
   od;
 
-  if IsBound(x![n + 1]) then
-    y[n + 1] := x![n + 1];
-    if IsBound(x![n + 2]) then
-      y[n + 2] := x![n + 2];
-    fi;
-  fi;
-
-  # This is necessary because TypeObj(x) can contain information about
-  # properties satisfied (or not) by x.
-
-  if IsBooleanMat(x) then
-    return BooleanMatNC(y);
-  elif IsMaxPlusMatrix(x) then
-    return MaxPlusMatrixNC(y);
-  elif IsMinPlusMatrix(x) then
-    return MinPlusMatrixNC(y);
-  elif IsTropicalMaxPlusMatrix(x) then
-    return TropicalMaxPlusMatrixNC(y);
-  elif IsTropicalMinPlusMatrix(x) then
-    return TropicalMinPlusMatrixNC(y);
-  elif IsNaturalMatrix(x) then
-    return NaturalMatrixNC(y);
-  elif IsProjectiveMaxPlusMatrix(x) then
-    return ProjectiveMaxPlusMatrixNC(y);
-  fi;
-
-  ErrorMayQuit("this shouldn't happen!");
+  return MatrixNC(x, y);
 end);
+
+InstallMethod(OneMutable, "for a matrix over semiring",
+[IsMatrixOverSemiring], OneImmutable);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
@@ -127,6 +290,9 @@ end);
 InstallMethod(ViewString, "for a matrix over semiring", [IsMatrixOverSemiring],
 function(x)
   local str;
+  if DimensionOfMatrixOverSemiring(x) < 9 then
+    return PrintString(x);
+  fi;
   str := "<";
   Append(str, String(DimensionOfMatrixOverSemiring(x)));
   Append(str, "x");
@@ -161,10 +327,13 @@ function(x)
   local n, str, i, j;
 
   n := DimensionOfMatrixOverSemiring(x);
-  str := Concatenation("\>",
-                       SEMIGROUPS_TypePrintStringOfMatrixOverSemiring(x),
-                       "(\>[");
-
+  str := "\>\>Matrix(\<\>";
+  if IsMatrixOverPrimeField(x) then
+    Append(str, String(BaseField(x)));
+  else
+    Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
+  fi;
+  Append(str, "\<, \>[");
   for i in [1 .. n] do
     Append(str, "\>\>[");
     for j in [1 .. n] do
@@ -190,20 +359,17 @@ function(x)
   od;
   Append(str, "\<\<]");
 
-  if IsNaturalMatrix(x) then
-    Append(str, "\>");
-    Append(str, PrintString(ThresholdNaturalMatrix(x)));
+  #TODO remove this from here make it a SEMIGROUPS_ function
+  if IsNTPMatrix(x) then
+    Append(str, ", \>");
+    Append(str, PrintString(ThresholdNTPMatrix(x)));
     Append(str, "\<");
     Append(str, ", \>");
-    Append(str, PrintString(PeriodNaturalMatrix(x)));
+    Append(str, PrintString(PeriodNTPMatrix(x)));
     Append(str, "\<");
   elif IsTropicalMatrix(x) then
     Append(str, ", \>");
     Append(str, PrintString(ThresholdTropicalMatrix(x)));
-    Append(str, "\<");
-  elif IsMatrixOverPrimeField(x) then
-    Append(str, ", \>");
-    Append(str, String(BaseField(x)));
     Append(str, "\<");
   fi;
   Append(str, "\<)\<");
@@ -249,27 +415,6 @@ function(x, y)
     fi;
   od;
   return false;
-end);
-
-#
-
-InstallMethod(SEMIGROUPS_RandomMatrixOverSemiring,
-"for a pos int, object, object",
-[IsPosInt, IsObject, IsObject],
-function(n, source, constructor)
-  local out, i, j;
-  out := List([1 .. n], x -> EmptyPlist(n));
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      out[i][j] := Random(Integers);
-      if out[i][j] = 0 and source <> false then
-        out[i][j] := source;
-      elif out[i][j] < 0 then
-        out[i][j] := out[i][j] + 1;
-      fi;
-    od;
-  od;
-  return constructor(out);
 end);
 
 InstallMethod(ChooseHashFunction, "for a matrix over semiring",
