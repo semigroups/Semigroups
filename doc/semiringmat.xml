@@ -58,7 +58,8 @@
       <Example><![CDATA[
 gap> x := BooleanMat([[1, 0, 0, 1], [0, 1, 1, 0], 
 >                     [1, 0, 1, 1], [0, 0, 0, 1]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], 
+  [0, 0, 0, 1]])
 gap> DimensionOfMatrixOverSemiring(x);
 4]]></Example>
     </Description>

@@ -549,7 +549,7 @@ function(arg)
   GASMAN("collect");
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples",
+  Print("NOT Testing manual examples",
         " with acting methods \033[35mDISABLED\033[0m",
         " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
