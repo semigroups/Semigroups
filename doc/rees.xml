@@ -13,10 +13,10 @@
     <Attr Name="SemigroupIdealOfReesCongruence" Arg="cong"/>
     <Returns>A semigroup ideal.</Returns>
     <Description>
-      If <A>cong</A> is a rees congruence (see <Ref Filt="IsReesCongruence"/>)
-      then this attribute returns the two-sided ideal that was used to define
-      it, i.e.~the ideal of elements in the only non-trivial congruence class of
-      <A>cong</A>.
+      If <A>cong</A> is a rees congruence (see <Ref Prop="IsReesCongruence"
+      BookName="ref"/>) then this attribute returns the two-sided ideal that was
+      used to define it, i.e.~the ideal of elements in the only non-trivial
+      congruence class of <A>cong</A>.
 
       <Example><![CDATA[
 gap> S := Semigroup([
@@ -40,10 +40,11 @@ gap> SemigroupIdealOfReesCongruence(cong);
     <Description>
       This category describes a congruence class of a Rees congruence.  A
       congruence class of a Rees congruence either contains all the elements of
-      an ideal, or is a singleton (see <Ref Filt="IsReesCongruence"/>). <P/>
+      an ideal, or is a singleton (see <Ref Prop="IsReesCongruence"
+      BookName="ref"/>). <P/>
 
-      An object of this type may be used in the same way as any other object in
-      the category <Ref Prop="IsCongruenceClass" BookName="ref"/>.
+      An object of this type may be used in the same way as any other congruence
+      class object.
 
       <Example><![CDATA[
 gap> S := Semigroup([
