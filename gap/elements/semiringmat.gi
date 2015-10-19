@@ -139,6 +139,10 @@ function(filter, mat)
                  "arguments,");
   fi;
 
+  if filter = IsBooleanMat then
+    return BooleanMat(mat);
+  fi;
+
   for row in mat do
     if not ForAll(row, SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter)) then
       ErrorMayQuit("Semigroups: Matrix: usage,\n",
@@ -192,10 +196,10 @@ function(arg)
       fi;
     fi;
   elif Length(arg) = 2 and IsSemiring(arg[1]) and IsPosInt(arg[2]) then
-    return RandomMatrixCons(arg[1], arg[2]);
+    return RandomMatrixOp(arg[1], arg[2]);
   elif Length(arg) = 2 and IsPosInt(arg[1]) and IsPrimeInt(arg[1])
     and IsPosInt(arg[2]) then
-    return RandomMatrixCons(GF(arg[1]), arg[2]);
+    return RandomMatrixOp(GF(arg[1]), arg[2]);
   fi;
 
   ErrorMayQuit("Semigroups: RandomMatrix: usage,\n",

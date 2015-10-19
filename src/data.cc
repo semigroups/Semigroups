@@ -154,7 +154,8 @@ void data_init_converter (Obj data) {
 
     }
     case MAT_OVER_PF:{
-      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)));
+      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)), 
+                                                    MatrixOverPrimeFieldType);
       break;
     }
     case PBR_TYPE:{

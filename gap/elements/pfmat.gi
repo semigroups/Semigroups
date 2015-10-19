@@ -62,7 +62,7 @@ function(x)
   return MatrixNC(x, id);
 end);
 
-InstallMethod(RandomMatrixCons, "for a prime field and pos int",
+InstallMethod(RandomMatrixOp, "for a prime field and pos int",
 [IsPrimeField, IsPosInt],
 function(field, n)
   local xy, i, j;
@@ -74,7 +74,7 @@ function(field, n)
       xy[i][j] := Random(field);
     od;
   od;
-  return Matrix(field, xy);
+  return MatrixNC(IsMatrixOverPrimeField, xy);
 end);
 
 # special methods

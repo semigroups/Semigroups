@@ -812,7 +812,7 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "IntegerMatrixType", &IntegerMatrixType );
 
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
-    ImportGVarFromLibrary( "AsMatrixOverPrimeFieldNC", &AsMatrixOverPrimeFieldNC );
+    ImportGVarFromLibrary( "MatrixOverPrimeFieldType", &MatrixOverPrimeFieldType );
     
     ImportGVarFromLibrary( "IsPBR", &IsPBR);
     ImportGVarFromLibrary( "PBRType", &PBRType );

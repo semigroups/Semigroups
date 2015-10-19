@@ -522,3 +522,9 @@ InstallMethod(RandomMatrixCons, "for IsIntegerMatrix and pos int",
 function(filter, dim)
   return MatrixNC(filter, SEMIGROUPS_RandomIntegerMatrix(dim, false));
 end);
+
+InstallMethod(RandomMatrixOp, "for Integers and pos int",
+[IsIntegers, IsPosInt],
+function(semiring, n)
+  return RandomMatrix(IsIntegerMatrix, n);
+end);

@@ -95,7 +95,7 @@ extern Obj NTPMatrixType;
 extern Obj IsIntegerMatrix;
 extern Obj IntegerMatrixType;
 extern Obj IsMatrixOverPrimeField;
-extern Obj AsMatrixOverPrimeFieldNC;
+extern Obj MatrixOverPrimeFieldType;
 extern Obj IsPBR;
 extern Obj PBRType;
 

@@ -384,7 +384,7 @@ function(arg)
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
   Print("Testing file: ", print_file,
-        "\nwith acting methods \033[32mENABLED\033[0m . . .\n");
+        "\nwith acting methods \033[94mENABLED\033[0m . . .\n");
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
@@ -397,7 +397,7 @@ function(arg)
   fi;
   Print("\n");
   Print("Testing file: ", print_file,
-        "\nwith acting methods \033[31mDISABLED\033[0m . . .\n");
+        "\nwith acting methods \033[35mDISABLED\033[0m . . .\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
@@ -538,7 +538,7 @@ function(arg)
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   Print("Testing manual examples",
-        " with acting methods \033[32mENABLED\033[0m",
+        " with acting methods \033[94mENABLED\033[0m",
         " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS_StartTest();
@@ -550,7 +550,7 @@ function(arg)
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   Print("Testing manual examples",
-        " with acting methods \033[31mDISABLED\033[0m",
+        " with acting methods \033[35mDISABLED\033[0m",
         " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   # SEMIGROUPS_StartTest();

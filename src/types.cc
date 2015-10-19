@@ -31,6 +31,6 @@ Obj NTPMatrixType;
 Obj IsIntegerMatrix;
 Obj IntegerMatrixType;
 Obj IsMatrixOverPrimeField;
-Obj AsMatrixOverPrimeFieldNC;
+Obj MatrixOverPrimeFieldType;
 Obj IsPBR;
 Obj PBRType;
