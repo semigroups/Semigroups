@@ -61,7 +61,8 @@ function(arg)
   if Length(arg) = 1 and IsInt(arg[1]) and 0 < arg[1] then
     names := List([1 .. arg[1]],
                   i -> Concatenation("x", String(i)));
-  elif Length(arg) = 2 and IsInt(arg[1]) and 0 < arg[1] then
+  elif Length(arg) = 2 and IsInt(arg[1]) and 0 < arg[1]
+      and IsString(arg[2]) then
     names := List([1 .. arg[1]],
                   i -> Concatenation(arg[2], String(i)));
   elif 1 <= Length(arg) and ForAll(arg, IsString) then
@@ -84,7 +85,7 @@ function(arg)
   ngens := Length(names);
   gens := EmptyPlist(ngens);
 
-  for m in  [1 .. ngens] do
+  for m in [1 .. ngens] do
     gens[m] := Objectify(type, rec(tuple := [m, 0, m, 0],
                                    cont := BlistList([1 .. ngens], [m]),
                                    word := [m]));
@@ -390,13 +391,12 @@ function(x, y)
 
   if x!.cont <> y!.cont then
     return false;
-  else
-    for i in [1 .. 4] do
-      if x!.tuple![i] <> y!.tuple![i] then
-        return false;
-      fi;
-    od;
   fi;
+  for i in [1 .. 4] do
+    if x!.tuple![i] <> y!.tuple![i] then
+      return false;
+    fi;
+  od;
   return true;
 end);
 
@@ -419,11 +419,8 @@ function(x, y)
     return false;
   elif tuple1[i] = 0 then
     return true;
-  else
-    return tuple1[i] < tuple2[i];
   fi;
-
-  return tuple1![i] < tuple2![i];
+  return tuple1[i] < tuple2[i];
 end);
 
 #

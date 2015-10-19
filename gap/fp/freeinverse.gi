@@ -39,13 +39,7 @@ function(iter)
         iter_list, output, semigroup;
 
   minimal_seq := function(n)
-    local i, output;
-
-    output := [];
-    for i in [1 .. n] do
-      output[i] := i;
-    od;
-    return output;
+    return [1 .. n];
   end;
 
   FG_NextIterator := function(iter)
@@ -114,7 +108,6 @@ function(S)
   record := rec(IsDoneIterator := ReturnFalse,
                 NextIterator   := NextIterator_FreeInverseSemigroup,
                 ShallowCopy    := ShallowCopy_FreeInverseSemigroup,
-
                 semigroup      := S,
                 seq            := [1],
                 words          := [S.1],
@@ -138,7 +131,8 @@ function(arg)
     names := List([1 .. arg[1]],
                   i -> Concatenation("x", String(i)));
     MakeImmutable(names);
-  elif Length(arg) = 2 and IsInt(arg[1]) and 0 < arg[1] then
+  elif Length(arg) = 2 and IsInt(arg[1]) and 0 < arg[1]
+      and IsString(arg[2]) then
     names := List([1 .. arg[1]],
                   i -> Concatenation(arg[2], String(i)));
     MakeImmutable(names);
@@ -155,38 +149,39 @@ function(arg)
                  "FreeInverseSemigroup(<rank> [, name]),");
   fi;
 
+  if IsEmpty(names) then
+    ErrorMayQuit("Semigroups: FreeInverseSemigroup: usage,\n",
+                 "the number of generators of a free inverse semigroup must ",
+                 "be non-zero,");
+  elif not IsFinite(names) then
+    ErrorMayQuit("Semigroups: FreeInverseSemigroup: usage,\n",
+                 "the number of generators of a free inverse semigroup must ",
+                 "be finite,");
+  fi;
+
   F := NewFamily("FreeInverseSemigroupElementsFamily",
                  IsFreeInverseSemigroupElement,
                  CanEasilySortElements);
 
   type := NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
-  if IsEmpty(names) then
-    ErrorMayQuit("Semigroups: FreeInverseSemigroup: usage,\n",
-                 "the number of generators of a free inverse semigroup must ",
-                 "be non-zero,");
-  elif IsFinite(names) then
-    gens := EmptyPlist(Length(names));
-    for m in [1 .. Length(names)] do
-      gens[m] := Objectify(type, [Length(names), 2, 2, [fail, 1],
-                                  [fail, 2 * m - 1], [], []]);
-      gens[m]![6][2 * m - 1] := 2;
-      gens[m]![7][2 * m] := 1;
-    od;
-    names := Concatenation(List(names, x -> [x, Concatenation(x, "^-1")]));
-    StoreInfoFreeMagma(F, names, IsFreeInverseSemigroupElement);
-    S := Objectify(NewType(FamilyObj(gens),
-                           IsFreeInverseSemigroupCategory
-                            and IsInverseSemigroup
-                            and IsAttributeStoringRep),
-                   rec());
-    SetGeneratorsOfInverseSemigroup(S, gens);
-    SetIsFreeInverseSemigroup(S, true);
-  else
-    ErrorMayQuit("Semigroups: FreeInverseSemigroup: usage,\n",
-                 "the number of generators of a free inverse semigroup must ",
-                 "be finite,");
-  fi;
+  gens := EmptyPlist(Length(names));
+  for m in [1 .. Length(names)] do
+    gens[m] := Objectify(type, [Length(names), 2, 2, [fail, 1],
+                                [fail, 2 * m - 1], [], []]);
+    gens[m]![6][2 * m - 1] := 2;
+    gens[m]![7][2 * m] := 1;
+  od;
+
+  names := Concatenation(List(names, x -> [x, Concatenation(x, "^-1")]));
+  StoreInfoFreeMagma(F, names, IsFreeInverseSemigroupElement);
+  S := Objectify(NewType(FamilyObj(gens),
+                         IsFreeInverseSemigroupCategory
+                          and IsInverseSemigroup
+                          and IsAttributeStoringRep),
+                 rec());
+  SetGeneratorsOfInverseSemigroup(S, gens);
+  SetIsFreeInverseSemigroup(S, true);
 
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
