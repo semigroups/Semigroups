@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  max-plus.gd
+#W  maxplusmat.gd
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -28,11 +28,6 @@ BindGlobal("MaxPlusMatrixType",
            NewType(MaxPlusMatrixFamily,
                    IsMaxPlusMatrix));
 
-DeclareGlobalFunction("MaxPlusMatrix");
-DeclareGlobalFunction("MaxPlusMatrixNC");
-
-DeclareOperation("RandomMaxPlusMatrix", [IsPosInt]);
-
 #############################################################################
 ## 2. Min-plus matrices
 #############################################################################
@@ -50,17 +45,15 @@ BindGlobal("MinPlusMatrixType",
            NewType(MinPlusMatrixFamily,
                    IsMinPlusMatrix));
 
-DeclareGlobalFunction("MinPlusMatrix");
-DeclareGlobalFunction("MinPlusMatrixNC");
-
-DeclareOperation("RandomMinPlusMatrix", [IsPosInt]);
-
 #############################################################################
 ## 3. Tropical matrices
 #############################################################################
 
+DeclareGlobalFunction("SEMIGROUPS_TropicalizeMat");
+
 DeclareCategory("IsTropicalMatrix", IsMatrixOverSemiring);
 DeclareCategoryCollections("IsTropicalMatrix");
+
 DeclareAttribute("ThresholdTropicalMatrix", IsTropicalMatrix);
 
 #############################################################################
@@ -80,11 +73,6 @@ BindGlobal("TropicalMaxPlusMatrixType",
            NewType(TropicalMaxPlusMatrixFamily,
                    IsTropicalMaxPlusMatrix));
 
-DeclareGlobalFunction("TropicalMaxPlusMatrix");
-DeclareGlobalFunction("TropicalMaxPlusMatrixNC");
-
-DeclareOperation("RandomTropicalMaxPlusMatrix", [IsPosInt, IsPosInt]);
-
 #############################################################################
 ## 5. Tropical min-plus matrices
 #############################################################################
@@ -102,13 +90,8 @@ BindGlobal("TropicalMinPlusMatrixType",
            NewType(TropicalMinPlusMatrixFamily,
                    IsTropicalMinPlusMatrix));
 
-DeclareGlobalFunction("TropicalMinPlusMatrix");
-DeclareGlobalFunction("TropicalMinPlusMatrixNC");
-
-DeclareOperation("RandomTropicalMinPlusMatrix", [IsPosInt, IsPosInt]);
-
 #############################################################################
-## 5. Projective max-plus matrices
+## 6. Projective max-plus matrices
 #############################################################################
 
 DeclareCategory("IsProjectiveMaxPlusMatrix", IsMatrixOverSemiring);
@@ -124,33 +107,41 @@ BindGlobal("ProjectiveMaxPlusMatrixType",
            NewType(ProjectiveMaxPlusMatrixFamily,
                    IsProjectiveMaxPlusMatrix));
 
-DeclareGlobalFunction("ProjectiveMaxPlusMatrix");
-DeclareGlobalFunction("ProjectiveMaxPlusMatrixNC");
-
-DeclareOperation("RandomProjectiveMaxPlusMatrix", [IsPosInt]);
-
 #############################################################################
-## 6. Natural number matrices
+## 7. NTP (Natural Threshold Period) matrices
 #############################################################################
 
-DeclareCategory("IsNaturalMatrix", IsTropicalMatrix);
-#FIXME is this correct? NaturalMatrix is a subcategory of tropical matrices?
-DeclareCategoryCollections("IsNaturalMatrix");
-DeclareCategoryCollections("IsNaturalMatrixCollection");
+DeclareGlobalFunction("SEMIGROUPS_NaturalizeMat");
 
-BindGlobal("NaturalMatrixFamily",
-           NewFamily("NaturalMatrixFamily",
-                     IsNaturalMatrix, CanEasilySortElements,
+DeclareCategory("IsNTPMatrix", IsMatrixOverSemiring);
+DeclareCategoryCollections("IsNTPMatrix");
+DeclareCategoryCollections("IsNTPMatrixCollection");
+
+BindGlobal("NTPMatrixFamily",
+           NewFamily("NTPMatrixFamily",
+                     IsNTPMatrix, CanEasilySortElements,
                      CanEasilySortElements));
 
-BindGlobal("NaturalMatrixType",
-           NewType(NaturalMatrixFamily,
-                   IsNaturalMatrix));
+BindGlobal("NTPMatrixType",
+           NewType(NTPMatrixFamily,
+                   IsNTPMatrix));
 
-DeclareGlobalFunction("NaturalMatrix");
-DeclareGlobalFunction("NaturalMatrixNC");
+DeclareAttribute("ThresholdNTPMatrix", IsNTPMatrix);
+DeclareAttribute("PeriodNTPMatrix", IsNTPMatrix);
 
-DeclareOperation("RandomNaturalMatrix", [IsPosInt, IsPosInt, IsPosInt]);
+#############################################################################
+## 8. Integer matrices
+#############################################################################
 
-DeclareAttribute("ThresholdNaturalMatrix", IsNaturalMatrix);
-DeclareAttribute("PeriodNaturalMatrix", IsNaturalMatrix);
+DeclareCategory("IsIntegerMatrix", IsMatrixOverSemiring);
+DeclareCategoryCollections("IsIntegerMatrix");
+DeclareCategoryCollections("IsIntegerMatrixCollection");
+
+BindGlobal("IntegerMatrixFamily",
+           NewFamily("IntegerMatrixFamily",
+                     IsIntegerMatrix, CanEasilySortElements,
+                     CanEasilySortElements));
+
+BindGlobal("IntegerMatrixType",
+           NewType(IntegerMatrixFamily,
+                   IsIntegerMatrix));

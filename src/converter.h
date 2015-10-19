@@ -245,8 +245,9 @@ class MatrixOverPrimeFieldConverter : public MatrixOverSemiringConverter {
 
   public:
 
-    MatrixOverPrimeFieldConverter(PrimeField* field)
-      : MatrixOverSemiringConverter(field, 0, 0) {}
+    MatrixOverPrimeFieldConverter(PrimeField* field, 
+                                  Obj         gap_type)
+      : MatrixOverSemiringConverter(field, 0, gap_type) {}
 
     MatrixOverSemiring* convert   (Obj      o, size_t n);
     Obj                 unconvert (Element* x          );

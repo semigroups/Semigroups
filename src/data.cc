@@ -43,8 +43,10 @@ DataType data_type (Obj data) {
         return TROP_MIN_PLUS_MAT;
       } else if (IS_PROJ_MAX_PLUS_MAT(x)) {
         return PROJ_MAX_PLUS_MAT;
-      } else if (IS_NAT_MAT(x)) {
-        return NAT_MAT;
+      } else if (IS_NTP_MAT(x)) {
+        return NTP_MAT;
+      } else if (IS_INT_MAT(x)) {
+        return INT_MAT;
       } else if (IS_MAT_OVER_PF(x)) {
         // TODO handle non-prime fields too!
         return MAT_OVER_PF;
@@ -131,11 +133,17 @@ void data_init_converter (Obj data) {
                                                   TropicalMinPlusMatrixType);
       break;
     }
-    case NAT_MAT:{
+    case NTP_MAT:{
       converter = new MatrixOverSemiringConverter(new NaturalSemiring(data_threshold(data),
                                                                       data_period(data)), 
                                                   INTOBJ_INT(0), 
-                                                  NaturalMatrixType);
+                                                  NTPMatrixType);
+      break;
+    }
+    case INT_MAT:{
+      converter = new MatrixOverSemiringConverter(new Integers(), 
+                                                  INTOBJ_INT(0), 
+                                                  IntegerMatrixType);
       break;
     }
     case PROJ_MAX_PLUS_MAT:{
@@ -146,7 +154,8 @@ void data_init_converter (Obj data) {
 
     }
     case MAT_OVER_PF:{
-      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)));
+      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)), 
+                                                    MatrixOverPrimeFieldType);
       break;
     }
     case PBR_TYPE:{
@@ -256,7 +265,7 @@ void data_delete (Obj data) {
 long data_threshold (Obj data) {
   Obj x = data_rep(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_TROP_MAT(x)||IS_NAT_MAT(x));
+  assert(IS_TROP_MAT(x)||IS_NTP_MAT(x));
   assert(ELM_PLIST(x, 1) != 0);
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
@@ -271,7 +280,7 @@ long data_threshold (Obj data) {
 long data_period (Obj data) {
   Obj x = data_rep(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_NAT_MAT(x));
+  assert(IS_NTP_MAT(x));
   assert(ELM_PLIST(x, 1) != 0);
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);

@@ -21,20 +21,20 @@ the argmuent must be a non-empty homogeneous list of homogeneous lists,
 
 #T# boolmat: BooleanMat, for 0s and 1s, 2/6
 gap> BooleanMat([[1, 0, 1], [0, 1, 0], [0, 1, 0]]);
-<3x3 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 1, 0]])
 
 #T# boolmat: BooleanMat, for blists in blist_rep, 3/6
 gap> BooleanMat([[true, false, true], [false, true, false],
 > [false, true, false]]);
-<3x3 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 1, 0]])
 
 #T# boolmat: BooleanMat, for blists not in blist_rep, 4/6
 gap> BooleanMat(List([1 .. 3], y -> List([1 .. 3], x -> x = x)));
-<3x3 boolean matrix>
+Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 1, 1]])
 
 #T# boolmat: BooleanMat, for successors, 5/6
 gap> BooleanMat([[1], [3, 4], [2], [1]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 1, 1], [0, 1, 0, 0], [1, 0, 0, 0]])
 
 #T# boolmat: BooleanMat, for successors, error, 6/6
 gap> BooleanMat([[1], [3, 4], [2], [5]]);
@@ -77,8 +77,8 @@ gap> x := BooleanMat([[1, 0, 0, 1],
 >                     [0, 0, 0, 0], 
 >                     [0, 1, 1, 0]]);;
 gap> PrintString(x);
-"\>BooleanMat(\>[\>\>[1, 0, 0, 1]\<, \<\>\>[1, 0, 1, 0]\<, \<\>\>[0, 0, 0, 0]\
-\<, \<\>\>[0, 1, 1, 0]\<\<]\<)\<"
+"\>\>Matrix(\<\>IsBooleanMat\<, \>[\>\>[1, 0, 0, 1]\<, \<\>\>[1, 0, 1, 0]\<, \
+\<\>\>[0, 0, 0, 0]\<, \<\>\>[0, 1, 1, 0]\<\<]\<)\<"
 
 #T# boolmat: \* for boolean mats, 1/2
 gap> x := BooleanMat([[1, 0, 0, 1], 
@@ -113,8 +113,7 @@ gap> Display(One(x));
 0 0 1
 
 #T# boolmat: RandomBooleanMat, for boolean mats, 1/1
-gap> x := RandomBooleanMat(1);
-<1x1 boolean matrix>
+gap> x := RandomMatrix(IsBooleanMat, 1);;
 
 #T# boolmat: \in, for boolean mats, 1/2
 gap> x := BooleanMat([[1, 0, 0], 
@@ -262,7 +261,7 @@ gap> Display(y);
 gap> IsEquivalenceBooleanMat(y);
 true
 gap> AsBooleanMat(x, 1);
-<1x1 boolean matrix>
+Matrix(IsBooleanMat, [[1]])
 gap> Display(AsBooleanMat(x, 1));
 1
 gap> Display(AsBooleanMat(x, 2));
@@ -288,7 +287,9 @@ gap> x := PBR([ [ -1, 1 ], [ 2, 3 ], [ -3, 2, 3 ] ],
 >             [ [ -1, 1, 2 ], [ -3, -1, 1, 3 ], 
 >               [ -3, -1, 1, 2, 3 ] ]);;
 gap> AsBooleanMat(x);
-<6x6 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0], 
+  [0, 1, 1, 0, 0, 1], [1, 1, 0, 1, 0, 0], [1, 0, 1, 1, 0, 1], 
+  [1, 1, 1, 1, 0, 1]])
 gap> Display(AsBooleanMat(x));
 1 0 0 1 0 0
 0 1 1 0 0 0
@@ -328,9 +329,13 @@ gap> mat := BooleanMat([[1, 1, 1, 0, 0, 0],
 >                       [0, 0, 0, 0, 0, 0], 
 >                       [0, 1, 1, 1, 1, 1], 
 >                       [0, 1, 1, 0, 1, 0]]);
-<6x6 boolean matrix>
+Matrix(IsBooleanMat, [[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1], 
+  [1, 0, 0, 1, 0, 1], [0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1], 
+  [0, 1, 1, 0, 1, 0]])
 gap> CanonicalBooleanMat(mat);
-<6x6 boolean matrix>
+Matrix(IsBooleanMat, [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 1], 
+  [0, 0, 0, 1, 1, 1], [0, 1, 1, 1, 0, 0], [1, 1, 1, 0, 0, 0], 
+  [1, 1, 1, 0, 1, 1]])
 gap> Display(CanonicalBooleanMat(mat));
 0 0 0 0 0 0
 0 0 0 0 1 1
@@ -370,14 +375,14 @@ gap> mat := BooleanMat([[0, 1, 1, 0],
 >                       [1, 0, 1, 1], 
 >                       [1, 1, 0, 1], 
 >                       [0, 1, 0, 1]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], [0, 1, 0, 1]])
 gap> IsSymmetricBooleanMat(mat);
 false
 gap> mat := BooleanMat([[0, 1, 1, 0], 
 >                       [1, 0, 1, 1], 
 >                       [1, 1, 0, 1], 
 >                       [0, 1, 1, 1]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], [0, 1, 1, 1]])
 gap> IsSymmetricBooleanMat(mat);
 true
 
@@ -386,7 +391,7 @@ gap> mat := BooleanMat([[0, 1, 1, 0],
 >                       [1, 0, 1, 1], 
 >                       [1, 1, 0, 1], 
 >                       [0, 1, 0, 1]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], [0, 1, 0, 1]])
 gap> IsReflexiveBooleanMat(mat);
 false
 
@@ -395,7 +400,7 @@ gap> mat := BooleanMat([[0, 1, 1, 0],
 >                       [1, 0, 1, 1], 
 >                       [1, 1, 0, 1], 
 >                       [0, 1, 0, 1]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], [0, 1, 0, 1]])
 gap> IsTransitiveBooleanMat(mat);
 false
 
@@ -404,14 +409,14 @@ gap> x := BooleanMat([[1, 0, 0, 1],
 >                     [1, 0, 1, 1], 
 >                     [1, 1, 1, 0], 
 >                     [0, 1, 1, 0]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], [0, 1, 1, 0]])
 gap> IsAntiSymmetricBooleanMat(x);
 false
 gap> x := BooleanMat([[1, 0, 0, 1], 
 >                     [1, 0, 1, 0], 
 >                     [1, 0, 1, 0], 
 >                     [0, 1, 1, 0]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 1, 0], [0, 1, 1, 0]])
 gap> IsAntiSymmetricBooleanMat(x);
 true
 
@@ -420,7 +425,7 @@ gap> x := BooleanMat([[1, 0, 0, 1],
 >                     [1, 0, 1, 1], 
 >                     [1, 1, 1, 0], 
 >                     [0, 1, 1, 0]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], [0, 1, 1, 0]])
 gap> IsTotalBooleanMat(x);
 true
 gap> IsOntoBooleanMat(x);
@@ -429,7 +434,7 @@ gap> x := BooleanMat([[1, 0, 0, 1],
 >                     [1, 0, 1, 0], 
 >                     [0, 0, 0, 0], 
 >                     [0, 1, 1, 0]]);
-<4x4 boolean matrix>
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [0, 0, 0, 0], [0, 1, 1, 0]])
 gap> IsTotalBooleanMat(x);
 false
 gap> IsOntoBooleanMat(x);

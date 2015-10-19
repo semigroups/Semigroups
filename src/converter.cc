@@ -132,6 +132,7 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
   size_t n = xx->degree();
   Obj plist = NEW_PLIST(T_PLIST, n + 2);
   SET_LEN_PLIST(plist, n + 2);
+  //TODO only do this if necessary
   SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
   SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
 
@@ -184,20 +185,24 @@ Obj MatrixOverPrimeFieldConverter::unconvert (Element* xx) {
   MatrixOverSemiring* x(static_cast<MatrixOverSemiring*>(xx));
 
   size_t n = x->degree();
-  Obj plist = NEW_PLIST(T_PLIST, n);
-  SET_LEN_PLIST(plist, n);
+  Obj plist = NEW_PLIST(T_PLIST, n + 1);
+  SET_LEN_PLIST(plist, n + 1);
+  SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(static_cast<PrimeField*>(_semiring)->size()));
+  FF field = FiniteField(static_cast<PrimeField*>(_semiring)->size(), 1);
 
   for (size_t i = 0; i < n; i++) {
-    Obj row = NEW_PLIST(T_PLIST_CYC, n);
+    Obj row = NEW_PLIST(T_PLIST_FFE, n);
     SET_LEN_PLIST(row, n);
     for (size_t j = 0; j < n; j++) {
-      SET_ELM_PLIST(row, j + 1, INTOBJ_INT(x->at(i * n + j)));
+      SET_ELM_PLIST(row, j + 1, NEW_FFE(field, (FFV) x->at(i * n + j)));
     }
     SET_ELM_PLIST(plist, i + 1, row);
     CHANGED_BAG(plist);
   }
-  PrimeField* field(static_cast<PrimeField*>(_semiring));
-  return CALL_2ARGS(AsMatrixOverPrimeFieldNC, INTOBJ_INT(field->size()), plist);
+  TYPE_POSOBJ(plist) = _gap_type;
+  RetypeBag(plist, T_POSOBJ);
+  CHANGED_BAG(plist);
+  return plist;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
