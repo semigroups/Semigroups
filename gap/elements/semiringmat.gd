@@ -41,10 +41,15 @@ DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
 DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
 
 DeclareGlobalFunction("RandomMatrix");
-DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring, IsPosInt]);
-DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring, IsPosInt, IsPosInt]);
-DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring, IsPosInt,
-                                        IsPosInt, IsPosInt]);
+DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
+                                        IsPosInt]);
+DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
+                                        IsPosInt,
+                                        IsPosInt]);
+DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
+                                        IsPosInt,
+                                        IsPosInt,
+                                        IsPosInt]);
 DeclareOperation("RandomMatrixOp", [IsSemiring, IsPosInt]);
 
 DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);

@@ -8,89 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="IsBooleanMat">
-  <ManSection>
-    <Filt Name="IsBooleanMat" Arg="obj" Type="Category"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-      Every boolean matrix in &Semigroups; is a member of the category
-      <C>IsBooleanMat</C>, which is a subcategory of <Ref
-        Filt="IsMatrixOverSemiring"/>.
-      <P/>
-
-      Every boolean matrix in &Semigroups; is a square matrix.
-      <P/>
-
-      Basic operations for Boolean matrices are:
-      <List>
-        <Item>
-          <Ref Oper = "NumberBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Attr = "Successors"/>
-        </Item>
-        <Item>
-          <Ref Oper = "IsRowTrimBooleanMat"/>,
-          <Ref Oper = "IsColTrimBooleanMat"/>,
-          and
-          <Ref Oper = "IsTrimBooleanMat"/>,
-        </Item>
-        <Item>
-          <Ref Oper = "CanonicalBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsSymmetricBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsAntiSymmetricBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsTransitiveBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsReflexiveBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsTotalBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsOntoBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsPartialOrderBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsEquivalenceBooleanMat"/>
-        </Item>
-      </List>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="IsBooleanMatCollection">
-  <ManSection>
-    <Filt Name="IsBooleanMatCollection" Arg="obj" Type="Category"/>
-    <Filt Name="IsBooleanMatCollColl" Arg="obj" Type="Category"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-       Every collection of matrices over the same semiring belongs to the
-       category <C>IsBooleanMatCollection</C>. For example, semigroups
-       of boolean matrices belong to <C>IsBooleanMatCollection</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="BooleanMatFamily">
-  <ManSection>
-    <Var Name="BooleanMatFamily"/>
-    <Var Name="BooleanMatType"/>
-    <Description>
-      The family of all boolean matrices is <C>BooleanMatFamily</C> and the type
-      of every boolean matrix is <C>BooleanMatType</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="BooleanMat">
   <ManSection>
     <Func Name="BooleanMat" Arg="arg"/>
@@ -142,6 +59,7 @@ gap> Display(x);
   </ManSection>
 <#/GAPDoc>
 
+<!-- deprecated -->
 <#GAPDoc Label="RandomBooleanMat">
   <ManSection>
     <Oper Name="RandomBooleanMat" Arg="n"/>
