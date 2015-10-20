@@ -428,7 +428,7 @@ InstallMethod(\<, "for matrices over a semiring",
 function(x, y)
   local n, i;
 
-  if  SEMIGROUPS_FilterOfMatrixOverSemiring(x) <>
+  if SEMIGROUPS_FilterOfMatrixOverSemiring(x) <>
       SEMIGROUPS_FilterOfMatrixOverSemiring(y) then
     ErrorMayQuit("Semigroups: \< (for matrices over a semiring):\n",
                  "the matrices are not of the same type,");
