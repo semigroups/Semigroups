@@ -81,13 +81,13 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
 gap> TransposedMat(TransposedMat(last)) = last;
 true
 
-# semiringmat: MatrixNC for a matrix over semiring and homogeneous list
+#T# semiringmat: MatrixNC for a matrix over semiring and homogeneous list
 gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3], [0, 2]], 5);
 Matrix(IsTropicalMaxPlusMatrix, [[0, 3], [0, 2]], 5)
 gap> One(mat);
 Matrix(IsTropicalMaxPlusMatrix, [[0, -infinity], [-infinity, 0]], 5)
 
-# semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
+#T# semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 1/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [2]], 3, 3);
 Error, Semigroups: Matrix: usage,
@@ -96,19 +96,19 @@ gap> Matrix(IsNTPMatrix, [[1, 1, 3], [1, 2, 3]], 3, 3);
 Error, Semigroups: Matrix: usage,
 the 1st argument must be a square table,
 
-# semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
+#T# semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 2/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2, 2]], 3, 3);
 Error, Semigroups: Matrix:
 cannot create a matrix from the given arguments,
 
-# semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
+#T# semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 3/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [2, 10]], 3, 3);
 Error, Semigroups: Matrix: usage,
 the entries in the 2nd argument do not define a matrix of type IsNTPMatrix,
 
-# semiringmat: Matrix, for a filter, homogeneous list, and pos int, 1/3
+#T# semiringmat: Matrix, for a filter, homogeneous list, and pos int, 1/3
 gap> Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [2]], 3);
 Error, Semigroups: Matrix: usage,
 the 1st argument must be a square table,
@@ -116,18 +116,18 @@ gap> Matrix(IsTropicalMaxPlusMatrix, [[1, 1, 3], [1, 2, 3]], 3);
 Error, Semigroups: Matrix: usage,
 the 1st argument must be a square table,
 
-# semiringmat: Matrix, for a filter, homogeneous list, and pos int, 2/3
+#T# semiringmat: Matrix, for a filter, homogeneous list, and pos int, 2/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2, 2]], 3);
 Error, Semigroups: Matrix:
 cannot create a matrix from the given arguments,
 
-# semiringmat: Matrix, for a filter, homogeneous list, and pos int, 3/3
+#T# semiringmat: Matrix, for a filter, homogeneous list, and pos int, 3/3
 gap> Matrix(IsTropicalMinPlusMatrix, [[1, 1], [2, 10]], 3);
 Error, Semigroups: Matrix: usage,
 the entries in the 2nd argument do not define a matrix of type IsTropicalMinPl\
 usMatrix,
 
-# semiringmat: Matrix, for a filter and homogeneous list, 1/3
+#T# semiringmat: Matrix, for a filter and homogeneous list, 1/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2]]);
 Error, Semigroups: Matrix: usage,
 the 1st argument must be a square table,
@@ -135,18 +135,18 @@ gap> Matrix(IsIntegerMatrix, [[1, 1, 3], [1, 2, 3]]);
 Error, Semigroups: Matrix: usage,
 the 1st argument must be a square table,
 
-# semiringmat: Matrix, for a filter and homogeneous list, 2/3
+#T# semiringmat: Matrix, for a filter and homogeneous list, 2/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [1, 2]]);
 Error, Semigroups: Matrix:
 cannot create a matrix from the given arguments,
 
-# semiringmat: Matrix, for a filter and homogeneous list, 3/3
+#T# semiringmat: Matrix, for a filter and homogeneous list, 3/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2, E(8)]]);
 Error, Semigroups: Matrix: usage,
 the entries in the 2nd argument do not define a matrix of type IsIntegerMatrix\
 ,
 
-# semiringmat: Matrix, for a semiring and homogeneous list, 1/3
+#T# semiringmat: Matrix, for a semiring and homogeneous list, 1/3
 gap> Matrix(Integers, [[1, 1], [2]]);
 Error, Semigroups: Matrix: usage,
 the 1st argument must be a square table,
@@ -154,38 +154,38 @@ gap> Matrix(Integers, [[1, 1, 3], [1, 2, 3]]);
 Error, Semigroups: Matrix: usage,
 the 1st argument must be a square table,
 
-# semiringmat: Matrix, for a semiring and homogeneous list, 2/3
+#T# semiringmat: Matrix, for a semiring and homogeneous list, 2/3
 gap> Matrix(Rationals, [[1, 1], [2, 2]]);
 Error, Semigroups: Matrix:
 cannot create a matrix from the given arguments,
 
-# semiringmat: Matrix, for a semiring and homogeneous list, 3/3
+#T# semiringmat: Matrix, for a semiring and homogeneous list, 3/3
 gap> Matrix(Integers, [[1, 1], [2, E(8)]]);
 Error, Semigroups: Matrix: usage,
 the entries in the 2nd argument do not define a matrix of type IsIntegerMatrix\
 ,
 
-# semiringmat: RandomMatrix, 1/6
+#T# semiringmat: RandomMatrix, 1/6
 gap> RandomMatrix(IsIntegerMatrix, 2);;
 
-# semiringmat: RandomMatrix, 2/6
+#T# semiringmat: RandomMatrix, 2/6
 gap> RandomMatrix(IsTropicalMaxPlusMatrix, 2, 2);;
 
-# semiringmat: RandomMatrix, 3/6
+#T# semiringmat: RandomMatrix, 3/6
 gap> RandomMatrix(IsNTPMatrix, 2, 2, 2);;
 
-# semiringmat: RandomMatrix, 4/6
+#T# semiringmat: RandomMatrix, 4/6
 gap> RandomMatrix(GF(7), 2);;
 
-# semiringmat: RandomMatrix, 5/6
+#T# semiringmat: RandomMatrix, 5/6
 gap> RandomMatrix(7, 2);;
 
-# semiringmat: RandomMatrix, 6/6
+#T# semiringmat: RandomMatrix, 6/6
 gap> RandomMatrix(7, 2, 3);
 Error, Semigroups: RandomMatrix: usage,
 the arguments must be: filter, pos int[, pos int[, pos int]],
 
-# semiringmat: PrintString, DisplayString for a collection
+#T# semiringmat: PrintString, DisplayString for a collection
 gap> mat := Matrix(IsBooleanMat, [[1, 0, 0, 0], 
 >                                 [0, 0, 0, 0], 
 >                                 [1, 1, 1, 1], 
@@ -213,7 +213,7 @@ gap> PrintString(MinimalDClass(Semigroup(mat)));
 0, 0, 0]\<, \<\>\>[0, 0, 0, 0]\<, \<\>\>[1, 1, 1, 1]\<, \<\>\>[1, 1, 1, 1]\<\<\
 ]\<)\<\<)\<\<"
 
-# semiringmat: Display and DisplayString for a matrix
+#T# semiringmat: Display and DisplayString for a matrix
 gap> Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
 >                                       [0, -1, -infinity, -infinity],
 >                                       [4, 4, 2, -1],
@@ -240,31 +240,31 @@ gap> Display(mat);
     4    40     2    -1
     1     1  1000 33313
 
-# semiringmat: ViewString for a matrix of dim >= 9
+#T# semiringmat: ViewString for a matrix of dim >= 9
 gap> mat := RandomMatrix(IsTropicalMinPlusMatrix, 9, 3);
 <9x9 tropical min-plus matrix>
 
-# semiringmat: \=, different types, 1/4
+#T# semiringmat: \=, different types, 1/4
 gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > = Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [-infinity, 3]], 3);
 false
 
-# semiringmat: \=, different dims, 2/4
+#T# semiringmat: \=, different dims, 2/4
 gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3) 
 > = Matrix(IsTropicalMinPlusMatrix, [[2]], 3);
 false
 
-# semiringmat: \=, different threshold, 3/4
+#T# semiringmat: \=, different threshold, 3/4
 gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > = Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 4);
 false
 
-# semiringmat: \=, different period, 4/4
+#T# semiringmat: \=, different period, 4/4
 gap> Matrix(IsNTPMatrix, [[2, 1], [1, 3]], 3, 3)
 > = Matrix(IsNTPMatrix, [[2, 1], [1, 3]], 3, 4);
 false
 
-# semiringmat: \<, 1/?
+#T# semiringmat: \<, 1/4
 gap> mat := Matrix(IsTropicalMinPlusMatrix, 
 > [[2, infinity, infinity, 3, 1, 1, infinity, 3, 3],
 >  [1, 1, 1, 1, 1, 2, 0, infinity, 0], 
@@ -287,18 +287,18 @@ gap> AsSet(S);
   <9x9 tropical min-plus matrix>, <9x9 tropical min-plus matrix>, 
   <9x9 tropical min-plus matrix> ]
 
-# semiringmat: \<, equal matrices, 2/?
+#T# semiringmat: \<, equal matrices, 2/4
 gap> mat := Matrix(IsIntegerMatrix, [[-2, 0], [0, 3]]);;
 gap> mat < mat;
 false
 
-# semiringmat: \<, different types, 3/?
+#T# semiringmat: \<, different types, 3/4
 gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > < Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [-infinity, 3]], 3);
 Error, Semigroups:  (for matrices over a semiring):
 the matrices are not of the same type,
 
-# semiringmat: \<, different dims, 4/?
+#T# semiringmat: \<, different dims, 4/4
 gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3) 
 > < Matrix(IsTropicalMinPlusMatrix, [[2]], 3);
 false
@@ -306,7 +306,7 @@ gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > > Matrix(IsTropicalMinPlusMatrix, [[2]], 3);
 true
 
-# semiringmat: ChooseHashFunction and use that hash function, 1/1
+#T# semiringmat: ChooseHashFunction and use that hash function, 1/1
 gap> mat := Matrix(IsTropicalMinPlusMatrix,
 > [[2, infinity, infinity, 3, 1, 1, infinity, 3, 3],
 >  [1, 1, 1, 1, 1, 2, 0, infinity, 0],
