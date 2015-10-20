@@ -48,7 +48,7 @@ function(S, kernel, traceBlocks)
           if not a * a ^ -1 in traceClass then
             ErrorMayQuit("Semigroups: ",
                          "InverseSemigroupCongruenceByKernelTrace:\n",
-                         "not a valid congruence pair 1,");
+                         "not a valid congruence pair (C2),");
           fi;
         else
           # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
@@ -56,7 +56,7 @@ function(S, kernel, traceBlocks)
             if a * e in kernel then
               ErrorMayQuit("Semigroups: ",
                            "InverseSemigroupCongruenceByKernelTrace:\n",
-                           "not a valid congruence pair 2,");
+                           "not a valid congruence pair (C1),");
             fi;
           od;
         fi;
@@ -150,14 +150,14 @@ InstallMethod(\in,
 function(pair, cong)
   local S;
   if Size(pair) <> 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   S := Range(cong);
   if not (pair[1] in S and pair[2] in S) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
-                 "the entries of the first arg <pair> must belong to the ",
-                 "semigroup of <cong>,");
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
+                 "the entries of the first arg <pair> must\n",
+                 "belong to the semigroup of <cong>,");
   fi;
   # Is (a^-1 a, b^-1 b) in the trace?
   if pair[1] ^ -1 * pair[1] in
@@ -178,8 +178,8 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
-                 "the second arg <elm> must be in the semigroup of the first ",
-                 "arg <cong>,");
+                 "the second arg <elm> must be in the\n",
+                 "semigroup of the first arg <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -230,7 +230,7 @@ InstallMethod(\*,
  IsInverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
+    ErrorMayQuit("Semigroups: \\*: usage,\n",
                  "the arguments must be classes of the same congruence,");
   fi;
   return EquivalenceClassOfElementNC(Parent(c1), c1!.rep * c2!.rep);
