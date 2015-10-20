@@ -166,7 +166,7 @@ function(semiring, mat)
   fi;
 
   # IsField required cos there's no method for IsPrimeField for Integers.
-  if IsField(semiring) and IsPrimeField(semiring) then
+  if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
     filter := IsMatrixOverPrimeField;
   elif IsIntegers(semiring) then
     filter := IsIntegerMatrix;
@@ -183,9 +183,9 @@ function(semiring, mat)
 
   for row in mat do
     if not ForAll(row, checker) then
-      ErrorMayQuit("Semigroups: Matrix:\n",
-                   "cannot create a matrix from the given ",
-                   "arguments,");
+      ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                   "the entries in the 2nd argument do not define a matrix ",
+                   "of type ", NameFunction(filter), ",");
     fi;
   od;
   mat := List(mat, ShallowCopy);
@@ -264,7 +264,7 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
 
-  # find the max max
+  # find the max entry
   max := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
@@ -282,14 +282,18 @@ function(x)
   od;
 
   pad := function(entry)
+    local n;
     if entry = infinity then
       entry := "∞";
+      n := 1;
     elif entry = -infinity then
       entry := "-∞";
+      n := 2;
     else
       entry := String(entry);
+      n := Length(entry);
     fi;
-    return Concatenation(ListWithIdenticalEntries(max - Length(entry), ' '),
+    return Concatenation(ListWithIdenticalEntries(max - n, ' '),
                          entry, " ");
   end;
 
@@ -424,7 +428,7 @@ InstallMethod(\<, "for matrices over a semiring",
 function(x, y)
   local n, i;
 
-  if not SEMIGROUPS_FilterOfMatrixOverSemiring(x) =
+  if SEMIGROUPS_FilterOfMatrixOverSemiring(x) <>
       SEMIGROUPS_FilterOfMatrixOverSemiring(y) then
     ErrorMayQuit("Semigroups: \< (for matrices over a semiring):\n",
                  "the matrices are not of the same type,");
