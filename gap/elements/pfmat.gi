@@ -22,11 +22,11 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 "for IsMatrixOverPrimeField",
 [IsMatrixOverPrimeField], x -> MatrixOverPrimeFieldType);
 
-#InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
-#"for IsMatrixOverPrimeField", [IsMatrixOverPrimeField],
-#function(filter)
-#  return IsFFE;
-#end);
+InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
+"for IsMatrixOverPrimeField", [IsMatrixOverPrimeField],
+function(filter)
+  return IsFFE;
+end);
 
 InstallMethod(\*, "for matrices over a prime field",
 [IsMatrixOverPrimeField, IsMatrixOverPrimeField],

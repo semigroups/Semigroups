@@ -26,7 +26,7 @@
 
       Basic operations for matrices over semirings are:
       <Ref Attr="DimensionOfMatrixOverSemiring"/>,
-      <Ref Attr="TransposedMat" BookName = "ref"/>,
+      <Ref Attr="TransposedMat" BookName = "ref"/>, and
       <Ref Attr="One" BookName = "ref"/>.
     </Description>
   </ManSection>
@@ -73,10 +73,114 @@ gap> DimensionOfMatrixOverSemiring(x);
     <Oper Name="Matrix" Arg="semiring, mat"/>
     <Returns>A matrix over semiring.</Returns>
     <Description>
-      If <A>filt</A> is one of the  
-      <Example><![CDATA[
+      This operation can be used to construct a matrix over
+      a semiring in &Semigroups;.
+      <P/>
+      
+      In its first form, the first argument <A>filt</A> specifies the
+      filter to be used to create the matrix, the second argument <A>mat</A> is
+      a &GAP; matrix (i.e. a list of lists) compatible with <A>filt</A>, the
+      third and fourth arguments <A>threshold</A> and <A>period</A> (if
+      required) must be positive integers.
+      <P/>
+      
+      <List>
+        <Mark><A>filt</A></Mark>
+        <Item>
+          This must be one of the filters given in Section <Ref Sect =
+            "IsXMatrix"/>.
+        </Item>
+
+        <Mark><A>mat</A></Mark>
+        <Item>
+          This must be a list of <C>n</C> lists each of length <C>n</C> (i.e. a
+          square matrix), consisting of elements belonging to the underlying
+          semiring described by <A>filt</A>, and <A>threshold</A> and
+          <A>period</A> if present. An error is given if <A>mat</A> is not
+          compatible with the other arguments.
+          <P/>
+          
+          For example, if <A>filt</A> is <C>IsMaxPlusMatrix</C>, then the
+          entries of <A>mat</A> must belong to the max-plus semiring, i.e. they
+          must be integers or -<M>\infty</M>. <P/>
+
+          The supported semirings are fully described at the start of this
+          chapter. 
+        </Item>
         
-]]></Example>
+        <Mark><A>threshold</A></Mark>
+        <Item>
+          If <A>filt</A> is any of <Ref Filt = "IsTropicalMaxPlusMatrix"/>, 
+          <Ref Filt = "IsTropicalMinPlusMatrix"/>, or <Ref Filt =
+            "IsNTPMatrix"/>, then this argument specifies the threshold of the
+          underlying semiring of the matrix being created. 
+        </Item>
+        
+        <Mark><A>period</A></Mark>
+        <Item>
+          If <A>filt</A> is <Ref Filt = "IsNTPMatrix"/>, then this argument
+          specifies the period of the underlying semiring of the matrix being
+          created. 
+        </Item>
+      </List>
+
+      In its second form, the arguments should be a semiring <A>semiring</A>
+      and matrix <A>mat</A> with entries in <A>semiring</A>. Currently, the
+      only supported semirings are finite fields of prime order, and the
+      integers <Ref Var ="Integers" BookName = "ref"/>.
+      <P/>
+
+      The function <Ref Func = "BooleanMat"/> is provided for specifically
+      creating boolean matrices. 
+      <Example><![CDATA[
+gap> Matrix(IsBooleanMat, [[1, 0, 0, 0], 
+>                          [0, 0, 0, 0], 
+>                          [1, 1, 1, 1], 
+>                          [1, 0, 1, 1]]);
+Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], 
+  [1, 0, 1, 1]])
+gap> Matrix(IsMaxPlusMatrix, [[4, 0, -2], 
+>                             [1, -3, 0], 
+>                             [5, -1, -4]]);
+Matrix(IsMaxPlusMatrix, [[4, 0, -2], [1, -3, 0], [5, -1, -4]])
+gap> Matrix(IsMinPlusMatrix, [[-1, infinity], 
+>                             [1, -1]]);
+Matrix(IsMinPlusMatrix, [[-1, infinity], [1, -1]])
+gap> Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], 
+>                                     [3, 1, 1], 
+>                                     [-infinity, 1, 1]], 
+>           9);
+Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1], 
+  [-infinity, 1, 1]], 9)
+gap> Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1], 
+>                                     [0, 3, 0], 
+>                                     [1, 1, 3]], 
+>           9);
+Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1], [0, 3, 0], [1, 1, 3]], 9)
+gap> Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
+>                                       [0, -1, -infinity, -infinity],
+>                                       [4, 4, 2, -1],
+>                                       [1, 1, 0, 3]]);
+Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
+  [0, -1, -infinity, -infinity], [4, 4, 2, -1], [1, 1, 0, 3]])
+gap> Matrix(IsNTPMatrix, [[0, 0, 0], 
+>                         [2, 0, 1],
+>                         [2, 2, 2]], 
+>           2, 1);
+Matrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)
+gap> Matrix(IsIntegerMatrix, [[-1, -2, 0], 
+>                             [0, 3, -1], 
+>                             [1, 0, -3]]);
+Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+gap> Matrix(Integers, [[-1, -2, 0], 
+>                      [0, 3, -1], 
+>                      [1, 0, -3]]);
+Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+gap> Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], 
+>                   [Z(3), Z(3)^0, Z(3)^0], 
+>                   [Z(3), 0*Z(3), 0*Z(3)]]);
+Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0], 
+  [Z(3), 0*Z(3), 0*Z(3)]])]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -84,13 +188,77 @@ gap> DimensionOfMatrixOverSemiring(x);
 <#GAPDoc Label="RandomMatrix">
   <ManSection>
     <Func Name="RandomMatrix" Arg="filt, dim[, threshold[, period]]"/>
-    <Oper Name="RandomMatrix" Arg="semiring, dim"/>
+    <Func Name="RandomMatrix" Arg="semiring, dim"/>
     <Returns>A matrix over semiring.</Returns>
     <Description>
+      This operation can be used to construct a random matrix over a semiring
+      in &Semigroups;. The usage of <C>RandomMatrix</C> is similar to that of
+        <Ref Oper = "Matrix"/>.
+      <P/>
       
-      <Example><![CDATA[
+      In its first form, the first argument <A>filt</A> specifies the
+      filter to be used to create the matrix, the second argument <A>dim</A> is
+      dimension of the matrix, the third and fourth arguments <A>threshold</A>
+      and <A>period</A> (if required) must be positive integers.
+      <P/>
+      
+      <List>
+        <Mark><A>filt</A></Mark>
+        <Item>
+          This must be one of the filters given in Section <Ref Sect =
+            "IsXMatrix"/>.
+        </Item>
+
+        <Mark><A>dim</A></Mark>
+        <Item>
+          This must be a positive integer.
+        </Item>
         
-]]></Example>
+        <Mark><A>threshold</A></Mark>
+        <Item>
+          If <A>filt</A> is any of <Ref Filt = "IsTropicalMaxPlusMatrix"/>, 
+          <Ref Filt = "IsTropicalMinPlusMatrix"/>, or <Ref Filt =
+            "IsNTPMatrix"/>, then this argument specifies the threshold of the
+          underlying semiring of the matrix being created. 
+        </Item>
+        
+        <Mark><A>period</A></Mark>
+        <Item>
+          If <A>filt</A> is <Ref Filt = "IsNTPMatrix"/>, then this argument
+          specifies the period of the underlying semiring of the matrix being
+          created. 
+        </Item>
+      </List>
+
+      In its second form, the arguments should be a semiring <A>semiring</A>
+      and dimension <A>dim</A>. Currently, the only supported semirings are
+      finite fields of prime order and the integers <Ref Var = "Integers"
+        BookName = "ref"/>.
+
+      <Log><![CDATA[
+gap> RandomMatrix(IsBooleanMat, 3);
+Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 0, 1]])
+gap> RandomMatrix(IsMaxPlusMatrix, 2);
+Matrix(IsMaxPlusMatrix, [[1, -infinity], [1, 0]])
+gap> RandomMatrix(IsMinPlusMatrix, 3);
+Matrix(IsMinPlusMatrix, [[infinity, 2, infinity], [4, 0, -2], [1, -3, 0]])
+gap> RandomMatrix(IsTropicalMaxPlusMatrix, 3, 5);
+Matrix(IsTropicalMaxPlusMatrix, [[5, 1, 4], [1, -infinity, 1], [1, 0, 2]], 
+  5)
+gap> RandomMatrix(IsTropicalMinPlusMatrix, 3, 2);
+Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1], 
+  [2, 2, 1]], 2)
+gap> RandomMatrix(IsProjectiveMaxPlusMatrix, 4);
+Matrix(IsProjectiveMaxPlusMatrix, [[1, -1, -1, -infinity], 
+  [0, -infinity, 1, -1], [-infinity, 3, 2, 4], [3, -1, 1, -infinity]])
+gap> RandomMatrix(IsNTPMatrix, 3, 2, 5);
+Matrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)
+gap> RandomMatrix(IsIntegerMatrix, 2);
+Matrix(IsIntegerMatrix, [[1, 3], [0, 0]])
+gap> RandomMatrix(Integers, 2);
+Matrix(IsIntegerMatrix, [[-1, 0], [0, -1]])
+gap> RandomMatrix(GF(5), 1);
+Matrix(GF(5), [[Z(5)^0]])]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>

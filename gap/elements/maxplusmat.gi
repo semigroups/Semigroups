@@ -489,7 +489,7 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsIntegerMatrix",
 [IsIntegerMatrix], x -> IntegerMatrixType);
 
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
-"for IsIntegerMatrix", [IsNTPMatrix],
+"for IsIntegerMatrix", [IsIntegerMatrix],
 function(filter)
   return IsInt;
 end);

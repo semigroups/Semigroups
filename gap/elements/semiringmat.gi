@@ -133,7 +133,7 @@ function(filter, mat)
   fi;
 
   if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
-                    IsProjectiveMaxPlusMatrix] then
+                    IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
     ErrorMayQuit("Semigroups: Matrix:\n",
                  "cannot create a matrix from the given ",
                  "arguments,");
@@ -158,29 +158,41 @@ end);
 InstallMethod(Matrix, "for a semiring and homogeneous list",
 [IsSemiring, IsHomogeneousList],
 function(semiring, mat)
-  local row;
+  local filter, entry_ok, checker, row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorMayQuit("Semigroups: Matrix: usage,\n",
                  "the 1st argument must be a square table,");
   fi;
 
-  if not IsPrimeField(semiring) then
+  # IsField required cos there's no method for IsPrimeField for Integers.
+  if IsField(semiring) and IsPrimeField(semiring) then
+    filter := IsMatrixOverPrimeField;
+  elif IsIntegers(semiring) then
+    filter := IsIntegerMatrix;
+  else
     ErrorMayQuit("Semigroups: Matrix:\n",
                  "cannot create a matrix from the given ",
                  "arguments,");
   fi;
 
+  entry_ok := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter);
+  checker := function(x)
+    return entry_ok(x) and x in semiring;
+  end;
+
   for row in mat do
-    if not ForAll(row, x -> IsFFE(x) and x in semiring) then
+    if not ForAll(row, checker) then
       ErrorMayQuit("Semigroups: Matrix:\n",
                    "cannot create a matrix from the given ",
                    "arguments,");
     fi;
   od;
   mat := List(mat, ShallowCopy);
-  Add(mat, Size(semiring));
-  return MatrixNC(MatrixOverPrimeFieldType, mat);
+  if IsField(semiring) then
+    Add(mat, Size(semiring));
+  fi;
+  return MatrixNC(filter, mat);
 end);
 
 InstallGlobalFunction(RandomMatrix,
