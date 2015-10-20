@@ -1,0 +1,131 @@
+#############################################################################
+##
+#W  maxplusmat.xml
+#Y  Copyright (C) 2015                                  James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsBooleanMat">
+  <ManSection>
+    <Filt Name="IsBooleanMat"              Arg="obj" Type="Category"/>
+    <Filt Name="IsMaxPlusMatrix"           Arg="obj" Type="Category"/>
+    <Filt Name="IsMinPlusMatrix"           Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMatrix"          Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMaxPlusMatrix"   Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMinPlusMatrix"   Arg="obj" Type="Category"/>
+    <Filt Name="IsProjectiveMaxPlusMatrix" Arg="obj" Type="Category"/>
+    <Filt Name="IsNTPMatrix"               Arg="obj" Type="Category"/>
+    <Filt Name="IsIntegerMatrix"           Arg="obj" Type="Category"/>
+    <Filt Name="IsMatrixOverPrimeField"    Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      Every matrix over a semiring in &Semigroups; is a member of one of these
+      categories, which are subcategory of <Ref Filt="IsMatrixOverSemiring"/>.
+      <P/>
+      
+      <C>IsTropicalMatrix</C> is a supercategory of <C>IsTropicalMaxPlusMatrix</C>, 
+      <C>IsTropicalMinPlusMatrix</C> and <C>IsProjectiveMaxPlusMatrix</C>.
+      <P/>
+
+      Basic operations for tropical matrices include: multiplication via \*,
+      <Ref Attr="One" BookName="ref"/>;
+      for tropical matrices <Ref Attr="ThresholdTropicalMatrix"/>; for ntp
+      matrices <Ref Attr="ThresholdNTPMatrix"/> and <Ref Attr="PeriodNTPMatrix"/>;
+      for matrices over finite fields <Ref Attr=""/>; for Boolean matrices more
+      details can be found in Section <Ref Sect="Boolean matrices"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsBooleanMatCollection">
+  <ManSection>
+    <Filt Name="IsBooleanMatCollection"              Arg="obj" Type="Category"/>
+    <Filt Name="IsBooleanMatCollColl"                Arg="obj" Type="Category"/>
+    <Filt Name="IsMaxPlusMatrixCollection"           Arg="obj" Type="Category"/>
+    <Filt Name="IsMaxPlusMatrixCollColl"             Arg="obj" Type="Category"/>
+    <Filt Name="IsMinPlusMatrixCollection"           Arg="obj" Type="Category"/>
+    <Filt Name="IsMinPlusMatrixCollColl"             Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMatrixCollection"          Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMatrixCollColl"            Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMaxPlusMatrixCollection"   Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMaxPlusMatrixCollColl"     Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMinPlusMatrixCollection"   Arg="obj" Type="Category"/>
+    <Filt Name="IsTropicalMinPlusMatrixCollColl"     Arg="obj" Type="Category"/>
+    <Filt Name="IsProjectiveMaxPlusMatrixCollection" Arg="obj" Type="Category"/>
+    <Filt Name="IsProjectiveMaxPlusMatrixCollColl"   Arg="obj" Type="Category"/>
+    <Filt Name="IsNTPMatrixCollection"               Arg="obj" Type="Category"/>
+    <Filt Name="IsNTPMatrixCollColl"                 Arg="obj" Type="Category"/>
+    <Filt Name="IsIntegerMatrixCollection"           Arg="obj" Type="Category"/>
+    <Filt Name="IsIntegerMatrixCollColl"             Arg="obj" Type="Category"/>
+    <Filt Name="IsMatrixOverPrimeFieldCollection"    Arg="obj" Type="Category"/>
+    <Filt Name="IsMatrixOverPrimeFieldCollColl"      Arg="obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+       Every collection of matrices over the same semiring in &Semigroups; belongs to
+       one of the categories above. For example, semigroups
+       of boolean matrices belong to <C>IsBooleanMatCollection</C>.<P/>
+
+       Similarly, every collection of collections of matrices over the same
+       semiring in &Semigroups; belongs to one of the categories above.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BooleanMatFamily">
+  <ManSection>
+    <Var Name="BooleanMatFamily"             />
+    <Var Name="BooleanMatType"               />
+    <Var Name="MaxPlusMatrixType"            />
+    <Var Name="MaxPlusMatrixFamily"          />
+    <Var Name="MinPlusMatrixType"            />
+    <Var Name="MinPlusMatrixFamily"          />
+    <Var Name="TropicalMatrixType"           />
+    <Var Name="TropicalMatrixFamily"         />
+    <Var Name="TropicalMaxPlusMatrixType"    />
+    <Var Name="TropicalMaxPlusMatrixFamily"  />
+    <Var Name="TropicalMinPlusMatrixType"    />
+    <Var Name="TropicalMinPlusMatrixFamily"  />
+    <Var Name="ProjectiveMaxPlusMatrixType"  />
+    <Var Name="ProjectiveMaxPlusMatrixFamily"/>
+    <Var Name="NTPMatrixType"                />
+    <Var Name="NTPMatrixFamily"              />
+    <Var Name="IntegerMatrixType"            />
+    <Var Name="IntegerMatrixFamily"          />
+    <Var Name="MatrixOverPrimeFieldType"     />
+    <Var Name="MatrixOverPrimeFieldFamily"   />
+
+    <Description>
+      Every matrix over a semiring in &Semigroups; has family and type equal to
+      one of the above.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ThresholdTropicalMatrix">
+  <ManSection>
+    <Attr Name="ThresholdTropicalMatrix" Arg="mat"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      If <A>mat</A> is a tropical matrix (i.e. belongs to the category <Ref
+        Filt = "IsTropicalMatrix"/>), then <C>ThresholdTropicalMatrix</C>
+      returns the threshold (i.e. the largest integer) of the underlying
+      semiring.
+      <Example><![CDATA[
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
+>  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10);
+Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10)
+gap> ThresholdTropicalMatrix(mat);
+10
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
+>   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3);
+Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3)
+gap> ThresholdTropicalMatrix(mat);
+3]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

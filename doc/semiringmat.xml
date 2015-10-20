@@ -25,8 +25,9 @@
       <P/>
 
       Basic operations for matrices over semirings are:
-      <Ref Attr="DimensionOfMatrixOverSemiring"/> and
-      <Ref Attr="TransposedMat" BookName = "ref"/>.
+      <Ref Attr="DimensionOfMatrixOverSemiring"/>,
+      <Ref Attr="TransposedMat" BookName = "ref"/>,
+      <Ref Attr="One" BookName = "ref"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -62,6 +63,34 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
   [0, 0, 0, 1]])
 gap> DimensionOfMatrixOverSemiring(x);
 4]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Matrix">
+  <ManSection>
+    <Oper Name="Matrix" Arg="filt, mat[, threshold[, period]]"/>
+    <Oper Name="Matrix" Arg="semiring, mat"/>
+    <Returns>A matrix over semiring.</Returns>
+    <Description>
+      If <A>filt</A> is one of the  
+      <Example><![CDATA[
+        
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomMatrix">
+  <ManSection>
+    <Func Name="RandomMatrix" Arg="filt, dim[, threshold[, period]]"/>
+    <Oper Name="RandomMatrix" Arg="semiring, dim"/>
+    <Returns>A matrix over semiring.</Returns>
+    <Description>
+      
+      <Example><![CDATA[
+        
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
