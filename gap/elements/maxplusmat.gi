@@ -273,7 +273,7 @@ InstallMethod(RandomMatrixCons,
 function(filter, dim, threshold)
   local mat;
   mat := SEMIGROUPS_RandomIntegerMatrix(dim, -infinity);
-  SEMIGROUPS_TropicalizeMat(mat, threshold);
+  mat := SEMIGROUPS_TropicalizeMat(mat, threshold);
   return MatrixNC(filter, mat);
 end);
 
@@ -342,8 +342,8 @@ InstallMethod(RandomMatrixCons,
 [IsTropicalMinPlusMatrix, IsPosInt, IsPosInt],
 function(filter, dim, threshold)
   local mat;
-  mat := SEMIGROUPS_RandomIntegerMatrix(dim, -infinity);
-  SEMIGROUPS_TropicalizeMat(mat, threshold);
+  mat := SEMIGROUPS_RandomIntegerMatrix(dim, infinity);
+  mat := SEMIGROUPS_TropicalizeMat(mat, threshold);
   return MatrixNC(filter, mat);
 end);
 
