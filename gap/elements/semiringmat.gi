@@ -17,6 +17,36 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+InstallMethod(Iterator, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(mat)
+  local iter;
+
+  iter := rec(pos := 0);
+
+  iter.NextIterator := function(iter)
+    if IsDoneIterator(iter) then
+      return fail;
+    fi;
+    iter!.pos := iter!.pos + 1;
+    return mat![iter!.pos];
+  end;
+
+  iter.IsDoneIterator := function(iter)
+    if iter!.pos = Length(mat![1]) then
+      return true;
+    fi;
+    return false;
+  end;
+
+  iter.ShallowCopy := function(iter)
+    return rec(pos := 0);
+  end;
+
+  return IteratorByFunctions(iter);
+end);
+
+
 InstallMethod(ELM_LIST, "for a matrix over semiring",
 [IsMatrixOverSemiring, IsPosInt],
 function(mat, pos)

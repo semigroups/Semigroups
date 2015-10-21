@@ -53,6 +53,7 @@ DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
 DeclareOperation("RandomMatrixOp", [IsSemiring, IsPosInt]);
 
 DeclareOperation("ELM_LIST", [IsMatrixOverSemiring, IsPosInt]);
+DeclareOperation("Iterator", [IsMatrixOverSemiring]);
 DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
 
