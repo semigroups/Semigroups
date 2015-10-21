@@ -30,7 +30,7 @@ function(arg)
   fi;
   if not IsSemigroup(arg[1]) then
     ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
-                 "1st argument <s> must be a semigroup,");
+                 "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
 
@@ -63,18 +63,21 @@ function(arg)
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     fi;
-  elif (IsRMSCongruenceByLinkedTriple(arg[2]) and IsSimpleSemigroup(S)) or
-       (IsRZMSCongruenceByLinkedTriple(arg[2]) and IsZeroSimpleSemigroup(S))
-       then
+  elif IsGeneralMapping(arg[2])
+     and ((IsRMSCongruenceByLinkedTriple(arg[3]) and IsSimpleSemigroup(S)) or
+          (IsRZMSCongruenceByLinkedTriple(arg[3]) and IsZeroSimpleSemigroup(S)))
+      then
     # We should have a congruence of an isomorphic RMS/RZMS
-    if Range(IsomorphismReesMatrixSemigroup(S)) = Range(arg[2]) then
-      return SEMIGROUPS_SimpleCongFromRMSCong(S, arg[2]);
+    if Range(arg[2]) = Range(arg[3]) and S = Source(arg[2]) then
+      return SEMIGROUPS_SimpleCongFromRMSCong(S, arg[2], arg[3]);
     else
       ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
                    "<cong> should be over a Rees (0-)matrix semigroup ",
-                   "isomorphic to <S>");
+                   "isomorphic to <S> via <iso>,");
     fi;
-  elif IsSemigroupIdeal(arg[2]) and Parent(arg[2]) = S then
+  elif HasIsSemigroupIdeal(arg[2])
+      and IsSemigroupIdeal(arg[2])
+      and Parent(arg[2]) = S then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
   elif Length(arg) = 3
       and IsInverseSemigroup(arg[2])
@@ -168,54 +171,4 @@ function(arg)
   else
     TryNextMethod();
   fi;
-end);
-
-#
-
-InstallMethod(ViewObj,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-1,
-function(cong)
-  Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
-  if HasGeneratingPairsOfMagmaCongruence(cong) then
-    Print(" with ", Size(GeneratingPairsOfSemigroupCongruence(cong)),
-          " generating pairs");
-  fi;
-  Print(">");
-end);
-
-#
-
-InstallMethod(PrintObj,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-1,
-function(cong)
-  Print("SemigroupCongruence( ");
-  PrintObj(Range(cong));
-  Print(", ");
-  if HasGeneratingPairsOfMagmaCongruence(cong) then
-    Print(GeneratingPairsOfSemigroupCongruence(cong));
-  fi;
-  Print(")");
-end);
-
-#
-
-InstallMethod(\*,
-"for an equivalence class and a list",
-[IsEquivalenceClass, IsList],
-function(class, list)
-  return List(list, x -> class * x);
-end);
-
-#
-
-InstallMethod(\*,
-"for a list and an equivalence class",
-[IsList, IsEquivalenceClass],
-function(list, class)
-  return List(list, x -> x * class);
 end);

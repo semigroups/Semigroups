@@ -114,6 +114,7 @@
     <#Include Label="IsBooleanMat"/>
     <#Include Label="IsBooleanMatCollection"/>
     <#Include Label="BooleanMatFamily"/>
+    <#Include Label="AsList"/>
     <!-- the following could go in a section of their own if there are more at
           some point -->
     <#Include Label="ThresholdTropicalMatrix"/>

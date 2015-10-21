@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  partbinrel.gi
+#W  pbr.gi
 #Y  Copyright (C) 2015                                   Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -11,7 +11,7 @@
 # This file contains an intitial implementation of partitioned binary
 # relations (PBRs) as defined in:
 #
-# Paul Martin and Volodymyr Mazorchuk, Partitioned Binary Relations,
+# Paul Martin and Volodymyr Mazorchuk, Partitioned binary relatons,
 # Mathematica Scandinavica, v113, n1, p. 30-52, http://arxiv.org/abs/1102.0862
 
 # Internally a PBR is stored as the adjacency list of digraph with
@@ -24,8 +24,37 @@
 # The number <n> is the *degree* of <x>.
 
 # TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
-# IsBipartitionPBR, IsTransformationPBR,
-# IsDualTransformationPBR, etc
+# IdentityPBR, AsPermutation, AsPBR for a pbr (extend or restrict),
+# AsPBR(boolean mat, pos int),
+
+InstallMethod(StarOp, "for a pbr", [IsPBR],
+function(x)
+  local ext;
+  ext := ShallowCopy(ExtRepOfPBR(x) * -1);
+  Apply(ext, ShallowCopy);
+  Apply(ext[1], ShallowCopy);
+  Apply(ext[2], ShallowCopy);
+  return PBR(ext[2], ext[1]);
+end);
+
+InstallMethod(DegreeOfPBRCollection, "for a PBR collection",
+[IsPBRCollection],
+function(coll)
+  local deg;
+
+  if IsPBRSemigroup(coll) then
+    return DegreeOfPBRSemigroup(coll);
+  fi;
+
+  deg := DegreeOfPBR(coll[1]);
+  if not ForAll(coll, x -> DegreeOfPBR(x) = deg) then
+    ErrorMayQuit("Semigroups: DegreeOfPBRCollection: usage,\n",
+                 "the argument <coll> must be a collection of PBRs ",
+                 "of equal degree,");
+  fi;
+
+  return deg;
+end);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
 [IsPBRCollection],
@@ -52,6 +81,7 @@ function(x)
   return IsEquivalenceBooleanMat(AsBooleanMat(x));
 end);
 
+# TODO is this the correct definition
 InstallMethod(IsTransformationPBR, "for a pbr",
 [IsPBR],
 function(x)
@@ -143,11 +173,13 @@ function(x, n)
 
   for block in blocks do
     for i in block do
-      if i < 0 then
-        i := -i;
-        out[2][i] := ShallowCopy(block);
-      else
-        out[1][i] := ShallowCopy(block);
+      if i <= n then
+        if i < 0 then
+          i := -i;
+          out[2][i] := ShallowCopy(block);
+        else
+          out[1][i] := ShallowCopy(block);
+        fi;
       fi;
     od;
   od;
@@ -230,13 +262,13 @@ function(arg)
   return Objectify(PBRType, arg);
 end);
 
-InstallMethod(DegreeOfPBR, "for a partitioned binary relation",
+InstallMethod(DegreeOfPBR, "for a pbr",
 [IsPBR], pbr -> pbr![1]);
 
 # can't we use some sort of Floyd-Warshall Algorithm here, the current method
 # involves searching in the same part of the graph repeatedly??
 
-InstallMethod(\*, "for partitioned binary relations",
+InstallMethod(\*, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
   local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, i;
@@ -296,7 +328,8 @@ function(x, y)
   return Objectify(PBRType, out);
 end);
 
-InstallGlobalFunction(ExtRepOfPBR,
+InstallMethod(ExtRepOfPBR, "for a pbr",
+[IsPBR],
 function(x)
   local n, out, i, j, k;
 
@@ -323,61 +356,28 @@ function(x)
   return out;
 end);
 
-InstallMethod(ViewString, "for a partitioned binary relation",
-[IsPBR],
-function(x)
-  local str, n, ext, i;
 
-  if IsUniversalPBR(x) then
-    return Concatenation("\><universal pbr on ", PrintString(x![1]),
-                         " points>\<");
-  elif IsEmptyPBR(x) then
-    return Concatenation("\><empty pbr on ", PrintString(x![1]),
-                         " points>\<");
+InstallMethod(ViewObj, "for a pbr", [IsPBR], PrintObj);
+
+InstallMethod(PrintObj, "for a pbr", [IsPBR],
+function(x)
+  local ext;
+
+  ext := ExtRepOfPBR(x);
+  Print("\>\>PBR(");
+  Print("\>\>", ext[1], "\<\<,");
+  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
+    Print("\n");
+  else
+    Print(" ");
   fi;
 
-  str := "\>\>\>\>\><pbr:";
-
-  n := DegreeOfPBR(x);
-  ext := ExtRepOfPBR(x);
-
-  Append(str, "\>");
-  Append(str, PRINT_STRINGIFY("[\>", ext[1][1]));
-  for i in [2 .. n] do
-    Append(str, ",\< \>");
-    Append(str, PrintString(ext[1][i]));
-  od;
-  Append(str, "\<],\<");
-  Append(str, " \>");
-  Append(str, PRINT_STRINGIFY("[\>", ext[2][1]));
-  for i in [2 .. n] do
-    Append(str, ",\< \>");
-    Append(str, PrintString(ext[2][i]));
-  od;
-  Append(str, "\<]\<");
-  Append(str, ">\<\<\<\<\<");
-  return str;
+  Print("\>\>");
+  Print(ext[2], "\<\<\<\<)");
 end);
 
-InstallMethod(PrintString, "for a partitioned binary relation",
-[IsPBR],
-function(x)
-  local str, ext;
 
-  str := "\>\>PBR(\>\>";
-
-  ext := ExtRepOfPBR(x);
-  Append(str, "\>");
-  Append(str, PrintString(ext[1]));
-  Append(str, "\<");
-  Append(str, ", \>");
-  Append(str, PrintString(ext[2]));
-  Append(str, "\<");
-  Append(str, "\<\<)\<\<");
-  return str;
-end);
-
-InstallMethod(\=, "for partitioned binary relations",
+InstallMethod(\=, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
   local n, i;
@@ -391,7 +391,7 @@ function(x, y)
   return true;
 end);
 
-InstallMethod(\<, "for partitioned binary relations",
+InstallMethod(\<, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
   local n, i;
@@ -407,15 +407,7 @@ function(x, y)
   return false;
 end);
 
-#PBRMonoid := function(n)
-#  local binrels;
-#  binrels := List(Tuples(Combinations([1..n]),n),
-#                  x -> BinaryRelationOnPoints(x));
-#  return Semigroup(List(Tuples(binrels,4),
-#                 x-> PBR(x[1],x[2],x[3],x[4])));
-#end;
-
-InstallMethod(OneMutable, "for a partitioned binary relation",
+InstallMethod(OneMutable, "for a pbr",
 [IsPBR],
 function(x)
   local n, out, i;
@@ -428,3 +420,73 @@ function(x)
   od;
   return Objectify(PBRType, out);
 end);
+
+#InstallMethod(ViewString, "for a pbr",
+#[IsPBR],
+#function(x)
+#  local str, n, ext, i;
+#
+#  if IsUniversalPBR(x) then
+#    return Concatenation("\><universal pbr on ", PrintString(x![1]),
+#                         " points>\<");
+#  elif IsEmptyPBR(x) then
+#    return Concatenation("\><empty pbr on ", PrintString(x![1]),
+#                         " points>\<");
+#  fi;
+#
+#  n := DegreeOfPBR(x);
+#  ext := ExtRepOfPBR(x);
+#
+#  str := "\><pbr:";
+#  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
+#    Append(str, "\n");
+#  else
+#    Append(str, " ");
+#  fi;
+#
+#  Append(str, "\>[\>");
+#  Append(str, ViewString(ext[1][1]));
+#  for i in [2 .. n] do
+#    Append(str, ",\< \>");
+#    Append(str, ViewString(ext[1][i]));
+#  od;
+#  Append(str, "\<],\<");
+#  if Length(String(ext)) > 72 then
+#    Append(str, "\n");
+#    if Length(String(ext[1])) <=  72 and Length(String(ext[2])) <= 72 then
+#      Append(str, "     ");
+#    fi;
+#  else
+#    Append(str, " ");
+#  fi;
+#  Append(str, "\>[\>");
+#  Append(str, ViewString(ext[2][1]));
+#  for i in [2 .. n] do
+#    Append(str, ",\< \>");
+#    Append(str, ViewString(ext[2][i]));
+#  od;
+#  Append(str, "\<]\<");
+#  Append(str, " >\<");
+#  return str;
+#end);
+#InstallMethod(PrintString, "for a pbr",
+#[IsPBR],
+#function(x)
+#  local str, ext;
+#
+#  ext := ExtRepOfPBR(x);
+#
+#  str := "\>\>PBR(\>\>";
+#  Append(str, "\>");
+#  Append(str, ViewString(ext[1]));
+#  Append(str, "\<");
+#  Append(str, ", ");
+#  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
+#    Append(str, "\n");
+#  fi;
+#  Append(str, "\>");
+#  Append(str, ViewString(ext[2]));
+#  Append(str, "\<");
+#  Append(str, "\<\<)\<\<");
+#  return str;
+#end);

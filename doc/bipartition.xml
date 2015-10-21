@@ -316,11 +316,16 @@ false]]></Example>
 <#GAPDoc Label="IsBipartitionCollection">
   <ManSection>
     <Filt Name="IsBipartitionCollection" Arg="obj" Type="Category"/>
+    <Filt Name="IsBipartitionCollColl" Arg="obj" Type="Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
        Every collection of bipartitions belongs to the category
      <C>IsBipartitionCollection</C>. For example, bipartition semigroups
-     belong to <C>IsBipartitionCollection</C>. 
+     belong to <C>IsBipartitionCollection</C>.<P/>
+
+     Every collection of collections of bipartitions belongs to
+     <C>IsBipartitionCollColl</C>. For example, a list of bipartition
+     semigroups belongs to <C>IsBipartitionCollColl</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -457,9 +462,8 @@ gap> AsBlockBijection(x, 11);
     <Oper Name="AsBipartition" Arg="f[, n]"/>
     <Returns>A bipartition.</Returns>
   <Description>
-  <C>AsBipartition</C> 
-  returns the bipartition, permutation, transformation, or partial permutation
-  <A>f</A>, as a bipartition of degree <A>n</A>.
+  <C>AsBipartition</C> returns the bipartition, permutation, transformation, or
+  partial permutation <A>f</A>, as a bipartition of degree <A>n</A>.<P/>
   
   There are several possible arguments for <C>AsBipartition</C>:
   <List>

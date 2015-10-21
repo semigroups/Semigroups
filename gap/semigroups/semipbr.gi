@@ -9,6 +9,34 @@
 
 # This file contains methods for semigroups of PBRs.
 
+InstallMethod(FullPBRMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens;
+
+  gens := [[PBR([ [ ] ], [ [ 1 ] ]), PBR([ [ -1, 1 ] ], [ [ 1 ] ]),
+            PBR([ [ -1 ] ], [ [ ] ]), PBR([ [ -1 ] ], [ [ 1 ] ]),
+            PBR([ [ -1 ] ], [ [ -1, 1 ] ]) ],
+
+          [ PBR([ [ ], [ -1 ] ], [ [ 2 ], [ -2, 1 ] ]),
+            PBR([ [ -2, 1 ], [ -1 ] ], [ [ 2 ], [ ] ]),
+            PBR([ [ -1, 2 ], [ -2 ] ], [ [ 1 ], [ 2 ] ]),
+            PBR([ [ -1 ], [ -2 ] ], [ [ 1 ], [ -2, 2 ] ]),
+            PBR([ [ -2 ], [ 2 ] ], [ [ 1 ], [ 2 ] ]),
+            PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 1, 2 ] ]),
+            PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 2 ] ]),
+            PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ -2 ] ]),
+            PBR([ [ -2 ], [ -1 ] ], [ [ 2 ], [ 1 ] ]),
+            PBR([ [ -2 ], [ -2, -1 ] ], [ [ 1 ], [ 2 ] ]) ]
+          ];
+
+  if n > 2 then
+    ErrorMayQuit("Semigroups: FullPBRMonoid: usage,\n",
+                 "the argument <n> must be at most 2,");
+  fi;
+  return Monoid(gens[n]);
+end);
+
 InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a pbr semigroup",
 [IsPBRSemigroup], S -> "\>pbr\< ");
 

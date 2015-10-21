@@ -243,7 +243,7 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
 function(cong)
-  local S, it, z, x, m, r, n, colBlocks, rowBlocks, rmscong, pairs, d;
+  local S, it, z, x, m, iso, r, n, colBlocks, rowBlocks, rmscong, pairs, d;
   S := Range(cong);
   if Size(S) = 1 then
     return [];
@@ -268,12 +268,13 @@ function(cong)
     m := MinimalIdeal(S);
 
     # Use the linked triple
-    r := Range(IsomorphismReesMatrixSemigroup(m));
+    iso := IsomorphismReesMatrixSemigroup(m);
+    r := Range(iso);
     n := UnderlyingSemigroup(r);
     colBlocks := [[1 .. Size(Matrix(r)[1])]];
     rowBlocks := [[1 .. Size(Matrix(r))]];
     rmscong := RMSCongruenceByLinkedTriple(r, n, colBlocks, rowBlocks);
-    cong := SEMIGROUPS_SimpleCongFromRMSCong(m, rmscong);
+    cong := SEMIGROUPS_SimpleCongFromRMSCong(m, iso, rmscong);
     pairs := ShallowCopy(GeneratingPairsOfSemigroupCongruence(cong));
 
     if IsSimpleSemigroup(S) then
