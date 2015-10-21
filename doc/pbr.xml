@@ -394,7 +394,10 @@ gap> Number(FullPBRMonoid(1), IsPartialPermPBR);
       If <A>x</A> is a bipartition and <A>n</A> is a positive integer, then
       <C>AsPBR</C> returns a PBR corresponding to <A>x</A> with degree
       <A>n</A>. The resulting PBR has an edge from <C>i</C> to <C>j</C> whenever 
-      <C>i</C> and <C>j</C> belong to the same block of <A>x</A>;
+      <C>i</C> and <C>j</C> belong to the same block of <A>x</A>.<P/>
+      
+      If the optional second argument <A>n</A>, then degree of the bipartition
+      <A>x</A> is used by default.
     </Item>
     
     <Mark>boolean matrices</Mark>
@@ -416,13 +419,16 @@ gap> Number(FullPBRMonoid(1), IsPartialPermPBR);
   </List>
 
   <Example><![CDATA[
-    gap> x := Bipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ 4, -3, -4 ] ] );
-    <block bijection: [ 1, 2, -1 ], [ 3, -2 ], [ 4, -3, -4 ]>
-    gap> AsPBR(x, 2);
-    <pbr: [[ -1, 1, 2 ], [ -1, 1, 2 ]], [[ -1, 1, 2 ], [ -2, -1 ]] >
-    gap> AsPBR(x, 5);
-
- ]]></Example>
+gap> x := Bipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ 4, -3, -4 ] ] );
+<block bijection: [ 1, 2, -1 ], [ 3, -2 ], [ 4, -3, -4 ]>
+gap> AsPBR(x, 2);
+<pbr: [[ -1, 1, 2 ], [ -1, 1, 2 ]], [[ -1, 1, 2 ], [ -2, -1 ]] >
+gap> AsPBR(x, 5);
+PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ], [  ] ],
+  [ [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ], [ -4, -3, 4 ], [  ] ])
+gap> AsPBR(x);
+PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ] ],
+ [ [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ], [ -4, -3, 4 ] ])]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
