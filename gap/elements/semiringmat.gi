@@ -17,6 +17,17 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+InstallMethod(ELM_LIST, "for a matrix over semiring",
+[IsMatrixOverSemiring, IsPosInt],
+function(mat, pos)
+  if pos > Length(mat![1]) then
+    ErrorMayQuit("Semigroups: ELM_LIST (for a matrix over semiring):\n",
+                 "the position is greater than the dimension of the matrix,");
+
+  fi;
+  return mat![pos];
+end);
+
 InstallMethod(MatrixNC, "for a type and homogeneous list",
 [IsType, IsList],
 function(type, mat)
