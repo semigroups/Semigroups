@@ -175,6 +175,7 @@ function(S, mat)
 
   # cannot set IsZeroSimpleSemigroup to be <true> here since the matrix may
   # contain a row or column consisting entirely of 0s!
+  # WW Also S might not be a simple semigroup (which is necessary)!
 
   #if HasIsFinite(S) then
   #  SetIsFinite(R, IsFinite(S));
@@ -600,13 +601,15 @@ function(R)
   norm.col_inv := List(norm.col, x -> x ^ -1);
   norm.row_inv := List(norm.row, x -> x ^ -1);
 
-  # Create the perms to sort rows and columns within all components
+  # Create the perms to sort rows and columns within components
   perm.row := PermList(perm.row);
   perm.col := PermList(perm.col);
 
-  # Compose perm with the perms which sort components by size
-  perm.row  := perm.row * PermList(Concatenation(List(comp, x -> x[1])));
-  perm.col  := perm.col * PermList(Concatenation(List(comp, x -> x[2])));
+  # Combine with perms which will sort components by size
+  perm.row := PermList(OnTuples(Concatenation(List(comp, x -> x[1])),
+                                perm.row));
+  perm.col := PermList(OnTuples(Concatenation(List(comp, x -> x[2])),
+                                perm.col));
   perm.row_inv := perm.row ^ -1;
   perm.col_inv := perm.col ^ -1;
 

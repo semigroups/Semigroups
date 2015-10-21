@@ -172,38 +172,6 @@ end);
 
 #
 
-InstallMethod(ViewObj,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-1,
-function(cong)
-  Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
-  if HasGeneratingPairsOfMagmaCongruence(cong) then
-    Print(" with ", Size(GeneratingPairsOfSemigroupCongruence(cong)),
-          " generating pairs");
-  fi;
-  Print(">");
-end);
-
-#
-
-InstallMethod(PrintObj,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-1,
-function(cong)
-  Print("SemigroupCongruence( ");
-  PrintObj(Range(cong));
-  Print(", ");
-  if HasGeneratingPairsOfMagmaCongruence(cong) then
-    Print(GeneratingPairsOfSemigroupCongruence(cong));
-  fi;
-  Print(")");
-end);
-
-#
-
 InstallMethod(\*,
 "for an equivalence class and a list",
 [IsEquivalenceClass, IsList],
