@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  partbinrel.gi
+#W  pbr.gi
 #Y  Copyright (C) 2015                                   Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -24,8 +24,27 @@
 # The number <n> is the *degree* of <x>.
 
 # TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
-# IsBipartitionPBR, IsTransformationPBR,
-# IsDualTransformationPBR, etc
+# IdentityPBR, AsPermutation, AsPBR for a pbr (extend or restrict),
+# AsPBR(boolean mat, pos int), Star (does this make sense?)
+
+InstallMethod(DegreeOfPBRCollection, "for a PBR collection",
+[IsPBRCollection],
+function(coll)
+  local deg;
+
+  if IsPBRSemigroup(coll) then
+    return DegreeOfPBRSemigroup(coll);
+  fi;
+
+  deg := DegreeOfPBR(coll[1]);
+  if not ForAll(coll, x -> DegreeOfPBR(x) = deg) then
+    ErrorMayQuit("Semigroups: DegreeOfPBRCollection: usage,\n",
+                 "the argument <coll> must be a collection of PBRs ",
+                 "of equal degree,");
+  fi;
+
+  return deg;
+end);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
 [IsPBRCollection],
@@ -52,6 +71,7 @@ function(x)
   return IsEquivalenceBooleanMat(AsBooleanMat(x));
 end);
 
+# TODO is this the correct definition
 InstallMethod(IsTransformationPBR, "for a pbr",
 [IsPBR],
 function(x)
@@ -296,7 +316,8 @@ function(x, y)
   return Objectify(PBRType, out);
 end);
 
-InstallGlobalFunction(ExtRepOfPBR,
+InstallMethod(ExtRepOfPBR, "for a pbr",
+[IsPBR],
 function(x)
   local n, out, i, j, k;
 
@@ -406,14 +427,6 @@ function(x, y)
   od;
   return false;
 end);
-
-#PBRMonoid := function(n)
-#  local binrels;
-#  binrels := List(Tuples(Combinations([1..n]),n),
-#                  x -> BinaryRelationOnPoints(x));
-#  return Semigroup(List(Tuples(binrels,4),
-#                 x-> PBR(x[1],x[2],x[3],x[4])));
-#end;
 
 InstallMethod(OneMutable, "for a partitioned binary relation",
 [IsPBR],
