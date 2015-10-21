@@ -34,7 +34,7 @@ function(x)
   Apply(ext, ShallowCopy);
   Apply(ext[1], ShallowCopy);
   Apply(ext[2], ShallowCopy);
-  return PBR(PlainListCopy(ext[2]), PlainListCopy(ext[1]));
+  return PBR(ext[2], ext[1]);
 end);
 
 InstallMethod(DegreeOfPBRCollection, "for a PBR collection",
