@@ -654,3 +654,56 @@ function(R)
   SetIsTotal(hom, true);
   return hom;
 end);
+
+InstallMethod(RMSNormalization,
+"for a Rees matrix semigroup",
+[IsReesMatrixSemigroup],
+function(R)
+  local G, mat, id, r, c, new, S, iso, inv, hom, i, j;
+
+  G := UnderlyingSemigroup(R);
+  if not IsGroup(G) or IsGroupAsSemigroup(G) then
+    ErrorMayQuit("Semigroups: RMSNormalization: usage,\n",
+                 "the underlying semigroup of the Rees matrix semigroup <R> ",
+                 "must be a group,");
+  fi;
+
+  mat := Matrix(R);
+  id := Identity(G);
+  r := EmptyPlist(Length(Rows(R)));
+
+  r[1] := id;
+  for i in [2 .. Length(Rows(R))] do
+    r[i] := mat[1][i] ^ -1 * mat[1][1];
+  od;
+  c := List(Columns(R), j -> mat[j][1] ^ -1);
+
+  # Construct new RMS
+  new := List(Columns(R), x -> EmptyPlist(Length(Rows(R))));
+  for i in Rows(R) do
+    for j in Columns(R) do
+      new[j][i] := c[j] * mat[j][i] * r[i];
+    od;
+  od;
+  S := ReesMatrixSemigroup(G, new);
+
+  iso := function(x)
+    if x![1] = 0 then
+      return MultiplicativeZero(S);
+    fi;
+    return RMSElement(S, x![1], r[x![1]] ^ -1 * x![2] * c[x![3]] ^ -1, x![3]);
+  end;
+
+  inv := function(x)
+    if x![1] = 0 then
+      return MultiplicativeZero(R);
+    fi;
+    return RMSElement(R, x![1], r[x![1]] * x![2] * c[x![3]], x![3]);
+  end;
+
+  hom := MappingByFunction(R, S, iso, inv);
+  SetIsInjective(hom, true);
+  SetIsSurjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
+end);

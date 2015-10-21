@@ -170,12 +170,18 @@ gap> MaximalDClasses(S);
 <#GAPDoc Label="PrincipalFactor">
 <ManSection>
   <Attr Name="PrincipalFactor" Arg="D"/>
-  <Returns>A Rees matrix semigroup.</Returns>
-  <Description> 
+  <Attr Name="NormalizedPrincipalFactor" Arg="D"/>
+  <Returns>A Rees (0-)matrix semigroup.</Returns>
+  <Description>
+    If <A>D</A> is a &D;-class of semigroup, then
     <C>PrincipalFactor(<A>D</A>)</C> is just shorthand for
-    <C>Range(InjectionPrincipalFactor(<A>D</A>))</C>, where <A>D</A> is a
-    &D;-class of semigroup; see
-    <Ref Oper="InjectionPrincipalFactor"/> for more details. 
+    <C>Range(InjectionPrincipalFactor(<A>D</A>))</C>, and
+    <C>NormalizedPrincipalFactor(<A>D</A>)</C> is shorthand for
+    <C>Range(InjectionNormalizedPrincipalFactor(<A>D</A>))</C>.
+    <P/>
+
+    See <Ref Attr="InjectionPrincipalFactor"/> and <Ref
+      Attr="InjectionNormalizedPrincipalFactor"/> for more details. 
     <Example><![CDATA[
 gap> S := Semigroup([ PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ), 
@@ -192,7 +198,7 @@ gap> S := Semigroup(
 gap> D := MinimalDClass(S);    
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], 
   [ -2, -5 ], [ -4 ]>>
-gap> PrincipalFactor(D);
+gap> NormalizedPrincipalFactor(D);
 <Rees matrix semigroup 1x5 over Group(())>]]></Example>
   </Description>
 </ManSection>
@@ -539,14 +545,15 @@ true]]></Example>
 <#GAPDoc Label="InjectionPrincipalFactor">
 <ManSection>
   <Attr Name="InjectionPrincipalFactor" Arg="D"/>
+  <Attr Name="InjectionNormalizedPrincipalFactor" Arg="D"/>
   <Attr Name="IsomorphismReesMatrixSemigroup" Arg="D" Label="for a D-class"/>
   <Returns>A injective mapping.</Returns>
   <Description> 
-    If the &D;-class <A>D</A> is a subsemigroup of a semigroup <C>S</C>, then the
-    <E>principal factor</E> of <A>D</A> is just <A>D</A> itself.  If <A>D</A>
-    is not a subsemigroup of <C>S</C>, then the principal factor of <A>D</A> is
-    the semigroup with elements <A>D</A> and a new element <C>0</C> with
-    multiplication of <M>x,y\in D</M> defined by:
+    If the &D;-class <A>D</A> is a subsemigroup of a semigroup <C>S</C>, then
+    the <E>principal factor</E> of <A>D</A> is just <A>D</A> itself.  If
+    <A>D</A> is not a subsemigroup of <C>S</C>, then the principal factor of
+    <A>D</A> is the semigroup with elements <A>D</A> and a new element <C>0</C>
+    with multiplication of <M>x,y\in D</M> defined by:
     <Alt Not="Text">
       <Display>
         xy=\left\{\begin{array}{ll}
@@ -575,6 +582,10 @@ true]]></Example>
     <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. In this case,
     <C>IsomorphismReesMatrixSemigroup</C> and
     <C>IsomorphismReesZeroMatrixSemigroup</C> returns an error.<P/>
+
+    <C>InjectionNormalizedPrincipalFactor</C> returns the composition of
+    <C>InjectionPrincipalFactor</C> with <Ref Attr="RZMSNormalization"/> or
+    <Ref Attr="RMSNormalization"/> as appropriate.<P/>
 
     See also <Ref Attr="PrincipalFactor"/>.
     
@@ -605,7 +616,7 @@ gap> D := GreensDClassOfElement(S,
 > Bipartition( [ [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ], [ -3 ] ] ));
 <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ]
    , [ -3 ]>>
-gap> InjectionPrincipalFactor(D);
+gap> InjectionNormalizedPrincipalFactor(D);
 MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], 
   [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over 
   Group([ (1,2) ])>, function( x ) ... end, function( x ) ... end )]]></Example>
@@ -710,6 +721,93 @@ gap> IrredundantGeneratingSubset(last);
   <bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]> ]]]></Log>
     </Description>
   </ManSection>
+<#/GAPDoc>
+
+#
+
+<#GAPDoc Label="RZMSDigraph">
+<ManSection>
+  <Attr Name="RZMSDigraph" Arg="R"/>
+  <Returns>?</Returns>
+  <Description>
+<Example><![CDATA[gap> 10;]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+#
+
+<#GAPDoc Label="RZMSConnectedComponents">
+<ManSection>
+  <Attr Name="RZMSConnectedComponents" Arg="R"/>
+  <Returns>?</Returns>
+  <Description>
+<Example><![CDATA[gap> 10;]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+#
+
+<#GAPDoc Label="RZMSNormalization">
+<ManSection>
+  <Attr Name="RZMSNormalization" Arg="R"/>
+  <Returns>An isomorphism.</Returns>
+  <Description>
+    If <A>R</A> is a Rees 0-matrix semigroup over a semigroup <C>T</C>, then
+    <C>RZMSNormalization</C> returns an isomorphism from <A>R</A> to a
+    <E>normalized</E> Rees 0-matrix semigroup <C>S</C> over <C>T</C>,
+    in the following sense.<P/>
+
+    The <Ref Attr="Matrix" BookName="ref"/> <C>mat</C> of <C>S</C> will have
+    the same dimensions as the matrix of <A>R</A>, and will satisfy the
+    following properties: <P/>
+
+    <M>I = I_1 \cup I_2 \cup \ldots \cup I_k \Lambda = \Lambda_1 \cup \Lambda_2
+      \cup \ldots \cup \Lambda_k</M><P/>
+
+    <M>|I_1| \cdot |\Lambda_1| \geq |I_2| \cdot |\Lambda_2| \geq \ldots \geq
+      |I_k| \cdot |\Lambda_k|</M><P/>
+
+    grouped by connected components, ordered by size <Ref
+      Attr="RZMSConnectedComponents" /> - <M>i &lt; j \Rightarrow</M> position
+    of first non-zero entry in row/column <M>i </M> position of first non-zero
+    entry in row/column j<P/>
+
+    Furthermore, if T is a group then:<P/>
+
+    the first non-zero entry of every row and every column of <C>mat</C> will
+    equal to <M>1_T</M>;<P/>
+
+    the non-zero entries of each connected component generate<P/>
+
+    Note that isomorphic Rees 0-matrix semigroups can have differing
+    normalizations.
+<Example><![CDATA[gap> 10;]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RMSNormalization">
+<ManSection>
+  <Attr Name="RMSNormalization" Arg="R"/>
+  <Returns>An isomorphism.</Returns>
+  <Description>
+    If <A>R</A> is a Rees matrix semigroup over a group <C>G</C>, then
+    <C>RMSNormalization</C> returns an isomorphism from <A>R</A> to a Rees
+    matrix semigroup <C>S</C> over <C>G</C>, such that the first entry of each
+    row and column of the <Ref Attr="Matrix" BookName="ref"/> of <C>S</C> is
+    the identity of <C>G</C>.
+<Example><![CDATA[
+gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
+> [ [ (1,2), (2,4,3), (2,1,4) ],
+>   [ (1,3,2), (1,2)(3,4), () ],
+>   [ (2,3), (1,3,2,4), (2,3) ] ]);
+gap> iso := RMSNormalization(R);
+gap> S := Range(iso);
+gap> Matrix(S);]]></Example>
+  </Description>
+</ManSection>
 <#/GAPDoc>
 
 #EOF
