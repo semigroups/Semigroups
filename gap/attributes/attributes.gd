@@ -16,6 +16,7 @@ DeclareOperation("IrredundantGeneratingSubset",
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
+DeclareAttribute("InjectionNormalizedPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("IsomorphismReesZeroMatrixSemigroup", IsSemigroup);
 DeclareAttribute("RepresentativeOfMinimalIdeal", IsSemigroup);
@@ -23,6 +24,7 @@ DeclareSynonymAttr("RepresentativeOfMinimalDClass",
                    RepresentativeOfMinimalIdeal);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
+DeclareAttribute("NormalizedPrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsSemigroup);
 DeclareAttribute("LengthOfLongestDClassChain", IsSemigroup);
 DeclareAttribute("NilpotencyDegree", IsSemigroup and IsFinite);

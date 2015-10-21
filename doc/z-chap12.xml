@@ -167,5 +167,20 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
+  <Section>
+
+    <Heading>
+      Attributes of Rees (0-)matrix semigroups
+    </Heading>
+
+    <#Include Label="RZMSDigraph">
+    <#Include Label="RZMSConnectedComponents">
+    <#Include Label="RZMSNormalization">
+    <#Include Label="RMSNormalization">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 </Chapter>
 

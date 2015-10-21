@@ -382,6 +382,11 @@ end);
 InstallMethod(PrincipalFactor, "for a Green's D-class",
 [IsGreensDClass], D -> Range(InjectionPrincipalFactor(D)));
 
+#
+
+InstallMethod(NormalizedPrincipalFactor, "for a Green's D-class",
+[IsGreensDClass], D -> Range(InjectionNormalizedPrincipalFactor(D)));
+
 # different method for ideals, not yet implemented
 
 InstallMethod(SmallSemigroupGeneratingSet,
@@ -513,16 +518,12 @@ end);
 
 # same method for ideals
 
+# note that IsGroup and IsGroupAsSemigroup are mutually exclusive
+# so the following method is not called for PermGroups etc
+
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
-function(S)
-  if IsGroup(S) then
-    # since groups (even perm groups) satisfy IsGroupAsSemigroup
-    TryNextMethod(); #this is appropriate, don't change it!
-  fi;
-
-  return StructureDescription(Range(IsomorphismPermGroup(S)));
-end);
+S -> StructureDescription(Range(IsomorphismPermGroup(S))));
 
 # same method for ideals
 
@@ -713,6 +714,35 @@ function(D)
     return SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
   fi;
   return SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+end);
+
+InstallMethod(InjectionNormalizedPrincipalFactor,
+"for a Green's D-class (Semigroups)",
+[IsGreensDClass],
+function(D)
+  local iso1, iso2, rms, inv1, inv2, iso, inv, hom;
+
+  if not IsRegularDClass(D) then
+    ErrorMayQuit("Semigroups: InjectionNormalizedPrincipalFactor: usage,\n",
+                 "the argument <D> must be a regular D-class,");
+  fi;
+  if NrHClasses(D) = NrIdempotents(D) then
+    iso1 := SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
+    iso2 := RMSNormalization(Range(iso1));
+  else
+    iso1 := SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+    iso2 := RZMSNormalization(Range(iso1));
+  fi;
+
+  rms := Range(iso2);
+  inv1 := InverseGeneralMapping(iso1);
+  inv2 := InverseGeneralMapping(iso2);
+  iso := x -> (x ^ iso1) ^ iso2;
+  inv := x -> (x ^ inv2) ^ inv1;
+  hom := MappingByFunction(D, rms, iso, inv);
+  SetIsInjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
 end);
 
 InstallMethod(MultiplicativeNeutralElement,

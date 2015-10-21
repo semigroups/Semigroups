@@ -1051,6 +1051,43 @@ Sym( [ 1 .. 5 ] )
 gap> LengthOfLongestDClassChain(S);
 0
 
+#T# attribute: NormalizedPrincipalFactor, 1
+gap> S := FullTransformationMonoid(4);
+<full transformation monoid of degree 4>
+gap> S := NormalizedPrincipalFactor(DClass(S,
+> Transformation([4, 4, 2, 3])));;
+gap> Rows(S);
+[ 1 .. 6 ]
+gap> Columns(S);
+[ 1 .. 4 ]
+gap> StructureDescription(UnderlyingSemigroup(S));
+"S3"
+
+#T# attribute: InjectionNormalizedPrincipalFactor, 1
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [0, ()]]);
+<Rees 0-matrix semigroup 2x2 over Group(())>
+gap> InjectionNormalizedPrincipalFactor(DClass(S, RMSElement(S, 1, (), 1)));
+MappingByFunction( <Green's D-class: (1,(),1)>, 
+<Rees 0-matrix semigroup 2x2 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
+
+#T# attribute: InjectionNormalizedPrincipalFactor, 2
+gap> S := SymmetricInverseMonoid(4);
+<symmetric inverse monoid of degree 4>
+gap> InjectionNormalizedPrincipalFactor(DClass(S,
+> PartialPerm([], [])));
+MappingByFunction( <Green's D-class: <empty partial perm>>, 
+<Rees matrix semigroup 1x1 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
+
+#T# attribute: InjectionNormalizedPrincipalFactor, 2
+gap> S := MonogenicSemigroup(4, 2);
+<commutative non-regular transformation semigroup of size 5, degree 6 with 1 
+ generator>
+gap> InjectionNormalizedPrincipalFactor(DClass(S, S.1));
+Error, Semigroups: InjectionNormalizedPrincipalFactor: usage,
+the argument <D> must be a regular D-class,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(s);

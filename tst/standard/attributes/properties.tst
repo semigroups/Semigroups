@@ -436,8 +436,8 @@ ents
 
 #T# properties: IsXTrivial, non-acting, 1
 gap> S := Semigroup(
-> Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity], 
->                                  [4, 0]], 8), 
+> Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity],
+>                                  [4, 0]], 8),
 > Matrix(IsTropicalMaxPlusMatrix, [[3, 1], [-infinity, 0]], 8));
 <semigroup of 2x2 tropical max-plus matrices with 2 generators>
 gap> IsHTrivial(S);
@@ -446,7 +446,7 @@ gap> IsLTrivial(S);
 false
 gap> IsRTrivial(S);
 true
-gap> I := SemigroupIdeal(S, 
+gap> I := SemigroupIdeal(S,
 > Matrix(IsTropicalMaxPlusMatrix, [[8, 8], [7, 5]], 8));
 <semigroup ideal of 2x2 tropical max-plus matrices with 1 generator>
 gap> IsHTrivial(I);

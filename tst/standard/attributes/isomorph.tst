@@ -60,7 +60,8 @@ gap> IsIsomorphicSemigroup(S, T);
 false
 
 # isomorph: IsIsomorphicSemigroup, 2/2
-gap> S := Semigroup([Matrix(IsNTPMatrix, [[0, 1, 2], [4, 3, 0], [0, 2, 0]], 9, 4),
+gap> S := Semigroup([
+>  Matrix(IsNTPMatrix, [[0, 1, 2], [4, 3, 0], [0, 2, 0]], 9, 4),
 >  Matrix(IsNTPMatrix, [[1, 1, 0], [4, 1, 1], [0, 0, 0]], 9, 4)]);
 <semigroup of 3x3 ntp matrices with 2 generators>
 gap> IsIsomorphicSemigroup(S, S);
