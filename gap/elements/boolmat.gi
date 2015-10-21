@@ -402,7 +402,31 @@ function(x, n)
       out[i][j] := true;
     fi;
   od;
+  #TODO: OK? Is out in BlistRep?
   return MatrixNC(BooleanMatType, out);
+end);
+
+InstallMethod(AsBooleanMat, "for a boolean mat and IsPosInt",
+[IsBooleanMat, IsPosInt],
+function(mat, m)
+  local n, out, i;
+
+  n := Length(mat![1]);
+  if m < n then
+    return MatrixNC(BooleanMatType,
+                    List([1 .. m], i -> mat![i]{[1 .. m]}));
+  else
+    #TODO use AsList
+    out := List([1 .. n], i -> ShallowCopy(mat![i]));
+    for i in [1 .. n] do
+      Append(out[i], BlistList([n + 1 .. m], []));
+    od;
+    for i in [n + 1 .. m] do
+      Add(out, BlistList([1 .. m], []));
+    od;
+    #TODO: OK? Is out in BlistRep?
+    return MatrixNC(BooleanMatType, out);
+  fi;
 end);
 
 # TODO AsBooleanMat for a BooleanMat
