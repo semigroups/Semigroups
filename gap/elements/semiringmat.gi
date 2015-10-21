@@ -133,7 +133,7 @@ function(filter, mat)
   fi;
 
   if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
-                    IsProjectiveMaxPlusMatrix] then
+                    IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
     ErrorMayQuit("Semigroups: Matrix:\n",
                  "cannot create a matrix from the given ",
                  "arguments,");
@@ -158,29 +158,41 @@ end);
 InstallMethod(Matrix, "for a semiring and homogeneous list",
 [IsSemiring, IsHomogeneousList],
 function(semiring, mat)
-  local row;
+  local filter, entry_ok, checker, row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorMayQuit("Semigroups: Matrix: usage,\n",
                  "the 1st argument must be a square table,");
   fi;
 
-  if not IsPrimeField(semiring) then
+  # IsField required cos there's no method for IsPrimeField for Integers.
+  if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
+    filter := IsMatrixOverPrimeField;
+  elif IsIntegers(semiring) then
+    filter := IsIntegerMatrix;
+  else
     ErrorMayQuit("Semigroups: Matrix:\n",
                  "cannot create a matrix from the given ",
                  "arguments,");
   fi;
 
+  entry_ok := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter);
+  checker := function(x)
+    return entry_ok(x) and x in semiring;
+  end;
+
   for row in mat do
-    if not ForAll(row, x -> IsFFE(x) and x in semiring) then
-      ErrorMayQuit("Semigroups: Matrix:\n",
-                   "cannot create a matrix from the given ",
-                   "arguments,");
+    if not ForAll(row, checker) then
+      ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                   "the entries in the 2nd argument do not define a matrix ",
+                   "of type ", NameFunction(filter), ",");
     fi;
   od;
   mat := List(mat, ShallowCopy);
-  Add(mat, Size(semiring));
-  return MatrixNC(MatrixOverPrimeFieldType, mat);
+  if IsField(semiring) then
+    Add(mat, Size(semiring));
+  fi;
+  return MatrixNC(filter, mat);
 end);
 
 InstallGlobalFunction(RandomMatrix,
@@ -252,7 +264,7 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
 
-  # find the max max
+  # find the max entry
   max := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
@@ -270,14 +282,18 @@ function(x)
   od;
 
   pad := function(entry)
+    local n;
     if entry = infinity then
       entry := "∞";
+      n := 1;
     elif entry = -infinity then
       entry := "-∞";
+      n := 2;
     else
       entry := String(entry);
+      n := Length(entry);
     fi;
-    return Concatenation(ListWithIdenticalEntries(max - Length(entry), ' '),
+    return Concatenation(ListWithIdenticalEntries(max - n, ' '),
                          entry, " ");
   end;
 
@@ -412,7 +428,7 @@ InstallMethod(\<, "for matrices over a semiring",
 function(x, y)
   local n, i;
 
-  if not SEMIGROUPS_FilterOfMatrixOverSemiring(x) =
+  if SEMIGROUPS_FilterOfMatrixOverSemiring(x) <>
       SEMIGROUPS_FilterOfMatrixOverSemiring(y) then
     ErrorMayQuit("Semigroups: \< (for matrices over a semiring):\n",
                  "the matrices are not of the same type,");

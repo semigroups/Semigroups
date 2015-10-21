@@ -9,3 +9,4 @@ InverseOp
 TraceSchreierTreeForward
 ELM_LIST
 TransposedMat
+RandomMatrixOp

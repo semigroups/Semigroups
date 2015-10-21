@@ -69,7 +69,8 @@
 
     <Mark>finite fields</Mark>
     <Item>
-      the finite fields <C>GF(q^d)</C> for prime <C>q</C> and some positive integer <C>d</C>.
+      the finite fields <C>GF(q^d)</C> for prime <C>q</C> and some positive
+      integer <C>d</C>.
     </Item>
   </List>
 
@@ -86,36 +87,37 @@
   <Section Label="Matrices over arbitrary semirings">
     <Heading>The category <C>IsMatrixOverSemiring</C></Heading>
     In this section we describe the categories, attributes, and operations
-    which apply to matrices in the category <Ref Filt="IsMatrixOverSemiring"/>.
+    for matrices in the category <Ref Filt="IsMatrixOverSemiring"/>. 
 
     <#Include Label="IsMatrixOverSemiring">
     <#Include Label="IsMatrixOverSemiringCollection">
     <#Include Label="DimensionOfMatrixOverSemiring">
-
-    <#Include Label="Matrix">
-    <#Include Label="RandomMatrix">
-
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label="Matrices over specific semirings">
-    <Heading>Matrices over specific semirings</Heading>
-    
-    In this section we describe the categories, attributes, and operations
-    which apply to every matrix over one of the semirings given at the start of
-    this chapter.
-  
+  <Section Label="Matrices over arbitrary semirings">
+    <Heading>Creating matrices over semirings</Heading>
+    In this section we describe the two main operations for creating matrices
+    over semirings in &Semigroups;, and the categories, attributes, and
+    operations which apply to every matrix over one of the semirings given at
+    the start of this chapter.<P/>
+
+    There are several special methods for boolean matrices and matrices over
+    finite fields, which can be found in Sections 
+    <Ref Sect = "Boolean matrices"/> and 
+    <Ref Sect = "Matrices over finite fields"/>
+
+    <#Include Label="Matrix">
+    <#Include Label="RandomMatrix">
     <#Include Label="IsBooleanMat"/>
     <#Include Label="IsBooleanMatCollection"/>
     <#Include Label="BooleanMatFamily"/>
-
     <!-- the following could go in a section of their own if there are more at
           some point -->
     <#Include Label="ThresholdTropicalMatrix"/>
-  JDM HERE!
-    
+    <#Include Label="ThresholdNTPMatrix"/>
   </Section>
 
   <!--**********************************************************************-->
@@ -159,8 +161,8 @@
     
     In this section we describe the operations, properties, and attributes in
     &Semigroups; specifically for Boolean matrices. These are in addition to
-    those given in Section <Ref Sect="Matrices over semirings"/> for arbitrary
-    matrices over semirings. These include:
+    those given elsewhere in this chapter for arbitrary matrices over
+    semirings. These include:
 
     <List>
       <Item>
@@ -223,11 +225,22 @@
     <#Include Label="IsTotalBooleanMat">
     <#Include Label="IsPartialOrderBooleanMat">
     <#Include Label="IsEquivalenceBooleanMat">
+  </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
     
+  <Section Label="Matrices over finite fields">
+    <Heading>
+      Matrices over finite fields
+    </Heading>
 
+    In this section we describe the operations, properties, and attributes in
+    &Semigroups; specifically for matrices over finite fields. These are in
+    addition to those given elsewhere in this chapter for arbitrary matrices
+    over semirings. These include:
+    <#Include Label="BaseField">
+    <#Include Label="AsMatrix">
 
   </Section>
 
