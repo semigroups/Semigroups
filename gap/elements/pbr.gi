@@ -194,16 +194,82 @@ end);
 InstallMethod(AsPBR, "for a boolean matrix",
 [IsBooleanMat],
 function(x)
-  local deg, succ;
+  local dim, succ;
 
-  deg := DimensionOfMatrixOverSemiring(x);
-  if not IsEvenInt(deg) then
+  dim := DimensionOfMatrixOverSemiring(x);
+  if not IsEvenInt(dim) then
     ErrorMayQuit("Semigroups: AsPBR: usage,\n",
-                 "the matrix <x> must be of even dimension,");
+                 "the boolean matrix <x> must be of even dimension,");
   fi;
   succ := Successors(x);
-  return PBR(succ{[1 .. deg / 2]},
-                                   succ{[deg / 2 + 1 .. deg]});
+  return PBR(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
+end);
+
+InstallMethod(AsPBR, "for a boolean mat and pos int",
+[IsBooleanMat, IsPosInt],
+function(mat, n)
+  local m, nbs, k, i, j;
+
+  if not IsEvenInt(n) then
+    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
+                 "the second argument <n> must be even,");
+  fi;
+
+  m := DimensionOfMatrixOverSemiring(mat);
+
+  if not IsEvenInt(m) then
+    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
+                 "the boolean matrix <x> must be of even dimension,");
+  fi;
+
+  nbs := [List([1 .. n / 2], x -> []),
+          List([1 .. n / 2], x -> [])];
+
+  if n <= m then
+    for i in [1 .. n / 2] do
+      for j in [1 .. n] do
+        if mat[i][j] then
+          Add(nbs[1][i], j);
+        fi;
+      od;
+    od;
+    for i in [n / 2 + 1 .. n] do
+      for j in [1 .. n] do
+        if mat[i][j] then
+          Add(nbs[2][i - n / 2], j);
+        fi;
+      od;
+    od;
+  else
+    k := (n - m) / 2;
+
+    for i in [1 .. m / 2] do
+      for j in [1 .. m / 2] do
+        if mat[i][j] then
+          Add(nbs[1][i], j);
+        fi;
+      od;
+      for j in [m / 2 + 1 .. m] do
+        if mat[i][j] then
+          Add(nbs[1][i], j + k);
+        fi;
+      od;
+    od;
+    for i in [m / 2 + 1 .. m] do
+      for j in [1 .. m / 2] do
+        if mat[i][j] then
+          Add(nbs[2][i - m / 2], j);
+        fi;
+      od;
+      for j in [m / 2 + 1 .. m] do
+        if mat[i][j] then
+          Add(nbs[2][i - m / 2], j + k);
+        fi;
+      od;
+    od;
+  fi;
+
+  return PBR(nbs[1], nbs[2]);
 end);
 
 # TODO use RandomDigraph here!
