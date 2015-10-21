@@ -175,3 +175,19 @@ gap> PeriodNTPMatrix(mat);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="AsList">
+  <ManSection>
+    <Attr Name="AsList" Arg="mat"/>
+    <Returns>A list of lists.</Returns>
+    <Description>
+      If <A>mat</A> is an integer matrix, then this attribute returns, as a list
+      of lists, the underlying matrix on which <A>mat</A> is based.
+      <Example><![CDATA[
+gap> m := Matrix(IsIntegerMatrix, [[0,2], [3,5]]);
+Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
+gap> AsList(m);
+[ [ 0, 2 ], [ 3, 5 ] ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

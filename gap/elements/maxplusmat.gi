@@ -567,3 +567,7 @@ InstallMethod(RandomMatrixOp, "for Integers and pos int",
 function(semiring, n)
   return RandomMatrix(IsIntegerMatrix, n);
 end);
+
+InstallMethod(AsList, "for an integer matrix",
+[IsIntegerMatrix],
+mat -> List([1 .. Length(mat![1])], i -> mat![i]));
