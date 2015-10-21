@@ -63,16 +63,17 @@ function(arg)
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     fi;
-  elif (IsRMSCongruenceByLinkedTriple(arg[2]) and IsSimpleSemigroup(S)) or
-       (IsRZMSCongruenceByLinkedTriple(arg[2]) and IsZeroSimpleSemigroup(S))
-       then
+  elif IsGeneralMapping(arg[2])
+     and ((IsRMSCongruenceByLinkedTriple(arg[3]) and IsSimpleSemigroup(S)) or
+          (IsRZMSCongruenceByLinkedTriple(arg[3]) and IsZeroSimpleSemigroup(S)))
+      then
     # We should have a congruence of an isomorphic RMS/RZMS
-    if Range(IsomorphismReesMatrixSemigroup(S)) = Range(arg[2]) then
-      return SEMIGROUPS_SimpleCongFromRMSCong(S, arg[2]);
+    if Range(arg[2]) = Range(arg[3]) then
+      return SEMIGROUPS_SimpleCongFromRMSCong(S, arg[2], arg[3]);
     else
       ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
                    "<cong> should be over a Rees (0-)matrix semigroup ",
-                   "isomorphic to <S>");
+                   "isomorphic to <S> via <iso>,");
     fi;
   elif IsSemigroupIdeal(arg[2]) and Parent(arg[2]) = S then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
