@@ -145,3 +145,4 @@ BindGlobal("IntegerMatrixFamily",
 BindGlobal("IntegerMatrixType",
            NewType(IntegerMatrixFamily,
                    IsIntegerMatrix));
+DeclareAttribute("AsList", IsIntegerMatrix);
