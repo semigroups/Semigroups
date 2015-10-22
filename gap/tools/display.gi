@@ -437,8 +437,8 @@ end);
 InstallMethod(DotDClasses, "for a semigroup and record",
 [IsSemigroup, IsRecord],
 function(S, opts)
-  local es, elts, str, i, R, SortHClassesInLClass, gp, color, pos, h, rel, ii,
-        di, j, dk, k, x, d, l;
+  local es, elts, str, i, color, pos, gp, iso, inv, RMS, mat, G, x, rel, ii,
+  di, j, dk, k, d, l, row, col;
 
   # process the options
   if not IsBound(opts.maximal) then
@@ -475,12 +475,6 @@ function(S, opts)
   i := 0;
 
   for d in DClasses(S) do
-    R := RClasses(d);
-    SortHClassesInLClass := function(list)
-      local p;
-      p := PermList(List(list, H -> Position(R, RClass(S, Representative(H)))));
-      return Permuted(list, p);
-    end;
 
     i := i + 1;
     Append(str, String(i));
@@ -497,13 +491,9 @@ function(S, opts)
       Append(str, "</TD></TR>");
     fi;
 
-    if opts.maximal and IsRegularDClass(d) then
-       gp := StructureDescription(GroupHClass(d));
-    fi;
-
-    for l in LClasses(d) do
+    if not IsRegularDClass(d) then
       Append(str, "<TR>");
-      if not IsRegularClass(l) then
+      for l in LClasses(d) do
         for x in HClasses(l) do
           color := "white";
           if opts.highlight <> false then
@@ -517,44 +507,61 @@ function(S, opts)
                                     color,
                                     "\"><font color=\"white\">*</font></TD>"));
         od;
-      else
-        h := SortHClassesInLClass(HClasses(l));
-        for x in h do
-          if IsGroupHClass(x) then
+      od;
+      Append(str, "</TR>\n</TABLE>>];\n");
+      continue;
+    fi;
+
+    if opts.maximal then
+      gp := StructureDescription(GroupHClass(d));
+    fi;
+
+    iso := InjectionNormalizedPrincipalFactor(d);
+    inv := InverseGeneralMapping(iso);
+    RMS := Range(iso);
+    mat := Matrix(RMS);
+    G := UnderlyingSemigroup(RMS);
+
+    for col in Columns(RMS) do # Columns of RMS = RClasses
+      Append(str, "<TR>");
+      for row in Rows(RMS) do # Rows of RMS = LClasses
+        Append(str, "<TD BGCOLOR=\"");
+        if opts.highlight <> false then
+          x := HClass(d, RMSElement(RMS, row, Identity(G), col) ^ inv);
+          pos := PositionProperty(opts.highlight, rcd -> x in rcd.HClasses);
+        fi;
+        if mat[col][row] <> 0 then
+          # group H-class
+          if opts.highlight <> false and pos <> fail then
+            color := opts.highlight[pos].HighlightGroupHClassColor;
+          else
             color := "gray";
-            if opts.highlight <> false then
-              pos := PositionProperty(opts.highlight,
-                                      record -> x in record.HClasses);
-              if pos <> fail then
-                color := opts.highlight[pos].HighlightGroupHClassColor;
-              fi;
+          fi;
+          Append(str, color);
+          Append(str, "\"");
+          if opts.maximal then
+            Append(str, ">");
+            Append(str, gp);
+          else
+            if opts.idempotentsemilattice then
+              Append(str, " PORT=\"e");
+              Append(str, String(Position(elts, Idempotents(x)[1])));
+              Append(str, "\"");
             fi;
-            if opts.maximal then
-              Append(str, Concatenation("<TD BGCOLOR=\"", color,
-                                        "\">", gp, "</TD>"));
-            else
-              Append(str, Concatenation("<TD BGCOLOR=\"", color, "\""));
-              if opts.idempotentsemilattice then
-                Append(str,
-                       Concatenation(" PORT=\"e",
-                                     String(Position(elts, Idempotents(x)[1])),
-                                            "\""));
-              fi;
-              Append(str, ">*</TD>");
-            fi;
+            Append(str, ">*");
+          fi;
+        else
+          # non-group H-class
+          if opts.highlight <> false and pos <> fail then
+            color := opts.highlight[pos].HighlightNonGroupHClassColor;
           else
             color := "white";
-            if opts.highlight <> false then
-              pos := PositionProperty(opts.highlight,
-                                      record -> x in record.HClasses);
-              if pos <> fail then
-                color := opts.highlight[pos].HighlightNonGroupHClassColor;
-              fi;
-            fi;
-            Append(str, Concatenation("<TD BGCOLOR=\"", color, "\"></TD>"));
           fi;
-        od;
-      fi;
+          Append(str, color);
+          Append(str, "\">");
+        fi;
+        Append(str, "</TD>");
+      od;
       Append(str, "</TR>\n");
     od;
     Append(str, "</TABLE>>];\n");
