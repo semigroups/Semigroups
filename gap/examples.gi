@@ -594,7 +594,7 @@ else
     local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal,
       d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
 
-    if not IsSemilattice(s) then
+    if not IsSemilatticeAsSemigroup(s) then
       Info(InfoWarning, 1, "usage: argument should be a semilattice,");
       return fail;
     fi;
