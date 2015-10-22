@@ -69,7 +69,7 @@ false]]></Example>
       <C>IsBand</C> returns <K>true</K> if every element of the semigroup
       <A>S</A> is an idempotent and <K>false</K> if it is not. An inverse
       semigroup is band if and only if it is a semilattice; see 
-      <Ref Prop="IsSemilatticeAsSemigroup"/>.
+      <Ref Prop="IsSemilattice"/>.
 
       <Example><![CDATA[
 gap> gens := [ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
@@ -293,7 +293,7 @@ false]]></Example>
 
       For inverse semigroups, the properties of being 
       &R;-trivial, &L;-trivial, &D;-trivial, and a semilattice are equivalent;
-      see <Ref Prop="IsSemilatticeAsSemigroup"/>.
+      see <Ref Prop="IsSemilattice"/>.
       <P/>
 
       A semigroup is <E>aperiodic</E> if its contains no non-trivial
@@ -445,7 +445,7 @@ true]]></Example>
       <Ref Attr="IdempotentGeneratedSubsemigroup"/>. <P/>
 
       An inverse semigroup is idempotent-generated if and only if it is a
-      semilattice; see <Ref Prop="IsSemilatticeAsSemigroup"/>.<P/>
+      semilattice; see <Ref Prop="IsSemilattice"/>.<P/>
 
       Semiband and  idempotent-generated are synonymous
       in this context. 
@@ -779,12 +779,12 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsSemilatticeAsSemigroup">
+<#GAPDoc Label="IsSemilattice">
   <ManSection>
-    <Prop Name="IsSemilatticeAsSemigroup" Arg="S"/>
+    <Prop Name="IsSemilattice" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsSemilatticeAsSemigroup</C> returns <K>true</K> if the semigroup
+      <C>IsSemilattice</C> returns <K>true</K> if the semigroup
       <A>S</A> is a semilattice and <K>false</K> if it is not. <P/>
       
       A semigroup is a <E>semilattice</E> if it is commutative and every
@@ -799,11 +799,11 @@ gap> IsInverseSemigroup(S);
 true
 gap> A := Semigroup(Idempotents(S)); 
 <transformation semigroup on 7 pts with 32 generators>
-gap> IsSemilatticeAsSemigroup(A);
+gap> IsSemilattice(A);
 true
 gap> S := FactorisableDualSymmetricInverseSemigroup(5);;
 gap> S := IdempotentGeneratedSubsemigroup(S);;
-gap> IsSemilatticeAsSemigroup(S);
+gap> IsSemilattice(S);
 true]]></Example>
     </Description>
   </ManSection>

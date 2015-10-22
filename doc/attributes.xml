@@ -425,12 +425,12 @@ gap> MinimalDClass(S);
   <Oper Name="IsomorphismPermGroup" Arg="S"/>
   <Returns> An isomorphism. </Returns>
   <Description>
-    If the semigroup <A>S</A> satisfies <Ref Prop="IsGroupAsSemigroup"/>, then
-    <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
+    If the semigroup <A>S</A> is mathematically a group, so that it satisfies
+    <Ref Prop="IsGroup" BookName="ref" /> or <Ref Prop="IsGroupAsSemigroup"/>,
+    then <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
     group.<P/> 
    
-    If <A>S</A> does not satisfy <Ref Prop="IsGroupAsSemigroup"/>,
-    then an error is given.
+    If <A>S</A> is not a group then an error is given.
 
 <Example><![CDATA[
 gap> S := Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
@@ -549,7 +549,7 @@ gap> S := DualSymmetricInverseSemigroup(5);
 <inverse bipartition monoid on 5 pts with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse bipartition monoid on 5 pts with 10 generators>
-gap> IsSemilatticeAsSemigroup(last);
+gap> IsSemilattice(last);
 true]]></Example>
     </Description>
   </ManSection>

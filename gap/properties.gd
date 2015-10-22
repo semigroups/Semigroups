@@ -42,7 +42,7 @@ InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
 InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsDTrivial, IsSemilattice);
 InstallTrueMethod(IsHTrivial, IsLTrivial);
 InstallTrueMethod(IsHTrivial, IsRTrivial);
 InstallTrueMethod(IsInverseMonoid, IsInverseSemigroup and IsMonoid);
@@ -57,7 +57,7 @@ InstallTrueMethod(IsRectangularBand,
 InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
 InstallTrueMethod(IsRTrivial, IsDTrivial);
-InstallTrueMethod(IsSemilatticeAsSemigroup, IsDTrivial and IsInverseSemigroup);
+InstallTrueMethod(IsSemilattice, IsDTrivial and IsInverseSemigroup);
 InstallTrueMethod(IsMonogenicInverseSemigroup,
                   IsInverseSemigroup and IsMonogenicSemigroup);
 InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);
