@@ -23,8 +23,44 @@
 #
 # The number <n> is the *degree* of <x>.
 
+#############################################################################
 # TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
 # IdentityPBR, AsPermutation, AsPBR for a pbr (extend or restrict),
+#############################################################################
+
+# FIXME the following is temporary, with the current definition of
+# IsGeneratorsOfInverseSemigroup for a pbr collection, the One of any element
+# in the collection does not satisfy IsGeneratorsOfInverseSemigroup, and so it
+# cannot be inverted.
+
+InstallMethod(InverseMonoidByGenerators,
+[IsPBRCollection],
+function(coll)
+  ErrorMayQuit("Semigroups: InverseMonoidByGenerators",
+               "(for a pbr collection):\nnot yet implemented,");
+end);
+
+# FIXME see the comment above, this is not really correct.
+
+InstallOtherMethod(InverseMutable, "for a PBR", [IsPBR],
+function(x)
+  #TODO change IsBlockBijection(AsBipartition(x)) to
+  # IsBlockBijectionPBR.
+  if IsPartialPermPBR(x) or (IsBipartitionPBR(x)
+      and IsBlockBijection(AsBipartition(x))) then
+    return Star(x);
+  fi;
+  return fail;
+end);
+
+# FIXME see the comment above, this is not really correct.
+
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
+[IsPBRCollection],
+function(coll)
+  return ForAll(coll, IsBipartitionPBR)
+         and IsGeneratorsOfInverseSemigroup(List(coll, AsBipartition));
+end);
 
 InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
@@ -55,12 +91,6 @@ function(coll)
   return deg;
 end);
 
-InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
-[IsPBRCollection],
-function(coll)
-  return ForAll(coll, IsBipartitionPBR)
-         and IsGeneratorsOfInverseSemigroup(List(coll, AsBipartition));
-end);
 
 InstallMethod(IsBipartitionPBR, "for a pbr",
 [IsPBR],

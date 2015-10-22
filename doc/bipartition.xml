@@ -304,7 +304,7 @@ false]]></Example>
     <Ref Attr="ExtRepOfBipartition"/>,
     <Ref Attr="LeftProjection"/>,
     <Ref Attr="RightProjection"/>,
-    <Ref Oper="StarOp"/>, 
+    <Ref Oper="StarOp" Label = "for a bipartition"/>, 
     <Ref Attr="DegreeOfBipartition"/>,
     <Ref Attr="RankOfBipartition"/>,
     multiplication of two bipartitions of equal degree is 
@@ -922,8 +922,8 @@ true]]></Example>
 
 <#GAPDoc Label="StarOp">
   <ManSection>
-    <Oper Name="StarOp" Arg="f"/>
-    <Attr Name="Star" Arg="f"/>
+    <Oper Name="StarOp" Arg="f" Label = "for a bipartition"/>
+    <Attr Name="Star" Arg="f" Label = "for a bipartition"/>
     <Returns>A bipartition.</Returns>
     <Description>
       <C>StarOp</C> returns the unique bipartition <C>g</C> with the

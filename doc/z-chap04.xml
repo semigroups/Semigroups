@@ -101,6 +101,7 @@
   <Heading>Attributes for PBRs</Heading>
     In this section we describe various attributes that a PBR can
     possess.  
+    <#Include Label="StarPBR">
     <#Include Label="DegreeOfPBR">
     <#Include Label="ExtRepOfPBR">
     <#Include Label="NumberPBR">

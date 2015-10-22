@@ -68,8 +68,11 @@ gap> x := PBR([ [ -1, 1 ], [ -3, 2 ], [ -4, 3 ], [ 4 ] ],
 >  [ [ -1, 1 ], [ -2 ], [ -3, 2 ], [ -4, 3 ] ]);;
 gap> IsGeneratorsOfInverseSemigroup([x]);
 true
-
-#gap> InverseSemigroup(x);
+gap> InverseSemigroup(x);
+<inverse pbr semigroup of degree 4 with 1 generator>
+gap> InverseMonoid(x);
+Error, Semigroups: InverseMonoidByGenerators(for a pbr collection):
+not yet implemented,
 
 #T# pbr: IsTransformationPBR, 1/1
 gap> x := PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ],
@@ -299,6 +302,11 @@ gap> x := PBR([ [ 2 ], [ -2, 2 ], [ -4, -1, 3 ], [  ] ],
 >  [ [  ], [  ], [ -4, 4 ], [ -1 ] ]);;
 gap> x < x;
 false
+
+#T# pbr, InverseMutable, fail, 1/1
+gap> x := PBR([ [  ], [  ], [  ] ], [ [  ], [ -2 ], [  ] ]);;
+gap> Inverse(x);
+fail
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/elements/pbr.tst");

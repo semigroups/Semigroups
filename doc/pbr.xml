@@ -19,7 +19,7 @@
       <Ref Attr="ExtRepOfPBR"/>,
       <Ref Oper="PBRNumber"/>,
       <Ref Oper="NumberPBR"/>,
-      <Ref Oper="StarOp"/>,
+      <Ref Oper="StarOp" Label = "for a pbr"/>,
       multiplication of two PBRs of equal degree is 
       via <K>*</K>. 
     </Description>
@@ -508,6 +508,26 @@ gap> IsPartialPermPBR(x);
 true
 gap> AsPartialPerm(x);
 [2,3,4](1)]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="StarPBR">
+  <ManSection>
+    <Oper Name = "StarOp" Arg = "x" Label = "for a pbr"/>
+    <Attr Name = "Star" Arg = "x" Label = "for a pbr"/>
+    <Returns>A pbr.</Returns>
+    <Description>
+      <C>StarOp</C> returns the unique pbr <C>y</C> obtained by exchanging the 
+      positive and negative numbers in <A>x</A> (i.e. multiplying  
+      <Ref Attr = "ExtRepOfPBR"/> by <C>-1</C> and swapping its first and
+      second components).
+
+      <Example><![CDATA[
+gap> x := PBR([ [  ], [ -1 ], [  ] ], [
+>             [ -3, -2, 2, 3 ], [ -2, 1 ], [  ] ]);;
+gap> Star(x);
+PBR([ [ -3, -2, 2, 3 ], [ -1, 2 ], [  ] ], [ [  ], [ 1 ], [  ] ])]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
