@@ -207,7 +207,10 @@ ter_3{\n2 3 10 4 6 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3 -- \
 
       The &D;-classes are shown as eggbox diagrams with &L;-classes as rows and
       &R;-classes as columns; group &H;-classes are shaded gray and contain an
-      asterisk. The &D;-classes are numbered according to their index in
+      asterisk. The &L;-classes and &R;-classes within a &D;-class are arranged
+      to correspond to the normalization of the principal factor given by <Ref
+        Attr="NormalizedPrincipalFactor"/>.
+      The &D;-classes are numbered according to their index in
       <C>GreensDClasses(<A>S</A>)</C>, so that an <C>i</C> appears next to the
       eggbox diagram of <C>GreensDClasses(<A>S</A>)[i]</C>. A red line from one
       &D;-class to another indicates that the higher &D;-class is greater than 
