@@ -63,7 +63,7 @@ false
 
 # Other transformation semigroups
 gap> s := FullTransformationMonoid(10);
-<full transformation semigroup on 10 pts>
+<full transformation monoid of degree 10>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -108,7 +108,7 @@ true
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := SymmetricInverseMonoid(1);
-<symmetric inverse semigroup on 1 pts>
+<symmetric inverse monoid of degree 1>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -303,7 +303,7 @@ false
 #T# AttributesTest5:
 # MultiplicativeZero where MinimalDClass is known
 gap> s := FullTransformationMonoid(10);
-<full transformation semigroup on 10 pts>
+<full transformation monoid of degree 10>
 gap> MinimalDClass(s);;
 gap> HasSize(last);
 false

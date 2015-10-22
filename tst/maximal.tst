@@ -98,10 +98,10 @@ true
 gap> Length(max);
 5
 gap> T := FullTransformationMonoid(3);
-<full transformation semigroup on 3 pts>
+<full transformation monoid of degree 3>
 gap> mat := [ [ Transformation([ 3, 2, 3 ]) ] ];;
 gap> R := ReesMatrixSemigroup(T, mat); # 1x1 RMS over a non-group semigroup
-<Rees matrix semigroup 1x1 over <full transformation semigroup on 3 pts>>
+<Rees matrix semigroup 1x1 over <full transformation monoid of degree 3>>
 gap> IsReesMatrixSubsemigroup(R);
 true
 gap> IsReesMatrixSemigroup(R);
@@ -176,11 +176,11 @@ Error, Semigroups: MaximalSubsemigroups: usage,
 the second argument <H> must be a maximal subgroup of the underlying
 group of the Rees matrix semigroup in the first argument, <R>,
 gap> T := FullTransformationMonoid(2);
-<full transformation semigroup on 2 pts>
+<full transformation monoid of degree 2>
 gap> mat := [ [ Transformation( [ ] ) ] ];
 [ [ IdentityTransformation ] ]
 gap> R := ReesMatrixSemigroup(T, mat);
-<Rees matrix semigroup 1x1 over <full transformation semigroup on 2 pts>>
+<Rees matrix semigroup 1x1 over <full transformation monoid of degree 2>>
 gap> MaximalSubsemigroups(R, Group(())); # not a RMS over a group
 Error, Semigroups: MaximalSubsemigroups: usage,
 the first argument <R> must be a Rees matrix semigroup whose underlying
@@ -497,7 +497,7 @@ true
 gap> ForAll(max, x -> IsMaximalSubsemigroup(S, x));
 true
 gap> T3 := FullTransformationMonoid(3); # Trans(3)
-<full transformation semigroup on 3 pts>
+<full transformation monoid of degree 3>
 gap> max := MaximalSubsemigroups(T3);;
 gap> correct := [
 >   Semigroup([

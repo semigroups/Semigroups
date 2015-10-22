@@ -766,7 +766,7 @@ gap> Size(s);
 gap> NrRClasses(s);
 200
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> r:=NextIterator(iter);;
 gap> r:=NextIterator(iter);
 <Green's R-class: Transformation( [ 4, 6, 3, 4, 2, 5 ] )>
@@ -965,7 +965,7 @@ gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
@@ -1087,7 +1087,7 @@ gap> gens:=[Transformation( [ 12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2 ] ),
 > Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] )];;
 gap> s:=Monoid(gens);;
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for r in iter do if Size(r)>1000 then break; fi; od;
 gap> r;
 <Green's R-class: Transformation( [ 2, 2, 12, 1, 12, 1, 2, 2, 12, 10, 5,
@@ -1099,7 +1099,7 @@ gap> Length(AsList(r));
 2760
 gap> s:=Monoid(gens);;
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for r in iter do if Size(r)>1000 then break; fi; od;
 gap> r;
 <Green's R-class: Transformation( [ 2, 2, 12, 1, 12, 1, 2, 2, 12, 10, 5,
@@ -1202,12 +1202,12 @@ gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 >   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> Iterator(s);
-<iterator of <transformation semigroup on 8 pts with 2 generators>>
+<iterator>
 gap> iter:=last;
-<iterator of <transformation semigroup on 8 pts with 2 generators>>
+<iterator>
 gap> for i in [1..10000] do NextIterator(iter); od;
 gap> iter:=Iterator(s);
-<iterator of <transformation semigroup on 8 pts with 2 generators>>
+<iterator>
 gap> j:=0; for i in iter do j:=j+1; od;
 0
 gap> j;
@@ -1232,7 +1232,7 @@ gap> r:=RClass(s, f);
 gap> Size(r);
 30683520
 gap> iter:=Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in [1..100000] do NextIterator(iter); od;
 gap> gens:=[ Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
 > 17, 8, 20, 10, 19, 12 ] ),
@@ -1274,7 +1274,7 @@ gap> gens:=[ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 9, 2, 2, 8, 5, 8, 8, 8, 5 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> NextIterator(iter);;
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )>
@@ -1291,7 +1291,7 @@ gap> NextIterator(iter);
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 8, 8, 8, 8, 8, 5, 8, 8, 5 ] )>
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> NextIterator(iter);;
 gap> Representative(last) in s;
 true
@@ -1307,10 +1307,10 @@ gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 5, 5, 8, 8, 5, 5, 2, 4, 2 ] )>
 gap> GreensRClasses(s);;
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for i in [1..10] do NextIterator(iter); od;
 gap> iter2:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> NextIterator(iter);
@@ -1345,7 +1345,7 @@ gap> for i in [1..100] do
 > fi;
 > od;
 gap> iter2;
-<iterator of R-classes>
+<iterator>
 gap> IsIteratorOfRClasses(iter2);
 true
 gap> ShallowCopy(iter2);
@@ -1363,7 +1363,7 @@ gap> NextIterator(iter);
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 8, 8, 5, 5, 2, 2, 2, 5, 2 ] )>
 gap> iter3:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> out:=[];
 [  ]
 gap> for i in iter3 do Add(out, i); od;
@@ -1374,11 +1374,11 @@ gap> NrRClasses(s);
 gap> s:=Semigroup(gens);
 <transformation semigroup on 9 pts with 5 generators>
 gap> iter1:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for i in iter1 do  
 > od;
 gap> iter1:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> j:=0;
 0
 gap> for i in iter1 do
@@ -1402,7 +1402,7 @@ true
 gap> GreensRClasses(s)=out;
 true
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for i in [1..500] do NextIterator(iter); od;
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfRClasses(s);;
@@ -1477,7 +1477,7 @@ gap> f:=Transformation([1,1,2,3,4,5,6,7]);;
 gap> Size(s);
 16777216
 gap> iter:=IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> d:=NextIterator(iter);;
 gap> d:=NextIterator(iter);
 <Green's D-class: Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1 ] )>
@@ -1493,12 +1493,12 @@ gap> Sum(List(GreensDClasses(s), Size)); 8^8;
 16777216
 16777216
 gap> iter:=IteratorOfDClassReps(s);
-<iterator of D-class reps>
+<iterator>
 gap> for i in [1..8] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 true
 gap> iter2:=IteratorOfRClassReps(s);
-<iterator of R-class reps>
+<iterator>
 gap> for i in [1..500] do NextIterator(iter2); od;
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 1, 4, 1, 2 ] ),
@@ -1506,7 +1506,7 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >   Transformation( [ 4, 1, 2, 1 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfDClassReps(s);
-<iterator of D-class reps>
+<iterator>
 gap> for i in [1..15] do NextIterator(iter); od;
 gap> s:=Semigroup(gens);;
 gap> iter1:=IteratorOfRClassReps(s);;
@@ -1611,7 +1611,7 @@ gap> HClassReps(r);
 #T# GreensTest2
 gap> t:=FullTransformationSemigroup(5);;
 gap> iter:=Iterator(t);
-<iterator of <full transformation semigroup on 5 pts>>
+<iterator>
 gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true

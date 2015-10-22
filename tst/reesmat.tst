@@ -180,11 +180,11 @@ true
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^iso=x^iso*y^iso));                   
 true
 gap> iso:=IsomorphismPermGroup(MinimalIdeal(V));
-MappingByFunction( <simple Rees 0-matrix semigroup ideal with 1 generator>
-, Group(()), function( x ) ... end, function( x ) ... end )
+MappingByFunction( <simple inverse Rees 0-matrix semigroup ideal with
+ 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group(()), <simple Rees 0-matrix semigroup ideal with
- 1 generator>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( Group(()), <simple inverse Rees 0-matrix semigroup ideal 
+ with 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(MinimalIdeal(V), x-> (x^iso)^inv=x);         
 true
 gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y-> 
@@ -540,7 +540,7 @@ gap> List(U, IsRegularSemigroup);
 gap> IsRegularSemigroup(V);      
 false
 gap> UU:=IdempotentGeneratedSubsemigroup(R);;
-gap> IsSemilatticeAsSemigroup(UU);
+gap> IsSemilattice(UU);
 false
 gap> IsSimpleSemigroup(V);        
 false
@@ -853,11 +853,11 @@ true
 
 #T# ReesMatTest103: NrIdempotents and Idempotents for an inverse RZMS
 gap> S := SymmetricInverseMonoid(4);
-<symmetric inverse semigroup on 4 pts>
+<symmetric inverse monoid of degree 4>
 gap> x := PartialPerm([2, 1, 4, 3]);;
 gap> y := PartialPerm([2, 4, 3, 1]);;
 gap> R := ReesZeroMatrixSemigroup(S, [[0, x], [y, 0]]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(R);
 true
 gap> NrIdempotents(R);
@@ -924,7 +924,7 @@ gap> x := PartialPerm([2, 1, 4, 3]);;
 gap> y := PartialPerm([2, 4, 3, 1]);;
 gap> z := PartialPerm([0, 0, 0, 0]);;
 gap> R := ReesZeroMatrixSemigroup(S, [[x, x, 0], [y, 0, 0], [0, 0, x]]);
-<Rees 0-matrix semigroup 3x3 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 3x3 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(R);
 false
 
@@ -971,19 +971,19 @@ gap> Idempotents(T);
 
 #
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2, 3]);
-<Rees 0-matrix semigroup 2x3 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x3 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 false
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 false
 gap> T := ReesZeroMatrixSubsemigroup(R, [1, 2], S, [2, 3]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 false
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 3]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 true
 gap> NrIdempotents(T);

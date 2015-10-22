@@ -137,7 +137,7 @@ gap> Size(h);
 gap> IsGroupHClass(h);
 false
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
 gap> h;
 <Green's H-class: <identity partial perm on [ 8, 20 ]>>
@@ -150,7 +150,7 @@ gap> First(HClasses(s), x-> not IsTrivial(x));
 gap> Size(last);
 2
 gap> iter:=IteratorOfHClasses(s);                                          
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
 gap> h;
 <Green's H-class: <identity partial perm on [ 8, 20 ]>>
@@ -159,7 +159,7 @@ false
 gap> s:=InverseSemigroup(Generators(s));
 <inverse partial perm semigroup on 18 pts with 2 generators>
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
 gap> h;
 <Green's H-class: <identity partial perm on [ 8, 20 ]>>
@@ -168,7 +168,7 @@ gap> Size(h);
 gap> IsDoneIterator(iter);
 false
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> h:=NextIterator(iter);
 <Green's H-class: <identity partial perm on 
  [ 1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20 ]>>
@@ -183,13 +183,13 @@ gap> h:=NextIterator(iter);
 gap> Size(h);
 1
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> Size(h);
 1
 gap> f:=PartialPermNC([8,20], [8,20]);
 <identity partial perm on [ 8, 20 ]>
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
 gap> h;
 <Green's H-class: <identity partial perm on [ 8, 20 ]>>
@@ -200,7 +200,7 @@ true
 gap> hh:=HClass(s, f);
 <Green's H-class: <identity partial perm on [ 8, 20 ]>>
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until h=hh or IsDoneIterator(iter);     
 gap> h;
 <Green's H-class: <identity partial perm on [ 8, 20 ]>>
@@ -223,11 +223,11 @@ true
 gap> Representative(h) in HClassReps(s);
 true
 gap> iter:=IteratorOfHClassReps(s);
-<iterator of H-class reps>
+<iterator>
 gap> s:=InverseSemigroup(Generators(s));
 <inverse partial perm semigroup on 18 pts with 2 generators>
 gap> iter:=IteratorOfHClassReps(s);
-<iterator of H-class reps>
+<iterator>
 gap> i:=0;
 0
 
@@ -246,7 +246,7 @@ gap> i:=0;
 #>   fi;
 #> od;
 gap> iter:=IteratorOfHClasses(s);                                  
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
 gap> h;
 <Green's H-class: <identity partial perm on [ 8, 20 ]>>
@@ -835,7 +835,7 @@ gap> s:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 4, 5, 6, 7, 9, 10, 11, 12, 15, 16, 18, 20 ], 
 > [ 1, 18, 3, 7, 4, 9, 19, 5, 14, 16, 12, 17, 15, 6 ] ) );;
 gap> iter:=IteratorOfDClassReps(s);
-<iterator of D-class reps>
+<iterator>
 gap> NextIterator(iter);
 <identity partial perm on [ 1, 3, 4, 5, 6, 8, 11, 12, 13, 14, 18, 19, 20 ]>
 gap> NextIterator(iter);
@@ -930,30 +930,30 @@ gap> NextIterator(iter);
 <identity partial perm on [ 1, 7, 15, 16 ]>
 gap> s:=RandomInverseSemigroup(2,20);;
 gap> iter:=IteratorOfDClassReps(s);
-<iterator of D-class reps>
+<iterator>
 gap> s:=RandomInverseSemigroup(2,100);;
 gap> iter:=IteratorOfLClassReps(s);
-<iterator of L-class reps>
+<iterator>
 gap> for i in [1..10000] do NextIterator(iter); od;
 gap> s:=RandomInverseSemigroup(2,10);;
 gap> iter:=IteratorOfLClassReps(s);
-<iterator of L-class reps>
+<iterator>
 gap> for i in iter do od;
 gap> iter:=IteratorOfDClassReps(s);
-<iterator of D-class reps>
+<iterator>
 gap> for i in iter do od;
 gap> iter:=IteratorOfRClassReps(s);
-<iterator of R-class reps>
+<iterator>
 gap> for i in iter do od;
 
 #T# InverseTest16
 gap> s:=RandomInverseSemigroup(100,100);
 <inverse partial perm semigroup on 100 pts with 100 generators>
 gap> iter:=IteratorOfRClasses(s);       
-<iterator of R-classes>
+<iterator>
 gap> for i in [1..100] do NextIterator(iter); od;
 gap> iter:=IteratorOfLClasses(s);      
-<iterator of L-classes>
+<iterator>
 gap> for i in [1..100] do NextIterator(iter); od;
 
 #T# InverseTest17

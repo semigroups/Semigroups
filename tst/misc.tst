@@ -43,7 +43,7 @@ true
 gap> d:=DClass(s, f);
 <Green's D-class: Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )>
 gap> iter:=Iterator(d);
-<iterator of D-class>
+<iterator>
 gap> for i in iter do od;
 
 #T# MiscTest1
@@ -83,7 +83,7 @@ Group(())
 gap> ForAll(l, x-> x in l);
 true
 gap> iter:=IteratorOfLClasses(s);
-<iterator of L-classes>
+<iterator>
 gap> repeat l:=NextIterator(iter); until Size(l)>1;
 gap> l;
 <Green's L-class: [4,3]>
@@ -543,7 +543,7 @@ gap> l:=LClass(s, f);
 gap> Size(l);
 1
 gap> iter:=IteratorOfLClasses(s);
-<iterator of L-classes>
+<iterator>
 gap> repeat l:=NextIterator(iter); until Size(l)>1;
 gap> l;
 <Green's L-class: Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )>
@@ -760,7 +760,7 @@ gap> l:=LClasses(s)[523];
 gap> Size(l);
 1
 gap> iter:=IteratorOfLClasses(s);
-<iterator of L-classes>
+<iterator>
 gap> repeat l:=NextIterator(iter); until Size(l)>1;
 gap> l;
 <Green's L-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
@@ -1010,7 +1010,7 @@ gap> GreensHClasses(d);
 [ <Green's H-class: [12,98][27,3][37,84][40,99][46,100][50,21][51,70][53,89]> 
  ]
 gap> iter:=IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> repeat d:=NextIterator(iter); until Size(d)>1;
 gap> d;
 <Green's D-class: [8,63][57,87]>
@@ -2185,7 +2185,7 @@ gap> d:=DClassNC(s, f);
 gap> Size(d);
 1
 gap> iter:=IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> repeat d:=NextIterator(iter); until Size(d)>1;
 gap> d;
 <Green's D-class: [74,26][84,6]>
@@ -2619,7 +2619,7 @@ gap> NrDClasses(s);
 gap> RClassReps(d);
 [ [4,2][7,9][11,6] ]
 gap> iter:=IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or Size(d)>1000;
 gap> d;
 <Green's D-class: [1,6][5,4]>
@@ -2753,7 +2753,7 @@ gap> r:=RClass(s, f);
 gap> Size(r);
 86
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
 <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
@@ -2989,7 +2989,7 @@ gap> r:=GreensRClassOfElementNC(s, f);
 gap> Size(r);
 4
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
 <Green's R-class: [1,4][9,3,5][10,7]>
@@ -3074,14 +3074,14 @@ false
 gap> ForAll(r, x-> x in s);
 true
 gap> iter:=Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in iter do od;
 gap> Size(r);
 24
 gap> IsDoneIterator(iter);
 true
 gap> iter:=Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in [1..23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false
@@ -3202,9 +3202,9 @@ gap> r:=RClassOfHClass(h);
 gap> HClassReps(r);
 [ [3,2](1,6)(5) ]
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
 gap> r;
 <Green's R-class: [1,2,3,4]>
@@ -3360,7 +3360,7 @@ Group([ (4,6) ])
 
 #T# MiscTest37
 gap> s:=FullTransformationSemigroup(7);
-<full transformation semigroup on 7 pts>
+<full transformation monoid of degree 7>
 gap> Factorial(7);
 5040
 gap> f:=One(s);
@@ -3429,7 +3429,7 @@ false
 gap> Size(h);
 1
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
 <Green's H-class: [3,2,5](1)>
@@ -3488,7 +3488,7 @@ gap> s:=Semigroup(gens);;
 gap> First(HClasses(s), IsRegularClass);
 <Green's H-class: Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )>
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
 <Green's H-class: Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )>
@@ -3562,7 +3562,7 @@ gap> s:=Semigroup(gens);;
 gap> Size(s);
 3941
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
 <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
@@ -3591,7 +3591,7 @@ gap> One(h);
 <identity partial perm on [ 1, 2, 3 ]>
 gap> s:=Semigroup(Generators(s));;
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
@@ -3610,7 +3610,7 @@ gap> One(h);
 gap> IsGroupHClass(h);
 true
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
 <Green's H-class: [2,5](1)(3)>
@@ -3642,7 +3642,7 @@ gap> s:=Semigroup(gens);;
 gap> Size(s);
 15488
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
 gap> h;
 <Green's H-class: Transformation( [ 2, 1, 8, 7, 6, 5, 4, 3 ] )>
@@ -3704,7 +3704,7 @@ gap> s:=Semigroup(gens);;
 gap> NrRClasses(s);
 38666
 gap> iter:=IteratorOfHClasses(s);
-<iterator of H-classes>
+<iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>24;
 gap> h;
 <Green's H-class: [2,4](1,3)(5,6)>
@@ -3880,7 +3880,7 @@ gap> r:=RClass(s, f);
 gap> Size(r);
 86
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
 <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
@@ -4118,7 +4118,7 @@ gap> r:=GreensRClassOfElementNC(s, f);
 gap> Size(r);
 4
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;
 <Green's R-class: [1,4][9,3,5][10,7]>
@@ -4203,14 +4203,14 @@ false
 gap> ForAll(r, x-> x in s);
 true
 gap> iter:=Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in iter do od;
 gap> Size(r);
 24
 gap> IsDoneIterator(iter);
 true
 gap> iter:=Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in [1..23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false
@@ -4293,7 +4293,7 @@ gap> HClassReps(r);
   [3,1,5][9,7][10,8], [1,2][3,10,4][9,8], [1,10,6][3,8][9,5], 
   [1,2][3,6](9,10), [3,9,2][10,1,7] ]
 gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
 gap> r;
 <Green's R-class: (1,5,2)>
