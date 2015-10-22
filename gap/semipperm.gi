@@ -648,7 +648,9 @@ function(S)
   codeg := Maximum(range);
 
   if min_rank = rank and domain = range then
-    SetIsGroupAsSemigroup(S, true);
+    if not IsGroup(S) then
+      SetIsGroupAsSemigroup(S, true);
+    fi;
     return gens[1];
   fi;
 

@@ -155,53 +155,57 @@ end);
 
 InstallMethod(GroupOfUnits, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(s)
-  local r, g, deg, u;
+function(S)
+  local r, g, deg, U;
 
-  if MultiplicativeNeutralElement(s) = fail then
+  if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
-  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  r := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
   g := SchutzenbergerGroup(r);
-  deg := DegreeOfTransformationSemigroup(s);
+  deg := DegreeOfTransformationSemigroup(S);
 
-  u := Monoid(List(GeneratorsOfGroup(g), x -> AsTransformation(x, deg)));
+  U := Monoid(List(GeneratorsOfGroup(g), x -> AsTransformation(x, deg)));
 
-  SetIsomorphismPermGroup(u, MappingByFunction(u, g, PermutationOfImage,
+  SetIsomorphismPermGroup(U, MappingByFunction(U, g, PermutationOfImage,
                                                x -> AsTransformation(x, deg)));
 
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
+  UseIsomorphismRelation(U, g);
 
-  return u;
+  return U;
 end);
 
 # same method for ideals
 
 InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-function(s)
-  local r, g, deg, u;
+function(S)
+  local r, g, deg, U;
 
-  if MultiplicativeNeutralElement(s) = fail then
+  if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
-  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  r := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
   g := SchutzenbergerGroup(r);
-  deg := Maximum(DegreeOfPartialPermSemigroup(s),
-                 CodegreeOfPartialPermSemigroup(s));
+  deg := Maximum(DegreeOfPartialPermSemigroup(S),
+                 CodegreeOfPartialPermSemigroup(S));
 
-  u := Monoid(List(GeneratorsOfGroup(g), x -> AsPartialPerm(x, deg)));
+  U := Monoid(List(GeneratorsOfGroup(g), x -> AsPartialPerm(x, deg)));
 
-  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation,
+  SetIsomorphismPermGroup(U, MappingByFunction(U, g, AsPermutation,
                                                x -> AsPartialPerm(x, deg)));
 
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
+  UseIsomorphismRelation(U, g);
 
-  return u;
+  return U;
 end);
 
 # same method for ideals
@@ -224,7 +228,9 @@ function(S)
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
                                                x -> AsBipartition(x, deg)));
 
-  SetIsGroupAsSemigroup(U, true);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
   UseIsomorphismRelation(U, G);
 
   return U;
@@ -234,46 +240,50 @@ end);
 
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
-function(s)
-  local r, g, i, j, u;
+function(S)
+  local r, g, i, j, U;
 
-  if MultiplicativeNeutralElement(s) = fail then
+  if MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
-  r := GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  r := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
   g := SchutzenbergerGroup(r);
-  i := MultiplicativeNeutralElement(s)![1];
-  j := MultiplicativeNeutralElement(s)![3];
+  i := MultiplicativeNeutralElement(S)![1];
+  j := MultiplicativeNeutralElement(S)![3];
 
-  u := Semigroup(List(GeneratorsOfGroup(g), x -> RMSElement(s, i, x, j)));
+  U := Semigroup(List(GeneratorsOfGroup(g), x -> RMSElement(S, i, x, j)));
 
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
+  UseIsomorphismRelation(U, g);
 
-  return u;
+  return U;
 end);
 
 InstallMethod(GroupOfUnits, "for an matrix over finite field semigroup",
 [IsMatrixSemigroup],
-function(s)
-  local r, g, e, u;
+function(S)
+  local r, g, e, U;
 
-  e := MultiplicativeNeutralElement(s);
+  e := MultiplicativeNeutralElement(S);
 
   if e = fail then
     return fail;
   fi;
 
-  r := GreensRClassOfElementNC(s, e);
+  r := GreensRClassOfElementNC(S, e);
   g := SchutzenbergerGroup(r);
 
-  u := Monoid(GeneratorsOfGroup(g));
+  U := Monoid(GeneratorsOfGroup(g));
 
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
+  if not IsGroup(U) then
+    SetIsGroupAsSemigroup(U, true);
+  fi;
+  UseIsomorphismRelation(U, g);
 
-  return u;
+  return U;
 end);
 
 # same method for ideals

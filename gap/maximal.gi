@@ -638,7 +638,9 @@ else
     fi;
 
     # Subsemigroups of finite groups are subgroups; hence so are maximal ones
-    if IsGroupAsSemigroup(S) then
+    if IsGroup(S) then
+      return MaximalSubgroups(G);
+    elif IsGroupAsSemigroup(S) then
       max := function(S)
         local out, G, iso, inv, gps, g, gens;
 

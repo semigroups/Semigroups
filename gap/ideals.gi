@@ -465,7 +465,8 @@ end);
 # method for IsSemigroup.
 
 InstallMethod(IsGroupAsSemigroup, "for a semigroup ideal",
-[IsSemigroupIdeal], S -> NrRClasses(S) = 1 and NrLClasses(S) = 1);
+[IsSemigroupIdeal],
+S -> not IsGroup(S) and NrRClasses(S) = 1 and NrLClasses(S) = 1);
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
 [IsActingSemigroupWithInverseOp and IsSemigroupIdeal],

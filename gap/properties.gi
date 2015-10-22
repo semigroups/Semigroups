@@ -149,7 +149,7 @@ function(S)
   elif not IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
-  elif IsGroupAsSemigroup(S) then
+  elif IsGroup(S) or IsGroupAsSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a group");
     return true;
   fi;
@@ -662,7 +662,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+x -> IsGroup(x) or IsGroupAsSemigroup(x));
 
 # different method for ideals without generators
 
@@ -740,7 +741,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) then
+  if not (IsGroup(I) or IsGroupAsSemigroup(I)) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -798,7 +799,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) then
+  if not (IsGroup(I) or IsGroupAsSemigroup(I)) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -1147,7 +1148,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsRightSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+x -> IsGroup(x) or IsGroupAsSemigroup(x));
 
 # different method for ideals
 

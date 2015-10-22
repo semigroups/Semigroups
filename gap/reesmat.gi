@@ -179,7 +179,8 @@ function(R)
       return false;
     fi;
 
-    if HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)) then
+    if HasIsMonoidAsSemigroup(U) and not IsMonoidAsSemigroup(U)
+        and not IsMonoid(U) then
       return false;
     fi;
 
@@ -284,7 +285,7 @@ function(R)
   if IsGroup(U) then
     iso := IdentityMapping(U);
     inv := iso;
-  elif IsGroupAsSemigroup(U) <> fail and IsGroupAsSemigroup(U) then
+  elif IsGroupAsSemigroup(U) then
     iso := IsomorphismPermGroup(U);
     inv := InverseGeneralMapping(iso);
   else
@@ -331,8 +332,7 @@ function(R)
   fi;
 
   U := UnderlyingSemigroup(R);
-  if not IsGroup(U)
-      and (IsGroupAsSemigroup(U) = fail or not IsGroupAsSemigroup(U)) then
+  if not IsGroup(U) and not IsGroupAsSemigroup(U) then
     TryNextMethod();
   fi;
 
