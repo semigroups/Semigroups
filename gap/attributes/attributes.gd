@@ -27,7 +27,6 @@ DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareAttribute("NormalizedPrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsSemigroup);
 DeclareAttribute("LengthOfLongestDClassChain", IsSemigroup);
-DeclareAttribute("NilpotencyDegree", IsSemigroup and IsFinite);
 
 DeclareAttribute("SmallSemigroupGeneratingSet",
                  IsAssociativeElementCollection);

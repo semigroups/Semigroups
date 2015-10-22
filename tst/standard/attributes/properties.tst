@@ -627,7 +627,7 @@ gap> S := AsBipartitionSemigroup(Group((1, 2, 3)));
 gap> IsGroupAsSemigroup(S);
 true
 gap> I := SemigroupIdeal(S, S.1);
-<commutative regular bipartition semigroup ideal of degree 3 with 1 generator>
+<commutative inverse bipartition semigroup ideal of degree 3 with 1 generator>
 gap> IsGroupAsSemigroup(I);
 true
 
