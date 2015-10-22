@@ -57,24 +57,24 @@
 
 <#GAPDoc Label="PBR">
   <ManSection>
-    <Func Name="PBR" Arg="adj"/>
+    <Oper Name="PBR" Arg="left, right"/>
     <Returns>A PBR.</Returns>
     <Description>
-      The argument  <A>adj</A> of this function should a list of length 2,
-      where both <A>adj[1]</A> and <A>adj[2]</A> are lists of length <C>n</C>
-      whose entries are lists of integers in the ranges <C>[-n .. -1]</C> and
-      <C>[1 .. n]</C> for some <C>n</C> greater than 0.
+      The arguments  <A>left</A> and <A>right</A> of this function should a
+      lists of length <C>n</C> whose entries are lists of integers in the
+      ranges <C>[-n .. -1]</C> and <C>[1 .. n]</C> for some <C>n</C> greater
+      than 0.
       <P/>
 
       Given such an argument, <C>PBR</C> returns the PBR <C>x</C> where:
       <List>
         <Item>
           for each <C>i</C> in the range <C>[1 .. n]</C> there is an edge from
-          <C>i</C> to every <C>j</C> in <A>adj[1][i]</A>;
+          <C>i</C> to every <C>j</C> in <A>left[i]</A>;
         </Item>
         <Item>
           for each <C>i</C> in the range <C>[-n .. -1]</C> there is an edge from
-          <C>i</C> to every <C>j</C> in <A>adj[2][-i]</A>;
+          <C>i</C> to every <C>j</C> in <A>right[-i]</A>;
         </Item>
       </List>
 

@@ -287,7 +287,6 @@ end);
 # TODO make a method that takes a float between 0 and 1 as the probability of
 # an edge existing.
 
-
 InstallMethod(RandomPBR, "for a pos int", [IsPosInt],
 function(n)
   local p, adj, k, i, j;
