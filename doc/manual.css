@@ -11,6 +11,7 @@ body {
   padding: 15pt;
   font-family: Helvetica,Verdana,Arial,sans-serif;
   text-align: justify;
+  z-index: 0;
 }
 
 /* no side toc on title page, bib and index */

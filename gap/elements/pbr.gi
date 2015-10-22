@@ -30,7 +30,7 @@
 InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
   local ext;
-  ext := ShallowCopy(ExtRepOfPBR(x) * -1);
+  ext := ShallowCopy(ExtRepOfPBR(x) * - 1);
   Apply(ext, ShallowCopy);
   Apply(ext[1], ShallowCopy);
   Apply(ext[2], ShallowCopy);
@@ -61,18 +61,6 @@ InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
 function(coll)
   return ForAll(coll, IsBipartitionPBR)
          and IsGeneratorsOfInverseSemigroup(List(coll, AsBipartition));
-end);
-
-# TODO 2 arg version of this
-
-InstallMethod(AsTransformation, "for a pbr",
-[IsPBR],
-function(x)
-  if not IsTransformationPBR(x) then
-    ErrorMayQuit("Semigroups: AsTransformation: usage,\n",
-                 "the argument <x> must be a transformation PBR,");
-  fi;
-  return AsTransformation(AsBipartition(x));
 end);
 
 InstallMethod(IsBipartitionPBR, "for a pbr",
@@ -272,6 +260,30 @@ function(mat, n)
   return PBR(nbs[1], nbs[2]);
 end);
 
+# TODO 2 arg version of this
+
+InstallMethod(AsTransformation, "for a pbr",
+[IsPBR],
+function(x)
+  if not IsTransformationPBR(x) then
+    ErrorMayQuit("Semigroups: AsTransformation: usage,\n",
+                 "the argument <x> must be a transformation PBR,");
+  fi;
+  return AsTransformation(AsBipartition(x));
+end);
+
+# TODO 2 arg version of this
+
+InstallMethod(AsPartialPerm, "for a pbr",
+[IsPBR],
+function(x)
+  if not IsPartialPermPBR(x) then
+    ErrorMayQuit("Semigroups: AsPartialPerm: usage,\n",
+                 "the argument <x> must be a partial perm PBR,");
+  fi;
+  return AsPartialPerm(AsBipartition(x));
+end);
+
 # TODO use RandomDigraph here!
 # TODO make a method that takes a float between 0 and 1 as the probability of
 # an edge existing.
@@ -299,7 +311,7 @@ function(n)
   return Objectify(PBRType, adj);
 end);
 
-#TODO add checks that the argument makes sense, really the below should be an
+#FIXME add checks that the argument makes sense, really the below should be an
 #     NC method, and we should add a new method with checks/.
 
 InstallGlobalFunction(PBR,
@@ -422,6 +434,9 @@ function(x)
   return out;
 end);
 
+# These ViewObj and PrintObj methods are here because Print(ext[1]) produces
+# nices output than Print(ViewString(ext[1])). The ViewString and PrintString
+# methods are required for use in things like Green's relations.
 
 InstallMethod(ViewObj, "for a pbr", [IsPBR], PrintObj);
 
@@ -430,18 +445,39 @@ function(x)
   local ext;
 
   ext := ExtRepOfPBR(x);
-  Print("\>\>PBR(");
-  Print("\>\>", ext[1], "\<\<,");
+  Print("\>\>PBR(\>\>", ext[1], "\<\<,");
+
   if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
     Print("\n");
   else
     Print(" ");
   fi;
 
-  Print("\>\>");
-  Print(ext[2], "\<\<\<\<)");
+  Print("\>\>", ext[2], "\<\<\<\<)");
 end);
 
+InstallMethod(ViewString, "for a pbr", [IsPBR], PrintString);
+
+InstallMethod(PrintString, "for a pbr",
+[IsPBR],
+function(x)
+  local ext, str;
+
+  ext := ExtRepOfPBR(x);
+
+  str := Concatenation("\>\>PBR(\>\>", ViewString(ext[1]), "\<\<,");
+
+  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
+    Append(str, "\n");
+  else
+    Append(str, " ");
+  fi;
+
+  Append(str, "\>\>");
+  Append(str, ViewString(ext[2]));
+  Append(str, "\<\<\<\<)");
+  return str;
+end);
 
 InstallMethod(\=, "for pbrs",
 [IsPBR, IsPBR],
@@ -486,73 +522,3 @@ function(x)
   od;
   return Objectify(PBRType, out);
 end);
-
-#InstallMethod(ViewString, "for a pbr",
-#[IsPBR],
-#function(x)
-#  local str, n, ext, i;
-#
-#  if IsUniversalPBR(x) then
-#    return Concatenation("\><universal pbr on ", PrintString(x![1]),
-#                         " points>\<");
-#  elif IsEmptyPBR(x) then
-#    return Concatenation("\><empty pbr on ", PrintString(x![1]),
-#                         " points>\<");
-#  fi;
-#
-#  n := DegreeOfPBR(x);
-#  ext := ExtRepOfPBR(x);
-#
-#  str := "\><pbr:";
-#  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
-#    Append(str, "\n");
-#  else
-#    Append(str, " ");
-#  fi;
-#
-#  Append(str, "\>[\>");
-#  Append(str, ViewString(ext[1][1]));
-#  for i in [2 .. n] do
-#    Append(str, ",\< \>");
-#    Append(str, ViewString(ext[1][i]));
-#  od;
-#  Append(str, "\<],\<");
-#  if Length(String(ext)) > 72 then
-#    Append(str, "\n");
-#    if Length(String(ext[1])) <=  72 and Length(String(ext[2])) <= 72 then
-#      Append(str, "     ");
-#    fi;
-#  else
-#    Append(str, " ");
-#  fi;
-#  Append(str, "\>[\>");
-#  Append(str, ViewString(ext[2][1]));
-#  for i in [2 .. n] do
-#    Append(str, ",\< \>");
-#    Append(str, ViewString(ext[2][i]));
-#  od;
-#  Append(str, "\<]\<");
-#  Append(str, " >\<");
-#  return str;
-#end);
-#InstallMethod(PrintString, "for a pbr",
-#[IsPBR],
-#function(x)
-#  local str, ext;
-#
-#  ext := ExtRepOfPBR(x);
-#
-#  str := "\>\>PBR(\>\>";
-#  Append(str, "\>");
-#  Append(str, ViewString(ext[1]));
-#  Append(str, "\<");
-#  Append(str, ", ");
-#  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
-#    Append(str, "\n");
-#  fi;
-#  Append(str, "\>");
-#  Append(str, ViewString(ext[2]));
-#  Append(str, "\<");
-#  Append(str, "\<\<)\<\<");
-#  return str;
-#end);

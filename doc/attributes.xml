@@ -865,7 +865,7 @@ gap> RZMSConnectedComponents(R);
     </List>
 
     The normalization given by <C>RZMSNormalization</C> is based on Theorem 2
-    of <Cite Key = "Graham1968bb" /> and is sometimes called <E>Graham normal
+    of <Cite Key = "Graham1968aa" /> and is sometimes called <E>Graham normal
       form</E>.  Note that isomorphic Rees 0-matrix semigroups can have
     normalizations which are not equal.<P/>
 <Example><![CDATA[

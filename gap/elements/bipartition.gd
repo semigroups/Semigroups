@@ -62,9 +62,10 @@ DeclareOperation("AsBipartition", [IsPartialPerm]);
 DeclareOperation("AsBipartition", [IsBipartition, IsPosInt]);
 DeclareOperation("AsBipartition", [IsBipartition, IsZeroCyc]);
 DeclareOperation("AsBipartition", [IsBipartition]);
-DeclareOperation("AsBipartition", [IsPBR]);
-#TODO implement the next operation
 DeclareOperation("AsBipartition", [IsPBR, IsPosInt]);
+DeclareOperation("AsBipartition", [IsPBR, IsZeroCyc]);
+DeclareOperation("AsBipartition", [IsPBR]);
+
 DeclareOperation("AsBlockBijection", [IsPartialPerm, IsPosInt]);
 DeclareOperation("AsBlockBijection", [IsPartialPerm, IsZeroCyc]);
 DeclareOperation("AsBlockBijection", [IsPartialPerm]);

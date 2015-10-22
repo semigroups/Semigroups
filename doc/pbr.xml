@@ -97,14 +97,13 @@ PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ],
       a random PBR of degree <A>n</A>.
       <Log><![CDATA[
 gap> RandomPBR(6);
-<pbr:[[ -6, -4, -2, -1, 1, 2, 6 ], [ -4, -1, 1, 4, 5, 6 ],
-      [ -5, -4, -1, 1, 5, 6 ], [ -6, -4, -3, -2, -1, 1, 2, 6 ],
-      [ -5, -3, -2, -1, 3, 4, 5, 6 ],
-      [ -6, -4, -2, -1, 2, 3, 4, 5, 6 ]], [[ -5, -4, -3, -2, 3, 4 ],
-      [ -6, -4, -3, -1, 3 ], [ -3, -2, -1, 2, 3, 4, 5 ],
-      [ -5, -4, -1, 1, 2, 4, 5, 6 ],
-      [ -6, -5, -4, -3, -1, 1, 2, 3, 5 ], [ -6, -3, -2, 1, 3, 5, 6 ]]
-      >]]>]]></Log>
+PBR(
+  [ [ -5, 1, 2, 3 ], [ -6, -3, -1, 2, 5 ], [ -5, -2, 2, 3, 5 ],
+      [ -6, -4, -1, 2, 3, 6 ], [ -4, -1, 2, 4 ],
+      [ -5, -3, -1, 1, 2, 3, 5 ] ],
+  [ [ -6, -4, -2, 1, 3, 5, 6 ], [ -5, -2, 1, 2, 3, 5 ],
+      [ -6, -5, -2, 1, 5 ], [ -6, -5, -3, -2, 1, 3, 4 ],
+      [ -6, -5, -4, -2, 3, 5 ], [ -6, -4, -2, -1, 1, 2, 6 ] ])]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -283,11 +282,11 @@ false]]></Example>
     <Ref Prop = "IsTransBipartition"/>.
     <P/>
     
-    With this definition, <Ref Oper = "AsPBR"/> and <Ref Oper =
-      "AsTransformation"/> define mutually inverse isomorphisms from the
-    full transformation monoid of degree <C>n</C> to the submonoid of the full
-    pbr monoid of degree <C>n</C> consisting of all the elements satisfying
-    <C>IsTransformationPBR</C>.
+    With this definition, <Ref Oper = "AsPBR"/> and 
+    <Ref Oper = "AsTransformation" Label = "for a PBR"/> define mutually
+    inverse isomorphisms from the full transformation monoid of degree <C>n</C>
+    to the submonoid of the full pbr monoid of degree <C>n</C> consisting of
+    all the elements satisfying <C>IsTransformationPBR</C>.
     
     <Example><![CDATA[
 gap> x := PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ],
@@ -356,11 +355,11 @@ gap> Number(FullPBRMonoid(1), IsDualTransformationPBR);
     <Ref Prop = "IsPartialPermBipartition"/>.
     <P/>
     
-    With this definition, <Ref Oper = "AsPBR"/> and <Ref Oper =
-      "AsPartialPerm"/> define mutually inverse isomorphisms from the
-    symmetric inverse monoid of degree <C>n</C> to the submonoid of the full
-    pbr monoid of degree <C>n</C> consisting of all the elements satisfying
-    <C>IsPartialPermPBR</C>.
+    With this definition, <Ref Oper = "AsPBR"/> and 
+    <Ref Oper = "AsPartialPerm" Label = "for a PBR"/> define mutually inverse
+    isomorphisms from the symmetric inverse monoid of degree <C>n</C> to the
+    submonoid of the full pbr monoid of degree <C>n</C> consisting of all the
+    elements satisfying <C>IsPartialPermPBR</C>.
 
   <Example><![CDATA[
 gap> x:= PBR([ [ -1, 1 ], [ 2 ] ], [ [ -1, 1 ], [ -2 ] ]);
@@ -460,5 +459,49 @@ gap> AsPBR(x, 5);
 PBR([ [ -4, 1 ], [ -3, 2 ], [ 3 ], [ 4 ], [ 5 ] ], 
   [ [ -1 ], [ -2 ], [ -3, 2 ], [ -4, 1 ], [ -5 ] ])]]></Example>
   </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsTransformationPBR">
+  <ManSection>
+    <Oper Name="AsTransformation" Arg="x" Label="for a PBR"/>
+    <Returns>A transformation.</Returns>
+    <Description>
+      When the argument <A>x</A> is a pbr, that satisfies <Ref Prop =
+        "IsTransformationPBR"/>, then this function returns that
+      transformation. 
+
+      <Example><![CDATA[
+gap> x := PBR([ [ -3, 1, 2 ], [ -3, 1, 2 ], [ -2, 3 ] ], 
+>             [ [ -1 ], [ -2, 3 ], [ -3, 1, 2 ] ]);;
+gap> IsTransformationPBR(x);
+true
+gap> AsTransformation(x);
+Transformation( [ 3, 3, 2 ] )
+gap> x := PBR([ [ 1 ], [ 1, 2 ] ], [ [ -2, -1 ], [ -2, -1 ] ]);;
+gap> AsTransformation(x);
+Error, Semigroups: AsTransformation: usage,
+the argument <x> must be a transformation PBR,]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsPartialPermPBR">
+  <ManSection>
+    <Oper Name="AsPartialPerm" Arg="x" Label="for a PBR"/>
+    <Returns>A partial perm.</Returns>
+    <Description>
+      When the argument <A>x</A> is a pbr satisfying 
+      <Ref Prop = "IsPartialPermPBR"/>, then this function returns that partial
+      perm.
+      
+      <Example><![CDATA[
+gap> x := PBR([ [ -1, 1 ], [ -3, 2 ], [ -4, 3 ], [ 4 ], [ 5 ] ],
+>  [ [ -1, 1 ], [ -2 ], [ -3, 2 ], [ -4, 3 ], [ -5 ] ]);;
+gap> IsPartialPermPBR(x);
+true
+gap> AsPartialPerm(x);
+[2,3,4](1)]]></Example>
+    </Description>
   </ManSection>
 <#/GAPDoc>

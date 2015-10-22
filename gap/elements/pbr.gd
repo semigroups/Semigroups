@@ -51,4 +51,3 @@ DeclareProperty("IsTransformationPBR", IsPBR);
 DeclareProperty("IsPartialPermPBR", IsPBR);
 DeclareProperty("IsBlockBijectionPBR", IsPBR);
 DeclareProperty("IsDualTransformationPBR", IsPBR);
-
