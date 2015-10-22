@@ -686,13 +686,21 @@ function(f, n)
 end);
 
 InstallMethod(AsBipartition, "for a pbr and pos int",
-[IsPBR, IsPosInt],
+[IsPBR, IsZeroCyc],
 function(x, deg)
-  ErrorMayQuit("Semigroups: AsBipartition (for a pbr and an int):\n",
-               "not yet implemented");
+  return Bipartition([]);
 end);
 
-#
+InstallMethod(AsBipartition, "for a pbr and pos int",
+[IsPBR, IsPosInt],
+function(x, deg)
+  if not IsBipartitionPBR(x) then
+    ErrorMayQuit("Semigroups: AsBipartition (for a pbr): usage,\n",
+                 "the argument does not satisfy 'IsBipartitionPBR',");
+  fi;
+
+  return AsBipartition(AsBipartition(x), deg);
+end);
 
 InstallMethod(AsBipartition, "for a pbr",
 [IsPBR],

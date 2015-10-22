@@ -7,7 +7,7 @@
   be created in &Semigroups;, the options that are available at the time of
   creation. 
   
-  <Section Label="Acting semigroups"><!--TODO: move this-->
+  <Section Label="Acting semigroups"><!--TODOFIXME: move this-->
     <Heading>Acting semigroups</Heading>
     It is harder for &Semigroups; to compute Green's &L;- and &H;-classes of a
     transformation semigroup and the methods used to compute with Green's &R;-
@@ -35,6 +35,10 @@
     <#Include Label="ClosureSemigroup">
     <#Include Label="SubsemigroupByProperty">
     <#Include Label="InverseSubsemigroupByProperty">
+  </Section> 
+  
+  <Section><Heading>Random semigroups</Heading> 
+    <#Include Label="RandomInverseMonoid"> 
   </Section> 
   
   <Section Label="Options when creating semigroups">
@@ -181,6 +185,7 @@ true</Log>
      <#Include Label="IsomorphismBipartitionSemigroup">
      <#Include Label="IsomorphismBlockBijectionSemigroup">
      <#Include Label="IsomorphismReesZeroMatrixSemigroup">
+     <#Include Label="IsomorphismPBRSemigroup">
   </Section>
   
 

@@ -46,7 +46,6 @@ function(mat)
   return IteratorByFunctions(iter);
 end);
 
-
 InstallMethod(ELM_LIST, "for a matrix over semiring",
 [IsMatrixOverSemiring, IsPosInt],
 function(mat, pos)

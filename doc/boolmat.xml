@@ -332,7 +332,7 @@ gap> BlistNumber(2, 10);
           degree of <A>x</A> is used by default. 
         </Item>
         
-        <Mark>pbr</Mark>
+        <Mark>pbrs</Mark>
         <Item>
           If <A>x</A> is a pbr and <A>n</A> is any non-negative
           integer, then <C>AsBooleanMat</C> returns the boolean matrix

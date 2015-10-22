@@ -440,5 +440,17 @@ false
 gap> IsOntoBooleanMat(x);
 true
 
+#T# boolmat: AsBooleanMat, for a boolean mat, 1/1
+gap> mat := Matrix(IsBooleanMat, [[1, 0, 0, 1], 
+>                                 [0, 1, 1, 0], 
+>                                 [1, 0, 1, 1],
+>                                 [0, 0, 0, 1]]);;
+gap> AsBooleanMat(mat, 2);
+Matrix(IsBooleanMat, [[1, 0], [0, 1]])
+gap> AsBooleanMat(mat, 6);
+Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0], 
+  [1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0]])
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/elements/boolmat.tst");
