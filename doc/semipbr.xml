@@ -49,7 +49,7 @@ gap> S := Semigroup( [
 gap> One(S);
 fail
 gap> MultiplicativeNeutralElement(S);
-PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ],
+PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ], 
   [ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -5 ] ])]]></Example>
       In this example <C>S</C> cannot be converted into a monoid using <Ref
         Attr="AsMonoid" BookName="ref"/> since the <Ref Attr="One"
@@ -89,14 +89,18 @@ gap> DegreeOfPBRSemigroup(S);
     <Attr Name="IsomorphismPBRSemigroup" Arg="S"/>
     <Returns>An isomorphism.</Returns>
     <Description> 
-      If <A>S</A> is a semigroup, then <C>IsomorphismPBRSemigroup</C>
-      returns an isomorphism from <A>S</A> to a PBR semigroup. When
-      <A>S</A> is a transformation semigroup, partial permutation semigroup, or
-      a permutation group, on <C>n</C> points,
-      <C>IsomorphismPBRSemigroup</C> returns the natural embedding of
-      <A>S</A> into the partition monoid on <C>n</C> points. When <A>S</A> is a
-      generic semigroup, this function returns the right regular representation
-      of <A>S</A> acting on <A>S</A> with an identity adjoined.<P/>
+      If <A>S</A> is a semigroup, then <C>IsomorphismPBRSemigroup</C> returns
+      an isomorphism from <A>S</A> to a PBR semigroup. When <A>S</A> is a
+      transformation or bipartition semigroup of degree <C>n</C>, 
+      <C>IsomorphismPBRSemigroup</C> returns the
+      natural embedding of <A>S</A> into the full pbr monoid on <C>n</C>
+      points. <P/>
+      
+      When <A>S</A> is any other type of semigroup, this function returns the
+      composition of an isomorphism from <A>S</A> to a transformation
+      semigroup, and an isomorphism from that transformation semigroup into a
+      PBR semigroup.
+      <P/>
 
       See <Ref Oper="AsPBRSemigroup"/>.
       <Example><![CDATA[
@@ -105,13 +109,8 @@ gap> S := InverseSemigroup(
 >              [ 2, 6, 7, 9, 1, 5 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
 >              [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
-gap> IsomorphismPBRSemigroup(S);
-CompositionMapping( MappingByFunction( <transformation semigroup of
- degree 11 with 4 generators>, <pbr semigroup of degree 11 with 4
- generators>, <Operation "AsPBR">, <Attribute "AsTransformation"> ),
- MappingByFunction( <inverse partial perm semigroup of rank 10 with 2
- generators>, <transformation semigroup of degree 11 with 4
- generators>, function( x ) ... end, <Operation "AsPartialPerm"> ) )]]></Example>
+gap> Range(IsomorphismPBRSemigroup(S));
+<pbr semigroup of degree 11 with 4 generators>]]></Example>
     </Description> 
   </ManSection> 
 <#/GAPDoc>

@@ -25,7 +25,6 @@
 
 # TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
 # IdentityPBR, AsPermutation, AsPBR for a pbr (extend or restrict),
-# AsPBR(boolean mat, pos int),
 
 InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
@@ -153,20 +152,20 @@ InstallMethod(AsPBR, "for a bipartition",
 InstallMethod(AsPBR, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
 function(x, n)
-  local deg, blocks, out, i, block;
+  local deg, blocks, out, dom, block, i;
 
-  deg := DegreeOfBipartition(x);
+  deg    := DegreeOfBipartition(x);
   blocks := ExtRepOfBipartition(x);
-  out := [[], []];
+  out    := [[], []];
+  dom := Union([-n .. -1], [1 .. n]);
 
   for block in blocks do
     for i in block do
-      if i <= n then
+      if AbsInt(i) <= n then
         if i < 0 then
-          i := -i;
-          out[2][i] := ShallowCopy(block);
+          out[2][-i] := Intersection(block, dom);
         else
-          out[1][i] := ShallowCopy(block);
+          out[1][i] := Intersection(block, dom);
         fi;
       fi;
     od;
@@ -176,7 +175,7 @@ function(x, n)
     Add(out[2], []);
   od;
 
-  return CallFuncList(PBR, out);
+  return PBRNC(out[1], out[2]);
 end);
 
 InstallMethod(AsPBR, "for a boolean matrix",
@@ -190,7 +189,7 @@ function(x)
                  "the boolean matrix <x> must be of even dimension,");
   fi;
   succ := Successors(x);
-  return PBR(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
+  return PBRNC(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
 end);
 
 InstallMethod(AsPBR, "for a boolean mat and pos int",
@@ -257,7 +256,7 @@ function(mat, n)
     od;
   fi;
 
-  return PBR(nbs[1], nbs[2]);
+  return PBRNC(nbs[1], nbs[2]);
 end);
 
 # TODO 2 arg version of this
@@ -288,6 +287,7 @@ end);
 # TODO make a method that takes a float between 0 and 1 as the probability of
 # an edge existing.
 
+
 InstallMethod(RandomPBR, "for a pos int", [IsPosInt],
 function(n)
   local p, adj, k, i, j;
@@ -308,34 +308,64 @@ function(n)
       fi;
     od;
   od;
-  return Objectify(PBRType, adj);
+  return PBRNC(adj);
 end);
 
-#FIXME add checks that the argument makes sense, really the below should be an
-#     NC method, and we should add a new method with checks/.
+InstallMethod(PBR, "for pair of dense list",
+[IsDenseList, IsDenseList],
+function(left, right)
+  local deg, i;
 
-InstallGlobalFunction(PBR,
+  if Length(left) <> Length(right) then
+    ErrorMayQuit("Semigroups: PBR: usage,\n",
+                 "the arguments must have equal lengths,");
+  fi;
+
+  deg := Length(left);
+
+  for i in [1 .. deg] do
+    if not IsHomogeneousList(left[i]) or not IsHomogeneousList(right[i]) then
+      ErrorMayQuit("Semigroups: PBR: usage,\n",
+                   "the entries in the arguments must be homogeneous lists,");
+    elif   not ForAll(left[i], j -> IsInt(j) and j <> 0
+                                    and j <= deg and j >= -deg)
+        or not ForAll(right[i], j -> IsInt(j) and j <> 0
+                                     and j <= deg and j >= -deg) then
+      ErrorMayQuit("Semigroups: PBR: usage,\n",
+                   "the entries in the first argument must be integers ",
+                   "in [", -deg, " .. -1] or [1 .. ", deg, "],");
+    fi;
+  od;
+  return PBRNC(left, right);
+end);
+
+InstallGlobalFunction(PBRNC,
 function(arg)
-  local left_adj, right_adj, n, i, j;
+  local left, right, n, i, j;
 
-  arg := ShallowCopy(arg);
-  left_adj := arg[1];  # things adjacent to positives
-  right_adj := arg[2]; # things adjacent to negatives
+  arg   := ShallowCopy(arg);
+  left  := arg[1];  # things adjacent to positives
+  right := arg[2];  # things adjacent to negatives
 
-  n := Length(left_adj);
+  n := Length(left);
 
   for i in [1 .. n] do
-    for j in [1 .. Length(left_adj[i])] do
-      if left_adj[i][j] < 0 then
-        left_adj[i][j] := -left_adj[i][j] + n;
+    for j in [1 .. Length(left[i])] do
+      if left[i][j] < 0 then
+        left[i][j] := -left[i][j] + n;
       fi;
     od;
-    for j in [1 .. Length(right_adj[i])] do
-      if right_adj[i][j] < 0 then
-        right_adj[i][j] := -right_adj[i][j] + n;
+    left[i] := ShallowCopy(left[i]);
+    Sort(left[i]);
+    for j in [1 .. Length(right[i])] do
+      if right[i][j] < 0 then
+        right[i][j] := -right[i][j] + n;
       fi;
     od;
+    right[i] := ShallowCopy(right[i]);
+    Sort(right[i]);
   od;
+  MakeImmutable(arg);
   arg := Concatenation([Length(arg[1])], Concatenation(arg));
   return Objectify(PBRType, arg);
 end);

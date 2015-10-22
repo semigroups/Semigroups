@@ -576,7 +576,8 @@ gap> AsBipartition(x, 2);
 gap> AsBipartition(x, 4);
 <bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]>
 gap> AsBipartition(x, 5);
-<bipartition: [ 1, 2, 3, 4, -1 ], [ 5 ], [ -2 ], [ -3 ], [ -4 ], [ -5 ]>
+<bipartition: [ 1, 2, 3, 4, -1 ], [ 5 ], [ -2 ], [ -3 ], [ -4 ], 
+ [ -5 ]>
 gap> AsBipartition(x, 0);
 <empty bipartition>]]></Example>
   </Description>

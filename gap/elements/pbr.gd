@@ -31,7 +31,8 @@ BindGlobal("PBRType",
            NewType(PBRFamily,
                    IsPBR and IsPositionalObjectRep));
 
-DeclareGlobalFunction("PBR");
+DeclareOperation("PBR", [IsHomogeneousList, IsHomogeneousList]);
+DeclareGlobalFunction("PBRNC");
 DeclareOperation("RandomPBR", [IsPosInt]);
 
 DeclareAttribute("DegreeOfPBR", IsPBR);
