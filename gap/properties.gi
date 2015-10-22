@@ -89,7 +89,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsBand, "for an inverse semigroup", [IsInverseSemigroup],
-IsSemilatticeAsSemigroup);
+IsSemilattice);
 
 # same method for ideals
 
@@ -304,7 +304,7 @@ function(S)
   if G = fail then
     return false;
   elif IsTrivial(G) then
-    return IsSemilatticeAsSemigroup(S);
+    return IsSemilattice(S);
   fi;
 
   iso := InverseGeneralMapping(IsomorphismPermGroup(G));
@@ -585,7 +585,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
-[IsInverseSemigroup], IsSemilatticeAsSemigroup);
+[IsInverseSemigroup], IsSemilattice);
 
 # same method for ideals
 
@@ -1195,10 +1195,10 @@ IsIdempotentGenerated);
 
 # same method for ideals
 
-InstallMethod(IsSemilatticeAsSemigroup, "for a semigroup", [IsSemigroup],
+InstallMethod(IsSemilattice, "for a semigroup", [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S))
-      and IsSemilatticeAsSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
     return true;
   fi;
   return IsCommutativeSemigroup(S) and IsBand(S);
@@ -1206,12 +1206,12 @@ end);
 
 # not applicable to ideals
 
-InstallMethod(IsSemilatticeAsSemigroup,
+InstallMethod(IsSemilattice,
 "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S))
-      and IsSemilatticeAsSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
     return true;
   fi;
   return ForAll(GeneratorsOfSemigroup(S), IsIdempotent);
@@ -1219,11 +1219,11 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsSemilatticeAsSemigroup, "for an inverse semigroup",
+InstallMethod(IsSemilattice, "for an inverse semigroup",
 [IsInverseSemigroup],
 function(S)
-  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S))
-      and IsSemilatticeAsSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
     return true;
   else
     return ForAll(GreensDClasses(S), IsTrivial);
