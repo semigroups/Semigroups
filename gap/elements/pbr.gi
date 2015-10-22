@@ -321,7 +321,7 @@ function(left, right)
                                      and j <= deg and j >= -deg) then
       ErrorMayQuit("Semigroups: PBR: usage,\n",
                    "the entries in the first argument must be integers ",
-                   "in [", -deg, " .. -1] or [1 .. ", deg, "],");
+                   "in [", -deg, " .. -1]\n or [1 .. ", deg, "],");
     fi;
   od;
   return PBRNC(left, right);
@@ -428,11 +428,6 @@ InstallMethod(ExtRepOfPBR, "for a pbr",
 [IsPBR],
 function(x)
   local n, out, i, j, k;
-
-  if not IsPBR(x) then
-    ErrorMayQuit("Semigroups: ExtRepOfPBR: usage,\n",
-                 "the argument <x> must be a PBR,");
-  fi;
 
   n := x![1];
   out := [[], []];
