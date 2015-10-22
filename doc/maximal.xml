@@ -27,7 +27,7 @@
 
   <Example><![CDATA[
 gap> S := FullTransformationSemigroup(4);
-<full transformation semigroup on 4 pts>
+<full transformation monoid of degree 4>
 gap> MaximalSubsemigroups(S);
 [ <transformation semigroup on 4 pts with 3 generators>, 
   <transformation semigroup on 4 pts with 5 generators>, 
@@ -131,7 +131,7 @@ true
 
     <Example><![CDATA[
 gap> S := FullTransformationSemigroup(4);                              
-<full transformation semigroup on 4 pts>
+<full transformation monoid of degree 4>
 gap> T := Semigroup([ Transformation( [ 3, 4, 1, 2 ] ),
 >  Transformation( [ 1, 4, 2, 3 ] ),
 >  Transformation( [ 2, 1, 1, 3 ] ) ]);

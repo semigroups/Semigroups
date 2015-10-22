@@ -122,9 +122,9 @@ true]]></Example>
       See <Ref Oper="AsBlockBijection"/> for more details. 
 <Example><![CDATA[
 gap> S:=SymmetricInverseMonoid(4);                                    
-<symmetric inverse semigroup on 4 pts>
+<symmetric inverse monoid of degree 4>
 gap> IsomorphismBlockBijectionSemigroup(S);
-MappingByFunction( <symmetric inverse semigroup on 4 pts>, 
+MappingByFunction( <symmetric inverse monoid of degree 4>, 
 <inverse bipartition monoid on 5 pts with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> Size(Range(last));

@@ -122,7 +122,7 @@ gap> PrimitiveIdempotents(S);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> x := PartialPerm([1,2,3]);
 <identity partial perm on [ 1, 2, 3 ]>
 gap> IsJoinIrreducible(S, x);
@@ -176,7 +176,7 @@ false]]></Example>
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(2);
-<symmetric inverse semigroup on 2 pts>
+<symmetric inverse monoid of degree 2>
 gap> T := [Elements(S)[2]];
 [ <identity partial perm on [ 1 ]> ]
 gap> IsMajorantlyClosed(S,T);
@@ -214,7 +214,7 @@ false
     elements in the &D;-class are join irreducible.  
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> JoinIrreducibleDClasses(S);
 [ <Green's D-class: <identity partial perm on [ 1 ]>> ]
 gap> T := InverseSemigroup( 
@@ -252,7 +252,7 @@ gap> JoinIrreducibleDClasses(D);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(4);
-<symmetric inverse semigroup on 4 pts>
+<symmetric inverse monoid of degree 4>
 gap> T := [PartialPerm([1,0,3,0])];
 [ <identity partial perm on [ 1, 3 ]> ]
 gap> U := MajorantClosure(S,T);
@@ -302,7 +302,7 @@ true
 </ManSection>
 <Example><![CDATA[
 gap> s := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> f := Elements(s)[13];
 [1,3](2)
 gap> Minorants(s,f);
@@ -336,7 +336,7 @@ gap> Minorants(S,f);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> T := InverseSemigroup(MajorantClosure(S,[PartialPerm([1])]));
 <inverse partial perm monoid on 3 pts with 6 generators>
 gap> IsMajorantlyClosed(S,T);
@@ -371,7 +371,7 @@ gap> RC := RightCosetsOfInverseSemigroup(S,T);
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
-<symmetric inverse semigroup on 3 pts>
+<symmetric inverse monoid of degree 3>
 gap> H := GroupHClass(GreensDClasses(S)[1]);
 <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> Elements(H);
@@ -465,11 +465,11 @@ MappingByFunction( <inverse partial perm monoid on 6721 pts
 </ManSection>
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(2);
-<symmetric inverse semigroup on 2 pts>
+<symmetric inverse monoid of degree 2>
 gap> Size(S);
 7
 gap> iso := VagnerPrestonRepresentation(S);
-MappingByFunction( <symmetric inverse semigroup on 2 pts>, <inverse pa\
+MappingByFunction( <symmetric inverse monoid of degree 2>, <inverse pa\
 rtial perm monoid on 7 pts
  with 2 generators>, function( x ) ... end, function( x ) ... end )
 gap> RespectsMultiplication(iso);

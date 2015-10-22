@@ -630,9 +630,9 @@ gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 <regular transformation semigroup ideal on 4 pts with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
+ on 4 pts with 1 generator> over <full transformation monoid of degree 4>>
 gap> hom := HomomorphismQuotientSemigroup(cong);
-MappingByFunction( <full transformation semigroup on 4 pts>, <quotient of Mono\
+MappingByFunction( <full transformation monoid of degree 4>, <quotient of Mono\
 id( [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), 
   Transformation( [ 1, 2, 3, 1 ] ) ] ) by ReesCongruenceOfSemigroupIdeal( 
 SemigroupIdeal( 
@@ -971,7 +971,7 @@ gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 <regular transformation semigroup ideal on 4 pts with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
+ on 4 pts with 1 generator> over <full transformation monoid of degree 4>>
 gap> NrCongruenceClasses(cong);
 169
 
