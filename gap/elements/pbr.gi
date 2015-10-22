@@ -283,31 +283,20 @@ function(x)
   return AsPartialPerm(AsBipartition(x));
 end);
 
-# TODO use RandomDigraph here!
-# TODO make a method that takes a float between 0 and 1 as the probability of
-# an edge existing.
-
 InstallMethod(RandomPBR, "for a pos int", [IsPosInt],
 function(n)
-  local p, adj, k, i, j;
+  local digraph;
+  digraph := RandomDigraph(2 * n);
+  return PBRNC(OutNeighbours(digraph){[1 .. n]},
+               OutNeighbours(digraph){[n + 1 .. 2 * n]});
+end);
 
-  # probability of an edge
-  p := Random([0 .. 9999]);
-
-  adj := [n];
-  for i in [2 .. 2 * n + 1] do
-    Add(adj, []);
-  od;
-
-  for i in [2 .. 2 * n + 1] do
-    for j in [1 .. 2 * n] do
-      k := Random(Integers) mod 10000;
-      if k < p then
-        Add(adj[i], j);
-      fi;
-    od;
-  od;
-  return PBRNC(adj);
+InstallMethod(RandomPBR, "for a pos int", [IsPosInt, IsFloat],
+function(n, p)
+  local digraph;
+  digraph := RandomDigraph(2 * n, p);
+  return PBRNC(OutNeighbours(digraph){[1 .. n]},
+               OutNeighbours(digraph){[n + 1 .. 2 * n]});
 end);
 
 InstallMethod(PBR, "for pair of dense list",
