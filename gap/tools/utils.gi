@@ -235,7 +235,7 @@ end);
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
   local opts, file_ext, is_testable, tst_dir, contents, subdirs, str, farm,
-        nr_tests, out, subdir, filename;
+    nr_tests, out, elapsed, start_time, pass, end_time, subdir, filename;
 
   if Length(arg) = 1 and IsRecord(arg[1]) then
     opts := arg[1];
@@ -288,7 +288,7 @@ function(arg)
   for str in contents do
     # TODO remove: <<< and str in ["attributes", etc ...] >>> from below
     if str <> ".." and str <> "."
-        and str in ["attributes", "congruences", "elements", "fp"] then
+        and str in ["attributes", "congruences", "elements", "fp", "greens"] then
       str := Concatenation(tst_dir, "/", str);
       if IsDirectoryPath(str) then
         Add(subdirs, str);
@@ -304,7 +304,7 @@ function(arg)
   else
     out := true;
   fi;
-
+  elapsed := 0;
   for subdir in subdirs do
     contents := DirectoryContents(Directory(subdir));
     for filename in contents do
@@ -314,8 +314,14 @@ function(arg)
           Submit(farm, [Filename(Directory(subdir), filename),
                         rec(silent := false)]);
         else
-          if not SEMIGROUPS_Test(Filename(Directory(subdir), filename),
-                                 rec(silent := false)) then
+          start_time := IO_gettimeofday();
+          pass := SEMIGROUPS_Test(Filename(Directory(subdir), filename),
+                                  rec(silent := false));
+
+          end_time := IO_gettimeofday();
+          elapsed := elapsed + (end_time.tv_sec - start_time.tv_sec) * 1000
+                     + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+          if not pass then
             out := false;
           fi;
         fi;
@@ -332,6 +338,7 @@ function(arg)
     Kill(farm);
   fi;
 
+  Print("TOTAL elapsed time: ", String(elapsed), "ms\n");
   return out;
 end);
 
