@@ -73,6 +73,26 @@ end);
 
 #
 
+InstallMethod(\=,
+"for universal congruence and semigroup congruence with generating pairs",
+[IsUniversalSemigroupCongruence,
+ IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(ucong, pcong)
+  return Range(ucong) = Range(pcong) and NrCongruenceClasses(pcong) = 1;
+end);
+
+#
+
+InstallMethod(\=,
+"for universal congruence and semigroup congruence with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsUniversalSemigroupCongruence],
+function(pcong, ucong)
+  return Range(ucong) = Range(pcong) and NrCongruenceClasses(pcong) = 1;
+end);
+
+#
+
 InstallMethod(\in,
 "for dense list and universal semigroup congruence",
 [IsDenseList, IsUniversalSemigroupCongruence],
