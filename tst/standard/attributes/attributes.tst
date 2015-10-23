@@ -823,6 +823,11 @@ gap> S := RegularBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 4 generators>
 gap> MultiplicativeNeutralElement(S);
 Matrix(IsBooleanMat, [[1, 0], [0, 1]])
+gap> S := Semigroup([Transformation([1, 2, 3, 3, 5, 5]),
+> Transformation([3, 3, 5, 3, 5, 3])]);
+<transformation semigroup of degree 6 with 2 generators>
+gap> MultiplicativeNeutralElement(S);
+fail
 
 #T# attributes: IsomorphismPermGroup
 gap> S := RegularBooleanMatMonoid(2);

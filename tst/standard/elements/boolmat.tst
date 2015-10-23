@@ -452,5 +452,12 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0],
   [1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0], 
   [0, 0, 0, 0, 0, 0]])
 
+#T# boolmat: RandomBooleanMat, 1
+gap> mat := RandomBooleanMat(20);;
+gap> IsBooleanMat(mat);
+true
+gap> DimensionOfMatrixOverSemiring(mat);
+20
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/elements/boolmat.tst");

@@ -270,6 +270,10 @@ gap> MaximalSubsemigroups(Semigroup(Transformation([2, 3, 1])))
 > = [TrivialSemigroup()];
 true
 
+#T# maximal: MaximalSubsemigroups, for a group
+gap> MaximalSubsemigroups(SymmetricGroup(3));
+[ Group([ (1,2,3) ]), Group([ (1,2) ]), Group([ (2,3) ]), Group([ (1,3) ]) ]
+
 #T# maximal; MaximalSubsemigroups, for a semigroup 1/?
 gap> S := Monoid([
 > Transformation([1, 1, 2, 1, 4, 4]),

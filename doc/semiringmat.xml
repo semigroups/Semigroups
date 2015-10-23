@@ -41,7 +41,12 @@
        Every collection of matrices over the same semiring belongs to the
        category <C>IsMatrixOverSemiringCollection</C>. For example, semigroups
        of matrices over a semiring belong to
-       <C>IsMatrixOverSemiringCollection</C>.
+       <C>IsMatrixOverSemiringCollection</C>. <P/>
+
+       Every collection of collections of matrices over the same semiring
+       belongs to the category <C>IsMatrixOverSemiringCollColl</C>.
+       For example, a list of semigroups of matrices over semirings belongs
+       to <C>IsMatrixOverSemiringCollColl</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>
