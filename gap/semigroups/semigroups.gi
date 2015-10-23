@@ -971,8 +971,8 @@ function(filt)
     return RandomMatrix(IsTropicalMinPlusMatrix, dim, threshold);
   end;
 
-  RandomProjectiveMaxPlusMatrix := function(dim, threshold)
-    return RandomMatrix(IsProjectiveMaxPlusMatrix, dim, threshold);
+  RandomProjectiveMaxPlusMatrix := function(dim)
+    return RandomMatrix(IsProjectiveMaxPlusMatrix, dim);
   end;
 
   RandomNTPMatrix := function(dim, threshold, period)
@@ -1008,7 +1008,7 @@ function(filt)
     return [RandomTropicalMinPlusMatrix, 2, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
   elif filt = IsProjectiveMaxPlusMatrixSemigroup then
-    return [RandomProjectiveMaxPlusMatrix, 2, IdFunc];
+    return [RandomProjectiveMaxPlusMatrix, 1, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
   elif filt = IsNTPMatrixSemigroup then
     return [RandomNTPMatrix, 3, IdFunc];
