@@ -42,11 +42,8 @@
 * `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
 * `CatalanMonoid`
 * Add `IsFinite` check to start of appropriate methods and add tests
-* `ViewString` for full transformation monoid, and symmetric inverse monoid
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
 * get rid of `*Data` roll semigroups-generic into semigroups.gi
-* tests for pbrs
-* check that nothing is missing in semigroup-matrix-*
 * add tests for all Semigroupe manual example things
 * closure of generic inverse semigroups
 
@@ -60,6 +57,9 @@
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* tests for pbrs
+* check that nothing is missing in semigroup-matrix-*
+* `ViewString` for full transformation monoid, and symmetric inverse monoid
 * improve compilation time by removing unnecessary templates
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 
