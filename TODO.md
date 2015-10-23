@@ -32,10 +32,8 @@
 ###GAP
 * change `IdempotentGeneratedSubsemigroup` for generic semigroups to find a small generating set
 * Move the new view string methods into the library.
-* Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing
 * `Idempotents(S, 1)` for non-acting semigroups
 * remove `genstoapply` from the the generic semigroup data
-
 * `ReadGenerators` and `WriteGenerators` for new types
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
@@ -57,6 +55,7 @@
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing
 * tests for pbrs
 * check that nothing is missing in semigroup-matrix-*
 * `ViewString` for full transformation monoid, and symmetric inverse monoid

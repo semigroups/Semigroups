@@ -592,7 +592,7 @@ gap> SmallInverseSemigroupGeneratingSet(S);;
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for 0 generators
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
-<trivial partial perm group of rank 3 with 0 generators>
+<commutative inverse partial perm monoid of rank 3 with 1 generator>
 gap> SmallInverseMonoidGeneratingSet(S);
 [  ]
 
@@ -978,7 +978,7 @@ Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 
 #T# attribute: IsomorphismReesZeroMatrixSemigroup, bug 1/1
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> IsomorphismReesMatrixSemigroup(S);
 Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
 the argument must be a simple semigroup,
