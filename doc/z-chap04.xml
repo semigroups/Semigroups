@@ -37,6 +37,9 @@
     described in this section.
     <#Include Label="PBR">
     <#Include Label="RandomPBR">
+    <#Include Label="EmptyPBR">
+    <#Include Label="IdentityPBR">
+    <#Include Label="UniversalPBR">
   </Section>
   
   <!--**********************************************************************-->
@@ -52,16 +55,18 @@
     <P/> 
 
     The  operations  
+    <Ref Oper="AsPermutation" Label="for a PBR"/>, 
     <Ref Oper="AsPartialPerm" Label="for a PBR"/>, 
     <Ref Oper="AsTransformation" Label="for a PBR"/>,
     <Ref Oper="AsBipartition"/>,
     <Ref Oper="AsBooleanMat"/> 
-    can be used  to convert PBRs into partial permutations, transformations,
-    bipartitions, and boolean matrices where  appropriate.  
+    can be used  to convert PBRs into permutations, partial permutations,
+    transformations, bipartitions, and boolean matrices where  appropriate.  
 
     <#Include Label="AsPBR"/>
     <#Include Label="AsTransformationPBR"/>
     <#Include Label="AsPartialPermPBR"/>
+    <#Include Label="AsPermutationPBR"/>
   </Section>
 
   <!--**********************************************************************-->
@@ -88,7 +93,7 @@
       <Item>
         <Index Key="="><C>=</C> (for PBRs)</Index>
         returns <K>true</K> if the PBR <A>x</A> equals the
-        PBR <A>g</A> and returns <K>false</K> if it does not.
+        PBR <A>y</A> and returns <K>false</K> if it does not.
       </Item>
     </List> 
     <!--TODO document Star -->
@@ -106,11 +111,13 @@
     <#Include Label="ExtRepOfPBR">
     <#Include Label="NumberPBR">
     <#Include Label="IsEmptyPBR">
+    <#Include Label="IsIdentityPBR">
     <#Include Label="IsUniversalPBR">
     <#Include Label="IsBipartitionPBR">
     <#Include Label="IsTransformationPBR">
     <#Include Label="IsDualTransformationPBR">
     <#Include Label="IsPartialPermPBR">
+    <#Include Label="IsPermPBR">
 
   </Section>
 

@@ -24,9 +24,21 @@
 # The number <n> is the *degree* of <x>.
 
 #############################################################################
-# TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
-# IdentityPBR, AsPermutation, AsPBR for a pbr (extend or restrict),
+# TODO the embeddings from the paper, AsPBR for a pbr (extend or restrict),
 #############################################################################
+
+InstallMethod(EmptyPBR, "for a pos int", [IsPosInt],
+n -> PBRNC(List([1 .. n], y -> []), List([1 .. n], y -> [])));
+
+InstallMethod(IdentityPBR, "for a pos int", [IsPosInt],
+n -> PBRNC(List([1 .. n], y -> [-y]), List([1 .. n], y -> [y])));
+
+InstallMethod(UniversalPBR, "for a pos in", [IsPosInt],
+function(n)
+  local x;
+  x := Concatenation([-n .. -1], [1 .. n]);
+  return PBRNC(List([1 .. n], y -> x), List([1 .. n], y -> x));
+end);
 
 # FIXME the following is temporary, with the current definition of
 # IsGeneratorsOfInverseSemigroup for a pbr collection, the One of any element
@@ -46,8 +58,8 @@ InstallOtherMethod(InverseMutable, "for a PBR", [IsPBR],
 function(x)
   #TODO change IsBlockBijection(AsBipartition(x)) to
   # IsBlockBijectionPBR.
-  if IsPartialPermPBR(x) or (IsBipartitionPBR(x)
-      and IsBlockBijection(AsBipartition(x))) then
+  if IsPartialPermPBR(x) or
+      (IsBipartitionPBR(x) and IsBlockBijection(AsBipartition(x))) then
     return Star(x);
   fi;
   return fail;
@@ -91,7 +103,6 @@ function(coll)
   return deg;
 end);
 
-
 InstallMethod(IsBipartitionPBR, "for a pbr",
 [IsPBR],
 function(x)
@@ -115,6 +126,12 @@ InstallMethod(IsPartialPermPBR, "for a pbr",
 [IsPBR],
 function(x)
   return IsBipartitionPBR(x) and IsPartialPermBipartition(AsBipartition(x));
+end);
+
+InstallMethod(IsPermPBR, "for a pbr",
+[IsPBR],
+function(x)
+  return IsBipartitionPBR(x) and IsPermBipartition(AsBipartition(x));
 end);
 
 InstallMethod(IsDualTransformationPBR, "for a pbr",
@@ -143,6 +160,25 @@ function(x)
   n := x![1];
   for i in [2 .. 2 * n + 1] do
     if Length(x![i]) > 0 then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(IsIdentityPBR, "for a partition binary relation",
+[IsPBR],
+function(x)
+  local n, i;
+
+  n := x![1];
+  for i in [2 .. n + 1] do
+    if Length(x![i]) <> 1 or x![i][1] <> i + n - 1 then
+      return false;
+    fi;
+  od;
+  for i in [n + 2 .. 2 * n + 1] do
+    if Length(x![i]) <> 1 or x![i][1] <> i - n - 1 then
       return false;
     fi;
   od;
@@ -311,6 +347,18 @@ function(x)
                  "the argument <x> must be a partial perm PBR,");
   fi;
   return AsPartialPerm(AsBipartition(x));
+end);
+
+# TODO 2 arg version of this
+
+InstallMethod(AsPermutation, "for a pbr",
+[IsPBR],
+function(x)
+  if not IsPermPBR(x) then
+    ErrorMayQuit("Semigroups: AsPermutation: usage,\n",
+                 "the argument <x> must be a permutation PBR,");
+  fi;
+  return AsPermutation(AsBipartition(x));
 end);
 
 InstallMethod(RandomPBR, "for a pos int", [IsPosInt],
