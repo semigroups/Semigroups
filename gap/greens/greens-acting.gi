@@ -2027,11 +2027,9 @@ end);
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  # gaplint: ignore 20
+  # gaplint: ignore 15
   return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)),
-    rec(
-
-      ElementNumber := function(enum, pos)
+  rec(ElementNumber := function(enum, pos)
         return GreensRClasses(S)[pos];
       end,
 

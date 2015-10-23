@@ -401,14 +401,14 @@ end);
 ## 4. Individual classes . . .
 #############################################################################
 
-InstallMethod(OneImmutable, "for an H-class",
-[IsGreensHClass],
-function(H)
-  if not IsGroupHClass(H) then
-    return fail;
-  fi;
-  return Idempotents(H)[1];
-end);
+#InstallMethod(OneImmutable, "for an H-class",
+#[IsGreensHClass],
+#function(H)
+#  if not IsGroupHClass(H) then
+#    return fail;
+#  fi;
+#  return Idempotents(H)[1];
+#end);
 
 InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
 InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
@@ -687,13 +687,13 @@ end);
 InstallMethod(GreensHClasses, "for a generic semigroup Green's class",
 [IsGreensClass], 2, # to beat the library method
 function(C)
-  if IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C) then
-    return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation,
-                                            GreensHClassOfElement);
+  if not (IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C)) then
+    ErrorMayQuit("Semigroups: GreensHClasses ",
+                 "(for a generic semigroup Green's class): usage,\n",
+                 "the argument should be a Green's R-, L-, or D-class,");
   fi;
-  ErrorMayQuit("Semigroups: GreensHClasses ",
-               "(for a generic semigroup Green's class): usage,\n",
-               "the argument should be a Green's R-, L-, or D-class,");
+  return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation,
+                                          GreensHClassOfElement);
 end);
 
 ## Representatives
@@ -727,14 +727,14 @@ function(S)
   local comps, id, right_id, left_id, right_comps, left_comps, right, left,
    genstoapply, out, seen, i, j, k, l;
 
-  comps := GreensDRelation(S)!.data.comps;
-  id := GreensDRelation(S)!.data.id;
-  right_id := GreensRRelation(S)!.data.id;
-  left_id := GreensLRelation(S)!.data.id;
+  comps       := GreensDRelation(S)!.data.comps;
+  id          := GreensDRelation(S)!.data.id;
+  right_id    := GreensRRelation(S)!.data.id;
+  left_id     := GreensLRelation(S)!.data.id;
   right_comps := GreensRRelation(S)!.data.comps;
-  left_comps := GreensLRelation(S)!.data.comps;
-  right := RightCayleyGraphSemigroup(S);
-  left := LeftCayleyGraphSemigroup(S);
+  left_comps  := GreensLRelation(S)!.data.comps;
+  right       := RightCayleyGraphSemigroup(S);
+  left        := LeftCayleyGraphSemigroup(S);
 
   genstoapply := [1 .. Length(right[1])];
   out := [];
@@ -846,8 +846,9 @@ function(C)
     Append(str, "L");
   elif IsGreensHClass(C) then
     Append(str, "H");
-  elif IsGreensJClass(C) then
-    Append(str, "J");
+  #elif IsGreensJClass(C) then #TODO delete these line,
+                               # this code cannot be executed
+  #  Append(str, "J");
   fi;
   Append(str, "-class: ");
   Append(str, ViewString(Representative(C)));
@@ -872,8 +873,8 @@ function(rel)
     Append(str, "L");
   elif IsGreensHRelation(rel) then
     Append(str, "H");
-  elif IsGreensJRelation(rel) then
-    Append(str, "J");
+  #elif IsGreensJRelation(rel) then #TODO remove this
+  #  Append(str, "J");
   fi;
   Append(str, "-relation of ");
   Append(str, ViewString(Source(rel)));
@@ -920,8 +921,8 @@ function(C)
     Append(str, "L");
   elif IsGreensHClass(C) then
     Append(str, "H");
-  elif IsGreensJClass(C) then
-    Append(str, "J");
+  #elif IsGreensJClass(C) then
+  #  Append(str, "J");
   fi;
   Append(str, "ClassOfElement\<(\>");
   Append(str, PrintString(Parent(C)));
@@ -946,8 +947,8 @@ function(rel)
     Append(str, "L");
   elif IsGreensHRelation(rel) then
     Append(str, "H");
-  elif IsGreensJRelation(rel) then
-    Append(str, "J");
+  #elif IsGreensJRelation(rel) then
+  #  Append(str, "J");
   fi;
   Append(str, "Relation\<(\>\n");
   Append(str, PrintString(Source(rel)));
