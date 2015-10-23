@@ -17,6 +17,10 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+InstallMethod(AsList, "for matrix over semiring",
+[IsMatrixOverSemiring],
+mat -> List([1 .. Length(mat![1])], i -> mat![i]));
+
 InstallMethod(Iterator, "for a matrix over semiring",
 [IsMatrixOverSemiring],
 function(mat)

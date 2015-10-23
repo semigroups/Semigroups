@@ -27,25 +27,3 @@ GF(7)]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-<#GAPDoc Label="AsMatrix">
-  <ManSection>
-    <Oper Name="AsMatrix" Arg="mat"/>
-    <Returns>A &GAP; library matrix.</Returns>
-    <Description>
-      If <A>mat</A> is a matrix over a finite field (in the category <Ref Filt
-        = "IsMatrixOverSemiring"/>), then <C>AsMatrix</C> returns the &GAP;
-      library matrix (i.e. list of lists of finite field elements)
-      corresponding to <A>mat</A>.
-      
-
-      <Example><![CDATA[
-gap> mat := Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]]);
-Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
-gap> AsMatrix(mat);
-[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ]
-gap> mat = Matrix(BaseField(mat), AsMatrix(mat));
-true]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>

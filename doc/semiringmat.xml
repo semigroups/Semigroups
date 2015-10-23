@@ -8,6 +8,30 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="AsList">
+  <ManSection>
+    <Oper Name="AsList" Arg="mat"/>
+    <Returns>A list of lists.</Returns>
+    <Description>
+      If <A>mat</A> is a matrix over a semiring (in the category <Ref Filt
+        = "IsMatrixOverSemiring"/>), then <C>AsList</C> returns the underlying
+      list of lists of semiring elements corresponding to <A>mat</A>.
+      
+      <Example><![CDATA[
+gap> mat := Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]]);
+Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
+gap> AsList(mat);
+[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ]
+gap> mat = Matrix(BaseField(mat), AsList(mat));
+true
+gap> mat := Matrix(IsIntegerMatrix, [[0,2], [3,5]]);
+Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
+gap> AsList(mat);
+[ [ 0, 2 ], [ 3, 5 ] ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsMatrixOverSemiring">
   <ManSection>
     <Filt Name="IsMatrixOverSemiring" Arg="obj" Type="Category"/>

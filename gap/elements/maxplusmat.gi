@@ -568,9 +568,6 @@ function(semiring, n)
   return RandomMatrix(IsIntegerMatrix, n);
 end);
 
-InstallMethod(AsList, "for an integer matrix",
-[IsIntegerMatrix],
-mat -> List([1 .. Length(mat![1])], i -> mat![i]));
 
 InstallMethod(IsFinite,
 "for a semigroup of matrices of positive integers",
@@ -588,11 +585,11 @@ function(s)
       od;
     od;
   od;
-
+  # FIXME use AsMatrix when available
   modgens := List(gens, x -> List(AsList(x), row -> List(row, x -> Minimum(x, 2))));
-  imagegen := List(modgens, x -> Matrix(IsNTPMatrix, x, 1, 2));  
+  imagegen := List(modgens, x -> Matrix(IsNTPMatrix, x, 1, 2));
   image := Semigroup(imagegen);
-  idempots := Idempotents(image);  
+  idempots := Idempotents(image);
 
   for a in idempots do
     b := List([1 .. Length(a![1])], i -> a![i]);

@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="IsBooleanMat">
+<#GAPDoc Label="IsXMatrix">
   <ManSection Label = "IsXMatrix">
   <Heading>Matrix filters</Heading>
     <Filt Name="IsBooleanMat"              Arg="obj" Type="Category"/>
@@ -32,18 +32,22 @@
       <C>IsProjectiveMaxPlusMatrix</C>.
       <P/>
 
-      Basic operations for tropical matrices include: multiplication via \*,
-      <Ref Attr="One" BookName="ref"/>; for tropical matrices <Ref
+      Basic operations for matrices over semirings include: multiplication via
+      \*, <Ref Attr = "DimensionOfMatrixOverSemiring"/>, <Ref Attr="One"
+        BookName="ref"/>, the underlying list of lists used to create the
+      matrix can be accessed using <Ref Oper = "AsList"/>, the rows of
+      <C>mat</C> can be accessed using <C>mat[i]</C> where <C>i</C> is between
+      <C>1</C> and the dimension of the matrix, it also possible to loop over
+      the rows of a matrix; for tropical matrices <Ref
         Attr="ThresholdTropicalMatrix"/>; for ntp matrices <Ref
         Attr="ThresholdNTPMatrix"/> and <Ref Attr="PeriodNTPMatrix"/>; for
-      matrices over finite fields <Ref Attr="BaseField"/> and <Ref
-        Oper="AsMatrix"/>; for Boolean matrices more
-      details can be found in Section <Ref Sect="Boolean matrices"/>.
+      matrices over finite fields <Ref Attr="BaseField"/>; for Boolean matrices
+      more details can be found in Section <Ref Sect="Boolean matrices"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsBooleanMatCollection">
+<#GAPDoc Label="IsXMatrixCollection">
 <ManSection Label ="IsXMatrixCollection">
   <Heading>Matrix collection filters</Heading>
     <Filt Name="IsBooleanMatCollection"              Arg="obj" Type="Category"/>
@@ -79,7 +83,7 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="BooleanMatFamily">
+<#GAPDoc Label="XMatrixFamily">
   <ManSection Label ="XMatrixFamily">
     <Heading>Matrix types and families</Heading>
     <Var Name="BooleanMatFamily"             />
@@ -176,18 +180,6 @@ gap> PeriodNTPMatrix(mat);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="AsList">
-  <ManSection>
-    <Attr Name="AsList" Arg="mat"/>
-    <Returns>A list of lists.</Returns>
-    <Description>
-      If <A>mat</A> is an integer matrix, then this attribute returns, as a list
-      of lists, the underlying matrix on which <A>mat</A> is based.
-      <Example><![CDATA[
-gap> m := Matrix(IsIntegerMatrix, [[0,2], [3,5]]);
-Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
-gap> AsList(m);
-[ [ 0, 2 ], [ 3, 5 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

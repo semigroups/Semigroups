@@ -111,10 +111,11 @@
 
     <#Include Label="Matrix">
     <#Include Label="RandomMatrix">
-    <#Include Label="IsBooleanMat"/>
-    <#Include Label="IsBooleanMatCollection"/>
-    <#Include Label="BooleanMatFamily"/>
+    <#Include Label="IsXMatrix"/>
+    <#Include Label="IsXMatrixCollection"/>
+    <#Include Label="XMatrixFamily"/>
     <#Include Label="AsList"/>
+
     <!-- the following could go in a section of their own if there are more at
           some point -->
     <#Include Label="ThresholdTropicalMatrix"/>
@@ -241,7 +242,6 @@
     addition to those given elsewhere in this chapter for arbitrary matrices
     over semirings. These include:
     <#Include Label="BaseField">
-    <#Include Label="AsMatrix">
 
   </Section>
   
