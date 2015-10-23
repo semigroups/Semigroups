@@ -112,7 +112,7 @@ gap> Display(One(x));
 0 1 0
 0 0 1
 
-#T# boolmat: RandomBooleanMat, for boolean mats, 1/1
+#T# boolmat: RandomMatrix, for boolean mats, 1/1
 gap> x := RandomMatrix(IsBooleanMat, 1);;
 
 #T# boolmat: \in, for boolean mats, 1/2
@@ -452,12 +452,9 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0],
   [1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0], 
   [0, 0, 0, 0, 0, 0]])
 
-#T# boolmat: RandomBooleanMat, 1
-gap> mat := RandomBooleanMat(20);;
-gap> IsBooleanMat(mat);
-true
-gap> DimensionOfMatrixOverSemiring(mat);
-20
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(x);
+gap> Unbind(y);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/elements/boolmat.tst");

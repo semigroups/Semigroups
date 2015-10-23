@@ -430,23 +430,6 @@ end);
 
 # TODO AsBooleanMat for a BooleanMat
 
-InstallMethod(RandomBooleanMat, "for a pos int",
-[IsPosInt],
-function(n)
-  local x, out, i, j;
-
-  x := [true, false];
-  out := EmptyPlist(n);
-  for i in [1 .. n] do
-    out[i] := BlistList([1 .. n], []);
-    for j in [1 .. n] do
-      out[i][j] := Random(x);
-    od;
-  od;
-  #TODO: OK? Is out in BlistRep?
-  return MatrixNC(BooleanMatType, out);
-end);
-
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],
   function(x, hashlen)

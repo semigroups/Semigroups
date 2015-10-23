@@ -356,7 +356,7 @@ gap> SizeOfSemigroupData(SemigroupData(S));
 0
 
 #T# acting: SEMIGROUPS_UniversalFakeOne
-gap> SEMIGROUPS_UniversalFakeOne * RandomBooleanMat(4);;
+gap> SEMIGROUPS_UniversalFakeOne * RandomMatrix(IsBooleanMat, 4);;
 gap> RandomTransformation(4) * SEMIGROUPS_UniversalFakeOne;;
 gap> String(SEMIGROUPS_UniversalFakeOne);
 "<universal fake one>"
