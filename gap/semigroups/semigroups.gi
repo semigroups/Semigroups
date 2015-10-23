@@ -299,7 +299,9 @@ function(gens, opts)
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
       gens := ShallowCopy(gens);
-      Remove(gens, pos);
+      if not IsPartialPermCollection(gens) then
+        Remove(gens, pos);
+      fi;
       SetGeneratorsOfMonoid(S, gens);
     fi;
   fi;
@@ -389,8 +391,10 @@ function(gens, opts)
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetGeneratorsOfMagma(S, AsList(gens));
-      gens := ShallowCopy(gens);
-      Remove(gens, pos);
+      if not IsPartialPermCollection(gens) then
+        Remove(gens, pos);
+        gens := ShallowCopy(gens);
+      fi;
     else
       SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
     fi;
@@ -464,10 +468,12 @@ function(gens, opts)
   pos := Position(gens, one);
   # FIXME shouldn't we check that we can easily compare the gens?
 
-  if pos <> fail then
+  if pos <> fail  then
     SetGeneratorsOfInverseSemigroup(S, gens);
     gens := ShallowCopy(gens);
-    Remove(gens, pos);
+    if not IsPartialPermCollection(gens) then
+      Remove(gens, pos);
+    fi;
     SetGeneratorsOfInverseMonoid(S, gens);
   else
     SetGeneratorsOfInverseMonoid(S, gens);
@@ -530,7 +536,9 @@ function(gens, opts)
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
       gens := ShallowCopy(gens);
-      Remove(gens, pos);
+      if not IsPartialPermCollection(gens) then
+        Remove(gens, pos);
+      fi;
       SetGeneratorsOfInverseMonoid(S, gens);
     fi;
   fi;

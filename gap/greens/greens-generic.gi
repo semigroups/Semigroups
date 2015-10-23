@@ -401,14 +401,14 @@ end);
 ## 4. Individual classes . . .
 #############################################################################
 
-#InstallMethod(OneImmutable, "for an H-class",
-#[IsGreensHClass],
-#function(H)
-#  if not IsGroupHClass(H) then
-#    return fail;
-#  fi;
-#  return Idempotents(H)[1];
-#end);
+InstallMethod(OneImmutable, "for an H-class",
+[IsGreensHClass],
+function(H)
+  if not IsGroupHClass(H) then
+    TryNextMethod();
+  fi;
+  return Idempotents(H)[1];
+end);
 
 InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
 InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
