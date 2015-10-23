@@ -50,6 +50,7 @@ DeclareOperation("AsPBR", [IsAssociativeElement, IsPosInt]);
 DeclareOperation("AsPBR", [IsAssociativeElement]);
 
 DeclareProperty("IsEmptyPBR", IsPBR);
+DeclareProperty("IsIdentityPBR", IsPBR);
 DeclareProperty("IsUniversalPBR", IsPBR);
 DeclareProperty("IsBipartitionPBR", IsPBR);
 DeclareProperty("IsTransformationPBR", IsPBR);

@@ -166,6 +166,25 @@ function(x)
   return true;
 end);
 
+InstallMethod(IsIdentityPBR, "for a partition binary relation",
+[IsPBR],
+function(x)
+  local n, i;
+
+  n := x![1];
+  for i in [2 .. n + 1] do
+    if Length(x![i]) <> 1 or x![i][1] <> i + n - 1 then
+      return false;
+    fi;
+  od;
+  for i in [n + 2 .. 2 * n + 1] do
+    if Length(x![i]) <> 1 or x![i][1] <> i - n - 1 then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
 InstallMethod(IsUniversalPBR, "for a partition binary relation",
 [IsPBR],
 function(x)

@@ -37,6 +37,9 @@
     described in this section.
     <#Include Label="PBR">
     <#Include Label="RandomPBR">
+    <#Include Label="EmptyPBR">
+    <#Include Label="IdentityPBR">
+    <#Include Label="UniversalPBR">
   </Section>
   
   <!--**********************************************************************-->
@@ -108,6 +111,7 @@
     <#Include Label="ExtRepOfPBR">
     <#Include Label="NumberPBR">
     <#Include Label="IsEmptyPBR">
+    <#Include Label="IsIdentityPBR">
     <#Include Label="IsUniversalPBR">
     <#Include Label="IsBipartitionPBR">
     <#Include Label="IsTransformationPBR">

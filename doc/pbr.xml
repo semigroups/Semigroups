@@ -100,18 +100,67 @@ PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ],
 
       If the optional second argument is not present, then a random value
       <A>p</A> is used (chosen with uniform probability).
-      <Log><![CDATA[
-gap> RandomPBR(6);
-PBR(
-  [ [ -5, 1, 2, 3 ], [ -6, -3, -1, 2, 5 ], [ -5, -2, 2, 3, 5 ],
-      [ -6, -4, -1, 2, 3, 6 ], [ -4, -1, 2, 4 ],
-      [ -5, -3, -1, 1, 2, 3, 5 ] ],
-  [ [ -6, -4, -2, 1, 3, 5, 6 ], [ -5, -2, 1, 2, 3, 5 ],
-      [ -6, -5, -2, 1, 5 ], [ -6, -5, -3, -2, 1, 3, 4 ],
-      [ -6, -5, -4, -2, 3, 5 ], [ -6, -4, -2, -1, 1, 2, 6 ] ])]]></Log>
+      <Example><![CDATA[
+gap> x := RandomPBR(6);;
+gap> DegreeOfPBR(x);
+6]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="EmptyPBR">
+  <ManSection>
+    <Oper Name="EmptyPBR" Arg="n"/>
+    <Returns>A PBR.</Returns>
+    <Description>
+      If <A>n</A> is a positive integer, then <C>EmptyPBR</C>
+      returns the PBR of degree <A>n</A> with no edges.
+      <Example><![CDATA[
+gap> x := EmptyPBR(3);
+PBR([ [  ], [  ], [  ] ], [ [  ], [  ], [  ] ])
+gap> IsEmptyPBR(x);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IdentityPBR">
+  <ManSection>
+    <Oper Name="IdentityPBR" Arg="n"/>
+    <Returns>A PBR.</Returns>
+    <Description>
+      If <A>n</A> is a positive integer, then <C>IdentityPBR</C> returns the
+      identity PBR of degree <A>n</A>.
+
+      This PBR has <C>2</C><A>n</A> edges: specifically, for each <C>i</C> in
+      the ranges <C>[1 .. n]</C> and <C>[-n .. -1]</C>, the identity PBR has an
+      edge from <C>i</C> to <C>-i</C>.
+      <Example><![CDATA[
+gap> x := IdentityPBR(3);
+PBR([ [ -1 ], [ -2 ], [ -3 ] ], [ [ 1 ], [ 2 ], [ 3 ] ])
+gap> IsIdentityPBR(x);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="UniversalPBR">
+  <ManSection>
+    <Oper Name="UniversalPBR" Arg="n"/>
+    <Returns>A PBR.</Returns>
+    <Description>
+      If <A>n</A> is a positive integer, then <C>UniversalPBR</C>
+      returns the PBR of degree <A>n</A> with <C>4 * n ^ 2</C> edges,
+      i.e. every possible edge.
+      <Example><![CDATA[
+gap> x := UniversalPBR(2);
+PBR([ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ], 
+  [ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ])
+gap> IsUniversalPBR(x);
+true]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
 
 <#GAPDoc Label="DegreeOfPBR">
   <ManSection>
@@ -206,6 +255,33 @@ gap> x := PBR([ [ -2, 1 ], [ 2 ] ], [ [ -1 ], [ -2, 1 ] ]);
 PBR([ [ -2, 1 ], [ 2 ] ], [ [ -1 ], [ -2, 1 ] ])
 gap> IsEmptyPBR(x);
 false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsIdentityPBR">
+  <ManSection>
+    <Prop Name="IsIdentityPBR" Arg="x"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A PBR of degree <C>n</C> is the <B>identity</B> PBR of degree <C>n</C>
+      if it is the identity of the full PBR monoid of degree <C>n</C>.
+
+      The identity PBR of degree <C>n</C> has <C>2n</C> edges.  Specifically,
+      for each <C>i</C> in the ranges <C>[1 .. n]</C> and <C>[-n .. -1]</C>,
+      the identity PBR has an edge from <C>i</C> to <C>-i</C>.  <P/>
+
+      <C>IsIdentityPBR</C> returns <K>true</K> is the PBR <A>x</A> is
+      an identity PBR and <K>false</K> if it is not.
+      <Example><![CDATA[
+gap> x := PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 2 ] ]);
+PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 2 ] ])
+gap> IsIdentityPBR(x);
+false
+gap> x := PBR([ [ -1 ] ], [ [ 1 ] ]);
+PBR([ [ -1 ] ], [ [ 1 ] ])
+gap> IsIdentityPBR(x);
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
