@@ -89,7 +89,7 @@ InstallMethod(PrintObj,
 [IsReesCongruence],
 function(cong)
   Print("ReesCongruenceOfSemigroupIdeal( ");
-  PrintObj(SemigroupIdealOfReesCongruence(cong));
+  Print(SemigroupIdealOfReesCongruence(cong));
   Print(" )");
 end);
 
@@ -257,7 +257,7 @@ InstallMethod(\*,
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
   if not Parent(c1) = Parent(c2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
+    ErrorMayQuit("Semigroups: \\*: usage,\n",
                  "the args <c1> and <c2> must be classes of the same ",
                  "congruence,");
   fi;
