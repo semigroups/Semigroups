@@ -18,17 +18,17 @@ BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
   assert(IS_BOOL_MAT(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
-  assert(n == (size_t) LEN_BLIST(ELM_PLIST(o, 1)));
 
+  size_t m = LEN_BLIST(ELM_PLIST(o, 1));
   std::vector<bool>* x(new std::vector<bool>());
-  x->resize(n * n, false);
+  x->resize(m * m, false);
 
-  for (size_t i = 0; i < n; i++) {
+  for (size_t i = 0; i < m; i++) {
     Obj row = ELM_PLIST(o, i + 1);
     assert(IS_BLIST_REP(row));
-    for (size_t j = 0; j < n; j++) {
+    for (size_t j = 0; j < m; j++) {
       if (ELM_BLIST(row, j + 1) == True) {
-        x->at(i * n + j) = true;
+        x->at(i * m + j) = true;
       }
     }
   }
@@ -74,12 +74,13 @@ Bipartition* BipartConverter::convert (Obj o, size_t n) {
 
   Obj blocks_gap = ElmPRec(o, RNamName("blocks"));
 
-  assert((size_t) LEN_LIST(blocks_gap) == 2 * n);
+  //assert((size_t) LEN_LIST(blocks_gap) == 2 * n);
 
   std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>());
-  blocks->reserve(2 * n);
-
-  for (size_t i = 0; i < 2 * n; i++) {
+  size_t m = LEN_LIST(blocks_gap);
+  // don't compare n and m since we might be testing membership 
+  blocks->reserve(m);
+  for (size_t i = 0; i < m; i++) {
     blocks->push_back(INT_INTOBJ(ELM_LIST(blocks_gap, i + 1)) - 1);
   }
   return new Bipartition(blocks);
@@ -108,14 +109,15 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_SEMI_RING(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
-  assert(n == (size_t) LEN_PLIST(ELM_PLIST(o, 1)));
+
+  size_t m = LEN_PLIST(ELM_PLIST(o, 1));
   
   std::vector<long>* matrix(new std::vector<long>());
-  matrix->reserve(n);
+  matrix->reserve(m);
 
-  for (size_t i = 0; i < n; i++) {
+  for (size_t i = 0; i < m; i++) {
     Obj row = ELM_PLIST(o, i + 1);
-    for (size_t j = 0; j < n; j++) {
+    for (size_t j = 0; j < m; j++) {
       Obj entry = ELM_PLIST(row, j + 1);
       if (EQ(_gap_zero, entry)) {
         matrix->push_back(_semiring->zero());
@@ -167,14 +169,14 @@ MatrixOverSemiring* MatrixOverPrimeFieldConverter::convert (Obj o, size_t n) {
   assert(IS_MAT_OVER_PF(o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
-  assert(n == (size_t) LEN_PLIST(ELM_PLIST(o, 1)));
+  size_t m = LEN_PLIST(ELM_PLIST(o, 1));
 
   std::vector<long>* matrix(new std::vector<long>());
-  matrix->reserve(n);
+  matrix->reserve(m);
 
-  for (size_t i = 1; i <= n; i++) {
+  for (size_t i = 1; i <= m; i++) {
     Obj row = ELM_PLIST(o, i);
-    for (size_t j = 1; j <= n; j++) {
+    for (size_t j = 1; j <= m; j++) {
       matrix->push_back(VAL_FFE(ELM_PLIST(row, j)));
     }
   }
@@ -215,12 +217,11 @@ Obj MatrixOverPrimeFieldConverter::unconvert (Element* xx) {
 
 PBR* PBRConverter::convert (Obj o, size_t n) {
   assert(IS_PBR(o));
-  assert(n == (size_t) INT_INTOBJ(ELM_PLIST(o, 1)));
-
+  size_t m = INT_INTOBJ(ELM_PLIST(o, 1));
   std::vector<std::vector<u_int32_t> >* pbr(new std::vector<std::vector<u_int32_t> >());
-  pbr->reserve(n);
+  pbr->reserve(m);
 
-  for (u_int32_t i = 0; i < 2 * n; i++) {
+  for (u_int32_t i = 0; i < 2 * m; i++) {
     Obj adj = ELM_PLIST(o, i + 2);
     std::vector<u_int32_t> next;
     for (u_int32_t j = 1; j <= LEN_PLIST(adj); j++) {
