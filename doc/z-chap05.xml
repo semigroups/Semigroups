@@ -17,8 +17,8 @@
     <Mark>the Boolean semiring</Mark>
     <Item> 
       the set <M>\{0, 1\}</M> where <M>0 + 0 = 0</M>,
-      <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, and <M>1\cdot 0 = 0 \cdot 0 = 0
-        \cdot 1 = 0</M>. 
+      <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, <M>1\cdot 0 = 0 \cdot 0 = 0
+        \cdot 1 = 0</M>, and <M>1\cdot 1 = 1</M>. 
     </Item>
 
     <Mark>the max-plus semiring</Mark>
@@ -129,10 +129,10 @@
     <List>
       <Mark><C><A>mat1</A> * <A>mat2</A></C></Mark>
       <Item>
-        <Index Key="*"><C>*</C> (for matrices over a semiring)</Index>
-        returns the product of the matrices <A>mat1</A> and <A>mat2</A>
-        of equal dimension using the usual matrix multiplication with the
-        operations <C>+</C> and <C>*</C> from the underlying semiring. 
+        <Index Key="*"><C>*</C> (for matrices over a semiring)</Index> returns
+        the product of the matrices <A>mat1</A> and <A>mat2</A> of equal
+        dimension over the same semiring using the usual matrix multiplication
+        with the operations <C>+</C> and <C>*</C> from the underlying semiring. 
       </Item>
       <Mark><C><A>mat1</A> &lt; <A>mat2</A></C></Mark>
       <Item>
