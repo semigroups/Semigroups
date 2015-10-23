@@ -211,5 +211,24 @@ the arguments must be matrices of the same dimensions,
 gap> RandomMatrix(Integers, 20);
 <20x20 integer matrix>
 
+#T# maxplusmat: AsMatrix, trop. min-plus <-> min-plus, 1/?
+gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
+>  [infinity, 4, 0]], 10);;
+gap> AsMatrix(IsMinPlusMatrix, mat);
+Matrix(IsMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2], [infinity, 4, 0]]
+  )
+gap> AsMatrix(IsTropicalMinPlusMatrix, last, 10);
+Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2], 
+  [infinity, 4, 0]], 10)
+gap> last = mat;
+true
+
+#T# maxplusmat: AsMatrix, trop. min-plus <-> trop. min-plus, 2/?
+gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
+>  [infinity, 4, 0]], 10);;
+gap> AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
+Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2], 
+  [infinity, 2, 0]], 2)
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/elements/maxplusmat.tst");

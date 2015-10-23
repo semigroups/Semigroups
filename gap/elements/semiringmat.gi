@@ -17,49 +17,7 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
-InstallMethod(AsList, "for matrix over semiring",
-[IsMatrixOverSemiring],
-mat -> List([1 .. Length(mat![1])], i -> mat![i]));
-
-InstallMethod(Iterator, "for a matrix over semiring",
-[IsMatrixOverSemiring],
-function(mat)
-  local iter;
-
-  iter := rec(pos := 0);
-
-  iter.NextIterator := function(iter)
-    if IsDoneIterator(iter) then
-      return fail;
-    fi;
-    iter!.pos := iter!.pos + 1;
-    return mat![iter!.pos];
-  end;
-
-  iter.IsDoneIterator := function(iter)
-    if iter!.pos = Length(mat![1]) then
-      return true;
-    fi;
-    return false;
-  end;
-
-  iter.ShallowCopy := function(iter)
-    return rec(pos := 0);
-  end;
-
-  return IteratorByFunctions(iter);
-end);
-
-InstallMethod(ELM_LIST, "for a matrix over semiring",
-[IsMatrixOverSemiring, IsPosInt],
-function(mat, pos)
-  if pos > Length(mat![1]) then
-    ErrorMayQuit("Semigroups: ELM_LIST (for a matrix over semiring):\n",
-                 "the position is greater than the dimension of the matrix,");
-
-  fi;
-  return mat![pos];
-end);
+# Note that MatrixNC changes its argument in place!!
 
 InstallMethod(MatrixNC, "for a type and homogeneous list",
 [IsType, IsList],
@@ -262,6 +220,78 @@ function(arg)
   ErrorMayQuit("Semigroups: RandomMatrix: usage,\n",
                "the arguments must be: filter, pos int[, pos int[,",
                " pos int]],");
+end);
+
+InstallMethod(AsMatrix, "for a filter, and matrix over semiring",
+[IsFunction and IsOperation, IsMatrixOverSemiring],
+function(filt, mat)
+  return AsMatrixCons(filt, mat);
+end);
+
+InstallMethod(AsMatrix, "for a filter, matrix over semiring, and pos int",
+[IsFunction and IsOperation, IsMatrixOverSemiring, IsPosInt],
+function(filt, mat, threshold)
+  return AsMatrixCons(filt, mat, threshold);
+end);
+
+InstallMethod(AsMatrix, "for a filter, matrix over semiring, pos int, pos int",
+[IsFunction and IsOperation, IsMatrixOverSemiring, IsPosInt, IsPosInt],
+function(filt, mat, threshold, period)
+  return AsMatrixCons(filt, mat, threshold, period);
+end);
+
+InstallMethod(AsMatrix, "for a semiring, and matrix over semiring",
+[IsSemiring, IsMatrixOverSemiring],
+function(filt, mat)
+  return AsMatrixCons(filt, mat);
+end);
+
+InstallMethod(AsMutableList, "for matrix over semiring",
+[IsMatrixOverSemiring],
+mat -> List([1 .. Length(mat![1])], i -> ShallowCopy(mat![i])));
+
+InstallMethod(AsList, "for matrix over semiring",
+[IsMatrixOverSemiring],
+mat -> List([1 .. Length(mat![1])], i -> mat![i]));
+
+InstallMethod(Iterator, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(mat)
+  local iter;
+
+  iter := rec(pos := 0);
+
+  iter.NextIterator := function(iter)
+    if IsDoneIterator(iter) then
+      return fail;
+    fi;
+    iter!.pos := iter!.pos + 1;
+    return mat![iter!.pos];
+  end;
+
+  iter.IsDoneIterator := function(iter)
+    if iter!.pos = Length(mat![1]) then
+      return true;
+    fi;
+    return false;
+  end;
+
+  iter.ShallowCopy := function(iter)
+    return rec(pos := 0);
+  end;
+
+  return IteratorByFunctions(iter);
+end);
+
+InstallMethod(ELM_LIST, "for a matrix over semiring",
+[IsMatrixOverSemiring, IsPosInt],
+function(mat, pos)
+  if pos > Length(mat![1]) then
+    ErrorMayQuit("Semigroups: ELM_LIST (for a matrix over semiring):\n",
+                 "the position is greater than the dimension of the matrix,");
+
+  fi;
+  return mat![pos];
 end);
 
 InstallMethod(TransposedMat, "for a matrix over semiring",
