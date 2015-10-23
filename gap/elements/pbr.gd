@@ -35,6 +35,9 @@ DeclareOperation("PBR", [IsDenseList, IsDenseList]);
 DeclareGlobalFunction("PBRNC");
 DeclareOperation("RandomPBR", [IsPosInt]);
 DeclareOperation("RandomPBR", [IsPosInt, IsFloat]);
+DeclareOperation("EmptyPBR", [IsPosInt]);
+DeclareOperation("IdentityPBR", [IsPosInt]);
+DeclareOperation("UniversalPBR", [IsPosInt]);
 
 DeclareAttribute("DegreeOfPBR", IsPBR);
 DeclareAttribute("DegreeOfPBRCollection", IsPBRCollection);
@@ -51,5 +54,6 @@ DeclareProperty("IsUniversalPBR", IsPBR);
 DeclareProperty("IsBipartitionPBR", IsPBR);
 DeclareProperty("IsTransformationPBR", IsPBR);
 DeclareProperty("IsPartialPermPBR", IsPBR);
+DeclareProperty("IsPermPBR", IsPBR);
 DeclareProperty("IsBlockBijectionPBR", IsPBR);
 DeclareProperty("IsDualTransformationPBR", IsPBR);

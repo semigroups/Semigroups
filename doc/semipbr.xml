@@ -50,7 +50,9 @@ gap> One(S);
 fail
 gap> MultiplicativeNeutralElement(S);
 PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ], 
-  [ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -5 ] ])]]></Example>
+  [ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -5 ] ])
+gap> IsPBRMonoid(S);
+false]]></Example>
       In this example <C>S</C> cannot be converted into a monoid using <Ref
         Attr="AsMonoid" BookName="ref"/> since the <Ref Attr="One"
         BookName="ref"/> of any element in <C>S</C> differs from the
