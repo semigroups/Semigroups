@@ -84,7 +84,7 @@ group of the Rees matrix semigroup in the first argument, <R>,
 #T# maximal: MaximalSubsemigroups, for RMS and group, error, 4/4
 gap> R := ReesMatrixSemigroup(SymmetricGroup(3), [[()]]);
 <Rees matrix semigroup 1x1 over Sym( [ 1 .. 3 ] )>
-gap> MaximalSub<transformation semigroup of degree 6 with 2 generators>semigroups(R, Group(()));
+gap> MaximalSubsemigroups(R, Group(()));
 Error, Semigroups: MaximalSubsemigroups: usage,
 the second argument <H> must be a maximal subgroup of the underlying
 group of the Rees matrix semigroup in the first argument, <R>,
