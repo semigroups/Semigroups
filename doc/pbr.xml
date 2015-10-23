@@ -448,7 +448,7 @@ gap> Number(FullPBRMonoid(1), IsPermPBR);
     <Item>
       If <A>x</A> is a boolean matrix of even dimension <C>2 * m</C> and
       <A>n</A> is a positive integer, then <C>AsPBR</C> returns a PBR
-      corresponding to <A>x</A> with degree <A>m</A>. 
+      corresponding to <A>x</A> with degree <A>n</A>.
       
       If the optional second argument <A>n</A> is not specified, then dimension
       of the boolean matrix <A>x</A> is used by default.
