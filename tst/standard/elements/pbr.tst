@@ -308,5 +308,81 @@ gap> x := PBR([ [  ], [  ], [  ] ], [ [  ], [ -2 ], [  ] ]);;
 gap> Inverse(x);
 fail
 
+#T# pbr, EmptyPBR, 1
+gap> EmptyPBR(0);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `EmptyPBR' on 1 arguments
+gap> EmptyPBR(1);
+PBR([ [  ] ], [ [  ] ])
+gap> EmptyPBR(2);
+PBR([ [  ], [  ] ], [ [  ], [  ] ])
+
+#T# pbr, IdentityPBR, 1
+gap> IdentityPBR(0);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IdentityPBR' on 1 arguments
+gap> IdentityPBR(1);
+PBR([ [ -1 ] ], [ [ 1 ] ])
+gap> IdentityPBR(2);
+PBR([ [ -1 ], [ -2 ] ], [ [ 1 ], [ 2 ] ])
+
+#T# pbr, UniversalPBR, 1
+gap> UniversalPBR(0);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `UniversalPBR' on 1 arguments
+gap> UniversalPBR(1);
+PBR([ [ -1, 1 ] ], [ [ -1, 1 ] ])
+gap> UniversalPBR(2);
+PBR([ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ], 
+  [ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ])
+
+#T# pbr, IsPermPBR, 1
+gap> IsPermPBR(PBR([[1], [-1, 1, 2]], [[-2, -1, 1, 2], [-2, -1, 1]]));
+false
+
+#T# pbr, IsPermPBR, 2
+gap> IsPermPBR(PBR([[-3, 1], [2], [-1, 3]], [[-1, 3], [-2], [-3, 1]]));
+false
+
+#T# pbr, IsPermPBR, 3
+gap> IsPermPBR(PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]));
+true
+
+#T# pbr, IsIdentityPBR, 1
+gap> x := IdentityPBR(3);;
+gap> IsIdentityPBR(x);
+true
+
+#T# pbr, IsIdentityPBR, 2
+gap> IsIdentityPBR(PBR([[-3, 1], [2], [-1, 3]], [[-1, 3], [-2], [-3, 1]]));
+false
+
+#T# pbr, IsIdentityPBR, 3
+gap> IsIdentityPBR(PBR([[-1], [-2]], [[1], [1]]));
+false
+
+#T# pbr, IsIdentityPBR, 4
+gap> IsIdentityPBR(PBR([[-1], [-2]], [[1], [2, 1]]));
+false
+
+#T# pbr, AsPermutation, for a pbr, 1
+gap> x := PBR([[-3, 1], [2], [-1, 3]], [[-1, 3], [-2], [-3, 1]]);;
+gap> AsPermutation(x);
+Error, Semigroups: AsPermutation: usage,
+the argument <x> must be a permutation PBR,
+
+#T# pbr, AsPermutation, for a pbr, 2
+gap> x := PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]);;
+gap> AsPermutation(x);
+(2,3)
+
+#T# pbr, \<, 1
+gap> x := PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]);;
+gap> x < PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]);
+false
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(x);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/elements/pbr.tst");
