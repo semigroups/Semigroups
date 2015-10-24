@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+DeclareOperation("TikzString", [IsObject]);
+DeclareOperation("TikzString", [IsObject, IsRecord]);
+DeclareOperation("DotString", [IsObject]);
+DeclareOperation("DotString", [IsObject, IsRecord]);
+
 DeclareAttribute("DotDClasses", IsSemigroup, "mutable");
 DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup, "mutable");
 DeclareOperation("DotDClasses", [IsSemigroup, IsRecord]);

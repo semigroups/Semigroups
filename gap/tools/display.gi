@@ -8,6 +8,25 @@
 #############################################################################
 ##
 
+#############################################################################
+
+SEMIGROUPS.TikzInit := Concatenation("%latex\n",
+                                     "\\documentclass{minimal}\n",
+                                     "\\usepackage{tikz}\n",
+                                     "\\begin{document}\n");
+
+SEMIGROUPS.TikzEnd := "\\end{document}";
+
+SEMIGROUPS.TikzColors := ["red", "green", "blue", "cyan", "magenta", "yellow",
+                          "black", "gray", "darkgray", "lightgray", "brown",
+                          "lime", "olive", "orange", "pink", "purple", "teal",
+                          "violet", "white"];
+
+SEMIGROUPS.TikzArcPBR := Concatenation("\\newcommand{\\arc}{\\draw[semithick, ",
+                                       "-{>[width = 1.5mm, length = 2.5mm]}]}\n");
+
+#############################################################################
+
 if not IsBound(Splash) then #This function is written by A. Egri-Nagy
   if ARCH_IS_MAC_OS_X() then
     BindGlobal("VizViewers", ["xpdf", "open", "evince", "okular", "gv"]);
@@ -114,85 +133,220 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
   end);
 fi;
 
-#
+#############################################################################
 
-BindGlobal("TikzInit",
-  Concatenation("%latex\n",
-                "\\documentclass{minimal}\n",
-                "\\usepackage{tikz}\n",
-                "\\begin{document}\n"));
+SEMIGROUPS.PBRTikzOpts := rec(labels := false);
 
-#
+InstallMethod(TikzString, "for a pbr",
+[IsPBR],
+function(x)
+  return TikzString(x, SEMIGROUPS.PBRTikzOpts);
+end);
 
-BindGlobal("TikzEnd", "\\end{document}");
+InstallMethod(TikzString, "for a pbr and record",
+[IsPBR, IsRecord],
+function(x, opts)
+  local ext, n, str, coeff1, coeff2, ii, jj, i, j;
 
-#
+  ext := ExtRepOfPBR(x);
+  n   := DegreeOfPBR(x);
+  str := ShallowCopy(SEMIGROUPS.TikzInit);
+  Append(str, "\\usetikzlibrary{arrows}\n");
+  Append(str, "\\usetikzlibrary{arrows.meta}\n");
+  Append(str, SEMIGROUPS.TikzArcPBR);
+  Append(str, "\\begin{tikzpicture}[\n");
+  Append(str, "  vertex/.style={circle, draw, fill=black, inner sep = 0.04cm},\n");
+  Append(str, "  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n");
+  Append(str, "  botloop/.style={min distance = 8mm, out = -70, in = -110},\n");
+  Append(str, "  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n");
+
+  # draw the vertices and their labels
+  Append(str, "  % vertices and labels\n");
+  Append(str, "  \\foreach \\i in {1,...,");
+  Append(str, String(n));
+  Append(str, "} {\n");
+
+  if opts.labels then
+    Append(str, "    \\node [vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) {};\n");
+  else
+    Append(str, "    \\node [vertex] at (\\i/1.5, 3) {};\n");
+  fi;
+
+  Append(str, "    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n");
+  Append(str, "  }\n\n");
+
+  Append(str, "  \\foreach \\i in {1,...,");
+  Append(str, String(n));
+  Append(str, "} {\n");
+
+  if opts.labels then
+    Append(str, "    \\node [vertex, label={[yshift=-15mm, xshift=-0.5mm]-\\i}] at (\\i/1.5, 0) {};\n");
+  else
+    Append(str, "    \\node [vertex] at (\\i/1.5, 0) {};\n");
+  fi;
+
+  Append(str, "    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n");
+  Append(str, "  }\n\n");
+
+  # draw the arcs
+  for i in [1 .. n] do
+    Append(str, "  % arcs from vertex ");
+    Append(str, String(i));
+    Append(str, "\n");
+
+    for j in ext[1][i] do
+      if j = i then
+        Append(str, "  \\arc (");
+        Append(str, String(i));
+        Append(str, ") edge [toploop] (");
+        Append(str, String(i));
+        Append(str, ");\n");
+      elif j > 0 then
+        if i < j then
+          coeff1 := 1;
+          coeff2 := -1;
+        else
+          coeff1 := -1;
+          coeff2 := 1;
+        fi;
+
+        Append(str, "  \\arc (");
+        Append(str, String(i));
+        Append(str, ") .. controls (");
+        Append(str, String(i / 1.5 + (coeff1 * 0.4 * AbsInt(i - j))));
+        Append(str, ", ");
+        Append(str, String(Float(2.75 - (5 / (4 * n)) * AbsInt(i - j))));
+        Append(str, ") and (");
+        Append(str, String(j / 1.5 + (coeff2 * 0.4 * AbsInt(i - j))));
+        Append(str, ", ");
+        Append(str, String(Float(2.75 - (5 / (4 * n)) * AbsInt(i - j))));
+        Append(str, ") .. (");
+        Append(str, String(j));
+        Append(str, ");\n");
+      else
+        Append(str, "  \\arc (");
+        Append(str, String(i));
+        Append(str, ") to (");
+        Append(str, String(j));
+        Append(str, ");\n");
+      fi;
+    od;
+    Append(str, "\n");
+
+    Append(str, "  % arcs from vertex -");
+    Append(str, String(i));
+    Append(str, "\n");
+    for j in ext[2][i] do
+      if j = -i then
+        Append(str, "  \\arc (");
+        Append(str, String(-i));
+        Append(str, ") edge [botloop] (");
+        Append(str, String(-i));
+        Append(str, ");\n");
+      elif j < 0 then
+        jj := -j;
+        if i < jj then
+          coeff1 := 1;
+          coeff2 := -1;
+        else
+          coeff1 := -1;
+          coeff2 := 1;
+        fi;
+
+        Append(str, "  \\arc (");
+        Append(str, String(-i));
+        Append(str, ") .. controls (");
+        Append(str, String(i / 1.5 + (coeff1 * 0.4 * AbsInt(i + j))));
+        Append(str, ", ");
+        Append(str, String(Float(0.25 + (5 / (4 * n)) * AbsInt(i + j))));
+        Append(str, ") and (");
+        Append(str, String(jj / 1.5 + (coeff2 * 0.4 * AbsInt(i + j))));
+        Append(str, ", ");
+        Append(str, String(Float(0.25 + (5 / (4 * n)) * AbsInt(i + j))));
+        Append(str, ") .. (");
+        Append(str, String(j));
+        Append(str, ");\n");
+      else
+        Append(str, "  \\arc (");
+        Append(str, String(-i));
+        Append(str, ") to (");
+        Append(str, String(j));
+        Append(str, ");\n");
+      fi;
+    od;
+    Append(str, "\n");
+  od;
+
+  Append(str, "\\end{tikzpicture}\n");
+  Append(str, SEMIGROUPS.TikzEnd);
+  return str;
+end);
 
 InstallGlobalFunction(TikzBipartition,
 function(arg)
-  return Concatenation(TikzInit,
+  return Concatenation(SEMIGROUPS.TikzInit,
                        CallFuncList(TikzStringForBipartition, arg),
-                       TikzEnd);
+                       SEMIGROUPS.TikzEnd);
 end);
 
 # for bipartition
 
 BindGlobal("TikzRightBlocks",
 function(x)
-  return Concatenation(TikzInit,
+  return Concatenation(SEMIGROUPS.TikzInit,
                        TikzStringForBlocks(RightBlocks(x), "bottom", "bottom"),
-                       TikzEnd);
+                       SEMIGROUPS.TikzEnd);
 end);
 
 # for bipartition
 
 BindGlobal("TikzLeftBlocks",
 function(f)
-  return Concatenation(TikzInit,
+  return Concatenation(SEMIGROUPS.TikzInit,
                        TikzStringForBlocks(LeftBlocks(f), "top", "top"),
-                       TikzEnd);
+                       SEMIGROUPS.TikzEnd);
 end);
 
 # for blocks, JDM have a right/left version of this
 
 InstallGlobalFunction(TikzBlocks,
 function(blocks)
-  return Concatenation(TikzInit,
+  return Concatenation(SEMIGROUPS.TikzInit,
                        TikzStringForBlocks(blocks, "top", "top"),
-                       TikzEnd);
+                       SEMIGROUPS.TikzEnd);
 end);
 
 #
 
 BindGlobal("TikzBipartitionRight",
 function(x)
-  return Concatenation(TikzInit,
+  return Concatenation(SEMIGROUPS.TikzInit,
                        "\\begin{center}\n",
                        TikzStringForBipartition(x),
                        "\\bigskip\n",
                        TikzStringForBlocks(RightBlocks(x), "none", "bottom"),
                        "\\end{center}\n",
-                       TikzEnd);
+                       SEMIGROUPS.TikzEnd);
 end);
 
 #
 
 BindGlobal("TikzBipartitionLeft",
 function(f)
-  return Concatenation(TikzInit,
+  return Concatenation(SEMIGROUPS.TikzInit,
                        "\\begin{center}\n",
                        TikzStringForBipartition(f),
                        "\\bigskip\n",
                        TikzStringForBlocks(LeftBlocks(f), "none", "top"),
                        "\\end{center}\n",
-                       TikzEnd);
+                       SEMIGROUPS.TikzEnd);
 end);
 
 #
 
 BindGlobal("TikzBipartitionLeftRight",
 function(f)
-  return Concatenation(TikzInit,
+  return Concatenation(SEMIGROUPS.TikzInit,
                        "\\begin{center}\n",
                        TikzStringForBlocks(LeftBlocks(f), "none", "top"),
                        "\\bigskip\n",
@@ -200,7 +354,7 @@ function(f)
                        "\\bigskip\n",
                        TikzStringForBlocks(RightBlocks(f), "none", "bottom"),
                        "\\end{center}\n",
-                       TikzEnd);
+                       SEMIGROUPS.TikzEnd);
 end);
 
 #
