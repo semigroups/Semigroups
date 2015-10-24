@@ -217,13 +217,11 @@ function(mat, threshold)
   mat[n + 1] := threshold;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      # TODO is this correct? In Semigroupe it is not possible to every get
-      # infinity in a product
-      if mat[i][j] <> infinity and mat[i][j] > threshold then
-        mat[i][j] := threshold;
-      fi;
-      if mat[i][j] <> -infinity then
+      if IsInt(mat[i][j]) then
         mat[i][j] := AbsInt(mat[i][j]);
+        if mat[i][j] > threshold then
+          mat[i][j] := threshold;
+        fi;
       fi;
     od;
   od;
