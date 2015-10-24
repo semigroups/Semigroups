@@ -1,4 +1,61 @@
+BindGlobal("TikzBipartitionRight",
+function(x)
+  return Concatenation(SEMIGROUPS.TikzInit,
+                       "\\begin{center}\n",
+                       TikzStringForBipartition(x),
+                       "\\bigskip\n",
+                       TikzStringForBlocks(RightBlocks(x), "none", "bottom"),
+                       "\\end{center}\n",
+                       SEMIGROUPS.TikzEnd);
+end);
+
 #
+
+BindGlobal("TikzBipartitionLeft",
+function(f)
+  return Concatenation(SEMIGROUPS.TikzInit,
+                       "\\begin{center}\n",
+                       TikzStringForBipartition(f),
+                       "\\bigskip\n",
+                       TikzStringForBlocks(LeftBlocks(f), "none", "top"),
+                       "\\end{center}\n",
+                       SEMIGROUPS.TikzEnd);
+end);
+
+#
+
+BindGlobal("TikzBipartitionLeftRight",
+function(f)
+  return Concatenation(SEMIGROUPS.TikzInit,
+                       "\\begin{center}\n",
+                       TikzStringForBlocks(LeftBlocks(f), "none", "top"),
+                       "\\bigskip\n",
+                       TikzStringForBipartition(f),
+                       "\\bigskip\n",
+                       TikzStringForBlocks(RightBlocks(f), "none", "bottom"),
+                       "\\end{center}\n",
+                       SEMIGROUPS.TikzEnd);
+end);
+
+#
+# for bipartition
+
+BindGlobal("TikzRightBlocks",
+function(x)
+  return Concatenation(SEMIGROUPS.TikzInit,
+                       TikzStringForBlocks(RightBlocks(x), "bottom", "bottom"),
+                       SEMIGROUPS.TikzEnd);
+end);
+
+# for bipartition
+
+BindGlobal("TikzLeftBlocks",
+function(f)
+  return Concatenation(SEMIGROUPS.TikzInit,
+                       TikzStringForBlocks(LeftBlocks(f), "top", "top"),
+                       SEMIGROUPS.TikzEnd);
+end);
+
 
 #InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
 #[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
@@ -260,10 +317,10 @@ function(d)
 
   return out;
 end);
-  
+
   # JDM below is an example of how to use FIND_SEMIGROUP, it used to be used in
   # Position . . .
-  
+
   #lookfunc := function(data, i)
   #  return data!.elts[i] = x;
   #end;

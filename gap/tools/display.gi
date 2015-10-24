@@ -23,17 +23,24 @@ SEMIGROUPS.TikzColors := ["red", "green", "blue", "cyan", "magenta", "yellow",
                           "violet", "white"];
 
 SEMIGROUPS.TikzArcPBR := Concatenation("\\newcommand{\\arc}{\\draw[semithick, ",
-                                       "-{>[width = 1.5mm, length = 2.5mm]}]}\n");
+                                       "-{>[width = 1.5mm, length = ",
+                                       "2.5mm]}]}\n");
+
+SEMIGROUPS.TikzPBROpts         := rec(labels := false);
+SEMIGROUPS.TikzBipartitionOpts := rec(colors := false);
+SEMIGROUPS.TikzBlocksOpts      := rec(labels := "above",
+                                      edges  := "below",
+                                      colors := false);
 
 #############################################################################
 
 if not IsBound(Splash) then #This function is written by A. Egri-Nagy
   if ARCH_IS_MAC_OS_X() then
-    BindGlobal("VizViewers", ["xpdf", "open", "evince", "okular", "gv"]);
+    SEMIGROUPS.Viewers := ["xpdf", "open", "evince", "okular", "gv"];
   elif ARCH_IS_UNIX() then
-    BindGlobal("VizViewers", ["xpdf", "xdg-open", "evince", "okular", "gv"]);
+    SEMIGROUPS.Viewers := ["xpdf", "xdg-open", "evince", "okular", "gv"];
   elif ARCH_IS_WINDOWS() then
-    BindGlobal("VizViewers", ["xpdf", "evince", "okular", "gv"]);
+    SEMIGROUPS.Viewers := ["xpdf", "evince", "okular", "gv"];
   fi;
 
   BindGlobal("Splash",
@@ -90,7 +97,7 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     if IsBound(opt.viewer) then
       viewer := opt.viewer;
     else
-      viewer := First(VizViewers, x ->
+      viewer := First(SEMIGROUPS.Viewers, x ->
                       Filename(DirectoriesSystemPrograms(), x) <> fail);
     fi;
 
@@ -117,6 +124,8 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
 
     if type = "latex" then
       FileString(Concatenation(dir, file, ".tex"), arg[1]);
+      # FIXME shouldn't wait for this to finish here, should just start it and
+      # carry on, since this causes problems if there are errors in the tex.
       Exec(Concatenation("cd ", dir, "; ", "pdflatex ", dir, file,
                          " 2>/dev/null 1>/dev/null"));
       Exec(Concatenation(viewer, " ", dir, file,
@@ -135,18 +144,16 @@ fi;
 
 #############################################################################
 
-SEMIGROUPS.PBRTikzOpts := rec(labels := false);
-
 InstallMethod(TikzString, "for a pbr",
 [IsPBR],
 function(x)
-  return TikzString(x, SEMIGROUPS.PBRTikzOpts);
+  return TikzString(x, SEMIGROUPS.TikzPBROpts);
 end);
 
 InstallMethod(TikzString, "for a pbr and record",
 [IsPBR, IsRecord],
 function(x, opts)
-  local ext, n, str, coeff1, coeff2, ii, jj, i, j;
+  local ext, n, str, coeff1, coeff2, jj, i, j;
 
   ext := ExtRepOfPBR(x);
   n   := DegreeOfPBR(x);
@@ -155,7 +162,8 @@ function(x, opts)
   Append(str, "\\usetikzlibrary{arrows.meta}\n");
   Append(str, SEMIGROUPS.TikzArcPBR);
   Append(str, "\\begin{tikzpicture}[\n");
-  Append(str, "  vertex/.style={circle, draw, fill=black, inner sep = 0.04cm},\n");
+  Append(str, "  vertex/.style={circle, draw, fill=black, inner sep =");
+  Append(str, "0.04cm},\n");
   Append(str, "  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n");
   Append(str, "  botloop/.style={min distance = 8mm, out = -70, in = -110},\n");
   Append(str, "  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n");
@@ -167,7 +175,8 @@ function(x, opts)
   Append(str, "} {\n");
 
   if opts.labels then
-    Append(str, "    \\node [vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) {};\n");
+    Append(str, "    \\node [vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) ");
+    Append(str, "{};\n");
   else
     Append(str, "    \\node [vertex] at (\\i/1.5, 3) {};\n");
   fi;
@@ -180,7 +189,8 @@ function(x, opts)
   Append(str, "} {\n");
 
   if opts.labels then
-    Append(str, "    \\node [vertex, label={[yshift=-15mm, xshift=-0.5mm]-\\i}] at (\\i/1.5, 0) {};\n");
+    Append(str, "    \\node [vertex, label={[yshift=-15mm,");
+    Append(str, "xshift=-0.5mm]-\\i}] at (\\i/1.5, 0) {};\n");
   else
     Append(str, "    \\node [vertex] at (\\i/1.5, 0) {};\n");
   fi;
@@ -282,199 +292,32 @@ function(x, opts)
   return str;
 end);
 
-InstallGlobalFunction(TikzBipartition,
-function(arg)
-  return Concatenation(SEMIGROUPS.TikzInit,
-                       CallFuncList(TikzStringForBipartition, arg),
-                       SEMIGROUPS.TikzEnd);
-end);
+#############################################################################
 
-# for bipartition
-
-BindGlobal("TikzRightBlocks",
+InstallMethod(TikzString, "for a bipartition",
+[IsBipartition],
 function(x)
-  return Concatenation(SEMIGROUPS.TikzInit,
-                       TikzStringForBlocks(RightBlocks(x), "bottom", "bottom"),
-                       SEMIGROUPS.TikzEnd);
+  return TikzString(x, SEMIGROUPS.TikzBipartitionOpts);
 end);
 
-# for bipartition
+InstallMethod(TikzString, "for a bipartition and record",
+[IsBipartition, IsRecord],
+function(x, opts)
+  local colors, fill, draw, ext, n, str, block, up, down, min, j, i, k;
 
-BindGlobal("TikzLeftBlocks",
-function(f)
-  return Concatenation(SEMIGROUPS.TikzInit,
-                       TikzStringForBlocks(LeftBlocks(f), "top", "top"),
-                       SEMIGROUPS.TikzEnd);
-end);
-
-# for blocks, JDM have a right/left version of this
-
-InstallGlobalFunction(TikzBlocks,
-function(blocks)
-  return Concatenation(SEMIGROUPS.TikzInit,
-                       TikzStringForBlocks(blocks, "top", "top"),
-                       SEMIGROUPS.TikzEnd);
-end);
-
-#
-
-BindGlobal("TikzBipartitionRight",
-function(x)
-  return Concatenation(SEMIGROUPS.TikzInit,
-                       "\\begin{center}\n",
-                       TikzStringForBipartition(x),
-                       "\\bigskip\n",
-                       TikzStringForBlocks(RightBlocks(x), "none", "bottom"),
-                       "\\end{center}\n",
-                       SEMIGROUPS.TikzEnd);
-end);
-
-#
-
-BindGlobal("TikzBipartitionLeft",
-function(f)
-  return Concatenation(SEMIGROUPS.TikzInit,
-                       "\\begin{center}\n",
-                       TikzStringForBipartition(f),
-                       "\\bigskip\n",
-                       TikzStringForBlocks(LeftBlocks(f), "none", "top"),
-                       "\\end{center}\n",
-                       SEMIGROUPS.TikzEnd);
-end);
-
-#
-
-BindGlobal("TikzBipartitionLeftRight",
-function(f)
-  return Concatenation(SEMIGROUPS.TikzInit,
-                       "\\begin{center}\n",
-                       TikzStringForBlocks(LeftBlocks(f), "none", "top"),
-                       "\\bigskip\n",
-                       TikzStringForBipartition(f),
-                       "\\bigskip\n",
-                       TikzStringForBlocks(RightBlocks(f), "none", "bottom"),
-                       "\\end{center}\n",
-                       SEMIGROUPS.TikzEnd);
-end);
-
-#
-
-InstallGlobalFunction(TikzStringForBlocks,
-function(blocks, labels, edges)
-  local str, n, x, ext, block, y, i;
-
-  str := "\\begin{tikzpicture}\n";
-  n := DegreeOfBlocks(blocks);
-
-  # draw the nodes
-  for i in [1 .. n] do
-    if blocks[n + blocks[i]] = 0 then #non-transverse block
-      #node
-      Append(str, "  \\draw[ultra thick](");
-      Append(str, ViewString(n - i + 1));
-      Append(str, ",2)circle(.115);\n");
-    else #transverse block
-      #node
-      Append(str, "  \\fill(");
-      Append(str, ViewString(n - i + 1));
-      Append(str, ",2)circle(.125);\n");
-    fi;
-
-    if labels <> "none" then
-      if labels = "top" then
-        #node label
-        x := "1.8";
-      elif labels = "bottom" then
-        x := "2.2";
-      else
-        ErrorMayQuit("Semigroups: TikzStringForBlocks: usage,\n",
-                     "the second argument <labels> must be \"bottom\",",
-                     "\"top\", or \"none\",");
-      fi;
-      Append(str, "  \\draw(");
-      Append(str, x);
-      Append(str, ",");
-      Append(str, ViewString(n - i + 1));
-      Append(str, ") node [");
-      Append(str, labels);
-      Append(str, "] {{$");
-      Append(str, ViewString(i));
-      Append(str, "$}};");
-      Append(str, "\n");
-    fi;
-  od;
-
-  # draw the edges
-  Append(str, "\n");
-  ext := ExtRepOfBlocks(blocks);
-  for block in ext do
-    block := ShallowCopy(block);
-    Apply(block, AbsInt);
-
-    if edges = "top" then
-      x := "2.125";
-      y := i -> ViewString(Float(2.5 + (1 / (2 * n))
-                           * (block[i] - block[i - 1])));
-    elif edges = "bottom" then
-      x := "1.875";
-      y := i -> ViewString(Float(1.5 - (1 / (2 * n))
-                           * (block[i] - block[i - 1])));
-    else
-      ErrorMayQuit("Semigroups: TikzStringForBlocks: usage,\n",
-                   "the third argument <edges> should be \"top\" or ",
-                   "\"bottom\",");
-    fi;
-
-    for i in [2 .. Length(block)] do
-      Append(str, "  \\draw (");
-      Append(str, ViewString(n - block[i - 1] + 1));
-      Append(str, ",");
-      Append(str, x);
-      Append(str, ") .. controls (");
-      Append(str, ViewString(n - block[i - 1] + 1));
-      Append(str, ",");
-      Append(str, y(i));
-      Append(str, ") and (");
-      Append(str, ViewString(n - block[i] + 1));
-      Append(str, ",");
-      Append(str, y(i));
-      Append(str, ") .. (");
-      Append(str, ViewString(n - block[i] + 1));
-      Append(str, ",");
-      Append(str, x);
-      Append(str, ");\n");
-    od;
-  od;
-
-  Append(str, "\\end{tikzpicture}\n\n");
-  return str;
-end);
-
-#
-
-InstallGlobalFunction(TikzStringForBipartition,
-function(arg)
-  local fill, draw, f, opts, colors, str, ext, n, block, up, down, min, j, i,
-  k;
-
-  fill := i -> "  \\fill(";
-  draw := i -> "  \\draw(";
-
-  f := arg[1];
-  if IsBound(arg[2]) then
-    opts := arg[2];
-    if IsBound(opts.colors) and opts.colors = true and NrBlocks(f) < 20 then
-      colors := ["red", "green", "blue", "cyan", "magenta", "yellow", "black",
-                 "gray", "darkgray", "lightgray", "brown", "lime", "olive",
-                 "orange", "pink", "purple", "teal", "violet", "white"];
-      fill := i -> Concatenation("  \\fill[", colors[i], "](");
-      draw := i -> Concatenation("  \\draw[", colors[i], "](");
-    fi;
+  if IsBound(opts.colors) and opts.colors = true and NrBlocks(x) < 20 then
+    fill := i -> Concatenation("  \\fill[", SEMIGROUPS.TikzColors[i], "](");
+    draw := i -> Concatenation("  \\draw[", SEMIGROUPS.TikzColors[i], "](");
+  else
+    fill := i -> "  \\fill(";
+    draw := i -> "  \\draw(";
   fi;
 
-  str := "\\begin{tikzpicture}\n";
-  ext := ExtRepOfBipartition(f);
-  n := DegreeOfBipartition(f);
+  ext := ExtRepOfBipartition(x);
+  n   := DegreeOfBipartition(x);
+
+  str := ShallowCopy(SEMIGROUPS.TikzInit);
+  Append(str, "\\begin{tikzpicture}\n");
 
   # draw the lines
   for j in [1 .. Length(ext)] do
@@ -488,23 +331,23 @@ function(arg)
     for i in block do
       if i > 0 then
         Append(str, fill(j));
-        Append(str, ViewString(i));
-        Append(str, ",2)circle(.125);\n");
+        Append(str, String(i));
+        Append(str, ", 2)circle(.125);\n");
         Append(str, draw(j));
-        Append(str, ViewString(i - 0.05));
-        Append(str, ", 2.2) node [above] {{ $");
-        Append(str, ViewString(i));
-        Append(str, "$}};");
+        Append(str, String(i - 0.05));
+        Append(str, ", 2.2) node [above] {$");
+        Append(str, String(i));
+        Append(str, "$};");
         Append(str, "\n");
       else
         Append(str, fill(j));
-        Append(str, ViewString(- i));
-        Append(str, ",0)circle(.125);\n");
+        Append(str, String(- i));
+        Append(str, ", 0)circle(.125);\n");
         Append(str, draw(j));
-        Append(str, ViewString(- i));
-        Append(str, ", -0.2) node [below] {{ $-");
-        Append(str, ViewString(- i));
-        Append(str, "$}};");
+        Append(str, String(- i));
+        Append(str, ", -0.2) node [below] {$-");
+        Append(str, String(- i));
+        Append(str, "$};");
         Append(str, "\n");
       fi;
     od;
@@ -518,38 +361,38 @@ function(arg)
         AddSet(up, block[i - 1]);
         AddSet(up, block[i]);
         Append(str, draw(j));
-        Append(str, ViewString(block[i - 1]));
-        Append(str, ",1.875) .. controls (");
-        Append(str, ViewString(block[i - 1]));
-        Append(str, ",");
-        Append(str, ViewString(Float(1.5 - (1 / (2 * n))
+        Append(str, String(block[i - 1]));
+        Append(str, ", 1.875) .. controls (");
+        Append(str, String(block[i - 1]));
+        Append(str, ", ");
+        Append(str, String(Float(1.5 - (1 / (2 * n))
                                * (block[i] - block[i - 1]))));
         Append(str, ") and (");
-        Append(str, ViewString(block[i]));
-        Append(str, ",");
-        Append(str, ViewString(Float(1.5 - (1 / (2 * n))
+        Append(str, String(block[i]));
+        Append(str, ", ");
+        Append(str, String(Float(1.5 - (1 / (2 * n))
                                * (block[i] - block[i - 1]))));
         Append(str, ") .. (");
-        Append(str, ViewString(block[i]));
-        Append(str, ",1.875);\n");
+        Append(str, String(block[i]));
+        Append(str, ", 1.875);\n");
       elif block[i - 1] < 0 and block[i] < 0 then
         AddSet(down, block[i - 1]);
         AddSet(down, block[i]);
         Append(str, draw(j));
-        Append(str, ViewString(- block[i - 1]));
-        Append(str, ",0.125) .. controls (");
-        Append(str, ViewString(- block[i - 1]));
-        Append(str, ",");
-        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n))
+        Append(str, String(- block[i - 1]));
+        Append(str, ", 0.125) .. controls (");
+        Append(str, String(- block[i - 1]));
+        Append(str, ", ");
+        Append(str, String(Float(0.5 + (- 1 / (2 * n))
                                * (block[i] - block[i - 1]))));
         Append(str, ") and (");
-        Append(str, ViewString(- block[i]));
-        Append(str, ",");
-        Append(str, ViewString(Float(0.5 + (- 1 / (2 * n))
+        Append(str, String(- block[i]));
+        Append(str, ", ");
+        Append(str, String(Float(0.5 + (- 1 / (2 * n))
                                * (block[i] - block[i - 1]))));
         Append(str, ") .. (");
-        Append(str, ViewString(- block[i]));
-        Append(str, ",0.125);\n");
+        Append(str, String(- block[i]));
+        Append(str, ", 0.125);\n");
       elif block[i - 1] > 0 and block[i] < 0 then
         AddSet(down, block[i]);
         AddSet(up, block[i - 1]);
@@ -571,13 +414,128 @@ function(arg)
         od;
       od;
       Append(str, draw(j));
-      Append(str, ViewString(min[2]));
-      Append(str, ",2)--(");
-      Append(str, ViewString(min[3]));
-      Append(str, ",0);\n");
+      Append(str, String(min[2]));
+      Append(str, ", 2)--(");
+      Append(str, String(min[3]));
+      Append(str, ", 0);\n");
     fi;
   od;
   Append(str, "\\end{tikzpicture}\n\n");
+  Append(str, SEMIGROUPS.TikzEnd);
+  return str;
+end);
+
+#############################################################################
+
+InstallMethod(TikzString, "for blocks", [IsBlocks],
+function(blocks)
+  return TikzString(blocks, SEMIGROUPS.TikzBlocksOpts);
+end);
+
+InstallMethod(TikzString, "for blocks and record", [IsBlocks, IsRecord],
+function(blocks, opts)
+  local labels, edges, draw, fill, n, str, x, ext, block, y, i, pos;
+
+  if IsBound(opts.labels) and opts.labels in ["above", "below", "none"] then
+    labels := opts.labels;
+  else
+    labels := SEMIGROUPS.TikzBlocksOpts.labels;
+  fi;
+
+  if IsBound(opts.edges) and opts.edges in ["above", "below"] then
+    edges := opts.edges;
+  else
+    edges := SEMIGROUPS.TikzBlocksOpts.edges;
+  fi;
+
+  if IsBound(opts.colors) and opts.colors = true and NrBlocks(blocks) < 20 then
+    draw := i -> Concatenation("  \\draw[ultra thick, ", SEMIGROUPS.TikzColors[i], "] (");
+    fill := i -> Concatenation("  \\fill[", SEMIGROUPS.TikzColors[i], "] (");
+  else
+    draw := i -> "  \\draw[ultra thick] (";
+    fill := i -> "  \\fill (";
+  fi;
+
+  n := DegreeOfBlocks(blocks);
+
+  str := ShallowCopy(SEMIGROUPS.TikzInit);
+  Append(str, "\\begin{tikzpicture}\n\n");
+
+  # draw the nodes
+  for i in [1 .. n] do
+    if blocks[n + blocks[i]] = 0 then #non-transverse block
+      #node
+      Append(str, draw(blocks[i]));
+      Append(str, String(n - i + 1));
+      Append(str, ", 2) circle (.115);\n");
+    else #transverse block
+      #node
+      Append(str, fill(blocks[i]));
+      Append(str, String(n - i + 1));
+      Append(str, ", 2) circle (.125);\n");
+    fi;
+
+    if labels <> "none" then
+      if labels = "above" then
+        #node label
+        x := "2.4";
+      elif labels = "below" then
+        x := "1.6";
+      fi;
+      Append(str, "  \\draw (");
+      Append(str, String(n - i + 1));
+      Append(str, ", ");
+      Append(str, x);
+      Append(str, ") node [");
+      Append(str, labels);
+      Append(str, "] {$");
+      Append(str, String(i));
+      Append(str, "$};");
+      Append(str, "\n");
+    fi;
+  od;
+
+  # draw the edges
+  Append(str, "\n");
+  ext := ExtRepOfBlocks(blocks);
+  for pos in [1 .. Length(ext)] do
+    block := ShallowCopy(ext[pos]);
+    Apply(block, AbsInt);
+
+    if edges = "above" then
+      x := "2.125";
+      y := i -> String(Float(2.5 + (1 / (2 * n))
+                           * (block[i] - block[i - 1])));
+    elif edges = "below" then
+      x := "1.875";
+      y := i -> String(Float(1.5 - (1 / (2 * n))
+                           * (block[i] - block[i - 1])));
+    fi;
+
+    for i in [2 .. Length(block)] do
+      Append(str, draw(pos));
+      Append(str, String(n - block[i - 1] + 1));
+      Append(str, ", ");
+      Append(str, x);
+      Append(str, ") .. controls (");
+      Append(str, String(n - block[i - 1] + 1));
+      Append(str, ", ");
+      Append(str, y(i));
+      Append(str, ") and (");
+      Append(str, String(n - block[i] + 1));
+      Append(str, ", ");
+      Append(str, y(i));
+      Append(str, ") .. (");
+      Append(str, String(n - block[i] + 1));
+      Append(str, ", ");
+      Append(str, x);
+      Append(str, ");\n");
+    od;
+  od;
+
+  Append(str, "\n\\end{tikzpicture}\n");
+  Append(str, SEMIGROUPS.TikzEnd);
+
   return str;
 end);
 
