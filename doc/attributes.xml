@@ -409,12 +409,12 @@ gap> MinimalDClass(S);
   <Oper Name="IsomorphismPermGroup" Arg="S"/>
   <Returns> An isomorphism. </Returns>
   <Description>
-    If the semigroup <A>S</A> satisfies <Ref Prop="IsGroupAsSemigroup"/>, then
-    <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
+    If the semigroup <A>S</A> is mathematically a group, so that it satisfies
+    <Ref Prop="IsGroup" BookName="ref" /> or <Ref Prop="IsGroupAsSemigroup"/>,
+    then <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
     group.<P/> 
    
-    If <A>S</A> does not satisfy <Ref Prop="IsGroupAsSemigroup"/>,
-    then an error is given.
+    If <A>S</A> is not a group then an error is given.
 
 <Example><![CDATA[
 gap> S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5]),
@@ -531,7 +531,7 @@ gap> IdempotentGeneratedSubsemigroup(S);
 gap> S := SymmetricInverseSemigroup(5);
 <symmetric inverse monoid of degree 5>
 gap> IdempotentGeneratedSubsemigroup(S);
-<inverse partial perm monoid of rank 5 with 5 generators>
+<inverse partial perm monoid of rank 5 with 6 generators>
 gap> S := DualSymmetricInverseSemigroup(5); 
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);
@@ -640,13 +640,13 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],
     
     <Example><![CDATA[
 gap> S := Semigroup(PartialPerm([1]));
-<trivial partial perm group of rank 1 with 0 generators>
+<commutative partial perm monoid of rank 1 with 1 generator>
 gap> IsomorphismReesMatrixSemigroup(S);
-MappingByFunction( <trivial partial perm group of rank 1 with
-  0 generators>, <Rees matrix semigroup 1x1 over Group(())>
+MappingByFunction( <partial perm group of rank 1 with 1 generator>, 
+<Rees matrix semigroup 1x1 over Group(())>
 , function( x ) ... end, function( x ) ... end )
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> Range(IsomorphismReesZeroMatrixSemigroup(S));
 <Rees 0-matrix semigroup 1x1 over Group(())>]]></Example>
   </Description>
@@ -865,7 +865,7 @@ gap> RZMSConnectedComponents(R);
     </List>
 
     The normalization given by <C>RZMSNormalization</C> is based on Theorem 2
-    of <Cite Key = "Graham1968bb" /> and is sometimes called <E>Graham normal
+    of <Cite Key = "Graham1968Graph" /> and is sometimes called <E>Graham normal
       form</E>.  Note that isomorphic Rees 0-matrix semigroups can have
     normalizations which are not equal.<P/>
 <Example><![CDATA[

@@ -119,6 +119,7 @@ true]]></Example>
   <Oper Name="AsPartialPermSemigroup" Arg="S"/>
   <Oper Name="AsBipartitionSemigroup" Arg="S"/>
   <Oper Name="AsBlockBijectionSemigroup" Arg="S"/>
+  <Oper Name="AsPBRSemigroup" Arg="S"/>
   <Returns>A semigroup.</Returns>
   <Description>
     <C>AsTransformationSemigroup(<A>S</A>)</C> is just shorthand for 
@@ -131,6 +132,7 @@ true]]></Example>
       <Item> <C>AsPartialPermSemigroup</C>;</Item>
       <Item> <C>AsBipartitionSemigroup</C>;</Item>
       <Item> <C>AsBlockBijectionSemigroup</C>;</Item>
+      <Item> <C>AsPBRSemigroup</C>;</Item>
     </List>
     are analogous to <C>AsTransformationSemigroup</C>.
 

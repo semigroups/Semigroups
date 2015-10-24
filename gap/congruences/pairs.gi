@@ -327,7 +327,8 @@ install_pairs_methods_with_filter@ := function(cong_type)
 
   InstallMethod(\=,
   Concatenation("for two finite ", cong_type.string, "s"),
-  [cong_type.filter and IsFinite, cong_type.filter and IsFinite],
+  [cong_type.filter and cong_type.haspairs and IsFinite,
+   cong_type.filter and cong_type.haspairs and IsFinite],
   function(cong1, cong2)
     return Range(cong1) = Range(cong2) and
            AsLookupTable(cong1) = AsLookupTable(cong2);

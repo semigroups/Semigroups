@@ -59,33 +59,6 @@ gap> Display(x);
   </ManSection>
 <#/GAPDoc>
 
-<!-- deprecated -->
-<#GAPDoc Label="RandomBooleanMat">
-  <ManSection>
-    <Oper Name="RandomBooleanMat" Arg="n"/>
-    <Returns>A boolean matrix.</Returns>
-    <Description>
-      If <A>n</A> is a positive integer, then <C>RandomBooleanMat</C> returns
-      an <C>n</C> by <C>n</C> boolean matrix chosen with uniform probability
-      among all <C>n</C>-dimensional boolean matrices.
-
-      <Log><![CDATA[
-gap> x := RandomBooleanMat(10);
-gap> Display(x);
-1 0 0 1 0 1 1 0 1 0
-1 1 0 0 0 1 1 1 1 0
-0 0 0 0 0 1 0 1 1 0
-0 1 0 1 0 0 0 0 0 0
-0 1 1 1 1 1 0 1 1 0
-1 0 0 1 0 1 0 0 0 1
-0 0 0 1 1 0 0 0 1 1
-1 1 0 0 1 1 0 0 1 1
-1 0 0 1 0 0 1 0 1 0
-1 0 1 0 1 0 0 0 1 1]]></Log>
-    </Description>
-  </ManSection>
-  <#/GAPDoc>
-
 <#GAPDoc Label="ContainmentBooleanMats">
   <ManSection>
     <Oper Name="\in" Arg="mat1, mat2"/>
@@ -201,17 +174,18 @@ false]]></Example>
     <Description>
       These functions implement a bijection from the set of all boolean
       matrices of dimension <A>n</A> and the numbers <C>[1 .. 2 ^
-        <A>n</A>]</C>.
+        (<A>n</A> ^ 2)]</C>.
       <P/>
 
       More precisely, if <A>m</A> and <A>n</A> are positive integers such that
-      <A>m</A> is at most <C>2 ^ <A>n</A></C>, then <C>BooleanMatNumber</C>
+      <A>m</A> is at most <C>2 ^ (<A>n</A> ^ 2)</C>, then
+      <C>BooleanMatNumber</C>
       returns the <A>m</A>th <A>n</A> by <A>n</A> boolean matrix. 
       <P/>
 
       If <A>mat</A> is an <A>n</A> by <A>n</A> boolean matrix, then
-      <C>NumberBooleanMat</C> returns the number in  <C>[1 .. 2 ^ <A>n</A>]</C>
-      that corresponds to <A>mat</A>.
+      <C>NumberBooleanMat</C> returns the number in
+      <C>[1 .. 2 ^ (<A>n</A> ^ 2)]</C> that corresponds to <A>mat</A>.
       
       <Example><![CDATA[
 gap> mat := BooleanMat([[0, 1, 1, 0], 
@@ -332,7 +306,7 @@ gap> BlistNumber(2, 10);
           degree of <A>x</A> is used by default. 
         </Item>
         
-        <Mark>pbr</Mark>
+        <Mark>pbrs</Mark>
         <Item>
           If <A>x</A> is a pbr and <A>n</A> is any non-negative
           integer, then <C>AsBooleanMat</C> returns the boolean matrix
@@ -572,9 +546,9 @@ true]]></Example>
     <Prop Name="IsTransitiveBooleanMat" Arg="mat"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A boolean matrix is <B>transitive</B> whenever
+      A boolean matrix is <B>transitive</B> if whenever
       <C><A>mat</A>[i][j] = true</C> and 
-      <C><A>mat</A>[j][k] = true</C> if and only if 
+      <C><A>mat</A>[j][k] = true</C> then
       <C><A>mat</A>[i][k] = true</C>.
     
       <Example><![CDATA[
@@ -603,9 +577,9 @@ true]]></Example>
     <Prop Name="IsAntiSymmetricBooleanMat" Arg="mat"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A boolean matrix is <B>anti-symmetric</B> whenever
+      A boolean matrix is <B>anti-symmetric</B> if whenever
       <C><A>mat</A>[i][j] = true</C> and 
-      <C><A>mat</A>[j][i] = true</C> if and only if
+      <C><A>mat</A>[j][i] = true</C> then
       <C>i = j</C>. 
       
       <Example><![CDATA[

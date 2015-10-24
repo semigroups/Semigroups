@@ -73,7 +73,7 @@
 
       <Item>
         partitioned binary relations as defined in <Cite
-          Key="Mazorchuk20????"/>, and matrices over the following semirings:
+          Key="Martin2011aa"/>, and matrices over the following semirings:
         <List>
           <Item> 
             the <E>Boolean semiring</E> <M>\{0,1\}</M> where <M>0 + 0 = 0</M>,

@@ -204,7 +204,7 @@ false
 gap> S := InverseSemigroup([
 >   PartialPerm([1]),
 >   PartialPerm([])]);
-<commutative inverse partial perm monoid of rank 1 with 1 generator>
+<inverse partial perm monoid of rank 1 with 2 generators>
 gap> IsZeroSimpleSemigroup(S);
 true
 
@@ -602,7 +602,7 @@ true
 
 #T# properties: IsRTrivial, pperm, 1/1
 gap> S := Semigroup(PartialPerm([1, 2], [1, 2]));
-<trivial partial perm group of rank 2 with 0 generators>
+<commutative partial perm monoid of rank 2 with 1 generator>
 gap> IsRTrivial(S);
 true
 
@@ -1338,7 +1338,7 @@ false
 
 #T# properties: IsZeroGroup, 4
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> IsZeroGroup(S);
 true
 gap> I := SemigroupIdeal(S, PartialPerm([]));;

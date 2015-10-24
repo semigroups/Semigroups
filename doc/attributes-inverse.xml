@@ -362,7 +362,7 @@ gap> Minorants(S, x);
 gap> S := SymmetricInverseSemigroup(3);
 <symmetric inverse monoid of degree 3>
 gap> T := InverseSemigroup(MajorantClosure(S, [PartialPerm([1])]));
-<inverse partial perm monoid of rank 3 with 6 generators>
+<inverse partial perm monoid of rank 3 with 7 generators>
 gap> IsMajorantlyClosed(S,T);
 true
 gap> RC := RightCosetsOfInverseSemigroup(S, T);
@@ -454,10 +454,10 @@ gap> Elements(R);
 [ <identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S := DualSymmetricInverseMonoid(5);;
 gap> T := Range(IsomorphismPartialPermSemigroup(S));
-<inverse partial perm monoid of rank 6721 with 3 generators>
+<inverse partial perm monoid of rank 6721 with 4 generators>
 gap> SmallerDegreePartialPermRepresentation(T);
-MappingByFunction( <inverse partial perm monoid of rank 6721 with 3 
- generators>, <inverse partial perm semigroup of rank 30 with 3 
+MappingByFunction( <inverse partial perm monoid of rank 6721 with 4 
+ generators>, <inverse partial perm monoid of rank 30 with 4 
  generators>, function( x ) ... end, function( x ) ... end )]]></Example>
 <#/GAPDoc>
 
@@ -493,7 +493,7 @@ gap> Size(S);
 7
 gap> iso := VagnerPrestonRepresentation(S);
 MappingByFunction( <symmetric inverse monoid of degree 2>, 
-<inverse partial perm monoid of rank 7 with 2 generators>
+<inverse partial perm monoid of rank 7 with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> RespectsMultiplication(iso);
 true

@@ -8,10 +8,25 @@
 #############################################################################
 ##
 
+# Transformation semigroups
+
+DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
+DeclareOperation("OrderEndomorphisms", [IsPosInt]);
+DeclareOperation("SingularOrderEndomorphisms", [IsPosInt]);
+DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
+DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
+DeclareSynonym("SingularTransformationMonoid",
+               SingularTransformationSemigroup);
+
+# Partial perm semigroups
+DeclareOperation("MunnSemigroup", [IsSemigroup]);
+DeclareOperation("POI", [IsPosInt]);
+DeclareOperation("POPI", [IsPosInt]);
+
+# Bipartition semigroups
 DeclareOperation("JonesMonoid", [IsPosInt]);
 DeclareOperation("SingularJonesMonoid", [IsPosInt]);
 DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
-
 DeclareOperation("BrauerMonoid", [IsPosInt]);
 DeclareOperation("PartialBrauerMonoid", [IsPosInt]);
 DeclareOperation("SingularBrauerMonoid", [IsPosInt]);
@@ -21,27 +36,18 @@ DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup",
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
 DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
+DeclareOperation("TriapsisMonoid", [IsPosInt]);
+DeclareOperation("PartitionMonoid", [IsPosInt]);
+DeclareOperation("SingularPartitionMonoid", [IsPosInt]);
 
-DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
+# Matrix over finite field semigroups
 
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("TriapsisMonoid", [IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
-DeclareOperation("MunnSemigroup", [IsSemigroup]);
-DeclareOperation("OrderEndomorphisms", [IsPosInt]);
-DeclareOperation("SingularOrderEndomorphisms", [IsPosInt]);
-DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
-DeclareOperation("PartitionMonoid", [IsPosInt]);
-DeclareOperation("SingularPartitionMonoid", [IsPosInt]);
-DeclareOperation("POI", [IsPosInt]);
-DeclareOperation("POPI", [IsPosInt]);
-DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
-DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
-DeclareSynonym("SingularTransformationMonoid",
-               SingularTransformationSemigroup);
 
+# Constructions
 DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
 DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RectangularBand", [IsPosInt, IsPosInt]);

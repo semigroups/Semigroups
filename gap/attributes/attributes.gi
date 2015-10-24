@@ -544,11 +544,10 @@ function(S)
   if HasMinimalDClass(S) then
     D := MinimalDClass(S);
     if HasSize(D) then
-      if Size(D) = 1 then
+      if IsTrivial(D) then
         return Representative(D);
-      else
-        return fail;
       fi;
+      return fail;
     fi;
   fi;
 

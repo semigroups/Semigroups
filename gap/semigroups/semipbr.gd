@@ -12,6 +12,8 @@
 
 DeclareSynonym("IsPBRSemigroup",
                IsSemigroup and IsPBRCollection);
+DeclareSynonym("IsPBRMonoid",
+               IsMonoid and IsPBRCollection);
 
 InstallTrueMethod(IsFinite, IsPBRSemigroup);
 DeclareAttribute("DegreeOfPBRSemigroup",

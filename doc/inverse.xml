@@ -77,7 +77,7 @@ gap> KernelOfSemigroupCongruence(cong);
       with an internal representation defined by that congruence's kernel and
       trace. <P/>
 
-      See <Cite Key="howie"/> section 5.3 for more details.
+      See <Cite Key="Howie1995aa"/> section 5.3 for more details.
       
       <Example><![CDATA[
 gap> i := InverseSemigroup([
@@ -108,7 +108,7 @@ gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
       of this category if its first argument <A>S</A> is an inverse
       semigroup.<P/>
 
-      See <Cite Key="howie"/> section 5.3 for more details.  See also <Ref
+      See <Cite Key="Howie1995aa"/> section 5.3 for more details.  See also <Ref
       Attr="InverseSemigroupCongruenceByKernelTrace"/>.
       
       <Example><![CDATA[
@@ -137,7 +137,7 @@ true]]></Example>
       which is represented internally by its kernel and trace.  See <Ref
       Attr="InverseSemigroupCongruenceByKernelTrace"/>. <P/>
 
-      See also <Cite Key="howie"/> section 5.3 for more details.
+      See also <Cite Key="Howie1995aa"/> section 5.3 for more details.
 
       <Example><![CDATA[
 gap> i := InverseSemigroup([
@@ -164,7 +164,7 @@ true]]></Example>
       If <A>S</A> is an inverse semigroup, <A>kernel</A> is a subsemigroup of
       <A>S</A>, <A>traceBlocks</A> is a list of lists describing a congruence on
       the idempotents of <A>S</A>, and <M>(<A>kernel</A>, <A>trace</A>)</M>
-      describes a valid congruence pair for <A>S</A> (see <Cite Key="howie"/>
+      describes a valid congruence pair for <A>S</A> (see <Cite Key="Howie1995aa"/>
       section 5.3) then this function returns the semigroup congruence defined
       by that congruence pair. <P/>
 

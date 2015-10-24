@@ -27,7 +27,7 @@
     that two edges labeled by the same generator are only incident to the same
     vertex if one of the edges is coming in and the other is leaving the vertex.
     For more information regarding free inverse semigroups and the Munn
-    representations see Section 5.10 of <Cite Key = "howie"/>.
+    representations see Section 5.10 of <Cite Key = "Howie1995aa"/>.
     <P/>
 
     See also <Ref Chap = "Inverse semigroups and monoids" BookName = "ref"/>,

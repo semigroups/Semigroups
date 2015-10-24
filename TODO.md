@@ -30,27 +30,23 @@
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 ###GAP
-* change `IdempotentGeneratedSubsemigroup` for generic semigroups to find a small generating set
-* Move the new view string methods into the library.
-* Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing
-* `Idempotents(S, 1)` for non-acting semigroups
-* remove `genstoapply` from the the generic semigroup data
 
+* **Move the new view string methods into the library.**
+
+* Add `IsFinite` check to start of appropriate methods and add tests
+* remove `genstoapply` from the the generic semigroup data
 * `ReadGenerators` and `WriteGenerators` for new types
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
+* add tests for all Semigroupe manual example things
 * `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
 * `CatalanMonoid`
-* Add `IsFinite` check to start of appropriate methods and add tests
-* `ViewString` for full transformation monoid, and symmetric inverse monoid
 * update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
 * get rid of `*Data` roll semigroups-generic into semigroups.gi
-* tests for pbrs
-* check that nothing is missing in semigroup-matrix-*
-* add tests for all Semigroupe manual example things
 * closure of generic inverse semigroups
 
 ##DO LATER
+* `Idempotents(S, 1)` for non-acting semigroups (I don't think this makes sense in general, what is the 1 for?)
 * objectify bipartitions etc in c code (i.e. don't call CALL_1ARGS)
 * a `small_generating_set` method using the Cayley graph
 * Trahtman $$$O(|X| n ^ 2)$$$ algorithm for saying if a transformation semigroup $$$S = \langle X\rangle$$$ of degree $$$n$$$ is $$$\mathscr{J}$$$-trivial
@@ -60,6 +56,11 @@
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* change `IdempotentGeneratedSubsemigroup` for generic semigroups to find a small generating set
+* Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing
+* tests for pbrs
+* check that nothing is missing in semigroup-matrix-*
+* `ViewString` for full transformation monoid, and symmetric inverse monoid
 * improve compilation time by removing unnecessary templates
 * replace `ClosureSemigroup` by `SEMIGROUPS_AddGenerators` where appropriate
 * ask Wilf to add a --recompile option to gap-profile (it should probably not run autoconf, and it should handle the gap root better (currently it only 

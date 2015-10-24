@@ -120,6 +120,24 @@ end);
 
 #
 
+InstallMethod(NaturalLeqInverseSemigroup, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+function(S)
+  if IsInverseSemigroup(S) then
+    if IsBlockBijectionSemigroup(S) then
+      return NaturalLeqBlockBijection;
+    elif IsPartialPermBipartitionSemigroup(S) then
+      return NaturalLeqPartialPermBipartition;
+    fi;
+    TryNextMethod(); # this should be the default method for a non-inverse op
+                     # semigroup
+  fi;
+  ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+               "the argument is not an inverse semigroup,");
+end);
+
+#
+
 InstallMethod(NaturalPartialOrder,
 "for an inverse block bijection semigroup",
 [IsBlockBijectionSemigroup and IsInverseSemigroup],

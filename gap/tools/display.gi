@@ -492,8 +492,8 @@ function(S, opts)
     fi;
 
     if not IsRegularDClass(d) then
-      Append(str, "<TR>");
       for l in LClasses(d) do
+        Append(str, "<TR>");
         for x in HClasses(l) do
           color := "white";
           if opts.highlight <> false then
@@ -507,8 +507,9 @@ function(S, opts)
                                     color,
                                     "\"><font color=\"white\">*</font></TD>"));
         od;
+        Append(str, "</TR>\n");
       od;
-      Append(str, "</TR>\n</TABLE>>];\n");
+      Append(str, "</TABLE>>];\n");
       continue;
     fi;
 

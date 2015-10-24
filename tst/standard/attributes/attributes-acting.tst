@@ -71,7 +71,7 @@ gap> StructureDescriptionSchutzenbergerGroups(S);
 gap> S := Semigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 > PartialPerm([1, 2, 3, 4], [2, 4, 1, 5])]);;
 gap> IdempotentGeneratedSubsemigroup(S);
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 
 #T# attributes-acting: IdempotentGeneratedSubsemigroup, for an inverse semigroup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [4, 3]),

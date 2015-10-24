@@ -592,7 +592,7 @@ gap> SmallInverseSemigroupGeneratingSet(S);;
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for 0 generators
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
-<trivial partial perm group of rank 3 with 0 generators>
+<commutative inverse partial perm monoid of rank 3 with 1 generator>
 gap> SmallInverseMonoidGeneratingSet(S);
 [  ]
 
@@ -823,6 +823,11 @@ gap> S := RegularBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 4 generators>
 gap> MultiplicativeNeutralElement(S);
 Matrix(IsBooleanMat, [[1, 0], [0, 1]])
+gap> S := Semigroup([Transformation([1, 2, 3, 3, 5, 5]),
+> Transformation([3, 3, 5, 3, 5, 3])]);
+<transformation semigroup of degree 6 with 2 generators>
+gap> MultiplicativeNeutralElement(S);
+fail
 
 #T# attributes: IsomorphismPermGroup
 gap> S := RegularBooleanMatMonoid(2);
@@ -973,7 +978,7 @@ Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 
 #T# attribute: IsomorphismReesZeroMatrixSemigroup, bug 1/1
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> IsomorphismReesMatrixSemigroup(S);
 Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
 the argument must be a simple semigroup,

@@ -17,8 +17,8 @@
     <Mark>the Boolean semiring</Mark>
     <Item> 
       the set <M>\{0, 1\}</M> where <M>0 + 0 = 0</M>,
-      <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, and <M>1\cdot 0 = 0 \cdot 0 = 0
-        \cdot 1 = 0</M>. 
+      <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, <M>1\cdot 0 = 0 \cdot 0 = 0
+        \cdot 1 = 0</M>, and <M>1\cdot 1 = 1</M>. 
     </Item>
 
     <Mark>the max-plus semiring</Mark>
@@ -111,10 +111,11 @@
 
     <#Include Label="Matrix">
     <#Include Label="RandomMatrix">
-    <#Include Label="IsBooleanMat"/>
-    <#Include Label="IsBooleanMatCollection"/>
-    <#Include Label="BooleanMatFamily"/>
+    <#Include Label="IsXMatrix"/>
+    <#Include Label="IsXMatrixCollection"/>
+    <#Include Label="XMatrixFamily"/>
     <#Include Label="AsList"/>
+
     <!-- the following could go in a section of their own if there are more at
           some point -->
     <#Include Label="ThresholdTropicalMatrix"/>
@@ -129,10 +130,10 @@
     <List>
       <Mark><C><A>mat1</A> * <A>mat2</A></C></Mark>
       <Item>
-        <Index Key="*"><C>*</C> (for matrices over a semiring)</Index>
-        returns the product of the matrices <A>mat1</A> and <A>mat2</A>
-        of equal dimension using the usual matrix multiplication with the
-        operations <C>+</C> and <C>*</C> from the underlying semiring. 
+        <Index Key="*"><C>*</C> (for matrices over a semiring)</Index> returns
+        the product of the matrices <A>mat1</A> and <A>mat2</A> of equal
+        dimension over the same semiring using the usual matrix multiplication
+        with the operations <C>+</C> and <C>*</C> from the underlying semiring. 
       </Item>
       <Mark><C><A>mat1</A> &lt; <A>mat2</A></C></Mark>
       <Item>
@@ -209,7 +210,6 @@
 
     <#Include Label="BooleanMat">
     <#Include Label="AsBooleanMat">
-    <#Include Label="RandomBooleanMat">
    
     <#Include Label="ContainmentBooleanMats">
     <#Include Label="OnBlist">
@@ -241,8 +241,20 @@
     addition to those given elsewhere in this chapter for arbitrary matrices
     over semirings. These include:
     <#Include Label="BaseField">
-    <#Include Label="AsMatrix">
 
   </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+    
+  <Section Label="Matrix semigroups">
+    <Heading>
+      Matrix semigroups
+    </Heading>
+  
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
 </Chapter>

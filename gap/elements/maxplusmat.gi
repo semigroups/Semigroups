@@ -126,6 +126,20 @@ function(filter, n)
                   SEMIGROUPS_RandomIntegerMatrix(n, -infinity));
 end);
 
+InstallMethod(AsMatrixCons,
+"for IsMaxPlusMatrix and a tropical max-plus matrix",
+[IsMaxPlusMatrix, IsTropicalMaxPlusMatrix],
+function(filter, mat)
+  return MatrixNC(filter, AsList(mat));
+end);
+
+InstallMethod(AsMatrixCons,
+"for IsMaxPlusMatrix and a tropical max-plus matrix",
+[IsMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
+function(filter, mat)
+  return MatrixNC(filter, AsList(mat));
+end);
+
 #############################################################################
 ## 2. Min-plus matrices
 #############################################################################
@@ -179,6 +193,13 @@ InstallMethod(RandomMatrixCons, "for IsMinPlusMatrix and pos int",
 function(filter, n)
   return MatrixNC(filter,
                   SEMIGROUPS_RandomIntegerMatrix(n, infinity));
+end);
+
+InstallMethod(AsMatrixCons,
+"for IsMinPlusMatrix and a tropical min-plus matrix",
+[IsMinPlusMatrix, IsTropicalMinPlusMatrix],
+function(filter, mat)
+  return MatrixNC(filter, AsList(mat));
 end);
 
 #############################################################################
@@ -277,6 +298,32 @@ function(filter, dim, threshold)
   return MatrixNC(filter, mat);
 end);
 
+InstallMethod(AsMatrixCons,
+"for IsTropicalMaxPlusMatrix, max-plus matrix, and pos int",
+[IsTropicalMaxPlusMatrix, IsMaxPlusMatrix, IsPosInt],
+function(filter, mat, threshold)
+  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+                                                    threshold));
+end);
+
+InstallMethod(AsMatrixCons,
+"for IsTropicalMaxPlusMatrix, projective max-plus matrix, and pos int",
+[IsTropicalMaxPlusMatrix, IsProjectiveMaxPlusMatrix, IsPosInt],
+function(filter, mat, threshold)
+  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+                                                    threshold));
+end);
+
+# change the threshold
+
+InstallMethod(AsMatrixCons,
+"for IsTropicalMaxPlusMatrix, max-plus matrix, and pos int",
+[IsTropicalMaxPlusMatrix, IsTropicalMaxPlusMatrix, IsPosInt],
+function(filter, mat, threshold)
+  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+                                                    threshold));
+end);
+
 #############################################################################
 ## 5. Tropical min-plus matrices
 #############################################################################
@@ -345,6 +392,24 @@ function(filter, dim, threshold)
   mat := SEMIGROUPS_RandomIntegerMatrix(dim, infinity);
   mat := SEMIGROUPS_TropicalizeMat(mat, threshold);
   return MatrixNC(filter, mat);
+end);
+
+InstallMethod(AsMatrixCons,
+"for IsTropicalMinPlusMatrix, min-plus matrix, and pos int",
+[IsTropicalMinPlusMatrix, IsMinPlusMatrix, IsPosInt],
+function(filter, mat, threshold)
+  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+                                                    threshold));
+end);
+
+# change the threshold
+
+InstallMethod(AsMatrixCons,
+"for IsTropicalMinPlusMatrix, min-plus matrix, and pos int",
+[IsTropicalMinPlusMatrix, IsTropicalMinPlusMatrix, IsPosInt],
+function(filter, mat, threshold)
+  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+                                                    threshold));
 end);
 
 #############################################################################
@@ -417,8 +482,22 @@ function(filter, n)
                   SEMIGROUPS_RandomIntegerMatrix(n, -infinity));
 end);
 
+InstallMethod(AsMatrixCons,
+"for IsProjectiveMaxPlusMatrix, max-plus matrix",
+[IsProjectiveMaxPlusMatrix, IsMaxPlusMatrix],
+function(filter, mat)
+  return MatrixNC(filter, AsList(mat));
+end);
+
+InstallMethod(AsMatrixCons,
+"for IsProjectiveMaxPlusMatrix, tropical max-plus matrix",
+[IsProjectiveMaxPlusMatrix, IsTropicalMaxPlusMatrix],
+function(filter, mat)
+  return MatrixNC(filter, AsList(mat));
+end);
+
 #############################################################################
-## 7. Natural number matrices
+## 7. NTP matrices
 #############################################################################
 
 InstallMethod(ThresholdNTPMatrix, "for a natural matrix",
@@ -508,6 +587,24 @@ function(filter, dim, threshold, period)
   return MatrixNC(filter, mat);
 end);
 
+InstallMethod(AsMatrixCons,
+"for IsNTPMatrix, ntp matrix, pos int, pos int",
+[IsNTPMatrix, IsNTPMatrix, IsPosInt, IsPosInt],
+function(filter, mat, threshold, period)
+  return MatrixNC(filter, SEMIGROUPS_NaturalizeMat(AsMutableList(mat),
+                                                   threshold,
+                                                   period));
+end);
+
+InstallMethod(AsMatrixCons,
+"for IsNTPMatrix, ntp matrix, pos int, pos int",
+[IsNTPMatrix, IsIntegerMatrix, IsPosInt, IsPosInt],
+function(filter, mat, threshold, period)
+  return MatrixNC(filter, SEMIGROUPS_NaturalizeMat(AsMutableList(mat),
+                                                   threshold,
+                                                   period));
+end);
+
 #############################################################################
 ## 8. Integer matrices
 #############################################################################
@@ -568,9 +665,6 @@ function(semiring, n)
   return RandomMatrix(IsIntegerMatrix, n);
 end);
 
-InstallMethod(AsList, "for an integer matrix",
-[IsIntegerMatrix],
-mat -> List([1 .. Length(mat![1])], i -> mat![i]));
 
 InstallMethod(IsFinite,
 "for a semigroup of matrices of positive integers",
@@ -588,11 +682,11 @@ function(s)
       od;
     od;
   od;
-
+  # FIXME use AsMatrix when available
   modgens := List(gens, x -> List(AsList(x), row -> List(row, x -> Minimum(x, 2))));
-  imagegen := List(modgens, x -> Matrix(IsNTPMatrix, x, 1, 2));  
+  imagegen := List(modgens, x -> Matrix(IsNTPMatrix, x, 1, 2));
   image := Semigroup(imagegen);
-  idempots := Idempotents(image);  
+  idempots := Idempotents(image);
 
   for a in idempots do
     b := List([1 .. Length(a![1])], i -> a![i]);
@@ -601,4 +695,11 @@ function(s)
     fi;
   od;
   return true;
+end);
+
+InstallMethod(AsMatrixCons,
+"for IsIntegerMatrix, ntp matrix",
+[IsIntegerMatrix, IsNTPMatrix],
+function(filter, mat)
+  return MatrixNC(filter, AsList(mat));
 end);

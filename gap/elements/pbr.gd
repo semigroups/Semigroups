@@ -31,8 +31,13 @@ BindGlobal("PBRType",
            NewType(PBRFamily,
                    IsPBR and IsPositionalObjectRep));
 
-DeclareGlobalFunction("PBR");
+DeclareOperation("PBR", [IsDenseList, IsDenseList]);
+DeclareGlobalFunction("PBRNC");
 DeclareOperation("RandomPBR", [IsPosInt]);
+DeclareOperation("RandomPBR", [IsPosInt, IsFloat]);
+DeclareOperation("EmptyPBR", [IsPosInt]);
+DeclareOperation("IdentityPBR", [IsPosInt]);
+DeclareOperation("UniversalPBR", [IsPosInt]);
 
 DeclareAttribute("DegreeOfPBR", IsPBR);
 DeclareAttribute("DegreeOfPBRCollection", IsPBRCollection);
@@ -45,10 +50,11 @@ DeclareOperation("AsPBR", [IsAssociativeElement, IsPosInt]);
 DeclareOperation("AsPBR", [IsAssociativeElement]);
 
 DeclareProperty("IsEmptyPBR", IsPBR);
+DeclareProperty("IsIdentityPBR", IsPBR);
 DeclareProperty("IsUniversalPBR", IsPBR);
 DeclareProperty("IsBipartitionPBR", IsPBR);
 DeclareProperty("IsTransformationPBR", IsPBR);
 DeclareProperty("IsPartialPermPBR", IsPBR);
+DeclareProperty("IsPermPBR", IsPBR);
 DeclareProperty("IsBlockBijectionPBR", IsPBR);
 DeclareProperty("IsDualTransformationPBR", IsPBR);
-

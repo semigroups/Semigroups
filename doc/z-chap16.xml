@@ -57,7 +57,7 @@
     semigroups in the &Semigroups; package, and the functions associated with
     them.  This code and this part of the manual were written by Michael Torpey.
     Most of the theorems used in this chapter are from Section 3.5 of
-    <Cite Key="howie"/>.<P/>
+    <Cite Key="Howie1995aa"/>.<P/>
 
     By the Rees Theorem, any 0-simple semigroup <M>S</M> is isomorphic to a
     <E>Rees 0-matrix semigroup</E> (see <Ref Chap = "Rees Matrix Semigroups"
@@ -111,7 +111,7 @@
       </Item>
     </List>
 
-    By Theorem 3.5.9 in <Cite Key="howie"/>, for any finite 0-simple Rees
+    By Theorem 3.5.9 in <Cite Key="Howie1995aa"/>, for any finite 0-simple Rees
     0-matrix semigroup, there is a bijection between its non-universal
     congruences and its linked triples.  In this way, we can internally
     represent any congruence of such a semigroup by storing its associated
@@ -147,7 +147,7 @@
     semigroups in the &Semigroups; package, and the functions associated with
     them.  This code and this part of the manual were written by Michael Torpey.
     Most of the theorems used in this chapter are from Section 5.3 of
-    <Cite Key="howie"/>.<P/>
+    <Cite Key="Howie1995aa"/>.<P/>
 
     The congruences of an inverse semigroup are in 1-1 correspondence with
     its <E>congruence pairs</E>.  A congruence pair is a pair <C>(N, t)</C> such
@@ -178,11 +178,11 @@
       </Item>
     </List>
 
-    By Theorem 5.3.3 in <Cite Key="howie"/>, for any inverse semigroup, there is
-    a bijection between its congruences and its congruence pairs.  In this way,
-    we can internally represent any congruence of such a semigroup by storing
-    its associated congruence pair instead of a set of generating pairs, and
-    thus perform many calculations on it more efficiently.<P/>
+    By Theorem 5.3.3 in <Cite Key="Howie1995aa"/>, for any inverse semigroup,
+    there is a bijection between its congruences and its congruence pairs.  In
+    this way, we can internally represent any congruence of such a semigroup by
+    storing its associated congruence pair instead of a set of generating
+    pairs, and thus perform many calculations on it more efficiently.<P/>
 
     If we have a congruence <C>C</C> with congruence pair <C>(N, t)</C>, it
     turns out that <C>N</C> is its <E>kernel</E> (that is, the set of all

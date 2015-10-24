@@ -154,7 +154,8 @@
   package for changing the representation of bipartition, or for changing the
   representation of another type of object to that of a bipartition.<P/> 
   
-  The  operations  <Ref Oper="AsPermutation" Label="for a bipartition"/>, 
+  The  operations  
+  <Ref Oper="AsPermutation" Label="for a bipartition"/>, 
   <Ref Oper="AsPartialPerm" Label="for a bipartition"/>, 
   <Ref Oper="AsTransformation" Label="for a bipartition"/> can be 
   used  to convert bipartitions into permutations, partial permutations, or
@@ -282,17 +283,19 @@
       Semigroups of bipartitions
     </Heading>
     
-    Semigroups and monoids of bipartitions
-    can be created in the usual way in &GAP; using the functions 
-    <Ref Func="Semigroup" BookName="ref"/> and 
-    <Ref Func="Monoid" BookName="ref"/>. 
+    Semigroups and monoids of bipartitions can be created in the usual way in
+    &GAP; using the functions <Ref Func="Semigroup" BookName="ref"/> and 
+    <Ref Func="Monoid" BookName="ref"/>; see Chapter 
+    <Ref Chap = "Creating semigroups and monoids"/> for more details.
     <P/>
     
-    It is possible to create inverse semigroups and monoids of bipartitions 
+    It is possible to create inverse semigroups and monoids of bipartitions
     using <Ref Func="InverseSemigroup" BookName="ref"/> and <Ref
       Func="InverseMonoid" BookName="ref"/> when the argument is a collection
     of block bijections or partial perm bipartions; see <Ref
       Prop="IsBlockBijection"/> and <Ref Prop="IsPartialPermBipartition"/>. 
+
+    Note that every bipartition semigroup in &Semigroups; is finite. 
 
     <#Include Label="IsBipartitionSemigroup">
     <#Include Label="IsBlockBijectionSemigroup">
