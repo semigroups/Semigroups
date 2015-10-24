@@ -31,6 +31,8 @@
 
 ###GAP
 
+* `AsTransformationSemigroup` for a pbr semigroup seems slow.
+
 * **Move the new view string methods into the library.**
 
 * Add `IsFinite` check to start of appropriate methods and add tests

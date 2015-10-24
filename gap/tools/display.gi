@@ -541,12 +541,12 @@ end);
 
 #
 
-InstallMethod(DotDClasses, "for a semigroup", [IsSemigroup],
+InstallMethod(DotString, "for a semigroup", [IsSemigroup],
 function(S)
-  return DotDClasses(S, rec());
+  return DotString(S, rec());
 end);
 
-InstallMethod(DotDClasses, "for a semigroup and record",
+InstallMethod(DotString, "for a semigroup and record",
 [IsSemigroup, IsRecord],
 function(S, opts)
   local es, elts, str, i, color, pos, gp, iso, inv, RMS, mat, G, x, rel, ii,
@@ -723,11 +723,7 @@ function(S)
 
   str := "//dot\n";
 
-  #if Length(rel)<20 then
-  #  Append(str,  "graph graphname {\n  node [shape=circle]\n");
-  #else
-    Append(str, "graph graphname {\n  node [shape=point]\n");
-  #fi;
+  Append(str, "graph graphname {\n  node [shape=point]\n");
   Append(str, "ranksep=2;\n");
 
   nr := 0;

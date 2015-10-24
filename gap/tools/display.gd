@@ -13,11 +13,4 @@ DeclareOperation("TikzString", [IsObject, IsRecord]);
 DeclareOperation("DotString", [IsObject]);
 DeclareOperation("DotString", [IsObject, IsRecord]);
 
-DeclareAttribute("DotDClasses", IsSemigroup, "mutable");
-DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup, "mutable");
-DeclareOperation("DotDClasses", [IsSemigroup, IsRecord]);
-
-DeclareGlobalFunction("TikzBipartition");
-DeclareGlobalFunction("TikzBlocks");
-DeclareGlobalFunction("TikzStringForBipartition");
-DeclareGlobalFunction("TikzStringForBlocks");
+DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup);
