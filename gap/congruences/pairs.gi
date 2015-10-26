@@ -77,18 +77,18 @@ install_pairs_methods_with_filter@ := function(cong_type)
     local S, elms, p1, p2, table, lookfunc;
 
     # Input checks
-    if not Size(pair) = 2 then
-      ErrorMayQuit("Semigroups: \in: usage,\n",
+    if Size(pair) <> 2 then
+      ErrorMayQuit("Semigroups: \\in: usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
     S := Range(cong);
     if not (pair[1] in S and pair[2] in S) then
-      ErrorMayQuit("Semigroups: \in: usage,\n",
-                   "elements of the first arg <pair> must be in range",
-                   "of the second\narg <cong>,");
+      ErrorMayQuit("Semigroups: \\in: usage,\n",
+                   "elements of the first arg <pair> must be\n",
+                   "in the range of the second arg <cong>,");
     fi;
     if not (HasIsFinite(S) and IsFinite(S)) then
-      ErrorMayQuit("Semigroups: \in: usage,\n",
+      ErrorMayQuit("Semigroups: \\in: usage,\n",
                    "this function currently only works if <cong> is a ",
                    "congruence of a semigroup\nwhich is known to be finite,");
     fi;
@@ -452,9 +452,32 @@ install_pairs_methods_with_filter@ := function(cong_type)
     end;
 
     record.NumberElement := function(enum, elm)
-      local x;
+      local x, lookfunc, result, table, classno, i;
       x := Position(enum!.elms, elm);
-      if [x, enum!.rep] in enum!.cong then # this does the calculations
+      lookfunc := function(data, lastpair)
+        return UF_FIND(data!.ufdata, x)
+               = UF_FIND(data!.ufdata, enum!.rep);
+      end;
+      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
+      if result = fail then
+        # cong has AsLookupTable
+        result := fail;
+        table := AsLookupTable(enum!.cong);
+        classno := table[enum!.rep];
+        for i in [1 .. Size(Range(enum!.cong))] do
+          if table[i] = classno and not enum!.found[i] then
+            enum!.found[i] := true;
+            enum!.len := enum!.len + 1;
+            enum!.list[enum!.len] := i;
+            if i = x then
+              result := enum!.len;
+            fi;
+          fi;
+        od;
+        SetSize(class, enum!.len);
+        SetAsList(class, enum!.list);
+        return result;
+      elif result!.found then
         # elm is in the class
         if enum!.found[x] then
           # elm already has a position
@@ -474,7 +497,8 @@ install_pairs_methods_with_filter@ := function(cong_type)
 
     enum := EnumeratorByFunctions(class, record);
     enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
-    enum!.elms := AsSSortedList(Range(enum!.cong));
+    enum!.elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(enum!.cong)),
+                                     infinity);
     enum!.rep := Position(enum!.elms,
                           Representative(UnderlyingCollection(enum)));
     enum!.list := [enum!.rep];

@@ -189,6 +189,16 @@ gap> CongruenceClasses(cong)* class;
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(cong);
+gap> Unbind(S);
+gap> Unbind(pairs);
+gap> Unbind(iso);
+gap> Unbind(R);
+gap> Unbind(rmscong);
+gap> Unbind(I);
+gap> Unbind(ker);
+gap> Unbind(trc);
+gap> Unbind(pair);
+gap> Unbind(class);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/congruences/congruences.tst");
