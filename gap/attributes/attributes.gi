@@ -304,6 +304,7 @@ function(coll)
       else
         AddSet(out, x);
       fi;
+      GASMAN("collect");
     fi;
   until Length(redund) + Length(out) = nrgens;
 
