@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  partbinrel.gd
+#W  pbr.gd
 #Y  Copyright (C) 2015                                   Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -31,20 +31,30 @@ BindGlobal("PBRType",
            NewType(PBRFamily,
                    IsPBR and IsPositionalObjectRep));
 
-DeclareAttribute("DegreeOfPBR",
-                 IsPBR);
-DeclareGlobalFunction("PBR");
-DeclareGlobalFunction("ExtRepOfPBR");
+DeclareOperation("PBR", [IsDenseList, IsDenseList]);
+DeclareGlobalFunction("PBRNC");
 DeclareOperation("RandomPBR", [IsPosInt]);
-DeclareOperation("AsPBR", [IsAssociativeElement, IsPosInt]);
-DeclareOperation("AsPBR", [IsAssociativeElement]);
+DeclareOperation("RandomPBR", [IsPosInt, IsFloat]);
+DeclareOperation("EmptyPBR", [IsPosInt]);
+DeclareOperation("IdentityPBR", [IsPosInt]);
+DeclareOperation("UniversalPBR", [IsPosInt]);
+
+DeclareAttribute("DegreeOfPBR", IsPBR);
+DeclareAttribute("DegreeOfPBRCollection", IsPBRCollection);
+DeclareAttribute("ExtRepOfPBR", IsPBR);
+
 DeclareOperation("NumberPBR", [IsPBR]);
 DeclareOperation("PBRNumber", [IsPosInt, IsPosInt]);
 
+DeclareOperation("AsPBR", [IsAssociativeElement, IsPosInt]);
+DeclareOperation("AsPBR", [IsAssociativeElement]);
+
 DeclareProperty("IsEmptyPBR", IsPBR);
+DeclareProperty("IsIdentityPBR", IsPBR);
 DeclareProperty("IsUniversalPBR", IsPBR);
 DeclareProperty("IsBipartitionPBR", IsPBR);
 DeclareProperty("IsTransformationPBR", IsPBR);
 DeclareProperty("IsPartialPermPBR", IsPBR);
+DeclareProperty("IsPermPBR", IsPBR);
 DeclareProperty("IsBlockBijectionPBR", IsPBR);
 DeclareProperty("IsDualTransformationPBR", IsPBR);

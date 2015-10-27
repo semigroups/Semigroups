@@ -14,3 +14,7 @@ DeclareOperation("GreensHClassOfElement",
                  [IsReesZeroMatrixSemigroup, IsPosInt, IsPosInt]);
 DeclareAttribute("MatrixEntries", IsReesZeroMatrixSemigroup);
 DeclareAttribute("MatrixEntries", IsReesMatrixSemigroup);
+DeclareAttribute("RZMSDigraph", IsReesZeroMatrixSemigroup);
+DeclareAttribute("RZMSConnectedComponents", IsReesZeroMatrixSemigroup);
+DeclareAttribute("RZMSNormalization", IsReesZeroMatrixSemigroup);
+DeclareAttribute("RMSNormalization", IsReesMatrixSemigroup);

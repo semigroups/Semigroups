@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/attributes/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# properties: IsBand, for a semigroup, 1/2
 gap> S := Semigroup(
@@ -204,7 +204,7 @@ false
 gap> S := InverseSemigroup([
 >   PartialPerm([1]),
 >   PartialPerm([])]);
-<commutative inverse partial perm monoid of rank 1 with 1 generator>
+<inverse partial perm monoid of rank 1 with 2 generators>
 gap> IsZeroSimpleSemigroup(S);
 true
 
@@ -436,8 +436,8 @@ ents
 
 #T# properties: IsXTrivial, non-acting, 1
 gap> S := Semigroup(
-> Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity], 
->                                  [4, 0]], 8), 
+> Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity],
+>                                  [4, 0]], 8),
 > Matrix(IsTropicalMaxPlusMatrix, [[3, 1], [-infinity, 0]], 8));
 <semigroup of 2x2 tropical max-plus matrices with 2 generators>
 gap> IsHTrivial(S);
@@ -446,7 +446,7 @@ gap> IsLTrivial(S);
 false
 gap> IsRTrivial(S);
 true
-gap> I := SemigroupIdeal(S, 
+gap> I := SemigroupIdeal(S,
 > Matrix(IsTropicalMaxPlusMatrix, [[8, 8], [7, 5]], 8));
 <semigroup ideal of 2x2 tropical max-plus matrices with 1 generator>
 gap> IsHTrivial(I);
@@ -602,7 +602,7 @@ true
 
 #T# properties: IsRTrivial, pperm, 1/1
 gap> S := Semigroup(PartialPerm([1, 2], [1, 2]));
-<trivial partial perm group of rank 2 with 0 generators>
+<commutative partial perm monoid of rank 2 with 1 generator>
 gap> IsRTrivial(S);
 true
 
@@ -627,7 +627,7 @@ gap> S := AsBipartitionSemigroup(Group((1, 2, 3)));
 gap> IsGroupAsSemigroup(S);
 true
 gap> I := SemigroupIdeal(S, S.1);
-<commutative regular bipartition semigroup ideal of degree 3 with 1 generator>
+<commutative inverse bipartition semigroup ideal of degree 3 with 1 generator>
 gap> IsGroupAsSemigroup(I);
 true
 
@@ -1338,7 +1338,7 @@ false
 
 #T# properties: IsZeroGroup, 4
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> IsZeroGroup(S);
 true
 gap> I := SemigroupIdeal(S, PartialPerm([]));;

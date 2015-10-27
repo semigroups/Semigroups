@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/semigroups/semipperm.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# SemiPPermTest1: NumberSubset
 gap> sets := Combinations([1 .. 10]);;

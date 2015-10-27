@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  partbinrel.gi
+#W  pbr.gi
 #Y  Copyright (C) 2015                                   Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -11,7 +11,7 @@
 # This file contains an intitial implementation of partitioned binary
 # relations (PBRs) as defined in:
 #
-# Paul Martin and Volodymyr Mazorchuk, Partitioned Binary Relations,
+# Paul Martin and Volodymyr Mazorchuk, Partitioned binary relatons,
 # Mathematica Scandinavica, v113, n1, p. 30-52, http://arxiv.org/abs/1102.0862
 
 # Internally a PBR is stored as the adjacency list of digraph with
@@ -23,9 +23,49 @@
 #
 # The number <n> is the *degree* of <x>.
 
-# TODO UniversalPBR, EmptyPBR, the embeddings from the paper,
-# IsBipartitionPBR, IsTransformationPBR,
-# IsDualTransformationPBR, etc
+#############################################################################
+# TODO the embeddings from the paper, AsPBR for a pbr (extend or restrict),
+#############################################################################
+
+InstallMethod(EmptyPBR, "for a pos int", [IsPosInt],
+n -> PBRNC(List([1 .. n], y -> []), List([1 .. n], y -> [])));
+
+InstallMethod(IdentityPBR, "for a pos int", [IsPosInt],
+n -> PBRNC(List([1 .. n], y -> [-y]), List([1 .. n], y -> [y])));
+
+InstallMethod(UniversalPBR, "for a pos in", [IsPosInt],
+function(n)
+  local x;
+  x := Concatenation([-n .. -1], [1 .. n]);
+  return PBRNC(List([1 .. n], y -> x), List([1 .. n], y -> x));
+end);
+
+# FIXME the following is temporary, with the current definition of
+# IsGeneratorsOfInverseSemigroup for a pbr collection, the One of any element
+# in the collection does not satisfy IsGeneratorsOfInverseSemigroup, and so it
+# cannot be inverted.
+
+InstallMethod(InverseMonoidByGenerators,
+[IsPBRCollection],
+function(coll)
+  ErrorMayQuit("Semigroups: InverseMonoidByGenerators",
+               "(for a pbr collection):\nnot yet implemented,");
+end);
+
+# FIXME see the comment above, this is not really correct.
+
+InstallOtherMethod(InverseMutable, "for a PBR", [IsPBR],
+function(x)
+  #TODO change IsBlockBijection(AsBipartition(x)) to
+  # IsBlockBijectionPBR.
+  if IsPartialPermPBR(x) or
+      (IsBipartitionPBR(x) and IsBlockBijection(AsBipartition(x))) then
+    return Star(x);
+  fi;
+  return fail;
+end);
+
+# FIXME see the comment above, this is not really correct.
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
 [IsPBRCollection],
@@ -34,16 +74,33 @@ function(coll)
          and IsGeneratorsOfInverseSemigroup(List(coll, AsBipartition));
 end);
 
-# TODO 2 arg version of this
-
-InstallMethod(AsTransformation, "for a pbr",
-[IsPBR],
+InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
-  if not IsTransformationPBR(x) then
-    ErrorMayQuit("Semigroups: AsTransformation: usage,\n",
-                 "the argument <x> must be a transformation PBR,");
+  local ext;
+  ext := ShallowCopy(ExtRepOfPBR(x) * - 1);
+  Apply(ext, ShallowCopy);
+  Apply(ext[1], ShallowCopy);
+  Apply(ext[2], ShallowCopy);
+  return PBR(ext[2], ext[1]);
+end);
+
+InstallMethod(DegreeOfPBRCollection, "for a PBR collection",
+[IsPBRCollection],
+function(coll)
+  local deg;
+
+  if IsPBRSemigroup(coll) then
+    return DegreeOfPBRSemigroup(coll);
   fi;
-  return AsTransformation(AsBipartition(x));
+
+  deg := DegreeOfPBR(coll[1]);
+  if not ForAll(coll, x -> DegreeOfPBR(x) = deg) then
+    ErrorMayQuit("Semigroups: DegreeOfPBRCollection: usage,\n",
+                 "the argument <coll> must be a collection of PBRs ",
+                 "of equal degree,");
+  fi;
+
+  return deg;
 end);
 
 InstallMethod(IsBipartitionPBR, "for a pbr",
@@ -52,6 +109,7 @@ function(x)
   return IsEquivalenceBooleanMat(AsBooleanMat(x));
 end);
 
+# TODO is this the correct definition
 InstallMethod(IsTransformationPBR, "for a pbr",
 [IsPBR],
 function(x)
@@ -68,6 +126,12 @@ InstallMethod(IsPartialPermPBR, "for a pbr",
 [IsPBR],
 function(x)
   return IsBipartitionPBR(x) and IsPartialPermBipartition(AsBipartition(x));
+end);
+
+InstallMethod(IsPermPBR, "for a pbr",
+[IsPBR],
+function(x)
+  return IsBipartitionPBR(x) and IsPermBipartition(AsBipartition(x));
 end);
 
 InstallMethod(IsDualTransformationPBR, "for a pbr",
@@ -96,6 +160,25 @@ function(x)
   n := x![1];
   for i in [2 .. 2 * n + 1] do
     if Length(x![i]) > 0 then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(IsIdentityPBR, "for a partition binary relation",
+[IsPBR],
+function(x)
+  local n, i;
+
+  n := x![1];
+  for i in [2 .. n + 1] do
+    if Length(x![i]) <> 1 or x![i][1] <> i + n - 1 then
+      return false;
+    fi;
+  od;
+  for i in [n + 2 .. 2 * n + 1] do
+    if Length(x![i]) <> 1 or x![i][1] <> i - n - 1 then
       return false;
     fi;
   od;
@@ -135,19 +218,21 @@ InstallMethod(AsPBR, "for a bipartition",
 InstallMethod(AsPBR, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
 function(x, n)
-  local deg, blocks, out, i, block;
+  local deg, blocks, out, dom, block, i;
 
-  deg := DegreeOfBipartition(x);
+  deg    := DegreeOfBipartition(x);
   blocks := ExtRepOfBipartition(x);
-  out := [[], []];
+  out    := [[], []];
+  dom := Union([-n .. -1], [1 .. n]);
 
   for block in blocks do
     for i in block do
-      if i < 0 then
-        i := -i;
-        out[2][i] := ShallowCopy(block);
-      else
-        out[1][i] := ShallowCopy(block);
+      if AbsInt(i) <= n then
+        if i < 0 then
+          out[2][-i] := Intersection(block, dom);
+        else
+          out[1][i] := Intersection(block, dom);
+        fi;
       fi;
     od;
   od;
@@ -156,87 +241,208 @@ function(x, n)
     Add(out[2], []);
   od;
 
-  return CallFuncList(PBR, out);
+  return PBRNC(out[1], out[2]);
 end);
 
 InstallMethod(AsPBR, "for a boolean matrix",
 [IsBooleanMat],
 function(x)
-  local deg, succ;
+  local dim, succ;
 
-  deg := DimensionOfMatrixOverSemiring(x);
-  if not IsEvenInt(deg) then
+  dim := DimensionOfMatrixOverSemiring(x);
+  if not IsEvenInt(dim) then
     ErrorMayQuit("Semigroups: AsPBR: usage,\n",
-                 "the matrix <x> must be of even dimension,");
+                 "the boolean matrix <x> must be of even dimension,");
   fi;
   succ := Successors(x);
-  return PBR(succ{[1 .. deg / 2]},
-                                   succ{[deg / 2 + 1 .. deg]});
+  return PBRNC(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
 end);
 
-# TODO use RandomDigraph here!
-# TODO make a method that takes a float between 0 and 1 as the probability of
-# an edge existing.
+InstallMethod(AsPBR, "for a boolean mat and pos int",
+[IsBooleanMat, IsPosInt],
+function(mat, n)
+  local m, nbs, k, i, j;
+
+  if not IsEvenInt(n) then
+    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
+                 "the second argument <n> must be even,");
+  fi;
+
+  m := DimensionOfMatrixOverSemiring(mat);
+
+  if not IsEvenInt(m) then
+    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
+                 "the boolean matrix <x> must be of even dimension,");
+  fi;
+
+  nbs := [List([1 .. n / 2], x -> []),
+          List([1 .. n / 2], x -> [])];
+
+  if n <= m then
+    for i in [1 .. n / 2] do
+      for j in [1 .. n] do
+        if mat[i][j] then
+          Add(nbs[1][i], j);
+        fi;
+      od;
+    od;
+    for i in [n / 2 + 1 .. n] do
+      for j in [1 .. n] do
+        if mat[i][j] then
+          Add(nbs[2][i - n / 2], j);
+        fi;
+      od;
+    od;
+  else
+    k := (n - m) / 2;
+
+    for i in [1 .. m / 2] do
+      for j in [1 .. m / 2] do
+        if mat[i][j] then
+          Add(nbs[1][i], j);
+        fi;
+      od;
+      for j in [m / 2 + 1 .. m] do
+        if mat[i][j] then
+          Add(nbs[1][i], j + k);
+        fi;
+      od;
+    od;
+    for i in [m / 2 + 1 .. m] do
+      for j in [1 .. m / 2] do
+        if mat[i][j] then
+          Add(nbs[2][i - m / 2], j);
+        fi;
+      od;
+      for j in [m / 2 + 1 .. m] do
+        if mat[i][j] then
+          Add(nbs[2][i - m / 2], j + k);
+        fi;
+      od;
+    od;
+  fi;
+
+  return PBRNC(nbs[1], nbs[2]);
+end);
+
+# TODO 2 arg version of this
+
+InstallMethod(AsTransformation, "for a pbr",
+[IsPBR],
+function(x)
+  if not IsTransformationPBR(x) then
+    ErrorMayQuit("Semigroups: AsTransformation: usage,\n",
+                 "the argument <x> must be a transformation PBR,");
+  fi;
+  return AsTransformation(AsBipartition(x));
+end);
+
+# TODO 2 arg version of this
+
+InstallMethod(AsPartialPerm, "for a pbr",
+[IsPBR],
+function(x)
+  if not IsPartialPermPBR(x) then
+    ErrorMayQuit("Semigroups: AsPartialPerm: usage,\n",
+                 "the argument <x> must be a partial perm PBR,");
+  fi;
+  return AsPartialPerm(AsBipartition(x));
+end);
+
+# TODO 2 arg version of this
+
+InstallMethod(AsPermutation, "for a pbr",
+[IsPBR],
+function(x)
+  if not IsPermPBR(x) then
+    ErrorMayQuit("Semigroups: AsPermutation: usage,\n",
+                 "the argument <x> must be a permutation PBR,");
+  fi;
+  return AsPermutation(AsBipartition(x));
+end);
 
 InstallMethod(RandomPBR, "for a pos int", [IsPosInt],
 function(n)
-  local p, adj, k, i, j;
-
-  # probability of an edge
-  p := Random([0 .. 9999]);
-
-  adj := [n];
-  for i in [2 .. 2 * n + 1] do
-    Add(adj, []);
-  od;
-
-  for i in [2 .. 2 * n + 1] do
-    for j in [1 .. 2 * n] do
-      k := Random(Integers) mod 10000;
-      if k < p then
-        Add(adj[i], j);
-      fi;
-    od;
-  od;
-  return Objectify(PBRType, adj);
+  local digraph;
+  digraph := RandomDigraph(2 * n);
+  return PBRNC(OutNeighbours(digraph){[1 .. n]},
+               OutNeighbours(digraph){[n + 1 .. 2 * n]});
 end);
 
-#TODO add checks that the argument makes sense, really the below should be an
-#     NC method, and we should add a new method with checks/.
+InstallMethod(RandomPBR, "for a pos int", [IsPosInt, IsFloat],
+function(n, p)
+  local digraph;
+  digraph := RandomDigraph(2 * n, p);
+  return PBRNC(OutNeighbours(digraph){[1 .. n]},
+               OutNeighbours(digraph){[n + 1 .. 2 * n]});
+end);
 
-InstallGlobalFunction(PBR,
+InstallMethod(PBR, "for pair of dense list",
+[IsDenseList, IsDenseList],
+function(left, right)
+  local deg, i;
+
+  if Length(left) <> Length(right) then
+    ErrorMayQuit("Semigroups: PBR: usage,\n",
+                 "the arguments must have equal lengths,");
+  fi;
+
+  deg := Length(left);
+
+  for i in [1 .. deg] do
+    if not IsHomogeneousList(left[i]) or not IsHomogeneousList(right[i]) then
+      ErrorMayQuit("Semigroups: PBR: usage,\n",
+                   "the entries in the arguments must be homogeneous lists,");
+    elif   not ForAll(left[i], j -> IsInt(j) and j <> 0
+                                    and j <= deg and j >= -deg)
+        or not ForAll(right[i], j -> IsInt(j) and j <> 0
+                                     and j <= deg and j >= -deg) then
+      ErrorMayQuit("Semigroups: PBR: usage,\n",
+                   "the entries in the first argument must be integers ",
+                   "in [", -deg, " .. -1]\n or [1 .. ", deg, "],");
+    fi;
+  od;
+  return PBRNC(left, right);
+end);
+
+InstallGlobalFunction(PBRNC,
 function(arg)
-  local left_adj, right_adj, n, i, j;
+  local left, right, n, i, j;
 
-  arg := ShallowCopy(arg);
-  left_adj := arg[1];  # things adjacent to positives
-  right_adj := arg[2]; # things adjacent to negatives
+  arg   := ShallowCopy(arg);
+  left  := arg[1];  # things adjacent to positives
+  right := arg[2];  # things adjacent to negatives
 
-  n := Length(left_adj);
+  n := Length(left);
 
   for i in [1 .. n] do
-    for j in [1 .. Length(left_adj[i])] do
-      if left_adj[i][j] < 0 then
-        left_adj[i][j] := -left_adj[i][j] + n;
+    for j in [1 .. Length(left[i])] do
+      if left[i][j] < 0 then
+        left[i][j] := -left[i][j] + n;
       fi;
     od;
-    for j in [1 .. Length(right_adj[i])] do
-      if right_adj[i][j] < 0 then
-        right_adj[i][j] := -right_adj[i][j] + n;
+    left[i] := ShallowCopy(left[i]);
+    Sort(left[i]);
+    for j in [1 .. Length(right[i])] do
+      if right[i][j] < 0 then
+        right[i][j] := -right[i][j] + n;
       fi;
     od;
+    right[i] := ShallowCopy(right[i]);
+    Sort(right[i]);
   od;
+  MakeImmutable(arg);
   arg := Concatenation([Length(arg[1])], Concatenation(arg));
   return Objectify(PBRType, arg);
 end);
 
-InstallMethod(DegreeOfPBR, "for a partitioned binary relation",
+InstallMethod(DegreeOfPBR, "for a pbr",
 [IsPBR], pbr -> pbr![1]);
 
 # can't we use some sort of Floyd-Warshall Algorithm here, the current method
 # involves searching in the same part of the graph repeatedly??
 
-InstallMethod(\*, "for partitioned binary relations",
+InstallMethod(\*, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
   local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, i;
@@ -296,14 +502,10 @@ function(x, y)
   return Objectify(PBRType, out);
 end);
 
-InstallGlobalFunction(ExtRepOfPBR,
+InstallMethod(ExtRepOfPBR, "for a pbr",
+[IsPBR],
 function(x)
   local n, out, i, j, k;
-
-  if not IsPBR(x) then
-    ErrorMayQuit("Semigroups: ExtRepOfPBR: usage,\n",
-                 "the argument <x> must be a PBR,");
-  fi;
 
   n := x![1];
   out := [[], []];
@@ -323,61 +525,52 @@ function(x)
   return out;
 end);
 
-InstallMethod(ViewString, "for a partitioned binary relation",
-[IsPBR],
-function(x)
-  local str, n, ext, i;
+# These ViewObj and PrintObj methods are here because Print(ext[1]) produces
+# nices output than Print(ViewString(ext[1])). The ViewString and PrintString
+# methods are required for use in things like Green's relations.
 
-  if IsUniversalPBR(x) then
-    return Concatenation("\><universal pbr on ", PrintString(x![1]),
-                         " points>\<");
-  elif IsEmptyPBR(x) then
-    return Concatenation("\><empty pbr on ", PrintString(x![1]),
-                         " points>\<");
+InstallMethod(ViewObj, "for a pbr", [IsPBR], PrintObj);
+
+InstallMethod(PrintObj, "for a pbr", [IsPBR],
+function(x)
+  local ext;
+
+  ext := ExtRepOfPBR(x);
+  Print("\>\>PBR(\>\>", ext[1], "\<\<,");
+
+  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
+    Print("\n");
+  else
+    Print(" ");
   fi;
 
-  str := "\>\>\>\>\><pbr:";
-
-  n := DegreeOfPBR(x);
-  ext := ExtRepOfPBR(x);
-
-  Append(str, "\>");
-  Append(str, PRINT_STRINGIFY("[\>", ext[1][1]));
-  for i in [2 .. n] do
-    Append(str, ",\< \>");
-    Append(str, PrintString(ext[1][i]));
-  od;
-  Append(str, "\<],\<");
-  Append(str, " \>");
-  Append(str, PRINT_STRINGIFY("[\>", ext[2][1]));
-  for i in [2 .. n] do
-    Append(str, ",\< \>");
-    Append(str, PrintString(ext[2][i]));
-  od;
-  Append(str, "\<]\<");
-  Append(str, ">\<\<\<\<\<");
-  return str;
+  Print("\>\>", ext[2], "\<\<\<\<)");
 end);
 
-InstallMethod(PrintString, "for a partitioned binary relation",
+InstallMethod(ViewString, "for a pbr", [IsPBR], PrintString);
+
+InstallMethod(PrintString, "for a pbr",
 [IsPBR],
 function(x)
-  local str, ext;
-
-  str := "\>\>PBR(\>\>";
+  local ext, str;
 
   ext := ExtRepOfPBR(x);
-  Append(str, "\>");
-  Append(str, PrintString(ext[1]));
-  Append(str, "\<");
-  Append(str, ", \>");
-  Append(str, PrintString(ext[2]));
-  Append(str, "\<");
-  Append(str, "\<\<)\<\<");
+
+  str := Concatenation("\>\>PBR(\>\>", ViewString(ext[1]), "\<\<,");
+
+  if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
+    Append(str, "\n");
+  else
+    Append(str, " ");
+  fi;
+
+  Append(str, "\>\>");
+  Append(str, ViewString(ext[2]));
+  Append(str, "\<\<\<\<)");
   return str;
 end);
 
-InstallMethod(\=, "for partitioned binary relations",
+InstallMethod(\=, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
   local n, i;
@@ -391,7 +584,7 @@ function(x, y)
   return true;
 end);
 
-InstallMethod(\<, "for partitioned binary relations",
+InstallMethod(\<, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
   local n, i;
@@ -407,15 +600,7 @@ function(x, y)
   return false;
 end);
 
-#PBRMonoid := function(n)
-#  local binrels;
-#  binrels := List(Tuples(Combinations([1..n]),n),
-#                  x -> BinaryRelationOnPoints(x));
-#  return Semigroup(List(Tuples(binrels,4),
-#                 x-> PBR(x[1],x[2],x[3],x[4])));
-#end;
-
-InstallMethod(OneMutable, "for a partitioned binary relation",
+InstallMethod(OneMutable, "for a pbr",
 [IsPBR],
 function(x)
   local n, out, i;

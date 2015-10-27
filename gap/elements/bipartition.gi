@@ -97,24 +97,6 @@ end);
 
 #
 
-InstallMethod(NaturalLeqInverseSemigroup, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
-function(S)
-  if IsInverseSemigroup(S) then
-    if IsBlockBijectionSemigroup(S) then
-      return NaturalLeqBlockBijection;
-    elif IsPartialPermBipartitionSemigroup(S) then
-      return NaturalLeqPartialPermBipartition;
-    fi;
-    TryNextMethod(); # this should be the default method for a non-inverse op
-                     # semigroup
-  fi;
-  ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-               "the argument is not an inverse semigroup,");
-end);
-
-#
-
 InstallOtherMethod(InverseMutable, "for a bipartition", [IsBipartition],
 function(f)
   if IsBlockBijection(f) or IsPartialPermBipartition(f) then
@@ -686,13 +668,21 @@ function(f, n)
 end);
 
 InstallMethod(AsBipartition, "for a pbr and pos int",
-[IsPBR, IsPosInt],
+[IsPBR, IsZeroCyc],
 function(x, deg)
-  ErrorMayQuit("Semigroups: AsBipartition (for a pbr and an int):\n",
-               "not yet implemented");
+  return Bipartition([]);
 end);
 
-#
+InstallMethod(AsBipartition, "for a pbr and pos int",
+[IsPBR, IsPosInt],
+function(x, deg)
+  if not IsBipartitionPBR(x) then
+    ErrorMayQuit("Semigroups: AsBipartition (for a pbr): usage,\n",
+                 "the argument does not satisfy 'IsBipartitionPBR',");
+  fi;
+
+  return AsBipartition(AsBipartition(x), deg);
+end);
 
 InstallMethod(AsBipartition, "for a pbr",
 [IsPBR],

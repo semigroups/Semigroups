@@ -21,6 +21,9 @@ else # only do this if ORBC is available
   Unbind(_PATH_SO);
 fi;
 
+BindGlobal("SEMIGROUPS", rec());
+MakeReadWriteGlobal("SEMIGROUPS");
+
 ReadPackage("semigroups/gap/options.g");
 
 ReadPackage("semigroups/gap/elements/star.gd");

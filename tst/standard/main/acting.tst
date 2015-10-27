@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/main/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS_DefaultOptionsRec.generic := false;;
 
 #T# ActingTest1
@@ -356,7 +356,7 @@ gap> SizeOfSemigroupData(SemigroupData(S));
 0
 
 #T# acting: SEMIGROUPS_UniversalFakeOne
-gap> SEMIGROUPS_UniversalFakeOne * RandomBooleanMat(4);;
+gap> SEMIGROUPS_UniversalFakeOne * RandomMatrix(IsBooleanMat, 4);;
 gap> RandomTransformation(4) * SEMIGROUPS_UniversalFakeOne;;
 gap> String(SEMIGROUPS_UniversalFakeOne);
 "<universal fake one>"

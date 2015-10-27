@@ -1,108 +1,53 @@
-<Chapter Label="Semigroup homomorphisms">
+<Chapter Label="Attributes of inverse semigroups">
   <Heading>
-    Semigroup homomorphisms
-  </Heading> 
-
-  In this chapter we describe the various ways to define a homomorphism from a
-  semigroup to another semigroup.
-  <P/>
+    Attributes of inverse semigroups
+  </Heading>
   
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  In this chapter we describe the attributes which are specific
+  to inverse semigroups that can be determined using &Semigroups;.<P/> 
+
+  The functions 
+  <List>
+    <Item><Ref Oper="IsJoinIrreducible"/></Item>
+    <Item><Ref Oper="IsMajorantlyClosed"/></Item>
+    <Item><Ref Attr="JoinIrreducibleDClasses"/></Item>
+    <Item><Ref Oper="MajorantClosure"/></Item> 
+    <Item><Ref Oper="Minorants"/></Item>
+    <Item><Ref Oper="RightCosetsOfInverseSemigroup"/></Item>
+    <Item><Ref Attr="SmallerDegreePartialPermRepresentation"/></Item>
+    <Item><Ref Attr="VagnerPrestonRepresentation"/></Item>
+  </List>
+  were written by Wilf Wilson and Robert Hancock. <P/>
+
+  The function <Ref Oper="CharacterTableOfInverseSemigroup"/> was written by
+  Jhevon Smith and Ben Steinberg.
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
-    <Heading>
-      Isomorphisms of arbitrary semigroups
-    </Heading> 
-
-    <#Include Label="IsIsomorphicSemigroup"> 
-    <#Include Label="SmallestMultiplicationTable"> 
-    <#Include Label="IsomorphismSemigroups"> 
-
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  
-  <Section>
-    <Heading>
-      Isomorphisms of Rees (0-)matrix semigroups
-    </Heading> 
-
-    PREAMBLE
-
-    <!--********************************************************************-->
     
-    <Subsection 
-      Label="Operators for isomorphisms of Rees (0-)matrix semigroup by triples">
-
-      <Heading>
-        Operators for isomorphisms of Rees (0-)matrix semigroup by triples
-      </Heading>
-
-      <List>
-        
-        <Mark><C><A>map</A>[<A>i</A>]</C></Mark>
-        <Item>
-          <Index Key="ELM_LIST"><C>ELM_LIST</C> (for Rees (0-)matrix semigroup
-            isomorphisms by triples)
-          </Index>
-          <C><A>map</A>[i]</C> returns the <A>i</A>th component of the Rees
-          (0-)matrix semigroup isomorphism by triple <A>map</A> when <C><A>i</A> = 1,
-            2, 3</C>; see <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>. 
-        </Item>
-
-        <Mark><C><A>map1</A> * <A>map2</A></C></Mark>
-        <Item>
-          <Index Key="*"><C>*</C> 
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns the composition of <A>map2</A> and <A>map1</A>;
-          see <Ref Oper = "CompositionMapping2" Label = "for IsRMSIsoByTriple"/>.
-        </Item>
-
-        <Mark><C><A>map1</A> &lt; <A>map2</A></C></Mark>
-        <Item>
-          <Index Key="&lt;"><C>&lt;</C>
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns <K>true</K> if <A>map1</A> is lexicographically less than
-          <A>map2</A>.
-        </Item>
-
-        <Mark><C><A>map1</A> = <A>map2</A></C></Mark>
-        <Item>
-          <Index Key="="><C>=</C>
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns <K>true</K> if the Rees (0-)matrix semigroup
-          isomorphisms by triple <A>map1</A> and <A>map2</A> have equal source and
-          range, and are equal as functions, and <K>false</K> otherwise. <P/>
-          
-          It is possible for <A>map1</A> and <A>map2</A> to be equal but to
-          have distinct components. 
-        </Item>
-        
-        <Mark><C><A>pt</A> ^ <A>map</A></C></Mark>
-        <Item>
-          <Index Key="^"><C>^</C>
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns the image of the element <A>pt</A> of the source of
-          <A>map</A> under the isomorphism <A>map</A>; see 
-          <Ref Oper = "ImagesElm" Label = "for IsRMSIsoByTriple"/>.
-        </Item>
-        
-      </List> 
-  
-    </Subsection>
-
-    <!--********************************************************************-->
+    <Heading>
+      Attributes of inverse semigroups
+    </Heading>
+    
+    <#Include Label="NaturalLeqInverseSemigroup">
+    <#Include Label="JoinIrreducibleDClasses">
+    <#Include Label="MajorantClosure">
+    <#Include Label="Minorants">
+    <#Include Label="PrimitiveIdempotents">
+    <#Include Label="RightCosetsOfInverseSemigroup">
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="SmallerDegreePartialPermRepresentation">
+    <#Include Label="VagnerPrestonRepresentation">
+    <#Include Label="CharacterTableOfInverseSemigroup">
 
   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
   
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
 </Chapter>
-

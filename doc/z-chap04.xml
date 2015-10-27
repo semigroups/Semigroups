@@ -2,4 +2,151 @@
   <Heading>
     Partitioned binary relations (PBRs)
   </Heading>
+  In this chapter we describe the functions in &Semigroups; for creating
+  and manipulating partitioned binary relations, henceforth referred to by
+  their acronym PBRs. We begin by describing what these objects are.
+  <P/>
+
+  PBRs were introduced in the paper <Cite Key="Martin2011aa"/> as, roughly
+  speaking, the maximum generalization of bipartitions and related objects.
+  Although, mathematically, bipartitions are a special type of PBR, in
+  &Semigroups; bipartitions and PBRs are currently distinct types of objects.
+  It is possible to change the representation from bipartition to PBR, and from
+  PBR to bipartition, when appropriate; see Section 
+  <Ref Sect = "Changing the representation of a PBR"/> for more
+  details. The reason for this distinct is largely historical, bipartition
+  appeared in the literature, and in the &Semigroups; package, before PBRs.
+
+  <!-- TODO fill in more details here. -->
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section><Heading>The family and categories of PBRs</Heading>
+    <#Include Label="IsPBR">
+    <#Include Label="IsPBRCollection">
+    <#Include Label="PBRFamily">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Creating PBRs">
+    <Heading>Creating PBRs</Heading>
+    There are several ways of creating PBRs in &GAP;, which are
+    described in this section.
+    <#Include Label="PBR">
+    <#Include Label="RandomPBR">
+    <#Include Label="EmptyPBR">
+    <#Include Label="IdentityPBR">
+    <#Include Label="UniversalPBR">
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Changing the representation of a PBR">
+    <Heading>Changing the representation of a PBR</Heading>
+    It  is  possible that a PBR can be represented as another type  of object,
+    or that another type of &GAP; object can be represented as a PBR. In this
+    section, we describe the functions in the &Semigroups; package for changing
+    the representation of PBR, or for changing the representation of another
+    type of object to that of a PBR.
+    <P/> 
+
+    The  operations  
+    <Ref Oper="AsPermutation" Label="for a PBR"/>, 
+    <Ref Oper="AsPartialPerm" Label="for a PBR"/>, 
+    <Ref Oper="AsTransformation" Label="for a PBR"/>,
+    <Ref Oper="AsBipartition"/>,
+    <Ref Oper="AsBooleanMat"/> 
+    can be used  to convert PBRs into permutations, partial permutations,
+    transformations, bipartitions, and boolean matrices where  appropriate.  
+
+    <#Include Label="AsPBR"/>
+    <#Include Label="AsTransformationPBR"/>
+    <#Include Label="AsPartialPermPBR"/>
+    <#Include Label="AsPermutationPBR"/>
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Operators for PBRs">
+  <Heading>Operators for PBRs</Heading>
+    <List>
+      <Mark><C><A>x</A> * <A>y</A></C></Mark>
+      <Item>
+        <Index Key="*"><C>*</C> (for PBRs)</Index>
+        returns the product of <A>x</A> and <A>y</A> when <A>x</A> and
+        <A>y</A> are PBRs. 
+      </Item>
+      <Mark><C><A>x</A> &lt; <A>y</A></C></Mark>
+      <Item>
+        <Index Key="&lt;"><C>&lt;</C> (for PBRs)</Index>
+        returns <K>true</K> if the degree of <A>x</A> is less than the degree
+        of <A>y</A>, or the degrees are equal and the out-neighbours of
+        <A>x</A> (as a list of list of positive integers) is lexicographically
+        less than the out-neighbours of <A>y</A>.
+      </Item>
+      <Mark><C><A>x</A> = <A>y</A></C></Mark>
+      <Item>
+        <Index Key="="><C>=</C> (for PBRs)</Index>
+        returns <K>true</K> if the PBR <A>x</A> equals the
+        PBR <A>y</A> and returns <K>false</K> if it does not.
+      </Item>
+    </List> 
+    <!--TODO document Star -->
+  </Section>    
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Attributes for PBRs">
+  <Heading>Attributes for PBRs</Heading>
+    In this section we describe various attributes that a PBR can
+    possess.  
+    <#Include Label="StarPBR">
+    <#Include Label="DegreeOfPBR">
+    <#Include Label="ExtRepOfPBR">
+    <#Include Label="NumberPBR">
+    <#Include Label="IsEmptyPBR">
+    <#Include Label="IsIdentityPBR">
+    <#Include Label="IsUniversalPBR">
+    <#Include Label="IsBipartitionPBR">
+    <#Include Label="IsTransformationPBR">
+    <#Include Label="IsDualTransformationPBR">
+    <#Include Label="IsPartialPermPBR">
+    <#Include Label="IsPermPBR">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>
+      Semigroups of PBRs
+    </Heading>
+    
+    Semigroups and monoids of PBRs can be created in the usual way in
+    &GAP; using the functions <Ref Func="Semigroup" BookName="ref"/> and 
+    <Ref Func="Monoid" BookName="ref"/>; see Chapter 
+    <Ref Chap = "Creating semigroups and monoids"/> for more details. 
+    <P/>
+    
+    It is possible to create inverse semigroups and monoids of PBRs
+    using <Ref Func="InverseSemigroup" BookName="ref"/> and <Ref
+      Func="InverseMonoid" BookName="ref"/> when the argument is a collection
+    of PBRs satisfying <Ref Prop="IsBipartitionPBR"/> and when considered as
+    bipartitions, the collection satisfies <C>IsGeneratorsOfInverseSemigroup</C>.
+    <P/>
+
+    Note that every PBR semigroup in &Semigroups; is finite. 
+
+    <#Include Label="IsPBRSemigroup">
+    <#Include Label="DegreeOfPBRSemigroup">
+
+  </Section>
+  
 </Chapter>

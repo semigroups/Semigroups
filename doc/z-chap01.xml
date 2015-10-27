@@ -68,12 +68,12 @@
         extend &Semigroups; see <Ref Chap="Extending the package"/>.  We refer
         to semigroups to which the algorithms in <Cite Key="Mitchell2015aa"/>
         can be applied as <E>acting semigroups</E>.  See Section <Ref
-          Sect="Acting Semigroups"/> for further details.
+          Sect="Acting semigroups"/> for further details.
       </Item>
 
       <Item>
         partitioned binary relations as defined in <Cite
-          Key="Mazorchuk20????"/>, and matrices over the following semirings:
+          Key="Martin2011aa"/>, and matrices over the following semirings:
         <List>
           <Item> 
             the <E>Boolean semiring</E> <M>\{0,1\}</M> where <M>0 + 0 = 0</M>,

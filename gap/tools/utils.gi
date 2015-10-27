@@ -9,55 +9,86 @@
 ##
 ## this file contains utilies for use with the Semigroups package.
 
-BindGlobal("SEMIGROUPS_DocXMLFiles", ["../PackageInfo.g",
-                                      "attributes-acting.xml",
-                                      "attributes-inverse.xml",
-                                      "attributes.xml",
-                                      "bipartition.xml",
-                                      "blocks.xml",
-                                      "boolmat.xml",
-                                      "congruences.xml",
-                                      "display.xml",
-                                      "examples.xml",
-                                      "factor.xml",
-                                      "freeband.xml",
-                                      "freeinverse.xml",
-                                      "greens.xml",
-                                      "ideals.xml",
-                                      "inverse.xml",
-                                      "isomorph.xml",
-                                      "maximal.xml",
-                                      "normalizer.xml",
-                                      "orbits.xml",
-                                      "pairs.xml",
-                                      "properties.xml",
-                                      "rees.xml",
-                                      "reesmat.xml",
-                                      "semiringmat.xml",
-                                      "semibipart.xml",
-                                      "semigroups.xml",
-                                      "semipperm.xml",
-                                      "semitrans.xml",
-                                      "univ.xml",
-                                      "utils.xml"]);
+#############################################################################
+# 1. Put things in the record SEMIGROUPS.
+#############################################################################
 
-InstallGlobalFunction(SemigroupsMakeDoc,
-function()
-  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                              "/doc"),
-                "main.xml", SEMIGROUPS_DocXMLFiles, "semigroups", "MathJax",
-                "../../..");
-  return;
-end);
+SEMIGROUPS.ColorizeString := function(arg)
+  local string, color, i;
 
-BindGlobal("SEMIGROUPS_TestRec", rec());
-MakeReadWriteGlobal("SEMIGROUPS_TestRec");
+  string := "";
+  for i in [1 .. Length(arg) - 1] do
+    if not IsString(arg[i]) then
+      Append(string, PrintString(arg[i]));
+    else
+      Append(string, arg[i]);
+    fi;
+  od;
 
-InstallGlobalFunction(SEMIGROUPS_StartTest,
-function()
+  if not IsString(arg[Length(arg)]) then
+    return string;
+  fi;
+
+  color := arg[Length(arg)];
+
+  if color = "green" then
+    return Concatenation("\033[1;32m", string, "\033[0m");
+  elif color = "red" then
+    return Concatenation("\033[1;31m", string, "\033[0m");
+  elif color = "lightblue" then
+    return Concatenation("\033[94m", string, "\033[0m");
+  elif color = "magenta" then
+    return Concatenation("\033[35m", string, "\033[0m");
+  elif color = "back_blue" then
+    return Concatenation("\033[1;44m", string, "\033[0m");
+  elif color = "back_gray" then
+    return Concatenation("\033[1;100m", string, "\033[0m");
+  fi;
+  return string;
+end;
+
+SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
+                           "attributes-acting.xml",
+                           "attributes-inverse.xml",
+                           "attributes.xml",
+                           "bipartition.xml",
+                           "blocks.xml",
+                           "boolmat.xml",
+                           "congruences.xml",
+                           "display.xml",
+                           "examples.xml",
+                           "factor.xml",
+                           "freeband.xml",
+                           "freeinverse.xml",
+                           "greens.xml",
+                           "ideals.xml",
+                           "inverse.xml",
+                           "isomorph.xml",
+                           "maximal.xml",
+                           "maxplusmat.xml",
+                           "normalizer.xml",
+                           "orbits.xml",
+                           "pairs.xml",
+                           "pbr.xml",
+                           "pfmat.xml",
+                           "properties.xml",
+                           "rees.xml",
+                           "reesmat.xml",
+                           "semiringmat.xml",
+                           "semibipart.xml",
+                           "semigroups.xml",
+                           "semipbr.xml",
+                           "semipperm.xml",
+                           "semitrans.xml",
+                           "univ.xml",
+                           "utils.xml"];
+
+SEMIGROUPS.TestRec := rec();
+
+SEMIGROUPS.StartTest := function()
   local record;
 
-  record := SEMIGROUPS_TestRec;
+  record := SEMIGROUPS.TestRec;
 
   # store current info levels
   record.InfoLevelInfoWarning := InfoLevel(InfoWarning);
@@ -104,19 +135,16 @@ function()
   record.STOP_TEST := STOP_TEST;
 
   UnbindGlobal("STOP_TEST");
-  BindGlobal("STOP_TEST", SEMIGROUPS_StopTest);
+  BindGlobal("STOP_TEST", SEMIGROUPS.StopTest);
   MakeReadWriteGlobal("STOP_TEST");
 
   return;
-end);
+end;
 
-#
-
-InstallGlobalFunction(SEMIGROUPS_StopTest,
-function(file)
+SEMIGROUPS.StopTest := function(file)
   local timeofday, record, elapsed, str;
 
-  record := SEMIGROUPS_TestRec;
+  record := SEMIGROUPS.TestRec;
 
   # restore info levels
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
@@ -154,7 +182,7 @@ function(file)
   Append(str, "ms\n");
 
   if not IsBound(GAPInfo.TestData.START_TIME)  then
-      ErrorMayQuit("Semigroups: SEMIGROUPS_StopTest:\n",
+      ErrorMayQuit("Semigroups: SEMIGROUPS.StopTest:\n",
                    "`STOP_TEST' command without `START_TEST' command for `",
                    file,
                    "'");
@@ -170,193 +198,13 @@ function(file)
   BindGlobal("STOP_TEST", record.STOP_TEST);
   MakeReadWriteGlobal("STOP_TEST");
   return;
-end);
+end;
 
-# TODO redo this
-
-InstallGlobalFunction(SEMIGROUPS_TestAll,
-function()
-  local dir_str, tst, dir, omit, filesplit, test, stringfile, str, filename;
-
-  Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
-  dir_str :=
-   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath, "/tst");
-  tst := DirectoryContents(dir_str);
-  dir := Directory(dir_str);
-
-  omit := SEMIGROUPS_OmitFromTests;
-
-  if Length(omit) > 0 then
-    Print("not testing files containing the strings");
-    for str in omit do
-      Print(", \"", str, "\"");
-    od;
-    Print(" . . .\n\n");
-  fi;
-
-  for filename in tst do
-
-    filesplit := SplitString(filename, ".");
-    if Length(filesplit) >= 2 and filesplit[Length(filesplit)] = "tst" then
-      test := true;
-      stringfile := StringFile(Concatenation(dir_str, "/", filename));
-      for str in omit do
-        if PositionSublist(stringfile, str) <> fail then
-          Print("not testing ", filename, ", it contains a test involving ",
-                str, ", which will not work . . .\n\n");
-          test := false;
-          break;
-        fi;
-      od;
-      if test then
-        Print("reading ", dir_str, "/", filename, " . . .\n");
-        Test(Filename(dir, filename));
-        Print("\n");
-      fi;
-    fi;
-  od;
-  return;
-end);
-#
-
-BindGlobal("SEMIGROUPS_PF",
-function(pass)
-  if pass then
-    return "\033[1;32mPASSED!\033[0m\n";
-  else
-    return "\033[1;31mFAILED!\033[0m\n";
-  fi;
-end);
-
-InstallGlobalFunction(SemigroupsTestStandard,
-function(arg)
-  local opts, file_ext, is_testable, tst_dir, contents, subdirs, str, farm,
-        nr_tests, out, subdir, filename;
-
-  if Length(arg) = 1 and IsRecord(arg[1]) then
-    opts := arg[1];
-    if not IsBound(opts.parallel) or not IsBool(opts.parallel) then
-      opts.parallel := false;
-    fi;
-  else
-    opts := rec(parallel := false);
-  fi;
-
-  Print("\n");
-
-  file_ext := function(str)
-    local split;
-    split := SplitString(str, ".");
-    if Length(split) > 1 then
-      return split[Length(split)];
-    else
-      return "";
-    fi;
-  end;
-
-  is_testable := function(dir, file)
-    local stringfile, str;
-    file := Concatenation(dir, "/", file);
-    stringfile := StringFile(file);
-    for str in SEMIGROUPS_OmitFromTests do
-      if PositionSublist(stringfile, str) <> fail then
-        Print("not testing ", file, ", it contains a test involving ",
-              str, ", which will not work . . .\n\n");
-        return false;
-      fi;
-    od;
-    return true;
-  end;
-
-  if Length(SEMIGROUPS_OmitFromTests) > 0 then
-    Print("not testing files containing the strings");
-    for str in SEMIGROUPS_OmitFromTests do
-      PRINT_STRINGIFY(", \"", str, "\"");
-    od;
-    PRINT_STRINGIFY(" . . .\n\n");
-  fi;
-
-  tst_dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                            "/tst/standard");
-  contents := DirectoryContents(tst_dir);
-  subdirs := [];
-
-  for str in contents do
-    # TODO remove: <<< and str in ["attributes", etc ...] >>> from below
-    if str <> ".." and str <> "."
-        and str in ["attributes", "congruences", "elements", "fp"] then
-      str := Concatenation(tst_dir, "/", str);
-      if IsDirectoryPath(str) then
-        Add(subdirs, str);
-      fi;
-    fi;
-  od;
-
-  SemigroupsTestInstall(rec(silent := false));
-  if opts.parallel then
-    farm := ParWorkerFarmByFork(SEMIGROUPS_Test,
-                                rec(NumberJobs := 3));
-    nr_tests := 0;
-  else
-    out := true;
-  fi;
-
-  for subdir in subdirs do
-    contents := DirectoryContents(Directory(subdir));
-    for filename in contents do
-      if file_ext(filename) = "tst" and is_testable(subdir, filename) then
-        if opts.parallel then
-          nr_tests := nr_tests + 1;
-          Submit(farm, [Filename(Directory(subdir), filename),
-                        rec(silent := false)]);
-        else
-          if not SEMIGROUPS_Test(Filename(Directory(subdir), filename),
-                                 rec(silent := false)) then
-            out := false;
-          fi;
-        fi;
-      fi;
-    od;
-  od;
-
-  if opts.parallel then
-    while Length(farm!.outqueue) < nr_tests do
-      DoQueues(farm, false);
-    od;
-
-    out := Pickup(farm);
-    Kill(farm);
-  fi;
-
-  return out;
-end);
-
-#
-
-InstallGlobalFunction(SemigroupsTestInstall,
-function(arg)
-  local opts;
-
-  if Length(arg) = 0 then
-    opts := rec();
-  else
-    opts := arg[1];
-  fi;
-  #TODO check args
-  return SEMIGROUPS_Test(Filename(DirectoriesPackageLibrary("semigroups",
-                                                            "tst"),
-                                  "testinstall.tst"),
-                         opts);
-end);
-
-#
-
-InstallGlobalFunction(SEMIGROUPS_Test,
-function(arg)
+SEMIGROUPS.Test := function(arg)
   local file, opts, generic, split, print_file, width, enabled, disabled;
 
   if Length(arg) = 0 then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_Test: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.Test: usage,\n",
                  "no arguments have been supplied,");
   fi;
 
@@ -383,8 +231,8 @@ function(arg)
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   fi;
-  Print("Testing file: ", print_file,
-        "\nwith acting methods \033[94mENABLED\033[0m . . .\n");
+  Print("Testing file: ", print_file, "\nwith acting methods ",
+        SEMIGROUPS.ColorizeString("ENABLED", "lightblue"), " . . .\n");
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
@@ -392,54 +240,61 @@ function(arg)
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   enabled := Test(file);
   if not opts.silent then
-    Print("\n", SEMIGROUPS_PF(enabled), "\n");
+    Print("\n");
+    if enabled then
+      Print(SEMIGROUPS.ColorizeString("PASSED!", "green"));
+    else
+      Print(SEMIGROUPS.ColorizeString("FAILED!", "red"));
+    fi;
+    Print("\n\n");
     Print(Concatenation(ListWithIdenticalEntries(width, "#")));
   fi;
   Print("\n");
-  Print("Testing file: ", print_file,
-        "\nwith acting methods \033[35mDISABLED\033[0m . . .\n");
+  Print("Testing file: ", print_file, "\nwith acting methods ",
+        SEMIGROUPS.ColorizeString("DISABLED", "magenta"), " . . .\n");
 
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   disabled := Test(file);
-  if not opts.silent then
-    Print("\n", SEMIGROUPS_PF(disabled));
-  fi;
   Print("\n");
+  if not opts.silent then
+    if disabled then
+      Print(SEMIGROUPS.ColorizeString("PASSED!", "green"));
+    else
+      Print(SEMIGROUPS.ColorizeString("FAILED!", "red"));
+    fi;
+    Print("\n\n");
+  fi;
 
   SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return enabled and disabled;
-end);
+end;
 
-#
-
-InstallGlobalFunction(SEMIGROUPS_ManualExamples,
-function()
+SEMIGROUPS.ManualExamples := function()
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
-                         "main.xml", SEMIGROUPS_DocXMLFiles, "Single");
-end);
+                         "main.xml", SEMIGROUPS.DocXMLFiles, "Single");
+end;
 
-BindGlobal("SEMIGROUPS_RunExamples",
-function(exlists, excluded)
-  local oldscr, l, sp, bad, s, start_time, test, end_time, elapsed, pex, new,
-   inp, j, ex, i;
+SEMIGROUPS.RunExamples := function(exlists, excluded)
+  local oldscr, l, sp, bad, s, start_time, test, end_time, elapsed, pex, j, ex,
+        i;
 
   oldscr := SizeScreen();
   SizeScreen([72, oldscr[2]]);
   for j in [1 .. Length(exlists)] do
     if j in excluded then
-      Print("\033[1;44m# Skipping list ", j, " . . .\033[0m\n");
+      Print(SEMIGROUPS.ColorizeString("# Skipping list ", j, " . . .\n", "back_blue"));
     else
       l := exlists[j];
-      Print("\033[1;100m# Running list ", j, " . . .\033[0m");
+      Print(SEMIGROUPS.ColorizeString("# Running list ", j, " . . .", "back_gray"));
       START_TEST("");
       for ex in l do
         sp := SplitString(ex[1], "\n", "");
         bad := Filtered([1 .. Length(sp)], function(i)
-          return Length(sp[i]) > 72;
-        end);
+                                             return Length(sp[i]) > 72;
+                                           end);
         s := InputTextString(ex[1]);
 
         start_time := IO_gettimeofday();
@@ -453,18 +308,20 @@ function(exlists, excluded)
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
         pex := TEST.lastTestData;
 
-        Print("\033[1;100m  elapsed time: ", String(elapsed), "ms\033[0m\n");
+        Print(SEMIGROUPS.ColorizeString(" elapsed time: ", elapsed, "back_gray"));
+        Print("\n");
 
         if Length(bad) > 0  then
-          Print("\033[1;31m# WARNING: Overlong lines ", bad, " in ",
-          ex[2]{[1 .. 3]}, "\033[0m\n");
+          Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad, " in ",
+                ex[2]{[1 .. 3]}, "red"));
+          Print("\n");
         fi;
 
         if test = false  then
           for i in [1 .. Length(pex[1])]  do
             if EQ(pex[2][i], pex[4][i]) <> true then
               Print("\033[1;31m########> Diff in ", ex[2]{[1 .. 3]},
-              "\n# Input is:\n");
+                    "\n# Input is:\n");
               PrintFormattedString(pex[1][i]);
               Print("# Expected output:\n");
               PrintFormattedString(pex[2][i]);
@@ -474,28 +331,14 @@ function(exlists, excluded)
             fi;
           od;
         fi;
-
-        if test = false  then#FIXME is this needed?
-          new := "";
-          for i in [1 .. Length(pex[1])]  do
-            inp := Concatenation("gap> ",
-               JoinStringsWithSeparator(
-               SplitString(pex[1][i], "\n", ""), "\n> "), "\n");
-               Append(new, inp);
-               Append(new, pex[4][i]);
-          od;
-          ex[2][4] := new;
-        fi;
       od;
     fi;
   od;
   SizeScreen(oldscr);
   return;
-end);
-#
+end;
 
-InstallGlobalFunction(SEMIGROUPS_TestManualExamples,
-function(arg)
+SEMIGROUPS.TestManualExamples := function(arg)
   local ex, omit, width, generic, exclude, str;
 
   # TODO add extreme/standard tests for those examples below where it makes
@@ -505,7 +348,7 @@ function(arg)
               141, 194, 195, 196];
   # 103 takes ages, 114 should be in an extreme test
 
-  ex := SEMIGROUPS_ManualExamples();
+  ex := SEMIGROUPS.ManualExamples();
   if Length(arg) = 1 then
     if IsPosInt(arg[1]) and arg[1] <= Length(ex) then
       ex := [ex[arg[1]]];
@@ -513,15 +356,15 @@ function(arg)
         and ForAll(arg[1], x -> IsPosInt(x) and x <= Length(ex)) then
       ex := ex{arg};
     else
-      ErrorMayQuit("Semigroups: SEMIGROUPS_TestManualExamples: usage,\n",
+      ErrorMayQuit("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
                    "the argument must be a pos int or list of pos ints,");
     fi;
   elif Length(arg) > 1 then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_TestManualExamples: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
                  "there should be 0 or 1 argument,");
   fi;
 
-  omit := SEMIGROUPS_OmitFromTests;
+  omit := SEMIGROUPS.OmitFromTests;
   if Length(omit) > 0 then
     Print("# not testing examples containing the strings");
     for str in omit do
@@ -537,28 +380,166 @@ function(arg)
   SEMIGROUPS_DefaultOptionsRec.generic := false;
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples",
-        " with acting methods \033[94mENABLED\033[0m",
-        " . . .\n");
+  Print("Testing manual examples with acting methods ",
+        SEMIGROUPS.ColorizeString("ENABLED", "lightblue"), " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  SEMIGROUPS_StartTest();
-  SEMIGROUPS_RunExamples(ex, []);
-  SEMIGROUPS_StopTest("");
+  SEMIGROUPS.StartTest();
+  SEMIGROUPS.RunExamples(ex, []);
+  SEMIGROUPS.StopTest("");
 
   SEMIGROUPS_DefaultOptionsRec.generic := true;
   GASMAN("collect");
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("NOT Testing manual examples",
-        " with acting methods \033[35mDISABLED\033[0m",
-        " . . .\n");
+  Print("NOT Testing file manual examples with acting methods ",
+        SEMIGROUPS.ColorizeString("DISABLED", "magenta"), " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  # SEMIGROUPS_StartTest();
+  # SEMIGROUPS.StartTest();
 
-  # SEMIGROUPS_RunExamples(ex, exclude);
-  # SEMIGROUPS_StopTest("");
-  #TODO make SEMIGROUPS_StopTest accept no args, or 1 arg
+  # SEMIGROUPS.RunExamples(ex, exclude);
+  # SEMIGROUPS.StopTest("");
+  #TODO make SEMIGROUPS.StopTest accept no args, or 1 arg
 
   SEMIGROUPS_DefaultOptionsRec.generic := generic;
   return;
+end;
+
+#############################################################################
+# 2. User/global functions
+#############################################################################
+
+InstallGlobalFunction(SemigroupsMakeDoc,
+function()
+  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+                              "/doc"),
+                "main.xml", SEMIGROUPS.DocXMLFiles, "semigroups", "MathJax",
+                "../../..");
+  return;
+end);
+
+InstallGlobalFunction(SemigroupsTestStandard,
+function(arg)
+  local opts, file_ext, is_testable, tst_dir, contents, subdirs, str, farm,
+    nr_tests, out, elapsed, start_time, pass, end_time, subdir, filename;
+
+  if Length(arg) = 1 and IsRecord(arg[1]) then
+    opts := arg[1];
+    if not IsBound(opts.parallel) or not IsBool(opts.parallel) then
+      opts.parallel := false;
+    fi;
+  else
+    opts := rec(parallel := false);
+  fi;
+
+  Print("\n");
+
+  file_ext := function(str)
+    local split;
+    split := SplitString(str, ".");
+    if Length(split) > 1 then
+      return split[Length(split)];
+    else
+      return "";
+    fi;
+  end;
+
+  is_testable := function(dir, file)
+    local stringfile, str;
+    file := Concatenation(dir, "/", file);
+    stringfile := StringFile(file);
+    for str in SEMIGROUPS.OmitFromTests do
+      if PositionSublist(stringfile, str) <> fail then
+        Print("not testing ", file, ", it contains a test involving ",
+              str, ", which will not work . . .\n\n");
+        return false;
+      fi;
+    od;
+    return true;
+  end;
+
+  if Length(SEMIGROUPS.OmitFromTests) > 0 then
+    Print("not testing files containing the strings");
+    for str in SEMIGROUPS.OmitFromTests do
+      PRINT_STRINGIFY(", \"", str, "\"");
+    od;
+    PRINT_STRINGIFY(" . . .\n\n");
+  fi;
+
+  tst_dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+                            "/tst/standard");
+  contents := DirectoryContents(tst_dir);
+  subdirs := [];
+
+  for str in contents do
+    # TODO remove: <<< and str in ["attributes", etc ...] >>> from below
+    if str <> ".." and str <> "."
+        and str in ["attributes", "congruences", "elements", "fp", "greens"]
+        then
+      str := Concatenation(tst_dir, "/", str);
+      if IsDirectoryPath(str) then
+        Add(subdirs, str);
+      fi;
+    fi;
+  od;
+
+  SemigroupsTestInstall(rec(silent := false));
+  if opts.parallel then
+    farm := ParWorkerFarmByFork(SEMIGROUPS.Test,
+                                rec(NumberJobs := 3));
+    nr_tests := 0;
+  else
+    out := true;
+  fi;
+  elapsed := 0;
+  for subdir in subdirs do
+    contents := DirectoryContents(Directory(subdir));
+    for filename in contents do
+      if file_ext(filename) = "tst" and is_testable(subdir, filename) then
+        if opts.parallel then
+          nr_tests := nr_tests + 1;
+          Submit(farm, [Filename(Directory(subdir), filename),
+                        rec(silent := false)]);
+        else
+          start_time := IO_gettimeofday();
+          pass := SEMIGROUPS.Test(Filename(Directory(subdir), filename),
+                                  rec(silent := false));
+
+          end_time := IO_gettimeofday();
+          elapsed := elapsed + (end_time.tv_sec - start_time.tv_sec) * 1000
+                     + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+          if not pass then
+            out := false;
+          fi;
+        fi;
+      fi;
+    od;
+  od;
+
+  if opts.parallel then
+    while Length(farm!.outqueue) < nr_tests do
+      DoQueues(farm, false);
+    od;
+
+    out := Pickup(farm);
+    Kill(farm);
+  fi;
+
+  Print("TOTAL elapsed time: ", String(elapsed), "ms\n");
+  return out;
+end);
+
+InstallGlobalFunction(SemigroupsTestInstall,
+function(arg)
+  local opts;
+
+  if Length(arg) = 0 then
+    opts := rec();
+  else
+    opts := arg[1];
+  fi;
+  #TODO check args
+  return SEMIGROUPS.Test(Filename(DirectoriesPackageLibrary("semigroups",
+                                                            "tst"),
+                                  "testinstall.tst"),
+                         opts);
 end);

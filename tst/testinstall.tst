@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# TestInstall3
 gap> S := Semigroup(Transformation([2, 3, 4, 1, 1, 1]));;
@@ -573,7 +573,7 @@ gap> for i in [1 .. 6] do
 # of the arguments is a monoid).
 # This only works in GAP 4.7.5 or higher hence the CompareVersionNumbers
 gap> S := Semigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));
-<trivial partial perm group of rank 5 with 0 generators>
+<commutative partial perm monoid of rank 5 with 1 generator>
 gap> T := Monoid(S, PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]));;
 gap> Length(GeneratorsOfMonoid(T)) = 2
 > or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
@@ -651,13 +651,13 @@ gap> Size(S);
 #T# TestInstall39: Issue 56
 # (Monoid/InverseMonoid removes One inappropriately sometimes)
 gap> M := InverseMonoid(PartialPerm([1, 2]), PartialPerm([1]));
-<commutative inverse partial perm monoid of rank 2 with 1 generator>
+<inverse partial perm monoid of rank 2 with 2 generators>
 gap> One(M) in M;
 true
 gap> AsSet(M);
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
 gap> M := InverseMonoid(PartialPerm([1, 2]), PartialPerm([1]));
-<commutative inverse partial perm monoid of rank 2 with 1 generator>
+<inverse partial perm monoid of rank 2 with 2 generators>
 gap> AsSet(M);
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
 
@@ -772,7 +772,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 >   G := Semigroup(PartialPerm([]));
 > fi;
 gap> G;
-<trivial partial perm group of rank 0 with 0 generators>
+<partial perm group of rank 0 with 1 generator>
 
 #T# TestInstall49: Issue 103
 # (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup but
@@ -1020,6 +1020,17 @@ gap> Size(S);
 gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of size 5, rank 2 with 2 generators>>
+
+#T# TestInstall65: Fixed bug where the GeneratorsOfMonoid were incorrectly set
+#   for partial perm monoids/inverse monoids, due to removal of the One.
+gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
+<partial perm monoid of rank 1 with 2 generators>
+gap> S := Monoid(PartialPerm([1]), PartialPerm([]));
+<partial perm monoid of rank 1 with 2 generators>
+gap> S := InverseSemigroup(PartialPerm([1]), PartialPerm([]));
+<inverse partial perm monoid of rank 1 with 2 generators>
+gap> S := InverseMonoid(PartialPerm([1]), PartialPerm([]));
+<inverse partial perm monoid of rank 1 with 2 generators>
 
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!

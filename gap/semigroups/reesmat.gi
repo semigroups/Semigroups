@@ -175,6 +175,7 @@ function(S, mat)
 
   # cannot set IsZeroSimpleSemigroup to be <true> here since the matrix may
   # contain a row or column consisting entirely of 0s!
+  # WW Also S might not be a simple semigroup (which is necessary)!
 
   #if HasIsFinite(S) then
   #  SetIsFinite(R, IsFinite(S));
@@ -483,4 +484,226 @@ function(R)
   od;
 
   return count;
+end);
+
+InstallMethod(RZMSDigraph,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local mat, n, m, out, i, j;
+
+  mat := Matrix(R);
+  n := Length(mat);
+  m := Length(mat[1]);
+  out := List([1 .. m + n], x -> []);
+  for i in [1 .. m] do
+    for j in [1 .. n] do
+      if mat[j][i] <> 0 then
+        Add(out[j + m], i);
+        Add(out[i], j + m);
+      fi;
+    od;
+  od;
+  return DigraphNC(out);
+end);
+
+InstallMethod(RZMSConnectedComponents,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local comps, new, mat, n, m, i;
+
+  comps := DigraphConnectedComponents(RZMSDigraph(R));
+  new := List([1 .. Length(comps.comps)], x -> [[], []]);
+  mat := Matrix(R);
+  n := Length(mat);
+  m := Length(mat[1]);
+  for i in [1 .. m] do
+    Add(new[comps.id[i]][1], i);
+  od;
+  for i in [m + 1 .. m + n] do
+    Add(new[comps.id[i]][2], i - m);
+  od;
+  return new;
+end);
+
+InstallMethod(RZMSNormalization,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local mat, n, m, comp, perm, norm, size, rows, cols, l, x, next_cols,
+  row_perm, col_perm, next_rows, new, out, iso, inv, hom, k, j, i;
+
+  if not IsGroup(UnderlyingSemigroup(R)) then
+    ErrorMayQuit("Semigroups: RZMSNormalization: usage,\n",
+                 "not yet implemented for when the underlying semigroup is ",
+                 "not IsGroup,");
+  fi;
+  mat := Matrix(R);
+  n := Length(mat);
+  m := Length(mat[1]);
+  comp := ShallowCopy(RZMSConnectedComponents(R));
+  perm := rec();
+  norm := rec();
+
+  # Sort components by size descending
+  size := List(comp, x -> Length(x[1]) * Length(x[2]));
+  SortParallel(size, comp, function(x, y)
+                             return LT(y, x);
+                           end);
+
+  perm.row := [1 .. m];
+  perm.col := [1 .. n];
+  norm.row := List(Rows(R), x -> ());
+  norm.col := List(Columns(R), x -> ());
+  for k in [1 .. Number(size, x -> x <> 0)] do
+    rows := ShallowCopy(comp[k][1]); # Rows of RZMS, not rows of matrix
+    cols := ShallowCopy(comp[k][2]); # Cols of RZMS, not cols of matrix
+
+    # Pick the column with the maximum number of non-zero entries to go first
+    l := List(cols, y -> Number(rows, z -> mat[y][z] <> 0));
+    x := Position(l, Maximum(l));
+    next_cols := [cols[x]];
+    Remove(cols, x);
+
+    row_perm := EmptyPlist(Length(rows));
+    col_perm := EmptyPlist(Length(cols));
+    while not IsEmpty(next_cols) do
+      Append(col_perm, next_cols);
+      next_rows := [];
+      for j in next_cols do
+        for i in rows do
+          if mat[j][i] <> 0 then
+            Add(next_rows, i);
+            norm.row[i] := norm.col[j] * mat[j][i];
+          fi;
+        od;
+        rows := Difference(rows, next_rows);
+      od;
+      Append(row_perm, next_rows);
+      next_cols := [];
+      for i in next_rows do
+        for j in cols do
+          if mat[j][i] <> 0 then
+            Add(next_cols, j);
+            norm.col[j] := norm.row[i] * mat[j][i] ^ -1;
+          fi;
+        od;
+        cols := Difference(cols, next_cols);
+      od;
+    od;
+
+    # Store the perm which sorts rows and columns within component <k>
+    perm.row{comp[k][1]} := row_perm;
+    perm.col{comp[k][2]} := col_perm;
+  od;
+
+  norm.col_inv := List(norm.col, x -> x ^ -1);
+  norm.row_inv := List(norm.row, x -> x ^ -1);
+
+  # Create the perms to sort rows and columns within components
+  perm.row := PermList(perm.row);
+  perm.col := PermList(perm.col);
+
+  # Combine with perms which will sort components by size
+  perm.row := PermList(OnTuples(Concatenation(List(comp, x -> x[1])),
+                                perm.row));
+  perm.col := PermList(OnTuples(Concatenation(List(comp, x -> x[2])),
+                                perm.col));
+  perm.row_inv := perm.row ^ -1;
+  perm.col_inv := perm.col ^ -1;
+
+  # Construct new matrix
+  new := List([1 .. n], x -> EmptyPlist(m));
+  for j in Columns(R) do
+    for i in Rows(R) do
+      if mat[j][i] = 0 then
+        new[j ^ perm.col_inv][i ^ perm.row_inv] := 0;
+      else
+        new[j ^ perm.col_inv][i ^ perm.row_inv] := norm.col[j] * mat[j][i] *
+                                                   norm.row_inv[i];
+      fi;
+    od;
+  od;
+
+  out := ReesZeroMatrixSemigroup(UnderlyingSemigroup(R), new);
+
+  iso := function(x)
+    if x![1] = 0 then
+      return MultiplicativeZero(out);
+    fi;
+    return RMSElement(out,
+                      x![1] ^ perm.row_inv,
+                      norm.row[x![1]] * x![2] * norm.col_inv[x![3]],
+                      x![3] ^ perm.col_inv);
+  end;
+  inv := function(x)
+    if x![1] = 0 then
+      return MultiplicativeZero(R);
+    fi;
+    return RMSElement(R,
+                      x![1] ^ perm.row,
+                      norm.row_inv[x![1] ^ perm.row] * x![2]
+                        * norm.col[x![3] ^ perm.col],
+                      x![3] ^ perm.col);
+  end;
+
+  hom := MappingByFunction(R, out, iso, inv);
+  SetIsInjective(hom, true);
+  SetIsSurjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
+end);
+
+InstallMethod(RMSNormalization,
+"for a Rees matrix semigroup",
+[IsReesMatrixSemigroup],
+function(R)
+  local G, mat, id, r, c, new, S, iso, inv, hom, i, j;
+
+  G := UnderlyingSemigroup(R);
+  if not IsGroup(G) or IsGroupAsSemigroup(G) then
+    ErrorMayQuit("Semigroups: RMSNormalization: usage,\n",
+                 "the underlying semigroup of the Rees matrix semigroup <R> ",
+                 "must be a group,");
+  fi;
+
+  mat := Matrix(R);
+  id := Identity(G);
+  r := EmptyPlist(Length(Rows(R)));
+
+  r[1] := id;
+  for i in [2 .. Length(Rows(R))] do
+    r[i] := mat[1][i] ^ -1 * mat[1][1];
+  od;
+  c := List(Columns(R), j -> mat[j][1] ^ -1);
+
+  # Construct new RMS
+  new := List(Columns(R), x -> EmptyPlist(Length(Rows(R))));
+  for i in Rows(R) do
+    for j in Columns(R) do
+      new[j][i] := c[j] * mat[j][i] * r[i];
+    od;
+  od;
+  S := ReesMatrixSemigroup(G, new);
+
+  iso := function(x)
+    if x![1] = 0 then
+      return MultiplicativeZero(S);
+    fi;
+    return RMSElement(S, x![1], r[x![1]] ^ -1 * x![2] * c[x![3]] ^ -1, x![3]);
+  end;
+
+  inv := function(x)
+    if x![1] = 0 then
+      return MultiplicativeZero(R);
+    fi;
+    return RMSElement(R, x![1], r[x![1]] * x![2] * c[x![3]], x![3]);
+  end;
+
+  hom := MappingByFunction(R, S, iso, inv);
+  SetIsInjective(hom, true);
+  SetIsSurjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
 end);

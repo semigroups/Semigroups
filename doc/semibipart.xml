@@ -81,17 +81,18 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
     <Attr Name="IsomorphismBipartitionSemigroup" Arg="S"/>
     <Attr Name="IsomorphismBipartitionMonoid" Arg="S"/>
     <Returns>An isomorphism.</Returns>
-    <Description> If <A>S</A> is a semigroup, then
-      <C>IsomorphismBipartitionSemigroup</C> returns an isomorphism from
-      <A>S</A> to a bipartition semigroup. When <A>S</A> is a transformation
-      semigroup, partial permutation semigroup, or a permutation group, on
-      <C>n</C> points, <C>IsomorphismBipartitionSemigroup</C> returns the
-      natural embedding of <A>S</A> into the partition monoid on <C>n</C>
-      points. When <A>S</A> is a generic semigroup, this funciton returns the
-      right regular representation of <A>S</A> acting on <A>S</A> with an
-      identity adjoined.<P/>
+    <Description> 
+      If <A>S</A> is a semigroup, then <C>IsomorphismBipartitionSemigroup</C>
+      returns an isomorphism from <A>S</A> to a bipartition semigroup. When
+      <A>S</A> is a transformation semigroup, partial permutation semigroup, or
+      a permutation group, on <C>n</C> points,
+      <C>IsomorphismBipartitionSemigroup</C> returns the natural embedding of
+      <A>S</A> into the partition monoid on <C>n</C> points. When <A>S</A> is a
+      generic semigroup, this function returns the right regular representation
+      of <A>S</A> acting on <A>S</A> with an identity adjoined.
+      <P/>
 
-      See <Ref Oper="AsBipartition"/>.
+      See <Ref Oper="AsBipartitionSemigroup"/>.
       <Example><![CDATA[
 gap> S := InverseSemigroup(
 > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], 

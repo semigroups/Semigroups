@@ -17,6 +17,8 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+# Note that MatrixNC changes its argument in place!!
+
 InstallMethod(MatrixNC, "for a type and homogeneous list",
 [IsType, IsList],
 function(type, mat)
@@ -79,8 +81,8 @@ function(filter, mat, threshold, period)
   for row in mat do
     if not ForAll(row, checker) then
       ErrorMayQuit("Semigroups: Matrix: usage,\n",
-      "the entries in the 2nd argument do not define a matrix ",
-      "of type ", NameFunction(filter), ",");
+                   "the entries in the 2nd argument do not define a matrix ",
+                   "of type ", NameFunction(filter), ",");
     fi;
   od;
 
@@ -125,7 +127,7 @@ end);
 InstallMethod(Matrix, "for a filter and homogeneous list",
 [IsFunction and IsOperation, IsHomogeneousList],
 function(filter, mat)
-  local checker, row;
+  local row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorMayQuit("Semigroups: Matrix: usage,\n",
@@ -133,7 +135,7 @@ function(filter, mat)
   fi;
 
   if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
-                    IsProjectiveMaxPlusMatrix] then
+                    IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
     ErrorMayQuit("Semigroups: Matrix:\n",
                  "cannot create a matrix from the given ",
                  "arguments,");
@@ -144,7 +146,8 @@ function(filter, mat)
   fi;
 
   for row in mat do
-    if not ForAll(row, SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter)) then
+    if not ForAll(row, SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter))
+        then
       ErrorMayQuit("Semigroups: Matrix: usage,\n",
                    "the entries in the 2nd argument do not define a matrix ",
                    "of type ", NameFunction(filter), ",");
@@ -157,29 +160,41 @@ end);
 InstallMethod(Matrix, "for a semiring and homogeneous list",
 [IsSemiring, IsHomogeneousList],
 function(semiring, mat)
-  local row;
+  local filter, entry_ok, checker, row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorMayQuit("Semigroups: Matrix: usage,\n",
                  "the 1st argument must be a square table,");
   fi;
 
-  if not IsPrimeField(semiring) then
+  # IsField required cos there's no method for IsPrimeField for Integers.
+  if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
+    filter := IsMatrixOverPrimeField;
+  elif IsIntegers(semiring) then
+    filter := IsIntegerMatrix;
+  else
     ErrorMayQuit("Semigroups: Matrix:\n",
                  "cannot create a matrix from the given ",
                  "arguments,");
   fi;
 
+  entry_ok := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter);
+  checker := function(x)
+    return entry_ok(x) and x in semiring;
+  end;
+
   for row in mat do
-    if not ForAll(row, x -> IsFFE(x) and x in semiring) then
-      ErrorMayQuit("Semigroups: Matrix:\n",
-                   "cannot create a matrix from the given ",
-                   "arguments,");
+    if not ForAll(row, checker) then
+      ErrorMayQuit("Semigroups: Matrix: usage,\n",
+                   "the entries in the 2nd argument do not define a matrix ",
+                   "of type ", NameFunction(filter), ",");
     fi;
   od;
   mat := List(mat, ShallowCopy);
-  Add(mat, Size(semiring));
-  return MatrixNC(MatrixOverPrimeFieldType, mat);
+  if IsField(semiring) then
+    Add(mat, Size(semiring));
+  fi;
+  return MatrixNC(filter, mat);
 end);
 
 InstallGlobalFunction(RandomMatrix,
@@ -198,13 +213,85 @@ function(arg)
   elif Length(arg) = 2 and IsSemiring(arg[1]) and IsPosInt(arg[2]) then
     return RandomMatrixOp(arg[1], arg[2]);
   elif Length(arg) = 2 and IsPosInt(arg[1]) and IsPrimeInt(arg[1])
-    and IsPosInt(arg[2]) then
+      and IsPosInt(arg[2]) then
     return RandomMatrixOp(GF(arg[1]), arg[2]);
   fi;
 
   ErrorMayQuit("Semigroups: RandomMatrix: usage,\n",
                "the arguments must be: filter, pos int[, pos int[,",
                " pos int]],");
+end);
+
+InstallMethod(AsMatrix, "for a filter, and matrix over semiring",
+[IsFunction and IsOperation, IsMatrixOverSemiring],
+function(filt, mat)
+  return AsMatrixCons(filt, mat);
+end);
+
+InstallMethod(AsMatrix, "for a filter, matrix over semiring, and pos int",
+[IsFunction and IsOperation, IsMatrixOverSemiring, IsPosInt],
+function(filt, mat, threshold)
+  return AsMatrixCons(filt, mat, threshold);
+end);
+
+InstallMethod(AsMatrix, "for a filter, matrix over semiring, pos int, pos int",
+[IsFunction and IsOperation, IsMatrixOverSemiring, IsPosInt, IsPosInt],
+function(filt, mat, threshold, period)
+  return AsMatrixCons(filt, mat, threshold, period);
+end);
+
+InstallMethod(AsMatrix, "for a semiring, and matrix over semiring",
+[IsSemiring, IsMatrixOverSemiring],
+function(filt, mat)
+  return AsMatrixCons(filt, mat);
+end);
+
+InstallMethod(AsMutableList, "for matrix over semiring",
+[IsMatrixOverSemiring],
+mat -> List([1 .. Length(mat![1])], i -> ShallowCopy(mat![i])));
+
+InstallMethod(AsList, "for matrix over semiring",
+[IsMatrixOverSemiring],
+mat -> List([1 .. Length(mat![1])], i -> mat![i]));
+
+InstallMethod(Iterator, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(mat)
+  local iter;
+
+  iter := rec(pos := 0);
+
+  iter.NextIterator := function(iter)
+    if IsDoneIterator(iter) then
+      return fail;
+    fi;
+    iter!.pos := iter!.pos + 1;
+    return mat![iter!.pos];
+  end;
+
+  iter.IsDoneIterator := function(iter)
+    if iter!.pos = Length(mat![1]) then
+      return true;
+    fi;
+    return false;
+  end;
+
+  iter.ShallowCopy := function(iter)
+    return rec(pos := 0);
+  end;
+
+  return IteratorByFunctions(iter);
+end);
+
+InstallMethod(ELM_LIST, "for a matrix over semiring",
+[IsMatrixOverSemiring, IsPosInt],
+function(mat, pos)
+  if pos > Length(mat![1]) then
+    ErrorMayQuit("Semigroups: ELM_LIST (for a matrix over semiring):\n",
+                 "the position is greater than the dimension of the matrix,");
+
+  fi;
+  return mat![pos];
 end);
 
 InstallMethod(TransposedMat, "for a matrix over semiring",
@@ -251,7 +338,7 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
 
-  # find the max max
+  # find the max entry
   max := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
@@ -269,14 +356,18 @@ function(x)
   od;
 
   pad := function(entry)
+    local n;
     if entry = infinity then
       entry := "∞";
+      n := 1;
     elif entry = -infinity then
       entry := "-∞";
+      n := 2;
     else
       entry := String(entry);
+      n := Length(entry);
     fi;
-    return Concatenation(ListWithIdenticalEntries(max - Length(entry), ' '),
+    return Concatenation(ListWithIdenticalEntries(max - n, ' '),
                          entry, " ");
   end;
 
@@ -385,17 +476,24 @@ InstallMethod(\=, "for matrices over a semiring",
 [IsMatrixOverSemiring, IsMatrixOverSemiring],
 function(x, y)
   local n, i;
+  if not SEMIGROUPS_FilterOfMatrixOverSemiring(x) =
+      SEMIGROUPS_FilterOfMatrixOverSemiring(y) then
+    return false;
+  fi;
 
   n := Length(x![1]);
   if Length(y![1]) <> n then
     return false;
   fi;
 
-  for i in [1 .. n] do
+  i := 1;
+  while IsBound(x![i]) do
     if x![i] <> y![i] then
       return false;
     fi;
+    i := i + 1;
   od;
+
   return true;
 end);
 
@@ -404,6 +502,11 @@ InstallMethod(\<, "for matrices over a semiring",
 function(x, y)
   local n, i;
 
+  if SEMIGROUPS_FilterOfMatrixOverSemiring(x) <>
+      SEMIGROUPS_FilterOfMatrixOverSemiring(y) then
+    ErrorMayQuit("Semigroups: \< (for matrices over a semiring):\n",
+                 "the matrices are not of the same type,");
+  fi;
   n := Length(x![1]);
   if n < Length(y![1]) then
     return true;
@@ -411,12 +514,14 @@ function(x, y)
     return false;
   fi;
 
-  for i in [1 .. n] do
+  i := 1;
+  while IsBound(x![i]) do
     if x![i] < y![i] then
       return true;
     elif x![i] > y![i] then
       return false;
     fi;
+    i := i + 1;
   od;
   return false;
 end);

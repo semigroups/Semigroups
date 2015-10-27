@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: standard/attributes/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();;
+gap> SEMIGROUPS.StartTest();;
 
 #T# MaximalTest1: IsMaximalSubsemigroup
 gap> S := Semigroup([
@@ -269,6 +269,10 @@ gap> MaximalSubsemigroups(TrivialSemigroup());
 gap> MaximalSubsemigroups(Semigroup(Transformation([2, 3, 1])))
 > = [TrivialSemigroup()];
 true
+
+#T# maximal: MaximalSubsemigroups, for a group
+gap> MaximalSubsemigroups(SymmetricGroup(3));
+[ Group([ (1,2,3) ]), Group([ (1,2) ]), Group([ (2,3) ]), Group([ (1,3) ]) ]
 
 #T# maximal; MaximalSubsemigroups, for a semigroup 1/?
 gap> S := Monoid([

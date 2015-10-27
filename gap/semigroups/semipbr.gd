@@ -10,8 +10,10 @@
 # This file contains declarations for semigroups of PBRs.
 
 
-DeclareSynonym("IsPBRSemigroup", 
+DeclareSynonym("IsPBRSemigroup",
                IsSemigroup and IsPBRCollection);
+DeclareSynonym("IsPBRMonoid",
+               IsMonoid and IsPBRCollection);
 
 InstallTrueMethod(IsFinite, IsPBRSemigroup);
 DeclareAttribute("DegreeOfPBRSemigroup",
@@ -19,3 +21,4 @@ DeclareAttribute("DegreeOfPBRSemigroup",
 
 DeclareAttribute("IsomorphismPBRSemigroup", IsSemigroup);
 DeclareAttribute("AsPBRSemigroup", IsSemigroup);
+DeclareOperation("FullPBRMonoid", [IsPosInt]);

@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: standard/elements/blocks.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 # blocks: BlocksNC 1/1
 gap> x := BlocksNC([[1], [2], [-3]]);

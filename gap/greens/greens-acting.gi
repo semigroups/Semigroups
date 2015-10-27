@@ -8,9 +8,6 @@
 #############################################################################
 ##
 
-# TODO
-# 1) recheck the "same/different" method comments
-
 #############################################################################
 ## This file contains methods for Green's classes etc for acting semigroups.
 ## It is organized as follows:
@@ -201,9 +198,9 @@ function(C)
 
   o := LambdaOrb(C);
 
-  if not (IsClosed(o) or IsIdealOrb(o)) then
-    Enumerate(o, infinity);
-  fi;
+  #if not (IsClosed(o) or IsIdealOrb(o)) then
+  #  Enumerate(o, infinity);
+  #fi;
 
   if not IsBound(C!.LambdaPos) then
     i := Position(o, LambdaFunc(Parent(C))(C!.rep));
@@ -211,12 +208,12 @@ function(C)
     i := C!.LambdaPos;
   fi;
 
-  if not HasLambdaOrbSCCIndex(C) then
-    m := OrbSCCLookup(o)[i];
-    SetLambdaOrbSCCIndex(C, m);
-  else
-    m := LambdaOrbSCCIndex(C);
-  fi;
+  #if not HasLambdaOrbSCCIndex(C) then
+  #  m := OrbSCCLookup(o)[i];
+  #  SetLambdaOrbSCCIndex(C, m);
+  #else
+  m := LambdaOrbSCCIndex(C);
+  #fi;
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := C!.rep * LambdaOrbMult(o, m, i)[2];
@@ -234,9 +231,9 @@ function(C)
 
   o := RhoOrb(C);
 
-  if not (IsClosed(o) or IsIdealOrb(o)) then
-    Enumerate(o, infinity);
-  fi;
+  #if not (IsClosed(o) or IsIdealOrb(o)) then
+  #  Enumerate(o, infinity);
+  #fi;
 
   if not IsBound(C!.RhoPos) then
     i := Position(o, RhoFunc(Parent(C))(C!.rep));
@@ -244,12 +241,12 @@ function(C)
     i := C!.RhoPos;
   fi;
 
-  if not HasRhoOrbSCCIndex(C) then
-    m := OrbSCCLookup(o)[i];
-    SetRhoOrbSCCIndex(C, m);
-  else
+  #if not HasRhoOrbSCCIndex(C) then
+  #  m := OrbSCCLookup(o)[i];
+  #  SetRhoOrbSCCIndex(C, m);
+  #else
     m := RhoOrbSCCIndex(C);
-  fi;
+  #fi;
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := RhoOrbMult(o, m, i)[2] * C!.rep;
@@ -261,28 +258,31 @@ end);
 
 # Lambda-Rho stuff
 
+# TODO delete the following methods, they don't appear to be used
+# anywhere.
+
 # same method for regular/inverse/ideals
 
-InstallMethod(LambdaOrbSCCIndex,
-"for a Green's class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsGreensClass],
-function(C)
-  local o;
-  o := LambdaOrb(C);
-  return OrbSCCLookup(o)[Position(o,
-                                  LambdaFunc(Parent(C))(Representative(C)))];
-end);
+#InstallMethod(LambdaOrbSCCIndex,
+#"for a Green's class of an acting semigroup",
+#[IsActingSemigroupGreensClass and IsGreensClass],
+#function(C)
+#  local o;
+#  o := LambdaOrb(C);
+#  return OrbSCCLookup(o)[Position(o,
+#                                  LambdaFunc(Parent(C))(Representative(C)))];
+#end);
 
 # same method for regular/ideals, not required for inverse
 
-InstallMethod(RhoOrbSCCIndex,
-"for a Green's class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsGreensClass],
-function(C)
-  local o;
-  o := RhoOrb(C);
-  return OrbSCCLookup(o)[Position(o, RhoFunc(Parent(C))(Representative(C)))];
-end);
+#InstallMethod(RhoOrbSCCIndex,
+#"for a Green's class of an acting semigroup",
+#[IsActingSemigroupGreensClass and IsGreensClass],
+#function(C)
+#  local o;
+#  o := RhoOrb(C);
+#  return OrbSCCLookup(o)[Position(o, RhoFunc(Parent(C))(Representative(C)))];
+#end);
 
 # same method for regular/inverse/ideals
 
@@ -501,9 +501,9 @@ function(H)
   # rep (the rho value mapped through the rep so that it is on the right)
   rho_p := LambdaConjugator(S)(RhoOrbRep(rho_o, rho_m), rho_mult * rep);
 
-  if lambda_stab = true then
-    return rho_schutz ^ rho_p;
-  fi;
+  #if lambda_stab = true then
+  #  return rho_schutz ^ rho_p;
+  #fi;
 
   return Intersection(lambda_schutz ^ lambda_p, rho_schutz ^ rho_p);
 end);
@@ -1245,6 +1245,7 @@ function(S)
     out[i] := SEMIGROUPS_CreateRClass(S, reps[i], false);
     SetLambdaOrb(out[i], LambdaOrb(S));
     SetLambdaOrbSCCIndex(out[i], data[i + 1][2]);
+    SetSemigroupDataIndex(out[i], i + 1);
   od;
   return out;
 end);
@@ -1641,24 +1642,27 @@ function(S, n)
   if n < 0 then
     ErrorMayQuit("Semigroups: Idempotents: usage,\n",
                  "the second argument <n> must be a non-negative integer,");
+  elif n > Maximum(List(GeneratorsOfSemigroup(S), x -> ActionRank(S)(x))) then
+    return [];
   fi;
 
   if HasIdempotents(S) or not IsRegularSemigroup(S) then
     return Filtered(Idempotents(S), x -> ActionRank(S)(x) = n);
   fi;
 
-  out := [];
-  nr := 0;
-  tester := IdempotentTester(S);
-  creator := IdempotentCreator(S);
-  rho_o := RhoOrb(S);
-  scc := OrbSCC(rho_o);
+  out      := [];
+  nr       := 0;
+  tester   := IdempotentTester(S);
+  creator  := IdempotentCreator(S);
+  rho_o    := RhoOrb(S);
+  scc      := OrbSCC(rho_o);
   lambda_o := LambdaOrb(S);
+  gens     := lambda_o!.gens;
+  rhofunc  := RhoFunc(S);
+  lookup   := OrbSCCLookup(rho_o);
+  rank     := RhoRank(S);
+
   Enumerate(lambda_o, infinity);
-  gens := lambda_o!.gens;
-  rhofunc := RhoFunc(S);
-  lookup := OrbSCCLookup(rho_o);
-  rank := RhoRank(S);
 
   for i in [2 .. Length(lambda_o)] do
     # TODO this could be better, just take the product with the next
@@ -2023,27 +2027,22 @@ end);
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  # gaplint: ignore 20
-  return EnumeratorByFunctions(S, rec(
+  # gaplint: ignore 15
+  return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)),
+  rec(ElementNumber := function(enum, pos)
+        return GreensRClasses(S)[pos];
+      end,
 
-    ElementNumber := function(enum, pos)
-      return GreensRClasses(S)[pos];
-    end,
+      NumberElement := function(enum, R)
+        return Position(SemigroupData(S), Representative(R)) - 1;
+      end,
 
-    NumberElement := function(enum, R)
-      return Position(SemigroupData(S), Representative(R)) - 1;
-    end,
+      Length := enum -> NrRClasses(S),
 
-    Membership := function(R, enum)
-      return Position(enum, R) <> fail;
-    end,
-
-    Length := enum -> NrRClasses(S),
-
-    PrintObj := function(enum)
-      Print( "<enumerator of R-classes of ", ViewString(S), ">");
-      return;
-    end));
+      PrintObj := function(enum)
+        Print( "<enumerator of R-classes of ", ViewString(S), ">");
+        return;
+      end));
 
 end);
 
@@ -2112,8 +2111,9 @@ function(S)
     function(iter, x)         #isnew FIXME ugh!!
       return x = fail or ForAll(iter!.classes, D -> not x[4] in D);
      end,
-    rec(classes := [], PrintObj := function(iter)
-                                     Print("<iterator of D-classes>");
-                                     return;
-                                   end));
+     rec(classes := [],
+         PrintObj := function(iter)
+           Print("<iterator of D-classes>");
+           return;
+         end));
 end);

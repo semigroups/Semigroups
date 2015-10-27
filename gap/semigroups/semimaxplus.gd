@@ -22,10 +22,12 @@ DeclareSynonym("IsTropicalMatrixSemigroup",
                IsSemigroup and IsTropicalMatrixCollection);
 
 DeclareSynonym("IsTropicalMaxPlusMatrixSemigroup",
-               IsTropicalMatrixSemigroup and IsMaxPlusMatrixCollection);
+               IsTropicalMatrixSemigroup
+               and IsTropicalMaxPlusMatrixCollection);
 
 DeclareSynonym("IsTropicalMinPlusMatrixSemigroup",
-               IsTropicalMatrixSemigroup and IsMinPlusMatrixCollection);
+               IsTropicalMatrixSemigroup
+               and IsTropicalMinPlusMatrixCollection);
 
 DeclareSynonym("IsProjectiveMaxPlusMatrixSemigroup",
                IsSemigroup and IsProjectiveMaxPlusMatrixCollection);
@@ -35,3 +37,7 @@ DeclareSynonym("IsNTPMatrixSemigroup",
 
 DeclareSynonym("IsIntegerMatrixSemigroup",
                IsSemigroup and IsIntegerMatrixCollection);
+
+InstallTrueMethod(IsFinite, IsTropicalMaxPlusMatrixSemigroup);
+InstallTrueMethod(IsFinite, IsTropicalMinPlusMatrixSemigroup);
+InstallTrueMethod(IsFinite, IsNTPMatrixSemigroup);

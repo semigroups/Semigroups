@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/congruences/rees.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# ReesCongTest1
 # Test whether a congruence is Rees and find its ideal
@@ -156,6 +156,11 @@ gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]));;
 gap> J := SemigroupIdeal(S, Transformation([3, 3, 3, 3, 1]));;
 gap> ci := ReesCongruenceOfSemigroupIdeal(I);;
 gap> cj := ReesCongruenceOfSemigroupIdeal(J);;
+gap> class1 := CongruenceClassOfElement(ci, Transformation([1,1,3,1,3]));;
+gap> class2 := CongruenceClassOfElement(cj, Transformation([1,1,3,1,3]));;
+gap> class1 * class2;
+Error, Semigroups: \*: usage,
+the args <c1> and <c2> must be classes of the same congruence,
 gap> cc := JoinSemigroupCongruences(ci, cj);;
 gap> NrCongruenceClasses(ci); NrCongruenceClasses(cj); NrCongruenceClasses(cc);
 16
@@ -163,10 +168,75 @@ gap> NrCongruenceClasses(ci); NrCongruenceClasses(cj); NrCongruenceClasses(cc);
 15
 gap> K := SemigroupIdeal(FullTransformationMonoid(5),
 >                         Transformation([3, 2, 5, 4, 2]));;
-gap> ck := ReesCongruenceOfSemigroupIdeal(K);;
+gap> ck := ReesCongruenceOfSemigroupIdeal(K);
+<Rees congruence of <regular transformation semigroup ideal of degree 5 with
+  1 generator> over <full transformation monoid of degree 5>>
 gap> JoinSemigroupCongruences(ci, ck);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 the args <c1> and <c2> must be congruences of the same semigroup,
+
+#T# Generating pairs
+gap> S := Semigroup([Transformation([1, 1, 3, 1, 3]),
+>                      Transformation([2, 1, 2, 2, 2]),
+>                      Transformation([3, 1, 3, 2, 4])]);;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]));;
+gap> J := SemigroupIdeal(S, Transformation([3, 3, 3, 3, 1]));;
+gap> ci := ReesCongruenceOfSemigroupIdeal(I);;
+gap> c := SemigroupCongruence(S, GeneratingPairsOfSemigroupCongruence(ci));
+<semigroup congruence over <transformation semigroup of size 20, degree 5 
+ with 3 generators> with 1 generating pairs>
+gap> HasIsReesCongruence(c);
+false
+gap> IsReesCongruence(c);
+true
+gap> c = ci;
+true
+gap> cj := ReesCongruenceOfSemigroupIdeal(J);;
+gap> ci = cj;
+false
+
+#T# IsReesCongruence: False
+gap> S := Semigroup([Transformation([3,4,3,2]),
+>                    Transformation([4,4,4,2])]);;
+gap> cong := SemigroupCongruence(S, [Transformation([2,4,2,2]),
+>                                    Transformation([4,2,4,4])]);;
+gap> IsReesCongruence(cong);
+false
+
+#T# IsReesCongruence: One class, but not an ideal
+gap> S := Semigroup( [ Transformation( [ 2, 4, 3, 2 ] ),
+>                      Transformation( [ 3, 3, 1, 3 ] ),
+>                      Transformation( [ 4, 1, 2, 4 ] ),
+>                      Transformation( [ 4, 2, 2, 4 ] ) ] );;
+gap> pairs := [Transformation([4,4,4,4]), Transformation([2,2,4,2])];;
+gap> cong := SemigroupCongruence(S, pairs);;
+gap> IsReesCongruence(cong);
+false
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(cong);
+gap> Unbind(I);
+gap> Unbind(cc);
+gap> Unbind(ccong);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+gap> Unbind(t);
+gap> Unbind(im);
+gap> Unbind(yclass);
+gap> Unbind(tclass);
+gap> Unbind(xclass);
+gap> Unbind(xxclass);
+gap> Unbind(J);
+gap> Unbind(ci);
+gap> Unbind(cj);
+gap> Unbind(class1);
+gap> Unbind(class2);
+gap> Unbind(K);
+gap> Unbind(ck);
+gap> Unbind(c);
+gap> Unbind(pairs);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congruences/rees.tst");

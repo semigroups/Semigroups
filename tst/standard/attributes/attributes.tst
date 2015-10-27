@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/attributes/attributes.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# AttributesTest1: MultiplicativeZero
 # for a transformation semigroup/ideal
@@ -592,7 +592,7 @@ gap> SmallInverseSemigroupGeneratingSet(S);;
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for 0 generators
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
-<trivial partial perm group of rank 3 with 0 generators>
+<commutative inverse partial perm monoid of rank 3 with 1 generator>
 gap> SmallInverseMonoidGeneratingSet(S);
 [  ]
 
@@ -823,6 +823,11 @@ gap> S := RegularBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 4 generators>
 gap> MultiplicativeNeutralElement(S);
 Matrix(IsBooleanMat, [[1, 0], [0, 1]])
+gap> S := Semigroup([Transformation([1, 2, 3, 3, 5, 5]),
+> Transformation([3, 3, 5, 3, 5, 3])]);
+<transformation semigroup of degree 6 with 2 generators>
+gap> MultiplicativeNeutralElement(S);
+fail
 
 #T# attributes: IsomorphismPermGroup
 gap> S := RegularBooleanMatMonoid(2);
@@ -973,7 +978,7 @@ Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 
 #T# attribute: IsomorphismReesZeroMatrixSemigroup, bug 1/1
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> IsomorphismReesMatrixSemigroup(S);
 Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
 the argument must be a simple semigroup,
@@ -1050,6 +1055,43 @@ gap> S := SymmetricGroup(5);
 Sym( [ 1 .. 5 ] )
 gap> LengthOfLongestDClassChain(S);
 0
+
+#T# attribute: NormalizedPrincipalFactor, 1
+gap> S := FullTransformationMonoid(4);
+<full transformation monoid of degree 4>
+gap> S := NormalizedPrincipalFactor(DClass(S,
+> Transformation([4, 4, 2, 3])));;
+gap> Rows(S);
+[ 1 .. 6 ]
+gap> Columns(S);
+[ 1 .. 4 ]
+gap> StructureDescription(UnderlyingSemigroup(S));
+"S3"
+
+#T# attribute: InjectionNormalizedPrincipalFactor, 1
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [0, ()]]);
+<Rees 0-matrix semigroup 2x2 over Group(())>
+gap> InjectionNormalizedPrincipalFactor(DClass(S, RMSElement(S, 1, (), 1)));
+MappingByFunction( <Green's D-class: (1,(),1)>, 
+<Rees 0-matrix semigroup 2x2 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
+
+#T# attribute: InjectionNormalizedPrincipalFactor, 2
+gap> S := SymmetricInverseMonoid(4);
+<symmetric inverse monoid of degree 4>
+gap> InjectionNormalizedPrincipalFactor(DClass(S,
+> PartialPerm([], [])));
+MappingByFunction( <Green's D-class: <empty partial perm>>, 
+<Rees matrix semigroup 1x1 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
+
+#T# attribute: InjectionNormalizedPrincipalFactor, 2
+gap> S := MonogenicSemigroup(4, 2);
+<commutative non-regular transformation semigroup of size 5, degree 6 with 1 
+ generator>
+gap> InjectionNormalizedPrincipalFactor(DClass(S, S.1));
+Error, Semigroups: InjectionNormalizedPrincipalFactor: usage,
+the argument <D> must be a regular D-class,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

@@ -40,13 +40,42 @@ DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
                             IsPosInt, IsPosInt]);
 DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
 
+DeclareOperation("AsMatrix", [IsFunction and IsOperation,
+                              IsMatrixOverSemiring]);
+DeclareOperation("AsMatrix", [IsFunction and IsOperation,
+                              IsMatrixOverSemiring,
+                              IsPosInt]);
+DeclareOperation("AsMatrix", [IsFunction and IsOperation, IsMatrixOverSemiring,
+                              IsPosInt, IsPosInt]);
+DeclareOperation("AsMatrix", [IsSemiring, IsMatrixOverSemiring]);
+
+DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
+                                    IsMatrixOverSemiring]);
+DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
+                                    IsMatrixOverSemiring,
+                                    IsPosInt]);
+DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
+                                    IsMatrixOverSemiring,
+                                    IsPosInt,
+                                    IsPosInt]);
+DeclareConstructor("AsMatrixCons", [IsSemiring, IsMatrixOverSemiring]);
+
 DeclareGlobalFunction("RandomMatrix");
-DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring, IsPosInt]);
-DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring, IsPosInt, IsPosInt]);
-DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring, IsPosInt,
-                                        IsPosInt, IsPosInt]);
+DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
+                                        IsPosInt]);
+DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
+                                        IsPosInt,
+                                        IsPosInt]);
+DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
+                                        IsPosInt,
+                                        IsPosInt,
+                                        IsPosInt]);
 DeclareOperation("RandomMatrixOp", [IsSemiring, IsPosInt]);
 
+DeclareAttribute("AsList", IsMatrixOverSemiring);
+DeclareOperation("AsMutableList", [IsMatrixOverSemiring]);
+DeclareOperation("ELM_LIST", [IsMatrixOverSemiring, IsPosInt]);
+DeclareOperation("Iterator", [IsMatrixOverSemiring]);
 DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
 

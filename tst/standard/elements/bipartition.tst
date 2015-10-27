@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: standard/elements/bipartition.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 # the number of iterations, change here to get faster test
 gap> N := 333;;
@@ -516,6 +516,36 @@ gap> y := Bipartition([[1, 3], [2, -1], [-2], [-3]]);;
 gap> DegreeOfBipartitionCollection([x, y]);
 Error, Semigroups: DegreeOfBipartitionCollection: usage,
 the argument <coll> must be a collection of bipartitions of equal degree,
+
+# bipartition: AsBipartition, for a PBR and 0, 1
+gap> AsBipartition(EmptyPBR(1), 0);
+<empty bipartition>
+
+# bipartition: AsBipartition, for a PBR and pos int, 1
+gap> AsBipartition(PBR([[-1], [-2]], [[], []]), 2);
+Error, Semigroups: AsBipartition (for a pbr): usage,
+the argument does not satisfy 'IsBipartitionPBR',
+
+# bipartition: AsBipartition, for a PBR and pos int, 2
+gap> AsBipartition(PBR(
+> [[-3, 1, 3], [-1, 2], [-3, 1, 3]],
+> [[-1, 2], [-2], [-3, 1, 3]]), 3);
+<bipartition: [ 1, 3, -3 ], [ 2, -1 ], [ -2 ]>
+
+# bipartition: AsBipartition, for a PBR, 1
+gap> AsBipartition(PBR([[-1], [-2]], [[], []]));
+Error, Semigroups: AsBipartition (for a pbr): usage,
+the argument does not satisfy 'IsBipartitionPBR',
+
+# bipartition: AsBipartition, for a PBR, 2
+gap> AsBipartition(PBR(
+> [[-3, 1, 3], [-1, 2], [-3, 1, 3]],
+> [[-1, 2], [-2], [-3, 1, 3]]));
+<bipartition: [ 1, 3, -3 ], [ 2, -1 ], [ -2 ]>
+
+# bipartition: RandomBlockBijection, 1
+gap> ForAll([1 .. 20], x -> IsBlockBijection(RandomBlockBijection(x)));
+true
 
 #
 gap> Unbind(elts);

@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/attributes/isomorph.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 # isomorph: SmallestMultiplicationTable, 1/2
 gap> S := DualSymmetricInverseMonoid(2);
@@ -60,7 +60,8 @@ gap> IsIsomorphicSemigroup(S, T);
 false
 
 # isomorph: IsIsomorphicSemigroup, 2/2
-gap> S := Semigroup([Matrix(IsNTPMatrix, [[0, 1, 2], [4, 3, 0], [0, 2, 0]], 9, 4),
+gap> S := Semigroup([
+>  Matrix(IsNTPMatrix, [[0, 1, 2], [4, 3, 0], [0, 2, 0]], 9, 4),
 >  Matrix(IsNTPMatrix, [[1, 1, 0], [4, 1, 1], [0, 0, 0]], 9, 4)]);
 <semigroup of 3x3 ntp matrices with 2 generators>
 gap> IsIsomorphicSemigroup(S, S);
@@ -73,7 +74,7 @@ not yet implemented,
 gap> S := Semigroup(IdentityTransformation);
 <trivial transformation group of degree 0 with 0 generators>
 gap> T := Semigroup(PartialPerm([]));
-<trivial partial perm group of rank 0 with 0 generators>
+<commutative partial perm monoid of rank 0 with 1 generator>
 gap> IsIsomorphicSemigroup(S, T);
 true
 gap> T := JonesMonoid(4);

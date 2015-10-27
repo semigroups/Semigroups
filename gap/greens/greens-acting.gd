@@ -36,7 +36,7 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 # of the *LambdaOrb* containing the Rho value. So, an L-class created as a
 # non-inverse-op class, which later becomes an inverse-op class will have the
 # wrong representative. Therefore we don't allow classes to change from
-# non-inverse-op to inverse-op.  representative
+# non-inverse-op to inverse-op.
 
 #TODO should this work for non-acting semigroups too?
 DeclareCategory("IsInverseOpClass", IsGreensClass);

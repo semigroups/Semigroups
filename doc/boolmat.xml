@@ -8,89 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="IsBooleanMat">
-  <ManSection>
-    <Filt Name="IsBooleanMat" Arg="obj" Type="Category"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-      Every boolean matrix in &Semigroups; is a member of the category
-      <C>IsBooleanMat</C>, which is a subcategory of <Ref
-        Filt="IsMatrixOverSemiring"/>.
-      <P/>
-
-      Every boolean matrix in &Semigroups; is a square matrix.
-      <P/>
-
-      Basic operations for Boolean matrices are:
-      <List>
-        <Item>
-          <Ref Oper = "NumberBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Attr = "Successors"/>
-        </Item>
-        <Item>
-          <Ref Oper = "IsRowTrimBooleanMat"/>,
-          <Ref Oper = "IsColTrimBooleanMat"/>,
-          and
-          <Ref Oper = "IsTrimBooleanMat"/>,
-        </Item>
-        <Item>
-          <Ref Oper = "CanonicalBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsSymmetricBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsAntiSymmetricBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsTransitiveBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsReflexiveBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsTotalBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsOntoBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsPartialOrderBooleanMat"/>
-        </Item>
-        <Item>
-          <Ref Prop = "IsEquivalenceBooleanMat"/>
-        </Item>
-      </List>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="IsBooleanMatCollection">
-  <ManSection>
-    <Filt Name="IsBooleanMatCollection" Arg="obj" Type="Category"/>
-    <Filt Name="IsBooleanMatCollColl" Arg="obj" Type="Category"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-       Every collection of matrices over the same semiring belongs to the
-       category <C>IsBooleanMatCollection</C>. For example, semigroups
-       of boolean matrices belong to <C>IsBooleanMatCollection</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="BooleanMatFamily">
-  <ManSection>
-    <Var Name="BooleanMatFamily"/>
-    <Var Name="BooleanMatType"/>
-    <Description>
-      The family of all boolean matrices is <C>BooleanMatFamily</C> and the type
-      of every boolean matrix is <C>BooleanMatType</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="BooleanMat">
   <ManSection>
     <Func Name="BooleanMat" Arg="arg"/>
@@ -141,32 +58,6 @@ gap> Display(x);
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-<#GAPDoc Label="RandomBooleanMat">
-  <ManSection>
-    <Oper Name="RandomBooleanMat" Arg="n"/>
-    <Returns>A boolean matrix.</Returns>
-    <Description>
-      If <A>n</A> is a positive integer, then <C>RandomBooleanMat</C> returns
-      an <C>n</C> by <C>n</C> boolean matrix chosen with uniform probability
-      among all <C>n</C>-dimensional boolean matrices.
-
-      <Log><![CDATA[
-gap> x := RandomBooleanMat(10);
-gap> Display(x);
-1 0 0 1 0 1 1 0 1 0
-1 1 0 0 0 1 1 1 1 0
-0 0 0 0 0 1 0 1 1 0
-0 1 0 1 0 0 0 0 0 0
-0 1 1 1 1 1 0 1 1 0
-1 0 0 1 0 1 0 0 0 1
-0 0 0 1 1 0 0 0 1 1
-1 1 0 0 1 1 0 0 1 1
-1 0 0 1 0 0 1 0 1 0
-1 0 1 0 1 0 0 0 1 1]]></Log>
-    </Description>
-  </ManSection>
-  <#/GAPDoc>
 
 <#GAPDoc Label="ContainmentBooleanMats">
   <ManSection>
@@ -283,17 +174,18 @@ false]]></Example>
     <Description>
       These functions implement a bijection from the set of all boolean
       matrices of dimension <A>n</A> and the numbers <C>[1 .. 2 ^
-        <A>n</A>]</C>.
+        (<A>n</A> ^ 2)]</C>.
       <P/>
 
       More precisely, if <A>m</A> and <A>n</A> are positive integers such that
-      <A>m</A> is at most <C>2 ^ <A>n</A></C>, then <C>BooleanMatNumber</C>
+      <A>m</A> is at most <C>2 ^ (<A>n</A> ^ 2)</C>, then
+      <C>BooleanMatNumber</C>
       returns the <A>m</A>th <A>n</A> by <A>n</A> boolean matrix. 
       <P/>
 
       If <A>mat</A> is an <A>n</A> by <A>n</A> boolean matrix, then
-      <C>NumberBooleanMat</C> returns the number in  <C>[1 .. 2 ^ <A>n</A>]</C>
-      that corresponds to <A>mat</A>.
+      <C>NumberBooleanMat</C> returns the number in
+      <C>[1 .. 2 ^ (<A>n</A> ^ 2)]</C> that corresponds to <A>mat</A>.
       
       <Example><![CDATA[
 gap> mat := BooleanMat([[0, 1, 1, 0], 
@@ -414,7 +306,7 @@ gap> BlistNumber(2, 10);
           degree of <A>x</A> is used by default. 
         </Item>
         
-        <Mark>pbr</Mark>
+        <Mark>pbrs</Mark>
         <Item>
           If <A>x</A> is a pbr and <A>n</A> is any non-negative
           integer, then <C>AsBooleanMat</C> returns the boolean matrix
@@ -654,9 +546,9 @@ true]]></Example>
     <Prop Name="IsTransitiveBooleanMat" Arg="mat"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A boolean matrix is <B>transitive</B> whenever
+      A boolean matrix is <B>transitive</B> if whenever
       <C><A>mat</A>[i][j] = true</C> and 
-      <C><A>mat</A>[j][k] = true</C> if and only if 
+      <C><A>mat</A>[j][k] = true</C> then
       <C><A>mat</A>[i][k] = true</C>.
     
       <Example><![CDATA[
@@ -685,9 +577,9 @@ true]]></Example>
     <Prop Name="IsAntiSymmetricBooleanMat" Arg="mat"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A boolean matrix is <B>anti-symmetric</B> whenever
+      A boolean matrix is <B>anti-symmetric</B> if whenever
       <C><A>mat</A>[i][j] = true</C> and 
-      <C><A>mat</A>[j][i] = true</C> if and only if
+      <C><A>mat</A>[j][i] = true</C> then
       <C>i = j</C>. 
       
       <Example><![CDATA[

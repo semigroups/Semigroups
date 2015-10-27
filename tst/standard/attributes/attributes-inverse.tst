@@ -12,7 +12,7 @@ gap> START_TEST(Concatenation("Semigroups package: ",
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# attributes-inverse: VagnerPrestonRepresentation, symmetric inv monoid 4 1/1
 gap> S := InverseSemigroup([
@@ -586,7 +586,7 @@ gap> NaturalPartialOrder(AsTransformationSemigroup(S));
 
 #T# attributes-inverse: NaturalPartialOrder (for a semigroup), error, 1/2
 gap> S := Semigroup(
-> [Matrix(IsTropicalMinPlusMatrix, 
+> [Matrix(IsTropicalMinPlusMatrix,
 >     [[infinity, 0, infinity, 1, 1, infinity, 3, 2, 3],
 >      [3, 1, 1, infinity, 1, 1, 1, 1, 1], [0, 3, 0, 1, 1, 3, 0, infinity, 1],
 >      [0, 0, 1, infinity, infinity, 3, 3, 2, 1], [1, 1, 0, 3, 0, 3, 0, 0, 3],
