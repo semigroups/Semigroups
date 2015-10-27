@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# TestInstall3
 gap> S := Semigroup(Transformation([2, 3, 4, 1, 1, 1]));;

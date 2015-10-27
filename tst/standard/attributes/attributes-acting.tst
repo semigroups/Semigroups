@@ -12,7 +12,7 @@ gap> START_TEST(Concatenation("Semigroups package: ",
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS_DefaultOptionsRec.generic := false;;
 
 # attributes-acting: IsMultiplicativeZero

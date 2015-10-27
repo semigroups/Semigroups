@@ -12,11 +12,4 @@ DeclareGlobalFunction("SemigroupsMakeDoc");
 DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestStandard");
 
-DeclareGlobalFunction("SEMIGROUPS_StartTest");
-DeclareGlobalFunction("SEMIGROUPS_StopTest");
-DeclareGlobalFunction("SEMIGROUPS_TestAll");
-DeclareGlobalFunction("SEMIGROUPS_TestManualExamples");
-DeclareGlobalFunction("SEMIGROUPS_ManualExamples");
-DeclareGlobalFunction("SEMIGROUPS_Test");
-
-BindGlobal("SEMIGROUPS_OmitFromTests", []);
+SEMIGROUPS.OmitFromTests := [];

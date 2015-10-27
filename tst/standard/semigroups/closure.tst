@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: standard/semigroups/closure.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# ClosureTest1
 gap> gens := [Transformation([2, 6, 7, 2, 6, 1, 1, 5]),

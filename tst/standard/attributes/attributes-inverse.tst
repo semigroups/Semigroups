@@ -12,7 +12,7 @@ gap> START_TEST(Concatenation("Semigroups package: ",
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# attributes-inverse: VagnerPrestonRepresentation, symmetric inv monoid 4 1/1
 gap> S := InverseSemigroup([

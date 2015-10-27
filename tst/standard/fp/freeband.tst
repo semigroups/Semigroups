@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: standard/fp/freeband.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# FreeBandTest1: Creating free bands and basic methods
 # (with default generators)

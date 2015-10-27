@@ -1,3 +1,48 @@
+# TODO redo this
+
+#InstallGlobalFunction(SEMIGROUPS.TestAll,
+#function()
+#  local dir_str, tst, dir, omit, filesplit, test, stringfile, str, filename;
+#
+#  Print("Reading all .tst files in the directory semigroups/tst/...\n\n");
+#  dir_str :=
+#   Concatenation(PackageInfo("semigroups")[1]!.InstallationPath, "/tst");
+#  tst := DirectoryContents(dir_str);
+#  dir := Directory(dir_str);
+#
+#  omit := SEMIGROUPS.OmitFromTests;
+#
+#  if Length(omit) > 0 then
+#    Print("not testing files containing the strings");
+#    for str in omit do
+#      Print(", \"", str, "\"");
+#    od;
+#    Print(" . . .\n\n");
+#  fi;
+#
+#  for filename in tst do
+#
+#    filesplit := SplitString(filename, ".");
+#    if Length(filesplit) >= 2 and filesplit[Length(filesplit)] = "tst" then
+#      test := true;
+#      stringfile := StringFile(Concatenation(dir_str, "/", filename));
+#      for str in omit do
+#        if PositionSublist(stringfile, str) <> fail then
+#          Print("not testing ", filename, ", it contains a test involving ",
+#                str, ", which will not work . . .\n\n");
+#          test := false;
+#          break;
+#        fi;
+#      od;
+#      if test then
+#        Print("reading ", dir_str, "/", filename, " . . .\n");
+#        Test(Filename(dir, filename));
+#        Print("\n");
+#      fi;
+#    fi;
+#  od;
+#  return;
+#end);
 BindGlobal("TikzBipartitionRight",
 function(x)
   return Concatenation(SEMIGROUPS.TikzInit,

@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: standard/attributes/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();;
+gap> SEMIGROUPS.StartTest();;
 
 #T# MaximalTest1: IsMaximalSubsemigroup
 gap> S := Semigroup([

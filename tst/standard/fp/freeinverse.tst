@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/fp/freeinverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# FreeInverseTest1: Creating free inverse semigroups and basic methods
 # (with default generators)

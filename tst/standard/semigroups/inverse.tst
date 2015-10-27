@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/semigroups/inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 # 
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# InverseTest1
 gap> gens := [PartialPermNC([1, 2, 4], [1, 5, 2]),

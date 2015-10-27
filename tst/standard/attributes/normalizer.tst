@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: standard/attributes/normalizer.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# normalizer: Normalizer, 1/3
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),

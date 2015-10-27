@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: standard/congruences/pairs.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# PairsCongTest2: Checking robustness against infinite semigroups
 gap> S := FreeSemigroup(1);

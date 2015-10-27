@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: standard/elements/boolmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #T#
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# boolmat: BooleanMat, error 1/6
 gap> BooleanMat([[true, false, 1], [0, 1, 0], [false, true, false]]);

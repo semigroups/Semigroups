@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/elements/maxplusmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# maxplusmat: test max-plus matrix code, 1/1
 gap> mat := Matrix(IsMaxPlusMatrix, [[4, 0, -2], 

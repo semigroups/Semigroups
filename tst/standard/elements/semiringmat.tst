@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/elements/semiringmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# Matrix: return an answer, all possibilities, and TransposedMat
 gap> Matrix(IsBooleanMat, [[1, 0, 0, 0], 

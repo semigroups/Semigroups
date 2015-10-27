@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/main/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS_DefaultOptionsRec.generic := false;;
 
 #T# ActingTest1

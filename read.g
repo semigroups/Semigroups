@@ -14,19 +14,19 @@ BindGlobal("IsGrapeCompiled",
            <> fail);
 
 if not IsGrapeLoaded then
-  Add(SEMIGROUPS_OmitFromTests, "SmallestMultiplicationTable");
+  Add(SEMIGROUPS.OmitFromTests, "SmallestMultiplicationTable");
   BindGlobal("GrapeIsNotLoadedString",
              Concatenation("the GRAPE package is not loaded and",
                            " so this function does not work"));
 fi;
 
 if not IsGrapeCompiled then
-  Add(SEMIGROUPS_OmitFromTests, "MaximalSubsemigroups");
-  Add(SEMIGROUPS_OmitFromTests, "MunnSemigroup");
-  Add(SEMIGROUPS_OmitFromTests, "IsIsomorphicSemigroup");
-  Add(SEMIGROUPS_OmitFromTests, "IsomorphismSemigroups");
-  Add(SEMIGROUPS_OmitFromTests, "RZMSInducedFunction");
-  Add(SEMIGROUPS_OmitFromTests, "RZMStoRZMSInducedFunction");
+  Add(SEMIGROUPS.OmitFromTests, "MaximalSubsemigroups");
+  Add(SEMIGROUPS.OmitFromTests, "MunnSemigroup");
+  Add(SEMIGROUPS.OmitFromTests, "IsIsomorphicSemigroup");
+  Add(SEMIGROUPS.OmitFromTests, "IsomorphismSemigroups");
+  Add(SEMIGROUPS.OmitFromTests, "RZMSInducedFunction");
+  Add(SEMIGROUPS.OmitFromTests, "RZMStoRZMSInducedFunction");
   BindGlobal("GrapeIsNotCompiledString",
              Concatenation("the nauty/dreadnaut binaries for the GRAPE ",
                            "package are not loaded\n#I  and so this function ",
@@ -34,8 +34,8 @@ if not IsGrapeCompiled then
 fi;
 
 if TestPackageAvailability("genss") = fail then
-  Add(SEMIGROUPS_OmitFromTests, "Normalizer");
-  Add(SEMIGROUPS_OmitFromTests,
+  Add(SEMIGROUPS.OmitFromTests, "Normalizer");
+  Add(SEMIGROUPS.OmitFromTests,
       "SEMIGROUPS_NonDeterministicNormalizer");
 fi;
 

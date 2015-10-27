@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/fp/fpsemi.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# AsFpSemigroup 1: trivial semigroup
 gap> S := TrivialSemigroup();

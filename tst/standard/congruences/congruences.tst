@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/congruences/congruences.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# SemigroupCongruence: Bad input
 gap> S := FullTransformationSemigroup(5);;

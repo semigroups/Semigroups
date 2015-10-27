@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/congruences/rees.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# ReesCongTest1
 # Test whether a congruence is Rees and find its ideal
