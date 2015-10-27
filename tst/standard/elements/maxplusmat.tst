@@ -211,7 +211,7 @@ the arguments must be matrices of the same dimensions,
 gap> RandomMatrix(Integers, 20);
 <20x20 integer matrix>
 
-#T# maxplusmat: AsMatrix, trop. min-plus <-> min-plus, 1/?
+#T# maxplusmat: AsMatrix, trop. min-plus <-> min-plus, 1/3
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
 >  [infinity, 4, 0]], 10);;
 gap> AsMatrix(IsMinPlusMatrix, mat);
@@ -223,12 +223,104 @@ Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
 gap> last = mat;
 true
 
-#T# maxplusmat: AsMatrix, trop. min-plus <-> trop. min-plus, 2/?
+#T# maxplusmat: AsMatrix, trop. min-plus <-> trop. min-plus, 2/3
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
 >  [infinity, 4, 0]], 10);;
 gap> AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2], 
   [infinity, 2, 0]], 2)
+
+#T# maxplusmat: AsMatrix, everything, 3/3
+gap> mat := Matrix(IsTropicalMinPlusMatrix, [[0, 1, 3], 
+>                                            [1, 1, 6], 
+>                                            [0, 4, 2]], 10);;
+gap> AsMatrix(IsMinPlusMatrix, mat);
+Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]])
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
+>                                            [0, 1, 3], 
+>                                            [4, 1, 0]], 10);;
+gap> AsMatrix(IsMaxPlusMatrix, mat);
+Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], [4, 1, 0]])
+gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[-1, 2, 1], 
+>                                              [-2, -1, 1], 
+>                                              [1, 1, 2]]);;
+gap> AsMatrix(IsMaxPlusMatrix, mat);
+Matrix(IsMaxPlusMatrix, [[-1, 2, 1], [-2, -1, 1], [1, 1, 2]])
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
+>                                            [0, 1, 3], 
+>                                            [4, 1, 0]], 10);;
+gap> AsMatrix(IsProjectiveMaxPlusMatrix, mat);
+Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
+  [4, 1, 0]])
+gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2], 
+>                                [0, 2, 0], 
+>                                [1, 3, 0]], 4, 5);;
+gap> AsMatrix(IsIntegerMatrix, mat);
+Matrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])
+gap> mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;
+gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
+Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
+gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 1);
+Matrix(IsTropicalMinPlusMatrix, [[0, 1, 1], [1, 1, 1], [0, 1, 1]], 1)
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
+>                                            [0, 1, 3], 
+>                                            [4, 1, 0]], 10);;
+gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 4);
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
+  [4, 1, 0]], 4)
+gap> mat := Matrix(IsProjectiveMaxPlusMatrix, 
+>                  [[-infinity, -infinity, 3], 
+>                   [0, 1, 3], 
+>                   [4, 1, 0]]);;
+gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 1);
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 1], [0, 1, 1], 
+  [1, 1, 0]], 1)
+gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], 
+>                                    [0, 1, 3], 
+>                                    [4, 1, 0]]);;
+gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 10);
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
+  [4, 1, 0]], 10)
+gap> AsMatrix(IsProjectiveMaxPlusMatrix, mat);
+Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
+  [4, 1, 0]])
+gap> mat := Matrix(IsNTPMatrix, [[0, 1, 0], 
+>                                [1, 3, 1], 
+>                                [1, 0, 1]], 10, 10);;
+gap> mat := AsMatrix(IsNTPMatrix, mat, 5, 6);
+Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6)
+gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 6);
+Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
+gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 1);
+Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
+gap> mat := AsMatrix(IsIntegerMatrix, mat);
+Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
+gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
+Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)
+
+# maxplusmat: IsFinite, for a semigroup of integer matrices, 1/3
+gap> [ Matrix(IsIntegerMatrix, [[0, 2, 1], [1, 0, 1], [0, 2, 1]]),
+>      Matrix(IsIntegerMatrix, [[5, 1, 1], [0, 0, 1], [2, 4, 3]]) ];;
+gap> S := Semigroup(last);
+<semigroup of 3x3 integer matrices with 2 generators>
+gap> IsFinite(S);
+false
+gap> Size(S);
+infinity
+
+# maxplusmat: IsFinite, for a semigroup of integer matrices, 2/3
+gap> S := Semigroup(Matrix(IsIntegerMatrix,
+>                   [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]));
+<commutative semigroup of 3x3 integer matrices with 1 generator>
+gap> IsFinite(S);
+true
+
+# maxplusmat: IsFinite, for a semigroup of integer matrices, 3/3
+gap> S := Semigroup(Matrix(IsIntegerMatrix,
+>                   [[1, 0, 0], [0, 1, 0], [0, 0, 0]]));
+<commutative semigroup of 3x3 integer matrices with 1 generator>
+gap> IsFinite(S);
+true
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/elements/maxplusmat.tst");

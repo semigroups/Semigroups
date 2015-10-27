@@ -669,7 +669,7 @@ InstallMethod(IsFinite,
 function(S)
   local gens, ET, mat, row, val;
 
-  gens := GeneratorsOfSemigroup(s);
+  gens := GeneratorsOfSemigroup(S);
   for mat in gens do
     for row in mat do
       for val in row do
