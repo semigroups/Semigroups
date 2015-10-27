@@ -257,10 +257,15 @@ gap> Unbind(S);
 gap> Unbind(x);
 gap> Unbind(gens);
 gap> Unbind(cong);
+gap> Unbind(class);
 gap> Unbind(T);
 gap> Unbind(u);
 gap> Unbind(v);
 gap> Unbind(classes);
+gap> Unbind(pair1);
+gap> Unbind(pair2);
+gap> Unbind(pair);
+gap> Unbind(enum);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congruences/pairs.tst");
