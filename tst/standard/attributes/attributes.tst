@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/attributes/attributes.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# AttributesTest1: MultiplicativeZero
 # for a transformation semigroup/ideal

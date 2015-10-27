@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: standard/elements/bipartition.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 # the number of iterations, change here to get faster test
 gap> N := 333;;

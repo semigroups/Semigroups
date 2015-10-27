@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/semigroups/semitrans.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();;
+gap> SEMIGROUPS.StartTest();;
 
 #T# SemiTransTest1
 # RepresentativeOfMinimalIdeal and IsSynchronizingSemigroup for T_n

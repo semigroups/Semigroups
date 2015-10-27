@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/congruences/univ.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# CongUnivTest1: No zero, non-simple
 gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 7, 5]),

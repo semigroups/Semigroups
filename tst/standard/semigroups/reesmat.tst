@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/semigroups/reesmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# ReesMatTest2
 # Some semigroups to which the methods in Semigroups should not apply

@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/congruences/reesmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 # All ReesZeroMatrixSemigroup functions tested with a small example
 #T# ReesMatCongTest1: Create a Rees 0-matrix semigroup

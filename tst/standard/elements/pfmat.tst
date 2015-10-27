@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/elements/pfmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# pfmat: Matrix, checker, 1/1
 gap> mat := Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5)^2, Z(5)^0]]);

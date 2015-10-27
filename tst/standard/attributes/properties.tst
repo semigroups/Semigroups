@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/attributes/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# properties: IsBand, for a semigroup, 1/2
 gap> S := Semigroup(

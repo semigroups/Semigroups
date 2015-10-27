@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: standard/elements/pbr.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# pbr: PBR, works, 1/4
 gap> PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ],
