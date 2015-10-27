@@ -1,0 +1,21 @@
+<Chapter Label = "Standard constructions">
+  <Heading>
+    Standard constructions
+  </Heading>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Standard constructions">
+    <Heading>
+      Standard constructions
+    </Heading>
+    <#Include Label="MonogenicSemigroup">
+    <#Include Label="RectangularBand">
+    <#Include Label="ZeroSemigroup">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+</Chapter>
