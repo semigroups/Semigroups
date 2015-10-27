@@ -261,23 +261,6 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section><Heading>Visualising blocks and bipartitions</Heading>
-    There are some functions in &Semigroups; for creating &LaTeX; pictures of
-    bipartitions and blocks. Descriptions of these methods can be found in this
-    section. <P/>
-
-    The functions described in this section return a string, which can be
-    written to a file using the function <Ref Func="FileString"
-      BookName="GAPDoc"/> or viewed using <Ref Func="Splash"/>.
-
-    <#Include Label="TikzBipartition">
-    <#Include Label="TikzBlocks">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
   <Section>
     <Heading>
       Semigroups of bipartitions

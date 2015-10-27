@@ -1,186 +1,57 @@
-<Chapter Label="Attributes and operations for semigroups">
 
+<Chapter Label="Free bands">
   <Heading>
-    Attributes and operations for semigroups
+    Free bands
   </Heading>
 
-  In this chapter we decribe the methods that are available in &Semigroups; for
-  determining the attributes of a semigroup, and the operations which can be
-  applied to a semigroup.
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
   <Section>
-    
     <Heading>
-      Random elements of a semigroup
+      Free bands
     </Heading>
-    
-    <#Include Label="Random">
+
+    A semigroup <M>B</M> is a <E>free band</E> on a non-empty set <M>X</M> if
+    <M>B</M> is a band with a map <M> f </M> from <M> B </M> to <M>X</M> such that
+    for every band <M> S </M> and every map <M> g </M> from <M>X</M> to <M> B </M>
+    there exists a unique homomorphism <M> g'</M> from <M>B</M> to <M>S</M> such
+    that <M>fg' = g</M>. The free band on a set <M>X</M> is unique up to
+    isomorphism.  Moreover, by the universal property, every band can be expressed
+    as a quotient of a free band.<P/>
+
+    For an alternative description of a free band. Suppose that <M> X </M> is a
+    non-empty set and <M> X^+ </M> a free semigroup on <M> X </M>. Also suppose
+    that <M> b </M> is the smallest congurance on <M> X^+ </M> containing the set
+    <Display> \{ (w^2, w) : w \in X^+ \}. </Display> Then the free band on 
+    <M> X </M> is isomorphic to the quotient of <M> X^+ </M> by <M> b </M>.
+    See Section 4.5 of <Cite Key = "Howie1995aa" /> for more information on
+    free bands.
+
+    <#Include Label = "FreeBand">
+    <#Include Label = "IsFreeBandCategory">
+    <#Include Label = "IsFreeBand">
+    <#Include Label = "IsFreeBandElement">
+    <#Include Label = "IsFreeBandSubsemigroup">
   </Section>
 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
   <Section>
-    
-    <Heading>
-      Expressing semigroup elements as words in generators
+    <Heading>Operators and operations for free band elements
     </Heading>
+    <List>
+      <Mark><C><A>u</A> * <A>v</A></C></Mark>
+      <Item>
+        returns the product of two free band elements <A>u</A>
+        and <A>v</A>.
+      </Item>
+      <Mark><C><A>u</A> = <A>v</A> </C></Mark>
+      <Item>
+        checks if two free band elements are equal.
+      </Item>
+      <Mark><C><A>u</A> &lt; <A>v</A> </C></Mark>
+      <Item>
+        compares the sizes of the internal representations of two free
+        band elements.
+      </Item>
+    </List>
 
-    It is possible to express an element of a semigroup as a word in the
-    generators of that semigroup. This section describes how to accomplish this
-    in &Semigroups;. <P/>
-    
-    <#Include Label="EvaluateWord">
-    <#Include Label="Factorization">
-    <#Include Label="MinimalFactorization">
-
+    <#Include Label = "GreensDClassOfElement" > 
   </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      Generating sets
-    </Heading>
-    
-    <#Include Label="Generators">
-    <#Include Label="SmallGeneratingSet"> 
-    <#Include Label="IrredundantGeneratingSubset">
-  
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      Minimal ideals and multiplicative zeros
-    </Heading>
-
-    In this section we describe the attributes of a semigroup that can be found
-    using the &Semigroups; package. 
-    <P/>
-    
-    <#Include Label="MinimalIdeal">
-    <#Include Label="RepresentativeOfMinimalIdeal">
-    <#Include Label="MultiplicativeZero">
-
-  </Section> 
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      Group of units and identity elements
-    </Heading>
-  
-    <#Include Label="GroupOfUnits">
-    <!--TODO add man entry for MultiplicativeNeutralElement-->
-
-  </Section> 
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  
-  <Section>
-
-    <Heading>
-      Idempotents
-    </Heading>
-
-    <#Include Label="Idempotents">
-    <#Include Label="NrIdempotents">
-    <#Include Label="IdempotentGeneratedSubsemigroup">
-
-  </Section>  
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  
-  <Section>
-
-    <Heading>
-      Maximal subsemigroups
-    </Heading>
-
-    <#Include Label="MaximalSubsemigroups">
-    <#Include Label="MaximalSubsemigroups2">
-    <#Include Label="IsMaximalSubsemigroup">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      The normalizer of a semigroup
-    </Heading>
-
-    <#Include Label="Normalizer">
-  
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  
-  <Section>
-
-    <Heading>
-      Attributes of transformation semigroups
-    </Heading>
-
-    <#Include Label="ComponentRepsOfTransformationSemigroup">
-    <#Include Label="ComponentsOfTransformationSemigroup">
-    <#Include Label="CyclesOfTransformationSemigroup">
-    <#Include Label="IsTransitive">
-    <#Include Label="SmallestElementSemigroup">
-    <#Include Label="GeneratorsSmallest">
-  
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-    
-  <Section>
-
-    <Heading>
-      Attributes of partial perm semigroups
-    </Heading>
-
-    <#Include Label="ComponentRepsOfPartialPermSemigroup">
-    <#Include Label="ComponentsOfPartialPermSemigroup">
-    <#Include Label="CyclesOfPartialPerm">
-    <#Include Label="CyclesOfPartialPermSemigroup">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      Attributes of Rees (0-)matrix semigroups
-    </Heading>
-
-    <#Include Label="RZMSDigraph">
-    <#Include Label="RZMSConnectedComponents">
-    <#Include Label="RZMSNormalization">
-    <#Include Label="RMSNormalization">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
 </Chapter>
-

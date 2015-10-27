@@ -1,0 +1,32 @@
+<Chapter Label="orbits">
+  <Heading>
+    Orbits
+  </Heading>
+  <Section><Heading>Looking for something in an orbit</Heading>
+    The functions described in this section supplement the &Orb; package by
+    providing methods for finding something in an orbit, with the possibility
+    of continuing the orbit enumeration at some later point. 
+
+    <#Include Label="EnumeratePosition">
+    <#Include Label="LookForInOrb">
+  </Section>
+  <Section>
+    <Heading>Strongly connected components of orbits</Heading>
+    The functions described in this section supplement the &Orb; package by
+    providing methods for operations related to strongly connected
+    components of orbits.<P/>
+
+    If any of the functions is applied to an open orbit, then the orbit is
+    completely enumerated before any further calculation is performed. It is not
+    possible to calculate the strongly connected components of an orbit of a
+    semigroup acting on a set until the entire orbit has been found.
+
+    <#Include Label="OrbSCC">
+    <#Include Label="OrbSCCLookup">
+    <#Include Label="OrbSCCTruthTable">
+    <#Include Label="ReverseSchreierTreeOfSCC">
+    <#Include Label="SchreierTreeOfSCC">
+    <#Include Label="TraceSchreierTreeOfSCCBack">
+    <#Include Label="TraceSchreierTreeOfSCCForward">
+  </Section>
+</Chapter>
