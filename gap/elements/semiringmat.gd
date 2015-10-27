@@ -40,18 +40,24 @@ DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
                             IsPosInt, IsPosInt]);
 DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
 
-DeclareOperation("AsMatrix", [IsFunction and IsOperation, IsMatrixOverSemiring]);
-DeclareOperation("AsMatrix", [IsFunction and IsOperation, IsMatrixOverSemiring,
+DeclareOperation("AsMatrix", [IsFunction and IsOperation,
+                              IsMatrixOverSemiring]);
+DeclareOperation("AsMatrix", [IsFunction and IsOperation,
+                              IsMatrixOverSemiring,
                               IsPosInt]);
 DeclareOperation("AsMatrix", [IsFunction and IsOperation, IsMatrixOverSemiring,
                               IsPosInt, IsPosInt]);
 DeclareOperation("AsMatrix", [IsSemiring, IsMatrixOverSemiring]);
 
-DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring, IsMatrixOverSemiring]);
-DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring, IsMatrixOverSemiring,
+DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
+                                    IsMatrixOverSemiring]);
+DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
+                                    IsMatrixOverSemiring,
                                     IsPosInt]);
-DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring, IsMatrixOverSemiring,
-                                    IsPosInt, IsPosInt]);
+DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
+                                    IsMatrixOverSemiring,
+                                    IsPosInt,
+                                    IsPosInt]);
 DeclareConstructor("AsMatrixCons", [IsSemiring, IsMatrixOverSemiring]);
 
 DeclareGlobalFunction("RandomMatrix");

@@ -148,7 +148,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
 
 <#GAPDoc Label="AsList">
   <ManSection>
-    <Oper Name="AsList"        Arg="mat"/>
+    <Attr Name="AsList"        Arg="mat"/>
     <Oper Name="AsMutableList" Arg="mat"/>
     <Returns>A list of lists.</Returns>
     <Description>

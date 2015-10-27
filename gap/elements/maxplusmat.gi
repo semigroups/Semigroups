@@ -663,35 +663,33 @@ function(semiring, n)
   return RandomMatrix(IsIntegerMatrix, n);
 end);
 
-
 InstallMethod(IsFinite,
 "for a semigroup of matrices of positive integers",
 [IsIntegerMatrixSemigroup],
-function(s)
-  local gens, gen, i, x, modgens, imagegen, image, idempots, a, b;
+function(S)
+  local gens, ET, mat, row, val;
 
   gens := GeneratorsOfSemigroup(s);
-  for gen in gens do
-    for i in [1 .. Length(gen![1])] do
-      for x in gen![i] do
-        if x < 0 then
+  for mat in gens do
+    for row in mat do
+      for val in row do
+        if val < 0 then
           TryNextMethod();
+          # FIXME do better than this!
         fi;
       od;
     od;
   od;
-  # FIXME use AsMatrix when available
-  modgens := List(gens, x -> List(AsList(x), row -> List(row, x -> Minimum(x, 2))));
-  imagegen := List(modgens, x -> Matrix(IsNTPMatrix, x, 1, 2));
-  image := Semigroup(imagegen);
-  idempots := Idempotents(image);
 
-  for a in idempots do
-    b := List([1 .. Length(a![1])], i -> a![i]);
-    if b^2 <> b^3 then
+  ET := Idempotents(Semigroup(List(gens, x -> AsMatrix(IsNTPMatrix, x, 1, 2))));
+
+  for mat in ET do
+    mat := AsMatrix(IsIntegerMatrix, mat);
+    if mat ^ 2 <> mat ^ 3 then
       return false;
     fi;
   od;
+
   return true;
 end);
 
