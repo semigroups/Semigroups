@@ -110,6 +110,7 @@
     <Ref Sect = "Matrices over finite fields"/>
 
     <#Include Label="Matrix">
+    <#Include Label="AsMatrix"/>
     <#Include Label="RandomMatrix">
     <#Include Label="IsXMatrix"/>
     <#Include Label="IsXMatrixCollection"/>
