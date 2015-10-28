@@ -243,7 +243,7 @@ install_pairs_methods_with_filter@ := function(cong_type)
 
     SetAsLookupTable(cong, newtable);
     Unbind(cong!.data);
-    data!.found := found;
+    data!.found := lookfunc(data, fail);
     return data;
   end);
 
@@ -330,8 +330,9 @@ install_pairs_methods_with_filter@ := function(cong_type)
   [cong_type.filter and cong_type.haspairs and IsFinite,
    cong_type.filter and cong_type.haspairs and IsFinite],
   function(cong1, cong2)
-    return Range(cong1) = Range(cong2) and
-           AsLookupTable(cong1) = AsLookupTable(cong2);
+    return Range(cong1) = Range(cong2)
+           and ForAll(cong_type.pairs(cong1), pair -> pair in cong2)
+           and ForAll(cong_type.pairs(cong2), pair -> pair in cong1);
   end);
 
   #
@@ -561,3 +562,156 @@ od;
 # Finished installing methods for all three filters
 Unbind(cong_type@);
 Unbind(install_pairs_methods_with_filter@);
+
+#
+
+InstallMethod(IsSubcongruence,
+"for two semigroup congruences",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(cong1, cong2)
+  # Tests whether cong2 is a subcongruence of cong1
+  if Range(cong1) <> Range(cong2) then
+    ErrorMayQuit("Semigroups: IsSubcongruence: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return ForAll(GeneratingPairsOfSemigroupCongruence(cong2),
+                pair -> pair in cong1);
+end);
+
+#
+
+InstallMethod(LatticeOfCongruences,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  local elms, pairs, congs1, nrcongs, children, parents, pair, badcong,
+        newchildren, newparents, newcong, i, congs, length, found, start, j, k;
+  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+
+  # Get all non-reflexive pairs in SxS
+  pairs := Combinations(elms, 2);
+
+  # Get all the unique 1-generated congruences
+  Info(InfoSemigroups, 1, "Getting all 1-generated congruences...");
+  congs1 := [];     # List of all congruences found so far
+  nrcongs := 0;     # Number of congruences found so far
+  children := [];   # List of lists of children
+  parents := [];    # List of lists of parents
+  for pair in pairs do
+    badcong := false;
+    newchildren := []; # Children of newcong
+    newparents := [];  # Parents of newcong
+    newcong := SemigroupCongruence(S, pair);
+    for i in [1 .. Length(congs1)] do
+      if IsSubcongruence(congs1[i], newcong) then
+        if IsSubcongruence(newcong, congs1[i]) then
+          # This is not a new congruence - drop it!
+          badcong := true;
+          break;
+        else
+          Add(newparents, i);
+        fi;
+      elif IsSubcongruence(newcong, congs1[i]) then
+        Add(newchildren, i);
+      fi;
+    od;
+    if not badcong then
+      nrcongs := nrcongs + 1;
+      congs1[nrcongs] := newcong;
+      children[nrcongs] := newchildren;
+      parents[nrcongs] := newparents;
+      for i in newchildren do
+        Add(parents[i], nrcongs);
+      od;
+      for i in newparents do
+        Add(children[i], nrcongs);
+      od;
+    fi;
+  od;
+  congs := ShallowCopy(congs1);
+
+  # Take all their joins
+  Info(InfoSemigroups, 1, "Taking joins...");
+  length := 0;
+  found := true;
+  while found do
+    # There are new congruences to try joining
+    start := length + 1; # New congruences start here
+    found := false;      # Have we found any more congruence on this sweep?
+    for i in [start .. Length(congs)] do # for each new congruence
+      for j in [1 .. Length(congs1)] do  # for each 1-generated congruence
+        newcong := JoinSemigroupCongruences(congs[i], congs1[j]);
+        badcong := false;  # Is newcong the same as another congruence?
+        newchildren := []; # Children of newcong
+        newparents := [];  # Parents of newcong
+        for k in [1 .. Length(congs)] do
+          if IsSubcongruence(congs[k], newcong) then
+            if IsSubcongruence(newcong, congs[k]) then
+              # This is the same as an old congruence - discard it!
+              badcong := true;
+              break;
+            else
+              Add(newparents, k);
+            fi;
+          elif IsSubcongruence(newcong, congs[k]) then
+            Add(newchildren, k);
+          fi;
+        od;
+        if not badcong then
+          nrcongs := nrcongs + 1;
+          congs[nrcongs] := newcong;
+          children[nrcongs] := newchildren;
+          parents[nrcongs] := newparents;
+          for i in newchildren do
+            Add(parents[i], nrcongs);
+          od;
+          for i in newparents do
+            Add(children[i], nrcongs);
+          od;
+          found := true;
+        fi;
+      od;
+    od;
+  od;
+
+  # Add the trivial congruence at the start
+  children := Concatenation([[]], children + 1);
+  for i in [2 .. nrcongs] do
+    Add(children[i], 1, 1);
+  od;
+  Add(congs, SemigroupCongruence(S, []), 1);
+
+  SetCongruencesOfSemigroup(S, congs);
+  return children;
+end);
+
+#
+
+InstallMethod(CongruencesOfSemigroup,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  LatticeOfCongruences(S);
+  return CongruencesOfSemigroup(S);
+end);
+
+#
+
+InstallMethod(JoinSemigroupCongruences,
+"for two semigroup congruences",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(c1, c2)
+  local pairs;
+  # TODO: combine lookup tables
+  if Range(c1) <> Range(c2) then
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  pairs := Concatenation(ShallowCopy(GeneratingPairsOfSemigroupCongruence(c1)),
+                         ShallowCopy(GeneratingPairsOfSemigroupCongruence(c2)));
+  return SemigroupCongruence(Range(c1), pairs);
+end);
+
+#

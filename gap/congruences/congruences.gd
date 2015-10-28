@@ -25,6 +25,7 @@ DeclareGlobalFunction("SemigroupCongruence");
 DeclareGlobalFunction("LeftSemigroupCongruence");
 DeclareGlobalFunction("RightSemigroupCongruence");
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("LatticeOfCongruences", IsSemigroup);
 
 DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
                GeneratingPairsOfLeftMagmaCongruence);
@@ -43,3 +44,6 @@ DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
 DeclareAttribute("AsLookupTable", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
 DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);
+
+DeclareOperation("IsSubcongruence",
+                 [IsSemigroupCongruence, IsSemigroupCongruence]);
