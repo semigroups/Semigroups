@@ -565,53 +565,6 @@ Unbind(install_pairs_methods_with_filter@);
 
 #
 
-InstallMethod(CongruencesOfSemigroup,
-"for a semigroup",
-[IsSemigroup],
-function(S)
-  local elms, pairs, congs1, pair, newcong, congs, length, found, start, i, j;
-  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
-
-  # Get all non-reflexive pairs in SxS
-  pairs := Combinations(elms, 2);
-
-  # Get all the unique 1-generated congruences
-  Info(InfoSemigroups, 1, "Getting all 1-generated congruences...");
-  #congs1 := Set(pairs, pair -> SemigroupCongruence(S, pair));
-  congs1 := [];
-  for pair in pairs do
-    newcong := SemigroupCongruence(S, pair);
-    if not ForAny(congs1, cong -> newcong = cong) then
-      Add(congs1, newcong);
-    fi;
-  od;
-  congs := ShallowCopy(congs1);
-
-  # Take all their joins
-  Info(InfoSemigroups, 1, "Taking joins...");
-  length := 0;
-  found := true;
-  while found do
-    start := length + 1;
-    found := false;
-    length := Length(congs);
-    for i in [start .. length] do
-      for j in [1 .. Length(congs1)] do
-        newcong := JoinSemigroupCongruences(congs[i], congs1[j]);
-        if not newcong in congs then
-          Add(congs, newcong);
-          found := true;
-        fi;
-      od;
-    od;
-  od;
-
-  Add(congs, SemigroupCongruence(S, []));
-  return congs;
-end);
-
-#
-
 InstallMethod(IsSubcongruence,
 "for two semigroup congruences",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
@@ -731,6 +684,16 @@ function(S)
 
   SetCongruencesOfSemigroup(S, congs);
   return children;
+end);
+
+#
+
+InstallMethod(CongruencesOfSemigroup,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  LatticeOfCongruences(S);
+  return CongruencesOfSemigroup(S);
 end);
 
 #
