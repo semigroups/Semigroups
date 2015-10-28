@@ -482,7 +482,7 @@ gap> StructureDescription(I);
   <ManSection>
     <Oper Name="ZeroSemigroup" Arg="n"/>
     <Returns>
-      A zero partial permutation semigroup of order <A>n</A>.
+      A zero semigroup of order <A>n</A>.
     </Returns>
       <Description>
         If <A>n</A> is a positive integer,
@@ -493,7 +493,7 @@ gap> StructureDescription(I);
         See <Ref Prop="IsZeroSemigroup"/> for more information.
 
         <Example><![CDATA[
-gap> S := ZeroSemigroup(15);
+gap> S := ZeroSemigroup(IsPartialPermSemigroup, 15);
 <non-regular partial perm semigroup of size 15, rank 14 with 14 
  generators>
 gap> Size(S);
@@ -512,8 +512,7 @@ true]]></Example>
   <ManSection>
     <Oper Name="RectangularBand" Arg="m, n"/>
     <Returns>
-      A Rees matrix semigroup
-      isomorphic to an <A>m</A> by <A>n</A> rectangular band.
+      A semigroup isomorphic to an <A>m</A> by <A>n</A> rectangular band.
     </Returns>
       <Description>
         If <A>m</A> and <A>n</A> are positive integers,
@@ -525,7 +524,7 @@ true]]></Example>
         See <Ref Prop="IsRectangularBand"/> for more information.
 
         <Example><![CDATA[
-gap> S := RectangularBand(4, 8);
+gap> S := RectangularBand(IsReesMatrixSemigroup, 4, 8);
 <Rees matrix semigroup 4x8 over Group(())>
 gap> IsRectangularBand(S);
 true

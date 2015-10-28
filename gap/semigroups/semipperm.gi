@@ -602,28 +602,6 @@ end);
 
 #
 
-InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
-[IsPartialPermSemigroup and IsFinite, IsPosInt],
-function(filter, n)
-  local zero, gens, out, i;
-
-  zero := PartialPerm([], []);
-  if n = 1 then
-    gens := [zero];
-  else
-    gens := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      gens[i] := PartialPerm([2 * i - 1], [2 * i]);
-    od;
-  fi;
-  out := Semigroup(gens);
-  SetMultiplicativeZero(out, zero);
-  return out;
-end);
-
-#
-
 InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],

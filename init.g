@@ -47,6 +47,7 @@ ReadPackage("semigroups/gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gd");
 ReadPackage("semigroups/gap/semigroups/semipfmat.gd");
 ReadPackage("semigroups/gap/semigroups/examples.gd");
+ReadPackage("semigroups/gap/semigroups/constructions.gd");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gd");
 ReadPackage("semigroups/gap/main/setup.gd");

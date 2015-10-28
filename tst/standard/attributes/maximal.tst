@@ -74,7 +74,7 @@ the first argument <R> must be a Rees matrix semigroup whose underlying
 semigroup is a group,
 
 #T# maximal: MaximalSubsemigroups, for RMS and group, error, 3/4
-gap> R := RectangularBand(2, 2);
+gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over Group(())>
 gap> MaximalSubsemigroups(R, Group((1, 2)));
 Error, Semigroups: MaximalSubsemigroups: usage,

@@ -103,6 +103,7 @@ ReadPackage("semigroups/gap/semigroups/semiringmat.gi");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gi");
 ReadPackage("semigroups/gap/semigroups/semipfmat.gi");
 ReadPackage("semigroups/gap/semigroups/examples.gi");
+ReadPackage("semigroups/gap/semigroups/constructions.gi");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gi");
 ReadPackage("semigroups/gap/main/setup.gi");

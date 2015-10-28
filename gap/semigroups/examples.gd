@@ -47,18 +47,6 @@ DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 
-# Constructions
-DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
-DeclareOperation("MonogenicSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RectangularBand", [IsPosInt, IsPosInt]);
-
-DeclareGlobalFunction("TrivialSemigroup");
-DeclareConstructor("TrivialSemigroupCons", [IsSemigroup, IsInt]);
-DeclareGlobalFunction("LeftZeroSemigroup");
-DeclareConstructor("LeftZeroSemigroupCons", [IsSemigroup, IsPosInt]);
-DeclareGlobalFunction("RightZeroSemigroup");
-DeclareConstructor("RightZeroSemigroupCons", [IsSemigroup, IsPosInt]);
-
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);
 DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);
