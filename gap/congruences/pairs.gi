@@ -331,7 +331,8 @@ install_pairs_methods_with_filter@ := function(cong_type)
    cong_type.filter and cong_type.haspairs and IsFinite],
   function(cong1, cong2)
     return Range(cong1) = Range(cong2) and
-           AsLookupTable(cong1) = AsLookupTable(cong2);
+           ForAll(cong_type.pairs(cong1), pair -> pair in cong2) and
+           ForAll(cong_type.pairs(cong2), pair -> pair in cong1);
   end);
 
   #
@@ -561,3 +562,19 @@ od;
 # Finished installing methods for all three filters
 Unbind(cong_type@);
 Unbind(install_pairs_methods_with_filter@);
+
+#
+
+InstallMethod(CongruencesOfSemigroup,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  local elms, pairs, congs;
+  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+  
+  # Get all non-reflexive pairs in SxS
+  pairs := Combinations(elms, 2);
+  congs := Set(pairs, pair -> SemigroupCongruence(S, pair));
+  
+  return congs;
+end);
