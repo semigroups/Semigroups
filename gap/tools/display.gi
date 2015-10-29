@@ -175,7 +175,8 @@ function(x, opts)
   Append(str, "} {\n");
 
   if opts.labels then
-    Append(str, "    \\node [vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) ");
+    Append(str, "    \\node [vertex, label={[yshift=9mm]\\i}] ");
+    Append(str, "at (\\i/1.5, 3) ");
     Append(str, "{};\n");
   else
     Append(str, "    \\node [vertex] at (\\i/1.5, 3) {};\n");
@@ -303,7 +304,7 @@ end);
 InstallMethod(TikzString, "for a bipartition and record",
 [IsBipartition, IsRecord],
 function(x, opts)
-  local colors, fill, draw, ext, n, str, block, up, down, min, j, i, k;
+  local fill, draw, ext, n, str, block, up, down, min, j, i, k;
 
   if IsBound(opts.colors) and opts.colors = true and NrBlocks(x) < 20 then
     fill := i -> Concatenation("  \\fill[", SEMIGROUPS.TikzColors[i], "](");
@@ -449,7 +450,9 @@ function(blocks, opts)
   fi;
 
   if IsBound(opts.colors) and opts.colors = true and NrBlocks(blocks) < 20 then
-    draw := i -> Concatenation("  \\draw[ultra thick, ", SEMIGROUPS.TikzColors[i], "] (");
+    draw := i -> Concatenation("  \\draw[ultra thick, ",
+                               SEMIGROUPS.TikzColors[i],
+                               "] (");
     fill := i -> Concatenation("  \\fill[", SEMIGROUPS.TikzColors[i], "] (");
   else
     draw := i -> "  \\draw[ultra thick] (";

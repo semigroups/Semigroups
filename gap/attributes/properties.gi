@@ -560,7 +560,7 @@ function(S)
 
   # the follow will never be accessed: in GAP there is an immediate method
   # which sets IsGroupAsSemigroup to be false for IsGroup's
-  #if IsGroup(S) then 
+  #if IsGroup(S) then
   #  return false;
   #fi;
 
