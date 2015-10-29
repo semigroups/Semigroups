@@ -116,6 +116,8 @@ else
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
    HasGeneratorsOfSemigroup],
   function(S, T)
+    local poS, pS, poT, pT, iso;
+
     if S = T then
       return true;
     elif Size(S) <> Size(T) or NrRClasses(S) <> NrRClasses(T) or
@@ -128,6 +130,27 @@ else
     elif Size(S) < 32 or (HasSmallestMultiplicationTable(S)
                           and HasSmallestMultiplicationTable(T)) then
       return SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
+    fi;
+
+    # compare the partial orders of the D-classes
+
+    poS := Digraph(PartialOrderOfDClasses(S));
+    poS := OutNeighbours(DigraphReflexiveTransitiveClosure(poS));
+    pS := Graph(Group(()), [1 .. NrDClasses(S)], OnPoints,
+                function(i, j)
+                  return i in poS[j];
+                end, true);
+    poT := Digraph(PartialOrderOfDClasses(T));
+    poT := OutNeighbours(DigraphReflexiveTransitiveClosure(poT));
+    pT := Graph(Group(()), [1 .. NrDClasses(T)], OnPoints,
+                function(i, j)
+                  return i in poT[j];
+                end, true);
+
+    iso := GraphIsomorphism(pS, pT);
+
+    if iso = fail then
+      return false;
     fi;
 
     ErrorMayQuit("Semigroups: IsIsomorphicSemigroup:\n",
