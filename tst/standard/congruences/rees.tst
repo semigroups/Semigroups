@@ -105,10 +105,10 @@ false
 gap> [x, x] in cong;
 true
 gap> [x, y, y] in cong;
-Error, Semigroups: in: usage,
+Error, Semigroups: \in: usage,
 the first arg <pair> must be a list of length 2,
 gap> [x, z] in cong;
-Error, Semigroups: in: usage,
+Error, Semigroups: \in: usage,
 the elements of 1st arg <pair> must be in the range of 2nd arg <cong>,
 gap> t := Transformation([1, 3, 4, 1, 4]);;   # in i
 gap> [t, y] in cong;

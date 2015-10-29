@@ -295,7 +295,7 @@ false
 #T# semiringmat: \<, different types, 3/4
 gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > < Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [-infinity, 3]], 3);
-Error, Semigroups:  (for matrices over a semiring):
+Error, Semigroups: \< (for matrices over a semiring):
 the matrices are not of the same type,
 
 #T# semiringmat: \<, different dims, 4/4
