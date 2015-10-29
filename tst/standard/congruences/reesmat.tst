@@ -63,7 +63,7 @@ true
 gap> class1 := CongruenceClassOfElement(cong, x);;
 gap> class2 := CongruenceClassOfElement(cong, y);;
 gap> class3 := CongruenceClassOfElement(cong, z);
-{(1,(2,3,4),3)}
+<congruence class of (1,(2,3,4),3)>
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -178,7 +178,7 @@ true
 gap> class1 := CongruenceClassOfElement(cong, x);;
 gap> class2 := CongruenceClassOfElement(cong, y);;
 gap> class3 := CongruenceClassOfElement(cong, z);
-{(1,(1,3,5),2)}
+<congruence class of (1,(1,3,5),2)>
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -238,7 +238,7 @@ gap> Length(CongruenceClasses(uni)) = 1 and
 >   RMSElement(S, 1, (), 1)); # the first is after 4.7.7 the latter before
 true
 gap> eq := CongruenceClassOfElement(uni, y);
-{(6,(1,3,5),1)}
+<congruence class of (6,(1,3,5),1)>
 gap> eq := CongruenceClassOfElement(uni, y);;
 gap> z in eq;
 true

@@ -919,7 +919,9 @@ gap> R := PrincipalFactor(MinimalDClass(S));
 <Rees matrix semigroup 1x6 over Group(())>
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, []);;
 gap> EquivalenceClasses(cong);
-[ {(1,(),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, {(1,(),6)} ]
+[ <congruence class of (1,(),1)>, <congruence class of (1,(),2)>, 
+  <congruence class of (1,(),3)>, <congruence class of (1,(),4)>, 
+  <congruence class of (1,(),5)>, <congruence class of (1,(),6)> ]
 
 #T# TestInstall61: Issue 95:
 # No zero class in semigroup congruence EquivalenceClasses (generating pairs)
@@ -932,14 +934,28 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ {0}, {(1,(1,3),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, 
-  {(1,(),6)}, {(2,(),1)}, {(2,(),2)}, {(2,(),3)}, {(2,(),4)}, {(2,(),5)}, 
-  {(2,(),6)}, {(3,(),1)}, {(3,(),2)}, {(3,(),3)}, {(3,(),4)}, {(3,(),5)}, 
-  {(3,(),6)}, {(4,(),1)}, {(4,(),2)}, {(4,(),3)}, {(4,(),4)}, {(4,(),5)}, 
-  {(4,(),6)}, {(5,(),1)}, {(5,(),2)}, {(5,(),3)}, {(5,(),4)}, {(5,(),5)}, 
-  {(5,(),6)}, {(6,(),1)}, {(6,(),2)}, {(6,(),3)}, {(6,(),4)}, {(6,(),5)}, 
-  {(6,(),6)}, {(7,(),1)}, {(7,(),2)}, {(7,(),3)}, {(7,(),4)}, {(7,(),5)}, 
-  {(7,(),6)} ]
+[ <congruence class of 0>, <congruence class of (1,(1,3),1)>, 
+  <congruence class of (1,(),2)>, <congruence class of (1,(),3)>, 
+  <congruence class of (1,(),4)>, <congruence class of (1,(),5)>, 
+  <congruence class of (1,(),6)>, <congruence class of (2,(),1)>, 
+  <congruence class of (2,(),2)>, <congruence class of (2,(),3)>, 
+  <congruence class of (2,(),4)>, <congruence class of (2,(),5)>, 
+  <congruence class of (2,(),6)>, <congruence class of (3,(),1)>, 
+  <congruence class of (3,(),2)>, <congruence class of (3,(),3)>, 
+  <congruence class of (3,(),4)>, <congruence class of (3,(),5)>, 
+  <congruence class of (3,(),6)>, <congruence class of (4,(),1)>, 
+  <congruence class of (4,(),2)>, <congruence class of (4,(),3)>, 
+  <congruence class of (4,(),4)>, <congruence class of (4,(),5)>, 
+  <congruence class of (4,(),6)>, <congruence class of (5,(),1)>, 
+  <congruence class of (5,(),2)>, <congruence class of (5,(),3)>, 
+  <congruence class of (5,(),4)>, <congruence class of (5,(),5)>, 
+  <congruence class of (5,(),6)>, <congruence class of (6,(),1)>, 
+  <congruence class of (6,(),2)>, <congruence class of (6,(),3)>, 
+  <congruence class of (6,(),4)>, <congruence class of (6,(),5)>, 
+  <congruence class of (6,(),6)>, <congruence class of (7,(),1)>, 
+  <congruence class of (7,(),2)>, <congruence class of (7,(),3)>, 
+  <congruence class of (7,(),4)>, <congruence class of (7,(),5)>, 
+  <congruence class of (7,(),6)> ]
 gap> ForAny(c, x -> MultiplicativeZero(R) in x);
 true
 

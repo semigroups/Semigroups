@@ -172,3 +172,14 @@ function(arg)
     TryNextMethod();
   fi;
 end);
+
+#
+
+InstallMethod(ViewObj,
+"for a congruence class",
+[IsCongruenceClass],
+function(class)
+  Print("<congruence class of ");
+  ViewObj(Representative(class));
+  Print(">");
+end);

@@ -53,7 +53,7 @@ true
 gap> classx := CongruenceClassOfElement(cong, x);;
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);
-{Transformation( [ 2, 1, 2, 1, 1 ] )}
+<congruence class of Transformation( [ 2, 1, 2, 1, 1 ] )>
 gap> classx = classy;
 true
 gap> classz = classx;

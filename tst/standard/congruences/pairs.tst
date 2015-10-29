@@ -88,11 +88,11 @@ gap> v := SemigroupCongruence(S, [gens[1], gens[1]]); # trivial congruence
 <semigroup congruence over <commutative transformation semigroup of size 5, 
  degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(CongruenceClasses(v));
-[ {Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )}, 
-  {Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )}, 
-  {Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )}, 
-  {Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )}, 
-  {Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )} ]
+[ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
+  <congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )>, 
+  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )> ]
 gap> ForAny(CongruenceClasses(u), x -> x in classes);
 false
 gap> classes[1] * CongruenceClasses(u)[1];
@@ -102,9 +102,9 @@ gap> CongruenceClasses(u)[1] * classes[1];
 Error, Semigroups: *: usage,
 the args must be classes of the same congruence,
 gap> classes[3] * classes[4];
-{Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )}
+<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
-{Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )}
+<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> Representative(classes[5] * classes[2]) =
 > Representative(classes[5]) * Representative(classes[2]);
 true
@@ -139,7 +139,7 @@ gap> AsLookupTable(cong);
 [ 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ {Transformation( [ 2, 1, 1, 2, 1 ] )} ]
+[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
 gap> SEMIGROUPS_Enumerate(cong, ReturnFalse);
 fail
 
@@ -166,9 +166,10 @@ true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 1, 1, 1, 2, 3, 4, 2, 2, 3, 3, 4, 4 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 3, 4, 3, 4, 4 ] )}
-    , {Transformation( [ 3, 4, 3, 4, 3 ] )}, 
-  {Transformation( [ 4, 3, 3, 4, 4 ] )} ]
+[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
+  <congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
+  <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
+  <congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
 gap> SEMIGROUPS_Enumerate(cong, ReturnTrue);
 fail
 
@@ -197,7 +198,7 @@ true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ {Transformation( [ 3, 4, 3, 4, 3 ] )} ]
+[ <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
 gap> SEMIGROUPS_Enumerate(cong, ReturnFail);
 fail
 

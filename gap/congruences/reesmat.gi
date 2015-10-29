@@ -821,6 +821,24 @@ end);
 
 #
 
+InstallMethod(Enumerator,
+"for RMS congruence class by linked triple",
+[IsRMSCongruenceClassByLinkedTriple],
+function(class)
+  return ImagesElm(Parent(class), Representative(class));
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for RZMS congruence class by linked triple",
+[IsRZMSCongruenceClassByLinkedTriple],
+function(class)
+  return ImagesElm(Parent(class), Representative(class));
+end);
+
+#
+
 InstallMethod(JoinSemigroupCongruences,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
