@@ -16,9 +16,9 @@
     </Heading>
 
     In this section, we describe the operations in &Semigroups; that can be
-    used to creating semigroups belonging to several standard classes of
-    example. See Chapter <Ref Chap="bipartition"/> for more information about
-    semigroups of bipartitions. 
+    used to create transformation semigroups belonging to several standard
+    classes of example. See <Ref Chap="Transformations" BookName="ref"/> for
+    more information about semigroups of transformations. 
     <#Include Label="EndomorphismsPartition"> 
     <#Include Label="PartialTransformationSemigroup"> 
     <#Include Label="MunnSemigroup">
@@ -43,6 +43,11 @@
     <Heading>
       Semigroups of bipartitions
     </Heading>
+
+    In this section, we describe the operations in &Semigroups; that can be
+    used to create bipartition semigroups belonging to several standard
+    classes of example. See Chapter <Ref Chap="bipartition"/> for more
+    information about semigroups of bipartitions.
     <#Include Label="PartitionMonoid"> 
     <#Include Label="BrauerMonoid"> 
     <#Include Label="JonesMonoid"> 
