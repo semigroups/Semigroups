@@ -59,6 +59,7 @@ InstallTrueMethod(IsLeftSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsLeftZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsRightZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsZeroSemigroup, IsSemigroup and IsTrivial);
+InstallTrueMethod(IsNilpotentSemigroup, IsZeroSemigroup);
 InstallTrueMethod(IsNilpotentSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
 InstallTrueMethod(IsLTrivial, IsDTrivial);

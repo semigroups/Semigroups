@@ -74,7 +74,7 @@ InstallMethod(IsomorphismPBRSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
   local deg, gens;
-  deg := DegreeOfTransformationSemigroup(S);
+  deg := Maximum(1, DegreeOfTransformationSemigroup(S));
   gens := List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg));
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
                                        AsPBR, AsTransformation);

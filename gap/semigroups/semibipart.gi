@@ -227,7 +227,7 @@ InstallMethod(IsomorphismBipartitionSemigroup,
 function(S)
   local n, source, range, i;
 
-  n := DegreeOfTransformationSemigroup(S);
+  n := Maximum(1, DegreeOfTransformationSemigroup(S));
   source := GeneratorsOfSemigroup(S);
   range := EmptyPlist(Length(source));
 
