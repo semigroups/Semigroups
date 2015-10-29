@@ -44,6 +44,12 @@ true
 gap> RMSCongruenceByLinkedTriple(S, SymmetricGroup(3), colBlocks, rowBlocks);
 Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
 the second arg <n> must be a normal subgroup,
+gap> RMSCongruenceByLinkedTriple(S, n, [1, [2]], rowBlocks);
+Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
+the third arg <colBlocks> must be a list of lists,
+gap> RMSCongruenceByLinkedTriple(S, n, colBlocks, [[1,2], 3]);
+Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
+the fourth arg <rowBlocks> must be a list of lists,
 
 #T# ReesMatCongTest4: Testing membership
 gap> x := ReesZeroMatrixSemigroupElement(S, 1, (2, 3), 2);;
