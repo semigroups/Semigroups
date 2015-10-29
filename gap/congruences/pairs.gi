@@ -567,8 +567,7 @@ Unbind(install_pairs_methods_with_filter@);
 
 InstallMethod(IsSubcongruence,
 "for two semigroup congruences",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+[IsSemigroupCongruence, IsSemigroupCongruence],
 function(cong1, cong2)
   # Tests whether cong2 is a subcongruence of cong1
   if Range(cong1) <> Range(cong2) then
@@ -677,7 +676,7 @@ function(S)
 
   # Add the trivial congruence at the start
   children := Concatenation([[]], children + 1);
-  for i in [2 .. nrcongs] do
+  for i in [2 .. nrcongs+1] do
     Add(children[i], 1, 1);
   od;
   Add(congs, SemigroupCongruence(S, []), 1);

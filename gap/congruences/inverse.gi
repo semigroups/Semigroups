@@ -119,6 +119,23 @@ end);
 
 #
 
+InstallMethod(IsSubcongruence,
+"for two inverse semigroup congruences",
+[IsInverseSemigroupCongruenceByKernelTrace,
+ IsInverseSemigroupCongruenceByKernelTrace],
+function(cong1, cong2)
+  # Tests whether cong2 is a subcongruence of cong1
+  if Range(cong1) <> Range(cong2) then
+    ErrorMayQuit("Semigroups: IsSubcongruence: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return IsSubsemigroup(cong1!.kernel, cong2!.kernel)
+         and ForAll(cong2!.traceBlocks,
+                    b2 -> ForAny(cong1!.traceBlocks, b1 -> IsSubset(b1, b2)));
+end);
+
+#
+
 InstallMethod(ImagesElm,
 "for inverse semigroup congruence and associative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],

@@ -112,6 +112,24 @@ end);
 
 #
 
+InstallMethod(IsSubcongruence,
+"for two Rees congruences",
+[IsReesCongruence, IsReesCongruence],
+function(cong1, cong2)
+  local i1, i2;
+  # Tests whether cong2 is a subcongruence of cong1
+  if Range(cong1) <> Range(cong2) then
+    ErrorMayQuit("Semigroups: IsSubcongruence: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  i1 := SemigroupIdealOfReesCongruence(cong1);
+  i2 := SemigroupIdealOfReesCongruence(cong2);
+  return ForAll(GeneratorsOfSemigroupIdeal(i2), gen -> gen in i1);
+end);
+
+#
+
+
 InstallMethod(\in,
 "for an associative element collection and a Rees congruence",
 [IsAssociativeElementCollection, IsReesCongruence],
