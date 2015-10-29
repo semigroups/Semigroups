@@ -12,6 +12,501 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
+#T# constructions: TrivialSemigroup: errors
+gap> S := TrivialSemigroup(-1);
+Error, Semigroups: TrivialSemigroup: usage,
+the arguments must be a non-negative integer or a filter and a non-negative
+integer,
+gap> S := TrivialSemigroup(IsPartialPermSemigroup, -1);
+Error, Semigroups: TrivialSemigroup: usage,
+the arguments must be a non-negative integer or a filter and a non-negative
+integer,
+gap> S := TrivialSemigroup(0, 1);
+Error, Semigroups: TrivialSemigroup: usage,
+the arguments must be a non-negative integer or a filter and a non-negative
+integer,
+gap> S := TrivialSemigroup(IsPartialPermSemigroup, 1, 1);
+Error, Semigroups: TrivialSemigroup: usage,
+the arguments must be a non-negative integer or a filter and a non-negative
+integer,
+gap> S := TrivialSemigroup(IsPermGroup, 1, 1);
+Error, Semigroups: TrivialSemigroup: usage,
+the arguments must be a non-negative integer or a filter and a non-negative
+integer,
+gap> S := TrivialSemigroup(IsMaxPlusMatrixSemigroup);
+Error, Semigroups: TrivialSemigroup: usage,
+the requested filter is not supported,
+
+#T# constructions: TrivialSemigroup: known properties and attributes
+gap> S := TrivialSemigroup(IsPartialPermSemigroup, 5);;
+gap> HasIsTrivial(S);
+true
+gap> IsTrivial(S);
+true
+gap> S := Semigroup(S);;
+gap> HasIsTrivial(S);
+false
+gap> IsTrivial(S);
+true
+
+#T# constructions: TrivialSemigroup: default
+gap> S := TrivialSemigroup();
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := TrivialSemigroup(0);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := TrivialSemigroup(1);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := TrivialSemigroup(5);
+<trivial transformation group of degree 5 with 1 generator>
+gap> S := TrivialSemigroup(10);
+<trivial transformation group of degree 10 with 1 generator>
+
+#T# constructions: TrivialSemigroup: transformation semigroup
+gap> S := TrivialSemigroup(IsTransformationSemigroup);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := TrivialSemigroup(IsTransformationSemigroup, 0);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := TrivialSemigroup(IsTransformationSemigroup, 1);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := TrivialSemigroup(IsTransformationSemigroup, 5);
+<trivial transformation group of degree 5 with 1 generator>
+gap> S := TrivialSemigroup(IsTransformationSemigroup, 10);
+<trivial transformation group of degree 10 with 1 generator>
+
+#T# constructions: TrivialSemigroup: partial perm semigroup
+gap> S := TrivialSemigroup(IsPartialPermSemigroup);
+<trivial partial perm group of rank 0 with 1 generator>
+gap> S := TrivialSemigroup(IsPartialPermSemigroup, 0);
+<trivial partial perm group of rank 0 with 1 generator>
+gap> S := TrivialSemigroup(IsPartialPermSemigroup, 1);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> S := TrivialSemigroup(IsPartialPermSemigroup, 5);
+<trivial partial perm group of rank 5 with 1 generator>
+gap> S := TrivialSemigroup(IsPartialPermSemigroup, 10);
+<trivial partial perm group of rank 10 with 1 generator>
+
+#T# constructions: TrivialSemigroup: bipartition semigroup
+gap> S := TrivialSemigroup(IsBipartitionSemigroup);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsBipartitionSemigroup, 0);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsBipartitionSemigroup, 1);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsBipartitionSemigroup, 5);
+<trivial bipartition group of degree 5 with 1 generator>
+gap> S := TrivialSemigroup(IsBipartitionSemigroup, 10);
+<trivial bipartition group of degree 10 with 1 generator>
+
+#T# constructions: TrivialSemigroup: block bijection semigroup
+gap> S := TrivialSemigroup(IsBlockBijectionSemigroup);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 0);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 1);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 5);
+<trivial bipartition group of degree 5 with 1 generator>
+gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 10);
+<trivial bipartition group of degree 10 with 1 generator>
+
+#T# constructions: TrivialSemigroup: PBR semigroup
+gap> S := TrivialSemigroup(IsPBRSemigroup);
+<trivial pbr monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsPBRSemigroup, 0);
+<trivial pbr monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsPBRSemigroup, 1);
+<trivial pbr monoid of degree 1 with 0 generators>
+gap> S := TrivialSemigroup(IsPBRSemigroup, 5);
+<trivial pbr monoid of degree 5 with 0 generators>
+gap> S := TrivialSemigroup(IsPBRSemigroup, 10);
+<trivial pbr monoid of degree 10 with 0 generators>
+
+#T# constructions: TrivialSemigroup: Boolean matrix semigroup
+gap> S := TrivialSemigroup(IsBooleanMatSemigroup);
+<trivial monoid of 1x1 boolean matrices with 0 generators>
+gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 0);
+<trivial monoid of 1x1 boolean matrices with 0 generators>
+gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 1);
+<trivial monoid of 1x1 boolean matrices with 0 generators>
+gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 5);
+<trivial monoid of 5x5 boolean matrices with 0 generators>
+gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 10);
+<trivial monoid of 10x10 boolean matrices with 0 generators>
+
+#T# constructions: MonogenicSemigroup: errors
+gap> S := MonogenicSemigroup(0);
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 0);
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := MonogenicSemigroup(0, 1);
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 0, 0);
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := MonogenicSemigroup(IsPermGroup, 1, 1, 1);
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 2, true);
+Error, Semigroups: MonogenicSemigroup: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := MonogenicSemigroup(IsMaxPlusMatrixSemigroup, 100, 100);
+Error, Semigroups: MonogenicSemigroup: usage,
+the requested filter is not supported,
+
+#T# constructions: MonogenicSemigroup: known properties and attributes, [4, 7]
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 4, 7);;
+gap> IndexPeriodOfPartialPerm(GeneratorsOfSemigroup(S)[1]);
+[ 4, 7 ]
+gap> HasSize(S);
+true
+gap> Size(S) = 4 + 7 - 1;
+true
+gap> HasIsMonogenicSemigroup(S);
+true
+gap> IsMonogenicSemigroup(S);
+true
+gap> HasIsGroupAsSemigroup(S);
+true
+gap> IsGroupAsSemigroup(S);
+false
+gap> HasIsRegularSemigroup(S);
+true
+gap> IsRegularSemigroup(S);
+false
+gap> HasIsZeroSemigroup(S);
+true
+gap> IsZeroSemigroup(S);
+false
+gap> S := Semigroup(S);;
+gap> IndexPeriodOfPartialPerm(GeneratorsOfSemigroup(S)[1]);
+[ 4, 7 ]
+gap> Size(S) = 4 + 7 - 1;
+true
+gap> IsMonogenicSemigroup(S);
+true
+gap> IsGroupAsSemigroup(S);
+false
+gap> IsRegularSemigroup(S);
+false
+gap> IsZeroSemigroup(S);
+false
+
+#T# constructions: MonogenicSemigroup: known properties and attributes, [2, 1]
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 2, 1);;
+gap> HasIsZeroSemigroup(S);
+true
+gap> IsZeroSemigroup(S);
+true
+gap> S := Semigroup(S);;
+gap> IsZeroSemigroup(S);
+true
+
+#T# constructions: MonogenicSemigroup: known properties and attributes, [1, 2]
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 1, 2);;
+gap> HasIsGroupAsSemigroup(S);
+true
+gap> IsGroupAsSemigroup(S);
+true
+gap> S := Semigroup(S);;
+gap> IsGroupAsSemigroup(S);
+true
+
+#T# constructions: MonogenicSemigroup: default
+gap> S := MonogenicSemigroup(1, 1);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := MonogenicSemigroup(2, 1);
+<commutative non-regular transformation semigroup of size 2, degree 3 with 1 
+ generator>
+gap> S := MonogenicSemigroup(1, 2);
+<transformation group of size 2, degree 2 with 1 generator>
+gap> S := MonogenicSemigroup(5, 5);
+<commutative non-regular transformation semigroup of size 9, degree 10 with 1 
+ generator>
+gap> S := MonogenicSemigroup(10, 11);
+<commutative non-regular transformation semigroup of size 20, degree 21 with 
+ 1 generator>
+
+#T# constructions: MonogenicSemigroup: transformation semigroup
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 1, 1);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 2, 1);
+<commutative non-regular transformation semigroup of size 2, degree 3 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 1, 2);
+<transformation group of size 2, degree 2 with 1 generator>
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 5, 5);
+<commutative non-regular transformation semigroup of size 9, degree 10 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 10, 11);
+<commutative non-regular transformation semigroup of size 20, degree 21 with 
+ 1 generator>
+
+#T# constructions: MonogenicSemigroup: partial perm semigroup
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 1, 1);
+<trivial partial perm group of rank 0 with 1 generator>
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 2, 1);
+<commutative non-regular partial perm semigroup of size 2, rank 1 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 1, 2);
+<partial perm group of size 2, rank 2 with 1 generator>
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 5, 5);
+<commutative non-regular partial perm semigroup of size 9, rank 9 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 10, 11);
+<commutative non-regular partial perm semigroup of size 20, rank 20 with 1 
+ generator>
+
+#T# constructions: MonogenicSemigroup: bipartition semigroup
+gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 1, 1);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 2, 1);
+<commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 1, 2);
+<bipartition group of size 2, degree 2 with 1 generator>
+gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 5, 5);
+<commutative non-regular bipartition semigroup of size 9, degree 11 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 10, 11);
+<commutative non-regular bipartition semigroup of size 20, degree 22 with 1 
+ generator>
+
+#T# constructions: MonogenicSemigroup: block bijection semigroup
+gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 1, 1);
+<trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 2, 1);
+<commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 1, 2);
+<bipartition group of size 2, degree 2 with 1 generator>
+gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 5, 5);
+<commutative non-regular bipartition semigroup of size 9, degree 11 with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 10, 11);
+<commutative non-regular bipartition semigroup of size 20, degree 22 with 1 
+ generator>
+
+#T# constructions: MonogenicSemigroup: PBR semigroup
+gap> S := MonogenicSemigroup(IsPBRSemigroup, 1, 1);
+<trivial pbr group of degree 1 with 1 generator>
+gap> S := MonogenicSemigroup(IsPBRSemigroup, 2, 1);
+<commutative non-regular pbr semigroup of size 2, degree 3 with 1 generator>
+gap> S := MonogenicSemigroup(IsPBRSemigroup, 1, 2);
+<pbr group of size 2, degree 2 with 1 generator>
+gap> S := MonogenicSemigroup(IsPBRSemigroup, 5, 5);
+<commutative non-regular pbr semigroup of size 9, degree 11 with 1 generator>
+gap> S := MonogenicSemigroup(IsPBRSemigroup, 10, 11);
+<commutative non-regular pbr semigroup of size 20, degree 22 with 1 generator>
+
+#T# constructions: MonogenicSemigroup: Boolean matrix semigroup
+gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 1, 1);
+<trivial monoid of 1x1 boolean matrices with 0 generators>
+gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 2, 1);
+<commutative non-regular semigroup of size 2, 3x3 boolean matrices with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 1, 2);
+<group of size 2, 2x2 boolean matrices with 1 generator>
+gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 5, 5);
+<commutative non-regular semigroup of size 9, 10x10 boolean matrices with 1 
+ generator>
+gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 10, 11);
+<commutative non-regular semigroup of size 20, 21x21 boolean matrices with 1 
+ generator>
+
+#T# constructions: RectangularBand: errors
+gap> S := RectangularBand(0);
+Error, Semigroups: RectangularBand: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := RectangularBand(IsPartialPermSemigroup, 0);
+Error, Semigroups: RectangularBand: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := RectangularBand(0, 1);
+Error, Semigroups: RectangularBand: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := RectangularBand(IsPartialPermSemigroup, 0, 0);
+Error, Semigroups: RectangularBand: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := RectangularBand(IsPermGroup, 1, 1, 1);
+Error, Semigroups: RectangularBand: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := RectangularBand(IsPartialPermSemigroup, 2, true);
+Error, Semigroups: RectangularBand: usage,
+the arguments must be two positive integers or a filter and a two positive
+integers,
+gap> S := RectangularBand(IsMaxPlusMatrixSemigroup, 100, 100);
+Error, Semigroups: RectangularBand: usage,
+the requested filter is not supported,
+
+#T# constructions: RectangularBand: known properties and attributes, [3, 4]
+gap> S := RectangularBand(3, 4);;
+gap> HasSize(S);
+true
+gap> Size(S) = 3 * 4;
+true
+gap> HasIsRectangularBand(S);
+true
+gap> IsRectangularBand(S);
+true
+gap> HasIsGroupAsSemigroup(S);
+true
+gap> IsGroupAsSemigroup(S);
+false
+gap> HasIsTrivial(S);
+true
+gap> IsTrivial(S);
+false
+gap> HasIsRightZeroSemigroup(S);
+true
+gap> IsRightZeroSemigroup(S);
+false
+gap> HasIsLeftZeroSemigroup(S);
+true
+gap> IsLeftZeroSemigroup(S);
+false
+gap> S := Semigroup(S);;
+gap> Size(S) = 3 * 4;
+true
+gap> IsRectangularBand(S);
+true
+gap> IsGroupAsSemigroup(S);
+false
+gap> IsTrivial(S);
+false
+gap> IsRightZeroSemigroup(S);
+false
+gap> IsLeftZeroSemigroup(S);
+false
+
+#T# constructions: RectangularBand: known properties and attributes, [1, 1]
+gap> S := RectangularBand(IsBooleanMatSemigroup, 1, 1);;
+gap> HasIsTrivial(S);
+true
+gap> IsTrivial(S);
+true
+gap> S := Semigroup(S);;
+gap> IsTrivial(S);
+true
+
+#T# constructions: RectangularBand: known properties and attributes, [2, 1]
+gap> S := RectangularBand(IsBooleanMatSemigroup, 2, 1);;
+gap> HasIsLeftZeroSemigroup(S);
+true
+gap> IsLeftZeroSemigroup(S);
+true
+gap> S := Semigroup(S);;
+gap> IsLeftZeroSemigroup(S);
+true
+
+#T# constructions: RectangularBand: known properties and attributes, [1, 2]
+gap> S := RectangularBand(IsBooleanMatSemigroup, 1, 2);;
+gap> HasIsRightZeroSemigroup(S);
+true
+gap> IsRightZeroSemigroup(S);
+true
+gap> S := Semigroup(S);;
+gap> IsRightZeroSemigroup(S);
+true
+
+#T# constructions: RectangularBand: default
+gap> S := RectangularBand(1, 1);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := RectangularBand(2, 1);
+<regular transformation semigroup of size 2, degree 3 with 2 generators>
+gap> S := RectangularBand(1, 2);
+<regular transformation semigroup of size 2, degree 2 with 2 generators>
+gap> S := RectangularBand(5, 5);
+<regular transformation semigroup of size 25, degree 26 with 5 generators>
+gap> S := RectangularBand(10, 11);
+<regular transformation semigroup of size 110, degree 111 with 11 generators>
+
+#T# constructions: RectangularBand: transformation semigroup
+gap> S := RectangularBand(IsTransformationSemigroup, 1, 1);
+<trivial transformation group of degree 0 with 0 generators>
+gap> S := RectangularBand(IsTransformationSemigroup, 2, 1);
+<regular transformation semigroup of size 2, degree 3 with 2 generators>
+gap> S := RectangularBand(IsTransformationSemigroup, 1, 2);
+<regular transformation semigroup of size 2, degree 2 with 2 generators>
+gap> S := RectangularBand(IsTransformationSemigroup, 5, 5);
+<regular transformation semigroup of size 25, degree 26 with 5 generators>
+gap> S := RectangularBand(IsTransformationSemigroup, 10, 11);
+<regular transformation semigroup of size 110, degree 111 with 11 generators>
+
+#T# constructions: RectangularBand: partial perm semigroup
+gap> S := RectangularBand(IsPartialPermSemigroup, 1, 1);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+gap> S := RectangularBand(IsPartialPermSemigroup, 2, 2);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+
+#T# constructions: RectangularBand: bipartition semigroup
+gap> S := RectangularBand(IsBipartitionSemigroup, 1, 1);
+<trivial bipartition group of degree 1 with 1 generator>
+gap> S := RectangularBand(IsBipartitionSemigroup, 2, 1);
+<regular bipartition semigroup of size 2, degree 2 with 2 generators>
+gap> S := RectangularBand(IsBipartitionSemigroup, 1, 2);
+<regular bipartition semigroup of size 2, degree 2 with 2 generators>
+gap> S := RectangularBand(IsBipartitionSemigroup, 5, 5);
+<regular bipartition semigroup of size 25, degree 3 with 5 generators>
+gap> S := RectangularBand(IsBipartitionSemigroup, 10, 11);
+<regular bipartition semigroup of size 110, degree 4 with 11 generators>
+
+#T# constructions: RectangularBand: block bijection semigroup
+gap> S := RectangularBand(IsBlockBijectionSemigroup, 1, 1);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+gap> S := RectangularBand(IsBlockBijectionSemigroup, 2, 2);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+
+#T# constructions: RectangularBand: PBR semigroup
+gap> S := RectangularBand(IsPBRSemigroup, 1, 1);
+<trivial pbr group of degree 1 with 1 generator>
+gap> S := RectangularBand(IsPBRSemigroup, 2, 1);
+<regular pbr semigroup of size 2, degree 2 with 2 generators>
+gap> S := RectangularBand(IsPBRSemigroup, 1, 2);
+<regular pbr semigroup of size 2, degree 2 with 2 generators>
+gap> S := RectangularBand(IsPBRSemigroup, 5, 5);
+<regular pbr semigroup of size 25, degree 3 with 5 generators>
+gap> S := RectangularBand(IsPBRSemigroup, 10, 11);
+<regular pbr semigroup of size 110, degree 4 with 11 generators>
+
+#T# constructions: RectangularBand: Boolean matrix semigroup
+gap> S := RectangularBand(IsBooleanMatSemigroup, 1, 1);
+<trivial group of 2x2 boolean matrices with 1 generator>
+gap> S := RectangularBand(IsBooleanMatSemigroup, 2, 1);
+<regular semigroup of size 2, 3x3 boolean matrices with 2 generators>
+gap> S := RectangularBand(IsBooleanMatSemigroup, 1, 2);
+<regular semigroup of size 2, 3x3 boolean matrices with 2 generators>
+gap> S := RectangularBand(IsBooleanMatSemigroup, 5, 5);
+<regular semigroup of size 25, 26x26 boolean matrices with 5 generators>
+
+#T# constructions: RectangularBand: Rees matrix semigroup
+gap> S := RectangularBand(IsReesMatrixSemigroup, 1, 1);
+<Rees matrix semigroup 1x1 over Group(())>
+gap> S := RectangularBand(IsReesMatrixSemigroup, 2, 1);
+<Rees matrix semigroup 2x1 over Group(())>
+gap> S := RectangularBand(IsReesMatrixSemigroup, 1, 2);
+<Rees matrix semigroup 1x2 over Group(())>
+gap> S := RectangularBand(IsReesMatrixSemigroup, 5, 5);
+<Rees matrix semigroup 5x5 over Group(())>
+gap> S := RectangularBand(IsReesMatrixSemigroup, 10, 11);
+<Rees matrix semigroup 10x11 over Group(())>
+
 #T# constructions: ZeroSemigroup: errors
 gap> S := ZeroSemigroup(0);
 Error, Semigroups: ZeroSemigroup: usage,
@@ -31,6 +526,9 @@ Error, no 1st choice method found for `ZeroSemigroupCons' on 2 arguments
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 2, true);
 Error, Semigroups: ZeroSemigroup: usage,
 the arguments must be a positive integer or a filter and a positive integer,
+gap> S := ZeroSemigroup(IsMaxPlusMatrixSemigroup, 100);
+Error, Semigroups: ZeroSemigroup: usage,
+the requested filter is not supported,
 
 #T# constructions: ZeroSemigroup: known properties and attributes, n = 1
 gap> S := ZeroSemigroup(1);;
@@ -186,6 +684,9 @@ true
 #T# constructions: ZeroSemigroup: bipartition semigroup
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 1);
 <trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := ZeroSemigroup(IsBipartitionSemigroup, 2);
+<commutative non-regular bipartition semigroup of size 2, degree 2 with 1 
+ generator>
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 5);
 <non-regular bipartition semigroup of size 5, degree 8 with 4 generators>
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 10);
@@ -196,6 +697,9 @@ true
 #T# constructions: ZeroSemigroup: block bijection semigroup
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 1); 
 <trivial bipartition monoid of degree 1 with 0 generators>
+gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 2); 
+<commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
+ generator>
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 5);
 <non-regular bipartition semigroup of size 5, degree 8 with 4 generators>
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 10);
@@ -238,864 +742,81 @@ gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 10);
 gap> IsZeroSemigroup(Semigroup(S));
 true
 
-# IsTransformationSemigroup
-gap> S := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 1));
+#T# constructions: LeftZeroSemigroup, error
+gap> S := LeftZeroSemigroup();
+Error, Semigroups: LeftZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := LeftZeroSemigroup(0);
+Error, Semigroups: LeftZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := LeftZeroSemigroup(0, 1);
+Error, Semigroups: LeftZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := LeftZeroSemigroup(IsTransformationSemigroup, 0);
+Error, Semigroups: LeftZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := LeftZeroSemigroup(1, 2, 3);
+Error, Semigroups: LeftZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := LeftZeroSemigroup(IsMaxPlusMatrixSemigroup, 4);
+Error, Semigroups: RectangularBand: usage,
+the requested filter is not supported,
+gap> S := LeftZeroSemigroup(IsGroup, 4);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
+
+#T# constructions: LeftZeroSemigroup 
+gap> S := LeftZeroSemigroup(1);
 <trivial transformation group of degree 0 with 0 generators>
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-1
-gap> Elements(S);
-[ IdentityTransformation ]
-gap> S := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 2));
-<commutative transformation semigroup of degree 3 with 1 generator>
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-2
-gap> Elements(S);
-[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 3, 1 ] ) ]
-gap> S := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 10));
-<transformation semigroup of degree 19 with 9 generators>
-gap> IsZeroSemigroup(S);
+gap> S := LeftZeroSemigroup(IsBipartitionSemigroup, 10);
+<regular bipartition semigroup of size 10, degree 4 with 10 generators>
+gap> IsLeftZeroSemigroup(Semigroup(S));
 true
 gap> Size(S);
 10
-gap> Elements(S);
-[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-     1, 19, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-     1, 17, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-     1, 15, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 13, 1, 1, 1, 1, 1, 1,
-      1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1,
-      1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1,
-     1, 1, 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1,
-      1, 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1 ] ), Transformation( [ 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-     1, 1, 1 ] ) ]
 
-# IsReesZeroMatrixSemigroup
-gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 1);
-Error, Semigroups: ZeroSemigroup: usage:
-there is no Rees 0-matrix semigroup of order 1,
-gap> S := ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 1);
-Error, Semigroups: ZeroSemigroupCons: usage:
-there is no Rees 0-matrix semigroup of order 1,
-gap> S := Semigroup(ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 2));;
-gap> IsReesZeroMatrixSemigroup(S);
-true
-gap> s;
-<Rees 0-matrix semigroup 1x1 over Group(())>
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-2
-gap> S := Semigroup(ZeroSemigroupCons(IsReesZeroMatrixSemigroup, 20));;
-gap> IsReesZeroMatrixSemigroup(S);
-true
-gap> s;
-<Rees 0-matrix semigroup 19x1 over Group(())>
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-20
-
-# IsBipartitionSemigroup and IsBlockBijectionSemigroup
-gap> S := ZeroSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
-gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
-gap> last = last2;
-true
-gap> S := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 2));
-<commutative bipartition semigroup of degree 2 with 1 generator>
-gap> IsBlockBijectionSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-2
-gap> S := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 2));
-<commutative bipartition semigroup of degree 3 with 1 generator>
-gap> IsBlockBijectionSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-2
-gap> S := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 20));
-<bipartition semigroup of degree 38 with 19 generators>
-gap> IsBlockBijectionSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-20
-gap> S := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 20));
-<bipartition semigroup of degree 38 with 19 generators>
-gap> IsBlockBijectionSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-20
-
-# Zero semigroup of order 1
-gap> S := ZeroSemigroup(1);
-<trivial partial perm group of rank 0 with 0 generators>
-gap> GeneratorsOfSemigroup(S);
-[ <empty partial perm> ]
-gap> HasAsList(S);
-true
-gap> AsList(S) = GeneratorsOfSemigroup(S);
-true
-gap> HasMultiplicativeZero(S);
-true
-gap> MultiplicativeZero(S);
-<empty partial perm>
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> IsMonogenicSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> IsRegularSemigroup(S);
-true
-gap> IsGroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-
-# Zero semigroup of order 2
-gap> S := ZeroSemigroup(2);
-<commutative non-regular partial perm semigroup of size 2, rank 1 with 1 
- generator>
-gap> HasIsZeroSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-false
-gap> HasAsList(S);
-true
-gap> AsList(S);
-[ [1,2], <empty partial perm> ]
-gap> Elements(S);
-[ <empty partial perm>, [1,2] ]
-gap> HasMultiplicativeZero(S);
-true
-gap> MultiplicativeZero(S);
-<empty partial perm>
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> IsMonogenicSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> IsRegularSemigroup(S);
-false
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-
-# Not created by ZeroSemigroup
-gap> S := Semigroup(S);;
-gap> HasIsZeroSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-false
-gap> HasAsList(S);
-false
-gap> AsList(S);
-[ [1,2], <empty partial perm> ]
-gap> Elements(S);
-[ <empty partial perm>, [1,2] ]
-gap> S := Semigroup(S);;
-gap> HasMultiplicativeZero(S);
-false
-gap> MultiplicativeZero(S);
-<empty partial perm>
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> IsMonogenicSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> HasIsGroupAsSemigroup(S);
-false
-gap> IsGroupAsSemigroup(S);
-false
-
-# Zero semigroup of order 50
-gap> S := ZeroSemigroup(50);
-<non-regular partial perm semigroup of size 50, rank 49 with 49 generators>
-gap> HasIsZeroSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-false
-gap> HasAsList(S);
-true
-gap> IsSubset(AsList(S), Elements(S)) and IsSubset(Elements(S), AsList(S));
-true
-gap> HasMultiplicativeZero(S);
-true
-gap> MultiplicativeZero(S);
-<empty partial perm>
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> IsMonogenicSemigroup(S);
-false
-gap> HasIsRegularSemigroup(S);
-true
-gap> IsRegularSemigroup(S);
-false
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-
-# Not created by ZeroSemigroup
-gap> S := Semigroup(S);;
-gap> HasIsZeroSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-false
-gap> HasAsList(S);
-false
-gap> IsSubset(AsList(S), Elements(S)) and IsSubset(Elements(S), AsList(S));
-true
-gap> S := Semigroup(S);;
-gap> HasMultiplicativeZero(S);
-false
-gap> MultiplicativeZero(S);
-<empty partial perm>
-gap> HasIsMonogenicSemigroup(S);
-false
-gap> IsMonogenicSemigroup(S);
-false
-gap> HasIsRegularSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> HasIsGroupAsSemigroup(S);
-false
-gap> IsGroupAsSemigroup(S);
-false
-
-#T# ConstructionsTest33: MonogenicSemigroup
-gap> S := MonogenicSemigroup(0, 1);
+#T# constructions: RightZeroSemigroup, error
+gap> S := RightZeroSemigroup();
+Error, Semigroups: RightZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := RightZeroSemigroup(0);
+Error, Semigroups: RightZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := RightZeroSemigroup(0, 1);
+Error, Semigroups: RightZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := RightZeroSemigroup(IsTransformationSemigroup, 0);
+Error, Semigroups: RightZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := RightZeroSemigroup(1, 2, 3);
+Error, Semigroups: RightZeroSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer,
+gap> S := RightZeroSemigroup(IsMaxPlusMatrixSemigroup, 4);
+Error, Semigroups: RectangularBand: usage,
+the requested filter is not supported,
+gap> S := RightZeroSemigroup(IsGroup, 4);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `MonogenicSemigroup' on 2 arguments
-gap> S := MonogenicSemigroup(1, 0);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `MonogenicSemigroup' on 2 arguments
+Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
 
-# Trivial monogenic semigroup
-gap> S := MonogenicSemigroup(1, 1);
+#T# constructions: RightZeroSemigroup
+gap> S := RightZeroSemigroup(1);
 <trivial transformation group of degree 0 with 0 generators>
-gap> HasSize(S);
+gap> S := RightZeroSemigroup(IsBipartitionSemigroup, 10);
+<regular bipartition semigroup of size 10, degree 4 with 10 generators>
+gap> IsRightZeroSemigroup(Semigroup(S));
 true
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> Size(S);
-1
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> GeneratorsOfSemigroup(S);
-[ IdentityTransformation ]
-
-# Not created by MonogenicSemigroup
-gap> S := Semigroup(S);;
-gap> HasSize(S);
-false
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> Size(S);
-1
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> GeneratorsOfSemigroup(S);
-[ IdentityTransformation ]
-gap> IndexPeriodOfTransformation(last[1]);
-[ 1, 1 ]
-
-# MonogenicSemigroup(2, 1)
-gap> S := MonogenicSemigroup(2, 1);
-<commutative non-regular transformation semigroup of size 2, degree 3 with 1 
- generator>
-gap> HasSize(S);
-true
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> Size(S);
-2
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-true
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 1, 1, 2 ] ) ]
-
-# Not created by MonogenicSemigroup
-gap> S := Semigroup(S);;
-gap> HasSize(S);
-false
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-false
-gap> HasIsRegularSemigroup(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> Size(S);
-2
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-true
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 1, 1, 2 ] ) ]
-gap> IndexPeriodOfTransformation(last[1]);
-[ 2, 1 ]
-
-# MonogenicSemigroup(3, 1)
-gap> S := MonogenicSemigroup(3, 1);
-<commutative non-regular transformation semigroup of size 3, degree 4 with 1 
- generator>
-gap> HasSize(S);
-true
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> Size(S);
-3
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 1, 1, 2, 3 ] ) ]
-
-# Not created by MonogenicSemigroup
-gap> S := Semigroup(S);;
-gap> HasSize(S);
-false
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-false
-gap> HasIsRegularSemigroup(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> Size(S);
-3
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 1, 1, 2, 3 ] ) ]
-gap> IndexPeriodOfTransformation(last[1]);
-[ 3, 1 ]
-
-# MonogenicSemigroup(1, 2)
-gap> S := MonogenicSemigroup(1, 2);
-<transformation group of size 2, degree 2 with 1 generator>
-gap> HasSize(S);
-true
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> Size(S);
-2
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-true
-gap> IsRegularSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-false
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 2, 1 ] ) ]
-
-# Not created by MonogenicSemigroup
-gap> S := Semigroup(S);
-<commutative transformation semigroup of degree 2 with 1 generator>
-gap> HasSize(S);
-false
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-false
-gap> HasIsRegularSemigroup(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> Size(S);
-2
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-true
-gap> IsRegularSemigroup(S);
-true
-gap> IsZeroSemigroup(S);
-false
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 2, 1 ] ) ]
-gap> IndexPeriodOfTransformation(last[1]);
-[ 1, 2 ]
-
-# MonogenicSemigroup(5, 10)
-gap> S := MonogenicSemigroup(5, 10);
-<commutative non-regular transformation semigroup of size 14, degree 15 with 
- 1 generator>
-gap> HasSize(S);
-true
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-true
-gap> HasIsRegularSemigroup(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> Size(S);
-14
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 10, 11, 12, 13, 14 ] ) ]
-
-# Not created by MonogenicSemigroup
-gap> S := Semigroup(S);
-<commutative transformation semigroup of degree 15 with 1 generator>
-gap> HasSize(S);
-false
-gap> HasIsMonogenicSemigroup(S);
-true
-gap> HasIsGroupAsSemigroup(S);
-false
-gap> HasIsRegularSemigroup(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> Size(S);
-14
-gap> IsMonogenicSemigroup(S);
-true
-gap> IsGroupAsSemigroup(S);
-false
-gap> IsRegularSemigroup(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 10, 11, 12, 13, 14 ] ) ]
-gap> IndexPeriodOfTransformation(last[1]);
-[ 5, 10 ]
-
-#T# ConstructionsTest34: RectangularBand
-gap> S := RectangularBand(0, 1);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RectangularBand' on 2 arguments
-gap> S := RectangularBand(1, 0);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RectangularBand' on 2 arguments
-
-# Trivial rectangular band
-gap> S := RectangularBand(1, 1);
-<Rees matrix semigroup 1x1 over Group(())>
-gap> HasIsRectangularBand(S);
-true
-gap> HasIsBand(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasSize(S);
-true
-gap> HasIsTrivial(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-true
-gap> HasIsRightZeroSemigroup(S);
-true
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-1
-gap> IsTrivial(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> IsLeftZeroSemigroup(S);
-true
-gap> IsRightZeroSemigroup(S);
-true
-
-# Not created by RectangularBand
-gap> S := AsTransformationSemigroup(S);
-<commutative transformation semigroup of degree 2 with 1 generator>
-gap> HasIsRectangularBand(S);
-false
-gap> HasIsBand(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasSize(S);
-false
-gap> HasIsTrivial(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> Size(S);
-1
-gap> IsTrivial(S);
-true
-gap> IsZeroSemigroup(S);
-true
-gap> IsLeftZeroSemigroup(S);
-true
-gap> IsRightZeroSemigroup(S);
-true
-
-# 10 x 1 rectangular band
-gap> S := RectangularBand(10, 1);
-<Rees matrix semigroup 10x1 over Group(())>
-gap> HasIsRectangularBand(S);
-true
-gap> HasIsBand(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasSize(S);
-true
-gap> HasIsTrivial(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-true
-gap> HasIsRightZeroSemigroup(S);
-true
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-false
 gap> Size(S);
 10
-gap> IsTrivial(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-true
-gap> IsRightZeroSemigroup(S);
-false
 
-# Not created by RectangularBand
-gap> S := AsTransformationSemigroup(S);
-<transformation semigroup of degree 11 with 10 generators>
-gap> HasIsRectangularBand(S);
-false
-gap> HasIsBand(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasSize(S);
-false
-gap> HasIsTrivial(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-false
-gap> Size(S);
-10
-gap> IsTrivial(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-true
-gap> IsRightZeroSemigroup(S);
-false
-
-# 1 x 8 rectangular band
-gap> S := RectangularBand(1, 8);
-<Rees matrix semigroup 1x8 over Group(())>
-gap> HasIsRectangularBand(S);
-true
-gap> HasIsBand(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasSize(S);
-true
-gap> HasIsTrivial(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-true
-gap> HasIsRightZeroSemigroup(S);
-true
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-false
-gap> Size(S);
-8
-gap> IsTrivial(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-true
-
-# Not created by RectangularBand
-gap> S := AsTransformationSemigroup(S);
-<transformation semigroup of degree 9 with 8 generators>
-gap> HasIsRectangularBand(S);
-false
-gap> HasIsBand(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasSize(S);
-false
-gap> HasIsTrivial(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-false
-gap> Size(S);
-8
-gap> IsTrivial(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-true
-
-# 12 x 7 rectangular band
-gap> S := RectangularBand(12, 7);
-<Rees matrix semigroup 12x7 over Group(())>
-gap> HasIsRectangularBand(S);
-true
-gap> HasIsBand(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasSize(S);
-true
-gap> HasIsTrivial(S);
-true
-gap> HasIsZeroSemigroup(S);
-true
-gap> HasIsLeftZeroSemigroup(S);
-true
-gap> HasIsRightZeroSemigroup(S);
-true
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-false
-gap> Size(S);
-84
-gap> IsTrivial(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-false
-
-# Not created by RectangularBand
-gap> S := AsTransformationSemigroup(S);
-<transformation semigroup of degree 85 with 84 generators>
-gap> HasIsRectangularBand(S);
-false
-gap> HasIsBand(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasSize(S);
-false
-gap> HasIsTrivial(S);
-false
-gap> HasIsZeroSemigroup(S);
-false
-gap> HasIsLeftZeroSemigroup(S);
-false
-gap> HasIsRightZeroSemigroup(S);
-false
-gap> IsRectangularBand(S);
-true
-gap> IsBand(S);
-true
-gap> IsZeroSemigroup(S);
-false
-gap> Size(S);
-84
-gap> IsTrivial(S);
-false
-gap> IsZeroSemigroup(S);
-false
-gap> IsLeftZeroSemigroup(S);
-false
-gap> IsRightZeroSemigroup(S);
-false
+#T# construction: SEMIGROUPS.AsXSemigroup
+gap> SEMIGROUPS.AsXSemigroup(IsTransformationSemigroup);
+<Operation "AsTransformationSemigroup">
+gap> SEMIGROUPS.AsXSemigroup(IsPartialPermSemigroup);
+<Operation "AsPartialPermSemigroup">
+gap> SEMIGROUPS.AsXSemigroup(IsBipartitionSemigroup);
+<Operation "AsBipartitionSemigroup">
+gap> SEMIGROUPS.AsXSemigroup(IsBlockBijectionSemigroup);
+<Operation "AsBlockBijectionSemigroup">
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

@@ -10,12 +10,12 @@
 ##
 
 SEMIGROUPS.AsXSemigroup := function(filt)
-  if filt = IsBipartitionSemigroup then
-    return AsBipartitionSemigroup;
-  elif filt = IsTransformationSemigroup then
+  if filt = IsTransformationSemigroup then
     return AsTransformationSemigroup;
   elif filt = IsPartialPermSemigroup then
     return AsPartialPermSemigroup;
+  elif filt = IsBipartitionSemigroup then
+    return AsBipartitionSemigroup;
   elif filt = IsBlockBijectionSemigroup then
     return AsBlockBijectionSemigroup;
   elif filt = IsPBRSemigroup then
@@ -25,6 +25,16 @@ SEMIGROUPS.AsXSemigroup := function(filt)
   fi;
   return fail;
 end;
+
+# Also have:
+#  IsMaxPlusMatrixSemigroup
+#  IsMinPlusMatrixSemigroup
+#  IsTropicalMaxPlusMatrixSemigroup
+#  IsTropicalMinPlusMatrixSemigroup
+#  IsProjectiveMaxPlusMatrixSemigroup
+#  IsNTPMatrixSemigroup
+#  IsMatrixOverPrimeFieldSemigroup
+#  IsIntegerMatrixSemigroup
 
 SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
   local func, S, param, m, r, n;
@@ -36,7 +46,6 @@ SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
   # Trivial semigroup
   if func = TrivialSemigroup then
     SetIsTrivial(S, true);
-    return;
 
   # Zero semigroup
   elif func = ZeroSemigroup then
@@ -55,7 +64,6 @@ SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
       SetAsList(S, Concatenation(GeneratorsOfSemigroup(S),
                                  [MultiplicativeZero(S)]));
     fi;
-    return;
 
   # Monogenic semigroup
   elif func = MonogenicSemigroup then
@@ -77,7 +85,6 @@ SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
     else
       SetIsZeroSemigroup(S, false);
     fi;
-    return;
 
   # Rectangular band
   elif func = RectangularBand then
@@ -85,6 +92,8 @@ SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
     n := param[2];
     SetSize(S, m * n);
     SetIsRectangularBand(S, true);
+    SetNrRClasses(S, m);
+    SetNrLClasses(S, n);
     if not (m = 1 and n = 1) then
       SetIsGroupAsSemigroup(S, false);
       SetIsZeroSemigroup(S, false);
@@ -99,9 +108,9 @@ SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
       else
         SetIsLeftZeroSemigroup(S, false);
       fi;
+    else
+      SetIsTrivial(S, true);
     fi;
-    return;
-
   fi;
 end;
 
@@ -164,7 +173,11 @@ function(arg)
   else
     ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
                  "the arguments must be a non-negative integer or ",
-                 "a filter and a non-negative integer,");
+                 "a filter and a non-negative\ninteger,");
+  fi;
+  if out = fail then
+    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
+                 "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(TrivialSemigroup, out, 0);
   return out;
@@ -236,7 +249,7 @@ SEMIGROUPS.InstallConstructors1(TrivialSemigroup,
                                  IsBlockBijectionSemigroup,
                                  IsPBRSemigroup,
                                  IsBooleanMatSemigroup],
-                                [IsPosInt]);
+                                [IsInt]);
 
 # Monogenic semigroup: main method
 
@@ -262,6 +275,10 @@ function(arg)
   fi;
 
   out := MonogenicSemigroupCons(filter, m, r);
+  if out = fail then
+    ErrorMayQuit("Semigroups: MonogenicSemigroup: usage,\n",
+                 "the requested filter is not supported,");
+  fi;
   SEMIGROUPS.StandardExampleApplyAttributes(MonogenicSemigroup, out, m, r);
   return out;
 end);
@@ -387,6 +404,10 @@ function(arg)
   fi;
 
   out := RectangularBandCons(filter, m, n);
+  if out = fail then
+    ErrorMayQuit("Semigroups: RectangularBand: usage,\n",
+                 "the requested filter is not supported,");
+  fi;
   SEMIGROUPS.StandardExampleApplyAttributes(RectangularBand, out, m, n);
   return out;
 end);
@@ -514,6 +535,10 @@ function(arg)
   fi;
 
   out := ZeroSemigroupCons(filter, n);
+  if out = fail then
+    ErrorMayQuit("Semigroups: ZeroSemigroup: usage,\n",
+                 "the requested filter is not supported,");
+  fi;
   SEMIGROUPS.StandardExampleApplyAttributes(ZeroSemigroup, out, n);
   return out;
 end);
@@ -643,26 +668,32 @@ SEMIGROUPS.InstallConstructors1(ZeroSemigroup,
 
 InstallGlobalFunction(LeftZeroSemigroup,
 function(arg)
+  local out;
   if Length(arg) = 2 and IsOperation(arg[1]) and IsPosInt(arg[2]) then
-    return RectangularBand(arg[1], arg[2], 1);
+    out := RectangularBand(arg[1], arg[2], 1);
   elif Length(arg) = 1 and IsPosInt(arg[1]) then
-    return RectangularBand(IsTransformationSemigroup, arg[1], 1);
+    out := RectangularBand(IsTransformationSemigroup, arg[1], 1);
+  else
+    ErrorMayQuit("Semigroups: LeftZeroSemigroup: usage,\n",
+                 "the arguments must be a positive integer or ",
+                 "a filter and a positive integer,");
   fi;
-  ErrorMayQuit("Semigroups: LeftZeroSemigroup: usage,\n",
-               "the arguments must be a positive integer or ",
-               "a filter and a positive integer,");
+  return out;
 end);
 
 # Right zero semigroup: main method
 
 InstallGlobalFunction(RightZeroSemigroup,
 function(arg)
+  local out;
   if Length(arg) = 2 and IsOperation(arg[1]) and IsPosInt(arg[2]) then
-    return RectangularBand(arg[1], 1, arg[2]);
+    out := RectangularBand(arg[1], 1, arg[2]);
   elif Length(arg) = 1 and IsPosInt(arg[1]) then
-    return RectangularBand(IsTransformationSemigroup, 1, arg[1]);
+    out := RectangularBand(IsTransformationSemigroup, 1, arg[1]);
+  else
+    ErrorMayQuit("Semigroups: RightZeroSemigroup: usage,\n",
+                 "the arguments must be a positive integer or ",
+                 "a filter and a positive integer,");
   fi;
-  ErrorMayQuit("Semigroups: RightZeroSemigroup: usage,\n",
-               "the arguments must be a positive integer or ",
-               "a filter and a positive integer,");
+  return out;
 end);
