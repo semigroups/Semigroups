@@ -676,7 +676,7 @@ function(S)
 
   # Add the trivial congruence at the start
   children := Concatenation([[]], children + 1);
-  for i in [2 .. nrcongs+1] do
+  for i in [2 .. nrcongs + 1] do
     Add(children[i], 1, 1);
   od;
   Add(congs, SemigroupCongruence(S, []), 1);
@@ -712,5 +712,3 @@ function(c1, c2)
                          ShallowCopy(GeneratingPairsOfSemigroupCongruence(c2)));
   return SemigroupCongruence(Range(c1), pairs);
 end);
-
-#

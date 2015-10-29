@@ -780,29 +780,29 @@ function(S)
   return cycles;
 end);
 
-InstallMethod(EndomorphismMonoid, "for a digraph", 
-[IsDigraph], 
+InstallMethod(EndomorphismMonoid, "for a digraph",
+[IsDigraph],
 function(digraph)
   local STAB, hook, S;
 
-  if IsMultiDigraph(digraph) then 
+  if IsMultiDigraph(digraph) then
     ErrorMayQuit("Semigroups: EndomorphismMonoid: usage,\n",
                  "the argument <digraph> must not be a multigraph,");
   fi;
-  
-  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then 
-    return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),  
-     rec(small := true));
+
+  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then
+    return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),
+                     rec(small := true));
   fi;
 
   STAB := function(gens, pt)
-    if gens = [] then 
+    if gens = [] then
       return [()];
     fi;
     return GeneratorsOfGroup(Stabilizer(Group(gens), pt));
   end;
-  
-  hook := function(S, f) 
+
+  hook := function(S, f)
     S[1] := ClosureSemigroup(S[1], f);
     Print("found ", Size(S[1]), " endomorphisms so far\n");
   end;

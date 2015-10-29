@@ -562,12 +562,12 @@ function(pair, cong)
 
   # Check for validity
   if Size(pair) <> 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the elements of the first arg <pair> ",
                  "must be in the range of the second arg <cong>,");
   fi;
@@ -602,12 +602,12 @@ function(pair, cong)
 
   # Check for validity
   if Size(pair) <> 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the elements of the first arg <pair> ",
                  "must be in the range of the second arg <cong>,");
   fi;

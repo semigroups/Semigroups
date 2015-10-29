@@ -129,7 +129,6 @@ end);
 
 #
 
-
 InstallMethod(\in,
 "for an associative element collection and a Rees congruence",
 [IsAssociativeElementCollection, IsReesCongruence],
@@ -137,12 +136,12 @@ function(pair, cong)
   local S, I;
   # Check for validity
   if Size(pair) <> 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the elements of 1st arg <pair> ",
                  "must be in the range of 2nd arg <cong>,");
   fi;

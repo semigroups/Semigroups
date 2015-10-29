@@ -300,10 +300,11 @@ function(S)
                             x -> GreensDClassOfElementNC(S, x),
                             [],
                             fail,
-                            rec(PrintObj := function(iter)
-                              Print("<iterator of D-classes>");
-                              return;
-                            end));
+                            rec(PrintObj :=
+                                function(iter)
+                                  Print("<iterator of D-classes>");
+                                  return;
+                                end));
 end);
 
 # different method for inverse
