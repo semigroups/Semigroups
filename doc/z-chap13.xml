@@ -1,103 +1,20 @@
-<Chapter Label="Green's relations">
+<Chapter Label="GraphInverseSemigroups">
   <Heading>
-    Green's relations
-  </Heading>
+    Graph inverse semigroups
+  </Heading> 
 
-  In this chapter we describe the functions in &Semigroups; for 
-  computing Green's classes and related properties of semigroups. 
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
+  In this chapter we describe a class of semigroups arising from directed
+  graphs. <P/>
 
   <Section>
-
     <Heading>
-      Creating Green's classes and representatives
-    </Heading>
-    
-    In this section, we describe the methods in the &Semigroups; package for
-    creating Green's classes. 
-    <P/>
+      Creating graph inverse semigroups
+    </Heading> 
 
-    <#Include Label="XClassOfYClass">
-    <#Include Label="GreensXClassOfElement">
-    <#Include Label="GreensXClassOfElementNC">
-    <#Include Label="GreensXClasses">
-    <#Include Label="XClassReps">
-    <#Include Label="MinimalDClass">
-    <#Include Label="MaximalDClasses">
-    <#Include Label="NrRegularDClasses">
-    <#Include Label="NrXClasses">
-    <#Include Label="PartialOrderOfDClasses">
-    <#Include Label="IsGreensDLeq">
-
+    <#Include Label="GraphInverseSemigroup"> 
+    <#Include Label="RangeSourceGraphInverseSemigroupElement"> 
+    <#Include Label="IsVertex"> 
+    <#Include Label="IsGraphInverseSemigroup"> 
+    <#Include Label="GraphOfGraphInverseSemigroup"> 
   </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  
-  <Section>
-
-    <Heading>
-      Iterators and enumerators of classes and representatives
-    </Heading>
-    
-    In this section, we describe the methods in the &Semigroups; package for
-    incrementally determining Green's classes or their representatives. 
-    <P/>
-
-    <#Include Label="IteratorOfXClassReps"> 
-    <#Include Label="IteratorOfXClasses"> 
-
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-    
-    <Heading>
-      Properties of Green's classes
-    </Heading>
-    
-    In this section, we describe the properties and operators of Green's
-    classes that are available in the &Semigroups; package
-    <P/>
-    
-    <#Include Label="\&lt;">
-    <#Include Label="IsRegularClass">
-    <#Include Label="IsGreensClassNC">
-    <#Include Label="IsTransformationSemigroupGreensClass">
-    <#Include Label="IsBipartitionSemigroupGreensClass">
-    <#Include Label="IsPartialPermSemigroupGreensClass">
-
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  
-  <Section>
-    
-    <Heading>
-      Attributes of Green's classes
-    </Heading>
-
-    In this section, we describe the attributes of Green's classes that are
-    available in the &Semigroups; package
-    <P/>
-
-    <#Include Label="GroupHClass">
-    <#Include Label="SchutzenbergerGroup">
-    <#Include Label="StructureDescriptionSchutzenbergerGroups">
-    <#Include Label="StructureDescriptionMaximalSubgroups">
-    <#Include Label="MultiplicativeNeutralElement">
-    <#Include Label="StructureDescription">
-    <#Include Label="InjectionPrincipalFactor">
-    <#Include Label="PrincipalFactor">
-    
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
 </Chapter>
