@@ -70,8 +70,8 @@ that:
   assigned using `BindGlobal` in that file. 
 * there should be no non-global functions
 * error messages should be in the following format: 
-  `Error("Semigroups: NameOfWhateverContainingError: \n", 
-         "something went wrong");`
+  `ErrorMayQuit("Semigroups: NameOfWhateverContainingError: \n", 
+                "something went wrong");`
 
 Adapted from the contributing files for
 [GAP](https://github.com/gap-system/gap/blob/master/CONTRIBUTING.md)
