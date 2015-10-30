@@ -585,7 +585,8 @@ InstallMethod(LatticeOfCongruences,
 [IsSemigroup],
 function(S)
   local elms, pairs, congs1, nrcongs, children, parents, pair, badcong,
-        newchildren, newparents, newcong, i, congs, length, found, start, j, k;
+        newchildren, newparents, newcong, i, c, p, congs, length, found, start,
+        j, k;
   elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
 
   # Get all non-reflexive pairs in SxS
@@ -620,11 +621,11 @@ function(S)
       congs1[nrcongs] := newcong;
       children[nrcongs] := newchildren;
       parents[nrcongs] := newparents;
-      for i in newchildren do
-        Add(parents[i], nrcongs);
+      for c in newchildren do
+        Add(parents[c], nrcongs);
       od;
-      for i in newparents do
-        Add(children[i], nrcongs);
+      for p in newparents do
+        Add(children[p], nrcongs);
       od;
     fi;
   od;
@@ -636,8 +637,9 @@ function(S)
   found := true;
   while found do
     # There are new congruences to try joining
-    start := length + 1; # New congruences start here
-    found := false;      # Have we found any more congruence on this sweep?
+    start := length + 1;     # New congruences start here
+    found := false;          # Have we found any more congruences on this sweep?
+    length := Length(congs); # Remember starting position for next sweep
     for i in [start .. Length(congs)] do # for each new congruence
       for j in [1 .. Length(congs1)] do  # for each 1-generated congruence
         newcong := JoinSemigroupCongruences(congs[i], congs1[j]);
@@ -662,11 +664,11 @@ function(S)
           congs[nrcongs] := newcong;
           children[nrcongs] := newchildren;
           parents[nrcongs] := newparents;
-          for i in newchildren do
-            Add(parents[i], nrcongs);
+          for c in newchildren do
+            Add(parents[c], nrcongs);
           od;
-          for i in newparents do
-            Add(children[i], nrcongs);
+          for p in newparents do
+            Add(children[p], nrcongs);
           od;
           found := true;
         fi;
@@ -683,6 +685,76 @@ function(S)
 
   SetCongruencesOfSemigroup(S, congs);
   return children;
+end);
+
+#
+
+InstallGlobalFunction(DotCongruences,
+function(arg)
+  local S, opts, lat, congs, symbols, i, nr, rel, str, j, k;
+  # Check input
+  if not Length(arg) in [1,2] then
+    ErrorMayQuit("Semigroups: DotCongruences: usage,\n",
+                 "this function requires 1 or 2 arguments,");
+  fi;
+  S := arg[1];
+  if not IsSemigroup(S) then
+    ErrorMayQuit("Semigroups: DotCongruences: usage,\n",
+                 "<S> must be a semigroup,");
+  fi;
+  if Length(arg) = 2 then
+    opts := arg[2];
+  else
+    opts := rec();
+  fi;
+  if not IsRecord(opts) then
+    ErrorMayQuit("Semigroups: DotCongruences: usage,\n",
+                 "<opts> must be a record,");
+  fi;
+
+  lat := LatticeOfCongruences(S);
+  congs := CongruencesOfSemigroup(S);
+  symbols := EmptyPlist(Length(lat));
+
+  # If the user wants info, then change the node labels
+  if IsBound(opts.info) and opts.info = true then
+    for i in [1..Length(lat)] do
+      nr := NrCongruenceClasses(congs[i]);
+      if nr = 1 then
+        symbols[i] := "U";
+      elif nr = Size(S) then
+        symbols[i] := "T";
+      elif IsReesCongruence(congs[i]) then
+        symbols[i] := Concatenation("R", String(i));
+      else
+        symbols[i] := String(i);
+      fi;
+    od;
+  else
+    symbols := List([1 .. Length(lat)], String);
+  fi;
+
+  rel := List([1 .. Length(lat)], x -> Filtered(lat[x], y -> x <> y));
+  str := "";
+
+  if Length(rel) < 40 then
+    Append(str, "//dot\ngraph graphname {\n     node [shape=circle]\n");
+  else
+    Append(str, "//dot\ngraph graphname {\n     node [shape=point]\n");
+  fi;
+
+  for i in [1..Length(rel)] do
+    j := Difference(rel[i], Union(rel{rel[i]}));
+    i := symbols[i];
+    for k in j do
+      k := symbols[k];
+      Append(str, Concatenation(i, " -- ", k, "\n"));
+    od;
+  od;
+
+  Append(str, " }");
+
+  return str;
 end);
 
 #
