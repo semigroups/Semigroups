@@ -262,7 +262,7 @@ function(coll, n)
     od;
   od;
 
-  return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
+  return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
 InstallMethod(IsTransitive,
@@ -297,7 +297,7 @@ function(coll, set)
     od;
   od;
 
-  return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
+  return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
 # not relevant for ideals
@@ -778,4 +778,36 @@ function(S)
   until next = fail;
 
   return cycles;
+end);
+
+InstallMethod(EndomorphismMonoid, "for a digraph",
+[IsDigraph],
+function(digraph)
+  local STAB, hook, S;
+
+  if IsMultiDigraph(digraph) then
+    ErrorMayQuit("Semigroups: EndomorphismMonoid: usage,\n",
+                 "the argument <digraph> must not be a multigraph,");
+  fi;
+
+  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then
+    return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),
+                     rec(small := true));
+  fi;
+
+  STAB := function(gens, pt)
+    if gens = [] then
+      return [()];
+    fi;
+    return GeneratorsOfGroup(Stabilizer(Group(gens), pt));
+  end;
+
+  hook := function(S, f)
+    S[1] := ClosureSemigroup(S[1], f);
+    Print("found ", Size(S[1]), " endomorphisms so far\n");
+  end;
+
+  S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
+
+  return GRAPH_HOMOS(digraph, hook, S, fail, fail, false, STAB);
 end);

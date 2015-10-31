@@ -15,12 +15,12 @@ gap> SEMIGROUPS.StartTest();
 
 # All ReesMatrixSemigroup functions tested with a small example
 #T# ReesMatCongTest1: Create a Rees matrix semigroup
-gap> g := SymmetricGroup( 4 );;
+gap> g := SymmetricGroup(4);;
 gap> StructureDescription(g);
 "S4"
-gap> mat :=  [ [ (1,3), (1,2)(3,4) ],
->              [ (1,4,3,2), () ],
->              [ (1,3)(2,4), (1,3,4,2) ] ];;
+gap> mat := [[(1, 3), (1, 2)(3, 4)],
+>            [(1, 4, 3, 2), ()],
+>            [(1, 3)(2, 4), (1, 3, 4, 2)]];;
 gap> S := ReesMatrixSemigroup(g, mat);;
 
 #T# ReesMatCongTest2: Find all its congruences
@@ -29,9 +29,9 @@ gap> Size(congs);
 23
 
 #T# ReesMatCongTest3: Construct a congruence manually
-gap> n := Group( [ (1,4)(2,3), (1,3)(2,4) ] );;
-gap> colBlocks := [ [ 1 ], [ 2 ] ];;
-gap> rowBlocks := [ [ 1, 2 ], [ 3 ] ];;
+gap> n := Group([(1, 4)(2, 3), (1, 3)(2, 4)]);;
+gap> colBlocks := [[1], [2]];;
+gap> rowBlocks := [[1, 2], [3]];;
 gap> cong := RMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (2^2,2,2)>
@@ -47,7 +47,7 @@ the second arg <n> must be a normal subgroup,
 gap> RMSCongruenceByLinkedTriple(S, n, [1, [2]], rowBlocks);
 Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
 the third arg <colBlocks> must be a list of lists,
-gap> RMSCongruenceByLinkedTriple(S, n, colBlocks, [[1,2], 3]);
+gap> RMSCongruenceByLinkedTriple(S, n, colBlocks, [[1, 2], 3]);
 Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
 the fourth arg <rowBlocks> must be a list of lists,
 

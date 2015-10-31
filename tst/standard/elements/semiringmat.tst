@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/elements/semiringmat.tst
-#Y  Copyright (C) 2015                                <NAMES>
+#Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -14,39 +14,39 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 #T# Matrix: return an answer, all possibilities, and TransposedMat
-gap> Matrix(IsBooleanMat, [[1, 0, 0, 0], 
->                          [0, 0, 0, 0], 
->                          [1, 1, 1, 1], 
+gap> Matrix(IsBooleanMat, [[1, 0, 0, 0],
+>                          [0, 0, 0, 0],
+>                          [1, 1, 1, 1],
 >                          [1, 0, 1, 1]]);
 Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [1, 0, 1, 1]])
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsMaxPlusMatrix, [[4, 0, -2], 
->                             [1, -3, 0], 
+gap> Matrix(IsMaxPlusMatrix, [[4, 0, -2],
+>                             [1, -3, 0],
 >                             [5, -1, -4]]);
 Matrix(IsMaxPlusMatrix, [[4, 0, -2], [1, -3, 0], [5, -1, -4]])
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsMinPlusMatrix, [[-1, infinity], 
+gap> Matrix(IsMinPlusMatrix, [[-1, infinity],
 >                             [1, -1]]);
 Matrix(IsMinPlusMatrix, [[-1, infinity], [1, -1]])
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], 
->                                     [3, 1, 1], 
->                                     [-infinity, 1, 1]], 
+gap> Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4],
+>                                     [3, 1, 1],
+>                                     [-infinity, 1, 1]],
 >           9);
 Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1], [-infinity, 1, 1]], 9)
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1], 
->                                     [0, 3, 0], 
->                                     [1, 1, 3]], 
+gap> Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1],
+>                                     [0, 3, 0],
+>                                     [1, 1, 3]],
 >           9);
 Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1], [0, 3, 0], [1, 1, 3]], 9)
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
+gap> Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0],
 >                                       [0, -1, -infinity, -infinity],
 >                                       [4, 4, 2, -1],
 >                                       [1, 1, 0, 3]]);
@@ -54,28 +54,28 @@ Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0],
   [0, -1, -infinity, -infinity], [4, 4, 2, -1], [1, 1, 0, 3]])
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsNTPMatrix, [[0, 0, 0], 
+gap> Matrix(IsNTPMatrix, [[0, 0, 0],
 >                         [2, 0, 1],
->                         [2, 2, 2]], 
+>                         [2, 2, 2]],
 >           2, 1);
 Matrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsIntegerMatrix, [[-1, -2, 0], 
->                             [0, 3, -1], 
+gap> Matrix(IsIntegerMatrix, [[-1, -2, 0],
+>                             [0, 3, -1],
 >                             [1, 0, -3]]);
 Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(Integers, [[-1, -2, 0], 
->                      [0, 3, -1], 
+gap> Matrix(Integers, [[-1, -2, 0],
+>                      [0, 3, -1],
 >                      [1, 0, -3]]);
 Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], 
->                   [Z(3), Z(3)^0, Z(3)^0], 
->                   [Z(3), 0*Z(3), 0*Z(3)]]);
+gap> Matrix(GF(3), [[Z(3), Z(3) ^ 0, Z(3)],
+>                   [Z(3), Z(3) ^ 0, Z(3) ^ 0],
+>                   [Z(3), 0 * Z(3), 0 * Z(3)]]);
 Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0], 
   [Z(3), 0*Z(3), 0*Z(3)]])
 gap> TransposedMat(TransposedMat(last)) = last;
@@ -186,9 +186,9 @@ Error, Semigroups: RandomMatrix: usage,
 the arguments must be: filter, pos int[, pos int[, pos int]],
 
 #T# semiringmat: PrintString, DisplayString for a collection
-gap> mat := Matrix(IsBooleanMat, [[1, 0, 0, 0], 
->                                 [0, 0, 0, 0], 
->                                 [1, 1, 1, 1], 
+gap> mat := Matrix(IsBooleanMat, [[1, 0, 0, 0],
+>                                 [0, 0, 0, 0],
+>                                 [1, 1, 1, 1],
 >                                 [1, 0, 1, 1]]);
 Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [1, 0, 1, 1]])
 gap> Display([mat, mat ^ 2]);
@@ -214,7 +214,7 @@ gap> PrintString(MinimalDClass(Semigroup(mat)));
 ]\<)\<\<)\<\<"
 
 #T# semiringmat: Display and DisplayString for a matrix
-gap> Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
+gap> Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0],
 >                                       [0, -1, -infinity, -infinity],
 >                                       [4, 4, 2, -1],
 >                                       [1, 1, 0, 3]]);
@@ -225,12 +225,12 @@ gap> Display(last);
  0 -1 -∞ -∞
  4  4  2 -1
  1  1  0  3
-gap> mat :=One(RandomMatrix(IsMinPlusMatrix, 2));
+gap> mat := One(RandomMatrix(IsMinPlusMatrix, 2));
 Matrix(IsMinPlusMatrix, [[0, infinity], [infinity, 0]])
 gap> Display(mat);
 0 ∞
 ∞ 0
-gap> mat := Matrix(IsMaxPlusMatrix, [[0, -infinity, -1, 0], 
+gap> mat := Matrix(IsMaxPlusMatrix, [[0, -infinity, -1, 0],
 >                                    [100, -1, -infinity, -infinity],
 >                                    [4, 40, 2, -1],
 >                                    [1, 1, 1000, 33313]]);;
@@ -250,7 +250,7 @@ gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 false
 
 #T# semiringmat: \=, different dims, 2/4
-gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3) 
+gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > = Matrix(IsTropicalMinPlusMatrix, [[2]], 3);
 false
 
@@ -265,13 +265,13 @@ gap> Matrix(IsNTPMatrix, [[2, 1], [1, 3]], 3, 3)
 false
 
 #T# semiringmat: \<, 1/4
-gap> mat := Matrix(IsTropicalMinPlusMatrix, 
+gap> mat := Matrix(IsTropicalMinPlusMatrix,
 > [[2, infinity, infinity, 3, 1, 1, infinity, 3, 3],
->  [1, 1, 1, 1, 1, 2, 0, infinity, 0], 
+>  [1, 1, 1, 1, 1, 2, 0, infinity, 0],
 >  [0, 1, 1, 2, 2, 1, 0, infinity, 1],
->  [1, 3, infinity, infinity, 3, 2, 2, 3, 2], 
+>  [1, 3, infinity, infinity, 3, 2, 2, 3, 2],
 >  [1, infinity, infinity, 1, 2, 1, 1, 3, 2],
->  [infinity, infinity, 0, 0, 2, 1, 3, 3, infinity], 
+>  [infinity, infinity, 0, 0, 2, 1, 3, 3, infinity],
 >  [infinity, 2, 1, 0, 1, 2, 2, 0, 2],
 >  [infinity, 0, 3, infinity, 1, 3, infinity, 2, 3],
 >  [0, 2, infinity, 2, 1, 0, infinity, 1, 1]], 3);
@@ -295,14 +295,14 @@ false
 #T# semiringmat: \<, different types, 3/4
 gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > < Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [-infinity, 3]], 3);
-Error, Semigroups:  (for matrices over a semiring):
+Error, Semigroups: \< (for matrices over a semiring):
 the matrices are not of the same type,
 
 #T# semiringmat: \<, different dims, 4/4
-gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3) 
+gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > < Matrix(IsTropicalMinPlusMatrix, [[2]], 3);
 false
-gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3) 
+gap> Matrix(IsTropicalMinPlusMatrix, [[2, infinity], [infinity, 3]], 3)
 > > Matrix(IsTropicalMinPlusMatrix, [[2]], 3);
 true
 
@@ -346,29 +346,29 @@ Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
   [infinity, 2, 0]], 2)
 
 #T# maxplusmat: AsMatrix, everything, 3/3
-gap> mat := Matrix(IsTropicalMinPlusMatrix, [[0, 1, 3], 
->                                            [1, 1, 6], 
+gap> mat := Matrix(IsTropicalMinPlusMatrix, [[0, 1, 3],
+>                                            [1, 1, 6],
 >                                            [0, 4, 2]], 10);;
 gap> AsMatrix(IsMinPlusMatrix, mat);
 Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]])
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
->                                            [0, 1, 3], 
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
+>                                            [0, 1, 3],
 >                                            [4, 1, 0]], 10);;
 gap> AsMatrix(IsMaxPlusMatrix, mat);
 Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], [4, 1, 0]])
-gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[-1, 2, 1], 
->                                              [-2, -1, 1], 
+gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[-1, 2, 1],
+>                                              [-2, -1, 1],
 >                                              [1, 1, 2]]);;
 gap> AsMatrix(IsMaxPlusMatrix, mat);
 Matrix(IsMaxPlusMatrix, [[-1, 2, 1], [-2, -1, 1], [1, 1, 2]])
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
->                                            [0, 1, 3], 
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
+>                                            [0, 1, 3],
 >                                            [4, 1, 0]], 10);;
 gap> AsMatrix(IsProjectiveMaxPlusMatrix, mat);
 Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
   [4, 1, 0]])
-gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2], 
->                                [0, 2, 0], 
+gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
+>                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
 gap> AsMatrix(IsIntegerMatrix, mat);
 Matrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])
@@ -377,21 +377,21 @@ gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
 gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 1);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 1], [1, 1, 1], [0, 1, 1]], 1)
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
->                                            [0, 1, 3], 
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
+>                                            [0, 1, 3],
 >                                            [4, 1, 0]], 10);;
 gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 4);
 Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
   [4, 1, 0]], 4)
-gap> mat := Matrix(IsProjectiveMaxPlusMatrix, 
->                  [[-infinity, -infinity, 3], 
->                   [0, 1, 3], 
+gap> mat := Matrix(IsProjectiveMaxPlusMatrix,
+>                  [[-infinity, -infinity, 3],
+>                   [0, 1, 3],
 >                   [4, 1, 0]]);;
 gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 1);
 Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 1], [0, 1, 1], 
   [1, 1, 0]], 1)
-gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], 
->                                    [0, 1, 3], 
+gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3],
+>                                    [0, 1, 3],
 >                                    [4, 1, 0]]);;
 gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 10);
 Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
@@ -399,8 +399,8 @@ Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3],
 gap> AsMatrix(IsProjectiveMaxPlusMatrix, mat);
 Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
   [4, 1, 0]])
-gap> mat := Matrix(IsNTPMatrix, [[0, 1, 0], 
->                                [1, 3, 1], 
+gap> mat := Matrix(IsNTPMatrix, [[0, 1, 0],
+>                                [1, 3, 1],
 >                                [1, 0, 1]], 10, 10);;
 gap> mat := AsMatrix(IsNTPMatrix, mat, 5, 6);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6)

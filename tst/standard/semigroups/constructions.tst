@@ -672,7 +672,7 @@ gap> IsZeroSemigroup(Semigroup(S));
 true
 
 #T# constructions: ZeroSemigroup: partial perm semigroup
-gap> S := ZeroSemigroup(IsPartialPermSemigroup, 1);    
+gap> S := ZeroSemigroup(IsPartialPermSemigroup, 1);
 <trivial partial perm group of rank 0 with 1 generator>
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 5);
 <non-regular partial perm semigroup of size 5, rank 4 with 4 generators>
@@ -695,9 +695,9 @@ gap> IsZeroSemigroup(Semigroup(S));
 true
 
 #T# constructions: ZeroSemigroup: block bijection semigroup
-gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 1); 
+gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
 <trivial bipartition monoid of degree 1 with 0 generators>
-gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 2); 
+gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 2);
 <commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
  generator>
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 5);
@@ -733,7 +733,7 @@ Error, Semigroups: ZeroSemigroupCons: usage:
 there is no Rees 0-matrix semigroup of order 1,
 
 #T# constructions: ZeroSemigroup: Rees 0-matrix semigroup, 2
-gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 2); 
+gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 2);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 5);
 <Rees 0-matrix semigroup 4x1 over Group(())>

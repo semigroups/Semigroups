@@ -19,6 +19,31 @@ InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a semigroup",
 InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a semigroup",
 [IsSemigroup], S -> "");
 
+InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a graph inverse semigroup",
+[IsGraphInverseSemigroup],
+function(S)
+  local n, str;
+
+  n := DigraphNrVertices(GraphOfGraphInverseSemigroup(S));
+  str := "\>with\< \>";
+  Append(str, String(n));
+  Append(str, "\< \>vert");
+  if n = 1 then
+    Append(str, "ex");
+  else
+    Append(str, "ices");
+  fi;
+  Append(str, ",\< ");
+  n := DigraphNrEdges(GraphOfGraphInverseSemigroup(S));
+  Append(str, String(n));
+  Append(str, "\< \>edge");
+  if not n = 1 then
+    Append(str, "s");
+  fi;
+  Append(str, "\<>\<");
+  return str;
+end);
+
 # ViewString
 
 BindGlobal("_ViewStringForSemigroups",
@@ -30,6 +55,9 @@ function(S)
   if HasIsTrivial(S) and IsTrivial(S) then
     Append(str, "\>trivial\< ");
   else
+    if HasIsFinite(S) and not IsFinite(S) then
+      Append(str, "\>infinite\< ");
+    fi;
     if HasIsCommutative(S) and IsCommutative(S) then
       Append(str, "\>commutative\< ");
     fi;
@@ -44,7 +72,9 @@ function(S)
       Append(str, "\>simple\< ");
     fi;
 
-    if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
+    if HasIsGraphInverseSemigroup(S) and IsGraphInverseSemigroup(S) then
+      Append(str, "\>graph inverse\< ");
+    elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
       Append(str, "\>inverse\< ");
     elif HasIsRegularSemigroup(S)
         and not (HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S)) then
@@ -74,13 +104,19 @@ function(S)
     fi;
   fi;
 
-  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) then
+  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) and IsFinite(S) then
     Append(str, "\>of size\> ");
     Append(str, ViewString(Size(S)));
     Append(str, ",\<\< ");
   fi;
 
   suffix := SEMIGROUPS_ViewStringSuffix(S);
+
+  if HasIsGraphInverseSemigroup(S) and IsGraphInverseSemigroup(S) then
+    Append(str, suffix);
+    return str;
+  fi;
+
   if suffix <> ""
       and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
     suffix := Concatenation("\>of\< ", suffix);

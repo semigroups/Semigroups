@@ -105,10 +105,10 @@ false
 gap> [x, x] in cong;
 true
 gap> [x, y, y] in cong;
-Error, Semigroups: in: usage,
+Error, Semigroups: \in: usage,
 the first arg <pair> must be a list of length 2,
 gap> [x, z] in cong;
-Error, Semigroups: in: usage,
+Error, Semigroups: \in: usage,
 the elements of 1st arg <pair> must be in the range of 2nd arg <cong>,
 gap> t := Transformation([1, 3, 4, 1, 4]);;   # in i
 gap> [t, y] in cong;
@@ -156,8 +156,8 @@ gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]));;
 gap> J := SemigroupIdeal(S, Transformation([3, 3, 3, 3, 1]));;
 gap> ci := ReesCongruenceOfSemigroupIdeal(I);;
 gap> cj := ReesCongruenceOfSemigroupIdeal(J);;
-gap> class1 := CongruenceClassOfElement(ci, Transformation([1,1,3,1,3]));;
-gap> class2 := CongruenceClassOfElement(cj, Transformation([1,1,3,1,3]));;
+gap> class1 := CongruenceClassOfElement(ci, Transformation([1, 1, 3, 1, 3]));;
+gap> class2 := CongruenceClassOfElement(cj, Transformation([1, 1, 3, 1, 3]));;
 gap> class1 * class2;
 Error, Semigroups: \*: usage,
 the args <c1> and <c2> must be classes of the same congruence,
@@ -196,19 +196,19 @@ gap> ci = cj;
 false
 
 #T# IsReesCongruence: False
-gap> S := Semigroup([Transformation([3,4,3,2]),
->                    Transformation([4,4,4,2])]);;
-gap> cong := SemigroupCongruence(S, [Transformation([2,4,2,2]),
->                                    Transformation([4,2,4,4])]);;
+gap> S := Semigroup([Transformation([3, 4, 3, 2]),
+>                    Transformation([4, 4, 4, 2])]);;
+gap> cong := SemigroupCongruence(S, [Transformation([2, 4, 2, 2]),
+>                                    Transformation([4, 2, 4, 4])]);;
 gap> IsReesCongruence(cong);
 false
 
 #T# IsReesCongruence: One class, but not an ideal
-gap> S := Semigroup( [ Transformation( [ 2, 4, 3, 2 ] ),
->                      Transformation( [ 3, 3, 1, 3 ] ),
->                      Transformation( [ 4, 1, 2, 4 ] ),
->                      Transformation( [ 4, 2, 2, 4 ] ) ] );;
-gap> pairs := [Transformation([4,4,4,4]), Transformation([2,2,4,2])];;
+gap> S := Semigroup([Transformation([2, 4, 3, 2]),
+>                      Transformation([3, 3, 1, 3]),
+>                      Transformation([4, 1, 2, 4]),
+>                      Transformation([4, 2, 2, 4])]);;
+gap> pairs := [Transformation([4, 4, 4, 4]), Transformation([2, 2, 4, 2])];;
 gap> cong := SemigroupCongruence(S, pairs);;
 gap> IsReesCongruence(cong);
 false

@@ -1,106 +1,71 @@
-<Chapter Label="Semigroup homomorphisms">
+<Chapter Label="Properties of semigroups and inverse semigroups">
+
   <Heading>
-    Semigroup homomorphisms
-  </Heading> 
+    Properties of semigroups and inverse semigroups
+  </Heading>
 
-  In this chapter we describe the various ways to define a homomorphism from a
-  semigroup to another semigroup.
-  <P/>
-  
+  In this chapter we decribe the methods that are available in &Semigroups; for
+  determining various properties of a semigroup.
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
+
     <Heading>
-      Isomorphisms of arbitrary semigroups
-    </Heading> 
+      Properties of semigroups
+    </Heading>
 
-    <#Include Label="IsIsomorphicSemigroup"> 
-    <#Include Label="SmallestMultiplicationTable"> 
-    <#Include Label="IsomorphismSemigroups"> 
-
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  
-  <Section>
-    <Heading>
-      Isomorphisms of Rees (0-)matrix semigroups
-    </Heading> 
-
-    PREAMBLE
-
-    <!--********************************************************************-->
+    In this section we describe the properties of a semigroup that can be
+    determined using the &Semigroups; package. 
+    <P/>
     
-    <Subsection 
-      Label="Operators for isomorphisms of Rees (0-)matrix semigroup by triples">
+    <#Include Label="IsBand">
+    <#Include Label="IsBlockGroup">
+    <#Include Label="IsCommutativeSemigroup">
+    <#Include Label="IsCompletelyRegularSemigroup">
+    <#Include Label="IsCongruenceFreeSemigroup">
+    <#Include Label="IsGroupAsSemigroup">
+    <#Include Label="IsIdempotentGenerated">
+    <#Include Label="IsLeftSimple">
+    <#Include Label="IsLeftZeroSemigroup">
+    <#Include Label="IsMonogenicSemigroup">
+    <#Include Label="IsMonoidAsSemigroup">
+    <#Include Label="IsOrthodoxSemigroup">
+    <#Include Label="IsRectangularBand">
+    <#Include Label="IsRegularSemigroup">
+    <#Include Label="IsRightZeroSemigroup">
+    <#Include Label="IsRTrivial">
+    <#Include Label="IsSemilattice">
+    <#Include Label="IsSimpleSemigroup">
+    <#Include Label="IsSynchronizingSemigroup">
+    <#Include Label="IsUnitRegularMonoid">
+    <#Include Label="IsZeroGroup">
+    <#Include Label="IsZeroRectangularBand">
+    <#Include Label="IsZeroSemigroup">
+    <#Include Label="IsZeroSimpleSemigroup">
+    
+  </Section>
 
-      <Heading>
-        Operators for isomorphisms of Rees (0-)matrix semigroup by triples
-      </Heading>
-
-      <List>
-        
-        <Mark><C><A>map</A>[<A>i</A>]</C></Mark>
-        <Item>
-          <Index Key="ELM_LIST"><C>ELM_LIST</C> (for Rees (0-)matrix semigroup
-            isomorphisms by triples)
-          </Index>
-          <C><A>map</A>[i]</C> returns the <A>i</A>th component of the Rees
-          (0-)matrix semigroup isomorphism by triple <A>map</A> when <C><A>i</A> = 1,
-            2, 3</C>; see <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>. 
-        </Item>
-
-        <Mark><C><A>map1</A> * <A>map2</A></C></Mark>
-        <Item>
-          <Index Key="*"><C>*</C> 
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns the composition of <A>map2</A> and <A>map1</A>;
-          see <Ref Oper = "CompositionMapping2" Label = "for IsRMSIsoByTriple"/>.
-        </Item>
-
-        <Mark><C><A>map1</A> &lt; <A>map2</A></C></Mark>
-        <Item>
-          <Index Key="&lt;"><C>&lt;</C>
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns <K>true</K> if <A>map1</A> is lexicographically less than
-          <A>map2</A>.
-        </Item>
-
-        <Mark><C><A>map1</A> = <A>map2</A></C></Mark>
-        <Item>
-          <Index Key="="><C>=</C>
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns <K>true</K> if the Rees (0-)matrix semigroup
-          isomorphisms by triple <A>map1</A> and <A>map2</A> have equal source and
-          range, and are equal as functions, and <K>false</K> otherwise. <P/>
-          
-          It is possible for <A>map1</A> and <A>map2</A> to be equal but to
-          have distinct components. 
-        </Item>
-        
-        <Mark><C><A>pt</A> ^ <A>map</A></C></Mark>
-        <Item>
-          <Index Key="^"><C>^</C>
-            (for Rees (0-)matrix semigroup isomorphisms by triples)
-          </Index>
-          returns the image of the element <A>pt</A> of the source of
-          <A>map</A> under the isomorphism <A>map</A>; see 
-          <Ref Oper = "ImagesElm" Label = "for IsRMSIsoByTriple"/>.
-        </Item>
-        
-      </List> 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
   
-    </Subsection>
-
-    <!--********************************************************************-->
+  <Section>
+    
+    <Heading>
+      Properties of inverse semigroups
+    </Heading>
+    
+    <#Include Label="IsCliffordSemigroup">
+    <#Include Label="IsBrandtSemigroup">
+    <#Include Label="IsEUnitaryInverseSemigroup">
+    <#Include Label="IsFactorisableInverseMonoid">
+    <#Include Label="IsJoinIrreducible">
+    <#Include Label="IsMajorantlyClosed">
+    <#Include Label="IsMonogenicInverseSemigroup">
 
   </Section>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

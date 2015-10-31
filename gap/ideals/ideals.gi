@@ -185,7 +185,7 @@ function(S, n)
   n := NameRNam(n);
   n := Int(n);
   if n = fail or Length(S) < n then
-    ErrorMayQuit("Semigroups: \.: usage,\n",
+    ErrorMayQuit("Semigroups: \\.: usage,\n",
                  "the second argument <n> should be a positive integer\n",
                  "not greater than the number of generators of the semigroup ",
                  "<S> in\nthe first argument,");

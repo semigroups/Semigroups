@@ -382,8 +382,8 @@ else
   # JDM use ClosureInverseSemigroup to improve things here!
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
   function(s)
-  local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal,
-  d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
+    local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal,
+    d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
 
     if not IsSemilattice(s) then
       Info(InfoWarning, 1, "usage: argument should be a semilattice,");
