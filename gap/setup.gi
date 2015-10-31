@@ -54,12 +54,12 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 # IsActingSemigroupWithInverseOp
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-IsBlockBijectionSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and
-IsPartialPermBipartitionSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp,
+                  IsInverseSemigroup and IsPartialPermSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp,
+                  IsInverseSemigroup and IsBlockBijectionSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp,
+                  IsInverseSemigroup and IsPartialPermBipartitionSemigroup);
 
 # the largest point involved in the action
 
