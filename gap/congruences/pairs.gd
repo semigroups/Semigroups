@@ -12,7 +12,9 @@
 ## MSc thesis "Computing with Semigroup Congruences", chapter 2
 ##
 
-DeclareGlobalFunction("SEMIGROUPS_SetupCongData");
+DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
+DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
+
 DeclareCategory("SEMIGROUPS_IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("SEMIGROUPS_Enumerate", [IsEquivalenceRelation, IsFunction]);
 DeclareOperation("SEMIGROUPS_Enumerate",

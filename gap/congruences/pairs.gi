@@ -11,9 +11,16 @@
 ## generating pairs, using a union-find method.  See Howie 1.5 and see MT's
 ## MSc thesis "Computing with Semigroup Congruences", chapter 2
 ##
+## FIXME this summary should be improved, what does Howie 1.5 mean? Give
+## proper references here.
+## FIXME write some text about how the file is organized and what the main idea
+## is here, i.e. how is the congruence defined, how is it enumerated etc.
+## FIXME write some details of the actual implementation, i.e. I noticed that
+## SEMIGROUP_Enumerate returns fail, when it has AsLookUpTable, why is this?
 
-InstallGlobalFunction(SEMIGROUPS_SetupCongData,
-function(cong)
+#############################################################################
+
+SEMIGROUPS.SetupCongData := function(cong)
   local S, elms, pairs, hashlen, ht, data, genpairs, right_compat, left_compat;
 
   S := Range(cong);
@@ -22,73 +29,226 @@ function(cong)
   # Is this a left, right, or 2-sided congruence?
   if HasGeneratingPairsOfMagmaCongruence(cong) then
     genpairs := GeneratingPairsOfSemigroupCongruence(cong);
-    left_compat := true;
-    right_compat := true;
   elif HasGeneratingPairsOfLeftMagmaCongruence(cong) then
     genpairs := GeneratingPairsOfLeftSemigroupCongruence(cong);
-    left_compat := true;
-    right_compat := false;
   elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
     genpairs := GeneratingPairsOfRightSemigroupCongruence(cong);
-    left_compat := false;
-    right_compat := true;
   fi;
 
-  pairs := List(genpairs, x -> [Position(elms, x[1]), Position(elms, x[2])]);
+  pairs   := List(genpairs, x -> [Position(elms, x[1]), Position(elms, x[2])]);
   hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
-  ht := HTCreate([elms[1], elms[1]], rec(forflatplainlists := true,
-                                         treehashsize := hashlen));
-  data := rec(cong := cong,
-              left_compat := left_compat,
-              right_compat := right_compat,
+  ht := HTCreate([1, 1], rec(forflatplainlists := true,
+                             treehashsize := hashlen));
+
+  data := rec(cong         := cong,
               pairstoapply := pairs,
-              pos := 0,
-              ht := ht,
-              elms := elms,
-              found := false,
-              ufdata := UF_NEW(Size(S)));
+              pos          := 0,
+              ht           := ht,
+              elms         := elms,
+              found        := false,
+              ufdata       := UF_NEW(Size(S)));
+
   cong!.data := Objectify(NewType(FamilyObj(cong),
                                   SEMIGROUPS_IsSemigroupCongruenceData),
                           data);
+end;
+
+# JDM this was previously installed 3 times in the loop lower down.
+# This would probably be faster if it was three separate methods, or if the
+# main while loop had the if IsXSemigroupCongruence() then ... fi; outside the
+# main loop, and the main loops body was repeated 3 times.
+
+InstallMethod(SEMIGROUPS_Enumerate,
+"for semigroup congruence data and a function",
+[SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
+function(data, lookfunc)
+  local cong, S, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
+        found, x, j, y, next, newtable, ii;
+
+  cong         := data!.cong;
+  ufdata       := data!.ufdata;
+  pairstoapply := data!.pairstoapply;
+  ht           := data!.ht;
+  S            := Range(cong);
+
+  if IsLeftSemigroupCongruence(cong) then
+    left := LeftCayleyGraphSemigroup(S);
+  fi;
+  if IsRightSemigroupCongruence(cong) then
+    right := RightCayleyGraphSemigroup(S);
+  fi;
+
+  genstoapply := [1 .. Size(GeneratorsOfSemigroup(S))];
+  i     := data!.pos;
+  nr    := Size(pairstoapply);
+  found := false;
+
+  if i = 0 then
+    # Add the generating pairs themselves
+    for x in pairstoapply do
+      if x[1] <> x[2] and HTValue(ht, x) = fail then
+        HTAdd(ht, x, true);
+        UF_UNION(ufdata, x);
+        # Have we found what we were looking for?
+        if lookfunc(data, x) then
+          data!.found := true;
+          return data;
+        fi;
+      fi;
+    od;
+  fi;
+  while i < nr do
+    i := i + 1;
+    x := pairstoapply[i];
+    # Add the pair's left-multiples
+    if IsLeftSemigroupCongruence(cong) then
+      for j in genstoapply do
+        y := [left[x[1]][j], left[x[2]][j]];
+        if y[1] <> y[2] and HTValue(ht, y) = fail then
+          HTAdd(ht, y, true);
+          nr := nr + 1;
+          pairstoapply[nr] := y;
+          UF_UNION(ufdata, y);
+          if lookfunc(data, y) then
+            found := true;
+          fi;
+        fi;
+      od;
+    fi;
+
+    if IsRightSemigroupCongruence(cong) then
+      # Add the pair's right-multiples
+      for j in genstoapply do
+        y := [right[x[1]][j], right[x[2]][j]];
+        if y[1] <> y[2] and HTValue(ht, y) = fail then
+          HTAdd(ht, y, true);
+          nr := nr + 1;
+          pairstoapply[nr] := y;
+          UF_UNION(ufdata, y);
+          if lookfunc(data, y) then
+            found := true;
+          fi;
+        fi;
+      od;
+    fi;
+
+    if found then
+      # Save our place
+      data!.pos := i;
+      data!.found := found;
+      return data;
+    fi;
+  od;
+
+  # "Normalise" the table for clean lookup
+  next := 1;
+  newtable := [];
+  for i in [1 .. UF_SIZE(ufdata)] do
+    ii := UF_FIND(ufdata, i);
+    if ii = i then
+      newtable[i] := next;
+      next := next + 1;
+    else
+      newtable[i] := newtable[ii];
+    fi;
+  od;
+
+  SetAsLookupTable(cong, newtable);
+  Unbind(cong!.data);
+  data!.found := lookfunc(data, fail);
+  return data;
 end);
 
-#
+# TODO better methods for these. Could actually check if they are closed under
+# left multiplication or not, OR: IsRight/LeftSemigroupCongruence should only
+# ever refer to the way the congruence was created, and then this should really
+# be a category.
 
-# Install the following methods for three different filters
-install_pairs_methods_with_filter@ := function(cong_type)
+InstallMethod(IsRightSemigroupCongruence, "for a left semigroup congruence",
+[IsLeftSemigroupCongruence], ReturnFalse);
+
+InstallMethod(IsLeftSemigroupCongruence, "for a right semigroup congruence",
+[IsRightSemigroupCongruence], ReturnFalse);
+
+#############################################################################
+# Install the following methods for left, right and 2-sided congruences.
+# FIXME explain why!!!!!!!!
+#
+# JDM I rewrote this, (and the comment above). Try to write meaningful
+# "Install the following methods for three different filters" might as well not
+# have been written for all the information it contains.
+#
+# JDM I rewrote this a bit to make it more readable, to expose the loop at the
+# top, so that is it possible to read the methods in this file and know what
+# they are being installed for, without having to look near the end of the
+# file.
+#
+#
+# JDM Almost all of these methods had incorrect info texts, and some of them
+# were missing HasGeneratingPairsOfXSemigroupCongruence, which caused some
+# errors to show up.
+
+# See below for the loop where this function is invoked. It is required to do
+# this in a function so that the values _record,
+# _GeneratingPairsOfXSemigroupCongruence, etc are available (as local
+# variables in the function) when the methods installed in this function are
+# actually called. If we don't use a function here, the values in _record etc
+# are unbound by the time the methods are called.
+
+#############################################################################
+# methods for left/right/2-sided congruences
+#############################################################################
+
+_InstallMethodsForCongruences := function(_record)
+  local _GeneratingPairsOfXSemigroupCongruence,
+        _HasGeneratingPairsOfXSemigroupCongruence,
+        _IsXSemigroupCongruence;
+
+  _GeneratingPairsOfXSemigroupCongruence := EvalString(Concatenation("GeneratingPairsOf",
+                                                                     _record.type_string,
+                                                                     "MagmaCongruence"));
+  _HasGeneratingPairsOfXSemigroupCongruence := EvalString(Concatenation("HasGeneratingPairsOf",
+                                                                        _record.type_string,
+                                                                        "MagmaCongruence"));
+  _IsXSemigroupCongruence                   := EvalString(Concatenation("Is",
+                                                                        _record.type_string,
+                                                                        "SemigroupCongruence"));
+
   InstallImmediateMethod(IsFinite,
-  Concatenation("for a ", cong_type.string),
-  cong_type.filter and HasRange,
-  0,
-  function(cong)
-    if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
-      return true;
-    fi;
-    TryNextMethod();
+    Concatenation("for a ", _record.info_string, " with known range"),
+    _IsXSemigroupCongruence and HasRange,
+    0,
+    function(cong)
+      if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
+        return true;
+      fi;
+      TryNextMethod();
   end);
 
   #
 
   InstallMethod(\in,
-  Concatenation("for dense list and ", cong_type.string),
-  [IsDenseList, cong_type.filter and cong_type.haspairs],
+  Concatenation("for dense list and ", _record.info_string,
+                " with known generating pairs"),
+  [IsDenseList, _IsXSemigroupCongruence and
+   _HasGeneratingPairsOfXSemigroupCongruence],
   function(pair, cong)
     local S, elms, p1, p2, table, lookfunc;
 
     # Input checks
     if Size(pair) <> 2 then
-      ErrorMayQuit("Semigroups: \\in: usage,\n",
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
     S := Range(cong);
     if not (pair[1] in S and pair[2] in S) then
-      ErrorMayQuit("Semigroups: \\in: usage,\n",
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "elements of the first arg <pair> must be\n",
                    "in the range of the second arg <cong>,");
     fi;
     if not (HasIsFinite(S) and IsFinite(S)) then
-      ErrorMayQuit("Semigroups: \\in: usage,\n",
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "this function currently only works if <cong> is a ",
                    "congruence of a semigroup\nwhich is known to be finite,");
     fi;
@@ -111,11 +271,12 @@ install_pairs_methods_with_filter@ := function(cong_type)
     fi;
   end);
 
-  #
+  #FIXME: you should avoid methods of this type, i.e. the method for
+  #AsLookupTable appears to call itself (ok, it works, but this is bad).
 
   InstallMethod(AsLookupTable,
-  Concatenation("for a ", cong_type.string),
-  [cong_type.filter],
+  Concatenation("for a ", _record.info_string, "with known generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
       ErrorMayQuit("Semigroups: AsLookupTable: usage,\n",
@@ -128,130 +289,25 @@ install_pairs_methods_with_filter@ := function(cong_type)
   #
 
   InstallMethod(SEMIGROUPS_Enumerate,
-  Concatenation("for a ", cong_type.string, " and a function"),
-  [cong_type.filter, IsFunction],
+  Concatenation("for a ", _record.info_string,
+                " with known generating pairs and a function"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   IsFunction],
   function(cong, lookfunc)
-    if HasAsLookupTable(cong) then
+    if HasAsLookupTable(cong) then #TODO: why does this return fail?
       return fail;
     fi;
     if not IsBound(cong!.data) then
-      SEMIGROUPS_SetupCongData(cong);
+      SEMIGROUPS.SetupCongData(cong);
     fi;
     return SEMIGROUPS_Enumerate(cong!.data, lookfunc);
   end);
 
   #
 
-  InstallMethod(SEMIGROUPS_Enumerate,
-  "for semigroup congruence data and a function",
-  [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
-  function(data, lookfunc)
-    local cong, S, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
-          found, x, j, y, next, newtable, ii, left_compat, right_compat;
-
-    cong := data!.cong;
-    S := Range(cong);
-
-    ufdata := data!.ufdata;
-    pairstoapply := data!.pairstoapply;
-    ht := data!.ht;
-    left_compat := data!.left_compat;
-    right_compat := data!.right_compat;
-
-    if left_compat then
-      left := LeftCayleyGraphSemigroup(S);
-    fi;
-    if right_compat then
-      right := RightCayleyGraphSemigroup(S);
-    fi;
-
-    genstoapply := [1 .. Size(GeneratorsOfSemigroup(S))];
-    i := data!.pos;
-    nr := Size(pairstoapply);
-    found := false;
-
-    if i = 0 then
-      # Add the generating pairs themselves
-      for x in pairstoapply do
-        if x[1] <> x[2] and HTValue(ht, x) = fail then
-          HTAdd(ht, x, true);
-          UF_UNION(ufdata, x);
-          # Have we found what we were looking for?
-          if lookfunc(data, x) then
-            data!.found := true;
-            return data;
-          fi;
-        fi;
-      od;
-    fi;
-
-    while i < nr do
-      i := i + 1;
-      x := pairstoapply[i];
-      # Add the pair's left-multiples
-      if left_compat then
-        for j in genstoapply do
-          y := [left[x[1]][j], left[x[2]][j]];
-          if y[1] <> y[2] and HTValue(ht, y) = fail then
-            HTAdd(ht, y, true);
-            nr := nr + 1;
-            pairstoapply[nr] := y;
-            UF_UNION(ufdata, y);
-            if lookfunc(data, y) then
-              found := true;
-            fi;
-          fi;
-        od;
-      fi;
-
-      if right_compat then
-        # Add the pair's right-multiples
-        for j in genstoapply do
-          y := [right[x[1]][j], right[x[2]][j]];
-          if y[1] <> y[2] and HTValue(ht, y) = fail then
-            HTAdd(ht, y, true);
-            nr := nr + 1;
-            pairstoapply[nr] := y;
-            UF_UNION(ufdata, y);
-            if lookfunc(data, y) then
-              found := true;
-            fi;
-          fi;
-        od;
-      fi;
-
-      if found then
-        # Save our place
-        data!.pos := i;
-        data!.found := found;
-        return data;
-      fi;
-    od;
-
-    # "Normalise" the table for clean lookup
-    next := 1;
-    newtable := [];
-    for i in [1 .. UF_SIZE(ufdata)] do
-      ii := UF_FIND(ufdata, i);
-      if ii = i then
-        newtable[i] := next;
-        next := next + 1;
-      else
-        newtable[i] := newtable[ii];
-      fi;
-    od;
-
-    SetAsLookupTable(cong, newtable);
-    Unbind(cong!.data);
-    data!.found := lookfunc(data, fail);
-    return data;
-  end);
-
-  #
-
   InstallMethod(EquivalenceClasses,
-  Concatenation("for a ", cong_type.string),
-  [cong_type.filter],
+  Concatenation("for a ", _record.info_string, " with known generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local classes, next, tab, elms, i;
 
@@ -276,8 +332,8 @@ install_pairs_methods_with_filter@ := function(cong_type)
   #
 
   InstallMethod(NonTrivialEquivalenceClasses,
-  Concatenation("for a ", cong_type.string),
-  [cong_type.filter],
+  Concatenation("for a ", _record.info_string, "with known generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local classes;
 
@@ -290,71 +346,24 @@ install_pairs_methods_with_filter@ := function(cong_type)
     return Filtered(classes, c -> Size(c) > 1);
   end);
 
-  #
-
-  InstallMethod(\in,
-  "for an associative element and a finite congruence class",
-  [IsAssociativeElement, IsCongruenceClass and IsFinite],
-  function(elm, class)
-    return [elm, Representative(class)] in EquivalenceClassRelation(class);
-  end);
-
-  #
-
-  InstallMethod(Size,
-  "for a finite congruence class",
-  [IsCongruenceClass and IsFinite],
-  function(class)
-    local elms, p, tab;
-    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Parent(class)), infinity);
-    p := Position(elms, Representative(class));
-    tab := AsLookupTable(EquivalenceClassRelation(class));
-    return Number(tab, n -> n = tab[p]);
-  end);
-
-  #
-
   InstallMethod(\=,
-  "for two congruence classes",
-  [IsCongruenceClass, IsCongruenceClass],
-  function(class1, class2)
-    return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-      and [Representative(class1), Representative(class2)]
-          in EquivalenceClassRelation(class1);
-  end);
-
-  #
-
-  InstallMethod(\=,
-  Concatenation("for two finite ", cong_type.string, "s"),
-  [cong_type.filter and cong_type.haspairs and IsFinite,
-   cong_type.filter and cong_type.haspairs and IsFinite],
+  Concatenation("for finite ", _record.info_string,
+                "s with known generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and IsFinite,
+   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and IsFinite],
   function(cong1, cong2)
     return Range(cong1) = Range(cong2)
-           and ForAll(cong_type.pairs(cong1), pair -> pair in cong2)
-           and ForAll(cong_type.pairs(cong2), pair -> pair in cong1);
+           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong1), pair -> pair in cong2)
+           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2), pair -> pair in cong1);
   end);
 
-  #
-
-  InstallMethod(\*,
-  "for two congruence classes",
-  [IsCongruenceClass, IsCongruenceClass],
-  function(class1, class2)
-    if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-      ErrorMayQuit("Semigroups: \*: usage,\n",
-                   "the args must be classes of the same congruence,");
-    fi;
-    return CongruenceClassOfElement(EquivalenceClassRelation(class1),
-                                    Representative(class1) *
-                                    Representative(class2));
-  end);
 
   #
 
   InstallMethod(ImagesElm,
-  Concatenation("for a ", cong_type.string, " and an associative element"),
-  [cong_type.filter, IsAssociativeElement],
+  Concatenation("for a ", _record.info_string, " with known generating pairs ",
+                "and an associative element"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence, IsAssociativeElement],
   function(cong, elm)
     local elms, lookup, classNo;
     elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(cong)), infinity);
@@ -363,20 +372,12 @@ install_pairs_methods_with_filter@ := function(cong_type)
     return elms{Positions(lookup, classNo)};
   end);
 
-  #
-
-  InstallMethod(AsList,
-  "for a congruence class",
-  [IsCongruenceClass],
-  function(class)
-    return ImagesElm(EquivalenceClassRelation(class), Representative(class));
-  end);
 
   #
 
   InstallMethod(NrCongruenceClasses,
-  Concatenation("for a ", cong_type.string, " with generating pairs"),
-  [cong_type.filter and cong_type.haspairs],
+  Concatenation("for a ", _record.info_string, " with generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local S;
     S := Range(cong);
@@ -388,182 +389,253 @@ install_pairs_methods_with_filter@ := function(cong_type)
     return Maximum(AsLookupTable(cong));
   end);
 
-  #
-
-  InstallMethod(Enumerator,
-  "for a congruence class",
-  [IsCongruenceClass],
-  function(class)
-    local cong, S, record, enum;
-
-    cong := EquivalenceClassRelation(class);
-    S := Range(cong);
-
-    if not (HasIsFinite(S) and IsFinite(S)) then
-      TryNextMethod();
-    fi;
-
-    # cong has been enumerated: return a list
-    if HasAsLookupTable(cong) then
-      return Enumerator(AsList(class));
-    fi;
-
-    # cong has not yet been enumerated: make functions
-    record := rec();
-
-    record.ElementNumber := function(enum, pos)
-      local lookfunc, result, table, classno, i;
-      if pos <= enum!.len then
-        return enum!.elms[enum!.list[pos]];
-      fi;
-      lookfunc := function(data, lastpair)
-        local classno, i;
-        classno := UF_FIND(data!.ufdata, enum!.rep);
-        if classno = UF_FIND(data!.ufdata, lastpair[1]) then
-          for i in [1 .. UF_SIZE(data!.ufdata)] do
-            if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
-              enum!.found[i] := true;
-              enum!.len := enum!.len + 1;
-              enum!.list[enum!.len] := i;
-            fi;
-          od;
-        fi;
-        return enum!.len >= pos;
-      end;
-      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
-      if result = fail then
-        # cong has AsLookupTable
-        table := AsLookupTable(enum!.cong);
-        classno := table[enum!.rep];
-        for i in [1 .. Size(Range(enum!.cong))] do
-          if table[i] = classno and not enum!.found[i] then
-            enum!.found[i] := true;
-            enum!.len := enum!.len + 1;
-            enum!.list[enum!.len] := i;
-          fi;
-        od;
-        SetSize(class, enum!.len);
-        SetAsList(class, enum!.list);
-      fi;
-      if pos <= enum!.len then
-        return enum!.elms[enum!.list[pos]];
-      else
-        return fail;
-      fi;
-    end;
-
-    record.NumberElement := function(enum, elm)
-      local x, lookfunc, result, table, classno, i;
-      x := Position(enum!.elms, elm);
-      lookfunc := function(data, lastpair)
-        return UF_FIND(data!.ufdata, x)
-               = UF_FIND(data!.ufdata, enum!.rep);
-      end;
-      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
-      if result = fail then
-        # cong has AsLookupTable
-        result := fail;
-        table := AsLookupTable(enum!.cong);
-        classno := table[enum!.rep];
-        for i in [1 .. Size(Range(enum!.cong))] do
-          if table[i] = classno and not enum!.found[i] then
-            enum!.found[i] := true;
-            enum!.len := enum!.len + 1;
-            enum!.list[enum!.len] := i;
-            if i = x then
-              result := enum!.len;
-            fi;
-          fi;
-        od;
-        SetSize(class, enum!.len);
-        SetAsList(class, enum!.list);
-        return result;
-      elif result!.found then
-        # elm is in the class
-        if enum!.found[x] then
-          # elm already has a position
-          return Position(enum!.list, x);
-        else
-          # put elm in the next available position
-          enum!.found[x] := true;
-          enum!.len := enum!.len + 1;
-          enum!.list[enum!.len] := x;
-          return enum!.len;
-        fi;
-      else
-        # elm is not in the class
-        return fail;
-      fi;
-    end;
-
-    enum := EnumeratorByFunctions(class, record);
-    enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
-    enum!.elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(enum!.cong)),
-                                     infinity);
-    enum!.rep := Position(enum!.elms,
-                          Representative(UnderlyingCollection(enum)));
-    enum!.list := [enum!.rep];
-    enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
-    enum!.len := 1;
-
-    return enum;
-  end);
 
   #
 
   InstallMethod(ViewObj,
-  Concatenation("for a ", cong_type.string),
-  [cong_type.filter and cong_type.haspairs],
+  Concatenation("for a ", _record.info_string, " with generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
-    Print("<");
-    Print(cong_type.string);
-    Print(" over ");
+    Print("<", _record.info_string, " over ");
     ViewObj(Range(cong));
-    Print(" with ", Size(cong_type.pairs(cong)),
-          " generating pairs");
-    Print(">");
+    Print(" with ", Size(_GeneratingPairsOfXSemigroupCongruence(cong)),
+          " generating pairs>");
   end);
-
-  #
-
-  InstallMethod(PrintObj,
-  Concatenation("for a ", cong_type.string),
-  [cong_type.filter and cong_type.haspairs],
-  function(cong)
-    if cong_type.filter = IsLeftSemigroupCongruence then
-      Print("Left");
-    elif cong_type.filter = IsRightSemigroupCongruence then
-      Print("Right");
-    fi;
-    Print("SemigroupCongruence( ");
-    PrintObj(Range(cong));
-    Print(", ");
-    Print(cong_type.pairs(cong));
-    Print(" )");
-  end);
-
 end;
 
-for cong_type@ in [rec(filter := IsSemigroupCongruence,
-                       string := "semigroup congruence",
-                       pairs := GeneratingPairsOfSemigroupCongruence,
-                       haspairs := HasGeneratingPairsOfMagmaCongruence),
-                   rec(filter := IsLeftSemigroupCongruence,
-                       string := "left semigroup congruence",
-                       pairs := GeneratingPairsOfLeftSemigroupCongruence,
-                       haspairs := HasGeneratingPairsOfLeftMagmaCongruence),
-                   rec(filter := IsRightSemigroupCongruence,
-                       string := "right semigroup congruence",
-                       pairs := GeneratingPairsOfRightSemigroupCongruence,
-                       haspairs := HasGeneratingPairsOfRightMagmaCongruence)] do
-  install_pairs_methods_with_filter@(cong_type@);
+for _record in [rec(type_string := "",
+                    info_string := "semigroup congruence"),
+                rec(type_string   := "Left",
+                    info_string := "left semigroup congruence"),
+                rec(type_string   := "Right",
+                    info_string := "right semigroup congruence")] do
+  _InstallMethodsForCongruences(_record);
 od;
 
-# Finished installing methods for all three filters
-Unbind(cong_type@);
-Unbind(install_pairs_methods_with_filter@);
+Unbind(_record);
+Unbind(_InstallMethodsForCongruences);
+
+###########################################################################
+# Some individual methods for congruences
+###########################################################################
+
+# JDM having one method with an if-statement inside which decides which case we
+# are in is bad, this is just doing home-made method selection.
+
+InstallMethod(PrintObj,
+"for a left semigroup congruence with known generating pairs",
+[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+function(cong)
+  Print("LeftSemigroupCongruence( ");
+  PrintObj(Range(cong));
+  Print(", ");
+  Print(GeneratingPairsOfLeftSemigroupCongruence(cong));
+  Print(" )");
+end);
+
+InstallMethod(PrintObj,
+"for a right semigroup congruence with known generating pairs",
+[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(cong)
+  Print("RightSemigroupCongruence( ");
+  PrintObj(Range(cong));
+  Print(", ");
+  Print(GeneratingPairsOfRightSemigroupCongruence(cong));
+  Print(" )");
+end);
+
+InstallMethod(PrintObj,
+"for a semigroup congruence with known generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(cong)
+  Print("SemigroupCongruence( ");
+  PrintObj(Range(cong));
+  Print(", ");
+  Print(GeneratingPairsOfSemigroupCongruence(cong));
+  Print(" )");
+end);
+
+###########################################################################
+# methods for congruence classes
+###########################################################################
+
+#JDM these were also installed 3 times previously.
+
+InstallMethod(Enumerator, "for a congruence class",
+[IsCongruenceClass],
+function(class)
+  local cong, S, enum;
+
+  cong := EquivalenceClassRelation(class);
+  S := Range(cong);
+
+  if not (HasIsFinite(S) and IsFinite(S)) then
+    TryNextMethod();
+  fi;
+
+  # cong has been enumerated: return a list
+  if HasAsLookupTable(cong) then
+    return Enumerator(AsList(class));
+  fi;
+
+  # cong has not yet been enumerated: make functions
+  enum := rec();
+
+  enum.ElementNumber := function(enum, pos)
+    local lookfunc, result, table, classno, i;
+    if pos <= enum!.len then
+      return enum!.elms[enum!.list[pos]];
+    fi;
+    lookfunc := function(data, lastpair)
+      local classno, i;
+      classno := UF_FIND(data!.ufdata, enum!.rep);
+      if classno = UF_FIND(data!.ufdata, lastpair[1]) then
+        for i in [1 .. UF_SIZE(data!.ufdata)] do
+          if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
+            enum!.found[i] := true;
+            enum!.len := enum!.len + 1;
+            enum!.list[enum!.len] := i;
+          fi;
+        od;
+      fi;
+      return enum!.len >= pos;
+    end;
+    result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
+    if result = fail then
+      # cong has AsLookupTable
+      table := AsLookupTable(enum!.cong);
+      classno := table[enum!.rep];
+      for i in [1 .. Size(Range(enum!.cong))] do
+        if table[i] = classno and not enum!.found[i] then
+          enum!.found[i] := true;
+          enum!.len := enum!.len + 1;
+          enum!.list[enum!.len] := i;
+        fi;
+      od;
+      SetSize(class, enum!.len);
+      SetAsList(class, enum!.list);
+    fi;
+    if pos <= enum!.len then
+      return enum!.elms[enum!.list[pos]];
+    else
+      return fail;
+    fi;
+  end;
+
+  enum.NumberElement := function(enum, elm)
+    local x, lookfunc, result, table, classno, i;
+    x := Position(enum!.elms, elm);
+    lookfunc := function(data, lastpair)
+      return UF_FIND(data!.ufdata, x)
+             = UF_FIND(data!.ufdata, enum!.rep);
+    end;
+    result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
+    if result = fail then
+      # cong has AsLookupTable
+      result := fail;
+      table := AsLookupTable(enum!.cong);
+      classno := table[enum!.rep];
+      for i in [1 .. Size(Range(enum!.cong))] do
+        if table[i] = classno and not enum!.found[i] then
+          enum!.found[i] := true;
+          enum!.len := enum!.len + 1;
+          enum!.list[enum!.len] := i;
+          if i = x then
+            result := enum!.len;
+          fi;
+        fi;
+      od;
+      SetSize(class, enum!.len);
+      SetAsList(class, enum!.list);
+      return result;
+    elif result!.found then
+      # elm is in the class
+      if enum!.found[x] then
+        # elm already has a position
+        return Position(enum!.list, x);
+      else
+        # put elm in the next available position
+        enum!.found[x] := true;
+        enum!.len := enum!.len + 1;
+        enum!.list[enum!.len] := x;
+        return enum!.len;
+      fi;
+    else
+      # elm is not in the class
+      return fail;
+    fi;
+  end;
+
+  enum := EnumeratorByFunctions(class, enum);
+  enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
+  enum!.elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(enum!.cong)),
+                                   infinity);
+  enum!.rep := Position(enum!.elms,
+                        Representative(UnderlyingCollection(enum)));
+  enum!.list := [enum!.rep];
+  enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
+  enum!.len := 1;
+
+  return enum;
+end);
+
+InstallMethod(\in,
+"for an associative element and a finite congruence class",
+[IsAssociativeElement, IsCongruenceClass and IsFinite],
+function(elm, class)
+  return [elm, Representative(class)] in EquivalenceClassRelation(class);
+end);
 
 #
+
+InstallMethod(Size,
+"for a finite congruence class",
+[IsCongruenceClass and IsFinite],
+function(class)
+  local elms, p, tab;
+  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Parent(class)), infinity);
+  p := Position(elms, Representative(class));
+  tab := AsLookupTable(EquivalenceClassRelation(class));
+  return Number(tab, n -> n = tab[p]);
+end);
+
+#
+
+InstallMethod(\=,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and [Representative(class1), Representative(class2)]
+        in EquivalenceClassRelation(class1);
+end);
+
+
+#
+
+InstallMethod(\*,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "the args must be classes of the same congruence,");
+  fi;
+  return CongruenceClassOfElement(EquivalenceClassRelation(class1),
+                                  Representative(class1) *
+                                  Representative(class2));
+end);
+
+#
+
+InstallMethod(AsList,
+"for a congruence class",
+[IsCongruenceClass],
+function(class)
+  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
+end);
+
+# TODO shouldn't there be methods for left and right congruences too?
 
 InstallMethod(IsSubcongruence,
 "for two semigroup congruences",
@@ -578,7 +650,25 @@ function(cong1, cong2)
                 pair -> pair in cong1);
 end);
 
-#
+# TODO shouldn't there be methods for left and right congruences too?
+
+InstallMethod(JoinSemigroupCongruences,
+"for two semigroup congruences",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(c1, c2)
+  local pairs;
+  # TODO: combine lookup tables
+  if Range(c1) <> Range(c2) then
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  pairs := Concatenation(ShallowCopy(GeneratingPairsOfSemigroupCongruence(c1)),
+                         ShallowCopy(GeneratingPairsOfSemigroupCongruence(c2)));
+  return SemigroupCongruence(Range(c1), pairs);
+end);
+
+# TODO shouldn't there be a method for MeetSemigroupCongruences too?
 
 InstallMethod(LatticeOfCongruences,
 "for a semigroup",
@@ -685,7 +775,13 @@ function(S)
   return children;
 end);
 
-#
+#FIXME: you should avoid methods of this type, i.e. the method for
+#CongruencesOfSemigroup calls itself (ok, it works, but this is bad). The
+# actual method should either go in here or it should be in separate function
+# that is called by both CongruencesOfSemigroup and LatticeOfCongruences, which
+# returns both of these values and then the values of CongruencesOfSemigroup
+# and LatticeOfCongruences are set in the respective methods for
+# CongruencesOfSemigroup and LatticeOfCongruences
 
 InstallMethod(CongruencesOfSemigroup,
 "for a semigroup",
@@ -694,23 +790,3 @@ function(S)
   LatticeOfCongruences(S);
   return CongruencesOfSemigroup(S);
 end);
-
-#
-
-InstallMethod(JoinSemigroupCongruences,
-"for two semigroup congruences",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(c1, c2)
-  local pairs;
-  # TODO: combine lookup tables
-  if Range(c1) <> Range(c2) then
-    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
-  fi;
-  pairs := Concatenation(ShallowCopy(GeneratingPairsOfSemigroupCongruence(c1)),
-                         ShallowCopy(GeneratingPairsOfSemigroupCongruence(c2)));
-  return SemigroupCongruence(Range(c1), pairs);
-end);
-
-#
