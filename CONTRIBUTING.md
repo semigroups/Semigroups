@@ -72,6 +72,14 @@ that:
 * error messages should be in the following format: 
   `ErrorMayQuit("Semigroups: NameOfWhateverContainingError: \n", 
                 "something went wrong");`
+* functions and variables which will be unbound after they are read must have
+ an underscore '_' at the start.
+* non-user operations must start SEMIGROUPS_
+* other non-user functions, variables etc should be stored inside the
+ SEMIGROUPS global record (so that they do not pollute GAP with lots of
+ internal names of functions). Remember that record look up can be expensive so
+ if you need to use a function in SEMIGROUPS in a tight loop, then put it into
+ a local variable.
 
 Adapted from the contributing files for
 [GAP](https://github.com/gap-system/gap/blob/master/CONTRIBUTING.md)
