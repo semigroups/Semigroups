@@ -22,17 +22,6 @@ function(S, rank)
                               x -> RankOfTransformation(x, deg) = rank);
 end);
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a transformation semigroup",
-[IsTransformationSemigroup], S -> "\>transformation\< ");
-
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
-  return Concatenation("\>degree \>",
-                       ViewString(DegreeOfTransformationSemigroup(S)),
-                       "\<\< ");
-end);
-
 # different method required (but not yet given!!) for ideals
 
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",

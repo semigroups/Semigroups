@@ -9,13 +9,10 @@
 ##
 
 # This file contains operations for creating semigroups, subsemigroups, and
-# closures. 
+# closures.
 
-# These two operations are used to produce the view strings for a semigroup. 
+# These two operations are used to produce the view strings for a semigroup.
 # TODO example
-
-DeclareOperation("SEMIGROUPS_ViewStringPrefix", [IsSemigroup]);
-DeclareOperation("SEMIGROUPS_ViewStringSuffix", [IsSemigroup]);
 
 # The following true method is required since IsInverseSemigroup is a property
 # of semigroups and so objectifying something using IsInverseSemigroup does not
@@ -54,7 +51,7 @@ DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsAssociativeElement, IsRecord]);
 DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsAssociativeElement]);
-DeclareOperation("ClosureSemigroupNC", 
+DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 DeclareGlobalFunction("SEMIGROUPS_AddGenerators");
 
