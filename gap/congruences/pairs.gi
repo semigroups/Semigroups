@@ -45,6 +45,8 @@
 #############################################################################
 
 SEMIGROUPS.SetupCongData := function(cong)
+  # This function creates the congruence data object for cong.  It should only
+  # be called once.
   local S, elms, pairs, hashlen, ht, data, genpairs, right_compat, left_compat;
 
   S := Range(cong);
@@ -78,35 +80,35 @@ SEMIGROUPS.SetupCongData := function(cong)
                           data);
 end;
 
-# JDM this was previously installed 3 times in the loop lower down.
-# This would probably be faster if it was three separate methods, or if the
-# main while loop had the if IsXSemigroupCongruence() then ... fi; outside the
-# main loop, and the main loops body was repeated 3 times.
+#
 
 InstallMethod(SEMIGROUPS_Enumerate,
 "for semigroup congruence data and a function",
 [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  local cong, S, ufdata, pairstoapply, ht, right, left, genstoapply, i, nr,
-        found, x, j, y, next, newtable, ii;
+  # Enumerates pairs in the congruence in batches until lookfunc is satisfied
+  local cong, ufdata, pairstoapply, ht, S, left, right, genstoapply, i, nr, x,
+        check_period, j, y, next, newtable, ii;
 
+  # Restore our place from the congruence data record
   cong         := data!.cong;
   ufdata       := data!.ufdata;
   pairstoapply := data!.pairstoapply;
   ht           := data!.ht;
   S            := Range(cong);
 
+  # Find the necessary Cayley graphs
   if IsLeftSemigroupCongruence(cong) then
     left := LeftCayleyGraphSemigroup(S);
   fi;
   if IsRightSemigroupCongruence(cong) then
     right := RightCayleyGraphSemigroup(S);
   fi;
+  # (a 2-sided congruence fulfils both of these)
 
   genstoapply := [1 .. Size(GeneratorsOfSemigroup(S))];
   i     := data!.pos;
   nr    := Size(pairstoapply);
-  found := false;
 
   if i = 0 then
     # Add the generating pairs themselves
@@ -114,19 +116,26 @@ function(data, lookfunc)
       if x[1] <> x[2] and HTValue(ht, x) = fail then
         HTAdd(ht, x, true);
         UF_UNION(ufdata, x);
-        # Have we found what we were looking for?
-        if lookfunc(data, x) then
-          data!.found := true;
-          return data;
-        fi;
       fi;
     od;
   fi;
-  while i < nr do
-    i := i + 1;
-    x := pairstoapply[i];
-    # Add the pair's left-multiples
-    if IsLeftSemigroupCongruence(cong) then
+
+  # Have we already found what we were looking for?
+  if lookfunc(data) then
+    data!.found := true;
+    return data;
+  fi;
+
+  # Define how often we check the lookfunc
+  check_period := 200;
+
+  # Main loop: find new pairs and keep multiplying them
+  # We may need left-multiples, right-multiples, or both
+  if HasGeneratingPairsOfMagmaCongruence(cong) then
+    while i < nr do
+      i := i + 1;
+      x := pairstoapply[i];
+      # Add the pair's left-multiples
       for j in genstoapply do
         y := [left[x[1]][j], left[x[2]][j]];
         if y[1] <> y[2] and HTValue(ht, y) = fail then
@@ -134,14 +143,8 @@ function(data, lookfunc)
           nr := nr + 1;
           pairstoapply[nr] := y;
           UF_UNION(ufdata, y);
-          if lookfunc(data, y) then
-            found := true;
-          fi;
         fi;
       od;
-    fi;
-
-    if IsRightSemigroupCongruence(cong) then
       # Add the pair's right-multiples
       for j in genstoapply do
         y := [right[x[1]][j], right[x[2]][j]];
@@ -150,22 +153,64 @@ function(data, lookfunc)
           nr := nr + 1;
           pairstoapply[nr] := y;
           UF_UNION(ufdata, y);
-          if lookfunc(data, y) then
-            found := true;
-          fi;
         fi;
       od;
-    fi;
+      # Check lookfunc periodically
+      if i mod check_period = 0 and lookfunc(data) then
+        # Save our place
+        data!.pos := i;
+        data!.found := true;
+        return data;
+      fi;
+    od;
+  elif HasGeneratingPairsOfLeftMagmaCongruence(cong) then
+    # Main loop: find new pairs and keep multiplying them
+    while i < nr do
+      i := i + 1;
+      x := pairstoapply[i];
+      # Add the pair's left-multiples
+      for j in genstoapply do
+        y := [left[x[1]][j], left[x[2]][j]];
+        if y[1] <> y[2] and HTValue(ht, y) = fail then
+          HTAdd(ht, y, true);
+          nr := nr + 1;
+          pairstoapply[nr] := y;
+          UF_UNION(ufdata, y);
+        fi;
+      od;
+      # Check lookfunc periodically
+      if i mod check_period = 0 and lookfunc(data) then
+        # Save our place
+        data!.pos := i;
+        data!.found := true;
+        return data;
+      fi;
+    od;
+  elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
+    while i < nr do
+      i := i + 1;
+      x := pairstoapply[i];
+      # Add the pair's right-multiples
+      for j in genstoapply do
+        y := [right[x[1]][j], right[x[2]][j]];
+        if y[1] <> y[2] and HTValue(ht, y) = fail then
+          HTAdd(ht, y, true);
+          nr := nr + 1;
+          pairstoapply[nr] := y;
+          UF_UNION(ufdata, y);
+        fi;
+      od;
+      # Check lookfunc periodically
+      if i mod check_period = 0 and lookfunc(data) then
+        # Save our place
+        data!.pos := i;
+        data!.found := true;
+        return data;
+      fi;
+    od;
+  fi;
 
-    if found then
-      # Save our place
-      data!.pos := i;
-      data!.found := found;
-      return data;
-    fi;
-  od;
-
-  # "Normalise" the table for clean lookup
+  # All pairs have been found: save a lookup tabloe
   next := 1;
   newtable := [];
   for i in [1 .. UF_SIZE(ufdata)] do
@@ -177,10 +222,11 @@ function(data, lookfunc)
       newtable[i] := newtable[ii];
     fi;
   od;
-
   SetAsLookupTable(cong, newtable);
+
+  # No need for congruence data object any more
   Unbind(cong!.data);
-  data!.found := lookfunc(data, fail);
+  data!.found := lookfunc(data);
   return data;
 end);
 
@@ -287,7 +333,7 @@ _InstallMethodsForCongruences := function(_record)
       return table[p1] = table[p2];
     else
       # Otherwise, begin calculating the lookup table and look for this pair
-      lookfunc := function(data, lastpair)
+      lookfunc := function(data)
         return UF_FIND(data!.ufdata, p1)
                = UF_FIND(data!.ufdata, p2);
       end;
@@ -510,18 +556,16 @@ function(class)
     if pos <= enum!.len then
       return enum!.elms[enum!.list[pos]];
     fi;
-    lookfunc := function(data, lastpair)
+    lookfunc := function(data)
       local classno, i;
       classno := UF_FIND(data!.ufdata, enum!.rep);
-      if classno = UF_FIND(data!.ufdata, lastpair[1]) then
-        for i in [1 .. UF_SIZE(data!.ufdata)] do
-          if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
-            enum!.found[i] := true;
-            enum!.len := enum!.len + 1;
-            enum!.list[enum!.len] := i;
-          fi;
-        od;
-      fi;
+      for i in [1 .. UF_SIZE(data!.ufdata)] do
+        if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
+          enum!.found[i] := true;
+          enum!.len := enum!.len + 1;
+          enum!.list[enum!.len] := i;
+        fi;
+      od;
       return enum!.len >= pos;
     end;
     result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
@@ -549,7 +593,7 @@ function(class)
   enum.NumberElement := function(enum, elm)
     local x, lookfunc, result, table, classno, i;
     x := Position(enum!.elms, elm);
-    lookfunc := function(data, lastpair)
+    lookfunc := function(data)
       return UF_FIND(data!.ufdata, x)
              = UF_FIND(data!.ufdata, enum!.rep);
     end;
