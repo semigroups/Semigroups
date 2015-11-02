@@ -8,20 +8,40 @@
 #############################################################################
 ##
 ## This file contains functions for any finite semigroup congruence with
-## generating pairs, using a union-find method.  See Howie 1.5 and see MT's
-## MSc thesis "Computing with Semigroup Congruences", chapter 2
+## generating pairs, using a pair enumeration and union-find method.
 ##
-## FIXME this summary should be improved, what does Howie 1.5 mean? Give
-## proper references here.
+#############################################################################
 ##
-## FIXME write some text about how the file is organized and what the main idea
-## is here, i.e. how is the congruence defined, how is it enumerated etc.
+## A congruence here is defined by a semigroup and a list of generating pairs.
+## Most of the work is done by SEMIGROUPS_Enumerate, a hidden function which
+## begins to multiply known pairs in the congruence by the semigroup's
+## generators, checking its results periodically against a supplied "lookfunc"
+## which checks whether some condition has been fulfilled.
 ##
-## FIXME write some details of the actual implementation, i.e. I noticed that
-## SEMIGROUP_Enumerate returns fail, when it has AsLookUpTable, why is this?
-## Don't only answer this question, but think about what information someone
-## else would require to be able to maintain this code, and comment on that.
-
+## Any function which requires information about a congruence may call
+## SEMIGROUPS_Enumerate with a lookfunc to allow it to terminate as soon as the
+## necessary information is found, without doing extra work.  Information found
+## so far is then stored in a "congruence data" object, and work may be resumed
+## in subsequent calls to SEMIGROUPS_Enumerate.
+##
+## If all the pairs of the congruence have been found, the congruence data
+## object is discarded, and a lookup table is stored, giving complete
+## information about the congruence classes.  If a lookup table is available,
+## it is always used instead of SEMIGROUPS_Enumerate, which will always return
+## fail from then on.
+##
+## Most methods in this file apply to (two-sided) congruences, as well as left
+## congruences and right congruences.  The _InstallMethodsForCongruences
+## function is called three times when Semigroups is loaded, installing slightly
+## different methods for left, right, and two-sided congruences.  Of course a
+## left congruence may turn out also to be a right congruence, and so on, but
+## the properties HasGeneratingPairsOf(Left/Right)MagmaCongruence allow us to
+## determine which type of relation we are treating it as.
+##
+## See J.M. Howie's "Fundamentals of Semigroup Theory" Section 1.5, and see
+## Michael Torpey's MSc thesis "Computing with Semigroup Congruences" Chapter 2
+## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
+##
 #############################################################################
 
 SEMIGROUPS.SetupCongData := function(cong)
