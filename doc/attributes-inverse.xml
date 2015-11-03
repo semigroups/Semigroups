@@ -338,7 +338,7 @@ gap> Minorants(S,f);
 gap> S := SymmetricInverseSemigroup(3);
 <symmetric inverse monoid of degree 3>
 gap> T := InverseSemigroup(MajorantClosure(S,[PartialPerm([1])]));
-<inverse partial perm monoid of degree 3 with 6 generators>
+<inverse partial perm monoid of rank 3 with 6 generators>
 gap> IsMajorantlyClosed(S,T);
 true
 gap> RC := RightCosetsOfInverseSemigroup(S,T);
@@ -414,28 +414,24 @@ gap> SameMinorantsSubgroup(x);
   </Description>
 </ManSection>
 <Example><![CDATA[
-gap> S := InverseSemigroup(PartialPerm([2,1,4,3,6,5,8,7]));
-<commutative inverse partial perm semigroup of rank 8 with 1 generator>
+gap> S := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));
+<commutative inverse partial perm semigroup of rank 8 with 1 
+ generator>
 gap> Elements(S);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, 
   (1,2)(3,4)(5,6)(7,8) ]
 gap> T := SmallerDegreePartialPermRepresentation(S);
-MappingByFunction( <partial perm group of size 2, 
- of degree 8 with 1 generator>
- , <commutative inverse partial perm semigroup of degree 2
- with 1 generator>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <partial perm group of size 2, rank 8 with
+  1 generator>, <commutative inverse partial perm semigroup of rank 2 
+with 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> R := Range(T);
-<commutative inverse partial perm semigroup of rank 2 with 1 generator>
+<commutative inverse partial perm semigroup of rank 2 with 1 
+ generator>
 gap> Elements(R);
 [ <identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S := DualSymmetricInverseMonoid(5);;
 gap> T := Range(IsomorphismPartialPermSemigroup(S));
-<inverse partial perm monoid of degree 6721 with 3 generators>
-gap> SmallerDegreePartialPermRepresentation(T);
-MappingByFunction( <inverse partial perm monoid of degree 6721
- with 3 generators>, <inverse partial perm semigroup of degree 30
- with 3 generators>, function( x ) ... end, function( x ) ... end )
-]]></Example>
+<inverse partial perm monoid of rank 6721 with 3 generators>]]></Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="VagnerPrestonRepresentation">
@@ -469,9 +465,9 @@ gap> S := SymmetricInverseSemigroup(2);
 gap> Size(S);
 7
 gap> iso := VagnerPrestonRepresentation(S);
-MappingByFunction( <symmetric inverse monoid of degree 2>, <inverse pa\
-rtial perm monoid of degree 7
- with 2 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <symmetric inverse monoid of degree 2>, 
+<inverse partial perm monoid of rank 7 with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> RespectsMultiplication(iso);
 true
 gap> inv := InverseGeneralMapping(iso);;
@@ -489,9 +485,9 @@ gap> IsInverseSemigroup(V);
 true
 gap> VagnerPrestonRepresentation(V);
 MappingByFunction( <inverse bipartition semigroup of size 394, 
- of degree 5 with 3 generators>, <inverse partial perm semigroup 
-of degree 394
- with 5 generators>, function( x ) ... end, function( x ) ... end )]]></Example>
+ degree 5 with 3 generators>, <inverse partial perm semigroup of 
+ rank 394 with 5 generators>
+ , function( x ) ... end, function( x ) ... end )]]></Example>
 <#/GAPDoc>
 
 #EOF
