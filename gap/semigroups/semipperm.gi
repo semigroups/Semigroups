@@ -20,17 +20,6 @@ function(S, rank)
                               x -> RankOfPartialPerm(x) = rank);
 end);
 
-#InstallMethod(SemigroupViewStringPrefix, "for a partial perm semigroup",
-#[IsPartialPermSemigroup], S -> "\>partial perm\< ");
-
-#InstallMethod(SemigroupViewStringSuffix, "for a partial perm semigroup",
-#[IsPartialPermSemigroup],
-#function(S)
-#  return Concatenation("\>rank \>",
-#                       ViewString(RankOfPartialPermSemigroup(S)),
-#                       "\<\< ");
-#end);
-
 # this should really be in the library
 
 InstallImmediateMethod(GeneratorsOfSemigroup,
