@@ -348,53 +348,44 @@ Concatenation("for a semigroup congruence with known generating pairs ",
  IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
 _GenericCongruenceEquality);
 
-#
-
 Unbind(_GenericCongruenceEquality);
 
-#############################################################################
-# Install the following methods for left, right and 2-sided congruences.
-# FIXME explain why!!!!!!!!
 #
-# JDM I rewrote this, (and the comment above). Try to write meaningful
-# "Install the following methods for three different filters" might as well not
-# have been written for all the information it contains.
-#
-# JDM I rewrote this a bit to make it more readable, to expose the loop at the
-# top, so that is it possible to read the methods in this file and know what
-# they are being installed for, without having to look near the end of the
-# file.
-#
-#
-# JDM Almost all of these methods had incorrect info texts, and some of them
-# were missing HasGeneratingPairsOfXSemigroupCongruence, which caused some
-# errors to show up.
 
+################################################################################
+# We now have some methods which apply to left congruences, right congruences
+# and 2-sided congruences.  These functions behave only slightly differently for
+# these three types of object, so they are installed by the function
+# _InstallMethodsForCongruences, which takes a record describing the type of
+# object the filters apply to (left, right, or 2-sided).
+#
 # See below for the loop where this function is invoked. It is required to do
 # this in a function so that the values _record,
 # _GeneratingPairsOfXSemigroupCongruence, etc are available (as local
 # variables in the function) when the methods installed in this function are
 # actually called. If we don't use a function here, the values in _record etc
 # are unbound by the time the methods are called.
-
-#############################################################################
-# methods for left/right/2-sided congruences
-#############################################################################
+################################################################################
 
 _InstallMethodsForCongruences := function(_record)
   local _GeneratingPairsOfXSemigroupCongruence,
         _HasGeneratingPairsOfXSemigroupCongruence,
         _IsXSemigroupCongruence;
 
-  _GeneratingPairsOfXSemigroupCongruence := EvalString(Concatenation("GeneratingPairsOf",
-                                                                     _record.type_string,
-                                                                     "MagmaCongruence"));
-  _HasGeneratingPairsOfXSemigroupCongruence := EvalString(Concatenation("HasGeneratingPairsOf",
-                                                                        _record.type_string,
-                                                                        "MagmaCongruence"));
-  _IsXSemigroupCongruence                   := EvalString(Concatenation("Is",
-                                                                        _record.type_string,
-                                                                        "SemigroupCongruence"));
+  _GeneratingPairsOfXSemigroupCongruence :=
+    EvalString(Concatenation("GeneratingPairsOf",
+                             _record.type_string,
+                             "MagmaCongruence"));
+  _HasGeneratingPairsOfXSemigroupCongruence :=
+    EvalString(Concatenation("HasGeneratingPairsOf",
+                             _record.type_string,
+                             "MagmaCongruence"));
+  _IsXSemigroupCongruence :=
+    EvalString(Concatenation("Is",
+                             _record.type_string,
+                             "SemigroupCongruence"));
+
+  #
 
   InstallImmediateMethod(IsFinite,
     Concatenation("for a ", _record.info_string, " with known range"),
