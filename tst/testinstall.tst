@@ -430,7 +430,7 @@ gap> ClosureSemigroup(S, f);
 
 #T# TestInstall27: Issue 36 in the new numbering...
 gap> S:=Semigroup(IdentityTransformation);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 gap> SmallGeneratingSet(S);
 [  ]
 
@@ -792,7 +792,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then
 > G:=Semigroup(IdentityTransformation);
 > fi;
 gap> G;
-<trivial transformation group>
+<trivial transformation group of degree 0 with 0 generators>
 
 #T# TestInstall48: Issue 101
 # (incorrect method for AsPartialPerm for a perm and zero)
