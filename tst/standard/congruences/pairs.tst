@@ -170,6 +170,8 @@ gap> NonTrivialCongruenceClasses(cong);
   <congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
   <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
   <congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
+gap> IsRightSemigroupCongruence(cong);
+true
 gap> SEMIGROUPS_Enumerate(cong, ReturnTrue);
 fail
 
@@ -199,6 +201,8 @@ gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
 gap> NonTrivialCongruenceClasses(cong);
 [ <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
+gap> IsLeftSemigroupCongruence(cong);
+false
 gap> SEMIGROUPS_Enumerate(cong, ReturnFail);
 fail
 
