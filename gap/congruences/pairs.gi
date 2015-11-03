@@ -227,7 +227,10 @@ function(data, lookfunc)
 
   # No need for congruence data object any more
   Unbind(cong!.data);
+
+  # Return the data object with important final data
   data!.found := lookfunc(data);
+  data!.lookup := newtable;
   return data;
 end);
 
@@ -443,19 +446,21 @@ _InstallMethodsForCongruences := function(_record)
     fi;
   end);
 
-  #FIXME: you should avoid methods of this type, i.e. the method for
-  #AsLookupTable appears to call itself (ok, it works, but this is bad).
+  #
 
   InstallMethod(AsLookupTable,
   Concatenation("for a ", _record.info_string, "with known generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
+    local data;
     if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
       ErrorMayQuit("Semigroups: AsLookupTable: usage,\n",
                    "<cong> must be a congruence of a finite semigroup,");
     fi;
-    SEMIGROUPS_Enumerate(cong, ReturnFalse);
-    return AsLookupTable(cong);
+    # Enumerate the congruence until all pairs are found
+    data := SEMIGROUPS_Enumerate(cong, ReturnFalse);
+    # Return the resultant lookup table
+    return data!.lookup;
   end);
 
   #
@@ -466,9 +471,12 @@ _InstallMethodsForCongruences := function(_record)
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    IsFunction],
   function(cong, lookfunc)
-    if HasAsLookupTable(cong) then #TODO: why does this return fail?
+    # If we have a lookup table, then we have complete information
+    # and there is nothing left to enumerate
+    if HasAsLookupTable(cong) then
       return fail;
     fi;
+    # If the congruence data does not exist, then we need to set it up
     if not IsBound(cong!.data) then
       SEMIGROUPS.SetupCongData(cong);
     fi;
