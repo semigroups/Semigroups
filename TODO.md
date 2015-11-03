@@ -30,6 +30,7 @@
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 ###GAP
+* fix the ViewString method for graph inverse semigroup
 
 * `AsTransformationSemigroup` for a pbr semigroup seems slow.
 
