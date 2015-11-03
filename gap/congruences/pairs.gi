@@ -279,6 +279,24 @@ end);
 
 #
 
+InstallMethod(IsSemigroupCongruence,
+"for a left semigroup congruence with known generating pairs",
+[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+function(cong)
+  return IsRightSemigroupCongruence(cong);
+end);
+
+#
+
+InstallMethod(IsSemigroupCongruence,
+"for a right semigroup congruence with known generating pairs",
+[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(cong)
+  return IsLeftSemigroupCongruence(cong);
+end);
+
+#
+
 _GenericCongruenceEquality := function(c1, c2)
   # This function tests equality of left, right, or 2-sided congruences
   return Range(c1) = Range(c2) and AsLookupTable(c1) = AsLookupTable(c2);
