@@ -10,7 +10,7 @@
 
 # This file contains methods for semigroups of matrices over semirings.
 
-InstallMethod(SEMIGROUPS_ViewStringSuffix,
+InstallMethod(SemigroupViewStringSuffix,
 "for a matrix over semiring semigroup with generators",
 [IsMatrixOverSemiringSemigroup],
 function(S)

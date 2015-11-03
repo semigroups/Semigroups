@@ -13,208 +13,202 @@
 
 # fall back methods
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a semigroup",
-[IsSemigroup], S -> "");
-
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a semigroup",
-[IsSemigroup], S -> "");
-
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a graph inverse semigroup",
-[IsGraphInverseSemigroup],
-function(S)
-  local n, str;
-
-  n := DigraphNrVertices(GraphOfGraphInverseSemigroup(S));
-  str := "\>with\< \>";
-  Append(str, String(n));
-  Append(str, "\< \>vert");
-  if n = 1 then
-    Append(str, "ex");
-  else
-    Append(str, "ices");
-  fi;
-  Append(str, ",\< ");
-  n := DigraphNrEdges(GraphOfGraphInverseSemigroup(S));
-  Append(str, String(n));
-  Append(str, "\< \>edge");
-  if not n = 1 then
-    Append(str, "s");
-  fi;
-  Append(str, "\<>\<");
-  return str;
-end);
+#InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a graph inverse semigroup",
+#[IsGraphInverseSemigroup],
+#function(S)
+#  local n, str;
+#
+#  n := DigraphNrVertices(GraphOfGraphInverseSemigroup(S));
+#  str := "\>with\< \>";
+#  Append(str, String(n));
+#  Append(str, "\< \>vert");
+#  if n = 1 then
+#    Append(str, "ex");
+#  else
+#    Append(str, "ices");
+#  fi;
+#  Append(str, ",\< ");
+#  n := DigraphNrEdges(GraphOfGraphInverseSemigroup(S));
+#  Append(str, String(n));
+#  Append(str, "\< \>edge");
+#  if not n = 1 then
+#    Append(str, "s");
+#  fi;
+#  Append(str, "\<>\<");
+#  return str;
+#end);
 
 # ViewString
 
-BindGlobal("_ViewStringForSemigroups",
-function(S)
-  local str, nrgens, suffix;
+#BindGlobal("_ViewStringForSemigroups",
+#function(S)
+#  local str, nrgens, suffix;
+#
+#  str := "\><";
+#
+#  if HasIsTrivial(S) and IsTrivial(S) then
+#    Append(str, "\>trivial\< ");
+#  else
+#    if HasIsFinite(S) and not IsFinite(S) then
+#      Append(str, "\>infinite\< ");
+#    fi;
+#    if HasIsCommutative(S) and IsCommutative(S) then
+#      Append(str, "\>commutative\< ");
+#    fi;
+#  fi;
+#
+#  if not IsGroup(S) then
+#    if HasIsTrivial(S) and IsTrivial(S) then
+#      # do nothing
+#    elif HasIsZeroSimpleSemigroup(S) and IsZeroSimpleSemigroup(S) then
+#      Append(str, "\>0-simple\< ");
+#    elif HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+#      Append(str, "\>simple\< ");
+#    fi;
+#
+#    if HasIsGraphInverseSemigroup(S) and IsGraphInverseSemigroup(S) then
+#      Append(str, "\>graph inverse\< ");
+#    elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
+#      Append(str, "\>inverse\< ");
+#    elif HasIsRegularSemigroup(S)
+#        and not (HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S)) then
+#      if IsRegularSemigroup(S) then
+#        Append(str, "\>regular\< ");
+#      else
+#        Append(str, "\>non-regular\< ");
+#      fi;
+#    fi;
+#  fi;
+#
+#  Append(str, SEMIGROUPS_ViewStringPrefix(S));
+#
+#  if HasIsMonoid(S) and IsMonoid(S) then
+#    Append(str, "\>monoid\< ");
+#    if HasGeneratorsOfInverseMonoid(S) then
+#      nrgens := Length(GeneratorsOfInverseMonoid(S));
+#    else
+#      nrgens := Length(GeneratorsOfMonoid(S));
+#    fi;
+#  else
+#    Append(str, "\>semigroup\< ");
+#    if HasGeneratorsOfInverseSemigroup(S) then
+#      nrgens := Length(GeneratorsOfInverseSemigroup(S));
+#    else
+#      nrgens := Length(GeneratorsOfSemigroup(S));
+#    fi;
+#  fi;
+#
+#  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) and IsFinite(S) then
+#    Append(str, "\>of size\> ");
+#    Append(str, ViewString(Size(S)));
+#    Append(str, ",\<\< ");
+#  fi;
+#
+#  suffix := SEMIGROUPS_ViewStringSuffix(S);
+#
+#  if HasIsGraphInverseSemigroup(S) and IsGraphInverseSemigroup(S) then
+#    Append(str, suffix);
+#    return str;
+#  fi;
+#
+#  if suffix <> ""
+#      and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
+#    suffix := Concatenation("\>of\< ", suffix);
+#  fi;
+#  Append(str, suffix);
+#
+#  Append(str, "\>with\< \>");
+#  Append(str, ViewString(nrgens));
+#  Append(str, "\< \>generator");
+#
+#  if nrgens > 1 or nrgens = 0 then
+#    Append(str, "s\<");
+#  else
+#    Append(str, "\<");
+#  fi;
+#
+#  Append(str, ">\<");
+#
+#  return str;
+#end);
 
-  str := "\><";
+#InstallMethod(ViewString, "for a semigroup with generators",
+#[IsSemigroup and HasGeneratorsOfSemigroup], 20, _ViewStringForSemigroups);
 
-  if HasIsTrivial(S) and IsTrivial(S) then
-    Append(str, "\>trivial\< ");
-  else
-    if HasIsFinite(S) and not IsFinite(S) then
-      Append(str, "\>infinite\< ");
-    fi;
-    if HasIsCommutative(S) and IsCommutative(S) then
-      Append(str, "\>commutative\< ");
-    fi;
-  fi;
+#InstallMethod(ViewString, "for a monoid with generators",
+#[IsMonoid and HasGeneratorsOfMonoid], 20, _ViewStringForSemigroups);
 
-  if not IsGroup(S) then
-    if HasIsTrivial(S) and IsTrivial(S) then
-      # do nothing
-    elif HasIsZeroSimpleSemigroup(S) and IsZeroSimpleSemigroup(S) then
-      Append(str, "\>0-simple\< ");
-    elif HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
-      Append(str, "\>simple\< ");
-    fi;
+#InstallMethod(ViewString, "for an inverse semigroup with generators",
+#[IsInverseSemigroup and HasGeneratorsOfInverseSemigroup], 20,
+#_ViewStringForSemigroups);
 
-    if HasIsGraphInverseSemigroup(S) and IsGraphInverseSemigroup(S) then
-      Append(str, "\>graph inverse\< ");
-    elif HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
-      Append(str, "\>inverse\< ");
-    elif HasIsRegularSemigroup(S)
-        and not (HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S)) then
-      if IsRegularSemigroup(S) then
-        Append(str, "\>regular\< ");
-      else
-        Append(str, "\>non-regular\< ");
-      fi;
-    fi;
-  fi;
+#InstallMethod(ViewString, "for an inverse monoid with generators",
+#[IsInverseMonoid and HasGeneratorsOfInverseMonoid], 20,
+#_ViewStringForSemigroups);
 
-  Append(str, SEMIGROUPS_ViewStringPrefix(S));
-
-  if HasIsMonoid(S) and IsMonoid(S) then
-    Append(str, "\>monoid\< ");
-    if HasGeneratorsOfInverseMonoid(S) then
-      nrgens := Length(GeneratorsOfInverseMonoid(S));
-    else
-      nrgens := Length(GeneratorsOfMonoid(S));
-    fi;
-  else
-    Append(str, "\>semigroup\< ");
-    if HasGeneratorsOfInverseSemigroup(S) then
-      nrgens := Length(GeneratorsOfInverseSemigroup(S));
-    else
-      nrgens := Length(GeneratorsOfSemigroup(S));
-    fi;
-  fi;
-
-  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) and IsFinite(S) then
-    Append(str, "\>of size\> ");
-    Append(str, ViewString(Size(S)));
-    Append(str, ",\<\< ");
-  fi;
-
-  suffix := SEMIGROUPS_ViewStringSuffix(S);
-
-  if HasIsGraphInverseSemigroup(S) and IsGraphInverseSemigroup(S) then
-    Append(str, suffix);
-    return str;
-  fi;
-
-  if suffix <> ""
-      and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
-    suffix := Concatenation("\>of\< ", suffix);
-  fi;
-  Append(str, suffix);
-
-  Append(str, "\>with\< \>");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< \>generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-
-  Append(str, ">\<");
-
-  return str;
-end);
-
-InstallMethod(ViewString, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 20, _ViewStringForSemigroups);
-
-InstallMethod(ViewString, "for a monoid with generators",
-[IsMonoid and HasGeneratorsOfMonoid], 20, _ViewStringForSemigroups);
-
-InstallMethod(ViewString, "for an inverse semigroup with generators",
-[IsInverseSemigroup and HasGeneratorsOfInverseSemigroup], 20,
-_ViewStringForSemigroups);
-
-InstallMethod(ViewString, "for an inverse monoid with generators",
-[IsInverseMonoid and HasGeneratorsOfInverseMonoid], 20,
-_ViewStringForSemigroups);
-
-MakeReadWriteGlobal("_ViewStringForSemigroups");
-Unbind(_ViewStringForSemigroups);
+#MakeReadWriteGlobal("_ViewStringForSemigroups");
+#Unbind(_ViewStringForSemigroups);
 
 #
 
-BindGlobal("_ViewStringForSemigroupsGroups",
-function(S)
-  local str, suffix;
-
-  str := "\><";
-
-  if HasIsTrivial(S) and IsTrivial(S) then
-    Append(str, "\>trivial\< ");
-  fi;
-  Append(str, SEMIGROUPS_ViewStringPrefix(S));
-  Append(str, "\>group\< ");
-  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) then
-    Append(str, "\>of size\> ");
-    Append(str, ViewString(Size(S)));
-    Append(str, ",\<\< ");
-  fi;
-
-  suffix := SEMIGROUPS_ViewStringSuffix(S);
-  if suffix <> ""
-      and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
-    suffix := Concatenation("of ", suffix);
-  fi;
-  Append(str, suffix);
-  Append(str, "with\> ");
-  Append(str, ViewString(Length(Generators(S))));
-  Append(str, "\< generator");
-
-  if Length(Generators(S)) > 1 or Length(Generators(S)) = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-
-  Append(str, ">\<");
-
-  return str;
-end);
-
-InstallMethod(ViewString, "for a group as semigroup",
-[IsGroupAsSemigroup], SUM_FLAGS, _ViewStringForSemigroupsGroups);
-
-InstallMethod(ViewString, "for a group consisting of semigroup elements",
-[IsGroup], _ViewStringForSemigroupsGroups);
-
-InstallMethod(ViewString, "for a group of transformations",
-[IsGroup and IsTransformationSemigroup], _ViewStringForSemigroupsGroups);
-
-InstallMethod(ViewString, "for a group of partial perms",
-[IsGroup and IsPartialPermSemigroup], _ViewStringForSemigroupsGroups);
-
-InstallMethod(ViewString, "for a partial perm group",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup
- and IsSimpleSemigroup and IsInverseSemigroup],
-1, # to beat the lib method
-_ViewStringForSemigroupsGroups);
-
-MakeReadWriteGlobal("_ViewStringForSemigroupsGroups");
-Unbind(_ViewStringForSemigroupsGroups);
+#BindGlobal("_ViewStringForSemigroupsGroups",
+#function(S)
+#  local str, suffix;
+#
+#  str := "\><";
+#
+#  if HasIsTrivial(S) and IsTrivial(S) then
+#    Append(str, "\>trivial\< ");
+#  fi;
+#  Append(str, SEMIGROUPS_ViewStringPrefix(S));
+#  Append(str, "\>group\< ");
+#  if HasIsTrivial(S) and not IsTrivial(S) and HasSize(S) then
+#    Append(str, "\>of size\> ");
+#    Append(str, ViewString(Size(S)));
+#    Append(str, ",\<\< ");
+#  fi;
+#
+#  suffix := SEMIGROUPS_ViewStringSuffix(S);
+#  if suffix <> ""
+#      and not (HasIsTrivial(S) and not IsTrivial(S) and HasSize(S)) then
+#    suffix := Concatenation("of ", suffix);
+#  fi;
+#  Append(str, suffix);
+#  Append(str, "with\> ");
+#  Append(str, ViewString(Length(Generators(S))));
+#  Append(str, "\< generator");
+#
+#  if Length(Generators(S)) > 1 or Length(Generators(S)) = 0 then
+#    Append(str, "s\<");
+#  else
+#    Append(str, "\<");
+#  fi;
+#
+#  Append(str, ">\<");
+#
+#  return str;
+#end);
+#
+#InstallMethod(ViewString, "for a group as semigroup",
+#[IsGroupAsSemigroup], SUM_FLAGS, _ViewStringForSemigroupsGroups);
+#
+#InstallMethod(ViewString, "for a group consisting of semigroup elements",
+#[IsGroup], _ViewStringForSemigroupsGroups);
+#
+#InstallMethod(ViewString, "for a group of transformations",
+#[IsGroup and IsTransformationSemigroup], _ViewStringForSemigroupsGroups);
+#
+#InstallMethod(ViewString, "for a group of partial perms",
+#[IsGroup and IsPartialPermSemigroup], _ViewStringForSemigroupsGroups);
+#
+#InstallMethod(ViewString, "for a partial perm group",
+#[IsPartialPermSemigroup and HasGeneratorsOfSemigroup
+# and IsSimpleSemigroup and IsInverseSemigroup],
+#1, # to beat the lib method
+#_ViewStringForSemigroupsGroups);
+#
+#MakeReadWriteGlobal("_ViewStringForSemigroupsGroups");
+#Unbind(_ViewStringForSemigroupsGroups);
 
 # Generators
 
