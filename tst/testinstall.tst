@@ -810,7 +810,7 @@ gap> G;
 gap> S:=POI(5);;
 gap> T:=Semigroup(S, PartialPerm([1,2,3,4,5],[2,3,4,5,1]));;
 gap> I:=SemigroupIdeal(T, [ PartialPerm( [ 1, 2, 4, 5 ], [ 1, 2, 3, 5 ] )]);
-<inverse partial perm semigroup ideal on 5 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 5 with 1 generator>
 gap> Size(I);
 626
 
