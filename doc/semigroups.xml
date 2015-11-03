@@ -114,7 +114,7 @@ gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 gap> S:=Monoid(gens[1]);;
 gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
 gap> S;
-<transformation monoid on 8 pts with 4 generators>
+<transformation monoid of degree 8 with 4 generators>
 gap> Size(S);
 233606
 gap> gens:=
@@ -164,31 +164,31 @@ gap> f:=PartialPerm(
 > [ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],
 > [ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;
 gap> S:=ClosureInverseSemigroup(S, f);
-<inverse partial perm semigroup on 19 pts with 4 generators>
+<inverse partial perm semigroup of rank 19 with 4 generators>
 gap> Size(S);
 9744
 gap> T:=Idempotents(SymmetricInverseSemigroup(10));;
 gap> S:=ClosureInverseSemigroup(S, T);
-<inverse partial perm semigroup on 19 pts with 854 generators>
+<inverse partial perm semigroup of rank 19 with 854 generators>
 gap> S:=InverseSemigroup(SmallGeneratingSet(S));
-<inverse partial perm semigroup on 19 pts with 14 generators>]]></Example>
+<inverse partial perm semigroup of rank 19 with 14 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="RandomInverseMonoid">
   <ManSection>
-    <Oper Name="RandomInverseMonoid" Arg="m,n"/>
-    <Oper Name="RandomInverseSemigroup"  Arg="m,n"/>
+    <Oper Name="RandomInverseMonoid" Arg="m, n"/>
+    <Oper Name="RandomInverseSemigroup"  Arg="m, n"/>
     <Returns>An inverse monoid or semigroup.</Returns>
     <Description>
       Returns  a  random  inverse  monoid  or semigroup of partial
-      permutations with degree at most <A>n</A>  with <A>m</A> generators.
+      permutations with degree at most <A>n</A> with <A>m</A> generators.
       <Example><![CDATA[
-gap> S:=RandomInverseSemigroup(10,10);                                
-<inverse partial perm semigroup on 10 pts with 10 generators>
-gap> S:=RandomInverseMonoid(10,10);   
-<inverse partial perm monoid on 10 pts with 10 generators>
+gap> S := RandomInverseSemigroup(10, 10);                                
+<inverse partial perm semigroup of rank 10 with 10 generators>
+gap> S := RandomInverseMonoid(10, 10);   
+<inverse partial perm monoid of rank 10 with 10 generators>
 ]]></Example>
     </Description>
   </ManSection>
@@ -203,10 +203,10 @@ gap> S:=RandomInverseMonoid(10,10);
       Returns a random transformation monoid or semigroup of at most degree
       <A>n</A> with <A>m</A> generators.
       <Example><![CDATA[
-gap> S:=RandomTransformationMonoid(5,5);
-<transformation monoid on 5 pts with 5 generators>
-gap> S:=RandomTransformationSemigroup(5,5);
-<transformation semigroup on 5 pts with 5 generators>]]></Example>
+gap> S := RandomTransformationMonoid(5, 5);
+<transformation monoid of degree 5 with 5 generators>
+gap> S := RandomTransformationSemigroup(5, 5);
+<transformation semigroup of degree 5 with 5 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -221,9 +221,9 @@ gap> S:=RandomTransformationSemigroup(5,5);
       <A>n</A> with <A>m</A> generators.
       <Log><![CDATA[
 gap> S:=RandomPartialPermSemigroup(5, 5);
-<partial perm semigroup on 4 pts with 5 generators>
+<partial perm semigroup of rank 4 with 5 generators>
 gap> S:=RandomPartialPermMonoid(5, 5);
-<partial perm monoid on 5 pts with 5 generators>]]></Log>
+<partial perm monoid of degree 5 with 5 generators>]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -254,10 +254,10 @@ gap> RandomBinaryRelationMonoid(5,5);
       Returns a random monoid or semigroup of bipartition on <A>n</A>
       points with <A>m</A> generators.
       <Example><![CDATA[
-gap> RandomBipartitionMonoid(5,5);
-<bipartition monoid on 5 pts with 5 generators>
-gap> RandomBipartitionSemigroup(5,5);
-<bipartition semigroup on 5 pts with 5 generators>]]></Example>
+gap> RandomBipartitionMonoid(5, 5);
+<bipartition monoid of degree 5 with 5 generators>
+gap> RandomBipartitionSemigroup(5, 5);
+<bipartition semigroup of degree 5 with 5 generators>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -346,15 +346,15 @@ gap> Size(S);
     integer, then once the subsemigroup has at least <A>limit</A> elements the
     computation stops.
     <Example><![CDATA[
-gap> func:=function(f) return 1^f<>1 and
-> ForAll([1..DegreeOfTransformation(f)], y-> y=1 or y^f=y); end;
+gap> func := function(f) return 1 ^ f <> 1 and
+> ForAll([1..DegreeOfTransformation(f)], y-> y = 1 or y ^ f = y); end;
 function( f ) ... end
-gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(3), func);
-<transformation semigroup of size 2, on 3 pts with 2 generators>
-gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(4), func);
-<transformation semigroup of size 3, on 4 pts with 3 generators>
-gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(5), func);
-<transformation semigroup of size 4, on 5 pts with 4 generators>]]></Example>
+gap> T := SubsemigroupByProperty(FullTransformationSemigroup(3), func);
+<transformation semigroup of size 2, degree 3 with 2 generators>
+gap> T := SubsemigroupByProperty(FullTransformationSemigroup(4), func);
+<transformation semigroup of size 3, degree 4 with 3 generators>
+gap> T := SubsemigroupByProperty(FullTransformationSemigroup(5), func);
+<transformation semigroup of size 4, degree 5 with 4 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

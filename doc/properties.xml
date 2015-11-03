@@ -88,9 +88,9 @@ false
 gap> IsBand(IdempotentGeneratedSubsemigroup(S));
 true
 gap> S := PartitionMonoid(4);
-<regular bipartition monoid on 4 pts with 4 generators>
+<regular bipartition monoid of degree 4 with 4 generators>
 gap> M := MinimalIdeal(S);
-<simple bipartition semigroup ideal on 4 pts with 1 generator>
+<simple bipartition semigroup ideal of degree 4 with 1 generator>
 gap> IsBand(M);
 true]]></Example> 
     </Description>
@@ -126,7 +126,7 @@ gap> S := Semigroup(
 > PartialPerm( [ 1, 3, 4 ], [ 3, 1, 2 ] ), 
 > PartialPerm( [ 1, 3, 4, 5 ], [ 5, 4, 3, 2 ] ) );;
 gap> T := Range(IsomorphismBlockBijectionSemigroup(S));
-<bipartition semigroup on 6 pts with 5 generators>
+<bipartition semigroup of degree 6 with 5 generators>
 gap> IsBlockGroup(T);
 true
 gap> IsBlockGroup(Range(IsomorphismBipartitionSemigroup(S)));
@@ -420,13 +420,13 @@ gap> IsGroupAsSemigroup(S);
 true
 gap> G := SymmetricGroup(5);;
 gap> S := Range(IsomorphismPartialPermSemigroup(G));
-<inverse partial perm semigroup on 5 pts with 2 generators>
+<inverse partial perm semigroup of degree 5 with 2 generators>
 gap> IsGroupAsSemigroup(S);
 true
 gap> S := SymmetricGroup([1,2,10]);;
 gap> T := Range(IsomorphismBlockBijectionSemigroup(
 > Range(IsomorphismPartialPermSemigroup(S))));
-<inverse bipartition semigroup on 11 pts with 2 generators>
+<inverse bipartition semigroup of degree 11 with 2 generators>
 gap> IsGroupAsSemigroup(T);
 true]]></Example>
     </Description>
@@ -452,11 +452,11 @@ true]]></Example>
 
       <Example><![CDATA[
 gap> S := SingularTransformationSemigroup(4);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> IsIdempotentGenerated(S);
 true
 gap> S := SingularBrauerMonoid(5);
-<regular bipartition semigroup ideal on 5 pts with 1 generator>
+<regular bipartition semigroup ideal of degree 5 with 1 generator>
 gap> IsIdempotentGenerated(S);
 true]]></Example>
     </Description>
@@ -798,7 +798,7 @@ gap> Size(S);
 gap> IsInverseSemigroup(S);
 true
 gap> A := Semigroup(Idempotents(S)); 
-<transformation semigroup on 7 pts with 32 generators>
+<transformation semigroup of degree 7 with 32 generators>
 gap> IsSemilattice(A);
 true
 gap> S := FactorisableDualSymmetricInverseSemigroup(5);;
@@ -1018,7 +1018,7 @@ gap> S := Semigroup( [
 > Transformation( [ 2, 3, 4, 5, 1, 6 ] ),
 > Transformation( [ 2, 1, 3, 4, 5, 6 ] ),
 > Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ] );
-<transformation semigroup on 6 pts with 3 generators>
+<transformation semigroup of degree 6 with 3 generators>
 gap> IsZeroGroup(S);
 true
 gap> IsSemigroupWithAdjoinedZero(S);
@@ -1029,5 +1029,3 @@ false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-#EOF

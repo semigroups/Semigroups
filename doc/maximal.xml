@@ -29,15 +29,15 @@
 gap> S := FullTransformationSemigroup(4);
 <full transformation monoid of degree 4>
 gap> MaximalSubsemigroups(S);
-[ <transformation semigroup on 4 pts with 3 generators>, 
-  <transformation semigroup on 4 pts with 5 generators>, 
-  <transformation semigroup on 4 pts with 4 generators>, 
-  <transformation semigroup on 4 pts with 4 generators>, 
-  <transformation semigroup on 4 pts with 5 generators>, 
-  <transformation semigroup on 4 pts with 4 generators>, 
-  <transformation semigroup on 4 pts with 5 generators>, 
-  <transformation semigroup on 4 pts with 5 generators>, 
-  <transformation semigroup on 4 pts with 4 generators> ]
+[ <transformation semigroup of degree 4 with 3 generators>, 
+  <transformation semigroup of degree 4 with 5 generators>, 
+  <transformation semigroup of degree 4 with 4 generators>, 
+  <transformation semigroup of degree 4 with 4 generators>, 
+  <transformation semigroup of degree 4 with 5 generators>, 
+  <transformation semigroup of degree 4 with 4 generators>, 
+  <transformation semigroup of degree 4 with 5 generators>, 
+  <transformation semigroup of degree 4 with 5 generators>, 
+  <transformation semigroup of degree 4 with 4 generators> ]
 gap> D := DClass(S, Transformation([ 2, 2 ]));
 <Green's D-class: Transformation( [ 2, 3, 1, 2 ] )>
 gap> R := PrincipalFactor(D);
@@ -135,13 +135,13 @@ gap> S := FullTransformationSemigroup(4);
 gap> T := Semigroup([ Transformation( [ 3, 4, 1, 2 ] ),
 >  Transformation( [ 1, 4, 2, 3 ] ),
 >  Transformation( [ 2, 1, 1, 3 ] ) ]);
-<transformation semigroup on 4 pts with 3 generators>
+<transformation semigroup of degree 4 with 3 generators>
 gap> IsMaximalSubsemigroup(S, T);
 true
 gap> R := Semigroup([ Transformation( [ 3, 4, 1, 2 ] ),
 >  Transformation( [ 1, 4, 2, 2 ] ),
 >  Transformation( [ 2, 1, 1, 3 ] ) ]);
-<transformation semigroup on 4 pts with 3 generators>
+<transformation semigroup of degree 4 with 3 generators>
 gap> IsMaximalSubsemigroup(S, R); 
 false]]></Example>
   </Description>

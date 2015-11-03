@@ -30,7 +30,7 @@
 
       <Example><![CDATA[
 gap> S:=EndomorphismsPartition([3,3,3]);
-<transformation semigroup on 9 pts with 4 generators>
+<transformation semigroup of degree 9 with 4 generators>
 gap> Size(S);
 531441
 ]]></Example>
@@ -57,9 +57,9 @@ gap> Size(S);
 
       <Example><![CDATA[
 gap> S:=JonesMonoid(4);
-<regular bipartition monoid on 4 pts with 3 generators>
+<regular bipartition monoid of degree 4 with 3 generators>
 gap> SingularJonesMonoid(8);
-<regular bipartition semigroup ideal on 8 pts with 1 generator>]]></Example>
+<regular bipartition semigroup ideal of degree 8 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -81,13 +81,13 @@ gap> SingularJonesMonoid(8);
 
       <Example><![CDATA[
 gap> S:=BrauerMonoid(4);
-<regular bipartition monoid on 4 pts with 3 generators>
+<regular bipartition monoid of degree 4 with 3 generators>
 gap> IsSubsemigroup(S, JonesMonoid(4));
 true
 gap> Size(S);
 105
 gap> SingularBrauerMonoid(8);
-<regular bipartition semigroup ideal on 8 pts with 1 generator>]]></Example>
+<regular bipartition semigroup ideal of degree 8 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -110,15 +110,15 @@ gap> SingularBrauerMonoid(8);
       See <Ref Prop="IsUniformBlockBijection"/>.
       <Example><![CDATA[
 gap> S:=DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid on 4 pts with 3 generators>
+<inverse bipartition monoid of degree 4 with 3 generators>
 gap> IsFactorisableSemigroup(S);
 false
 gap> S:=FactorisableDualSymmetricInverseSemigroup(4);
-<inverse bipartition monoid on 4 pts with 3 generators>
+<inverse bipartition monoid of degree 4 with 3 generators>
 gap> IsFactorisableSemigroup(S);
 true
 gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
-<inverse bipartition monoid on 5 pts with 3 generators>
+<inverse bipartition monoid of degree 5 with 3 generators>
 gap> IsFactorisableSemigroup(S);
 true
 ]]></Example>
@@ -147,7 +147,7 @@ true
 gap> Number(PartitionMonoid(3), IsBlockBijection);
 25
 gap> S:=DualSymmetricInverseSemigroup(3);
-<inverse bipartition monoid on 3 pts with 3 generators>
+<inverse bipartition monoid of degree 3 with 3 generators>
 gap> Size(S);
 25
 ]]></Example>
@@ -171,7 +171,7 @@ gap> Size(S);
 
       <Example><![CDATA[
 gap> S:=PartitionMonoid(5);
-<regular bipartition monoid on 5 pts with 4 generators>
+<regular bipartition monoid of degree 5 with 4 generators>
 gap> Size(S);
 115975
 ]]></Example>
@@ -191,7 +191,7 @@ gap> Size(S);
       <!--JDM add generators-->
       <Example><![CDATA[
 gap> PartialTransformationSemigroup(8); 
-<regular transformation monoid on 9 pts with 4 generators>
+<regular transformation monoid of degree 9 with 4 generators>
 gap> Size(last);
 43046721]]></Example>
     </Description>
@@ -274,7 +274,7 @@ gap> Size(S);
 gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
 > PartialPerm( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );
-<inverse partial perm semigroup on 10 pts with 2 generators>
+<inverse partial perm semigroup of degree 10 with 2 generators>
 gap> T:=InverseSemigroup(Idempotents(S), rec(small:=true));;
 gap> M:=MunnSemigroup(T);;
 gap> NrIdempotents(M);
@@ -372,13 +372,13 @@ gap> NrIdempotents(S);
 </List>
       <Example><![CDATA[
 gap> S:=POPI(10);                                            
-<inverse partial perm monoid on 10 pts with 2 generators>
+<inverse partial perm monoid of degree 10 with 2 generators>
 gap> Size(S);
 923781
 gap> 1+5*Binomial(20, 10);
 923781
 gap> S:=POI(10);
-<inverse partial perm monoid on 10 pts with 10 generators>
+<inverse partial perm monoid of degree 10 with 10 generators>
 gap> Size(S);
 184756
 gap> Binomial(20,10);
@@ -386,7 +386,7 @@ gap> Binomial(20,10);
 gap> IsSubsemigroup(POPI(10), POI(10));
 true
 gap> S:=OrderEndomorphisms(5);
-<regular transformation monoid on 5 pts with 5 generators>
+<regular transformation monoid of degree 5 with 5 generators>
 gap> IsIdempotentGenerated(S);
 true
 gap> Size(S)=Binomial(2*5-1, 5-1);
@@ -408,7 +408,7 @@ true]]></Example>
 
         <Example><![CDATA[
 gap> S:=SingularTransformationSemigroup(5);
-<regular transformation semigroup ideal on 5 pts with 1 generator>
+<regular transformation semigroup ideal of degree 5 with 1 generator>
 gap> Size(S);
 3005]]></Example>
       </Description>
@@ -486,19 +486,19 @@ gap> Size(S);
         <Example><![CDATA[
 gap> S := MonogenicSemigroup(5, 3);
 <commutative non-regular transformation semigroup of size 7, 
- on 8 pts with 1 generator>
+ of degree 8 with 1 generator>
 gap> IsMonogenicSemigroup(S);
 true
 gap> I := MinimalIdeal(S);
 <commutative simple transformation semigroup ideal 
- on 8 pts with 1 generator>
+ of degree 8 with 1 generator>
 gap> IsGroupAsSemigroup(I);
 true
 gap> StructureDescription(I);
 "C3"
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
 <commutative non-regular bipartition semigroup of size 9, 
- on 10 pts with 1 generator>]]></Example>
+ of degree 10 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -535,7 +535,7 @@ true
 gap> IsCompletelySimpleSemigroup(S) and IsHTrivial(S);
 true
 gap> T := RectangularBand(IsTransformationSemigroup, 5, 6);
-<transformation semigroup of size 30, on 31 pts with 6 generators>
+<transformation semigroup of size 30, of degree 31 with 6 generators>
 gap> IsRectangularBand(T);
 true]]></Example>
     </Description>
@@ -570,7 +570,7 @@ true]]></Example>
 
         <Example><![CDATA[
 gap> S := ZeroSemigroup(15);
-<partial perm semigroup of size 15, on 14 pts with 14 generators>
+<partial perm semigroup of size 15, of degree 14 with 14 generators>
 gap> Size(S);
 15
 gap> z := MultiplicativeZero(S);
@@ -617,13 +617,13 @@ true]]></Example>
       
         <Example><![CDATA[
 gap> S := LeftZeroSemigroup(20);
-<transformation semigroup of size 20, on 21 pts with 20 generators>
+<transformation semigroup of size 20, of degree 21 with 20 generators>
 gap> IsLeftZeroSemigroup(S);
 true
 gap> ForAll(Tuples(S, 2), p -> p[1] * p[2] = p[1]);
 true
 gap> S := RightZeroSemigroup(IsBipartitionSemigroup, 5);
-<bipartition semigroup of size 5, on 3 pts with 5 generators>
+<bipartition semigroup of size 5, of degree 3 with 5 generators>
 gap> IsRightZeroSemigroup(S);
 true]]></Example>
     </Description>

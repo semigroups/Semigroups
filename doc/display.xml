@@ -176,7 +176,7 @@ ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
 
       <Log><![CDATA[
 gap> S:=DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid on 4 pts with 3 generators>
+<inverse bipartition monoid of degree 4 with 3 generators>
 gap> DotSemilatticeOfIdempotents(S);
 "graph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph cluste\
 r_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 8 12 13 \n}\nsubgraph clus\
@@ -237,7 +237,7 @@ ter_3{\n2 3 10 4 6 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3 -- \
       </List>
       <Log><![CDATA[
 gap> S:=FullTransformationSemigroup(3);
-<full transformation semigroup on 3 pts>
+<full transformation semigroup of degree 3>
 gap> DotDClasses(S);        
 "digraph  DClasses {\nnode [shape=plaintext]\nedge [color=red,arrowhe\
 ad=none]\n1 [shape=box style=dotted label=<\n<TABLE BORDER=\"0\" CELL\
