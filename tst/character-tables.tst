@@ -45,16 +45,16 @@ gap> gens:=[
 >   PartialPerm( [ 1, 2, 4, 5 ], [ 3, 5, 1, 2 ] ) ],
 > [ PartialPerm( [ 1, 2, 3, 5 ], [ 4, 1, 2, 3 ] ) ]];;
 gap> S:=List(gens, InverseSemigroup);
-[ <inverse partial perm semigroup on 9 pts with 1 generator>, 
-  <inverse partial perm semigroup on 8 pts with 3 generators>, 
-  <inverse partial perm semigroup on 7 pts with 4 generators>, 
-  <inverse partial perm semigroup on 7 pts with 4 generators>, 
-  <inverse partial perm semigroup on 7 pts with 2 generators>, 
-  <inverse partial perm semigroup on 10 pts with 3 generators>, 
-  <inverse partial perm semigroup on 9 pts with 3 generators>, 
-  <inverse partial perm semigroup on 6 pts with 4 generators>, 
-  <inverse partial perm semigroup on 5 pts with 3 generators>, 
-  <inverse partial perm semigroup on 5 pts with 1 generator> ]
+[ <inverse partial perm semigroup of rank 9 with 1 generator>, 
+  <inverse partial perm semigroup of rank 8 with 3 generators>, 
+  <inverse partial perm semigroup of rank 7 with 4 generators>, 
+  <inverse partial perm semigroup of rank 7 with 4 generators>, 
+  <inverse partial perm semigroup of rank 7 with 2 generators>, 
+  <inverse partial perm semigroup of rank 10 with 3 generators>, 
+  <inverse partial perm semigroup of rank 9 with 3 generators>, 
+  <inverse partial perm semigroup of rank 6 with 4 generators>, 
+  <inverse partial perm semigroup of rank 5 with 3 generators>, 
+  <inverse partial perm semigroup of rank 5 with 1 generator> ]
 gap> CharacterTableOfInverseSemigroup(S[1]);
 [ [ [ 1, 0, 0, 0 ], [ 2, 1, 0, 0 ], [ 1, 1, 1, -1 ], [ 1, 1, 1, 1 ] ], 
   [ <identity partial perm on [ 1, 3, 4, 5, 8, 9, 10 ]>, 

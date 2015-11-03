@@ -26,7 +26,7 @@ gap> s := InverseSemigroup( [ PartialPerm( [ 1, 2, 3, 5 ], [ 2, 7, 3, 4 ] ),
 gap> cong := SemigroupCongruence(s,
 >  [ PartialPerm( [ 4 ], [ 7 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] );
 <semigroup congruence over <inverse partial perm semigroup of size 4165, 
-on 7 pts with 7 generators> with congruence pair (106,57)>
+ rank 7 with 7 generators> with congruence pair (106,57)>
 
 #T# InverseCongTest3: Try some methods
 gap> x := PartialPerm( [ 4 ], [ 5 ] );;
@@ -72,7 +72,7 @@ gap> ccong = cong;
 true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
 <semigroup congruence over <inverse partial perm semigroup of size 4165, 
-on 7 pts with 7 generators> with 1 generating pairs>
+ rank 7 with 7 generators> with 1 generating pairs>
 gap> [x,y] in ccong;
 false
 gap> [x,z] in ccong;

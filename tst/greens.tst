@@ -462,7 +462,7 @@ gap> r2:=First(dr, x-> x=r);;
 gap> DClassOfLClass(r2)=d;
 true
 gap> m:=Semigroup(GeneratorsOfSemigroup(m));
-<transformation semigroup on 7 pts with 2 generators>
+<transformation semigroup of degree 7 with 2 generators>
 gap>  r:=GreensLClassOfElement(m, Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] ));
 <Green's L-class: Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] )>
 gap> d:=DClassOfLClass(r);;
@@ -819,7 +819,7 @@ gap> gens:=[ Transformation( [ 1, 2, 6, 4, 7, 5, 7 ] ),
 >  Transformation( [ 7, 3, 3, 5, 1, 7, 4 ] ),
 >  Transformation( [ 1, 6, 6, 3, 3, 7, 1 ] ) ];;
 gap> s:=Semigroup(gens);
-<transformation semigroup on 7 pts with 22 generators>
+<transformation semigroup of degree 7 with 22 generators>
 gap> Size(s);
 677391
 gap> f:=Transformation( [ 1, 5, 3, 2, 7, 6, 7 ] );;
@@ -995,7 +995,7 @@ true
 gap> ForAll(AsSSortedList(r), x-> x in r);
 true
 gap> s:=Semigroup(gens);
-<transformation semigroup on 8 pts with 8 generators>
+<transformation semigroup of degree 8 with 8 generators>
 gap> r:=RClass(s, Transformation( [ 3, 5, 2, 2, 3, 5, 2, 3 ] ));
 <Green's R-class: Transformation( [ 8, 5, 1, 1, 8, 5, 1, 8 ] )>
 gap> enum:=Enumerator(r);;
@@ -1028,7 +1028,7 @@ gap> ForAll(rr, x->  Position(enum, x)=fail);
 true
 gap> f:=Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] );;
 gap> s:=Semigroup(gens);
-<transformation semigroup on 8 pts with 8 generators>
+<transformation semigroup of degree 8 with 8 generators>
 gap> r:=GreensRClassOfElementNC(s, f);
 <Green's R-class: Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] )>
 gap> Size(r);
@@ -1220,7 +1220,7 @@ gap> gens:=[
 >       28, 40, 32, 45, 45, 32, 49, 25, 18, 50, 45, 36, 2, 35, 10, 1, 13, 6, 
 >       20, 5, 4, 45, 45, 24, 45, 43, 4, 28, 21, 5, 31, 13, 49, 28, 20 ] ) ];;
 gap> s:=Semigroup(gens);
-<transformation semigroup on 50 pts with 2 generators>
+<transformation semigroup of degree 50 with 2 generators>
 gap> f:=Transformation( [ 39, 6, 6, 17, 25, 17, 39, 28, 28, 5, 6, 17, 4, 25, 32,
 > 25, 32, 6, 4, 6, 28, 28, 32, 17, 17, 5, 17, 39, 17, 32, 5, 25, 6, 32, 39,
 > 25, 28, 6, 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] );;
@@ -1372,7 +1372,7 @@ gap> Length(out);
 gap> NrRClasses(s);
 503
 gap> s:=Semigroup(gens);
-<transformation semigroup on 9 pts with 5 generators>
+<transformation semigroup of degree 9 with 5 generators>
 gap> iter1:=IteratorOfRClasses(s);
 <iterator>
 gap> for i in iter1 do  
@@ -1419,7 +1419,7 @@ gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
 >   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) ];;
 gap> s:=Semigroup(gens);
-<transformation semigroup on 8 pts with 5 generators>
+<transformation semigroup of degree 8 with 5 generators>
 gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
 gap> r:=RClass(s, f);
 <Green's R-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )>

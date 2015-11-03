@@ -20,23 +20,23 @@ gap> S := InverseSemigroup([
 >  PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] ),
 >  PartialPerm( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
 >  PartialPerm( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] ) ]);
-<inverse partial perm semigroup on 7 pts with 5 generators>
+<inverse partial perm semigroup of rank 7 with 5 generators>
 gap> iso := IsomorphismBipartitionSemigroup(S);;
 gap> A := Range(iso);
-<inverse bipartition semigroup on 7 pts with 5 generators>
+<inverse bipartition semigroup of degree 7 with 5 generators>
 gap> I := SemigroupIdeal(S, PartialPerm( [ 1, 3, 4, 5, 7 ],[ 1, 3, 4, 5, 7 ] ));
-<inverse partial perm semigroup ideal on 7 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 7 with 1 generator>
 gap> B := InverseSemigroup([
 > Bipartition([ [ 1, -6 ],[ 2, -4 ],[ 3, -3 ],[ 4, 5, 6, 7, -1, -2, -5, -7 ] ]),
 > Bipartition([[ 1, -4 ],[ 2, -5 ],[ 3, 6, 7, -2, -3, -7 ],[ 4, -1 ],[ 5, -6]]),
 > Bipartition([[ 1, -6 ],[ 2, -5 ],[ 3, 5, 7, -3, -4, -7 ],[ 4, -2 ],[ 6, -1]]) 
 > ]);
-<inverse bipartition semigroup on 7 pts with 3 generators>
+<inverse bipartition semigroup of degree 7 with 3 generators>
 gap> J := SemigroupIdeal(B,
 >  Bipartition([ [ 1, -1 ], [ 2, 3, 5, 7, -2, -3, -5, -7 ], [ 4, -4 ],
 >    [ 6, -6 ] ]),
 >  Bipartition([ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ]));
-<inverse bipartition semigroup ideal on 7 pts with 2 generators>
+<inverse bipartition semigroup ideal of degree 7 with 2 generators>
 gap> JoinIrreducibleDClasses(S);
 [ <Green's D-class: <identity partial perm on [ 2 ]>> ]
 gap> JoinIrreducibleDClasses(I);
@@ -335,7 +335,7 @@ gap> w := PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 3, 4 ] );
 <identity partial perm on [ 1, 2, 3, 4 ]>
 gap> m := MajorantClosure(S, [ w ]);;
 gap> W := InverseSemigroup(m);
-<inverse partial perm semigroup on 7 pts with 5 generators>
+<inverse partial perm semigroup of rank 7 with 5 generators>
 gap> IsMajorantlyClosed(S, W);
 true
 gap> RightCosetsOfInverseSemigroup(S, W);
@@ -353,7 +353,7 @@ gap> RightCosetsOfInverseSemigroup(S, W);
 gap> ww := w ^ iso;;
 gap> m := MajorantClosure(A, [ ww ]);;
 gap> WW := InverseSemigroup(m);
-<inverse bipartition semigroup on 7 pts with 5 generators>
+<inverse bipartition semigroup of degree 7 with 5 generators>
 gap> IsMajorantlyClosed(A, WW);
 true
 gap> RightCosetsOfInverseSemigroup(A, WW);
@@ -412,7 +412,7 @@ gap> RightCosetsOfInverseSemigroup(A, WW);
   [ <bipartition: [ 1, -5 ], [ 2, -4 ], [ 3, -6 ], [ 4, -3 ], [ 5 ], [ 6 ], 
          [ 7 ], [ -1 ], [ -2 ], [ -7 ]> ] ]
 gap> I2 := SemigroupIdeal(S, PartialPerm( [ 1, 2, 3, 4, 5, 6 ] ));
-<inverse partial perm semigroup ideal on 7 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 7 with 1 generator>
 gap> RightCosetsOfInverseSemigroup(I2, W);
 [ [ [3,2,1,4,6] ], [ [2,7][3,1,5][4,6] ], [ [1,3,5][4,7](2) ], 
   [ [2,3,4,1,7] ], 
@@ -431,7 +431,7 @@ gap> C := Bipartition(
 > [ [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ] ] );;
 gap> m := MajorantClosure(B, [ C ]);;
 gap> V := InverseSemigroup(m);
-<inverse bipartition semigroup on 7 pts with 5 generators>
+<inverse bipartition semigroup of degree 7 with 5 generators>
 gap> IsMajorantlyClosed(B, V);
 true
 gap> RightCosetsOfInverseSemigroup(B, V);
@@ -451,7 +451,7 @@ gap> gens := [
 > Bipartition(
 >  [ [ 1, -1 ], [ 2, -2 ], [ 3, 4, 7, -3, -4, -7 ], [ 5, -5 ], [ 6, -6 ] ] )];;
 gap> J2 := SemigroupIdeal(B, gens);
-<inverse bipartition semigroup ideal on 7 pts with 3 generators>
+<inverse bipartition semigroup ideal of degree 7 with 3 generators>
 gap> RightCosetsOfInverseSemigroup(J2, V);
 [ [ <block bijection: [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>
         , <block bijection: [ 1, 2, 5, 7, -1, -2, -5, -7 ], [ 3, -3 ], 

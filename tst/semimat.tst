@@ -7,7 +7,6 @@
 ##
 #############################################################################
 ##
-
 gap> START_TEST("Semigroups package: semimat.tst");
 gap> LoadPackage( "semigroups", false );;
 
@@ -44,7 +43,7 @@ gap> PartialOrderOfDClasses(S);
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "C7161" ]
 gap> T := AsTransformationSemigroup(S);
-<commutative transformation semigroup on 65536 pts with 1 generator>
+<commutative transformation semigroup of degree 65536 with 1 generator>
 gap> Size(T);
 7161
 gap> Size(S) = Size(T);
@@ -148,7 +147,7 @@ gap> func(y, x);;
 
 #T# MatrixSemigroups6:
 gap> T := Semigroup(Transformation( [ 1, 2, 7, 3, 2, 1, 4, 3 ] ), Transformation( [ 5, 7, 8, 2, 7, 3, 8, 5 ] ));
-<transformation semigroup on 8 pts with 2 generators>
+<transformation semigroup of degree 8 with 2 generators>
 gap> Size(T);
 416
 gap> S := AsMatrixSemigroup(T);

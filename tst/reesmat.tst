@@ -16,8 +16,8 @@ gap> SemigroupsStartTest();
 #T# ReesMatTest2
 # Some semigroups to which the methods in Semigroups should not apply
 gap> R:=ReesZeroMatrixSemigroup(POI(5), [[0,0,0], [0,0,0]]);
-<Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid on 5 pts
- with 5 generators>>
+<Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid of rank 5 with 
+  5 generators>>
 gap> R:=Semigroup(Generators(R));
 <subsemigroup of 3x2 Rees 0-matrix semigroup with 1512 generators>
 gap> IsActingSemigroup(R);
@@ -32,8 +32,8 @@ gap> IsActingSemigroup(R);
 false
 gap> R:=ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([],[]),0],
 > [0, PartialPerm([], [])]]);
-<Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid on 5 pts
- with 5 generators>>
+<Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid of rank 5 with 
+  5 generators>>
 gap> R:=Semigroup(Generators(R));                                              
 <subsemigroup of 2x2 Rees 0-matrix semigroup with 1008 generators>
 gap> IsActingSemigroup(R);
@@ -180,11 +180,11 @@ true
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^iso=x^iso*y^iso));                   
 true
 gap> iso:=IsomorphismPermGroup(MinimalIdeal(V));
-MappingByFunction( <simple inverse Rees 0-matrix semigroup ideal with
- 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
+MappingByFunction( <group with 1 generator>
+, Group(()), function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group(()), <simple inverse Rees 0-matrix semigroup ideal 
- with 1 generator>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( Group(()), <trivial group with 1 generator>
+, function( x ) ... end, function( x ) ... end )
 gap> ForAll(MinimalIdeal(V), x-> (x^iso)^inv=x);         
 true
 gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y-> 
@@ -517,8 +517,8 @@ gap> List(U, IsMonoidAsSemigroup);
 [ false, false, false, false, false, false ]
 gap> IsomorphismTransformationSemigroup(R);
 MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
- with 2 generators>, <commutative transformation monoid 
- on 2 pts with 1 generator>, function( x ) ... end, function( x ) ... end )
+ with 2 generators>, <commutative transformation monoid of degree 2 with 1 
+ generator>, function( x ) ... end, function( x ) ... end )
 gap> IsOrthodoxSemigroup(R);
 true
 gap> IsOrthodoxSemigroup(V);
@@ -735,12 +735,12 @@ true
 
 #
 gap> T := Semigroup(Transformation([2, 1]));
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> IsGroupAsSemigroup(T);
 true
 gap> R := ReesZeroMatrixSemigroup(T, [[Transformation([2, 1])]]);
-<Rees 0-matrix semigroup 1x1 over <transformation group 
-  on 2 pts with 1 generator>>
+<Rees 0-matrix semigroup 1x1 over <transformation group of degree 2 with
+   1 generator>>
 gap> IsInverseSemigroup(R);
 true
 gap> IsInverseSemigroup(AsTransformationSemigroup(R));
@@ -752,8 +752,8 @@ gap> T := Semigroup(x);;
 gap> IsInverseSemigroup(T);
 false
 gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
-  on 3 pts with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
+  degree 3 with 1 generator>>
 gap> IsInverseSemigroup(R);
 false
 gap> IsInverseSemigroup(AsTransformationSemigroup(R));
@@ -799,7 +799,7 @@ false
 
 #T# ReesMatTest102: IsInverseSemigroup (false because of matrix)
 gap> S := Semigroup(SymmetricInverseMonoid(5));
-<partial perm monoid on 5 pts with 4 generators>
+<partial perm monoid of rank 5 with 4 generators>
 gap> id := Identity(S);
 <identity partial perm on [ 1, 2, 3, 4, 5 ]>
 gap> zero := MultiplicativeZero(S);
@@ -807,8 +807,8 @@ gap> zero := MultiplicativeZero(S);
 
 # Non-square matrix
 gap> R := ReesZeroMatrixSemigroup(S, [[zero, id]]);
-<Rees 0-matrix semigroup 2x1 over <partial perm monoid on 5 pts
- with 4 generators>>
+<Rees 0-matrix semigroup 2x1 over <partial perm monoid of rank 5 with 4 
+  generators>>
 gap> IsInverseSemigroup(R);
 false
 
@@ -887,10 +887,10 @@ true
 #
 gap> x := Transformation([2, 1]);;
 gap> T := Semigroup(x);
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
-  on 2 pts with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
+  degree 2 with 1 generator>>
 gap> NrIdempotents(R);
 4
 gap> Idempotents(R);
@@ -904,10 +904,10 @@ true
 #
 gap> x := Transformation([1, 1, 2]);;
 gap> T := Semigroup(x);
-<commutative transformation semigroup on 3 pts with 1 generator>
+<commutative transformation semigroup of degree 3 with 1 generator>
 gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [0, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
-  on 3 pts with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
+  degree 3 with 1 generator>>
 gap> NrIdempotents(R);
 3
 gap> Idempotents(R);
@@ -1035,7 +1035,7 @@ gap> T := ReesZeroMatrixSubsemigroup(R, [1 .. 2], G, [1 .. 2]);
 gap> IsReesZeroMatrixSemigroup(T);
 true
 gap> UnderlyingSemigroup(T);
-<partial perm group of size 120, on 5 pts with 73 generators>
+<partial perm group of size 120, rank 5 with 73 generators>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(f1);

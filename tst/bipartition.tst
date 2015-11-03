@@ -16,26 +16,26 @@ gap> SemigroupsStartTest();
 
 #T# BipartitionTest1: IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
 gap> S:=DualSymmetricInverseMonoid(4);                                
-<inverse bipartition monoid on 4 pts with 3 generators>
+<inverse bipartition monoid of degree 4 with 3 generators>
 gap> IsomorphismTransformationMonoid(S);
-MappingByFunction( <inverse bipartition monoid of size 339, 
- on 4 pts with 3 generators>, <transformation monoid 
- on 339 pts with 3 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse bipartition monoid of size 339, degree 4 with 3 
+ generators>, <transformation monoid of degree 339 with 3 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> S:=Semigroup( Bipartition( [ [ 1, 2, 3, 4, -2, -3 ], [ -1 ], [ -4 ] ] ), 
 >  Bipartition( [ [ 1, 2, -1, -3 ], [ 3, 4, -2, -4 ] ] ), 
 >  Bipartition( [ [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ] ] ), 
 >  Bipartition( [ [ 1, -4 ], [ 2 ], [ 3, -2 ], [ 4, -1 ], [ -3 ] ] ) );;
 gap> IsomorphismTransformationSemigroup(S);
-MappingByFunction( <bipartition semigroup of size 284, 
- on 4 pts with 4 generators>, <transformation semigroup 
- on 285 pts with 4 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <bipartition semigroup of size 284, degree 4 with 4 
+ generators>, <transformation semigroup of degree 285 with 4 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> S:=Monoid(Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, -3, -4 ], [ -1 ] ] ), 
 >  Bipartition( [ [ 1, 3, -3, -4 ], [ 2, 4, -1, -2 ] ] ), 
 >  Bipartition( [ [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ] ] ), 
 >  Bipartition( [ [ 1, 4, -4 ], [ 2, -1 ], [ 3, -2, -3 ] ] ) );;
 gap> IsomorphismTransformationMonoid(S);
-MappingByFunction( <bipartition monoid of size 41, on 4 pts with 4 generators>
- , <transformation monoid on 41 pts with 4 generators>
+MappingByFunction( <bipartition monoid of size 41, degree 4 with 4 generators>
+ , <transformation monoid of degree 41 with 4 generators>
  , function( x ) ... end, function( x ) ... end )
 
 # the number of iterations, change here to get faster test
@@ -131,7 +131,7 @@ gap> G:=SymmetricGroup(5);;
 gap> ForAll(G, x-> AsPermutation(AsBipartition(x))=x);
 true
 gap> G:=GroupOfUnits(PartitionMonoid(5));                   
-<bipartition group on 5 pts with 2 generators>
+<bipartition group of degree 5 with 2 generators>
 gap> ForAll(G, x-> AsBipartition(AsPermutation(x), 5)=x);
 true
 
@@ -151,7 +151,7 @@ gap> R:=PrincipalFactor(D);
 <Rees 0-matrix semigroup 12x15 over Group(())>
 gap> f:=IsomorphismBipartitionSemigroup(R);
 MappingByFunction( <Rees 0-matrix semigroup 12x15 over Group(())>, 
-<bipartition semigroup on 182 pts with 181 generators>
+<bipartition semigroup of degree 182 with 181 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> g:=InverseGeneralMapping(f);;
 gap> ForAll(R, x-> (x^f)^g=x);
@@ -167,10 +167,10 @@ gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> S:=Range(IsomorphismBipartitionSemigroup(s));
-<bipartition semigroup on 5 pts with 3 generators>
+<bipartition semigroup of degree 5 with 3 generators>
 gap> f:=IsomorphismBipartitionSemigroup(s);
-MappingByFunction( <transformation semigroup on 5 pts with 3 generators>, 
-<bipartition semigroup on 5 pts with 3 generators>
+MappingByFunction( <transformation semigroup of degree 5 with 3 generators>, 
+<bipartition semigroup of degree 5 with 3 generators>
  , function( x ) ... end, <Attribute "AsTransformation"> )
 gap> g:=InverseGeneralMapping(f);;
 gap> ForAll(s, x-> (x^f)^g=x);                   
@@ -193,10 +193,10 @@ gap> S:=Semigroup( Transformation( [ 1, 3, 4, 1, 3 ] ),
 > Transformation( [ 4, 1, 2, 2, 1 ] ), 
 > Transformation( [ 5, 5, 1, 1, 3 ] ) );;
 gap> T:=Range(IsomorphismBipartitionSemigroup(S));
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> f:=IsomorphismTransformationSemigroup(T);
-MappingByFunction( <bipartition semigroup on 5 pts with 5 generators>, 
-<transformation semigroup on 5 pts with 5 generators>
+MappingByFunction( <bipartition semigroup of degree 5 with 5 generators>, 
+<transformation semigroup of degree 5 with 5 generators>
  , <Attribute "AsTransformation">, function( x ) ... end )
 gap> g:=InverseGeneralMapping(f);;      
 gap> ForAll(T, x-> (x^f)^g=x);
@@ -219,7 +219,7 @@ gap> S:=Semigroup(
 >  PartialPerm( [ 1, 2, 3, 4 ], [ 2, 4, 1, 5 ] ), 
 >  PartialPerm( [ 1, 3, 5 ], [ 5, 1, 3 ] ) ]);;
 gap> T:=Range(IsomorphismBipartitionSemigroup(S));
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> Generators(S);
 [ [2,3,4](1), [1,2,5](3), [3,2,1,4], [3,1,2,4,5], (1,5,3) ]
 gap> Generators(T);
@@ -276,7 +276,7 @@ gap> S:=Semigroup(
 gap> IsomorphismPartialPermSemigroup(S);
 fail
 gap> Range(IsomorphismTransformationSemigroup(S));
-<transformation semigroup on 208 pts with 5 generators>
+<transformation semigroup of degree 208 with 5 generators>
 
 #T# BipartitionTest19: IsomorphismBipartitionSemigroup for a perm group
 gap> G:=DihedralGroup(IsPermGroup, 10);;
@@ -291,10 +291,11 @@ true
 
 #T# BipartitionTest20: IsomorphismPermGroup
 gap> G:=GroupOfUnits(PartitionMonoid(5));
-<bipartition group on 5 pts with 2 generators>
+<bipartition group of degree 5 with 2 generators>
 gap> IsomorphismPermGroup(G);
-MappingByFunction( <bipartition group on 5 pts with 2 generators>, Group([ (1,
-2,3,4,5), (1,2) ]), <Attribute "AsPermutation">, function( x ) ... end )
+MappingByFunction( <bipartition group of degree 5 with 2 generators>
+, Group([ (1,2,3,4,5), (1,
+2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> f:=last;; g:=InverseGeneralMapping(f);;           
 gap> ForAll(G, x-> ForAll(G, y-> (x*y)^f=x^f*y^f));
 true
@@ -319,15 +320,15 @@ gap> S:=InverseSemigroup(
 > PartialPerm( [ 1, 3, 5, 7, 9 ], [ 7, 6, 5, 10, 1 ] ), 
 > PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 9, 10, 4, 2, 5, 6 ] ) );;
 gap> T:=Range(IsomorphismBipartitionSemigroup(S));
-<inverse bipartition semigroup on 10 pts with 2 generators>
+<inverse bipartition semigroup of degree 10 with 2 generators>
 gap> Size(S);
 281
 gap> Size(T);
 281
 gap> IsomorphismPartialPermSemigroup(T);
-MappingByFunction( <inverse bipartition semigroup of size 281, 
- on 10 pts with 2 generators>, <inverse partial perm semigroup on 9 pts
- with 4 generators>, <Operation "AsPartialPerm">, function( x ) ... end )
+MappingByFunction( <inverse bipartition semigroup of size 281, degree 10 with 
+ 2 generators>, <inverse partial perm semigroup of rank 9 with 4 generators>
+ , <Operation "AsPartialPerm">, function( x ) ... end )
 gap> Size(Range(last));
 281
 gap> f:=last2;; g:=InverseGeneralMapping(f);;
@@ -345,7 +346,7 @@ gap> AsBlockBijection(S.1);
 gap> S.1;
 [3,7][8,1,2,6,9][10,5]
 gap> T:=Range(IsomorphismBlockBijectionSemigroup(S));
-<inverse bipartition semigroup on 11 pts with 2 generators>
+<inverse bipartition semigroup of degree 11 with 2 generators>
 gap> f:=IsomorphismBlockBijectionSemigroup(S);;
 gap> g:=InverseGeneralMapping(f);;
 gap> ForAll(S, x-> (x^f)^g=x);
@@ -369,7 +370,7 @@ gap> Size(S);
 gap> IsInverseSemigroup(S);
 false
 gap> T:=Range(IsomorphismBlockBijectionSemigroup(S));
-<bipartition semigroup on 11 pts with 2 generators>
+<bipartition semigroup of degree 11 with 2 generators>
 gap> Size(T);
 90
 gap> IsInverseSemigroup(T);
@@ -439,7 +440,7 @@ gap> Factorization(S, f);
 gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
 <bipartition: [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ]>
 gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
-<inverse bipartition monoid on 5 pts with 3 generators>
+<inverse bipartition monoid of degree 5 with 3 generators>
 gap> f:=S.1*S.2*S.3*S.2*S.1;
 <bipartition: [ 1 ], [ 2, -2 ], [ 3, -4 ], [ 4, -5 ], [ 5, -3 ], [ -1 ]>
 gap> Factorization(S, f);
@@ -474,7 +475,7 @@ gap> S:=Semigroup(
 >  Bipartition( [ [ 1, 7, -10, -12 ], [ 2, 3, 4, 6, 10, 13, -13 ], 
 >      [ 5, 12, -1 ], [ 8, 9, 11 ], [ -2, -9 ], [ -3, -7, -8 ], [ -4 ], 
 >      [ -5 ], [ -6, -11 ] ] ) );
-<bipartition semigroup on 13 pts with 3 generators>
+<bipartition semigroup of degree 13 with 3 generators>
 gap> f:=Bipartition( [ [ 1, 2, 3, 4, 7, 8, 11, 13 ], [ 5, 9 ], [ 6, 10, 12 ], 
 > [ -1, -2, -6 ], [ -3 ], [ -4, -8 ], [ -5, -11 ], [ -7, -10, -13 ], [ -9 ], 
 >  [ -12 ] ] );;
@@ -661,7 +662,7 @@ gap> JClasses(S);
   <Green's D-class: <bipartition: [ 1, 2, 3, -1, -2, -5 ], [ 4, 5, -3 ], 
       [ -4 ]>> ]
 gap> S:=Semigroup(S);
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> D:=DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
@@ -703,7 +704,7 @@ true
 gap> List(D, IsGreensClassNC);
 [ true, false, false, true, true, true, true, false ]
 gap> S:=Semigroup(S);
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> D:=DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
@@ -723,7 +724,7 @@ true
 gap> LClassNC(D, f)=LClass(S, f);
 true
 gap> S:=Semigroup(S);
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> D:=DClass(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> LClassNC(D, f);
@@ -742,7 +743,7 @@ true
 gap> LClassNC(D, f)=LClass(S, f);
 true
 gap> S:=Semigroup(S);
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> D:=DClass(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> RClassNC(D, f);
@@ -760,7 +761,7 @@ true
 gap> RClassNC(D, f)=RClass(S, f);
 true
 gap> S:=Semigroup(S);
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> D:=DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
@@ -780,7 +781,7 @@ true
 gap> RClassNC(D, f)=RClass(S, f);
 true
 gap> S:=Semigroup(S);
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> D:=DClass(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
 gap> HClassNC(D, f);
@@ -799,7 +800,7 @@ true
 gap> HClassNC(D, f)=HClass(S, f);
 true
 gap> S:=Semigroup(S);
-<bipartition semigroup on 5 pts with 5 generators>
+<bipartition semigroup of degree 5 with 5 generators>
 gap> D:=DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
@@ -2965,8 +2966,8 @@ gap> S:=Semigroup(
 >  Bipartition( [ [ 1, 2, -7 ], [ 3, -1, -2 ], [ 4, -8 ], [ 5, -4 ], 
 >     [ 6, -5 ], [ 7, -3 ], [ 8, -6 ] ] )  );;
 gap> iso:=IsomorphismPermGroup(S);
-MappingByFunction( <bipartition group on 8 pts with 2 generators>, Group([ (1,
-2,3,7,6,5,4), (1,6,2)
+MappingByFunction( <bipartition group of degree 8 with 2 generators>
+, Group([ (1,2,3,7,6,5,4), (1,6,2)
 (3,7,5,4) ]), function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);;
 gap> ForAll(S, x-> x^iso in Range(iso));

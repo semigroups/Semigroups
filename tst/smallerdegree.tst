@@ -18,19 +18,19 @@ gap> f1 := PartialPerm([ 1, 2, 4, 3 ]);;
 gap> f2 := PartialPerm([ 1 ]);;
 gap> f3 := PartialPerm([ 0, 2 ]);;
 gap> f := InverseSemigroup(f1, f2, f3);
-<inverse partial perm semigroup on 4 pts with 3 generators>
+<inverse partial perm semigroup of rank 4 with 3 generators>
 gap> NrMovedPoints(f);
 2
 gap> Size(f);
 5
 gap> VPR := VagnerPrestonRepresentation(f);
-MappingByFunction( <inverse partial perm semigroup of size 5, on 4 pts
- with 3 generators>, <inverse partial perm semigroup on 5 pts
- with 3 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse partial perm semigroup of size 5, rank 4 with 3 
+ generators>, <inverse partial perm semigroup of rank 5 with 3 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(VPR);
-MappingByFunction( <inverse partial perm semigroup on 5 pts
- with 3 generators>, <inverse partial perm semigroup of size 5, on 4 pts
- with 3 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse partial perm semigroup of rank 5 with 3 
+ generators>, <inverse partial perm semigroup of size 5, rank 4 with 3 
+ generators>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(f, x -> (x ^ VPR) ^ inv = x);
 true
 
@@ -70,7 +70,7 @@ gap> B := Semigroup([
 gap> IsInverseSemigroup(B);
 true
 gap> V := Range(VagnerPrestonRepresentation(B));
-<inverse partial perm semigroup on 664 pts with 6 generators>
+<inverse partial perm semigroup of rank 664 with 6 generators>
 
 #T# SmallerDegreeTest4: SmallerDegreePartialPermRepresentation Issue 1:
 # Example where the degree being returned was greater than the original degree
@@ -167,7 +167,7 @@ gap> h := PartialPerm(J);
 <partial perm on 122 pts with degree 122, codegree 122>
 gap> 
 gap> V := InverseSemigroup(H1, H2, h);
-<inverse partial perm monoid on 122 pts with 240 generators>
+<inverse partial perm monoid of rank 122 with 240 generators>
 gap> iso := SmallerDegreePartialPermRepresentation(V);;
 gap> ActionDegree(Range(iso)) <= 12; # Genuine minimum degree of V is 7.
 true

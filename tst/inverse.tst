@@ -25,7 +25,7 @@ gap> gens:=[PartialPermNC( [ 1, 2, 4 ], [ 1, 5, 2 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5 ], [ 5, 2, 4, 3, 1 ] ),
 > PartialPermNC( [ 1, 3, 5 ], [ 5, 4, 1 ] )];;
 gap> s:=InverseSemigroup(gens);                 
-<inverse partial perm semigroup on 5 pts with 10 generators>
+<inverse partial perm semigroup of rank 5 with 10 generators>
 gap> Size(s);
 860
 gap> NrRClasses(s);
@@ -107,7 +107,7 @@ true
 gap> S:=InverseSemigroup(PartialPermNC([ 1, 2, 3, 6, 8, 10 ], 
 > [ 2, 6, 7, 9, 1, 5 ]), PartialPermNC([ 1, 2, 3, 4, 6, 7, 8, 10 ], 
 > [ 3, 8, 1, 9, 4, 10, 5, 6 ]));
-<inverse partial perm semigroup on 10 pts with 2 generators>
+<inverse partial perm semigroup of rank 10 with 2 generators>
 gap> f:=Generators(S)[1];
 [3,7][8,1,2,6,9][10,5]
 gap> h:=HClass(S, f);
@@ -157,7 +157,7 @@ gap> h;
 gap> IsDoneIterator(iter);
 false
 gap> s:=InverseSemigroup(Generators(s));
-<inverse partial perm semigroup on 18 pts with 2 generators>
+<inverse partial perm semigroup of rank 18 with 2 generators>
 gap> iter:=IteratorOfHClasses(s);
 <iterator>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
@@ -225,7 +225,7 @@ true
 gap> iter:=IteratorOfHClassReps(s);
 <iterator>
 gap> s:=InverseSemigroup(Generators(s));
-<inverse partial perm semigroup on 18 pts with 2 generators>
+<inverse partial perm semigroup of rank 18 with 2 generators>
 gap> iter:=IteratorOfHClassReps(s);
 <iterator>
 gap> i:=0;
@@ -272,7 +272,7 @@ true
 #T# InverseTest5 
 gap> s:=Semigroup( [ Transformation( [ 3, 2, 1, 6, 5, 4 ] ), 
 > Transformation( [ 4, 7, 3, 1, 6, 5, 7 ] ) ] );
-<transformation semigroup on 7 pts with 2 generators>
+<transformation semigroup of degree 7 with 2 generators>
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
 gap> inv:=InverseGeneralMapping(iso);;
 gap> f:=Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] );;
@@ -480,14 +480,14 @@ gap>
 
 #T# InverseTest10
 gap> s:=POI(10);
-<inverse partial perm monoid on 10 pts with 10 generators>
+<inverse partial perm monoid of rank 10 with 10 generators>
 gap> f:=PartialPermNC([ 2, 4, 5, 7 ], [ 2, 3, 5, 7 ]);;
 gap> l:=LClassNC(s, f);
 <Green's L-class: <identity partial perm on [ 2, 3, 5, 7 ]>>
 gap> l:=LClass(s,f);
 <Green's L-class: [1,2,3,5][4,7]>
 gap> s:=POI(15);
-<inverse partial perm monoid on 15 pts with 15 generators>
+<inverse partial perm monoid of rank 15 with 15 generators>
 gap> f:=PartialPermNC( [ 1, 3, 5, 8, 9, 10, 12, 13, 14 ],
 > [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ] ) ;;
 gap> l:=LClass(s,f);
@@ -521,7 +521,7 @@ gap> HClassNC(POI(13), f);
 gap> DClassNC(POI(13), f);
 <Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
 gap> s:=POI(13);
-<inverse partial perm monoid on 13 pts with 13 generators>
+<inverse partial perm monoid of rank 13 with 13 generators>
 gap> D:=DClassNC(s, f);
 <Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
 gap> l:=LClassNC(s, f);
@@ -529,7 +529,7 @@ gap> l:=LClassNC(s, f);
 gap> l:=LClass(s,f);
 <Green's L-class: [1,2,3,4,5,6,8,11][7,10]>
 gap> s:=POI(15);
-<inverse partial perm monoid on 15 pts with 15 generators>
+<inverse partial perm monoid of rank 15 with 15 generators>
 gap> f:=PartialPermNC( [ 1, 3, 5, 8, 9, 10, 12, 13, 14 ],
 > [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ] ) ;;
 gap> l:=LClass(s,f);
@@ -563,7 +563,7 @@ gap> HClassNC(POI(13), f);
 gap> DClassNC(POI(13), f);
 <Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
 gap> s:=POI(13);
-<inverse partial perm monoid on 13 pts with 13 generators>
+<inverse partial perm monoid of rank 13 with 13 generators>
 gap> D:=DClassNC(s, f);
 <Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
 gap> LClassNC(s, f)=LClass(D, f);
@@ -824,7 +824,7 @@ gap> Idempotents(r);
 gap> s := InverseSemigroup([
 > PartialPerm( [ 1, 2, 3, 4, 5, 6, 9 ], [ 1, 5, 9, 2, 6, 10, 7 ] ),
 > PartialPerm( [ 1, 3, 4, 7, 8, 9 ], [ 9, 4, 1, 6, 2, 8 ] )]);
-<inverse partial perm semigroup on 10 pts with 2 generators>
+<inverse partial perm semigroup of rank 10 with 2 generators>
 gap> ForAll(RClasses(s), IsRegularClass);
 true
 
@@ -948,7 +948,7 @@ gap> for i in iter do od;
 
 #T# InverseTest16
 gap> s:=RandomInverseSemigroup(100,100);
-<inverse partial perm semigroup on 100 pts with 100 generators>
+<inverse partial perm semigroup of rank 100 with 100 generators>
 gap> iter:=IteratorOfRClasses(s);       
 <iterator>
 gap> for i in [1..100] do NextIterator(iter); od;
