@@ -381,6 +381,8 @@ function(S, x, y)
   fi;
 end);
 
+#TODO this method is probably redundant.
+
 InstallMethod(ViewString,
 "for an matrix over finite field semigroup with generators",
 [IsMatrixSemigroup and HasGeneratorsOfSemigroup],

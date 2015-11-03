@@ -39,7 +39,7 @@ false
 
 #T# TestInstall5
 gap> s:=SingularTransformationSemigroup(6);
-<regular transformation semigroup ideal on 6 pts with 1 generator>
+<regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> Size(s);
 45936
 
@@ -548,7 +548,7 @@ gap> gens:=[
 > Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
 > Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ) ];;
 gap> V:=SemigroupIdealByGenerators(S, gens);
-<regular bipartition semigroup ideal on 3 pts with 3 generators>
+<regular bipartition semigroup ideal of degree 3 with 3 generators>
 gap> tuples:=[ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ] ] ) ];;
 gap> Semigroup(V, tuples, rec(small:=true));;
 
@@ -627,10 +627,10 @@ true
 #T# TestInstall38: Issue 33 (problem with Rees factor semigroups)
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), 
 > [Transformation([1,2,2,2])]);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation monoid of degree 4>>
+<Rees congruence of <regular transformation semigroup ideal of degree 4 with
+  1 generator> over <full transformation monoid of degree 4>>
 gap> hom := HomomorphismQuotientSemigroup(cong);
 MappingByFunction( <full transformation monoid of degree 4>, <quotient of Mono\
 id( [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), 
@@ -926,12 +926,12 @@ gap> S := DualSymmetricInverseMonoid(6);;
 gap> x := Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], 
 > [ 5, -5 ], [ 6, -6 ] ] );;
 gap> I := SemigroupIdeal(S, x);
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> JoinIrreducibleDClasses(I);
 [ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], 
       [ 6, -6 ]>> ]
 gap> I;
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 
 #T# TestInstall60: Issue 94:
 # EquivalenceClasses of trivial congruence returns empty list
@@ -968,10 +968,10 @@ true
 # Bug in NrCongruenceClasses for Rees congruences
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 > [Transformation([1,2,2,2])]);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation monoid of degree 4>>
+<Rees congruence of <regular transformation semigroup ideal of degree 4 with
+  1 generator> over <full transformation monoid of degree 4>>
 gap> NrCongruenceClasses(cong);
 169
 
@@ -1029,7 +1029,7 @@ gap> T := AsTransformationSemigroup(S);
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));
-<regular transformation semigroup ideal on 22 pts with 8 generators>
+<regular transformation semigroup ideal of degree 22 with 8 generators>
 gap> Size(I);
 21
 
