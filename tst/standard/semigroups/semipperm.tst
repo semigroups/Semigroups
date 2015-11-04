@@ -144,7 +144,7 @@ true
 
 # S = 0-simple semigroup of order 2
 gap> s := Semigroup(empty_map, PartialPerm([1], [1]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> RepresentativeOfMinimalIdeal(s) = empty_map;
 true
 gap> empty_map in s;
