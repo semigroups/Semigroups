@@ -363,7 +363,7 @@ gap> gens := [
 gap> s := Monoid(gens);;
 gap> s := Semigroup(GeneratorsOfSemigroup(s));;
 gap> IsMonoidAsSemigroup(s);
-false
+true
 gap> IsMonoid(s);
 true
 gap> i:=MinimalIdeal(s);;
