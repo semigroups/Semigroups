@@ -167,7 +167,7 @@ function(S)
     return false;
   elif not IsFinite(S) then
     TryNextMethod();
-  elif IsGroupAsSemigroup(S) or IsGroup(S) then
+  elif IsGroupAsSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a group");
     return true;
   elif not IsRegularSemigroup(S) then
@@ -537,13 +537,13 @@ end);
 InstallMethod(IsGroupAsSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsGroup(S) and HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
+  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
       and IsGroupAsSemigroup(Parent(S)) then
     return true;
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
-  return not IsGroup(S) and NrRClasses(S) = 1 and NrLClasses(S) = 1;
+  return NrRClasses(S) = 1 and NrLClasses(S) = 1;
 end);
 
 # same method for non-regular ideals
@@ -553,13 +553,10 @@ InstallMethod(IsGroupAsSemigroup, "for an acting semigroup",
 function(S)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
 
-  if not IsGroup(S) and HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
+  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
       and IsGroupAsSemigroup(Parent(S)) then
     return true;
   fi;
-
-  # Don't check for IsGroup, since in GAP there is an immediate method which
-  # sets IsGroupAsSemigroup to be false for IsGroup's
 
   gens := GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
 
@@ -704,9 +701,7 @@ end);
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup",
 [IsInverseSemigroup],
-function(S)
-  return IsGroup(S) or IsGroupAsSemigroup(S);
-end);
+IsGroupAsSemigroup);
 
 # different method for ideals without generators
 
@@ -776,7 +771,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) and not IsGroup(I) then
+  if not IsGroupAsSemigroup(I) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -1181,9 +1176,7 @@ end);
 
 InstallMethod(IsRightSimple, "for an inverse semigroup",
 [IsInverseSemigroup],
-function(S)
-  return IsGroup(S) or IsGroupAsSemigroup(S);
-end);
+IsGroupAsSemigroup);
 
 # different method for ideals
 
@@ -1317,9 +1310,7 @@ end);
 
 InstallMethod(IsSimpleSemigroup, "for a finite inverse semigroup",
 [IsInverseSemigroup and IsFinite],
-function(S)
-  return IsGroup(S) or IsGroupAsSemigroup(S);
-end);
+IsGroupAsSemigroup);
 
 # different method for ideals
 

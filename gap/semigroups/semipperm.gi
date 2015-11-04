@@ -306,9 +306,7 @@ function(S)
                                                x -> x ^ map,
                                                x -> x ^ inv));
 
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
   return U;
@@ -747,9 +745,7 @@ function(S)
   codeg := Maximum(range);
 
   if min_rank = rank and domain = range then
-    if not IsGroup(S) then
-      SetIsGroupAsSemigroup(S, true);
-    fi;
+    SetIsGroupAsSemigroup(S, true);
     return gens[1];
   fi;
 

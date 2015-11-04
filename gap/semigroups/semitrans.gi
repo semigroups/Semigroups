@@ -471,7 +471,7 @@ function(S)
     fi;
   od;
 
-  if not IsGroup(S) and min_rank = n then
+  if min_rank = n then
     SetIsGroupAsSemigroup(S, true);
     return gens[1];
   fi;
@@ -605,9 +605,7 @@ function(S)
 
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
                                                x -> x ^ map));
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
 
   UseIsomorphismRelation(U, G);
 

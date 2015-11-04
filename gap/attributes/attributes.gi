@@ -140,9 +140,7 @@ function(S)
                            x -> x ^ map,
                            x -> x ^ InverseGeneralMapping(map));
   SetIsomorphismPermGroup(U, iso);
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, Range(iso));
   return U;
 end);

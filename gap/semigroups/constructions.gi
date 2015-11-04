@@ -72,9 +72,7 @@ SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
     SetSize(S, m + r - 1);
     SetIsMonogenicSemigroup(S, true);
     if m = 1 then
-      if not IsGroup(S) then
-        SetIsGroupAsSemigroup(S, true);
-      fi;
+      SetIsGroupAsSemigroup(S, true);
     else
       SetIsGroupAsSemigroup(S, false);
       SetIsRegularSemigroup(S, false);

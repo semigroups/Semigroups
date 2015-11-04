@@ -433,8 +433,7 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       <C>IsGroupAsSemigroup</C> returns <K>true</K> if and only if the
-      semigroup <A>S</A> is mathematically a group but does belong to the
-      category of groups <Ref Prop="IsGroup" BookName="ref"/> in &GAP;.
+      semigroup <A>S</A> is mathematically a group.
       <Example><![CDATA[
 gap> gens := [ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
 >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;

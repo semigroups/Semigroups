@@ -101,9 +101,7 @@ function(S)
 
   U := Semigroup(List(GeneratorsOfGroup(G), x -> RMSElement(S, i, x, j)));
 
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
   return U;
@@ -454,7 +452,7 @@ function(R)
   fi;
 
   U := UnderlyingSemigroup(R);
-  if not IsGroup(U) and not IsGroupAsSemigroup(U) then
+  if not IsGroupAsSemigroup(U) then
     TryNextMethod();
   fi;
 
@@ -520,10 +518,10 @@ function(R)
   local mat, n, m, comp, perm, norm, size, rows, cols, l, x, next_cols,
   row_perm, col_perm, next_rows, new, out, iso, inv, hom, k, j, i;
 
-  if not IsGroup(UnderlyingSemigroup(R)) then
+  if not IsGroupAsSemigroup(UnderlyingSemigroup(R)) then
     ErrorMayQuit("Semigroups: RZMSNormalization: usage,\n",
                  "not yet implemented for when the underlying semigroup is ",
-                 "not IsGroup,");
+                 "not a group,");
   fi;
   mat := Matrix(R);
   n := Length(mat);
@@ -648,7 +646,7 @@ function(R)
   local G, mat, id, r, c, new, S, iso, inv, hom, i, j;
 
   G := UnderlyingSemigroup(R);
-  if not IsGroup(G) and not IsGroupAsSemigroup(G) then
+  if not IsGroupAsSemigroup(G) then
     ErrorMayQuit("Semigroups: RMSNormalization: usage,\n",
                  "the underlying semigroup of the Rees matrix semigroup <R> ",
                  "must be a group,");
