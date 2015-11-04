@@ -36,10 +36,10 @@ function(n)
   return Monoid(gens[n]);
 end);
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a pbr semigroup",
+InstallMethod(SemigroupViewStringPrefix, "for a pbr semigroup",
 [IsPBRSemigroup], S -> "\>pbr\< ");
 
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a pbr semigroup",
+InstallMethod(SemigroupViewStringSuffix, "for a pbr semigroup",
 [IsPBRSemigroup],
 function(S)
   return Concatenation("\>degree \>",

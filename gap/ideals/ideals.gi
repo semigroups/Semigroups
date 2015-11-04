@@ -66,7 +66,7 @@ function(I)
     fi;
   fi;
 
-  Append(str, SEMIGROUPS_ViewStringPrefix(I));
+  Append(str, SemigroupViewStringPrefix(I));
 
   if HasIsMonoid(I) and IsMonoid(I) then
     Append(str, "\>monoid\< ");
@@ -81,7 +81,7 @@ function(I)
     Append(str, ",\<\< ");
   fi;
 
-  suffix := SEMIGROUPS_ViewStringSuffix(I);
+  suffix := SemigroupViewStringSuffix(I);
   if suffix <> ""
       and not (HasIsTrivial(I) and not IsTrivial(I) and HasSize(I)) then
     suffix := Concatenation("of ", suffix);

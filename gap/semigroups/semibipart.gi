@@ -11,10 +11,10 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to bipartition semigroups.
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
+InstallMethod(SemigroupViewStringPrefix, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> "\>bipartition\< ");
 
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
+InstallMethod(SemigroupViewStringSuffix, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
   return Concatenation("\>degree \>",
