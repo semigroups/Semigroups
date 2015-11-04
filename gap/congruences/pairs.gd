@@ -8,10 +8,10 @@
 #############################################################################
 ##
 ## This file contains functions for any finite semigroup congruence with
-## generating pairs, using a union-find method.  See Howie 1.5 and see MT's
-## MSc thesis "Computing with Semigroup Congruences", chapter 2
+## generating pairs, using a pair enumeration and union-find method.
 ##
-## FIXME this summary is not very good.
+## See the header of pairs.gi for a full summary.
+## 
 
 DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
 DeclareProperty("IsLeftSemigroupCongruence",  IsRightSemigroupCongruence);
