@@ -373,6 +373,7 @@ Unbind(_GenericCongruenceEquality);
 _InstallMethodsForCongruences := function(_record)
   local _GeneratingPairsOfXSemigroupCongruence,
         _HasGeneratingPairsOfXSemigroupCongruence,
+        _XSemigroupCongruence,
         _IsXSemigroupCongruence;
 
   _GeneratingPairsOfXSemigroupCongruence :=
@@ -383,6 +384,9 @@ _InstallMethodsForCongruences := function(_record)
     EvalString(Concatenation("HasGeneratingPairsOf",
                              _record.type_string,
                              "MagmaCongruence"));
+  _XSemigroupCongruence :=
+    EvalString(Concatenation(_record.type_string,
+                             "SemigroupCongruence"));
   _IsXSemigroupCongruence :=
     EvalString(Concatenation("Is",
                              _record.type_string,
@@ -391,14 +395,14 @@ _InstallMethodsForCongruences := function(_record)
   #
 
   InstallImmediateMethod(IsFinite,
-    Concatenation("for a ", _record.info_string, " with known range"),
-    _IsXSemigroupCongruence and HasRange,
-    0,
-    function(cong)
-      if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
-        return true;
-      fi;
-      TryNextMethod();
+  Concatenation("for a ", _record.info_string, " with known range"),
+  _IsXSemigroupCongruence and HasRange,
+  0,
+  function(cong)
+    if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
+      return true;
+    fi;
+    TryNextMethod();
   end);
 
   #
@@ -526,6 +530,8 @@ _InstallMethodsForCongruences := function(_record)
     return Filtered(classes, c -> Size(c) > 1);
   end);
 
+  #
+
   InstallMethod(\=,
   Concatenation("for finite ", _record.info_string,
                 "s with known generating pairs"),
@@ -580,6 +586,27 @@ _InstallMethodsForCongruences := function(_record)
     ViewObj(Range(cong));
     Print(" with ", Size(_GeneratingPairsOfXSemigroupCongruence(cong)),
           " generating pairs>");
+  end);
+
+  #
+
+  InstallMethod(EvalString(
+  Concatenation("Join", _record.type_string, "SemigroupCongruences")),
+  Concatenation("for two ", _record.info_string, "s with generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
+  function(c1, c2)
+    local pairs;
+    # TODO: combine lookup tables
+    if Range(c1) <> Range(c2) then
+      ErrorMayQuit("Semigroups: Join", _record.type_string,
+                   "SemigroupCongruences: usage,\n",
+                   "congruences must be defined over the same semigroup,");
+    fi;
+    pairs := Concatenation(
+               ShallowCopy(_GeneratingPairsOfXSemigroupCongruence(c1)),
+               ShallowCopy(_GeneratingPairsOfXSemigroupCongruence(c2)));
+    return _XSemigroupCongruence(Range(c1), pairs);
   end);
 
   #
@@ -827,24 +854,6 @@ function(class)
 end);
 
 #
-
-# TODO shouldn't there be methods for left and right congruences too?
-
-InstallMethod(JoinSemigroupCongruences,
-"for two semigroup congruences",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(c1, c2)
-  local pairs;
-  # TODO: combine lookup tables
-  if Range(c1) <> Range(c2) then
-    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
-  fi;
-  pairs := Concatenation(ShallowCopy(GeneratingPairsOfSemigroupCongruence(c1)),
-                         ShallowCopy(GeneratingPairsOfSemigroupCongruence(c2)));
-  return SemigroupCongruence(Range(c1), pairs);
-end);
 
 # TODO shouldn't there be a method for MeetSemigroupCongruences too?
 
