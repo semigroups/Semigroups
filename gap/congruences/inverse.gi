@@ -119,14 +119,14 @@ end);
 
 #
 
-InstallMethod(IsSubcongruence,
+InstallMethod(IsSubrelation,
 "for two inverse semigroup congruences",
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsInverseSemigroupCongruenceByKernelTrace],
 function(cong1, cong2)
   # Tests whether cong2 is a subcongruence of cong1
   if Range(cong1) <> Range(cong2) then
-    ErrorMayQuit("Semigroups: IsSubcongruence: usage,\n",
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
                  "congruences must be defined over the same semigroup,");
   fi;
   return IsSubsemigroup(cong1!.kernel, cong2!.kernel)

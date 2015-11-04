@@ -581,7 +581,24 @@ _InstallMethodsForCongruences := function(_record)
     Print(" with ", Size(_GeneratingPairsOfXSemigroupCongruence(cong)),
           " generating pairs>");
   end);
+
+  #
+
+  InstallMethod(IsSubrelation,
+  Concatenation("for two ", _record.info_string, "s with generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
+  function(cong1, cong2)
+    # Tests whether cong1 contains all the pairs in cong2
+    if Range(cong1) <> Range(cong2) then
+      ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                   "congruences must be defined over the same semigroup,");
+    fi;
+    return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
+                  pair -> pair in cong1);
+  end);
 end;
+# End of _InstallMethodsForCongruences function
 
 for _record in [rec(type_string := "",
                     info_string := "semigroup congruence"),
@@ -598,9 +615,6 @@ Unbind(_InstallMethodsForCongruences);
 ###########################################################################
 # Some individual methods for congruences
 ###########################################################################
-
-# JDM having one method with an if-statement inside which decides which case we
-# are in is bad, this is just doing home-made method selection.
 
 InstallMethod(PrintObj,
 "for a left semigroup congruence with known generating pairs",
@@ -638,8 +652,6 @@ end);
 ###########################################################################
 # methods for congruence classes
 ###########################################################################
-
-#JDM these were also installed 3 times previously.
 
 InstallMethod(Enumerator, "for a congruence class",
 [IsCongruenceClass],
@@ -710,7 +722,6 @@ function(class)
     result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
     if result = fail then
       # cong has AsLookupTable
-      result := fail;
       table := AsLookupTable(enum!.cong);
       classno := table[enum!.rep];
       for i in [1 .. Size(Range(enum!.cong))] do
@@ -756,6 +767,8 @@ function(class)
 
   return enum;
 end);
+
+#
 
 InstallMethod(\in,
 "for an associative element and a finite congruence class",
@@ -813,20 +826,7 @@ function(class)
   return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
-# TODO shouldn't there be methods for left and right congruences too?
-
-InstallMethod(IsSubcongruence,
-"for two semigroup congruences",
-[IsSemigroupCongruence, IsSemigroupCongruence],
-function(cong1, cong2)
-  # Tests whether cong2 is a subcongruence of cong1
-  if Range(cong1) <> Range(cong2) then
-    ErrorMayQuit("Semigroups: IsSubcongruence: usage,\n",
-                 "congruences must be defined over the same semigroup,");
-  fi;
-  return ForAll(GeneratingPairsOfSemigroupCongruence(cong2),
-                pair -> pair in cong1);
-end);
+#
 
 # TODO shouldn't there be methods for left and right congruences too?
 
@@ -872,15 +872,15 @@ function(S)
     newparents := [];  # Parents of newcong
     newcong := SemigroupCongruence(S, pair);
     for i in [1 .. Length(congs1)] do
-      if IsSubcongruence(congs1[i], newcong) then
-        if IsSubcongruence(newcong, congs1[i]) then
+      if IsSubrelation(congs1[i], newcong) then
+        if IsSubrelation(newcong, congs1[i]) then
           # This is not a new congruence - drop it!
           badcong := true;
           break;
         else
           Add(newparents, i);
         fi;
-      elif IsSubcongruence(newcong, congs1[i]) then
+      elif IsSubrelation(newcong, congs1[i]) then
         Add(newchildren, i);
       fi;
     od;
@@ -915,15 +915,15 @@ function(S)
         newchildren := []; # Children of newcong
         newparents := [];  # Parents of newcong
         for k in [1 .. Length(congs)] do
-          if IsSubcongruence(congs[k], newcong) then
-            if IsSubcongruence(newcong, congs[k]) then
+          if IsSubrelation(congs[k], newcong) then
+            if IsSubrelation(newcong, congs[k]) then
               # This is the same as an old congruence - discard it!
               badcong := true;
               break;
             else
               Add(newparents, k);
             fi;
-          elif IsSubcongruence(newcong, congs[k]) then
+          elif IsSubrelation(newcong, congs[k]) then
             Add(newchildren, k);
           fi;
         od;

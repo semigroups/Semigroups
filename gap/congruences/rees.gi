@@ -112,14 +112,14 @@ end);
 
 #
 
-InstallMethod(IsSubcongruence,
+InstallMethod(IsSubrelation,
 "for two Rees congruences",
 [IsReesCongruence, IsReesCongruence],
 function(cong1, cong2)
   local i1, i2;
   # Tests whether cong2 is a subcongruence of cong1
   if Range(cong1) <> Range(cong2) then
-    ErrorMayQuit("Semigroups: IsSubcongruence: usage,\n",
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
                  "congruences must be defined over the same semigroup,");
   fi;
   i1 := SemigroupIdealOfReesCongruence(cong1);

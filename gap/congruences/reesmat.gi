@@ -536,16 +536,34 @@ end);
 
 #
 
-InstallMethod(IsSubcongruence,
+InstallMethod(IsSubrelation,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
 function(cong1, cong2)
   # Tests whether cong2 is a subcongruence of cong1
   if Range(cong1) <> Range(cong2) then
-    ErrorMayQuit("Semigroups: IsSubcongruence: usage,\n",
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
                  "congruences must be defined over the same semigroup,");
   fi;
   return IsSubgroup(cong1!.n, cong2!.n)
+         and ForAll(cong2!.colBlocks,
+                    b2 -> ForAny(cong1!.colBlocks, b1 -> IsSubset(b1, b2)))
+         and ForAll(cong2!.rowBlocks,
+                    b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
+end);
+
+#
+
+InstallMethod(IsSubrelation,
+"for two Rees 0-matrix semigroup congruences by linked triple",
+[IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
+function(cong1, cong2)
+  # Tests whether cong2 is a subcongruence of cong1
+  if Range(cong1) <> Range(cong2) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return IsSubgroup(cong1!.n, cong2!.ln)
          and ForAll(cong2!.colBlocks,
                     b2 -> ForAny(cong1!.colBlocks, b1 -> IsSubset(b1, b2)))
          and ForAll(cong2!.rowBlocks,
