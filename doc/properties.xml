@@ -624,15 +624,18 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsMonoidAsSemigroup</C> returns <K>true</K> if and only if the
-      semigroup <A>S</A> is mathematically a monoid but does belong to the
-      category of monoids <Ref Prop="IsMonoid" BookName="ref"/> in &GAP; This is
-      possible if the <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>
-      of <A>S</A> is not equal to the <Ref Attr="One" BookName="ref"/> of any
-      element in <A>S</A>. <P/>
-
-      A semigroup satisfying <C>IsMonoidAsSemigroup</C> does not possess the
-      attributes of a monoid (such as, <Ref Attr="GeneratorsOfMonoid"
-        BookName="ref"/>).<P/>
+      semigroup <A>S</A> is mathematically a monoid, i.e. if and only if it
+      contains a <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
+      <P/>
+      
+      It is possible that a semigroup which satisfies
+      <C>IsMonoidAsSemigroup</C> is not in the &GAP; category <Ref
+        Prop="IsMonoid" BookName="ref"/>. This is possible if the <Ref
+        Attr="MultiplicativeNeutralElement" BookName="ref"/> of <A>S</A> is not
+      equal to the <Ref Attr="One" BookName="ref"/> of any element in <A>S</A>.
+      Therefore a semigroup satisfying <C>IsMonoidAsSemigroup</C> may not
+      possess the attributes of a monoid (such as, <Ref
+        Attr="GeneratorsOfMonoid" BookName="ref"/>).<P/>
 
      See also <Ref Attr="One" BookName="ref"/>, 
      <Ref Prop="IsInverseMonoid" BookName="ref"/>
