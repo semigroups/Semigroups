@@ -1,6 +1,11 @@
 #TODO
 ##There are more TODOs in the source files this list is not exhaustive##
 
+gap> S := Semigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));
+<trivial partial perm group of rank 5 with 0 generators>
+gap> Print(S);
+Group( ... )
+
 fix this:
 
 gap> s := FreeSemigroup("a","b");
