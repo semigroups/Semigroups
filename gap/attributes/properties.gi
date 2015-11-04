@@ -863,7 +863,7 @@ end);
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  return not IsMonoid(S) and MultiplicativeNeutralElement(S) <> fail;
+  return MultiplicativeNeutralElement(S) <> fail;
 end);
 
 # is there a better method? JDM
