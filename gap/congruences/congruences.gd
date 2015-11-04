@@ -45,5 +45,5 @@ DeclareAttribute("AsLookupTable", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
 DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);
 
-DeclareOperation("IsSubcongruence",
-                 [IsSemigroupCongruence, IsSemigroupCongruence]);
+DeclareOperation("IsSubrelation",
+                 [IsEquivalenceRelation, IsEquivalenceRelation]);
