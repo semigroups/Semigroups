@@ -530,7 +530,7 @@ gap> IdempotentGeneratedSubsemigroup(S);
 gap> S := SymmetricInverseSemigroup(5);
 <symmetric inverse monoid of degree 5>
 gap> IdempotentGeneratedSubsemigroup(S);
-<inverse partial perm monoid of rank 5 with 6 generators>
+<inverse partial perm monoid of rank 5 with 5 generators>
 gap> S := DualSymmetricInverseSemigroup(5); 
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);

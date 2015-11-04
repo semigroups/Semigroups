@@ -136,7 +136,7 @@ gap> empty_map := PartialPerm([], []);;
 
 # S = {empty_map}
 gap> s := Semigroup(empty_map);
-<trivial partial perm group of rank 0 with 0 generators>
+<trivial partial perm group of rank 0 with 1 generator>
 gap> RepresentativeOfMinimalIdeal(s) = empty_map;
 true
 gap> empty_map in s;
@@ -254,7 +254,7 @@ false
 
 # Trivial partial perm semigroup: GAP knows that it is simple at creation
 gap> s := Semigroup(PartialPerm([2], [2]));
-<trivial partial perm group of rank 1 with 0 generators>
+<trivial partial perm group of rank 1 with 1 generator>
 gap> HasIsSimpleSemigroup(s);
 true
 gap> RepresentativeOfMinimalIdeal(s);

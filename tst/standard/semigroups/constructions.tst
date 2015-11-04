@@ -45,17 +45,17 @@ gap> IsTrivial(S);
 true
 gap> S := Semigroup(S);;
 gap> HasIsTrivial(S);
-false
+true
 gap> IsTrivial(S);
 true
 
 #T# constructions: TrivialSemigroup: default
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := TrivialSemigroup(0);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := TrivialSemigroup(1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := TrivialSemigroup(5);
 <trivial transformation group of degree 5 with 1 generator>
 gap> S := TrivialSemigroup(10);
@@ -63,11 +63,11 @@ gap> S := TrivialSemigroup(10);
 
 #T# constructions: TrivialSemigroup: transformation semigroup
 gap> S := TrivialSemigroup(IsTransformationSemigroup);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := TrivialSemigroup(IsTransformationSemigroup, 0);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := TrivialSemigroup(IsTransformationSemigroup, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := TrivialSemigroup(IsTransformationSemigroup, 5);
 <trivial transformation group of degree 5 with 1 generator>
 gap> S := TrivialSemigroup(IsTransformationSemigroup, 10);
@@ -87,11 +87,11 @@ gap> S := TrivialSemigroup(IsPartialPermSemigroup, 10);
 
 #T# constructions: TrivialSemigroup: bipartition semigroup
 gap> S := TrivialSemigroup(IsBipartitionSemigroup);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 0);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 5);
 <trivial bipartition group of degree 5 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 10);
@@ -99,11 +99,11 @@ gap> S := TrivialSemigroup(IsBipartitionSemigroup, 10);
 
 #T# constructions: TrivialSemigroup: block bijection semigroup
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 0);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 5);
 <trivial bipartition group of degree 5 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 10);
@@ -111,27 +111,27 @@ gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 10);
 
 #T# constructions: TrivialSemigroup: PBR semigroup
 gap> S := TrivialSemigroup(IsPBRSemigroup);
-<trivial pbr monoid of degree 1 with 0 generators>
+<trivial pbr group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsPBRSemigroup, 0);
-<trivial pbr monoid of degree 1 with 0 generators>
+<trivial pbr group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsPBRSemigroup, 1);
-<trivial pbr monoid of degree 1 with 0 generators>
+<trivial pbr group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsPBRSemigroup, 5);
-<trivial pbr monoid of degree 5 with 0 generators>
+<trivial pbr group of degree 5 with 1 generator>
 gap> S := TrivialSemigroup(IsPBRSemigroup, 10);
-<trivial pbr monoid of degree 10 with 0 generators>
+<trivial pbr group of degree 10 with 1 generator>
 
 #T# constructions: TrivialSemigroup: Boolean matrix semigroup
 gap> S := TrivialSemigroup(IsBooleanMatSemigroup);
-<trivial monoid of 1x1 boolean matrices with 0 generators>
+<trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 0);
-<trivial monoid of 1x1 boolean matrices with 0 generators>
+<trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 1);
-<trivial monoid of 1x1 boolean matrices with 0 generators>
+<trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 5);
-<trivial monoid of 5x5 boolean matrices with 0 generators>
+<trivial group of 5x5 boolean matrices with 1 generator>
 gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 10);
-<trivial monoid of 10x10 boolean matrices with 0 generators>
+<trivial group of 10x10 boolean matrices with 1 generator>
 
 #T# constructions: MonogenicSemigroup: errors
 gap> S := MonogenicSemigroup(0);
@@ -222,7 +222,7 @@ true
 
 #T# constructions: MonogenicSemigroup: default
 gap> S := MonogenicSemigroup(1, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := MonogenicSemigroup(2, 1);
 <commutative non-regular transformation semigroup of size 2, degree 3 with 1 
  generator>
@@ -237,7 +237,7 @@ gap> S := MonogenicSemigroup(10, 11);
 
 #T# constructions: MonogenicSemigroup: transformation semigroup
 gap> S := MonogenicSemigroup(IsTransformationSemigroup, 1, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := MonogenicSemigroup(IsTransformationSemigroup, 2, 1);
 <commutative non-regular transformation semigroup of size 2, degree 3 with 1 
  generator>
@@ -267,7 +267,7 @@ gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 10, 11);
 
 #T# constructions: MonogenicSemigroup: bipartition semigroup
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 1, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 2, 1);
 <commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
  generator>
@@ -282,7 +282,7 @@ gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 10, 11);
 
 #T# constructions: MonogenicSemigroup: block bijection semigroup
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 1, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 2, 1);
 <commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
  generator>
@@ -309,7 +309,7 @@ gap> S := MonogenicSemigroup(IsPBRSemigroup, 10, 11);
 
 #T# constructions: MonogenicSemigroup: Boolean matrix semigroup
 gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 1, 1);
-<trivial monoid of 1x1 boolean matrices with 0 generators>
+<trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 2, 1);
 <commutative non-regular semigroup of size 2, 3x3 boolean matrices with 1 
  generator>
@@ -423,7 +423,7 @@ true
 
 #T# constructions: RectangularBand: default
 gap> S := RectangularBand(1, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := RectangularBand(2, 1);
 <regular transformation semigroup of size 2, degree 3 with 2 generators>
 gap> S := RectangularBand(1, 2);
@@ -435,7 +435,7 @@ gap> S := RectangularBand(10, 11);
 
 #T# constructions: RectangularBand: transformation semigroup
 gap> S := RectangularBand(IsTransformationSemigroup, 1, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := RectangularBand(IsTransformationSemigroup, 2, 1);
 <regular transformation semigroup of size 2, degree 3 with 2 generators>
 gap> S := RectangularBand(IsTransformationSemigroup, 1, 2);
@@ -652,7 +652,7 @@ false
 
 #T# constructions: ZeroSemigroup: default
 gap> S := ZeroSemigroup(1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := ZeroSemigroup(2);
 <commutative non-regular transformation semigroup of size 2, degree 3 with 1 
  generator>
@@ -663,7 +663,7 @@ true
 
 #T# constructions: ZeroSemigroup: transformation semigroup
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 5);
 <non-regular transformation semigroup of size 5, degree 9 with 4 generators>
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 10);
@@ -683,7 +683,7 @@ true
 
 #T# constructions: ZeroSemigroup: bipartition semigroup
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 2);
 <commutative non-regular bipartition semigroup of size 2, degree 2 with 1 
  generator>
@@ -696,7 +696,7 @@ true
 
 #T# constructions: ZeroSemigroup: block bijection semigroup
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition monoid of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 2);
 <commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
  generator>
@@ -719,7 +719,7 @@ true
 
 #T# constructions: ZeroSemigroup: Boolean matrix semigroup
 gap> S := ZeroSemigroup(IsBooleanMatSemigroup, 1);
-<trivial monoid of 1x1 boolean matrices with 0 generators>
+<trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := ZeroSemigroup(IsBooleanMatSemigroup, 5);
 <non-regular semigroup of size 5, 6x6 boolean matrices with 4 generators>
 gap> S := ZeroSemigroup(IsBooleanMatSemigroup, 10);
@@ -767,7 +767,7 @@ Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
 
 #T# constructions: LeftZeroSemigroup 
 gap> S := LeftZeroSemigroup(1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := LeftZeroSemigroup(IsBipartitionSemigroup, 10);
 <regular bipartition semigroup of size 10, degree 4 with 10 generators>
 gap> IsLeftZeroSemigroup(Semigroup(S));
@@ -800,7 +800,7 @@ Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
 
 #T# constructions: RightZeroSemigroup
 gap> S := RightZeroSemigroup(1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := RightZeroSemigroup(IsBipartitionSemigroup, 10);
 <regular bipartition semigroup of size 10, degree 4 with 10 generators>
 gap> IsRightZeroSemigroup(Semigroup(S));
