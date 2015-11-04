@@ -410,8 +410,7 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       <C>IsGroupAsSemigroup</C> returns <K>true</K> if and only if the
-      semigroup <A>S</A> is mathematically a group but does belong to the
-      category of groups <Ref Prop="IsGroup" BookName="ref"/> in &GAP;.
+      semigroup <A>S</A> is mathematically a group.
       <Example><![CDATA[
 gap> gens := [ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
 >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
@@ -657,7 +656,7 @@ fail
 gap> S := Monoid(Transformation( [ 8, 2, 8, 9, 10, 6, 2, 8, 7, 8 ] ),
 > Transformation( [ 9, 2, 6, 3, 6, 4, 5, 5, 3, 2 ] ));;
 gap> IsMonoidAsSemigroup(S);
-false]]></Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

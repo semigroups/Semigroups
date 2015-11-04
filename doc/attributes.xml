@@ -426,7 +426,7 @@ gap> MinimalDClass(S);
   <Returns> An isomorphism. </Returns>
   <Description>
     If the semigroup <A>S</A> is mathematically a group, so that it satisfies
-    <Ref Prop="IsGroup" BookName="ref" /> or <Ref Prop="IsGroupAsSemigroup"/>,
+    <Ref Prop="IsGroupAsSemigroup"/>,
     then <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
     group.<P/> 
    
