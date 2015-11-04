@@ -3,7 +3,7 @@
 #W  extreme/ideals.tst
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                       Julius Jonusas 
-##                                                       Wilfred Wilson
+##                                                       Wilfred A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: extreme/ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# IdealsTest1
 gap> gens := [Transformation([2, 6, 1, 7, 5, 3, 4]),
@@ -392,7 +392,7 @@ gap> MinimalIdeal(K);
 gap> MinimalDClass(K);
 <Green's D-class: <empty partial perm>>
 gap> I := MinimalIdeal(K);
-<partial perm group of rank 10 with 1 generator>
+<trivial partial perm group of rank 10 with 1 generator>
 gap> IsomorphismPermGroup(I);
 MappingByFunction( <trivial partial perm group of rank 10 with 1 generator>
 , Group(()), <Attribute "AsPermutation">, function( x ) ... end )
@@ -415,7 +415,7 @@ gap> StructureDescriptionSchutzenbergerGroups(L);
 gap> StructureDescriptionMaximalSubgroups(L);
 [ "1", "C2", "C4", "C5", "S3", "S4" ]
 gap> GroupOfUnits(L);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IdempotentGeneratedSubsemigroup(L);;
 gap> x := Transformation([1, 4, 4, 5, 5, 3, 3, 1]);;
 gap> InversesOfSemigroupElement(L, x);
@@ -431,7 +431,7 @@ gap> MinimalIdeal(L);
 gap> L := SemigroupIdeal(S, GeneratorsOfSemigroup(S));
 <non-regular transformation semigroup ideal of degree 8 with 5 generators>
 gap> MinimalIdeal(J);
-<simple transformation semigroup of size 6, degree 6 with 6 generators>
+<simple transformation semigroup ideal of size 6, degree 6 with 1 generator>
 gap> MinimalIdeal(L);
 <simple transformation semigroup ideal of degree 8 with 1 generator>
 gap> MinimalDClass(L);

@@ -15,7 +15,7 @@ gap> START_TEST("Semigroups Package: extreme/transform.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# TransformTest1
 gap> gens := [Transformation([2, 3, 2, 4, 3]),

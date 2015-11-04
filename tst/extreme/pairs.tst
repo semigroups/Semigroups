@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: extreme/pairs.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# PairsCongTest1
 gap> s := Semigroup([Transformation([1, 3, 4, 1, 3, 5]),
@@ -39,19 +39,19 @@ true
 false
 false
 gap> [x, y, z] in cong;
-Error, Semigroups: in: usage,
+Error, Semigroups: \in (for a congruence): usage,
 the first arg <pair> must be a list of length 2,
 gap> [x, Transformation([1])] in cong;
-Error, Semigroups: in: usage,
-elements of the first arg <pair> must be in rangeof the second
-arg <cong>,
+Error, Semigroups: \in (for a congruence): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> classx := CongruenceClassOfElement(cong, x);;
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);
-{Transformation( [ 2, 4, 6, 1, 6, 5 ] )}
+<congruence class of Transformation( [ 2, 4, 6, 1, 6, 5 ] )>
 gap> classx = classy;
 true
 gap> classz = classx;
@@ -100,7 +100,7 @@ gap> cong := SemigroupCongruence(s, gens);
 <semigroup congruence over <free semigroup on the generators [ s1 ]> with 
 1 generating pairs>
 gap> gens in cong;
-Error, Semigroups: in: usage,
+Error, Semigroups: \in (for a congruence): usage,
 this function currently only works if <cong> is a congruence of a semigroup
 which is known to be finite,
 gap> AsLookupTable(cong);
@@ -121,7 +121,7 @@ gap> s := Semigroup(Transformation([1]));;
 gap> t := Monoid(gens);;
 gap> u := UniversalSemigroupCongruence(s);
 <universal semigroup congruence over <trivial transformation group of 
- degree 0 with 0 generators>>
+ degree 0 with 1 generator>>
 gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);
 <semigroup congruence over <commutative transformation monoid of degree 10 
  with 1 generator> with 0 generating pairs>
@@ -158,11 +158,11 @@ gap> v := SemigroupCongruence(s, [gens[1], gens[1]]); # trivial congruence
 <semigroup congruence over <commutative transformation semigroup of size 5, 
  degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(CongruenceClasses(v));
-[ {Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )}, 
-  {Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )}, 
-  {Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )}, 
-  {Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )}, 
-  {Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )} ]
+[ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
+  <congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )>, 
+  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )> ]
 gap> ForAny(CongruenceClasses(u), x -> x in classes);
 false
 gap> classes[1] * CongruenceClasses(u)[1];
@@ -172,9 +172,9 @@ gap> CongruenceClasses(u)[1] * classes[1];
 Error, Semigroups: *: usage,
 the args must be classes of the same congruence,
 gap> classes[3] * classes[4];
-{Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )}
+<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
-{Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )}
+<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> Representative(classes[5] * classes[2]) =
 > Representative(classes[5]) * Representative(classes[2]);
 true

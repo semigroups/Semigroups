@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: extreme/monoid_pkg.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# MonoidPkgTest2
 gap> g := CyclicGroup(3);;

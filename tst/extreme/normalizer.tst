@@ -14,7 +14,7 @@ gap> START_TEST("Semigroups package: extreme/normalizer.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 # NormalizerTest3
 #gap> S:=Semigroup(
