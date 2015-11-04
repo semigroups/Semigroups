@@ -159,14 +159,15 @@ function(gens, opts)
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
       gens := ShallowCopy(gens);
-      # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-      # = gens[1] from this, it is not possible to recreate the semigroup using
-      # Monoid(PartialPerm([1])) (since the One in this case is
-      # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-      if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
-        Remove(gens, pos);
-      elif Length(gens) = 1 then
+      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
+      elif not IsPartialPermCollection(gens) or One(gens) = 
+          One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
+        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
+        # = gens[1] from this, it is not possible to recreate the semigroup using
+        # Monoid(PartialPerm([1])) (since the One in this case is
+        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        Remove(gens, pos);
       fi;
       SetGeneratorsOfMonoid(S, gens);
     fi;
@@ -256,16 +257,17 @@ function(gens, opts)
   if CanEasilyCompareElements(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
-      SetGeneratorsOfMagma(S, AsList(gens));
-      # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-      # = gens[1] from this, it is not possible to recreate the semigroup using
-      # Monoid(PartialPerm([1])) (since the One in this case is
-      # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-      if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
-        Remove(gens, pos);
-        gens := ShallowCopy(gens);
-      elif Length(gens) = 1 then
+      SetGeneratorsOfMagma(S, gens);
+      gens := ShallowCopy(gens);
+      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
+      elif not IsPartialPermCollection(gens) or One(gens) = 
+          One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
+        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
+        # = gens[1] from this, it is not possible to recreate the semigroup using
+        # Monoid(PartialPerm([1])) (since the One in this case is
+        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        Remove(gens, pos);
       fi;
     else
       SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
@@ -337,27 +339,30 @@ function(gens, opts)
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   one := One(gens);
   SetOne(S, one);
-  pos := Position(gens, one);
-  # FIXME shouldn't we check that we can easily compare the gens?
-
-  if pos <> fail  then
-    SetGeneratorsOfInverseSemigroup(S, gens);
-    gens := ShallowCopy(gens);
-    # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-    # = gens[1] from this, it is not possible to recreate the semigroup using
-    # Monoid(PartialPerm([1])) (since the One in this case is
-    # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-    if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
-      Remove(gens, pos);
-    elif Length(gens) = 1 then
-      SetIsTrivial(S, true);
+  if CanEasilyCompareElements(gens) then
+    pos := Position(gens, one);
+    if pos <> fail  then
+      SetGeneratorsOfInverseSemigroup(S, gens);
+      gens := ShallowCopy(gens);
+      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
+        SetIsTrivial(S, true);
+      elif not IsPartialPermCollection(gens) or One(gens) = 
+          One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
+        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
+        # = gens[1] from this, it is not possible to recreate the semigroup using
+        # Monoid(PartialPerm([1])) (since the One in this case is
+        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        Remove(gens, pos);
+      fi;
+      SetGeneratorsOfInverseMonoid(S, gens);
+    else
+      SetGeneratorsOfInverseMonoid(S, gens);
+      gens := ShallowCopy(gens);
+      Add(gens, one);
+      SetGeneratorsOfInverseSemigroup(S, gens);
     fi;
-    SetGeneratorsOfInverseMonoid(S, gens);
   else
     SetGeneratorsOfInverseMonoid(S, gens);
-    gens := ShallowCopy(gens);
-    Add(gens, one);
-    SetGeneratorsOfInverseSemigroup(S, gens);
   fi;
 
   return S;
@@ -409,19 +414,21 @@ function(gens, opts)
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   SetGeneratorsOfInverseSemigroup(S, AsList(gens));
 
-  if IsMultiplicativeElementWithOneCollection(gens) then
+  if IsMultiplicativeElementWithOneCollection(gens)
+      and CanEasilyCompareElements(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
       gens := ShallowCopy(gens);
-      # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-      # = gens[1] from this, it is not possible to recreate the semigroup using
-      # Monoid(PartialPerm([1])) (since the One in this case is
-      # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-      if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
-        Remove(gens, pos);
-      elif Length(gens) = 1 then
+      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
+      elif not IsPartialPermCollection(gens) or One(gens) = 
+          One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
+        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
+        # = gens[1] from this, it is not possible to recreate the semigroup using
+        # Monoid(PartialPerm([1])) (since the One in this case is
+        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        Remove(gens, pos);
       fi;
       SetGeneratorsOfInverseMonoid(S, gens);
     fi;

@@ -1879,7 +1879,9 @@ true
 gap> IsLeftZeroSemigroup(s);
 false
 gap> IsMonoidAsSemigroup(s);
-false
+true
+gap> IsMonoid(s);
+true
 gap> IsOrthodoxSemigroup(s);
 true
 gap> IsRectangularBand(s);
