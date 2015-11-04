@@ -863,7 +863,7 @@ InstallMethod(LatticeOfCongruences,
 function(S)
   local elms, pairs, congs1, nrcongs, children, parents, pair, badcong,
         newchildren, newparents, newcong, i, c, p, congs, length, found, start,
-        j, k;
+        j, k, lattice;
   elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
 
   # Get all non-reflexive pairs in SxS
@@ -960,40 +960,40 @@ function(S)
   od;
   Add(congs, SemigroupCongruence(S, []), 1);
 
+  # We have a list of all the congruences
   SetCongruencesOfSemigroup(S, congs);
-  return children;
+
+  # Objectify the result
+  lattice := Objectify(NewType(FamilyObj(children),
+                               SEMIGROUPS_IsCongruenceLattice),
+                       [children, congs]);
+  return lattice;
 end);
 
-InstallGlobalFunction(DotCongruences,
-function(arg)
-  local S, opts, lat, congs, symbols, i, nr, rel, str, j, k;
-  # Check input
-  if not Length(arg) in [1, 2] then
-    ErrorMayQuit("Semigroups: DotCongruences: usage,\n",
-                 "this function requires 1 or 2 arguments,");
-  fi;
-  S := arg[1];
-  if not IsSemigroup(S) then
-    ErrorMayQuit("Semigroups: DotCongruences: usage,\n",
-                 "<S> must be a semigroup,");
-  fi;
-  if Length(arg) = 2 then
-    opts := arg[2];
-  else
-    opts := rec();
-  fi;
-  if not IsRecord(opts) then
-    ErrorMayQuit("Semigroups: DotCongruences: usage,\n",
-                 "<opts> must be a record,");
-  fi;
+#
 
-  lat := LatticeOfCongruences(S);
-  congs := CongruencesOfSemigroup(S);
-  symbols := EmptyPlist(Length(lat));
+InstallMethod(DotString,
+"for a congruence lattice",
+[SEMIGROUPS_IsCongruenceLattice],
+function(latt)
+  # Call the below function, with info turned off
+  return DotString(latt, rec(info := false));
+end);
 
+#
+
+InstallMethod(DotString,
+"for a congruence lattice and a record",
+[SEMIGROUPS_IsCongruenceLattice, IsRecord],
+function(latt, opts)
+  local congs, S, symbols, i, nr, rel, str, j, k;
   # If the user wants info, then change the node labels
-  if IsBound(opts.info) and opts.info = true then
-    for i in [1..Length(lat)] do
+  if opts.info = true then
+    # The congruences are stored inside the lattice object
+    congs := latt![2];
+    S := Range(congs[1]);
+    symbols := EmptyPlist(Length(latt));
+    for i in [1..Length(latt)] do
       nr := NrCongruenceClasses(congs[i]);
       if nr = 1 then
         symbols[i] := "U";
@@ -1006,10 +1006,10 @@ function(arg)
       fi;
     od;
   else
-    symbols := List([1 .. Length(lat)], String);
+    symbols := List([1 .. Length(latt)], String);
   fi;
 
-  rel := List([1 .. Length(lat)], x -> Filtered(lat[x], y -> x <> y));
+  rel := List([1 .. Length(latt)], x -> Filtered(latt[x], y -> x <> y));
   str := "";
 
   if Length(rel) < 40 then
@@ -1032,18 +1032,13 @@ function(arg)
   return str;
 end);
 
-#FIXME: you should avoid methods of this type, i.e. the method for
-#CongruencesOfSemigroup calls itself (ok, it works, but this is bad). The
-# actual method should either go in here or it should be in separate function
-# that is called by both CongruencesOfSemigroup and LatticeOfCongruences, which
-# returns both of these values and then the values of CongruencesOfSemigroup
-# and LatticeOfCongruences are set in the respective methods for
-# CongruencesOfSemigroup and LatticeOfCongruences
+#
 
 InstallMethod(CongruencesOfSemigroup,
 "for a semigroup",
 [IsSemigroup],
 function(S)
-  LatticeOfCongruences(S);
-  return CongruencesOfSemigroup(S);
+  # Find the lattice of congruences, and retrieve
+  # the list of congruences from inside it
+  return LatticeOfCongruences(S)![2];
 end);
