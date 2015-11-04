@@ -1,6 +1,30 @@
 #TODO
 ##There are more TODOs in the source files this list is not exhaustive##
 
+fix this:
+
+gap> s := FreeSemigroup("a","b");
+<free semigroup on the generators [ a, b ]>
+gap> t := Subsemigroup(s,[]);
+<trivial group with 0 generators>
+gap> Size(t);
+1
+gap> AsList(t);
+Error, List Element: <list>[1] must have an assigned value in
+  data.ht := HTCreate( data.gens[1], rec(
+      treehashsize := hashlen ) )
+ ; on line 295 of file /Users/jdm/gap/pkg/semigroups/gap/main/froidure-pin.gi called from
+GenericSemigroupData( S
+ ) on line 101 of file /Users/jdm/gap/pkg/semigroups/gap/main/froidure-pin.gi called from
+enum!.Length( enum ) on line 467 of file /Users/jdm/gap/lib/coll.gi called from
+Length( list ) on line 481 of file /Users/jdm/gap/lib/list.gi called from
+IsSmallList( list ) on line 551 of file /Users/jdm/gap/lib/list.gi called from
+ConstantTimeAccessList( Enumerator( coll ) ) on line 282 of file /Users/jdm/gap/lib/coll.gi called from
+...  at line 12 of *stdin*
+you can 'return;' after assigning a value
+brk>
+
+
 ###TODO C++
 
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
