@@ -165,6 +165,8 @@ function(gens, opts)
       # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
       if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
         Remove(gens, pos);
+      elif Length(gens) = 1 then
+        SetIsTrivial(S, true);
       fi;
       SetGeneratorsOfMonoid(S, gens);
     fi;
@@ -262,6 +264,8 @@ function(gens, opts)
       if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
         Remove(gens, pos);
         gens := ShallowCopy(gens);
+      elif Length(gens) = 1 then
+        SetIsTrivial(S, true);
       fi;
     else
       SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
@@ -345,6 +349,8 @@ function(gens, opts)
     # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
     if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
       Remove(gens, pos);
+    elif Length(gens) = 1 then
+      SetIsTrivial(S, true);
     fi;
     SetGeneratorsOfInverseMonoid(S, gens);
   else
@@ -414,6 +420,8 @@ function(gens, opts)
       # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
       if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
         Remove(gens, pos);
+      elif Length(gens) = 1 then
+        SetIsTrivial(S, true);
       fi;
       SetGeneratorsOfInverseMonoid(S, gens);
     fi;
