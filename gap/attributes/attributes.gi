@@ -817,7 +817,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  if not IsGroupAsSemigroup(S)  then
+  if not IsGroupAsSemigroup(S) then
     ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
                  "the argument must be a semigroup satisfying ",
                  "IsGroupAsSemigroup,");

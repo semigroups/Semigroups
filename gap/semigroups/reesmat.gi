@@ -65,7 +65,7 @@ InstallMethod(IsomorphismPermGroup,
 function(S)
   local rep;
 
-  if not IsGroupAsSemigroup(S)  then
+  if not IsGroupAsSemigroup(S) then
     ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
                  "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
                  "semigroup satisfying IsGroupAsSemigroup,");
@@ -319,7 +319,8 @@ function(R)
 
   if (HasIsInverseSemigroup(U) and not IsInverseSemigroup(U))
       or (HasIsRegularSemigroup(U) and not IsRegularSemigroup(U))
-      or (HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)))
+      or (not IsMonoid(U) and HasIsMonoidAsSemigroup(U)
+          and not IsMonoidAsSemigroup(U))
       or (HasGroupOfUnits(U) and GroupOfUnits(U) = fail)
       or Length(Columns(R)) <> Length(Rows(R)) then
     return false;
@@ -406,7 +407,7 @@ function(R)
   if IsGroup(U) then
     iso := IdentityMapping(U);
     inv := iso;
-  elif IsGroupAsSemigroup(U) <> fail and IsGroupAsSemigroup(U) then
+  elif IsGroupAsSemigroup(U) then
     iso := IsomorphismPermGroup(U);
     inv := InverseGeneralMapping(iso);
   else
@@ -453,8 +454,7 @@ function(R)
   fi;
 
   U := UnderlyingSemigroup(R);
-  if not IsGroup(U)
-      and (IsGroupAsSemigroup(U) = fail or not IsGroupAsSemigroup(U)) then
+  if not IsGroup(U) and not IsGroupAsSemigroup(U) then
     TryNextMethod();
   fi;
 
@@ -648,7 +648,7 @@ function(R)
   local G, mat, id, r, c, new, S, iso, inv, hom, i, j;
 
   G := UnderlyingSemigroup(R);
-  if not IsGroup(G) or IsGroupAsSemigroup(G) then
+  if not IsGroup(G) and not IsGroupAsSemigroup(G) then
     ErrorMayQuit("Semigroups: RMSNormalization: usage,\n",
                  "the underlying semigroup of the Rees matrix semigroup <R> ",
                  "must be a group,");

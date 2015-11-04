@@ -167,7 +167,7 @@ function(S)
     return false;
   elif not IsFinite(S) then
     TryNextMethod();
-  elif IsGroupAsSemigroup(S) then
+  elif IsGroupAsSemigroup(S) or IsGroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a group");
     return true;
   elif not IsRegularSemigroup(S) then
@@ -537,7 +537,7 @@ end);
 InstallMethod(IsGroupAsSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
+  if not IsGroup(S) and HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
       and IsGroupAsSemigroup(Parent(S)) then
     return true;
   elif not IsFinite(S) then
@@ -553,7 +553,7 @@ InstallMethod(IsGroupAsSemigroup, "for an acting semigroup",
 function(S)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
 
-  if HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
+  if not IsGroup(S) and HasParent(S) and HasIsGroupAsSemigroup(Parent(S))
       and IsGroupAsSemigroup(Parent(S)) then
     return true;
   fi;
@@ -776,7 +776,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) then
+  if not IsGroupAsSemigroup(I) and not IsGroup(I) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -1316,7 +1316,10 @@ end);
 # same method for ideals
 
 InstallMethod(IsSimpleSemigroup, "for a finite inverse semigroup",
-[IsInverseSemigroup and IsFinite], IsGroupAsSemigroup);
+[IsInverseSemigroup and IsFinite],
+function(S)
+  return IsGroup(S) or IsGroupAsSemigroup(S);
+end);
 
 # different method for ideals
 

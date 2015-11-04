@@ -259,7 +259,7 @@ InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
 
-  if not IsGroupAsSemigroup(s)  then
+  if not IsGroupAsSemigroup(s) then
     ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
                  "the argument <s> must be a partial perm semigroup ",
                  "satisfying IsGroupAsSemigroup,");
