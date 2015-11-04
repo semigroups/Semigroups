@@ -163,7 +163,7 @@ function(gens, opts)
       # = gens[1] from this, it is not possible to recreate the semigroup using
       # Monoid(PartialPerm([1])) (since the One in this case is
       # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-      if not IsPartialPermCollection(gens) then
+      if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
         Remove(gens, pos);
       fi;
       SetGeneratorsOfMonoid(S, gens);
@@ -259,7 +259,7 @@ function(gens, opts)
       # = gens[1] from this, it is not possible to recreate the semigroup using
       # Monoid(PartialPerm([1])) (since the One in this case is
       # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-      if not IsPartialPermCollection(gens) then
+      if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
         Remove(gens, pos);
         gens := ShallowCopy(gens);
       fi;
@@ -343,7 +343,7 @@ function(gens, opts)
     # = gens[1] from this, it is not possible to recreate the semigroup using
     # Monoid(PartialPerm([1])) (since the One in this case is
     # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-    if not IsPartialPermCollection(gens) then
+    if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
       Remove(gens, pos);
     fi;
     SetGeneratorsOfInverseMonoid(S, gens);
@@ -412,7 +412,7 @@ function(gens, opts)
       # = gens[1] from this, it is not possible to recreate the semigroup using
       # Monoid(PartialPerm([1])) (since the One in this case is
       # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-      if not IsPartialPermCollection(gens) then
+      if Length(gens) <> 1 and not IsPartialPermCollection(gens) then
         Remove(gens, pos);
       fi;
       SetGeneratorsOfInverseMonoid(S, gens);
