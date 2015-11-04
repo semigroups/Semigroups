@@ -20,7 +20,7 @@ gap> t := Transformation([1]);;
 # Trivial full transformation monoid T_1
 # Previously this crashed: see issue #121 on Bitbucket
 gap> s := Semigroup(t); # with displaying the semigroup
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -592,7 +592,7 @@ gap> SmallInverseSemigroupGeneratingSet(S);;
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for 0 generators
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
-<commutative inverse partial perm monoid of rank 3 with 1 generator>
+<trivial partial perm group of rank 3 with 1 generator>
 gap> SmallInverseMonoidGeneratingSet(S);
 [  ]
 

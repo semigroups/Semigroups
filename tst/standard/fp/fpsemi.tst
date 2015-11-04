@@ -15,7 +15,7 @@ gap> SEMIGROUPS.StartTest();
 
 #T# AsFpSemigroup 1: trivial semigroup
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := AsFpSemigroup(S);
 <fp semigroup on the generators [ s1 ]>
 gap> RelationsOfFpSemigroup(S);
@@ -31,9 +31,9 @@ gap> RelationsOfFpSemigroup(S);
 
 #T# AsFpMonoid 1: trivial semigroup
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> S := AsFpMonoid(S);
-<fp group on the generators [  ]>
+<fp monoid on the generators [ m1 ]>
 
 #T# AsFpMonoid 2: 2 element semilattice
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([], []));

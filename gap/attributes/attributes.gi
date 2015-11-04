@@ -522,7 +522,12 @@ end);
 
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
-S -> StructureDescription(Range(IsomorphismPermGroup(S))));
+function(S)
+  if IsGroup(S) then
+    TryNextMethod();
+  fi;
+  return StructureDescription(Range(IsomorphismPermGroup(S)));
+end);
 
 # same method for ideals
 

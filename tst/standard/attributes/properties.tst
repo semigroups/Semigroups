@@ -602,7 +602,7 @@ true
 
 #T# properties: IsRTrivial, pperm, 1/1
 gap> S := Semigroup(PartialPerm([1, 2], [1, 2]));
-<commutative partial perm monoid of rank 2 with 1 generator>
+<trivial partial perm group of rank 2 with 1 generator>
 gap> IsRTrivial(S);
 true
 
@@ -639,9 +639,9 @@ true
 
 #T# properties: IsGroupAsSemigroup, for IsGroup groups, 5
 gap> IsGroupAsSemigroup(SymmetricGroup(5));
-false
+true
 gap> IsGroupAsSemigroup(Semigroup(Transformation([1])));
-false
+true
 
 #T# properties: IsIdempotentGenerated, 1
 gap> S :=
@@ -733,7 +733,7 @@ false
 
 #T# properties: IsLeftSimple, left zero, 2
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsLeftZeroSemigroup(S);
 true
 gap> IsLeftSimple(S);
@@ -873,7 +873,7 @@ true
 #T# properties: IsMonoidAsSemigroup, 2
 gap> S := FreeGroup(1);;
 gap> IsMonoidAsSemigroup(S);
-false
+true
 gap> S := FreeSemigroup(1);;
 gap> IsMonoidAsSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -1135,7 +1135,7 @@ false
 
 #T# properties: IsRightSimple, right zero, 2
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsRightZeroSemigroup(S);
 true
 gap> IsRightSimple(S);
@@ -1263,7 +1263,7 @@ false
 
 #T# properties: IsTrivial, 1
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> Size(S);
 1
 gap> IsTrivial(S);

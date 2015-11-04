@@ -39,7 +39,7 @@
         <P/>
         <Example><![CDATA[
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> Size(S);
 1
 gap> S := TrivialSemigroup(3);

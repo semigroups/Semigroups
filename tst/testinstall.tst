@@ -422,7 +422,7 @@ gap> ClosureSemigroup(S, x);
 
 #T# TestInstall27: Issue 36 in the new numbering...
 gap> S := Semigroup(IdentityTransformation);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> SmallGeneratingSet(S);
 [  ]
 
@@ -573,7 +573,7 @@ gap> for i in [1 .. 6] do
 # of the arguments is a monoid).
 # This only works in GAP 4.7.5 or higher hence the CompareVersionNumbers
 gap> S := Semigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));
-<commutative partial perm monoid of rank 5 with 1 generator>
+<trivial partial perm group of rank 5 with 1 generator>
 gap> T := Monoid(S, PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]));;
 gap> Length(GeneratorsOfMonoid(T)) = 2
 > or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
@@ -746,8 +746,8 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 > else
 >   G := SymmetricGroup(3);
 > fi;
-gap> G;
-Sym( [ 1 .. 3 ] )
+gap> G = SymmetricGroup(3);
+true
 
 #T# TestInstall46: Issue 98
 # (incorrect definition of partition monoid on 1 point)
@@ -762,7 +762,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 >   G := Semigroup(IdentityTransformation);
 > fi;
 gap> G;
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# TestInstall48: Issue 101
 # (incorrect method for AsPartialPerm for a perm and zero)
@@ -772,7 +772,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 >   G := Semigroup(PartialPerm([]));
 > fi;
 gap> G;
-<partial perm group of rank 0 with 1 generator>
+<trivial partial perm group of rank 0 with 1 generator>
 
 #T# TestInstall49: Issue 103
 # (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup but

@@ -51,7 +51,7 @@ gap> S := Semigroup(Transformation([1]));;
 gap> T := Monoid(gens);;
 gap> u := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <trivial transformation group of 
- degree 0 with 0 generators>>
+ degree 0 with 1 generator>>
 gap> v := SemigroupCongruence(T, [gens[1], gens[1]]);
 <semigroup congruence over <commutative transformation monoid of degree 10 
  with 1 generator> with 0 generating pairs>
