@@ -1829,7 +1829,9 @@ true
 gap> IsLeftZeroSemigroup(s);
 false
 gap> IsMonoidAsSemigroup(s);
-false
+true
+gap> IsMonoid(s);
+true
 gap> IsOrthodoxSemigroup(s);
 true
 gap> IsRectangularBand(s);
@@ -2464,7 +2466,7 @@ true
 gap> HasIsGroupAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
-false
+true
 gap> IsGroup(s);
 true
 
@@ -2657,7 +2659,7 @@ gap> Size(s);
 gap> IsMonogenicSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
-false
+true
 gap> IsGroup(s);
 true
 gap> IsRegularSemigroup(s);
@@ -2684,7 +2686,7 @@ gap> Size(s);
 gap> IsMonogenicSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
-false
+true
 gap> IsGroup(s);
 true
 gap> IsRegularSemigroup(s);
