@@ -45,5 +45,10 @@ DeclareAttribute("AsLookupTable", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
 DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);
 
+DeclareOperation("JoinLeftSemigroupCongruences",
+                 [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
+DeclareOperation("JoinRightSemigroupCongruences",
+                 [IsRightSemigroupCongruence, IsRightSemigroupCongruence]);
+
 DeclareOperation("IsSubrelation",
                  [IsEquivalenceRelation, IsEquivalenceRelation]);
