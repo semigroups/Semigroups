@@ -626,6 +626,10 @@ Obj UF_NEW (Obj self, Obj size) {
   return NewSemigroupsBag(new UFData(INT_INTOBJ(size)), UF_DATA);
 }
 
+Obj UF_COPY (Obj self, Obj ufdata) {
+  return NewSemigroupsBag(new UFData(*CLASS_OBJ<UFData>(ufdata)), UF_DATA);
+}
+
 Obj UF_SIZE (Obj self, Obj ufdata) {
   return INTOBJ_INT(CLASS_OBJ<UFData>(ufdata)->get_size());
 }
@@ -750,6 +754,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "left, right"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_NEW, 1,
                           "size"),
+    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_COPY, 1,
+                          "ufdata"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_SIZE, 1,
                           "ufdata"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_FIND, 2,
