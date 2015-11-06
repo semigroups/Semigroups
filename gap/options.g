@@ -41,8 +41,6 @@ end);
 BindGlobal("SEMIGROUPS_OptionsRec",
 function(S)
   if not IsBound(S!.opts) then
-    Info(InfoWarning, 1,
-         "Semigroups: SEMIGROUPS_OptionsRec: using default options!");
     return SEMIGROUPS_DefaultOptionsRec;
   fi;
   return S!.opts;
