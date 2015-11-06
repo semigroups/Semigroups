@@ -267,12 +267,24 @@ gap> l := LatticeOfCongruences(S);
   [ 1 ], [ 1, 7, 8 ], [ 1, 3 ], [ 1, 2, 3, 7, 10 ], [ 1, 3, 4, 8, 10 ], 
   [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ] ]
 gap> S := OrderEndomorphisms(2);;
+gap> CongruencesOfSemigroup(S);
+[ <semigroup congruence over <regular transformation monoid of size 3, 
+     degree 2 with 2 generators> with 0 generating pairs>, 
+  <semigroup congruence over <regular transformation monoid of size 3, 
+     degree 2 with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <regular transformation monoid of size 3, 
+     degree 2 with 2 generators> with 1 generating pairs> ]
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1, 3 ], [ 1 ] ]
+gap> DotString(l);
+"//dot\ngraph graphname {\n     node [shape=circle]\n2 -- 3\n3 -- 1\n }"
 gap> S := Semigroup( [ Transformation( [ 1, 4, 3, 1, 4, 2 ] ),
 >                      Transformation( [ 1, 6, 6, 3, 6, 6 ] ) ] );;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1, 2, 5 ], [ 1, 2, 3, 5 ], [ 1, 2 ] ]
+gap> DotString(l, rec(info := true)) = Concatenation("//dot\ngraph graphname",
+> " {\n     node [shape=circle]\nR2 -- T\nR3 -- 5\nU -- R3\n5 -- R2\n }");
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
