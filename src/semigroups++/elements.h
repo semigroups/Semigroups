@@ -307,7 +307,7 @@ class MatrixOverSemiring :
     virtual  size_t   hash_value  ()                               const override;
              Element* identity    ()                               const override;
              Element* really_copy (size_t increase_deg_by)         const override;
-             void     redefine    (Element const*, Element const*);
+             void     redefine    (Element const*, Element const*) override;
 
   private: 
 
