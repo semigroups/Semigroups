@@ -13,6 +13,11 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
+#T# TestInstall0: Validate the package info file
+gap> ValidatePackageInfo(Filename(DirectoriesPackageLibrary("semigroups", ""),
+> "PackageInfo.g"));
+true
+
 #T# TestInstall3
 gap> S := Semigroup(Transformation([2, 3, 4, 1, 1, 1]));;
 gap> IsMonoidAsSemigroup(S);
