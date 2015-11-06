@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: extreme/misc.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# MiscTest0
 gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
@@ -373,7 +373,7 @@ gap>  schutz := RhoOrbStabChain(d);
 gap> l <> scc[m][1];
 true
 gap> cosets := LambdaCosets(d);
-<enumerator of perm group>
+[ () ]
 gap> LambdaOrbStabChain(LambdaOrb(d), LambdaOrbSCCIndex(d));
 false
 gap> g := LambdaPerm(s)(rep, g);
@@ -706,9 +706,9 @@ gap> Size(d);
 4
 gap> Size(l);
 4
-gap> l = d;
+gap> AsSSortedList(l) = AsSortedList(d);
 true
-gap> d = l;
+gap> AsSSortedList(d) = AsSSortedList(l);
 true
 gap> l < d;
 false
@@ -891,7 +891,7 @@ gap> OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
   3708, 3765, 3766, 3767, 3831, 3850, 3891, 3910, 3916, 3925, 4040, 4041, 
   4042, 4043, 4044, 4573, 4703, 4807, 5517 ]
 gap> LambdaCosets(d);
-<enumerator of perm group>
+[ () ]
 gap> LambdaOrbSCC(d);
 [ 49 ]
 gap> RhoOrbSCC(d);
@@ -1895,9 +1895,7 @@ gap> Size(h);
 1
 gap> Size(d);
 1
-gap> h = d;
-true
-gap> d = h;
+gap> AsSSortedList(h) = AsSSortedList(d);
 true
 
 #T# MiscTest15
@@ -2220,13 +2218,11 @@ gap> Size(r);
 3686
 gap> ForAll(r, x -> x in d);
 true
-gap> d = r;
+gap> ForAll(d, x -> x in r);
 true
 gap> rr := RClass(s, f);
 <Green's R-class: [41,6][50,26]>
-gap> rr = r;
-true
-gap> r = rr;
+gap> AsSSortedList(rr) = AsSSortedList(r);
 true
 gap> d;
 <Green's D-class: [41,26][50,6]>
@@ -2283,7 +2279,7 @@ gap> Size(last);
 3
 gap> h := last2;
 <Green's H-class: <identity partial perm on [ 1, 3, 4, 6, 10 ]>>
-gap> h = d;
+gap> AsSSortedList(h) = AsSSortedList(d);
 true
 gap> Elements(h);
 [ <identity partial perm on [ 1, 3, 4, 6, 10 ]>, (1,3,4)(6)(10), 
@@ -2550,7 +2546,7 @@ gap> NrHClasses(d);
 1
 gap> GroupHClass(d);
 <Green's H-class: Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )>
-gap> last = d;
+gap> AsSSortedList(last) = AsSSortedList(d);
 true
 gap> Size(d);
 7
@@ -2673,7 +2669,7 @@ gap> HClassReps(d);
 [ Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] ) ]
 gap> h := GroupHClass(d);
 <Green's H-class: IdentityTransformation>
-gap> h = d;
+gap> ForAll(h, x -> x in d) and ForAll(d, x -> x in h);
 true
 gap> Size(s);
 491558

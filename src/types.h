@@ -12,6 +12,7 @@
 #include "src/compiled.h"          /* GAP headers                */
 
 #include <assert.h>
+#include <iostream>
 #include <vector>
 
 /*******************************************************************************
@@ -108,11 +109,27 @@ typedef std::vector<table_t*> blocks_t;
 
 class UFData {
 public:
-  // Remove things that might cause copying
-  UFData (const UFData& copy) = delete;
+  // Copy constructor
+  UFData (const UFData& copy) : _size(copy._size),
+                                _table(new table_t(*copy._table)),
+                                _blocks(nullptr),
+                                _haschanged(copy._haschanged) {
+    if (copy._blocks != nullptr) {
+      // Copy the blocks as well
+      _blocks = new blocks_t();
+      _blocks->reserve(copy._blocks->size());
+      for (auto block: *copy._blocks) {
+        if (block == nullptr) {
+          _blocks->push_back(nullptr);
+        } else {
+          _blocks->push_back(new table_t(*block));
+        }
+      }
+    }
+  }
   UFData& operator= (UFData const& copy) = delete;
 
-  // Constructor
+  // Constructor by size
   UFData (size_t size) : _size(size),
                          _table(new table_t()),
                          _blocks(nullptr),

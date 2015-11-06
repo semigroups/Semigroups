@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: extreme/attributes-inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 # 
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# AttributesInverseTest1: JoinIrreducibleDClasses
 gap> S := InverseSemigroup([

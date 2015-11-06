@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: extreme/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# PropertiesTest3
 gap> semis :=
@@ -373,7 +373,7 @@ gap> gens := [
 gap> s := Monoid(gens);;
 gap> s := Semigroup(GeneratorsOfSemigroup(s));;
 gap> IsMonoidAsSemigroup(s);
-false
+true
 gap> IsMonoid(s);
 true
 gap> i := MinimalIdeal(s);;
@@ -800,7 +800,7 @@ false
 # for <IdentityTransformation>
 gap> t := Transformation([1]);;
 gap> s := Semigroup(t);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsSynchronizingSemigroup(s, 2);
 false
 gap> IsSynchronizingSemigroup(s, 1);
@@ -813,7 +813,7 @@ gap> t := Transformation([1]);;
 
 # For a trivial transformation semigroup
 gap> s := Semigroup(t);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsZeroSemigroup(s);
 true
 
@@ -847,7 +847,7 @@ gap> s := Semigroup(t);
 gap> IsZeroSemigroup(s);
 false
 gap> I := SemigroupIdeal(s, Transformation([1, 2]));
-<commutative regular transformation semigroup ideal of degree 2 with
+<commutative inverse transformation semigroup ideal of degree 2 with
   1 generator>
 gap> IsZeroSemigroup(I); # parent knows that it is not zero
 false

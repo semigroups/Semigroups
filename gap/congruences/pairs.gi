@@ -211,9 +211,9 @@ function(data, lookfunc)
     od;
   fi;
 
-  # All pairs have been found: save a lookup tabloe
+  # All pairs have been found: save a lookup table
   next := 1;
-  newtable := [];
+  newtable := EmptyPlist(UF_SIZE(ufdata));
   for i in [1 .. UF_SIZE(ufdata)] do
     ii := UF_FIND(ufdata, i);
     if ii = i then
@@ -224,6 +224,9 @@ function(data, lookfunc)
     fi;
   od;
   SetAsLookupTable(cong, newtable);
+
+  # Also store the completed union-find table
+  cong!.ufdata := ufdata;
 
   # No need for congruence data object any more
   Unbind(cong!.data);
@@ -596,8 +599,7 @@ _InstallMethodsForCongruences := function(_record)
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(c1, c2)
-    local pairs;
-    # TODO: combine lookup tables
+    local pairs, cong, ufdata, uf2, i, ii, next, newtable;
     if Range(c1) <> Range(c2) then
       ErrorMayQuit("Semigroups: Join", _record.type_string,
                    "SemigroupCongruences: usage,\n",
@@ -606,8 +608,42 @@ _InstallMethodsForCongruences := function(_record)
     pairs := Concatenation(
                ShallowCopy(_GeneratingPairsOfXSemigroupCongruence(c1)),
                ShallowCopy(_GeneratingPairsOfXSemigroupCongruence(c2)));
-    return _XSemigroupCongruence(Range(c1), pairs);
+    cong := _XSemigroupCongruence(Range(c1), pairs);
+
+    # Join the lookup tables
+    if HasAsLookupTable(c1) and HasAsLookupTable(c2) then
+      # First join the union-find tables
+      ufdata := UF_COPY(c1!.ufdata);
+      uf2 := c2!.ufdata;
+      for i in [1 .. UF_SIZE(uf2)] do
+        ii := UF_FIND(uf2, i);
+        if ii <> i then
+          UF_UNION(ufdata, [i,ii]);
+        fi;
+      od;
+      cong!.ufdata := ufdata;
+
+      # Now normalise this as a lookup table
+      next := 1;
+      newtable := EmptyPlist(UF_SIZE(ufdata));
+      for i in [1 .. UF_SIZE(ufdata)] do
+        ii := UF_FIND(ufdata, i);
+        if ii = i then
+          newtable[i] := next;
+          next := next + 1;
+        else
+          newtable[i] := newtable[ii];
+        fi;
+      od;
+      SetAsLookupTable(cong, newtable);
+    fi;
+
+    return cong;
   end);
+
+  #
+
+  #TODO: A method for MeetXSemigroupCongruences
 
   #
 
@@ -854,8 +890,6 @@ function(class)
 end);
 
 #
-
-# TODO shouldn't there be a method for MeetSemigroupCongruences too?
 
 InstallMethod(LatticeOfCongruences,
 "for a semigroup",

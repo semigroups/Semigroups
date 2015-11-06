@@ -259,6 +259,21 @@ in the range of the second arg <cong>,
 gap> Size(class);
 89
 
+#T# LatticeOfCongruences
+gap> S := PartitionMonoid(2);;
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1, 3, 7 ], [ 1 ], [ 1, 3, 8 ], 
+  [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13 ], [ 1, 2, 3, 4, 7, 8, 9 ], [ 1 ], 
+  [ 1 ], [ 1, 7, 8 ], [ 1, 3 ], [ 1, 2, 3, 7, 10 ], [ 1, 3, 4, 8, 10 ], 
+  [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ] ]
+gap> S := OrderEndomorphisms(2);;
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1, 3 ], [ 1 ] ]
+gap> S := Semigroup( [ Transformation( [ 1, 4, 3, 1, 4, 2 ] ),
+>                      Transformation( [ 1, 6, 6, 3, 6, 6 ] ) ] );;
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1 ], [ 1, 2, 5 ], [ 1, 2, 3, 5 ], [ 1, 2 ] ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(x);

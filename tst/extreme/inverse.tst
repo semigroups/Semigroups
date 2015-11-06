@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: extreme/inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# InverseCongTest1: Create an inverse semigroup
 gap> s := InverseSemigroup([PartialPerm([1, 2, 3, 5], [2, 7, 3, 4]),

@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: extreme/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
 #  
-gap> SEMIGROUPS_StartTest();;
+gap> SEMIGROUPS.StartTest();;
 
 #T# MaximalTest1: IsMaximalSubsemigroup
 gap> S := Semigroup([
@@ -414,13 +414,13 @@ the first argument <R> must be a regular Rees 0-matrix semigroup,
 
 #T# MaximalTest5: MaximalSubsemigroups for a transformation semigroup
 gap> S := Semigroup(Transformation([])); # trivial semigroup
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> MaximalSubsemigroups(S);
 [  ]
 gap> S := Semigroup(Transformation([2, 3, 1])); # group C3 as semigroup
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> MaximalSubsemigroups(S);
-[ <trivial transformation group of degree 0 with 0 generators> ]
+[ <trivial transformation group of degree 0 with 1 generator> ]
 gap> S := Semigroup([
 > Transformation([1, 2, 1]),
 > Transformation([1, 2, 2])]); # simple semigroup
@@ -438,7 +438,7 @@ gap> S := Monoid([
 <commutative transformation monoid of degree 2 with 1 generator>
 gap> max := MaximalSubsemigroups(S);
 [ <commutative transformation semigroup of degree 2 with 1 generator>, 
-  <trivial transformation group of degree 0 with 0 generators> ]
+  <trivial transformation group of degree 0 with 1 generator> ]
 gap> S := Monoid([
 > Transformation([1, 1, 2])]); # semigroup with gen in non-regular D-class
 <commutative transformation monoid of degree 3 with 1 generator>
