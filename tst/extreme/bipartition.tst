@@ -12,7 +12,7 @@ gap> START_TEST("Semigroups package: extreme/bipartition.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# BipartitionTest1: IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
 gap> S := DualSymmetricInverseMonoid(4);

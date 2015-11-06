@@ -13,7 +13,7 @@ gap> START_TEST("Semigroups package: extreme/closure.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# ClosureTest1
 gap> gens := [Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
@@ -33,7 +33,7 @@ gap> NrLClasses(S);
 gap> NrDClasses(S);
 662
 gap> GroupOfUnits(S);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# ClosureTest2
 gap> gens :=
@@ -191,7 +191,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# ClosureTest8
 gap> gens := [Transformation([1, 3, 4, 1]),

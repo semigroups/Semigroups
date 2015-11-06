@@ -39,8 +39,6 @@ DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
 
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsRegularStarSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
                                             IsPartialPermSemigroup);
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
                                             IsBlockBijectionSemigroup);
@@ -59,6 +57,7 @@ InstallTrueMethod(IsLeftSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsLeftZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsRightZeroSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsZeroSemigroup, IsSemigroup and IsTrivial);
+InstallTrueMethod(IsNilpotentSemigroup, IsZeroSemigroup);
 InstallTrueMethod(IsNilpotentSemigroup, IsSemigroup and IsTrivial);
 InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
 InstallTrueMethod(IsLTrivial, IsDTrivial);
@@ -81,3 +80,10 @@ InstallTrueMethod(IsTrivial,
                   IsLeftZeroSemigroup and IsRightZeroSemigroup);
 InstallTrueMethod(IsBand, IsRectangularBand);
 InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
+
+# The following method is invalid. For example, if we have a semigroup of
+# bipartitions, which does not consist of partial perm bipartitions or block
+# bijections, but which is a group, say, then InverseOp(any element) = fail,
+# but it satisfies IsInverseSemigroup, IsRegularStarSemigroup.
+#InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
+#                                            IsRegularStarSemigroup);

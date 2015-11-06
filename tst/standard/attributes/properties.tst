@@ -602,7 +602,7 @@ true
 
 #T# properties: IsRTrivial, pperm, 1/1
 gap> S := Semigroup(PartialPerm([1, 2], [1, 2]));
-<commutative partial perm monoid of rank 2 with 1 generator>
+<trivial partial perm group of rank 2 with 1 generator>
 gap> IsRTrivial(S);
 true
 
@@ -639,9 +639,9 @@ true
 
 #T# properties: IsGroupAsSemigroup, for IsGroup groups, 5
 gap> IsGroupAsSemigroup(SymmetricGroup(5));
-false
+true
 gap> IsGroupAsSemigroup(Semigroup(Transformation([1])));
-false
+true
 
 #T# properties: IsIdempotentGenerated, 1
 gap> S :=
@@ -733,7 +733,7 @@ false
 
 #T# properties: IsLeftSimple, left zero, 2
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsLeftZeroSemigroup(S);
 true
 gap> IsLeftSimple(S);
@@ -779,7 +779,8 @@ gap> IsLeftZeroSemigroup(I);
 true
 
 #T# properties: IsLeftZeroSemigroup, 2
-gap> S := AsTransformationSemigroup(RectangularBand(2, 2));
+gap> S := AsTransformationSemigroup(
+> RectangularBand(IsReesMatrixSemigroup, 2, 2));
 <transformation semigroup of degree 5 with 4 generators>
 gap> IsLeftZeroSemigroup(S);
 false
@@ -872,7 +873,7 @@ true
 #T# properties: IsMonoidAsSemigroup, 2
 gap> S := FreeGroup(1);;
 gap> IsMonoidAsSemigroup(S);
-false
+true
 gap> S := FreeSemigroup(1);;
 gap> IsMonoidAsSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -938,7 +939,7 @@ gap> IsOrthodoxSemigroup(FullTransformationMonoid(3));
 false
 
 #T# properties: IsRectangularBand, 1
-gap> S := Semigroup(RectangularBand(4, 4));
+gap> S := Semigroup(RectangularBand(IsReesMatrixSemigroup, 4, 4));
 <subsemigroup of 4x4 Rees matrix semigroup with 16 generators>
 gap> IsRectangularBand(S);
 true
@@ -1134,7 +1135,7 @@ false
 
 #T# properties: IsRightSimple, right zero, 2
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsRightZeroSemigroup(S);
 true
 gap> IsRightSimple(S);
@@ -1179,7 +1180,8 @@ gap> IsRightZeroSemigroup(I);
 true
 
 #T# properties: IsRightZeroSemigroup, 2
-gap> S := AsTransformationSemigroup(RectangularBand(2, 2));
+gap> S := AsTransformationSemigroup(
+> RectangularBand(IsReesMatrixSemigroup, 2, 2));
 <transformation semigroup of degree 5 with 4 generators>
 gap> IsRightZeroSemigroup(S);
 false
@@ -1261,7 +1263,7 @@ false
 
 #T# properties: IsTrivial, 1
 gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> Size(S);
 1
 gap> IsTrivial(S);
@@ -1379,7 +1381,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsZeroRectangularBand' on 1 arguments
 
 #T# properties: IsZeroSemigroup, 1
-gap> S := Semigroup(ZeroSemigroup(3));
+gap> S := Semigroup(ZeroSemigroup(IsPartialPermSemigroup, 3));
 <partial perm semigroup of rank 2 with 2 generators>
 gap> IsZeroSemigroup(S);
 true

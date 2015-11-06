@@ -15,12 +15,12 @@ gap> SEMIGROUPS.StartTest();
 
 # All ReesMatrixSemigroup functions tested with a small example
 #T# ReesMatCongTest1: Create a Rees matrix semigroup
-gap> g := SymmetricGroup( 4 );;
+gap> g := SymmetricGroup(4);;
 gap> StructureDescription(g);
 "S4"
-gap> mat :=  [ [ (1,3), (1,2)(3,4) ],
->              [ (1,4,3,2), () ],
->              [ (1,3)(2,4), (1,3,4,2) ] ];;
+gap> mat := [[(1, 3), (1, 2)(3, 4)],
+>            [(1, 4, 3, 2), ()],
+>            [(1, 3)(2, 4), (1, 3, 4, 2)]];;
 gap> S := ReesMatrixSemigroup(g, mat);;
 
 #T# ReesMatCongTest2: Find all its congruences
@@ -29,9 +29,9 @@ gap> Size(congs);
 23
 
 #T# ReesMatCongTest3: Construct a congruence manually
-gap> n := Group( [ (1,4)(2,3), (1,3)(2,4) ] );;
-gap> colBlocks := [ [ 1 ], [ 2 ] ];;
-gap> rowBlocks := [ [ 1, 2 ], [ 3 ] ];;
+gap> n := Group([(1, 4)(2, 3), (1, 3)(2, 4)]);;
+gap> colBlocks := [[1], [2]];;
+gap> rowBlocks := [[1, 2], [3]];;
 gap> cong := RMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (2^2,2,2)>
@@ -44,6 +44,12 @@ true
 gap> RMSCongruenceByLinkedTriple(S, SymmetricGroup(3), colBlocks, rowBlocks);
 Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
 the second arg <n> must be a normal subgroup,
+gap> RMSCongruenceByLinkedTriple(S, n, [1, [2]], rowBlocks);
+Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
+the third arg <colBlocks> must be a list of lists,
+gap> RMSCongruenceByLinkedTriple(S, n, colBlocks, [[1, 2], 3]);
+Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
+the fourth arg <rowBlocks> must be a list of lists,
 
 #T# ReesMatCongTest4: Testing membership
 gap> x := ReesZeroMatrixSemigroupElement(S, 1, (2, 3), 2);;
@@ -63,7 +69,7 @@ true
 gap> class1 := CongruenceClassOfElement(cong, x);;
 gap> class2 := CongruenceClassOfElement(cong, y);;
 gap> class3 := CongruenceClassOfElement(cong, z);
-{(1,(2,3,4),3)}
+<congruence class of (1,(2,3,4),3)>
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -178,7 +184,7 @@ true
 gap> class1 := CongruenceClassOfElement(cong, x);;
 gap> class2 := CongruenceClassOfElement(cong, y);;
 gap> class3 := CongruenceClassOfElement(cong, z);
-{(1,(1,3,5),2)}
+<congruence class of (1,(1,3,5),2)>
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -238,7 +244,7 @@ gap> Length(CongruenceClasses(uni)) = 1 and
 >   RMSElement(S, 1, (), 1)); # the first is after 4.7.7 the latter before
 true
 gap> eq := CongruenceClassOfElement(uni, y);
-{(6,(1,3,5),1)}
+<congruence class of (6,(1,3,5),1)>
 gap> eq := CongruenceClassOfElement(uni, y);;
 gap> z in eq;
 true

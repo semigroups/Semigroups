@@ -78,7 +78,7 @@ gap> Size(last);
 120
 
 #T# RMSInducedFunction
-gap> AutomorphismGroup(RectangularBand(4, 3));
+gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 4, 3));
 <automorphism group of <Rees matrix semigroup 4x3 over Group(())> with 
 5 generators>
 
@@ -139,23 +139,23 @@ gap> AutomorphismGroup(R);
 1 generator>
 
 #T# AutomorphismGroup: 1x2 and 2x1 RMS
-gap> AutomorphismGroup(RectangularBand(2, 1));
+gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 2, 1));
 <automorphism group of <Rees matrix semigroup 2x1 over Group(())> with 
 2 generators>
-gap> AutomorphismGroup(RectangularBand(1, 2));
+gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 1, 2));
 <automorphism group of <Rees matrix semigroup 1x2 over Group(())> with 
 2 generators>
 
 #T# AutomorphismGroup: 1x3 and 3x1 RMS
-gap> AutomorphismGroup(RectangularBand(3, 1));
+gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 3, 1));
 <automorphism group of <Rees matrix semigroup 3x1 over Group(())> with 
 3 generators>
-gap> AutomorphismGroup(RectangularBand(1, 3));
+gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 1, 3));
 <automorphism group of <Rees matrix semigroup 1x3 over Group(())> with 
 3 generators>
 
 #T# AutomorphismGroup: 33x33 RMS
-gap> AutomorphismGroup(RectangularBand(33, 33));
+gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 33, 33));
 <automorphism group of <Rees matrix semigroup 33x33 over Group(())> with 
 65 generators>
 
@@ -166,15 +166,15 @@ gap> IdentityMapping(R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
 
 #T# IsomorphismSemigroups: RMS fail
-gap> R := RectangularBand(2, 2);
+gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over Group(())>
-gap> S := RectangularBand(2, 3);
+gap> S := RectangularBand(IsReesMatrixSemigroup, 2, 3);
 <Rees matrix semigroup 2x3 over Group(())>
 gap> IsomorphismSemigroups(R, S);
 fail
 
 #T# IsomorphismSemigroups: from RMS to itself
-gap> R := RectangularBand(2, 2);
+gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over Group(())>
 gap> IsomorphismSemigroups(R, R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), (), (), () ])
@@ -261,7 +261,7 @@ Error, Semigroups: SEMIGROUPS_RZMStoRZMSInducedFunction: usage,
 the 5th argument must be a list of length 2,
 
 #T# \=: RMS and RMS elements
-gap> R := RectangularBand(2, 2);
+gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over Group(())>
 gap> G := AutomorphismGroup(R);
 <automorphism group of <Rees matrix semigroup 2x2 over Group(())> with 
@@ -274,9 +274,9 @@ gap> One(G) = One(G.1);
 true
 
 #T# \=: RMS and RMS elements
-gap> R := RectangularBand(2, 2);
+gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over Group(())>
-gap> S := RectangularBand(2, 2);
+gap> S := RectangularBand(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over Group(())>
 gap> G := AutomorphismGroup(R); H := AutomorphismGroup(S);
 <automorphism group of <Rees matrix semigroup 2x2 over Group(())> with 

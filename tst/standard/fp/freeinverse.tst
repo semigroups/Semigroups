@@ -105,9 +105,9 @@ gap> CanonicalForm(S.1 * (S.1 ^ -1));
 "x1x1^-1"
 gap> CanonicalForm(S.1 * (S.1 ^ -1) * S.1 * (S.1 ^ -1));
 "x1x1^-1"
-gap> CanonicalForm((S.1 ^ -1) * S.1);                   
+gap> CanonicalForm((S.1 ^ -1) * S.1);
 "x1^-1x1"
-gap> CanonicalForm((S.1 ^ -1) * S.1 * (S.1 ^ -1) * S.1);                   
+gap> CanonicalForm((S.1 ^ -1) * S.1 * (S.1 ^ -1) * S.1);
 "x1^-1x1"
 
 #T# SEMIGROUPS_UnbindVariables

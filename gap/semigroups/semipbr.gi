@@ -14,21 +14,20 @@ InstallMethod(FullPBRMonoid, "for a positive integer",
 function(n)
   local gens;
 
-  gens := [[PBR([ [ ] ], [ [ 1 ] ]), PBR([ [ -1, 1 ] ], [ [ 1 ] ]),
-            PBR([ [ -1 ] ], [ [ ] ]), PBR([ [ -1 ] ], [ [ 1 ] ]),
-            PBR([ [ -1 ] ], [ [ -1, 1 ] ]) ],
+  gens := [[PBR([[]], [[1]]), PBR([[-1, 1]], [[1]]),
+            PBR([[-1]], [[]]), PBR([[-1]], [[1]]),
+            PBR([[-1]], [[-1, 1]])],
 
-          [ PBR([ [ ], [ -1 ] ], [ [ 2 ], [ -2, 1 ] ]),
-            PBR([ [ -2, 1 ], [ -1 ] ], [ [ 2 ], [ ] ]),
-            PBR([ [ -1, 2 ], [ -2 ] ], [ [ 1 ], [ 2 ] ]),
-            PBR([ [ -1 ], [ -2 ] ], [ [ 1 ], [ -2, 2 ] ]),
-            PBR([ [ -2 ], [ 2 ] ], [ [ 1 ], [ 2 ] ]),
-            PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 1, 2 ] ]),
-            PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 2 ] ]),
-            PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ -2 ] ]),
-            PBR([ [ -2 ], [ -1 ] ], [ [ 2 ], [ 1 ] ]),
-            PBR([ [ -2 ], [ -2, -1 ] ], [ [ 1 ], [ 2 ] ]) ]
-          ];
+           [PBR([[], [-1]], [[2], [-2, 1]]),
+            PBR([[-2, 1], [-1]], [[2], []]),
+            PBR([[-1, 2], [-2]], [[1], [2]]),
+            PBR([[-1], [-2]], [[1], [-2, 2]]),
+            PBR([[-2], [2]], [[1], [2]]),
+            PBR([[-2], [-1]], [[1], [1, 2]]),
+            PBR([[-2], [-1]], [[1], [2]]),
+            PBR([[-2], [-1]], [[1], [-2]]),
+            PBR([[-2], [-1]], [[2], [1]]),
+            PBR([[-2], [-2, -1]], [[1], [2]])]];
 
   if n > 2 then
     ErrorMayQuit("Semigroups: FullPBRMonoid: usage,\n",
@@ -37,10 +36,10 @@ function(n)
   return Monoid(gens[n]);
 end);
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a pbr semigroup",
+InstallMethod(SemigroupViewStringPrefix, "for a pbr semigroup",
 [IsPBRSemigroup], S -> "\>pbr\< ");
 
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a pbr semigroup",
+InstallMethod(SemigroupViewStringSuffix, "for a pbr semigroup",
 [IsPBRSemigroup],
 function(S)
   return Concatenation("\>degree \>",
@@ -74,7 +73,7 @@ InstallMethod(IsomorphismPBRSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
   local deg, gens;
-  deg := DegreeOfTransformationSemigroup(S);
+  deg := Maximum(1, DegreeOfTransformationSemigroup(S));
   gens := List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg));
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
                                        AsPBR, AsTransformation);

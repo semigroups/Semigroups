@@ -11,10 +11,10 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to bipartition semigroups.
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a bipartition semigroup",
+InstallMethod(SemigroupViewStringPrefix, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> "\>bipartition\< ");
 
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a bipartition semigroup",
+InstallMethod(SemigroupViewStringSuffix, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
   return Concatenation("\>degree \>",
@@ -42,9 +42,7 @@ function(S)
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
                                                x -> AsBipartition(x, deg)));
 
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
   return U;
@@ -227,7 +225,7 @@ InstallMethod(IsomorphismBipartitionSemigroup,
 function(S)
   local n, source, range, i;
 
-  n := DegreeOfTransformationSemigroup(S);
+  n := Maximum(1, DegreeOfTransformationSemigroup(S));
   source := GeneratorsOfSemigroup(S);
   range := EmptyPlist(Length(source));
 
@@ -627,49 +625,3 @@ InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
 
 InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> DegreeOfBipartition(Representative(s)));
-
-#
-
-InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
-[IsBipartitionSemigroup and IsFinite, IsPosInt],
-function(filter, n)
-  local zero, out;
-
-  if n = 2 then
-    zero := Bipartition([[1], [2], [-1], [-2]]);
-    out := Semigroup(Bipartition([[1, -2], [2], [-1]]));
-    SetMultiplicativeZero(out, zero);
-    return out;
-  fi;
-  return ZeroSemigroupCons(IsBlockBijectionSemigroup, n);
-end);
-
-#
-
-InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
-[IsBlockBijectionSemigroup and IsFinite, IsPosInt],
-function(filter, n)
-  local zero, gens, points, pair, out, i;
-
-  if n = 1 then
-    zero := Bipartition([[1, -1]]);
-    gens := [zero];
-  elif n = 2 then
-    points := Concatenation([1 .. 3], [-3 .. -1]);
-    zero := Bipartition([points]);
-    gens := [Bipartition([[1, -2], [-1, 2, 3, -3]])];
-  else
-    points := Concatenation([1 .. 2 * (n - 1)], -[1 .. 2 * (n - 1)]);
-    zero := Bipartition([points]);
-    gens := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      pair := [2 * i - 1, -(2 * i)];
-      gens[i] := Bipartition([pair, Difference(points, pair)]);
-    od;
-  fi;
-  out := Semigroup(gens);
-  SetMultiplicativeZero(out, zero);
-  return out;
-end);

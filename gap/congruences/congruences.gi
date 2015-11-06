@@ -68,9 +68,9 @@ function(arg)
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     fi;
-  elif IsGeneralMapping(arg[2])
-     and ((IsRMSCongruenceByLinkedTriple(arg[3]) and IsSimpleSemigroup(S)) or
-          (IsRZMSCongruenceByLinkedTriple(arg[3]) and IsZeroSimpleSemigroup(S)))
+  elif IsGeneralMapping(arg[2]) and
+      ((IsRMSCongruenceByLinkedTriple(arg[3]) and IsSimpleSemigroup(S))
+       or (IsRZMSCongruenceByLinkedTriple(arg[3]) and IsZeroSimpleSemigroup(S)))
       then
     # We should have a congruence of an isomorphic RMS/RZMS
     if Range(arg[2]) = Range(arg[3]) and S = Source(arg[2]) then
@@ -176,4 +176,15 @@ function(arg)
   else
     TryNextMethod();
   fi;
+end);
+
+#
+
+InstallMethod(ViewObj,
+"for a congruence class",
+[IsCongruenceClass],
+function(class)
+  Print("<congruence class of ");
+  ViewObj(Representative(class));
+  Print(">");
 end);

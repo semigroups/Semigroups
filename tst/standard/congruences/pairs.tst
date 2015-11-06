@@ -29,7 +29,7 @@ Error, Semigroups: NonTrivialEquivalenceClasses: usage,
 this function currently only works if <cong> is a congruence of a semigroup
 which is known to be finite,
 gap> gens in cong;
-Error, Semigroups: \in: usage,
+Error, Semigroups: \in (for a congruence): usage,
 this function currently only works if <cong> is a congruence of a semigroup
 which is known to be finite,
 gap> AsLookupTable(cong);
@@ -51,7 +51,7 @@ gap> S := Semigroup(Transformation([1]));;
 gap> T := Monoid(gens);;
 gap> u := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <trivial transformation group of 
- degree 0 with 0 generators>>
+ degree 0 with 1 generator>>
 gap> v := SemigroupCongruence(T, [gens[1], gens[1]]);
 <semigroup congruence over <commutative transformation monoid of degree 10 
  with 1 generator> with 0 generating pairs>
@@ -88,11 +88,11 @@ gap> v := SemigroupCongruence(S, [gens[1], gens[1]]); # trivial congruence
 <semigroup congruence over <commutative transformation semigroup of size 5, 
  degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(CongruenceClasses(v));
-[ {Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )}, 
-  {Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )}, 
-  {Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )}, 
-  {Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )}, 
-  {Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )} ]
+[ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
+  <congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )>, 
+  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )> ]
 gap> ForAny(CongruenceClasses(u), x -> x in classes);
 false
 gap> classes[1] * CongruenceClasses(u)[1];
@@ -102,36 +102,36 @@ gap> CongruenceClasses(u)[1] * classes[1];
 Error, Semigroups: *: usage,
 the args must be classes of the same congruence,
 gap> classes[3] * classes[4];
-{Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )}
+<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
-{Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )}
+<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> Representative(classes[5] * classes[2]) =
 > Representative(classes[5]) * Representative(classes[2]);
 true
 
 #T# A semigroup congruence example
-gap> S := Semigroup([Transformation([2,1,1,2,1]),
->                    Transformation([3,4,3,4,3]),
->                    Transformation([4,3,3,4,4]),
->                    Transformation([1,3,4,1,3])]);;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
+>                    Transformation([3, 4, 3, 4, 3]),
+>                    Transformation([4, 3, 3, 4, 4]),
+>                    Transformation([1, 3, 4, 1, 3])]);;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := SemigroupCongruence(S, pair1, pair2);
 <semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
 gap> HasAsLookupTable(cong);
 false
-gap> [Transformation([4,4,3,4,4]), Transformation([3,3,1,3,3])] in cong;
+gap> [Transformation([4, 4, 3, 4, 4]), Transformation([3, 3, 1, 3, 3])] in cong;
 true
-gap> [Transformation([4,4,3,4,4]), Transformation([3,3,1,3,3])] in cong;
+gap> [Transformation([4, 4, 3, 4, 4]), Transformation([3, 3, 1, 3, 3])] in cong;
 true
 gap> HasAsLookupTable(cong);
 false
-gap> [Transformation([3,4,3,3,4]), Transformation([1,3,4,1,3])] in cong;
+gap> [Transformation([3, 4, 3, 3, 4]), Transformation([1, 3, 4, 1, 3])] in cong;
 false
-gap> [Transformation([3,4,3,3,4]), Transformation([1,3,4,1,3])] in cong;
+gap> [Transformation([3, 4, 3, 3, 4]), Transformation([1, 3, 4, 1, 3])] in cong;
 false
 gap> HasAsLookupTable(cong);
 true
@@ -139,95 +139,102 @@ gap> AsLookupTable(cong);
 [ 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ {Transformation( [ 2, 1, 1, 2, 1 ] )} ]
+[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
 gap> SEMIGROUPS_Enumerate(cong, ReturnFalse);
 fail
 
 #T# A left semigroup congruence example
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
->                 Transformation( [ 3, 4, 3, 4, 4 ] ),
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
+>                   Transformation([3, 4, 3, 4, 4]),
+>                   Transformation([3, 4, 3, 4, 3]),
+>                   Transformation([4, 3, 3, 4, 4]));;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := LeftSemigroupCongruence(S, pair1, pair2);
 <left semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
-gap> [Transformation([3,4,4,3,3]), Transformation([1,2,2,1,1])] in cong;
+gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 true
-gap> [Transformation([3,4,4,3,3]), Transformation([1,2,2,1,1])] in cong;
+gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 true
-gap> [Transformation([1,2,1,2,2]), Transformation([1,2,2,1,2])] in cong;
+gap> [Transformation([1, 2, 1, 2, 2]), Transformation([1, 2, 2, 1, 2])] in cong;
 false
 gap> HasAsLookupTable(cong);
 true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 1, 1, 1, 2, 3, 4, 2, 2, 3, 3, 4, 4 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 3, 4, 3, 4, 4 ] )}
-    , {Transformation( [ 3, 4, 3, 4, 3 ] )}, 
-  {Transformation( [ 4, 3, 3, 4, 4 ] )} ]
+[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
+  <congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
+  <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
+  <congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
+gap> IsRightSemigroupCongruence(cong);
+true
 gap> SEMIGROUPS_Enumerate(cong, ReturnTrue);
 fail
 
 #T# A right semigroup congruence example
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
->                 Transformation( [ 3, 4, 3, 4, 4 ] ),
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
+>                   Transformation([3, 4, 3, 4, 4]),
+>                   Transformation([3, 4, 3, 4, 3]),
+>                   Transformation([4, 3, 3, 4, 4]));;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := RightSemigroupCongruence(S, pair1, pair2);
 <right semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
-gap> [Transformation([3,4,3,4,3]), Transformation([1,2,1,2,1])] in cong;
+gap> [Transformation([3, 4, 3, 4, 3]), Transformation([1, 2, 1, 2, 1])] in cong;
 true
-gap> [Transformation([3,4,3,4,3]), Transformation([1,2,1,2,1])] in cong;
+gap> [Transformation([3, 4, 3, 4, 3]), Transformation([1, 2, 1, 2, 1])] in cong;
 true
-gap> [Transformation([3,4,4,3,3]), Transformation([1,2,2,1,1])] in cong;
+gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 false
-gap> [Transformation([3,4,4,3,3]), Transformation([1,2,2,1,1])] in cong;
+gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 false
 gap> HasAsLookupTable(cong);
 true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ {Transformation( [ 3, 4, 3, 4, 3 ] )} ]
+[ <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
+gap> IsLeftSemigroupCongruence(cong);
+false
 gap> SEMIGROUPS_Enumerate(cong, ReturnFail);
 fail
 
 #T# \in: Bad input
-gap> S := Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
->                   Transformation( [ 2, 4, 2, 3, 5 ] ),
->                   Transformation( [ 3, 4, 3, 4, 3 ] ),
->                   Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
+>                   Transformation([2, 4, 2, 3, 5]),
+>                   Transformation([3, 4, 3, 4, 3]),
+>                   Transformation([4, 3, 3, 4, 4]));;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
 gap> cong := SemigroupCongruence(S, pair1);;
 gap> [Transformation([2,1,1,2,1])] in cong;
-Error, Semigroups: \in: usage,
+Error, Semigroups: \in (for a congruence): usage,
 the first arg <pair> must be a list of length 2,
 gap> [Transformation([2,1,1,2,1]), Transformation([5,2,1,2,2])] in cong;
-Error, Semigroups: \in: usage,
+Error, Semigroups: \in (for a congruence): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 
 #T# Classes
-gap> S := Semigroup([Transformation([1,5,4,2,1]),Transformation([2,1,1,1,3])]);;
-gap> pair := [Transformation([2,2,2,3,2]), Transformation([2,2,1,1,2])];;
+gap> S := Semigroup([
+> Transformation([1, 5, 4, 2, 1]), Transformation([2, 1, 1, 1, 3])]);;
+gap> pair := [Transformation([2, 2, 2, 3, 2]), Transformation([2, 2, 1, 1, 2])];
+[ Transformation( [ 2, 2, 2, 3, 2 ] ), Transformation( [ 2, 2, 1, 1, 2 ] ) ]
 gap> cong := SemigroupCongruence(S, pair);;
-gap> class := CongruenceClassOfElement(cong, Transformation([1,2,2,2,1]));;
+gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> enum := Enumerator(class);;
-gap> Transformation( [ 1, 2, 2, 2, 1 ] ) in enum;
+gap> Transformation([1, 2, 2, 2, 1]) in enum;
 true
-gap> Transformation( [ 2, 2, 3, 2, 2 ]) in enum;
+gap> Transformation([2, 2, 3, 2, 2]) in enum;
 true
-gap> Transformation( [ 1, 5, 4, 2, 1 ] ) in enum;
+gap> Transformation([1, 5, 4, 2, 1]) in enum;
 false
 gap> enum[3];
 Transformation( [ 1, 1, 5, 1, 1 ] )
@@ -235,22 +242,49 @@ gap> last in class;
 true
 gap> enum[25];
 Transformation( [ 2, 2, 2, 2, 3 ] )
-gap> Transformation( [ 1, 5, 4, 2, 1 ] ) in class;
+gap> Transformation([1, 5, 4, 2, 1]) in class;
 false
-gap> Transformation( [ 1, 2, 2, 2, 1 ] ) in class;
+gap> Transformation([1, 2, 2, 2, 1]) in class;
 true
-gap> Transformation( [ 2, 2, 3, 2, 2 ]) in class;
+gap> Transformation([2, 2, 3, 2, 2]) in class;
 true
 gap> cong := SemigroupCongruence(S, pair);;
-gap> class := CongruenceClassOfElement(cong, Transformation([1,2,2,2,1]));;
-gap> Transformation( [ 1, 1, 5, 1, 1 ] ) in class;
+gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
+gap> Transformation([1, 1, 5, 1, 1]) in class;
 true
 gap> Transformation( [ 6, 2, 3, 4, 1, 1 ] ) in class;
-Error, Semigroups: \in: usage,
+Error, Semigroups: \in (for a congruence): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 gap> Size(class);
 89
+
+#T# LatticeOfCongruences
+gap> S := PartitionMonoid(2);;
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1, 3, 7 ], [ 1 ], [ 1, 3, 8 ], 
+  [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13 ], [ 1, 2, 3, 4, 7, 8, 9 ], [ 1 ], 
+  [ 1 ], [ 1, 7, 8 ], [ 1, 3 ], [ 1, 2, 3, 7, 10 ], [ 1, 3, 4, 8, 10 ], 
+  [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ] ]
+gap> S := OrderEndomorphisms(2);;
+gap> CongruencesOfSemigroup(S);
+[ <semigroup congruence over <regular transformation monoid of size 3, 
+     degree 2 with 2 generators> with 0 generating pairs>, 
+  <semigroup congruence over <regular transformation monoid of size 3, 
+     degree 2 with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <regular transformation monoid of size 3, 
+     degree 2 with 2 generators> with 1 generating pairs> ]
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1, 3 ], [ 1 ] ]
+gap> DotString(l);
+"//dot\ngraph graphname {\n     node [shape=circle]\n2 -- 3\n3 -- 1\n }"
+gap> S := Semigroup( [ Transformation( [ 1, 4, 3, 1, 4, 2 ] ),
+>                      Transformation( [ 1, 6, 6, 3, 6, 6 ] ) ] );;
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1 ], [ 1, 2, 5 ], [ 1, 2, 3, 5 ], [ 1, 2 ] ]
+gap> DotString(l, rec(info := true)) = Concatenation("//dot\ngraph graphname",
+> " {\n     node [shape=circle]\nR2 -- T\nR3 -- 5\nU -- R3\n5 -- R2\n }");
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

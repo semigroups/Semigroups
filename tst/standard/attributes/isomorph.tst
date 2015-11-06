@@ -72,9 +72,9 @@ gap> IsIsomorphicSemigroup(S, T);
 Error, Semigroups: IsIsomorphicSemigroup:
 not yet implemented,
 gap> S := Semigroup(IdentityTransformation);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> T := Semigroup(PartialPerm([]));
-<commutative partial perm monoid of rank 0 with 1 generator>
+<trivial partial perm group of rank 0 with 1 generator>
 gap> IsIsomorphicSemigroup(S, T);
 true
 gap> T := JonesMonoid(4);

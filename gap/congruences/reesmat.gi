@@ -536,6 +536,42 @@ end);
 
 #
 
+InstallMethod(IsSubrelation,
+"for two Rees matrix semigroup congruences by linked triple",
+[IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
+function(cong1, cong2)
+  # Tests whether cong2 is a subcongruence of cong1
+  if Range(cong1) <> Range(cong2) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return IsSubgroup(cong1!.n, cong2!.n)
+         and ForAll(cong2!.colBlocks,
+                    b2 -> ForAny(cong1!.colBlocks, b1 -> IsSubset(b1, b2)))
+         and ForAll(cong2!.rowBlocks,
+                    b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
+end);
+
+#
+
+InstallMethod(IsSubrelation,
+"for two Rees 0-matrix semigroup congruences by linked triple",
+[IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
+function(cong1, cong2)
+  # Tests whether cong2 is a subcongruence of cong1
+  if Range(cong1) <> Range(cong2) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return IsSubgroup(cong1!.n, cong2!.ln)
+         and ForAll(cong2!.colBlocks,
+                    b2 -> ForAny(cong1!.colBlocks, b1 -> IsSubset(b1, b2)))
+         and ForAll(cong2!.rowBlocks,
+                    b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
+end);
+
+#
+
 InstallMethod(\in,
 "for RMS element coll and a semigroup congruence by linked triple",
 [IsReesMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
@@ -544,12 +580,12 @@ function(pair, cong)
 
   # Check for validity
   if Size(pair) <> 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the elements of the first arg <pair> ",
                  "must be in the range of the second arg <cong>,");
   fi;
@@ -584,12 +620,12 @@ function(pair, cong)
 
   # Check for validity
   if Size(pair) <> 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the elements of the first arg <pair> ",
                  "must be in the range of the second arg <cong>,");
   fi;
@@ -799,6 +835,24 @@ function(cong)
          * Size(cong!.colBlocks)       # Number of column blocks
          * Size(cong!.rowBlocks)       # Number of row blocks
          + 1);                         # Class containing zero
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for RMS congruence class by linked triple",
+[IsRMSCongruenceClassByLinkedTriple],
+function(class)
+  return ImagesElm(Parent(class), Representative(class));
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for RZMS congruence class by linked triple",
+[IsRZMSCongruenceClassByLinkedTriple],
+function(class)
+  return ImagesElm(Parent(class), Representative(class));
 end);
 
 #

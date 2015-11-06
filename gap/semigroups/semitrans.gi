@@ -22,17 +22,6 @@ function(S, rank)
                               x -> RankOfTransformation(x, deg) = rank);
 end);
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a transformation semigroup",
-[IsTransformationSemigroup], S -> "\>transformation\< ");
-
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
-  return Concatenation("\>degree \>",
-                       ViewString(DegreeOfTransformationSemigroup(S)),
-                       "\<\< ");
-end);
-
 # different method required (but not yet given!!) for ideals
 
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
@@ -262,7 +251,7 @@ function(coll, n)
     od;
   od;
 
-  return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
+  return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
 InstallMethod(IsTransitive,
@@ -297,7 +286,7 @@ function(coll, set)
     od;
   od;
 
-  return Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph)) = 1;
+  return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
 # not relevant for ideals
@@ -482,7 +471,7 @@ function(S)
     fi;
   od;
 
-  if not IsGroup(S) and min_rank = n then
+  if min_rank = n then
     SetIsGroupAsSemigroup(S, true);
     return gens[1];
   fi;
@@ -616,9 +605,7 @@ function(S)
 
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
                                                x -> x ^ map));
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
 
   UseIsomorphismRelation(U, G);
 
@@ -780,28 +767,34 @@ function(S)
   return cycles;
 end);
 
-#
+InstallMethod(EndomorphismMonoid, "for a digraph",
+[IsDigraph],
+function(digraph)
+  local STAB, hook, S;
 
-InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
-[IsTransformationSemigroup and IsFinite, IsPosInt],
-function(filter, n)
-  local zero, gens, out, i;
-
-  if n = 1 then
-    zero := Transformation([1]);
-    gens := [zero];
-  else
-    zero := Transformation(List([1 .. 2 * n + 1], x -> 1));
-    gens := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      gens[i] := Transformation(Concatenation([1 .. (2 * i) - 1] * 0 + 1,
-                                              [2 * i + 1],
-                                              [2 * i + 1 .. 2 * n - 1]
-                                              * 0 + 1));
-    od;
+  if IsMultiDigraph(digraph) then
+    ErrorMayQuit("Semigroups: EndomorphismMonoid: usage,\n",
+                 "the argument <digraph> must not be a multigraph,");
   fi;
-  out := Semigroup(gens);
-  SetMultiplicativeZero(out, zero);
-  return out;
+
+  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then
+    return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),
+                     rec(small := true));
+  fi;
+
+  STAB := function(gens, pt)
+    if gens = [] then
+      return [()];
+    fi;
+    return GeneratorsOfGroup(Stabilizer(Group(gens), pt));
+  end;
+
+  hook := function(S, f)
+    S[1] := ClosureSemigroup(S[1], f);
+    Print("found ", Size(S[1]), " endomorphisms so far\n");
+  end;
+
+  S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
+
+  return GRAPH_HOMOS(digraph, hook, S, fail, fail, false, STAB);
 end);

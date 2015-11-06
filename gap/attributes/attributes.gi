@@ -140,9 +140,7 @@ function(S)
                            x -> x ^ map,
                            x -> x ^ InverseGeneralMapping(map));
   SetIsomorphismPermGroup(U, iso);
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, Range(iso));
   return U;
 end);
@@ -524,7 +522,12 @@ end);
 
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
-S -> StructureDescription(Range(IsomorphismPermGroup(S))));
+function(S)
+  if IsGroup(S) then
+    TryNextMethod();
+  fi;
+  return StructureDescription(Range(IsomorphismPermGroup(S)));
+end);
 
 # same method for ideals
 
@@ -817,7 +820,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  if not IsGroupAsSemigroup(S)  then
+  if not IsGroupAsSemigroup(S) then
     ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
                  "the argument must be a semigroup satisfying ",
                  "IsGroupAsSemigroup,");

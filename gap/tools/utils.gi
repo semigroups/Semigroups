@@ -55,12 +55,14 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "blocks.xml",
                            "boolmat.xml",
                            "congruences.xml",
+                           "constructions.xml",
                            "display.xml",
                            "examples.xml",
                            "factor.xml",
                            "freeband.xml",
                            "freeinverse.xml",
                            "greens.xml",
+                           "graph-inverse.xml",
                            "ideals.xml",
                            "inverse.xml",
                            "isomorph.xml",
@@ -285,10 +287,12 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
   SizeScreen([72, oldscr[2]]);
   for j in [1 .. Length(exlists)] do
     if j in excluded then
-      Print(SEMIGROUPS.ColorizeString("# Skipping list ", j, " . . .\n", "back_blue"));
+      Print(SEMIGROUPS.ColorizeString("# Skipping list ", j, " . . .\n",
+                                      "back_blue"));
     else
       l := exlists[j];
-      Print(SEMIGROUPS.ColorizeString("# Running list ", j, " . . .", "back_gray"));
+      Print(SEMIGROUPS.ColorizeString("# Running list ", j, " . . .",
+                                      "back_gray"));
       START_TEST("");
       for ex in l do
         sp := SplitString(ex[1], "\n", "");
@@ -308,12 +312,13 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
         pex := TEST.lastTestData;
 
-        Print(SEMIGROUPS.ColorizeString(" elapsed time: ", elapsed, "back_gray"));
+        Print(SEMIGROUPS.ColorizeString(" elapsed time: ", elapsed,
+                                        "back_gray"));
         Print("\n");
 
         if Length(bad) > 0  then
-          Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad, " in ",
-                ex[2]{[1 .. 3]}, "red"));
+          Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad,
+                                         " in ", ex[2]{[1 .. 3]}, "red"));
           Print("\n");
         fi;
 

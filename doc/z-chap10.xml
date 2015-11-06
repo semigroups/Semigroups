@@ -1,7 +1,11 @@
-<Chapter Label = "Standard constructions">
+<Chapter Label="Standard constructions">
   <Heading>
     Standard constructions
   </Heading>
+
+  In this Chapter we describe some standard semigroup constructions which
+  are available in the &Semigroups; package.
+  <P/>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
@@ -10,9 +14,18 @@
     <Heading>
       Standard constructions
     </Heading>
+
+    In this section, we describe the functions in &Semigroups; that can be used
+    to create standard semigroup constructions in various representations.
+    For all of the constructions, the default representation is as a semigroup
+    of transformations. In general, these functions do not return
+    a representation of minimal degree.
+
+    <#Include Label="TrivialSemigroup">
     <#Include Label="MonogenicSemigroup">
     <#Include Label="RectangularBand">
     <#Include Label="ZeroSemigroup">
+    <#Include Label="LeftZeroSemigroup">
   </Section>
 
   <!--**********************************************************************-->

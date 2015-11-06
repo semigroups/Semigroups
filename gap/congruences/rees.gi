@@ -112,6 +112,23 @@ end);
 
 #
 
+InstallMethod(IsSubrelation,
+"for two Rees congruences",
+[IsReesCongruence, IsReesCongruence],
+function(cong1, cong2)
+  local i1, i2;
+  # Tests whether cong2 is a subcongruence of cong1
+  if Range(cong1) <> Range(cong2) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  i1 := SemigroupIdealOfReesCongruence(cong1);
+  i2 := SemigroupIdealOfReesCongruence(cong2);
+  return ForAll(GeneratorsOfSemigroupIdeal(i2), gen -> gen in i1);
+end);
+
+#
+
 InstallMethod(\in,
 "for an associative element collection and a Rees congruence",
 [IsAssociativeElementCollection, IsReesCongruence],
@@ -119,12 +136,12 @@ function(pair, cong)
   local S, I;
   # Check for validity
   if Size(pair) <> 2 then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
   fi;
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
-    ErrorMayQuit("Semigroups: \in: usage,\n",
+    ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the elements of 1st arg <pair> ",
                  "must be in the range of 2nd arg <cong>,");
   fi;
@@ -327,4 +344,18 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 function(cong)
   cong := AsSemigroupCongruenceByGeneratingPairs(cong);
   return GeneratingPairsOfSemigroupCongruence(cong);
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for a Rees congruence class",
+[IsReesCongruenceClass],
+function(class)
+  local cong;
+  if class!.is_ideal_class then
+    cong := EquivalenceClassRelation(class);
+    return Enumerator(SemigroupIdealOfReesCongruence(cong));
+  fi;
+  return AsList(class);
 end);

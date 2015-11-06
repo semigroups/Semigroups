@@ -20,17 +20,6 @@ function(S, rank)
                               x -> RankOfPartialPerm(x) = rank);
 end);
 
-InstallMethod(SEMIGROUPS_ViewStringPrefix, "for a partial perm semigroup",
-[IsPartialPermSemigroup], S -> "\>partial perm\< ");
-
-InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(S)
-  return Concatenation("\>rank \>",
-                       ViewString(RankOfPartialPermSemigroup(S)),
-                       "\<\< ");
-end);
-
 # this should really be in the library
 
 InstallImmediateMethod(GeneratorsOfSemigroup,
@@ -270,7 +259,7 @@ InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
 
-  if not IsGroupAsSemigroup(s)  then
+  if not IsGroupAsSemigroup(s) then
     ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
                  "the argument <s> must be a partial perm semigroup ",
                  "satisfying IsGroupAsSemigroup,");
@@ -317,9 +306,7 @@ function(S)
                                                x -> x ^ map,
                                                x -> x ^ inv));
 
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
+  SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
   return U;
@@ -602,28 +589,6 @@ end);
 
 #
 
-InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
-[IsPartialPermSemigroup and IsFinite, IsPosInt],
-function(filter, n)
-  local zero, gens, out, i;
-
-  zero := PartialPerm([], []);
-  if n = 1 then
-    gens := [zero];
-  else
-    gens := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      gens[i] := PartialPerm([2 * i - 1], [2 * i]);
-    od;
-  fi;
-  out := Semigroup(gens);
-  SetMultiplicativeZero(out, zero);
-  return out;
-end);
-
-#
-
 InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
@@ -780,9 +745,7 @@ function(S)
   codeg := Maximum(range);
 
   if min_rank = rank and domain = range then
-    if not IsGroup(S) then
-      SetIsGroupAsSemigroup(S, true);
-    fi;
+    SetIsGroupAsSemigroup(S, true);
     return gens[1];
   fi;
 

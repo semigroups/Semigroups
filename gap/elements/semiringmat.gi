@@ -504,7 +504,7 @@ function(x, y)
 
   if SEMIGROUPS_FilterOfMatrixOverSemiring(x) <>
       SEMIGROUPS_FilterOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \< (for matrices over a semiring):\n",
+    ErrorMayQuit("Semigroups: \\< (for matrices over a semiring):\n",
                  "the matrices are not of the same type,");
   fi;
   n := Length(x![1]);

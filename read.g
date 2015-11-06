@@ -47,9 +47,8 @@ if not IsBound(MappingPermListList_C) then
     local src_tab, dst_tab, d, out, next, i;
 
     if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
-       Error("Semigroups: MappingPermListList_C: usage,\n",
-             "the arguments must be lists of equal length,");
-       return;
+       ErrorMayQuit("Semigroups: MappingPermListList_C: usage,\n",
+                    "the arguments must be lists of equal length,");
     fi;
 
     if IsEmpty(src)  then
@@ -103,6 +102,8 @@ ReadPackage("semigroups/gap/semigroups/semiringmat.gi");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gi");
 ReadPackage("semigroups/gap/semigroups/semipfmat.gi");
 ReadPackage("semigroups/gap/semigroups/examples.gi");
+ReadPackage("semigroups/gap/semigroups/constructions.gi");
+ReadPackage("semigroups/gap/semigroups/graph-inverse.gi");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gi");
 ReadPackage("semigroups/gap/main/setup.gi");
@@ -147,6 +148,7 @@ ReadPackage("semigroups/gap/congruences/rees.gi");
 ReadPackage("semigroups/gap/congruences/quotients.gi");
 ReadPackage("semigroups/gap/congruences/semilattice.gi");
 ReadPackage("semigroups/gap/congruences/congruences.gi");
+ReadPackage("semigroups/gap/congruences/lattice.gi");
 
 ReadPackage("semigroups/gap/fp/fpsemi.gi");
 ReadPackage("semigroups/gap/fp/freeinverse.gi");

@@ -543,7 +543,7 @@ function(S)
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
-  return not IsGroup(S) and NrRClasses(S) = 1 and NrLClasses(S) = 1;
+  return NrRClasses(S) = 1 and NrLClasses(S) = 1;
 end);
 
 # same method for non-regular ideals
@@ -557,12 +557,6 @@ function(S)
       and IsGroupAsSemigroup(Parent(S)) then
     return true;
   fi;
-
-  # the follow will never be accessed: in GAP there is an immediate method
-  # which sets IsGroupAsSemigroup to be false for IsGroup's
-  #if IsGroup(S) then 
-  #  return false;
-  #fi;
 
   gens := GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
 
@@ -707,9 +701,7 @@ end);
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup",
 [IsInverseSemigroup],
-function(S)
-  return IsGroup(S) or IsGroupAsSemigroup(S);
-end);
+IsGroupAsSemigroup);
 
 # different method for ideals without generators
 
@@ -871,7 +863,7 @@ end);
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  return not IsMonoid(S) and MultiplicativeNeutralElement(S) <> fail;
+  return MultiplicativeNeutralElement(S) <> fail;
 end);
 
 # is there a better method? JDM
@@ -1184,9 +1176,7 @@ end);
 
 InstallMethod(IsRightSimple, "for an inverse semigroup",
 [IsInverseSemigroup],
-function(S)
-  return IsGroup(S) or IsGroupAsSemigroup(S);
-end);
+IsGroupAsSemigroup);
 
 # different method for ideals
 
@@ -1319,7 +1309,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsSimpleSemigroup, "for a finite inverse semigroup",
-[IsInverseSemigroup and IsFinite], IsGroupAsSemigroup);
+[IsInverseSemigroup and IsFinite],
+IsGroupAsSemigroup);
 
 # different method for ideals
 

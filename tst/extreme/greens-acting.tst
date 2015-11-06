@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  standard/greens/greens-acting.tst
+#W  extreme/greens-acting.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -8,13 +8,12 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"greens.tst"));
 # takes approx. 1 minute to run currently!
-gap> START_TEST("Semigroups package: standard/greens/greens-acting.tst");
+gap> START_TEST("Semigroups package: extreme/greens-acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# GreensTest1
 gap> gens :=
@@ -875,13 +874,27 @@ gap> h := HClass(s, f);
 <Green's H-class: Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )>
 gap> d := DClass(s, f);
 <Green's D-class: Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )>
+gap> AsSSortedList(r) = AsSSortedList(l);
+true
+gap> AsSSortedList(r) = AsSSortedList(h);
+true
+gap> AsSSortedList(l) = AsSSortedList(r);
+true
+gap> AsSSortedList(h) = AsSSortedList(r);
+true
+gap> AsSSortedList(d) = AsSSortedList(r);
+true
+gap> AsSSortedList(r) = AsSSortedList(d);
+true
+gap> AsSSortedList(r) = AsSSortedList(r);
+true
 gap> r = l; r = h; l = r; h = r; d = r; r = d; r = r;
-true
-true
-true
-true
-true
-true
+false
+false
+false
+false
+false
+false
 true
 gap> f := Transformation([5, 4, 3, 3, 4, 4, 4]);;
 gap> rr := RClass(s, f);; ll := LClass(s, f);;
@@ -1198,12 +1211,12 @@ gap> gens := [Transformation([5, 6, 7, 3, 1, 4, 2, 8]),
 >   Transformation([3, 6, 8, 5, 7, 4, 2, 8])];;
 gap> s := Semigroup(gens);;
 gap> Iterator(s);
-<iterator of <transformation semigroup of degree 8 with 2 generators>>
+<iterator>
 gap> iter := last;
-<iterator of <transformation semigroup of degree 8 with 2 generators>>
+<iterator>
 gap> for i in [1 .. 10000] do NextIterator(iter); od;
 gap> iter := Iterator(s);
-<iterator of <transformation semigroup of degree 8 with 2 generators>>
+<iterator>
 gap> j := 0; for i in iter do j := j + 1; od;
 0
 gap> j;
@@ -1303,10 +1316,10 @@ gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 5, 5, 8, 8, 5, 5, 2, 4, 2 ] )>
 gap> GreensRClasses(s);;
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for i in [1 .. 10] do NextIterator(iter); od;
 gap> iter2 := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 gap> NextIterator(iter);
@@ -1325,7 +1338,7 @@ gap> for i in [1 .. 100] do
 >   r2 := NextIterator(iter2);
 >   r3 := NextIterator(iter3);
 >   if not (r1 = r2 and r2 = r3) then
->     Error("Problem in IteratorOfRClasses 1");
+>     ErrorMayQuit("Problem in IteratorOfRClasses 1");
 >   fi;
 > od;
 gap> for i in iter1 do od;
@@ -1337,13 +1350,14 @@ gap> IsDoneIterator(iter3);
 false
 gap> GreensDClasses(s);;
 gap> for i in [1 .. 100] do
-> r2 := NextIterator(iter2); r3 := NextIterator(iter3);
+> r2 := NextIterator(iter2);
+> r3 := NextIterator(iter3);
 > if not r2 = r3 then
-> Error("Problem in IteratorOfRClasses 2");
+>   ErrorMayQuit("Problem in IteratorOfRClasses 2");
 > fi;
 > od;
 gap> iter2;
-<iterator of R-classes>
+<iterator>
 gap> IsIteratorOfRClasses(iter2);
 true
 gap> ShallowCopy(iter2);
@@ -1361,7 +1375,7 @@ gap> NextIterator(iter);
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 8, 8, 5, 5, 2, 2, 2, 5, 2 ] )>
 gap> iter3 := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> out := [];
 [  ]
 gap> for i in iter3 do Add(out, i); od;
@@ -1380,9 +1394,10 @@ gap> iter1 := IteratorOfRClasses(s);
 gap> j := 0;
 0
 gap> for i in iter1 do
-> j := j + 1; if not i = out[j] then
-> Error("Problems with IteratorOfRClasses 3");
-> fi;
+>   j := j + 1;
+>   if not i = out[j] then
+>     ErrorMayQuit("Problems with IteratorOfRClasses 3");
+>   fi;
 > od;
 gap> s := Semigroup(gens);;
 gap> GreensRClasses(s) = out;
@@ -1400,13 +1415,13 @@ true
 gap> GreensRClasses(s) = out;
 true
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for i in [1 .. 500] do NextIterator(iter); od;
 gap> s := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(s);;
 gap> for i in [1 .. 1000] do NextIterator(iter); od;
 gap> iter := ShallowCopy(iter);
-<iterator>
+<iterator of R-classes>
 gap> out := [];;
 gap> for i in iter do Add(out, i); od;
 gap> Set(out) = Set(GreensRClasses(s));
@@ -1609,13 +1624,12 @@ gap> HClassReps(r);
 #T# GreensTest2
 gap> t := FullTransformationSemigroup(5);;
 gap> iter := Iterator(t);
-<iterator of <regular transformation monoid of size 3125, degree 5 with
- 3 generators>>
+<iterator of semigroup>
 gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true
 gap> iter := ShallowCopy(iter);
-<iterator>
+<iterator of semigroup>
 gap> NextIterator(iter);
 Transformation( [ 1, 1, 1, 1, 1 ] )
 gap> NextIterator(iter);
@@ -1879,4 +1893,4 @@ gap> Unbind(t);
 gap> Unbind(x);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/greens/greens-acting.tst");
+gap> STOP_TEST("Semigroups package: extreme/greens-acting.tst");

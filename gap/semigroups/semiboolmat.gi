@@ -14,7 +14,7 @@ InstallMethod(IsomorphismBooleanMatSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
   local n, T;
-  n := DegreeOfTransformationSemigroup(S);
+  n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
   return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
 end);

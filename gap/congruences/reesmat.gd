@@ -27,10 +27,10 @@ DeclareGlobalFunction("RZMSCongruenceByLinkedTripleNC");
 
 # Congruence Classes
 DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
-                IsEquivalenceClass and IsAttributeStoringRep and
+                IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
 DeclareCategory("IsRZMSCongruenceClassByLinkedTriple",
-                IsEquivalenceClass and IsAttributeStoringRep and
+                IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
 DeclareOperation("RMSCongruenceClassByLinkedTriple",
                  [IsRMSCongruenceByLinkedTriple,

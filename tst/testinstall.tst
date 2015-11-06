@@ -422,7 +422,7 @@ gap> ClosureSemigroup(S, x);
 
 #T# TestInstall27: Issue 36 in the new numbering...
 gap> S := Semigroup(IdentityTransformation);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> SmallGeneratingSet(S);
 [  ]
 
@@ -573,7 +573,7 @@ gap> for i in [1 .. 6] do
 # of the arguments is a monoid).
 # This only works in GAP 4.7.5 or higher hence the CompareVersionNumbers
 gap> S := Semigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));
-<commutative partial perm monoid of rank 5 with 1 generator>
+<trivial partial perm group of rank 5 with 1 generator>
 gap> T := Monoid(S, PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]));;
 gap> Length(GeneratorsOfMonoid(T)) = 2
 > or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
@@ -636,13 +636,13 @@ true
 gap> Size(T);
 169
 gap> u := Image(hom, Transformation([1, 1, 1, 1]));
-{Transformation( [ 1, 2, 2, 2 ] )}
+<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> t := Image(hom, Transformation([2, 1, 2, 3]));
-{Transformation( [ 2, 1, 2, 3 ] )}
+<congruence class of Transformation( [ 2, 1, 2, 3 ] )>
 gap> u * t;
-{Transformation( [ 1, 2, 2, 2 ] )}
+<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> t * u;
-{Transformation( [ 1, 2, 2, 2 ] )}
+<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> S := Semigroup(u, t);
 <semigroup with 2 generators>
 gap> Size(S);
@@ -746,8 +746,8 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 > else
 >   G := SymmetricGroup(3);
 > fi;
-gap> G;
-Sym( [ 1 .. 3 ] )
+gap> G = SymmetricGroup(3);
+true
 
 #T# TestInstall46: Issue 98
 # (incorrect definition of partition monoid on 1 point)
@@ -762,7 +762,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 >   G := Semigroup(IdentityTransformation);
 > fi;
 gap> G;
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# TestInstall48: Issue 101
 # (incorrect method for AsPartialPerm for a perm and zero)
@@ -772,7 +772,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
 >   G := Semigroup(PartialPerm([]));
 > fi;
 gap> G;
-<partial perm group of rank 0 with 1 generator>
+<trivial partial perm group of rank 0 with 1 generator>
 
 #T# TestInstall49: Issue 103
 # (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup but
@@ -919,7 +919,9 @@ gap> R := PrincipalFactor(MinimalDClass(S));
 <Rees matrix semigroup 1x6 over Group(())>
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, []);;
 gap> EquivalenceClasses(cong);
-[ {(1,(),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, {(1,(),6)} ]
+[ <congruence class of (1,(),1)>, <congruence class of (1,(),2)>, 
+  <congruence class of (1,(),3)>, <congruence class of (1,(),4)>, 
+  <congruence class of (1,(),5)>, <congruence class of (1,(),6)> ]
 
 #T# TestInstall61: Issue 95:
 # No zero class in semigroup congruence EquivalenceClasses (generating pairs)
@@ -932,14 +934,28 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ {0}, {(1,(1,3),1)}, {(1,(),2)}, {(1,(),3)}, {(1,(),4)}, {(1,(),5)}, 
-  {(1,(),6)}, {(2,(),1)}, {(2,(),2)}, {(2,(),3)}, {(2,(),4)}, {(2,(),5)}, 
-  {(2,(),6)}, {(3,(),1)}, {(3,(),2)}, {(3,(),3)}, {(3,(),4)}, {(3,(),5)}, 
-  {(3,(),6)}, {(4,(),1)}, {(4,(),2)}, {(4,(),3)}, {(4,(),4)}, {(4,(),5)}, 
-  {(4,(),6)}, {(5,(),1)}, {(5,(),2)}, {(5,(),3)}, {(5,(),4)}, {(5,(),5)}, 
-  {(5,(),6)}, {(6,(),1)}, {(6,(),2)}, {(6,(),3)}, {(6,(),4)}, {(6,(),5)}, 
-  {(6,(),6)}, {(7,(),1)}, {(7,(),2)}, {(7,(),3)}, {(7,(),4)}, {(7,(),5)}, 
-  {(7,(),6)} ]
+[ <congruence class of 0>, <congruence class of (1,(1,3),1)>, 
+  <congruence class of (1,(),2)>, <congruence class of (1,(),3)>, 
+  <congruence class of (1,(),4)>, <congruence class of (1,(),5)>, 
+  <congruence class of (1,(),6)>, <congruence class of (2,(),1)>, 
+  <congruence class of (2,(),2)>, <congruence class of (2,(),3)>, 
+  <congruence class of (2,(),4)>, <congruence class of (2,(),5)>, 
+  <congruence class of (2,(),6)>, <congruence class of (3,(),1)>, 
+  <congruence class of (3,(),2)>, <congruence class of (3,(),3)>, 
+  <congruence class of (3,(),4)>, <congruence class of (3,(),5)>, 
+  <congruence class of (3,(),6)>, <congruence class of (4,(),1)>, 
+  <congruence class of (4,(),2)>, <congruence class of (4,(),3)>, 
+  <congruence class of (4,(),4)>, <congruence class of (4,(),5)>, 
+  <congruence class of (4,(),6)>, <congruence class of (5,(),1)>, 
+  <congruence class of (5,(),2)>, <congruence class of (5,(),3)>, 
+  <congruence class of (5,(),4)>, <congruence class of (5,(),5)>, 
+  <congruence class of (5,(),6)>, <congruence class of (6,(),1)>, 
+  <congruence class of (6,(),2)>, <congruence class of (6,(),3)>, 
+  <congruence class of (6,(),4)>, <congruence class of (6,(),5)>, 
+  <congruence class of (6,(),6)>, <congruence class of (7,(),1)>, 
+  <congruence class of (7,(),2)>, <congruence class of (7,(),3)>, 
+  <congruence class of (7,(),4)>, <congruence class of (7,(),5)>, 
+  <congruence class of (7,(),6)> ]
 gap> ForAny(c, x -> MultiplicativeZero(R) in x);
 true
 
