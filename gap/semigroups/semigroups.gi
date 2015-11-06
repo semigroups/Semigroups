@@ -160,7 +160,6 @@ function(gens, opts)
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -169,6 +168,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
       SetGeneratorsOfMonoid(S, gens);
@@ -260,7 +260,6 @@ function(gens, opts)
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetGeneratorsOfMagma(S, gens);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -269,6 +268,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
     else
@@ -345,7 +345,6 @@ function(gens, opts)
     pos := Position(gens, one);
     if pos <> fail  then
       SetGeneratorsOfInverseSemigroup(S, gens);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -354,6 +353,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
       SetGeneratorsOfInverseMonoid(S, gens);
@@ -421,7 +421,6 @@ function(gens, opts)
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -430,6 +429,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
       SetGeneratorsOfInverseMonoid(S, gens);
