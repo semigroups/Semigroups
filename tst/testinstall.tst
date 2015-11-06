@@ -636,13 +636,13 @@ true
 gap> Size(T);
 169
 gap> u := Image(hom, Transformation([1, 1, 1, 1]));
-{Transformation( [ 1, 2, 2, 2 ] )}
+<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> t := Image(hom, Transformation([2, 1, 2, 3]));
-{Transformation( [ 2, 1, 2, 3 ] )}
+<congruence class of Transformation( [ 2, 1, 2, 3 ] )>
 gap> u * t;
-{Transformation( [ 1, 2, 2, 2 ] )}
+<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> t * u;
-{Transformation( [ 1, 2, 2, 2 ] )}
+<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> S := Semigroup(u, t);
 <semigroup with 2 generators>
 gap> Size(S);

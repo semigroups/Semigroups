@@ -61,11 +61,11 @@ gap> Size(cc);
 gap> List(cc, Size);
 [ 1095, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> cc[1] * cc[1];
-{Transformation( [ 3, 1, 1, 4, 4 ] )}
+<congruence class of Transformation( [ 3, 1, 1, 4, 4 ] )>
 gap> cc[7] * cc[1];
-{Transformation( [ 3, 1, 1, 4, 4 ] )}
+<congruence class of Transformation( [ 3, 1, 1, 4, 4 ] )>
 gap> cc[2] * cc[5];
-{Transformation( [ 2, 4, 1, 3, 1 ] )}
+<congruence class of Transformation( [ 2, 4, 1, 3, 1 ] )>
 gap> cc[9] * cc[7] = cc[11];
 true
 
@@ -136,7 +136,7 @@ gap> CongruenceClassOfElement(cong, z);
 Error, Semigroups: EquivalenceClassOfElement: usage,
 the second arg <elm> must be in the semigroup of first arg <cong>,
 gap> xclass := CongruenceClassOfElement(cong, x);
-{Transformation( [ 3, 4, 2, 4 ] )}
+<congruence class of Transformation( [ 3, 4, 2, 4 ] )>
 gap> x in xclass;
 true
 gap> xclass * yclass = tclass;
