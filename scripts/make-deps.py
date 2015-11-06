@@ -3,7 +3,7 @@
 This module compiles the dependencies of the Semigroups package.
 """
 
-import argparse, os, sys, subprocess
+import argparse, os, sys, subprocess 
 
 PACKAGES = ["io", "orb", "grape", "digraphs"]
 
@@ -31,6 +31,8 @@ if not (os.path.exists(ARGS.pkg_dir) or os.path.isdir(ARGS.pkg_dir)):
     sys.exit('ERROR: can\'t pkg directory!')
 
 DIR = os.getcwd()
+_SCREEN_WIDTH = int(os.popen('stty size', 'r').read().split()[1]) - 3
+_LINE_OF_HASHES = '\033[35m' + ('#' * _SCREEN_WIDTH) + '\033[0m'
 
 for name in PACKAGES:
     os.chdir(ARGS.pkg_dir)
@@ -42,10 +44,10 @@ for name in PACKAGES:
     if len(dirs) == 0:
         print 'ERROR: can\'t find ' + name
         continue
-
-    print 'making ' + os.getcwd() + ' . . . '
     os.chdir(dirs[-1])
-    print 'making ' + os.getcwd() + ' . . . '
-    bash = ['./configure', 'make clean', './configure', 'make']
+    print '\n', _LINE_OF_HASHES
+    print '\033[35mmaking ' + os.getcwd() + ' . . .  \033[0m'
+    print _LINE_OF_HASHES, '\n'
+    bash = ['make clean', './configure', 'make']
     for x in bash:
         subprocess.call(x, shell=True)
