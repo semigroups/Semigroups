@@ -2340,7 +2340,7 @@ this function takes at most two arguments,
 
 # IsTransformationSemigroup
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 1));
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsZeroSemigroup(s);
 true
 gap> Size(s);
@@ -2404,9 +2404,9 @@ gap> Size(s);
 
 # IsBipartitionSemigroup and IsBlockBijectionSemigroup
 gap> s := ZeroSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition group of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> s := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition group of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> last = last2;
 true
 gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 2));
@@ -2444,7 +2444,7 @@ gap> Size(s);
 
 # Zero semigroup of order 1
 gap> s := ZeroSemigroup(1);
-<trivial partial perm group of rank 0 with 0 generators>
+<trivial partial perm group of rank 0 with 1 generator>
 gap> GeneratorsOfSemigroup(s);
 [ <empty partial perm> ]
 gap> HasAsList(s);
@@ -2633,7 +2633,7 @@ gap> s := MonogenicSemigroup(IsPermGroup, 1, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `MonogenicSemigroupCons' on 3 arguments
 gap> s := MonogenicSemigroup(IsTransformationSemigroup, 1, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> s := MonogenicSemigroup(1, 1, 1, 1);
 Error, Semigroups: MonogenicSemigroup: usage,
 this function takes either two or three arguments,
@@ -2643,7 +2643,7 @@ this function takes either two or three arguments,
 
 # Trivial monogenic semigroup
 gap> s := MonogenicSemigroup(1, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2919,7 +2919,7 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # partial perm
 gap> s := MonogenicSemigroup(IsPartialPermSemigroup, 1, 1);
-<trivial partial perm group of rank 0 with 0 generators>
+<trivial partial perm group of rank 0 with 1 generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 1, 1 ]
@@ -2938,7 +2938,7 @@ gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 
 # bipartition and block bijection
 gap> s := MonogenicSemigroup(IsBipartitionSemigroup, 1, 1);
-<trivial bipartition group of degree 1 with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 1, 1 ]
@@ -3274,7 +3274,7 @@ false
 
 # transformation semigroup
 gap> s := RectangularBand(IsTransformationSemigroup, 1, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [1, 1];
@@ -3347,7 +3347,7 @@ gap> s := LeftZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
 gap> s := LeftZeroSemigroup(IsTransformationSemigroup, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> s := LeftZeroSemigroup(1, 1, 1);
 Error, Semigroups: LeftZeroSemigroup: usage,
 this function takes at most two arguments,
@@ -3363,7 +3363,7 @@ gap> s := RightZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
 gap> s := RightZeroSemigroup(IsTransformationSemigroup, 1);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> s := RightZeroSemigroup(1, 1, 1);
 Error, Semigroups: RightZeroSemigroup: usage,
 this function takes at most two arguments,

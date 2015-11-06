@@ -20,7 +20,7 @@ gap> t := Transformation( [ 1 ] );;
 # Trivial full transformation monoid T_1
 # Previously this crashed: see issue #121 on Bitbucket
 gap> s := Semigroup(t); # with displaying the semigroup
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -364,9 +364,9 @@ gap> S := Semigroup(Elements(S));
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
 fail
 gap> S := Semigroup([PartialPerm([]), PartialPerm([1])]);
-<commutative partial perm monoid of rank 1 with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
-<trivial partial perm group of rank 1 with 0 generators>
+<trivial partial perm group of rank 1 with 1 generator>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);

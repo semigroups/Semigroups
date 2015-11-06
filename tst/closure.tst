@@ -34,7 +34,7 @@ gap> NrLClasses(s);
 gap> NrDClasses(s);
 662
 gap> GroupOfUnits(s);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# ClosureTest2
 gap> gens:=
@@ -192,7 +192,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# ClosureTest7
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
@@ -209,7 +209,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# ClosureTest8
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),

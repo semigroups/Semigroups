@@ -414,7 +414,7 @@ gap> StructureDescriptionSchutzenbergerGroups(L);
 gap> StructureDescriptionMaximalSubgroups(L);
 [ "1", "C2", "C4", "C5", "S3", "S4" ]
 gap> GroupOfUnits(L);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IdempotentGeneratedSubsemigroup(L);;
 gap> x:=Transformation( [ 1, 4, 4, 5, 5, 3, 3, 1 ] );;
 gap> InversesOfSemigroupElement(L, x);

@@ -790,7 +790,7 @@ false
 # for <IdentityTransformation>
 gap> t := Transformation( [ 1 ] );;
 gap> s := Semigroup(t);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsSynchronizingSemigroup(s, 2);
 false
 gap> IsSynchronizingSemigroup(s, 1);
@@ -803,7 +803,7 @@ gap> t := Transformation( [ 1 ] );;
 
 # For a trivial transformation semigroup
 gap> s := Semigroup(t);
-<trivial transformation group of degree 0 with 0 generators>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsZeroSemigroup(s);
 true
 
