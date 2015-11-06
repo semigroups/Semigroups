@@ -11,6 +11,8 @@
 # This file contains methods for finite semigroups which do not depend on
 # whether they are acting or not, i.e. they should work for all semigroups.
 
+#TODO update the info strings to include "finite"
+
 # fall back methods
 
 # TODO move this method into the graph inverse semigroup file
@@ -76,12 +78,12 @@ end);
 # creating semigroups, monoids, inverse semigroups, etc
 
 InstallMethod(MagmaByGenerators, "for an associative element collection",
-[IsAssociativeElementCollection], SemigroupByGenerators);
+[IsAssociativeElementCollection and IsFinite], SemigroupByGenerators);
 
 #
 
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
-[IsAssociativeElementCollection],
+[IsAssociativeElementCollection and IsFinite],
 function(coll)
   return SemigroupByGenerators(coll, SEMIGROUPS_DefaultOptionsRec);
 end);
@@ -90,7 +92,7 @@ end);
 
 InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection, IsRecord],
+[IsAssociativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
   local n, i, S, filts, pos, x;
 
@@ -161,7 +163,7 @@ function(gens, opts)
       gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) = 
+      elif not IsPartialPermCollection(gens) or One(gens) =
           One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
         # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
         # = gens[1] from this, it is not possible to recreate the semigroup using
@@ -179,7 +181,7 @@ end);
 #
 
 InstallMethod(MonoidByGenerators, "for an associative element collection",
-[IsAssociativeElementCollection],
+[IsAssociativeElementCollection and IsFinite],
 function(gens)
   return MonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
 end);
@@ -188,7 +190,7 @@ end);
 
 InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection, IsRecord],
+[IsAssociativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
   local n, S, filts, pos, i, x;
 
@@ -261,7 +263,7 @@ function(gens, opts)
       gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) = 
+      elif not IsPartialPermCollection(gens) or One(gens) =
           One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
         # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
         # = gens[1] from this, it is not possible to recreate the semigroup using
@@ -281,7 +283,7 @@ end);
 
 InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection",
-[IsAssociativeElementCollection],
+[IsAssociativeElementCollection and IsFinite],
 function(gens)
   return InverseMonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
 end);
@@ -290,7 +292,7 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection",
-[IsAssociativeElementCollection],
+[IsAssociativeElementCollection and IsFinite],
 function(gens)
   return InverseSemigroupByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
 end);
@@ -299,8 +301,8 @@ end);
 
 InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection,
- IsRecord],
+[IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection
+ and IsFinite, IsRecord],
 function(gens, opts)
   local n, S, filts, one, pos, x;
 
@@ -346,7 +348,7 @@ function(gens, opts)
       gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) = 
+      elif not IsPartialPermCollection(gens) or One(gens) =
           One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
         # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
         # = gens[1] from this, it is not possible to recreate the semigroup using
@@ -372,7 +374,7 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection, IsRecord],
+[IsAssociativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
   local n, S, filts, pos, x;
 
@@ -422,7 +424,7 @@ function(gens, opts)
       gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) = 
+      elif not IsPartialPermCollection(gens) or One(gens) =
           One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
         # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
         # = gens[1] from this, it is not possible to recreate the semigroup using
@@ -441,7 +443,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op and associative element coll.",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection and IsFinite],
 function(S, coll) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  coll,
@@ -472,7 +474,8 @@ end);
 
 InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op, associative elt coll, and record",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
+[IsSemigroupWithInverseOp, IsAssociativeElementCollection and IsFinite,
+ IsRecord],
 function(S, coll, opts)
 
   if IsEmpty(coll) then
@@ -568,7 +571,7 @@ end);
 
 InstallMethod(ClosureSemigroup,
 "for a semigroup and associative element collection",
-[IsSemigroup, IsAssociativeElementCollection],
+[IsSemigroup, IsAssociativeElementCollection and IsFinite],
 function(S, coll) #FIXME: ShallowCopy?
   return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS_OptionsRec(S)));
 end);
@@ -594,7 +597,7 @@ end);
 
 InstallMethod(ClosureSemigroup,
 "for a semigroup, associative element collection, and record",
-[IsSemigroup, IsAssociativeElementCollection, IsRecord],
+[IsSemigroup, IsAssociativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
 
   if IsEmpty(coll) then
@@ -677,7 +680,7 @@ end);
 
 InstallMethod(ClosureSemigroupNC,
 "for a semigroup, associative element collection, and record",
-[IsSemigroup, IsAssociativeElementCollection, IsRecord],
+[IsSemigroup, IsAssociativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
   local data, T;
 
