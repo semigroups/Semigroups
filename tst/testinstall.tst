@@ -1054,6 +1054,59 @@ gap> I := SemigroupIdeal(FullTransformationSemigroup(3), Transformation([1,1,1])
 gap> hom:=HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
 gap> map:=IsomorphismTransformationSemigroup(Range(hom));;
 
+#T# TestInstall67: Checking for correct non-removal of one from generating
+# sets.
+gap> S := Monoid(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+
+#gap> PrintObj(S);
+#Semigroup( [ PartialPerm( [ 1 ], [ 1 ] ) ] )
+gap> S := Semigroup(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ PartialPerm( [ 1 ], [ 1 ] ) ] )
+gap> S := InverseSemigroup(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ PartialPerm( [ 1 ], [ 1 ] ) ] )
+gap> S := InverseMonoid(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ PartialPerm( [ 1 ], [ 1 ] ) ] )
+gap> S := Semigroup(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ IdentityTransformation ] )
+gap> S := Monoid(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ IdentityTransformation ] )
+gap> S := InverseSemigroup(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ IdentityTransformation ] )
+gap> S := InverseMonoid(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ IdentityTransformation ] )
+gap> S := Group(PartialPerm([1]));
+<partial perm group of rank 1 with 1 generator>
+
+#gap> Print(S);
+#Semigroup( [ PartialPerm( [ 1 ], [ 1 ] ) ] )
+gap> S := Group(IdentityTransformation);
+<transformation group of degree 0 with 1 generator>
+
+#gap> Print(S);
+#Group( [ IdentityTransformation ] )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
