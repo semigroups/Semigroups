@@ -434,8 +434,7 @@ gap> SmallGeneratingSet(S);
 #T# TestInstall28: MaximalSubsemigroups of Rees 0-matrix semigroups
 gap> G := Group((1, 2), (3, 4));;
 gap> mat := [[(), ()], [(), 0], [(), (1, 2)]];;
-gap> R := ReesZeroMatrixSemigroup(G, mat);
-<Rees 0-matrix semigroup 2x3 over Group([ (1,2), (3,4) ])>
+gap> R := ReesZeroMatrixSemigroup(G, mat);;
 gap> (IsBound(GAPInfo.PackagesLoaded.grape)
 > and Filename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail
 > and IsDuplicateFreeList(MaximalSubsemigroups(R))
@@ -1052,6 +1051,18 @@ gap> S := InverseSemigroup(PartialPerm([1]), PartialPerm([]));
 <inverse partial perm monoid of rank 1 with 2 generators>
 gap> S := InverseMonoid(PartialPerm([1]), PartialPerm([]));
 <inverse partial perm monoid of rank 1 with 2 generators>
+
+#T# TestInstall66: semigroups with 0 generators are not allowed in Semigroups,
+#i.e. this example shouldn't use Semigroups code and this is here to make sure
+#that it does not. This is from bugfix.tst.
+gap> AsGroup([-1, 1]);
+fail
+
+#T# TestInstall67: semigroups with infinity generators are not allowed in
+# Semigroups, i.e. this example shouldn't use Semigroups code and this is here
+# to make sure that it does not. This is from bugfix.tst.
+gap> FreeMonoid( infinity, "m", [  ] );
+<free monoid with infinity generators>
 
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
