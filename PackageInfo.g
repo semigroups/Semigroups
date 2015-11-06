@@ -29,7 +29,7 @@ function(st)
   fi;
 end);
 
-BindGlobal(_RecogsFunnyWWWURLFunction,
+BindGlobal("_RecogsFunnyWWWURLFunction",
 function(re)
   if IsBound(re.WWWHome) then
     return re.WWWHome;
