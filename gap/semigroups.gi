@@ -261,7 +261,8 @@ function(gens, opts)
 
   SetGeneratorsOfMagma(s, gens);
   if (IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens)) or IsMatrixObj(gens[1]) then
+      and CanEasilyCompareElements(gens) and IsFinite(gens))
+      or IsMatrixObj(gens[1]) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(s, IsMonoid);
@@ -308,7 +309,7 @@ function(gens, record)
   fi;
 
   record := SEMIGROUPS_ProcessOptionsRec(record);
-  gens := ShallowCopy(gens);
+  gens := AsList(gens);
 
   if record.small and Length(gens) > 1 then #small gen. set
     gens := SSortedList(gens); #remove duplicates
@@ -364,7 +365,7 @@ function(gens, record)
   fi;
 
   # remove one from gens if it's there.
-  if CanEasilyCompareElements(gens) then
+  if CanEasilyCompareElements(gens) and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetGeneratorsOfMagma(s, AsList(gens));
@@ -428,6 +429,7 @@ function(gens, record)
   fi;
 
   record := SEMIGROUPS_ProcessOptionsRec(record);
+  gens := AsList(gens);
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
@@ -497,6 +499,7 @@ function(gens, record)
   fi;
 
   record := SEMIGROUPS_ProcessOptionsRec(record);
+  gens := AsList(gens);
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
