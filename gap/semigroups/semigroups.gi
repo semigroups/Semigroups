@@ -97,7 +97,7 @@ function(gens, opts)
   local n, i, S, filts, pos, x;
 
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
-  gens := ShallowCopy(gens);
+  gens := AsList(gens);
 
   # try to find a smaller generating set
   if opts.small and Length(gens) > 1 then
@@ -156,7 +156,8 @@ function(gens, opts)
   SetGeneratorsOfMagma(S, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens) then
+      and CanEasilyCompareElements(gens)
+      and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
@@ -195,7 +196,7 @@ function(gens, opts)
   local n, S, filts, pos, i, x;
 
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
-  gens := ShallowCopy(gens);
+  gens := AsList(gens);
 
   if opts.small and Length(gens) > 1 then #small gen. set
     gens := Shuffle(SSortedList(gens));
@@ -256,7 +257,7 @@ function(gens, opts)
   fi;
 
   # remove one from gens if it's there.
-  if CanEasilyCompareElements(gens) then
+  if CanEasilyCompareElements(gens) and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetGeneratorsOfMagma(S, gens);
@@ -341,9 +342,10 @@ function(gens, opts)
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   one := One(gens);
   SetOne(S, one);
-  gens := ShallowCopy(gens);
+  gens := AsList(gens);
 
-  if CanEasilyCompareElements(gens) then
+  if CanEasilyCompareElements(gens)
+      and IsFinite(gens) then
     pos := Position(gens, one);
     if pos <> fail  then
       SetGeneratorsOfInverseSemigroup(S, gens);
@@ -416,11 +418,12 @@ function(gens, opts)
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-  gens := ShallowCopy(gens);
+  gens := AsList(gens);
   SetGeneratorsOfInverseSemigroup(S, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens) then
+      and CanEasilyCompareElements(gens)
+      and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
