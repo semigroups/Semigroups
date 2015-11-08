@@ -97,7 +97,7 @@ function(gens, opts)
   local n, i, S, filts, pos, x;
 
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
-  gens := AsList(gens);
+  gens := ShallowCopy(gens);
 
   # try to find a smaller generating set
   if opts.small and Length(gens) > 1 then
@@ -341,6 +341,8 @@ function(gens, opts)
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   one := One(gens);
   SetOne(S, one);
+  gens := ShallowCopy(gens);
+
   if CanEasilyCompareElements(gens) then
     pos := Position(gens, one);
     if pos <> fail  then
@@ -414,7 +416,8 @@ function(gens, opts)
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-  SetGeneratorsOfInverseSemigroup(S, AsList(gens));
+  gens := ShallowCopy(gens);
+  SetGeneratorsOfInverseSemigroup(S, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens)
       and CanEasilyCompareElements(gens) then
