@@ -59,7 +59,7 @@ gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
 
 # Congruence classes
 gap> classx := CongruenceClassOfElement(cong, x);
-{PartialPerm( [ 1 ], [ 2 ] )}
+<congruence class of [1,2]>
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);;
 gap> classx = classy;
