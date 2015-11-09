@@ -82,6 +82,10 @@ InstallMethod(Enumerator, "for a generic semigroup with generators",
 function(S)
   local enum;
 
+  if Length(GeneratorsOfSemigroup(S)) = 0 then
+    TryNextMethod();
+  fi;
+
   enum := rec();
 
   enum.NumberElement := function(enum, elt)
@@ -254,6 +258,10 @@ InstallMethod(GenericSemigroupData, "for a semigroup",
 [IsSemigroup],
 function(S)
   local data, hashlen, nrgens, nr, val, i;
+
+  if Length(GeneratorsOfSemigroup(S)) = 0 then
+    TryNextMethod();
+  fi;
 
   if SEMIGROUPS_IsCCSemigroup(S) then
 

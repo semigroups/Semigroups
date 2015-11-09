@@ -250,7 +250,8 @@ function(D)
     ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                  "the D-class is not a subsemigroup,");
   fi;
-  return SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
+
+  return InjectionPrincipalFactor(D);
 end);
 
 # same method for ideal

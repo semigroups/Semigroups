@@ -17,33 +17,6 @@ function(R, i, g, j)
                    [i, g, j, Matrix(R)]);
 end);
 
-InstallImmediateMethod(IsFinite, IsReesZeroMatrixSubsemigroup, 0,
-function(R)
-  if ElementsFamily(FamilyObj(R))!.IsFinite then
-    return true;
-  fi;
-  TryNextMethod();
-end);
-
-InstallMethod(ViewString, "for a Rees matrix semigroup element",
-[IsReesMatrixSemigroupElement],
-function(x)
-  return Concatenation("(", String(x![1]), ",", String(x![2]), ",",
-                       String(x![3]), ")");
-end);
-
-#
-
-InstallMethod(ViewString, "for a Rees 0-matrix semigroup element",
-[IsReesZeroMatrixSemigroupElement],
-function(x)
-  if x![1] = 0 then
-    return "0";
-  fi;
-  return Concatenation("(", ViewString(x![1]), ",", ViewString(x![2]), ",",
-                       ViewString(x![3]), ")");
-end);
-
 InstallMethod(MultiplicativeZero, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
@@ -119,78 +92,9 @@ function(R)
                     Random(Columns(R)), Matrix(ParentAttr(R))]);
 end);
 
-# this method is just a copy of the library method in GAP 4.7.5 with the extra
-# line GeneratorsOfSemigroup, so that the correct (i.e. acting) methods
-# are used for ReesZeroMatrixSemigroups when the package is loaded.
-
-#FIXME double check this isn't already in the library
-#FIXME check this is still necessary, are RZM semigroups acting?
-InstallMethod(ReesZeroMatrixSemigroup, "for a semigroup and a dense list",
-[IsSemigroup, IsDenseList],
-function(S, mat)
-  local fam, R, type, x;
-
-  if not ForAll(mat, x -> IsDenseList(x) and Length(x) = Length(mat[1])) then
-    ErrorMayQuit("Semigroups: ReesZeroMatrixSemigroup: usage,\n",
-                 "<mat> must be a list of dense lists of equal length,");
-  fi;
-
-  for x in mat do
-    if ForAny(x, s -> not (s = 0 or s in S)) then
-      ErrorMayQuit("Semigroups: ReesZeroMatrixSemigroup: usage,\n",
-                   "the entries of <mat> must be 0 or belong to <S>,");
-    fi;
-  od;
-
-  fam := NewFamily("ReesZeroMatrixSemigroupElementsFamily",
-                   IsReesZeroMatrixSemigroupElement);
-
-  if HasIsFinite(S) then
-    fam!.IsFinite := IsFinite(S);
-  else
-    fam!.IsFinite := false;
-  fi;
-
-  # create the Rees matrix semigroup
-  R := Objectify(NewType(CollectionsFamily(fam),
-                 IsWholeFamily
-                 and IsReesZeroMatrixSubsemigroup
-                 and IsAttributeStoringRep), rec());
-
-  # store the type of the elements in the semigroup
-  type := NewType(fam, IsReesZeroMatrixSemigroupElement);
-
-  fam!.type := type;
-  SetTypeReesMatrixSemigroupElements(R, type);
-  SetReesMatrixSemigroupOfFamily(fam, R);
-
-  SetMatrix(R, mat);
-  SetUnderlyingSemigroup(R, S);
-  SetRows(R, [1 .. Length(mat[1])]);
-  SetColumns(R, [1 .. Length(mat)]);
-  SetMultiplicativeZero(R,
-                        Objectify(TypeReesMatrixSemigroupElements(R), [0]));
-
-  # cannot set IsZeroSimpleSemigroup to be <true> here since the matrix may
-  # contain a row or column consisting entirely of 0s!
-  # WW Also S might not be a simple semigroup (which is necessary)!
-
-  #if HasIsFinite(S) then
-  #  SetIsFinite(R, IsFinite(S));
-  #fi;
-
-  GeneratorsOfSemigroup(R);
-  SetIsSimpleSemigroup(R, false);
-  return R;
-end);
-
-#
-
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a collection of Rees 0-matrix semigroup elements",
 [IsReesZeroMatrixSemigroupElementCollection], ReturnFalse);
-
-#
 
 InstallMethod(ViewString,
 "for a Rees 0-matrix subsemigroup ideal with ideal generators",

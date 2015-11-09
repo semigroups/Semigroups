@@ -441,9 +441,7 @@ Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
 
 #T# attributes: IsomorphismReesZeroMatrixSemigroup, infinite
 gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsomorphismReesZeroMatrixSemigroup' on \
-1 arguments
+Error, usage: the semigroup must be a finite 0-simple semigroup,
 
 #T# attributes: IsomorphismReesZeroMatrixSemigroup, error, 1/1
 gap> IsomorphismReesZeroMatrixSemigroup(RegularBooleanMatMonoid(2));
