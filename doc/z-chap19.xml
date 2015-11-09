@@ -30,17 +30,33 @@
   inverse semigroup, then the congruence will be converted automatically to one
   of the last two items in the above list, to reduce the complexity of any
   calculations to be performed.  The user need not manually specify, or even be
-  aware of, the congruence's linked triple or kernel and trace.
+  aware of, the congruence's linked triple or kernel and trace.<P/>
+
+  We can also create left congruences and right congruences, using the <Ref
+  Func="LeftSemigroupCongruence"/> and <Ref Func="RightSemigroupCongruence"/>
+  functions.
+
+  <Section><Heading>Semigroup congruence objects</Heading>
+
+    <#Include Label="IsSemigroupCongruence">
+    <#Include Label="IsLeftSemigroupCongruence">
+    <#Include Label="IsRightSemigroupCongruence">
+
+  </Section>
 
   <Section><Heading>Creating congruences</Heading>
 
-  <#Include Label="SemigroupCongruence">
-  <#Include Label="LeftSemigroupCongruence">
-  <#Include Label="RightSemigroupCongruence">
+    <#Include Label="SemigroupCongruence">
+    <#Include Label="LeftSemigroupCongruence">
+    <#Include Label="RightSemigroupCongruence">
 
   </Section>
+
   <Section><Heading>Congruence classes</Heading>
 
+    <#Include Label="IsCongruenceClass">
+    <#Include Label="IsLeftCongruenceClass">
+    <#Include Label="IsRightCongruenceClass">
     <#Include Label="CongruenceClassOfElement">
     <#Include Label="CongruenceClasses">
     <#Include Label="NonTrivialEquivalenceClasses">
@@ -66,12 +82,12 @@
       That is, <Display>S \cong \mathcal{M}^0[G; I,\Lambda; P], </Display> where
       <M>G</M> is a group, <M>\Lambda</M> and <M>I</M> are non-empty sets, and
       <M>P</M> is regular in the sense that it has no rows or columns consisting
-      soley of zeroes.
+      solely of zeroes.
     </Alt>
     <Alt Only="Text">
       That is, <C>S</C> is isomorphic to <C>M^0[G;I,L;P]</C> where <C>G</C> is a
       group, <C>L</C> and <C>I</C> are non-empty sets and the matrix <C>P</C> is
-      regular in the sense that it has no rows or columns consisting soley of
+      regular in the sense that it has no rows or columns consisting solely of
       zeroes.
     </Alt><P/>
 

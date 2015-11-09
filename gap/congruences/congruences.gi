@@ -188,3 +188,25 @@ function(class)
   ViewObj(Representative(class));
   Print(">");
 end);
+
+#
+
+InstallMethod(ViewObj,
+"for a left congruence class",
+[IsLeftCongruenceClass],
+function(class)
+  Print("<left congruence class of ");
+  ViewObj(Representative(class));
+  Print(">");
+end);
+
+#
+
+InstallMethod(ViewObj,
+"for a right congruence class",
+[IsRightCongruenceClass],
+function(class)
+  Print("<right congruence class of ");
+  ViewObj(Representative(class));
+  Print(">");
+end);

@@ -26,22 +26,22 @@ gap> cong := SemigroupCongruence(S, gens);
 1 generating pairs>
 gap> NonTrivialCongruenceClasses(cong);
 Error, Semigroups: NonTrivialEquivalenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
+this function currently only works if <cong> is over a semigroup
 which is known to be finite,
 gap> gens in cong;
 Error, Semigroups: \in (for a congruence): usage,
-this function currently only works if <cong> is a congruence of a semigroup
+this function currently only works if <cong> is over a semigroup
 which is known to be finite,
 gap> AsLookupTable(cong);
 Error, Semigroups: AsLookupTable: usage,
 <cong> must be a congruence of a finite semigroup,
 gap> EquivalenceClasses(cong);
 Error, Semigroups: EquivalenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
+this function currently only works if <cong> is over a semigroup
 which is known to be finite,
 gap> NrCongruenceClasses(cong);
-Error, Semigroups: NrCongruenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
+Error, Semigroups: NrEquivalenceClasses: usage,
+this function currently only works if <cong> is over a semigroup
 which is known to be finite,
 gap> class := CongruenceClassOfElement(cong, x);;
 
@@ -166,10 +166,10 @@ true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 1, 1, 1, 2, 3, 4, 2, 2, 3, 3, 4, 4 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
-  <congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
-  <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
-  <congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
+[ <left congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
+  <left congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
+  <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
+  <left congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
 gap> IsRightSemigroupCongruence(cong);
 true
 gap> SEMIGROUPS_Enumerate(cong, ReturnTrue);
@@ -200,7 +200,7 @@ true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
+[ <right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
 gap> IsLeftSemigroupCongruence(cong);
 false
 gap> SEMIGROUPS_Enumerate(cong, ReturnFail);

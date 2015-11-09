@@ -216,7 +216,8 @@ function(cong, elm)
   class := Objectify(NewType(fam,
                      IsInverseSemigroupCongruenceClassByKernelTrace),
                      rec(rep := elm));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
 end);
@@ -228,8 +229,8 @@ InstallMethod(\=,
 [IsInverseSemigroupCongruenceClassByKernelTrace,
  IsInverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
-  return(ParentAttr(c1) = ParentAttr(c2) and
-          [c1!.rep, c2!.rep] in ParentAttr(c1));
+  return(EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
+          [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
 end);
 
 #
@@ -239,7 +240,7 @@ InstallMethod(\in,
 [IsAssociativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
 function(elm, class)
   local cong;
-  cong := ParentAttr(class);
+  cong := EquivalenceClassRelation(class);
   return elm in Range(cong) and [elm, class!.rep] in cong;
 end);
 
@@ -250,11 +251,12 @@ InstallMethod(\*,
 [IsInverseSemigroupCongruenceClassByKernelTrace,
  IsInverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
-  if not Parent(c1) = Parent(c2) then
+  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
     ErrorMayQuit("Semigroups: \\*: usage,\n",
                  "the arguments must be classes of the same congruence,");
   fi;
-  return EquivalenceClassOfElementNC(Parent(c1), c1!.rep * c2!.rep);
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
+                                     c1!.rep * c2!.rep);
 end);
 
 #
@@ -263,7 +265,7 @@ InstallMethod(AsSSortedList,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
 function(class)
-  return SSortedList(ImagesElm(ParentAttr(class), class!.rep));
+  return SSortedList(ImagesElm(EquivalenceClassRelation(class), class!.rep));
 end);
 
 #
@@ -359,10 +361,10 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local S, idsmgp, ids, ht_e, i, StartTiming, StopTiming, pos, hashlen, ht, 
-        treehashsize, right, left, genstoapply, enumerate_trace, 
-        enforce_conditions, compute_kernel, genpairs, pairstoapply, 
-        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup, 
+  local S, idsmgp, ids, ht_e, i, StartTiming, StopTiming, pos, hashlen, ht,
+        treehashsize, right, left, genstoapply, enumerate_trace,
+        enforce_conditions, compute_kernel, genpairs, pairstoapply,
+        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup,
         oldKernel, traceBlocks;
 
   # Check that the argument makes sense

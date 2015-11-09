@@ -21,9 +21,17 @@
 ## Some general functions are also implemented in congruences.gi
 ##
 
+# Flexible functions for creating congruences
 DeclareGlobalFunction("SemigroupCongruence");
 DeclareGlobalFunction("LeftSemigroupCongruence");
 DeclareGlobalFunction("RightSemigroupCongruence");
+
+# Separate categories for the classes of left, right, and 2-sided congruences
+DeclareCategory("IsLeftCongruenceClass",
+                IsEquivalenceClass and IsAttributeStoringRep);
+DeclareCategory("IsRightCongruenceClass",
+                IsEquivalenceClass and IsAttributeStoringRep);
+
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("LatticeOfCongruences", IsSemigroup);
 
@@ -33,9 +41,6 @@ DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
                GeneratingPairsOfRightMagmaCongruence);
 
 DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
-DeclareSynonym("NonTrivialCongruenceClasses", NonTrivialEquivalenceClasses);
-DeclareSynonym("CongruenceClasses", EquivalenceClasses);
-DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
 DeclareOperation("\*", [IsEquivalenceClass, IsList]);
 DeclareOperation("\*", [IsList, IsEquivalenceClass]);
 
@@ -43,7 +48,6 @@ DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
                  [IsSemigroupCongruence]);
 DeclareAttribute("AsLookupTable", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
-DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);
 
 DeclareOperation("JoinLeftSemigroupCongruences",
                  [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
@@ -52,3 +56,9 @@ DeclareOperation("JoinRightSemigroupCongruences",
 
 DeclareOperation("IsSubrelation",
                  [IsEquivalenceRelation, IsEquivalenceRelation]);
+
+# Synonyms replacing "equivalence" with "congruence", at user's preference
+DeclareSynonym("NonTrivialCongruenceClasses", NonTrivialEquivalenceClasses);
+DeclareSynonym("CongruenceClasses", EquivalenceClasses);
+DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
+DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);

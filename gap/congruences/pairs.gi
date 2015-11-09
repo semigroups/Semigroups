@@ -377,7 +377,8 @@ _InstallMethodsForCongruences := function(_record)
   local _GeneratingPairsOfXSemigroupCongruence,
         _HasGeneratingPairsOfXSemigroupCongruence,
         _XSemigroupCongruence,
-        _IsXSemigroupCongruence;
+        _IsXSemigroupCongruence,
+        _IsXCongruenceClass;
 
   _GeneratingPairsOfXSemigroupCongruence :=
     EvalString(Concatenation("GeneratingPairsOf",
@@ -394,6 +395,10 @@ _InstallMethodsForCongruences := function(_record)
     EvalString(Concatenation("Is",
                              _record.type_string,
                              "SemigroupCongruence"));
+  _IsXCongruenceClass :=
+    EvalString(Concatenation("Is",
+                             _record.type_string,
+                             "CongruenceClass"));
 
   #
 
@@ -431,8 +436,8 @@ _InstallMethodsForCongruences := function(_record)
     fi;
     if not (HasIsFinite(S) and IsFinite(S)) then
       ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
-                   "this function currently only works if <cong> is a ",
-                   "congruence of a semigroup\nwhich is known to be finite,");
+                   "this function currently only works if <cong> is ",
+                   "over a semigroup\nwhich is known to be finite,");
     fi;
 
     elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
@@ -500,8 +505,8 @@ _InstallMethodsForCongruences := function(_record)
 
     if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
       ErrorMayQuit("Semigroups: EquivalenceClasses: usage,\n",
-                   "this function currently only works if <cong> is a ",
-                   "congruence of a semigroup\nwhich is known to be finite,");
+                   "this function currently only works if <cong> is over a ",
+                   "semigroup\nwhich is known to be finite,");
     fi;
     classes := [];
     next := 1;
@@ -526,8 +531,8 @@ _InstallMethodsForCongruences := function(_record)
 
     if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
       ErrorMayQuit("Semigroups: NonTrivialEquivalenceClasses: usage,\n",
-                   "this function currently only works if <cong> is a ",
-                   "congruence of a semigroup\nwhich is known to be finite,");
+                   "this function currently only works if <cong> is ",
+                   "over a semigroup\nwhich is known to be finite,");
     fi;
     classes := EquivalenceClasses(cong);
     return Filtered(classes, c -> Size(c) > 1);
@@ -564,16 +569,16 @@ _InstallMethodsForCongruences := function(_record)
 
   #
 
-  InstallMethod(NrCongruenceClasses,
+  InstallMethod(NrEquivalenceClasses,
   Concatenation("for a ", _record.info_string, " with generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local S;
     S := Range(cong);
     if not (HasIsFinite(S) and IsFinite(S)) then
-      ErrorMayQuit("Semigroups: NrCongruenceClasses: usage,\n",
-                   "this function currently only works if <cong> is a ",
-                   "congruence of a semigroup\nwhich is known to be finite,");
+      ErrorMayQuit("Semigroups: NrEquivalenceClasses: usage,\n",
+                   "this function currently only works if <cong> is over ",
+                   "a semigroup\nwhich is known to be finite,");
     fi;
     return Maximum(AsLookupTable(cong));
   end);
@@ -660,6 +665,210 @@ _InstallMethodsForCongruences := function(_record)
     return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
                   pair -> pair in cong1);
   end);
+
+  ###########################################################################
+  # methods for classes
+  ###########################################################################
+
+  InstallMethod(EquivalenceClassOfElement,
+  Concatenation("for a ", _record.info_string,
+                " with generating pairs and an associative element"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   IsAssociativeElement],
+  function(cong, elm)
+    if not elm in Range(cong) then
+      ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+                   "the second arg <elm> must be in the\n",
+                   "semigroup of the first arg <cong>,");
+    fi;
+    return EquivalenceClassOfElementNC(cong, elm);
+  end);
+
+  #
+
+  InstallMethod(EquivalenceClassOfElementNC,
+  Concatenation("for a ", _record.info_string,
+                " with generating pairs and an associative element"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   IsAssociativeElement],
+  function(cong, elm)
+    local fam, class;
+    fam := FamilyObj(Range(cong));
+    class := Objectify(NewType(fam, _IsXCongruenceClass
+                               and IsEquivalenceClassDefaultRep),
+                       rec(rep := elm));
+    SetParentAttr(class, Range(cong));
+    SetEquivalenceClassRelation(class, cong);
+    SetRepresentative(class, elm);
+    if HasIsFinite(cong) and IsFinite(cong) then
+      SetIsFinite(class, true);
+    fi;
+    return class;
+  end);
+
+  #
+
+  InstallMethod(Enumerator,
+  Concatenation("for a ", _record.type_string, " congruence class"),
+  [_IsXCongruenceClass],
+  function(class)
+    local cong, S, enum;
+
+    cong := EquivalenceClassRelation(class);
+    S := Range(cong);
+
+    if not (HasIsFinite(S) and IsFinite(S)) then
+      TryNextMethod();
+    fi;
+
+    # cong has been enumerated: return a list
+    if HasAsLookupTable(cong) then
+      return Enumerator(AsList(class));
+    fi;
+
+    # cong has not yet been enumerated: make functions
+    enum := rec();
+
+    enum.ElementNumber := function(enum, pos)
+      local lookfunc, result, table, classno, i;
+      if pos <= enum!.len then
+        return enum!.elms[enum!.list[pos]];
+      fi;
+      lookfunc := function(data)
+        local classno, i;
+        classno := UF_FIND(data!.ufdata, enum!.rep);
+        for i in [1 .. UF_SIZE(data!.ufdata)] do
+          if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
+            enum!.found[i] := true;
+            enum!.len := enum!.len + 1;
+            enum!.list[enum!.len] := i;
+          fi;
+        od;
+        return enum!.len >= pos;
+      end;
+      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
+      if result = fail then
+        # cong has AsLookupTable
+        table := AsLookupTable(enum!.cong);
+        classno := table[enum!.rep];
+        for i in [1 .. Size(Range(enum!.cong))] do
+          if table[i] = classno and not enum!.found[i] then
+            enum!.found[i] := true;
+            enum!.len := enum!.len + 1;
+            enum!.list[enum!.len] := i;
+          fi;
+        od;
+        SetSize(class, enum!.len);
+        SetAsList(class, enum!.list);
+      fi;
+      if pos <= enum!.len then
+        return enum!.elms[enum!.list[pos]];
+      else
+        return fail;
+      fi;
+    end;
+
+    enum.NumberElement := function(enum, elm)
+      local x, lookfunc, result, table, classno, i;
+      x := Position(enum!.elms, elm);
+      lookfunc := function(data)
+        return UF_FIND(data!.ufdata, x)
+               = UF_FIND(data!.ufdata, enum!.rep);
+      end;
+      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
+      if result = fail then
+        # cong has AsLookupTable
+        table := AsLookupTable(enum!.cong);
+        classno := table[enum!.rep];
+        for i in [1 .. Size(Range(enum!.cong))] do
+          if table[i] = classno and not enum!.found[i] then
+            enum!.found[i] := true;
+            enum!.len := enum!.len + 1;
+            enum!.list[enum!.len] := i;
+            if i = x then
+              result := enum!.len;
+            fi;
+          fi;
+        od;
+        SetSize(class, enum!.len);
+        SetAsList(class, enum!.list);
+        return result;
+      elif result!.found then
+        # elm is in the class
+        if enum!.found[x] then
+          # elm already has a position
+          return Position(enum!.list, x);
+        else
+          # put elm in the next available position
+          enum!.found[x] := true;
+          enum!.len := enum!.len + 1;
+          enum!.list[enum!.len] := x;
+          return enum!.len;
+        fi;
+      else
+        # elm is not in the class
+        return fail;
+      fi;
+    end;
+
+    enum := EnumeratorByFunctions(class, enum);
+    enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
+    enum!.elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(enum!.cong)),
+                                     infinity);
+    enum!.rep := Position(enum!.elms,
+                          Representative(UnderlyingCollection(enum)));
+    enum!.list := [enum!.rep];
+    enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
+    enum!.len := 1;
+
+    return enum;
+  end);
+
+  #
+
+  InstallMethod(\in,
+  Concatenation("for an associative element and a finite ",
+                _record.type_string, " congruence class"),
+  [IsAssociativeElement, _IsXCongruenceClass and IsFinite],
+  function(elm, class)
+    return [elm, Representative(class)] in EquivalenceClassRelation(class);
+  end);
+
+  #
+
+  InstallMethod(Size,
+  Concatenation("for a finite ", _record.type_string, " congruence class"),
+  [_IsXCongruenceClass and IsFinite],
+  function(class)
+    local elms, p, tab;
+    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(ParentAttr(class)), infinity);
+    p := Position(elms, Representative(class));
+    tab := AsLookupTable(EquivalenceClassRelation(class));
+    return Number(tab, n -> n = tab[p]);
+  end);
+
+  #
+
+  InstallMethod(\=,
+  Concatenation("for two ", _record.type_string, " congruence classes"),
+  [_IsXCongruenceClass, _IsXCongruenceClass],
+  function(class1, class2)
+    return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+      and [Representative(class1), Representative(class2)]
+          in EquivalenceClassRelation(class1);
+  end);
+
+  #
+
+  InstallMethod(AsList,
+  Concatenation("for a finite ", _record.type_string, " congruence class"),
+  [_IsXCongruenceClass],
+  function(class)
+    return ImagesElm(EquivalenceClassRelation(class), Representative(class));
+  end);
+
+  #
+
 end;
 # End of _InstallMethodsForCongruences function
 
@@ -674,6 +883,22 @@ od;
 
 Unbind(_record);
 Unbind(_InstallMethodsForCongruences);
+
+#
+
+# Multiplication for congruence classes: only makes sense for 2-sided
+InstallMethod(\*,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    ErrorMayQuit("Semigroups: \*: usage,\n",
+                 "the args must be classes of the same congruence,");
+  fi;
+  return CongruenceClassOfElement(EquivalenceClassRelation(class1),
+                                  Representative(class1) *
+                                  Representative(class2));
+end);
 
 ###########################################################################
 # Some individual methods for congruences
@@ -710,183 +935,6 @@ function(cong)
   Print(", ");
   Print(GeneratingPairsOfSemigroupCongruence(cong));
   Print(" )");
-end);
-
-###########################################################################
-# methods for congruence classes
-###########################################################################
-
-InstallMethod(Enumerator, "for a congruence class",
-[IsCongruenceClass],
-function(class)
-  local cong, S, enum;
-
-  cong := EquivalenceClassRelation(class);
-  S := Range(cong);
-
-  if not (HasIsFinite(S) and IsFinite(S)) then
-    TryNextMethod();
-  fi;
-
-  # cong has been enumerated: return a list
-  if HasAsLookupTable(cong) then
-    return Enumerator(AsList(class));
-  fi;
-
-  # cong has not yet been enumerated: make functions
-  enum := rec();
-
-  enum.ElementNumber := function(enum, pos)
-    local lookfunc, result, table, classno, i;
-    if pos <= enum!.len then
-      return enum!.elms[enum!.list[pos]];
-    fi;
-    lookfunc := function(data)
-      local classno, i;
-      classno := UF_FIND(data!.ufdata, enum!.rep);
-      for i in [1 .. UF_SIZE(data!.ufdata)] do
-        if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
-          enum!.found[i] := true;
-          enum!.len := enum!.len + 1;
-          enum!.list[enum!.len] := i;
-        fi;
-      od;
-      return enum!.len >= pos;
-    end;
-    result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
-    if result = fail then
-      # cong has AsLookupTable
-      table := AsLookupTable(enum!.cong);
-      classno := table[enum!.rep];
-      for i in [1 .. Size(Range(enum!.cong))] do
-        if table[i] = classno and not enum!.found[i] then
-          enum!.found[i] := true;
-          enum!.len := enum!.len + 1;
-          enum!.list[enum!.len] := i;
-        fi;
-      od;
-      SetSize(class, enum!.len);
-      SetAsList(class, enum!.list);
-    fi;
-    if pos <= enum!.len then
-      return enum!.elms[enum!.list[pos]];
-    else
-      return fail;
-    fi;
-  end;
-
-  enum.NumberElement := function(enum, elm)
-    local x, lookfunc, result, table, classno, i;
-    x := Position(enum!.elms, elm);
-    lookfunc := function(data)
-      return UF_FIND(data!.ufdata, x)
-             = UF_FIND(data!.ufdata, enum!.rep);
-    end;
-    result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
-    if result = fail then
-      # cong has AsLookupTable
-      table := AsLookupTable(enum!.cong);
-      classno := table[enum!.rep];
-      for i in [1 .. Size(Range(enum!.cong))] do
-        if table[i] = classno and not enum!.found[i] then
-          enum!.found[i] := true;
-          enum!.len := enum!.len + 1;
-          enum!.list[enum!.len] := i;
-          if i = x then
-            result := enum!.len;
-          fi;
-        fi;
-      od;
-      SetSize(class, enum!.len);
-      SetAsList(class, enum!.list);
-      return result;
-    elif result!.found then
-      # elm is in the class
-      if enum!.found[x] then
-        # elm already has a position
-        return Position(enum!.list, x);
-      else
-        # put elm in the next available position
-        enum!.found[x] := true;
-        enum!.len := enum!.len + 1;
-        enum!.list[enum!.len] := x;
-        return enum!.len;
-      fi;
-    else
-      # elm is not in the class
-      return fail;
-    fi;
-  end;
-
-  enum := EnumeratorByFunctions(class, enum);
-  enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
-  enum!.elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(enum!.cong)),
-                                   infinity);
-  enum!.rep := Position(enum!.elms,
-                        Representative(UnderlyingCollection(enum)));
-  enum!.list := [enum!.rep];
-  enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
-  enum!.len := 1;
-
-  return enum;
-end);
-
-#
-
-InstallMethod(\in,
-"for an associative element and a finite congruence class",
-[IsAssociativeElement, IsCongruenceClass and IsFinite],
-function(elm, class)
-  return [elm, Representative(class)] in EquivalenceClassRelation(class);
-end);
-
-#
-
-InstallMethod(Size,
-"for a finite congruence class",
-[IsCongruenceClass and IsFinite],
-function(class)
-  local elms, p, tab;
-  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Parent(class)), infinity);
-  p := Position(elms, Representative(class));
-  tab := AsLookupTable(EquivalenceClassRelation(class));
-  return Number(tab, n -> n = tab[p]);
-end);
-
-#
-
-InstallMethod(\=,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-    and [Representative(class1), Representative(class2)]
-        in EquivalenceClassRelation(class1);
-end);
-
-
-#
-
-InstallMethod(\*,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
-                 "the args must be classes of the same congruence,");
-  fi;
-  return CongruenceClassOfElement(EquivalenceClassRelation(class1),
-                                  Representative(class1) *
-                                  Representative(class2));
-end);
-
-#
-
-InstallMethod(AsList,
-"for a congruence class",
-[IsCongruenceClass],
-function(class)
-  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
 #
@@ -1028,7 +1076,7 @@ function(latt, opts)
     S := Range(congs[1]);
     symbols := EmptyPlist(Length(latt));
     for i in [1..Length(latt)] do
-      nr := NrCongruenceClasses(congs[i]);
+      nr := NrEquivalenceClasses(congs[i]);
       if nr = 1 then
         symbols[i] := "U";
       elif nr = Size(S) then
