@@ -13,14 +13,11 @@
 DeclareProperty("IsSemilatticeCongruence",
                 IsSemigroupCongruence and IsAttributeStoringRep);
 DeclareCategory("IsSemilatticeCongruenceClass",
-                IsEquivalenceClass and IsAttributeStoringRep and
+                IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
 DeclareAttribute("MeetsOfGeneratingPairs", IsSemilatticeCongruence);
 DeclareAttribute("BlockCoincidenceTable", IsSemilatticeCongruence);
 
-DeclareCategory("SEMIGROUPS_SemilatticeCongruenceClass",
-                IsCongruenceClass and IsAttributeStoringRep and
-                IsAssociativeElement);
 DeclareGlobalFunction("SEMIGROUPS_SemilatticeCongClassNoOfElm");
 
 DeclareGlobalFunction("SemilatticeElementsBetween");

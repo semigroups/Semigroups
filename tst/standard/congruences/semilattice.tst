@@ -7,11 +7,11 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: congruences/semilattice.tst");
+gap> START_TEST("Semigroups package: standard/congruences/semilattice.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SEMIGROUPS_StartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# CongSemilatticeTest1: 
 gap> e := InverseSemigroup( [ PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] ),
@@ -65,18 +65,86 @@ gap> BlockCoincidenceTable(cong);
 [ 1, 1, 1, 2 ]
 
 #T# CongSemilatticeTest2: Bigger example
-gap> s := InverseSemigroup( [
->   PartialPerm( [1,2,3,4,5,6,7,8], [10,7,2,5,6,9,3,8] ),
->   PartialPerm( [1,2,3,4,6,7,9], [1,6,2,8,5,9,7] ),
->   PartialPerm( [1,2,3,4,9], [3,5,10,4,6] ),
->   PartialPerm( [1,2,3,5,6,7,8,9], [7,4,1,6,9,5,2,3] ),
->   PartialPerm( [1,2,4,5,8,9], [9,5,4,8,6,1] ),
->   PartialPerm( [1,3,4,5,8,9], [10,6,7,9,4,1] ),
->   PartialPerm( [1,2,3,8,10], [1,2,7,9,4] ),
->   PartialPerm( [1,2,3,5,6,10], [4,3,6,2,1,10] ),
->   PartialPerm( [1,2,3,4,5,7,8,10], [5,2,8,4,1,10,3,7] ),
->   PartialPerm( [1,2,3,4,6,7,8,9,10], [8,10,3,7,1,5,9,2,6] ) ] );;
-gap> e := IdempotentGeneratedSubsemigroup(s);;
+gap> e := InverseSemigroup( [
+> PartialPerm([1,2,3,4,6,7,8,9,10], [1,2,3,4,6,7,8,9,10]),
+> PartialPerm([1,2,3,5,6,7,8,9,10], [1,2,3,5,6,7,8,9,10]),
+> PartialPerm([2,3,5,6,7,8,9,10], [2,3,5,6,7,8,9,10]),
+> PartialPerm([1,2,3,4,5,7,8,10], [1,2,3,4,5,7,8,10]),
+> PartialPerm([1,2,3,5,6,8,9,10], [1,2,3,5,6,8,9,10]),
+> PartialPerm([1,2,3,4,7,8,9,10], [1,2,3,4,7,8,9,10]),
+> PartialPerm([1,2,3,4,5,6,7,9], [1,2,3,4,5,6,7,9]),
+> PartialPerm([1,3,4,6,7,8,9,10], [1,3,4,6,7,8,9,10]),
+> PartialPerm([1,2,3,4,6,8,9,10], [1,2,3,4,6,8,9,10]),
+> PartialPerm([1,2,3,5,6,7,8,9], [1,2,3,5,6,7,8,9]),
+> PartialPerm([1,2,3,4,5,6,7,8], [1,2,3,4,5,6,7,8]),
+> PartialPerm([2,3,5,7,8,9,10], [2,3,5,7,8,9,10]),
+> PartialPerm([1,3,4,5,6,7,9], [1,3,4,5,6,7,9]),
+> PartialPerm([2,3,5,6,7,8,10], [2,3,5,6,7,8,10]),
+> PartialPerm([1,2,3,4,7,8,9], [1,2,3,4,7,8,9]),
+> PartialPerm([1,3,4,6,7,8,9], [1,3,4,6,7,8,9]),
+> PartialPerm([1,2,3,4,5,6,9], [1,2,3,4,5,6,9]),
+> PartialPerm([1,2,3,5,6,9,10], [1,2,3,5,6,9,10]),
+> PartialPerm([1,2,3,5,8,9,10], [1,2,3,5,8,9,10]),
+> PartialPerm([1,2,4,5,6,7,8], [1,2,4,5,6,7,8]),
+> PartialPerm([1,4,6,7,8,9,10], [1,4,6,7,8,9,10]),
+> PartialPerm([1,2,3,4,5,7,9], [1,2,3,4,5,7,9]),
+> PartialPerm([1,2,3,4,6,8,10], [1,2,3,4,6,8,10]),
+> PartialPerm([1,3,5,7,8,9,10], [1,3,5,7,8,9,10]),
+> PartialPerm([1,2,3,4,6,8,9], [1,2,3,4,6,8,9]),
+> PartialPerm([2,3,5,6,7,9,10], [2,3,5,6,7,9,10]),
+> PartialPerm([1,2,3,4,5,8,10], [1,2,3,4,5,8,10]),
+> PartialPerm([3,4,6,7,8,9,10], [3,4,6,7,8,9,10]),
+> PartialPerm([1,2,4,5,6,7,9], [1,2,4,5,6,7,9]),
+> PartialPerm([1,3,4,6,7,8,10], [1,3,4,6,7,8,10]),
+> PartialPerm([1,3,4,5,6,7,8], [1,3,4,5,6,7,8]),
+> PartialPerm([2,3,4,5,7,8,10], [2,3,4,5,7,8,10]),
+> PartialPerm([2,3,4,7,8,9,10], [2,3,4,7,8,9,10]),
+> PartialPerm([1,3,4,6,7,9,10], [1,3,4,6,7,9,10]),
+> PartialPerm([1,2,5,6,7,8,9], [1,2,5,6,7,8,9]),
+> PartialPerm([1,3,5,6,7,8,9], [1,3,5,6,7,8,9]),
+> PartialPerm([2,3,4,5,6,7,9], [2,3,4,5,6,7,9]),
+> PartialPerm([3,5,6,7,8,9,10], [3,5,6,7,8,9,10]),
+> PartialPerm([1,2,3,5,7,8,9], [1,2,3,5,7,8,9]),
+> PartialPerm([2,3,4,5,6,7,8], [2,3,4,5,6,7,8]),
+> PartialPerm([1,2,3,4,7,9,10], [1,2,3,4,7,9,10]),
+> PartialPerm([1,3,5,6,9,10], [1,3,5,6,9,10]),
+> PartialPerm([2,4,7,8,9,10], [2,4,7,8,9,10]),
+> PartialPerm([2,5,6,7,8,10], [2,5,6,7,8,10]),
+> PartialPerm([1,2,4,5,8,9], [1,2,4,5,8,9]),
+> PartialPerm([2,3,4,5,6,8], [2,3,4,5,6,8]),
+> PartialPerm([1,5,7,8,9,10], [1,5,7,8,9,10]),
+> PartialPerm([1,2,4,6,8,10], [1,2,4,6,8,10]),
+> PartialPerm([2,3,4,6,8,10], [2,3,4,6,8,10]),
+> PartialPerm([1,2,5,8,9,10], [1,2,5,8,9,10]),
+> PartialPerm([1,3,4,5,8,10], [1,3,4,5,8,10]),
+> PartialPerm([1,2,3,4,6,10], [1,2,3,4,6,10]),
+> PartialPerm([1,2,4,8,9,10], [1,2,4,8,9,10]),
+> PartialPerm([1,4,5,6,8,9], [1,4,5,6,8,9]),
+> PartialPerm([2,5,6,7,9,10], [2,5,6,7,9,10]),
+> PartialPerm([1,2,3,5,7,10], [1,2,3,5,7,10]),
+> PartialPerm([1,2,4,5,8,10], [1,2,4,5,8,10]),
+> PartialPerm([3,4,5,7,8,10], [3,4,5,7,8,10]),
+> PartialPerm([1,3,5,7,9,10], [1,3,5,7,9,10]),
+> PartialPerm([1,2,3,5,6,10], [1,2,3,5,6,10]),
+> PartialPerm([1,2,3,4,5,10], [1,2,3,4,5,10]),
+> PartialPerm([2,5,7,8,9,10], [2,5,7,8,9,10]),
+> PartialPerm([1,2,5,6,9,10], [1,2,5,6,9,10]),
+> PartialPerm([2,3,4,6,8,9], [2,3,4,6,8,9]),
+> PartialPerm([2,6,7,8,9,10], [2,6,7,8,9,10]),
+> PartialPerm([1,2,4,7,9,10], [1,2,4,7,9,10]),
+> PartialPerm([1,2,4,7,8,9], [1,2,4,7,8,9]),
+> PartialPerm([2,4,5,7,8,10], [2,4,5,7,8,10]),
+> PartialPerm([1,2,5,7,8,10], [1,2,5,7,8,10]),
+> PartialPerm([1,3,4,5,8,9], [1,3,4,5,8,9]),
+> PartialPerm([3,4,5,7,10], [3,4,5,7,10]),
+> PartialPerm([2,4,6,8,9], [2,4,6,8,9]),
+> PartialPerm([2,4,5,7,10], [2,4,5,7,10]),
+> PartialPerm([4,5,6,8,9], [4,5,6,8,9]),
+> PartialPerm([5,6,8,9,10], [5,6,8,9,10]),
+> PartialPerm([3,4,5,8,9], [3,4,5,8,9]),
+> PartialPerm([3,4,5,6,10], [3,4,5,6,10]),
+> PartialPerm([2,4,5,8,9], [2,4,5,8,9]),
+> PartialPerm([4,5,6,10], [4,5,6,10])]);;
 gap> IsSemilattice(e);
 true
 gap> pairs := [
@@ -158,7 +226,8 @@ true
 gap> c2 * c2 = c2;
 true
 gap> NonTrivialCongruenceClasses(cong);
-[ {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, {PartialPerm( [ 3, 4 ], [ 3, 4 ] )} ]
+[ <congruence class of <identity partial perm on [ 2, 3 ]>>, 
+  <congruence class of <identity partial perm on [ 3, 4 ]>> ]
 gap> NonTrivialCongruenceClasses(cong2);
 [  ]
 gap> ImagesElm(cong, PartialPerm([8,9],[8,9]));
@@ -207,26 +276,97 @@ gap> AsList(c1);
 [ <empty partial perm>, <identity partial perm on [ 2, 3 ]>, 
   <identity partial perm on [ 2 ]>, <identity partial perm on [ 2, 4 ]> ]
 gap> CongruenceClasses(cong);
-[ {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, 
-  {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
-  {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}, 
-  {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
-  {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, {PartialPerm( [ 3 ], [ 3 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 1 ], [ 1 ] )} ]
+[ <congruence class of <identity partial perm on [ 2, 3 ]>>, 
+  <congruence class of <identity partial perm on [ 3, 4 ]>>, 
+  <congruence class of <identity partial perm on [ 1, 3, 4 ]>>, 
+  <congruence class of <identity partial perm on [ 1, 2, 3 ]>>, 
+  <congruence class of <identity partial perm on [ 1, 2, 4 ]>>, 
+  <congruence class of <identity partial perm on [ 1, 3 ]>>, 
+  <congruence class of <identity partial perm on [ 3 ]>>, 
+  <congruence class of <identity partial perm on [ 1, 2 ]>>, 
+  <congruence class of <identity partial perm on [ 1 ]>> ]
 
 #T# CongSemilatticeTest4: ElementsBetween
-gap> s := InverseSemigroup( [
->   PartialPerm( [1,2,3,4,5,6,7,8], [10,7,2,5,6,9,3,8] ),
->   PartialPerm( [1,2,3,4,6,7,9], [1,6,2,8,5,9,7] ),
->   PartialPerm( [1,2,3,4,9], [3,5,10,4,6] ),
->   PartialPerm( [1,2,3,5,6,7,8,9], [7,4,1,6,9,5,2,3] ),
->   PartialPerm( [1,2,4,5,8,9], [9,5,4,8,6,1] ),
->   PartialPerm( [1,3,4,5,8,9], [10,6,7,9,4,1] ),
->   PartialPerm( [1,2,3,8,10], [1,2,7,9,4] ),
->   PartialPerm( [1,2,3,5,6,10], [4,3,6,2,1,10] ),
->   PartialPerm( [1,2,3,4,5,7,8,10], [5,2,8,4,1,10,3,7] ),
->   PartialPerm( [1,2,3,4,6,7,8,9,10], [8,10,3,7,1,5,9,2,6] ) ] );;
-gap> e := IdempotentGeneratedSubsemigroup(s);;
+gap> e := InverseSemigroup( [
+> PartialPerm([1,2,3,4,6,7,8,9,10], [1,2,3,4,6,7,8,9,10]),
+> PartialPerm([1,2,3,5,6,7,8,9,10], [1,2,3,5,6,7,8,9,10]),
+> PartialPerm([2,3,5,6,7,8,9,10], [2,3,5,6,7,8,9,10]),
+> PartialPerm([1,2,3,4,5,7,8,10], [1,2,3,4,5,7,8,10]),
+> PartialPerm([1,2,3,5,6,8,9,10], [1,2,3,5,6,8,9,10]),
+> PartialPerm([1,2,3,4,7,8,9,10], [1,2,3,4,7,8,9,10]),
+> PartialPerm([1,2,3,4,5,6,7,9], [1,2,3,4,5,6,7,9]),
+> PartialPerm([1,3,4,6,7,8,9,10], [1,3,4,6,7,8,9,10]),
+> PartialPerm([1,2,3,4,6,8,9,10], [1,2,3,4,6,8,9,10]),
+> PartialPerm([1,2,3,5,6,7,8,9], [1,2,3,5,6,7,8,9]),
+> PartialPerm([1,2,3,4,5,6,7,8], [1,2,3,4,5,6,7,8]),
+> PartialPerm([2,3,5,7,8,9,10], [2,3,5,7,8,9,10]),
+> PartialPerm([1,3,4,5,6,7,9], [1,3,4,5,6,7,9]),
+> PartialPerm([2,3,5,6,7,8,10], [2,3,5,6,7,8,10]),
+> PartialPerm([1,2,3,4,7,8,9], [1,2,3,4,7,8,9]),
+> PartialPerm([1,3,4,6,7,8,9], [1,3,4,6,7,8,9]),
+> PartialPerm([1,2,3,4,5,6,9], [1,2,3,4,5,6,9]),
+> PartialPerm([1,2,3,5,6,9,10], [1,2,3,5,6,9,10]),
+> PartialPerm([1,2,3,5,8,9,10], [1,2,3,5,8,9,10]),
+> PartialPerm([1,2,4,5,6,7,8], [1,2,4,5,6,7,8]),
+> PartialPerm([1,4,6,7,8,9,10], [1,4,6,7,8,9,10]),
+> PartialPerm([1,2,3,4,5,7,9], [1,2,3,4,5,7,9]),
+> PartialPerm([1,2,3,4,6,8,10], [1,2,3,4,6,8,10]),
+> PartialPerm([1,3,5,7,8,9,10], [1,3,5,7,8,9,10]),
+> PartialPerm([1,2,3,4,6,8,9], [1,2,3,4,6,8,9]),
+> PartialPerm([2,3,5,6,7,9,10], [2,3,5,6,7,9,10]),
+> PartialPerm([1,2,3,4,5,8,10], [1,2,3,4,5,8,10]),
+> PartialPerm([3,4,6,7,8,9,10], [3,4,6,7,8,9,10]),
+> PartialPerm([1,2,4,5,6,7,9], [1,2,4,5,6,7,9]),
+> PartialPerm([1,3,4,6,7,8,10], [1,3,4,6,7,8,10]),
+> PartialPerm([1,3,4,5,6,7,8], [1,3,4,5,6,7,8]),
+> PartialPerm([2,3,4,5,7,8,10], [2,3,4,5,7,8,10]),
+> PartialPerm([2,3,4,7,8,9,10], [2,3,4,7,8,9,10]),
+> PartialPerm([1,3,4,6,7,9,10], [1,3,4,6,7,9,10]),
+> PartialPerm([1,2,5,6,7,8,9], [1,2,5,6,7,8,9]),
+> PartialPerm([1,3,5,6,7,8,9], [1,3,5,6,7,8,9]),
+> PartialPerm([2,3,4,5,6,7,9], [2,3,4,5,6,7,9]),
+> PartialPerm([3,5,6,7,8,9,10], [3,5,6,7,8,9,10]),
+> PartialPerm([1,2,3,5,7,8,9], [1,2,3,5,7,8,9]),
+> PartialPerm([2,3,4,5,6,7,8], [2,3,4,5,6,7,8]),
+> PartialPerm([1,2,3,4,7,9,10], [1,2,3,4,7,9,10]),
+> PartialPerm([1,3,5,6,9,10], [1,3,5,6,9,10]),
+> PartialPerm([2,4,7,8,9,10], [2,4,7,8,9,10]),
+> PartialPerm([2,5,6,7,8,10], [2,5,6,7,8,10]),
+> PartialPerm([1,2,4,5,8,9], [1,2,4,5,8,9]),
+> PartialPerm([2,3,4,5,6,8], [2,3,4,5,6,8]),
+> PartialPerm([1,5,7,8,9,10], [1,5,7,8,9,10]),
+> PartialPerm([1,2,4,6,8,10], [1,2,4,6,8,10]),
+> PartialPerm([2,3,4,6,8,10], [2,3,4,6,8,10]),
+> PartialPerm([1,2,5,8,9,10], [1,2,5,8,9,10]),
+> PartialPerm([1,3,4,5,8,10], [1,3,4,5,8,10]),
+> PartialPerm([1,2,3,4,6,10], [1,2,3,4,6,10]),
+> PartialPerm([1,2,4,8,9,10], [1,2,4,8,9,10]),
+> PartialPerm([1,4,5,6,8,9], [1,4,5,6,8,9]),
+> PartialPerm([2,5,6,7,9,10], [2,5,6,7,9,10]),
+> PartialPerm([1,2,3,5,7,10], [1,2,3,5,7,10]),
+> PartialPerm([1,2,4,5,8,10], [1,2,4,5,8,10]),
+> PartialPerm([3,4,5,7,8,10], [3,4,5,7,8,10]),
+> PartialPerm([1,3,5,7,9,10], [1,3,5,7,9,10]),
+> PartialPerm([1,2,3,5,6,10], [1,2,3,5,6,10]),
+> PartialPerm([1,2,3,4,5,10], [1,2,3,4,5,10]),
+> PartialPerm([2,5,7,8,9,10], [2,5,7,8,9,10]),
+> PartialPerm([1,2,5,6,9,10], [1,2,5,6,9,10]),
+> PartialPerm([2,3,4,6,8,9], [2,3,4,6,8,9]),
+> PartialPerm([2,6,7,8,9,10], [2,6,7,8,9,10]),
+> PartialPerm([1,2,4,7,9,10], [1,2,4,7,9,10]),
+> PartialPerm([1,2,4,7,8,9], [1,2,4,7,8,9]),
+> PartialPerm([2,4,5,7,8,10], [2,4,5,7,8,10]),
+> PartialPerm([1,2,5,7,8,10], [1,2,5,7,8,10]),
+> PartialPerm([1,3,4,5,8,9], [1,3,4,5,8,9]),
+> PartialPerm([3,4,5,7,10], [3,4,5,7,10]),
+> PartialPerm([2,4,6,8,9], [2,4,6,8,9]),
+> PartialPerm([2,4,5,7,10], [2,4,5,7,10]),
+> PartialPerm([4,5,6,8,9], [4,5,6,8,9]),
+> PartialPerm([5,6,8,9,10], [5,6,8,9,10]),
+> PartialPerm([3,4,5,8,9], [3,4,5,8,9]),
+> PartialPerm([3,4,5,6,10], [3,4,5,6,10]),
+> PartialPerm([2,4,5,8,9], [2,4,5,8,9]),
+> PartialPerm([4,5,6,10], [4,5,6,10])]);;
 gap> IsSemilattice(e);
 true
 gap> hi := PartialPerm( [ 3, 5, 8, 9, 10 ], [ 3, 5, 8, 9, 10 ] );;
@@ -289,7 +429,7 @@ gap> cc := MeetSemigroupCongruences(c1,c2);
 <semigroup congruence over <inverse partial perm semigroup of rank 4 with 6 
  generators> with 1 generating pairs>
 gap> NonTrivialCongruenceClasses(cc);
-[ {PartialPerm( [ 1, 2 ], [ 1, 2 ] )} ]
+[ <congruence class of <identity partial perm on [ 1, 2 ]>> ]
 gap> Elements(last[1]);
 [ <identity partial perm on [ 1, 2 ]>, <identity partial perm on [ 1, 2, 3 ]> 
  ]

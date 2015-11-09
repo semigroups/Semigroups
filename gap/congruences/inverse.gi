@@ -67,7 +67,7 @@ function(S, kernel, traceBlocks)
     od;
   od;
   #TODO: Change this to NC
-  return InverseSemigroupCongruenceByKernelTrace(S, kernel, traceBlocks);
+  return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end);
 
 #
@@ -507,18 +507,18 @@ function(cong)
   repeat
     oldLookup := StructuralCopy(UF_TABLE(traceUF));
     oldKernel := kernel;
-    StartTiming(timing);
-    Print("compute_kernel: ");
+    # StartTiming(timing);
+    # Print("compute_kernel: ");
     compute_kernel();
-    StopTiming(timing);
-    StartTiming(timing);
-    Print("enforce_conditions: ");
+    # StopTiming(timing);
+    # StartTiming(timing);
+    # Print("enforce_conditions: ");
     enforce_conditions();
-    StopTiming(timing);
-    StartTiming(timing);
-    Print("enumerate_trace: ");
+    # StopTiming(timing);
+    # StartTiming(timing);
+    # Print("enumerate_trace: ");
     enumerate_trace();
-    StopTiming(timing);
+    # StopTiming(timing);
     Info(InfoSemigroups, 1, "lookup: ", oldLookup = UF_TABLE(traceUF));
     Info(InfoSemigroups, 1, "kernel: ", oldKernel = kernel);
     Info(InfoSemigroups, 1, "nrk = 0: ", nrk = 0);
