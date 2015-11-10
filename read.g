@@ -146,7 +146,6 @@ ReadPackage("semigroups/gap/congruences/inverse.gi");
 ReadPackage("semigroups/gap/congruences/simple.gi");
 ReadPackage("semigroups/gap/congruences/rees.gi");
 ReadPackage("semigroups/gap/congruences/quotients.gi");
-ReadPackage("semigroups/gap/congruences/semilattice.gi");
 ReadPackage("semigroups/gap/congruences/congruences.gi");
 ReadPackage("semigroups/gap/congruences/lattice.gi");
 
