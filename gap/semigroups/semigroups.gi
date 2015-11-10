@@ -156,11 +156,11 @@ function(gens, opts)
   SetGeneratorsOfMagma(S, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens) then
+      and CanEasilyCompareElements(gens)
+      and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -169,6 +169,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
       SetGeneratorsOfMonoid(S, gens);
@@ -195,7 +196,7 @@ function(gens, opts)
   local n, S, filts, pos, i, x;
 
   opts := SEMIGROUPS_ProcessOptionsRec(opts);
-  gens := ShallowCopy(gens);
+  gens := AsList(gens);
 
   if opts.small and Length(gens) > 1 then #small gen. set
     gens := Shuffle(SSortedList(gens));
@@ -256,11 +257,10 @@ function(gens, opts)
   fi;
 
   # remove one from gens if it's there.
-  if CanEasilyCompareElements(gens) then
+  if CanEasilyCompareElements(gens) and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetGeneratorsOfMagma(S, gens);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -269,6 +269,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
     else
@@ -341,11 +342,13 @@ function(gens, opts)
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   one := One(gens);
   SetOne(S, one);
-  if CanEasilyCompareElements(gens) then
+  gens := AsList(gens);
+
+  if CanEasilyCompareElements(gens)
+      and IsFinite(gens) then
     pos := Position(gens, one);
     if pos <> fail  then
       SetGeneratorsOfInverseSemigroup(S, gens);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -354,6 +357,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
       SetGeneratorsOfInverseMonoid(S, gens);
@@ -414,14 +418,15 @@ function(gens, opts)
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-  SetGeneratorsOfInverseSemigroup(S, AsList(gens));
+  gens := AsList(gens);
+  SetGeneratorsOfInverseSemigroup(S, gens);
 
   if IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens) then
+      and CanEasilyCompareElements(gens)
+      and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(S, IsMonoid);
-      gens := ShallowCopy(gens);
       if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
         SetIsTrivial(S, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
@@ -430,6 +435,7 @@ function(gens, opts)
         # = gens[1] from this, it is not possible to recreate the semigroup using
         # Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
       SetGeneratorsOfInverseMonoid(S, gens);
