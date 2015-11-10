@@ -78,7 +78,7 @@ InstallMethod(\=,
 [IsUniversalSemigroupCongruence,
  IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(ucong, pcong)
-  return Range(ucong) = Range(pcong) and NrCongruenceClasses(pcong) = 1;
+  return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
 end);
 
 #
@@ -88,7 +88,7 @@ InstallMethod(\=,
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
  IsUniversalSemigroupCongruence],
 function(pcong, ucong)
-  return Range(ucong) = Range(pcong) and NrCongruenceClasses(pcong) = 1;
+  return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
 end);
 
 #
@@ -117,7 +117,7 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
 function(cong)

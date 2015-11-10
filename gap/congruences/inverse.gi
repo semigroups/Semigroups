@@ -11,7 +11,7 @@
 ## "kernel and trace" representation - see Howie 5.3
 ##
 
-# TODO: make a method for NrCongruenceClasses for an inverse semigroup by
+# TODO: make a method for NrEquivalenceClasses for an inverse semigroup by
 # congreunce pair JDM
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,

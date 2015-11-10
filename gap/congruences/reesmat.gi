@@ -810,7 +810,7 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
 function(cong)
@@ -824,7 +824,7 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
 function(cong)

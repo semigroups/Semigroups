@@ -229,11 +229,11 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for a (0-simple) semigroup congruence",
 [SEMIGROUPS_CongSimple],
 function(cong)
-  return NrCongruenceClasses(cong!.rmscong);
+  return NrEquivalenceClasses(cong!.rmscong);
 end);
 
 #

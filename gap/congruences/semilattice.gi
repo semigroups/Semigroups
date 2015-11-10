@@ -404,7 +404,7 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for a semilattice congruence",
 [IsSemilatticeCongruence],
 function(cong)

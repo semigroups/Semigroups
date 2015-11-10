@@ -19,7 +19,7 @@ function(cong)
   local S, classes, sizes, pos, class, ideal;
   # This function is adapted from code in the library
   S := Range(cong);
-  if NrCongruenceClasses(cong) = Size(S) then
+  if NrEquivalenceClasses(cong) = Size(S) then
     # Trivial congruence - only possible ideal is zero
     if MultiplicativeZero(S) <> fail then
       SetSemigroupIdealOfReesCongruence(cong, MinimalIdeal(S));
@@ -95,7 +95,7 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for a Rees congruence",
 [IsReesCongruence],
 cong -> Size(Range(cong)) - Size(SemigroupIdealOfReesCongruence(cong)) + 1);
@@ -201,7 +201,7 @@ InstallMethod(EquivalenceClasses,
 [IsReesCongruence],
 function(cong)
   local classes, I, next, x;
-  classes := EmptyPlist(NrCongruenceClasses(cong));
+  classes := EmptyPlist(NrEquivalenceClasses(cong));
   I := SemigroupIdealOfReesCongruence(cong);
   classes[1] := EquivalenceClassOfElementNC(cong, I.1);
   next := 2;
@@ -322,7 +322,7 @@ function(cong)
   S := Range(cong);
   gens := MinimalIdealGeneratingSet(SemigroupIdealOfReesCongruence(cong));
   min := MinimalIdeal(S);
-  nrclasses := NrCongruenceClasses(cong);
+  nrclasses := NrEquivalenceClasses(cong);
   pairs := [];
   cong := SemigroupCongruence(S, pairs);
   for y in min do
