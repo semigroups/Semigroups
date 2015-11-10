@@ -77,10 +77,10 @@ function(cong, rmsclass)
   fam := FamilyObj(Range(cong));
   class := Objectify(NewType(fam, SEMIGROUPS_CongClassSimple),
                      rec(rmsclass := rmsclass, iso := cong!.iso));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, Representative(rmsclass) ^
                            InverseGeneralMapping(cong!.iso));
-  SetEquivalenceClassRelation(class, cong);
   return class;
 end);
 

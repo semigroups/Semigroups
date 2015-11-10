@@ -144,7 +144,7 @@ function(cong, elm)
   classNo := SEMIGROUPS_SemilatticeCongClassNoOfElm(cong, elm);
   class := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
                      rec(classNo := classNo));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
@@ -215,7 +215,7 @@ function(cong)
   for i in [1 .. nrclasses] do
     list[i] := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
                          rec(classNo := i));
-    SetParentAttr(list[i], cong);
+    SetParentAttr(list[i], Range(cong));
     SetEquivalenceClassRelation(list[i], cong);
   od;
   return list;
@@ -429,7 +429,7 @@ function(cong)
       i := i + 1;
       classes[i] := Objectify(NewType(fam, IsSemilatticeCongruenceClass),
                               rec(classNo := 0));
-      SetParentAttr(classes[i], cong);
+      SetParentAttr(classes[i], Range(cong));
       SetEquivalenceClassRelation(classes[i], cong);
       SetRepresentative(classes[i], x);
     fi;

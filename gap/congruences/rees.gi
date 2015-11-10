@@ -248,7 +248,7 @@ function(cong, elm)
   fam := CollectionsFamily(FamilyObj(elm));
   class := Objectify(NewType(fam, IsReesCongruenceClass),
                      rec(is_ideal_class := is_ideal_class));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
@@ -261,7 +261,8 @@ InstallMethod(\in,
 [IsAssociativeElement, IsReesCongruenceClass],
 function(elm, class)
   if class!.is_ideal_class then
-    return elm in SemigroupIdealOfReesCongruence(Parent(class));
+    return elm in SemigroupIdealOfReesCongruence(
+                    EquivalenceClassRelation(class));
   else
     return elm = Representative(class);
   fi;
@@ -273,7 +274,7 @@ InstallMethod(\*,
 "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
-  if not Parent(c1) = Parent(c2) then
+  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
     ErrorMayQuit("Semigroups: \\*: usage,\n",
                  "the args <c1> and <c2> must be classes of the same ",
                  "congruence,");
@@ -284,7 +285,7 @@ function(c1, c2)
   if c2!.is_ideal_class then
     return c2;
   fi;
-  return EquivalenceClassOfElementNC(Parent(c1),
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
                                      Representative(c1) * Representative(c2));
 end);
 

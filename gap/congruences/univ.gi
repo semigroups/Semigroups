@@ -11,8 +11,6 @@
 ## semigroup, that is the relation SxS on a semigroup S.
 ##
 
-#
-
 InstallMethod(UniversalSemigroupCongruence,
 "for a semigroup",
 [IsSemigroup],
@@ -50,7 +48,7 @@ InstallMethod(\=,
 "for two universal semigroup congruences",
 [IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong1, cong2)
-  return(Range(cong1) = Range(cong2));
+  return Range(cong1) = Range(cong2);
 end);
 
 #
@@ -211,7 +209,7 @@ function(cong, elm)
   local fam, class;
   fam := CollectionsFamily(FamilyObj(elm));
   class := Objectify(NewType(fam, IsUniversalSemigroupCongruenceClass), rec());
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
@@ -223,7 +221,7 @@ InstallMethod(\in,
 "for associative element and universal semigroup congruence class",
 [IsAssociativeElement, IsUniversalSemigroupCongruenceClass],
 function(elm, class)
-  return(elm in Range(ParentAttr(class)));
+  return elm in Parent(class);
 end);
 
 #
@@ -232,7 +230,7 @@ InstallMethod(\*,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
-  if ParentAttr(c1) <> ParentAttr(c2) then
+  if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
     ErrorMayQuit("Semigroups: \*: usage,\n",
                  "the args <c1> and <c2> must be over the same congruence");
   fi;
@@ -254,7 +252,7 @@ InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
-  return(ParentAttr(c1) = ParentAttr(c2));
+  return EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2);
 end);
 
 #

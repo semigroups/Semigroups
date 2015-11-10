@@ -13,8 +13,6 @@
 ## and MSc thesis "Computing with Semigroup Congruences" chapter 3.
 ##
 
-# TODO: remove brackets around return statements everywhere in this file.
-
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 function(S, n, colBlocks, rowBlocks)
   local mat, g;
@@ -493,7 +491,7 @@ function(elm)
   u := elm[3];  # Row no
   if IsReesMatrixSemigroupElement(elm) then
     # RMS case
-    return(mat[1][i] * elm[2] * mat[u][1]);
+    return mat[1][i] * elm[2] * mat[u][1];
   else
     # RZMS case
     for v in [1 .. Size(mat)] do
@@ -607,7 +605,7 @@ function(pair, cong)
   # Finally, check Lemma 3.5.6(2) in Howie, with row 1 and column 1
   mat := Matrix(S);
   gpElm := mat[1][i] * a * mat[u][1] * Inverse(mat[1][j] * b * mat[v][1]);
-  return(gpElm in cong!.n);
+  return gpElm in cong!.n;
 end);
 
 #
@@ -660,7 +658,7 @@ function(pair, cong)
   row := PositionProperty(cols[i], x -> x <> 0);
   gpElm := mat[row][i] * a * mat[u][col] *
            Inverse(mat[row][j] * b * mat[v][col]);
-  return(gpElm in cong!.n);
+  return gpElm in cong!.n;
 end);
 
 #
@@ -843,7 +841,7 @@ InstallMethod(Enumerator,
 "for RMS congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
 function(class)
-  return ImagesElm(Parent(class), Representative(class));
+  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
 #
@@ -852,7 +850,7 @@ InstallMethod(Enumerator,
 "for RZMS congruence class by linked triple",
 [IsRZMSCongruenceClassByLinkedTriple],
 function(class)
-  return ImagesElm(Parent(class), Representative(class));
+  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
 #
@@ -1100,7 +1098,8 @@ function(cong, nCoset, colClass, rowClass)
                      rec(nCoset := nCoset,
                          colClass := colClass,
                          rowClass := rowClass));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, CanonicalRepresentative(class));
   return class;
 end);
@@ -1118,7 +1117,8 @@ function(cong, nCoset, colClass, rowClass)
                      rec(nCoset := nCoset,
                          colClass := colClass,
                          rowClass := rowClass));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, CanonicalRepresentative(class));
   return class;
 end);
@@ -1168,7 +1168,7 @@ function(cong, elm)
                      rec(nCoset := nCoset,
                          colClass := colClass,
                          rowClass := rowClass));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
@@ -1195,7 +1195,7 @@ function(cong, elm)
                            colClass := colClass,
                            rowClass := rowClass));
   fi;
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
@@ -1208,7 +1208,7 @@ InstallMethod(\in,
 [IsReesMatrixSemigroupElement, IsRMSCongruenceClassByLinkedTriple],
 function(elm, class)
   local S, cong;
-  cong := ParentAttr(class);
+  cong := EquivalenceClassRelation(class);
   S := Range(cong);
   return(elm in S and
          cong!.colLookup[elm[1]] = class!.colClass and
@@ -1223,11 +1223,11 @@ InstallMethod(\in,
 [IsReesZeroMatrixSemigroupElement, IsRZMSCongruenceClassByLinkedTriple],
 function(elm, class)
   local S, cong;
-  cong := ParentAttr(class);
+  cong := EquivalenceClassRelation(class);
   S := Range(cong);
   # Special case for 0 and {0}
   if elm = MultiplicativeZero(S) then
-    return(class!.nCoset = 0);
+    return class!.nCoset = 0;
   elif class!.nCoset = 0 then
     return false;
   fi;
@@ -1245,13 +1245,13 @@ InstallMethod(\*,
 [IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
 function(c1, c2)
   local elm;
-  if not Parent(c1) = Parent(c2) then
+  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
     ErrorMayQuit("Semigroups: \*: usage,\n",
                  "the args <c1> and <c2> must be classes of the same ",
                  "congruence,");
   fi;
   elm := Representative(c1) * Representative(c2);
-  return(EquivalenceClassOfElementNC(Parent(c1), elm));
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
 end);
 
 #
@@ -1261,12 +1261,12 @@ InstallMethod(\*,
 [IsRZMSCongruenceClassByLinkedTriple, IsRZMSCongruenceClassByLinkedTriple],
 function(c1, c2)
   local elm;
-  if not Parent(c1) = Parent(c2) then
+  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
     ErrorMayQuit("Semigroups: \*: usage,\n",
                  "<c1> and <c2> must be classes of the same congruence,");
   fi;
   elm := Representative(c1) * Representative(c2);
-  return(EquivalenceClassOfElementNC(Parent(c1), elm));
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
 end);
 
 #
@@ -1276,7 +1276,7 @@ InstallMethod(Size,
 [IsRMSCongruenceClassByLinkedTriple],
 function(class)
   local cong;
-  cong := Parent(class);
+  cong := EquivalenceClassRelation(class);
   return(Size(cong!.n) *
          Size(cong!.colBlocks[class!.colClass]) *
          Size(cong!.rowBlocks[class!.rowClass]));
@@ -1294,7 +1294,7 @@ function(class)
     return 1;
   fi;
   # Otherwise
-  cong := Parent(class);
+  cong := EquivalenceClassRelation(class);
   return(Size(cong!.n) *
          Size(cong!.colBlocks[class!.colClass]) *
          Size(cong!.rowBlocks[class!.rowClass]));
@@ -1334,7 +1334,7 @@ InstallMethod(CanonicalRepresentative,
 [IsRMSCongruenceClassByLinkedTriple],
 function(class)
   local cong, S, i, u, mat, a;
-  cong := Parent(class);
+  cong := EquivalenceClassRelation(class);
   S := Range(cong);
   # Pick the first row and column from the classes
   i := cong!.colBlocks[class!.colClass][1];
@@ -1354,7 +1354,7 @@ InstallMethod(CanonicalRepresentative,
 [IsRZMSCongruenceClassByLinkedTriple],
 function(class)
   local cong, S, mat, i, u, v, j, a;
-  cong := Parent(class);
+  cong := EquivalenceClassRelation(class);
   S := Range(cong);
   # Special case for {0}
   if class!.nCoset = 0 then
